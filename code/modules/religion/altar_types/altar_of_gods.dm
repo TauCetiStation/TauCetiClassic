@@ -1,6 +1,6 @@
 /obj/structure/altar_of_gods
 	name = "Altar of the Gods"
-	desc = "An altar which allows the head of the church to choose a sect of religious teachings as well as provide sacrifices to earn favor."
+	desc = "Алтарь, позволяющий главе церкви выбирать религиозное учение и приносить жертвы для того, чтобы заработать милость богов."
 	icon = 'icons/obj/structures/chapel.dmi'
 	icon_state = "altar"
 	density = TRUE
@@ -31,14 +31,15 @@
 	experiments.init_known_tech()
 
 	AddComponent(/datum/component/clickplace)
-	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), .proc/start_rite)
-	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), .proc/reset_rite)
+	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), PROC_REF(start_rite))
+	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), PROC_REF(reset_rite))
 	init_turfs_around()
 
 /obj/structure/altar_of_gods/Destroy()
 	mobs_around = null
 	turfs_around = null
-	religion.altars -= src
+	if(religion)
+		religion.altars -= src
 	qdel(experiments)
 	return ..()
 
@@ -97,7 +98,7 @@
 // This proc is used to sacrifice all items on altar. Returns TRUE if at least something was sacrificed.
 /obj/structure/altar_of_gods/proc/sacrifice(mob/user)
 	if(!religion || !religion.aspects.len)
-		to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
+		to_chat(user, "<span class ='warning'>Сначала выберите аспекты своей религии!</span>")
 		return FALSE
 
 	if(user.is_busy(src))
@@ -125,7 +126,7 @@
 
 		if(max_points > MIN_FAVOUR_GAIN)
 			religion.adjust_favor(max_points, user)
-			INVOKE_ASYNC(src, .proc/sacrifice_item, I)
+			INVOKE_ASYNC(src, PROC_REF(sacrifice_item), I)
 			sacrificed = TRUE
 
 		else if(max_points > 0)
@@ -145,11 +146,11 @@
 	if(user.mind && user.mind.holy_role >= HOLY_ROLE_PRIEST)
 		sacrifice(user)
 	else
-		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
+		to_chat(user, "<span class='warning'>Вы не знаете, как это использовать.</span>")
 
 /obj/structure/altar_of_gods/proc/can_interact(mob/user)
 	if(religion && user.my_religion != religion)
-		to_chat(user, "Are you a member of another religion.")
+		to_chat(user, "Вы последователь другой религии.")
 		return FALSE
 	if(!user.mind)
 		return FALSE
@@ -247,11 +248,11 @@
 		return
 
 	if(performing_rite)
-		to_chat(user, "<span class='warning'>You are already performing [performing_rite.name]!</span>")
+		to_chat(user, "<span class='warning'>Вы уже проводите [performing_rite.name]!</span>")
 		return
 
 	if(!Adjacent(user))
-		to_chat(user, "<span class='warning'>You are too far away!</span>")
+		to_chat(user, "<span class='warning'>Вы слишком далеко!</span>")
 		return
 
 	performing_rite = religion.rites_by_name[rite_name]
@@ -278,6 +279,7 @@
 	T.rite.religion = religion
 	T.rite.favor_cost = 0
 	T.rite.piety_cost = 0
+	T.rite.divine_power = round(sqrt(R.divine_power))
 	religion.adjust_favor(-R.favor_cost*2)
 	religion.adjust_piety(-R.piety_cost*2)
 
@@ -391,7 +393,7 @@
 	return reactions
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
-	if(iswrench(C))
+	if(iswrenching(C))
 		if(!user.is_busy(src) && C.use_tool(src, user, 40, volume = 50))
 			anchored = !anchored
 			visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
@@ -407,20 +409,15 @@
 
 	return ..()
 
-/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return TRUE
-	return ..()
-
-/obj/structure/altar_of_gods/CheckExit(atom/movable/AM, target)
-	if(istype(AM) && AM.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
 
 /obj/structure/altar_of_gods/proc/init_turfs_around()
 	for(var/turf/T as anything in RANGE_TURFS(3, src))
-		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
-		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
+		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), PROC_REF(turf_around_enter))
+		RegisterSignal(T, list(COMSIG_ATOM_EXITED), PROC_REF(turf_around_exit))
 		turfs_around += T
 
 /obj/structure/altar_of_gods/proc/clear_turfs_around()

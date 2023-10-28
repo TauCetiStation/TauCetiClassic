@@ -15,7 +15,7 @@
 	R.add_reagent("fuel", max_fuel)
 
 /obj/item/weapon/weldpack/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/T = I
 		if(T.isOn() & prob(50))
 			message_admins("[key_name_admin(user)] triggered a welding kit explosion. [ADMIN_JMP(user)]")
@@ -60,7 +60,7 @@
 	var/obj/item/weapon/flamethrower_M2/Connected_Flamethrower = null
 
 /obj/item/weapon/weldpack/M2_fuelback/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/T = I
 		if(T.isOn())
 			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion. [ADMIN_JMP(user)]")

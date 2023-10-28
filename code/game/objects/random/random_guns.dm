@@ -6,8 +6,8 @@
 	icon_state = "9mm_glock"
 /obj/random/guns/handgun_security/item_to_spawn()
 		return pick(\
-						prob(3);/obj/item/weapon/gun/projectile/glock,\
-						prob(1);/obj/item/weapon/gun/projectile/glock/spec
+						prob(3);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
+						prob(1);/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec
 					)
 
 /obj/random/guns/projectile_security
@@ -54,20 +54,18 @@
 	icon_state = "revolver"
 /obj/random/guns/projectile_handgun/item_to_spawn()
 		return pick(\
-						prob(15);/obj/item/weapon/gun/projectile/glock,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/colt1911,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/luger,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/colt1911,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/silenced,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/peacemaker,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/detective,\
 						prob(5);/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver/syndie,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver,\
-						prob(5);/obj/item/weapon/gun/projectile/automatic/deagle,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/gyropistol,\
-						prob(2);/obj/item/weapon/gun/projectile/glock/spec,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/deagle/gold,\
+						prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/deagle,\
+						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
+						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/mateba\
 					)
 
@@ -141,9 +139,8 @@
 						prob(180);/obj/item/ammo_casing/c9mm,\
 						prob(25);/obj/item/ammo_casing/c9mmr,\
 						prob(5);/obj/item/ammo_box/c9mm,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/luger,\
-						prob(2);/obj/item/weapon/gun/projectile/glock,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol,\
+						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
+						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
 						prob(1);/obj/item/weapon/gun/projectile/automatic/mini_uzi\
 					)
 
@@ -171,8 +168,36 @@
 /obj/random/guns/set_357/item_to_spawn()
 		return pick(\
 						prob(200);/obj/item/ammo_casing/a357,\
-						prob(20);/obj/item/ammo_box/a357,\
+						prob(20);/obj/item/ammo_box/speedloader/a357,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/mateba,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/syndie\
+					)
+
+/obj/random/guns/set_special
+	name = "Random lethal Weapon"
+	desc = "This is a random weapon."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "saber-18"
+
+/obj/random/guns/set_special/item_to_spawn()
+		return pick(\
+						/obj/item/weapon/gun/projectile/shotgun,\
+						/obj/item/weapon/gun/projectile/shotgun/combat,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off,\
+						/obj/item/weapon/gun/projectile/revolver,\
+						/obj/item/weapon/gun/projectile/revolver/detective,\
+						/obj/item/weapon/gun/projectile/automatic,\
+						/obj/item/weapon/gun/projectile/automatic/mini_uzi,\
+						/obj/item/weapon/gun/projectile/automatic/c20r,\
+						/obj/item/weapon/gun/projectile/automatic/l13,\
+						/obj/item/weapon/gun/projectile/automatic/tommygun,\
+						/obj/item/weapon/gun/projectile/automatic/bulldog,\
+						/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
+						/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
+						/obj/item/weapon/gun/projectile/automatic/pistol/colt1911,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer,\
+						/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate,\
+						/obj/item/weapon/gun/projectile/automatic/pistol/wjpp\
 					)

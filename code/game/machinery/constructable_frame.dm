@@ -92,7 +92,7 @@
 						state = 2
 						icon_state = "box_1"
 
-			else if(isscrewdriver(P) && !anchored)
+			else if(isscrewing(P) && !anchored)
 				if(user.is_busy(src))
 					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
@@ -102,7 +102,7 @@
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						deconstruct(TRUE)
 
-			else if(iswrench(P))
+			else if(iswrenching(P))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
@@ -111,7 +111,7 @@
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
 		if(2)
-			if(iswrench(P))
+			if(iswrenching(P))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
@@ -138,7 +138,7 @@
 					update_req_desc()
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
-			if(iswirecutter(P))
+			if(iscutter(P))
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
@@ -146,7 +146,7 @@
 				new /obj/item/stack/cable_coil/red(loc, 5)
 
 		if(3)
-			if(iscrowbar(P))
+			if(isprying(P))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				state = 2
 				circuit.loc = src.loc
@@ -163,7 +163,7 @@
 				components = null
 				icon_state = "box_1"
 
-			if(isscrewdriver(P))
+			if(isscrewing(P))
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)
@@ -196,7 +196,7 @@
 					if(!co.crit_fail)
 						part_list += co
 				//Sort the parts. This ensures that higher tier items are applied first.
-				part_list = sortTim(part_list, /proc/cmp_rped_sort)
+				part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
 
 				for(var/path in req_components)
 					while(req_components[path] > 0 && (locate(path) in part_list))
@@ -253,41 +253,36 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/vending_refill/boozeomat = 3)
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
-		var/list/names = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-							/obj/machinery/vending/snack = "Getmore Chocolate Corp (Red)",
-							/obj/machinery/vending/snack/blue = "Getmore Chocolate Corp (Blue)",
-							/obj/machinery/vending/snack/orange = "Getmore Chocolate Corp (Orange)",
-							/obj/machinery/vending/snack/green = "Getmore Chocolate Corp (Green)",
-							/obj/machinery/vending/snack/teal = "Getmore Chocolate Corp (Teal)",
-							/obj/machinery/vending/coffee = "Hot Drinks",
-							/obj/machinery/vending/cola = "Robust Softdrinks (Blue)",
-							/obj/machinery/vending/cola/black = "Robust Softdrinks (Black)",
-							/obj/machinery/vending/cola/red = "Robust Softdrinks (Red)",
-							/obj/machinery/vending/cola/spaceup = "Robust Softdrinks (Space-Up!)",
-							/obj/machinery/vending/cola/starkist = "Robust Softdrinks (Starkist)",
-							/obj/machinery/vending/cola/soda = "Robust Softdrinks (Soda)",
-							/obj/machinery/vending/cola/gib = "Robust Softdrinks (Dr. Gibb)",
-							/obj/machinery/vending/cigarette = "Cigarette",
-							/obj/machinery/vending/barbervend = "Fab-O-Vend",
-							/obj/machinery/vending/chinese = "Mr. Chang",
-							/obj/machinery/vending/medical = "NanoMed Plus",
-							/obj/machinery/vending/hydronutrients = "NutriMax",
-							/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",
-							/obj/machinery/vending/dinnerware = "Dinnerware",
-							/obj/machinery/vending/tool = "YouTool",
-							/obj/machinery/vending/engivend = "Engi-Vend",
-							/obj/machinery/vending/clothing = "ClothesMate",
-							/obj/machinery/vending/blood = "Blood'O'Matic",
-							/obj/machinery/vending/junkfood = "McNuffin's Fast Food",
-							/obj/machinery/vending/donut = "Monkin' Donuts",
-			)
-//							/obj/machinery/vending/autodrobe = "AutoDrobe")
+	if(isscrewing(I))
+		var/static/list/names_of_vendings = list()
+		var/static/list/radial_icons = list()
 
-		build_path = pick(names)
-		name = "circuit board ([names[build_path]] Vendor)"
-		to_chat(user, "<span class='notice'>You set the board to [names[build_path]].</span>")
-		req_components = list(text2path("/obj/item/weapon/vending_refill/[copytext("[build_path]", 24)]") = 3)       //Never before has i used a method as horrible as this one, im so sorry
+		if(names_of_vendings.len == 0)
+			for(var/obj/machinery/vending/type as anything in typesof(/obj/machinery/vending))
+				if(!initial(type.refill_canister))
+					continue
+				var/full_name
+				if(initial(type.subname))
+					full_name = "[initial(type.name)] ([initial(type.subname)])"
+				else
+					full_name = initial(type.name)
+
+				ASSERT(!names_of_vendings[full_name])
+
+				names_of_vendings[full_name] = type
+				radial_icons[full_name] = icon(initial(type.icon), initial(type.icon_state))
+
+		var/vending_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
+		if(isnull(vending_name))
+			return
+
+		var/obj/machinery/vending/vending_type = names_of_vendings[vending_name]
+
+		to_chat(user, "<span class='notice'>You set the board to [vending_name].</span>")
+
+		name = "circuit board ([vending_name] Vendor)"
+		build_path = vending_type
+		req_components = list(initial(vending_type.refill_canister) = 3)
 		return
 	return ..()
 
@@ -377,7 +372,6 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 2)
-
 /obj/item/weapon/circuitboard/cryo_tube
 	name = "circuit board (Cryotube)"
 	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
@@ -397,6 +391,15 @@ to destroy them and players will be able to make replacements.
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/capacitor = 2)
+
+
+/obj/item/weapon/circuitboard/reagentgrinder
+	name = "circuit board (All-In-One Grinder)"
+	board_type = "machine"
+	build_path = /obj/machinery/reagentgrinder
+	origin_tech = "biotech=2;engineering=1;materials=2"
+	req_components = list(
+		/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/item/weapon/circuitboard/cooler
 	name = "circuit board (Cooler)"
@@ -548,6 +551,54 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "programming=1"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1)
+
+/obj/item/weapon/circuitboard/smartfridge/attackby(obj/item/I, mob/user, params)
+	if(isscrewing(I))
+		var/static/list/names_of_smartfridges
+		var/static/list/radial_icons
+
+		if (!names_of_smartfridges || !radial_icons)
+			names_of_smartfridges = list()
+			radial_icons = list()
+
+			var/available_designs = list(
+				/obj/machinery/smartfridge/seeds,
+				/obj/machinery/smartfridge/chemistry,
+				/obj/machinery/smartfridge/secure/extract,
+				/obj/machinery/smartfridge/secure/virology,
+				/obj/machinery/smartfridge/drinks,
+				/obj/machinery/smartfridge) // Food
+
+			for(var/obj/machinery/smartfridge/type as anything in available_designs)
+				var/full_name = initial(type.name)
+				names_of_smartfridges[full_name] = type
+				// Icon stuff
+				var/atom/fridge_icon = image(initial(type.icon), initial(type.icon_state))
+				fridge_icon.add_overlay(icon(initial(type.icon), initial(type.content_overlay)))
+				fridge_icon.add_overlay(icon(initial(type.icon), "smartfridge-glass"))
+				radial_icons[full_name] = fridge_icon
+
+		var/smartfridge_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
+		if(isnull(smartfridge_name))
+			return
+
+		var/obj/machinery/smartfridge_type = names_of_smartfridges[smartfridge_name]
+		to_chat(user, "<span class='notice'>You set the board to [smartfridge_name].</span>")
+		name = "circuit board ([smartfridge_name])"
+		build_path = smartfridge_type
+
+		return
+	return ..()
+
+/obj/item/weapon/circuitboard/smartfridge/secure/bluespace
+	name = "circuit board (Bluespace Storage)"
+	build_path = /obj/machinery/smartfridge/secure/bluespace
+	board_type = "machine"
+	origin_tech = "programming=4;engineering=4;bluespace=4"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace = 3,
+							/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/monkey_recycler
 	name = "circuit board (Monkey Recycler)"
@@ -733,6 +784,13 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "powerstorage=3;engineering=3;materials=4"
 	req_components = list(
 							/obj/item/weapon/stock_parts/capacitor = 1,)
+/obj/item/weapon/circuitboard/cell_recharger
+	name = "circuit board (Cell Recharger)"
+	build_path = /obj/machinery/cell_charger
+	board_type = "machine"
+	origin_tech = "powerstorage=1;engineering=2;materials=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/capacitor = 1,)
 
 // Telecomms circuit boards:
 /obj/item/weapon/circuitboard/telecomms/receiver
@@ -867,3 +925,23 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/capacitor = 3,
 							/obj/item/stack/cable_coil = 5)
+
+/obj/item/weapon/circuitboard/operating_table
+	name = "circuit board (Operating Table)"
+	build_path = /obj/machinery/optable
+	board_type = "machine"
+	origin_tech = "engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/scanning_module = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/stack/cable_coil = 2)
+
+/obj/item/weapon/circuitboard/operating_table/abductor
+	name = "circuit board (Abductor Operating Table)"
+	build_path = /obj/machinery/optable/abductor
+	board_type = "machine"
+	origin_tech = "engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic = 2,
+							/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = 1,
+							/obj/item/stack/cable_coil = 2)

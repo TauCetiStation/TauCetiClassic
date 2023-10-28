@@ -41,7 +41,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/kyphotorin
 	name = "kyphotorin bottle"
-	desc = "A small bottle. Contains kyphotorin - used to recover bones."
+	desc = "A small bottle. Contains kyphotorin - used for treatment. Only works at high temperature."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle1"
 	list_reagents = list("kyphotorin" = 30)
@@ -58,7 +58,7 @@
 	desc = "A small bottle of synaptizine. Do not drink, it is very poisonous."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle2"
-	list_reagents = list("synaptizine" = 10)
+	list_reagents = list("synaptizine" = 5)
 
 /obj/item/weapon/reagent_containers/glass/bottle/phoron
 	name = "phoron bottle"
@@ -87,6 +87,20 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle2"
 	list_reagents = list("chloralhydrate" = 15)
+
+/obj/item/weapon/reagent_containers/glass/bottle/sanguisacid
+	name = "Sanguis acid Bottle"
+	desc = "A small bottle of Sanguis Acid. Burns the blood inside the body. Only works on humanoids."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("sanguisacid" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/bonebreaker
+	name = "BB EX-01 Bottle"
+	desc = "A small bottle of BB EX-01, also known as Bonebreaker toxin."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("bonebreaker" = 5)
 
 /obj/item/weapon/reagent_containers/glass/bottle/antitoxin
 	name = "anti-toxin bottle"
@@ -181,6 +195,20 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle1"
 	list_reagents = list("zombiepowder" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/ambrosium
+	name = "ambrosium bottle"
+	desc = "A small bottle of ambrosium. It smells sweet."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("ambrosium" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/jenkem
+	name = "space jenkem bottle"
+	desc = "A small bottle of space jenkem. Say goodbye to your liver if you wanna try this."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("jenkem" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/peridaxon
 	name = "peridaxon bottle"

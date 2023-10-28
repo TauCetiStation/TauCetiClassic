@@ -1,47 +1,6 @@
-
-// Light Replacer (LR)
-//
-// ABOUT THE DEVICE
-//
-// This is a device supposedly to be used by Janitors and Janitor Cyborgs which will
-// allow them to easily replace lights. This was mostly designed for Janitor Cyborgs since
-// they don't have hands or a way to replace lightbulbs.
-//
-// HOW IT WORKS
-//
-// You attack a light fixture with it, if the light fixture is broken it will replace the
-// light fixture with a working light; the broken light is then placed on the floor for the
-// user to then pickup with a trash bag. If it's empty then it will just place a light in the fixture.
-//
-// HOW TO REFILL THE DEVICE
-//
-// It will need to be manually refilled with lights.
-// If it's part of a robot module, it will charge when the Robot is inside a Recharge Station.
-//
-// EMAGGED FEATURES
-//
-// NOTICE: The Cyborg cannot use the emagged Light Replacer and the light's explosion was nerfed. It cannot create holes in the station anymore.
-//
-// I'm not sure everyone will react the emag's features so please say what your opinions are of it.
-//
-// When emagged it will rig every light it replaces, which will explode when the light is on.
-// This is VERY noticable, even the device's name changes when you emag it so if anyone
-// examines you when you're holding it in your hand, you will be discovered.
-// It will also be very obvious who is setting all these lights off, since only Janitor Borgs and Janitors have easy
-// access to them, and only one of them can emag their device.
-//
-// The explosion cannot insta-kill anyone with 30% or more health.
-
-#define LIGHT_OK 0
-#define LIGHT_EMPTY 1
-#define LIGHT_BROKEN 2
-#define LIGHT_BURNED 3
-
-
 /obj/item/device/lightreplacer
-
 	name = "light replacer"
-	desc = "A device to automatically replace lights. Refill with working lightbulbs."
+	desc = "A device to automatically replace lights. Refill with reinforced glass."
 
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
@@ -51,129 +10,82 @@
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "magnets=3;materials=2"
 
-	var/max_uses = 20
+	usesound = 'sound/machines/click.ogg'
+	//required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED) // janitor don't have any skills, maybe in the future
+
+	var/max_uses = 100
 	var/uses = 0
-	var/emagged = 0
-	var/failmsg = ""
-	// How much to increase per each glass?
-	var/increment = 5
-	// How much to take from the glass?
-	var/decrement = 1
-	var/charge = 1
+	var/charge_cicle = 1 // for borgs only
+
+	var/obj/item/weapon/light/lamp_type = /obj/item/weapon/light/tube
+	var/list/valid_lamp_types = list("tube" = /obj/item/weapon/light/tube, "bulb" = /obj/item/weapon/light/bulb, "smart tube" = /obj/item/weapon/light/tube/smart)
+
+	var/emagged = FALSE // todo
+
+/obj/item/device/lightreplacer/robot
+	max_uses = 20
 
 /obj/item/device/lightreplacer/atom_init()
-	uses = max_uses / 2
-	failmsg = "The [name]'s refill light blinks red."
+	uses = max_uses / 4
 	. = ..()
 
 /obj/item/device/lightreplacer/examine(mob/user)
 	..()
 	if(src in view(1, user))
-		to_chat(user, "It has [uses] lights remaining.")
+		to_chat(user, "It has [uses] use\s remaining. Print type set on [initial(lamp_type.name)].")
+
+/obj/item/device/lightreplacer/tool_use_check(mob/user, amount, obj/machinery/light/target)
+	if(target.fitting != initial(lamp_type.fitting))
+		if(user)
+			to_chat(user, "<span class='notice'>Wrong fitting type, this type of light requires a [target.fitting]. You need to change printing mode of [src].</span>")
+		return FALSE
+	if(uses < amount)
+		if(user)
+			to_chat(user, "<span class='notice'>You need to refill [src].</span>")
+		return FALSE
+	return TRUE
+
+/obj/item/device/lightreplacer/use(used = 1, mob/user = null)
+	if(used < 0)
+		stack_trace("[src.type]/use() called with a negative parameter")
+		return FALSE
+
+	if(uses < used)
+		return FALSE
+
+	uses -= used
+	return TRUE
+
+// Negative numbers will subtract
+/obj/item/device/lightreplacer/proc/add_uses(amount = 1)
+	uses = clamp(uses + amount, 0, max_uses)
+
+/obj/item/device/lightreplacer/proc/Charge(mob/user)
+	charge_cicle += 1
+	if(charge_cicle > 3)
+		add_uses(5)
+		charge_cicle = 1
 
 /obj/item/device/lightreplacer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = I
-		if(G.get_amount() - decrement >= 0 && uses < max_uses)
-			var/remaining = max(G.get_amount() - decrement, 0)
-			if(!remaining && !(G.get_amount() - decrement) == 0)
-				to_chat(user, "There isn't enough glass.")
-				return
-			G.set_amount(remaining)
-			AddUses(increment)
-			to_chat(user, "You insert a piece of glass into the [src.name]. You have [uses] lights remaining.")
+	if(istype(I, /obj/item/stack/sheet/rglass)) // now it's need rglass. One rglass is 37.5 bulbs if we count by mats (met+glass)
+		if(uses == max_uses)
+			to_chat(user, "\The [src] is already fully loaded.")
 			return
-
-	else if(istype(I, /obj/item/weapon/light))
-		var/obj/item/weapon/light/L = I
-		if(L.status == 0) // LIGHT OKAY
-			if(uses < max_uses)
-				AddUses(1)
-				to_chat(user, "You insert the [L.name] into the [src.name]. You have [uses] lights remaining.")
-				qdel(L)
-				return
-		else
-			to_chat(user, "You need a working light.")
+		var/obj/item/stack/sheet/rglass/G = I
+		if(G.use_tool(src, user, 10, 1))
+			add_uses(35) // count 2.5 uses as efficiency loss (it's not autolathe)
+			to_chat(user, "You insert a piece of glass into the [src.name]. It now has [uses] use\s.")
 			return
-
 	else
 		return ..()
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
-	/* // This would probably be a bit OP. If you want it though, uncomment the code.
-	if(isrobot(user))
-		var/mob/living/silicon/robot/R = user
-		if(R.emagged)
-			Emag()
-			to_chat(usr, "You shortcircuit the [src].")
-			return
-	*/
-	to_chat(usr, "It has [uses] lights remaining.")
+	var/new_type = input(user, "Select new bulb type.", "Bulb print type", lamp_type) in valid_lamp_types
+	if(new_type)
+		lamp_type = valid_lamp_types[new_type]
 
 /obj/item/device/lightreplacer/update_icon()
 	icon_state = "lightreplacer[emagged]"
-
-
-/obj/item/device/lightreplacer/proc/Use(mob/user)
-
-	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
-	AddUses(-1)
-	return 1
-
-// Negative numbers will subtract
-/obj/item/device/lightreplacer/proc/AddUses(amount = 1)
-	uses = min(max(uses + amount, 0), max_uses)
-
-/obj/item/device/lightreplacer/proc/Charge(mob/user)
-	charge += 5
-	if(charge > 7)
-		AddUses(5)
-		charge = 1
-
-/obj/item/device/lightreplacer/proc/ReplaceLight(obj/machinery/light/target, mob/living/U)
-
-	if(target.status != LIGHT_OK)
-		if(CanUse(U))
-			if(!Use(U)) return
-			to_chat(U, "<span class='notice'>You replace the [target.fitting] with the [src].</span>")
-
-			if(target.status != LIGHT_EMPTY)
-
-				var/obj/item/weapon/light/L1 = new target.light_type(target.loc)
-				L1.status = target.status
-				L1.rigged = target.rigged
-				L1.brightness_range = target.brightness_range
-				L1.brightness_power = target.brightness_power
-				L1.brightness_color = target.brightness_color
-				L1.switchcount = target.switchcount
-				target.switchcount = 0
-				L1.update()
-
-				target.status = LIGHT_EMPTY
-				target.update()
-
-			var/obj/item/weapon/light/L2 = new target.light_type()
-
-			target.status = L2.status
-			target.switchcount = L2.switchcount
-			target.rigged = emagged
-			target.brightness_range = L2.brightness_range
-			target.brightness_power = L2.brightness_power
-			target.brightness_color = L2.brightness_color
-			target.on = target.has_power()
-			target.update()
-			qdel(L2)
-
-			if(target.on && target.rigged)
-				target.explode()
-			return
-
-		else
-			to_chat(U, failmsg)
-			return
-	else
-		to_chat(U, "There is a working [target.fitting] already inserted.")
-		return
 
 /obj/item/device/lightreplacer/emag_act(mob/user)
 	emagged = !emagged
@@ -184,18 +96,3 @@
 		name = initial(name)
 	update_icon()
 	return TRUE
-
-//Can you use it?
-
-/obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
-	add_fingerprint(user)
-	//Not sure what else to check for. Maybe if clumsy?
-	if(uses > 0)
-		return 1
-	else
-		return 0
-
-#undef LIGHT_OK
-#undef LIGHT_EMPTY
-#undef LIGHT_BROKEN
-#undef LIGHT_BURNED

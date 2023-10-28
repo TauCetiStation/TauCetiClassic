@@ -1,9 +1,12 @@
+#define MANY_STATES 1
+#define TWO_STATES 2
+
 //TG-stuff
 /obj/item/ammo_casing
 	name = "bullet casing"
-	desc = "A bullet casing."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "s-casing"
+	desc = "Гильза от пули."
+	icon = 'icons/obj/ammo/casings.dmi'
+	icon_state = "casing_normal"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 1
@@ -29,8 +32,8 @@
 
 /obj/item/ammo_casing/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
-	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
+	icon_state = "[initial(icon_state)][BB ? "" : "-spent"]"
+	desc = "[initial(desc)][BB ? "" : " Этот патрон использован."]"
 
 /obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
 	if (!BB)
@@ -38,23 +41,23 @@
 	return
 
 /obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(BB)
 			if(initial(BB.name) == "bullet")
-				var/label_text = sanitize_safe(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription"), MAX_NAME_LEN)
+				var/label_text = sanitize_safe(input(user, "Нанести надпись на [initial(BB.name)]","Надпись"), MAX_NAME_LEN)
 				if(length(label_text) > 20)
-					to_chat(user, "<span class='warning'>The inscription can be at most 20 characters long.</span>")
+					to_chat(user, "<span class='warning'>Надпись может состоять не более чем из 20 символов.</span>")
 				else
 					if(label_text == "")
-						to_chat(user, "<span class='notice'>You scratch the inscription off of [initial(BB)].</span>")
+						to_chat(user, "<span class='notice'>Вы стираете надпись с [initial(BB)].</span>")
 						BB.name = initial(BB.name)
 					else
-						to_chat(user, "<span class='notice'>You inscribe \"[label_text]\" into \the [initial(BB.name)].</span>")
+						to_chat(user, "<span class='notice'>Вы вписываете \"[label_text]\" на [initial(BB.name)].</span>")
 						BB.name = "[initial(BB.name)] \"[label_text]\""
 			else
-				to_chat(user, "<span class='notice'>You can only inscribe a metal bullet.</span>")//because inscribing beanbags is silly
+				to_chat(user, "<span class='notice'>Вы можете нанести надпись только на металлическую пулю</span>")//because inscribing beanbags is silly
 		else
-			to_chat(user, "<span class='notice'>There is no bullet in the casing to inscribe anything into.</span>")
+			to_chat(user, "<span class='notice'>В гильзе нет пули, на которой можно было бы сделать какую-либо надпись.</span>")
 		return
 
 	if(istype(I, /obj/item/ammo_box) && isturf(loc))
@@ -74,9 +77,9 @@
 //Boxes of ammo
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
-	desc = "A box of ammo"
+	desc = "Коробка с патронами"
 	icon_state = "357"
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/ammo/boxes.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "syringe_kit"
@@ -88,9 +91,9 @@
 	var/list/stored_ammo = list()
 	var/ammo_type = /obj/item/ammo_casing
 	var/max_ammo = 7
-	var/multiple_sprites = 0
+	var/multiple_sprites = TWO_STATES
 	var/caliber
-	var/multiload = 1
+	var/multiload = TRUE
 
 /obj/item/ammo_box/atom_init()
 	. = ..()
@@ -98,7 +101,7 @@
 		stored_ammo += new ammo_type(src)
 	update_icon()
 
-/obj/item/ammo_box/proc/get_round(keep = 0)
+/obj/item/ammo_box/proc/get_round(keep = FALSE)
 	if (!stored_ammo.len)
 		return null
 	else
@@ -114,8 +117,8 @@
 		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
 			stored_ammo += rb
 			rb.loc = src
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/ammo_box/proc/make_empty(deleting = TRUE)
 	if(deleting)
@@ -155,17 +158,31 @@
 	if(A)
 		A.loc = get_turf(src.loc)
 		user.put_in_hands(A)
-		to_chat(user, "<span class='notice'>You remove a shell from \the [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы снимаете оболочку с [src]!</span>")
 		update_icon()
 
 /obj/item/ammo_box/update_icon()
 	switch(multiple_sprites)
-		if(1)
+		if(MANY_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
-		if(2)
+			desc = "[initial(desc)] Осталось снарядов: [stored_ammo.len]"
+		if(TWO_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
-	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+			desc = "[initial(desc)] [get_ammo_count_description()]."
 
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
 	return stored_ammo.len
+
+/obj/item/ammo_box/proc/get_ammo_count_description(message)
+	if(stored_ammo.len == max_ammo)
+		message = "Кажется, магазин полон"
+	if(stored_ammo.len < max_ammo)
+		message = "Кажется, магазин почти полон"
+	if(stored_ammo.len <= max_ammo*0.5)
+		message = "Кажется, магазин наполовину полон"
+	if(stored_ammo.len <= max_ammo*0.25)
+		message = "Кажется, магазин почти пуст"
+	if(!stored_ammo.len)
+		message = "Магазин пуст"
+	return (message)

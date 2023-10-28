@@ -46,6 +46,7 @@
 @include meta.load-css('./interfaces/ListInput.scss');
 @include meta.load-css('./interfaces/IntegratedCircuit.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
+@include meta.load-css('./interfaces/CardPay.scss');
 @include meta.load-css('./interfaces/CameraConsole.scss');
 @include meta.load-css('./interfaces/Changelog.scss');
 @include meta.load-css('./interfaces/CrewManifest.scss');
@@ -56,6 +57,7 @@
 @include meta.load-css('./interfaces/Safe.scss');
 @include meta.load-css('./interfaces/TachyonArray.scss');
 @include meta.load-css('./interfaces/Techweb.scss');
+@include meta.load-css('./interfaces/Minesweeper.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

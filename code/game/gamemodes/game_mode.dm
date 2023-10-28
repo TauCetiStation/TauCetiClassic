@@ -132,7 +132,10 @@
 	var/list/available_players = get_ready_players()
 	for(var/datum/faction/F in factions)
 		for(var/mob/dead/new_player/P in available_players)
-			if(F.max_roles && F.members.len >= F.max_roles)
+			if(!F.rounstart_populate)
+				log_mode("[F] without roundstart populating.")
+				break
+			if(F.max_roles != 0 && F.members.len >= F.max_roles)
 				break
 			if(!F.can_join_faction(P))
 				log_mode("[P] failed [F] can_join_faction!")
@@ -171,16 +174,18 @@
 			continue
 		if(!F.can_join_faction(mob))
 			continue
+		if(!F.can_latespawn_mob(mob))
+			continue
 		possible_factions += F
 	if(possible_factions.len)
 		var/datum/faction/F = pick(possible_factions)
 		add_faction_member(F, mob, TRUE)
 
 /datum/game_mode/proc/PostSetup()
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
-	addtimer(CALLBACK(src, .proc/send_intercept), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
+	addtimer(CALLBACK(src, PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
+	addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
 
-	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended)
+	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended, /datum/game_mode/imposter)
 	if(!(type in exclude_autotraitor_for))
 		CreateFaction(/datum/faction/traitor/auto, num_players())
 
@@ -213,12 +218,13 @@
 	for(var/datum/faction/F in factions)
 		F.calculate_completion()
 		SSStatistics.add_faction(F)
-		if (F.members.len > 0)
+		if(F.members.len > 0 || F.always_print)
 			exist = TRUE
 			completition_text += "<div class='Section'>"
 			completition_text += F.GetFactionHeader()
 			completition_text += F.GetScoreboard()
 			completition_text += "</div>"
+
 	if (orphaned_roles.len > 0)
 		completition_text += "<FONT size = 2><B>Independents:</B></FONT><br>"
 	for(var/datum/role/R in orphaned_roles)

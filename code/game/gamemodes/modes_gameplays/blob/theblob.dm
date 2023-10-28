@@ -10,6 +10,7 @@
 	desc = "Some blob creature thingy."
 	density = FALSE
 	anchored = TRUE
+	can_block_air = TRUE
 	layer = BELOW_MOB_LAYER
 	max_integrity = 30
 	var/health_timestamp = 0
@@ -37,8 +38,8 @@
 	return ..()
 
 
-/obj/structure/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))
+/obj/structure/blob/CanPass(atom/movable/mover, turf/target, height=0)
+	if(!height)
 		return FALSE
 	if(istype(mover) && mover.checkpass(PASSBLOB))
 		return TRUE

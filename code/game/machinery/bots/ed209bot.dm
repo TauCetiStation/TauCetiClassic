@@ -99,7 +99,7 @@
 
 
 /obj/machinery/bot/secbot/ed209/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!isscrewdriver(W) && W.force && !target)
+	if(!isscrewing(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 		if(lasertag_color)//To make up for the fact that lasertag bots don't hunt
@@ -165,7 +165,7 @@
 				blockcount++
 				if(blockcount > 5)	// attempt 5 times before recomputing
 					// find new path excluding blocked turf
-					addtimer(CALLBACK(src, .proc/patrol_substep, next), 2)
+					addtimer(CALLBACK(src, PROC_REF(patrol_substep), next), 2)
 
 		else	// not a valid turf
 			mode = SECBOT_IDLE
@@ -227,8 +227,8 @@
 				var/obj/item/clothing/suit/lasertag/L = I
 				if(L.lasertag_color != lasertag_color)
 					threatcount += 4
-			else if(istype(I, /obj/item/weapon/gun/energy/laser/lasertag))
-				var/obj/item/weapon/gun/energy/laser/lasertag/L = I
+			else if(istype(I, /obj/item/weapon/gun/energy/laser/selfcharging/lasertag))
+				var/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/L = I
 				if(L.lasertag_color != lasertag_color)
 					threatcount += 4
 
@@ -252,10 +252,10 @@
 		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
 		G.power_supply.charge = 0
 	else if(lasertag_color == "blue")
-		var/obj/item/weapon/gun/energy/laser/lasertag/bluetag/G = new /obj/item/weapon/gun/energy/laser/lasertag/bluetag(Tsec)
+		var/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag/G = new /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag(Tsec)
 		G.power_supply.charge = 0
 	else if(lasertag_color == "red")
-		var/obj/item/weapon/gun/energy/laser/lasertag/redtag/G = new /obj/item/weapon/gun/energy/laser/lasertag/redtag(Tsec)
+		var/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag/G = new /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag(Tsec)
 		G.power_supply.charge = 0
 
 	if(prob(50))
@@ -396,7 +396,7 @@
 				did_something = TRUE
 
 		if(3)
-			if(iswelder(I))
+			if(iswelding(I))
 				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.use(0,user))
 					build_step++
@@ -438,11 +438,11 @@
 		if(7)
 			switch(lasertag_color)
 				if("blue")
-					if(!istype(I, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
+					if(!istype(I, /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag))
 						return
 					name = "bluetag ED-209 assembly"
 				if("red")
-					if(!istype(I, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
+					if(!istype(I, /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag))
 						return
 					name = "redtag ED-209 assembly"
 				if("")
@@ -459,7 +459,7 @@
 			did_something = TRUE
 
 		if(8)
-			if(isscrewdriver(I))
+			if(isscrewing(I))
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
@@ -504,7 +504,7 @@
 		if(L.lasertag_color != lasertag_color)
 			turn_off()
 			qdel(Proj)
-			on_timer_id = addtimer(CALLBACK(src, .proc/turn_on_cb), 100, TIMER_STOPPABLE)
+			on_timer_id = addtimer(CALLBACK(src, PROC_REF(turn_on_cb)), 100, TIMER_STOPPABLE)
 
 /obj/machinery/bot/secbot/ed209/bluetag
 	lasertag_color = "blue"

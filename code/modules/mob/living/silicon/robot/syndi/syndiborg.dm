@@ -42,7 +42,7 @@
 /obj/item/device/radio/borg/syndicate/atom_init()
 	. = ..()
 	set_frequency(SYND_FREQ)
-	INVOKE_ASYNC(src, .proc/recalculateChannels)
+	INVOKE_ASYNC(src, PROC_REF(recalculateChannels))
 
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 500

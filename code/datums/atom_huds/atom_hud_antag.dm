@@ -67,5 +67,5 @@
 /datum/mind/proc/leave_all_antag_huds()
 	for(var/hud in get_all_antag_huds())
 		var/datum/atom_hud/antag/H = hud
-		if(H.hudusers[current])
+		if(H.hudatoms[current])
 			H.leave_hud(current)

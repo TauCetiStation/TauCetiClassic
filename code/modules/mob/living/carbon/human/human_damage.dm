@@ -46,7 +46,7 @@
 	return res
 
 /mob/living/carbon/human/adjustBrainLoss(amount)
-	if(species.brain_mod == 0 || !should_have_organ(O_BRAIN))
+	if(species.brain_mod == 0 || species.flags[IS_SYNTHETIC] || !should_have_organ(O_BRAIN))
 		brainloss = 0
 	else
 		amount = amount * species.brain_mod
@@ -352,6 +352,14 @@ This function restores all bodyparts.
 			var/obj/item/organ/external/E = new path(null)
 			E.insert_organ(src)
 
+/mob/living/carbon/human/restore_all_organs()
+	for(var/organ_tag in species.has_organ)
+		var/obj/item/organ/O = organs_by_name[organ_tag]
+		if(!O)
+			O = species.has_organ[organ_tag]
+			O = new O(null)
+			O.insert_organ(src)
+
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)
 	if(isbodypart(BP))
@@ -374,7 +382,6 @@ This function restores all bodyparts.
 	return bodyparts_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
-
 	if(damagetype == HALLOSS && species && species.flags[NO_PAIN])
 		return FALSE
 
@@ -409,7 +416,10 @@ This function restores all bodyparts.
 			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon)
 		if(BURN)
 			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
-
+	if(damage > 8 && (BP.status & ORGAN_SPLINTED))
+		BP.status &= ~ORGAN_SPLINTED
+		playsound(src, 'sound/effects/splint_broke.ogg', VOL_EFFECTS_MASTER)
+		visible_message("<span class='bold warning'>You see how the splint falls off from [src]'s [BP.name]!</span>")
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()
 

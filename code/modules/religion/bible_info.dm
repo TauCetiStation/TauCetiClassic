@@ -9,9 +9,13 @@
 	var/laws_type = /datum/ai_laws/faith/commandments
 	var/borg_name = "Blessed"
 
+	var/image/radial_image
+
 /datum/bible_info/New(datum/religion/R)
 	if(pos_names)
 		name = pick(pos_names)
+
+	radial_image = image(icon = icon, icon_state = icon_state)
 
 /datum/bible_info/proc/apply_to(obj/item/weapon/storage/bible/B)
 	B.name = name
@@ -28,6 +32,7 @@
 	item_state = "bible"
 
 /datum/bible_info/chaplain/custom/New(datum/religion/R)
+	..()
 	name = "The Holy Book of [R.name]"
 
 /datum/bible_info/chaplain/bible
@@ -93,6 +98,14 @@
 	item_state = "scientology"
 	laws_type = /datum/ai_laws/faith/scientology
 	borg_name = "Good"
+
+/datum/bible_info/chaplain/animalism
+	pos_names = list("Old Major's Ideas", "Anthem of Animalism")
+
+	icon_state = "animalism"
+	item_state = "animalism"
+	laws_type = /datum/ai_laws/faith/animalism
+	borg_name = "Animal"
 
 /datum/bible_info/chaplain/scrapbook
 	pos_names = list("The Holy Joke Book", "Hymns to the Honkmother", "Prank in the name of Honkmother", "Scrapbook")

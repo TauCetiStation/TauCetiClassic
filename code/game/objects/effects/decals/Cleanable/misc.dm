@@ -207,3 +207,41 @@ var/global/list/toilet_overlay_cache = list()
 
 	add_overlay(mainOverlay)
 	add_overlay(shadeOverlay)
+
+/obj/effect/decal/cleanable/gourd
+	name = "swampy grease"
+	desc = "Мерзкая гадость. Кому придёт в голову пихать в себя ЭТО?"
+	anchored = TRUE
+	density = FALSE
+
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "mfloor1"
+	random_icon_states = list("mfloor1", "mfloor2", "mfloor3", "mfloor4", "mfloor5", "mfloor6", "mfloor7")
+
+	color = "#95ba43"
+
+	beauty = -200
+
+/obj/effect/decal/cleanable/gourd/atom_init()
+	..()
+	AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING, CALLBACK(src, PROC_REF(try_faceplant_react)))
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/decal/cleanable/gourd/atom_init_late()
+	// Only one gourd puddle per tile.
+	for(var/obj/effect/decal/cleanable/gourd/G in loc)
+		if(G != src && G.type == type)
+			qdel(G)
+
+/obj/effect/decal/cleanable/gourd/Crossed(atom/movable/AM)
+	. = ..()
+	try_faceplant_react(AM)
+
+/obj/effect/decal/cleanable/gourd/proc/try_faceplant_react(atom/movable/AM)
+	if(!isliving(AM))
+		return
+	var/mob/living/L = AM
+	if(L.get_species() == UNATHI)
+		return
+	if(L.lying || L.crawling)
+		L.vomit()

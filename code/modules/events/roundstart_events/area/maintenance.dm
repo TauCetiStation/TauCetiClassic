@@ -26,15 +26,13 @@
 /datum/event/feature/area/maintenance_spawn/invasion
 	possible_types = list(
 		/mob/living/simple_animal/hostile/giant_spider,
-		/mob/living/simple_animal/hostile/pylon,
-		/mob/living/simple_animal/hostile/xenomorph/drone,
-		/mob/living/simple_animal/hostile/xenomorph,
-		/mob/living/simple_animal/hostile/hivebot,
-		/mob/living/carbon/slime,
+		/mob/living/simple_animal/hostile/shade,
+		/mob/living/simple_animal/hostile/octopus,
+		/mob/living/simple_animal/hostile/cyber_horror,
 	)
 
 /datum/event/feature/area/maintenance_spawn/invasion/setup()
-	nums = rand(4, 8)
+	nums = rand(8, 12)
 	. = ..()
 
 /datum/event/feature/area/maintenance_spawn/antag_meta

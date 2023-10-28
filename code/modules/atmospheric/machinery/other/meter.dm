@@ -111,7 +111,7 @@
 	return ..()
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user)
-	if (!iswrench(W))
+	if (!iswrenching(W))
 		return ..()
 	if(user.is_busy(src))
 		return

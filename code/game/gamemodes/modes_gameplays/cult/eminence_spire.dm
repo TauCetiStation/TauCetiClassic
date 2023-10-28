@@ -8,12 +8,13 @@
 	max_integrity = 1500
 	pixel_x = -16
 	pixel_y = -2
+	anchored = TRUE
 	var/mob/eminence_nominee //Exactly for mob that wants to be an eminence
 	var/ghost_nomination = FALSE
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
 	var/kingmaking
 
-//Returns a list of all servants of Ratvar and observers.
+//Returns a list of all servants of Nar-Sie and observers.
 /proc/servants_and_ghosts()
 	. = list()
 	for(var/V in player_list)
@@ -69,7 +70,7 @@
 			cult_religion.send_message_to_members("[nominee] предлагает призракам стать Возвышенным! Вы можете возразить, дотронувшись до обелиска Возвышенного. В ином случае, кандидат станет Возвышенным через 30 секунд.", , 3)
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
-	selection_timer = addtimer(CALLBACK(src, .proc/kingmaker), 30 SECONDS, TIMER_STOPPABLE)
+	selection_timer = addtimer(CALLBACK(src, PROC_REF(kingmaker)), 30 SECONDS, TIMER_STOPPABLE)
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/objection(mob/living/wright)
@@ -129,6 +130,7 @@
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		cult_religion.send_message_to_members("<span class='large'>Призрак стал Возвышенным!</span>", , 4, eminence) //Before key transfer
 		eminence_nominee = pick(candidates)
+		eminence.mind_initialize()
 		eminence.key = eminence_nominee.key
 		eminence.eminence_help()
 	for(var/mob/M as anything in servants_and_ghosts())

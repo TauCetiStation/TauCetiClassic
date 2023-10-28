@@ -29,6 +29,8 @@ var/global/list/huds = list(
 	ANTAG_HUD_ZOMB = new/datum/atom_hud/antag,
 	ANTAG_HUD_GANGSTER = new/datum/atom_hud/antag/hidden,
 	ANTAG_HUD_SPACECOP = new/datum/atom_hud/antag,
+	ANTAG_HUD_REPLICATOR = new/datum/atom_hud/antag/hidden,
+	ANTAG_HUD_PIRATES = new/datum/atom_hud/antag,
 )
 
 /datum/atom_hud
@@ -55,7 +57,8 @@ var/global/list/huds = list(
 	if(!M || !hudusers[M])
 		return
 	if (absolute || !--hudusers[M])
-		UnregisterSignal(M, COMSIG_PARENT_QDELETING)
+		if(!hudatoms[M])
+			UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 		hudusers -= M
 		if(next_time_allowed[M])
 			next_time_allowed -= M
@@ -68,6 +71,8 @@ var/global/list/huds = list(
 /datum/atom_hud/proc/remove_from_hud(atom/A)
 	if(!A)
 		return FALSE
+	if(!hudusers[A])
+		UnregisterSignal(A, COMSIG_PARENT_QDELETING)
 	for(var/mob/M in hudusers)
 		remove_from_single_hud(M, A)
 	hudatoms -= A
@@ -79,15 +84,22 @@ var/global/list/huds = list(
 	for(var/i in hud_icons)
 		M.client.images -= A.hud_list[i]
 
+/datum/atom_hud/proc/unregister_atom(datum/source, force)
+	SIGNAL_HANDLER
+	if(hudusers[source])
+		remove_hud_from(source, TRUE)
+	if(hudatoms[source])
+		remove_from_hud(source)
+
 /datum/atom_hud/proc/add_hud_to(mob/M)
 	if(!M)
 		return
 	if(!hudusers[M])
 		hudusers[M] = 1
-		RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/unregister_mob)
+		RegisterSignal(M, COMSIG_PARENT_QDELETING, PROC_REF(unregister_atom), override = TRUE)
 		if(next_time_allowed[M] > world.time)
 			if(!queued_to_see[M])
-				addtimer(CALLBACK(src, .proc/show_hud_images_after_cooldown, M), next_time_allowed[M] - world.time)
+				addtimer(CALLBACK(src, PROC_REF(show_hud_images_after_cooldown), M), next_time_allowed[M] - world.time)
 				queued_to_see[M] = TRUE
 		else
 			next_time_allowed[M] = world.time + ADD_HUD_TO_COOLDOWN
@@ -95,10 +107,6 @@ var/global/list/huds = list(
 				add_to_single_hud(M, A)
 	else
 		hudusers[M]++
-
-/datum/atom_hud/proc/unregister_mob(datum/source, force)
-	SIGNAL_HANDLER
-	remove_hud_from(source, TRUE)
 
 /datum/atom_hud/proc/hide_single_atomhud_from(hud_user, hidden_atom)
 	if(hudusers[hud_user])
@@ -123,7 +131,8 @@ var/global/list/huds = list(
 /datum/atom_hud/proc/add_to_hud(atom/A)
 	if(!A)
 		return FALSE
-	hudatoms |= A
+	hudatoms[A] = TRUE
+	RegisterSignal(A, COMSIG_PARENT_QDELETING, PROC_REF(unregister_atom), override = TRUE)
 	for(var/mob/M in hudusers)
 		if(!queued_to_see[M])
 			add_to_single_hud(M, A)

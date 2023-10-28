@@ -36,21 +36,25 @@
 
 	var/animating_combo = FALSE
 
+	var/showing_hud = FALSE
+
 /datum/combo_handler/New(mob/living/victim, mob/living/attacker, combo_element, combo_value, max_combo_elements = 4)
 	last_hit_registered = world.time + delete_after_no_hits
 
 	src.attacker = attacker
 	src.victim = victim
-	progbar = new(attacker, 100, victim, my_icon_state="combat_prog_bar", insert_under=TRUE)
+	progbar = new(attacker, 100, victim, my_icon_state="combat_prog_bar", insert_under=TRUE, visible=FALSE)
 
 	src.max_combo_elements = max_combo_elements // Take note, that there are only sprites for 4 atm.
 
+	if(ishuman(attacker))
+		var/mob/living/carbon/human/H = attacker
+		if(istype(H.gloves, /obj/item/clothing/gloves/boxing))
+			show_combo_hud()
+
 /datum/combo_handler/Destroy()
-	if(attacker.client)
-		if(combo_icon)
-			attacker.client.images -= combo_icon
-		for(var/c_el_i in combo_elements_icons)
-			attacker.client.images -= c_el_i
+	hide_combo_hud()
+
 	QDEL_NULL(combo_icon)
 	QDEL_LIST(combo_elements_icons)
 	attacker.combo_animation = FALSE
@@ -70,6 +74,9 @@
 	if(!attacker)
 		return
 
+	if(!showing_hud)
+		return
+
 	if(combo_icon && attacker.client)
 		attacker.client.images -= combo_icon
 
@@ -85,9 +92,12 @@
 			var/matrix/N = matrix()
 			animate(combo_icon, transform=N, time=2)
 
-		INVOKE_ASYNC(src, .proc/shake_combo_icon)
+		INVOKE_ASYNC(src, PROC_REF(shake_combo_icon))
 
 /datum/combo_handler/proc/shake_combo_icon()
+	if(!showing_hud)
+		return
+
 	sleep(2) // This is here for set_combo_icon to properly animate the icon.
 
 	if(!attacker || !attacker.client)
@@ -139,6 +149,9 @@
 	A.attack_animation = FALSE
 
 /datum/combo_handler/proc/update_combo_elements()
+	if(!showing_hud)
+		return
+
 	if(attacker && attacker.client)
 		for(var/combo_element_icon in combo_elements_icons)
 			attacker.client.images -= combo_element_icon
@@ -230,7 +243,7 @@
 		next_combo = null
 		CC.pre_execute(victim, attacker)
 
-		INVOKE_ASYNC(src, .proc/do_animation, CC)
+		INVOKE_ASYNC(src, PROC_REF(do_animation), CC)
 
 		CC.execute(victim, attacker)
 		if(!CC.heavy_animation)
@@ -290,7 +303,7 @@
 
 	var/static/list/attack_elements = list(INTENT_HELP, INTENT_GRAB, INTENT_PUSH, INTENT_HARM)
 	if(combo_element in attack_elements)
-		INVOKE_ASYNC(src, .proc/animate_attack, combo_element, combo_value, victim, attacker)
+		INVOKE_ASYNC(src, PROC_REF(animate_attack), combo_element, combo_value, victim, attacker)
 
 	return FALSE
 
@@ -299,7 +312,7 @@
 		return
 
 	if(combo_icon && (SSmobs.times_fired % 3) == 0)
-		INVOKE_ASYNC(src, .proc/shake_combo_icon)
+		INVOKE_ASYNC(src, PROC_REF(shake_combo_icon))
 
 	progbar.update(points)
 
@@ -320,6 +333,40 @@
 
 	if(points < 0 || last_hit_registered + delete_after_no_hits < world.time)
 		qdel(src)
+
+/datum/combo_handler/proc/show_combo_hud()
+	if(showing_hud)
+		return
+
+	showing_hud = TRUE
+	if(!attacker.client)
+		return
+
+	progbar.visible = TRUE
+	attacker.client.images += progbar.bar
+	progbar.shown = TRUE
+
+	if(combo_icon)
+		attacker.client.images += combo_icon
+	for(var/c_el_i in combo_elements_icons)
+		attacker.client.images += c_el_i
+
+/datum/combo_handler/proc/hide_combo_hud()
+	if(!showing_hud)
+		return
+	showing_hud = FALSE
+
+	if(!attacker.client)
+		return
+
+	progbar.visible = FALSE
+	attacker.client.images -= progbar.bar
+	progbar.shown = FALSE
+
+	if(combo_icon)
+		attacker.client.images -= combo_icon
+	for(var/c_el_i in combo_elements_icons)
+		attacker.client.images -= c_el_i
 
 #undef ANIM_MAX_HIT_TURN_ANGLE
 #undef COMBOPOINTS_LOSE_PER_TICK

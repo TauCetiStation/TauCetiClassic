@@ -10,7 +10,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/teleblock/RegisterWithParent() //RegisterSignal
-	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_TELEPORT, .proc/intercept)
+	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_TELEPORT, PROC_REF(intercept))
 
 /datum/component/teleblock/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_INTERCEPT_TELEPORT)

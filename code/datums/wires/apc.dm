@@ -44,17 +44,17 @@ var/global/const/APC_WIRE_AI_CONTROL  = 8
 	switch(index)
 		if(APC_WIRE_IDSCAN)
 			A.locked = FALSE
-			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 300)
+			addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 300)
 
 		if(APC_WIRE_MAIN_POWER1, APC_WIRE_MAIN_POWER2)
 			if(!A.shorted)
 				A.shorted = TRUE
-				addtimer(CALLBACK(src, .proc/pulse_reaction, index), 1200)
+				addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 1200)
 
 		if(APC_WIRE_AI_CONTROL)
 			if(!A.aidisabled)
 				A.aidisabled = TRUE
-				addtimer(CALLBACK(src, .proc/pulse_reaction, index), 10)
+				addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 10)
 
 /datum/wires/apc/proc/pulse_reaction(index)
 	var/obj/machinery/power/apc/A = holder

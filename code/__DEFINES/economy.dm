@@ -1,0 +1,5 @@
+#define MAX_INSURANCE_PRICE 5000
+
+#define INSURANCE_NONE "None"
+#define INSURANCE_STANDARD "Standard"
+#define INSURANCE_PREMIUM "Premium"

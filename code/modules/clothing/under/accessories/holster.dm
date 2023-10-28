@@ -5,6 +5,12 @@
 	slot = "utility"
 	var/obj/item/weapon/gun/holstered = null
 
+/obj/item/clothing/accessory/holster/atom_init()
+	. = ..()
+	if(holstered)
+		holstered = new holstered(src)
+		update_icon()
+
 /obj/item/clothing/accessory/holster/proc/holster(obj/item/I, mob/user)
 	if(holstered)
 		to_chat(user, "<span class='warning'>There is already a [holstered] holstered here!</span>")
@@ -79,7 +85,7 @@
 
 /mob/living/carbon/human/proc/get_holster()
 	var/obj/item/clothing/accessory/holster/H = locate() in src
-	if(!H && istype(w_uniform, /obj/item/clothing/under))
+	if(!H && isunder(w_uniform))
 		var/obj/item/clothing/under/S = w_uniform
 		if(S.accessories)
 			H = locate() in S.accessories
@@ -121,6 +127,8 @@
 /obj/item/clothing/accessory/holster/armpit/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][holstered ? "_loaded" : ""]"
+
+/obj/item/clothing/accessory/holster/armpit/
 
 /obj/item/clothing/accessory/holster/mafia
 	name = "gun holster"

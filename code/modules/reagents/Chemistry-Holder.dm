@@ -60,11 +60,13 @@ var/global/const/INGEST = 2
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
+	if(total_volume == 0)
+		return
 	var/datum/reagents/R
 	if(istype(target,/datum/reagents))
 		R = target
 	else
-		if (!target.reagents || src.total_volume<=0)
+		if (!target.reagents)
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -369,34 +371,34 @@ var/global/const/INGEST = 2
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_mob, A, TOUCH, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_mob), A, TOUCH, R.volume+volume_modifier)
 				if(isturf(A))
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_turf, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_turf), A, R.volume+volume_modifier)
 				if(isobj(A))
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_obj), A, R.volume+volume_modifier)
 		if(INGEST)
 			for(var/datum/reagent/R in reagent_list)
 				if(ismob(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_mob, A, INGEST, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_mob), A, INGEST, R.volume+volume_modifier)
 				if(isturf(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_turf, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_turf), A, R.volume+volume_modifier)
 				if(isobj(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_obj), A, R.volume+volume_modifier)
 	return
 
 // adds new reagent by ID, mix it with those already present if needed
@@ -446,7 +448,7 @@ var/global/const/INGEST = 2
 
 		if(data)
 			R.data = data.Copy()
-			
+
 			if(data["virus2"]) // list of datums, need to copy manually through virus_copylist()
 				R.data["virus2"] |= virus_copylist(data["virus2"])
 
@@ -590,8 +592,10 @@ var/global/const/INGEST = 2
 		qdel(R)
 	reagent_list.Cut()
 	reagent_list = null
-	if(my_atom && my_atom.reagents == src)
-		my_atom.reagents = null
+	if(my_atom)
+		if(my_atom.reagents == src)
+			my_atom.reagents = null
+		my_atom = null
 
 /datum/reagents/proc/create_chempuff(amount, multiplier=1, preserve_data=1, name_from_reagents = TRUE, icon_from_reagents = TRUE)
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(my_atom))
@@ -625,6 +629,11 @@ var/global/const/INGEST = 2
 			var/contained = splash.get_reagents()
 
 			L.log_combat(user, "splashed with [my_atom.name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
+
+			var/image/splash_animation = image('icons/effects/effects.dmi', L, "splash")
+			splash_animation.color = mix_color_from_reagents(splash.reagent_list)
+			splash_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
+			flick_overlay_view(splash_animation, target, 1 SECONDS)
 
 	splash.reaction(target, TOUCH)
 	splash.clear_reagents()

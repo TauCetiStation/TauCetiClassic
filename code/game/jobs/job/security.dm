@@ -9,10 +9,11 @@
 	selection_color = "#ffdddd"
 	idtype = /obj/item/weapon/card/id/secGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_security, access_sec_doors, access_brig, access_armory,
 		access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
-		access_research, access_mining, access_medical, access_construction, access_mailsorting,
+		access_research, access_mining, access_medical, access_construction,
 		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
 	)
 	salary = 250
@@ -27,7 +28,7 @@
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
-
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 /datum/job/warden
 	title = "Warden"
@@ -52,7 +53,7 @@
 		~Luduk
 	*/
 	restricted_species = list(TAJARAN, DIONA, VOX, IPC)
-
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 /datum/job/detective
 	title = "Detective"
@@ -77,7 +78,7 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA)
-
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 /datum/job/officer
 	title = "Security Officer"
@@ -102,7 +103,7 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
-
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 /datum/job/forensic
 	title = "Forensic Technician"
@@ -127,7 +128,7 @@
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
-
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 /datum/job/cadet
 	title = "Security Cadet"
@@ -152,3 +153,4 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE

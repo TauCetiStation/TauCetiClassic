@@ -1,6 +1,8 @@
 /obj/item/weapon/shield
 	name = "shield"
 	var/block_chance = 65
+	var/wall_of_shield_on = FALSE
+	var/saved_dir = 0
 
 /obj/item/weapon/shield/atom_init()
 	. = ..()
@@ -11,9 +13,9 @@
 
 	SCB.can_push = TRUE
 
-	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+	SCB.on_sweep_hit = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_hit))
 
-	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -62,6 +64,81 @@
 				M.apply_effect(6, STUTTER, 0)
 				shake_camera(M, 1, 1)
 
+/obj/item/weapon/shield/AltClick(mob/living/user)
+	toggle_wallshield(user)
+
+/obj/item/weapon/shield/proc/toggle_wallshield(mob/living/user)
+	if(wall_of_shield_on)
+		disable_wallshield(user)
+		user.visible_message("<span class='notice'>[user] stopped holding the protective stance.</span>")
+	else
+		if(enable_wallshield(user))
+			user.visible_message("<span class='warning'>[user] got into a defensive stance with [src].</span>",
+								"<span class='notice'>You got into a defensive stance with [src].</span>")
+
+/obj/item/weapon/shield/proc/enable_wallshield(mob/living/user)
+	if(!user.is_in_hands(src))
+		return FALSE
+	user.SetNextMove(CLICK_CD_MELEE)
+	saved_dir = user.dir
+	wall_of_shield_on = TRUE
+	add_filter("wallshield_outline", 2, outline_filter(1, "#c0c0c0"))
+	update_icon()
+	update_inv_mob()
+	RegisterSignal(user, list(COMSIG_ATOM_CHANGE_DIR), PROC_REF(user_moved))
+	return TRUE
+
+/obj/item/weapon/shield/proc/disable_wallshield(mob/living/user)
+	saved_dir = 0
+	wall_of_shield_on = FALSE
+	remove_filter("wallshield_outline")
+	update_icon()
+	if(user)
+		to_chat(user, "<span class='info'>You interrupted the Wall of Shields technique.</span>")
+		update_inv_mob()
+		UnregisterSignal(user, list(COMSIG_ATOM_CHANGE_DIR))
+
+/obj/item/weapon/shield/proc/user_moved(datum/source, dir)
+	if(!wall_of_shield_on)
+		return
+	if(!saved_dir)
+		return
+	if(dir != saved_dir)
+		disable_wallshield(source)
+
+/obj/item/weapon/shield/update_icon()
+	item_state = "[icon_state][wall_of_shield_on ? "_outline" : ""]"
+
+//nothing happens but it should be because of logic
+/obj/item/weapon/shield/dropped(mob/living/user)
+	. = ..()
+	if(wall_of_shield_on)
+		disable_wallshield(user)
+
+/obj/item/weapon/shield/Get_shield_chance()
+	var/mob/living/carbon/human/M = loc
+	if(!M || !M.is_in_hands(src) || !wall_of_shield_on)
+		return block_chance
+	var/add_block = 0
+	var/turf/user_turf = get_turf(M)
+	//find comrads without build a line or smth
+	for(var/mob/living/carbon/human/H in range(1, user_turf))
+		if(H == M)
+			continue
+		var/obj/item/weapon/shield/shield = H.is_in_hands(/obj/item/weapon/shield)
+		//no_shields
+		if(!shield)
+			continue
+		//should be in hand
+		if(!shield.wall_of_shield_on)
+			continue
+		//Must face the same direction for balance
+		if(shield.saved_dir != saved_dir)
+			continue
+		//should be more unbalanced because of promotion teamplay
+		add_block += 15
+	return block_chance + add_block
+
 /obj/item/weapon/shield/riot
 	hitsound = list('sound/weapons/metal_shield_hit.ogg')
 	name = "riot shield"
@@ -80,9 +157,6 @@
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
-
-/obj/item/weapon/shield/riot/Get_shield_chance()
-	return block_chance
 
 /obj/item/weapon/shield/riot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/melee/baton))
@@ -119,14 +193,17 @@
 
 	SCB.can_push = TRUE
 
-	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+	SCB.on_sweep_hit = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_hit))
 
-	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep)
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep_push)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/energy, can_sweep))
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/energy, can_sweep_push))
 
 	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/shield/energy/toggle_wallshield(mob/user)
+	to_chat(user, "<span class='warning'>Why do I have to move so slowly?</span>")
 
 /obj/item/weapon/shield/energy/proc/can_sweep(mob/user)
 	return active
@@ -150,6 +227,10 @@
 			emp_cooldown = world.time + rand(200, 400)
 			turn_off()
 
+/obj/item/weapon/shield/energy/on_enter_storage(obj/item/weapon/storage/S)
+	..()
+	if(active)
+		attack_self(usr)
 
 /obj/item/weapon/shield/riot/tele
 	name = "telescopic shield"
@@ -175,12 +256,12 @@
 
 	SCB.can_push = TRUE
 
-	SCB.on_sweep_hit = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_hit)
+	SCB.on_sweep_hit = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_hit))
 
-	SCB.on_sweep_push_success = CALLBACK(src, /obj/item/weapon/shield.proc/on_sweep_push_success)
+	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep)
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/riot/tele.proc/can_sweep_push)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/riot/tele, can_sweep))
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield/riot/tele, can_sweep_push))
 
 	AddComponent(/datum/component/swiping, SCB)
 
@@ -192,8 +273,12 @@
 
 /obj/item/weapon/shield/riot/tele/Get_shield_chance()
 	if(active)
-		return block_chance
+		return ..()
 	return 0
+
+/obj/item/weapon/shield/riot/tele/toggle_wallshield(mob/living/user)
+	if(active)
+		return ..()
 
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
@@ -213,8 +298,11 @@
 		throw_speed = 3
 		w_class = SIZE_SMALL
 		slot_flags = null
+		if(wall_of_shield_on)
+			disable_wallshield(user)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
+	update_icon()
 
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
@@ -240,10 +328,6 @@
 	attack_verb = list("shoved", "bashed")
 	hitsound = list('sound/weapons/wood_shield_hit.ogg')
 	var/cooldown = 0
-
-/obj/item/weapon/shield/buckler/Get_shield_chance()
-	return block_chance
-
 
 /obj/item/weapon/shield/buckler/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/spear))
@@ -314,3 +398,24 @@
 		loc:update_icons()
 	..()
 */
+
+/proc/check_shield_dir(mob/shield_bearer, attack_dir)
+	if(istype(shield_bearer.l_hand, /obj/item/weapon/shield))
+		if(shield_bearer.dir == NORTH && (attack_dir in list(SOUTH, EAST)))
+			return TRUE
+		else if(shield_bearer.dir == SOUTH && (attack_dir in list(NORTH, WEST)))
+			return TRUE
+		else if(shield_bearer.dir == EAST && (attack_dir in list(WEST, SOUTH)))
+			return TRUE
+		else if(shield_bearer.dir == WEST && (attack_dir in list(EAST, NORTH)))
+			return TRUE
+	if(istype(shield_bearer.r_hand, /obj/item/weapon/shield))
+		if(shield_bearer.dir == NORTH && (attack_dir in list(SOUTH, WEST)))
+			return TRUE
+		else if(shield_bearer.dir == SOUTH && (attack_dir in list(NORTH, EAST)))
+			return TRUE
+		else if(shield_bearer.dir == EAST && (attack_dir in list(WEST, NORTH)))
+			return TRUE
+		else if(shield_bearer.dir == WEST && (attack_dir in list(EAST, SOUTH)))
+			return TRUE
+	return FALSE

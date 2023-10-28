@@ -106,7 +106,7 @@
 			desc = "A cardboard cutout of a clown. You get the feeling that it should be in a corner."
 			icon_state = "cutout_clown"
 		if("Mime")
-			name = "[pick(first_names_male)] [pick(last_names)]"
+			name = pick(mime_names)
 			desc = "...(A cardboard cutout of a mime.)"
 			icon_state = "cutout_mime"
 		if("Traitor")

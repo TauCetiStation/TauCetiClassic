@@ -137,6 +137,10 @@
 	var/from_suicide
 	// string, anything
 	var/last_attacker_name
+	// string, anything
+	var/last_phrase
+	// string, anything
+	var/last_examined_name
 	// object, where DAMAGE TYPE: int, [0...]
 	var/list/damage = list(
 		"BRUTE" = 0,
@@ -160,8 +164,12 @@
 	var/heavy_impact_range = 0
 	// int, [-infinity...]
 	var/light_impact_range = 0
-	// int, [-infinity...MAX_EXPLOSION_RANGE], now MAX_EXPLOSION_RANGE is 14
+	// int, [-infinity...]
 	var/flash_range = 0
+	// int, [-infinity...]
+	var/flame_range = 0
+	// string, [hh:mm]
+	var/occurred_time
 
 /datum/stat/manifest_entry
 	// string, anything
@@ -170,6 +178,14 @@
 	var/assigned_role
 	// string, anything, name of antagonists' role
 	var/special_role
+	// string, species name from code\modules\mob\living\carbon\species.dm
+	var/species
+	// int, anything
+	var/age
+	// string, by byond
+	var/gender
+	// string, anything
+	var/flavor
 	// array of strings, where strings are antagonists' roles
 	var/list/antag_roles = null
 
@@ -189,3 +205,35 @@
 	var/start_time
 	// string, [hh:mm]
 	var/leave_time
+
+/datum/stat/emp_stat
+	// int, [0...]
+	var/epicenter_x = 0
+	// int, [0...]
+	var/epicenter_y = 0
+	// int, [0...]
+	var/epicenter_z = 0
+	// int, [-infinity...]
+	var/devastation_range = 0
+	// int, [-infinity...]
+	var/heavy_range = 0
+	// int, [-infinity...]
+	var/light_range = 0
+	// string, [hh:mm]
+	var/occurred_time
+
+/datum/stat/rating
+	// map of [string, float] where float is [0..5]
+	var/list/ratings = list()
+
+/datum/stat/vote
+	// string from /datum/poll name
+	var/name
+	// int, [0...]
+	var/total_votes
+	// int, [0...]
+	var/total_voters
+	// string rfom /datum/vote_choice
+	var/winner
+	// map of [string, int] where int is [0...]
+	var/list/results = list()

@@ -161,9 +161,8 @@
 			var/obj/structure/closet/crate/secure/weapon/C = new(src.loc)
 			var/new_type = pick(
 			200; /obj/item/weapon/hatchet, \
-			/obj/item/weapon/gun/projectile/automatic/pistol, \
-			/obj/item/weapon/gun/projectile/automatic/deagle, \
-			/obj/item/weapon/gun/projectile/revolver/russian, \
+			/obj/item/weapon/gun/projectile/automatic/pistol/stechkin, \
+			/obj/item/weapon/gun/projectile/automatic/pistol/deagle, \
 			)
 			new new_type(C)
 		if("spacesuit")

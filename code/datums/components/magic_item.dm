@@ -19,7 +19,7 @@
 	if(istype(parent, /obj/item/clothing) && clothing_description)
 		tip_desc = clothing_description
 
-	var/datum/callback/can_callback = CALLBACK(src, .proc/can_show_tip)
+	var/datum/callback/can_callback = CALLBACK(src, PROC_REF(can_show_tip))
 
 	var/datum/mechanic_tip/self_effect/effect_tip = new(src, tip_desc)
 	parent.AddComponent(/datum/component/mechanic_desc, list(effect_tip), can_callback)

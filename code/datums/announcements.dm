@@ -12,16 +12,25 @@ var/global/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/tran
 
 /* Announcement sounds */
 var/global/list/announcement_sounds = list(
+	"admin_capitain_tishina" = 'sound/AI/_admin_capitain.ogg',
+	"admin_hos_gone" = 'sound/AI/_admin_hos_gone.ogg',
+	"admin_cap_gone" = 'sound/AI/_admin_cap_gone.ogg',
+	"admin_war_pipisky" = 'sound/AI/_admin_war_pipisky.ogg',
+	"admin_war_pizdec" = 'sound/AI/_admin_war_pizdec.ogg',
+	"admin_war_tishina" = 'sound/AI/_admin_war_tishina.ogg',
+	
 	"commandreport" = 'sound/AI/commandreport.ogg',
 	"announce" = 'sound/AI/announce.ogg',
 	"aiannounce" = 'sound/AI/aiannounce.ogg',
+	"portal" = 'sound/AI/portal.ogg',
 
 	"yesert" = 'sound/AI/yesert.ogg',
 	"noert" = 'sound/AI/noert.ogg',
-	"nuke" = 'sound/AI/nuke.ogg',
-	"radiation" = list('sound/AI/radiation1.ogg', 'sound/AI/radiation2.ogg', 'sound/AI/radiation3.ogg'),
+	"nuke1" = 'sound/AI/nuke1.ogg',
+	"nuke2" = 'sound/AI/nuke2.ogg',
+	"radiation" = 'sound/AI/radiation.ogg',
 	"radpassed" = 'sound/AI/radpassed.ogg',
-	"meteors" = list('sound/AI/meteors1.ogg', 'sound/AI/meteors2.ogg'),
+	"meteors" = 'sound/AI/meteors.ogg',
 	"meteorcleared" = 'sound/AI/meteorcleared.ogg',
 	"gravanom" = 'sound/AI/gravanomalies.ogg',
 	"fluxanom" = 'sound/AI/flux.ogg',
@@ -31,15 +40,16 @@ var/global/list/announcement_sounds = list(
 	"pyroanom" = 'sound/AI/pyr_anomalies.ogg',
 	"wormholes" = 'sound/AI/wormholes.ogg',
 	"outbreak7" = 'sound/AI/outbreak7.ogg',
-	"outbreak5" = list('sound/AI/outbreak5_1.ogg', 'sound/AI/outbreak5_2.ogg'),
-	"lifesigns" = list('sound/AI/lifesigns1.ogg', 'sound/AI/lifesigns2.ogg', 'sound/AI/lifesigns3.ogg'),
+	"outbreak5" = 'sound/AI/outbreak5.ogg',
+	"lifesigns" = 'sound/AI/lifesigns.ogg',
 	"greytide" = 'sound/AI/greytide.ogg',
 	"rampbrand" = 'sound/AI/rampant_brand_int.ogg',
 	"carps" = 'sound/AI/carps.ogg',
 	"estorm" = 'sound/AI/e-storm.ogg',
-	"istorm" = 'sound/AI/i-storm.ogg',
+	"istorm" = list('sound/AI/i-storm1.ogg', 'sound/AI/i-storm2.ogg', 'sound/AI/i-storm3.ogg'),
 	"poweroff" = list('sound/AI/poweroff1.ogg', 'sound/AI/poweroff2.ogg'),
-	"poweron" = 'sound/AI/poweron.ogg',
+	"poweron1" = 'sound/AI/poweron1.ogg',
+	"poweron2" = 'sound/AI/poweron2.ogg',
 	"gravoff" = 'sound/AI/gravityoff.ogg',
 	"gravon" = 'sound/AI/gravityon.ogg',
 	"artillery" = 'sound/AI/artillery.ogg',
@@ -47,6 +57,27 @@ var/global/list/announcement_sounds = list(
 	"fungi" = 'sound/AI/fungi.ogg',
 	"animes" = 'sound/AI/animes.ogg',
 	"horror" = 'sound/AI/_admin_horror_music.ogg',
+	"frost" = 'sound/AI/frost.ogg',
+	"access_override" = 'sound/AI/access_override.ogg',
+	"carp_major" = 'sound/AI/carp_major.ogg',
+	"comms_blackout" = 'sound/AI/comms_blackout.ogg',
+	"dust" = 'sound/AI/dust.ogg',
+	"dust_passed" = 'sound/AI/dust_passed.ogg',
+	"irod" = 'sound/AI/irod.ogg',
+	"infestation" = 'sound/AI/infestation.ogg',
+	"gateway" = 'sound/AI/gateway.ogg',
+	"department" = 'sound/AI/department.ogg',
+
+	"maint_revoke" = 'sound/AI/maint_revoke.ogg',
+	"maint_readd" = 'sound/AI/maint_readd.ogg',
+
+	"blob_dead" = 'sound/AI/blob_dead.ogg',
+	"blob_critical" = 'sound/AI/blob_critical.ogg',
+
+	"vox_arrival" = 'sound/AI/vox_arrival.ogg',
+	"vox_returns" = 'sound/AI/vox_returns.ogg',
+
+	"gang_announce" = 'sound/AI/gang_announce.ogg',
 
 	"emer_shut_called" = 'sound/AI/emergency_s_called.ogg',
 	"emer_shut_recalled" = 'sound/AI/emergency_s_recalled.ogg',
@@ -69,6 +100,25 @@ var/global/list/announcement_sounds = list(
 	"malf2" = 'sound/AI/ai_malf_2.ogg',
 	"malf3" = 'sound/AI/ai_malf_3.ogg',
 	"malf4" = 'sound/AI/ai_malf_4.ogg',
+
+	"xeno_first_help" = 'sound/AI/xeno_first_help.ogg',
+	"xeno_first_help_fail" = 'sound/AI/xeno_first_help_fail.ogg',
+	"xeno_second_help" = 'sound/AI/xeno_second_help.ogg',
+	"xeno_second_help_fail" = 'sound/AI/xeno_second_help_fail.ogg',
+	"xeno_crew_win" = 'sound/AI/xeno_crew_win.ogg',
+
+	"hos" = 'sound/AI/hos.ogg',
+	"cmo" = 'sound/AI/cmo.ogg',
+	"hop" = 'sound/AI/hop.ogg',
+	"rd" = 'sound/AI/rd.ogg',
+	"se" = 'sound/AI/se.ogg',
+	"kep" = 'sound/AI/kep.ogg',
+
+	"construction_began" = 'sound/AI/construction_began.ogg',
+	"construction_quarter" = 'sound/AI/construction_quarter.ogg',
+	"construction_half" = 'sound/AI/construction_half.ogg',
+	"construction_three_quarters" = 'sound/AI/construction_three_quarters.ogg',
+	"construction_doom" = 'sound/AI/construction_doom.ogg',
 )
 
 /* General announcement */
@@ -158,6 +208,16 @@ var/global/list/announcement_sounds = list(
 				C.messagetitle.Add("[P.name]")
 				C.messagetext.Add(P.info)
 
+	if(announce_text)
+		for(var/datum/feed_channel/FC in news_network.network_channels)
+			if(FC.channel_name == "Station Announcements")
+				var/datum/feed_message/newMsg = new /datum/feed_message
+				var/datum/comment_pages/CP = new /datum/comment_pages
+				newMsg.pages += CP
+				newMsg.author = station_name()
+				newMsg.body = announce_text
+				FC.messages += newMsg
+				break
 
 /datum/announcement/ping
 	sound = "commandreport"

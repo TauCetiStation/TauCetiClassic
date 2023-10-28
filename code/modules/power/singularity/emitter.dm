@@ -37,10 +37,11 @@
 	RefreshParts()
 
 /obj/machinery/power/emitter/RefreshParts()
+	..()
+
 	var/max_firedelay = 120
 	var/firedelay = 120
 	var/min_firedelay = 24
-	var/power_usage = 350
 	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
 		max_firedelay -= 20 * L.rating
 		min_firedelay -= 4 * L.rating
@@ -48,9 +49,6 @@
 	maximum_fire_delay = max_firedelay
 	minimum_fire_delay = min_firedelay
 	fire_delay = firedelay
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		power_usage -= 50 * M.rating
-	active_power_usage = power_usage
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
@@ -175,7 +173,7 @@
 
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
@@ -198,7 +196,7 @@
 				to_chat(user, "<span class='warning'>The [src.name] needs to be unwelded from the floor.</span>")
 		return
 
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
@@ -247,7 +245,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
-	if(isscrewdriver(W))
+	if(isscrewing(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return

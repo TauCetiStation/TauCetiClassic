@@ -42,7 +42,7 @@
  * Delete `item` after `time` passed.
  * Return `id` for timer, so deletion process could be stopped.
  */
-#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
+#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), item), time, TIMER_STOPPABLE)
 
 /**
  * Delete `item` and nullify var, where it was.

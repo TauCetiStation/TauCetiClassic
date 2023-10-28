@@ -112,6 +112,7 @@
 
 /obj/item/organ/external/head/skeleton
 	name = "skeleton head"
+	desc = "Poor Yorick!"
 	vital = FALSE
 	leaves_stump = FALSE
 	force = 8
@@ -125,6 +126,10 @@
 /obj/item/organ/external/head/skeleton/transfer_identity()
 	owner.force_remote_viewing = TRUE
 	owner.reset_view(src)
+
+/obj/item/organ/external/head/skeleton/droplimb(no_explode, clean, disintegrate)
+	transfer_identity()
+	. = ..()
 
 /obj/item/organ/external/groin/skeleton
 	name = "skeleton groin"

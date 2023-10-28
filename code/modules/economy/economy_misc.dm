@@ -68,6 +68,7 @@ var/global/current_date_string
 var/global/datum/money_account/vendor_account
 var/global/datum/money_account/cargo_account
 var/global/datum/money_account/station_account
+var/global/datum/money_account/centcomm_account
 var/global/list/datum/money_account/department_accounts = list()
 var/global/num_financial_terminals = 1
 var/global/next_account_number = 0
@@ -93,46 +94,94 @@ var/global/initial_station_money = 7500
 	newChannel.is_admin_channel = 1
 	news_network.network_channels += newChannel
 
+	newChannel = new /datum/feed_channel
+	newChannel.channel_name = "Station Announcements"
+	newChannel.author = station_name()
+	newChannel.locked = 1
+	newChannel.is_admin_channel = 1
+	news_network.network_channels += newChannel
+
 	for(var/loc_type in subtypesof(/datum/trade_destination))
 		var/datum/trade_destination/D = new loc_type
 		weighted_randomevent_locations[D] = D.viable_random_events.len
 		weighted_mundaneevent_locations[D] = D.viable_mundane_events.len
 
 	create_station_account()
+	create_centcomm_account()
 
 	for(var/department in station_departments)
 		create_department_account(department)
+
 	create_department_account("Vendor")
 	vendor_account = department_accounts["Vendor"]
-	cargo_account = department_accounts["Cargo"]
 
-	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
+	cargo_account = department_accounts["Cargo"]
+	SSeconomy.set_dividend_rate("Cargo", 0.1)
+	// Enough stock to supply 2 cargos of employees with it. TO-DO: calculate it programatically depending on map changes to jobs?
+	SSeconomy.issue_founding_stock(cargo_account.account_number, "Cargo", 260)
+	// Pay out the insurance to everyone completely.
+	SSeconomy.set_dividend_rate("Medical", 1.0)
+	// Enoguh stock to supply 2 medbay employees. See comment above.
+	SSeconomy.issue_founding_stock(global.department_accounts["Medical"], "Medical", 410)
+
+	var/MM = time2text(world.timeofday, "MM")
+	var/DD = time2text(world.timeofday, "DD")
+	current_date_string = "[DD].[MM].[game_year]"
 
 	economy_init = TRUE
 	return 1
 
+/proc/create_centcomm_account()
+	if(global.centcomm_account)
+		return
+
+	global.centcomm_account = new
+	global.centcomm_account.owner_name = "CentComm Station Account"
+	global.centcomm_account.account_number = rand(111111, 999999)
+	global.centcomm_account.remote_access_pin = rand(1111, 9999)
+	global.centcomm_account.security_level = 2
+	global.centcomm_account.money = 10000000
+	global.centcomm_account.hidden = TRUE
+	// Is needed in case admins want to have some !!!FUN!!!
+	SSeconomy.issue_founding_stock(global.centcomm_account.account_number, "Cargo", 10)
+	SSeconomy.issue_founding_stock(global.centcomm_account.account_number, "Medical", 10)
+
+	//create an entry in the account transaction log for when it was created
+	var/datum/transaction/T = new()
+	T.target_name = global.centcomm_account.owner_name
+	T.purpose = "Account creation"
+	T.amount = global.centcomm_account.money
+	T.date = "2nd May, [gamestory_start_year - 10]"
+	T.time = "10:41"
+	T.source_terminal = "Biesel GalaxyNet Terminal #277"
+
+	station_account.transaction_log.Add(T)
+
 /proc/create_station_account()
-	if(!station_account)
-		next_account_number = rand(111111, 999999)
+	if(station_account)
+		return
+	next_account_number = rand(111111, 999999)
 
-		station_account = new()
-		station_account.owner_name = "[station_name()] Station Account"
-		station_account.account_number = rand(111111, 999999)
-		station_account.remote_access_pin = rand(1111, 111111)
-		station_account.money = global.initial_station_money
+	station_account = new()
+	station_account.owner_name = "[station_name()] Station Account"
+	station_account.account_number = rand(111111, 999999)
+	station_account.remote_access_pin = rand(1111, 9999)
+	station_account.security_level = 1
+	station_account.money = global.initial_station_money
+	// Station gets a slight rebound on all cargo activity from stock ownership. In theory HoP or Captain can also sell this.
+	SSeconomy.issue_founding_stock(station_account.account_number, "Cargo", 10)
+	SSeconomy.issue_founding_stock(station_account.account_number, "Medical", 10)
 
-		//create an entry in the account transaction log for when it was created
-		var/datum/transaction/T = new()
-		T.target_name = station_account.owner_name
-		T.purpose = "Account creation"
-		T.amount = station_account.money
-		T.date = "2nd April, [gamestory_start_year]"
-		T.time = "11:24"
-		T.source_terminal = "Biesel GalaxyNet Terminal #277"
+	//create an entry in the account transaction log for when it was created
+	var/datum/transaction/T = new()
+	T.target_name = station_account.owner_name
+	T.purpose = "Account creation"
+	T.amount = station_account.money
+	T.date = "2nd April, [gamestory_start_year]"
+	T.time = "11:24"
+	T.source_terminal = "Biesel GalaxyNet Terminal #277"
 
-		//add the account
-		station_account.transaction_log.Add(T)
-		all_money_accounts.Add(station_account)
+	station_account.transaction_log.Add(T)
 
 /proc/create_department_account(department)
 	next_account_number = rand(111111, 999999)
@@ -140,7 +189,8 @@ var/global/initial_station_money = 7500
 	var/datum/money_account/department_account = new()
 	department_account.owner_name = "[department] Account"
 	department_account.account_number = rand(111111, 999999)
-	department_account.remote_access_pin = rand(1111, 111111)
+	department_account.remote_access_pin = rand(1111, 9999)
+	department_account.security_level = 1
 	department_account.money = 500
 
 	//create an entry in the account transaction log for when it was created
@@ -154,6 +204,5 @@ var/global/initial_station_money = 7500
 
 	//add the account
 	department_account.transaction_log.Add(T)
-	all_money_accounts.Add(department_account)
 
 	department_accounts[department] = department_account

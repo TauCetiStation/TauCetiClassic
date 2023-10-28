@@ -65,8 +65,16 @@
 /obj/item/clothing/under/rank/chef
 	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
 	name = "chef's uniform"
-	icon_state = "chef"
+	icon_state = "chef_uniform"
+	item_state = "chef_uniform"
 	flags = ONESIZEFITSALL
+
+//Chef
+/obj/item/clothing/under/rank/chef/sushi
+	name = "sushi master robe"
+	desc = "The one who wears this clearly knows a lot about fish, rice and perfectly understands the moonspeak."
+	icon_state = "sushirobe"
+	item_state = "sushirobe"
 
 
 /obj/item/clothing/under/rank/clown
@@ -115,6 +123,7 @@
 	icon_state = "janitor"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL
+	can_get_wet = FALSE
 
 
 /obj/item/clothing/under/lawyer
@@ -135,11 +144,6 @@
 /obj/item/clothing/under/lawyer/red
 	icon_state = "lawyer_red"
 	item_state = "lawyer_red"
-	flags = ONESIZEFITSALL
-
-/obj/item/clothing/under/lawyer/blue
-	icon_state = "lawyer_blue"
-	item_state = "lawyer_blue"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/bluesuit

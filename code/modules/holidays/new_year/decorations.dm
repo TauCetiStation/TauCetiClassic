@@ -146,7 +146,7 @@
 	to_chat(user, "<span class='notice'>You can place a wrapped item here as a gift to someone special.</span>")
 
 /obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(iswrenching(I))
 		return ..()
 	if(I.flags & ABSTRACT)
 		return

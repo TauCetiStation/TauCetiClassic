@@ -165,7 +165,7 @@
 /datum/dna/gene/basic/noshock
 	name="Shock Immunity"
 	activation_messages=list("Your skin feels electric.")
-	mutation=NO_SHOCK
+	trait_mutation = TRAIT_SHOCKIMMUNE
 	activation_prob=50
 
 /datum/dna/gene/basic/noshock/New()
@@ -246,7 +246,7 @@
 		DSN.occupant = null
 		DSN.icon_state = "scanner_0"
 	var/mob/living/simple_animal/hulk/Monster
-	if(CLUMSY in mutations)
+	if(IsClumsy())
 		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(src))
 	else if(get_species() == UNATHI || prob(23))
 		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(src))

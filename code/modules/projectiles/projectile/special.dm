@@ -99,7 +99,7 @@
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			if(prob(15))
-				M.apply_effect((rand(30,80)),IRRADIATE)
+				irradiate_one_mob(M, rand(30, 80))
 				M.Stun(2)
 				M.Weaken(5)
 				visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", blind_message = "<span class='warning'>You hear the crunching of leaves.</span>")
@@ -190,26 +190,13 @@
 	edge = 0
 
 /obj/item/projectile/anti_singulo/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /obj/singularity))
+	if(istype(target, /obj/singularity/narsie))
+		return
 
-		switch(target.type)
-			if(/obj/singularity)
-				var/obj/singularity/S = target
-				empulse(S, 4, 10)
-				for(var/mob/living/carbon/H in viewers(S))
-					H.apply_effect(20, IRRADIATE, 0)
-				S.deduce_energy(600)
-				return
-			if(/obj/singularity/narsie)
-				for(var/mob/M in player_list)
-					if(!isnewplayer(M))
-						to_chat(M, "<font size='15' color='red'><b>FOOLISH MORTALS! I AM A GOD. HOW CAN YOU KILL A GOD?</b></font>")
-						M.playsound_local(null, 'sound/hallucinations/demons_3.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
-						for(M in range(20))
-							M.gib()
-							return
-			else
-				return
+	if(istype(target, /obj/singularity))
+		empulse(target, 4, 10)
+		qdel(target)
+		return
 
 	return ..()
 
@@ -254,18 +241,6 @@
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
 					if(prob(60))
 						C.make_old()
-						if(bp == H.head)
-							H.update_inv_head()
-						if(bp == H.wear_mask)
-							H.update_inv_wear_mask()
-						if(bp == H.wear_suit)
-							H.update_inv_wear_suit()
-						if(bp == H.w_uniform)
-							H.update_inv_w_uniform()
-						if(bp == H.gloves)
-							H.update_inv_gloves()
-						if(bp == H.shoes)
-							H.update_inv_shoes()
 					visible_message("<span class='warning'>The [target.name] gets absorbed by [H]'s [C.name]!</span>")
 					return
 			else
@@ -340,9 +315,6 @@
 	var/display_celsium = TRUE
 	var/display_fahrenheit = TRUE
 	var/display_kelvin = FALSE
-
-/obj/item/projectile/pyrometer/on_impact(atom/A)
-	return
 
 /obj/item/projectile/pyrometer/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()

@@ -43,8 +43,8 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
 	if(upgraded)
-		component_parts += new /obj/item/weapon/stock_parts/matter_bin/bluespace(null)
-		component_parts += new /obj/item/weapon/stock_parts/manipulator/femto(null)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace(null)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator/nano/pico/femto(null)
 	else
 		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 		component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
@@ -56,6 +56,8 @@
 		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/sleeper/RefreshParts()
+	..()
+
 	var/E
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		E += B.rating

@@ -28,7 +28,7 @@ var/global/list/dyed_item_types = list(
 	DYED_GLOVES = list(
 		DYE_RED = /obj/item/clothing/gloves/red,
 		DYE_ORANGE = /obj/item/clothing/gloves/orange,
-		DYE_YELLOW = list(/obj/item/clothing/gloves/yellow, /obj/item/clothing/gloves/fyellow),
+		DYE_YELLOW = /obj/item/clothing/gloves/yellow,
 		DYE_GREEN = /obj/item/clothing/gloves/green,
 		DYE_BLUE = /obj/item/clothing/gloves/blue,
 		DYE_PURPLE = /obj/item/clothing/gloves/purple,
@@ -219,7 +219,7 @@ var/global/list/dyed_item_types = list(
 	icon_state = "wm_[state][panel]"
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user)
-	/*if(isscrewdriver(W))
+	/*if(isscrewing(W))
 		panel = !panel
 		to_chat(user, "<span class='notice'>you [panel ? </span>"open" : "close"] the [src]'s maintenance panel")*/
 	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
@@ -241,13 +241,13 @@ var/global/list/dyed_item_types = list(
 		else
 			..()
 	else if(istype(W,/obj/item/stack/sheet/hairlesshide) || \
-		istype(W,/obj/item/clothing/under) || \
 		istype(W,/obj/item/clothing/mask) || \
 		istype(W,/obj/item/clothing/head) || \
 		istype(W,/obj/item/clothing/gloves) || \
 		istype(W,/obj/item/clothing/shoes) || \
 		istype(W,/obj/item/clothing/suit) || \
-		istype(W,/obj/item/weapon/bedsheet))
+		istype(W,/obj/item/weapon/bedsheet) || \
+		isunder(W))
 
 		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
 		if ( istype(W,/obj/item/clothing/suit/space ) )

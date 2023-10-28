@@ -80,7 +80,7 @@
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "aY" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater{
@@ -146,7 +146,8 @@
 /obj/machinery/power/apc/largecell{
 	dir = 8;
 	name = "largecell apc left";
-	pixel_x = -28
+	pixel_x = -28;
+	start_charge = 0
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
@@ -391,7 +392,8 @@
 	frequency = 1379;
 	id_tag = "alien_der_inner";
 	locked = 1;
-	name = "Research Ship External Access"
+	name = "Research Ship External Access";
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -420,37 +422,17 @@
 /obj/structure/alien/weeds/node,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
-"Fq" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/grille{
-	destroyed = 1
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/research_ship)
 "Fu" = (
 /obj/machinery/r_n_d/destructive_analyzer,
 /obj/structure/alien/weeds/node,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "FD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/research_ship)
 "FL" = (
@@ -628,9 +610,9 @@
 /turf/environment/space,
 /area/space_structures/research_ship)
 "SX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor,
 /turf/simulated/floor/plating,
@@ -688,7 +670,8 @@
 	frequency = 1379;
 	id_tag = "alien_der_outer";
 	locked = 1;
-	name = "Research Ship External Access"
+	name = "Research Ship External Access";
+	dir = 4
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -883,7 +866,7 @@ Qw
 of
 AC
 ea
-Fq
+FD
 OD
 ab
 UV

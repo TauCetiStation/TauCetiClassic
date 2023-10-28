@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/russian
 	name = "Russian"
-	desc = "For the Motherland!"
+	desc = "За матушку Россию!"
 	icon_state = "russianmelee"
 	icon_living = "russianmelee"
 	icon_dead = "russianmelee_dead"

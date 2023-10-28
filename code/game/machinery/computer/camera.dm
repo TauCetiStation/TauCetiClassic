@@ -32,7 +32,7 @@
 
 	var/camera_cache = null
 
-/obj/machinery/computer/security/atom_init()
+/obj/machinery/computer/security/atom_init(mapload, obj/item/weapon/circuitboard/C)
 	. = ..()
 	// Map name has to start and end with an A-Z character,
 	// and definitely NOT with a square bracket or even a number.
@@ -46,20 +46,21 @@
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
 	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/plane_master/instance = new plane()
-		if(instance.blend_mode_override)
-			instance.blend_mode = instance.blend_mode_override
-		instance.assigned_map = map_name
-		instance.del_on_map_removal = FALSE
-		instance.screen_loc = "[map_name]:CENTER"
-		cam_plane_masters += instance
+		cam_plane_masters += plane
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
+	var/obj/item/weapon/circuitboard/security/board = circuit
+	if(istype(C))
+		var/list/circuitboard_network = board.network
+		if(circuitboard_network.len > 0)
+			network = circuitboard_network
+	else
+		board.network = network
 
 /obj/machinery/computer/security/Destroy()
 	qdel(cam_screen)
-	QDEL_LIST(cam_plane_masters)
+	cam_plane_masters.Cut()
 	qdel(cam_background)
 	return ..()
 
@@ -90,8 +91,19 @@
 			use_power(active_power_usage)
 		// Register map objects
 		user.client.register_map_obj(cam_screen)
+
 		for(var/plane in cam_plane_masters)
-			user.client.register_map_obj(plane)
+			var/atom/movable/screen/plane_master/instance = new plane()
+
+			if(instance.blend_mode_override)
+				instance.blend_mode = instance.blend_mode_override
+			instance.assigned_map = map_name
+			instance.del_on_map_removal = FALSE
+			instance.screen_loc = "[map_name]:CENTER"
+
+			instance.apply_effects(user)
+			user.client.register_map_obj(instance)
+
 		user.client.register_map_obj(cam_background)
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)

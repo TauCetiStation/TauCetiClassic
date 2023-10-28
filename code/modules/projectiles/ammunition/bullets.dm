@@ -1,105 +1,96 @@
 /obj/item/ammo_casing/a357
 	name = "357. bullet"
-	desc = "A .357 bullet casing."
+	icon_state = "casing_357"
+	desc = "Патрон от пули калибра .357."
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/revbullet
 	m_amt = 1000
 
 /obj/item/ammo_casing/a50
-	desc = "A .50AE bullet casing."
+	desc = "Патрон от пули калибра .50АЕ."
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet
 
 /obj/item/ammo_casing/a50/weakened
 	projectile_type = /obj/item/projectile/bullet/midbullet3
 
-/obj/item/ammo_casing/a418
-	desc = "A .418 bullet casing."
-	caliber = "357"
-	projectile_type = /obj/item/projectile/bullet/suffocationbullet
-
-/obj/item/ammo_casing/a666
-	desc = "A .666 bullet casing."
-	caliber = "357"
-	projectile_type = /obj/item/projectile/bullet/cyanideround
-
 /obj/item/ammo_casing/c38
-	desc = "A .38 bullet casing."
+	desc = "Патрон от пули 38-го калибра."
+	icon_state = "casing_38_rubber"
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
 	m_amt = 200
 
 /obj/item/ammo_casing/c9mm
-	desc = "A 9mm bullet casing."
+	desc = "Патрон от пули калибра 9мм."
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 	m_amt = 300
 
 /obj/item/ammo_casing/c9mmr
-	desc = "A 9mm rubber bullet casing."
-	icon_state = "st-casing"
+	desc = "Патрон от резиновой пули калибра 9мм."
+	icon_state = "casing_rubber"
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
 	m_amt = 100
 
 /obj/item/ammo_casing/c45
-	desc = "A .45 bullet casing."
+	desc = "Патрон от пули 45-го калибра."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg
 	m_amt = 400
 
 /obj/item/ammo_casing/c45hp
-	desc = "A .45 HP bullet casing."
+	desc = "Патрон от пули калибра .45 HP."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_hp
 
 /obj/item/ammo_casing/c45hv
-	desc = "A .45 HV bullet casing."
+	desc = "Патрон от пули калибра .45 HV."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_hv
 
 /obj/item/ammo_casing/c45imp
-	desc = "A .45 IMP bullet casing."
+	desc = "Патрон от пули калибра .45 IMP."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_imp
 
 /obj/item/ammo_casing/c45r
-	desc = "A .45 rubber bullet casing."
-	icon_state = "st-casing"
+	desc = "Патрон от резиновой пули 45-го калибра."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
 	m_amt = 200
 
 /obj/item/ammo_casing/a12mm
-	desc = "A 12mm bullet casing."
+	desc = "Патрон от пули калибра 12мм."
 	caliber = "12mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 
 /obj/item/ammo_casing/shotgun
 	name = "shotgun slug"
-	desc = "A 12 gauge slug."
+	desc = "Патрон от 12-го калибра типа пуля."
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet/slug
 	m_amt = 3750
 
 /obj/item/ammo_casing/shotgun/buckshot
-	name = "shotgun shell"
-	desc = "A 12 gauge shell."
+	name = "buckshot shell"
+	desc = "Патрон от 12-го калибра типа картечь."
 	icon_state = "gshell"
-	pellets = 10
+	pellets = 7
 	projectile_type = /obj/item/projectile/bullet/pellet
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
-	desc = "A weak beanbag shell."
+	desc = "Патрон от 12-го калибра типа травматический."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/beanbag
 	m_amt = 300
 
 /obj/item/ammo_casing/shotgun/stunshot
 	name = "stun shell"
-	desc = "An electrified, stunning taser shell for shotguns."
+	desc = "Патрон от 12-го калибра типа электрошок."
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
 	pellets = 5
@@ -107,25 +98,25 @@
 
 /obj/item/ammo_casing/shotgun/incendiary
 	name = "incendiary shell"
-	desc = "An incendiary shell."
+	desc = "Патрон от 12-го калибра типа зажигательный."
 	icon_state = "ishell"
 	projectile_type = /obj/item/projectile/bullet/incendiary/buckshot
 	pellets = 12
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun darts"
-	desc = "A dart for use in shotguns."
+	desc = "Патрон от 12-го калибра типа дротик."
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/energy/dart
 	m_amt = 2500
 
 /obj/item/ammo_casing/a762
-	desc = "A 7.62mm bullet casing."
+	desc = "Патрон пули калибра 7.62мм."
 	caliber = "a762"
 	projectile_type = /obj/item/projectile/bullet/a762
 
 /obj/item/ammo_casing/a145
-	desc = "A 14.5mm shell."
+	desc = "Патрон пули 14,5мм."
 	icon_state = "lcasing"
 	caliber = "14.5mm"
 	projectile_type = /obj/item/projectile/bullet/heavy/a145
@@ -133,34 +124,41 @@
 
 /obj/item/ammo_casing/r4046
 	name = "40x46mm grenade"
-	desc = "A 40x46mm grenade."
+	desc = "Граната калибра 40х46мм."
 	icon_state = "40x46"
 	caliber = "40x46"
 	projectile_type = /obj/item/projectile/bullet/grenade/r4046
 
 
 /obj/item/ammo_casing/r4046/explosive
-	desc = "A 40x46mm grenade (Exp)."
+	desc = "Граната калибра 40х46мм (Взрывная)."
 	icon_state = "expl40x46"
 	projectile_type = /obj/item/projectile/bullet/grenade/explosive
 
+/obj/item/ammo_casing/r4046/explosive/light
+	name = "30mm grenade"
+	desc = "Граната калибра 30мм (Взрывная)."
+	icon_state = "expl30"
+	caliber = "30"
+	projectile_type = /obj/item/projectile/bullet/grenade/explosive/light
+
 /obj/item/ammo_casing/r4046/chem/teargas
-	desc = "A 40x46mm grenade (teargas)."
+	desc = "Граната калибра 40х46мм (Слезоточивая)."
 	icon_state = "gas40x46"
 	projectile_type = /obj/item/projectile/bullet/chem/teargas
 
 /obj/item/ammo_casing/r4046/chem/EMP
-	desc = "A 40x46mm grenade (EMP)."
+	desc = "Граната калибра 40х46мм (ЭМИ)."
 	icon_state = "emp40x46"
 	projectile_type = /obj/item/projectile/bullet/chem/EMP
 
 /obj/item/ammo_casing/r4046/chem/Exp
-	desc = "A 40x46mm grenade (Exp)."
+	desc = "Граната калибра 40х46мм (Взрывная)."
 	icon_state = "expl40x46"
 	projectile_type = /obj/item/projectile/bullet/chem/Exp
 
 /obj/item/ammo_casing/caseless
-	desc = "A caseless bullet casing."
+	desc = "Безоболочечная гильза."
 
 /obj/item/ammo_casing/caseless/fire(atom/target, mob/living/user, params, distro, quiet)
 	if (..())
@@ -170,76 +168,71 @@
 		return 0
 
 /obj/item/ammo_casing/caseless/a75
-	desc = "A .75 bullet casing."
+	desc = "Патрон от пули калибра .75."
 	caliber = "75"
 	projectile_type = /obj/item/projectile/bullet/gyro
 
 /obj/item/ammo_casing/caseless/rocket
 	name = "HE rocket shell"
-	desc = "A high explosive designed to be fired from a launcher."
+	desc = "Ракета, предназначенная для стрельбы из пусковой установки."
 	icon_state = "rocket-he"
 	projectile_type = /obj/item/projectile/missile
 	caliber = "rocket"
 
 /obj/item/ammo_casing/caseless/rocket/emp
 	name = "EMP rocket shell"
-	desc = "A EMP rocket designed to be fired from a launcher."
+	desc = "Ракета ЭМИ, предназначенная для стрельбы из пусковой установки."
 	icon_state = "rocket-emp"
 	projectile_type = /obj/item/projectile/missile/emp
 
 /obj/item/ammo_casing/caseless/rocket/anti_singulo
 	name = "AS rocket shell"
-	desc = "A special type of rocket designed to destroy gravitational singularities via bluespace manipulation."
+	desc = "Ракета особого типа, предназначенная для разрушения гравитационных сингулярностей с помощью манипуляций с блюспейс пространством."
 	icon_state = "rocket-as"
 	projectile_type = /obj/item/projectile/anti_singulo
 	caliber = "rocket_as"
 
 /obj/item/ammo_casing/chameleon
 	name = "chameleon bullets"
-	desc = "A set of bullets for the Chameleon Gun."
+	desc = "Патроны для пистолета-хамелеона."
 	projectile_type = /obj/item/projectile/bullet/chameleon
 	caliber = ".45"
 
 /obj/item/ammo_casing/a3006
-	desc = "A .30-06 bullet casing."
+	desc = "Патрон от пули калибра 30-06мм."
 	caliber = "a3006"
 	projectile_type = /obj/item/projectile/bullet/midbullet3
 
-/obj/item/ammo_casing/flare
-	desc = "A flare for flare gun."
-	caliber = "flare"
-	icon_state = "flare"
-	projectile_type = /obj/item/projectile/bullet/flare
-
 /obj/item/ammo_casing/c38m
-	desc = "A .38 bullet casing."
+	desc = "Патрон от пули калибра .38."
+	icon_state = "casing_38"
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 	m_amt = 400
 
-/obj/item/ammo_box/c38m
-	name = "speedloader (.38)"
-	icon_state = "38"
-	ammo_type = /obj/item/ammo_casing/c38m
-	max_ammo = 6
-	multiple_sprites = 1
-
 /obj/item/ammo_casing/a556
-	desc = "A 5.56mm bullet casing."
+	desc = "Патрон от пули калибра 5.56мм."
 	caliber = "5.56mm"
 	projectile_type = /obj/item/projectile/bullet/rifle2
 
 /obj/item/ammo_casing/a556i
-	desc = "A 5.56mm incendiary bullet casing."
+	desc = "Патрон для зажигательной пули калибра 5.56 мм."
 	caliber = "5.56mm"
+	icon_state = "casing_incendiary"
 	projectile_type = /obj/item/projectile/bullet/incendiary
 
 /obj/item/ammo_casing/a74
-	desc = "A 7.74mm bullet casing."
+	desc = "Патрон от пули калибра 7.74мм."
 	caliber = "7.74mm"
 	projectile_type = /obj/item/projectile/bullet/rifle3
 
 /obj/item/ammo_casing/drozd127
-	desc = "A 12.7 bullet casing."
+	desc = "Патрон от пули калибра 12.7мм."
 	caliber = "12.7mm"
 	projectile_type = /obj/item/projectile/bullet/rifle2
+
+/obj/item/ammo_casing/pulserifle
+	desc = "Патрон от пули калибра 10х24."
+	caliber = "10x24"
+	icon_state = "casing_1024"
+	projectile_type = /obj/item/projectile/bullet/pulserifle

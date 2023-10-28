@@ -53,7 +53,7 @@
 			qdel(src)
 			return
 
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use_tool(src, user, 20, volume = 50))
@@ -97,7 +97,7 @@
 	if(new_item_type)
 		find_type = new_item_type
 	else
-		find_type = rand(1,37) // update this when you add new find types
+		find_type = rand(1,38) // update this when you add new find types
 
 	var/item_type = "object"
 	icon_state = "unknown[rand(1,4)]"
@@ -432,9 +432,8 @@
 		if(32)
 			//humanoid remains
 			apply_prefix = 0
+			new_item = new /obj/effect/decal/remains/human(loc)
 			item_type = "humanoid [pick("remains","skeleton")]"
-			icon = 'icons/effects/blood.dmi'
-			icon_state = "remains"
 			additional_desc = pick("They appear almost human.",\
 			"They are contorted in a most gruesome way.",\
 			"They look almost peaceful.",\
@@ -447,9 +446,9 @@
 		if(33)
 			//robot remains
 			apply_prefix = 0
+			new_item = new /obj/effect/decal/remains/robot(loc)
 			item_type = "[pick("mechanical","robotic","cyborg")] [pick("remains","chassis","debris")]"
 			icon = 'icons/mob/robots.dmi'
-			icon_state = "gib[rand(1,6)]"
 			additional_desc = pick("Almost mistakeable for the remains of a modern cyborg.",\
 			"They are barely recognisable as anything other than a pile of waste metals.",\
 			"It looks like the battered remains of an ancient robot chassis.",\
@@ -462,9 +461,9 @@
 		if(34)
 			//xenos remains
 			apply_prefix = 0
+			new_item = new /obj/effect/decal/remains/xeno(loc)
 			item_type = "alien [pick("remains","skeleton")]"
 			icon = 'icons/effects/blood.dmi'
-			icon_state = "remainsxeno"
 			additional_desc = pick("It looks vaguely reptilian, but with more teeth.",\
 			"They are faintly unsettling.",\
 			"There is a faint aura of unease about them.",\
@@ -492,6 +491,13 @@
 		if(37)
 			//relic water bottle
 			new_item = new /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic(loc)
+
+		if(38)
+			var/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic/G = new /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic(loc)
+			G.name = "purple mossy gourd"
+			G.desc = "Though it is strange that the gourd's medicinal waters refill automatically, the seeds within may hold the secret to how it works."
+			G.restore_reagent = pick("paracetamol", "tricordrazine", "hyperzine")
+			new_item = G
 
 	var/decorations = ""
 	if(apply_material_decorations)

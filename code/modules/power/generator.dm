@@ -187,7 +187,7 @@
 	add_avail(lastgen)
 
 /obj/machinery/power/generator/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>")
 		lastgenlev = 0

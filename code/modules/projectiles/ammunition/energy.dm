@@ -1,6 +1,6 @@
 /obj/item/ammo_casing/energy
 	name = "energy weapon lens"
-	desc = "The part of the gun that makes the laser go pew."
+	desc = "Часть оружия, из которой выстреливает лазер."
 	caliber = "energy"
 	projectile_type = /obj/item/projectile/energy
 	var/e_cost = 100 //The amount of energy a cell needs to expend to create this shot.
@@ -24,6 +24,16 @@
 	pellets = 5
 	variance = 0.8
 	select_name = "scatter"
+
+/obj/item/ammo_casing/energy/laser/cutter
+	e_cost = 100
+	select_name = "safe mode"
+	projectile_type = /obj/item/projectile/beam/plasma_cutter
+
+/obj/item/ammo_casing/energy/laser/cutter/emagged
+	projectile_type = /obj/item/projectile/beam/plasma_cutter/emagged
+	select_name = "combat mode"
+	e_cost = 1000
 
 /obj/item/ammo_casing/energy/laser/heavy
 	projectile_type = /obj/item/projectile/beam/heavylaser

@@ -64,6 +64,8 @@ var/global/list/frozen_items = list()
 			return
 
 		var/obj/item/I = input(usr, "Please choose which object to retrieve.","Object recovery",null) as obj in frozen_items
+		if(!can_still_interact_with(usr))
+			return
 
 		if(!I || frozen_items.len == 0)
 			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
@@ -197,7 +199,7 @@ var/global/list/frozen_items = list()
 
 	O.target = null
 
-	addtimer(CALLBACK(src, .proc/delete_objective, O), 1) //This should ideally fire after the occupant is deleted.
+	addtimer(CALLBACK(src, PROC_REF(delete_objective), O), 1) //This should ideally fire after the occupant is deleted.
 
 //Lifted from Unity stasis.dm and refactored. ~Zuhayr
 /obj/machinery/cryopod/process()

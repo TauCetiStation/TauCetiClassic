@@ -125,9 +125,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user)
-	if(istool(W))
-		if(process_tool_hit(W,user))
-			return
+	if(process_tool_hit(W,user))
+		return
 	..()
 	return
 
@@ -203,14 +202,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
-			if(iswrench(O))
+			if(iswrenching(O))
 				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
-			if(iswrench(O))
+			if(iswrenching(O))
 				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
@@ -223,16 +222,16 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 						"You add some wires.")
 					temp_state++
 		if(2)
-			if(iswirecutter(O))//TODO:Shock user if its on?
+			if(iscutter(O))//TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
 					"You remove some wires.")
 				temp_state--
-			else if(isscrewdriver(O))
+			else if(isscrewing(O))
 				user.visible_message("[user.name] closes the [src.name]'s access panel.", \
 					"You close the access panel.")
 				temp_state++
 		if(3)
-			if(isscrewdriver(O))
+			if(isscrewing(O))
 				user.visible_message("[user.name] opens the [src.name]'s access panel.", \
 					"You open the access panel.")
 				temp_state--
@@ -306,9 +305,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 
 /obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user)
-	if(istool(W))
-		if(process_tool_hit(W,user))
-			return
+	if(process_tool_hit(W,user))
+		return
 	..()
 	return
 
@@ -341,14 +339,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	var/temp_state = src.construction_state
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
-			if(iswrench(O))
+			if(iswrenching(O))
 				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
-			if(iswrench(O))
+			if(iswrenching(O))
 				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
@@ -360,16 +358,16 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 						"You add some wires.")
 					temp_state++
 		if(2)
-			if(iswirecutter(O))//TODO:Shock user if its on?
+			if(iscutter(O))//TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
 					"You remove some wires.")
 				temp_state--
-			else if(isscrewdriver(O))
+			else if(isscrewing(O))
 				user.visible_message("[user.name] closes the [src.name]'s access panel.", \
 					"You close the access panel.")
 				temp_state++
 		if(3)
-			if(isscrewdriver(O))
+			if(isscrewing(O))
 				user.visible_message("[user.name] opens the [src.name]'s access panel.", \
 					"You open the access panel.")
 				temp_state--

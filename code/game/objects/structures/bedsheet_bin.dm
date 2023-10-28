@@ -130,30 +130,6 @@ LINEN BINS
 	desc = "A special fabric enchanted with magic so you can have an enchanted night.  It even glows!"
 	icon_state = "sheetwiz"
 
-/obj/item/weapon/bedsheet/wiz/atom_init()
-	. = ..()
-
-	var/obj/effect/effect/forcefield/F = new
-	AddComponent(/datum/component/forcefield, "wizard field", 20, 3 SECONDS, 5 SECONDS, F, TRUE, TRUE)
-
-/obj/item/weapon/bedsheet/wiz/proc/activate(mob/living/user)
-	if(iswizard(user) || iswizardapprentice(user))
-		SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
-
-/obj/item/weapon/bedsheet/wiz/proc/deactivate(mob/living/user)
-	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
-
-/obj/item/weapon/bedsheet/wiz/equipped(mob/living/user, slot)
-	. = ..()
-
-	if(slot == SLOT_BACK)
-		activate(user)
-
-/obj/item/weapon/bedsheet/wiz/dropped(mob/living/user)
-	. = ..()
-	if(slot_equipped == SLOT_BACK)
-		deactivate(user)
-
 /obj/item/weapon/bedsheet/gar
 	name = "gar bedsheet"
 	desc = "A surprisingly soft gar bedsheet."
@@ -184,11 +160,12 @@ LINEN BINS
 
 
 /obj/structure/bedsheetbin/update_icon()
-	switch(amount)
-		if(0)				icon_state = "linenbin-empty"
-		if(1 to amount / 2)	icon_state = "linenbin-half"
-		else				icon_state = "linenbin-full"
-
+	if(amount == 0)
+		icon_state = "linenbin-empty"
+	else if(amount < initial(amount) / 2)
+		icon_state = "linenbin-half"
+	else
+		icon_state = "linenbin-full"
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/bedsheet))

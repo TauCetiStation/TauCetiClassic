@@ -39,6 +39,22 @@
 /obj/item/weapon/storage/secure/attack_paw(mob/user)
 	return attack_hand(user)
 
+/obj/item/weapon/storage/secure/AltClick(mob/user)
+	add_fingerprint(user)
+	if(!try_open(user))
+		tgui_interact(user)
+
+/obj/item/weapon/storage/secure/try_open(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(locked)
+		return FALSE
+
+	open(user)
+	return TRUE
+
+
 /obj/item/weapon/storage/secure/attackby(obj/item/I, mob/user, params)
 	if(locked)
 		if(istype(I, /obj/item/weapon/melee/energy/blade) && !emagged)
@@ -57,12 +73,12 @@
 			to_chat(user, "You slice through the lock on [src].")
 			return
 
-		if (isscrewdriver(I))
+		if (isscrewing(I))
 			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50))
 				open = !open
 				to_chat(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
-		if ((ismultitool(I)) && (src.open == 1)&& (!src.l_hacking))
+		if ((ispulsing(I)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='warning'>Now attempting to reset internal memory, please hold.</span>", SHOWMSG_ALWAYS)
 			src.l_hacking = 1
 			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50))
@@ -203,10 +219,7 @@
 	else
 		item_state = "secure-r"
 
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_l_hand()
-		M.update_inv_r_hand()
+	update_inv_mob()
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/weapon/storage/secure/briefcase/syndie

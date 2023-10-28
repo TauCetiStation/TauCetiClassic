@@ -14,9 +14,9 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "ad" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
@@ -75,10 +75,11 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/robostatoin)
 "ap" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "aq" = (
 /obj/machinery/light/small{
@@ -100,7 +101,9 @@
 	},
 /area/space_structures/robostatoin)
 "au" = (
-/obj/machinery/door/airlock/clown,
+/obj/machinery/door/airlock/clown{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "av" = (
@@ -187,10 +190,11 @@
 /area/space_structures/robostatoin)
 "aL" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "aM" = (
 /obj/structure/table/reinforced,
@@ -199,10 +203,11 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "aN" = (
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "aO" = (
 /obj/structure/closet/lasertag/blue,
@@ -262,10 +267,11 @@
 /area/space_structures/robostatoin)
 "ba" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bb" = (
 /obj/effect/decal/remains/human,
@@ -341,7 +347,7 @@
 /area/space_structures/robostatoin)
 "br" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/stock_parts/micro_laser/quadultra,
+/obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra,
 /obj/item/weapon/stock_parts/manipulator,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
@@ -359,9 +365,10 @@
 "bu" = (
 /obj/item/mecha_parts/chassis/honker,
 /obj/structure/kitchenspike,
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bv" = (
 /obj/structure/table/reinforced,
@@ -428,7 +435,7 @@
 /area/space_structures/robostatoin)
 "bI" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/stock_parts/matter_bin/super,
+/obj/item/weapon/stock_parts/matter_bin/adv/super,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bJ" = (
@@ -467,9 +474,9 @@
 	},
 /area/space_structures/robostatoin)
 "bR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /turf/environment/space,
@@ -634,8 +641,10 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/robostatoin)
 "cu" = (
-/obj/machinery/door/airlock/external,
 /obj/item/weapon/bananapeel,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cv" = (
@@ -651,11 +660,12 @@
 /area/space_structures/robostatoin)
 "cx" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/barricade/wooden,
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /turf/environment/space,
 /area/space_structures/robostatoin)
 "cy" = (
@@ -678,17 +688,18 @@
 /area/space_structures/robostatoin)
 "cE" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/barricade/wooden,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cF" = (
 /mob/living/simple_animal/hostile/hivebot/range,
@@ -746,14 +757,15 @@
 /area/space_structures/robostatoin)
 "cO" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/barricade/wooden,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cQ" = (
 /mob/living/simple_animal/hostile/hivebot/strong,
@@ -775,57 +787,59 @@
 /area/space_structures/robostatoin)
 "cU" = (
 /obj/item/mecha_parts/mecha_equipment/weapon/honker,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebot";
-	nitrogen = 0.01;
-	oxygen = 0.01
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cV" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/barricade/wooden,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cW" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/barricade/wooden,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cX" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/barricade/wooden,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cZ" = (
 /turf/simulated/floor{
@@ -852,7 +866,9 @@
 	},
 /area/space_structures/robostatoin)
 "de" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "dg" = (
@@ -866,15 +882,16 @@
 /area/space_structures/robostatoin)
 "di" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/barricade/wooden,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "dk" = (
 /turf/simulated/shuttle/wall{
@@ -915,15 +932,16 @@
 /area/space_structures/robostatoin)
 "dI" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/barricade/wooden,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "en" = (
 /obj/machinery/porta_turret/stationary{
@@ -965,13 +983,13 @@
 /area/space_structures/robostatoin)
 "Cw" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -1007,6 +1025,18 @@
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
+/area/space_structures/robostatoin)
+"OQ" = (
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/robostatoin)
+"OV" = (
+/obj/machinery/door/airlock/hatch{
+	dir = 4
+	},
+/turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "Sx" = (
 /obj/structure/stool/bed/psych,
@@ -1508,8 +1538,8 @@ aC
 ad
 ae
 ae
-aX
-aX
+OV
+OV
 ae
 aa
 aa
@@ -1586,8 +1616,8 @@ aa
 aa
 aa
 ae
-aX
-aX
+OV
+OV
 ae
 ad
 ad
@@ -1713,7 +1743,7 @@ ae
 ae
 ae
 ae
-aX
+OV
 aS
 ae
 ae
@@ -1985,7 +2015,7 @@ ae
 ae
 ae
 ae
-aX
+OV
 ae
 ae
 ae
@@ -2258,7 +2288,7 @@ ae
 ae
 ae
 ae
-aP
+OQ
 ae
 ae
 ae

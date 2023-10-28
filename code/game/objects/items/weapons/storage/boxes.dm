@@ -525,8 +525,10 @@
 
 /obj/item/weapon/storage/box/lights/mixed/atom_init()
 	. = ..()
-	for(var/i in 1 to 14)
+	for(var/i in 1 to 7)
 		new /obj/item/weapon/light/tube(src)
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/light/tube/smart(src)
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/light/bulb(src)
 
@@ -720,7 +722,7 @@
 /obj/item/weapon/storage/box/rare_seeds
 	name = "granny's gift"
 	desc = "XOXO! - Granny"
-	startswith = list(/obj/item/seeds/gelthi = 1, /obj/item/seeds/vale = 1, /obj/item/seeds/surik = 1, /obj/item/seeds/blackberry = 1, /obj/item/seeds/amauri = 1, /obj/item/seeds/jurlmah = 1)
+	startswith = list(/obj/item/seeds/gourdseed = 1, /obj/item/seeds/gelthi = 1, /obj/item/seeds/vale = 1, /obj/item/seeds/surik = 1, /obj/item/seeds/blackberry = 1, /obj/item/seeds/amauri = 1, /obj/item/seeds/jurlmah = 1)
 
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box

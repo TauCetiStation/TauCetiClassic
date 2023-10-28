@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hulk
 	name = "Hulk"
 	real_name = "Hulk"
-	desc = ""
+	desc = "КРУШИТЬ!"
 	icon = 'icons/mob/hulk.dmi'
 	icon_state = "hulk"
 	icon_living = "hulk"
@@ -10,8 +10,8 @@
 	immune_to_ssd = 1
 	w_class = SIZE_MASSIVE
 
-	speak_emote = list("roars")
-	emote_hear = list("roars")
+	speak_emote = list("рычит")
+	emote_hear = list("рычит")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
 	response_harm   = "punches"
@@ -45,9 +45,14 @@
 	has_arm = TRUE
 	has_leg = TRUE
 
+	can_point = TRUE
+
 /mob/living/simple_animal/hulk/atom_init()
 	attack_sound = SOUNDIN_PUNCH_HEAVY
 	. = ..()
+
+/mob/living/simple_animal/hulk/blob_act()
+	adjustBruteLoss(120) //+- 40 damage for hulks
 
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
@@ -58,7 +63,7 @@
 /mob/living/simple_animal/hulk/unathi
 	name = "Zilla"
 	real_name = "Zilla"
-	desc = ""
+	desc = "Сиквел?"
 	icon = 'icons/mob/hulk_zilla.dmi'
 	icon_state = "zilla"
 	icon_living = "zilla"
@@ -83,7 +88,7 @@
 /mob/living/simple_animal/hulk/Clowan
 	name = "Champion of Honk"
 	real_name = "Champion of Honk"
-	desc = ""
+	desc = "Боже... Мега-шутка!"
 	icon = 'icons/mob/GyperHonk.dmi'
 	icon_state = "Clowan"
 	icon_living = "Clowan"
@@ -110,7 +115,7 @@
 
 /mob/living/simple_animal/hulk/unathi/Login()
 	..()
-	to_chat(src, "<span class='notice'>Can eat limbs (left mouse button).</span>")
+	to_chat(src, "<span class='notice'>Вы можете есть конечности (Левая кнопка мыши).</span>")
 
 /mob/living/simple_animal/hulk/Life()
 	if(health < 1)
@@ -247,7 +252,7 @@
 
 	if(!. || moving_diagonally)
 		return .
-	
+
 	var/turf/T = loc
 
 	if(isturf(T) && !(T.flags & NOSTEPSOUND) && !lying)
@@ -261,7 +266,7 @@
 		playsound(target, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER, 75)
 		return 0
 	else
-		say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+		say(pick("РААААААААААААА!", "ХННННННННННААА!", "ГРАААААААААААААААХ!", "КРУШИИИИИИИИИИТЬ!", "АААААААААААААР!" ))
 		visible_message("<span class='userdanger'>[src] has destroyed some mechanic in the [target]!</span>",\
 		"<span class='userdanger'>You destroy some mechanic in the [target] door, which holds it in place!</span>",\
 		"<span class='userdanger'>You feel some weird vibration!</span>")

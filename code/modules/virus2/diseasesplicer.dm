@@ -11,8 +11,8 @@
 	var/scanning = 0
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO, /datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
-/obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
-	if(isscrewdriver(I))
+/obj/machinery/computer/diseasesplicer/attackby(obj/item/weapon/I, mob/user)
+	if(isscrewing(I))
 		return ..()
 
 	else if(istype(I,/obj/item/weapon/virusdish))

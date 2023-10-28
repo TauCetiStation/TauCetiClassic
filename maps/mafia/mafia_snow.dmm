@@ -42,7 +42,8 @@
 /area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/mafia,
-/turf/unsimulated/wall/fakeglass,
+/obj/structure/window/fulltile/reinforced/indestructible,
+/turf/unsimulated/floor,
 /area/mafia)
 "t" = (
 /turf/unsimulated/floor/snow{
@@ -58,6 +59,15 @@
 "v" = (
 /obj/mafia_game_board,
 /turf/unsimulated/floor/snow,
+/area/mafia)
+"D" = (
+/obj/structure/mineral_door/silver{
+	dir = 4
+	},
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
 /area/mafia)
 "H" = (
 /obj/structure/closet,
@@ -118,7 +128,8 @@
 "S" = (
 /obj/machinery/door/poddoor/mafia,
 /obj/item/decoration/snowflake,
-/turf/unsimulated/wall/fakeglass,
+/obj/structure/window/fulltile/reinforced/indestructible,
+/turf/unsimulated/floor,
 /area/mafia)
 "T" = (
 /obj/structure/closet,
@@ -251,9 +262,9 @@ i
 i
 b
 b
-j
+D
 b
-j
+D
 b
 b
 i
@@ -273,7 +284,7 @@ K
 i
 b
 b
-j
+D
 b
 I
 X
@@ -281,7 +292,7 @@ b
 X
 J
 b
-j
+D
 b
 b
 L
@@ -573,7 +584,7 @@ i
 i
 b
 b
-j
+D
 b
 P
 X
@@ -581,7 +592,7 @@ b
 X
 T
 b
-j
+D
 b
 b
 i
@@ -601,9 +612,9 @@ i
 L
 b
 b
-j
+D
 b
-j
+D
 b
 b
 i

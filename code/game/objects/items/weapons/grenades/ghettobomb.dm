@@ -70,7 +70,7 @@
 	active = 1
 	update_icon()
 	playsound(src, activate_sound, VOL_EFFECTS_MASTER)
-	addtimer(CALLBACK(src, .proc/prime), det_time)
+	addtimer(CALLBACK(src, PROC_REF(prime)), det_time)
 
 /obj/item/weapon/grenade/cancasing/prime() // Blowing that can up
 	//update_mob()
@@ -120,7 +120,7 @@
 		var/obj/item/weapon/lighter/O = I
 		if(O.lit)
 			is_W_lit = TRUE
-	else if(iswelder(I))
+	else if(iswelding(I))
 		var/obj/item/weapon/weldingtool/O = I
 		if(O.isOn())
 			is_W_lit = TRUE

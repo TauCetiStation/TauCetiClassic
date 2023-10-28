@@ -79,7 +79,7 @@
  * Invokes async toggle artifact
  */
 /datum/artifact_effect/proc/ToggleActivate(reveal_toggle = TRUE)
-	INVOKE_ASYNC(src, .proc/toggle_artifact_effect, reveal_toggle)
+	INVOKE_ASYNC(src, PROC_REF(toggle_artifact_effect), reveal_toggle)
 
 /**
  * Stops/starts processing, updates artifact icon, displays visible_message

@@ -91,7 +91,7 @@
 		data = "[infolinks ? info_links : info][stamp_text]"
 
 	if(view)
-		var/datum/browser/popup = new(user, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
+		var/datum/browser/popup = new(user, "window=[name]", "[name]", 425, 600, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(data)
 		popup.open()
 
@@ -103,7 +103,7 @@
 	set src in usr
 
 
-	if((CLUMSY in usr.mutations) && prob(50))
+	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H) && !H.species.flags[NO_MINORCUTS])
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
@@ -118,7 +118,7 @@
 	set category = "Object"
 	set src in usr
 
-	if((CLUMSY in usr.mutations) && prob(50))
+	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H) && !H.species.flags[NO_MINORCUTS])
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
@@ -540,16 +540,10 @@
 				h_user.put_in_l_hand(B)
 			else if (h_user.l_store == src)
 				h_user.drop_from_inventory(src)
-				B.loc = h_user
-				B.plane = ABOVE_HUD_PLANE
-				h_user.l_store = B
-				h_user.update_inv_pockets()
+				h_user.equip_to_slot_if_possible(B, SLOT_L_STORE)
 			else if (h_user.r_store == src)
 				h_user.drop_from_inventory(src)
-				B.loc = h_user
-				B.plane = ABOVE_HUD_PLANE
-				h_user.r_store = B
-				h_user.update_inv_pockets()
+				h_user.equip_to_slot_if_possible(B, SLOT_R_STORE)
 			else if (h_user.head == src)
 				h_user.u_equip(src)
 				h_user.put_in_hands(B)
@@ -671,6 +665,11 @@
 /obj/item/weapon/paper/brig_arsenal
 	name = "Armory Inventory"
 	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>3 Riot Sets:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Helmet<li>Riot Suit</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>8 Security Masks<br>3 Pistols Glock 17<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>3 Energy Guns<br>2 Ion Rifle<br>3 Laser rifles <br>1 L10-c Carbine<br>1 104-sass Shotgun<br>2 Plasma weapon battery packs<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 teargas, 7 rounds)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 m79 Grenade Box (40x46 EMP, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
+
+/obj/item/weapon/paper/brig_arsenal/atom_init()
+	. = ..()
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY)|| HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+		info = "A program is underway to re-equip NanoTrasen security. The current list has not yet been compiled, we apologize."
 
 /obj/item/weapon/paper/firing_range
 	name = "Firing Range Instructions"
@@ -856,7 +855,7 @@
 	</ul>
 	<h2>Процедура</h2>
 	<ol>
-	<li>Place patient on CMF manipulation table</li>
+	<li>Поместите пациента на CMF manipulation table</li>
 	<li>Спросите пациента о его знаниях и навыках. Проверьте показатели IQ и MDI</li>
 	<li>Вставьте картридж в стол</li>
 	<li>Распакуйте картридж (процедура не является обратимой)</li>
@@ -935,3 +934,55 @@ var/global/list/contributor_names
 	S.stamp_paper(src, "CentComm DPA")
 
 	update_icon()
+
+/obj/item/weapon/paper/psc
+	name = "Разрешение на работу ЧОП"
+	info = {"<h1 style="text-align: center;"Разрешение на работу ЧОП></h1>
+	<p>Данный документ подтверждает, что держатель документа (далее Сотрудник) является сотрудником частного охранного предприятия, нанятого для охраны активов Карго.</p>
+	<p>Сотрудник имеет право на владение и использование пистолета W&J PP и/или флешера и средств личной защиты в целях охраны активов Карго.</p>
+	<p>При неправомерном применении спецсредств офицеры охраны имеют право изъять пистолет, флешер и средства личной защиты.</p>"}
+
+/obj/item/weapon/paper/psc/atom_init()
+	. = ..()
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm Logistics Department")
+
+/obj/item/weapon/paper/depacc
+	name = "Реквизиты счёта отдела "
+	var/department_name = ""
+
+/obj/item/weapon/paper/depacc/atom_init()
+	. = ..()
+	if(!department_name)
+		qdel(src)
+		return
+
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
+
+/obj/item/weapon/paper/depacc/Destroy()
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+	return ..()
+
+/obj/item/weapon/paper/depacc/proc/on_round_start()
+	var/datum/money_account/dep = global.department_accounts[department_name]
+	if(!dep)
+		qdel(src)
+		return
+
+	info = {"<h2>Бухгалтерия Центрального Коммитета «ЦК»</h2>
+	<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">[current_date_string]</blockquote>
+	<table align="center" border="3" cellpadding="10" width="100%">
+  		<caption><b><big>Реквизиты счёта отдела</big></b></caption>
+  		<tr><td>Отдел:</td><td>«[department_name]»</td></tr>
+  		<tr><td>Номер счёта:</td><td>№ [dep.account_number]</td></tr>
+  		<tr><td>Пин-код:</td><td>PIN: [dep.remote_access_pin]</td></tr>
+ 	 	<tr><td>Бюджет:</td><td>[dep.money] $</td></tr>
+	</table>
+	<hr>"}
+
+	var/obj/item/weapon/stamp/centcomm/Stamp1 = new
+	Stamp1.stamp_paper(src, "CentComm")
+	var/obj/item/weapon/stamp/copy_correct/Stamp2 = new
+	Stamp2.stamp_paper(src)
+
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)

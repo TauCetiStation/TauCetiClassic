@@ -1,4 +1,6 @@
-
+#define IS_NOT_MOLOTOV 0
+#define IS_MOLOTOV 1
+#define IS_LIT 2
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
@@ -13,6 +15,9 @@
 	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
 
 	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
+
+	var/molotov_state = IS_NOT_MOLOTOV
+	var/lit_time = null
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
 	. = ..()
@@ -89,6 +94,9 @@
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
 	transfer_fingerprints_to(B)
+	if(molotov_state == IS_LIT)
+		var/turf/T = get_turf(target)
+		T.hotspot_expose(1000, 500)
 
 	qdel(src)
 
@@ -98,9 +106,17 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/update_icon()
 	show_filler_on_icon(3, 24, 0)
+	cut_overlays()
+	if(molotov_state == IS_MOLOTOV)
+		add_overlay(image(icon, "molotov"))
+	if(molotov_state == IS_LIT)
+		add_overlay(image(icon, "molotov_lit"))
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/can_smash()
+	return is_glass
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
-	if(user.a_intent != INTENT_HARM || !is_glass)
+	if(user.a_intent != INTENT_HARM || !can_smash())
 		return ..()
 
 	if(!target)
@@ -157,7 +173,7 @@
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='notice'><B>The contents of the [src] splashes all over [target]!</B></span>"), 1)
-		reagents.reaction(target, TOUCH)
+		reagents.standard_splash(target, user = user)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)
@@ -171,23 +187,58 @@
 		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
 			playsound(user, 'sound/items/glass_containers/bottle_pouring.ogg', VOL_EFFECTS_MASTER, 800)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
-	..()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..())
+		return
 	if(is_glass)
 		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
-		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+		var/icon/I = new('icons/obj/drinks.dmi', icon_state)
 		I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
 		I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 		BB.icon = I
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
 		reagents.standard_splash(loc)
+		if(molotov_state == IS_LIT)
+			var/turf/T = get_turf(hit_atom)
+			T.hotspot_expose(1000, 500)
+			if(isliving(hit_atom))
+				var/mob/living/L = hit_atom
+				L.IgniteMob()
 		qdel(src)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/sheet/cloth) && is_glass && molotov_state == IS_NOT_MOLOTOV)
+		var/obj/item/stack/sheet/cloth/C = I
+		C.use(1)
+		molotov_state = IS_MOLOTOV
+		flags ^= OPENCONTAINER
+		to_chat(user, "<span class='notice'You stuff some cloth into the bottleneck.</span>")
+
+	if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = I
+		if(L.lit && molotov_state == IS_MOLOTOV)
+			molotov_state = IS_LIT
+			lit_time = world.time + rand(200, 400)
+			user.visible_message("<span class='warning'>[user] lights up a molotov!</span>")
+			playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
+			START_PROCESSING(SSobj, src)
+
+	update_icon()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/process()
+	if(world.time >= lit_time)
+		throw_impact(loc)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/attack_self(mob/user)
+	if(molotov_state == IS_MOLOTOV)
+		new /obj/item/stack/sheet/cloth(user.loc)
+		molotov_state = IS_NOT_MOLOTOV
+		flags |= OPENCONTAINER
+		update_icon()
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
-
 	name = "Broken Bottle"
 	desc = "A bottle with a sharp broken bottom."
 	w_class = SIZE_TINY
@@ -211,7 +262,6 @@
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	qdel(src)
-
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"

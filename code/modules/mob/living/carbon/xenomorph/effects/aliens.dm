@@ -5,6 +5,7 @@
  *		Weeds
  *		Egg
  *	effect/alien/Acid
+ *	effect/alien/Queen_Acid
  */
 
 #define WEED_SOUTH_EDGING 1
@@ -44,6 +45,7 @@
 	density = TRUE
 	opacity = TRUE
 	anchored = TRUE
+	can_block_air = TRUE
 	canSmoothWith = list(/obj/structure/alien/resin)
 	smooth = SMOOTH_TRUE
 	max_integrity = 300
@@ -75,7 +77,7 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	update_nearby_tiles(need_rebuild = TRUE)
+	update_nearby_tiles()
 
 /obj/structure/alien/resin/Destroy()
 	var/turf/T = get_turf(src)
@@ -101,8 +103,7 @@
 /obj/structure/alien/resin/attack_alien(mob/user, damage)
 	..(user, rand(40, 60))
 
-/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return 0
+/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
@@ -144,7 +145,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/alien/weeds/atom_init_late()
-	addtimer(CALLBACK(src, .proc/Life), rand(150, 200))
+	addtimer(CALLBACK(src, PROC_REF(Life)), rand(150, 200))
 
 /obj/structure/alien/weeds/Destroy()
 	linked_node = null
@@ -167,13 +168,19 @@
 			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
 				continue
 
+			if(locate(/obj/structure/window/fulltile) in T)
+				continue
+
+			if(locate(/obj/structure/windowsill) in T)
+				continue
+
 			for(var/obj/machinery/door/D in T)
 				if(D.density)
 					continue check_next_dir
 
-			var/obj/structure/window/W = locate() in T
+			var/obj/structure/window/thin/W = locate() in T
 
-			if(W && W.density)
+			if(W && W.density && dirn == turn(dir,180)) // if window is facing us
 				continue
 
 			new /obj/structure/alien/weeds(T, linked_node)
@@ -279,6 +286,22 @@
 			visible_message("<span class='notice'><B>[src.target] begins to crumble under the acid!</B></span>")
 	spawn(rand(150, 200)) tick()
 
+/obj/effect/alien/acid/queen_acid
+	name = "queen acid"
+	desc = "Burbling corrossive and yellow stuff. I wouldn't want to touch it."
+	icon = 'icons/mob/xenomorph.dmi'
+	icon_state = "queen_acid"
+
+/obj/effect/alien/acid/queen_acid/atom_init_late()
+	if(iswallturf(target))
+		target_strength = 6
+	else if(is_type_in_list(target, ventcrawl_machinery))
+		target_strength = 2
+	else
+		target_strength = 4
+	tick()
+
+
 /*
  * Egg
  */
@@ -301,11 +324,20 @@
 	integrity_failure = 0.5
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	var/timer
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/structure/alien/egg/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	timer = addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
+	if(status == GROWN)
+		Grow()
+	else
+		timer = addtimer(CALLBACK(src, PROC_REF(Grow)), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
+
+/obj/structure/alien/egg/Destroy()
+	if(timer)
+		deltimer(timer)
+	return ..()
 
 /obj/structure/alien/egg/attack_paw(mob/user)
 	if(isxeno(user))
@@ -336,20 +368,25 @@
 /obj/structure/alien/egg/proc/Grow()
 	icon_state = "egg"
 	status = GROWN
-	new /obj/item/clothing/mask/facehugger(src)
+	proximity_monitor = new(src, 1)
+
+/obj/structure/alien/egg/proc/spawn_hugger(kill_fh = TRUE)
+	var/obj/item/clothing/mask/facehugger/FH = new (get_turf(src))
+	status = BURST
+	if(kill_fh)
+		FH.Die()
 
 /obj/structure/alien/egg/proc/Burst(kill_fh = TRUE)
+	if(status == BURST || status == BURSTING)
+		return
 	STOP_PROCESSING(SSobj, src)
 	deltimer(timer)
-	if(status == GROWN || status == GROWING)
-		icon_state = "egg_hatched"
-		flick("egg_opening", src)
-		status = BURSTING
-		spawn(15)
-			status = BURST
-			var/obj/item/clothing/mask/facehugger/FH = new /obj/item/clothing/mask/facehugger(get_turf(src))
-			if(kill_fh)
-				FH.Die()
+	timer = null
+	QDEL_NULL(proximity_monitor)
+	icon_state = "egg_hatched"
+	flick("egg_opening", src)
+	status = BURSTING
+	addtimer(CALLBACK(src, PROC_REF(spawn_hugger), kill_fh), 15)
 
 /obj/structure/alien/egg/attack_ghost(mob/dead/observer/user)
 	if(facehuggers_control_type != FACEHUGGERS_PLAYABLE)
@@ -393,6 +430,18 @@
 /obj/structure/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 290)
 		take_damage(25, BURN, FIRE, FALSE)
+
+/obj/structure/alien/egg/HasProximity(mob/living/carbon/C)
+	if (!((ishuman(C) || ismonkey(C)) && C.is_facehuggable()))
+		return
+	if(istype(C.wear_mask, /obj/item/clothing/mask/facehugger))
+		return
+
+	Burst(FALSE)
+
+// for shitspawn
+/obj/structure/alien/egg/grown
+	status = GROWN
 
 #undef BURST
 #undef BURSTING

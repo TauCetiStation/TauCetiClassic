@@ -19,14 +19,14 @@
 /obj/structure/AIcore/attackby(obj/item/P, mob/user)
 	switch(state)
 		if(0)
-			if(iswrench(P))
+			if(iswrenching(P))
 				if(user.is_busy(src))
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = TRUE
 					state = 1
-			if(iswelder(P))
+			if(iswelding(P))
 				var/obj/item/weapon/weldingtool/WT = P
 				if(!WT.isOn())
 					to_chat(user, "The welder must be on for this task.")
@@ -36,7 +36,7 @@
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 					deconstruct(TRUE)
 		if(1)
-			if(iswrench(P))
+			if(iswrenching(P))
 				if(user.is_busy(src))
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
@@ -49,12 +49,12 @@
 				icon_state = "1"
 				circuit = P
 				user.drop_from_inventory(P, src)
-			if(isscrewdriver(P) && circuit)
+			if(isscrewing(P) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				state = 2
 				icon_state = "2"
-			if(iscrowbar(P) && circuit)
+			if(isprying(P) && circuit)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				state = 1
@@ -62,7 +62,7 @@
 				circuit.loc = loc
 				circuit = null
 		if(2)
-			if(isscrewdriver(P) && circuit)
+			if(isscrewing(P) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				state = 1
@@ -78,7 +78,7 @@
 						state = 3
 						icon_state = "3"
 		if(3)
-			if(iswirecutter(P))
+			if(iscutter(P))
 				if (brain)
 					to_chat(user, "Get that brain out of there first")
 				else
@@ -147,7 +147,7 @@
 				to_chat(usr, "Added [M].")
 				icon_state = "3b"
 
-			if(iscrowbar(P) && brain)
+			if(isprying(P) && brain)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the brain.</span>")
 				brain.loc = loc
@@ -155,7 +155,7 @@
 				icon_state = "3"
 
 		if(4)
-			if(iscrowbar(P))
+			if(isprying(P))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				state = 3
@@ -166,7 +166,7 @@
 				new /obj/item/stack/sheet/rglass( loc, 2 )
 				return
 
-			if(isscrewdriver(P))
+			if(isscrewing(P))
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				if(!brain)

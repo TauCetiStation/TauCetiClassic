@@ -35,4 +35,18 @@
 	destr_cd = 10 SECONDS
 	rune_cd = 10 SECONDS
 	cost_coef = 1.5
-	build_cd = 5 SECONDS
+	build_cd = 10 SECONDS
+
+/obj/item/weapon/storage/bible/tome/eminence/can_destroy(atom/target, mob/user)
+	var/area/area = get_area(user)
+	if(!istype(religion, area.religion?.type))
+		to_chat(user, "<span class='warning'>Только в подконтрольной зоне вашей религии вы способны на подобное проявление силы!</span>")
+		return FALSE
+	return ..()
+
+/obj/item/weapon/storage/bible/tome/eminence/can_build_here(mob/user, datum/rune/rune)
+	var/area/area = get_area(user)
+	if(!istype(religion, area.religion?.type))
+		to_chat(user, "<span class='warning'>Вы не всемогущи, а потому можете строить только в зоне, подконтрольной вашей религии!</span>")
+		return FALSE
+	return TRUE

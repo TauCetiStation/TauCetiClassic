@@ -3,9 +3,9 @@
 	if(wipe_timer_id)
 		deltimer(wipe_timer_id)
 		wipe_timer_id = 0
-	for(var/mob/living/M as anything in living_list)
-		if(M.digitalcamo && M.digitaldisguise)
-			client.images += M.digitaldisguise
+	var/datum/element/digitalcamo/ele = SSdcs.GetElement(list(/datum/element/digitalcamo))
+	for(var/i in ele.attached_mobs)
+		client.images += ele.attached_mobs[i]
 	regenerate_icons()
 
 	if(stat != DEAD)

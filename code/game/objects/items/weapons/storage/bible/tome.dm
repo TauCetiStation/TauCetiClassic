@@ -217,7 +217,7 @@
 	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, user))
 		return
 
-	var/turf/targeted_turf = get_step(src, user.dir)
+	var/turf/targeted_turf = iseminence(user) ? get_turf(src) : get_step(src, user.dir)
 	for(var/atom/A in targeted_turf.contents)
 		if(A.density)
 			to_chat(user, "<span class='warning'>Что-то мешает построить!</span>")

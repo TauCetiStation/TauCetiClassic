@@ -90,10 +90,15 @@
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
 	canremove = 0
-	action_button_name = "Toggle Vision"
 	icon = 'icons/mob/shadowling_hud.dmi'
 	icon_state = "ling_vision_off"
+	flash_protection = FLASHES_AMPLIFIER
+	flash_protection_slots = list(SLOT_GLASSES)
 
+	item_action_types = list(/datum/action/item_action/toggle_vision)
+
+/datum/action/item_action/toggle_vision
+	name = "Toggle Vision"
 
 /obj/item/clothing/glasses/night/shadowling/attack_self()
 	toggle()
@@ -109,6 +114,7 @@
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
 			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 			lighting_alpha = usr.lighting_alpha
+			flash_protection = FLASHES_AMPLIFIER
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 			lighting_alpha = usr.lighting_alpha
@@ -118,8 +124,8 @@
 		else
 			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 			lighting_alpha = usr.lighting_alpha
+			flash_protection = NONE
 	usr.update_sight()
-	usr.update_inv_glasses()
 
 /obj/structure/shadow_vortex
 	name = "vortex"

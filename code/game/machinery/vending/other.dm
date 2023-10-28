@@ -15,6 +15,7 @@
 		/obj/item/weapon/cartridge/captain = 3,
 		/obj/item/weapon/cartridge/quartermaster = 10,
 	)
+	private = TRUE
 
 /obj/machinery/vending/cigarette
 	name = "Cigarette machine" //OCD had to be uppercase to look nice with the new formating
@@ -33,9 +34,13 @@
 	)
 	contraband = list(
 		/obj/item/weapon/lighter/zippo = 4,
+		/obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1,
 	)
 	premium = list(
-		/obj/item/clothing/mask/cigarette/cigar/havana = 2,
+		/obj/item/clothing/mask/cigarette/cigar = 2,
+		/obj/item/clothing/mask/cigarette/cigar/havana = 1,
+		/obj/item/clothing/mask/cigarette/cigar/cohiba = 1,
+		/obj/item/clothing/mask/cigarette/pipe = 1,
 	)
 	syndie = list(
 		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 1,
@@ -48,6 +53,7 @@
 		/obj/item/clothing/mask/ecig = 40,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
+	private = FALSE
 
 /obj/machinery/vending/security
 	name = "SecTech"
@@ -62,15 +68,22 @@
 		/obj/item/weapon/grenade/flashbang = 4,
 		/obj/item/device/flash = 5,
 		/obj/item/weapon/storage/box/evidence = 6,
+		/obj/item/ammo_box/magazine/glock/extended/rubber = 5,
+		/obj/item/ammo_box/magazine/glock/rubber = 10,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
 		/obj/item/device/flashlight/seclite = 4,
 	)
 	syndie = list(
-		/obj/item/ammo_box/a357 = 1,
-		/obj/item/ammo_box/magazine/m9mm = 1,
+		/obj/item/ammo_box/speedloader/a357 = 1,
+		/obj/item/ammo_box/magazine/stechkin = 1,
 	)
+	prices = list(
+		/obj/item/ammo_box/magazine/glock/extended/rubber = 200,
+		/obj/item/ammo_box/magazine/glock/rubber = 50,
+	)
+	private = TRUE
 
 /obj/machinery/vending/weirdomat
 	name = "Weird-O-Mat"
@@ -112,6 +125,7 @@
 	product_slogans = "Amicitiae nostrae memoriam spero sempiternam fore;Aequam memento rebus in arduis servare mentem;Vitanda est improba siren desidia;Serva me, servabo te;Faber est suae quisque fortunae"
 	vend_reply = "Have fun! No returns!"
 	product_ads = "Occult is magic;Knowledge is magic;All the magic!;None to spook us;The dice has been cast"
+	private = TRUE
 
 /obj/machinery/vending/weirdomat/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/occult_scanner))
@@ -173,6 +187,7 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator = 3,
 		/obj/item/weapon/storage/box/lipstick = 3,
 	)
+	private = TRUE
 
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"
@@ -184,7 +199,8 @@
 		/obj/item/weapon/kitchen/utensil/fork = 6,
 		/obj/item/weapon/kitchenknife = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
-		/obj/item/clothing/suit/chef/classic = 2,
+		/obj/item/clothing/suit/chef_classic = 2,
+		/obj/item/clothing/suit/chef = 1,
 		/obj/item/weapon/kitchen/mould/bear = 1,
 		/obj/item/weapon/kitchen/mould/worm = 1,
 		/obj/item/weapon/kitchen/mould/bean = 1,
@@ -195,14 +211,17 @@
 		/obj/item/weapon/kitchen/mould/loli = 1,
 	)
 	contraband = list(
+		/obj/item/clothing/under/rank/chef/sushi = 1,
+		/obj/item/clothing/head/sushi_band = 1,
 		/obj/item/weapon/kitchen/utensil/spoon = 2,
 		/obj/item/weapon/kitchen/rollingpin = 2,
-		/obj/item/weapon/kitchenknife/butch = 2,
+		/obj/item/weapon/kitchenknife/butch = 2,		
 	)
 	syndie = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/dinnerware
+	private = TRUE
 
 /obj/machinery/vending/blood
 	name = "Blood'O'Matic"
@@ -225,6 +244,7 @@
 		/obj/item/weapon/reagent_containers/blood/empty = 10,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/blood
+	private = TRUE
 
 /obj/machinery/vending/syndi
 	name = "KillNTVend"
@@ -267,8 +287,9 @@
 		"Heavy hybrid suit" = /obj/item/weapon/storage/box/syndie_kit/heavy_rig,
 		"Assault Armor" = /obj/item/weapon/storage/box/syndie_kit/armor,
 	)
-	
+
 	var/static/list/selections_armor
+	private = TRUE
 
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher/kit))
@@ -396,3 +417,4 @@
 		/obj/item/clothing/mask/tie/golden_cross = 1000,
 		/obj/item/clothing/shoes/jolly_gravedigger = 200,
 	)
+	private = TRUE

@@ -75,7 +75,8 @@
 
 /obj/machinery/syndicate_beacon/proc/selfdestruct()
 	selfdestructing = 1
-	spawn() explosion(src.loc, rand(3,8), rand(1,3), 1, 10)
+	var/power = rand(1, 3)
+	spawn() explosion(src.loc, 0, power, power*3)
 
 
 
@@ -138,7 +139,7 @@
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+	if(isscrewing(W))
 		if(active)
 			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 			return

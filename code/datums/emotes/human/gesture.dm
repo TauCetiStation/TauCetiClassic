@@ -65,6 +65,25 @@
 	. = ..()
 	user.play_rock_paper_scissors_animation(emote_key)
 
+/datum/emote/human/surrender
+	key = "surr"
+
+	message_1p = "You surrender!"
+	message_3p = "surrenders!"
+	cloud = "cloud-white_flag"
+	cooldown = 15 SECONDS
+	cloud_duration = 20 SECONDS
+
+	message_type = SHOWMSG_VISUAL
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_not_species, ZOMBIE),
+	)
+
+/datum/emote/human/surrender/do_emote(mob/living/carbon/human/user)
+	. = ..()
+	user.AdjustWeakened(10)
 
 /datum/emote/human/clap
 	key = "clap"

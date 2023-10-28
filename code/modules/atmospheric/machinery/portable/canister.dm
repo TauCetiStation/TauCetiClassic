@@ -37,6 +37,11 @@
 	canister_color = "redws"
 	gas_type = "sleeping_agent"
 
+/obj/machinery/portable_atmospherics/canister/anesthetic
+	name = "Canister: \[Anesthetic\]"
+	icon_state = "redws"
+	canister_color = "redws"
+
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
@@ -133,6 +138,10 @@
 /obj/machinery/portable_atmospherics/canister/air/create_gas()
 	var/list/air_mix = StandardAirMix()
 	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "nitrogen", air_mix["nitrogen"])
+
+/obj/machinery/portable_atmospherics/canister/anesthetic/create_gas()
+	var/list/air_mix = StandardAirMix()
+	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "sleeping_agent", air_mix["nitrogen"])
 
 #define HOLDING     1
 #define CONNECTED   2
@@ -267,7 +276,7 @@ update_flag
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
+	if(iswelding(W))
 		if(user.is_busy(src))
 			return
 		var/obj/item/weapon/weldingtool/WT = W
@@ -363,7 +372,7 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/tgui_act(action, params)
 	. = ..()
-	if(. || issilicon(usr))
+	if(. || isAI(usr))
 		return
 	switch(action)
 		if("relabel")

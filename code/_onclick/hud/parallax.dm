@@ -51,6 +51,9 @@
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref()
+	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(mymob, TRAIT_BYPASS_MEASURES))
+		return FALSE
+
 	var/client/C = mymob.client
 	switch(C.prefs.parallax)
 		if (PARALLAX_INSANE)
@@ -128,7 +131,7 @@
 	C.parallax_movedir = new_parallax_movedir
 	if (C.parallax_animate_timer)
 		deltimer(C.parallax_animate_timer)
-	C.parallax_animate_timer = addtimer(CALLBACK(src, .proc/update_parallax_motionblur, C, animatedir, new_parallax_movedir, newtransform), min(shortesttimer, PARALLAX_LOOP_TIME), TIMER_CLIENT_TIME|TIMER_STOPPABLE)
+	C.parallax_animate_timer = addtimer(CALLBACK(src, PROC_REF(update_parallax_motionblur), C, animatedir, new_parallax_movedir, newtransform), min(shortesttimer, PARALLAX_LOOP_TIME), TIMER_CLIENT_TIME|TIMER_STOPPABLE)
 
 /datum/hud/proc/update_parallax_motionblur(client/C, animatedir, new_parallax_movedir, matrix/newtransform)
 	if(!C)
@@ -243,9 +246,12 @@
 	if (!view)
 		view = world.view
 	var/list/new_overlays = list()
-	var/count = CEIL(view/(480/world.icon_size))+1
-	for(var/x in -count to count)
-		for(var/y in -count to count)
+	var/static/parallax_scaler = world.icon_size / 480
+	var/list/viewscales = getviewsize(view)
+	var/countx = CEIL((viewscales[1] / 2) * parallax_scaler) + 1
+	var/county = CEIL((viewscales[2] / 2) * parallax_scaler) + 1
+	for(var/x in -countx to countx)
+		for(var/y in -county to county)
 			if(x == 0 && y == 0)
 				continue
 			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)

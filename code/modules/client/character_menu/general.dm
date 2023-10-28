@@ -12,8 +12,11 @@
 	. += 						"<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a>"
 	. += 						"<br>(<a href='?_src_=prefs;preference=name;task=random'>Random Name</a>)"
 	. += 						"(<a href='?_src_=prefs;preference=name'>Always Random Name: [be_random_name ? "Yes" : "No"]</a>)"
-	. += 						"<b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>"
+	if(!specie_obj.flags[NO_GENDERS])
+		. += 					"<br><b>Gender:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
+	if(species == IPC)  // only ipc can change their voice at this moment
+		. += 					"<br><b>Voice:</b> <a href='?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Height:</b> <a href='?_src_=prefs;preference=height;task=input'>[height]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
@@ -42,6 +45,7 @@
 			. += "Body: <a href='?_src_=prefs;preference=all;task=random'>&reg;</a>"
 			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
+			. += "<br>Insurance: <a href='byond://?src=\ref[user];preference=insurance;task=input'>[insurance]</a>"
 			if(!specie_obj.flags[NO_BLOOD])
 				. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
 			if(specie_obj.flags[HAS_SKIN_TONE])
@@ -117,7 +121,10 @@
 
 			if(specie_obj.flags[HAS_SKIN_COLOR])
 				. += "<b>Body Color</b>"
-				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]"
+				. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> [color_square(r_skin, g_skin, b_skin)]<br>"
+			if(species == UNATHI)
+				. += "<b>Belly & Jaw Color</b>"
+				. += "<br><a href='?_src_=prefs;preference=belly;task=input'>Change Color</a> [color_square(r_belly, g_belly, b_belly)]"
 
 		//Gear
 		if("gear")
@@ -288,13 +295,19 @@
 						new_species = whitelisted_species
 
 					species = input("Please select a species", "Character Generation", prev_species) in new_species
+					specie_obj = all_species[species]
 
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
 						h_style = random_hair_style(gender, species, ipc_head)
+						neuter_gender_voice = MALE
+						age = rand(specie_obj.min_age, specie_obj.max_age)
 						ResetJobs()
 						UpdateAllowedQuirks()
 						ResetQuirks()
+						gender = MALE
+						if(specie_obj.flags[NO_GENDERS])
+							gender = NEUTER
 						if(language && language != "None")
 							var/datum/language/lang = all_languages[language]
 							if(!(species in lang.allowed_speak))
@@ -309,6 +322,11 @@
 							new_languages += lang.name
 
 					language = input("Please select a secondary language", "Character Generation", language) in new_languages
+
+
+				if("insurance")
+					insurance = input("Please select an insurance level", "Character Generation", insurance) in SSeconomy.insurance_prices
+
 
 				if("b_type")
 					if(specie_obj.flags[NO_BLOOD])
@@ -435,6 +453,13 @@
 						r_skin = hex2num(copytext(new_skin, 2, 4))
 						g_skin = hex2num(copytext(new_skin, 4, 6))
 						b_skin = hex2num(copytext(new_skin, 6, 8))
+
+				if("belly")
+					var/new_belly = input(user, "Choose your character's belly colour: ", "Character Preference", rgb(r_belly, g_belly, b_belly)) as color|null
+					if(new_belly)
+						r_belly = hex2num(copytext(new_belly, 2, 4))
+						g_belly = hex2num(copytext(new_belly, 4, 6))
+						b_belly = hex2num(copytext(new_belly, 6, 8))
 
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", backbaglist[backbag]) as null|anything in backbaglist
@@ -574,6 +599,9 @@
 		else
 			switch(href_list["preference"])
 				if("gender")
+					if(specie_obj.flags[NO_GENDERS])
+						gender = NEUTER
+						return
 					if(gender == MALE)
 						gender = FEMALE
 					else
@@ -581,6 +609,9 @@
 
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species, ipc_head)
+
+				if("gendervoice")
+					neuter_gender_voice = neuter_gender_voice == MALE ? FEMALE : MALE
 
 				if("randomslot")
 					randomslot = !randomslot

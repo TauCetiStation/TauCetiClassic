@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
-	desc = "A basic energy-based gun with two settings: Stun and kill."
+	desc = "Стандартный энергетический пистолет с двумя режимами работы: оглушающим и летальным."
 	icon_state = "energytac"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser)
@@ -11,25 +11,35 @@
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
 	..()
 	update_icon()
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	update_inv_mob()
 
 /obj/item/weapon/gun/energy/gun/head
-	desc = "A basic energy-based gun with two settings: Stun and kill. This one has a grip made of wood."
+	desc = "Основной энергетический пистолет с деревянной рукояткой и с двумя режимами работы: оглушающим и летальным."
 	icon_state = "energy"
 
 /obj/item/weapon/gun/energy/gun/hos
 	name = "\"Revenant\" Energy Advanced Pistol"
-	desc = "Feat of weapon engineering, this pistol is able to fire taser bolts, lasers and EMP bursts. Only issued to high-ranking members of security teams."
+	desc = "Вершина оружейной инженерии, Этот пистолет способен поражать цели электрошоком, лазером или ЭМИ. Выдается только высокопоставленным офицерам службы безопасности."
 	icon_state = "hosgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/ion/small)
 	origin_tech = "combat=4;magnets=3"
 
+/obj/item/weapon/gun/energy/gun/adv
+	name = "Energy Gun Mark II"
+	desc = "Новейшая модель энергетического оружия. Передовая конструкция отличается улучшенной системой охлаждения и внутренней батареей."
+	icon_state = "advgun"
+	origin_tech = "combat=6;magnets=5;powerstorage=2;syndicate=1"
+	fire_delay = 4
+
+/obj/item/weapon/gun/energy/gun/adv/atom_init()
+	. = ..()
+	if(power_supply)
+		power_supply.maxcharge = 1500
+		power_supply.charge = 1500
+
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"
-	desc = "An energy gun with an experimental miniaturized reactor."
+	desc = "Энергетическое оружие с экспериментальным миниатюрным реактором."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "nucgun"
 	origin_tech = "combat=3;materials=5;powerstorage=3"
@@ -64,19 +74,10 @@
 	lightfail = 0
 	if (prob(src.reliability)) return 1 //No failure
 	if (prob(src.reliability))
-		for (var/mob/living/M in range(0,src)) //Only a minor failure, enjoy your radiation if you're in the same tile or carrying it
-			if (loc == M)
-				to_chat(M, "<span class='warning'>Your gun feels pleasantly warm for a moment.</span>")
-			else
-				to_chat(M, "<span class='warning'>You feel a warm sensation.</span>")
-			M.apply_effect(rand(3,120), IRRADIATE)
+		irradiate_in_dist(get_turf(src), rand(3, 120), 0)
 		lightfail = 1
 	else
-		for (var/mob/living/M in range(rand(1,4),src)) //Big failure, TIME FOR RADIATION BITCHES
-			if (loc == M)
-				to_chat(M, "<span class='warning'>Your gun's reactor overloads!</span>")
-			to_chat(M, "<span class='warning'>You feel a wave of heat wash over you.</span>")
-			M.apply_effect(300, IRRADIATE)
+		irradiate_in_dist(get_turf(src), 300, rand(1, 4))
 		crit_fail = 1 //break the gun so it stops recharging
 		STOP_PROCESSING(SSobj, src)
 		update_icon()

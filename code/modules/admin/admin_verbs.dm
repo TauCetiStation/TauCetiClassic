@@ -88,6 +88,9 @@ var/global/list/admin_verbs_variables = list(
 	/client/proc/add_player_age,
 	/client/proc/grand_guard_pass,
 	/client/proc/mass_apply_status_effect,
+	/client/proc/add_smartlight_preset,
+	/client/proc/set_area_smartlight,
+	/client/proc/debug_bloom,
 )
 var/global/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -123,7 +126,8 @@ var/global/list/admin_verbs_fun = list(
 	/client/proc/achievement,
 	/client/proc/toggle_AI_interact, //toggle admin ability to interact with machines as an AI,
 	/client/proc/centcom_barriers_toggle,
-	/client/proc/gateway_toggle
+	/client/proc/gateway_toggle,
+	/client/proc/repaint_area_windows
 	)
 var/global/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		//allows us to spawn instances,
@@ -151,6 +155,7 @@ var/global/list/admin_verbs_server = list(
 	/client/proc/toggle_random_events,
 	/client/proc/nanomapgen_DumpImage,
 	/client/proc/adminchangemap,
+	/datum/admins/proc/show_lag_switch_panel,
 	/datum/admins/proc/toggle_deathmatch_arena,
 	)
 var/global/list/admin_verbs_debug = list(
@@ -187,6 +192,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
 	/client/proc/event_manager_panel,
+	/client/proc/generate_fulltile_window_placeholders,
 #ifdef REFERENCE_TRACKING
 /client/proc/find_refs,
 /client/proc/qdel_then_find_references,
@@ -568,17 +574,23 @@ var/global/list/admin_verbs_hideable = list(
 	set desc = "Cause an explosion of varying strength at your location."
 
 	var/turf/epicenter = mob.loc
-	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb", "Cancel")
+	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Cap Bomb", "Nuke", "Custom Bomb", "Cancel")
 	var/choice = input("What size explosion would you like to produce?") in choices
 	switch(choice)
 		if(null)
 			return 0
 		if("Small Bomb")
-			explosion(epicenter, 1, 2, 3, 3)
+			explosion(epicenter, 1, 2, 3)
 		if("Medium Bomb")
-			explosion(epicenter, 2, 3, 4, 4)
+			explosion(epicenter, 2, 4, 6)
 		if("Big Bomb")
-			explosion(epicenter, 3, 5, 7, 5)
+			explosion(epicenter, 3, 6, 9)
+		if("Cap Bomb")
+			explosion(epicenter, SSexplosions.MAX_EX_DEVESTATION_RANGE, SSexplosions.MAX_EX_HEAVY_RANGE, SSexplosions.MAX_EX_LIGHT_RANGE)
+		if("Nuke")
+			if(tgui_alert(usr, "This will break things terribly, are you sure?", "Confirm", list("Ok", "Cancel")) == "Cancel")
+				return
+			SSticker.station_explosion_detonation(epicenter)
 		if("Custom Bomb")
 			var/devastation_range = input("Devastation range (in tiles):") as num
 			var/heavy_impact_range = input("Heavy impact range (in tiles):") as num
@@ -587,8 +599,8 @@ var/global/list/admin_verbs_hideable = list(
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 		if("Cancel")
 			return 0
-	log_admin("[ckey] creating an admin explosion at [epicenter.loc].")
-	message_admins("<span class='notice'>[ckey] creating an admin explosion at [epicenter.loc].</span>")
+	log_admin("[ckey] created an admin explosion ([choice]) at [epicenter.loc].")
+	message_admins("<span class='notice'>[ckey] created an admin explosion ([choice]) at [epicenter.loc].</span>")
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
@@ -657,7 +669,7 @@ var/global/list/admin_verbs_hideable = list(
 				break
 		disease_type = "[disease_type] ([jointext(D.effects, ", ")])"
 	else
-		D.makerandom(greater)
+		D.makerandom(greater, spread_vector = DISEASE_SPREAD_AIRBORNE)
 		if (!greater)
 			D.infectionchance = 1
 
@@ -1091,6 +1103,31 @@ var/global/list/admin_verbs_hideable = list(
 			message_admins("[key_name_admin(usr)] changed blobwincount to [conglomerate.blobwincount]")
 			feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
+
+/client/proc/repaint_area_windows()
+	set category = "Fun"
+	set name = "Repaint Area Windows"
+
+	if(!check_rights(R_FUN))
+		return
+
+	if(!SSstation_coloring.initialized)
+		to_chat(usr, "<span class='warning'>Subsystem has not finished initializing, please wait.</span>")
+		return
+
+	var/new_color = input(src, "Please select new colour.", "Windows colour") as color|null
+
+	if(!new_color)
+		return
+
+	var/area/A = get_area(usr)
+	if(!A)
+		return
+
+	SSstation_coloring.color_area_objects(list(A), new_color)
+
+	log_admin("[key_name(src)] repainted the windows [new_color] in \the [A]")
+	message_admins("[key_name(src)] repainted the windows [new_color] in \the [A]")
 
 //////////////////////////////
 // Map loader

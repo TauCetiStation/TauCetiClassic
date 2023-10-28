@@ -9,83 +9,24 @@
 	name = "agent vest"
 	desc = "A vest outfitted with mind influence stealth technology. It has two modes - combat and stealth."
 	icon = 'icons/obj/abductor.dmi'
-	icon_state = "vest_stealth"
+	icon_state = "vest_combat"
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	origin_tech = "materials=5;biotech=4;powerstorage=5"
-	action_button_name = "Activate"
-	action_button_is_hands_free = 1
-	var/mode = VEST_STEALTH
-	var/stealth_active = 0
+	item_action_types = list(/datum/action/item_action/hands_free/activate_vest)
 	var/combat_cooldown = 10
 	var/datum/icon_snapshot/disguise
-	var/stealth_armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
-	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
 
-	action_button_name = "Toggle Vest"
-
-/obj/item/clothing/suit/armor/abductor/vest/atom_init()
-	. = ..()
-	armor = mode == VEST_STEALTH ? stealth_armor : combat_armor
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
-	switch(mode)
-		if(VEST_STEALTH)
-			mode = VEST_COMBAT
-			DeactivateStealth()
-			armor = combat_armor
-			icon_state = "vest_combat"
-			if(ishuman(loc))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
-		if(VEST_COMBAT)// TO STEALTH
-			mode = VEST_STEALTH
-			armor = stealth_armor
-			icon_state = "vest_stealth"
-			if(ishuman(loc))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
+/datum/action/item_action/hands_free/activate_vest
+	name = "Activate Vest"
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/ActivateStealth()
-	if(disguise == null)
-		return
-	stealth_active = 1
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/M = src.loc
-		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
-		M.name_override = disguise.name
-		M.icon = disguise.icon
-		M.icon_state = disguise.icon_state
-		M.copy_overlays(disguise, TRUE)
-		M.update_inv_r_hand()
-		M.update_inv_l_hand()
-	return
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
-	if(!stealth_active)
-		return
-	stealth_active = 0
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/M = src.loc
-		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
-		M.name_override = null
-		M.cut_overlays()
-		M.regenerate_icons()
-	return
-
-/obj/item/clothing/suit/armor/abductor/vest/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
-	if(reaction_type == REACTION_ITEM_TAKE)
-		return
-
-	DeactivateStealth()
-
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(mob/user)
 	if(isabductor(user))
@@ -99,14 +40,7 @@
 	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
-	switch(mode)
-		if(VEST_COMBAT)
-			Adrenaline()
-		if(VEST_STEALTH)
-			if(stealth_active)
-				DeactivateStealth()
-			else
-				ActivateStealth()
+	Adrenaline()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
 	if(ishuman(src.loc))
@@ -199,14 +133,6 @@
 		to_chat(user, "<span class='notice'>This specimen is already marked.</span>")
 		return
 	if(isabductor(target) || istype(target, /mob/living/simple_animal/cow))
-		var/mob/M = target
-		var/datum/role/R = M.mind.GetRoleByType(/datum/role/abductor)
-		if(R) // Now, we shouldn't let two teams to steal one another
-			var/datum/role/R2 = user.mind.GetRoleByType(/datum/role/abductor)
-			if(R.faction != R2.faction)
-				to_chat(user, "<span class='notice'>One team shouldn't interfere with another by these means!</span>")
-				user.burn_skin(40) //You dont wanna to repeat, yea?
-				return
 		marked = target
 		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 	else
@@ -271,26 +197,32 @@
 	desc = "Returns you to the mothership."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "implant"
-//	activated = 1
+	item_action_types = list(/datum/action/item_action/hands_free/activate_implant)
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 30 SECONDS
 
-	action_button_name = "Activate Implant"
-	action_button_is_hands_free = 1
+/datum/action/item_action/hands_free/activate_implant
+	name = "Activate Implant"
+	check_flags = AB_CHECK_INSIDE
 
 /obj/item/weapon/implant/abductor/attack_self()
+	var/turf/T = get_turf(src)
+	if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
+		to_chat(imp_in, "<span class='warning'>WARNING! Bluespace interference has been detected in the location, preventing teleportation! Teleportation is canceled!</span>")
+		return FALSE
 	if(cooldown >= initial(cooldown))
 		if(imp_in.buckled)
 			imp_in.buckled.unbuckle_mob()
 		home.Retrieve(imp_in)
 		cooldown = 0
-		INVOKE_ASYNC(src, .proc/start_recharge, imp_in)
+		INVOKE_ASYNC(src, PROC_REF(start_recharge), imp_in)
 	else
-		to_chat(imp_in, "<span class='warning'>You must wait [300 - cooldown] seconds to use [src] again!</span>")
+		to_chat(imp_in, "<span class='warning'>You must wait [(300 - cooldown) / 10] seconds to use [src] again!</span>")
 	return
 
 /obj/item/weapon/implant/abductor/proc/start_recharge(mob/user = usr)
-	var/atom/movable/screen/cooldown_overlay/cooldowne = start_cooldown(action.button, initial(cooldown))
+	var/datum/action/item_action/hands_free/activate_implant/A = locate(/datum/action/item_action/hands_free/activate_implant) in item_actions
+	var/atom/movable/screen/cooldown_overlay/cooldowne = start_cooldown(A.button, initial(cooldown))
 	while(cooldown < initial(cooldown))
 		sleep(1)
 		cooldown++
@@ -306,16 +238,14 @@
 	origin_tech = "materials=6;biotech=4;combat=5"
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
+	ammo_type = list(/obj/item/ammo_casing/energy/declone/light)
+	item_action_types = null
 
 /obj/item/weapon/gun/energy/decloner/alien/special_check(mob/living/carbon/human/M)
 	if(M.species.name != ABDUCTOR)
 		to_chat(M, "<span class='notice'>You can't figure how this works.</span>")
 		return FALSE
 	return TRUE
-
-/obj/item/weapon/gun/energy/decloner/alien
-	ammo_type = list(/obj/item/ammo_casing/energy/declone/light)
-
 
 //AGENT HELMET
 /obj/item/clothing/head/helmet/abductor
@@ -324,10 +254,13 @@
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
 	origin_tech = "materials=5;biotech=5"
-	action_button_name = "Activate Helmet"
 
-	var/team
 	var/obj/machinery/camera/helm_cam
+
+	item_action_types = list(/datum/action/item_action/hands_free/activate_helmet)
+
+/datum/action/item_action/hands_free/activate_helmet
+	name = "Activate Helmet"
 
 /obj/item/clothing/head/helmet/abductor/attack_self(mob/living/carbon/human/user)
 	if(!isabductor(user))
@@ -336,24 +269,44 @@
 	if(helm_cam)
 		..(user)
 	else
+		var/computer_detected = FALSE
+		var/obj/machinery/computer/security/abductor_ag/comp
+		for(var/obj/machinery/computer/security/abductor_ag/C in range(2, get_turf(src)))
+			if(C.network.len < 1)
+				computer_detected = TRUE
+				comp = C
+				break
+		if(!computer_detected)
+			to_chat(user, "<span class='warning'>No computers nearby. Helmet deactivated.</span>")
+			return
 		icon_state = "alienhelmet_a"
 		item_state = "alienhelmet_a"
-		user.update_inv_head()
-		var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
-		team = A.get_team_num()
+		update_inv_mob()
 		helm_cam = new /obj/machinery/camera(src)
 		helm_cam.c_tag = "[user.real_name] Cam"
-		helm_cam.replace_networks(list("Abductor[team]"))
+		helm_cam.replace_networks(list("Abductor[comp.team]"))
 
-		for(var/obj/machinery/computer/security/abductor_ag/C in computer_list)
-			if(C.team == team)
-				if(C.network.len < 1)
-					C.network = helm_cam.network
+		comp.network = helm_cam.network
 
 		helm_cam.hidden = 1
-		blockTracking = 1
 		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")
+		update_item_actions()
 		return
+
+/obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_HEAD)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+	else
+		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/clothing/head/helmet/abductor/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+
+/obj/item/clothing/head/helmet/abductor/proc/can_track(datum/source)
+	SIGNAL_HANDLER
+	return COMPONENT_CANT_TRACK
 
 //ADVANCED BATON
 #define BATON_STUN 0
@@ -373,8 +326,11 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 7
 	w_class = SIZE_SMALL
-	action_button_name = "Toggle Mode"
 	var/obj/machinery/abductor/console/console
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_mode)
+
+/datum/action/item_action/hands_free/toggle_mode
+	name = "Toggle Mode"
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	if(!isabductor(user))
@@ -399,8 +355,8 @@
 
 	to_chat(user, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
+	update_inv_mob()
+	update_item_actions()
 
 /obj/item/weapon/abductor_baton/update_icon()
 	switch(mode)
@@ -478,8 +434,7 @@
 								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/handcuffs/alien(C)
-				C.update_inv_handcuffed()
+				C.equip_to_slot_or_del(new /obj/item/weapon/handcuffs/alien, SLOT_HANDCUFFED)
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
 				L.log_combat(user, "handcuffed with \a [src]")
 		else
@@ -575,7 +530,13 @@
 /obj/machinery/optable/abductor/atom_init()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
 	. = ..()
-
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/operating_table/abductor(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic(null)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
+	RefreshParts()
 /obj/machinery/optable/abductor/attack_hand(mob/living/carbon/C)
 	if(!victim && !fastened)
 		return

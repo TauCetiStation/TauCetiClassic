@@ -7,6 +7,8 @@
  * 		Wirecutters
  * 		Welding Tool
  * 		Crowbar
+ * 		Hand Drill
+ * 		Jaws of Life
  */
 
 /*
@@ -30,6 +32,10 @@
 	var/random_color = TRUE
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
+	qualities = list(
+		QUALITY_WRENCHING = 1
+	)
+
 /obj/item/weapon/wrench/atom_init(mapload, param_color)
 	. = ..()
 	if(random_color)
@@ -37,28 +43,6 @@
 			param_color = pick("black","red","green","blue","default")
 		icon_state = "wrench_[param_color]"
 		item_state = "wrench_[param_color]"
-
-/obj/item/weapon/wrench/power
-	name = "Hand Drill"
-	desc ="A simple powered drill with a bolt bit"
-	hitsound = list('sound/items/tools/tool-hit.ogg')
-	icon_state = "drill_bolt"
-	item_state = "drill"
-	materials = list(MAT_METAL=150, MAT_SILVER=50)
-	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
-	force = 8 //might or might not be too high, subject to change
-	throwforce = 8
-	toolspeed = 0.7
-	attack_verb = list("drilled", "screwed", "jabbed")
-	action_button_name = "Change mode"
-	random_color = FALSE
-
-/obj/item/weapon/wrench/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_drill.ogg', VOL_EFFECTS_MASTER)
-	var/obj/item/weapon/screwdriver/power/s_drill = new
-	to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
-	qdel(src)
-	user.put_in_active_hand(s_drill)
 
 /*
  * Screwdriver
@@ -80,7 +64,9 @@
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	attack_verb = list("stabbed")
 	usesound = 'sound/items/Screwdriver.ogg'
-
+	qualities = list(
+		QUALITY_SCREWING = 1
+	)
 	stab_eyes = TRUE
 
 	var/random_color = TRUE
@@ -103,30 +89,6 @@
 	pixel_y = rand(-6, 6)
 	pixel_x = rand(-4, 4)
 
-/obj/item/weapon/screwdriver/power
-	name = "Hand Drill"
-	desc = "A simple hand drill with a screwdriver bit attached."
-	hitsound = list('sound/items/drill_hit.ogg')
-	icon_state = "drill_screw"
-	item_state = "drill"
-	materials = list(MAT_METAL=150, MAT_SILVER=50)
-	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
-	force = 8 //might or might not be too high, subject to change
-	w_class = SIZE_TINY
-	throwforce = 8
-	throw_speed = 2
-	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
-	toolspeed = 0.7
-	attack_verb = list("drilled", "screwed", "jabbed","whacked")
-	action_button_name = "Change mode"
-	random_color = FALSE
-
-/obj/item/weapon/screwdriver/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_drill.ogg', VOL_EFFECTS_MASTER)
-	var/obj/item/weapon/wrench/power/b_drill = new
-	to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
-	qdel(src)
-	user.put_in_active_hand(b_drill)
 /*
  * Wirecutters
  */
@@ -150,6 +112,9 @@
 	usesound = 'sound/items/Wirecutter.ogg'
 	var/random_color = TRUE
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
+	qualities = list(
+		QUALITY_CUTTING = 1
+	)
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
 	. = ..()
@@ -169,29 +134,8 @@
 			"You hear handcuffs being cut.")
 			if(C.buckled && C.buckled.buckle_require_restraints)
 				C.buckled.unbuckle_mob()
-			C.update_inv_handcuffed()
-		return
 	else
 		..()
-
-/obj/item/weapon/wirecutters/power
-	name = "Jaws of Life"
-	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head."
-	icon = 'icons/obj/tools.dmi'
-	icon_state = "jaws_cutter"
-	item_state = "jawsoflife"
-	origin_tech = "materials=2;engineering=2"
-	materials = list(MAT_METAL=150, MAT_SILVER=50)
-	action_button_name = "Change mode"
-	toolspeed = 0.7
-	random_color = FALSE
-
-/obj/item/weapon/wirecutters/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_jaws.ogg', VOL_EFFECTS_MASTER)
-	var/obj/item/weapon/crowbar/power/pryjaws = new
-	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
-	qdel(src)
-	user.put_in_active_hand(pryjaws)
 
 /*
  * Welding Tool
@@ -204,7 +148,6 @@
 	icon_state = "welder"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	action_button_name = "Switch Welding tool"
 	usesound = 'sound/items/Welder2.ogg'
 
 	force = 3.0
@@ -212,6 +155,9 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_TINY
+	qualities = list(
+		QUALITY_WELDING = 1
+	)
 
 	m_amt = 70 // Cost to make in the autolathe
 	g_amt = 30
@@ -225,6 +171,10 @@
 	var/image/welding_sparks    // Welding overlay for targets
 
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
+	item_action_types = list(/datum/action/item_action/hands_free/switch_welding_tool)
+
+/datum/action/item_action/hands_free/switch_welding_tool
+	name = "Switch Welding tool"
 
 /obj/item/weapon/weldingtool/atom_init()
 	. = ..()
@@ -233,7 +183,7 @@
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
 	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", layer = ABOVE_LIGHTING_LAYER)
-	welding_sparks.plane = ABOVE_LIGHTING_PLANE
+	welding_sparks.plane = LIGHTING_LAMPS_PLANE
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
@@ -241,7 +191,7 @@
 		to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(active)
 			to_chat(user, "<span class='rose'>Off [src], first!</span>")
 			return
@@ -350,10 +300,10 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
-/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override, skills_speed_bonus = -0.4)
+/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override, skills_speed_bonus = -0.4, can_move = FALSE)
 	target.add_overlay(welding_sparks)
-	INVOKE_ASYNC(src, .proc/start_welding, target)
-	var/datum/callback/checks  = CALLBACK(src, .proc/check_active_and_extra, extra_checks)
+	INVOKE_ASYNC(src, PROC_REF(start_welding), target)
+	var/datum/callback/checks  = CALLBACK(src, PROC_REF(check_active_and_extra), extra_checks)
 	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_skills_override = required_skills_override, skills_speed_bonus = skills_speed_bonus)
 	stop_welding()
 	target.cut_overlay(welding_sparks)
@@ -447,10 +397,8 @@
 		src.icon_state = initial(src.icon_state)
 		src.active = FALSE
 
-	if(usr.hand)
-		usr.update_inv_l_hand()
-	else
-		usr.update_inv_r_hand()
+	update_inv_mob()
+	update_item_actions()
 
 // Decides whether or not to damage a player's eyes based on what they're wearing as protection
 // Note: This should probably be moved to mob
@@ -471,10 +419,12 @@
 			if(0)
 				to_chat(usr, "<span class='warning'>Your eyes burn.</span>")
 				IO.damage += rand(2, 4)
+				H.flash_eyes()
 				if(IO.damage > 10)
 					IO.damage += rand(4,10)
 			if(-1)
 				to_chat(usr, "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>")
+				H.flash_eyes()
 				user.adjustBlurriness(rand(12,20))
 				IO.damage += rand(12, 16)
 		if(safety<2)
@@ -487,9 +437,8 @@
 				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.eye_blind = 5
 				user.adjustBlurriness(5)
-				user.disabilities |= NEARSIGHTED
-				spawn(100)
-					user.disabilities &= ~NEARSIGHTED
+				user.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
+				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
 	return
 
 
@@ -579,25 +528,6 @@
 		QUALITY_PRYING = 0.7
 	)
 
-/obj/item/weapon/crowbar/power
-	name = "Jaws of Life"
-	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a prying head"
-	hitsound = list('sound/items/tools/tool-hit.ogg')
-	icon_state = "jaws_pry"
-	item_state = "jawsoflife"
-	materials = list(MAT_METAL=150, MAT_SILVER=50)
-	origin_tech = "materials=2;engineering=2"
-	force = 15
-	toolspeed = 0.7
-	action_button_name = "Change mode"
-
-/obj/item/weapon/crowbar/power/attack_self(mob/user)
-	playsound(user, 'sound/items/change_jaws.ogg', VOL_EFFECTS_MASTER)
-	var/obj/item/weapon/wirecutters/power/cutjaws = new
-	to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
-	qdel(src)
-	user.put_in_active_hand(cutjaws)
-
 /obj/item/weapon/weldingtool/attack(mob/M, mob/user, def_zone)
 
 	if(ishuman(M))
@@ -614,7 +544,13 @@
 				to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
 				return
 
+		if(H.check_pierce_protection(target_zone = def_zone))
+			to_chat(user, "<span class='rose'>There is no exposed surface for repair.</span>")
+			return
+
 		if(BP.brute_dam)
+			if(!use(1, user))
+				return
 			BP.heal_damage(15,0,0,1)
 			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.name] with \the [src].</span>")
 		else
@@ -622,3 +558,82 @@
 
 	else
 		return ..()
+
+/obj/item/weapon/multi
+	var/mode = FALSE
+	w_class = SIZE_TINY
+
+/obj/item/weapon/multi/hand_drill
+	name = "Hand Drill"
+	desc ="A simple powered drill with a bolt bit"
+	hitsound = list('sound/items/tools/tool-hit.ogg')
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "drill_bolt"
+	item_state = "drill"
+	materials = list(MAT_METAL=150, MAT_SILVER=50)
+	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+	force = 8 //might or might not be too high, subject to change
+	throwforce = 8
+	toolspeed = 0.7
+	attack_verb = list("drilled", "screwed", "jabbed")
+	qualities = list(
+		QUALITY_WRENCHING = 1
+	)
+	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
+
+/datum/action/item_action/hands_free/change_mode
+	name = "Change mode"
+
+/obj/item/weapon/multi/hand_drill/attack_self(mob/user)
+	mode = !mode
+	playsound(user, 'sound/items/change_drill.ogg', VOL_EFFECTS_MASTER)
+	if(mode)
+		qualities = list(
+			QUALITY_SCREWING = 1
+		)
+		icon_state = "drill_screw"
+		to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
+	else
+		qualities = list(
+			QUALITY_WRENCHING = 1
+		)
+		icon_state = "drill_bolt"
+		to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
+	update_item_actions()
+
+/obj/item/weapon/multi/jaws_of_life
+	name = "Jaws of Life"
+	desc = "A set of jaws of life, the magic of science has managed to fit it down into a device small enough to fit in a tool belt. It's fitted with a cutting head."
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "jaws_cutter"
+	item_state = "jawsoflife"
+	origin_tech = "materials=2;engineering=2"
+	materials = list(MAT_METAL=150, MAT_SILVER=50)
+	toolspeed = 0.7
+	sharp = 1
+	qualities = list(
+		QUALITY_CUTTING = 1
+	)
+	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
+
+/datum/action/item_action/hands_free/change_mode
+	name = "Change mode"
+
+/obj/item/weapon/multi/jaws_of_life/attack_self(mob/user)
+	mode = !mode
+	playsound(user, 'sound/items/change_jaws.ogg', VOL_EFFECTS_MASTER)
+	if(mode)
+		qualities = list(
+			QUALITY_PRYING = 1
+		)
+		sharp = 0
+		icon_state = "jaws_pry"
+		to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
+	else
+		qualities = list(
+			QUALITY_CUTTING = 1
+		)
+		sharp = 1
+		icon_state = "jaws_cutter"
+		to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
+	update_item_actions()

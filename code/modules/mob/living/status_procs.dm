@@ -21,6 +21,25 @@
 /mob/living/proc/has_quirk(quirktype)
 	return roundstart_quirks[quirktype]
 
+/mob/proc/cure_nearsighted(source)
+	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+		clear_fullscreen("nearsighted")
+
+/mob/proc/become_nearsighted(source)
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
+	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
+
+/mob/living/carbon/human/become_nearsighted(source)
+	if(glasses)
+		var/obj/item/clothing/glasses/G = glasses
+		if(G.prescription)
+			ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
+			return
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
+	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
 
 /* STUN */
 // placeholders
@@ -236,3 +255,11 @@
 	else if(amount > 0)
 		S = apply_status_effect(STATUS_EFFECT_SLEEPING, amount, updating)
 	return S
+
+/mob/living/carbon/proc/AdjustClumsyStatus(amount)
+	var/datum/status_effect/clumsy/C = has_status_effect(STATUS_EFFECT_CLUMSY)
+	if(C)
+		C.duration += amount SECONDS
+	else if(amount > 0)
+		C = apply_status_effect(STATUS_EFFECT_CLUMSY, amount SECONDS)
+	return C

@@ -4,29 +4,35 @@
 	name = "implant"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "implant"
+	item_actions_special = TRUE
 	var/implanted = null
-	var/mob/imp_in = null
+	var/mob/living/carbon/imp_in = null
 	var/obj/item/organ/external/part = null
 	var/allow_reagents = 0
 	var/malfunction = 0
 	var/uses = 0
-
+	var/implant_trait
 	var/implant_type = "b"
+
+/datum/action/item_action/implant
+	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
 
 /obj/item/weapon/implant/atom_init()
 	. = ..()
 	implant_list += src
+	if(ismob(loc))
+		add_item_actions(loc)
 
 /obj/item/weapon/implant/Destroy()
+	implant_removal(imp_in)
 	implant_list -= src
 	implanted = FALSE
-	imp_in = null
 	if(part)
 		part.implants.Remove(src)
 		part = null
 		if(isliving(imp_in))
-			var/mob/living/L = imp_in
-			L.sec_hud_set_implants()
+			imp_in.sec_hud_set_implants()
+	imp_in = null
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
@@ -53,14 +59,26 @@
 		if(!BP)
 			return
 		BP.implants += src
-		C.sec_hud_set_implants()
 		part = BP
+
+	if(implant_trait)
+		ADD_TRAIT(C, implant_trait, IMPLANT_TRAIT)
+	C.sec_hud_set_implants()
+
+	add_item_actions(C)
+
 
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
 	forceMove(C)
 	imp_in = C
 	implanted = TRUE
 	C.sec_hud_set_implants()
+	add_item_actions(C)
+
+/obj/item/weapon/implant/proc/implant_removal(mob/host)
+	if(implant_trait && istype(host))
+		REMOVE_TRAIT(host, implant_trait, IMPLANT_TRAIT)
+	remove_item_actions(host)
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -87,6 +105,7 @@
 /obj/item/weapon/implant/tracking
 	name = "tracking implant"
 	desc = "Track with this."
+	implant_trait = TRAIT_VISUAL_TRACK
 	var/id = 1.0
 
 /obj/item/weapon/implant/tracking/get_data()
@@ -147,7 +166,7 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/dexplosive/activate(cause)
 	if((!cause) || (!src.imp_in))	return 0
-	explosion(src, -1, 0, 2, 3, 0)//This might be a bit much, dono will have to see.
+	explosion(src, -1, 0, 2, 3)//This might be a bit much, dono will have to see.
 	if(src.imp_in)
 		imp_in.gib()
 
@@ -286,8 +305,29 @@ Implant Specifics:<BR>"}
 	icon_state = "implant"
 	uses = 3
 
-	action_button_name = "Adrenaline implant"
-	action_button_is_hands_free = TRUE
+	item_action_types = list(/datum/action/item_action/implant/adrenaline_implant)
+
+/datum/action/item_action/implant/adrenaline_implant
+	name = "Adrenaline implant"
+
+/datum/action/item_action/implant/adrenaline_implant/Activate()
+	var/obj/item/weapon/implant/adrenaline/S = target
+	S.uses--
+	to_chat(S.imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	if(ishuman(S.imp_in))
+		var/mob/living/carbon/human/H = S.imp_in
+		H.setHalLoss(0)
+		H.shock_stage = 0
+	S.imp_in.stat = CONSCIOUS
+	S.imp_in.SetParalysis(0)
+	S.imp_in.SetStunned(0)
+	S.imp_in.SetWeakened(0)
+	S.imp_in.reagents.add_reagent("tricordrazine", 20)
+	S.imp_in.reagents.add_reagent("doctorsdelight", 25)
+	S.imp_in.reagents.add_reagent("oxycodone", 5)
+	S.imp_in.reagents.add_reagent("stimulants", 4)
+	if (!S.uses)
+		qdel(S)
 
 /obj/item/weapon/implant/adrenaline/get_data()
 	var/dat = {"
@@ -302,44 +342,30 @@ Implant Specifics:<BR>"}
 <b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
 	return dat
 
-/obj/item/weapon/implant/adrenaline/ui_action_click()
-	uses--
-	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	if(ishuman(imp_in))
-		var/mob/living/carbon/human/H = imp_in
-		H.halloss = 0
-		H.shock_stage = 0
-	imp_in.stat = CONSCIOUS
-	imp_in.SetParalysis(0)
-	imp_in.SetStunned(0)
-	imp_in.SetWeakened(0)
-	imp_in.reagents.add_reagent("tricordrazine", 20)
-	imp_in.reagents.add_reagent("doctorsdelight", 25)
-	imp_in.reagents.add_reagent("oxycodone", 5)
-	imp_in.reagents.add_reagent("stimulants", 4)
-	if (!uses)
-		qdel(src)
-
 /obj/item/weapon/implant/emp
 	name = "emp implant"
 	desc = "Triggers an EMP."
 	icon_state = "emp"
 	uses = 3
 
-	action_button_name = "EMP pulse"
-	action_button_is_hands_free = TRUE
+	item_action_types = list(/datum/action/item_action/implant/emp_implant)
 
-/obj/item/weapon/implant/emp/ui_action_click()
-	if (uses > 0)
-		empulse(imp_in, 3, 5)
-		uses--
-		if (!uses)
-			qdel(src)
+/datum/action/item_action/implant/emp_implant
+	name = "EMP implant"
+
+/datum/action/item_action/implant/emp_implant/Activate()
+	var/obj/item/weapon/implant/emp/S = target
+	if (S.uses > 0)
+		empulse(S.imp_in, 3, 5)
+		S.uses--
+		if (!S.uses)
+			qdel(S)
 
 /obj/item/weapon/implant/chem
 	name = "chemical implant"
 	desc = "Injects things."
 	allow_reagents = 1
+	implant_trait = TRAIT_VISUAL_CHEM
 
 /obj/item/weapon/implant/chem/get_data()
 	var/dat = {"
@@ -374,7 +400,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 /obj/item/weapon/implant/chem/activate(cause)
-	if((!cause) || (!src.imp_in))	return 0
+	if((!cause) || (!src.imp_in))
+		return 0
 	var/mob/living/carbon/R = src.imp_in
 	reagents.trans_to(R, cause)
 	to_chat(R, "You hear a faint *beep*.")
@@ -544,15 +571,19 @@ var/global/list/death_alarm_stealth_areas = list(
 	desc = "Stores up to two big items in a bluespace pocket."
 	icon_state = "implant_evil"
 	origin_tech = "materials=2;magnets=4;bluespace=5;syndicate=4"
-	action_button_name = "Bluespace pocket"
 	var/obj/item/weapon/storage/internal/imp/storage
+	item_action_types = list(/datum/action/item_action/implant/storage_implant)
+
+/datum/action/item_action/implant/storage_implant
+	name = "Bluespace pocket"
+
+/datum/action/item_action/implant/storage_implant/Activate()
+	var/obj/item/weapon/implant/storage/S = target
+	S.storage.open(S.imp_in)
 
 /obj/item/weapon/implant/storage/atom_init()
 	. = ..()
 	storage = new /obj/item/weapon/storage/internal/imp(src)
-
-/obj/item/weapon/implant/storage/ui_action_click()
-	storage.open(imp_in)
 
 /obj/item/weapon/implant/storage/proc/removed()
 	storage.close_all()
@@ -583,3 +614,40 @@ var/global/list/death_alarm_stealth_areas = list(
 <b>Special Features:</b> Less-than-lethal controlled shocks.<BR>
 <b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
 	return dat
+
+/obj/item/weapon/implant/blueshield
+	name = "blueshield implant"
+	desc = "Subtle brainwashing."
+	var/last_examined = 0
+
+/obj/item/weapon/implant/blueshield/get_data()
+	var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen \"Blueshield\" Experimental Initiative<BR>
+<b>Life:</b> Activates upon injection.<BR>
+<b>Important Notes:</b> Subtly directs user to protect heads of staff.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains special hormones which affect host's brain.<BR>
+<b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
+	return dat
+
+/obj/item/weapon/implant/blueshield/implanted(mob/source)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/implant/blueshield/process()
+	if (!implanted)
+		STOP_PROCESSING(SSobj, src)
+		return
+	if(!imp_in)
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	if(world.time > last_examined + 6000)
+		SEND_SIGNAL(imp_in, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
+		SEND_SIGNAL(imp_in, COMSIG_ADD_MOOD_EVENT, "blueshield", /datum/mood_event/blueshield)
+
+/obj/item/weapon/implant/fake_loyal
+	name = "loyaIty implant"
+	desc = "Makes you loyal or such."
+	implant_trait = TRAIT_FAKELOYAL_VISUAL

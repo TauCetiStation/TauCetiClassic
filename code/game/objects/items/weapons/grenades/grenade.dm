@@ -13,14 +13,17 @@
 	var/det_time = 50
 	var/activate_sound = 'sound/weapons/armbomb.ogg'
 
-	action_button_name = "Activate Grenade"
+	item_action_types = list(/datum/action/item_action/hands_free/activate_grenade)
+
+/datum/action/item_action/hands_free/activate_grenade
+	name = "Activate Grenade"
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/user)
-	if((CLUMSY in user.mutations) && prob(50))
+	if(user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 		activate(user)
 		add_fingerprint(user)
-		addtimer(CALLBACK(src, .proc/prime), 5)
+		addtimer(CALLBACK(src, PROC_REF(prime)), 5)
 		return 0
 	return 1
 
@@ -53,9 +56,10 @@
 			log_game("[key_name(usr)] has primed a [name] for detonation at [T.loc] [COORD(T)].")
 
 	icon_state = initial(icon_state) + "_active"
+	update_item_actions()
 	active = 1
 	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-	addtimer(CALLBACK(src, .proc/prime), det_time)
+	addtimer(CALLBACK(src, PROC_REF(prime)), det_time)
 
 /obj/item/weapon/grenade/proc/prime()
 	var/turf/T = get_turf(src)
@@ -63,7 +67,7 @@
 		T.hotspot_expose(700,125)
 
 /obj/item/weapon/grenade/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		switch(det_time)
 			if(1)
 				det_time = 3 SECONDS

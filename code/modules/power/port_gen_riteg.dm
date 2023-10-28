@@ -2,8 +2,8 @@
 
 /obj/machinery/power/port_gen/riteg
 	name = "C.H.E.R.N.O.B.Y.L-type Portable Emergency Generator"
-	icon_state = "gen_gen_chernobyl-o-off"
-	icon_state_on = "gen_gen_chernobyl-o-on"
+	icon_state = "gen_chernobyl-off"
+	icon_state_on = "gen_chernobyl-on"
 	power_gen = 5000
 	var/rad_cooef = 40
 	var/rad_range = 1
@@ -11,7 +11,7 @@
 /obj/machinery/power/port_gen/riteg/attackby(obj/item/O, mob/user, params)
 	if(!active)
 
-		if(iswrench(O))
+		if(iswrenching(O))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -69,19 +69,12 @@
 
 	updateUsrDialog()
 
-
-/obj/machinery/power/port_gen/riteg/proc/Pulse_radiation()
-	for(var/mob/living/l in range(rad_range,src))
-		l.show_message("<span class=\"warning\">You feel warm</span>", SHOWMSG_FEEL)
-		var/rads = rad_cooef * sqrt( 1 / (get_dist(l, src) + 1) )
-		l.apply_effect(rads, IRRADIATE)
-
 /obj/machinery/power/port_gen/riteg/process()
 
 	if(active  && !crit_fail && anchored && powernet)
 		add_avail(power_gen * power_output)
 		UseFuel()
-		Pulse_radiation()
+		irradiate_in_dist(get_turf(src), rad_cooef, rad_range)
 		updateDialog()
 
 	else

@@ -46,7 +46,7 @@
 
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
-		explosion(get_turf(src),8,12,18,12)
+		explosion(get_turf(src),8,12,18,12, ignorecap = TRUE)
 		if(src) qdel(src)
 
 	if(update_shield_icons && !shield_icon_delay)
@@ -149,7 +149,7 @@
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user)
 	if(!istype(W) || !user) return
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(!anchored)
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \

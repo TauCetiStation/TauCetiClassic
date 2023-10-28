@@ -5,13 +5,13 @@
 /datum/religion_rites/standing/food
 	name = "Создание Еды"
 	desc = "Нужно больше и больше еды!"
-	ritual_length = (2.1 MINUTES)
-	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
-						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
-						"...and driven far away from this place by Your authority, may they not harm anyone, but these fields and waters...",
-						"...and the gardens will be left completely at rest so that all that is growing and born in them will serve for thy glory...",
-						"...and our needs helped, for we praise you...")
-	invoke_msg = "...and bring glory to you!!"
+	ritual_length = (30 SECONDS)
+	ritual_invocations = list("О Господь, мы молим тебя: услышь наши молитвы, чтобы они были исполнены по милости Твоей, во славу имени Твоего...",
+						"...Наши посевы и сады, мы заслужили кару за наши грехи, мы страдаем из-за птиц, червей, мышей, кротов и других тварей Господних...",
+						"...и изгнанные Твоей властью в дебри пустынные, пусть они не причинят вреда никому, кроме этих полей и вод...",
+						"...и сады будут оставлены в покое, все, что растет и рождается в них, будет служить во славу твою...",
+						"...и наши горечи сокрушены , ибо мы восхваляем тебя...")
+	invoke_msg = "..ИБО МЫ ВОСХВАЛЯЕМ ТЕБЯ!!"
 	favor_cost = 300
 
 	needed_aspects = list(
@@ -28,12 +28,10 @@
 	for(var/i in 1 to amount)
 		var/chosen = pick(borks)
 		var/obj/B = new chosen(location)
-		var/obj/randomcatcher/CATCH
 		if(!B.icon_state || !B.reagents || !B.reagents.reagent_list.len)
 			QDEL_NULL(B)
-			CATCH = new /obj/randomcatcher(location)
-			B = CATCH.get_item(pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage))
-			QDEL_NULL(CATCH)
+			var/random_type = PATH_OR_RANDOM_PATH(pick(/obj/random/foods/drink_can, /obj/random/foods/drink_bottle, /obj/random/foods/food_snack, /obj/random/foods/food_without_garbage))
+			B = new random_type
 		if(B && prob(80))
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH, SOUTH, EAST, WEST))
@@ -66,17 +64,16 @@
 /datum/religion_rites/standing/pray
 	name = "Молитва"
 	desc = "За добрые слова вы получаете немного favor'а."
-	ritual_length = (4 MINUTES)
-	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
-							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
-							  "...have mercy on us...",
-							  "...Lord have mercy on us, for we have hoped in Thee, be not angry with us greatly, neither remember our iniquities...",
-							  "...but look upon us now as Thou art compassionate, and deliver us from our enemies...",
-							  "...for Thou art our God, and we, Thy people; all are the works of Thy hands, and we call upon Thy name...",
-							  "...Both now and ever, and unto the ages of ages...",
-							  "...The door of compassion open unto us 0 blessed Theotokos, for hoping in thee...",
-							  "...let us not perish; through thee may we be delivered from adversities, for thou art the salvation of the Our race...")
-	invoke_msg = "Lord have mercy. Twelve times."
+	ritual_length = (2 MINUTES)
+	ritual_invocations = list("Господи помилуй, О Гопсподи помилуй...",
+							  "...Воставше от сна, припадаем Тебе, Блаже, и ангельскую песнь воспоем Тебе...",
+							  "...Свят будь, Боже, Богородица помилуй нас...",
+							  "...Господи помилуй...",
+							  "...Боже, очисти меня грешного, как никогда сотворив благое перед Тобою...",
+							  "...но избави меня от лукавого, и да будет во мне воля Твоя...",
+							  "...Да неосужденно открою уста мои недостойные и восхвалю имя Твое святое...",
+							  "...Отца и Сына и Святого Духа, ныне и присно и во веки веков. Аминь...",)
+	invoke_msg = "Господи помилуй. Двенадцать Раз."
 	favor_cost = 0
 
 	var/adding_favor = 0
@@ -111,14 +108,14 @@
 /datum/religion_rites/standing/honk
 	name = "Клоунский Крик"
 	desc = "Разносит хонк по всей станции."
-	ritual_length = (1.9 MINUTES)
-	ritual_invocations = list("All able to hear, hear!...",
-							  "...This message is dedicated to all of you...",
-							  "...may all of you be healthy and smart...",
-							  "...let your jokes be funny...",
-							  "...and the soul be pure!...",
-							  "...This screech will be devoted to all jokes and clowns...",)
-	invoke_msg = "...So hear it!!!"
+	ritual_length = (1 MINUTES)
+	ritual_invocations = list("Все кто способен слышать, услышьте!...",
+							  "...Данное послание для всех вас...",
+							  "...Пусть будут ваши тела здоровы, а ваши умы светлы...",
+							  "...Пусть будут ваши шутки смешными...",
+							  "...и души ваши чисты!...",
+							  "...Этот крик посвящен всем шуткам и клоунам...",)
+	invoke_msg = "...Да услышьте его!!!"
 	favor_cost = 200
 
 	needed_aspects = list(
@@ -149,11 +146,11 @@
 	name = "Анимация"
 	desc = "Возрождает вещи на алтаре."
 	ritual_length = (50 SECONDS)
-	ritual_invocations = list("I appeal to you - you are the strength of the Lord...",
-							  "...given from the light given by the wisdom of the gods returned...",
-							  "...They endowed Animation with human passions and feelings...",
-							  "...Animation, come from the New Kingdom, rejoice in the light!...",)
-	invoke_msg = "I appeal to you! I am calling! Wake up from sleep!"
+	ritual_invocations = list("Я обращаюсь к тебе - Всевышний...",
+							  "...свет, дарованный мудростью возвратившихся богов...",
+							  "...Они наделили Анимацию человеческими страстями и чувствами...", 
+							  "...Анимация, пришедшая из Нового Царства, радуйся свету!...",)
+	invoke_msg = "Я обращаюсь к тебе! Я взываю! Очнись ото сна!"
 	favor_cost = 80
 
 	needed_aspects = list(
@@ -206,14 +203,14 @@
 	name = "Испуг"
 	desc = "Издаёт из алтаря страшный крик."
 	ritual_length = (20 SECONDS)
-	ritual_invocations = list("I call the souls of people here, I send your soul to the otherworldly thief, in a black mirror...",
-							  "...Let Evil take you and lock you up...",
-							  "...torment you, torture you, torture you all, exhaust you, destroy you...",
-							  "...I give evil to your soul...",
-							  "...I instill Evil in your head, in your heart, in your liver, in your blood...",
-							  "...I do not order...",
-							  "...As I said, it will be so! I close with a key, close with a lock...")
-	invoke_msg = "...I conjure! I conjure! I conjure!"
+	ritual_invocations = list("Я призываю сюда души людей, я отправляю твою душу к потустороннему вору, в черное зеркало...",
+							  "...Позволь злу захватить тебя и запереть...",
+							  "...Мучить тебя, пытать тебя, истощать тебя, уничтожать тебя...",
+							  "...Я вселяю зло в твою душу...",
+							  "...Я впускаю зло в твою голову, в твое сердце, в твою печень, в твою кровь...",
+							  "...Я не приказываю...",
+							  "...Как я сказал, так и будет! Я закрываю на ключ, закрываю на замок...")
+	invoke_msg = "...Я заклинаю! Я заклинаю! Я заклинаю!"
 	favor_cost = 100
 
 	needed_aspects = list(
@@ -242,7 +239,7 @@
 		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
 		I.override = TRUE
 		M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
-		addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 10 SECONDS * divine_power)
+		addtimer(CALLBACK(src, PROC_REF(remove_spook_effect), M), 10 SECONDS * divine_power)
 
 	var/list/targets = list()
 	for(var/turf/T in range(4))
@@ -258,15 +255,15 @@
 /datum/religion_rites/standing/illuminate
 	name = "Озарение"
 	desc = "Создаёт пучок света над вами."
-	ritual_length = (50 SECONDS)
-	ritual_invocations = list("Come to me, wisp...",
-							  "...Appear to me the one whom everyone wants...",
-							  "...to whom they turn for help!..",
-							  "...Good wisp, able to reveal the darkness...",
-							  "...I ask you for help...",
-							  "...Hear me, do not reject me...",
-							  "...for it's not just for the sake of curiosity that I disturb your peace...")
-	invoke_msg = "...I pray, please come!"
+	ritual_length = (30 SECONDS)
+	ritual_invocations = list("Иди ко мне, огонек...",
+							  "...Явись мне тем, кого все хотят...",
+							  "...к кому обращаются за помощью!...",
+							  "...Хороший огонек, способный рассеять тьму...",
+							  "...я прошу тебя о помощи...",
+							  "...Услышь меня, не отвергай меня...",
+							  "...Ибо я нарушаю твой покой не только из любопытства...")
+	invoke_msg = "...Я молю, пожалуйста, приди!"
 	favor_cost = 200
 
 	var/shield_icon = "at_shield2"
@@ -317,15 +314,15 @@
 /datum/religion_rites/standing/revive_animal
 	name = "Возрождение Животного"
 	desc = "Возвращает душу животного из лучшего мира."
-	ritual_length = (50 SECONDS)
-	ritual_invocations = list("I will say, whisper, quietly say such words...",
-							  "...May every disease leave you...",
-							  "...You will not know that you are in torment, pain and suffering...",
-							  "...No one can hurt...",
-							  "...You must poison the whole, chase the tails from the body a animal...",
-							  "... let them go to the raw ground, the water goes and does not come back...",
-							  "...God helps, and in my words the work is strengthened...",)
-	invoke_msg = "...Let it be so!"
+	ritual_length = (30 SECONDS)
+	ritual_invocations = list("Я скажу, прошепчу, тихо произнесу такие слова...",
+							  "...Пусть каждая болезнь оставит тебя...",
+							  "...Ты не узнаешь, что испытываешь мучения, боль и страдание...",
+							  "...Никто не может причинить вреда...",
+							  "...Ты должен вытравить все целиком, изгнать заразу из тела животного...",
+							  "...Пусть она уйдет в сырую землю, с водой уйдет и не вернется обратно...",
+							  "...Бог помогает и мои слова становятся весомее...",)
+	invoke_msg = "...Да будет так!"
 	favor_cost = 150
 	can_talismaned = FALSE
 

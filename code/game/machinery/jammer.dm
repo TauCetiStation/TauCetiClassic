@@ -87,7 +87,7 @@
 		return
 
 	if(!locked)
-		if (ismultitool(I))
+		if (ispulsing(I))
 			var/new_radius = clamp(input(user, "Set new radius in range 1-5", "Radius", radius) as num, 1, 5)
 
 			if(Adjacent(usr))
@@ -111,7 +111,7 @@
 		return
 	if(prob(80/severity))
 		stat |= EMPED
-		addtimer(CALLBACK(src, .proc/after_emp), 10 MINUTES / severity)
+		addtimer(CALLBACK(src, PROC_REF(after_emp)), 10 MINUTES / severity)
 
 /obj/machinery/telescience_jammer/proc/after_emp()
 	stat &= ~EMPED

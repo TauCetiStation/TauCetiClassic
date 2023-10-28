@@ -46,7 +46,7 @@ var/global/list/image/splatter_cache=list()
 				qdel(B)
 
 		drytime = world.time + DRYING_TIME * (amount + 1)
-		addtimer(CALLBACK(src, .proc/dry), drytime)
+		addtimer(CALLBACK(src, PROC_REF(dry)), drytime)
 
 /obj/effect/decal/cleanable/blood/update_icon()
 	color = basedatum.color
@@ -91,7 +91,7 @@ var/global/list/image/splatter_cache=list()
 			else
 				feet_blood_DNA = dirt_DNA.Copy()
 
-		update_inv_shoes()
+		update_inv_slot(SLOT_SHOES)
 		if(blood && lying)
 			crawl_in_blood(dirt_cover)
 
@@ -129,7 +129,7 @@ var/global/list/image/splatter_cache=list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
 		user.hand_dirt_datum = new(basedatum)
-		user.update_inv_gloves()
+		user.update_inv_slot(SLOT_GLOVES)
 		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
 
 /obj/effect/decal/cleanable/blood/splatter
@@ -269,7 +269,7 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/mucus/atom_init()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/set_dry, 1), DRYING_TIME * 2)
+	addtimer(CALLBACK(src, PROC_REF(set_dry), 1), DRYING_TIME * 2)
 
 /obj/effect/decal/cleanable/mucus/proc/set_dry(value) // just to change var using timer, we need a whole new proc :(
 	dry = value

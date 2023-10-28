@@ -97,7 +97,7 @@
 			user.drop_from_inventory(W, src)
 			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
 		return
-	else if(ismultitool(W))
+	else if(ispulsing(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			if(telepad)
@@ -174,7 +174,7 @@
 
 	if(SEND_SIGNAL(exit, COMSIG_ATOM_INTERCEPT_TELEPORT))
 		return FALSE
-	
+
 	active_wormhole = new (telepad.loc, exit)
 	active_wormhole.linked_console = src
 	return active_wormhole

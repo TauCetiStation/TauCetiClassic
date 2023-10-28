@@ -359,12 +359,24 @@
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
 
+/obj/item/rig_module/cooling_unit/advanced
+	name = "advanced hardsuit mounted cooling unit"
+	charge_consumption = 20
+	interface_name = "advanced mounted cooling unit"
+
 /obj/item/rig_module/emp_shield
 	name = "hardsuit EMP shield"
 	icon_state = "powersink"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 5 EMPs."
 	origin_tech = "engineering=2;magnets=2"
 	interface_name = "EMP shield"
-	interface_desc = "Device for protecting hardsuit against EMPs."
+	var/uses = 5
+
+/obj/item/rig_module/emp_shield/adv
+	name = "hardsuit advanced EMP shield"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 20 EMPs."
+	origin_tech = "engineering=2;magnets=2;bluespace=3;"
+	uses = 20
 
 /obj/item/rig_module/teleporter_stabilizer
 	name = "hardsuit teleporter stabilizer"
@@ -483,6 +495,67 @@
 
 	return FALSE
 
+/obj/item/rig_module/selfrepair/adv
+	name = "hardsuit advanced self-repair module"
+
+/obj/item/rig_module/selfrepair/adv/process_module()
+	if(!active)
+		return passive_power_cost
+
+	var/mob/living/carbon/human/H = holder.wearer
+	var/obj/item/organ/external/DBP
+
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.is_robotic())
+			if(BP.brute_dam)
+				DBP = BP
+			else if(BP.burn_dam)
+				DBP = BP
+
+	if(!holder.brute_damage && !holder.burn_damage && !DBP)
+		deactivate()
+		to_chat(H, "<span class='notice'>Self-repair is completed</span>")
+		return passive_power_cost
+
+	var/datum/rig_charge/charge = charges["metal"]
+
+	if(!charge)
+		deactivate()
+		return FALSE
+
+	active_power_cost = passive_power_cost
+	if(holder.brute_damage && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+
+		charge.charges -= chargeuse
+		holder.repair_breaches(BRUTE, chargeuse, H, stop_messages = TRUE)
+
+		active_power_cost = chargeuse * 150
+	else if(holder.burn_damage && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+
+		charge.charges -= chargeuse
+		holder.repair_breaches(BURN, chargeuse, H, stop_messages = TRUE)
+
+		active_power_cost = chargeuse * 150
+	else if(DBP?.brute_dam && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+		DBP.heal_damage(10, 0, 0, 1)
+		charge.charges -= chargeuse
+
+		active_power_cost = chargeuse * 200
+	else if(DBP?.burn_dam && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+		DBP.heal_damage(0, 10, 0, 1)
+		charge.charges -= chargeuse
+
+		active_power_cost = chargeuse * 200
+	else
+		deactivate()
+		to_chat(H, "<span class='danger'>Not enough materials to continue self-repair</span>")
+
+	return active_power_cost
+
 /obj/item/rig_module/med_teleport
 	name = "hardsuit medical teleport system"
 	origin_tech = "programming=2;materials=2;bluespace=1"
@@ -558,7 +631,7 @@
 	if(damage == MODULE_DAMAGED && prob(2))
 		if(holder.wearer)
 			to_chat(holder.wearer, "<span class='warning'>Your damaged [name] irradiates you</span>")
-			holder.wearer.apply_effect(rand(5, 25), IRRADIATE, 0)
+			irradiate_one_mob(holder.wearer, rand(5, 25))
 
 	if(damage >= MODULE_DESTROYED)
 		if(!unstable)
@@ -570,7 +643,7 @@
 			else
 				holder.visible_message("<span class='warning'>The nuclear reactor inside [holder] is gloving red and looks very unstable</span>")
 			unstable = TRUE
-			addtimer(CALLBACK(src, .proc/boom), rand(60 SECONDS, 120 SECONDS))
+			addtimer(CALLBACK(src, PROC_REF(boom)), rand(60 SECONDS, 120 SECONDS))
 			light_color = LIGHT_COLOR_FLARE
 			set_light(5)
 
@@ -657,7 +730,7 @@
 /obj/item/rig_module/device/extinguisher/engage(atom/target)
 	. = ..()
 	if(device)
-		addtimer(CALLBACK(src, .proc/update_foam_amount), 5) // because extinguisher uses spawns
+		addtimer(CALLBACK(src, PROC_REF(update_foam_amount)), 5) // because extinguisher uses spawns
 
 /obj/item/rig_module/device/extinguisher/proc/update_foam_amount()
 	if(device)
@@ -708,7 +781,7 @@
 
 	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
 	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
-	INVOKE_ASYNC(src, .proc/spray_at, T)
+	INVOKE_ASYNC(src, PROC_REF(spray_at), T)
 
 	return TRUE
 

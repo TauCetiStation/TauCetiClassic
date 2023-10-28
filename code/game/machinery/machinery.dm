@@ -112,6 +112,7 @@ Class Procs:
 	damage_deflection = 15
 	resistance_flags = CAN_BE_HIT
 
+	var/icon_state_active = 0
 	var/stat = 0
 	var/emagged = 0 // Can be 0, 1 or 2
 	var/use_power = IDLE_POWER_USE
@@ -169,15 +170,18 @@ Class Procs:
 	set_power_use(NO_POWER_USE)
 	machines -= src
 
+	stop_processing()
+
+	dropContents()
+	return ..()
+
+/obj/machinery/proc/stop_processing()
 	if (speed_process)
 		STOP_PROCESSING(SSfastprocess, src)
 	else if (process_last)
 		STOP_PROCESSING_NAMED(SSmachines, src, processing_second)
 	else
 		STOP_PROCESSING(SSmachines, src)
-
-	dropContents()
-	return ..()
 
 /obj/machinery/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -289,15 +293,37 @@ Class Procs:
 
 /**
  * Can this particular `user` interact with the machine?
- * Calls `is_operational()` first.
- * If you're going to override it, in most cases don't forget: `. = ..()`
+ * Does not check access or distance
  */
 /obj/machinery/proc/can_interact_with(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(user.incapacitated())
+		return FALSE
+	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user))) //can we just swap it for IsAdvancedToolUser
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return FALSE
 	if(!is_operational() && !interact_offline)
 		return FALSE
 	if(panel_open && !interact_open)
 		return FALSE
-	if(!can_mob_interact(user))
+	if(user.interact_prob_brain_damage(src))
+		return FALSE
+
+	return TRUE
+
+/**
+ * Any input()/alert() pause proc, so sometimes we need to check after if user still around and can interact
+ * For topics and tgui_act
+ * todo: we need atom analogues for attack_hand/attackby/topic/etc.
+ */
+/obj/machinery/proc/can_still_interact_with(mob/user)
+	// in the future we maybe need to add or change to TGUI can_use_topic, should be fine now
+	if(usr.can_use_topic(src) != STATUS_INTERACTIVE || !can_interact_with(user))
+		usr.unset_machine(src)
+		return FALSE
+	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !allowed(user))
+		allowed_fail(user)
 		return FALSE
 
 	return TRUE
@@ -333,6 +359,10 @@ Class Procs:
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
 		return TRUE
+
+	if(!can_interact_with(usr))
+		return
+
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
@@ -382,11 +412,6 @@ Class Procs:
 
 // set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user)
-	if((user.lying || user.stat != CONSCIOUS) && !IsAdminGhost(user))
-		return TRUE
-	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return TRUE
 	if(!can_interact_with(user))
 		return TRUE
 	if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
@@ -414,31 +439,52 @@ Class Procs:
 	..()
 	RefreshParts()
 
-/obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
+/obj/machinery/proc/RefreshParts()
+	var/caprat = 0
+	var/binrat = 0
+
+	var/manrat = 0
+	var/lasrat = 0
+	var/scanrat = 0
+
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		caprat += C.rating
+	for(var/obj/item/weapon/stock_parts/matter_bin/C in component_parts)
+		binrat += C.rating
+
+	for(var/obj/item/weapon/stock_parts/manipulator/C in component_parts)
+		manrat += C.rating
+	for(var/obj/item/weapon/stock_parts/micro_laser/C in component_parts)
+		lasrat += C.rating
+	for(var/obj/item/weapon/stock_parts/scanning_module/C in component_parts)
+		scanrat += C.rating
+
+	idle_power_usage = initial(idle_power_usage) * caprat * CAPACITOR_POWER_MULTIPLIER * binrat * MATTERBIN_POWER_MULTIPLIER
+	active_power_usage = initial(active_power_usage) * manrat * MANIPULATOR_POWER_MULTIPLIER * lasrat * LASER_POWER_MULTIPLIER * scanrat * SCANER_POWER_MULTIPLIER
 	return
 
 /obj/machinery/proc/assign_uid()
 	uid = gl_uid
 	gl_uid++
 
-/obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
-	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
+/obj/machinery/proc/default_pry_open(obj/item/weapon/I)
+	. = isprying(I) && !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT))
 	if(.)
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[usr] pry open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 		return 1
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
-	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
+/obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/I, ignore_panel = 0)
+	. = isprying(I) && (panel_open || ignore_panel) && !(flags & NODECONSTRUCT)
 	if(.)
 		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>"))
 			return
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE)
 
-/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
-	if(istype(S) &&  !(flags & NODECONSTRUCT))
+/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/I)
+	if(isscrewing(I) &&  !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!panel_open)
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to open the maintenance hatch of [src].</span>"))
@@ -455,19 +501,19 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
-	if(panel_open && istype(W))
+/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/I)
+	if(panel_open && iswrenching(I))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		set_dir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
 		return 1
 	return 0
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = SKILL_TASK_VERY_EASY)
-	if(istype(W) &&  !(flags & NODECONSTRUCT))
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/I, time = SKILL_TASK_VERY_EASY)
+	if(iswrenching(I) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		if(W.use_tool(src, user, time, volume = 50, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
+		if(I.use_tool(src, user, time, volume = 50, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)

@@ -32,7 +32,7 @@
 		var/datum/religion/cult/C = user.my_religion
 		if(!GetComponent(/datum/component/self_effect) && C.get_tech(RTECH_MIRROR_SHIELD))
 			var/shield_type = /obj/item/weapon/shield/riot/mirror
-			AddComponent(/datum/component/self_effect, shield_type, "#51106bff", CALLBACK(src, .proc/only_cultists), 2 MINUTE, 30 SECONDS, 2 MINUTE)
+			AddComponent(/datum/component/self_effect, shield_type, "#51106bff", CALLBACK(src, PROC_REF(only_cultists)), 2 MINUTE, 30 SECONDS, 2 MINUTE)
 	else
 		to_chat(user, "<span class='warning'>Ошеломляющее чувство страха охватывает тебя при поднятии красного меча, было бы разумно поскорее избавиться от него.</span>")
 		user.make_dizzy(120)
@@ -62,6 +62,9 @@
 		return TRUE
 	return FALSE
 
+/obj/item/weapon/shield/riot/mirror/toggle_wallshield(mob/living/user)
+	to_chat(user, "<span class='warning'>You are fucking INVINCIBLE!</span>")
+
 /obj/item/clothing/glasses/cult_blindfold
 	name = "blindfold"
 	desc = "Covers the eyes, preventing sight. Altough, something wrong with this one..."
@@ -70,6 +73,8 @@
 	vision_flags = SEE_TURFS
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_GLASSES)
 
 /obj/item/clothing/glasses/cult_blindfold/mob_can_equip(M, slot)
 	if(!isliving(M))
@@ -95,17 +100,18 @@
 	desc = "A hood worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
 	flags = HEADCOVERSEYES
-	body_parts_covered = HEAD|EYES
+	body_parts_covered = HEAD|EYES|BLOCKHAIR
 	armor = list(melee = 30, bullet = 20, laser = 30,energy = 25, bomb = 0, bio = 0, rad = 0)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
 
-/obj/item/clothing/suit/cultrobes
+/obj/item/clothing/suit/hooded/cultrobes
 	name = "cult robes"
 	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
+	hoodtype = /obj/item/clothing/head/culthood
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/bible/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 40, bullet = 25, laser = 45,energy = 40, bomb = 25, bio = 10, rad = 0)
@@ -163,8 +169,7 @@
 
 /obj/item/weapon/storage/backpack/cultpack/armor/atom_init()
 	. = ..()
-	new /obj/item/clothing/head/culthood(src)
-	new /obj/item/clothing/suit/cultrobes(src)
+	new /obj/item/clothing/suit/hooded/cultrobes(src)
 	new /obj/item/clothing/shoes/boots/cult(src)
 
 /obj/item/weapon/storage/backpack/cultpack/space_armor
@@ -252,7 +257,7 @@
 	current_user.reset_view(camera)
 	toggle = !toggle
 
-	RegisterSignal(camera, list(COMSIG_PARENT_QDELETING), .proc/feel_pain)
+	RegisterSignal(camera, list(COMSIG_PARENT_QDELETING), PROC_REF(feel_pain))
 
 /obj/item/device/cult_camera/dropped(mob/living/carbon/human/user)
 	. = ..()

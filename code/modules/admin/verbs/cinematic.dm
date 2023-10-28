@@ -13,6 +13,6 @@
 				if(1)
 					override = input(src,"mode = ?","Enter Parameter",null) as anything in list("nuclear emergency","no override")
 				if(0)
-					override = input(src,"mode = ?","Enter Parameter",null) as anything in list("blob","nuclear emergency","AI malfunction","no override")
+					override = input(src,"mode = ?","Enter Parameter",null) as anything in list("blob","nuclear emergency","AI malfunction","replicators","no override")
 			SSticker.station_explosion_cinematic(parameter,override)
 	return

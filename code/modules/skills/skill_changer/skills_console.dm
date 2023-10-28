@@ -30,7 +30,7 @@
 	return scanner && scanner.cartridge != null
 
 /obj/machinery/computer/skills_console/attackby(obj/item/I, mob/user)
-	if(ismultitool(I))
+	if(ispulsing(I))
 		var/obj/item/device/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/optable/skill_scanner))
 			scanner = M.buffer
@@ -101,7 +101,7 @@
 			var/mob/living/carbon/human/H = scanner.victim
 			var/same_user = H == user
 			var/compatible = (H.species.name in scanner.cartridge.compatible_species)
-			if(compatible && !same_user && !H.ismindprotect())
+			if(compatible && !same_user && !(HAS_TRAIT(H, TRAIT_VISUAL_MINDSHIELD) || HAS_TRAIT(H, TRAIT_VISUAL_LOYAL)))
 				return TRUE
 	return FALSE
 

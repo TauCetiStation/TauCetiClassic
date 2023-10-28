@@ -103,7 +103,7 @@
 	repeating = TRUE
 	heal_brute = 1
 
-	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NONE)
 
 /obj/item/stack/medical/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -169,7 +169,7 @@
 	repeating = FALSE
 	heal_burn = 1
 
-	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NONE)
 
 /obj/item/stack/medical/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -355,14 +355,10 @@
 
 	var/mob/living/carbon/human/H = L
 	var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
-
-	if(BP.body_zone == BP_HEAD || BP.body_zone == BP_CHEST || BP.body_zone == BP_GROIN)
-		to_chat(user, "<span class='danger'>You can't apply a splint there!</span>")
-		return FALSE
 	if(BP.status & ORGAN_SPLINTED)
 		to_chat(user, "<span class='danger'>[H]'s [BP.name] is already splinted!</span>")
 		return FALSE
-	if(H == user && ((user.hand && BP.body_zone != BP_R_ARM) || (user.hand && BP.body_zone != BP_L_ARM)))
+	if(H == user && ((!user.hand && BP.body_zone == BP_R_ARM) || (user.hand && BP.body_zone == BP_L_ARM)))
 		to_chat(user, "<span class='danger'>You can't apply a splint to the arm you're using!</span>")
 		return FALSE
 

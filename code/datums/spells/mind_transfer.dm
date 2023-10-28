@@ -83,7 +83,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 			for(var/j=checked_spells.len,(j>0&&checked_spells.len),j--)//While the spell list to check is greater than zero and has spells in it, run this proc.
 				if(prob(base_spell_loss_chance))
 					checked_spells -= pick(checked_spells)//Pick a random spell to remove.
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, victim, "<span class='danger'>The mind transfer has robbed you of a spell.</span>"), msg_wait)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), victim, "<span class='danger'>The mind transfer has robbed you of a spell.</span>"), msg_wait)
 					break//Spell lost. Break loop, going back to the previous for() statement.
 				else//Or keep checking, adding spell chance modifier to increase chance of losing a spell.
 					base_spell_loss_chance += spell_loss_chance_modifier
@@ -129,4 +129,4 @@ Also, you never added distance checking after target is selected. I've went ahea
 	victim.Paralyse(paralysis_amount_victim)
 
 	//After a certain amount of time the victim gets a message about being in a different body.
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, caster, "<span class='warning'>You feel woozy and lightheaded. <b>Your body doesn't seem like your own.</b></span>"), msg_wait)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), caster, "<span class='warning'>You feel woozy and lightheaded. <b>Your body doesn't seem like your own.</b></span>"), msg_wait)

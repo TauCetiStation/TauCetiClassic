@@ -17,6 +17,8 @@
 
 #define iswallturf(A) (istype(A, /turf/simulated/wall))
 
+#define iswaterturf(A) (istype(A, /turf/simulated/floor/beach/water) || istype(A, /turf/unsimulated/beach/water) || istype(A, /turf/unsimulated/jungle/water))
+
 // HUMAN
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
@@ -92,6 +94,8 @@
 
 #define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
 
+#define isreplicator(A) (istype(A, /mob/living/simple_animal/hostile/replicator))
+
 // MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -111,6 +115,8 @@
 #define isbot(A) (istype(A, /obj/machinery/bot))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
+
+#define istagger(A) (istype(A, /obj/item/device/tagger))
 
 // GOONCHAT PORT
 
@@ -135,23 +141,27 @@
 
 // TOOLS HELPERS
 
-#define iswrench(A) (istype(A, /obj/item/weapon/wrench))
+#define iswrenching(I) 	I.get_quality(QUALITY_WRENCHING)
 
-#define iswelder(A) (istype(A, /obj/item/weapon/weldingtool))
+#define iswelding(I) 	I.get_quality(QUALITY_WELDING)
 
-#define iswirecutter(A) (istype(A, /obj/item/weapon/wirecutters))
+#define iscutter(I) 	I.get_quality(QUALITY_CUTTING)
 
-#define isscrewdriver(A) (istype(A, /obj/item/weapon/screwdriver))
+#define isscrewing(I) 	I.get_quality(QUALITY_SCREWING)
 
-#define iscrowbar(A) (istype(A, /obj/item/weapon/crowbar))
+#define isprying(I)		I.get_quality(QUALITY_PRYING)
 
-#define ismultitool(A) (istype(A, /obj/item/device/multitool))
+#define ispulsing(I) 	I.get_quality(QUALITY_PULSING)
+
+#define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
 
 #define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
 
 // OBJECTS
 
 #define isitem(A) (istype(A, /obj/item))
+
+#define isunder(A) (istype(A, /obj/item/clothing/under))
 
 // ROLES / ANTAG
 
@@ -189,11 +199,13 @@
 
 #define istraitor(H) isrole(TRAITOR, H)
 
+#define isimposter(H) isrole(IMPOSTER, H)
+
 #define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
 
 #define ismalf(H) isrole(MALF, H)
 
-#define isnukeop(H) isrole(NUKE_OP, H)
+#define isnukeop(H) (isrole(NUKE_OP, H) || isrole(NUKE_OP_LEADER, H) || isrole(SYNDIESQUADIE, H))
 
 #define iswizard(H) isrole(WIZARD, H)
 
@@ -206,6 +218,8 @@
 #define isERT(H) isrole(RESPONDER, H)
 
 #define isrolezombie(H) isrole(ZOMBIE, H)
+
+#define iszombie(H) (H.get_species() in global.all_zombie_species_names)
 
 #define isalien(H) isrole(XENOMORPH, H)
 

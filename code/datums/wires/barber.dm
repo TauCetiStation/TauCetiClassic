@@ -37,6 +37,6 @@ var/global/const/COLOR_MIXER_OUTPUT_SAFETY = 32
 	switch(index)
 		if(COLOR_MIXER_OUTPUT_SAFETY)
 			var/turf/T = get_turf(pick(viewers(2, src)))
-			INVOKE_ASYNC(CM, /obj/machinery/color_mixer/proc/Spray_at, T)
+			INVOKE_ASYNC(CM, TYPE_PROC_REF(/obj/machinery/color_mixer, Spray_at), T)
 			CM.update_icon()
 			CM.updateUsrDialog()

@@ -35,6 +35,12 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 		new/datum/stack_recipe("lime comfy chair", /obj/structure/stool/bed/chair/comfy/lime, 2, one_per_turf = TRUE, on_floor = TRUE),
 		new/datum/stack_recipe("teal comfy chair", /obj/structure/stool/bed/chair/comfy/teal, 2, one_per_turf = TRUE, on_floor = TRUE),
 		), 2),
+	new/datum/stack_recipe_list("Cabinets", list(
+			new/datum/stack_recipe("Light filling cabinet", /obj/structure/filingcabinet/filingcabinet, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+			new/datum/stack_recipe("Dark filling cabinet", /obj/structure/filingcabinet, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+			new/datum/stack_recipe("Light chest drawer", /obj/structure/filingcabinet/chestdrawer, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+			new/datum/stack_recipe("Dark chest drawer", /obj/structure/filingcabinet/chestdrawer/black, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+		), 4),
 	null,
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2),
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts),
@@ -81,7 +87,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("door control frame", /obj/item/door_control_frame, 1, required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)),
 	new/datum/stack_recipe("metal picture frame", /obj/item/weapon/picture_frame/metal, 1, time = 15),
 	null,
-	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, one_per_turf = TRUE, on_floor = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED))
+	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, one_per_turf = TRUE, on_floor = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED)),
+	new/datum/stack_recipe("windowsill", /obj/structure/windowsill, 2, one_per_turf = TRUE, on_floor = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED), time = 20)
 )
 
 /obj/item/stack/sheet/metal
@@ -107,7 +114,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 /obj/item/stack/sheet/metal/atom_init()
 	recipes = metal_recipes
 	. = ..()
-
 
 /*
  * Plasteel

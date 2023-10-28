@@ -26,11 +26,18 @@
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
 	var/max_contents = 1
+	var/overlay_food_string = "loaded_food"
 
 /obj/item/weapon/kitchen/utensil/atom_init()
 	. = ..()
 	if (prob(60))
 		pixel_y = rand(0, 4)
+
+/obj/item/weapon/kitchen/utensil/proc/create_food_overlay(filling_color)
+	cut_overlays()
+	var/image/IM = new(icon, overlay_food_string)
+	IM.color = filling_color
+	add_overlay(IM)
 
 /obj/item/weapon/kitchen/utensil/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
@@ -38,7 +45,7 @@
 
 	if(user.a_intent != INTENT_HELP)
 		if(user.get_targetzone() == "head" || user.get_targetzone() == "eyes")
-			if((CLUMSY in user.mutations) && prob(50))
+			if(user.ClumsyProbabilityCheck(50))
 				M = user
 			return eyestab(M,user)
 		else
@@ -48,7 +55,7 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/toEat = contents[1]
 		if(istype(toEat))
 			if(CanEat(user, M, toEat, "eat"))
-				toEat.On_Consume(M, user)
+				toEat.attack(M, user, user.get_targetzone(), TRUE)
 				if(toEat)
 					qdel(toEat)
 				cut_overlays()
@@ -62,12 +69,15 @@
 	desc = "SPOON!"
 	icon_state = "spoon"
 	attack_verb = list("attacked", "poked")
+	overlay_food_string = "food_spoon"
+	m_amt = 250
 
 /obj/item/weapon/kitchen/utensil/pspoon
 	name = "plastic spoon"
 	desc = "Super dull action!"
 	icon_state = "pspoon"
 	attack_verb = list("attacked", "poked")
+	overlay_food_string = "food_spoon"
 
 /*
  * Forks
@@ -78,6 +88,8 @@
 	force = 3
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
+	overlay_food_string = "food_fork"
+	m_amt = 300
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
@@ -95,13 +107,14 @@
 	desc = "How do people even hold this?"
 	force = 2
 	icon_state = "sticks"
+	overlay_food_string = "food_sticks"
 
 /obj/item/weapon/kitchen/utensil/pfork
 	name = "plastic fork"
 	desc = "Yay, no washing up to do."
 	icon_state = "pfork"
 	force = 0
-
+	overlay_food_string = "food_fork"
 
 /obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity, params)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
@@ -189,6 +202,22 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "throwing_knife"
 
+/obj/item/weapon/kitchenknife/makeshift_shiv
+	name = "glass shiv"
+	desc = "A shard of sharp glass with a rag tied around"
+	force = 9
+	throwforce = 5
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "glass"
+
+/obj/item/weapon/kitchenknife/makeshift_shiv/phoron
+	name = "phoron glass shiv"
+	desc = "A shard of sharp glass with a rag tied around. Considerably tougher than regular glass shiv."
+	force = 13
+	throwforce = 9
+	icon_state = "pglass"
+
+
 /*
  * Bucher's cleaver
  */
@@ -204,9 +233,6 @@
 	throw_range = 6
 	m_amt = 12000
 	sweep_step = 2
-
-
-
 
 /*
  * Rolling Pins
@@ -225,7 +251,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>The [src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Paralyse(2)

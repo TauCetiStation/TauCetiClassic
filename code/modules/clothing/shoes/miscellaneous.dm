@@ -18,7 +18,7 @@
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
 	icon_state = "s-ninja"
 	permeability_coefficient = 0.01
-	flags = NOSLIP
+	flags = NOSLIP | AIR_FLOW_PROTECT
 	siemens_coefficient = 0.2
 
 	cold_protection = LEGS
@@ -74,7 +74,7 @@
 	return ..()
 
 /obj/item/clothing/shoes/clown_shoes/proc/start_waddling(mob/user)
-	if(CLUMSY in user.mutations)
+	if(user.IsClumsy())
 		slowdown = SHOES_SLOWDOWN
 	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
 
@@ -111,7 +111,7 @@
 	return ..()
 
 /obj/item/clothing/shoes/jolly_gravedigger/proc/start_waddling(mob/user)
-	RegisterSignal(user, list(COMSIG_LIVING_STOP_PULL), .proc/stop_waddling)
+	RegisterSignal(user, list(COMSIG_LIVING_STOP_PULL), PROC_REF(stop_waddling))
 	UnregisterSignal(user, list(COMSIG_LIVING_START_PULL))
 
 	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
@@ -120,7 +120,7 @@
 /obj/item/clothing/shoes/jolly_gravedigger/proc/stop_waddling(mob/user)
 	UnregisterSignal(user, list(COMSIG_LIVING_STOP_PULL))
 	if(slot_equipped == SLOT_SHOES)
-		RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
+		RegisterSignal(user, list(COMSIG_LIVING_START_PULL), PROC_REF(check_coffin))
 	qdel(user.GetComponent(/datum/component/waddle))
 	waddling = FALSE
 
@@ -130,7 +130,7 @@
 		if(user.pulling)
 			check_coffin(user, user.pulling)
 		else
-			RegisterSignal(user, list(COMSIG_LIVING_START_PULL), .proc/check_coffin)
+			RegisterSignal(user, list(COMSIG_LIVING_START_PULL), PROC_REF(check_coffin))
 	else if(waddling)
 		stop_waddling(user)
 
@@ -200,12 +200,12 @@
 	name = "gorlex magboots"
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
-	slowdown_off = 0
+	slowdown_off = 1
 
 /obj/item/clothing/shoes/magboots/ert
 	name = "advanced magboots"
 	desc = "A pair of advanced magboots designed specifically for ERT."
-	slowdown_off = 0
+	slowdown_off = 1
 	icon_state = "advmag0"
 	magboot_state = "advmag"
 

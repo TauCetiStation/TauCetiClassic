@@ -65,3 +65,51 @@
 	var/mob/living/L = user.mob
 	L.swap_hand()
 	return TRUE
+
+/datum/keybinding/living/select_help_intent
+	hotkey_keys = list("1")
+	name = "select_help_intent"
+	full_name = "Select help intent"
+	description = ""
+
+/datum/keybinding/living/select_help_intent/down(client/user)
+	if(issilicon(user.mob))
+		return
+	user.mob?.a_intent_change(INTENT_HELP)
+	return TRUE
+
+/datum/keybinding/living/select_disarm_intent
+	hotkey_keys = list("2")
+	name = "select_push_intent"
+	full_name = "Select push intent"
+	description = ""
+
+/datum/keybinding/living/select_disarm_intent/down(client/user)
+	if(issilicon(user.mob))
+		return
+	user.mob?.a_intent_change(INTENT_PUSH)
+	return TRUE
+
+/datum/keybinding/living/select_grab_intent
+	hotkey_keys = list("3")
+	name = "select_grab_intent"
+	full_name = "Select grab intent"
+	description = ""
+
+/datum/keybinding/living/select_grab_intent/down(client/user)
+	if(issilicon(user.mob))
+		return
+	user.mob?.a_intent_change(INTENT_GRAB)
+	return TRUE
+
+/datum/keybinding/living/select_harm_intent
+	hotkey_keys = list("4")
+	name = "select_harm_intent"
+	full_name = "Select harm intent"
+	description = ""
+
+/datum/keybinding/living/select_harm_intent/down(client/user)
+	if(issilicon(user.mob))
+		return
+	user.mob?.a_intent_change(INTENT_HARM)
+	return TRUE

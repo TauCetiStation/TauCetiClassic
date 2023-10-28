@@ -41,6 +41,8 @@
 	// Type for collector of statistics by this role
 	var/datum/stat/role/stat_type = /datum/stat/role
 
+	var/moveset_type
+
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -98,8 +100,11 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
+	var/mob/living/A = antag.current
 	if(!isnull(skillset_type))
 		M.skills.remove_available_skillset(skillset_type)
+	if(!isnull(moveset_type))
+		A.remove_moveset_source(MOVESET_ROLES)
 
 	remove_antag_hud()
 	if(M.current?.hud_used)
@@ -188,6 +193,9 @@
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	add_antag_hud()
+	var/mob/living/A = antag.current
+	if(!isnull(moveset_type))
+		A.add_moveset(new moveset_type(), MOVESET_ROLES)
 	if(antag.current?.hud_used)
 		add_ui(antag.current.hud_used)
 	SEND_SIGNAL(src, COMSIG_ROLE_POSTSETUP, laterole)
@@ -205,7 +213,7 @@
 	return TRUE
 
 /datum/role/proc/AppendObjective(objective_type, duplicates = 0)
-	if(!duplicates && locate(objective_type) in objectives)
+	if(!duplicates && locate(objective_type) in objectives.objectives)
 		return null
 	var/datum/objective/O
 	if(istype(objective_type, /datum/objective)) //Passed an actual objective
@@ -310,6 +318,9 @@
 
 	return text
 
+/datum/role/proc/GetObjectiveDescription(datum/objective/objective)
+	return "[objective.explanation_text] [objective.completion_to_string()]"
+
 /datum/role/proc/Declare()
 	var/win = TRUE
 	var/text = ""
@@ -320,7 +331,7 @@
 		var/count = 1
 		text += "<ul>"
 		for(var/datum/objective/objective in objectives.GetObjectives())
-			text += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
+			text += "<B>Objective #[count]</B>: [GetObjectiveDescription(objective)]"
 			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
 			if(objective.completed == OBJECTIVE_LOSS) //If one objective fails, then you did not win.
 				win = FALSE

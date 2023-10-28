@@ -8,8 +8,8 @@
 	return pick(\
 					prob(75);/obj/item/weapon/stock_parts/matter_bin,\
 					prob(25);/obj/item/weapon/stock_parts/matter_bin/adv,\
-					prob(4);/obj/item/weapon/stock_parts/matter_bin/super,\
-					prob(1);/obj/item/weapon/stock_parts/matter_bin/bluespace\
+					prob(4);/obj/item/weapon/stock_parts/matter_bin/adv/super,\
+					prob(1);/obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace\
 				)
 
 /obj/random/science/micro_laser
@@ -21,8 +21,8 @@
 	return pick(\
 					prob(75);/obj/item/weapon/stock_parts/micro_laser,\
 					prob(25);/obj/item/weapon/stock_parts/micro_laser/high,\
-					prob(4);/obj/item/weapon/stock_parts/micro_laser/ultra,\
-					prob(1);/obj/item/weapon/stock_parts/micro_laser/quadultra\
+					prob(4);/obj/item/weapon/stock_parts/micro_laser/high/ultra,\
+					prob(1);/obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra\
 				)
 
 /obj/random/science/capacitor
@@ -34,8 +34,8 @@
 	return pick(\
 					prob(75);/obj/item/weapon/stock_parts/capacitor,\
 					prob(25);/obj/item/weapon/stock_parts/capacitor/adv,\
-					prob(4);/obj/item/weapon/stock_parts/capacitor/super,\
-					prob(1);/obj/item/weapon/stock_parts/capacitor/quadratic\
+					prob(4);/obj/item/weapon/stock_parts/capacitor/adv/super,\
+					prob(1);/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic\
 				)
 
 /obj/random/science/scanning_module
@@ -47,8 +47,8 @@
 	return pick(\
 					prob(75);/obj/item/weapon/stock_parts/scanning_module,\
 					prob(25);/obj/item/weapon/stock_parts/scanning_module/adv,\
-					prob(4);/obj/item/weapon/stock_parts/scanning_module/phasic,\
-					prob(1);/obj/item/weapon/stock_parts/scanning_module/triphasic\
+					prob(4);/obj/item/weapon/stock_parts/scanning_module/adv/phasic,\
+					prob(1);/obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic\
 				)
 
 /obj/random/science/manipulator
@@ -60,8 +60,8 @@
 	return pick(\
 					prob(75);/obj/item/weapon/stock_parts/manipulator,\
 					prob(25);/obj/item/weapon/stock_parts/manipulator/nano,\
-					prob(4);/obj/item/weapon/stock_parts/manipulator/pico,\
-					prob(1);/obj/item/weapon/stock_parts/manipulator/femto\
+					prob(4);/obj/item/weapon/stock_parts/manipulator/nano/pico,\
+					prob(1);/obj/item/weapon/stock_parts/manipulator/nano/pico/femto\
 				)
 
 /obj/random/science/stock_part

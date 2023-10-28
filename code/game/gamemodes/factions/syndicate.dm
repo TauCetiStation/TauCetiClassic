@@ -17,6 +17,8 @@
 
 	var/nuke_code
 
+	var/list/team_discounts = list()
+
 /datum/faction/nuclear/AdminPanelEntry()
 	var/dat = ..()
 	var/obj/item/weapon/disk/nuclear/nukedisk
@@ -54,7 +56,7 @@
 	if (!..())
 		return FALSE
 
-	max_roles = clamp((num_players/5), MIN_OPS, MAX_OPS)
+	max_roles = clamp((num_players/7), MIN_OPS, MAX_OPS)
 
 	// Looking for map to nuclear spawn points
 	return length(landmarks_list["Syndicate-Commander"]) > 0 && length(landmarks_list["Syndicate-Spawn"]) > 0
@@ -287,3 +289,12 @@
 
 #undef MAX_OPS
 #undef MIN_OPS
+
+/datum/faction/nuclear/crossfire
+	name = F_SYNDIOPS_CROSSFIRE
+	ID = F_SYNDIOPS_CROSSFIRE
+	var/nuke_landed = FALSE
+
+/datum/faction/nuclear/crossfire/proc/landing_nuke()
+	if(!nuke_landed)
+		create_uniq_faction(/datum/faction/heist/saboteurs)

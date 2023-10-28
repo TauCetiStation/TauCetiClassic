@@ -20,8 +20,8 @@
 		"Cult of Blood" = /turf/simulated/floor/carpet/black
 	)
 
-	carpet_dir_by_name = list(
-		"Cult of Blood" = 9
+	decal_by_name = list(
+		"Cult of Blood",
 	)
 
 	binding_rites = list(
@@ -105,8 +105,8 @@
 		coord_started_anomalies += C
 	next_anomaly = world.time + spawn_anomaly_cd
 
-	RegisterSignal(area, list(COMSIG_AREA_ENTERED), .proc/area_entered)
-	RegisterSignal(area, list(COMSIG_AREA_EXITED), .proc/area_exited)
+	RegisterSignal(area, list(COMSIG_AREA_ENTERED), PROC_REF(area_entered))
+	RegisterSignal(area, list(COMSIG_AREA_EXITED), PROC_REF(area_exited))
 
 	START_PROCESSING(SSreligion, src)
 
@@ -152,13 +152,13 @@
 				var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("husk_s", "electrocuted_generic", "ghost", "zombie", "skeleton", "abductor_s", "electrocuted_base"), layer = INFRONT_MOB_LAYER, loc = target)
 				I.override = TRUE
 				target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", I, H)
-				addtimer(CALLBACK(src, .proc/remove_spook_effect, target), 3 MINUTES)
+				addtimer(CALLBACK(src, PROC_REF(remove_spook_effect), target), 3 MINUTES)
 			else
 				if(!H.contents.len)
 					return
 				var/obj/item/I = pick(H.contents)
 				I.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /obj/effect/decal/remains/human, I)
-				addtimer(CALLBACK(src, .proc/remove_spook_effect, I), 3 MINUTES)
+				addtimer(CALLBACK(src, PROC_REF(remove_spook_effect), I), 3 MINUTES)
 
 
 		else if(prob(1)) // temp alt_apperance of nar-sie
@@ -166,7 +166,7 @@
 				return
 			var/obj/structure/altar_of_gods/altar = pick(altars)
 			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /atom/movable/narsie, altar)
-			addtimer(CALLBACK(src, .proc/remove_spook_effect, altar), 10 MINUTES)
+			addtimer(CALLBACK(src, PROC_REF(remove_spook_effect), altar), 10 MINUTES)
 
 		else if(prob(1)) // 6/100000000 chance, or 0,000006% wow
 			H.say(pick(possible_human_phrases))
@@ -195,7 +195,7 @@
 		var/anom = pick(strange_anomalies)
 		var/rand_time = force ? 0 : rand(1 SECOND, 1 MINUTE)
 		time += rand_time
-		addtimer(CALLBACK(src, .proc/create_anomaly, anom, T, C), rand_time)
+		addtimer(CALLBACK(src, PROC_REF(create_anomaly), anom, T, C), rand_time)
 
 	if(!force)
 		next_anomaly = world.time + spawn_anomaly_cd + time

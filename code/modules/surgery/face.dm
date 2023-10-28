@@ -190,7 +190,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s screen with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s screen with \the [tool]!</span>")
-	BP.take_damage(60, 0, DAM_SHARP|DAM_EDGE, tool)
+	BP.take_damage(6, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/face/pry_screen
 	allowed_tools = list(
@@ -251,7 +251,7 @@
 	if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 		BP.take_damage(0, 6, used_weapon = tool)
 
-	else if(iswrench(tool))
+	else if(iswrenching(tool))
 		BP.take_damage(12, 0, used_weapon = tool)
 		BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 

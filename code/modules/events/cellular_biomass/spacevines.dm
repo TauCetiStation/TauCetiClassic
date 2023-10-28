@@ -25,7 +25,7 @@
 /obj/structure/spacevine/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
 	var/temperature = W.get_current_temperature()
-	if(W.sharp || W.get_quality(QUALITY_CUTTING) > 0 || temperature > 3000)
+	if(W.sharp || iscutter(W) > 0 || temperature > 3000)
 		qdel(src)
 	else
 		return ..()
@@ -183,6 +183,6 @@
 				return
 	qdel(src)
 
-/obj/structure/spacevine/fire_act(null, temperature, volume) //hotspots kill vines
-	if(temperature > T0C+100)
+/obj/structure/spacevine/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume) //hotspots kill vines
+	if(exposed_temperature > T0C+100)
 		qdel(src)

@@ -4,9 +4,9 @@
 	If you are an antag or a head of staff, you get 2 votes
 */
 #define VOTE_WEIGHT_NONE   0
-#define VOTE_WEIGHT_LOW    0.3
+#define VOTE_WEIGHT_LOW    0.5
 #define VOTE_WEIGHT_NORMAL 1
-#define VOTE_WEIGHT_HIGH   2
+#define VOTE_WEIGHT_HIGH   1.5
 #define MINIMUM_VOTE_LIFETIME 15 MINUTES
 
 
@@ -17,7 +17,7 @@
 	var/description = ""
 	var/warning_message = ""
 	var/list/choice_types = list(/datum/vote_choice) //Choices will be initialized from this list
-	var/list/choices = list() // contents initiated /datum/vote_choice
+	var/list/datum/vote_choice/choices = list() // contents initiated /datum/vote_choice
 	var/initiator = null
 
 	var/only_admin = TRUE //Is only admins can initiate this?
@@ -37,6 +37,8 @@
 
 	var/vote_period = null //overrides default config.vote_period
 
+	var/datum/vote_choice/winner
+
 /datum/poll/proc/init_choices()
 	for(var/ch in choice_types)
 		choices.Add(new ch)
@@ -50,7 +52,6 @@
 	else
 		initiator = "Сервер"
 	on_start()
-	SSvote.active_vote = src
 	return TRUE
 
 /datum/poll/proc/get_force_blocking_reason()
@@ -84,8 +85,6 @@
 	choices.Cut()
 	initiator = null
 	description = initial(description)
-	if(SSvote.active_vote == src)
-		SSvote.active_vote = null
 
 /datum/poll/proc/reset_next_vote()
 	next_vote = 0
@@ -158,7 +157,6 @@
 			text += "Наибольший процент голосов: [PERCENT(max_votepercent)]%<br><br>"
 			invalid = TRUE
 
-	var/datum/vote_choice/winner = null
 	var/list/winners = list()
 	if(!invalid)
 		for(var/datum/vote_choice/V in choice_votes)
@@ -181,7 +179,7 @@
 	text += "Не проголосовало - [non_voters]<br>"
 
 	if(winner)
-		text += "<b>Результат голосования [winners.len > 1 ? " (Случайно)" : ""]: [winner.text]</b><br>"
+		text += "<b>Результат голосования[winners.len > 1 ? " (Случайно)" : ""]: [winner.text]</b><br>"
 
 	log_vote(text)
 	to_chat(world, "<span class='vote'>[text]</span>")

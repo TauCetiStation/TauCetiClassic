@@ -12,6 +12,13 @@
 #define IDLE_POWER_USE 1
 #define ACTIVE_POWER_USE 2
 
+//Components Power Multiplicators
+#define CAPACITOR_POWER_MULTIPLIER 1
+#define MATTERBIN_POWER_MULTIPLIER 0.5
+#define MANIPULATOR_POWER_MULTIPLIER 0.75
+#define LASER_POWER_MULTIPLIER 2
+#define SCANER_POWER_MULTIPLIER 1
+
 //used in design to specify which machine can build it
 #define IMPRINTER	1	//For circuits. Uses glass/chemicals.
 #define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
@@ -26,9 +33,6 @@
 #define POWEROFF	4		// tbd
 #define MAINT		8		// under maintaince
 #define EMPED		16		// temporary broken by EMP pulse
-
-//General-purpose life speed define for plants.
-#define HYDRO_SPEED_MULTIPLIER 1
 
 #define NANO_IGNORE_DISTANCE 1
 
@@ -68,3 +72,13 @@
 #define ATMOS_DEFAULT_VOLUME_FILTER 200 // L.
 #define ATMOS_DEFAULT_VOLUME_MIXER  200 // L.
 #define ATMOS_DEFAULT_VOLUME_PIPE   70  // L.
+
+// status values shared between lighting fixtures and items
+#define LIGHT_OK 0
+#define LIGHT_EMPTY 1
+#define LIGHT_BROKEN 2
+#define LIGHT_BURNED 3
+
+#define LAMP_FITTING_BULB "bulb"
+#define LAMP_FITTING_TUBE "tube"
+#define LAMP_FITTING_LARGE_TUBE "large tube"

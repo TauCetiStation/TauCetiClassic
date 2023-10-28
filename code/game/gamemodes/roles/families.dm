@@ -3,7 +3,7 @@
 	id = GANGSTER
 
 	required_pref = ROLE_FAMILIES
-	restricted_jobs = list("Head of Personnel", "Security Cadet", "AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
+	restricted_jobs = list("Head of Personnel", "Security Cadet", "AI", "Cyborg", "Security Officer", "Warden", "Head of Security", "Captain", "Internal Affairs Agent", "Blueshield Officer")
 
 	antag_hud_type = ANTAG_HUD_GANGSTER
 	antag_hud_name = "hud_gangster"
@@ -105,6 +105,7 @@
 
 /datum/role/traitor/dealer/OnPostSetup(laterole)
 	var/mob/living/carbon/human/H = antag.current
+	notify_ghosts("New gun dealer!", source = H, action = NOTIFY_ORBIT, header = "Gun Dealer")
 	H.equipOutfit(/datum/outfit/families_traitor)
 	. = ..()
 

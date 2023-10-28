@@ -4,7 +4,7 @@
 	if(S)
 		. += "<b>Select a character slot to load</b><br>"
 		var/name
-		for(var/i in 1 to MAX_SAVE_SLOTS)
+		for(var/i in 1 to GET_MAX_SAVE_SLOTS(parent))
 			S.cd = "/character[i]"
 			S["real_name"] >> name
 			if(!name)

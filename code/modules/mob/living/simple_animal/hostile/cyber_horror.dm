@@ -1,11 +1,11 @@
 /mob/living/simple_animal/hostile/cyber_horror
 	name = "cyber horror"
-	desc = "What was once a man, twisted and warped by machine."
+	desc = "Что-то, что когда-то было человеком..."
 	icon_state = "cyber_horror"
 	icon_dead = "cyber_horror_dead"
 	icon_gib = "cyber_horror_dead"
-	speak = list("H@!#$$P M@!$#", "GHAA!@@#", "KR@!!N", "K!@@##L!@@ %!@#E", "G@#!$ H@!#%, H!@%%@ @!E")
-	speak_emote = list("emits", "groans")
+	speak = list("П@$%@ТЕ @#Е", "А@#А%", "КР#%Н", "УБ#$@Т# $#@Я", "@О#@#$И, ПО%#%$@Е М%#")
+	speak_emote = list("кричит", "рычит")
 	speak_chance = 20
 	turns_per_move = 5
 	see_in_dark = 6
@@ -42,9 +42,11 @@
 			adjustBruteLoss(25)
 			emp_damage += 25
 
-/mob/living/simple_animal/hostile/cyber_horror/AttackingTarget()
-	..()
-	var/mob/living/L = target
+/mob/living/simple_animal/hostile/cyber_horror/UnarmedAttack(atom/A)
+	. = ..()
+	if(!isliving(A))
+		return
+	var/mob/living/L = A
 	if(L.reagents)
 		if(prob(nanobot_chance))
 			visible_message("<span class='warning'>[src] injects something from its flailing arm!</span>")

@@ -60,6 +60,9 @@ Pipelines + Other Objects -> Pipe network
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
+	if(SSair.stop_airnet_processing)
+		return ..()
+
 	for(DEVICE_TYPE_LOOP)
 		nullifyNode(I)
 
@@ -154,7 +157,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		return
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		if(user.is_busy()) return
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)

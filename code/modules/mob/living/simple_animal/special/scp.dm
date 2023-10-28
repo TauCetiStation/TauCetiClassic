@@ -2,7 +2,7 @@
 /mob/living/simple_animal/special/scp173
 	name = "friend"
 	real_name = "friend"
-	desc = "It's some kind of human sized, doll-like sculpture, with weird discolourations on some parts of it. It appears to be quite solid."
+	desc = "Какая-то скульптура в человеческий рост, напоминающая куклу. На некоторых её частях видны странные пятна. Выглядит доволько крепким."
 	icon = 'icons/mob/scp.dmi'
 	icon_state = "scp_173"
 	icon_living = "scp_173"
@@ -180,7 +180,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		if(light_amount <= 3)
-			var/msg = "<span cass='info'>It's too dark in there...</span>"
+			var/msg = "<span cass='info'>Здесь слишком темно...</span>"
 			to_chat(L, msg)
 			return
 		else

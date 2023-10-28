@@ -146,9 +146,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						                          'sound/machines/airlock/close.ogg')
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(2) // EXPLOSIONS
-						var/list/hallsound = list('sound/effects/explosionfar.ogg',
-						                          'sound/effects/Explosion2.ogg',
-						                          'sound/effects/Explosion1.ogg')
+						var/list/hallsound = pick(SOUNDIN_EXPLOSION, SOUNDIN_EXPLOSION_FAR, SOUNDIN_EXPLOSION_ECHO, SOUNDIN_EXPLOSION_CREAK)
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER)
 					if(3) // GLASS
 						playsound_local(target, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
@@ -376,7 +374,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				if(weapon_name)
 					my_target.playsound_local(null, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", SHOWMSG_VISUAL)
-					my_target.halloss += 8
+					my_target.adjustHalLoss(8)
 					if(prob(20)) my_target.blurEyes(10)
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
@@ -384,7 +382,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				else
 					my_target.playsound_local(null, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER, 35)
 					my_target.show_message("<span class='warning'><B>[src.name] has punched [my_target]!</B></span>", SHOWMSG_VISUAL)
-					my_target.halloss += 4
+					my_target.adjustHalLoss(4)
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
@@ -409,7 +407,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		qdel(O)
 	return
 
-var/global/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/a357,\
+var/global/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/speedloader/a357,\
 	/obj/item/weapon/gun/energy/crossbow, /obj/item/weapon/melee/energy/sword,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
 	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\

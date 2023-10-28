@@ -214,6 +214,7 @@ var/global/BSACooldown = 0
 	var/timestamp = PLAYER_INFO_MISSING_TIMESTAMP_TEXT  // Because this is bloody annoying
 	var/days_timestamp = 0 // number of day after 1 Jan 2000
 	var/round_id = PLAYER_INFO_MISSING_ROUND_ID_TEXT
+	var/ingameage = 0
 
 /datum/player_info/proc/get_days_timestamp()
 	return isnum(days_timestamp) ? days_timestamp : 0
@@ -251,7 +252,7 @@ var/global/BSACooldown = 0
 	else
 		var/list/infos = generalized_players_info(db_messages, db_bans)
 		for(var/datum/player_info/I in infos)
-			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> on <i><font color=blue>#[I.round_id], [I.timestamp]</i></font> "
+			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> on <i><font color=blue>#[I.round_id], [I.timestamp] ([I.ingameage] player minutes)</i></font> "
 			dat += "<br><br>"
 	dat += "<br>"
 	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
@@ -266,7 +267,7 @@ var/global/BSACooldown = 0
 		merged += file_notes
 	if(length(db_notes))
 		merged += db_notes
-	merged = sortMerge(merged, /proc/cmp_days_timestamp, FALSE)
+	merged = sortMerge(merged, GLOBAL_PROC_REF(cmp_days_timestamp), FALSE)
 	return merged
 
 /proc/cmp_days_timestamp(datum/player_info/a, datum/player_info/b)
@@ -283,7 +284,8 @@ var/global/BSACooldown = 0
 		"text",
 		"DATE_FORMAT(timestamp, '[timestamp_format]')",
 		"DATEDIFF(timestamp, '[days_ago_start_date]')",
-		"round_id"
+		"round_id",
+		"ingameage"
 	 )
 	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_messages WHERE (targetckey = '[ckey(player_ckey)]') AND (deleted = 0) ORDER BY id LIMIT 100")
 	if(!query.Execute())
@@ -296,6 +298,7 @@ var/global/BSACooldown = 0
 		var/timestamp = query.item[3]
 		var/days_ago = text2num(query.item[4])
 		var/rid = text2num(query.item[5])
+		var/ingameage = text2num(query.item[6])
 
 		if(length(a_ckey))
 			notes_record.author = a_ckey
@@ -307,6 +310,8 @@ var/global/BSACooldown = 0
 			notes_record.days_timestamp = days_ago
 		if(rid)
 			notes_record.round_id = rid
+		if(ingameage)
+			notes_record.ingameage = ingameage
 
 		db_player_notes += notes_record
 
@@ -334,7 +339,8 @@ var/global/BSACooldown = 0
 		"DATE_FORMAT(unbanned_datetime, '[timestamp_format]')",
 		"DATEDIFF(unbanned_datetime, '[days_ago_start_date]')",
 		"unbanned_ckey",
-		"round_id"
+		"round_id",
+		"ingameage"
 	 )
 	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_ban WHERE (ckey = '[ckey(player_ckey)]') ORDER BY id LIMIT 100")
 	if(!query.Execute())
@@ -359,9 +365,13 @@ var/global/BSACooldown = 0
 		var/unbanned_days_ago = text2num(query.item[12])
 		var/unbanned_a_ckey = query.item[13]
 		var/rid = text2num(query.item[14])
+		var/ingameage = text2num(query.item[15])
 
 		if(rid)
 			notes_record.round_id = rid
+
+		if(ingameage)
+			notes_record.round_id = ingameage
 
 		// -1 = perma, duration in minutes come
 		if(!duration)
@@ -677,6 +687,7 @@ var/global/BSACooldown = 0
 
 	dat += {"
 		<BR>
+		<A href='?src=\ref[src];show_raspect=1'>Show Round Aspect</A><br>
 		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
 		<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
 		<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>
@@ -703,15 +714,18 @@ var/global/BSACooldown = 0
 		dat += "<table>"
 		dat += "<tr><th>Name</th><th>Rank</th><th>Salary</th><th>Control</th></tr>"
 		for(var/person in crew)
+			var/datum/money_account/acc = get_account(person["account"])
+			if(!acc)
+				continue
+
 			var/color = "silver"
-			var/datum/money_account/acc = person["acc_datum"]
 			if(acc.owner_salary > acc.base_salary)
 				color = "green"
 			else if(acc.owner_salary < acc.base_salary)
 				color = "red"
 			dat += "<tr><td><span class='highlight'>[person["name"]]</span></td><td><span class='average'>[person["rank"]]</span></td>"
 			dat += "<td><font color='[color]'><b>[person["salary"]]$</b></font></td>"
-			dat += "<td><A href='byond://?src=\ref[src];salary=\ref[person["acc_datum"]]'>Change</A></td></tr>"
+			dat += "<td><A href='byond://?src=\ref[src];salary=[person["account"]]'>Change</A></td></tr>"
 		dat += "</table>"
 	else
 		dat += "<span class='bad'>Crew not found!</span>"
@@ -864,13 +878,12 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="People can't enter"
 	set name="Toggle Entering"
-	enter_allowed = !( enter_allowed )
-	if (!( enter_allowed ))
-		to_chat(world, "<B>New players may no longer enter the game.</B>")
-	else
-		to_chat(world, "<B>New players may now enter the game.</B>")
-	log_admin("[key_name(usr)] toggled new player game entering.")
-	message_admins("<span class='notice'>[key_name_admin(usr)] toggled new player game entering.</span>")
+	if(!SSlag_switch.initialized)
+		return
+	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, !SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+	log_admin("[key_name(usr)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
+	message_admins("[key_name_admin(usr)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
+
 	world.update_status()
 	feedback_add_details("admin_verb","TE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -1156,7 +1169,7 @@ var/global/BSACooldown = 0
 		return
 
 	M.mind.edit_skills()
-	feedback_add_details("admin_verb","SKP") 
+	feedback_add_details("admin_verb","SKP")
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"
@@ -1219,6 +1232,49 @@ var/global/BSACooldown = 0
 	if(istype(H))
 		H.regenerate_icons()
 
+/datum/admins/proc/show_lag_switch_panel()
+	set category = "Server"
+	set name = "Show Lag Switches"
+	set desc="Display the controls for drastic lag mitigation measures."
+
+	if(!SSlag_switch.initialized)
+		to_chat(usr, "<span class='notice'>The Lag Switch subsystem has not yet been initialized.</span>")
+		return
+	if(!check_rights(R_SERVER))
+		return
+
+	var/html = ""
+
+	html += "<div class='Section__title'>Settings</div><div class='Section'>"
+	html += "Automatic Trigger: <a href='?_src_=holder;change_lag_switch_option=TOGGLE_AUTO'><b>[SSlag_switch.auto_switch ? "On" : "Off"]</b></a><br>"
+	html += "Population Threshold: <a href='?_src_=holder;change_lag_switch_option=NUM'><b>[SSlag_switch.trigger_pop]</b></a><br>"
+	html += "Slowmode Cooldown (toggle On/Off below): <a href='?_src_=holder;change_lag_switch_option=SLOWCOOL'><b>[SSlag_switch.slowmode_cooldown/10] seconds</b></a><br>"
+	html += "<br><b>SET ALL MEASURES: <a href='?_src_=holder;change_lag_switch=ALL_ON'>ON</a> | <a href='?_src_=holder;change_lag_switch=ALL_OFF'>OFF</a></b><br>"
+	html += "Disable late joining: <a href='?_src_=holder;change_lag_switch=[DISABLE_NON_OBSJOBS]'><b>[SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "On" : "Off"]</b></a>"
+	html += "</div>"
+
+	html += "<div class='Section__title'>Lag Switches</div><div class='Section'>"
+	html += "Disable deadmob <u title='Movement with keyboard'>keyLoop</u> (except staff): <a href='?_src_=holder;change_lag_switch=[DISABLE_DEAD_KEYLOOP]'><b>[SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] ? "On" : "Off"]</b></a><br>"
+	html += "Disable ghost zoom: <a href='?_src_=holder;change_lag_switch=[DISABLE_GHOST_ZOOM]'><b>[SSlag_switch.measures[DISABLE_GHOST_ZOOM] ? "On" : "Off"]</b></a><br><br>"
+	html += "Measures below can be bypassed with a <u title='TRAIT_BYPASS_MEASURES'>special trait</u><br>"
+	html += "Slowmode say/me verbs: <a href='?_src_=holder;change_lag_switch=[SLOWMODE_IC_CHAT]'><b>[SSlag_switch.measures[SLOWMODE_IC_CHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br>"
+	html += "Disable runechat: <a href='?_src_=holder;change_lag_switch=[DISABLE_RUNECHAT]'><b>[SSlag_switch.measures[DISABLE_RUNECHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br>"
+	html += "Disable examine icons: <a href='?_src_=holder;change_lag_switch=[DISABLE_BICON]'><b>[SSlag_switch.measures[DISABLE_BICON] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to examiner</span><br>"
+	html += "Disable parallax: <a href='?_src_=holder;change_lag_switch=[DISABLE_PARALLAX]'><b>[SSlag_switch.measures[DISABLE_PARALLAX] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br>"
+	html += "Disable footsteps sounds: <a href='?_src_=holder;change_lag_switch=[DISABLE_FOOTSTEPS]'><b>[SSlag_switch.measures[DISABLE_FOOTSTEPS] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span>"
+	html += "</div>"
+
+	html += "<div class='Section__title bgbad'>Dangerous Zone</div><div class='Section'>"
+	html += "<a class='[SSdemo.can_fire ? "bgbad" : "bggrey"]' href='?_src_=holder;lag_switch_special=STOP_DEMO'>DISABLE DEMO</a>"
+
+	// not sure if we need it here, without own subsystem it will be awfully bad
+	html += "<a class='[SSair.stop_airnet_processing ? "bgbad" : "bggrey"]' href='?_src_=holder;lag_switch_special=STOP_AIRNET'>DISABLE AIRNET</a>"
+	html += "<a class='[SSmachines.stop_powernet_processing ? "bgbad" : "bggrey"]' href='?_src_=holder;lag_switch_special=STOP_POWERNET'>DISABLE POWERNET</a>"
+	html += "</div>"
+
+	var/datum/browser/popup = new(usr, "lag_switch_panel", "Lag Switch Panel", 440, 540)
+	popup.set_content(html)
+	popup.open()
 
 /proc/get_options_bar(whom, detail = 2, name = 0, link = 1, reply = null, mentor_pm = FALSE)
 	if(!whom)
