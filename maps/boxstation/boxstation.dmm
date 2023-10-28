@@ -66855,7 +66855,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/psych)
 "cEf" = (
-/obj/item/clothing/head/hardhat,
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
