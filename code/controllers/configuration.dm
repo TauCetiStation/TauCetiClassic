@@ -61,7 +61,7 @@ var/global/bridge_secret = null
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	// If true - disable OOC for the duration of a round.
-	var/ooc_round_only = FALSE
+	var/ooc_round_autotoggle = FALSE
 
 	var/registration_panic_bunker_age = null
 	var/allowed_by_bunker_player_age = 60
@@ -691,8 +691,8 @@ var/global/bridge_secret = null
 				if("use_persistent_cache")
 					config.use_persistent_cache = TRUE
 
-				if("ooc_round_only")
-					config.ooc_round_only = TRUE
+				if("ooc_round_only") // todo: ambiguous old name, need to rename for ooc_round_autotoggle or something
+					config.ooc_round_autotoggle = TRUE
 
 				if("minute_topic_limit")
 					config.minutetopiclimit = text2num(value)

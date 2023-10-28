@@ -57,7 +57,6 @@
 
 /obj/item/ammo_casing/c45r
 	desc = "Патрон от резиновой пули 45-го калибра."
-	icon_state = "st-casing"
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
 	m_amt = 200
