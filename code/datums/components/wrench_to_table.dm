@@ -5,7 +5,8 @@
 	var/datum/callback/on_unwrenched
 
 /datum/component/wrench_to_table/Initialize(datum/callback/_on_wrenched = null, datum/callback/_on_unwrenched = null)
-	var/obj/structure/table/table = locate(/obj/structure/table, get_turf(parent))
+	var/obj/item/parent_item = parent
+	var/obj/structure/table/table = locate(/obj/structure/table, get_turf(parent_item))
 	if(table)
 		wrenched_to = table
 		wrench()
@@ -35,7 +36,7 @@
 	if(user.is_busy(parent_item))
 		return
 
-	var/obj/structure/table/table = locate(/obj/structure/table, get_turf(parent))
+	var/obj/structure/table/table = locate(/obj/structure/table, get_turf(parent_item))
 	if(!table)
 		to_chat(user, "<span class='warning'>[parent_item.name] можно прикрутить только к столу.</span>")
 		return
