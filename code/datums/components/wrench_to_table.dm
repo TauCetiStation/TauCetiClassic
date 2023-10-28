@@ -29,9 +29,9 @@
 	QDEL_NULL(on_unwrenched)
 	return ..()
 
-/datum/component/wrench_to_table/proc/try_wrench(datum/source, obj/item/Tool,  mob/living/user, params)
+/datum/component/wrench_to_table/proc/try_wrench(datum/source, obj/item/tool,  mob/living/user, params)
 	var/obj/item/parent_item = parent
-	if(!isturf(parent_item.loc) || !iswrenching(Tool))
+	if(!isturf(parent_item.loc) || !iswrenching(tool))
 		return
 	if(user.is_busy(parent_item))
 		return
@@ -42,7 +42,7 @@
 		return
 	wrenched_to = table
 
-	if(Tool.use_tool(parent, user, SKILL_TASK_VERY_EASY, volume = 50))
+	if(tool.use_tool(parent, user, SKILL_TASK_VERY_EASY, volume = 50))
 		if(!parent_item.anchored)
 			to_chat(user, "<span class='warning'>[parent_item.name] прикручен.</span>")
 			wrench()
