@@ -56097,16 +56097,6 @@
 	icon_state = "escape"
 	},
 /area/station/engineering/atmos)
-"bZa" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/simulated/wall,
-/area/station/civilian/garden)
 "bZb" = (
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -138681,7 +138671,7 @@ aTX
 aTX
 aTX
 aTX
-bZa
+aTX
 bWu
 aaa
 aaa
