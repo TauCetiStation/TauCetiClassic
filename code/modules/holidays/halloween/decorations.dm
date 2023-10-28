@@ -9,7 +9,7 @@
 	icon = 'icons/holidays/halloween/decorations.dmi'
 	glow_icon = 'icons/holidays/halloween/decorations.dmi'
 	icon_state = "pumpkin"
-
+	var/icon_state_off = "pumpkin"
 	var/obj/item/candle/candle
 	var/candled = FALSE
 
@@ -18,8 +18,9 @@
 
 /obj/item/weapon/carved_pumpkin/atom_init()
 	. = ..()
-	icon_state = "pumpkin_[rand(1, 8)]"
-	glow_icon_state = "[icon_state]_light"
+	icon_state_off = "pumpkin_[rand(1, 8)]"
+	glow_icon_state = "[icon_state_off]_light"
+	icon_state = icon_state_off
 
 	if(candled)
 		candle = new(src)
@@ -28,9 +29,11 @@
 
 /obj/item/weapon/carved_pumpkin/update_icon()
 	if(candle)
+		icon_state = "[icon_state_off]_on"
 		light_color = candle.light_color
 		set_light(3)
 	else
+		icon_state = icon_state_off
 		set_light(0)
 
 /obj/item/weapon/carved_pumpkin/attackby(obj/item/I, mob/user, params)
