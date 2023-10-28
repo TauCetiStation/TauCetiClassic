@@ -78219,12 +78219,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/hor)
-"mdC" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/central)
 "meb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -121191,8 +121185,8 @@ clq
 aKx
 mbQ
 aNU
-mdC
-mdC
+vbW
+vbW
 aNU
 aPv
 bau
