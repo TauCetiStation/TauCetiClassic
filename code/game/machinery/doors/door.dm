@@ -9,19 +9,23 @@ var/global/list/wedge_image_cache = list()
 	opacity = 1
 	density = TRUE
 	can_block_air = TRUE
+
 	layer = DOOR_LAYER
+	var/base_layer = DOOR_LAYER
+	var/layer_delta = DOOR_CLOSED_MOD
+
 	power_channel = STATIC_ENVIRON
 	hud_possible = list(DIAG_AIRLOCK_HUD)
-	var/base_layer = DOOR_LAYER
 	var/icon_state_open  = "door0"
 	var/icon_state_close = "door1"
 
 	var/secondsElectrified = 0
-	var/visible = 1
 	var/p_open = 0
 	var/operating = 0
 	var/autoclose = 0
-	var/glass = 0
+	var/glass = 0 // glass doors are transparent when closed, also does something with door materials and icon
+	var/always_transparent = TRUE // will make closed door always transpanert, regardless "glass" flag
+	var/allow_passglass = TRUE // too many strange flags, future refactoring needed
 	var/normalspeed = 1
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
 	var/air_properties_vary_with_direction = 0
@@ -45,7 +49,7 @@ var/global/list/wedge_image_cache = list()
 /obj/machinery/door/atom_init()
 	. = ..()
 	if(density)
-		layer = base_layer + DOOR_CLOSED_MOD //Above most items if closed
+		layer = base_layer + layer_delta //Above most items if closed
 		explosive_resistance = initial(explosive_resistance)
 		update_heat_protection(get_turf(src))
 	else
@@ -132,7 +136,7 @@ var/global/list/wedge_image_cache = list()
 	return ..()
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && allow_passglass && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
 
@@ -526,14 +530,14 @@ var/global/list/wedge_image_cache = list()
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/do_close()
+	layer = base_layer + layer_delta
 	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
 	sleep(2)
 	density = TRUE
 	sleep(4)
-	if(visible && !glass)
+	if(!always_transparent && !glass)
 		set_opacity(TRUE)
-	layer = base_layer + DOOR_CLOSED_MOD
 	explosive_resistance = initial(explosive_resistance)
 	do_afterclose()
 	update_icon()
