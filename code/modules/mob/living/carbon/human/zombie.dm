@@ -337,3 +337,33 @@ var/global/list/zombie_list = list()
 	spawn(50)
 		if(user && user.client)
 			user.client.images -= I
+
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial/romerol
+	name = "romerol bottle"
+	desc = "As if in mockery, someone kindly engraved in small print directly on the glass of the vial: \"Romerol. The REAL zombie powder.\""
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial/romerol/atom_init()
+	. = ..()
+	reagents.add_reagent("romerol", 15)
+	update_icon()
+
+/datum/reagent/romerol
+	name = "Romerol"
+	id = "romerol"
+	// the REAL zombie powder
+	description = "Romerol is a highly experimental bioterror agent \
+		which causes dormant nodules to be etched into the grey matter of \
+		the subject. These nodules only become active upon death of the \
+		host, upon which, the secondary structures activate and take control \
+		of the host body."
+	color = "#123524" // RGB (18, 53, 36)
+	custom_metabolism = 1
+	taste_message = "brains"
+	restrict_species = list(IPC, DIONA, VOX)
+
+/datum/reagent/romerol/on_general_digest(mob/living/M)
+	..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.infect_zombie_virus(null, TRUE, FALSE)

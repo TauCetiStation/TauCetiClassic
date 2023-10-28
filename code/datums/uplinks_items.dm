@@ -627,6 +627,20 @@
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 2
 	uplink_types = list("nuclear")
+
+/datum/uplink_item/stealthy_weapons/romerol_kit
+	name = "Romerol"
+	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
+			On death, these nodules take control of the dead body, causing limited revivification, \
+			along with slurred speech, aggression, and the ability to infect others with this agent."
+	item = /obj/item/weapon/storage/box/syndie_kit/romerol
+	cost = 40
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/stealthy_weapons/romerol_kit
+	uplink_types = list("traitor")
+	cost = 45
+	cant_discount = TRUE
 /*
 /datum/uplink_item/stealthy_weapons/silencer
 	name = "Stetchkin Silencer"

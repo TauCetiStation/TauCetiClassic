@@ -196,6 +196,15 @@
 		new /obj/item/weapon/throwing_star(src)
 	make_exact_fit()
 
+/obj/item/weapon/storage/box/syndie_kit/romerol
+	name = "Red box"
+	desc = "A small red box, though with additional metal fasteners, which makes it seem that it is very, very important. But... How would it get into your hands if it`s really important?"
+
+/obj/item/weapon/storage/box/syndie_kit/romerol/atom_init()
+	new /obj/item/weapon/reagent_containers/glass/beaker/vial/romerol(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/dropper(src)
+
 /obj/item/weapon/storage/box/syndie_kit/cutouts
 	name = "box (G)"
 
