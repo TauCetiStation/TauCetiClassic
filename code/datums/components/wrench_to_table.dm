@@ -6,7 +6,7 @@
 
 /datum/component/wrench_to_table/Initialize(datum/callback/_on_wrenched = null, datum/callback/_on_unwrenched = null)
 	var/obj/structure/table/table = locate(/obj/structure/table, get_turf(parent))
-	if(Table)
+	if(table)
 		wrenched_to = table
 		wrench()
 
