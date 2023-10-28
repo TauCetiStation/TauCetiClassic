@@ -29,37 +29,37 @@
 	return ..()
 
 /datum/component/wrench_to_table/proc/try_wrench(datum/source, obj/item/Tool,  mob/living/user, params)
-	var/obj/item/Parent_Item = parent
-	if(!isturf(Parent_Item.loc) || !iswrenching(Tool))
+	var/obj/item/parent_item = parent
+	if(!isturf(parent_item.loc) || !iswrenching(Tool))
 		return
-	if(user.is_busy(Parent_Item))
+	if(user.is_busy(parent_item))
 		return
 
 	var/obj/structure/table/Table = locate(/obj/structure/table, get_turf(parent))
 	if(!Table)
-		to_chat(user, "<span class='warning'>[Parent_Item.name] можно прикрутить только к столу.</span>")
+		to_chat(user, "<span class='warning'>[parent_item.name] можно прикрутить только к столу.</span>")
 		return
 	Wrenched_To = Table
 
 	if(Tool.use_tool(parent, user, SKILL_TASK_VERY_EASY, volume = 50))
-		if(!Parent_Item.anchored)
-			to_chat(user, "<span class='warning'>[Parent_Item.name] прикручен.</span>")
+		if(!parent_item.anchored)
+			to_chat(user, "<span class='warning'>[parent_item.name] прикручен.</span>")
 			wrench()
 			return
-		to_chat(user, "<span class='notice'>[Parent_Item.name] откручен.</span>")
+		to_chat(user, "<span class='notice'>[parent_item.name] откручен.</span>")
 		unwrench()
 
 /datum/component/wrench_to_table/proc/wrench()
-	var/obj/item/Parent_Item = parent
-	Parent_Item.anchored = TRUE
+	var/obj/item/parent_item = parent
+	parent_item.anchored = TRUE
 	RegisterSignal(Wrenched_To, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
 
 	if(on_wrenched)
 		on_wrenched.Invoke()
 
 /datum/component/wrench_to_table/proc/unwrench()
-	var/obj/item/Parent_Item = parent
-	Parent_Item.anchored = FALSE
+	var/obj/item/parent_item = parent
+	parent_item.anchored = FALSE
 	if(Wrenched_To)
 		UnregisterSignal(Wrenched_To, list(COMSIG_PARENT_QDELETING))
 
