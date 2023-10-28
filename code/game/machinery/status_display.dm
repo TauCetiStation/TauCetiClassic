@@ -92,9 +92,9 @@
 				var/line1
 				var/line2 = get_shuttle_timer()
 				if(SSshuttle.location == 1)
-					line1 = "-Отпр.-"
+					line1 = "-Отпр-"
 				else
-					line1 = "-Приб.-"
+					line1 = "-Приб-"
 				if(length_char(line2) > CHARS_PER_LINE)
 					line2 = "Ошибка!"
 				update_display(line1, line2)
@@ -123,7 +123,7 @@
 					index2 -= message2_len
 			update_display(line1, line2)
 		if(4)				// supply shuttle timer
-			var/line1 = "-Груз.-"
+			var/line1 = "-Груз-"
 			var/line2
 			if(SSshuttle.moving)
 				line2 = get_SSshuttle_timer()
