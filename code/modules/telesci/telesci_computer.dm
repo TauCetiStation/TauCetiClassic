@@ -282,10 +282,10 @@
 		temp_msg = "ERROR! This sector is unreachable."
 		return
 	if(teles_left > 0)
-		open_wormhole()
+		open_wormhole(user)
 	else
-		temp_msg = "ERROR!<BR>Calibration required."
 		telefail()
+		temp_msg = "ERROR!<BR>Calibration required."
 		return
 	return
 
@@ -348,14 +348,14 @@
 	if(href_list["close_teleport"])
 		close_wormhole(usr)
 
-	if(href_list["eject"])
-		eject()
-		temp_msg = "NOTICE:<BR>Bluespace crystals ejected."
-
 	if(href_list["recal"])
 		recalibrate()
 		sparks()
 		temp_msg = "NOTICE:<BR>Calibration successful."
+
+	if(href_list["eject"])
+		eject()
+		temp_msg = "NOTICE:<BR>Bluespace crystals ejected."
 
 	updateDialog()
 
