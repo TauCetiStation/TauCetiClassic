@@ -40309,6 +40309,10 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/machinery/flasher{
+	id = "HoP_flasher";
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -63234,17 +63238,13 @@
 	pixel_x = 32;
 	pixel_y = -28
 	},
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 4;
 	icon_state = "arrow"
 	},
-/obj/machinery/door/firedoor{
-	dir = 4
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
 	},
-/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ctz" = (
 /obj/structure/disposalpipe/segment{
@@ -71904,11 +71904,6 @@
 	},
 /area/station/security/main)
 "fFe" = (
-/obj/machinery/flasher{
-	id = "HoP_flasher";
-	pixel_x = 32;
-	pixel_y = 28
-	},
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 8;
 	icon_state = "arrow"
@@ -85347,10 +85342,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
-"usn" = (
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "uul" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
