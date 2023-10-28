@@ -60,7 +60,7 @@
 
 						var/list/available_items = list()
 						for(var/datum/shop_lot/lot in global.online_shop_lots)
-							if(!lot || lot.sold)
+							if(lot.sold)
 								continue
 							available_items += lot
 
