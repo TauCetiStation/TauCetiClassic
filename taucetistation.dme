@@ -1693,6 +1693,7 @@
 #include "code\modules\holiday\months\november.dm"
 #include "code\modules\holiday\months\october.dm"
 #include "code\modules\holiday\months\september.dm"
+#include "code\modules\holidays\halloween\decorations.dm"
 #include "code\modules\holidays\new_year\clothing.dm"
 #include "code\modules\holidays\new_year\decorations.dm"
 #include "code\modules\holidays\new_year\new_year_mate.dm"
