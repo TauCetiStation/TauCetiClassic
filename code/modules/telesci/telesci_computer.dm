@@ -237,7 +237,7 @@
 				teles_left -= 1
 				teleport_cooldown = world.time + (power * 2)
 				// use a lot of power
-				use_power(power * 1500)
+				use_power(power * 5000)
 				set_power_use(ACTIVE_POWER_USE)
 
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -257,7 +257,7 @@
 				trueCord_y = 0
 
 			else
-				use_power(power * 1500)
+				use_power(power * 5000)
 				var/datum/effect/effect/system/spark_spread/SS = new /datum/effect/effect/system/spark_spread
 				SS.set_up(5, 1, get_turf(telepad))
 				SS.start()
