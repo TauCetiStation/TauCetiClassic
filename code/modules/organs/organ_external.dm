@@ -174,8 +174,8 @@
 		icon = species.deform
 		icon_state = "[body_zone][g ? "_[g]" : ""][fat ? "_[fat]" : ""][(pump && !fat) ? "_[pump]" : ""]"
 	else
-		if(HAS_TRAIT(owner, TRAIT_SKELETON_HEAD) && istype(src, /obj/item/organ/external/head))
-			var/datum/species/S = all_species[SKELETON]
+		if(HAS_TRAIT(owner, TRAIT_SKELETON_HEAD) && istype(src, /obj/item/organ/external/head) && owner.species.skeleton_type)
+			var/datum/species/S = all_species[owner.species.skeleton_type]
 			icon = S.icobase
 		else
 			icon = species.icobase
