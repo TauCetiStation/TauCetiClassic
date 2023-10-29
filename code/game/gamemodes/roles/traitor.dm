@@ -151,6 +151,8 @@
 	name = IMPOSTER
 	id = IMPOSTER
 	required_pref = ROLE_IMPOSTER
+	logo_state = "imposter"
+	antag_hud_name = "hudimposter"
 	//No restricts, everyone can be a imposter
 	restricted_jobs = list()
 	//Challenge

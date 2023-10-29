@@ -95,6 +95,7 @@
 	required_pref = ROLE_IMPOSTER
 	roletype = /datum/role/traitor/imposter
 	initroletype = /datum/role/traitor/imposter
+	logo_state = "imposter"
 	//latespawned human can be imposter
 	accept_latejoiners = TRUE
 	rounstart_populate = FALSE
