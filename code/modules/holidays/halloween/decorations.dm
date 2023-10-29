@@ -75,16 +75,19 @@
 
 /obj/item/decoration/garland/halloween/long
 	icon_state = "garland_1"
+	icon_state_off = "garland_1"
 	glow_icon_state = "garland_1_lights"
 	random = FALSE
 
 /obj/item/decoration/garland/halloween/medium
 	icon_state = "garland_2"
+	icon_state_off = "garland_2"
 	glow_icon_state = "garland_2_lights"
 	random = FALSE
 
 /obj/item/decoration/garland/halloween/short
 	icon_state = "garland_3"
+	icon_state_off = "garland_3"
 	glow_icon_state = "garland_3_lights"
 	random = FALSE
 
