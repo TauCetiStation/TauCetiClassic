@@ -48,5 +48,6 @@ var/global/list/datum/map_template/map_templates = list()
 
 //var/list/datum/map_template/shuttle_templates = list()
 var/global/list/datum/map_template/shelter_templates = list()
+var/global/list/datum/map_template/aspects_templates = list()
 var/global/list/datum/map_template/holoscene_templates = list()
 var/global/list/datum/map_template/spacestructures_templates = list()

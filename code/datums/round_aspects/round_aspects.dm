@@ -83,3 +83,64 @@
 
 /datum/round_aspect/ai_trio/on_start()
 	SSticker.triai = TRUE
+
+/datum/round_aspect/elite_sec
+	name = ROUND_ASPECT_ELITE_SECURITY
+	desc = "Изменено снаряжение офицеров охраны. Увеличены цены на оружие в карго и РнД."
+
+/datum/round_aspect/elite_sec/on_start()
+	new /datum/event/feature/area/replace/sec_rearmament_elite
+	for(var/obj/structure/closet/secure_closet/warden/sc in world)
+		sc.PopulateContents()
+	for(var/obj/structure/closet/secure_closet/security/sc in world)
+		sc.PopulateContents()
+	for(var/obj/structure/closet/wardrobe/red/sc in world)
+		sc.PopulateContents()
+
+	for(var/datum/design/nuclear_gun/ng in global.all_designs)
+		ng.materials = list(MAT_METAL = 150000, MAT_GLASS = 50000, MAT_URANIUM = 100000)
+	for(var/datum/design/stunrevolver/sr in global.all_designs)
+		sr.materials = list(MAT_METAL = 200000)
+	for(var/datum/design/smg/smg in global.all_designs)
+		smg.materials = list(MAT_METAL = 160000, MAT_SILVER = 40000, MAT_DIAMOND = 20000)
+	for(var/datum/design/lasercannon/lc in global.all_designs)
+		lc.materials = list(MAT_METAL = 200000, MAT_GLASS = 20000, MAT_DIAMOND = 40000, MAT_URANIUM = 10000)
+	for(var/datum/design/laserrifle/lr in global.all_designs)
+		lr.materials = list (MAT_METAL = 160000, MAT_GLASS = 50000, MAT_URANIUM = 10000)
+	for(var/datum/design/plasma_10_gun/plsm in global.all_designs)
+		plsm.materials = list(MAT_METAL = 250000, MAT_GOLD = 120000, MAT_SILVER = 90000, MAT_DIAMOND = 10000, MAT_URANIUM = 20000)
+	for(var/datum/design/plasma_104_gun/plsmsh in global.all_designs)
+		plsmsh.materials = list(MAT_METAL = 250000, MAT_GOLD = 120000, MAT_SILVER = 150000, MAT_DIAMOND = 150000, MAT_URANIUM = 100000)
+
+	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
+		e.cost *= 50
+
+	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
+		b.cost *= 50
+
+/datum/round_aspect/more_random_events
+	name = ROUND_ASPECT_MORE_RANDOM_EVENTS
+	desc = "Увеличена частота случайных событий."
+
+/datum/round_aspect/alternative_research
+	name = ROUND_ASPECT_ALTERNATIVE_RESEARCH
+	desc = "Взрывы газовых бомб стали приносить меньше научных очков."
+	afterspawn_IC_announcement = "<span class='warning'>Научно-исследовательский Совет НаноТрейзен стал в меньшей мере интересоваться изучением взрывчатых свойств форона.</span>"
+
+/datum/round_aspect/alchemy
+	name = ROUND_ASPECT_ALCHEMY
+	desc = "Отдел химии заменён на гидропонику."
+	var/datum/map_template/aspect/alchemy/template
+
+/datum/round_aspect/alchemy/on_start()
+	for(var/datum/design/chem_dispenser/cd in global.all_designs)
+		cd.materials = list(MAT_GLASS = 250000, "sacid" = 200)
+
+	template = aspects_templates["Alchemy"]
+	var/turf/simulated/spawn_point = null
+	var/obj/effect/landmark/L = locate("landmark*Chem Aspect Replace")
+	spawn_point = get_turf(L)
+	for(var/area/station/medical/chemistry/ch in all_areas)
+		for(var/obj/i in ch)
+			qdel(i)
+	template.load(spawn_point, FALSE)
