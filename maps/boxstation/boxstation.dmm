@@ -6810,7 +6810,9 @@
 	dir = 4;
 	network = list("SS13","Security")
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "red"
@@ -6913,7 +6915,9 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "alw" = (
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "escape"
@@ -10250,7 +10254,9 @@
 /area/station/security/prison)
 "aqX" = (
 /obj/machinery/light/smart,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
 	},
@@ -10330,7 +10336,9 @@
 /area/station/rnd/xenobiology)
 "are" = (
 /obj/structure/window/thin/reinforced,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "arf" = (
@@ -10507,7 +10515,9 @@
 /area/station/security/blueshield)
 "arA" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -16555,7 +16565,9 @@
 	pixel_y = 2
 	},
 /obj/item/stack/medical/bruise_pack,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -17345,7 +17357,9 @@
 /area/station/civilian/bar)
 "aEi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -19247,7 +19261,9 @@
 /area/station/security/brig)
 "aHM" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aHN" = (
@@ -23216,7 +23232,9 @@
 /mob/living/simple_animal/lizard{
 	name = "Lizzy"
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
 "aOZ" = (
@@ -23677,7 +23695,9 @@
 	c_tag = "Auxiliary Tool Storage";
 	dir = 8
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "yellow"
@@ -24298,7 +24318,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = 20
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -25036,7 +25058,9 @@
 	pixel_x = -22
 	},
 /obj/structure/table/woodentable,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "aSp" = (
@@ -25912,7 +25936,9 @@
 	dir = 4
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -31810,7 +31836,9 @@
 "bdV" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper/cmf_manual,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bdW" = (
@@ -32498,7 +32526,9 @@
 /area/station/medical/reception)
 "bfb" = (
 /obj/structure/table,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "bfc" = (
@@ -33713,7 +33743,9 @@
 	dir = 8;
 	pixel_x = 25
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
@@ -36339,7 +36371,9 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -37829,7 +37863,9 @@
 /area/station/medical/hallway)
 "boK" = (
 /obj/structure/table,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -40301,7 +40337,9 @@
 	pixel_y = 28
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -40554,7 +40592,9 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -41228,7 +41268,9 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -42070,7 +42112,9 @@
 "bwf" = (
 /obj/structure/table/reinforced/stall,
 /obj/structure/window/thin/reinforced,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -47096,7 +47140,9 @@
 "bEU" = (
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/trash/candle/red,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -50656,7 +50702,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bLq" = (
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "purple"
@@ -50901,7 +50949,9 @@
 /area/station/hallway/primary/starboard)
 "bLM" = (
 /obj/effect/landmark/start/research_assistant,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "purple"
@@ -51544,7 +51594,9 @@
 	name = "apc right";
 	pixel_x = 28
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -53381,7 +53433,9 @@
 /obj/machinery/newscaster{
 	pixel_y = -30
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -63655,7 +63709,9 @@
 /area/station/aisat/antechamber)
 "csI" = (
 /obj/item/weapon/table_parts/wood,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/engineering)
 "csJ" = (
@@ -67395,7 +67451,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cDh" = (
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blue"
@@ -70687,7 +70745,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "djH" = (
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -70766,7 +70826,9 @@
 	},
 /area/station/medical/morgue)
 "dni" = (
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "doG" = (
@@ -70819,7 +70881,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "dra" = (
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "green"
@@ -71133,6 +71197,20 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/security/prison/toilet)
+"dGp" = (
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/item/decoration/garland/halloween,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/central)
 "dHv" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -73127,7 +73205,9 @@
 	},
 /area/station/security/main)
 "fJp" = (
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -73400,7 +73480,9 @@
 "fWB" = (
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "fXb" = (
@@ -73464,7 +73546,9 @@
 /obj/item/decoration/garland/halloween{
 	pixel_y = -32
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "gcb" = (
@@ -74683,7 +74767,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "hlb" = (
@@ -74908,7 +74994,9 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "huy" = (
@@ -75277,7 +75365,9 @@
 /obj/item/weapon/pen{
 	layer = 3.1
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "escape"
@@ -75668,7 +75758,9 @@
 	dir = 2;
 	icon_state = "spline_fancy"
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "igb" = (
@@ -76380,7 +76472,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "blue"
@@ -76465,7 +76559,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "blue"
@@ -76621,7 +76717,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blue"
@@ -77159,7 +77257,9 @@
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
 "jwo" = (
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "jxb" = (
@@ -77370,7 +77470,9 @@
 /area/station/maintenance/medbay)
 "jHb" = (
 /obj/structure/table,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -78226,6 +78328,7 @@
 /obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
 "kwS" = (
@@ -78523,7 +78626,9 @@
 /area/station/civilian/chapel/mass_driver)
 "kNZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "kOb" = (
@@ -78586,7 +78691,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "kRb" = (
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -79688,6 +79795,9 @@
 	icon_state = "gr_window"
 	},
 /obj/item/decoration/garland/halloween,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/hallway)
 "lUd" = (
@@ -81415,7 +81525,9 @@
 	icon_state = "spline_fancy"
 	},
 /obj/structure/flora/ausbushes/brflowers,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "nIb" = (
@@ -82327,7 +82439,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
@@ -83695,7 +83809,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/singularity)
 "qqY" = (
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "qrb" = (
@@ -83727,7 +83843,9 @@
 /area/station/security/prison/toilet)
 "qsv" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -83982,6 +84100,9 @@
 	dir = 4
 	},
 /obj/item/decoration/garland/halloween,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/barbershop)
 "qFq" = (
@@ -84428,7 +84549,9 @@
 /area/station/medical/reception)
 "rbb" = (
 /obj/structure/table/glass,
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "rby" = (
@@ -85293,6 +85416,20 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
+"rPH" = (
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/central)
 "rQb" = (
 /obj/item/clothing/gloves/latex,
 /obj/item/device/antibody_scanner,
@@ -87260,7 +87397,6 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/item/decoration/garland/halloween,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "udR" = (
@@ -89040,7 +89176,9 @@
 /obj/structure/noticeboard/chaplain{
 	pixel_y = 32
 	},
-/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -116533,8 +116671,8 @@ bnN
 bnN
 fFe
 bVa
-ucU
-bVa
+dGp
+rPH
 ucU
 cty
 bDw
