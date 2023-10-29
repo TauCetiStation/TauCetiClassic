@@ -19,6 +19,10 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
+/datum/outfit/job/hos/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
+		implants += /obj/item/weapon/implant/obedience
+
 // WARDEN OUTFIT
 /datum/outfit/job/warden
 	name = OUTFIT_JOB_NAME("Warden")
