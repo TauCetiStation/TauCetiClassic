@@ -27,9 +27,8 @@
 /area/mafia)
 "g" = (
 /obj/mafia_game_board,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/mafia)
 "j" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -74,15 +73,21 @@
 	},
 /area/mafia)
 "s" = (
-/turf/unsimulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 9;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/mafia)
 "t" = (
-/turf/unsimulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/mafia)
 "u" = (
@@ -93,46 +98,63 @@
 /area/mafia)
 "v" = (
 /obj/mafia_game_board,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/mafia)
 "w" = (
 /turf/simulated/mineral,
 /area/mafia)
 "A" = (
-/turf/unsimulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 5;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/mafia)
 "B" = (
-/turf/unsimulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/mafia)
 "C" = (
-/turf/unsimulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/mafia)
 "E" = (
-/turf/unsimulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 10;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/mafia)
 "F" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
 /turf/unsimulated/floor{
-	icon_state = "podhatch"
+	icon_state = "podhatchfull"
 	},
 /area/mafia)
 "G" = (
-/turf/unsimulated/floor{
+/obj/effect/decal/turf_decal{
 	dir = 6;
-	icon_state = "podhatch"
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/mafia)
 "H" = (
@@ -140,6 +162,14 @@
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
+/area/mafia)
+"Y" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	locked = 1;
+	req_access = list(101);
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/mafia)
 
 (1,1,1) = {"
@@ -253,9 +283,9 @@ w
 w
 a
 a
-j
+Y
 a
-j
+Y
 a
 a
 w
@@ -275,7 +305,7 @@ w
 w
 a
 a
-j
+Y
 a
 b
 r
@@ -283,7 +313,7 @@ a
 o
 l
 a
-j
+Y
 a
 a
 w
@@ -575,7 +605,7 @@ w
 w
 a
 a
-j
+Y
 a
 l
 o
@@ -583,7 +613,7 @@ a
 r
 b
 a
-j
+Y
 a
 a
 w
@@ -603,9 +633,9 @@ w
 w
 a
 a
-j
+Y
 a
-j
+Y
 a
 a
 w

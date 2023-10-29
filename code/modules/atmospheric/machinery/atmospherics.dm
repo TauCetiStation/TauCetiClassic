@@ -60,6 +60,9 @@ Pipelines + Other Objects -> Pipe network
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
+	if(SSair.stop_airnet_processing)
+		return ..()
+
 	for(DEVICE_TYPE_LOOP)
 		nullifyNode(I)
 

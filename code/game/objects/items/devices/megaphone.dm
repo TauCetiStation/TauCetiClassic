@@ -6,12 +6,15 @@
 	w_class = SIZE_TINY
 	flags = CONDUCT
 
-	action_button_name = "Toggle Megaphone"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_megaphone)
 
 	var/spamcheck = 0
 	var/emagged = 0
 	var/list/insultmsg = list("ПОШЛИ ВЫ ВСЕ НАХУЙ!", "Я АГЕНТ СИНДИКАТА!", "ХОС ХУЕСОС!", "У МЕНЯ БОМБА!", "КАПИТАН ГОНДОН!", "СЛАВА СИНДИКАТУ!")
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
+
+/datum/action/item_action/hands_free/toggle_megaphone
+	name = "Toggle Megaphone"
 
 /obj/item/device/megaphone/attack_self(mob/living/user)
 	if (user.client)

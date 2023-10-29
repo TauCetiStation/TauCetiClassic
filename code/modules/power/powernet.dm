@@ -70,8 +70,10 @@
 	nodes[M] = M
 
 //handles the power changes in the powernet
-//called every ticks by the powernet controller
+//called every ticks by the powernet controller (who named it "reset" lol)
 /datum/powernet/proc/reset()
+	if(SSmachines.stop_powernet_processing)
+		return
 	// Generated power:
 	avail = newavail
 	newavail = 0

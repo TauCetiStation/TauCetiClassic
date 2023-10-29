@@ -67,7 +67,7 @@
 	requirement = "Нет."
 
 /datum/quality/positiveish/prepared/add_effect(mob/living/carbon/human/H, latespawn)
-	H.equip_or_collect(new /obj/item/clothing/gloves/yellow(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/clothing/gloves/insulated(H), SLOT_L_STORE)
 
 
 /datum/quality/positiveish/disguise
@@ -105,15 +105,15 @@
 
 /datum/quality/positiveish/big_iron/add_effect(mob/living/carbon/human/H, latespawn)
 	if(prob(50))
-		H.equip_or_collect(new /obj/item/clothing/suit/serifcoat(H), SLOT_WEAR_SUIT)
+		H.equip_to_slot(new /obj/item/clothing/suit/serifcoat(H), SLOT_WEAR_SUIT)
 	else
-		H.equip_or_collect(new /obj/item/clothing/suit/poncho(H), SLOT_WEAR_SUIT)
-	H.equip_or_collect(new /obj/item/clothing/under/cowboy/brown(H), SLOT_W_UNIFORM)
-	H.equip_or_collect(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
-	H.equip_or_collect(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
-	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
-	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
-	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
+		H.equip_to_slot(new /obj/item/clothing/suit/poncho(H), SLOT_WEAR_SUIT)
+	H.equip_to_slot(new /obj/item/clothing/under/cowboy/brown(H), SLOT_W_UNIFORM)
+	H.equip_to_slot(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
+	H.equip_to_slot(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
+	H.equip_to_slot(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
+	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
+	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
 
 
 /datum/quality/positiveish/all_affairs
@@ -195,7 +195,7 @@
 
 
 /datum/quality/positiveish/freakish_linguist
-	name = "Freakish linguist"
+	name = "Freakish Linguist"
 	desc = "Ты знаешь все языки. Абсолютно все. Но какой ценой?"
 	requirement = "Мим."
 
@@ -399,3 +399,26 @@
 
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
+
+
+/datum/quality/positiveish/rollercoaster
+	name = "Roller Coaster"
+	desc = "Случайная встреча с подопытным в техах научила тебя безболезненно кататься по мусорным трубам."
+	requirement = "Нет."
+
+/datum/quality/positiveish/rollercoaster/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_NO_DISPOSALS_DAMAGE, QUALITY_TRAIT)
+
+/datum/quality/positiveish/spaceartist
+	name = "Space Artist"
+	desc = "Как же быть актёром в космосе, но без космического скафандра?"
+	requirement = "Клоун, Мим."
+	jobs_required = list("Clown", "Mime")
+
+/datum/quality/positiveish/spaceartist/add_effect(mob/living/carbon/human/H)
+	if(H.job == "Clown")
+		H.equip_to_slot(new /obj/item/clothing/suit/space/clown, SLOT_R_HAND)
+		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/clown, SLOT_L_HAND)
+	else if(H.job == "Mime")
+		H.equip_to_slot(new /obj/item/clothing/suit/space/mime, SLOT_R_HAND)
+		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/mime, SLOT_L_HAND)

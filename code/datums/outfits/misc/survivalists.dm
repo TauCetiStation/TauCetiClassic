@@ -7,7 +7,7 @@
 	belt = /obj/item/weapon/storage/belt/utility/cool
 	head = /obj/item/clothing/head/hardhat/white
 	back = /obj/item/weapon/storage/backpack/industrial
-	gloves = /obj/item/clothing/gloves/yellow
+	gloves = /obj/item/clothing/gloves/insulated
 	id = /obj/item/weapon/card/id/old_station/eng
 
 	r_pocket = /obj/item/device/t_scanner

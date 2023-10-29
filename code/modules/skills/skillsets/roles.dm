@@ -215,7 +215,7 @@
 		/datum/skill/medical = SKILL_LEVEL_PRO,
 		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
 		/datum/skill/research = SKILL_LEVEL_PRO,
-		/datum/skill/command = SKILL_LEVEL_NOVICE
+		/datum/skill/command = SKILL_LEVEL_MASTER
 	)
 
 /datum/skillset/golem

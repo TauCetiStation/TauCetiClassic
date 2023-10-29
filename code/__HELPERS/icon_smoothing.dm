@@ -115,6 +115,9 @@
 
 //do not use, use queue_smooth(atom)
 /proc/smooth_icon(atom/A)
+	if(!A.initialized)
+		warning("Smoothing called for not initialized atom [A] [A.type] at [A.x].[A.y].[A.z]!")
+
 	if(!A || !(A.smooth || length(A.smooth_adapters)))
 		return
 	A.smooth &= ~SMOOTH_QUEUED
@@ -298,24 +301,6 @@
 			return source.type == target_turf.type ? target_turf : null
 		var/atom/A = locate(source.type) in target_turf
 		return A && A.type == source.type ? A : null
-
-//Icon smoothing helpers
-/proc/smooth_zlevel(zlevel, now = FALSE)
-	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
-	for(var/V in away_turfs)
-		var/turf/T = V
-		if(T.smooth)
-			if(now)
-				smooth_icon(T)
-			else
-				queue_smooth(T)
-		for(var/R in T)
-			var/atom/A = R
-			if(A.smooth)
-				if(now)
-					smooth_icon(A)
-				else
-					queue_smooth(A)
 
 /atom/proc/smooth_set_icon(adjacencies)
 #ifdef MANUAL_ICON_SMOOTH

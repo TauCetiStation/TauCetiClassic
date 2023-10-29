@@ -1,6 +1,10 @@
 // ----- Effects ------
 var/global/list/SOUNDIN_SHATTER   = list('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
-var/global/list/SOUNDIN_EXPLOSION = list('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
+var/global/list/SOUNDIN_CREAK = list('sound/effects/creak1.ogg', 'sound/effects/creak2.ogg', 'sound/effects/creak3.ogg')
+var/global/list/SOUNDIN_EXPLOSION = list('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg', 'sound/effects/explosion3.ogg')
+var/global/list/SOUNDIN_EXPLOSION_FAR = list('sound/effects/explosionfar1.ogg', 'sound/effects/explosionfar2.ogg')
+var/global/list/SOUNDIN_EXPLOSION_ECHO = list('sound/effects/explosion_echo.ogg')
+var/global/list/SOUNDIN_EXPLOSION_CREAK = list('sound/effects/explosioncreak1.ogg', 'sound/effects/explosioncreak2.ogg')
 var/global/list/SOUNDIN_SPARKS    = list('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg')
 var/global/list/SOUNDIN_BODYFALL  = list('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
 var/global/list/SOUNDIN_PAGETURN  = list('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')

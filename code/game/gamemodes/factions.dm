@@ -12,6 +12,8 @@
 	var/min_roles = 1
 	// Whether or not this faction accepts newspawn latejoiners
 	var/accept_latejoiners = FALSE
+	// Accepts roundstart populating. Set FALSE to make faction members list empty
+	var/rounstart_populate = TRUE
 
 	// Type of roles that should be in faction initially
 	var/datum/role/initroletype
@@ -103,6 +105,9 @@
 		return TRUE
 	if(!P.client.prefs.be_role.Find(required_pref) || jobban_isbanned(P, required_pref) || role_available_in_minutes(P, required_pref) || jobban_isbanned(P, "Syndicate"))
 		return FALSE
+	return TRUE
+
+/datum/faction/proc/can_latespawn_mob(mob/P)
 	return TRUE
 
 // Basically, they are members of the new faction

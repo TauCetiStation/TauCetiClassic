@@ -32,7 +32,7 @@ var/global/it_is_a_snow_day = FALSE
 	load_last_mode()
 	load_motd()
 	load_host_announcements()
-	load_test_merge()
+	load_test_merges()
 	load_admins()
 	load_mentors()
 	load_supporters()
@@ -320,13 +320,47 @@ var/global/shutdown_processed = FALSE
 
 		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
 
-/world/proc/load_test_merge()
-	if(fexists("test_merge.txt"))
-		join_test_merge = "<strong>Test merged PRs:</strong> "
-		var/list/prs = splittext(trim(file2text("test_merge.txt")), " ")
-		for(var/pr in prs)
-			test_merges += "#[pr] "
-			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
+/world/proc/load_test_merges()
+	if(!fexists("test_merge.txt"))
+		return
+
+	test_merges = splittext(trim(file2text("test_merge.txt")), " ")
+
+	var/list/to_fetch = list()
+
+	for(var/pr in test_merges)
+		var/path = "[PERSISTENT_CACHE_FOLDER]/github/[pr]"
+		if(fexists(path))
+			test_merges[pr] = sanitize(file2text(path))
+		else
+			test_merges[pr] = TEST_MERGE_DEFAULT_TEXT
+			to_fetch += pr
+
+	if(length(to_fetch))
+		fetch_new_test_merges(to_fetch)
+
+/world/proc/fetch_new_test_merges(list/to_fetch)
+	set waitfor = FALSE
+
+	if(!to_fetch)
+		return
+
+	var/arguments = to_fetch.Join(" ")
+	if(config.github_token)
+		arguments += " -t '[config.github_token]'"
+	if(config.repository_link)
+		arguments += " -r '[config.github_repository_owner]/[config.github_repository_name]'"
+
+	var/json_content = world.ext_python("fetch_test_merges.py", arguments)
+	if(!json_content)
+		return
+
+	var/list/fetch = json_decode(json_content) // {"number": {"title": title, "success": TRUE|FALSE}}
+	for(var/pr in fetch)
+		test_merges[pr] = sanitize(fetch[pr]["title"])
+		if(fetch[pr]["success"])
+			var/path = "[PERSISTENT_CACHE_FOLDER]/github/[pr]"
+			text2file(fetch[pr]["title"], path)
 
 /world/proc/load_regisration_panic_bunker()
 	if(config.registration_panic_bunker_age)

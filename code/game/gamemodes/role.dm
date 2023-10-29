@@ -213,7 +213,7 @@
 	return TRUE
 
 /datum/role/proc/AppendObjective(objective_type, duplicates = 0)
-	if(!duplicates && locate(objective_type) in objectives)
+	if(!duplicates && locate(objective_type) in objectives.objectives)
 		return null
 	var/datum/objective/O
 	if(istype(objective_type, /datum/objective)) //Passed an actual objective
@@ -318,6 +318,9 @@
 
 	return text
 
+/datum/role/proc/GetObjectiveDescription(datum/objective/objective)
+	return "[objective.explanation_text] [objective.completion_to_string()]"
+
 /datum/role/proc/Declare()
 	var/win = TRUE
 	var/text = ""
@@ -328,7 +331,7 @@
 		var/count = 1
 		text += "<ul>"
 		for(var/datum/objective/objective in objectives.GetObjectives())
-			text += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
+			text += "<B>Objective #[count]</B>: [GetObjectiveDescription(objective)]"
 			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
 			if(objective.completed == OBJECTIVE_LOSS) //If one objective fails, then you did not win.
 				win = FALSE

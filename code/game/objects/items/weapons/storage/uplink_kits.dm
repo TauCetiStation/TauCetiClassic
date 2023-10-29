@@ -27,7 +27,7 @@
 			new /obj/item/device/powersink(src)
 			new /obj/item/clothing/suit/space/syndicate(src)
 			new /obj/item/clothing/head/helmet/space/syndicate(src)
-			new /obj/item/clothing/gloves/yellow(src)
+			new /obj/item/clothing/gloves/insulated(src)
 			new /obj/item/weapon/plastique(src)
 
 		if("guns")
@@ -433,7 +433,7 @@
 	name = "chemical fighter kit"
 	startswith = list(
 	/obj/item/weapon/reagent_containers/watertank_backpack/syndie,
-	/obj/item/weapon/lighter/zippo,
+	/obj/item/weapon/lighter/zippo/syndi,
 	/obj/item/weapon/gun/projectile/revolver/syndie,
 	/obj/item/ammo_box/speedloader/a357 = 2,
 	/obj/item/weapon/melee/energy/sword,

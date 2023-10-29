@@ -24,9 +24,12 @@
 	require_module = 1
 
 /obj/item/borg/upgrade/reset/action(mob/living/silicon/robot/R)
-	if(..()) return 0
+	if(..())
+		return 0
+
 	R.uneq_all()
 	R.icon_state = "robot"
+	clearlist(R.module.channels)
 	qdel(R.module)
 	R.module = null
 	R.module_icon.update_icon(R)
@@ -127,18 +130,14 @@
 	return 1
 
 /obj/item/borg/upgrade/jetpack
-	name = "mining robot jetpack"
-	desc = "A carbon dioxide jetpack suitable for low-gravity mining operations."
+	name = "robot jetpack"
+	desc = "A carbon dioxide jetpack suitable for low-gravity operations."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 
 /obj/item/borg/upgrade/jetpack/action(mob/living/silicon/robot/R)
 	if(..()) return 0
 
-	if(!istype(R.module, /obj/item/weapon/robot_module/miner))
-		to_chat(R, "Upgrade mounting error!  No suitable hardpoint detected!")
-		to_chat(usr, "There's no mounting point for the module!")
-		return 0
 	for(var/obj/item/weapon/tank/jetpack/J in R.module.modules)
 		if(J && istype(J, /obj/item/weapon/tank/jetpack))
 			to_chat(usr, "There's no room for another jetpack!")
