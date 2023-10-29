@@ -97,7 +97,6 @@
 
 /datum/component/epilepsy/proc/try_do_seizure(datum/source)
 	SIGNAL_HANDLER
-	world.log << "triggered [world.time]"
 	if(!is_condition_fulfilled(source))
 		return
 	if(is_delayed(source))
