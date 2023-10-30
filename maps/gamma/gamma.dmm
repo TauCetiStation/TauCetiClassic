@@ -12893,6 +12893,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/science/rd,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science/rd,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -17383,8 +17384,9 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/science,
 /obj/item/device/suit_cooling_unit,
-/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science,
+/obj/item/clothing/mask/breath,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -72686,7 +72688,6 @@
 	},
 /area/station/rnd/hallway)
 "nRJ" = (
-/obj/item/clothing/head/hardhat,
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn_corner"
@@ -115434,6 +115435,10 @@
 "wrF" = (
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/mine_sci_shuttle)

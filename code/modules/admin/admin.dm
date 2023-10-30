@@ -214,6 +214,7 @@ var/global/BSACooldown = 0
 	var/timestamp = PLAYER_INFO_MISSING_TIMESTAMP_TEXT  // Because this is bloody annoying
 	var/days_timestamp = 0 // number of day after 1 Jan 2000
 	var/round_id = PLAYER_INFO_MISSING_ROUND_ID_TEXT
+	var/ingameage = 0
 
 /datum/player_info/proc/get_days_timestamp()
 	return isnum(days_timestamp) ? days_timestamp : 0
@@ -251,7 +252,7 @@ var/global/BSACooldown = 0
 	else
 		var/list/infos = generalized_players_info(db_messages, db_bans)
 		for(var/datum/player_info/I in infos)
-			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> on <i><font color=blue>#[I.round_id], [I.timestamp]</i></font> "
+			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> on <i><font color=blue>#[I.round_id], [I.timestamp] ([I.ingameage] player minutes)</i></font> "
 			dat += "<br><br>"
 	dat += "<br>"
 	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
@@ -283,7 +284,8 @@ var/global/BSACooldown = 0
 		"text",
 		"DATE_FORMAT(timestamp, '[timestamp_format]')",
 		"DATEDIFF(timestamp, '[days_ago_start_date]')",
-		"round_id"
+		"round_id",
+		"ingameage"
 	 )
 	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_messages WHERE (targetckey = '[ckey(player_ckey)]') AND (deleted = 0) ORDER BY id LIMIT 100")
 	if(!query.Execute())
@@ -296,6 +298,7 @@ var/global/BSACooldown = 0
 		var/timestamp = query.item[3]
 		var/days_ago = text2num(query.item[4])
 		var/rid = text2num(query.item[5])
+		var/ingameage = text2num(query.item[6])
 
 		if(length(a_ckey))
 			notes_record.author = a_ckey
@@ -307,6 +310,8 @@ var/global/BSACooldown = 0
 			notes_record.days_timestamp = days_ago
 		if(rid)
 			notes_record.round_id = rid
+		if(ingameage)
+			notes_record.ingameage = ingameage
 
 		db_player_notes += notes_record
 
@@ -334,7 +339,8 @@ var/global/BSACooldown = 0
 		"DATE_FORMAT(unbanned_datetime, '[timestamp_format]')",
 		"DATEDIFF(unbanned_datetime, '[days_ago_start_date]')",
 		"unbanned_ckey",
-		"round_id"
+		"round_id",
+		"ingameage"
 	 )
 	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_ban WHERE (ckey = '[ckey(player_ckey)]') ORDER BY id LIMIT 100")
 	if(!query.Execute())
@@ -359,9 +365,13 @@ var/global/BSACooldown = 0
 		var/unbanned_days_ago = text2num(query.item[12])
 		var/unbanned_a_ckey = query.item[13]
 		var/rid = text2num(query.item[14])
+		var/ingameage = text2num(query.item[15])
 
 		if(rid)
 			notes_record.round_id = rid
+
+		if(ingameage)
+			notes_record.round_id = ingameage
 
 		// -1 = perma, duration in minutes come
 		if(!duration)
@@ -677,6 +687,7 @@ var/global/BSACooldown = 0
 
 	dat += {"
 		<BR>
+		<A href='?src=\ref[src];show_raspect=1'>Show Round Aspect</A><br>
 		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
 		<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
 		<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>

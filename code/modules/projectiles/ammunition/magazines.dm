@@ -7,7 +7,7 @@
 ////////////////INTERNAL MAGAZINES//////////////////////
 /obj/item/ammo_box/magazine/internal/cylinder
 	name = "revolver cylinder"
-	desc = "Oh god, this shouldn't be here!"
+	desc = "О боже, этого не должно было здесь быть!"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 7
@@ -25,7 +25,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "russian revolver cylinder"
-	desc = "Oh god, this shouldn't be here!"
+	desc = "О боже, этого не должно было здесь быть!"
 	ammo_type = /obj/item/ammo_casing/a357
 	caliber = "357"
 	max_ammo = 6
@@ -37,14 +37,14 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	name = "d-tiv revolver cylinder"
-	desc = "Oh god, this shouldn't be here!"
+	desc = "О боже, этого не должно было здесь быть!"
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = "38"
 	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/shot
 	name = "shotgun internal magazine"
-	desc = "Oh god, this shouldn't be here!"
+	desc = "О боже, этого не должно было здесь быть!"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 4
@@ -52,7 +52,7 @@
 
 /obj/item/ammo_box/magazine/internal/heavyrifle
 	name = "heavysniper internal magazine"
-	desc = "Oh god, this shouldn't be here!"
+	desc = "О боже, этого не должно было здесь быть!"
 	ammo_type = /obj/item/ammo_casing/a145
 	caliber = "14.5mm"
 	max_ammo = 1
@@ -60,7 +60,7 @@
 
 /obj/item/ammo_box/magazine/internal/m79
 	name = "m79 grenade launcher internal magazine"
-	desc = "Oh god, this shouldn't be here!"
+	desc = "О боже, этого не должно было здесь быть!"
 	ammo_type = /obj/item/ammo_casing/r4046
 	caliber = "40x46"
 	max_ammo = 1
@@ -69,9 +69,13 @@
 /obj/item/ammo_box/magazine/internal/m79/underslung
 	ammo_type = /obj/item/ammo_casing/r4046/explosive
 
+/obj/item/ammo_box/magazine/internal/m79/underslung/marines
+	ammo_type = /obj/item/ammo_casing/r4046/explosive/light
+	caliber = "30"
+
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
-	desc = "Oh god, this shouldn't be here!"
+	desc = "О боже, этого не должно было здесь быть!"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	caliber = "shotgun"
 	max_ammo = 8
@@ -82,7 +86,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	name = "double-barrel shotgun internal magazine"
-	desc = "This doesn't even exist!"
+	desc = "Этого даже не существует!"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
 	max_ammo = 2
@@ -90,7 +94,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
 	name = "derringer internal magazine"
-	desc = "This doesn't even exist!"
+	desc = "Этого даже не существует!"
 	ammo_type = /obj/item/ammo_casing/c38m
 	caliber = "38"
 	max_ammo = 2
@@ -102,7 +106,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	name = "bazooka internal magazine"
-	desc = "This doesn't even exist!"
+	desc = "Этого даже не существует!"
 	ammo_type = /obj/item/ammo_casing/caseless/rocket
 	caliber = "rocket"
 	max_ammo = 1
@@ -110,7 +114,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rocket/anti_singulo
 	name = "bazooka internal magazine"
-	desc = "This doesn't even exist!"
+	desc = "Этого даже не существует!"
 	ammo_type = /obj/item/ammo_casing/caseless/rocket/anti_singulo
 	caliber = "rocket_as"
 	max_ammo = 1
@@ -121,7 +125,7 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev45
 	name = "Colt revolver cylinder"
-	desc = "Oh god, this shouldn't be here."
+	desc = "О боже, этого не должно было здесь быть!"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
 	max_ammo = 6
@@ -132,14 +136,14 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
 	name = "d-tiv revolver cylinder"
-	desc = "Oh god, this shouldn't be here."
+	desc = "О боже, этого не должно было здесь быть!"
 	ammo_type = /obj/item/ammo_casing/c38m
 	caliber = "38"
 	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
 	name = "double-barrel shotgun internal magazine"
-	desc = "This doesn't even exist."
+	desc = "Этого даже не существует!"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
 /obj/item/ammo_box/magazine/internal/shot/dungeon
@@ -222,7 +226,7 @@
 
 /obj/item/ammo_box/magazine/c20r/hp
 	name = "magazine (.45 HP)"
-	desc = "Magazine, full of high power submachinegun ammo."
+	desc = "Магазин, полный мощных патронов для пистолета-пулемета"
 	icon_state = "c20r_mag_hp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hp
@@ -231,7 +235,7 @@
 
 /obj/item/ammo_box/magazine/c20r/hv
 	name = "magazine (.45 HV)"
-	desc = "Magazine, full of high velocity submachinegun ammo."
+	desc = "Магазин, полный высокоскоростных патронов для пистолета-пулемета."
 	icon_state = "c20r_mag_hv"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hv
@@ -240,7 +244,7 @@
 
 /obj/item/ammo_box/magazine/c20r/imp
 	name = "magazine (.45 IMP)"
-	desc = "Magazine, full of impact submachinegun ammo."
+	desc = "Магазин, полный импульсных патронов для пистолета-пулемета."
 	icon_state = "c20r_mag_imp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45imp
@@ -321,7 +325,7 @@
 
 /obj/item/ammo_box/magazine/l13
 	name = "magazine (.38 rubber)"
-	icon_state = "l13_mag"
+	icon_state = "l13_mag_rubber"
 	origin_tech = "combat=1"
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = "38"
@@ -332,11 +336,12 @@
 /obj/item/ammo_box/magazine/l13/lethal
 	name = "magazine (.38)"
 	origin_tech = "combat=2"
+	icon_state = "l13_mag"
 	ammo_type = /obj/item/ammo_casing/c38m
 
 /obj/item/ammo_box/magazine/internal/repeater
 	name = "repeater internal magazine"
-	desc = "Oh god, this shouldn't be here."
+	desc = "О боже, этого не должно было здесь быть!"
 	ammo_type = /obj/item/ammo_casing/a762
 	caliber = "a762"
 	max_ammo = 8
@@ -378,14 +383,14 @@
 			SMG.magazine = src
 			SMG.magazine.forceMove(SMG)
 			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [SMG].</span>")
+			to_chat(user, "<span class='notice'>Вы загружаете новый магазин в [SMG].</span>")
 			SMG.chamber_round()
 			I.update_icon()
 			update_icon()
 			return TRUE
 
 		else if (SMG.magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
+			to_chat(user, "<span class='notice'>В [src] уже есть магазин.</span>")
 			return
 
 	return ..()
@@ -449,7 +454,7 @@
 
 /obj/item/ammo_box/magazine/plasma
 	name = "plasma weapon battery pack"
-	desc = "A special battery case with protection against EM pulse. Uses fast charge method. Has standardized dimensions and can be used with any plasma type gun of this series. Power cell can be replaced."
+	desc = "Специальный корпус аккумулятора с защитой от ЭМИ. Используется метод быстрой зарядки. Имеет стандартизированные размеры и может использоваться с любым плазмотроном данной серии. Возможна замена элемента питания."
 	icon_state = "plasma_clip"
 	origin_tech = "combat=2"
 	ammo_type = null // unused, those are inside guns of this type.
@@ -503,7 +508,7 @@
 /obj/item/ammo_box/magazine/plasma/examine(mob/user)
 	. = ..(user, 1)
 	if(.)
-		to_chat(user, "<span class='notice'>You see a charge meter, it reads: [power_supply ? round(power_supply.charge * 100 / power_supply.maxcharge) : "nan"]%.</span>")
+		to_chat(user, "<span class='notice'>Вы видите индикатор заряда, он показывает: [power_supply ? round(power_supply.charge * 100 / power_supply.maxcharge) : "nan"]%.</span>")
 
 /obj/item/ammo_box/magazine/plasma/attack_self(mob/user) // check parent proc before adding ..() or removing this one.
 	return
@@ -543,6 +548,17 @@
 	icon_state = "wjpp_mag_rubber"
 	ammo_type = /obj/item/ammo_casing/c9mmr
 
+/obj/item/ammo_box/magazine/m41a
+	name = "M41A magazine (10x24 Caseless)"
+	desc = "99-и зарядная палочка смерти"
+	icon_state = "M41A"
+	origin_tech = "combat=1"
+	ammo_type = /obj/item/ammo_casing/pulserifle
+	caliber = "10x24"
+	max_ammo = 99
+	multiple_sprites = TWO_STATES
+	overlay = "pulserifle-mag"
+
 /obj/item/ammo_box/speedloader
 	name = "nonexistant speedloader"
 	multiple_sprites = MANY_STATES
@@ -550,7 +566,7 @@
 
 /obj/item/ammo_box/speedloader/a357
 	name = "speedloader (.357)"
-	desc = "A .357 speedloader."
+	desc = "Спидлоадер под 357-й калибр."
 	caliber = "357"
 	icon_state = "357"
 	ammo_type = /obj/item/ammo_casing/a357
@@ -558,7 +574,7 @@
 
 /obj/item/ammo_box/speedloader/c38
 	name = "speedloader (.38 rubber)"
-	desc = "A .38 speedloader."
+	desc = "Спидлоадер под 38-й калибр"
 	caliber = "38"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38
@@ -573,7 +589,7 @@
 
 /obj/item/ammo_box/speedloader/c45rubber
 	name = "speedloader (.45 rubber)"
-	desc = "A .45 speedloader."
+	desc = "Спидлоадер под 45-й калибр"
 	caliber = ".45"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c45r

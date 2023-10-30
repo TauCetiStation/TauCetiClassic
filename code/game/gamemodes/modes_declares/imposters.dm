@@ -1,7 +1,7 @@
 /datum/game_mode/imposter
 	name = "Imposter"
 	config_name = "imposter"
-	probability = 70
+	probability = 5
 	factions_allowed = list(/datum/faction/traitor/auto/imposter)
 	minimum_player_count = 1
 	minimum_players_bundles = 1

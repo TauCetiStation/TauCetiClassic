@@ -48,7 +48,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		user.set_dir(dir)
 		to_chat(user, "<span class='notice'>You start doing your business...</span>")
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, vol = 50)
-		
+
 		if(do_after(user, rand(5, 20) SECONDS, needhand = FALSE, target = src))
 			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
 			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER)
@@ -175,7 +175,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		user.set_dir(turn(dir, 180))
 		to_chat(user, "<span class='notice'>You start doing your business...</span>")
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, vol = 50)
-		
+
 		if(do_after(user, rand(5, 10) SECONDS, needhand = TRUE, target = src))
 			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
 			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER, vol = 50)
@@ -360,7 +360,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 /obj/machinery/shower
 	name = "shower"
-	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
@@ -374,6 +373,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 	var/payed_time = 0
 	var/cost_per_activation = 10
+
+/obj/machinery/shower/atom_init()
+  	. = ..()
+  	desc = "The HS-451. Installed in the [round(global.gamestory_start_year, 10)]s by the Nanotrasen Hygiene Division."
 
 //add heat controls? when emagged, you can freeze to death in it?
 
