@@ -620,10 +620,13 @@
 
 			materials_to_add[material] = retrieved_materials
 
-	// Every check passed, start to recycle'
+	// Every check passed, start to recycle
 	user.visible_message("<span class='notice'>[user] starts placing \the [I] into \the [src].</span>",
 						 "<span class='notice'>You start placing \the [I] into \the [src].</span>")
-	if(I.use_tool(src, user, I.w_class * FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER, required_skills_override = list()))
+
+	var/check = CALLBACK(src, PROC_REF(do_after_checks), user, I)
+
+	if(do_after(user, I.w_class * FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER, target = src, extra_checks = check))
 		for(var/material in materials_to_add)
 			resources[material] += materials_to_add[material]
 
@@ -635,6 +638,9 @@
 		updateUsrDialog()
 		cut_overlay("fab-load-metal")
 	return TRUE
+
+/obj/machinery/mecha_part_fabricator/proc/do_after_checks(mob/user, obj/item/item)
+	return user.Adjacent(src) && item.Adjacent(src) && user.Adjacent(user)
 
 /obj/machinery/mecha_part_fabricator/deconstruction()
 	. = ..()
