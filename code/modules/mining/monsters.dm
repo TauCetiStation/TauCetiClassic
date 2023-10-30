@@ -514,10 +514,10 @@
 		pre_attack = 0
 
 /obj/effect/goliath_tentacle/original/halloween
-	icon = 'icons/mob/lavaland_monsters.dmi'
+	icon = 'icons/mob/lavaland_goliath.dmi'
 
 /obj/effect/goliath_tentacle/halloween
-	icon = 'icons/mob/lavaland_monsters.dmi'
+	icon = 'icons/mob/lavaland_goliath.dmi'
 
 /obj/effect/goliath_tentacle/original/halloween/spawn_copies()
 	var/list/directions = cardinal.Copy()
