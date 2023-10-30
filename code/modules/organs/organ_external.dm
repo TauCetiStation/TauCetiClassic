@@ -378,7 +378,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 				if(!clean)
 					// Throw limb around.
 					if(isturf(bodypart.loc))
-						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
+						var/throwdistance = rand(1, 3)
+						if(SSholiday.holidays[HALLOWEEN] && isskeleton(owner))
+							throwdistance = 6
+						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), throwdistance, throw_speed)
 					set_dir(2)
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
