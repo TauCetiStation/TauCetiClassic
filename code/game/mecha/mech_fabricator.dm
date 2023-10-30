@@ -659,8 +659,8 @@
 				return FALSE
 		return TRUE
 
-
-	var/global/list/allowed_recycling_assembled_types = list( // All the types that are allowed to have contents
+	// All the types that are allowed to have contents
+	var/global/list/allowed_recycling_assembled_types = list(
 		/obj/item/device/mmi/posibrain,
 		/obj/item/mecha_parts/mecha_equipment/generator,
 		/obj/item/mecha_parts/mecha_equipment/extinguisher,
