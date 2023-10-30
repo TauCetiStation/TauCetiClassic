@@ -81,7 +81,7 @@ SUBSYSTEM_DEF(qualities)
 
 	if(!selected_quality)
 		if(C.mob)
-			to_chat(C.mob, "<span class='warning'>В бухгалтерии всё перепутали, и мы, к сожалению не смогли найти твою особенность. В награду за терпение, за то что ты такой крутой, держи очки.</span>")
+			to_chat(C.mob, "<span class='warning'>В бухгалтерии всё перепутали, и мы, к сожалению, не смогли найти твою особенность. В награду за терпение, за то, что ты такой крутой, держи очки.</span>")
 		selected_quality = qualities_by_type[/datum/quality/positiveish/sunglasses]
 
 	return selected_quality
