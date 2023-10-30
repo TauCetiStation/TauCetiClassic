@@ -598,7 +598,7 @@
 	if(isrobot(user))
 		return FALSE
 
-	var/global/list/disallowed_types = list(
+	var/list/disallowed_types = list(
 		/obj/item/mecha_parts/chassis, // No way to fully disassemble mecha chassis and im lazy to make a way to disassemble it...
 	)
 
@@ -660,7 +660,7 @@
 		return TRUE
 
 	// All the types that are allowed to have contents
-	var/global/list/allowed_recycling_assembled_types = list(
+	var/list/allowed_recycling_assembled_types = list(
 		/obj/item/device/mmi/posibrain,
 		/obj/item/mecha_parts/mecha_equipment/generator,
 		/obj/item/mecha_parts/mecha_equipment/extinguisher,
