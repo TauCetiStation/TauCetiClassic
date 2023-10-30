@@ -586,6 +586,35 @@
 		return
 	return ..()
 
+/obj/machinery/mecha_part_fabricator/proc/check_contents_empty(obj/item/I)
+	if(istype(I, /obj/item/device/mmi/radio_enabled))
+		for(var/A as anything in I.contents)
+			if(!istype(A, /obj/item/device/radio))
+				return FALSE
+		return TRUE
+
+	if(istype(I, /obj/item/weapon/gun/energy/kinetic_accelerator))
+		for(var/A as anything in I.contents)
+			if(!istype(A, /obj/item/weapon/stock_parts/cell/crap) && !istype(A, /obj/item/ammo_casing/energy/kinetic))
+				return FALSE
+		return TRUE
+
+
+	var/global/list/allowed_recycling_assembled_types = list( // All the types that are allowed to have contents
+		/obj/item/device/mmi/posibrain,// haha main reason for fabrication
+		/obj/item/mecha_parts/mecha_equipment/generator,
+		/obj/item/mecha_parts/mecha_equipment/extinguisher,
+		/obj/item/mecha_parts/mecha_equipment/cable_layer,
+		/obj/item/weapon/pickaxe/drill/diamond_drill,
+		/obj/item/weapon/gun/energy/laser/cutter,
+		/obj/item/weapon/pickaxe/drill/jackhammer,
+	)
+
+	if(I.type in allowed_recycling_assembled_types)
+		return TRUE
+
+	return I.contents.len == 0
+
 /obj/machinery/mecha_part_fabricator/proc/try_to_recycle(obj/item/I, mob/user)
 	if(being_built)
 		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
@@ -596,7 +625,7 @@
 
 	var/datum/design/found_design = null
 
-	if(I.contents.len) // Needs review. Check to prevent recycling whole rigs/assembled borg endoskeletons.
+	if(!check_contents_empty(I)) // Needs review. Check to prevent recycling whole rigs/assembled borg endoskeletons.
 		to_chat(user, "<span class='warning'>You need to fully disassemble \the [I] before recycling.</span>")
 		return TRUE
 
@@ -624,9 +653,9 @@
 	user.visible_message("<span class='notice'>[user] starts placing \the [I] into \the [src].</span>",
 						 "<span class='notice'>You start placing \the [I] into \the [src].</span>")
 
-	var/check = CALLBACK(src, PROC_REF(do_after_checks), user, I)
+	var/checks = CALLBACK(src, PROC_REF(do_after_checks), user, I)
 
-	if(do_after(user, I.w_class * FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER, target = src, extra_checks = check))
+	if(do_after(user, I.w_class * FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER, target = src, extra_checks = checks))
 		for(var/material in materials_to_add)
 			resources[material] += materials_to_add[material]
 
