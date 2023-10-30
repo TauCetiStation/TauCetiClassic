@@ -36,12 +36,18 @@
 	// List of xeno species required to be able to get this quality. Please note that `requirement` variable is not set automatically!
 	var/list/species_required
 
+	// List of holidays required for this quality to be availible
+	var/list/holidays_required
+
 // Whether it is even possible for this player to get this quality (job bans, xeno whitelist)
 /datum/quality/proc/satisfies_availability(client/C)
 	if(jobs_required && !can_be_jobs(C, jobs_required))
 		return FALSE
 
 	if(species_required && !can_be_species(C, species_required))
+		return FALSE
+
+	if(holidays_required && !is_holiday())
 		return FALSE
 
 	return TRUE
@@ -66,6 +72,9 @@
 
 /datum/quality/proc/is_species(mob/living/carbon/human/H, list/species)
 	return H.get_species() in species
+
+/datum/quality/proc/is_holiday()
+	return !!length(SSholiday.holidays & holidays_required)
 
 /datum/quality/proc/can_be_jobs(client/C, list/jobs)
 	for(var/job in jobs)
