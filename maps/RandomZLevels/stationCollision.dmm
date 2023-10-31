@@ -156,7 +156,9 @@
 	},
 /area/awaymission/stationcollision/syndishuttle)
 "aE" = (
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/engineering{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/stationcollision/northblock)
 "aF" = (
@@ -388,11 +390,15 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/northblock)
 "bu" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/shuttle/plating,
 /area/awaymission/stationcollision/syndishuttle)
 "bv" = (
-/obj/machinery/door/airlock/centcom,
+/obj/machinery/door/airlock/centcom{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -1092,7 +1098,8 @@
 "dl" = (
 /obj/machinery/door/poddoor{
 	id = "Narsiedoor";
-	name = "Blast Doors"
+	name = "Blast Doors";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1125,7 +1132,8 @@
 /area/awaymission/stationcollision/northblock)
 "dq" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Security Airlock"
+	name = "Security Airlock";
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -1180,7 +1188,8 @@
 /area/awaymission/stationcollision/research)
 "dv" = (
 /obj/machinery/door/airlock/hatch{
-	name = "High-Security Airlock"
+	name = "High-Security Airlock";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1250,7 +1259,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/mediumcell{
 	dir = 8;
-	name = "Research APC";
+	name = "mediumcell apc left";
 	pixel_x = -28
 	},
 /turf/simulated/floor{
@@ -1590,7 +1599,9 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/northblock)
 "ev" = (
-/obj/machinery/door/airlock/command,
+/obj/machinery/door/airlock/command{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1747,12 +1758,12 @@
 	},
 /area/awaymission/stationcollision/northblock)
 "eN" = (
+/obj/structure/cable,
 /obj/machinery/power/apc{
 	dir = 4;
-	name = "North Block APC";
+	name = "apc right";
 	pixel_x = 28
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "blue"
@@ -2400,14 +2411,14 @@
 /area/awaymission/stationcollision/midblock)
 "gG" = (
 /obj/item/ammo_casing/shotgun,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Mid Block APC";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/midblock)
@@ -2465,7 +2476,8 @@
 /area/awaymission/stationcollision/midblock)
 "gN" = (
 /obj/machinery/door/airlock/sandstone{
-	name = "Airlock"
+	name = "Airlock";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2517,7 +2529,8 @@
 /area/awaymission/stationcollision/arrivalblock)
 "gV" = (
 /obj/machinery/door/airlock/external{
-	welded = 1
+	welded = 1;
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/arrivalblock)
@@ -2888,14 +2901,14 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/arrivalblock)
 "ib" = (
-/obj/machinery/power/apc/mediumcell{
-	dir = 8;
-	name = "Arrivals Block APC";
-	pixel_x = -28
-	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/mediumcell{
+	dir = 8;
+	name = "mediumcell apc left";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -2936,7 +2949,8 @@
 "if" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Glass Airlock";
-	req_access = list(0)
+	req_access = list(0);
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -3465,11 +3479,11 @@
 /area/awaymission/stationcollision/southblock)
 "kf" = (
 /obj/machinery/light/small,
-/obj/machinery/power/apc{
-	name = "South Block APC";
-	pixel_y = -30
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/southblock)
 "kg" = (
@@ -4171,7 +4185,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/engineering,
+/obj/machinery/door/airlock/engineering{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "mc" = (
@@ -4279,17 +4295,23 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "mo" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Gateroom APC";
-	pixel_x = 28
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
+"YD" = (
+/obj/machinery/door/airlock/medical{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/awaymission/stationcollision/southblock)
 
 (1,1,1) = {"
 aa
@@ -6132,10 +6154,10 @@ jc
 jc
 jc
 jc
-kv
+YD
 jc
 jc
-kv
+YD
 jc
 jc
 "}

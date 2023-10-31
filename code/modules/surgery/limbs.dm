@@ -157,6 +157,9 @@
 		if(!L.can_attach())
 			return
 		BP = new L.bodypart_type()
+		if(L.part == HEAD && !target.has_organ(O_EYES))
+			var/obj/item/organ/internal/eyes/ipc/cameras = new(null)
+			cameras.insert_organ(target)
 		target.remove_from_mob(tool)
 		qdel(tool)
 

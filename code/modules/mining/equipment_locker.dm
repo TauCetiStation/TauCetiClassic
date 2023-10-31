@@ -43,6 +43,8 @@
 	RefreshParts()
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
+	..()
+
 	var/ore_pickup_rate_temp = 15
 	var/point_upgrade_temp = 1
 	var/sheet_per_ore_temp = 1

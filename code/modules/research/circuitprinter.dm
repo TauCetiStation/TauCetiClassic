@@ -31,6 +31,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	loaded_materials[MAT_DIAMOND]  = new /datum/rnd_material("Diamond",  /obj/item/stack/sheet/mineral/diamond)
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
+	..()
+
 	var/T = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume

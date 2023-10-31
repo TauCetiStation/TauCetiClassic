@@ -259,6 +259,15 @@
 	reagents.add_reagent("stimulants",5)
 	reagents.add_reagent("toxin", 5)
 
+/obj/item/weapon/reagent_containers/pill/LSD
+	name = "LSD"
+	desc = "Ahaha oh wow."
+	icon_state = "pill9"
+
+/obj/item/weapon/reagent_containers/pill/LSD/atom_init()
+	. = ..()
+	reagents.add_reagent("mindbreaker", 15)
+
 /obj/item/weapon/reagent_containers/pill/lipozine
 	name = "Lipozine (15u)"
 	desc = "When you mistake whith maffin"

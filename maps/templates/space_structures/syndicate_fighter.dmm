@@ -62,7 +62,8 @@
 "h" = (
 /obj/machinery/door/airlock/hatch{
 	id_tag = "syndishiv";
-	locked = 1
+	locked = 1;
+	dir = 4
 	},
 /obj/structure/fans/tiny,
 /turf/simulated/shuttle/floor4{

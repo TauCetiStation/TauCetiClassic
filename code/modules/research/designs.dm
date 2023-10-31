@@ -37,6 +37,9 @@ other types of metals and chemistry for reagents).
 	var/list/category = null        //Primarily used for Mech Fabricators, but can be used for anything
 	var/starts_unlocked = FALSE     //If true does not require any technologies and unlocked from the start
 
+/datum/design/New()
+	all_designs += src
+
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/seccamera

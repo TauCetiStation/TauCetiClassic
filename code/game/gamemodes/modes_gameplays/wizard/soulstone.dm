@@ -38,7 +38,7 @@
 		to_chat(user, "<span class='warning'>Разум этого существа сопротивляется силе камня.</span>")
 		return ..()
 
-	if(HAS_TRAIT(H, TRAIT_NO_SOUL) || HAS_TRAIT(H, TRAIT_SOULSTONE_IMMUNE))
+	if(HAS_TRAIT(H, TRAIT_NO_SOUL) || HAS_TRAIT(H, TRAIT_SOULSTONE_IMMUNE) || H.species.flags[IS_SYNTHETIC])
 		to_chat(user, "<span class='warning'>У этого существа нет души.</span>")
 		return ..()
 
