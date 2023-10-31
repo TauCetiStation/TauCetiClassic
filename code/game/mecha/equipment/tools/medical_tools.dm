@@ -265,6 +265,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/detach()
+	chassis.events.clearEvent("onMove",event)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/Destroy()
