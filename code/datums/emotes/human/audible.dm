@@ -26,16 +26,12 @@
 		"[SKRELL][MALE]" = SOUNDIN_LAUGH_SKRELL_MALE,
 	)
 
-	var/g = user.gender == FEMALE ? FEMALE : MALE
-	var/hash = "[user.get_species()][g]"
+	var/hash = "[user.get_species()][user.gender]"
 
 	if(laugh_by_gender_species[hash])
 		return laugh_by_gender_species[hash]
 
-	if(g == FEMALE)
-		return pick(SOUNDIN_LAUGH_FEMALE)
-
-	return pick(SOUNDIN_LAUGH_MALE)
+	return get_sound_by_voice(user, SOUNDIN_LAUGH_MALE, SOUNDIN_LAUGH_FEMALE)
 
 
 /datum/emote/human/giggle
@@ -82,7 +78,7 @@
 	return "clenches [P_THEIR(user.gender)] teeth."
 
 /datum/emote/human/grunt/get_sound(mob/living/carbon/human/user, intentional)
-	return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_LIGHT_PAIN : SOUNDIN_MALE_LIGHT_PAIN)
+	return get_sound_by_voice(user, SOUNDIN_MALE_LIGHT_PAIN, SOUNDIN_FEMALE_LIGHT_PAIN)
 
 /datum/emote/human/grunt/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
@@ -113,10 +109,13 @@
 	return "opens [P_THEIR(user.gender)] mouth slightly."
 
 /datum/emote/human/groan/get_sound(mob/living/carbon/human/user, intentional)
+	var/female_groans = SOUNDIN_FEMALE_PASSIVE_PAIN
+	var/male_groans = SOUNDIN_MALE_PASSIVE_PAIN
 	if(user.get_species() != SKRELL && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(66))
-		return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN)
+		female_groans = SOUNDIN_FEMALE_WHINER_PAIN
+		male_groans = SOUNDIN_MALE_WHINER_PAIN
 
-	return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN)
+	return get_sound_by_voice(user, male_groans, female_groans)
 
 /datum/emote/human/groan/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
@@ -147,7 +146,7 @@
 	return "opens [P_THEIR(user.gender)] mouth like a fish gasping for air!"
 
 /datum/emote/human/scream/get_sound(mob/living/carbon/human/user, intentional)
-	return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_HEAVY_PAIN : SOUNDIN_MALE_HEAVY_PAIN)
+	return get_sound_by_voice(user, SOUNDIN_MALE_HEAVY_PAIN, SOUNDIN_FEMALE_HEAVY_PAIN)
 
 /datum/emote/human/scream/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
@@ -176,7 +175,7 @@
 	return "moves [P_THEIR(user.gender)] face forward as [P_THEY(user.gender)] open and close [P_THEIR(user.gender)] mouth!"
 
 /datum/emote/human/cough/get_sound(mob/living/carbon/human/user, intentional)
-	return pick(user.gender == FEMALE ? SOUNDIN_FBCOUGH : SOUNDIN_MBCOUGH)
+	return get_sound_by_voice(user, SOUNDIN_MBCOUGH, SOUNDIN_FBCOUGH)
 
 
 /datum/emote/human/hiccup
@@ -375,8 +374,7 @@
 	return "scratches [P_THEIR(user.gender)] chin thougtfully..."
 
 /datum/emote/human/hmm_think/get_sound(mob/living/carbon/human/user, intentional)
-	return pick(user.gender == FEMALE ? SOUNDIN_HMM_THINK_FEMALE : SOUNDIN_HMM_THINK_MALE)
-
+	return get_sound_by_voice(user, SOUNDIN_HMM_THINK_MALE, SOUNDIN_HMM_THINK_FEMALE)
 
 /datum/emote/human/hmm_question
 	key = "hmm?"
@@ -401,8 +399,7 @@
 	return "curls [P_THEIR(user.gender)] eyebrows questioningly..?"
 
 /datum/emote/human/hmm_question/get_sound(mob/living/carbon/human/user, intentional)
-	return pick(user.gender == FEMALE ? SOUNDIN_HMM_QUESTION_FEMALE : SOUNDIN_HMM_QUESTION_MALE)
-
+	return get_sound_by_voice(user, SOUNDIN_HMM_QUESTION_MALE, SOUNDIN_HMM_QUESTION_FEMALE)
 
 /datum/emote/human/hmm_excited
 	key = "hmm!"
@@ -427,8 +424,7 @@
 	return "curls [P_THEIR(user.gender)] eyebrows excitedly!"
 
 /datum/emote/human/hmm_excited/get_sound(mob/living/carbon/human/user, intentional)
-	return pick(user.gender == FEMALE ? SOUNDIN_HMM_EXCLAIM_FEMALE : SOUNDIN_HMM_EXCLAIM_MALE)
-
+	return get_sound_by_voice(user, SOUNDIN_HMM_EXCLAIM_MALE, SOUNDIN_HMM_EXCLAIM_FEMALE)
 
 /datum/emote/human/woo
 	key = "woo"
@@ -451,8 +447,7 @@
 	)
 
 /datum/emote/human/woo/get_sound(mob/living/carbon/human/user, intentional)
-	return pick(user.gender == FEMALE ? SOUNDIN_WOO_FEMALE : SOUNDIN_WOO_MALE)
-
+	return get_sound_by_voice(user, SOUNDIN_WOO_MALE, SOUNDIN_WOO_FEMALE)
 
 /datum/emote/human/spit
 	key = "spit"

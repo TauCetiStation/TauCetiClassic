@@ -341,7 +341,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 		if(length(struc_enzymes)!= 3*DNA_SE_LENGTH)
 			ResetSE()
 
-		if(length(unique_enzymes) != DNA_UNIQUE_ENZYMES_LEN)
+		if(length(unique_enzymes) != DNA_UNIQUE_ENZYMES_LEN && !character.species.flags[NO_DNA])
 			unique_enzymes = md5(character.real_name)
 	else
 		if(length(uni_identity) != 3*DNA_UI_LENGTH)
@@ -356,8 +356,10 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 	ResetSE()
 
-	unique_enzymes = md5(character.real_name)
-	reg_dna[unique_enzymes] = character.real_name
+	unique_enzymes = ""
+	if(!character.species.flags[NO_DNA])
+		unique_enzymes = md5(character.real_name)
+		reg_dna[unique_enzymes] = character.real_name
 
 /datum/dna/proc/generate_unique_enzymes(mob/living/holder)
 	. = ""

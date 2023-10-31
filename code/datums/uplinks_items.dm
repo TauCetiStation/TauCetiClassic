@@ -816,7 +816,7 @@
 	name = "Syndicate Medical Small Kit"
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
-	cost = 5
+	cost = 2
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/bonepen

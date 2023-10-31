@@ -15,7 +15,7 @@
 	var/deepfried = 0
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
-/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
+/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M, silent = FALSE)
 	if(!usr)	return
 	if(isliving(M))
 		var/mob/living/L = M
@@ -27,9 +27,8 @@
 			if(prob(50) && SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nasty_throat_feel", /datum/mood_event/nasty_throat_feel))
 				to_chat(H, "<span class='warning'>You feel like something enveloping in your throat...</span>")
 	if(!reagents.total_volume)
-		if(M == usr)
-			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
-		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
+		if(!silent)
+			M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>", "<span class='notice'>You finish eating \the [src].</span>")
 		if(food_type)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "food_type", food_moodlet)
 		SSStatistics.score.foodeaten++
@@ -47,7 +46,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
 	if(!reagents || !reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
 		M.drop_from_inventory(src)	//so icons update :[
@@ -112,7 +111,7 @@
 				else
 					reagents.trans_to_ingest(M, reagents.total_volume)
 				bitecount++
-				On_Consume(M)
+				On_Consume(M, silent)
 			return TRUE
 
 	return FALSE
