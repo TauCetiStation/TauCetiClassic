@@ -80,6 +80,7 @@ var/global/list/slot_equipment_priority = list(
 	SLOT_S_STORE,
 	SLOT_TIE,
 	SLOT_L_STORE,
+	SLOT_R_STORE,
 	SLOT_L_HAND,
 	SLOT_R_HAND,
 	SLOT_IN_BACKPACK
