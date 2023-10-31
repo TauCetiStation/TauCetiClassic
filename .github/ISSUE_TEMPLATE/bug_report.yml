@@ -9,22 +9,10 @@ body:
     attributes:
       label: "Описание"
       description: "Опишите одну проблему как можно подробнее"
+      value: |
+      #### Что должно было произойти
 
-  - type: textarea
-    id: should_happen
-    attributes:
-      label: "Что должно было произойти"
-      description: "То, что вы ожидали"
-      placeholder: |
-        Открытое меню автолата не вызывает лаги
-
-  - type: textarea
-    id: happened
-    attributes:
-      label: "Что произошло на самом деле"
-      description: "То, что случилось"
-      placeholder: |
-        Очень сильно лагает компьютер, когда я открываю автолат
+      #### Что произошло на самом деле
 
   - type: textarea
     id: reproduction
