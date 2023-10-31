@@ -5,7 +5,7 @@
 	w_class = SIZE_LARGE
 	item_state = "electronic"
 	flags = CONDUCT
-	var/channels = list()
+	var/list/channels = list()
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/obj/item/borg/upgrade/jetpack = null
@@ -179,6 +179,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/meson(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
+	modules += new /obj/item/weapon/airlock_painter(src)
 	modules += new /obj/item/weapon/weldingtool/largetank(src)
 	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wrench(src)

@@ -5,7 +5,7 @@
 
 	factions_allowed = list(/datum/faction/shadowlings)
 
-	minimum_player_count = 30
+	minimum_player_count = 25
 	minimum_players_bundles = 25
 
 /datum/game_mode/shadowling/announce()

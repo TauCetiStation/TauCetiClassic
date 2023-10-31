@@ -230,6 +230,9 @@
 	if(!config.maplist.len)
 		return "Отсутствует конфиг карт"
 
+#define FORMAT_MAP_NAME(name) splittext(name, " ")[1]
+#define REPEATED_MAPS_FACTOR_DECREASE 0.1
+
 /datum/poll/nextmap/init_choices()
 	var/list/voteweights = get_voteweights()
 	if(!voteweights)
@@ -247,7 +250,7 @@
 			continue
 
 		var/datum/vote_choice/nextmap/vc = new
-		var/map_name = splittext(VM.map_name, " ")[1]
+		var/map_name = FORMAT_MAP_NAME(VM.map_name)
 		if(map_name in voteweights)
 			VM.voteweight = max(0.4, VM.voteweight * voteweights[map_name])
 		vc.text = VM.GetFullMapName()
@@ -262,16 +265,27 @@
 	if(!establish_db_connection("erro_round"))
 		return FALSE
 	var/list/voteweights = list()
-	var/DBQuery/select_query = dbcon.NewQuery("SELECT map_name FROM erro_round WHERE (end_state = 'proper completion' OR end_state = 'nuke') AND server_port = [sanitize_sql(world.port)] ORDER BY id DESC LIMIT 3")
+
+	// decrease weight for repeated maps
+
+	// last 1
+	var/map_name = FORMAT_MAP_NAME(SSmapping.config.map_name) 
+	voteweights[map_name] = 1 - REPEATED_MAPS_FACTOR_DECREASE
+
+	// and 2 previous from DB history
+	var/DBQuery/select_query = dbcon.NewQuery("SELECT map_name FROM erro_round WHERE (end_state = 'proper completion' OR end_state = 'nuke') AND server_port = [sanitize_sql(world.port)] ORDER BY id DESC LIMIT 2")
 	select_query.Execute()
-	var/map_name = ""
 	while(select_query.NextRow())
 		var/list/row = select_query.GetRowData()
-		map_name = splittext(row["map_name"], " ")[1]
+		map_name = FORMAT_MAP_NAME(row["map_name"])
 		if(!(map_name in voteweights))
 			voteweights[map_name] = 1
-		voteweights[map_name] -= 0.2
+		voteweights[map_name] -= REPEATED_MAPS_FACTOR_DECREASE
+
 	return voteweights
+
+#undef REPEATED_MAPS_FACTOR_DECREASE
+#undef FORMAT_MAP_NAME
 
 /datum/vote_choice/nextmap
 	text = "Box Station"

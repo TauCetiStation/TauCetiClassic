@@ -58,27 +58,36 @@
 				var/obj/machinery/power/apc/A = term.master
 				L += A
 
-		t += "<PRE>Total power: [DisplayPower(powernet.viewavail)]<BR>Total load:  [DisplayPower(powernet.viewload)]<BR></PRE>"
-
-		t += "<FONT SIZE=-1><TABLE style='border-collapse: separate; border: 0px solid transparent; border-spacing: 0 0px; width: 100%'>"
-
+		var/apcs = ""
+		var/equipment_cons = 0
+		var/lighting_cons = 0
+		var/environment_cons = 0
 		if(L.len > 0)
-			t += "<tr> <th>Area</th> <th>Eqp.</th> <th>Lgt.</th> <th>Env.</th>"
-			t += "<th style='text-align: center'>Load</th> <th style='text-align: right'>Cell </th> <th> - </th> </tr>"
+			apcs += "<tr> <th>Area</th> <th>Eqp.</th> <th>Lgt.</th> <th>Env.</th>"
+			apcs += "<th style='text-align: center'>Load</th> <th style='text-align: right'>Cell </th> <th> - </th> </tr>"
 
 			var/list/S = list("Off", "A-Off", "On", "A-On")
 			var/list/chg = list("<span style='color: red'>N</span>", "<span style='color: orange'>C</span>", "<span style='color: green'>F</span>")
 
 			for(var/obj/machinery/power/apc/A in L)
-				t += "<tr> <td>"
-				t += copytext("\The [A.area]", 1, 30)
-				t += "</td> <td>[S[A.equipment + 1]]</td> <td>[S[A.lighting + 1]]</td> <td>[S[A.environ + 1]]</td>"
-				t += "<td style='text-align: right'>[round(A.lastused_total)]</td> <td style='text-align: right'>"
+				apcs += "<tr> <td>"
+				apcs += copytext("\The [A.area]", 1, 30)
+				apcs += "</td> <td>[S[A.equipment + 1]]</td> <td>[S[A.lighting + 1]]</td> <td>[S[A.environ + 1]]</td>"
+				apcs += "<td style='text-align: right'>[round(A.lastused_total)]</td> <td style='text-align: right'>"
 
 				if(A.cell)
-					t += "[round(A.cell.percent())]%</td> <td> [chg[A.charging + 1]] </td> </tr>"
+					apcs += "[round(A.cell.percent())]%</td> <td> [chg[A.charging + 1]] </td> </tr>"
 				else
-					t += "N/C</td> <td>   </td> </tr>"
+					apcs += "N/C</td> <td>   </td> </tr>"
+
+				equipment_cons += A.lastused_equip
+				lighting_cons += A.lastused_light
+				environment_cons += A.lastused_environ
+
+		t += "<PRE>Total power: [DisplayPower(powernet.viewavail)]<BR>Total load:  [DisplayPower(powernet.viewload)]<BR></PRE>"
+		t += "<PRE>Equipment: [DisplayPower(equipment_cons)]; Lighting: [DisplayPower(lighting_cons)]; Environment: [DisplayPower(environment_cons)]<BR></PRE>"
+		t += "<FONT SIZE=-1><TABLE style='border-collapse: separate; border: 0px solid transparent; border-spacing: 0 0px; width: 100%'>"
+		t += apcs
 
 		t += "</TABLE></FONT></TT>"
 

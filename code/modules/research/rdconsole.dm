@@ -50,6 +50,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	var/selected_protolathe_category
 	var/selected_imprinter_category
 	var/search_text
+	var/sabotagable = TRUE // if traitor can sabotage it with disk
 
 	req_access = list(access_tox)	//Data and setting manipulation requires scientist access.
 	allowed_checks = ALLOWED_CHECK_NONE

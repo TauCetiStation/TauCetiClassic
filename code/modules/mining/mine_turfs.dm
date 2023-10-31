@@ -349,7 +349,7 @@
 				M.flash_eyes()
 				if(prob(50))
 					M.Stun(5)
-			M.apply_effect(25, IRRADIATE)
+			irradiate_one_mob(M, 25)
 		for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
 			var/distance_rad_signal = get_dist(counter, src)
 			var/rads = 25 * sqrt(1 / (distance_rad_signal + 1))
