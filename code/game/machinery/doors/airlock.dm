@@ -1188,6 +1188,7 @@ var/global/list/airlock_overlays = list()
 		ae.broken = TRUE
 		operating = 0
 	..()
+
 /obj/structure/door_scrap
 	name = "Door Scrap"
 	desc = "Just a bunch of garbage."
