@@ -459,10 +459,9 @@
 
 	var/obj/item/organ/external/picked = specific_limb || pick(human_mob.bodyparts)
 	if(!(picked in bodyparts))
-		RegisterSignal(picked, list(COMSIG_PARENT_QDELETING), PROC_REF(remove_bodypart)) //COMSIG_BODYPART_REMOVED
+		RegisterSignal(picked, list(COMSIG_PARENT_QDELETING), PROC_REF(remove_bodypart))
 		RegisterSignal(picked, COMSIG_BODYPART_UPDATING_HEALTH_HUD, PROC_REF(on_bodypart_hud_update))
 
-	bodyparts[picked] = clamp(severity || rand(1, 5), 1, 5)
 	hallucinator.update_health_hud()
 
 /// Remove a bodypart from our list, unregistering all associated signals and handling the reference
