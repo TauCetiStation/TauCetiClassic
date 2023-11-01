@@ -98,9 +98,9 @@
 /datum/quality/quirkieish/informed
 	name = "Informed"
 	desc = "В баре тебе удалось подслушать странный разговор о каких-то кодовых словах."
-	requirement = "Все, кроме охраны, Капитана и ХоПа."
+	requirement = "Все, кроме охраны, Синего щита, Капитана и ХоПа."
 
-	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel")
+	var/list/funpolice = list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Captain", "Warden", "Head of Personnel", "Blueshield Officer")
 
 /datum/quality/quirkieish/informed/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return !(H.mind.assigned_role in funpolice)
@@ -327,7 +327,7 @@
 	if(prob(10))
 		return
 	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
-	L.stealth_inject(H)
+	L.inject(H, BP_CHEST)
 
 
 /datum/quality/quirkieish/slime_person
@@ -405,3 +405,24 @@
 
 	create_and_setup_role(/datum/role/prisoner, H)
 	H.sec_hud_set_security_status()
+
+/datum/quality/unrestricted
+	name = "Unrestricted"
+	desc = "В качестве особого эксперимента, НТ позволило вам занять любую должность на станции."
+	requirement = "Прибыть на станцию после начала смены."
+	max_amount = 1
+
+/datum/quality/unrestricted/add_effect(mob/living/carbon/human/H, latespawn)
+	//only for latespawners
+	if(!latespawn)
+		return
+	var/datum/job/job = SSjob.GetJob(H.mind.assigned_role)
+	//don't give paper if work is allowed by default for species
+	if(job.is_species_permitted(H.get_species()))
+		return
+	var/obj/item/weapon/paper/P = new
+	P.name = "Форма смены профессии или должности"
+	P.info = "<center><img src = bluentlogo.png><br>Отдел Кадров Центрального Коммандования<br>Назначение на должность</center><hr>Полное имя составителя: [H.real_name]<br>Назначенная должность: [H.mind.assigned_role]<hr>Место для штампов."
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(P)
+	H.equip_or_collect(P, SLOT_L_HAND)

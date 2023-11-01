@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(lag_switch)
 	/// List of bools corresponding to code/__DEFINES/lag_switch.dm
 	var/static/list/measures[MEASURES_AMOUNT]
 	/// List of measures that toggle automatically
-	var/list/auto_measures = list(DISABLE_RUNECHAT, DISABLE_PARALLAX, DISABLE_BICON, DISABLE_FOOTSTEPS)
+	var/list/auto_measures = list(DISABLE_GHOST_ZOOM, DISABLE_RUNECHAT, DISABLE_PARALLAX, DISABLE_BICON, DISABLE_FOOTSTEPS)
 	/// Timer ID for the automatic veto period
 	var/veto_timer_id
 	/// Cooldown between say verb uses when slowmode is enabled
@@ -94,6 +94,14 @@ SUBSYSTEM_DEF(lag_switch)
 			else
 				global.keyloop_list |= global.player_list
 				to_chat(observer_list, "<span class='bold notice'>Observer freelook has been re-enabled. Enjoy your wooshing.</span>")
+
+		if(DISABLE_GHOST_ZOOM)
+			if(state)
+				for(var/mob/user as anything in global.observer_list)
+					user.client?.change_view(world.view)
+				to_chat(observer_list, "<span class='bold notice'>Observer zoom has been disabled.</span>")
+			else
+				to_chat(observer_list, "<span class='bold notice'>Observer zoom has been enabled.</span>")
 
 		if(SLOWMODE_IC_CHAT)
 			if(state)

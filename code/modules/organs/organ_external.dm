@@ -126,6 +126,9 @@
 	owner.bodyparts += src
 	owner.bodyparts_by_name[body_zone] = src
 
+	for(var/obj/item/organ/internal/IO in bodypart_organs)
+		IO.insert_organ(owner)
+
 	if(parent)
 		parent.children += src
 
@@ -445,6 +448,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(vital)
 		owner.death()
 
+	for(var/obj/item/organ/internal/IO in bodypart_organs)
+		owner.organs -= IO
+		owner.organs_by_name -= IO.organ_tag
+		IO.owner = null
+
 	owner.UpdateDamageIcon(src)
 	if(!clean && leaves_stump)
 		var/obj/item/organ/external/stump/S = new(null)
@@ -581,7 +589,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, eyes_layer)
 		if(species.eyes_glowing)
-			img_eyes_s.plane = ABOVE_LIGHTING_PLANE
+			img_eyes_s.plane = LIGHTING_LAMPS_PLANE
 			img_eyes_s.layer = ABOVE_LIGHTING_LAYER
 
 		if(HULK in owner.mutations)

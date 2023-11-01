@@ -86,6 +86,9 @@ SUBSYSTEM_DEF(smartlight)
 
 	var/color = input("Select hex color for ligthing", "New Night Shift Preset") as null|color
 
+	if(!color) // doulbe input because https://www.byond.com/forum/post/2650322 and I NEED THIS HEX INPUT
+		color = input("Select hex color for ligthing", "New Night Shift Preset") as null|text
+
 	if(!color)
 		return
 
