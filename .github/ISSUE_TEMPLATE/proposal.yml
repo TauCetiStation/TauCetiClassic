@@ -1,4 +1,5 @@
 name: "Оставить предложение"
+title: "[Proposal] "
 description: "Любые идеи."
 labels: ["Proposal"]
 body:
