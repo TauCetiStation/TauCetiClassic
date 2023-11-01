@@ -9736,13 +9736,13 @@
 /obj/structure/closet/secure_closet/forensics,
 /obj/item/weapon/storage/briefcase,
 /obj/structure/cable,
-/obj/machinery/light_switch{
-	pixel_y = -27
-	},
 /obj/machinery/power/apc{
 	custom_smartlight_preset = "Dark Brig";
 	name = "Brig dark down APC";
 	pixel_y = -27
+	},
+/obj/machinery/light_switch{
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 6;
