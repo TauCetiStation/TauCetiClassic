@@ -117,6 +117,7 @@
 #include "code\__HELPERS\filters.dm"
 #include "code\__HELPERS\game.dm"
 #include "code\__HELPERS\global_lists.dm"
+#include "code\__HELPERS\hallucinations.dm"
 #include "code\__HELPERS\heap.dm"
 #include "code\__HELPERS\hex_colors.dm"
 #include "code\__HELPERS\icon_smoothing.dm"
