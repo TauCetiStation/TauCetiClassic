@@ -12576,7 +12576,7 @@
 	pixel_y = 30
 	},
 /obj/machinery/camera{
-	c_tag = "Storage Room";
+	c_tag = "Mining production";
 	dir = 6;
 	network = list("MINE")
 	},
@@ -13073,7 +13073,7 @@
 /area/asteroid/mine/explored)
 "Ue" = (
 /obj/machinery/camera{
-	c_tag = "Shuttle Airlock";
+	c_tag = "Mining";
 	dir = 8;
 	network = list("MINE")
 	},
