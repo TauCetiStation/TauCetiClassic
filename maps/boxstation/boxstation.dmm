@@ -50628,7 +50628,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
-/obj/item/weapon/bell,
 /turf/simulated/floor,
 /area/station/bridge/hop_office)
 "bMs" = (
