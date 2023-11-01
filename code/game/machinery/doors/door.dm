@@ -78,23 +78,17 @@ var/global/list/wedge_image_cache = list()
 	if(world.time - last_bumped <= 7)
 		return //Can bump-open one airlock per animation. This is to prevent shock spam.
 	last_bumped = world.time
+
 	if(ismob(AM))
 		var/mob/M = AM
 		if(!M.restrained() && M.w_class >= SIZE_SMALL)
 			bumpopen(M)
 		return
-	else if(isitem(AM))
-		if(AM.w_class < SIZE_NORMAL)
-			if(!length(AM.GetAccess()) || check_access(null))
-				return
-		if(allowed(AM))
-			open()
-		return
 
-	if(allowed(AM))
-		open()
-	else
-		do_animate("deny")
+	if(AM.w_class < SIZE_NORMAL) //Big item tries to open a door anyways
+		if(!length(AM.GetAccess()) || check_access(null)) //Door that requires access and we have a card
+			return
+	try_open(AM)
 
 /obj/machinery/door/AltClick(mob/user)
 	if(user.incapacitated())
@@ -147,33 +141,35 @@ var/global/list/wedge_image_cache = list()
 		return
 	try_open(user)
 
-/obj/machinery/door/proc/try_open(mob/user, obj/item/tool = null)
+/obj/machinery/door/proc/try_open(atom/movable/AM, obj/item/tool = null)
 	if(operating)
 		return
 
-	add_fingerprint(user)
+	if(ismob(AM))
+		var/mob/user = AM
+		add_fingerprint(user)
 
-	if(ishuman(user) && prob(40) && density)
-		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
-			var/armor_block = H.run_armor_check(BP_HEAD, "melee")
-			if(armor_block)
-				visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
-			else
-				visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
-			if(H.apply_damage(10, BRUTE, BP_HEAD, armor_block))
-				H.Stun(2)
-				H.Weaken(5)
-			return
+		if(ishuman(user) && prob(40) && density)
+			var/mob/living/carbon/human/H = user
+			if(H.getBrainLoss() >= 60)
+				playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
+				var/armor_block = H.run_armor_check(BP_HEAD, "melee")
+				if(armor_block)
+					visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
+				else
+					visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+				if(H.apply_damage(10, BRUTE, BP_HEAD, armor_block))
+					H.Stun(2)
+					H.Weaken(5)
+				return
 
-	user.SetNextMove(CLICK_CD_INTERACT)
+		user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(!requiresID() && !check_access(null))
 		do_animate("deny")
 		return
 
-	if(allowed(user))
+	if(allowed(AM))
 		if(density)
 			open()
 		else
