@@ -1188,20 +1188,6 @@ var/global/list/airlock_overlays = list()
 		ae.broken = TRUE
 		operating = 0
 	..()
-/*
-/obj/machinery/door/airlock/proc/update_other_id()
-	for(var/obj/machinery/door/airlock/Airlock in airlock_list)
-		if(Airlock.closeOtherId == closeOtherId && Airlock != src)
-			if(!(Airlock in close_others))
-				close_others += Airlock
-			if(!(src in Airlock.close_others))
-				Airlock.close_others += src
-	if(closeOtherId != null)
-		for (var/obj/machinery/door/airlock/A in airlock_list)
-			if(A.closeOtherId == closeOtherId && A != src)
-				closeOther = A
-				break
-				*/
 /obj/structure/door_scrap
 	name = "Door Scrap"
 	desc = "Just a bunch of garbage."
