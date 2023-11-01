@@ -125,7 +125,7 @@ var/global/list/airlock_overlays = list()
 	//needs rewriting all hallucination += num to one proc/adjust_hallucination(num)
 	//so directly call status_effect for now
 	if(user.hallucination > 50)
-		user.apply_status_effect(/datum/status_effect/hallucination, 209 SECONDS)
+		user.apply_status_effect(/datum/status_effect/hallucination, 2 SECONDS)
 
 	if(SEND_SIGNAL(user, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, src) & STOP_BUMP)
 		return
