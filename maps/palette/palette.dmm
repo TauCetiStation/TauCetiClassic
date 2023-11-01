@@ -3332,6 +3332,16 @@
 	icon_state = "darkredcorners"
 	},
 /area/space)
+"Db" = (
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "Dc" = (
 /turf/simulated/floor{
 	icon_state = "neutralchecker"
@@ -3937,6 +3947,16 @@
 	dir = 8;
 	icon_state = "cautioncorner"
 	},
+/area/space)
+"Hb" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/space)
 "Hd" = (
 /turf/simulated/floor{
@@ -8254,10 +8274,10 @@ aS
 Ll
 DS
 DS
-wN
-wN
-cb
-cb
+Hb
+Hb
+Db
+Db
 Sr
 Sr
 ZP

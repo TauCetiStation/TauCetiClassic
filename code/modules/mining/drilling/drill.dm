@@ -257,6 +257,7 @@
 
 /obj/machinery/mining/drill/RefreshParts()
 	..()
+
 	damage_to_user = 30
 	harvest_speed = 0
 	capacity = 0
