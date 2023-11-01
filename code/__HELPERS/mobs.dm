@@ -251,7 +251,7 @@
 		return TRUE
 	return FALSE
 
-/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information)
+/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information, scan_hallucination = FALSE)
 	var/message = ""
 	var/insurance_type
 
@@ -374,7 +374,9 @@
 				if(HEART_FIBR)
 					message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
 			message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
-
+	var/list/reflist = list(message, scan_hallucination)
+	SEND_SIGNAL(M, COMSIG_LIVING_HEALTHSCAN, reflist)
+	message = reflist[1]
 	if(insurance_type)
 		message += "<span class='notice'><font color='blue'>Страховка: [insurance_type]</font></span><br>"
 
