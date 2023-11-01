@@ -396,6 +396,6 @@
 	/// Return to override that bodypart's health hud with your own icon
 	#define COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
 
-/// from /proc/health_analyze(): (message, scan_hallucination_boolean)
+/// from /proc/health_analyze(): (list/args = list(message, scan_hallucination_boolean))
 /// Consumers are allowed to mutate the scan_results list to add extra information
 #define COMSIG_LIVING_HEALTHSCAN "living_healthscan"
