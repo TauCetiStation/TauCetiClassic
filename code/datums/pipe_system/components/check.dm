@@ -6,6 +6,7 @@
 	. = ..()
 
 	src.success_component = success_component
+
 	src.fail_component = fail_component
 
 /datum/pipe_system/component/check/CopyComponent()
@@ -20,19 +21,19 @@
 
 	return new_component
 
-/datum/pipe_system/component/check/ApiChange(href_list)
+/datum/pipe_system/component/check/ApiChange(action, list/params, vector = "")
 
-	if(href_list["get_fail_component"])
-		return fail_component
+	// if(href_list["get_fail_component"])
+	// 	return fail_component
 
-	if(href_list["get_success_component"])
-		return success_component
+	// if(href_list["get_success_component"])
+	// 	return success_component
 
-	if(href_list["change_fail_component"])
-		return ChangeFailComponent(href_list["change_fail_component"])
+	// if(href_list["change_fail_component"])
+	// 	return ChangeFailComponent(href_list["change_fail_component"])
 
-	if(href_list["change_success_component"])
-		return ChangeSuccessComponent(href_list["change_success_component"])
+	// if(href_list["change_success_component"])
+	// 	return ChangeSuccessComponent(href_list["change_success_component"])
 
 	return ..()
 

@@ -1,4 +1,5 @@
 /datum/pipe_system/component/data
+	id_component = "DATA"
 	var/value
 	var/id_data = "DEFAULT"
 
@@ -27,18 +28,26 @@
 
 	return new_component
 
-/datum/pipe_system/component/data/ApiChange(href_list)
+/datum/pipe_system/component/data/ApiChange(action, list/params, vector = "")
 
-	if(href_list["change_data"])
-		return ChangeData(href_list["change_data"])
+	if(action == "change_data")
+		return ChangeData(params["change_data"])
 
-	if(href_list["get_data"])
-		return GetData()
+	// if(href_list["get_data"])
+	// 	return GetData()
 
-	if(href_list["is_valid"])
-		return IsValid()
+	// if(href_list["is_valid"])
+	// 	return IsValid()
 
 	return ..()
+
+/datum/pipe_system/component/data/GetApiObject(loop_safety)
+	var/list/data = ..()
+
+	data["id_data"] = id_data
+	data["value"] = value
+
+	return data
 
 /datum/pipe_system/component/data/proc/ChangeData(datum/pipe_system/component/data/data)
 

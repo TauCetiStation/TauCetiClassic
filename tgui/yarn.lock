@@ -1796,6 +1796,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/prop-types@npm:*":
+  version: 15.7.9
+  resolution: "@types/prop-types@npm:15.7.9"
+  checksum: c7591d3ff7593e243908a07e1d3e2bb6e8879008af5800d8378115a90d0fdf669a1cae72a6d7f69e59c4fa7bb4c8ed61f6ebc1c520fe110c6f2b03ac02414072
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^18.2.32":
+  version: 18.2.32
+  resolution: "@types/react@npm:18.2.32"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: dad139dd165c4ce2364d1849af4e022746adc73f1a35bb5e0c95dbfee4732637de709504440c518e0177898aaf151b7a6b34019c8e398ea2e919dcfc4d79198f
+  languageName: node
+  linkType: hard
+
+"@types/scheduler@npm:*":
+  version: 0.16.5
+  resolution: "@types/scheduler@npm:0.16.5"
+  checksum: 5aae67331bb7877edc65f77f205fb03c3808d9e51c186afe26945ce69f4072886629580a751e9ce8573e4a7538d0dfa1e4ce388c7c451fa689a4c592fdf1ea45
+  languageName: node
+  linkType: hard
+
 "@types/stack-utils@npm:^2.0.0":
   version: 2.0.0
   resolution: "@types/stack-utils@npm:2.0.0"
@@ -2668,9 +2693,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001248":
-  version: 1.0.30001251
-  resolution: "caniuse-lite@npm:1.0.30001251"
-  checksum: 918e1b1662c26c11291206146bc305d7fd1ca351aa9231c2e21cb1526d87b444830e2d8dc54416ebb8ecf7e0addea12d66a1c41493476229987e5e6922f0c14b
+  version: 1.0.30001553
+  resolution: "caniuse-lite@npm:1.0.30001553"
+  checksum: 45d6a2a3c3a098c8093a4c8883fceafb4bbf59d96f6fd5bb381ba4581d07eecbe0ede4f55383f0d49374154ff6a808bd90fbe32b17ccd1738034d2579787b33c
   languageName: node
   linkType: hard
 
@@ -2990,6 +3015,13 @@ __metadata:
   dependencies:
     cssom: ~0.3.6
   checksum: 5f05e6fd2e3df0b44695c2f08b9ef38b011862b274e320665176467c0725e44a53e341bc4959a41176e83b66064ab786262e7380fd1cabeae6efee0d255bb4e3
+  languageName: node
+  linkType: hard
+
+"csstype@npm:^3.0.2":
+  version: 3.1.2
+  resolution: "csstype@npm:3.1.2"
+  checksum: e1a52e6c25c1314d6beef5168da704ab29c5186b877c07d822bd0806717d9a265e8493a2e35ca7e68d0f5d472d43fac1cdce70fd79fd0853dff81f3028d857b5
   languageName: node
   linkType: hard
 
@@ -5222,7 +5254,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -5903,6 +5935,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prop-types@npm:^15.8.1":
+  version: 15.8.1
+  resolution: "prop-types@npm:15.8.1"
+  dependencies:
+    loose-envify: ^1.4.0
+    object-assign: ^4.1.1
+    react-is: ^16.13.1
+  checksum: c056d3f1c057cb7ff8344c645450e14f088a915d078dcda795041765047fa080d38e5d626560ccaac94a4e16e3aa15f3557c1a9a8d1174530955e992c675e459
+  languageName: node
+  linkType: hard
+
 "psl@npm:^1.1.28, psl@npm:^1.1.33":
   version: 1.8.0
   resolution: "psl@npm:1.8.0"
@@ -5940,7 +5983,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^16.8.1":
+"react-archer@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "react-archer@npm:4.3.0"
+  dependencies:
+    react-fast-compare: ^2.0.4
+    resize-observer-polyfill: 1.5.0
+  peerDependencies:
+    "@types/react": ^16.8.8 || ^17 || ^18
+    prop-types: ^15.6.2
+    react: ^16.9.0 || ^17 || ^18
+  checksum: 3e910fb4d216c5efed6d74d27208634a9dfc63a05e5f229396fa4becd2f2b2b9c231e24983afad20d6475f0a4cc3cf3f52f153282b0f06386bf023229a48bd11
+  languageName: node
+  linkType: hard
+
+"react-fast-compare@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "react-fast-compare@npm:2.0.4"
+  checksum: 06046595f90a4e3e3a56f40a8078c00aa71bdb064ddb98343f577f546aa22e888831fd45f009c93b34707cc842b4c637737e956fd13d6f80607ee92fb9cf9a1c
+  languageName: node
+  linkType: hard
+
+"react-is@npm:^16.13.1, react-is@npm:^16.8.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
@@ -5951,6 +6015,15 @@ __metadata:
   version: 17.0.1
   resolution: "react-is@npm:17.0.1"
   checksum: 5e6945a286367894d11b24f41a0065607ba62bdac0df0b567294b2e299c037e3641434e66f9be30536b8c47f7ad94d44e633feb2ba25959c2c42423844e6c2f1
+  languageName: node
+  linkType: hard
+
+"react@npm:^18.2.0":
+  version: 18.2.0
+  resolution: "react@npm:18.2.0"
+  dependencies:
+    loose-envify: ^1.1.0
+  checksum: 88e38092da8839b830cda6feef2e8505dec8ace60579e46aa5490fc3dc9bba0bd50336507dc166f43e3afc1c42939c09fe33b25fae889d6f402721dcd78fca1b
   languageName: node
   linkType: hard
 
@@ -6107,6 +6180,13 @@ __metadata:
   version: 2.0.2
   resolution: "require-from-string@npm:2.0.2"
   checksum: a03ef6895445f33a4015300c426699bc66b2b044ba7b670aa238610381b56d3f07c686251740d575e22f4c87531ba662d06937508f0f3c0f1ddc04db3130560b
+  languageName: node
+  linkType: hard
+
+"resize-observer-polyfill@npm:1.5.0":
+  version: 1.5.0
+  resolution: "resize-observer-polyfill@npm:1.5.0"
+  checksum: ecc6aab5d4f967f1b76cee0748c1967c8b6b5d8c4393764ca3b788dbd15c0f846326c4ebff9f4f39aba45fea8016cd42bb95e28e8fab1d14349e173790c58133
   languageName: node
   linkType: hard
 
@@ -6831,6 +6911,7 @@ resolve@^2.0.0-next.3:
     "@types/jest": ^27.0.1
     "@types/jsdom": ^16.2.13
     "@types/node": ^14.17.9
+    "@types/react": ^18.2.32
     "@typescript-eslint/parser": ^4.29.1
     babel-jest: ^27.0.6
     babel-loader: ^8.2.2
@@ -6847,6 +6928,9 @@ resolve@^2.0.0-next.3:
     jest-circus: ^27.0.6
     jsdom: ^16.7.0
     mini-css-extract-plugin: ^1.6.2
+    prop-types: ^15.8.1
+    react: ^18.2.0
+    react-archer: ^4.3.0
     sass: ^1.37.5
     sass-loader: ^11.1.1
     style-loader: ^2.0.0

@@ -24,10 +24,10 @@
 
 	return ..()
 
-/datum/pipe_system/component/proc_component/for_cycle/ApiChange(href_list)
+/datum/pipe_system/component/proc_component/for_cycle/ApiChange(action, list/params, vector = "")
 
-	if(href_list["set_cycle_component"])
-		return SetCycleComponent(href_list["set_cycle_component"])
+	// if(href_list["set_cycle_component"])
+	// 	return SetCycleComponent(href_list["set_cycle_component"])
 
 	return ..()
 

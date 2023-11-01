@@ -389,3 +389,5 @@
 #define COMSIG_PIPE_CHECK_SUCCESS "pipe_check_success"
 #define COMSIG_PIPE_COMPONENT_ACTION "pipe_component_action"
 #define COMSIG_PIPE_COMPONENT_ACTION_LAST "pipe_component_action_last"
+
+#define COMSIG_PIPE_COMPONENT_DELETE "pipe_component_delete"

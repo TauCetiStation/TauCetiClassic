@@ -7,6 +7,9 @@
 /datum/pipe_system/component/New(datum/P)
 	parent = P
 
+/datum/pipe_system/component/Destroy(force, ...)
+	return ..()
+
 /datum/pipe_system/component/proc/InsertNextComponent(datum/pipe_system/component/C)
 
 	C.previous_component = src
@@ -25,22 +28,56 @@
 /datum/pipe_system/component/proc/DeleteNextComponent()
 
 	if(next_component)
-		next_component.SelfDelete()
+		return next_component.SelfDelete()
 
 /datum/pipe_system/component/proc/DeletePreviousComponent()
 
 	if(previous_component)
-		previous_component.SelfDelete()
+		return previous_component.SelfDelete()
 
 /datum/pipe_system/component/proc/SelfDelete()
 
 	if(previous_component)
-		previous_component.next_component = next_component
+		previous_component.AfterDeleteChildComponent(src)
 
 	if(next_component)
-		next_component.previous_component = previous_component
+		next_component.AfterDeleteChildComponent(src)
+
+	SEND_SIGNAL(parent, COMSIG_PIPE_COMPONENT_DELETE, src)
+
+	next_component = null
+	previous_component = null
+	parent = null
 
 	qdel(src)
+
+	return TRUE
+
+/datum/pipe_system/component/proc/AfterDeleteChildComponent(datum/pipe_system/component/C)
+
+	if(ref(next_component) == ref(C))
+		return SetNextComponent(C.next_component)
+
+	if(ref(previous_component) == ref(C))
+		return SetPreviousComponent(C.previous_component)
+
+	return FALSE
+
+/datum/pipe_system/component/proc/SetNextComponent(datum/pipe_system/component/C)
+
+	next_component = C
+
+	if(C)
+		C.previous_component = src
+
+	return TRUE
+
+/datum/pipe_system/component/proc/SetPreviousComponent(datum/pipe_system/component/C)
+
+	previous_component = C
+
+	if(C)
+		C.next_component = src
 
 	return TRUE
 
@@ -51,6 +88,7 @@
 
 	if(!next_component)
 		next_component = C
+		C.previous_component = src
 		return TRUE
 
 	return next_component.AddLastComponent(C)
@@ -61,6 +99,13 @@
 		return src
 
 	return next_component.GetLastComponent()
+
+/datum/pipe_system/component/proc/GetFirstComponent()
+
+	if(!previous_component)
+		return src
+
+	return previous_component.GetFirstComponent()
 
 /datum/pipe_system/component/proc/RunTimeAction(datum/pipe_system/process/process)
 
@@ -96,33 +141,60 @@
 
 	if(next_component)
 		new_component.next_component = next_component.CopyComponent()
+		new_component.next_component.previous_component = new_component
 
 	return new_component
 
-/datum/pipe_system/component/proc/ApiChange(href_list)
+/datum/pipe_system/component/proc/ApiChange(action, list/params, vector = "")
 
-	if(href_list["get_this_component"])
+	if(!PingFromRef(params["link_component"]))
+		var/result = FALSE
+		if(next_component && vector != PIPE_SYSTEM_BACK)
+			result = next_component.ApiChange(action, params, PIPE_SYSTEM_FORWARD)
+			if(result != FALSE)
+				return result
+
+		if(previous_component && vector != PIPE_SYSTEM_FORWARD)
+			result = previous_component.ApiChange(action, params, PIPE_SYSTEM_BACK)
+			if(result != FALSE)
+				return result
+
+		return FALSE
+
+	if(action == "select_component")
 		return src
 
-	if(href_list["get_copy_component"])
-		return CopyComponent()
+	// if(action == "add_last_component")
+	// 	return AddLastComponent(href_list["add_last_component"])
 
-	if(href_list["insert_next_component"])
-		return InsertNextComponent(href_list["insert_next_component"])
-
-	if(href_list["add_last_component"])
-		return AddLastComponent(href_list["add_last_component"])
-
-	if(href_list["get_last_component"])
-		return GetLastComponent()
-
-	if(href_list["self_delete"])
+	if(action == "self_delete")
 		return SelfDelete()
 
-	if(href_list["delete_next_component"])
+	if(action == "delete_next_component")
 		return DeleteNextComponent()
 
-	if(href_list["delete_previous_component"])
+	if(action == "delete_previous_component")
 		return DeletePreviousComponent()
 
 	return TRUE
+
+/datum/pipe_system/component/proc/PingFromRef(link_component)
+	if(link_component != ref(src))
+		return FALSE
+	return TRUE
+
+/datum/pipe_system/component/proc/GetApiObject(loop_safety = FALSE)
+
+	var/list/data = list()
+
+	if(next_component && !loop_safety)
+		data["next_component"] = next_component.GetApiObject()
+
+	if(previous_component)
+		data["previous_component"] = previous_component.GetApiObject(TRUE)
+
+	data["id_component"] = id_component
+
+	data["link_component"] = ref(src)
+
+	return data
