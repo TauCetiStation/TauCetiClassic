@@ -56416,6 +56416,7 @@
 	pixel_x = -8;
 	pixel_y = 10
 	},
+/obj/item/device/healthanalyzer,
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "cap" = (
@@ -75562,13 +75563,16 @@
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 /obj/item/clothing/suit/straight_jacket,
+/obj/structure/closet/secure_closet{
+	name = "Psychiatrist's Locker";
+	req_access = list(64)
+	},
 /obj/machinery/camera{
 	c_tag = "Psychiatric Office";
 	dir = 8;
 	network = list("SS13","Medical")
 	},
 /obj/item/toy/plushie/tuxedo_cat,
-/obj/structure/closet/secure_closet/psycho,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "jrS" = (
