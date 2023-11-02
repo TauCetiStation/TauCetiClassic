@@ -102,7 +102,7 @@
 
 		if("Other Signature")
 			mode = SEARCH_FOR_OBJECT
-			switch(tgui_alert(usr, "Search for AI signature or DNA fragment?" , "Signature Mode Select" , list("DNA", "AI System", "Microphones")))
+			switch(tgui_alert(usr, "Search for AI signature or DNA fragment?" , "Signature Mode Select" , list("DNA", "AI System", "Microphone")))
 				if("DNA")
 					var/DNAstring = sanitize(input("Input DNA string to search for." , "Please Enter String." , ""))
 					if(!DNAstring)
@@ -122,7 +122,7 @@
 						return
 					target = target_ai
 					to_chat(usr, "You set the pinpointer to locate [target]")
-				if("Microphones")
+				if("Microphone")
 					if(!global.all_command_microphones)
 						to_chat(usr, "Failed to locate any microphone!")
 						return
