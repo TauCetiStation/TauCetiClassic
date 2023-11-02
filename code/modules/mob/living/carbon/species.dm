@@ -1447,12 +1447,12 @@
 	,NO_EMBED = TRUE
 	)
 
-	brute_mod = 0.6
-	burn_mod = 1.6
+	brute_mod = 1.8
+	burn_mod = 1
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0
-	speed_mod = -0.4
+	speed_mod = -0.2
 	speed_mod_no_shoes = -1
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
@@ -1501,9 +1501,9 @@
 	icobase = 'icons/mob/human_races/r_zombie_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_zombie_tajaran.dmi'
 
-	brute_mod = 0.7
-	burn_mod = 1.7
-	speed_mod = -0.9
+	brute_mod = 2
+	burn_mod = 1.2
+	speed_mod = -0.8
 
 	tail = "tajaran_zombie"
 
@@ -1552,9 +1552,9 @@
 	icobase = 'icons/mob/human_races/r_zombie_lizard.dmi'
 	deform = 'icons/mob/human_races/r_zombie_lizard.dmi'
 
-	brute_mod = 0.9
-	burn_mod = 1.3
-	speed_mod = -0.4
+	brute_mod = 1.6
+	burn_mod = 0.90
+	speed_mod = -0.2
 
 	tail = "unathi_zombie"
 
