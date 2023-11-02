@@ -376,14 +376,15 @@
 					for(var/P in typesof(/obj/item/weapon/card/id))
 						var/obj/item/weapon/card/id/C = new P
 						if(C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
-							radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
+							radial_chooses[C] = image(icon = C.icon, icon_state = initial(C.icon_state))
 
 				var/obj/item/weapon/card/id/newc = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 				if (newc)
 					src.icon = 'icons/obj/card.dmi'
-					src.icon_state = newc.icon_state
+					src.item_state_inventory = initial(newc.icon_state)
+					src.item_state_world = newc.item_state_world
 					src.desc = newc.desc
-				update_icon()
+				update_world_icon()
 				to_chat(user, "<span class='notice'>You successfully change the look of the ID card!</span>")
 				return
 
@@ -445,7 +446,7 @@
 	name = "CentCom. ID"
 	desc = "ID карта прямиком с Центрального Командования."
 	icon_state = "centcom"
-	item_state_world = "centcomm_world"
+	item_state_world = "centcom_world"
 	registered_name = "Central Command"
 	assignment = "General"
 	rank = "NanoTrasen Representative"

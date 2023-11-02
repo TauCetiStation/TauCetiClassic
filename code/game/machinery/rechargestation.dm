@@ -32,6 +32,8 @@
 	update_icon()
 
 /obj/machinery/recharge_station/RefreshParts()
+	..()
+
 	recharge_speed = 0
 	repairs = 0
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)

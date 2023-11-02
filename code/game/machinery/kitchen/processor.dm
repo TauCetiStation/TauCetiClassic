@@ -22,6 +22,8 @@
 	RefreshParts()
 
 /obj/machinery/processor/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		rating_amount = B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
