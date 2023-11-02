@@ -7,7 +7,7 @@
 	flags = NODROP | ABSTRACT | DROPDEL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
-	force = 20
+	force = 16
 	w_class = SIZE_BIG
 	throwforce = 0
 	throw_range = 0
@@ -71,7 +71,7 @@
 			playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(do_after(user, 100, target = A))
 				if(A && A.density && user.Adjacent(A))
-					if(attempts >= 1 && prob(attempts * 3))
+					if(attempts >= 2 && prob(attempts*5))
 						user.visible_message("<span class='warning'>[user] broke the airlock with [src]!</span>",\
 											 "<span class='warning'>You break the airlock.</span>",\
 											 "<span class='warning'>You hear a metal screeching sound.</span>")
@@ -141,7 +141,7 @@
 
 /datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed)
 	if(!gibbed)
-		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(1000,1200))
+		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(600,700))
 
 /proc/handle_infected_death(mob/living/carbon/human/H)
 	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
@@ -158,7 +158,7 @@
 						ghost.reenter_corpse()
 
 		H.visible_message("<span class='danger'>[H]'s body starts to move!</span>")
-		addtimer(CALLBACK(null, PROC_REF(revive_zombie), H), 60)
+		addtimer(CALLBACK(null, PROC_REF(revive_zombie), H), 40)
 
 /proc/revive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
@@ -238,7 +238,7 @@
 		var/datum/disease2/disease/V = virus2[ID]
 		for(var/datum/disease2/effectholder/e in V.effects)
 			if(istype(e.effect, /datum/disease2/effect/zombie)) //Already infected
-				e.chance = min(80, e.chance + 10) //Make virus develop faster
+				e.chance = min(100, e.chance + 10) //Make virus develop faster
 				V.cooldown_mul = min(3, V.cooldown_mul + 1)
 				return
 
@@ -253,7 +253,7 @@
 		holder.chance = 100
 	D.addeffect(holder)
 	D.uniqueID = rand(0,10000)
-	D.infectionchance = 80
+	D.infectionchance = 100
 	D.antigen |= ANTIGEN_Z
 	D.spreadtype = DISEASE_SPREAD_BLOOD // not airborn and not contact, because spreading zombie virus through air or hugs is silly
 
