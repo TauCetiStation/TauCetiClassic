@@ -25,13 +25,20 @@
 
 /datum/event/feature/area/maintenance_spawn/invasion
 	possible_types = list(
-		/mob/living/simple_animal/hostile/asteroid/basilisk/halloween,
-		/mob/living/simple_animal/hostile/asteroid/goliath/broodmother_halloween,
-		/mob/living/simple_animal/hostile/asteroid/goliath/ancient_halloween,
-		/mob/living/simple_animal/hostile/asteroid/goliath/halloween,
-	)
+			/mob/living/simple_animal/hostile/giant_spider,
+			/mob/living/simple_animal/hostile/shade,
+			/mob/living/simple_animal/hostile/octopus,
+			/mob/living/simple_animal/hostile/cyber_horror,
+		)
 
 /datum/event/feature/area/maintenance_spawn/invasion/setup()
+	if(SSholiday.holidays[HALLOWEEN])
+		possible_types = list(
+			/mob/living/simple_animal/hostile/asteroid/basilisk/halloween,
+			/mob/living/simple_animal/hostile/asteroid/goliath/broodmother_halloween,
+			/mob/living/simple_animal/hostile/asteroid/goliath/ancient_halloween,
+			/mob/living/simple_animal/hostile/asteroid/goliath/halloween,
+		)
 	nums = rand(8, 12)
 	. = ..()
 
