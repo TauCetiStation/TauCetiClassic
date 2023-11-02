@@ -73,7 +73,6 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(IPC)
 	flags = JOB_FLAG_SCIENCE
 
 /datum/job/xenobiologist
