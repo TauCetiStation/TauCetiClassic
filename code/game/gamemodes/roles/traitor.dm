@@ -174,6 +174,15 @@
 		else
 			AppendObjective(/datum/objective/target/dehead, TRUE)
 
+/datum/role/traitor/imposter/proc/add_god_objective()
+	switch(rand(1, 10))
+		if(1 to 6)
+			AppendObjective(/datum/objective/target/protect, TRUE)
+		if(7 to 9)
+			AppendObjective(/datum/objective/target/harm, TRUE)
+		else
+			AppendObjective(/datum/objective/target/assassinate, TRUE)
+
 /datum/role/traitor/imposter/proc/add_killhead_objectives()
 	var/list/heads = get_living_heads()
 	for(var/datum/mind/head_mind in heads)
@@ -203,6 +212,12 @@
 	if(prob(5))
 		add_killhead_objectives()
 		log_mode("IMPOSTERS: Non-silicon imposter ([antag.current]) has killhead objectives")
+		return
+	//95% prob to default objectives for god imposter
+	if(isgod(antag.current))
+		for(var/i in 1 to 3)
+			add_god_objective()
+		log_mode("IMPOSTERS: God imposter ([antag.current]) has god objectives")
 		return
 	//default traitor objectives
 	for(var/i in 1 to 3)
