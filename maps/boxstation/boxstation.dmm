@@ -77129,6 +77129,13 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel)
+"kYG" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "kYI" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
@@ -113319,7 +113326,7 @@ btQ
 bFy
 sVa
 aIR
-bek
+kYG
 bWY
 bmS
 aMM
