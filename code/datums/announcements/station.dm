@@ -45,9 +45,15 @@
 	name = "Heads: Chief Engineer"
 	sound = "se"
 
-/datum/announcement/station/command/department/play(department, message)
+/datum/announcement/station/command/department/play(department, message, mob/user)
 	if(department && message)
 		title = "Оповещение из [department]"
+	announcer = user?.GetVoice()
+	if(ishuman(user) && announcer)
+		var/mob/living/carbon/human/H = user
+		var/obj/item/weapon/card/id/I = H.wear_id.GetID()
+		if(I.assignment)
+			announcer += " ([I.assignment])"
 	..(message)
 
 /datum/announcement/station/command/ai

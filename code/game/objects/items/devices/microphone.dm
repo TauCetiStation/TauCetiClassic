@@ -11,13 +11,15 @@
 	var/datum/announcement/station/command/department/announcement = new
 
 	var/last_announce = 0
-	var/announce_cooldown = 10 SECONDS
+	var/announce_cooldown = 5 MINUTES
 
 /obj/item/device/microphone/atom_init(mapload)
 	. = ..()
 	AddComponent(/datum/component/wrench_to_table)
 
+	global.all_command_microphones += src
 	desc += " ([department])."
+	last_announce = -announce_cooldown // no cooldown on roundstart
 
 /obj/item/device/microphone/proc/can_use(mob/user)
 	if(!anchored || !isturf(loc) || !is_station_level(z))
@@ -54,7 +56,7 @@
 		return
 
 	last_announce = world.time
-	announcement.play(department_genitive, new_message)
+	announcement.play(department_genitive, new_message, user)
 	message_admins("[key_name_admin(usr)] has made a department announcement. [ADMIN_JMP(usr)]")
 
 // Heads
