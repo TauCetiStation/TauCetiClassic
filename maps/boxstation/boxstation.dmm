@@ -75568,7 +75568,6 @@
 	network = list("SS13","Medical")
 	},
 /obj/item/toy/plushie/tuxedo_cat,
-/obj/structure/closet/secure_closet/psycho,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "jrS" = (
