@@ -1,3 +1,23 @@
+#define EMISSIVE_PLANE           3 // For over-lighting overlays (ex. cigarette glows)
+  #define EMISSIVE_LAYER           1
+////EMISSIVE_PLANE
+////EMISSIVE_LAYER
+///LIGHTING_LAMPS_PLANE
+///ABOVE_LIGHTING_LAYER
+//ABOVE_LIGHTING_PLANE
+//ABOVE_LIGHTING_LAYER
+/proc/emissive_overlay(var/icon, var/icon_state, var/loc, var/dir)
+	var/image/emissive/I = new(icon, icon_state)
+	if(!isnull(loc))
+		I.loc = loc
+	if(!isnull(dir))
+		I.dir = dir
+	return I
+
+/image/emissive/New()
+	..()
+	layer = ABOVE_LIGHTING_LAYER
+	plane = LIGHTING_LAMPS_PLANE
 /*
   Tiny babby plant critter plus procs.
 */
@@ -27,7 +47,8 @@
 	universal_speak = FALSE      // before becoming an adult. Use *chirp.
 	holder_type = /obj/item/weapon/holder/diona
 	blood_datum = /datum/dirt_cover/green_blood
-
+	//var/tmp/image/eyes
+	var/image/eyes
 	var/list/saved_quirks
 
 /mob/living/carbon/monkey/diona/podman
@@ -48,11 +69,22 @@
 
 	spawner_args = list(/datum/spawner/living/podman/fake_nymph, 2 MINUTES)
 
+/mob/living/carbon/monkey/diona/update_icons()
+	. = ..()
+	update_eyes()
+
+/mob/living/carbon/monkey/diona/proc/update_eyes()
+	cut_overlay(eyes)
+	add_overlay(eyes)
+
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
 	gender = NEUTER
 	greaterform = DIONA
 	add_language(LANGUAGE_ROOTSPEAK)
+	eyes = image(icon, "eyes_[icon_state]", layer = ABOVE_LIGHTING_LAYER)
+	eyes.plane = LIGHTING_LAMPS_PLANE
+	//eyes = emissive_overlay(icon = icon, icon_state = "eyes_[icon_state]")
 
 /mob/living/carbon/monkey/diona/podman/atom_init()
 	. = ..()
