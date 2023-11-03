@@ -54,7 +54,8 @@
 
 /mob/living/carbon/monkey/diona/proc/update_eyes()
 	cut_overlay(eyes)
-	add_overlay(eyes)
+	if(stat == CONSCIOUS)
+		add_overlay(eyes)
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
