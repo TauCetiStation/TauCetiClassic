@@ -12,7 +12,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/microphone, all_command_microphones)
 	var/department_genitive = "Nothing's"
 	var/datum/announcement/station/command/department/announcement = new
 
-	var/last_announce = 0
+	var/next_announce = 0
 	var/announce_cooldown = 5 MINUTES
 
 /obj/item/device/microphone/atom_init(mapload)
@@ -20,7 +20,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/microphone, all_command_microphones)
 	AddComponent(/datum/component/wrench_to_table)
 
 	desc += " ([department])."
-	last_announce = -announce_cooldown // no cooldown on roundstart
 
 /obj/item/device/microphone/proc/can_use(mob/user)
 	if(!anchored || !isturf(loc) || !is_station_level(z))
@@ -39,7 +38,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/microphone, all_command_microphones)
 		to_chat(user, "<span class='userdange'>Вы немы.</span>")
 		return FALSE
 
-	if(last_announce + announce_cooldown > world.time)
+	if(next_announce > world.time)
 		to_chat(user, "<span class='userdange'>Микрофон перезаряжается.</span>")
 		return FALSE
 
@@ -56,7 +55,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/microphone, all_command_microphones)
 	if(!can_use(user) || !length(new_message))
 		return
 
-	last_announce = world.time
+	next_announce = world.time + announce_cooldown
 	announcement.play(department_genitive, new_message, user)
 	message_admins("[key_name_admin(usr)] has made a department announcement. [ADMIN_JMP(usr)]")
 
