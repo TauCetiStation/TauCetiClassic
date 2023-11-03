@@ -93,6 +93,10 @@
 		/obj/item/weapon/implant/mind_protect/loyalty
 		)
 
+/datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
+		r_hand = /obj/item/weapon/melee/chainofcommand
+
 // CLOWN OUTFIT
 /datum/outfit/job/clown
 	name = OUTFIT_JOB_NAME("Clown")
