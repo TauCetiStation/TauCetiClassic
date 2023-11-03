@@ -1,3 +1,5 @@
+ADD_TO_GLOBAL_LIST(/obj/item/device/microphone, all_command_microphones)
+
 /obj/item/device/microphone
 	name = "Microphone"
 	desc = "Микрофон для озвучивания объявлений отдела"
@@ -17,7 +19,6 @@
 	. = ..()
 	AddComponent(/datum/component/wrench_to_table)
 
-	global.all_command_microphones += src
 	desc += " ([department])."
 	last_announce = -announce_cooldown // no cooldown on roundstart
 

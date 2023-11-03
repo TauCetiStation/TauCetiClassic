@@ -123,7 +123,7 @@
 					target = target_ai
 					to_chat(usr, "You set the pinpointer to locate [target]")
 				if("Microphone")
-					if(!global.all_command_microphones)
+					if(!global.all_command_microphones.len)
 						to_chat(usr, "Failed to locate any microphone!")
 						return
 					var/target_micro = input("Select microphone to search for", "Microphone Select") as null|anything in global.all_command_microphones
