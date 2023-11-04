@@ -2208,7 +2208,7 @@
 			massages_done_right = 0
 			return_to_body_dialog()
 
-			if((health > config.health_threshold_dead) || (suiciding))
+			if((health > config.health_threshold_dead) || (!suiciding))
 				Heart.heart_fibrillate()
 				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
 			else
