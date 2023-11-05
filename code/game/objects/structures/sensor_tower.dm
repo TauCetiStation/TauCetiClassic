@@ -9,6 +9,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/sensor_tower, sensor_towers)
 	anchored = TRUE
 	uses_integrity = TRUE
 	resistance_flags = FULL_INDESTRUCTIBLE | CAN_BE_HIT
+	unacidable = TRUE
 	var/enabled = FALSE
 	var/broken = FALSE
 	var/obj/item/device/gps/inserted_gps
