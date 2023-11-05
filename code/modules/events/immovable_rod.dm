@@ -9,7 +9,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /datum/event/immovable_rod
 	announceWhen = 5
-	announcement = new /datum/announcement/centcomm/irod
+	announce_begin_type = /datum/announcement/centcomm/irod
 
 /datum/event/immovable_rod/start()
 	var/startside = pick(cardinal)

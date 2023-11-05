@@ -3,7 +3,7 @@ var/global/list/all_wormholes = list()// So we can pick wormholes to teleport to
 /datum/event/wormholes
 	announceWhen = 10
 	endWhen      = 60
-	announcement = new /datum/announcement/centcomm/wormholes
+	announce_begin_type = /datum/announcement/centcomm/wormholes
 
 	var/list/pick_turfs = list()
 	var/list/wormholes = list()
@@ -15,7 +15,7 @@ var/global/list/all_wormholes = list()// So we can pick wormholes to teleport to
 	endWhen = rand(40, 80)
 
 /datum/event/wormholes/announce()
-	if(pick_turfs.len)
+	if(pick_turfs.len && announcement)
 		announcement.play()
 
 /datum/event/wormholes/start()

@@ -1,5 +1,5 @@
 /datum/event/wallrot
-	announcement = new /datum/announcement/centcomm/fungi
+	announce_begin_type = /datum/announcement/centcomm/fungi
 
 	var/turf/simulated/wall/center = null
 
@@ -8,7 +8,7 @@
 	endWhen = announceWhen + 1
 
 /datum/event/wallrot/announce()
-	if(center)
+	if(center && announcement)
 		announcement.play()
 
 /datum/event/wallrot/start()

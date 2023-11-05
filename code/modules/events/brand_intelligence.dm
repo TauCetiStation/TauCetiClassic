@@ -1,7 +1,7 @@
 /datum/event/brand_intelligence
 	announceWhen	= 21
 	endWhen			= 1000	//Ends when all vending machines are subverted anyway.
-	announcement = new /datum/announcement/centcomm/brand
+	announce_begin_type = /datum/announcement/centcomm/brand
 
 	var/list/obj/machinery/vending/vendingMachines = list()
 	var/list/obj/machinery/vending/infectedVendingMachines = list()

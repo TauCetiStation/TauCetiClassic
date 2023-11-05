@@ -1,5 +1,5 @@
 /datum/event/organ_failure
-	announcement = new /datum/announcement/centcomm/organ_failure
+	announce_begin_type = /datum/announcement/centcomm/organ_failure
 
 /datum/event/organ_failure/setup()
 	announceWhen = rand(0, 300)

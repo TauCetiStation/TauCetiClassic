@@ -2,7 +2,7 @@
 	startWhen = 3
 	announceWhen = 20
 	endWhen = 80
-	announcement = new /datum/announcement/centcomm/anomaly/flux
+	announce_begin_type = /datum/announcement/centcomm/anomaly/flux
 	anomaly_type = /obj/effect/anomaly/flux
 
 /datum/event/anomaly/anomaly_flux/end()

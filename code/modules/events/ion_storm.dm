@@ -2,7 +2,7 @@
 
 /datum/event/ionstorm
 	announceWhen = -1 // Never (setup may override)
-	announcement = new /datum/announcement/centcomm/anomaly/istorm
+	announce_begin_type = /datum/announcement/centcomm/anomaly/istorm
 
 	var/botEmagChance = 10
 

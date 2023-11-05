@@ -29,8 +29,8 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 /datum/event/meteor_wave
 	startWhen		= 6
 	endWhen			= 33
-	announcement = new /datum/announcement/centcomm/meteor_wave
-	announcement_end = new /datum/announcement/centcomm/meteor_wave_passed
+	announce_begin_type = /datum/announcement/centcomm/meteor_wave
+	announce_end_type = /datum/announcement/centcomm/meteor_wave_passed
 
 /datum/event/meteor_wave/setup()
 	endWhen = rand(10,25) * 3
@@ -43,8 +43,8 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 /datum/event/meteor_shower
 	startWhen		= 5
 	endWhen 		= 7
-	announcement = new /datum/announcement/centcomm/meteor_shower
-	announcement_end = new /datum/announcement/centcomm/meteor_shower_passed
+	announce_begin_type = /datum/announcement/centcomm/meteor_shower
+	announce_end_type = /datum/announcement/centcomm/meteor_shower_passed
 	var/next_meteor = 6
 	var/waves = 1
 

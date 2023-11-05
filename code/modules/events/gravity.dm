@@ -1,8 +1,8 @@
 /datum/event/gravity
 	announceWhen = 5
 	endWhen = 100
-	announcement = new /datum/announcement/station/gravity_off
-	announcement_end = new /datum/announcement/station/gravity_on
+	announce_begin_type = /datum/announcement/station/gravity_off
+	announce_end_type = /datum/announcement/station/gravity_on
 
 	var/affecting_z = 2
 

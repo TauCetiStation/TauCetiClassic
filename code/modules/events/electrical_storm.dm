@@ -1,5 +1,5 @@
 /datum/event/electrical_storm
-	announcement = new /datum/announcement/centcomm/estorm
+	announce_begin_type = /datum/announcement/centcomm/estorm
 
 	var/lightsoutRange	= 25
 

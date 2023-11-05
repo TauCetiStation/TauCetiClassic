@@ -2,7 +2,7 @@
 
 /datum/event/borer_infestation
 	announceWhen = 400
-	announcement = new /datum/announcement/centcomm/aliens
+	announce_begin_type = /datum/announcement/centcomm/aliens
 
 	var/spawncount = 1
 	var/successSpawn = FALSE //So we don't make a command report if nothing gets spawned.
@@ -12,7 +12,7 @@
 	spawncount = rand(1, 3)
 
 /datum/event/borer_infestation/announce()
-	if(successSpawn)
+	if(successSpawn && announcement)
 		announcement.play()
 
 /datum/event/borer_infestation/start()

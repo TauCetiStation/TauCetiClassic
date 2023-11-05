@@ -2,7 +2,7 @@
 	startWhen = 10
 	announceWhen = 3
 	endWhen = 110
-	announcement = new /datum/announcement/centcomm/anomaly/pyro
+	announce_begin_type = /datum/announcement/centcomm/anomaly/pyro
 	anomaly_type = /obj/effect/anomaly/pyro
 
 /datum/event/anomaly/anomaly_pyro/tick()

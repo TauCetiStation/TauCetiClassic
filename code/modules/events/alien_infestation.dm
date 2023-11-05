@@ -4,7 +4,7 @@
 	var/spawncount = 1
 	var/successSpawn = FALSE  //So we don't make a command report if nothing gets spawned.
 
-	announcement = new /datum/announcement/centcomm/aliens
+	announce_begin_type = /datum/announcement/centcomm/aliens
 
 
 /datum/event/alien_infestation/setup()
@@ -12,7 +12,7 @@
 	spawncount = rand(3, 4)
 
 /datum/event/alien_infestation/announce()
-	if(successSpawn)
+	if(successSpawn && announcement)
 		announcement.play()
 
 /datum/event/alien_infestation/start()

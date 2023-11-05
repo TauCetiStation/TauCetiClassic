@@ -1,6 +1,6 @@
 /datum/event/prison_break
 	announceWhen	= 50
-	announcement = new /datum/announcement/centcomm/greytide
+	announce_begin_type = /datum/announcement/centcomm/greytide
 
 	var/releaseWhen = 25
 	var/list/area/prisonAreas = list()
@@ -15,7 +15,7 @@
 
 
 /datum/event/prison_break/announce()
-	if(prisonAreas && prisonAreas.len > 0)
+	if(prisonAreas && prisonAreas.len > 0 && announcement)
 		announcement.play()
 	else
 		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."

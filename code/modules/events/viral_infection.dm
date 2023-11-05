@@ -1,5 +1,5 @@
 /datum/event/viral_infection
-	announcement = new /datum/announcement/centcomm/blob/outbreak5
+	announce_begin_type = /datum/announcement/centcomm/blob/outbreak5
 
 	var/infected = 2
 	var/chance = 33
