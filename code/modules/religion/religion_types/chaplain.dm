@@ -130,7 +130,7 @@
 
 	lore = sanitize_safe(input(chaplain, "You can come up with the lore of your god in [new_religion] religion.", "Lore for new god", ""), MAX_MESSAGE_LEN)
 
-	chaplain.equip_to_slot_or_del(B, SLOT_L_HAND)
+	chaplain.equip_to_appropriate_slot(B, TRUE)
 
 	var/list/bible_variants = gen_pos_bible_variants()
 
