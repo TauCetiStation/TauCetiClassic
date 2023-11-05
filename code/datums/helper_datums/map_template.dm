@@ -122,7 +122,6 @@
 	preloadHolodeckTemplates()
 	preloadSpaceStructuresTemplates()
 
-
 /proc/preloadHolodeckTemplates()
 	for(var/item in subtypesof(/datum/map_template/holoscene))
 		var/datum/map_template/holoscene/holoscene_type = item
