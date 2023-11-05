@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Input, LabeledList, Section } from '../components';
+import { Button, Input, LabeledList, Section, NoticeBox } from '../components';
 import { Window } from '../layouts';
 import { AccessList } from './common/AccessList';
 
@@ -7,6 +7,7 @@ type Data = {
   oneAccess: number | boolean | null | undefined;
   unres_direction: number;
   passedName: string;
+  lastOperator: string;
   regions: string[];
   accesses: string[];
 };
@@ -19,10 +20,14 @@ export const AirLockMainSection = (props, context) => {
     passedName,
     regions = [],
     unres_direction,
+    lastOperator,
   } = data;
 
   return (
     <Section title="Main">
+      <NoticeBox info>
+        Last operator: {lastOperator}.
+      </NoticeBox>
       <LabeledList>
         <LabeledList.Item label="Access Required">
           <Button
