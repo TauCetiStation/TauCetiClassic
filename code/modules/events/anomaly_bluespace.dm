@@ -2,9 +2,18 @@
 	startWhen = 3
 	announceWhen = 10
 	endWhen = 95
-	announcement = new /datum/announcement/centcomm/anomaly/bluespace
+	announce_begin_type = /datum/announcement/centcomm/anomaly/bluespace
 	anomaly_type = /obj/effect/anomaly/bluespace
-	var/datum/announcement/announcement_trigger = new /datum/announcement/centcomm/anomaly/bluespace_trigger
+	var/datum/announcement/announcement_trigger
+	var/announcement_trigger_type = /datum/announcement/centcomm/anomaly/bluespace_trigger
+
+/datum/event/anomaly/anomaly_bluespace/disable_announce()
+	..()
+	announcement_trigger = null
+
+/datum/event/anomaly/anomaly_bluespace/enable_announce()
+	..()
+	announcement_trigger = new announcement_trigger_type()
 
 /datum/event/anomaly/anomaly_bluespace/end()
 	if(!QDELETED(newAnomaly))//If it hasn't been neutralized, it's time to warp half the station away jeez
@@ -26,7 +35,8 @@
 				var/turf/TO = get_turf(chosen)			 // the turf of origin we're travelling TO
 
 				playsound(TO, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
-				announcement_trigger.play()
+				if(announcement_trigger)
+					announcement_trigger.play()
 
 				var/list/flashers = list()
 				for(var/mob/living/carbon/human/M in viewers(TO, null))
