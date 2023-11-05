@@ -16,6 +16,8 @@
 	announceWhen = startWhen + 5
 	endWhen = startWhen + 300
 	max_constructs = rand(2, 3)
+
+/datum/event/anomaly/cult_portal/enable_announce()
 	var/announcement_type = pick(typesof(/datum/announcement/centcomm/anomaly) - blacklisted_announcements)
 	announcement = new announcement_type
 
@@ -41,8 +43,6 @@
 	startWhen = 5
 	announceWhen = 5
 	endWhen = 300
-	var/announcement_type = pick(typesof(/datum/announcement/centcomm/anomaly) - blacklisted_announcements)
-	announcement = new announcement_type
 
 /datum/event/anomaly/cult_portal/massive/start()
 	if(!newAnomaly)
