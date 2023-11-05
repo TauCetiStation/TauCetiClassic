@@ -223,7 +223,7 @@
 			log_admin("[key_name(usr)] made all areas powered")
 			message_admins("<span class='notice'>[key_name_admin(usr)] made all areas powered</span>")
 			var/datum/announcement/centcomm/grid_on/announce = new()
-			power_restore(badminery=1, announce)
+			power_restore(badminery = 1, gridoon = announce)
 		// Make all areas unpowered
 		if("unpower")
 			feedback_inc("admin_secrets_fun_used",1)
