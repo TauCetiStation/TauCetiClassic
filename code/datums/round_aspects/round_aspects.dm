@@ -126,21 +126,3 @@
 	name = ROUND_ASPECT_ALTERNATIVE_RESEARCH
 	desc = "Взрывы газовых бомб стали приносить меньше научных очков."
 	afterspawn_IC_announcement = "<span class='warning'>Научно-исследовательский Совет НаноТрейзен стал в меньшей мере интересоваться изучением взрывчатых свойств форона.</span>"
-
-/datum/round_aspect/alchemy
-	name = ROUND_ASPECT_ALCHEMY
-	desc = "Отдел химии заменён на гидропонику."
-	var/datum/map_template/aspect/alchemy/template
-
-/datum/round_aspect/alchemy/on_start()
-	for(var/datum/design/chem_dispenser/cd in global.all_designs)
-		cd.materials = list(MAT_GLASS = 250000, "sacid" = 200)
-
-	template = aspects_templates["Alchemy"]
-	var/turf/simulated/spawn_point = null
-	var/obj/effect/landmark/L = locate("landmark*Chem Aspect Replace")
-	spawn_point = get_turf(L)
-	for(var/area/station/medical/chemistry/ch in all_areas)
-		for(var/obj/i in ch)
-			qdel(i)
-	template.load(spawn_point, FALSE)
