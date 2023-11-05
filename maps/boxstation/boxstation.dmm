@@ -76905,12 +76905,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
-"kJK" = (
-/obj/effect/landmark{
-	name = "Chem Aspect Replace"
-	},
-/turf/simulated/wall/r_wall,
-/area/station/medical/chemistry)
 "kKb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -122227,7 +122221,7 @@ bkE
 bkE
 bkE
 bkE
-kJK
+bkE
 fwb
 bjO
 bxi
