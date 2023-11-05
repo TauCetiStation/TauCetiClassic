@@ -222,14 +222,16 @@
 			feedback_add_details("admin_secrets_fun_used","P")
 			log_admin("[key_name(usr)] made all areas powered")
 			message_admins("<span class='notice'>[key_name_admin(usr)] made all areas powered</span>")
-			power_restore(badminery=1)
+			var/datum/announcement/centcomm/grid_on/announce = new()
+			power_restore(badminery=1, announce)
 		// Make all areas unpowered
 		if("unpower")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","UP")
 			log_admin("[key_name(usr)] made all areas unpowered")
 			message_admins("<span class='notice'>[key_name_admin(usr)] made all areas unpowered</span>")
-			power_failure()
+			var/datum/announcement/centcomm/grid_off/announce = new()
+			power_failure(announce)
 		// Power all SMES
 		if("quickpower")
 			if(power_fail_event)
