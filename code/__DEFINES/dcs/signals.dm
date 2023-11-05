@@ -385,3 +385,6 @@
 
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
+
+#define COMSIG_DISABLE_ANNOUNCE_RELAY "disable_announce_relay"
+#define COMSIG_ENABLE_ANNOUNCE_RELAY "enable_announce_relay"
