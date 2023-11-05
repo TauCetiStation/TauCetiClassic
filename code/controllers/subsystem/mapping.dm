@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(mapping)
 	preloadTemplates()
 	// Space structures
 	spawn_space_structures()
-
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(create_pillars_around_station))
 	..()
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
@@ -286,6 +286,88 @@ SUBSYSTEM_DEF(mapping)
 	if(map_poll && map_poll.can_start())
 		to_chat(world, "<span class='notice'>Current next map is inappropriate for ammount of players online. Map vote will be forced.</span>")
 		SSvote.start_vote(map_poll)
+
+/datum/controller/subsystem/mapping/proc/get_working_towers()
+	if(global.sensor_towers.len <= 0)
+		return list()
+	var/list/working_towers = list()
+	for(var/obj/structure/sensor_tower/tower as anything in global.sensor_towers)
+		if(!tower.enabled)
+			continue
+		if(tower.broken)
+			continue
+		working_towers += tower
+	return working_towers
+
+/datum/controller/subsystem/mapping/proc/get_count_of_enabled_sensor_towers(list/z_levels_to_check)
+	if(z_levels_to_check.len <= 0)
+		return 0
+	var/list/working_towers = get_working_towers()
+	if(working_towers.len <= 0)
+		return 0
+	for(var/obj/structure/sensor_tower/tower as anything in working_towers)
+		for(var/z in z_levels_to_check)
+			if(get_level(z) == get_level(tower.z))
+				working_towers += tower
+	return working_towers.len
+
+/datum/controller/subsystem/mapping/proc/is_sensor_towers_exists()
+	return (SSenvironment.envtype[pick(SSmapping.levels_by_trait(ZTRAIT_STATION))] == ENV_TYPE_SNOW)
+
+/datum/controller/subsystem/mapping/proc/update_sensors()
+	if(!is_sensor_towers_exists())
+		return
+	if(get_count_of_enabled_sensor_towers(SSmapping.levels_by_trait(ZTRAIT_STATION)) < COUNT_TOWERS_NEEDED_FOR_EVENTS)
+		SEND_SIGNAL(src, COMSIG_DISABLE_ANNOUNCE_RELAY)
+	else
+		SEND_SIGNAL(src, COMSIG_ENABLE_ANNOUNCE_RELAY)
+
+/datum/controller/subsystem/mapping/proc/is_area_around_turf_cleared(turf/T)
+	for(var/turf/turfnear in range(4, T))
+		var/area/A = get_area(turfnear)
+		if(A.type != /area/space/snow)
+			return FALSE
+		for(var/atom/movable/content_obj in turfnear.contents)
+			if(istype(content_obj, /atom/movable/lighting_object))
+				continue
+			QDEL_NULL(content_obj)
+		if(turfnear.basetype != /turf/environment/snow)
+			turfnear.ChangeTurf(/turf/environment/snow)
+	return TRUE
+
+/datum/controller/subsystem/mapping/proc/total_place_pillar(corner)
+	var/turf/T = calculate_pos_pillar(corner)
+	var/need_recalculate = FALSE
+	if(!is_area_around_turf_cleared(T))
+		need_recalculate = TRUE
+	if(need_recalculate)
+		T = total_place_pillar(corner)
+	return T
+
+/datum/controller/subsystem/mapping/proc/create_pillars_around_station()
+	if(!is_sensor_towers_exists())
+		return
+	for(var/corner in global.cornerdirs)
+		var/turf/T = total_place_pillar(corner)
+		new /obj/structure/sensor_tower(T)
+
+/datum/controller/subsystem/mapping/proc/calculate_pos_pillar(corner)
+	var/starty
+	var/startx
+	switch(corner)
+		if(NORTHEAST)
+			starty = rand(round(world.maxy / 2) + 15, world.maxy - TRANSITIONEDGE)
+			startx = rand(world.maxx - 40, world.maxx - TRANSITIONEDGE)
+		if(NORTHWEST)
+			starty = rand(world.maxy - 40, world.maxy - TRANSITIONEDGE)
+			startx = rand(TRANSITIONEDGE, round(world.maxx / 2) - 15)
+		if(SOUTHWEST)
+			starty = TRANSITIONEDGE
+			startx = rand(TRANSITIONEDGE, round(world.maxx / 2) - 30)
+		if(SOUTHEAST)
+			starty = rand(TRANSITIONEDGE, round(world.maxy / 2 - 15))
+			startx = rand(world.maxx - 35, world.maxx - TRANSITIONEDGE)
+	return locate(startx, starty, pick(SSmapping.levels_by_trait(ZTRAIT_STATION)))
 
 #undef SPACE_STRUCTURES_AMOUNT
 #undef MAX_MINING_SECRET_ROOM
