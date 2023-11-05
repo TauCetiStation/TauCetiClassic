@@ -68,7 +68,9 @@
 	var/noAutoEnd       = 0 //Does the event end automatically after endWhen passes?
 
 	var/datum/announcement/announcement
+	var/announce_begin_type
 	var/datum/announcement/announcement_end
+	var/announce_end_type
 
 /datum/event/nothing
 
@@ -172,5 +174,28 @@
 	startedAt = world.time
 
 	setup()
+	if(!SSmapping.is_sensor_towers_exists())
+		enable_announce()
+	else
+		if(SSmapping.get_count_of_enabled_sensor_towers(SSmapping.levels_by_trait(ZTRAIT_STATION)) < COUNT_TOWERS_NEEDED_FOR_EVENTS)
+			disable_announce()
+		else
+			enable_announce()
+		RegisterSignal(SSmapping, COMSIG_DISABLE_ANNOUNCE_RELAY, PROC_REF(disable_announce))
+		RegisterSignal(SSmapping, COMSIG_ENABLE_ANNOUNCE_RELAY, PROC_REF(enable_announce))
 	SSevents.active_events += src
 	..()
+
+/datum/event/Destroy()
+	UnregisterSignal(SSmapping, list(COMSIG_DISABLE_ANNOUNCE_RELAY, COMSIG_ENABLE_ANNOUNCE_RELAY))
+	return ..()
+
+/datum/event/proc/disable_announce()
+	announcement = null
+	announcement_end = null
+
+/datum/event/proc/enable_announce()
+	if(announce_begin_type)
+		announcement = new announce_begin_type()
+	if(announce_end_type)
+		announcement_end = new announce_end_type()
