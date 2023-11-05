@@ -69,6 +69,7 @@ var/global/list/vending_products = list() //this list is used to create product 
 var/global/list/intercom_list = list()
 var/global/list/all_designs = list()
 var/global/list/all_supply_pack = list()
+var/global/list/sensor_towers = list()
 
 
 var/global/list/spells_by_aspects = list()
