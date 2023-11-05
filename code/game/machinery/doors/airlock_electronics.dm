@@ -33,9 +33,6 @@
 		return
 	tgui_interact(user)
 
-/obj/item/weapon/airlock_electronics/tgui_state(mob/user)
-	return global.hands_state
-
 /obj/item/weapon/airlock_electronics/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
