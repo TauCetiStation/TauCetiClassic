@@ -1,28 +1,42 @@
 /datum/event/grid_check	//NOTE: Times are measured in master controller ticks!
 	announceWhen		= 5
+	var/datum/announcement/announce_grid_on
+	var/announce_grid_on_type = /datum/announcement/centcomm/grid_on
+	var/datum/announcement/announce_grid_off
+	var/announce_grid_off_type = /datum/announcement/centcomm/grid_off
+
+/datum/event/grid_check/disable_announce()
+	..()
+	announce_grid_on = null
+	announce_grid_off = null
+
+/datum/event/grid_check/enable_announce()
+	..()
+	announce_grid_on = new announce_grid_on_type()
+	announce_grid_off = new announce_grid_off_type()
 
 /datum/event/grid_check/setup()
 	endWhen = rand(30, 120)
 
 /datum/event/grid_check/start()
-	power_failure()
+	power_failure(announce_grid_off)
 
 /datum/event/grid_check/announce()
 	return
 
 /datum/event/grid_check/end()
 	if(power_fail_event)
-		power_restore()
+		power_restore(announce_grid_on)
 
 
 var/global/power_fail_event = FALSE
-/proc/power_failure()
+/proc/power_failure(datum/announcement/gridoff)
 	if(power_fail_event)
 		return
 	power_fail_event = TRUE
 
-	var/datum/announcement/centcomm/grid_off/announcement = new
-	announcement.play()
+	if(gridoff)
+		gridoff.play()
 	if(prob(25))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_ambience)), 600)
 
@@ -51,12 +65,11 @@ var/global/power_fail_event = FALSE
 	for(var/mob/M in player_list)
 		M.playsound_music('sound/ambience/specific/hullcreak.ogg', VOL_AMBIENT, null, null, CHANNEL_AMBIENT_LOOP)
 
-/proc/power_restore(badminery = 0)
+/proc/power_restore(badminery = 0, datum/announcement/gridoon)
 	power_fail_event = FALSE
 	var/list/skipped_areas = list(/area/station/aisat/ai_chamber, /area/station/tcommsat/computer, /area/station/tcommsat/chamber)
-
-	var/datum/announcement/centcomm/grid_on/announcement = new
-	announcement.play()
+	if(gridoon)
+		gridoon.play()
 
 	for(var/obj/machinery/power/apc/C in apc_list)
 		if(C.cell && is_station_level(C.z))
