@@ -1208,6 +1208,7 @@
 #include "code\game\objects\structures\pit.dm"
 #include "code\game\objects\structures\rd_armor_stand.dm"
 #include "code\game\objects\structures\safe.dm"
+#include "code\game\objects\structures\sensor_tower.dm"
 #include "code\game\objects\structures\survivor_cryopod.dm"
 #include "code\game\objects\structures\tables_racks.dm"
 #include "code\game\objects\structures\tank_dispenser.dm"
