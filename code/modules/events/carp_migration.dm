@@ -1,8 +1,9 @@
 /datum/event/carp_migration
 	announceWhen	= 50
 	endWhen = 900
-	announcement = new /datum/announcement/centcomm/carp
-	var/datum/announcement/announcement_major = new /datum/announcement/centcomm/carp_major
+	announce_begin_type = /datum/announcement/centcomm/carp
+	var/datum/announcement/announcement_major
+	var/announcement_major_type = /datum/announcement/centcomm/carp_major
 	var/list/spawned_carp = list()
 	var/list/spawned_mobs = list(
 		/mob/living/simple_animal/hostile/carp = 95,
@@ -13,11 +14,20 @@
 	announceWhen = rand(40, 60)
 	endWhen = rand(600,1200)
 
+/datum/event/carp_migration/disable_announce()
+	..()
+	announcement_major = null
+
+/datum/event/carp_migration/enable_announce()
+	..()
+	announcement_major = new announcement_major_type()
+
 /datum/event/carp_migration/announce()
-	if(severity == EVENT_LEVEL_MAJOR)
+	if(severity == EVENT_LEVEL_MAJOR && announcement_major)
 		announcement_major.play()
 	else
-		announcement.play()
+		if(announcement)
+			announcement.play()
 
 /datum/event/carp_migration/start()
 	switch(severity)
