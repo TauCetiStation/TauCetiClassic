@@ -1,9 +1,11 @@
 /datum/event/rogue_drone
 	startWhen = 10
 	endWhen = 1000
-	announcement = new /datum/announcement/centcomm/icarus_lost
-	var/datum/announcement/announcement_recoverd = new /datum/announcement/centcomm/icarus_recovered
-	var/datum/announcement/announcement_destroyed = new /datum/announcement/centcomm/icarus_destroyed
+	announce_begin_type = /datum/announcement/centcomm/icarus_lost
+	var/datum/announcement/announcement_recoverd
+	var/announcement_recoverd_type = /datum/announcement/centcomm/icarus_recovered
+	var/datum/announcement/announcement_destroyed
+	var/announcement_destroyed_type = /datum/announcement/centcomm/icarus_destroyed
 	var/list/drones_list = list()
 
 /datum/event/rogue_drone/start()
@@ -20,7 +22,8 @@
 			D.disabled = rand(15, 60)
 
 /datum/event/rogue_drone/announce()
-	announcement.play()
+	if(announcement)
+		announcement.play()
 
 /datum/event/rogue_drone/tick()
 	return
@@ -37,7 +40,18 @@
 		qdel(D)
 		num_recovered++
 
-	if(num_recovered > drones_list.len * 0.75)
+	if(num_recovered > drones_list.len * 0.75 && announcement_recoverd)
 		announcement_recoverd.play()
 	else
-		announcement_destroyed.play()
+		if(announcement_destroyed)
+			announcement_destroyed.play()
+
+/datum/event/rogue_drone/disable_announce()
+	..()
+	announcement_recoverd = null
+	announcement_destroyed = null
+
+/datum/event/rogue_drone/enable_announce()
+	..()
+	announcement_recoverd = new announcement_recoverd_type()
+	announcement_destroyed = new announcement_destroyed_type()
