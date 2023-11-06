@@ -383,6 +383,3 @@
 #define SMOOTH_ADAPTERS_WALLS_FOR_WALLS list( \
 		/obj/machinery/door/airlock = "wall", \
 )
-
-// Halloween temporary trait for skeletons
-#define TRAIT_SKELETON_LIMBS "skeleton_limbs"
