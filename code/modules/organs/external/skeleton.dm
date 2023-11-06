@@ -45,6 +45,10 @@
 /datum/bodypart_controller/skeleton/need_process()
 	return FALSE
 
+/datum/bodypart_controller/skeleton/process()
+	if(SSholiday.holidays[HALLOWEEN])
+		return ..()
+
 /datum/bodypart_controller/skeleton/update_damages()
 	return
 
@@ -54,12 +58,17 @@
 /datum/bodypart_controller/skeleton/fracture()
 	return
 
+/datum/bodypart_controller/skeleton/handle_cut()
+	if(SSholiday.holidays[HALLOWEEN])
+		return ..()
+
 /datum/bodypart_controller/skeleton/process_outside()
-	var/turf/T = get_step(BP, get_dir(BP, BP.owner))
-	if(BP.owner in T)
-		skeleton_insert_bodypart(BP.owner, BP)
-	else
-		BP.forceMove(T)
+	if(SSholiday.holidays[HALLOWEEN])
+		var/turf/T = get_step(BP, get_dir(BP, BP.owner))
+		if(BP.owner in T)
+			skeleton_insert_bodypart(BP.owner, BP)
+		else
+			BP.forceMove(T)
 
 // If you attach these bones to any other species they just won't work, because magic
 /datum/bodypart_controller/skeleton/check_rejection()
@@ -105,12 +114,10 @@
 	controller_type = /datum/bodypart_controller/skeleton
 	can_be_pulled = FALSE
 
-// Temporary can't pickup
-/obj/item/organ/external/chest/skeleton/mob_pickup(mob/user, hand_index=null)
-	return
-
 /obj/item/organ/external/chest/skeleton/is_attached()
-	return (loc == owner)
+	if(SSholiday.holidays[HALLOWEEN])
+		return (loc == owner)
+	return ..()
 
 /obj/item/organ/external/chest/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
@@ -128,11 +135,14 @@
 
 // Temporary can't pickup
 /obj/item/organ/external/head/skeleton/mob_pickup(mob/user, hand_index=null)
-	if(isskeleton(user))
-		return ..()
+	if(SSholiday.holidays[HALLOWEEN])
+		return
+	return ..()
 
 /obj/item/organ/external/head/skeleton/is_attached()
-	return (loc == owner)
+	if(SSholiday.holidays[HALLOWEEN])
+		return (loc == owner)
+	return ..()
 
 /obj/item/organ/external/head/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
@@ -157,13 +167,15 @@
 	cannot_amputate = FALSE
 	vital = FALSE
 
-// Temporary can't pickup
 /obj/item/organ/external/groin/skeleton/mob_pickup(mob/user, hand_index=null)
-	if(isskeleton(user))
-		return ..()
+	if(SSholiday.holidays[HALLOWEEN])
+		return
+	return ..()
 
 /obj/item/organ/external/groin/skeleton/is_attached()
-	return (loc == owner)
+	if(SSholiday.holidays[HALLOWEEN])
+		return (loc == owner)
+	return ..()
 
 /obj/item/organ/external/groin/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
@@ -177,13 +189,15 @@
 	controller_type = /datum/bodypart_controller/skeleton
 	can_be_pulled = FALSE
 
-// Temporary can't pickup
 /obj/item/organ/external/l_arm/skeleton/mob_pickup(mob/user, hand_index=null)
-	if(isskeleton(user))
-		return ..()
+	if(SSholiday.holidays[HALLOWEEN])
+		return
+	return ..()
 
 /obj/item/organ/external/l_arm/skeleton/is_attached()
-	return (loc == owner)
+	if(SSholiday.holidays[HALLOWEEN])
+		return (loc == owner)
+	return ..()
 
 /obj/item/organ/external/l_arm/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
@@ -197,13 +211,15 @@
 	controller_type = /datum/bodypart_controller/skeleton
 	can_be_pulled = FALSE
 
-// Temporary can't pickup
 /obj/item/organ/external/r_arm/skeleton/mob_pickup(mob/user, hand_index=null)
-	if(isskeleton(user))
-		return ..()
+	if(SSholiday.holidays[HALLOWEEN])
+		return
+	return ..()
 
 /obj/item/organ/external/r_arm/skeleton/is_attached()
-	return (loc == owner)
+	if(SSholiday.holidays[HALLOWEEN])
+		return (loc == owner)
+	return ..()
 
 /obj/item/organ/external/r_arm/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
@@ -217,13 +233,15 @@
 	controller_type = /datum/bodypart_controller/skeleton
 	can_be_pulled = FALSE
 
-// Temporary can't pickup
 /obj/item/organ/external/r_leg/skeleton/mob_pickup(mob/user, hand_index=null)
-	if(isskeleton(user))
-		return ..()
+	if(SSholiday.holidays[HALLOWEEN])
+		return
+	return ..()
 
 /obj/item/organ/external/r_leg/skeleton/is_attached()
-	return (loc == owner)
+	if(SSholiday.holidays[HALLOWEEN])
+		return (loc == owner)
+	return ..()
 
 /obj/item/organ/external/r_leg/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
@@ -237,13 +255,15 @@
 	controller_type = /datum/bodypart_controller/skeleton
 	can_be_pulled = FALSE
 
-// Temporary can't pickup
 /obj/item/organ/external/l_leg/skeleton/mob_pickup(mob/user, hand_index=null)
-	if(isskeleton(user))
-		return ..()
+	if(SSholiday.holidays[HALLOWEEN])
+		return
+	return ..()
 
 /obj/item/organ/external/l_leg/skeleton/is_attached()
-	return (loc == owner)
+	if(SSholiday.holidays[HALLOWEEN])
+		return (loc == owner)
+	return ..()
 
 /obj/item/organ/external/l_leg/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
