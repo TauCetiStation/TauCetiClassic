@@ -495,6 +495,67 @@
 
 	return FALSE
 
+/obj/item/rig_module/selfrepair/adv
+	name = "hardsuit advanced self-repair module"
+
+/obj/item/rig_module/selfrepair/adv/process_module()
+	if(!active)
+		return passive_power_cost
+
+	var/mob/living/carbon/human/H = holder.wearer
+	var/obj/item/organ/external/DBP
+
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.is_robotic())
+			if(BP.brute_dam)
+				DBP = BP
+			else if(BP.burn_dam)
+				DBP = BP
+
+	if(!holder.brute_damage && !holder.burn_damage && !DBP)
+		deactivate()
+		to_chat(H, "<span class='notice'>Self-repair is completed</span>")
+		return passive_power_cost
+
+	var/datum/rig_charge/charge = charges["metal"]
+
+	if(!charge)
+		deactivate()
+		return FALSE
+
+	active_power_cost = passive_power_cost
+	if(holder.brute_damage && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+
+		charge.charges -= chargeuse
+		holder.repair_breaches(BRUTE, chargeuse, H, stop_messages = TRUE)
+
+		active_power_cost = chargeuse * 150
+	else if(holder.burn_damage && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+
+		charge.charges -= chargeuse
+		holder.repair_breaches(BURN, chargeuse, H, stop_messages = TRUE)
+
+		active_power_cost = chargeuse * 150
+	else if(DBP?.brute_dam && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+		DBP.heal_damage(10, 0, 0, 1)
+		charge.charges -= chargeuse
+
+		active_power_cost = chargeuse * 200
+	else if(DBP?.burn_dam && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+		DBP.heal_damage(0, 10, 0, 1)
+		charge.charges -= chargeuse
+
+		active_power_cost = chargeuse * 200
+	else
+		deactivate()
+		to_chat(H, "<span class='danger'>Not enough materials to continue self-repair</span>")
+
+	return active_power_cost
+
 /obj/item/rig_module/med_teleport
 	name = "hardsuit medical teleport system"
 	origin_tech = "programming=2;materials=2;bluespace=1"

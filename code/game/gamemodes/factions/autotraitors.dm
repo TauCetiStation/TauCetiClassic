@@ -97,6 +97,7 @@
 	initroletype = /datum/role/traitor/imposter
 	//latespawned human can be imposter
 	accept_latejoiners = TRUE
+	rounstart_populate = FALSE
 	//abstract variable which helps decide how much imposters we need
 	var/antag_counting = 0
 
@@ -112,22 +113,26 @@
 // Mindprotected gain imposter
 /datum/faction/traitor/auto/imposter/proc/first_imposter_addition()
 	var/list/mindprotected_list = list()
-	var/list/imposter_prioritize_list = list()
-	for(var/J in subtypesof(/datum/job))
-		var/datum/job/type_of_job = J
-		if(type_of_job.flags & JOB_FLAG_IMPOSTER_PRIORITIZE)
-			imposter_prioritize_list += type_of_job.title
 	for(var/mob/living/carbon/human/player as anything in human_list)
 		if(!player.mind || !player.client)
 			continue
 		if(isanyantag(player))
 			continue
-		if(player.mind.assigned_role in imposter_prioritize_list)
+		if(!(required_pref in player.client.prefs.be_role))
+			continue
+		if(jobban_isbanned(player, required_pref))
+			continue
+		if(!role_available_in_minutes(player, required_pref))
+			continue
+		var/datum/job/J = SSjob.GetJob(player.mind.assigned_role)
+		if(!J)
+			continue
+		if(J.flags & JOB_FLAG_IMPOSTER_PRIORITIZE)
 			mindprotected_list += player
 	log_mode("IMPOSTERS: First addition list has [mindprotected_list.len] lenght")
 	if(mindprotected_list.len)
 		var/mob/M = pick(mindprotected_list)
-		add_faction_member(src, M)
+		add_faction_member(src, M, TRUE, TRUE)
 		antag_counting++
 
 /datum/faction/traitor/auto/imposter/get_max_traitors(playercount)
@@ -152,9 +157,9 @@
 		log_mode("IMPOSTERS: Imposter count is [antag_counting], members count is [members.len]. Adding auto-imposters failed")
 
 /datum/faction/traitor/auto/imposter/limit_roles(num_players)
-	..()
-	max_roles /= 3
-	log_mode("IMPOSTERS: [src] faction has [max_roles] limit of roundstart roles")
+	// No imposters on roundstart
+	max_roles = 0
+	min_roles = 0
 	return max_roles
 
 /datum/faction/traitor/auto/imposter/can_latespawn_mob(mob/P)

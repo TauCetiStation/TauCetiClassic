@@ -47,11 +47,10 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
-	/*
+	'sound/music/1.ogg',\
 	'sound/music/space.ogg',\
 	'sound/music/clouds.s3m',\
-	'sound/music/title1.ogg',\	//disgusting
-	*/
+	'sound/music/title1.ogg',\
 	'sound/music/space_oddity.ogg',\
 	'sound/music/b12_combined_start.ogg',\
 	'sound/music/title2.ogg',\
@@ -190,8 +189,8 @@ SUBSYSTEM_DEF(ticker)
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 
 	// Discuss your stuff after the round ends.
-	if(config.ooc_round_only)
-		to_chat(world, "<span class='warning bold'>The OOC channel has been globally disabled for the duration of the round!</span>")
+	if(config.ooc_round_autotoggle)
+		to_chat(world, "<span class='warning bold'>The OOC channel for IC clients has been globally disabled for the duration of the round!</span>")
 		ooc_allowed = FALSE
 
 	var/init_start = world.timeofday
@@ -525,7 +524,7 @@ SUBSYSTEM_DEF(ticker)
 //cursed code
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	// Now you all can discuss the game.
-	if(config.ooc_round_only)
+	if(config.ooc_round_autotoggle)
 		to_chat(world, "<span class='notice bold'>The OOC channel has been globally enabled!</span>")
 		ooc_allowed = TRUE
 
