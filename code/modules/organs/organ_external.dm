@@ -462,7 +462,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		S.copy_original_limb(src)
 		S.insert_organ(owner, FALSE)
 	owner.updatehealth()
-	if(owner && HAS_TRAIT(owner, TRAIT_SKELETON_LIMBS))
+	if(SSholiday.holidays[HALLOWEEN] && owner && HAS_TRAIT(owner, TRAIT_SKELETON_LIMBS))
 		handle_cut()
 		return
 	if(!should_delete)
