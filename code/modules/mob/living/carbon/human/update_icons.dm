@@ -95,7 +95,7 @@ If you have any questions/constructive-comments/bugs-to-report/or have a massivl
 Please contact me on #coderbus IRC. ~Carn x
 */
 
-/obj/item/proc/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+/obj/item/proc/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, slot, bloodied_icon_state = null, icon_state_appendix = null)
 	var/icon_path = def_icon_path
 
 	var/t_state
@@ -123,7 +123,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(t_state != null)
 			if("[t_state]_fem" in icon_states(def_icon_path))
 				fem = "_fem"
-
+	var/image/offsetted_icon = S.get_offset_overlay_image(icon_path, t_state, color, slot)
+	if(!isnull(offsetted_icon))
+		return offsetted_icon
 	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
 	I.color = color
 
@@ -402,7 +404,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
 				drop_from_inventory(U)
 				return
-		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
+		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, slot_id_to_name(SLOT_W_UNIFORM), "uniformblood")
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
 
@@ -444,12 +446,16 @@ Please contact me on #coderbus IRC. ~Carn x
 				gloves.screen_loc = ui_gloves		//...draw the item in the inventory screen
 			client.screen += gloves					//Either way, add the item to the HUD
 
-		var/image/standing = gloves.get_standing_overlay(src, 'icons/mob/hands.dmi', SPRITE_SHEET_GLOVES, -GLOVES_LAYER, "bloodyhands")
+		var/image/standing = gloves.get_standing_overlay(src, 'icons/mob/hands.dmi', SPRITE_SHEET_GLOVES, -GLOVES_LAYER, slot_id_to_name(SLOT_GLOVES), "bloodyhands")
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[GLOVES_LAYER] = standing
 	else
 		if(blood_DNA)
-			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			var/blood_icon_hand = "bloodyhands"
+			var/datum/species/S = species
+			if(S)
+				blood_icon_hand = S.specie_hand_blood_state
+			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state" = blood_icon_hand)
 			bloodsies.color = hand_dirt_datum.color
 			bloodsies = human_update_offset(bloodsies, FALSE)
 			overlays_standing[GLOVES_LAYER]	= bloodsies
@@ -466,7 +472,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				glasses.screen_loc = ui_glasses		//...draw the item in the inventory screen
 			client.screen += glasses				//Either way, add the item to the HUD
 
-		var/image/standing = glasses.get_standing_overlay(src, 'icons/mob/eyes.dmi', SPRITE_SHEET_EYES, -GLASSES_LAYER)
+		var/image/standing = glasses.get_standing_overlay(src, 'icons/mob/eyes.dmi', SPRITE_SHEET_EYES, -GLASSES_LAYER, slot_id_to_name(SLOT_GLASSES))
 		standing = human_update_offset(standing, TRUE)
 		overlays_standing[GLASSES_LAYER] = standing
 
@@ -483,7 +489,7 @@ Please contact me on #coderbus IRC. ~Carn x
 					l_ear.screen_loc = ui_l_ear			//...draw the item in the inventory screen
 				client.screen += l_ear					//Either way, add the item to the HUD
 
-			var/image/standing = l_ear.get_standing_overlay(src, 'icons/mob/ears.dmi', SPRITE_SHEET_EARS, -EARS_LAYER)
+			var/image/standing = l_ear.get_standing_overlay(src, 'icons/mob/ears.dmi', SPRITE_SHEET_EARS, -EARS_LAYER, slot_id_to_name(SLOT_L_EAR))
 			standing = human_update_offset(standing, TRUE)
 			overlays_standing[EARS_LAYER] = standing
 		if(r_ear)
@@ -492,7 +498,7 @@ Please contact me on #coderbus IRC. ~Carn x
 					r_ear.screen_loc = ui_r_ear		//...draw the item in the inventory screen
 				client.screen += r_ear				//Either way, add the item to the HUD
 
-			var/image/standing = r_ear.get_standing_overlay(src, 'icons/mob/ears.dmi', SPRITE_SHEET_EARS, -EARS_LAYER)
+			var/image/standing = r_ear.get_standing_overlay(src, 'icons/mob/ears.dmi', SPRITE_SHEET_EARS, -EARS_LAYER, slot_id_to_name(SLOT_R_EAR))
 			standing = human_update_offset(standing, TRUE)
 			overlays_standing[EARS_LAYER] = standing
 
@@ -508,11 +514,15 @@ Please contact me on #coderbus IRC. ~Carn x
 				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
 			client.screen += shoes					//Either way, add the item to the HUD
 
-		var/image/standing = shoes.get_standing_overlay(src, 'icons/mob/feet.dmi', SPRITE_SHEET_FEET, -SHOES_LAYER, "shoeblood")
+		var/image/standing = shoes.get_standing_overlay(src, 'icons/mob/feet.dmi', SPRITE_SHEET_FEET, -SHOES_LAYER, slot_id_to_name(SLOT_SHOES), "shoeblood")
 		overlays_standing[SHOES_LAYER] = standing
 	else
 		if(feet_blood_DNA)
-			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
+			var/blood_icon_shoe = "shoeblood"
+			var/datum/species/S = species
+			if(S)
+				blood_icon_shoe = S.specie_shoe_blood_state
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state" = blood_icon_shoe)
 			bloodsies.color = feet_dirt_color.color
 			overlays_standing[SHOES_LAYER] = bloodsies
 		else
@@ -559,7 +569,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				bloodsies.color = K.dirt_overlay.color
 				standing.overlays += bloodsies
 		else
-			standing = head.get_standing_overlay(src, 'icons/mob/head.dmi', SPRITE_SHEET_HEAD, -HEAD_LAYER, "helmetblood")
+			standing = head.get_standing_overlay(src, 'icons/mob/head.dmi', SPRITE_SHEET_HEAD, -HEAD_LAYER, slot_id_to_name(SLOT_HEAD), "helmetblood")
 
 		standing = human_update_offset(standing, TRUE)
 		overlays_standing[HEAD_LAYER] = standing
@@ -575,7 +585,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += belt
 
-		var/image/standing = belt.get_standing_overlay(src, 'icons/mob/belt.dmi', SPRITE_SHEET_BELT, -BELT_LAYER)
+		var/image/standing = belt.get_standing_overlay(src, 'icons/mob/belt.dmi', SPRITE_SHEET_BELT, -BELT_LAYER, slot_id_to_name(SLOT_BELT))
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[BELT_LAYER] = standing
 
@@ -603,7 +613,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				drop_from_inventory(wear_suit)
 				return
 
-		var/image/standing = S.get_standing_overlay(src, default_path, suit_sheet, -SUIT_LAYER, "[S.blood_overlay_type]blood")
+		var/image/standing = S.get_standing_overlay(src, default_path, suit_sheet, -SUIT_LAYER, slot_id_to_name(SLOT_WEAR_SUIT), "[S.blood_overlay_type]blood")
 		standing = update_height(standing)
 		overlays_standing[SUIT_LAYER] = standing
 
@@ -651,7 +661,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				wear_mask.screen_loc = ui_mask		//...draw the item in the inventory screen
 			client.screen += wear_mask				//Either way, add the item to the HUD
 
-		var/image/standing = wear_mask.get_standing_overlay(src, 'icons/mob/mask.dmi', SPRITE_SHEET_MASK, -FACEMASK_LAYER, "maskblood")
+		var/image/standing = wear_mask.get_standing_overlay(src, 'icons/mob/mask.dmi', SPRITE_SHEET_MASK, -FACEMASK_LAYER, slot_id_to_name(SLOT_WEAR_MASK), "maskblood")
 		standing = human_update_offset(standing, TRUE)
 		overlays_standing[FACEMASK_LAYER]	= standing
 
@@ -666,7 +676,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used && hud_used.hud_shown)
 			client.screen += back
 
-		var/image/standing = back.get_standing_overlay(src, 'icons/mob/back.dmi', SPRITE_SHEET_BACK, -BACK_LAYER)
+		var/image/standing = back.get_standing_overlay(src, 'icons/mob/back.dmi', SPRITE_SHEET_BACK, -BACK_LAYER, slot_id_to_name(SLOT_BACK))
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[BACK_LAYER] = standing
 	apply_standing_overlay(BACK_LAYER)
@@ -687,7 +697,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		drop_r_hand()
 		drop_l_hand()
 		stop_pulling()	//TODO: should be handled elsewhere
-		var/image/standing = image("icon"='icons/mob/mob.dmi', "icon_state"="handcuff1", "layer"=-HANDCUFF_LAYER)
+		var/image/standing = handcuffed.get_standing_overlay(src, 'icons/mob/mob.dmi', null, -HANDCUFF_LAYER, slot_id_to_name(SLOT_HANDCUFFED))
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[HANDCUFF_LAYER]	= standing
 	apply_standing_overlay(HANDCUFF_LAYER)
@@ -713,7 +723,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += r_hand
 
-		var/image/standing = r_hand.get_standing_overlay(src, r_hand.righthand_file, SPRITE_SHEET_HELD, -R_HAND_LAYER, icon_state_appendix = "_r")
+		var/image/standing = r_hand.get_standing_overlay(src, r_hand.righthand_file, SPRITE_SHEET_HELD, -R_HAND_LAYER, slot_id_to_name(SLOT_R_HAND), icon_state_appendix = "_r")
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[R_HAND_LAYER] = standing
 		if(handcuffed)
@@ -733,7 +743,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/t_state = l_hand.item_state
 		if(!t_state)
 			t_state = l_hand.icon_state
-		var/image/standing = l_hand.get_standing_overlay(src, l_hand.lefthand_file, SPRITE_SHEET_HELD, -L_HAND_LAYER, icon_state_appendix = "_l")
+		var/image/standing = l_hand.get_standing_overlay(src, l_hand.lefthand_file, SPRITE_SHEET_HELD, -L_HAND_LAYER, slot_id_to_name(SLOT_L_HAND), icon_state_appendix = "_l")
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[L_HAND_LAYER] = standing
 		if(handcuffed)
