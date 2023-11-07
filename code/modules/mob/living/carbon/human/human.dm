@@ -156,6 +156,9 @@
 /mob/living/carbon/human/skeleton/atom_init(mapload)
 	. = ..(mapload, SKELETON)
 
+/mob/living/carbon/human/serpentid/atom_init(mapload)
+	. = ..(mapload, SERPENTID)
+
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
 	..()
