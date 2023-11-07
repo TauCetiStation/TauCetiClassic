@@ -159,6 +159,9 @@
 /mob/living/carbon/human/serpentid/atom_init(mapload)
 	. = ..(mapload, SERPENTID)
 
+/mob/living/carbon/human/moth/atom_init(mapload)
+	. = ..(mapload, MOTH)
+
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
 	..()
