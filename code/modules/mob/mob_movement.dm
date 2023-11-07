@@ -143,7 +143,7 @@
 		//Relaymoves
 		if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
 			return mob.pulledby.relaymove(mob, direct)
-		
+
 		if(mob.buckled) // Wheelchair driving!
 			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
@@ -394,6 +394,8 @@
 	return FALSE
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
+	if(species?.flags[NO_SLIP])
+		return FALSE
 	if(!(lube & GALOSHES_DONT_HELP))
 		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP) || (get_species() == SKRELL && !shoes)))
 			return FALSE
