@@ -98,6 +98,9 @@
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
+		if(H.species.flags[NO_MED_HEALTH_SCAN])
+			to_chat(user, "<span class='userdanger'>Это существо нельзя сканировать</span>")
+			return
 		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
 			add_fingerprint(user)
 			var/message = ""
