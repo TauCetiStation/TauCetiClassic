@@ -74,14 +74,14 @@ var/global/can_call_ert
 		var/choice = input("Какой?") as anything in allowed_ert_teams
 		team = choice
 	var/changing_objective = FALSE
-	var/custom_objective = "Help the station crew."
+	var/custom_objective = "Помогите экипажу станции"
 	if(team.fixed_objective)
 		var/objective_choice = tgui_alert(usr, "У этого ОБР есть предусмотренная задача. Хотите поменять?", "ERT", list("Нет", "Да"))
 		if(objective_choice == "Да")
 			changing_objective = TRUE
-			custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Setup objective", "Help the station crew"))
+			custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Setup objective", "Помогите экипажу станции"))
 	else
-		custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Setup objective", "Help the station crew"))
+		custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Setup objective", "Помогите экипажу станции"))
 		changing_objective = TRUE
 
 	create_spawners(team.spawner, team.spawners_amount)
