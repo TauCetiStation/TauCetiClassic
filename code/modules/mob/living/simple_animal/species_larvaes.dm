@@ -13,7 +13,6 @@
 	turns_per_move = 4
 	speed = 3
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/candy/fudge/alien_meat = 3)
-	var/stage = 1
 
 /mob/living/simple_animal/grown_larvae/atom_init()
 	. = ..()
@@ -23,13 +22,38 @@
 	..()
 	stat(null)
 	if(statpanel("Status"))
-		stat("Прогресс роста: [stage * 25]/100")
+		stat("Прогресс роста: [evolv_stage * 25]/100")
 
 /mob/living/simple_animal/grown_larvae/serpentid
 	name = "Serpentid larvae"
 	icon_state = "larvae-serpentid"
 	icon_living = "larvae-serpentid"
 	icon_dead = "larvae-serpentid_dead"
+
+/mob/living/simple_animal/grown_larvae/serpentid/evolve_to_young_adult()
+	var/mob/living/simple_animal/grown_larvae/snake/S = new(loc)
+	mind.transfer_to(S)
+	qdel(src)
+
+/mob/living/simple_animal/grown_larvae/snake
+	name = "Snake"
+	desc = "Hiss"
+	icon_state = "snake"
+	icon_living = "snake"
+	icon_dead = "snake_dead"
+	ventcrawler = 2
+	melee_damage = 5
+	has_arm = FALSE
+	has_leg = FALSE
+
+/mob/living/simple_animal/grown_larvae/snake/evolve_to_young_adult()
+	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+	smoke.set_up(10, 0, loc)
+	smoke.start()
+	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+	var/mob/living/carbon/human/serpentid/S = new(loc)
+	mind.transfer_to(S)
+	qdel(src)
 
 /mob/living/simple_animal/grown_larvae/small_moth
 	name = "Young moth"
@@ -81,7 +105,7 @@
 	addtimer(CALLBACK(src, .proc/handle_evolving), 100, TIMER_UNIQUE)
 
 /mob/living/simple_animal/mouse/rat/newborn_moth/evolve_to_young_adult()
-	var/mob/living/simple_animal/small_moth/moth = new(loc)
+	var/mob/living/simple_animal/grown_larvae/small_moth/moth = new(loc)
 	mind.transfer_to(moth)
 	qdel(src)
 
