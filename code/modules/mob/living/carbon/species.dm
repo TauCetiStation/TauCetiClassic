@@ -1904,6 +1904,7 @@
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 	blood_datum_path = /datum/dirt_cover/gray_blood
+	butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/candy/fudge/alien_meat = 5)
 	damage_mask = FALSE
 	min_age = 1
 	max_age = 5

@@ -438,13 +438,14 @@
 	if(evolv_stage < 4)
 		addtimer(CALLBACK(src, .proc/handle_evolving), 100, TIMER_UNIQUE)
 		evolv_stage++
-		if(2)
-			maxHealth = 20
-			health += 20
-		if(3)
-			maxHealth = 40
-			health += 40
-			speed -= 0.5
-			melee_damage = 2
+		switch(evolv_stage)
+			if(2)
+				maxHealth = 20
+				health += 20
+			if(3)
+				maxHealth = 40
+				health += 40
+				speed -= 0.5
+				melee_damage = 2
 		return
 	evolve_to_young_adult()
