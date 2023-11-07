@@ -1876,3 +1876,145 @@
 /datum/species/serpentid/on_life(mob/living/carbon/human/H)
 	if(!H.on_fire && H.fire_stacks < 2)
 		H.fire_stacks += 0.2
+
+/datum/species/moth
+	name = MOTH
+	flesh_color = "00FF00"
+	icobase = 'icons/mob/human_races/r_moth.dmi'
+	deform = 'icons/mob/human_races/r_moth.dmi'
+	tail = "moth_wings"
+	flags = list(
+				NO_BREATHE = TRUE,
+				NO_BLOOD = TRUE,
+				NO_EMBED = TRUE,
+				RAD_IMMUNE = TRUE,
+				VIRUS_IMMUNE = TRUE,
+				NO_FINGERPRINT = TRUE,
+				NO_SCAN = TRUE,
+				NO_MED_HEALTH_SCAN = TRUE,
+				NO_MINORCUTS = TRUE,
+				NO_VOMIT = TRUE,
+				NO_EMOTION = TRUE,
+				HAS_TAIL = TRUE,
+				NO_DNA = TRUE,
+				NO_PAIN = TRUE,
+				NO_GENDERS = TRUE,
+				NO_FAT = TRUE,
+				)
+	unarmed_type = /datum/unarmed_attack/claws
+	dietflags = DIET_OMNI
+	blood_datum_path = /datum/dirt_cover/gray_blood
+	damage_mask = FALSE
+	min_age = 1
+	max_age = 5
+	darksight = 8
+	nighteyes = 1
+
+/datum/species/moth/on_gain(mob/living/carbon/human/H)
+	var/static/list/moth_names = list(
+			"Acantharctia",
+			"Acco",
+			"Acherontia",
+			"Actias",
+			"Aemilia",
+			"Aethria",
+			"Antheraea",
+			"Aphomia",
+			"Argema",
+			"Ascalapha",
+			"Asota",
+			"Athrypsiastis",
+			"Attacus",
+			"Autochloris",
+			"Axylia",
+			"Bombyx",
+			"Callhistia",
+			"Callosamia",
+			"Capricornia",
+			"Catocala",
+			"Cheliosea",
+			"Chloroclystis",
+			"Cochylimorpha",
+			"Cryphia",
+			"Cryptophasa",
+			"Cucullia",
+			"Cydia",
+			"Diaphora",
+			"Diarsia",
+			"Dolichohedya",
+			"Dyspyralis",
+			"Eacles",
+			"Eclipsea",
+			"Electresia",
+			"Elysius",
+			"Enarmonia",
+			"Epiphyas",
+			"Eriomastyx",
+			"Eugnorisma",
+			"Eupithecia",
+			"Euplexia",
+			"Eurosia",
+			"Falcatula",
+			"Fangarctia",
+			"Fulcrifera",
+			"Glyphidoptera",
+			"Gracillina",
+			"Gravitarmata",
+			"Haemanota",
+			"Halysidota",
+			"Helicoverpa",
+			"Heliomata",
+			"Hyalophora",
+			"Hypomartyria",
+			"Icelita",
+			"Isanthrene",
+			"Isochorista",
+			"Izatha",
+			"Kodiosoma",
+			"Lacida",
+			"Leguminivora",
+			"Leucoptera",
+			"Lymantria",
+			"Macrobathra",
+			"Maruca",
+			"Mecodina",
+			"Megalonycta",
+			"Metacrisia",
+			"Mythimna",
+			"Naenia",
+			"Naenia",
+			"Neuroxena",
+			"Nodaria",
+			"Nymphicula",
+			"Obscurior",
+			"Ochropleura",
+			"Opodiphthera",
+			"Ostrinia",
+			"Pacificulla",
+			"Philomusaea",
+			"Phragmataecia",
+			"Plodia",
+			"Plutella",
+			"Rachiplusia",
+			"Sarobela",
+			"Selenarctia",
+			"Shiragasane",
+			"Socioplana",
+			"Sphingidae",
+			"Spodoptera",
+			"Syllomatia",
+			"Thaumetopoea",
+			"Timandra",
+			"Toxoproctis",
+			"Uranophora",
+			"Vestura",
+			"Vietteria",
+			"Xanthorhoe",
+			"Xestia",
+			"Zomaria",
+	)
+	H.real_name = pick(moth_names)
+	return ..()
+
+/datum/species/moth/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_moth_digest(M)
