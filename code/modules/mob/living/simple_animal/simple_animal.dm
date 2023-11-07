@@ -423,3 +423,26 @@
 
 /mob/living/simple_animal/can_pickup(obj/O)
 	return FALSE
+
+/mob/living/simple_animal/proc/evolve_to_young_adult()
+	return
+
+/mob/living/simple_animal/proc/handle_evolving()
+	if(stat == DEAD)
+		return
+	if(!mind || !client || !key)
+		addtimer(CALLBACK(src, .proc/handle_evolving), 100, TIMER_UNIQUE)
+		return
+	if(stage < 4)
+		addtimer(CALLBACK(src, .proc/handle_evolving), 100, TIMER_UNIQUE)
+		stage++
+		if(2)
+			maxHealth = 20
+			health += 20
+		if(3)
+			maxHealth = 40
+			health += 40
+			speed--
+			melee_damage = 2
+		return
+	evolve_to_young_adult()
