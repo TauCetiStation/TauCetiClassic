@@ -112,6 +112,11 @@
 /mob/living/proc/med_hud_set_health()
 	var/image/holder = hud_list[HEALTH_HUD]
 	holder.icon_state = "hud[RoundHealth(src)]"
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/datum/species/S = H.species
+		if(S)
+			holder.pixel_y = S.hud_offset_y
 
 //for carbon suit sensors
 /mob/living/carbon/med_hud_set_health()
@@ -146,6 +151,13 @@
 			holder.icon_state = "hudhealthy"
 		else
 			holder.icon_state = "hudill[min(virus_threat, 7)]"
+	if(!ishuman(src))
+		return
+	var/mob/living/carbon/human/H = src
+	var/datum/species/S = H.species
+	if(!S)
+		return
+	holder.pixel_y = S.hud_offset_y
 
 /mob/living/carbon/human/med_hud_set_status()
 	..()
@@ -156,6 +168,9 @@
 	holder = hud_list[INSURANCE_HUD]
 	var/insurance_type = get_insurance_type(src)
 	holder.icon_state = "hud_insurance_[insurance_type]"
+	var/datum/species/S = species
+	if(S)
+		holder.pixel_y = S.hud_offset_y
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.
@@ -165,11 +180,19 @@
 	holder.icon_state = "hudunknown"
 	if(wear_id?.GetID())
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
-	holder.pixel_y = -8
+	var/datum/species/S = species
+	if(S)
+		holder.pixel_y = S.hud_offset_y - 8
 	sec_hud_set_security_status()
 
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder
+	var/species_offset_hud = 0
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/datum/species/S = H.species
+		if(S)
+			species_offset_hud = S.hud_offset_y
 	var/y = 0
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD))
 		holder = hud_list[i]
@@ -178,34 +201,38 @@
 	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL) || HAS_TRAIT(src, TRAIT_FAKELOYAL_VISUAL))
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
+		holder.pixel_y = species_offset_hud
 		y += -5
 
 	if(HAS_TRAIT(src, TRAIT_VISUAL_MINDSHIELD))
 		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
-		holder.pixel_y = y
+		holder.pixel_y = y + species_offset_hud
 		y += -5
 
 	if(HAS_TRAIT(src, TRAIT_VISUAL_OBEY))
 		holder = hud_list[IMPOBED_HUD]
 		holder.icon_state = "hud_imp_obedience"
-		holder.pixel_y = y
+		holder.pixel_y = y + species_offset_hud
 		y += -5
 
 	if(HAS_TRAIT(src, TRAIT_VISUAL_CHEM))
 		holder = hud_list[IMPCHEM_HUD]
 		holder.icon_state = "hud_imp_chem"
-		holder.pixel_y = y
+		holder.pixel_y = y + species_offset_hud
 		y += -5
 
 	if(HAS_TRAIT(src, TRAIT_VISUAL_TRACK))
 		holder = hud_list[IMPTRACK_HUD]
 		holder.icon_state = "hud_imp_tracking"
-		holder.pixel_y = y
+		holder.pixel_y = y + species_offset_hud
 		y += -5
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
+	var/datum/species/S = species
+	if(S)
+		holder.pixel_y = S.hud_offset_y
 	var/perpname = get_visible_name(TRUE)
 	if(perpname)
 		var/datum/data/record/R = find_security_record("name", perpname)
