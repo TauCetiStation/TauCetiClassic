@@ -67,6 +67,8 @@
 
 	// See atom_init below.
 	moveset_type = null
+	// used for growing creatures
+	var/evolv_stage = 0
 
 /mob/living/simple_animal/atom_init()
 	if(!moveset_type)
@@ -433,16 +435,16 @@
 	if(!mind || !client || !key)
 		addtimer(CALLBACK(src, .proc/handle_evolving), 100, TIMER_UNIQUE)
 		return
-	if(stage < 4)
+	if(evolv_stage < 4)
 		addtimer(CALLBACK(src, .proc/handle_evolving), 100, TIMER_UNIQUE)
-		stage++
+		evolv_stage++
 		if(2)
 			maxHealth = 20
 			health += 20
 		if(3)
 			maxHealth = 40
 			health += 40
-			speed--
+			speed -= 0.5
 			melee_damage = 2
 		return
 	evolve_to_young_adult()
