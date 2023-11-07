@@ -8,11 +8,20 @@
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
+	var/eyes_icon = 'icons/mob/human_face.dmi'
 	var/eyes = "eyes"                                    // Icon for eyes.
 	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
 	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
+	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
+	var/hud_offset_y = 0                                 // As above, but specifically for the HUD indicator.
+	var/list/equip_adjust = list()
+	var/list/equip_overlays = list()
+	var/icon_template = 'icons/mob/human_races/template.dmi'
+	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
+	var/specie_shoe_blood_state = "shoeblood"
+	var/specie_hand_blood_state = "bloodyhands"
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
@@ -204,6 +213,34 @@
   *
   * Called after pre_equip()
   */
+//Items without sprite in lefthand cause blan
+/datum/species/proc/get_offset_overlay_image(mob_icon, mob_state, color, slot)
+	// If we don't actually need to offset this, don't bother with any of the generation/caching.
+	if(!length(equip_adjust) || !equip_adjust[slot] || !length(equip_adjust[slot]))
+		return null
+	// Check the cache for previously made icons.
+	var/image_key = "[mob_icon]-[mob_state]-[color]-[slot]"
+	if(!equip_overlays[image_key])
+
+		var/icon/final_I = new(icon_template)
+		var/list/shifts = equip_adjust[slot]
+
+		// Apply all pixel shifts for each direction.
+		for(var/shift_facing in shifts)
+			var/list/facing_list = shifts[shift_facing]
+			var/use_dir = text2num(shift_facing)
+			var/icon/equip = new(mob_icon, icon_state = mob_state, dir = use_dir)
+			var/icon/canvas = new(icon_template)
+			canvas.Blend(equip, ICON_OVERLAY, facing_list[1]+1, facing_list[2]+1)
+			final_I.Insert(canvas, dir = use_dir)
+		var/image/ret = image(final_I, null)
+		ret.color = color
+		ret.appearance_flags = RESET_COLOR
+		equip_overlays[image_key] = ret
+	var/image/I = new() // We return a copy of the cached image, in case downstream procs mutate it.
+	I.appearance = equip_overlays[image_key]
+	return I
+
 /datum/species/proc/species_equip(mob/living/carbon/human/H, datum/outfit/O)
 	species_replace_outfit(O, replace_outfit)
 	call_species_equip_proc(H, O)
@@ -1239,6 +1276,12 @@
 	attack_verb = list("slash", "claw", "lacerate")
 	damage = 35
 
+/datum/unarmed_attack/claws/serpentid
+	attack_verb = list("mauled", "slashed", "struck", "pierced")
+	damage = 6
+	sharp = 1
+	edge = 1
+
 /datum/species/shadowling
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
@@ -1772,3 +1815,62 @@
 		H.remove_from_mob(I)
 	H.dust()
 	return TRUE
+
+/datum/species/serpentid
+	name = SERPENTID
+	icobase = 'icons/mob/human_races/r_serpentid.dmi'
+	deform = 'icons/mob/human_races/r_serpentid.dmi'
+	damage_mask = FALSE
+	has_gendered_icons = FALSE
+	eyes_icon = 'icons/mob/serpentid_face.dmi'
+	eyes = "serpentid_eyes"
+	base_color = "#336600"
+	flesh_color = "#525252"
+	blood_datum_path = /datum/dirt_cover/hemolymph
+	specie_shoe_blood_state = "snakeshoeblood"
+	specie_hand_blood_state = "snakebloodyhands"
+	min_age = 18
+	max_age = 40
+	hud_offset_y = 8
+	brute_mod = 0.9
+	burn_mod = 1.35
+	oxy_mod = 0.5
+	speed_mod = -0.5
+	total_health = 200
+	flags = list(
+		NO_SCAN = TRUE,
+		NO_DNA = TRUE,
+		NO_FAT = TRUE,
+		IS_SOCIAL = TRUE,
+		NO_GENDERS = TRUE,
+		NO_SLIP = TRUE,
+		NO_MINORCUTS = TRUE)
+	//primitive = SNAKE TODO
+	restricted_inventory_slots = list(SLOT_L_EAR, SLOT_R_EAR, SLOT_SHOES, SLOT_GLASSES, SLOT_GLOVES, SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_WEAR_MASK)
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT + 50
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 80
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
+	icon_template = 'icons/mob/human_races/template_tall.dmi'
+	unarmed_type = /datum/unarmed_attack/claws/serpentid
+	blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/snake
+	darksight = 8
+
+/datum/species/serpentid/New()
+	equip_adjust = list(slot_id_to_name(SLOT_L_HAND) =     list("[NORTH]" = list( 0, 8),  "[EAST]" = list(0, 8),  "[SOUTH]" = list(-0, 8),  "[WEST]" = list( 0, 8)),
+						slot_id_to_name(SLOT_R_HAND) =     list("[NORTH]" = list( 0, 8),  "[EAST]" = list(0, 8),  "[SOUTH]" = list( 0, 8),  "[WEST]" = list( 0, 8)),
+						slot_id_to_name(SLOT_HEAD) =       list("[NORTH]" = list( 0, 7),  "[EAST]" = list(0, 8),  "[SOUTH]" = list( 0, 8),  "[WEST]" = list( 0, 8)),
+						slot_id_to_name(SLOT_BACK) =       list("[NORTH]" = list( 0, 7),  "[EAST]" = list(0, 8),  "[SOUTH]" = list( 0, 8),  "[WEST]" = list( 0, 8)),
+						slot_id_to_name(SLOT_BELT) =       list("[NORTH]" = list( 0, 0),  "[EAST]" = list(8, 0),  "[SOUTH]" = list( 0, 0),  "[WEST]" = list(-8, 0)),
+						slot_id_to_name(SLOT_GLASSES) =    list("[NORTH]" = list( 0, 10), "[EAST]" = list(0, 11), "[SOUTH]" = list( 0, 11), "[WEST]" = list( 0, 11)),
+						slot_id_to_name(SLOT_HANDCUFFED) = list("[NORTH]" = list( 0, 8),  "[EAST]" = list(0, 8),  "[SOUTH]" = list( 0, 8),  "[WEST]" = list( 0, 8)),
+	)
+	. = ..()
+
+/datum/species/serpentid/on_gain(mob/living/carbon/human/H)
+	..()
+	H.r_eyes = 255
+	H.update_hair()
+
+/datum/species/serpentid/on_life(mob/living/carbon/human/H)
+	if(!H.on_fire && H.fire_stacks < 2)
+		H.fire_stacks += 0.2
