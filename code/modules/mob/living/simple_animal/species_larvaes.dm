@@ -30,9 +30,20 @@
 	icon_living = "larvae-serpentid"
 	icon_dead = "larvae-serpentid_dead"
 
+/mob/living/simple_animal/grown_larvae/serpentid/Login()
+	. = ..()
+	to_chat(src, "<span class='userdanger'>Вы агрессивная форма жизни практикующая канибализм, так как мясо вашего вида очень вкусное.</span>")
+
 /mob/living/simple_animal/grown_larvae/serpentid/evolve_to_young_adult()
 	var/mob/living/simple_animal/grown_larvae/snake/S = new(loc)
 	mind.transfer_to(S)
+	qdel(src)
+
+/mob/living/simple_animal/grown_larvae/serpentid/death()
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 1 to butcher_results[path])
+				new path(loc)
 	qdel(src)
 
 /mob/living/simple_animal/grown_larvae/snake
@@ -45,6 +56,10 @@
 	melee_damage = 5
 	has_arm = FALSE
 	has_leg = FALSE
+
+/mob/living/simple_animal/grown_larvae/snake/Login()
+	. = ..()
+	to_chat(src, "<span class='userdanger'>Вы агрессивная форма жизни в стадии развития до взрослой особи. Ваша сила укуса растёт.</span>")
 
 /mob/living/simple_animal/grown_larvae/snake/evolve_to_young_adult()
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
@@ -64,6 +79,10 @@
 	maxbodytemp = 301
 	heat_damage_per_tick = 9
 	bodytemperature = 293
+
+/mob/living/simple_animal/grown_larvae/small_moth/Login()
+	. = ..()
+	to_chat(src, "<span class='userdanger'>Вы дружелюбная форма жизни в стадии развития до взрослой особи. Помните, чем больше вы растёте, тем больше в вас мяса.</span>")
 
 /mob/living/simple_animal/grown_larvae/small_moth/evolve_to_young_adult()
 	var/mob/living/carbon/human/moth/M = new(loc)
@@ -99,6 +118,10 @@
 	ventcrawler = 2
 	has_arm = FALSE
 	has_leg = FALSE
+
+/mob/living/simple_animal/mouse/rat/newborn_moth/Login()
+	. = ..()
+	to_chat(src, "<span class='userdanger'>Вы дружелюбная форма жизни готовая съесть что-угодно.</span>")
 
 /mob/living/simple_animal/mouse/rat/newborn_moth/atom_init()
 	. = ..()
