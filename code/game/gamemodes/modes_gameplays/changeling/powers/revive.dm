@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/revive
 	name = "Regenerate"
 	desc = "We regenerate, healing all damage from our form."
+	button_icon_state = "fake_death"
 	req_stat = DEAD
 
 //Revive from regenerative stasis

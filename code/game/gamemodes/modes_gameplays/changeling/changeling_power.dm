@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling
 	panel = "Changeling"
 	name = "Prototype Sting"
-	desc = "" // Fluff
+	/// The description of what the action does, shown in button tooltips
 	var/helptext = "" // Details
 	var/chemical_cost = 0 // negative chemical cost is for passive abilities (chemical glands)
 	var/genomecost = -1 //cost of the sting in dna points. 0 = auto-purchase, -1 = cannot be purchased
@@ -12,9 +12,39 @@
 	var/max_genetic_damage = 100 // hard counter for spamming abilities. Not used/balanced much yet.
 	var/can_be_used_in_abom_form = TRUE
 
-/obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
-	return
+	var/needs_button = TRUE//for passive abilities like hivemind that dont need a button
+	var/datum/action/innate/changeling/action
+	var/button_icon_state = ""
 
+/obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	if(needs_button)
+		action = new (user)
+		action.button_icon_state = button_icon_state
+		action.name = name
+		action.holder = src
+		action.Grant(user)
+		action.button.UpdateIcon()
+
+/datum/action/innate/changeling
+	button_icon = 'icons/hud/actions_changeling.dmi'
+	background_icon_state = "bg_changeling"
+	button_icon_state = "revive"
+	var/obj/effect/proc_holder/changeling/holder
+
+/datum/action/innate/changeling/Trigger()
+	. = ..()
+	var/mob/user = owner
+	if(!user || !ischangeling(user))
+		return
+	holder.try_to_sting(user)
+/*
+/obj/effect/proc_holder/changeling/Trigger(trigger_flags)
+	var/mob/user = owner
+	if(!user || !user.mind || !user.mind.has_antag_datum(/datum/antagonist/changeling))
+		return
+	try_to_sting(user)
+	*/
 /obj/effect/proc_holder/changeling/Click()
 	var/mob/user = usr
 	if(!user || !ischangeling(user))

@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/absorbDNA
 	name = "Absorb DNA"
 	desc = "Absorb the DNA of our victim."
+	button_icon_state = "absorb_dna"
 	chemical_cost = 0
 	genomecost = 0
 	req_human = 1

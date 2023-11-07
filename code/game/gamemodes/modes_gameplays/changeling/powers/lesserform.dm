@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/lesserform
 	name = "Lesser form"
 	desc = "We debase ourselves and become lesser. We become a monkey."
+	button_icon_state = "lesser_form"
 	chemical_cost = 5
 	genomecost = 1
 	genetic_damage = 30
