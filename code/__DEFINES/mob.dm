@@ -101,6 +101,7 @@
 #define SLIME          	 "Slime"
 #define ABOMINATION    	 "disgusting abomination"
 #define SERPENTID        "Serpentid"
+#define MOTH		     "Moth"
 
 
 #define MONKEY         	 "Monkey"
