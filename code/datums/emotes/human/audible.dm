@@ -24,6 +24,7 @@
 	var/static/list/laugh_by_gender_species = list(
 		"[SKRELL][FEMALE]" = SOUNDIN_LAUGH_SKRELL_FEMALE,
 		"[SKRELL][MALE]" = SOUNDIN_LAUGH_SKRELL_MALE,
+		"[SERPENTID][NEUTER]" = SOUNDIN_LAUGH_SERPENTID
 	)
 
 	var/hash = "[user.get_species()][user.gender]"
@@ -78,6 +79,14 @@
 	return "clenches [P_THEIR(user.gender)] teeth."
 
 /datum/emote/human/grunt/get_sound(mob/living/carbon/human/user, intentional)
+	var/static/list/grunt_by_gender_species = list(
+		"[SERPENTID]" = SOUNDIN_GRUNT_SERPENTID
+	)
+
+	var/hash = "[user.get_species()]"
+
+	if(grunt_by_gender_species[hash])
+		return grunt_by_gender_species[hash]
 	return get_sound_by_voice(user, SOUNDIN_MALE_LIGHT_PAIN, SOUNDIN_FEMALE_LIGHT_PAIN)
 
 /datum/emote/human/grunt/do_emote(mob/living/carbon/human/user, emote_key, intentional)
@@ -109,6 +118,14 @@
 	return "opens [P_THEIR(user.gender)] mouth slightly."
 
 /datum/emote/human/groan/get_sound(mob/living/carbon/human/user, intentional)
+	var/static/list/grunt_by_gender_species = list(
+		"[SERPENTID]" = SOUNDIN_GRUNT_SERPENTID
+	)
+
+	var/hash = "[user.get_species()]"
+
+	if(grunt_by_gender_species[hash])
+		return grunt_by_gender_species[hash]
 	var/female_groans = SOUNDIN_FEMALE_PASSIVE_PAIN
 	var/male_groans = SOUNDIN_MALE_PASSIVE_PAIN
 	if(user.get_species() != SKRELL && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(66))
@@ -146,6 +163,13 @@
 	return "opens [P_THEIR(user.gender)] mouth like a fish gasping for air!"
 
 /datum/emote/human/scream/get_sound(mob/living/carbon/human/user, intentional)
+	var/static/list/scream_by_gender_species = list(
+		"[SERPENTID]" = SOUNDIN_SCREAM_SERPENTID,
+	)
+	var/hash = "[user.get_species()]"
+
+	if(scream_by_gender_species[hash])
+		return scream_by_gender_species[hash]
 	return get_sound_by_voice(user, SOUNDIN_MALE_HEAVY_PAIN, SOUNDIN_FEMALE_HEAVY_PAIN)
 
 /datum/emote/human/scream/do_emote(mob/living/carbon/human/user, emote_key, intentional)
