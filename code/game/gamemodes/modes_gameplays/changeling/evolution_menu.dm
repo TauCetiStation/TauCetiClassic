@@ -4,6 +4,7 @@ var/global/list/sting_paths
 /obj/effect/proc_holder/changeling/evolution_menu
 	name = "-Evolution Menu-" //Dashes are so it's listed before all the other abilities.
 	desc = "Choose our method of subjugation."
+	button_icon_state = "tentacle"
 	genomecost = 0
 
 

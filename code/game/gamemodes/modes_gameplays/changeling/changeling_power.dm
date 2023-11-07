@@ -12,19 +12,17 @@
 	var/max_genetic_damage = 100 // hard counter for spamming abilities. Not used/balanced much yet.
 	var/can_be_used_in_abom_form = TRUE
 
-	var/needs_button = TRUE//for passive abilities like hivemind that dont need a button
 	var/datum/action/innate/changeling/action
 	var/button_icon_state = ""
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	if(needs_button)
+	if(button_icon_state)
 		action = new (user)
 		action.button_icon_state = button_icon_state
 		action.name = name
 		action.holder = src
 		action.Grant(user)
-		action.button.UpdateIcon()
 
 /datum/action/innate/changeling
 	button_icon = 'icons/hud/actions_changeling.dmi'

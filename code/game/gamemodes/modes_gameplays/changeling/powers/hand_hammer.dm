@@ -2,6 +2,7 @@
 	name = "Organic Hammer"
 	desc = "We reform one of our arms into hammer."
 	helptext = "Can break walls, airlocks, windows and humans, requires a lot of chemical for each use. Cannot be used while in lesser form."
+	button_icon_state = "arm_hammer"
 	chemical_cost = 20
 	genomecost = 2
 	genetic_damage = 12
