@@ -1,7 +1,8 @@
 import { toTitleCase } from 'common/string';
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Flex, TimeDisplay } from '../components';
+import { Button, LabeledList, Section, Flex } from '../components';
 import { Window } from '../layouts';
+import { formatTime } from '../format';
 
 export const SpawnersMenu = (props, context) => {
   const { act, data } = useBackend(context);
@@ -47,7 +48,7 @@ export const SpawnersMenu = (props, context) => {
                       label={spawner.time_type === 1 ? "Регистрация" : "Доступно"}
                       color={spawner.time_type === 1 ? "green" : "red"}
                     >
-                      <TimeDisplay auto="down" value={spawner.time_left} />
+                      {formatTime(spawner.time_left)}
                     </LabeledList.Item>
                   )}
                   <LabeledList.Item color="green" label="Позиций свободно">

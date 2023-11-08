@@ -14,11 +14,11 @@ SUBSYSTEM_DEF(role_spawners)
 /datum/controller/subsystem/role_spawners/proc/add_to_list(datum/spawner/S)
 	spawners += S
 	sortTim(spawners, GLOBAL_PROC_REF(cmp_spawners_asc))
-//	trigger_ui_update()
+	//trigger_ui_update()
 
 /datum/controller/subsystem/role_spawners/proc/remove_from_list(datum/spawner/S)
 	spawners -= S
-//	trigger_ui_update()
+	//trigger_ui_update()
 
 /datum/controller/subsystem/role_spawners/proc/roll_round_start()
 	for(var/datum/spawner/S in spawners)
@@ -31,4 +31,5 @@ SUBSYSTEM_DEF(role_spawners)
 			continue
 
 		if(M.spawners_menu)
-			SStgui.update_uis(M.spawners_menu)*/
+			SStgui.update_uis(M.spawners_menu)
+*/

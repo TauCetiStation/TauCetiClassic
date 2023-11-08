@@ -6,13 +6,13 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
 	var/datum/spawners_menu/spawners_menu
-	var/global/list/datum/spawner/registred_spawners = list()
+	var/global/datum/spawner/registred_spawner
 
 /mob/dead/Logout()
 	..()
-	if(length(registred_spawners))
-		for(var/datum/spawner/S in registred_spawners)
-			S.cancel_registration(src)
+	if(registred_spawner)
+		var/datum/spawner/S = registred_spawner
+		S.cancel_registration(src)
 
 /**
   * Doesn't call parent, see [/atom/proc/atom_init]

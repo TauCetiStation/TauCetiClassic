@@ -43,7 +43,7 @@
 	// Name of spawner, wow
 	var/name
 
-	// Priority of spawner, affects position in menu and
+	// Priority of spawner, affects position in menu and roll order for lobby spawners
 	var/priority = 100
 
 	// In interface: "Описание: "
@@ -78,7 +78,7 @@
 	var/list/registered_candidates = list()
 
 	// Automatically roll for registred clients at round start, autosets register_only
-	var/lobby_spawner = TRUE // todo: maybe use -1 for time_for_registration as roll mode
+	var/lobby_spawner = FALSE // todo: maybe use -1 for time_for_registration as roll mode
 
 	// Time for clients for registration before spawn will be automatically rolled
 	// Can be zero if you want to trigger roll manually or use as lobby spawner
@@ -100,17 +100,16 @@
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 
-	if(lobby_spawner)
-		register_only = TRUE
-
 	if(SSticker.current_state >= GAME_STATE_PLAYING)
 		start_timers()
 	else
+		if(lobby_spawner)
+			register_only = TRUE
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(start_timers))
 
 /datum/spawner/proc/start_timers()
 	// todo: should we start del timer, if registration timer is active?
-	if(register_only && time_for_registration)
+	if(register_only && time_for_registration && !lobby_spawner)
 		registration_timer_id = addtimer(CALLBACK(src, PROC_REF(roll_registrations)), time_for_registration, TIMER_STOPPABLE)
 	if(time_while_available)
 		availability_timer_id = QDEL_IN(src, time_while_available)
@@ -118,7 +117,7 @@
 	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/Destroy()
-	SSrole_spawners.add_to_list(src)
+	SSrole_spawners.remove_from_list(src)
 
 	spawn_landmark_name = null
 
@@ -127,7 +126,7 @@
 
 	if(length(registered_candidates))
 		for(var/mob/dead/M in registered_candidates)
-			M.registred_spawners -= src
+			M.registred_spawner = null
 		registered_candidates = null
 
 	return ..()
@@ -156,9 +155,14 @@
 		do_spawn(spectator)
 		return
 
+	// todo: registration for multiple spawners?
 	if(spectator in registered_candidates)
 		cancel_registration(spectator)
 		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
+		return
+
+	else if(spectator.registred_spawner)
+		to_chat(spectator, "<span class='notice'>Вы уже ждете роль \"[spectator.registred_spawner.name]\". Сначала отмените заявку.</span>")
 		return
 
 	if(!can_spawn(spectator))
@@ -170,20 +174,19 @@
 			return
 
 	registered_candidates += spectator
-	spectator.registred_spawners += src
+	spectator.registred_spawner = src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
 	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
-	spectator.registred_spawners -= src
+	spectator.registred_spawner = null
 	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
 
-	world.log << "roll [type]"
 	if(!length(registered_candidates))
 		//SSrole_spawners.trigger_ui_update()
 		return
@@ -206,6 +209,7 @@
 
 	for(var/mob/dead/M in filtered_candidates)
 		if(positions > 0)
+			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
 			do_spawn(M)
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")

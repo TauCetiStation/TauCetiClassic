@@ -540,7 +540,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	name = "Espionage Agent Start"
 
 /obj/effect/landmark/espionage_start/atom_init(mapload)
-	..()
+	. = ..()
 	create_spawner(/datum/spawner/spy)
 
 /obj/effect/landmark/survival_start
@@ -548,7 +548,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	var/spawnertype = /datum/spawner/survival
 
 /obj/effect/landmark/survival_start/atom_init(mapload)
-	..()
+	. = ..()
 	create_spawner(spawnertype)
 
 /obj/effect/landmark/survival_start/medic

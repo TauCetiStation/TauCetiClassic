@@ -696,8 +696,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		game = create_mafia_game()
 	game.tgui_interact(usr)
 
-///mob/dead/observer/verb/open_spawners_menu()
-/mob/dead/verb/open_spawners_menu()
+/mob/dead/observer/verb/open_spawners_menu()
 	set name = "Spawners Menu"
 	set desc = "See all currently available spawners"
 	set category = "Ghost"
