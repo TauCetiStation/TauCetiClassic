@@ -1880,6 +1880,8 @@
 
 /datum/species/serpentid/on_gain(mob/living/carbon/human/H)
 	..()
+	H.real_name = "Giant Armoured Snake"
+	H.name = H.real_name
 	H.r_eyes = 255
 	H.update_hair()
 	RegisterSignal(H, COMSIG_HUMAN_ATTACKBY, PROC_REF(try_eat_item))
@@ -1988,6 +1990,7 @@
 
 /datum/species/moth/on_gain(mob/living/carbon/human/H)
 	H.real_name = "[pick(global.moth_first)] [pick(global.moth_second)]"
+	H.name = H.real_name
 	return ..()
 
 /datum/species/moth/call_digest_proc(mob/living/M, datum/reagent/R)
