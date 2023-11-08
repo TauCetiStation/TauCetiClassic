@@ -36,13 +36,7 @@
 	if(!user || !ischangeling(user))
 		return
 	holder.try_to_sting(user)
-/*
-/obj/effect/proc_holder/changeling/Trigger(trigger_flags)
-	var/mob/user = owner
-	if(!user || !user.mind || !user.mind.has_antag_datum(/datum/antagonist/changeling))
-		return
-	try_to_sting(user)
-	*/
+
 /obj/effect/proc_holder/changeling/Click()
 	var/mob/user = usr
 	if(!user || !ischangeling(user))

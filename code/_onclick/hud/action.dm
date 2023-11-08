@@ -177,7 +177,6 @@
 /atom/movable/screen/movable/action_button
 	var/datum/action/owner
 	screen_loc = "WEST,NORTH"
-	var/image/overlay_image
 
 /atom/movable/screen/movable/action_button/Destroy()
 	owner = null
@@ -207,11 +206,9 @@
 	else if(owner.button_icon && owner.button_icon_state)
 		img = image(owner.button_icon,src,owner.button_icon_state)
 
-	if(img)
-		img.pixel_x = 0
-		img.pixel_y = 0
-		add_overlay(img)
-		overlay_image = img
+	img.pixel_x = 0
+	img.pixel_y = 0
+	add_overlay(img)
 
 	if(!owner.IsAvailable())
 		color = rgb(128,0,0,128)
