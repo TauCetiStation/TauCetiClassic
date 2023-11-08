@@ -637,17 +637,10 @@
 	cost = 40
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/stealthy_weapons/romerol_kit
+/datum/uplink_item/stealthy_weapons/romerol_kit/traitor
 	uplink_types = list("traitor")
-	cost = 45
+	cost = 70
 	cant_discount = TRUE
-/*
-/datum/uplink_item/stealthy_weapons/silencer
-	name = "Stetchkin Silencer"
-	desc = "Fitted for use on the Stetchkin pistol, this silencer will make its shots quieter when equipped onto it."
-	item = /obj/item/weapon/silencer
-	cost = 2
-	uplink_types = list("nuclear") */
 
 // STEALTHY TOOLS
 
