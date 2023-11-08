@@ -1,6 +1,3 @@
-var/global/list/datum/spawner/spawners = list()
-var/global/list/datum/spawners_cooldown = list()
-
 // Don't call this proc directly! Use defines create_spawner and create_spawners
 /proc/_create_spawners(type, num, list/arguments)
 	// arguments must have at least 1 element due to the use of arglist
@@ -15,8 +12,8 @@ var/global/list/datum/spawners_cooldown = list()
 	var/need_update = FALSE
 
 	// check if we should just update existing spawner
-	if(!length(arguments) && global.spawners[type] && !global.spawners[type].should_be_unique)
-		spawner = global.spawners[type]
+	if(!length(arguments) && SSrole_spawners.spawners[type] && !SSrole_spawners.spawners[type].should_be_unique)
+		spawner = SSrole_spawners.spawners[type]
 
 	if(!spawner)
 		spawner = new type(arglist(arguments))
@@ -30,7 +27,7 @@ var/global/list/datum/spawners_cooldown = list()
 	if(!need_update)
 		return
 
-	spawner.add_to_global_list()
+	SSrole_spawners.add_to_list(spawner)
 
 	for(var/mob/dead/observer/ghost in observer_list)
 		if(!ghost.client)
@@ -46,8 +43,8 @@ var/global/list/datum/spawners_cooldown = list()
 	// Name of spawner, wow
 	var/name
 
-	// Position of spawner in menu, lower number - higher position
-	var/position = 100
+	// Priority of spawner, affects position in menu and
+	var/priority = 100
 
 	// In interface: "Описание: "
 	var/desc
@@ -80,28 +77,31 @@ var/global/list/datum/spawners_cooldown = list()
 	// List of clients who checked for spawner
 	var/list/registered_candidates = list()
 
-	// Cooldown between the opportunity become a role
-	var/cooldown = 10 MINUTES
+	// Automatically roll for registred clients at round start, autosets register_only
+	var/lobby_spawner = TRUE // todo: maybe use -1 for time_for_registration as roll mode
 
 	// Time for clients for registration before spawn will be automatically rolled
-	// Can be zero if you want to trigger roll manually
+	// Can be zero if you want to trigger roll manually or use as lobby spawner
 	var/time_for_registration
 
 	// Time for spawner to be active, spawner will be deleted after time ends
 	var/time_while_available
 
-	// id of timers
-	VAR_PRIVATE/registration_timer_id
-	VAR_PRIVATE/availability_timer_id
+	// Cooldown between the opportunity become a role
+	var/cooldown = 10 MINUTES
 
-/datum/spawner/proc/after_spawn()
-	// /datum/spawner/team/after_spawn
-	// если есть родственный спавнер и разница между ними > n
-	return
+	// id of timers
+	var/registration_timer_id
+	var/availability_timer_id
+
+#define SPAWNER_AUTOROLL_ROUND_START
 
 /datum/spawner/New()
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
+
+	if(lobby_spawner)
+		register_only = TRUE
 
 	if(SSticker.current_state >= GAME_STATE_PLAYING)
 		start_timers()
@@ -109,16 +109,16 @@ var/global/list/datum/spawners_cooldown = list()
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(start_timers))
 
 /datum/spawner/proc/start_timers()
-	// todo: should we start del timer, if check_in timer is active?
+	// todo: should we start del timer, if registration timer is active?
 	if(register_only && time_for_registration)
 		registration_timer_id = addtimer(CALLBACK(src, PROC_REF(roll_registrations)), time_for_registration, TIMER_STOPPABLE)
 	if(time_while_available)
 		availability_timer_id = QDEL_IN(src, time_while_available)
 
-	trigger_ui_update()
+	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/Destroy()
-	remove_from_global_list()
+	SSrole_spawners.add_to_list(src)
 
 	spawn_landmark_name = null
 
@@ -127,50 +127,37 @@ var/global/list/datum/spawners_cooldown = list()
 
 	if(length(registered_candidates))
 		for(var/mob/dead/M in registered_candidates)
-			M.check_in_spawners -= src
+			M.registred_spawners -= src
 		registered_candidates = null
 
 	return ..()
 
-/datum/spawner/proc/trigger_ui_update()
-	for(var/mob/dead/M in (new_player_list + observer_list))
-		if(!M.client)
-			continue
-
-		if(M.spawners_menu)
-			SStgui.update_uis(M.spawners_menu)
-
-/datum/spawner/proc/add_to_global_list()
-	global.spawners += src
-	trigger_ui_update()
-
-/datum/spawner/proc/remove_from_global_list()
-	global.spawners -= src
-	trigger_ui_update()
-
 /datum/spawner/proc/add_client_cooldown(client/C)
 	if(cooldown)
-		if(!global.spawners_cooldown[C.ckey])
-			global.spawners_cooldown[C.ckey] = list()
-		var/list/ckey_cooldowns = global.spawners_cooldown[C.ckey]
+		if(!SSrole_spawners.spawners_cooldown[C.ckey])
+			SSrole_spawners.spawners_cooldown[C.ckey] = list()
+		var/list/ckey_cooldowns = SSrole_spawners.spawners_cooldown[C.ckey]
 		ckey_cooldowns[type] = world.time + cooldown
 
 /datum/spawner/proc/check_cooldown(mob/dead/spectator)
-	if(global.spawners_cooldown[spectator.ckey])
-		var/list/ckey_cooldowns = global.spawners_cooldown[spectator.ckey]
+	if(SSrole_spawners.spawners_cooldown[spectator.ckey])
+		var/list/ckey_cooldowns = SSrole_spawners.spawners_cooldown[spectator.ckey]
 		if(world.time < ckey_cooldowns[type])
 			var/timediff = round((ckey_cooldowns[type] - world.time) * 0.1)
 			to_chat(spectator, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
 			return FALSE
 	return TRUE
 
-/datum/spawner/proc/check_in(mob/dead/spectator)
+/datum/spawner/proc/registration(mob/dead/spectator)
+	if(blocked)
+		return
+
 	if(!register_only)
 		do_spawn(spectator)
 		return
 
 	if(spectator in registered_candidates)
-		check_out(spectator)
+		cancel_registration(spectator)
 		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
 		return
 
@@ -182,36 +169,37 @@ var/global/list/datum/spawners_cooldown = list()
 			to_chat(spectator, "<span class='notice'>Нет свободных позиций для роли.</span>")
 			return
 
-
 	registered_candidates += spectator
-	spectator.check_in_spawners += src
+	spectator.registred_spawners += src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
-	trigger_ui_update()
+	//SSrole_spawners.trigger_ui_update()
 
-/datum/spawner/proc/check_out(mob/dead/spectator)
+/datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
-	spectator.check_in_spawners -= src
-	trigger_ui_update()
+	spectator.registred_spawners -= src
+	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
 
 	world.log << "roll [type]"
 	if(!length(registered_candidates))
-		trigger_ui_update()
+		//SSrole_spawners.trigger_ui_update()
 		return
 
 	var/list/filtered_candidates = list()
 
 	// possible some candidates already spawned
-	// control of this should be part of separate subsystem imho
+	// todo: control of this should be part of subsystem
 	for(var/mob/dead/M in registered_candidates)
 		if(M.client)
 			filtered_candidates += M
 
+	registered_candidates.Cut()
+
 	if(!length(filtered_candidates))
-		trigger_ui_update()
+		//SSrole_spawners.trigger_ui_update()
 		return
 
 	shuffle(filtered_candidates)
@@ -222,7 +210,7 @@ var/global/list/datum/spawners_cooldown = list()
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
-	trigger_ui_update()
+	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
 	if(!can_spawn(spectator))
@@ -485,9 +473,7 @@ var/global/list/datum/spawners_cooldown = list()
 	desc = "Вы появляетесь в суровом мире людей и должны выжить."
 	wiki_ref = "Mouse"
 
-	time_while_available = 3 MINUTES
-
-	important_info = "AYYYYAAAA"
+	priority = 1000
 
 	ranks = list("Mouse")
 	positions = INFINITY
@@ -518,10 +504,9 @@ var/global/list/datum/spawners_cooldown = list()
 	desc = "Вы появляетесь на дронстанции и обязаны ремонтировать станцию."
 	wiki_ref = "Drone"
 
-	ranks = list(ROLE_DRONE)
+	priority = 1000
 
-	register_only = TRUE
-	time_for_registration = 0.5 MINUTES
+	ranks = list(ROLE_DRONE)
 
 	positions = INFINITY
 

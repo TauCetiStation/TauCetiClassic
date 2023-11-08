@@ -43,7 +43,10 @@ export const SpawnersMenu = (props, context) => {
                 )}>
                 <LabeledList>
                   {spawner.time_left && (
-                    <LabeledList.Item color="green" label={spawner.time_type === 1 ? "Регистрация" : "Доступно"} >
+                    <LabeledList.Item
+                      label={spawner.time_type === 1 ? "Регистрация" : "Доступно"}
+                      color={spawner.time_type === 1 ? "green" : "red"}
+                    >
                       <TimeDisplay auto="down" value={spawner.time_left} />
                     </LabeledList.Item>
                   )}

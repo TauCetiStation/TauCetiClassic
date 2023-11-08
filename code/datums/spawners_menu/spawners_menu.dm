@@ -19,13 +19,13 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SpawnersMenu")
-		ui.set_autoupdate(FALSE)
+		//ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/spawners_menu/tgui_data(mob/user)
 	var/list/data = list()
 	data["spawners"] = list()
-	for(var/datum/spawner/spawner in global.spawners)
+	for(var/datum/spawner/spawner in SSrole_spawners.spawners)
 		var/list/this = list()
 		this["ref"] = "\ref[spawner]"
 		this["name"] = spawner.name
@@ -77,7 +77,7 @@
 	var/datum/spawner/spawner = pick(spawnerlist)
 	*/
 
-	var/datum/spawner/spawner = locate(params["ref"]) in global.spawners
+	var/datum/spawner/spawner = locate(params["ref"]) in SSrole_spawners.spawners
 
 	if(!spawner)
 		return
@@ -88,6 +88,6 @@
 			return TRUE
 		if("spawn")
 			role_selected = TRUE
-			spawner.check_in(owner)
+			spawner.registration(owner)
 			role_selected = FALSE
 			return TRUE

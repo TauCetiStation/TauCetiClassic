@@ -249,6 +249,7 @@
 #include "code\controllers\subsystem\qualities.dm"
 #include "code\controllers\subsystem\quirks.dm"
 #include "code\controllers\subsystem\religion.dm"
+#include "code\controllers\subsystem\role_spawners.dm"
 #include "code\controllers\subsystem\round_aspects.dm"
 #include "code\controllers\subsystem\round_rating.dm"
 #include "code\controllers\subsystem\runechat.dm"
