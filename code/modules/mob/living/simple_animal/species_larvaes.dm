@@ -68,7 +68,9 @@
 	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 	var/mob/living/carbon/human/serpentid/S = new(loc)
 	mind.transfer_to(S)
-	to_chat(S, "<span class='userdanger'>Вы агрессивная форма жизни с примитивным интеллектом уровня обезьяны. Вторжение в вашу комфортную зону других форм означает агрессию по отношению к вам. Представителей своего вида вы предпочитаете видеть в качестве завтрака. Своей хваткой вы способны разрывать тела на части. Ваша цель - выжить.</span>")
+	var/lore = "Вы агрессивная форма жизни с примитивным интеллектом уровня обезьяны. Вторжение в вашу комфортную зону означает агрессию по отношению к вам. Представителей своего вида вы предпочитаете видеть в качестве завтрака. Своей хваткой вы способны разрывать тела на части. Ваша цель - выжить."
+	to_chat(S, "<span class='userdanger'>[lore]</span>")
+	mind.store_memory(lore)
 	qdel(src)
 
 /mob/living/simple_animal/grown_larvae/small_moth
@@ -88,7 +90,9 @@
 /mob/living/simple_animal/grown_larvae/small_moth/evolve_to_young_adult()
 	var/mob/living/carbon/human/moth/M = new(loc)
 	mind.transfer_to(M)
-	to_chat(M, "<span class='userdanger'>Вы всеядная форма жизни с примитивным интеллектом уровня обезьяны, предпочитающая питаться падалью. В число ваших врагов входят только Серпентиды, отношение к остальным зачастую нейтральное. Ваша цель - выжить.</span>")
+	var/lore = "Вы всеядная форма жизни с примитивным интеллектом уровня обезьяны, предпочитающая питаться падалью. В число ваших врагов входят только Серпентиды, отношение к остальным зачастую нейтральное. Ваша цель - выжить."
+	to_chat(M, "<span class='userdanger'>[lore]</span>")
+	mind.store_memory(lore)
 	qdel(src)
 
 /mob/living/simple_animal/mouse/rat/newborn_moth
