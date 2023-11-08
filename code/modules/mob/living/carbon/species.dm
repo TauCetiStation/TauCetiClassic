@@ -1896,7 +1896,6 @@
 		H.fire_stacks += 0.2
 
 /datum/species/serpentid/proc/try_tear_body(mob/living/source, obj/item/weapon/grab/G)
-	SIGNAL_HANDLER
 	var/mob/living/assailant = source
 	if(!ishuman(G.affecting))
 		return FALSE
