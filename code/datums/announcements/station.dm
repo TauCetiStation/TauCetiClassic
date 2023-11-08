@@ -45,9 +45,10 @@
 	name = "Heads: Chief Engineer"
 	sound = "se"
 
-/datum/announcement/station/command/department/play(department, message)
+/datum/announcement/station/command/department/play(department, message, mob/user)
 	if(department && message)
 		title = "Оповещение из [department]"
+	announcer = user?.GetVoice()
 	..(message)
 
 /datum/announcement/station/command/ai

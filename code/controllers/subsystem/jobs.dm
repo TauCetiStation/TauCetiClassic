@@ -451,7 +451,7 @@ SUBSYSTEM_DEF(job)
 
 	if(!joined_late)
 		var/obj/effect/landmark/start/spawn_mark
-		var/list/rank_landmarks = landmarks_list[rank]
+		var/list/rank_landmarks = landmarks_list[H.mind.role_alt_title]
 		if(length(rank_landmarks))
 			for(var/obj/effect/landmark/start/landmark as anything in rank_landmarks)
 				if(!(locate(/mob/living) in landmark.loc))
@@ -554,6 +554,9 @@ SUBSYSTEM_DEF(job)
 	to_chat(H, "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
 	if(job.req_admin_notify)
 		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
+
+	if(SSround_aspects.aspect_name && SSround_aspects.aspect.afterspawn_IC_announcement)
+		to_chat(H, SSround_aspects.aspect.afterspawn_IC_announcement)
 
 	spawnId(H, rank, alt_title)
 

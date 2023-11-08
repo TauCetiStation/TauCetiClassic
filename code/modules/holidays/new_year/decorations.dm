@@ -25,20 +25,22 @@
 	name = "garland"
 	desc = "Beautiful lights! Shinee!"
 	icon_state = "garland_on"
+	var/icon_state_off = "garland"
+	var/light_colors = list("#ff0000", "#6111ff", "#ffa500", "#44faff")
 	var/on = TRUE
 	var/brightness = 4
 
 /obj/item/decoration/garland/proc/update_garland()
 	if(on)
-		icon_state = "garland_on"
+		icon_state = "[icon_state_off]_on"
 		set_light(brightness)
 	else
-		icon_state = "garland"
+		icon_state = "[icon_state_off]"
 		set_light(0)
 
 /obj/item/decoration/garland/atom_init()
 	. = ..()
-	light_color = pick("#ff0000", "#6111ff", "#ffa500", "#44faff")
+	light_color = pick(light_colors)
 	update_garland()
 
 /obj/item/decoration/garland/attack_self(mob/user)
@@ -62,28 +64,30 @@
 /obj/item/decoration/tinsel
 	name = "tinsel"
 	desc = "Soft tinsel, pleasant to the touch. Ahhh..."
-	icon_state = "tinsel_g"
+	icon = 'icons/holidays/new_year/tinsel.dmi'
+	icon_state = "1"
+	var/variations = 4
 	var/random = TRUE // random color
 
 /obj/item/decoration/tinsel/atom_init()
 	. = ..()
 	if(random)
-		icon_state = "tinsel[pick("_g", "_r", "_y", "_w")]"
+		icon_state = "[rand(1, variations)]"
 
 /obj/item/decoration/tinsel/green
-	icon_state = "tinsel_g"
+	icon_state = "1"
 	random = FALSE
 
 /obj/item/decoration/tinsel/red
-	icon_state = "tinsel_r"
+	icon_state = "2"
 	random = FALSE
 
 /obj/item/decoration/tinsel/yellow
-	icon_state = "tinsel_y"
+	icon_state = "3"
 	random = FALSE
 
 /obj/item/decoration/tinsel/white
-	icon_state = "tinsel_w"
+	icon_state = "4"
 	random = FALSE
 
 // Snowflakes

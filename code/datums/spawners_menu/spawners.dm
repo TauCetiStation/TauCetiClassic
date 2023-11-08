@@ -94,7 +94,6 @@ var/global/list/datum/spawners_cooldown = list()
 			var/timediff = round((ckey_cooldowns[type] - world.time) * 0.1)
 			to_chat(ghost, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
 			return FALSE
-
 	return TRUE
 
 /datum/spawner/proc/do_spawn(mob/dead/observer/ghost)
@@ -591,11 +590,13 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Вокс-Налётчик"
 	desc = "Воксы-налётчики это представители расы Воксов, птице-подобных гуманоидов, дышащих азотом. Прибыли на станцию что бы украсть что-нибудь ценное."
 	wiki_ref = "Vox_Raider"
+	id = "vox"
 
 /datum/spawner/living/abductor
 	name = "Похититель"
 	desc = "Технологически развитое сообщество пришельцев, которые занимаются каталогизированием других существ в Галактике. К сожалению для этих существ, методы похитителей, мягко выражаясь, агрессивны."
 	wiki_ref = "Abductor"
+	id = "abductor"
 
 /datum/spawner/spy
 	name = "Агент Прослушки"
@@ -645,6 +646,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_RAIDER, ROLE_GHOSTLY)
 	time_to_del = 5 MINUTES
+	id = "vox"
 
 /datum/spawner/vox/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(global.heiststart)
@@ -690,6 +692,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	ranks = list(ROLE_ABDUCTOR, ROLE_GHOSTLY)
 	time_to_del = 5 MINUTES
+	id = "abductor"
 
 /datum/spawner/abductor/spawn_ghost(mob/dead/observer/ghost)
 	// One team. Working together
@@ -771,4 +774,4 @@ var/global/list/datum/spawners_cooldown = list()
 	H.loc = spawnloc
 	H.key = C.key
 
-	create_and_setup_role(/datum/role/operative/lone, H, TRUE)
+	create_and_setup_role(/datum/role/operative/lone, H, TRUE, TRUE)
