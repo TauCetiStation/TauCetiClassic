@@ -1,8 +1,0 @@
-# Format:
-# ckey
-# OR
-# ckey DD.MM.YY
-#
-# second parameter is optional expiration day
-
-volas 22.12.22
