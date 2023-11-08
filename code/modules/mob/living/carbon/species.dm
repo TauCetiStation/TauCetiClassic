@@ -1868,14 +1868,89 @@
 	)
 	. = ..()
 
+/datum/species/serpentid/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
+	SIGNAL_HANDLER
+	if(!istype(I, /obj/item/weapon/holder) && !istype(I, /obj/item/organ))
+		return
+	source.nutrition += max(0, NUTRITION_LEVEL_FULL - source.nutrition)
+	qdel(I)
+	source.visible_message("<span class='warning'>[I] was swallowed by [source]!</span>",
+						   "<span class='notice'>You ate [I]. Delicious!</span>")
+	return COMPONENT_PREVENT_ATTACKBY
+
 /datum/species/serpentid/on_gain(mob/living/carbon/human/H)
 	..()
 	H.r_eyes = 255
 	H.update_hair()
+	RegisterSignal(H, COMSIG_HUMAN_ATTACKBY, PROC_REF(try_eat_item))
+	RegisterSignal(H, COMSIG_GRAB_KILL_UPGRADE, PROC_REF(try_tear_body))
+
+/datum/species/serpentid/on_loose(mob/living/carbon/human/H, new_species)
+	UnregisterSignal(H, list(COMSIG_HUMAN_ATTACKBY, COMSIG_GRAB_KILL_UPGRADE))
+	return ..()
 
 /datum/species/serpentid/on_life(mob/living/carbon/human/H)
 	if(!H.on_fire && H.fire_stacks < 2)
 		H.fire_stacks += 0.2
+
+/datum/species/serpentid/proc/try_tear_body(mob/living/source, obj/item/weapon/grab/G)
+	SIGNAL_HANDLER
+	var/mob/living/assailant = source
+	if(!istype(G.affecting, /mob/living/carbon/human))
+		return FALSE
+
+	if(assailant.is_busy()) //can't stack the attempts
+		return FALSE
+
+	var/mob/living/carbon/human/H = G.affecting
+	var/hit_zone = assailant.get_targetzone()
+	var/obj/item/organ/external/L = H.get_bodypart(hit_zone)
+	if(!L || (L.is_stump) || istype(L, /obj/item/organ/external/chest) || istype(L, /obj/item/organ/external/groin))
+		return FALSE
+	var/limb_time = rand(40,60)
+	if(istype(L, /obj/item/organ/external/head))
+		limb_time = rand(90,110)
+
+	assailant.visible_message("<span class='shadowling'>[assailant] begins pulling on [H]'s [L.name] with incredible strength!</span>", \
+					"<span class='shadowling'>You begin to pull on [H]'s [L.name] with incredible strength!</span>")
+
+	if(!do_after(assailant, limb_time, TRUE, H))
+		to_chat(assailant, "<span class='notice'>You stop ripping off the limb.</span>")
+		return FALSE
+
+	if(!L || (L.is_stump))
+		return FALSE
+
+	if(L.is_robotic())
+		L.take_damage(rand(30,40), 0, 0)
+		assailant.visible_message("<span class='shadowling'>You hear [H]'s [L.name] being pulled beyond its load limits!</span>", \
+						"<span class='shadowling'>[H]'s [L.name] begins to tear apart!</span>")
+	else
+		assailant.visible_message("<span class='shadowling'>You hear the bones in [H]'s [L.name] snap with a sickening crunch!</span>", \
+						"<span class='shadowling'>[H]'s [L.name] bones snap with a satisfying crunch!</span>")
+		L.take_damage(rand(15,25), 0, 0)
+		L.fracture()
+
+	assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>ripped the [L.name] off of [H.name] ([H.ckey]) 1/2 progress</font>")
+	H.attack_log += text("\[[time_stamp()]\] <font color='orange'>had their [L.name] ripped off by [assailant.name] ([assailant.ckey]) 1/2 progress</font>")
+	log_attack("[assailant.name] ([assailant.ckey]) ripped the [L.name] off of [H.name] ([H.ckey]) 1/2 progress")
+
+	if(!do_after(assailant, limb_time, TRUE, H))
+		to_chat(assailant, "<span class='notice'>You stop ripping off the limb.</span>")
+		return FALSE
+
+	if(!L || (L.is_stump))
+		return FALSE
+
+	assailant.visible_message("<span class='shadowling'>[assailant] rips [H]'s [L.name] away from \his body!</span>", \
+					"<span class='shadowling'>[H]'s [L.name] rips away from \his body!</span>")
+	assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>ripped the [L.name] off of [H.name] ([H.ckey]) 2/2 progress</font>")
+	H.attack_log += text("\[[time_stamp()]\] <font color='orange'>had their [L.name] ripped off by [assailant.name] ([assailant.ckey]) 2/2 progress</font>")
+	log_attack("[assailant.name] ([assailant.ckey]) ripped the [L.name] off of [H.name] ([H.ckey]) 2/2 progress")
+
+	L.droplimb(TRUE, FALSE, DROPLIMB_EDGE)
+
+	return TRUE
 
 /datum/species/moth
 	name = MOTH
