@@ -8,19 +8,21 @@
 
 /obj/item/weapon/implant/freedom/atom_init()
 	activation_emote = pick("blink", "eyebrow", "twitch", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
-	uses = rand(1, 5)
+	uses = rand(3, 5)
 	. = ..()
 
 
 /obj/item/weapon/implant/freedom/trigger(emote, mob/living/carbon/source)
 	if (uses < 1)
 		return 0
-	if (emote == activation_emote)
+	if (source.handcuffed && emote == activation_emote)
 		uses--
 		to_chat(source, "You feel a faint click.")
 		source.uncuff()
+	else
+		to_chat(source, "You hands are free.")
+		return
 	return
-
 
 /obj/item/weapon/implant/freedom/implanted(mob/living/carbon/source)
 	source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0)
