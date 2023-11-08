@@ -1896,7 +1896,7 @@
 /datum/species/serpentid/proc/try_tear_body(mob/living/source, obj/item/weapon/grab/G)
 	SIGNAL_HANDLER
 	var/mob/living/assailant = source
-	if(!istype(G.affecting, /mob/living/carbon/human))
+	if(!ishuman(G.affecting))
 		return FALSE
 
 	if(assailant.is_busy()) //can't stack the attempts
