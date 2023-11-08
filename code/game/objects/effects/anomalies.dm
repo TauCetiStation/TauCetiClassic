@@ -70,7 +70,6 @@
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "grav"
-	plane = LIGHTING_LAMPS_PLANE
 	density = TRUE
 	var/boing = 0
 	///Warp effect holder for displacement filter to "pulse" the anomaly
@@ -121,7 +120,6 @@
 
 /obj/effect/anomaly/flux
 	name = "flux wave anomaly"
-	plane = LIGHTING_LAMPS_PLANE
 	icon_state = "flux2"
 	light_color = "#ffe194"
 
@@ -134,7 +132,6 @@
 /obj/effect/anomaly/bluespace
 	name = "bluespace anomaly"
 	icon_state = "bluespace"
-	plane = LIGHTING_LAMPS_PLANE
 	density = TRUE
 	light_color = "#009eff"
 
