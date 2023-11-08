@@ -5,6 +5,15 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
+	var/datum/spawners_menu/spawners_menu
+	var/global/list/datum/spawner/check_in_spawners = list() // один?
+
+/mob/dead/Logout()
+	..()
+	if(length(check_in_spawners))
+		for(var/datum/spawner/S in check_in_spawners)
+			S.check_out(src)
+
 /**
   * Doesn't call parent, see [/atom/proc/atom_init]
   */

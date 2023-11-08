@@ -33,7 +33,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/next_point_to = 0
 
 	var/datum/orbit_menu/orbit_menu
-	var/datum/spawners_menu/spawners_menu
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
@@ -697,7 +696,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		game = create_mafia_game()
 	game.tgui_interact(usr)
 
-/mob/dead/observer/verb/open_spawners_menu()
+///mob/dead/observer/verb/open_spawners_menu()
+/mob/dead/verb/open_spawners_menu()
 	set name = "Spawners Menu"
 	set desc = "See all currently available spawners"
 	set category = "Ghost"
