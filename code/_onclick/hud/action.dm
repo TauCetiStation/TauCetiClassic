@@ -207,7 +207,6 @@
 	else if(owner.button_icon && owner.button_icon_state)
 		img = image(owner.button_icon,src,owner.button_icon_state)
 
-	to_chat(world, "[owner.button_icon] && [owner.button_icon_state]")
 	if(img)
 		img.pixel_x = 0
 		img.pixel_y = 0

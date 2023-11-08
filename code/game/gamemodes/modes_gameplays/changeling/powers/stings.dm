@@ -264,6 +264,7 @@
 /obj/effect/proc_holder/changeling/sting/unfat
 	name = "Fat Sting"
 	desc = "We silently sting a human, forcing them to rapidly metabolize their fat."
+	button_icon_state = "sting_fat"
 	helptext = ""
 	sting_icon = "sting_fat"
 	chemical_cost = 5

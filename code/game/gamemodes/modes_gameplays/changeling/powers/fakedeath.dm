@@ -55,13 +55,16 @@
 			else
 				to_chat(user, "<span class='notice'>We are ready to regenerate.</span>")
 				C.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
+				action.button_icon_state = "revive"
+				action.button.UpdateIcon()
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(C.instatis) //We already regenerating, no need to start second time in a row.
 		return FALSE
-	if(locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers)
-		to_chat(user, "<span class='notice'>We already prepared our ability.</span>")
+	var/obj/effect/proc_holder/changeling/revive/A = locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers
+	if(A)
+		A.try_to_sting(user)
 		return FALSE
 	if(user.fake_death)
 		return FALSE

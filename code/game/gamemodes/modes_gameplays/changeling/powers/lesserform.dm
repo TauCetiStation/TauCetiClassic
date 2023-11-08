@@ -9,6 +9,14 @@
 	req_human = 1
 	can_be_used_in_abom_form = FALSE
 
+/obj/effect/proc_holder/changeling/lesserform/can_sting(mob/user)
+	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
+	var/obj/effect/proc_holder/changeling/humanform/A = locate(/obj/effect/proc_holder/changeling/humanform) in C.purchasedpowers
+	if(A)
+		A.try_to_sting(user)
+		return FALSE
+	. = ..()
+
 //Transform into a monkey.
 /obj/effect/proc_holder/changeling/lesserform/sting_action(mob/living/carbon/human/user)
 	if(user.has_brain_worms())

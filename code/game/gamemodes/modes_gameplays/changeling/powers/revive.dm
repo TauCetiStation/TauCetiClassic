@@ -1,7 +1,6 @@
 /obj/effect/proc_holder/changeling/revive
 	name = "Regenerate"
 	desc = "We regenerate, healing all damage from our form."
-	button_icon_state = "fake_death"
 	req_stat = DEAD
 
 //Revive from regenerative stasis
@@ -21,6 +20,10 @@
 	user.rejuvenate()
 	to_chat(user, "<span class='notice'>We have regenerated.</span>")
 	feedback_add_details("changeling_powers","CR")
+
+	var/obj/effect/proc_holder/changeling/fakedeath/A = locate(/obj/effect/proc_holder/changeling/fakedeath) in C.purchasedpowers
+	A.action.button_icon_state = "fake_death"
+	A.action.button.UpdateIcon()
 	return TRUE
 
 /obj/effect/proc_holder/changeling/revive/can_sting(mob/user)
