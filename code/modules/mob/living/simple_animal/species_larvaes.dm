@@ -70,7 +70,7 @@
 	mind.transfer_to(S)
 	var/lore = "Вы агрессивная форма жизни с примитивным интеллектом уровня обезьяны. Вторжение в вашу комфортную зону означает агрессию по отношению к вам. Представителей своего вида вы предпочитаете видеть в качестве завтрака. Своей хваткой вы способны разрывать тела на части. Ваша цель - выжить."
 	to_chat(S, "<span class='userdanger'>[lore]</span>")
-	mind.store_memory(lore)
+	S.mind.store_memory(lore)
 	qdel(src)
 
 /mob/living/simple_animal/grown_larvae/small_moth
@@ -92,7 +92,7 @@
 	mind.transfer_to(M)
 	var/lore = "Вы всеядная форма жизни с примитивным интеллектом уровня обезьяны, предпочитающая питаться падалью. В число ваших врагов входят только Серпентиды, отношение к остальным зачастую нейтральное. Ваша цель - выжить."
 	to_chat(M, "<span class='userdanger'>[lore]</span>")
-	mind.store_memory(lore)
+	M.mind.store_memory(lore)
 	qdel(src)
 
 /mob/living/simple_animal/mouse/rat/newborn_moth
