@@ -27,7 +27,7 @@
 		source.reagents.add_reagent("tramadol", 10)
 		source.reagents.add_reagent("paracetamol", 20)
 	else
-		to_chat(source, "You hands are free.")
+		to_chat(source, "Your hands are free.")
 		return
 	return
 
