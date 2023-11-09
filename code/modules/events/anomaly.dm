@@ -13,12 +13,12 @@
 	if(!impact_area)
 		CRASH("No valid areas for anomaly found.")
 	var/list/turf_test = get_area_turfs(impact_area)
-	if(!turf_test || !turf_test.len)
+	if(!turf_test)
 		CRASH("Anomaly : No valid turfs found for [impact_area] - [impact_area.type]")
 
 /datum/event/anomaly/start()
 	var/list/turfs = get_area_turfs(impact_area)
-	if(!turfs || turfs.len)
+	if(!turfs)
 		return
 	var/turf/T = pick(turfs)
 	newAnomaly = new anomaly_type(T)
