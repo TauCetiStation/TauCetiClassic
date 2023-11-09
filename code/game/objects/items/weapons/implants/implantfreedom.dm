@@ -8,17 +8,27 @@
 
 /obj/item/weapon/implant/freedom/atom_init()
 	activation_emote = pick("blink", "eyebrow", "twitch", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
-	uses = rand(1, 5)
+	uses = rand(3, 5)
 	. = ..()
 
 
 /obj/item/weapon/implant/freedom/trigger(emote, mob/living/carbon/source)
 	if (uses < 1)
 		return 0
-	if (emote == activation_emote)
+	if (source.handcuffed && emote == activation_emote)
 		uses--
 		to_chat(source, "You feel a faint click.")
 		source.uncuff()
+		source.SetParalysis(0)
+		source.SetStunned(0)
+		source.SetWeakened(0)
+		source.reagents.add_reagent("oxycodone", 5)
+		source.reagents.add_reagent("stimulants", 5)
+		source.reagents.add_reagent("tramadol", 10)
+		source.reagents.add_reagent("paracetamol", 20)
+	else
+		to_chat(source, "Your hands are free.")
+		return
 	return
 
 
