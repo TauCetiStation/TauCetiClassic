@@ -340,7 +340,9 @@
 			adjustBruteLoss(-1)
 			adjustToxLoss(-1)
 			adjustOxyLoss(-1)
-
+		else if(light_amount < -3)
+			if(race == DIONA && prob(5))
+				emote("chirp")
 		if(injecting)
 			if(gestalt && nutrition > 210)
 				gestalt.reagents.add_reagent(injecting,1)
