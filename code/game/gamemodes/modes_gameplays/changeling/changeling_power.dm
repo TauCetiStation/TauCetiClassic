@@ -27,7 +27,6 @@
 /datum/action/innate/changeling
 	button_icon = 'icons/hud/actions_changeling.dmi'
 	background_icon_state = "bg_changeling"
-	button_icon_state = "revive"
 	var/obj/effect/proc_holder/changeling/holder
 
 /datum/action/innate/changeling/Trigger()

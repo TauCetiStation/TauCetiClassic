@@ -125,7 +125,8 @@
 
 			var/obj/effect/proc_holder/changeling/lesserform/A = locate(/obj/effect/proc_holder/changeling/lesserform) in C.purchasedpowers
 			if(A.action.button)
-				A.action.button_icon_state = "humanform"
+				A.action.button_icon_state = "human_form"
+				A.action.button.name = "Human form"
 				A.action.button.UpdateIcon()
 
 	SEND_SIGNAL(O, COMSIG_HUMAN_MONKEYIZE)
@@ -258,7 +259,8 @@
 
 			var/obj/effect/proc_holder/changeling/lesserform/A = locate(/obj/effect/proc_holder/changeling/lesserform) in C.purchasedpowers
 			if(A.action.button)
-				A.action.button_icon_state = "lesserform"
+				A.action.button_icon_state = "lesser_form"
+				A.action.button.name = "Lesser form"
 				A.action.button.UpdateIcon()
 
 	transfer_trait_datums(O)
