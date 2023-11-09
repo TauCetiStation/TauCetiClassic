@@ -67,6 +67,9 @@ var/global/list/the_station_areas = list()
 var/global/list/machines = list()
 var/global/list/vending_products = list() //this list is used to create product images in the vending machine window
 var/global/list/intercom_list = list()
+var/global/list/all_designs = list()
+var/global/list/all_supply_pack = list()
+var/global/list/all_command_microphones = list()
 
 var/global/list/spells_by_aspects = list()
 var/global/list/rites_by_aspects = list()
