@@ -23,6 +23,9 @@
 		source.SetStunned(0)
 		source.SetWeakened(0)
 		source.reagents.add_reagent("oxycodone", 5)
+		source.reagents.add_reagent("stimulants", 5)
+		source.reagents.add_reagent("tramadol", 10)
+		source.reagents.add_reagent("paracetamol", 20)
 	else
 		to_chat(source, "You hands are free.")
 		return
