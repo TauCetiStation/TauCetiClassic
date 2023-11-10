@@ -111,11 +111,6 @@
 	user.SetNextMove(CLICK_CD_RAPID)
 	if (iswrenching(W))
 		if (stage == STAGE_START)
-			if(user.is_busy(src))
-				return
-			to_chat(user, "You begin deconstructing [src].")
-			if(!W.use_tool(src, usr, 30, volume = 75))
-				return
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -132,8 +127,6 @@
 	if(iscutter(W))
 		if (stage != STAGE_COILED)
 			return
-		if(!W.use_tool(src, usr, 30, volume = 75))
-			return
 		stage = STAGE_START
 		switch(fitting)
 			if(LAMP_FITTING_BULB)
@@ -149,8 +142,6 @@
 	if(iscoil(W))
 		if (stage != STAGE_START)
 			return
-		if(!W.use_tool(src, usr, 30, amount = 1, volume = 75))
-			return
 		switch(fitting)
 			if(LAMP_FITTING_BULB)
 				icon_state = "bulb-construct-stage2"
@@ -163,8 +154,6 @@
 
 	if(isscrewing(W))
 		if (stage != STAGE_COILED)
-			return
-		if(!W.use_tool(src, usr, 30, volume = 75))
 			return
 
 		user.visible_message("[user.name] closes [src]'s casing.", \
@@ -183,7 +172,7 @@
 		return
 	..()
 
-/obj/machinery/light_construct/deconstruct(disassembled) 
+/obj/machinery/light_construct/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
 
