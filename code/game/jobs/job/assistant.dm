@@ -21,6 +21,7 @@
 	outfit = /datum/outfit/job/assistant
 	skillsets = list(
 		"Assistant"      = /datum/skillset/assistant,
+		"Test Subject"   = /datum/skillset/assistant/test_subject,
 		"Lawyer"         = /datum/skillset/assistant/lawyer,
 		"Mecha Operator" = /datum/skillset/assistant/mecha,
 		"Private Eye"    = /datum/skillset/assistant/detective,
