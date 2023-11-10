@@ -111,6 +111,8 @@
 	user.SetNextMove(CLICK_CD_RAPID)
 	if (iswrenching(W))
 		if (stage == STAGE_START)
+			if(!W.use_tool(src, usr, 0, volume = 75, force_sound = TRUE))
+				return
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -127,6 +129,8 @@
 	if(iscutter(W))
 		if (stage != STAGE_COILED)
 			return
+		if(!W.use_tool(src, usr, 0, volume = 75, force_sound = TRUE))
+			return
 		stage = STAGE_START
 		switch(fitting)
 			if(LAMP_FITTING_BULB)
@@ -142,8 +146,7 @@
 	if(iscoil(W))
 		if (stage != STAGE_START)
 			return
-		var/obj/item/stack/cable_coil/C = W
-		if(!C.use(1))
+		if(!W.use_tool(src, usr, 0, amount = 1, volume = 75, force_sound = TRUE))
 			return
 		switch(fitting)
 			if(LAMP_FITTING_BULB)
@@ -157,6 +160,8 @@
 
 	if(isscrewing(W))
 		if (stage != STAGE_COILED)
+			return
+		if(!W.use_tool(src, usr, 0, volume = 75, force_sound = TRUE))
 			return
 
 		user.visible_message("[user.name] closes [src]'s casing.", \

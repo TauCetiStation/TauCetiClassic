@@ -717,7 +717,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4, can_move = FALSE)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4, can_move = FALSE, force_sound = FALSE)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -770,7 +770,7 @@
 
 	// Play tool sound at the end of tool usage,
 	// but only if the delay between the beginning and the end is not too small
-	if(delay >= MIN_TOOL_SOUND_DELAY)
+	if(delay >= MIN_TOOL_SOUND_DELAY || force_sound)
 		play_tool_sound(target, volume)
 
 	return TRUE
