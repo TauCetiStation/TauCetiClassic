@@ -11,6 +11,11 @@
 	max_genetic_damage = 10
 	can_be_used_in_abom_form = FALSE
 
+/obj/effect/proc_holder/changeling/headcrab/can_sting(mob/user, mob/target)
+	. = ..()
+	if(tgui_alert(user, "Are we sure we wish to sacrifice our current body?","Last Resort", list("Yes","No")) == "No")
+		return FALSE
+
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
 	for(var/mob/living/carbon/human/H in range(2,user))
