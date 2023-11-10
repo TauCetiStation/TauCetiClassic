@@ -25,7 +25,7 @@
 		stat("Прогресс роста: [evolv_stage * 25]/100")
 
 /mob/living/simple_animal/grown_larvae/serpentid
-	name = "Serpentid larvae"
+	name = "Nabber larvae"
 	icon_state = "larvae-serpentid"
 	icon_living = "larvae-serpentid"
 	icon_dead = "larvae-serpentid_dead"
@@ -54,6 +54,7 @@
 	icon_dead = "snake_dead"
 	ventcrawler = 2
 	melee_damage = 5
+	speed = 1
 	has_arm = FALSE
 	has_leg = FALSE
 
@@ -68,6 +69,7 @@
 	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 	var/mob/living/carbon/human/serpentid/S = new(loc)
 	mind.transfer_to(S)
+	create_and_setup_role(/datum/role/animal, S)
 	var/lore = "Вы агрессивная форма жизни с примитивным интеллектом уровня обезьяны. Вторжение в вашу комфортную зону означает агрессию по отношению к вам. Представителей своего вида вы предпочитаете видеть в качестве завтрака. Своей хваткой вы способны разрывать тела на части. Ваша цель - выжить."
 	to_chat(S, "<span class='userdanger'>[lore]</span>")
 	S.mind.store_memory(lore)
