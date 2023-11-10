@@ -142,6 +142,9 @@
 	if(iscoil(W))
 		if (stage != STAGE_START)
 			return
+		var/obj/item/stack/cable_coil/C = W
+		if(!C.use(1))
+			return
 		switch(fitting)
 			if(LAMP_FITTING_BULB)
 				icon_state = "bulb-construct-stage2"
