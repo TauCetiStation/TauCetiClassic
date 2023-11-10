@@ -13,7 +13,7 @@
 
 /obj/effect/proc_holder/changeling/headcrab/can_sting(mob/user, mob/target)
 	. = ..()
-	if(tgui_alert(user, "Are we sure we wish to sacrifice our current body?","Last Resort", list("Yes","No")) == "No")
+	if(tgui_alert(user, "Are we sure we wish to sacrifice our current body?","Last Resort", list("Yes","No")) != "Yes")
 		return FALSE
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
