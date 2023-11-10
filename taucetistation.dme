@@ -751,6 +751,7 @@
 #include "code\game\gamemodes\roles\syndicate.dm"
 #include "code\game\gamemodes\roles\traitor.dm"
 #include "code\game\gamemodes\roles\traitorchan.dm"
+#include "code\game\gamemodes\roles\wild_animal.dm"
 #include "code\game\gamemodes\roles\wizard.dm"
 #include "code\game\gamemodes\roles\zombie.dm"
 #include "code\game\jobs\access.dm"

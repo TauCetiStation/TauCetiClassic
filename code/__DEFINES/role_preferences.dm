@@ -21,6 +21,8 @@
 #define ROLE_GHOSTLY           "Ghostly Roles"
 #define ROLE_IMPOSTER          "Imposter"
 #define ROLE_REPLICATOR        "Replicator"
+#define ROLE_WILD_ANIMAL       "Animal"
+
 
 #define ROLE_ERT               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"
