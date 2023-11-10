@@ -1996,7 +1996,7 @@
 /datum/species/moth/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_moth_digest(M)
 
-/datum/species/serpentid/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
+/datum/species/moth/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
 	SIGNAL_HANDLER
 	if(!istype(I, /obj/item/clothing) && !istype(I, /obj/item/organ))
 		return
