@@ -89,6 +89,10 @@
 	name = "Janitor"
 /datum/skillset/assistant
 	name = "Assistant"
+	initial_skills = list(
+		/datum/skill/command = SKILL_LEVEL_TRAINED
+	)
+
 /datum/skillset/assistant/lawyer
 	name = "Lawyer"
 	initial_skills = list(
