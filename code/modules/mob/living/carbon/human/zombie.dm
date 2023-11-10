@@ -366,4 +366,4 @@ var/global/list/zombie_list = list()
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.infect_zombie_virus(null, TRUE, FALSE)
+		H.infect_zombie_virus(null, TRUE, TRUE)
