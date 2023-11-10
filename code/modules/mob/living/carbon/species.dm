@@ -1990,7 +1990,23 @@
 /datum/species/moth/on_gain(mob/living/carbon/human/H)
 	H.real_name = "[pick(global.moth_first)] [pick(global.moth_second)]"
 	H.name = H.real_name
+	RegisterSignal(H, COMSIG_HUMAN_ATTACKBY, PROC_REF(try_eat_item))
 	return ..()
 
 /datum/species/moth/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_moth_digest(M)
+
+/datum/species/serpentid/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
+	SIGNAL_HANDLER
+	if(!istype(I, /obj/item/clothing) && !istype(I, /obj/item/organ))
+		return
+	source.nutrition += max(0, NUTRITION_LEVEL_FULL - source.nutrition / 4)
+	new /obj/effect/decal/cleanable/ash(get_turf(source))
+	qdel(I)
+	source.visible_message("<span class='warning'>[I] was swallowed by [source]!</span>",
+						   "<span class='notice'>You ate [I]. Delicious!</span>")
+	return COMPONENT_PREVENT_ATTACKBY
+
+/datum/species/moth/on_loose(mob/living/carbon/human/H, new_species)
+	UnregisterSignal(H, COMSIG_HUMAN_ATTACKBY)
+	return ..()
