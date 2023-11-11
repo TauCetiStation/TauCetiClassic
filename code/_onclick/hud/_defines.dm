@@ -159,6 +159,8 @@
 // Leap
 #define ui_human_leap "CENTER+3:20,SOUTH:5"
 
+#define ui_direction_arrow "CENTER,CENTER"
+
 // Hud slots
 #define HUD_SLOT_MAIN		1
 #define HUD_SLOT_ADDING		2
