@@ -412,6 +412,8 @@
 /mob/proc/update_eye_blur()
 	if(!client)
 		return
+	if(!client.prefs.eye_blur_effect)
+		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(eye_blurry)
 		game_plane_master_controller.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))

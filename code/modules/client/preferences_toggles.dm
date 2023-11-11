@@ -263,6 +263,19 @@
 		PM.apply_effects(mob)
 	feedback_add_details("admin_verb","GLR")
 
+/client/verb/eye_blur_effect()
+	set name = "Blur effect"
+	set category = "Preferences"
+
+	prefs.eye_blur_effect = !prefs.eye_blur_effect
+	to_chat(src, "Blur effect: [prefs.eye_blur_effect ? "Enabled" : "Disabled"].")
+	prefs.save_preferences()
+	var/atom/movable/plane_master_controller/game_plane_master_controller = mob.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	if(eye_blurry)
+		game_plane_master_controller.remove_filter("eye_blur_angular")
+		game_plane_master_controller.remove_filter("eye_blur_gauss")
+	feedback_add_details("admin_verb","EBE")
+
 /client/verb/set_parallax_quality()
 	set name = "Set Parallax Quality"
 	set category = "Preferences"
