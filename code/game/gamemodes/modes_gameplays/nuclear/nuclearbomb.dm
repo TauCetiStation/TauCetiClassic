@@ -468,14 +468,12 @@ var/global/bomb_set
 		qdel(src)
 
 /obj/item/weapon/disk/nuclear/Destroy()
-	if(blobstart.len > 0)
-		var/turf/targetturf = get_turf(pick(blobstart))
-		var/turf/diskturf = get_turf(src)
-		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
-		message_admins("[src] has been destroyed in ([COORD(diskturf)] - [ADMIN_JMP(diskturf)]). Moving it to ([COORD(targetturf)] - [ADMIN_JMP(targetturf)]).")
-		log_game("[src] has been destroyed in [COORD(diskturf)]. Moving it to [COORD(targetturf)].")
-	else
-		throw EXCEPTION("Unable to find a blobstart landmark")
+	var/turf/targetturf = pick_landmarked_location("blobstart", least_used = FALSE)
+	var/turf/diskturf = get_turf(src)
+	forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
+	message_admins("[src] has been destroyed in ([COORD(diskturf)] - [ADMIN_JMP(diskturf)]). Moving it to ([COORD(targetturf)] - [ADMIN_JMP(targetturf)]).")
+	log_game("[src] has been destroyed in [COORD(diskturf)]. Moving it to [COORD(targetturf)].")
+
 	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
 
 #undef TIMER_MIN

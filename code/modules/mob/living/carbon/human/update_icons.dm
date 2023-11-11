@@ -335,6 +335,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", layer = -FIRE_UPPER_LAYER)
 		under = update_height(under)
 		over = update_height(over)
+		over.plane = LIGHTING_LAMPS_PLANE
 		overlays_standing[FIRE_LOWER_LAYER] = under
 		overlays_standing[FIRE_UPPER_LAYER] = over
 
