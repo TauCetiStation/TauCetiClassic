@@ -183,7 +183,7 @@
 /datum/spawner/living/sugar_larvae
 	name = "Сладкая личинка"
 	desc = "Вы форма жизни используемая в качестве скота, ваша задача выжить на станции."
-	time_to_del = 1 MINUTES
+	time_while_available = 1 MINUTES
 
 /*
  * Heist
