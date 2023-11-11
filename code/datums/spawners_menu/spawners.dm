@@ -573,11 +573,6 @@ var/global/list/datum/spawners_cooldown = list()
 	..()
 	create_and_setup_role(/datum/role/evil_shade, mob)
 
-/datum/spawner/living/sugar_larvae
-	name = "Сладкая личинка"
-	desc = "Вы форма жизни используемая в качестве скота, ваша задача выжить на станции."
-	time_to_del = 1 MINUTES
-
 /datum/spawner/living/rat
 	name = "Крыса"
 	id = "rat"
