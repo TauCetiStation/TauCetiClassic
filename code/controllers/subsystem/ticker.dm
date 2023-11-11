@@ -568,6 +568,8 @@ SUBSYSTEM_DEF(ticker)
 		if(station_evacuated)
 			to_chat(world, "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
 		to_chat(world, "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>")
+	if(SSround_aspects.aspect)
+		to_chat(world, "<BR>[TAB]Аспект истории: <B>[SSround_aspects.aspect_name].</B> [SSround_aspects.aspect.desc]")
 	to_chat(world, "<BR>")
 
 	//Print a list of antagonists to the server log
