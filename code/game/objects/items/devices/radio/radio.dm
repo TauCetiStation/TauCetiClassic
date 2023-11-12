@@ -20,6 +20,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/broadcasting = 0
 	var/listening = 1
 	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
+	var/allow_settings = TRUE
 	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
@@ -80,7 +81,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		interact(user)
 
 /obj/item/device/radio/interact(mob/user)
-	if(!on)
+	if(!on || !allow_settings)
 		return
 
 	if(active_uplink_check(user))
@@ -118,7 +119,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if ((usr.stat != CONSCIOUS && !IsAdminGhost(usr)) || !on)
+	if ((usr.stat != CONSCIOUS && !IsAdminGhost(usr)) || !on || !allow_settings)
 		return
 
 	if (!(issilicon(usr) || IsAdminGhost(usr) || Adjacent(usr)))

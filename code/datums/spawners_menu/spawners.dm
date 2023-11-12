@@ -90,11 +90,12 @@
 	// Cooldown between the opportunity become a role
 	var/cooldown = 10 MINUTES
 
+	// optionally you can link faction for additional field in meny "playing"
+	var/datum/faction/faction // todo: print faction logo in spawn menu?
+
 	// id of timers
 	var/registration_timer_id
 	var/availability_timer_id
-
-#define SPAWNER_AUTOROLL_ROUND_START
 
 /datum/spawner/New()
 	SHOULD_CALL_PARENT(TRUE)

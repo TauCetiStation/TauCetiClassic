@@ -39,6 +39,9 @@
 			this["amount"] += "[length(spawner.registered_candidates)]/"
 		this["amount"] += "[spawner.positions == INFINITY ? "∞" : spawner.positions]"
 
+		if(spawner.faction)
+			this["playing"] = spawner.faction.get_active_members_count()
+
 		var/time
 		var/time_type
 		if(spawner.registration_timer_id)

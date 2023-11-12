@@ -46,12 +46,8 @@
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	// Link faction.
-	faction = fac
-	if(!faction)
-		SSticker.mode.orphaned_roles += src
-	else
-		faction.add_role(src)
+
+	AssignToFaction(fac)
 
 	if(M && !AssignToRole(M, override))
 		Drop()
@@ -63,6 +59,13 @@
 /datum/role/Destroy(force, ...)
 	QDEL_NULL(objectives)
 	return ..()
+
+/datum/role/proc/AssignToFaction(datum/faction/fac)
+	faction = fac
+	if(!faction)
+		SSticker.mode.orphaned_roles += src
+	else
+		faction.add_role(src)
 
 /datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
 	if(!istype(M) && !override)

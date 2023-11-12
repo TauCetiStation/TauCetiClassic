@@ -33,3 +33,18 @@
 	. = ..()
 	if(!ismob(loc))
 		return INITIALIZE_HINT_QDEL
+
+/obj/effect/effect/antiliving_shield
+	name = "antiliving shield"
+	desc = "Does not allow living matters to pass through"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "energyshield"
+	density = FALSE
+	anchored = TRUE
+
+	var/allow_pass = FALSE
+
+/obj/effect/effect/antiliving_shield/CanPass(atom/movable/mover, turf/target, height=0)
+	if(!allow_pass && ismob(mover)) // todo: contents check for boxes
+		return FALSE
+	return TRUE

@@ -43,6 +43,8 @@ SUBSYSTEM_DEF(ticker)
 	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
 	var/Malf_announce_stage = 0//Used for announcement
 
+	var/force_end = FALSE // set TRUE to forse round end and show credits
+
 	var/end_timer_id
 
 /datum/controller/subsystem/ticker/PreInit()
@@ -111,7 +113,7 @@ SUBSYSTEM_DEF(ticker)
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
+			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1) || force_end
 			if(!explosion_in_progress && mode_finished && !SSrating.voting)
 
 				if(!SSrating.already_started)

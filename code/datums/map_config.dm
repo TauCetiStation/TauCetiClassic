@@ -30,10 +30,13 @@
 	var/minetype = "asteroid"
 	var/smartlight_preset = "default"
 
+	var/map_module = null
+
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
 	if (global.config.load_testmap)
-		filename = "maps/testmap.json"
+		//filename = "maps/testmap.json"
+		filename = "maps/_events/forts.json"
 	if (default_to_box)
 		return config
 	if (!config.LoadConfig(filename, error_if_missing))
@@ -142,6 +145,9 @@
 
 	if("smartlight_preset" in json)
 		smartlight_preset = json["smartlight_preset"]
+
+	if("map_module" in json)
+		map_module = json["map_module"]
 
 	defaulted = FALSE
 	return TRUE
