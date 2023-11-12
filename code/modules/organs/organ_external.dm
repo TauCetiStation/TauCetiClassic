@@ -26,7 +26,7 @@
 	var/body_zone = null              // Unique identifier of this limb.
 	var/datum/species/species
 	var/original_color
-	var/b_type = "A+"
+	var/b_type = "A(II) Rh+"
 	var/is_rejecting = FALSE
 
 	// Wound and structural data.
