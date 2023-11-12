@@ -268,12 +268,13 @@
 	set category = "Preferences"
 
 	prefs.eye_blur_effect = !prefs.eye_blur_effect
-	to_chat(src, "Blur effect: [prefs.eye_blur_effect ? "Enabled" : "Disabled"].")
+	to_chat(src, "Blur effect: [prefs.eye_blur_effect ? "Enabled" : "Old design"].")
 	prefs.save_preferences()
 	var/atom/movable/plane_master_controller/game_plane_master_controller = mob.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(mob.eye_blurry)
 		game_plane_master_controller.remove_filter("eye_blur_angular")
 		game_plane_master_controller.remove_filter("eye_blur_gauss")
+		mob.clear_fullscreen("blurry")
 	feedback_add_details("admin_verb","EBE")
 
 /client/verb/set_parallax_quality()
