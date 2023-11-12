@@ -93,3 +93,6 @@ var/global/cmp_field = "name"
 		. = sorttext(B["rank"], A["rank"])
 	if (!.)
 		. = sorttext(B["name"], A["name"])
+
+/proc/cmp_spawners_asc(datum/spawner/A, datum/spawner/B)
+	return A.priority - B.priority

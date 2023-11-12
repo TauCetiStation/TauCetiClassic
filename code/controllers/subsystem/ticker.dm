@@ -607,7 +607,7 @@ SUBSYSTEM_DEF(ticker)
 		spawn_gladiator(M)
 
 /datum/controller/subsystem/ticker/proc/spawn_gladiator(mob/M, transfer_mind = TRUE)
-	var/mob/living/carbon/human/L = new(pick(eorgwarp))
+	var/mob/living/carbon/human/L = new(pick_landmarked_location("eorgwarp"))
 	if(transfer_mind)
 		M.mind.transfer_to(L)
 	else
