@@ -552,7 +552,7 @@ SUBSYSTEM_DEF(ticker)
 						num_escapees++
 						to_chat(Player, "<font color='green'><b>Вам удалось пережить события на станции [station_name()] как [Player.real_name].</b></FONT>")
 				else
-					to_chat(Player, "<font color='green'><b>green'><b>Вам удалось пережить события на станции [station_name()] как [Player.real_name].</b></FONT>")
+					to_chat(Player, "<font color='green'><b>Вам удалось пережить события на станции [station_name()] как [Player.real_name].</b></FONT>")
 			else
 				to_chat(Player, "<font color='red'><b>Вы не пережили событий, произошедших на станции [station_name()]...</b></FONT>")
 
