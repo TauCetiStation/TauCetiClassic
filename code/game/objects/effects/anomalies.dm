@@ -413,7 +413,7 @@
 	for(var/i in 1 to rand_num)
 		step(C, pick(alldirs))
 	if(need_bound)
-		to_chat(C, "<span class='danger'>Вы чувствуете, что портал не стабилен. Его уничтожение может низвергнуть вас обратно из этой реальности!</span>")
+		to_chat(C, "<span class='danger'>Вы чувствуете, что портал нестабилен. Его уничтожение может низвергнуть вас обратно из этой реальности!</span>")
 		var/datum/component/bounded/B = C.AddComponent(/datum/component/bounded, src, 0, 7, null, CALLBACK(C, TYPE_PROC_REF(/mob/living/simple_animal/construct, death)))
 		var/mob/M = B.parent
 		if(M.ckey)
