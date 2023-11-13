@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(job)
 	occupations = list()
 	var/list/all_jobs = typesof(/datum/job)
 	if(!all_jobs.len)
-		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
+		to_chat(world, "<span class='boldannounce'>Ошибка при настройке вакансий, не найдено ни одного рабочего места</span>")
 		return FALSE
 
 	for(var/J in all_jobs)
@@ -377,7 +377,7 @@ SUBSYSTEM_DEF(job)
 			player.client << output(player.ready, "lobbybrowser:setReadyStatus")
 
 			unassigned -= player
-			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
+			to_chat(player, "<span class='alert bold'>Вы были возвращены в лобби, так как ваши настройки профессии были недоступны. Вы можете это изменить в настройках.</span>")
 	return TRUE
 
 //Gives the player the stuff he should have with his rank
@@ -410,7 +410,7 @@ SUBSYSTEM_DEF(job)
 						permitted = FALSE
 
 					if(!permitted)
-						to_chat(H, "<span class='warning'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>")
+						to_chat(H, "<span class='warning'>Ваша текущая работа или статус в белом списке не позволяют вам появляться с [thing]!</span>")
 						continue
 
 					if(G.slot && !(G.slot in custom_equip_slots))
@@ -445,7 +445,7 @@ SUBSYSTEM_DEF(job)
 					spawn_in_storage += thing
 
 	else
-		to_chat(H, "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator.")
+		to_chat(H, "Ваша профессия - [rank], и игра просто не может с ней справиться! Пожалуйста, сообщите об этой ошибке администратору.")
 
 	H.job = rank
 
@@ -463,7 +463,7 @@ SUBSYSTEM_DEF(job)
 		if(!spawn_mark)
 			if(!fallback_landmark)
 				fallback_landmark = locate("start*Fallback-Start")
-			warning("Failed to find spawn position for [rank]. Using fallback spawn position!")
+			warning("Не удалось найти позицию спавна для [rank]. Использование резервной позиции для спавна!")
 			spawn_mark = fallback_landmark
 
 		if(istype(spawn_mark, /obj/effect/landmark/start) && istype(spawn_mark.loc, /turf))
