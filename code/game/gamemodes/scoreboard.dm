@@ -197,7 +197,7 @@
 		if(-20 to -1) SSStatistics.score.rating = "Могло быть и хуже"
 		if(0) SSStatistics.score.rating = "Ничего ценного"
 		if(1 to 20) SSStatistics.score.rating = "Среднестатистическая смена"
-		if(21 to 99) SSStatistics.score.rating = "Ни рыба, ни мясо"
+		if(21 to 99) SSStatistics.score.rating = "Ни рыба ни мясо"
 		if(100 to 249) SSStatistics.score.rating = "Искусные служители науки"
 		if(250 to 499) SSStatistics.score.rating = "Бережливая станция 13"
 		if(500 to 999) SSStatistics.score.rating = "Образцовая команда"
