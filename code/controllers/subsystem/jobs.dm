@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(job)
 	occupations = list()
 	var/list/all_jobs = typesof(/datum/job)
 	if(!all_jobs.len)
-		to_chat(world, "<span class='boldannounce'>Ошибка при настройке вакансий, не найдено ни одного рабочего места</span>")
+		to_chat(world, "<span class='boldannounce'>Ошибка при настройке вакансий, файл job datums не обнаружен</span>")
 		return FALSE
 
 	for(var/J in all_jobs)
