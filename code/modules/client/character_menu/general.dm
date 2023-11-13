@@ -331,7 +331,7 @@
 				if("b_type")
 					if(specie_obj.flags[NO_BLOOD])
 						return
-					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Blood-type", b_type) as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
+					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Blood-type", b_type) as null|anything in list( "A(II) Rh+", "A(II) Rh-", "B(III) Rh+", "B(III) Rh-", "AB(IV) Rh+", "AB(IV) Rh-", "O(I) Rh+", "O(I) Rh-" )
 					if(new_b_type)
 						b_type = new_b_type
 

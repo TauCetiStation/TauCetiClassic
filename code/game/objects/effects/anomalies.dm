@@ -328,8 +328,22 @@
 	if(next_spawn > world.time)
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
-
-	var/type = pick(70; /mob/living/simple_animal/construct/harvester,\
+	var/type
+	if(SSholiday.holidays[HALLOWEEN])
+		type = pick(50; /mob/living/simple_animal/construct/wraith/hellknight_halloween,\
+					45; /mob/living/simple_animal/construct/wraith/envoy_halloween,\
+					40; /mob/living/simple_animal/construct/wraith/firewraith_halloween,\
+					30; /mob/living/simple_animal/construct/armoured/fire_halloween,\
+					25; /mob/living/simple_animal/construct/armoured/pain_halloween,\
+					20; /mob/living/simple_animal/construct/armoured/golem_halloween,\
+					35;	/mob/living/simple_animal/construct/builder/summoner_halloween,\
+					40;	/mob/living/simple_animal/construct/builder/firetower_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/necro_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/fireharvest_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/boneshaper_halloween,\
+					)
+	else
+		type = pick(70; /mob/living/simple_animal/construct/harvester,\
 					50; /mob/living/simple_animal/construct/wraith,\
 					30; /mob/living/simple_animal/construct/armoured,\
 					40; /mob/living/simple_animal/construct/proteon,\
@@ -351,7 +365,22 @@
 		var/mob/slave = pick_n_take(candidates)
 		if(!slave) // I dont know why or how it can be null, but it can be null
 			continue
-		var/type = pick(
+		var/type
+		if(SSholiday.holidays[HALLOWEEN])
+			type = pick(50; /mob/living/simple_animal/construct/wraith/hellknight_halloween,\
+						45; /mob/living/simple_animal/construct/wraith/envoy_halloween,\
+						40; /mob/living/simple_animal/construct/wraith/firewraith_halloween,\
+						30; /mob/living/simple_animal/construct/armoured/fire_halloween,\
+						25; /mob/living/simple_animal/construct/armoured/pain_halloween,\
+						20; /mob/living/simple_animal/construct/armoured/golem_halloween,\
+						35;	/mob/living/simple_animal/construct/builder/summoner_halloween,\
+						40;	/mob/living/simple_animal/construct/builder/firetower_halloween,\
+						25; /mob/living/simple_animal/construct/harvester/necro_halloween,\
+						25; /mob/living/simple_animal/construct/harvester/fireharvest_halloween,\
+						25; /mob/living/simple_animal/construct/harvester/boneshaper_halloween,\
+						)
+		else
+			type = pick(
 				50; /mob/living/simple_animal/construct/wraith,\
 				50; /mob/living/simple_animal/construct/armoured,\
 				40; /mob/living/simple_animal/construct/proteon,\
