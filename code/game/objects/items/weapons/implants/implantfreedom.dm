@@ -15,7 +15,12 @@
 /obj/item/weapon/implant/freedom/trigger(emote, mob/living/carbon/source)
 	if (uses < 1)
 		return 0
-	if (source.handcuffed && emote == activation_emote)
+	if (emote != activation_emote)
+		return
+	if (!source.handcuffed)
+		to_chat(source, "You need to be restricted to use freedom implant.")
+		return
+	else
 		uses--
 		to_chat(source, "You feel a faint click.")
 		source.uncuff()
@@ -26,9 +31,6 @@
 		source.reagents.add_reagent("stimulants", 5)
 		source.reagents.add_reagent("tramadol", 10)
 		source.reagents.add_reagent("paracetamol", 20)
-	else
-		to_chat(source, "Your hands are free.")
-		return
 	return
 
 
