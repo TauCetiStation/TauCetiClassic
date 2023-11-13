@@ -213,7 +213,7 @@
 	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
 
 /datum/game_mode/proc/GetScoreboard()
-	completition_text = "<h2>Factions & Roles</h2>"
+	completition_text = "<h2>Фракции & Роли</h2>"
 	var/exist = FALSE
 	for(var/datum/faction/F in factions)
 		F.calculate_completion()
@@ -226,7 +226,7 @@
 			completition_text += "</div>"
 
 	if (orphaned_roles.len > 0)
-		completition_text += "<FONT size = 2><B>Independents:</B></FONT><br>"
+		completition_text += "<FONT size = 2><B>Независимые:</B></FONT><br>"
 	for(var/datum/role/R in orphaned_roles)
 		R.calculate_completion()
 		SSStatistics.add_orphaned_role(R)
@@ -235,7 +235,7 @@
 		completition_text += R.GetScoreboard()
 		completition_text += "</div>"
 	if (!exist)
-		completition_text += "(none)"
+		completition_text += "(Роли отсуствовали)"
 	completition_text += "<BR>"
 	count_survivors()
 
