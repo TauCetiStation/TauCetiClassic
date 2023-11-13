@@ -74,7 +74,7 @@ SUBSYSTEM_DEF(ticker)
 		if(GAME_STATE_STARTUP)
 			timeLeft = initial(timeLeft)
 			to_chat(world, "<b><font color='blue'>Добро пожаловать в предыгровое лобби!</font></b>")
-			to_chat(world, "Пожалуйста, настройте своего персонажа и нажмите на кнопку Ready. Игра начнется через [timeLeft/10].")
+			to_chat(world, "Пожалуйста, настройте своего персонажа и нажмите на кнопку Ready. Игра начнется через [timeLeft/10] секунд.")
 			current_state = GAME_STATE_PREGAME
 			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 
@@ -547,7 +547,7 @@ SUBSYSTEM_DEF(ticker)
 					if(!playerTurf)
 						continue
 					if(!is_centcom_level(playerTurf.z))
-						to_chat(Player, "<font color='blue'><b>Вам удалось выжить, но вы были выброшены на станции [station_name()]...</b></FONT>")
+						to_chat(Player, "<font color='blue'><b>Вам удалось выжить, но вы были брошены на станции [station_name()]...</b></FONT>")
 					else
 						num_escapees++
 						to_chat(Player, "<font color='green'><b>Вам удалось пережить события на станции [station_name()] как [Player.real_name].</b></FONT>")
