@@ -919,7 +919,7 @@
 	item_state = "syndie_hardsuit"
 	rig_variant = "rig-heavy"
 	slowdown = 1.2
-	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair/adv, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/emp_shield)
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair/adv, /obj/item/rig_module/emp_shield)
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 45, bullet = 30, laser = 30, energy = 45, bomb = 50, bio = 100, rad = 60)
 	combat_slowdown = 0.5
