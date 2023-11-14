@@ -468,8 +468,8 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 /proc/blood_incompatible(donor, receiver)
 	if(!donor || !receiver)
 		return FALSE
-	var/donor_antigen = copytext(donor, 1, -1)
-	var/receiver_antigen = copytext(receiver, 1, -1)
+	var/donor_antigen = copytext(donor, 1, 2)
+	var/receiver_antigen = copytext(receiver, 1, 2)
 	var/donor_rh = (findtext(donor, "+") > 0)
 	var/receiver_rh = (findtext(receiver, "+") > 0)
 	if(donor_rh && !receiver_rh) // Bad: "+" -> "-". Other combinations is ok
