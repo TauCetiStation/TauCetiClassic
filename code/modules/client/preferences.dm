@@ -171,6 +171,8 @@ var/global/list/preferences_datums = list()
 	var/glowlevel = GLOW_MED // or bloom
 	var/lampsexposure = TRUE // idk how we should name it
 	var/lampsglare = FALSE // aka lens flare
+	//Impacts performance clientside
+	var/eye_blur_effect = TRUE
 
   //custom loadout
 	var/list/gear = list()
