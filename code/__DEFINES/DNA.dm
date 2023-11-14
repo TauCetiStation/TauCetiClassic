@@ -50,3 +50,15 @@
 #define DNA_UNIQUE_ENZYMES_LEN 32
 // For later:
 //#define DNA_SE_LENGTH 50 // Was STRUCDNASIZE, size 27. 15 new blocks added = 42, plus room to grow.
+
+#define BLOOD_OPLUS "O(I) Rh+"
+#define BLOOD_OMINUS "O(I) Rh-"
+
+#define BLOOD_APLUS "A(II) Rh+"
+#define BLOOD_AMINUS "A(II) Rh-"
+
+#define BLOOD_BPLUS "B(III) Rh+"
+#define BLOOD_BMINUS "B(III) Rh-"
+
+#define BLOOD_ABPLUS "AB(IV) Rh+"
+#define BLOOD_ABMINUS "AB(IV) Rh-"
