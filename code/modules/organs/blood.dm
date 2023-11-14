@@ -461,28 +461,19 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	blood_add(amount, injected.data)
 	var/datum/reagent/blood/our = blood_get()
 
-	if(blood_incompatible(injected.data["blood_type"], our.data["blood_type"]))
+	if(!blood_compatible(injected.data["blood_type"], our.data["blood_type"]))
 		reagents.add_reagent("toxin", amount * 0.5)
 	..()
 
-/proc/blood_incompatible(donor, receiver)
-	if(!donor || !receiver)
-		return FALSE
-	var/donor_antigen = copytext(donor, 1, 2)
-	var/receiver_antigen = copytext(receiver, 1, 2)
-	var/donor_rh = (findtext(donor, "+") > 0)
-	var/receiver_rh = (findtext(receiver, "+") > 0)
-	if(donor_rh && !receiver_rh) // Bad: "+" -> "-". Other combinations is ok
-		return TRUE
-	switch(receiver_antigen)
-		if("A")
-			if(donor_antigen != "A" && donor_antigen != "O")
-				return TRUE
-		if("B")
-			if(donor_antigen != "B" && donor_antigen != "O")
-				return TRUE
-		if("O")
-			if(donor_antigen != "O")
-				return TRUE
-		// AB is a universal receiver
-	return FALSE
+/proc/blood_compatible(blood_donor, blood_recipient)
+	var/static/list/blood_recipient_can_receive = list(
+		BLOOD_APLUS   =  list(BLOOD_APLUS = TRUE, BLOOD_AMINUS = TRUE, BLOOD_OPLUS = TRUE, BLOOD_OMINUS = TRUE),
+		BLOOD_AMINUS  =  list(BLOOD_AMINUS = TRUE, BLOOD_OMINUS = TRUE),
+		BLOOD_BPLUS   =  list(BLOOD_BPLUS = TRUE, BLOOD_BMINUS = TRUE, BLOOD_OPLUS = TRUE, BLOOD_OMINUS = TRUE),
+		BLOOD_BMINUS  =  list(BLOOD_BMINUS = TRUE, BLOOD_OMINUS = TRUE),
+		BLOOD_OPLUS   =  list(BLOOD_OPLUS = TRUE, BLOOD_OMINUS = TRUE),
+		BLOOD_OMINUS  =  list(BLOOD_OMINUS = TRUE),
+		BLOOD_ABPLUS  =  list(BLOOD_APLUS = TRUE, BLOOD_AMINUS = TRUE, BLOOD_BPLUS = TRUE, BLOOD_BMINUS = TRUE, BLOOD_OPLUS = TRUE, BLOOD_OMINUS = TRUE, BLOOD_ABPLUS = TRUE, BLOOD_ABMINUS = TRUE),
+		BLOOD_ABMINUS =  list(BLOOD_AMINUS = TRUE, BLOOD_BMINUS = TRUE, BLOOD_OMINUS = TRUE, BLOOD_ABMINUS = TRUE)
+		)
+	return blood_recipient_can_receive[blood_recipient][blood_donor]
