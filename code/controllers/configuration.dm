@@ -61,7 +61,7 @@ var/global/bridge_secret = null
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	// If true - disable OOC for the duration of a round.
-	var/ooc_round_only = FALSE
+	var/ooc_round_autotoggle = FALSE
 
 	var/registration_panic_bunker_age = null
 	var/allowed_by_bunker_player_age = 60
@@ -221,6 +221,9 @@ var/global/bridge_secret = null
 	var/secondtopiclimit = 10
 
 	var/deathmatch_arena = TRUE
+
+	var/ghost_max_view = 10 // 21x21
+	var/ghost_max_view_supporter = 13 // 27x27
 
 	var/hard_deletes_overrun_threshold = 0.5
 	var/hard_deletes_overrun_limit = 0
@@ -541,6 +544,12 @@ var/global/bridge_secret = null
 				if("req_cult_ghostwriter")
 					config.cult_ghostwriter_req_cultists = text2num(value)
 
+				if("ghost_max_view")
+					config.ghost_max_view = text2num(value)
+
+				if("ghost_max_view_supporter")
+					config.ghost_max_view_supporter = text2num(value)
+
 				if("deathtime_required")
 					config.deathtime_required = text2num(value)
 
@@ -682,8 +691,8 @@ var/global/bridge_secret = null
 				if("use_persistent_cache")
 					config.use_persistent_cache = TRUE
 
-				if("ooc_round_only")
-					config.ooc_round_only = TRUE
+				if("ooc_round_only") // todo: ambiguous old name, need to rename for ooc_round_autotoggle or something
+					config.ooc_round_autotoggle = TRUE
 
 				if("minute_topic_limit")
 					config.minutetopiclimit = text2num(value)
@@ -815,22 +824,22 @@ var/global/bridge_secret = null
 /datum/configuration/proc/get_runnable_modes(datum/modesbundle/bundle)
 	var/list/datum/game_mode/runnable_modes = list()
 	var/list/runnable_modes_names = list()
-	for (var/type in bundle.possible_gamemodes)
+	for(var/type in bundle.possible_gamemodes)
 		var/datum/game_mode/M = new type()
-		if (!M.name || !(M.config_name in config_name_by_real))
+		if(!M.name || !(M.config_name in config_name_by_real))
 			qdel(M)
 			continue
-		if (probabilities[M.config_name] <= 0)
+		if(probabilities[M.config_name] <= 0)
 			qdel(M)
 			continue
-		if (global.master_last_mode == M.name)
+		if(global.master_last_mode == M.name)
 			qdel(M)
 			continue
-		if (global.modes_failed_start[M.name])
+		if(global.modes_failed_start[M.name])
 			qdel(M)
 			continue
-		var/mod_prob = probabilities[M.name]
-		if (M.can_start())
+		var/mod_prob = probabilities[M.config_name]
+		if(M.can_start())
 			runnable_modes[M] = mod_prob
 			runnable_modes_names += M.name
 	log_mode("Current pool of gamemodes([runnable_modes.len]):")

@@ -26,7 +26,7 @@
 	var/body_zone = null              // Unique identifier of this limb.
 	var/datum/species/species
 	var/original_color
-	var/b_type = "A+"
+	var/b_type = "A(II) Rh+"
 	var/is_rejecting = FALSE
 
 	// Wound and structural data.
@@ -125,6 +125,9 @@
 
 	owner.bodyparts += src
 	owner.bodyparts_by_name[body_zone] = src
+
+	for(var/obj/item/organ/internal/IO in bodypart_organs)
+		IO.insert_organ(owner)
 
 	if(parent)
 		parent.children += src
@@ -444,6 +447,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(vital)
 		owner.death()
+
+	for(var/obj/item/organ/internal/IO in bodypart_organs)
+		owner.organs -= IO
+		owner.organs_by_name -= IO.organ_tag
+		IO.owner = null
 
 	owner.UpdateDamageIcon(src)
 	if(!clean && leaves_stump)

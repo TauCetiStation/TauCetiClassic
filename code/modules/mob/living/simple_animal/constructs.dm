@@ -86,6 +86,43 @@
 	return ..()
 
 /////////////////Juggernaut///////////////
+/mob/living/simple_animal/construct/armoured/fire_halloween
+	name = "Fire Eye"
+	icon_state = "firejuggernaut"
+	icon_living = "firejuggernaut"
+	melee_damage = 10
+	speed = 2
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/hulk_lazor,
+		/obj/effect/proc_holder/spell/aoe_turf/hulk_spit
+	)
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate/halloween
+	clothes_req = 0
+
+/mob/living/simple_animal/construct/armoured/pain_halloween
+	name = "Incarnation of Pain"
+	icon_state = "pain"
+	icon_living = "pain"
+	melee_damage = 5
+	speed = 5
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate/halloween
+	)
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/halloween
+	clothes_req = 0
+
+/mob/living/simple_animal/construct/armoured/golem_halloween
+	name = "Metal Golem"
+	icon_state = "golem"
+	icon_living = "golem"
+	melee_damage = 35
+	speed = 4
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/repulse/halloween
+	)
+
 /mob/living/simple_animal/construct/armoured
 	name = "Juggernaut"
 	real_name = "Juggernaut"
@@ -136,6 +173,53 @@
 
 
 ////////////////////////Wraith/////////////////////////////////////////////
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift/hell
+	dissapear_animation = icon(icon = 'icons/mob/construct.dmi', icon_state = "infernal_rift_out")
+	appear_animation = icon(icon = 'icons/mob/construct.dmi', icon_state = "infernal_rift_in")
+
+/mob/living/simple_animal/construct/wraith/hellknight_halloween
+	name = "Hell Knight"
+	real_name = "Hell Knight"
+	desc = "Hell Knight."
+	icon_state = "hell_knight"
+	icon_living = "hell_knight"
+	speed = 1
+	melee_damage = 25
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift/hell
+		)
+
+/obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/halloween
+	clothes_req = FALSE
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift/envoy
+	dissapear_animation = icon(icon = 'icons/mob/construct.dmi', icon_state = "shadowstep_out")
+	appear_animation = icon(icon = 'icons/mob/construct.dmi', icon_state = "shadowstep_in")
+
+/mob/living/simple_animal/construct/wraith/envoy_halloween
+	name = "Envoy of Death"
+	real_name = "Envoy of Death"
+	desc = "Envoy of Death."
+	icon_state = "envoy_of_death"
+	icon_living = "envoy_of_death"
+	speed = 0
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/targeted/emplosion/disable_tech/halloween,
+		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/phaseshift/envoy
+		)
+
+/mob/living/simple_animal/construct/wraith/firewraith_halloween
+	name = "Fire Demon"
+	real_name = "Fire Demon"
+	desc = "Зловещий демон, управляемый духом."
+	icon_state = "firewraith"
+	icon_living = "firewraith"
+	melee_damage = 10
+	speed = 0
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/dumbfire/fireball
+		)
+
 /mob/living/simple_animal/construct/wraith
 	name = "Wraith"
 	real_name = "Wraith"
@@ -157,6 +241,35 @@
 
 
 /////////////////////////////Artificer/////////////////////////
+/mob/living/simple_animal/construct/builder/summoner_halloween
+	name = "Summoner"
+	real_name = "Summoner"
+	desc = "Summoner."
+	icon_state = "summoner"
+	icon_living = "summoner"
+	melee_damage = 15
+	speed = -1
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall,
+		/obj/effect/proc_holder/spell/targeted/forcewall,
+		/obj/effect/proc_holder/spell/targeted/smoke,
+		)
+
+/obj/effect/proc_holder/spell/targeted/lighting_shock/halloween
+	charge_max = 100
+	clothes_req = 0
+
+/mob/living/simple_animal/construct/builder/firetower_halloween
+	name = "Fire Tower"
+	real_name = "Fire Tower"
+	desc = "Fire Tower."
+	icon_state = "fireartificer"
+	icon_living = "fireartificer"
+	melee_damage = 5
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/targeted/lighting_shock/halloween
+		)
+
 /mob/living/simple_animal/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
@@ -213,6 +326,55 @@
 
 
 /////////////////////////////////////Harvester construct/////////////////////////////////
+/mob/living/simple_animal/construct/harvester/necro_halloween
+	name = "Necrophage"
+	desc = "Necrophage"
+	icon_state = "necrophage"
+	icon_living = "necrophage"
+	maxHealth = 90
+	health = 90
+	speed = 1
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
+		/obj/effect/proc_holder/spell/no_target/rot
+		)
+
+/mob/living/simple_animal/construct/harvester/necro_halloween/add_conversion_area_spell()
+	return
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/halloween
+	clothes_req = 0
+
+/mob/living/simple_animal/construct/harvester/fireharvest_halloween
+	name = "Fire Harvester"
+	desc = "Предвестник"
+	icon_state = "fireharvester"
+	icon_living = "fireharvester"
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/halloween
+		)
+
+/mob/living/simple_animal/construct/harvester/fireharvest_halloween/add_conversion_area_spell()
+	return
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/blind/halloween
+	clothes_req = FALSE
+
+/mob/living/simple_animal/construct/harvester/boneshaper_halloween
+	name = "Boneshaper"
+	desc = "Boneshaper"
+	icon_state = "boneshaper"
+	icon_living = "boneshaper"
+	maxHealth = 120
+	health = 120
+	melee_damage = 5
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/targeted/trigger/blind,
+		/obj/effect/proc_holder/spell/targeted/inflict_handler/blind/halloween
+		)
+/mob/living/simple_animal/construct/harvester/boneshaper_halloween/add_conversion_area_spell()
+	return
+
 /mob/living/simple_animal/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"
@@ -237,6 +399,9 @@
 		)
 /mob/living/simple_animal/construct/harvester/atom_init()
 	. = ..()
+	add_conversion_area_spell()
+
+/mob/living/simple_animal/construct/harvester/proc/add_conversion_area_spell()
 	if(SSticker.nar_sie_has_risen)
 		AddSpell(new /obj/effect/proc_holder/spell/no_target/area_conversion(src))
 	else

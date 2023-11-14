@@ -49,7 +49,7 @@
 				if(self.data["blood_type"])
 					blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 				else
-					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O+"
+					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O(I) Rh+"
 
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
@@ -58,7 +58,7 @@
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
-			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
+			blood_prop.blood_DNA["Non-Human DNA"] = "A(II) Rh+"
 
 	else if(isxeno(donor))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
@@ -350,6 +350,8 @@
 /datum/reagent/diethylamine/reaction_mob(mob/M, method = TOUCH, volume)
 	if(volume >= 1 && ishuman(M))
 		var/mob/living/carbon/human/H = M
+		if(!H.species.flags[HAS_HAIR])
+			return
 		var/list/species_hair = list()
 		if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
 			for(var/i in hair_styles_list)

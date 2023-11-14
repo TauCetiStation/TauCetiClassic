@@ -66,6 +66,8 @@
 	RefreshParts()
 
 /obj/machinery/dna_scannernew/RefreshParts()
+	..()
+
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
@@ -118,6 +120,10 @@
 			if(occupant)
 				break
 			if(iscarbon(M))
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.species.flags[NO_DNA])
+						continue
 				var/mob/living/carbon/C = M
 				occupant = occupant_body = C
 				break

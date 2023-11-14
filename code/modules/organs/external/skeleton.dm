@@ -127,6 +127,10 @@
 	owner.force_remote_viewing = TRUE
 	owner.reset_view(src)
 
+/obj/item/organ/external/head/skeleton/droplimb(no_explode, clean, disintegrate)
+	transfer_identity()
+	. = ..()
+
 /obj/item/organ/external/groin/skeleton
 	name = "skeleton groin"
 	leaves_stump = FALSE

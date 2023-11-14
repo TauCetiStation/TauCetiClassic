@@ -4,8 +4,11 @@
 	wiki_ref = "Emergency_Response_Team"
 
 	ranks = list(ROLE_ERT, "Security Officer")
-	time_to_del = 5 MINUTES
 
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	time_while_available = 5 MINUTES
 
 	var/outfit
 	var/leader_outfit
@@ -18,14 +21,13 @@
 
 /datum/spawner/responders/New(mission)
 	..()
-	id = mission
 	important_info += mission
 
-/datum/spawner/responders/jump(mob/dead/observer/ghost)
+/datum/spawner/responders/jump(mob/dead/spectator)
 	var/jump_to = pick(landmarks_list["Commando"])
-	ghost.forceMove(get_turf(jump_to))
+	spectator.forceMove(get_turf(jump_to))
 
-/datum/spawner/responders/spawn_ghost(mob/dead/observer/ghost)
+/datum/spawner/responders/spawn_body(mob/dead/spectator)
 	var/obj/spawnloc = pick(landmarks_list["Commando"])
 
 	var/datum/faction/responders/R = find_faction_by_type(faction)
@@ -37,8 +39,8 @@
 
 	var/mob/living/carbon/human/M = new(null)
 	if(naming_allowed)
-		var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
-		ghost.client.create_human_apperance(M, new_name)
+		var/new_name = sanitize_safe(input(spectator, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
+		spectator.client.create_human_apperance(M, new_name)
 	M.age = !R.leader_selected ? rand(M.species.min_age, M.species.min_age * 1.5) : rand(M.species.min_age * 1.25, M.species.min_age * 1.75)
 
 	//Creates mind stuff.
@@ -62,12 +64,12 @@
 		else
 			M.equipOutfit(outfit)
 
-	M.mind.key = ghost.key
-	M.key = ghost.key
+	M.mind.key = spectator.key
+	M.key = spectator.key
 	create_random_account_and_store_in_mind(M)
 
 	if(R)
-		add_faction_member(R, M, FALSE)
+		add_faction_member(R, M, FALSE, TRUE)
 	post_spawn(M)
 
 	to_chat(M, "Ты почти у цели...")
@@ -132,3 +134,27 @@
 	leader_text = "Ты - <B>комиссар</B> разведвзвода СССП! Чертовы капиталисты отправили сигнал бедствия и скоро об этом пожалеют! Буржуев-глав - к стенке, а их работникам нечего терять, кроме цепей!"
 	fluff_text = "Ты - солдат разведвзвода СССП! Чертовы капиталисты отправили сигнал бедствия и скоро об этом пожалеют! Буржуев-глав - к стенке, а их работникам нечего терять, кроме цепей!"
 	faction = /datum/faction/responders/soviet
+
+/datum/spawner/responders/security
+	outfit = /datum/outfit/responders/security
+	leader_outfit = /datum/outfit/responders/security/leader
+
+/datum/spawner/responders/security/New()
+	. = ..()
+	var/reason = pick("была уничтожена ядерным взрывом", "была поглощена блобом", "была переработана репликаторами", "загадочным образом исчезла")
+	leader_text = "Ты - <B>глава</B> отдела СБ с КСН \"■■■■■■■\"!  После  того, как твоя станция [reason], командование направило тебя и твой отдел на помощь другой станции!"
+	fluff_text = "Ты - офицер отдела СБ с КСН \"■■■■■■■\"!  После  того, как твоя станция и[reason], командование направило тебя и твой отдел на помощь другой станции! Во всём подчиняйся своему начальнику и главам станции."
+
+/datum/spawner/responders/marines
+	outfit = /datum/outfit/responders/marines
+	leader_outfit = /datum/outfit/responders/marines/leader
+	leader_text = "Ты - <B>сержант</B> отряда Колониальной Пехоты Нанотрейзен! Возвращаясь с очередного патруля, вы получили сигнал о помощи и поспешили помочь гражданским."
+	fluff_text = "Ты - солдат отряда Колониальной Пехоты Нанотрейзен! Возвращаясь с очередного патруля, вы получили сигнал о помощи и поспешили помочь гражданским."
+	faction = /datum/faction/responders/marines
+
+/datum/spawner/responders/clowns
+	outfit = /datum/outfit/responders/clown
+	leader_outfit = /datum/outfit/responders/clown
+	leader_text = "Ты - клоун из космического цирка! Недавно ваша труппа получила кое-какие игрушки от партнеров из Синдиката, и сегодня вы намерены поразвлечься и поразвлечь!"
+	fluff_text = "Ты - клоун из космического цирка! Недавно ваша труппа получила кое-какие игрушки от партнеров из Синдиката, и сегодня вы намерены поразвлечься и поразвлечь!"
+	faction = /datum/faction/responders/clowns

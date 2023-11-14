@@ -1715,7 +1715,7 @@
 			injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
 		else
 			//it is much easier to prick yourself than another person
-			injection_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) 
+			injection_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15)
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
 				if(!stealth && user != src)
@@ -2208,7 +2208,7 @@
 			massages_done_right = 0
 			return_to_body_dialog()
 
-			if(health > config.health_threshold_dead)
+			if((health > config.health_threshold_dead) || (!suiciding))
 				Heart.heart_fibrillate()
 				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
 			else
@@ -2497,3 +2497,15 @@
 		return 0
 
 	return BP.pumped
+
+/mob/living/carbon/human/clean_blood()
+	. = ..()
+	if(gloves)
+		gloves.clean_blood()
+		gloves.germ_level = 0
+	else
+		bloody_hands = 0
+		bloody_hands_mob = null
+		QDEL_NULL(hand_dirt_datum)
+		update_inv_slot(SLOT_GLOVES)
+		germ_level = 0
