@@ -24,27 +24,27 @@
 		if(51 to INFINITY)	icon_state = "full"
 
 /obj/item/weapon/reagent_containers/blood/APlus
-	name = "bloodpack [BLOOD_APLUS]"
+	name = "bloodpack A(II) Rh+"
 	blood_type = BLOOD_APLUS
 
 /obj/item/weapon/reagent_containers/blood/AMinus
-	name = "bloodpack [BLOOD_AMINUS]"
+	name = "bloodpack A(II) Rh-"
 	blood_type = BLOOD_AMINUS
 
 /obj/item/weapon/reagent_containers/blood/BPlus
-	name = "bloodpack BLOOD_BPLUS"
+	name = "bloodpack B(III) Rh+"
 	blood_type = BLOOD_BPLUS
 
 /obj/item/weapon/reagent_containers/blood/BMinus
-	name = "bloodpack [BLOOD_BMINUS]"
+	name = "bloodpack B(III) Rh-"
 	blood_type = BLOOD_BMINUS
 
 /obj/item/weapon/reagent_containers/blood/OPlus
-	name = "bloodpack [BLOOD_OPLUS]"
+	name = "bloodpack O(I) Rh+"
 	blood_type = BLOOD_OPLUS
 
 /obj/item/weapon/reagent_containers/blood/OMinus
-	name = "bloodpack [BLOOD_OMINUS]"
+	name = "bloodpack O(I) Rh-"
 	blood_type = BLOOD_OMINUS
 
 /obj/item/weapon/reagent_containers/blood/empty
