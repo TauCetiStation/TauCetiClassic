@@ -74,9 +74,9 @@
 			attach(H)
 
 /obj/machinery/life_assist/proc/resolve_stranded(datum/component/bounded/bounds)
-	if(get_dist(bounds.bound_to, src) == 2 && !anchored)
-		step_towards(src, bounds.bound_to)
-		var/dist = get_dist(src, get_turf(bounds.bound_to))
+	if(get_dist(bounds.master, src) == 2 && !anchored)
+		step_towards(src, bounds.master)
+		var/dist = get_dist(src, get_turf(bounds.master))
 		if(dist >= bounds.min_dist && dist <= bounds.max_dist)
 			return TRUE
 
