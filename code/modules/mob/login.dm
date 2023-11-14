@@ -76,11 +76,11 @@
 	blocker.plane = ABOVE_HUD_PLANE
 	blocker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-	//Users with different eye_blur_effect prefs OR client disconnected during eye_blurry effect
-	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used?.plane_master_controllers[PLANE_MASTERS_GAME]
-	if(game_plane_master_controller)
-		game_plane_master_controller.remove_filter("eye_blur_angular")
-		game_plane_master_controller.remove_filter("eye_blur_gauss")
+	//Users with different eye_blur_effect pref OR client disconnected during eye_blurry effect
+	var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in client.screen
+	if(PM)
+		PM.remove_filter("eye_blur_angular")
+		PM.remove_filter("eye_blur_gauss")
 	clear_fullscreen("blurry")
 
 	// atom_huds
