@@ -109,16 +109,13 @@
 
 	var/IO = 0
 	var/C = 0
-	var/c = 0
 	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
 		IO += CP.rating
 	input_level_max = 200000 * IO
 	output_level_max = 200000 * IO
 	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
 		C += PC.maxcharge
-		c += PC.charge
 	capacity = C * 100
-	charge = c * 100
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user)
 	// opening using screwdriver
