@@ -163,7 +163,7 @@
 	<B>Электропитание по всей станции:</B> [SSStatistics.score.powerbonus ? "Да" : "Нет"] ([SSStatistics.score.powerbonus * 2500] очков)<BR>
 	<B>Ультра чистота на станции:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([SSStatistics.score.messbonus * 3000] очков)<BR><BR>
 	<U>ПЛОХО:</U><BR>
-	<B>Успешность действий Ролей:</B> [SSStatistics.score.roleswon] (-[SSStatistics.score.roleswon * 250] очков)<BR>
+	<B>Успешность действий антоганистов:</B> [SSStatistics.score.roleswon] (-[SSStatistics.score.roleswon * 250] очков)<BR>
 	<B>Мёртвые тела на станции:</B> [SSStatistics.score.crew_dead] (-[SSStatistics.score.crew_dead * 250] очков)<BR>
 	<B>Неубранный мусор:</B> [SSStatistics.score.mess] (-[SSStatistics.score.mess] очков)<BR>
 	<B>Проблемы с электропитанием станции:</B> [SSStatistics.score.powerloss] (-[SSStatistics.score.powerloss * 30] очков)<BR>
