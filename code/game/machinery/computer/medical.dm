@@ -373,7 +373,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						src.temp = "<B>Mental Condition:</B><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=insane'>*Insane*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=unstable'>*Unstable*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=watch'>*Watch*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=stable'>Stable</A><BR>"
 				if("b_type")
 					if (istype(src.active2, /datum/data/record))
-						src.temp = "<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=an'>[BLOOD_AMINUS]</A> <A href='?src=\ref[src];temp=1;b_type=ap'>[BLOOD_APLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=bn'>[BLOOD_BMINUS]</A> <A href='?src=\ref[src];temp=1;b_type=bp'>[BLOOD_BPLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=abn'>[BLOOD_ABMINUS]</A> <A href='?src=\ref[src];temp=1;b_type=abp'>[BLOOD_ABPLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=on'>[BLOOD_OMINUS]</A> <A href='?src=\ref[src];temp=1;b_type=op'>[BLOOD_OPLUS]</A><BR>"
+						src.temp = "<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=an'>[BLOOD_A_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=ap'>[BLOOD_A_PLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=bn'>[BLOOD_B_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=bp'>[BLOOD_B_PLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=abn'>[BLOOD_AB_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=abp'>[BLOOD_AB_PLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=on'>[BLOOD_O_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=op'>[BLOOD_O_PLUS]</A><BR>"
 				if("b_dna")
 					if (istype(src.active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input DNA hash:", "Med. records", input_default(src.active1.fields["dna"]), null)  as text)
@@ -428,21 +428,21 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 			if (src.active2)
 				switch(href_list["b_type"])
 					if("an")
-						src.active2.fields["b_type"] = BLOOD_AMINUS
+						src.active2.fields["b_type"] = BLOOD_A_MINUS
 					if("bn")
-						src.active2.fields["b_type"] = BLOOD_BMINUS
+						src.active2.fields["b_type"] = BLOOD_B_MINUS
 					if("abn")
-						src.active2.fields["b_type"] = BLOOD_ABMINUS
+						src.active2.fields["b_type"] = BLOOD_AB_MINUS
 					if("on")
-						src.active2.fields["b_type"] = BLOOD_OMINUS
+						src.active2.fields["b_type"] = BLOOD_O_MINUS
 					if("ap")
-						src.active2.fields["b_type"] = BLOOD_APLUS
+						src.active2.fields["b_type"] = BLOOD_A_PLUS
 					if("bp")
-						src.active2.fields["b_type"] = BLOOD_BPLUS
+						src.active2.fields["b_type"] = BLOOD_B_PLUS
 					if("abp")
-						src.active2.fields["b_type"] = BLOOD_ABPLUS
+						src.active2.fields["b_type"] = BLOOD_AB_PLUS
 					if("op")
-						src.active2.fields["b_type"] = BLOOD_OPLUS
+						src.active2.fields["b_type"] = BLOOD_O_PLUS
 
 
 		if (href_list["del_r"])

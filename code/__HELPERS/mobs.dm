@@ -1,13 +1,13 @@
 /proc/random_blood_type()
 	return pick(
-	4;  BLOOD_OMINUS,
-	36; BLOOD_OPLUS,
-	3;  BLOOD_AMINUS,
-	28; BLOOD_APLUS,
-	1;  BLOOD_BMINUS,
-	20; BLOOD_BPLUS,
-	1;  BLOOD_ABMINUS,
-	5;  BLOOD_ABPLUS
+	4;  BLOOD_O_MINUS,
+	36; BLOOD_O_PLUS,
+	3;  BLOOD_A_MINUS,
+	28; BLOOD_A_PLUS,
+	1;  BLOOD_B_MINUS,
+	20; BLOOD_B_PLUS,
+	1;  BLOOD_AB_MINUS,
+	5;  BLOOD_AB_PLUS
 	)
 
 /proc/random_hair_style(gender, species = HUMAN, ipc_head)

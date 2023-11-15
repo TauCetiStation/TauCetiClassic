@@ -25,27 +25,27 @@
 
 /obj/item/weapon/reagent_containers/blood/APlus
 	name = "bloodpack A(II) Rh+"
-	blood_type = BLOOD_APLUS
+	blood_type = BLOOD_A_PLUS
 
 /obj/item/weapon/reagent_containers/blood/AMinus
 	name = "bloodpack A(II) Rh-"
-	blood_type = BLOOD_AMINUS
+	blood_type = BLOOD_A_MINUS
 
 /obj/item/weapon/reagent_containers/blood/BPlus
 	name = "bloodpack B(III) Rh+"
-	blood_type = BLOOD_BPLUS
+	blood_type = BLOOD_B_PLUS
 
 /obj/item/weapon/reagent_containers/blood/BMinus
 	name = "bloodpack B(III) Rh-"
-	blood_type = BLOOD_BMINUS
+	blood_type = BLOOD_B_MINUS
 
 /obj/item/weapon/reagent_containers/blood/OPlus
 	name = "bloodpack O(I) Rh+"
-	blood_type = BLOOD_OPLUS
+	blood_type = BLOOD_O_PLUS
 
 /obj/item/weapon/reagent_containers/blood/OMinus
 	name = "bloodpack O(I) Rh-"
-	blood_type = BLOOD_OMINUS
+	blood_type = BLOOD_O_MINUS
 
 /obj/item/weapon/reagent_containers/blood/empty
 	name = "empty bloodpack"
