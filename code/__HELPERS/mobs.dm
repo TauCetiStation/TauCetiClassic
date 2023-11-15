@@ -1,14 +1,14 @@
 /proc/random_blood_type()
-	return pick(
-	4;  BLOOD_O_MINUS,
-	36; BLOOD_O_PLUS,
-	3;  BLOOD_A_MINUS,
-	28; BLOOD_A_PLUS,
-	1;  BLOOD_B_MINUS,
-	20; BLOOD_B_PLUS,
-	1;  BLOOD_AB_MINUS,
-	5;  BLOOD_AB_PLUS
-	)
+	return pickweight(list(
+		BLOOD_O_MINUS  = 4,
+		BLOOD_O_PLUS   = 36,
+		BLOOD_A_MINUS  = 3,
+		BLOOD_A_PLUS   = 28,
+		BLOOD_B_MINUS  = 1,
+		BLOOD_B_PLUS   = 20,
+		BLOOD_AB_MINUS = 1,
+		BLOOD_AB_PLUS  = 5
+	))
 
 /proc/random_hair_style(gender, species = HUMAN, ipc_head)
 	var/h_style = "Bald"
