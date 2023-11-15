@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 47
+#define SAVEFILE_VERSION_MAX 48
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -262,6 +262,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(diff.len)
 				S["ignore_question"] << ignore_question - diff
 
+	if(current_version < 48)
+		S["b_type"] << null
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
@@ -576,7 +578,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]        >> undershirt
 	S["socks"]             >> socks
 	S["backbag"]           >> backbag
-	S["b_type"]            >> b_type
 	S["use_skirt"]         >> use_skirt
 
 	//Load prefs
@@ -660,7 +661,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
 	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
-	b_type			= sanitize_text(b_type, initial(b_type))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	neuter_gender_voice = sanitize_gender_voice(neuter_gender_voice)
 
@@ -772,7 +772,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]            << undershirt
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
-	S["b_type"]                << b_type
 	S["use_skirt"]             << use_skirt
 	//Write prefs
 	S["alternate_option"]      << alternate_option
