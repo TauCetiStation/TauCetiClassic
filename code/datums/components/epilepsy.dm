@@ -74,16 +74,12 @@
 	delay_effect += amount
 
 /datum/component/epilepsy/proc/is_condition_fulfilled(datum/source)
-	if(epilepsy_conditions & IS_EPILEPTIC_MOB)
+	if(epilepsy_conditions & IS_EPILEPTIC_NOT_IN_PARALYSIS)
 		if(!ismob(source))
 			return FALSE
-	if(epilepsy_conditions & IS_EPILEPTIC_NOT_IN_PARALYSIS)
-		if((epilepsy_conditions & IS_EPILEPTIC_MOB))
-			if(!ismob(source))
-				return FALSE
-			var/mob/M = source
-			if(M.paralysis)
-				return FALSE
+		var/mob/M = source
+		if(M.paralysis)
+			return FALSE
 	return TRUE
 
 /datum/component/epilepsy/proc/do_effect(datum/source)
@@ -131,7 +127,6 @@
 		return
 	if(!do_effect(source))
 		return
-	if(epilepsy_conditions & IS_EPILEPTIC_MOB)
-		var/mob/M = source
-		M.visible_message("<span class='danger'>[source] starts having a seizure!</span>",
-		                  "<span class='warning'>You have a seizure!</span>")
+	var/mob/M = source
+	M.visible_message("<span class='danger'>[source] starts having a seizure!</span>",
+						"<span class='warning'>You have a seizure!</span>")

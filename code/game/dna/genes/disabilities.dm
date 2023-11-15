@@ -85,7 +85,7 @@
 
 /datum/dna/gene/disability/epilepsy/activate(mob/M, connected, flags)
 	if(istype(M))
-		M.AddComponent(/datum/component/epilepsy, (IS_EPILEPTIC_MOB | IS_EPILEPTIC_NOT_IN_PARALYSIS), (EPILEPSY_PARALYSE_EFFECT | EPILEPSY_JITTERY_EFFECT), GENE_TYPE_EPILEPSY)
+		M.AddComponent(/datum/component/epilepsy, IS_EPILEPTIC_NOT_IN_PARALYSIS, (EPILEPSY_PARALYSE_EFFECT | EPILEPSY_JITTERY_EFFECT), GENE_TYPE_EPILEPSY)
 
 /datum/dna/gene/disability/epilepsy/deactivate(mob/M, connected, flags)
 	if(!istype(M))
