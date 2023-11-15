@@ -7,13 +7,13 @@
 // Blocks an attempt to connect before even creating our client datum thing.
 // real_bans_only check exists bans, not resticts(WhiteList, GuestPass)
 /world/IsBanned(key, address, computer_id, type, real_bans_only = FALSE, provided_ckey)
-	log_access("ISBANNED: '[ckey(key)]', [args.Join("', '")]'")
+	var/ckey = ckey(key)
+	log_access("ISBANNED: '[ckey]', [args.Join("', '")]'")
 
 	// Shunt world topic banchecks to purely to byond's internal ban system
 	if (type == "world")
 		return ..()
 
-	var/ckey = ckey(key)
 	var/is_admin = FALSE
 	var/client/C = global.directory[ckey]
 
