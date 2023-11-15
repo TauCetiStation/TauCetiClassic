@@ -88,8 +88,9 @@
 		M.AddComponent(/datum/component/epilepsy, (IS_EPILEPTIC_MOB | IS_EPILEPTIC_NOT_IN_PARALYSIS), (EPILEPSY_PARALYSE_EFFECT | EPILEPSY_JITTERY_EFFECT), GENE_TYPE_EPILEPSY)
 
 /datum/dna/gene/disability/epilepsy/deactivate(mob/M, connected, flags)
-	if(istype(M))
-		SEND_SIGNAL(M, COMSIG_REMOVE_EPILEPSY, GENE_TYPE_EPILEPSY)
+	if(!istype(M))
+		return
+	SEND_SIGNAL(M, COMSIG_REMOVE_GENE_DISABILITY, GENE_TYPE_EPILEPSY)
 
 /datum/dna/gene/disability/cough
 	name="Coughing"

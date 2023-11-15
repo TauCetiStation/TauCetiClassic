@@ -927,6 +927,6 @@
 		M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10))
 		M.emote("drool")
-	if(istype(M))
-		SEND_SIGNAL(M, COMSIG_ADJUST_DELAY_EPILEPSY, 0.5, 10)
-		SEND_SIGNAL(M, COMSIG_MAKE_EPILEPSY_DANGEROUS, ALCOHOL_TOLERANCE_EPILEPSY)
+	if(!istype(M))
+		return
+	SEND_SIGNAL(M, COMSIG_IMPEDREZENE_DIGEST)

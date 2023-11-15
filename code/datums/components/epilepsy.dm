@@ -13,18 +13,20 @@
 	epilepsy_conditions |= _epilepsy_conditions
 	epilepsy_effect |= _epilepsy_effect
 	type_epilepsy = _type_epilepsy
-	RegisterSignal(parent, list(COMSIG_TRIGGER_EPILEPSY), PROC_REF(try_do_seizure))
-	RegisterSignal(parent, list(COMSIG_ADJUST_DELAY_EPILEPSY), PROC_REF(adjust_delay_effect))
-	RegisterSignal(parent, list(COMSIG_REMOVE_EPILEPSY), PROC_REF(remove_epilepsy))
-	RegisterSignal(parent, list(COMSIG_MAKE_EPILEPSY_DANGEROUS), PROC_REF(make_epilepsy_dangerous))
-	RegisterSignal(parent, list(COMSIG_MAKE_EPILEPSY_LESS_DANGEROUS), PROC_REF(make_epilepsy_less_dangerous))
+	RegisterSignal(parent, list(COMSIG_FLASH_EYES), PROC_REF(handle_flash_eyes))
+	RegisterSignal(parent, list(COMSIG_IMPEDREZENE_DIGEST), PROC_REF(adjust_impedrezene_effect))
+	RegisterSignal(parent, list(COMSIG_REMOVE_GENE_DISABILITY), PROC_REF(remove_epilepsy))
+	RegisterSignal(parent, list(COMSIG_HANDLE_DISABILITIES), PROC_REF(handle_disabilities))
+	RegisterSignal(parent, list(COMSIG_HUMAN_ENTERED_WATER), PROC_REF(enter_waterturf))
+	RegisterSignal(parent, list(COMSIG_HUMAN_EXITED_WATER), PROC_REF(exit_waterturf))
 
 /datum/component/epilepsy/Destroy()
-	UnregisterSignal(parent, list(COMSIG_TRIGGER_EPILEPSY,
-	                              COMSIG_ADJUST_DELAY_EPILEPSY,
-	                              COMSIG_REMOVE_EPILEPSY,
-							      COMSIG_MAKE_EPILEPSY_DANGEROUS,
-							      COMSIG_MAKE_EPILEPSY_LESS_DANGEROUS
+	UnregisterSignal(parent, list(COMSIG_HUMAN_EXITED_WATER,
+	                              COMSIG_HUMAN_ENTERED_WATER,
+	                              COMSIG_HANDLE_DISABILITIES,
+							      COMSIG_REMOVE_GENE_DISABILITY,
+							      COMSIG_IMPEDREZENE_DIGEST,
+								  COMSIG_FLASH_EYES
 	                            ))
 	return ..()
 
@@ -46,10 +48,23 @@
 		if(isliving(source))
 			REMOVE_TRAIT(source, TRAIT_LIGHT_DRINKER, GENERIC_TRAIT)
 
+/datum/component/epilepsy/proc/enter_waterturf(datum/source)
+	SIGNAL_HANDLER
+	make_epilepsy_dangerous(source, WATER_CHOKE_EPILEPSY)
+
+/datum/component/epilepsy/proc/exit_waterturf(datum/source)
+	SIGNAL_HANDLER
+	make_epilepsy_less_dangerous(source, WATER_CHOKE_EPILEPSY)
+
 /datum/component/epilepsy/proc/remove_epilepsy(datum/source, type)
 	SIGNAL_HANDLER
 	if(type == type_epilepsy)
 		qdel(src)
+
+/datum/component/epilepsy/proc/adjust_impedrezene_effect(datum/source)
+	SIGNAL_HANDLER
+	adjust_delay_effect(source, 0.5, 10)
+	make_epilepsy_dangerous(source, ALCOHOL_TOLERANCE_EPILEPSY)
 
 /datum/component/epilepsy/proc/adjust_delay_effect(datum/source, amount, max_protect_times)
 	SIGNAL_HANDLER
@@ -94,6 +109,19 @@
 		return FALSE
 	delay_effect--
 	return TRUE
+
+/datum/component/epilepsy/proc/handle_disabilities(datum/source)
+	SIGNAL_HANDLER
+	if(prob(99))
+		return
+	try_do_seizure(source)
+
+/datum/component/epilepsy/proc/handle_flash_eyes(datum/source, intensity)
+	SIGNAL_HANDLER
+	if(intensity <= 0)
+		return
+	if(prob(intensity * 50))
+		try_do_seizure(source)
 
 /datum/component/epilepsy/proc/try_do_seizure(datum/source)
 	SIGNAL_HANDLER

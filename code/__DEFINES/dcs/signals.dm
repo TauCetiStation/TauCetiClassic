@@ -386,13 +386,15 @@
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
 
-// send this signal to try enable epilepsy effects in /datum/component/epilepsy: ()
-#define COMSIG_TRIGGER_EPILEPSY "trigger_epilepsy"
-// send this signal to add protecting delay from epilepsy effects in /datum/component/epilepsy: (amount_times_protect as num, higher_border as num)
-#define COMSIG_ADJUST_DELAY_EPILEPSY "adjust_delay_epilepsy"
-// send this signal to qdel epilepsy with tranmitted type_string in /datum/component/epilepsy: (type as string)
-#define COMSIG_REMOVE_EPILEPSY "remove_epilepsy"
-// send this signal to add bitflags of dangerous factors in /datum/component/epilepsy: (factor as bitflag)
-#define COMSIG_MAKE_EPILEPSY_DANGEROUS "make_epilepsy_dangerous"
-// send this signal to remove bitflags of dangerous factors in /datum/component/epilepsy: (factor as bitflag)
-#define COMSIG_MAKE_EPILEPSY_LESS_DANGEROUS "make_epilepsy_less_dangerous"
+// send this signal to make effect impedrezene for mob/living
+#define COMSIG_IMPEDREZENE_DIGEST "impedrezene_digest"
+// send this signal to make effect flashing eyes for mob/living
+#define COMSIG_FLASH_EYES "flash_eyes"
+// send this signal to make effect enter water turf for mob/living/carbon/human
+#define COMSIG_HUMAN_ENTERED_WATER "human_entered_water"
+// send this signal to make effect exit water turf for mob/living/carbon/human
+#define COMSIG_HUMAN_EXITED_WATER "human_exited_water"
+// send this signal to disable gene for mob/living/carbon
+#define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
+// send this signal to handle disabilities in life for mob/living/carbon/human
+#define COMSIG_HANDLE_DISABILITIES "handle_disabilities"
