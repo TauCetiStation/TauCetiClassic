@@ -275,7 +275,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						for(var/i in global.department_accounts)
 							if(t1 == global.department_accounts[i].account_number)
 								tgui_alert(usr, "This is department account, you can't use it.")
-								return				
+								return
 						if(MA.owner_name != src.active1.fields["name"])
 							tgui_alert(usr, "[src.active1.fields["name"]] is not owner of this money account.")
 							return
@@ -284,7 +284,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						if(R)
 							tgui_alert(usr, "This money account is already used by [R.fields["id"]] record.")
 							return
-						
+
 						for(var/mob/living/carbon/human/H as anything in global.human_list)
 							if(md5(H.dna.uni_identity) != src.active1.fields["fingerprint"])
 								continue
@@ -295,10 +295,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'.", "Insurancer", "Medical", freq = radiochannels["Medical"])
 							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'.", "Insurancer", "Security", freq = radiochannels["Security"])
 							qdel(announcer)
-						
+
 						if(src.active1.fields["insurance_account_number"] != t1)
 							tgui_alert(usr, "Can't match the 'fingerprint' data, please check this and try again.")
-						
+
 				if("sex")
 					if (istype(src.active1, /datum/data/record))
 						if (src.active1.fields["sex"] == "Male")
@@ -373,7 +373,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						src.temp = "<B>Mental Condition:</B><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=insane'>*Insane*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=unstable'>*Unstable*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=watch'>*Watch*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=stable'>Stable</A><BR>"
 				if("b_type")
 					if (istype(src.active2, /datum/data/record))
-						src.temp = "<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=an'>A-</A> <A href='?src=\ref[src];temp=1;b_type=ap'>A+</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=bn'>B-</A> <A href='?src=\ref[src];temp=1;b_type=bp'>B+</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=abn'>AB-</A> <A href='?src=\ref[src];temp=1;b_type=abp'>AB+</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=on'>O-</A> <A href='?src=\ref[src];temp=1;b_type=op'>O+</A><BR>"
+						src.temp = "<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=an'>A(II) Rh-</A> <A href='?src=\ref[src];temp=1;b_type=ap'>A(II) Rh+</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=bn'>B(III) Rh-</A> <A href='?src=\ref[src];temp=1;b_type=bp'>B(III) Rh+</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=abn'>AB(IV) Rh-</A> <A href='?src=\ref[src];temp=1;b_type=abp'>AB(IV) Rh+</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=on'>O(I) Rh-</A> <A href='?src=\ref[src];temp=1;b_type=op'>O(I) Rh+</A><BR>"
 				if("b_dna")
 					if (istype(src.active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input DNA hash:", "Med. records", input_default(src.active1.fields["dna"]), null)  as text)
@@ -428,21 +428,21 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 			if (src.active2)
 				switch(href_list["b_type"])
 					if("an")
-						src.active2.fields["b_type"] = "A-"
+						src.active2.fields["b_type"] = "A(II) Rh-"
 					if("bn")
-						src.active2.fields["b_type"] = "B-"
+						src.active2.fields["b_type"] = "B(III) Rh-"
 					if("abn")
-						src.active2.fields["b_type"] = "AB-"
+						src.active2.fields["b_type"] = "AB(IV) Rh-"
 					if("on")
-						src.active2.fields["b_type"] = "O-"
+						src.active2.fields["b_type"] = "O(I) Rh-"
 					if("ap")
-						src.active2.fields["b_type"] = "A+"
+						src.active2.fields["b_type"] = "A(II) Rh+"
 					if("bp")
-						src.active2.fields["b_type"] = "B+"
+						src.active2.fields["b_type"] = "B(III) Rh+"
 					if("abp")
-						src.active2.fields["b_type"] = "AB+"
+						src.active2.fields["b_type"] = "AB(IV) Rh+"
 					if("op")
-						src.active2.fields["b_type"] = "O+"
+						src.active2.fields["b_type"] = "O(I) Rh+"
 
 
 		if (href_list["del_r"])

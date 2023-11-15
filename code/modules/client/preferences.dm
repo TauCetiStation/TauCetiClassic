@@ -83,7 +83,7 @@ var/global/list/preferences_datums = list()
 	var/neuter_gender_voice = MALE		//for male/female emote sounds but with neuter gender
 	var/age = 30						//age of character
 	var/height = HUMANHEIGHT_MEDIUM		//height of character
-	var/b_type = "A+"					//blood type (not-chooseable)
+	var/b_type = "A(II) Rh+"			//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
 	var/socks = 1						//socks type
@@ -171,6 +171,8 @@ var/global/list/preferences_datums = list()
 	var/glowlevel = GLOW_MED // or bloom
 	var/lampsexposure = TRUE // idk how we should name it
 	var/lampsglare = FALSE // aka lens flare
+	//Impacts performance clientside
+	var/eye_blur_effect = TRUE
 
   //custom loadout
 	var/list/gear = list()

@@ -20,7 +20,7 @@
 	radius_obj = new(get_turf(AM))
 	radius_obj.appearance_flags &= ~TILE_BOUND
 	radius_obj.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	radius_obj.AddComponent(/datum/component/bounded, AM, 0, 0, null, FALSE, FALSE)
+	radius_obj.AddComponent(/datum/component/bounded, AM, 0, 0, null, null, FALSE, FALSE)
 
 	radius_img = image('icons/hud/screen1.dmi', radius_obj, icon_state, ABOVE_LIGHTING_LAYER)
 	radius_img.plane = ABOVE_LIGHTING_PLANE

@@ -198,9 +198,10 @@ var/global/bridge_ooc_colour = "#7b804f"
 			var/track = ""
 			if(isobserver(C.mob) && !isnewplayer(mob))
 				track = FOLLOW_LINK(C.mob, mob)
+			var/remote = ""
 			if (!(C.mob in heard))
-				prefix = "(R)[prefix]"
-			to_chat(C, "[track]<span class='looc'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span>")
+				remote = "(R)"
+			to_chat(C, "[track]<span class='looc'><span class='prefix'>[remote][prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
 /client/verb/fix_ui()
 	set name = "Fix UI"

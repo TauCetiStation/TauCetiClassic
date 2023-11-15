@@ -363,6 +363,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["glowlevel"]         >> glowlevel
 	S["lampsexposure"]     >> lampsexposure
 	S["lampsglare"]        >> lampsglare
+	S["eye_blur_effect"]   >> eye_blur_effect
 	S["auto_fit_viewport"] >> auto_fit_viewport
 	S["lobbyanimation"]    >> lobbyanimation
 	S["tooltip"]           >> tooltip
@@ -419,6 +420,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	glowlevel		= sanitize_integer(glowlevel, GLOW_HIGH, GLOW_DISABLE, initial(glowlevel))
+	eye_blur_effect = sanitize_integer(eye_blur_effect, 0, 1, initial(eye_blur_effect))
 	lampsexposure	= sanitize_integer(lampsexposure, 0, 1, initial(lampsexposure))
 	lampsglare		= sanitize_integer(lampsglare, 0, 1, initial(lampsglare))
 	lobbyanimation	= sanitize_integer(lobbyanimation, 0, 1, initial(lobbyanimation))
@@ -491,6 +493,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]          << parallax
 	S["ambientocclusion"]  << ambientocclusion
 	S["glowlevel"]         << glowlevel
+	S["eye_blur_effect"]   << eye_blur_effect
 	S["lampsexposure"]     << lampsexposure
 	S["lampsglare"]        << lampsglare
 	S["lobbyanimation"]    << lobbyanimation
