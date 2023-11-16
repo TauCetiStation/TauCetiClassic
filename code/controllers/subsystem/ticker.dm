@@ -164,7 +164,7 @@ SUBSYSTEM_DEF(ticker)
 	var/static/admin_delay_announced = FALSE //announce reason only first time
 	if(admin_delayed)
 		if(!admin_delay_announced)
-			to_chat(world, "<span class='info bold'>Рестарт раунда отложен администратором.</span>")
+			to_chat(world, "<span class='info bold'>Рестарт отложен администратором.</span>")
 			world.send2bridge(
 				type = list(BRIDGE_ROUNDSTAT),
 				attachment_msg = "Администратор отложил окончание раунда.",
