@@ -71,9 +71,9 @@
 	var/my_angle
 	if(Cmatrix.b == 1 && Cmatrix.d == -1)
 		my_angle = EAST
-	if(Cmatrix.b == -1 && Cmatrix.d == 1)
+	else if(Cmatrix.b == -1 && Cmatrix.d == 1)
 		my_angle = WEST
-	if(!my_angle)
+	else
 		return
 	var/list/delay_lying = list("[EAST][NORTH][SLOT_L_HAND]" = 1 SECOND,
 								"[EAST][SOUTH][SLOT_L_HAND]" = 1 SECOND,
