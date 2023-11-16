@@ -175,7 +175,7 @@
 	if (profit > 0)
 		dat += "<B>Прибыль станции:</B> +[num2text(profit,50)]<BR>"
 	else if (profit < 0)
-		dat += "<B>Траты станции:</B> [num2text(profit,50)]<BR>"
+		dat += "<B>Убытки станции:</B> [num2text(profit,50)]<BR>"
 	dat += {"<B>Еды съедено:</b> [SSStatistics.score.foodeaten]<BR>
 	<B>Случаи жестокого обращения с клоуном:</B> [SSStatistics.score.clownabuse]<BR><BR>"}
 	if (SSStatistics.score.crew_escaped)
