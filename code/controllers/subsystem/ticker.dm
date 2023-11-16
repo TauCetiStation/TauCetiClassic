@@ -547,14 +547,14 @@ SUBSYSTEM_DEF(ticker)
 					if(!playerTurf)
 						continue
 					if(!is_centcom_level(playerTurf.z))
-						to_chat(Player, "<font color='blue'><b>Вам удалось выжить, но вы были брошены на станции [station_name()]...</b></FONT>")
+						to_chat(Player, "<font color='blue'><b>Вам удалось выжить, но вы были брошены на станции [station_name_ru()]...</b></FONT>")
 					else
 						num_escapees++
-						to_chat(Player, "<font color='green'><b>Вам удалось пережить события на станции [station_name()] как [Player.real_name].</b></FONT>")
+						to_chat(Player, "<font color='green'><b>Вам удалось пережить события на станции [station_name_ru()] как [Player.real_name].</b></FONT>")
 				else
-					to_chat(Player, "<font color='green'><b>Вам удалось пережить события на станции [station_name()] как [Player.real_name].</b></FONT>")
+					to_chat(Player, "<font color='green'><b>Вам удалось пережить события на станции [station_name_ru()] как [Player.real_name].</b></FONT>")
 			else
-				to_chat(Player, "<font color='red'><b>Вы не пережили событий, произошедших на станции [station_name()]...</b></FONT>")
+				to_chat(Player, "<font color='red'><b>Вы не пережили событий, произошедших на станции [station_name_ru()]...</b></FONT>")
 
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
