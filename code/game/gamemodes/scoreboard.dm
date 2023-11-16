@@ -153,7 +153,7 @@
 	var/totalfunds = station_account.money
 	dat += {"<B><U>ОБЩАЯ СТАТИСТИКА</U></B><BR>
 	<U>ХОРОШО:</U><BR>
-	<B>Полезные ящики отгружены:</B> [SSStatistics.score.stuffshipped] ([SSStatistics.score.stuffshipped * 75] очков)<BR>
+	<B>Ящиков отгружено:</B> [SSStatistics.score.stuffshipped] ([SSStatistics.score.stuffshipped * 75] очков)<BR>
 	<B>Урожай, полученный в гидропонике:</B> [SSStatistics.score.stuffharvested] ([SSStatistics.score.stuffharvested] очков)<BR>
 	<B>Руды добыто:</B> [SSStatistics.score.oremined] ([SSStatistics.score.oremined] очков)<BR>
 	<B>Приготовлено закусок:</B> [SSStatistics.score.meals] ([SSStatistics.score.meals * 5] очков)<BR>
@@ -161,7 +161,7 @@
 	dat += "<B>Cбежавшие на шаттле:</B> [SSStatistics.score.crew_escaped] ([SSStatistics.score.crew_escaped * 25] очков)<BR>"
 	dat += {"<B>Случайные события пережили:</B> [SSStatistics.score.eventsendured] ([SSStatistics.score.eventsendured * 50] очков)<BR>
 	<B>Электропитание по всей станции:</B> [SSStatistics.score.powerbonus ? "Да" : "Нет"] ([SSStatistics.score.powerbonus * 2500] очков)<BR>
-	<B>Ультра чистота на станции:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([SSStatistics.score.messbonus * 3000] очков)<BR><BR>
+	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([SSStatistics.score.messbonus * 3000] очков)<BR><BR>
 	<U>ПЛОХО:</U><BR>
 	<B>Успешность действий антоганистов:</B> [SSStatistics.score.roleswon] (-[SSStatistics.score.roleswon * 250] очков)<BR>
 	<B>Мёртвые тела на станции:</B> [SSStatistics.score.crew_dead] (-[SSStatistics.score.crew_dead * 250] очков)<BR>
@@ -179,10 +179,10 @@
 	dat += {"<B>Еды съедено:</b> [SSStatistics.score.foodeaten]<BR>
 	<B>Случаи жестокого обращения с клоуном:</B> [SSStatistics.score.clownabuse]<BR><BR>"}
 	if (SSStatistics.score.crew_escaped)
-		dat += "<B>Самый богатый беглец:</B> [SSStatistics.score.richestname], [SSStatistics.score.richestjob]: [SSStatistics.score.richestcash] credits ([SSStatistics.score.richestkey])<BR>"
-		dat += "<B>Самый избитый беглец:</B> [SSStatistics.score.dmgestname], [SSStatistics.score.dmgestjob]: [SSStatistics.score.dmgestdamage] damage ([SSStatistics.score.dmgestkey])<BR>"
+		dat += "<B>Самый богатый эвакуировавшийся:</B> [SSStatistics.score.richestname], [SSStatistics.score.richestjob]: [SSStatistics.score.richestcash] credits ([SSStatistics.score.richestkey])<BR>"
+		dat += "<B>Самый избитый эвакуировавшийся:</B> [SSStatistics.score.dmgestname], [SSStatistics.score.dmgestjob]: [SSStatistics.score.dmgestdamage] damage ([SSStatistics.score.dmgestkey])<BR>"
 	else
-		dat += "Станция не была эвакуирована, и никто не спасся!<BR>"
+		dat += "Станция не была эвакуирована, или никто не эвакуировался!<BR>"
 	dat += {"<HR><BR>
 	<B><U>ФИНАЛЬНЫЙ СЧЁТ: [SSStatistics.score.crewscore]</U></B><BR>"}
 	SSStatistics.score.rating = "Аристократы!"
