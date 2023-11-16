@@ -51,12 +51,51 @@
 	if(two_hand_weapon)
 		to_chat(user, "<span class='warning'>[two_hand_weapon].</span>")
 
-/obj/item/weapon/gun/proc/ready_to_fire()
-	if(world.time >= last_fired + fire_delay)
-		last_fired = world.time
-		return 1
+/obj/item/weapon/gun/proc/ready_to_fire(mob/user)
+	. = TRUE
+	if(world.time < last_fired + fire_delay)
+		. = FALSE
+		return
+	last_fired = world.time
+	if(!user.lying)
+		return
+	if(!iscarbon(user))
+		return
+	var/mob/living/carbon/C = user
+	var/handles_hand
+	if(C.l_hand == src)
+		handles_hand = "[SLOT_L_HAND]"
+	else if(C.r_hand == src)
+		handles_hand = "[SLOT_R_HAND]"
 	else
-		return 0
+		return
+	var/matrix/Cmatrix = C.default_transform
+	var/my_angle
+	if(Cmatrix.b == 1 && Cmatrix.d == -1)
+		my_angle = EAST
+	if(Cmatrix.b == -1 && Cmatrix.d == 1)
+		my_angle = WEST
+	if(!my_angle)
+		return
+	var/list/delay_lying = list("[EAST][NORTH][SLOT_L_HAND]" = 1.5 SECONDS,
+								"[EAST][SOUTH][SLOT_L_HAND]" = 1.5 SECONDS,
+								"[EAST][EAST][SLOT_L_HAND]" = 3 SECONDS,
+								"[EAST][WEST][SLOT_L_HAND]" = 3 SECONDS,
+								"[WEST][NORTH][SLOT_L_HAND]" = 3 SECONDS,
+								"[WEST][SOUTH][SLOT_L_HAND]" = 3 SECONDS,
+								"[WEST][EAST][SLOT_L_HAND]" = 3 SECONDS,
+								"[WEST][WEST][SLOT_L_HAND]" = 1.5 SECONDS,
+								"[EAST][NORTH][SLOT_R_HAND]" = 3 SECONDS,
+								"[EAST][SOUTH][SLOT_R_HAND]" = 3 SECONDS,
+								"[EAST][EAST][SLOT_R_HAND]" = 1.5 SECONDS,
+								"[EAST][WEST][SLOT_R_HAND]" = 3 SECONDS,
+								"[WEST][NORTH][SLOT_R_HAND]" = 1.5 SECONDS,
+								"[WEST][SOUTH][SLOT_R_HAND]" = 1.5 SECONDS,
+								"[WEST][EAST][SLOT_R_HAND]" = 3 SECONDS,
+								"[WEST][WEST][SLOT_R_HAND]" = 3 SECONDS,
+								)
+	var/added_delay = delay_lying["[my_angle][C.dir][handles_hand]"]
+	last_fired += added_delay
 
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
@@ -173,7 +212,7 @@
 	if(!special_check(user, target))
 		return
 
-	if (!ready_to_fire())
+	if (!ready_to_fire(user))
 		if (world.time % 3) //to prevent spam
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
