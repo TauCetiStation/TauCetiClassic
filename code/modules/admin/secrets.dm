@@ -662,7 +662,7 @@
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 			for(var/mob/living/carbon/human/H as anything in human_list)
 				if(H.dna && H.ckey)
-					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
+					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.b_type]</td></tr>"
 			dat += "</table>"
 
 			var/datum/browser/popup = new(usr, "DNA", "Showing DNA from blood", 440, 410)

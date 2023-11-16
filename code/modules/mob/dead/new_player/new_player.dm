@@ -121,34 +121,7 @@
 		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
 			if(!client)
 				return
-			var/mob/dead/observer/observer = new()
-
-			spawning = 1
-			playsound_stop(CHANNEL_MUSIC) // MAD JAMS cant last forever yo
-
-
-			observer.started_as_observer = 1
-			close_spawn_windows()
-			var/obj/O = locate("landmark*Observer-Start")
-			to_chat(src, "<span class='notice'>Now teleporting.</span>")
-			observer.loc = O.loc
-			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
-
-			// client.prefs.update_preview_icon()
-			// observer.icon = client.prefs.preview_icon
-			observer.icon = 'icons/mob/mob.dmi'
-			observer.icon_state = "ghost"
-
-			observer.alpha = 127
-
-			if(client.prefs.be_random_name)
-				client.prefs.real_name = random_name(client.prefs.gender)
-			observer.real_name = client.prefs.real_name
-			observer.name = observer.real_name
-			if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
-				observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
-			observer.key = key
-			qdel(src)
+			spawn_as_observer()
 
 			return
 
@@ -210,6 +183,35 @@
 		return FALSE
 	return TRUE
 
+/mob/dead/new_player/proc/spawn_as_observer()
+	var/mob/dead/observer/observer = new()
+	spawning = 1
+	playsound_stop(CHANNEL_MUSIC) // MAD JAMS cant last forever yo
+
+	observer.started_as_observer = 1
+	close_spawn_windows()
+	var/obj/O = locate("landmark*Observer-Start")
+	to_chat(src, "<span class='notice'>Now teleporting.</span>")
+	observer.loc = O.loc
+	observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
+
+	// client.prefs.update_preview_icon()
+	// observer.icon = client.prefs.preview_icon
+	observer.icon = 'icons/mob/mob.dmi'
+	observer.icon_state = "ghost"
+
+	observer.alpha = 127
+
+	if(client.prefs.be_random_name)
+		client.prefs.real_name = random_name(client.prefs.gender)
+	observer.real_name = client.prefs.real_name
+	observer.name = observer.real_name
+	if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
+		observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
+	observer.key = key
+	qdel(src)
+
+	return observer
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if (src != usr)
@@ -433,7 +435,6 @@
 
 	new_character.name = real_name
 	new_character.dna.ready_dna(new_character)
-	new_character.dna.b_type = client.prefs.b_type
 	new_character.dna.UpdateSE()
 	new_character.dna.original_character_name = new_character.real_name
 	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)
