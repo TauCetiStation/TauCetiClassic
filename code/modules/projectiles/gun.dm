@@ -57,9 +57,7 @@
 		. = FALSE
 		return
 	last_fired = world.time
-	if(!user.lying)
-		return
-	if(!iscarbon(user))
+	if(!user || !user.lying || !iscarbon(user))
 		return
 	var/mob/living/carbon/C = user
 	var/handles_hand
