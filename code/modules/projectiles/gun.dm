@@ -75,22 +75,22 @@
 		my_angle = WEST
 	if(!my_angle)
 		return
-	var/list/delay_lying = list("[EAST][NORTH][SLOT_L_HAND]" = 1.5 SECONDS,
-								"[EAST][SOUTH][SLOT_L_HAND]" = 1.5 SECONDS,
-								"[EAST][EAST][SLOT_L_HAND]" = 3 SECONDS,
+	var/list/delay_lying = list("[EAST][NORTH][SLOT_L_HAND]" = 1 SECOND,
+								"[EAST][SOUTH][SLOT_L_HAND]" = 1 SECOND,
+								"[EAST][EAST][SLOT_L_HAND]" = 1 SECOND,
 								"[EAST][WEST][SLOT_L_HAND]" = 3 SECONDS,
 								"[WEST][NORTH][SLOT_L_HAND]" = 3 SECONDS,
 								"[WEST][SOUTH][SLOT_L_HAND]" = 3 SECONDS,
 								"[WEST][EAST][SLOT_L_HAND]" = 3 SECONDS,
-								"[WEST][WEST][SLOT_L_HAND]" = 1.5 SECONDS,
+								"[WEST][WEST][SLOT_L_HAND]" = 1 SECOND,
 								"[EAST][NORTH][SLOT_R_HAND]" = 3 SECONDS,
 								"[EAST][SOUTH][SLOT_R_HAND]" = 3 SECONDS,
-								"[EAST][EAST][SLOT_R_HAND]" = 1.5 SECONDS,
+								"[EAST][EAST][SLOT_R_HAND]" = 1 SECOND,
 								"[EAST][WEST][SLOT_R_HAND]" = 3 SECONDS,
-								"[WEST][NORTH][SLOT_R_HAND]" = 1.5 SECONDS,
-								"[WEST][SOUTH][SLOT_R_HAND]" = 1.5 SECONDS,
+								"[WEST][NORTH][SLOT_R_HAND]" = 1 SECOND,
+								"[WEST][SOUTH][SLOT_R_HAND]" = 1 SECOND,
 								"[WEST][EAST][SLOT_R_HAND]" = 3 SECONDS,
-								"[WEST][WEST][SLOT_R_HAND]" = 3 SECONDS,
+								"[WEST][WEST][SLOT_R_HAND]" = 1 SECOND,
 								)
 	var/added_delay = delay_lying["[my_angle][C.dir][handles_hand]"]
 	last_fired += added_delay
