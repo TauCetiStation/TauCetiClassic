@@ -618,7 +618,7 @@ SUBSYSTEM_DEF(ticker)
 	L.real_name = L.name
 	L.mind.skills.add_available_skillset(/datum/skillset/max)
 	L.mind.skills.maximize_active_skills()
-	to_chat(L, "<span class='warning'>Добро пожаловать на арену Смертельных игр в конце раунда! Разгуляйся и выпусти пар!</span>")
+	to_chat(L, "<span class='warning'>Добро пожаловать на арену Смертельных игр! Разгуляйся, выпусти пар и покажи кто здесь батя!</span>")
 
 /datum/controller/subsystem/ticker/proc/achievement_declare_completion()
 	var/text = "<br><FONT size = 5><b>Кроме того, достижения получили следующие игроки:</b></FONT>"
