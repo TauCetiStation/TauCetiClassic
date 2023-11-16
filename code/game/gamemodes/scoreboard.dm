@@ -154,10 +154,10 @@
 	dat += {"<B><U>ОБЩАЯ СТАТИСТИКА</U></B><BR>
 	<U>ХОРОШО:</U><BR>
 	<B>Ящиков отгружено:</B> [SSStatistics.score.stuffshipped] ([SSStatistics.score.stuffshipped * 75] очков)<BR>
-	<B>Урожай, полученный в гидропонике:</B> [SSStatistics.score.stuffharvested] ([SSStatistics.score.stuffharvested] очков)<BR>
+	<B>Урожая собрано:</B> [SSStatistics.score.stuffharvested] ([SSStatistics.score.stuffharvested] очков)<BR>
 	<B>Руды добыто:</B> [SSStatistics.score.oremined] ([SSStatistics.score.oremined] очков)<BR>
 	<B>Приготовлено закусок:</B> [SSStatistics.score.meals] ([SSStatistics.score.meals * 5] очков)<BR>
-	<B>Завершенных исследований:</B> [SSStatistics.score.researchdone] ([SSStatistics.score.researchdone * 30] очков)<BR>"}
+	<B>Исследований завершено:</B> [SSStatistics.score.researchdone] ([SSStatistics.score.researchdone * 30] очков)<BR>"}
 	dat += "<B>Cбежавшие на шаттле:</B> [SSStatistics.score.crew_escaped] ([SSStatistics.score.crew_escaped * 25] очков)<BR>"
 	dat += {"<B>Случайные события пережили:</B> [SSStatistics.score.eventsendured] ([SSStatistics.score.eventsendured * 50] очков)<BR>
 	<B>Электропитание по всей станции:</B> [SSStatistics.score.powerbonus ? "Да" : "Нет"] ([SSStatistics.score.powerbonus * 2500] очков)<BR>
@@ -165,9 +165,9 @@
 	<U>ПЛОХО:</U><BR>
 	<B>Успешность действий антоганистов:</B> [SSStatistics.score.roleswon] (-[SSStatistics.score.roleswon * 250] очков)<BR>
 	<B>Мёртвые тела на станции:</B> [SSStatistics.score.crew_dead] (-[SSStatistics.score.crew_dead * 250] очков)<BR>
-	<B>Неубранный мусор:</B> [SSStatistics.score.mess] (-[SSStatistics.score.mess] очков)<BR>
-	<B>Проблемы с электропитанием станции:</B> [SSStatistics.score.powerloss] (-[SSStatistics.score.powerloss * 30] очков)<BR>
-	<B>Распространенные заболевания:</B> [SSStatistics.score.disease] (-[SSStatistics.score.disease * 30] очков)<BR>
+	<B>Неубрано мусора:</B> [SSStatistics.score.mess] (-[SSStatistics.score.mess] очков)<BR>
+	<B>Проблемы с электропитанием на станции:</B> [SSStatistics.score.powerloss] (-[SSStatistics.score.powerloss * 30] очков)<BR>
+	<B>Распространенно заболеваний:</B> [SSStatistics.score.disease] (-[SSStatistics.score.disease * 30] очков)<BR>
 	<B>ИИ уничтожен:</B> [SSStatistics.score.deadaipenalty ? "Да" : "Нет"] (-[SSStatistics.score.deadaipenalty * 250] очков)<BR><BR>
 	<U>Остальное:</U><BR>
 	<B>Итоговый бюджет станции:</B> $[num2text(totalfunds,50)]<BR>"}
