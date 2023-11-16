@@ -303,8 +303,6 @@
 		M.heal_bodypart_damage(REM, 0)
 	if(M.getFireLoss() && prob(80))
 		M.heal_bodypart_damage(0, REM)
-	if(M.getToxLoss() && prob(80))
-		M.adjustToxLoss(-1 * REM)
 
 /datum/reagent/anti_toxin
 	name = "Anti-Toxin (Dylovene)"
