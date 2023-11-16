@@ -634,7 +634,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(!holder.secrets_menu["custom_announce"])
 		holder.secrets_menu["custom_announce"] = new /datum/secrets_menu/custom_announce(usr.client)
-	holder.secrets_menu["custom_announce"].interact()
+	holder.secrets_menu["custom_announce"].interact(usr)
 
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

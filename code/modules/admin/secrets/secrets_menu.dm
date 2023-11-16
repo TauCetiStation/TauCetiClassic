@@ -19,7 +19,10 @@
 /datum/secrets_menu/tgui_status()
 	return UI_INTERACTIVE
 
-/datum/secrets_menu/proc/interact()
+/datum/secrets_menu/proc/interact(mob/user)
+	if(!admin)
+		admin = user.client
+		holder = admin.holder
 	tgui_interact(admin.mob)
 
 /datum/secrets_menu/tgui_interact(mob/user, datum/tgui/ui)
