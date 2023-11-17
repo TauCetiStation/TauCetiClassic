@@ -9675,6 +9675,9 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
+/obj/item/device/microphone/ce{
+	pixel_x = 7
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -9843,6 +9846,10 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/glasses/sunglasses/hud/med,
+/obj/item/device/microphone/cmo{
+	pixel_x = -7;
+	pixel_y = 7
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -28322,9 +28329,14 @@
 "eYr" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/pinpointer/advpinpointer,
-/obj/item/weapon/disk/nuclear,
+/obj/item/weapon/disk/nuclear{
+	pixel_x = -5
+	},
 /obj/machinery/keycard_auth{
 	pixel_x = -28
+	},
+/obj/item/weapon/hand_tele{
+	pixel_x = 7
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -32749,12 +32761,12 @@
 /area/station/hallway/primary/bridgehall)
 "fRJ" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/hand_tele{
-	pixel_x = 5
-	},
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 1;
 	icon_state = "siding_wood_line"
+	},
+/obj/item/device/microphone/cap{
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -40733,6 +40745,10 @@
 	pixel_x = -7;
 	pixel_y = -12
 	},
+/obj/item/device/microphone/hos{
+	pixel_x = 7;
+	pixel_y = 7
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "htX" = (
@@ -40967,6 +40983,9 @@
 /obj/item/device/flashlight/lamp/small{
 	pixel_x = -17;
 	pixel_y = 17
+	},
+/obj/item/device/microphone/rd{
+	pixel_x = -7
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -59673,6 +59692,10 @@
 /obj/item/weapon/flora/deskleaf{
 	pixel_x = 10;
 	pixel_y = -10
+	},
+/obj/item/device/microphone/hop{
+	pixel_x = 9;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
@@ -94452,7 +94475,6 @@
 	pixel_y = -15
 	},
 /obj/item/weapon/storage/box/PDAs{
-	pixel_x = 10;
 	pixel_y = -15
 	},
 /obj/item/device/megaphone{
