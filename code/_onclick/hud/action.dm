@@ -205,6 +205,7 @@
 		img = image(I.icon, src , I.icon_state)
 	else if(owner.button_icon && owner.button_icon_state)
 		img = image(owner.button_icon,src,owner.button_icon_state)
+
 	img.pixel_x = 0
 	img.pixel_y = 0
 	add_overlay(img)

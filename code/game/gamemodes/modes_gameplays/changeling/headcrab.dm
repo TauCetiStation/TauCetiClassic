@@ -4,12 +4,18 @@
 	name = "Last Resort"
 	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
 	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
+	button_icon_state = "last_resort"
 	chemical_cost = 20
 	genomecost = 1
 	req_human = 1
 	req_stat = DEAD
 	max_genetic_damage = 10
 	can_be_used_in_abom_form = FALSE
+
+/obj/effect/proc_holder/changeling/headcrab/can_sting(mob/user, mob/target)
+	. = ..()
+	if(tgui_alert(user, "Are we sure we wish to sacrifice our current body?","Last Resort", list("Yes","No")) != "Yes")
+		return FALSE
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
