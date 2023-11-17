@@ -12,7 +12,7 @@
 	weapon_name_simple = "hammer"
 
 /obj/item/weapon/melee/changeling_hammer
-	name = "oganic hammer"
+	name = "organic hammer"
 	desc = "A mass of tough, boney tissue,reminiscent of hammer."
 	canremove = 0
 	force = 15
