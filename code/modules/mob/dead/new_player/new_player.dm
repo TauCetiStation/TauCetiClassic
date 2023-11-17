@@ -435,7 +435,6 @@
 
 	new_character.name = real_name
 	new_character.dna.ready_dna(new_character)
-	new_character.dna.b_type = client.prefs.b_type
 	new_character.dna.UpdateSE()
 	new_character.dna.original_character_name = new_character.real_name
 	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)

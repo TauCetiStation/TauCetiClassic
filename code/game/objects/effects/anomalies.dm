@@ -246,9 +246,11 @@
 	var/list/coord_of_pylons = list(1, 1)
 	var/list/beams = list()
 
-/obj/effect/anomaly/bluespace/cult_portal/atom_init(mapload, bound = FALSE)
+/obj/effect/anomaly/bluespace/cult_portal/atom_init(mapload, bound = FALSE, bound_extencion_cd)
 	. = ..()
 	need_bound = bound
+	if(bound_extencion_cd)
+		extencion_cd = bound_extencion_cd
 
 	enable()
 	notify_ghosts("Появился портал культа. Нажмите на него, чтобы стать конструктом.", source = src, action = NOTIFY_ATTACK, header = "Cult Portal")
@@ -411,7 +413,8 @@
 	for(var/i in 1 to rand_num)
 		step(C, pick(alldirs))
 	if(need_bound)
-		var/datum/component/bounded/B = C.AddComponent(/datum/component/bounded, src, 0, 7)
+		to_chat(C, "<span class='danger'>Вы чувствуете, что портал нестабилен. Его уничтожение может низвергнуть вас обратно из этой реальности!</span>")
+		var/datum/component/bounded/B = C.AddComponent(/datum/component/bounded, src, 0, 7, null, CALLBACK(C, TYPE_PROC_REF(/mob/living/simple_animal/construct, death)))
 		var/mob/M = B.parent
 		if(M.ckey)
 			extencion_timers[M.ckey] = addtimer(CALLBACK(src, PROC_REF(extencion), B), extencion_cd, TIMER_STOPPABLE)
