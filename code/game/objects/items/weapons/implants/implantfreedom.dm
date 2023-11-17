@@ -20,17 +20,16 @@
 	if (!source.handcuffed)
 		to_chat(source, "You need to be restricted to use freedom implant.")
 		return
-	else
-		uses--
-		to_chat(source, "You feel a faint click.")
-		source.uncuff()
-		source.SetParalysis(0)
-		source.SetStunned(0)
-		source.SetWeakened(0)
-		source.reagents.add_reagent("oxycodone", 5)
-		source.reagents.add_reagent("stimulants", 5)
-		source.reagents.add_reagent("tramadol", 10)
-		source.reagents.add_reagent("paracetamol", 20)
+	uses--
+	to_chat(source, "You feel a faint click.")
+	source.uncuff()
+	source.SetParalysis(0)
+	source.SetStunned(0)
+	source.SetWeakened(0)
+	source.reagents.add_reagent("oxycodone", 5)
+	source.reagents.add_reagent("stimulants", 5)
+	source.reagents.add_reagent("tramadol", 10)
+	source.reagents.add_reagent("paracetamol", 20)
 	return
 
 
