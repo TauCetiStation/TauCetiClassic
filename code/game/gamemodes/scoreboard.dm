@@ -158,9 +158,10 @@
 	<B>Руды добыто:</B> [SSStatistics.score.oremined] ([SSStatistics.score.oremined] очков)<BR>
 	<B>Приготовлено закусок:</B> [SSStatistics.score.meals] ([SSStatistics.score.meals * 5] очков)<BR>
 	<B>Исследований завершено:</B> [SSStatistics.score.researchdone] ([SSStatistics.score.researchdone * 30] очков)<BR>"}
-	dat += "<B>Cбежавшие на шаттле:</B> [SSStatistics.score.crew_escaped] ([SSStatistics.score.crew_escaped * 25] очков)<BR>"
+	dat += "<B>Улетевшие на шаттле и капсулах:</B> [SSStatistics.score.crew_escaped] ([SSStatistics.score.crew_escaped * 25] очков)<BR>"
 	dat += {"<B>Случайные события пережили:</B> [SSStatistics.score.eventsendured] ([SSStatistics.score.eventsendured * 50] очков)<BR>
 	<B>Электропитание по всей станции:</B> [SSStatistics.score.powerbonus ? "Да" : "Нет"] ([SSStatistics.score.powerbonus * 2500] очков)<BR>
+	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([SSStatistics.score.messbonus * 3000] очков)<BR><BR>
 	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([SSStatistics.score.messbonus * 3000] очков)<BR><BR>
 	<U>ПЛОХО:</U><BR>
 	<B>Успешность действий антоганистов:</B> [SSStatistics.score.roleswon] (-[SSStatistics.score.roleswon * 250] очков)<BR>
