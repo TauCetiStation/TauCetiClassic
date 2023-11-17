@@ -50,6 +50,7 @@
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
+	dna.b_type = random_blood_type()
 
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R

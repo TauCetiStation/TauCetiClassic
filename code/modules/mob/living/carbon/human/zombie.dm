@@ -142,10 +142,15 @@
 /datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed)
 	if(!gibbed)
 		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(600,700))
+		to_chat(H, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
+			Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
+			который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
 
-/proc/handle_infected_death(mob/living/carbon/human/H)
-	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
-		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), H), rand(600,700))
+/mob/living/carbon/human/proc/handle_infected_death()
+	if(species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
+		addtimer(CALLBACK(null, PROC_REF(prerevive_zombie), src), rand(600,700))
+		to_chat(src, "<span class='cult'>Твоё сердце останавливается, но вместе с этим просыпается ненасытный ГОЛОД... \
+					Вот только жизнь не покинула твоё бездыханное тело. Этот голод не отпускает тебя, ты ещё восстанешь, что бы распространять болезнь и сеять смерть!</span>")
 
 /proc/prerevive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
@@ -204,7 +209,7 @@
 	H.clear_alert("embeddedobject")
 
 	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
-	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
+	to_chat(H, "<span class='cult'>Твой голод всё также ненасытен! Пора его утолить!</span>")
 	H.visible_message("<span class='danger'>[H] suddenly wakes up!</span>")
 
 /mob/living/carbon/proc/is_infected_with_zombie_virus()
@@ -272,6 +277,10 @@
 			set_species(ZOMBIE_UNATHI, TRUE, TRUE)
 		else
 			set_species(ZOMBIE, TRUE, TRUE)
+
+	to_chat(src, "<span class='cult large'>Ты ГОЛОДЕН!</span><br>\
+	<span class='cult'>Теперь ты зомби! Не пытайся вылечиться, не вреди своим собратьям мёртвым, не помогай какому бы то ни было не-зомби. \
+	Теперь ты - воплощение голода, смерти и жестокости. Распространяй болезнь и УБИВАЙ.</span>")
 
 var/global/list/zombie_list = list()
 
