@@ -2,6 +2,7 @@
 	name = "Digital Camouflage"
 	desc = "By evolving the ability to distort our form and proprotions, we defeat common altgorithms used to detect lifeforms on cameras."
 	helptext = "We cannot be tracked by camera while using this skill. However, humans looking at us will find us... uncanny. We must constantly expend chemicals to maintain our form like this."
+	button_icon_state = "digital_camo"
 	genomecost = 1
 	var/active = FALSE
 
