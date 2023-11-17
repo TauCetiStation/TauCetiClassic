@@ -226,6 +226,7 @@
 		return
 
 	if(!can_spawn(spectator))
+		positions++
 		return
 
 	var/client/C = spectator.client
