@@ -183,7 +183,7 @@
 		dat += "<B>Самый богатый эвакуировавшийся:</B> [SSStatistics.score.richestname], [SSStatistics.score.richestjob]: [SSStatistics.score.richestcash] credits ([SSStatistics.score.richestkey])<BR>"
 		dat += "<B>Самый избитый эвакуировавшийся:</B> [SSStatistics.score.dmgestname], [SSStatistics.score.dmgestjob]: [SSStatistics.score.dmgestdamage] damage ([SSStatistics.score.dmgestkey])<BR>"
 	else
-		dat += "Станция не была эвакуирована, или никто не эвакуировался!<BR>"
+		dat += "Шаттл эвакуации не был вызван, или никто не эвакуировался!<BR>"
 	dat += {"<HR><BR>
 	<B><U>ФИНАЛЬНЫЙ СЧЁТ: [SSStatistics.score.crewscore]</U></B><BR>"}
 	SSStatistics.score.rating = "Аристократы!"
