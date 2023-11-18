@@ -4,7 +4,7 @@
 	icon_state = "particle_protection"
 	item_state = "particle_protection"
 	item_state_world = "particle_protection_w"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
+	armor = list(melee = 25, bullet = 10, laser = 15, energy = 15, bomb = 25, bio = 100, rad = 100)
 
 /obj/item/clothing/head/bio_hood/particle_protection
 	name = "particle protection helmet"
@@ -13,7 +13,7 @@
 	item_state = "particle_protection"
 	item_state_world = "particle_protection_w"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 100)
+	armor = list(melee = 25, bullet = 10, laser = 15, energy = 15, bomb = 25, bio = 100, rad = 100)
 	var/cooldown_sound = 0
 
 /obj/item/clothing/head/bio_hood/particle_protection/equipped(mob/user, slot)
