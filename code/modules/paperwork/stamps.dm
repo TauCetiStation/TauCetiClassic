@@ -18,8 +18,8 @@
 	var/dye_color = DYE_CARGO
 	attack_verb = list("stamped")
 	var/stamp_message = "Stamp"
-	var/stamp_color = "#e27285"
-	var/stamp_border_color = "#b25266"
+	var/stamp_color = "#b25266"
+	var/stamp_border_color = "#753643"
 	var/stamp_border_style = "solid"
 	var/stamp_paper_overlay = "paper_stamp-dots"
 	var/stamp_big = FALSE
@@ -46,19 +46,19 @@
 	. = ..()
 	regenerate_overlays()
 
-/obj/item/weapon/stamp/captain
+/obj/item/weapon/stamp/cap
 	name = "captain's rubber stamp"
 	dye_color = DYE_CAPTAIN
 	stamp_message = "Captain"
-	stamp_color = "#73efe8"
-	stamp_border_color = "#2789cd"
+	stamp_color = "#2b4e95"
+	stamp_border_color = "#1c3362"
 	stamp_paper_overlay = "paper_stamp-circle"
 	stamp_big = TRUE
 	stamp_handle_colored = TRUE
 	stamp_max_offset_x = STAMP_OFFSET_CIRCLE_X
 	stamp_max_offset_y = STAMP_OFFSET_CIRCLE_Y
 
-/obj/item/weapon/stamp/captain/atom_init()
+/obj/item/weapon/stamp/cap/atom_init()
 	. = ..()
 	stamp_message = "[station_name()]"
 
@@ -66,53 +66,75 @@
 	name = "head of personnel's rubber stamp"
 	dye_color = DYE_HOP
 	stamp_message = "Head of Personnel"
-	stamp_color = "#42bfe8"
-	stamp_border_color = "#2789cd"
+	stamp_color = "#2789cd"
+	stamp_border_color = "#1a5a87"
 	stamp_handle_colored = TRUE
 
-/obj/item/weapon/stamp/hos
-	name = "head of security's rubber stamp"
+/obj/item/weapon/stamp/sec
+	name = "security rubber stamp"
 	dye_color = DYE_HOS
+	stamp_message = "Security"
+	stamp_color = "#b9451d"
+	stamp_border_color = "#7a2d13"
+
+/obj/item/weapon/stamp/sec/hos
+	name = "head of security's rubber stamp"
 	stamp_message = "Head of Security"
-	stamp_color = "#e27285"
-	stamp_border_color = "#b25266"
 	stamp_handle_colored = TRUE
 
-/obj/item/weapon/stamp/ce
-	name = "chief engineer's rubber stamp"
+/obj/item/weapon/stamp/eng
+	name = "engineering rubber stamp"
 	dye_color = DYE_CE
+	stamp_message = "Engineering"
+	stamp_color = "#d39741"
+	stamp_border_color = "#8b632b"
+
+/obj/item/weapon/stamp/eng/ce
+	name = "chief engineer's rubber stamp"
 	stamp_message = "Chief Engineer"
-	stamp_color = "#e88a36"
-	stamp_border_color = "#b05b2c"
 	stamp_handle_colored = TRUE
 
-/obj/item/weapon/stamp/rd
-	name = "research director's rubber stamp"
+/obj/item/weapon/stamp/sci
+	name = "research division rubber stamp"
 	dye_color = DYE_RD
+	stamp_message = "Research Division"
+	stamp_color = "#7864c6"
+	stamp_border_color = "#4f4282"
+
+/obj/item/weapon/stamp/sci/rd
+	name = "research director's rubber stamp"
 	stamp_message = "Research Director"
-	stamp_color = "#ceaaed"
-	stamp_border_color = "#7864c6"
 	stamp_handle_colored = TRUE
 
-/obj/item/weapon/stamp/cmo
-	name = "chief medical officer's rubber stamp"
+/obj/item/weapon/stamp/med
+	name = "medbay rubber stamp"
 	dye_color = DYE_CMO
+	stamp_message = "Medbay"
+	stamp_color = "#42bfe8"
+	stamp_border_color = "#2b7e99"
+
+/obj/item/weapon/stamp/med/cmo
+	name = "chief medical officer's rubber stamp"
 	stamp_message = "Chief Medical Officer"
-	stamp_color = "#73efe8"
-	stamp_border_color = "#2789cd"
 	stamp_handle_colored = TRUE
 
-/obj/item/weapon/stamp/qm
-	name = "quartermaster's rubber stamp"
+/obj/item/weapon/stamp/cargo
+	name = "supply rubber stamp"
 	dye_color = DYE_QM
+	stamp_message = "Supply"
+	stamp_color = "#b25266"
+	stamp_border_color = "#753643"
+
+/obj/item/weapon/stamp/cargo/qm
+	name = "quartermaster's rubber stamp"
 	stamp_message = "Quartermaster"
 
 /obj/item/weapon/stamp/approve
 	name = "APPROVED rubber stamp"
 	dye_color = DYE_GREENCOAT
 	stamp_message = "APPROVED"
-	stamp_color = "#8fd032"
-	stamp_border_color = "#42a459"
+	stamp_color = "#61a53f"
+	stamp_border_color = "#406d2a"
 	stamp_paper_overlay = "paper_stamp-check"
 	stamp_big = TRUE
 	stamp_max_offset_x = STAMP_OFFSET_CIRCLE_X - 1
@@ -121,8 +143,8 @@
 	name = "DENIED rubber stamp"
 	dye_color = DYE_REDCOAT
 	stamp_message = "DENIED"
-	stamp_color = "#e27285"
-	stamp_border_color = "#b25266"
+	stamp_color = "#bd1039"
+	stamp_border_color = "#7d0b26"
 	stamp_paper_overlay = "paper_stamp-x"
 	stamp_big = TRUE
 
@@ -131,30 +153,33 @@
 	icon_state = "stamp-clown"
 	dye_color = DYE_CLOWN
 	stamp_message = "HONK!"
-	stamp_color = "#e27285"
-	stamp_border_color = "#b25266"
+	stamp_color = "#f500f5"
+	stamp_border_color = "#bf3fbf"
 	stamp_paper_overlay = "paper_stamp-honk"
 	stamp_big = TRUE
-	stamp_max_offset_x = 0
-	stamp_max_offset_y = 3
+	stamp_max_offset_x = 3
+	stamp_max_offset_y = 5
 
 /obj/item/weapon/stamp/law
 	name = "lawyer's rubber stamp"
 	dye_color = DYE_REDCOAT
 	stamp_message = "Lawyer"
+	stamp_color = "#8aa1f6"
+	stamp_border_color = "#5b6aa2"
 	stamp_paper_overlay = "paper_stamp-circle"
 	stamp_big = TRUE
 	stamp_max_offset_x = STAMP_OFFSET_CIRCLE_X
 	stamp_max_offset_y = STAMP_OFFSET_CIRCLE_Y
 
-/obj/item/weapon/stamp/internalaffairs
+/obj/item/weapon/stamp/iaa
 	name = "internal affairs rubber stamp"
 	dye_color = DYE_IAA
 	stamp_message = "Internal Affairs"
-	stamp_color = "#555963"
-	stamp_border_color = "#322f35"
+	stamp_color = "#323232"
+	stamp_border_color = "#212121"
 	stamp_paper_overlay = "paper_stamp-circle"
 	stamp_big = TRUE
+	stamp_handle_colored = TRUE
 	stamp_max_offset_x = STAMP_OFFSET_CIRCLE_X
 	stamp_max_offset_y = STAMP_OFFSET_CIRCLE_Y
 
@@ -162,8 +187,8 @@
 	name = "centcomm rubber stamp"
 	dye_color = DYE_CENTCOMM
 	stamp_message = "Central Command"
-	stamp_color = "#8fd032"
-	stamp_border_color = "#42a459"
+	stamp_color = "#61a53f"
+	stamp_border_color = "#406d2a"
 	stamp_paper_overlay = "paper_stamp-circle"
 	stamp_big = TRUE
 	stamp_handle_colored = TRUE
@@ -174,8 +199,8 @@
 	name = "cantcom rubber stamp"
 	dye_color = DYE_FAKECENTCOM
 	stamp_message = "Central Compound"
-	stamp_color = "#42a459"
-	stamp_border_color = "#42a459"
+	stamp_color = "#61a53f"
+	stamp_border_color = "#61a53f"
 	stamp_paper_overlay = "paper_stamp-circle"
 	stamp_big = TRUE
 	stamp_handle_colored = TRUE
@@ -186,19 +211,19 @@
 	name = "syndicate rubber stamp"
 	dye_color = DYE_SYNDICATE
 	stamp_message = "Syndicate Command"
-	stamp_color = "#b25266"
-	stamp_border_color = "#64364b"
+	stamp_color = "#bd1039"
+	stamp_border_color = "#7d0b26"
 	stamp_paper_overlay = "paper_stamp-s"
 	stamp_big = TRUE
 	stamp_handle_colored = TRUE
-	stamp_max_offset_x = 1
-	stamp_max_offset_y = 1
+	stamp_max_offset_x = 6
+	stamp_max_offset_y = 2
 
 /obj/item/weapon/stamp/cargo_industries
 	name = "cargo industries rubber stamp"
 	stamp_message = "Cargo Industries"
-	stamp_color = "#f6d896"
-	stamp_border_color = "#b28b78"
+	stamp_color = "#b25266"
+	stamp_border_color = "#753643"
 	stamp_paper_overlay = "paper_stamp-circle"
 	stamp_big = TRUE
 	stamp_handle_colored = TRUE
@@ -208,8 +233,8 @@
 /obj/item/weapon/stamp/velocity
 	name = "velocity rubber stamp"
 	stamp_message = "NTS Velocity"
-	stamp_color = "#73efe8"
-	stamp_border_color = "#2789cd"
+	stamp_color = "#a8a8a8"
+	stamp_border_color = "#4572e3"
 	stamp_paper_overlay = "paper_stamp-circle"
 	stamp_big = TRUE
 	stamp_handle_colored = TRUE
@@ -220,8 +245,8 @@
 	name = "copy is correct rubber stamp"
 	dye_color = DYE_HOP
 	stamp_message = "Копия верна"
-	stamp_color = "#42bfe8"
-	stamp_border_color = "#2789cd"
+	stamp_color = "#2789cd"
+	stamp_border_color = "#1a5a87"
 	stamp_border_style = "dashed"
 
 // Syndicate stamp to forge documents.

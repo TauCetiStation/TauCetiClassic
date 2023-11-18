@@ -11142,7 +11142,7 @@
 /obj/item/weapon/paper_bin{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/captain{
+/obj/item/weapon/stamp/cap{
 	pixel_y = 8
 	},
 /obj/item/weapon/pen/blue{
@@ -15229,7 +15229,7 @@
 "fJZ" = (
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/item/device/megaphone,
-/obj/item/weapon/stamp/qm,
+/obj/item/weapon/stamp/cargo/qm,
 /obj/machinery/light/smart,
 /obj/machinery/computer/guestpass{
 	dir = 1;
@@ -16538,7 +16538,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/obj/item/weapon/stamp/ce{
+/obj/item/weapon/stamp/eng/ce{
 	pixel_y = 13
 	},
 /obj/structure/sign/nanotrasen{
@@ -24751,12 +24751,7 @@
 /obj/structure/table/glass,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
-/obj/item/weapon/stamp{
-	icon_state = "stamp";
-	name = "medbay rubber stamp";
-	stamp_message = "Medbay";
-	stamp_handle_colored = 0
-	},
+/obj/item/weapon/stamp/med,
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	pixel_y = -27;
@@ -27081,11 +27076,9 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp{
-	name = "cargo rubber stamp";
+/obj/item/weapon/stamp/cargo{
 	pixel_x = -3;
-	pixel_y = 3;
-	stamp_message = "Cargo"
+	pixel_y = 3
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -28513,7 +28506,7 @@
 "seD" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/hos,
+/obj/item/weapon/stamp/sec/hos,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -28
 	},
@@ -31890,7 +31883,7 @@
 	network = list("Medical");
 	pixel_y = 25
 	},
-/obj/item/weapon/stamp/cmo{
+/obj/item/weapon/stamp/med/cmo{
 	pixel_x = 12;
 	pixel_y = 6
 	},
@@ -34276,7 +34269,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/obj/item/weapon/stamp/rd{
+/obj/item/weapon/stamp/sci/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
