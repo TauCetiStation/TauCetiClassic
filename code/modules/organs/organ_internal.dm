@@ -332,7 +332,7 @@
 /obj/item/organ/internal/liver/serpentid
 
 /obj/item/organ/internal/liver/serpentid/handle_liver_life()
-	if(damage >= min_bruised_damage)
+	if(is_bruised())
 		if(owner.life_tick % process_accuracy == 0)
 			for(var/datum/reagent/R in owner.reagents.reagent_list)
 				if(istype(R, /datum/reagent/consumable/ethanol))

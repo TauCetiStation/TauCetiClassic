@@ -288,8 +288,7 @@
 /datum/reagent/dexalinp/on_serpentid_digest(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/S = M
-		var/obj/item/organ/internal/IO = S.organs_by_name[O_LIVER]
-		if(IO.damage > IO.min_bruised_damage)
+		if(S.is_bruised_organ(O_LIVER))
 			return FALSE
 	M.adjustOxyLoss(-M.getOxyLoss())
 	return TRUE
