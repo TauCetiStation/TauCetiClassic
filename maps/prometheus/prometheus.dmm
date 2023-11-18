@@ -33458,6 +33458,10 @@
 	pixel_x = 4;
 	pixel_y = -30
 	},
+/obj/item/device/microphone/hop{
+	pixel_x = -7;
+	pixel_y = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "hsq" = (
@@ -42415,6 +42419,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/device/microphone/hos{
+	pixel_x = 7;
+	pixel_y = 7
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "jHo" = (
@@ -47777,6 +47785,9 @@
 	pixel_y = 6
 	},
 /obj/structure/table/glass,
+/obj/item/device/microphone/cmo{
+	pixel_x = -11
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -54261,6 +54272,10 @@
 	id = "CE";
 	name = "CE Shutters Control";
 	req_access = list(56)
+	},
+/obj/item/device/microphone/ce{
+	pixel_x = -7;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -78639,6 +78654,9 @@
 	pixel_y = -7
 	},
 /obj/structure/table/woodentable,
+/obj/item/device/microphone/rd{
+	pixel_x = -6
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -87158,6 +87176,10 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/pen,
+/obj/item/device/microphone/cap{
+	pixel_x = 7;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "uTa" = (

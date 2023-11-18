@@ -243,6 +243,7 @@
 
 /obj/effect/proc_holder/changeling/manage_essencies
 	name = "Manage Essencies"
+	button_icon_state = "manage_essensies"
 	genomecost = 0
 	req_stat = UNCONSCIOUS
 	var/mob/living/parasite/essence/choosen_essence
