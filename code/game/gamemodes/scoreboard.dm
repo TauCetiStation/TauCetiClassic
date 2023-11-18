@@ -175,6 +175,9 @@
 	<B>ИИ уничтожен:</B> [SSStatistics.score.deadaipenalty ? "Да" : "Нет"] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.deadaipenalty * 250)] )<BR><BR>
 	<U>Остальное:</U><BR>
 	<B>Итоговый бюджет станции:</B> $[num2text(totalfunds,50)]<BR>"}
+	
+	#undef PLURALIZE_RUSSIAN_POINTS
+	
 	var/profit = totalfunds - global.initial_station_money
 	if (profit > 0)
 		dat += "<B>Прибыль станции:</B> +[num2text(profit,50)]<BR>"
