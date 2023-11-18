@@ -33,7 +33,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/next_point_to = 0
 
 	var/datum/orbit_menu/orbit_menu
-	var/datum/spawners_menu/spawners_menu
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 

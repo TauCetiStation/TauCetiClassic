@@ -315,7 +315,8 @@
 /obj/item/device/flashlight/emp/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-
+	if(!on)
+		return
 	if(emp_cur_charges)
 		emp_cur_charges--
 

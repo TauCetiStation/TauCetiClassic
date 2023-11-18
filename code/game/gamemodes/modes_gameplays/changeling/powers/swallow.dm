@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/devour
 	name = "Devour"
 	desc = "Devour our prey whole."
+	button_icon_state = "gib"
 	chemical_cost = 30
 	genomecost = 0
 	max_genetic_damage = 100
