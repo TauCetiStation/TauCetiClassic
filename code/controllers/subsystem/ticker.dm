@@ -135,7 +135,7 @@ SUBSYSTEM_DEF(ticker)
 
 					world.send2bridge(
 						type = list(BRIDGE_ROUNDSTAT),
-						attachment_title = "Раунд #[global.round_id] окончился",
+						attachment_title = "Раунд #[global.round_id] закончился",
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
 
@@ -146,11 +146,11 @@ SUBSYSTEM_DEF(ticker)
 					if (station_was_nuked)
 						feedback_set_details("end_proper","nuke")
 						if(!admin_delayed)
-							to_chat(world, "<span class='notice'><B>Рестарт из-за уничтожения станции через [restart_timeout/10] секунд.</B></span>")
+							to_chat(world, "<span class='notice'><B>Рестарт из-за уничтожения станции через [restart_timeout/10] [pluralize_russian(get_vote_time(), "секунда", "секунды", "секунд")].</B></span>")
 					else
 						feedback_set_details("end_proper","proper completion")
 						if(!admin_delayed)
-							to_chat(world, "<span class='notice'><B>Рестарт через [restart_timeout/10] секунд.</B></span>")
+							to_chat(world, "<span class='notice'><B>Рестарт через [restart_timeout/10] [pluralize_russian(get_vote_time(), "секунда", "секунды", "секунд")].</B></span>")
 
 					end_timer_id = addtimer(CALLBACK(src, PROC_REF(try_to_end)), restart_timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
@@ -508,11 +508,11 @@ SUBSYSTEM_DEF(ticker)
 			var/robokey = robo.mind ? robo.mind.key : robo.key
 			if (!robo.connected_ai)
 				if (robo.stat != DEAD)
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) выжил как непривязанный киборг к ИИ! Их законы были таковы:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) выжил как непривязанный киборг к ИИ! Его законы были таковы:</B>"}
 				else
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) не смог выдержать суровых условий жизни киборга без искусственного интеллекта. Их законы были таковы:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) не смог выдержать суровых условий жизни киборга без ИИ. Его законы были таковы:</B>"}
 			else
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) [robo.stat!=2?"выжил":"уничтоженный"] как киборг, подчиненный [robo.connected_ai]! Их законы были таковы:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) [robo.stat!=2?"выжил":"уничтоженный"] как киборг, подчиненный [robo.connected_ai]! Его законы были таковы:</B>"}
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)
@@ -550,11 +550,11 @@ SUBSYSTEM_DEF(ticker)
 						to_chat(Player, "<font color='blue'><b>Вам удалось выжить, но вы были брошены на [station_name_ru()]...</b></FONT>")
 					else
 						num_escapees++
-						to_chat(Player, "<font color='green'><b>Вам удалось пережить события на станции [station_name_ru()] как [Player.real_name].</b></FONT>")
+						to_chat(Player, "<font color='green'><b>Вам удалось пережить события на [station_name_ru()] как [Player.real_name].</b></FONT>")
 				else
-					to_chat(Player, "<font color='green'><b>Вам удалось пережить события на станции [station_name_ru()] как [Player.real_name].</b></FONT>")
+					to_chat(Player, "<font color='green'><b>Вам удалось пережить события на [station_name_ru()] как [Player.real_name].</b></FONT>")
 			else
-				to_chat(Player, "<font color='red'><b>Вы не пережили событий, произошедших на станции [station_name_ru()]...</b></FONT>")
+				to_chat(Player, "<font color='red'><b>Вы не пережили событий, произошедших на [station_name_ru()]...</b></FONT>")
 
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
