@@ -153,6 +153,7 @@
 			dat += "</li>"
 		dat += "</ul>"
 
+	#define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "[points] очко", "[points] очка", "[points] очков")
 	var/totalfunds = station_account.money
 	dat += {"<B><U>ОБЩАЯ СТАТИСТИКА</U></B><BR>
 	<U>ХОРОШО:</U><BR>
