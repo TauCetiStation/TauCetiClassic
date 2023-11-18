@@ -128,6 +128,7 @@
 /obj/item/weapon/stamp/cargo/qm
 	name = "quartermaster's rubber stamp"
 	stamp_message = "Quartermaster"
+	stamp_handle_colored = TRUE
 
 /obj/item/weapon/stamp/approve
 	name = "APPROVED rubber stamp"
