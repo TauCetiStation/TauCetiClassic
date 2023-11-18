@@ -131,6 +131,7 @@
 			if(E.client)
 				E.scorestats(completions)
 
+// For Ru Translation points
 #define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "[points] очка", "[points] очка", "[points] очков")
 
 /datum/controller/subsystem/ticker/proc/scorestats(completions)
@@ -169,9 +170,9 @@
 	<B>Успешность действий антоганистов:</B> [SSStatistics.score.roleswon] (-[SSStatistics.score.roleswon * 250] очков)<BR>
 	<B>Мёртвые тела на станции:</B> [SSStatistics.score.crew_dead] (-[SSStatistics.score.crew_dead * 250] очков)<BR>
 	<B>Неубрано мусора:</B> [SSStatistics.score.mess] (-[SSStatistics.score.mess] очков)<BR>
-	<B>Проблемы с электропитанием на станции:</B> [SSStatistics.score.powerloss] (-[SSStatistics.score.powerloss * 30] очков)<BR>
-	<B>Распространенно заболеваний:</B> [SSStatistics.score.disease] (-[SSStatistics.score.disease * 30] очков)<BR>
-	<B>ИИ уничтожен:</B> [SSStatistics.score.deadaipenalty ? "Да" : "Нет"] (-[SSStatistics.score.deadaipenalty * 250] очков)<BR><BR>
+	<B>Проблемы с электропитанием на станции:</B> [SSStatistics.score.powerloss] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.powerloss * 30)] очков)<BR>
+	<B>Распространенно заболеваний:</B> [SSStatistics.score.disease] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.disease * 30)] очков)<BR>
+	<B>ИИ уничтожен:</B> [SSStatistics.score.deadaipenalty ? "Да" : "Нет"] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.deadaipenalty * 250)] очков)<BR><BR>
 	<U>Остальное:</U><BR>
 	<B>Итоговый бюджет станции:</B> $[num2text(totalfunds,50)]<BR>"}
 	var/profit = totalfunds - global.initial_station_money
@@ -182,8 +183,8 @@
 	dat += {"<B>Еды съедено:</b> [SSStatistics.score.foodeaten]<BR>
 	<B>Случаи жестокого обращения с клоуном:</B> [SSStatistics.score.clownabuse]<BR><BR>"}
 	if (SSStatistics.score.crew_escaped)
-		dat += "<B>Самый богатый эвакуировавшийся:</B> [SSStatistics.score.richestname], [SSStatistics.score.richestjob]: [SSStatistics.score.richestcash] credits ([SSStatistics.score.richestkey])<BR>"
-		dat += "<B>Самый избитый эвакуировавшийся:</B> [SSStatistics.score.dmgestname], [SSStatistics.score.dmgestjob]: [SSStatistics.score.dmgestdamage] damage ([SSStatistics.score.dmgestkey])<BR>"
+		dat += "<B>Самый богатый эвакуировавшийся:</B> [SSStatistics.score.richestname], [SSStatistics.score.richestjob]: [SSStatistics.score.richestcash] кредитов ([SSStatistics.score.richestkey])<BR>"
+		dat += "<B>Самый избитый эвакуировавшийся:</B> [SSStatistics.score.dmgestname], [SSStatistics.score.dmgestjob]: [SSStatistics.score.dmgestdamage] урона ([SSStatistics.score.dmgestkey])<BR>"
 	else
 		dat += "Шаттл эвакуации не был вызван, или никто не эвакуировался!<BR>"
 	dat += {"<HR><BR>
