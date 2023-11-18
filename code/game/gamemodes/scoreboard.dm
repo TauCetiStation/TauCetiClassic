@@ -156,23 +156,23 @@
 	var/totalfunds = station_account.money
 	dat += {"<B><U>ОБЩАЯ СТАТИСТИКА</U></B><BR>
 	<U>ХОРОШО:</U><BR>
-	<B>Ящиков отгружено:</B> [SSStatistics.score.stuffshipped] ([SSStatistics.score.stuffshipped * 75] очков)<BR>
-	<B>Урожая собрано:</B> [SSStatistics.score.stuffharvested] ([SSStatistics.score.stuffharvested] очков)<BR>
-	<B>Руды добыто:</B> [SSStatistics.score.oremined] ([SSStatistics.score.oremined] очков)<BR>
-	<B>Приготовлено закусок:</B> [SSStatistics.score.meals] ([SSStatistics.score.meals * 5] очков)<BR>
-	<B>Исследований завершено:</B> [SSStatistics.score.researchdone] ([SSStatistics.score.researchdone * 30] очков)<BR>"}
-	dat += "<B>Улетевшие на шаттле и капсулах:</B> [SSStatistics.score.crew_escaped] ([SSStatistics.score.crew_escaped * 25] очков)<BR>"
-	dat += {"<B>Случайные события пережили:</B> [SSStatistics.score.eventsendured] ([SSStatistics.score.eventsendured * 50] очков)<BR>
-	<B>Электропитание по всей станции:</B> [SSStatistics.score.powerbonus ? "Да" : "Нет"] ([SSStatistics.score.powerbonus * 2500] очков)<BR>
-	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([SSStatistics.score.messbonus * 3000] очков)<BR><BR>
-	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([SSStatistics.score.messbonus * 3000] очков)<BR><BR>
+	<B>Ящиков отгружено:</B> [SSStatistics.score.stuffshipped] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.stuffshipped * 75)])<BR>
+	<B>Урожая собрано:</B> [SSStatistics.score.stuffharvested] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.stuffharvested)])<BR>
+	<B>Руды добыто:</B> [SSStatistics.score.oremined] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.oremined)])<BR>
+	<B>Приготовлено закусок:</B> [SSStatistics.score.meals] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.meals * 5)])<BR>
+	<B>Исследований завершено:</B> [SSStatistics.score.researchdone] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.researchdone * 30)])<BR>"}
+	dat += "<B>Улетевшие на шаттле и капсулах:</B> [SSStatistics.score.crew_escaped] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.crew_escaped * 25)])<BR>"
+	dat += {"<B>Случайные события пережили:</B> [SSStatistics.score.eventsendured] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.eventsendured * 50)])<BR>
+	<B>Электропитание по всей станции:</B> [SSStatistics.score.powerbonus ? "Да" : "Нет"] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.powerbonus * 2500)])<BR>
+	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.messbonus * 3000)])<BR><BR>
+	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.messbonus * 3000)])<BR><BR>
 	<U>ПЛОХО:</U><BR>
-	<B>Успешность действий антоганистов:</B> [SSStatistics.score.roleswon] (-[SSStatistics.score.roleswon * 250] очков)<BR>
-	<B>Мёртвые тела на станции:</B> [SSStatistics.score.crew_dead] (-[SSStatistics.score.crew_dead * 250] очков)<BR>
-	<B>Неубрано мусора:</B> [SSStatistics.score.mess] (-[SSStatistics.score.mess] очков)<BR>
-	<B>Проблемы с электропитанием на станции:</B> [SSStatistics.score.powerloss] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.powerloss * 30)] очков)<BR>
-	<B>Распространенно заболеваний:</B> [SSStatistics.score.disease] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.disease * 30)] очков)<BR>
-	<B>ИИ уничтожен:</B> [SSStatistics.score.deadaipenalty ? "Да" : "Нет"] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.deadaipenalty * 250)] очков)<BR><BR>
+	<B>Успешность действий антоганистов:</B> [SSStatistics.score.roleswon] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.roleswon * 250)])<BR>
+	<B>Мёртвые тела на станции:</B> [SSStatistics.score.crew_dead] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.crew_dead * 250)])<BR>
+	<B>Неубрано мусора:</B> [SSStatistics.score.mess] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.mess)])<BR>
+	<B>Проблемы с электропитанием на станции:</B> [SSStatistics.score.powerloss] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.powerloss * 30)])<BR>
+	<B>Распространенно заболеваний:</B> [SSStatistics.score.disease] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.disease * 30)])<BR>
+	<B>ИИ уничтожен:</B> [SSStatistics.score.deadaipenalty ? "Да" : "Нет"] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.deadaipenalty * 250)] )<BR><BR>
 	<U>Остальное:</U><BR>
 	<B>Итоговый бюджет станции:</B> $[num2text(totalfunds,50)]<BR>"}
 	var/profit = totalfunds - global.initial_station_money
