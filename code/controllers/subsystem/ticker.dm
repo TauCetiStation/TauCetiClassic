@@ -150,7 +150,7 @@ SUBSYSTEM_DEF(ticker)
 					else
 						feedback_set_details("end_proper","proper completion")
 						if(!admin_delayed)
-							to_chat(world, "<span class='notice'><B>Рестарт через [restart_timeout/10] [pluralize_russian(restart_timeout(), "секунда", "секунды", "секунд")].</B></span>")
+							to_chat(world, "<span class='notice'><B>Рестарт через [restart_timeout/10] [pluralize_russian(restart_timeout/10(), "секунда", "секунды", "секунд")].</B></span>")
 
 					end_timer_id = addtimer(CALLBACK(src, PROC_REF(try_to_end)), restart_timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
