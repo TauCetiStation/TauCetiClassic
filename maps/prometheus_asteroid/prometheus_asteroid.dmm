@@ -11636,10 +11636,10 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/stamp{
-	icon_state = "stamp-rd";
+	icon_state = "stamp";
 	name = "research outpost rubber stamp";
 	pixel_y = -10;
-	stamp_border = "#7f4ba2";
+	stamp_border_color = "#7f4ba2";
 	stamp_color = "#9361b5";
 	stamp_message = "Research Outpost"
 	},

@@ -24752,9 +24752,10 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
 /obj/item/weapon/stamp{
-	icon_state = "stamp-cmo";
+	icon_state = "stamp";
 	name = "medbay rubber stamp";
-	stamp_message = "Medbay"
+	stamp_message = "Medbay";
+	stamp_handle_colored = 0
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc{
