@@ -566,7 +566,7 @@ SUBSYSTEM_DEF(ticker)
 	if(joined_player_list.len)
 		to_chat(world, "<BR>[TAB]Общая численность персонала: <B>[joined_player_list.len]</B>")
 		if(station_evacuated)
-			to_chat(world, "<BR>[TAB]Процент эвакуировавшихся: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
+			to_chat(world, "<BR>[TAB]Эвакуировалось: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
 		to_chat(world, "<BR>[TAB]Процент выживших: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>")
 	to_chat(world, "<BR>")
 
