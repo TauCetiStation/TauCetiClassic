@@ -207,7 +207,7 @@ SUBSYSTEM_DEF(ticker)
 
 		if(!runnable_modes.len)
 			current_state = GAME_STATE_PREGAME
-			to_chat(world, "<B>Невозможно выбрать игровой режим.</B> Возвращение к предыгровому лобби.")
+			to_chat(world, "<B>Невозможно выбрать игровой режим.</B> Возвращение в предыгровое лобби.")
 			// Players can initiate gamemode vote again
 			var/datum/poll/gamemode_vote = SSvote.possible_polls[/datum/poll/gamemode]
 			if(gamemode_vote)
