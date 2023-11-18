@@ -295,7 +295,7 @@ SUBSYSTEM_DEF(ticker)
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 	)
 
-	world.log << "Начало игры [(world.timeofday - init_start)/10]s"
+	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 
 	to_chat(world, "<FONT color='blue'><B>Приятной игры!</B></FONT>")
 	for(var/mob/M as anything in player_list)

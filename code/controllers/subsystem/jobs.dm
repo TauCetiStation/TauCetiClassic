@@ -463,7 +463,7 @@ SUBSYSTEM_DEF(job)
 		if(!spawn_mark)
 			if(!fallback_landmark)
 				fallback_landmark = locate("start*Fallback-Start")
-			warning("Не удалось найти позицию спавна для [rank]. Использование резервной позиции для спавна!")
+			warning("Failed to find spawn position for [rank]. Using fallback spawn position!")
 			spawn_mark = fallback_landmark
 
 		if(istype(spawn_mark, /obj/effect/landmark/start) && istype(spawn_mark.loc, /turf))
