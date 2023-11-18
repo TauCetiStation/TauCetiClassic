@@ -131,9 +131,6 @@
 			if(E.client)
 				E.scorestats(completions)
 
-// For Ru Translation points
-#define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "[points] очко", "[points] очка", "[points] очков")
-
 /datum/controller/subsystem/ticker/proc/scorestats(completions)
 	var/dat = completions
 	dat += {"<h2>Статистика и рейтинги раунда</h2><div class='Section'>"}
@@ -175,9 +172,9 @@
 	<B>ИИ уничтожен:</B> [SSStatistics.score.deadaipenalty ? "Да" : "Нет"] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.deadaipenalty * 250)] )<BR><BR>
 	<U>Остальное:</U><BR>
 	<B>Итоговый бюджет станции:</B> $[num2text(totalfunds,50)]<BR>"}
-	
+
 	#undef PLURALIZE_RUSSIAN_POINTS
-	
+
 	var/profit = totalfunds - global.initial_station_money
 	if (profit > 0)
 		dat += "<B>Прибыль станции:</B> +[num2text(profit,50)]<BR>"
