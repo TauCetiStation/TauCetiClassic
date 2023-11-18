@@ -89,12 +89,18 @@
 	return ..()
 
 
-/obj/item/projectile/proc/check_living_shield(mob/living/carbon/C)
-	for(var/obj/item/weapon/grab/grab in C.GetGrabs())
-		if(grab.state >= GRAB_NECK && !grab.affecting.lying)
-			if(is_the_opposite_dir(C.dir, dir))
-				return grab.affecting
-	return C
+/obj/item/projectile/proc/check_living_shield(mob/living/carbon/human/H)
+	var/obj/item/weapon/grab/grab = null
+	if(istype(H.r_hand,/obj/item/weapon/grab))
+		grab = H.r_hand
+	else if(istype(H.l_hand,/obj/item/weapon/grab))
+		grab = H.l_hand
+	if(!grab)
+		return H
+	if(grab.state >= GRAB_NECK && !grab.affecting.lying)
+		if(is_the_opposite_dir(H.dir, dir))
+			return grab.affecting
+	return H
 
 /obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	impact_effect(effect_transform)		// generate impact effect
@@ -169,10 +175,6 @@
 			if(length(mobs) > 0)
 				A = pick(mobs) // pick random alive mob as target
 				A_loc = A.loc
-		
-	if(iscarbon(A))
-		A = check_living_shield(A)
-		A_loc = A.loc
 
 	var/forcedodge = 0 // force the projectile to pass
 	var/mob/living/M = isliving(A) ? A : null
