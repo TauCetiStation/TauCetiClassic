@@ -7,5 +7,5 @@
 	minimum_players_bundles = 1
 
 /datum/game_mode/imposter/announce()
-	to_chat(world, "<B>The current game mode is - Imposter!</B>")
-	to_chat(world, "<B>There is a imposter on the station!</B>")
+	to_chat(world, "<B>Текущий режим игры - Самозванец!</B>")
+	to_chat(world, "<B>Среди нас 1 предатель...</B>")
