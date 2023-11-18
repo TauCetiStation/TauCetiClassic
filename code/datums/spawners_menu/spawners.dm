@@ -155,8 +155,11 @@
 		return
 
 	if(!register_only)
-		positions--
-		do_spawn(spectator)
+		if(positions < 1)
+			to_chat(spectator, "<span class='notice'>Нет свободных позиций для роли.</span>")
+		else
+			positions--
+			do_spawn(spectator)
 		return
 
 	// todo: registration for multiple spawners?
@@ -222,9 +225,6 @@
 	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
-	if(positions < 1)
-		return
-
 	if(!can_spawn(spectator))
 		positions++
 		return
