@@ -1847,7 +1847,15 @@
 		NO_MINORCUTS = TRUE,
 		NO_MED_HEALTH_SCAN = TRUE,
 		)
-	//primitive = SNAKE TODO
+	has_organ = list(
+		 O_HEART   = /obj/item/organ/internal/heart
+		,O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes
+		,O_LUNGS   = /obj/item/organ/internal/lungs
+		,O_LIVER   = /obj/item/organ/internal/liver/serpentid
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
+	/obj/item/organ/internal/liver/serpentid
 	restricted_inventory_slots = list(SLOT_L_EAR, SLOT_R_EAR, SLOT_SHOES, SLOT_GLASSES, SLOT_GLOVES, SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_WEAR_MASK)
 	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT + 50
 	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 80
@@ -1868,6 +1876,9 @@
 	)
 	. = ..()
 
+/datum/species/serpentid/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_serpentid_digest(M)
+
 /datum/species/serpentid/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
 	SIGNAL_HANDLER
 	if(!istype(I, /obj/item/weapon/holder) && !istype(I, /obj/item/organ))
@@ -1886,6 +1897,7 @@
 	H.update_hair()
 	RegisterSignal(H, COMSIG_HUMAN_ATTACKBY, PROC_REF(try_eat_item))
 	RegisterSignal(H, COMSIG_GRAB_KILL_UPGRADE, PROC_REF(try_tear_body))
+	H.reagents.add_reagent("dexalinp", 3.0)
 
 /datum/species/serpentid/on_loose(mob/living/carbon/human/H, new_species)
 	UnregisterSignal(H, list(COMSIG_HUMAN_ATTACKBY, COMSIG_GRAB_KILL_UPGRADE))
