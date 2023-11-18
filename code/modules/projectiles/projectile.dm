@@ -166,7 +166,7 @@
 			for(var/mob/living/L in A_loc)
 				if(L.stat != DEAD)
 					mobs += L
-			if(mobs.len > 0)
+			if(length(mobs) > 0)
 				A = pick(mobs) // pick random alive mob as target
 				A_loc = A.loc
 		
