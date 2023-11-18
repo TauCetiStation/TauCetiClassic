@@ -371,6 +371,12 @@
 
 	skeleton_type = SKELETON_UNATHI
 
+	sprite_sheets = list(
+		SPRITE_SHEET_HEAD     = 'icons/mob/species/unathi/helmet.dmi',
+		SPRITE_SHEET_SUIT     = 'icons/mob/species/unathi/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
+	)
+
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
 
@@ -441,6 +447,12 @@
 
 	skeleton_type = SKELETON_TAJARAN
 
+	sprite_sheets = list(
+		SPRITE_SHEET_HEAD     = 'icons/mob/species/tajaran/helmet.dmi',
+		SPRITE_SHEET_SUIT     = 'icons/mob/species/tajaran/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
+	)
+
 /datum/species/tajaran/on_gain(mob/living/M)
 	..()
 	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
@@ -501,6 +513,11 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_SKRELL
+
+	sprite_sheets = list(
+		SPRITE_SHEET_HEAD = 'icons/mob/species/skrell/helmet.dmi',
+		SPRITE_SHEET_SUIT = 'icons/mob/species/skrell/suit.dmi'
+	)
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
