@@ -57,6 +57,21 @@
 	. = ..()
 	InitSpawnArea()
 
+/area/asteroid/mine/unexplored/Entered(atom/movable/A, atom/OldLoc)
+	. = ..()
+	if(!ismob(A) || istype(A, /mob/living/simple_animal/hostile/asteroid))
+		return
+	var/mob/M = A
+	M.overlay_fullscreen("mine_veil", /atom/movable/screen/fullscreen/oxy, 7)
+	to_chat(A, "<span class='warning'>suspension of particles obstructs the view</span>")
+
+/area/asteroid/mine/unexplored/Exited(atom/movable/A, atom/NewLoc)
+	. = ..()
+	if(!ismob(A) || istype(A, /mob/living/simple_animal/hostile/asteroid))
+		return
+	var/mob/M = A
+	M.clear_fullscreen("mine_veil")
+
 // Creates the spawn area component for this area.
 /area/asteroid/mine/unexplored/proc/InitSpawnArea()
 	// 8 is 1 more than client's view. So mobs spawn right after the view's border
