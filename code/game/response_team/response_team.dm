@@ -79,7 +79,7 @@ var/global/can_call_ert
 		var/objective_choice = tgui_alert(usr, "У этого ОБР есть предусмотренная задача. Хотите поменять?", "ERT", list("Нет", "Да"))
 		if(objective_choice == "Да")
 			changing_objective = TRUE
-			custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Настроить цели", "Помогите экипажу станции"))
+			custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Настройка цели", "Помогите экипажу станции"))
 	else
 		custom_objective = sanitize(input(usr, "Какая задача будет у ОБР?", "Настроить цели", "Помогите экипажу станции"))
 		changing_objective = TRUE
