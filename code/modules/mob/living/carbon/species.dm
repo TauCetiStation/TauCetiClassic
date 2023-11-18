@@ -1855,7 +1855,6 @@
 		,O_LIVER   = /obj/item/organ/internal/liver/serpentid
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
-	/obj/item/organ/internal/liver/serpentid
 	restricted_inventory_slots = list(SLOT_L_EAR, SLOT_R_EAR, SLOT_SHOES, SLOT_GLASSES, SLOT_GLOVES, SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_WEAR_MASK)
 	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT + 50
 	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 80
