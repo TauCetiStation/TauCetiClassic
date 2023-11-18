@@ -89,18 +89,12 @@
 	return ..()
 
 
-/obj/item/projectile/proc/check_living_shield(mob/living/carbon/human/H)
-	var/obj/item/weapon/grab/grab = null
-	if(istype(H.r_hand,/obj/item/weapon/grab))
-		grab = H.r_hand
-	else if(istype(H.l_hand,/obj/item/weapon/grab))
-		grab = H.l_hand
-	if(!grab)
-		return H
-	if(grab.state >= GRAB_NECK && !grab.affecting.lying)
-		if(is_the_opposite_dir(H.dir, dir))
-			return grab.affecting
-	return H
+/obj/item/projectile/proc/check_living_shield(mob/living/carbon/C)
+	for(var/obj/item/weapon/grab/grab in C.GetGrabs())
+		if(grab.state >= GRAB_NECK && !grab.affecting.lying)
+			if(is_the_opposite_dir(C.dir, dir))
+				return grab.affecting
+	return C
 
 /obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	impact_effect(effect_transform)		// generate impact effect
@@ -162,11 +156,29 @@
 	if((bumped && !forced) || (A in permutated))
 		return 0
 
+	var/turf/A_loc = isturf(A) ?  A : A.loc
+	if(!(A.flags & ON_BORDER)) // target is not on border 
+		if(!isturf(original) && (original.loc == A_loc))
+			A = original // target on the same tile as original, pick original
+			A_loc = A.loc
+		else // original is turf or somewhere else -> try to find mob target
+			var/list/mobs = list()
+			for(var/mob/living/L in A_loc)
+				if(L.stat != DEAD)
+					mobs += L
+			if(mobs.len > 0)
+				A = pick(mobs) // pick random alive mob as target
+				A_loc = A.loc
+		
+	if(iscarbon(A))
+		A = check_living_shield(A)
+		A_loc = A.loc
+
 	var/forcedodge = 0 // force the projectile to pass
 	var/mob/living/M = isliving(A) ? A : null
 	bumped = 1
 	if(firer && M)
-		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
+		var/distance = get_dist(starting, loc) //More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
 		if(damage && (distance > 7))
 			if(damage >= 50)
@@ -184,18 +196,6 @@
 			forcedodge = PROJECTILE_FORCE_MISS
 
 	if(!forcedodge)
-		if(istype(A,/turf) && A.density) // if it's a wall - try to pick stuck mob first to prevent abuses (why? it's better to prevent mobs in the walls at all)
-			for(var/mob/living/ML in A)
-				A = ML
-				// todo: exeption?
-				break
-
-		if(ismob(A)) // if it's a mob - pick one random from turf, not the one with biggest layer. Prevents some abuses with crawl.
-			var/list/mobs = list()
-			for(var/mob/living/ML in get_turf(A.loc))
-				mobs += ML
-			A = pick(mobs)
-
 		forcedodge = A.bullet_act(src, def_zone) // finally try to shot something
 
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
@@ -203,19 +203,14 @@
 			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
 			playsound(M.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
 
-		if(istype(A, /turf))
-			loc = A
-		else
-			loc = A.loc
+		forceMove(A_loc)
 		bumped = FALSE // reset bumped variable!
 		permutated.Add(A)
 
 		return FALSE
 
-	density = FALSE
-	invisibility = 101
 	qdel(src)
-	return 1
+	return TRUE
 
 
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0)
