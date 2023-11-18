@@ -166,18 +166,16 @@
 	var/mob/living/M = isliving(A) ? A : null
 	bumped = 1
 	if(firer && M)
-		if(!isliving(A))
-			loc = A.loc
-			return 0// nope.avi
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
 		if(damage && (distance > 7))
-			if(damage < 55)
+			if(damage >= 50)
+				miss_modifier = -100 // so sniper rifle and PTR-rifle projectiles cannot miss
+			else
 				damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
-				miss_modifier = - 100 // so sniper rifle and PTR-rifle projectiles cannot miss
 		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
 			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
-			if (daddy.target && (original in daddy.target)) //As opposed to no-delay pew pew
+			if (daddy.target && (M in daddy.target)) //As opposed to no-delay pew pew
 				miss_modifier -= 60
 		if(distance > 1)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
