@@ -508,7 +508,7 @@ SUBSYSTEM_DEF(ticker)
 			var/robokey = robo.mind ? robo.mind.key : robo.key
 			if (!robo.connected_ai)
 				if (robo.stat != DEAD)
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) выжил как непривязанный киборг к ИИ! Его законы были таковы:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) выжил как непривязанный к ИИ киборг! Его законы были таковы:</B>"}
 				else
 					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) не смог выдержать суровых условий жизни киборга без ИИ. Его законы были таковы:</B>"}
 			else

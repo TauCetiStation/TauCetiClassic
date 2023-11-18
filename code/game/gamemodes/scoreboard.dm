@@ -165,13 +165,12 @@
 	dat += {"<B>Случайные события пережили:</B> [SSStatistics.score.eventsendured] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.eventsendured * 50)])<BR>
 	<B>Электропитание по всей станции:</B> [SSStatistics.score.powerbonus ? "Да" : "Нет"] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.powerbonus * 2500)])<BR>
 	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.messbonus * 3000)])<BR><BR>
-	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.messbonus * 3000)])<BR><BR>
 	<U>ПЛОХО:</U><BR>
 	<B>Успешность действий антоганистов:</B> [SSStatistics.score.roleswon] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.roleswon * 250)])<BR>
 	<B>Мёртвые тела на станции:</B> [SSStatistics.score.crew_dead] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.crew_dead * 250)])<BR>
-	<B>Неубрано мусора:</B> [SSStatistics.score.mess] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.mess)])<BR>
+	<B>Не убрано мусора:</B> [SSStatistics.score.mess] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.mess)])<BR>
 	<B>Проблемы с электропитанием на станции:</B> [SSStatistics.score.powerloss] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.powerloss * 30)])<BR>
-	<B>Распространенно заболеваний:</B> [SSStatistics.score.disease] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.disease * 30)])<BR>
+	<B>Распространено заболеваний:</B> [SSStatistics.score.disease] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.disease * 30)])<BR>
 	<B>ИИ уничтожен:</B> [SSStatistics.score.deadaipenalty ? "Да" : "Нет"] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.deadaipenalty * 250)] )<BR><BR>
 	<U>Остальное:</U><BR>
 	<B>Итоговый бюджет станции:</B> $[num2text(totalfunds,50)]<BR>"}

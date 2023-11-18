@@ -213,7 +213,7 @@
 	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
 
 /datum/game_mode/proc/GetScoreboard()
-	completition_text = "<h2>Фракции & Роли</h2>"
+	completition_text = "<h2>Фракции & Антагонисты</h2>"
 	var/exist = FALSE
 	for(var/datum/faction/F in factions)
 		F.calculate_completion()
@@ -235,7 +235,7 @@
 		completition_text += R.GetScoreboard()
 		completition_text += "</div>"
 	if (!exist)
-		completition_text += "(Роли отсуствовали)"
+		completition_text += "(Антагонисты отсуствовали)"
 	completition_text += "<BR>"
 	count_survivors()
 
