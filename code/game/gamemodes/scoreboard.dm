@@ -132,7 +132,7 @@
 				E.scorestats(completions)
 
 // For Ru Translation points
-#define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "[points] очка", "[points] очка", "[points] очков")
+#define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "[points] очко", "[points] очка", "[points] очков")
 
 /datum/controller/subsystem/ticker/proc/scorestats(completions)
 	var/dat = completions
