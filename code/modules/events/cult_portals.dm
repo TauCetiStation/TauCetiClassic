@@ -25,7 +25,7 @@
 		return
 
 	var/turf/T = pick(turfs)
-	var/obj/effect/anomaly/bluespace/cult_portal/C = new(T, TRUE)
+	var/obj/effect/anomaly/bluespace/cult_portal/C = new(T, TRUE, 2 MINUTES)
 	newAnomaly = C
 	C.spawns = max_constructs
 	C.send_request_to_ghost()

@@ -157,9 +157,9 @@
 				if(!activated)
 					activated = TRUE
 					H.visible_message("<span class='danger'>[H] suddenly closes \his eyes. \His body falls lifeless and stops moving. \He seems to stop breathing.</span>")
-					H.SetSleeping(600 SECONDS)
-					handle_infected_death(H)
-					H.update_canmove()
+					H.suiciding = TRUE
+					H.adjustOxyLoss(max(H.maxHealth * 2 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss(), 0))
+					H.updatehealth()
 					disease.dead = TRUE
 
 /datum/disease2/effect/zombie/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
