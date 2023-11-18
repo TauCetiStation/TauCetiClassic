@@ -300,6 +300,7 @@
 	var/y = rand(0, stamp_max_offset_y)
 
 	var/image/stamp_overlay = image("icon" = icon, "icon_state" = stamp_paper_overlay)
+	stamp_overlay.appearance_flags |= KEEP_TOGETHER
 	stamp_overlay.color = stamp_color
 
 	stamp_overlay.pixel_x = x
@@ -312,6 +313,7 @@
 
 	// Yes, if there is no such state, icon will be empty
 	var/image/border_overlay = image("icon" = icon, "icon_state" = "[stamp_paper_overlay]-border")
+	stamp_overlay.appearance_flags |= KEEP_TOGETHER
 	border_overlay.color = stamp_border_color
 
 	border_overlay.pixel_x = x
