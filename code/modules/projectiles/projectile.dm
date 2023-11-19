@@ -163,22 +163,14 @@
 		return 0
 
 	var/turf/A_loc = isturf(A) ?  A : A.loc
-	if(!(A.flags & ON_BORDER)) // target is not on border 
-		if(!isturf(original) && (original.loc == A_loc))
-			A = original // target on the same tile as original, pick original
-			A_loc = A.loc
-		else // original is turf or somewhere else -> try to find mob target
-			var/list/mobs = list()
-			for(var/mob/living/L in A_loc)
-				if(L.stat != DEAD)
-					mobs += L
-			if(length(mobs) > 0)
-				A = pick(mobs) // pick random alive mob as target
-				A_loc = A.loc
-
 	var/forcedodge = 0 // force the projectile to pass
 	var/mob/living/M = isliving(A) ? A : null
-	bumped = 1
+
+	if(!isturf(original) && original.loc == A_loc)
+		A = original
+		A_loc = original.loc
+
+	bumped = TRUE
 	if(firer && M)
 		var/distance = get_dist(starting, loc) //More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
@@ -251,17 +243,6 @@
 		Move(location.return_turf())
 		if(QDELING(src))
 			return
-
-		if(!bumped && !isturf(original))
-			if(loc == get_turf(original))
-				if(isturf(original.loc))
-					if(!(original in permutated))
-						if(Bump(original))
-							return
-				else//if target is in mecha/crate/MULE/etc
-					if(!(original.loc in permutated))
-						if(Bump(original.loc))
-							return
 
 		if(first_step)
 			if(boolet_number == 1) // so that it won't spam with muzzle effects incase of multiple pellets.

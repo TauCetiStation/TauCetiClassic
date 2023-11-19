@@ -97,50 +97,103 @@
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
 
+/proc/get_exit_bump_target(turf/T, atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+	var/atom/second_obstacle = null
+	var/turf/mover_loc = mover.loc
+	//First, check objects to block exit
+	for(var/obj/obstacle as anything in mover_loc)
+		if(mover != obstacle && forget != obstacle)
+			if(!obstacle.CheckExit(mover, T))
+				if(obstacle.flags & ON_BORDER)
+					if(isnull(second_obstacle))
+						second_obstacle = obstacle
+				else
+					return obstacle
+
+	return second_obstacle // obstacle on border  or null
+
+/proc/get_projectile_bump_target(turf/T, obj/item/projectile/mover, atom/forget as mob|obj|turf|area)
+	var/atom/second_obstacle = get_exit_bump_target(T, mover, forget)
+
+	if(second_obstacle)
+		return second_obstacle
+
+	second_obstacle = null
+	var/mob/living/alive_obstacle
+	var/turf/mover_loc = mover.loc
+	var/atom/priority_target = mover.original
+
+	if(!isturf(priority_target) && priority_target.loc == T)
+		if(isliving(priority_target))
+			alive_obstacle = priority_target
+		else
+			second_obstacle = priority_target
+
+	//Next, check objects to block entry
+	for(var/atom/movable/obstacle as anything in T)
+		if((forget != obstacle) && !obstacle.CanPass(mover, mover_loc, 1))
+			if(!(obstacle in mover.permutated) && (obstacle != mover.firer))
+				if(obstacle.flags & ON_BORDER)
+					return obstacle
+				if(isnull(alive_obstacle))
+					if(isliving(obstacle))
+						var/mob/living/L = obstacle
+						if(L.stat != DEAD)
+							alive_obstacle = obstacle
+					if(isnull(second_obstacle))
+						second_obstacle = obstacle
+
+	//Then living on turf
+	if(alive_obstacle)
+		return alive_obstacle
+
+	//Then, check the turf itself
+	if (!T.CanPass(mover, T))
+		return T
+
+	// Not living obstacle not on border or null
+	return second_obstacle
+
+/proc/get_bump_target(turf/T, atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+	var/second_obstacle = get_exit_bump_target(T, mover, forget)
+
+	if(second_obstacle)
+		return second_obstacle
+
+	var/turf/mover_loc = mover.loc
+	//Next, check objects to block entry
+	for(var/atom/movable/obstacle as anything in T)
+		if(forget != obstacle)
+			if(!obstacle.CanPass(mover, mover_loc, 1))
+				if(obstacle.flags & ON_BORDER)
+					return obstacle
+				else if(isnull(second_obstacle))
+					second_obstacle = obstacle
+
+	//Then, check the turf itself
+	if (!T.CanPass(mover, T))
+		return T
+
+	// obstacle not on border or null
+	return second_obstacle
+
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
 		return FALSE
 
-	var/list/second_check = list()
-	var/turf/mover_loc = mover.loc
-	//First, check objects to block exit that are not on the border
-	for(var/obj/obstacle in mover_loc)
-		if(mover != obstacle && forget != obstacle)
-			if(obstacle.flags & ON_BORDER)
-				second_check += obstacle
-			else if(!obstacle.CheckExit(mover, src))
-				mover.Bump(obstacle, TRUE)
-				return FALSE
+	var/atom/bump_target
 
-	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle as anything in second_check)
-		if(!border_obstacle.CheckExit(mover, src))
-			mover.Bump(border_obstacle, TRUE)
-			return FALSE
+	if(istype(mover, /obj/item/projectile))
+		bump_target = get_projectile_bump_target(src, mover, forget)
+	else
+		bump_target = get_bump_target(src, mover, forget)
 
-	second_check.Cut()
-	//Next, check objects to block entry that are on the border
-	for(var/atom/movable/border_obstacle as anything in src)
-		if(forget != border_obstacle)
-			if(border_obstacle.flags & ON_BORDER)
-				if(!border_obstacle.CanPass(mover, mover_loc, 1))
-					mover.Bump(border_obstacle, TRUE)
-					return FALSE
-			else
-				second_check += border_obstacle
-
-	//Then, check the turf itself
-	if (!CanPass(mover, src))
-		mover.Bump(src, TRUE)
+	if(bump_target)
+		mover.Bump(bump_target, TRUE)
 		return FALSE
 
-	//Finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle as anything in second_check)
-		if(!obstacle.CanPass(mover, mover_loc, 1))
-			mover.Bump(obstacle, TRUE)
-			return FALSE
-	return TRUE //Nothing found to block so return success!
+	return TRUE
 
 /turf/proc/is_mob_placeable(mob/M) // todo: maybe rewrite as COMSIG_ATOM_INTERCEPT_TELEPORT
 	if(density)
