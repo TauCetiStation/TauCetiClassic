@@ -377,9 +377,12 @@
 /datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.unathi_equip(H)
 
-/datum/species/unathi/on_gain(mob/living/M)
+/datum/species/unathi/on_gain(mob/living/carbon/human/M)
 	..()
 	M.verbs += /mob/living/carbon/human/proc/air_sample
+	M.r_belly = HEX_VAL_RED(base_color)
+	M.g_belly = HEX_VAL_GREEN(base_color)
+	M.b_belly = HEX_VAL_BLUE(base_color)
 
 /datum/species/unathi/on_loose(mob/living/M, new_species)
 	M.verbs -= /mob/living/carbon/human/proc/air_sample
