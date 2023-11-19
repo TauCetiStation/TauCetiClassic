@@ -131,6 +131,7 @@
 			if(E.client)
 				E.scorestats(completions)
 
+#define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "[points] очко", "[points] очка", "[points] очков")
 /datum/controller/subsystem/ticker/proc/scorestats(completions)
 	var/dat = completions
 	dat += {"<h2>Статистика и рейтинги раунда</h2><div class='Section'>"}
@@ -150,7 +151,6 @@
 			dat += "</li>"
 		dat += "</ul>"
 
-	#define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "[points] очко", "[points] очка", "[points] очков")
 	var/totalfunds = station_account.money
 	dat += {"<B><U>ОБЩАЯ СТАТИСТИКА</U></B><BR>
 	<U>ХОРОШО:</U><BR>
@@ -172,8 +172,6 @@
 	<B>ИИ уничтожен:</B> [SSStatistics.score.deadaipenalty ? "Да" : "Нет"] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.deadaipenalty * 250)] )<BR><BR>
 	<U>Остальное:</U><BR>
 	<B>Итоговый бюджет станции:</B> $[num2text(totalfunds,50)]<BR>"}
-
-	#undef PLURALIZE_RUSSIAN_POINTS
 
 	var/profit = totalfunds - global.initial_station_money
 	if (profit > 0)
@@ -215,6 +213,7 @@
 	log_game(dat)
 
 	return dat
+#undef PLURALIZE_RUSSIAN_POINTS
 
 /mob/proc/scorestats(completions)//omg why we count this for every player
 	// Show the score - might add "ranks" later
