@@ -606,7 +606,6 @@
 #include "code\game\gamemodes\modes_gameplays\changeling\powers\glands.dm"
 #include "code\game\gamemodes\modes_gameplays\changeling\powers\hand_hammer.dm"
 #include "code\game\gamemodes\modes_gameplays\changeling\powers\hivemind.dm"
-#include "code\game\gamemodes\modes_gameplays\changeling\powers\humanform.dm"
 #include "code\game\gamemodes\modes_gameplays\changeling\powers\lesserform.dm"
 #include "code\game\gamemodes\modes_gameplays\changeling\powers\mimic_voice.dm"
 #include "code\game\gamemodes\modes_gameplays\changeling\powers\mutations.dm"

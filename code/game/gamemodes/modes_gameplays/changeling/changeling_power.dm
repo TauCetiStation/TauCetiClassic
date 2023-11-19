@@ -24,6 +24,10 @@
 		action.holder = src
 		action.Grant(user)
 
+/obj/effect/proc_holder/changeling/Destroy()
+	QDEL_NULL(action)
+	return ..()
+
 /datum/action/innate/changeling
 	button_icon = 'icons/hud/actions_changeling.dmi'
 	background_icon_state = "bg_changeling"
