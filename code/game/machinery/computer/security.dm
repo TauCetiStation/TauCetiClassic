@@ -470,12 +470,6 @@ What a mess.*/
 						active1.fields["insurance_account_number"] = 0
 						active1.fields["insurance_type"] = INSURANCE_NONE
 
-						var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
-						announcer.config(list("Medical" = 1, "Security" = 1))
-						announcer.autosay("[usr] has changed the 'fingerprint' in [active1.fields["id"]] record from '[old_value]' to '[t1]'. All insurance data will be deleted.", "Insurancer", "Medical", freq = radiochannels["Medical"])
-						announcer.autosay("[usr] has changed the 'fingerprint' in [active1.fields["id"]] record from '[old_value]' to '[t1]'. All insurance data will be deleted.", "Insurancer", "Security", freq = radiochannels["Security"])
-						qdel(announcer)
-
 				if("sex")
 					if(istype(active1, /datum/data/record))
 						if(active1.fields["sex"] == "Male")
