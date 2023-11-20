@@ -1,5 +1,14 @@
 /proc/random_blood_type()
-	return pick(4;"O(I) Rh-", 36;"O(I) Rh+", 3;"A(II) Rh-", 28;"A(II) Rh+", 1;"B(III) Rh-", 20;"B(III) Rh+", 1;"AB(IV) Rh-", 5;"AB(IV) Rh+")
+	return pickweight(list(
+		BLOOD_O_MINUS  = 4,
+		BLOOD_O_PLUS   = 36,
+		BLOOD_A_MINUS  = 3,
+		BLOOD_A_PLUS   = 28,
+		BLOOD_B_MINUS  = 1,
+		BLOOD_B_PLUS   = 20,
+		BLOOD_AB_MINUS = 1,
+		BLOOD_AB_PLUS  = 5
+	))
 
 /proc/random_hair_style(gender, species = HUMAN, ipc_head)
 	var/h_style = "Bald"
@@ -251,7 +260,7 @@
 		return TRUE
 	return FALSE
 
-/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information)
+/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information, scan_hallucination = FALSE)
 	var/message = ""
 	var/insurance_type
 
@@ -374,6 +383,9 @@
 				if(HEART_FIBR)
 					message += "<span class='notice'>Состояние сердца пациента: <font color='blue'>Внимание! Сердце подвержено фибрилляции.</font></span><br>"
 			message += "<span class='notice'>Пульс пациента: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] уд/мин.</font></span><br>"
+	var/list/reflist = list(message, scan_hallucination)
+	SEND_SIGNAL(M, COMSIG_LIVING_HEALTHSCAN, reflist)
+	message = reflist[1]
 
 	if(insurance_type)
 		message += "<span class='notice'><font color='blue'>Страховка: [insurance_type]</font></span><br>"

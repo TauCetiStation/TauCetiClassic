@@ -4,19 +4,26 @@ var/global/list/sting_paths
 /obj/effect/proc_holder/changeling/evolution_menu
 	name = "-Evolution Menu-" //Dashes are so it's listed before all the other abilities.
 	desc = "Choose our method of subjugation."
+	button_icon_state = "evolution"
 	genomecost = 0
 
 
 /obj/effect/proc_holder/changeling/evolution_menu/Click()
 	if(!usr || !ischangeling(usr))
 		return
-	var/datum/role/changeling/changeling = usr.mind.GetRoleByType(/datum/role/changeling)
+	sting_action(usr)
+
+/obj/effect/proc_holder/changeling/evolution_menu/can_sting(mob/user)
+	return TRUE
+
+/obj/effect/proc_holder/changeling/evolution_menu/sting_action(mob/user)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 
 	if(!sting_paths)
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
 
 	var/dat = create_menu(changeling)
-	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
