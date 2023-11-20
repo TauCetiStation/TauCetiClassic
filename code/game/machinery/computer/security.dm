@@ -465,7 +465,6 @@ What a mess.*/
 						if(!t1 || active1 != a1 || t1 == active1.fields["fingerprint"])
 							return FALSE
 
-						var/old_value = active1.fields["fingerprint"]
 						active1.fields["fingerprint"] = t1
 						active1.fields["insurance_account_number"] = 0
 						active1.fields["insurance_type"] = INSURANCE_NONE

@@ -252,7 +252,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1 || t1 == src.active1.fields["fingerprint"]))
 							return
 
-						var/old_value = src.active1.fields["fingerprint"]
 						src.active1.fields["fingerprint"] = t1
 						src.active1.fields["insurance_account_number"] = 0
 						src.active1.fields["insurance_type"] = INSURANCE_NONE
@@ -282,7 +281,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						for(var/mob/living/carbon/human/H as anything in global.human_list)
 							if(md5(H.dna.uni_identity) != src.active1.fields["fingerprint"])
 								continue
-							var/old_value = src.active1.fields["insurance_account_number"]
 							src.active1.fields["insurance_account_number"] = t1
 
 						if(src.active1.fields["insurance_account_number"] != t1)
