@@ -15,6 +15,7 @@
 	var/output_to_chat = TRUE
 	var/last_scan = ""
 	var/last_scan_name = ""
+	var/scan_hallucination = FALSE
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
@@ -41,7 +42,7 @@
 			return
 		else
 			add_fingerprint(user)
-			var/dat = health_analyze(M, user, mode, output_to_chat)
+			var/dat = health_analyze(M, user, mode, output_to_chat, null, scan_hallucination)
 			last_scan = dat
 			last_scan_name = M.name
 			if(!output_to_chat)
@@ -152,3 +153,8 @@
 	attack_self(usr)
 	add_fingerprint(usr)
 	return
+
+/obj/item/device/healthanalyzer/psychology
+	name = "Health and Mental Analyzer"
+	desc = "A hand-held body scanner able to distinguish vital and mental signs of the subject."
+	scan_hallucination = TRUE

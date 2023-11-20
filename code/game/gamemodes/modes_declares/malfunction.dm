@@ -9,6 +9,6 @@
 	minimum_players_bundles = 20
 
 /datum/game_mode/malfunction/announce()
-	to_chat(world, "<B>The current game mode is - AI Malfunction!</B>")
-	to_chat(world, "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>")
-	to_chat(world, "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [1800/60] minutes to disable it.")
+	to_chat(world, "<B>Текущий режим игры - Неисправный ИИ!</B>")
+	to_chat(world, "<B>ИИ на спутнике дал сбой и должен быть уничтожен.</B>")
+	to_chat(world, "Спутник ИИ находится глубоко в космосе, и добраться до него можно только с помощью телепортера! У вас есть [1800/60] минут, чтобы отключить ИИ.")
