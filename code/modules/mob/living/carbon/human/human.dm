@@ -54,6 +54,7 @@
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
+	dna.b_type = random_blood_type()
 
 	. = ..()
 
@@ -98,9 +99,6 @@
 
 /mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
-	r_belly = HEX_VAL_RED(species.base_color)
-	g_belly = HEX_VAL_GREEN(species.base_color)
-	b_belly = HEX_VAL_BLUE(species.base_color)
 	. = ..(mapload, UNATHI)
 
 /mob/living/carbon/human/vox/atom_init(mapload)

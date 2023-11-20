@@ -1,8 +1,6 @@
 /datum/spawners_menu
 	var/mob/dead/owner
 
-	var/role_selected = FALSE
-
 /datum/spawners_menu/New(mob/dead/new_owner)
 	if(!istype(new_owner))
 		qdel(src)
@@ -62,7 +60,7 @@
 	if(.)
 		return
 
-	if(role_selected)
+	if(!owner.client || owner.client.is_in_spawner)
 		to_chat(owner, "<span class='notice'>Вы уже выбрали роль!</span>")
 		return
 
@@ -87,7 +85,5 @@
 			spawner.jump(owner)
 			return TRUE
 		if("spawn")
-			role_selected = TRUE
 			spawner.registration(owner)
-			role_selected = FALSE
 			return TRUE

@@ -343,7 +343,7 @@
 ///from grab/s_click(): (grab)
 #define COMSIG_GRAB_KILL_UPGRADE "grab_kill_upgrade"
 
-/// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
+/// from /obj/effect/proc_holder/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
 /// from /mob/living/carbon/proc/finish_monkeyize()
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
@@ -390,3 +390,17 @@
 
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
+
+///from /obj/machinery/door/airlock/bumpopen(), to the carbon who bumped: (airlock)
+#define COMSIG_CARBON_BUMPED_AIRLOCK_OPEN "carbon_bumped_airlock_open"
+/// Return to stop the door opening on bump.
+	#define STOP_BUMP (1<<0)
+
+/// Called from update_health_hud, whenever a bodypart is being updated on the health doll
+#define COMSIG_BODYPART_UPDATING_HEALTH_HUD "bodypart_updating_health_hud"
+	/// Return to override that bodypart's health hud with your own icon
+	#define COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
+
+/// from /proc/health_analyze(): (list/args = list(message, scan_hallucination_boolean))
+/// Consumers are allowed to mutate the scan_results list to add extra information
+#define COMSIG_LIVING_HEALTHSCAN "living_healthscan"

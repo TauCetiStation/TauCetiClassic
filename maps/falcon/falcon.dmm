@@ -2961,6 +2961,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = -22
 	},
+/obj/item/device/microphone/ce{
+	pixel_x = -9
+	},
 /turf/simulated/floor{
 	icon_state = "darkyellow"
 	},
@@ -17287,9 +17290,14 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 31
 	},
-/obj/item/weapon/folder/blue,
+/obj/item/weapon/folder/blue{
+	pixel_x = 5
+	},
 /obj/item/device/megaphone{
 	pixel_y = 14
+	},
+/obj/item/device/microphone/cap{
+	pixel_x = -8
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -22540,6 +22548,10 @@
 /obj/machinery/recharger/wallcharger{
 	pixel_x = 4;
 	pixel_y = -30
+	},
+/obj/item/device/microphone/hop{
+	pixel_x = -7;
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
@@ -28505,6 +28517,10 @@
 	pixel_y = -28
 	},
 /obj/item/clothing/head/beret/sec/hos,
+/obj/item/device/microphone/hos{
+	pixel_x = 7;
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "sfO" = (
@@ -31886,6 +31902,9 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
+/obj/item/device/microphone/cmo{
+	pixel_x = -12
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -34270,6 +34289,10 @@
 	},
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = -28
+	},
+/obj/item/device/microphone/rd{
+	pixel_y = 10;
+	pixel_x = 5
 	},
 /turf/simulated/floor{
 	dir = 8;
