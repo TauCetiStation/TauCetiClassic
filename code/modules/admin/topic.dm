@@ -1371,7 +1371,7 @@
 
 		if(config.allow_admin_rev)
 			L.revive()
-			message_admins("<span class='warning'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)]!</span>")
+			message_admins("<span class='warning'>Admin [key_name_admin(usr)] healed / revived [key_name_admin(L)] [ADMIN_FLW(L)]!</span>")
 			log_admin("[key_name(usr)] healed / Rrvived [key_name(L)]")
 		else
 			to_chat(usr, "Admin Rejuvinates have been disabled")
