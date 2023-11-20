@@ -23,7 +23,10 @@
 	//Briefly write down here what the aspect does.
 	var/desc
 
-/datum/round_aspect/proc/on_start()
+/datum/round_aspect/proc/after_init() //after SSround_aspects init
+	return
+
+/datum/round_aspect/proc/after_full_init() //after all systems init
 	return
 
 /datum/round_aspect/agent_of_high_affairs
@@ -34,7 +37,7 @@
 	name = ROUND_ASPECT_REARM_ENERGY
 	desc = "Всё огнестрельное оружие заменено на энергетическое, повышена цена и количество ресурсов для создания огнестрельного оружия."
 
-/datum/round_aspect/rearm_energy/on_start()
+/datum/round_aspect/rearm_energy/after_init()
 	new /datum/event/feature/area/replace/station_rearmament_energy
 
 	for(var/datum/design/smg/smg in global.all_designs)
@@ -44,13 +47,14 @@
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
 		b.cost *= 50
 
+/datum/round_aspect/rearm_energy/after_full_init()
+	new /datum/event/feature/area/replace/station_rearmament_energy
+
 /datum/round_aspect/rearm_ballistic
 	name = ROUND_ASPECT_REARM_BULLETS
 	desc = "Всё энергооружие заменено на огнестрельное, повышена цена и количество ресурсов для создания энергооружия."
 
-/datum/round_aspect/rearm_ballistic/on_start()
-	new /datum/event/feature/area/replace/station_rearmament_bullets
-
+/datum/round_aspect/rearm_ballistic/after_init()
 	for(var/datum/design/nuclear_gun/ng in global.all_designs)
 		for(var/M in ng.materials)
 			ng.materials[M] *= 5
@@ -73,11 +77,14 @@
 	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
 		e.cost *= 50
 
+/datum/round_aspect/rearm_ballistic/after_full_init()
+	new /datum/event/feature/area/replace/station_rearmament_bullets
+
 /datum/round_aspect/no_common_rchannel
 	name = ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL
 	desc = "Убран общий канал радиосвязи."
 
-/datum/round_aspect/no_common_rchannel/on_start()
+/datum/round_aspect/no_common_rchannel/after_full_init()
 	new /datum/event/feature/area/replace/del_tcomms
 
 /datum/round_aspect/high_space_rad
@@ -90,15 +97,14 @@
 	OOC_init_announcement = "<span class='warning'>В качестве эксперимента, НаноТрейзен решило разместить на спутнике станции целых три ядра ИИ.</span>"
 	desc = "Увеличено количество слотов ИИ до трёх."
 
-/datum/round_aspect/ai_trio/on_start()
+/datum/round_aspect/ai_trio/after_full_init()
 	SSticker.triai = TRUE
 
 /datum/round_aspect/elite_sec
 	name = ROUND_ASPECT_ELITE_SECURITY
 	desc = "Изменено снаряжение офицеров охраны. Увеличены цены на оружие в карго и РнД."
 
-/datum/round_aspect/elite_sec/on_start()
-	new /datum/event/feature/area/replace/sec_rearmament_elite
+/datum/round_aspect/elite_sec/after_init()
 	for(var/obj/structure/closet/secure_closet/warden/sc in world)
 		sc.PopulateContents()
 	for(var/obj/structure/closet/secure_closet/security/sc in world)
@@ -133,6 +139,9 @@
 
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
 		b.cost *= 50
+
+/datum/round_aspect/elite_sec/after_full_init()
+	new /datum/event/feature/area/replace/sec_rearmament_elite
 
 /datum/round_aspect/more_random_events
 	name = ROUND_ASPECT_MORE_RANDOM_EVENTS

@@ -160,8 +160,6 @@
 	icon_opened = "wardensecure_open"
 
 /obj/structure/closet/secure_closet/warden/PopulateContents()
-	for(var/obj/item/i in contents)
-		qdel(i)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/security(src)
 	else
@@ -213,8 +211,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	damage_deflection = 15
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
-	for(var/obj/item/i in contents)
-		qdel(i)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/security(src)
 	else

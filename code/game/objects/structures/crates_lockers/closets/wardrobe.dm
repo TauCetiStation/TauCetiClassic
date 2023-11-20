@@ -10,8 +10,6 @@
 	icon_closed = "red"
 
 /obj/structure/closet/wardrobe/red/PopulateContents()
-	for(var/obj/item/i in contents)
-		qdel(i)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
 		for (var/i in 1 to 6)
 			new /obj/item/clothing/under/syndicate(src)
