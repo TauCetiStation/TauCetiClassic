@@ -882,6 +882,9 @@ var/global/list/tourette_bad_words= list(
 		healthdoll.cut_overlays()
 		healthdoll.icon_state = "healthdoll_EMPTY"
 		for(var/obj/item/organ/external/BP in bodyparts)
+			if(SEND_SIGNAL(BP, COMSIG_BODYPART_UPDATING_HEALTH_HUD, src) & COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD)
+				continue
+
 			if(!BP || BP.is_stump)
 				continue
 
