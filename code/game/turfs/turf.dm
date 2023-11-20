@@ -139,7 +139,13 @@
 					if(isliving(obstacle))
 						var/mob/living/L = obstacle
 						if(L.stat != DEAD)
-							alive_obstacle = obstacle
+							if(L.check_miss(mover))
+								L.visible_message("<span class = 'notice'>\The [mover] misses [L] narrowly!</span>")
+								playsound(L.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
+								mover.permutated.Add(L)
+							else
+								alive_obstacle = obstacle
+							continue
 					if(isnull(second_obstacle))
 						second_obstacle = obstacle
 

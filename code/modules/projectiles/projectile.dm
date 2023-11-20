@@ -81,6 +81,7 @@
 	for(var/obj/effect/projectile/P in tracer_list)
 		if(!P.deletes_itself)
 			qdel(P)
+	permutated.Cut()
 	tracer_list = null
 	firer = null
 	starting = null
@@ -151,52 +152,29 @@
 /obj/item/projectile/proc/After_hit()
 	return
 
+/obj/item/projectile/proc/get_miss_modifier(var/mob/living/L)
+	var/distance = get_dist(starting, loc) //More distance = less damage, except for high fire power weapons.
+	var/miss_modifier = 0
+	if(damage && (distance > 7))
+		if(damage >= 50)
+			miss_modifier = -100 // so sniper rifle and PTR-rifle projectiles cannot miss
+		else
+			damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
+	if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
+		var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
+		if (daddy.target && (L in daddy.target)) //As opposed to no-delay pew pew
+			miss_modifier -= 60
+	return miss_modifier
+
 /obj/item/projectile/Bump(atom/A, forced=0)
-	if(A == src)
-		return 0 //no
-
-	if(A == firer)
-		loc = A.loc
-		return 0 //cannot shoot yourself
-
-	if((bumped && !forced) || (A in permutated))
+	if((bumped && !forced))
 		return 0
 
 	var/turf/A_loc = isturf(A) ?  A : A.loc
-	var/forcedodge = 0 // force the projectile to pass
-	var/mob/living/M = isliving(A) ? A : null
-
-	if(!isturf(original) && original.loc == A_loc)
-		A = original
-		A_loc = original.loc
-
 	bumped = TRUE
-	if(firer && M)
-		var/distance = get_dist(starting, loc) //More distance = less damage, except for high fire power weapons.
-		var/miss_modifier = 0
-		if(damage && (distance > 7))
-			if(damage >= 50)
-				miss_modifier = -100 // so sniper rifle and PTR-rifle projectiles cannot miss
-			else
-				damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
-		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
-			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
-			if (daddy.target && (M in daddy.target)) //As opposed to no-delay pew pew
-				miss_modifier -= 60
-		if(distance > 1)
-			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
-
-		if(!def_zone)
-			forcedodge = PROJECTILE_FORCE_MISS
-
-	if(!forcedodge)
-		forcedodge = A.bullet_act(src, def_zone) // finally try to shot something
+	var/forcedodge = A.bullet_act(src, def_zone) // try to shot something
 
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
-		if(M)
-			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
-			playsound(M.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
-
 		forceMove(A_loc)
 		bumped = FALSE // reset bumped variable!
 		permutated.Add(A)
@@ -205,7 +183,6 @@
 
 	qdel(src)
 	return TRUE
-
 
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/item/projectile) && (reverse_dir[dir] & mover.dir))
@@ -394,12 +371,6 @@
 			return 0
 
 		Move(location.return_turf())
-
-		if(!bumped && !isturf(original) && loc == get_turf(original))
-			if(isturf(original.loc))
-				Bump(original)
-			else
-				Bump(original.loc) //if target is in mecha/crate/MULE/etc
 
 /obj/item/projectile/proc/Range() ///tg/
 	return
