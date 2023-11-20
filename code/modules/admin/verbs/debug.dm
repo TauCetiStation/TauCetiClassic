@@ -447,12 +447,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	message_admins("<span class='notice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..</span>")
 	return
 
-/client/proc/cmd_admin_stamp_regenerate(obj/item/weapon/stamp/S)
-	set category = "Fun"
-	set name = "Regenerate icon"
-
-	S.regenerate_overlays()
-
 /client/proc/startSinglo()
 
 	set category = "Debug"

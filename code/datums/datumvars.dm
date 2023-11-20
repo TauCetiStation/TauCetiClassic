@@ -297,6 +297,8 @@
 		body += "<option value='?_src_=vars;action=remreag;reagents=\ref[D]'>Remove reagent</option>"
 		body += "<option value='?_src_=vars;action=isoreag;reagents=\ref[D]'>Isolate reagent</option>"
 		body += "<option value='?_src_=vars;action=clearreags;reagents=\ref[D]'>Clear reagents</option>"
+	if(istype(D, /obj/item/weapon/stamp))
+		body += "<option value='?_src_=vars;action=regenicon;stamp=\ref[D]'>Regenerate icon</option>"
 
 	body += "</select></form>"
 
@@ -1093,6 +1095,14 @@ body
 			if("clearreags")
 				if(tgui_alert(usr, "Are you sure you want to clear reagents?", "Clear Reagents", list("Yes", "No")) == "Yes")
 					R.clear_reagents()
+
+	else if(href_list["stamp"])
+		if(!check_rights(R_DEBUG|R_ADMIN))
+			return
+		var/obj/item/weapon/stamp/S = locate(href_list["stamp"])
+		switch(href_list["action"])
+			if("regenicon")
+				S.regenerate_overlays()
 
 	else if(href_list["allowmoving"])
 		if(!check_rights(R_FUN))
