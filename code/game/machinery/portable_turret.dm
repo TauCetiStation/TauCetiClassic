@@ -276,11 +276,15 @@ var/global/list/turret_icons
 		return
 
 	if(href_list["command"])
+		var/log_action = null
+		var/list/toggle = list("disabled","enabled")
 		switch(href_list["command"])
 			if("enable")
 				enabled = !enabled
+				log_action = "[toggle[enabled+1]] the turret"
 			if("lethal")
 				lethal = !lethal
+				log_action = "[toggle[lethal+1]] the turret lethal mode."
 			if("check_n_synth")
 				check_n_synth = !check_n_synth
 			if("shot_synth")
@@ -295,6 +299,10 @@ var/global/list/turret_icons
 				check_access = !check_access
 			if("check_anomalies")
 				check_anomalies = !check_anomalies
+
+		if(log_action)
+			log_admin("[key_name(usr)] has [log_action]")
+			message_admins("[key_name_admin(usr)] has [log_action] [ADMIN_JMP(src)]")
 
 	updateUsrDialog()
 

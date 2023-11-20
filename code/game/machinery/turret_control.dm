@@ -191,7 +191,7 @@
 
 		if(log_action)
 			log_admin("[key_name(usr)] has [log_action]")
-			message_admins("[key_name_admin(usr)] has [log_action]")
+			message_admins("[key_name_admin(usr)] has [log_action] [ADMIN_JMP(src)]")
 
 		updateTurrets()
 	updateUsrDialog()
