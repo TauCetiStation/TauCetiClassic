@@ -125,7 +125,8 @@
 
 	if(!isturf(priority_target) && priority_target.loc == T)
 		if(isliving(priority_target))
-			alive_obstacle = priority_target
+			if(!mover.check_miss(priority_target))
+				alive_obstacle = priority_target
 		else
 			second_obstacle = priority_target
 
@@ -139,11 +140,7 @@
 					if(isliving(obstacle))
 						var/mob/living/L = obstacle
 						if(L.stat != DEAD)
-							if(L.check_miss(mover))
-								L.visible_message("<span class = 'notice'>\The [mover] misses [L] narrowly!</span>")
-								playsound(L.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
-								mover.permutated.Add(L)
-							else
+							if(!mover.check_miss(L))
 								alive_obstacle = obstacle
 							continue
 					if(isnull(second_obstacle))

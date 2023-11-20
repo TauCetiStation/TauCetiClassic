@@ -166,6 +166,14 @@
 			miss_modifier -= 60
 	return miss_modifier
 
+/obj/item/projectile/proc/check_miss(mob/living/L)
+	if(L.check_miss(src))
+		L.visible_message("<span class = 'notice'>\The [src] misses [L] narrowly!</span>")
+		playsound(L.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
+		permutated.Add(L)
+		return TRUE
+	return FALSE
+
 /obj/item/projectile/Bump(atom/A, forced=0)
 	if((bumped && !forced))
 		return 0
