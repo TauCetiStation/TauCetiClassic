@@ -27496,7 +27496,7 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/under/suit_jacket,
 /turf/unsimulated/floor{
 	icon_state = "wood"
