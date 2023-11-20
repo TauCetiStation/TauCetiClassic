@@ -31,6 +31,7 @@ var/global/it_is_a_snow_day = FALSE
 	load_mode()
 	load_last_mode()
 	load_motd()
+	load_totds()
 	load_host_announcements()
 	load_test_merges()
 	load_admins()
@@ -181,7 +182,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 		if (packet_data)
 			if(packet_data["announce"] == "")
 				return receive_net_announce(packet_data, addr)
-			if(packet_data["bridge"] == "" && addr == "127.0.0.1") // 
+			if(packet_data["bridge"] == "" && addr == "127.0.0.1") //
 				bridge2game(packet_data)
 				return "bridge=1" // no return data in topic, feedback should be send only through bridge
 
@@ -303,6 +304,15 @@ var/global/shutdown_processed = FALSE
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+
+/world/proc/load_totds()
+	var/list/files = flist("tips/")
+
+	join_totd = "" // reset in case of reload
+
+	if(files.len)
+		join_totd += trim(file2text("tips/[pick(files)]"))
+		join_totd = "<h2>Подсказка дня:</h2><br>[join_totd]"
 
 /world/proc/load_host_announcements()
 	var/list/files = flist("data/announcements/")
@@ -658,7 +668,7 @@ var/global/failed_db_connections = 0
 
 	packet_data["secret"] = "SECRET"
 	log_href("WTOPIC: NET ANNOUNCE: \"[list2params(packet_data)]\", from:[sender]")
-	
+
 	return proccess_net_announce(packet_data["type"], packet_data, sender)
 
 /world/proc/proccess_net_announce(type, list/data, sender)

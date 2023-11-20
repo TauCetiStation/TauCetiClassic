@@ -2,6 +2,7 @@ var/global/datum/configuration/config = null
 
 var/global/host = null
 var/global/join_motd = null
+var/global/join_totd = null
 var/global/host_announcements
 var/global/list/test_merges
 var/global/station_name = "NSS Exodus"

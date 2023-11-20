@@ -13,6 +13,8 @@
 		client.show_test_merges()
 	if(host_announcements)
 		to_chat(src, "<div class='host_announcements emojify linkify'>[host_announcements]</div>")
+	if(join_totd)
+		to_chat(src, "<div class='motd linkify'>[join_totd]</div>")
 
 	sight |= SEE_TURFS
 
