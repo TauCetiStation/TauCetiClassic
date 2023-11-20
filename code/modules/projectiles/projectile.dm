@@ -152,7 +152,7 @@
 /obj/item/projectile/proc/After_hit()
 	return
 
-/obj/item/projectile/proc/get_miss_modifier(var/mob/living/L)
+/obj/item/projectile/proc/get_miss_modifier(mob/living/L)
 	var/distance = get_dist(starting, loc) //More distance = less damage, except for high fire power weapons.
 	var/miss_modifier = 0
 	if(damage && (distance > 7))
