@@ -511,7 +511,7 @@ var/global/const/INGEST = 2
 /datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)
-		if (res != "") res += ","
+		if (res != "") res += ", "
 		res += A.name
 
 	return res
@@ -621,8 +621,8 @@ var/global/const/INGEST = 2
 
 	if(!isnull(user))
 		var/turf/T = get_turf(target)
-		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location [COORD(T)] [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] splashed [get_reagents()] on [target], location [COORD(T)]")
+		message_admins("[key_name_admin(user)] splashed ([splash.get_reagents()]) on [target], location [COORD(T)] [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [splash.get_reagents()] on [target], location [COORD(T)]")
 
 		if(ismob(target))
 			var/mob/living/L = target
