@@ -216,3 +216,8 @@
 	cost = 1
 	allowed_roles = list("Security Officer", "Security Cadet", "Warden", "Detective", "Head of Security", "Forensic Technician" )
 	whitelisted = SKRELL
+
+/datum/gear/under/vice
+	display_name = "Vice Grey Suit"
+	path = /obj/item/clothing/under/vice
+	cost = 1

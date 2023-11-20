@@ -56,8 +56,8 @@
 	item_state = "sexyclown"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
-/obj/item/clothing/under/rank/vice
-	name = "vice officer's jumpsuit"
+/obj/item/clothing/under/vice
+	name = "vice grey suit"
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
 	icon_state = "vice"
 	item_state = "vice"

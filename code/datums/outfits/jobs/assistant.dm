@@ -42,12 +42,6 @@
 	uniform = /obj/item/clothing/under/waiter
 	shoes = /obj/item/clothing/shoes/black
 
-/datum/outfit/job/assistant/vice_officer
-	name = OUTFIT_JOB_NAME("Vice Officer")
-
-	uniform = /obj/item/clothing/under/rank/vice
-	shoes = /obj/item/clothing/shoes/black
-
 /datum/outfit/job/assistant/paranormal_investigator
 	name = OUTFIT_JOB_NAME("Paranormal Investigator")
 

@@ -121,13 +121,6 @@
 		/datum/skill/medical = SKILL_LEVEL_NOVICE
 	)
 
-/datum/skillset/test_subject/vice_officer
-	name = "Vice Officer"
-	initial_skills = list(
-		/datum/skill/command = SKILL_LEVEL_TRAINED,
-		/datum/skill/police = SKILL_LEVEL_NOVICE
-	)
-
 /datum/skillset/test_subject/paranormal
 	name = "Paranormal Investigator"
 	initial_skills = list(

@@ -14,7 +14,6 @@
 		"Private Eye"    = /datum/outfit/job/assistant/private_eye,
 		"Reporter"       = /datum/outfit/job/assistant/reporter,
 		"Waiter"         = /datum/outfit/job/assistant/waiter,
-		"Vice Officer"   = /datum/outfit/job/assistant/vice_officer,
 		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
 		)
 	outfit = /datum/outfit/job/assistant/test_subject
@@ -25,7 +24,6 @@
 		"Private Eye"    = /datum/skillset/test_subject/detective,
 		"Reporter"       = /datum/skillset/test_subject/reporter,
 		"Waiter"         = /datum/skillset/test_subject/waiter,
-		"Vice Officer"   = /datum/skillset/test_subject/vice_officer,
 		"Paranormal Investigator" = /datum/skillset/test_subject/paranormal
 		)
 	flags = JOB_FLAG_CIVIL
