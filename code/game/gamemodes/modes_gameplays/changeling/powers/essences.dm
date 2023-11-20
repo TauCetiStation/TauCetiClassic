@@ -83,12 +83,20 @@
 			return
 		message = copytext(message, 2 + length(message[2])) // deleting prefix
 		var/n_message = sanitize(message)
+		var/list/listeners = list()
+		listeners |= host
 		for(var/M in changeling.essences)
-			to_chat(M, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
-		for(var/datum/orbit/O in host.orbiters)
-			to_chat(O.orbiter, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
+			listeners |= M
+		for(var/M in observer_list)
+			listeners |= M
 
-		to_chat(host, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
+		for(var/mob/M in listeners)
+			if(!M.client)
+				continue
+			if (isobserver(M))
+				to_chat(M, "<span class='shadowling'>[FOLLOW_LINK(M, src)] <b>Essence of [name] to [changeling.changelingID]:</b> [n_message]</span>")
+			else
+				to_chat(M, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
 		log_say("Changeling Mind: [name]/[key] : [n_message]")
 		return
 	else if(message_mode == "changeling")
@@ -104,7 +112,7 @@
 				for(var/mob in C.essences)
 					to_chat(mob, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
 			else if(isobserver(M) && M.client)
-				to_chat(M, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
+				to_chat(M, "<span class='changeling'>[FOLLOW_LINK(M, src)] <b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
 		log_say("Changeling Hivechat: [name]/[key] : [n_message]")
 		return
 

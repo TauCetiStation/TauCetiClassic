@@ -258,17 +258,25 @@
 							to_chat(M, n_message)
 
 					else if(isobserver(Changeling))
-						to_chat(Changeling, n_message)
+						to_chat(Changeling, "[FOLLOW_LINK(Changeling, src)] [n_message]")
 			return
 		if("alientalk")
 			if(ischangeling(src))
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-				var/n_message = "<span class='shadowling'><b>[C.changelingID]:</b> [message]</span>"
+				var/list/listeners = list()
+				listeners |= src
 				for(var/M in C.essences)
-					to_chat(M, n_message)
-				for(var/datum/orbit/O in orbiters)
-					to_chat(O.orbiter, n_message)
-				to_chat(src, n_message)
+					listeners |= M
+				for(var/M in observer_list)
+					listeners |= M
+
+				for(var/mob/M in listeners)
+					if(!M.client)
+						continue
+					if (isobserver(M))
+						to_chat(M, "<span class='shadowling'><b>[FOLLOW_LINK(M, src)] [C.changelingID] to essences:</b> [message]</span>")
+					else
+						to_chat(M, "<span class='shadowling'><b>[C.changelingID]:</b> [message]</span>")
 				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
 			return
 		if("mafia")
