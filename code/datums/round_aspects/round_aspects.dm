@@ -105,13 +105,6 @@
 	desc = "Изменено снаряжение офицеров охраны. Увеличены цены на оружие в карго и РнД."
 
 /datum/round_aspect/elite_sec/after_init()
-	for(var/obj/structure/closet/secure_closet/warden/sc in world)
-		sc.PopulateContents()
-	for(var/obj/structure/closet/secure_closet/security/sc in world)
-		sc.PopulateContents()
-	for(var/obj/structure/closet/wardrobe/red/sc in world)
-		sc.PopulateContents()
-
 	for(var/datum/design/nuclear_gun/ng in global.all_designs)
 		for(var/M in ng.materials)
 			ng.materials[M] *= 5
