@@ -33,7 +33,7 @@
 		var/image/handle_overlay = image("icon" = icon, "icon_state" = "stamp_handle")
 		handle_overlay.color = stamp_color
 		add_overlay(handle_overlay)
-	
+
 	var/image/pad_overlay = image("icon" = icon, "icon_state" = "stamp_pad")
 	pad_overlay.color = stamp_color
 	add_overlay(pad_overlay)
@@ -326,3 +326,8 @@
 
 /obj/item/weapon/stamp/attack_paw(mob/user)
 	return attack_hand(user)
+
+#undef STAMP_OFFSET_CIRCLE_Y
+#undef STAMP_OFFSET_CIRCLE_X
+#undef STAMP_OFFSET_DOTS_Y
+#undef STAMP_OFFSET_DOTS_X
