@@ -128,15 +128,15 @@
 		return null
 
 	// redirecting
-	return pick(
-		prob(65); BP_CHEST,
-		prob(10); BP_HEAD,
-		prob(5); BP_L_ARM,
-		prob(5); BP_R_ARM,
-		prob(5); BP_L_LEG,
-		prob(5); BP_R_LEG,
-		prob(5); BP_GROIN,
-	)
+	return pickweight(list(
+		BP_CHEST = 65,
+		BP_HEAD  = 10,
+		BP_L_ARM = 5,
+		BP_R_ARM = 5,
+		BP_L_LEG = 5,
+		BP_R_LEG = 5,
+		BP_GROIN = 5,
+	))
 
 /proc/get_zone_with_probabilty(zone, probability = 80)
 
