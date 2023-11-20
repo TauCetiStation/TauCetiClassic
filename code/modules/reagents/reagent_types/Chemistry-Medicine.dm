@@ -305,7 +305,6 @@
 	if(M.getToxLoss() && prob(80))
 		M.adjustToxLoss(-1 * REM)
 	if(volume > 60)
-		M.adjustCloneLoss(0.5)
 		M.adjustBrainLoss(0.5)
 
 /datum/reagent/anti_toxin
