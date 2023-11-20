@@ -190,8 +190,18 @@
 			rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> [verb], <span class='message'>\"[message_stars]\"</span></span>"
 			to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span></i>")//The AI can "hear" its own message.
 
-		for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
-			if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
+		var/list/hearers = hearers(T.loc)
+
+		for(var/mob/M as anything in observer_list)
+			if(!M.client)
+				continue
+			hearers |= M
+
+		for(var/mob/M in hearers)//The location is the object, default distance.
+			if (M in observer_list)
+				var/tracker = FOLLOW_LINK(M, src)
+				to_chat(M, "[tracker] [rendered_a]")
+			else if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
 				M.show_message(rendered_a, SHOWMSG_AUDIO)
 			else//If they do not.
 				M.show_message(rendered_b, SHOWMSG_AUDIO)
@@ -258,9 +268,9 @@
 		for (var/mob/M in heard)
 			M.show_message(rendered, SHOWMSG_AUDIO)
 
-	rendered = "<i><span class='binarysay'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
-
-	to_chat(observer_list, rendered)
+	for (var/mob/M in observer_list)
+		rendered = "<i><span class='binarysay'>[FOLLOW_LINK(M, src)] Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
+		to_chat(M, rendered)
 
 #undef IS_AI
 #undef IS_ROBOT
