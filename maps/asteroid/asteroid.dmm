@@ -12271,11 +12271,6 @@
 	},
 /area/asteroid/mine/explored)
 "Ie" = (
-/obj/machinery/camera{
-	c_tag = "Shuttle Airlock";
-	dir = 8;
-	network = list("MINE")
-	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "mining_internal";
 	name = "mining conveyor"
@@ -12579,6 +12574,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
 	pixel_y = 30
+	},
+/obj/machinery/camera{
+	c_tag = "Mining production";
+	dir = 6;
+	network = list("MINE")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -13073,12 +13073,13 @@
 /area/asteroid/mine/explored)
 "Ue" = (
 /obj/machinery/camera{
-	c_tag = "Production Room";
+	c_tag = "Mining";
 	dir = 8;
 	network = list("MINE")
 	},
 /turf/simulated/floor{
-	icon_state = "vaultfull"
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/asteroid/mine/production)
 "Uf" = (
@@ -56804,7 +56805,7 @@ kc
 wb
 xu
 zn
-zn
+Ue
 Ad
 Rd
 zn
@@ -58352,7 +58353,7 @@ ws
 Ge
 ws
 Oe
-Ue
+Te
 Ef
 Qz
 AV

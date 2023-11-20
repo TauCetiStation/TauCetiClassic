@@ -46,8 +46,6 @@
 			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
 			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
 			. += "<br>Insurance: <a href='byond://?src=\ref[user];preference=insurance;task=input'>[insurance]</a>"
-			if(!specie_obj.flags[NO_BLOOD])
-				. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
 			if(specie_obj.flags[HAS_SKIN_TONE])
 				. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
 
@@ -326,14 +324,6 @@
 
 				if("insurance")
 					insurance = input("Please select an insurance level", "Character Generation", insurance) in SSeconomy.insurance_prices
-
-
-				if("b_type")
-					if(specie_obj.flags[NO_BLOOD])
-						return
-					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Blood-type", b_type) as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
-					if(new_b_type)
-						b_type = new_b_type
 
 				if("hair")
 					if(!specie_obj.flags[HAS_HAIR_COLOR])

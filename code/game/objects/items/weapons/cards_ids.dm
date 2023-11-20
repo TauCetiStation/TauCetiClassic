@@ -17,6 +17,33 @@
 
 	var/list/files = list(  )
 
+/obj/item/weapon/card/ticket // tickets for ticket machine
+	name = "ticket"
+	desc = "Билет"
+	icon = 'icons/obj/card.dmi'
+	icon_state = "ticket"
+	item_state_world = "ticket_world"
+
+	maptext_x = 1
+	maptext_y = 3
+
+	var/number = 0
+
+/obj/item/weapon/card/ticket/update_world_icon()
+	. = ..()
+	if(icon_state == initial(icon_state))
+		maptext = {"<div style="font-size:3;color:#595757;font-family:'StatusDisplays';text-align:center;" valign="middle">[number]</div>"}
+	else
+		maptext = ""
+
+/obj/item/weapon/card/ticket/atom_init(mapload, newnumber)
+	. = ..()
+
+	number = newnumber
+
+	maptext = {"<div style="font-size:3;color:#595757;font-family:'StatusDisplays';text-align:center;" valign="middle">[number]</div>"}
+	desc += " №[number]."
+
 /obj/item/weapon/card/emag_broken
 	desc = "Это карта с магнитной полосой, прикрепленной к какой-то микросхеме. Выглядит слишком разбитой, чтобы её можно было использовать для чего-либо, кроме утилизации."
 	name = "broken cryptographic sequencer"

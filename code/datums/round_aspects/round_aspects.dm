@@ -19,7 +19,7 @@
 	//Write here the IC description of the aspect if it is dangerous or if it needs to be noticed.
 	var/afterspawn_IC_announcement
 
-	//Description of the aspect for admins.
+	//Description of the aspect for admins & end round titles.
 	//Briefly write down here what the aspect does.
 	var/desc
 
