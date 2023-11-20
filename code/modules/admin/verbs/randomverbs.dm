@@ -502,7 +502,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.b_type = record_found.fields["b_type"]
+		new_character.dna.b_type = record_found.fields["b_type"]
 	else
 		new_character.gender = pick(MALE,FEMALE)
 		var/datum/preferences/A = new()
@@ -632,9 +632,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "Please wait until the game starts!")
 		return
 
-	if(!holder.secrets_menu["custom_announce"])
-		holder.secrets_menu["custom_announce"] = new /datum/secrets_menu/custom_announce(usr.client)
-	holder.secrets_menu["custom_announce"].interact()
+	if(!holder.tgui_secrets["custom_announce"])
+		holder.tgui_secrets["custom_announce"] = new /datum/tgui_secrets/custom_announce(usr.client)
+	holder.tgui_secrets["custom_announce"].interact(usr)
 
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

@@ -102,6 +102,7 @@
 	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
 	sting_icon = "sting_cryo"
+	button_icon_state = "sting_cryo"
 	chemical_cost = 15
 	genomecost = 1
 
@@ -119,6 +120,7 @@
 	desc = "Causes terror in the target."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
+	button_icon_state = "sting_lsd"
 	chemical_cost = 15
 	genomecost = 1
 
@@ -136,6 +138,7 @@
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
 	helptext = "Does not provide a warning to others. The victim will transform much like a changeling would."
 	sting_icon = "sting_transform"
+	button_icon_state = "sting_transform"
 	chemical_cost = 40
 	genomecost = 2
 	var/datum/dna/selected_dna = null
@@ -189,6 +192,7 @@
 	desc = "We stealthily sting a target and extract their DNA."
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
 	sting_icon = "sting_extract"
+	button_icon_state = "sting_extract"
 	chemical_cost = 25
 	genomecost = 1
 	ranged = 0
@@ -222,6 +226,7 @@
 	desc = "We silently sting a human, completely deafening and silencing them for a short time."
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
 	sting_icon = "sting_mute"
+	button_icon_state = "sting_mute"
 	chemical_cost = 20
 	genomecost = 1
 
@@ -241,6 +246,7 @@
 
 	desc = "This sting completely blinds a target for a short time. The target does not notice they have been stung."
 	sting_icon = "sting_blind"
+	button_icon_state = "sting_blind"
 	chemical_cost = 25
 	genomecost = 1
 
@@ -258,6 +264,7 @@
 /obj/effect/proc_holder/changeling/sting/unfat
 	name = "Fat Sting"
 	desc = "We silently sting a human, forcing them to rapidly metabolize their fat."
+	button_icon_state = "sting_fat"
 	helptext = ""
 	sting_icon = "sting_fat"
 	chemical_cost = 5
