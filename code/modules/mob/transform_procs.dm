@@ -122,6 +122,13 @@
 			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
+
+			var/obj/effect/proc_holder/changeling/lesserform/A = locate(/obj/effect/proc_holder/changeling/lesserform) in C.purchasedpowers
+			if(A.action.button)
+				A.action.button_icon_state = "human_form"
+				A.action.button.name = "Human form"
+				A.action.button.UpdateIcon()
+
 	SEND_SIGNAL(O, COMSIG_HUMAN_MONKEYIZE)
 	transfer_trait_datums(O)
 
@@ -249,6 +256,12 @@
 			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
+
+			var/obj/effect/proc_holder/changeling/lesserform/A = locate(/obj/effect/proc_holder/changeling/lesserform) in C.purchasedpowers
+			if(A.action.button)
+				A.action.button_icon_state = "lesser_form"
+				A.action.button.name = "Lesser form"
+				A.action.button.UpdateIcon()
 
 	transfer_trait_datums(O)
 

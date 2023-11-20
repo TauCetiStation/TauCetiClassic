@@ -338,7 +338,7 @@
 	#define COMPONENT_CANT_TRACK (1<<0)
 #define COMSIG_LIVING_BUMPED "living_bumped"
 
-/// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
+/// from /obj/effect/proc_holder/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
 /// from /mob/living/carbon/proc/finish_monkeyize()
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"

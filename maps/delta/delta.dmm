@@ -2433,7 +2433,13 @@
 /area/station/security/main)
 "afB" = (
 /obj/structure/table/glass,
-/obj/item/weapon/stamp/cmo,
+/obj/item/weapon/stamp/cmo{
+	pixel_x = 3
+	},
+/obj/item/device/microphone/cmo{
+	pixel_x = -7;
+	pixel_y = 10
+	},
 /turf/simulated/floor{
 	icon_state = "bluechecker"
 	},
@@ -4670,7 +4676,9 @@
 /area/station/medical/chemistry)
 "aBG" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/stamp/ce,
+/obj/item/device/microphone/ce{
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -27497,7 +27505,13 @@
 /area/station/bridge/teleporter)
 "fuu" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/wires,
+/obj/item/weapon/paper/wires{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/weapon/stamp/ce{
+	pixel_x = 5
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -38930,9 +38944,14 @@
 /area/station/security/armoury)
 "hPJ" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/hand_tele,
 /obj/machinery/requests_console/captain{
 	pixel_x = 32
+	},
+/obj/item/weapon/paper_bin{
+	pixel_y = 5
+	},
+/obj/item/weapon/stamp/captain{
+	pixel_x = 5
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -43852,6 +43871,10 @@
 	dir = 4
 	},
 /obj/item/weapon/phone,
+/obj/item/device/microphone/hos{
+	pixel_x = 7;
+	pixel_y = 11
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -45403,8 +45426,7 @@
 /obj/machinery/door/window/brigdoor/northleft{
 	req_access = list(20)
 	},
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/stamp/captain,
+/obj/item/device/microphone/cap,
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
 "jjk" = (
@@ -47289,7 +47311,12 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/item/weapon/pinpointer/advpinpointer,
+/obj/item/weapon/pinpointer/advpinpointer{
+	pixel_x = 5
+	},
+/obj/item/weapon/hand_tele{
+	pixel_x = -7
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -57430,11 +57457,16 @@
 	},
 /obj/structure/table/woodentable,
 /obj/item/device/megaphone{
-	pixel_y = 4
+	pixel_y = 4;
+	pixel_x = -4
 	},
 /obj/item/device/flashlight/lamp{
 	on = 0;
 	pixel_x = -18;
+	pixel_y = 6
+	},
+/obj/item/device/microphone/hop{
+	pixel_x = 8;
 	pixel_y = 6
 	},
 /turf/simulated/floor/wood,
@@ -88484,16 +88516,21 @@
 /area/station/security/prison)
 "syE" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/monitorkey,
+/obj/item/weapon/paper/monitorkey{
+	pixel_x = 5
+	},
 /obj/item/weapon/cartridge/signal/science{
 	pixel_x = 4;
 	pixel_y = 6
 	},
 /obj/item/weapon/cartridge/signal/science{
-	pixel_x = -4;
 	pixel_y = 2
 	},
 /obj/item/weapon/cartridge/signal/science,
+/obj/item/device/microphone/rd{
+	pixel_y = 8;
+	pixel_x = -7
+	},
 /turf/simulated/floor{
 	icon_state = "whitechoco"
 	},

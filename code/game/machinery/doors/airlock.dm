@@ -626,9 +626,12 @@ var/global/list/airlock_overlays = list()
 	da.created_name = name
 	da.update_state()
 
-	electronics.loc = da
-	da.electronics = electronics
-	electronics = null
+	if(electronics)
+		electronics.loc = da
+		da.electronics = electronics
+		electronics = null
+	else
+		da.electronics = new (da)
 
 	qdel(src)
 
