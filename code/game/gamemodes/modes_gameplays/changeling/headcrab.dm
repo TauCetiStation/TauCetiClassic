@@ -130,7 +130,15 @@
 	origin.transfer_to(M)
 	var/datum/role/changeling/C = origin.GetRoleByType(/datum/role/changeling)
 	if(C)
-		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		var/obj/effect/proc_holder/changeling/lesserform/A = locate(/obj/effect/proc_holder/changeling/lesserform) in C.purchasedpowers
+		if(!A) //If ling doesnt have lesserfrom, give them one-use
+			A = new (null)
+			A.last_resort = TRUE
+			C.purchasedpowers += A
+			A.on_purchase(M)
+		A.action.button_icon_state = "human_form"
+		A.action.button.name = "Human form"
+		A.action.button.UpdateIcon()
 		M.changeling_update_languages(C.absorbed_languages)
 		for(var/mob/living/parasite/essence/E in src)
 			E.enter_host(M)
