@@ -291,7 +291,6 @@
 	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 	reagent_state = LIQUID
 	color = "#00b080" // rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE * 2
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -303,6 +302,11 @@
 		M.heal_bodypart_damage(REM, 0)
 	if(M.getFireLoss() && prob(80))
 		M.heal_bodypart_damage(0, REM)
+	if(M.getToxLoss() && prob(80))
+		M.adjustToxLoss(-1 * REM)
+	if(volume > 60)
+		M.adjustCloneLoss(0.5)
+		M.adjustBrainLoss(0.5)
 
 /datum/reagent/anti_toxin
 	name = "Anti-Toxin (Dylovene)"
