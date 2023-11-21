@@ -190,6 +190,7 @@
 #define TRAIT_NO_DISPOSALS_DAMAGE "no_disposals_damage"
 #define TRAIT_FAKELOYAL_VISUAL    "fakeloyal_visual"
 #define TRAIT_CHANGELING_ABSORBING "changeling_absorbing"
+#define TRAIT_VULPCANIN           "vulpcanin"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
