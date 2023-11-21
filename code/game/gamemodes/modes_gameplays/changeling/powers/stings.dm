@@ -4,8 +4,7 @@
 	var/sting_icon = null
 	var/ranged = 1
 
-/obj/effect/proc_holder/changeling/sting/try_to_sting(mob/user, mob/target)
-	. = ..()
+/obj/effect/proc_holder/changeling/sting/on_sting_choose(mob/user)
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!(C.chosen_sting))
 		set_sting(user)
