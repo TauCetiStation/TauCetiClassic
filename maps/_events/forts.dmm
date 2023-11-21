@@ -83,7 +83,7 @@
 /area/space/holospace)
 "q" = (
 /obj/structure/window/fulltile/reinforced{
-	color = #ff0000;
+	color = "#ff0000";
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
