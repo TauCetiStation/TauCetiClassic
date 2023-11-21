@@ -105,7 +105,7 @@
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
-		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [COORD(src)] [ADMIN_JMP(src)]")
+		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [COORD(src)] [ADMIN_FLW(src)] [ADMIN_JMP(src)]")
 		if(modded)
 			modded = FALSE
 		else
