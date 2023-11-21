@@ -95,6 +95,7 @@
 #define GOLEM          	 "Adamantine Golem"
 #define HOMUNCULUS     	 "Homunculus"
 #define ZOMBIE         	 "Zombie"
+#define ZOMBIE_VULP      "Vulpcanin"
 #define ZOMBIE_TAJARAN 	 "Zombie Tajaran"
 #define ZOMBIE_SKRELL  	 "Zombie Skrell"
 #define ZOMBIE_UNATHI  	 "Zombie Unathi"
