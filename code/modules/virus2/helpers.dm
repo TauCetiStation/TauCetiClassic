@@ -126,6 +126,8 @@
 	D.makerandom(spread_vector = DISEASE_SPREAD_AIRBORNE)
 	D.infectionchance = 1
 	infect_virus2(M,D,1)
+	message_admins("Event: [key_name(M)] was infected with lesser disease [ADMIN_FLW(M)]")
+	log_game("Event: [key_name(M)] was infected with lesser disease")
 	M.med_hud_set_status()
 
 //Infects mob M with random greated disease, if he doesn't have one
@@ -133,6 +135,8 @@
 	var/datum/disease2/disease/D = new /datum/disease2/disease
 	D.makerandom(1, DISEASE_SPREAD_AIRBORNE)
 	infect_virus2(M,D,1)
+	message_admins("Event: [key_name(M)] was infected with greater disease [ADMIN_FLW(M)]")
+	log_game("Event: [key_name(M)] was infected with greater disease")
 	M.med_hud_set_status()
 
 //Fancy prob() function.
