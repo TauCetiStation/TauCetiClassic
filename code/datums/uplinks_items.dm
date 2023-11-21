@@ -1251,3 +1251,17 @@
 	desc = "These posters expose NT lies and promote violence towards monopolists, allowing to convert spacemen remotely."
 	item = /obj/item/weapon/storage/box/syndie_kit/revolution/posters
 	cost = 1
+
+/datum/uplink_item/stealthy_weapons/romerol_kit
+	name = "Romerol"
+	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
+			On death, these nodules take control of the dead body, causing limited revivification, \
+			along with slurred speech, aggression, and the ability to infect others with this agent."
+	item = /obj/item/weapon/storage/box/syndie_kit/romerol
+	// make cost like mech
+	cost = 60
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/stealthy_weapons/romerol_kit/traitor
+	uplink_types = list("traitor")
+	cost = 200
