@@ -35,5 +35,7 @@ SUBSYSTEM_DEF(round_aspects)
 		global_ooc_info("[SSround_aspects.aspect.OOC_init_announcement]")
 
 /datum/controller/subsystem/round_aspects/proc/PostInit()
+	if(!aspect_name)
+		return
 	aspect.after_full_init()
 	addtimer(CALLBACK(src, PROC_REF(announce_aspect)), 15 SECOND, TIMER_STOPPABLE)
