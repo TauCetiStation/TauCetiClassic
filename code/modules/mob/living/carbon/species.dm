@@ -1488,12 +1488,7 @@
 	ADD_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
 
 	H.remove_status_flags(CANSTUN|CANPARALYSE) //CANWEAKEN
-
-	H.drop_l_hand()
-	H.drop_r_hand()
-
-	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
-	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
+	add_zombie_hands(H)
 
 	var/obj/item/organ/external/head/O = H.bodyparts_by_name[BP_HEAD]
 	O.max_damage = 1000
@@ -1514,6 +1509,39 @@
 	remove_zombie(H)
 
 	..()
+
+/datum/species/zombie/proc/add_zombie_hands(mob/living/carbon/human/H)
+	H.drop_l_hand()
+	H.drop_r_hand()
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
+
+/datum/species/zombie/vulpcanin
+	name = ZOMBIE_VULP
+	icobase = 'icons/mob/human_races/r_vulpcanin.dmi'
+	deform = 'icons/mob/human_races/r_vulpcanin.dmi'
+	burn_mod = 2.0
+	speed_mod = -0.4
+	tail = "vulptailw"
+	flags = list(
+	NO_BREATHE = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
+	,NO_EMBED = TRUE
+	)
+
+/datum/species/zombie/vulpcanin/add_zombie_hands(mob/living/carbon/human/H)
+	H.drop_l_hand()
+	H.drop_r_hand()
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/vulp_claw, SLOT_L_HAND)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/vulp_claw, SLOT_R_HAND)
 
 /datum/species/zombie/tajaran
 	name = ZOMBIE_TAJARAN
