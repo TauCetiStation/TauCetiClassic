@@ -293,6 +293,14 @@
 		var/image/lid = image(icon, src, "lid_[initial(icon_state)]")
 		add_overlay(lid)
 
+/obj/item/weapon/reagent_containers/glass/beaker/vial/romerol
+	name = "romerol"
+	desc = "As if in mockery, someone kindly engraved in small print directly on the glass of the vial: \"Romerol. The REAL zombie powder.\""
+
+/obj/item/weapon/reagent_containers/glass/beaker/vial/romerol/atom_init()
+	. = ..()
+	reagents.add_reagent("romerol", 15)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/teapot
 	name = "teapot"
