@@ -20,7 +20,7 @@ var/global/BSACooldown = 0
 
 /proc/msg_admin_attack(msg, mob/living/target) //Toggleable Attack Messages
 	log_attack(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[msg]</span></span> [ADMIN_PPJMPFLW(target)]"
+	msg = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[msg]</span> [ADMIN_PPJMPFLW(target)]</span>"
 
 
 	var/require_flags = CHAT_ATTACKLOGS
