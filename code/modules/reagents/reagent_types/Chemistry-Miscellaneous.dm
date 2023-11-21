@@ -919,3 +919,20 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	..()
 	M.adjustToxLoss(REM)
 	return FALSE
+
+/datum/reagent/romerol
+	name = "Romerol"
+	id = "romerol"
+	description = "Romerol is a highly experimental bioterror agent \
+		which causes dormant nodules to be etched into the grey matter of \
+		the subject. These nodules only become active upon death of the \
+		host, upon which, the secondary structures activate and take control \
+		of the host body."
+	color = "#ffc0cb" // RGB (255, 192, 203)
+	custom_metabolism = 1
+	taste_message = "furries"
+	restrict_species = list(IPC, DIONA, VOX)
+
+/datum/reagent/romerol/on_general_digest(mob/living/M)
+	..()
+	infect_vulpcanin_virus(M)
