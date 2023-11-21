@@ -19,6 +19,18 @@
 /obj/item/weapon/melee/zombie_hand/right
 	icon_state = "bloodhand_right"
 
+/obj/item/weapon/melee/zombie_hand/vulp_claw
+	name = "vulp claw"
+	desc = "A vulp's claw is its primary tool, capable of infecting humans, \
+	        butchering all other living things to sustain the furry, \
+			smashing open airlock doors and opening child-safe caps on bottles."
+	icon = 'icons/mob/human_races/r_vulpcanin.dmi'
+	icon_state = "vulp_claw"
+
+/obj/item/weapon/melee/zombie_hand/vulp_claw/zombie_claw_infect(mob/living/carbon/human/H, mob/user)
+	if(!iszombie(H))
+		infect_vulpcanin_virus(H)
+
 /obj/item/weapon/melee/zombie_hand/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
@@ -103,16 +115,18 @@
 /obj/item/weapon/melee/zombie_hand/attack(mob/M, mob/user)
 	. = ..()
 	if(. && ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(!iszombie(H))
-			var/target_zone = user.get_targetzone()
+		zombie_claw_infect(M, user)
 
-			if((target_zone == BP_HEAD || target_zone == BP_CHEST) && prob(40))
-				target_zone = pick(BP_L_ARM, BP_R_ARM)
-			if(target_zone == BP_GROIN && prob(40))
-				target_zone = pick(BP_L_LEG, BP_R_LEG)
+/obj/item/weapon/melee/zombie_hand/proc/zombie_claw_infect(mob/living/carbon/human/H, mob/user)
+	if(!iszombie(H))
+		var/target_zone = user.get_targetzone()
 
-			H.infect_zombie_virus(target_zone)
+		if((target_zone == BP_HEAD || target_zone == BP_CHEST) && prob(40))
+			target_zone = pick(BP_L_ARM, BP_R_ARM)
+		if(target_zone == BP_GROIN && prob(40))
+			target_zone = pick(BP_L_LEG, BP_R_LEG)
+
+		H.infect_zombie_virus(target_zone)
 
 /datum/species/zombie/on_life(mob/living/carbon/human/H)
 	if(!H.life_tick % 3)
@@ -268,6 +282,13 @@
 	if(iszombie(src))
 		return
 
+	if(HAS_TRAIT(src, TRAIT_VULPCANIN))
+		set_species(ZOMBIE_VULP, TRUE, TRUE)
+		to_chat(src, "<span class='cult large'>Ты ГОЛОДЕН!</span><br>\
+	                <span class='cult'>Теперь ты вульпканин! Не пытайся вылечиться, не вреди своим собратьям пушистикам, не помогай какому бы то ни было не-вульпе. \
+	                Теперь ты - воплощение пушистости. Распространяй болезнь.</span>")
+		return
+
 	switch(species.name)
 		if(TAJARAN)
 			set_species(ZOMBIE_TAJARAN, TRUE, TRUE)
@@ -391,3 +412,10 @@ var/global/list/zombie_list = list()
 	tracker = null
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
+
+/proc/infect_vulpcanin_virus(mob/living/M)
+	if(!M || !ishuman(M) || HAS_TRAIT(M, TRAIT_VACCINATED))
+		return
+	var/mob/living/carbon/human/H = M
+	ADD_TRAIT(H, TRAIT_VULPCANIN, GENERIC_TRAIT)
+	H.infect_zombie_virus(target_zone = null, forced = TRUE, fast = TRUE)
