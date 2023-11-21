@@ -451,3 +451,12 @@
 	/obj/item/device/radio/uplink,
 	/obj/item/stack/telecrystal/twenty,
 	)
+
+/obj/item/weapon/storage/box/syndie_kit/romerol
+	name = "Red box"
+	desc = "A small red box, though with additional metal fasteners, which makes it seem that it is very, very important. But... How would it get into your hands if it`s really important?"
+
+/obj/item/weapon/storage/box/syndie_kit/romerol/atom_init()
+	new /obj/item/weapon/reagent_containers/glass/beaker/vial/romerol(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/dropper(src)
