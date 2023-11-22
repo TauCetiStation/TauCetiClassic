@@ -407,7 +407,7 @@
 /obj/structure/altar_of_gods/proc/get_members_around()
 	var/list/members = list()
 
-	for(var/mob/M in range(3, src))
+	for(var/mob/living/M in range(3, src))
 		if(religion.is_member(M))
 			members += M
 
