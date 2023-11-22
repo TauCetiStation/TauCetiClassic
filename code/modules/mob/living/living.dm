@@ -55,7 +55,7 @@
 /mob/living/CanPass(atom/movable/mover, turf/target, height)
 	if(istype(mover, /obj/item/projectile) && lying && stat != DEAD)
 		var/obj/item/projectile/P = mover
-		if(get_dist(P.original, src) <= 1)
+		if(get_turf(P.original) == loc)
 			return FALSE
 	return ..()
 
