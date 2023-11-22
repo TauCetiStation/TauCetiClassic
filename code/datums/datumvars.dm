@@ -1102,7 +1102,7 @@ body
 		var/obj/item/weapon/stamp/S = locate(href_list["stamp"])
 		switch(href_list["action"])
 			if("regenicon")
-				S.regenerate_overlays()
+				S.update_icon()
 
 	else if(href_list["allowmoving"])
 		if(!check_rights(R_FUN))

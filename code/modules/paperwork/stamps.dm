@@ -27,7 +27,7 @@
 	var/stamp_max_offset_x = STAMP_OFFSET_DOTS_X
 	var/stamp_max_offset_y = STAMP_OFFSET_DOTS_Y
 
-/obj/item/weapon/stamp/proc/regenerate_overlays()
+/obj/item/weapon/stamp/update_icon()
 	cut_overlays()
 	if (stamp_handle_colored)
 		var/image/handle_overlay = image("icon" = icon, "icon_state" = "stamp_handle")
@@ -44,7 +44,7 @@
 
 /obj/item/weapon/stamp/atom_init()
 	. = ..()
-	regenerate_overlays()
+	update_icon()
 
 /obj/item/weapon/stamp/cap
 	name = "captain's rubber stamp"
@@ -282,7 +282,7 @@
 			stamp_max_offset_x = chosen_stamp.stamp_max_offset_x
 			stamp_max_offset_y = chosen_stamp.stamp_max_offset_y
 
-			regenerate_overlays()
+			update_icon()
 
 /obj/item/weapon/stamp/proc/stamp_paper(obj/item/weapon/paper/P, stamp_text)
 	if (P.stamp_text && P.stamp_text != "")
