@@ -305,7 +305,7 @@
 		M.heal_bodypart_damage(0, REM)
 	if(M.getToxLoss() && prob(80))
 		M.adjustToxLoss(-1 * REM)
-	if(volume > 60)
+	if(volume > overdose)
 		if(!data["ticks"])
 			data["ticks"] = 1
 		data["ticks"]++
