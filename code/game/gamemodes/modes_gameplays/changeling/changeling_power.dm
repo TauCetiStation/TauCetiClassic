@@ -38,12 +38,15 @@
 	var/mob/user = owner
 	if(!user || !ischangeling(user))
 		return
-	holder.try_to_sting(user)
+	holder.on_sting_choose(user)
 
 /obj/effect/proc_holder/changeling/Click()
 	var/mob/user = usr
 	if(!user || !ischangeling(user))
 		return
+	on_sting_choose(user)
+
+/obj/effect/proc_holder/changeling/proc/on_sting_choose(mob/user)
 	try_to_sting(user)
 
 /obj/effect/proc_holder/changeling/proc/try_to_sting(mob/user, mob/target)
