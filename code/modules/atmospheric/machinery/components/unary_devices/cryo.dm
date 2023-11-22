@@ -1,5 +1,6 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
+	cases = list("крио камеры", "крио камере", "крио камеру", "крио камерой", "крио камере")
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "pod-off"
 
@@ -309,8 +310,8 @@
 			return
 		beaker = I
 		user.visible_message(
-			"[user] inserts [I] into cryocell.",
-			"<span class='notice'>You insert [I] into cryocell.</span>")
+			"[user] вставляет [I] в крио капсулу.",
+			"<span class='notice'>Вы вставляете [I] внутрь крио капсулы.</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return
