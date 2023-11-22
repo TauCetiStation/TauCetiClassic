@@ -293,6 +293,7 @@
 	color = "#00b080" // rgb: 200, 165, 220
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
+	data = list()
 
 /datum/reagent/tricordrazine/on_general_digest(mob/living/M)
 	..()
@@ -305,7 +306,12 @@
 	if(M.getToxLoss() && prob(80))
 		M.adjustToxLoss(-1 * REM)
 	if(volume > 60)
-		M.adjustBrainLoss(0.5)
+		if(!data["ticks"])
+			data["ticks"] = 1
+		data["ticks"]++
+		if(data["ticks"] > 35)
+			M.vomit()
+			data["ticks"] -= rand(25, 30)
 
 /datum/reagent/anti_toxin
 	name = "Anti-Toxin (Dylovene)"
