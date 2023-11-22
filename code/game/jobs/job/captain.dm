@@ -24,7 +24,7 @@
 
 /datum/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
-		to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
+		to_chat(world, "<b>[H.real_name] новый капитан!</b>")//maybe should be announcment, not OOC notification?
 		SSStatistics.score.captain += H.real_name
 
 /datum/job/captain/get_access()

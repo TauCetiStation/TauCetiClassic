@@ -6,15 +6,15 @@
 
 // Blocks an attempt to connect before even creating our client datum thing.
 // real_bans_only check exists bans, not resticts(WhiteList, GuestPass)
-/world/IsBanned(key, address, computer_id, type, real_bans_only = FALSE)
-	log_access("ISBANNED: '[args.Join("', '")]'")
+/world/IsBanned(key, address, computer_id, type, real_bans_only = FALSE, provided_ckey)
+	var/ckey = ckey(key)
+	log_access("ISBANNED: '[ckey]', [args.Join("', '")]'")
 
 	// Shunt world topic banchecks to purely to byond's internal ban system
 	if (type == "world")
 		return ..()
 
 	var/is_admin = FALSE
-	var/ckey = ckey(key)
 	var/client/C = global.directory[ckey]
 
 	// Don't recheck connected clients.
@@ -22,12 +22,12 @@
 		return
 
 	// Whitelist
-	if(!real_bans_only && config.bunker_ban_mode && is_blocked_by_regisration_panic_bunker_ban_mode(key))
+	if(!real_bans_only && config.bunker_ban_mode && is_blocked_by_regisration_panic_bunker_ban_mode(ckey))
 		return list(BANKEY_REASON="", "desc"="[config.bunker_ban_mode_message]")
 	//Guest Checking
 	if(!real_bans_only && !guests_allowed && IsGuestKey(key))
-		log_access("Failed Login: [key] - Guests not allowed")
-		message_admins("<span class='notice'>Failed Login: [key] - Guests not allowed</span>")
+		log_access("Failed Login: [ckey] - Guests not allowed")
+		message_admins("<span class='notice'>Failed Login: [ckey] - Guests not allowed</span>")
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 	// Admin allowed anyway
 	if (ckey in admin_datums)

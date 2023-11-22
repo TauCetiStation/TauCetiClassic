@@ -2,6 +2,7 @@
 	name = "Spread Infestation"
 	desc = "Our form divides, creating arachnids which will grow into deadly beasts."
 	helptext = "The spiders are thoughtless creatures, and may attack their creators when fully grown. Requires at least 4 DNA absorptions."
+	button_icon_state = "spread_infestation"
 	chemical_cost = 30
 	genomecost = 2
 	req_dna = 4

@@ -151,8 +151,15 @@
 	if(blocked)
 		return
 
+	if(!spectator.client || spectator.client.is_in_spawner)
+		return
+
 	if(!register_only)
-		do_spawn(spectator)
+		if(positions < 1)
+			to_chat(spectator, "<span class='notice'>Нет свободных позиций для роли.</span>")
+		else
+			positions--
+			do_spawn(spectator)
 		return
 
 	// todo: registration for multiple spawners?
@@ -209,8 +216,9 @@
 
 	for(var/mob/dead/M in filtered_candidates)
 		if(positions > 0)
+			positions--
 			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
-			do_spawn(M)
+			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
@@ -218,20 +226,23 @@
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
 	if(!can_spawn(spectator))
+		positions++
 		return
-
-	if(positions < 1)
-		return
-
-	positions--
 
 	var/client/C = spectator.client
+
+	// temporary flag to fight some races because of pre-spawn dialogs in spawn_body of some spawners
+	// we should fight it and first spawn user, so he can't access spawn menu anymore,
+	// and only then allow costumization in separated thread
+	C.is_in_spawner = TRUE
+
 	if(isnewplayer(spectator))
 		var/mob/dead/new_player/NP = spectator
 		spectator = NP.spawn_as_observer() // need to check if we can skip this step
 
 	spawn_body(spectator)
 
+	C.is_in_spawner = FALSE
 	// check if the spectator really moved to a new body
 	if(spectator.client == C)
 		positions++
