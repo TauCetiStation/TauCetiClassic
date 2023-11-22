@@ -287,6 +287,7 @@
 		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
 		body += "<option value='?_src_=vars;edit_filters=\ref[D]'>Edit Filters</option>"
 		body += "<option value='?_src_=vars;edit_particles=\ref[D]'>Edit Particles</option>"
+		body += "<option value='?_src_=vars;update_icon=\ref[D]'>Update icon</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
@@ -297,8 +298,6 @@
 		body += "<option value='?_src_=vars;action=remreag;reagents=\ref[D]'>Remove reagent</option>"
 		body += "<option value='?_src_=vars;action=isoreag;reagents=\ref[D]'>Isolate reagent</option>"
 		body += "<option value='?_src_=vars;action=clearreags;reagents=\ref[D]'>Clear reagents</option>"
-	if(istype(D, /obj/item/weapon/stamp))
-		body += "<option value='?_src_=vars;action=regenicon;stamp=\ref[D]'>Regenerate icon</option>"
 
 	body += "</select></form>"
 
@@ -641,6 +640,12 @@ body
 			return
 		var/atom/A = locate(href_list["edit_particles"])
 		open_particles_editor(A)
+
+	else if(href_list["update_icon"])
+		if(!check_rights(R_DEBUG|R_ADMIN))
+			return
+		var/atom/A = locate(href_list["update_icon"])
+		A.update_icon()
 
 	else if(href_list["delthis"])
 		//Rights check are in cmd_admin_delete() proc
@@ -1095,14 +1100,6 @@ body
 			if("clearreags")
 				if(tgui_alert(usr, "Are you sure you want to clear reagents?", "Clear Reagents", list("Yes", "No")) == "Yes")
 					R.clear_reagents()
-
-	else if(href_list["stamp"])
-		if(!check_rights(R_DEBUG|R_ADMIN))
-			return
-		var/obj/item/weapon/stamp/S = locate(href_list["stamp"])
-		switch(href_list["action"])
-			if("regenicon")
-				S.update_icon()
 
 	else if(href_list["allowmoving"])
 		if(!check_rights(R_FUN))
