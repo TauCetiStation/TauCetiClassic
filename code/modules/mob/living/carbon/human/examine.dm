@@ -61,7 +61,10 @@
 				t_his = "her"
 				t_him = "her"
 
-	msg += "<EM>[user.client?.holder ? key_name_admin(src) : name]"
+	if (user.client?.holder && (R_ADMIN & user.client?.holder.rights))
+		msg += "<EM>[key_name_admin(src)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>)"
+	else
+		msg += "<EM>[name]"
 
 	if(HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT) && !(skipface && skipjumpsuit))
 		var/species_color = species.flesh_color
