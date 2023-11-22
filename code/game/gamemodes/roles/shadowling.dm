@@ -47,9 +47,9 @@
 
 /datum/role/thrall/OnPreSetup(greeting, custom)
 	. = ..()
+	to_chat(antag.current, "<b>Вы были порабощены Шедоулингом и стали его рабом. Вы обязаны выполнять любой приказ своего владыки и помогать ему в достижении его целей.</b>")
 	antag.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
 	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "thralled", /datum/mood_event/thrall)
-	to_chat(antag.current, "<b>Вы были порабощены Шедоулингом и стали его рабом. Вы обязаны выполнять любой приказ своего владыки и помогать ему в достижении его целей.</b>")
 
 /datum/role/thrall/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
