@@ -13634,7 +13634,7 @@
 /area/station/medical/virology)
 "ccC" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/stamp/internalaffairs{
+/obj/item/weapon/stamp/iaa{
 	pixel_x = -7;
 	pixel_y = -1
 	},
@@ -15417,7 +15417,7 @@
 	pixel_x = 8;
 	pixel_y = 10
 	},
-/obj/item/weapon/stamp/qm{
+/obj/item/weapon/stamp/cargo/qm{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -18696,7 +18696,7 @@
 /area/station/maintenance/brigright)
 "cYs" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/stamp/ce{
+/obj/item/weapon/stamp/eng/ce{
 	pixel_y = 6
 	},
 /obj/item/weapon/paper/wires{
@@ -40736,7 +40736,7 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/hos,
+/obj/item/weapon/stamp/sec/hos,
 /obj/item/pens_bin{
 	pixel_x = 8;
 	pixel_y = -7
@@ -40961,7 +40961,7 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
-/obj/item/weapon/stamp/rd{
+/obj/item/weapon/stamp/sci/rd{
 	pixel_x = 3;
 	pixel_y = -7
 	},
@@ -54909,7 +54909,7 @@
 "klW" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/stamp{
+/obj/item/weapon/stamp/cargo{
 	name = "miner's rubber stamp";
 	stamp_message = "Miner"
 	},
@@ -65499,7 +65499,7 @@
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/obj/item/weapon/stamp/cmo{
+/obj/item/weapon/stamp/med/cmo{
 	pixel_x = -14
 	},
 /obj/structure/disposalpipe/segment{
@@ -70975,7 +70975,7 @@
 "nAc" = (
 /obj/structure/table,
 /obj/item/weapon/folder/yellow,
-/obj/item/weapon/stamp{
+/obj/item/weapon/stamp/cargo{
 	name = "recycler's rubber stamp";
 	pixel_y = 13;
 	stamp_message = "Recycler"
@@ -84102,11 +84102,9 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
-/obj/item/weapon/stamp{
-	name = "cargo rubber stamp";
+/obj/item/weapon/stamp/cargo{
 	pixel_x = -3;
-	pixel_y = 3;
-	stamp_message = "Cargo"
+	pixel_y = 3
 	},
 /obj/item/clothing/head/soft,
 /obj/item/toy/figure/miner{
@@ -122508,7 +122506,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/internalaffairs{
+/obj/item/weapon/stamp/iaa{
 	pixel_x = -7;
 	pixel_y = 5
 	},
@@ -122645,7 +122643,7 @@
 	pixel_y = 10
 	},
 /obj/item/weapon/folder/blue,
-/obj/item/weapon/stamp/captain,
+/obj/item/weapon/stamp/cap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
