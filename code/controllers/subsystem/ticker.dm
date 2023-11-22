@@ -456,7 +456,7 @@ SUBSYSTEM_DEF(ticker)
 				to_chat(M, "Капитаном никто не стал.")
 
 /datum/controller/subsystem/ticker/proc/generate_scoreboard(mob/one_mob)
-	var/completition = "<h1>Информация по окончании раунда</h1><HR>"
+	var/completition = "<h1>Информация по окончанию раунда</h1><HR>"
 	completition += get_ai_completition()
 	completition += mode.declare_completion()
 	completition += get_ratings()

@@ -52,7 +52,7 @@
 
 /datum/role/thrall/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
-	to_chat(antag.current, "<b>Вы были порабощены Шедоулингом и стали его рабом. Ты обязан выполнять любой приказ своего владыки и помогать ему в достижении его целей.</b>")
+	to_chat(antag.current, "<b>Вы были порабощены Шедоулингом и стали его рабом. Вы обязаны выполнять любой приказ своего владыки и помогать ему в достижении его целей.</b>")
 	for(var/obj/effect/proc_holder/spell/targeted/shadowling_hivemind/S in antag.current.spell_list)
 		antag.current.RemoveSpell(S)
 	..()
