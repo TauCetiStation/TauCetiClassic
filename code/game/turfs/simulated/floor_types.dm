@@ -241,7 +241,7 @@
 
 /turf/simulated/floor/beach/water
 	name = "Water"
-	cases = list("воды", "воде","воды", "водой", "воде")
+	cases = list("воды", "воде", "воду", "водой", "воде")
 	icon_state = "water"
 	light_color = "#00bfff"
 	light_power = 2
