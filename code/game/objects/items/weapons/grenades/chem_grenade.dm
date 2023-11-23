@@ -34,7 +34,7 @@
 				if(istype(B))
 					beakers -= B
 					user.put_in_hands(B)
-		name = "Граната с [beakers.len] сосудами[detonator?" и детонатором":""]"
+		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 
 	if(stage > 1)
 		..()
@@ -60,7 +60,7 @@
 			var/obj/item/device/assembly/timer/T = det.a_right
 			det_time = T.time * 10
 		icon_state = initial(icon_state) +"_ass"
-		name = "Граната с [beakers.len] сосудами[detonator?" и детонатором":""]"
+		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
 
 	else if(isscrewing(I) && path != 2)
@@ -86,7 +86,7 @@
 			else
 				to_chat(user, "<span class='notice'>Вы открываете корпус гранаты.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-				name = "Граната с [beakers.len] сосудами[detonator?" и детонатором":""]"
+				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				icon_state = initial(icon_state) + (detonator?"_ass":"")
 				stage = 1
 				active = 0
@@ -102,7 +102,7 @@
 				user.drop_from_inventory(I, src)
 				beakers += I
 				stage = 1
-				name = "Граната с [beakers.len] сосудами[detonator?" и детонатором":""]"
+				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
 				to_chat(user, "<span class='red'> [I] пуст.</span>")
 
@@ -112,7 +112,7 @@
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	..()
 	if(src in user && detonator)
-		to_chat(user, "С закрепленным[detonator.name]")
+		to_chat(user, "С закрепленным [detonator.name]")
 
 /obj/item/weapon/grenade/chem_grenade/activate(mob/user)
 	if(active) return
