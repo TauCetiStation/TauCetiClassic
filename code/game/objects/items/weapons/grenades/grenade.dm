@@ -1,6 +1,6 @@
 /obj/item/weapon/grenade
 	name = "grenade"
-	desc = "Ручная граната с таймером."
+	desc = "Ручная граната с настраиваемым таймером."
 	w_class = SIZE_TINY
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
