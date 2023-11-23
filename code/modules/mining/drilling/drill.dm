@@ -433,8 +433,11 @@
 	var/team_name
 	var/obj/machinery/computer/fort_console/console
 
-/obj/machinery/mining/drill/forts/atom_init()
+/obj/machinery/mining/drill/forts/atom_init(mapload, _team_name)
 	..()
+
+	if(_team_name)
+		team_name = _team_name
 
 	return INITIALIZE_HINT_LATELOAD
 

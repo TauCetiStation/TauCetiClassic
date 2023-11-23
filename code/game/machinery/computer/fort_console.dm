@@ -53,7 +53,8 @@
 	html += "Drills:<br>"
 	if(length(drills))
 		for(var/obj/machinery/mining/drill/forts/drill as anything in drills)
-			html += "[TAB]Drill at [drill.x].[drill.y]:"
+			var/turf/T = get_turf(drill)
+			html += "[TAB]Drill at [T.x].[T.y]:"
 			html += " [drill.active ? "<span class='green'>Active</span>" : "<span class='orange'>Inactive</span>"]"
 			html += "[drill.need_player_check ? " | <span class='red'>Diagnostic required!</span>": ""]<br>"
 	else
@@ -165,6 +166,21 @@
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/scicrate
 	for(var/i in 1 to 10)
 		new /obj/item/weapon/rcd_ammo/bluespace(C)
+
+	return C
+
+/datum/fort_console_lot/drill
+	name = "Drill set"
+	desc = "Drill and two braces"
+	price = 400
+
+	order = 50
+
+/datum/fort_console_lot/drill/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/large
+	new /obj/machinery/mining/drill/forts(C, command.team_name)
+	new /obj/machinery/mining/brace(C)
+	new /obj/machinery/mining/brace(C)
 
 	return C
 
