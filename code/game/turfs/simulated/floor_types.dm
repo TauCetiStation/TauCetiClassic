@@ -329,7 +329,7 @@
 
 /turf/simulated/floor/grass
 	name = "Grass patch"
-	cases = list("травяной плитки", "травяной плитке", "травяная плитка", "травяной плиткой", "травяной плитке")
+	cases = list("травяного покрытия", "травяному покрытию", "травяное покрытие", "травяным покрытием", "травяном покрытии")
 	icon_state = "grass1"
 	floor_type = /obj/item/stack/tile/grass
 	footstep = FOOTSTEP_GRASS
