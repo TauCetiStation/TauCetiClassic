@@ -411,7 +411,7 @@
 	icon = 'icons/turf/catwalks.dmi'
 	icon_state = "catwalk0"
 	name = "catwalk"
-	cases = list("помоста", "помосту","помост", "помостом", "помосте")
+	cases = list("помоста", "помосту", "помост", "помостом", "помосте")
 	desc = "Рабочий помост с сомнительным функционалом."
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
