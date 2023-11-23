@@ -1,6 +1,6 @@
 /obj/item/weapon/plastique
 	name = "plastic explosives"
-	desc = "Used to put holes in specific areas without too much extra hole."
+	desc = "Используется для создания точечных взрывов в определенных областях."
 	gender = PLURAL
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "plastic-explosive0"
@@ -18,7 +18,7 @@
 	if(newtime < 10)
 		newtime = 10
 	timer = newtime
-	to_chat(user, "Timer set for [timer] seconds.")
+	to_chat(user, "Таймер установлен на [timer] секунд.")
 
 /obj/item/weapon/plastique/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity)
@@ -26,7 +26,7 @@
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
 		return
 	if(user.is_busy()) return
-	to_chat(user, "Planting explosives...")
+	to_chat(user, "Устанавливает взрывчатку...")
 	if(ismob(target))
 		var/mob/living/M = target
 		M.log_combat(user, "planted (attempt) with [name]")
@@ -41,7 +41,7 @@
 			var/mob/living/M = target
 			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
 			user.visible_message("<span class ='red'> [user.name] finished planting an explosive on [M.name]!</span>")
-		to_chat(user, "Bomb has been planted. Timer counting down from [timer].")
+		to_chat(user, "Взрывчатка установлена, отсчет таймера от [timer].")
 		user.drop_item()
 		plant_bomb(target)
 

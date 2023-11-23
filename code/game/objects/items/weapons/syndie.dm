@@ -10,7 +10,7 @@
 	icon_state = "c-4small_0"
 	item_state = "c-4small"
 	name = "normal-sized package"
-	desc = "A small wrapped package."
+	desc = "Небольшой завернутый пакет."
 	w_class = SIZE_SMALL
 
 	var/power = 1  /*Size of the explosion.*/
@@ -19,7 +19,7 @@
 /obj/item/weapon/syndie/c4explosive/heavy
 	icon_state = "c-4large_0"
 	item_state = "c-4large"
-	desc = "A mysterious package, it's quite heavy."
+	desc = "Таинственный пакет, он довольно тяжелый."
 	power = 2
 	size = "large"
 
@@ -28,9 +28,9 @@
 	var/K = rand(1,2000)
 	K = md5(num2text(K)+name)
 	K = copytext(K,1,7)
-	src.desc += "\n You see [K] engraved on \the [src]."
+	src.desc += "\n Вы видите [K] выгравированное на [src]."
 	var/obj/item/weapon/syndie/c4detonator/detonator = new(src.loc)
-	detonator.desc += "\n You see [K] engraved on the lighter."
+	detonator.desc += "\n Вы видите [K] выгравированное на зажигалке."
 	detonator.bomb = src
 
 /obj/item/weapon/syndie/c4explosive/proc/detonate()
@@ -55,7 +55,7 @@
 	icon_state = "c-4detonator_0"
 	item_state = "c-4detonator"
 	name = "Zippo lighter"  /*Sneaky, thanks Dreyfus.*/
-	desc = "The zippo."
+	desc = "Зиппо."
 	w_class = SIZE_MINUSCULE
 
 	var/obj/item/weapon/syndie/c4explosive/bomb
@@ -65,14 +65,14 @@
 	switch(src.icon_state)
 		if("c-4detonator_0")
 			src.icon_state = "c-4detonator_1"
-			to_chat(user, "You flick open the lighter.")
+			to_chat(user, "Вы открываете зажигалку.")
 
 		if("c-4detonator_1")
 			if(!pr_open)
 				pr_open = 1
 				switch(tgui_alert(user, "What would you like to do?", "Lighter", list("Press the button.", "Close the lighter.")))
 					if("Press the button.")
-						to_chat(user, "<span class='warning'>You press the button.</span>")
+						to_chat(user, "<span class='warning'>Вы нажимаете кнопку.</span>")
 						flick("c-4detonator_click", src)
 						if(src.bomb)
 							bomb.detonate()
@@ -81,5 +81,5 @@
 
 					if("Close the lighter.")
 						src.icon_state = "c-4detonator_0"
-						to_chat(user, "You close the lighter.")
+						to_chat(user, "Вы закрываете зажигалку.")
 				pr_open = 0
