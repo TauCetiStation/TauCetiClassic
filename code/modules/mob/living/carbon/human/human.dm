@@ -1399,8 +1399,8 @@
 	maxHealth = species.total_health
 
 	if(species.flags[NO_PAIN])
-		src.shock_stage = 0
-		src.traumatic_shock = 0
+		shock_stage = 0
+		traumatic_shock = 0
 
 	if(species.base_color && default_colour)
 		//Apply colour.
