@@ -37,7 +37,7 @@
 
 /turf/unsimulated/desert
 	name = "sand"
-	cases = list("песка", "песку","песок", "песком", "песке")
+	cases = list("песка", "песку", "песок", "песком", "песке")
 	icon_state = "asteroid"
 
 /turf/simulated/floor/smoothtile
@@ -226,7 +226,7 @@
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
-	cases = list("песка", "песку","песок", "песком", "песке")
+	cases = list("песка", "песку", "песок", "песком", "песке")
 	icon_state = "sand"
 
 /turf/simulated/floor/beach/coastline
@@ -241,7 +241,7 @@
 
 /turf/simulated/floor/beach/water
 	name = "Water"
-	cases = list("воды", "воде","воды", "водой", "воде")
+	cases = list("воды", "воде", "воду", "водой", "воде")
 	icon_state = "water"
 	light_color = "#00bfff"
 	light_power = 2
@@ -353,7 +353,7 @@
 
 /turf/simulated/floor/plating/ironsand
 	name = "Iron Sand"
-	cases = list("красного песка", "красному песку","красный песок", "красным песком", "красном песке")
+	cases = list("красного песка", "красному песку", "красный песок", "красным песком", "красном песке")
 	icon_state = "ironsand1"
 	basetype = /turf/simulated/floor/plating/ironsand
 	footstep = FOOTSTEP_SAND
@@ -384,7 +384,7 @@
 /turf/simulated/floor/plating/snow
 	basetype = /turf/simulated/floor/plating/ironsand
 	name = "snow"
-	cases = list("снега", "снегу","снег", "снегом", "снеге")
+	cases = list("снега", "снегу", "снег", "снегом", "снеге")
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 	footstep = FOOTSTEP_SAND
@@ -411,7 +411,7 @@
 	icon = 'icons/turf/catwalks.dmi'
 	icon_state = "catwalk0"
 	name = "catwalk"
-	cases = list("помоста", "помосту","помост", "помостом", "помосте")
+	cases = list("помоста", "помосту", "помост", "помостом", "помосте")
 	desc = "Рабочий помост с сомнительным функционалом."
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
