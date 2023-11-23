@@ -121,7 +121,7 @@
 				to_chat(M, "<span class='warning'>Вы ничего не слышите!</span>")
 				M.sdisabilities |= DEAF
 	else if(M.ear_damage >= 5)
-		to_chat(M, "<span class='warning'>В ваших ушах начинается звон!</span>")
+		to_chat(M, "<span class='warning'>Вы чувствуете звон в ушах!</span>")
 	M.update_icons()
 
 ////////////////////
