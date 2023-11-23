@@ -1,6 +1,7 @@
 /obj/item/weapon/grenade/cancasing
 	name = "can explosive"
 	desc = "Слабое, самодельное устройство."
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	w_class = SIZE_TINY
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "can_grenade_preview"
