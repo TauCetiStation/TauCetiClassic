@@ -329,8 +329,31 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 /turf/simulated/floor/proc/make_plating()
 	if(istype(src,/turf/simulated/floor/engine))
 		return
+	name = "reinforced floor"
+	cases = list("укреплённого покрытия","укреплённому покрытию", "укреплённое покрытие", "укреплённым покрытием", "укреплённом покрытии")
+	icon_plating = "catwalk0"
+	floor_type = null
+	intact = 0
+	broken = 0
+	burnt = 0
+
+	clean_turf_decals()
+	update_icon()
+	levelupdate()
+
 	if(is_catwalk())
 		return
+	name = "catwalk"
+	cases = list("помоста", "помосту","помост", "помостом", "помосте")
+	icon_plating = "catwalk0"
+	floor_type = null
+	intact = 0
+	broken = 0
+	burnt = 0
+
+	clean_turf_decals()
+	update_icon()
+	levelupdate()
 
 	if(is_grass_floor())
 		for(var/direction in cardinal)

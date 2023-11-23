@@ -28,12 +28,14 @@
 
 /turf/simulated/floor/holofloor/carpet // pain
 	name = "red classic carpet"
+	cases = list("ковра", "ковру", "ковёр","ковром", "ковре")
 	icon_state = "center_8"
 	icon = 'icons/turf/floors/carpets/carpet_classic_red.dmi'
 	smooth = SMOOTH_TRUE
 
 /turf/simulated/floor/plating/airless/carpet // PAIN
 	name = "red classic carpet"
+	cases = list("ковра", "ковру", "ковёр","ковром", "ковре")
 	icon_state = "center_8"
 	icon = 'icons/turf/floors/carpets/carpet_classic_red.dmi'
 	smooth = SMOOTH_TRUE

@@ -197,7 +197,7 @@
 
 /turf/simulated/shuttle/plating
 	name = "plating"
-	cases = list("поверхности", "поверхности", "поверхность", "поверхностью", "поверхности")
+	cases = list("обшивки", "обшивке", "обшивка", "обшивкой", "обшивке")
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
 	footstep = FOOTSTEP_PLATING
