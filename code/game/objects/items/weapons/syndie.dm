@@ -29,7 +29,7 @@
 	var/K = rand(1,2000)
 	K = md5(num2text(K)+name)
 	K = copytext(K,1,7)
-	src.desc += "\n Вы видите [K] выгравированное на [src]."
+	src.desc += "\n Вы видите [K] выгравированное на [case(c4explosive,PREPOSITIONAL_CASE)]."
 	var/obj/item/weapon/syndie/c4detonator/detonator = new(src.loc)
 	detonator.desc += "\n Вы видите [K] выгравированное на зажигалке."
 	detonator.bomb = src
@@ -54,7 +54,6 @@
 
 /obj/item/weapon/syndie/c4detonator
 	icon_state = "c-4detonator_0"
-	cases = list("зажигалки", "зажигалке", "зажигалку", "зажигалкой", "зажигалке")
 	item_state = "c-4detonator"
 	name = "Zippo lighter"  /*Sneaky, thanks Dreyfus.*/
 	desc = "Зиппо."
