@@ -13478,12 +13478,9 @@
 /obj/item/weapon/folder{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp{
-	icon_state = "stamp-rd";
+/obj/item/weapon/stamp/sci{
 	name = "research outpost rubber stamp";
 	pixel_y = 4;
-	stamp_border = "#7f4ba2";
-	stamp_color = "#9361b5";
 	stamp_message = "Research Outpost"
 	},
 /turf/simulated/floor{
@@ -30444,7 +30441,7 @@
 /obj/item/weapon/folder/blue{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/captain{
+/obj/item/weapon/stamp/cap{
 	pixel_y = 4
 	},
 /obj/item/device/megaphone,
@@ -42402,7 +42399,7 @@
 /obj/item/weapon/folder/red{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/hos{
+/obj/item/weapon/stamp/sec/hos{
 	pixel_y = 4
 	},
 /obj/item/clothing/head/beret/sec/hos{
@@ -47780,7 +47777,7 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
-/obj/item/weapon/stamp/cmo{
+/obj/item/weapon/stamp/med/cmo{
 	pixel_x = 12;
 	pixel_y = 6
 	},
@@ -54242,7 +54239,7 @@
 "mDG" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper/wires,
-/obj/item/weapon/stamp/ce{
+/obj/item/weapon/stamp/eng/ce{
 	pixel_y = 6
 	},
 /obj/machinery/door_control{
@@ -54666,10 +54663,6 @@
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 /obj/item/clothing/suit/straight_jacket,
-/obj/structure/closet/secure_closet{
-	name = "Psychiatrist's Locker";
-	req_access = list(64)
-	},
 /obj/item/weapon/storage/box/cups,
 /obj/item/toy/plushie/tuxedo_cat,
 /obj/item/device/radio/intercom{
@@ -54678,6 +54671,7 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/structure/closet/secure_closet/psycho,
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "mGY" = (
@@ -61819,7 +61813,6 @@
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/item/device/healthanalyzer,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "owL" = (
@@ -65557,7 +65550,7 @@
 "pwJ" = (
 /obj/structure/table,
 /obj/item/weapon/folder/brown,
-/obj/item/weapon/stamp{
+/obj/item/weapon/stamp/cargo{
 	name = "recycler's rubber stamp";
 	stamp_message = "Recycler"
 	},
@@ -78649,7 +78642,7 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
-/obj/item/weapon/stamp/rd{
+/obj/item/weapon/stamp/sci/rd{
 	pixel_x = 3;
 	pixel_y = -7
 	},
@@ -85760,7 +85753,7 @@
 /obj/item/weapon/folder/brown{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/qm{
+/obj/item/weapon/stamp/cargo/qm{
 	pixel_y = 3
 	},
 /obj/structure/table/woodentable,
@@ -86471,7 +86464,7 @@
 	dir = 1;
 	pixel_y = -28
 	},
-/obj/item/weapon/stamp{
+/obj/item/weapon/stamp/cargo{
 	name = "cargo rubber stamp";
 	pixel_x = -2;
 	pixel_y = 3;
@@ -91660,7 +91653,7 @@
 /obj/item/weapon/folder/blue{
 	pixel_x = 5
 	},
-/obj/item/weapon/stamp/internalaffairs,
+/obj/item/weapon/stamp/iaa,
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
 	pixel_y = -2
@@ -99133,7 +99126,7 @@
 /obj/item/weapon/folder/blue{
 	pixel_x = 5
 	},
-/obj/item/weapon/stamp/internalaffairs,
+/obj/item/weapon/stamp/iaa,
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
 	pixel_y = -2

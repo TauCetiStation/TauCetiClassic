@@ -252,16 +252,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1 || t1 == src.active1.fields["fingerprint"]))
 							return
 
-						var/old_value = src.active1.fields["fingerprint"]
 						src.active1.fields["fingerprint"] = t1
 						src.active1.fields["insurance_account_number"] = 0
 						src.active1.fields["insurance_type"] = INSURANCE_NONE
-
-						var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
-						announcer.config(list("Medical" = 1, "Security" = 1))
-						announcer.autosay("[usr] has changed the 'fingerprint' in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'. All insurance data will be deleted.", "Insurancer", "Medical", freq = radiochannels["Medical"])
-						announcer.autosay("[usr] has changed the 'fingerprint' in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'. All insurance data will be deleted.", "Insurancer", "Security", freq = radiochannels["Security"])
-						qdel(announcer)
 
 				if("insurance_account_number")
 					if (istype(src.active1, /datum/data/record))
@@ -288,13 +281,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						for(var/mob/living/carbon/human/H as anything in global.human_list)
 							if(md5(H.dna.uni_identity) != src.active1.fields["fingerprint"])
 								continue
-							var/old_value = src.active1.fields["insurance_account_number"]
 							src.active1.fields["insurance_account_number"] = t1
-							var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
-							announcer.config(list("Medical" = 1, "Security" = 1))
-							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'.", "Insurancer", "Medical", freq = radiochannels["Medical"])
-							announcer.autosay("[usr] has changed the insurance account number in [src.active1.fields["id"]] record from '[old_value]' to '[t1]'.", "Insurancer", "Security", freq = radiochannels["Security"])
-							qdel(announcer)
 
 						if(src.active1.fields["insurance_account_number"] != t1)
 							tgui_alert(usr, "Can't match the 'fingerprint' data, please check this and try again.")

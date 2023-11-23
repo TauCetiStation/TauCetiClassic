@@ -13,6 +13,7 @@
 	active_power_usage = 20 // will be recalculated based on light intensity
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	interact_offline = TRUE
+	flags_2 = PROHIBIT_OVERLAYS_FOR_DEMO_2
 
 	glow_icon_state = "tube"
 	exposure_icon_state = "cone"

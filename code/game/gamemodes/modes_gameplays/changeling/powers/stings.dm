@@ -4,16 +4,12 @@
 	var/sting_icon = null
 	var/ranged = 1
 
-/obj/effect/proc_holder/changeling/sting/Click()
-	var/mob/user = usr
-	if(!user || !ischangeling(user))
-		return
+/obj/effect/proc_holder/changeling/sting/on_sting_choose(mob/user)
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!(C.chosen_sting))
 		set_sting(user)
 	else
 		unset_sting(user)
-	return
 
 /obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
 	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")

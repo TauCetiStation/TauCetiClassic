@@ -24,6 +24,10 @@
 		action.holder = src
 		action.Grant(user)
 
+/obj/effect/proc_holder/changeling/Destroy()
+	QDEL_NULL(action)
+	return ..()
+
 /datum/action/innate/changeling
 	button_icon = 'icons/hud/actions_changeling.dmi'
 	background_icon_state = "bg_changeling"
@@ -34,12 +38,15 @@
 	var/mob/user = owner
 	if(!user || !ischangeling(user))
 		return
-	holder.try_to_sting(user)
+	holder.on_sting_choose(user)
 
 /obj/effect/proc_holder/changeling/Click()
 	var/mob/user = usr
 	if(!user || !ischangeling(user))
 		return
+	on_sting_choose(user)
+
+/obj/effect/proc_holder/changeling/proc/on_sting_choose(mob/user)
 	try_to_sting(user)
 
 /obj/effect/proc_holder/changeling/proc/try_to_sting(mob/user, mob/target)
