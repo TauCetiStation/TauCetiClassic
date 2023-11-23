@@ -30,7 +30,7 @@
 	if(ismob(target))
 		var/mob/living/M = target
 		M.log_combat(user, "planted (attempt) with [name]")
-		user.visible_message("<span class ='red'> [user.name] is trying to plant some kind of explosive on [M.name]!</span>")
+		user.visible_message("<span class ='red'> [user.name] пытаеться установить взрывчатку на [M.name]!</span>")
 	else
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
 		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name]", user)
@@ -40,7 +40,7 @@
 		if(ismob(target))
 			var/mob/living/M = target
 			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
-			user.visible_message("<span class ='red'> [user.name] finished planting an explosive on [M.name]!</span>")
+			user.visible_message("<span class ='red'> [user.name] установил взрывчатку на [M.name]!</span>")
 		to_chat(user, "Взрывчатка установлена, отсчет таймера от [timer].")
 		user.drop_item()
 		plant_bomb(target)
