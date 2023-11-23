@@ -226,7 +226,7 @@
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
-	cases = list("песка", "песку","песок", "песком", "песке")
+	cases = list("песка", "песку", "песок", "песком", "песке")
 	icon_state = "sand"
 
 /turf/simulated/floor/beach/coastline
