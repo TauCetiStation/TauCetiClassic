@@ -5,6 +5,7 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "flashbang"
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	throw_speed = 4
 	throw_range = 20
 	flags = CONDUCT
