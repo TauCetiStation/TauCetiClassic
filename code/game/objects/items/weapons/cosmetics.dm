@@ -240,7 +240,6 @@
 
 	mannequin.gender = H.gender
 	mannequin.age = H.age
-	mannequin.b_type = H.b_type
 
 	mannequin.r_eyes = H.r_eyes
 	mannequin.g_eyes = H.g_eyes
