@@ -51,6 +51,7 @@
  */
 /obj/item/stack/tile/carpet
 	name = "carpet"
+	cases = list("ковра", "ковру", "ковёр","ковром", "ковре")
 	singular_name = "carpet"
 	desc = "A piece of carpet. It is the same size as a normal floor tile!"
 	icon_state = "tile-carpet"
