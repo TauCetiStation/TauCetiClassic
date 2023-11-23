@@ -57,6 +57,7 @@
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
+	cases = list("укреплённого покрытия","укреплённому покрытию", "укреплённое покрытие", "укреплённым покрытием", "укреплённом покрытии")
 	icon = 'icons/turf/floors/smooth/hardfloor_1.dmi'
 	icon_state = "center_8"
 	thermal_conductivity = 0.025
@@ -216,6 +217,7 @@
 
 /turf/simulated/floor/beach
 	name = "Beach"
+	cases = list("пляжа", "пляжу", "пляж", "пляжем", "пляже")
 	icon = 'icons/misc/beach.dmi'
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
@@ -224,6 +226,7 @@
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
+	cases = list("песка", "песку","песок", "песком", "песке")
 	icon_state = "sand"
 
 /turf/simulated/floor/beach/coastline
