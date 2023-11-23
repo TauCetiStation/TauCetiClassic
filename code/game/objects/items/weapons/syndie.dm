@@ -72,7 +72,7 @@
 				pr_open = 1
 				switch(tgui_alert(user, "What would you like to do?", "Lighter", list("Press the button.", "Close the lighter.")))
 					if("Press the button.")
-						to_chat(user, "<span class='warning'>Вы нажимаете кнопку.</span>")
+						to_chat(user, "<span class='warning'>Вы нажимаете на кнопку.</span>")
 						flick("c-4detonator_click", src)
 						if(src.bomb)
 							bomb.detonate()

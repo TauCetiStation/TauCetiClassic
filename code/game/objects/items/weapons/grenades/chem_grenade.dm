@@ -46,10 +46,10 @@
 			to_chat(user, "<span class='red'>В корпусе гранаты должен быть воспламенитель.</span>")
 			return
 		if(!det.secured)
-			to_chat(user, "<span class='red'>Корпус гранаты необходимо закрепить отверткой.</span>")
+			to_chat(user, "<span class='red'>Корпус гранаты необходимо скрепить отверткой.</span>")
 			return
 		path = 1
-		to_chat(user, "<span class='notice'>Вы добавляете [I] в корпус гранаты.</span>")
+		to_chat(user, "<span class='notice'>Вы помещаете [I] в корпус гранаты.</span>")
 		playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
 		user.drop_from_inventory(det, src)
 		detonator = det
@@ -69,11 +69,11 @@
 			if(!detonator)
 				det_time = 1
 			if(beakers.len)
-				to_chat(user, "<span class='notice'>Вы закрепляете корпус гранаты.</span>")
+				to_chat(user, "<span class='notice'>Вы скрепляете корпус гранаты.</span>")
 				name = "grenade"
 			else
 //					user << "<span class='warning'>You need to add at least one beaker before locking the assembly.</span>"
-				to_chat(user, "<span class='notice'>Вы закрепляете пустой корпус.</span>")
+				to_chat(user, "<span class='notice'>Вы скрепляете пустой корпус.</span>")
 				name = "fake grenade"
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			icon_state = initial(icon_state) +"_locked"
@@ -98,7 +98,7 @@
 			return
 		else
 			if(I.reagents && I.reagents.total_volume)
-				to_chat(user, "<span class='notice'>Вы добавляете [I] в корпус гранаты.</span>")
+				to_chat(user, "<span class='notice'>Вы помещаете [I] в корпус гранаты.</span>")
 				user.drop_from_inventory(I, src)
 				beakers += I
 				stage = 1
@@ -200,7 +200,7 @@
 ///////Metalfoam
 /obj/item/weapon/grenade/chem_grenade/metalfoam
 	name = "metal-foam grenade"
-	desc = "Используется для аварийной герметизации."
+	desc = "Используется для экстренной герметизации."
 	path = 1
 	stage = 2
 
@@ -294,7 +294,7 @@
 ///////Teargas
 /obj/item/weapon/grenade/chem_grenade/teargas
 	name = "teargas grenade"
-	desc = "Используется для подавления беспорядков. Содержимое под давлением. Не вдыхайте содержимое напрямую"
+	desc = "Используется для подавления беспорядков. Содержимое под давлением. Не вдыхайте содержимое напрямую."
 	stage = 2
 	path = 1
 
@@ -340,7 +340,7 @@
 ///Drugs
 /obj/item/weapon/grenade/chem_grenade/drugs
 	name = "Drugs grenade"
-	desc = "Граната с запрещенным химическим веществами, используемая в качестве наркотика."
+	desc = "Граната с запрещенным химическими веществами, используемая в качестве наркотика."
 	path = 1
 	stage = 2
 

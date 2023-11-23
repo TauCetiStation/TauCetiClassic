@@ -30,7 +30,7 @@
 	if(ismob(target))
 		var/mob/living/M = target
 		M.log_combat(user, "planted (attempt) with [name]")
-		user.visible_message("<span class ='red'> [user.name] пытаеться установить взрывчатку на [M.name]!</span>")
+		user.visible_message("<span class ='red'> [user.name] пытается установить взрывчатку на [M.name]!</span>")
 	else
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
 		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name]", user)
