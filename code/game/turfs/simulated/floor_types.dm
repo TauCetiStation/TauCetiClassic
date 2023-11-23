@@ -353,7 +353,7 @@
 
 /turf/simulated/floor/plating/ironsand
 	name = "Iron Sand"
-	cases = list("красного песка", "красному песку","красный песок", "красным песком", "красном песке")
+	cases = list("красного песка", "красному песку", "красный песок", "красным песком", "красном песке")
 	icon_state = "ironsand1"
 	basetype = /turf/simulated/floor/plating/ironsand
 	footstep = FOOTSTEP_SAND
