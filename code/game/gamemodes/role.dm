@@ -65,6 +65,7 @@
 	if(!faction)
 		SSticker.mode.orphaned_roles += src
 	else
+		SSticker.mode.orphaned_roles -= src
 		faction.add_role(src)
 
 /datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)

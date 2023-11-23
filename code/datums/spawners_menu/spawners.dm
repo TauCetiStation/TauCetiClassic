@@ -39,6 +39,8 @@
 
 		to_chat(ghost, "<span class='ghostalert'>Доступны новые роли в меню возрождения!</span>")
 
+	return spawner
+
 /datum/spawner
 	// Name of spawner, wow
 	var/name

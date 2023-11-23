@@ -39,7 +39,7 @@
 	desc = "Does not allow living matters to pass through"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "energyshield"
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 
 	var/allow_pass = FALSE

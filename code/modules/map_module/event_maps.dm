@@ -1,22 +1,24 @@
 // Original idea author: BartNixon, 2019
 
-#define TEAM_NAME_RED "Red Team"
-#define TEAM_NAME_BLUE "Blue Team"
-
 /datum/map_module/forts
-	name = "Forts Arena"
+	name = MAP_MODULE_FORTS
 
 	config_disable_random_events = TRUE
 	config_use_spawners_lobby = TRUE
 
-	var/datum/faction/custom/team_red
-	var/datum/faction/custom/team_blue
+	var/list/datum/faction/factions = list()
+	var/list/datum/spawner/fort_team/spawners = list()
+	var/list/obj/machinery/computer/fort_console/consoles = list()
 
 /datum/map_module/forts/New()
 	..()
 
-	create_spawner(/datum/spawner/fort_team/red, INFINITY, src)
-	create_spawner(/datum/spawner/fort_team/blue, INFINITY, src)
+	var/objective = "Защитите свой командный пункт и уничтожьте командный пункт противника!"
+	factions[TEAM_NAME_RED] = create_custom_faction(TEAM_NAME_RED, TEAM_NAME_RED, "red", objective)
+	factions[TEAM_NAME_BLUE] = create_custom_faction(TEAM_NAME_BLUE, TEAM_NAME_BLUE, "blue", objective)
+
+	spawners[TEAM_NAME_RED] = create_spawner(/datum/spawner/fort_team/red, src)
+	spawners[TEAM_NAME_BLUE] = create_spawner(/datum/spawner/fort_team/blue, src)
 
 /* spawner */
 /datum/spawner/fort_team
@@ -31,36 +33,25 @@
 	var/team_name
 	var/team_outfit
 
-// some low level factions code here, need to wrap it better somehow...
-/datum/spawner/fort_team/New(datum/map_module/MM)
+/datum/spawner/fort_team/New(datum/map_module/forts/MM)
 	. = ..()
-	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(init_faction))
-
-/datum/spawner/fort_team/proc/init_faction()
-	faction = new 
-	faction.name = team_name
-	faction.ID = team_name
-	faction.forgeObjectives("Защитите свой командный пункт и уничтожьте командный пункт противника!")
-
-/datum/spawner/fort_team/roll_registrations()
-	SSticker.mode.factions += faction // todo
-	. = ..()
+	faction = MM.factions[team_name]
 
 /datum/spawner/fort_team/proc/assign_to_team(mob/M)
 	var/datum/role/custom/teammate = new
 	teammate.name = "Team Member"
 	// updates here
-	if(team_name == TEAM_NAME_RED)
-		teammate.logo_state = "red"
-	else
-		teammate.logo_state = "blue"
-
+	// todo: can we use hud rank as teammate.logo_state?
 	teammate.antag_hud_type = ANTAG_HUD_TEAMS
 	teammate.antag_hud_name = "hud_team_captain"
-	//skillset_type
-
+	// add skillset_type
 	teammate.AssignToFaction(faction)
-	teammate.AssignToRole(M.mind, msg_admins = FALSE) // todo: why it announce faction twice
+	teammate.AssignToRole(M.mind, msg_admins = FALSE)
+
+	// gamemode will do this for first roll players, and we need to do this for latespawn roles
+	// todo: wrap it somehow too
+	if(SSticker.current_state >= GAME_STATE_PLAYING)
+		setup_role(teammate)
 
 /datum/spawner/fort_team/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
@@ -87,6 +78,3 @@
 	spawn_landmark_name = TEAM_NAME_BLUE // /obj/effect/landmark/blue_team
 
 	team_outfit = /datum/outfit/forts_team/blue
-
-#undef TEAM_NAME_RED
-#undef TEAM_NAME_BLUE
