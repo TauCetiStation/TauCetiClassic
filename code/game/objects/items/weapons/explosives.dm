@@ -26,7 +26,7 @@
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
 		return
 	if(user.is_busy()) return
-	to_chat(user, "Устанавливает взрывчатку...")
+	to_chat(user, "Устанавливаем взрывчатку...")
 	if(ismob(target))
 		var/mob/living/M = target
 		M.log_combat(user, "planted (attempt) with [name]")
