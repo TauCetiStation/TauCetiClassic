@@ -22,6 +22,8 @@
 /datum/map_module/New()
 	SHOULD_CALL_PARENT(TRUE)
 
+	. = ..()
+
 	log_debug("Map module '[name]' loaded.")
 
 	if(config_disable_random_events)
