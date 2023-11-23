@@ -271,7 +271,7 @@
 ///////Cleaner
 /obj/item/weapon/grenade/chem_grenade/cleaner
 	name = "cleaner grenade"
-	desc = "BLAM! – пенящееся чистящее средство для быстрой очистки больших площадей."
+	desc = "БЛАМ! – пенящееся чистящее средство для быстрой очистки больших площадей."
 	stage = 2
 	path = 1
 
