@@ -384,7 +384,7 @@
 /turf/simulated/floor/plating/snow
 	basetype = /turf/simulated/floor/plating/ironsand
 	name = "snow"
-	cases = list("снега", "снегу","снег", "снегом", "снеге")
+	cases = list("снега", "снегу", "снег", "снегом", "снеге")
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 	footstep = FOOTSTEP_SAND
