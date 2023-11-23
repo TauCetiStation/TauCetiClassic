@@ -341,7 +341,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	if(!floor_type)
 		return
 	name = "plating"
-	cases = list("поверхности", "поверхности", "поверхность", "поверхностью", "поверхности")
+	cases = list("обшивки", "обшивке", "обшивка", "обшивкой", "обшивке")
 	icon_plating = "plating"
 	set_light(0)
 	floor_type = null
