@@ -3,6 +3,7 @@
 /* classic carpets */
 /turf/simulated/floor/carpet
 	name = "red classic carpet"
+	cases = list("ковра", "ковру", "ковёр","ковром", "ковре")
 	icon_state = "center_8" // for webmap and map editors only, "box" is too noisy
 
 	floor_type = /obj/item/stack/tile/carpet
