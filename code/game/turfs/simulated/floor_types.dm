@@ -141,6 +141,7 @@
 
 /turf/simulated/floor/plating
 	name = "plating"
+	cases = list("поверхности", "поверхности", "поверхность", "поверхностью", "поверхности")
 	icon_state = "plating"
 	floor_type = null
 	intact = 0
@@ -186,6 +187,7 @@
 
 /turf/simulated/shuttle/floor
 	name = "floor"
+	cases = list("плитки пола", "плитке пола", "плитку пола", "плиткой пола", "плитке пола")
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -194,6 +196,7 @@
 
 /turf/simulated/shuttle/plating
 	name = "plating"
+	cases = list("поверхности", "поверхности", "поверхность", "поверхностью", "поверхности")
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
 	footstep = FOOTSTEP_PLATING

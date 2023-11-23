@@ -25,6 +25,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	//Note to coders, the 'intact' var can no longer be used to determine if the floor is a plating or not.
 	//Use the is_plating(), is_plasteel_floor() and is_light_floor() procs instead. --Errorage
 	name = "floor"
+	cases = list("плитки пола", "плитке пола", "плитку пола", "плиткой пола", "плитке пола")
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 
@@ -340,6 +341,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	if(!floor_type)
 		return
 	name = "plating"
+	cases = list("поверхности", "поверхности", "поверхность", "поверхностью", "поверхности")
 	icon_plating = "plating"
 	set_light(0)
 	floor_type = null
