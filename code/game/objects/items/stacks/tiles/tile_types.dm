@@ -16,6 +16,7 @@
  */
 /obj/item/stack/tile/grass
 	name = "grass tile"
+	cases = list("травяного покрытия", "травяному покрытию", "травяное покрытие", "травяным покрытием", "травяном покрытии")
 	singular_name = "grass floor tile"
 	desc = "A patch of grass like they often use on golf courses."
 	icon_state = "tile_grass"
@@ -34,6 +35,7 @@
  */
 /obj/item/stack/tile/wood
 	name = "wood floor tile"
+	cases = list("деревянного пола", "деревянному полу", "деревянный пол", "деревянным полом", "деревянном поле")
 	singular_name = "wood floor tile"
 	desc = "An easy to fit wooden floor tile."
 	icon_state = "tile-wood"
@@ -51,6 +53,7 @@
  */
 /obj/item/stack/tile/carpet
 	name = "carpet"
+	cases = list("ковра", "ковру", "ковёр","ковром", "ковре")
 	singular_name = "carpet"
 	desc = "A piece of carpet. It is the same size as a normal floor tile!"
 	icon_state = "tile-carpet"
