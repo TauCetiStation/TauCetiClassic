@@ -79,7 +79,7 @@
 
 /obj/item/weapon/grenade/cancasing/examine(mob/user)
 	..()
-	to_chat(user, "Будет трудно понять, когда она взорвется!")
+	to_chat(user, "Вы не можете сказать, когда она взорвется!")
 
 /obj/item/weapon/grenade/cancasing/rag
 	icon_state = "can_grenade_rag_preview"
