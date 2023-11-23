@@ -131,7 +131,7 @@
 	if(!clown_check(user))
 		return ..()
 
-	user.visible_message("<span class='warning'>[bicon(src)] [user] Поджигает [CASE(grenade, ACCUSATIVE_CASE)] при помощи [I]!</span>", "<span class='warning'>[bicon(src)] Вы поджигаете [name] при помощи [I]!</span>")
+	user.visible_message("<span class='warning'>[bicon(src)] [user] Поджигает [CASE(src, ACCUSATIVE_CASE)] при помощи [I]!</span>", "<span class='warning'>[bicon(src)] Вы поджигаете [name] при помощи [I]!</span>")
 	activate(user)
 	add_fingerprint(user)
 	if(iscarbon(user) && istype(user.get_inactive_hand(), src))
