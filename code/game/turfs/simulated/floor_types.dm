@@ -37,7 +37,7 @@
 
 /turf/unsimulated/desert
 	name = "sand"
-	cases = list("песка", "песку","песок", "песком", "песке")
+	cases = list("песка", "песку", "песок", "песком", "песке")
 	icon_state = "asteroid"
 
 /turf/simulated/floor/smoothtile
