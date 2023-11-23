@@ -61,7 +61,7 @@
 
 
 	if(distance == 0 || loc == M.loc || loc == M)
-		to_chat(M, "<span class='userdanger'>Взрыв [src] сильно дезориентирует вас!</span>")
+		to_chat(M, "<span class='userdanger'>Взрыв [CASE(src, GENITIVE_CASE)] сильно дезориентирует вас!</span>")
 		if(ear_safety > 1)
 			M.Stun(10)
 			M.Weaken(4)
