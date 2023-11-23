@@ -115,7 +115,7 @@
 		if(H.species.name == SHADOWLING) // BBQ from shadowling ~Zve
 			H.adjustFireLoss(rand(15, 25))
 	if(M.ear_damage >= 15)
-		to_chat(M, "<span class='warning'>В ваших ушах начинается сильный звон!</span>")
+		to_chat(M, "<span class='warning'>Вы чувствуете сильный звон в ушах!</span>")
 		if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
 			if(prob(M.ear_damage - 5))
 				to_chat(M, "<span class='warning'>Вы ничего не слышите!</span>")
