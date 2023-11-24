@@ -334,8 +334,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_standing_overlay(FIRE_UPPER_LAYER)
 
 	if(on_fire)
-		var/image/under = image('icons/mob/OnFire.dmi', "human_underlay", layer = -FIRE_LOWER_LAYER)
-		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", layer = -FIRE_UPPER_LAYER)
+		var/fire_suffix_icon = "human"
+		var/datum/species/S = species
+		if(S)
+			fire_suffix_icon = S.specie_suffix_fire_icon
+		var/image/under = image('icons/mob/OnFire.dmi', "[fire_suffix_icon]_underlay", layer = -FIRE_LOWER_LAYER)
+		var/image/over = image('icons/mob/OnFire.dmi', "[fire_suffix_icon]_overlay", layer = -FIRE_UPPER_LAYER)
 		under = update_height(under)
 		over = update_height(over)
 		over.plane = LIGHTING_LAMPS_PLANE

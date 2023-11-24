@@ -22,6 +22,7 @@
 	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
 	var/specie_shoe_blood_state = "shoeblood"
 	var/specie_hand_blood_state = "bloodyhands"
+	var/specie_suffix_fire_icon = "human"
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
@@ -1849,6 +1850,7 @@
 	blood_datum_path = /datum/dirt_cover/hemolymph
 	specie_shoe_blood_state = "snakeshoeblood"
 	specie_hand_blood_state = "snakebloodyhands"
+	specie_suffix_fire_icon = "generic"
 	min_age = 18
 	max_age = 40
 	hud_offset_y = 8
