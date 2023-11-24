@@ -18,7 +18,7 @@
 	name = "grass tile"
 	cases = list("травяного покрытия", "травяному покрытию", "травяное покрытие", "травяным покрытием", "травяном покрытии")
 	singular_name = "grass floor tile"
-	desc = "A patch of grass like they often use on golf courses."
+	desc = "Травяное покрытие, используемое для игр в гольф."
 	icon_state = "tile_grass"
 	w_class = SIZE_SMALL
 	force = 1.0
@@ -37,7 +37,7 @@
 	name = "wood floor tile"
 	cases = list("деревянного пола", "деревянному полу", "деревянный пол", "деревянным полом", "деревянном поле")
 	singular_name = "wood floor tile"
-	desc = "An easy to fit wooden floor tile."
+	desc = "Простая в укладке деревянная напольная плитка."
 	icon_state = "tile-wood"
 	w_class = SIZE_SMALL
 	force = 1.0
@@ -55,7 +55,7 @@
 	name = "carpet"
 	cases = list("ковра", "ковру", "ковёр", "ковром", "ковре")
 	singular_name = "carpet"
-	desc = "A piece of carpet. It is the same size as a normal floor tile!"
+	desc = "Часть ковра, соразмерная плитке."
 	icon_state = "tile-carpet"
 	w_class = SIZE_SMALL
 	force = 1.0
@@ -70,7 +70,7 @@
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
 	singular_name = "black carpet"
-	desc = "A piece of black carpet. It is the same size as a normal floor tile!"
+	desc = "Часть чёрного ковра, соразмерная плитке."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-black"
 	turf_type = /turf/simulated/floor/carpet/black
@@ -79,7 +79,7 @@
 /obj/item/stack/tile/carpet/purple
 	name = "purple carpet"
 	singular_name = "purple carpet"
-	desc = "A piece of purple carpet. It is the same size as a normal floor tile!"
+	desc = "Часть фиолетового ковра, соразмерная плитке."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-purple"
 	turf_type = /turf/simulated/floor/carpet/purple
@@ -88,7 +88,7 @@
 /obj/item/stack/tile/carpet/orange
 	name = "orange carpet"
 	singular_name = "orange carpet"
-	desc = "A piece of orange carpet. It is the same size as a normal floor tile!"
+	desc = "Часть оранжевого ковра, соразмерная плитке."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-orange"
 	turf_type = /turf/simulated/floor/carpet/orange
@@ -97,7 +97,7 @@
 /obj/item/stack/tile/carpet/green
 	name = "green carpet"
 	singular_name = "green carpet"
-	desc = "A piece of green carpet. It is the same size as a normal floor tile!"
+	desc = "Часть зелёного ковра, соразмерная плитке."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-green"
 	turf_type = /turf/simulated/floor/carpet/green
@@ -106,7 +106,7 @@
 /obj/item/stack/tile/carpet/blue
 	name = "blue carpet"
 	singular_name = "blue carpet"
-	desc = "A piece of blue carpet. It is the same size as a normal floor tile!"
+	desc = "Часть синего ковра, соразмерная плитке."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-blue"
 	turf_type = /turf/simulated/floor/carpet/blue
@@ -115,7 +115,7 @@
 /obj/item/stack/tile/carpet/blue2
 	name = "blue carpet"
 	singular_name = "blue carpet"
-	desc = "A piece of blue carpet. It is the same size as a normal floor tile!"
+	desc = "Часть голубого ковра, соразмерная плитке."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-blue2"
 	turf_type = /turf/simulated/floor/carpet/blue2
@@ -124,7 +124,7 @@
 /obj/item/stack/tile/carpet/red
 	name = "red carpet"
 	singular_name = "red carpet"
-	desc = "A piece of red carpet. It is the same size as a normal floor tile!"
+	desc = "Часть синего ковра, соразмерная плитке."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-red"
 	turf_type = /turf/simulated/floor/carpet/red
@@ -133,7 +133,7 @@
 /obj/item/stack/tile/carpet/cyan
 	name = "cyan carpet"
 	singular_name = "cyan carpet"
-	desc = "A piece of cyan carpet. It is the same size as a normal floor tile!"
+	desc = "Часть ковра цвета морской волны, соразмерная плитке."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-cyan"
 	turf_type = /turf/simulated/floor/carpet/cyan
