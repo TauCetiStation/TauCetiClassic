@@ -231,7 +231,7 @@
 
 /turf/simulated/floor/beach/coastline
 	name = "Coastline"
-	cases = list("береговой линии", "береговой линии", "береговой линией", "береговой линии")
+	cases = list("береговой линии", "береговой линии", "береговую линию", "береговой линией", "береговой линии")
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "sandwater"
 	footstep = FOOTSTEP_WATER_SHALLOW
