@@ -74,6 +74,8 @@
 	// сделать зависимым от фракции...
 	positions = INFINITY
 
+	cooldown = 0 // todo: need to add common cooldown
+
 	var/datum/map_module/forts/map_module
 
 	var/team_name

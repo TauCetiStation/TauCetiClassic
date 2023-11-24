@@ -2,6 +2,7 @@
 
 /datum/outfit/forts_team
 	name = "Forts Team"
+	glasses = /obj/item/clothing/glasses/warhead_monitor
 	uniform = /obj/item/clothing/under/ert
 	shoes = /obj/item/clothing/shoes/boots/combat
 	belt = /obj/item/weapon/storage/belt/utility/full

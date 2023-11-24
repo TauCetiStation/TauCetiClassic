@@ -117,7 +117,6 @@
 	if(time_while_available)
 		availability_timer_id = QDEL_IN(src, time_while_available)
 
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/Destroy()
 	SSrole_spawners.remove_from_list(src)
@@ -187,18 +186,15 @@
 	spectator.registred_spawner = src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
 	spectator.registred_spawner = null
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
 
 	if(!length(registered_candidates))
-		//SSrole_spawners.trigger_ui_update()
 		return
 
 	var/list/filtered_candidates = list()
@@ -212,7 +208,6 @@
 	registered_candidates.Cut()
 
 	if(!length(filtered_candidates))
-		//SSrole_spawners.trigger_ui_update()
 		return
 
 	shuffle(filtered_candidates)
@@ -225,7 +220,6 @@
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
 	if(!can_spawn(spectator))
@@ -262,9 +256,6 @@
 		return FALSE
 	if(!ranks)
 		return TRUE
-	if(jobban_isbanned(spectator, "Syndicate"))
-		to_chat(spectator, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")
-		return FALSE
 	for(var/rank in ranks)
 		if(jobban_isbanned(spectator, rank))
 			to_chat(spectator, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")

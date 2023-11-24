@@ -114,14 +114,14 @@
 /datum/fort_console_lot/team_announce
 	name = "Team Announce"
 	desc = "Make big scary announcement for team only"
-	price = 50
+	price = 10
 
 	order = 1
 
 /datum/fort_console_lot/global_announce
 	name = "Global Announce"
 	desc = "Dominate other team with words"
-	price = 50
+	price = 40
 
 	order = 2
 
@@ -172,7 +172,7 @@
 /datum/fort_console_lot/drill
 	name = "Drill set"
 	desc = "Drill and two braces"
-	price = 400
+	price = 200
 
 	order = 50
 
@@ -187,7 +187,7 @@
 /datum/fort_console_lot/update_map
 	name = "Update Holomap"
 	desc = "Scan battlefield and update holomap"
-	price = 200
+	price = 50
 
 	order = 100
 

@@ -95,8 +95,8 @@ RCD
 
 	switch(mode)
 		if(RCD_MODE_FLOOR_WALLS)
-			if(isenvironmentturf(target))
-				var/turf/T = target
+			if(isenvironmentturf(target) || istype(target, /obj/structure/lattice))
+				var/turf/T = get_turf(target)
 				if(!canBuildOnTurf(T))
 					to_chat(user, "<span class='warning'>You can't build floor here.</span>")
 					return FALSE
