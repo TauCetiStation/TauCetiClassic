@@ -105,7 +105,7 @@
 				stage = 1
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
-				to_chat(user, "<span class='red'> [CASE(I, NOMINATIVE_CASE)] пуст.</span>")
+				to_chat(user, "<span class='red'> [I] пуст.</span>") // we need nominative case
 
 	else
 		return ..()
@@ -113,7 +113,7 @@
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	..()
 	if(src in user && detonator)
-		to_chat(user, "С закрепленным [CASE(detonator.name, INSTRUMENTAL_CASE)]")
+		to_chat(user, "С закрепленным [CASE(detonator.name, ABLATIVE_CASE)]")
 
 /obj/item/weapon/grenade/chem_grenade/activate(mob/user)
 	if(active) return
