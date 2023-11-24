@@ -57,7 +57,7 @@
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
-	cases = list("укреплённого покрытия","укреплённому покрытию", "укреплённое покрытие", "укреплённым покрытием", "укреплённом покрытии")
+	cases = list("укреплённого покрытия", "укреплённому покрытию", "укреплённое покрытие", "укреплённым покрытием", "укреплённом покрытии")
 	icon = 'icons/turf/floors/smooth/hardfloor_1.dmi'
 	icon_state = "center_8"
 	thermal_conductivity = 0.025
