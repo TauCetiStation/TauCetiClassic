@@ -192,7 +192,6 @@
 /obj/item/weapon/grenade/chem_grenade/large
 	name = "large chem grenade"
 	desc = "Крупная граната, поражающая большую область."
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
 	origin_tech = "combat=3;materials=3"
@@ -203,7 +202,6 @@
 /obj/item/weapon/grenade/chem_grenade/metalfoam
 	name = "metal-foam grenade"
 	desc = "Используется для экстренной герметизации."
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	path = 1
 	stage = 2
 
@@ -227,7 +225,6 @@
 /obj/item/weapon/grenade/chem_grenade/incendiary
 	name = "incendiary grenade"
 	desc = "Используется для очистки помещений от живых существ."
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	path = 1
 	stage = 2
 
@@ -252,7 +249,6 @@
 /obj/item/weapon/grenade/chem_grenade/antiweed
 	name = "weedkiller grenade"
 	desc = "Используется для очистки больших площадей от инвазивных видов растений. Содержимое под давлением. Не вдыхайте содержимое напрямую."
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	path = 1
 	stage = 2
 
@@ -277,7 +273,6 @@
 /obj/item/weapon/grenade/chem_grenade/cleaner
 	name = "cleaner grenade"
 	desc = "БЛАМ! – пенящееся чистящее средство в специальном аппликаторе для быстрой очистки больших площадей."
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	stage = 2
 	path = 1
 
@@ -301,7 +296,6 @@
 /obj/item/weapon/grenade/chem_grenade/teargas
 	name = "teargas grenade"
 	desc = "Используется для подавления беспорядков. Содержимое под давлением. Не вдыхайте содержимое напрямую."
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	stage = 2
 	path = 1
 
@@ -325,7 +319,6 @@
 /obj/item/weapon/grenade/chem_grenade/acid
 	name = "Acid grenade"
 	desc = "Используется для сжигания брони, вещей и человеческой плоти."
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	stage = 2
 	path = 1
 
@@ -349,7 +342,6 @@
 /obj/item/weapon/grenade/chem_grenade/drugs
 	name = "Drugs grenade"
 	desc = "Граната с запрещенными химическими веществами, используемая в качестве наркотика."
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	path = 1
 	stage = 2
 

@@ -90,7 +90,6 @@
 	desc = "Изготовленное синдикатом взрывное устройство, предназначенное для разрушений и хаоса."
 	name = "syndicate minibomb"
 	icon_state = "syndicate"
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	item_state = "flashbang"
 	origin_tech = "materials=3;magnets=4;syndicate=4"
 
