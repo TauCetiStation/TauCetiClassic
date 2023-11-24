@@ -14,7 +14,7 @@
 	smoke.attach(src)
 
 /obj/item/weapon/grenade/smokebomb/Destroy()
-	qdel(smoke)
+	QDEL_NULL(smoke)
 	return ..()
 
 /obj/item/weapon/grenade/smokebomb/prime()

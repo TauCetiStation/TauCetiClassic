@@ -17,8 +17,8 @@
 /obj/item/device/assembly_holder/Destroy()
 	a_left.holder = null
 	a_right.holder = null
-	qdel(a_left)
-	qdel(a_right)
+	QDEL_NULL(a_left)
+	QDEL_NULL(a_right)
 	return ..()
 
 /obj/item/device/assembly_holder/proc/attach(obj/item/device/D, obj/item/device/D2, mob/user)
