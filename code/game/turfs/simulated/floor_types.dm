@@ -142,7 +142,7 @@
 
 /turf/simulated/floor/plating
 	name = "plating"
-	cases = list("обшивки", "обшивке", "обшивка", "обшивкой", "обшивке")
+	cases = list("обшивки", "обшивке", "обшивку", "обшивкой", "обшивке")
 	icon_state = "plating"
 	floor_type = null
 	intact = 0
