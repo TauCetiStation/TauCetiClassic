@@ -124,7 +124,7 @@
 /obj/item/stack/tile/carpet/red
 	name = "red carpet"
 	singular_name = "red carpet"
-	desc = "Часть синего ковра, соразмерная плитке."
+	desc = "Часть красного ковра, соразмерная плитке."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-red"
 	turf_type = /turf/simulated/floor/carpet/red
