@@ -142,7 +142,7 @@
 
 /turf/simulated/floor/plating
 	name = "plating"
-	cases = list("обшивки", "обшивке", "обшивка", "обшивкой", "обшивке")
+	cases = list("обшивки", "обшивке", "обшивку", "обшивкой", "обшивке")
 	icon_state = "plating"
 	floor_type = null
 	intact = 0
@@ -197,7 +197,7 @@
 
 /turf/simulated/shuttle/plating
 	name = "plating"
-	cases = list("обшивки", "обшивке", "обшивка", "обшивкой", "обшивке")
+	cases = list("обшивки", "обшивке", "обшивку", "обшивкой", "обшивке")
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
 	footstep = FOOTSTEP_PLATING
@@ -231,7 +231,7 @@
 
 /turf/simulated/floor/beach/coastline
 	name = "Coastline"
-	cases = list("береговой линии", "береговой линии", "береговой линией", "береговой линии")
+	cases = list("береговой линии", "береговой линии", "береговую линию", "береговой линией", "береговой линии")
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "sandwater"
 	footstep = FOOTSTEP_WATER_SHALLOW
