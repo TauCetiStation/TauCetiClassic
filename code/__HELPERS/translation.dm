@@ -3,7 +3,7 @@
 #define ACCUSATIVE_CASE    3
 #define ABLATIVE_CASE      4
 #define PREPOSITIONAL_CASE 5
-#define NOMINATIVE_CASE    6
+#define NOMINATIVE_CASE    6   //delete when names get translated... or dont.
 
 #define CASE(item, case) (item.cases && item.cases[case] ? item.cases[case] : item.name)
 
