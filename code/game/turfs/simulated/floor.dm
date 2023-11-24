@@ -344,7 +344,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	if(is_catwalk())
 		return
 	name = "catwalk"
-	cases = list("помоста", "помосту","помост", "помостом", "помосте")
+	cases = list("помоста", "помосту", "помост", "помостом", "помосте")
 	icon_plating = "catwalk0"
 	floor_type = null
 	intact = 0
