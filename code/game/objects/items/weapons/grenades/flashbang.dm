@@ -2,6 +2,7 @@
 	name = "flashbang"
 	icon_state = "flashbang"
 	item_state = "flashbang"
+	cases = list("светошумовой гранаты", "светошумовой гранате", "светошумовую гранату", "светошумовой гранатой", "светошумовой гранате")
 	origin_tech = "materials=2;combat=1"
 	var/banglet = FALSE
 	var/flashbang_range = 7 //how many tiles away the mob will be stunned.
@@ -131,6 +132,7 @@
 	desc = "Использование этого оружия может считаться военным преступлением в вашем регионе. Проконсультируйтесь с местным капитаном."
 	name = "clusterbang"
 	icon = 'icons/obj/grenade.dmi'
+	cases = list("кластерной гранаты", "кластерной гранате", "кластеную гранату", "кластерной гранатой", "кластерной гранате")
 	icon_state = "clusterbang"
 	var/payload = /obj/item/weapon/grenade/flashbang/cluster
 	var/numspawned = 4
@@ -151,6 +153,7 @@
 /obj/item/weapon/grenade/clusterbuster/segment
 	desc = "Сегмент кластерной гранаты. Лучше убегай."
 	name = "clusterbang segment"
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang_segment"
 	numspawned = 2

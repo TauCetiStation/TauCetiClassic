@@ -1,6 +1,7 @@
 /obj/item/weapon/grenade/smokebomb
 	desc = "Таймер установлен на 2 секунды."
 	name = "smoke bomb"
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
 	det_time = 20

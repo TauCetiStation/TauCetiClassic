@@ -3,6 +3,7 @@
 	icon_state = "chemg"
 	item_state = "flashbang"
 	desc = "Химическая граната ручного изготовления."
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	w_class = SIZE_TINY
 	force = 2.0
 	flags = HEAR_TALK
@@ -49,7 +50,7 @@
 			to_chat(user, "<span class='red'>Корпус гранаты необходимо скрепить отверткой.</span>")
 			return
 		path = 1
-		to_chat(user, "<span class='notice'>Вы помещаете [I] в корпус гранаты.</span>")
+		to_chat(user, "<span class='notice'>Вы помещаете [CASE(I, ACCUSATIVE_CASE)] в корпус гранаты.</span>")
 		playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
 		user.drop_from_inventory(det, src)
 		detonator = det
@@ -98,13 +99,13 @@
 			return
 		else
 			if(I.reagents && I.reagents.total_volume)
-				to_chat(user, "<span class='notice'>Вы помещаете [I] в корпус гранаты.</span>")
+				to_chat(user, "<span class='notice'>Вы помещаете [CASE(I, ACCUSATIVE_CASE)] в корпус гранаты.</span>")
 				user.drop_from_inventory(I, src)
 				beakers += I
 				stage = 1
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
-				to_chat(user, "<span class='red'> [I] пуст.</span>")
+				to_chat(user, "<span class='red'> [CASE(I, NOMINATIVE_CASE)] пуст.</span>")
 
 	else
 		return ..()
@@ -112,7 +113,7 @@
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	..()
 	if(src in user && detonator)
-		to_chat(user, "С закрепленным [detonator.name]")
+		to_chat(user, "С закрепленным [CASE(detonator.name, INSTRUMENTAL_CASE)]")
 
 /obj/item/weapon/grenade/chem_grenade/activate(mob/user)
 	if(active) return
@@ -191,6 +192,7 @@
 /obj/item/weapon/grenade/chem_grenade/large
 	name = "large chem grenade"
 	desc = "Крупная граната, поражающая большую область."
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
 	origin_tech = "combat=3;materials=3"
@@ -201,6 +203,7 @@
 /obj/item/weapon/grenade/chem_grenade/metalfoam
 	name = "metal-foam grenade"
 	desc = "Используется для экстренной герметизации."
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	path = 1
 	stage = 2
 
@@ -224,6 +227,7 @@
 /obj/item/weapon/grenade/chem_grenade/incendiary
 	name = "incendiary grenade"
 	desc = "Используется для очистки помещений от живых существ."
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	path = 1
 	stage = 2
 
@@ -248,6 +252,7 @@
 /obj/item/weapon/grenade/chem_grenade/antiweed
 	name = "weedkiller grenade"
 	desc = "Используется для очистки больших площадей от инвазивных видов растений. Содержимое под давлением. Не вдыхайте содержимое напрямую."
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	path = 1
 	stage = 2
 
@@ -272,6 +277,7 @@
 /obj/item/weapon/grenade/chem_grenade/cleaner
 	name = "cleaner grenade"
 	desc = "БЛАМ! – пенящееся чистящее средство для быстрой очистки больших площадей."
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	stage = 2
 	path = 1
 
@@ -295,6 +301,7 @@
 /obj/item/weapon/grenade/chem_grenade/teargas
 	name = "teargas grenade"
 	desc = "Используется для подавления беспорядков. Содержимое под давлением. Не вдыхайте содержимое напрямую."
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	stage = 2
 	path = 1
 
@@ -318,6 +325,7 @@
 /obj/item/weapon/grenade/chem_grenade/acid
 	name = "Acid grenade"
 	desc = "Используется для сжигания брони, вещей и человеческой плоти."
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	stage = 2
 	path = 1
 
@@ -341,6 +349,7 @@
 /obj/item/weapon/grenade/chem_grenade/drugs
 	name = "Drugs grenade"
 	desc = "Граната с запрещенными химическими веществами, используемая в качестве наркотика."
+	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 	path = 1
 	stage = 2
 
