@@ -403,7 +403,7 @@
 
 /obj/item/weapon/storage/backpack/henchmen
 	name = "wings"
-	cases = list("крылья","крыльев", "крыльям", "крылья", "крыльями", "крыльях")
+	cases = list("крылья", "крыльев", "крыльям", "крылья", "крыльями", "крыльях")
 	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
 	icon_state = "henchmen"
 
