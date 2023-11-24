@@ -3,7 +3,6 @@
 	icon_state = "emp"
 	item_state = "emp"
 	origin_tech = "materials=2;magnets=3"
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
 
 /obj/item/weapon/grenade/empgrenade/prime()
 	..()
