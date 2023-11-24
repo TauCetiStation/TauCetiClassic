@@ -55,7 +55,7 @@
 	name = "carpet"
 	cases = list("ковра", "ковру", "ковёр", "ковром", "ковре")
 	singular_name = "carpet"
-	desc = "Часть ковра, соразмерная плитке."
+	desc = "Соразмерная плитке, часть ковра."
 	icon_state = "tile-carpet"
 	w_class = SIZE_SMALL
 	force = 1.0
@@ -70,7 +70,7 @@
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
 	singular_name = "black carpet"
-	desc = "Часть чёрного ковра, соразмерная плитке."
+	desc = "Соразмерная плитке, часть чёрного ковра."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-black"
 	turf_type = /turf/simulated/floor/carpet/black
@@ -79,7 +79,7 @@
 /obj/item/stack/tile/carpet/purple
 	name = "purple carpet"
 	singular_name = "purple carpet"
-	desc = "Часть фиолетового ковра, соразмерная плитке."
+	desc = "Соразмерная плитке, часть фиолетового ковра."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-purple"
 	turf_type = /turf/simulated/floor/carpet/purple
@@ -88,7 +88,7 @@
 /obj/item/stack/tile/carpet/orange
 	name = "orange carpet"
 	singular_name = "orange carpet"
-	desc = "Часть оранжевого ковра, соразмерная плитке."
+	desc = "Соразмерная плитке, часть оранжевого ковра."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-orange"
 	turf_type = /turf/simulated/floor/carpet/orange
@@ -97,7 +97,7 @@
 /obj/item/stack/tile/carpet/green
 	name = "green carpet"
 	singular_name = "green carpet"
-	desc = "Часть зелёного ковра, соразмерная плитке."
+	desc = "Соразмерная плитке, часть зелёного ковра."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-green"
 	turf_type = /turf/simulated/floor/carpet/green
@@ -106,7 +106,7 @@
 /obj/item/stack/tile/carpet/blue
 	name = "blue carpet"
 	singular_name = "blue carpet"
-	desc = "Часть синего ковра, соразмерная плитке."
+	desc = "Соразмерная плитке, часть синего ковра."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-blue"
 	turf_type = /turf/simulated/floor/carpet/blue
@@ -115,7 +115,7 @@
 /obj/item/stack/tile/carpet/blue2
 	name = "blue carpet"
 	singular_name = "blue carpet"
-	desc = "Часть голубого ковра, соразмерная плитке."
+	desc = "Соразмерная плитке, часть голубого ковра."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-blue2"
 	turf_type = /turf/simulated/floor/carpet/blue2
@@ -124,7 +124,7 @@
 /obj/item/stack/tile/carpet/red
 	name = "red carpet"
 	singular_name = "red carpet"
-	desc = "Часть синего ковра, соразмерная плитке."
+	desc = "Соразмерная плитке, часть красного ковра."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-red"
 	turf_type = /turf/simulated/floor/carpet/red
@@ -133,7 +133,7 @@
 /obj/item/stack/tile/carpet/cyan
 	name = "cyan carpet"
 	singular_name = "cyan carpet"
-	desc = "Часть ковра цвета морской волны, соразмерная плитке."
+	desc = "Соразмерная плитке, часть ковра цвета морской волны."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-cyan"
 	turf_type = /turf/simulated/floor/carpet/cyan
