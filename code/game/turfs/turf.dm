@@ -290,10 +290,6 @@
 	//BEGIN: ECS SHIT (UNTIL SOMEONE MAKES POSSIBLE TO USE QDEL IN THIS PROC FOR TURFS)
 	signal_enabled = FALSE
 
-	if(isfloorturf(src))
-		var/turf/simulated/floor/sf = src
-		QDEL_NULL(sf.holy)
-
 	var/list/dc = datum_components
 	if(dc)
 		var/all_components = dc[/datum/component]
