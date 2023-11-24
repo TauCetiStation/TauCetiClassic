@@ -1543,6 +1543,7 @@
 #include "code\modules\clothing\spacesuits\syndi.dm"
 #include "code\modules\clothing\spacesuits\void.dm"
 #include "code\modules\clothing\spacesuits\rig\ert.dm"
+#include "code\modules\clothing\spacesuits\rig\forts_teams.dm"
 #include "code\modules\clothing\spacesuits\rig\rig.dm"
 #include "code\modules\clothing\spacesuits\rig\rig_attackby.dm"
 #include "code\modules\clothing\spacesuits\rig\rig_verbs.dm"

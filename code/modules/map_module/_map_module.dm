@@ -9,8 +9,8 @@
 	// list of additional verbs for admins
 	var/list/admin_verbs
 
-	// gamemode to force
-	var/gamemode = "Extended"
+	// gamemode name to force
+	var/gamemode
 
 	// todo: default stats
 
@@ -18,6 +18,9 @@
 	var/config_disable_random_events = FALSE
 	// enables alternative spawn menu for lobby through spawners
 	var/config_use_spawners_lobby = FALSE
+
+	// disable default mice/drone spawners
+	var/disable_default_spawners = FALSE
 
 /datum/map_module/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -33,6 +36,14 @@
 	if(config_use_spawners_lobby)
 		config.alt_lobby_menu = TRUE
 		log_debug("Alternative event menu enabled.")
+
+	if(disable_default_spawners) // need to rewrite configs, this is stupid
+		config.disable_player_mice = TRUE
+		config.allow_drone_spawn = FALSE
+
+	if(gamemode)
+		log_debug("[gamemode] mode forced.")
+		master_mode = gamemode
 
 	if(player_verbs)
 		setup_temp_player_verbs(player_verbs, "Map")

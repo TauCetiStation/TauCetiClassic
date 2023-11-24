@@ -191,12 +191,30 @@
 
 	order = 100
 
-/datum/fort_console_lot/update_map/purshase()
-	SSholomaps.default_holomap = image(SSholomaps.generate_holo_map()) // todo: own holomap for each team
+/datum/fort_console_lot/update_map/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	SSholomaps.regenerate_custom_holomap(command.team_name)
 
-/datum/fort_console_lot/rename_team
+/datum/fort_console_lot/droppod
+	name = "Droppod"
+	desc = "Contains caller for droppod. One way ticket for the bravests."
+	price = 1000
+
+	order = 999
+
+/datum/fort_console_lot/droppod/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/secure/weapon
+	var/obj/item/device/drop_caller/dropcaller = new(C)
+	switch(command.team_name)
+		if(TEAM_NAME_RED)
+			dropcaller.drop_type = /obj/structure/droppod/fort/red_team
+		if(TEAM_NAME_BLUE)
+			dropcaller.drop_type = /obj/structure/droppod/fort/blue_team
+
+	return C
+
+/*/datum/fort_console_lot/rename_team
 	name = "Rename Team"
 	desc = "Name your Red or Blue to something more original"
 	price = 200
 
-	order = 800
+	order = 800*/

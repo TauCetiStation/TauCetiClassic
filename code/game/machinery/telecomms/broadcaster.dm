@@ -255,7 +255,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
 
-			if(istype(R, /obj/item/device/radio/headset))
+			if(R.subspace_transmission)
 				continue
 
 			if(R.receive_range(display_freq, level) > -1)

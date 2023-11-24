@@ -7,5 +7,9 @@
     "traits":[{
         "Linkage": null,
         "Environment Type": "Holospace"
-    }]
+    }],
+    "space_ruin_levels": 0,
+    "space_empty_levels": 0,
+    "load_junkyard": 0,
+    "minetype": null
 }

@@ -356,6 +356,7 @@
 	item_state = "headset"
 	subspace_transmission = FALSE
 	allow_settings = FALSE
+	freerange = TRUE
 
 /obj/item/device/radio/headset/team_red/atom_init()
 	. = ..()
@@ -367,6 +368,7 @@
 	item_state = "headset"
 	subspace_transmission = FALSE
 	allow_settings = FALSE
+	freerange = TRUE
 
 /obj/item/device/radio/headset/team_blue/atom_init()
 	. = ..()

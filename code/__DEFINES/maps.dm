@@ -17,7 +17,7 @@
 #define ZTRAIT_SNOWSTORM "Snowstorm"
 
 // number - bombcap is multiplied by this before being applied to bombs
-#define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
+#define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier" // todo: not implemented
 
 // number - default gravity if there's no gravity generators or area overrides present
 #define ZTRAIT_GRAVITY "Gravity"

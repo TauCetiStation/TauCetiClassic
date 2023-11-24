@@ -3,8 +3,10 @@
 /datum/map_module/forts
 	name = MAP_MODULE_FORTS
 
+	gamemode = "Extended"
 	config_disable_random_events = TRUE
 	config_use_spawners_lobby = TRUE
+	disable_default_spawners = TRUE
 
 	admin_verbs = list(
 		/client/proc/toggle_passmode_shields,

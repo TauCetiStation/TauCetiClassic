@@ -599,8 +599,10 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_default_spawners()
 	// infinity spawners
-	create_spawner(/datum/spawner/mouse)
-	create_spawner(/datum/spawner/drone)
+	if(!config.disable_player_mice)
+		create_spawner(/datum/spawner/mouse)
+	if(config.allow_drone_spawn)
+		create_spawner(/datum/spawner/drone)
 
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
 	if(!config.deathmatch_arena)

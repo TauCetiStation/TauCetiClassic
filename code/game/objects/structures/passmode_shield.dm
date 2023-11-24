@@ -58,7 +58,7 @@ var/global/list/obj/structure/passmode_shield/passmode_shields
 
 /obj/structure/passmode_shield/CanPass(atom/movable/mover, turf/target, height=0)
 	if(passmode == FSHIELD_PASS_ALLOW_NOT_LIVING)
-		if(isliving(mover))
+		if(isliving(mover)) // crate
 			return FALSE
 		else
 			return TRUE

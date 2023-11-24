@@ -12,6 +12,8 @@
 	var/datum/action/toggle_holomap/holomap_toggle_action = null
 
 	var/image/holomap_base
+	var/holomap_custom_key
+
 	var/image/self_marker
 
 	var/frequency = "1400"		//Frequency for transmitting data
@@ -21,7 +23,10 @@
 	. = ..()
 	holder = I
 	holomap_toggle_action = new(src)
-	holomap_base = SSholomaps.default_holomap
+	if(holomap_custom_key)
+		holomap_base = SSholomaps.get_custom_holomap(holomap_custom_key)
+	else
+		holomap_base = SSholomaps.default_holomap
 	instantiate_self_marker()
 
 /obj/item/holochip/Destroy()
@@ -54,7 +59,10 @@
 		return
 	update_freq(frequency)
 	activator = user
-	holomap_base = SSholomaps.default_holomap
+	if(holomap_custom_key)
+		holomap_base = SSholomaps.get_custom_holomap(holomap_custom_key)
+	else
+		holomap_base = SSholomaps.default_holomap
 	if(color_filter)
 		holomap_base.color = color_filter
 	activator.holomap_obj?.add_overlay(holomap_base)

@@ -10,6 +10,7 @@ SUBSYSTEM_DEF(holomaps)
 
 	var/list/holochips = list()
 	var/image/default_holomap = null
+	var/list/image/custom_holomaps = list()
 	var/list/holomap_cache = list()
 	var/list/holomap_landmarks = list()    //List for shuttles and other stuff that might be useful
 
@@ -52,6 +53,15 @@ SUBSYSTEM_DEF(holomaps)
 
 #define HOLOMAP_WALKABLE_TILE "#66666699"
 #define HOLOMAP_CONCRETE_TILE "#FFFFFFDD"
+
+/datum/controller/subsystem/holomaps/proc/get_custom_holomap(key)
+	if(!custom_holomaps[key])
+		custom_holomaps[key] = image(generate_holo_map())
+
+	return custom_holomaps[key]
+
+/datum/controller/subsystem/holomaps/proc/regenerate_custom_holomap(key)
+	custom_holomaps[key] = image(generate_holo_map())
 
 /datum/controller/subsystem/holomaps/proc/generate_holo_map()
 	var/icon/holomap = icon('icons/holomaps/canvas.dmi', "blank")
