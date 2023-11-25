@@ -1,5 +1,5 @@
 /turf/simulated/floor/airless
-	cases = list("плитки пола", "плитке пола", "плитку пола", "плиткой пола", "плитке пола")
+	cases = list("плитка пола", "плитки пола", "плитке пола", "плитку пола", "плиткой пола", "плитке пола")
 	icon_state = "floor"
 	name = "airless floor"
 	airless = TRUE
@@ -13,7 +13,7 @@
 
 /turf/simulated/floor/light
 	name = "Light floor"
-	cases = list("светящегося пола", "светящемуся полу", "светящийся пол", "светящимся полом", "светящемся полу")
+	cases = list("светящийся пол", "светящегося пола", "светящемуся полу", "светящийся пол", "светящимся полом", "светящемся полу")
 	light_range = 5
 	icon_state = "light_on"
 	floor_type = /obj/item/stack/tile/light
@@ -37,7 +37,7 @@
 
 /turf/unsimulated/desert
 	name = "sand"
-	cases = list("песка", "песку", "песок", "песком", "песке")
+	cases = list("песок", "песка", "песку", "песок", "песком", "песке")
 	icon_state = "asteroid"
 
 /turf/simulated/floor/smoothtile
@@ -57,7 +57,7 @@
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
-	cases = list("укреплённого покрытия", "укреплённому покрытию", "укреплённое покрытие", "укреплённым покрытием", "укреплённом покрытии")
+	cases = list("укреплённое покрытие", "укреплённого покрытия", "укреплённому покрытию", "укреплённое покрытие", "укреплённым покрытием", "укреплённом покрытии")
 	icon = 'icons/turf/floors/smooth/hardfloor_1.dmi'
 	icon_state = "center_8"
 	thermal_conductivity = 0.025
@@ -142,7 +142,7 @@
 
 /turf/simulated/floor/plating
 	name = "plating"
-	cases = list("обшивки", "обшивке", "обшивку", "обшивкой", "обшивке")
+	cases = list("обшивка", "обшивки", "обшивке", "обшивку", "обшивкой", "обшивке")
 	icon_state = "plating"
 	floor_type = null
 	intact = 0
@@ -188,7 +188,7 @@
 
 /turf/simulated/shuttle/floor
 	name = "floor"
-	cases = list("плитки пола", "плитке пола", "плитку пола", "плиткой пола", "плитке пола")
+	cases = list("плитка пола", "плитки пола", "плитке пола", "плитку пола", "плиткой пола", "плитке пола")
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -197,7 +197,7 @@
 
 /turf/simulated/shuttle/plating
 	name = "plating"
-	cases = list("обшивки", "обшивке", "обшивку", "обшивкой", "обшивке")
+	cases = list("обшивка", "обшивки", "обшивке", "обшивку", "обшивкой", "обшивке")
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "plating"
 	footstep = FOOTSTEP_PLATING
@@ -208,7 +208,8 @@
 	explosive_resistance = 1
 
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
-	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.
+	name = "Brig floor"   // Also added it into the 2x3 brig area of the shuttle.
+	cases = list("плитка пола", "плитки пола", "плитке пола", "плитку пола", "плиткой пола", "плитке пола")
 	icon_state = "floor4"
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -217,7 +218,7 @@
 
 /turf/simulated/floor/beach
 	name = "Beach"
-	cases = list("пляжа", "пляжу", "пляж", "пляжем", "пляже")
+	cases = list("пляж", "пляжа", "пляжу", "пляж", "пляжем", "пляже")
 	icon = 'icons/misc/beach.dmi'
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
@@ -226,12 +227,12 @@
 
 /turf/simulated/floor/beach/sand
 	name = "Sand"
-	cases = list("песка", "песку", "песок", "песком", "песке")
+	cases = list("песок", "песка", "песку", "песок", "песком", "песке")
 	icon_state = "sand"
 
 /turf/simulated/floor/beach/coastline
 	name = "Coastline"
-	cases = list("береговой линии", "береговой линии", "береговую линию", "береговой линией", "береговой линии")
+	cases = list("береговая линия", "береговой линии", "береговой линии", "береговую линию", "береговой линией", "береговой линии")
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "sandwater"
 	footstep = FOOTSTEP_WATER_SHALLOW
@@ -241,7 +242,7 @@
 
 /turf/simulated/floor/beach/water
 	name = "Water"
-	cases = list("воды", "воде", "воду", "водой", "воде")
+	cases = list("вода", "воды", "воде", "воду", "водой", "воде")
 	icon_state = "water"
 	light_color = "#00bfff"
 	light_power = 2
@@ -332,7 +333,7 @@
 
 /turf/simulated/floor/grass
 	name = "Grass patch"
-	cases = list("травяного покрытия", "травяному покрытию", "травяное покрытие", "травяным покрытием", "травяном покрытии")
+	cases = list("травяное покрытие", "травяного покрытия", "травяному покрытию", "травяное покрытие", "травяным покрытием", "травяном покрытии")
 	icon_state = "grass1"
 	floor_type = /obj/item/stack/tile/grass
 	footstep = FOOTSTEP_GRASS
@@ -353,7 +354,7 @@
 
 /turf/simulated/floor/plating/ironsand
 	name = "Iron Sand"
-	cases = list("красного песка", "красному песку", "красный песок", "красным песком", "красном песке")
+	cases = list("красный песок", "красного песка", "красному песку", "красный песок", "красным песком", "красном песке")
 	icon_state = "ironsand1"
 	basetype = /turf/simulated/floor/plating/ironsand
 	footstep = FOOTSTEP_SAND
@@ -384,7 +385,7 @@
 /turf/simulated/floor/plating/snow
 	basetype = /turf/simulated/floor/plating/ironsand
 	name = "snow"
-	cases = list("снега", "снегу", "снег", "снегом", "снеге")
+	cases = list("снег", "снега", "снегу", "снег", "снегом", "снеге")
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
 	footstep = FOOTSTEP_SAND
@@ -411,7 +412,7 @@
 	icon = 'icons/turf/catwalks.dmi'
 	icon_state = "catwalk0"
 	name = "catwalk"
-	cases = list("помоста", "помосту", "помост", "помостом", "помосте")
+	cases = list("помост", "помоста", "помосту", "помост", "помостом", "помосте")
 	desc = "Рабочий помост с сомнительным функционалом."
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
