@@ -4660,10 +4660,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/vox/arkship)
-"alx" = (
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/turf/environment/space,
-/area/space)
 "aly" = (
 /turf/unsimulated/wall,
 /area/custom/syndicate_mothership/droppod_garage)
@@ -15978,7 +15974,6 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aJn" = (
-/obj/item/weapon/storage/toolbox/syndicate,
 /obj/structure/rack,
 /obj/effect/decal/turf_decal/metal{
 	dir = 8;
@@ -15987,6 +15982,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -22887,11 +22883,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/specops)
-"bpm" = (
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/turf/environment/space,
-/area/space)
 "bqb" = (
 /obj/structure/table/woodentable{
 	dir = 5
@@ -84974,7 +84965,7 @@ aaM
 aaM
 aaM
 aaM
-alx
+aaM
 aaM
 aeD
 aie
@@ -84986,7 +84977,7 @@ ahF
 ahF
 aaM
 aaM
-bpm
+aaM
 aaM
 aaM
 aka
