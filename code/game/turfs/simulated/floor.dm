@@ -330,7 +330,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	if(istype(src,/turf/simulated/floor/engine))
 		return
 	name = "reinforced floor"
-	cases = list("укреплённого покрытия","укреплённому покрытию", "укреплённое покрытие", "укреплённым покрытием", "укреплённом покрытии")
+	cases = list("укреплённое покрытие", "укреплённого покрытия","укреплённому покрытию", "укреплённое покрытие", "укреплённым покрытием", "укреплённом покрытии")
 	icon_plating = "catwalk0"
 	floor_type = null
 	intact = 0
@@ -344,7 +344,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	if(is_catwalk())
 		return
 	name = "catwalk"
-	cases = list("помоста", "помосту", "помост", "помостом", "помосте")
+	cases = list("помост", "помоста", "помосту", "помост", "помостом", "помосте")
 	icon_plating = "catwalk0"
 	floor_type = null
 	intact = 0
@@ -364,7 +364,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	if(!floor_type)
 		return
 	name = "plating"
-	cases = list("обшивки", "обшивке", "обшивку", "обшивкой", "обшивке")
+	cases = list("обшивка", "обшивки", "обшивке", "обшивку", "обшивкой", "обшивке")
 	icon_plating = "plating"
 	set_light(0)
 	floor_type = null
