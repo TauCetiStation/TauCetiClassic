@@ -1436,10 +1436,7 @@
 /area/shuttle/escape/centcom)
 "adH" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/firstaid/regular,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "black"
@@ -3108,15 +3105,6 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "aid" = (
-/obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/tactical{
-	pixel_x = -4;
-	pixel_y = -4
-	},
 /obj/structure/table/glass,
 /obj/machinery/light{
 	dir = 4
@@ -3125,6 +3113,7 @@
 	dir = 4;
 	icon_state = "siding_wideplating_line"
 	},
+/obj/item/weapon/mop,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -4672,13 +4661,9 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "alx" = (
-/obj/item/weapon/reagent_containers/glass/bucket/full,
 /obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/weapon/mop,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/syndicate/start)
+/turf/environment/space,
+/area/space)
 "aly" = (
 /turf/unsimulated/wall,
 /area/custom/syndicate_mothership/droppod_garage)
@@ -15993,12 +15978,6 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aJn" = (
-/obj/item/weapon/storage/toolbox/syndicate{
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/toolbox/syndicate{
-	pixel_y = 4
-	},
 /obj/item/weapon/storage/toolbox/syndicate,
 /obj/structure/rack,
 /obj/effect/decal/turf_decal/metal{
@@ -17377,20 +17356,14 @@
 	},
 /area/centcom/specops)
 "aMy" = (
-/obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_x = -4;
-	pixel_y = -4
-	},
 /obj/structure/table/glass,
 /obj/effect/decal/turf_decal/alpha/green{
 	dir = 4;
 	icon_state = "siding_wideplating_line"
 	},
+/obj/item/weapon/reagent_containers/glass/bucket/full,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -17410,6 +17383,7 @@
 	dir = 8;
 	icon_state = "siding_wideplating_line"
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -21663,9 +21637,7 @@
 /obj/item/weapon/storage/visuals/surgery/full{
 	pixel_y = 5
 	},
-/obj/item/weapon/scalpel/manager,
 /obj/item/weapon/scalpel/laser3,
-/obj/item/weapon/surgicaldrill,
 /obj/structure/table/glass,
 /obj/effect/decal/turf_decal/alpha/green{
 	icon_state = "siding_wideplating_line"
@@ -21746,13 +21718,7 @@
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/syringe/antiviral,
 /obj/item/weapon/reagent_containers/syringe/antiviral,
-/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
-/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
 /obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/stack/medical/suture,
-/obj/item/stack/medical/suture,
-/obj/item/stack/medical/suture,
 /obj/effect/decal/turf_decal/alpha/green{
 	dir = 6;
 	icon_state = "siding_wideplating_line"
@@ -22921,6 +22887,11 @@
 	icon_state = "floor"
 	},
 /area/centcom/specops)
+"bpm" = (
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/environment/space,
+/area/space)
 "bqb" = (
 /obj/structure/table/woodentable{
 	dir = 5
@@ -85003,7 +84974,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+alx
 aaM
 aeD
 aie
@@ -85015,7 +84986,7 @@ ahF
 ahF
 aaM
 aaM
-aaM
+bpm
 aaM
 aaM
 aka
@@ -85541,7 +85512,7 @@ aHP
 akM
 akM
 akM
-alx
+akM
 akM
 akM
 aJR
