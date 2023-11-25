@@ -53,7 +53,7 @@
  */
 /obj/item/stack/tile/carpet
 	name = "carpet"
-	cases = list("ковра", "ковру", "ковёр", "ковром", "ковре")
+	cases = list("ковёр", "ковра", "ковру", "ковёр", "ковром", "ковре")
 	singular_name = "carpet"
 	desc = "Соразмерная плитке, часть ковра."
 	icon_state = "tile-carpet"
@@ -69,6 +69,7 @@
 
 /obj/item/stack/tile/carpet/black
 	name = "black carpet"
+	cases = list("чёрный ковёр", "чёрного ковра", "чёрному ковру", "чёрный ковёр", "чёрным ковром", "чёрном ковре")
 	singular_name = "black carpet"
 	desc = "Соразмерная плитке, часть чёрного ковра."
 	icon_state = "tile-carpet"
@@ -78,6 +79,7 @@
 
 /obj/item/stack/tile/carpet/purple
 	name = "purple carpet"
+	cases = list("фиолетовый ковёр", "фиолетового ковра", "фиолетовому ковру", "фиолетовый ковёр", "фиолетовым ковром", "фиолетовом ковре")
 	singular_name = "purple carpet"
 	desc = "Соразмерная плитке, часть фиолетового ковра."
 	icon_state = "tile-carpet"
@@ -87,6 +89,7 @@
 
 /obj/item/stack/tile/carpet/orange
 	name = "orange carpet"
+	cases = list("оранжевый ковёр", "оранжевого ковра", "оранжевому ковру", "оранжевый ковёр", "оранжевым ковром", "оранжевом ковре")
 	singular_name = "orange carpet"
 	desc = "Соразмерная плитке, часть оранжевого ковра."
 	icon_state = "tile-carpet"
@@ -96,6 +99,7 @@
 
 /obj/item/stack/tile/carpet/green
 	name = "green carpet"
+	cases = list("зелёный ковёр", "зелёного ковра", "зелёному ковру", "зелёный ковёр", "зелёным ковром", "зелёном ковре")
 	singular_name = "green carpet"
 	desc = "Соразмерная плитке, часть зелёного ковра."
 	icon_state = "tile-carpet"
@@ -105,6 +109,7 @@
 
 /obj/item/stack/tile/carpet/blue
 	name = "blue carpet"
+	cases = list("синий ковёр", "синего ковра", "синему ковру", "синий ковёр", "синим ковром", "синем ковре")
 	singular_name = "blue carpet"
 	desc = "Соразмерная плитке, часть синего ковра."
 	icon_state = "tile-carpet"
@@ -114,6 +119,7 @@
 
 /obj/item/stack/tile/carpet/blue2
 	name = "blue carpet"
+	cases = list("голубой ковёр", "голубого ковра", "голубому ковру", "голубой ковёр", "голубым ковром", "голубом ковре")
 	singular_name = "blue carpet"
 	desc = "Соразмерная плитке, часть голубого ковра."
 	icon_state = "tile-carpet"
@@ -123,6 +129,7 @@
 
 /obj/item/stack/tile/carpet/red
 	name = "red carpet"
+	cases = list("красный ковёр", "красного ковра", "красному ковру", "красный ковёр", "красным ковром", "красном ковре")
 	singular_name = "red carpet"
 	desc = "Соразмерная плитке, часть красного ковра."
 	icon_state = "tile-carpet"
@@ -132,8 +139,9 @@
 
 /obj/item/stack/tile/carpet/cyan
 	name = "cyan carpet"
+	cases = list("циановый ковёр", "цианового ковра", "циановому ковру", "циановый ковёр", "циановым ковром", "циановом ковре")
 	singular_name = "cyan carpet"
-	desc = "Соразмерная плитке, часть ковра цвета морской волны."
+	desc = "Соразмерная плитке, часть цианового ковра."
 	icon_state = "tile-carpet"
 	item_state = "tile-carpet-cyan"
 	turf_type = /turf/simulated/floor/carpet/cyan
