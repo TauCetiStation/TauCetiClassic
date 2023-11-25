@@ -25,6 +25,9 @@
 		action.Grant(user)
 
 /obj/effect/proc_holder/changeling/Destroy()
+	var/datum/role/changeling/role = action.owner.mind.GetRoleByType(/datum/role/changeling)
+	if(role) //just in case
+		role.purchasedpowers -= src
 	QDEL_NULL(action)
 	return ..()
 

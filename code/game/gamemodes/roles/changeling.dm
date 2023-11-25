@@ -110,6 +110,7 @@
 
 /datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "changeling")
+	M.current.remove_changeling_powers(FALSE)
 	. = ..()
 
 /datum/role/changeling/proc/changelingRegen()
