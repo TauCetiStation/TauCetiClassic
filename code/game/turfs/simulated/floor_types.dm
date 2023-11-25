@@ -28,7 +28,7 @@
 
 /turf/simulated/floor/wood
 	name = "floor"
-	cases = list("деревянного пола", "деревянному полу", "деревянный пол", "деревянным полом", "деревянном поле")
+	cases = list("деревянный пол", "деревянного пола", "деревянному полу", "деревянный пол", "деревянным полом", "деревянном поле")
 	icon_state = "wood"
 	floor_type = /obj/item/stack/tile/wood
 	footstep = FOOTSTEP_WOOD
