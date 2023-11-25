@@ -32,8 +32,8 @@
 	// Admin allowed anyway
 	if (ckey in admin_datums)
 		is_admin = TRUE
-		if (!C) // first connect admin
-			turnoff_stickybans_temporary(ckey)
+		//if (!C) // first connect admin
+		//	turnoff_stickybans_temporary(ckey)
 		return // remove this for admin checks in bans too
 	// Check bans
 	var/ban = get_ban_blacklist(key, address, computer_id)
