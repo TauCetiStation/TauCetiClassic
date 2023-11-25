@@ -9,7 +9,7 @@
 /obj/item/weapon/syndie/c4explosive
 	icon_state = "c-4small_0"
 	item_state = "c-4small"
-	cases = list("взрывчатки", "взрывчатке", "взрывчатку", "взрывчаткой", "взрывчатке")
+	cases = list("взрывчатка", "взрывчатки", "взрывчатке", "взрывчатку", "взрывчаткой", "взрывчатке")
 	name = "normal-sized package"
 	desc = "Небольшой завернутый пакет."
 	w_class = SIZE_SMALL
@@ -20,7 +20,6 @@
 /obj/item/weapon/syndie/c4explosive/heavy
 	icon_state = "c-4large_0"
 	item_state = "c-4large"
-	cases = list("взрывчатки", "взрывчатке", "взрывчатку", "взрывчаткой", "взрывчатке")
 	desc = "Таинственный пакет, он довольно тяжелый."
 	power = 2
 	size = "large"
@@ -55,7 +54,7 @@
 
 /obj/item/weapon/syndie/c4detonator
 	icon_state = "c-4detonator_0"
-	cases = list("зажигалки", "зажигалке", "зажигалку", "зажигалкой", "зажигалке")
+	cases = list("зажигалка", "зажигалки", "зажигалке", "зажигалку", "зажигалкой", "зажигалке")
 	item_state = "c-4detonator"
 	name = "Zippo lighter"  /*Sneaky, thanks Dreyfus.*/
 	desc = "Зиппо."

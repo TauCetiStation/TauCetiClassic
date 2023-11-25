@@ -1,6 +1,7 @@
 /obj/item/weapon/plastique
 	name = "plastic explosives"
 	desc = "Используется для создания точечных взрывов в определенных областях."
+	cases = list("взрывчатка", "взрывчатки", "взрывчатке", "взрывчатку", "взрывчаткой", "взрывчатке")
 	gender = PLURAL
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "plastic-explosive0"

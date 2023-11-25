@@ -3,7 +3,7 @@
 	icon_state = "chemg"
 	item_state = "flashbang"
 	desc = "Химическая граната ручного изготовления."
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
+	cases = list("граната", "гранаты", "гранате", "гранату", "гранатой", "гранате")
 	w_class = SIZE_TINY
 	force = 2.0
 	flags = HEAR_TALK
@@ -105,7 +105,7 @@
 				stage = 1
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
-				to_chat(user, "<span class='red'> [I] пуст.</span>") // we need nominative case
+				to_chat(user, "<span class='red'> [CASE(I, NOMINATIVE_CASE)] пуст.</span>") // we have a nominative case, for now.
 
 	else
 		return ..()
@@ -113,7 +113,7 @@
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	..()
 	if(src in user && detonator)
-		to_chat(user, "С закрепленным [CASE(detonator, ABLATIVE_CASE)]") 
+		to_chat(user, "С закрепленным [CASE(detonator, ABLATIVE_CASE)]")
 
 /obj/item/weapon/grenade/chem_grenade/activate(mob/user)
 	if(active) return

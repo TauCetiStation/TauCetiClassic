@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade/spawnergrenade
 	desc = "Таймер установлен на 5 секунд. Она высвободит случайную аномалию поблизости."
 	name = "delivery grenade"
-	cases = list("гранаты", "гранате", "гранату", "гранатой", "гранате")
+	cases = list("граната", "гранаты", "гранате", "гранату", "гранатой", "гранате")
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "delivery"
 	item_state = "flashbang"
