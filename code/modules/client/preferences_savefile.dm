@@ -243,8 +243,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				S["ignore_question"] << ignore_question
 
 	if(current_version < 42)
-		if(ROLE_NINJA in be_role)
-			be_role -= ROLE_NINJA
 		if(ROLE_ABDUCTOR in be_role)
 			be_role -= ROLE_ABDUCTOR
 		S["be_role"] << be_role
