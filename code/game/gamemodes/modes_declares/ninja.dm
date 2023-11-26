@@ -5,5 +5,5 @@
 
 	factions_allowed = list(/datum/faction/ninja)
 
-	minimum_player_count = 15
-	minimum_players_bundles = 15
+	minimum_player_count = 20
+	minimum_players_bundles = 20

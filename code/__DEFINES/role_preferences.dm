@@ -53,6 +53,7 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_REPLICATOR = null,
 	ROLE_IMPOSTER   = null,
 	ROLE_RAIDER     = null,
+	ROLE_NINJA      = null,
 	ROLE_GHOSTLY    = list(IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE),
 )
 
