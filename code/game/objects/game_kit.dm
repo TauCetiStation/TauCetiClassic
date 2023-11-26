@@ -9,8 +9,10 @@
 	var/board_stat = null		//Core string
 	var/data = ""
 	force = 8
-	m_amt = 2000
-	g_amt = 1000
+	construction = list(
+		MAT_METAL=2000,
+		MAT_GLASS=1000
+	)
 	item_state = "sheet-metal"
 	w_class = SIZE_SMALL
 

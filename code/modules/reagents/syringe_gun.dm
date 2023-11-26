@@ -13,7 +13,9 @@
 	force = 4.0
 	var/list/syringes = list()
 	var/max_syringes = 1
-	m_amt = 2000
+	construction = list(
+		MAT_METAL=2000
+	)
 	can_suicide_with = FALSE
 
 /obj/item/weapon/gun/syringe/examine(mob/user)

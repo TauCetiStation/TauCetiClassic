@@ -5,8 +5,10 @@
 	flags = HEAR_TALK
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
 	origin_tech = "magnets=1"
-	m_amt = 500
-	g_amt = 50
+	construction = list(
+		MAT_METAL=500,
+		MAT_GLASS=50
+	)
 
 	var/listening = 0
 	var/recorded = "" //the activation message

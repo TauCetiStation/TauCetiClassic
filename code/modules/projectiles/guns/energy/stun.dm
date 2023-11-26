@@ -63,7 +63,9 @@
 	icon_state = "crossbow"
 	w_class = SIZE_TINY
 	item_state = "crossbow"
-	m_amt = 2000
+	construction = list(
+		MAT_METAL=2000
+	)
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	silenced = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
@@ -100,4 +102,6 @@
 	w_class = SIZE_NORMAL
 	can_be_holstered = FALSE
 	force = 10
-	m_amt = 200000
+	construction = list(
+		MAT_METAL=200000
+	)

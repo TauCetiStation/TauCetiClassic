@@ -10,7 +10,9 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_SMALL
-	m_amt = 500
+	construction = list(
+		MAT_METAL=500
+	)
 	origin_tech = "combat=1;phorontech=1"
 	var/status = 0
 	var/throw_amount = 1 // If player turns it up higher, it may be a worldfire.
@@ -221,7 +223,9 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_SMALL
-	m_amt = 500
+	construction = list(
+		MAT_METAL=500
+	)
 	origin_tech = "combat=2;phorontech=1"
 	var/status = 0
 	var/throw_amount = 25

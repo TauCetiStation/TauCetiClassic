@@ -5,8 +5,10 @@
 	icon_state = "cameracase"
 	w_class = SIZE_TINY
 	anchored = FALSE
-	m_amt = 700
-	g_amt = 300
+	construction = list(
+		MAT_METAL=700,
+		MAT_GLASS=300
+	)
 
 	//	Motion, EMP-Proof, X-Ray
 	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/phoron, /obj/item/device/analyzer)

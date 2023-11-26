@@ -183,8 +183,10 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
-	m_amt = 0
-	g_amt = 500
+	construction = list(
+		MAT_METAL=0,
+		MAT_GLASS=500
+	)
 	volume = 60
 	var/list/filling_states = list()
 	possible_transfer_amounts = list(5,10,15,25,30,60)
@@ -235,7 +237,9 @@
 	name = "large beaker"
 	desc = "A large beaker."
 	icon_state = "beakerlarge"
-	g_amt = 5000
+	construction = list(
+		MAT_GLASS=5000
+	)
 	volume = 150
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,150)
@@ -245,7 +249,9 @@
 	name = "cryostasis beaker"
 	desc = "A cryostasis beaker that allows for chemical storage without reactions."
 	icon_state = "beakernoreact"
-	g_amt = 500
+	construction = list(
+		MAT_GLASS=500
+	)
 	amount_per_transfer_from_this = 10
 	flags = OPENCONTAINER | NOREACT
 
@@ -253,7 +259,9 @@
 	name = "bluespace beaker"
 	desc = "A bluespace beaker, powered by experimental bluespace technology."
 	icon_state = "beakerbluespace"
-	g_amt = 5000
+	construction = list(
+		MAT_GLASS=5000
+	)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30,50,100,300)
@@ -264,7 +272,9 @@
 	name = "vial"
 	desc = "A small glass vial."
 	icon_state = "vial"
-	g_amt = 250
+	construction = list(
+		MAT_GLASS=250
+	)
 	volume = 25
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25)
@@ -328,8 +338,10 @@
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
-	m_amt = 200
-	g_amt = 0
+	construction = list(
+		MAT_METAL=200,
+		MAT_GLASS=0
+	)
 	w_class = SIZE_SMALL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)

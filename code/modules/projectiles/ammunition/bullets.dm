@@ -4,7 +4,9 @@
 	desc = "Патрон от пули калибра .357."
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/revbullet
-	m_amt = 1000
+	construction = list(
+		MAT_METAL=1000
+	)
 
 /obj/item/ammo_casing/a50
 	desc = "Патрон от пули калибра .50АЕ."
@@ -19,26 +21,34 @@
 	icon_state = "casing_38_rubber"
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
-	m_amt = 200
+	construction = list(
+		MAT_METAL=200
+	)
 
 /obj/item/ammo_casing/c9mm
 	desc = "Патрон от пули калибра 9мм."
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
-	m_amt = 300
+	construction = list(
+		MAT_METAL=300
+	)
 
 /obj/item/ammo_casing/c9mmr
 	desc = "Патрон от резиновой пули калибра 9мм."
 	icon_state = "casing_rubber"
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
-	m_amt = 100
+	construction = list(
+		MAT_METAL=100
+	)
 
 /obj/item/ammo_casing/c45
 	desc = "Патрон от пули 45-го калибра."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg
-	m_amt = 400
+	construction = list(
+		MAT_METAL=400
+	)
 
 /obj/item/ammo_casing/c45hp
 	desc = "Патрон от пули калибра .45 HP."
@@ -59,7 +69,9 @@
 	desc = "Патрон от резиновой пули 45-го калибра."
 	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
-	m_amt = 200
+	construction = list(
+		MAT_METAL=200
+	)
 
 /obj/item/ammo_casing/a12mm
 	desc = "Патрон от пули калибра 12мм."
@@ -72,7 +84,9 @@
 	icon_state = "blshell"
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet/slug
-	m_amt = 3750
+	construction = list(
+		MAT_METAL=3750
+	)
 
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "buckshot shell"
@@ -86,7 +100,9 @@
 	desc = "Патрон от 12-го калибра типа травматический."
 	icon_state = "bshell"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/beanbag
-	m_amt = 300
+	construction = list(
+		MAT_METAL=300
+	)
 
 /obj/item/ammo_casing/shotgun/stunshot
 	name = "stun shell"
@@ -94,7 +110,9 @@
 	icon_state = "stunshell"
 	projectile_type = /obj/item/projectile/bullet/stunshot
 	pellets = 5
-	m_amt = 2500
+	construction = list(
+		MAT_METAL=2500
+	)
 
 /obj/item/ammo_casing/shotgun/incendiary
 	name = "incendiary shell"
@@ -108,7 +126,9 @@
 	desc = "Патрон от 12-го калибра типа дротик."
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/energy/dart
-	m_amt = 2500
+	construction = list(
+		MAT_METAL=2500
+	)
 
 /obj/item/ammo_casing/a762
 	desc = "Патрон пули калибра 7.62мм."
@@ -208,7 +228,9 @@
 	icon_state = "casing_38"
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
-	m_amt = 400
+	construction = list(
+		MAT_METAL=400
+	)
 
 /obj/item/ammo_casing/a556
 	desc = "Патрон от пули калибра 5.56мм."

@@ -152,8 +152,10 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = SIZE_NORMAL
-	g_amt = 7500
-	m_amt = 1000
+	construction = list(
+		MAT_METAL=1000,
+		MAT_GLASS=7500
+	)
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
@@ -322,8 +324,10 @@
 	throw_range = 5
 	block_chance = 45
 	w_class = SIZE_SMALL
-	m_amt = 1000
-	g_amt = 0
+	construction = list(
+		MAT_METAL=1000,
+		MAT_GLASS=0
+	)
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
 	hitsound = list('sound/weapons/wood_shield_hit.ogg')

@@ -20,7 +20,9 @@
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
-	m_amt = 750
+	construction = list(
+		MAT_METAL=750
+	)
 	origin_tech = "powerstorage=3;syndicate=5"
 	var/drain_rate = 0 // amount of power to drain per tick
 	var/power_drained = 0 // has drained this much power

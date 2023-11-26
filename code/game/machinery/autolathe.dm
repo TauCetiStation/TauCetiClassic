@@ -46,9 +46,10 @@
 	recipe.name = initial(path.name)
 	recipe.category = category_name
 	recipe.result_type = path
+	var/item_construction = initial(P.construction)
 	recipe.resources = list(
-		MAT_METAL = initial(P.m_amt) * amount,
-		MAT_GLASS = initial(P.g_amt) * amount,
+		MAT_METAL = (item_construction[MAT_METAL] ? item_construction[MAT_METAL] : 0) * amount,
+		MAT_GLASS = (item_construction[MAT_GLASS] ? item_construction[MAT_GLASS] : 0) * amount,
 	)
 	return recipe
 
@@ -316,8 +317,8 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 	var/amount = 1
 	var/obj/item/stack/stack
-	var/m_amt = I.m_amt
-	var/g_amt = I.g_amt
+	var/m_amt = I.construction[MAT_METAL] ? I.construction[MAT_METAL] : 0
+	var/g_amt = I.construction[MAT_GLASS] ? I.construction[MAT_GLASS] : 0
 	if(istype(I, /obj/item/stack))
 		stack = I
 		amount = stack.get_amount()
@@ -452,8 +453,10 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 					stored_material[MAT_METAL] -= recipe.resources[MAT_METAL] / coeff
 					stored_material[MAT_GLASS] -= recipe.resources[MAT_GLASS] / coeff
 					var/obj/new_item = new recipe.result_type(T)
-					new_item.m_amt /= coeff
-					new_item.g_amt /= coeff
+					if(new_item.construction[MAT_METAL])
+						new_item.construction[MAT_METAL] /= coeff
+					if(new_item.construction[MAT_GLASS])
+						new_item.construction[MAT_GLASS] /= coeff
 				if(stored_material[MAT_METAL] < 0)
 					stored_material[MAT_METAL] = 0
 				if(stored_material[MAT_GLASS] < 0)

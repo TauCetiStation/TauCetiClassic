@@ -614,7 +614,7 @@
 	if(!materials_to_add.len)
 		return FALSE
 
-	for(var/material in materials_to_add)
+	for(var/material as anything in materials_to_add)
 		if((resources[material] + materials_to_add[material]) >= res_max_amount)
 			to_chat(user, "<span class='warning'>\The [src] [material] storage is full!</span>")
 			return TRUE
@@ -629,7 +629,7 @@
 	var/checks = CALLBACK(src, PROC_REF(do_after_checks), user, I)
 
 	if(do_after(user, I.w_class * FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER, target = src, extra_checks = checks))
-		for(var/material in materials_to_add)
+		for(var/material as anything in materials_to_add)
 			resources[material] += materials_to_add[material]
 
 		qdel(I)
@@ -680,7 +680,7 @@
 	for(var/datum/design/D as anything in files.known_designs) // TODO: Optimize and cache it with keeping "recycle only known designs" feature instead of cycling through all designs, but I can't think of any way with less than O(N) complexity on every check. Only way I can think of is to keep build_path to design list with all available designs in research files, but that seems as a bad solution. Review needed.
 		if((D.build_type & build_type) && istype(I, D.build_path))
 			var/list/materials_to_add = list()
-			for(var/material in D.materials)
+			for(var/material as anything in D.materials)
 				if(material in resources)
 					materials_to_add[material] = round(get_resource_cost_w_coeff(D, material, roundto = 0.01) * FABRICATOR_RECYCLE_MATERIAL_RATE, 1)
 			return materials_to_add
@@ -692,7 +692,7 @@
 
 /obj/machinery/mecha_part_fabricator/deconstruction()
 	. = ..()
-	for(var/material in resources)
+	for(var/material as anything in resources)
 		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 
 /obj/machinery/mecha_part_fabricator/update_icon()

@@ -5,8 +5,10 @@
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
 	w_class = SIZE_TINY
-	m_amt = 60
-	g_amt = 30
+	construction = list(
+		MAT_METAL=60,
+		MAT_GLASS=30
+	)
 	var/emagged = FALSE
 	var/recording = FALSE
 	var/playing = FALSE

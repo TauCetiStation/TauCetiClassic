@@ -5,7 +5,9 @@
 	icon_state = "laser"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	w_class = SIZE_SMALL
-	m_amt = 2000
+	construction = list(
+		MAT_METAL=2000
+	)
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 	slot_flags = SLOT_FLAGS_BACK

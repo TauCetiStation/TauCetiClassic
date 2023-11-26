@@ -9,7 +9,9 @@
 	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 10
-	m_amt = 200
+	construction = list(
+		MAT_METAL=200
+	)
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = TRUE
 	var/output_to_chat = TRUE

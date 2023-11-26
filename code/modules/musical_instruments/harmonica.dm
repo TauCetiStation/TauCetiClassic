@@ -6,7 +6,9 @@
 	item_state = "harmonica"
 	force = 5
 	w_class = SIZE_TINY
-	m_amt = 500
+	construction = list(
+		MAT_METAL=500
+	)
 	var/channel
 	var/cooldown = 70
 	var/last_played = 0

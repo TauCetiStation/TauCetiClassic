@@ -22,8 +22,10 @@
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 30
-	g_amt = 20
+	construction = list(
+		MAT_METAL=30,
+		MAT_GLASS=20
+	)
 	origin_tech = "magnets=2;engineering=2"
 	var/data = "" // Is used for UI interaction.
 	var/report_time = 0 // So people can't spam with papers.

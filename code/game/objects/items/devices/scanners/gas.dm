@@ -17,8 +17,10 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 30
-	g_amt = 20
+	construction = list(
+		MAT_METAL=30,
+		MAT_GLASS=20
+	)
 	origin_tech = "magnets=1;engineering=1"
 
 	var/status

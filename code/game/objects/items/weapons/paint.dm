@@ -8,8 +8,10 @@ var/global/list/cached_icons = list()
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
 	item_state = "paintcan"
-	m_amt = 200
-	g_amt = 0
+	construction = list(
+		MAT_METAL=200,
+		MAT_GLASS=0
+	)
 	w_class = SIZE_SMALL
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10,20,30,50,70)

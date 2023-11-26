@@ -24,7 +24,9 @@
 	force = 5.0
 	throwforce = 7.0
 	w_class = SIZE_TINY
-	m_amt = 150
+	construction = list(
+		MAT_METAL=150
+	)
 	origin_tech = "materials=1;engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
@@ -59,8 +61,10 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
-	g_amt = 0
-	m_amt = 75
+	construction = list(
+		MAT_METAL=75,
+		MAT_GLASS=0
+	)
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	attack_verb = list("stabbed")
 	usesound = 'sound/items/Screwdriver.ogg'
@@ -103,7 +107,9 @@
 	throw_speed = 2
 	throw_range = 9
 	w_class = SIZE_TINY
-	m_amt = 80
+	construction = list(
+		MAT_METAL=80
+	)
 	origin_tech = "materials=1;engineering=1"
 	hitsound = list('sound/items/tools/wirecutters-pinch.ogg')
 	attack_verb = list("pinched", "nipped")
@@ -159,8 +165,12 @@
 		QUALITY_WELDING = 1
 	)
 
-	m_amt = 70 // Cost to make in the autolathe
-	g_amt = 30
+	construction = list(
+		MAT_METAL=70
+	) // Cost to make in the autolathe
+	construction = list(
+		MAT_GLASS=30
+	)
 
 	origin_tech = "engineering=1" // R&D tech level
 
@@ -447,8 +457,10 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "indwelder"
 	max_fuel = 40
-	m_amt = 70
-	g_amt = 60
+	construction = list(
+		MAT_METAL=70,
+		MAT_GLASS=60
+	)
 	origin_tech = "engineering=2"
 
 /obj/item/weapon/weldingtool/hugetank
@@ -457,8 +469,10 @@
 	icon_state = "hugewelder"
 	max_fuel = 80
 	w_class = SIZE_SMALL
-	m_amt = 70
-	g_amt = 120
+	construction = list(
+		MAT_METAL=70,
+		MAT_GLASS=120
+	)
 	origin_tech = "engineering=3"
 
 /obj/item/weapon/weldingtool/experimental
@@ -467,8 +481,10 @@
 	icon_state = "expwelder"
 	max_fuel = 40
 	w_class = SIZE_SMALL
-	m_amt = 70
-	g_amt = 120
+	construction = list(
+		MAT_METAL=70,
+		MAT_GLASS=120
+	)
 	toolspeed = 0.5
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
 	var/next_refuel_tick = 0
@@ -502,7 +518,9 @@
 
 	w_class = SIZE_SMALL
 
-	m_amt = 50
+	construction = list(
+		MAT_METAL=50
+	)
 	origin_tech = "engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
@@ -522,7 +540,9 @@
 	throwforce = 5.0
 
 	w_class = SIZE_TINY
-	m_amt = 15
+	construction = list(
+		MAT_METAL=15
+	)
 
 	qualities = list(
 		QUALITY_PRYING = 0.7

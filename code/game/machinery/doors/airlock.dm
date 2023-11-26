@@ -569,7 +569,7 @@ var/global/list/airlock_overlays = list()
 	if (isElectrified())
 		if (isitem(mover))
 			var/obj/item/i = mover
-			if (i.m_amt)
+			if (i.construction[MAT_METAL])
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()

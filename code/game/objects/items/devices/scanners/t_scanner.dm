@@ -5,7 +5,9 @@
 	slot_flags = SLOT_FLAGS_BELT
 	w_class = SIZE_TINY
 	item_state = "electronic"
-	m_amt = 150
+	construction = list(
+		MAT_METAL=150
+	)
 	origin_tech = "magnets=1;engineering=1"
 
 	var/on = FALSE

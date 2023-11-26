@@ -298,7 +298,9 @@
 	w_class = SIZE_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	m_amt = 2000
+	construction = list(
+		MAT_METAL=2000
+	)
 	var/flash_enabled = TRUE
 	var/pictures_max = 10
 	var/pictures_left = 10

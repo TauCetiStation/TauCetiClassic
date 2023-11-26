@@ -9,7 +9,9 @@
 	icon_state = "conpipe-s"
 	anchored = FALSE
 	density = FALSE
-	m_amt = 1850
+	construction = list(
+		MAT_METAL=1850
+	)
 	level = 2
 	resistance_flags = CAN_BE_HIT
 	var/ptype = 0

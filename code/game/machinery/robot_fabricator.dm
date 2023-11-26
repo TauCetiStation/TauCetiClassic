@@ -23,7 +23,7 @@
 				if(!M.get_amount())
 					return
 				while(metal_amount < 150000 && M.use(1))
-					src.metal_amount += M.m_amt /*O:height * O:width * O:length * 100000.0*/
+					src.metal_amount += M.construction[MAT_METAL] ? m.construction[MAT_METAL] : 0 /*O:height * O:width * O:length * 100000.0*/
 					count++
 
 				to_chat(user, "You insert [count] metal sheet\s into the fabricator.")

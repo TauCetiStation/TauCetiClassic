@@ -97,7 +97,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	hitsound = list('sound/items/trayhit2.ogg')
-	m_amt = 3750
+	construction = list(
+		MAT_METAL=3750
+	)
 	throwforce = 5.0
 	flags = CONDUCT
 	origin_tech = "materials=1"
@@ -107,7 +109,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	desc = "Sheets made out off metal. It has been dubbed Metal Sheets."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
-	m_amt = 0
+	construction = list(
+		MAT_METAL=0
+	)
 	throwforce = 5.0
 	flags = CONDUCT
 
@@ -129,7 +133,9 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	desc = "This sheet is an alloy of steel and platinum."
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
-	m_amt = 7500
+	construction = list(
+		MAT_METAL=7500
+	)
 	throwforce = 7.0
 	flags = CONDUCT
 	origin_tech = "materials=2"

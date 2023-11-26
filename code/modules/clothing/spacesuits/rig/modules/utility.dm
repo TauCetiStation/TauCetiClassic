@@ -124,8 +124,7 @@
 		device.canremove = FALSE // so we can't place mounted devices on tables/racks
 		device.flags |= ABSTRACT // so we can't put mounted devices into backpacks
 		device.origin_tech = null // so we can't put them into destructive analyzer
-		device.m_amt = 0 // so we can't put them into autolathe
-		device.g_amt = 0
+		device.construction = list() // so we can't put them into autolathe
 
 /obj/item/rig_module/device/engage(atom/target)
 	if(!isturf(holder.wearer.loc) && target)

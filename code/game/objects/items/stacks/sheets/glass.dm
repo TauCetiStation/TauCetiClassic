@@ -15,7 +15,9 @@
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	g_amt = 3750
+	construction = list(
+		MAT_GLASS=3750
+	)
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/thin
 	required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)
@@ -25,7 +27,9 @@
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
-	g_amt = 0
+	construction = list(
+		MAT_GLASS=0
+	)
 	created_window = /obj/structure/window/thin
 
 /obj/item/stack/sheet/glass/attack_self(mob/user)
@@ -167,8 +171,10 @@
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
-	g_amt = 3750
-	m_amt = 1875
+	construction = list(
+		MAT_METAL=1875,
+		MAT_GLASS=3750
+	)
 	origin_tech = "materials=2"
 	required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED)
 
@@ -177,8 +183,10 @@
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
-	g_amt = 0
-	m_amt = 0
+	construction = list(
+		MAT_METAL=0,
+		MAT_GLASS=0
+	)
 
 /obj/item/stack/sheet/rglass/attack_self(mob/user)
 	construct_window(user)
@@ -281,7 +289,9 @@
 	desc = "A very strong and very resistant sheet of a phoron-glass alloy."
 	singular_name = "phoron glass sheet"
 	icon_state = "sheet-phoronglass"
-	g_amt = 7500
+	construction = list(
+		MAT_GLASS=7500
+	)
 	origin_tech = "materials=3;phorontech=2"
 	created_window = /obj/structure/window/thin/phoron
 	required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)
@@ -297,8 +307,10 @@
 	desc = "Phoron glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced phoron glass sheet"
 	icon_state = "sheet-phoronrglass"
-	g_amt = 7500
-	m_amt = 1875
+	construction = list(
+		MAT_METAL=1875,
+		MAT_GLASS=7500
+	)
 	origin_tech = "materials=4;phorontech=2"
 	created_window = /obj/structure/window/thin/reinforced/phoron
 	required_skills = list(/datum/skill/construction = SKILL_LEVEL_MASTER)

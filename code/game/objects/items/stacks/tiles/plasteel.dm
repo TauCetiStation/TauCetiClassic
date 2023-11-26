@@ -4,7 +4,9 @@
 	desc = "Those could not work as a pretty decent throwing weapon."
 	w_class = SIZE_SMALL
 	force = 6.0
-	m_amt = 937.5
+	construction = list(
+		MAT_METAL=937.5 // wtf
+	)
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 3
@@ -12,7 +14,7 @@
 	max_amount = 60
 	turf_type = /turf/simulated/floor
 
-	
+
 
 /obj/item/stack/tile/plasteel/atom_init()
 	. = ..()

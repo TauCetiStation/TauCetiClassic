@@ -202,7 +202,9 @@
 	throw_speed = 2
 	throw_range = 9
 	w_class = SIZE_TINY
-	m_amt = 80
+	construction = list(
+		MAT_METAL=80
+	)
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("cut", "stabbed", "chipped")
 	sharp = 1

@@ -235,8 +235,8 @@ Note: Must be placed west/left of and R&D console to function.
 		// So consider them tests of "new" construction techniques for an item already known
 		// #define MAGIC_2_MANIPULATORS_MAX_OUTPUT_CONSIDERING_IT_SHOULD_ROUND_UP_TO_30_PERCENT_COEFFICIENT 3.75
 		new_item.prototipify(min_reliability=linked_console.files.design_reliabilities[D.id] + efficiency_coeff * 12.5,  max_reliability=70 + efficiency_coeff * 12.5)
-		new_item.m_amt /= efficiency_coeff
-		new_item.g_amt /= efficiency_coeff
+		for(var/material as anything in new_item.construction)
+			new_item.construction[material] /= efficiency_coeff
 
 		linked_console.files.design_reliabilities[D.id] += linked_console.files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** linked_console.files.design_created_prototypes[D.id])
 		linked_console.files.design_reliabilities[D.id] = max(round(linked_console.files.design_reliabilities[D.id], 5), 1)

@@ -5,8 +5,10 @@
 	desc = "A hand-held scanner which reports condition of the plant."
 	icon = 'icons/obj/device.dmi'
 	w_class = SIZE_MINUSCULE
-	m_amt = 200
-	g_amt = 50
+	construction = list(
+		MAT_METAL=200,
+		MAT_GLASS=50
+	)
 	origin_tech = "materials=1;biotech=1"
 	icon_state = "hydro"
 	item_state = "plantanalyzer"
@@ -1429,7 +1431,9 @@
 	force = 5.0
 	throwforce = 7.0
 	w_class = SIZE_TINY
-	m_amt = 2550
+	construction = list(
+		MAT_METAL=2550
+	)
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 

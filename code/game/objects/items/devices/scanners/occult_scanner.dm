@@ -8,7 +8,9 @@
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 500
+	construction = list(
+		MAT_METAL=500
+	)
 	var/scanned_type = /obj/item/weapon/reagent_containers/food/snacks/ectoplasm
 
 /obj/item/device/occult_scanner/attack_self(mob/user)

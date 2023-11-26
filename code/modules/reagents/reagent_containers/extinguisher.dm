@@ -12,7 +12,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
-	m_amt = 90
+	construction = list(
+		MAT_METAL=90
+	)
 	safety = TRUE
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 
@@ -85,7 +87,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	throwforce = 2
 	w_class = SIZE_TINY
 	force = 3.0
-	m_amt = 0
+	construction = list(
+		MAT_METAL=0
+	)
 
 	volume = 120
 
@@ -143,7 +147,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	throwforce = 2
 	w_class = SIZE_TINY
 	force = 3.0
-	m_amt = 0
+	construction = list(
+		MAT_METAL=0
+	)
 	volume = 120
 	random_overlay = FALSE
 	FE_type = "mini"
