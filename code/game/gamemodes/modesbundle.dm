@@ -26,6 +26,7 @@
 	/datum/game_mode/replicators,
 	/datum/game_mode/malfunction,
 	/datum/game_mode/nuclear,
+	/datum/game_mode/ninja,
 	/datum/game_mode/revolution,
 	/datum/game_mode/shadowling,
 	/datum/game_mode/traitorchan,
