@@ -424,8 +424,8 @@
 				B.dat = content
 				B.icon_state = "book[rand(1,10)]"
 				B.item_state_world = "[B.icon_state]_world"
-				B.update_world_icon()
 				B.item_state_inventory = B.icon_state
+				B.update_world_icon()
 				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
 
@@ -549,7 +549,7 @@
 		b.name = "Print Job #" + "[rand(100, 999)]"
 		b.icon_state = "book[rand(1,10)]"
 		b.item_state_world = "[b.icon_state]_world"
-		b.item_state_invetory = b.icon_state
+		b.item_state_inventory = b.icon_state
 		b.update_world_icon()
 		qdel(O)
 	else
