@@ -6,7 +6,7 @@
 
 	roletype = /datum/role/borer
 
-	min_roles = 3
+	min_roles = 1
 	max_roles = 3
 
 	logo_state = "borer-logo"

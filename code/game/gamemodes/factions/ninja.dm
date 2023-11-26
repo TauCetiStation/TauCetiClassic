@@ -4,7 +4,7 @@
 
 	initroletype = /datum/role/ninja
 
-	min_roles = 2
+	min_roles = 1
 	max_roles = 2
 
 	required_pref = ROLE_NINJA
