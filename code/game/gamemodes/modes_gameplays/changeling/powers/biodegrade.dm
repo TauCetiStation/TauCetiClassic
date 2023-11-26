@@ -2,6 +2,7 @@
 	name = "Biodegrade"
 	desc = "Dissolves restraints or other objects preventing free movement."
 	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets."
+	button_icon_state = "biodegrade"
 	chemical_cost = 30 //High cost to prevent spam
 	genomecost = 1
 	req_human = 1

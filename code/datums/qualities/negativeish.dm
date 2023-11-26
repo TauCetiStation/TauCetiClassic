@@ -309,3 +309,15 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/awkward/add_effect(mob/living/carbon/human/H, latespawn)
 	H.AddElement(/datum/element/awkward)
+
+/datum/quality/negativeish/dumb
+	name = "Dumb"
+	desc = "Ты несколько раз упал головой на тулбокс и отупел."
+	requirement = "Нет."
+
+/datum/quality/negativeish/dumb/add_effect(mob/living/carbon/human/H, latespawn)
+	if(latespawn)
+		//60 for nasty airlock-bumping, make a light effect for latespawning humans
+		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, adjustBrainLoss), 50), 3 MINUTE)
+		return
+	H.adjustBrainLoss(60)

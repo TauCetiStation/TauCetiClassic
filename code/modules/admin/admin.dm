@@ -74,6 +74,7 @@ var/global/BSACooldown = 0
 		<b>Guard:</b> <A href='?src=\ref[src];guard=\ref[M]'>Show</A> |
 		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A>|<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A><br>
 		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
+		<b>CentCom (other server bans)</b>: <A target='_blank' href='https://centcom.melonmesa.com/viewer/view/[M.ckey]'>CentCom (ENG)</A><br>
 		<b>BYOND profile</b>: <A target='_blank' href='http://byond.com/members/[M.ckey]'>[M.ckey]</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
@@ -687,6 +688,7 @@ var/global/BSACooldown = 0
 
 	dat += {"
 		<BR>
+		<A href='?src=\ref[src];show_raspect=1'>Show Round Aspect</A><br>
 		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
 		<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
 		<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>

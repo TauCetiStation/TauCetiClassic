@@ -3,12 +3,15 @@
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
 	icon = 'icons/obj/doors/DoorHazard.dmi'
 	icon_state = "door_open"
+	var/base_state = "door"
 	req_one_access = list(access_atmospherics, access_engine_equip, access_paramedic)
 	opacity = 0
+	glass = 0
+	always_transparent = TRUE
+	allow_passglass = FALSE // for balance reasons
 	density = FALSE
 	layer = SAFEDOOR_LAYER
 	base_layer = SAFEDOOR_LAYER
-	glass = 0
 	door_open_sound  = 'sound/machines/firedoor_open.ogg'
 	door_close_sound = 'sound/machines/firedoor_close.ogg'
 
@@ -279,12 +282,18 @@
 	return
 
 /obj/machinery/door/firedoor/do_close()
-	..()
 	if(locate(/obj/structure/window/fulltile) in loc)
-		alpha = 45
-		layer = base_layer + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
+		base_state = "doorwin"
+		layer_delta = SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
+		opacity = TRUE
+		always_transparent = FALSE
 	else
-		layer = base_layer + SAFEDOOR_CLOSED_MOD_BEFORE_DOOR
+		base_state = "door"
+		layer_delta = SAFEDOOR_CLOSED_MOD_BEFORE_DOOR
+		opacity = FALSE
+		always_transparent = TRUE
+	..()
+
 	START_PROCESSING(SSmachines, src)
 	latetoggle()
 
@@ -306,16 +315,16 @@
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
 		if("opening")
-			flick("door_opening", src)
+			flick("[base_state]_opening", src)
 		if("closing")
-			flick("door_closing", src)
+			flick("[base_state]_closing", src)
 	return
 
 
 /obj/machinery/door/firedoor/update_icon()
 	var/list/firedoor_overlays = list()
 	if(density)
-		icon_state = "door_closed"
+		icon_state = "[base_state]_closed"
 		if(hatch_open)
 			firedoor_overlays += get_airlock_overlay("hatch", icon, FALSE)
 		if(blocked)
@@ -328,7 +337,7 @@
 					if(dir_alerts[d] & (1<<(i-1)))
 						firedoor_overlays += get_airlock_overlay("alert_[ALERT_STATES[i]]", icon, FALSE)//сделать TRUE кога решится проблема со створками
 	else
-		icon_state = "door_open"
+		icon_state = "[base_state]_open"
 		if(blocked)
 			firedoor_overlays += get_airlock_overlay("welded_open", icon, FALSE)
 

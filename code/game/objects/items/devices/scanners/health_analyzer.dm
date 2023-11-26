@@ -2,7 +2,7 @@
 	name = "Health Analyzer"
 	icon_state = "health"
 	item_state = "healthanalyzer"
-	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
+	desc = "Ручной сканер тела, способный проанализировать жизненные показатели пациента."
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
@@ -15,23 +15,24 @@
 	var/output_to_chat = TRUE
 	var/last_scan = ""
 	var/last_scan_name = ""
+	var/scan_hallucination = FALSE
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
 			var/message = ""
-			message += "<span class = 'notice'>Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR</span><br>"
-			message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
-			message += "&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
-			message += "<span class = 'notice'>Body Temperature: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span><br>"
-			message += "<span class = 'warning bold'>Warning: Blood Level ERROR: --% --cl.</span><span class = 'notice bold'>Type: ERROR</span><br>"
-			message += "<span class = 'notice'>Subject's pulse:</span><font color='red'>-- bpm.</font><br>"
+			message += "<span class = 'notice'>Результаты сканирования: ОШИБКА\n&emsp; Общее состояние: ОШИБКА</span><br>"
+			message += "&emsp; Key: <font color='blue'>Асфиксия</font>/<font color='green'>Интоксикация</font>/<font color='#FFA500'>Термические</font>/<font color='red'>Механические</font><br>"
+			message += "&emsp; Специфика повреждений: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
+			message += "<span class = 'notice'>Температура тела: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span><br>"
+			message += "<span class = 'warning bold'>Внимание: Уровень крови ОШИБКА: --% --сл.</span> <span class = 'notice bold'>Группа крови: ОШИБКА</span><br>"
+			message += "<span class = 'notice'>Пульс пациента:</span><font color='red'>-- уд/мин.</font><br>"
 
 			last_scan = message
 			last_scan_name = M.name
 			if(!output_to_chat)
-				var/datum/browser/popup = new(user, "[M.name]_scan_report", "[M.name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
+				var/datum/browser/popup = new(user, "[M.name]_scan_report", "Результаты сканирования [M.name]", 400, 400, ntheme = CSS_THEME_LIGHT)
 				popup.set_content(message)
 				popup.open()
 			else
@@ -41,21 +42,21 @@
 			return
 		else
 			add_fingerprint(user)
-			var/dat = health_analyze(M, user, mode, output_to_chat)
+			var/dat = health_analyze(M, user, mode, output_to_chat, null, scan_hallucination)
 			last_scan = dat
 			last_scan_name = M.name
 			if(!output_to_chat)
-				var/datum/browser/popup = new(user, "[M.name]_scan_report", "[M.name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
+				var/datum/browser/popup = new(user, "[M.name]_scan_report", "Результаты сканирования [M.name]", 400, 400, ntheme = CSS_THEME_LIGHT)
 				popup.set_content(dat)
 				popup.open()
 			else
 				to_chat(user, dat)
 	else
 		add_fingerprint(user)
-		to_chat(user, "<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
+		to_chat(user, "<span class = 'warning'>Результаты анализа не завершены. Обнаружена неизвестная анатомия.</span>")
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
-	var/datum/browser/popup = new(user, "[last_scan_name]_scan_report", "[last_scan_name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "[last_scan_name]_scan_report", "Результаты сканирования [last_scan_name]", 400, 400, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(last_scan)
 	popup.open()
 
@@ -152,3 +153,8 @@
 	attack_self(usr)
 	add_fingerprint(usr)
 	return
+
+/obj/item/device/healthanalyzer/psychology
+	name = "Health and Mental Analyzer"
+	desc = "A hand-held body scanner able to distinguish vital and mental signs of the subject."
+	scan_hallucination = TRUE

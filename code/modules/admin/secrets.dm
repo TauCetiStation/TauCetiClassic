@@ -1,11 +1,15 @@
 /datum/admins
 	var/current_tab = 0
 
-	var/list/datum/secrets_menu/secrets_menu = list()
+	var/list/datum/tgui_secrets/tgui_secrets = list()
 
 	var/static/datum/announcement/station/gravity_off/announce_gravity_off = new
 	var/static/datum/announcement/station/gravity_on/announce_gravity_on = new
 	var/static/datum/announcement/centcomm/access_override/announce_override = new
+
+/datum/admins/Destroy()
+	QDEL_LIST_ASSOC_VAL(tgui_secrets)
+	return ..()
 
 /datum/admins/proc/Secrets()
 	if(!check_rights(0))
@@ -662,7 +666,7 @@
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
 			for(var/mob/living/carbon/human/H as anything in human_list)
 				if(H.dna && H.ckey)
-					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
+					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.b_type]</td></tr>"
 			dat += "</table>"
 
 			var/datum/browser/popup = new(usr, "DNA", "Showing DNA from blood", 440, 410)

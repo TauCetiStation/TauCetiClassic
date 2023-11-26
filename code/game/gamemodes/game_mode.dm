@@ -132,7 +132,10 @@
 	var/list/available_players = get_ready_players()
 	for(var/datum/faction/F in factions)
 		for(var/mob/dead/new_player/P in available_players)
-			if(F.max_roles && F.members.len >= F.max_roles)
+			if(!F.rounstart_populate)
+				log_mode("[F] without roundstart populating.")
+				break
+			if(F.max_roles != 0 && F.members.len >= F.max_roles)
 				break
 			if(!F.can_join_faction(P))
 				log_mode("[P] failed [F] can_join_faction!")
@@ -210,7 +213,7 @@
 	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
 
 /datum/game_mode/proc/GetScoreboard()
-	completition_text = "<h2>Factions & Roles</h2>"
+	completition_text = "<h2>Фракции & Антагонисты</h2>"
 	var/exist = FALSE
 	for(var/datum/faction/F in factions)
 		F.calculate_completion()
@@ -223,7 +226,7 @@
 			completition_text += "</div>"
 
 	if (orphaned_roles.len > 0)
-		completition_text += "<FONT size = 2><B>Independents:</B></FONT><br>"
+		completition_text += "<FONT size = 2><B>Независимые:</B></FONT><br>"
 	for(var/datum/role/R in orphaned_roles)
 		R.calculate_completion()
 		SSStatistics.add_orphaned_role(R)
@@ -232,7 +235,7 @@
 		completition_text += R.GetScoreboard()
 		completition_text += "</div>"
 	if (!exist)
-		completition_text += "(none)"
+		completition_text += "(Антагонисты отсуствовали)"
 	completition_text += "<BR>"
 	count_survivors()
 

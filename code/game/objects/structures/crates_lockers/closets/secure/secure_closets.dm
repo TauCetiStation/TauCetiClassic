@@ -154,3 +154,10 @@
 	else
 		add_overlay(overlay_unlocked)
 
+
+/obj/structure/closet/secure_closet/psycho
+	name = "Psychiatrist's Locker"
+	req_access = list(access_psychiatrist)
+
+/obj/structure/closet/secure_closet/psycho/PopulateContents()
+	new /obj/item/device/healthanalyzer/psychology(src)
