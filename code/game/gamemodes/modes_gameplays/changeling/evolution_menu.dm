@@ -22,7 +22,7 @@ var/global/list/sting_paths
 	if(!sting_paths)
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
 
-	var/dat = create_menu(changeling)
+	var/dat = create_menu(role)
 	var/datum/browser/popup = new(user, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()

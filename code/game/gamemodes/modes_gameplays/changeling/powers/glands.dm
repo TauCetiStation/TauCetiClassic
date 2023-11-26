@@ -7,11 +7,9 @@
 
 /obj/effect/proc_holder/changeling/glands/on_purchase(mob/user)
 	..()
-	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
-	changeling.chem_storage += 25
+	role.chem_storage += 25
 
 /obj/effect/proc_holder/changeling/glands/Destroy()
 	. = ..()
-	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
-	changeling.chem_storage -= 25
-	changeling.chem_charges = min(changeling.chem_charges, changeling.chem_storage)
+	role.chem_storage -= 25
+	role.chem_charges = min(changeling.chem_charges, changeling.chem_storage)
