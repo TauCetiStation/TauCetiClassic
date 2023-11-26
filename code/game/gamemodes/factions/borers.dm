@@ -1,10 +1,12 @@
 /datum/faction/borers
 	name = F_BORER_HIVEMIND
 	ID = F_BORER_HIVEMIND
-	required_pref = ROLE_ALIEN // in code\modules\events\borers.dm too
+	// in code\modules\events\borers.dm too
+	required_pref = ROLE_BORER
 
 	roletype = /datum/role/borer
 
+	min_roles = 3
 	max_roles = 3
 
 	logo_state = "borer-logo"

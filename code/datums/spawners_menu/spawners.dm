@@ -431,7 +431,7 @@
 	desc = "Вы появляетесь где-то в вентиляции на станции."
 	wiki_ref = "Cortical_Borer"
 
-	ranks = list(ROLE_GHOSTLY)
+	ranks = list(ROLE_GHOSTLY, ROLE_BORER)
 
 	register_only = TRUE
 	time_for_registration = 0.5 MINUTES

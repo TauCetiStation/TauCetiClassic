@@ -10,6 +10,7 @@
 #define ROLE_MALF              "Malf AI"
 #define ROLE_REV               "Revolutionary"
 #define ROLE_ALIEN             "Xenomorph"
+#define ROLE_BORER             "Borer"
 #define ROLE_CULTIST           "Cultist"
 #define ROLE_BLOB              "Blob"
 #define ROLE_NINJA             "Ninja"
@@ -46,6 +47,7 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_MALF       = null,
 	ROLE_REV        = null,
 	ROLE_ALIEN      = list(IGNORE_LARVA),
+	ROLE_BORER      = null
 	ROLE_CULTIST    = list(IGNORE_NARSIE_SLAVE, IGNORE_EMINENCE),
 	ROLE_BLOB       = list(IGNORE_EVENT_BLOB),
 	ROLE_SHADOWLING = null,
