@@ -122,10 +122,7 @@
 	use_to_pickup = 1
 	var/wrapper_color
 	var/label
-	construction = list(
-		MAT_METAL=50,
-		MAT_GLASS=50
-	)
+	construction = MAT_METAL+"=50;"+MAT_GLASS+"=50"
 
 /obj/item/weapon/storage/pill_bottle/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W))

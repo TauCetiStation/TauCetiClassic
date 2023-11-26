@@ -16,6 +16,7 @@
 /obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
+		var/list/item_construction = params2numberlist(M.construction)
 		if (src.metal_amount < 150000.0)
 			var/count = 0
 			add_overlay("fab-load-metal")
@@ -23,7 +24,7 @@
 				if(!M.get_amount())
 					return
 				while(metal_amount < 150000 && M.use(1))
-					src.metal_amount += M.construction[MAT_METAL] ? M.construction[MAT_METAL] : 0 /*O:height * O:width * O:length * 100000.0*/
+					src.metal_amount += item_construction || 0 /*O:height * O:width * O:length * 100000.0*/
 					count++
 
 				to_chat(user, "You insert [count] metal sheet\s into the fabricator.")

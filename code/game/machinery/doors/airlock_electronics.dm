@@ -4,10 +4,7 @@
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
 	w_class = SIZE_TINY
-	construction = list(
-		MAT_METAL=50,
-		MAT_GLASS=50
-	)
+	construction = MAT_METAL+"=50;"+MAT_GLASS+"=50"
 
 	//Emagged
 	var/broken = FALSE

@@ -10,9 +10,7 @@
 	w_class = SIZE_TINY
 	throw_speed = 2
 	throw_range = 5
-	construction = list(
-		MAT_METAL=500
-	)
+	construction = MAT_METAL+"=500"
 	origin_tech = "materials=1"
 	var/dispenser = 0
 	var/breakouttime = 1200 //Deciseconds = 120s = 2 minutes

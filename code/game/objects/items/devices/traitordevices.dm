@@ -69,9 +69,7 @@ effective or pretty fucking useless.
 	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
-	construction = list(
-		MAT_METAL=10000
-	)
+	construction = MAT_METAL+"=10000"
 	origin_tech = "magnets=3;bluespace=4;syndicate=2"
 	COOLDOWN_DECLARE(announce)
 

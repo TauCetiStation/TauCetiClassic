@@ -285,10 +285,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	icon_state = "datadisk2"
 	item_state = "card-id"
 	w_class = SIZE_TINY
-	construction = list(
-		MAT_METAL=30,
-		MAT_GLASS=10
-	)
+	construction = MAT_METAL+"=30;"+MAT_GLASS+"=10"
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/tech_disk/atom_init()

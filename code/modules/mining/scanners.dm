@@ -9,10 +9,7 @@
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
-	construction = list(
-		MAT_METAL=30,
-		MAT_GLASS=20
-	)
+	construction = MAT_METAL+"=30;"+MAT_GLASS+"=20"
 	origin_tech = "magnets=1;engineering=2"
 
 /obj/item/device/geoscanner/afterattack(atom/target, mob/user, proximity, params)

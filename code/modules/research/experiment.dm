@@ -319,9 +319,7 @@
 	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 10
-	construction = list(
-		MAT_METAL=200
-	)
+	construction = MAT_METAL+"=200"
 	origin_tech = "engineering=1;biotech=1"
 
 	var/datum/experiment_data/experiments
@@ -405,10 +403,7 @@
 	icon_state = "datadisk2"
 	item_state = "card-id"
 	w_class = SIZE_TINY
-	construction = list(
-		MAT_METAL=30,
-		MAT_GLASS=10
-	)
+	construction = MAT_METAL+"=30;"+MAT_GLASS+"=10"
 	var/stored_points
 
 /obj/item/weapon/disk/research_points/atom_init()

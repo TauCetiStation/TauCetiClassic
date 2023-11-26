@@ -10,10 +10,7 @@
 	icon_state = "card-pay-idle"
 
 	slot_flags = SLOT_FLAGS_BELT
-	construction = list(
-		MAT_METAL=7000,
-		MAT_GLASS=2000
-	)
+	construction = MAT_METAL+"=7000;"+MAT_GLASS+"=2000"
 
 	var/linked_account = 0
 	var/pay_amount = 0

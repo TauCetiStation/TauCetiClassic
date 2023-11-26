@@ -10,9 +10,7 @@
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
-	construction = list(
-		MAT_METAL=500
-	)
+	construction = MAT_METAL+"=500"
 	var/active = FALSE
 	var/atom/target = null
 	var/mode = SEARCH_FOR_DISK  // Need here for GREAT OOP style, 0 - searching disk

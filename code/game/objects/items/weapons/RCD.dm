@@ -16,9 +16,7 @@ RCD
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_SMALL
-	construction = list(
-		MAT_METAL=50000
-	)
+	construction = MAT_METAL+"=50000"
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
 	var/matter = 0
@@ -230,8 +228,5 @@ RCD
 	density = FALSE
 	anchored = FALSE
 	origin_tech = "materials=2"
-	construction = list(
-		MAT_METAL=30000,
-		MAT_GLASS=15000
-	)
+	construction = MAT_METAL+"=30000;"+MAT_GLASS+"=15000"
 	w_class = SIZE_TINY

@@ -7,10 +7,7 @@
 	w_class = SIZE_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	construction = list(
-		MAT_METAL=50,
-		MAT_GLASS=20
-	)
+	construction = MAT_METAL+"=50;"+MAT_GLASS+"=20"
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_flashlight)
 	var/on = 0
 	var/button_sound = 'sound/items/flashlight.ogg' // Sound when using light
@@ -146,10 +143,7 @@
 	brightness_on = 4
 	w_class = SIZE_NORMAL
 	flags = CONDUCT
-	construction = list(
-		MAT_METAL=0,
-		MAT_GLASS=0
-	)
+	construction = MAT_METAL+"=0;"+MAT_GLASS+"=0"
 	on = 1
 
 /obj/item/device/flashlight/lamp/get_current_temperature()
@@ -267,10 +261,7 @@
 	icon_state = "floor" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
 	w_class = SIZE_MINUSCULE
-	construction = list(
-		MAT_METAL=0,
-		MAT_GLASS=0
-	)
+	construction = MAT_METAL+"=0;"+MAT_GLASS+"=0"
 	brightness_on = 6
 	on = 1 //Bio-luminesence has one setting, on.
 

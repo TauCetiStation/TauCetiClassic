@@ -1,6 +1,6 @@
 /obj
 	//var/datum/module/mod		//not used
-	var/list/construction = list() // Resources used for construction
+	var/construction = "" // Resources used for construction
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/crit_fail = 0

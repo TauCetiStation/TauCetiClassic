@@ -46,10 +46,12 @@
 	recipe.name = initial(path.name)
 	recipe.category = category_name
 	recipe.result_type = path
-	var/list/item_construction = initial(P.construction)
+	var/list/item_construction = params2numberlist(initial(P.construction))
+	var/m_amt = item_construction[MAT_METAL] || 0
+	var/g_amt = item_construction[MAT_GLASS] || 0
 	recipe.resources = list(
-		MAT_METAL = (item_construction[MAT_METAL] ? item_construction[MAT_METAL] : 0) * amount,
-		MAT_GLASS = (item_construction[MAT_GLASS] ? item_construction[MAT_GLASS] : 0) * amount,
+		MAT_METAL = m_amt * amount,
+		MAT_GLASS = g_amt * amount
 	)
 	return recipe
 
@@ -317,8 +319,9 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 	var/amount = 1
 	var/obj/item/stack/stack
-	var/m_amt = I.construction[MAT_METAL] ? I.construction[MAT_METAL] : 0
-	var/g_amt = I.construction[MAT_GLASS] ? I.construction[MAT_GLASS] : 0
+	var/list/item_construction = params2numberlist(I.construction)
+	var/m_amt = item_construction[MAT_METAL] || 0
+	var/g_amt = item_construction[MAT_GLASS] || 0
 	if(istype(I, /obj/item/stack))
 		stack = I
 		amount = stack.get_amount()
@@ -334,8 +337,9 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		var/obj/item/ammo_box/ammobox = I
 		if(ammobox.stored_ammo.len)
 			for(var/obj/item/ammo_casing/ammo_type in ammobox.stored_ammo)
-				m_amt += ammo_type.construction[MAT_METAL] ? ammo_type.construction[MAT_METAL] : 0
-				g_amt += ammo_type.construction[MAT_GLASS] ? ammo_type.construction[MAT_GLASS] : 0
+				var/list/ammo_construction = params2numberlist(ammo_type.construction)
+				m_amt += ammo_construction[MAT_METAL] || 0
+				g_amt += ammo_construction[MAT_GLASS] || 0
 	m_amt *= amount
 	g_amt *= amount
 
@@ -453,10 +457,11 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 					stored_material[MAT_METAL] -= recipe.resources[MAT_METAL] / coeff
 					stored_material[MAT_GLASS] -= recipe.resources[MAT_GLASS] / coeff
 					var/obj/new_item = new recipe.result_type(T)
-					if(new_item.construction[MAT_METAL])
-						new_item.construction[MAT_METAL] /= coeff
-					if(new_item.construction[MAT_GLASS])
-						new_item.construction[MAT_GLASS] /= coeff
+					var/list/item_construction = params2numberlist(new_item.construction)
+					if(item_construction[MAT_METAL])
+						item_construction[MAT_METAL] /= coeff
+					if(item_construction[MAT_GLASS])
+						item_construction[MAT_GLASS] /= coeff
 				if(stored_material[MAT_METAL] < 0)
 					stored_material[MAT_METAL] = 0
 				if(stored_material[MAT_GLASS] < 0)

@@ -179,9 +179,11 @@
 	var/I = new D.build_path(location)
 	if(isobj(I))
 		var/obj/O = I
+		var/list/used_materials = list()
 		for(var/resource in D.materials)
 			if(resource in resources)
-				O.construction[resource] = get_resource_cost_w_coeff(D, resource)
+				used_materials[resource] = get_resource_cost_w_coeff(D, resource)
+		O.construction = numberlist2params(used_materials)
 
 		O.prototipify(min_reliability=files.design_reliabilities[D.id] + efficiency_coeff * 25.0,  max_reliability=70 + efficiency_coeff * 25.0)
 
@@ -658,9 +660,10 @@
 	for(var/datum/design/D as anything in files.known_designs) // TODO: Optimize and cache it with keeping "recycle only known designs" feature instead of cycling through all designs, but I can't think of any way with less than O(N) complexity on every check. Only way I can think of is to keep build_path to design list with all available designs in research files, but that seems as a bad solution. Review needed.
 		if((D.build_type & build_type) && istype(I, D.build_path))
 			var/list/materials_to_add = list()
-			for(var/material as anything in I.construction)
+			var/list/item_construction = params2numberlist(I.construction)
+			for(var/material as anything in item_construction)
 				if(material in resources)
-					materials_to_add[material] = round(I.construction[material] * resource_coeff_recycle, 1)
+					materials_to_add[material] = round(item_construction[material] * resource_coeff_recycle, 1)
 			return materials_to_add
 
 	return list()

@@ -2,10 +2,7 @@
 	name = "timer"
 	desc = "Used to time things. Works well with contraptions which has to count down. Tick tock."
 	icon_state = "timer"
-	construction = list(
-		MAT_METAL=500,
-		MAT_GLASS=50
-	)
+	construction = MAT_METAL+"=500;"+MAT_GLASS+"=50"
 	origin_tech = "magnets=1"
 
 	wires = WIRE_PULSE

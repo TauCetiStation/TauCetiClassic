@@ -17,10 +17,7 @@
 	icon_state = "welding"
 	flags = (HEADCOVERSEYES | HEADCOVERSMOUTH)
 	item_state = "welding"
-	construction = list(
-		MAT_METAL=3000,
-		MAT_GLASS=1000
-	)
+	construction = MAT_METAL+"=3000;"+MAT_GLASS+"=1000"
 	var/up = 0
 	flash_protection = FLASHES_FULL_PROTECTION
 	flash_protection_slots = list(SLOT_HEAD)

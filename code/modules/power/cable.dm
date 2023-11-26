@@ -436,10 +436,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	w_class = SIZE_TINY
 	throw_speed = 2
 	throw_range = 5
-	construction = list(
-		MAT_METAL=50,
-		MAT_GLASS=20
-	)
+	construction = MAT_METAL+"=50;"+MAT_GLASS+"=20"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "coil"
@@ -451,10 +448,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/cable_coil/cyborg
 	max_amount = 90
-	construction = list(
-		MAT_METAL=0,
-		MAT_GLASS=0
-	)
+	construction = MAT_METAL+"=0;"+MAT_GLASS+"=0"
 
 /obj/item/stack/cable_coil/atom_init(mapload, new_amount = null, param_color = null)
 	. = ..()

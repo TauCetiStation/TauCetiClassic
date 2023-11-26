@@ -998,7 +998,7 @@
 	if(qual_prying <= 0)
 		return
 
-	var/chance = w_class / (qual_prying * (construction[MAT_METAL] ? construction[MAT_METAL] + 1 : 1))
+	var/chance = w_class / (qual_prying * (params2numberlist(construction)[MAT_METAL] || 0) + 1)
 
 	if(prob(chance * 100))
 		qdel(src)

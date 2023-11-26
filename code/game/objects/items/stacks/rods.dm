@@ -9,9 +9,7 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 20
-	construction = list(
-		MAT_METAL=1875
-	)
+	construction = MAT_METAL+"=1875"
 	max_amount = 60
 	usesound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("hit", "bludgeoned", "whacked")

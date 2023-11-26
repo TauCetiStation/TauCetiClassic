@@ -16,10 +16,7 @@
 	desc = "Retracts stuff."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor"
-	construction = list(
-		MAT_METAL=10000,
-		MAT_GLASS=5000
-	)
+	construction = MAT_METAL+"=10000;"+MAT_GLASS+"=5000"
 	flags = CONDUCT
 	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
@@ -33,10 +30,7 @@
 	desc = "You think you have seen this before."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat"
-	construction = list(
-		MAT_METAL=5000,
-		MAT_GLASS=2500
-	)
+	construction = MAT_METAL+"=5000;"+MAT_GLASS+"=2500"
 	flags = CONDUCT
 	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
@@ -51,10 +45,7 @@
 	desc = "This stops bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery"
-	construction = list(
-		MAT_METAL=5000,
-		MAT_GLASS=2500
-	)
+	construction = MAT_METAL+"=5000;"+MAT_GLASS+"=2500"
 	flags = CONDUCT
 	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
@@ -71,10 +62,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "drill"
 	hitsound = list('sound/weapons/circsawhit.ogg')
-	construction = list(
-		MAT_METAL=15000,
-		MAT_GLASS=10000
-	)
+	construction = MAT_METAL+"=15000;"+MAT_GLASS+"=10000"
 	flags = CONDUCT
 	force = 15.0
 	w_class = SIZE_TINY
@@ -105,10 +93,7 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
-	construction = list(
-		MAT_METAL=10000,
-		MAT_GLASS=5000
-	)
+	construction = MAT_METAL+"=10000;"+MAT_GLASS+"=5000"
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
@@ -172,10 +157,7 @@
 	throwforce = 9.0
 	throw_speed = 3
 	throw_range = 5
-	construction = list(
-		MAT_METAL=20000,
-		MAT_GLASS=10000
-	)
+	construction = MAT_METAL+"=20000;"+MAT_GLASS+"=10000"
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharp = 1

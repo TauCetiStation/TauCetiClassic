@@ -9,9 +9,7 @@
 	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 10
-	construction = list(
-		MAT_METAL=200
-	)
+	construction = MAT_METAL+"=200"
 	origin_tech = "magnets=4;biotech=4"
 
 	var/can_scan = TRUE
@@ -528,9 +526,7 @@
 	w_class = SIZE_SMALL
 	throw_speed = 4
 	throw_range = 10
-	construction = list(
-		MAT_METAL=300
-	)
+	construction = MAT_METAL+"=300"
 	origin_tech = "magnets=5;biotech=5;programming=3"
 
 	flash_danger_color = TRUE

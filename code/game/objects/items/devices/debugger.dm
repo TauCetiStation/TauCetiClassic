@@ -15,10 +15,7 @@
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3
-	construction = list(
-		MAT_METAL=50,
-		MAT_GLASS=20
-	)
+	construction = MAT_METAL+"=50;"+MAT_GLASS+"=20"
 	origin_tech = "magnets=1;engineering=1"
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 

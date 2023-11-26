@@ -13,9 +13,7 @@
 	w_class = SIZE_MINUSCULE
 	throw_speed = 4
 	throw_range = 15
-	construction = list(
-		MAT_METAL=60
-	)
+	construction = MAT_METAL+"=60"
 	hitsound = list('sound/effects/stamp.ogg') //taken from Baystation build
 	var/dye_color = DYE_CARGO
 	attack_verb = list("stamped")

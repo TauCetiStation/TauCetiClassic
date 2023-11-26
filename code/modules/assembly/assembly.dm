@@ -5,10 +5,7 @@
 	icon_state = ""
 	flags = CONDUCT
 	w_class = SIZE_TINY
-	construction = list(
-		MAT_METAL=100,
-		MAT_GLASS=0
-	)
+	construction = MAT_METAL+"=100;"+MAT_GLASS+"=0"
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 10

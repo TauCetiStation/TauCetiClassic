@@ -21,9 +21,7 @@
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
-	construction = list(
-		MAT_METAL=400
-	)
+	construction = MAT_METAL+"=400"
 	origin_tech = "magnets=1"
 
 /obj/item/weapon/locator/attack_self(mob/user)
@@ -135,9 +133,7 @@ Frequency:
 	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
-	construction = list(
-		MAT_METAL=10000
-	)
+	construction = MAT_METAL+"=10000"
 	origin_tech = "magnets=1;bluespace=3"
 
 /obj/item/weapon/hand_tele/attack_self(mob/user)

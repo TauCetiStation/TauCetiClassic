@@ -4,9 +4,7 @@
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
 	w_class = SIZE_SMALL
-	construction = list(
-		MAT_METAL=1000
-	)
+	construction = MAT_METAL+"=1000"
 	fire_delay = 4
 	recoil = 1
 	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'

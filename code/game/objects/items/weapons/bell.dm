@@ -7,9 +7,7 @@
 	icon_state = "bell"
 	flags = NOBLUDGEON
 	hitsound = list('sound/items/oneding.ogg')
-	construction = list(
-		MAT_METAL=75
-	)
+	construction = MAT_METAL+"=75"
 	var/next_ring = 0
 
 /obj/item/weapon/bell/attack_hand(mob/user)

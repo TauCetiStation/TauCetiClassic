@@ -11,9 +11,7 @@
 	icon = 'icons/obj/syringe.dmi'
 	item_state = "syringe_0"
 	icon_state = "0"
-	construction = list(
-		MAT_GLASS=150
-	)
+	construction = MAT_GLASS+"=150"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = null //list(5,10,15)
 	volume = 15
