@@ -46,11 +46,7 @@
 	popup.open()
 
 /datum/role/vox_raider/roundstart/OnPostSetup(laterole)
-	. = ..()
 	var/mob/living/carbon/human/vox = antag.current
-	vox.set_species(VOX)
-	vox.spawner_args = list(/datum/spawner/living/vox, 2 MINUTES)
-
 	var/sounds = rand(2, 8)
 	var/newname = ""
 	for(var/i in 1 to sounds)
@@ -58,6 +54,7 @@
 	vox.real_name = capitalize(newname)
 	vox.name = vox.real_name
 	vox.age = rand(5, 15)
+	vox.set_species(VOX)
 	vox.add_language(LANGUAGE_VOXPIDGIN)
 	if(faction.members.len % 2 == 0 || prob(33))
 		vox.add_language(LANGUAGE_SOLCOMMON)
@@ -67,6 +64,7 @@
 
 	var/obj/item/weapon/implant/cortical/I = new(vox)
 	I.inject(vox, BP_HEAD)
-
+	vox.spawner_args = list(/datum/spawner/living/vox, 2 MINUTES)
 	vox.equip_vox_raider()
 	vox.regenerate_icons()
+	return ..()

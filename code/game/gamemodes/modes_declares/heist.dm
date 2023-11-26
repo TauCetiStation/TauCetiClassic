@@ -3,7 +3,7 @@
 	config_name = "heist"
 	probability = 1
 
-	factions_allowed = list(/datum/faction/heist)
+	factions_allowed = list(/datum/faction/heist/roundstart)
 
 	minimum_player_count = 15
 	minimum_players_bundles = 15

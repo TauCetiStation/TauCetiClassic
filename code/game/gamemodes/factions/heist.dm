@@ -45,9 +45,9 @@
 
 /datum/faction/heist/OnPostSetup()
 	. = ..()
-	setup_members_loc()
+	create_crew()
 
-/datum/faction/heist/proc/setup_members_loc()
+/datum/faction/heist/proc/create_crew()
 	create_spawners(/datum/spawner/vox, max_roles)
 
 /datum/faction/heist/GetScoreboard()
@@ -105,7 +105,11 @@
 	min_roles = 4
 	initroletype = /datum/role/vox_raider/roundstart
 
-/datum/faction/heist/roundstart/setup_members_loc()
+/datum/faction/heist/roundstart/OnPostSetup()
 	for(var/datum/role/R in members)
-		var/spawnloc = pick_landmarked_location("Heist")
+		var/turf/spawnloc = pick_landmarked_location("Heist")
 		R.antag.current.forceMove(spawnloc)
+	return ..()
+
+/datum/faction/heist/roundstart/create_crew()
+	return
