@@ -12,4 +12,4 @@
 /obj/effect/proc_holder/changeling/glands/Destroy()
 	. = ..()
 	role.chem_storage -= 25
-	role.chem_charges = min(changeling.chem_charges, changeling.chem_storage)
+	role.chem_charges = min(role.chem_charges, role.chem_storage)
