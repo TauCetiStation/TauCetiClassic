@@ -44,3 +44,29 @@
 	var/datum/browser/popup = new(antag.current, "window=vxrd", nwidth = 600, nheight = 300)
 	popup.set_content(output_text)
 	popup.open()
+
+/datum/role/vox_raider/roundstart/OnPostSetup(laterole)
+	. = ..()
+	var/mob/living/carbon/human/vox = antag.current
+	vox.set_species(VOX)
+	vox.spawner_args = list(/datum/spawner/living/vox, 2 MINUTES)
+
+	var/sounds = rand(2, 8)
+	var/newname = ""
+	for(var/i in 1 to sounds)
+		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
+	vox.real_name = capitalize(newname)
+	vox.name = vox.real_name
+	vox.age = rand(5, 15)
+	vox.add_language(LANGUAGE_VOXPIDGIN)
+	if(faction.members.len % 2 == 0 || prob(33))
+		vox.add_language(LANGUAGE_SOLCOMMON)
+	vox.h_style = "Short Vox Quills"
+	vox.f_style = "Shaved"
+	vox.grad_style = "none"
+
+	var/obj/item/weapon/implant/cortical/I = new(vox)
+	I.inject(vox, BP_HEAD)
+
+	vox.equip_vox_raider()
+	vox.regenerate_icons()
