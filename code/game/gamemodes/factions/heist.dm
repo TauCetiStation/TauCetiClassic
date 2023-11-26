@@ -45,6 +45,9 @@
 
 /datum/faction/heist/OnPostSetup()
 	. = ..()
+	setup_members_loc()
+
+/datum/faction/heist/proc/setup_members_loc()
 	create_spawners(/datum/spawner/vox, max_roles)
 
 /datum/faction/heist/GetScoreboard()
@@ -97,3 +100,12 @@
 
 /datum/faction/heist/saboteurs/AppendVoxInviolateObjectives()
 	AppendObjective(/datum/objective/heist/inviolate_crew)
+
+/datum/faction/heist/roundstart
+	min_roles = 4
+	initroletype = /datum/role/vox_raider/roundstart
+
+/datum/faction/heist/roundstart/setup_members_loc()
+	for(var/datum/role/R in members)
+		var/spawnloc = pick_landmarked_location("Heist")
+		R.antag.current.forceMove(spawnloc)
