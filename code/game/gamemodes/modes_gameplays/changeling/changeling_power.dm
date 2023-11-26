@@ -30,6 +30,7 @@
 /obj/effect/proc_holder/changeling/Destroy()
 	if(role) //just in case
 		role.purchasedpowers -= src
+		role = null
 	QDEL_NULL(action)
 	return ..()
 
