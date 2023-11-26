@@ -2,6 +2,7 @@
 	name = "explosive particles"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "explosion_particle"
+	plane = LIGHTING_LAMPS_PLANE
 	opacity = 1
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -34,6 +35,7 @@
 	name = "explosive particles"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
+	plane = LIGHTING_LAMPS_PLANE
 	opacity = 1
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

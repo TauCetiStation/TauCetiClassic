@@ -118,6 +118,9 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(S.sprite_sheets[sprite_sheet_slot])
 		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
+	if(!(t_state in icon_states(icon_path)))
+		icon_path = def_icon_path
+
 	var/fem = ""
 	if(H.gender == FEMALE && S.gender_limb_icons)
 		if(t_state != null)
@@ -333,6 +336,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", layer = -FIRE_UPPER_LAYER)
 		under = update_height(under)
 		over = update_height(over)
+		over.plane = LIGHTING_LAMPS_PLANE
 		overlays_standing[FIRE_LOWER_LAYER] = under
 		overlays_standing[FIRE_UPPER_LAYER] = over
 

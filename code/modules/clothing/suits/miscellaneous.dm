@@ -334,7 +334,7 @@
 	name = "black trenchcoat"
 	desc = "A black trenchcoat."
 	icon_state = "dude_coat"
-	item_state = "jensensuit"
+	item_state = "dude_coat"
 
 //pyjamas
 //originally intended to be pinstripes >.>

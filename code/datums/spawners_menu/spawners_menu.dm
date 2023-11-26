@@ -1,9 +1,7 @@
 /datum/spawners_menu
-	var/mob/dead/observer/owner
+	var/mob/dead/owner
 
-	var/role_selected = FALSE
-
-/datum/spawners_menu/New(mob/dead/observer/new_owner)
+/datum/spawners_menu/New(mob/dead/new_owner)
 	if(!istype(new_owner))
 		qdel(src)
 	owner = new_owner
@@ -13,39 +11,46 @@
 	return ..()
 
 /datum/spawners_menu/tgui_state(mob/user)
-	return global.observer_state
+	return global.spectator_state
 
 /datum/spawners_menu/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SpawnersMenu")
-		ui.set_autoupdate(FALSE)
+		//ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/spawners_menu/tgui_data(mob/user)
 	var/list/data = list()
 	data["spawners"] = list()
-	for(var/spawner_id in global.spawners)
+	for(var/datum/spawner/spawner in SSrole_spawners.spawners)
 		var/list/this = list()
-		var/list/spawners_list = global.spawners[spawner_id]
-		var/datum/spawner/spawner = pick(spawners_list)
-		this["type"] = spawner_id
+		this["ref"] = "\ref[spawner]"
 		this["name"] = spawner.name
 		this["short_desc"] = spawner.desc
 		this["wiki_ref"] = config.wikiurl && spawner.wiki_ref ? "[config.wikiurl]/[spawner.wiki_ref]" : null
 		this["important_warning"] = spawner.important_info
-		this["amount_left"] = spawners_list.len
-		this["is_infinite"] = spawner.infinity
+		this["register_only"] = spawner.register_only
+		this["checked"] = (user in spawner.registered_candidates)
+		this["blocked"] = spawner.blocked
 
-		var/min_time = INFINITY
-		for(var/datum/spawner/S as anything in spawners_list)
-			if(!S.timer_to_expiration)
-				continue
-			var/time_left = timeleft(S.timer_to_expiration)
-			if(time_left < min_time)
-				min_time = time_left
+		this["amount"] = ""
+		if(spawner.register_only)
+			this["amount"] += "[length(spawner.registered_candidates)]/"
+		this["amount"] += "[spawner.positions == INFINITY ? "∞" : spawner.positions]"
 
-		this["time_left"] = min_time != INFINITY ? min_time : null
+		var/time
+		var/time_type
+		if(spawner.registration_timer_id)
+			time = timeleft(spawner.registration_timer_id)
+			time_type = 1
+		else if(spawner.availability_timer_id)
+			time = timeleft(spawner.availability_timer_id)
+			time_type = 2
+
+		if(time)
+			this["time_left"] = time
+			this["time_type"] = time_type
 
 		data["spawners"] += list(this)
 	return data
@@ -55,11 +60,11 @@
 	if(.)
 		return
 
-	if(role_selected)
+	if(!owner.client || owner.client.is_in_spawner)
 		to_chat(owner, "<span class='notice'>Вы уже выбрали роль!</span>")
 		return
 
-	var/spawner_id = params["type"]
+/*	var/spawner_id = params["type"]
 	if(!(spawner_id in global.spawners))
 		return
 
@@ -68,6 +73,10 @@
 		return
 
 	var/datum/spawner/spawner = pick(spawnerlist)
+	*/
+
+	var/datum/spawner/spawner = locate(params["ref"]) in SSrole_spawners.spawners
+
 	if(!spawner)
 		return
 
@@ -76,7 +85,5 @@
 			spawner.jump(owner)
 			return TRUE
 		if("spawn")
-			role_selected = TRUE
-			spawner.do_spawn(owner)
-			role_selected = FALSE
+			spawner.registration(owner)
 			return TRUE

@@ -41,6 +41,7 @@ var/global/it_is_a_snow_day = FALSE
 	if(config.usealienwhitelist)
 		load_whitelistSQL()
 	LoadBans()
+	load_guard_blacklist()
 
 	spawn
 		changelog_hash = trim(get_webpage(config.changelog_hash_link))
@@ -78,8 +79,7 @@ var/global/it_is_a_snow_day = FALSE
 #endif
 
 	if(config.kick_inactive)
-		spawn(15 MINUTES)
-			KickInactiveClients()
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(KickInactiveClients)), 15 MINUTES)
 
 #undef RECOMMENDED_VERSION
 
@@ -263,13 +263,13 @@ var/global/shutdown_processed = FALSE
 
 	..()
 
-/world/proc/KickInactiveClients()
+/proc/KickInactiveClients()
 	for (var/client/C in clients)
 		if (!(C.holder || C.supporter) && C.is_afk())
 			log_access("AFK: [key_name(C)]")
 			to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
 			QDEL_IN(C, 2 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(KickInactiveClients)), 5 MINUTES)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(KickInactiveClients)), 5 MINUTES)
 
 /world/proc/load_stealth_keys()
 	var/list/keys_list = file2list("config/stealth_keys.txt")
@@ -378,6 +378,31 @@ var/global/shutdown_processed = FALSE
 			var/enabled_by = S["enabled_by"]
 			var/active_hours_left = num2text((active_until - world.realtime) / 36000, 1)
 			log_game("Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]. Enabled by [enabled_by]. Active hours left: [active_hours_left]")
+
+/world/proc/load_guard_blacklist()
+	if(!config.guard_enabled || !fexists("config/guard_blacklist.txt"))
+		return
+
+	var/L = file2list("config/guard_blacklist.txt")
+
+	for(var/line in L)
+		line = trim(line)
+
+		if(!length(line) || line[1] == "#")
+			continue
+
+		var/pos = findtext(line," ")
+		var/code = trim(copytext(line, 1, pos))
+		var/value = trim(copytext(line, pos))
+
+		if(!length(value)) // don't fuck up
+			continue
+
+		switch(code)
+			if("IP")
+				guard_blacklist["IP"] += value
+			if("ISP")
+				guard_blacklist["ISP"] += value
 
 /world/proc/load_supporters()
 	if(config.allow_donators && fexists("config/donators.txt"))

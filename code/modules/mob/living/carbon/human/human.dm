@@ -50,6 +50,7 @@
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
+	dna.b_type = random_blood_type()
 
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -98,9 +99,6 @@
 
 /mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
-	r_belly = HEX_VAL_RED(species.base_color)
-	g_belly = HEX_VAL_GREEN(species.base_color)
-	b_belly = HEX_VAL_BLUE(species.base_color)
 	. = ..(mapload, UNATHI)
 
 /mob/living/carbon/human/vox/atom_init(mapload)
@@ -2140,6 +2138,7 @@
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, jittery_process))
+	. = jitteriness
 
 /mob/living/carbon/human/is_facehuggable()
 	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)
@@ -2208,7 +2207,7 @@
 			massages_done_right = 0
 			return_to_body_dialog()
 
-			if(health > config.health_threshold_dead)
+			if((health > config.health_threshold_dead) || (!suiciding))
 				Heart.heart_fibrillate()
 				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
 			else
