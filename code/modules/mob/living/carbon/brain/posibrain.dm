@@ -13,6 +13,8 @@
 
 	var/ping_cd = 0//attack_ghost cooldown
 
+/obj/item/device/mmi/posibrain/can_be_disassembled()
+	return TRUE
 
 /obj/item/device/mmi/posibrain/attack_self(mob/user)
 	if(brainmob && !brainmob.key && searching == 0)

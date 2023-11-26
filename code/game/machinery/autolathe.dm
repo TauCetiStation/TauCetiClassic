@@ -46,7 +46,7 @@
 	recipe.name = initial(path.name)
 	recipe.category = category_name
 	recipe.result_type = path
-	var/item_construction = initial(P.construction)
+	var/list/item_construction = initial(P.construction)
 	recipe.resources = list(
 		MAT_METAL = (item_construction[MAT_METAL] ? item_construction[MAT_METAL] : 0) * amount,
 		MAT_GLASS = (item_construction[MAT_GLASS] ? item_construction[MAT_GLASS] : 0) * amount,

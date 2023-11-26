@@ -165,6 +165,14 @@
 
 	var/obj/item/device/radio/radio = null//Let's give it a radio.
 
+/obj/item/device/mmi/radio_enabled/can_be_disassembled()
+	if(!contents.len)
+		return TRUE
+	for(var/A as anything in contents)
+		if(A != radio)
+			return FALSE
+	return TRUE
+
 /obj/item/device/mmi/radio_enabled/atom_init()
 	. = ..()
 	radio = new(src)//Spawns a radio inside the MMI.

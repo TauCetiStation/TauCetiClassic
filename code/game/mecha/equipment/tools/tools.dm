@@ -241,6 +241,9 @@
 
 	var/obj/item/weapon/reagent_containers/spray/extinguisher/ext
 
+/obj/item/mecha_parts/mecha_equipment/extinguisher/can_be_disassembled()
+	return TRUE
+
 /obj/item/mecha_parts/mecha_equipment/extinguisher/atom_init()
 	ext = new/obj/item/weapon/reagent_containers/spray/extinguisher/mecha(src)
 	. = ..()
@@ -865,6 +868,9 @@
 	var/fuel_per_cycle_active = 500
 	var/power_per_cycle = 20
 	reliability = 1000
+
+/obj/item/mecha_parts/mecha_equipment/generator/can_be_disassembled()
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/generator/atom_init()
 	..()

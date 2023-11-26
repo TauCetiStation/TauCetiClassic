@@ -1,4 +1,3 @@
-#define FABRICATOR_RECYCLE_MATERIAL_RATE 0.8 // To be discussed. Maybe add dependency on part tiers.
 #define FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER 5 // Item.size * modifier is the time required to recycle an item.
 
 /obj/machinery/mecha_part_fabricator
@@ -17,6 +16,7 @@
 	var/time_coeff_tech = 1
 	var/resource_coeff = 1
 	var/resource_coeff_tech = 1
+	var/resource_coeff_recycle = 0.6
 	var/efficiency_coeff = 0
 	var/list/resources = list(
 								MAT_METAL=0,
@@ -85,6 +85,8 @@
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
 		T += Ma.rating
 	resource_coeff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/8,0.01)
+	//resources recycle coefficient (0.6 -> 0.73 -> 0.87 -> 1)
+	resource_coeff_recycle = min(round(initial(resource_coeff_recycle) + ((1 - resource_coeff_recycle) * (T))/4, 0.01), 1)
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
@@ -177,6 +179,10 @@
 	var/I = new D.build_path(location)
 	if(isobj(I))
 		var/obj/O = I
+		for(var/resource in D.materials)
+			if(resource in resources)
+				O.construction[resource] = get_resource_cost_w_coeff(D, resource)
+
 		O.prototipify(min_reliability=files.design_reliabilities[D.id] + efficiency_coeff * 25.0,  max_reliability=70 + efficiency_coeff * 25.0)
 
 		files.design_reliabilities[D.id] += files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** files.design_created_prototypes[D.id])
@@ -605,7 +611,7 @@
 	if(is_type_in_list(I, disallowed_types))
 		return FALSE
 
-	if(!recycling_check_contents_empty(I)) // Needs review. Check to prevent recycling whole rigs/assembled borg endoskeletons.
+	if(!I.can_be_disassembled())
 		to_chat(user, "<span class='warning'>You need to fully disassemble \the [I] before recycling.</span>")
 		return TRUE
 
@@ -646,43 +652,15 @@
 
 	return TRUE
 
-/obj/machinery/mecha_part_fabricator/proc/recycling_check_contents_empty(obj/item/I)
-	if(istype(I, /obj/item/device/mmi/radio_enabled))
-		for(var/A as anything in I.contents)
-			if(!istype(A, /obj/item/device/radio))
-				return FALSE
-		return TRUE
-
-	if(istype(I, /obj/item/weapon/gun/energy/kinetic_accelerator))
-		for(var/A as anything in I.contents)
-			if(!istype(A, /obj/item/weapon/stock_parts/cell/crap) && !istype(A, /obj/item/ammo_casing/energy/kinetic))
-				return FALSE
-		return TRUE
-
-	// All the types that are allowed to have contents
-	var/list/allowed_recycling_assembled_types = list(
-		/obj/item/device/mmi/posibrain,
-		/obj/item/mecha_parts/mecha_equipment/generator,
-		/obj/item/mecha_parts/mecha_equipment/extinguisher,
-		/obj/item/mecha_parts/mecha_equipment/cable_layer,
-		/obj/item/weapon/gun/energy/laser/cutter,
-		/obj/item/weapon/pickaxe/drill/jackhammer,
-	)
-
-	if(is_type_in_list(I, allowed_recycling_assembled_types))
-		return TRUE
-
-	return I.contents.len == 0
-
 /obj/machinery/mecha_part_fabricator/proc/get_recycled_materials(obj/item/I)
 	// TODO: Maybe add mecha wreckage and mecha chassis recycling
 
 	for(var/datum/design/D as anything in files.known_designs) // TODO: Optimize and cache it with keeping "recycle only known designs" feature instead of cycling through all designs, but I can't think of any way with less than O(N) complexity on every check. Only way I can think of is to keep build_path to design list with all available designs in research files, but that seems as a bad solution. Review needed.
 		if((D.build_type & build_type) && istype(I, D.build_path))
 			var/list/materials_to_add = list()
-			for(var/material as anything in D.materials)
+			for(var/material as anything in I.construction)
 				if(material in resources)
-					materials_to_add[material] = round(get_resource_cost_w_coeff(D, material, roundto = 0.01) * FABRICATOR_RECYCLE_MATERIAL_RATE, 1)
+					materials_to_add[material] = round(I.construction[material] * resource_coeff_recycle, 1)
 			return materials_to_add
 
 	return list()
@@ -708,5 +686,4 @@
 	..()
 	update_icon()
 
-#undef FABRICATOR_RECYCLE_MATERIAL_RATE
 #undef FABRICATOR_ITEM_RECYCLE_SIZE_TO_TIME_MODIFIER

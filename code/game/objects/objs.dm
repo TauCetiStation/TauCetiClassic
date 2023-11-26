@@ -49,6 +49,13 @@
 	underlays -= icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 	verbs -= /obj/proc/remove_price_tag
 
+/obj/proc/can_be_disassembled()
+	/*
+	Returns TRUE if this item can be safely disassembled by recycling.
+	TODO: Add more implementations and use this proc in RnD deconstruction and autolathe recycling
+	*/
+	return contents.len == 0
+
 /obj/proc/get_current_temperature()
 	/*
 	It actually returns a rise in temperature from the enviroment since I don't know why.
