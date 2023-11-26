@@ -18,3 +18,7 @@
 
 	feedback_add_details("changeling_powers","CAM")
 	return TRUE
+
+/obj/effect/proc_holder/changeling/digitalcamo/Destroy()
+	. = ..()
+	RemoveElement(/datum/element/digitalcamo)

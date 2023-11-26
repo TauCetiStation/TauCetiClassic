@@ -392,7 +392,6 @@ var/global/list/sting_paths
 /mob/proc/remove_changeling_powers(keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
 		if(ischangeling(src))
-			RemoveElement(/datum/element/digitalcamo)
 			var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 			C.reset()
 			for(var/obj/effect/proc_holder/changeling/p in C.purchasedpowers)

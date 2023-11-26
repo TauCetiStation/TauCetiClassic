@@ -15,8 +15,11 @@
 	var/datum/action/innate/changeling/action
 	var/button_icon_state = ""
 
+	var/datum/role/changeling/role
+
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	role = user.mind.GetRoleByType(/datum/role/changeling)
 	if(button_icon_state)
 		action = new (user)
 		action.button_icon_state = button_icon_state
@@ -25,7 +28,6 @@
 		action.Grant(user)
 
 /obj/effect/proc_holder/changeling/Destroy()
-	var/datum/role/changeling/role = action.owner.mind.GetRoleByType(/datum/role/changeling)
 	if(role) //just in case
 		role.purchasedpowers -= src
 	QDEL_NULL(action)

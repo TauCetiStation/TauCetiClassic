@@ -9,3 +9,8 @@
 	..()
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	changeling.chem_recharge_rate *= 2
+
+/obj/effect/proc_holder/changeling/chemicalsynth/Destroy()
+	. = ..()
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
+	changeling.chem_recharge_rate /= 2
