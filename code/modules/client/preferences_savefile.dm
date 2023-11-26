@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 48
+#define SAVEFILE_VERSION_MAX 49
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -232,12 +232,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(h_style in deleted_hairstyles)
 			h_style = "Skrell Long Tentacles"
 
-	if(current_version < 38)
-		if("Raider" in be_role)
-			be_role -= "Raider"
-
-		S["be_role"] << be_role
-
 	if(current_version < 39)
 		S["ghost_orbit"] << null
 
@@ -255,15 +249,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			be_role -= ROLE_ABDUCTOR
 		S["be_role"] << be_role
 
+	if(current_version < 48)
+		S["b_type"] << null
+
 	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
-	if(current_version < 45)
+	if(current_version < 49)
 		if(ignore_question && ignore_question.len)
 			var/list/diff = ignore_question - global.full_ignore_question
 			if(diff.len)
 				S["ignore_question"] << ignore_question - diff
 
-	if(current_version < 48)
-		S["b_type"] << null
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
