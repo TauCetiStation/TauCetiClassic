@@ -334,8 +334,8 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		var/obj/item/ammo_box/ammobox = I
 		if(ammobox.stored_ammo.len)
 			for(var/obj/item/ammo_casing/ammo_type in ammobox.stored_ammo)
-				m_amt += ammo_type.m_amt
-				g_amt += ammo_type.g_amt
+				m_amt += ammo_type.construction[MAT_METAL] ? ammo_type.construction[MAT_METAL] : 0
+				g_amt += ammo_type.construction[MAT_GLASS] ? ammo_type.construction[MAT_GLASS] : 0
 	m_amt *= amount
 	g_amt *= amount
 

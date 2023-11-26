@@ -15,7 +15,7 @@
 	var/max_spawn_time = 50
 	var/last_process_time = 0
 
-	var/list/construction = list()
+	var/list/alien_construction = list()
 	var/list/spawning_types = list()
 	var/list/stored_materials = list()
 
@@ -93,7 +93,7 @@
 		var/button_desc = "a [pick("yellow", "purple", "green", "blue", "red", "orange", "white")], "
 		button_desc += "[pick("round", "square", "diamond", "heart", "dog", "human")] shaped "
 		button_desc += "[pick("toggle", "switch", "lever", "button", "pad", "hole")]"
-		construction[button_desc] = PATH_OR_RANDOM_PATH(pick_n_take(viables))
+		alien_construction[button_desc] = PATH_OR_RANDOM_PATH(pick_n_take(viables))
 
 	fail_message = "<span class='notice'>[bicon(src)] a [pick("loud", "soft", "sinister", "eery", "triumphant", "depressing", "cheerful", "angry")] \
 		[pick("horn", "beep", "bing", "bleep", "blat", "honk", "hrumph", "ding")] sounds and a \
@@ -137,8 +137,8 @@
 /obj/machinery/replicator/ui_interact(mob/user)
 	var/dat = "The control panel displays an incomprehensible selection of controls, many with unusual markings or text around them.<br>"
 	dat += "<br>"
-	for(var/index=1, index<=construction.len, index++)
-		dat += "<A href='?src=\ref[src];activate=[index]'>\[[construction[index]]\]</a><br>"
+	for(var/index=1, index<=alien_construction.len, index++)
+		dat += "<A href='?src=\ref[src];activate=[index]'>\[[alien_construction[index]]\]</a><br>"
 
 	var/datum/browser/popup = new(user, "alien_replicator")
 	popup.set_content(dat)
@@ -162,14 +162,14 @@
 
 	if(href_list["activate"])
 		var/index = text2num(href_list["activate"])
-		if(index > 0 && index <= construction.len)
+		if(index > 0 && index <= alien_construction.len)
 			if(stored_materials.len > spawning_types.len)
 				if(spawning_types.len)
 					visible_message("<span class='notice'>[bicon(src)] a [pick("light", "dial", "display", "meter", "pad")] on [src]'s front [pick("blinks", "flashes")] [pick("red", "yellow", "blue", "orange", "purple", "green", "white")].</span>")
 				else
 					visible_message("<span class='notice'>[bicon(src)] [src]'s front compartment slides shut.</span>")
 
-				spawning_types.Add(construction[construction[index]])
+				spawning_types.Add(alien_construction[alien_construction[index]]) // wtf?
 				spawn_progress_time = 0
 				set_power_use(ACTIVE_POWER_USE)
 				icon_state = "replicator_active"

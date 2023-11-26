@@ -184,7 +184,7 @@
 		files.design_created_prototypes[D.id]++
 	if(isitem(I))
 		var/obj/item/Item = I
-		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
+		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL) // Uhm
 		Item.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
 	visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
 	being_built = null
