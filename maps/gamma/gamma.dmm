@@ -29117,10 +29117,6 @@
 	},
 /area/station/civilian/hydroponics)
 "fil" = (
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -29129,6 +29125,17 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/vote_button{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/meeting_button{
+	pixel_x = 16;
+	pixel_y = 18
+	},
+/obj/vote_button{
+	pixel_x = 6
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
@@ -47746,7 +47753,13 @@
 /area/station/civilian/garden)
 "iMQ" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/flora/deskfern,
+/obj/vote_button{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/vote_button{
+	pixel_x = -6
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "iNh" = (
@@ -65389,7 +65402,7 @@
 "mrT" = (
 /obj/structure/computerframe,
 /obj/item/weapon/paper{
-	info = "Привет, извините за задержку с Клонированием. Мы должны получить все необходимые детали к началу следующей смены. Все платы пока-что отложили в Хранилище Плат. Если забудем - просто напомните. Спасибо. -�?нженерный отдел";
+	info = "Привет, извините за задержку с Клонированием. Мы должны получить все необходимые детали к началу следующей смены. Все платы пока-что отложили в Хранилище Плат. Если забудем - просто напомните. Спасибо. -�?нженерный отдел";
 	name = "Cloning Status";
 	pixel_x = -4;
 	pixel_y = -4
@@ -67557,7 +67570,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/vote_button{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/vote_button{
+	pixel_x = -6
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "mPZ" = (
@@ -70227,6 +70246,7 @@
 	dir = 9;
 	icon_state = "siding_wood_line"
 	},
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor/wood{
 	icon_state = "wood8"
 	},
@@ -107299,18 +107319,13 @@
 /area/station/maintenance/brigright)
 "uLT" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/folder/blue,
-/obj/item/mars_globe{
-	pixel_x = -16;
-	pixel_y = -9
+/obj/vote_button{
+	pixel_x = -6;
+	pixel_y = 10
 	},
-/obj/item/weapon/folder/red,
-/obj/item/folder_holder{
-	pixel_y = 12
+/obj/vote_button{
+	pixel_x = 6
 	},
-/obj/item/weapon/folder/green,
-/obj/item/weapon/folder,
-/obj/item/weapon/folder,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "uLY" = (
@@ -112605,22 +112620,15 @@
 /area/station/civilian/chapel/mass_driver)
 "vQM" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	pixel_x = -4
-	},
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	pixel_x = 6;
-	pixel_y = 7
-	},
-/obj/item/weapon/phone{
-	pixel_x = 8;
-	pixel_y = -4
-	},
 /obj/structure/sign/poster/official/random{
 	pixel_y = -32
 	},
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
+	},
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood8"
