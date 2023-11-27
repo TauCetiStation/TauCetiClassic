@@ -4888,15 +4888,18 @@
 	},
 /area/station/hallway/secondary/exit)
 "aDj" = (
-/obj/item/weapon/storage/box/cups{
-	pixel_y = 4
-	},
 /obj/structure/table/glass,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
 /obj/structure/noticeboard{
 	pixel_y = 28
+	},
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -13761,22 +13764,15 @@
 /area/station/maintenance/engineering)
 "cUW" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
-	},
-/obj/item/weapon/pen{
-	pixel_y = 6
-	},
-/obj/item/ashtray/bronze{
-	pixel_x = -13;
-	pixel_y = 5
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/meeting_button{
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -16419,12 +16415,20 @@
 	},
 /area/station/security/checkpoint)
 "dAq" = (
-/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/structure/table/glass,
+/obj/item/device/taperecorder{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/obj/item/device/assembly/timer{
+	pixel_x = 7;
+	secured = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -24760,6 +24764,9 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/handcuffs,
+/obj/item/weapon/storage/fancy/donut_box{
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -34619,11 +34626,17 @@
 /area/station/security/lawyer_office)
 "hIV" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/item/weapon/book/manual/wiki/sop{
+	pixel_y = 6
+	},
+/obj/item/weapon/book/manual/wiki/security_space_law{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkgreen"
@@ -37148,17 +37161,12 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "ipA" = (
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/weapon/folder/white{
-	pixel_x = -4;
-	pixel_y = 1
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
+	},
+/obj/structure/table/woodentable,
+/obj/machinery/faxmachine{
+	department = "Bridge"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -39675,8 +39683,11 @@
 /area/station/bridge/ai_upload)
 "iXe" = (
 /obj/structure/table/woodentable,
-/obj/item/device/taperecorder{
-	pixel_x = -1;
+/obj/vote_button{
+	pixel_x = 8
+	},
+/obj/vote_button{
+	pixel_x = -6;
 	pixel_y = 6
 	},
 /turf/simulated/floor{
@@ -49464,9 +49475,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/folder/blue{
-	pixel_y = 2
-	},
+/obj/vote_button,
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -82231,9 +82240,6 @@
 /area/station/maintenance/brig)
 "tHc" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/wiki/sop{
-	pixel_y = 6
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -82244,6 +82250,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/vote_button{
+	pixel_x = -6;
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -90538,8 +90548,8 @@
 /area/station/maintenance/dormitory)
 "vIV" = (
 /obj/structure/table/woodentable,
-/obj/machinery/faxmachine{
-	department = "Bridge"
+/obj/vote_button{
+	pixel_x = -6
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -94104,14 +94114,12 @@
 /area/station/civilian/library)
 "wCq" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/flora/deskferntrim{
-	icon_state = "plant-34-alternative";
-	pixel_x = -8;
-	pixel_y = 10
+/obj/vote_button{
+	pixel_x = -8
 	},
-/obj/item/device/assembly/timer{
-	pixel_x = 7;
-	secured = 1
+/obj/vote_button{
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -97175,9 +97183,8 @@
 /area/station/maintenance/chapel)
 "xpb" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/storage/fancy/donut_box,
-/obj/item/station_map/prometheus{
-	pixel_y = -8
+/obj/vote_button{
+	pixel_x = 6
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -98253,9 +98260,6 @@
 /area/station/hallway/secondary/arrival)
 "xFr" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/wiki/security_space_law{
-	pixel_y = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -98266,6 +98270,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/vote_button{
+	pixel_x = 6;
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	dir = 4;
