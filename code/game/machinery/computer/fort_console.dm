@@ -112,6 +112,7 @@
 	return null
 
 // 1-10
+/*
 /datum/fort_console_lot/team_announce
 	name = "Team Announce"
 	desc = "Make big scary announcement for team only"
@@ -125,7 +126,7 @@
 	price = 40
 
 	order = 2
-
+*/
 /datum/fort_console_lot/update_map
 	name = "Update Holomap"
 	desc = "Scan battlefield and update holomap"

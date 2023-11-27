@@ -81,7 +81,7 @@
 	holomap_base = null
 	activator = null
 
-/obj/item/holochip/proc/update_holomap_image(key)
+/obj/item/holochip/proc/update_holomap_image(datum/source, key)
 	SIGNAL_HANDLER
 
 	if(holomap_custom_key != key)
