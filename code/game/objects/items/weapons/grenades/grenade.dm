@@ -1,6 +1,7 @@
 /obj/item/weapon/grenade
 	name = "grenade"
-	desc = "A hand held grenade, with an adjustable timer."
+	cases = list("граната", "гранаты", "гранате", "гранату", "гранатой", "гранате")
+	desc = "Ручная граната с настраиваемым таймером."
 	w_class = SIZE_TINY
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
@@ -20,7 +21,7 @@
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/user)
 	if(user.ClumsyProbabilityCheck(50))
-		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
+		to_chat(user, "<span class='warning'>Как эта штука работает?</span>")
 		activate(user)
 		add_fingerprint(user)
 		addtimer(CALLBACK(src, PROC_REF(prime)), 5)
@@ -30,7 +31,7 @@
 /obj/item/weapon/grenade/examine(mob/user)
 	..()
 	if(!istype(src, /obj/item/weapon/grenade/cancasing)) // ghetto bomb examine verb: > You can't tell when it will explode!
-		to_chat(user, "The timer is set [det_time == 1 ? "for instant detonation" : "to [det_time/10]  seconds"].")
+		to_chat(user, "Таймер установлен [det_time == 1 ? "на моментальную детонацию" : "на [det_time/10]  секунд"].")
 
 /obj/item/weapon/grenade/attack_self(mob/user)
 	if(active)
@@ -38,7 +39,7 @@
 	if(!clown_check(user))
 		return
 
-	to_chat(user, "<span class='warning'>You prime \the [name]![det_time != 1 ? " [det_time/10] seconds!" : ""]</span>")
+	to_chat(user, "<span class='warning'>Вы подготавливаете [CASE(src, ACCUSATIVE_CASE)]![det_time != 1 ? " [det_time/10] секунд!" : ""]</span>")
 	activate(user)
 	add_fingerprint(user)
 	if(iscarbon(user))
@@ -75,7 +76,7 @@
 				det_time = 5 SECONDS
 			if(5 SECONDS)
 				det_time = 1
-		to_chat(user, "<span class='notice'>You set the [name] for [det_time == 1 ? "instant detonation" : "[det_time * 0.1] second detonation time"].</span>")
+		to_chat(user, "<span class='notice'>Вы устанавливаете [CASE(src, ACCUSATIVE_CASE)] на [det_time == 1 ? "моментальную детонацию" : "[det_time * 0.1] секунд до детонации"].</span>")
 		add_fingerprint(user)
 		return
 	return ..()
@@ -86,7 +87,7 @@
 	..()
 
 /obj/item/weapon/grenade/syndieminibomb
-	desc = "A syndicate manufactured explosive used to sow destruction and chaos."
+	desc = "Изготовленное синдикатом взрывное устройство, предназначенное для разрушений и хаоса."
 	name = "syndicate minibomb"
 	icon_state = "syndicate"
 	item_state = "flashbang"
