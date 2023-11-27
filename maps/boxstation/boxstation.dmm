@@ -30079,10 +30079,17 @@
 	},
 /area/station/hallway/secondary/entry)
 "bbx" = (
-/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/vote_button{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/vote_button{
+	pixel_x = -6;
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
@@ -30840,13 +30847,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/item/pens_bin{
-	pixel_x = -8;
-	pixel_y = 10
+/obj/vote_button{
+	pixel_x = 6
 	},
-/obj/item/weapon/pen,
-/obj/item/weapon/pen/blue,
-/obj/item/weapon/pen/red,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "bcS" = (
@@ -33067,6 +33070,14 @@
 /obj/item/device/assembly/timer,
 /obj/structure/table/woodentable,
 /obj/item/device/tagger/shop,
+/obj/item/pens_bin{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/weapon/pen/red,
+/obj/item/weapon/pen/blue,
+/obj/item/weapon/pen/blue,
+/obj/item/weapon/pen,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bgH" = (
@@ -33077,8 +33088,13 @@
 /area/station/bridge/meeting_room)
 "bgI" = (
 /obj/structure/table/woodentable,
-/obj/item/mars_globe{
-	pixel_x = 9
+/obj/vote_button{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/vote_button{
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
@@ -33478,21 +33494,24 @@
 	},
 /area/station/civilian/garden)
 "bhx" = (
-/obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/table/woodentable,
 /obj/machinery/door_control{
 	id = "heads_meeting";
 	name = "Security Shutters";
 	pixel_y = 15
 	},
+/obj/item/weapon/paper_bin,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bhy" = (
-/obj/item/weapon/paper_bin{
-	pixel_x = 8;
-	pixel_y = 10
-	},
 /obj/structure/table/woodentable,
+/obj/vote_button{
+	pixel_x = -6
+	},
+/obj/meeting_button{
+	pixel_x = 16;
+	pixel_y = 18
+	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "bhz" = (
@@ -39798,17 +39817,17 @@
 /obj/machinery/camera{
 	c_tag = "Bridge West"
 	},
-/obj/item/weapon/folder/white,
-/obj/item/device/radio/off{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/device/assembly/signaler,
 /obj/machinery/computer/guestpass{
 	dir = 1;
 	pixel_y = 28
 	},
 /obj/structure/table/glass,
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/device/radio/off{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/device/assembly/signaler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -40999,8 +41018,8 @@
 	icon_state = "arrow"
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "loadingarea";
-	dir = 1
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -71903,8 +71922,8 @@
 	queue_display = 1
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "loadingarea";
-	dir = 8
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -82137,8 +82156,8 @@
 "qMF" = (
 /obj/structure/table,
 /obj/item/pens_bin{
-	pixel_y = 6;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /obj/item/weapon/pen,
 /obj/item/weapon/pen/blue,
@@ -84923,16 +84942,16 @@
 "tKI" = (
 /obj/machinery/ticket_machine,
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "loadingarea";
-	dir = 1
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "box_corners_white";
-	dir = 1
+	dir = 1;
+	icon_state = "box_corners_white"
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "box_corners_white";
-	dir = 4
+	dir = 4;
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
