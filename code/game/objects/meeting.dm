@@ -5,6 +5,7 @@ ADD_TO_GLOBAL_LIST(/obj/meeting_button, meeting_buttons)
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "sound_button_on"
 	anchored = TRUE
+	w_class = SIZE_SMALL
 	var/meeting_id = 0
 	var/list/synced_buttons = list()
 	var/list/display_names = list()
@@ -57,6 +58,7 @@ ADD_TO_GLOBAL_LIST(/obj/meeting_button, meeting_buttons)
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "sound_button_on"
 	anchored = TRUE
+	w_class = SIZE_SMALL
 	var/avaible_to_choose = TRUE
 	var/obj/meeting_button/general_button
 	var/meeting_id = 0
