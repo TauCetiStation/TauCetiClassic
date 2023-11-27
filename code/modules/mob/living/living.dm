@@ -1100,6 +1100,7 @@
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
+		SEND_SIGNAL(src, COMSIG_FLASH_EYES, intensity)
 		return TRUE
 	return FALSE
 

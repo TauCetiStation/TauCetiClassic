@@ -148,11 +148,7 @@ var/global/list/tourette_bad_words= list(
 			   )
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if (prob(1) && !paralysis)
-			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
-			Paralyse(10)
-			make_jittery(1000)
+	SEND_SIGNAL(src, COMSIG_HANDLE_DISABILITIES)
 	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
 		if (prob(5) && !paralysis)
 			drop_item()
