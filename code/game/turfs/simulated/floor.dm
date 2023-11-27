@@ -329,31 +329,9 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 /turf/simulated/floor/proc/make_plating()
 	if(istype(src,/turf/simulated/floor/engine))
 		return
-	name = "reinforced floor"
-	cases = list("укреплённое покрытие", "укреплённого покрытия","укреплённому покрытию", "укреплённое покрытие", "укреплённым покрытием", "укреплённом покрытии")
-	icon_plating = "catwalk0"
-	floor_type = null
-	intact = 0
-	broken = 0
-	burnt = 0
-
-	clean_turf_decals()
-	update_icon()
-	levelupdate()
 
 	if(is_catwalk())
 		return
-	name = "catwalk"
-	cases = list("помост", "помоста", "помосту", "помост", "помостом", "помосте")
-	icon_plating = "catwalk0"
-	floor_type = null
-	intact = 0
-	broken = 0
-	burnt = 0
-
-	clean_turf_decals()
-	update_icon()
-	levelupdate()
 
 	if(is_grass_floor())
 		for(var/direction in cardinal)
@@ -380,6 +358,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
 /turf/simulated/floor/proc/make_plasteel_floor(obj/item/stack/tile/plasteel/T = null)
+	cases = list("плитка пола", "плитки пола", "плитке пола", "плитку пола", "плиткой пола", "плитке пола")
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -407,6 +386,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 //If none is given it will make a new object. dropping or unequipping must be handled before or after calling
 //this proc.
 /turf/simulated/floor/proc/make_light_floor(obj/item/stack/tile/light/T = null)
+	cases = list("светящийся пол", "светящегося пола", "светящемуся полу", "светящийся пол", "светящимся полом", "светящемся полу")
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -425,6 +405,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 //This proc will make a turf into a grass patch. Fun eh? Insert the grass tile to be used as the argument
 //If no argument is given a new one will be made.
 /turf/simulated/floor/proc/make_grass_floor(obj/item/stack/tile/grass/T = null)
+	cases = list("травяное покрытие", "травяного покрытия", "травяному покрытию", "травяное покрытие", "травяным покрытием", "травяном покрытии")
 	broken = 0
 	burnt = 0
 	intact = 1
@@ -443,6 +424,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 //This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
 //If no argument is given a new one will be made.
 /turf/simulated/floor/proc/make_wood_floor(obj/item/stack/tile/wood/T = null)
+	cases = list("деревянный пол", "деревянного пола", "деревянному полу", "деревянный пол", "деревянным полом", "деревянном поле")
 	broken = 0
 	burnt = 0
 	intact = 1

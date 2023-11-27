@@ -1,5 +1,6 @@
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
+	cases = list("плитка пола", "плитки пола", "плитке пола", "плитку пола", "плиткой пола", "плитке пола")
 	singular_name = "floor tile"
 	desc = "Those could not work as a pretty decent throwing weapon."
 	w_class = SIZE_SMALL
@@ -12,7 +13,7 @@
 	max_amount = 60
 	turf_type = /turf/simulated/floor
 
-	
+
 
 /obj/item/stack/tile/plasteel/atom_init()
 	. = ..()
