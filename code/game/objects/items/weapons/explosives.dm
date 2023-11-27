@@ -41,7 +41,7 @@
 		if(ismob(target))
 			var/mob/living/M = target
 			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
-			user.visible_message("<span class ='red'> [user.name] установил взрывчатку на [M.name]!</span>")
+			user.visible_message("<span class ='red'> [user.name] устанавливает взрывчатку на [M.name]!</span>")
 		to_chat(user, "Взрывчатка установлена, отсчет времени [timer].")
 		user.drop_item()
 		plant_bomb(target)
