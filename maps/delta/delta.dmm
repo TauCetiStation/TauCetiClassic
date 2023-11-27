@@ -57458,8 +57458,8 @@
 	},
 /obj/structure/table/woodentable,
 /obj/item/device/megaphone{
-	pixel_y = 4;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /obj/item/device/flashlight/lamp{
 	on = 0;
@@ -65332,7 +65332,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/paper_bin,
+/obj/vote_button{
+	pixel_y = 12
+	},
+/obj/vote_button{
+	pixel_y = -1
+	},
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
 "ntM" = (
@@ -81198,7 +81203,18 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/toy/figure/dsquad,
+/obj/vote_button{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/vote_button{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/vote_button{
+	pixel_x = -6;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
 "qSZ" = (
@@ -83506,6 +83522,10 @@
 "rvM" = (
 /obj/structure/table/woodentable,
 /obj/item/device/paicard,
+/obj/item/weapon/clipboard,
+/obj/item/weapon/folder/brown,
+/obj/item/weapon/folder/white,
+/obj/item/weapon/pen,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "rvN" = (
@@ -85440,8 +85460,7 @@
 /area/station/maintenance/chapel)
 "rOo" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen,
+/obj/item/toy/figure/dsquad,
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
 "rOC" = (
@@ -88529,8 +88548,8 @@
 	},
 /obj/item/weapon/cartridge/signal/science,
 /obj/item/device/microphone/rd{
-	pixel_y = 8;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	icon_state = "whitechoco"
@@ -95762,7 +95781,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/device/radio/intercom,
+/obj/meeting_button{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
 "uiQ" = (
@@ -96357,8 +96378,12 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/brown,
+/obj/vote_button{
+	pixel_y = 12
+	},
+/obj/vote_button{
+	pixel_y = -1
+	},
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
 "unL" = (
@@ -113471,19 +113496,13 @@
 /turf/simulated/wall/r_wall,
 /area/station/bridge/captain_quarters)
 "yku" = (
-/obj/item/clothing/mask/cigarette/cigar/cohiba{
-	pixel_x = 3
-	},
-/obj/item/clothing/mask/cigarette/cigar/havana{
-	pixel_x = -3
-	},
-/obj/item/clothing/mask/cigarette/cigar,
 /obj/structure/table/woodentable,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/item/weapon/paper_bin,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "yky" = (
