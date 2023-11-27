@@ -15,7 +15,7 @@
 	can_be_modded = FALSE
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,
 	/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,
-	/obj/item/weapon/tank,/obj/item/weapon/rcd)
+	/obj/item/weapon/tank,/obj/item/weapon/rcd, /obj/item/device/multitool)
 	slowdown = 0.5
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE

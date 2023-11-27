@@ -12,11 +12,12 @@
 		/client/proc/toggle_passmode_shields,
 		/client/proc/fort_assign_commander,
 		/client/proc/fort_open_spawns,
+		/client/proc/fort_points,
 	)
 
 	var/list/datum/faction/factions = list()
 	var/list/datum/spawner/fort_team/spawners = list()
-	var/list/obj/machinery/computer/fort_console/consoles = list()
+	var/list/consoles = list() // assoc list (TEAMNAME = /obj/machinery/computer/fort_console)
 
 /datum/map_module/forts/New()
 	..()
@@ -59,6 +60,12 @@
 	teammate.AssignToFaction(faction)
 	teammate.AssignToRole(M.mind, msg_admins = FALSE)
 
+	if(rank == "Commander")
+		var/obj/item/weapon/card/id/captains_spare/card = new 
+		card.assignment = "Commander"
+		card.assign(M)
+		M.equip_to_appropriate_slot(card)
+
 	// gamemode will do this for first roll players, and we need to do this for latespawn roles
 	// todo: wrap it somehow too
 	if(SSticker.current_state >= GAME_STATE_PLAYING)
@@ -74,7 +81,7 @@
 	// сделать зависимым от фракции...
 	positions = INFINITY
 
-	cooldown = 0 // todo: need to add common cooldown
+	//cooldown = 0 // todo: need to add common cooldown
 
 	var/datum/map_module/forts/map_module
 
@@ -98,8 +105,8 @@
 	H.equipOutfit(team_outfit)
 
 	var/new_name = spectator.name
-	// uncomment me
-	//INVOKE_ASYNC(C, TYPE_PROC_REF(/client, create_human_apperance), H, new_name, TRUE)
+	// comment me for tests
+	INVOKE_ASYNC(C, TYPE_PROC_REF(/client, create_human_apperance), H, new_name, TRUE)
 
 /datum/spawner/fort_team/red
 	name = TEAM_NAME_RED
@@ -118,12 +125,36 @@
 /* admin verbs */
 /client/proc/fort_assign_commander()
 	set category = "Event"
-	set name = "Fort: assign commander"
+	set name = "Fort: Assign Commander"
 
+	var/datum/map_module/forts/forts_map_module = SSmapping.get_map_module(MAP_MODULE_FORTS)
+
+	var/faction_name = tgui_input_list(src,"Choise faction:", "Assign Commander", forts_map_module.factions)
+	if(!faction_name)
+		return
+	var/datum/faction/F = forts_map_module.factions[faction_name]
+
+	if(!length(F.members))
+		to_chat(usr, "<span class='warning'>Faction is empty!</span>")
+		return
+
+	var/list/candidates = list()
+
+	for(var/datum/role/R in F.members) // how we can get active clients in faction
+		var/mob/M = R.antag?.current
+		if(!M || !M.client)
+			continue
+		candidates["[M.real_name] ([M.client])"] = M
+
+	var/new_commander = tgui_input_list(src,"Choise member to become a commander:", "Assign Commander", candidates)
+
+	message_admins("[key_name(src)] assigned [candidates[new_commander]] as Commander of [faction_name].")
+
+	forts_map_module.assign_to_team(candidates[new_commander], faction = F, rank = "Commander")
 
 /client/proc/fort_open_spawns()
 	set category = "Event"
-	set name = "Fort: toggle spawn"
+	set name = "Fort: Poddors"
 
 	if(!fort_spawn_poddors)
 		return
@@ -133,6 +164,8 @@
 			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/poddoor, do_open))
 		else
 			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/poddoor, do_close))
+
+	message_admins("[key_name(src)] toggled spawn blocking poddors.")
 
 var/global/list/obj/machinery/door/poddoor/fort_spawn_poddors
 
@@ -145,3 +178,19 @@ var/global/list/obj/machinery/door/poddoor/fort_spawn_poddors
 	. = ..()
 
 	LAZYREMOVE(fort_spawn_poddors, src)
+
+/client/proc/fort_points()
+	set category = "Event"
+	set name = "Fort: Give Points"
+
+	var/add_points = input("Enter points you want to give for teams.", "Points") as num|null
+
+	if(!add_points)
+		return
+
+	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	for(var/team_name in MM.consoles)
+		var/obj/machinery/computer/fort_console/console = MM.consoles[team_name]
+		console.points += add_points
+
+	message_admins("[key_name(src)] added [add_points] points for teams.")

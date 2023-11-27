@@ -65,7 +65,7 @@
 		html += "<a href='?src=[REF(src)];purshase=[REF(lot)]' title='[lot.desc]'>[lot.name] ([lot.price] points)</a><br>"
 	html += "</div>"
 
-	var/datum/browser/popup = new(user, "fort_console", "Command Computer")
+	var/datum/browser/popup = new(user, "fort_console", "Command Computer", 400, 700)
 	popup.set_content(html)
 	popup.open()
 
@@ -111,6 +111,7 @@
 /datum/fort_console_lot/proc/purshase(mob/user, obj/machinery/computer/fort_console/command)
 	return null
 
+// 1-10
 /datum/fort_console_lot/team_announce
 	name = "Team Announce"
 	desc = "Make big scary announcement for team only"
@@ -125,12 +126,23 @@
 
 	order = 2
 
+/datum/fort_console_lot/update_map
+	name = "Update Holomap"
+	desc = "Scan battlefield and update holomap"
+	price = 50
+
+	order = 3
+
+/datum/fort_console_lot/update_map/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	SSholomaps.regenerate_custom_holomap(command.team_name)
+
+// 10-20
 /datum/fort_console_lot/metal
 	name = "Metal 5x50"
 	desc = "5x50 metal lists"
 	price = 50
 
-	order = 10
+	order = 11
 
 /datum/fort_console_lot/metal/purshase()
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/engi
@@ -145,7 +157,7 @@
 	desc = "5x50 glass lists"
 	price = 50
 
-	order = 11
+	order = 12
 
 /datum/fort_console_lot/glass/purshase()
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/engi
@@ -155,12 +167,28 @@
 
 	return C
 
+/datum/fort_console_lot/wood
+	name = "Wood 5x50"
+	desc = "5x50 wood lists"
+	price = 50
+
+	order = 13
+
+/datum/fort_console_lot/wood/purshase()
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/engi
+	for(var/i in 1 to 5)
+		var/obj/item/stack/sheet/wood/S = new(C)
+		S.set_amount(50)
+
+	return C
+
+// 20-30
 /datum/fort_console_lot/rcd_ammo
 	name = "Compressed RCD ammunition"
 	desc = "10 cartridges of compressed RCD ammunition"
 	price = 200
 
-	order = 20
+	order = 21
 
 /datum/fort_console_lot/rcd_ammo/purshase()
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/scicrate
@@ -169,6 +197,48 @@
 
 	return C
 
+//30-40
+/datum/fort_console_lot/rocket_cheap
+	name = "Cheap Rockets 1x9"
+	desc = "Crate containing 9 less effective explosive rockets"
+	price = 50
+
+	order = 31
+
+/datum/fort_console_lot/rocket_cheap/purshase()
+	. = new /obj/structure/storage_box/rocket/cheap
+
+/datum/fort_console_lot/rocket_explosive
+	name = "Standart Rockets 1x9"
+	desc = "Crate containing 9 standart explosive rockets"
+	price = 100
+
+	order = 32
+
+/datum/fort_console_lot/rocket_explosive/purshase()
+	. = new /obj/structure/storage_box/rocket/explosive
+
+/datum/fort_console_lot/rocket_emp
+	name = "EMP Rockets 1x9"
+	desc = "Crate containing 9 standart EMP rockets"
+	price = 100
+
+	order = 33
+
+/datum/fort_console_lot/rocket_emp/purshase()
+	. = new /obj/structure/storage_box/rocket/emp
+
+/datum/fort_console_lot/rocket_piercing
+	name = "Armor-Piercing Rockets 1x9"
+	desc = "Crate containing 9 armor-Piercing explosive rockets"
+	price = 200
+
+	order = 34
+
+/datum/fort_console_lot/rocket_piercing/purshase()
+	. = new /obj/structure/storage_box/rocket/piercing
+
+// 50+
 /datum/fort_console_lot/drill
 	name = "Drill set"
 	desc = "Drill and two braces"
@@ -184,19 +254,72 @@
 
 	return C
 
-/datum/fort_console_lot/update_map
-	name = "Update Holomap"
-	desc = "Scan battlefield and update holomap"
-	price = 50
+/datum/fort_console_lot/conveyor
+	name = "Conveyor Assembly"
+	desc = "Conveyor assembly kit"
+	price = 30
 
-	order = 100
+	order = 51
 
-/datum/fort_console_lot/update_map/purshase(mob/user, obj/machinery/computer/fort_console/command)
-	SSholomaps.regenerate_custom_holomap(command.team_name)
+/datum/fort_console_lot/conveyor/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/engi
+
+	for(var/i in 1 to 6)
+		new /obj/item/conveyor_construct(C)
+
+	new /obj/item/conveyor_switch_construct(C)
+
+	return C
+
+/datum/fort_console_lot/medical
+	name = "Medical Supply"
+	desc = "Medical Supply"
+	price = 30
+
+	order = 52
+
+/datum/fort_console_lot/medical/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/medical
+
+	for(var/i in 1 to 4)
+		new /obj/item/weapon/storage/firstaid/small_firstaid_kit/space(C)
+
+	new /obj/item/weapon/storage/firstaid/regular(C)
+	new /obj/item/weapon/storage/firstaid/fire(C)
+	new /obj/item/weapon/storage/firstaid/toxin(C)
+	new /obj/item/weapon/storage/firstaid/o2(C)
+	new /obj/item/weapon/storage/firstaid/adv(C)
+
+	return C
+
+/datum/fort_console_lot/fueltank
+	name = "Fueltank"
+	desc = "Fueltank"
+	price = 30
+
+	order = 53
+
+/datum/fort_console_lot/fueltank/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	. = new /obj/structure/reagent_dispensers/fueltank
+
+/datum/fort_console_lot/energylaser
+	name = "Laser Rifle 1x5"
+	desc = "Why do you need it if you have a rocket?"
+	price = 100
+
+	order = 54
+
+/datum/fort_console_lot/energylaser/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/secure/weapon
+
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/gun/energy/laser(C)
+
+	return C
 
 /datum/fort_console_lot/droppod
 	name = "Droppod"
-	desc = "Contains caller for droppod. One way ticket for the bravests."
+	desc = "Contains a caller for the droppod. One way ticket for the bravests."
 	price = 1000
 
 	order = 999
@@ -218,3 +341,4 @@
 	price = 200
 
 	order = 800*/
+

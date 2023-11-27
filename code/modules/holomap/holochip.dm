@@ -26,8 +26,9 @@
 	if(holomap_custom_key)
 		holomap_base = SSholomaps.get_custom_holomap(holomap_custom_key)
 	else
-		holomap_base = SSholomaps.default_holomap
+		holomap_base = SSholomaps.get_default_holomap()
 	instantiate_self_marker()
+	RegisterSignal(SSholomaps, COMSIG_HOLOMAP_REGENERATED, PROC_REF(update_holomap_image))
 
 /obj/item/holochip/Destroy()
 	STOP_PROCESSING(SSholomaps, src)
@@ -62,7 +63,7 @@
 	if(holomap_custom_key)
 		holomap_base = SSholomaps.get_custom_holomap(holomap_custom_key)
 	else
-		holomap_base = SSholomaps.default_holomap
+		holomap_base = SSholomaps.get_default_holomap()
 	if(color_filter)
 		holomap_base.color = color_filter
 	activator.holomap_obj?.add_overlay(holomap_base)
@@ -79,6 +80,17 @@
 		QDEL_LIST(holomap_images)
 	holomap_base = null
 	activator = null
+
+/obj/item/holochip/proc/update_holomap_image(key)
+	SIGNAL_HANDLER
+
+	if(holomap_custom_key != key)
+		return
+
+	if(activator && activator.holomap_obj)
+		var/mob/user = activator
+		deactivate_holomap()
+		activate_holomap(user)
 
 /obj/item/holochip/proc/handle_markers()
 	if(!activator || !activator.client)

@@ -58,6 +58,14 @@
 	color_filter = HOLOMAP_TEAM_COLOR
 	holomap_custom_key = TEAM_NAME_RED
 
+/obj/item/holochip/team_red/atom_init()
+	. = ..()
+	frequency = "[TEAM_RED_FREQUENCY]"
+
 /obj/item/holochip/team_blue
 	color_filter = HOLOMAP_TEAM_COLOR
 	holomap_custom_key = TEAM_NAME_BLUE
+
+/obj/item/holochip/team_red/atom_init()
+	. = ..()
+	frequency = "[TEAM_BLUE_FREQUENCY]"

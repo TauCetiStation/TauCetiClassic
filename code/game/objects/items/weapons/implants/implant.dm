@@ -509,6 +509,24 @@ var/global/list/death_alarm_stealth_areas = list(
 	START_PROCESSING(SSobj, src)
 	return 1
 
+/obj/item/weapon/implant/death_alarm/coordinates
+	var/frequency = 1459
+
+/obj/item/weapon/implant/death_alarm/coordinates/activate(cause)
+	var/turf/T = get_turf(imp_in)
+
+	var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
+	a.autosay("[imp_in.real_name] has died at [T.x].[T.y]!", "[mobname]'s Death Alarm", freq = frequency)
+	STOP_PROCESSING(SSobj, src)
+	qdel(a)
+
+/obj/item/weapon/implant/death_alarm/coordinates/team_red
+	frequency = TEAM_RED_FREQUENCY
+
+/obj/item/weapon/implant/death_alarm/coordinates/team_blue
+	frequency = TEAM_BLUE_FREQUENCY
+
+
 /obj/item/weapon/implant/compressed
 	name = "compressed matter implant"
 	desc = "Based on compressed matter technology, can store a single item."

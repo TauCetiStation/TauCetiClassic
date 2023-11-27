@@ -1459,8 +1459,8 @@
 			AM.forceMove(src.loc)
 			AM.pipe_eject(dir)
 
-			if(istype(AM, /obj/item/warhead))
-				var/obj/item/warhead/WH = AM
+			if(istype(AM, /obj/item/rocket))
+				var/obj/item/rocket/WH = AM
 				// long distance target will get us better accuracy in throwind datum
 				var/launch_target = get_turf_in_angle(dir2angle(dir)+WH.launch_angle, src.loc, 200)
 

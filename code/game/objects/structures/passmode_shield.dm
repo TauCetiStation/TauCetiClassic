@@ -46,6 +46,9 @@ var/global/list/obj/structure/passmode_shield/passmode_shields
 	LAZYADD(passmode_shields, src)
 	switch_mode(passmode)
 
+/obj/structure/passmode_shield/ex_act()
+	return
+
 // need testing:
 //	if(!(/client/proc/toggle_passmode_shields in admin_verbs))
 //		setup_temp_admin_verbs(/client/proc/toggle_passmode_shields, "Passmode Shield Spawned")

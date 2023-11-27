@@ -234,9 +234,9 @@
 /mob/proc/restrained()
 	return
 
-/mob/proc/reset_view(atom/A)
+/mob/proc/reset_view(atom/A, force_remote_viewing)
 	if(client)
-		if(istype(A, /atom/movable))
+		if(istype(A, /atom))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else

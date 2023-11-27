@@ -2,10 +2,8 @@ SUBSYSTEM_DEF(role_spawners)
 	name = "Role Spawners"
 	flags = SS_NO_FIRE
 
-	var/global/list/datum/spawner/spawners = list()
-	var/global/list/datum/spawners_cooldown = list()
-
-	var/global/list/datum/spawner/round_start_autoroll = list()
+	var/list/datum/spawner/spawners = list()
+	var/list/spawners_cooldown = list()
 
 /datum/controller/subsystem/role_spawners/Initialize(timeofday)
 	..()

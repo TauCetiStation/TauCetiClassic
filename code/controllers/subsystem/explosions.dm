@@ -228,6 +228,7 @@ SUBSYSTEM_DEF(explosions)
 		else if(dist < light_impact_range)
 			severity = EXPLODE_LIGHT
 
+
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
 				SSexplosions.highturf += explode
@@ -431,6 +432,7 @@ SUBSYSTEM_DEF(explosions)
 		timer = TICK_USAGE_REAL
 		var/list/local_high_mov_atom = high_mov_atom
 		high_mov_atom = list()
+		//todo: maybe check for atom.simulated and ABSTRACT flag, currently it calls ex_act for lighting
 		for(var/atom/movable/movable_thing as anything in local_high_mov_atom)
 			if(QDELETED(movable_thing))
 				continue

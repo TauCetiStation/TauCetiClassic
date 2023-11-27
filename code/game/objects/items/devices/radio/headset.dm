@@ -360,7 +360,7 @@
 
 /obj/item/device/radio/headset/team_red/atom_init()
 	. = ..()
-	set_frequency(1501)
+	set_frequency(TEAM_RED_FREQUENCY)
 
 /obj/item/device/radio/headset/team_blue
 	name = "Team Red headset"
@@ -372,4 +372,4 @@
 
 /obj/item/device/radio/headset/team_blue/atom_init()
 	. = ..()
-	set_frequency(1502)
+	set_frequency(TEAM_BLUE_FREQUENCY)
