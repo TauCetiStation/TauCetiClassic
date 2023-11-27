@@ -7,11 +7,11 @@
 /*The explosive charge itself.  Flashes for five seconds before exploding.*/
 
 /obj/item/weapon/syndie/c4explosive
+	name = "normal-sized package"
+	cases = list("взрывчатка", "взрывчатки", "взрывчатке", "взрывчатку", "взрывчаткой", "взрывчатке")
+	desc = "Небольшой завернутый пакет."
 	icon_state = "c-4small_0"
 	item_state = "c-4small"
-	cases = list("взрывчатка", "взрывчатки", "взрывчатке", "взрывчатку", "взрывчаткой", "взрывчатке")
-	name = "normal-sized package"
-	desc = "Небольшой завернутый пакет."
 	w_class = SIZE_SMALL
 
 	var/power = 1  /*Size of the explosion.*/
@@ -53,11 +53,11 @@
 /*Click it when closed to open, when open to bring up a prompt asking you if you want to close it or press the button.*/
 
 /obj/item/weapon/syndie/c4detonator
-	icon_state = "c-4detonator_0"
-	cases = list("зажигалка", "зажигалки", "зажигалке", "зажигалку", "зажигалкой", "зажигалке")
-	item_state = "c-4detonator"
 	name = "Zippo lighter"  /*Sneaky, thanks Dreyfus.*/
 	desc = "Зиппо."
+	cases = list("зажигалка", "зажигалки", "зажигалке", "зажигалку", "зажигалкой", "зажигалке")
+	icon_state = "c-4detonator_0"
+	item_state = "c-4detonator"
 	w_class = SIZE_MINUSCULE
 
 	var/obj/item/weapon/syndie/c4explosive/bomb

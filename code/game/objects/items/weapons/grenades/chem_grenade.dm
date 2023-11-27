@@ -1,9 +1,9 @@
 /obj/item/weapon/grenade/chem_grenade
 	name = "grenade casing"
+	cases = list("граната", "гранаты", "гранате", "гранату", "гранатой", "гранате")
 	icon_state = "chemg"
 	item_state = "flashbang"
 	desc = "Химическая граната ручного изготовления."
-	cases = list("граната", "гранаты", "гранате", "гранату", "гранатой", "гранате")
 	w_class = SIZE_TINY
 	force = 2.0
 	flags = HEAR_TALK
