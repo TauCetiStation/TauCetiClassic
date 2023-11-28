@@ -191,46 +191,53 @@
 
 /mob/living/proc/sec_hud_set_implants()
 	var/image/holder
-	var/species_offset_hud = 0
+	var/species_offset_hud_Y = 0
+	var/species_offset_hud_X = 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		var/datum/species/S = H.species
 		if(S)
-			species_offset_hud = S.hud_offset_y
+			species_offset_hud_Y = S.hud_offset_y
+			species_offset_hud_X = S.hud_offset_x
 	var/y = 0
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
-		holder.pixel_x = S.hud_offset_x
+		holder.pixel_x = species_offset_hud_X
 
 	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL) || HAS_TRAIT(src, TRAIT_FAKELOYAL_VISUAL))
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
-		holder.pixel_y = species_offset_hud
+		holder.pixel_y = species_offset_hud_Y
+		holder.pixel_x = species_offset_hud_X
 		y += -5
 
 	if(HAS_TRAIT(src, TRAIT_VISUAL_MINDSHIELD))
 		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
-		holder.pixel_y = y + species_offset_hud
+		holder.pixel_y = y + species_offset_hud_Y
+		holder.pixel_x = species_offset_hud_X
 		y += -5
 
 	if(HAS_TRAIT(src, TRAIT_VISUAL_OBEY))
 		holder = hud_list[IMPOBED_HUD]
 		holder.icon_state = "hud_imp_obedience"
-		holder.pixel_y = y + species_offset_hud
+		holder.pixel_y = y + species_offset_hud_Y
+		holder.pixel_x = species_offset_hud_X
 		y += -5
 
 	if(HAS_TRAIT(src, TRAIT_VISUAL_CHEM))
 		holder = hud_list[IMPCHEM_HUD]
 		holder.icon_state = "hud_imp_chem"
-		holder.pixel_y = y + species_offset_hud
+		holder.pixel_y = y + species_offset_hud_Y
+		holder.pixel_x = species_offset_hud_X
 		y += -5
 
 	if(HAS_TRAIT(src, TRAIT_VISUAL_TRACK))
 		holder = hud_list[IMPTRACK_HUD]
 		holder.icon_state = "hud_imp_tracking"
-		holder.pixel_y = y + species_offset_hud
+		holder.pixel_y = y + species_offset_hud_Y
+		holder.pixel_x = species_offset_hud_X
 		y += -5
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
