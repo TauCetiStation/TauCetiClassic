@@ -84,7 +84,7 @@
 /obj/item/weapon/book/manual/wiki/supermatter_engine
 	name = "Supermatter Engine User's Guide"
 	icon_state = "bookSupermatter"
-	item_state_world = "bookSupermatters_world"
+	item_state_world = "bookSupermatter_world"
 	item_state ="book3"
 	author = "Einstein Engines Inc"
 	title = "Supermatter Engine User's Guide"
