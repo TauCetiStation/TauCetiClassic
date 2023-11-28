@@ -117,6 +117,7 @@
 		var/datum/species/S = H.species
 		if(S)
 			holder.pixel_y = S.hud_offset_y
+			holder.pixel_x = S.hud_offset_x
 
 //for carbon suit sensors
 /mob/living/carbon/med_hud_set_health()
@@ -158,6 +159,7 @@
 	if(!S)
 		return
 	holder.pixel_y = S.hud_offset_y
+	holder.pixel_x = S.hud_offset_x
 
 /mob/living/carbon/human/med_hud_set_status()
 	..()
@@ -171,6 +173,7 @@
 	var/datum/species/S = species
 	if(S)
 		holder.pixel_y = S.hud_offset_y
+		holder.pixel_x = S.hud_offset_x
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.
@@ -183,6 +186,7 @@
 	var/datum/species/S = species
 	if(S)
 		holder.pixel_y = S.hud_offset_y - 8
+		holder.pixel_x = S.hud_offset_x
 	sec_hud_set_security_status()
 
 /mob/living/proc/sec_hud_set_implants()
@@ -197,6 +201,7 @@
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, IMPOBED_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
+		holder.pixel_x = S.hud_offset_x
 
 	if(HAS_TRAIT(src, TRAIT_VISUAL_LOYAL) || HAS_TRAIT(src, TRAIT_FAKELOYAL_VISUAL))
 		holder = hud_list[IMPLOYAL_HUD]
@@ -233,6 +238,7 @@
 	var/datum/species/S = species
 	if(S)
 		holder.pixel_y = S.hud_offset_y
+		holder.pixel_x = S.hud_offset_x
 	var/perpname = get_visible_name(TRUE)
 	if(perpname)
 		var/datum/data/record/R = find_security_record("name", perpname)

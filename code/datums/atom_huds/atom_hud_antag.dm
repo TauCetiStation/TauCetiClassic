@@ -59,6 +59,7 @@
 		var/datum/species/S = H.species
 		if(S)
 			holder.pixel_y = S.hud_offset_y
+			holder.pixel_x = S.hud_offset_x
 
 //MIND PROCS
 //these are called by mind.transfer_to()
