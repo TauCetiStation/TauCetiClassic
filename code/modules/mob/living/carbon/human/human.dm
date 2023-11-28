@@ -38,6 +38,10 @@
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
 
+	var/datum/reagents/R = new/datum/reagents(1000)
+	reagents = R
+	R.my_atom = src
+
 	if(!species)
 		if(new_species)
 			set_species(new_species, FALSE, TRUE)
