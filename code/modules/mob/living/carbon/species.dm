@@ -13,6 +13,8 @@
 	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
+	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
+	var/hud_offset_y = 0
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
