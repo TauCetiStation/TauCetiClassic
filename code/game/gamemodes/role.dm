@@ -24,6 +24,7 @@
 	// Logo of role
 	var/logo_state
 
+	var/hide_logo = FALSE
 	// What faction this role is associated with.
 	var/datum/faction/faction
 	// The actual antag mind.
@@ -318,6 +319,19 @@
 
 	return text
 
+/datum/role/proc/print_player_without_icon(datum/mind/mind)
+	var/text = ""
+	var/mob/M = mind.current
+	text += "<b>[mind.key]</b> was <b>[name]</b> ("
+	if(!M)
+		text += "body destroyed"
+	else if(M.stat == DEAD)
+		text += "died"
+	else
+		text += "survived"
+	text += ")"
+	return text
+
 /datum/role/proc/GetObjectiveDescription(datum/objective/objective)
 	return "[objective.explanation_text] [objective.completion_to_string()]"
 
@@ -325,8 +339,10 @@
 	var/win = TRUE
 	var/text = ""
 
-	text = printplayerwithicon(antag)
-
+	if(!hide_logo)
+		text = printplayerwithicon(antag)
+	else
+		text = print_player_without_icon(antag)
 	if(objectives.objectives.len > 0)
 		var/count = 1
 		text += "<ul>"
