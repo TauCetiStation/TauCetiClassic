@@ -113,6 +113,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FUR                "fur"
 #define NO_GENDERS         "no_genders"
 
+#define NO_MED_HEALTH_SCAN "no_med_health_scan"
+
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
 #define DIET_PLANT		2 // Vegans!
