@@ -464,7 +464,7 @@ var/global/list/slot_equipment_priority = list(
 
 	return obscured
 
-/mob/proc/slot_id_to_name(slot)
+/proc/slot_id_to_name(slot)
 	switch(slot)
 		if(SLOT_BACK)
 			return "back"
@@ -510,14 +510,10 @@ var/global/list/slot_equipment_priority = list(
 			return "suit"
 		if(SLOT_EARS)
 			return "ears"
+		if(SLOT_NECK)
+			return "neck"
 		else
 			return "error=[slot]"
-
-/mob/living/carbon/ian/slot_id_to_name(slot)
-	if(slot == SLOT_NECK)
-		return "neck"
-	else
-		return ..()
 
 /mob/proc/CanUseTopicInventory(mob/target)
 	if(is_busy() || isdrone(src) || incapacitated() || !isturf(target.loc) || !in_interaction_vicinity(target))
