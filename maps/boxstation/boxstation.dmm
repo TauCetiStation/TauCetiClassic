@@ -56007,7 +56007,7 @@
 	pixel_y = 22
 	},
 /obj/item/clothing/shoes/leather,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/head/beret/black,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/device/camera,

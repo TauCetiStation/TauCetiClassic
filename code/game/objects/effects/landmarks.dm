@@ -422,7 +422,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 /obj/effect/landmark/costume/butler/atom_init()
 	..()
-	new /obj/item/clothing/suit/wcoat(loc)
+	new /obj/item/clothing/accessory/tie/waistcoat(loc)
 	new /obj/item/clothing/under/suit_jacket(loc)
 	new /obj/item/clothing/head/that(loc)
 	return INITIALIZE_HINT_QDEL
@@ -444,7 +444,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 /obj/effect/landmark/costume/prig/atom_init()
 	..()
-	new /obj/item/clothing/suit/wcoat(loc)
+	new /obj/item/clothing/accessory/tie/waistcoat(loc)
 	new /obj/item/clothing/glasses/monocle(loc)
 	var/CHOICE = pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/that)
 	new CHOICE(loc)
