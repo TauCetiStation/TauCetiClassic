@@ -56,10 +56,6 @@
 	dna.species = species.name
 	dna.b_type = random_blood_type()
 
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
-
 	. = ..()
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
