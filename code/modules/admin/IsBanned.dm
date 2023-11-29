@@ -8,7 +8,7 @@
 // real_bans_only check exists bans, not resticts(WhiteList, GuestPass)
 /world/IsBanned(key, address, computer_id, type, real_bans_only = FALSE, provided_ckey)
 	var/ckey = ckey(key)
-	log_access("ISBANNED: '[ckey]', [args.Join("', '")]'")
+	log_access("ISBANNED: '[ckey]', '[args.Join("', '")]'")
 
 	// Shunt world topic banchecks to purely to byond's internal ban system
 	if (type == "world")
@@ -32,8 +32,8 @@
 	// Admin allowed anyway
 	if (ckey in admin_datums)
 		is_admin = TRUE
-		if (!C) // first connect admin
-			turnoff_stickybans_temporary(ckey)
+		//if (!C) // first connect admin
+		//	turnoff_stickybans_temporary(ckey)
 		return // remove this for admin checks in bans too
 	// Check bans
 	var/ban = get_ban_blacklist(key, address, computer_id)
@@ -187,21 +187,25 @@
 
 	// Save current Config bans
 	if (!length(global.stickyban_admin_exemptions))
+		log_access("Stickybans timeout because of [admin_ckey].")
 		for (var/banned_ckey in world.GetConfig("ban"))
 			global.stickyban_admin_texts[banned_ckey] = world.GetConfig("ban", banned_ckey)
 			world.SetConfig("ban", banned_ckey, null)
+	else
+		log_access("Increasing stickybans timeout because of [admin_ckey].")
 	if (!SSstickyban || !SSstickyban.initialized)
 		return
 	global.stickyban_admin_exemptions[admin_ckey] = world.time
 	// Get time for Config update
 	stoplag()
-	// Restore on 5 seconds
+	// Restore on timer
 	global.stickyban_admin_exemption_timer_id = addtimer( \
 		CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(restore_stickybans)),  \
 		seconds SECONDS, \
 		TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /proc/restore_stickybans()
+	log_access("Stickybans timeout is over.")
 	// Restore stickybans SetConfig from stickyban_admin_texts
 	// Drop timer stickyban_admin_exemption_timer_id
 	for (var/banned_ckey in global.stickyban_admin_texts)

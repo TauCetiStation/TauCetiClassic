@@ -2433,7 +2433,7 @@
 /area/station/security/main)
 "afB" = (
 /obj/structure/table/glass,
-/obj/item/weapon/stamp/cmo{
+/obj/item/weapon/stamp/med/cmo{
 	pixel_x = 3
 	},
 /obj/item/device/microphone/cmo{
@@ -27509,7 +27509,7 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/weapon/stamp/ce{
+/obj/item/weapon/stamp/eng/ce{
 	pixel_x = 5
 	},
 /turf/simulated/floor{
@@ -38950,7 +38950,7 @@
 /obj/item/weapon/paper_bin{
 	pixel_y = 5
 	},
-/obj/item/weapon/stamp/captain{
+/obj/item/weapon/stamp/cap{
 	pixel_x = 5
 	},
 /turf/simulated/floor{
@@ -40565,7 +40565,7 @@
 /area/station/maintenance/cargo)
 "ihe" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/stamp/internalaffairs,
+/obj/item/weapon/stamp/iaa,
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
 	pixel_y = -2
@@ -45426,6 +45426,7 @@
 /obj/machinery/door/window/brigdoor/northleft{
 	req_access = list(20)
 	},
+/obj/item/weapon/paper_bin,
 /obj/item/device/microphone/cap,
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
@@ -52790,7 +52791,7 @@
 "kIC" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/item/weapon/stamp/qm{
+/obj/item/weapon/stamp/cargo/qm{
 	pixel_x = 6
 	},
 /obj/item/weapon/cartridge/quartermaster{
@@ -63936,7 +63937,7 @@
 	pixel_y = 7;
 	req_access = list(2)
 	},
-/obj/item/weapon/stamp/hos{
+/obj/item/weapon/stamp/sec/hos{
 	pixel_x = -6;
 	pixel_y = 8
 	},
@@ -95325,7 +95326,7 @@
 /obj/structure/table,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/stamp{
+/obj/item/weapon/stamp/cargo{
 	name = "recycler's rubber stamp";
 	stamp_message = "Recycler"
 	},
@@ -99353,7 +99354,7 @@
 	pixel_y = 6
 	},
 /obj/item/weapon/changeling_test,
-/obj/item/weapon/stamp/rd{
+/obj/item/weapon/stamp/sci/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -101616,7 +101617,7 @@
 /area/station/engineering/engine)
 "vBV" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/stamp/internalaffairs,
+/obj/item/weapon/stamp/iaa,
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
 	pixel_y = -2
@@ -106416,7 +106417,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/clothing/shoes/leather,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/head/beret/black,
 /obj/item/device/cardpay{
 	dir = 1

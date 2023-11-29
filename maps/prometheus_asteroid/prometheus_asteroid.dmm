@@ -11635,12 +11635,9 @@
 /obj/item/weapon/pen{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp{
-	icon_state = "stamp-rd";
+/obj/item/weapon/stamp/sci{
 	name = "research outpost rubber stamp";
 	pixel_y = -10;
-	stamp_border = "#7f4ba2";
-	stamp_color = "#9361b5";
 	stamp_message = "Research Outpost"
 	},
 /turf/simulated/floor{
