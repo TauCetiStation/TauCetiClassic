@@ -729,6 +729,10 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 	reagents.add_reagent("lube", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
+	AddComponent(/datum/component/slippery, 8, NONE, CALLBACK(src, PROC_REF(AfterSlip)))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/proc/AfterSlip(mob/living/carbon/human/M)
+	M.Stun(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..())
@@ -739,13 +743,6 @@
 	for(var/atom/A in get_turf(hit_atom))
 		reagents.reaction(A)
 	qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(atom/movable/AM)
-	. = ..()
-	if(ismob(AM))
-		var/mob/M = AM
-		if(M.slip(weaken_duration = 5, slipped_on = src))
-			M.Stun(8)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed_type = /obj/item/seeds/wheatseed
