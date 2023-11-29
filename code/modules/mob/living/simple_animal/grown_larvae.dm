@@ -22,3 +22,15 @@
 	stat(null)
 	if(statpanel("Status"))
 		stat("Прогресс роста: [evolv_stage * 25]/100")
+
+/mob/living/simple_animal/grown_larvae/snake
+	name = "Snake"
+	desc = "Hiss"
+	icon_state = "snake"
+	icon_living = "snake"
+	icon_dead = "snake_dead"
+	ventcrawler = 2
+	melee_damage = 5
+	speed = 1
+	has_arm = FALSE
+	has_leg = FALSE
