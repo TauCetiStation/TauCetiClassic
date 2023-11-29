@@ -13567,7 +13567,7 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
-/obj/item/weapon/stamp/internalaffairs{
+/obj/item/weapon/stamp/iaa{
 	pixel_x = -8
 	},
 /turf/simulated/floor{
@@ -22455,7 +22455,7 @@
 /area/station/hallway/primary/central)
 "aOb" = (
 /obj/structure/table,
-/obj/item/weapon/stamp/qm{
+/obj/item/weapon/stamp/cargo/qm{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -31422,7 +31422,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -30
 	},
-/obj/item/weapon/stamp/captain,
+/obj/item/weapon/stamp/cap,
 /obj/item/device/megaphone,
 /obj/item/device/flashlight/lamp/green{
 	on = 0;
@@ -39558,11 +39558,9 @@
 /area/station/cargo/office)
 "bsL" = (
 /obj/structure/table,
-/obj/item/weapon/stamp{
-	name = "cargo rubber stamp";
+/obj/item/weapon/stamp/cargo{
 	pixel_x = -3;
-	pixel_y = 3;
-	stamp_message = "Cargo"
+	pixel_y = 3
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -45275,7 +45273,7 @@
 "bCJ" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
-/obj/item/weapon/stamp/rd{
+/obj/item/weapon/stamp/sci/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -47883,7 +47881,7 @@
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/item/weapon/stamp/internalaffairs{
+/obj/item/weapon/stamp/iaa{
 	pixel_x = -8
 	},
 /obj/item/weapon/stamp/denied{
@@ -56009,7 +56007,7 @@
 	pixel_y = 22
 	},
 /obj/item/clothing/shoes/leather,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/head/beret/black,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/device/camera,
@@ -69267,7 +69265,7 @@
 "cMW" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/hos,
+/obj/item/weapon/stamp/sec/hos,
 /obj/item/clothing/head/beret/sec/hos,
 /obj/structure/cable{
 	d1 = 1;
@@ -72581,7 +72579,7 @@
 /obj/item/weapon/pen{
 	pixel_x = -12
 	},
-/obj/item/weapon/stamp/ce{
+/obj/item/weapon/stamp/eng/ce{
 	pixel_x = -12
 	},
 /obj/structure/cable/yellow{
@@ -78112,7 +78110,7 @@
 /area/station/maintenance/medbay)
 "lZb" = (
 /obj/structure/table/glass,
-/obj/item/weapon/stamp/cmo,
+/obj/item/weapon/stamp/med/cmo,
 /obj/item/tableclock{
 	pixel_x = 4;
 	pixel_y = 12
