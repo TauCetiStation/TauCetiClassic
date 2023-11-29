@@ -146,10 +146,10 @@ const CryoContent = (props, context) => {
               <AnimatedNumber value={cellTemperature} /> K
             </LabeledList.Item>
           ) : (
-            <LabeledList.Item label="Статус воздуха" color="bad">
+            <LabeledList.Item label="Состояние воздуха" color="bad">
               No Air
             </LabeledList.Item>)}
-          <LabeledList.Item label="Мензурка">
+          <LabeledList.Item label="Сосуд">
             <CryoBeaker />
           </LabeledList.Item>
         </LabeledList>
@@ -172,13 +172,13 @@ const CryoBeaker = (props, context) => {
             value={beakerVolume}
             format={v => Math.round(v) + " юнитов осталось"}
           />
-        ) : "Мензурка пуста"}
+        ) : "Сосуд пуст"}
       </Box>
     );
   } else {
     return (
       <Box color="average">
-        Мензурка отсутсвует
+        Сосуд отсутсвует
       </Box>
     );
   }
