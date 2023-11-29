@@ -1,6 +1,5 @@
 /obj/item/device/healthanalyzer
 	name = "Health Analyzer"
-	cases = list("ручного сканера тела", "ручному сканеру тела", "ручной сканер тела", "ручным сканером тела", "ручном сканере тела")
 	icon_state = "health"
 	item_state = "healthanalyzer"
 	desc = "Ручной сканер тела, способный проанализировать жизненные показатели пациента."
