@@ -171,20 +171,21 @@
 /datum/disease2/effect/heal/chem
 	name = "Toxolysis"
 	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
+	desc = "Вирус быстро разрушает любые посторонние химические вещества в кровотоке."
 	level = 4
 
 /datum/disease2/effect/heal/chem/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
 	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
 		M.reagents.remove_reagent(R.id, actual_power)
 		if(prob(2))
-			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
+			to_chat(M, "<span class='notice'>Вы чувствуете небольшое тепло, в то время как ваша кровь очищается.</span>")
 	return 1
 
 /datum/disease2/effect/heal/coma
 	name = "Regenerative Coma"
-	desc = "The virus causes the host to fall into a death-like coma when severely damaged, then rapidly fixes the damage."
+	desc = "Вирус заставляет носителя впасть в кому подобную смерти после получения серьёзных повреждений, затем быстро восстанавливает их."
 	level = 4
-	passive_message = "<span class='notice'>The pain from your wounds makes you feel oddly sleepy...</span>"
+	passive_message = "<span class='notice'>Боль от ваших ран заставляет чуствовать вас сонным...</span>"
 	var/active_coma = FALSE
 
 /datum/disease2/effect/heal/coma/can_heal(mob/living/carbon/human/M, datum/disease2/disease/disease)
@@ -193,7 +194,7 @@
 	else if(M.stat == UNCONSCIOUS)
 		return 0.5
 	else if(M.getBruteLoss() + M.getFireLoss() >= 120 && !active_coma)
-		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
+		to_chat(M, "<span class='warning'>Вы чувствуете как впадаете в регенеративную кому...</span>")
 		active_coma = TRUE
 		addtimer(CALLBACK(src, PROC_REF(coma), M), 60)
 
@@ -229,7 +230,7 @@
 
 /datum/disease2/effect/metabolism
 	name = "Metabolic Boost"
-	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast, but also causing increased hunger."
+	desc = "Вирус ускоряет метаболизм хозяина, заставляя проходить химические процессы в два раза быстрее, но повышая при этом голод."
 	level = 4
 	cooldown = 60
 	max_stage = 5
@@ -252,7 +253,7 @@
 
 /datum/disease2/effect/flesh_death
 	name = "Autophagocytosis Necrosis"
-	desc = "The virus rapidly consumes infected cells, leading to heavy and widespread damage."
+	desc = "Вирус быстро пожирает заражённые клетки, приводя к тяжелым и обширным повреждениям."
 	level = 4
 	max_stage = 3
 	cooldown = 5
@@ -261,14 +262,14 @@
 
 /datum/disease2/effect/flesh_death/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || (holder.stage >= 1 && holder.stage <= 2))
-		to_chat(mob, "<span class='warning'>[pick("You feel your body break apart.", "Your skin rubs off like dust.")]</span>")
+		to_chat(mob, "<span class='warning'>[pick("Вы чувствуете как разваливаетесь на части.", "Ваша кожа стирается словно пыль.")]</span>")
 	else if(holder.stage == 3)
-		to_chat(mob, "<span class='userdanger'>[pick("You feel your muscles weakening.", "Some of your skin detaches itself.", "You feel sandy.")]</span>")
+		to_chat(mob, "<span class='userdanger'>[pick("Вы чувствуете как ваши мышци слабеют.", "Ваша кожа отслаивается сама по себе.", "Вы как буд-то растворяетесь.")]</span>")
 		mob.adjustBruteLoss(rand(6,10))
 
 /datum/disease2/effect/stage_boost
 	name = "Quick growth"
-	desc = "The virus mutates and quickly grows, reaching its full potential in moments."
+	desc = "Вирус мутирует и быстро развивается, достигая своего полного потенциала в мгновение ока."
 	level = 4
 	max_stage = 1
 	cooldown = 1
@@ -279,11 +280,11 @@
 /datum/disease2/effect/stage_boost/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(disease.stage < disease.effects.len)
 		disease.stage = disease.effects.len
-		to_chat(mob, "<span class='notice'>You feel warmth inside your head.</span>")
+		to_chat(mob, "<span class='notice'>Вы чувствуете небольшое тепло в области головы.</span>")
 
 /datum/disease2/effect/gibbingtons
 	name = "Gibbingtons Syndrome"
-	desc = "The virus synthesizes hydrogen sulphide in the bloodstream, damaging host's veins and arteries. In extreme cases, overdose of hydrogen sulphide may also cause host to explode in a shower of gore."
+	desc = "Вирус генерирует сероводород в кровотоке, повреждая вены и артерии. В особых случаях, передозировка сероводородом может привести к взрыву, разнося носителя на кусочки."
 	level = 4
 	max_stage = 14
 	cooldown = 30
