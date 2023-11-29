@@ -195,7 +195,7 @@
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/item/projectile) && (reverse_dir[dir] & mover.dir))
 		return prob(95)
-	return 1
+	return TRUE
 
 
 /obj/item/projectile/process(boolet_number = 1) // we add default arg value, because there is alot of uses of projectiles without guns (e.g turrets).
@@ -326,25 +326,11 @@
 	var/target = null
 	var/atom/result = null //To pass the bumped atom back to the gun.
 
+/obj/item/projectile/test/check_miss(mob/living/L)
+	return FALSE
+
 /obj/item/projectile/test/Bump(atom/A)
-	if(A == firer)
-		loc = A.loc
-		return //cannot shoot yourself
 	if(istype(A, /obj/item/projectile))
-		return
-	if(isliving(A))
-		result = A
-		bumped = TRUE
-		return
-	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window/thin))
-		return
-	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window/fulltile))
-		var/obj/structure/window/fulltile/FTW = A
-		if(!FTW.grilled)
-			return
-		else if(checkpass(PASSGRILLE))
-			return
-	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
 	result = A
 	bumped = TRUE
