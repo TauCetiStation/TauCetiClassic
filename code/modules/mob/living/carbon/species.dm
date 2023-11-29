@@ -78,6 +78,8 @@
 
 	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
 	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
+	var/specie_shoe_blood_state = "shoeblood"
+	var/specie_hand_blood_state = "bloodyhands"
 	var/flesh_color = "#ffc896" //Pink.
 	var/base_color      //Used when setting species.
 
