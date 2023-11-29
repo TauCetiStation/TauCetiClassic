@@ -743,7 +743,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(atom/movable/AM)
 	. = ..()
 	if(ismob(AM))
-		var/mob/M
+		var/mob/M = AM
 		if(M.slip(weaken_duration = 5, slipped_on = src))
 			M.Stun(8)
 
