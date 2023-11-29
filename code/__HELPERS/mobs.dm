@@ -271,7 +271,7 @@
 		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Результаты сканирования [M.name]</title></head><BODY>"
 
 	if(user.ClumsyProbabilityCheck(50) || (user.getBrainLoss() >= 60 && prob(50)))
-		user.visible_message("<span class='warning'>[user] просканировал жизненные показатели пола!</span>", "<span class = 'warning'>Вы пытаетесь просканировать жизненные показатели пола!</span>")
+		user.visible_message("<span class='warning'>[user] сканирует жизненные показатели пола!</span>", "<span class = 'warning'>Вы пытаетесь просканировать жизненные показатели пола!</span>")
 		message += "<span class='notice'>Результаты сканирования пола:\n&emsp; Общее состояние: здоров</span><br>"
 		message += "<span class='notice'>&emsp; Специфика повреждений: [0]-[0]-[0]-[0]</span><br>"
 		message += "<span class='notice'>Типы: Асфиксия/Интоксикация/Термические/Механические</span><br>"
