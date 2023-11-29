@@ -742,20 +742,10 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(atom/movable/AM)
 	. = ..()
-	if (iscarbon(AM))
-		var/mob/living/carbon/C = AM
-
-		if (ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if ((H.shoes && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
-				return
-
-		C.stop_pulling()
-		to_chat(C, "<span class='notice'>You slipped on the [name]!</span>")
-		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-		if(!C.buckled)
-			C.Stun(8)
-			C.Weaken(5)
+	if(ismob(AM))
+		var/mob/M
+		if(M.slip(weaken_duration = 5, slipped_on = src))
+			M.Stun(8)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed_type = /obj/item/seeds/wheatseed
