@@ -106,6 +106,7 @@
 		var/mob/living/carbon/human/H = A
 		if(iszombie(H))
 			disease.dead = TRUE
+			UnregisterSignal(H, COMSIG_MOB_DIED)
 			return
 
 		if(!(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
@@ -123,6 +124,7 @@
 
 		if(QDELETED(infected_organ) || !infected_organ || !infected_organ.is_flesh() || infected_organ.is_stump || !infected_organ.is_attached())
 			disease.dead = TRUE
+			UnregisterSignal(A, COMSIG_MOB_DIED)
 			to_chat(H, "<span class='notice'>You suddenly feel better.</span>")
 			return
 
@@ -150,6 +152,7 @@
 				else if(prob(33) && H.stat == CONSCIOUS)
 					to_chat(H, "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>")
 					H.adjustOxyLoss(rand(10, 40))
+					H.losebreath = rand(10, 20)
 				else
 					to_chat(H, "<span class='danger'>[pick("Your body is paralyzed.")]</span>")
 					H.Stun(4)
@@ -160,11 +163,34 @@
 					H.suiciding = TRUE
 					H.adjustOxyLoss(max(H.maxHealth * 2 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss(), 0))
 					H.updatehealth()
+					addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), 600)
+					to_chat(H, "<span class='cult'>Твоё сердце останавливается, но вместе с этим просыпается ненасытный ГОЛОД... \
+					Вот только жизнь не покинула твоё бездыханное тело. Этот голод не отпускает тебя, ты ещё восстанешь, что бы распространять болезнь и сеять смерть!</span>")
 					disease.dead = TRUE
+					UnregisterSignal(A, COMSIG_MOB_DIED)
 
 /datum/disease2/effect/zombie/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 	var/datum/disease2/effect/zombie/Z = effect_old
 	infected_organ = Z.infected_organ
+
+/datum/disease2/effect/zombie/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	. = ..()
+	if(ishuman(A))
+		UnregisterSignal(A, COMSIG_MOB_DIED)
+
+/datum/disease2/effect/zombie/proc/handle_infected_death(mob/user)
+	SIGNAL_HANDLER
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.handle_infected_death()
+		to_chat(H, "<span class='cult'>Твоё сердце останавливается, но вместе с этим просыпается ненасытный ГОЛОД... \
+				Вот только жизнь не покинула твоё бездыханное тело. \
+				Этот голод не отпускает тебя, ты ещё восстанешь, что бы распространять болезнь и сеять смерть!</span>")
+		activated = TRUE
+		UnregisterSignal(H, COMSIG_MOB_DIED)
+//трижды присылает сообщение, ревайвит через 4 секунды
+
+
 
 ////////////////////////STAGE 4/////////////////////////////////
 
