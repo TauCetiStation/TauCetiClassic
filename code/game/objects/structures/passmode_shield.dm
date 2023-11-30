@@ -32,7 +32,7 @@ var/global/list/obj/structure/passmode_shield/passmode_shields
 	var/datum/map_module/forts/forts_module = SSmapping.get_map_module(MAP_MODULE_FORTS)
 	if(forts_module)
 		var/mode_text
-		switch(mode)
+		switch(modes[mode])
 			if(FSHIELD_PASS_DISALLOW)
 				mode_text = "ничего не пропускает"
 			if(FSHIELD_PASS_ALLOW_NOT_LIVING)
