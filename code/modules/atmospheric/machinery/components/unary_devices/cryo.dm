@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
-	cases = list("крио камеры", "крио камере", "крио камеру", "крио камерой", "крио камере")
+	cases = list("крио капсула", "крио капсулы", "крио капсуле", "крио капсулу", "крио капсулой", "крио капсуле")
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "pod-off"
 

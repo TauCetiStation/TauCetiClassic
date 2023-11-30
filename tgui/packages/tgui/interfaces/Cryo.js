@@ -85,7 +85,7 @@ const CryoContent = (props, context) => {
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item
-              label="Статус"
+              label="Состояние"
               color={statNames[occupant.stat][0]}>
               {statNames[occupant.stat][1]}
             </LabeledList.Item>
@@ -122,7 +122,7 @@ const CryoContent = (props, context) => {
         )}
       </Section>
       <Section
-        title="Камера"
+        title="Капсула"
         buttons={(
           <Button
             icon="eject"
