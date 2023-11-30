@@ -409,6 +409,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
+		var/fem = ""
+		if(gender == FEMALE)
+			fem = "_fem"
 
 		for(var/obj/item/clothing/accessory/A in U.accessories)
 			var/tie_color = A.icon_state
@@ -416,7 +419,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(A.icon_custom)
 				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
 			else
-				tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
+				tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color][fem]", "layer" = -UNIFORM_LAYER + A.layer_priority)
 			tie.color = A.color
 			tie = human_update_offset(tie, TRUE)
 			standing.add_overlay(tie)

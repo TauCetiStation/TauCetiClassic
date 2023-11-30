@@ -7,6 +7,10 @@
 	item_state = "ba_suit"
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/rank/bartender/alt
+	icon_state = "alt_ba_suit"
+	item_state = "alt_ba_suit"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
