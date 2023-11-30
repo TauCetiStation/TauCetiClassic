@@ -236,7 +236,7 @@
 
 /mob/proc/reset_view(atom/A, force_remote_viewing)
 	if(client)
-		if(istype(A, /atom))
+		if(isatom(A))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
