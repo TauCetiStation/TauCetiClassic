@@ -28,6 +28,19 @@ var/global/list/obj/structure/passmode_shield/passmode_shields
 	for(var/obj/structure/passmode_shield/shield as anything in passmode_shields)
 		shield.switch_mode(modes[mode])
 
+	// forts event announcement
+	var/datum/map_module/forts/forts_module = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	if(forts_module)
+		var/mode_text
+		switch(mode)
+			if(FSHIELD_PASS_DISALLOW)
+				mode_text = "ничего не пропускает"
+			if(FSHIELD_PASS_ALLOW_NOT_LIVING)
+				mode_text = "не пропускает людей, объекты разрешены"
+			if(FSHIELD_PASS_ALLOW_ALL)
+				mode_text = "пропускает всё"
+		forts_module.announce("Новый режим барьера: [mode_text]!")
+
 /obj/structure/passmode_shield
 	name = "shield"
 	icon = 'icons/effects/effects.dmi'
@@ -46,14 +59,14 @@ var/global/list/obj/structure/passmode_shield/passmode_shields
 	LAZYADD(passmode_shields, src)
 	switch_mode(passmode)
 
-/obj/structure/passmode_shield/ex_act()
-	return
-
 // need testing:
-//	if(!(/client/proc/toggle_passmode_shields in admin_verbs))
-//		setup_temp_admin_verbs(/client/proc/toggle_passmode_shields, "Passmode Shield Spawned")
+	if(!(/client/proc/toggle_passmode_shields in global.temp_admin_verbs))
+		setup_temp_admin_verbs(/client/proc/toggle_passmode_shields, "Passmode Shield Spawned")
 
 	return ..()
+
+/obj/structure/passmode_shield/ex_act()
+	return
 
 /obj/structure/passmode_shield/Destroy()
 	LAZYREMOVE(passmode_shields, src)
@@ -61,7 +74,9 @@ var/global/list/obj/structure/passmode_shield/passmode_shields
 
 /obj/structure/passmode_shield/CanPass(atom/movable/mover, turf/target, height=0)
 	if(passmode == FSHIELD_PASS_ALLOW_NOT_LIVING)
-		if(isliving(mover)) // crate
+		if(isliving(mover))
+			return FALSE
+		else if(locate(/mob) in mover) // crates, etc.
 			return FALSE
 		else
 			return TRUE

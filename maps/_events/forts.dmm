@@ -5,11 +5,26 @@
 	},
 /turf/simulated/floor/engine/type3,
 /area/space/holospace/forts/no_droppods)
+"bP" = (
+/obj/machinery/door_control{
+	id = "blue-front";
+	pixel_x = 26;
+	name = "Back Shutters"
+	},
+/turf/simulated/floor/engine/type3,
+/area/space/holospace/forts/no_droppods)
 "cx" = (
 /obj/structure/window/fulltile/reinforced{
 	color = "#ff0000";
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "red-back";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/space/holospace/forts/no_droppods)
@@ -45,12 +60,35 @@
 	icon_state = "dark"
 	},
 /area/space/holospace/forts/no_droppods)
+"hz" = (
+/obj/structure/window/fulltile/reinforced{
+	color = "#6666ff";
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "blue-front";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space/holospace/forts/no_droppods)
 "hA" = (
 /turf/simulated/wall,
 /area/space/holospace/forts/no_droppods)
 "hK" = (
 /turf/environment/space,
 /area/space/holospace)
+"ke" = (
+/obj/machinery/door_control{
+	id = "blue-back";
+	pixel_x = 26;
+	name = "Back Shutters"
+	},
+/turf/simulated/floor/engine/type3,
+/area/space/holospace/forts/no_droppods)
 "nj" = (
 /turf/simulated/floor/plating{
 	icon_state = "asteroidplating"
@@ -152,6 +190,14 @@
 "EG" = (
 /turf/unsimulated/wall,
 /area/space/holospace/forts/no_droppods)
+"EH" = (
+/obj/machinery/door_control{
+	id = "red-back";
+	pixel_x = -26;
+	name = "Back Shutters"
+	},
+/turf/simulated/floor/engine/type3,
+/area/space/holospace/forts/no_droppods)
 "Fz" = (
 /obj/machinery/light/smart{
 	dir = 8
@@ -192,6 +238,13 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "blue-back";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/space/holospace/forts/no_droppods)
 "Ni" = (
@@ -214,6 +267,21 @@
 /obj/structure/passmode_shield,
 /turf/environment/space,
 /area/space/holospace/forts/no_droppods)
+"Qg" = (
+/obj/structure/window/fulltile/reinforced{
+	color = "#ff0000";
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "red-front";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space/holospace/forts/no_droppods)
 "Qu" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "box_white"
@@ -232,6 +300,14 @@
 /area/space/holospace/forts/no_droppods)
 "UD" = (
 /turf/environment/space,
+/area/space/holospace/forts/no_droppods)
+"UT" = (
+/obj/machinery/door_control{
+	id = "red-front";
+	pixel_x = -26;
+	name = "Front Shutters"
+	},
+/turf/simulated/floor/engine/type3,
 /area/space/holospace/forts/no_droppods)
 "Wa" = (
 /obj/machinery/light/smart,
@@ -7065,9 +7141,9 @@ cO
 cO
 cO
 cO
+EH
 cO
-cO
-cO
+UT
 cO
 cO
 cO
@@ -8093,9 +8169,9 @@ BW
 Ni
 ZY
 Ni
-cx
-cx
-cx
+Qg
+Qg
+Qg
 Ni
 ZY
 Ni
@@ -57951,9 +58027,9 @@ BW
 Ni
 ZY
 Ni
-MD
-MD
-MD
+hz
+hz
+hz
 Ni
 ZY
 Ni
@@ -58979,9 +59055,9 @@ cO
 cO
 cO
 cO
+ke
 cO
-cO
-cO
+bP
 cO
 cO
 cO

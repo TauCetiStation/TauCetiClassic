@@ -91,6 +91,8 @@
 
 	// Cooldown between the opportunity become a role
 	var/cooldown = 10 MINUTES
+	// Set this if you want to share cooldown between several spawners, can be type or unique key
+	var/cooldown_type
 
 	// optionally you can link faction for additional field in meny "playing"
 	var/datum/faction/faction // todo: print faction logo in spawn menu?
@@ -138,13 +140,15 @@
 		if(!SSrole_spawners.spawners_cooldown[C.ckey])
 			SSrole_spawners.spawners_cooldown[C.ckey] = list()
 		var/list/ckey_cooldowns = SSrole_spawners.spawners_cooldown[C.ckey]
-		ckey_cooldowns[type] = world.time + cooldown
+		var/cooldown_key = cooldown_type ? cooldown_type : type
+		ckey_cooldowns[cooldown_key] = world.time + cooldown
 
 /datum/spawner/proc/check_cooldown(mob/dead/spectator)
 	if(SSrole_spawners.spawners_cooldown[spectator.ckey])
 		var/list/ckey_cooldowns = SSrole_spawners.spawners_cooldown[spectator.ckey]
-		if(world.time < ckey_cooldowns[type])
-			var/timediff = round((ckey_cooldowns[type] - world.time) * 0.1)
+		var/cooldown_key = cooldown_type ? cooldown_type : type
+		if(world.time < ckey_cooldowns[cooldown_key])
+			var/timediff = round((ckey_cooldowns[cooldown_key] - world.time) * 0.1)
 			to_chat(spectator, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
 			return FALSE
 	return TRUE

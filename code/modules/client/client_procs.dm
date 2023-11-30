@@ -324,7 +324,7 @@ var/global/list/blacklisted_builds = list(
 
 	connection_time = world.time
 
-	SSevents.custom_event_announce()
+	SSevents.custom_event_announce(src)
 
 	if(length(global.temp_player_verbs))
 		verbs |= global.temp_player_verbs

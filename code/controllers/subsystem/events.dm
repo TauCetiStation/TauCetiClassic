@@ -363,8 +363,10 @@ SUBSYSTEM_DEF(events)
 		return pick(possible_areas)
 
 /datum/controller/subsystem/events/proc/setup_custom_event(text, mode)
-	text = text
-	mode = mode
+	custom_event_msg = text
+	custom_event_mode = mode
+
+	custom_event_announce()
 
 /datum/controller/subsystem/events/proc/custom_event_announce(user)
 	if(!custom_event_msg)

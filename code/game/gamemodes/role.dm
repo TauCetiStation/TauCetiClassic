@@ -100,7 +100,7 @@
 	deconverted_roles[id] += antag.name
 	Drop()
 
-// if role has been deconverts use Deconvert()
+// if role has been deconverted use Deconvert()
 /datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null

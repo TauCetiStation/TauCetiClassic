@@ -259,7 +259,6 @@
 			//first lets add that momentum to range.
 			range *= (user_momentum / speed) + 1
 			//then lets add it to speed
-			world.log << "user_momentum [user_momentum]"
 			speed += user_momentum
 			if (speed <= 0)
 				return //no throw speed, the user was moving too fast.

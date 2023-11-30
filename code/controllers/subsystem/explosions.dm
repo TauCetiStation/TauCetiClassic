@@ -228,7 +228,6 @@ SUBSYSTEM_DEF(explosions)
 		else if(dist < light_impact_range)
 			severity = EXPLODE_LIGHT
 
-
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
 				SSexplosions.highturf += explode

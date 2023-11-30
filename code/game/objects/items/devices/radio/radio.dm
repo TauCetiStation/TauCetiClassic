@@ -183,7 +183,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			updateDialog()
 	add_fingerprint(usr)
 
-/obj/item/device/radio/proc/autosay(message, from, channel, freq = 1459) //BS12 EDIT
+/obj/item/device/radio/proc/autosay(message, from, channel, freq = 1459, broadcast_mode = BROADCAST_MODE_NO_TRACK_AI) //BS12 EDIT
 	var/datum/radio_frequency/connection = null
 	if(channel && channels && channels.len > 0)
 		if (channel == "department")
@@ -191,19 +191,19 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			channel = channels[1]
 		connection = secure_radio_connections[channel]
 	else
+		set_frequency(freq)
 		connection = radio_connection
 		channel = null
 	if (!istype(connection))
 		return
 	if (!connection)
 		return
-
 	var/mob/autosay/A = new /mob/autosay(src)
 	A.real_name = from
 	Broadcast_Message(connection, A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
-						4, 0, SSmapping.levels_by_trait(ZTRAIT_STATION), freq)
+						broadcast_mode, 0, SSmapping.levels_by_trait(ZTRAIT_STATION), freq)
 	qdel(A)
 	return
 
@@ -361,11 +361,11 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	  /* ###### Intercoms and station-bounced radios ###### */
 
-		var/filter_type = 2
+		var/broadcast_mode = BROADCAST_MODE_INTERCOMS_AND_RADIOS
 
 		/* --- Intercoms can only broadcast to other intercoms, but bounced radios can broadcast to bounced radios and intercoms --- */
 		if(istype(src, /obj/item/device/radio/intercom))
-			filter_type = 1
+			broadcast_mode = BROADCAST_MODE_INTERCOMS
 
 
 		var/datum/signal/signal = new
@@ -416,7 +416,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 						  src, message, displayname, jobname, real_name, M.voice_name,
-		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
+		                  broadcast_mode, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
 
 		return TRUE
 

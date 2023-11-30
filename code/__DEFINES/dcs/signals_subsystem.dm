@@ -25,6 +25,5 @@
 /// SSexplosions from base of /proc/empulse: (turf/epicenter, heavy_range, light_range)
 #define COMSIG_EXPLOSIONS_EMPULSE "comsig_explosions_empulse" // empulse not part of subsystem, signal moved here for consistency with explosions
 
-///From base of datum/controller/subsystem/Initialize
-//#define COMSIG_SUBSYSTEM_POST_INITIALIZE "subsystem_post_initialize"
+///From base of /datum/controller/subsystem/holomaps/proc/regenerate_custom_holomap: (holomap_key)
 #define COMSIG_HOLOMAP_REGENERATED "comsig_holomap_regenerated"

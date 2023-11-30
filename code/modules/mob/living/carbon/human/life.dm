@@ -89,7 +89,7 @@
 	update_canmove()
 
 	//Update our name based on whether our face is obscured/disfigured
-	name = get_visible_name(face_name_priority = TRUE) // why in life wtf
+	name = get_visible_name() // why in life wtf
 
 	//Species-specific update.
 	if(species)

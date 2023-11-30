@@ -13,11 +13,13 @@
 		/client/proc/fort_assign_commander,
 		/client/proc/fort_open_spawns,
 		/client/proc/fort_points,
+		/client/proc/fort_points_multiplier,
 	)
 
-	var/list/datum/faction/factions = list()
-	var/list/datum/spawner/fort_team/spawners = list()
-	var/list/consoles = list() // assoc list (TEAMNAME = /obj/machinery/computer/fort_console)
+	// assoc lists (TEAMNAME = reference)
+	var/list/factions = list()
+	var/list/spawners = list()
+	var/list/consoles = list() 
 
 /datum/map_module/forts/New()
 	..()
@@ -45,11 +47,11 @@
 		switch(M.client.player_ingame_age)
 			if(0 to 4000)
 				teammate.antag_hud_name = "hudblank" // only background
-			if(4000 to 10000)
+			if(4000 to 15000)
 				teammate.antag_hud_name = "hud_team_1"
-			if(10000 to 25000)
+			if(15000 to 30000)
 				teammate.antag_hud_name = "hud_team_2"
-			if(25000 to INFINITY)
+			if(30000 to INFINITY)
 				teammate.antag_hud_name = "hud_team_3"
 
 	teammate.logo_file = 'icons/hud/hud.dmi'
@@ -63,13 +65,35 @@
 	if(rank == "Commander")
 		var/obj/item/weapon/card/id/captains_spare/card = new 
 		card.assignment = "Commander"
-		card.assign(M)
+		card.assign(M.real_name)
 		M.equip_to_appropriate_slot(card)
 
 	// gamemode will do this for first roll players, and we need to do this for latespawn roles
 	// todo: wrap it somehow too
 	if(SSticker.current_state >= GAME_STATE_PLAYING)
 		setup_role(teammate)
+
+/datum/map_module/forts/proc/announce(message, mob/user, from_team, team_only = FALSE)
+	var/datum/announcement/A = new
+
+	A.title = "Forts Arena Announcement"
+	if(from_team)
+		if(team_only)
+			A.faction_filter = factions[from_team]
+			A.subtitle = "[from_team] private announcement"
+		else
+			A.subtitle = "[from_team] public announcement"
+
+	A.message = message
+	A.flags = ANNOUNCE_TEXT | ANNOUNCE_SOUND
+	A.sound = "bell"
+	A.announcer = user?.GetVoice()
+	A.play()
+
+/datum/map_module/forts/stat_entry(mob/M)
+	if(M.client.holder)
+		stat(null, "Red Points: [consoles[TEAM_NAME_RED]?.points || "--"]")
+		stat(null, "Blue Points: [consoles[TEAM_NAME_BLUE]?.points || "--"]")
 
 /* spawner */
 /datum/spawner/fort_team
@@ -81,7 +105,8 @@
 	// сделать зависимым от фракции...
 	positions = INFINITY
 
-	//cooldown = 0 // todo: need to add common cooldown
+	cooldown_type = /datum/spawner/fort_team // will be shared between both teams
+	cooldown = 5 MINUTES
 
 	var/datum/map_module/forts/map_module
 
@@ -193,4 +218,25 @@ var/global/list/obj/machinery/door/poddoor/fort_spawn_poddors
 		var/obj/machinery/computer/fort_console/console = MM.consoles[team_name]
 		console.points += add_points
 
+	MM.announce("Команды получили в своё распоряжение [add_points] бонусных очков!")
+
 	message_admins("[key_name(src)] added [add_points] points for teams.")
+
+var/global/forts_points_multiplier = 1
+/client/proc/fort_points_multiplier()
+	set category = "Event"
+	set name = "Fort: Points Multiplier"
+
+	var/multiplier = input("Enter points multiplier factor.", "Points", forts_points_multiplier) as num|null
+	if(!multiplier)
+		return
+
+	forts_points_multiplier = multiplier
+
+	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	if(forts_points_multiplier == 1)
+		MM.announce("Скорость получения очков вернулась в норму!")
+	else
+		MM.announce("Скорость получения очков увеличина в [forts_points_multiplier] [pluralize_russian(forts_points_multiplier, "раз", "раза", "раз")]!")
+ 
+	message_admins("[key_name(src)] changed points multiplier to [forts_points_multiplier].")

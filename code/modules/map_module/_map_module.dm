@@ -53,3 +53,6 @@
 
 	if(default_event_message || default_event_name)
 		SSevents.setup_custom_event(default_event_message, default_event_name)
+
+/datum/map_module/proc/stat_entry(mob/M)
+	return

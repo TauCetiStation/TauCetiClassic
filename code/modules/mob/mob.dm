@@ -708,6 +708,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
 
+			if(SSmapping.loaded_map_module)
+				SSmapping.loaded_map_module.stat_entry(src)
+
 	if(client && client.holder)
 		if(statpanel("Tickets"))
 			global.ahelp_tickets.stat_entry()

@@ -1,3 +1,5 @@
+#define ROCKET_TRIGGER_SPEED 3
+
 /* Observation Glasses */
 
 /obj/item/clothing/glasses/rocket_observation
@@ -133,6 +135,10 @@
 	icon = 'icons/obj/rockets.dmi'
 	icon_state = "rocket"
 
+	//max_integrity = 100
+	//resistance_flags = CAN_BE_HIT
+	//armor = list(MELEE = 25, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 30, FIRE = 50)
+
 	throwforce = 20
 
 	density = TRUE
@@ -148,15 +154,16 @@
 	throw_range = 1
 
 	// disposal outlet aka launch platform throw parameters
-	var/launch_speed = 3
+	var/launch_speed = ROCKET_TRIGGER_SPEED
 	var/launch_angle = 0
+	var/launch_distance = 200 // max distance when rocket will explode even if not bumped
 
 	var/list/obj/item/clothing/glasses/rocket_observation/tuned_glasses = list()
 
 /obj/item/rocket/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	// check for speed threshhold only if it's not throwed by a mob (fuck user momentum), else do prob for accident
 	// todo: make this treshhold more readable and allow atoms be thrower so we can check for disposal here
-	if(triggered && ((!throwingdatum.thrower && throwingdatum.speed >= 3) || prob(accident_prob*throwingdatum.speed)))
+	if(triggered && ((!throwingdatum.thrower && throwingdatum.speed >= ROCKET_TRIGGER_SPEED) || prob(accident_prob*throwingdatum.speed)))
 		trigger(hit_atom)
 		QDEL_NULL(src)
 	else
@@ -177,6 +184,15 @@
 
 	return ..()
 
+/obj/item/rocket/Moved()
+	// another thrownthing thing - currently it ignores maxrange for no-gravity movement
+	// so for launch_distance to work correctly in space we need to check it ourselves
+	. = ..()
+	var/datum/thrownthing/TT = SSthrowing.processing[src]
+	if(TT && TT.speed >= ROCKET_TRIGGER_SPEED && TT.dist_travelled > launch_distance)
+		trigger(get_turf(loc))
+
+
 /obj/item/rocket/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
@@ -190,7 +206,8 @@
 
 /obj/item/rocket/attackby(obj/item/C, mob/user)
 	if(ispulsing(C))
-		var/useroption = tgui_alert(user, "Choise option", "Options:", list("Tune to Glasses", "Change angle")) // todo: radial?
+		var/list/choices = list("Tune to Glasses", "Change Angle", "Change Distance")
+		var/useroption = tgui_input_list(user, "Choise option", "Options", choices)
 
 		if(useroption == "Tune to Glasses")
 			var/mob/living/carbon/human/H = user
@@ -202,7 +219,7 @@
 				to_chat(usr, "<span class='warning'>You don't have observation glasses!</span>")
 				return
 
-		else if(useroption == "Change angle")
+		else if(useroption == "Change Angle")
 			var/new_angle = input("Enter new angle between -45 and 45", "Angle Setup", launch_angle) as num|null
 			if(!isnum(new_angle))
 				return
@@ -214,6 +231,18 @@
 			to_chat(usr, "<span class='notice'>You have set launch angle to [launch_angle] degrees.</span>")
 			update_name()
 
+		else if(useroption == "Change Distance")
+			var/new_distance = input("Enter new maximum distance between 10 and 200", "Distance Setup", launch_distance) as num|null
+			if(!isnum(new_distance))
+				return
+			if(user.incapacitated() || !Adjacent(user))
+				to_chat(usr, "<span class='warning'>You can't do it!</span>")
+				return
+
+			launch_distance = clamp(round(new_distance), 10, 200)
+			to_chat(usr, "<span class='notice'>You have set max distance to [launch_angle].</span>")
+			update_name()
+
 		return TRUE
 	return ..()
 
@@ -221,12 +250,15 @@
 	name = "[initial(name)]"
 	if(launch_angle)
 		name += " ([launch_angle]deg)"
+	if(launch_distance)
+		name += " ([launch_distance]dist)"
 
 /* Explosive */
 
 /obj/item/rocket/cheap
 	name = "cheap explosive rocket"
 	desc = "Compatible with standard pneumatic systems. This one looks suspicious."
+	//armor = list(MELEE = 10, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 15, FIRE = 25)
 	accident_prob = 15
 
 /obj/item/rocket/explosive
@@ -267,7 +299,7 @@
 	if(!throwing || pierced >= pierced_cap)
 		return ..()
 	var/datum/thrownthing/TT = SSthrowing.processing[src]
-	if(!TT || TT.speed < 3)
+	if(!TT || TT.speed < ROCKET_TRIGGER_SPEED)
 		return ..()
 	// walls don't use resistance_flags yet, walls don't use armor yet, can't do this part nicely
 	if(iswallturf(target))
@@ -294,3 +326,4 @@
 /* Fire */
 // todo, fire not work in space, also need to add fire_act
 
+#undef ROCKET_TRIGGER_SPEED

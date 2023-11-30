@@ -467,14 +467,14 @@
 
 	if(QDELETED(console))
 		system_error("command computer not found")
-		explosion(src.loc, 2, 3, 9)
+		explosion(src.loc, 1, 2, 3)
 		qdel(src)
 		return
 
 	var/points_per_second = min(harvest_speed, 4) // already capped, just in case
 	points_per_second = points_per_second * 0.1
 
-	console.points += round(seconds_per_tick * points_per_second, 0.1) // 0.6-0.8 per tick
+	console.points += round(seconds_per_tick * points_per_second, 0.1) * forts_points_multiplier // 0.6-0.8 per tick
 
 /obj/machinery/mining/drill/forts/red
 	team_name = TEAM_NAME_RED

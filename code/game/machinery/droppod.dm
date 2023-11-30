@@ -828,7 +828,7 @@
 	var/y_coord = clamp(input("Y coordinate, 1-[world.maxy]", "Coordinates") as num, 1, world.maxy)
 
 	var/deviation = 5
-	if(tgui_alert(usr, "Coordinates: [x_coord].[y_coord]. Continue?", "Coordinates", list("Confirm", "Cancel")) == "Cancel")
+	if(tgui_alert(usr, "Coordinates: ([x_coord], [y_coord]). Continue?", "Coordinates", list("Confirm", "Cancel")) == "Cancel")
 		return
 
 	var/turf/center = locate(x_coord, y_coord, z)

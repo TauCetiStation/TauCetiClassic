@@ -13,14 +13,14 @@
 	suit_store = /obj/item/device/multitool
 
 /datum/outfit/forts_team/blue
-	//implants = list(/obj/item/weapon/implant/death_alarm/coordinates/team_blue) // fuck broadcast code
+	implants = list(/obj/item/weapon/implant/death_alarm/coordinates/team_blue)
 	l_ear = /obj/item/device/radio/headset/team_blue
 	suit = /obj/item/clothing/suit/space/rig/forts/team_blue
 	head = /obj/item/clothing/head/helmet/space/rig/forts/team_blue
 	back = /obj/item/weapon/storage/backpack/ert/commander
 
 /datum/outfit/forts_team/red
-	//implants = list(/obj/item/weapon/implant/death_alarm/coordinates/team_red) // fuck broadcast code
+	implants = list(/obj/item/weapon/implant/death_alarm/coordinates/team_red)
 	l_ear = /obj/item/device/radio/headset/team_red
 	suit = /obj/item/clothing/suit/space/rig/forts/team_red
 	head = /obj/item/clothing/head/helmet/space/rig/forts/team_red

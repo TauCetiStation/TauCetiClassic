@@ -198,6 +198,10 @@
 	return
 
 /obj/item/weapon/card/id/proc/assign(real_name)
+	if(!istext(real_name))
+		stack_trace("Expected text, got reference")
+		real_name = "[real_name]"
+
 	name = "[real_name]'s ID Card[assignment ? " ([assignment])" : ""]"
 	registered_name = real_name
 

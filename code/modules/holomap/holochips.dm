@@ -60,7 +60,7 @@
 
 /obj/item/holochip/team_red/atom_init()
 	. = ..()
-	frequency = "[TEAM_RED_FREQUENCY]"
+	frequency = "[FREQ_TEAM_RED]"
 
 /obj/item/holochip/team_blue
 	color_filter = HOLOMAP_TEAM_COLOR
@@ -68,4 +68,4 @@
 
 /obj/item/holochip/team_red/atom_init()
 	. = ..()
-	frequency = "[TEAM_BLUE_FREQUENCY]"
+	frequency = "[FREQ_TEAM_BLUE]"

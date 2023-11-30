@@ -4,12 +4,14 @@
 
 	icon_state = "computer_generic"
 
-	var/team_name
+	req_access = list(access_captain)
+
+	var/team_id
 
 	var/points = 200 //
 	var/points_per_second = 0.5 // 1 per tick, 30 per minute
 
-	var/list/turf/spawn_zone = list()
+	var/turf/spawn_zone = list()
 	var/list/datum/fort_console_lot/shoplist = list()
 
 	var/spawn_zone_distance = 4
@@ -21,16 +23,16 @@
 /obj/machinery/computer/fort_console/atom_init()
 	. = ..()
 
-	if(team_name)
+	if(team_id)
 		var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
-		MM.consoles[team_name] = src
+		MM.consoles[team_id] = src
 
 	var/turf/step_to = loc
 	for(var/i = 1 to spawn_zone_distance) // is there proc for this?
 		step_to = get_step(step_to, turn(dir, 180))
 
 	//spawn_zone = RANGE_TURFS(spawn_zone_radius, step_to)
-	spawn_zone += step_to
+	spawn_zone = step_to
 
 	for(var/lot in subtypesof(/datum/fort_console_lot))
 		shoplist += new lot
@@ -38,13 +40,16 @@
 	sortTim(shoplist, GLOBAL_PROC_REF(cmp_general_order_asc))
 
 /obj/machinery/computer/fort_console/process(seconds_per_tick)
-	points += seconds_per_tick * points_per_second
+	points += seconds_per_tick * points_per_second * forts_points_multiplier
 
-/obj/machinery/computer/fort_console/Destroy() // fail team
+/obj/machinery/computer/fort_console/Destroy()
 	. = ..()
 
+	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	MM.announce("Консоль [team_id] была уничтожена!")
+
 	QDEL_LIST(shoplist)
-	spawn_zone.Cut()
+	spawn_zone = null
 
 /obj/machinery/computer/fort_console/ui_interact(mob/user)
 	var/html = "<div class='Section__title'>Status</div><div class='Section'>"
@@ -81,22 +86,27 @@
 		if(lot.price > points)
 			to_chat(usr, "<span class='warning'>You have no points to buy it!</span>")
 			return
+		if(is_blocked_turf(spawn_zone) || (locate(/obj/effect/falling_effect) in spawn_zone))
+			to_chat(usr, "<span class='warning'>Clear the landing point!</span>")
+			return
 
 		points -= lot.price
 		updateDialog()
 		var/atom/A = lot.purshase(usr, src)
 		if(istype(A))
-			new /obj/effect/falling_effect(pick(spawn_zone), null, A)
+			new /obj/effect/falling_effect(spawn_zone, null, A)
 
 /obj/machinery/computer/fort_console/red
 	name = "Red Team Command Computer"
 	light_color = COLOR_RED
-	team_name = TEAM_NAME_RED
+	team_id = TEAM_NAME_RED
+	dir = 8
 
 /obj/machinery/computer/fort_console/blue
 	name = "Blue Team Command Computer"
 	light_color = COLOR_BLUE
-	team_name = TEAM_NAME_BLUE
+	team_id = TEAM_NAME_BLUE
+	dir = 4
 
 /* shop list */
 
@@ -112,21 +122,30 @@
 	return null
 
 // 1-10
-/*
 /datum/fort_console_lot/team_announce
 	name = "Team Announce"
-	desc = "Make big scary announcement for team only"
-	price = 10
+	desc = "Make big scary announcement for your team"
+	price = 5
 
 	order = 1
+
+/datum/fort_console_lot/team_announce/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/message = sanitize(input(user, "Please enter text for your announcement.", "Announce") as text, MAX_MESSAGE_LEN, extra = FALSE)
+	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	MM.announce(message, user, from_team = command.team_id, team_only = TRUE)
 
 /datum/fort_console_lot/global_announce
 	name = "Global Announce"
 	desc = "Dominate other team with words"
-	price = 40
+	price = 25
 
 	order = 2
-*/
+
+/datum/fort_console_lot/global_announce/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/message = sanitize(input(user, "Please enter text for your announcement.", "Announce") as text, MAX_MESSAGE_LEN, extra = FALSE)
+	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	MM.announce(message, user, from_team = command.team_id)
+
 /datum/fort_console_lot/update_map
 	name = "Update Holomap"
 	desc = "Scan battlefield and update holomap"
@@ -135,7 +154,7 @@
 	order = 3
 
 /datum/fort_console_lot/update_map/purshase(mob/user, obj/machinery/computer/fort_console/command)
-	SSholomaps.regenerate_custom_holomap(command.team_name)
+	SSholomaps.regenerate_custom_holomap(command.team_id)
 
 // 10-20
 /datum/fort_console_lot/metal
@@ -185,7 +204,7 @@
 
 // 20-30
 /datum/fort_console_lot/rcd_ammo
-	name = "Compressed RCD ammunition"
+	name = "RCD ammunition 1x10"
 	desc = "10 cartridges of compressed RCD ammunition"
 	price = 200
 
@@ -249,7 +268,7 @@
 
 /datum/fort_console_lot/drill/purshase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/large
-	new /obj/machinery/mining/drill/forts(C, command.team_name)
+	new /obj/machinery/mining/drill/forts(C, command.team_id)
 	new /obj/machinery/mining/brace(C)
 	new /obj/machinery/mining/brace(C)
 
@@ -318,6 +337,21 @@
 
 	return C
 
+/datum/fort_console_lot/c4
+	name = "C4 1x10"
+	desc = "Why do you need it if you have a rocket?"
+	price = 100
+
+	order = 55
+
+/datum/fort_console_lot/c4/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/secure/weapon
+
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/plastique(C)
+
+	return C
+
 /datum/fort_console_lot/droppod
 	name = "Droppod"
 	desc = "Contains a caller for the droppod. One way ticket for the bravests."
@@ -328,7 +362,7 @@
 /datum/fort_console_lot/droppod/purshase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/secure/weapon
 	var/obj/item/device/drop_caller/dropcaller = new(C)
-	switch(command.team_name)
+	switch(command.team_id)
 		if(TEAM_NAME_RED)
 			dropcaller.drop_type = /obj/structure/droppod/fort/red_team
 		if(TEAM_NAME_BLUE)
@@ -336,10 +370,13 @@
 
 	return C
 
-/*/datum/fort_console_lot/rename_team
+/*
+// for this need to check all name references
+/datum/fort_console_lot/rename_team
 	name = "Rename Team"
 	desc = "Name your Red or Blue to something more original"
 	price = 200
 
-	order = 800*/
+	order = 800
+*/
 
