@@ -18,7 +18,7 @@
 	name = "grass tile"
 	cases = list("газон", "газона", "газону", "газон", "газоном", "газоне")
 	singular_name = "grass floor tile"
-	desc = "Газон, который можно использовать для игр в гольф."
+	desc = "Газон, который можно использовать для игры в гольф."
 	icon_state = "tile_grass"
 	w_class = SIZE_SMALL
 	force = 1.0
