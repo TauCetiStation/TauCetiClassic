@@ -98,86 +98,95 @@
 		explosion(src, -1, 0, 2)
 
 /proc/get_exit_bump_target(turf/T, atom/movable/mover as mob|obj)
-	var/atom/second_obstacle = null
+	// Obstacle to use if no preferred target is found
+	var/atom/rollback_obstacle = null
 	var/turf/mover_loc = mover.loc
-	//First, check objects to block exit
+	// First, check objects to block exit (not on border priority)
 	for(var/obj/obstacle as anything in mover_loc)
 		if(mover != obstacle)
 			if(!obstacle.CheckExit(mover, T))
 				if(obstacle.flags & ON_BORDER)
-					if(isnull(second_obstacle))
-						second_obstacle = obstacle
+					if(isnull(rollback_obstacle))
+						rollback_obstacle = obstacle
 				else
 					return obstacle
 
-	return second_obstacle // obstacle on border  or null
+	return rollback_obstacle // obstacle on border or null
 
 /proc/get_projectile_bump_target(turf/T, obj/item/projectile/mover)
-	var/atom/second_obstacle = get_exit_bump_target(T, mover)
+	// Obstacle to use if no preferred target is found
+	var/atom/rollback_obstacle
+	
+	// First check objects to block exit
+	rollback_obstacle = get_exit_bump_target(T, mover)
 
-	if(second_obstacle)
-		return second_obstacle
+	if(rollback_obstacle)
+		return rollback_obstacle
 
-	second_obstacle = null
 	var/mob/living/alive_obstacle
 	var/turf/mover_loc = mover.loc
 	var/atom/priority_target = mover.original
 
+	// Then check priority target if it on the tile
 	if(!isturf(priority_target) && priority_target.loc == T)
 		if(isliving(priority_target))
 			if(!mover.check_miss(priority_target))
 				alive_obstacle = priority_target
 		else
-			second_obstacle = priority_target
+			rollback_obstacle = priority_target
 
-	//Next, check objects to block entry
+	// Then check objects to block entry (on border priority)
 	for(var/atom/movable/obstacle as anything in T)
 		if(!obstacle.CanPass(mover, mover_loc, 1))
 			if(!(obstacle in mover.permutated) && (obstacle != mover.firer))
 				if(obstacle.flags & ON_BORDER)
 					return obstacle
 				if(isnull(alive_obstacle))
-					if(isliving(obstacle))
+					if(isliving(obstacle) && obstacle != priority_target) // living and we haven't missed it before
 						var/mob/living/L = obstacle
 						if(L.stat != DEAD)
 							if(!mover.check_miss(L))
 								alive_obstacle = obstacle
 							continue
-					if(isnull(second_obstacle))
-						second_obstacle = obstacle
+					if(isnull(rollback_obstacle))
+						rollback_obstacle = obstacle
 
-	//Then living on turf
+	// Then living on turf
 	if(alive_obstacle)
 		return alive_obstacle
 
-	//Then, check the turf itself
+	// Then check the turf itself
 	if (!T.CanPass(mover, T))
 		return T
 
-	// Not living obstacle not on border or null
-	return second_obstacle
+	// Not living and not on border obstackle, or null
+	return rollback_obstacle
 
 /proc/get_bump_target(turf/T, atom/movable/mover as mob|obj)
-	var/second_obstacle = get_exit_bump_target(T, mover)
+	// Obstacle to use if no preferred target is found
+	var/atom/rollback_obstacle
+	
+	// First check objects to block exit
+	rollback_obstacle = get_exit_bump_target(T, mover)
 
-	if(second_obstacle)
-		return second_obstacle
+	if(rollback_obstacle)
+		return rollback_obstacle
 
 	var/turf/mover_loc = mover.loc
-	//Next, check objects to block entry
+	// Then check objects to block entry (on border priority)
 	for(var/atom/movable/obstacle as anything in T)
 		if(!obstacle.CanPass(mover, mover_loc, 1))
 			if(obstacle.flags & ON_BORDER)
 				return obstacle
-			else if(isnull(second_obstacle))
-				second_obstacle = obstacle
+			else if(isnull(rollback_obstacle))
+				rollback_obstacle = obstacle
 
-	//Then, check the turf itself
+	// Then check the turf itself
 	if (!T.CanPass(mover, T))
 		return T
 
-	// obstacle not on border or null
-	return second_obstacle
+	// Obstacle not on border or null
+	return rollback_obstacle
 
 /turf/Enter(atom/movable/mover as mob|obj)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
