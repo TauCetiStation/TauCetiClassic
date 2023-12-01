@@ -118,7 +118,7 @@ var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","E
 	icon_state = "tcboss"
 	var/virgin = 1
 	var/scanrange = 10
-	var/storedcrystals = 30
+	var/storedcrystals = 0
 	var/list/TCstations = list()
 	var/list/transferlog = list()
 
