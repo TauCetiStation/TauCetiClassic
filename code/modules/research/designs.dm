@@ -1950,6 +1950,15 @@ other types of metals and chemistry for reagents).
 	materials = list (MAT_METAL = 8000, MAT_GLASS = 1000, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/gun/energy/laser
 	category = list("Weapons")
+	
+/datum/design/laserpractice
+	name = "Practice Laser Gun"
+	desc = "Модифицированная версия стандартной лазерной винтовки, которая стреляет менее концентрированными энергетическими зарядами, предназначенными для стрельбы по мишеням."
+	id = "laserpractice"
+	build_type = PROTOLATHE
+	materials = list (MAT_METAL = 1250, MAT_GLASS = 250)
+	build_path = /obj/item/weapon/gun/energy/laser/practice
+	category = list("Weapons")
 
 /datum/design/lasercannon
 	name = "Laser Cannon"
