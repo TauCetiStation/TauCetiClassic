@@ -167,7 +167,7 @@
 	return miss_modifier
 
 /obj/item/projectile/proc/check_miss(mob/living/L)
-	if(L.check_miss(src))
+	if(L.prob_miss(src))
 		L.visible_message("<span class = 'notice'>\The [src] misses [L] narrowly!</span>")
 		playsound(L.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
 		permutated.Add(L)
