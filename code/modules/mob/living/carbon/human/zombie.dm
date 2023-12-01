@@ -138,16 +138,20 @@
 	if(H.stat != DEAD && prob(10))
 		playsound(H, pick(spooks), VOL_EFFECTS_MASTER)
 
-/datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed)
+/datum/species/zombie/handle_death(mob/living/carbon/human/H, gibbed) //Death of zombie
 	if(gibbed)
-		H.handle_infected_death()
-
-/mob/living/carbon/human/proc/handle_infected_death()
-	if(species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
-		addtimer(CALLBACK(src, PROC_REF(prerevive_zombie)), rand(60,70))
-		to_chat(src, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
+		return
+	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), rand(600,700))
+	to_chat(H, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
 		Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
 		который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
+
+/mob/living/carbon/human/proc/handle_infected_death() //Death of human
+	if(species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
+		addtimer(CALLBACK(src, PROC_REF(prerevive_zombie)), 300)
+		to_chat(src, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
+			Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
+			который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
 
 /mob/living/carbon/human/proc/prerevive_zombie()
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
@@ -192,6 +196,9 @@
 	radiation = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
 	restore_blood()
+	// make the icons look correct
+	if(HUSK in mutations)
+		mutations.Remove(HUSK)
 
 	// remove the character from the list of the dead
 	if(stat == DEAD)
