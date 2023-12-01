@@ -10,7 +10,7 @@
 	new /obj/item/clothing/mask/surgical(src) // These three are here, so the barber can pick and choose what he's painting.
 	new /obj/item/clothing/head/surgery/blue(src)
 	new /obj/item/clothing/suit/surgicalapron(src)
-	new /obj/item/clothing/suit/wcoat(src)
+	new /obj/item/clothing/accessory/tie/waistcoat(src)
 	new /obj/item/clothing/under/rank/barber(src)
 	new /obj/item/clothing/under/lawyer/purpsuit(src)
 	new /obj/item/weapon/storage/box/hairdyes(src)
