@@ -27,4 +27,4 @@
 	new /obj/item/weapon/pinpointer/nukeop(src)
 	new /obj/item/weapon/kitchenknife/combat(src)
 	new /obj/item/clothing/accessory/storage/syndi_vest(src)
-	new /obj/item/device/radio/uplink(src)
+	new /obj/item/device/radio/uplink/nukeop_leader(src)
