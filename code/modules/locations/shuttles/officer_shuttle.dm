@@ -4,10 +4,11 @@
 
 /obj/machinery/computer/officer_shuttle
 	name = "Shuttle Console"
+	cases = ("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	var/department_note = "Velocity transport shuttle departed from station."
-	var/arrival_note = "Velocity Transport Shuttle docked with the station."
+	var/department_note = "Транспортный шаттл Велосити отстыковался от станции."
+	var/arrival_note = "Транспортный шаттл Велосити пристыковался к станции."
 	var/obj/item/device/radio/intercom/radio
 	var/moving = 0
 	var/area/curr_location
@@ -86,11 +87,11 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/officer_shuttle/ui_interact(mob/user)
-	var/dat = {"Location: [curr_location]<br>
-			Ready to move[max(lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
-		<a href='?src=\ref[src];velocity=1'>NTS Velocity</a> |
-		<a href='?src=\ref[src];station=1'>[station_name()]</a> |
-		<a href='?src=\ref[src];centcomm=1'>Centcomm</a><br>"}
+	var/dat = {"Местоположение: [curr_location]<br>
+			Готов лететь[max(lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [max(round((lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] секунд" : ": сейчас"]<br>
+		<a href='?src=\ref[src];velocity=1'>ТСК Велосити</a> |
+		<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> |
+		<a href='?src=\ref[src];centcomm=1'>ЦентКом</a><br>"}
 
 	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450)
 	popup.set_content(dat)

@@ -145,7 +145,7 @@ var/global/lastMove = 0
 				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
-	var/dat = "<center><div class='Section'>Shuttle location: <b>[curr_location]</b><br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><A href='?src=\ref[src];move=1'>Send</A></div></center>"
+	var/dat = "<center><div class='Section'>Местоположение шаттла: <b>[curr_location]</b><br>Готов к полету[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><A href='?src=\ref[src];move=1'>Send</A></div></center>"
 	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 400)
 	popup.set_content(dat)
 	popup.open()
@@ -158,7 +158,7 @@ var/global/lastMove = 0
 
 	if(href_list["move"])
 		if(!arrival_shuttle_ready_move())
-			to_chat(usr, "<span class='notice'>Shuttle is not ready to move yet.</span>")
+			to_chat(usr, "<span class='notice'>Шаттл еще не готов к полёту.</span>")
 		else if(!moving && location == ARRIVAL_SHUTTLE_VELOCITY)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			arrival_shuttle_move()
