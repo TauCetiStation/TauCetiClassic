@@ -245,7 +245,7 @@
 	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
 	if(!COOLDOWN_FINISHED(src, metabolicboost_message))
 		return
-	to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
+	to_chat(M, "<span class='notice'>Вы ощущаете необычное бульканье, как будто желудок работает быстрее обычного.</span>")
 	COOLDOWN_START(src, metabolicboost_message, 1 MINUTES)
 
 /datum/disease2/effect/metabolism/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -293,13 +293,13 @@
 /datum/disease2/effect/gibbingtons/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1,2,3,4,5)
-			to_chat(mob, "<span class='notice'>[pick("You feel angry for some reason.", "Your skin feels flakey.", "Your skin burns.", "Random small wounds are appearing on your skin.")]</span>")
+			to_chat(mob, "<span class='notice'>[pick("Вы почему-то злитесь.", "Ваша кожа шелушиться.", "Ваша кожа горит.", "То тут то там появляются маленькие ранки на вашей коже.")]</span>")
 		if(6,7,8,9)
 			if(prob(70))
 				mob.reagents.add_reagent("potassium", 10)
 				mob.reagents.add_reagent("water", 10)
 			else
-				to_chat(mob, "<span class='warning'>[pick("You feel chemical reactions inside your body.", "Your skin turns into bubbles that explode after a few seconds.", "Blood appears on your skin. Something is ripping you appart!", "Wounds on your body become worse.", "You feel small explosions inside of you.")]</span>")
+				to_chat(mob, "<span class='warning'>[pick("Вы чувствуете как происходят химические реакции в вашем теле.", "На вашей коже появляются пузырьки которые немедленно взрываются.", "Кровь проявляется на вашем теле. Что-то разрывает вас изнутри!", "Раны на теле становятся все серьезнее.", "Вы чувствуете взрывы внутри себя.")]</span>")
 		if(10,11,12,13)
 			if(prob(10) && ishuman(mob))
 				var/mob/living/carbon/human/H = mob
@@ -309,7 +309,7 @@
 					mob.emote("scream")
 					BP.droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_BLUNT)
 			else
-				to_chat(mob, "<span class='userdanger'>[pick("Something is ripping you appart!", "IT HURTS!")]</span>")
+				to_chat(mob, "<span class='userdanger'>[pick("Вас разрывает на части!", "БОЛЬНО!")]</span>")
 				mob.adjustBruteLoss(rand(2,10))
 		if(14)
 			mob.emote("scream")
@@ -319,7 +319,7 @@
 
 /datum/disease2/effect/vomit
 	name = "Haematemesis's Syndrome"
-	desc = "The virus introduces nanites into the host's digestive system, which multiply and begin to eat the body's tissues, causing bleeding with vomiting."
+	desc = "Вирус производит нанитов в пищеварительной системе носителя, которые размножаются и питаются тканями организма., вызывая кровотечение с рвотой."
 	level = 4
 	max_stage = 3
 	cooldown = 60
@@ -328,7 +328,7 @@
 /datum/disease2/effect/vomit/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
-			to_chat(mob, "<span class='warning'>Your chest hurts!</span>")
+			to_chat(mob, "<span class='warning'>У вас болит груль!</span>")
 		if(2)
 			mob.vomit(vomit_type = VOMIT_BLOOD, stun = FALSE)
 			if(ishuman(mob))
@@ -342,7 +342,7 @@
 
 /datum/disease2/effect/monkey
 	name = "Monkism Syndrome"
-	desc = "The virus degrades host's dna, making him into a monkey."
+	desc = "Вирус меняет ДНК хозяина, первращая его в обезьяну."
 	level = 4
 	max_stage = 8
 	cooldown = 30
@@ -353,7 +353,7 @@
 		var/mob/living/carbon/human/h = A
 		switch(holder.stage)
 			if(1,2,3)
-				to_chat(A, "<span class='notice'>[pick("You want bananas.", "You feel very primitive.", "Is that a banana?")]</span>")
+				to_chat(A, "<span class='notice'>[pick("Вы хотите бананов.", "You feel very primitive.", "Is that a banana?")]</span>")
 			if(4,5,6,7)
 				if(holder.stage == 7 && prob(20))
 					h.say(pick("Bananas?", "Do you have some bananas?", "Ooh-ooh-ooh-eee-eee","Ooh ooh ooh eee eee eee aah aah aah", "Eeek! Eeek!"))
