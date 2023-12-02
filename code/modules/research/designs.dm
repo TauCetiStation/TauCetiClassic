@@ -1953,7 +1953,7 @@ other types of metals and chemistry for reagents).
 	
 /datum/design/laserpractice
 	name = "Practice Laser Gun"
-	desc = "Модифицированная версия стандартной лазерной винтовки, которая стреляет менее концентрированными энергетическими зарядами, предназначенными для стрельбы по мишеням."
+	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	id = "laserpractice"
 	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 1250, MAT_GLASS = 250)
