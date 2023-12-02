@@ -730,6 +730,17 @@
 				attackby(R.module_state_3,R)
 			else
 				return
+	if(ishuman(M))
+		var/obj/item/weapon/storage/bag/ore/B
+		var/mob/living/carbon/human/H = M
+		for(var/bag in H.get_body_slots())
+			if(istype(bag, /obj/item/weapon/storage/bag/ore))
+				B = bag
+				attackby(B, H)
+				if(B.storage_space_used() > 0 && istype(B, /obj/item/weapon/storage/bag/ore/holding) && istype(H.pulling, /obj/structure/ore_box))
+					var/obj/structure/ore_box/O = H.pulling
+					O.attackby(B, H)
+				break
 
 #undef MIN_TUNNEL_LENGTH
 #undef MAX_TUNNEL_LENGTH
