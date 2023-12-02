@@ -4,9 +4,7 @@
 #define BROADCAST_MODE_INTERCOMS 1
 #define BROADCAST_MODE_INTERCOMS_AND_RADIOS 2
 #define BROADCAST_MODE_SYNDICATE 3
-#define BROADCAST_MODE_NO_TRACK_AI 4 // possible means something else // default fallback
-
-
+#define BROADCAST_MODE_NO_TRACK_AI 4 // default fallback
 
 /* Frequencies */
 

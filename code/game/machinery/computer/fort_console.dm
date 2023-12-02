@@ -65,9 +65,9 @@
 	else
 		html += "[TAB]No drills registred"
 
-	html += "</div><div class='Section__title'>Purshase list</div><div class='Section'>"
+	html += "</div><div class='Section__title'>Purchase list</div><div class='Section'>"
 	for(var/datum/fort_console_lot/lot as anything in shoplist)
-		html += "<a href='?src=[REF(src)];purshase=[REF(lot)]' title='[lot.desc]'>[lot.name] ([lot.price] points)</a><br>"
+		html += "<a href='?src=[REF(src)];purchase=[REF(lot)]' title='[lot.desc]'>[lot.name] ([lot.price] points)</a><br>"
 	html += "</div>"
 
 	var/datum/browser/popup = new(user, "fort_console", "Command Computer", 400, 700)
@@ -79,8 +79,8 @@
 	if(!.)
 		return
 
-	if(href_list["purshase"])
-		var/datum/fort_console_lot/lot = locate(href_list["purshase"]) in shoplist
+	if(href_list["purchase"])
+		var/datum/fort_console_lot/lot = locate(href_list["purchase"]) in shoplist
 		if(!lot || !istype(lot) || !lot.unlocked)
 			return
 		if(lot.price > points)
@@ -92,7 +92,7 @@
 
 		points -= lot.price
 		updateDialog()
-		var/atom/A = lot.purshase(usr, src)
+		var/atom/A = lot.purchase(usr, src)
 		if(istype(A))
 			new /obj/effect/falling_effect(spawn_zone, null, A)
 
@@ -118,7 +118,7 @@
 	var/order = 100
 
 // atom for spawn or null
-/datum/fort_console_lot/proc/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/proc/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	return null
 
 // 1-10
@@ -129,7 +129,7 @@
 
 	order = 1
 
-/datum/fort_console_lot/specialization/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/specialization/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
 	var/datum/faction/F = MM.factions[command.team_id]
 
@@ -163,7 +163,7 @@
 
 	order = 2
 
-/datum/fort_console_lot/team_announce/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/team_announce/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/message = sanitize(input(user, "Please enter text for your announcement.", "Announce") as text, MAX_MESSAGE_LEN, extra = FALSE)
 	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
 	MM.announce(message, user, from_team = command.team_id, team_only = TRUE)
@@ -175,7 +175,7 @@
 
 	order = 3
 
-/datum/fort_console_lot/global_announce/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/global_announce/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/message = sanitize(input(user, "Please enter text for your announcement.", "Announce") as text, MAX_MESSAGE_LEN, extra = FALSE)
 	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
 	MM.announce(message, user, from_team = command.team_id)
@@ -187,7 +187,7 @@
 
 	order = 4
 
-/datum/fort_console_lot/update_map/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/update_map/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	SSholomaps.regenerate_custom_holomap(command.team_id)
 
 // 10-20
@@ -198,7 +198,7 @@
 
 	order = 11
 
-/datum/fort_console_lot/metal/purshase()
+/datum/fort_console_lot/metal/purchase()
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/engi
 	for(var/i in 1 to 5)
 		var/obj/item/stack/sheet/metal/S = new(C)
@@ -213,7 +213,7 @@
 
 	order = 12
 
-/datum/fort_console_lot/glass/purshase()
+/datum/fort_console_lot/glass/purchase()
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/engi
 	for(var/i in 1 to 5)
 		var/obj/item/stack/sheet/glass/S = new(C)
@@ -228,7 +228,7 @@
 
 	order = 13
 
-/datum/fort_console_lot/wood/purshase()
+/datum/fort_console_lot/wood/purchase()
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/engi
 	for(var/i in 1 to 5)
 		var/obj/item/stack/sheet/wood/S = new(C)
@@ -244,7 +244,7 @@
 
 	order = 21
 
-/datum/fort_console_lot/rcd_ammo/purshase()
+/datum/fort_console_lot/rcd_ammo/purchase()
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/scicrate
 	for(var/i in 1 to 10)
 		new /obj/item/weapon/rcd_ammo/bluespace(C)
@@ -259,7 +259,7 @@
 
 	order = 31
 
-/datum/fort_console_lot/rocket_cheap/purshase()
+/datum/fort_console_lot/rocket_cheap/purchase()
 	. = new /obj/structure/storage_box/rocket/cheap
 
 /datum/fort_console_lot/rocket_explosive
@@ -269,7 +269,7 @@
 
 	order = 32
 
-/datum/fort_console_lot/rocket_explosive/purshase()
+/datum/fort_console_lot/rocket_explosive/purchase()
 	. = new /obj/structure/storage_box/rocket/explosive
 
 /datum/fort_console_lot/rocket_emp
@@ -279,7 +279,7 @@
 
 	order = 33
 
-/datum/fort_console_lot/rocket_emp/purshase()
+/datum/fort_console_lot/rocket_emp/purchase()
 	. = new /obj/structure/storage_box/rocket/emp
 
 /datum/fort_console_lot/rocket_piercing
@@ -289,7 +289,7 @@
 
 	order = 34
 
-/datum/fort_console_lot/rocket_piercing/purshase()
+/datum/fort_console_lot/rocket_piercing/purchase()
 	. = new /obj/structure/storage_box/rocket/piercing
 
 // 50-60
@@ -300,7 +300,7 @@
 
 	order = 50
 
-/datum/fort_console_lot/drill/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/drill/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/large
 	new /obj/machinery/mining/drill/forts(C, command.team_id)
 	new /obj/machinery/mining/brace(C)
@@ -315,7 +315,7 @@
 
 	order = 52
 
-/datum/fort_console_lot/medical/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/medical/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/medical
 
 	for(var/i in 1 to 4)
@@ -336,7 +336,7 @@
 
 	order = 53
 
-/datum/fort_console_lot/supermedical/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/supermedical/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/medical
 
 	for(var/i in 1 to 2)
@@ -351,7 +351,7 @@
 
 	order = 54
 
-/datum/fort_console_lot/food/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/food/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/freezer
 
 	for(var/i in 1 to 4)
@@ -366,7 +366,7 @@
 
 	order = 55
 
-/datum/fort_console_lot/fueltank/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/fueltank/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	. = new /obj/structure/reagent_dispensers/fueltank
 
 // 60-70
@@ -377,7 +377,7 @@
 
 	order = 56
 
-/datum/fort_console_lot/gps/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/gps/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/scicrate
 
 	var/gps_type
@@ -399,7 +399,7 @@
 
 	order = 62
 
-/datum/fort_console_lot/energylaser/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/energylaser/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/secure/weapon
 
 	for(var/i in 1 to 5)
@@ -414,7 +414,7 @@
 
 	order = 63
 
-/datum/fort_console_lot/c4/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/c4/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/secure/weapon
 
 	for(var/i in 1 to 10)
@@ -429,7 +429,7 @@
 
 	order = 999
 
-/datum/fort_console_lot/droppod/purshase(mob/user, obj/machinery/computer/fort_console/command)
+/datum/fort_console_lot/droppod/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/secure/weapon
 	var/obj/item/device/drop_caller/dropcaller = new(C)
 	switch(command.team_id)

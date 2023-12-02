@@ -35,7 +35,6 @@
 		AM.forceMove(src.loc)
 
 /obj/structure/storage_box/ex_act(severity)
-	world.log << "why we here"
 	switch(severity)
 		if(EXPLODE_HEAVY)
 			if(prob(50))

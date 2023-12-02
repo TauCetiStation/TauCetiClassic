@@ -15,7 +15,7 @@
 	hud_icons = list(ANTAG_HUD)
 	var/self_visible = TRUE
 	var/icon_color //will set the icon color to this
-	var/background_state// = "hud_team_bg_red"
+	var/background_state
 
 /datum/atom_hud/antag/team
 	hud_icons = list(ANTAG_HUD)

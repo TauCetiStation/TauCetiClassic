@@ -35,7 +35,7 @@
 #define ZTRAIT_ENV_TYPE "Environment Type"
     // ENV_TYPE_SPACE if absent - no environment generation
     #define ENV_TYPE_SPACE "Space"
-    // ENV_TYPE_HOLOSPACE like space, but with atmosphere and gravitation. no environment generation
+    // ENV_TYPE_HOLOSPACE like space, but with atmosphere. no environment generation
     #define ENV_TYPE_HOLOSPACE "Holospace"
     // ENV_TYPE_SNOW - snow environment generation
     #define ENV_TYPE_SNOW "Snow"
