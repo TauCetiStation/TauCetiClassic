@@ -159,7 +159,7 @@
 	if (!T.CanPass(mover, T))
 		return T
 
-	// Not living and not on border obstackle, or null
+	// Not living and not on border obstacle, or null
 	return rollback_obstacle
 
 /proc/get_bump_target(turf/T, atom/movable/mover as mob|obj)
