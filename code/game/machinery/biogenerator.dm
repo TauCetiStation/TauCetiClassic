@@ -181,7 +181,6 @@
 			dat += "<div class='Section'>"
 			dat += "Rags: <A href='?src=\ref[src];action=create;item=rags'>Make</A><A href='?src=\ref[src];action=create;item=rags5'>x5</A> ([40/efficiency])<BR>"
 			dat += "Cloth: <A href='?src=\ref[src];action=create;item=cloth'>Make</A><A href='?src=\ref[src];action=create;item=cloth5'>x5</A> ([200/efficiency])<BR>"
-			dat += "Shooting target: <A href='?src=\ref[src];action=create;item=shoottarget'>Make</A> ([50/efficiency])<BR>"
 			dat += "</div>"
 		else
 			dat += "<div class='Section'>No beaker inside, please insert beaker.</div>"
@@ -369,9 +368,6 @@
 		if("cloth5")
 			if (check_cost(1000/efficiency)) return 0
 			else new/obj/item/stack/sheet/cloth(src.loc, 5, null, null, 0)
-		if("shoottarget")
-			if (check_cost(50/efficiency)) return 0
-			else new/obj/item/target(src.loc)
 	processing = 0
 	menustat = "complete"
 	update_icon()
