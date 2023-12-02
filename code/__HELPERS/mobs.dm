@@ -279,7 +279,7 @@
 		if(!output_to_chat)
 			message += "</BODY></HTML>"
 		return message
-	user.visible_message("<span class='notice'>[user] просканировал жизненные показатели [M].</span>","<span class='notice'>Вы просканировали жизненные показатели [M].</span>")
+	user.visible_message("<span class='notice'>[user] сканирует жизненные показатели [M].</span>","<span class='notice'>Вы просканировали жизненные показатели [M].</span>")
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
 	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
