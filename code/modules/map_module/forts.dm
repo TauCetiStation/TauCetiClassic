@@ -51,20 +51,27 @@
 		if(TEAM_NAME_BLUE)
 			teammate.antag_hud_type = ANTAG_HUD_TEAMS_BLUE
 
-	if(rank == FORTS_ROLE_COMMANDER)
-		teammate.antag_hud_name = "hud_team_captain"
-	else if(rank == FORTS_ROLE_MEDIC)
-		teammate.antag_hud_name = "hud_team_medic"
-	else
-		switch(M.client.player_ingame_age)
-			if(0 to 4000)
-				teammate.antag_hud_name = "hudblank" // only background
-			if(4000 to 15000)
-				teammate.antag_hud_name = "hud_team_1"
-			if(15000 to 30000)
-				teammate.antag_hud_name = "hud_team_2"
-			if(30000 to INFINITY)
-				teammate.antag_hud_name = "hud_team_3"
+	switch(rank)
+		if(FORTS_ROLE_MEDIC)
+			teammate.antag_hud_name = "hud_team_medic"
+		if(FORTS_ROLE_ARTILLERYMAN)
+			teammate.antag_hud_name = "hud_team_artillery"
+		if(FORTS_ROLE_ENGINEER)
+			teammate.antag_hud_name = "hud_team_engineer"
+		if(FORTS_ROLE_OFFICER)
+			teammate.antag_hud_name = "hud_team_officer"
+		if(FORTS_ROLE_COMMANDER)
+			teammate.antag_hud_name = "hud_team_captain"
+		else // default FORTS_ROLE_MEMBER
+			switch(M.client.player_ingame_age)
+				if(0 to 4000)
+					teammate.antag_hud_name = "hudblank" // only background
+				if(4000 to 15000)
+					teammate.antag_hud_name = "hud_team_1"
+				if(15000 to 30000)
+					teammate.antag_hud_name = "hud_team_2"
+				if(30000 to INFINITY)
+					teammate.antag_hud_name = "hud_team_3"
 
 	// for endgame screen
 	teammate.logo_file = 'icons/hud/hud.dmi'

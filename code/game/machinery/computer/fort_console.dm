@@ -150,7 +150,7 @@
 	if(!member)
 		return
 
-	var/rank = tgui_input_list(user, "Choise rank for [member]:", "Assign Rank", list(FORTS_ROLE_MEMBER, FORTS_ROLE_MEDIC, FORTS_ROLE_COMMANDER))
+	var/rank = tgui_input_list(user, "Choise rank for [member]:", "Assign Rank", FORTS_ROLES)
 
 	message_admins("[key_name(user)] assigned [candidates[member]] as [rank] of [F.name].")
 
