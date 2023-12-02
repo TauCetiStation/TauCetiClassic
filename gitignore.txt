@@ -1,0 +1,15 @@
+#ignore misc BYOND files
+*.log
+*.int
+*.rsc
+*.dmb
+*.lk
+*.backup
+taucetistation.dmb
+Thumbs.db
+data/
+cache/
+cfg/
+.vscode
+**/MapFXDrawer/*.png
+test_merge.txt
