@@ -8,6 +8,28 @@
 	var/points = 0
 	var/refined_type = null //What this ore defaults to being refined into
 
+/obj/item/weapon/ore/Crossed(atom/movable/M)
+	var/obj/item/weapon/storage/bag/ore/B
+	var/turf/simulated/floor/F = get_turf(src)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		for(var/bag in H.get_body_slots())
+			if(istype(bag, /obj/item/weapon/storage/bag/ore))
+				B = bag
+				F.attackby(B, H)
+				if(B.storage_space_used() > 0 && istype(B, /obj/item/weapon/storage/bag/ore/holding) && istype(H.pulling, /obj/structure/ore_box))
+					var/obj/structure/ore_box/O = H.pulling
+					O.attackby(B, H)
+				break
+	else if (isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		if(istype(R.module, /obj/item/weapon/robot_module/miner))
+			for(var/bag in R.module.modules)
+				if(istype(bag, /obj/item/weapon/storage/bag/ore))
+					B = bag
+					F.attackby(B, R)
+					break
+
 /obj/item/weapon/ore/uranium
 	name = "pitchblende"
 	icon_state = "Uranium ore"

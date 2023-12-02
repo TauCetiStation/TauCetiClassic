@@ -717,30 +717,20 @@
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
 
-/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M)
-	..()
-	if(isrobot(M))
-		var/mob/living/silicon/robot/R = M
-		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_3,R)
-			else
-				return
-	if(ishuman(M))
-		var/obj/item/weapon/storage/bag/ore/B
-		var/mob/living/carbon/human/H = M
-		for(var/bag in H.get_body_slots())
-			if(istype(bag, /obj/item/weapon/storage/bag/ore))
-				B = bag
-				attackby(B, H)
-				if(B.storage_space_used() > 0 && istype(B, /obj/item/weapon/storage/bag/ore/holding) && istype(H.pulling, /obj/structure/ore_box))
-					var/obj/structure/ore_box/O = H.pulling
-					O.attackby(B, H)
-				break
+// /turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M)
+// 	..()
+// 	if(isrobot(M))
+// 		var/mob/living/silicon/robot/R = M
+// 		if(istype(R.module, /obj/item/weapon/robot_module/miner))
+// 			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
+// 				attackby(R.module_state_1,R)
+// 			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
+// 				attackby(R.module_state_2,R)
+// 			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
+// 				attackby(R.module_state_3,R)
+// 			else
+// 				return
+
 
 #undef MIN_TUNNEL_LENGTH
 #undef MAX_TUNNEL_LENGTH
