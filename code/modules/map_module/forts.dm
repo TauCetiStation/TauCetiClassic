@@ -17,9 +17,9 @@
 	)
 
 	// assoc lists (TEAMNAME = reference)
-	var/list/factions = list()
-	var/list/spawners = list()
-	var/list/consoles = list() 
+	var/list/datum/faction/factions = list()
+	var/list/datum/spawner/fort_team/spawners = list()
+	var/list/obj/machinery/computer/fort_console/consoles = list()
 
 /datum/map_module/forts/New()
 	..()
@@ -31,7 +31,17 @@
 	spawners[TEAM_NAME_RED] = create_spawner(/datum/spawner/fort_team/red, src)
 	spawners[TEAM_NAME_BLUE] = create_spawner(/datum/spawner/fort_team/blue, src)
 
-/datum/map_module/forts/proc/assign_to_team(mob/M, datum/faction/faction, rank = "Team Member")
+/datum/map_module/forts/stat_entry(mob/M)
+	if(M.client.holder)
+		stat(null, "Red Points: [consoles[TEAM_NAME_RED]?.points || "--"]")
+		stat(null, "Blue Points: [consoles[TEAM_NAME_BLUE]?.points || "--"]")
+
+// maybe should be moved to own role datum
+/datum/map_module/forts/proc/assign_to_team(mob/M, datum/faction/faction, rank = FORTS_ROLE_MEMBER)
+	var/datum/role/old_role = M.mind.GetRoleByType(/datum/role/custom)
+	if(old_role)
+		old_role.Drop(msg_admins = FALSE)
+
 	var/datum/role/custom/teammate = new
 	teammate.name = rank
 
@@ -41,8 +51,10 @@
 		if(TEAM_NAME_BLUE)
 			teammate.antag_hud_type = ANTAG_HUD_TEAMS_BLUE
 
-	if(rank == "Commander")
+	if(rank == FORTS_ROLE_COMMANDER)
 		teammate.antag_hud_name = "hud_team_captain"
+	else if(rank == FORTS_ROLE_MEDIC)
+		teammate.antag_hud_name = "hud_team_medic"
 	else
 		switch(M.client.player_ingame_age)
 			if(0 to 4000)
@@ -54,6 +66,7 @@
 			if(30000 to INFINITY)
 				teammate.antag_hud_name = "hud_team_3"
 
+	// for endgame screen
 	teammate.logo_file = 'icons/hud/hud.dmi'
 	teammate.logo_state = teammate.antag_hud_name
 
@@ -62,9 +75,9 @@
 	teammate.AssignToFaction(faction)
 	teammate.AssignToRole(M.mind, msg_admins = FALSE)
 
-	if(rank == "Commander")
+	if(rank == FORTS_ROLE_COMMANDER)
 		var/obj/item/weapon/card/id/captains_spare/card = new 
-		card.assignment = "Commander"
+		card.assignment = FORTS_ROLE_COMMANDER
 		card.assign(M.real_name)
 		M.equip_to_appropriate_slot(card)
 
@@ -89,63 +102,6 @@
 	A.sound = "bell"
 	A.announcer = user?.GetVoice()
 	A.play()
-
-/datum/map_module/forts/stat_entry(mob/M)
-	if(M.client.holder)
-		stat(null, "Red Points: [consoles[TEAM_NAME_RED]?.points || "--"]")
-		stat(null, "Blue Points: [consoles[TEAM_NAME_BLUE]?.points || "--"]")
-
-/* spawner */
-/datum/spawner/fort_team
-	name = "Fort Team"
-	desc = "Отстраивайте и защищайте форт своей команды, уничтожьте форт команды противников!"
-	//wiki_ref = "Forst event" // todo
-
-	lobby_spawner = TRUE
-	// сделать зависимым от фракции...
-	positions = INFINITY
-
-	cooldown_type = /datum/spawner/fort_team // will be shared between both teams
-	cooldown = 5 MINUTES
-
-	var/datum/map_module/forts/map_module
-
-	var/team_name
-	var/team_outfit
-
-/datum/spawner/fort_team/New(datum/map_module/forts/MM)
-	. = ..()
-	map_module = MM
-	faction = MM.factions[team_name]
-
-/datum/spawner/fort_team/spawn_body(mob/dead/spectator)
-	var/spawnloc = pick_spawn_location()
-
-	var/client/C = spectator.client
-
-	var/mob/living/carbon/human/H = new(spawnloc)
-	H.key = C.key
-
-	map_module.assign_to_team(H, faction)
-	H.equipOutfit(team_outfit)
-
-	var/new_name = spectator.name
-	// comment me for tests
-	INVOKE_ASYNC(C, TYPE_PROC_REF(/client, create_human_apperance), H, new_name, TRUE)
-
-/datum/spawner/fort_team/red
-	name = TEAM_NAME_RED
-	team_name = TEAM_NAME_RED
-	spawn_landmark_name = TEAM_NAME_RED // /obj/effect/landmark/red_team
-
-	team_outfit = /datum/outfit/forts_team/red
-
-/datum/spawner/fort_team/blue
-	name = TEAM_NAME_BLUE
-	team_name = TEAM_NAME_BLUE
-	spawn_landmark_name = TEAM_NAME_BLUE // /obj/effect/landmark/blue_team
-
-	team_outfit = /datum/outfit/forts_team/blue
 
 /* admin verbs */
 /client/proc/fort_assign_commander()
@@ -173,9 +129,12 @@
 
 	var/new_commander = tgui_input_list(src,"Choise member to become a commander:", "Assign Commander", candidates)
 
+	if(!new_commander)
+		return
+
 	message_admins("[key_name(src)] assigned [candidates[new_commander]] as Commander of [faction_name].")
 
-	forts_map_module.assign_to_team(candidates[new_commander], faction = F, rank = "Commander")
+	forts_map_module.assign_to_team(candidates[new_commander], faction = F, rank = FORTS_ROLE_COMMANDER)
 
 /client/proc/fort_open_spawns()
 	set category = "Event"

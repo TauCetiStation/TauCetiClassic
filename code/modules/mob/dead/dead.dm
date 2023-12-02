@@ -14,6 +14,11 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		var/datum/spawner/S = registred_spawner
 		S.cancel_registration(src)
 
+/mob/dead/Destroy()
+	QDEL_NULL(spawners_menu)
+
+	return ..()
+
 /**
   * Doesn't call parent, see [/atom/proc/atom_init]
   */

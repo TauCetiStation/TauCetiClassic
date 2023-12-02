@@ -148,7 +148,7 @@
 		if(!config.alt_lobby_menu)
 			return
 		if(!spawners_menu)
-			spawners_menu = new(src)
+			spawners_menu = new()
 
 		spawners_menu.tgui_interact(src)
 		return

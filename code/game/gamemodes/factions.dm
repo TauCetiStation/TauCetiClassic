@@ -407,11 +407,13 @@
 		if(R.antag && ckey(R.antag.key) == ckey)
 			return R
 
-/datum/faction/proc/get_members_count()
-	return length(members)
-
-/datum/faction/proc/get_active_members_count()
-	return length(members) // todo: check for clients? or for in clients (or playing mobs) and check for role?
+/datum/faction/proc/get_active_members()
+	. = list()
+	for(var/datum/role/R in members)
+		var/mob/M = R.antag.current
+		if(!M || !M.client)
+			continue
+		. += M
 
 /datum/faction/proc/check_crew()
 	var/total_human = 0

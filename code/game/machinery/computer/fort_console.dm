@@ -8,7 +8,7 @@
 
 	var/team_id
 
-	var/points = 200 //
+	var/points = 300
 	var/points_per_second = 0.5 // 1 per tick, 30 per minute
 
 	var/turf/spawn_zone = list()
@@ -122,12 +122,46 @@
 	return null
 
 // 1-10
+/datum/fort_console_lot/specialization
+	name = "Grant new rank"
+	desc = "Change rank for teammate"
+	price = 1
+
+	order = 1
+
+/datum/fort_console_lot/specialization/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	var/datum/faction/F = MM.factions[command.team_id]
+
+	if(!length(F.members))
+		to_chat(user, "<span class='warning'>Faction is empty!</span>")
+		return
+
+	var/list/candidates = list()
+
+	for(var/datum/role/R in F.members)
+		var/mob/M = R.antag?.current
+		if(!M || !M.client)
+			continue
+		candidates["[M.real_name] ([R.name])"] = M
+
+	var/member = tgui_input_list(user, "Choise member to change a rank:", "Assign Rank", candidates)
+
+	if(!member)
+		return
+
+	var/rank = tgui_input_list(user, "Choise rank for [member]:", "Assign Rank", list(FORTS_ROLE_MEMBER, FORTS_ROLE_MEDIC, FORTS_ROLE_COMMANDER))
+
+	message_admins("[key_name(user)] assigned [candidates[member]] as [rank] of [F.name].")
+
+	MM.assign_to_team(candidates[member], faction = F, rank = rank)
+
 /datum/fort_console_lot/team_announce
 	name = "Team Announce"
 	desc = "Make big scary announcement for your team"
 	price = 5
 
-	order = 1
+	order = 2
 
 /datum/fort_console_lot/team_announce/purshase(mob/user, obj/machinery/computer/fort_console/command)
 	var/message = sanitize(input(user, "Please enter text for your announcement.", "Announce") as text, MAX_MESSAGE_LEN, extra = FALSE)
@@ -139,7 +173,7 @@
 	desc = "Dominate other team with words"
 	price = 25
 
-	order = 2
+	order = 3
 
 /datum/fort_console_lot/global_announce/purshase(mob/user, obj/machinery/computer/fort_console/command)
 	var/message = sanitize(input(user, "Please enter text for your announcement.", "Announce") as text, MAX_MESSAGE_LEN, extra = FALSE)
@@ -151,7 +185,7 @@
 	desc = "Scan battlefield and update holomap"
 	price = 50
 
-	order = 3
+	order = 4
 
 /datum/fort_console_lot/update_map/purshase(mob/user, obj/machinery/computer/fort_console/command)
 	SSholomaps.regenerate_custom_holomap(command.team_id)
@@ -258,11 +292,11 @@
 /datum/fort_console_lot/rocket_piercing/purshase()
 	. = new /obj/structure/storage_box/rocket/piercing
 
-// 50+
+// 50-60
 /datum/fort_console_lot/drill
 	name = "Drill set"
 	desc = "Drill and two braces"
-	price = 200
+	price = 100
 
 	order = 50
 
@@ -274,27 +308,10 @@
 
 	return C
 
-/datum/fort_console_lot/conveyor
-	name = "Conveyor Assembly"
-	desc = "Conveyor assembly kit"
-	price = 30
-
-	order = 51
-
-/datum/fort_console_lot/conveyor/purshase(mob/user, obj/machinery/computer/fort_console/command)
-	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/engi
-
-	for(var/i in 1 to 6)
-		new /obj/item/conveyor_construct(C)
-
-	new /obj/item/conveyor_switch_construct(C)
-
-	return C
-
 /datum/fort_console_lot/medical
 	name = "Medical Supply"
-	desc = "Medical Supply"
-	price = 30
+	desc = "Set of colored first aids"
+	price = 25
 
 	order = 52
 
@@ -312,22 +329,75 @@
 
 	return C
 
+/datum/fort_console_lot/supermedical
+	name = "Heal Injector 1x2"
+	desc = "Can revive dead. Five times."
+	price = 75
+
+	order = 53
+
+/datum/fort_console_lot/supermedical/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/medical
+
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/lazarus_injector/revive(C)
+
+	return C
+
+/datum/fort_console_lot/food
+	name = "Food Supply"
+	desc = "Food Supply"
+	price = 20
+
+	order = 54
+
+/datum/fort_console_lot/food/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/freezer
+
+	for(var/i in 1 to 4)
+		new /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment(C)
+
+	return C
+
 /datum/fort_console_lot/fueltank
 	name = "Fueltank"
 	desc = "Fueltank"
 	price = 30
 
-	order = 53
+	order = 55
 
 /datum/fort_console_lot/fueltank/purshase(mob/user, obj/machinery/computer/fort_console/command)
 	. = new /obj/structure/reagent_dispensers/fueltank
+
+// 60-70
+/datum/fort_console_lot/gps
+	name = "GPS 1x10"
+	desc = "GPS devices"
+	price = 50
+
+	order = 56
+
+/datum/fort_console_lot/gps/purshase(mob/user, obj/machinery/computer/fort_console/command)
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/scicrate
+
+	var/gps_type
+	switch(command.team_id)
+		if(TEAM_NAME_RED)
+			gps_type = /obj/item/device/gps/team_red
+		if(TEAM_NAME_BLUE)
+			gps_type = /obj/item/device/gps/team_blue
+
+	for(var/i in 1 to 10)
+		new gps_type(C)
+
+	return C
 
 /datum/fort_console_lot/energylaser
 	name = "Laser Rifle 1x5"
 	desc = "Why do you need it if you have a rocket?"
 	price = 100
 
-	order = 54
+	order = 62
 
 /datum/fort_console_lot/energylaser/purshase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/secure/weapon
@@ -342,7 +412,7 @@
 	desc = "Why do you need it if you have a rocket?"
 	price = 100
 
-	order = 55
+	order = 63
 
 /datum/fort_console_lot/c4/purshase(mob/user, obj/machinery/computer/fort_console/command)
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/secure/weapon
@@ -355,7 +425,7 @@
 /datum/fort_console_lot/droppod
 	name = "Droppod"
 	desc = "Contains a caller for the droppod. One way ticket for the bravests."
-	price = 1000
+	price = 800
 
 	order = 999
 

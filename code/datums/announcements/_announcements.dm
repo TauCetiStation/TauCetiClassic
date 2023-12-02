@@ -189,7 +189,7 @@ var/global/list/announcement_sounds = list(
 			continue
 
 		if(faction_filter && !isobserver(M))
-			if(!M.mind.IsPartOfFaction(faction_filter))
+			if(!M?.mind.IsPartOfFaction(faction_filter))
 				continue
 
 		if(announce_text)

@@ -1,14 +1,4 @@
 /datum/spawners_menu
-	var/mob/dead/owner
-
-/datum/spawners_menu/New(mob/dead/new_owner)
-	if(!istype(new_owner))
-		qdel(src)
-	owner = new_owner
-
-/datum/spawners_menu/Destroy()
-	owner = null
-	return ..()
 
 /datum/spawners_menu/tgui_state(mob/user)
 	return global.spectator_state
@@ -40,7 +30,7 @@
 		this["amount"] += "[spawner.positions == INFINITY ? "∞" : spawner.positions]"
 
 		if(spawner.faction)
-			this["playing"] = spawner.faction.get_active_members_count()
+			this["playing"] = length(spawner.faction.get_active_members())
 
 		var/time
 		var/time_type
@@ -63,8 +53,8 @@
 	if(.)
 		return
 
-	if(!owner.client || owner.client.is_in_spawner)
-		to_chat(owner, "<span class='notice'>Вы уже выбрали роль!</span>")
+	if(!ui.user.client || ui.user.client.is_in_spawner)
+		to_chat(ui.user, "<span class='notice'>Вы уже выбрали роль!</span>")
 		return
 
 /*	var/spawner_id = params["type"]
@@ -85,8 +75,8 @@
 
 	switch(action)
 		if("jump")
-			spawner.jump(owner)
+			spawner.jump(ui.user)
 			return TRUE
 		if("spawn")
-			spawner.registration(owner)
+			spawner.registration(ui.user)
 			return TRUE

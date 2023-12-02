@@ -120,9 +120,9 @@
 	antag = null
 
 // Drops the antag mind from the parent role, informs the gamemode the mind now doesn't have a role, and deletes the role datum.
-/datum/role/proc/Drop()
+/datum/role/proc/Drop(msg_admins = TRUE)
 	if(antag)
-		RemoveFromRole(antag)
+		RemoveFromRole(antag, msg_admins)
 
 	if(faction && (src in faction.members))
 		faction.remove_role(src)
