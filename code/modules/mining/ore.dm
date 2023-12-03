@@ -16,14 +16,14 @@
 		for(var/bag in H.get_body_slots())
 			if(istype(bag, /obj/item/weapon/storage/bag/ore))
 				B = bag
-				if (B.max_storage_space < B.storage_space_used() + SIZE_TINY)
+				if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
 					continue
 				F.attackby(B, H)
 				if(B.storage_space_used() > 0 && istype(B, /obj/item/weapon/storage/bag/ore/holding) && istype(H.pulling, /obj/structure/ore_box))
 					var/obj/structure/ore_box/O = H.pulling
 					O.attackby(B, H)
 				break
-	else if (isrobot(M))
+	else if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(istype(R.module, /obj/item/weapon/robot_module/miner))
 			for(var/bag in R.module.modules)
