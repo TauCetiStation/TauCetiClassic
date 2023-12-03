@@ -44,7 +44,6 @@
 		popup.set_content(message)
 		popup.open()
 		return
-	add_fingerprint(user)
 	var/dat = health_analyze(M, user, mode, output_to_chat, null, scan_hallucination)
 	last_scan = dat
 	last_scan_name = M.name
