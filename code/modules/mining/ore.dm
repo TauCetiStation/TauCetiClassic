@@ -16,6 +16,8 @@
 		for(var/bag in H.get_body_slots())
 			if(istype(bag, /obj/item/weapon/storage/bag/ore))
 				B = bag
+				if (B.max_storage_space < B.storage_space_used() + SIZE_TINY)
+					continue
 				F.attackby(B, H)
 				if(B.storage_space_used() > 0 && istype(B, /obj/item/weapon/storage/bag/ore/holding) && istype(H.pulling, /obj/structure/ore_box))
 					var/obj/structure/ore_box/O = H.pulling
