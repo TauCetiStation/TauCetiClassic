@@ -123,7 +123,7 @@
 
 	if(tension>=max_tension)
 		tension = max_tension
-		to_chat(user, "Арбалет лязгает, когда вы натягиваете тетиву до максимального натяжения!")
+		to_chat(user, "[capitalize(CASE(src, ACCUSATIVE_CASE))] лязгает, когда вы натягиваете тетиву до максимального натяжения!")
 	else
 		user.visible_message("[user] натягивает тетиву [CASE(src, GENITIVE_CASE)]!", "Вы продолжаете натягивать тетиву [CASE(src, GENITIVE_CASE)]!")
 		spawn(25) increase_tension(user)
