@@ -178,7 +178,7 @@ const CryoBeaker = (props, context) => {
   } else {
     return (
       <Box color="average">
-        Сосуд отсутсвует
+        Сосуд отсутствует
       </Box>
     );
   }
