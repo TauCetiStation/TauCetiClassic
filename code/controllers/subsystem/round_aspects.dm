@@ -29,13 +29,17 @@ SUBSYSTEM_DEF(round_aspects)
 	aspect = pick(possible_aspect)
 	aspect_name = aspect.name
 
-/datum/controller/subsystem/round_aspects/proc/announce_aspect()
+/datum/controller/subsystem/round_aspects/proc/global_announce_aspect()
 	message_admins("Round Aspect: [aspect_name]. [aspect.desc]")
-	if(aspect.OOC_init_announcement)
-		global_ooc_info("[SSround_aspects.aspect.OOC_init_announcement]")
+	if(aspect.OOC_lobby_announcement)
+		global_ooc_info("[SSround_aspects.aspect.OOC_lobby_announcement]")
+
+/datum/controller/subsystem/round_aspects/proc/local_announce_aspect(client)
+	if(aspect_name && aspect.OOC_lobby_announcement)
+		to_chat(client,"[SSround_aspects.aspect.OOC_lobby_announcement]")
 
 /datum/controller/subsystem/round_aspects/proc/PostInit()
 	if(!aspect_name)
 		return
 	aspect.after_full_init()
-	addtimer(CALLBACK(src, PROC_REF(announce_aspect)), 15 SECOND, TIMER_STOPPABLE)
+	global_announce_aspect()

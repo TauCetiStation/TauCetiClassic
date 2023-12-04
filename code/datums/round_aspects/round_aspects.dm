@@ -13,7 +13,7 @@
 	//OOC announcement after initialization of the subsystem and selection of aspect.
 	//Write a description here if it requires preliminary preparation, for example, choosing a role in setup.
 	//You shouldn't write a description here if you think it will scare away players, use afterspawn IC announcement for this.
-	var/OOC_init_announcement
+	var/OOC_lobby_announcement
 
 	//Message after character spawn.
 	//Write here the IC description of the aspect if it is dangerous or if it needs to be noticed.
@@ -94,7 +94,7 @@
 
 /datum/round_aspect/ai_trio
 	name = ROUND_ASPECT_AI_TRIO
-	OOC_init_announcement = "<span class='warning'>В качестве эксперимента, НаноТрейзен решило разместить на спутнике станции целых три ядра ИИ.</span>"
+	OOC_lobby_announcement = "<span class='warning'>В качестве эксперимента, НаноТрейзен решило разместить на спутнике станции целых три ядра ИИ.</span>"
 	desc = "Увеличено количество слотов ИИ до трёх."
 
 /datum/round_aspect/ai_trio/after_full_init()
