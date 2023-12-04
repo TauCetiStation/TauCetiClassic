@@ -143,7 +143,7 @@
 		//Relaymoves
 		if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
 			return mob.pulledby.relaymove(mob, direct)
-		
+
 		if(mob.buckled) // Wheelchair driving!
 			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
@@ -381,13 +381,13 @@
 
 /mob/proc/slip(weaken_duration, obj/slipped_on, lube)
 	SEND_SIGNAL(src, COMSIG_MOB_SLIP, weaken_duration, slipped_on, lube)
-	return FALSE
+	return TRUE
 
 /mob/living/carbon/slip(weaken_duration, obj/slipped_on, lube)
 	if(!loc.handle_slip(src, weaken_duration, slipped_on, lube))
 		return FALSE
 
-	..()
+	return ..()
 
 /mob/living/carbon/slime/slip()
 	..()
