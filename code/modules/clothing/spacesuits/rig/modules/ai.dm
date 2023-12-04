@@ -348,8 +348,8 @@
 
 	if(repairModule)
 		for(var/obj/item/organ/external/BP in H.bodyparts)
-		if(BP.is_robotic() && (BP.brute_dam || BP.burn_dam))
-			repairModule.activate()
+			if(BP.is_robotic() && (BP.brute_dam || BP.burn_dam))
+				repairModule.activate()
 
 	if(!chem_disp)
 		return
