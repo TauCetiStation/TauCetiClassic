@@ -44,9 +44,6 @@
 			if(!QDELETED(src) && replace)
 				user.put_in_hands(new_item)
 	if(iscutter(I))
-		if(get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need at least one rod to do this!</span>")
-			return
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message(
 			"[user.name] cuts the [src], turning it into a crossbow bolt.",
