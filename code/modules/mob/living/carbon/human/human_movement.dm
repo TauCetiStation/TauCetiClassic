@@ -21,7 +21,7 @@
 
 	if(lying)
 		tally += 7
-	if(m_intent == "walk" && HAS_TRAIT(src, TRAIT_FAST_WALKER))
+	if(m_intent == MOVE_INTENT_WALK && HAS_TRAIT(src, TRAIT_FAST_WALKER))
 		tally -= 1.5
 
 	if(!nullify_debuffs)
