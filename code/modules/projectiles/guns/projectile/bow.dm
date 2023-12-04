@@ -139,7 +139,7 @@
 		return
 
 	if(!tension)
-		to_chat(user, "Вы не натянули [CASE(arrow, ACCUSATIVE_CASE)] на тетиву!")
+		to_chat(user, "Вы не натянули тетиву!")
 		return 0
 
 	if (!arrow)
