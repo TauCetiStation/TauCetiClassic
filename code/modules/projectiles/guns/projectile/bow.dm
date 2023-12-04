@@ -11,14 +11,6 @@
 	sharp = 1
 	edge = 0
 
-/obj/item/weapon/arrow/proc/removed(mob/user)
-	if(throwforce == 15) // The rod has been superheated - we don't want it to be useable when removed from the bow.
-		to_chat(user, "[src] при выпуске из арбалета разлетается на россыпь осколков из перенапряженного металла.")
-		var/obj/item/weapon/shard/shrapnel/S = new()
-		S.loc = get_turf(src)
-		qdel(src)
-	return
-
 /obj/item/weapon/arrow/quill
 
 	name = "vox quill"
@@ -96,7 +88,6 @@
 			user.visible_message("[user] ослабляет натяжение тетивы [CASE(src, GENITIVE_CASE)] и вытаскивает [CASE(arrow, ACCUSATIVE_CASE)].","Вы ослабляете натяжение тетивы [CASE(src, GENITIVE_CASE)] и вытаскиваете [CASE(arrow, ACCUSATIVE_CASE)].")
 			var/obj/item/weapon/arrow/A = arrow
 			A.loc = get_turf(src)
-			A.removed(user)
 			arrow = null
 		else
 			user.visible_message("[user] ослабляет натяжение тетивы [CASE(src, GENITIVE_CASE)].", "Вы ослабляете натяжение тетивы [CASE(src, GENITIVE_CASE)].")
