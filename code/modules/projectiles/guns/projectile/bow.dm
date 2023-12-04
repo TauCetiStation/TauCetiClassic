@@ -63,7 +63,7 @@
 			to_chat(user, "<span class='notice'>Вы вставляете батарейку в [CASE(src, ACCUSATIVE_CASE)] и подключаете его к катушке зажигания.</span>")
 			if(arrow)
 				if(istype(arrow,/obj/item/weapon/arrow) && arrow.throwforce < 15 && cell.charge >= 500)
-					to_chat(user, "<span class='notice'>[CASE(arrow, ACCUSATIVE_CASE)] мерцает и трещит, раскаляясь докрасна.</span>")
+					to_chat(user, "<span class='notice'>[capitalize(CASE(arrow, ACCUSATIVE_CASE))] мерцает и трещит, раскаляясь докрасна.</span>")
 					arrow.throwforce = 15
 					arrow.icon_state = "metal-rod-superheated"
 					cell.use(500)
@@ -77,7 +77,7 @@
 			cell = null
 			to_chat(user, "<span class='notice'>Вы вынимаете батарейку из [CASE(src, GENITIVE_CASE)] [I].</span>")
 		else
-			to_chat(user, "<span class='notice'>[CASE(src, ACCUSATIVE_CASE)] не имеет батарейки внутри.</span>")
+			to_chat(user, "<span class='notice'>[capitalize(CASE(src, ACCUSATIVE_CASE))] не имеет батарейки внутри.</span>")
 
 	else
 		return ..()
