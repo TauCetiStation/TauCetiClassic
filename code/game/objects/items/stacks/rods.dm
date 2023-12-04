@@ -43,6 +43,16 @@
 			use(2)
 			if(!QDELETED(src) && replace)
 				user.put_in_hands(new_item)
+	if(iscutter(I))
+		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
+		user.visible_message(
+			"[user.name] cuts the [src], turning it into a crossbow bolt.",
+			"<span class='notice'>You cuts the [src], turning it into a crossbow bolt.</span>"
+			)
+		var/obj/item/weapon/arrow/new_item = new(usr.loc, , TRUE)
+		var/replace = (user.get_inactive_hand() == src)
+		if(!QDELETED(src) && replace)
+			user.put_in_hands(new_item)
 
 	else
 		return ..()
