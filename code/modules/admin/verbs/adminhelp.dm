@@ -166,6 +166,8 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/obj/effect/statclick/ahelp/statclick
 	/// Static counter used for generating each ticket ID
 	var/static/ticket_counter = 0
+	/// Has the player replied to this ticket yet?
+	//var/player_replied = FALSE
 
 /**
  * Call this on its own to create a ticket, don't manually assign current_ticket
@@ -385,7 +387,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		var/msg = "<span class='warning' size='4'><b>- AdminHelp Rejected! -</b></span><br>" + \
 			"<span class='warning'><b>Your admin help was rejected.</b> The adminhelp verb has been returned to you so that you may try again.</span><br>" + \
 			"Please try to be calm, clear, and descriptive in admin helps, do not assume the admin has seen any related events, and clearly state the names of anybody you are reporting."
-	
+
 		to_chat_admin_pm(initiator, msg)
 
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"

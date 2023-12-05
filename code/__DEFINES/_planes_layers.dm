@@ -151,6 +151,10 @@ What is the naming convention for planes or layers?
 #define LIGHTING_LAMPS_GLARE 104 // Light glare (optional setting)
 #define LIGHTING_LAMPS_RENDER_TARGET "*LIGHTING_LAMPS_RENDER_TARGET"
 
+/// Plane related to the menu when pressing Escape.
+/// Needed so that we can apply a blur effect to EVERYTHING, and guarantee we are above all UI.
+#define ESCAPE_MENU_PLANE 105
+
 #define ABOVE_LIGHTING_PLANE 120
   #define ABOVE_LIGHTING_LAYER 1
   #define RUNECHAT_LAYER 2
@@ -183,6 +187,7 @@ What is the naming convention for planes or layers?
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
+#define PLANE_MASTERS_NON_MASTER "plane_masters_non_master"
 
 //--------------------MISC-----------------------
 //modifiers for /obj/machinery/door (and subtypes) layers

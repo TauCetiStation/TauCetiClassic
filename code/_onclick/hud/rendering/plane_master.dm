@@ -270,3 +270,11 @@
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
+
+//Anything relating to the escape menu.
+/atom/movable/screen/plane_master/escape_menu
+	name = "Escape Menu"
+	plane = ESCAPE_MENU_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	render_relay_plane = SPLASHSCREEN_PLANE
+	//allows_offsetting = FALSE

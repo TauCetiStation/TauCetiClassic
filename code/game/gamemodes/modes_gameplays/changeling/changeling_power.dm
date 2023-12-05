@@ -52,10 +52,9 @@
 /obj/effect/proc_holder/changeling/proc/try_to_sting(mob/user, mob/target)
 	if(!can_sting(user, target))
 		return
-	var/datum/role/changeling/c = user.mind.GetRoleByType(/datum/role/changeling)
 	if(sting_action(user, target))
 		sting_feedback(user, target)
-		take_chemical_cost(c)
+		take_chemical_cost(role)
 
 /obj/effect/proc_holder/changeling/proc/sting_action(mob/user, mob/target)
 	return FALSE
@@ -79,11 +78,10 @@
 	else if(req_human)
 		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
 		return FALSE
-	var/datum/role/changeling/c = user.mind.GetRoleByType(/datum/role/changeling)
-	if(c.chem_charges<chemical_cost)
+	if(role.chem_charges<chemical_cost)
 		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
 		return FALSE
-	if(c.absorbed_dna.len<req_dna)
+	if(role.absorbed_dna.len<req_dna)
 		to_chat(user, "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>")
 		return FALSE
 	if(req_stat < user.stat)
@@ -92,7 +90,7 @@
 	if((user.status_flags & FAKEDEATH) && name!="Regenerate")
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return FALSE
-	if(c.geneticdamage > max_genetic_damage)
+	if(role.geneticdamage > max_genetic_damage)
 		to_chat(user, "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>")
 		return FALSE
 	return TRUE

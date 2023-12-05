@@ -411,3 +411,6 @@
 #define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
 // send this signal to handle disabilities in life for mob/living/carbon/human
 #define COMSIG_HANDLE_DISABILITIES "handle_disabilities"
+
+/// Called on a client when a player receives an adminhelp.
+#define COMSIG_ADMIN_HELP_RECEIVED "admin_help_received"

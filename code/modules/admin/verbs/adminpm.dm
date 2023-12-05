@@ -124,7 +124,7 @@
 		else		//recipient is an admin but sender is not
 			if(!current_ticket)
 				to_chat_admin_pm(src, "<span class='warning'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</span>")
-				
+
 				to_chat_admin_pm(src, "<span class='notice'>Message: [msg]</span>")
 				return
 			else
@@ -165,6 +165,7 @@
 		attachment_color = BRIDGE_COLOR_ADMINLOG,
 	)
 	window_flash(recipient)
+	SEND_SIGNAL(src, COMSIG_ADMIN_HELP_RECEIVED, msg)
 	log_admin_private("[key_name(src)]->[key_name(recipient)]: [msg]")
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in global.admins)
