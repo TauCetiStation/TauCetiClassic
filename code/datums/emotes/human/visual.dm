@@ -127,6 +127,20 @@
 	)
 
 
+/datum/emote/human/blush
+	key = "blush"
+
+	message_1p = "You blush."
+	message_3p = "blushes."
+
+	message_type = SHOWMSG_VISUAL
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_present_bodypart, BP_HEAD),
+	)
+
+
 /datum/emote/human/shrug
 	key = "shrug"
 
