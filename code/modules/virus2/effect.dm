@@ -353,12 +353,12 @@
 		var/mob/living/carbon/human/h = A
 		switch(holder.stage)
 			if(1,2,3)
-				to_chat(A, "<span class='notice'>[pick("Вы хотите бананов.", "You feel very primitive.", "Is that a banana?")]</span>")
+				to_chat(A, "<span class='notice'>[pick("Вы хотите бананов.", "You feel very primitive.", "Это банан"?")]</span>")
 			if(4,5,6,7)
 				if(holder.stage == 7 && prob(20))
-					h.say(pick("Bananas?", "Do you have some bananas?", "Ooh-ooh-ooh-eee-eee","Ooh ooh ooh eee eee eee aah aah aah", "Eeek! Eeek!"))
+					h.say(pick("О,Банан?", "У тебя есть бананы?", "У-У-У-и-и","Уо Уо Уои ээи ээи иии ииии", "Иииир! Иииир!"))
 				else
-					to_chat(A, "<span class='danger'>[pick("You really want some bananas.", "You feel yourself slowly degrading.", "You become smaller.", "Fur appears on your skin.")]</span>")
+					to_chat(A, "<span class='danger'>[pick("Вы реально хотитте бананов.", "Вы замечатете как начинатете деградировать.", "Вы становитесь ниже.", "Шерсть проступает на вашей коже.")]</span>")
 			if(8)
 				h.monkeyize()
 
@@ -387,7 +387,7 @@
 
 /datum/disease2/effect/dna
 	name = "Reverse Pattern Syndrome"
-	desc = "The virus bonds with the DNA of the host, causing damaging mutations until removed."
+	desc = "Вирус приcоединяется к ДНК Хозяина, вызывая вредные мутации до его удаленния ."
 	level = 4
 	max_stage = 3
 	cooldown = 10
@@ -395,9 +395,9 @@
 
 /datum/disease2/effect/dna/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class='notice'>[pick("For some reason you feel different.", "Your skin feels itchy.", "You feel light headed.")]</span>")
+		to_chat(mob, "<span class='notice'>[pick("Вы чувствуете себя совсем по другому.", "Вы чувствуетет зуд по всему телу.", "Вы чувствуете лёгкое головокружение.")]</span>")
 	else if(prob(20) || holder.stage == 2)
-		to_chat(mob, "<span class='warning'>[pick("Something is changing inside you.", "Your head hurts.")]</span>")
+		to_chat(mob, "<span class='warning'>[pick("Вы чувствуете что что=то поменялось в вас.", "У вас болит голова.")]</span>")
 	else if(holder.stage == 3)
 		scramble(0,mob,10)
 
@@ -409,7 +409,7 @@
 
 /datum/disease2/effect/organs
 	name = "Shutdown Syndrome"
-	desc = "The virus damages bones and muscle tissue, slowly destroying host's external organs. Very lethal."
+	desc = "Вирус повреждает кости и мышечную ткань, медленно разрушая конечности носителя. Очень смертельно."
 	level = 4
 	max_stage = 7
 	cooldown = 20
@@ -418,10 +418,10 @@
 /datum/disease2/effect/organs/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1,2,3)
-			to_chat(mob, "<span class='notice'>[pick("Your skin feels itchy.", "You feel weaker.")]</span>")
+			to_chat(mob, "<span class='notice'>[pick("Вы чувствуетет зуд по всему телу.", "Вы чувствуетет слабость.")]</span>")
 		if(4,5,6)
 			mob.adjustToxLoss(3)
-			to_chat(mob, "<span class='warning'>[pick("Your arm hurts.", "Your leg hurts.")]</span>")
+			to_chat(mob, "<span class='warning'>[pick("У вас болит рука.", "Ваша нога болит.")]</span>")
 		if(7)
 			if(ishuman(mob) && prob(40))
 				var/mob/living/carbon/human/H = mob
@@ -429,12 +429,12 @@
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
 				if (!(BP.status & ORGAN_DEAD))
 					BP.status |= ORGAN_DEAD
-					to_chat(H, "<span class='warning'>You can't feel your [BP.name] anymore...</span>")
+					to_chat(H, "<span class='warning'>Вы больше не чувствуете какую-то конечность...</span>")
 					for (var/obj/item/organ/external/CHILD in BP.children)
 						CHILD.status |= ORGAN_DEAD
 				H.update_body()
 			else
-				to_chat(mob, "<span class='userdanger'>[pick("Your hands are trembling and badly hurt.", "You feel your body break apart.")]</span>")
+				to_chat(mob, "<span class='userdanger'>[pick("Ваши руки дрожат и сильно болят.", "Ваше тело как будто разваливается.")]</span>")
 				mob.apply_effect(20,AGONY,0)
 				mob.adjustBruteLoss(rand(5,15))
 
@@ -449,7 +449,7 @@
 
 /datum/disease2/effect/bones
 	name = "Fragile Bones Syndrome"
-	desc = "The virus creates a problem with host's production of connective tissue, making bones very fragile."
+	desc = "Вирус создает проблемы с выработкой соединительной ткани в организме, что делает кости очень хрупкими."
 	level = 4
 	max_stage = 8
 	cooldown = 60
@@ -458,15 +458,15 @@
 /datum/disease2/effect/bones/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1,2,3,4)
-			to_chat(mob, "<span class='notice'>[pick("You seem less agile.", "You move more jaggy than usual.")]</span>")
+			to_chat(mob, "<span class='notice'>[pick("Вы видете, что стали менее ловким.", "Вы двигаетесь более неуклюже, чем обычно.")]</span>")
 		if(5,6,7)
-			to_chat(mob, "<span class='notice'>[pick("You feel like something is wrong with your bones.", "Your bones creak when you move.")]</span>")
+			to_chat(mob, "<span class='notice'>[pick("Вы понимаете, что с вашими костями что-то не так.", "Ваши кости хрустят при движении.")]</span>")
 		if(8)
 			if(ishuman(mob))
 				var/mob/living/carbon/human/H = mob
 				var/obj/item/organ/external/BP = pick(H.bodyparts)
 				BP.min_broken_damage = max(10, initial(BP.min_broken_damage) - 30)
-				to_chat(mob, "<span class='notice'>You feel like your [BP.name] is not as strong as it was before..</span>")
+				to_chat(mob, "<span class='notice'>Вы поняли, что ваши конечности не такие крепкие как прежде..</span>")
 
 /datum/disease2/effect/bones/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(A))
@@ -478,9 +478,9 @@
 
 /datum/disease2/effect/heal/starlight
 	name = "Starlight Condensation"
-	desc = "The virus reacts to direct starlight, producing regenerative chemicals. Works best against toxin-based damage."
+	desc = "Вирус реагирует на звездный свет, вырабатывая регенерирующие химические вещества. Лучше всего работает против повреждений, вызванных токсинами."
 	level = 3
-	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
+	passive_message = "<span class='notice'>Вы скучаете по ощущению звездного света на своей коже..</span>"
 
 /datum/disease2/effect/heal/starlight/proc/calculate_spacepower(atom/A)
 	if(isspaceturf(get_turf(A)))
@@ -498,7 +498,7 @@
 
 /datum/disease2/effect/heal/starlight/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
 	if(M.getToxLoss())
-		passive_message = "<span class='notice'>Your skin tingles as the starlight seems to heal you.</span>"
+		passive_message = "<span class='notice'>Ваша кожа покалывает, а свет звезд похоже исцеляет вас.</span>"
 	else
 		passive_message = initial(passive_message)
 	M.adjustToxLoss(-(4 * actual_power)) //most effective on toxins
@@ -527,9 +527,9 @@
 
 /datum/disease2/effect/heal/darkness
 	name = "Nocturnal Regeneration"
-	desc = "The virus is able to mend the host's flesh when in conditions of low light, repairing physical damage. More effective against brute damage."
+	desc = "Вирус способен восстанавливать плоть хозяина в условиях недостаточного освещения, восстанавливая физические повреждения. Эффективен против механического урона ."
 	level = 3
-	passive_message = "<span class='notice'>You feel tingling on your skin as light passes over it.</span>"
+	passive_message = "<span class='notice'>Вы чувствуете покалывание на коже, когда по ней проходит свет..</span>"
 
 /datum/disease2/effect/heal/darkness/can_heal(mob/living/carbon/human/M, datum/disease2/disease/disease)
 	var/light_amount = 0
@@ -553,7 +553,7 @@
 		return
 
 	if(prob(5))
-		to_chat(M, "<span class='notice'>The darkness soothes and mends your wounds.</span>")
+		to_chat(M, "<span class='notice'>Темнота обволакивает вас и лечит ваши раны.</span>")
 
 	M.heal_bodypart_damage(heal_amt, heal_amt * 0.5) //more effective on brute
 	return 1
@@ -565,7 +565,7 @@
 
 /datum/disease2/effect/fire
 	name = "Spontaneous Combustion"
-	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
+	desc = "Вирус превращает жир в чрезвычайно огнеопасное соединение и повышает температуру тела, заставляя носителя самопроизвольно вспыхивать.."
 	level = 3
 	max_stage = 3
 	cooldown = 30
@@ -573,21 +573,21 @@
 
 /datum/disease2/effect/fire/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(50) || holder.stage == 1)
-		to_chat(mob, "<span class='warning'>[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]</span>")
+		to_chat(mob, "<span class='warning'>[pick("Вы чуствуете что стало слишком жарко.", "Вы слышите потрескивание..", "Вы чувствуете запах дыма.")]</span>")
 	else if(prob(50) || holder.stage == 2)
 		mob.adjust_fire_stacks(1)
 		mob.IgniteMob()
-		to_chat(mob, "<span class='userdanger'>Your skin bursts into flames!</span>")
+		to_chat(mob, "<span class='userdanger'>Ваша кожа вспыхивает пламенем!</span>")
 		mob.emote("scream")
 	else if(holder.stage == 3)
 		mob.adjust_fire_stacks(3)
 		mob.IgniteMob()
-		to_chat(mob, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
+		to_chat(mob, "<span class='userdanger'>Ваша кожа охвачено пламенем, вы словно попали в Ад!</span>")
 		mob.emote("scream")
 
 /datum/disease2/effect/flesh_eating
 	name = "Necrotizing Fasciitis"
-	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."
+	desc = "Вирус агрессивно атакует клетки организма, омертвевая ткани и органы."
 	level = 3
 	max_stage = 4
 	cooldown = 30
@@ -596,14 +596,14 @@
 
 /datum/disease2/effect/flesh_eating/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(50) || (holder.stage >= 1 && holder.stage <= 3))
-		to_chat(mob, "<span class='warning'>[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>")
+		to_chat(mob, "<span class='warning'>[pick("Всё ваше тело пронизывает боль.", "Капли крови внезапно появляются на коже.")]</span>")
 	else if(holder.stage == 4)
-		to_chat(mob, "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
+		to_chat(mob, "<span class='userdanger'>[pick("Вы скорчиваетесь, когда невыносимая боль охватывает ваше тело.", "Такое ощущение, что ваше тело съедает само себя изнутри.", "БОЛЬНО.")]</span>")
 		mob.adjustBruteLoss(rand(15, 25))
 
 /datum/disease2/effect/mind_restoration
 	name = "Mind Restoration"
-	desc = "The virus strengthens the bonds between neurons, reducing the duration of any ailments of the mind."
+	desc = "Вирус укрепляет связи между нейронами, сокращая продолжительность любых воздействий на разум."
 	level = 3
 	max_stage = 5
 	cooldown = 5
@@ -628,7 +628,7 @@
 
 /datum/disease2/effect/sensory_restoration
 	name = "Sensory Restoration"
-	desc = "The virus stimulates the production and replacement of sensory tissues, causing the host to regenerate eyes and ears when damaged."
+	desc = "Вирус стимулирует циркуляцию крови, производство и замену тканей глаз и ушей, заставляя хозяина регенерировать при их повреждении."
 	level = 3
 	max_stage = 4
 	cooldown = 1
@@ -651,7 +651,7 @@
 
 /datum/disease2/effect/cooldown_boost
 	name = "Virus booster"
-	desc = "The virus mutates and becomes more active, reducing the time between effects."
+	desc = "Вирус мутирует и становится более активным, сокращая время между эффектами."
 	level = 3
 	max_stage = 1
 	cooldown = 1
@@ -665,11 +665,11 @@
 		activated = TRUE
 		disease.cooldown_mul += 1
 		disease.advance_stage()
-		to_chat(mob, "<span class='notice'>You feel that your brain is more active.</span>")
+		to_chat(mob, "<span class='notice'>Вы чувствуете, что ваш мозг работает эффективнее.</span>")
 
 /datum/disease2/effect/chance_boost
 	name = "Structure improvement"
-	desc = "The virus mutates and changes its structure, making effects show up more likely."
+	desc = "Вирус мутирует и изменяет свою структуру, в результате чего эффекты проявляются с большей вероятностью."
 	level = 3
 	max_stage = 1
 	cooldown = 1
@@ -684,7 +684,7 @@
 		for(var/datum/disease2/effectholder/e in disease.effects)
 			e.chance = max(min(e.chance * 2, 100), 40)
 		disease.advance_stage()
-		to_chat(mob, "<span class='notice'>You feel smarter.</span>")
+		to_chat(mob, "<span class='notice'>Вы чувствуете себя умнее.</span>")
 
 /datum/disease2/effect/chance_boost/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 	var/datum/disease2/effect/chance_boost/Z = effect_old
@@ -692,7 +692,7 @@
 
 /datum/disease2/effect/radian
 	name = "Radian's Syndrome"
-	desc = "The virus mutates host's skin cells, increasing exposure to radiation."
+	desc = "Вирус мутирует в клетках кожи хозяина, увеличивая воздействие радиации."
 	level = 3
 	max_stage = 3
 	cooldown = 10
@@ -701,9 +701,9 @@
 /datum/disease2/effect/radian/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
-			to_chat(A, "<span class='notice'>[pick("You feel warmth.", "You feel weak.")]</span>")
+			to_chat(A, "<span class='notice'>[pick("Вы чувствуете тепло.", "Вы чувствуете слабость.")]</span>")
 		if(2)
-			to_chat(A, "<span class='warning'>[pick("Your skin is flaking.", "You have a headache.")]</span>")
+			to_chat(A, "<span class='warning'>[pick("Ваша кожа шелушится.", "У вас жар.")]</span>")
 			irradiate_one_mob(A, 5)
 		if(3)
 			irradiate_one_mob(A, 20)
@@ -713,7 +713,7 @@
 
 /datum/disease2/effect/killertoxins
 	name = "Toxification Syndrome"
-	desc = "The virus causes nausea and irritates the stomach, causing intoxication and occasional vomit."
+	desc = "Вирус вызывает тошноту и раздражает желудок, вызывая интоксикацию и периодическую рвоту."
 	level = 3
 	max_stage = 3
 	cooldown = 10
@@ -721,18 +721,18 @@
 
 /datum/disease2/effect/killertoxins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class='warning'>[pick("You feel nauseated.", "You feel like you're going to throw up!")]</span>")
+		to_chat(mob, "<span class='warning'>[pick("Вас тошнит.", "Вам кажется, что вас сейчас вырвет!")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			H.invoke_vomit_async()
 	else if(holder.stage == 3)
-		to_chat(mob, "<span class='userdanger'>[pick("Your stomach hurts.", "You feel a sharp abdominal pain.")]</span>")
+		to_chat(mob, "<span class='userdanger'>[pick("У вас болит живот.", "Вы ощущаете резкую боль в животе.")]</span>")
 		mob.reagents.add_reagent(pick("plasticide", "toxin", "amatoxin", "phoron", "lexorin", "carpotoxin", "mindbreaker", "plantbgone", "fluorine"), round(rand(1, 3), 1)) // some random toxin
 
 /datum/disease2/effect/toxins
 	name = "Hyperacidity"
-	desc = "The virus damages host's stomach, forcing it to produce a lot of acids, causing intoxication."
+	desc = "Вирус повреждает желудок хозяина, заставляя его вырабатывать большое количество кислот, что вызывает интоксикацию.."
 	level = 3
 	max_stage = 3
 	cooldown = 20
@@ -741,17 +741,17 @@
 /datum/disease2/effect/toxins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
-			to_chat(mob, "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You feel nauseated.")]</span>")
+			to_chat(mob, "<span class='notice'>[pick("Вы чувствуете странное бульканье в животе.", "Вы испытываете тошноту.")]</span>")
 		if(2)
-			to_chat(mob, "<span class='warning'>[pick("Your stomach hurts.", "You feel a nasty pain inside your throat.")]</span>")
+			to_chat(mob, "<span class='warning'>[pick("У вас болит желудок.", "Вы чувствуете противную боль в горле.")]</span>")
 			mob.adjustToxLoss(5)
 		if(3)
-			to_chat(mob, "<span class='warning'>[pick("Your stomach hurts a lot.", "Your skin seems to become more pale.", "You feel confused.", "Your breathing is hot and irregular.")]</span>")
+			to_chat(mob, "<span class='warning'>[pick("У вас очень сильно болит желудок.", "Ваша кожа кажется более бледной.", "Вы чувствуете себя растерянным.", "Ваше дыхание горячее и нерегулярное.")]</span>")
 			mob.adjustToxLoss(10)
 
 /datum/disease2/effect/nerve_support
 	name = "Nerve Support"
-	desc = "The virus injects nanites into the host's body, which act as a secondary nervous system, protecting against nerve palsies."
+	desc = "Вирус вводит в организм хозяина наниты, которые действуют как вторичная нервная система, защищая от паралича."
 	level = 3
 	max_stage = 3
 	cooldown = 7
@@ -763,7 +763,7 @@
 	switch(holder.stage)
 		if(1)
 			if(COOLDOWN_FINISHED(src, senses_message))
-				to_chat(mob, "<span class='notice'>You feel your tactile senses intensify.</span>")
+				to_chat(mob, "<span class='notice'>Вы чувствуете, как обостряются ваши тактильные ощущения.</span>")
 				COOLDOWN_START(src, senses_message, 1 MINUTE)
 		if(2)
 			mob.make_dizzy(min(mob.dizziness + 10, 15))
@@ -780,7 +780,7 @@
 
 /datum/disease2/effect/telepathic
 	name = "Telepathy Syndrome"
-	desc = "The virus mutates the brain in a strange way, giving host ability to communicate with others through his mind."
+	desc = "Вирус странным образом мутирует в мозге, наделяя носителя способностью общаться с другими людьми посредством своего разума."
 	level = 3
 	max_stage = 3
 	cooldown = 60
@@ -789,9 +789,9 @@
 /datum/disease2/effect/telepathic/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
-			to_chat(mob, "<span class='notice'>[pick("You heard something.", "Random thoughts are appearing inside your mind.", "Something is not right.")]</span>")
+			to_chat(mob, "<span class='notice'>[pick("Вам что-то послышалось.", "В голове появляются посторонние мысли.", "Мир кажется странным.")]</span>")
 		if(2)
-			to_chat(mob, "<span class='warning'>[pick("You panic hearing so much random words.", "You can't understand what is going on with your head.")]</span>")
+			to_chat(mob, "<span class='warning'>[pick("Вы паникуете, слыша столько случайных слов.", "Вы не можете понять, что происходит с вашей головой.")]</span>")
 		if(3)
 			mob.dna.check_integrity()
 			mob.dna.SetSEState(REMOTETALKBLOCK,1)
@@ -799,7 +799,7 @@
 
 /datum/disease2/effect/mind
 	name = "Lazy Mind Syndrome"
-	desc = "The virus slowly damages the brain, making host very dumb."
+	desc = "Вирус медленно повреждает мозг, делая носителя очень тупым."
 	level = 3
 	max_stage = 3
 	cooldown = 30
@@ -807,12 +807,12 @@
 
 /datum/disease2/effect/mind/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class='notice'>[pick("Something is not right.", "You forget your name for a moment.", "You suddenly forgot where you were going.")]</span>")
+		to_chat(mob, "<span class='notice'>[pick("Мир кажется странным.", "Вы на секунду забыли как вас зовут.", "Вы вдруг забыли, куда шли..")]</span>")
 	else if(prob(20) || holder.stage == 2)
-		to_chat(mob, "<span class='warning'>[pick("You feel dumb.", "You keep staring at something.", "You are drooling.")]</span>")
+		to_chat(mob, "<span class='warning'>[pick("Вы чувствуете себя тупым.", "Вы на что-то уставились и смотрите.", "У вас текут слюни.")]</span>")
 		mob.adjustBrainLoss(5)
 	else if(holder.stage == 3)
-		to_chat(mob, "<span class='userdanger'>[pick("You forgot how to breathe for a moment.", "Who am I?", "You feel very dumb.")]</span>")
+		to_chat(mob, "<span class='userdanger'>[pick("Вы на мгновение забыли, как дышать..", "Кто я?", "Как какать?.")]</span>") //Ayanami Rei
 		if(ishuman(mob) && prob(10))
 			var/mob/living/carbon/human/H = mob
 			var/obj/item/organ/internal/brain/IO = H.organs_by_name[O_BRAIN]
@@ -824,7 +824,7 @@
 
 /datum/disease2/effect/repairing
 	name = "Mechanical Repair"
-	desc = "The virus produces nanites that fix damage in the host's mechanical limbs."
+	desc = "Вирус производит наниты, которые устраняют повреждения в механических конечностях хозяина."
 	level = 3
 	max_stage = 7
 	cooldown = 10
@@ -852,7 +852,7 @@
 
 /datum/disease2/effect/beard
 	name = "Facial Hypertrichosis"
-	desc = "The virus increases hair production significantly, causing rapid beard growth."
+	desc = "Вирус значительно увеличивает количество тестостерона, вызывая быстрый рост бороды."
 	level = 2
 	max_stage = 3
 	cooldown = 30
@@ -863,24 +863,24 @@
 		var/mob/living/carbon/human/H = A
 		switch(holder.stage)
 			if(1)
-				to_chat(H, "<span class='warning'>Your chin itches.</span>")
+				to_chat(H, "<span class='warning'>У вас чешется подбородок.</span>")
 				if(H.f_style == "Shaved" && prob(30))
 					H.f_style = "Jensen Beard"
 					H.update_hair()
 			if(2)
 				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard") && !(H.f_style == "Full Beard"))
-					to_chat(H, "<span class='warning'>You feel tough.</span>")
+					to_chat(H, "<span class='warning'>YВы чувствуете себя крутым.</span>")
 					H.f_style = "Full Beard"
 					H.update_hair()
 			if(3)
 				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard"))
-					to_chat(H, "<span class='warning'>You feel manly!</span>")
+					to_chat(H, "<span class='warning'>Вы чувствуете себя гигачадом!</span>")
 					H.f_style = pick("Dwarf Beard", "Very Long Beard")
 					H.update_hair()
 
 /datum/disease2/effect/hallucinations
 	name = "Hallucinational Syndrome"
-	desc = "The virus stimulates the brain, causing occasional hallucinations."
+	desc = "Вирус стимулирует мозг, вызывая периодические галлюцинации."
 	level = 2
 	max_stage = 3
 	cooldown = 30
@@ -888,17 +888,17 @@
 
 /datum/disease2/effect/hallucinations/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class='notice'>[pick("Something appears in your peripheral vision, then winks out.", "You hear a faint whisper with no source.", "Your head aches.")]</span>")
+		to_chat(mob, "<span class='notice'>[pick("Что-то появляется в вашем периферийном зрении, а затем исчезает.", "Вы слышите слабый шепот, не имеющий источника.", "У вас болит голова.")]</span>")
 	else if(prob(20) || holder.stage == 2)
-		to_chat(mob, "<span class='danger'>[pick("Something is following you.", "You are being watched.", "You hear a whisper in your ear.", "Thumping footsteps slam toward you from nowhere.")]</span>")
+		to_chat(mob, "<span class='danger'>[pick("Что-то преследует вас.", "За вами следят.", "Вы слышите шепот в своем ухе.", "Вы слышите гулкие шаги, раздающиеся из ниоткуда.")]</span>")
 		mob.hallucination = max(mob.hallucination, 50)
 	else if(holder.stage == 3)
-		to_chat(mob, "<span class='userdanger'>[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]</span>")
+		to_chat(mob, "<span class='userdanger'>[pick("Ох, моя голова...", "У вас раскалывается голова.", "Они повсюду! Бегите!", "Что-то сркывается в тенях...")]</span>")
 		mob.hallucination = max(mob.hallucination, 100)
 
 /datum/disease2/effect/deaf
 	name = "Hard of Hearing Syndrome"
-	desc = "The virus causes inflammation of the eardrums, causing intermittent deafness."
+	desc = "Вирус вызывает воспаление барабанных перепонок, что приводит к периодической глухоте."
 	level = 2
 	max_stage = 3
 	cooldown = 60
@@ -907,22 +907,22 @@
 
 /datum/disease2/effect/deaf/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class='notice'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>")
+		to_chat(mob, "<span class='notice'>[pick("Вы слышите звон в ушах.", "Ваши уши закладывает.")]</span>")
 	else if(prob(20) || holder.stage == 2)
-		to_chat(mob, "<span class='warning'><i>Everything is so quiet suddenly...</i></span>")
+		to_chat(mob, "<span class='warning'><i>Все стало таким тихим...</i></span>")
 		mob.ear_deaf = max(mob.ear_deaf, 2)
 	else if(holder.stage == 3)
 		if(prob(pain_chance))
-			to_chat(mob, "<span class='userdanger'>Your ears pop painfully and start bleeding!</span>")
+			to_chat(mob, "<span class='userdanger'>Ваши уши болят, закладывает и начинает идти кровь!</span>")
 			mob.ear_deaf = max(mob.ear_deaf, 10)
 			mob.emote("scream")
 		else
-			to_chat(mob, "<span class='userdanger'>Your ears pop and begin ringing loudly!</span>")
+			to_chat(mob, "<span class='userdanger'>У вас закладывает уши и начинает громко звенеть!</span>")
 			mob.ear_deaf = max(mob.ear_deaf, 5)
 
 /datum/disease2/effect/giggle
 	name = "Uncontrolled Laughter Effect"
-	desc = "The virus creates a neurologic disorder, causing host to laugh unstoppable."
+	desc = "Вирус вызывает неврологическое расстройство, заставляя носителя неудержимо смеяться."
 	level = 2
 	max_stage = 4
 	cooldown = 10
@@ -931,34 +931,35 @@
 
 /datum/disease2/effect/giggle/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class='notice'>[pick("You smile for no reason.", "You feel very happy.")]</span>")
+		to_chat(mob, "<span class='notice'>[pick("Вы улыбаетесь без причины.", "Вы чувствуете себя очень счастливым.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		if(prob(50))
-			to_chat(mob, "<span class='notice'>Everything is so good in the world you can't stop smiling.</span>")
+			to_chat(mob, "<span class='notice'>В мире все так хорошо, что вы не можете перестать улыбаться.</span>")
 		else
 			mob.emote(pick("smile","grin"))
 
 	else if(prob(20) || holder.stage == 3)
 		if(prob(30))
-			to_chat(mob, "<span class='warning'>[pick("You laugh unstoppable.", "You are almost crying from laughter.", "Your lungs hurt from laughing so much.")]</span>")
+			to_chat(mob, "<span class='warning'>[pick("Вы неудержимо смеетесь.", "Вы чуть не плачете от смеха.", "У вас болят легкие от смеха.")]</span>")
 		else
 			mob.emote(pick("laugh","giggle"))
 	else if(holder.stage == 4)
 		if(prob(30))
-			to_chat(mob, "<span class='userdanger'>[pick("AHAHAHA!","MUST LAUGH", "HELP ME, I CAN'T STOP")]</span>")
+			to_chat(mob, "<span class='userdanger'>[pick("АХАХАХАХА!","Я ДОЛЖЕН СМЕЯТЬСЯ", "ПОМОГИТЕ МНЕ, Я НЕ МОГУ ОСТАНОВИТЬСЯ!")]</span>")
 		else if(prob(laughing_fit_chance))
-			to_chat(mob, "<span notice='userdanger'>[pick("You have a laughing fit!", "You can't stop laughing!")]</span>")
+			to_chat(mob, "<span notice='userdanger'>[pick("У вас приступ смеха!", "Вы не можете остановиться смеяться!")]</span>")
 			mob.apply_effect(2, WEAKEN)
 			mob.make_jittery(50)
 			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob/, emote), pick("laugh","giggle")), 6)
 			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob/, emote), pick("laugh","giggle")), 12)
 			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob/, emote), pick("laugh","giggle")), 18)
 		else
-			mob.say(pick("haha","ha ha ha","ha","HA","hah","haaaaaa","hehe","hehehe","heh","heh heh","muahaha","mwahaha","heehee","teehee","hahaha","ahahaha","bahaha","gahaha"))
+			mob.say(pick("хаха","ха ха ха","ха","ХА","хех","аха","хехе","хехехе","хех","хе хе хе","мухахаха","мваахаха","хихи","тцхихи","хахаха","ахахахах","бваахах","гхахах"))
 
 /datum/disease2/effect/confusion
 	name = "Topographical Cretinism"
-	desc = "The virus damages brain, making host be unable to orient in his surroundings."
+	desc = "Вирус повреждает мозг, из-за чего носитель не может ориентироваться в окружающем мире
+	."
 	level = 2
 	max_stage = 3
 	cooldown = 60
@@ -966,17 +967,17 @@
 
 /datum/disease2/effect/confusion/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class='notice'>[pick("You suddenly forget where your right is.", "You suddenly forget where your left is.")]</span>")
+		to_chat(mob, "<span class='notice'>[pick("Вы вдруг забыли, где находится ваше право.", "Вы вдруг забыли, где находится ваше лево.")]</span>")
 	else if(prob(20) || holder.stage == 2)
-		to_chat(mob, "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>")
+		to_chat(mob, "<span class='notice'>Вам вдруг стало трудно различать право и лево..</span>")
 		mob.MakeConfused(2)
 	else if(holder.stage == 3)
-		to_chat(mob, "<span class='warning'><i>Where am I?</i></span>")
+		to_chat(mob, "<span class='warning'><i>Где я?</i></span>")
 		mob.MakeConfused(10)
 
 /datum/disease2/effect/purging_advanced
 	name = "Selective Purification"
-	desc = "The virus purge toxins and dangerous chemicals from the host's bloodstream, while ignoring beneficial chemicals."
+	desc = "Вирус очищает кровь хозяина от токсинов и опасных химических веществ, игнорируя при этом полезные химические вещества.."
 	level = 2
 	max_stage = 1
 	cooldown = 30
@@ -992,7 +993,7 @@
 
 /datum/disease2/effect/weight_even
 	name = "Weight Even"
-	desc = "The virus alters the host's metabolism, making it far more efficient then normal, and synthesizing nutrients from normally unedible sources."
+	desc = "Вирус изменяет метаболизм хозяина, делая его гораздо более эффективным, чем обычно, и синтезируя питательные вещества из обычно несъедобных источников.."
 	level = 2
 	max_stage = 3
 	cooldown = 10
@@ -1017,7 +1018,7 @@
 
 /datum/disease2/effect/stimulant
 	name = "Adrenaline Extra"
-	desc = "The virus synthesizes stimulants in the bloodstream, giving host a lot of energy."
+	desc = "Вирус синтезирует стимуляторы в кровотоке, давая хозяину много энергии и сил."
 	level = 2
 	max_stage = 3
 	cooldown = 10
@@ -1026,24 +1027,24 @@
 
 /datum/disease2/effect/stimulant/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class = 'notice'>[pick("You want to jump around.", "You want to run.")]</span>")
+		to_chat(mob, "<span class = 'notice'>[pick("Вы хотите попрыгать вокруг.", "Вы хотите бегать.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		if (mob.reagents.get_reagent_amount("stimulants") < 1)
-			to_chat(mob, "<span class='notice'>You feel a small boost of energy.</span>")
+			to_chat(mob, "<span class='notice'>Вы чувствуете небольшой прилив сил..</span>")
 			mob.reagents.add_reagent("stimulants", 1)
 	else if(holder.stage == 3)
 		if (mob.reagents.get_reagent_amount("stimulants") < 10)
-			to_chat(mob, "<span class='notice'>You feel a rush of energy inside you!</span>")
+			to_chat(mob, "<span class='notice'>Вы ощущаете прилив энергии внутри себя!</span>")
 			mob.reagents.add_reagent("stimulants", 4)
 		else if(prob(muscles_ache_chance))
-			to_chat(mob, "<span class='userdanger'>Your muscles ache.</span>")
+			to_chat(mob, "<span class='userdanger'>Ваши мышцы болят.</span>")
 			mob.apply_effect(35,AGONY,0)
 		if (prob(30))
 			mob.make_jittery(150)
 
 /datum/disease2/effect/mute
 	name = "Absorption"
-	desc = "The virus produces nanites on the host's skin that absorb sound waves."
+	desc = "Вирус производит на коже хозяина наниты, которые поглощают звуковые волны."
 	level = 2
 	max_stage = 2
 	cooldown = 10
@@ -1056,7 +1057,7 @@
 		if(1)
 			if(!COOLDOWN_FINISHED(src, mute_message))
 				return
-			to_chat(mob, "<span class='warning'>You begin to hear your own speech worse.</span>")
+			to_chat(mob, "<span class='warning'>Вы начинаете хуже слышать собственную речь..</span>")
 			COOLDOWN_START(src, mute_message, 1 MINUTES)
 		if(2)
 			if(trait_added)
