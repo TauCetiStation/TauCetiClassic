@@ -75,6 +75,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/reagent_containers/glass/beaker/vial,  CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/syringe,            CATEGORY_MEDICAL),
 	R(/obj/item/clothing/accessory/stethoscope,               CATEGORY_MEDICAL),
+	R(/obj/item/weapon/storage/pill_bottle,                   CATEGORY_MEDICAL),
 	R(/obj/item/stack/cable_coil/random,             CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/module/power_control,         CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/circuitboard/manipulator,     CATEGORY_ENGINEERING),
@@ -114,7 +115,10 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/stack/sheet/rglass,      CATEGORY_MATERIALS),
 	R(/obj/item/stack/rods,              CATEGORY_MATERIALS),
 	R(/obj/item/weapon/reagent_containers/glass/bucket,       CATEGORY_GENERAL),
+	R(/obj/item/weapon/kitchen/utensil/spoon,                 CATEGORY_GENERAL),
+	R(/obj/item/weapon/kitchen/utensil/fork,                  CATEGORY_GENERAL),
 	R(/obj/item/weapon/reagent_containers/spray/extinguisher, CATEGORY_GENERAL),
+	R(/obj/item/weapon/storage/visuals/tray,                  CATEGORY_GENERAL),
 	R(/obj/item/clothing/head/welding,                        CATEGORY_GENERAL),
 	R(/obj/item/weapon/kitchenknife,                          CATEGORY_GENERAL),
 	R(/obj/item/weapon/light/tube,                            CATEGORY_GENERAL),
@@ -195,6 +199,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 /obj/machinery/autolathe/RefreshParts()
 	..()
+
 	var/mb_rating = 0
 	man_rating = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)

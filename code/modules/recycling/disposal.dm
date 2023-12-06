@@ -381,21 +381,35 @@
 
 	// flush handle
 	if(flush)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-handle"))
+		add_overlay("dispover-handle")
 
 	// only handle is shown if no power
 	if(stat & NOPOWER || mode == -1)
 		return
 
+	var/list/status_overlay = list()
 	// 	check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-full"))
+		status_overlay.Add(image(icon = 'icons/obj/pipes/disposal.dmi',\
+							     icon_state = "dispover-full-light"))
+		set_light(1, 1, "#006381")
 
 	// charging and ready light
 	if(mode == 1)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-charge"))
+		status_overlay.Add(image(icon = 'icons/obj/pipes/disposal.dmi',\
+							     icon_state = "dispover-charge-light"))
+		add_overlay("dispover-charge")
+		set_light(1, 1, "#940101")
+
 	else if(mode == 2)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-ready"))
+		status_overlay.Add(image(icon = 'icons/obj/pipes/disposal.dmi',\
+							     icon_state = "dispover-ready-light"))
+		add_overlay("dispover-ready")
+		set_light(1, 1, "#0c8801")
+
+	for(var/image/I in status_overlay)
+		I.plane = LIGHTING_LAMPS_PLANE
+		add_overlay(I)
 
 // timed process
 // charge the gas reservoir and perform flush if ready
@@ -410,7 +424,7 @@
 	if( flush_count >= flush_every_ticks )
 		if( contents.len )
 			if(mode == 2)
-				feedback_inc("disposal_auto_flush",1)
+				feedback_inc("disposal_auto_flush", 1)
 				INVOKE_ASYNC(src, PROC_REF(flush))
 		flush_count = 0
 
@@ -609,13 +623,13 @@
 
 		if(hasmob && prob(3))
 			for(var/mob/living/H in src)
-				if(!isdrone(H) && !isreplicator(H)) //Drones use the mailing code to move through the disposal system,
+				if(!isdrone(H) && !isreplicator(H) && !HAS_TRAIT(H, TRAIT_NO_DISPOSALS_DAMAGE)) //Drones use the mailing code to move through the disposal system,
 					H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
 
 		if(has_bodybag && prob(3))
 			for(var/obj/structure/closet/body_bag/B in src)
 				for(var/mob/living/H in B)
-					if(!isdrone(H) && !isreplicator(H))
+					if(!isdrone(H) && !isreplicator(H) && !HAS_TRAIT(H, TRAIT_NO_DISPOSALS_DAMAGE))
 						H.take_overall_damage(20, 0, "Blunt Trauma")
 
 		if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy

@@ -246,7 +246,8 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "asteroidder_inner";
-	req_access = list(101)
+	req_access = list(101);
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
@@ -1069,7 +1070,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/clothing/shoes/laceup,
 /obj/item/clothing/under/gentlesuit,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/head/that,
 /obj/item/weapon/staff/gentcane,
 /turf/simulated/floor/plating,
@@ -1114,7 +1115,8 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "asteroidder_outer";
-	req_access = list(101)
+	req_access = list(101);
+	dir = 4
 	},
 /obj/effect/decal/turf_decal{
 	dir = 8;

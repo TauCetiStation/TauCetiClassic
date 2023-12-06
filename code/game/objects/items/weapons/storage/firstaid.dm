@@ -122,6 +122,8 @@
 	use_to_pickup = 1
 	var/wrapper_color
 	var/label
+	m_amt = 50
+	g_amt = 50
 
 /obj/item/weapon/storage/pill_bottle/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W))

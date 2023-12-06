@@ -38,6 +38,10 @@
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
 
+	var/datum/reagents/R = new/datum/reagents(1000)
+	reagents = R
+	R.my_atom = src
+
 	if(!species)
 		if(new_species)
 			set_species(new_species, FALSE, TRUE)
@@ -50,10 +54,7 @@
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
-
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
+	dna.b_type = random_blood_type()
 
 	. = ..()
 
@@ -98,9 +99,6 @@
 
 /mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
-	r_belly = HEX_VAL_RED(species.base_color)
-	g_belly = HEX_VAL_GREEN(species.base_color)
-	b_belly = HEX_VAL_BLUE(species.base_color)
 	. = ..(mapload, UNATHI)
 
 /mob/living/carbon/human/vox/atom_init(mapload)
@@ -1718,7 +1716,7 @@
 			injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
 		else
 			//it is much easier to prick yourself than another person
-			injection_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) 
+			injection_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15)
 		if(!instant)
 			if(hunt_injection_port) // takes additional time
 				if(!stealth && user != src)
@@ -2143,6 +2141,7 @@
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, jittery_process))
+	. = jitteriness
 
 /mob/living/carbon/human/is_facehuggable()
 	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)
@@ -2211,7 +2210,7 @@
 			massages_done_right = 0
 			return_to_body_dialog()
 
-			if(health > config.health_threshold_dead)
+			if((health > config.health_threshold_dead) || (!suiciding))
 				Heart.heart_fibrillate()
 				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
 			else
@@ -2500,3 +2499,15 @@
 		return 0
 
 	return BP.pumped
+
+/mob/living/carbon/human/clean_blood()
+	. = ..()
+	if(gloves)
+		gloves.clean_blood()
+		gloves.germ_level = 0
+	else
+		bloody_hands = 0
+		bloody_hands_mob = null
+		QDEL_NULL(hand_dirt_datum)
+		update_inv_slot(SLOT_GLOVES)
+		germ_level = 0

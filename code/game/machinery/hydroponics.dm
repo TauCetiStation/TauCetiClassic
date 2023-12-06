@@ -49,6 +49,8 @@
 	RefreshParts()
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
+	..()
+
 	var/tmp_capacity = 0
 	for (var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		tmp_capacity += M.rating

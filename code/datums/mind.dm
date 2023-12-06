@@ -83,11 +83,12 @@
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
 
+	transfer_actions(new_character)
+
 	var/mob/old_character = current
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
 
-	transfer_actions(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
 	transfer_antag_huds(hud_to_transfer)
 

@@ -13,6 +13,10 @@
 	active_power_usage = 20 // will be recalculated based on light intensity
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	interact_offline = TRUE
+	flags_2 = PROHIBIT_OVERLAYS_FOR_DEMO_2
+
+	glow_icon_state = "tube"
+	exposure_icon_state = "cone"
 
 	var/obj/item/weapon/light/inserted_bulb_type = /obj/item/weapon/light/tube
 	var/fitting = LAMP_FITTING_TUBE
@@ -39,12 +43,19 @@
 	base_icon_state = "tube" // not a typo
 	inserted_bulb_type = /obj/item/weapon/light/tube/smart
 
+	glow_icon_state = "stube"
+	exposure_icon_state = "cone"
+	glow_colored = TRUE
+
 /obj/machinery/light/small
 	desc = "A small lighting fixture."
 	icon_state = "bulb"
 	base_icon_state = "bulb"
 	fitting = LAMP_FITTING_BULB
 	inserted_bulb_type = /obj/item/weapon/light/bulb
+
+	glow_icon_state = "bulb"
+	exposure_icon_state = "circle"
 
 /obj/machinery/light/small/emergency
 	inserted_bulb_type = /obj/item/weapon/light/bulb/emergency

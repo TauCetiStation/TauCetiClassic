@@ -5,11 +5,14 @@
 	item_state = "syndicate-helm"
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	action_button_name = "Toggle Helmet Light"
 	var/brightness = 3 //light_range when on
 	var/lit = FALSE
 	species_restricted = list("exclude" , DIONA)
 	var/image/lamp = null
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet_light)
+
+/datum/action/item_action/hands_free/toggle_helmet_light
+	name = "Toggle Helmet Light"
 
 /obj/item/clothing/head/helmet/space/syndicate/atom_init()
 	. = ..()
@@ -43,6 +46,7 @@
 	lit = !lit
 	set_light(lit ? brightness : 0)
 	update_icon(user)
+	update_item_actions()
 
 
 //Civilian syndicate space suit
@@ -100,7 +104,7 @@
 	desc = "Space helmet made by unknown manufacturer. It's made from some strange composite material."
 	icon_state = "syndicate-helm-infiltrator"
 	item_state = "syndicate-helm-elite"
-	action_button_name = null
+	item_action_types = null
 
 /obj/item/clothing/suit/space/syndicate/infiltrator
 	name = "infiltrator space suit"
@@ -119,7 +123,7 @@
 	icon_state = "syndicate-helm-elite"
 	item_state = "syndicate-helm-elite"
 	armor = list(melee = 75, bullet = 65, laser = 65, energy = 65, bomb = 70, bio = 100, rad = 20)
-	action_button_name = null
+	item_action_types = null
 
 /obj/item/clothing/head/helmet/space/syndicate/elite/atom_init()
 	. = ..()

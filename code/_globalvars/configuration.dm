@@ -3,8 +3,7 @@ var/global/datum/configuration/config = null
 var/global/host = null
 var/global/join_motd = null
 var/global/host_announcements
-var/global/join_test_merge = null
-var/global/test_merges
+var/global/list/test_merges
 var/global/station_name = "NSS Exodus"
 var/global/station_name_ru = "КСН Исход"
 var/global/system_name = "Tau Ceti"

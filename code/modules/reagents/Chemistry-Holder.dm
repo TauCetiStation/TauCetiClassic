@@ -287,7 +287,8 @@ var/global/const/INGEST = 2
 						feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
 						add_reagent(C.result, C.result_amount*multiplier)
-						set_data(C.result, preserved_data)
+						if(preserved_data)
+							set_data(C.result, preserved_data)
 
 						//add secondary products
 						for(var/S in C.secondary_results)
@@ -511,7 +512,7 @@ var/global/const/INGEST = 2
 /datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)
-		if (res != "") res += ","
+		if (res != "") res += ", "
 		res += A.name
 
 	return res
@@ -621,8 +622,8 @@ var/global/const/INGEST = 2
 
 	if(!isnull(user))
 		var/turf/T = get_turf(target)
-		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location [COORD(T)] [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] splashed [get_reagents()] on [target], location [COORD(T)]")
+		message_admins("[key_name_admin(user)] splashed ([splash.get_reagents()]) on [target], location [COORD(T)] [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [splash.get_reagents()] on [target], location [COORD(T)]")
 
 		if(ismob(target))
 			var/mob/living/L = target

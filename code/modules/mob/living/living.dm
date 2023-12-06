@@ -56,8 +56,9 @@
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
 		return
+	SEND_SIGNAL(src, COMSIG_LIVING_BUMPED, A)
 	if(!ismovable(A) || is_blocked_turf(A))
-		if(confused && stat == CONSCIOUS && m_intent == "run")
+		if(confused && stat == CONSCIOUS && m_intent == MOVE_INTENT_RUN && !lying)
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
 			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
@@ -411,13 +412,21 @@
 /mob/proc/update_eye_blur()
 	if(!client)
 		return
-	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	if(eye_blurry)
-		game_plane_master_controller.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
-		game_plane_master_controller.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
+
+	if(client.prefs.eye_blur_effect)
+		var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in client.screen
+		if(eye_blurry)
+			PM.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
+			PM.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
+		else
+			PM.remove_filter("eye_blur_angular")
+			PM.remove_filter("eye_blur_gauss")
+
 	else
-		game_plane_master_controller.remove_filter("eye_blur_angular")
-		game_plane_master_controller.remove_filter("eye_blur_gauss")
+		if(eye_blurry)
+			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
+		else
+			clear_fullscreen("blurry")
 
 // ============================================================
 
@@ -519,6 +528,9 @@
 /mob/living/proc/restore_all_bodyparts()
 	return
 
+/mob/living/proc/restore_all_organs()
+	return
+
 /mob/living/proc/revive()
 	rejuvenate()
 	if(buckled)
@@ -584,6 +596,7 @@
 			Heart?.heart_normalize()
 
 	restore_all_bodyparts()
+	restore_all_organs()
 	cure_all_viruses()
 
 	// remove the character from the list of the dead
@@ -1087,6 +1100,7 @@
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
+		SEND_SIGNAL(src, COMSIG_FLASH_EYES, intensity)
 		return TRUE
 	return FALSE
 
@@ -1338,19 +1352,13 @@
 		if(masked)
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>",
 							"<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
-			if(gender == FEMALE)
-				vomitsound = SOUNDIN_FRIGVOMIT
-			else
-				vomitsound = SOUNDIN_MRIGVOMIT
+			vomitsound = get_sound_by_voice(src, SOUNDIN_MRIGVOMIT, SOUNDIN_FRIGVOMIT)
 			eye_blurry = max(10, eye_blurry)
 			losebreath += 20
 		else
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
 							"<span class='warning'>You throw up!</span>")
-			if(gender == FEMALE)
-				vomitsound = SOUNDIN_FEMALEVOMIT
-			else
-				vomitsound = SOUNDIN_MALEVOMIT
+			vomitsound = get_sound_by_voice(src, SOUNDIN_MALEVOMIT, SOUNDIN_FEMALEVOMIT)
 		make_jittery(max(35 - jitteriness, 0))
 		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
 	else

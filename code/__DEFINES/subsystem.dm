@@ -43,6 +43,7 @@
 #define SS_INIT_STICKY_BAN    -7
 #define SS_INIT_HOLOMAPS      -8
 #define SS_INIT_EXPLOSIONS    -69
+#define SS_INIT_ASPECTS       -92
 #define SS_INIT_QUALITIES     -93
 #define SS_INIT_DEMO          -94 // To avoid a bunch of changes related to initialization being written, do this last
 #define SS_INIT_CHAT          -95 //Should be last to ensure chat remains smooth during init.

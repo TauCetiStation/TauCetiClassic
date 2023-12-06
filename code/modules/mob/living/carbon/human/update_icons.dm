@@ -118,6 +118,9 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(S.sprite_sheets[sprite_sheet_slot])
 		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
+	if(!(t_state in icon_states(icon_path)))
+		icon_path = def_icon_path
+
 	var/fem = ""
 	if(H.gender == FEMALE && S.gender_limb_icons)
 		if(t_state != null)
@@ -196,7 +199,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		var/obj/item/organ/external/Head = bodyparts_by_name[BP_HEAD]
 		if(Head && !Head.is_stump)
-			var/mutable_appearance/jaw = mutable_appearance('icons/mob/human.dmi', "[gender]_jaw", -FACEMASK_LAYER)
+			var/mutable_appearance/jaw = mutable_appearance('icons/mob/human.dmi', "[gender]_jaw", -BODY_LAYER)
 			jaw.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
 			standing += jaw
 
@@ -348,6 +351,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", layer = -FIRE_UPPER_LAYER)
 		under = update_height(under)
 		over = update_height(over)
+		over.plane = LIGHTING_LAMPS_PLANE
 		overlays_standing[FIRE_LOWER_LAYER] = under
 		overlays_standing[FIRE_UPPER_LAYER] = over
 
@@ -426,6 +430,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
+		var/fem = ""
+		if(gender == FEMALE)
+			fem = "_fem"
 
 		for(var/obj/item/clothing/accessory/A in U.accessories)
 			var/tie_color = A.icon_state
@@ -433,7 +440,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(A.icon_custom)
 				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
 			else
-				tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
+				tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color][fem]", "layer" = -UNIFORM_LAYER + A.layer_priority)
 			tie.color = A.color
 			tie = human_update_offset(tie, TRUE)
 			standing.add_overlay(tie)
@@ -877,7 +884,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/standing = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.open)
-			standing += image("icon" = 'icons/mob/surgery.dmi', "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
+			standing += image("icon" = species.surgery_icobase, "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
 
 	if(standing.len)
 		for(var/image/I in standing)
