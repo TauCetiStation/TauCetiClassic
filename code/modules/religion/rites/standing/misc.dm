@@ -148,7 +148,7 @@
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Я обращаюсь к тебе - Всевышний...",
 							  "...свет, дарованный мудростью возвратившихся богов...",
-							  "...Они наделили Анимацию человеческими страстями и чувствами...", 
+							  "...Они наделили Анимацию человеческими страстями и чувствами...",
 							  "...Анимация, пришедшая из Нового Царства, радуйся свету!...",)
 	invoke_msg = "Я обращаюсь к тебе! Я взываю! Очнись ото сна!"
 	favor_cost = 80
@@ -366,7 +366,11 @@
 	if(!istype(animal))
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
 		return FALSE
-	animal.maxHealth *= divine_power
+	var/potential_max_health = animal.maxHealth * divine_power
+	if(potential_max_health <= 300)
+		animal.maxHealth = potential_max_health
+	else
+		animal.maxHealth = 300
 	animal.rejuvenate()
 
 	return TRUE
