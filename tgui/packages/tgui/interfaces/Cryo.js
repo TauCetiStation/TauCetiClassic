@@ -128,7 +128,7 @@ const CryoContent = (props, context) => {
             icon="eject"
             onClick={() => act('ejectBeaker')}
             disabled={!isBeakerLoaded}>
-            Извлечь мензурку
+            Извлечь сосуд
           </Button>
         )}>
         <LabeledList>
@@ -147,7 +147,7 @@ const CryoContent = (props, context) => {
             </LabeledList.Item>
           ) : (
             <LabeledList.Item label="Состояние воздуха" color="bad">
-              No Air
+              Нет воздуха
             </LabeledList.Item>)}
           <LabeledList.Item label="Сосуд">
             <CryoBeaker />
