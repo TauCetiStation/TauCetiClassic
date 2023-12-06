@@ -311,7 +311,7 @@
 		beaker = I
 		user.visible_message(
 			"[user] вставляет [I] в крио капсулу.",
-			"<span class='notice'>Вы вставляете [I] внутрь крио капсулы.</span>")
+			"<span class='notice'>Вы вставляете [CASE(I, ACCUSATIVE_CASE)] внутрь крио капсулы.</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return
