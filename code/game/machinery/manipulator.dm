@@ -503,6 +503,10 @@
 		return
 
 	else if(default_unfasten_wrench(user, I) && !busy_moving && state == MANIPULATOR_STATE_IDLE)
+		if(issilicon(user))
+			to_chat(user, "<span class='warning'>Sorry! Automatic protocols preventing AI from becoming too powerful can't allow you to unwrench this!</span>")
+			return
+
 		if(state != MANIPULATOR_STATE_IDLE)
 			to_chat(user, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
 			return
