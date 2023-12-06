@@ -503,18 +503,6 @@
 		return
 
 	else if(default_unfasten_wrench(user, I) && !busy_moving && state == MANIPULATOR_STATE_IDLE)
-		if(issilicon(user))
-			to_chat(user, "<span class='warning'>Sorry! Automatic protocols preventing AI from becoming too powerful can't allow you to unwrench this!</span>")
-			return
-
-		if(state != MANIPULATOR_STATE_IDLE)
-			to_chat(user, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
-			return
-
-		if(busy_moving)
-			to_chat(user, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
-			return
-
 		if(!panel_open)
 			if(anchored)
 				add_overlay(stat)
@@ -531,6 +519,21 @@
 
 	else if(default_deconstruction_crowbar(I))
 		return
+
+	return ..()
+
+/obj/machinery/manipulator/default_unfasten_wrench(mob/user, obj/item/weapon/I, time = SKILL_TASK_VERY_EASY)
+	if(issilicon(user))
+		to_chat(user, "<span class='warning'>Sorry! Automatic protocols preventing AI from becoming too powerful can't allow you to unwrench this!</span>")
+		return FALSE
+
+	if(state != MANIPULATOR_STATE_IDLE)
+		to_chat(user, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
+		return FALSE
+
+	if(busy_moving)
+		to_chat(user, "<span class='warning'>You cannot unwrench [src] while it's working.</span>")
+		return FALSE
 
 	return ..()
 
