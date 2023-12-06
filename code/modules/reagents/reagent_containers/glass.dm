@@ -149,7 +149,7 @@
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/device/flashlight/pen))
-		var/tmp_label = sanitize_safe(input(user, "Enter a label for [src.name]","Label", input_default(label_text)), MAX_NAME_LEN)
+		var/tmp_label = sanitize_safe(input(user, "Введите имя для [CASE(src.name, GENITIVE_CASE)]","Label", input_default(label_text)), MAX_NAME_LEN)
 		if(length(tmp_label) > 10)
 			to_chat(user, "<span class = 'rose'>Длина этикетки может составлять не более 10 символов.</span>")
 		else
