@@ -61,10 +61,10 @@
 /obj/item/weapon/reagent_containers/glass/attack_self()
 	..()
 	if (is_open_container())
-		to_chat(usr, "<span class = 'notice'>Вы накрываете крышку на [CASE(src, ACCUSATIVE_CASE)].</span>")
+		to_chat(usr, "<span class = 'notice'>Вы закрываете крышку [CASE(src, GENITIVE_CASE)].</span>")
 		flags ^= OPENCONTAINER
 	else
-		to_chat(usr, "<span class = 'notice'>Вы снимаете крышку с [CASE(src, ACCUSATIVE_CASE)].</span>")
+		to_chat(usr, "<span class = 'notice'>Вы снимаете крышку с [CASE(src, GENITIVE_CASE)].</span>")
 		flags |= OPENCONTAINER
 	update_icon()
 	update_item_actions()
@@ -101,7 +101,7 @@
 			T.try_transfer(src, T, user)
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			to_chat(user, "<span class = 'rose'>[capitalize(CASE(src, NOMINATIVE_CASE)] пуста.</span>")
+			to_chat(user, "<span class = 'rose'>[capitalize(CASE(src, NOMINATIVE_CASE))] пуста.</span>")
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -153,7 +153,7 @@
 		if(length(tmp_label) > 10)
 			to_chat(user, "<span class = 'rose'>Длина этикетки может составлять не более 10 символов.</span>")
 		else
-			to_chat(user, "<span class = 'notice'>Вы устанавливаете этикетку на\"[tmp_label]\".</span>")
+			to_chat(user, "<span class = 'notice'>Вы клеите этикетку на\"[tmp_label]\".</span>")
 			label_text = tmp_label
 			update_name_label()
 
@@ -192,7 +192,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/atom_init()
 	. = ..()
-	desc += "Может содержать [volume] юнитов."
+	desc += "Может вместить [volume] юнитов."
 	filling_states = list(20, 40, 60, 80, 100)
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
@@ -246,7 +246,7 @@
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
 	cases = list("криостазисная мензурка", "криостазисной мензурки", "криостазисной мензурке", "криостазисную мензурку", "криостазисной мензуркой", "криостазисной мензурке")
-	desc = "Криостазисная мензурка, позволяющий хранить химические вещества без реакций."
+	desc = "Криостазисная мензурка, позволяющая хранить химические вещества без протекания реакций."
 	icon_state = "beakernoreact"
 	g_amt = 500
 	amount_per_transfer_from_this = 10
@@ -255,7 +255,7 @@
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
 	cases = list("блюспейс мензурка", "блюспейс мензурки", "блюспейс мензурке", "блюспейс мензурку", "блюспейс мензуркой", "блюспейс мензурке")
-	desc = "Блюспейс мензурка, работающая на экспериментальной блюспейс технологии."
+	desc = "Блюспейс мензурка, работающая на экспериментальной технологии."
 	icon_state = "beakerbluespace"
 	g_amt = 5000
 	volume = 300
@@ -266,8 +266,8 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/vial
 	name = "vial"
-	cases = list("флакон", "флакона", "флакону", "флакон", "флаконом", "флаконе")
-	desc = "Маленький стеклянный флакон."
+	cases = list("пробирка", "пробирки", "пробирке", "пробирку", "пробиркой", "пробирке")
+	desc = "Маленькая стеклянная пробирка."
 	icon_state = "vial"
 	g_amt = 250
 	volume = 25
@@ -302,7 +302,7 @@
 /obj/item/weapon/reagent_containers/glass/beaker/teapot
 	name = "teapot"
 	cases = list("чайник", "чайника", "чайнику", "чайник", "чайником", "чайнике")
-	desc = "Элегантный чайник"
+	desc = "Элегантный чайник."
 	icon_state = "teapot"
 	item_state = "teapot"
 
