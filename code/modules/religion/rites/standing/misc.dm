@@ -366,11 +366,7 @@
 	if(!istype(animal))
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
 		return FALSE
-	var/potential_max_health = animal.maxHealth * divine_power
-	if(potential_max_health <= 300)
-		animal.maxHealth = potential_max_health
-	else
-		animal.maxHealth = 300
+	animal.maxHealth = clamp(initial(animal.maxHealth) * divine_power, 0, 300)
 	animal.rejuvenate()
 
 	return TRUE
