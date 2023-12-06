@@ -403,6 +403,7 @@
 		affecting.set_dir(WEST)
 
 		set_state(GRAB_KILL)
+	SEND_SIGNAL(assailant, COMSIG_S_CLICK_GRAB, src)
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/grab/proc/confirm()
