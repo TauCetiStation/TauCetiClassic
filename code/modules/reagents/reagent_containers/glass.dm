@@ -101,7 +101,7 @@
 			T.try_transfer(src, T, user)
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			to_chat(user, "<span class = 'rose'>[CASE(src, NOMINATIVE_CASE)] пуста.</span>")
+			to_chat(user, "<span class = 'rose'>[capitalize(CASE(src, NOMINATIVE_CASE)] пуста.</span>")
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
