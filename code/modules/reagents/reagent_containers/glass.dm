@@ -56,15 +56,15 @@
 /obj/item/weapon/reagent_containers/glass/examine(mob/user)
 	..()
 	if(!is_open_container())
-		to_chat(user, "<span class='info'>Airtight lid seals it completely.</span>")
+		to_chat(user, "<span class='info'>Герметичная крышка полностью закрывает ее.</span>")
 
 /obj/item/weapon/reagent_containers/glass/attack_self()
 	..()
 	if (is_open_container())
-		to_chat(usr, "<span class = 'notice'>You put the lid on \the [src].</span>")
+		to_chat(usr, "<span class = 'notice'>Вы накрываете крышку на [CASE(src, ACCUSATIVE_CASE)].</span>")
 		flags ^= OPENCONTAINER
 	else
-		to_chat(usr, "<span class = 'notice'>You take the lid off \the [src].</span>")
+		to_chat(usr, "<span class = 'notice'>Вы снимаете крышку с [CASE(src, ACCUSATIVE_CASE)].</span>")
 		flags |= OPENCONTAINER
 	update_icon()
 	update_item_actions()
@@ -101,7 +101,7 @@
 			T.try_transfer(src, T, user)
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			to_chat(user, "<span class = 'rose'>[src] is empty.</span>")
+			to_chat(user, "<span class = 'rose'>[CASE(src, NOMINATIVE_CASE)] пуста.</span>")
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -143,7 +143,7 @@
 
 
 	else if(reagents && reagents.total_volume)
-		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
+		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [target].</span>")
 		reagents.standard_splash(target, user=user)
 		return
 
@@ -151,9 +151,9 @@
 	if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/device/flashlight/pen))
 		var/tmp_label = sanitize_safe(input(user, "Enter a label for [src.name]","Label", input_default(label_text)), MAX_NAME_LEN)
 		if(length(tmp_label) > 10)
-			to_chat(user, "<span class = 'rose'>The label can be at most 10 characters long.</span>")
+			to_chat(user, "<span class = 'rose'>Длина этикетки может составлять не более 10 символов.</span>")
 		else
-			to_chat(user, "<span class = 'notice'>You set the label to \"[tmp_label]\".</span>")
+			to_chat(user, "<span class = 'notice'>Вы устанавливаете этикетку на\"[tmp_label]\".</span>")
 			label_text = tmp_label
 			update_name_label()
 
@@ -161,7 +161,7 @@
 		var/obj/item/stack/nanopaste/N = I
 		if(is_open_container() && reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "<span class = 'rose'>[src] is full.</span>")
+				to_chat(user, "<span class = 'rose'>[CASE(src, NOMINATIVE_CASE)] полон.</span>")
 				return
 
 			if(!N.use(1))
@@ -179,7 +179,8 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker
 	name = "beaker"
-	desc = "A beaker."
+	cases = list("мензурка", "мензурки", "мензурке", "мензурку", "мензуркой", "мензурке")
+	desc = "Это мензурка."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
@@ -191,7 +192,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/atom_init()
 	. = ..()
-	desc += " Can hold up to [volume] units."
+	desc += "Может содержать [volume] юнитов."
 	filling_states = list(20, 40, 60, 80, 100)
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
@@ -233,7 +234,8 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
-	desc = "A large beaker."
+	cases = list("большая мензурка", "большой мензурки", "большой мензурке", "большую мензурку", "большой мензуркой", "большой мензурке")
+	desc = "Это большая мензурка."
 	icon_state = "beakerlarge"
 	g_amt = 5000
 	volume = 150
@@ -243,7 +245,8 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
-	desc = "A cryostasis beaker that allows for chemical storage without reactions."
+	cases = list("криостазисная мензурка", "криостазисной мензурки", "криостазисной мензурке", "криостазисную мензурку", "криостазисной мензуркой", "криостазисной мензурке")
+	desc = "Криостазисная мензурка, позволяющий хранить химические вещества без реакций."
 	icon_state = "beakernoreact"
 	g_amt = 500
 	amount_per_transfer_from_this = 10
@@ -251,7 +254,8 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
-	desc = "A bluespace beaker, powered by experimental bluespace technology."
+	cases = list("блюспейс мензурка", "блюспейс мензурки", "блюспейс мензурке", "блюспейс мензурку", "блюспейс мензуркой", "блюспейс мензурке")
+	desc = "Блюспейс мензурка, работающая на экспериментальной блюспейс технологии."
 	icon_state = "beakerbluespace"
 	g_amt = 5000
 	volume = 300
@@ -262,7 +266,8 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/vial
 	name = "vial"
-	desc = "A small glass vial."
+	cases = list("флакон", "флакона", "флакону", "флакон", "флаконом", "флаконе")
+	desc = "Маленький стеклянный флакон."
 	icon_state = "vial"
 	g_amt = 250
 	volume = 25
@@ -296,7 +301,8 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/teapot
 	name = "teapot"
-	desc = "An elegant teapot."
+	cases = list("чайник", "чайника", "чайнику", "чайник", "чайником", "чайнике")
+	desc = "Элегантный чайник"
 	icon_state = "teapot"
 	item_state = "teapot"
 
@@ -323,8 +329,9 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bucket
-	desc = "It's a bucket."
 	name = "bucket"
+	cases = list("ведро", "ведра", "ведру", "ведро", "ведром", "ведре")
+	desc = "Это ведро."
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
