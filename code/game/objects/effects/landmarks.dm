@@ -148,10 +148,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 // Assistats
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
-	icon_state = "Test Subject"
-
-/obj/effect/landmark/start/assistant/test_subject
-	name = "Test Subject"
+	icon_state = "Assistant"
 
 /obj/effect/landmark/start/assistant/waiter
 	name = "Waiter"
