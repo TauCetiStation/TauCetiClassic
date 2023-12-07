@@ -161,7 +161,7 @@
 		var/obj/item/stack/nanopaste/N = I
 		if(is_open_container() && reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "<span class = 'rose'>[src] is full.</span>")
+				to_chat(user, "<span class = 'rose'>Внутри [CASE(src, GENITIVE_CASE)] нет свободного места.</span>")
 				return
 
 			if(!N.use(1))
