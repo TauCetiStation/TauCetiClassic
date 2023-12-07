@@ -4,6 +4,7 @@
 
 /obj/machinery/sleep_console
 	name = "Sleeper Console"
+	cases = list("консоль капсулы диализа", "консоли капсулы диализа", "консоли капсулы диализа", "консоль капсулы диализа", "консолью капсулы диализа", "консоли капсулы диализа")
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeperconsole"
 	anchored = TRUE //About time someone fixed this.
@@ -12,7 +13,8 @@
 
 /obj/machinery/sleeper
 	name = "Sleeper"
-	desc = "Used for the rapid introduction of chemicals from the internal storage."
+	cases = list("капсула диализа", "капсулы диализа", "капсуле диализа", "капсула диализа", "капсулой диализа", "капсуле диализа")
+	desc = "Используется для быстрого вывода или ввода различных веществ путём диализа."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper-open"
 	layer = BELOW_CONTAINERS_LAYER
@@ -78,7 +80,7 @@
 	if(user.incapacitated() || !iscarbon(target) || target.buckled)
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, как работает это устройство.</span>")
 		return
 	close_machine(target)
 
@@ -86,7 +88,7 @@
 	if(user.incapacitated() || !Adjacent(user))
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, как работает это устройство.</span>")
 		return
 	if(occupant && is_operational())
 		open_machine()
@@ -116,7 +118,7 @@
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	..()
 	if(M.environment_smash)
-		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+		visible_message("<span class='danger'>[M.name] ломает [src] на части!</span>")
 		qdel(src)
 	return
 
@@ -125,11 +127,11 @@
 		if(!beaker)
 			beaker = I
 			user.drop_from_inventory(I, src)
-			user.visible_message("[user] adds \a [I] to \the [src]!", "You add \a [I] to \the [src]!")
+			user.visible_message("[user] добавил \a [I] в \the [src]!", "Вы добавили \a [I] в \the [src]!")
 			updateUsrDialog()
 			return
 		else
-			to_chat(user, "<span class='warning'>The sleeper has a beaker already.</span>")
+			to_chat(user, "<span class='warning'>Внутри капсулы уже находится сосуд.</span>")
 			return
 
 	if(!state_open && !occupant)
@@ -216,28 +218,28 @@
 	return
 
 /obj/machinery/sleeper/ui_interact(mob/user)
-	var/dat = "<div class='Section__title'>Sleeper Status</div>"
+	var/dat = "<div class='Section__title'>Статус капсулы диализа</div>"
 
 	dat += "<div class='Section'>"
 	if(!occupant)
-		dat += "Sleeper Unoccupied"
+		dat += "Капсула не занята"
 	else
 		dat += "[occupant.name] => "
 		switch(occupant.stat)	//obvious, see what their status is
 			if(0)
-				dat += "<span class='good'>Conscious</span>"
+				dat += "<span class='good'>В сознании</span>"
 			if(1)
-				dat += "<span class='average'>Unconscious</span>"
+				dat += "<span class='average'>Не в сознании</span>"
 			else
-				dat += "<span class='bad'>DEAD</span>"
+				dat += "<span class='bad'>МЁРТВ</span>"
 
 		dat += "<br />"
 
 		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill bggood'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Механические повреждения:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Статус асфиксии:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Статус интоксикации:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Термические повреждения:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
 
 		var/occupant_paralysis = occupant.AmountParalyzed()
 		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant_paralysis)]% [occupant_paralysis ? "([round(occupant_paralysis / 4)] seconds left)" : ""]</div></div>"
@@ -247,41 +249,41 @@
 
 	dat += "</div>"
 
-	dat += "<A href='?src=\ref[src];refresh=1'>Scan</A>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Начать сканирование</A>"
 
-	dat += "<A href='?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
+	dat += "<A href='?src=\ref[src];[state_open ? "close=1'>Закрыть</A>" : "open=1'>Открыть</A>"]"
 
-	dat += "<h3>Beaker</h3>"
+	dat += "<h3>Сосуд</h3>"
 
 	if(src.beaker)
-		dat += "<A href='?src=\ref[src];removebeaker=1'>Remove Beaker</A>"
+		dat += "<A href='?src=\ref[src];removebeaker=1'>Убрать сосуд</A>"
 		if(filtering)
-			dat += "<A href='?src=\ref[src];togglefilter=1'>Stop Dialysis</A>"
-			dat += text("<BR>Output Beaker has [] units of free space remaining<BR><HR>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
+			dat += "<A href='?src=\ref[src];togglefilter=1'>Остановить диализ</A>"
+			dat += text("<BR>В выходном сосуде осталось [] юнитов свободного места<BR><HR>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 		else
-			dat += "<A href='?src=\ref[src];togglefilter=1'>Start Dialysis</A>"
-			dat += text("<BR>Output Beaker has [] units of free space remaining", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
+			dat += "<A href='?src=\ref[src];togglefilter=1'>Начать диализ</A>"
+			dat += text("<BR>В выходном сосуде осталось [] юнитов свободного места", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 	else
-		dat += "<BR>No Dialysis Output Beaker is present."
+		dat += "<BR>Сосуд для проведения диализа не вставлен"
 
-	dat += "<h3>Injector</h3>"
+	dat += "<h3>Введение препаратов</h3>"
 
 	if(src.occupant)
-		dat += "<A href='?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
+		dat += "<A href='?src=\ref[src];inject=inaprovaline'>Ввести Инапровалин</A>"
 	else
-		dat += "<span class='disabled'>Inject Inaprovaline</span>"
+		dat += "<span class='disabled'>Ввести Инапровалин</span>"
 	if(occupant && occupant.health > min_health)
 		for(var/re in available_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
 			if(C)
-				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
+				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Ввести [C.name]</A>"
 	else
 		for(var/re in available_chems)
 			var/datum/reagent/C = chemical_reagents_list[re]
 			if(C)
-				dat += "<BR><span class='disabled'>Inject [C.name]</span>"
+				dat += "<BR><span class='disabled'>Ввести [C.name]</span>"
 
-	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 605)	//Set up the popup browser window
+	var/datum/browser/popup = new(user, "капсула диализа", "консоль капсулы диализа", 520, 605)	//Set up the popup browser window
 	popup.set_content(dat)
 	popup.open()
 
@@ -304,9 +306,9 @@
 		if(href_list["inject"] == "inaprovaline" || (occupant.health > min_health && (href_list["inject"] in available_chems)))
 			inject_chem(usr, href_list["inject"])
 		else
-			to_chat(usr, "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>")
+			to_chat(usr, "<span class='notice'>ОШИБКА: ПАЦИЕНТ НЕ НАХОДИТСЯ В СТАБИЛЬНОМ СОСТОЯНИИ ДЛЯ ВВЕДЕНИЯ ПРЕПАРАТОВ.</span>")
 	else
-		to_chat(usr, "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>")
+		to_chat(usr, "<span class='notice'>ОШИБКА: У ПАЦИЕНТА ОБНАРУЖЕНО СЕРЬЕЗНОЕ НАРУШЕНИЕ МЕТАБОЛИЗМА.</span>")
 	updateUsrDialog()
 
 /obj/machinery/sleeper/open_machine()
@@ -317,7 +319,7 @@
 
 /obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)
-		to_chat(target, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
+		to_chat(target, "<span class='notice'><b>Вы чувствуете охлаждение воздуха в капсуле...</b></span>")
 		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
@@ -325,7 +327,7 @@
 		if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
 			occupant.reagents.add_reagent(chem, 10)
 		var/units = round(occupant.reagents.get_reagent_amount(chem))
-		to_chat(user, "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>")
+		to_chat(user, "<span class='notice'>Пациенту было введено [units] юнитов\s of [chem] в организм.</span>")
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)

@@ -1,5 +1,5 @@
 /datum/reagent/srejuvenate
-	name = "Soporific Rejuvenant"
+	name = "Снотворное"
 	id = "stoxin2"
 	description = "Put people to sleep, and heals them."
 	reagent_state = LIQUID
@@ -36,7 +36,7 @@
 			M.jitteriness = 0
 
 /datum/reagent/inaprovaline
-	name = "Inaprovaline"
+	name = "Инапровалин"
 	id = "inaprovaline"
 	description = "Inaprovaline is a synaptic stimulant and cardiostimulant. Commonly used to stabilize patients."
 	reagent_state = LIQUID
@@ -56,7 +56,7 @@
 	return FALSE // General digest proc shouldn't be called.
 
 /datum/reagent/ryetalyn
-	name = "Ryetalyn"
+	name = "Риеталин"
 	id = "ryetalyn"
 	description = "Ryetalyn can cure all genetic abnomalities via a catalytic process."
 	reagent_state = SOLID
@@ -82,7 +82,7 @@
 	data["ticks"]++
 
 /datum/reagent/paracetamol
-	name = "Paracetamol"
+	name = "Парацетамол"
 	id = "paracetamol"
 	description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
 	reagent_state = LIQUID
@@ -97,7 +97,7 @@
 		M.hallucination = max(M.hallucination, 2)
 
 /datum/reagent/tramadol
-	name = "Tramadol"
+	name = "Трамадол"
 	id = "tramadol"
 	description = "A simple, yet effective painkiller."
 	reagent_state = LIQUID
@@ -113,7 +113,7 @@
 		M.hallucination = max(M.hallucination, 2)
 
 /datum/reagent/oxycodone
-	name = "Oxycodone"
+	name = "Оксикодон"
 	id = "oxycodone"
 	description = "An effective and very addictive painkiller."
 	reagent_state = LIQUID
@@ -130,7 +130,7 @@
 		M.hallucination = max(M.hallucination, 3)
 
 /datum/reagent/sterilizine
-	name = "Sterilizine"
+	name = "Стерилизин"
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
 	reagent_state = LIQUID
@@ -155,7 +155,7 @@
 	T.germ_level -= min(volume*20, T.germ_level)
 
 /datum/reagent/leporazine
-	name = "Leporazine"
+	name = "Лепорацин"
 	id = "leporazine"
 	description = "Leporazine can be use to stabilize an individuals body temperature."
 	reagent_state = LIQUID
@@ -171,7 +171,7 @@
 		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/kelotane
-	name = "Kelotane"
+	name = "Келотан"
 	id = "kelotane"
 	description = "Kelotane is a drug used to treat burns."
 	reagent_state = LIQUID
@@ -185,7 +185,7 @@
 	M.heal_bodypart_damage(0,2 * REM)
 
 /datum/reagent/dermaline
-	name = "Dermaline"
+	name = "Дермалин"
 	id = "dermaline"
 	description = "Dermaline is the next step in burn medication. Works twice as good as kelotane and enables the body to restore even the direst heat-damaged tissue."
 	reagent_state = LIQUID
@@ -203,7 +203,7 @@
 		H.update_body()
 
 /datum/reagent/dexalin
-	name = "Dexalin"
+	name = "Дексалин"
 	id = "dexalin"
 	description = "Dexalin is used in the treatment of oxygen deprivation."
 	reagent_state = LIQUID
@@ -225,7 +225,7 @@
 	return FALSE
 
 /datum/reagent/dextromethorphan
-	name = "Dextromethorphan"
+	name = "Декстрометорфан"
 	id = "dextromethorphan"
 	description = "Analgesic chemical that heals lung damage and coughing."
 	reagent_state = LIQUID
@@ -264,7 +264,7 @@
 	return FALSE
 
 /datum/reagent/dexalinp
-	name = "Dexalin Plus"
+	name = "Дексалин Плюс"
 	id = "dexalinp"
 	description = "Dexalin Plus is used in the treatment of oxygen deprivation. It is highly effective."
 	reagent_state = LIQUID
@@ -286,7 +286,7 @@
 	return FALSE
 
 /datum/reagent/tricordrazine
-	name = "Tricordrazine"
+	name = "Трикордрацин"
 	id = "tricordrazine"
 	description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 	reagent_state = LIQUID
@@ -316,7 +316,7 @@
 			data["ticks"] -= rand(25, 30)
 
 /datum/reagent/anti_toxin
-	name = "Anti-Toxin (Dylovene)"
+	name = "Диловен"
 	id = "anti_toxin"
 	description = "Dylovene is a broad-spectrum antitoxin."
 	reagent_state = LIQUID
@@ -334,7 +334,7 @@
 	M.adjustToxLoss(-2 * REM)
 
 /datum/reagent/thermopsis
-	name = "Thermopsis"
+	name = "Термопсис"
 	id = "thermopsis"
 	description = "Irritates stomach receptors, that leads to reflex rise of vomiting."
 	reagent_state = LIQUID
@@ -356,7 +356,7 @@
 		data["ticks"] -= rand(0, 10)
 
 /datum/reagent/adminordrazine //An OP chemical for admins
-	name = "Adminordrazine"
+	name = "Админодразин"
 	id = "adminordrazine"
 	description = "It's magic. We don't have to explain it."
 	reagent_state = LIQUID
@@ -389,7 +389,7 @@
 	M.jitteriness = 0
 
 /datum/reagent/synaptizine
-	name = "Synaptizine"
+	name = "Синаптизин"
 	id = "synaptizine"
 	description = "Synaptizine is used to treat various diseases."
 	reagent_state = LIQUID
@@ -411,7 +411,7 @@
 		M.adjustToxLoss(1)
 
 /datum/reagent/hyronalin
-	name = "Hyronalin"
+	name = "Гироналин"
 	id = "hyronalin"
 	description = "Hyronalin is a medicinal drug used to counter the effect of radiation poisoning."
 	reagent_state = LIQUID
@@ -425,7 +425,7 @@
 	M.radiation = max(M.radiation - 3 * REM, 0)
 
 /datum/reagent/arithrazine
-	name = "Arithrazine"
+	name = "Аритрацин"
 	id = "arithrazine"
 	description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
 	reagent_state = LIQUID
@@ -442,7 +442,7 @@
 		M.take_bodypart_damage(1, 0)
 
 /datum/reagent/alkysine
-	name = "Alkysine"
+	name = "Алкизин"
 	id = "alkysine"
 	description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
 	reagent_state = LIQUID
@@ -456,7 +456,7 @@
 	M.adjustBrainLoss(-3 * REM)
 
 /datum/reagent/imidazoline
-	name = "Imidazoline"
+	name = "Имидазолин"
 	id = "imidazoline"
 	description = "Heals eye damage."
 	reagent_state = LIQUID
@@ -477,7 +477,7 @@
 				IO.damage = max(IO.damage - 1, 0)
 
 /datum/reagent/aurisine
-	name = "Aurisine"
+	name = "Ауризин"
 	id = "aurisine"
 	description = "Aurisine is a chemical compound used to heal ear damage."
 	reagent_state = LIQUID
@@ -493,7 +493,7 @@
 		M.sdisabilities &= ~DEAF
 
 /datum/reagent/peridaxon
-	name = "Peridaxon"
+	name = "Перидаксон"
 	id = "peridaxon"
 	description = "Used to encourage recovery of organs and nervous systems. Medicate cautiously."
 	reagent_state = LIQUID
@@ -519,7 +519,7 @@
 				IO.damage = max(IO.damage - (3 * custom_metabolism / damaged_organs), 0)
 
 /datum/reagent/kyphotorin
-	name = "Kyphotorin"
+	name = "Кифоторин"
 	id = "kyphotorin"
 	description = "Prototype military nanites, can heal a person of almost any damage in the blink of an eye, however, they only start working at very high temperatures."
 	reagent_state = LIQUID
@@ -553,7 +553,7 @@
 			to_chat(M, "You feel just terrible, as if something is tearing you apart inside, it’s very hard for you to breathe!")
 
 /datum/reagent/bicaridine
-	name = "Bicaridine"
+	name = "Бикаридин"
 	id = "bicaridine"
 	description = "Bicaridine is an analgesic medication and can be used to treat blunt trauma."
 	reagent_state = LIQUID
@@ -567,7 +567,7 @@
 	M.heal_bodypart_damage(2 * REM, 0)
 
 /datum/reagent/xenojelly_n // only for alien nest
-	name = "Natural xenojelly"
+	name = "Натуральное желе ксеноморфов"
 	id = "xenojelly_n"
 	description = "Natural xenomorph jelly is released only if the victim hits the nest"
 	reagent_state = LIQUID
@@ -584,7 +584,7 @@
 	M.adjustFireLoss(-20)
 
 /datum/reagent/xenojelly_un
-	name = "Unnatural xenojelly"
+	name = "Ненатуральное желе ксеноморфов"
 	id = "xenojelly_un"
 	description  = "Usually, this jelly is found in the meat of xenomorphs, but it is less useful than natural."
 	reagent_state = LIQUID
@@ -602,7 +602,7 @@
 	M.adjustFireLoss(-5)
 
 /datum/reagent/hyperzine
-	name = "Hyperzine"
+	name = "Гиперцин"
 	id = "hyperzine"
 	description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
 	reagent_state = LIQUID
@@ -618,7 +618,7 @@
 		M.emote(pick("twitch","blink","shiver"))
 
 /datum/reagent/cryoxadone
-	name = "Cryoxadone"
+	name = "Криодаксон"
 	id = "cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 	reagent_state = LIQUID
@@ -634,7 +634,7 @@
 		M.adjustToxLoss(-1)
 
 /datum/reagent/clonexadone
-	name = "Clonexadone"
+	name = "Клонедаксон"
 	id = "clonexadone"
 	description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' the cloning process when used in conjunction with a cryo tube."
 	reagent_state = LIQUID
@@ -650,7 +650,7 @@
 		M.adjustToxLoss(-3)
 
 /datum/reagent/rezadone
-	name = "Rezadone"
+	name = "Резадон"
 	id = "rezadone"
 	description = "A powder derived from fish toxin, this substance can effectively treat genetic damage in humanoids, though excessive consumption has side effects."
 	reagent_state = SOLID
@@ -684,7 +684,7 @@
 			M.make_jittery(5)
 
 /datum/reagent/spaceacillin
-	name = "Spaceacillin"
+	name = "Спэйсациллин"
 	id = "spaceacillin"
 	description = "An all-purpose antiviral agent."
 	reagent_state = LIQUID
@@ -694,7 +694,7 @@
 	taste_message = null
 
 /datum/reagent/ethylredoxrazine // FUCK YOU, ALCOHOL
-	name = "Ethylredoxrazine"
+	name = "Этилредоксрацин"
 	id = "ethylredoxrazine"
 	description = "A powerful oxidizer that reacts with ethanol."
 	reagent_state = SOLID
@@ -717,10 +717,10 @@
 		if(!BP || !BP.disfigured)
 			return
 		BP.disfigured = FALSE
-		to_chat(H, "Your face is shaped normally again.")
+		to_chat(H, "Ваше лицо снова выглядит нормальным.")
 
 /datum/reagent/vitamin //Helps to regen blood and hunger(but doesn't really regen hunger because of the commented code below).
-	name = "Vitamin"
+	name = "Витамин"
 	id = "vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
@@ -741,7 +741,7 @@
 				H.blood_add(0.5)
 
 /datum/reagent/lipozine
-	name = "Lipozine" // The anti-nutriment.
+	name = "Липозин" // The anti-nutriment.
 	id = "lipozine"
 	description = "A chemical compound that causes a powerful fat-burning reaction."
 	reagent_state = LIQUID
@@ -755,7 +755,7 @@
 	M.overeatduration = 0
 
 /datum/reagent/stimulants
-	name = "Stimulants"
+	name = "Стимулянты"
 	id = "stimulants"
 	description = "Stimulants to keep you up in a critical moment"
 	reagent_state = LIQUID
@@ -775,7 +775,7 @@
 	H.shock_stage -= 20
 
 /datum/reagent/nanocalcium
-	name = "Nano-Calcium"
+	name = "Нано-кальций"
 	id = "nanocalcium"
 	description = "Highly advanced nanites equipped with calcium payloads designed to repair bones. Nanomachines son."
 	reagent_state = LIQUID
@@ -812,7 +812,7 @@
 					holder.remove_reagent("nanocalcium", 10)
 
 /datum/reagent/metatrombine
-	name = "Metatrombine"
+	name = "Метатромбин"
 	id = "metatrombine"
 	description = "Metatrombine is a drug that induces high plateletes production. Can be used to temporarily coagulate blood in internal bleedings."
 	reagent_state = LIQUID

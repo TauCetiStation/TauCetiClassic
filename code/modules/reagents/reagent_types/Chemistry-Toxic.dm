@@ -1,5 +1,5 @@
 /datum/reagent/toxin
-	name = "Toxin"
+	name = "Токсин"
 	id = "toxin"
 	description = "A toxic chemical."
 	reagent_state = LIQUID
@@ -24,7 +24,7 @@
 	return !flags[IS_ORGANIC]
 
 /datum/reagent/toxin/amatoxin
-	name = "Amatoxin"
+	name = "Аматоксин"
 	id = "amatoxin"
 	description = "A powerful poison derived from certain species of mushroom."
 	reagent_state = LIQUID
@@ -61,7 +61,7 @@
 	irradiate_one_mob(M, 10)
 
 /datum/reagent/toxin/phoron
-	name = "Phoron"
+	name = "Форон"
 	id = "phoron"
 	description = "Phoron in its liquid form."
 	reagent_state = LIQUID
@@ -106,7 +106,7 @@
 		M.adjust_fire_stacks(volume / 5)
 
 /datum/reagent/toxin/lexorin
-	name = "Lexorin"
+	name = "Лексорин"
 	id = "lexorin"
 	description = "Lexorin temporarily stops respiration. Causes tissue damage."
 	reagent_state = LIQUID
@@ -125,7 +125,7 @@
 		M.emote("gasp")
 
 /datum/reagent/toxin/slimejelly
-	name = "Slime Jelly"
+	name = "Желе слайма"
 	id = "slimejelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 	reagent_state = LIQUID
@@ -142,7 +142,7 @@
 		M.heal_bodypart_damage(5 * REM, 0)
 
 /datum/reagent/toxin/cyanide //Fast and Lethal
-	name = "Cyanide"
+	name = "Цианид"
 	id = "cyanide"
 	description = "A highly toxic chemical."
 	reagent_state = LIQUID
@@ -168,7 +168,7 @@
 		M.emote("gasp")
 
 /datum/reagent/toxin/minttoxin
-	name = "Mint Toxin"
+	name = "Мятный токсин"
 	id = "minttoxin"
 	description = "Useful for dealing with undesirable customers."
 	reagent_state = LIQUID
@@ -182,7 +182,7 @@
 		M.gib()
 
 /datum/reagent/toxin/carpotoxin
-	name = "Carpotoxin"
+	name = "Карпотоксин"
 	id = "carpotoxin"
 	description = "A deadly neurotoxin produced by the dreaded space carp."
 	reagent_state = LIQUID
@@ -191,7 +191,7 @@
 	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/zombiepowder
-	name = "Zombie Powder"
+	name = "Зомби-порошок"
 	id = "zombiepowder"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	reagent_state = SOLID
@@ -222,7 +222,7 @@
 	return ..()
 
 /datum/reagent/toxin/mindbreaker
-	name = "Mindbreaker Toxin"
+	name = "Токсин разрушения разума"
 	id = "mindbreaker"
 	description = "A powerful hallucinogen, it can cause fatal effects in users."
 	reagent_state = LIQUID
@@ -237,7 +237,7 @@
 	M.hallucination += 10
 
 /datum/reagent/toxin/plantbgone
-	name = "Plant-B-Gone"
+	name = "Плэнт-Би-Гон"
 	id = "plantbgone"
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 	reagent_state = LIQUID
@@ -319,7 +319,7 @@
 
 
 /datum/reagent/toxin/stoxin
-	name = "Sleep Toxin"
+	name = "Снотворное"
 	id = "stoxin"
 	description = "An effective hypnotic used to treat insomnia."
 	reagent_state = LIQUID
@@ -352,7 +352,7 @@
 	data["ticks"]++
 
 /datum/reagent/toxin/chloralhydrate
-	name = "Chloral Hydrate"
+	name = "Хлоральгидрат"
 	id = "chloralhydrate"
 	description = "A powerful sedative."
 	reagent_state = SOLID
@@ -380,7 +380,7 @@
 			M.SetSleeping(20 SECONDS)
 
 /datum/reagent/toxin/potassium_chloride
-	name = "Potassium Chloride"
+	name = "Хлорид калия"
 	id = "potassium_chloride"
 	description = "A delicious salt that stops the heart when injected into cardiac muscle."
 	reagent_state = SOLID
@@ -403,7 +403,7 @@
 				H.attack_heart(10, 0)
 
 /datum/reagent/toxin/potassium_chlorophoride
-	name = "Potassium Chlorophoride"
+	name = "Хлорофоронид калия"
 	id = "potassium_chlorophoride"
 	description = "A specific chemical based on Potassium Chloride to stop the heart for surgery. Not safe to eat!"
 	reagent_state = SOLID
@@ -426,7 +426,7 @@
 			H.attack_heart(5, 0)
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
-	name = "Beer"
+	name = "Пиво"
 	id = "beer2"
 	description = "An alcoholic beverage made from malted grains, hops, yeast, and water. The fermentation appears to be incomplete." //If the players manage to analyze this, they deserve to know something is wrong.
 	reagent_state = LIQUID
@@ -451,7 +451,7 @@
 	data["ticks"]++
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder. @ TG Port
-	name = "Mute Toxin"
+	name = "Заглушающий токсин"
 	id = "mutetoxin"
 	description = "A toxin that temporarily paralyzes the vocal cords."
 	color = "#f0f8ff" // rgb: 240, 248, 255
@@ -464,7 +464,7 @@
 	M.silent = max(M.silent, 3)
 
 /datum/reagent/toxin/acid
-	name = "Sulphuric acid"
+	name = "Серная кислота"
 	id = "sacid"
 	description = "A very corrosive mineral acid with the molecular formula H2SO4."
 	reagent_state = LIQUID
@@ -540,7 +540,7 @@
 			qdel(O)
 
 /datum/reagent/toxin/acid/polyacid
-	name = "Polytrinic acid"
+	name = "Политринная кислота"
 	id = "pacid"
 	description = "Polytrinic acid is a an extremely corrosive chemical substance."
 	reagent_state = LIQUID
@@ -554,7 +554,7 @@
 //////////////////////////////////////////////
 
 /datum/reagent/alphaamanitin
-	name = "Alpha-amanitin"
+	name = "Альфа-аматинин"
 	id = "alphaamanitin"
 	description = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
 	color = "#792300" //rgb: 121, 35, 0
@@ -569,7 +569,7 @@
 	M.adjustBrainLoss(2)
 
 /datum/reagent/aflatoxin
-	name = "Aflatoxin"
+	name = "Афлатоксин"
 	id = "aflatoxin"
 	description = "Deadly toxin delayed action. Causes general poisoning and damage the structure of DNA."
 	reagent_state = LIQUID
@@ -591,7 +591,7 @@
 	data["ticks"]++
 
 /datum/reagent/chefspecial	//From VG. Only for traitors
-	name = "Chef's Special"
+	name = "Подарок Шефа"
 	id = "chefspecial"
 	description = "An extremely toxic chemical that will surely end in death."
 	reagent_state = LIQUID
@@ -614,7 +614,7 @@
 	data["ticks"]++
 
 /datum/reagent/sanguisacid
-	name = "Sanguis Acid"
+	name = "Сангвисовая кислота"
 	id = "sanguisacid"
 	description = "A toxin that burns the blood in the body causes hematemesis. Only works on humanoids."
 	reagent_state = LIQUID
@@ -668,7 +668,7 @@
 				E.fracture()
 
 /datum/reagent/dioxin
-	name = "Dioxin"
+	name = "Диоксин"
 	id = "dioxin"
 	description = "A powerful poison with a cumulative effect."
 	reagent_state = LIQUID
@@ -710,7 +710,7 @@
 	data["ticks"]++
 
 /datum/reagent/mulligan
-	name = "Mulligan Toxin"
+	name = "Токсин смены личности"
 	id = "mulligan"
 	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
 	reagent_state = LIQUID
@@ -726,7 +726,7 @@
 	randomize_human(H)
 
 /datum/reagent/slimetoxin
-	name = "Mutation Toxin"
+	name = "Токсин мутации"
 	id = "mutationtoxin"
 	description = "A corruptive toxin produced by slimes."
 	reagent_state = LIQUID
@@ -775,7 +775,7 @@
 				M.adjustOxyLoss(-2 * REM)
 
 /datum/reagent/aslimetoxin
-	name = "Advanced Mutation Toxin"
+	name = "Усовершенствованный токсин мутации"
 	id = "amutationtoxin"
 	description = "An advanced corruptive toxin produced by slimes."
 	reagent_state = LIQUID
@@ -814,7 +814,7 @@
 //////////////Harmful reagents that are not quite toxins but I diagress/////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 /datum/reagent/space_drugs
-	name = "Space drugs"
+	name = "Космо-наркотик"
 	id = "space_drugs"
 	description = "An illegal chemical compound used as drug."
 	reagent_state = LIQUID
@@ -837,7 +837,7 @@
 	return FALSE
 
 /datum/reagent/ambrosium
-	name = "Ambrosium"
+	name = "Амброзиум"
 	id = "ambrosium"
 	description = "Reagent isolated from ambrosia vulgaris. Its has narcotic and toxic effect."
 	reagent_state = LIQUID
@@ -858,7 +858,7 @@
 		M.adjustToxLoss(1)
 
 /datum/reagent/jenkem
-	name = "Space jenkem"
+	name = "Космический Дженкем"
 	id = "jenkem"
 	description = "A homemade illegal chemical compound used by the poor as a substitute for better quality drugs. Very toxic."
 	reagent_state = LIQUID
@@ -878,7 +878,7 @@
 		M.adjustToxLoss(1)
 
 /datum/reagent/serotrotium
-	name = "Serotrotium"
+	name = "Серотротий"
 	id = "serotrotium"
 	description = "A chemical compound that promotes concentrated production of the serotonin neurotransmitter in humans."
 	reagent_state = LIQUID
@@ -894,7 +894,7 @@
 			M.emote(pick("twitch","drool","moan","gasp"))
 
 /datum/reagent/cryptobiolin
-	name = "Cryptobiolin"
+	name = "Криптобиолин"
 	id = "cryptobiolin"
 	description = "Cryptobiolin causes confusion and dizzyness."
 	reagent_state = LIQUID
@@ -910,7 +910,7 @@
 	M.MakeConfused(20)
 
 /datum/reagent/impedrezene
-	name = "Impedrezene"
+	name = "Импедрезен"
 	id = "impedrezene"
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
 	reagent_state = LIQUID
