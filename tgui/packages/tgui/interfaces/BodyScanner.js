@@ -22,6 +22,7 @@ const stats = [
 ];
 
 const abnormalities = [
+  ['hasBorer', 'bad', 'Subject suffering from aberrant brain activity. Recommend further incision.'],
   ['hasVirus', 'bad', 'Viral pathogen detected in blood stream.'],
   ['blind', 'average', 'Cataracts detected.'],
   ['colourblind', 'average', 'Photoreceptor abnormalities detected.'],
@@ -155,6 +156,27 @@ const BodyScannerMainOccupant = (props, context) => {
             }}
           />
         </LabeledList.Item>
+        <LabeledList.Item label="Blood">
+          <ProgressBar
+            min="0"
+            max={occupant.blood.bloodNormal}
+            value={occupant.blood.bloodLevel / occupant.blood.bloodNormal}
+            ranges={{
+              good: [0.8, Infinity],
+              average: [0.6, 0.8],
+              bad: [-Infinity, 0.6],
+            }}>
+            <Box inline
+              style={{
+                float: 'left',
+              }}>
+              {occupant.blood.pulse} BPM
+            </Box>
+            <Box inline>
+              {occupant.blood.percent}%
+            </Box>
+          </ProgressBar>
+        </LabeledList.Item>
         <LabeledList.Item label="Status" color={stats[occupant.stat][0]}>
           {stats[occupant.stat][1]}
         </LabeledList.Item>
@@ -163,13 +185,6 @@ const BodyScannerMainOccupant = (props, context) => {
           &deg;C,&nbsp;
           <AnimatedNumber value={round(occupant.bodyTempF, 0)} />
           &deg;F
-        </LabeledList.Item>
-        <LabeledList.Item label="Implants">
-          {occupant.implant_len ? (
-            <Box>{occupant.implant.map((im) => im.name).join(', ')}</Box>
-          ) : (
-            <Box color="label">None</Box>
-          )}
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -268,7 +283,7 @@ const BodyScannerMainOrgansExternal = (props) => {
         <Table.Row header>
           <Table.Cell>Name</Table.Cell>
           <Table.Cell textAlign="center">Damage</Table.Cell>
-          <Table.Cell textAlign="right">Injuries</Table.Cell>
+          <Table.Cell textAlign="right">Additional Information</Table.Cell>
         </Table.Row>
         {props.organs.map((o, i) => (
           <Table.Row key={i} textTransform="capitalize">
@@ -296,23 +311,26 @@ const BodyScannerMainOrgansExternal = (props) => {
                 value={o.totalLoss / o.maxHealth}
                 ranges={damageRange}
               >
-                <Box float="left" display="inline">
+                <Box inline
+                  style={{
+                    float: 'left',
+                  }}>
                   {!!o.bruteLoss && (
-                    <Box display="inline" position="relative">
+                    <Box inline position="relative">
                       <Icon name="bone" />
                       {round(o.bruteLoss, 0)}&nbsp;
                       <Tooltip position="top" content="Brute damage" />
                     </Box>
                   )}
                   {!!o.fireLoss && (
-                    <Box display="inline" position="relative">
+                    <Box inline position="relative">
                       <Icon name="fire" />
                       {round(o.fireLoss, 0)}
                       <Tooltip position="top" content="Burn damage" />
                     </Box>
                   )}
                 </Box>
-                <Box display="inline">{round(o.totalLoss, 0)}</Box>
+                <Box inline>{round(o.totalLoss, 0)}</Box>
               </ProgressBar>
             </Table.Cell>
             <Table.Cell
@@ -321,17 +339,26 @@ const BodyScannerMainOrgansExternal = (props) => {
               width="33%"
               pt={i > 0 && 'calc(0.5rem + 2px)'}
             >
-              <Box color="average" display="inline">
-                {reduceOrganStatus([
-                  !!o.internalBleeding && 'Internal bleeding',
-                  !!o.burnWound && 'Critical tissue burns',
-                  !!o.lungRuptured && 'Ruptured lung',
-                  !!o.status.broken && o.status.broken,
-                  germStatus(o.germ_level),
-                  !!o.open && 'Open incision',
-                ])}
-              </Box>
-              <Box display="inline">
+              <Box inline>
+                <Box color="average">
+                  {reduceOrganStatus([
+                    !!o.internalBleeding && 'Internal bleeding',
+                    !!o.burnWound && 'Critical tissue burns',
+                    !!o.lungRuptured && 'Ruptured lung',
+                    !!o.status.broken && o.status.broken,
+                    germStatus(o.germ_level),
+                    !!o.open && 'Open incision',
+                  ])}
+                </Box>
+                {o.implant.map((s) => (s.name ? (
+                  <Box color="good">
+                    {s.name}
+                  </Box>
+                ) : (
+                  <Box color="average">
+                    Unknown body present
+                  </Box>
+                )))}
                 {reduceOrganStatus([
                   !!o.status.splinted && <Box color="good">Splinted</Box>,
                   !!o.status.robotic && <Box color="label">Robotic</Box>,
@@ -341,9 +368,6 @@ const BodyScannerMainOrgansExternal = (props) => {
                     </Box>
                   ),
                 ])}
-                {reduceOrganStatus(
-                  o.shrapnel.map((s) => (s.known ? s.name : 'Unknown object'))
-                )}
               </Box>
             </Table.Cell>
           </Table.Row>
@@ -368,7 +392,7 @@ const BodyScannerMainOrgansInternal = (props) => {
         <Table.Row header>
           <Table.Cell>Name</Table.Cell>
           <Table.Cell textAlign="center">Damage</Table.Cell>
-          <Table.Cell textAlign="right">Injuries</Table.Cell>
+          <Table.Cell textAlign="right">Additional Information</Table.Cell>
         </Table.Row>
         {props.organs.map((o, i) => (
           <Table.Row key={i} textTransform="capitalize">
@@ -399,10 +423,10 @@ const BodyScannerMainOrgansInternal = (props) => {
               width="33%"
               pt={i > 0 && 'calc(0.5rem + 2px)'}
             >
-              <Box color="average" display="inline">
+              <Box inline color="average">
                 {reduceOrganStatus([germStatus(o.germ_level)])}
               </Box>
-              <Box display="inline">
+              <Box inline>
                 {reduceOrganStatus([
                   o.robotic === 1 && <Box color="label">Robotic</Box>,
                   o.robotic === 2 && <Box color="label">Assisted</Box>,
@@ -423,7 +447,7 @@ const BodyScannerMainOrgansInternal = (props) => {
 
 const BodyScannerEmpty = () => {
   return (
-    <Section textAlign="center" flexGrow="1">
+    <Section fill textAlign="center">
       <Flex height="100%">
         <Flex.Item grow="1" align="center" color="label">
           <Icon name="user-slash" mb="0.5rem" size="5" />

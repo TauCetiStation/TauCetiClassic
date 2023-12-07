@@ -44,6 +44,7 @@
 	if(!move_inside_checks(usr, usr))
 		return
 	close_machine(usr, usr)
+	SStgui.update_uis(src)
 
 /obj/machinery/bodyscanner/proc/move_inside_checks(mob/target, mob/user)
 	if(occupant)
@@ -197,6 +198,7 @@
 			bloodData["pulse"] = occupant.get_pulse(GETPULSE_TOOL)
 			bloodData["bloodLevel"] = occupant.blood_amount()
 			bloodData["bloodMax"] = BLOOD_VOLUME_MAXIMUM
+			bloodData["bloodNormal"] = BLOOD_VOLUME_NORMAL
 		occupantData["blood"] = bloodData
 
 		var/list/extOrganData = list()
@@ -211,26 +213,19 @@
 			organData["maxHealth"] = E.max_damage
 			organData["broken"] = E.min_broken_damage
 
-			var/list/shrapnelData = list()
-			for(var/obj/I in E.hidden)
-				var/shrapnelSubData[0]
-				shrapnelSubData["name"] = I.name
-
-				shrapnelData.Add(list(shrapnelSubData))
-
-			organData["shrapnel"] = shrapnelData
-			organData["shrapnel_len"] = shrapnelData.len
-
 			var/list/implantData = list()
 			for(var/obj/I in E.implants)
+				var/list/implantSubData = list()
 				if(is_type_in_list(I, known_implants))
-					var/list/implantSubData = list()
-					implantSubData["name"] = sanitize(I.name)
+					implantSubData["name"] = capitalize(sanitize(I.name))
 					implantData.Add(list(implantSubData))
-			occupantData["implant"] = implantData
-			occupantData["implant_len"] = implantData.len
+				else
+					implantSubData["name"] = null
+					implantData.Add(list(implantSubData))
+			organData["implant"] = implantData
+			organData["implant_len"] = implantData.len
 
-			var/organStatus[0]
+			var/list/organStatus = list()
 			if(E.status & ORGAN_BROKEN)
 				organStatus["broken"] = capitalize(E.broken_description)
 			if(E.is_robotic())
@@ -269,9 +264,9 @@
 
 		occupantData["intOrgan"] = intOrganData
 
-		occupantData["blind"] = (BLIND in occupant.mutations)
+		occupantData["blind"] = occupant.sdisabilities & BLIND
 		occupantData["colourblind"] = occupant.daltonism
-		occupantData["nearsighted"] = (NEARSIGHTED in occupant.mutations)
+		occupantData["nearsighted"] = HAS_TRAIT(occupant, TRAIT_NEARSIGHT)
 
 	data["occupant"] = occupantData
 
@@ -281,6 +276,14 @@
 	. = ..()
 	if(.)
 		return
+
+	switch(action)
+		if("ejectify")
+			connected.eject()
+		if("print_p")
+			print_scan()
+
+	return TRUE
 
 /obj/machinery/body_scanconsole/proc/print_scan(additional_info)
 	var/obj/item/weapon/paper/P = new(loc)
