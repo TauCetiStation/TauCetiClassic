@@ -352,7 +352,7 @@
 		var/mob/living/carbon/human/h = A
 		switch(holder.stage)
 			if(1,2,3)
-				to_chat(A, "<span class='notice'>[pick("Вы хотите бананов.", "Вы ощущаете, что тупеете.", "Это банан"?")]</span>")
+				to_chat(A, "<span class='notice'>[pick("Вы хотите бананов.", "Вы ощущаете, что тупеете.", "Это банан?")]</span>")
 			if(4,5,6,7)
 				if(holder.stage == 7 && prob(20))
 					h.say(pick("О,Банан?", "У тебя есть бананы?", "У-У-У-и-и","Уо Уо Уои ээи ээи иии ииии", "Иииир! Иииир!"))
@@ -957,8 +957,7 @@
 
 /datum/disease2/effect/confusion
 	name = "Topographical Cretinism"
-	desc = "Вирус повреждает мозг, из-за чего носитель не может ориентироваться в окружающем мире
-	."
+	desc = "Вирус повреждает мозг, из-за чего носитель не может ориентироваться в окружающем мире."
 	level = 2
 	max_stage = 3
 	cooldown = 60
