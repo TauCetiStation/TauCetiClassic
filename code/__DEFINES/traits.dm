@@ -191,6 +191,7 @@
 #define TRAIT_FAKELOYAL_VISUAL    "fakeloyal_visual"
 #define TRAIT_CHANGELING_ABSORBING "changeling_absorbing"
 #define TRAIT_FAST_WALKER         "fast_walker"
+#define TRAIT_RANDOM_CLIENT_DIR    "random_client_dir"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

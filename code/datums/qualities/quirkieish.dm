@@ -406,13 +406,13 @@
 	create_and_setup_role(/datum/role/prisoner, H)
 	H.sec_hud_set_security_status()
 
-/datum/quality/unrestricted
+/datum/quality/quirkieish/unrestricted
 	name = "Unrestricted"
 	desc = "В качестве особого эксперимента, НТ позволило вам занять любую должность на станции."
 	requirement = "Прибыть на станцию после начала смены."
 	max_amount = 1
 
-/datum/quality/unrestricted/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/quirkieish/unrestricted/add_effect(mob/living/carbon/human/H, latespawn)
 	//only for latespawners
 	if(!latespawn)
 		return
@@ -426,3 +426,13 @@
 	var/obj/item/weapon/stamp/centcomm/S = new
 	S.stamp_paper(P)
 	H.equip_or_collect(P, SLOT_L_HAND)
+
+/datum/quality/quirkieish/maze
+	name = "Maze"
+	desc = "С утра ты ощущаешь лёгкое головокружение: всё будто бы не на своих местах..."
+	requirement = "Нет."
+
+/datum/quality/quirkieish/maze/add_effect(mob/living/carbon/human/H, latespawn)
+	if(H.client)
+		H.client.dir = pick(2, 4, 8)
+		ADD_TRAIT(H, TRAIT_RANDOM_CLIENT_DIR, QUALITY_TRAIT)
