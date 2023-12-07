@@ -327,7 +327,7 @@
 		if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
 			occupant.reagents.add_reagent(chem, 10)
 		var/units = round(occupant.reagents.get_reagent_amount(chem))
-		to_chat(user, "<span class='notice'>Пациенту было введено [units] юнитов\s of [chem] в организм.</span>")
+		to_chat(user, "<span class='notice'>Пациенту было введено [units] юнитов [chem] в организм.</span>")
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)
