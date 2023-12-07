@@ -180,6 +180,8 @@
 /// from mob/tryGrab(): (/mob/grabber, force_state, show_warnings)
 #define COMSIG_MOVABLE_TRY_GRAB "movable_try_grab"
 	#define COMPONENT_PREVENT_GRAB 1
+/// from /obj/item/weapon/grab/proc/s_click(): (/obj/item/weapon/grab)
+#define COMSIG_S_CLICK_GRAB "s_click_grab"
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
 ///from base of area/Entered(): (/area, /atom/OldLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
