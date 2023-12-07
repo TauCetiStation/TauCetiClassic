@@ -231,7 +231,7 @@
 			if(1)
 				dat += "<span class='average'>Без сознания</span>"
 			else
-				dat += "<span class='bad'>МЁРТВ</span>"
+				dat += "<span class='bad'>Мёртв</span>"
 
 		dat += "<br />"
 
