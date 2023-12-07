@@ -306,9 +306,9 @@
 		if(href_list["inject"] == "inaprovaline" || (occupant.health > min_health && (href_list["inject"] in available_chems)))
 			inject_chem(usr, href_list["inject"])
 		else
-			to_chat(usr, "<span class='notice'>ОШИБКА: ПАЦИЕНТ НЕ НАХОДИТСЯ В СТАБИЛЬНОМ СОСТОЯНИИ ДЛЯ ВВЕДЕНИЯ ПРЕПАРАТОВ.</span>")
+			to_chat(usr, "<span class='notice'>ОШИБКА: Пациент не находится в стабильном состоянии для введения препаратов.</span>")
 	else
-		to_chat(usr, "<span class='notice'>ОШИБКА: У ПАЦИЕНТА ОБНАРУЖЕНО СЕРЬЕЗНОЕ НАРУШЕНИЕ МЕТАБОЛИЗМА.</span>")
+		to_chat(usr, "<span class='notice'>ОШИБКА: У пациента обнаружены серьезные нарушения метаболизма.</span>")
 	updateUsrDialog()
 
 /obj/machinery/sleeper/open_machine()
