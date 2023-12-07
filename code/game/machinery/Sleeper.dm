@@ -13,7 +13,7 @@
 
 /obj/machinery/sleeper
 	name = "Sleeper"
-	cases = list("капсула диализа", "капсулы диализа", "капсуле диализа", "капсула диализа", "капсулой диализа", "капсуле диализа")
+	cases = list("капсула диализа", "капсулы диализа", "капсуле диализа", "капсулу диализа", "капсулой диализа", "капсуле диализа")
 	desc = "Используется для быстрого вывода или ввода различных веществ путём диализа."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper-open"
@@ -127,7 +127,7 @@
 		if(!beaker)
 			beaker = I
 			user.drop_from_inventory(I, src)
-			user.visible_message("[user] добавил \a [I] в \the [src]!", "Вы добавили \a [I] в \the [CASE(src, NOMINATIVE_CASE)]!")
+			user.visible_message("[user] вставил [I] в [CASE(src, ACCUSATIVE_CASE)]!", "Вы вставили [I] в [CASE(src, ACCUSATIVE_CASE)]!")
 			updateUsrDialog()
 			return
 		else
@@ -327,7 +327,7 @@
 		if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
 			occupant.reagents.add_reagent(chem, 10)
 		var/units = round(occupant.reagents.get_reagent_amount(chem))
-		to_chat(user, "<span class='notice'>Пациенту было введено [units] юнитов [chem] в организм.</span>")
+		to_chat(user, "<span class='notice'>Пациенту было введено [units] юнит(ов) [chem] в организм.</span>")
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)
