@@ -39,7 +39,7 @@
 	if(!clown_check(user))
 		return
 
-	to_chat(user, "<span class='warning'>Вы подготавливаете [CASE(src, ACCUSATIVE_CASE)]![det_time != 1 ? " [det_time/10] секунд!" : ""]</span>")
+	to_chat(user, "<span class='warning'>Вы подготавливаете таймер [CASE(src, ACCUSATIVE_CASE)]![det_time != 1 ? " [det_time/10] секунд!" : ""]</span>")
 	activate(user)
 	add_fingerprint(user)
 	if(iscarbon(user))
