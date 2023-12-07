@@ -319,7 +319,7 @@
 
 /obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)
-		to_chat(target, "<span class='notice'><b>Вы чувствуете охлаждение воздуха в капсуле, а затем медленную остановку жизненных процессов.</b></span>")
+		to_chat(target, "<span class='notice'><b>Вы чувствуете охлаждение воздуха в капсуле, а затем вы оцепенели, когда ваше сознание начало засыпать.</b></span>")
 		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
