@@ -259,7 +259,7 @@
 		dat += "<A href='?src=\ref[src];removebeaker=1'>Извлечь сосуд</A>"
 		if(filtering)
 			dat += "<A href='?src=\ref[src];togglefilter=1'>Остановить диализ</A>"
-			dat += text("<BR>В выходном сосуде осталось [] юнитов свободного места<BR><HR>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
+			dat += text("<BR>В сосуде осталось [] юнитов свободного места<BR><HR>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 		else
 			dat += "<A href='?src=\ref[src];togglefilter=1'>Начать диализ</A>"
 			dat += text("<BR>В сосуде осталось [] юнитов свободного места", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
