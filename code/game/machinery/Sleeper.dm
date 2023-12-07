@@ -118,7 +118,7 @@
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	..()
 	if(M.environment_smash)
-		visible_message("<span class='danger'>[M.name] ломает [src] на части!</span>")
+		visible_message("<span class='danger'>[M.name] ломает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
 		qdel(src)
 	return
 
@@ -127,7 +127,7 @@
 		if(!beaker)
 			beaker = I
 			user.drop_from_inventory(I, src)
-			user.visible_message("[user] добавил \a [I] в \the [src]!", "Вы добавили \a [I] в \the [src]!")
+			user.visible_message("[user] добавил \a [I] в \the [src]!", "Вы добавили \a [I] в \the [CASE(src, NOMINATIVE_CASE)]!")
 			updateUsrDialog()
 			return
 		else
