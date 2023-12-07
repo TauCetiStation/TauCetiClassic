@@ -56,7 +56,7 @@
 /obj/item/weapon/reagent_containers/glass/examine(mob/user)
 	..()
 	if(!is_open_container())
-		to_chat(user, "<span class='info'>Герметичная крышка полностью закрывает ее.</span>")
+		to_chat(user, "<span class='info'>Герметичная крышка полностью закрывает [CASE(src, ACCUSATIVE_CASE)] .</span>")
 
 /obj/item/weapon/reagent_containers/glass/attack_self()
 	..()
@@ -79,7 +79,7 @@
 			return
 
 	if(ismob(target) && target.reagents && reagents.total_volume)
-		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
+		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [CASE(target, ACCUSATIVE_CASE)].</span>")
 
 		var/mob/living/M = target
 		var/list/injected = list()
@@ -89,7 +89,7 @@
 
 		M.log_combat(user, "splashed with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
-		user.visible_message("<span class='rose'>[target] has been splashed with something by [user]!</span>")
+		user.visible_message("<span class='rose'>[user] чем-то облил(а) [target]!</span>")
 		reagents.standard_splash(target, user=user)
 		return
 
@@ -101,15 +101,15 @@
 			T.try_transfer(src, T, user)
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			to_chat(user, "<span class = 'rose'>[capitalize(CASE(src, NOMINATIVE_CASE))] пуста.</span>")
+			to_chat(user, "<span class = 'rose'>В [CASE(src, DATIVE_CASE)] ничего нет.</span>")
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, "<span class = 'rose'>[target] is full.</span>")
+			to_chat(user, "<span class = 'rose'>Сосуд полон.</span>")
 			return
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
-		to_chat(user, "<span class = 'notice'>You transfer [trans] units of the solution to [target].</span>")
+		to_chat(user, "<span class = 'notice'>Вы переливаете [trans] юнитов раствора в [CASE(target, ACCUSATIVE_CASE)].</span>")
 		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER) // Sound taken from "Eris" build
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
@@ -143,17 +143,17 @@
 
 
 	else if(reagents && reagents.total_volume)
-		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [target].</span>")
+		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [CASE(target, ACCUSATIVE_CASE)].</span>")
 		reagents.standard_splash(target, user=user)
 		return
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/device/flashlight/pen))
-		var/tmp_label = sanitize_safe(input(user, "Введите имя для [CASE(src, GENITIVE_CASE)]","Label", input_default(label_text)), MAX_NAME_LEN)
+		var/tmp_label = sanitize_safe(input(user, "Введите имя для [CASE(src, GENITIVE_CASE)]","Этикетка", input_default(label_text)), MAX_NAME_LEN)
 		if(length(tmp_label) > 10)
 			to_chat(user, "<span class = 'rose'>Длина этикетки может составлять не более 10 символов.</span>")
 		else
-			to_chat(user, "<span class = 'notice'>Вы клеите этикетку на\"[tmp_label]\".</span>")
+			to_chat(user, "<span class = 'notice'>Вы клеите этикетку \"[tmp_label]\".</span>")
 			label_text = tmp_label
 			update_name_label()
 
@@ -192,7 +192,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/atom_init()
 	. = ..()
-	desc += "Может вместить [volume] юнитов."
+	desc += "Может вместить до [volume] юнитов."
 	filling_states = list(20, 40, 60, 80, 100)
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
