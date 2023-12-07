@@ -229,7 +229,7 @@
 			if(0)
 				dat += "<span class='good'>В сознании</span>"
 			if(1)
-				dat += "<span class='average'>Не в сознании</span>"
+				dat += "<span class='average'>Без сознания</span>"
 			else
 				dat += "<span class='bad'>МЁРТВ</span>"
 
