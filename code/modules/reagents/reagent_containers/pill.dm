@@ -92,10 +92,10 @@
 	..()
 	if(!is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)))
 		return
-	to_chat(user, "It contains:")
+	to_chat(user, "Внутри содержится:")
 	if(reagents.reagent_list.len)
 		for(var/datum/reagent/R in reagents.reagent_list)
-			to_chat(user, "<span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>")
+			to_chat(user, "<span class='info'>[R.volume + R.volume * rand(-25,25) / 100] юнитов вещества [R.name]</span>")
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END
