@@ -94,7 +94,7 @@
 	taste_message = "grape"
 
 /datum/reagent/consumable/drink/grapesoda
-	name = "Виноградная сода"
+	name = "Виноградная газировка"
 	id = "grapesoda"
 	description = "Grapes made into a fine drank."
 	color = "#421c52" // rgb: 98, 57, 53
