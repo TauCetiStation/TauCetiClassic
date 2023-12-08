@@ -64,7 +64,7 @@
 		to_chat(usr, "<span class = 'notice'>Вы закрываете крышку [CASE(src, GENITIVE_CASE)].</span>")
 		flags ^= OPENCONTAINER
 	else
-		to_chat(usr, "<span class = 'notice'>Вы снимаете крышку с [CASE(src, GENITIVE_CASE)].</span>")
+		to_chat(usr, "<span class = 'notice'>Вы снимаете крышку [CASE(src, GENITIVE_CASE)].</span>")
 		flags |= OPENCONTAINER
 	update_icon()
 	update_item_actions()
@@ -105,7 +105,7 @@
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, "<span class = 'rose'>Сосуд полон.</span>")
+			to_chat(user, "<span class = 'rose'>Внутри [CASE(src, GENITIVE_CASE)] нет свободного места.</span>")
 			return
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
