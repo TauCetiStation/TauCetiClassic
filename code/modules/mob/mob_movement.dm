@@ -394,7 +394,7 @@
 	return FALSE
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
-	if(species?.flags[NO_SLIP])
+	if(species.flags[NO_SLIP])
 		return FALSE
 	if(!(lube & GALOSHES_DONT_HELP))
 		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP) || (get_species() == SKRELL && !shoes)))
