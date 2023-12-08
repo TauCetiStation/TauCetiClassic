@@ -48,12 +48,15 @@
 					"<span class='warning'>[AM] falls on you!</span>",
 					"<span class='notice'>You hear something heavy fall.</span>")
 
-/mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/carbon/human/prob_miss(obj/item/projectile/P)
+	var/def_zone = get_zone_with_miss_chance(P.def_zone, src, P.get_miss_modifier())
+	if(!def_zone)
+		return TRUE
 	def_zone = check_zone(def_zone)
 	if(!has_bodypart(def_zone))
-		return PROJECTILE_FORCE_MISS //if they don't have the body part in question then the projectile just passes by.
-
-	return ..()
+		return TRUE
+	P.def_zone = def_zone // a bit junky, but it will either bump this one, or bump object
+	return FALSE
 
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
 	. = PROJECTILE_ALL_OK
