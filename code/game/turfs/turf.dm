@@ -444,11 +444,7 @@
 	var/typepath
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/species/S = H.species
-		if(S)
-			typepath = S.blood_trail_type
-		else
-			typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
+		typepath = H.species.blood_trail_type
 	else if(isxeno(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/claws
 	else // can shomeone make shlime footprint shprites later pwetty pwease?
