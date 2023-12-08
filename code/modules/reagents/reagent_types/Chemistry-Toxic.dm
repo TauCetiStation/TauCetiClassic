@@ -837,7 +837,7 @@
 	return FALSE
 
 /datum/reagent/ambrosium
-	name = "Амброзиум"
+	name = "Амброзия"
 	id = "ambrosium"
 	description = "Reagent isolated from ambrosia vulgaris. Its has narcotic and toxic effect."
 	reagent_state = LIQUID

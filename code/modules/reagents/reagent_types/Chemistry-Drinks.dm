@@ -351,7 +351,7 @@
 	color = "#619494" // rgb: 97, 148, 148
 
 /datum/reagent/consumable/drink/cold/space_cola
-	name = "Космо-кола"
+	name = "Космо-Кола"
 	id = "cola"
 	description = "A refreshing beverage."
 	reagent_state = LIQUID
@@ -360,7 +360,7 @@
 	taste_message = "cola"
 
 /datum/reagent/consumable/drink/cold/nuka_cola
-	name = "Нюка-кола"
+	name = "Нюка-Кола"
 	id = "nuka_cola"
 	description = "Cola, cola never changes."
 	color = "#100800" // rgb: 16, 8, 0
@@ -392,7 +392,7 @@
 	taste_message = "cherry soda"
 
 /datum/reagent/consumable/drink/cold/space_up
-	name = "Спэйс-ап"
+	name = "Спэйс-Ап"
 	id = "space_up"
 	description = "Tastes like a hull breach in your mouth."
 	color = "#202800" // rgb: 32, 40, 0
@@ -400,7 +400,7 @@
 	taste_message = "lemon soda"
 
 /datum/reagent/consumable/drink/cold/lemon_lime
-	name = "Лимонный лайм"
+	name = "Лимонный Лайм"
 	description = "A tangy substance made of 0.5% natural citrus!"
 	id = "lemon_lime"
 	color = "#878f00" // rgb: 135, 40, 0
@@ -462,7 +462,7 @@
 	data["ticks"]++
 
 /datum/reagent/consumable/drink/cold/milkshake/chocolate
-	name = "Шоколадный милкшейк"
+	name = "Шоколадный Милкшейк"
 	description = "Glorious brainfreezing mixture. Now with cocoa!"
 	id = "milkshake_chocolate"
 	color = "#aee5e4" // rgb" 174, 229, 228
@@ -470,7 +470,7 @@
 	taste_message = "chocolate milk"
 
 /datum/reagent/consumable/drink/cold/milkshake/strawberry
-	name = "Ягодный милкшейк"
+	name = "Ягодный Милкшейк"
 	description = "Glorious brainfreezing mixture. So sweet!"
 	id = "milkshake_strawberry"
 	color = "#aee5e4" // rgb" 174, 229, 228
@@ -498,7 +498,7 @@
 	taste_message = "communism"
 
 /datum/reagent/consumable/doctor_delight
-	name = "Удовольствие доктора"
+	name = "Удовольствие Доктора"
 	id = "doctorsdelight"
 	description = "A gulp a day keeps the MediBot away. That's probably for the best."
 	reagent_state = LIQUID
@@ -865,7 +865,7 @@
 	taste_message = "class"
 
 /datum/reagent/consumable/ethanol/thirteenloko
-	name = "Тринадцатая компания"
+	name = "Тринадцатая Компания"
 	id = "thirteenloko"
 	description = "A potent mixture of caffeine and alcohol."
 	color = "#102000" // rgb: 16, 32, 0
@@ -913,7 +913,7 @@
 	M.adjustDrugginess(5)
 
 /datum/reagent/consumable/ethanol/gin
-	name = "Гин"
+	name = "Джин"
 	id = "gin"
 	description = "It's gin. In space. I say, good sir."
 	color = "#cdd1da" // rgb: 205, 209, 218
@@ -938,7 +938,7 @@
 	taste_message = "champagne"
 
 /datum/reagent/consumable/ethanol/tequilla
-	name = "Текилла"
+	name = "Текила"
 	id = "tequilla"
 	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 	color = "#ffff91" // rgb: 255, 255, 145
@@ -1280,7 +1280,7 @@
 	taste_message = "coffee and booze"
 
 /datum/reagent/consumable/ethanol/margarita
-	name = "Маргнарита"
+	name = "Маргарита"
 	id = "margarita"
 	description = "On the rocks with salt on the rim. Arriba~!"
 	color = "#8cff8c" // rgb: 140, 255, 140
@@ -1304,7 +1304,7 @@
 	taste_message = "bitter alcohol"
 
 /datum/reagent/consumable/ethanol/manhattan_proj
-	name = "Манхэттэнский проект"
+	name = "Манхэттэнский Проект"
 	id = "manhattan_proj"
 	description = "A scientist's drink of choice, for pondering ways to blow up the station."
 	color = "#664300" // rgb: 102, 67, 0

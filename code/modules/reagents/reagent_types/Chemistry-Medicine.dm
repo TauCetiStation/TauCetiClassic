@@ -755,7 +755,7 @@
 	M.overeatduration = 0
 
 /datum/reagent/stimulants
-	name = "Стимулянты"
+	name = "Стимуляторы"
 	id = "stimulants"
 	description = "Stimulants to keep you up in a critical moment"
 	reagent_state = LIQUID
