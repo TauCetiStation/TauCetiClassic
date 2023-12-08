@@ -102,69 +102,90 @@
 	var/obj/item/organ/external/infected_organ = null //if infected part is removed, destroys itself
 
 /datum/disease2/effect/zombie/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	if(ishuman(A))
-		var/mob/living/carbon/human/H = A
-		if(iszombie(H))
-			disease.dead = TRUE
-			return
+	if(!ishuman(A))
+		return
+	var/mob/living/carbon/human/H = A
+	if(iszombie(H) || activated)
+		disease.dead = TRUE
+		UnregisterSignal(H, COMSIG_MOB_DIED)
+		return
 
-		if(!(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
-			return
+	if(!(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
+		return
 
-		if(infected_organ == null && holder.ticks == 0)
-			var/list/organs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Organs that you can actually cut off are checked first to give a chance
-			organs = shuffle(organs) + shuffle(list(BP_CHEST, BP_GROIN, BP_HEAD))
+	if(infected_organ == null && holder.ticks == 0)
+		var/list/organs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Organs that you can actually cut off are checked first to give a chance
+		organs = shuffle(organs) + shuffle(list(BP_CHEST, BP_GROIN, BP_HEAD))
+		for(var/o in organs)
+			var/obj/item/organ/external/BP = H.get_bodypart(o)
+			if(BP && BP.is_flesh() && BP.is_usable())
+				infected_organ = BP
+				break
 
-			for(var/o in organs)
-				var/obj/item/organ/external/BP = H.get_bodypart(o)
-				if(BP && BP.is_flesh() && BP.is_usable())
-					infected_organ = BP
-					break
+	if(QDELETED(infected_organ) || !infected_organ || !infected_organ.is_flesh() || infected_organ.is_stump || !infected_organ.is_attached())
+		disease.dead = TRUE
+		UnregisterSignal(A, COMSIG_MOB_DIED)
+		to_chat(H, "<span class='notice'>You suddenly feel better.</span>")
+		return
 
-		if(QDELETED(infected_organ) || !infected_organ || !infected_organ.is_flesh() || infected_organ.is_stump || !infected_organ.is_attached())
-			disease.dead = TRUE
-			to_chat(H, "<span class='notice'>You suddenly feel better.</span>")
-			return
+	var/tox_damage = 0
+	var/messages_pool = list()
 
-		switch(holder.stage)
-			if(1,2,3) //increased hunger
-				H.nutrition = max(H.nutrition - 20, 0)
-				if(prob(1)) //might never happen and its fine
-					to_chat(H, "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You are hungry for something.", "You suddenly feel better.", "You suddenly feel worse.")]</span>")
-			if(4,5,6) //some random stuff
-				H.adjustToxLoss(1)
-				if(prob(70))
-					H.emote(pick("twitch","drool","sneeze","sniff","cough","shiver","giggle","laugh","gasp"))
-				else
-					to_chat(H, "<span class='warning'>[pick("Your [infected_organ.name] seems to become more green...", "Your [infected_organ.name] hurts...")]</span>")
-			if(7,8) //pain
-				to_chat(H, "<span class='danger'>[pick("Your brain hurts.", "Your [infected_organ.name] hurts a lot.", "Your muscles ache.", "Your muscles are sore.")]</span>")
-				H.apply_effect(20, AGONY, 0)
-				H.adjustBrainLoss(5)
-				H.adjustToxLoss(3)
-			if(9) //IT HURTS
-				if(prob(33))
-					to_chat(H, "<span class='danger'>[pick("IT HURTS", "You feel a sharp pain across your whole body!")]</span>")
-					H.adjustBruteLoss(rand(2, 5))
-					H.apply_effect(50, AGONY, 0)
-				else if(prob(33) && H.stat == CONSCIOUS)
-					to_chat(H, "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>")
-					H.adjustOxyLoss(rand(10, 40))
-				else
-					to_chat(H, "<span class='danger'>[pick("Your body is paralyzed.")]</span>")
-					H.Stun(4)
-			if(10) //rip
-				if(!activated)
-					activated = TRUE
-					H.visible_message("<span class='danger'>[H] suddenly closes \his eyes. \His body falls lifeless and stops moving. \He seems to stop breathing.</span>")
-					H.suiciding = TRUE
-					H.adjustOxyLoss(max(H.maxHealth * 2 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss(), 0))
-					H.updatehealth()
-					disease.dead = TRUE
+	H.nutrition = max(H.nutrition - 20, 0)
+	messages_pool += "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You are hungry for something.", "You suddenly feel better.", "You suddenly feel worse.")]</span>"
+	if(holder.stage > 3) //some random stuff
+		tox_damage += 1
+		if(prob(10))
+			H.emote(pick("twitch","drool","sneeze","sniff","cough","shiver","giggle","laugh","gasp"))
+		messages_pool += "<span class='warning'>[pick("Your [infected_organ.name] seems to become more green...", "Your [infected_organ.name] hurts...")]</span>"
+	if(holder.stage > 6) //pain
+		messages_pool += "<span class='danger'>[pick("Your brain hurts.", "Your [infected_organ.name] hurts a lot.", "Your muscles ache.", "Your muscles are sore.")]</span>"
+		H.adjustBrainLoss(5)
+		tox_damage += 2
+	if(holder.stage > 8) //IT HURTS
+		if(prob(33))
+			messages_pool += "<span class='danger'>[pick("IT HURTS", "You feel a sharp pain across your whole body!")]</span>"
+			H.adjustBruteLoss(20)
+			H.apply_effect(20, AGONY, 0)
+		else if(prob(33) && H.stat == CONSCIOUS)
+			messages_pool += "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>"
+			H.adjustOxyLoss(10)
+			H.losebreath = 5
+		else
+			messages_pool += "<span class='danger'>Your body is paralyzed.</span>"
+			H.Stun(4)
+
+	H.adjustToxLoss(tox_damage)
+	if(prob(50))
+		to_chat(H, pick(messages_pool))
+
+	if(holder.stage > 9) //rip
+		activated = TRUE
+		H.suiciding = TRUE
+		UnregisterSignal(H, COMSIG_MOB_DIED)
+		H.adjustOxyLoss(max(H.maxHealth * 2 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss(), 0))
+		H.updatehealth()
+		disease.dead = TRUE
 
 /datum/disease2/effect/zombie/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 	var/datum/disease2/effect/zombie/Z = effect_old
 	infected_organ = Z.infected_organ
+
+/datum/disease2/effect/zombie/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	. = ..()
+	if(ishuman(A))
+		UnregisterSignal(A, COMSIG_MOB_DIED)
+
+/datum/disease2/effect/zombie/proc/handle_infected_death(mob/user)
+	SIGNAL_HANDLER
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), 600)
+		to_chat(H, "<span class='cult'>Твоё сердце останавливается, но вместе с этим просыпается ненасытный ГОЛОД... \
+				Вот только жизнь не покинула твоё бездыханное тело. \
+				Этот голод не отпускает тебя, ты ещё восстанешь, что бы распространять болезнь и сеять смерть!</span>")
+		activated = TRUE
+		UnregisterSignal(H, COMSIG_MOB_DIED)
 
 ////////////////////////STAGE 4/////////////////////////////////
 
