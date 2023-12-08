@@ -245,7 +245,7 @@
 		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant_paralysis)]% [occupant_paralysis ? "([round(occupant_paralysis / 4)] seconds left)" : ""]</div></div>"
 		if(occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in occupant.reagents.reagent_list)
-				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] units</div></div>", round(R.volume, 0.1))
+				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] юнит(ов)</div></div>", round(R.volume, 0.1))
 
 	dat += "</div>"
 
