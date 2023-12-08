@@ -15,6 +15,8 @@
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
 
+	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
+
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
 	var/datum/unarmed_attack/unarmed                                          // For empty hand harm-intent attack
