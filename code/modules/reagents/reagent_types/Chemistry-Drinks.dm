@@ -211,7 +211,7 @@
 	diet_flags = DIET_ALL
 
 /datum/reagent/consumable/drink/milk/cream
-	name = "Мороженное"
+	name = "Мороженое"
 	id = "cream"
 	description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 	color = "#dfd7af" // rgb: 223, 215, 175

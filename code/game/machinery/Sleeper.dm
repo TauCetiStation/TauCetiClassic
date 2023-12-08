@@ -229,16 +229,16 @@
 			if(0)
 				dat += "<span class='good'>В сознании</span>"
 			if(1)
-				dat += "<span class='average'>Не в сознании</span>"
+				dat += "<span class='average'>Без сознания</span>"
 			else
-				dat += "<span class='bad'>МЁРТВ</span>"
+				dat += "<span class='bad'>Мёртв</span>"
 
 		dat += "<br />"
 
 		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill bggood'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
 		dat +=  "<div class='line'><div class='statusLabel'>\> Механические повреждения:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Статус асфиксии:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Статус интоксикации:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Асфиксия:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
+		dat +=  "<div class='line'><div class='statusLabel'>\> Интоксикация:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
 		dat +=  "<div class='line'><div class='statusLabel'>\> Термические повреждения:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
 
 		var/occupant_paralysis = occupant.AmountParalyzed()
@@ -256,13 +256,13 @@
 	dat += "<h3>Сосуд</h3>"
 
 	if(src.beaker)
-		dat += "<A href='?src=\ref[src];removebeaker=1'>Убрать сосуд</A>"
+		dat += "<A href='?src=\ref[src];removebeaker=1'>Извлечь сосуд</A>"
 		if(filtering)
 			dat += "<A href='?src=\ref[src];togglefilter=1'>Остановить диализ</A>"
-			dat += text("<BR>В выходном сосуде осталось [] юнитов свободного места<BR><HR>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
+			dat += text("<BR>В сосуде осталось [] юнитов свободного места<BR><HR>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 		else
 			dat += "<A href='?src=\ref[src];togglefilter=1'>Начать диализ</A>"
-			dat += text("<BR>В выходном сосуде осталось [] юнитов свободного места", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
+			dat += text("<BR>В сосуде осталось [] юнитов свободного места", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 	else
 		dat += "<BR>Сосуд для проведения диализа не вставлен"
 
@@ -319,7 +319,7 @@
 
 /obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)
-		to_chat(target, "<span class='notice'><b>Вы чувствуете охлаждение воздуха в капсуле, а затем медленную остановку жизненных процессов.</b></span>")
+		to_chat(target, "<span class='notice'><b>Вы чувствуете охлаждение воздуха в капсуле, а затем вы оцепенели, когда ваше сознание начало засыпать.</b></span>")
 		..(target)
 
 /obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
