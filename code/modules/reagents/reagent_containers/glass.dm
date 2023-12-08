@@ -89,7 +89,7 @@
 
 		M.log_combat(user, "splashed with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
-		user.visible_message("<span class='rose'>[user] чем-то облил(а) [target]!</span>")
+		user.visible_message("<span class='rose'>[target] has been splashed with something by [user]!</span>")
 		reagents.standard_splash(target, user=user)
 		return
 
