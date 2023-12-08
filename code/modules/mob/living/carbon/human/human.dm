@@ -1398,6 +1398,10 @@
 
 	maxHealth = species.total_health
 
+	if(species.flags[NO_PAIN])
+		shock_stage = 0
+		traumatic_shock = 0
+
 	if(species.base_color && default_colour)
 		//Apply colour.
 		r_skin = HEX_VAL_RED(species.base_color)

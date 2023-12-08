@@ -15,6 +15,8 @@
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
 
+	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
+
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
 	var/datum/unarmed_attack/unarmed                                          // For empty hand harm-intent attack
@@ -1473,7 +1475,6 @@
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0
-	speed_mod = -0.2
 	speed_mod_no_shoes = -1
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
@@ -1524,7 +1525,7 @@
 
 	brute_mod = 2
 	burn_mod = 1.2
-	speed_mod = -0.8
+	speed_mod = -0.6
 
 	tail = "tajaran_zombie"
 
@@ -1575,7 +1576,7 @@
 
 	brute_mod = 1.6
 	burn_mod = 0.90
-	speed_mod = -0.2
+	speed_mod = 0.1
 
 	tail = "unathi_zombie"
 
