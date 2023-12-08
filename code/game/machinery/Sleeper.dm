@@ -264,7 +264,7 @@
 			dat += "<A href='?src=\ref[src];togglefilter=1'>Начать диализ</A>"
 			dat += text("<BR>В сосуде осталось [] юнитов свободного места", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
 	else
-		dat += "<BR>Сосуд для проведения диализа не вставлен"
+		dat += "<BR>Сосуд для проведения диализа не вставлен."
 
 	dat += "<h3>Введение препаратов</h3>"
 
