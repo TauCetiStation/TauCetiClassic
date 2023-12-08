@@ -242,7 +242,7 @@
 		dat +=  "<div class='line'><div class='statusLabel'>\> Термические повреждения:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
 
 		var/occupant_paralysis = occupant.AmountParalyzed()
-		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant_paralysis)]% [occupant_paralysis ? "([round(occupant_paralysis / 4)] seconds left)" : ""]</div></div>"
+		dat += "<HR><div class='line'><div class='statusLabel'>Парализован на:</div><div class='statusValue'>[round(occupant_paralysis)]% [occupant_paralysis ? "([round(occupant_paralysis / 4)] seconds left)" : ""]</div></div>"
 		if(occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in occupant.reagents.reagent_list)
 				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] юнит(ов)</div></div>", round(R.volume, 0.1))
