@@ -308,7 +308,7 @@
 		else
 			var/obj/item/organ/internal/IO = pick(owner.organs)
 			if(IO)
-				IO.damage += 0.2  * process_accuracy
+				IO.damage += 0.2 * process_accuracy
 
 	//Detox can heal small amounts of damage
 	if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
