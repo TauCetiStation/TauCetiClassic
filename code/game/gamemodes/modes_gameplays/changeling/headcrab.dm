@@ -4,6 +4,7 @@
 	name = "Last Resort"
 	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
 	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
+	button_icon_state = "last_resort"
 	chemical_cost = 20
 	genomecost = 1
 	req_human = 1
@@ -29,7 +30,7 @@
 
 	// Prevents having Regenerate verb after rebirth.
 	var/datum/role/changeling/C = M.GetRoleByType(/datum/role/changeling)
-	C.purchasedpowers -= locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers
+	qdel(locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers)
 
 	// In case we did it out of stasis
 	if (C.instatis)
@@ -129,7 +130,15 @@
 	origin.transfer_to(M)
 	var/datum/role/changeling/C = origin.GetRoleByType(/datum/role/changeling)
 	if(C)
-		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		var/obj/effect/proc_holder/changeling/lesserform/A = locate(/obj/effect/proc_holder/changeling/lesserform) in C.purchasedpowers
+		if(!A) //If ling doesnt have lesserfrom, give them one-use
+			A = new (null)
+			A.last_resort = TRUE
+			C.purchasedpowers += A
+			A.on_purchase(M)
+		A.action.button_icon_state = "human_form"
+		A.action.button.name = "Human form"
+		A.action.button.UpdateIcon()
 		M.changeling_update_languages(C.absorbed_languages)
 		for(var/mob/living/parasite/essence/E in src)
 			E.enter_host(M)

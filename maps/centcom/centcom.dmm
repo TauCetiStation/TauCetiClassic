@@ -15649,9 +15649,7 @@
 "aIs" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp{
-	name = "security rubber stamp"
-	},
+/obj/item/weapon/stamp/sec,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -16964,7 +16962,7 @@
 /area/centcom/evac)
 "aLH" = (
 /obj/structure/table,
-/obj/item/weapon/stamp/captain,
+/obj/item/weapon/stamp/cap,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aLI" = (
@@ -27496,7 +27494,7 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/under/suit_jacket,
 /turf/unsimulated/floor{
 	icon_state = "wood"
