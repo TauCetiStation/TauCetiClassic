@@ -1,8 +1,9 @@
 /obj/item/device/healthanalyzer
 	name = "Health Analyzer"
+	cases = list("анализатор здоровья", "анализатора здоровья", "анализатору здоровья", "анализатор здоровья", "анализатором здоровья", "анализаторе здоровья")
 	icon_state = "health"
 	item_state = "healthanalyzer"
-	desc = "Ручной сканер тела, способный проанализировать жизненные показатели пациента."
+	desc = "Способен просканировать жизненные показатели пациента."
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
@@ -66,9 +67,9 @@
 
 	output_to_chat = !output_to_chat
 	if(output_to_chat)
-		to_chat(usr, "The scanner now outputs data to chat.")
+		to_chat(usr, "Теперь сканер выводит данные в чат.")
 	else
-		to_chat(usr, "The scanner now outputs data in a seperate window.")
+		to_chat(usr, "Теперь сканер выводит данные в отдельном окне.")
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
@@ -76,9 +77,9 @@
 
 	mode = !mode
 	if(mode)
-		to_chat(usr, "The scanner now shows specific limb damage.")
+		to_chat(usr, "Сканер теперь показывает конкретные повреждения конечностей.")
 	else
-		to_chat(usr, "The scanner no longer shows limb damage.")
+		to_chat(usr, "Сканер больше не показывает повреждения конечностей.")
 
 /obj/item/device/healthanalyzer/rad_laser
 	materials = list(MAT_METAL=400)
@@ -99,7 +100,7 @@
 		spawn(cooldown) // splits off to handle the cooldown while handling wavelength
 			used = 0
 			icon_state = "health"
-		to_chat(user,"<span class='warning'>Successfully irradiated [M].</span>")
+		to_chat(user,"<span class='warning'>Успешное облучение [M].</span>")
 		M.log_combat(user, "irradiated with [name]")
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
@@ -107,7 +108,7 @@
 					M.apply_effect(round(intensity/1.5), PARALYZE)
 				irradiate_one_mob(M, intensity * 10)
 	else
-		to_chat(user,"<span class='warning'>The radioactive microlaser is still recharging.</span>")
+		to_chat(user,"<span class='warning'>Радиоактивный микролазер все еще перезаряжается.</span>")
 
 /obj/item/device/healthanalyzer/rad_laser/attack_self(mob/user)
 	interact(user)
@@ -115,19 +116,19 @@
 /obj/item/device/healthanalyzer/rad_laser/interact(mob/user)
 	user.set_machine(src)
 	var/cooldown = round(max(10, (intensity*5 - wavelength/4)))
-	var/dat = "Irradiation: <A href='?src=\ref[src];rad=1'>[irradiate ? "On" : "Off"]</A><br>"
+	var/dat = "Облучение: <A href='?src=\ref[src];rad=1'>[irradiate ? "Вкл" : "Выкл"]</A><br>"
 
 	dat += {"
-	Radiation Intensity:
+	Интенсивность излучения:
 	<A href='?src=\ref[src];radint=-5'>-</A><A href='?src=\ref[src];radint=-1'>-</A>
 	[intensity]
 	<A href='?src=\ref[src];radint=1'>+</A><A href='?src=\ref[src];radint=5'>+</A><BR>
 
-	Radiation Wavelength:
+	Длина волны излучения:
 	<A href='?src=\ref[src];radwav=-5'>-</A><A href='?src=\ref[src];radwav=-1'>-</A>
 	[(wavelength+(intensity*4))]
 	<A href='?src=\ref[src];radwav=1'>+</A><A href='?src=\ref[src];radwav=5'>+</A><BR>
-	Laser Cooldown: [cooldown] Seconds<BR>
+	Перезарядка лазера: [cooldown] секунд<BR>
 	"}
 
 	var/datum/browser/popup = new(user, "radlaser", "Radioactive Microlaser Interface", 400, 240)
@@ -156,5 +157,6 @@
 
 /obj/item/device/healthanalyzer/psychology
 	name = "Health and Mental Analyzer"
-	desc = "A hand-held body scanner able to distinguish vital and mental signs of the subject."
+	cases = list("анализатор здоровья и психики", "анализатора здоровья и психики", "анализатору здоровья и психики", "анализатор здоровья психики", "анализатором здоровья и психики", "анализаторе здоровья и психики")
+	desc = "Анализатор здоровья и психики, способный просканировать жизненные и психические показатели пациента."
 	scan_hallucination = TRUE
