@@ -43,7 +43,6 @@
 
 	var/age = 30                //Player's age (pure fluff)
 	var/height = HUMANHEIGHT_MEDIUM  //Player's height
-	var/b_type = "A+"           //Player's bloodtype
 
 	var/underwear = 1   //Which underwear the player wants
 	var/undershirt = 0  //Which undershirt the player wants.

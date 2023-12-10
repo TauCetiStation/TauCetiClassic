@@ -4,7 +4,7 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
-	desc = "Used for a more detailed analysis of the patient."
+	desc = "Используется для более детального анализа состояния пациента."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
 	anchored = TRUE
@@ -49,12 +49,12 @@
 
 /obj/machinery/bodyscanner/proc/move_inside_checks(mob/target, mob/user)
 	if(occupant)
-		to_chat(user, "<span class='userdanger'>The scanner is already occupied!</span>")
+		to_chat(user, "<span class='userdanger'>Сканер уже занят кем-то!</span>")
 		return FALSE
 	if(!iscarbon(target))
 		return FALSE
 	if(target.abiotic())
-		to_chat(user, "<span class='userdanger'>Subject cannot have abiotic items on.</span>")
+		to_chat(user, "<span class='userdanger'>У пациента не должно быть чего-либо в руках.</span>")
 		return FALSE
 	if(!do_skill_checks(user))
 		return
@@ -77,7 +77,7 @@
 	if(user.incapacitated())
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 	if(!move_inside_checks(target, user))
 		return
@@ -89,7 +89,7 @@
 	if(user.incapacitated() || !Adjacent(user))
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 	if(occupant)
 		eject()
@@ -298,16 +298,16 @@
 
 	var/obj/item/weapon/paper/P = new(loc)
 	var/mob/living/carbon/human/occupant = connected.occupant
-	var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
-	t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
+	var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> расширенный отчет сканера.<BR>"
+	t1 += "Станционное время: <B>[worldtime2text()]</B><BR>"
 	switch(occupant.stat) // obvious, see what their status is
 		if(CONSCIOUS)
-			t1 += "Status: <B>Conscious</B>"
+			t1 += "Status: <B>В сознании</B>"
 		if(UNCONSCIOUS)
-			t1 += "Status: <B>Unconscious</B>"
+			t1 += "Status: <B>Без сознания</B>"
 		else
-			t1 += "Status: <B><span class='warning'>*dead*</span></B>"
+			t1 += "Status: <B><span class='warning'>*Мёртв*</span></B>"
 	t1 += additional_info
 	P.info = t1
-	P.name = "[occupant.name]'s scanner report"
+	P.name = "Результаты сканирования [occupant.name]"
 	P.update_icon()

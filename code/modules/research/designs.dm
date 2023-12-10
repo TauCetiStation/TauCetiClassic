@@ -37,6 +37,9 @@ other types of metals and chemistry for reagents).
 	var/list/category = null        //Primarily used for Mech Fabricators, but can be used for anything
 	var/starts_unlocked = FALSE     //If true does not require any technologies and unlocked from the start
 
+/datum/design/New()
+	all_designs += src
+
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/seccamera
@@ -1946,6 +1949,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 8000, MAT_GLASS = 1000, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/gun/energy/laser
+	category = list("Weapons")
+	
+/datum/design/laserpractice
+	name = "Practice Laser Gun"
+	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
+	id = "laserpractice"
+	build_type = PROTOLATHE
+	materials = list (MAT_METAL = 1250, MAT_GLASS = 250)
+	build_path = /obj/item/weapon/gun/energy/laser/practice
 	category = list("Weapons")
 
 /datum/design/lasercannon

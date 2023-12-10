@@ -59,6 +59,8 @@
 		A.loc = loc
 
 /obj/machinery/smartfridge/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
 
@@ -219,15 +221,6 @@
 		return
 
 	default_deconstruction_crowbar(O)
-
-	if(isscrewing(O))
-		panel_open = !panel_open
-		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
-		cut_overlays()
-		if(panel_open)
-			add_overlay(image(icon, icon_panel))
-		nanomanager.update_uis(src)
-		return
 
 	if(is_wire_tool(O) && panel_open && wires.interact(user))
 		return

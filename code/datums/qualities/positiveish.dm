@@ -422,3 +422,11 @@
 	else if(H.job == "Mime")
 		H.equip_to_slot(new /obj/item/clothing/suit/space/mime, SLOT_R_HAND)
 		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/mime, SLOT_L_HAND)
+
+/datum/quality/positiveish/fastwalker
+	name = "Fast Walker"
+	desc = "Упражнения спортивной ходьбой по таяранской методике дали свои плоды - ты способен передвигаться быстро, бесшумно и аккуратно, когда не бежишь."
+	requirement = "Нет."
+
+/datum/quality/positiveish/fastwalker/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_FAST_WALKER, QUALITY_TRAIT)

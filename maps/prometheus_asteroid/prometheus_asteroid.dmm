@@ -141,7 +141,9 @@
 /area/asteroid/mine/abandoned)
 "as" = (
 /obj/structure/alien/weeds,
-/obj/machinery/suit_storage_unit/syndicate_unit,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/cheap,
+/obj/item/clothing/head/helmet/space/cheap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1373,7 +1375,9 @@
 	name = "Bathroom";
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -1800,6 +1804,16 @@
 	icon_state = "wood"
 	},
 /area/asteroid/mine/explored)
+"gg" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "gh" = (
 /obj/structure/grille,
 /obj/item/weapon/scrap_lump,
@@ -2069,7 +2083,9 @@
 	req_access = list(65);
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -2432,7 +2448,9 @@
 	req_one_access = list(65,10,24);
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8
 	},
@@ -2907,7 +2925,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3277,7 +3297,9 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced_phoron"
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
@@ -3435,7 +3457,9 @@
 	},
 /area/asteroid/mine/explored)
 "mF" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
@@ -3566,7 +3590,9 @@
 	req_one_access = list(65,10,24);
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3944,7 +3970,9 @@
 	name = "Mining outpost";
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -4629,7 +4657,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
 "so" = (
@@ -4698,7 +4728,9 @@
 /turf/simulated/floor,
 /area/asteroid/mine/dwarf)
 "sE" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/cable,
 /obj/machinery/power/apc/largecell{
 	name = "RnD largecell apc down";
@@ -4855,7 +4887,9 @@
 	name = "Long Term Storage";
 	req_access = list(65)
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -4914,7 +4948,9 @@
 /turf/simulated/wall,
 /area/asteroid/research_outpost/hallway)
 "tF" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
@@ -4977,13 +5013,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
+"tQ" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/production)
 "tU" = (
 /obj/machinery/door/airlock/mining{
 	name = "Mining Storage";
 	req_access = list(48);
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -5453,7 +5501,9 @@
 	name = "Mining External Access";
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
@@ -5676,7 +5726,9 @@
 /turf/simulated/floor/engine,
 /area/asteroid/mine/abandoned)
 "xp" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -5918,7 +5970,9 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "yx" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/sign/departments/chemistry{
 	desc = "A warning sign which reads 'SAMPLE PREPARATION'";
 	name = "\improper SAMPLE PREPARATION";
@@ -6300,7 +6354,9 @@
 	req_access = list(65);
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -6339,7 +6395,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6517,9 +6575,21 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/maintenance)
+"AY" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/hallway)
 "Bb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -6668,7 +6738,9 @@
 	req_one_access = list(48);
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -6893,7 +6965,9 @@
 	req_access = list(65);
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -6942,7 +7016,9 @@
 	name = "Mining Outpost"
 	})
 "Da" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -6995,7 +7071,9 @@
 	req_access = list(65);
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -7258,6 +7336,16 @@
 /obj/random/vending/snack,
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
+"EJ" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/anomaly)
 "EK" = (
 /obj/machinery/power/terminal,
 /obj/structure/cable,
@@ -7564,7 +7652,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -7914,7 +8004,9 @@
 	name = "Mining Outpost"
 	})
 "Ic" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
@@ -7965,7 +8057,9 @@
 /area/asteroid/mine/eva)
 "Ir" = (
 /obj/machinery/mineral/unloading_machine,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/west_outpost{
 	name = "Mining Outpost"
@@ -8116,7 +8210,9 @@
 	name = "Mining Station EVA";
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -8179,7 +8275,9 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "Jv" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -8288,7 +8386,9 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "JS" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
@@ -9041,7 +9141,9 @@
 /turf/environment/space,
 /area/space)
 "Nv" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/door/airlock{
 	id_tag = "mbath";
 	name = "Bathroom";
@@ -9493,7 +9595,9 @@
 /turf/simulated/floor/bluegrid,
 /area/asteroid/research_outpost/iso1)
 "PW" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -9808,6 +9912,18 @@
 	icon_state = "vaultfull"
 	},
 /area/asteroid/mine/eva)
+"Rt" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost{
+	name = "Mining Outpost"
+	})
 "Rx" = (
 /obj/structure/dispenser/oxygen,
 /obj/machinery/firealarm{
@@ -9905,7 +10021,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -9932,7 +10050,9 @@
 	req_access = list(61);
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10095,7 +10215,9 @@
 	id = "mining_internal"
 	},
 /obj/structure/plasticflaps,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "SR" = (
@@ -10691,7 +10813,9 @@
 	},
 /area/asteroid/research_outpost/iso1)
 "Vs" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
@@ -10810,7 +10934,9 @@
 	id = "mining_internal"
 	},
 /obj/structure/plasticflaps,
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn_corner"
 	},
@@ -10899,7 +11025,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -11006,7 +11134,9 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
@@ -11208,6 +11338,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
+"Yi" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/eva)
 "Yk" = (
 /obj/machinery/mining/brace{
 	dir = 4
@@ -11495,12 +11635,9 @@
 /obj/item/weapon/pen{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp{
-	icon_state = "stamp-rd";
+/obj/item/weapon/stamp/sci{
 	name = "research outpost rubber stamp";
 	pixel_y = -10;
-	stamp_border = "#7f4ba2";
-	stamp_color = "#9361b5";
 	stamp_message = "Research Outpost"
 	},
 /turf/simulated/floor{
@@ -11602,7 +11739,9 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "ZG" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
@@ -39760,9 +39899,9 @@ EK
 Lz
 fP
 Wf
-jG
-jG
-jG
+tQ
+tQ
+tQ
 MT
 SQ
 MT
@@ -41815,10 +41954,10 @@ Bx
 FP
 zJ
 yH
-oF
+Yi
 Jh
-oF
-oF
+Yi
+Yi
 yH
 VL
 VL
@@ -42067,9 +42206,9 @@ es
 hc
 zA
 zA
-jG
+tQ
 tU
-jG
+tQ
 yH
 yH
 mK
@@ -43861,9 +44000,9 @@ WW
 db
 zA
 zA
-vv
+gg
 tF
-vv
+gg
 zA
 zA
 nZ
@@ -44380,9 +44519,9 @@ lm
 lm
 MT
 MT
-jG
+tQ
 BM
-jG
+tQ
 yH
 yH
 XM
@@ -46946,8 +47085,8 @@ db
 db
 vU
 Ic
-nP
-nP
+AY
+AY
 vU
 vG
 EB
@@ -47726,8 +47865,8 @@ Da
 Jv
 Qn
 Qn
-Iv
-Iv
+EJ
+EJ
 zK
 Qn
 Qn
@@ -49268,9 +49407,9 @@ PW
 sE
 Qn
 Ug
-Iv
+EJ
 hx
-Iv
+EJ
 Qn
 Vd
 jg
@@ -49828,10 +49967,10 @@ aK
 IC
 gZ
 gZ
-of
+Rt
 oL
-of
-of
+Rt
+Rt
 gZ
 gZ
 gZ

@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/absorbDNA
 	name = "Absorb DNA"
 	desc = "Absorb the DNA of our victim."
+	button_icon_state = "absorb_dna"
 	chemical_cost = 0
 	genomecost = 0
 	req_human = 1
@@ -10,8 +11,7 @@
 	if(!..())
 		return FALSE
 
-	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
-	if(changeling.isabsorbing)
+	if(HAS_TRAIT_FROM(user, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT))
 		to_chat(user, "<span class='warning'>We are already absorbing!</span>")
 		return FALSE
 
@@ -24,13 +24,14 @@
 		return FALSE
 
 	var/mob/living/carbon/target = G.affecting
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	return changeling.can_absorb_dna(user,target)
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/living/user)
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
-	changeling.isabsorbing = 1
+	ADD_TRAIT(user, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT)
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
 			if(1)
@@ -53,7 +54,7 @@
 		feedback_add_details("changeling_powers","A[stage]")
 		if(!do_mob(user, target, 150))
 			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
-			changeling.isabsorbing = 0
+			REMOVE_TRAIT(user, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT)
 			return FALSE
 
 	to_chat(user, "<span class='notice'>We have absorbed [target]!</span>")
@@ -111,7 +112,7 @@
 		changeling.chem_charges += 10
 
 	changeling.absorbedamount++
-	changeling.isabsorbing = 0
+	REMOVE_TRAIT(user, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT)
 	target.blood_remove(BLOOD_VOLUME_MAXIMUM) // We are vamplings, so we drink blood!
 	target.death(0)
 	target.Drain()

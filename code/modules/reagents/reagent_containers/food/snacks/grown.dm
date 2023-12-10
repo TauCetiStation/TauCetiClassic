@@ -493,9 +493,14 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/hatchet) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/melee/energy))
 		to_chat(user, "<span class='notice'>You carve a face into [src]!</span>")
-		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
-		qdel(src)
-		return
+		if (tgui_alert(usr, "Шлем или Декор?", "Что вырезать?", list("Шлем", "Декор")) == "Шлем")
+			new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
+			qdel(src)
+			return
+		else
+			new /obj/item/weapon/carved_pumpkin (user.loc)
+			qdel(src)
+			return
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/lime
@@ -724,6 +729,10 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 	reagents.add_reagent("lube", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
+	AddComponent(/datum/component/slippery, 8, NONE, CALLBACK(src, PROC_REF(AfterSlip)))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/proc/AfterSlip(mob/living/carbon/human/M)
+	M.Stun(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..())
@@ -734,23 +743,6 @@
 	for(var/atom/A in get_turf(hit_atom))
 		reagents.reaction(A)
 	qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(atom/movable/AM)
-	. = ..()
-	if (iscarbon(AM))
-		var/mob/living/carbon/C = AM
-
-		if (ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if ((H.shoes && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
-				return
-
-		C.stop_pulling()
-		to_chat(C, "<span class='notice'>You slipped on the [name]!</span>")
-		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-		if(!C.buckled)
-			C.Stun(8)
-			C.Weaken(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed_type = /obj/item/seeds/wheatseed

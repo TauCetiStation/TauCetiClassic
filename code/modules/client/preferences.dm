@@ -83,7 +83,6 @@ var/global/list/preferences_datums = list()
 	var/neuter_gender_voice = MALE		//for male/female emote sounds but with neuter gender
 	var/age = 30						//age of character
 	var/height = HUMANHEIGHT_MEDIUM		//height of character
-	var/b_type = "A+"					//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
 	var/socks = 1						//socks type
@@ -171,6 +170,8 @@ var/global/list/preferences_datums = list()
 	var/glowlevel = GLOW_MED // or bloom
 	var/lampsexposure = TRUE // idk how we should name it
 	var/lampsglare = FALSE // aka lens flare
+	//Impacts performance clientside
+	var/eye_blur_effect = TRUE
 
   //custom loadout
 	var/list/gear = list()
@@ -181,7 +182,6 @@ var/global/list/preferences_datums = list()
 	parent = C
 	UI_style = global.available_ui_styles[1]
 	custom_emote_panel = global.emotes_for_emote_panel
-	b_type = random_blood_type()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -367,7 +367,6 @@ var/global/list/preferences_datums = list()
 	character.neuter_gender_voice = neuter_gender_voice
 	character.age = age
 	character.height = height
-	character.b_type = b_type
 
 	character.regenerate_icons()
 
@@ -389,6 +388,8 @@ var/global/list/preferences_datums = list()
 			if("Human")
 				var/obj/item/organ/external/head/robot/ipc/human/H = new(null)
 				H.insert_organ(character)
+		var/obj/item/organ/internal/eyes/ipc/IO = new(null)
+		IO.insert_organ(character)
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes

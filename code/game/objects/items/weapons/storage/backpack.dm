@@ -5,6 +5,7 @@
 
 /obj/item/weapon/storage/backpack
 	name = "backpack"
+	cases = list("рюкзак", "рюкзака", "рюкзаку", "рюкзак", "рюкзаком", "рюкзаке")
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
@@ -79,6 +80,7 @@
 
 /obj/item/weapon/storage/backpack/santabag
 	name = "Santa's Gift Bag"
+	cases = list("мешок", "мешка", "мешку", "мешок", "мешком", "мешке")
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
@@ -128,6 +130,7 @@
 
 /obj/item/weapon/storage/backpack/satchel
 	name = "leather satchel"
+	cases = list("сумка", "сумки", "сумке", "сумку", "сумкой", "сумке")
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
 	item_state = "satchel"
@@ -236,6 +239,7 @@
 
 /obj/item/weapon/storage/backpack/kitbag
 	name = "kitbag"
+	cases = list("вещмешок", "вещмешка", "вещмешку", "вещмешок", "вещмешком", "вещмешке")
 	icon_state = "kitbag"
 
 /obj/item/weapon/storage/backpack/medbag
@@ -342,6 +346,7 @@
 
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "suspicious looking dufflebag"
+	cases = list("вещмешок", "вещмешка", "вещмешку", "вещмешок", "вещмешком", "вещмешке")
 	desc = "A large dufflebag for holding extra tactical supplies."
 	icon_state = "duffle-syndie"
 	item_state = "duffle-syndie"
@@ -398,6 +403,7 @@
 
 /obj/item/weapon/storage/backpack/henchmen
 	name = "wings"
+	cases = list("крылья", "крыльев", "крыльям", "крылья", "крыльями", "крыльях")
 	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
 	icon_state = "henchmen"
 

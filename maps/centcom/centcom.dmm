@@ -6647,7 +6647,7 @@
 /area/space)
 "apz" = (
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "floor"
 	},
 /area/custom/alien)
 "apA" = (
@@ -6815,7 +6815,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "floor"
 	},
 /area/custom/alien)
 "apT" = (
@@ -15381,7 +15381,7 @@
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "floor"
 	},
 /area/centcom/evac)
 "aHK" = (
@@ -15649,9 +15649,7 @@
 "aIs" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
-/obj/item/weapon/stamp{
-	name = "security rubber stamp"
-	},
+/obj/item/weapon/stamp/sec,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
@@ -15785,15 +15783,6 @@
 "aII" = (
 /turf/unsimulated/floor,
 /area/centcom/evac)
-"aIJ" = (
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock";
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
-/area/centcom/evac)
 "aIK" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -15822,11 +15811,6 @@
 	icon_state = "warn"
 	},
 /turf/unsimulated/floor,
-/area/centcom/evac)
-"aIP" = (
-/turf/unsimulated/floor{
-	icon_state = "floor5"
-	},
 /area/centcom/evac)
 "aIQ" = (
 /obj/structure/stool/bed,
@@ -16978,7 +16962,7 @@
 /area/centcom/evac)
 "aLH" = (
 /obj/structure/table,
-/obj/item/weapon/stamp/captain,
+/obj/item/weapon/stamp/cap,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aLI" = (
@@ -23271,7 +23255,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "floor"
 	},
 /area/centcom/evac)
 "bOb" = (
@@ -24987,7 +24971,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "floor"
 	},
 /area/centcom/evac)
 "eOb" = (
@@ -25444,7 +25428,7 @@
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "floor"
 	},
 /area/centcom/evac)
 "fLb" = (
@@ -27510,7 +27494,7 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/under/suit_jacket,
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -27769,7 +27753,7 @@
 	name = "Arrival Airlock"
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "floor"
 	},
 /area/centcom/evac)
 "ksb" = (
@@ -29797,7 +29781,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "floor5"
+	icon_state = "floor"
 	},
 /area/centcom/evac)
 "pgb" = (
@@ -49939,7 +49923,7 @@ aaM
 aaM
 aaM
 abn
-aIP
+aIy
 abn
 aaM
 aaM
@@ -50964,7 +50948,7 @@ hyb
 aIy
 hOb
 hSb
-aIP
+aIy
 hZb
 hyb
 aIy
@@ -51738,7 +51722,7 @@ aHv
 aaM
 aHv
 aHv
-aIJ
+pdb
 aHv
 aHv
 aaM
