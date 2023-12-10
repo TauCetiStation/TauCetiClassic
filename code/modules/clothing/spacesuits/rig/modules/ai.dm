@@ -346,15 +346,14 @@
 	var/obj/item/rig_module/chem_dispenser/chem_disp = holder.find_module(/obj/item/rig_module/chem_dispenser)
 	var/obj/item/rig_module/selfrepair/adv/repairModule = holder.find_module(/obj/item/rig_module/selfrepair/adv)
 
-	if(!chem_disp && !repairModule)
+	if(repairModule)
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			if(BP.is_robotic() && (BP.brute_dam || BP.burn_dam))
+				repairModule.activate()
+				break
+
+	if(!chem_disp)
 		return
-
-	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if(BP.is_robotic())
-			if(BP.brute_dam || BP.burn_dam)
-				if(!repairModule.active)
-					repairModule.activate()
-
 	if(H.getOxyLoss() > 40 && H.species != VOX)
 		if(try_inject(H, chem_disp, list("dexalin plus", "dexalin", "inaprovaline", "tricordrazine")))
 			return
