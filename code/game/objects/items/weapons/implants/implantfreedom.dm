@@ -7,7 +7,7 @@
 	implant_type = "r"
 
 /obj/item/weapon/implant/freedom/atom_init()
-	activation_emote = pick("blink", "eyebrow", "twitch", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
+	activation_emote = pick("blink", "eyebrow", "twitch", "frown", "nod", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
 	uses = rand(3, 5)
 	. = ..()
 
