@@ -67,34 +67,6 @@ const reduceOrganStatus = (A) => {
     : null;
 };
 
-const germStatus = (i) => {
-  if (i > 100) {
-    if (i < 300) {
-      return 'mild infection';
-    }
-    if (i < 400) {
-      return 'mild infection+';
-    }
-    if (i < 500) {
-      return 'mild infection++';
-    }
-    if (i < 700) {
-      return 'acute infection';
-    }
-    if (i < 800) {
-      return 'acute infection+';
-    }
-    if (i < 900) {
-      return 'acute infection++';
-    }
-    if (i >= 900) {
-      return 'septic';
-    }
-  }
-
-  return '';
-};
-
 export const BodyScanner = (props, context) => {
   const { data } = useBackend(context);
   const { occupied, occupant = {} } = data;
@@ -157,25 +129,32 @@ const BodyScannerMainOccupant = (props, context) => {
           />
         </LabeledList.Item>
         <LabeledList.Item label="Blood">
-          <ProgressBar
-            min="0"
-            max={occupant.blood.bloodNormal}
-            value={occupant.blood.bloodLevel / occupant.blood.bloodNormal}
-            ranges={{
-              good: [0.8, Infinity],
-              average: [0.6, 0.8],
-              bad: [-Infinity, 0.6],
-            }}>
-            <Box inline
-              style={{
-                float: 'left',
+          {occupant.blood.hasBlood ? (
+            <ProgressBar
+              min="0"
+              max={occupant.blood.bloodNormal}
+              value={occupant.blood.bloodLevel / occupant.blood.bloodNormal}
+              ranges={{
+                good: [0.8, Infinity],
+                average: [0.6, 0.8],
+                bad: [-Infinity, 0.6],
               }}>
-              {occupant.blood.pulse} BPM
+              <Box inline
+                style={{
+                  float: 'left',
+                }}>
+                {occupant.blood.pulse} BPM
+              </Box>
+              <Box inline>
+                {occupant.blood.percent}%
+              </Box>
+            </ProgressBar>
+          ) : (
+            <Box color="average">
+              Not detected
             </Box>
-            <Box inline>
-              {occupant.blood.percent}%
-            </Box>
-          </ProgressBar>
+          )}
+
         </LabeledList.Item>
         <LabeledList.Item label="Status" color={stats[occupant.stat][0]}>
           {stats[occupant.stat][1]}
@@ -289,13 +268,15 @@ const BodyScannerMainOrgansExternal = (props) => {
           <Table.Row key={i} textTransform="capitalize">
             <Table.Cell
               color={
-                (!!o.status.dead && 'bad')
-                || ((!!o.internalBleeding
-                  || !!o.burnWound
-                  || !!o.lungRuptured
+                ((!!o.status.dead
+                  || !!o.internalBleeding
+                  || !!o.stump)
+                  && 'bad')
+                || ((!!o.lungRuptured
                   || !!o.status.broken
                   || !!o.open
-                  || o.germ_level > 100)
+                  || !!o.germ_level
+                  || !!o.impant_len)
                   && 'average')
                 || (!!o.status.robotic && 'label')
               }
@@ -340,13 +321,17 @@ const BodyScannerMainOrgansExternal = (props) => {
               pt={i > 0 && 'calc(0.5rem + 2px)'}
             >
               <Box inline>
-                <Box color="average">
+                <Box color="bad" bold>
                   {reduceOrganStatus([
                     !!o.internalBleeding && 'Internal bleeding',
-                    !!o.burnWound && 'Critical tissue burns',
+                    !!o.status.dead && 'DEAD',
+                  ])}
+                </Box>
+                <Box color="average">
+                  {reduceOrganStatus([
                     !!o.lungRuptured && 'Ruptured lung',
                     !!o.status.broken && o.status.broken,
-                    germStatus(o.germ_level),
+                    !!o.germ_level && o.germ_level,
                     !!o.open && 'Open incision',
                   ])}
                 </Box>
@@ -362,11 +347,6 @@ const BodyScannerMainOrgansExternal = (props) => {
                 {reduceOrganStatus([
                   !!o.status.splinted && <Box color="good">Splinted</Box>,
                   !!o.status.robotic && <Box color="label">Robotic</Box>,
-                  !!o.status.dead && (
-                    <Box color="bad" bold>
-                      DEAD
-                    </Box>
-                  ),
                 ])}
               </Box>
             </Table.Cell>
@@ -398,9 +378,9 @@ const BodyScannerMainOrgansInternal = (props) => {
           <Table.Row key={i} textTransform="capitalize">
             <Table.Cell
               color={
-                (!!o.dead && 'bad')
-                || (o.germ_level > 100 && 'average')
-                || (o.robotic > 0 && 'label')
+                ((!!o.dead || !!o.broken) && 'bad')
+                || (o.robotic && 'label')
+                || ((!!o.germ_level || !!o.bruised) && 'average')
               }
               width="33%"
             >
@@ -423,13 +403,13 @@ const BodyScannerMainOrgansInternal = (props) => {
               width="33%"
               pt={i > 0 && 'calc(0.5rem + 2px)'}
             >
-              <Box inline color="average">
-                {reduceOrganStatus([germStatus(o.germ_level)])}
-              </Box>
               <Box inline>
+                <Box color="average">
+                  {reduceOrganStatus([!!o.germ_level && o.germ_level])}
+                </Box>
                 {reduceOrganStatus([
-                  o.robotic === 1 && <Box color="label">Robotic</Box>,
-                  o.robotic === 2 && <Box color="label">Assisted</Box>,
+                  o.robotic && <Box color="label">Robotic</Box>,
+                  o.assisted && <Box color="label">Assisted</Box>,
                   !!o.dead && (
                     <Box color="bad" bold>
                       DEAD

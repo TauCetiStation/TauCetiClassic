@@ -7,7 +7,6 @@
 	desc = "Used for a more detailed analysis of the patient."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
-	density = TRUE
 	anchored = TRUE
 	light_color = "#00ff00"
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
@@ -188,7 +187,7 @@
 		occupantData["bodyTempC"] = occupant.bodytemperature-T0C
 		occupantData["bodyTempF"] = (((occupant.bodytemperature-T0C) * 1.8) + 32)
 
-		occupantData["hasBorer"] = occupant.has_brain_worms()
+		occupantData["hasBorer"] = !!occupant.has_brain_worms()
 
 		var/list/bloodData = list()
 		bloodData["hasBlood"] = FALSE
@@ -197,7 +196,6 @@
 			bloodData["percent"] = round(((occupant.blood_amount() / BLOOD_VOLUME_NORMAL)*100))
 			bloodData["pulse"] = occupant.get_pulse(GETPULSE_TOOL)
 			bloodData["bloodLevel"] = occupant.blood_amount()
-			bloodData["bloodMax"] = BLOOD_VOLUME_MAXIMUM
 			bloodData["bloodNormal"] = BLOOD_VOLUME_NORMAL
 		occupantData["blood"] = bloodData
 
@@ -206,12 +204,13 @@
 			var/list/organData = list()
 			organData["name"] = capitalize(E.name)
 			organData["open"] = E.open
-			organData["germ_level"] = E.germ_level
+			organData["germ_level"] = get_germ_level_name(E.germ_level)
 			organData["bruteLoss"] = E.brute_dam
 			organData["fireLoss"] = E.burn_dam
 			organData["totalLoss"] = E.brute_dam + E.burn_dam
 			organData["maxHealth"] = E.max_damage
 			organData["broken"] = E.min_broken_damage
+			organData["stump"] = E.is_stump
 
 			var/list/implantData = list()
 			for(var/obj/I in E.implants)
@@ -252,11 +251,12 @@
 			var/list/organData = list()
 			organData["name"] = capitalize(I.name)
 			organData["desc"] = I.desc
-			organData["germ_level"] = I.germ_level
+			organData["germ_level"] = get_germ_level_name(I.germ_level)
 			organData["damage"] = I.damage
 			organData["maxHealth"] = I.min_broken_damage
-			organData["bruised"] = I.min_bruised_damage
-			organData["broken"] = I.min_broken_damage
+			organData["bruised"] = I.is_bruised()
+			organData["broken"] = I.is_broken()
+			organData["assisted"] = I.robotic == 1
 			organData["robotic"] = I.robotic == 2
 			organData["dead"] = (I.status & ORGAN_DEAD)
 
