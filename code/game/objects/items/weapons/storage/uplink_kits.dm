@@ -201,9 +201,30 @@
 	desc = "A small red box, though with additional metal fasteners, which makes it seem that it is very, very important. But... How would it get into your hands if it`s really important?"
 
 /obj/item/weapon/storage/box/syndie_kit/romerol/atom_init()
+	. = ..()
 	new /obj/item/weapon/reagent_containers/glass/beaker/vial/romerol(src)
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	new /obj/item/weapon/reagent_containers/dropper(src)
+
+/obj/item/weapon/storage/box/syndie_kit/romerol/nuke
+	name = "Red box"
+
+/obj/item/weapon/storage/box/syndie_kit/romerol/nuke/atom_init()
+	. = ..()
+	desc += " Though, this box looks really important"
+	new /obj/item/weapon/reagent_containers/hypospray/combat/zombie(src)
+
+	var/garanted_item = pick(/obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol, /obj/item/weapon/grenade/chem_grenade/romerol, /obj/item/weapon/implanter/zombie)
+	new garanted_item (src)
+
+	if(prob(50))
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol(src)
+	if(prob(50))
+		new /obj/item/weapon/grenade/chem_grenade/romerol(src)
+	if(prob(50))
+		new /obj/item/weapon/implanter/zombie(src)
+	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/cutouts
 	name = "box (G)"

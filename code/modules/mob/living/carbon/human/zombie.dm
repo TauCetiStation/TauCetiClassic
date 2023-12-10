@@ -426,3 +426,96 @@ var/global/list/zombie_list = list()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.infect_zombie_virus(null, TRUE, TRUE)
+
+/obj/item/weapon/reagent_containers/hypospray/combat/zombie
+	name = "biowarfare hypospray"
+	desc = "A modified air-needle autoinjector, used by operatives to quickly make warcrimes in the field. This one is left unlabelled."
+	volume = 50
+	list_reagents = list("romerol" = 50)
+	amount_per_transfer_from_this = 5
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol
+	name = "Z-virus"
+	desc = "Makes warcrimes"
+	icon_state = "bonepen"
+	item_state = "bonepen"
+	volume = 35
+	list_reagents = list("romerol" = 5, "cyanide" = 30)
+
+/obj/item/weapon/grenade/chem_grenade/romerol
+	name = "biowarfare grenade"
+	icon_state = "pyrog"
+	item_state = "flashbang"
+	desc = "A red grenade with an unusual design, a biohazard sign is engraved on the side. Does massive war crimes."
+	path = 2
+	stage = 2
+	det_time = 2 SECONDS
+
+/obj/item/weapon/grenade/chem_grenade/romerol/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+	B1.reagents.add_reagent("sugar", 75)
+	B1.reagents.add_reagent("potassium", 75)
+	B2.reagents.add_reagent("phosphorus", 75)
+
+	B2.reagents.add_reagent("romerol", 20)
+	B1.reagents.add_reagent("cyanide", 55)
+
+	beakers += B1
+	beakers += B2
+
+	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+	var/obj/item/device/assembly/timer/tmr = detonator.a_left
+	tmr.time = 2
+
+/obj/item/weapon/implanter/zombie
+	name = "implanter (Z)"
+
+/obj/item/weapon/implanter/zombie/atom_init()
+	imp = new /obj/item/weapon/implant/zombie(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implant/zombie
+	name = "retaliation"
+	desc = "And boom goes the weasel."
+	icon_state = "implant_evil"
+
+/obj/item/weapon/implant/zombie/get_data()
+	var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> Retaliation's implant<BR>
+<b>Life:</b> Activates upon death.<BR>
+<b>Important Notes:</b> Prevent the implant from falling into the hands of the enemy<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains special chemicals that bring the deceased back to life a few seconds after death. Allows you to take revenge on your enemy. Use away from allies.<BR>
+<b>Special Features:</b> Replaces the explosion implant<BR>
+<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+	return dat
+
+/obj/item/weapon/implant/zombie/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	for(var/obj/item/weapon/implant/dexplosive/I in C)
+		qdel(I)
+
+/obj/item/weapon/implant/zombie/trigger(emote, source)
+	if(emote == "deathgasp")
+		activate("death")
+	return
+
+/obj/item/weapon/implant/zombie/activate(cause)
+	if(!cause || !imp_in)
+		return FALSE
+	var/mob/living/carbon/human/H = imp_in
+	if(!H || !(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
+		return FALSE
+	if(imp_in.stat != DEAD)
+		imp_in.adjustToxLoss(imp_in.maxHealth * 2.5)
+		imp_in.death(FALSE)
+	H.prerevive_zombie(imp_in)
+	qdel(src)
+
+/obj/item/weapon/implant/zombie/islegal()
+	return FALSE
