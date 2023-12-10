@@ -214,12 +214,13 @@
 			var/list/implantData = list()
 			for(var/obj/I in E.implants)
 				var/list/implantSubData = list()
+				implantSubData["name"] = null
+
 				if(is_type_in_list(I, known_implants))
 					implantSubData["name"] = capitalize(sanitize(I.name))
-					implantData.Add(list(implantSubData))
-				else
-					implantSubData["name"] = null
-					implantData.Add(list(implantSubData))
+
+				implantData.Add(list(implantSubData))
+
 			organData["implant"] = implantData
 			organData["implant_len"] = implantData.len
 
@@ -293,7 +294,6 @@
 		return
 
 	next_print = world.time + 10 SECONDS
-	to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
 	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
 
 	var/obj/item/weapon/paper/P = new(loc)

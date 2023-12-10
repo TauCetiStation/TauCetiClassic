@@ -276,7 +276,7 @@ const BodyScannerMainOrgansExternal = (props) => {
                   || !!o.status.broken
                   || !!o.open
                   || !!o.germ_level
-                  || !!o.impant_len)
+                  || !!o.implant_len)
                   && 'average')
                 || (!!o.status.robotic && 'label')
               }
