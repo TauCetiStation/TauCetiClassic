@@ -29,6 +29,8 @@
 
 	if (usr.incapacitated())
 		return
+	if(!do_skill_checks(usr))
+		return
 	open_machine()
 	add_fingerprint(usr)
 	return
@@ -90,8 +92,7 @@
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 	if(occupant)
-		open_machine()
-		add_fingerprint(user)
+		eject()
 		return
 	var/mob/living/carbon/target = locate() in loc
 	if(!target)
@@ -136,13 +137,11 @@
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
 	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield, /obj/item/weapon/implant/fake_loyal)
-	var/delete
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = TRUE
 	var/next_print = 0
-	var/storedinfo = null
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/body_scanconsole/atom_init()
@@ -183,7 +182,7 @@
 		occupantData["radLoss"] = occupant.radiation
 		occupantData["cloneLoss"] = occupant.getCloneLoss()
 		occupantData["brainLoss"] = occupant.getBrainLoss()
-		occupantData["drunkenness"] = (occupant.drunkenness / 10)
+		occupantData["drunkenness"] = (occupant.drunkenness / 6) // 600 - maximum stage
 		occupantData["bodyTempC"] = occupant.bodytemperature-T0C
 		occupantData["bodyTempF"] = (((occupant.bodytemperature-T0C) * 1.8) + 32)
 
@@ -286,9 +285,18 @@
 	return TRUE
 
 /obj/machinery/body_scanconsole/proc/print_scan(additional_info)
-	var/obj/item/weapon/paper/P = new(loc)
-	if(!connected || !connected.occupant) // If while we were printing the occupant got out or our thingy did a boom.
+	if(!do_skill_checks(usr))
 		return
+
+	if(next_print > world.time) //10 sec cooldown
+		to_chat(usr, "<span class='notice'>The console can't print that fast!</span>")
+		return
+
+	next_print = world.time + 10 SECONDS
+	to_chat(usr, "<span class='notice'>Printing... Please wait.</span>")
+	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
+
+	var/obj/item/weapon/paper/P = new(loc)
 	var/mob/living/carbon/human/occupant = connected.occupant
 	var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> advanced scanner report.<BR>"
 	t1 += "Station Time: <B>[worldtime2text()]</B><BR>"
