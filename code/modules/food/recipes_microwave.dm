@@ -759,14 +759,14 @@
 	reagents = list("water" = 10)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/julma_tulkrash
 
 /datum/recipe/microwave/ajurahma
 	reagents = list("water" = 10, "sugar" = 10)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/adjurahma
 
