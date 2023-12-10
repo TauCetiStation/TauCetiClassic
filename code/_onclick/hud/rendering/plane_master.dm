@@ -94,6 +94,8 @@
 	//byond internal end
 	render_relay_plane = RENDER_PLANE_GAME
 
+	render_target = BLACKNESS_RENDER_TARGET
+
 /atom/movable/screen/plane_master/lighting
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
@@ -101,6 +103,13 @@
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/lighting/apply_effects(mob/mymob)
+	remove_filter("add_blackness")
+	remove_filter("exclude_space")
+
+	add_filter("add_blackness", 1, layering_filter(render_source = BLACKNESS_RENDER_TARGET, blend_mode = BLEND_ADD))
+	add_filter("exclude_space", 1, layering_filter(render_source = PARALLAX_WHITE_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
 
 /atom/movable/screen/plane_master/exposure
 	name = "exposure plane master"
@@ -213,6 +222,8 @@
 	name = "parallax whitifier plane master"
 	plane = PLANE_SPACE
 	render_relay_plane = RENDER_PLANE_GAME
+
+	render_target = PARALLAX_WHITE_RENDER_TARGET
 
 /atom/movable/screen/plane_master/singularity_0
 	name = "singularity_0 plane"
