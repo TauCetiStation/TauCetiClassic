@@ -889,7 +889,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("sflash")
+	unlocks_designs = list("sflash","laserpractice")
 
 /datum/technology/advanced_nonlethal
 	name = "Advanced Non-Lethal"

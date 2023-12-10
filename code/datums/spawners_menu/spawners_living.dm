@@ -161,11 +161,15 @@
 	name = "Оживлённый предмет"
 	desc = "Вы магическим образом ожили на станции"
 	cooldown = 1 MINUTES
+	time_for_registration = null
+	register_only = FALSE
 
 /datum/spawner/living/evil_shade
 	name = "Злой Дух"
 	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
 	cooldown = 2 MINUTES
+	time_for_registration = null
+	register_only = FALSE
 
 /datum/spawner/living/evil_shade/spawn_body(mob/dead/spectator)
 	..()
@@ -174,6 +178,8 @@
 /datum/spawner/living/rat
 	name = "Крыса"
 	desc = "Вы появляетесь в своём новом доме"
+	time_for_registration = null
+	register_only = FALSE
 
 /datum/spawner/living/rat/spawn_body(mob/dead/spectator)
 	. = ..()
@@ -192,3 +198,5 @@
 	name = "Похититель"
 	desc = "Технологически развитое сообщество пришельцев, которые занимаются каталогизированием других существ в Галактике. К сожалению для этих существ, методы похитителей, мягко выражаясь, агрессивны."
 	wiki_ref = "Abductor"
+	time_for_registration = null
+	register_only = FALSE

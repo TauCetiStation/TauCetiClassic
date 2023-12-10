@@ -1,5 +1,14 @@
 /proc/random_blood_type()
-	return pick(4;"O(I) Rh-", 36;"O(I) Rh+", 3;"A(II) Rh-", 28;"A(II) Rh+", 1;"B(III) Rh-", 20;"B(III) Rh+", 1;"AB(IV) Rh-", 5;"AB(IV) Rh+")
+	return pickweight(list(
+		BLOOD_O_MINUS  = 4,
+		BLOOD_O_PLUS   = 36,
+		BLOOD_A_MINUS  = 3,
+		BLOOD_A_PLUS   = 28,
+		BLOOD_B_MINUS  = 1,
+		BLOOD_B_PLUS   = 20,
+		BLOOD_AB_MINUS = 1,
+		BLOOD_AB_PLUS  = 5
+	))
 
 /proc/random_hair_style(gender, species = HUMAN, ipc_head)
 	var/h_style = "Bald"
@@ -251,7 +260,7 @@
 		return TRUE
 	return FALSE
 
-/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information)
+/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information, scan_hallucination = FALSE)
 	var/message = ""
 	var/insurance_type
 
@@ -262,7 +271,7 @@
 		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Результаты сканирования [M.name]</title></head><BODY>"
 
 	if(user.ClumsyProbabilityCheck(50) || (user.getBrainLoss() >= 60 && prob(50)))
-		user.visible_message("<span class='warning'>[user] просканировал жизненные показатели пола!</span>", "<span class = 'warning'>Вы пытаетесь просканировать жизненные показатели пола!</span>")
+		user.visible_message("<span class='warning'>[user] сканирует жизненные показатели пола!</span>", "<span class = 'warning'>Вы пытаетесь просканировать жизненные показатели пола!</span>")
 		message += "<span class='notice'>Результаты сканирования пола:\n&emsp; Общее состояние: здоров</span><br>"
 		message += "<span class='notice'>&emsp; Специфика повреждений: [0]-[0]-[0]-[0]</span><br>"
 		message += "<span class='notice'>Типы: Асфиксия/Интоксикация/Термические/Механические</span><br>"
@@ -270,7 +279,7 @@
 		if(!output_to_chat)
 			message += "</BODY></HTML>"
 		return message
-	user.visible_message("<span class='notice'>[user] просканировал жизненные показатели [M].</span>","<span class='notice'>Вы просканировали жизненные показатели [M].</span>")
+	user.visible_message("<span class='notice'>[user] сканирует жизненные показатели [M].</span>","<span class='notice'>Вы просканировали жизненные показатели [M].</span>")
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
 	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
@@ -374,6 +383,9 @@
 				if(HEART_FIBR)
 					message += "<span class='notice'>Состояние сердца пациента: <font color='blue'>Внимание! Сердце подвержено фибрилляции.</font></span><br>"
 			message += "<span class='notice'>Пульс пациента: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] уд/мин.</font></span><br>"
+	var/list/reflist = list(message, scan_hallucination)
+	SEND_SIGNAL(M, COMSIG_LIVING_HEALTHSCAN, reflist)
+	message = reflist[1]
 
 	if(insurance_type)
 		message += "<span class='notice'><font color='blue'>Страховка: [insurance_type]</font></span><br>"

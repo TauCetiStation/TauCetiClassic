@@ -38,6 +38,10 @@
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
 
+	var/datum/reagents/R = new/datum/reagents(1000)
+	reagents = R
+	R.my_atom = src
+
 	if(!species)
 		if(new_species)
 			set_species(new_species, FALSE, TRUE)
@@ -50,10 +54,7 @@
 		butcher_results = species.butcher_drops.Copy()
 
 	dna.species = species.name
-
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
+	dna.b_type = random_blood_type()
 
 	. = ..()
 
@@ -98,9 +99,6 @@
 
 /mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
-	r_belly = HEX_VAL_RED(species.base_color)
-	g_belly = HEX_VAL_GREEN(species.base_color)
-	b_belly = HEX_VAL_BLUE(species.base_color)
 	. = ..(mapload, UNATHI)
 
 /mob/living/carbon/human/vox/atom_init(mapload)
@@ -1400,6 +1398,10 @@
 
 	maxHealth = species.total_health
 
+	if(species.flags[NO_PAIN])
+		shock_stage = 0
+		traumatic_shock = 0
+
 	if(species.base_color && default_colour)
 		//Apply colour.
 		r_skin = HEX_VAL_RED(species.base_color)
@@ -2140,6 +2142,7 @@
 													// clamped to max 1000
 	if(jitteriness > 30 && !is_jittery)
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, jittery_process))
+	. = jitteriness
 
 /mob/living/carbon/human/is_facehuggable()
 	return species.flags[FACEHUGGABLE] && stat != DEAD && !(locate(/obj/item/alien_embryo) in contents)

@@ -45,6 +45,10 @@
 	skillset_type = /datum/skillset/thrall
 	change_to_maximum_skills = TRUE
 
+/datum/role/thrall/Greet(greeting, custom)
+    . = ..()
+    to_chat(antag.current, "<b>Вы были порабощены Шедоулингом и обязаны выполнять любой приказ, и помогать ему в достижении его целей.</b>")
+
 /datum/role/thrall/OnPreSetup(greeting, custom)
 	. = ..()
 	antag.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
@@ -52,7 +56,6 @@
 
 /datum/role/thrall/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
-	to_chat(antag.current, "<b>Вы были порабощены Шедоулингом и стали его рабом. Ты обязан выполнять любой приказ своего владыки и помогать ему в достижении его целей.</b>")
 	for(var/obj/effect/proc_holder/spell/targeted/shadowling_hivemind/S in antag.current.spell_list)
 		antag.current.RemoveSpell(S)
 	..()

@@ -8,5 +8,5 @@
 	minimum_players_bundles = 1
 
 /datum/game_mode/traitor/announce()
-	to_chat(world, "<B>The current game mode is - Traitor!</B>")
-	to_chat(world, "<B>There is a syndicate traitor on the station. Do not let the traitor succeed!</B>")
+	to_chat(world, "<B>Текущий режим игры - Предатели!</B>")
+	to_chat(world, "<B>На станции находятся агенты Cиндиката. Не дайте агентам добиться успеха!</B>")
