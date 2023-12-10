@@ -379,7 +379,7 @@ const BodyScannerMainOrgansInternal = (props) => {
             <Table.Cell
               color={
                 ((!!o.dead || !!o.broken) && 'bad')
-                || (o.robotic && 'label')
+                || (!!o.robotic && 'label')
                 || ((!!o.germ_level || !!o.bruised) && 'average')
               }
               width="33%"
@@ -408,8 +408,8 @@ const BodyScannerMainOrgansInternal = (props) => {
                   {reduceOrganStatus([!!o.germ_level && o.germ_level])}
                 </Box>
                 {reduceOrganStatus([
-                  o.robotic && <Box color="label">Robotic</Box>,
-                  o.assisted && <Box color="label">Assisted</Box>,
+                  !!o.robotic && <Box color="label">Robotic</Box>,
+                  !!o.assisted && <Box color="label">Assisted</Box>,
                   !!o.dead && (
                     <Box color="bad" bold>
                       DEAD
