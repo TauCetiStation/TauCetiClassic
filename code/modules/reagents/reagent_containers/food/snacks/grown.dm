@@ -1121,6 +1121,8 @@
 	icon_state = "chureechnut"
 	desc = "Огромный, небесного цвета орех, который славятся поистине сладким вкусом."
 	potency = 10
+	seed_type = /obj/item/seeds/chureech_nut
+	filling_color = "#91ebff"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut/atom_init()
 	. = ..()
