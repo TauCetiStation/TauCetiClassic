@@ -1,8 +1,8 @@
 /datum/map_module
 	var/name = "default"
 
-	var/default_event_message
 	var/default_event_name
+	var/default_event_message
 
 	// list of additional verbs for players
 	var/list/player_verbs

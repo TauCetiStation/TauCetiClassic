@@ -376,7 +376,7 @@ SUBSYSTEM_DEF(events)
 
 	var/message = {"<h1 class='alert'>Custom Event</h1><br>
 <h2 class='alert'>A custom event is taking place. OOC Info:</h2><br>
-<span class='alert'>[custom_event_msg]</span><br>
+<span class='alert linkify'>[custom_event_msg]</span><br>
 <br>"}
 
 	to_chat(target, message)

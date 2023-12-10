@@ -17,7 +17,7 @@
 	log_admin("[key_name(usr)] has changed the custom event text.")
 	message_admins("[key_name_admin(usr)] has changed the custom event text.")
 
-	SSevents.setup_custom_event(input, "Event") // todo: name
+	SSevents.setup_custom_event(input, "Event")
 
 	if(tgui_alert(usr, "Do you want to make an announcement to chat conference?", "Chat announcement", list("Yes", "No, I don't want these people at my party")) == "Yes")
 		SSevents.custom_event_announce_bridge()

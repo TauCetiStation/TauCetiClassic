@@ -3,6 +3,9 @@
 /datum/map_module/forts
 	name = MAP_MODULE_FORTS
 
+	default_event_name = "Forts"
+	default_event_message = {"Ивент Форты, подробнее: https://wiki.taucetistation.org/Forts"}
+
 	gamemode = "Extended"
 	config_disable_random_events = TRUE
 	config_use_spawners_lobby = TRUE

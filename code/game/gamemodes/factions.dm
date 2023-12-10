@@ -410,7 +410,7 @@
 /datum/faction/proc/get_active_members()
 	. = list()
 	for(var/datum/role/R in members)
-		var/mob/M = R.antag.current
+		var/mob/M = R.antag?.current
 		if(!M || !M.client)
 			continue
 		. += M

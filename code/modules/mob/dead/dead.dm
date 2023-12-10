@@ -6,7 +6,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
 	var/datum/spawners_menu/spawners_menu
-	var/global/datum/spawner/registred_spawner
+	var/datum/spawner/registred_spawner
 
 /mob/dead/Logout()
 	..()
