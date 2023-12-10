@@ -862,11 +862,11 @@
 	growthstages = 6
 
 /obj/item/seeds/chureech_nut
-	name = "Пачка семян ореха Чур'их"
+	name = "пачка семян ореха Чур'их"
 	desc = "Семяна вырастут в дерево, известное среди народа Таяран своими обильными плодами орехов и съестных листьев."
 	icon_state = "seed-chureech"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
-	species = "chureechnut"
+	species = "chureech"
 	plantname = "Дерево Чур'их"
 	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
 	lifespan = 55
