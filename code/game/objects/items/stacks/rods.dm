@@ -49,7 +49,7 @@
 			"[user.name] cuts the [src], turning it into a crossbow bolt.",
 			"<span class='notice'>You cuts the [src], turning it into a crossbow bolt.</span>"
 			)
-		var/obj/item/weapon/arrow/new_item = new(usr.loc, , TRUE)
+		var/obj/item/weapon/arrow/new_item = new(user.loc)
 		use(1)
 		var/replace = (user.get_inactive_hand() == src)
 		if(!QDELETED(src) && replace)
