@@ -384,7 +384,7 @@
 
 /datum/disease2/effect/suicide
 	name = "Suicidal Syndrome"
-	desc = "The virus creates fake thoughts inside host's brain, making him very likely to commit suicide."
+	desc = "Вирус вызывает у носителя суицидальные мысли, что очень вероятно приводит к суициду последнего."
 	level = 4
 	max_stage = 8
 	cooldown = 50
@@ -392,16 +392,16 @@
 
 /datum/disease2/effect/suicide/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if((holder.stage >= 1 && holder.stage <= 7) || prob(70))
-		to_chat(mob, "<span class='notice'>[pick("You feel very bad, thinking that there are people in the world who drown little tajaras.", "You are useless.", "Why do you exist?", "The world would be better without you.", "If suicide isn't an exit, then what is?", "Maybe they were right after all...", "I wish I hadn't been born.", "I wish I was dead.", "I feel so alone...", "Maybe I should end all of this.", "Everything I do is wrong.", "I am just an unfunny joke.", "Why should I disappoint everyone again?")]</span>")
+		to_chat(mob, "<span class='notice'>[pick("Вам становится больно от одной мысли, что могут быть люди, что топят маленьких таяран.", "Ты не нужен.", "Почему ты вообще существуешь?", "Миру будет лучше без тебя.", "Если суицид не выход, то что?", "Может они были правы...", "Вам хотелось бы, чтобы вы вовсе не рождались.", "Вам хочется умереть.", "Вам так одиноко...", "Может вы должны со всем покончить.", "Всё, что вы делаете, вы делаете не так.", "Вы лишь несмешная шутка.", "И почему вы лишь разочаровываете всех вокруг?")]</span>")
 	else if(holder.stage == 8 && mob.stat == CONSCIOUS)
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			if(prob(90))
 				H.emote("gasp")
-				H.visible_message("<span class='danger'>[H] tried to hold \his breath but couldn't.</span>")
+				H.visible_message("<span class='danger'>[H] пытается задержать своё дыхание, но не справляется.</span>")
 				H.adjustOxyLoss(60)
 			else
-				H.visible_message("<span class='danger'>[H] is holding \his breath. It looks like \he is trying to commit suicide.</span>")
+				H.visible_message("<span class='danger'>[H] задерживает своё дыхание. Выглядит, что это попытка самоубийства.</span>")
 				H.adjustOxyLoss(175 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss())
 			H.updatehealth()
 
