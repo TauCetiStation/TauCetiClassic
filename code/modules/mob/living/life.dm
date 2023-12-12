@@ -84,7 +84,7 @@
 			if (!(machine.check_eye(src)))
 				reset_view(null)
 		else
-			if(!client.adminobs && !force_remote_viewing)
+			if(!client?.adminobs && !force_remote_viewing)
 				reset_view(null)
 
 

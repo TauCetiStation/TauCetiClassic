@@ -330,6 +330,9 @@
 /datum/emote/human/sigh/get_impaired_msg(mob/user)
 	return "opens [P_THEIR(user.gender)] mouth."
 
+/datum/emote/human/sigh/get_sound(mob/living/carbon/human/user, intentional)
+	return get_sound_by_voice(user, SOUNDIN_SIGH_MALE, SOUNDIN_SIGH_FEMALE)
+
 /datum/emote/human/mumble
 	key = "mumble"
 

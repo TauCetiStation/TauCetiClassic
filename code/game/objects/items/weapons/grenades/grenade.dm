@@ -39,7 +39,7 @@
 	if(!clown_check(user))
 		return
 
-	to_chat(user, "<span class='warning'>Вы подготавливаете [CASE(src, ACCUSATIVE_CASE)]![det_time != 1 ? " [det_time/10] секунд!" : ""]</span>")
+	to_chat(user, "<span class='warning'>Вы активируете [CASE(src, ACCUSATIVE_CASE)]![det_time != 1 ? " [det_time/10] секунд!" : ""]</span>")
 	activate(user)
 	add_fingerprint(user)
 	if(iscarbon(user))
@@ -87,8 +87,8 @@
 	..()
 
 /obj/item/weapon/grenade/syndieminibomb
-	desc = "Изготовленное синдикатом взрывное устройство, предназначенное для разрушений и хаоса."
 	name = "syndicate minibomb"
+	desc = "Изготовленное синдикатом взрывное устройство, предназначенное для разрушений и хаоса."
 	icon_state = "syndicate"
 	item_state = "flashbang"
 	origin_tech = "materials=3;magnets=4;syndicate=4"

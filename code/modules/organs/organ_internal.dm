@@ -284,43 +284,50 @@
 	new/obj/item/weapon/stock_parts/cell/crap(src)
 	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(ipc_cell_explode))
 
-/obj/item/organ/internal/liver/process()
-	..()
-	if (germ_level > INFECTION_LEVEL_ONE)
+/obj/item/organ/internal/liver/proc/handle_liver_infection()
+	if(germ_level > INFECTION_LEVEL_ONE)
 		if(prob(1))
 			to_chat(owner, "<span class='warning'>Your skin itches.</span>")
-	if (germ_level > INFECTION_LEVEL_TWO)
+	if(germ_level > INFECTION_LEVEL_TWO)
 		if(prob(1))
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living/carbon/human, vomit))
 
-	if(owner.life_tick % process_accuracy == 0)
-		if(src.damage < 0)
-			src.damage = 0
+/obj/item/organ/internal/liver/proc/handle_liver_life()
+	if(owner.life_tick % process_accuracy != 0)
+		return
 
-		//High toxins levels are dangerous
-		if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
-			//Healthy liver suffers on its own
-			if (src.damage < min_broken_damage)
-				src.damage += 0.2 * process_accuracy
-			//Damaged one shares the fun
-			else
-				var/obj/item/organ/internal/IO = pick(owner.organs)
-				if(IO)
-					IO.damage += 0.2  * process_accuracy
+	if(src.damage < 0)
+		src.damage = 0
 
-		//Detox can heal small amounts of damage
-		if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
-			src.damage -= 0.2 * process_accuracy
+	//High toxins levels are dangerous
+	if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
+		//Healthy liver suffers on its own
+		if (src.damage < min_broken_damage)
+			src.damage += 0.2 * process_accuracy
+		//Damaged one shares the fun
+		else
+			var/obj/item/organ/internal/IO = pick(owner.organs)
+			if(IO)
+				IO.damage += 0.2 * process_accuracy
 
-		// Damaged liver means some chemicals are very dangerous
-		if(src.damage >= src.min_bruised_damage)
-			for(var/datum/reagent/R in owner.reagents.reagent_list)
-				// Ethanol and all drinks are bad
-				if(istype(R, /datum/reagent/consumable/ethanol))
-					owner.adjustToxLoss(0.1 * process_accuracy)
-				// Can't cope with toxins at all
-				if(istype(R, /datum/reagent/toxin))
-					owner.adjustToxLoss(0.3 * process_accuracy)
+	//Detox can heal small amounts of damage
+	if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
+		src.damage -= 0.2 * process_accuracy
+
+	// Damaged liver means some chemicals are very dangerous
+	if(src.damage >= src.min_bruised_damage)
+		for(var/datum/reagent/R in owner.reagents.reagent_list)
+			// Ethanol and all drinks are bad
+			if(istype(R, /datum/reagent/consumable/ethanol))
+				owner.adjustToxLoss(0.1 * process_accuracy)
+			// Can't cope with toxins at all
+			if(istype(R, /datum/reagent/toxin))
+				owner.adjustToxLoss(0.3 * process_accuracy)
+
+/obj/item/organ/internal/liver/process()
+	..()
+	handle_liver_infection()
+	handle_liver_life()
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src

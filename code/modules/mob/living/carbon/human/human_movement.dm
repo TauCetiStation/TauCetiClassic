@@ -21,6 +21,8 @@
 
 	if(lying)
 		tally += 7
+	if(m_intent == MOVE_INTENT_WALK && HAS_TRAIT(src, TRAIT_FAST_WALKER))
+		tally -= 1.5
 
 	if(!nullify_debuffs)
 		if(is_type_organ(O_HEART, /obj/item/organ/internal/heart/ipc)) // IPC's heart is a servomotor, damaging it influences speed.
