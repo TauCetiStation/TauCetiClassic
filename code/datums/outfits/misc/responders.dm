@@ -612,6 +612,7 @@
 /obj/item/weapon/rcd/ert
 	name = "advanced RCD"
 	matter = 100
+	max_matter = 100
 
 /obj/item/stack/sheet/metal/fifty
 	amount = 50

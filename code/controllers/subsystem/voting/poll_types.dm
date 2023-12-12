@@ -150,6 +150,8 @@
 		return
 	if(!world.is_round_preparing())
 		return "Доступно только перед началом игры"
+	if(SSmapping.loaded_map_module && SSmapping.loaded_map_module.gamemode)
+		return "Режим установлен картой"
 
 /datum/poll/gamemode/get_blocking_reason()
 	. = ..()

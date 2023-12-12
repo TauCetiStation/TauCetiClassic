@@ -161,28 +161,30 @@ var/global/normal_next
 #undef ACCURACY
 
 /proc/get_turf_in_angle(angle, turf/starting, increments)
-	var/pixel_x = 0
-	var/pixel_y = 0
+	var/step_x = sin(angle)
+	var/step_y = cos(angle)
+
+	var/valid_x = starting.x
+	var/valid_y = starting.y
+	var/new_x
+	var/new_y
+
 	for(var/i in 1 to increments)
-		pixel_x += sin(angle)+16*sin(angle)*2
-		pixel_y += cos(angle)+16*cos(angle)*2
-	var/new_x = starting.x
-	var/new_y = starting.y
-	while(pixel_x > 16)
-		pixel_x -= 32
-		new_x++
-	while(pixel_x < -16)
-		pixel_x += 32
-		new_x--
-	while(pixel_y > 16)
-		pixel_y -= 32
-		new_y++
-	while(pixel_y < -16)
-		pixel_y += 32
-		new_y--
-	new_x = clamp(new_x, 0, world.maxx)
-	new_y = clamp(new_y, 0, world.maxy)
-	return locate(new_x, new_y, starting.z)
+		new_x = valid_x + step_x
+		new_y = valid_y + step_y
+
+		if(new_x < 1 || new_x > world.maxx)
+			break
+		if(new_y < 1 || new_y > world.maxx)
+			break
+
+		valid_x = new_x
+		valid_y = new_y
+
+	valid_x = round(valid_x, 1)
+	valid_y = round(valid_y, 1)
+
+	return locate(valid_x, valid_y, starting.z)
 
 // Returns a list where [1] is all x values and [2] is all y values that overlap between the given pair of rectangles
 /proc/get_overlap(x1, y1, x2, y2, x3, y3, x4, y4)
