@@ -566,7 +566,6 @@
 
 	return FALSE
 
-
 /datum/mind/proc/set_current(mob/new_current)
 	if(current)
 		UnregisterSignal(src, COMSIG_PARENT_QDELETING)

@@ -528,7 +528,6 @@ var/global/list/death_alarm_stealth_areas = list(
 /obj/item/weapon/implant/death_alarm/coordinates/team_blue
 	frequency = FREQ_TEAM_BLUE
 
-
 /obj/item/weapon/implant/compressed
 	name = "compressed matter implant"
 	desc = "Based on compressed matter technology, can store a single item."

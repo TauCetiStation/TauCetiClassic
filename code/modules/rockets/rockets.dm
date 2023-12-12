@@ -1,134 +1,5 @@
 #define ROCKET_TRIGGER_SPEED 3
 
-/* Observation Glasses */
-
-/obj/item/clothing/glasses/rocket_observation
-	name = "rocket observation glasses"
-	desc = "Allows you to observe rocket launch so you can better adjust accuracy."
-	icon_state = "healthhudnight"
-	off_state = "healthhudnight"
-	item_state = "glasses"
-	toggleable = TRUE
-	
-	var/obj/item/rocket/target
-
-	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
-
-/obj/item/clothing/glasses/rocket_observation/attack_self(mob/living/user)
-	toggle_view(user)
-
-/obj/item/clothing/glasses/rocket_observation/dropped(mob/living/user)
-	if(user.client?.eye == target)
-		toggle_view(user)
-
-	return ..()
-
-/obj/item/clothing/glasses/rocket_observation/proc/toggle_view(mob/living/user, eye_delay = 0)
-	if(!istype(user))
-		return
-
-	if(user.client?.eye == target) // reset_view
-		if(eye_delay)
-			// rocket destroyed, but give some time to watch explosion
-			user.reset_view(get_turf(target), force_remote_viewing = TRUE)
-			addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, reset_view), null, TRUE), eye_delay)
-		else
-			user.reset_view(null, force_remote_viewing = FALSE)
-		active = FALSE
-	else
-		if(!target)
-			to_chat(user, "<span class='notice'>No rocket is tuned to the glasses! Use multitool on the rocket first.</span>")
-			return
-		user.reset_view(target, force_remote_viewing = TRUE)
-		active = TRUE
-
-	playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
-	update_inv_mob()
-	update_item_actions()
-
-/obj/item/clothing/glasses/rocket_observation/proc/sync_to_rocket(obj/item/rocket/R)
-	if(QDELING(R))
-		return
-
-	if(target)
-		unsync_from_rocket(target)
-
-	target = R
-	R.tuned_glasses += src
-
-/obj/item/clothing/glasses/rocket_observation/proc/unsync_from_rocket(obj/item/rocket/R, eye_delay = 0)
-	if(target == R)
-		if(slot_equipped && ismob(loc))
-			var/mob/living/user = loc
-			if(user.client?.eye == target)
-				toggle_view(user, eye_delay)
-
-		target = null
-
-	R.tuned_glasses -= src
-
-/* Crates */
-
-/obj/structure/storage_box/rocket
-	name = "Rockets Crate"
-	desc = "A heavy box storing rockets."
-	var/spawn_type = /obj/item/rocket
-	var/number = 9
-
-/obj/structure/storage_box/rocket/atom_init(mapload)
-	for(var/i in 1 to number)
-		new spawn_type(src)
-
-	return ..()
-
-/obj/structure/storage_box/rocket/cheap
-	name = "Cheap Explosive Rockets Crate"
-	desc = "A heavy box storing rockets."
-	spawn_type = /obj/item/rocket/cheap
-
-/obj/structure/storage_box/rocket/explosive
-	name = "Explosive Rockets Crate"
-	desc = "A heavy box storing rockets."
-	spawn_type = /obj/item/rocket/explosive
-
-/obj/structure/storage_box/rocket/emp
-	name = "EMP Rockets Crate"
-	desc = "A heavy box storing rockets."
-	spawn_type = /obj/item/rocket/emp
-
-/obj/structure/storage_box/rocket/piercing
-	name = "Armor-piercing Rockets Crate"
-	desc = "A heavy box storing rockets."
-	spawn_type = /obj/item/rocket/piercing
-
-// todo: we need merge mechanics for simultaneous explosions on the same turf
-// here i do it manyally because this box can contain only rockets
-/obj/structure/storage_box/rocket/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(95))
-				return
-
-	var/new_explosion_severity
-
-	for(var/obj/item/rocket/R as anything in contents)
-		new_explosion_severity += 0.5
-		R.exploded = TRUE
-		qdel(R)
-
-	var/turf/T = get_turf(src)
-
-	qdel(src) // mark as destroying first so explosions don't go into recursion
-
-	if(new_explosion_severity)
-		new_explosion_severity = clamp(new_explosion_severity, 1, 3)
-		explosion(T, new_explosion_severity, new_explosion_severity*2, new_explosion_severity*3)
-
-/* rockets */
-
 /obj/item/rocket
 	name = "rocket"
 	desc = "Compatible with standard pneumatic systems."
@@ -137,7 +8,7 @@
 
 	//max_integrity = 100
 	//resistance_flags = CAN_BE_HIT
-	//armor = list(MELEE = 25, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 30, FIRE = 50)
+	//armor = list(MELEE = 100, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 30, FIRE = 50)
 
 	throwforce = 20
 
@@ -162,7 +33,7 @@
 
 /obj/item/rocket/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	// check for speed threshhold only if it's not throwed by a mob (fuck user momentum), else do prob for accident
-	// todo: make this treshhold more readable and allow atoms be thrower so we can check for disposal here
+	// todo: make this treshhold more readable and allow atoms be thrower so we can check for disposal here and not some magic number
 	if(triggered && ((!throwingdatum.thrower && throwingdatum.speed >= ROCKET_TRIGGER_SPEED) || prob(accident_prob*throwingdatum.speed)))
 		trigger(hit_atom)
 		QDEL_NULL(src)
@@ -191,7 +62,6 @@
 	var/datum/thrownthing/TT = SSthrowing.processing[src]
 	if(TT && TT.speed >= ROCKET_TRIGGER_SPEED && TT.dist_travelled > launch_distance)
 		trigger(get_turf(loc))
-
 
 /obj/item/rocket/ex_act(severity)
 	switch(severity)
@@ -258,7 +128,7 @@
 /obj/item/rocket/cheap
 	name = "cheap explosive rocket"
 	desc = "Compatible with standard pneumatic systems. This one looks suspicious."
-	//armor = list(MELEE = 10, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 15, FIRE = 25)
+	//armor = list(MELEE = 95, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 15, FIRE = 25)
 	accident_prob = 15
 
 /obj/item/rocket/explosive

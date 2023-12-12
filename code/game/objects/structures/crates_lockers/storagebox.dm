@@ -5,10 +5,7 @@
 	desc = "A heavy box used for storing stuff."
 	density = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
-
-
 	resistance_flags = CAN_BE_HIT
-
 	max_integrity = 100
 
 /obj/structure/storage_box/attack_hand(mob/user)
