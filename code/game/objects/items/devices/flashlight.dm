@@ -98,7 +98,7 @@
 				to_chat(user, "<span class='notice'>[M] pupils or screen does not react to the light!</span>")
 			else if(H.species.flags[IS_SYNTHETIC])
 				to_chat(user, "<span class='warning'>[M]'s robotic screen glances the flash back at you. You wonder whether that was wise.</span>")
-				return
+				user.flash_eyes()
 			else if(XRAY in M.mutations)	//mob has X-RAY vision
 				M.flash_eyes() //Yes, you can still get flashed wit X-Ray.
 				to_chat(user, "<span class='notice'>[M] pupils give an eerie glow!</span>")
