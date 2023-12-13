@@ -78,7 +78,7 @@
 		if(istype(target, type))
 			return
 
-	if(ismob(target) && target.reagents && reagents.total_volume)
+	if(ismob(target) && target.reagents && reagents.total_volume && user.a_intent == "harm")
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 
 		var/mob/living/M = target
@@ -142,7 +142,7 @@
 				return
 
 
-	else if(reagents && reagents.total_volume)
+	else if(reagents && reagents.total_volume && user.a_intent == "harm")
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 		reagents.standard_splash(target, user=user)
 		return
