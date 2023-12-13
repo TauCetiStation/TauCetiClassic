@@ -1,4 +1,4 @@
-r# JTGMerge
+# JTGMerge
 
 **JTGMerge** развитие оригинального [JMerge](https://github.com/Baystation12/JMerge), добавляющее ряд фич и поддержку TGM формата.
 
