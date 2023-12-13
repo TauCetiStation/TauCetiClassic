@@ -234,7 +234,7 @@ var/global/list/toilet_overlay_cache = list()
 			qdel(G)
 
 /obj/effect/decal/cleanable/gourd/proc/try_faceplant_react(atom/movable/AM)
-	if(!isliving(AM) && issilicon(AM))
+	if(!isliving(AM) || issilicon(AM))
 		return
 	var/mob/living/L = AM
 	if(L.get_species() == UNATHI)
