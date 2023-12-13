@@ -575,7 +575,8 @@
 		return
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(mob/target, mob/user, def_zone)
-		if( user.a_intent == INTENT_HARM && ismob(target) && target.reagents && reagents.total_volume)
+	if(user.a_intent == INTENT_HARM)
+		if(ismob(target) && target.reagents && reagents.total_volume)
 			to_chat(user, "<span class='warning'>You splash your drink in the [target] face!</span>")
 			reagents.standard_splash(target, user=user)
 			user.visible_message("<span class='warning'>[target] has been splashed with [src] in the face by [user]!</span>")
