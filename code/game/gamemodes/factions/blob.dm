@@ -227,7 +227,7 @@ Message ends."}
 	Экипажа на борту станции: <b>[result["numAlive"]]</b><br>
 	Экипажа в космосе: <b>[result["numSpace"]]</b><br>
 	Экипажа вне станции: <b>[result["numOffStation"]]</b><br>
-	Pre-escapes: <b>[pre_escapees.len]</b><br>
+	Счастливчики: <b>[pre_escapees.len]</b><br>
 	<HR>"}
 	return dat
 
