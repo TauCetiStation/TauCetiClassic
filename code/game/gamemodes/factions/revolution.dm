@@ -236,7 +236,7 @@
 	<B>Количество выживших глав революции:</B> [foecount]<BR>
 	<B>Количество выживших глав станции:</B> [comcount]<BR>
 	<B>Количество выживших революционеров:</B> [revcount]<BR>
-	<B>Количество выживших членов экипажа:</B> [loycount]<BR><BR>
+	<B>Количество выживших лоялистов:</B> [loycount]<BR><BR>
 	<B>Глав революции арестовано:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] очков)<BR>
 	<B>Глав революции убито:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 500] очков)<BR>
 	<B>Глав убито:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] очков)<BR>
