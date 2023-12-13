@@ -21106,7 +21106,8 @@
 	dir = 4
 	},
 /obj/structure/toilet{
-	dir = 8
+	dir = 8;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -30470,6 +30471,10 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
