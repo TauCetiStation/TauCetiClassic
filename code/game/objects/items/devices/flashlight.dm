@@ -96,12 +96,12 @@
 		if(ishuman(M) || ismonkey(M))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
 				to_chat(user, "<span class='notice'>[M] pupils does not react to the light!</span>")
+			else if(H.species.flags[IS_SYNTHETIC])
+				to_chat(user, "<span class='warning'>[M]'s robotic screen glances the flash back at you. You wonder whether that was wise.</span>")
+				return
 			else if(XRAY in M.mutations)	//mob has X-RAY vision
 				M.flash_eyes() //Yes, you can still get flashed wit X-Ray.
 				to_chat(user, "<span class='notice'>[M] pupils give an eerie glow!</span>")
-			else if(H.species.flags[IS_SYNTHETIC])
-				return
-				to_chat(user, "<span class='warning'>[M]'s robotic screen glances the flash back at you. You wonder whether that was wise.</span>")
 			else	//they're okay!
 				if(!M.blinded)
 					M.flash_eyes()	//flash the affected mob
