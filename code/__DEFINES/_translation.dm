@@ -135,7 +135,7 @@
 ////////////////////////////////////////////////
 
 // Произвольное слово в склонениях по родам
-// "[vessel] [ANYMORPH(vessel, полон, полна, полно, полны)]"
+// "[vessel] [ANYMORPH(vessel, "полон", "полна", "полно", "полны")]"
 #define ANYMORPH(atom, male, female, neuter, plural) atom.gender == MALE && male \
                || atom.gender == FEMALE && female \
                || atom.gender == NEUTER && neuter \
