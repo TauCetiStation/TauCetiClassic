@@ -101,11 +101,11 @@
 			T.try_transfer(src, T, user)
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			to_chat(user, "<span class = 'rose'>В [CASE(src, DATIVE_CASE)] ничего нет.</span>")
+			to_chat(user, "<span class = 'rose'>В [CASE(src, PREPOSITIONAL_CASE)] ничего нет.</span>")
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, "<span class = 'rose'>Внутри [CASE(src, GENITIVE_CASE)] нет свободного места.</span>")
+			to_chat(user, "<span class = 'rose'>[capitalize(CASE(target, NOMINATIVE_CASE))][(ANYMORPH(target, "полон", "полна", "полно", "полны"))].</span>")
 			return
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
@@ -161,7 +161,7 @@
 		var/obj/item/stack/nanopaste/N = I
 		if(is_open_container() && reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "<span class = 'rose'>Внутри [CASE(src, GENITIVE_CASE)] нет свободного места.</span>")
+				to_chat(user, "<span class = 'rose'>[capitalize(CASE(src, NOMINATIVE_CASE))] [ANYMORPH(src, "полон", "полна", "полно", "полны")].</span>")
 				return
 
 			if(!N.use(1))
@@ -180,6 +180,7 @@
 /obj/item/weapon/reagent_containers/glass/beaker
 	name = "beaker"
 	cases = list("мензурка", "мензурки", "мензурке", "мензурку", "мензуркой", "мензурке")
+
 	desc = "Это мензурка."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
@@ -192,7 +193,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/atom_init()
 	. = ..()
-	desc += "Может вместить до [volume] юнитов."
+	desc += " Может вместить до [volume] юнитов."
 	filling_states = list(20, 40, 60, 80, 100)
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
