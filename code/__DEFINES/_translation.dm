@@ -131,12 +131,12 @@
                || "ись"
 
 ////////////////////////////////////////////////
-//                Произвольное                //
+//                   Прочее                   //
 ////////////////////////////////////////////////
 
-// Произвольное слово в склонениях по родам
+// Произвольное слово в вариации по родам
 // "[vessel] [ANYMORPH(vessel, "полон", "полна", "полно", "полны")]"
-#define ANYMORPH(atom, male, female, neuter, plural) atom.gender == MALE && male \
-               || atom.gender == FEMALE && female \
-               || atom.gender == NEUTER && neuter \
-               || plural
+#define ANYMORPH(atom, w_male, w_female, w_neuter, w_plural) atom.gender == MALE && w_male \
+               || atom.gender == FEMALE && w_female \
+               || atom.gender == NEUTER && w_neuter \
+               || w_plural
