@@ -23,6 +23,7 @@
 	var/is_roundstart_role = FALSE
 	// Logo of role
 	var/logo_state
+	var/logo_file = 'icons/misc/logos.dmi'
 
 	// What faction this role is associated with.
 	var/datum/faction/faction
@@ -46,12 +47,8 @@
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	// Link faction.
-	faction = fac
-	if(!faction)
-		SSticker.mode.orphaned_roles += src
-	else
-		faction.add_role(src)
+
+	AssignToFaction(fac)
 
 	if(M && !AssignToRole(M, override))
 		Drop()
@@ -63,6 +60,14 @@
 /datum/role/Destroy(force, ...)
 	QDEL_NULL(objectives)
 	return ..()
+
+/datum/role/proc/AssignToFaction(datum/faction/fac)
+	faction = fac
+	if(!faction)
+		SSticker.mode.orphaned_roles += src
+	else
+		SSticker.mode.orphaned_roles -= src
+		faction.add_role(src)
 
 /datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
 	if(!istype(M) && !override)
@@ -95,7 +100,7 @@
 	deconverted_roles[id] += antag.name
 	Drop()
 
-// if role has been deconverts use Deconvert()
+// if role has been deconverted use Deconvert()
 /datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
@@ -115,9 +120,9 @@
 	antag = null
 
 // Drops the antag mind from the parent role, informs the gamemode the mind now doesn't have a role, and deletes the role datum.
-/datum/role/proc/Drop()
+/datum/role/proc/Drop(msg_admins = TRUE)
 	if(antag)
-		RemoveFromRole(antag)
+		RemoveFromRole(antag, msg_admins)
 
 	if(faction && (src in faction.members))
 		faction.remove_role(src)
@@ -233,10 +238,10 @@
 
 /datum/role/proc/get_logo_icon(custom)
 	if(custom)
-		return icon('icons/misc/logos.dmi', custom)
+		return icon(logo_file, custom)
 	if(logo_state)
-		return icon('icons/misc/logos.dmi', logo_state)
-	return icon('icons/misc/logos.dmi', "unknown-logo")
+		return icon(logo_file, logo_state)
+	return icon(logo_file, "unknown-logo")
 
 /datum/role/proc/AdminPanelEntry(show_logo = FALSE, datum/mind/mind)
 	var/icon/logo = get_logo_icon()
@@ -470,14 +475,14 @@
 		var/name = antag_hud_name ? antag_hud_name :custom_name
 		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
 		hud.join_hud(antag.current)
-		set_antag_hud(antag.current, name)
+		set_antag_hud(antag.current, name, antag_hud_type)
 
 // Removes the specified antag hud from the player. Usually called in an antag datum file
 /datum/role/proc/remove_antag_hud()
 	if(antag_hud_type && antag_hud_name)
 		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
 		hud.leave_hud(antag.current)
-		set_antag_hud(antag.current, null)
+		set_antag_hud(antag.current, null, antag_hud_type)
 
 /datum/role/proc/add_ui(datum/hud/hud)
 	return

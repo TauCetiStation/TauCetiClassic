@@ -555,6 +555,17 @@
 		return R.GetFaction()
 	return FALSE
 
+/datum/mind/proc/IsPartOfFaction(datum/faction/F)
+	if(!length(antag_roles))
+		return FALSE
+
+	for(var/role_id in antag_roles)
+		var/datum/role/R = antag_roles[role_id]
+		if(R.GetFaction() == F)
+			return TRUE
+
+	return FALSE
+
 /datum/mind/proc/set_current(mob/new_current)
 	if(current)
 		UnregisterSignal(src, COMSIG_PARENT_QDELETING)

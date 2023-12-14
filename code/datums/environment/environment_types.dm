@@ -4,6 +4,12 @@
 	turf_type = /turf/environment/space
 	turf_light_color = COLOR_WHITE
 
+/datum/environment/holospace
+	name = ENV_TYPE_HOLOSPACE
+
+	turf_type = /turf/environment/space/holospace
+	turf_light_color = COLOR_WHITE
+
 /datum/environment/snow
 	name = ENV_TYPE_SNOW
 

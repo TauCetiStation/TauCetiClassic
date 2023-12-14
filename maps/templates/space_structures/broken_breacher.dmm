@@ -301,7 +301,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/weapon/arrow/rod,
+/obj/item/weapon/arrow,
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
@@ -1236,7 +1236,7 @@
 /area/space)
 "Vk" = (
 /obj/item/weapon/crossbow/vox,
-/obj/item/weapon/arrow/rod,
+/obj/item/weapon/arrow,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/broken_breacher)
@@ -1255,7 +1255,7 @@
 	},
 /area/space_structures/broken_breacher)
 "Wa" = (
-/obj/item/weapon/arrow/rod,
+/obj/item/weapon/arrow,
 /turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
 	},
