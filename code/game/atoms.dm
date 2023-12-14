@@ -1,4 +1,9 @@
 /atom
+	/// russian case forms of atom name in format
+	/// list(NOMINATIVE_CASE, GENITIVE_CASE, DATIVE_CASE, ACCUSATIVE_CASE, ABLATIVE_CASE, PREPOSITIONAL_CASE)
+	/// for usage with CASE macros (code/__DEFINES/_translation.dm)
+	var/list/cases = null
+
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 
@@ -29,6 +34,9 @@
 	var/list/remove_overlays
 	/// a very temporary list of overlays to add
 	var/list/add_overlays
+
+	/// parallax thing
+	var/list/clients_in_contents
 
 	///This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null

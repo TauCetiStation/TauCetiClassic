@@ -72,6 +72,14 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	else
 		icon_regular_floor = icon_state
 
+/turf/simulated/floor/ChangeTurf()
+	var/old_holy = holy
+	. = ..()
+	if(istype(src)) // turf is changed, is it still a floor?
+		holy = old_holy
+	else // nope, it's not a floor
+		qdel(old_holy)
+
 /turf/simulated/floor/Destroy()
 	if(floor_type)
 		floor_type = null

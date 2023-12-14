@@ -70,11 +70,13 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// atom queued to SSoverlay
 #define OVERLAY_QUEUED_2       (1<<1)
 /// atom with this flag will never appear on demo
-#define PROHIBIT_FOR_DEMO_2    (1<<2)
+#define PROHIBIT_FOR_DEMO_2          (1<<2)
+/// atom overlays with this flag will never appear on demo
+#define PROHIBIT_OVERLAYS_FOR_DEMO_2 (1<<3)
 
-#define IN_INVENTORY           (1<<3)
-#define IN_STORAGE             (1<<4)
-#define CANT_BE_INSERTED       (1<<5)   // Prohibits putting an item in a containers
+#define IN_INVENTORY           (1<<4)
+#define IN_STORAGE             (1<<5)
+#define CANT_BE_INSERTED       (1<<6)   // Prohibits putting an item in a containers
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)
@@ -110,6 +112,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_DNA             "no_dna"
 #define FUR                "fur"
 #define NO_GENDERS         "no_genders"
+#define NO_SLIP            "no_slip"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
@@ -197,3 +200,12 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HOLOMAP_NUCLEAR_COLOR "#e30000"
 #define HOLOMAP_VOX_COLOR "#3bcccc"
 #define HOLOMAP_ERT_COLOR "#0b74b4"
+#define HOLOMAP_TEAM_COLOR "#00bb00"
+
+#define IS_EPILEPTIC_NOT_IN_PARALYSIS (1<<0)
+
+#define EPILEPSY_PARALYSE_EFFECT (1<<0)
+#define EPILEPSY_JITTERY_EFFECT (1<<1)
+
+#define ALCOHOL_TOLERANCE_EPILEPSY (1<<0)
+#define WATER_CHOKE_EPILEPSY (1<<1)
