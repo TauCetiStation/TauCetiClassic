@@ -129,3 +129,14 @@
                || atom.gender == FEMALE && "ась" \
                || atom.gender == NEUTER && "ось" \
                || "ись"
+
+////////////////////////////////////////////////
+//                   Прочее                   //
+////////////////////////////////////////////////
+
+// Произвольное слово в вариации по родам
+// "[vessel] [ANYMORPH(vessel, "полон", "полна", "полно", "полны")]"
+#define ANYMORPH(atom, w_male, w_female, w_neuter, w_plural) atom.gender == MALE && w_male \
+               || atom.gender == FEMALE && w_female \
+               || atom.gender == NEUTER && w_neuter \
+               || w_plural
