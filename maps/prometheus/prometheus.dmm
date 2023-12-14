@@ -4769,7 +4769,7 @@
 /turf/simulated/wall,
 /area/station/civilian/chapel/altar)
 "aBf" = (
-/obj/structure/closet,
+/obj/machinery/vending/newyearmate,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"

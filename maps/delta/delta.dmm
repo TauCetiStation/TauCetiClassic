@@ -20907,11 +20907,11 @@
 /turf/simulated/floor/carpet,
 /area/station/bridge/meeting_room)
 "dVF" = (
-/obj/machinery/vending/cigarette,
 /obj/effect/decal/turf_decal/blue{
 	dir = 8;
 	icon_state = "siding_line"
 	},
+/obj/machinery/vending/newyearmate,
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
@@ -41420,6 +41420,7 @@
 /area/station/security/brig)
 "ikZ" = (
 /obj/item/decoration/tinsel,
+/obj/machinery/vending/newyearmate,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -61559,6 +61560,12 @@
 	icon_state = "darkred"
 	},
 /area/station/security/checkpoint/medbay)
+"muu" = (
+/obj/machinery/vending/newyearmate,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/civilian/dormitories/service_bedrooms)
 "muv" = (
 /obj/machinery/optable,
 /obj/machinery/status_display{
@@ -70948,6 +70955,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "ovi" = (
@@ -152547,7 +152555,7 @@ jGh
 iga
 dXT
 jGh
-bll
+muu
 rXS
 gBW
 bll

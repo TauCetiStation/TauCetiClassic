@@ -13860,8 +13860,8 @@
 	},
 /area/station/civilian/gym)
 "axC" = (
-/obj/item/device/flashlight/lamp/fir/special,
 /obj/item/weapon/present,
+/obj/item/device/flashlight/lamp/fir/special/alternative,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "axD" = (

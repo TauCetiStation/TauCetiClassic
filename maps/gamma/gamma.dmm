@@ -47536,7 +47536,7 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/obj/item/decoration/snowman,
+/obj/machinery/vending/newyearmate,
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -121876,11 +121876,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "xvG" = (
-/obj/item/weapon/flora/pottedplant/orientaltree,
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/machinery/vending/newyearmate,
 /turf/simulated/floor,
 /area/station/hallway/secondary/arrival)
 "xvI" = (
