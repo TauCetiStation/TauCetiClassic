@@ -56,10 +56,8 @@
 		M.mind.antag_hud_icon_state = new_icon_state
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/species/S = H.species
-		if(S)
-			holder.pixel_y = S.hud_offset_y
-			holder.pixel_x = S.hud_offset_x
+		holder.pixel_y = H.species.hud_offset_y
+		holder.pixel_x = H.species.hud_offset_x
 
 //MIND PROCS
 //these are called by mind.transfer_to()
