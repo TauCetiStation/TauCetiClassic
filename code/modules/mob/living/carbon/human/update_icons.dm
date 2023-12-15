@@ -456,11 +456,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[GLOVES_LAYER] = standing
 	else
 		if(blood_DNA)
-			var/blood_icon_hand = "bloodyhands"
-			var/datum/species/S = species
-			if(S)
-				blood_icon_hand = S.specie_hand_blood_state
-			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state" = blood_icon_hand)
+			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_hand_blood_state)
 			bloodsies.color = hand_dirt_datum.color
 			bloodsies = human_update_offset(bloodsies, FALSE)
 			overlays_standing[GLOVES_LAYER]	= bloodsies
@@ -523,11 +519,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[SHOES_LAYER] = standing
 	else
 		if(feet_blood_DNA)
-			var/blood_icon_shoe = "shoeblood"
-			var/datum/species/S = species
-			if(S)
-				blood_icon_shoe = S.specie_shoe_blood_state
-			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state" = blood_icon_shoe)
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_shoe_blood_state)
 			bloodsies.color = feet_dirt_color.color
 			overlays_standing[SHOES_LAYER] = bloodsies
 		else
