@@ -1117,9 +1117,9 @@
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
-	name = "Орех Чур'их"
+	name = "Сhur'eech nut"
 	icon_state = "chureechnut"
-	desc = "Огромный, небесного цвета орех, который славятся поистине сладким вкусом."
+	desc = "Огромный орех небесного цвета, который славится поистине сладким вкусом."
 	potency = 10
 	seed_type = /obj/item/seeds/chureech_nut
 	filling_color = "#91ebff"
