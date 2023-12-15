@@ -329,19 +329,6 @@
 
 	return text
 
-/datum/role/proc/print_player_without_icon(datum/mind/mind)
-	var/text = ""
-	var/mob/M = mind.current
-	text += "<b>[mind.key]</b> was <b>[name]</b> ("
-	if(!M)
-		text += "body destroyed"
-	else if(M.stat == DEAD)
-		text += "died"
-	else
-		text += "survived"
-	text += ")"
-	return text
-
 /datum/role/proc/GetObjectiveDescription(datum/objective/objective)
 	return "[objective.explanation_text] [objective.completion_to_string()]"
 
