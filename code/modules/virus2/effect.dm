@@ -384,7 +384,7 @@
 
 /datum/disease2/effect/suicide
 	name = "Suicidal Syndrome"
-	desc = "Вирус вызывает у носителя суицидальные мысли, что очень вероятно приводит к суициду последнего."
+	desc = "Вирус вызывает у носителя фальшивые суицидальные мысли, из-за чего последний с большой вероятностью может совершить самоубийство."
 	level = 4
 	max_stage = 8
 	cooldown = 50
@@ -401,7 +401,7 @@
 				H.visible_message("<span class='danger'>[H] пытается задержать своё дыхание, но не справляется.</span>")
 				H.adjustOxyLoss(60)
 			else
-				H.visible_message("<span class='danger'>[H] задерживает своё дыхание. Выглядит, что это попытка самоубийства.</span>")
+				H.visible_message("<span class='danger'>[H] задерживает своё дыхание. Похоже, что это попытка самоубийства.</span>")
 				H.adjustOxyLoss(175 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss())
 			H.updatehealth()
 
