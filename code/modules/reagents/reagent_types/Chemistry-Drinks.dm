@@ -360,7 +360,7 @@
 	taste_message = "cola"
 
 /datum/reagent/consumable/drink/cold/nuka_cola
-	name = "Нюка-Кола"
+	name = "Ядер-Кола"
 	id = "nuka_cola"
 	description = "Cola, cola never changes."
 	color = "#100800" // rgb: 16, 8, 0
