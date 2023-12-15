@@ -15,7 +15,8 @@
 /obj/structure/closet/critter/proc/create_mob_inside()
 	var/mob/living/to_die
 	to_die = new content_mob(loc)
-	to_die.health = to_die.health * (!crit_fail)
+	if(crit_fail)
+		to_die.health = 0
 	return list(to_die)
 
 /obj/structure/closet/critter/open()
@@ -70,7 +71,7 @@
 	var/mob/living/to_die
 	var/list/chicks = list()
 	var/num = rand(4, 6)
-	for(var/i = 0, i < num, i++)
+	for(var/i in 1 to num)
 		to_die = new content_mob(loc)
 		to_die.health = to_die.health * (!crit_fail)
 		chicks += to_die
