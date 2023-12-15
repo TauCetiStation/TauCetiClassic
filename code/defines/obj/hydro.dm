@@ -862,12 +862,12 @@
 	growthstages = 6
 
 /obj/item/seeds/chureech_nut
-	name = "пачка семян ореха Чур'их"
-	desc = "Семяна вырастут в дерево, известное среди народа Таяран своими обильными плодами орехов и съестных листьев."
+	name = "pack of Chur'eech seeds"
+	desc = "Эти семена вырастут в дерево, известное среди народа таяран своими обильными плодами орехов и съестными листьями."
 	icon_state = "seed-chureech"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "chureech"
-	plantname = "Дерево Чур'их"
+	plantname = "Chur'eech tree"
 	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
 	lifespan = 55
 	endurance = 35
