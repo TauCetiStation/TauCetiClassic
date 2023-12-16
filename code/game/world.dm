@@ -147,7 +147,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 
 		var/list/s = list()
 		s["version"] = game_version
-		s["mode"] = custom_event_msg ? "event" : master_mode
+		s["mode"] = SSevents.custom_event_mode ? SSevents.custom_event_mode : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
 		s["enter"] = !LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS)
 		s["ai"] = config.allow_ai

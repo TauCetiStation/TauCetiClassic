@@ -1550,7 +1550,7 @@
 /mob/living/proc/pickup_ore(/obj/item/weapon/storage/bag/ore/I)
 	return
 
-/mob/living/carbon/human/trigger_syringe_fear()
+/mob/living/carbon/human/trigger_syringe_fear() // move to carbon/human
 	..()
 	if(prob(15))
 		var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN)
@@ -1558,3 +1558,7 @@
 		if(BP)
 			BP.take_damage(8, used_weapon = "Syringe") 	//half kithen-knife damage
 			to_chat(src, "<span class='warning'>You got a cut with a syringe.</span>")
+
+/mob/living/reset_view(atom/A, force_remote_viewing)
+	..()
+	src.force_remote_viewing = force_remote_viewing

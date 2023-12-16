@@ -48,6 +48,9 @@ var/global/list/SOUNDIN_HMM_EXCLAIM_FEMALE 	= list('sound/voice/hmm/hmm_exclaim_
 var/global/list/SOUNDIN_HMM_EXCLAIM_MALE 	= list('sound/voice/hmm/hmm_exclaim_male_1.ogg', 'sound/voice/hmm/hmm_exclaim_male_2.ogg', 'sound/voice/hmm/hmm_exclaim_male_3.ogg', 'sound/voice/hmm/hmm_exclaim_male_4.ogg', 'sound/voice/hmm/hmm_exclaim_male_5.ogg')
 var/global/list/SOUNDIN_WOO_MALE 	= list('sound/voice/woo/woo_male_1.ogg', 'sound/voice/woo/woo_male_2.ogg', 'sound/voice/woo/woo_male_3.ogg', 'sound/voice/woo/woo_male_4.ogg', 'sound/voice/woo/woo_male_5.ogg', 'sound/voice/woo/woo_male_6.ogg')
 var/global/list/SOUNDIN_WOO_FEMALE 	= list('sound/voice/woo/woo_female_1.ogg', 'sound/voice/woo/woo_female_2.ogg', 'sound/voice/woo/woo_female_3.ogg', 'sound/voice/woo/woo_female_4.ogg', 'sound/voice/woo/woo_female_5.ogg')
+var/global/list/SOUNDIN_SIGH_MALE   = list('sound/voice/sigh/sigh_male.ogg')
+var/global/list/SOUNDIN_SIGH_FEMALE = list('sound/voice/sigh/sigh_female.ogg')
+
 // Human's pain
 var/global/list/SOUNDIN_FEMALE_LIGHT_PAIN   = list('sound/voice/mob/pain/female/light_1.ogg', 'sound/voice/mob/pain/female/light_2.ogg', 'sound/voice/mob/pain/female/light_3.ogg', 'sound/voice/mob/pain/female/light_4.ogg', 'sound/voice/mob/pain/female/light_5.ogg', 'sound/voice/mob/pain/female/light_6.ogg', 'sound/voice/mob/pain/female/light_7.ogg', 'sound/voice/mob/pain/female/light_8.ogg')
 var/global/list/SOUNDIN_FEMALE_HEAVY_PAIN   = list('sound/voice/mob/pain/female/heavy_1.ogg', 'sound/voice/mob/pain/female/heavy_2.ogg', 'sound/voice/mob/pain/female/heavy_3.ogg', 'sound/voice/mob/pain/female/heavy_4.ogg', 'sound/voice/mob/pain/female/heavy_5.ogg', 'sound/voice/mob/pain/female/heavy_6.ogg')
