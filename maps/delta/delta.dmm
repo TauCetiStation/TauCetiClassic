@@ -1326,7 +1326,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "acf" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
 	},
@@ -5098,7 +5098,7 @@
 /area/station/solar/auxstarboard)
 "aGk" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -8468,7 +8468,7 @@
 	},
 /area/station/medical/psych)
 "bpO" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/light/smart{
 	dir = 4
 	},
@@ -11539,7 +11539,7 @@
 	},
 /area/station/security/interrogation)
 "bUL" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair{
 	dir = 4
 	},
@@ -13340,7 +13340,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/service_bedrooms)
 "cmX" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
 	},
@@ -17800,7 +17800,7 @@
 	},
 /area/station/engineering/break_room)
 "dlC" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -20253,7 +20253,7 @@
 	},
 /area/station/aisat/antechamber_interior)
 "dSt" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -21491,7 +21491,7 @@
 	},
 /area/station/civilian/dormitories/courtroom)
 "efb" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair{
 	dir = 4
 	},
@@ -27614,7 +27614,7 @@
 	},
 /area/station/civilian/dormitories)
 "fvE" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -30394,7 +30394,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
 "gdp" = (
@@ -35262,7 +35262,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "hcM" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 8
 	},
@@ -40200,7 +40200,7 @@
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "idn" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
 	},
@@ -47222,7 +47222,7 @@
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 1;
 	icon_state = "box_corners_white"
@@ -50869,7 +50869,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "koo" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/green,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -57294,7 +57294,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/wood,
 /area/station/storage/tools)
 "lHD" = (
@@ -60280,7 +60280,7 @@
 /turf/simulated/floor,
 /area/station/storage/tech)
 "mpG" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -63550,7 +63550,7 @@
 	},
 /area/station/security/brig)
 "mZB" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "mZC" = (
@@ -64834,7 +64834,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "npk" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
@@ -65233,7 +65233,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/wood,
 /area/station/storage/tools)
 "nsv" = (
@@ -69112,7 +69112,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
 "ojc" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 8
 	},
@@ -69292,7 +69292,7 @@
 	},
 /area/station/hallway/primary/fore)
 "olT" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -70397,7 +70397,7 @@
 	},
 /area/station/security/checkpoint/escape)
 "oBy" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 1
 	},
@@ -75596,7 +75596,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "pGv" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
 	},
@@ -85101,7 +85101,7 @@
 	},
 /area/station/hallway/primary/central)
 "rKy" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair{
 	dir = 4
 	},
@@ -92337,7 +92337,7 @@
 /area/station/civilian/gym)
 "tun" = (
 /obj/structure/stool/bed/chair/metal/white,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "tur" = (
@@ -93296,7 +93296,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "tEg" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool,
 /turf/simulated/floor{
 	icon_state = "neutral"
@@ -95707,7 +95707,7 @@
 	},
 /area/station/rnd/xenobiology)
 "uhY" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
@@ -97524,7 +97524,7 @@
 	},
 /area/station/engineering/atmos)
 "uDx" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
 	},
@@ -97616,7 +97616,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/light/small,
 /obj/effect/landmark{
 	name = "blobstart"
@@ -111722,7 +111722,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "xQv" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 1
 	},

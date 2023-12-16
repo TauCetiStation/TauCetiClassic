@@ -38,6 +38,10 @@
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
 
+	var/datum/reagents/R = new/datum/reagents(1000)
+	reagents = R
+	R.my_atom = src
+
 	if(!species)
 		if(new_species)
 			set_species(new_species, FALSE, TRUE)
@@ -51,10 +55,6 @@
 
 	dna.species = species.name
 	dna.b_type = random_blood_type()
-
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
 
 	. = ..()
 
@@ -1397,6 +1397,10 @@
 		old_species.on_loose(src, new_species)
 
 	maxHealth = species.total_health
+
+	if(species.flags[NO_PAIN])
+		shock_stage = 0
+		traumatic_shock = 0
 
 	if(species.base_color && default_colour)
 		//Apply colour.

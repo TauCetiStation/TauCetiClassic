@@ -96,9 +96,13 @@ var/global/can_call_ert
 	var/datum/announcement/centcomm/ert/announcement = new
 	announcement.play()
 
-/client/proc/create_human_apperance(mob/living/carbon/human/H, _name)
+/client/proc/create_human_apperance(mob/living/carbon/human/H, _name, allow_name_choice = FALSE)
 	//todo: god damn this.
 	//make it a panel, like in character creation
+	//upd: please (also as option we can take current character from client preferences)
+	if(allow_name_choice)
+		_name = sanitize_name(input(src, "Выберите имя.", "Создание персонажа", _name))
+
 	var/new_facial = input(src, "Выберите цвет растительности на лице.", "Создание персонажа") as color
 	if(new_facial)
 		H.r_facial = hex2num(copytext(new_facial, 2, 4))
