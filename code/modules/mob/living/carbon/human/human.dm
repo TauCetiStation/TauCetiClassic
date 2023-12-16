@@ -2513,8 +2513,9 @@
 		update_inv_slot(SLOT_GLOVES)
 		germ_level = 0
 
-/mob/living/carbon/human/pickup_ore(var/obj/item/weapon/storage/bag/ore/B)
+/mob/living/carbon/human/pickup_ore(I)
 	var/turf/simulated/floor/F = get_turf(src)
+	var/obj/item/weapon/storage/bag/ore/B = I
 	for(var/obj/item/weapon/storage/bag/ore/bag in list(l_store , r_store, l_hand, r_hand, belt, s_store))
 		B = bag
 		if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
