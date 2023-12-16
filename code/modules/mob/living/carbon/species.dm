@@ -79,6 +79,7 @@
 
 	var/list/flags = list()       // Various specific features.
 
+	var/specie_suffix_fire_icon = "human"
 	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
 	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
 	var/flesh_color = "#ffc896" //Pink.
