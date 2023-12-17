@@ -57,6 +57,7 @@
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_red"))
 				deltimer(delta_timer_id)
 				delta_timer_id = 0
+				SSsmartlight.reset_smartlight()
 
 			if(SEC_LEVEL_DELTA)
 				security_level = SEC_LEVEL_DELTA
@@ -67,7 +68,7 @@
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_delta"))
 				if(!delta_timer_id)
 					delta_alarm()
-		SSsmartlight.check_nightshift() // Night shift mode turns off if security level is raised to red or above
+				SSsmartlight.update_mode(light_modes_by_name["Code Red"], TRUE)
 		code_announce.play()
 	else
 		return
