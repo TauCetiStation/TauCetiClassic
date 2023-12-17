@@ -57,8 +57,6 @@ var/global/bomb_set
 		if(timeleft <= 0)
 			explode()
 
-
-
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
 	if(isscrewing(O))
 		add_fingerprint(user)
