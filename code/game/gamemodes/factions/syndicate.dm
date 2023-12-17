@@ -275,7 +275,7 @@
 	if (!diskdat)
 		diskdat = "Uh oh. Something has fucked up! Report this."
 
-	dat += {"<B><U>ЯДЕРНАЯ СТАТИСТИКА</U></B><BR>
+	dat += {"<B><U>Ядерная статистика</U></B><BR>
 	<B>Количество оперативников:</B> [foecount]<BR>
 	<B>Количество выживших членов экипажа:</B> [crewcount]<BR>
 	<B>Местоположение ядерной бомбы:</B> [bombdat]<BR>
