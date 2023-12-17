@@ -556,3 +556,12 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 /obj/effect/landmark/junkyard_bum // don't exists on map, randomly spawned by junkyard generator
 	name = "Junkyard Bum"
+
+// generic event map landmarks
+/obj/effect/landmark/blue_team
+	name = "Blue Team"
+	icon_state = "x2"
+
+/obj/effect/landmark/red_team
+	name = "Red Team"
+	icon_state = "x"

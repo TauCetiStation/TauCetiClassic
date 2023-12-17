@@ -233,15 +233,10 @@ var/global/list/toilet_overlay_cache = list()
 		if(G != src && G.type == type)
 			qdel(G)
 
-/obj/effect/decal/cleanable/gourd/Crossed(atom/movable/AM)
-	. = ..()
-	try_faceplant_react(AM)
-
 /obj/effect/decal/cleanable/gourd/proc/try_faceplant_react(atom/movable/AM)
 	if(!isliving(AM))
 		return
 	var/mob/living/L = AM
 	if(L.get_species() == UNATHI)
 		return
-	if(L.lying || L.crawling)
-		L.vomit()
+	L.vomit()
