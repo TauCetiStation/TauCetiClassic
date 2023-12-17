@@ -1,4 +1,4 @@
-#define CHANCE_OF_NO_ASPECT 70
+#define CHANCE_OF_NO_ASPECT 1
 SUBSYSTEM_DEF(round_aspects)
 	name = "Round Aspects"
 	init_order = SS_INIT_ASPECTS
@@ -15,6 +15,8 @@ SUBSYSTEM_DEF(round_aspects)
 	populate_lists_and_pick_aspect()
 	if(aspect_name)
 		aspect.after_init()
+		aspect.after_full_init()
+		global_announce_aspect()
 	return ..()
 
 /datum/controller/subsystem/round_aspects/proc/populate_lists_and_pick_aspect()
@@ -38,8 +40,3 @@ SUBSYSTEM_DEF(round_aspects)
 	if(aspect_name && aspect.OOC_lobby_announcement)
 		to_chat(client,"[SSround_aspects.aspect.OOC_lobby_announcement]")
 
-/datum/controller/subsystem/round_aspects/proc/PostInit()
-	if(!aspect_name)
-		return
-	aspect.after_full_init()
-	global_announce_aspect()

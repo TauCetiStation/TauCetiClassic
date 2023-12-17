@@ -170,7 +170,6 @@ var/global/datum/controller/master/Master = new()
 	world.log << "Initializations complete in [time] second[time == 1 ? "" : "s"]!"
 	log_initialization("Initializations complete in [time] second[time == 1 ? "" : "s"]!")
 	to_chat(world, "<span class='success'>Инициализация завершена за [time] сек.!</span>")
-	SSround_aspects.PostInit()
 
 	SetRunLevel(RUNLEVEL_LOBBY)
 
