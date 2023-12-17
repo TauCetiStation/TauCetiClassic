@@ -241,7 +241,7 @@
 	<B>Глав революции убито:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 500] очков)<BR>
 	<B>Глав станции убито:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] очков)<BR>
 	<B>Революция преуспела:</B> [SSStatistics.score.traitorswon ? "Да" : "Нет"] (-[SSStatistics.score.traitorswon * revpenalty] очков)<BR>
-	<B>Все главы революции арестованы:</B> [SSStatistics.score.allarrested ? "Да" : "Нет"] (очки утроены)<BR>"}
+ 	<B>Все главы революции арестованы:</B> [SSStatistics.score.allarrested ? "Да (очки утроены)" : "Нет"]<BR>"}
 
 	return dat
 
