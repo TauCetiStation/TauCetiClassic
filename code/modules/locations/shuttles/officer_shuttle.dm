@@ -4,7 +4,7 @@
 
 /obj/machinery/computer/officer_shuttle
 	name = "Shuttle Console"
-	cases = ("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
+	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	var/department_note = "Транспортный шаттл Велосити отстыковался от станции."
