@@ -140,7 +140,7 @@
 		UnregisterSignal(fool, COMSIG_LOGOUT)
 		var/datum/hud/our_hud = fool.hud_used
 
-		for(var/atom/movable/screen/plane_master/seethrough in our_hud.plane_masters[SEETHROUGH_PLANE])
+		for(var/atom/movable/screen/plane_master/seethrough in our_hud.plane_masters["[SEETHROUGH_PLANE]"])
 			seethrough.hidden_for_user = TRUE
 
 	tricked_mobs.Cut()
@@ -153,5 +153,5 @@
 	UnregisterSignal(fool, COMSIG_LOGOUT)
 	RegisterSignal(fool, COMSIG_LOGIN, PROC_REF(trick_mob))
 	var/datum/hud/our_hud = fool.hud_used
-	for(var/atom/movable/screen/plane_master/seethrough in our_hud.plane_masters[SEETHROUGH_PLANE])
+	for(var/atom/movable/screen/plane_master/seethrough in our_hud.plane_masters["[SEETHROUGH_PLANE]"])
 		seethrough.hidden_for_user = TRUE
