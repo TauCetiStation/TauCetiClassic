@@ -105,7 +105,7 @@
 			return
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, "<span class = 'rose'>[capitalize(CASE(target, NOMINATIVE_CASE))][(ANYMORPH(target, "полон", "полна", "полно", "полны"))].</span>")
+			to_chat(user, "<span class = 'rose'>[capitalize(CASE(target, NOMINATIVE_CASE))] [(ANYMORPH(target, "полон", "полна", "полно", "полны"))].</span>")
 			return
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
@@ -180,8 +180,8 @@
 /obj/item/weapon/reagent_containers/glass/beaker
 	name = "beaker"
 	cases = list("мензурка", "мензурки", "мензурке", "мензурку", "мензуркой", "мензурке")
-
 	desc = "Это мензурка."
+	gender = FEMALE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
@@ -237,6 +237,7 @@
 	name = "large beaker"
 	cases = list("большая мензурка", "большой мензурки", "большой мензурке", "большую мензурку", "большой мензуркой", "большой мензурке")
 	desc = "Это большая мензурка."
+	gender = FEMALE
 	icon_state = "beakerlarge"
 	g_amt = 5000
 	volume = 150
@@ -257,6 +258,7 @@
 	name = "bluespace beaker"
 	cases = list("блюспейс мензурка", "блюспейс мензурки", "блюспейс мензурке", "блюспейс мензурку", "блюспейс мензуркой", "блюспейс мензурке")
 	desc = "Блюспейс мензурка, работающая на экспериментальной технологии."
+	gender = FEMALE
 	icon_state = "beakerbluespace"
 	g_amt = 5000
 	volume = 300
@@ -269,6 +271,7 @@
 	name = "vial"
 	cases = list("пробирка", "пробирки", "пробирке", "пробирку", "пробиркой", "пробирке")
 	desc = "Маленькая стеклянная пробирка."
+	gender = FEMALE
 	icon_state = "vial"
 	g_amt = 250
 	volume = 25
@@ -304,6 +307,7 @@
 	name = "teapot"
 	cases = list("чайник", "чайника", "чайнику", "чайник", "чайником", "чайнике")
 	desc = "Элегантный чайник."
+	gender = MALE
 	icon_state = "teapot"
 	item_state = "teapot"
 
@@ -333,6 +337,7 @@
 	name = "bucket"
 	cases = list("ведро", "ведра", "ведру", "ведро", "ведром", "ведре")
 	desc = "Это ведро."
+	gender = NEUTER
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
