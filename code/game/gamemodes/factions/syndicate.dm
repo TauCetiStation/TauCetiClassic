@@ -283,7 +283,7 @@
 	<B>Оперативников арестовано:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] очков)<BR>
 	<B>Оперативников убито:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 250] очков)<BR>
 	<B>Станция разрушена:</B> [SSStatistics.score.nuked ? "Да" : "Нет"] (-[nukedpenalty] очков)<BR>
-	<B>Все оперативники арестованы:</B> [SSStatistics.score.allarrested ? "Да" : "Нет"] (очки утроены)<BR>"}
+	<B>Все оперативники арестованы:</B> [SSStatistics.score.allarrested ? "Да (очки утроены)" : "Нет"]<BR>"}
 
 	return dat
 
