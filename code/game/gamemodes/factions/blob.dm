@@ -219,7 +219,7 @@ Message ends."}
 	end.count()
 	var/list/result = check_quarantaine()
 	dat += {"<B><U>Статистика блоба</U></B><BR>
-	<b>Всего блобов: [blobs.len]</b><br>
+	<b>Количество блобов: [blobs.len]</b><br>
 	<b>Целостность станции: [round(end.score(start)*100)]%</b><br>
 	<br>
 	<b>О состоянии карантина:</b><br>
