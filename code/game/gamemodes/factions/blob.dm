@@ -222,7 +222,7 @@ Message ends."}
 	<b>Количество блобов: [blobs.len]</b><br>
 	<b>Целостность станции: [round(end.score(start)*100)]%</b><br>
 	<br>
-	<b>О состоянии карантина:</b><br>
+	<b>Состояние карантина:</b><br>
 	Экипажа мертво: <b>[result["numDead"]]</b><br>
 	Экипажа на борту станции: <b>[result["numAlive"]]</b><br>
 	Экипажа в космосе: <b>[result["numSpace"]]</b><br>
