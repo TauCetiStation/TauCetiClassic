@@ -1118,6 +1118,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
 	name = "Сhur'eech nut"
+	cases = list("орех Чур'их", "ореха Чур'их", "ореху Чур'их", "орех Чур'их", "орехом Чур'их", "орехе Чур'их")
 	icon_state = "chureechnut"
 	desc = "Огромный орех небесного цвета, который славится поистине сладким вкусом."
 	potency = 10
