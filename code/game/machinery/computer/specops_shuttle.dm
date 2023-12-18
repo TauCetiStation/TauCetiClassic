@@ -41,7 +41,7 @@ var/global/specops_shuttle_timeleft = 0
 		if(announcer)
 			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
 			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
-				message = "ТРЕВОГА: [rounded_time_left] секунд осталось"
+				message = "ТРЕВОГА: осталось [rounded_time_left] секунд"
 				if(rounded_time_left==0)
 					message = "ТРЕВОГА: Взлёт"
 				announcer.autosay(message, "Automated Docking System", "Response Team")
@@ -228,7 +228,7 @@ var/global/specops_shuttle_timeleft = 0
 				to_chat(usr, "<span class='notice'>[-(world.timeofday - specops_shuttle_timereset) / 10] секунд осталось!</span>")
 			return FALSE
 
-		to_chat(usr, "<span class='notice'>Шаттл специального назначения прибудет на Центральное командование черех [(SPECOPS_MOVETIME / 10)] секунд.</span>")
+		to_chat(usr, "<span class='notice'>Шаттл специального назначения прибудет на Центральное командование через [(SPECOPS_MOVETIME / 10)] секунд.</span>")
 
 		temp += "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
