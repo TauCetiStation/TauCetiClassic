@@ -250,7 +250,7 @@
 
 /datum/disease2/effect/metabolism
 	name = "Metabolic Boost"
-	desc = "Вирус ускоряет метаболизм носителя, заставляя химические процессы протекать в два раза быстрее, но повышает при этом голод."
+	desc = "Вирус ускоряет метаболизм носителя, заставляя химические процессы протекать в два раза быстрее, но  при этом повышает аппетит."
 	level = 4
 	cooldown = 60
 	max_stage = 5
@@ -265,7 +265,7 @@
 	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
 	if(!COOLDOWN_FINISHED(src, metabolicboost_message))
 		return
-	to_chat(M, "<span class='notice'>Вы ощущаете необычное бульканье, как будто желудок работает быстрее обычного.</span>")
+	to_chat(M, "<span class='notice'>Ваш живот странно урчит, как будто бы ваш желудок работает быстрее обычного.</span>")
 	COOLDOWN_START(src, metabolicboost_message, 1 MINUTES)
 
 /datum/disease2/effect/metabolism/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -284,7 +284,7 @@
 	if(prob(20) || (holder.stage >= 1 && holder.stage <= 2))
 		to_chat(mob, "<span class='warning'>[pick("Вы чувствуете, как разваливаетесь на части.", "Ваша кожа стирается, словно пыль.")]</span>")
 	else if(holder.stage == 3)
-		to_chat(mob, "<span class='userdanger'>[pick("Вы чувствуете, как ваши мышци слабеют.", "Ваша кожа отслаивается сама по себе.", "Вы как будто растворяетесь.")]</span>")
+		to_chat(mob, "<span class='userdanger'>[pick("Вы чувствуете, как ваши мышцы слабеют.", "Ваша кожа отслаивается сама по себе.", "Вы как будто растворяетесь.")]</span>")
 		mob.adjustBruteLoss(rand(6,10))
 
 /datum/disease2/effect/stage_boost
@@ -319,7 +319,7 @@
 				mob.reagents.add_reagent("potassium", 10)
 				mob.reagents.add_reagent("water", 10)
 			else
-				to_chat(mob, "<span class='warning'>[pick("Вы чувствуете как протекают химические реакции в вашем теле.", "На вашей коже появляются пузырьки, которые немедленно взрываются.", "Кровь проявляется на вашем теле. Что-то разрывает вас изнутри!", "Раны на теле становятся все серьезнее.", "Вы чувствуете взрывы внутри себя.")]</span>")
+				to_chat(mob, "<span class='warning'>[pick("Вы чувствуете как протекают химические реакции в вашем теле.", "На вашей коже появляются пузырьки, которые немедленно взрываются.", "Кровь проявляется на вашем теле. Что-то разрывает вас изнутри!", "Раны на теле становятся все серьезнее.", "Вы чувствуете, как внутри вас что-то слабо взрывается.")]</span>")
 		if(10,11,12,13)
 			if(prob(10) && ishuman(mob))
 				var/mob/living/carbon/human/H = mob
@@ -547,7 +547,7 @@
 
 /datum/disease2/effect/heal/darkness
 	name = "Nocturnal Regeneration"
-	desc = "Вирус способен восстанавливать плоть хозяина в условиях недостаточного освещения, излечивая небольшие повреждения. Эффективен против механического урона."
+	desc = "Вирус способен восстанавливать плоть хозяина в условиях недостаточного освещения, излечивая небольшие повреждения. Эффективен против механического травм."
 	level = 3
 	passive_message = "<span class='notice'>Вы чувствуете покалывание на коже, когда на неё падает свет.</span>"
 
@@ -585,7 +585,7 @@
 
 /datum/disease2/effect/fire
 	name = "Spontaneous Combustion"
-	desc = "Вирус превращает жир в чрезвычайно огнеопасное соединение и повышает температуру тела, заставляя носителя самопроизвольно вспыхивать."
+	desc = "Вирус превращает жиры носителя в чрезвычайно огнеопасное соединение и повышает температуру тела, заставляя его самопроизвольно вспыхивать."
 	level = 3
 	max_stage = 3
 	cooldown = 30
@@ -761,12 +761,12 @@
 /datum/disease2/effect/toxins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
-			to_chat(mob, "<span class='notice'>[pick("Вы чувствуете странное бульканье в животе.", "Вы испытываете тошноту.")]</span>")
+			to_chat(mob, "<span class='notice'>[pick("У вас болит живот.", "Вы испытываете тошноту.")]</span>")
 		if(2)
-			to_chat(mob, "<span class='warning'>[pick("У вас болит желудок.", "Вы чувствуете противную боль в горле.")]</span>")
+			to_chat(mob, "<span class='warning'>[pick("У вас болит живот.", "Вы чувствуете противную боль в горле.")]</span>")
 			mob.adjustToxLoss(5)
 		if(3)
-			to_chat(mob, "<span class='warning'>[pick("У вас очень сильно болит желудок.", "Ваша кожа кажется более бледной.", "Вы чувствуете себя растерянным.", "Ваше дыхание горячее и нерегулярное.")]</span>")
+			to_chat(mob, "<span class='warning'>[pick("У вас очень сильно болит живот.", "Ваша кожа кажется более бледной.", "Вы чувствуете себя растерянным.", "Ваше дыхание горячее и нерегулярное.")]</span>")
 			mob.adjustToxLoss(10)
 
 /datum/disease2/effect/nerve_support
@@ -1237,7 +1237,7 @@
 			return
 		switch(holder.stage)
 			if(1,2,3)
-				to_chat(H, "<span class='warning'>[pick("Ваша кожа головы чешется.", "Ваша кожа шелушится.")]</span>")
+				to_chat(H, "<span class='warning'>[pick("Ваш скальп чешется.", "Ваша кожа шелушится.")]</span>")
 			if(4,5,6)
 				to_chat(H, "<span class='warning'>[pick("Начинают выпадать случайные волоски.", "Вы чувствуете, как лысеете с каждой секундой.")]</span>")
 			if(7)
@@ -1303,7 +1303,7 @@
 	if(mob.reagents.has_reagent("dextromethorphan"))
 		return
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class = 'notice'>[pick("Вы проглатываете избыток слизи.", "Вы слегка покашливаете.")]</span>")
+		to_chat(mob, "<span class = 'notice'>[pick("Вы проглатываете избыток мокроты.", "Вы слегка покашливаете.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		mob.emote("cough")
 		disease.spread(mob, 2)
@@ -1336,7 +1336,7 @@
 		to_chat(mob, "<span class = 'notice'>[pick("Вы шмыгаете носом.", "Вам хочется чихнуть.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		if(prob(50))
-			to_chat(mob, "<span class = 'notice'>[pick("Невыносимое желание чихнуть.")]</span>")
+			to_chat(mob, "<span class = 'notice'>[pick("Желание чихнуть невыносимо.")]</span>")
 		else if(prob(50))
 			mob.emote("sniff")
 		else
@@ -1447,7 +1447,7 @@
 	switch(holder.stage)
 		if(1)
 			if(COOLDOWN_FINISHED(src, blood_add_message))
-				to_chat(A, "<span class='notice'>Вы чувствуете, что ваши кровеносные сосуды периодически пульсируют..</span>")
+				to_chat(A, "<span class='notice'>Вы чувствуете, что ваши кровеносные сосуды периодически пульсируют.</span>")
 				COOLDOWN_START(src, blood_add_message, 1 MINUTE)
 			if(!ishuman(A))
 				return
