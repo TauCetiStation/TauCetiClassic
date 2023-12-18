@@ -355,7 +355,7 @@
 		scantemp = "Ошибка: мозг субьекта не реагирует на сканирование."
 		return
 	if((!subject.ckey) || (!subject.client))
-		scantemp = "Ошибка: мозг субьекта не способен к клонированию."
+		scantemp = "Ошибка: в мозге субьекта обнаружена ментальная ошибка."
 		return
 	if((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
 		scantemp = "<span class='bad'>Субьект не содержит достаточное количество материала для клонирования.</span>"
