@@ -36,60 +36,6 @@
 	H.health = 50
 	H.maxHealth = 50
 
-
-/datum/quality/negativeish/depression
-	name = "Depression"
-	desc = "Ты в депрессии и чувствуешь себя уныло. Так и живём."
-	requirement = "Нет."
-
-/datum/quality/negativeish/depression/add_effect(mob/living/carbon/human/H, latespawn)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "roundstart_depression", /datum/mood_event/depression)
-
-
-/datum/quality/negativeish/true_keeper
-	name = "True Keeper"
-	desc = "Ты не должен покидать бриг ЛЮБОЙ ЦЕНОЙ. Он ведь загнётся без твоего надзора!"
-	requirement = "Смотритель."
-
-	jobs_required = list(
-		"Warden",
-	)
-
-/datum/quality/negativeish/true_keeper/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
-	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
-
-/datum/quality/negativeish/true_keeper/proc/on_enter(datum/source, area/A, atom/OldLoc)
-	if(istype(A, /area/station/security))
-		SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "true_keeper_failure")
-
-/datum/quality/negativeish/true_keeper/proc/on_exit(datum/source, area/A, atom/NewLoc)
-	if(istype(A, /area/station/security))
-		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "true_keeper_failure", /datum/mood_event/true_keeper_failure)
-
-
-/datum/quality/negativeish/rts
-	name = "RTS"
-	desc = "Ты не должен покидать мостик. Ты ведь мозг станции, а мозг должен быть в самом защищенном месте."
-	requirement = "Капитан."
-
-	jobs_required = list(
-		"Captain",
-	)
-
-/datum/quality/negativeish/rts/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
-	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
-
-/datum/quality/negativeish/rts/proc/on_enter(datum/source, area/A, atom/OldLoc)
-	if(istype(A, /area/station/bridge))
-		SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "rts_failure")
-
-/datum/quality/negativeish/rts/proc/on_exit(datum/source, area/A, atom/NewLoc)
-	if(istype(A, /area/station/bridge))
-		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
-
-
 /datum/quality/negativeish/soulless
 	name = "Soulless"
 	desc = "У тебя нет души."
