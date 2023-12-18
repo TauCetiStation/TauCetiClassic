@@ -119,7 +119,7 @@
 				else
 					scantemp = "Сканер не занят"
 
-				dat += "Статус блокировки ": <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Заблокирован" : "Разблокирован"]</a><br>"
+				dat += "Статус блокировки: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Заблокирован" : "Разблокирован"]</a><br>"
 
 			if (!isnull(src.pod1))
 				dat += "Биомасса: <i>[src.pod1.biomass] единиц(а)</i><br>"
