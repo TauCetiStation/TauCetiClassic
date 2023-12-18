@@ -41,7 +41,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		dat += "<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> |"
 		dat += "<a href='?src=\ref[src];sci=1'>Научный аванпост</a><br>"
 	else
-		dat = "Cannot find shuttle"
+		dat = "Невозможно найти шаттл"
 
 	var/datum/browser/popup = new(user, "flightcomputer", "[src.name]", 365, 200)
 	popup.set_content(dat)
