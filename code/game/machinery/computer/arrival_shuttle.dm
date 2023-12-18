@@ -110,7 +110,7 @@ var/global/lastMove = 0
 	// Sending message only on EXODUS
 	if (destLocation == ARRIVAL_SHUTTLE_EXODUS)
 		if (!radio_message_via_ai(arrival_note))
-			radio.autosay(arrival_note, "Arrivals Alert System")
+			radio.autosay(arrival_note, "Система оповещения о прибытии")
 
 	location = destLocation
 	play_flying_sound(toArea)

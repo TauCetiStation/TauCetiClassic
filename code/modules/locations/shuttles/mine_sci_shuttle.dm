@@ -29,7 +29,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 /obj/machinery/computer/mine_sci_shuttle/ui_interact(mob/user)
 	var/dat
 	if(autopilot)
-		var/shuttle_location = station_name()
+		var/shuttle_location = station_name_ru()
 		if(istype(autopilot.mine_sci_curr_location, MINE_DOCK))
 			shuttle_location = "Mining Station"
 		else if(istype(autopilot.mine_sci_curr_location, SCI_DOCK))
