@@ -152,7 +152,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/verb/move_eject()
 	set name = "Eject Cryo Cell"
-	set desc = "Начать процедуру открытия [CASE(src, GENITIVE_CASE)]."
+	set desc = "Начать процедуру открытия криокапсулы."
 	set category = "Object"
 	set src in oview(1)
 	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
