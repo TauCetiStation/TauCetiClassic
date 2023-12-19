@@ -305,7 +305,7 @@
 			else if(pod1.occupant)
 				temp = "Ошибка: капсула клонирования уже занята"
 			else if(pod1.biomass < CLONE_BIOMASS)
-				temp = "Ошибка: недостаточно биомассы"
+				temp = "Ошибка: недостаточно биомассы."
 			else if(pod1.mess)
 				temp = "Ошибка: повреждение капсулы клонирования."
 			else if(!config.revival_cloning)
