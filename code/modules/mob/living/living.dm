@@ -52,6 +52,13 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
+/mob/living/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover, /obj/item/projectile) && lying && stat != DEAD)
+		var/obj/item/projectile/P = mover
+		if(get_turf(P.original) == loc)
+			return FALSE
+	return ..()
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
