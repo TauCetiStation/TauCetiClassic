@@ -30,7 +30,7 @@
 
 	// Prevents having Regenerate verb after rebirth.
 	var/datum/role/changeling/C = M.GetRoleByType(/datum/role/changeling)
-	C.purchasedpowers -= locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers
+	qdel(locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers)
 
 	// In case we did it out of stasis
 	if (C.instatis)

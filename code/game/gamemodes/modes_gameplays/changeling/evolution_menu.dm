@@ -353,7 +353,7 @@ var/global/list/sting_paths
 	if(!sting_paths)
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
 	if(C.purchasedpowers)
-		remove_changeling_powers(1)
+		remove_changeling_powers(TRUE)
 	// purchase free powers.
 	for(var/path in sting_paths)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -385,16 +385,18 @@ var/global/list/sting_paths
 	chem_recharge_rate = initial(chem_recharge_rate)
 	chem_charges = min(chem_charges, chem_storage)
 	mimicing = ""
+	if(isliving(antag.current))
+		var/mob/living/L = antag.current
+		L.changeling_aug = FALSE
 
 /mob/proc/remove_changeling_powers(keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
 		if(ischangeling(src))
-			RemoveElement(/datum/element/digitalcamo)
 			var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 			C.reset()
 			for(var/obj/effect/proc_holder/changeling/p in C.purchasedpowers)
 				if(!(p.genomecost == 0 && keep_free_powers))
-					C.purchasedpowers -= p
+					qdel(p)
 			if(hud_used)
 				C.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 

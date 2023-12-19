@@ -264,6 +264,9 @@
 
 			calculated_research_points = added_score * new_score_coeff + min(already_earned_score * round(repeat_score_coeff * softcap_coeff), repetition_cap - saved_earned_points)
 
+			if(HAS_ROUND_ASPECT(ROUND_ASPECT_ALTERNATIVE_RESEARCH))
+				calculated_research_points /= 5
+
 			if(score > saved_interaction_score)
 				RD.files.experiments.saved_best_score[inter_type] = score
 
