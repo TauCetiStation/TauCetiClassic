@@ -12,7 +12,7 @@
 	if(isliving(M))
 		var/mob/living/L = M
 		if (L.stat == CONSCIOUS && !L.restrained())
-			L.pickup_ore(/obj/item/weapon/storage/bag/ore)
+			L.pickup_ore()
 
 /obj/item/weapon/ore/uranium
 	name = "pitchblende"

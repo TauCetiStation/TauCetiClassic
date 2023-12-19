@@ -1547,7 +1547,7 @@
 		make_dizzy(150)
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "scared", /datum/mood_event/scared)
 
-/mob/living/proc/pickup_ore(/obj/item/weapon/storage/bag/ore/I)
+/mob/living/proc/pickup_ore()
 	return
 
 /mob/living/carbon/human/trigger_syringe_fear() // move to carbon/human
