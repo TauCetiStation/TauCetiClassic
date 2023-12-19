@@ -668,7 +668,7 @@
 
 /obj/item/weapon/paper/brig_arsenal/atom_init()
 	. = ..()
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY)|| HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY) || HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		info = "A program is underway to re-equip NanoTrasen security. The current list has not yet been compiled, we apologize."
 
 /obj/item/weapon/paper/firing_range
