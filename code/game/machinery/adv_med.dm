@@ -48,7 +48,7 @@
 
 /obj/machinery/bodyscanner/proc/move_inside_checks(mob/target, mob/user)
 	if(occupant)
-		to_chat(user, "<span class='userdanger'>Сканер уже занят кем-то!</span>")
+		to_chat(user, "<span class='userdanger'>[capitalize(CASE(src, NOMINATIVE_CASE))] уже занят кем-то!</span>")
 		return FALSE
 	if(!iscarbon(target))
 		return FALSE
@@ -139,6 +139,7 @@
 	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield, /obj/item/weapon/implant/fake_loyal)
 	var/delete
 	name = "Body Scanner Console"
+	cases = list("Консоль МРТ Сканера", "Консоли МРТ Сканера", "Консоли МРТ сканера", "Консоль МРТ сканера", "Консолью МРТ сканера", "Консоли МРТ сканера")
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = TRUE
