@@ -1,7 +1,7 @@
 /obj/structure/stool/bed/chair/schair/wagon
 	name = "Shuttle Chair"
 	cases = list("кресло шаттла", "кресла шаттла", "креслу шаттла", "кресло шаттла", "креслом шаттла", "кресле шаттла")
-	desc = "Вы сидите на этом. Либо по своей воле, либо по принуждению."
+	desc = "Вы сидите на этом. Либо по своей воле, либо добровольно принудительно."
 	icon = 'icons/locations/shuttles/bench.dmi'
 	icon_state = "chair"
 
