@@ -346,22 +346,22 @@
 			scantemp = "Ошибка: не обнаружено следов разума."
 			return
 	else if(!isbrain(subject))
-		scantemp = "Ошибка: тело субьекта не поддерживается."
+		scantemp = "Ошибка: тело пациента не поддерживается."
 		return
 	if(!subject.dna)
-		scantemp = "Ошибка: невозможно получить ДНК субьекта."
+		scantemp = "Ошибка: невозможно получить ДНК пациента."
 		return
 	if(subject.suiciding)
-		scantemp = "Ошибка: мозг субьекта не реагирует на сканирование."
+		scantemp = "Ошибка: мозг пациента не реагирует на сканирование."
 		return
 	if((!subject.ckey) || (!subject.client))
-		scantemp = "Ошибка: в мозге субьекта обнаружена ментальная ошибка."
+		scantemp = "Ошибка: в мозге пациента обнаружена ментальная ошибка."
 		return
 	if((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
-		scantemp = "<span class='bad'>Субьект не содержит достаточное количество материала для клонирования.</span>"
+		scantemp = "<span class='bad'>Пациент не содержит достаточное количество материала для клонирования.</span>"
 		return
 	if(!isnull(find_record(subject.ckey)))
-		scantemp = "Субьект уже находится в базе данных."
+		scantemp = "Пациент уже находится в базе данных."
 		return
 
 	subject.dna.check_integrity()
@@ -395,7 +395,7 @@
 		R.mind = "\ref[subject.mind]"
 
 	src.records += R
-	scantemp = "Субьект успешно просканирован."
+	scantemp = "Пациент успешно просканирован."
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(find_key)
