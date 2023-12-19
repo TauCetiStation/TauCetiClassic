@@ -85,6 +85,8 @@
 		return
 
 	if(href_list["lobby_ready"])
+		if(config.alt_lobby_menu)
+			return
 		if(ready && SSticker.timeLeft <= 50)
 			to_chat(src, "<span class='warning'>Locked! The round is about to start.</span>")
 			return
@@ -94,6 +96,8 @@
 		return
 
 	if(href_list["lobby_be_special"])
+		if(config.alt_lobby_menu)
+			return
 		if(client.prefs.selected_quality_name)
 			var/datum/quality/quality = SSqualities.qualities_by_type[SSqualities.registered_clients[client.ckey]]
 			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
@@ -126,6 +130,8 @@
 			return
 
 	if(href_list["lobby_join"])
+		if(config.alt_lobby_menu)
+			return
 		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 			to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
 			return
@@ -136,6 +142,15 @@
 				return FALSE
 
 		LateChoices()
+		return
+
+	if(href_list["event_join"])
+		if(!config.alt_lobby_menu)
+			return
+		if(!spawners_menu)
+			spawners_menu = new()
+
+		spawners_menu.tgui_interact(src)
 		return
 
 	if(href_list["lobby_crew"])

@@ -51,6 +51,11 @@
 		return FALSE
 	if(!iscarbon(target))
 		return FALSE
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.species.flags[NO_MED_HEALTH_SCAN])
+			to_chat(user, "<span class='userdanger'>Это существо нельзя сканировать</span>")
+			return FALSE
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>У пациента не должно быть чего-либо в руках.</span>")
 		return FALSE

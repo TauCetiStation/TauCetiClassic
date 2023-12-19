@@ -39,6 +39,8 @@
 
 		to_chat(ghost, "<span class='ghostalert'>Доступны новые роли в меню возрождения!</span>")
 
+	return spawner
+
 /datum/spawner
 	// Name of spawner, wow
 	var/name
@@ -89,12 +91,15 @@
 
 	// Cooldown between the opportunity become a role
 	var/cooldown = 10 MINUTES
+	// Set this if you want to share cooldown between several spawners, can be type or unique key
+	var/cooldown_type
+
+	// optionally you can link faction for additional field in meny "playing"
+	var/datum/faction/faction // todo: print faction logo in spawn menu?
 
 	// id of timers
 	var/registration_timer_id
 	var/availability_timer_id
-
-#define SPAWNER_AUTOROLL_ROUND_START
 
 /datum/spawner/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -114,7 +119,6 @@
 	if(time_while_available)
 		availability_timer_id = QDEL_IN(src, time_while_available)
 
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/Destroy()
 	SSrole_spawners.remove_from_list(src)
@@ -136,13 +140,15 @@
 		if(!SSrole_spawners.spawners_cooldown[C.ckey])
 			SSrole_spawners.spawners_cooldown[C.ckey] = list()
 		var/list/ckey_cooldowns = SSrole_spawners.spawners_cooldown[C.ckey]
-		ckey_cooldowns[type] = world.time + cooldown
+		var/cooldown_key = cooldown_type ? cooldown_type : type
+		ckey_cooldowns[cooldown_key] = world.time + cooldown
 
 /datum/spawner/proc/check_cooldown(mob/dead/spectator)
 	if(SSrole_spawners.spawners_cooldown[spectator.ckey])
 		var/list/ckey_cooldowns = SSrole_spawners.spawners_cooldown[spectator.ckey]
-		if(world.time < ckey_cooldowns[type])
-			var/timediff = round((ckey_cooldowns[type] - world.time) * 0.1)
+		var/cooldown_key = cooldown_type ? cooldown_type : type
+		if(world.time < ckey_cooldowns[cooldown_key])
+			var/timediff = round((ckey_cooldowns[cooldown_key] - world.time) * 0.1)
 			to_chat(spectator, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
 			return FALSE
 	return TRUE
@@ -184,18 +190,15 @@
 	spectator.registred_spawner = src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
 	spectator.registred_spawner = null
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
 
 	if(!length(registered_candidates))
-		//SSrole_spawners.trigger_ui_update()
 		return
 
 	var/list/filtered_candidates = list()
@@ -209,7 +212,6 @@
 	registered_candidates.Cut()
 
 	if(!length(filtered_candidates))
-		//SSrole_spawners.trigger_ui_update()
 		return
 
 	shuffle(filtered_candidates)
@@ -222,7 +224,6 @@
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
 	if(!can_spawn(spectator))
@@ -259,9 +260,6 @@
 		return FALSE
 	if(!ranks)
 		return TRUE
-	if(jobban_isbanned(spectator, "Syndicate"))
-		to_chat(spectator, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")
-		return FALSE
 	for(var/rank in ranks)
 		if(jobban_isbanned(spectator, rank))
 			to_chat(spectator, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")

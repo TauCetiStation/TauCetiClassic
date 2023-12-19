@@ -9678,6 +9678,7 @@
 /obj/item/device/microphone/ce{
 	pixel_x = 7
 	},
+/obj/item/device/megaphone,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -22599,6 +22600,13 @@
 	icon_state = "darkred"
 	},
 /area/station/security/secconfhall)
+"dOQ" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/structure/closet/wardrobe/atmospherics_yellow,
+/turf/simulated/floor,
+/area/station/engineering/atmos)
 "dOZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -64517,7 +64525,6 @@
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "mhM" = (
-/obj/structure/closet/wardrobe/atmospherics_yellow,
 /obj/structure/closet/fireaxecabinet{
 	pixel_y = 30
 	},
@@ -64527,6 +64534,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/space_heater,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "mhQ" = (
@@ -166290,7 +166298,7 @@ vRt
 vmZ
 wGz
 iir
-iYC
+dOQ
 rRh
 rMF
 dAA

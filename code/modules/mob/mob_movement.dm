@@ -381,17 +381,13 @@
 
 /mob/proc/slip(weaken_duration, obj/slipped_on, lube)
 	SEND_SIGNAL(src, COMSIG_MOB_SLIP, weaken_duration, slipped_on, lube)
-	return FALSE
+	return TRUE
 
 /mob/living/carbon/slip(weaken_duration, obj/slipped_on, lube)
 	if(!loc.handle_slip(src, weaken_duration, slipped_on, lube))
 		return FALSE
 
-	..()
-
-/mob/living/carbon/slime/slip()
-	..()
-	return FALSE
+	return ..()
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
 	if(species.flags[NO_SLIP])
