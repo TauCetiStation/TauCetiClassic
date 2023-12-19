@@ -102,7 +102,7 @@
 				dat += " <span class='green'>Капсула - обнаружена!</span><br>"
 
 			// Scanner
-			dat += "<h4>Функция сканера</h4>"
+			dat += "<h4>Функции сканера</h4>"
 
 			if(loading)
 				dat += "<b>Сканирование...</b><br>"
@@ -179,7 +179,7 @@
 			dat = "[src.temp]<br>"
 			dat += "<h4>Подтвердить удаление записи</h4>"
 
-			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Просканируйте ID-картой для подтверждения.</a></b><br>"
+			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Приложите ID-карту для подтверждения.</a></b><br>"
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>Отмена</a></b>"
 
 	var/datum/browser/popup = new(user, "клонирования", "Управление системой клонирования")
@@ -305,7 +305,7 @@
 			else if(pod1.occupant)
 				temp = "Ошибка: капсула клонирования уже занята"
 			else if(pod1.biomass < CLONE_BIOMASS)
-				temp = "Ошибка: недостаточно биомассы"
+				temp = "Ошибка: недостаточно биомассы."
 			else if(pod1.mess)
 				temp = "Ошибка: повреждение капсулы клонирования."
 			else if(!config.revival_cloning)
