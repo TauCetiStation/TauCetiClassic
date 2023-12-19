@@ -77,7 +77,7 @@
 /obj/machinery/computer/cloning/ui_interact(mob/user)
 	updatemodules()
 	var/dat = ""
-	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Перезапустить</a></font><br>"
+	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Обновить</a></font><br>"
 	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
 		if(!autoprocess)
 			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Автоматическое выполнение</a>"
