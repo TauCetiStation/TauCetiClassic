@@ -80,11 +80,11 @@
 	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Перезапустить</a></font><br>"
 	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
 		if(!autoprocess)
-			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Автоматическое выполнение процедур</a>"
+			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Автоматическое выполнение</a>"
 		else
-			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Остановить автоматическое выполнение процедур</a>"
+			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Остановить автоматическое выполнение</a>"
 	else
-		dat += "<span class='disabled'>Автоматическое выполнение процедур</span>"
+		dat += "<span class='disabled'>Автоматическое выполнение</span>"
 	dat += "<br><tt>[temp]</tt><br>"
 
 	switch(src.menu)
