@@ -179,7 +179,7 @@
 			dat = "[src.temp]<br>"
 			dat += "<h4>Подтвердить удаление записи</h4>"
 
-			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Просканируйте ID-картой для подтверждения.</a></b><br>"
+			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Приложите ID-карту для подтверждения.</a></b><br>"
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>Отмена</a></b>"
 
 	var/datum/browser/popup = new(user, "клонирования", "Управление системой клонирования")
