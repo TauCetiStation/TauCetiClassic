@@ -6,6 +6,8 @@
 	var/datum/pipe_system/component/data/req_access/req_access_data = process.GetCacheData(REQ_ACCESS_DATA)
 	var/datum/pipe_system/component/data/access/access_data = process.GetCacheData(ACCESS_DATA)
 
+	if(!req_access_data || !access_data)
+		return FailCheck(process)
 
 	if(!req_access_data.IsValid() || !access_data.IsValid())
 		return FailCheck(process)

@@ -1,12 +1,16 @@
 /obj/item/device/terminal
 	name = "Terminal"
-	var/list/datum/pipe_system/component/saved_components = list()
+	icon = 'icons/obj/pda.dmi'
+	icon_state = "aicard" // aicard-full
+	item_state = "electronic"
+	var/list/datum/pipe_system/component/reference_saved_components = list()
+	var/list/datum/pipe_system/component/buffer_components = list()
 	var/datum/pipe_system/component/first_component_program
 	var/datum/pipe_system/component/selected_component
 	var/datum/pipe_system/process/active_process
 	var/list/console_output = list()
 	var/ram_used = 0
-	var/ram_max = 10
+	var/ram_max = 20
 	var/state = 0
 
 /obj/item/device/terminal/atom_init()
@@ -14,27 +18,9 @@
 
 	RegisterSignal(src, COMSIG_PIPE_COMPONENT_DELETE, PROC_REF(DeleteSelectedComponent))
 
-	var/datum/pipe_system/component/data/log_target/terminal_logger_data = new(src, src)
-
-	var/datum/pipe_system/component/proc_component/log_terminal/terminal_logger = new(src)
-	var/datum/pipe_system/component/data/test_data1 = new(src, "TEST VALUE")
-	terminal_logger.AddLastComponent(test_data1)
-
-	var/datum/pipe_system/component/awaiter/logger = new(src, null, terminal_logger, null)
-
-	terminal_logger_data.AddLastComponent(logger)
-
-	var/datum/pipe_system/component/data/test_data2 = new(src, "TEST VALUE 2")
-	terminal_logger_data.AddLastComponent(test_data2)
-
-	var/datum/pipe_system/component/data/test_data3 = new(src, "TEST VALUE 3")
-	terminal_logger_data.AddLastComponent(test_data3)
-
-	selected_component = terminal_logger_data.CopyComponent()
-
 /obj/item/device/terminal/attack_self(mob/user)
-	. = ..()
 	tgui_interact(user, null)
+	. = ..()
 
 /obj/item/device/terminal/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -43,18 +29,24 @@
 		ui.open()
 
 /obj/item/device/terminal/tgui_data(mob/user)
+
 	var/list/data = list()
 	data["console_output"] = console_output
 
+	data["selected_component"] = null
 	if(selected_component)
 		data["selected_component"] = selected_component.GetApiObject()
-	else
-		data["selected_component"] = null
 
+	data["tree_selected_component"] = null
 	if(selected_component)
 		data["tree_selected_component"] = selected_component.GetFirstComponent().GetApiObject()
-	else
-		data["tree_selected_component"] = null
+
+	data["saved_components"] = list()
+
+	LAZYINITLIST(buffer_saved_components)
+
+	for(var/datum/pipe_system/component/C in buffer_saved_components)
+		data["saved_components"][ref(C)] = C.GetApiObject()
 
 	return data
 
@@ -63,17 +55,30 @@
 	if(..())
 		return TRUE
 
+	var/datum/pipe_system/component/target_component = null
+	if(params["target_link_component"])
+		var/list/params_find = list()
+		params_find["link_component"] = params["target_link_component"]
+		for(var/datum/pipe_system/component/C in buffer_saved_components)
+			if(istype(C))
+				target_component = C.ApiChange("select_component", params_find)
+				params["target_component"] = target_component
+
+	var/datum/pipe_system/component/action_component = null
+	if(params["action_link_component"])
+		var/list/params_find = list()
+		params_find["link_component"] = params["action_link_component"]
+		for(var/datum/pipe_system/component/C in buffer_saved_components)
+			if(istype(C))
+				action_component = C.ApiChange("select_component", params_find)
+				params["action_component"] = action_component
+
+	if(action == "select_component")
+		SelectComponent(action_component.ApiChange(action, params))
+		return TRUE
+
 	if(action == "clear_console")
 		LAZYCLEARLIST(console_output)
-
-	if(action == "select_component" && selected_component)
-		var/new_selected_component = selected_component.ApiChange(action, params)
-		if(new_selected_component)
-			SelectComponent(new_selected_component)
-			return TRUE
-
-	if(selected_component)
-		selected_component.ApiChange(action, params)
 
 	return TRUE
 
@@ -119,36 +124,46 @@
 
 	return TRUE
 
-/obj/item/device/terminal/proc/RestoreSavedComponents()
+
+/obj/item/device/terminal/proc/InitializeBuffer()
+
+	LAZYINITLIST(buffer_saved_components)
+	ram_used = buffer_saved_components.len
+
 	return TRUE
 
-/obj/item/device/terminal/Topic(href, href_list)
-	. = ..()
+/obj/item/device/terminal/proc/AddObjectInBuffer(object)
 
-	if(href_list["clear_console"])
-		LAZYCLEARLIST(console_output)
+	InitializeBuffer()
 
-	if(href_list["get_saved_components"])
-		return saved_components
+	if(ram_used >= ram_max)
+		return FALSE
 
-	if(href_list["select_component"])
-		var/datum/pipe_system/component/component = href_list["select_component"]
-		if(istype(component))
-			return SelectComponent(component)
+	LAZYADD(buffer_saved_components, object)
 
-	if(href_list["save_component"])
-		var/datum/pipe_system/component/component = href_list["save_component"]
-		if(istype(component))
-			LAZYADD(saved_components, component)
-			return saved_components
+	ram_used += 1
 
-	if(href_list["remove_component_saved_components"])
-		var/datum/pipe_system/component/component = href_list["remove_component_saved_components"]
-		if(istype(component))
-			LAZYREMOVE(saved_components, component)
-			return saved_components
+	return TRUE
 
-	if(href_list["restore_saved_components"])
-		return RestoreSavedComponents()
+/obj/item/device/terminal/proc/RemoveObjectInBuffer(object)
 
-	return selected_component
+	InitializeBuffer()
+
+	if(!buffer_saved_components.Find(object))
+		return FALSE
+
+	LAZYREMOVE(buffer_saved_components, object)
+
+	ram_used -= 1
+
+	return TRUE
+
+/obj/item/device/terminal/proc/FindObjectInBuffer(link_object)
+
+	InitializeBuffer()
+
+	for(var/object in buffer_saved_components)
+		if(ref(object) == link_object)
+			return object
+
+	return FALSE

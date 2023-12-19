@@ -159,7 +159,7 @@ export class ProgramComponent extends Component {
     return (
       <div>
         <Section fitted={false} getObj = {this.setRef} fill={false} grow={1} backgroundColor={backgroundColor} m={5}>
-            {this.deleted == true ? "Компонент не существует" : this.getObjectContent()}
+            {this.deleted == true ? "Компоненты не существует" : this.getObjectContent()}
         </Section>
       </div>
     )
