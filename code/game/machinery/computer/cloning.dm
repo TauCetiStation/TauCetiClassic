@@ -12,7 +12,7 @@
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
 	var/temp = ""
-	var/scantemp = "Сканер не занят"
+	var/scantemp = "Сканер пуст"
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
 	var/datum/dna2/record/active_record = null
