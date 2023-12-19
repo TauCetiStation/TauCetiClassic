@@ -77,7 +77,7 @@
 /obj/machinery/computer/cloning/ui_interact(mob/user)
 	updatemodules()
 	var/dat = ""
-	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Перезапустить</a></font><br>"
+	dat += "<font size=-1><a href='byond://?src=\ref[src];refresh=1'>Обновить</a></font><br>"
 	if(scanner && pod1 && ((scanner.scan_level > 2) || (pod1.efficiency > 5)))
 		if(!autoprocess)
 			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Автоматическое выполнение</a>"
@@ -128,7 +128,7 @@
 			dat += "<h4>Функции для управления базой данных</h4>"
 			dat += "<a href='byond://?src=\ref[src];menu=2'>Просмотреть записи</a><br>"
 			if (src.diskette)
-				dat += "<a href='byond://?src=\ref[src];disk=eject'>Вытащить диск</a>"
+				dat += "<a href='byond://?src=\ref[src];disk=eject'>Извлечь диск</a>"
 
 
 		if(2)
@@ -267,7 +267,7 @@
 
 				src.active_record = src.diskette.buf
 
-				src.temp = "Загрузка успешна."
+				src.temp = "Загрузка прошла успешно."
 			if("eject")
 				if (!isnull(src.diskette))
 					src.diskette.loc = src.loc
@@ -303,7 +303,7 @@
 			if(!pod1)
 				temp = "Ошибка: не обнаружено капсулы клонирования."
 			else if(pod1.occupant)
-				temp = "Ошибка: капсула клонирования уже занята"
+				temp = "Ошибка: капсула клонирования уже занята."
 			else if(pod1.biomass < CLONE_BIOMASS)
 				temp = "Ошибка: недостаточно биомассы."
 			else if(pod1.mess)
@@ -332,7 +332,7 @@
 					temp = "Начинаем процесс клонирования...<br>Error: Ошибка: пост-инициализация не удалась. Процесс клонирования отменён."
 
 		else
-			temp = "Ошибка: повреждение данных"
+			temp = "Ошибка: повреждение данных."
 
 	else if (href_list["menu"])
 		src.menu = text2num(href_list["menu"])
