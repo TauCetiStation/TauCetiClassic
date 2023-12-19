@@ -37,7 +37,7 @@
 /obj/structure/closet/medical_wall/erokez //wall mounted medical closet
 	name = "first-aid closet"
 	cases = list("шкаф первой помощи", "шкафа первой помощи", "шкафу первой помощи", "шкаф первой помощи", "шкафом первой помощи", "шкафе первой помощи")
-	desc = "Это настенное шкаф для хранения предметов первой помощи."
+	desc = "Это настенный шкаф для хранения предметов первой помощи."
 	icon = 'icons/locations/shuttles/closet.dmi'
 	icon_state = "WallClosetMed_1"
 	icon_closed = "WallClosetMed_1"
