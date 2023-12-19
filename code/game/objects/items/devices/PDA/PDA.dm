@@ -146,6 +146,10 @@
 		set_light(f_lum)
 
 /obj/item/device/pda/proc/assign(real_name)
+	if(!istext(real_name))
+		stack_trace("Expected text, got reference")
+		real_name = "[real_name]"
+
 	owner = real_name
 	name = "PDA-[real_name][ownjob ? " ([ownjob])" : ""]"
 
