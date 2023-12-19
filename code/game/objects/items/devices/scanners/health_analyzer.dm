@@ -19,42 +19,41 @@
 	var/scan_hallucination = FALSE
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
-			var/message = ""
-			message += "<span class = 'notice'>Результаты сканирования: ОШИБКА\n&emsp; Общее состояние: ОШИБКА</span><br>"
-			message += "&emsp; Key: <font color='blue'>Асфиксия</font>/<font color='green'>Интоксикация</font>/<font color='#FFA500'>Термические</font>/<font color='red'>Механические</font><br>"
-			message += "&emsp; Специфика повреждений: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
-			message += "<span class = 'notice'>Температура тела: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span><br>"
-			message += "<span class = 'warning bold'>Внимание: Уровень крови ОШИБКА: --% --сл.</span> <span class = 'notice bold'>Группа крови: ОШИБКА</span><br>"
-			message += "<span class = 'notice'>Пульс пациента:</span><font color='red'>-- уд/мин.</font><br>"
-
-			last_scan = message
-			last_scan_name = M.name
-			if(!output_to_chat)
-				var/datum/browser/popup = new(user, "[M.name]_scan_report", "Результаты сканирования [M.name]", 400, 400, ntheme = CSS_THEME_LIGHT)
-				popup.set_content(message)
-				popup.open()
-			else
-				to_chat(user, message)
-
-			add_fingerprint(user)
-			return
-		else
-			add_fingerprint(user)
-			var/dat = health_analyze(M, user, mode, output_to_chat, null, scan_hallucination)
-			last_scan = dat
-			last_scan_name = M.name
-			if(!output_to_chat)
-				var/datum/browser/popup = new(user, "[M.name]_scan_report", "Результаты сканирования [M.name]", 400, 400, ntheme = CSS_THEME_LIGHT)
-				popup.set_content(dat)
-				popup.open()
-			else
-				to_chat(user, dat)
-	else
-		add_fingerprint(user)
+	add_fingerprint(user)
+	if(!ishuman(M))
 		to_chat(user, "<span class = 'warning'>Результаты анализа не завершены. Обнаружена неизвестная анатомия.</span>")
+		return
+	var/mob/living/carbon/human/H = M
+	if(H.species.flags[NO_MED_HEALTH_SCAN])
+		to_chat(user, "<span class='userdanger'>Это существо нельзя сканировать</span>")
+		return
+	if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
+		var/message = ""
+		message += "<span class = 'notice'>Результаты сканирования: ОШИБКА\n&emsp; Общее состояние: ОШИБКА</span><br>"
+		message += "&emsp; Key: <font color='blue'>Асфиксия</font>/<font color='green'>Интоксикация</font>/<font color='#FFA500'>Термические</font>/<font color='red'>Механические</font><br>"
+		message += "&emsp; Специфика повреждений: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font><br>"
+		message += "<span class = 'notice'>Температура тела: [H.bodytemperature-T0C]&deg;C ([H.bodytemperature*1.8-459.67]&deg;F)</span><br>"
+		message += "<span class = 'warning bold'>Внимание: Уровень крови ОШИБКА: --% --сл.</span> <span class = 'notice bold'>Группа крови: ОШИБКА</span><br>"
+		message += "<span class = 'notice'>Пульс пациента:</span><font color='red'>-- уд/мин.</font><br>"
+
+		last_scan = message
+		last_scan_name = M.name
+		if(output_to_chat)
+			to_chat(user, message)
+			return
+		var/datum/browser/popup = new(user, "[M.name]_scan_report", "Результаты сканирования [M.name]", 400, 400, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(message)
+		popup.open()
+		return
+	var/dat = health_analyze(M, user, mode, output_to_chat, null, scan_hallucination)
+	last_scan = dat
+	last_scan_name = M.name
+	if(output_to_chat)
+		to_chat(user, dat)
+		return
+	var/datum/browser/popup = new(user, "[M.name]_scan_report", "Результаты сканирования [M.name]", 400, 400, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
 	var/datum/browser/popup = new(user, "[last_scan_name]_scan_report", "Результаты сканирования [last_scan_name]", 400, 400, ntheme = CSS_THEME_LIGHT)

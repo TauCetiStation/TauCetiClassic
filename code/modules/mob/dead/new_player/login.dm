@@ -14,6 +14,8 @@
 	if(host_announcements)
 		to_chat(src, "<div class='host_announcements emojify linkify'>[host_announcements]</div>")
 
+	SSround_aspects.local_announce_aspect(client)
+
 	sight |= SEE_TURFS
 
 	show_titlescreen()

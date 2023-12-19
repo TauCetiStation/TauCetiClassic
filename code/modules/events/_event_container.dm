@@ -118,6 +118,8 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		playercount_modifier = playercount_modifier * delay_modifier
 
 		var/event_delay = rand(config.event_delay_lower[severity], config.event_delay_upper[severity]) * playercount_modifier
+		if(HAS_ROUND_ASPECT(ROUND_ASPECT_MORE_RANDOM_EVENTS))
+			event_delay /= 3
 		next_event_time = world.time + event_delay
 
 	log_debug("Next event of severity [severity_to_string[severity]] in [(next_event_time - world.time)/600] minutes.")
