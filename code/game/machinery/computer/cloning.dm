@@ -267,7 +267,7 @@
 
 				src.active_record = src.diskette.buf
 
-				src.temp = "Загрузка успешна."
+				src.temp = "Загрузка прошла успешно."
 			if("eject")
 				if (!isnull(src.diskette))
 					src.diskette.loc = src.loc
