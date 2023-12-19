@@ -402,6 +402,6 @@ var/global/list/sting_paths
 
 /datum/role/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
-		if(power.name == P.name)
+		if(power.type == P.type)
 			return TRUE
 	return FALSE
