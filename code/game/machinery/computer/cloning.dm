@@ -128,7 +128,7 @@
 			dat += "<h4>Функции для управления базой данных</h4>"
 			dat += "<a href='byond://?src=\ref[src];menu=2'>Просмотреть записи</a><br>"
 			if (src.diskette)
-				dat += "<a href='byond://?src=\ref[src];disk=eject'>Вытащить диск</a>"
+				dat += "<a href='byond://?src=\ref[src];disk=eject'>Извлечь диск</a>"
 
 
 		if(2)
