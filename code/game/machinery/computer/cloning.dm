@@ -171,7 +171,7 @@
 				if(pod1 && pod1.biomass >= CLONE_BIOMASS)
 					dat += {"<a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Клонировать</a><br>"}
 				else
-					dat += {"<b>Неподходящая биомасса</b><br>"}
+					dat += {"<b>Недостаточно биомассы</b><br>"}
 
 		if(4)
 			if (!src.active_record)
@@ -321,7 +321,7 @@
 				if(selected)
 					selected.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
 					var/answer = tgui_alert(selected,"Вы желаете вернуться к жизни?","Cloning", list("Да","Нет"))
-					if(answer != "No" && pod1.growclone(C))
+					if(answer != "Нет" && pod1.growclone(C))
 						temp = "Начинаем процесс клонирования..."
 						records.Remove(C)
 						qdel(C)

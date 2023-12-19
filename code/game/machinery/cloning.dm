@@ -135,11 +135,11 @@
 
 /obj/item/weapon/disk/data/attack_self(mob/user)
 	src.read_only = !src.read_only
-	to_chat(user, "Вы переключили режим защиты от записи на [src.read_only ? "включён" : "отключён"].")
+	to_chat(user, "Вы переключили режим защиты от записи на значение [src.read_only ? "включён" : "отключён"].")
 
 /obj/item/weapon/disk/data/examine(mob/user)
 	..()
-	to_chat(user, "Режим защиты от записи: [src.read_only ? "включён" : "отключён"].")
+	to_chat(user, "Режим защиты от записи установлен на значение: [src.read_only ? "включён" : "отключён"].")
 
 //Health Tracker Implant
 
