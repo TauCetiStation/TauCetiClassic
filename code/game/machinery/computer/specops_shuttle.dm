@@ -205,10 +205,10 @@ var/global/specops_shuttle_timeleft = 0
 	if (temp)
 		dat = temp
 	else
-		dat += {"\nМестоположение: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Отправляющийся на [station_name_ru] через ([specops_shuttle_timeleft] секунд.)":specops_shuttle_at_station ? "Станция":"Док"]<BR>
+		dat += {"\nМестоположение: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Отправляющийся на [station_name_ru] через ([specops_shuttle_timeleft] секунд.)":specops_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
 			[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*Шаттл специального назначения уже отправляется.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Шаттл стоит наготове..</a><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
 
-	var/datum/browser/popup = new(user, "computer", "Special Operations Shuttle", 575, 450)
+	var/datum/browser/popup = new(user, "компьютер", "Шаттл специального назначения", 575, 450)
 	popup.set_content(dat)
 	popup.open()
 
@@ -244,7 +244,7 @@ var/global/specops_shuttle_timeleft = 0
 			to_chat(usr, "<span class='warning'>Шаттл специального назначения не может улететь.</span>")
 			return FALSE
 
-		to_chat(usr, "<span class='notice'>Шаттл специального назначения прибудет на [station_name] в [(SPECOPS_MOVETIME/10)] секунд.</span>")
+		to_chat(usr, "<span class='notice'>Шаттл специального назначения прибудет на [station_name_ru] в [(SPECOPS_MOVETIME/10)] секунд.</span>")
 
 		temp += "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 

@@ -26,7 +26,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 	var/mob/living/silicon/decoy/announcer = locate() in syndicate_ship//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
-	var/message = "THE SYNDICATE ELITE SHUTTLE IS PREPARING FOR LAUNCH"//Initial message shown.
+	var/message = "ЭЛИТНЫЙ ШАТТЛ СИНДИКАТА ГОТОВИТСЯ К ВЗЛЁТУ"//Initial message shown.
 	if(announcer)
 		announcer.say(message)
 
@@ -42,18 +42,18 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 			if(departpos == "station")
 				var/rounded_time_left = round(syndicate_elite_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
 				if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
-					message = "ALERT: [rounded_time_left] SECOND[(rounded_time_left!=1)?"S":""] REMAIN"
+					message = "ТРЕВОГА: осталось [rounded_time_left] секунд"
 					if(rounded_time_left==0)
-						message = "ALERT: TAKEOFF"
+						message = "ТРЕВОГА: Взлёт"
 					announcer.say(message)
 					message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 					//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 			else if(departpos == "syndimothership")
 				var/rounded_time_left = round(syndicate_elite_shuttle_timeleft)
 				if(rounded_time_left in message_tracker)
-					message = "Attention, the shuttle will go back to base in [rounded_time_left] second[(rounded_time_left!=1)?"s":""] remain. GO BACK INSIDE SHUTTLE!"
+					message = "Внимание, шаттл вернется на базу через [rounded_time_left] секунд. ВОЗВРАЩАЙТЕСЬ НА ШАТТЛ!"
 					if(rounded_time_left==0)
-						message = "ALERT: SHUTTLE DOCK IN MOTHERSHIP. WELCOME HOME, SOLDIERS"
+						message = "ТРЕВОГА: Шаттл пристыковался к материнскому кораблю. Добро пожаловать домой, солдаты."
 					announcer.say(message)
 					message_tracker -= rounded_time_left
 		sleep(5)
@@ -64,7 +64,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 	if (syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
 
 	if (!syndicate_elite_can_move())
-		to_chat(usr, "<span class='warning'>The Syndicate Elite shuttle is unable to leave.</span>")
+		to_chat(usr, "<span class='warning'>Шаттл элитного Синдиката не может улететь.</span>")
 		return
 
 	var/area/startloc
@@ -104,7 +104,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(startloc) )
 		var/mob/M = locate(/mob) in T
-		to_chat(M, syndicate_elite_shuttle_at_station ? "<span class='warning'>You have arrived to [station_name]. Commence operation!</span>" : "<span class='warning'>You have arrived to home. Great job!</span>")
+		to_chat(M, syndicate_elite_shuttle_at_station ? "<span class='warning'>Вы прибыли на [station_name_ru]. Приступайте к операции!</span>" : "<span class='warning'>Вы прибыли домой. Отличная работа!</span>")
 
 /proc/syndicate_elite_can_move()
 	if(syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return 0
@@ -114,7 +114,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 	attack_hand(user)
 
 /obj/machinery/computer/syndicate_elite_shuttle/emag_act(mob/user)
-	to_chat(user, "<span class='notice'>The electronic systems in this console are far too advanced for your primitive hacking peripherals.</span>")
+	to_chat(user, "<span class='notice'>Электронные системы в этой консоли слишком продвинуты для вашей примитивной хакерской периферии.</span>")
 	return TRUE //yep, don't try do that
 
 /obj/machinery/computer/syndicate_elite_shuttle/ui_interact(mob/user)
@@ -122,10 +122,10 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 	if (temp)
 		dat = temp
 	else
-		dat  = {"\nLocation: [syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "Departing for [station_name] in ([syndicate_elite_shuttle_timeleft] seconds.)":syndicate_elite_shuttle_at_station ? "Station":"Dock"]<BR>
-			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*The Syndicate Elite shuttle is already leaving.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Return shuttle to mothership</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Depart to [station_name]</A><BR>\n<BR>"]"}
+		dat  = {"\nМестоположение: [syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "Отправляющийся на [station_name_ru] через ([syndicate_elite_shuttle_timeleft] секунд.)":syndicate_elite_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
+			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*Шаттл элитного Синдиката уже отправляется.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Возвращение шаттла на материнский корабль</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
 
-	var/datum/browser/popup = new(user, "computer", "Special Operations Shuttle", 575, 450)
+	var/datum/browser/popup = new(user, "компьютер", "Шаттл специального назначения", 575, 450)
 	popup.set_content(dat)
 	popup.open()
 
@@ -142,19 +142,19 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 			syndicate_elite_shuttle_time = world.timeofday + SYNDICATE_ELITE_MOVETIME
 			syndicate_elite_shuttle_move("syndimothership")
 		else
-			to_chat(usr, "<span class='notice'>The Syndicate haven't permission to return the Elite Squad shuttle.</span>")
+			to_chat(usr, "<span class='notice'>Материнский корабль пока не разрешил шаттлу элитного Синдиката вернуться.</span>")
 			return FALSE
 
 	else if (href_list["sendtostation"])
 		if(syndicate_elite_shuttle_at_station || syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
 
 		if (!specops_can_move())
-			to_chat(usr, "<span class='warning'>The Syndicate Elite shuttle is unable to leave.</span>")
+			to_chat(usr, "<span class='warning'>Шаттл элитного Синдиката не может улететь.</span>")
 			return FALSE
 
-		to_chat(usr, "<span class='notice'>The Syndicate Elite shuttle will arrive on [station_name] in [(SYNDICATE_ELITE_MOVETIME/10)] seconds.</span>")
+		to_chat(usr, "<span class='notice'>Шаттл элитного Синдиката прибудет на [station_name_ru] через [(SYNDICATE_ELITE_MOVETIME/10)] секунд.</span>")
 
-		temp  = "Shuttle departing.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		temp  = "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		syndicate_elite_shuttle_moving_to_station = TRUE
 		syndicate_elite_shuttle_time = world.timeofday + SYNDICATE_ELITE_MOVETIME
 		syndicate_elite_shuttle_move("station")

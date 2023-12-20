@@ -93,7 +93,7 @@
 		<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> |
 		<a href='?src=\ref[src];centcomm=1'>ЦентКом</a><br>"}
 
-	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450)
+	var/datum/browser/popup = new(user, "компьютер", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 575, 450)
 	popup.set_content(dat)
 	popup.open()
 
