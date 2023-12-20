@@ -57,7 +57,7 @@
 		if(speaker == src)
 			message = "<span class='warning'>You cannot hear yourself speak!</span>"
 		else
-			message = "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [P_THEM(speaker.gender)]."
+			message = "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [P_THEM(speaker)]."
 	else
 		if(isliving(src))
 			message = highlight_traitor_codewords(message, src.mind)

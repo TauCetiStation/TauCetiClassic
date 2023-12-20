@@ -71,7 +71,6 @@ What is the naming convention for planes or layers?
   #define SPACE_PARALLAX_2_LAYER 2
   #define SPACE_PARALLAX_3_LAYER 3
   #define SPACE_PARALLAX_PLANET_LAYER 10
-#define PARALLAX_WHITE_RENDER_TARGET "*PARALLAX_WHITE_RENDER_TARGET"
 
 //SINGULARITY EFFECT
 #define SINGULARITY_EFFECT_PLANE_0 -25
@@ -131,7 +130,6 @@ What is the naming convention for planes or layers?
 #define ABOVE_GAME_PLANE  -1
 
 #define BLACKNESS_PLANE   0
-#define BLACKNESS_RENDER_TARGET "*BLACKNESS_RENDER_TARGET"
 
 #define SINGULARITY_PLANE 10
   #define SINGULARITY_LAYER 1

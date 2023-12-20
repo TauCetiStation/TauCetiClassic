@@ -234,9 +234,9 @@
 /mob/proc/restrained()
 	return
 
-/mob/proc/reset_view(atom/A)
+/mob/proc/reset_view(atom/A, force_remote_viewing)
 	if(client)
-		if(istype(A, /atom/movable))
+		if(isatom(A))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
@@ -707,6 +707,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 					stat(null, "Time left: [max(GM.AI_win_timeleft / (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
+
+			if(SSmapping.loaded_map_module)
+				SSmapping.loaded_map_module.stat_entry(src)
 
 	if(client && client.holder)
 		if(statpanel("Tickets"))
