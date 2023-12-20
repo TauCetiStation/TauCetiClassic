@@ -11,6 +11,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_stealth
 	name = "skipjack cloaking field terminal"
+	cases = list("терминал маскировочного поля \"Skipjack\"", "терминала маскировочного поля \"Skipjack\"", "терминалу \"Skipjack\"", "терминал маскировочного поля \"Skipjack\"", "терминалом маскировочного поля \"Skipjack\"", "терминале маскировочного поля \"Skipjack\"")
 	icon = 'icons/locations/shuttles/vox_pc.dmi'
 	icon_state = "vox_invs"
 	state_broken_preset = "tcbossb"
@@ -35,7 +36,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_stealth/attack_hand(mob/user)
 	if(!VOX_CAN_USE(user))
-		to_chat(user, "<span class='notice'>You have no idea how to use this.</span>")
+		to_chat(user, "<span class='notice'>Вы понятия не имеете, как это использовать</span>")
 		return
 
 	. = ..()
@@ -46,14 +47,15 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		return // no point in this console after moving shuttle from start position.
 
 	if(announce_vox_departure)
-		console_say("Смена режима маскировки: полная маскировки. КСН \"Исход\" не будет оповещен о нашем прибытии.")
+		console_say("Смена режима маскировки: полная маскировка. [station_name_ru()] не будет оповещен о нашем прибытии.")
 		announce_vox_departure = FALSE
 	else
-		console_say("Смена режима маскировки: торговое судно. КСН \"Исход\" будет оповещен о нашем прибытии.")
+		console_say("Смена режима маскировки: торговое судно. [station_name_ru()] будет оповещен о нашем прибытии.")
 		announce_vox_departure = TRUE
 
 /obj/machinery/computer/vox_station
 	name = "skipjack terminal"
+	cases = list("терминал \"Skipjack\"", "терминала \"Skipjack\"", "терминалу \"Skipjack\"", "терминал \"Skipjack\"", "терминалом \"Skipjack\"", "терминале \"Skipjack\"")
 	icon = 'icons/locations/shuttles/vox_pc.dmi'
 	icon_state = "vox_cont"
 	state_broken_preset = "tcbossb"
@@ -133,7 +135,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_station/attack_hand(mob/user)
 	if(!VOX_CAN_USE(user))
-		to_chat(user, "<span class='notice'>You have no idea how to use this.</span>")
+		to_chat(user, "<span class='notice'>Вы понятия не имеете, как это использовать.</span>")
 		return
 	. = ..()
 
@@ -158,7 +160,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	var/time_seconds = round(time_to_move * 0.1)
 	var/sec_word = pluralize_russian(time_seconds, "секунду", "секунды", "секунд")
 	var/dat = {"Маскировочное Поле Skipjack: [announce_vox_departure ? "<span style='color: #ff0000;font-weight: bold;'>Деактивировано!</span>" : "<span style='color: #aa00aa'>Активировано!</span>"]<br><br>
-		Локация: [curr_location]<br>
+		Местоположение: [curr_location]<br>
 		Готовность к полёту[time_to_move ? " через [time_seconds] [sec_word]" : ": Готово"]<br><br>
 		<a href='?src=\ref[src];start=1' style='width:100%;text-align:center'>Вернуться в далёкий космос</a>
 		<div class="center_div" style="position: relative;" >
