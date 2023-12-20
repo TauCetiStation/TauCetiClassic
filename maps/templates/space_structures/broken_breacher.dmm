@@ -1235,7 +1235,7 @@
 /turf/environment/space,
 /area/space)
 "Vk" = (
-/obj/item/weapon/crossbow/vox,
+/obj/item/weapon/crossbow,
 /obj/item/weapon/arrow,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating/airless,

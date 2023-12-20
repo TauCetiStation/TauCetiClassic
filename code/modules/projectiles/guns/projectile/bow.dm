@@ -31,8 +31,8 @@
 	w_class = SIZE_SMALL
 
 	var/tension = 0                       // Current draw on the bow.
-	var/max_tension = 3                   // Highest possible tension.
-	var/release_speed = 4                 // Speed per unit of tension.
+	var/max_tension = 5                   // Highest possible tension.
+	var/release_speed = 5                 // Speed per unit of tension.
 	var/mob/living/current_user = null    // Used to see if the person drawing the bow started drawing it.
 	var/obj/item/weapon/arrow = null      // Nocked arrow.
 	var/obj/item/weapon/stock_parts/cell/cell = null  // Used for firing special projectiles like rods.
@@ -209,7 +209,3 @@
 	desc = "Чтобы завершить, вам нужно: затянуть болты с помощью отвертки."
 	icon_state = "crossbowframe6"
 	item_state = "crossbow-solid"
-
-/obj/item/weapon/crossbow/vox
-	max_tension = 5
-	release_speed = 5
