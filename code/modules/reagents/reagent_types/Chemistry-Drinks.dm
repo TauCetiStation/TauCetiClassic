@@ -1096,7 +1096,7 @@
 
 
 /datum/reagent/consumable/ethanol/goldschlager
-	name = "Гольдшлегер"
+	name = "Гольдшлягер"
 	id = "goldschlager"
 	description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
 	color = "#664300" // rgb: 102, 67, 0
