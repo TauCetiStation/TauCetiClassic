@@ -283,7 +283,7 @@
 			if(C)
 				dat += "<BR><span class='disabled'>Ввести [C.name]</span>"
 
-	var/datum/browser/popup = new(user, "капсула диализа", "консоль капсулы диализа", 520, 605)	//Set up the popup browser window
+	var/datum/browser/popup = new(user, "Капсула диализа", "Консоль капсулы диализа", 520, 605)	//Set up the popup browser window
 	popup.set_content(dat)
 	popup.open()
 
