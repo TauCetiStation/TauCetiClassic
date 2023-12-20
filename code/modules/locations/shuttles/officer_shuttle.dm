@@ -89,7 +89,7 @@
 /obj/machinery/computer/officer_shuttle/ui_interact(mob/user)
 	var/dat = {"Местоположение: [curr_location]<br>
 			Готов лететь[max(lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [max(round((lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] секунд" : ": сейчас"]<br>
-		<a href='?src=\ref[src];velocity=1'>ТСК Велосити</a> |
+		<a href='?src=\ref[src];velocity=1'>НТС Велосити</a> |
 		<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> |
 		<a href='?src=\ref[src];centcomm=1'>ЦентКом</a><br>"}
 
