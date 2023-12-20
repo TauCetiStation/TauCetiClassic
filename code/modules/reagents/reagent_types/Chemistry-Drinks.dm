@@ -134,7 +134,7 @@
 	taste_message = "banana"
 
 /datum/reagent/consumable/drink/nothing
-	name = "Ничего..."
+	name = "Ничего"
 	id = "nothing"
 	description = "Absolutely nothing."
 	taste_message = "nothing... how?"
