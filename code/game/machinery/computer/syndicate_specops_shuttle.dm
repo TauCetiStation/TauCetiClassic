@@ -44,7 +44,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 				if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
 					message = "ТРЕВОГА: осталось [rounded_time_left] секунд"
 					if(rounded_time_left==0)
-						message = "ТРЕВОГА: Взлёт"
+						message = "ТРЕВОГА: Шаттл начинает отстыковку"
 					announcer.say(message)
 					message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 					//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
