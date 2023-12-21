@@ -7,8 +7,8 @@
 	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	var/department_note = "Транспортный шаттл Велосити отстыковался от станции."
-	var/arrival_note = "Транспортный шаттл Велосити пристыковался к станции."
+	var/department_note = "Транспортный шаттл Велосити отстыковался от [station_name_ru()]."
+	var/arrival_note = "Транспортный шаттл Велосити пристыковался к [station_name_ru()]."
 	var/obj/item/device/radio/intercom/radio
 	var/moving = 0
 	var/area/curr_location
@@ -37,7 +37,7 @@
 	if(curr_location == locate(/area/shuttle/officer/station))
 		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_officer")
 		SSshuttle.undock_act(curr_location, "arrival_officer")
-		radio.autosay(department_note, "Система оповещения о прибытии")
+		radio.autosay(department_note, "Система оповещения")
 	else if(curr_location == locate(/area/shuttle/officer/velocity))
 		SSshuttle.undock_act(/area/velocity, "velocity_officer")
 		SSshuttle.undock_act(curr_location, "arrival_officer")
@@ -70,7 +70,7 @@
 	if(dest_location == locate(/area/shuttle/officer/station))
 		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_officer")
 		SSshuttle.dock_act(dest_location, "arrival_officer")
-		radio.autosay(arrival_note, "Система оповещения о прибытии")
+		radio.autosay(arrival_note, "Система оповещения")
 	else if(dest_location == locate(/area/shuttle/officer/velocity))
 		SSshuttle.dock_act(/area/velocity, "velocity_officer")
 		SSshuttle.dock_act(dest_location, "arrival_officer")

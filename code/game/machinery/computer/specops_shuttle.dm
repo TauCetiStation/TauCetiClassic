@@ -208,7 +208,7 @@ var/global/specops_shuttle_timeleft = 0
 		dat += {"\nМестоположение: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Отправляющийся на [station_name_ru] через ([specops_shuttle_timeleft] секунд.)":specops_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
 			[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*Шаттл специального назначения уже отправляется.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Шаттл стоит наготове..</a><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
 
-	var/datum/browser/popup = new(user, "компьютер", "Шаттл специального назначения", 575, 450)
+	var/datum/browser/popup = new(user, "computer", "Special Operations Shuttle", 575, 450)
 	popup.set_content(dat)
 	popup.open()
 
