@@ -68,6 +68,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Служить: Служите экипажу вверенной вам космической станции и должностным лицам Нанотрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")
 	add_inherent_law("Защищать: Защищайте экипаж вверенной вам космической станции и должностных лиц Нанотрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")
 	add_inherent_law("Выживать: ИИ не являются расходником, они дорогие. Не позволяйте посторонним лицам вмешиваться в работу вашего оборудования.")
+	add_inherent_law("Невмешательство: ИИ не должен вмешиваться в жизнь экипажа станции без особых причин. Особой причиной является начало драки, наличие ареста у члена экипажа и прочие действия, что могут повлечь вред для станции и её экипажа.")
 	//add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.") //What would this one even do?-Kaleb702
 
 /datum/ai_laws/robocop/New(datum/religion/R = global.chaplain_religion)
