@@ -7,8 +7,8 @@
 	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	var/department_note = "Транспортный шаттл Велосити отстыковался от [station_name_ru()]."
-	var/arrival_note = "Транспортный шаттл Велосити пристыковался к [station_name_ru()]."
+	var/department_note = "Транспортный шаттл Велосити отстыковался от [station_name_ru]."
+	var/arrival_note = "Транспортный шаттл Велосити пристыковался к [station_name_ru]."
 	var/obj/item/device/radio/intercom/radio
 	var/moving = 0
 	var/area/curr_location
