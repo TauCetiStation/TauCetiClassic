@@ -191,7 +191,7 @@
 
 /datum/disease2/effect/heal/chem
 	name = "Toxolysis"
-	desc = "Вирус быстро разрушает любые посторонние химические вещества в кровотоке."
+	desc = "Вирус быстро расщепляет все инородные химические вещества, попавшие в кровь."
 	level = 4
 
 /datum/disease2/effect/heal/chem/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
@@ -282,7 +282,7 @@
 
 /datum/disease2/effect/flesh_death/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || (holder.stage >= 1 && holder.stage <= 2))
-		to_chat(mob, "<span class='warning'>[pick("Вы чувствуете, как разваливаетесь на части.", "Ваша кожа стирается, словно пыль.")]</span>")
+		to_chat(mob, "<span class='warning'>[pick("Вы чувствуете, как разваливаетесь на части.", "Ваша кожа осыпается, как пыль.")]</span>")
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='userdanger'>[pick("Вы чувствуете, как ваши мышцы слабеют.", "Ваша кожа отслаивается сама по себе.", "Вы как будто растворяетесь.")]</span>")
 		mob.adjustBruteLoss(rand(6,10))
@@ -376,9 +376,9 @@
 				to_chat(A, "<span class='notice'>[pick("Вы хотите бананов.", "Вы ощущаете, что тупеете.", "Это банан?")]</span>")
 			if(4,5,6,7)
 				if(holder.stage == 7 && prob(20))
-					h.say(pick("О, банан?", "У тебя есть бананы?", "У-У-У-и-и","Уо Уо Уои ээи ээи иии ииии", "Иииир! Иииир!"))
+					h.say(pick("О, банан?", "У тебя есть бананы?", "У-У-У-и-и","Уо Уо Уои ээи ээи иии ииии", "Ииик! Ииик!"))
 				else
-					to_chat(A, "<span class='danger'>[pick("Вы реально хотите бананов.", "Вы замечаете как начинаете деградировать.", "Вы становитесь ниже.", "Шерсть проступает на вашей коже.")]</span>")
+					to_chat(A, "<span class='danger'>[pick("Вы реально хотите бананов.", "Вы замечаете как начинаете постепенно деградировать.", "Вы становитесь ниже.", "Шерсть проступает на вашей коже.")]</span>")
 			if(8)
 				h.monkeyize()
 
@@ -986,7 +986,7 @@
 
 /datum/disease2/effect/confusion/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class='notice'>[pick("Вы вдруг забыли, где находится ваше право.", "Вы вдруг забыли, где находится ваше лево.")]</span>")
+		to_chat(mob, "<span class='notice'>[pick("Вы вдруг забыли, где находится право.", "Вы вдруг забыли, где находится лево.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		to_chat(mob, "<span class='notice'>Вам вдруг стало трудно различать право и лево.</span>")
 		mob.MakeConfused(2)
@@ -1191,7 +1191,7 @@
 	else if(holder.stage == 3)
 		mob.nutrition = max(0, mob.nutrition - 20)
 		mob.overeatduration = max(mob.overeatduration - 20, 0)
-		to_chat(mob, "<span class='warning'><i>[pick("Хочется кушать...", "Вы готовы убить кого-то ради еды...", "Вас охватывают голодные спазмы...")]</i></span>")
+		to_chat(mob, "<span class='warning'><i>[pick("Хочется кушать...", "Вы готовы убить кого-то ради кусочка еды...", "Вас охватывают голодные спазмы...")]</i></span>")
 
 		if(mob.nutrition < 10 && prob(5))
 			to_chat(mob, "<span class='userdanger'>Вы ослабеваете от голода.</span>")
@@ -1344,7 +1344,7 @@
 			disease.spread(mob, 1)
 	else if(holder.stage == 3)
 		if(prob(30))
-			to_chat(mob, "<span class = 'warning'>[pick("Вы не можете остановить порыв чихнуть.")]</span>")
+			to_chat(mob, "<span class = 'warning'>[pick("Вы не можете остановить желание чихнуть.")]</span>")
 		else
 			mob.emote("sneeze")
 			disease.spread(mob, 2)
@@ -1417,7 +1417,7 @@
 			if(prob(20) || holder.stage	== 1)
 				to_chat(H, "<span class = 'notice'>[pick("У вас побаливает голова.", "У вас болит голова.", "Голова немного болит.", "У вас началась головная боль.")]</span>")
 			else if(prob(20) || (holder.stage >= 2 && holder.stage <= 5))
-				to_chat(H, "<span class = 'warning'>[pick("У васраскалывается голова.", "Ваша голова непрерывно болит.", "У вас пульсирующая головная боль.")]</span>")
+				to_chat(H, "<span class = 'warning'>[pick("У вас раскалывается голова.", "Ваша голова непрерывно болит.", "У вас пульсирующая головная боль.")]</span>")
 				H.apply_effect(5,AGONY,0)
 			else if(holder.stage == 6)
 				to_chat(H, "<span class = 'userdanger'>[pick("Голова как будто налита свинцом!", "Вы чувствуете, будто раскаленный нож вошёл в ваш мозг!", "Волна боли заполняет вашу голову!")]</span>")
