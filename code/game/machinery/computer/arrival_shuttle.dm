@@ -112,11 +112,6 @@ var/global/lastMove = 0
 		if (!radio_message_via_ai(arrival_note))
 			radio.autosay(arrival_note, "Система оповещения")
 
-	if(curr_location == locate(/area/shuttle/arrival/station))
-		SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
-		SSshuttle.undock_act(curr_location, "arrival_1")
-		radio.autosay(department_note, "Система оповещения")
-
 	location = destLocation
 	play_flying_sound(toArea)
 	SSshuttle.shake_mobs_in_area(toArea, WEST)
@@ -133,6 +128,11 @@ var/global/lastMove = 0
 	SSshuttle.undock_act(/area/velocity, "velocity_1")
 	SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
 	SSshuttle.undock_act(A)
+
+	if(curr_location == locate(/area/shuttle/arrival/station))
+		SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
+		SSshuttle.undock_act(curr_location, "arrival_1")
+		radio.autosay(department_note, "Система оповещения")
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
 	switch(arrival)
