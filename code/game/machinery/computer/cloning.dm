@@ -182,7 +182,7 @@
 			dat += "<b><a href='byond://?src=\ref[src];del_rec=1'>Приложите ID-карту для подтверждения.</a></b><br>"
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>Отмена</a></b>"
 
-	var/datum/browser/popup = new(user, "клонирования", "Управление системой клонирования")
+	var/datum/browser/popup = new(user, "cloning", "Управление системой клонирования")
 	popup.set_content(dat)
 	popup.open()
 	return
