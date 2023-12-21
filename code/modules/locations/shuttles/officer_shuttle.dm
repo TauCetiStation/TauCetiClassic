@@ -18,7 +18,7 @@
 
 /obj/machinery/computer/officer_shuttle/atom_init()
 	department_note = "Транспортный шаттл Велосити отстыковался от [station_name_ru()]."
-	arrival_note = "Транспортный шаттл Велосити пристыковался к [station_name_ru()].
+	arrival_note = "Транспортный шаттл Велосити пристыковался к [station_name_ru()]."
 	radio = new (src)
 	..()
 	return INITIALIZE_HINT_LATELOAD
