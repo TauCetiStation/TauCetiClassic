@@ -197,7 +197,7 @@ var/global/specops_shuttle_timeleft = 0
 	attack_hand(user)
 
 /obj/machinery/computer/specops_shuttle/emag_act(mob/user)
-	to_chat(user, "<span class='notice'>Электронные системы в этой консоли слишком продвинуты для вашей примитивной хакерской периферии.</span>")
+	to_chat(user, "<span class='notice'>Электронные системы в этой консоли слишком продвинуты для вашей примитивной хакерской аппаратуры.</span>")
 	return TRUE //yep, don't try do that
 
 /obj/machinery/computer/specops_shuttle/ui_interact(mob/user)
