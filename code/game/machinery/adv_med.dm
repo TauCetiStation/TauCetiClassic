@@ -4,7 +4,7 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
-	cases = list("МРТ Сканер", "МРТ Сканера", "МРТ сканеру", "МРТ сканер", "МРТ сканером", "МРТ сканере")
+	cases = list("МРТ сканер", "МРТ сканера", "МРТ сканеру", "МРТ сканер", "МРТ сканером", "МРТ сканере")
 	desc = "Используется для более детального анализа состояния пациента."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
