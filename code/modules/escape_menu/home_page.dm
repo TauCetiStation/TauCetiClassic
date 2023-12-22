@@ -214,11 +214,6 @@
 	STOP_PROCESSING(SSescape_menu, src)
 	home_button_text.update_text()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/proc/on_admin_help_replied()
-	SIGNAL_HANDLER
-
-	end_processing()
-
 /atom/movable/screen/escape_menu/home_button/admin_help/enabled()
 	if (!..())
 		return FALSE
