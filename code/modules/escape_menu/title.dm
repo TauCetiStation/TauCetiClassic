@@ -25,10 +25,10 @@ var/global/atom/movable/screen/escape_menu/title/escape_menu_title
 	return ..()
 
 /atom/movable/screen/escape_menu/title/proc/update_text()
-	var/subtitle_text = MAPTEXT("<span style='font-size: 8px'>Another day on...</span>")
+	var/subtitle_text = MAPTEXT("<span style='font-size: 8px'>Ещё один день на...</span>")
 	var/title_text = {"
 		<span style='font-weight: bolder; font-size: 24px'>
-			[station_name()]
+			[station_name_ru()]
 		</span>
 	"}
 

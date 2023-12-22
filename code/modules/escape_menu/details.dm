@@ -33,9 +33,9 @@ var/global/atom/movable/screen/escape_menu/details/escape_menu_details
 /atom/movable/screen/escape_menu/details/proc/update_text()
 	var/new_maptext = {"
 		<span style='text-align: right; line-height: 0.7'>
-			Round ID: [global.round_id || "Unset"]<br />
-			Round Time: [worldtime2text()]<br />
-			Map: [SSmapping.config?.map_name || "Loading..."]<br />
+			ID Раунда: [global.round_id || "Не установлено"]<br />
+			Время в раунде: [worldtime2text()]<br />
+			Карта: [SSmapping.config?.map_name || "Загрузка..."]<br />
 		</span>
 	"}
 

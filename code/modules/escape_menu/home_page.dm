@@ -4,7 +4,7 @@
 			null,
 			/* hud_owner = */ src,
 			src,
-			"Resume",
+			"Вернуться в игру",
 			/* offset = */ 0,
 			CALLBACK(src, PROC_REF(home_resume)),
 		)
@@ -15,7 +15,7 @@
 			null,
 			/* hud_owner = */ null,
 			src,
-			"Settings",
+			"Настройки",
 			/* offset = */ 1,
 			CALLBACK(src, PROC_REF(home_open_settings)),
 		)
@@ -26,7 +26,7 @@
 			null,
 			/* hud_owner = */ src,
 			src,
-			"Admin Help",
+			"Помощь Администратора",
 			/* offset = */ 2,
 		)
 	)
@@ -36,7 +36,7 @@
 			null,
 			/* hud_owner = */ src,
 			src,
-			"Leave Body",
+			"Покинуть тело",
 			/* offset = */ 3,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
