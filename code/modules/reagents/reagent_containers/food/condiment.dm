@@ -40,7 +40,6 @@
 	flags = OPENCONTAINER
 	possible_transfer_amounts = list(1,5,10)
 	volume = 50
-	var/emptystate = "condiment"
 
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user)
 	return
@@ -113,14 +112,13 @@
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
 	if(!reagents || (reagents && !reagents.reagent_list.len))
-		icon_state = "[emptystate]_empty"
-		item_state = "[emptystate]_empty"
+		icon_state = "[initial(icon_state)]_empty"
+		item_state = "[initial(icon_state)]_empty"
 		update_inv_mob()
 	else
-		icon_state = "[emptystate]"
-		item_state = "[emptystate]"
+		icon_state = initial(icon_state)
+		item_state = initial(icon_state)
 		update_inv_mob()
-		return 1
 
 	if(reagents.reagent_list.len == 1) // So here we change the desc if condiment contains multiple reagents
 		desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
@@ -278,7 +276,6 @@
 	desc = "A small bag filled with some flour."
 	icon_state = "flour"
 	item_state = "flour"
-	emptystate = "flour"
 	list_reagents = list("flour" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
@@ -286,7 +283,6 @@
 	desc = "Tastey space sugar!"
 	icon_state = "sugar"
 	item_state = "sugar"
-	emptystate = "sugar"
 	list_reagents = list("sugar" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/rice
@@ -294,7 +290,6 @@
 	desc = "Salt. From space oceans, presumably. Good for cooking!"
 	icon_state = "rice"
 	item_state = "rice"
-	emptystate = "rice"
 	list_reagents = list("rice" = 30)
 
 // SAUCES
@@ -303,35 +298,30 @@
 	name = "soy sauce"
 	desc = "A salty soy-based flavoring."
 	icon_state = "soysauce"
-	emptystate = "soysauce"
 	list_reagents = list("soysauce" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/hotsauce
 	name = "hot sauce"
 	desc = "You can almost TASTE the stomach ulcers now!"
 	icon_state = "hotsauce"
-	emptystate = "hotsauce"
 	list_reagents = list("capsaicin" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/ketchup
 	name = "ketchup"
 	desc = "You feel more American already."
 	icon_state = "ketchup"
-	emptystate = "ketchup"
 	list_reagents = list("ketchup" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/coldsauce
 	name = "cold sauce"
 	desc = "Leaves the tongue numb in its passage."
 	icon_state = "coldsauce"
-	emptystate = "coldsauce"
 	list_reagents = list("frostoil" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/cornoil
 	name = "corn oil"
 	desc = "A delicious oil used in cooking. Made from corn."
 	icon_state = "cornoil"
-	emptystate = "cornoil"
 	list_reagents = list("cornoil" = 40)
 
 // SUPPLEMENTS
@@ -341,14 +331,12 @@
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
 	item_state = "enzyme"
-	emptystate = "enzyme"
 	list_reagents = list("enzyme" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker
 	name = "salt shaker"
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
-	emptystate = "saltshakersmall"
 	possible_transfer_amounts = list(1,20) // for the clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
@@ -358,7 +346,6 @@
 	name = "pepper mill"
 	desc = "Often used to flavor food or make people sneeze."
 	icon_state = "peppermillsmall"
-	emptystate = "peppermillsmall"
 	possible_transfer_amounts = list(1,20) // for the clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
@@ -368,5 +355,4 @@
 	name = "honey pot"
 	desc = "Sweet and healthy!"
 	icon_state = "honey"
-	emptystate = "honey"
 	list_reagents = list("honey" = 40)
