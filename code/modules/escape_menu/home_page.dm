@@ -205,16 +205,6 @@
 	current_blink = TRUE
 	START_PROCESSING(SSescape_menu, src)
 	home_button_text.update_text()
-	addtimer(CALLBACK(src, PROC_REF(end_processing)), 15 SECONDS, TIMER_STOPPABLE)
-
-/atom/movable/screen/escape_menu/home_button/admin_help/proc/end_processing()
-	if (!is_blinking)
-		return
-
-	is_blinking = FALSE
-	current_blink = FALSE
-	STOP_PROCESSING(SSescape_menu, src)
-	home_button_text.update_text()
 
 /atom/movable/screen/escape_menu/home_button/admin_help/enabled()
 	if (!..())
