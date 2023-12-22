@@ -68,7 +68,7 @@
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_delta"))
 				if(!delta_timer_id)
 					delta_alarm()
-				SSsmartlight.update_mode(light_modes_by_name["Code Red"], TRUE)
+				SSsmartlight.update_mode(light_modes_by_name["Code Delta"], TRUE)
 		code_announce.play()
 	else
 		return
