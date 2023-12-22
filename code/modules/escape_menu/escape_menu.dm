@@ -1,4 +1,3 @@
-//GLOBAL_LIST_EMPTY(escape_menus)
 var/global/list/escape_menus = list()
 
 /// Opens the escape menu.
@@ -118,7 +117,7 @@ var/global/list/escape_menus = list()
 
 /atom/movable/screen/escape_menu
 	plane = ESCAPE_MENU_PLANE
-	//clear_with_screen = FALSE
+	icon = null
 
 // The escape menu can be opened before SSatoms
 INITIALIZE_IMMEDIATE(/atom/movable/screen/escape_menu)

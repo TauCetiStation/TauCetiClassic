@@ -154,15 +154,6 @@
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
 
-	if(href_list["preference"] && (!ready || (href_list["preference"] == "close")))
-		if(client)
-			client.prefs.process_link(src, href_list)
-		return
-
-	else
-		to_chat(src, "Locked! You are ready.")
-		return
-
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)

@@ -142,6 +142,10 @@ var/global/list/blacklisted_builds = list(
 		show_metahelp_message(href_list["metahelp"])
 		return
 
+	if(href_list["preference"])
+		prefs.process_link(mob, href_list)
+		return
+
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
 		if("usr")		hsrc = mob
@@ -152,6 +156,7 @@ var/global/list/blacklisted_builds = list(
 	switch(href_list["action"])
 		if ("openLink")
 			src << link(href_list["link"])
+
 
 	..()	//redirect to hsrc.Topic()
 

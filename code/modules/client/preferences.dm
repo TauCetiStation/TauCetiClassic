@@ -262,9 +262,6 @@ var/global/list/preferences_datums = list()
 			C.clear_character_previews()
 		return
 
-	if(!isnewplayer(user))
-		return
-
 	switch(href_list["preference"])
 		if("save")
 			save_preferences()
