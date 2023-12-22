@@ -92,7 +92,7 @@
 	if((user.status_flags & FAKEDEATH) && name!="Regenerate")
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return FALSE
-	if(role.geneticdamage > max_genetic_damage)
+	if(c.geneticdamage > max_genetic_damage)
 		to_chat(user, "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>")
 		return FALSE
 	return TRUE

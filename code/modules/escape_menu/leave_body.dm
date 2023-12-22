@@ -98,7 +98,7 @@
 
 	add_overlay(button_overlay)
 
-	maptext = MAPTEXT_VCR_OSD_MONO("<b style='font-size: 16px; text-align: center'>[button_text]</b>")
+	maptext = MAPTEXT_VCR_OSD_MONO("<b> <style='font-size: 16px; text-align: center'>[button_text]</b>")
 	screen_loc = "CENTER:[pixel_offset],CENTER-1"
 
 /atom/movable/screen/escape_menu/leave_body_button/Destroy()
