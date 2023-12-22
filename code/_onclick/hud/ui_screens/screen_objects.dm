@@ -21,9 +21,6 @@
 	var/hud_slot = HUD_SLOT_ADDING
 	var/copy_flags = ALL
 
-	/// If FALSE, this will not be cleared when calling /client/clear_screen()
-	//var/clear_with_screen = TRUE
-
 /atom/movable/screen/Destroy()
 	master = null
 	return ..()

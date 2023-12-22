@@ -185,7 +185,6 @@ What is the naming convention for planes or layers?
 ///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
 #define SPLASHSCREEN_PLANE 9999
 
-
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
 #define PLANE_MASTERS_NON_MASTER "plane_masters_non_master"

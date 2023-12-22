@@ -4,7 +4,6 @@
 	var/static/dead_clown
 	if (isnull(dead_clown))
 		if(SSticker)
-		//if (MC_RUNNING(SSatoms.init_stage)) // We're about to create a bunch of atoms for a human
 			dead_clown = create_dead_clown()
 		else
 			stack_trace("The leave body menu was opened before the atoms SS. This shouldn't be possible, as the leave body menu should only be accessible when you have a body.")

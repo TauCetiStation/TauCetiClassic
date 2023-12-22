@@ -157,7 +157,6 @@ var/global/list/blacklisted_builds = list(
 		if ("openLink")
 			src << link(href_list["link"])
 
-
 	..()	//redirect to hsrc.Topic()
 
 #undef ADMINSWARNED_AT

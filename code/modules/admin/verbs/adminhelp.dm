@@ -166,8 +166,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/obj/effect/statclick/ahelp/statclick
 	/// Static counter used for generating each ticket ID
 	var/static/ticket_counter = 0
-	/// Has the player replied to this ticket yet?
-	//var/player_replied = FALSE
 
 /**
  * Call this on its own to create a ticket, don't manually assign current_ticket

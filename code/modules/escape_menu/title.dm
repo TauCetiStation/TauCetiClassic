@@ -1,5 +1,4 @@
-// This doesn't instantiate right away, since we rely on other GLOBs
-//GLOBAL_DATUM(escape_menu_title, /atom/movable/screen/escape_menu/title)
+// This doesn't instantiate right away
 var/global/atom/movable/screen/escape_menu/title/escape_menu_title
 
 /// Provides a singleton for the escape menu details screen.

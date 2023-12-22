@@ -39,5 +39,4 @@ var/global/atom/movable/screen/escape_menu/details/escape_menu_details
 		</span>
 	"}
 
-	//		Time Dilation: [round(SStime_track.time_dilation_current,1)]%<br />
 	maptext = MAPTEXT(new_maptext)

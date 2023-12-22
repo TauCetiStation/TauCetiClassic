@@ -277,4 +277,3 @@
 	plane = ESCAPE_MENU_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	render_relay_plane = SPLASHSCREEN_PLANE
-	//allows_offsetting = FALSE
