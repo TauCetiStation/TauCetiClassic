@@ -209,7 +209,7 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 /datum/light_mode/code_delta
 	name = "Code Delta"
 
-	color = "#ee0e19"
+	color = "#ff0915"
 	power = 0.8
 	range = 6
 
