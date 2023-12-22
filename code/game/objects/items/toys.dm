@@ -625,7 +625,7 @@
 
 /obj/item/toy/dualsword/attack_self(mob/user)
 	..()
-=======
+
 /obj/item/toy/dualsword/attack_self(mob/user)
 	active = !active
 	if (active)
