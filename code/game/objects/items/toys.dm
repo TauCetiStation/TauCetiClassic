@@ -489,7 +489,7 @@
 			light_color = COLOR_GRAY
 
 	var/datum/swipe_component_builder/SCB = new
-	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+	SCB.interupt_on_sweep_hit_types = list()
 
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
