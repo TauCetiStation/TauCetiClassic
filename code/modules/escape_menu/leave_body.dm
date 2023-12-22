@@ -79,9 +79,10 @@
 	maptext_width = 96
 	maptext_y = -32
 
-	VAR_PRIVATE/datum/callback/on_click_callback
-	VAR_PRIVATE/hovered = FALSE
-	VAR_PRIVATE/tooltip_text
+	VAR_PRIVATE
+		datum/callback/on_click_callback
+		hovered = FALSE
+		tooltip_text
 
 /atom/movable/screen/escape_menu/leave_body_button/atom_init(
 	mapload,

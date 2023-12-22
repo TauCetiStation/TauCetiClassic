@@ -22,14 +22,12 @@ var/global/list/escape_menus = list()
 	/// The client that owns this escape menu
 	var/client/client
 
-	VAR_PRIVATE/ckey
-
-	VAR_PRIVATE/datum/screen_object_holder/base_holder
-	VAR_PRIVATE/datum/screen_object_holder/page_holder
-
-	VAR_PRIVATE/atom/movable/plane_master_controller/plane_master_controller
-
-	VAR_PRIVATE/menu_page = PAGE_HOME
+	VAR_PRIVATE
+		ckey
+		datum/screen_object_holder/base_holder
+		datum/screen_object_holder/page_holder
+		atom/movable/plane_master_controller/plane_master_controller
+		menu_page = PAGE_HOME
 
 /datum/escape_menu/New(client/client)
 	ASSERT(!(client.ckey in global.escape_menus))
@@ -128,9 +126,10 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/escape_menu)
 /// A helper instance that will handle adding objects from the client's screen
 /// to easily remove from later.
 /datum/screen_object_holder
-	VAR_PRIVATE/client/client
-	VAR_PRIVATE/list/screen_objects = list()
-	VAR_PRIVATE/list/protected_screen_objects = list()
+	VAR_PRIVATE
+		client/client
+		list/screen_objects = list()
+		list/protected_screen_objects = list()
 
 /datum/screen_object_holder/New(client/client)
 	ASSERT(istype(client))

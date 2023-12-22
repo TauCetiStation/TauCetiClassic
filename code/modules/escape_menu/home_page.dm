@@ -57,9 +57,10 @@
 /atom/movable/screen/escape_menu/home_button
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
-	VAR_PRIVATE/atom/movable/screen/escape_menu/home_button_text/home_button_text
-	VAR_PRIVATE/datum/escape_menu/escape_menu
-	VAR_PRIVATE/datum/callback/on_click_callback
+	VAR_PRIVATE
+		atom/movable/screen/escape_menu/home_button_text/home_button_text
+		datum/escape_menu/escape_menu
+		datum/callback/on_click_callback
 
 /atom/movable/screen/escape_menu/home_button/atom_init(
 	mapload,
@@ -115,8 +116,9 @@
 	maptext_height = 50
 	pixel_x = -80
 
-	VAR_PRIVATE/button_text
-	VAR_PRIVATE/hovered = FALSE
+	VAR_PRIVATE
+		button_text
+		hovered = FALSE
 
 /atom/movable/screen/escape_menu/home_button_text/atom_init(mapload, datum/hud/hud_owner, button_text)
 	. = ..()
