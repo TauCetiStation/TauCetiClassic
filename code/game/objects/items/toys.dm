@@ -625,6 +625,30 @@
 
 /obj/item/toy/dualsword/attack_self(mob/user)
 	..()
+=======
+/obj/item/toy/dualsword/attack_self(mob/user)
+	active = !active
+	if (active)
+		to_chat(user, "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>")
+		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
+		icon_state = "dualsaber[blade_color]1"
+		item_state = icon_state
+		w_class = SIZE_NORMAL
+		hitsound = list('sound/weapons/blade1.ogg')
+		set_light(2)
+	else
+		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
+		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
+		icon_state = "dualsaber0"
+		item_state = "dualsaber0"
+		w_class = SIZE_TINY
+		hitsound = initial(hitsound)
+		set_light(0)
+
+	update_inv_mob()
+
+	add_fingerprint(user)
+	return
 
 /*
  * Snap pops
