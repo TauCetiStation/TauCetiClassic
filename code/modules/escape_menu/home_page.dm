@@ -158,12 +158,9 @@
 	. = ..()
 
 	RegisterSignal(escape_menu.client, COMSIG_ADMIN_HELP_RECEIVED, PROC_REF(on_admin_help_received))
-	//RegisterSignal(escape_menu.client, list(COMSIG_CLIENT_VERB_ADDED, COMSIG_CLIENT_VERB_REMOVED), PROC_REF(on_client_verb_changed))
 
 	var/datum/admin_help/current_ticket = escape_menu.client?.current_ticket
 	if (!isnull(current_ticket))
-		connect_ticket(current_ticket)
-		//if (!current_ticket?.player_replied)
 		begin_processing()
 
 /atom/movable/screen/escape_menu/home_button/admin_help/Click(location, control, params)
@@ -174,9 +171,6 @@
 
 	var/client/client = escape_menu.client
 
-	/*if (has_open_adminhelp())
-		client?.view_latest_ticket()
-	else*/
 	client?.adminhelp()
 
 /atom/movable/screen/escape_menu/home_button/admin_help/proc/has_open_adminhelp()
@@ -188,12 +182,6 @@
 	// This is okay since the View Latest Ticket panel already tells you if your ticket is closed,  intentionally.
 	if (isnull(current_ticket))
 		return FALSE
-/*
-	// If we sent a ticket, but nobody has responded, send another one instead.
-	// Not worth opening a menu when there's nothing to read, you're only going to want to send.
-	if (length(current_ticket.admins_involved - client?.ckey) == 0)
-		return FALSE
-*/
 	return TRUE
 
 /atom/movable/screen/escape_menu/home_button/admin_help/proc/on_admin_help_received()
@@ -215,6 +203,7 @@
 	current_blink = TRUE
 	START_PROCESSING(SSescape_menu, src)
 	home_button_text.update_text()
+	addtimer(CALLBACK(src, PROC_REF(end_processing)), 15 SECONDS, TIMER_STOPPABLE)
 
 /atom/movable/screen/escape_menu/home_button/admin_help/proc/end_processing()
 	if (!is_blinking)
@@ -224,11 +213,6 @@
 	current_blink = FALSE
 	STOP_PROCESSING(SSescape_menu, src)
 	home_button_text.update_text()
-
-/atom/movable/screen/escape_menu/home_button/admin_help/proc/connect_ticket(datum/admin_help/admin_help)
-	ASSERT(istype(admin_help))
-
-	//RegisterSignal(admin_help, COMSIG_ADMIN_HELP_REPLIED, PROC_REF(on_admin_help_replied))
 
 /atom/movable/screen/escape_menu/home_button/admin_help/proc/on_admin_help_replied()
 	SIGNAL_HANDLER
