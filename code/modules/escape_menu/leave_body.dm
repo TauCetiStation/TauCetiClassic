@@ -12,7 +12,7 @@
 		new /atom/movable/screen/escape_menu/leave_body_button(
 		src,
 		"Суицид",
-		"Совершите драматическое самоубийство в игре",
+		"Совершить драматическое самоубийство",
 		/* pixel_offset = */ -105,
 		CALLBACK(src, PROC_REF(leave_suicide)),
 		/* button_overlay = */ dead_clown,
@@ -22,7 +22,7 @@
 		new /atom/movable/screen/escape_menu/leave_body_button(
 			src,
 			"Призрак",
-			"Выйдите тихо, оставив своё тело",
+			"Тихонько выйти, оставив своё тело",
 			/* pixel_offset = */ 0,
 			CALLBACK(src, PROC_REF(leave_ghost)),
 			/* button_overlay = */ "ghost",
@@ -103,7 +103,6 @@
 
 /atom/movable/screen/escape_menu/leave_body_button/Destroy()
 	on_click_callback = null
-
 	return ..()
 
 /atom/movable/screen/escape_menu/leave_body_button/Click(location, control, params)

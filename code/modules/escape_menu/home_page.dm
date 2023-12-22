@@ -112,7 +112,7 @@
 
 // Needs to be separated so it doesn't scale
 /atom/movable/screen/escape_menu/home_button_text
-	maptext_width = 200
+	maptext_width = 300
 	maptext_height = 50
 	pixel_x = -80
 
@@ -233,7 +233,7 @@
 	. = ..()
 
 	if (is_blinking)
-		openToolTip(usr, src, params, content = "An admin is trying to talk to you!")
+		openToolTip(usr, src, params, content = "Администрация хочет поговорить с Вами!")
 
 /atom/movable/screen/escape_menu/home_button/admin_help/MouseExited(location, control, params)
 	. = ..()
