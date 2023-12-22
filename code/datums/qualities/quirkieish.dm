@@ -436,3 +436,4 @@
 	if(H.client)
 		H.client.dir = pick(2, 4, 8)
 		ADD_TRAIT(H, TRAIT_RANDOM_CLIENT_DIR, QUALITY_TRAIT)
+		to_chat(H, "<span class='notice'>Если головокружение станет совсем невыносимым, мне стоит заглянуть к психиатру...</span>")

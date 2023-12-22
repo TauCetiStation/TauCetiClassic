@@ -19,6 +19,10 @@
 		if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
 			data = world.time
 			to_chat(M, "<span class='notice'>Your mind feels focused and undivided.</span>")
+			if(prob(50) && HAS_TRAIT(M, TRAIT_RANDOM_CLIENT_DIR))
+				M.client.dir = initial(M.client.dir)
+				REMOVE_TRAIT(M, TRAIT_RANDOM_CLIENT_DIR, QUALITY_TRAIT)
+				to_chat(M, "<span class='notice'>Головокружение, кажется, проходит...</span>")
 
 /datum/chemical_reaction/methylphenidate
 	name = "Methylphenidate"
