@@ -2,6 +2,7 @@
 	name = "Resonant Shriek"
 	desc = "Our lungs and vocal chords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
 	helptext = "Emits a high-frequency sound that confuses and deafens humans, blows out nearby lights and overloads cyborg sensors."
+	button_icon_state = "resonant_shriek"
 	chemical_cost = 25
 	genomecost = 3
 	req_human = 1
@@ -15,7 +16,7 @@
 				M.ear_deaf += 30
 				M.AdjustConfused(20)
 				M.make_jittery(500)
-				
+
 		if(issilicon(M))
 			M.playsound_local(null, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			M.Stun(rand(5,10))

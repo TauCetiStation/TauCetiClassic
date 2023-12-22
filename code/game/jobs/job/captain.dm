@@ -24,7 +24,7 @@
 
 /datum/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
-		to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
+		to_chat(world, "<b>[H.real_name] новый капитан!</b>")//maybe should be announcment, not OOC notification?
 		SSStatistics.score.captain += H.real_name
 
 /datum/job/captain/get_access()
@@ -60,7 +60,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+	restricted_species = list(UNATHI, TAJARAN, DIONA, VOX)
 	skillsets = list("Head of Personnel" = /datum/skillset/hop)
 	flags = JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC
 
