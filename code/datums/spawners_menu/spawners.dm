@@ -720,3 +720,31 @@
 	H.key = C.key
 
 	create_and_setup_role(/datum/role/operative/lone, H, TRUE, TRUE)
+
+/*
+ * Midround wizard
+*/
+/datum/spawner/wizard_event
+	name = "Маг"
+	desc = "Вы просыпаетесь в Логове Волшебника, с неотложным заданием от Федерации магов."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	spawn_landmark_name = "Wizard"
+
+/datum/spawner/wizard_event/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick(wizardstart)
+
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = "Wizard The Unbenannt"
+	C.create_human_apperance(H, new_name)
+
+	H.loc = spawnloc
+	H.key = C.key
+
+	create_and_setup_role(/datum/role/wizard, H, TRUE, TRUE)
