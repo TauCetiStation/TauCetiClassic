@@ -45,7 +45,6 @@
 	if(!move_inside_checks(usr, usr))
 		return
 	close_machine(usr, usr)
-	SStgui.update_uis(src)
 
 /obj/machinery/bodyscanner/proc/move_inside_checks(mob/target, mob/user)
 	if(occupant)
@@ -285,12 +284,15 @@
 
 	return TRUE
 
-/obj/machinery/body_scanconsole/proc/print_scan(additional_info)
+/obj/machinery/body_scanconsole/proc/print_scan()
 	if(!do_skill_checks(usr))
 		return
 
+	if(!connected || !connected.occupant)
+		return
+
 	if(next_print > world.time) //10 sec cooldown
-		to_chat(usr, "<span class='notice'>The console can't print that fast!</span>")
+		to_chat(usr, "<span class='notice'>Консоль не может печатать так быстро!</span>")
 		return
 
 	next_print = world.time + 10 SECONDS
@@ -298,16 +300,154 @@
 
 	var/obj/item/weapon/paper/P = new(loc)
 	var/mob/living/carbon/human/occupant = connected.occupant
-	var/t1 = "<B>[occupant ? occupant.name : "Unknown"]'s</B> расширенный отчет сканера.<BR>"
-	t1 += "Станционное время: <B>[worldtime2text()]</B><BR>"
-	switch(occupant.stat) // obvious, see what their status is
-		if(CONSCIOUS)
-			t1 += "Status: <B>В сознании</B>"
-		if(UNCONSCIOUS)
-			t1 += "Status: <B>Без сознания</B>"
-		else
-			t1 += "Status: <B><span class='warning'>*Мёртв*</span></B>"
-	t1 += additional_info
-	P.info = t1
+	P.info = get_scan_info()
 	P.name = "Результаты сканирования [occupant.name]"
 	P.update_icon()
+
+/obj/machinery/body_scanconsole/proc/get_scan_info()
+	var/dat
+	var/mob/living/carbon/human/occupant = connected.occupant
+
+	dat = "<B>Информация о пациенте:</B><BR>" //Blah obvious
+	dat += "Станционное время: <B>[worldtime2text()]</B><BR>"
+
+	var/t1
+	switch(occupant.stat) // obvious, see what their status is
+		if(0)
+			t1 = "В сознании"
+		if(1)
+			t1 = "Без сознания"
+		else
+			t1 = "<B>Мёртв</B>"
+	dat += "<BR>"
+
+	if(ischangeling(occupant) && occupant.fake_death)
+		dat += ">Обнаружена аномальная биохимическая активность!<BR>"
+
+	if(occupant.virus2.len)
+		dat += "В кровотоке обнаружен вирусный патоген.<BR>"
+
+	dat += "\tЗдоровье %: [occupant.health] ([t1])</font><BR>"
+	dat += "\t-Механические %: [occupant.getBruteLoss()]<BR>"
+	dat += "\t-Асфиксия %: [occupant.getOxyLoss()]<BR>"
+	dat += "\t-Интоксикация %: [occupant.getToxLoss()]<BR>"
+	dat += "\t-Термические %: [occupant.getFireLoss()]<BR><BR>"
+
+	dat += "\tУровень облучения %: [occupant.radiation]<BR>"
+	dat += "\tГенетическое повреждение тканей %: [occupant.getCloneLoss()]<BR>"
+	dat += "\tПовреждение мозга %: [occupant.getBrainLoss()]<BR>"
+
+	var/occupant_paralysis = occupant.AmountParalyzed()
+	dat += "Парализован на %: [occupant_paralysis] (осталось [round(occupant_paralysis / 4) [pluralize_russian(round(occupant_paralysis / 4), "секунда", "секунды", "секунд")]])<BR>"
+
+	dat += "Температура тела: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>"
+
+	if(occupant.has_brain_worms())
+		dat += "В лобной доле обнаружено новообразование, возможно злокачественное. Рекомендуется хирургическое вмешательство.<BR/>"
+
+	var/blood_volume = occupant.blood_amount()
+	var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
+	dat += "\tУровень крови %: [blood_percent] ([blood_volume] [pluralize_russian(blood_volume, "юнит", "юнита", "юнитов")]])<BR>"
+
+	if(occupant.reagents)
+		dat += "\tИнапровалин: [occupant.reagents.get_reagent_amount("inaprovaline")] [pluralize_russian(occupant.reagents.get_reagent_amount("inaprovaline"), "юнит", "юнита", "юнитов")]<BR>"
+		dat += "\tСнотворное: [occupant.reagents.get_reagent_amount("stoxin")] [pluralize_russian(occupant.reagents.get_reagent_amount("stoxin"), "юнит", "юнита", "юнитов")]<BR>"
+		dat += "\tДермалин: [occupant.reagents.get_reagent_amount("dermaline")] [pluralize_russian(occupant.reagents.get_reagent_amount("dermaline"), "юнит", "юнита", "юнитов")]<BR>"
+		dat += "\tБикаридин: [occupant.reagents.get_reagent_amount("bicaridine")] [pluralize_russian(occupant.reagents.get_reagent_amount("bicaridine"), "юнит", "юнита", "юнитов")]<BR>"
+		dat += "\tДексалин: [occupant.reagents.get_reagent_amount("dexalin")] [pluralize_russian(occupant.reagents.get_reagent_amount("dexalin"), "юнит", "юнита", "юнитов")]<BR>"
+
+	dat += "<HR><table border='1'>"
+	dat += "<tr>"
+	dat += "<th>Часть тела<</th>"
+	dat += "<th>Термические</th>"
+	dat += "<th>Механические</th>"
+	dat += "<th>Другое</th>"
+	dat += "</tr>"
+	for(var/obj/item/organ/external/BP in occupant.bodyparts)
+		dat += "<tr>"
+		var/AN = ""
+		var/open = ""
+		var/infected = ""
+		var/imp = ""
+		var/bled = ""
+		var/robot = ""
+		var/splint = ""
+		var/arterial_bleeding = ""
+		var/rejecting = ""
+		if(BP.status & ORGAN_ARTERY_CUT)
+			arterial_bleeding = "<br><b>Arterial bleeding</b></br>"
+		if(BP.status & ORGAN_SPLINTED)
+			splint = "Наложена шина:"
+		if(BP.status & ORGAN_BLEEDING)
+			bled = "Кровотечение:"
+		if(BP.status & ORGAN_BROKEN)
+			AN = "[BP.broken_description]:"
+		if(BP.is_robotic())
+			robot = "Протез:"
+		if(BP.open)
+			open = "Вскрытое:"
+		if(BP.is_rejecting)
+			rejecting = "Генетическое отторжение:"
+		if(BP.germ_level)
+			infected = "[get_germ_level_name(BP.germ_level)]:"
+
+		var/unknown_body = 0
+		for(var/I in BP.implants)
+			if(is_type_in_list(I,known_implants))
+				imp += "[I] имплантирован:"
+			else
+				unknown_body++
+		if(unknown_body || BP.hidden)
+			imp += "Обнаружен инородный предмет:"
+
+		if(!AN && !open && !infected && !imp)
+			AN = "Не обнаружено:"
+
+		if(!(BP.is_stump))
+			dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+		else
+			dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Конечность отсутствует</td>"
+		dat += "</tr>"
+
+	for(var/missing_zone in occupant.get_missing_bodyparts())
+		dat += "<tr>"
+		dat += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Конечность отсутствует</td>"
+		dat += "</tr>"
+
+	for(var/obj/item/organ/internal/IO in occupant.organs)
+		var/mech = "Органическое:"
+		var/organ_status = ""
+		var/infection = ""
+		if(IO.robotic == 1)
+			mech = "Со вспомогательными средствами:" // sounds weird
+		if(IO.robotic == 2)
+			mech = "Механическое:"
+
+		if(istype(IO, /obj/item/organ/internal/heart))
+			var/obj/item/organ/internal/heart/Heart = IO
+			if(Heart.heart_status == HEART_FAILURE)
+				organ_status = "Остановка сердца:"
+			else if(Heart.heart_status == HEART_FIBR)
+				organ_status = "Фибрилляция сердца:"
+
+		if(istype(IO, /obj/item/organ/internal/lungs))
+			if(occupant.is_lung_ruptured())
+				organ_status = "Разрыв легкого:"
+
+		if(IO.germ_level)
+			infection = "[get_germ_level_name(IO.germ_level)]:"
+		if(!organ_status && !infection)
+			infection = "Не обнаружено:"
+
+		dat += "<tr>"
+		dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+		dat += "</tr>"
+
+	dat += "</table>"
+
+	if(occupant.sdisabilities & BLIND)
+		dat += "Обнаружена катаракта.<BR>"
+	if(HAS_TRAIT(occupant, TRAIT_NEARSIGHT))
+		dat += "Обнаружено смещение сетчатки.<BR>"
+
+	return dat
