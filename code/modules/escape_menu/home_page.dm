@@ -26,7 +26,7 @@
 			null,
 			/* hud_owner = */ src,
 			src,
-			"Помощь Администратора",
+			"Помощь",
 			/* offset = */ 2,
 		)
 	)
@@ -84,7 +84,7 @@
 	vis_contents += home_button_text
 
 	screen_loc = "NORTH:-[100 + (32 * offset)],WEST:110"
-	transform = transform.Scale(6, 1)
+	transform = transform.Scale(10, 1)
 
 /atom/movable/screen/escape_menu/home_button/Destroy()
 	escape_menu = null
@@ -112,7 +112,7 @@
 
 // Needs to be separated so it doesn't scale
 /atom/movable/screen/escape_menu/home_button_text
-	maptext_width = 300
+	maptext_width = 600
 	maptext_height = 50
 	pixel_x = -80
 

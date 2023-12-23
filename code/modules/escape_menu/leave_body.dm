@@ -12,7 +12,7 @@
 		new /atom/movable/screen/escape_menu/leave_body_button(
 		src,
 		"Суицид",
-		"Совершить драматическое самоубийство",
+		"Драматично окончить свою жизнь самоубийством",
 		/* pixel_offset = */ -105,
 		CALLBACK(src, PROC_REF(leave_suicide)),
 		/* button_overlay = */ dead_clown,
@@ -32,8 +32,8 @@
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/leave_body_button(
 			src,
-			"Назад",
-			/* tooltip_text = */ null,
+			"Вернуться",
+			/* tooltip_text = */ "Вернуться в меню",
 			/* pixel_offset = */ 105,
 			CALLBACK(src, PROC_REF(open_home_page)),
 			/* button_overlay = */ "back",
@@ -98,7 +98,7 @@
 
 	add_overlay(button_overlay)
 
-	maptext = MAPTEXT_VCR_OSD_MONO("<b> <style='font-size: 16px; text-align: center'>[button_text]</b>")
+	maptext = MAPTEXT_VCR_OSD_MONO("<span b style='font-size: 16px; text-align: center'>[button_text]</span>")
 	screen_loc = "CENTER:[pixel_offset],CENTER-1"
 
 /atom/movable/screen/escape_menu/leave_body_button/Destroy()
