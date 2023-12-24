@@ -158,7 +158,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes + autolathe_recipes_hidden
 
 /obj/machinery/autolathe
-	name = "autholat"
+	name = "autolathe"
 	desc = "Производит вещи из стекла и металла."
 	icon_state = "autolathe"
 	density = TRUE
