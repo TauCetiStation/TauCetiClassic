@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher
 	name = "Goliath missile launcher"
 	desc = "Голиаф - это однозарядная, многоцелевая переносная пусковая установка для ракет, стреляющая с плеча."
-    cases = list("Пусковая установка Goliath","Пусковой установки Goliath","Пусковой установке Goliath","Пусковую установку Goliath","Пусковой установкой Goliath","Пусковой установке Goliath")
+      cases = list("Пусковая установка Goliath","Пусковой установки Goliath","Пусковой установке Goliath","Пусковую установку Goliath","Пусковой установкой Goliath","Пусковой установке Goliath")
 	icon_state = "rocket"
 	item_state = "rocket"
 	w_class = SIZE_NORMAL
