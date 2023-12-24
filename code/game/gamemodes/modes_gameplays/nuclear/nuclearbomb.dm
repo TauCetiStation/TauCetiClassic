@@ -271,14 +271,13 @@ var/global/bomb_set
 	if(timing)
 		timing = FALSE
 		set_security_level("red")
-		cooldown = 60
 	else
 		var/area/nuclearbombloc = get_area(loc)
 		announce_nuke.play(nuclearbombloc)
 		set_security_level("delta")
 		notify_ghosts("[src] has been activated!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
 		timing = TRUE
-		cooldown = 60
+	cooldown = 60
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/deploy(mob/user)
