@@ -158,8 +158,8 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes + autolathe_recipes_hidden
 
 /obj/machinery/autolathe
-	name = "autolathe"
-	desc = "It produces items using metal and glass."
+	name = "Автолат"
+	desc = "Производит вещи из стекла и металла."
 	icon_state = "autolathe"
 	density = TRUE
 	anchored = TRUE
@@ -284,7 +284,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	if(shocked && !issilicon(user) && !isobserver(user))
 		shock(user,50)
 	if(disabled)
-		to_chat(user, "<span class='warning'>You press the button, but nothing happens.</span>")
+		to_chat(user, "<span class='warning'>Вы нажимаете на кнопку, но ничего не происходит.</span>")
 		return
 	..()
 
@@ -292,7 +292,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	if(istype(I, /obj/item/weapon/pai_cable))
 		return
 	if(busy)
-		to_chat(user, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
+		to_chat(user, "<span class='warning'>Автолат занят производством. Пожалуйста, пождитесь онончания предыдущей операции.</span>")
 		return 1
 
 	if(default_deconstruction_screwdriver(user, "autolathe", "autolathe", I))
@@ -339,10 +339,10 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	g_amt *= amount
 
 	if((stored_material[MAT_METAL] + m_amt > storage_capacity[MAT_METAL]) || (stored_material[MAT_GLASS] + g_amt > storage_capacity[MAT_GLASS]))
-		to_chat(user, "<span class='warning'>The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>")
+		to_chat(user, "<span class='warning'>Автолат заполнен. Пожалуйста, извлеките металл из автолата, чтобы вы могли поместить больше материалов.</span>")
 		return 1
 	if(m_amt == 0 && g_amt == 0)
-		to_chat(user, "<span class='warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>")
+		to_chat(user, "<span class='warning'>Данный объект не содержит достаточного количества металла или стекла, или же он неподходящего размера, или содержит опасные материалы.</span>")
 		return 1
 
 	take_item(I, amount)
@@ -395,7 +395,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		if(TempUsr.hackobj != src)
 			return
 	if(busy)
-		to_chat(usr, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
+		to_chat(usr, "<span class='warning'>Автолат занят производством. Пожалуйста, пождитесь онончания предыдущей операции.</span>")
 		return FALSE
 
 	if(action == "make")
