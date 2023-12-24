@@ -1,6 +1,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher
 	name = "Goliath missile launcher"
-	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
+	desc = "Голиаф - это однозарядная, многоцелевая переносная пусковая установка для ракет, стреляющая с плеча."
+    cases = list("Пусковая установка для ракет Goliath", "Пусковой установки для ракет Goliath", "Пусковой установке для ракет Goliath", "Пусковую установку для ракет Goliath", "Пусковой установкой для ракет Goliath", "пусковой установке для ракет Goliath")
 	icon_state = "rocket"
 	item_state = "rocket"
 	w_class = SIZE_NORMAL
@@ -33,7 +34,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo
 	name = "XASL Mk.2 singularity buster"
-	desc = "Experimental Anti-Singularity Launcher. In case of extreme emergency you should point it at super-massive blackhole expanding towards you."
+	desc = "Эксперементальная Анти-Сингулярная пусковая установка. В случае чрезвычайной ситуации вам следует направить ее на сверхмассивную чёрную дыру, приближающуюся к вам."
 	icon_state = "anti-singulo"
 	item_state = "anti-singulo"
 	slot_flags = SLOT_FLAGS_BACK
@@ -43,7 +44,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando
 	name = "\'Commando\' rocket launcher"
-	desc = "Four-tube grenade launcher. When you don't really care about the integrity of the station."
+	desc = "Четырёхзарядная ракетная установка. Когда тебя вообще не волнует целостность станции."
 	icon_state = "commando"
 	item_state = "commando"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket/four
