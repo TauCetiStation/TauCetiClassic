@@ -46,6 +46,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando
 	name = "\'Commando\' rocket launcher"
 	desc = "Четырёхзарядная ракетная установка. Когда тебя вообще не волнует целостность станции."
+    cases = list("Ракетная установка \'Commando\'","Ракетной установки \'Commando\'","Ракетной установке \'Commando\'","Ракетную установку \'Commando\'","Ракетной установкой \'Commando\'","Ракетной установке \'Commando\'")
 	icon_state = "commando"
 	item_state = "commando"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket/four
