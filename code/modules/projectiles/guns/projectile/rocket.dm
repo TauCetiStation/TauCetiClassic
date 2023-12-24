@@ -30,7 +30,7 @@
 	if (num_unloaded)
 		to_chat(user, "<span class = 'notice'>Вы выгружаете [num_unloaded] снаряд (-а) из [CASE(src, ACCUSATIVE_CASE)].</span>")
 	else
-		to_chat(user, "<span class='notice'>[src] пуста.</span>")
+		to_chat(user, "<span class='notice'>[CASE(src, NOMINATIVE_CASE)] пуста.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo
 	name = "XASL Mk.2 singularity buster"
