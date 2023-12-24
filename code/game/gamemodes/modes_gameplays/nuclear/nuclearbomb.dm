@@ -266,7 +266,7 @@ var/global/bomb_set
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/bomb_set(mob/user)
-	if(!authorized || safety || cooldown != 0)
+	if(!authorized || safety || cooldown)
 		return
 	if(timing)
 		timing = FALSE
