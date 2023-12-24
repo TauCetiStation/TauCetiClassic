@@ -24,7 +24,7 @@
 #define CATEGORY_GENERAL     "Общее"
 #define CATEGORY_TOOLS       "Инструменты"
 #define CATEGORY_MEDICAL     "Медицина"
-#define CATEGORY_ENGINEERING "Инженирия"
+#define CATEGORY_ENGINEERING "Инженерия"
 #define CATEGORY_AMMO        "Аммуниция"
 #define CATEGORY_DEVICES     "Устройства"
 #define CATEGORY_MATERIALS   "Материалы"
