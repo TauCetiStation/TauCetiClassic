@@ -21,13 +21,13 @@
 /datum/autolathe_recipe/stack
 	max_res_amount = 50
 
-#define CATEGORY_GENERAL     "General"
-#define CATEGORY_TOOLS       "Tools"
-#define CATEGORY_MEDICAL     "Medical"
-#define CATEGORY_ENGINEERING "Engineering"
-#define CATEGORY_AMMO        "Ammo"
-#define CATEGORY_DEVICES     "Devices"
-#define CATEGORY_MATERIALS   "Materials"
+#define CATEGORY_GENERAL     "Общее"
+#define CATEGORY_TOOLS       "Инструменты"
+#define CATEGORY_MEDICAL     "Медицина"
+#define CATEGORY_ENGINEERING "Инженирия"
+#define CATEGORY_AMMO        "Аммуниция"
+#define CATEGORY_DEVICES     "Устройства"
+#define CATEGORY_MATERIALS   "Материалы"
 
 /proc/path_to_ar(obj/path, category_name = CATEGORY_GENERAL)
 	var/obj/P = path
