@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher
 	name = "Goliath missile launcher"
 	desc = "Голиаф - это однозарядная, многоцелевая переносная пусковая установка для ракет, стреляющая с плеча."
-    cases = list("Пусковая установка Goliath", "Пусковой установки Goliath", "Пусковой установке Goliath", "Пусковую установку Goliath", "Пусковой установкой Goliath", "пусковой установке Goliath")
+    cases = list("Пусковая установка Goliath","Пусковой установки Goliath","Пусковой установке Goliath","Пусковую установку Goliath","Пусковой установкой Goliath","Пусковой установке Goliath")
 	icon_state = "rocket"
 	item_state = "rocket"
 	w_class = SIZE_NORMAL
@@ -28,7 +28,7 @@
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
-		to_chat(user, "<span class = 'notice'>Вы выгружаете [num_unloaded] снаряд (-а) из [CASE(src, ACCUSATIVE_CASE)].</span>")
+		to_chat(user, "<span class = 'notice'>Вы разряжаете [num_unloaded] снаряд (-а) из [CASE(src, ACCUSATIVE_CASE)].</span>")
 	else
 		to_chat(user, "<span class='notice'>[CASE(src, NOMINATIVE_CASE)] пуста.</span>")
 
