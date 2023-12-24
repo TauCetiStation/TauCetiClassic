@@ -21,13 +21,13 @@
 /datum/autolathe_recipe/stack
 	max_res_amount = 50
 
-#define CATEGORY_GENERAL     "Общее"
-#define CATEGORY_TOOLS       "Инструменты"
-#define CATEGORY_MEDICAL     "Медицина"
-#define CATEGORY_ENGINEERING "Инженерия"
-#define CATEGORY_AMMO        "Аммуниция"
-#define CATEGORY_DEVICES     "Устройства"
-#define CATEGORY_MATERIALS   "Материалы"
+#define CATEGORY_GENERAL     "General"
+#define CATEGORY_TOOLS       "Tools"
+#define CATEGORY_MEDICAL     "Medical"
+#define CATEGORY_ENGINEERING "Engineering"
+#define CATEGORY_AMMO        "Ammo"
+#define CATEGORY_DEVICES     "Devices"
+#define CATEGORY_MATERIALS   "Materials"
 
 /proc/path_to_ar(obj/path, category_name = CATEGORY_GENERAL)
 	var/obj/P = path
@@ -158,7 +158,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes + autolathe_recipes_hidden
 
 /obj/machinery/autolathe
-	name = "Автолат"
+	name = "autholat"
 	desc = "Производит вещи из стекла и металла."
 	icon_state = "autolathe"
 	density = TRUE
@@ -292,7 +292,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	if(istype(I, /obj/item/weapon/pai_cable))
 		return
 	if(busy)
-		to_chat(user, "<span class='warning'>Автолат занят производством. Пожалуйста, пождитесь онончания предыдущей операции.</span>")
+		to_chat(user, "<span class='warning'>Автолат занят производством. Пожалуйста, дождитесь онончания предыдущей операции.</span>")
 		return 1
 
 	if(default_deconstruction_screwdriver(user, "autolathe", "autolathe", I))
