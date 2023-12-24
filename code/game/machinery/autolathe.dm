@@ -160,6 +160,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 /obj/machinery/autolathe
 	name = "autolathe"
 	desc = "Производит вещи из стекла и металла."
+    cases = list("автолат", "автолата", "автолату", "автолатом", "автолате")
 	icon_state = "autolathe"
 	density = TRUE
 	anchored = TRUE
@@ -339,10 +340,10 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	g_amt *= amount
 
 	if((stored_material[MAT_METAL] + m_amt > storage_capacity[MAT_METAL]) || (stored_material[MAT_GLASS] + g_amt > storage_capacity[MAT_GLASS]))
-		to_chat(user, "<span class='warning'>Автолат заполнен. Пожалуйста, извлеките металл из автолата, чтобы вы могли поместить больше материалов.</span>")
+		to_chat(user, "<span class='warning'>Автолат заполнен. Пожалуйста, извлеките материал из автолата.</span>")
 		return 1
 	if(m_amt == 0 && g_amt == 0)
-		to_chat(user, "<span class='warning'>Данный объект не содержит достаточного количества металла или стекла, или же он неподходящего размера, или содержит опасные материалы.</span>")
+		to_chat(user, "<span class='warning'>Данный объект состоит из недостаточного количества материала, либо он неподходящего размера или содержит опасные для оборудования комплектующие.</span>")
 		return 1
 
 	take_item(I, amount)
