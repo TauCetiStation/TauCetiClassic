@@ -337,6 +337,7 @@
 		icon_state = module_sprites[new_icon_state]
 
 	radio.config(module.channels)
+	radio.recalculateChannels()
 
 /mob/living/silicon/robot/proc/build_combat_borg()
 	var/mob/living/silicon/robot/combat/C = new(get_turf(src))
@@ -783,8 +784,6 @@
 			to_chat(usr, "The borg must choose a module before he can be upgraded!")
 		else if(U.locked)
 			to_chat(usr, "The upgrade is locked and cannot be used yet!")
-		else if(cell)
-			to_chat(usr, "Remove the power cell first.")
 		else
 			if(U.action(src))
 				to_chat(usr, "You apply the upgrade to [src]!")
@@ -1198,3 +1197,15 @@
 /mob/living/silicon/robot/crawl()
 	toggle_all_components()
 	to_chat(src, "<span class='notice'>You toggle all your components.</span>")
+
+/mob/living/silicon/robot/pickup_ore()
+	var/turf/simulated/floor/F = get_turf(src)
+	var/obj/item/weapon/storage/bag/ore/B
+	if(istype(module, /obj/item/weapon/robot_module/miner))
+		for(var/bag in module.modules)
+			if(istype(bag, /obj/item/weapon/storage/bag/ore))
+				B = bag
+				if(B.max_storage_space == B.storage_space_used())
+					return
+				F.attackby(B, src)
+				break

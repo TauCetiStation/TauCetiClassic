@@ -28,7 +28,7 @@
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
-
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 /datum/job/warden
 	title = "Warden"
@@ -53,7 +53,11 @@
 		~Luduk
 	*/
 	restricted_species = list(TAJARAN, DIONA, VOX, IPC)
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
 
+/datum/job/warden/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		to_chat(H, "<span class='notice'>Вместо обычной охраны на эту станцию решили прислать профессиональных оперативников. Вы являетесь одним из них. В отличии от стандартного офицера охраны, вы обладаете продвинутым снаряжением, отличной подготовкой, имплантом лояльности и встроенным устройством для уничтожения тела после смерти.</span>")
 
 /datum/job/detective
 	title = "Detective"
@@ -77,8 +81,8 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(DIONA)
-
+	restricted_species = list(DIONA, IPC)
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 /datum/job/officer
 	title = "Security Officer"
@@ -103,7 +107,12 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
 
+/datum/job/officer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		to_chat(H, "<span class='notice'>Вместо обычной охраны на эту станцию решили прислать профессиональных оперативников. Вы являетесь одним из них. В отличии от стандартного офицера охраны, вы обладаете продвинутым снаряжением, отличной подготовкой, имплантом лояльности и встроенным устройством для уничтожения тела после смерти.</span>")
+		LAZYADD(skillsets, /datum/skillset/warden)
 
 /datum/job/forensic
 	title = "Forensic Technician"
@@ -127,8 +136,8 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
-
+	restricted_species = list(UNATHI, DIONA)
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 /datum/job/cadet
 	title = "Security Cadet"
@@ -153,4 +162,4 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
-
+	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE

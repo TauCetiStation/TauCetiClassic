@@ -35,6 +35,12 @@
 	var/clawfootstep
 	var/heavyfootstep
 
+	//Depth for water turf and liqud`s
+	var/static_fluid_depth = null
+
+	var/list/turf_decals
+
+
 /**
   * Turf Initialize
   *
@@ -91,50 +97,114 @@
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+/proc/get_exit_bump_target(turf/T, atom/movable/mover as mob|obj)
+	// Obstacle to use if no preferred target is found
+	var/atom/rollback_obstacle = null
+	var/turf/mover_loc = mover.loc
+	// First, check objects to block exit (not on border priority)
+	for(var/obj/obstacle as anything in mover_loc)
+		if(mover != obstacle)
+			if(!obstacle.CheckExit(mover, T))
+				if(obstacle.flags & ON_BORDER)
+					if(isnull(rollback_obstacle))
+						rollback_obstacle = obstacle
+				else
+					return obstacle
+
+	return rollback_obstacle // obstacle on border or null
+
+/proc/get_projectile_bump_target(turf/T, obj/item/projectile/mover)
+	// Obstacle to use if no preferred target is found
+	var/atom/rollback_obstacle
+	
+	// First check objects to block exit
+	rollback_obstacle = get_exit_bump_target(T, mover)
+
+	if(rollback_obstacle)
+		return rollback_obstacle
+
+	var/mob/living/alive_obstacle
+	var/turf/mover_loc = mover.loc
+	var/atom/priority_target = mover.original
+
+	// Then check priority target if it on the tile
+	if(!isturf(priority_target) && priority_target.loc == T)
+		if(isliving(priority_target))
+			if(!mover.check_miss(priority_target))
+				alive_obstacle = priority_target
+		else
+			rollback_obstacle = priority_target
+
+	// Then check objects to block entry (on border priority)
+	for(var/atom/movable/obstacle as anything in T)
+		if(!obstacle.CanPass(mover, mover_loc, 1))
+			if(!(obstacle in mover.permutated) && (obstacle != mover.firer))
+				if(obstacle.flags & ON_BORDER)
+					return obstacle
+				if(isnull(alive_obstacle))
+					if(isliving(obstacle) && obstacle != priority_target) // living and we haven't missed it before
+						var/mob/living/L = obstacle
+						if(L.stat != DEAD)
+							if(!mover.check_miss(L))
+								alive_obstacle = obstacle
+							continue
+					if(isnull(rollback_obstacle))
+						rollback_obstacle = obstacle
+
+	// Then living on turf
+	if(alive_obstacle)
+		return alive_obstacle
+
+	// Then check the turf itself
+	if (!T.CanPass(mover, T))
+		return T
+
+	// Not living and not on border obstacle, or null
+	return rollback_obstacle
+
+/proc/get_bump_target(turf/T, atom/movable/mover as mob|obj)
+	// Obstacle to use if no preferred target is found
+	var/atom/rollback_obstacle
+	
+	// First check objects to block exit
+	rollback_obstacle = get_exit_bump_target(T, mover)
+
+	if(rollback_obstacle)
+		return rollback_obstacle
+
+	var/turf/mover_loc = mover.loc
+	// Then check objects to block entry (on border priority)
+	for(var/atom/movable/obstacle as anything in T)
+		if(!obstacle.CanPass(mover, mover_loc, 1))
+			if(obstacle.flags & ON_BORDER)
+				return obstacle
+			else if(isnull(rollback_obstacle))
+				rollback_obstacle = obstacle
+
+	// Then check the turf itself
+	if (!T.CanPass(mover, T))
+		return T
+
+	// Obstacle not on border or null
+	return rollback_obstacle
+
+/turf/Enter(atom/movable/mover as mob|obj, atom/old_loc as mob|obj|turf)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
 		return FALSE
 
-	var/list/second_check = list()
-	var/turf/mover_loc = mover.loc
-	//First, check objects to block exit that are not on the border
-	for(var/obj/obstacle in mover_loc)
-		if(mover != obstacle && forget != obstacle)
-			if(obstacle.flags & ON_BORDER)
-				second_check += obstacle
-			else if(!obstacle.CheckExit(mover, src))
-				mover.Bump(obstacle, TRUE)
-				return FALSE
+	var/atom/bump_target
 
-	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle as anything in second_check)
-		if(!border_obstacle.CheckExit(mover, src))
-			mover.Bump(border_obstacle, TRUE)
-			return FALSE
+	if(istype(mover, /obj/item/projectile))
+		bump_target = get_projectile_bump_target(src, mover)
+	else
+		bump_target = get_bump_target(src, mover)
 
-	second_check.Cut()
-	//Next, check objects to block entry that are on the border
-	for(var/atom/movable/border_obstacle as anything in src)
-		if(forget != border_obstacle)
-			if(border_obstacle.flags & ON_BORDER)
-				if(!border_obstacle.CanPass(mover, mover_loc, 1))
-					mover.Bump(border_obstacle, TRUE)
-					return FALSE
-			else
-				second_check += border_obstacle
-
-	//Then, check the turf itself
-	if (!CanPass(mover, src))
-		mover.Bump(src, TRUE)
+	if(bump_target)
+		mover.Bump(bump_target, TRUE)
 		return FALSE
 
-	//Finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle as anything in second_check)
-		if(!obstacle.CanPass(mover, mover_loc, 1))
-			mover.Bump(obstacle, TRUE)
-			return FALSE
-	return TRUE //Nothing found to block so return success!
+	return TRUE
 
 /turf/proc/is_mob_placeable(mob/M) // todo: maybe rewrite as COMSIG_ATOM_INTERCEPT_TELEPORT
 	if(density)
@@ -198,8 +268,6 @@
 	return 0
 /turf/proc/is_catwalk()
 	return 0
-/turf/proc/return_siding_icon_state()		//used for grass floors, which have siding.
-	return 0
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
@@ -234,6 +302,8 @@
 /turf/proc/ChangeTurf(path, list/arguments = list())
 	if (!path)
 		return
+
+	clean_turf_decals()
 
 	/*if(istype(src, path))
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
@@ -419,7 +489,7 @@
 	return(2)
 
 /turf/update_icon()
-	if(is_flooded(absolute = 1))
+	if(is_flooded(absolute = 1)) // wtf this doing here
 		if(!(locate(/obj/effect/flood) in contents))
 			new /obj/effect/flood(src)
 	else
@@ -437,7 +507,8 @@
 
 	var/typepath
 	if(ishuman(M))
-		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
+		var/mob/living/carbon/human/H = M
+		typepath = H.species.blood_trail_type
 	else if(isxeno(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/claws
 	else // can shomeone make shlime footprint shprites later pwetty pwease?
@@ -514,3 +585,26 @@
 			V.name = "metallic slurry"
 			V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
 			V.icon_state = "vomitnanite_[pick(1,4)]"
+
+/turf/proc/add_turf_decal(mutable_appearance/decal)
+	if(length(turf_decals) > TURF_DECALS_LIMIT)
+		CRASH("Too many turf decals on [src]: [x].[y].[z]")
+
+	if(decal in turf_decals)
+		CRASH("Decal already exists on [src]: [x].[y].[z]")
+
+	LAZYADD(turf_decals, decal)
+	add_overlay(decal)
+
+/turf/proc/remove_turf_decal(mutable_appearance/decal)
+	LAZYREMOVE(turf_decals, decal)
+	cut_overlay(decal)
+
+/turf/proc/clean_turf_decals()
+	if(!length(turf_decals))
+		return
+
+	cut_overlay(turf_decals)
+	turf_decals = null
+/*	for(var/appearance in turf_decals)
+		LAZYREMOVE(turf_decals, decal)*/

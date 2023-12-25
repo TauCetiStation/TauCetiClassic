@@ -16,6 +16,7 @@
 	minimal_player_ingame_minutes = 3900
 	outfit = /datum/outfit/job/captain
 	skillsets = list("Captain" = /datum/skillset/captain)
+	flags = JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC|JOB_FLAG_IMPOSTER_PRIORITIZE
 
 // Non-human species can't be captains.
 /datum/job/captain/special_species_check(datum/species/S)
@@ -23,7 +24,7 @@
 
 /datum/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
-		to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
+		to_chat(world, "<b>[H.real_name] новый капитан!</b>")//maybe should be announcment, not OOC notification?
 		SSStatistics.score.captain += H.real_name
 
 /datum/job/captain/get_access()
@@ -59,8 +60,9 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+	restricted_species = list(UNATHI, TAJARAN, DIONA, VOX)
 	skillsets = list("Head of Personnel" = /datum/skillset/hop)
+	flags = JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/blueshield
 	title = "Blueshield Officer"
@@ -87,3 +89,4 @@
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 	skillsets = list("Blueshield Officer" = /datum/skillset/blueshield)
+	flags = JOB_FLAG_COMMAND|JOB_FLAG_IMPOSTER_PRIORITIZE

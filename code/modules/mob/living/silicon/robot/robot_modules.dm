@@ -5,7 +5,7 @@
 	w_class = SIZE_LARGE
 	item_state = "electronic"
 	flags = CONDUCT
-	var/channels = list()
+	var/list/channels = list()
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/obj/item/borg/upgrade/jetpack = null
@@ -179,6 +179,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/meson(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
+	modules += new /obj/item/weapon/airlock_painter(src)
 	modules += new /obj/item/weapon/weldingtool/largetank(src)
 	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wrench(src)
@@ -211,6 +212,7 @@
 	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 	modules += new /obj/item/taperoll/police(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new /obj/item/device/hailer(src)
 	emag = new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
@@ -374,6 +376,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/gripper/science(src)
 	modules += new /obj/item/device/analyzer(src)
+	modules += new /obj/item/taperoll/science(src)
 	modules += new /obj/item/device/assembly/signaler(src)
 	modules += new /obj/item/device/ano_scanner(src)
 	modules += new /obj/item/device/science_tool(src)

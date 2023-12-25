@@ -6,10 +6,7 @@
 /area/station/civilian/holodeck/source_courtroom)
 "b" = (
 /obj/structure/stool/bed/chair/holochair,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet14-10"
-	},
+/turf/simulated/floor/holofloor/carpet,
 /area/station/civilian/holodeck/source_courtroom)
 "c" = (
 /obj/structure/table/holotable/wooden,
@@ -23,10 +20,7 @@
 /obj/structure/window/thin/reinforced/holowindow{
 	dir = 8
 	},
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet5-1"
-	},
+/turf/simulated/floor/holofloor/carpet,
 /area/station/civilian/holodeck/source_courtroom)
 "e" = (
 /turf/simulated/floor/holofloor{
@@ -38,17 +32,7 @@
 /obj/structure/window/thin/reinforced/holowindow{
 	dir = 8
 	},
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet7-3"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"g" = (
-/obj/structure/stool/bed/chair/holochair,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet15-15"
-	},
+/turf/simulated/floor/holofloor/carpet,
 /area/station/civilian/holodeck/source_courtroom)
 "h" = (
 /obj/structure/table/holotable/wooden,
@@ -62,17 +46,7 @@
 "i" = (
 /obj/structure/table/holotable/wooden,
 /obj/structure/window/thin/reinforced/holowindow,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet13-5"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"j" = (
-/obj/structure/table/holotable/wooden,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet13-5"
-	},
+/turf/simulated/floor/holofloor/carpet,
 /area/station/civilian/holodeck/source_courtroom)
 "k" = (
 /obj/structure/stool/bed/chair/holochair{
@@ -91,67 +65,14 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/holodeck/source_courtroom)
-"l" = (
-/obj/structure/table/holotable/wooden,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet15-15"
-	},
-/area/station/civilian/holodeck/source_courtroom)
 "m" = (
 /obj/structure/stool/bed/chair/holochair{
 	dir = 8
 	},
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet14-10"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"n" = (
-/obj/structure/stool/bed/chair/holochair{
-	dir = 8
-	},
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet10-8"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"o" = (
-/obj/structure/stool/bed/chair/holochair{
-	dir = 8
-	},
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet15-15"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"p" = (
-/obj/structure/stool/bed/chair/holochair{
-	dir = 8
-	},
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet11-12"
-	},
+/turf/simulated/floor/holofloor/carpet,
 /area/station/civilian/holodeck/source_courtroom)
 "q" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet6-2"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"r" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet14-10"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"s" = (
-/obj/structure/table/holotable/wooden,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet14-10"
-	},
+/turf/simulated/floor/holofloor/carpet,
 /area/station/civilian/holodeck/source_courtroom)
 "t" = (
 /obj/structure/stool/bed/chair/holochair{
@@ -160,27 +81,6 @@
 	},
 /turf/simulated/floor/holofloor{
 	icon_state = "dark"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"u" = (
-/obj/structure/table/holotable/wooden,
-/obj/structure/window/thin/reinforced/holowindow,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet9-4"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"v" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet15-15"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"w" = (
-/obj/structure/table/holotable/wooden,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet11-12"
 	},
 /area/station/civilian/holodeck/source_courtroom)
 "x" = (
@@ -199,42 +99,6 @@
 	},
 /turf/simulated/floor/holofloor{
 	icon_state = "dark"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"y" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet5-1"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"z" = (
-/obj/structure/stool/bed/chair/holochair{
-	dir = 8
-	},
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet13-5"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"A" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet7-3"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"B" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet13-5"
-	},
-/area/station/civilian/holodeck/source_courtroom)
-"C" = (
-/obj/structure/stool/bed/chair/holochair{
-	dir = 8
-	},
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet9-4"
 	},
 /area/station/civilian/holodeck/source_courtroom)
 "D" = (
@@ -267,10 +131,7 @@
 /area/station/civilian/holodeck/source_courtroom)
 "G" = (
 /obj/structure/table/holotable/wooden,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet10-8"
-	},
+/turf/simulated/floor/holofloor/carpet,
 /area/station/civilian/holodeck/source_courtroom)
 "H" = (
 /obj/machinery/door/window/holowindoor{
@@ -320,7 +181,7 @@ a
 "}
 (4,1,1) = {"
 b
-g
+b
 i
 k
 h
@@ -332,73 +193,73 @@ a
 "}
 (5,1,1) = {"
 b
-g
+b
 i
 q
-A
-A
-A
-y
+q
+q
+q
+q
 F
 a
 "}
 (6,1,1) = {"
 b
-g
+b
 i
-s
-l
-v
-l
-j
+G
+G
+q
+G
+G
 F
 a
 "}
 (7,1,1) = {"
 b
-g
+b
 i
 m
-o
-v
-o
-z
+m
+q
+m
+m
 F
 a
 "}
 (8,1,1) = {"
 b
-g
+b
 i
-r
-v
-v
-v
-B
+q
+q
+q
+q
+q
 F
 a
 "}
 (9,1,1) = {"
 b
-g
+b
 i
 m
-o
-o
-o
-z
+m
+m
+m
+m
 H
 a
 "}
 (10,1,1) = {"
 G
-w
-u
-n
-p
-p
-p
-C
+G
+i
+m
+m
+m
+m
+m
 D
 a
 "}

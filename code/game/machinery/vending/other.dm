@@ -199,7 +199,8 @@
 		/obj/item/weapon/kitchen/utensil/fork = 6,
 		/obj/item/weapon/kitchenknife = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,
-		/obj/item/clothing/suit/chef/classic = 2,
+		/obj/item/clothing/suit/chef_classic = 2,
+		/obj/item/clothing/suit/chef = 1,
 		/obj/item/weapon/kitchen/mould/bear = 1,
 		/obj/item/weapon/kitchen/mould/worm = 1,
 		/obj/item/weapon/kitchen/mould/bean = 1,
@@ -210,9 +211,11 @@
 		/obj/item/weapon/kitchen/mould/loli = 1,
 	)
 	contraband = list(
+		/obj/item/clothing/under/rank/chef/sushi = 1,
+		/obj/item/clothing/head/sushi_band = 1,
 		/obj/item/weapon/kitchen/utensil/spoon = 2,
 		/obj/item/weapon/kitchen/rollingpin = 2,
-		/obj/item/weapon/kitchenknife/butch = 2,
+		/obj/item/weapon/kitchenknife/butch = 2,		
 	)
 	syndie = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,

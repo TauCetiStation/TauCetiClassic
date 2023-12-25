@@ -41,6 +41,8 @@
 	RefreshParts()
 
 /obj/machinery/clonepod/RefreshParts()
+	..()
+
 	speed_coeff = 0
 	efficiency = 0
 	for(var/obj/item/weapon/stock_parts/scanning_module/S in component_parts)

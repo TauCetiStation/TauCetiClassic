@@ -23,6 +23,8 @@
 	var/list/stocks
 	var/total_dividend_payouts = 0.0
 
+	var/list/shopping_cart = list()
+
 /datum/money_account/New()
 	all_money_accounts += src
 	return ..()
@@ -140,7 +142,7 @@
 	//create a new account
 	var/datum/money_account/M = new()
 	M.owner_name = new_owner_name
-	M.remote_access_pin = rand(1111, 111111)
+	M.remote_access_pin = rand(1111, 9999)
 	M.adjust_money(starting_funds)
 
 	//create an entry in the account transaction log for when it was created

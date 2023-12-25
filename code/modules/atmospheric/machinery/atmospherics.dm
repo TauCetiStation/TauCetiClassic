@@ -60,6 +60,9 @@ Pipelines + Other Objects -> Pipe network
 	SetInitDirections()
 
 /obj/machinery/atmospherics/Destroy()
+	if(SSair.stop_airnet_processing)
+		return ..()
+
 	for(DEVICE_TYPE_LOOP)
 		nullifyNode(I)
 
@@ -173,9 +176,14 @@ Pipelines + Other Objects -> Pipe network
 				return
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
-			if (internal_pressure > 2 * ONE_ATMOSPHERE)
+			if (internal_pressure > 2 * ONE_ATMOSPHERE && !issilicon(user))
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if(!((H.shoes && (H.shoes.flags & AIR_FLOW_PROTECT)) || (H.wear_suit && (H.wear_suit.flags & AIR_FLOW_PROTECT))))
+						unsafe_wrenching = TRUE // you forgot to activate magboots
+				else
+					unsafe_wrenching = TRUE //Oh dear oh dear
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
-				unsafe_wrenching = TRUE //Oh dear oh dear
 
 			if (W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_NOVICE)))
 				user.visible_message(

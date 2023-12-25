@@ -1,3 +1,6 @@
+/datum/objective/target/dehead
+	required_equipment = /obj/item/device/biocan
+
 /datum/objective/target/dehead/format_explanation()
 	return "Put the head of [target.current.real_name] in biogel can and steal it."
 

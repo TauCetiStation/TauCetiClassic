@@ -1,8 +1,9 @@
-#define CHARS_PER_LINE 5
-#define FONT_SIZE "5pt"
+#define CHARS_PER_LINE 6
+#define FONT_SIZE "3"
 #define FONT_COLOR "#09f"
-#define FONT_STYLE "Arial Black"
+#define FONT_STYLE "StatusDisplays"
 #define SCROLL_SPEED 2
+#define LINE_HEIGHT 0.75
 
 // Status display
 // (formerly Countdown timer display)
@@ -25,6 +26,7 @@
 					// 3 = alert picture
 					// 4 = Supply shuttle timer
 					// 5 = default N picture
+					// 6 = Queue_Mode
 
 	var/picture_state	// icon_state of alert picture
 	var/message1 = ""	// message line 1
@@ -33,12 +35,15 @@
 	var/index2
 
 	frequency = 1435		// radio frequency
-	var/supply_display = 0		// true if a supply shuttle display
+	var/supply_display = FALSE		// true if a supply shuttle display
+	var/queue_display = FALSE
+	var/queue_number = 0
 
 	var/friendc = 0      // track if Friend Computer mode
 
 	maptext_height = 28
 	maptext_width = 32
+	maptext_y = 3
 
 	// new display
 	// register for radio system
@@ -105,7 +110,7 @@
 			if(!index1)
 				line1 = message1
 			else
-				line1 = copytext_char(message1+"|"+message1, index1, index1+CHARS_PER_LINE)
+				line1 = copytext_char(message1+" "+message1, index1, index1+CHARS_PER_LINE)
 				var/message1_len = length(message1)
 				index1 += SCROLL_SPEED
 				if(index1 > message1_len)
@@ -114,7 +119,7 @@
 			if(!index2)
 				line2 = message2
 			else
-				line2 = copytext_char(message2+"|"+message2, index2, index2+CHARS_PER_LINE)
+				line2 = copytext_char(message2+" "+message2, index2, index2+CHARS_PER_LINE)
 				var/message2_len = length_char(message2)
 				index2 += SCROLL_SPEED
 				if(index2 > message2_len)
@@ -135,6 +140,10 @@
 			update_display(line1, line2)
 		if(5)				// default picture
 			set_picture("default")
+		if(6)
+			var/line1 = "Ticket:"
+			var/line2 = "-[queue_number]-"
+			update_display(line1, line2)
 
 /obj/machinery/status_display/examine(mob/user)
 	..()
@@ -164,7 +173,7 @@
 	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
 
 /obj/machinery/status_display/proc/update_display(line1, line2)
-	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
+	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];line-height:[LINE_HEIGHT];font-family:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text
 
@@ -212,6 +221,13 @@
 
 		if("default")
 			mode = 5
+
+		if("queue")
+			if(queue_display)
+				mode = 6
+				if(queue_number < global.ticket_machine_number)
+					queue_number++
+					playsound(src, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 
 
 	update()
@@ -330,3 +346,4 @@
 #undef FONT_COLOR
 #undef FONT_STYLE
 #undef SCROLL_SPEED
+#undef LINE_HEIGHT

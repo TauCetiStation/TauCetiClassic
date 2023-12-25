@@ -214,7 +214,7 @@ var/global/loopModeNames=list(
 	updateUsrDialog()
 
 /obj/machinery/media/jukebox/process()
-	if(!playlist)
+	if(!playlist && config.media_base_url)
 		var/url="[config.media_base_url]/index.php?playlist=[playlist_id]"
 		//testing("[src] - Updating playlist from [url]...")
 		var/response = world.Export(url)
@@ -239,11 +239,13 @@ var/global/loopModeNames=list(
 				playing=1
 				autoplay=0
 			updateUsrDialog()
-		else
-			//testing("[src] failed to update playlist: Response null.")
-			stat &= BROKEN
-			update_icon()
-			return
+
+	if(!playlist) // if request failed or we don't have config
+		stat &= BROKEN
+		update_icon()
+		stop_processing()
+		return
+
 	if(playing)
 		var/datum/song_info/song
 		if(current_song && current_song <= playlist.len)

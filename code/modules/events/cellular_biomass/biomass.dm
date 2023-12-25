@@ -130,6 +130,6 @@
 				return
 	qdel(src)
 
-/obj/effect/biomass/fire_act(null, temperature, volume) //hotspots kill biomass
-	if(temperature > T0C+100)
+/obj/effect/biomass/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume) //hotspots kill biomass
+	if(exposed_temperature > T0C+100)
 		qdel(src)

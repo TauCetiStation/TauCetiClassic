@@ -1,6 +1,5 @@
 export const emojis = [
   "peka",
-  "pekasvast",
   "peka1",
   "peka2",
   "pekadeal",
@@ -104,7 +103,7 @@ export const emojis = [
   "hmm",
   "joypain",
   "joypainroll",
-  "kaka",	
+  "kaka",
   "think",
   "cat",
   "lul",

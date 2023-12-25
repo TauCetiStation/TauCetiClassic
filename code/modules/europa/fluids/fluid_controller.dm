@@ -62,8 +62,8 @@ SUBSYSTEM_DEF(fluids)
 			for(var/other_thing in get_turf(thing))
 				var/atom/A = other_thing
 				if(A.simulated)
-					var/obj/effect/fluid/F = thing
-					A.water_act(F.fluid_amount)
+					var/turf/T = A.loc
+					A.water_act(T.get_fluid_depth())
 		CHECK_TICK
 
 /datum/controller/subsystem/fluids/proc/add_active_source(turf/T)

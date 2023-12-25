@@ -268,3 +268,213 @@
 	name = "Неуклюжесть"
 	desc = "Вы чувствуете головокружение."
 	icon_state = "woozy"
+
+/// Hallucination status effect. How most hallucinations end up happening.
+/datum/status_effect/hallucination
+	id = "hallucination"
+	alert_type = null
+	tick_interval = 2 SECONDS
+	/// Biotypes which cannot hallucinate.
+	var/list/barred_biotypes = list()
+	/// The lower range of when the next hallucination will trigger after one occurs.
+	var/lower_tick_interval = 10 SECONDS
+	/// The upper range of when the next hallucination will trigger after one occurs.
+	var/upper_tick_interval = 60 SECONDS
+	/// The cooldown for when the next hallucination can occur
+	COOLDOWN_DECLARE(hallucination_cooldown)
+
+/datum/status_effect/hallucination/on_creation(mob/living/new_owner, duration)
+	if(isnum(duration))
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/hallucination/on_apply()
+	if(owner.get_species() in barred_biotypes)
+		return FALSE
+
+	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN,  PROC_REF(on_health_scan))
+	if(iscarbon(owner))
+		RegisterSignal(owner, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, PROC_REF(on_bump_airlock))
+
+	return TRUE
+
+/datum/status_effect/hallucination/on_remove()
+	UnregisterSignal(owner, list(
+		COMSIG_LIVING_HEALTHSCAN,
+		COMSIG_CARBON_BUMPED_AIRLOCK_OPEN,
+	))
+
+/// Signal proc for [COMSIG_LIVING_HEALTHSCAN]. Show we're hallucinating to (advanced) scanners.
+/datum/status_effect/hallucination/proc/on_health_scan(datum/source, list/reflist)
+	SIGNAL_HANDLER
+	if(!reflist[2])
+		return
+	reflist[1] += "<span class='warning'>Subject is hallucinating.</span><br>"
+
+/// Signal proc for [COMSIG_CARBON_BUMPED_AIRLOCK_OPEN], bumping an airlock can cause a fake zap.
+/// This only happens on airlock bump, future TODO - make this chance roll for attack_hand opening airlocks too
+/datum/status_effect/hallucination/proc/on_bump_airlock(mob/living/carbon/source, obj/machinery/door/airlock/bumped)
+	SIGNAL_HANDLER
+
+	// 1% chance to fake a shock.
+	if(prob(99) || bumped.operating)
+		return
+
+	source.cause_hallucination(/datum/hallucination/shock, "hallucinated shock from [bumped]",)
+	return STOP_BUMP
+
+/datum/status_effect/hallucination/tick(seconds_between_ticks)
+	if(owner.stat == DEAD)
+		return
+	if(!COOLDOWN_FINISHED(src, hallucination_cooldown))
+		return
+
+	COOLDOWN_START(src, hallucination_cooldown, rand(lower_tick_interval, upper_tick_interval))
+
+/// Causes a fake "zap" to the hallucinator.
+/datum/hallucination/shock
+	var/electrocution_icon = 'icons/mob/human.dmi'
+	var/electrocution_icon_state = "electrocuted_base"
+	var/image/shock_image
+	var/image/electrocution_skeleton_anim
+
+/datum/hallucination/shock/New(mob/living/hallucinator)
+	var/electrocuted_sprite = "electrocuted_generic"
+	switch(hallucinator.get_species())
+		if(UNATHI)
+			electrocuted_sprite += "_unathi"
+		if(TAJARAN)
+			electrocuted_sprite += "_tajaran"
+		if(SKRELL)
+			electrocuted_sprite += "_skrell"
+		if(VOX)
+			electrocuted_sprite += "_vox"
+	electrocution_icon_state = electrocuted_sprite
+	return ..()
+
+/datum/hallucination/shock/Destroy()
+	if(shock_image)
+		hallucinator.client?.images -= shock_image
+		shock_image = null
+	if(electrocution_skeleton_anim)
+		hallucinator.client?.images -= electrocution_skeleton_anim
+		electrocution_skeleton_anim = null
+
+	return ..()
+
+/datum/hallucination/shock/start()
+	shock_image = image(hallucinator, hallucinator, dir = hallucinator.dir)
+	shock_image.appearance_flags |= KEEP_APART
+	shock_image.color = rgb(0, 0, 0)
+	shock_image.override = TRUE
+
+	electrocution_skeleton_anim = image(electrocution_icon, hallucinator, icon_state = electrocution_icon_state, layer = MOB_ELECTROCUTION_LAYER)
+	electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
+
+	to_chat(hallucinator, "<span class='danger'>You feel a powerful shock course through your body!</span>")
+	hallucinator.visible_message("<span class='warning'>[hallucinator] falls to the ground, shaking!</span>", ignored_mobs = hallucinator)
+	hallucinator.client?.images |= shock_image
+	hallucinator.client?.images |= electrocution_skeleton_anim
+
+	hallucinator.playsound_local(null, 'sound/effects/electric_shock.ogg', VOL_EFFECTS_MASTER)
+	hallucinator.adjustHalLoss(50)
+	hallucinator.Stun(8)
+	hallucinator.make_jittery(300) // Maximum jitter
+
+	addtimer(CALLBACK(src, PROC_REF(reset_shock_animation)), 4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(shock_drop)), 2 SECONDS)
+	QDEL_IN(src, 4 SECONDS)
+	return TRUE
+
+/datum/hallucination/shock/proc/reset_shock_animation()
+	if(QDELETED(hallucinator))
+		return
+
+	hallucinator.client?.images -= shock_image
+	shock_image = null
+
+	hallucinator.client?.images -= electrocution_skeleton_anim
+	electrocution_skeleton_anim = null
+
+/datum/hallucination/shock/proc/shock_drop()
+	if(QDELETED(hallucinator))
+		return
+	hallucinator.cause_hallucination(/datum/hallucination/fake_health_doll, "hallucinated shock from", specific_bodypart = list(BP_L_ARM, BP_R_ARM), random_pick_specific_part = TRUE)
+	hallucinator.Weaken(8)
+
+///Causes the target to see incorrect health damages on the healthdoll
+/datum/hallucination/fake_health_doll
+	/// The duration of the hallucination
+	var/duration
+	/// Assoc list of [ref to bodyparts] to [severity]
+	var/list/bodyparts = list()
+	/// Timer ID for when we're deleted
+	var/del_timer_id
+
+	var/list/specific_bodyparts_string = list()
+	var/pick_random_specific = TRUE
+
+/datum/hallucination/fake_health_doll/New(mob/living/hallucinator, duration = 50 SECONDS, list/specific_bodypart, random_pick_specific_part)
+	src.duration = duration
+	specific_bodyparts_string += specific_bodypart
+	pick_random_specific = random_pick_specific_part
+	return ..()
+
+// So that the associated addition proc cleans it up correctly
+/datum/hallucination/fake_health_doll/Destroy()
+	if(del_timer_id)
+		deltimer(del_timer_id)
+
+	for(var/obj/item/organ/external/limb as anything in bodyparts)
+		remove_bodypart(limb)
+
+	hallucinator.update_health_hud()
+	return ..()
+
+/datum/hallucination/fake_health_doll/start()
+	if(!ishuman(hallucinator))
+		return FALSE
+	var/mob/living/carbon/human/H = hallucinator
+	if(!specific_bodyparts_string.len)
+		add_fake_limb()
+	else
+		if(!pick_random_specific)
+			for(var/i in specific_bodyparts_string)
+				var/obj/item/organ/external/specific_limb = H.get_bodypart(i)
+				add_fake_limb(specific_limb)
+		else
+			var/obj/item/organ/external/specific_limb = H.get_bodypart(pick(specific_bodyparts_string))
+			add_fake_limb(specific_limb)
+	del_timer_id = QDEL_IN(src, duration)
+	return TRUE
+
+/**
+ * Adds a fake limb to the effect.
+ *
+ * specific_limb - optional, the specific limb to apply the effect to. If not passed, picks a random limb
+ * seveirty - optional, the specific severity level to apply the effect. Clamped from 1 to 5. If not passed, picks a random number.
+ */
+/datum/hallucination/fake_health_doll/proc/add_fake_limb(obj/item/organ/external/specific_limb, severity)
+	var/mob/living/carbon/human/human_mob = hallucinator
+
+	var/obj/item/organ/external/picked = specific_limb || pick(human_mob.bodyparts)
+	if(!(picked in bodyparts))
+		RegisterSignal(picked, list(COMSIG_PARENT_QDELETING), PROC_REF(remove_bodypart))
+		RegisterSignal(picked, COMSIG_BODYPART_UPDATING_HEALTH_HUD, PROC_REF(on_bodypart_hud_update))
+
+	hallucinator.update_health_hud()
+
+/// Remove a bodypart from our list, unregistering all associated signals and handling the reference
+/datum/hallucination/fake_health_doll/proc/remove_bodypart(obj/item/organ/external/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_BODYPART_UPDATING_HEALTH_HUD))
+	bodyparts -= source
+
+/// Whenever a bodypart we're tracking has their health hud updated, override it with our fake overlay
+/datum/hallucination/fake_health_doll/proc/on_bodypart_hud_update(obj/item/organ/external/source, mob/living/carbon/human/owner)
+	SIGNAL_HANDLER
+
+	var/mutable_appearance/fake_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "[source.body_zone][5]") //bodyparts[source]
+	owner.healthdoll.add_overlay(fake_overlay)
+	return COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD

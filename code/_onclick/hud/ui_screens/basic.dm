@@ -103,6 +103,9 @@
 	add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
 	add_filter("inset_drop_shadow", 2, drop_shadow_filter(size = -1))
 
+/atom/movable/screen/health/diona
+	icon = 'icons/hud/screen_diona.dmi'
+
 /atom/movable/screen/health_doll
 	icon = 'icons/hud/screen_gen.dmi'
 	name = "health doll"
@@ -320,103 +323,6 @@
 	update_icon(hud.mymob)
 	hud.mymob.move_intent = src
 
-// Internals
-/atom/movable/screen/internal
-	name = "internal"
-	icon_state = "internal0"
-	screen_loc = ui_internal
-
-	copy_flags = HUD_COPY_ICON
-
-/atom/movable/screen/internal/update_icon(mob/living/carbon/mymob)
-	if(!istype(mymob))
-		return
-	icon_state = mymob.internal ? "internal1" : "internal0"
-
-/atom/movable/screen/internal/add_to_hud(datum/hud/hud)
-	..()
-	update_icon(hud.mymob)
-	hud.mymob.internals = src
-
-/atom/movable/screen/internal/action()
-	if(!iscarbon(usr))
-		return
-
-	var/mob/living/carbon/C = usr
-	if(C.stat != CONSCIOUS || C.stunned || C.paralysis || C.restrained() || (internal_switch > world.time))
-		return
-
-	internal_switch = world.time + 16
-
-	var/internalsound
-	if(C.internal)
-		C.internal = null
-		to_chat(C, "<span class='notice'>No longer running on internals.</span>")
-		internalsound = 'sound/misc/internaloff.ogg'
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-				internalsound = 'sound/misc/riginternaloff.ogg'
-		playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-		update_icon(C)
-		return
-
-	if(!istype(C.wear_mask, /obj/item/clothing/mask))
-		to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
-		internal_switch = world.time + 8
-		return
-	if(istype(C.wear_mask, /obj/item/clothing/mask/breath))
-		var/obj/item/clothing/mask/breath/M = C.wear_mask
-		if(M.hanging) // if mask on face but pushed down
-			M.attack_self() // adjust it back
-	if(!(C.wear_mask.flags & MASKINTERNALS))
-
-		to_chat(C, "<span class='notice'>This mask doesn't support breathing through the tanks.</span>")
-		return
-
-	var/list/nicename
-	var/list/tankcheck
-	var/inhale_type = C.inhale_gas
-	var/poison_type = C.poison_gas
-
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
-		tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
-	else
-		nicename = list("Right Hand", "Left Hand", "Back")
-		tankcheck = list(C.r_hand, C.l_hand, C.back)
-
-	var/best = null
-	var/bestcontents = 0
-
-	for(var/i in 1 to tankcheck.len)
-		var/obj/item/weapon/tank/t = tankcheck[i]
-		if(!istype(t))
-			continue
-
-		var/datum/gas_mixture/t_gasses = t.air_contents.gas
-		var/inhale = t_gasses[inhale_type]
-
-		if(!t_gasses[poison_type] && inhale)
-			if(bestcontents < inhale)
-				best = i
-				bestcontents = inhale
-
-	//We've determined the best container now we set it as our internals
-
-	if(best)
-		to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
-		C.internal = tankcheck[best]
-		internalsound = 'sound/misc/internalon.ogg'
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-				internalsound = 'sound/misc/riginternalon.ogg'
-		playsound(C, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-		update_icon(C)
-	else
-		to_chat(C, "<span class='notice'>You don't have [inhale_type=="oxygen" ? "an" : "a"] [inhale_type] tank.</span>")
 
 // Transparent boxes for intent choosing
 /atom/movable/screen/intent

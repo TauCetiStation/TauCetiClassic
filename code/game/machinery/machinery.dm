@@ -170,15 +170,18 @@ Class Procs:
 	set_power_use(NO_POWER_USE)
 	machines -= src
 
+	stop_processing()
+
+	dropContents()
+	return ..()
+
+/obj/machinery/proc/stop_processing()
 	if (speed_process)
 		STOP_PROCESSING(SSfastprocess, src)
 	else if (process_last)
 		STOP_PROCESSING_NAMED(SSmachines, src, processing_second)
 	else
 		STOP_PROCESSING(SSmachines, src)
-
-	dropContents()
-	return ..()
 
 /obj/machinery/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -436,7 +439,28 @@ Class Procs:
 	..()
 	RefreshParts()
 
-/obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
+/obj/machinery/proc/RefreshParts()
+	var/caprat = 0
+	var/binrat = 0
+
+	var/manrat = 0
+	var/lasrat = 0
+	var/scanrat = 0
+
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		caprat += C.rating
+	for(var/obj/item/weapon/stock_parts/matter_bin/C in component_parts)
+		binrat += C.rating
+
+	for(var/obj/item/weapon/stock_parts/manipulator/C in component_parts)
+		manrat += C.rating
+	for(var/obj/item/weapon/stock_parts/micro_laser/C in component_parts)
+		lasrat += C.rating
+	for(var/obj/item/weapon/stock_parts/scanning_module/C in component_parts)
+		scanrat += C.rating
+
+	idle_power_usage = initial(idle_power_usage) * caprat * CAPACITOR_POWER_MULTIPLIER * binrat * MATTERBIN_POWER_MULTIPLIER
+	active_power_usage = initial(active_power_usage) * manrat * MANIPULATOR_POWER_MULTIPLIER * lasrat * LASER_POWER_MULTIPLIER * scanrat * SCANER_POWER_MULTIPLIER
 	return
 
 /obj/machinery/proc/assign_uid()

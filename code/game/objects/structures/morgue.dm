@@ -73,7 +73,13 @@
 
 	for(var/atom/movable/A in src)
 		A.forceMove(loc)
-		A.ex_act(severity)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 	qdel(src)
 
 /obj/structure/morgue/alter_health()
@@ -309,9 +315,15 @@
 			if(prob(95))
 				return
 
-	for(var/atom/movable/A as mob|obj in src)
+	for(var/atom/movable/A in src)
 		A.forceMove(loc)
-		A.ex_act(severity)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 	qdel(src)
 
 /obj/structure/crematorium/alter_health()

@@ -39,6 +39,22 @@
 /obj/item/weapon/storage/secure/attack_paw(mob/user)
 	return attack_hand(user)
 
+/obj/item/weapon/storage/secure/AltClick(mob/user)
+	add_fingerprint(user)
+	if(!try_open(user))
+		tgui_interact(user)
+
+/obj/item/weapon/storage/secure/try_open(mob/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(locked)
+		return FALSE
+
+	open(user)
+	return TRUE
+
+
 /obj/item/weapon/storage/secure/attackby(obj/item/I, mob/user, params)
 	if(locked)
 		if(istype(I, /obj/item/weapon/melee/energy/blade) && !emagged)

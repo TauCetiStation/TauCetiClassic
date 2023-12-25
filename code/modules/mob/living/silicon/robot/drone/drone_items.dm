@@ -13,6 +13,9 @@
 		/obj/item/weapon/airalarm_electronics,
 		/obj/item/weapon/airlock_electronics,
 		/obj/item/weapon/module/power_control,
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/plasteel,
 		/obj/item/weapon/stock_parts,
 		/obj/item/light_fixture_frame,
 		/obj/item/apc_frame,
@@ -203,6 +206,8 @@
 		/obj/item/robot_parts/r_leg,
 		/obj/item/stack/sheet/mineral/phoron,
 		/obj/item/weapon/tank/anesthetic,
+		/obj/item/bodybag,
+		/obj/item/weapon/reagent_containers/syringe
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)

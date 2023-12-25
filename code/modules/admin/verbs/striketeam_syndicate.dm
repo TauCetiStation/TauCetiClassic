@@ -80,7 +80,6 @@ var/global/sent_syndicate_strike_team = FALSE
 		new_syndicate_commando.key = commandos[i]
 		initial_syndicate_commando(new_syndicate_commando, syndicate_commando_leader)
 		new_syndicate_commando.internal = new_syndicate_commando.s_store
-		new_syndicate_commando.internals.icon_state = "internal1"
 
 		//So they don't forget their code or mission.
 		if(nuke_code)

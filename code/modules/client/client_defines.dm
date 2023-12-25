@@ -126,3 +126,5 @@
 
 	///Tracks say() usage for ic/dchat while slowmode is enabled
 	COOLDOWN_DECLARE(say_slowmode)
+
+	var/is_in_spawner = FALSE

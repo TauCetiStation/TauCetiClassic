@@ -349,7 +349,7 @@
 
 /obj/item/toy/crossbow
 	name = "foam dart crossbow"
-	desc = "A weapon favored by many overactive children. Ages 8 and up."
+	desc = "Оружие, любимое многими гиперактивными детьми. Возрастной рейтинг 8+."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow"
@@ -464,29 +464,65 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "sword0"
 	item_state = "sword0"
-	var/active = 0.0
+	var/active = FALSE
 	w_class = SIZE_TINY
 	attack_verb = list("attacked", "struck", "hit")
+	var/blade_color = "blue"
+
+/obj/item/toy/sword/atom_init()
+	. = ..()
+	blade_color = pick("red", "blue", "green", "purple", "yellow", "pink", "black")
+	switch(blade_color)
+		if("red")
+			light_color = COLOR_RED
+		if("blue")
+			light_color = COLOR_BLUE
+		if("green")
+			light_color = COLOR_GREEN
+		if("purple")
+			light_color = COLOR_PURPLE
+		if("yellow")
+			light_color = COLOR_YELLOW
+		if("pink")
+			light_color = COLOR_PINK
+		if("black")
+			light_color = COLOR_GRAY
 
 /obj/item/toy/sword/attack_self(mob/user)
-	src.active = !( src.active )
-	if (src.active)
+	active = !active
+	if (active)
 		to_chat(user, "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>")
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
-		src.icon_state = "swordblue"
-		src.item_state = "swordblue"
-		src.w_class = SIZE_NORMAL
+		icon_state = "sword[blade_color]"
+		item_state = icon_state
+		w_class = SIZE_NORMAL
+		hitsound = list('sound/weapons/blade1.ogg')
+		set_light(2)
 	else
 		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
-		src.icon_state = "sword0"
-		src.item_state = "sword0"
-		src.w_class = SIZE_TINY
+		icon_state = "sword0"
+		item_state = "sword0"
+		w_class = SIZE_TINY
+		hitsound = initial(hitsound)
+		set_light(0)
 
 	update_inv_mob()
 
 	add_fingerprint(user)
 	return
+
+/obj/item/toy/sword/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/sword))
+		to_chat(user, "<span class='notice'>You attach the ends of the two \
+			toy energy swords, making a single double-bladed toy weapon! \
+			You're cool.</span>")
+		var/obj/item/toy/dualsword/newsword = new(user.loc)
+		user.unEquip(I)
+		user.unEquip(src)
+		qdel(I)
+		qdel(src)
+		user.put_in_hands(newsword)
 
 /obj/item/toy/katana
 	name = "replica katana"
@@ -501,6 +537,60 @@
 	throwforce = 5
 	w_class = SIZE_SMALL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
+
+/obj/item/toy/dualsword
+	name = "double-bladed energy sword"
+	desc = "Handle with care"
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "dualsaber0"
+	item_state = "dualsaber0"
+	var/active = FALSE
+	w_class = SIZE_TINY
+	attack_verb = list("attacked", "struck", "hit")
+	var/blade_color = "blue"
+
+/obj/item/toy/dualsword/atom_init()
+	. = ..()
+	blade_color = pick("red", "blue", "green", "purple", "yellow", "pink", "black")
+	switch(blade_color)
+		if("red")
+			light_color = COLOR_RED
+		if("blue")
+			light_color = COLOR_BLUE
+		if("green")
+			light_color = COLOR_GREEN
+		if("purple")
+			light_color = COLOR_PURPLE
+		if("yellow")
+			light_color = COLOR_YELLOW
+		if("pink")
+			light_color = COLOR_PINK
+		if("black")
+			light_color = COLOR_GRAY
+
+/obj/item/toy/dualsword/attack_self(mob/user)
+	active = !active
+	if (active)
+		to_chat(user, "<span class='notice'>You extend the plastic blade with a quick flick of your wrist.</span>")
+		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
+		icon_state = "dualsaber[blade_color]1"
+		item_state = icon_state
+		w_class = SIZE_NORMAL
+		hitsound = list('sound/weapons/blade1.ogg')
+		set_light(2)
+	else
+		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
+		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
+		icon_state = "dualsaber0"
+		item_state = "dualsaber0"
+		w_class = SIZE_TINY
+		hitsound = initial(hitsound)
+		set_light(0)
+
+	update_inv_mob()
+
+	add_fingerprint(user)
+	return
 
 /*
  * Snap pops
