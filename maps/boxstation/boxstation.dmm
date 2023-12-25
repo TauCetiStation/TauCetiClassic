@@ -6447,7 +6447,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -6592,7 +6592,7 @@
 /area/station/storage/primary)
 "akY" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "akZ" = (
@@ -6607,7 +6607,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "ala" = (
@@ -19843,7 +19843,7 @@
 /turf/simulated/floor,
 /area/station/rnd/mixing)
 "aJk" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aJl" = (
@@ -21106,8 +21106,7 @@
 	dir = 4
 	},
 /obj/structure/toilet{
-	dir = 8;
-	pixel_y = 8
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -24725,7 +24724,7 @@
 	},
 /area/station/medical/hallway)
 "aSi" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -24863,7 +24862,7 @@
 /area/station/storage/primary)
 "aSw" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -25630,12 +25629,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aTN" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aTO" = (
@@ -26454,7 +26453,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aVm" = (
@@ -26467,7 +26466,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aVn" = (
@@ -26495,7 +26494,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aVp" = (
@@ -27348,7 +27347,7 @@
 	},
 /area/station/storage/primary)
 "aWG" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -27445,7 +27444,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -30471,6 +30470,10 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -33567,6 +33570,10 @@
 "bhF" = (
 /obj/structure/cable,
 /obj/machinery/computer/smartlight,
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "bhG" = (
@@ -56007,7 +56014,7 @@
 	pixel_y = 22
 	},
 /obj/item/clothing/shoes/leather,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/head/beret/black,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/device/camera,
@@ -59467,7 +59474,7 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "ckE" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},

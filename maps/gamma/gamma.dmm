@@ -715,7 +715,7 @@
 /area/station/civilian/garden)
 "abk" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal/wood{
 	dir = 2;
 	icon_state = "spline_fancy"
@@ -1391,7 +1391,7 @@
 /area/station/civilian/garden)
 "aco" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -5857,7 +5857,7 @@
 	},
 /area/station/maintenance/brig)
 "aDm" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9678,6 +9678,7 @@
 /obj/item/device/microphone/ce{
 	pixel_x = 7
 	},
+/obj/item/device/megaphone,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -14441,7 +14442,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -18307,7 +18308,7 @@
 	},
 /area/station/medical/psych)
 "cUF" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "cUI" = (
@@ -19059,7 +19060,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/blue,
 /area/station/hallway/secondary/entry)
 "ddd" = (
@@ -22599,6 +22600,13 @@
 	icon_state = "darkred"
 	},
 /area/station/security/secconfhall)
+"dOQ" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/structure/closet/wardrobe/atmospherics_yellow,
+/turf/simulated/floor,
+/area/station/engineering/atmos)
 "dOZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -22658,7 +22666,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "dPw" = (
@@ -24175,7 +24183,7 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal/alpha/gray{
 	dir = 1;
 	icon_state = "box_corners_white"
@@ -27735,7 +27743,7 @@
 	pixel_y = 22
 	},
 /obj/item/clothing/shoes/leather,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/head/beret/black,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/device/camera,
@@ -28658,7 +28666,7 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -28694,7 +28702,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "fcK" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -29848,7 +29856,7 @@
 /area/station/bridge/hop_office)
 "fnX" = (
 /obj/structure/stool/bed/chair/metal,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "escape"
@@ -31720,7 +31728,7 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "fGY" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
@@ -34739,7 +34747,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -38015,7 +38023,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/hallway)
 "gPf" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "black"
@@ -45566,7 +45574,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -47709,7 +47717,7 @@
 /area/station/maintenance/science)
 "iMq" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -54490,7 +54498,7 @@
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/alarm{
 	pixel_x = -28;
 	pixel_y = -6
@@ -57923,7 +57931,7 @@
 /turf/environment/space,
 /area/space)
 "kTp" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -63819,7 +63827,7 @@
 "lZV" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/purple,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/orange,
 /area/station/civilian/dormitories/dormthree)
 "mag" = (
@@ -64517,7 +64525,6 @@
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "mhM" = (
-/obj/structure/closet/wardrobe/atmospherics_yellow,
 /obj/structure/closet/fireaxecabinet{
 	pixel_y = 30
 	},
@@ -64527,6 +64534,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/space_heater,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "mhQ" = (
@@ -65389,7 +65397,7 @@
 "mrT" = (
 /obj/structure/computerframe,
 /obj/item/weapon/paper{
-	info = "Привет, извините за задержку с Клонированием. Мы должны получить все необходимые детали к началу следующей смены. Все платы пока-что отложили в Хранилище Плат. Если забудем - просто напомните. Спасибо. -�?нженерный отдел";
+	info = "Привет, извините за задержку с Клонированием. Мы должны получить все необходимые детали к началу следующей смены. Все платы пока-что отложили в Хранилище Плат. Если забудем - просто напомните. Спасибо. -�?нженерный отдел";
 	name = "Cloning Status";
 	pixel_x = -4;
 	pixel_y = -4
@@ -65750,7 +65758,7 @@
 /turf/simulated/floor,
 /area/station/rnd/tox_launch)
 "mvg" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -66197,7 +66205,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "mAg" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 1
 	},
@@ -66952,7 +66960,7 @@
 /area/station/maintenance/science)
 "mJs" = (
 /obj/structure/stool/bed/chair/metal/red,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -73135,7 +73143,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -75700,7 +75708,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "oxL" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -86307,7 +86315,7 @@
 /area/station/storage/tech)
 "qDC" = (
 /obj/structure/stool/bar,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
@@ -99699,7 +99707,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -104905,7 +104913,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/blue,
 /area/station/hallway/secondary/entry)
 "umV" = (
@@ -107734,7 +107742,7 @@
 /area/station/hallway/secondary/entry)
 "uQr" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
@@ -108167,7 +108175,7 @@
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/item/device/radio/intercom{
 	pixel_x = -25
 	},
@@ -113503,7 +113511,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
@@ -113992,7 +114000,7 @@
 /area/station/engineering/monitoring)
 "wdg" = (
 /obj/structure/stool/bed/chair/comfy/brown,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -115814,7 +115822,7 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "wuN" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/door_control{
 	id = "DockUnit1";
 	name = "Unit 1";
@@ -117526,7 +117534,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
 "wPJ" = (
@@ -118098,7 +118106,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/rust)
 "wXk" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -122552,7 +122560,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
 	},
@@ -122677,7 +122685,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -166290,7 +166298,7 @@ vRt
 vmZ
 wGz
 iir
-iYC
+dOQ
 rRh
 rMF
 dAA

@@ -112,6 +112,9 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_DNA             "no_dna"
 #define FUR                "fur"
 #define NO_GENDERS         "no_genders"
+#define NO_SLIP            "no_slip"
+
+#define NO_MED_HEALTH_SCAN "no_med_health_scan"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
@@ -199,6 +202,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HOLOMAP_NUCLEAR_COLOR "#e30000"
 #define HOLOMAP_VOX_COLOR "#3bcccc"
 #define HOLOMAP_ERT_COLOR "#0b74b4"
+#define HOLOMAP_TEAM_COLOR "#00bb00"
 
 #define IS_EPILEPTIC_NOT_IN_PARALYSIS (1<<0)
 

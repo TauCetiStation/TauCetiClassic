@@ -356,6 +356,9 @@ Ccomp's first proc.
 	G.has_enabled_antagHUD = 2
 	G.can_reenter_corpse = 1
 
+	if(G.ckey && SSrole_spawners.spawners_cooldown[G.ckey])
+		SSrole_spawners.spawners_cooldown[G.ckey] = null
+
 	to_chat(G, "<span class='notice'><B>You may now respawn. You should roleplay as if you learned nothing about the round during your time with the dead.</B></span>")
 	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the 30 minute respawn limit")
 	message_admins("Admin [key_name_admin(usr)] allowed [key_name_admin(G)] to bypass the 30 minute respawn limit")
@@ -522,7 +525,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	else
 		new_character.mind_initialize()
 	if(!new_character.mind.assigned_role)
-		new_character.mind.assigned_role = "Test Subject"//If they somehow got a null assigned role.
+		new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
 
 	//DNA
 	if(record_found)//Pull up their name from database records if they did have a mind.

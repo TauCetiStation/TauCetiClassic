@@ -54,6 +54,11 @@ export const SpawnersMenu = (props, context) => {
                   <LabeledList.Item color="green" label="Позиций свободно">
                     {spawner.amount}
                   </LabeledList.Item>
+                  {spawner.playing > 0 && (
+                    <LabeledList.Item color="green" label="Играет">
+                      {spawner.playing}
+                    </LabeledList.Item>
+                  )}
                   <LabeledList.Item label="Описание">
                     {spawner.short_desc}
                   </LabeledList.Item>

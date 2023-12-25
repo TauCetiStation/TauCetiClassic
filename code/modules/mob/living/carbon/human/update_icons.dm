@@ -332,8 +332,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_standing_overlay(FIRE_UPPER_LAYER)
 
 	if(on_fire)
-		var/image/under = image('icons/mob/OnFire.dmi', "human_underlay", layer = -FIRE_LOWER_LAYER)
-		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", layer = -FIRE_UPPER_LAYER)
+		var/image/under = image('icons/mob/OnFire.dmi', "[species.specie_suffix_fire_icon]_underlay", layer = -FIRE_LOWER_LAYER)
+		var/image/over = image('icons/mob/OnFire.dmi', "[species.specie_suffix_fire_icon]_overlay", layer = -FIRE_UPPER_LAYER)
 		under = update_height(under)
 		over = update_height(over)
 		over.plane = LIGHTING_LAMPS_PLANE
@@ -409,6 +409,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
+		var/fem = ""
+		if(gender == FEMALE)
+			fem = "_fem"
 
 		for(var/obj/item/clothing/accessory/A in U.accessories)
 			var/tie_color = A.icon_state
@@ -416,7 +419,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(A.icon_custom)
 				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
 			else
-				tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
+				tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color][fem]", "layer" = -UNIFORM_LAYER + A.layer_priority)
 			tie.color = A.color
 			tie = human_update_offset(tie, TRUE)
 			standing.add_overlay(tie)
@@ -453,7 +456,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[GLOVES_LAYER] = standing
 	else
 		if(blood_DNA)
-			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_hand_blood_state)
 			bloodsies.color = hand_dirt_datum.color
 			bloodsies = human_update_offset(bloodsies, FALSE)
 			overlays_standing[GLOVES_LAYER]	= bloodsies
@@ -516,7 +519,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[SHOES_LAYER] = standing
 	else
 		if(feet_blood_DNA)
-			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_shoe_blood_state)
 			bloodsies.color = feet_dirt_color.color
 			overlays_standing[SHOES_LAYER] = bloodsies
 		else
@@ -734,9 +737,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += l_hand
 
-		var/t_state = l_hand.item_state
-		if(!t_state)
-			t_state = l_hand.icon_state
 		var/image/standing = l_hand.get_standing_overlay(src, l_hand.lefthand_file, SPRITE_SHEET_HELD, -L_HAND_LAYER, icon_state_appendix = "_l")
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[L_HAND_LAYER] = standing

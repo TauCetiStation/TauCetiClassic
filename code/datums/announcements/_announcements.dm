@@ -119,6 +119,8 @@ var/global/list/announcement_sounds = list(
 	"construction_half" = 'sound/AI/construction_half.ogg',
 	"construction_three_quarters" = 'sound/AI/construction_three_quarters.ogg',
 	"construction_doom" = 'sound/AI/construction_doom.ogg',
+
+	"bell" = 'sound/effects/bell.ogg',
 )
 
 /* General announcement */
@@ -133,6 +135,8 @@ var/global/list/announcement_sounds = list(
 	var/always_random = FALSE
 	var/volume = 100
 	var/flags
+
+	var/datum/faction/faction_filter
 
 /datum/announcement/New()
 	randomize()
@@ -181,15 +185,24 @@ var/global/list/announcement_sounds = list(
 				WARNING("No sound file for [sound]")
 
 	for(var/mob/M in player_list)
-		if(!isnewplayer(M))
-			if(announce_text)
-				to_chat(M, announce_text)
+		if(isnewplayer(M))
+			continue
 
-			if(announce_sound)
-				if((sound == "emer_shut_left" || sound == "crew_shut_left") && IS_ON_ESCAPE_SHUTTLE)
-					continue
+		if(faction_filter && !isobserver(M))
+			if(!M?.mind.IsPartOfFaction(faction_filter))
+				continue
 
-				M.playsound_local(null, announce_sound, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, null, channel = CHANNEL_ANNOUNCE, wait = TRUE)
+		if(announce_text)
+			to_chat(M, announce_text)
+
+		if(announce_sound)
+			if((sound == "emer_shut_left" || sound == "crew_shut_left") && IS_ON_ESCAPE_SHUTTLE)
+				continue
+
+			M.playsound_local(null, announce_sound, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, null, channel = CHANNEL_ANNOUNCE, wait = TRUE)
+
+	if(faction_filter) // antag announce, don't print it in machinery
+		return
 
 	if(flags & ANNOUNCE_COMMS)
 		for (var/obj/machinery/computer/communications/C in communications_list)

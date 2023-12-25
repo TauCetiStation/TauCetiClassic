@@ -763,6 +763,14 @@ var/global/BSACooldown = 0
 		sleep(50)
 		world.Reboot(end_state = "admin reboot - by [usr.key]")
 
+/datum/admins/proc/end_round()
+	set category = "Server"
+	set name = "End Round"
+
+	if(tgui_alert(usr, "This will finish the round, but print and save all statistics. Are you sure?", "Restart", list("Yes", "Cancel")) != "Yes")
+		return
+
+	SSticker.force_end = TRUE
 
 /datum/admins/proc/announce()
 	set category = "Special Verbs"

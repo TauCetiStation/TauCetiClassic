@@ -49,11 +49,6 @@
 	display_name = "Suspenders"
 	path = /obj/item/clothing/suit/suspenders
 
-/datum/gear/suit/wcoat
-	display_name = "Waistcoat"
-	path = /obj/item/clothing/suit/wcoat
-	cost = 1
-
 /datum/gear/suit/kung
 	display_name = "Kung jacket"
 	path = /obj/item/clothing/suit/kung
