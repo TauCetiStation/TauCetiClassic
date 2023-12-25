@@ -22,6 +22,14 @@
 	reagents.standard_splash(loc)
 	qdel(src)
 
+obj/item/weapon/reagent_containers/food/drinks/attackby(obj/O, mob/user)
+  if(istype(O, /obj/item/weapon/pen))
+        var/newname = sanitize_safe(input(usr, "Как назвать ваш коктель?"))
+    if(!newname)
+        return
+    else
+        name = ("Коктель ([sanitize(newname)])")
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
 	. = ..()
 
