@@ -33,6 +33,7 @@ var/global/bomb_set
 	var/cur_code
 	var/datum/announcement/station/nuke/announce_nuke = new
 	var/cooldown = 0
+	var/siren_cooldown = 0
 
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()
@@ -51,10 +52,11 @@ var/global/bomb_set
 		bomb_set = TRUE //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
 		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
-		if(timeleft == 60 || timeleft == 30 || timeleft == 61 || timeleft == 31)
+		if(timeleft <= 100 && world.time >= siren_cooldown)
 			for(var/mob/M in player_list)
 				if(!isnewplayer(M))
 					M.playsound_local(null, 'sound/machines/nuke_siren.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, 30, vary = FALSE, frequency = null, ignore_environment = TRUE)
+			siren_cooldown = world.time + 32 SECONDS
 		if(timeleft <= 0)
 			explode()
 	cooldown = max(cooldown - 2, 0)
@@ -267,6 +269,7 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/proc/bomb_set(mob/user)
 	if(!authorized || safety || cooldown)
+		to_chat(user, "<span class = 'red'>Не так быстро! Эта кнопка сработает снова через [cooldown] секунд!</span>")
 		return
 	if(timing)
 		timing = FALSE
