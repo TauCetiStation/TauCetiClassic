@@ -170,6 +170,9 @@
 	if(action == "self_delete")
 		return SelfDelete()
 
+	if(action == "insert_next_component" && params["target_component"])
+		return InsertNextComponent(params["target_component"])
+
 	if(action == "delete_next_component")
 		return DeleteNextComponent()
 

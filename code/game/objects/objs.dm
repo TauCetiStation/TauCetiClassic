@@ -275,3 +275,6 @@
 			if(src)
 				step(src, pick(cardinal))
 				sleep(rand(2, 4))
+
+/obj/proc/get_data_components()
+	return TRUE

@@ -3,10 +3,9 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
-	var/list/datum/pipe_system/component/reference_saved_components = list()
-	var/list/datum/pipe_system/component/buffer_components = list()
-	var/datum/pipe_system/component/first_component_program
+	var/list/datum/pipe_system/component/saved_components = list()
 	var/datum/pipe_system/component/selected_component
+	var/datum/pipe_system/component/selected_program
 	var/datum/pipe_system/process/active_process
 	var/list/console_output = list()
 	var/ram_used = 0
@@ -34,19 +33,8 @@
 	data["console_output"] = console_output
 
 	data["selected_component"] = null
-	if(selected_component)
-		data["selected_component"] = selected_component.GetApiObject()
 
-	data["tree_selected_component"] = null
-	if(selected_component)
-		data["tree_selected_component"] = selected_component.GetFirstComponent().GetApiObject()
-
-	data["saved_components"] = list()
-
-	LAZYINITLIST(buffer_saved_components)
-
-	for(var/datum/pipe_system/component/C in buffer_saved_components)
-		data["saved_components"][ref(C)] = C.GetApiObject()
+	data["saved_components"] = saved_components
 
 	return data
 
@@ -55,35 +43,33 @@
 	if(..())
 		return TRUE
 
-	var/datum/pipe_system/component/target_component = null
-	if(params["target_link_component"])
-		var/list/params_find = list()
-		params_find["link_component"] = params["target_link_component"]
-		for(var/datum/pipe_system/component/C in buffer_saved_components)
-			if(istype(C))
-				target_component = C.ApiChange("select_component", params_find)
-				params["target_component"] = target_component
-
-	var/datum/pipe_system/component/action_component = null
-	if(params["action_link_component"])
-		var/list/params_find = list()
-		params_find["link_component"] = params["action_link_component"]
-		for(var/datum/pipe_system/component/C in buffer_saved_components)
-			if(istype(C))
-				action_component = C.ApiChange("select_component", params_find)
-				params["action_component"] = action_component
-
-	if(action == "select_component")
-		SelectComponent(action_component.ApiChange(action, params))
-		return TRUE
-
 	if(action == "clear_console")
 		LAZYCLEARLIST(console_output)
+		return TRUE
+
+	if(action == "init_new_program")
+		InitNewProgram()
+		return TRUE
+
+	if(action == "set_first_component")
+		selected_program = FindComponent(params["link_component"])
+		return TRUE
+
+	if(params["target_component_link"])
+		params["target_component"] = FindComponent(params["target_component_link"])
+
+	if(selected_program)
+		selected_program.ApiChange(action, params)
 
 	return TRUE
 
 /obj/item/device/terminal/attack_atom(atom/attacked_atom, mob/living/user, params)
 	. = ..()
+
+	if(istype(attacked_atom, /obj))
+		var/obj/scan_object = attacked_atom
+		ScanObject(scan_object)
+		return
 
 	if(!istype(attacked_atom, /obj/machinery))
 		return
@@ -92,7 +78,7 @@
 
 	var/datum/pipe_system/process/process = new()
 
-	process.AddComponentPipe(selected_component)
+	process.AddComponentPipe(selected_program)
 
 	target.interact_program(process)
 
@@ -109,61 +95,21 @@
 
 	return selected_component
 
-/obj/item/device/terminal/proc/DeleteSelectedComponent(obj/item/device/terminal/terminal, datum/pipe_system/component/C)
 
-	if(selected_component == C)
-		selected_component = null
+/obj/item/device/terminal/proc/ScanObject(obj/scan_object)
 
-	if(C.next_component)
-		SelectComponent(C.next_component)
-		return TRUE
+	var/list/datum/pipe_system/component/components = scan_object.get_data_components()
 
-	if(C.previous_component)
-		SelectComponent(C.previous_component)
-		return TRUE
+	for(var/datum/pipe_system/component/C in components)
+		LAZYADD(saved_components, C)
 
-	return TRUE
+/obj/item/device/terminal/proc/InitNewProgram(first_ref)
+
+	selected_program = null
 
 
-/obj/item/device/terminal/proc/InitializeBuffer()
+/obj/item/device/terminal/proc/FindComponent(ref_component)
 
-	LAZYINITLIST(buffer_saved_components)
-	ram_used = buffer_saved_components.len
-
-	return TRUE
-
-/obj/item/device/terminal/proc/AddObjectInBuffer(object)
-
-	InitializeBuffer()
-
-	if(ram_used >= ram_max)
-		return FALSE
-
-	LAZYADD(buffer_saved_components, object)
-
-	ram_used += 1
-
-	return TRUE
-
-/obj/item/device/terminal/proc/RemoveObjectInBuffer(object)
-
-	InitializeBuffer()
-
-	if(!buffer_saved_components.Find(object))
-		return FALSE
-
-	LAZYREMOVE(buffer_saved_components, object)
-
-	ram_used -= 1
-
-	return TRUE
-
-/obj/item/device/terminal/proc/FindObjectInBuffer(link_object)
-
-	InitializeBuffer()
-
-	for(var/object in buffer_saved_components)
-		if(ref(object) == link_object)
-			return object
-
-	return FALSE
+	for(var/datum/pipe_system/component/C in saved_components)
+		if(ref(C) == ref_component)
+			return C.CopyComponent()
