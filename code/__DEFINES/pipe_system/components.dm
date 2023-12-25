@@ -1,0 +1,10 @@
+#define PIPE_SYSTEM_DEFAULT "pipe_system_default"
+#define PIPE_SYSTEM_DATA "pipe_system_data"
+#define PIPE_SYSTEM_PROC "pipe_system_proc"
+#define PIPE_SYSTEM_CHECKER "pipe_system_checker"
+#define PIPE_SYSTEM_AWAITER "pipe_system_awaiter"
+#define PIPE_SYSTEM_PROC_FOR_CYCLE "pipe_system_proc_for_cycle"
+
+#define PIPE_SYSTEM_DATA_STRING "pipe_system_data_string"
+#define PIPE_SYSTEM_DATA_NUMBER "pipe_system_data_number"
+#define PIPE_SYSTEM_DATA_REF "pipe_system_data_ref"

@@ -111,6 +111,7 @@
 #include "code\__DEFINES\dcs\signals.dm"
 #include "code\__DEFINES\dcs\signals_subsystem.dm"
 #include "code\__DEFINES\dcs\signals_atom\signals_atom_attack.dm"
+#include "code\__DEFINES\pipe_system\components.dm"
 #include "code\__DEFINES\pipe_system\data.dm"
 #include "code\__DEFINES\pipe_system\system.dm"
 #include "code\__HELPERS\_lists.dm"

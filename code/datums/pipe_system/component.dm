@@ -1,8 +1,9 @@
 /datum/pipe_system/component
 	var/datum/parent
-	var/id_component = "DEFAULT"
+	var/id_component = PIPE_SYSTEM_DEFAULT
 	var/datum/pipe_system/component/next_component
 	var/datum/pipe_system/component/previous_component
+	var/description = "Базовый компонент"
 
 /datum/pipe_system/component/New(datum/P)
 	parent = P
@@ -204,6 +205,8 @@
 		data["previous_component"] = previous_component.GetApiObject(TRUE)
 
 	data["id_component"] = id_component
+
+	data["description"] = description
 
 	data["link_component"] = ref(src)
 

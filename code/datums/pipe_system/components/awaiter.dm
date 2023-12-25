@@ -1,5 +1,5 @@
 /datum/pipe_system/component/awaiter
-	id_component = "awaiter"
+	id_component = PIPE_SYSTEM_AWAITER
 	var/datum/pipe_system/component/checker = null
 	var/datum/pipe_system/component/waiting_component = null
 	var/datum/pipe_system/component/timeout_component = null

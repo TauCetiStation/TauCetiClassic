@@ -1,5 +1,5 @@
 /datum/pipe_system/component/data
-	id_component = "DATA"
+	id_component = PIPE_SYSTEM_DATA
 	var/value
 	var/id_data = "DEFAULT"
 

@@ -1,6 +1,7 @@
 /datum/pipe_system/component/proc_component/for_cycle
+	id_component = PIPE_SYSTEM_PROC_FOR_CYCLE
 	var/datum/pipe_system/component/cycle_component
-
+	description = "Реализация цикла FOR, использует FOR_CYCLE_COUNT_DATA и FOR_CYCLE_INITIAL_DATA для того чтобы внедрить в цепочку компоненту cycle_component определенное количество раз"
 
 /datum/pipe_system/component/proc_component/for_cycle/New(datum/P, datum/pipe_system/component/cycle_component)
 
@@ -19,10 +20,28 @@
 	var/initial_cycle = for_cycle_initial_data.value
 	var/count_cycle = for_cycle_count_data.value
 
-	for(var/initial in range(initial_cycle, count_cycle))
+	for(var/i = initial_cycle, i < count_cycle, i++)
 		InsertNextComponent(cycle_component.CopyComponent())
 
 	return ..()
+
+/datum/pipe_system/component/proc_component/for_cycle/CopyComponent()
+	var/datum/pipe_system/component/proc_component/for_cycle/new_component = ..()
+
+	if(cycle_component)
+		new_component.cycle_component = cycle_component.CopyComponent()
+		new_component.cycle_component.previous_component = new_component
+
+	return new_component
+
+
+/datum/pipe_system/component/proc_component/for_cycle/GetApiObject(loop_safety)
+	var/list/data = ..(loop_safety)
+
+	if(cycle_component && !loop_safety)
+		data["cycle_component"] = cycle_component.GetApiObject()
+
+	return data
 
 /datum/pipe_system/component/proc_component/for_cycle/ApiChangeRuntime(action, list/params, vector = "")
 

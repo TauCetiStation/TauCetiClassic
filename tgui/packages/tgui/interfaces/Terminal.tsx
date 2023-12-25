@@ -29,13 +29,13 @@ export const Terminal = (props, context) => {
     <Window resizable>
       <Window.Content>
 
-        <Section title="Terminal Output" width="100%" height="100%">
+        {/* <Section title="Terminal Output" width="100%" height="100%">
           <Flex direction="column">
 
-            <Flex direction="row" height="50%">
+            <Flex direction="row" >
 
-              <Section title="Terminal Output" width="100%" height="100%">
-                <Flex.Item fill={true} grow={0} backgroundColor={"#000622"} scrollable={true} overflowY="scroll">
+              <Section title="Terminal Output">
+                <Flex.Item fill={true} grow={1} backgroundColor={"#000622"} scrollable={true} overflowY="scroll">
                   <Table>
                     {datatype.console_output.map((element, i) => (
                       <TableRow>{element}</TableRow>
@@ -44,45 +44,84 @@ export const Terminal = (props, context) => {
                   </Table>
                 </Flex.Item>
 
-                <Flex.Item fill={false} grow={0} backgroundColor={"#000622"} scrollable={true} overflowY="scroll" overflowX="hidden" mt={2}>
+                <Flex.Item fill={false} grow={1} backgroundColor={"#000622"} scrollable={true} overflowY="scroll" overflowX="hidden" mt={2}>
                   <Input backgroundColor={"#000622"} width="100%" fontSize={1.5} onChange={() => act('clear_console')}></Input>
                 </Flex.Item>
 
               </Section>
 
-              <Section title="Target Program Component" width="50%" height="100%">
-                  <Flex.Item fill={true} grow={0} height={10} backgroundColor={"#000622"} scrollable={true} maxHeight={50} overflowY="scroll">
+              <Section title="Target Program Component">
+                  <Flex.Item fill={true} grow={1} backgroundColor={"#000622"} scrollable={true} overflowY="scroll">
                       <TypeProgramComponent act={act} onlyObject={true} component={data.target_component}/>
                   </Flex.Item>
               </Section>
 
             </Flex>
 
-            <Flex direction="row"  height="100%">
+            <Flex direction="row">
 
-              <Section title="Selected Program" height="100%">
-                  <Flex.Item fill={true} grow={1} backgroundColor={"#000622"} scrollable={false} overflowY="scroll">
+              <Section title="Selected Program">
+                  <Flex.Item height={50} width={50} fill={false} grow={0} backgroundColor={"#000622"} scrollable={true} overflowX="scroll" overflowY="scroll">
                       <ProcessProgrammComponent component = {data.selected_program} selected_component={data.selected_component} act={act}></ProcessProgrammComponent>
                   </Flex.Item>
               </Section>
 
-              <Section title="Saved Program Components"  width="50%" height="100%">
-                <Flex direction="column">
-                  <Flex.Item fill={true} grow={1} backgroundColor={"#000622"} scrollable={true} overflowY="scroll">
-                      {data.saved_components?.len}
+              <Section title="Saved Program Components">
+                  <Flex.Item height={50} width={50} fill={false} grow={0} backgroundColor={"#000622"} scrollable={true} overflowX="scroll" overflowY="scroll">
                       {Object.keys(data.saved_components)?.map((key) => {
                         return(
                           <ProcessProgrammComponent component = {data.saved_components[key]} act={act}></ProcessProgrammComponent>
                         )
                       })}
                   </Flex.Item>
-                </Flex>
               </Section>
 
             </Flex>
 
           </Flex>
-        </Section>
+        </Section> */}
+
+        <Flex direction="column">
+          <Flex direction="row">
+            <Section title="Selected Program" width="75vw" fill={true} grow={1}>
+              <Box height="40vh" backgroundColor={"#000622"} overflowX="scroll" overflowY="scroll">
+                <ProcessProgrammComponent component = {data.selected_program} selected_component={data.selected_component} act={act}></ProcessProgrammComponent>
+              </Box>
+            </Section>
+            <Section title="Terminal Output" width="25vw">
+              <Box height="35vh" backgroundColor={"#000622"} overflowY="scroll">
+                <Table>
+                  {datatype.console_output.map((element, i) => (
+                    <TableRow>{element}</TableRow>
+                  ))}
+                  <TableRow><Blink>_</Blink></TableRow>
+                </Table>
+              </Box>
+
+              <Flex.Item fill={false} grow={1} backgroundColor={"#000622"} scrollable={true} overflowY="scroll" overflowX="hidden" mt={2}>
+                <Input backgroundColor={"#000622"} width="100%" fontSize={1.5} onChange={() => act('clear_console')}></Input>
+              </Flex.Item>
+            </Section>
+          </Flex>
+          <Flex direction="row">
+            <Section title="Saved Program Components" width="75vw" fill={true} grow={1}>
+              <Box height="35vh" backgroundColor={"#000622"} overflowX="scroll" overflowY="scroll">
+                <Flex direction="row">
+                  {Object.keys(data.saved_components)?.map((key) => {
+                    return(
+                      <ProcessProgrammComponent component = {data.saved_components[key]} act={act}></ProcessProgrammComponent>
+                    )
+                  })}
+                </Flex>
+              </Box>
+            </Section>
+            <Section title="Target Program Component" width="25vw">
+              <Box height="35vh" backgroundColor={"#000622"} overflowX="scroll" overflowY="scroll">
+                <TypeProgramComponent act={act} onlyObject={true} component={data.target_component}/>
+              </Box>
+            </Section>
+          </Flex>
+        </Flex>
 
       </Window.Content>
     </Window>

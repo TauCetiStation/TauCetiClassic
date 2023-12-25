@@ -1,4 +1,5 @@
 /datum/pipe_system/component/check
+	id_component = PIPE_SYSTEM_CHECKER
 	var/datum/pipe_system/component/success_component = null
 	var/datum/pipe_system/component/fail_component = null
 
@@ -20,6 +21,17 @@
 		new_component.fail_component = fail_component.CopyComponent()
 
 	return new_component
+
+/datum/pipe_system/component/check/GetApiObject(loop_safety)
+	var/list/data = ..(loop_safety)
+
+	if(success_component && !loop_safety)
+		data["success_component"] = success_component.GetApiObject()
+
+	if(fail_component && !loop_safety)
+		data["fail_component"] = fail_component.GetApiObject()
+
+	return data
 
 /datum/pipe_system/component/check/ApiChange(action, list/params, vector)
 

@@ -101,7 +101,6 @@
 	if(istype(attacked_atom, /obj))
 		var/obj/scan_object = attacked_atom
 		ScanObject(scan_object)
-		return
 
 	if(!istype(attacked_atom, /obj/machinery))
 		return
@@ -162,6 +161,8 @@
 	var/datum/pipe_system/component/proc_component/for_cycle/for_cycle = new(src)
 	var/datum/pipe_system/component/awaiter/awaiter = new(src)
 	var/datum/pipe_system/component/check/checker = new(src)
+	var/datum/pipe_system/component/data/ref/log_target/log_target = new(src, src)
+	var/datum/pipe_system/component/proc_component/log_terminal/log_terminal = new(src)
 
 	LAZYADD(saved_components, number_component_example)
 	LAZYADD(saved_components, string_component_example)
@@ -172,6 +173,8 @@
 	LAZYADD(saved_components, for_cycle)
 	LAZYADD(saved_components, awaiter)
 	LAZYADD(saved_components, checker)
+	LAZYADD(saved_components, log_target)
+	LAZYADD(saved_components, log_terminal)
 
 	return TRUE
 
