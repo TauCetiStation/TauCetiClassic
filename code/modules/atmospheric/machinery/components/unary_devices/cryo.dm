@@ -1,5 +1,6 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
+	cases = list("криокапсула", "криокапсулы", "криокапсуле", "криокапсулу", "криокапсулой", "криокапсуле")
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "pod-off"
 
@@ -143,15 +144,15 @@
 	if(user.is_busy(null, FALSE)) // prevents spam too.
 		return
 
-	to_chat(user, "<span class='notice'>Вы пытаетесь выбраться из криокамеры, толкаясь ногами... (Потребуется около 30 секунд.)</span>")
-	audible_message("<span class='notice'>Вы слышите глухой стук из криокамеры.</span>")
+	to_chat(user, "<span class='notice'>Вы пытаетесь выбраться из [CASE(src, GENITIVE_CASE )], толкаясь ногами... (Потребуется около 30 секунд.)</span>")
+	audible_message("<span class='notice'>Вы слышите глухой стук из [CASE(src, GENITIVE_CASE )].</span>")
 	if(do_after(user, 300, target = src))
 		if(occupant == user) // Check they're still here.
 			open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/verb/move_eject()
 	set name = "Eject Cryo Cell"
-	set desc = "Начать процедуру открытия криокамеры."
+	set desc = "Начать процедуру открытия криокапсулы."
 	set category = "Object"
 	set src in oview(1)
 	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
@@ -176,11 +177,11 @@
 	..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Вы едва можете различить форму того, что плавает в криокамере.")
+			to_chat(user, "Вы едва можете различить форму того, что плавает в [CASE(src, PREPOSITIONAL_CASE)].")
 		else
-			to_chat(user, "Кто-то внутри криокамеры!")
+			to_chat(user, "Кто-то внутри [CASE(src, GENITIVE_CASE)]!")
 	else
-		to_chat(user, "Криокамера выглядит пустой.")
+		to_chat(user, "[capitalize(CASE(src, NOMINATIVE_CASE))] выглядит пустой.")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, datum/tgui/ui)
 	tgui_interact(user)
@@ -303,14 +304,14 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			to_chat(user, "<span class='warning'>Что-то уже загружено в криокамеру!</span>")
+			to_chat(user, "<span class='warning'>Что-то уже загружено в [CASE(src, ACCUSATIVE_CASE)]!</span>")
 			return
 		if(!user.drop_from_inventory(I, src))
 			return
 		beaker = I
 		user.visible_message(
-			"[user] inserts [I] into cryocell.",
-			"<span class='notice'>You insert [I] into cryocell.</span>")
+			"[user] вставляет [CASE(I, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].",
+			"<span class='notice'>Вы вставляете [CASE(I, ACCUSATIVE_CASE)] внутрь [CASE(src, GENITIVE_CASE)].</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return
