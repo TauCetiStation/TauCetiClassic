@@ -590,7 +590,7 @@ obj/item/weapon/reagent_containers/food/drinks/attackby(obj/O, mob/user)
     if(!newname)
         return
     else
-        name = ("Коктель ([sanitize(newname)])")
+        name = ("Коктель [sanitize(newname)]")
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
