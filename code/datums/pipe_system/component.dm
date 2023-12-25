@@ -131,6 +131,9 @@
 	if(!next_component)
 		return TRUE
 
+	if(process.interrupt)
+		return FALSE
+
 	return next_component.Action(process)
 
 /datum/pipe_system/component/proc/CopyComponent()

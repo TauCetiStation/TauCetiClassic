@@ -10,8 +10,8 @@
 
 /datum/pipe_system/component/proc_component/for_cycle/RunTimeAction(datum/pipe_system/process/process)
 
-	var/datum/pipe_system/component/data/for_cycle_count/for_cycle_count_data = process.GetCacheData(FOR_CYCLE_COUNT_DATA)
-	var/datum/pipe_system/component/data/for_cycle_initial/for_cycle_initial_data = process.GetCacheData(FOR_CYCLE_INITIAL_DATA)
+	var/datum/pipe_system/component/data/number/for_cycle_count/for_cycle_count_data = process.GetCacheData(FOR_CYCLE_COUNT_DATA)
+	var/datum/pipe_system/component/data/number/for_cycle_initial/for_cycle_initial_data = process.GetCacheData(FOR_CYCLE_INITIAL_DATA)
 
 	if(!for_cycle_count_data.IsValid() || !for_cycle_initial_data.IsValid() || !cycle_component)
 		return ..()
@@ -26,13 +26,16 @@
 
 /datum/pipe_system/component/proc_component/for_cycle/ApiChange(action, list/params, vector = "")
 
-	// if(href_list["set_cycle_component"])
-	// 	return SetCycleComponent(href_list["set_cycle_component"])
+	if(action == "set_cycle_component" && params["target_component"])
+		return SetCycleComponent(params["target_component"])
 
 	return ..()
 
 /datum/pipe_system/component/proc_component/for_cycle/proc/SetCycleComponent(datum/pipe_system/component/cycle_component)
 
 	src.cycle_component = cycle_component
+
+	if(src.cycle_component)
+		src.cycle_component.previous_component = src
 
 	return TRUE

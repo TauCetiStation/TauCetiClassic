@@ -4,6 +4,8 @@
 	var/datum/pipe_system/component/active_component = null
 	var/list/datum/pipe_system/component/awaiter/active_awaiters = list()
 	var/activate = 0
+	var/activated = FALSE
+	var/interrupt = FALSE
 
 /datum/pipe_system/process/proc/PrepareActiveAwaiters()
 
@@ -71,7 +73,9 @@
 
 /datum/pipe_system/process/proc/RunComponents()
 
+	activated = TRUE
 	first_component.Action(src)
+	activated = FALSE
 
 	return TRUE
 
@@ -82,3 +86,14 @@
 /datum/pipe_system/process/proc/GetActiveComponent()
 
 	return active_component
+
+/datum/pipe_system/process/proc/GetApiObject()
+	var/list/data = list()
+
+	data["first_component"] = null
+	if(first_component)
+		data["first_component"] = first_component.GetApiObject()
+
+	data["active_component"] = null
+	if(active_component)
+		data["active_component"] = active_component.GetApiObject()

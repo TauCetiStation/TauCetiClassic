@@ -30,8 +30,8 @@
 
 /datum/pipe_system/component/data/ApiChange(action, list/params, vector = "")
 
-	if(action == "change_data")
-		return ChangeData(params["change_data"])
+	if(action == "set_data")
+		return SetData(params["data_change"])
 
 	// if(href_list["get_data"])
 	// 	return GetData()
@@ -45,7 +45,8 @@
 	var/list/data = ..()
 
 	data["id_data"] = id_data
-	data["value"] = value
+	data["data"] = GetData()
+	data["is_valid"] = IsValid()
 
 	return data
 
@@ -68,3 +69,16 @@
 		return FALSE
 
 	return TRUE
+
+/datum/pipe_system/component/data/proc/SetData(value_data)
+
+	if(!CheckValidData(value_data))
+		return FALSE
+
+	value = value_data
+
+	return TRUE
+
+/datum/pipe_system/component/data/proc/CheckValidData(value_data)
+
+	return FALSE

@@ -23,17 +23,11 @@
 
 /datum/pipe_system/component/check/ApiChange(action, list/params, vector = "")
 
-	// if(href_list["get_fail_component"])
-	// 	return fail_component
+	if(action == "change_fail_component" && params["target_component"])
+		return ChangeFailComponent(params["target_component"])
 
-	// if(href_list["get_success_component"])
-	// 	return success_component
-
-	// if(href_list["change_fail_component"])
-	// 	return ChangeFailComponent(href_list["change_fail_component"])
-
-	// if(href_list["change_success_component"])
-	// 	return ChangeSuccessComponent(href_list["change_success_component"])
+	if(action == "change_success_component" && params["target_component"])
+		return ChangeSuccessComponent(params["target_component"])
 
 	return ..()
 

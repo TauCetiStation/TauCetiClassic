@@ -6,7 +6,7 @@ import { Window } from '../layouts';
 type Data = {
   selected_component?: ProgramComponent;
   saved_components?: Map<string, ProgramComponent>
-  tree_selected_component?: ProgramComponent;
+  selected_program?: ProgramComponent;
   console_output?: [string];
 };
 
@@ -16,10 +16,10 @@ export const Terminal = (props, context) => {
 
   const datatype : Data = data
 
-  const TypeProgramComponent = GetTypeProgramComponent(datatype.selected_component?.id_component)
+  const TypeProgramComponent = GetTypeProgramComponent(datatype.target_component?.id_component)
 
   let saved_components = []
-  // let map : Map<string, ProgramComponent> = data.saved_components as Map<string, ProgramComponent>
+  let map : Map<string, ProgramComponent> = data.saved_components as Map<string, ProgramComponent>
 
   // map.forEach((value, key) => {
   //   saved_components.push(value)
@@ -50,9 +50,9 @@ export const Terminal = (props, context) => {
 
               </Section>
 
-              <Section title="Selected Program Component" width="50%" height="100%">
+              <Section title="Target Program Component" width="50%" height="100%">
                   <Flex.Item fill={true} grow={0} height={10} backgroundColor={"#000622"} scrollable={true} maxHeight={50} overflowY="scroll">
-                      <TypeProgramComponent act={act} onlyObject={true} component={data.selected_component}/>
+                      <TypeProgramComponent act={act} onlyObject={true} component={data.target_component}/>
                   </Flex.Item>
               </Section>
 
@@ -62,13 +62,14 @@ export const Terminal = (props, context) => {
 
               <Section title="Selected Program" height="100%">
                   <Flex.Item fill={true} grow={1} backgroundColor={"#000622"} scrollable={false} overflowY="scroll">
-                      <ProcessProgrammComponent component = {data.tree_selected_component} selected_component={data.selected_component} act={act}></ProcessProgrammComponent>
+                      <ProcessProgrammComponent component = {data.selected_program} selected_component={data.selected_component} act={act}></ProcessProgrammComponent>
                   </Flex.Item>
               </Section>
 
               <Section title="Saved Program Components"  width="50%" height="100%">
                 <Flex direction="column">
                   <Flex.Item fill={true} grow={1} backgroundColor={"#000622"} scrollable={true} overflowY="scroll">
+                      {data.saved_components?.len}
                       {Object.keys(data.saved_components)?.map((key) => {
                         return(
                           <ProcessProgrammComponent component = {data.saved_components[key]} act={act}></ProcessProgrammComponent>

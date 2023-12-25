@@ -1,6 +1,6 @@
 /datum/pipe_system/component/proc_component/log_terminal/RunTimeAction(datum/pipe_system/process/process)
 
-	var/datum/pipe_system/component/data/log_target/terminal_data = process.GetCacheData(LOG_TARGET_DATA)
+	var/datum/pipe_system/component/data/ref/log_target/terminal_data = process.GetCacheData(LOG_TARGET_DATA)
 
 	if(!terminal_data.IsValid())
 		return ..()

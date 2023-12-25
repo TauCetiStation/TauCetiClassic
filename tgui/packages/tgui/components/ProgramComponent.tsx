@@ -137,6 +137,12 @@ export class ProgramComponent extends Component {
         <br></br>
         LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
         <br></br>
+        SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
+        <br></br>
+        SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
+        <br></br>
+        INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
+        <br></br>
         LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
         <br></br>
         LINK Previous Component: {this.getButtonComponent(this.previous_component, "Select: " + this.previous_component?.link_component, "select_component")}
@@ -266,6 +272,12 @@ export class AwaiterProgramComponent extends ProgramComponent {
             <br></br>
             LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
             <br></br>
+            SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
+            <br></br>
+            SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
+            <br></br>
+            INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
+            <br></br>
             LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
             <br></br>
             LINK Previous Component: {this.getButtonComponent(this.previous_component, "Select: " + this.previous_component?.link_component, "select_component")}
@@ -302,6 +314,12 @@ export class DataProgramComponent extends ProgramComponent {
             ID COMPONENT: {this.id_component}
             <br></br>
             LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
+            <br></br>
+            SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
+            <br></br>
+            SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
+            <br></br>
+            INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
             <br></br>
             LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
             <br></br>

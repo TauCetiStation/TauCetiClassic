@@ -85,17 +85,17 @@
 			if(result != FALSE)
 				return result
 
-	// if(href_list["change_waiting_component"])
-	// 	return ChangeWaitingComponent(href_list["change_waiting_component"])
+	if(action == "change_waiting_component" && params["target_component"])
+		return ChangeWaitingComponent(params["target_component"])
 
-	// if(href_list["change_timeout_component"])
-	// 	return ChangeTimeoutComponent(href_list["change_timeout_component"])
+	if(action == "change_timeout_component" && params["target_component"])
+		return ChangeTimeoutComponent(params["target_component"])
 
-	// if(href_list["change_checker_component"])
-	// 	return ChangeCheckerComponent(href_list["change_checker_component"])
+	if(action == "change_checker_component" && params["target_component"])
+		return ChangeCheckerComponent(params["target_component"])
 
-	// if(href_list["change_signals_wait"])
-	// 	return ChangeSignal(href_list["change_signals_wait"])
+	if(action == "change_signals_wait")
+		return ChangeSignal(params["change_signals_wait"])
 
 	return ..(action, params, "")
 

@@ -632,9 +632,9 @@ Class Procs:
 	return handle_fumbling(user, src, fumbling_time, required_skills, check_busy = FALSE)
 
 /obj/machinery/proc/InitializeProgram()
-	program_action = new /datum/pipe_system/component/data/initial_machinery(src, name)
+	program_action = new /datum/pipe_system/component/data/string/initial_machinery(src, name)
 
-	program_action.AddLastComponent(new /datum/pipe_system/component/data/target_program(src, src))
+	program_action.AddLastComponent(new /datum/pipe_system/component/data/ref/target_program(src, src))
 	program_action.AddLastComponent(new /datum/pipe_system/component/proc_component/clear_active_awaiters(src))
 	program_action.AddLastComponent(new /datum/pipe_system/component/data/req_access(src, req_access))
 
