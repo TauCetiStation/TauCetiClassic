@@ -24,7 +24,7 @@
 
 	return ..()
 
-/datum/pipe_system/component/proc_component/for_cycle/ApiChange(action, list/params, vector = "")
+/datum/pipe_system/component/proc_component/for_cycle/ApiChangeRuntime(action, list/params, vector = "")
 
 	if(action == "set_cycle_component" && params["target_component"])
 		return SetCycleComponent(params["target_component"])

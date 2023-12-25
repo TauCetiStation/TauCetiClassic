@@ -21,7 +21,24 @@
 
 	return new_component
 
-/datum/pipe_system/component/check/ApiChange(action, list/params, vector = "")
+/datum/pipe_system/component/check/ApiChange(action, list/params, vector)
+
+	vector = ""
+	if(!PingFromRef(params["link_component"]))
+		var/result = FALSE
+		if(fail_component && vector != PIPE_SYSTEM_BACK)
+			result = fail_component.ApiChange(action, params, PIPE_SYSTEM_FORWARD)
+			if(result != FALSE)
+				return result
+
+		if(success_component && vector != PIPE_SYSTEM_BACK)
+			result = success_component.ApiChange(action, params, PIPE_SYSTEM_FORWARD)
+			if(result != FALSE)
+				return result
+
+	return ..()
+
+/datum/pipe_system/component/check/ApiChangeRuntime(action, list/params, vector = "")
 
 	if(action == "change_fail_component" && params["target_component"])
 		return ChangeFailComponent(params["target_component"])

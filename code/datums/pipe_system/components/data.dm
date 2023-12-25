@@ -28,7 +28,7 @@
 
 	return new_component
 
-/datum/pipe_system/component/data/ApiChange(action, list/params, vector = "")
+/datum/pipe_system/component/data/ApiChangeRuntime(action, list/params, vector = "")
 
 	if(action == "set_data")
 		return SetData(params["data_change"])

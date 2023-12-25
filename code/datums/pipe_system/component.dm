@@ -164,6 +164,10 @@
 
 		return FALSE
 
+	return ApiChangeRuntime(action, params, vector)
+
+/datum/pipe_system/component/proc/ApiChangeRuntime(action, list/params, vector = "")
+
 	if(action == "select_component")
 		return src
 

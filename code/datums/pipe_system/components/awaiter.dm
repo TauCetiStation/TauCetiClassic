@@ -65,7 +65,7 @@
 
 	return FALSE
 
-/datum/pipe_system/component/awaiter/ApiChange(action, list/params, vector = "")
+/datum/pipe_system/component/awaiter/ApiChange(action, list/params, vector)
 
 	vector = ""
 	if(!PingFromRef(params["link_component"]))
@@ -84,6 +84,10 @@
 			result = timeout_component.ApiChange(action, params, PIPE_SYSTEM_FORWARD)
 			if(result != FALSE)
 				return result
+
+	return ..()
+
+/datum/pipe_system/component/awaiter/ApiChangeRuntime(action, list/params, vector = "")
 
 	if(action == "change_waiting_component" && params["target_component"])
 		return ChangeWaitingComponent(params["target_component"])
