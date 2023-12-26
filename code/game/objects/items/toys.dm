@@ -488,6 +488,13 @@
 		if("black")
 			light_color = COLOR_GRAY
 
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list()
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
+
 /obj/item/toy/sword/attack_self(mob/user)
 	active = !active
 	if (active)
@@ -540,14 +547,14 @@
 
 /obj/item/toy/dualsword
 	name = "double-bladed energy sword"
-	desc = "Handle with care"
+	desc = "Handle with care."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "dualsaber0"
-	item_state = "dualsaber0"
 	var/active = FALSE
 	w_class = SIZE_TINY
 	attack_verb = list("attacked", "struck", "hit")
 	var/blade_color = "blue"
+	sweep_step = 2
 
 /obj/item/toy/dualsword/atom_init()
 	. = ..()
@@ -567,6 +574,57 @@
 			light_color = COLOR_PINK
 		if("black")
 			light_color = COLOR_GRAY
+
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list()
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/dualsword, can_swipe))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/dualsword, can_swipe))
+	SCB.on_get_sweep_objects = CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/dualsword, get_sweep_objs))
+	AddComponent(/datum/component/swiping, SCB)
+
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.on_wield = CALLBACK(src, PROC_REF(on_wield))
+	TCB.on_unwield = CALLBACK(src, PROC_REF(on_unwield))
+	AddComponent(/datum/component/twohanded, TCB)
+
+/obj/item/toy/dualsword/proc/on_wield()
+	set_light(2)
+	w_class = SIZE_SMALL
+	flags_2 |= CANT_BE_INSERTED
+	return FALSE
+
+/obj/item/toy/dualsword/proc/on_unwield()
+	set_light(0)
+	flags_2 &= ~CANT_BE_INSERTED
+	w_class = initial(w_class)
+	return FALSE
+
+/obj/item/toy/dualsword/proc/can_swipe(mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
+
+/obj/item/toy/dualsword/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
+	var/list/directions_opposite = list()
+	for(var/dir_ in directions)
+		directions_opposite += turn(dir_, 180)
+
+	var/list/sweep_objects = list()
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_delay)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_delay)
+	return sweep_objects
+
+/obj/item/toy/dualsword/update_icon()
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
+		icon_state = "dualsaber[blade_color]1"
+	else
+		icon_state = "dualsaber0"
+	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
+
+/obj/item/toy/dualsword/attack_self(mob/user)
+	..()
 
 /obj/item/toy/dualsword/attack_self(mob/user)
 	active = !active
