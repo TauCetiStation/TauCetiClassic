@@ -9,7 +9,7 @@
 	flags =  CONDUCT
 	origin_tech = "combat=8;materials=5"
 	slot_flags = 0
-    initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	can_be_holstered = FALSE
 	two_hand_weapon = ONLY_TWOHAND
 	fire_sound = 'sound/effects/bang.ogg'
@@ -46,7 +46,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando
 	name = "\'Commando\' rocket launcher"
 	desc = "Четырёхзарядная ракетная установка. Когда тебя вообще не волнует целостность станции."
-    cases = list("Ракетная установка \'Commando\'","Ракетной установки \'Commando\'","Ракетной установке \'Commando\'","Ракетную установку \'Commando\'","Ракетной установкой \'Commando\'","Ракетной установке \'Commando\'")
+	cases = list("Ракетная установка \'Commando\'","Ракетной установки \'Commando\'","Ракетной установке \'Commando\'","Ракетную установку \'Commando\'","Ракетной установкой \'Commando\'","Ракетной установке \'Commando\'")
 	icon_state = "commando"
 	item_state = "commando"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket/four
