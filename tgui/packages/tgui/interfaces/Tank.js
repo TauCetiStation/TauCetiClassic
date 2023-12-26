@@ -64,4 +64,3 @@ export const Tank = (props, context) => {
     </Window>
   );
 };
-
