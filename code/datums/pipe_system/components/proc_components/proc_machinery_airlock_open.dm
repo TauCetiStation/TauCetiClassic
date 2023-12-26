@@ -7,6 +7,9 @@
 	var/datum/pipe_system/component/data/ref/terminal/terminal_data = process.GetCacheData(TERMINAL_DATA)
 	var/datum/pipe_system/component/data/string/program_command/program_command = process.GetCacheData(PROGRAM_COMMAND_DATA)
 
+	if(!program_command || !terminal_data || !target_program_data)
+		return ..()
+
 	if(!target_program_data.IsValid() || !terminal_data.IsValid() || !program_command.IsValid())
 		return ..()
 
