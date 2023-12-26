@@ -40,4 +40,3 @@ export { TextArea } from './TextArea';
 export { TimeDisplay } from './TimeDisplay';
 export { Tooltip } from './Tooltip';
 export { ProgramComponent, ProcessProgrammComponent, GetTypeProgramComponent } from './ProgramComponent';
-export { LineConnector } from './LineConnector';
