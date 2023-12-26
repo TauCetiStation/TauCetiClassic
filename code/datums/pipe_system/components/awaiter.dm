@@ -1,5 +1,6 @@
 /datum/pipe_system/component/awaiter
 	id_component = PIPE_SYSTEM_AWAITER
+	description = "Реализация асинхронной операции, по стандарту ожидает от компоненты CHECK сигнал успеха чтобы поместить ОЖИДАЮЩУЮ компоненту в цепочку"
 	var/datum/pipe_system/component/checker = null
 	var/datum/pipe_system/component/waiting_component = null
 	var/datum/pipe_system/component/timeout_component = null
@@ -27,6 +28,8 @@
 	RegisterSignal(process, COMSIG_PIPE_COMPONENT_ACTION, CALLBACK(src, .proc/InvokeCheckerComponent, process))
 
 	RegisterSignal(process, COMSIG_PIPE_COMPONENT_ACTION_LAST, CALLBACK(src, .proc/InvokeTimeoutComponent, process))
+
+	process.AddActiveAwaiter(src)
 
 	return ..()
 
@@ -67,7 +70,6 @@
 
 /datum/pipe_system/component/awaiter/ApiChange(action, list/params, vector)
 
-	vector = ""
 	if(!PingFromRef(params["link_component"]))
 		var/result = FALSE
 		if(checker && vector != PIPE_SYSTEM_BACK)
@@ -85,7 +87,7 @@
 			if(result != FALSE)
 				return result
 
-	return ..()
+	return ..(action, params, vector)
 
 /datum/pipe_system/component/awaiter/ApiChangeRuntime(action, list/params, vector = "")
 
@@ -106,15 +108,19 @@
 /datum/pipe_system/component/awaiter/GetApiObject(loop_safety = FALSE)
 	var/list/data = ..(loop_safety)
 
+	data["checker_component"] = null
 	if(checker && !loop_safety)
 		data["checker_component"] = checker.GetApiObject()
 
+	data["waiting_component"] = null
 	if(waiting_component && !loop_safety)
 		data["waiting_component"] = waiting_component.GetApiObject()
 
+	data["timeout_component"] = null
 	if(timeout_component && !loop_safety)
 		data["timeout_component"] = timeout_component.GetApiObject()
 
+	data["signals_list"] = null
 	if(signal_checker_wait)
 		data["signals_list"] = signal_checker_wait
 

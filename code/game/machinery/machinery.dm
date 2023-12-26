@@ -638,9 +638,8 @@ Class Procs:
 	program_action.AddLastComponent(new /datum/pipe_system/component/proc_component/clear_active_awaiters(src))
 	program_action.AddLastComponent(new /datum/pipe_system/component/data/req_access(src, req_access))
 
-	var/datum/pipe_system/component/proc_component/machinery_drop_contents/machinery_drop_contents_proc = new(src)
 	var/datum/pipe_system/component/proc_component/stop_program/stop_program_proc = new(src)
-	var/datum/pipe_system/component/check/req_access/firewall_check_req_access = new(src, machinery_drop_contents_proc, stop_program_proc)
+	var/datum/pipe_system/component/check/req_access/firewall_check_req_access = new(src, null, stop_program_proc)
 	program_action.AddLastComponent(firewall_check_req_access)
 
 	return TRUE

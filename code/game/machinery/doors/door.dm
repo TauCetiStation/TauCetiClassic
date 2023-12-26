@@ -104,6 +104,14 @@ var/global/list/wedge_image_cache = list()
 	else
 		take_out_wedged_item(user)
 
+/obj/machinery/door/InitializeProgram()
+	..()
+
+	var/datum/pipe_system/component/proc_component/machinery_airlock_open/open_door_command = new(src)
+	program_action.AddLastComponent(open_door_command)
+
+	return TRUE
+
 /obj/machinery/door/proc/generate_wedge_overlay()
 	var/cache_string = "[wedged_item.icon]||[wedged_item.icon_state]||[wedged_item.overlays.len]||[wedged_item.underlays.len]"
 

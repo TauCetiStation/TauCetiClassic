@@ -57,6 +57,9 @@
 
 /datum/pipe_system/process/proc/AddComponentPipe(datum/pipe_system/component/C)
 
+	if(!C)
+		return FALSE
+
 	var/datum/pipe_system/component/adding_component = C.CopyComponent()
 
 	if(!istype(adding_component))

@@ -5,3 +5,5 @@
 #define LOG_TARGET_DATA "log_target_data"
 #define FOR_CYCLE_INITIAL_DATA "for_cycle_initial_data"
 #define FOR_CYCLE_COUNT_DATA "for_cycle_count_data"
+#define USER_DATA "user_data"
+#define TERMINAL_DATA "terminal_data"

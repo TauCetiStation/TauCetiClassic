@@ -1,7 +1,7 @@
 /datum/pipe_system/component/proc_component/for_cycle
 	id_component = PIPE_SYSTEM_PROC_FOR_CYCLE
 	var/datum/pipe_system/component/cycle_component
-	description = "Реализация цикла FOR, использует FOR_CYCLE_COUNT_DATA и FOR_CYCLE_INITIAL_DATA для того чтобы внедрить в цепочку компоненту cycle_component определенное количество раз"
+	description = "(PIPE_SYSTEM_PROC_FOR_CYCLE) Реализация цикла FOR, использует FOR_CYCLE_COUNT_DATA и FOR_CYCLE_INITIAL_DATA для того чтобы внедрить в цепочку компоненту cycle_component определенное количество раз"
 
 /datum/pipe_system/component/proc_component/for_cycle/New(datum/P, datum/pipe_system/component/cycle_component)
 
@@ -38,10 +38,22 @@
 /datum/pipe_system/component/proc_component/for_cycle/GetApiObject(loop_safety)
 	var/list/data = ..(loop_safety)
 
+	data["cycle_component"] = null
 	if(cycle_component && !loop_safety)
 		data["cycle_component"] = cycle_component.GetApiObject()
 
 	return data
+
+/datum/pipe_system/component/proc_component/for_cycle/ApiChange(action, list/params, vector)
+
+	if(!PingFromRef(params["link_component"]))
+		var/result = FALSE
+		if(cycle_component && vector != PIPE_SYSTEM_BACK)
+			result = cycle_component.ApiChange(action, params, PIPE_SYSTEM_FORWARD)
+			if(result != FALSE)
+				return result
+
+	return ..(action, params, vector)
 
 /datum/pipe_system/component/proc_component/for_cycle/ApiChangeRuntime(action, list/params, vector = "")
 
@@ -58,3 +70,12 @@
 		src.cycle_component.previous_component = src
 
 	return TRUE
+
+/datum/pipe_system/component/proc_component/for_cycle/AfterDeleteChildComponent(datum/pipe_system/component/C)
+	if(..())
+		return TRUE
+
+	if(ref(cycle_component) == ref(C))
+		return SetCycleComponent(C.next_component)
+
+	return FALSE

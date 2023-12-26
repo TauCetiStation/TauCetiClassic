@@ -12,6 +12,7 @@ import { LineConnector, PositionTypes } from './LineConnector';
 import { Component, findDOMNode, createRef, InfernoNode, RefObject } from 'inferno';
 import { Input } from './Input';
 import { NumberInput } from './NumberInput';
+import { LabeledList } from './LabeledList';
 
 export class ProcessProgrammComponent extends Component {
 
@@ -22,7 +23,7 @@ export class ProcessProgrammComponent extends Component {
   render() {
     const TypeComponent = GetTypeProgramComponent(this.props.component?.id_component)
     return (
-        <TypeComponent act={this.props.act} selected_component={this.props.selected_component} component = {this.props.component}/>
+        <TypeComponent act={this.props.act} selected_component={this.props.selected_component} component = {this.props.component} thisEditProgram = {this.props.thisEditProgram}/>
     )
   }
 }
@@ -40,15 +41,37 @@ export class ProgramComponent extends Component {
   height;
   childComponentsRef;
   deleted;
+  content_blocks;
+  props;
 
   constructor(props) {
     super(props)
     this.refProgram = null;
+    this.props = props;
 
     this.updateProgramData()
+    this.initContentBlocks(this.props);
 
     if(this.props.getObj != null){
       this.props.getObj(this)
+    }
+  }
+
+  initContentBlocks(props){
+    this.content_blocks = []
+
+    this.content_blocks.push(
+      this.getMainComponentContent()
+    )
+
+    if(props.thisEditProgram){
+      this.content_blocks.push(
+        this.getProgramActions()
+      )
+    } else {
+      this.content_blocks.push(
+        this.getSavedComponentsActions()
+      );
     }
   }
 
@@ -130,34 +153,70 @@ export class ProgramComponent extends Component {
     )
   }
 
+  getMainComponentContent(){
+    return (
+      <Box>
+        <LabeledList>
+          <LabeledList.Item label="ID компоненты">
+            {this.id_component}
+          </LabeledList.Item>
+          <LabeledList.Item label="Описание">
+            {this.description}
+          </LabeledList.Item>
+        </LabeledList>
+      </Box>
+    )
+  }
+
+  getProgramActions(){
+    return (
+      <Box mt={3} border={"solid red"}>
+        <LabeledList>
+          <LabeledList.Item label="Ссылочное обозначение компоненты">
+            {this.link_component}
+          </LabeledList.Item>
+          <LabeledList.Item label="Следующий компонент">
+            {this.next_component?.link_component}
+          </LabeledList.Item>
+          <LabeledList.Item label="Предыдущий компонент">
+            {this.previous_component?.link_component}
+          </LabeledList.Item>
+          <LabeledList.Item label="Вставить следующий компонент" buttons = {[this.getButtonComponent(this, "X", "insert_next_component")]}>
+          </LabeledList.Item>
+          <LabeledList.Item labelColor={"red"} label="Удаление компоненты из процесса" buttons = {[this.getButtonComponent(this, "X", "self_delete")]}>
+          </LabeledList.Item>
+        </LabeledList>
+      </Box>
+    )
+  }
+
+  getSavedComponentsActions(){
+    return (
+      <Box>
+        <LabeledList>
+          <LabeledList.Item label="Инициализировать новую программу" buttons = {[this.getButtonComponent(this, "X", "set_first_component")]}>
+            {"Это действие из этой компоненты сделает новую программу"}
+          </LabeledList.Item>
+          <LabeledList.Item label="Сделать таргетом" buttons = {[this.getButtonComponent(this, "X", "set_target_component")]}>
+            {"Использовать этот компонент при следующем действии"}
+          </LabeledList.Item>
+        </LabeledList>
+      </Box>
+    )
+  }
+
   getObjectContent(){
     return(
-      <div>
-        DELETED: {this.deleted ? "YES" : "NO"}
-        <br></br>
-        ID COMPONENT: {this.id_component}
-        <br></br>
-        LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
-        <br></br>
-        DESCRIPTION: {this.description}
-        <br></br>
-        SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
-        <br></br>
-        SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
-        <br></br>
-        INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
-        <br></br>
-        LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
-        <br></br>
-        LINK Previous Component: {this.getButtonComponent(this.previous_component, "Select: " + this.previous_component?.link_component, "select_component")}
-        <br></br>
-        {this.getButtonComponent(this, "DELETE YOURSELF NOW", "self_delete")}
-      </div>
+      <Box>
+        {this.content_blocks.map((element, i) => (
+          <div>{element}</div>
+        ))}
+      </Box>
     )
   }
 
   getRenderObject(){
-    let backgroundColor = "#000000"
+    let backgroundColor = "#202020"
     if(this.props.selected_component?.link_component == this.link_component){
       backgroundColor = "#228B22"
     }
@@ -168,8 +227,10 @@ export class ProgramComponent extends Component {
 
     return (
       <div>
-        <Section fitted={false} getObj = {this.setRef} fill={false} grow={1} backgroundColor={backgroundColor} m={5}>
+        <Section width={40} fitted={false} getObj = {this.setRef} fill={false} grow={0} backgroundColor={backgroundColor} m={5}>
+          <Box maxWidth={40}>
             {this.deleted == true ? "Компоненты не существует" : this.getObjectContent()}
+          </Box>
         </Section>
       </div>
     )
@@ -190,7 +251,7 @@ export class ProgramComponent extends Component {
               <TypeComponent act={this.props.act} parent={this} connect={{
                 parent: PositionTypes.BottomCenter,
                 child: PositionTypes.TopCenter
-              }} component={element} selected_component={this.props.selected_component} getObj={this.setChildComponentRef}/>
+              }} component={element} selected_component={this.props.selected_component} getObj={this.setChildComponentRef} thisEditProgram = {this.props.thisEditProgram}/>
             )
           }
         })}
@@ -213,7 +274,7 @@ export class ProgramComponent extends Component {
         <TypeComponent act={this.props.act} getObj = {this.setNextComponentRef} connect={{
           parent: PositionTypes.RightCenter,
           child: PositionTypes.LeftCenter
-        }} parent = {this} selected_component={this.props.selected_component} component = {this.next_component}/>
+        }} parent = {this} selected_component={this.props.selected_component} component = {this.next_component} thisEditProgram = {this.props.thisEditProgram}/>
       )
     }
 
@@ -252,51 +313,48 @@ export class AwaiterProgramComponent extends ProgramComponent {
   }
 
   getChildComponents(){
-    let listComponents = []
-    listComponents.push(this.checker_component)
-    listComponents.push(this.waiting_component)
-    listComponents.push(this.timeout_component)
-    return listComponents
+    let listComponents = [];
+    listComponents.push(this.checker_component);
+    listComponents.push(this.waiting_component);
+    listComponents.push(this.timeout_component);
+    return listComponents;
   }
 
-  getObjectContent(){
-    return (
-        <div>
-            WAIT: {this.getButtonComponent(this.waiting_component, "Select: " + this.waiting_component?.link_component, "select_component")}
-            <br></br>
-            SET_WAIT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "change_waiting_component")}
-            <br></br>
-            TIMEOUT: {this.getButtonComponent(this.timeout_component, "Select: " + this.timeout_component?.link_component, "select_component")}
-            <br></br>
-            SET_TIMEOUT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "change_timeout_component")}
-            <br></br>
-            CHECKER: {this.getButtonComponent(this.checker_component, "Select: " + this.checker_component?.link_component, "select_component")}
-            <br></br>
-            SET_CHECKER_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "change_checker_component")}
-            <br></br>
-            SIGNALS: {this.signals_list?.map((element) => {
-              {element}
-            })}
-            <br></br>
-            ID COMPONENT: {this.id_component}
-            <br></br>
-            DESCRIPTION: {this.description}
-            <br></br>
-            LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
-            <br></br>
-            SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
-            <br></br>
-            SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
-            <br></br>
-            INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
-            <br></br>
-            LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
-            <br></br>
-            LINK Previous Component: {this.getButtonComponent(this.previous_component, "Select: " + this.previous_component?.link_component, "select_component")}
-            <br></br>
-            {this.getButtonComponent(this, "DELETE YOURSELF NOW", "self_delete")}
-        </div>
-    )
+  initContentBlocks(props: any): void {
+    super.initContentBlocks(props);
+    if(props.thisEditProgram){
+      this.content_blocks.push(
+        this.getAwaiterComponentsActions()
+      )
+    };
+  }
+
+  getAwaiterComponentsActions(){
+
+      return (
+        <Box>
+          <LabeledList>
+            <LabeledList.Item label="Ожидающая компонента">
+              {this.waiting_component?.link_component}
+            </LabeledList.Item>
+            <LabeledList.Item label="Таймаут компонента">
+              {this.timeout_component?.link_component}
+            </LabeledList.Item>
+            <LabeledList.Item label="Проверяющая компонента">
+              {this.checker_component?.link_component}
+            </LabeledList.Item>
+            <LabeledList.Item label="Изменить ожидающий компонент" buttons = {[this.getButtonComponent(this, "X", "change_waiting_component")]}>
+              {"Это действие из этой компоненты, поставит целевой компонент в ожидающий. Он будет помещен в цепь при выполнении программы если из ПРОВЕРЯЮЩЕЙ компоненты будет послан нужный СИГНАЛ"}
+            </LabeledList.Item>
+            <LabeledList.Item label="Изменить таймаут компонент" buttons = {[this.getButtonComponent(this, "X", "change_timeout_component")]}>
+              {"Это действие из этой компоненты, поставит целевой компонент в таймаут. Он будет помещен в цепь при выполнении программы если условие для ОЖИДАЮЩЕЙ компоненты не будет выполнено и программа закончит работу (то есть в конец)"}
+            </LabeledList.Item>
+            <LabeledList.Item label="Изменить проверяющую компоненту" buttons = {[this.getButtonComponent(this, "X", "change_checker_component")]}>
+              {"Это действие из этой компоненты, поставит целевой компонент в проверяющую. Проверяющая компонента делает свое действие после каждого выполнения последующих компонент, пока AWAITER активен и пока цепь продолжается"}
+            </LabeledList.Item>
+          </LabeledList>
+        </Box>
+      )
   }
 }
 
@@ -316,31 +374,34 @@ export class DataProgramComponent extends ProgramComponent {
     this.id_data = component?.id_data;
   }
 
-  getObjectContent(){
+  initContentBlocks(props: any): void {
+    super.initContentBlocks(props);
+    this.content_blocks.push(
+      this.getDataInfo()
+    );
+    if(props.thisEditProgram){
+      this.content_blocks.push(
+        this.getProgramDataActions()
+      );
+    };
+  }
+
+  getProgramDataActions(){
+    return null;
+  }
+
+  getDataInfo(){
     return (
-        <div>
-            ID_DATA: {this.id_data}
-            <br></br>
-            VALUE: {this.data}
-            <br></br>
-            ID COMPONENT: {this.id_component}
-            <br></br>
-            DESCRIPTION: {this.description}
-            <br></br>
-            LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
-            <br></br>
-            SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
-            <br></br>
-            SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
-            <br></br>
-            INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
-            <br></br>
-            LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
-            <br></br>
-            LINK Previous Component: {this.getButtonComponent(this.previous_component, "Select: " + this.previous_component?.link_component, "select_component")}
-            <br></br>
-            {this.getButtonComponent(this, "DELETE YOURSELF NOW", "self_delete")}
-        </div>
+      <Box>
+        <LabeledList>
+          <LabeledList.Item label="Информация">
+            {this.data}
+          </LabeledList.Item>
+          <LabeledList.Item label="ID информации">
+            {this.id_data}
+          </LabeledList.Item>
+        </LabeledList>
+      </Box>
     )
   }
 }
@@ -373,38 +434,22 @@ export class DataStringProgramComponent extends DataProgramComponent {
     )
   }
 
-  getObjectContent(){
+  getProgramDataActions(){
     return (
-        <div>
-            ID_DATA: {this.id_data}
-            <br></br>
-            VALUE: {this.data}
-            <br></br>
-            TEXTBOX_DATA_CHANGE: {this.getTextBoxComponent(this, "", "set_data")}
-            <br></br>
-            ID COMPONENT: {this.id_component}
-            <br></br>
-            DESCRIPTION: {this.description}
-            <br></br>
-            LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
-            <br></br>
-            SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
-            <br></br>
-            SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
-            <br></br>
-            INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
-            <br></br>
-            LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
-            <br></br>
-            LINK Previous Component: {this.getButtonComponent(this.previous_component, "Select: " + this.previous_component?.link_component, "select_component")}
-            <br></br>
-            {this.getButtonComponent(this, "DELETE YOURSELF NOW", "self_delete")}
-        </div>
+      <Box>
+        <LabeledList>
+          <LabeledList.Item label="Изменить информацию">
+            {this.getTextBoxComponent(this, "", "set_data")}
+          </LabeledList.Item>
+        </LabeledList>
+      </Box>
     )
   }
 }
 
 export class DataNumberProgramComponent extends DataProgramComponent {
+  min_value;
+  max_value;
 
   constructor(props) {
     super(props)
@@ -416,6 +461,8 @@ export class DataNumberProgramComponent extends DataProgramComponent {
     let component : DataNumberProgramComponent = this.props.component as DataNumberProgramComponent
     this.data = component?.data;
     this.id_data = component?.id_data;
+    this.min_value = component?.min_value;
+    this.max_value = component?.max_value;
   }
 
   getNumberBoxComponent(element : ProgramComponent, text, action){
@@ -423,7 +470,7 @@ export class DataNumberProgramComponent extends DataProgramComponent {
       return "None"
     }
     return (
-    <NumberInput value={this.data} onChange={(e, value) => this.props.act(action, {
+    <NumberInput minValue = {this.min_value} maxValue = {this.max_value} value={this.data} onChange={(e, value) => this.props.act(action, {
       link_component: element?.link_component,
       data_change: value
     })}>
@@ -432,33 +479,15 @@ export class DataNumberProgramComponent extends DataProgramComponent {
     )
   }
 
-  getObjectContent(){
+  getProgramDataActions(){
     return (
-        <div>
-            ID_DATA: {this.id_data}
-            <br></br>
-            VALUE: {this.data}
-            <br></br>
-            NUMBERBOX_DATA_CHANGE: {this.getNumberBoxComponent(this, "", "set_data")}
-            <br></br>
-            ID COMPONENT: {this.id_component}
-            <br></br>
-            DESCRIPTION: {this.description}
-            <br></br>
-            LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
-            <br></br>
-            SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
-            <br></br>
-            SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
-            <br></br>
-            INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
-            <br></br>
-            LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
-            <br></br>
-            LINK Previous Component: {this.getButtonComponent(this.previous_component, "Select: " + this.previous_component?.link_component, "select_component")}
-            <br></br>
-            {this.getButtonComponent(this, "DELETE YOURSELF NOW", "self_delete")}
-        </div>
+      <Box>
+        <LabeledList>
+          <LabeledList.Item label="Изменить информацию">
+            {this.getNumberBoxComponent(this, "", "set_data")}
+          </LabeledList.Item>
+        </LabeledList>
+      </Box>
     )
   }
 }
@@ -479,29 +508,34 @@ export class CheckerProgramComponent extends ProgramComponent {
     this.success_component = component?.success_component;
   }
 
-  getObjectContent(){
+  initContentBlocks(props: any): void {
+    super.initContentBlocks(props);
+    if(props.thisEditProgram){
+      this.content_blocks.push(
+        this.getCheckerProgramActions()
+      )
+    }
+  }
+
+  getCheckerProgramActions(){
     return (
-        <div>
-            <br></br>
-            ID COMPONENT: {this.id_component}
-            <br></br>
-            DESCRIPTION: {this.description}
-            <br></br>
-            LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
-            <br></br>
-            SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
-            <br></br>
-            SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
-            <br></br>
-            INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
-            <br></br>
-            LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
-            <br></br>
-            LINK Previous Component: {this.getButtonComponent(this.previous_component, "Select: " + this.previous_component?.link_component, "select_component")}
-            <br></br>
-            {this.getButtonComponent(this, "DELETE YOURSELF NOW", "self_delete")}
-        </div>
-    )
+      <Box>
+        <LabeledList>
+            <LabeledList.Item label="Успешная компонента">
+              {this.success_component?.link_component}
+            </LabeledList.Item>
+            <LabeledList.Item label="Провальная компонента">
+              {this.fail_component?.link_component}
+            </LabeledList.Item>
+            <LabeledList.Item label="Изменить успешную компоненту" buttons = {[this.getButtonComponent(this, "X", "change_success_component")]}>
+              {"Это действие из этой компоненты, поставит целевой компонент в успешный. Он будет помещен в цепь при выполнении программы если из проверка внутри этой компоненты будет УСПЕШНОЙ"}
+            </LabeledList.Item>
+            <LabeledList.Item label="Изменить провальную компоненту" buttons = {[this.getButtonComponent(this, "X", "change_fail_component")]}>
+            {"Это действие из этой компоненты, поставит целевой компонент в успешный. Он будет помещен в цепь при выполнении программы если из проверка внутри этой компоненты будет ПРОВАЛЬНОЙ"}
+            </LabeledList.Item>
+          </LabeledList>
+      </Box>
+    );
   }
 }
 
@@ -518,35 +552,9 @@ export class ProcProgramComponent extends ProgramComponent {
     let component : ProcProgramComponent = this.props.component as ProcProgramComponent
     this.using_data = component?.using_data;
   }
-
-  getObjectContent(){
-    return (
-        <div>
-            <br></br>
-            ID COMPONENT: {this.id_component}
-            <br></br>
-            DESCRIPTION: {this.description}
-            <br></br>
-            LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
-            <br></br>
-            SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
-            <br></br>
-            SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
-            <br></br>
-            INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
-            <br></br>
-            LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
-            <br></br>
-            LINK Previous Component: {this.getButtonComponent(this.previous_component, "Select: " + this.previous_component?.link_component, "select_component")}
-            <br></br>
-            {this.getButtonComponent(this, "DELETE YOURSELF NOW", "self_delete")}
-        </div>
-    )
-  }
 }
 
 export class ProcForCycleProgramComponent extends ProcProgramComponent {
-  using_data?;
   cycle_component?;
 
   constructor(props) {
@@ -566,30 +574,72 @@ export class ProcForCycleProgramComponent extends ProcProgramComponent {
     return listComponents
   }
 
-  getObjectContent(){
+  initContentBlocks(props: any): void {
+    super.initContentBlocks(props);
+    if(props.thisEditProgram){
+      this.content_blocks.push(
+        this.getProgramActionsForCycle()
+      )
+    }
+  }
+
+  getProgramActionsForCycle() {
     return (
-        <div>
-            <br></br>
-            ID COMPONENT: {this.id_component}
-            <br></br>
-            DESCRIPTION: {this.description}
-            <br></br>
-            LINK: {this.getButtonComponent(this, "Select: " + this.link_component, "select_component")}
-            <br></br>
-            SET_CYCLE_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_cycle_component")}
-            <br></br>
-            SET_FIRST_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_first_component")}
-            <br></br>
-            SET_TARGET_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "set_target_component")}
-            <br></br>
-            INSERT_NEXT_COMPONENT: {this.getButtonComponent(this, "Set: " + this.link_component, "insert_next_component")}
-            <br></br>
-            LINK Next Component: {this.getButtonComponent(this.next_component, "Select: " + this.next_component?.link_component, "select_component")}
-            <br></br>
-            LINK Previous Component: {this.getButtonComponent(this.previous_component, "Select: " + this.previous_component?.link_component, "select_component")}
-            <br></br>
-            {this.getButtonComponent(this, "DELETE YOURSELF NOW", "self_delete")}
-        </div>
+      <Box>
+        <LabeledList>
+          <LabeledList.Item label="Цикличная компонента">
+            {this.cycle_component?.link_component}
+          </LabeledList.Item>
+          <LabeledList.Item label="Изменить цикличную компоненту" buttons = {[this.getButtonComponent(this, "X", "set_cycle_component")]}>
+            {"Это действие из этой компоненты, поставит целевой компонент в цикличную. Она будет помещаться в цепь при выполнении программы когда начнется выполнение этой компоненты и ее копии будут помещаться туда определенное количество раз"}
+          </LabeledList.Item>
+        </LabeledList>
+      </Box>
+    )
+  }
+}
+
+export class ProcInjectAfterNextComponentProgramComponent extends ProcProgramComponent {
+  inject_component?;
+
+  constructor(props) {
+    super(props)
+  }
+
+  updateProgramData(){
+    super.updateProgramData()
+
+    let component : ProcInjectAfterNextComponentProgramComponent = this.props.component as ProcInjectAfterNextComponentProgramComponent
+    this.inject_component = component?.inject_component;
+  }
+
+  getChildComponents(){
+    let listComponents = []
+    listComponents.push(this.inject_component)
+    return listComponents
+  }
+
+  initContentBlocks(props: any): void {
+    super.initContentBlocks(props);
+    if(props.thisEditProgram){
+      this.content_blocks.push(
+        this.getProgramActionsForCycle()
+      )
+    }
+  }
+
+  getProgramActionsForCycle() {
+    return (
+      <Box>
+        <LabeledList>
+          <LabeledList.Item label="Внедряемая компонента">
+            {this.inject_component?.link_component}
+          </LabeledList.Item>
+          <LabeledList.Item label="Изменить внедряемую компоненту" buttons = {[this.getButtonComponent(this, "X", "set_inject_component")]}>
+            {"Это действие из этой компоненты, поставит целевой компонент во внедряемую. Она будет помещаться в цепь после следующей, при отсутствии следующей компоненты ничего происходить не будет"}
+          </LabeledList.Item>
+        </LabeledList>
+      </Box>
     )
   }
 }
@@ -605,6 +655,7 @@ export const ProgramComponentTypesMap = {
   "pipe_system_data_string" : DataStringProgramComponent,
   "pipe_system_data_number" : DataNumberProgramComponent,
   "pipe_system_data_ref" : DataProgramComponent,
+  "pipe_system_proc_inject_after_next_component" : ProcInjectAfterNextComponentProgramComponent,
 }
 
 export const GetTypeProgramComponent = (id_component) =>{

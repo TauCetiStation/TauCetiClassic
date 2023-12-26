@@ -25,9 +25,11 @@
 /datum/pipe_system/component/check/GetApiObject(loop_safety)
 	var/list/data = ..(loop_safety)
 
+	data["success_component"] = null
 	if(success_component && !loop_safety)
 		data["success_component"] = success_component.GetApiObject()
 
+	data["fail_component"] = null
 	if(fail_component && !loop_safety)
 		data["fail_component"] = fail_component.GetApiObject()
 
@@ -35,7 +37,6 @@
 
 /datum/pipe_system/component/check/ApiChange(action, list/params, vector)
 
-	vector = ""
 	if(!PingFromRef(params["link_component"]))
 		var/result = FALSE
 		if(fail_component && vector != PIPE_SYSTEM_BACK)
@@ -48,7 +49,7 @@
 			if(result != FALSE)
 				return result
 
-	return ..()
+	return ..(action, params, vector)
 
 /datum/pipe_system/component/check/ApiChangeRuntime(action, list/params, vector = "")
 
@@ -60,11 +61,30 @@
 
 	return ..()
 
+/datum/pipe_system/component/check/AfterDeleteChildComponent(datum/pipe_system/component/C)
+	if(..())
+		return TRUE
+
+	if(ref(fail_component) == ref(C))
+		return ChangeFailComponent(C.next_component)
+
+	if(ref(success_component) == ref(C))
+		return ChangeSuccessComponent(C.next_component)
+
+	return FALSE
+
 /datum/pipe_system/component/check/proc/ChangeFailComponent(datum/pipe_system/component/C)
 	fail_component = C
 
+	if(fail_component)
+		fail_component.previous_component = src
+
 /datum/pipe_system/component/check/proc/ChangeSuccessComponent(datum/pipe_system/component/C)
+
 	success_component = C
+
+	if(success_component)
+		success_component.previous_component = src
 
 /datum/pipe_system/component/check/proc/FailCheck(datum/pipe_system/process/process)
 

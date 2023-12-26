@@ -109,6 +109,12 @@
 
 	var/datum/pipe_system/process/process = new()
 
+	var/datum/pipe_system/component/data/ref/target_program/target_program = new(src, target)
+	process.AddComponentPipe(target_program)
+
+	var/datum/pipe_system/component/data/ref/terminal/terminal_data = new(src, src)
+	process.AddComponentPipe(terminal_data)
+
 	process.AddComponentPipe(selected_program)
 
 	target.interact_program(process)
@@ -152,28 +158,24 @@
 /obj/item/device/terminal/proc/InitDefaultSavedComponents()
 	LAZYINITLIST(saved_components)
 
-	var/datum/pipe_system/component/data/number/number_component_example = new(src, 0)
-	var/datum/pipe_system/component/data/string/string_component_example = new(src, "")
 	var/datum/pipe_system/component/data/number/for_cycle_count/for_cycle_count_example = new(src, 10)
 	var/datum/pipe_system/component/data/number/for_cycle_initial/for_cycle_initial_example = new(src, 0)
+	var/datum/pipe_system/component/data/string/program_command/program_command = new(src)
 	var/datum/pipe_system/component/proc_component/skip_component/skip_component = new(src)
 	var/datum/pipe_system/component/proc_component/stop_program/stop_program = new(src)
 	var/datum/pipe_system/component/proc_component/for_cycle/for_cycle = new(src)
+	var/datum/pipe_system/component/proc_component/inject_after_next_component/injector = new(src)
 	var/datum/pipe_system/component/awaiter/awaiter = new(src)
-	var/datum/pipe_system/component/check/checker = new(src)
-	var/datum/pipe_system/component/data/ref/log_target/log_target = new(src, src)
 	var/datum/pipe_system/component/proc_component/log_terminal/log_terminal = new(src)
 
-	LAZYADD(saved_components, number_component_example)
-	LAZYADD(saved_components, string_component_example)
 	LAZYADD(saved_components, for_cycle_count_example)
 	LAZYADD(saved_components, for_cycle_initial_example)
+	LAZYADD(saved_components, program_command)
 	LAZYADD(saved_components, skip_component)
 	LAZYADD(saved_components, stop_program)
 	LAZYADD(saved_components, for_cycle)
+	LAZYADD(saved_components, injector)
 	LAZYADD(saved_components, awaiter)
-	LAZYADD(saved_components, checker)
-	LAZYADD(saved_components, log_target)
 	LAZYADD(saved_components, log_terminal)
 
 	return TRUE

@@ -198,9 +198,11 @@
 
 	var/list/data = list()
 
+	data["next_component"] = null
 	if(next_component && !loop_safety)
 		data["next_component"] = next_component.GetApiObject()
 
+	data["previous_component"] = null
 	if(previous_component)
 		data["previous_component"] = previous_component.GetApiObject(TRUE)
 

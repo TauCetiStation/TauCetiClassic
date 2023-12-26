@@ -1,4 +1,5 @@
 /datum/pipe_system/component/check/req_access
+	description = "(REQ_ACCESS_DATA, ACCESS_DATA) Проверка доступа"
 
 /datum/pipe_system/component/check/req_access/RunTimeAction(datum/pipe_system/process/process)
 
