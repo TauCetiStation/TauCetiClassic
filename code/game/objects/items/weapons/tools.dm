@@ -397,8 +397,8 @@
 		if (rigged)
 			var/turf/T = get_turf(src.loc)
 			var/phoron =  reagents.get_reagent_amount("phoron")
-			var/devast = round(phoron / 80)
-			var/area = CEIL(phoron / 20)
+			var/devast = (phoron >= 80) ? 1 : 0
+			var/area = ceil(phoron / 20)
 			log_admin("LOG: Rigged weldingtool explosion, last touched by [fingerprintslast]")
 			message_admins("LOG: Rigged weldingtool explosion, last touched by [fingerprintslast] [ADMIN_JMP(T)]")
 			explosion(T, devast, area, area * 2, area * 4)
