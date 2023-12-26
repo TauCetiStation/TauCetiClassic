@@ -584,13 +584,13 @@
 
 	return ..()
 
-obj/item/weapon/reagent_containers/food/drinks/attackby(obj/O, mob/user)
-  var/newname = sanitize_safe(input(usr, "Как назвать ваш коктель?"))
+/obj/item/weapon/reagent_containers/food/drinks/attackby(obj/O, mob/user)
+  var/newname = sanitize_safe(input(usr, "Как назвать ваш коктейль?"))
   if(istype(O, /obj/item/weapon/pen))
     if(!newname)
       return
     else
-      name = ("Коктель [sanitize(newname)]")
+      name = ("Коктейль [sanitize(newname)]")
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
