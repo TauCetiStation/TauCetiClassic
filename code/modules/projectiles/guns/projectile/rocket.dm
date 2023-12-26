@@ -35,7 +35,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo
 	name = "XASL Mk.2 singularity buster"
 	desc = "Эксперементальная Анти-Сингулярная пусковая установка. В случае чрезвычайной ситуации вам следует направить ее на сверхмассивную чёрную дыру, приближающуюся к вам."
-    cases = list("Разрушитель сингулярностей XASL Mk.2","Разрушителя сингулярностей XASL Mk.2","Разрушителю сингулярностей XASL Mk.2","Разрушитель сингулярностей XASL Mk.2","Разрушителем сингулярностей XASL Mk.2","Разрушителе сингулярностей XASL Mk.2")
+	cases = list("Разрушитель сингулярностей XASL Mk.2","Разрушителя сингулярностей XASL Mk.2","Разрушителю сингулярностей XASL Mk.2","Разрушитель сингулярностей XASL Mk.2","Разрушителем сингулярностей XASL Mk.2","Разрушителе сингулярностей XASL Mk.2")
 	icon_state = "anti-singulo"
 	item_state = "anti-singulo"
 	slot_flags = SLOT_FLAGS_BACK
