@@ -26,11 +26,13 @@ export class Section extends Component<SectionProps> {
   scrollableRef: RefObject<HTMLDivElement>;
   sectionRef: RefObject<HTMLDivElement>;
   scrollable: boolean;
+  props;
 
   constructor(props) {
     super(props);
     this.scrollableRef = createRef();
     this.scrollable = props.scrollable;
+    this.props = props;
   }
 
   componentDidMount() {
@@ -45,11 +47,11 @@ export class Section extends Component<SectionProps> {
     }
   }
 
-  setRef = (ref) =>{
-    this.sectionRef = ref
+  setRef = (ref) => {
+    this.sectionRef = ref;
 
-    if(this.props.getObj){
-      this.props.getObj(this.sectionRef)
+    if (this.props.getObj) {
+      this.props.getObj(this.sectionRef);
     }
   }
 
@@ -67,7 +69,7 @@ export class Section extends Component<SectionProps> {
     const hasTitle = canRender(title) || canRender(buttons);
     return (
       <div
-        ref = {this.setRef}
+        ref={this.setRef}
         className={classes([
           'Section',
           Byond.IS_LTE_IE8 && 'Section--iefix',
