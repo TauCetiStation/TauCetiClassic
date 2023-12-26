@@ -102,7 +102,7 @@
 		var/obj/scan_object = attacked_atom
 		ScanObject(scan_object)
 
-	if(!istype(attacked_atom, /obj/machinery))
+	if(!ismachinery(attacked_atom))
 		return
 
 	var/obj/machinery/target = attacked_atom
