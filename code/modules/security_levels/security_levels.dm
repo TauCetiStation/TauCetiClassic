@@ -69,6 +69,8 @@
 				if(!delta_timer_id)
 					delta_alarm()
 				SSsmartlight.update_mode(light_modes_by_name["Code Delta"], TRUE)
+			// commented in favor of deltacode above, also because we don't use NS actively atm. Need to revisit this
+			//SSsmartlight.check_nightshift() // Night shift mode turns off if security level is raised to red or above
 		code_announce.play()
 	else
 		return
