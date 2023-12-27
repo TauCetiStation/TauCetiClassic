@@ -741,7 +741,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += l_hand
 
-		var/image/standing = l_hand.get_standing_overlay(src, l_hand.lefthand_file, SPRITE_SHEET_HELD, -L_HAND_LAYER, icon_state_appendix = "_l")
+		var/image/standing = l_hand.get_standing_overlay(src, l_hand.lefthand_file, SPRITE_SHEET_HELD, -L_HAND_LAYER, "[SLOT_L_HAND]", icon_state_appendix = "_l")
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[L_HAND_LAYER] = standing
 		if(handcuffed)
