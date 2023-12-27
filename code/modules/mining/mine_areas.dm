@@ -125,7 +125,7 @@
 		return
 	var/mob/M = A
 	M.overlay_fullscreen("mine_veil", /atom/movable/screen/fullscreen/oxy, 7)
-	to_chat(A, "<span class='warning'>Suspension of particles obstructs the view.</span>")
+	to_chat(A, "<span class='warning'>Suspension of particles obstructs the view. This area are more dangerous.</span>")
 
 /area/asteroid/mine/unexplored/dangerous/Exited(atom/movable/A, atom/NewLoc)
 	. = ..()
