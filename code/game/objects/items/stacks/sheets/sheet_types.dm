@@ -35,6 +35,12 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 		new/datum/stack_recipe("lime comfy chair", /obj/structure/stool/bed/chair/comfy/lime, 2, one_per_turf = TRUE, on_floor = TRUE),
 		new/datum/stack_recipe("teal comfy chair", /obj/structure/stool/bed/chair/comfy/teal, 2, one_per_turf = TRUE, on_floor = TRUE),
 		), 2),
+	new/datum/stack_recipe_list("Cabinets", list(
+			new/datum/stack_recipe("Light filling cabinet", /obj/structure/filingcabinet/filingcabinet, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+			new/datum/stack_recipe("Dark filling cabinet", /obj/structure/filingcabinet, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+			new/datum/stack_recipe("Light chest drawer", /obj/structure/filingcabinet/chestdrawer, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+			new/datum/stack_recipe("Dark chest drawer", /obj/structure/filingcabinet/chestdrawer/black, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+		), 4),
 	null,
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2),
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts),
@@ -109,10 +115,6 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	recipes = metal_recipes
 	. = ..()
 
-/obj/item/stack/sheet/metal/random/atom_init()
-	amount = rand(8, 12)
-	. = ..()
-
 /*
  * Plasteel
  */
@@ -134,10 +136,6 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 
 /obj/item/stack/sheet/plasteel/atom_init()
 	recipes = plasteel_recipes
-	. = ..()
-
-/obj/item/stack/sheet/plasteel/random/atom_init()
-	amount = rand(1, 3)
 	. = ..()
 
 /*
@@ -178,10 +176,6 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 
 /obj/item/stack/sheet/wood/atom_init()
 	recipes = wood_recipes
-	. = ..()
-
-/obj/item/stack/sheet/wood/random/atom_init()
-	amount = rand(3, 8)
 	. = ..()
 
 /*

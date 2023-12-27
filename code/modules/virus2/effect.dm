@@ -33,6 +33,7 @@
 	var/level = 1
 	var/max_stage = 1
 	var/cooldown = 0
+	var/pools = list()
 
 /datum/disease2/effect/proc/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -54,6 +55,7 @@
 	cooldown = 0
 	chance_minm = 100
 	chance_maxm = 100
+	pools = list(POOL_POSITIVE_VIRUS)
 	var/passive_message = "" //random message to infected but not actively healing people
 	COOLDOWN_DECLARE(heal_message)
 
@@ -95,73 +97,95 @@
 	cooldown = 10
 	chance_minm = 20
 	chance_maxm = 20
+	pools = list(POOL_NEGATIVE_VIRUS)
 	var/activated = FALSE
 	var/obj/item/organ/external/infected_organ = null //if infected part is removed, destroys itself
 
 /datum/disease2/effect/zombie/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	if(ishuman(A))
-		var/mob/living/carbon/human/H = A
-		if(iszombie(H))
-			disease.dead = TRUE
-			return
+	if(!ishuman(A))
+		return
+	var/mob/living/carbon/human/H = A
+	if(iszombie(H) || activated)
+		disease.dead = TRUE
+		UnregisterSignal(H, COMSIG_MOB_DIED)
+		return
 
-		if(!(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
-			return
+	if(!(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
+		return
 
-		if(infected_organ == null && holder.ticks == 0)
-			var/list/organs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Organs that you can actually cut off are checked first to give a chance
-			organs = shuffle(organs) + shuffle(list(BP_CHEST, BP_GROIN, BP_HEAD))
+	if(infected_organ == null && holder.ticks == 0)
+		var/list/organs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Organs that you can actually cut off are checked first to give a chance
+		organs = shuffle(organs) + shuffle(list(BP_CHEST, BP_GROIN, BP_HEAD))
+		for(var/o in organs)
+			var/obj/item/organ/external/BP = H.get_bodypart(o)
+			if(BP && BP.is_flesh() && BP.is_usable())
+				infected_organ = BP
+				break
 
-			for(var/o in organs)
-				var/obj/item/organ/external/BP = H.get_bodypart(o)
-				if(BP && BP.is_flesh() && BP.is_usable())
-					infected_organ = BP
-					break
+	if(QDELETED(infected_organ) || !infected_organ || !infected_organ.is_flesh() || infected_organ.is_stump || !infected_organ.is_attached())
+		disease.dead = TRUE
+		UnregisterSignal(A, COMSIG_MOB_DIED)
+		to_chat(H, "<span class='notice'>You suddenly feel better.</span>")
+		return
 
-		if(QDELETED(infected_organ) || !infected_organ || !infected_organ.is_flesh() || infected_organ.is_stump || !infected_organ.is_attached())
-			disease.dead = TRUE
-			to_chat(H, "<span class='notice'>You suddenly feel better.</span>")
-			return
+	var/tox_damage = 0
+	var/messages_pool = list()
 
-		switch(holder.stage)
-			if(1,2,3) //increased hunger
-				H.nutrition = max(H.nutrition - 20, 0)
-				if(prob(1)) //might never happen and its fine
-					to_chat(H, "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You are hungry for something.", "You suddenly feel better.", "You suddenly feel worse.")]</span>")
-			if(4,5,6) //some random stuff
-				H.adjustToxLoss(1)
-				if(prob(70))
-					H.emote(pick("twitch","drool","sneeze","sniff","cough","shiver","giggle","laugh","gasp"))
-				else
-					to_chat(H, "<span class='warning'>[pick("Your [infected_organ.name] seems to become more green...", "Your [infected_organ.name] hurts...")]</span>")
-			if(7,8) //pain
-				to_chat(H, "<span class='danger'>[pick("Your brain hurts.", "Your [infected_organ.name] hurts a lot.", "Your muscles ache.", "Your muscles are sore.")]</span>")
-				H.apply_effect(20, AGONY, 0)
-				H.adjustBrainLoss(5)
-				H.adjustToxLoss(3)
-			if(9) //IT HURTS
-				if(prob(33))
-					to_chat(H, "<span class='danger'>[pick("IT HURTS", "You feel a sharp pain across your whole body!")]</span>")
-					H.adjustBruteLoss(rand(2, 5))
-					H.apply_effect(50, AGONY, 0)
-				else if(prob(33) && H.stat == CONSCIOUS)
-					to_chat(H, "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>")
-					H.adjustOxyLoss(rand(10, 40))
-				else
-					to_chat(H, "<span class='danger'>[pick("Your body is paralyzed.")]</span>")
-					H.Stun(4)
-			if(10) //rip
-				if(!activated)
-					activated = TRUE
-					H.visible_message("<span class='danger'>[H] suddenly closes \his eyes. \His body falls lifeless and stops moving. \He seems to stop breathing.</span>")
-					H.SetSleeping(600 SECONDS)
-					handle_infected_death(H)
-					H.update_canmove()
-					disease.dead = TRUE
+	H.nutrition = max(H.nutrition - 20, 0)
+	messages_pool += "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You are hungry for something.", "You suddenly feel better.", "You suddenly feel worse.")]</span>"
+	if(holder.stage > 3) //some random stuff
+		tox_damage += 1
+		if(prob(10))
+			H.emote(pick("twitch","drool","sneeze","sniff","cough","shiver","giggle","laugh","gasp"))
+		messages_pool += "<span class='warning'>[pick("Your [infected_organ.name] seems to become more green...", "Your [infected_organ.name] hurts...")]</span>"
+	if(holder.stage > 6) //pain
+		messages_pool += "<span class='danger'>[pick("Your brain hurts.", "Your [infected_organ.name] hurts a lot.", "Your muscles ache.", "Your muscles are sore.")]</span>"
+		H.adjustBrainLoss(5)
+		tox_damage += 2
+	if(holder.stage > 8) //IT HURTS
+		if(prob(33))
+			messages_pool += "<span class='danger'>[pick("IT HURTS", "You feel a sharp pain across your whole body!")]</span>"
+			H.adjustBruteLoss(20)
+			H.apply_effect(20, AGONY, 0)
+		else if(prob(33) && H.stat == CONSCIOUS)
+			messages_pool += "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>"
+			H.adjustOxyLoss(10)
+			H.losebreath = 5
+		else
+			messages_pool += "<span class='danger'>Your body is paralyzed.</span>"
+			H.Stun(4)
+
+	H.adjustToxLoss(tox_damage)
+	if(prob(50))
+		to_chat(H, pick(messages_pool))
+
+	if(holder.stage > 9) //rip
+		activated = TRUE
+		H.suiciding = TRUE
+		UnregisterSignal(H, COMSIG_MOB_DIED)
+		H.adjustOxyLoss(max(H.maxHealth * 2 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss(), 0))
+		H.updatehealth()
+		disease.dead = TRUE
 
 /datum/disease2/effect/zombie/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 	var/datum/disease2/effect/zombie/Z = effect_old
 	infected_organ = Z.infected_organ
+
+/datum/disease2/effect/zombie/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	. = ..()
+	if(ishuman(A))
+		UnregisterSignal(A, COMSIG_MOB_DIED)
+
+/datum/disease2/effect/zombie/proc/handle_infected_death(mob/user)
+	SIGNAL_HANDLER
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), 600)
+		to_chat(H, "<span class='cult'>Твоё сердце останавливается, но вместе с этим просыпается ненасытный ГОЛОД... \
+				Вот только жизнь не покинула твоё бездыханное тело. \
+				Этот голод не отпускает тебя, ты ещё восстанешь, что бы распространять болезнь и сеять смерть!</span>")
+		activated = TRUE
+		UnregisterSignal(H, COMSIG_MOB_DIED)
 
 ////////////////////////STAGE 4/////////////////////////////////
 
@@ -230,6 +254,7 @@
 	level = 4
 	cooldown = 60
 	max_stage = 5
+	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
 	COOLDOWN_DECLARE(metabolicboost_message)
 
 /datum/disease2/effect/metabolism/activate_mob(mob/living/carbon/human/M, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -253,6 +278,7 @@
 	max_stage = 3
 	cooldown = 5
 	chance_maxm = 20
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/flesh_death/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || (holder.stage >= 1 && holder.stage <= 2))
@@ -269,6 +295,7 @@
 	cooldown = 1
 	chance_minm = 100
 	chance_maxm = 100
+	pools = list(POOL_NEUTRAL_VIRUS)
 
 /datum/disease2/effect/stage_boost/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(disease.stage < disease.effects.len)
@@ -281,6 +308,7 @@
 	level = 4
 	max_stage = 14
 	cooldown = 30
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/gibbingtons/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
@@ -315,6 +343,7 @@
 	level = 4
 	max_stage = 3
 	cooldown = 60
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/vomit/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
@@ -337,6 +366,7 @@
 	level = 4
 	max_stage = 8
 	cooldown = 30
+	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/monkey/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(A))
@@ -358,6 +388,7 @@
 	level = 4
 	max_stage = 8
 	cooldown = 50
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/suicide/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if((holder.stage >= 1 && holder.stage <= 7) || prob(70))
@@ -380,6 +411,7 @@
 	level = 4
 	max_stage = 3
 	cooldown = 10
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/dna/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -401,6 +433,7 @@
 	level = 4
 	max_stage = 7
 	cooldown = 20
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/organs/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
@@ -440,6 +473,7 @@
 	level = 4
 	max_stage = 8
 	cooldown = 60
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/bones/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
@@ -555,6 +589,7 @@
 	level = 3
 	max_stage = 3
 	cooldown = 30
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/fire/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(50) || holder.stage == 1)
@@ -577,6 +612,7 @@
 	max_stage = 4
 	cooldown = 30
 	chance_maxm = 30
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/flesh_eating/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(50) || (holder.stage >= 1 && holder.stage <= 3))
@@ -593,6 +629,7 @@
 	cooldown = 5
 	chance_minm = 100
 	chance_maxm = 100
+	pools = list(POOL_POSITIVE_VIRUS)
 
 /datum/disease2/effect/mind_restoration/activate_mob(mob/living/carbon/M, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(holder.stage	>= 3)
@@ -617,6 +654,7 @@
 	cooldown = 1
 	chance_minm = 100
 	chance_maxm = 100
+	pools = list(POOL_POSITIVE_VIRUS)
 
 /datum/disease2/effect/sensory_restoration/activate_mob(mob/living/carbon/M, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(holder.stage	== 4)
@@ -639,6 +677,7 @@
 	cooldown = 1
 	chance_minm = 100
 	chance_maxm = 100
+	pools = list(POOL_NEUTRAL_VIRUS)
 	var/activated = FALSE
 
 /datum/disease2/effect/cooldown_boost/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -656,6 +695,7 @@
 	cooldown = 1
 	chance_minm = 100
 	chance_maxm = 100
+	pools = list(POOL_NEUTRAL_VIRUS)
 	var/activated = FALSE
 
 /datum/disease2/effect/chance_boost/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -676,6 +716,7 @@
 	level = 3
 	max_stage = 3
 	cooldown = 10
+	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/radian/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
@@ -696,6 +737,7 @@
 	level = 3
 	max_stage = 3
 	cooldown = 10
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/killertoxins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -714,6 +756,7 @@
 	level = 3
 	max_stage = 3
 	cooldown = 20
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/toxins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
@@ -732,6 +775,7 @@
 	level = 3
 	max_stage = 3
 	cooldown = 7
+	pools = list(POOL_POSITIVE_VIRUS)
 	var/trait_added = FALSE
 	COOLDOWN_DECLARE(senses_message)
 
@@ -760,6 +804,7 @@
 	level = 3
 	max_stage = 3
 	cooldown = 60
+	pools = list(POOL_POSITIVE_VIRUS)
 
 /datum/disease2/effect/telepathic/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
@@ -778,6 +823,7 @@
 	level = 3
 	max_stage = 3
 	cooldown = 30
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/mind/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -796,6 +842,32 @@
 		else
 			mob.adjustBrainLoss(10)
 
+/datum/disease2/effect/repairing
+	name = "Mechanical Repair"
+	desc = "The virus produces nanites that fix damage in the host's mechanical limbs."
+	level = 3
+	max_stage = 7
+	cooldown = 10
+	pools = list(POOL_POSITIVE_VIRUS)
+
+/datum/disease2/effect/repairing/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(!ishuman(mob))
+		return
+	var/mob/living/carbon/human/H = mob
+	var/list/parts = list()
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.is_robotic())
+			if(BP.get_damage())
+				parts += BP
+	if(!parts.len)
+		return
+	var/countBPhealed = 1
+	for(var/obj/item/organ/external/BP in shuffle(parts))
+		if(countBPhealed > holder.stage)
+			return
+		countBPhealed++
+		BP.heal_damage(1 / parts.len, 1 / parts.len, robo_repair = TRUE)
+
 ////////////////////////STAGE 2/////////////////////////////////
 
 /datum/disease2/effect/beard
@@ -804,6 +876,7 @@
 	level = 2
 	max_stage = 3
 	cooldown = 30
+	pools = list(POOL_NEUTRAL_VIRUS)
 
 /datum/disease2/effect/beard/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(A))
@@ -831,6 +904,7 @@
 	level = 2
 	max_stage = 3
 	cooldown = 30
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/hallucinations/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -848,6 +922,7 @@
 	level = 2
 	max_stage = 3
 	cooldown = 60
+	pools = list(POOL_NEGATIVE_VIRUS)
 	var/pain_chance = 5
 
 /datum/disease2/effect/deaf/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -871,6 +946,7 @@
 	level = 2
 	max_stage = 4
 	cooldown = 10
+	pools = list(POOL_NEGATIVE_VIRUS)
 	var/laughing_fit_chance = 5
 
 /datum/disease2/effect/giggle/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -906,6 +982,7 @@
 	level = 2
 	max_stage = 3
 	cooldown = 60
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/confusion/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -923,6 +1000,7 @@
 	level = 2
 	max_stage = 1
 	cooldown = 30
+	pools = list(POOL_POSITIVE_VIRUS)
 
 /datum/disease2/effect/purging_advanced/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(!mob.getToxLoss())
@@ -938,6 +1016,7 @@
 	level = 2
 	max_stage = 3
 	cooldown = 10
+	pools = list(POOL_POSITIVE_VIRUS)
 	var/target_nutrition = NUTRITION_LEVEL_NORMAL
 
 /datum/disease2/effect/weight_even/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -962,6 +1041,7 @@
 	level = 2
 	max_stage = 3
 	cooldown = 10
+	pools = list(POOL_POSITIVE_VIRUS, POOL_NEUTRAL_VIRUS)
 	var/muscles_ache_chance = 5
 
 /datum/disease2/effect/stimulant/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -981,6 +1061,32 @@
 		if (prob(30))
 			mob.make_jittery(150)
 
+/datum/disease2/effect/mute
+	name = "Absorption"
+	desc = "The virus produces nanites on the host's skin that absorb sound waves."
+	level = 2
+	max_stage = 2
+	cooldown = 10
+	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
+	var/trait_added = FALSE
+	COOLDOWN_DECLARE(mute_message)
+
+/datum/disease2/effect/mute/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	switch(holder.stage)
+		if(1)
+			if(!COOLDOWN_FINISHED(src, mute_message))
+				return
+			to_chat(mob, "<span class='warning'>You begin to hear your own speech worse.</span>")
+			COOLDOWN_START(src, mute_message, 1 MINUTES)
+		if(2)
+			if(trait_added)
+				return
+			ADD_TRAIT(mob, TRAIT_MUTE, VIRUS_TRAIT)
+
+/datum/disease2/effect/mute/deactivate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	REMOVE_TRAIT(mob, TRAIT_MUTE, VIRUS_TRAIT)
+	trait_added = FALSE
+
 ////////////////////////STAGE 1/////////////////////////////////
 
 /datum/disease2/effect/scream
@@ -989,6 +1095,7 @@
 	level = 1
 	max_stage = 4
 	cooldown = 10
+	pools = list(POOL_NEUTRAL_VIRUS)
 
 /datum/disease2/effect/scream/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -1016,6 +1123,7 @@
 	level = 1
 	max_stage = 4
 	cooldown = 60
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/drowsness/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -1042,6 +1150,7 @@
 	level = 1
 	max_stage = 4
 	cooldown = 10
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/blind/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -1070,6 +1179,7 @@
 	level = 1
 	max_stage = 3
 	cooldown = 30
+	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/hungry/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -1093,6 +1203,7 @@
 	level = 1
 	max_stage = 3
 	cooldown = 20
+	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/fridge/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -1116,6 +1227,7 @@
 	level = 1
 	max_stage = 8
 	cooldown = 60
+	pools = list(POOL_NEUTRAL_VIRUS)
 
 /datum/disease2/effect/hair/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(A))
@@ -1169,6 +1281,7 @@
 	level = 1
 	max_stage = 1
 	cooldown = 600
+	pools = list(POOL_POSITIVE_VIRUS, POOL_NEUTRAL_VIRUS)
 
 /datum/disease2/effect/monitoring/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	SSmobs.virus_monitored_mobs |= mob
@@ -1182,6 +1295,7 @@
 	level = 1
 	max_stage = 3
 	cooldown = 10
+	pools = list(POOL_NEGATIVE_VIRUS)
 	var/drop_item_chance = 30
 	var/couthing_fit_chance = 5
 
@@ -1215,6 +1329,7 @@
 	level = 1
 	max_stage = 3
 	cooldown = 20
+	pools = list(POOL_NEUTRAL_VIRUS)
 
 /datum/disease2/effect/sneeze/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -1246,6 +1361,7 @@
 	level = 1
 	max_stage = 3
 	cooldown = 10
+	pools = list(POOL_NEUTRAL_VIRUS)
 
 /datum/disease2/effect/drool/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -1269,6 +1385,7 @@
 	level = 1
 	max_stage = 3
 	cooldown = 5
+	pools = list(POOL_NEUTRAL_VIRUS)
 
 /datum/disease2/effect/twitch/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
@@ -1290,6 +1407,7 @@
 	level = 1
 	max_stage = 6
 	cooldown = 10
+	pools = list(POOL_NEGATIVE_VIRUS)
 	var/stun_chance = 5
 
 /datum/disease2/effect/headache/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -1309,3 +1427,40 @@
 					H.emote("scream")
 				else
 					H.apply_effect(10,AGONY,0)
+
+/datum/disease2/effect/hemocoagulation
+	name = "Rapid Coagulation"
+	desc = "The virus producing nanites that rapid coagulation when the host is wounded, dramatically reducing bleeding rate."
+	level = 1
+	max_stage = 2
+	cooldown = 40
+	pools = list(POOL_POSITIVE_VIRUS)
+	var/trait_added = FALSE
+	COOLDOWN_DECLARE(blood_add_message)
+
+/datum/disease2/effect/hemocoagulation/proc/heal_artery(mob/living/carbon/human/H)
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.is_artery_cut())
+			BP.status &= ~ORGAN_ARTERY_CUT
+
+/datum/disease2/effect/hemocoagulation/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	switch(holder.stage)
+		if(1)
+			if(COOLDOWN_FINISHED(src, blood_add_message))
+				to_chat(A, "<span class='notice'>You feel like your blood vessels pulsate periodically.</span>")
+				COOLDOWN_START(src, blood_add_message, 1 MINUTE)
+			if(!ishuman(A))
+				return
+			var/mob/living/carbon/human/H = A
+			H.blood_add(1)
+		if(2)
+			if(!trait_added)
+				trait_added = TRUE
+				if(ishuman(A))
+					var/mob/living/carbon/human/H = A
+					heal_artery(H)
+				ADD_TRAIT(A, TRAIT_HEMOCOAGULATION, VIRUS_TRAIT)
+
+/datum/disease2/effect/hemocoagulation/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	REMOVE_TRAIT(A, TRAIT_HEMOCOAGULATION, VIRUS_TRAIT)
+	trait_added = FALSE

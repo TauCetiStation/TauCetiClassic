@@ -8,11 +8,14 @@
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
+	var/eyes_icon = 'icons/mob/human_face.dmi'
 	var/eyes = "eyes"                                    // Icon for eyes.
 	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
 	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
+
+	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
@@ -76,8 +79,11 @@
 
 	var/list/flags = list()       // Various specific features.
 
+	var/specie_suffix_fire_icon = "human"
 	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
 	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
+	var/specie_shoe_blood_state = "shoeblood"
+	var/specie_hand_blood_state = "bloodyhands"
 	var/flesh_color = "#ffc896" //Pink.
 	var/base_color      //Used when setting species.
 
@@ -160,6 +166,8 @@
 
 	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
 
+	var/surgery_icobase = 'icons/mob/surgery.dmi'
+
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -236,6 +244,9 @@
 
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
+
+	if(flags[NO_GENDERS])
+		H.gender = NEUTER
 
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
@@ -366,15 +377,24 @@
 
 	skeleton_type = SKELETON_UNATHI
 
+	sprite_sheets = list(
+		SPRITE_SHEET_HEAD     = 'icons/mob/species/unathi/helmet.dmi',
+		SPRITE_SHEET_SUIT     = 'icons/mob/species/unathi/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
+	)
+
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
 
 /datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.unathi_equip(H)
 
-/datum/species/unathi/on_gain(mob/living/M)
+/datum/species/unathi/on_gain(mob/living/carbon/human/M)
 	..()
 	M.verbs += /mob/living/carbon/human/proc/air_sample
+	M.r_belly = HEX_VAL_RED(base_color)
+	M.g_belly = HEX_VAL_GREEN(base_color)
+	M.b_belly = HEX_VAL_BLUE(base_color)
 
 /datum/species/unathi/on_loose(mob/living/M, new_species)
 	M.verbs -= /mob/living/carbon/human/proc/air_sample
@@ -436,6 +456,12 @@
 
 	skeleton_type = SKELETON_TAJARAN
 
+	sprite_sheets = list(
+		SPRITE_SHEET_HEAD     = 'icons/mob/species/tajaran/helmet.dmi',
+		SPRITE_SHEET_SUIT     = 'icons/mob/species/tajaran/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
+	)
+
 /datum/species/tajaran/on_gain(mob/living/M)
 	..()
 	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
@@ -463,6 +489,9 @@
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
 	has_gendered_icons = FALSE
 
+	speed_mod = 1.5
+	speed_mod_no_shoes = -2.2
+
 	flags = list(
 	 IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
@@ -471,6 +500,7 @@
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_MINORCUTS = TRUE
 	)
 
 	has_organ = list(
@@ -493,6 +523,11 @@
 
 	skeleton_type = SKELETON_SKRELL
 
+	sprite_sheets = list(
+		SPRITE_SHEET_HEAD = 'icons/mob/species/skrell/helmet.dmi',
+		SPRITE_SHEET_SUIT = 'icons/mob/species/skrell/suit.dmi'
+	)
+
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
 
@@ -507,6 +542,7 @@
 	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	tail = "vox_prim"
 	has_gendered_icons = FALSE
+	surgery_icobase = 'icons/mob/species/vox/surgery.dmi'
 
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
@@ -533,6 +569,7 @@
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE
 		,IS_SOCIAL = TRUE
+		,NO_GENDERS = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -581,10 +618,6 @@
 	skeleton_type = SKELETON_VOX
 
 	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
-
-/datum/species/vox/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
@@ -677,6 +710,7 @@
 	,NO_PAIN = TRUE
 	,NO_FAT = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -745,6 +779,7 @@
 	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -788,10 +823,6 @@
 	var/regen_mod = 1.0
 	// Podmen don't.
 	var/regen_limbs = TRUE
-
-/datum/species/diona/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/diona/regen(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -883,6 +914,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_HAIR = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -927,6 +959,7 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
+	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
 
 	eyes = null
 
@@ -976,6 +1009,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1007,7 +1041,7 @@
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 	min_age = 1
-	max_age = 125
+	max_age = 50
 
 	is_common = TRUE
 
@@ -1066,16 +1100,13 @@
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_VOMIT = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/gray_blood
 
 	min_age = 100
 	max_age = 500
-
-/datum/species/abductor/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_abductor_digest(M)
@@ -1125,10 +1156,7 @@
 		,BP_R_LEG  = /obj/item/organ/external/r_leg/skeleton
 		)
 
-	has_organ = list(
-		 O_BRAIN   = /obj/item/organ/internal/brain
-		,O_EYES    = /obj/item/organ/internal/eyes
-		)
+	has_organ = list()
 
 	min_age = 1
 	max_age = 1000
@@ -1137,7 +1165,6 @@
 
 /datum/species/skeleton/on_gain(mob/living/carbon/human/H)
 	..()
-	H.gender = NEUTER
 	H.remove_status_flags(CANSTUN|CANPARALYSE)
 
 /datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
@@ -1288,6 +1315,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	burn_mod = 2
@@ -1297,10 +1325,6 @@
 
 	min_age = 1
 	max_age = 10000
-
-/datum/species/shadowling/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/shadowling/regen(mob/living/carbon/human/H)
 	H.nutrition = NUTRITION_LEVEL_NORMAL //i aint never get hongry
@@ -1361,6 +1385,7 @@
 		NO_EMOTION = TRUE,
 		NO_FAT = TRUE,
 		IS_SOCIAL = TRUE,
+		NO_GENDERS = TRUE,
 		)
 
 	has_organ = list(
@@ -1453,7 +1478,6 @@
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0
-	speed_mod = -0.2
 	speed_mod_no_shoes = -1
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
@@ -1504,7 +1528,7 @@
 
 	brute_mod = 2
 	burn_mod = 1.2
-	speed_mod = -0.8
+	speed_mod = -0.6
 
 	tail = "tajaran_zombie"
 
@@ -1555,7 +1579,7 @@
 
 	brute_mod = 1.6
 	burn_mod = 0.90
-	speed_mod = -0.2
+	speed_mod = 0.1
 
 	tail = "unathi_zombie"
 
@@ -1652,6 +1676,7 @@
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
 	,NO_PAIN = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(

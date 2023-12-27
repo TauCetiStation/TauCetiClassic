@@ -390,9 +390,9 @@
 	icon = 'icons/obj/vialbox.dmi'
 	icon_state = "vialbox0"
 	item_state = "syringe_kit"
-	max_w_class = SIZE_SMALL
 	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 	storage_slots = 6
+	max_storage_space = 12
 	req_access = list(access_virology)
 
 /obj/item/weapon/storage/lockbox/vials/atom_init()

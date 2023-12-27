@@ -1,6 +1,10 @@
 // ----- Effects ------
 var/global/list/SOUNDIN_SHATTER   = list('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
-var/global/list/SOUNDIN_EXPLOSION = list('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
+var/global/list/SOUNDIN_CREAK = list('sound/effects/creak1.ogg', 'sound/effects/creak2.ogg', 'sound/effects/creak3.ogg')
+var/global/list/SOUNDIN_EXPLOSION = list('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg', 'sound/effects/explosion3.ogg')
+var/global/list/SOUNDIN_EXPLOSION_FAR = list('sound/effects/explosionfar1.ogg', 'sound/effects/explosionfar2.ogg')
+var/global/list/SOUNDIN_EXPLOSION_ECHO = list('sound/effects/explosion_echo.ogg')
+var/global/list/SOUNDIN_EXPLOSION_CREAK = list('sound/effects/explosioncreak1.ogg', 'sound/effects/explosioncreak2.ogg')
 var/global/list/SOUNDIN_SPARKS    = list('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg')
 var/global/list/SOUNDIN_BODYFALL  = list('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
 var/global/list/SOUNDIN_PAGETURN  = list('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
@@ -44,6 +48,9 @@ var/global/list/SOUNDIN_HMM_EXCLAIM_FEMALE 	= list('sound/voice/hmm/hmm_exclaim_
 var/global/list/SOUNDIN_HMM_EXCLAIM_MALE 	= list('sound/voice/hmm/hmm_exclaim_male_1.ogg', 'sound/voice/hmm/hmm_exclaim_male_2.ogg', 'sound/voice/hmm/hmm_exclaim_male_3.ogg', 'sound/voice/hmm/hmm_exclaim_male_4.ogg', 'sound/voice/hmm/hmm_exclaim_male_5.ogg')
 var/global/list/SOUNDIN_WOO_MALE 	= list('sound/voice/woo/woo_male_1.ogg', 'sound/voice/woo/woo_male_2.ogg', 'sound/voice/woo/woo_male_3.ogg', 'sound/voice/woo/woo_male_4.ogg', 'sound/voice/woo/woo_male_5.ogg', 'sound/voice/woo/woo_male_6.ogg')
 var/global/list/SOUNDIN_WOO_FEMALE 	= list('sound/voice/woo/woo_female_1.ogg', 'sound/voice/woo/woo_female_2.ogg', 'sound/voice/woo/woo_female_3.ogg', 'sound/voice/woo/woo_female_4.ogg', 'sound/voice/woo/woo_female_5.ogg')
+var/global/list/SOUNDIN_SIGH_MALE   = list('sound/voice/sigh/sigh_male.ogg')
+var/global/list/SOUNDIN_SIGH_FEMALE = list('sound/voice/sigh/sigh_female.ogg')
+
 // Human's pain
 var/global/list/SOUNDIN_FEMALE_LIGHT_PAIN   = list('sound/voice/mob/pain/female/light_1.ogg', 'sound/voice/mob/pain/female/light_2.ogg', 'sound/voice/mob/pain/female/light_3.ogg', 'sound/voice/mob/pain/female/light_4.ogg', 'sound/voice/mob/pain/female/light_5.ogg', 'sound/voice/mob/pain/female/light_6.ogg', 'sound/voice/mob/pain/female/light_7.ogg', 'sound/voice/mob/pain/female/light_8.ogg')
 var/global/list/SOUNDIN_FEMALE_HEAVY_PAIN   = list('sound/voice/mob/pain/female/heavy_1.ogg', 'sound/voice/mob/pain/female/heavy_2.ogg', 'sound/voice/mob/pain/female/heavy_3.ogg', 'sound/voice/mob/pain/female/heavy_4.ogg', 'sound/voice/mob/pain/female/heavy_5.ogg', 'sound/voice/mob/pain/female/heavy_6.ogg')

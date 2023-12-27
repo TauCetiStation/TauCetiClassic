@@ -22,7 +22,7 @@
 	w_class = SIZE_SMALL
 	force = 1.0
 	throwforce = 1.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 20
 	flags = CONDUCT
 	max_amount = 60
@@ -40,7 +40,7 @@
 	w_class = SIZE_SMALL
 	force = 1.0
 	throwforce = 1.0
-	throw_speed = 5
+	throw_speed = 4
 	throw_range = 20
 	flags = CONDUCT
 	max_amount = 60
@@ -57,7 +57,7 @@
 	w_class = SIZE_SMALL
 	force = 1.0
 	throwforce = 1.0
-	throw_speed = 5
+	throw_speed = 4
 	throw_range = 20
 	flags = CONDUCT
 	max_amount = 60

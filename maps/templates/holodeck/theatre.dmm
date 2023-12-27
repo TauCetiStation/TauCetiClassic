@@ -69,7 +69,7 @@
 /area/station/civilian/holodeck/source_theatre)
 "g" = (
 /obj/structure/rack/holorack,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/under/suit_jacket,
 /obj/item/clothing/head/that,
 /obj/item/clothing/glasses/monocle,
@@ -125,12 +125,13 @@
 	},
 /area/station/civilian/holodeck/source_theatre)
 "l" = (
+/obj/effect/decal/turf_decal/metal{
+	dir = 1;
+	icon_state = "spline_plain"
+	},
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "wood"
-	},
-/turf/simulated/floor/holofloor{
-	icon_state = "siding1"
 	},
 /area/station/civilian/holodeck/source_theatre)
 "m" = (
@@ -145,61 +146,11 @@
 	},
 /area/station/civilian/holodeck/source_theatre)
 "o" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet6-2"
-	},
+/turf/simulated/floor/holofloor/carpet,
 /area/station/civilian/holodeck/source_theatre)
 "p" = (
 /obj/structure/holostool,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet14-10"
-	},
-/area/station/civilian/holodeck/source_theatre)
-"q" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet10-8"
-	},
-/area/station/civilian/holodeck/source_theatre)
-"s" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet7-3"
-	},
-/area/station/civilian/holodeck/source_theatre)
-"t" = (
-/obj/structure/holostool,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet15-15"
-	},
-/area/station/civilian/holodeck/source_theatre)
-"u" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet11-12"
-	},
-/area/station/civilian/holodeck/source_theatre)
-"w" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet5-1"
-	},
-/area/station/civilian/holodeck/source_theatre)
-"x" = (
-/obj/structure/holostool,
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet13-5"
-	},
-/area/station/civilian/holodeck/source_theatre)
-"y" = (
-/turf/simulated/floor/holofloor{
-	dir = 4;
-	icon_state = "carpet9-4"
-	},
+/turf/simulated/floor/holofloor/carpet,
 /area/station/civilian/holodeck/source_theatre)
 "A" = (
 /obj/item/weapon/flora/pottedplant{
@@ -230,9 +181,9 @@ k
 k
 l
 o
-s
-s
-w
+o
+o
+o
 n
 "}
 (3,1,1) = {"
@@ -242,9 +193,9 @@ k
 k
 l
 p
-t
-t
-x
+p
+p
+p
 n
 "}
 (4,1,1) = {"
@@ -254,9 +205,9 @@ k
 k
 l
 p
-t
-t
-x
+p
+p
+p
 n
 "}
 (5,1,1) = {"
@@ -266,9 +217,9 @@ k
 k
 l
 p
-t
-t
-x
+p
+p
+p
 n
 "}
 (6,1,1) = {"
@@ -278,9 +229,9 @@ k
 k
 l
 p
-t
-t
-x
+p
+p
+p
 n
 "}
 (7,1,1) = {"
@@ -290,9 +241,9 @@ k
 k
 l
 p
-t
-t
-x
+p
+p
+p
 n
 "}
 (8,1,1) = {"
@@ -302,9 +253,9 @@ k
 k
 l
 p
-t
-t
-x
+p
+p
+p
 n
 "}
 (9,1,1) = {"
@@ -313,10 +264,10 @@ k
 k
 k
 l
-q
-u
-u
-y
+o
+o
+o
+o
 n
 "}
 (10,1,1) = {"

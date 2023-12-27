@@ -384,9 +384,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		to_chat(world, "* [areatype]")
 
 /client/proc/robust_dress_shop()
-	var/list/baseoutfits = list("Naked", "As Job...")
+	var/list/baseoutfits = list("Naked", "As Job...", "As Responder...")
 	var/list/outfits = list()
-	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
+	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/responders)
 
 	for(var/datum/outfit/O as anything in paths)
 		if(initial(O.name))
@@ -409,6 +409,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
+
+	else if(dresscode == "As Responder...")
+		var/list/responder_paths = subtypesof(/datum/outfit/responders)
+		var/list/responder_outfits = list()
+		for(var/datum/outfit/O as anything in responder_paths)
+			responder_outfits[initial(O.name)] = O
+
+		dresscode = input("Select responder equipment", "Robust quick dress shop") as null|anything in sortList(responder_outfits)
+		dresscode = responder_outfits[dresscode]
+		if(isnull(dresscode))
+			return
+
 
 	return dresscode
 
@@ -659,3 +671,35 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 /datum/debug_color_matrix/proc/callJsFunc(client, funcName, list/params)
 	var/paramsJS = list2params(params)
 	client << output(paramsJS,"colormatrix.browser:[funcName]")
+
+/client/proc/burn_tile()
+	set category = "Debug"
+	set name = "Floor: Burn"
+
+	var/turf/simulated/floor/T = get_turf(usr)
+	if(!istype(T))
+		return
+
+	T.burn_tile()
+
+/client/proc/break_tile()
+	set category = "Debug"
+	set name = "Floor: Break"
+
+	var/turf/simulated/floor/T = get_turf(usr)
+	if(!istype(T))
+		return
+
+	T.break_tile()
+
+/client/proc/fix_tile()
+	set category = "Debug"
+	set name = "Floor: Fix"
+
+	var/turf/simulated/floor/T = get_turf(usr)
+	if(!istype(T))
+		return
+
+	T.burnt = 0
+	T.broken = 0
+	T.update_icon()

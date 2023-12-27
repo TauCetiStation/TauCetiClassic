@@ -20,6 +20,7 @@
 /datum/gear/accessory/headwear
 	display_name = "Skrell headwear selection"
 	path = /obj/item/clothing/head/skrell_headwear
+	whitelisted = SKRELL
 
 /datum/gear/accessory/headwear/New()
 	..()
@@ -29,6 +30,9 @@
 	headwear["blue"] = /obj/item/clothing/head/skrell_headwear/blue
 	gear_tweaks += new/datum/gear_tweak/path(headwear)
 
+/datum/gear/accessory/waistcoat
+	display_name = "Waistcoat"
+	path = /obj/item/clothing/accessory/tie/waistcoat
 
 /datum/gear/accessory/headscarf
 	display_name = "Zhan Headscarf"

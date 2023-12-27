@@ -8,9 +8,19 @@
 	var/parts[] = list()            // type paths of items that will be placed in the result
 	var/chem_catalysts[] = list()   // like tools but for reagents
 	var/required_proficiency
+	var/list/blacklist = list()		///type paths of items explicitly not allowed as an ingredient
 
 /datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
 	return
+
+/datum/crafting_recipe/crossbow_bolt
+	name = "Crossbow Bolt"
+	result = /obj/item/weapon/arrow
+	reqs = list(/obj/item/stack/rods = 1)
+	tools = list(/obj/item/weapon/wirecutters)
+	time = 1
+	required_proficiency = list(/datum/skill/construction = SKILL_LEVEL_NONE)
+
 
 /datum/crafting_recipe/can_grenade_igniter
 	name = "Can Grenade (igniter)"
@@ -321,4 +331,19 @@
 	tools = list(/obj/item/toy/crayon/spraycan)
 	result = /obj/item/clothing/accessory/armband/medgreen
 	time = 30
+
+/datum/crafting_recipe/makeshift_shiv
+	name = "Glass shiv"
+	reqs = list(/obj/item/stack/sheet/cloth = 1,
+				/obj/item/weapon/shard = 1)
+	blacklist = list(/obj/item/weapon/shard/phoron)
+	result = /obj/item/weapon/kitchenknife/makeshift_shiv
+	time = 10
+
+/datum/crafting_recipe/makeshift_shiv_phoron
+	name = "Phoron glass shiv"
+	reqs = list(/obj/item/stack/sheet/cloth = 1,
+				/obj/item/weapon/shard/phoron = 1)
+	result = /obj/item/weapon/kitchenknife/makeshift_shiv/phoron
+	time = 10
 

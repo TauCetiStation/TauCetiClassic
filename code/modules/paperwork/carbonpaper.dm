@@ -2,8 +2,8 @@
 	name = "paper"
 	icon_state = "paper_stack"
 	item_state = "paper"
-	var/copied = 0
-	var/iscopy = 0
+	var/copied = FALSE
+	var/iscopy = FALSE
 
 
 /obj/item/weapon/paper/carbon/update_icon()
@@ -37,7 +37,7 @@
 
 	var/mob/living/L = usr
 
-	if (copied == 0)
+	if(!copied)
 		var/obj/item/weapon/paper/carbon/c = src
 		var/copycontents = c.info
 		var/obj/item/weapon/paper/carbon/copy = new /obj/item/weapon/paper/carbon(loc)
@@ -51,8 +51,9 @@
 		copy.fields = c.fields
 		copy.updateinfolinks()
 		to_chat(L, "<span class='notice'>You tear off the carbon-copy!</span>")
-		c.copied = 1
-		copy.iscopy = 1
+		c.copied = TRUE
+		copy.iscopy = TRUE
+		copy.copied = TRUE
 		copy.update_icon()
 		c.update_icon()
 	else

@@ -48,9 +48,6 @@
 
 		update_canmove()
 
-		if(is_infected_with_zombie_virus())
-			handle_infected_death(src)
-
 	tod = worldtime2text()		//weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 	if(SSticker && SSticker.mode)
@@ -118,6 +115,8 @@
 		if(BP.vital)
 			death()
 			BP.brainmob.death()
+			if(HAS_TRAIT(src, TRAIT_NO_CLONE))
+				ADD_TRAIT(BP.brainmob, TRAIT_NO_CLONE, GENERIC_TRAIT)
 
 			tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
 			timeofdeath = 0

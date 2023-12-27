@@ -10,6 +10,12 @@
 /obj/structure/sign/map/right
 	icon_state = "map-right"
 
+/obj/structure/sign/map/gamma_left
+	icon_state = "gammamap-left"
+
+/obj/structure/sign/map/gamma_right
+	icon_state = "gammamap-right"
+
 /obj/structure/sign/map/prometheus
 	icon_state = "prometheus"
 	var/icon/img = 'nano/images/nanomap_prometheus_1_small.png'

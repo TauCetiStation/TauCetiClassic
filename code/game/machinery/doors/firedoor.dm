@@ -3,12 +3,15 @@
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
 	icon = 'icons/obj/doors/DoorHazard.dmi'
 	icon_state = "door_open"
+	var/base_state = "door"
 	req_one_access = list(access_atmospherics, access_engine_equip, access_paramedic)
 	opacity = 0
+	glass = 0
+	always_transparent = TRUE
+	allow_passglass = FALSE // for balance reasons
 	density = FALSE
 	layer = SAFEDOOR_LAYER
 	base_layer = SAFEDOOR_LAYER
-	glass = 0
 	door_open_sound  = 'sound/machines/firedoor_open.ogg'
 	door_close_sound = 'sound/machines/firedoor_close.ogg'
 
@@ -77,12 +80,13 @@
 		return
 	if(!density)
 		return ..()
+	if(world.time - last_bumped <= 10)
+		return //Can bump-open one airlock per second. This is to prevent popup message spam.
+	last_bumped = world.time
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if (mecha.occupant)
 			var/mob/M = mecha.occupant
-			if(world.time - M.last_bumped <= 10) return //Can bump-open one airlock per second. This is to prevent popup message spam.
-			M.last_bumped = world.time
 			attack_hand(M)
 	return 0
 
@@ -255,6 +259,7 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 	take_out_wedged_item()
+	new /obj/item/weapon/airalarm_electronics(loc)
 	if(disassembled || prob(40))
 		var/obj/structure/firedoor_assembly/FA = new (loc)
 		if(disassembled)
@@ -277,12 +282,18 @@
 	return
 
 /obj/machinery/door/firedoor/do_close()
-	..()
 	if(locate(/obj/structure/window/fulltile) in loc)
-		alpha = 45
-		layer = base_layer + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
+		base_state = "doorwin"
+		layer_delta = SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
+		opacity = TRUE
+		always_transparent = FALSE
 	else
-		layer = base_layer + SAFEDOOR_CLOSED_MOD_BEFORE_DOOR
+		base_state = "door"
+		layer_delta = SAFEDOOR_CLOSED_MOD_BEFORE_DOOR
+		opacity = FALSE
+		always_transparent = TRUE
+	..()
+
 	START_PROCESSING(SSmachines, src)
 	latetoggle()
 
@@ -304,32 +315,34 @@
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
 		if("opening")
-			flick("door_opening", src)
+			flick("[base_state]_opening", src)
 		if("closing")
-			flick("door_closing", src)
+			flick("[base_state]_closing", src)
 	return
 
 
 /obj/machinery/door/firedoor/update_icon()
-	cut_overlays()
+	var/list/firedoor_overlays = list()
 	if(density)
-		icon_state = "door_closed"
+		icon_state = "[base_state]_closed"
 		if(hatch_open)
-			add_overlay("hatch")
+			firedoor_overlays += get_airlock_overlay("hatch", icon, FALSE)
 		if(blocked)
-			add_overlay("welded")
+			firedoor_overlays += get_airlock_overlay("welded", icon, FALSE)
 		if(pdiff_alert)
-			add_overlay("palert")
+			firedoor_overlays += get_airlock_overlay("palert", icon, FALSE)//сделать TRUE кога решится проблема со створками
 		if(dir_alerts)
 			for(var/d in 1 to 4)
-				var/cdir = cardinal[d]
 				for(var/i in 1 to ALERT_STATES.len)
 					if(dir_alerts[d] & (1<<(i-1)))
-						add_overlay(new/icon(icon,"alert_[ALERT_STATES[i]]", dir=cdir))
+						firedoor_overlays += get_airlock_overlay("alert_[ALERT_STATES[i]]", icon, FALSE)//сделать TRUE кога решится проблема со створками
 	else
-		icon_state = "door_open"
+		icon_state = "[base_state]_open"
 		if(blocked)
-			add_overlay("welded_open")
+			firedoor_overlays += get_airlock_overlay("welded_open", icon, FALSE)
+
+	cut_overlays()
+	add_overlay(firedoor_overlays)
 
 	if(underlays.len)
 		underlays.Cut()

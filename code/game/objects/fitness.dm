@@ -287,7 +287,6 @@
 	force = 7.0
 	sharp = 0
 	throwforce = 5.0
-	throw_speed = 5
 	throw_range = 3
 	w_class = SIZE_NORMAL
 
@@ -302,7 +301,7 @@
 	force = 10.0
 	sharp = 0
 	throwforce = 8.0
-	throw_speed = 5
+	throw_speed = 1
 	throw_range = 1
 	w_class = SIZE_NORMAL
 

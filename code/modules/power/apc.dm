@@ -1235,19 +1235,19 @@
 		if(EXPLODE_DEVASTATE)
 			//set_broken() //now Destroy() do what we need
 			if(cell)
-				cell.ex_act(EXPLODE_DEVASTATE) // more lags woohoo
+				SSexplosions.high_mov_atom += cell
 			qdel(src)
 			return
 		if(EXPLODE_HEAVY)
 			if(prob(50))
 				set_broken()
 				if(cell && prob(50))
-					cell.ex_act(EXPLODE_HEAVY)
+					SSexplosions.med_mov_atom += cell
 		if(EXPLODE_LIGHT)
 			if(prob(25))
 				set_broken()
 				if(cell && prob(25))
-					cell.ex_act(EXPLODE_LIGHT)
+					SSexplosions.low_mov_atom += cell
 
 /obj/machinery/power/apc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(stat & BROKEN)
@@ -1312,8 +1312,6 @@
 	if(custom_smartlight_preset)
 		var/type = smartlight_presets[custom_smartlight_preset]
 		smartlight_preset = new type
-	else if(is_type_in_typecache(get_area(src), hard_lighting_arealist))
-		smartlight_preset = new /datum/smartlight_preset/hardlight_nightshift
 	else
 		smartlight_preset = new
 

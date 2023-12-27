@@ -91,7 +91,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/stack/cable_coil/random(src)
 	if(prob(5))
-		new /obj/item/clothing/gloves/yellow(src)
+		new /obj/item/clothing/gloves/insulated(src)
 	else
 		new /obj/item/stack/cable_coil/random(src)
 

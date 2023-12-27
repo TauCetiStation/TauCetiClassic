@@ -49,9 +49,8 @@
 /area/space_structures/space_villa)
 "bz" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "bE" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -104,9 +103,8 @@
 /area/space_structures/space_villa)
 "dw" = (
 /obj/structure/easel,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "dy" = (
 /obj/structure/stool/bed,
@@ -132,9 +130,8 @@
 "eu" = (
 /obj/structure/stool/bar,
 /obj/effect/decal/cleanable/blood/drip,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "ev" = (
 /obj/structure/flora/ausbushes/sparsegrass{
@@ -170,16 +167,14 @@
 "fT" = (
 /obj/item/stack/tile/wood,
 /obj/effect/decal/cleanable/blood/gibs/core,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "fW" = (
 /obj/item/stack/tile/carpet/black,
 /obj/effect/decal/cleanable/blood/drip,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "fZ" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -217,9 +212,10 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "hu" = (
 /obj/structure/table/woodentable,
@@ -237,9 +233,8 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "ir" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -251,15 +246,17 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "asteroidder_inner";
-	req_access = list(101)
+	req_access = list(101);
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "iZ" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -281,9 +278,8 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "kx" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
@@ -310,9 +306,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "lG" = (
 /obj/structure/table/woodentable,
@@ -333,9 +330,8 @@
 /area/space_structures/space_villa)
 "me" = (
 /obj/item/weapon/flora/random,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "mD" = (
 /obj/machinery/light{
@@ -362,27 +358,24 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/plaid,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "no" = (
 /obj/structure/stool/bed/chair/comfy/brown,
 /turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "nr" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "nz" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
 /obj/item/ammo_casing,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "nD" = (
 /obj/structure/flora/tree/jungle,
@@ -396,9 +389,10 @@
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 4
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "op" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -416,9 +410,10 @@
 	frequency = 1379;
 	id_tag = "asteroidder_pump"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "oT" = (
 /obj/structure/flora/ausbushes/ywflowers{
@@ -440,9 +435,8 @@
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
 	name = "Syndicate agent remains"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "qg" = (
 /obj/machinery/light{
@@ -459,9 +453,8 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "qY" = (
 /obj/structure/flora/ausbushes/sparsegrass{
@@ -527,9 +520,8 @@
 /area/space_structures/space_villa)
 "tb" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "td" = (
 /obj/structure/cable/yellow{
@@ -538,9 +530,10 @@
 	},
 /obj/machinery/constructable_frame/machine_frame,
 /obj/item/weapon/circuitboard/smes,
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "ti" = (
 /obj/item/weapon/flora/random,
@@ -582,9 +575,10 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "vh" = (
 /obj/structure/flora/ausbushes/leafybush,
@@ -642,9 +636,8 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken6"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "wQ" = (
 /turf/simulated/floor/beach/sand,
@@ -653,10 +646,11 @@
 /turf/simulated/floor/beach/coastline,
 /area/space_structures/space_villa)
 "xg" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplatecorner"
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "xt" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -694,9 +688,8 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "yZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -708,9 +701,8 @@
 /area/space_structures/space_villa)
 "zo" = (
 /obj/structure/flora/ausbushes/stalkybush,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "zy" = (
 /obj/structure/table/woodentable,
@@ -735,9 +727,8 @@
 /area/space_structures/space_villa)
 "Ai" = (
 /obj/effect/decal/cleanable/blood,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "Aq" = (
 /obj/effect/overlay/palmtree_l,
@@ -745,9 +736,8 @@
 /area/space_structures/space_villa)
 "At" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "AB" = (
 /turf/simulated/floor/wood{
@@ -780,9 +770,8 @@
 	pixel_y = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "Bj" = (
 /obj/structure/flora/ausbushes/sparsegrass{
@@ -841,9 +830,8 @@
 /obj/structure/flora/ausbushes/ppflowers{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "Fw" = (
 /obj/effect/overlay/palmtree_r,
@@ -864,9 +852,8 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "FX" = (
 /obj/structure/flora/ausbushes/sparsegrass{
@@ -879,9 +866,8 @@
 /area/space_structures/space_villa)
 "Gy" = (
 /obj/item/weapon/gun/projectile/automatic/silenced,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "GE" = (
 /obj/structure/table/woodentable,
@@ -1015,9 +1001,8 @@
 "Kx" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/game_kit/random,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "Kz" = (
 /obj/structure/flora/ausbushes/leafybush,
@@ -1035,9 +1020,10 @@
 	name = "exterior access button";
 	pixel_x = 28
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "warnplatecorner"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn_corner"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "Ln" = (
 /obj/structure/table/woodentable,
@@ -1064,30 +1050,27 @@
 /obj/structure/stool/bar,
 /obj/machinery/light/small,
 /obj/item/stack/tile/wood,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "LN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	frequency = 1379;
 	id_tag = "asteroidder_pump"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "LV" = (
 /obj/machinery/porta_turret_construct,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "Ma" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/shoes/laceup,
 /obj/item/clothing/under/gentlesuit,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/head/that,
 /obj/item/weapon/staff/gentcane,
 /turf/simulated/floor/plating,
@@ -1098,9 +1081,8 @@
 /area/space_structures/space_villa)
 "Na" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "Nj" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -1112,9 +1094,8 @@
 "Nv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "NE" = (
 /obj/random/vending/snack,
@@ -1134,12 +1115,14 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "asteroidder_outer";
-	req_access = list(101)
+	req_access = list(101);
+	dir = 4
 	},
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 8;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "OB" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -1167,9 +1150,8 @@
 /obj/structure/sign/poster/official/high_class_martini{
 	pixel_y = 32
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken6"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "PT" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -1195,9 +1177,8 @@
 	tag_interior_door = "asteroidder_inner"
 	},
 /obj/machinery/porta_turret_construct,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "QJ" = (
 /turf/simulated/floor/wood,
@@ -1217,9 +1198,8 @@
 "Sw" = (
 /obj/item/stack/tile/wood,
 /obj/item/ammo_casing,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "SD" = (
 /obj/structure/sink/puddle,
@@ -1252,10 +1232,11 @@
 /turf/simulated/floor/grass,
 /area/space_structures/space_villa)
 "SP" = (
-/turf/simulated/floor/plating/airless{
+/obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space)
 "Th" = (
 /obj/structure/flora/ausbushes/genericbush,
@@ -1282,9 +1263,8 @@
 	anchored = 1
 	},
 /obj/effect/decal/cleanable/blood/oil,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "TZ" = (
 /obj/structure/table/woodentable,
@@ -1341,9 +1321,8 @@
 "Wf" = (
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken3"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "WG" = (
 /obj/structure/flora/ausbushes/sparsegrass{
@@ -1360,9 +1339,8 @@
 	pixel_x = 4;
 	pixel_y = 32
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "WR" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -1390,9 +1368,10 @@
 	frequency = 1379;
 	id_tag = "asteroidder_pump"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "XF" = (
 /obj/structure/sign/poster/official/cohiba_robusto_ad{
@@ -1402,9 +1381,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/space_structures/space_villa)
 "XN" = (
 /obj/structure/flora/ausbushes/sparsegrass{
@@ -1485,15 +1463,13 @@
 "YS" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/item/weapon/transparant/no_nt,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "Zf" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "Zg" = (
 /mob/living/simple_animal/crab,

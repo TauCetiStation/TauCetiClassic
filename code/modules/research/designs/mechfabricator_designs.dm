@@ -934,7 +934,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_jetpack
-	name = "Cyborg Upgrade Module (Mining Jetpack)"
+	name = "Cyborg Upgrade Module (Cyborg Jetpack)"
 	id = "borg_upgrade_jetpack"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/jetpack

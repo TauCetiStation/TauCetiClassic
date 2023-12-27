@@ -64,7 +64,7 @@
 	icon_state = "bola"
 	breakouttime = LEGCUFF_BREAKTIME_BOLA
 	origin_tech = "engineering=3;combat=1"
-	throw_speed = 5
+	throw_speed = 4
 	var/weaken = 0.8
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
@@ -72,7 +72,8 @@
 	playsound(src,'sound/weapons/bolathrow.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	//if it gets caught or the target can't be cuffed
+	if(..()) //if it gets caught or the target can't be cuffed
+		return
 	if(!isliving(hit_atom))
 		return
 	var/mob/living/L = hit_atom
@@ -86,19 +87,6 @@
 		                "<span class='userdanger'>\The [src] ensnares you!</span>",
 						"<span class='notice'>You hear something flying at a very fast speed.</span>")
 		feedback_add_details("handcuffs","B")
-		var/chances_to_fault = 100
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			var/BP_armor = 0
-			for(var/leg in list(BP_L_LEG, BP_R_LEG))
-				var/obj/item/organ/external/BP = H.get_bodypart(leg)
-				if(BP)
-					var/leg_armor = H.getarmor(BP, MELEE)
-					if(leg_armor > BP_armor)
-						BP_armor = leg_armor
-			chances_to_fault = clamp((BP_armor - weaken * 10), 0, 100)
-		if(prob(chances_to_fault))
-			return
 		C.Weaken(weaken)
 
 //traitor variant
@@ -110,6 +98,7 @@
 	origin_tech = "engineering=4;combat=3"
 	weaken = 2
 	throw_range = 5
+	throw_speed = 5
 
 #undef LEGCUFF_BREAKTIME_DEFAULT
 #undef LEGCUFF_BREAKTIME_BOLA
