@@ -51,7 +51,7 @@
 	name = "corgi crate"
 	content_mob = /mob/living/simple_animal/corgi //This statement is (not) false. See above.
 
-/obj/structure/closet/critter/corgi/New()
+/obj/structure/closet/critter/corgi/atom_init()
 	content_mob = pick(/mob/living/simple_animal/corgi/Lisa, /mob/living/simple_animal/corgi)
 	. = ..()
 
