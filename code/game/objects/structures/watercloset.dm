@@ -708,6 +708,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 /obj/structure/sink/attackby(obj/item/O, mob/user)
 	if(user.is_busy())
 		return
+	if(istype(O, /obj/item/weapon/wirerod))
+		return ..()
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone's already washing here.</span>")
 		return
@@ -781,6 +783,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	name = "puddle"
 	desc = "The puddle looks infinitely deep and infinitely lonely on the space station."
 	icon_state = "puddle"
+
+/obj/structure/sink/puddle/atom_init()
+	. = ..()
+	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 9, /obj/item/fish_carp/mega = 2), 10 SECONDS, rand(1, 30) , 20)
 
 /obj/structure/sink/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"

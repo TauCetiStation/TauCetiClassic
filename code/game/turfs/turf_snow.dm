@@ -203,34 +203,14 @@
 	icon = 'icons/turf/snow2.dmi'
 	icon_state = "ice_hole"
 	anchored = 1
-	var/fish_amount = 0
 
 /obj/effect/overlay/ice_hole/atom_init()
 	. = ..()
-	fish_amount = rand(1, 30)
+	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 9, /obj/item/fish_carp/mega = 2), 10 SECONDS, rand(1, 30) , 20)
 
 /obj/effect/overlay/ice_hole/attackby(obj/O, mob/user)
 	. = ..()
-	if (istype(O, /obj/item/weapon/wirerod) && !user.is_busy())
-		if(fish_amount && fish_amount < 3)
-			to_chat(user, "<span class='warning'>Looks like there is almost no fish left in this location.</span>")
-		visible_message("<span class='notice'>[user] starts fishing.</span>")
-		if(do_after(user, 10 SECONDS, target = src))
-			if(!fish_amount)
-				to_chat(user, "<span class='warning'>No fish left here, time to change location.</span>")
-			else
-				if(prob(20))
-					fish_amount--
-					var/fish_path = pick(
-						prob(90);/obj/item/fish_carp,
-						prob(20);/obj/item/fish_carp/mega
-						)
-					var/obj/fish = new fish_path(loc, get_step(user, get_dir(src, user)))
-					visible_message("<span class='notice'>[user] has caught [fish].</span>")
-					return
-			visible_message("<span class='notice'>[user] fails to catch anything.</span>")
-		else
-			visible_message("<span class='notice'>[user] stops fishing.</span>")
+	SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, O, user)
 
 /obj/random/misc/all/high
 	spawn_nothing_chance = 40
