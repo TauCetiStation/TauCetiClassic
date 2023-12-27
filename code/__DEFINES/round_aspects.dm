@@ -11,3 +11,10 @@
 #define ROUND_ASPECT_HIGH_SPACE_RADIATION "High Level Of Space Radiation"
 
 #define ROUND_ASPECT_AI_TRIO "AI Triumvirate"
+
+#define ROUND_ASPECT_ELITE_SECURITY "Elite Security"
+
+#define ROUND_ASPECT_MORE_RANDOM_EVENTS "More Random Events"
+
+#define ROUND_ASPECT_ALTERNATIVE_RESEARCH "Alternative Research"
+

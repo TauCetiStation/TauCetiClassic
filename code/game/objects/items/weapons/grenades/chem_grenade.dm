@@ -105,7 +105,7 @@
 				stage = 1
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
-				to_chat(user, "<span class='red'> В [CASE(I, DATIVE_CASE)] пусто.</span>")
+				to_chat(user, "<span class='red'> В [CASE(I, DATIVE_CASE)] ничего нет.</span>")
 	else
 		return ..()
 
