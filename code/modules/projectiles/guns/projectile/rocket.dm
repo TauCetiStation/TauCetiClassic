@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher
 	name = "Goliath missile launcher"
+	cases = list("Пусковая установка Голиаф","Пусковой установки Голиаф","Пусковой установке Голиаф","Пусковую установку Голиаф","Пусковой установкой Голиаф","Пусковой установке Голиаф")
 	desc = "Голиаф - это однозарядная, многоцелевая переносная пусковая установка для ракет, стреляющая с плеча."
-	cases = list("Пусковая установка Goliath","Пусковой установки Goliath","Пусковой установке Goliath","Пусковую установку Goliath","Пусковой установкой Goliath","Пусковой установке Goliath")
 	icon_state = "rocket"
 	item_state = "rocket"
 	w_class = SIZE_NORMAL
@@ -34,8 +34,8 @@
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo
 	name = "XASL Mk.2 singularity buster"
+	cases = list("Разрушитель сингулярностей ЭАСУ Модель 2","Разрушителя сингулярностей ЭАСУ Модель 2","Разрушителю сингулярностей ЭАСУ Модель 2","Разрушитель сингулярностей ЭАСУ Модель 2","Разрушителем сингулярностей ЭАСУ Модель 2","Разрушителе сингулярностей ЭАСУ Модель 2")
 	desc = "Эксперементальная Анти-Сингулярная пусковая установка. В случае чрезвычайной ситуации вам следует направить ее на сверхмассивную чёрную дыру, приближающуюся к вам."
-	cases = list("Разрушитель сингулярностей XASL Mk.2","Разрушителя сингулярностей XASL Mk.2","Разрушителю сингулярностей XASL Mk.2","Разрушитель сингулярностей XASL Mk.2","Разрушителем сингулярностей XASL Mk.2","Разрушителе сингулярностей XASL Mk.2")
 	icon_state = "anti-singulo"
 	item_state = "anti-singulo"
 	slot_flags = SLOT_FLAGS_BACK
@@ -45,8 +45,8 @@
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando
 	name = "\'Commando\' rocket launcher"
-	desc = "Четырёхзарядная ракетная установка. Когда тебя вообще не волнует целостность станции."
 	cases = list("Ракетная установка \'Commando\'","Ракетной установки \'Commando\'","Ракетной установке \'Commando\'","Ракетную установку \'Commando\'","Ракетной установкой \'Commando\'","Ракетной установке \'Commando\'")
+	desc = "Четырёхзарядная ракетная установка. Это тот случай, когда тебя вообще не волнует целостность станции."
 	icon_state = "commando"
 	item_state = "commando"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket/four
