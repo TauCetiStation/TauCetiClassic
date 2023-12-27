@@ -33,7 +33,7 @@
 		handle_disabilities()
 
 		//Virus updates, duh
-		handle_virus_updates()
+		SEND_SIGNAL(src, COMSIG_HANDLE_VIRUS)
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -155,7 +155,13 @@
 					domutcheck(src,null)
 					emote("gasp")
 
-/mob/living/carbon/monkey/proc/handle_virus_updates()
+/mob/living/carbon/monkey/emplode(severity)
+	. = ..()
+	if(. && virus2.len)
+		for(var/datum/disease2/disease/V as anything in virus2)
+			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, src, severity)
+
+/mob/living/carbon/monkey/proc/handle_virus_updates(datum/source)
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(bodytemperature > 406)
 		for (var/ID in virus2)
@@ -184,7 +190,7 @@
 			if(isnull(V)) // Trying to figure out a runtime error that keeps repeating
 				CRASH("virus2 nulled before calling activate()")
 			else
-				V.activate(src)
+				SEND_SIGNAL(V, COMSIG_HANDLE_VIRUS, src)
 			// activate may have deleted the virus
 			if(!V) continue
 

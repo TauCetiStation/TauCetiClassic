@@ -66,6 +66,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 
 	. = ..()
 
+	RegisterSignal(src, COMSIG_HANDLE_VIRUS, PROC_REF(handle_virus_updates))
+
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()
 	if(ian_action)

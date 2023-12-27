@@ -3,6 +3,13 @@
 #define POOL_NEGATIVE_VIRUS "pool_negative_virus"
 var/global/list/virus_types_by_pool
 
+#define NANITE_SHOCK_IMMUNE 0 << 1
+#define NANITE_EMP_IMMUNE   1 << 1
+
+//Nanite excess thresholds
+#define NANITE_EXCESS_VOMIT 100
+#define NANITE_EXCESS_BURST 350
+
 /datum/disease2/disease
 	var/infectionchance = 70
 	var/speed = 1
@@ -20,9 +27,136 @@ var/global/list/virus_types_by_pool
 	var/list/affected_species = list(HUMAN , UNATHI , SKRELL , TAJARAN)
 	var/list/spread_types = list(DISEASE_SPREAD_AIRBORNE = 2, DISEASE_SPREAD_CONTACT = 2, DISEASE_SPREAD_BLOOD = 6)
 
+	var/nanite_volume = 100		//amount of nanites in the system, used as fuel for nanite programs
+	var/max_nanites = 500		//maximum amount of nanites in the system
+	var/regen_rate = 0.5		//nanites generated per second
+	var/safety_threshold = 50	//how low nanites will get before they stop processing
+
 /datum/disease2/disease/New()
 	uniqueID = rand(0,10000)
 	..()
+	RegisterSignal(src, COMSIG_HANDLE_VIRUS, PROC_REF(on_process))
+	RegisterSignal(src, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
+	RegisterSignal(src, COMSIG_MOB_DIED, PROC_REF(on_death))
+	RegisterSignal(src, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(on_shock))
+	//RegisterSignal(src, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(on_minor_shock))
+
+/datum/disease2/disease/proc/on_process(datum/source, atom/host)
+	if(istype(host, /obj/machinery/hydroponics))
+		adjust_nanites(null, regen_rate)
+		affect_plants(host)
+	else if(istype(host, /mob/living/carbon))
+		var/mob/living/carbon/mob = host
+		if(!IS_IN_STASIS(mob))
+			adjust_nanites(null, regen_rate)
+		activate(mob)
+
+/datum/disease2/disease/proc/consume_nanites(amount, force = FALSE)
+	if(!force)
+		if(safety_threshold && (nanite_volume - amount < safety_threshold))
+			return FALSE
+	adjust_nanites(null, -amount)
+	return (nanite_volume > 0)
+
+/**
+ * Handles how nanites leave the host's body if they find out that they're currently exceeding the maximum supported amount
+ *
+ * IC explanation:
+ * Normally nanites simply discard excess volume by slowing replication or 'sweating' it out in imperceptible amounts,
+ * but if there is a large excess volume, likely due to a programming change that leaves them unable to support their current volume,
+ * the nanites attempt to leave the host as fast as necessary to prevent nanite poisoning. This can range from minor oozing to nanites
+ * rapidly bursting out from every possible pathway, causing temporary inconvenience to the host.
+ */
+/datum/disease2/disease/proc/reject_excess_nanites(atom/host)
+	if(!isliving(host))
+		return
+	var/mob/living/mob = host
+	var/excess = nanite_volume - max_nanites
+	nanite_volume = max_nanites
+
+	switch(excess)
+		//Nanites getting rejected in massive amounts, but still enough to make a semi-orderly exit through vomit
+		if((NANITE_EXCESS_VOMIT + 0.1) to NANITE_EXCESS_BURST)
+			if(iscarbon(mob))
+				var/mob/living/carbon/C = mob
+				C.vomit(vomit_type = VOMIT_NANITE)
+		//Way too many nanites, they just leave through the closest exit before they harm/poison the host
+		if((NANITE_EXCESS_BURST + 0.1) to INFINITY)
+			mob.visible_message("<span class='userdanger'>A torrent of metallic grey slurry violently bursts out of [mob]'s face and floods out of [mob] skin!</span>",
+								"<span class='userdanger'>A torrent of metallic grey slurry violently bursts out of your eyes, ears, and mouth, and floods out of your skin!</span>")
+			//nanites coming out of your eyes
+			mob.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
+			addtimer(CALLBACK(mob, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 60 SECONDS, TIMER_STOPPABLE)
+			mob.apply_effects(stun = 10, weaken = 15, paralyze = 5, eyeblur = 5, agony = 25)
+			if(iscarbon(mob))
+				var/mob/living/carbon/C = mob
+				//nanites coming out of your ears
+				C.ear_deaf += 30
+				//nanites coming out of your mouth
+				C.vomit(vomit_type = VOMIT_NANITE)
+
+///Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount
+/datum/disease2/disease/proc/adjust_nanites(datum/source, amount, atom/host)
+	SIGNAL_HANDLER
+
+	nanite_volume += amount
+	//a large loss of nanites is accompanied by a small amount of blood loss in humans
+	if(amount <= -5)
+		if(ishuman(host))
+			var/mob/living/carbon/human/H = host
+			/* Normal blood value is 560, value when nanites can deactivate is 336
+			/Max possible nanites purge is ~50 per action
+			/4,5 (~5) actions is too much for balancing by blood
+			/~2-3 actions should good
+			/so just multiply value to 2 */
+			H.blood_remove(2 * abs(amount))
+	if(nanite_volume > max_nanites)
+		reject_excess_nanites(host)
+	if(nanite_volume <= 0) //oops we ran out
+		qdel(src)
+
+/datum/disease2/disease/proc/on_emp(datum/source, atom/host, severity)
+	SIGNAL_HANDLER
+	nanite_volume *= (rand(60, 90) * 0.01) //Lose 10-40% of nanites
+	adjust_nanites(null, -(rand(5, 50)), host) //Lose 5-50 flat nanite volume
+	for(var/datum/disease2/effectholder/NP as anything in effects)
+		NP.effect.on_emp(source, severity, src)
+
+/datum/disease2/disease/proc/on_shock(datum/source, atom/host, shock_damage, siemens_coeff = 1, flags = NONE)
+	SIGNAL_HANDLER
+	if(shock_damage < 1)
+		return
+	nanite_volume *= (rand(45, 80) * 0.01) //Lose 20-55% of nanites
+	adjust_nanites(null, -(rand(5, 50)), host)  //Lose 5-50 flat nanite volume
+	for(var/datum/disease2/effectholder/NP as anything in effects)
+		NP.effect.on_shock(source, shock_damage, src)
+
+/datum/disease2/disease/proc/on_minor_shock(datum/source, atom/host)
+	SIGNAL_HANDLER
+	adjust_nanites(null, -(rand(5, 15)), host)	//Lose 5-15 flat nanite volume
+	for(var/datum/disease2/effectholder/NP as anything in effects)
+		NP.effect.on_minor_shock(source, src)
+
+/datum/disease2/disease/proc/on_death(datum/source, atom/host, gibbed)
+	SIGNAL_HANDLER
+	for(var/datum/disease2/effectholder/NP as anything in effects)
+		NP.effect.on_death(source, gibbed, src)
+
+/datum/disease2/disease/proc/set_volume(datum/source, amount)
+	SIGNAL_HANDLER
+	nanite_volume = clamp(amount, 0, max_nanites)
+
+/datum/disease2/disease/proc/set_max_volume(datum/source, amount)
+	SIGNAL_HANDLER
+	max_nanites = max(1, amount)
+
+/datum/disease2/disease/proc/set_safety(datum/source, amount)
+	SIGNAL_HANDLER
+	safety_threshold = clamp(amount, 0, max_nanites)
+
+/datum/disease2/disease/proc/set_regen(datum/source, amount)
+	SIGNAL_HANDLER
+	regen_rate = amount
 
 /datum/disease2/disease/proc/haseffect(datum/disease2/effect/checkeffect)
 	for(var/datum/disease2/effectholder/e in effects)
@@ -44,16 +178,21 @@ var/global/list/virus_types_by_pool
 	if(!possible_effects.len)
 		return null
 
-	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
-	holder.effect = pick(possible_effects)
-	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
+	var/datum/disease2/effectholder/holder = get_new_effectholder(pick(possible_effects))
 	return holder
+
+/datum/disease2/disease/proc/get_new_effectholder(datum/disease2/effect/based_effect)
+	var/datum/disease2/effectholder/new_ef_holder = new /datum/disease2/effectholder
+	new_ef_holder.effect = based_effect
+	new_ef_holder.chance = rand(based_effect.chance_minm, based_effect.chance_maxm)
+	return new_ef_holder
 
 /datum/disease2/disease/proc/addeffect(datum/disease2/effectholder/holder)
 	if(holder == null)
 		return
 	if(effects.len < max_symptoms)
 		effects += holder
+		holder.on_adding()
 
 /datum/disease2/disease/proc/radiate()
 	effects = shuffle(effects)
@@ -71,9 +210,16 @@ var/global/list/virus_types_by_pool
 /datum/disease2/disease/proc/reactphoron()
 	addeffect(getrandomeffect(4,4))
 
+/datum/disease2/disease/proc/remove_effect(datum/disease2/effectholder/ef_holder)
+	if(effects.len <= min_symptoms)
+		return FALSE
+	effects -= ef_holder
+	UnregisterSignal(ef_holder, COMSIG_HANDLE_VIRUS)
+	return TRUE
+
 /datum/disease2/disease/proc/reactsleeptoxin()
-	if(effects.len > min_symptoms)
-		effects -= pick(effects) //remove random effect
+	//remove random effect
+	remove_effect(pick(effects))
 
 /datum/disease2/disease/proc/get_random_effect_total(minlvl = 1, maxlvl = 4, pool_name = null)
 	var/static/list/pool_distribution = list(
@@ -96,13 +242,12 @@ var/global/list/virus_types_by_pool
 	if(!effects_pool_list.len)
 		//recursive
 		return get_random_effect_total(max(minlvl - 1, 1), maxlvl + 1, pickedpool)
-	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
+
 	var/datum/disease2/effect/effect = pick(effects_pool_list)
+	var/datum/disease2/effectholder/holder = get_new_effectholder(effect)
 	effects_pool_list -= effect
-	holder.effect = effect
 	for(var/eff as anything in effects_pool_list)
 		qdel(eff)
-	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	return holder
 
 /datum/disease2/disease/proc/makerandom(greater = 0, spread_vector)
@@ -238,12 +383,11 @@ var/global/list/virus_types_by_pool
 	disease.uniqueID = uniqueID
 	disease.affected_species = affected_species.Copy()
 	for(var/datum/disease2/effectholder/holder in effects)
-		var/datum/disease2/effectholder/newholder = new /datum/disease2/effectholder
-		newholder.effect = new holder.effect.type
+		var/datum/disease2/effect/copied_effect = new holder.effect.type
+		var/datum/disease2/effectholder/newholder = get_new_effectholder(copied_effect)
 		newholder.chance = holder.chance
 		newholder.multiplier = holder.multiplier
 		newholder.effect.copy(holder, newholder, holder.effect)
-		//newholder.stage = holder.stage
 		disease.effects += newholder
 	return disease
 

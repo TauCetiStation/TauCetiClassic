@@ -171,6 +171,8 @@
 	monkey_list += src
 	update_icons()
 
+	RegisterSignal(src, COMSIG_HANDLE_VIRUS, PROC_REF(handle_virus_updates))
+
 /mob/living/carbon/monkey/Destroy()
 	monkey_list -= src
 	return ..()

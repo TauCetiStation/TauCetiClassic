@@ -1,3 +1,5 @@
+#define MICROBIOLOGY_NANITE 1
+
 /datum/disease2/effectholder
 	var/name = "Holder"
 	var/datum/disease2/effect/effect
@@ -7,19 +9,39 @@
 	var/ticks = 0
 	var/cooldownticks = 0
 
+/datum/disease2/effectholder/proc/on_adding()
+	RegisterSignal(src, COMSIG_HANDLE_VIRUS, PROC_REF(on_process))
+
+/datum/disease2/effectholder/proc/on_process(datum/disease2/disease/virus, atom/host)
+	return effect.on_process(host, virus, src)
+
 /datum/disease2/effectholder/proc/runeffect(atom/host, datum/disease2/disease/disease)
 	if(cooldownticks > 0)
 		cooldownticks -= 1 * disease.cooldown_mul
 	if(prob(chance))
+		ticks += 1
 		if(ticks > stage * 10 && prob(50) && stage < effect.max_stage)
 			stage++
 		if(cooldownticks <= 0)
 			cooldownticks = effect.cooldown
+			if(!effect.effect_active)
+				return
+			if(!check_conditions(host, disease, src))
+				return
 			if(ismob(host))
 				effect.activate_mob(host, src, disease)
 			if(istype(host, /obj/machinery/hydroponics))
 				effect.activate_plant(host, src, disease)
-		ticks += 1
+
+//If false, disables effects
+/datum/disease2/effectholder/proc/check_conditions(atom/A, datum/disease2/disease/disease)
+	//bloodloss = nanite loss. Programs suspended
+	if(ishuman(A) && effect.effect_type & MICROBIOLOGY_NANITE)
+		var/mob/living/carbon/human/H = A
+		var/probability_denied = clamp(BLOOD_VOLUME_OKAY - H.blood_amount(), 0, 100)
+		if(prob(probability_denied))
+			return FALSE
+	return effect.check_conditions(A, disease, src)
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////EFFECTS/////////////////////////////////
@@ -34,11 +56,61 @@
 	var/max_stage = 1
 	var/cooldown = 0
 	var/pools = list()
+	var/effect_active = TRUE
+	var/effect_type = 0
+	//The following vars are customizable
+	var/use_rate = 0 			//Amount of nanites used while active
+	var/program_flags = NONE
+	var/list/rogue_types = list(/*datum/disease2/effect/glitch*/) //What this can turn into if it glitches.
 
 /datum/disease2/effect/proc/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
+
+/datum/disease2/effect/proc/check_conditions(atom/host, datum/disease2/disease/disease, datum/disease2/effectholder/holder)
+	return TRUE
+
+/datum/disease2/effect/proc/on_process(datum/disease2/disease/virus, atom/host)
+	effect_active = check_conditions(host, virus) && consume_nanites(use_rate, FALSE, virus)
+
+/datum/disease2/effect/proc/consume_nanites(amount, force = FALSE, datum/disease2/disease/virus)
+	return virus.consume_nanites(amount, force)
+
+/datum/disease2/effect/proc/on_death(datum/source, gibbed, datum/disease2/disease/virus)
+	return
+
+/datum/disease2/effect/proc/software_error(type, datum/disease2/disease/virus)
+	if(!type)
+		type = rand(1,5)
+	switch(type)
+		if(1)
+			virus.dead = TRUE
+		if(2)
+			virus.cooldown_mul /= 2
+		if(3)
+			virus.stage = min(1, virus.stage - 1)
+		if(4)
+			virus.regen_rate = 0
+		if(5) //Program is scrambled and does something different
+			var/rogue_type = pick(rogue_types)
+			var/datum/disease2/effect/rogue = new rogue_type
+			for(var/datum/disease2/effectholder/ef_holder as anything in virus.effects)
+				if(ef_holder.effect == src)
+					virus.remove_effect(ef_holder.effect)
+			virus.addeffect(virus.get_new_effectholder(rogue))
+
+/datum/disease2/effect/proc/on_emp(datum/source, severity, datum/disease2/disease/virus)
+	if((program_flags & NANITE_EMP_IMMUNE) && prob(80 / severity))
+		software_error(null, virus)
+
+/datum/disease2/effect/proc/on_shock(datum/source, shock_damage, datum/disease2/disease/virus)
+	if((!program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
+		software_error(1, virus)
+
+/datum/disease2/effect/proc/on_minor_shock(datum/source, datum/disease2/disease/virus)
+	if((!program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
+		software_error(null, virus)
 
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
@@ -343,6 +415,7 @@
 	level = 4
 	max_stage = 3
 	cooldown = 60
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_NEGATIVE_VIRUS)
 
 /datum/disease2/effect/vomit/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -775,6 +848,7 @@
 	level = 3
 	max_stage = 3
 	cooldown = 7
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS)
 	var/trait_added = FALSE
 	COOLDOWN_DECLARE(senses_message)
@@ -848,6 +922,7 @@
 	level = 3
 	max_stage = 7
 	cooldown = 10
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS)
 
 /datum/disease2/effect/repairing/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -1067,6 +1142,7 @@
 	level = 2
 	max_stage = 2
 	cooldown = 10
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
 	var/trait_added = FALSE
 	COOLDOWN_DECLARE(mute_message)
@@ -1281,6 +1357,7 @@
 	level = 1
 	max_stage = 1
 	cooldown = 600
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS, POOL_NEUTRAL_VIRUS)
 
 /datum/disease2/effect/monitoring/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -1434,6 +1511,7 @@
 	level = 1
 	max_stage = 2
 	cooldown = 40
+	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS)
 	var/trait_added = FALSE
 	COOLDOWN_DECLARE(blood_add_message)

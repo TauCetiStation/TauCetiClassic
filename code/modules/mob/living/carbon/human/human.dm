@@ -63,6 +63,8 @@
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), PROC_REF(mood_item_equipped))
 
+	RegisterSignal(src, COMSIG_HANDLE_VIRUS, PROC_REF(handle_virus_updates))
+
 	if(dna)
 		dna.real_name = real_name
 
@@ -609,6 +611,9 @@
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	SEND_SIGNAL(src, COMSIG_ATOM_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
+	if(virus2.len)
+		for(var/datum/disease2/disease/V as anything in virus2)
+			SEND_SIGNAL(V, COMSIG_ATOM_ELECTROCUTE_ACT, src, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(status_flags & GODMODE)
 		return 0	//godmode
 	if(IsShockproof())

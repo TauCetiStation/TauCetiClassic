@@ -50,13 +50,13 @@
 			handle_mutations_and_radiation()
 
 		if(stat != DEAD)
+			SEND_SIGNAL(src, COMSIG_HANDLE_VIRUS)
+
 			//Disabilities
 			handle_disabilities()
 
 			//Random events (vomiting etc)
 			handle_random_events()
-
-			handle_virus_updates()
 
 			handle_shock()
 
@@ -1103,7 +1103,13 @@ var/global/list/tourette_bad_words= list(
 		if(T.get_lumcount() < 0.1)
 			playsound_local(src, pick(SOUNDIN_SCARYSOUNDS), VOL_EFFECTS_MASTER)
 
-/mob/living/carbon/human/proc/handle_virus_updates()
+/mob/living/carbon/human/emplode(severity)
+	. = ..()
+	if(. && virus2.len)
+		for(var/datum/disease2/disease/V as anything in virus2)
+			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, src, severity)
+
+/mob/living/carbon/human/proc/handle_virus_updates(datum/source)
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(bodytemperature > 406)
 		for (var/ID in virus2)
@@ -1135,7 +1141,7 @@ var/global/list/tourette_bad_words= list(
 			if(isnull(V)) // Trying to figure out a runtime error that keeps repeating
 				CRASH("virus2 nulled before calling activate()")
 			else
-				V.activate(src)
+				SEND_SIGNAL(V, COMSIG_HANDLE_VIRUS, src)
 			// activate may have deleted the virus
 			if(!V) continue
 

@@ -48,6 +48,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
 
+	RegisterSignal(src, COMSIG_HANDLE_VIRUS, PROC_REF(handle_virus_updates))
+
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	..()
 
@@ -190,9 +192,13 @@
 	if(needs_update)
 		update_icon()
 
-	handle_virus_updates()
+/obj/machinery/hydroponics/emplode(severity)
+	. = ..()
+	if(. && virus2.len)
+		for(var/datum/disease2/disease/V as anything in virus2)
+			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, src, severity)
 
-/obj/machinery/hydroponics/proc/handle_virus_updates()
+/obj/machinery/hydroponics/proc/handle_virus_updates(datum/source)
 	if(antibodies > 0)
 		adjustAntibodies(-1)
 	if(!virus2.len)
@@ -211,7 +217,7 @@
 		if(isnull(V))
 			CRASH("virus2 nulled before calling activate()")
 		else
-			V.affect_plants(src)
+			SEND_SIGNAL(V, COMSIG_HANDLE_VIRUS, src)
 
 /obj/machinery/hydroponics/proc/ripen()
 	harvest = TRUE

@@ -413,3 +413,42 @@
 #define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
 // send this signal to handle disabilities in life for mob/living/carbon/human
 #define COMSIG_HANDLE_DISABILITIES "handle_disabilities"
+
+///Nanites
+#define COMSIG_HANDLE_VIRUS "handle_virus"
+//returns TRUE if nanites are found
+#define COMSIG_HAS_NANITES "has_nanites"
+	#define COMPONENT_NANITES_DETECTED 1
+//() returns TRUE if nanites have stealth
+#define COMSIG_NANITE_IS_STEALTHY "nanite_is_stealthy"
+	#define NANITE_STEALTH_ENABLED 1
+//(list/nanite_programs) - makes the input list a copy the nanites' program list
+#define COMSIG_NANITE_GET_PROGRAMS	"nanite_get_programs"
+//(amount) Sets current nanite volume to the given amount
+#define COMSIG_NANITE_SET_VOLUME "nanite_set_volume"
+//(amount) Adjusts nanite volume by the given amount
+#define COMSIG_NANITE_ADJUST_VOLUME "nanite_adjust"
+//(amount) Sets maximum nanite volume to the given amount
+#define COMSIG_NANITE_SET_MAX_VOLUME "nanite_set_max_volume"
+//(amount(0-100)) Sets cloud ID to the given amount
+#define COMSIG_NANITE_SET_CLOUD "nanite_set_cloud"
+//(amount) Sets safety threshold to the given amount
+#define COMSIG_NANITE_SET_SAFETY "nanite_set_safety"
+//(amount) Sets regeneration rate to the given amount
+#define COMSIG_NANITE_SET_REGEN "nanite_set_regen"
+//(code(1-9999)) Called when sending a nanite signal to a mob.
+#define COMSIG_NANITE_SIGNAL "nanite_signal"
+//(mob/user, full_scan) - sends to chat a scan of the nanites to the user, returns TRUE if nanites are detected
+#define COMSIG_NANITE_SCAN "nanite_scan"
+//(datum/nanite_program/new_program, datum/nanite_program/source_program) Called when adding a program to a nanite component
+#define COMSIG_NANITE_ADD_PROGRAM "nanite_add_program"
+	///Installation failed, but there are still nanites
+	#define COMPONENT_PROGRAM_NOT_INSTALLED 1
+//(datum/component/nanites, full_overwrite, copy_activation) Called to sync the target's nanites to a given nanite component
+#define COMSIG_NANITE_SYNC "nanite_sync"
+//() deletes the nanite component
+#define COMSIG_NANITE_DELETE "nanite_delete"
+//(method) Modify cloud sync status. Method can be toggle, enable or disable
+#define COMSIG_NANITE_SET_CLOUD_SYNC "nanite_set_cloud_sync"
+//(comm_code(1-9999), comm_message) Called when sending a nanite comm signal to a mob.
+#define COMSIG_NANITE_COMM_SIGNAL "nanite_comm_signal"

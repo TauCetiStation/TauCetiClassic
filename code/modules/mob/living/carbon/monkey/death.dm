@@ -11,7 +11,7 @@
 /mob/living/carbon/monkey/death(gibbed)
 	if(stat == DEAD)
 		return
-	
+
 	stat = DEAD
 
 	if(!gibbed)
@@ -19,4 +19,8 @@
 
 	update_canmove()
 
-	return ..(gibbed)
+	. = ..(gibbed)
+	if(. && virus2.len)
+		for(var/datum/disease2/disease/V as anything in virus2)
+			SEND_SIGNAL(V, COMSIG_MOB_DIED, src, gibbed)
+

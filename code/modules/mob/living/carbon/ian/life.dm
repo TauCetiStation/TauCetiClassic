@@ -109,7 +109,7 @@
 		handle_mutations_and_radiation()
 		handle_chemicals_in_body()
 		handle_disabilities()
-		handle_virus_updates()
+		SEND_SIGNAL(src, COMSIG_HANDLE_VIRUS)
 
 	blinded = null
 
@@ -247,7 +247,13 @@
 		if (prob(10))
 			Stuttering(10)
 
-/mob/living/carbon/ian/proc/handle_virus_updates()
+/mob/living/carbon/ian/emplode(severity)
+	. = ..()
+	if(. && virus2.len)
+		for(var/datum/disease2/disease/V as anything in virus2)
+			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, severity)
+
+/mob/living/carbon/ian/proc/handle_virus_updates(datum/source)
 	if(status_flags & GODMODE)
 		return FALSE
 	if(bodytemperature > 406)
@@ -277,7 +283,7 @@
 			if(isnull(V)) // Trying to figure out a runtime error that keeps repeating
 				CRASH("virus2 nulled before calling activate()")
 			else
-				V.activate(src)
+				SEND_SIGNAL(V, COMSIG_HANDLE_VIRUS, src)
 			// activate may have deleted the virus
 			if(!V)
 				continue
@@ -426,4 +432,8 @@
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
 
-	return ..(gibbed)
+	. = ..(gibbed)
+	if(virus2.len)
+		for(var/datum/disease2/disease/V as anything in virus2)
+			SEND_SIGNAL(V, COMSIG_MOB_DIED, src, gibbed)
+
