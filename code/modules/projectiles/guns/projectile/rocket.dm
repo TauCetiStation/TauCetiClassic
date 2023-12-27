@@ -28,7 +28,7 @@
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)
-		to_chat(user, "<span class = 'notice'>Вы разряжаете [num_unloaded] [pluralize_russian(num_unloaded, "снаряд", "снаряда", "снарядов")] из [CASE(src, ACCUSATIVE_CASE)].</span>")
+		to_chat(user, "<span class = 'notice'>Вы разряжаете [num_unloaded] [pluralize_russian(num_unloaded, "снаряд", "снаряда", "снарядов")] из [CASE(src, GENITIVE_CASE)].</span>")
 	else
 		to_chat(user, "<span class='notice'>[CASE(src, NOMINATIVE_CASE)] пуста.</span>")
 
