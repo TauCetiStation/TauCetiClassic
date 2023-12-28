@@ -224,6 +224,9 @@
 			BP.take_damage(force / 2, null, damage_flags())
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
+		var/datum/species/S = all_species[M.get_species()]
+		if(S && S.flags[NO_MINORCUTS])
+			return
 		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 		M.adjustBruteLoss(force / 2)
 

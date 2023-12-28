@@ -346,7 +346,7 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/device/t_scanner,
-/obj/item/clothing/gloves/fyellow,
+/obj/item/clothing/gloves/budget_insulated,
 /obj/item/device/multitool,
 /turf/simulated/floor{
 	dir = 1;
@@ -1032,9 +1032,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "platebot"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/agrospheregarden)
 "co" = (
 /obj/structure/disposalpipe/segment{
@@ -1170,9 +1171,10 @@
 	external_pressure_bound_default = 140;
 	name = "(OUT) Space Large Air Vent"
 	},
-/turf/simulated/floor/plating/airless{
-	icon_state = "platebot"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/agrospheregarden)
 "cC" = (
 /turf/simulated/shuttle/wall{
@@ -1219,10 +1221,11 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump/on,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "warnplate"
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cH" = (
 /obj/structure/stool/bed/roller,
@@ -1295,9 +1298,10 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cN" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1310,9 +1314,10 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cP" = (
 /obj/structure/table/glass,
@@ -1368,9 +1373,10 @@
 	name = "Agrosphere Large Air Vent"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cT" = (
 /obj/machinery/atmospherics/pipe/manifold/visible,
@@ -1393,9 +1399,10 @@
 	id_tag = "agrosphere_pump";
 	name = "Agrosphere Large Air Vent"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
+/obj/effect/decal/turf_decal/alpha/cyan{
+	icon_state = "bot"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cV" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -1415,9 +1422,10 @@
 	frequency = 1380;
 	id_tag = "agrosphere_outer"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "warnplate"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "cX" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -1452,6 +1460,19 @@
 	faction = "tomato"
 	},
 /turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"KY" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	id = "agro blast";
+	name = "Blast Doors";
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
 "OZ" = (
 /obj/structure/sink{
@@ -1497,9 +1518,9 @@ aa
 aa
 aa
 aE
-aA
-aA
-aA
+KY
+KY
+KY
 aD
 cn
 aa
@@ -1516,7 +1537,7 @@ aa
 aa
 aa
 aE
-aA
+KY
 aD
 bj
 da
@@ -1833,9 +1854,9 @@ aa
 aa
 aa
 aC
-aA
-aA
-aA
+KY
+KY
+KY
 aD
 cB
 aa

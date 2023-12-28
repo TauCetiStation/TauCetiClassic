@@ -1,23 +1,10 @@
 /obj/structure/closet/secure_closet/freezer
-
-	icon_state = "fridge1"
+	icon_state = "fridge"
 	icon_closed = "fridge"
-	icon_locked = "fridge1"
-	icon_opened = "fridgeopen"
-	icon_broken = "fridgebroken"
-	icon_off = "fridgeoff"
-
-/obj/structure/closet/secure_closet/freezer/update_icon()
-	if(broken)
-		icon_state = icon_broken
-	else
-		if(!opened)
-			if(locked)
-				icon_state = icon_locked
-			else
-				icon_state = icon_closed
-		else
-			icon_state = icon_opened
+	icon_opened = "fridge_open"
+	overlay_locked = "fridge_locked"
+	overlay_unlocked = "fridge_unlocked"
+	overlay_welded = "fridge_welded"
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "Kitchen Cabinet"
@@ -29,6 +16,24 @@
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
 	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
+
+
+/obj/structure/closet/secure_closet/freezer/kitchen/kitchenbig
+
+/obj/structure/closet/secure_closet/freezer/kitchen/kitchenbig/PopulateContents()
+	for (var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/food/drinks/milk(src)
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/drinks/soymilk(src)
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/storage/fancy/egg_box(src)
+	for (var/i in 1 to 6)
+		new /obj/item/weapon/reagent_containers/food/condiment/flour(src)
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/food/snacks/meat/monkey(src)
+	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
+
+
 
 /obj/structure/closet/secure_closet/freezer/kitchen/mining
 	req_access = list()
@@ -71,12 +76,6 @@
 
 /obj/structure/closet/secure_closet/freezer/milkshake
 	name = "Refrigerator"
-	icon_state = "fridge1"
-	icon_closed = "fridge"
-	icon_locked = "fridge1"
-	icon_opened = "fridgeopen"
-	icon_broken = "fridgebroken"
-	icon_off = "fridgeoff"
 
 /obj/structure/closet/secure_closet/freezer/milkshake/PopulateContents()
 	for(var/i in 1 to 5)

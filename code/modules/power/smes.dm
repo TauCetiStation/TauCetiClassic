@@ -105,6 +105,8 @@
 	..()
 
 /obj/machinery/power/smes/RefreshParts()
+	..()
+
 	var/IO = 0
 	var/C = 0
 	var/c = 0
@@ -449,7 +451,7 @@
 	smoke.set_up(3, 0, src.loc)
 	smoke.attach(src)
 	smoke.start()
-	explosion(src.loc, -1, 0, 1, 3, 0)
+	explosion(src.loc, -1, 0, 1, 3, adminlog = FALSE)
 	message_admins("SMES explosion in [src.loc.loc] [ADMIN_JMP(src)]")
 	log_game("SMES explosion in [src.loc.loc]")
 	qdel(src)

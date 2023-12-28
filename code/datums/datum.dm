@@ -85,6 +85,10 @@
 		A.filters += filter(arglist(arguments))
 	UNSETEMPTY(filter_data)
 
+/obj/item/update_filters()
+	. = ..()
+	update_item_actions()
+
 /datum/proc/transition_filter(name, time, list/new_params, easing, loop)
 	var/filter = get_filter(name)
 	if(!filter)

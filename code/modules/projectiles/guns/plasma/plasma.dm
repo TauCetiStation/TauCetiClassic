@@ -13,16 +13,14 @@
 
 /obj/item/weapon/gun/plasma // this will act as placeholder too (previously it was L10-C under projectile guns).
 	name = "plasma 10-bc"
-	desc = "A basic plasma-based bullpup carbine with fast rate of fire."
+	desc = "Стандартный плазменный карабин типа булл-пап обладающий высокой скорострельностью."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
-	fire_delay = 1
-	w_class = SIZE_NORMAL
+	fire_delay = 2
 	origin_tech = "combat=3;magnets=2"
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
 	can_be_holstered = FALSE
-	two_hand_weapon = ONLY_TWOHAND
 
 	var/overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_shot.ogg'
 
@@ -38,7 +36,7 @@
 
 /obj/item/weapon/gun/plasma/p104sass
 	name = "plasma 104-sass" // its actually 10/4. 10 - because its based in some technical aspects of carbine and even shoots the same projectiles. 4 - stands for prototype number.
-	desc = "A plasma-based semi-automatic short shotgun."
+	desc = "Полуавтоматический короткоствольный дробовик на основе плазмы"
 	icon_state = "plasma104_stg"
 	item_state = "plasma104_stg"
 	origin_tech = "combat=4;magnets=3"
@@ -50,7 +48,7 @@
 		PLASMAGUN_OVERCHARGE_TYPE = /obj/item/ammo_casing/plasma/overcharge/massive
 		)
 
-	w_class = SIZE_BIG
+	w_class = SIZE_NORMAL
 	fire_delay = 15
 	number_of_shots = 7 // It can be more than that (but no more than 1 extra), if there is a bit of charge left after 7th shot.
 	max_projectile_per_fire = 5
@@ -71,6 +69,7 @@
 /obj/item/weapon/gun/plasma/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()
 	..()
+	chambered = null
 
 /obj/item/weapon/gun/plasma/proc/newshot()
 	if (!magazine || !magazine.power_supply || magazine.power_supply.charge <= 0 || chambered)
@@ -86,7 +85,7 @@
 		fire_sound = initial(fire_sound)
 	else
 		shot = ammo_type[PLASMAGUN_OVERCHARGE_TYPE]
-		fire_delay = 0
+		fire_delay = 1
 		fire_sound = overcharge_fire_sound
 		max_projectile_per_fire = 1
 
@@ -120,16 +119,14 @@
 /obj/item/weapon/gun/plasma/attack_self(mob/user)
 	if(magazine && magazine.get_charge())
 		playsound(user, 'sound/weapons/guns/plasma10_unload.ogg', VOL_EFFECTS_MASTER) // yes, no overcharge sound for unload.
-	if(chambered)
-		QDEL_NULL(chambered)
 	if (magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы вытаскиваете магазин из [src]!</span>")
 	else
-		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
+		to_chat(user, "<span class='notice'>Внутри [src] нет магазина.</span>")
 	update_icon(user)
 	return
 
@@ -139,7 +136,7 @@
 		if(!magazine && istype(AB, initial_mag))
 			user.drop_from_inventory(AB, src)
 			magazine = AB
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
+			to_chat(user, "<span class='notice'>Вы загрузили новый магазин в [src].</span>")
 			if(AB.get_charge())
 				if(!AB.has_overcharge())
 					playsound(user, 'sound/weapons/guns/plasma10_load.ogg', VOL_EFFECTS_MASTER)
@@ -150,7 +147,7 @@
 			return TRUE
 
 		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
+			to_chat(user, "<span class='notice'>Внутри [src] уже установлен магазин.</span>")
 			return
 
 	return ..()

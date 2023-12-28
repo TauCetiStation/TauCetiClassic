@@ -4,16 +4,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 	icon_state = "robot_rd"
 	icon_living = "robot_rd"
 	icon_dead = "robot_rd_died"
-	desc = "Digital Explorer Theory - 5. Робот с блестящими колесами. Иногда из его корпуса вылетают искры."
+	desc = "Теория цифровых проводников - 5. Робот с блестящими колесами. Иногда из его корпуса вылетают искры."
 
 	speak = list("Бип", "Буп", "Биииибски...",
-				 "Один...два...три...ещё...",
+				 "Раз...два...три...четыре...пять...",
 				 "Но-о-о-оль", "Один...нуль...Бип",
 				 "Анализирую...", "Успешно",
 				 "...это была шутка", "Ла ла ла... Бип",
 				 "Бум...", "Нет времени",
 				 "Время науки", "ED-209, защити меня", "Директор, где изучения?",
-				 "Ресурсы были?", "Бомбы взрывали?", "Форон в токсичной...",
+				 "Ресурсы были?", "Бомбы взрывали?", "Форон в токсинной...",
 				 "Мехов изучили?", "РПЕД изучили?", "РД, когда улучшения?")
 
 	speak_emote = list("бикает", "пищит")
@@ -95,7 +95,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 
 /mob/living/simple_animal/det5/proc/explode()	// explode
 	visible_message("<span class='bold'>[src]</span> пищит <span class='userdanger'>В@ры# п!дгот$влен, а-а-ак>ив&ция...</span>")
-	explosion(get_turf(src), 0, 2, 2, 2, 1)
+	explosion(get_turf(src), 0, 2, 2, 2)
 	death()
 
 /mob/living/simple_animal/det5/emag_act(mob/user)

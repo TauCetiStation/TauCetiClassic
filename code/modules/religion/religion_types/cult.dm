@@ -20,8 +20,8 @@
 		"Cult of Blood" = /turf/simulated/floor/carpet/black
 	)
 
-	carpet_dir_by_name = list(
-		"Cult of Blood" = 9
+	decal_by_name = list(
+		"Cult of Blood",
 	)
 
 	binding_rites = list(

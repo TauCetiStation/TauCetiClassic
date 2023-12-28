@@ -15,12 +15,12 @@ var/global/list/scrap_base_cache = list()
 	var/loot_min = 3
 	var/loot_max = 5
 	var/list/loot_list = list(
-		/obj/item/stack/rods/random,
-		/obj/item/stack/sheet/mineral/plastic/random,
-		/obj/item/stack/sheet/metal/random,
-		/obj/item/stack/sheet/glass/random,
-		/obj/item/stack/sheet/plasteel/random,
-		/obj/item/stack/sheet/wood/random,
+		/obj/item/stack/rods,
+		/obj/item/stack/sheet/mineral/plastic,
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/plasteel,
+		/obj/item/stack/sheet/wood,
 		/obj/item/weapon/shard
 	)
 	var/dig_amount = 7
@@ -105,13 +105,32 @@ var/global/list/scrap_base_cache = list()
 	var/amt = rand(loot_min, loot_max)
 	for(var/x = 1 to amt)
 		var/loot_path = pick(loot_list)
-		new loot_path(src)
+		if (ispath(loot_path, /obj/item/stack))
+			new loot_path(src, amount_in_stack(loot_path))
+		else
+			new loot_path(src)
 	for(var/obj/item/I in contents)
 		if(prob(66))
 			I.make_old()
 	loot = new(src)
 	loot.set_slots(slots = 7, slot_size = SIZE_BIG)
 	shuffle_loot()
+
+/obj/structure/scrap/proc/amount_in_stack(path)
+	var/amount = rand(20, 40)
+	if (ispath(path, /obj/item/stack/rods))
+		amount = rand(3, 8)
+	else if (ispath(path, /obj/item/stack/sheet/mineral/plastic))
+		amount = rand(5, 10)
+	else if (ispath(path, /obj/item/stack/sheet/metal))
+		amount = rand(8, 12)
+	else if (ispath(path, /obj/item/stack/sheet/glass))
+		amount = rand(5, 10)
+	else if (ispath(path, /obj/item/stack/sheet/plasteel))
+		amount = rand(1, 3)
+	else if (ispath(path, /obj/item/stack/sheet/wood))
+		amount = rand(3, 8)
+	return amount
 
 /obj/structure/scrap/Destroy()
 	for (var/obj/item in loot)
@@ -129,7 +148,7 @@ var/global/list/scrap_base_cache = list()
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])
 				return
-			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS) ) )
+			if((!H.shoes && !H.species.flags[NO_MINORCUTS]) && (!H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS)))
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.is_robotic())
 					return
@@ -190,31 +209,22 @@ var/global/list/scrap_base_cache = list()
 		underlays |= I
 
 /obj/structure/scrap/proc/hurt_hand(mob/user)
-	if(prob(50))
-		if(!ishuman(user))
-			return 0
-		var/mob/living/carbon/human/victim = user
-		if(victim.species.flags[IS_SYNTHETIC])
-			return 0
-		if(victim.gloves)
-			if(istype(victim.gloves, /obj/item/clothing/gloves))
-				var/obj/item/clothing/gloves/G = victim.gloves
-				if(G.protect_fingers)
-					return
-		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
-		if(!BP)
-			return 0
-		if(BP.is_robotic())
-			return 0
-		if(victim.species.flags[NO_MINORCUTS])
-			return 0
+	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/victim = user
+	var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
+	var/obj/item/clothing/gloves/G = victim.gloves
+	if(!BP || BP.is_robotic() || victim.species.flags[NO_MINORCUTS]\
+		|| victim.species.flags[IS_SYNTHETIC] || (victim.gloves && G.protect_fingers))
+		return FALSE
+	else if(prob(50))
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
 		BP.take_damage(5, null, DAM_SHARP | DAM_EDGE, "Sharp debris")
 		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 		if(victim.species.flags[NO_PAIN]) // So we still take damage, but actually dig through.
-			return 0
-		return 1
-	return 0
+			return FALSE
+		return TRUE
+	return FALSE
 
 /obj/structure/scrap/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -300,7 +310,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/meds/medical_supply,
 		/obj/random/meds/medical_supply,
 		/obj/random/meds/medical_supply,
-		/obj/item/stack/rods/random,
+		/obj/item/stack/rods,
 		/obj/item/weapon/shard
 	)
 
@@ -315,8 +325,8 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
 		/obj/random/tools/tech_supply/guaranteed,
-		/obj/item/stack/rods/random,
-		/obj/item/stack/sheet/metal/random,
+		/obj/item/stack/rods,
+		/obj/item/stack/sheet/metal,
 		/obj/item/weapon/shard
 	)
 
@@ -332,7 +342,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/foods/food_without_garbage,
 		/obj/random/foods/food_without_garbage,
 		/obj/item/weapon/shard,
-		/obj/item/stack/rods/random
+		/obj/item/stack/rods
 	)
 
 /obj/structure/scrap/guns
@@ -348,8 +358,8 @@ var/global/list/scrap_base_cache = list()
 		/obj/item/toy/gun,
 		/obj/item/toy/crossbow,
 		/obj/item/weapon/shard,
-		/obj/item/stack/sheet/metal/random,
-		/obj/item/stack/rods/random
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/rods
 	)
 
 /obj/structure/scrap/science
@@ -417,7 +427,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/misc/pack,
 		/obj/random/misc/pack,
 		/obj/item/weapon/shard,
-		/obj/item/stack/rods/random
+		/obj/item/stack/rods
 	)
 
 /obj/structure/scrap/poor/large

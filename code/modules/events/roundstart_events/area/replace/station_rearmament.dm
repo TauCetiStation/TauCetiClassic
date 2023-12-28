@@ -14,9 +14,12 @@
 
 /datum/event/feature/area/replace/station_rearmament_energy
 	special_area_types = list(/area/station/security/warden, /area/station/security/armoury, /area/station/security/hos,
-	/area/station/security/main, /area/station/security/checkpoint, /area/station/medical/reception, /area/station/bridge)
+	/area/station/security/main, /area/station/security/checkpoint, /area/station/medical/reception, /area/station/bridge, /area/station/security/blueshield,
+	/area/station/security/blueshield/shuttle)
 	replace_types = list(
 		/obj/item/weapon/gun/energy/taser = /obj/item/weapon/gun/energy/taser/stunrevolver,
+		/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec = /obj/item/weapon/gun/energy/gun/hos,
+		/obj/item/ammo_box/magazine/glock/extended = /obj/item/weapon/storage/box/flashbangs,
 		/obj/item/weapon/gun/projectile/automatic/pistol/glock = /obj/item/weapon/gun/energy/taser/stunrevolver,
 		/obj/item/ammo_box/magazine/glock/rubber = /obj/item/device/radio_grid,
 		/obj/item/ammo_box/magazine/glock = /obj/item/weapon/grenade/empgrenade,
@@ -26,4 +29,16 @@
 		/obj/item/weapon/storage/box/r4046/teargas = /obj/item/ammo_box/magazine/plasma,
 		/obj/item/weapon/storage/box/r4046/EMP = /obj/item/ammo_box/magazine/plasma,
 		/obj/item/weapon/storage/box/r4046/rubber = /obj/item/ammo_box/magazine/plasma,
+	)
+
+/datum/event/feature/area/replace/sec_rearmament_elite
+	special_area_types = list(/area/station/security/armoury)
+	replace_types = list(
+		/obj/item/weapon/shield/riot = /obj/item/weapon/shield/riot/tele,
+		/obj/item/weapon/gun/projectile/automatic/pistol/glock = /obj/item/weapon/gun/projectile/automatic/l13,
+		/obj/item/ammo_box/magazine/glock/rubber = /obj/item/ammo_box/magazine/l13,
+		/obj/item/ammo_box/magazine/glock = /obj/item/ammo_box/magazine/l13/lethal,
+		/obj/item/ammo_box/shotgun/beanbag = /obj/item/ammo_box/eight_shells/stunshot,
+		/obj/item/weapon/gun/energy/laser = /obj/item/weapon/gun/energy/lasercannon,
+		/obj/item/weapon/gun/energy/gun = /obj/item/weapon/gun/energy/gun/nuclear,
 	)

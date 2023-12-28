@@ -202,10 +202,8 @@
 		return null
 	if(!(contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS)))
 		internal = null
-		internals?.update_icon(src)
 		return null
 
-	internals?.update_icon(src)
 	return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
@@ -342,7 +340,9 @@
 			adjustBruteLoss(-1)
 			adjustToxLoss(-1)
 			adjustOxyLoss(-1)
-
+		else if(light_amount < -3)
+			if(race == DIONA && prob(5))
+				emote("chirp")
 		if(injecting)
 			if(gestalt && nutrition > 210)
 				gestalt.reagents.add_reagent(injecting,1)

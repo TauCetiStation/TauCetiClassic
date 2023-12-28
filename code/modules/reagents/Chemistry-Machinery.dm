@@ -258,6 +258,8 @@
 	RefreshParts()
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
+	..()
+
 	var/time = 0
 	var/temp_energy = 0
 	var/i
@@ -830,6 +832,7 @@
 
 /obj/machinery/reagentgrinder/RefreshParts()
 	. = ..()
+
 	speed = 1
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		speed = M.rating

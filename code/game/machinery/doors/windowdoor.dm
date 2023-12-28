@@ -5,10 +5,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	desc = "A strong door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
-	visible = 0.0
+	always_transparent = TRUE
 	flags = ON_BORDER
 	opacity = 0
-	explosion_resistance = 5
+	explosive_resistance = 0
 	air_properties_vary_with_direction = 1
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
 	door_close_sound = 'sound/machines/windowdoor.ogg'
@@ -32,10 +32,22 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 	color = SSstation_coloring.get_default_color()
 
+	if(unres_sides)
+		//remove unres_sides from directions it can't be bumped from
+		switch(dir)
+			if(NORTH,SOUTH)
+				unres_sides &= ~EAST
+				unres_sides &= ~WEST
+			if(EAST,WEST)
+				unres_sides &= ~NORTH
+				unres_sides &= ~SOUTH
+
+	src.unres_sides = unres_sides
+
 /obj/machinery/door/window/Destroy()
 	density = FALSE
 	update_nearby_tiles()
-	electronics = null
+	QDEL_NULL(electronics)
 	return ..()
 
 /obj/machinery/door/window/proc/open_and_close()
@@ -61,7 +73,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		new /obj/item/stack/cable_coil/red(loc, 2)
 		var/obj/item/weapon/airlock_electronics/ae
 		if(!electronics)
-			ae = new/obj/item/weapon/airlock_electronics( src.loc )
+			ae = new (src.loc)
 			if(!src.req_access)
 				check_access()
 			if(src.req_access.len)
@@ -73,6 +85,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 			ae = electronics
 			electronics = null
 			ae.loc = src.loc
+		ae.unres_sides = unres_sides
 		if(operating == -1)
 			ae.icon_state = "door_electronics_smoked"
 			ae.broken = TRUE
@@ -98,28 +111,17 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		color = new_color
 
 /obj/machinery/door/window/Bumped(atom/movable/AM)
-	if( operating || !src.density )
+	if(operating || !src.density)
 		return
-	if (!( ismob(AM) ))
-		var/obj/machinery/bot/bot = AM
-		if(istype(bot))
-			if(check_access(bot.botcard))
-				open_and_close()
-			else
-				do_animate("deny")
-		else if(istype(AM, /obj/mecha))
-			var/obj/mecha/mecha = AM
-			if(mecha.occupant && allowed(mecha.occupant))
-				open_and_close()
-			else
-				do_animate("deny")
-		return
-	if (!( SSticker ))
+	if(!ismob(AM))
+		if(allowed(AM))
+			open_and_close()
+		else
+			do_animate("deny")
 		return
 	var/mob/M = AM
 	if(!M.restrained())
 		bumpopen(M)
-	return
 
 /obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
@@ -147,6 +149,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		return !density
 	else
 		return 1
+
+/obj/machinery/door/window/unrestricted_side(mob/opener)
+	if(get_turf(opener) == loc)
+		return turn(dir,180) & unres_sides
+	return ..()
 
 /obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
@@ -178,7 +185,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	sleep(10)
 	density = FALSE
 	block_air_zones = FALSE // We merge zones if door is open.
-	explosion_resistance = 0
+	explosive_resistance = 0
 	update_nearby_tiles()
 
 /obj/machinery/door/window/do_close()
@@ -189,7 +196,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	icon_state = base_state
 	density = TRUE
 	block_air_zones = TRUE
-	explosion_resistance = initial(explosion_resistance)
+	explosive_resistance = initial(explosive_resistance)
 	update_nearby_tiles()
 
 /obj/machinery/door/window/do_animate(animation)
@@ -293,7 +300,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 						var/obj/item/weapon/airlock_electronics/ae
 						if(!electronics)
-							ae = new/obj/item/weapon/airlock_electronics( src.loc )
+							ae = new (src.loc)
 							if(!req_access)
 								check_access()
 							if(req_access.len)
@@ -306,6 +313,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 							ae = electronics
 							electronics = null
 							ae.loc = src.loc
+						ae.unres_sides = unres_sides
 
 						if(operating == -1)
 							ae.icon_state = "door_electronics_smoked"
