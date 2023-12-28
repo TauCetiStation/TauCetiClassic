@@ -25,7 +25,7 @@
 				if(prob(catch_chance))
 					catchable_things_amount--
 					var/catchable_path = pickweight(catchable_things)
-					var/obj/thing = new catchable_path(get_turf(A), get_step(user, get_dir(A, user)))
+					var/thing = new catchable_path(get_turf(A), get_step(user, get_dir(A, user)))
 					A.visible_message("<span class='notice'>[user] has caught [thing].</span>")
 					return
 			A.visible_message("<span class='notice'>[user] fails to catch anything.</span>")

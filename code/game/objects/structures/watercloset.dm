@@ -18,6 +18,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	. = ..()
 	lid_open = round(rand(0, 1))
 	update_icon()
+	AddComponent(/datum/component/fishing, list(/obj/item/weapon/reagent_containers/food/snacks/badrecipe = 10, /mob/living/simple_animal/mouse = 3, /mob/living/simple_animal/mouse/rat = 2, /mob/living/simple_animal/hostile/giant_spider = 1), 10 SECONDS, rand(1, 3) , 20)
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE * 1.5)
@@ -92,6 +93,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	icon_state = "toilet[lid_open][cistern_open]"
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/weapon/wirerod) && lid_open)
+		return ..()
 	if(iswrenching(I) && broken) // we don't have any plunger around, so wrench is good
 		to_chat(user, "<span class='notice'>You start fixing \the [src].</span>")
 		if(I.use_tool(src, user, 60, volume = 100))
@@ -786,7 +789,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 /obj/structure/sink/puddle/atom_init()
 	. = ..()
-	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 9, /obj/item/fish_carp/mega = 2), 10 SECONDS, rand(1, 30) , 20)
+	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 10, /obj/item/fish_carp/mega = 2), 10 SECONDS, rand(1, 30) , 20)
 
 /obj/structure/sink/puddle/attack_hand(mob/M)
 	icon_state = "puddle-splash"

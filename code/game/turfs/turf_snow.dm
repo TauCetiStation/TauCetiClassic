@@ -206,7 +206,7 @@
 
 /obj/effect/overlay/ice_hole/atom_init()
 	. = ..()
-	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 9, /obj/item/fish_carp/mega = 2), 10 SECONDS, rand(1, 30) , 20)
+	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 15, /obj/item/fish_carp/mega = 8, /obj/item/fish_carp/full_size = 5, /obj/item/fish_carp/over_size = 3, PATH_OR_RANDOM_PATH(/obj/random/mecha/wreckage) = 1, PATH_OR_RANDOM_PATH(/obj/random/cloth/shittysuit) = 1), 10 SECONDS, rand(1, 30) , 20)
 
 /obj/effect/overlay/ice_hole/attackby(obj/O, mob/user)
 	. = ..()
@@ -289,3 +289,10 @@
 
 /obj/item/fish_carp/full_size
 	scale_icon = 1
+	meat_amount_max = 8
+	loot_amount = 6
+
+/obj/item/fish_carp/over_size
+	scale_icon = 2
+	meat_amount_max = 16
+	loot_amount = 12
