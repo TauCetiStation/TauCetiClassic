@@ -131,7 +131,7 @@ SUBSYSTEM_DEF(job)
 		if(!job)
 			continue
 
-		if(istype(job, GetJob("Test Subject"))) // We don't want to give him assistant, that's boring!
+		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
 			continue
 
 		if(job.title in command_positions) //If you want a command position, select it!
@@ -159,8 +159,8 @@ SUBSYSTEM_DEF(job)
 
 	// So we end up here which means every other job is unavailable, lets give him "assistant", since this is the only job without any spawn limit and restrictions.
 	if(player.mind && !player.mind.assigned_role)
-		Debug("GRJ Random job given, Player: [player], Job: Test Subject")
-		AssignRole(player, "Test Subject")
+		Debug("GRJ Random job given, Player: [player], Job: Assistant")
+		AssignRole(player, "Assistant")
 		unassigned -= player
 
 /datum/controller/subsystem/job/proc/ResetOccupations()
@@ -286,7 +286,7 @@ SUBSYSTEM_DEF(job)
 	Debug("AC1, Candidates: [assistant_candidates.len]")
 	for(var/mob/dead/new_player/player in assistant_candidates)
 		Debug("AC1 pass, Player: [player]")
-		AssignRole(player, "Test Subject")
+		AssignRole(player, "Assistant")
 		assistant_candidates -= player
 	Debug("DO, AC1 end")
 
@@ -366,7 +366,7 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == BE_ASSISTANT)
 			Debug("AC2 Assistant located, Player: [player]")
-			AssignRole(player, "Test Subject")
+			AssignRole(player, "Assistant")
 
 	//For ones returning to lobby
 	for(var/mob/dead/new_player/player in unassigned)
@@ -377,7 +377,7 @@ SUBSYSTEM_DEF(job)
 			player.client << output(player.ready, "lobbybrowser:setReadyStatus")
 
 			unassigned -= player
-			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
+			to_chat(player, "<span class='alert bold'>Вы были возвращены в лобби, так как ваши настройки профессии были недоступны. Вы можете это изменить в настройках.</span>")
 	return TRUE
 
 //Gives the player the stuff he should have with his rank
@@ -410,7 +410,7 @@ SUBSYSTEM_DEF(job)
 						permitted = FALSE
 
 					if(!permitted)
-						to_chat(H, "<span class='warning'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>")
+						to_chat(H, "<span class='warning'>Ваша текущая работа или статус в белом списке не позволяют вам появляться с [thing]!</span>")
 						continue
 
 					if(G.slot && !(G.slot in custom_equip_slots))
@@ -445,7 +445,7 @@ SUBSYSTEM_DEF(job)
 					spawn_in_storage += thing
 
 	else
-		to_chat(H, "Your job is [rank] and the game just can't handle it! Please report this bug to an administrator.")
+		to_chat(H, "Ваша профессия - [rank], и игра почему-то не может её обработать! Пожалуйста, сообщите об этой ошибке администратору.")
 
 	H.job = rank
 
@@ -554,6 +554,9 @@ SUBSYSTEM_DEF(job)
 	to_chat(H, "<b>As the [alt_title ? alt_title : rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
 	if(job.req_admin_notify)
 		to_chat(H, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
+
+	if(SSround_aspects.aspect_name && SSround_aspects.aspect.afterspawn_IC_announcement)
+		to_chat(H, SSround_aspects.aspect.afterspawn_IC_announcement)
 
 	spawnId(H, rank, alt_title)
 

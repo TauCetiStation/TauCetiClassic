@@ -14,6 +14,13 @@
 	var/obj/item/device/assembly/a_right = null
 	var/obj/special_assembly = null
 
+/obj/item/device/assembly_holder/Destroy()
+	a_left.holder = null
+	a_right.holder = null
+	QDEL_NULL(a_left)
+	QDEL_NULL(a_right)
+	return ..()
+
 /obj/item/device/assembly_holder/proc/attach(obj/item/device/D, obj/item/device/D2, mob/user)
 	return
 

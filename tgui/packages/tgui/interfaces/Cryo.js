@@ -5,31 +5,31 @@ import { Window } from "../layouts";
 
 const damageTypes = [
   {
-    label: "Resp.",
+    label: "Асфиксия",
     type: "oxyLoss",
   },
   {
-    label: "Toxin",
+    label: "Интоксикация",
     type: "toxLoss",
   },
   {
-    label: "Brute",
+    label: "Механические",
     type: "bruteLoss",
   },
   {
-    label: "Burn",
+    label: "Термические",
     type: "fireLoss",
   },
   {
-    label: "Clone",
+    label: "Генетические",
     type: "cloneLoss",
   },
 ];
 
 const statNames = [
-  ["good", "Conscious"],
-  ["average", "Unconscious"],
-  ["bad", "DEAD"],
+  ["good", "В сознании"],
+  ["average", "Без сознания"],
+  ["bad", "Мёртв"],
 ];
 
 export const Cryo = (props, context) => {
@@ -59,22 +59,22 @@ const CryoContent = (props, context) => {
   return (
     <Fragment>
       <Section
-        title="Occupant"
+        title="Пациент"
         flexGrow="1"
         buttons={(
           <Button
             icon={isOpen ? "toggle-off" : "toggle-on"}
             onClick={() => act(isOpen ? 'close' : 'open')}
             selected={!isOpen}>
-            {isOpen ? "Opened" : "Closed"}
+            {isOpen ? "Открыто" : "Закрыто"}
           </Button>
         )}>
         {hasOccupant ? (
           <LabeledList>
-            <LabeledList.Item label="Occupant">
-              {occupant.name || "Unknown"}
+            <LabeledList.Item label="Пациент">
+              {occupant.name || "Неизвестно"}
             </LabeledList.Item>
-            <LabeledList.Item label="Health">
+            <LabeledList.Item label="Здоровье">
               <ProgressBar
                 min={occupant.health}
                 max={occupant.maxHealth}
@@ -85,11 +85,11 @@ const CryoContent = (props, context) => {
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item
-              label="Status"
+              label="Состояние"
               color={statNames[occupant.stat][0]}>
               {statNames[occupant.stat][1]}
             </LabeledList.Item>
-            <LabeledList.Item label="Temperature">
+            <LabeledList.Item label="Температура">
               <AnimatedNumber
                 value={Math.round(occupant.bodyTemperature)} />
               {' K'}
@@ -116,40 +116,40 @@ const CryoContent = (props, context) => {
                 mb="0.5rem"
                 size="5"
               /><br />
-              No occupant detected.
+              Пациент не обнаружен.
             </Flex.Item>
           </Flex>
         )}
       </Section>
       <Section
-        title="Cell"
+        title="Капсула"
         buttons={(
           <Button
             icon="eject"
             onClick={() => act('ejectBeaker')}
             disabled={!isBeakerLoaded}>
-            Eject Beaker
+            Извлечь сосуд
           </Button>
         )}>
         <LabeledList>
-          <LabeledList.Item label="Power">
+          <LabeledList.Item label="Питание">
             <Button
               icon="power-off"
               onClick={() => act(isOperating ? 'switchOff' : 'switchOn')}
               selected={isOperating}
               disabled={isOpen || !hasAir}>
-              {isOperating ? "On" : "Off"}
+              {isOperating ? "Вкл" : "Выкл"}
             </Button>
           </LabeledList.Item>
           {hasAir ? (
-            <LabeledList.Item label="Air Temperature" color={cellTemperatureStatus}>
+            <LabeledList.Item label="Температура воздуха" color={cellTemperatureStatus}>
               <AnimatedNumber value={cellTemperature} /> K
             </LabeledList.Item>
           ) : (
-            <LabeledList.Item label="Air Status" color="bad">
-              No Air
+            <LabeledList.Item label="Состояние воздуха" color="bad">
+              Нет воздуха
             </LabeledList.Item>)}
-          <LabeledList.Item label="Beaker">
+          <LabeledList.Item label="Сосуд">
             <CryoBeaker />
           </LabeledList.Item>
         </LabeledList>
@@ -170,15 +170,15 @@ const CryoBeaker = (props, context) => {
         {beakerVolume ? (
           <AnimatedNumber
             value={beakerVolume}
-            format={v => Math.round(v) + " units remaining"}
+            format={v => Math.round(v) + " юнитов осталось"}
           />
-        ) : "Beaker is empty"}
+        ) : "Сосуд пуст"}
       </Box>
     );
   } else {
     return (
       <Box color="average">
-        No beaker loaded
+        Отсутствует
       </Box>
     );
   }

@@ -829,7 +829,7 @@
 	               /obj/item/weapon/handcuffs)
 	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA, VOX)
 	max_mounted_devices = 4
-	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/emp_shield)
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair/adv, /obj/item/rig_module/emp_shield)
 	cell_type = /obj/item/weapon/stock_parts/cell/super
 	var/combat_mode = FALSE
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
@@ -919,7 +919,7 @@
 	item_state = "syndie_hardsuit"
 	rig_variant = "rig-heavy"
 	slowdown = 1.2
-	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/emp_shield)
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair/adv, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/emp_shield)
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 45, bullet = 30, laser = 30, energy = 45, bomb = 50, bio = 100, rad = 60)
 	combat_slowdown = 0.5
@@ -953,7 +953,7 @@
 	combat_armor = list(melee = 80, bullet = 75, laser = 65, energy = 65, bomb = 70, bio = 70, rad = 70)
 	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
 	combat_slowdown = 0.2
-	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage, /obj/item/rig_module/emp_shield)
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair/adv, /obj/item/rig_module/syndiemmessage, /obj/item/rig_module/emp_shield)
 	can_be_modded = FALSE
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
@@ -983,7 +983,7 @@
 	slowdown = 0.7
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	unacidable = TRUE
-	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/emp_shield, /obj/item/rig_module/cooling_unit/advanced)
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair/adv, /obj/item/rig_module/emp_shield, /obj/item/rig_module/cooling_unit/advanced)
 	allowed = list(/obj/item/device/flashlight,
 	               /obj/item/weapon/tank,
 	               /obj/item/device/suit_cooling_unit,

@@ -63,9 +63,13 @@
 	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
-	var/item_state = null         // has priority over icon_state for on-mob sprites
-	var/item_state_world = null   // has priority over icon_state for world (not in inventory) sprites
-	var/icon_override = null      // Used to override hardcoded clothing dmis in human clothing proc (see also icon_custom)
+	// optional world/inventory icon_state overrides
+	var/item_state_world = null      // has priority over icon_state for item world (not in inventory) sprites
+	var/item_state_inventory = null  // has priority over icon_state for item inventory sprites, defaults to initial(icon_state)
+
+	// other icon overrides
+	var/item_state = null            // has priority over icon_state for on-mob sprites
+	var/icon_override = null         // Used to override hardcoded clothing dmis in human clothing proc (see also icon_custom)
 
 	/* Species-specific sprite sheets for inventory sprites
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
@@ -134,8 +138,7 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/Destroy()
-	for(var/datum/action/A in item_actions)
-		qdel(A)
+	QDEL_LIST(item_actions)
 	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -1064,11 +1067,10 @@
 	if(!item_state_world)
 		return
 
-	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state == item_state_world)
+	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
 		// moving to inventory, restore icon (big inventory icon)
-		icon_state = initial(icon_state)
-
-	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state != item_state_world)
+		icon_state = item_state_inventory ? item_state_inventory : initial(icon_state)
+	else
 		// moving to world, change icon (small world icon)
 		icon_state = item_state_world
 
