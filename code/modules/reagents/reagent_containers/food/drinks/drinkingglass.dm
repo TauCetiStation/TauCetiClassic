@@ -584,7 +584,7 @@
 
 	return ..()
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/weapon/pen/O, mob/user)
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/O, mob/user)
     if(istype(O, /obj/item/weapon/pen))
         var/newname = sanitize_safe(input(usr, "Как назвать ваш коктейль?"))
         if(newname)
