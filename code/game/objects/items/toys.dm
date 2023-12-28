@@ -618,7 +618,6 @@
 
 /obj/item/toy/dualsword/update_icon()
 	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
-
 		icon_state = "dualsaber[blade_color]1"
 	else
 		icon_state = "dualsaber0"
