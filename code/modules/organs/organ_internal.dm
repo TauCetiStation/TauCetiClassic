@@ -191,6 +191,7 @@
 		lungs.add_refrigerant(pumping_volume)
 
 /obj/item/organ/internal/heart/vox
+	name = "vox heart"
 	icon_state = "vox heart"
 	parent_bodypart = BP_GROIN
 
