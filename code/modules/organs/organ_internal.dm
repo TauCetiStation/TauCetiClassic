@@ -197,6 +197,8 @@
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "lungs"
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
 
@@ -204,6 +206,7 @@
 
 /obj/item/organ/internal/lungs/vox
 	name = "air capillary sack"
+	icon_state = "robotic lungs"
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs/skrell
