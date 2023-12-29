@@ -211,6 +211,7 @@
 
 /obj/item/organ/internal/lungs/skrell
 	name = "respiration sac"
+	icon_state = "skrell lungs"
 	has_gills = TRUE
 
 /obj/item/organ/internal/lungs/diona
