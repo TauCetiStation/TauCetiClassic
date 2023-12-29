@@ -442,7 +442,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	levelupdate()
 
 /turf/simulated/floor/attackby(obj/item/C, mob/user)
-
+	. = ..()
 	if(!C || !user)
 		return 0
 	user.SetNextMove(CLICK_CD_INTERACT)
