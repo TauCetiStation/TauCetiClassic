@@ -168,6 +168,7 @@
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
+	icon_state = "prosthetic heart"
 
 	var/pumping_rate = 5
 	var/bruised_loss = 3
