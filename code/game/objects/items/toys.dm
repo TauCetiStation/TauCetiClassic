@@ -623,9 +623,6 @@
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 
-/obj/item/toy/dualsword/attack_self(mob/user)
-	..()
-
 /*
  * Snap pops
  */
