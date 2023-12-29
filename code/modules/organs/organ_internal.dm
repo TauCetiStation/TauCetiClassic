@@ -131,6 +131,8 @@
 
 /obj/item/organ/internal/heart
 	name = "heart"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "heart-off"
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
 	var/heart_status = HEART_NORMAL
@@ -188,6 +190,7 @@
 		lungs.add_refrigerant(pumping_volume)
 
 /obj/item/organ/internal/heart/vox
+	icon_state = "vox heart"
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs
