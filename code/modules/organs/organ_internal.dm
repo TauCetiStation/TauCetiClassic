@@ -206,7 +206,7 @@
 
 /obj/item/organ/internal/lungs/vox
 	name = "air capillary sack"
-	icon_state = "robotic lungs"
+	icon_state = "vox lungs"
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs/skrell
@@ -220,6 +220,7 @@
 
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
+	icon_state = "robotic lungs"
 
 	var/refrigerant_max = 50
 	var/refrigerant = 50
