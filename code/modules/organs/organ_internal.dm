@@ -132,7 +132,7 @@
 /obj/item/organ/internal/heart
 	name = "heart"
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "heart-off"
+	icon_state = "heart"
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
 	var/heart_status = HEART_NORMAL
