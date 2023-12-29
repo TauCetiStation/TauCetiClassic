@@ -586,11 +586,13 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attackby(obj/O, mob/user)
     if(istype(O, /obj/item/weapon/pen))
-        var/newname = sanitize_safe(input(usr, "Как назвать ваш коктейль?"))
+     if(/datum/reagent/consumable/drink)
+ action_true(var/newname = sanitize_safe(input(usr, "Как назвать ваш коктейль?"))
         if(newname)
-            name = newname
-        return
-    return ..()
+            name = newname)
+ else 
+ action_false(return
+    return ..())
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
