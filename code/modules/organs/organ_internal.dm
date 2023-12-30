@@ -424,15 +424,20 @@
 
 /obj/item/organ/internal/brain
 	name = "brain"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "brain2"
 	organ_tag = O_BRAIN
 	parent_bodypart = BP_HEAD
 
 /obj/item/organ/internal/brain/diona
 	name = "main node nymph"
+	icon_state = "diona brain"
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/brain/ipc
 	name = "positronic brain"
+	icon = 'icons/obj/assemblies.dmi'
+	icon_state = "posibrain"
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/brain/abomination
@@ -441,11 +446,14 @@
 
 /obj/item/organ/internal/eyes
 	name = "eyes"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "eyes"
 	organ_tag = O_EYES
 	parent_bodypart = BP_HEAD
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"
+	icon_state = "biomechanical eyes"
 	robotic = 2
 
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.

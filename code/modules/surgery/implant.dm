@@ -255,7 +255,6 @@
 						Simp.removed()
 					remove_from_cavity(user, target, choosen_object, BP, tool)
 					target.sec_hud_set_implants()
-
 			if("Organs")
 				var/choosen_object = show_radial_menu(user, target, embed_object_organs, radius = 50, require_near = TRUE, tooltips = TRUE)
 				if(choosen_object)
@@ -268,8 +267,6 @@
 						var/obj/item/organ/internal/org = organ
 						org.remove_organ(target)
 					remove_from_cavity(user, target, choosen_object, BP, tool)
-
-
 			if("Else")
 				var/choosen_object = show_radial_menu(user, target, embed_object_else, radius = 50, require_near = TRUE, tooltips = TRUE)
 				if(choosen_object)
