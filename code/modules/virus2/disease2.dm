@@ -142,22 +142,6 @@ var/global/list/virus_types_by_pool
 	for(var/datum/disease2/effectholder/NP as anything in effects)
 		NP.effect.on_death(source, gibbed, src)
 
-/datum/disease2/disease/proc/set_volume(datum/source, amount)
-	SIGNAL_HANDLER
-	nanite_volume = clamp(amount, 0, max_nanites)
-
-/datum/disease2/disease/proc/set_max_volume(datum/source, amount)
-	SIGNAL_HANDLER
-	max_nanites = max(1, amount)
-
-/datum/disease2/disease/proc/set_safety(datum/source, amount)
-	SIGNAL_HANDLER
-	safety_threshold = clamp(amount, 0, max_nanites)
-
-/datum/disease2/disease/proc/set_regen(datum/source, amount)
-	SIGNAL_HANDLER
-	regen_rate = amount
-
 /datum/disease2/disease/proc/haseffect(datum/disease2/effect/checkeffect)
 	for(var/datum/disease2/effectholder/e in effects)
 		if(e.effect.type == checkeffect.type)
