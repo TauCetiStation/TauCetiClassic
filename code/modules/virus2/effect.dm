@@ -108,10 +108,6 @@
 	if((!program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
 		software_error(1, virus)
 
-/datum/disease2/effect/proc/on_minor_shock(datum/source, datum/disease2/disease/virus)
-	if((!program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
-		software_error(null, virus)
-
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
 	level = 0 // can't get this one

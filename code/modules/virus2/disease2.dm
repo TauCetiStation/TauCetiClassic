@@ -39,7 +39,6 @@ var/global/list/virus_types_by_pool
 	RegisterSignal(src, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
 	RegisterSignal(src, COMSIG_MOB_DIED, PROC_REF(on_death))
 	RegisterSignal(src, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(on_shock))
-	//RegisterSignal(src, COMSIG_LIVING_MINOR_SHOCK, PROC_REF(on_minor_shock))
 
 /datum/disease2/disease/proc/on_process(datum/source, atom/host)
 	if(istype(host, /obj/machinery/hydroponics))
@@ -130,12 +129,6 @@ var/global/list/virus_types_by_pool
 	adjust_nanites(null, -(rand(5, 50)), host)  //Lose 5-50 flat nanite volume
 	for(var/datum/disease2/effectholder/NP as anything in effects)
 		NP.effect.on_shock(source, shock_damage, src)
-
-/datum/disease2/disease/proc/on_minor_shock(datum/source, atom/host)
-	SIGNAL_HANDLER
-	adjust_nanites(null, -(rand(5, 15)), host)	//Lose 5-15 flat nanite volume
-	for(var/datum/disease2/effectholder/NP as anything in effects)
-		NP.effect.on_minor_shock(source, src)
 
 /datum/disease2/disease/proc/on_death(datum/source, atom/host, gibbed)
 	SIGNAL_HANDLER
