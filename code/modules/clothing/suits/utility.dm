@@ -87,6 +87,7 @@
 /obj/item/clothing/head/radiation
 	name = "radiation hood"
 	icon_state = "rad"
+	item_state_world = "rad_w"
 	desc = "A hood with radiation protective properties. Label: Made with lead, do not eat insulation."
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	body_parts_covered = HEAD|FACE|EYES
@@ -98,6 +99,7 @@
 	desc = "A suit that protects against radiation. Label: Made with lead, do not eat insulation."
 	icon_state = "rad"
 	item_state = "rad_suit"
+	item_state_world = "rad_w"
 	w_class = SIZE_NORMAL//bulky item
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
