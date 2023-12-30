@@ -717,20 +717,6 @@
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
 
-/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M)
-	..()
-	if(isrobot(M))
-		var/mob/living/silicon/robot/R = M
-		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_3,R)
-			else
-				return
-
 #undef MIN_TUNNEL_LENGTH
 #undef MAX_TUNNEL_LENGTH
 #undef DISTANCE_BEETWEEN_MOSTERS
