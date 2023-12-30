@@ -196,7 +196,6 @@
 
 /datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	var/obj/item/organ/external/chest/BO = target.get_organs(target_zone)
 	if(BP.implants.len)
 		var/list/list_of_embed_types = list()
 		var/list/embed_object_shrapnel = list()
@@ -204,7 +203,6 @@
 		var/list/embed_object_organs = list()
 		var/list/embed_object_else = list()
 		for(var/embed_object in BP.implants)
-		for(var/embed_object in BO.implants)
 			if(istype(embed_object, /obj/item/weapon/shard/shrapnel))
 				embed_object_shrapnel += embed_object
 				continue
