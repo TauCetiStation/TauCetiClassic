@@ -264,7 +264,7 @@ RCD
 
 /obj/item/weapon/rcd/bluespace
 	max_matter = 100
-	matter = 100
+	matter = 30
 	w_class = SIZE_TINY
 
 /obj/item/weapon/rcd/pp/bluespace

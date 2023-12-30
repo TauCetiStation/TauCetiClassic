@@ -7,8 +7,9 @@
 	force = 10
 	sharp = 1
 	edge = 1
-	w_class = SIZE_SMALL
-	flags_2 = CANT_BE_INSERTED
+	//w_class = SIZE_SMALL
+	w_class = SIZE_TINY
+	//flags_2 = CANT_BE_INSERTED
 	slot_flags = SLOT_FLAGS_BACK
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	sweep_step = 5

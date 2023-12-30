@@ -213,12 +213,21 @@
 	name = "bush"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-10"
-	max_integrity = 40
-	damage_deflection = 5
+	max_integrity = 10
+	damage_deflection = 0
 	flags = NODECONSTRUCT // prevent getting drop without harvesting
-	resistance_flags = FULL_INDESTRUCTIBLE
 	var/cutting_sound = 'sound/weapons/bladeslice.ogg'
 	var/list/drop_on_destroy = list()
+
+
+/obj/structure/flora/ex_act(severity)
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			qdel(src)
+		if(EXPLODE_HEAVY)
+			take_damage(60, BRUTE, BOMB)
+		if(EXPLODE_LIGHT)
+			take_damage(30, BRUTE, BOMB)
 
 /obj/structure/flora/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(!attacking_item.is_sharp())
@@ -250,12 +259,11 @@
 	density = TRUE
 	pixel_x = -16
 	layer = 9
-	max_integrity = 150
-	damage_deflection = 15
+	max_integrity = 80
+	damage_deflection = 5
 	resistance_flags = CAN_BE_HIT
 	cutting_sound = 'sound/items/Axe.ogg'
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
-
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"

@@ -12,6 +12,8 @@
 	r_pocket = /obj/item/weapon/rcd/pp/bluespace
 	suit_store = /obj/item/device/multitool
 
+	backpack_contents = list(/obj/item/weapon/fireaxe)
+
 /datum/outfit/forts_team/blue
 	implants = list(/obj/item/weapon/implant/death_alarm/coordinates/team_blue)
 	l_ear = /obj/item/device/radio/headset/team_blue

@@ -15,7 +15,7 @@
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
-	temperature = TM50C
+	temperature = T20C
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 12000 // ~6 snow tiles
 
@@ -45,6 +45,19 @@
 
 /turf/environment/snow/Destroy()
 	return QDEL_HINT_LETMELIVE
+
+/turf/environment/snow/ex_act(severity) // should we move it to environment turfs?
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
 
 /turf/environment/snow/attack_paw(mob/user)
 	return attack_hand(user)

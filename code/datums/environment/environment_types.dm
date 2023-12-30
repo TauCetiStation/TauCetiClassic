@@ -16,4 +16,4 @@
 	turf_type = /turf/environment/snow
 	gen_type = /datum/map_generator/snow
 	turf_light_color = COLOR_BLUE
-	area_type = /area/space/snow
+	area_type = /area/space/holospace
