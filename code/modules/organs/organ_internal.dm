@@ -294,12 +294,15 @@
 
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
+	icon_state = "diona liver"
 
 /obj/item/organ/internal/liver/vox
 	name = "waste tract"
+	icon_state = "vox liver"
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
+	icon_state = "robotic liver"
 	var/accumulator_warning = 0
 
 /obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
