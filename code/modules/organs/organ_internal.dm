@@ -386,6 +386,8 @@
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "kidneys"
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_CHEST
 
