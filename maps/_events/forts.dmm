@@ -81,6 +81,10 @@
 "hK" = (
 /turf/environment/space,
 /area/space/holospace)
+"jQ" = (
+/obj/item/device/flashlight/lamp/fir,
+/turf/simulated/floor/engine/type3,
+/area/space/holospace/forts/no_droppods)
 "ke" = (
 /obj/machinery/door_control{
 	id = "blue-back";
@@ -7139,7 +7143,7 @@ BW
 Ni
 cO
 cO
-cO
+jQ
 cO
 EH
 cO
@@ -58802,7 +58806,7 @@ cO
 cO
 cO
 cO
-cO
+jQ
 cO
 cO
 Ni
