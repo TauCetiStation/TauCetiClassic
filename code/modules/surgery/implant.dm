@@ -224,7 +224,7 @@
 		if(embed_object_implants.len)
 			list_of_embed_types += list("Implants" = embed_object_implants[pick(embed_object_implants)])
 		if(embed_object_organs.len)
-			list_of_embed_types += list("Organs" = embed_object_else[pick(embed_object_organs)])
+			list_of_embed_types += list("Organs" = embed_object_organs[pick(embed_object_organs)])
 		if(embed_object_else.len)
 			list_of_embed_types += list("Else" = embed_object_else[pick(embed_object_else)])
 		var/list_to_choose = show_radial_menu(user, target, list_of_embed_types, radius = 30, require_near = TRUE, tooltips = TRUE)
