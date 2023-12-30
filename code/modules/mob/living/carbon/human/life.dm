@@ -834,6 +834,16 @@ var/global/list/tourette_bad_words= list(
 		else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
 			ear_damage = max(ear_damage-0.05, 0)
 
+		//Liver
+		if(should_have_organ(O_LIVER) && !has_organ(O_LIVER))
+			adjustToxLoss(0.2)
+			blurEyes(0.5)
+
+		//Kidneys
+		if(should_have_organ(O_KIDNEYS) && !has_organ(O_KIDNEYS))
+			adjustToxLoss(0.4)
+			adjustBruteLoss(0.2)
+
 		//Other
 		if(stunned)
 			speech_problem_flag = 1

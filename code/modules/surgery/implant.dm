@@ -196,6 +196,7 @@
 
 /datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
+	var/obj/item/organ/external/chest/BO = target.get_organs(target_zone)
 	if(BP.implants.len)
 		var/list/list_of_embed_types = list()
 		var/list/embed_object_shrapnel = list()
@@ -203,6 +204,7 @@
 		var/list/embed_object_organs = list()
 		var/list/embed_object_else = list()
 		for(var/embed_object in BP.implants)
+		for(var/embed_object in BO.implants)
 			if(istype(embed_object, /obj/item/weapon/shard/shrapnel))
 				embed_object_shrapnel += embed_object
 				continue
@@ -258,14 +260,9 @@
 			if("Organs")
 				var/choosen_object = show_radial_menu(user, target, embed_object_organs, radius = 50, require_near = TRUE, tooltips = TRUE)
 				if(choosen_object)
-					var/obj/item/organ/internal/organ = choosen_object
-					for(var/datum/wound/W in BP.wounds)
-						if(organ in W.embedded_objects)
-							W.embedded_objects -= organ
-							break
-					if(istype(organ, /obj/item/organ/internal))
-						var/obj/item/organ/internal/org = organ
-						org.remove_organ(target)
+					if(istype(choosen_object, /obj/item/organ/internal))
+						var/obj/item/organ/internal/H = choosen_object
+						H.remove_organ()
 					remove_from_cavity(user, target, choosen_object, BP, tool)
 			if("Else")
 				var/choosen_object = show_radial_menu(user, target, embed_object_else, radius = 50, require_near = TRUE, tooltips = TRUE)
