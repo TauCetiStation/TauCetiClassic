@@ -128,6 +128,7 @@ What is the naming convention for planes or layers?
   #define HIGHEST_GAME_LAYER              50
 
 #define ABOVE_GAME_PLANE  -1
+#define SEETHROUGH_PLANE -3
 
 #define BLACKNESS_PLANE   0
 

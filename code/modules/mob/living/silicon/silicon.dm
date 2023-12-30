@@ -210,3 +210,6 @@
 /mob/living/silicon/update_canmove(no_transform)
 	return
 
+/mob/living/silicon/vomit()
+	return
+
