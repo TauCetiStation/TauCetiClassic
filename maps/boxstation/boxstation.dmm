@@ -45373,6 +45373,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/vase{
+	pixel_y = 10
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -49246,6 +49249,10 @@
 "bJD" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
+/obj/item/vase{
+	pixel_x = -15;
+	pixel_y = 15
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -51999,6 +52006,11 @@
 "bOF" = (
 /obj/structure/table,
 /obj/item/device/paicard,
+/obj/item/vase{
+	pixel_x = -15;
+	pixel_y = 15
+	},
+/obj/item/weapon/grown/sunflower,
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
 "bOG" = (
@@ -85340,6 +85352,11 @@
 	pixel_x = -3
 	},
 /obj/structure/table/woodentable/fancy/black,
+/obj/item/vase{
+	pixel_x = -15;
+	pixel_y = 15
+	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
