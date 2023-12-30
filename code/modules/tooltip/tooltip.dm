@@ -48,6 +48,7 @@ Notes:
 	..()
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
+	to_chat(world, "2")
 	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
 		return 0
 
@@ -55,7 +56,7 @@ Notes:
 		//Initialize some vars
 		init = 1
 		owner << output(list2params(list(world.icon_size, control)), "[control]:tooltip.init")
-
+	to_chat(world, "1")
 	showing = 1
 
 	if (title && content)
@@ -65,7 +66,7 @@ Notes:
 		title = "<p>[title]</p>"
 	else if (!title && content)
 		content = "<p>[content]</p>"
-
+	to_chat(world, "AHEM")
 	//Make our dumb param object
 	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
 
@@ -106,6 +107,7 @@ Notes:
 			if(!theme)
 				theme = "default"
 			user.client.tooltips.show(tip_src, params,title,content,theme)
+	to_chat(world, "tip")
 
 
 //Arbitrarily close a user's tooltip

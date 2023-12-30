@@ -75,7 +75,7 @@
 /atom/movable/screen/escape_menu/leave_body_button
 	icon = 'icons/hud/escape_menu_leave_body.dmi'
 	icon_state = "template"
-	maptext_width = 96
+	maptext_width = 114
 	maptext_y = -32
 
 	VAR_PRIVATE

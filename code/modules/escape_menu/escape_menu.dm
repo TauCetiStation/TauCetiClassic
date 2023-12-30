@@ -79,6 +79,8 @@ var/global/list/escape_menus = list()
 			show_home_page()
 		if (PAGE_LEAVE_BODY)
 			show_leave_body_page()
+		if(PAGE_HELP)
+			show_help_page()
 		else
 			CRASH("Unknown escape menu page: [menu_page]")
 
@@ -101,6 +103,12 @@ var/global/list/escape_menus = list()
 	PRIVATE_PROC(TRUE)
 
 	menu_page = PAGE_LEAVE_BODY
+	show_page()
+
+/datum/escape_menu/proc/open_help()
+	PRIVATE_PROC(TRUE)
+
+	menu_page = PAGE_HELP
 	show_page()
 
 /datum/escape_menu/proc/add_blur()

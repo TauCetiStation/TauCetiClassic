@@ -165,16 +165,6 @@
 	if (!isnull(current_ticket))
 		begin_processing()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/Click(location, control, params)
-	if (!enabled())
-		return
-
-	QDEL_IN(escape_menu, 0)
-
-	var/client/client = escape_menu.client
-
-	client?.adminhelp()
-
 /atom/movable/screen/escape_menu/home_button/admin_help/proc/has_open_adminhelp()
 	var/client/client = escape_menu.client
 

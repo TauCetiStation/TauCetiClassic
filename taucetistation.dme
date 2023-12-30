@@ -1593,6 +1593,7 @@
 #include "code\modules\escape_menu\details.dm"
 #include "code\modules\escape_menu\dimmer.dm"
 #include "code\modules\escape_menu\escape_menu.dm"
+#include "code\modules\escape_menu\help.dm"
 #include "code\modules\escape_menu\home_page.dm"
 #include "code\modules\escape_menu\leave_body.dm"
 #include "code\modules\escape_menu\subsystem.dm"
