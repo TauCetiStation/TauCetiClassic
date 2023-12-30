@@ -37,6 +37,16 @@
 	if(parent)
 		parent.bodypart_organs += src
 
+/obj/item/organ/internal/remove_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
+	..()
+
+	owner.organs -= src
+	owner.organs_by_name[organ_tag] = src
+
+	if(parent)
+		parent.bodypart_organs -= src
+
+
 
 /obj/item/organ/internal/proc/rejuvenate()
 	damage = 0
@@ -276,6 +286,8 @@
 
 /obj/item/organ/internal/liver
 	name = "liver"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "liver"
 	organ_tag = O_LIVER
 	parent_bodypart = BP_CHEST
 	process_accuracy = 10

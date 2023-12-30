@@ -34,8 +34,17 @@
 	loc = null
 	owner = H
 
+/obj/item/organ/proc/del_owner(mob/living/carbon/human/H, datum/species/S)
+	loc = null
+	owner = H
+
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	set_owner(H, S)
+
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/organ/proc/remove_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
+	del_owner(H, S)
 
 	STOP_PROCESSING(SSobj, src)
 
