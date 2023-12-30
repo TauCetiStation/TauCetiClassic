@@ -1,5 +1,3 @@
-#define MICROBIOLOGY_NANITE 1
-
 /datum/disease2/effectholder
 	var/name = "Holder"
 	var/datum/disease2/effect/effect
