@@ -103,12 +103,8 @@ var/global/list/virus_types_by_pool
 	if(amount <= -5)
 		if(ishuman(host))
 			var/mob/living/carbon/human/H = host
-			/* Normal blood value is 560, value when nanites can deactivate is 336
-			/Max possible nanites purge is ~50 per action
-			/4,5 (~5) actions is too much for balancing by blood
-			/~2-3 actions should good
-			/so just multiply value to 2 */
-			H.blood_remove(2 * abs(amount))
+			// Normal blood value is 560, value when nanites can deactivate is 336
+			H.blood_remove(abs(amount))
 	if(nanite_volume > max_nanites)
 		reject_excess_nanites(host)
 	if(nanite_volume <= 0) //oops we ran out
