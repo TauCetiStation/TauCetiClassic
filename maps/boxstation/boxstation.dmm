@@ -5928,6 +5928,9 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/machinery/light/smart,
+/obj/item/weapon/stickers{
+	pixel_y = 11
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "red"
@@ -13415,6 +13418,9 @@
 	layer = 3.1
 	},
 /obj/structure/table/glass,
+/obj/item/weapon/stickers{
+	pixel_y = 11
+	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
@@ -17260,6 +17266,9 @@
 	layer = 4;
 	pixel_y = 32
 	},
+/obj/item/weapon/stickers{
+	pixel_x = -11
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -19481,6 +19490,7 @@
 	charge = 100;
 	maxcharge = 15000
 	},
+/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -24731,8 +24741,7 @@
 	},
 /area/station/storage/primary)
 "aSj" = (
-/obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop,
+/obj/structure/closet/freezer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -25543,6 +25552,9 @@
 	dir = 4;
 	network = list("SS13","Research")
 	},
+/obj/item/weapon/storage/box/cups{
+	pixel_x = -8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -25817,14 +25829,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/mixing)
 "aUf" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 6;
-	pixel_y = 7
-	},
-/obj/item/weapon/storage/box/cups{
-	pixel_x = -8
-	},
+/obj/structure/closet/freezer,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -27842,6 +27847,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/item/weapon/stickers{
+	pixel_y = 11
+	},
 /turf/simulated/floor,
 /area/station/rnd/mixing)
 "aXC" = (
@@ -29267,6 +29275,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
 /obj/item/device/science_tool,
+/obj/item/weapon/stickers{
+	pixel_y = 11
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -31876,11 +31887,11 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "beE" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/structure/closet/small_freezer,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "beF" = (
@@ -32490,6 +32501,7 @@
 "bfE" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/donut_box,
+/obj/item/weapon/reagent_containers/food/drinks/coffee,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "bfF" = (
@@ -33070,6 +33082,10 @@
 /obj/item/device/assembly/timer,
 /obj/structure/table/woodentable,
 /obj/item/device/tagger/shop,
+/obj/item/weapon/stickers{
+	pixel_x = -6;
+	pixel_y = 11
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bgH" = (
@@ -33915,6 +33931,10 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
+/obj/item/weapon/stickers{
+	pixel_x = -6;
+	pixel_y = 11
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bim" = (
@@ -34228,6 +34248,10 @@
 /obj/item/wallclock{
 	pixel_x = -32
 	},
+/obj/item/weapon/stickers{
+	pixel_y = 12;
+	pixel_x = -8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -34509,9 +34533,7 @@
 	},
 /area/station/medical/genetics_cloning)
 "bjJ" = (
-/obj/item/trash/sosjerky,
-/obj/structure/table,
-/obj/item/weapon/kitchen/utensil/fork,
+/obj/structure/closet/small_freezer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bjK" = (
@@ -34947,8 +34969,7 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "bkA" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/coffee,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bkB" = (
@@ -37367,6 +37388,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/weapon/stickers{
+	pixel_y = 12
+	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "boJ" = (
@@ -39568,6 +39592,9 @@
 /obj/item/weapon/stamp/cargo{
 	pixel_x = -3;
 	pixel_y = 3
+	},
+/obj/item/weapon/stickers{
+	pixel_x = 7
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -48612,6 +48639,9 @@
 	name = "Station Intercom (Medbay)";
 	pixel_x = -27
 	},
+/obj/item/weapon/storage/box/cups{
+	pixel_x = -8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -50061,6 +50091,9 @@
 /obj/item/pens_bin{
 	pixel_x = 8;
 	pixel_y = 16
+	},
+/obj/item/weapon/stickers{
+	pixel_x = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -52416,13 +52449,7 @@
 	pixel_x = 28
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
-	pixel_x = -8
-	},
-/obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 6;
-	pixel_y = 3
-	},
+/obj/machinery/computer/med_data/laptop,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -55297,11 +55324,10 @@
 	pixel_y = 28
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -2;
-	pixel_y = 4
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
 	},
-/obj/item/bodybag/cryobag,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -55311,6 +55337,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/item/weapon/stickers{
+	pixel_y = 12
+	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "bWH" = (
@@ -55337,6 +55366,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/item/weapon/stickers{
+	pixel_y = 11
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -68803,6 +68835,7 @@
 /obj/structure/table,
 /obj/item/trash/raisins,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/kitchen/utensil/fork,
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "cLs" = (
@@ -70554,6 +70587,9 @@
 /obj/item/pens_bin{
 	pixel_x = -8;
 	pixel_y = 10
+	},
+/obj/item/weapon/stickers{
+	pixel_y = 12
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -72379,6 +72415,11 @@
 /obj/item/weapon/storage/box,
 /obj/item/weapon/storage/box,
 /obj/item/weapon/storage/belt/utility,
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = -2;
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -73207,6 +73248,9 @@
 /obj/item/weapon/paper_bin{
 	pixel_x = 5;
 	pixel_y = 4
+	},
+/obj/item/weapon/stickers{
+	pixel_x = -6
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -76466,6 +76510,9 @@
 	dir = 8;
 	name = "Medbay left APC";
 	pixel_x = -27
+	},
+/obj/item/weapon/stickers{
+	pixel_y = 12
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -82937,13 +82984,12 @@
 	},
 /area/station/medical/virology)
 "rzb" = (
-/obj/structure/table/glass,
 /obj/machinery/camera{
 	c_tag = "Virology Break";
 	dir = 4;
 	network = list("SS13","Medical")
 	},
-/obj/item/weapon/storage/box/donkpockets,
+/obj/structure/closet/small_freezer,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitegreen"
@@ -85936,8 +85982,7 @@
 	},
 /area/station/civilian/hydroponics)
 "vVm" = (
-/obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
+/obj/structure/closet/freezer,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -130553,7 +130598,7 @@ bxi
 bOV
 bFh
 aTt
-owL
+aSj
 bGe
 bJV
 bLE
@@ -130810,7 +130855,7 @@ bxi
 anW
 aSm
 aTt
-aSj
+owL
 bGh
 bKN
 aoF

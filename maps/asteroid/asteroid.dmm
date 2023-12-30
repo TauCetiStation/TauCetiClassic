@@ -7188,9 +7188,9 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/item/weapon/flora/pottedplant{
-	icon_state = "plant-20"
-	},
+/obj/structure/closet/small_freezer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -9376,10 +9376,13 @@
 /area/asteroid/mine/eva)
 "uY" = (
 /obj/structure/table,
-/obj/item/device/guitar,
 /obj/item/device/radio/intercom{
 	name = "Asteroid Intercom (General)";
 	pixel_y = 24
+	},
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -9579,10 +9582,8 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "vu" = (
-/obj/structure/table,
-/obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+/obj/item/weapon/flora/pottedplant{
+	icon_state = "plant-20"
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -9733,8 +9734,7 @@
 	},
 /area/asteroid/mine/west_outpost)
 "vJ" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/structure/closet/small_freezer,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -9799,12 +9799,11 @@
 	},
 /area/asteroid/mine/explored)
 "vS" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/item/device/guitar,
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -9930,7 +9929,6 @@
 /area/asteroid/mine/west_outpost)
 "wi" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -27755,7 +27753,7 @@ qA
 qA
 qA
 uU
-sB
+vk
 sB
 ve
 sB
@@ -28012,8 +28010,8 @@ qA
 lA
 lA
 uU
-vk
 vJ
+sB
 wF
 sB
 xF

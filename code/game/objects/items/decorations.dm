@@ -86,13 +86,60 @@
 	name = "mars globe"
 	desc = "Глобус Марса."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "globe"
+	icon_state = "globe_mars"
+
+/obj/item/venus_globe
+	name = "venus globe"
+	desc = "Глобус Венеры."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "globe_venus"
+
+/obj/item/earth_globe
+	name = "venus globe"
+	desc = "Глобус Земли."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "globe_earth"
+
+/obj/item/yargon_globe
+	name = "yargon IV globe"
+	desc = "Глобус Яргона-4."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "globe_yargon4"
 
 /obj/item/newtons_pendulum
 	name = "newton's pendulum"
 	desc = "Вечный двигатель в миниатюре."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "newtons_pendulum"
+
+/obj/item/statuette
+	name = "statuette"
+	desc = "Абстрактная статуэтка."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "statuette_1"
+
+/obj/item/statuette/atom_init(mapload)
+	. = ..()
+	var/statuette_number = rand(1, 4)
+	icon_state = "statuette_[statuette_number]"
+
+/obj/item/bust
+	name = "bust"
+	desc = "Бюст должностного лица НаноТрейзен."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "bust_1"
+
+/obj/item/bust/atom_init(mapload)
+	. = ..()
+	var/bust_number = rand(1, 3)
+	icon_state = "bust_[bust_number]"
+	switch(bust_number)
+		if(1)
+			desc = "Франклин Моррис - Главный представитель НаноТрейзен на территории СолГов."
+		if(2)
+			desc = "Эдвард Мунос - Начальник ОБОП НаноТрейзен."
+		if(3)
+			desc = "Маргарет Чейн - Директор отдела кооперации и связей с общественностью НаноТрейзен."
 
 /obj/item/tableclock
 	name = "table clock"
@@ -115,6 +162,16 @@
 		maptext = new_text
 
 		desc = "'Точное время в любое время'. Показывают: [worldtime2text()]"
+
+/obj/item/woodenclock
+	name = "wooden clock"
+	desc = "Показывают время."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "wooden_clock"
+
+/obj/item/woodenclock/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Показывают: [worldtime2text()]</span>")
 
 /obj/item/wallclock
 	name = "wall clock"
