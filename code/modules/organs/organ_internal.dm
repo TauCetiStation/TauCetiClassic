@@ -216,6 +216,7 @@
 
 /obj/item/organ/internal/lungs/diona
 	name = "virga inopinatus"
+	icon_state = "diona lungs"
 	process_accuracy = 10
 
 /obj/item/organ/internal/lungs/ipc
