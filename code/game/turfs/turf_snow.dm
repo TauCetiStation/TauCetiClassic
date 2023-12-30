@@ -78,14 +78,14 @@
 
 /turf/environment/snow/ice/ChangeTurf(path)
 	if(path != type)
-		var/obj/effect/overlay/ice_hole/IH = locate() in contents
+		var/obj/structure/ice_hole/IH = locate() in contents
 		if(IH)
 			qdel(IH)
 	return ..()
 
 /turf/environment/snow/ice/attackby(obj/item/O, mob/user)
 	. = ..()
-	if(locate(/obj/effect/overlay/ice_hole) in range(4))
+	if(locate(/obj/structure/ice_hole) in range(4))
 		to_chat(user, "<span class='notice'>Too close to the other ice hole.</span>")
 		return
 	if(!O.has_edge())
@@ -97,7 +97,7 @@
 	var/type = src.type
 	if(!do_after(user, 20 SECONDS, target = src) || type != src.type)
 		return
-	new /obj/effect/overlay/ice_hole(src)
+	new /obj/structure/ice_hole(src)
 	playsound(src, 'sound/effects/shovel_digging.ogg', VOL_EFFECTS_MASTER)
 
 /atom/movable
@@ -198,19 +198,16 @@
 		qdel(src)
 
 
-/obj/effect/overlay/ice_hole
+/obj/structure/ice_hole
 	name = "ice hole"
 	icon = 'icons/turf/snow2.dmi'
 	icon_state = "ice_hole"
 	anchored = 1
+	density = 1
 
-/obj/effect/overlay/ice_hole/atom_init()
+/obj/structure/ice_hole/atom_init()
 	. = ..()
 	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 15, /obj/item/fish_carp/mega = 8, /obj/item/fish_carp/full_size = 5, /obj/item/fish_carp/over_size = 3, PATH_OR_RANDOM_PATH(/obj/random/mecha/wreckage) = 1, PATH_OR_RANDOM_PATH(/obj/random/cloth/shittysuit) = 1), 10 SECONDS, rand(1, 30) , 20)
-
-/obj/effect/overlay/ice_hole/attackby(obj/O, mob/user)
-	. = ..()
-	SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, O, user)
 
 /obj/random/misc/all/high
 	spawn_nothing_chance = 40

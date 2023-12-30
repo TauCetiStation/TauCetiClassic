@@ -94,8 +94,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	icon_state = "toilet[lid_open][cistern_open]"
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/weapon/wirerod) && lid_open)
-		return ..()
+	. = ..()
+	if(.)
+		return
 	if(iswrenching(I) && broken) // we don't have any plunger around, so wrench is good
 		to_chat(user, "<span class='notice'>You start fixing \the [src].</span>")
 		if(I.use_tool(src, user, 60, volume = 100))
@@ -713,10 +714,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		busy = FALSE
 
 /obj/structure/sink/attackby(obj/item/O, mob/user)
+	. = ..()
+	if(.)
+		return
 	if(user.is_busy())
 		return
-	if(istype(O, /obj/item/weapon/wirerod))
-		return ..()
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone's already washing here.</span>")
 		return
@@ -801,6 +803,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	icon_state = "puddle"
 
 /obj/structure/sink/puddle/attackby(obj/item/O, mob/user)
+	. = ..()
 	icon_state = "puddle-splash"
-	..()
 	icon_state = "puddle"
