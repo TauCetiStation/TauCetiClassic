@@ -63,8 +63,6 @@
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), PROC_REF(mood_item_equipped))
 
-	RegisterSignal(src, COMSIG_HANDLE_VIRUS, PROC_REF(handle_virus_updates))
-
 	if(dna)
 		dna.real_name = real_name
 

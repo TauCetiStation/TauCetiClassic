@@ -33,7 +33,7 @@
 		handle_disabilities()
 
 		//Virus updates, duh
-		SEND_SIGNAL(src, COMSIG_HANDLE_VIRUS)
+		handle_virus_updates()
 
 	//Apparently, the person who wrote this code designed it so that
 	//blinded get reset each cycle and then get activated later in the
@@ -161,7 +161,7 @@
 		for(var/datum/disease2/disease/V as anything in virus2)
 			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, src, severity)
 
-/mob/living/carbon/monkey/proc/handle_virus_updates(datum/source)
+/mob/living/carbon/monkey/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(bodytemperature > 406)
 		for (var/ID in virus2)

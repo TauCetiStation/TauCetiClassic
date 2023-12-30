@@ -109,7 +109,7 @@
 		handle_mutations_and_radiation()
 		handle_chemicals_in_body()
 		handle_disabilities()
-		SEND_SIGNAL(src, COMSIG_HANDLE_VIRUS)
+		handle_virus_updates()
 
 	blinded = null
 
@@ -253,7 +253,7 @@
 		for(var/datum/disease2/disease/V as anything in virus2)
 			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, severity)
 
-/mob/living/carbon/ian/proc/handle_virus_updates(datum/source)
+/mob/living/carbon/ian/proc/handle_virus_updates()
 	if(status_flags & GODMODE)
 		return FALSE
 	if(bodytemperature > 406)

@@ -50,13 +50,13 @@
 			handle_mutations_and_radiation()
 
 		if(stat != DEAD)
-			SEND_SIGNAL(src, COMSIG_HANDLE_VIRUS)
-
 			//Disabilities
 			handle_disabilities()
 
 			//Random events (vomiting etc)
 			handle_random_events()
+
+			handle_virus_updates()
 
 			handle_shock()
 
@@ -1109,7 +1109,7 @@ var/global/list/tourette_bad_words= list(
 		for(var/datum/disease2/disease/V as anything in virus2)
 			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, src, severity)
 
-/mob/living/carbon/human/proc/handle_virus_updates(datum/source)
+/mob/living/carbon/human/proc/handle_virus_updates()
 	if(status_flags & GODMODE)	return 0	//godmode
 	if(bodytemperature > 406)
 		for (var/ID in virus2)
