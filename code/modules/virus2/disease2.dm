@@ -85,7 +85,6 @@
 ///Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount
 /datum/disease2/disease/proc/adjust_nanites(datum/source, amount, atom/host)
 	SIGNAL_HANDLER
-
 	nanite_volume += amount
 	//a large loss of nanites is accompanied by a small amount of blood loss in humans
 	if(amount <= -5)
@@ -95,8 +94,8 @@
 			H.blood_remove(abs(amount))
 	if(nanite_volume > max_nanites)
 		reject_excess_nanites(host)
-	if(nanite_volume <= 0) //oops we ran out
-		qdel(src)
+	if(nanite_volume <= 0 && iscarbon(host)) //oops we ran out
+		cure(host)
 
 /datum/disease2/disease/proc/on_emp(datum/source, atom/host, severity)
 	SIGNAL_HANDLER
