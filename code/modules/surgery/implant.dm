@@ -209,14 +209,15 @@
 			if(istype(embed_object, /obj/item/weapon/implant))
 				embed_object_implants += embed_object
 				continue
+		for(var/embed_object in BP.bodypart_organs)
 			if(istype(embed_object, /obj/item/organ/internal))
-				embed_object_organs += embed_object
+				embed_object_organs = BP.bodypart_organs.Copy()
 				continue
 			embed_object_else += embed_object
 		for(var/atom/embed_object as anything in embed_object_implants)
 			embed_object_implants[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		for(var/atom/embed_object as anything in embed_object_organs)
-			embed_object_implants[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
+			embed_object_organs[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		for(var/atom/embed_object as anything in embed_object_else)
 			embed_object_else[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		if(embed_object_shrapnel.len)
