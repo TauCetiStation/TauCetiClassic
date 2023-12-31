@@ -58,3 +58,7 @@
 /// Call by name proc reference, checks if the proc is existing global proc
 #define GLOBAL_PROC_REF(X) (/proc/##X)
 #endif
+
+#if DM_VERSION < 515
+#define ceil(x) (-round(-(x)))
+#endif
