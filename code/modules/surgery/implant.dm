@@ -196,7 +196,7 @@
 
 /datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	if(BP.implants.len)
+	if(BP.implants.len || BP.bodypart_organs.len)
 		var/list/list_of_embed_types = list()
 		var/list/embed_object_shrapnel = list()
 		var/list/embed_object_implants = list()
