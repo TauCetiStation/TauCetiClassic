@@ -807,6 +807,94 @@
 	name = "Ougi"
 	icon_state = "hair_ougi"
 
+/datum/sprite_accessory/hair/halfzingertail
+	name = "Half Zingertail"
+	icon_state = "hair_halfzingertail"
+
+/datum/sprite_accessory/hair/lbangs2
+	name = "Lbangs 2"
+	icon_state = "hair_lbangs_2"
+
+/datum/sprite_accessory/hair/slightmessy2
+	name = "Slight Messy 2"
+	icon_state = "hair_slightmessy_2"
+
+/datum/sprite_accessory/hair/ragby
+	name = "Ragby"
+	icon_state = "hair_ragby"
+
+/datum/sprite_accessory/hair/bun5
+	name = "Bun 5"
+	icon_state = "hair_bun_5"
+
+/datum/sprite_accessory/hair/maya
+	name = "Maya"
+	icon_state = "hair_maya"
+
+/datum/sprite_accessory/hair/dolly
+	name = "Dolly"
+	icon_state = "hair_dolly"
+
+/datum/sprite_accessory/hair/longsidepartstraight2
+	name = "Longside Partstraight 2"
+	icon_state = "hair_longsidepartstraight_2"
+
+/datum/sprite_accessory/hair/elly
+	name = "Elly"
+	icon_state = "hair_elly"
+
+/datum/sprite_accessory/hair/wild
+	name = "Wild 1"
+	icon_state = "hair_wild"
+
+/datum/sprite_accessory/hair/wild2
+	name = "Wild 2"
+	icon_state = "hair_wild_2"
+
+/datum/sprite_accessory/hair/millenium
+	name = "Millenium"
+	icon_state = "hair_millenium"
+
+/datum/sprite_accessory/hair/feather2
+	name = "Feather 2"
+	icon_state = "hair_feather_2"
+
+/datum/sprite_accessory/hair/braidedhair2
+	name = "Braided Hair 2"
+	icon_state = "hair_braided_hair_2"
+
+/datum/sprite_accessory/hair/fridge
+	name = "Fridge"
+	icon_state = "hair_fridge"
+
+/datum/sprite_accessory/hair/rabby
+	name = "Rabby"
+	icon_state = "hair_rabby"
+
+/datum/sprite_accessory/hair/zoey
+	name = "Zoey"
+	icon_state = "hair_zoey"
+
+/datum/sprite_accessory/hair/kitty
+	name = "Kitty"
+	icon_state = "hair_kitty"
+
+/datum/sprite_accessory/hair/star
+	name = "Star"
+	icon_state = "hair_star"
+
+/datum/sprite_accessory/hair/pear
+	name = "Pear"
+	icon_state = "hair_pear"
+
+/datum/sprite_accessory/hair/spicy
+	name = "Spicy"
+	icon_state = "hair_spicy"
+
+/datum/sprite_accessory/hair/piggy
+	name = "Piggy"
+	icon_state = "hair_piggy"
+
 //datum/sprite_accessory/hair/modern
 //	name = "Modern"
 //	icon_state = "hair_modern"
