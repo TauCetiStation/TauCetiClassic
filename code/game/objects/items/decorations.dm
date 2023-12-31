@@ -11,7 +11,7 @@
 
 	if(mapload)
 		var/turf/T = get_turf(src)
-		var/obj/item/weapon/pen/Pen = locate(/obj/item/weapon/pen) in T.contents)
+		var/obj/item/weapon/pen/Pen = locate(/obj/item/weapon/pen) in T.contents
 		if(!Pen)
 			return
 		Pen.pixel_x = -2
