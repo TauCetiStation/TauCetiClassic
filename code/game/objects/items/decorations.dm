@@ -6,6 +6,21 @@
 
 	var/obj/item/weapon/pen/holded
 
+/obj/item/pen_holder/atom_init(mapload)
+	. = ..()
+
+	if(mapload)
+		var/turf/T = get_turf(src)
+		var/obj/item/weapon/pen/Pen = locate(/obj/item/weapon/pen) in T.contents)
+		if(!Pen)
+			return
+		Pen.pixel_x = -2
+		Pen.pixel_y = 5
+		Pen.forceMove(src)
+		holded = Pen
+		underlays += Pen
+		icon_state = "penholder_full"
+
 /obj/item/pen_holder/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen) && !holded)
 		user.drop_from_inventory(I, src)
