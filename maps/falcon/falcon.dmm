@@ -6543,7 +6543,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "amm" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -17801,7 +17801,7 @@
 	},
 /area/station/rnd/hor)
 "ilV" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},

@@ -7255,7 +7255,7 @@
 	},
 /area/station/maintenance/dormitory)
 "bkd" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -7587,7 +7587,7 @@
 	},
 /area/station/civilian/chapel/mass_driver)
 "boj" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whitepurple"
@@ -11435,7 +11435,7 @@
 	},
 /area/station/hallway/primary/port)
 "cos" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/light/small,
 /obj/machinery/alarm{
 	pixel_y = -32
@@ -15935,7 +15935,7 @@
 	},
 /area/station/rnd/xenobiology)
 "dvs" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
@@ -16419,7 +16419,7 @@
 	},
 /area/station/security/checkpoint)
 "dAq" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
@@ -16905,7 +16905,7 @@
 	},
 /area/station/security/hos)
 "dFV" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
@@ -24130,7 +24130,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "fnJ" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "black"
@@ -24426,7 +24426,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "fql" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -25594,7 +25594,7 @@
 	},
 /area/station/maintenance/brig)
 "fEb" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -27130,7 +27130,7 @@
 	},
 /area/station/tcommsat/computer)
 "fVn" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -29819,7 +29819,7 @@
 	},
 /area/station/engineering/atmos)
 "gCu" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "darkred"
@@ -32145,7 +32145,7 @@
 	},
 /area/station/security/lobby)
 "hcc" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -33945,7 +33945,7 @@
 	},
 /area/station/security/interrogation)
 "hAD" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
@@ -35037,7 +35037,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "hOj" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -61361,7 +61361,7 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "osg" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -67308,7 +67308,7 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
 "pUn" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/alarm{
 	pixel_x = -28;
 	pixel_y = -6
@@ -69791,7 +69791,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "qyZ" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/structure/sign/warning/airlock{
 	pixel_x = -32
 	},
@@ -71504,7 +71504,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -72579,7 +72579,7 @@
 /turf/simulated/floor,
 /area/station/medical/reception)
 "rkn" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/light/small,
 /obj/structure/sign/map/prometheus{
 	pixel_y = -32
@@ -74929,7 +74929,7 @@
 	name = "Operating Theatre"
 	})
 "rPR" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22

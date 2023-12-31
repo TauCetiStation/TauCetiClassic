@@ -1935,7 +1935,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -10810,7 +10810,7 @@
 	},
 /area/station/engineering/atmos/atmos_office)
 "bLz" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -22
@@ -15605,7 +15605,7 @@
 	},
 /area/station/rnd/scibreak)
 "cNa" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
@@ -28431,7 +28431,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/bridge/ai_upload)
 "fFv" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/camera{
 	c_tag = "Medbay Psychiatrist Office";
 	dir = 1;
@@ -58076,7 +58076,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -69256,7 +69256,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "olx" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
@@ -79661,7 +79661,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "qCm" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
@@ -82602,7 +82602,7 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
@@ -85937,7 +85937,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "rUL" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -111518,7 +111518,7 @@
 	},
 /area/station/medical/cryo)
 "xOa" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/simulated/floor{
 	icon_state = "whitebluecorner"
 	},

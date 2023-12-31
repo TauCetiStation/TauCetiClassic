@@ -3693,7 +3693,7 @@
 	},
 /area/custom/syndicate_mothership)
 "ajq" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 6;
 	icon_state = "siding_wood_line"
@@ -7238,7 +7238,7 @@
 	},
 /area/velocity)
 "aqN" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -10977,7 +10977,7 @@
 /turf/unsimulated/wall,
 /area/velocity)
 "aye" = (
-/obj/structure/reagent_dispensers/water_cooler{
+/obj/structure/water_cooler{
 	pixel_y = 1
 	},
 /turf/unsimulated/floor{
@@ -18446,7 +18446,7 @@
 	},
 /area/centcom/holding)
 "aOI" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -19117,7 +19117,7 @@
 	},
 /area/centcom/living)
 "aQk" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/water_cooler,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"

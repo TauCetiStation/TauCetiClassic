@@ -1640,6 +1640,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Paper packs"
 	group = "Supply"
 
+/datum/supply_pack/water
+	name = "Cooler bottle of water"
+	contains = list(/obj/item/weapon/reagent_containers/food/drinks/water_cooler_bottle)
+	crate_name = "Cooler refill"
+	group = "Supply"
+
 /datum/supply_pack/vest
 	name = "Vest Crate"
 	contains = list(/obj/item/clothing/accessory/storage/brown_vest,

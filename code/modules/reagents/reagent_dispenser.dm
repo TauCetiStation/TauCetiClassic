@@ -244,22 +244,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	. = ..()
 	reagents.add_reagent("condensedcapsaicin",1000)
 
-
-
-/obj/structure/reagent_dispensers/water_cooler
-	name = "Water-Cooler"
-	desc = "A machine that dispenses water to drink."
-	amount_per_transfer_from_this = 5
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "water_cooler"
-	possible_transfer_amounts = null
-	anchored = TRUE
-
-/obj/structure/reagent_dispensers/water_cooler/atom_init()
-	. = ..()
-	reagents.add_reagent("water",500)
-
-
 /obj/structure/reagent_dispensers/beerkeg
 	name = "beer keg"
 	desc = "A beer keg."

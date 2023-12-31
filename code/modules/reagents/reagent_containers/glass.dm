@@ -111,6 +111,13 @@
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>Вы переливаете [trans] юнитов вещества в [CASE(target, ACCUSATIVE_CASE)].</span>")
 		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER) // Sound taken from "Eris" build
+	else if(istype(target, /obj/structure/water_cooler)) //Water-Cooler
+		var/obj/structure/water_cooler/Cooler = target
+		if(!Cooler.bottle)
+			return
+		Cooler.bottle.reagents.trans_to(src, 5)
+		Cooler.update_icon()
+		Cooler.bottle.update_icon()
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))

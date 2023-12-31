@@ -244,11 +244,18 @@
 /obj/structure/closet/freezer
 	name = "fridge"
 	desc = "Холодильник фирмы Einstein Electronics."
-	icon_state = "freezer"
+	icon_state = "freezer_grey"
 	icon_closed = "freezer"
 	icon_opened = "freezer_open"
 
 	glow_icon_state = "freezer"
+
+/obj/structure/closet/freezer/atom_init()
+	. = ..()
+
+	icon_closed = "freezer_[pick(list("red", "grey", "black", "white"))]"
+	icon_opened = "[icon_closed]_open"
+	icon_state = icon_closed
 
 /obj/structure/closet/freezer/PopulateContents()
 	new /obj/item/weapon/reagent_containers/food/drinks/milk(src)
@@ -269,11 +276,18 @@
 /obj/structure/closet/small_freezer
 	name = "small fridge"
 	desc = "Холодильник фирмы Einstein Electronics."
-	icon_state = "small_freezer"
+	icon_state = "small_freezer_grey"
 	icon_closed = "small_freezer"
 	icon_opened = "small_freezer_open"
 
 	glow_icon_state = "small_freezer"
+
+/obj/structure/closet/small_freezer/atom_init()
+	. = ..()
+
+	icon_closed = "small_freezer_[pick(list("red", "grey", "black", "white"))]"
+	icon_opened = "[icon_closed]_open"
+	icon_state = icon_closed
 
 /obj/structure/closet/small_freezer/PopulateContents()
 	new /obj/item/weapon/reagent_containers/food/drinks/milk(src)
