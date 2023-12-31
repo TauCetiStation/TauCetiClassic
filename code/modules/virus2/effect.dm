@@ -59,7 +59,7 @@
 	//The following vars are customizable
 	var/use_rate = 0 			//Amount of nanites used while active
 	var/program_flags = NONE
-	var/list/rogue_types = list(/*datum/disease2/effect/glitch*/) //What this can turn into if it glitches.
+	var/list/rogue_types = list(/*datum/disease2/effect/confusion*/) //What this can turn into if it glitches.
 
 /datum/disease2/effect/proc/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)

@@ -250,7 +250,8 @@
 /mob/living/carbon/ian/emplode(severity)
 	. = ..()
 	if(. && virus2.len)
-		for(var/datum/disease2/disease/V as anything in virus2)
+		for(var/id in virus2)
+			var/datum/disease2/disease/V = virus2[id]
 			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, severity)
 
 /mob/living/carbon/ian/proc/handle_virus_updates()
@@ -434,6 +435,7 @@
 
 	. = ..(gibbed)
 	if(virus2.len)
-		for(var/datum/disease2/disease/V as anything in virus2)
+		for(var/id in virus2)
+			var/datum/disease2/disease/V = virus2[id]
 			SEND_SIGNAL(V, COMSIG_MOB_DIED, src, gibbed)
 

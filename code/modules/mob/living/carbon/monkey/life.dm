@@ -158,7 +158,8 @@
 /mob/living/carbon/monkey/emplode(severity)
 	. = ..()
 	if(. && virus2.len)
-		for(var/datum/disease2/disease/V as anything in virus2)
+		for(var/id in virus2)
+			var/datum/disease2/disease/V = virus2[id]
 			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, src, severity)
 
 /mob/living/carbon/monkey/proc/handle_virus_updates()

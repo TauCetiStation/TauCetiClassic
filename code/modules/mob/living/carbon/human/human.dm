@@ -610,7 +610,8 @@
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	SEND_SIGNAL(src, COMSIG_ATOM_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(virus2.len)
-		for(var/datum/disease2/disease/V as anything in virus2)
+		for(var/id in virus2)
+			var/datum/disease2/disease/V = virus2[id]
 			SEND_SIGNAL(V, COMSIG_ATOM_ELECTROCUTE_ACT, src, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(status_flags & GODMODE)
 		return 0	//godmode

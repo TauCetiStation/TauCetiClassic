@@ -195,7 +195,8 @@
 /obj/machinery/hydroponics/emplode(severity)
 	. = ..()
 	if(. && virus2.len)
-		for(var/datum/disease2/disease/V as anything in virus2)
+		for(var/id in virus2)
+			var/datum/disease2/disease/V = virus2[id]
 			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, src, severity)
 
 /obj/machinery/hydroponics/proc/handle_virus_updates()
