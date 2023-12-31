@@ -49,18 +49,24 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
-	'sound/music/1.ogg',\
-	'sound/music/space.ogg',\
-	'sound/music/clouds.s3m',\
-	'sound/music/title1.ogg',\
-	'sound/music/space_oddity.ogg',\
-	'sound/music/b12_combined_start.ogg',\
-	'sound/music/title2.ogg',\
-	'sound/music/traitor.ogg',\
-	'sound/lobby/sundown.ogg',\
-	'sound/lobby/hanging_masses.ogg',\
+	'sound/lobby/1.ogg',\
+	'sound/lobby/Absconditus.ogg',\
 	'sound/lobby/admiral-station-13.ogg',\
-	'sound/lobby/robocop_gb_intro.ogg')
+	'sound/lobby/Clouds of Fire.ogg',\
+	'sound/lobby/Dwarf Fortress Intro.ogg',\
+	'sound/lobby/Endless Space.ogg',\
+	'sound/lobby/Flip-Flap.ogg',\
+	'sound/lobby/hanging_masses.ogg',\
+	'sound/lobby/Marhaba.ogg',\
+	'sound/lobby/Memories Of Lysendraa.ogg',\
+	'sound/lobby/Phoron Will Make Us Rich.ogg',\
+	'sound/lobby/robocop_gb_intro.ogg',\
+	'sound/lobby/sundown.ogg',\
+	'sound/lobby/The Station.ogg',\
+	'sound/lobby/Thunderdome.ogg',\
+	'sound/lobby/Title2.ogg',\
+	'sound/lobby/Title3.ogg',\
+	'sound/music/space_oddity.ogg')
 
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
