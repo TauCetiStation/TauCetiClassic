@@ -3,7 +3,7 @@
 	endWhen			= 120
 
 /datum/event/wizard/start()
-	if(!length(wizardstart))
+	if(!length(landmarks_list["Wizard"]))
 		kill()
 		return
 

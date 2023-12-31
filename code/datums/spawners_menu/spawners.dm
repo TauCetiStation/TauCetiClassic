@@ -733,12 +733,14 @@
 	register_only = TRUE
 	time_for_registration = 0.5 MINUTES
 
+	spawn_landmark_name = "Wizard"
+
 /datum/spawner/wizard_event/New()
 	. = ..()
 	desc = "Вы просыпаетесь в [pick("Логове Волшебника", "Убежище мага", "Винтерхолде", "Башне мага")] с неотложным заданием от Федерации магов."
 
 /datum/spawner/wizard_event/spawn_body(mob/dead/spectator)
-	var/spawnloc = pick(wizardstart)
+	var/spawnloc = pick_spawn_location()
 	var/mob/living/carbon/human/H = new(null)
 	var/new_name = "Wizard The Unbenannt"
 	INVOKE_ASYNC(spectator.client, TYPE_PROC_REF(/client, create_human_apperance), H, new_name, TRUE)

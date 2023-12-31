@@ -139,7 +139,7 @@
 
 /datum/role/wizard/RoleTopic(href, href_list, datum/mind/M, admin_auth)
 	if(href_list["wiz_tp"])
-		M.current.forceMove(pick(wizardstart))
+		M.current.forceMove(pick_landmarked_location("Wizard"))
 
 	else if(href_list["wiz_name"])
 		INVOKE_ASYNC(src, PROC_REF(name_wizard), M.current)
