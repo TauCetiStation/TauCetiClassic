@@ -125,7 +125,7 @@
 
 /datum/surgery_step/brain/insert_brain
 	allowed_tools = list(
-	/obj/item/brain/internal = 100
+	/obj/item/organ/internal/brain = 100
 	)
 	allowed_species = list("exclude", IPC, DIONA)
 
@@ -146,7 +146,7 @@
 	user.visible_message("<span class='notice'>[user] inserts [tool] into [target]'s [BP.name].</span>",
 	"<span class='notice'>You inserts [tool] into [target]'s [BP.name].</span>")
 
-	if(!istype(tool, /obj/item/brain/internal))
+	if(!istype(tool, /obj/item/organ/internal/brain))
 		return
 
 	//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO

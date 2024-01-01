@@ -1870,7 +1870,6 @@
 #include "code\modules\mob\living\carbon\telekinesis.dm"
 #include "code\modules\mob\living\carbon\update_icons.dm"
 #include "code\modules\mob\living\carbon\brain\brain.dm"
-#include "code\modules\mob\living\carbon\brain\brain_item.dm"
 #include "code\modules\mob\living\carbon\brain\death.dm"
 #include "code\modules\mob\living\carbon\brain\emote.dm"
 #include "code\modules\mob\living\carbon\brain\life.dm"
