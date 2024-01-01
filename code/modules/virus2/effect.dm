@@ -78,7 +78,7 @@
 /datum/disease2/effect/proc/on_death(datum/source, atom/host, gibbed)
 	return
 
-/datum/disease2/effect/proc/software_error(type, datum/disease2/disease/virus)
+/datum/disease2/effect/proc/software_error(type, atom/host, datum/disease2/disease/virus)
 	if(!type)
 		type = rand(1,5)
 	switch(type)
@@ -100,11 +100,11 @@
 
 /datum/disease2/effect/proc/on_emp(datum/source, atom/host, severity)
 	if((effect_type & MICROBIOLOGY_NANITE) && (program_flags & NANITE_EMP_IMMUNE) && prob(80 / severity))
-		software_error(null, virus)
+		software_error(null, host, virus)
 
 /datum/disease2/effect/proc/on_shock(datum/source, atom/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
 	if((effect_type & MICROBIOLOGY_NANITE) && (!program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
-		software_error(1, virus)
+		software_error(1, host, virus)
 
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
