@@ -96,8 +96,11 @@
 			H.blood_remove(abs(amount))
 	if(nanite_volume > max_nanites)
 		reject_excess_nanites(host)
-	if(nanite_volume <= 0 && iscarbon(host)) //oops we ran out
-		cure(host)
+	if(nanite_volume > 0 || !iscarbon(host))
+		return
+	for(var/datum/disease2/effectholder/NP as anything in effects)
+		if(NP.effect.effect_type & MICROBIOLOGY_NANITE)
+			remove_effect(NP)
 
 /datum/disease2/disease/proc/on_emp(datum/source, atom/host, severity)
 	SIGNAL_HANDLER
