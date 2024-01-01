@@ -30,19 +30,19 @@
 
 /datum/disease2/disease/proc/on_process(datum/source, atom/host)
 	if(istype(host, /obj/machinery/hydroponics))
-		adjust_nanites(null, regen_rate)
+		adjust_nanites(regen_rate, host)
 		affect_plants(host)
 	else if(istype(host, /mob/living/carbon))
 		var/mob/living/carbon/mob = host
 		if(!IS_IN_STASIS(mob))
-			adjust_nanites(null, regen_rate)
+			adjust_nanites(regen_rate, host)
 		activate(mob)
 
-/datum/disease2/disease/proc/consume_nanites(amount, force = FALSE)
+/datum/disease2/disease/proc/consume_nanites(amount, force = FALSE, atom/host)
 	if(!force)
 		if(safety_threshold && (nanite_volume - amount < safety_threshold))
 			return FALSE
-	adjust_nanites(null, -amount)
+	adjust_nanites(-amount, host)
 	return (nanite_volume > 0)
 
 /**
@@ -83,9 +83,11 @@
 				C.vomit(vomit_type = VOMIT_NANITE)
 
 ///Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount
-/datum/disease2/disease/proc/adjust_nanites(datum/source, amount, atom/host)
+/datum/disease2/disease/proc/adjust_nanites(amount, atom/host)
 	SIGNAL_HANDLER
 	nanite_volume += amount
+	if(!istype(host))
+		return
 	//a large loss of nanites is accompanied by a small amount of blood loss in humans
 	if(amount <= -5)
 		if(ishuman(host))
@@ -100,23 +102,23 @@
 /datum/disease2/disease/proc/on_emp(datum/source, atom/host, severity)
 	SIGNAL_HANDLER
 	nanite_volume *= (rand(60, 90) * 0.01) //Lose 10-40% of nanites
-	adjust_nanites(null, -(rand(5, 50)), host) //Lose 5-50 flat nanite volume
+	adjust_nanites(-(rand(5, 50)), host) //Lose 5-50 flat nanite volume
 	for(var/datum/disease2/effectholder/NP as anything in effects)
-		NP.effect.on_emp(source, severity, src)
+		NP.effect.on_emp(source, host, severity)
 
-/datum/disease2/disease/proc/on_shock(datum/source, atom/host, shock_damage, siemens_coeff = 1, flags = NONE)
+/datum/disease2/disease/proc/on_shock(datum/source, atom/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
 	SIGNAL_HANDLER
 	if(shock_damage < 1)
 		return
 	nanite_volume *= (rand(45, 80) * 0.01) //Lose 20-55% of nanites
-	adjust_nanites(null, -(rand(5, 50)), host)  //Lose 5-50 flat nanite volume
+	adjust_nanites(-(rand(5, 50)), host)  //Lose 5-50 flat nanite volume
 	for(var/datum/disease2/effectholder/NP as anything in effects)
-		NP.effect.on_shock(source, shock_damage, src)
+		NP.effect.on_shock(source, host, shock_damage, current_source, siemens_coeff, def_zone, tesla_shock)
 
 /datum/disease2/disease/proc/on_death(datum/source, atom/host, gibbed)
 	SIGNAL_HANDLER
 	for(var/datum/disease2/effectholder/NP as anything in effects)
-		NP.effect.on_death(source, gibbed, src)
+		NP.effect.on_death(source, host, gibbed)
 
 /datum/disease2/disease/proc/haseffect(datum/disease2/effect/checkeffect)
 	for(var/datum/disease2/effectholder/e in effects)

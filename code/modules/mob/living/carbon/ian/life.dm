@@ -252,7 +252,7 @@
 	if(. && virus2.len)
 		for(var/id in virus2)
 			var/datum/disease2/disease/V = virus2[id]
-			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, severity)
+			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, src, severity)
 
 /mob/living/carbon/ian/proc/handle_virus_updates()
 	if(status_flags & GODMODE)

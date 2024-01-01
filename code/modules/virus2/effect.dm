@@ -70,12 +70,12 @@
 	return TRUE
 
 /datum/disease2/effect/proc/on_process(datum/disease2/disease/virus, atom/host)
-	effect_active = check_conditions(host, virus) && consume_nanites(use_rate, FALSE, virus)
+	effect_active = check_conditions(host, virus) && consume_nanites(use_rate, FALSE, virus, host)
 
-/datum/disease2/effect/proc/consume_nanites(amount, force = FALSE, datum/disease2/disease/virus)
-	return virus.consume_nanites(amount, force)
+/datum/disease2/effect/proc/consume_nanites(amount, force = FALSE, datum/disease2/disease/virus, atom/host)
+	return virus.consume_nanites(amount, force, host)
 
-/datum/disease2/effect/proc/on_death(datum/source, gibbed, datum/disease2/disease/virus)
+/datum/disease2/effect/proc/on_death(datum/source, atom/host, gibbed)
 	return
 
 /datum/disease2/effect/proc/software_error(type, datum/disease2/disease/virus)
@@ -98,11 +98,11 @@
 					virus.remove_effect(ef_holder.effect)
 			virus.addeffect(virus.get_new_effectholder(rogue))
 
-/datum/disease2/effect/proc/on_emp(datum/source, severity, datum/disease2/disease/virus)
+/datum/disease2/effect/proc/on_emp(datum/source, atom/host, severity)
 	if((effect_type & MICROBIOLOGY_NANITE) && (program_flags & NANITE_EMP_IMMUNE) && prob(80 / severity))
 		software_error(null, virus)
 
-/datum/disease2/effect/proc/on_shock(datum/source, shock_damage, datum/disease2/disease/virus)
+/datum/disease2/effect/proc/on_shock(datum/source, atom/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
 	if((effect_type & MICROBIOLOGY_NANITE) && (!program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
 		software_error(1, virus)
 
