@@ -41,7 +41,7 @@
 	..()
 
 	owner.organs -= src
-	owner.organs_by_name[organ_tag] = src
+	owner.organs_by_name[organ_tag] -= src
 
 	if(parent)
 		parent.bodypart_organs -= src
@@ -148,6 +148,13 @@
 	var/heart_status = HEART_NORMAL
 	var/fibrillation_timer_id = null
 	var/failing_interval = 1 MINUTE
+	force = 1.0
+	w_class = SIZE_TINY
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 5
+	origin_tech = "biotech=3"
+	attack_verb = list("attacked", "slapped", "whacked")
 
 /obj/item/organ/internal/heart/insert_organ()
 	..()
@@ -211,6 +218,13 @@
 	icon_state = "lungs"
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
+	force = 1.0
+	w_class = SIZE_TINY
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 5
+	origin_tech = "biotech=3"
+	attack_verb = list("attacked", "slapped", "whacked")
 
 	var/has_gills = FALSE
 
@@ -291,6 +305,13 @@
 	organ_tag = O_LIVER
 	parent_bodypart = BP_CHEST
 	process_accuracy = 10
+	force = 1.0
+	w_class = SIZE_TINY
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 5
+	origin_tech = "biotech=3"
+	attack_verb = list("attacked", "slapped", "whacked")
 
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
@@ -390,6 +411,13 @@
 	icon_state = "kidneys"
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_CHEST
+	force = 1.0
+	w_class = SIZE_TINY
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 5
+	origin_tech = "biotech=3"
+	attack_verb = list("attacked", "slapped", "whacked")
 
 /obj/item/organ/internal/kidneys/vox
 	name = "filtration bladder"
@@ -430,6 +458,39 @@
 	icon_state = "brain2"
 	organ_tag = O_BRAIN
 	parent_bodypart = BP_HEAD
+	force = 1.0
+	w_class = SIZE_TINY
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 5
+	origin_tech = "biotech=3"
+	attack_verb = list("attacked", "slapped", "whacked")
+
+/obj/item/brain/internal/atom_init()
+	. = ..()
+	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
+	//WASSSSSUUUPPPP /N
+	spawn(5)
+		brainmob?.client?.screen.len = null //clear the hud
+
+/obj/item/brain/internal/proc/transfer_identity(mob/living/carbon/H)
+	name = "[H]'s brain"
+	brainmob = new(src)
+	brainmob.name = H.real_name
+	brainmob.real_name = H.real_name
+	brainmob.dna = H.dna.Clone()
+	brainmob.timeofhostdeath = H.timeofdeath
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
+
+	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
+/obj/item/brain/internal/examine(mob/user) // -- TLE
+	..()
+	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
+		to_chat(user, "You can feel the small spark of life still left in this one.")
+	else
+		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
+
 
 /obj/item/organ/internal/brain/diona
 	name = "main node nymph"

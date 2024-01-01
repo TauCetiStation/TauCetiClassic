@@ -105,7 +105,7 @@
 
 	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 
-	var/obj/item/brain/B
+	var/obj/item/organ/internal/brain/B
 	B = new(target.loc)
 	B.transfer_identity(target)
 
@@ -125,7 +125,7 @@
 
 /datum/surgery_step/brain/insert_brain
 	allowed_tools = list(
-	/obj/item/brain = 100
+	/obj/item/brain/internal = 100
 	)
 	allowed_species = list("exclude", IPC, DIONA)
 
@@ -146,7 +146,7 @@
 	user.visible_message("<span class='notice'>[user] inserts [tool] into [target]'s [BP.name].</span>",
 	"<span class='notice'>You inserts [tool] into [target]'s [BP.name].</span>")
 
-	if(!istype(tool, /obj/item/brain))
+	if(!istype(tool, /obj/item/brain/internal))
 		return
 
 	//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO

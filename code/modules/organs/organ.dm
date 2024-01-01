@@ -41,7 +41,6 @@
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	set_owner(H, S)
 
-	START_PROCESSING(SSobj, src)
 	if(parent_bodypart)
 		parent = owner.bodyparts_by_name[parent_bodypart]
 
@@ -49,7 +48,6 @@
 /obj/item/organ/proc/remove_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	del_owner(H, S)
 
-	STOP_PROCESSING(SSobj, src)
 	if(parent_bodypart)
 		parent = null
 

@@ -35,7 +35,7 @@
 	return ""
 
 /datum/surgery_step/cavity/proc/remove_from_cavity(mob/user, mob/target, obj/obj_to_remove, obj/item/organ/external/BP, obj/tool)
-	BP.implants -= obj_to_remove
+	BP.implants || -= obj_to_remove
 	for(var/datum/wound/W in BP.wounds)
 		if(obj_to_remove in W.embedded_objects)
 			W.embedded_objects -= obj_to_remove
@@ -209,14 +209,14 @@
 			if(istype(embed_object, /obj/item/weapon/implant))
 				embed_object_implants += embed_object
 				continue
-		for(var/embed_object in BP.bodypart_organs)
 			if(istype(embed_object, /obj/item/organ/internal))
-				embed_object_organs = BP.bodypart_organs.Copy()
+				BP.bodypart_organs.Copy()
+				embed_object_organs = BP.bodypart_organs
 				continue
 			embed_object_else += embed_object
 		for(var/atom/embed_object as anything in embed_object_implants)
 			embed_object_implants[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
-		for(var/atom/embed_object as anything in embed_object_organs)
+		for(var/atom/embed_object as anything in BP.bodypart_organs)
 			embed_object_organs[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		for(var/atom/embed_object as anything in embed_object_else)
 			embed_object_else[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)

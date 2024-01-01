@@ -411,7 +411,7 @@ var/global/list/scrap_base_cache = list()
 		/obj/random/syndie/fullhouse,
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-		/obj/item/brain,
+		/obj/item/brain/internal,
 		/obj/item/weapon/tank/phoron
 	)
 

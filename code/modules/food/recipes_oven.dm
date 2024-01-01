@@ -385,7 +385,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
-		/obj/item/brain
+		/obj/item/brain/internal
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/brain
 
