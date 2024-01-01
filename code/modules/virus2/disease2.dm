@@ -32,7 +32,7 @@
 	if(istype(host, /obj/machinery/hydroponics))
 		adjust_nanites(regen_rate, host)
 		affect_plants(host)
-	else if(istype(host, /mob/living/carbon))
+	else if(iscarbon(host))
 		var/mob/living/carbon/mob = host
 		if(!IS_IN_STASIS(mob))
 			adjust_nanites(regen_rate, host)
@@ -84,7 +84,6 @@
 
 ///Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount
 /datum/disease2/disease/proc/adjust_nanites(amount, atom/host)
-	SIGNAL_HANDLER
 	nanite_volume += amount
 	if(!istype(host))
 		return
@@ -95,6 +94,7 @@
 			// Normal blood value is 560, value when nanites can deactivate is 336
 			H.blood_remove(abs(amount))
 	if(nanite_volume > max_nanites)
+		INVOKE_ASYNC(src, PROC_REF(reject_excess_nanites), host)
 		reject_excess_nanites(host)
 	if(nanite_volume > 0 || !iscarbon(host))
 		return
