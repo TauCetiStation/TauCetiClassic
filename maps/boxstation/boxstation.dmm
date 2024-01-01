@@ -19815,7 +19815,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave/einstein_electronics{
-	pixel_y = 9;
+	pixel_y = 5;
 	pixel_x = -1
 	},
 /turf/simulated/floor{
@@ -25859,7 +25859,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave/einstein_electronics{
-	pixel_y = 9;
+	pixel_y = 8;
 	pixel_x = -1
 	},
 /turf/simulated/floor{
@@ -55378,7 +55378,7 @@
 	},
 /obj/structure/table/glass,
 /obj/machinery/kitchen_machine/microwave/einstein_electronics{
-	pixel_y = 9;
+	pixel_y = 8;
 	pixel_x = -1
 	},
 /turf/simulated/floor{
@@ -74157,6 +74157,9 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos)
 "hTE" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "green"
@@ -77876,13 +77879,6 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
-"lFQ" = (
-/obj/machinery/hydroponics/constructable,
-/obj/machinery/light/smart,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/civilian/hydroponics)
 "lGb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -80432,7 +80428,7 @@
 "owL" = (
 /obj/structure/table/glass,
 /obj/machinery/kitchen_machine/microwave/einstein_electronics{
-	pixel_y = 9;
+	pixel_y = 8;
 	pixel_x = -1
 	},
 /turf/simulated/floor{
@@ -82844,7 +82840,7 @@
 	pixel_y = 24
 	},
 /obj/machinery/kitchen_machine/microwave/einstein_electronics{
-	pixel_y = 9;
+	pixel_y = 8;
 	pixel_x = -1
 	},
 /turf/simulated/floor{
@@ -106503,7 +106499,7 @@ aVg
 lwE
 aVg
 aZs
-lFQ
+ayy
 aNi
 uru
 iXb
