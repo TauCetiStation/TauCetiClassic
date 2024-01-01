@@ -99,11 +99,11 @@
 			virus.addeffect(virus.get_new_effectholder(rogue))
 
 /datum/disease2/effect/proc/on_emp(datum/source, severity, datum/disease2/disease/virus)
-	if((program_flags & NANITE_EMP_IMMUNE) && prob(80 / severity))
+	if((effect_type & MICROBIOLOGY_NANITE) && (program_flags & NANITE_EMP_IMMUNE) && prob(80 / severity))
 		software_error(null, virus)
 
 /datum/disease2/effect/proc/on_shock(datum/source, shock_damage, datum/disease2/disease/virus)
-	if((!program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
+	if((effect_type & MICROBIOLOGY_NANITE) && (!program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
 		software_error(1, virus)
 
 /datum/disease2/effect/invisible
