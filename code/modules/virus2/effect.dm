@@ -103,7 +103,7 @@
 		software_error(null, host, source)
 
 /datum/disease2/effect/proc/on_shock(datum/source, atom/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
-	if((effect_type & MICROBIOLOGY_NANITE) && (!program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
+	if((effect_type & MICROBIOLOGY_NANITE) && !(program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
 		software_error(1, host, source)
 
 /datum/disease2/effect/invisible
