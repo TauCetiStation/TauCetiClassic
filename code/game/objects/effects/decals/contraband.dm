@@ -170,13 +170,27 @@
 	random_basetype = /obj/structure/sign/poster
 
 /obj/structure/sign/poster/calendar
-	name = "2223 calendar"
+	name = "2224 calendar"
 	icon_state = "calendar"
 	desc = "Календарь на 2224-й год."
 
 /obj/structure/sign/poster/calendar/examine(mob/user)
 	. = ..()
 	to_chat(user, "<span class='notice'>Сегодня: [global.current_date_string]</span>")
+
+/obj/structure/sign/poster/calendar_old
+	name = "2223 calendar"
+	icon_state = "calendar_old"
+	desc = "Календарь на 2223-й год."
+	var/old_date
+
+/obj/structure/sign/poster/calendar_old/atom_init()
+	. = ..()
+	old_date = "[rand(1,31)].[rand(1,12)].2223"
+
+/obj/structure/sign/poster/calendar_old/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>Сегодня: [old_date]</span>")
 
 /obj/structure/sign/poster/sivtsev
 	name = "sivtsev table"
