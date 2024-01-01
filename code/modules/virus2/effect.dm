@@ -59,7 +59,7 @@
 	//The following vars are customizable
 	var/use_rate = 0 			//Amount of nanites used while active
 	var/program_flags = NONE
-	var/list/rogue_types = list(/*datum/disease2/effect/confusion*/) //What this can turn into if it glitches.
+	var/list/rogue_mutate_type = list(/*datum/disease2/effect/confusion*/) //What this can turn into if it glitches.
 
 /datum/disease2/effect/proc/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 /datum/disease2/effect/proc/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -90,8 +90,8 @@
 			virus.stage = min(1, virus.stage - 1)
 		if(4)
 			virus.regen_rate = 0
-		if(5) //Program is scrambled and does something different
-			var/rogue_type = pick(rogue_types)
+		if(5) //Effect breakes and does something different
+			var/rogue_type = pick(rogue_mutate_type)
 			var/datum/disease2/effect/rogue = new rogue_type
 			for(var/datum/disease2/effectholder/ef_holder as anything in virus.effects)
 				if(ef_holder.effect == src)
@@ -100,11 +100,11 @@
 
 /datum/disease2/effect/proc/on_emp(datum/source, atom/host, severity)
 	if((effect_type & MICROBIOLOGY_NANITE) && (program_flags & NANITE_EMP_IMMUNE) && prob(80 / severity))
-		software_error(null, host, virus)
+		software_error(null, host, source)
 
 /datum/disease2/effect/proc/on_shock(datum/source, atom/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
 	if((effect_type & MICROBIOLOGY_NANITE) && (!program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
-		software_error(1, host, virus)
+		software_error(1, host, source)
 
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
@@ -409,6 +409,8 @@
 	level = 4
 	max_stage = 3
 	cooldown = 60
+	use_rate = 1.5
+	rogue_mutate_type = list(/datum/disease2/effect/organs)
 	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_NEGATIVE_VIRUS)
 
@@ -836,12 +838,43 @@
 			to_chat(mob, "<span class='warning'>[pick("Your stomach hurts a lot.", "Your skin seems to become more pale.", "You feel confused.", "Your breathing is hot and irregular.")]</span>")
 			mob.adjustToxLoss(10)
 
+/datum/disease2/effect/nerve_decay
+	name = "Nerve Decay"
+	desc = "The virus produces nanites that attacks the host's nerves, causing lack of coordination and short bursts of paralysis."
+	level = 3
+	max_stage = 10
+	cooldown = 5
+	use_rate = 1
+	rogue_mutate_type = list(/datum/disease2/effect/flesh_eating)
+	effect_type = MICROBIOLOGY_NANITE
+	COOLDOWN_DECLARE(nerv_decay_message)
+
+/datum/disease2/effect/nerve_decay/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	switch(holder.stage)
+		if(1 to 5)
+			if(COOLDOWN_FINISHED(src, nerv_decay_message))
+				to_chat(mob, "<span class='warning'>You feel unbalanced!</span>")
+				COOLDOWN_START(src, nerv_decay_message, 1 MINUTE)
+			mob.AdjustConfused(holder.stage)
+		if(6 to 9)
+			if(COOLDOWN_FINISHED(src, nerv_decay_message))
+				to_chat(mob, "<span class='warning'>You can't feel your hands!</span>")
+				COOLDOWN_START(src, nerv_decay_message, 1 MINUTE)
+			mob.drop_item()
+		else
+			if(COOLDOWN_FINISHED(src, nerv_decay_message))
+				to_chat(mob, "<span class='warning'>You can't feel your legs!</span>")
+				COOLDOWN_START(src, nerv_decay_message, 1 MINUTE)
+			mob.AdjustWeakened(7)
+
 /datum/disease2/effect/nerve_support
 	name = "Nerve Support"
 	desc = "The virus injects nanites into the host's body, which act as a secondary nervous system, protecting against nerve palsies."
 	level = 3
 	max_stage = 3
 	cooldown = 7
+	use_rate = 1.5
+	rogue_mutate_type = list(/datum/disease2/effect/nerve_decay, /datum/disease2/effect/giggle, /datum/disease2/effect/cough)
 	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS)
 	var/trait_added = FALSE
@@ -916,6 +949,8 @@
 	level = 3
 	max_stage = 7
 	cooldown = 10
+	use_rate = 0.5
+	rogue_mutate_type = list(/datum/disease2/effect/flesh_eating)
 	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS)
 
@@ -1136,6 +1171,8 @@
 	level = 2
 	max_stage = 2
 	cooldown = 10
+	use_rate = 0.75
+	rogue_mutate_type = list(/datum/disease2/effect/mind, /datum/disease2/effect/drowsness, /datum/disease2/effect/confusion, /datum/disease2/effect/hallucinations)
 	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
 	var/trait_added = FALSE
@@ -1351,6 +1388,7 @@
 	level = 1
 	max_stage = 1
 	cooldown = 600
+	rogue_mutate_type = list(/datum/disease2/effect/toxins)
 	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS, POOL_NEUTRAL_VIRUS)
 
@@ -1499,12 +1537,25 @@
 				else
 					H.apply_effect(10,AGONY,0)
 
+/datum/disease2/effect/suffocating
+	name = "Hypoxemia"
+	desc = "The virus producing nanites that prevent the host's blood from absorbing oxygen efficiently."
+	level = 1
+	max_stage = 3
+	use_rate = 0.75
+	effect_type = MICROBIOLOGY_NANITE
+
+/datum/disease2/effect/suffocating/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.losebreath += holder.stage
+
 /datum/disease2/effect/hemocoagulation
 	name = "Rapid Coagulation"
 	desc = "The virus producing nanites that rapid coagulation when the host is wounded, dramatically reducing bleeding rate."
 	level = 1
 	max_stage = 2
 	cooldown = 40
+	use_rate = 0.10
+	rogue_mutate_type = list(/datum/disease2/effect/suffocating)
 	effect_type = MICROBIOLOGY_NANITE
 	pools = list(POOL_POSITIVE_VIRUS)
 	var/trait_added = FALSE
