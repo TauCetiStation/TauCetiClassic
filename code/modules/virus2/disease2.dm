@@ -94,7 +94,6 @@
 			// Normal blood value is 560, value when nanites can deactivate is 336
 			H.blood_remove(abs(amount))
 	if(nanite_volume > max_nanites)
-		INVOKE_ASYNC(src, PROC_REF(reject_excess_nanites), host)
 		reject_excess_nanites(host)
 	if(nanite_volume > 0 || !iscarbon(host))
 		return
@@ -103,14 +102,12 @@
 			remove_effect(NP)
 
 /datum/disease2/disease/proc/on_emp(datum/source, atom/host, severity)
-	SIGNAL_HANDLER
 	nanite_volume *= (rand(60, 90) * 0.01) //Lose 10-40% of nanites
 	adjust_nanites(-(rand(5, 50)), host) //Lose 5-50 flat nanite volume
 	for(var/datum/disease2/effectholder/NP as anything in effects)
 		NP.effect.on_emp(source, host, severity)
 
 /datum/disease2/disease/proc/on_shock(datum/source, atom/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
-	SIGNAL_HANDLER
 	if(shock_damage < 1)
 		return
 	nanite_volume *= (rand(45, 80) * 0.01) //Lose 20-55% of nanites
@@ -119,7 +116,6 @@
 		NP.effect.on_shock(source, host, shock_damage, current_source, siemens_coeff, def_zone, tesla_shock)
 
 /datum/disease2/disease/proc/on_death(datum/source, atom/host, gibbed)
-	SIGNAL_HANDLER
 	for(var/datum/disease2/effectholder/NP as anything in effects)
 		NP.effect.on_death(source, host, gibbed)
 
