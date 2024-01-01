@@ -110,7 +110,7 @@
 	icon_state = "globe_venus"
 
 /obj/item/earth_globe
-	name = "venus globe"
+	name = "earth globe"
 	desc = "Глобус Земли."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_earth"

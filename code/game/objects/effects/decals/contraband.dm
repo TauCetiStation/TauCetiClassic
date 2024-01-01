@@ -172,7 +172,11 @@
 /obj/structure/sign/poster/calendar
 	name = "2223 calendar"
 	icon_state = "calendar"
-	desc = "Календарь на 2223-й год."
+	desc = "Календарь на 2224-й год."
+
+/obj/structure/sign/poster/calendar/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>Сегодня: [global.current_date_string]</span>")
 
 /obj/structure/sign/poster/sivtsev
 	name = "sivtsev table"
