@@ -905,7 +905,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 						var/obj/item/device/mmi/posibrain/B = new(loc)
 						B.transfer_identity(brainmob)
 					else
-						var/obj/item/brain/internal/B = new(loc)
+						var/obj/item/organ/internal/brain/B = new(loc)
 						B.transfer_identity(brainmob)
 
 					brain_op_stage = 4.0

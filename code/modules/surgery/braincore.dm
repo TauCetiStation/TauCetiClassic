@@ -105,9 +105,9 @@
 
 	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 
-	var/obj/item/organ/internal/brain/B
-	B = new(target.loc)
-	B.transfer_identity(target)
+	var/obj/item/organ/internal/brain/H
+	H = new(target.loc)
+	H.transfer_identity(target)
 
 	var/obj/item/organ/internal/brain/IO = target.organs_by_name[O_BRAIN]
 	target.organs -= IO
@@ -152,7 +152,7 @@
 	//this might actually be outdated since barring badminnery, a debrain'd body will have any client sucked out to the brain's internal mob. Leaving it anyway to be safe. --NEO
 	if(target.key)//Revised. /N
 		target.ghostize()
-	var/obj/item/brain/B = tool
+	var/obj/item/organ/internal/brain/B = tool
 	if(B.brainmob)
 		if(B.brainmob.mind)
 			B.brainmob.mind.transfer_to(target)

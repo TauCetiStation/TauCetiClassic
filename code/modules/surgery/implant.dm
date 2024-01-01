@@ -35,7 +35,7 @@
 	return ""
 
 /datum/surgery_step/cavity/proc/remove_from_cavity(mob/user, mob/target, obj/obj_to_remove, obj/item/organ/external/BP, obj/tool)
-	BP.implants || -= obj_to_remove
+	BP.implants -= obj_to_remove
 	for(var/datum/wound/W in BP.wounds)
 		if(obj_to_remove in W.embedded_objects)
 			W.embedded_objects -= obj_to_remove

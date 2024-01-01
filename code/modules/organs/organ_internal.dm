@@ -466,14 +466,14 @@
 	origin_tech = "biotech=3"
 	attack_verb = list("attacked", "slapped", "whacked")
 
-/obj/item/brain/internal/atom_init()
+/obj/item/organ/internal/brain/internal/atom_init()
 	. = ..()
 	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
 	//WASSSSSUUUPPPP /N
 	spawn(5)
 		brainmob?.client?.screen.len = null //clear the hud
 
-/obj/item/brain/internal/proc/transfer_identity(mob/living/carbon/H)
+/obj/item/organ/internal/brain/proc/transfer_identity(mob/living/carbon/H)
 	name = "[H]'s brain"
 	brainmob = new(src)
 	brainmob.name = H.real_name
@@ -484,7 +484,7 @@
 		H.mind.transfer_to(brainmob)
 
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
-/obj/item/brain/internal/examine(mob/user) // -- TLE
+/obj/item/organ/internal/brain/examine(mob/user) // -- TLE
 	..()
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
 		to_chat(user, "You can feel the small spark of life still left in this one.")
