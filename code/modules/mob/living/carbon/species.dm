@@ -14,6 +14,8 @@
 	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
+	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
+	var/hud_offset_y = 0
 
 	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
 

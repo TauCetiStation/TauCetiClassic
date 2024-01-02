@@ -555,6 +555,9 @@
 	attack_verb = list("attacked", "struck", "hit")
 	var/blade_color = "blue"
 	sweep_step = 2
+	var/wieldsound = 'sound/weapons/saberon.ogg'
+	var/unwieldsound = 'sound/weapons/saberoff.ogg'
+	var/hitsound_wielded = list('sound/weapons/blade1.ogg')
 
 /obj/item/toy/dualsword/atom_init()
 	. = ..()
@@ -587,6 +590,9 @@
 	AddComponent(/datum/component/swiping, SCB)
 
 	var/datum/twohanded_component_builder/TCB = new
+	TCB.wieldsound = wieldsound
+	TCB.unwieldsound = unwieldsound
+	TCB.attacksound = hitsound_wielded
 	TCB.on_wield = CALLBACK(src, PROC_REF(on_wield))
 	TCB.on_unwield = CALLBACK(src, PROC_REF(on_unwield))
 	AddComponent(/datum/component/twohanded, TCB)
