@@ -261,7 +261,8 @@
 				if(choosen_object)
 					if(istype(choosen_object, /obj/item/organ/internal))
 						var/obj/item/organ/internal/H = choosen_object
-						H.remove_organ()
+						BP.bodypart_organs -= choosen_object
+						H.loc = get_turf(target)
 					remove_from_cavity(user, target, choosen_object, BP, tool)
 			if("Else")
 				var/choosen_object = show_radial_menu(user, target, embed_object_else, radius = 50, require_near = TRUE, tooltips = TRUE)

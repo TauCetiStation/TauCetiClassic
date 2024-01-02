@@ -844,6 +844,14 @@ var/global/list/tourette_bad_words= list(
 			adjustToxLoss(0.4)
 			adjustBruteLoss(0.2)
 
+		//Heart
+		if(should_have_organ(O_HEART && !has_organ(O_HEART)))
+			death()
+
+		//Lungs
+		if(should_have_organ(O_LUNGS && !has_organ(O_LUNGS)))
+			adjustOxyLoss(1.5)
+
 		//Other
 		if(stunned)
 			speech_problem_flag = 1

@@ -6,6 +6,7 @@
 
 	// Strings.
 	var/organ_tag   = null      // Unique identifier.
+	var/mob/living/carbon/brain/brainmob = null // will be moved
 
 	// Damage vars.
 	var/min_bruised_damage = 10 // Damage before considered bruised
@@ -466,13 +467,6 @@
 	origin_tech = "biotech=3"
 	attack_verb = list("attacked", "slapped", "whacked")
 
-/obj/item/organ/internal/brain/internal/atom_init()
-	. = ..()
-	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
-	//WASSSSSUUUPPPP /N
-	spawn(5)
-		brainmob?.client?.screen.len = null //clear the hud
-
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/carbon/H)
 	name = "[H]'s brain"
 	brainmob = new(src)
@@ -484,6 +478,14 @@
 		H.mind.transfer_to(brainmob)
 
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
+
+/obj/item/organ/internal/brain/internal/atom_init()
+	. = ..()
+	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
+	//WASSSSSUUUPPPP /N
+	spawn(5)
+		brainmob?.client?.screen.len = null //clear the hud
+
 /obj/item/organ/internal/brain/examine(mob/user) // -- TLE
 	..()
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
