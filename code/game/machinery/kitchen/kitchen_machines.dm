@@ -446,6 +446,7 @@
 
 /obj/machinery/kitchen_machine/microwave
 	name = "microwave"
+	cases = list("микроволновка", "микроволновки", "микроволновке", "микроволновку", "микроволновкой", "микроволновке")
 	desc = "A microwave, perfect for reheating things with radiation."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"

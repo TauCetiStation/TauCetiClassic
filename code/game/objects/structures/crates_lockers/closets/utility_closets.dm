@@ -243,6 +243,7 @@
 
 /obj/structure/closet/freezer
 	name = "fridge"
+	cases = list("холодильник", "холодильника", "холодильнику", "холодильник", "холодильником", "холодильнике")
 	desc = "Холодильник фирмы Einstein Electronics."
 	icon_state = "freezer_grey"
 	icon_closed = "freezer"
@@ -275,6 +276,7 @@
 
 /obj/structure/closet/small_freezer
 	name = "small fridge"
+	cases = list("холодильник", "холодильника", "холодильнику", "холодильник", "холодильником", "холодильнике")
 	desc = "Холодильник фирмы Einstein Electronics."
 	icon_state = "small_freezer_grey"
 	icon_closed = "small_freezer"

@@ -1,6 +1,7 @@
 /obj/item/weapon/paper/sticker
 	name = "sticker"
-	gender = PLURAL
+	cases = list("стикер", "стикера", "стикеру", "стикер", "стикером", "стикере")
+	desc = "Самоклеящаяся бумага для заметок."
 	icon_state = "sticker_yellow"
 	slot_flags = null
 
@@ -74,6 +75,7 @@
 
 /obj/item/weapon/stickers
 	name = "stickers"
+	cases = list("стикеры", "стикеров", "стикерам", "стикеры", "стикерами", "стикерах")
 	desc = "Самоклеящаяся бумага для заметок."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "stickers_4"
