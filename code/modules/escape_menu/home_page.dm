@@ -28,6 +28,7 @@
 			src,
 			"Помощь",
 			/* offset = */ 2,
+			CALLBACK(src, PROC_REF(open_help)),
 		)
 	)
 

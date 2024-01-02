@@ -17,6 +17,7 @@ var/global/list/escape_menus = list()
 
 #define PAGE_HOME "PAGE_HOME"
 #define PAGE_LEAVE_BODY "PAGE_LEAVE_BODY"
+#define PAGE_HELP "PAGE_HELP"
 
 /datum/escape_menu
 	/// The client that owns this escape menu
