@@ -186,6 +186,17 @@
 	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похозяйничайте в нём.</B>")
 	to_chat(mob, "<B>(Вы можете грызть провода и лампочки).</B>")
 
+/datum/spawner/living/clone
+	name = "Клон"
+	desc = "Вы появляетесь в своём новом теле."
+	time_for_registration = null
+	register_only = FALSE
+
+/datum/spawner/living/clone/spawn_body(mob/dead/spectator)
+	. = ..()
+	to_chat(mob, "<B>Ты не помнишь, кто ты такой и как попал в эту банку...</B>")
+	to_chat(mob, "<B>Ты можешь притвориться, что знаешь, что делаешь, или отдаться безумию бессмертия.</B>")
+
 /*
  * Heist
 */

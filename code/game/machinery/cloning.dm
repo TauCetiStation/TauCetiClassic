@@ -165,7 +165,7 @@
 //Clonepod
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(datum/dna2/record/R)
+/obj/machinery/clonepod/proc/growclone(datum/dna2/record/R, spawner = FALSE)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -201,9 +201,10 @@
 
 	//Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
+	if(!spawner)
+		clonemind.transfer_to(H)
+		H.ckey = R.ckey
 
-	clonemind.transfer_to(H)
-	H.ckey = R.ckey
 	to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
 
 	for(var/V in R.quirks)
@@ -253,7 +254,7 @@
 
 	if((src.occupant) && (src.occupant.loc == src))
 
-		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
+		if((src.occupant.stat == DEAD) || (src.occupant.suiciding))  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			go_out()
 			connected_message("Clone Rejected: Deceased.")

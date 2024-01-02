@@ -310,6 +310,14 @@
 			else if(!config.revival_cloning)
 				temp = "Error: Unable to initiate cloning cycle."
 
+			else if(prob(25))
+				pod1.growclone(C, TRUE)
+				var/mob/living/carbon/spawner = pod1.occupant
+				create_spawner(/datum/spawner/living/clone, spawner)
+				temp = "Initiating cloning cycle..."
+				records.Remove(C)
+				qdel(C)
+				menu = 1
 			else if(pod1.growclone(C))
 				temp = "<span class='good'>Cloning cycle in progress...</span>"
 				records.Remove(C)
