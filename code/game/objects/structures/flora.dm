@@ -256,11 +256,21 @@
 	cutting_sound = 'sound/items/Axe.ogg'
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
 
+/obj/structure/flora/tree/atom_init()
+	. = ..()
+	AddComponent(/datum/component/seethrough, get_seethrough_map())
+
+///Return a see_through_map, examples in seethrough.dm
+/obj/structure/flora/tree/proc/get_seethrough_map()
+	return SEE_THROUGH_MAP_DEFAULT
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
+
+/obj/structure/flora/tree/pine/get_seethrough_map()
+	return SEE_THROUGH_MAP_DEFAULT_TWO_TALL
 
 /obj/structure/flora/tree/pine/unbreakable
 	resistance_flags = FULL_INDESTRUCTIBLE
@@ -300,6 +310,9 @@
 	pixel_x = -48
 	pixel_y = -20
 
+/obj/structure/flora/tree/jungle/get_seethrough_map()
+	return SEE_THROUGH_MAP_THREE_X_THREE
+
 /obj/structure/flora/tree/jungle/atom_init()
 	. = ..()
 	icon_state = pick(icon_states(icon))
@@ -308,6 +321,9 @@
 	pixel_y = 0
 	pixel_x = -32
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
+
+/obj/structure/flora/tree/jungle/small/get_seethrough_map()
+	return SEE_THROUGH_MAP_THREE_X_TWO
 
 // grass
 

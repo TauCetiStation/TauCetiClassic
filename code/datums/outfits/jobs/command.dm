@@ -18,6 +18,11 @@
 		/obj/item/weapon/implant/mind_protect/loyalty
 		)
 
+/datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
+		implants += /obj/item/weapon/implant/obedience
+
+
 // HOP OUTFIT
 /datum/outfit/job/hop
 	name = OUTFIT_JOB_NAME("Head of Personnel")
@@ -29,3 +34,7 @@
 	belt = /obj/item/device/pda/heads/hop
 
 	r_hand_back = /obj/item/weapon/storage/box/ids
+
+/datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
+		implants += /obj/item/weapon/implant/obedience

@@ -16,6 +16,10 @@
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
+/datum/outfit/job/chief_engineer/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
+		implants += /obj/item/weapon/implant/obedience
+
 // ENGINEER OUTFIT
 /datum/outfit/job/engineer
 	name = OUTFIT_JOB_NAME("Station Engineer")

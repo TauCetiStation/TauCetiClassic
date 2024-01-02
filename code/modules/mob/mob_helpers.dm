@@ -111,43 +111,32 @@
 	zone = check_zone(zone)
 
 	// you can only miss if your target is standing and not restrained
-	if(!target.buckled && !target.lying)
-		var/miss_chance = 10
-		switch(zone)
-			if(BP_HEAD)
-				miss_chance = 50
-			if(BP_GROIN)
-				miss_chance = 50
-			if(BP_L_ARM)
-				miss_chance = 60
-			if(BP_R_ARM)
-				miss_chance = 60
-			if(BP_L_LEG)
-				miss_chance = 60
-			if(BP_R_LEG)
-				miss_chance = 60
-		if(prob(max(miss_chance + miss_chance_mod, 0)))
-			if(prob(max(20, (miss_chance/2))))
-				return null
-			else
-				var/t = rand(1, 100)
-				switch(t)
-					if(1 to 65)
-						return BP_CHEST
-					if(66 to 75)
-						return BP_HEAD
-					if(76 to 80)
-						return BP_L_ARM
-					if(81 to 85)
-						return BP_R_ARM
-					if(86 to 90)
-						return BP_R_LEG
-					if(91 to 95)
-						return BP_L_LEG
-					if(96 to 100)
-						return BP_GROIN
+	if(target.buckled || target.lying)
+		return zone
 
-	return zone
+	var/miss_chance = 10
+	switch(zone)
+		if(BP_HEAD, BP_GROIN)
+			miss_chance = 50
+		if(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
+			miss_chance = 60
+
+	if(!prob(miss_chance + miss_chance_mod)) // chance to hit
+		return zone
+
+	if(prob(max(20, miss_chance / 2))) // chance to fully miss
+		return null
+
+	// redirecting
+	return pickweight(list(
+		BP_CHEST = 65,
+		BP_HEAD  = 10,
+		BP_L_ARM = 5,
+		BP_R_ARM = 5,
+		BP_L_LEG = 5,
+		BP_R_LEG = 5,
+		BP_GROIN = 5,
+	))
 
 /proc/get_zone_with_probabilty(zone, probability = 80)
 
@@ -449,13 +438,16 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 	set hidden = 1
 
 	if(isliving(src))
+		var/setting_intent = input
 		switch(input)
 			if(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
-				set_a_intent(input)
+				setting_intent = input
 			if(INTENT_HOTKEY_RIGHT)
-				set_a_intent(intent_numeric((intent_numeric(a_intent)+1) % 4))
+				setting_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
 			if(INTENT_HOTKEY_LEFT)
-				set_a_intent(intent_numeric((intent_numeric(a_intent)+3) % 4))
+				setting_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
+		set_a_intent(setting_intent)
+		SEND_SIGNAL(src, COMSIG_LIVING_INTENT_CHANGE, setting_intent)
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
 	var/datum/atom_hud/hud = huds[DATA_HUD_SECURITY]

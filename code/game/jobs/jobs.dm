@@ -125,7 +125,7 @@ var/global/list/civilian_positions = list(
 	"Janitor",
 	"Barber",
 	"Librarian",
-	"Test Subject"
+	"Assistant"
 )
 
 var/global/list/nonhuman_positions = list(

@@ -4,6 +4,7 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
+	cases = list("МРТ сканер", "МРТ сканера", "МРТ сканеру", "МРТ сканер", "МРТ сканером", "МРТ сканере")
 	desc = "Используется для более детального анализа состояния пациента."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
@@ -47,10 +48,15 @@
 
 /obj/machinery/bodyscanner/proc/move_inside_checks(mob/target, mob/user)
 	if(occupant)
-		to_chat(user, "<span class='userdanger'>Сканер уже занят кем-то!</span>")
+		to_chat(user, "<span class='userdanger'>[capitalize(CASE(src, NOMINATIVE_CASE))] уже занят кем-то!</span>")
 		return FALSE
 	if(!iscarbon(target))
 		return FALSE
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.species.flags[NO_MED_HEALTH_SCAN])
+			to_chat(user, "<span class='userdanger'>Это существо нельзя сканировать</span>")
+			return FALSE
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>У пациента не должно быть чего-либо в руках.</span>")
 		return FALSE
@@ -138,6 +144,7 @@
 	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield, /obj/item/weapon/implant/fake_loyal)
 	var/delete
 	name = "Body Scanner Console"
+	cases = list("консоль МРТ сканера", "консоли МРТ сканера", "консоли МРТ сканера", "консоль МРТ сканера", "консолью МРТ сканера", "консоли МРТ сканера")
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = TRUE
@@ -240,7 +247,7 @@
 					var/arterial_bleeding = ""
 					var/rejecting = ""
 					if(BP.status & ORGAN_ARTERY_CUT)
-						arterial_bleeding = "<br>Артериальное кровотечние"
+						arterial_bleeding = "<span class='red'><br><b>Артериальное кровотечение</b><br></span>"
 					if(BP.status & ORGAN_SPLINTED)
 						splint = "Наложена шина:"
 					if(BP.status & ORGAN_BLEEDING)
@@ -281,8 +288,10 @@
 					if(!AN && !open && !infected && !imp)
 						AN = "Не обнаружено:"
 					if(!(BP.is_stump))
-						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
-						storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						var/burnDamText = BP.burn_dam > 0 ? "<span class='orange'>[BP.burn_dam]</span>" : "-/-"
+						var/bruteDamText = BP.brute_dam > 0 ? "<span class='red'>[BP.brute_dam]</span>" : "-/-"
+						dat += "<td>[BP.name]</td><td>[burnDamText]</td><td>[bruteDamText]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						storedinfo += "<td>[BP.name]</td><td>[burnDamText]</td><td>[bruteDamText]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 					else
 						dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
 						storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
@@ -333,11 +342,13 @@
 
 					if(!organ_status && !infection)
 						infection = "Не обнаружено:"
+
+					var/organ_damage_text = IO.damage > 0 ? "<span class='red'>[IO.damage]</span>" : "-/-"
 					dat += "<tr>"
-					dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+					dat += "<td>[IO.name]</td><td>N/A</td><td>[organ_damage_text]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 					dat += "</tr>"
 					storedinfo += "<tr>"
-					storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+					storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[organ_damage_text]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 					storedinfo += "</tr>"
 				dat += "</table>"
 				storedinfo += "</table>"
@@ -352,7 +363,7 @@
 	else
 		dat = "<font color='red'> Ошибка: Не подключен сканер тела.</font>"
 
-	var/datum/browser/popup = new(user, "window=scanconsole", src.name, 430, 600, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "window=scanconsole", src.name, 530, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 

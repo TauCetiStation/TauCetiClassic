@@ -1059,7 +1059,7 @@
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 				message_admins("<span class='notice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
 
-				qdel(M.client)
+				QDEL_IN(M.client, 2 SECONDS)
 				//qdel(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				if(!check_rights(R_BAN))   return
@@ -1084,7 +1084,7 @@
 				feedback_inc("ban_perma",1)
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
-				qdel(M.client)
+				QDEL_IN(M.client, 2 SECONDS)
 			if("Cancel")
 				return
 
@@ -1768,6 +1768,13 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 		show_skills_panel(M)
+
+	else if(href_list["show_raspect"])
+		if(!SSround_aspects.aspect_name)
+			message_admins("Round Aspect: Absent.")
+			return
+		message_admins("Round Aspect: [SSround_aspects.aspect_name]. [SSround_aspects.aspect.desc]")
+		return
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return

@@ -14,11 +14,18 @@
 	M.log_combat(user, "stunned with [name]")
 	playsound(src, 'sound/machines/defib_zap.ogg', VOL_EFFECTS_MASTER)
 
-	user.cell.charge -= 30
+	user.cell.charge -= 500
 
-	M.Weaken(5)
-	M.Stuttering(5)
-	M.Stun(5)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+		var/calc_power = 125 // 25% better than stungloves
+		calc_power *= H.get_siemens_coefficient_organ(BP)
+		M.apply_effects(0,0,0,0,2,0,0,calc_power)
+	else
+		M.Weaken(5)
+		M.Stuttering(5)
+		M.Stun(5)
 
 
 	M.visible_message("<span class='warning'><B>[user] has prodded [M] with an electrically-charged arm!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
@@ -127,8 +134,8 @@
 		if(!M.IsSleeping())
 			if(M.crawling)
 				M.SetCrawling(FALSE)
-		user.visible_message("<span class='notice'>[user] shakes [M] trying to wake [P_THEM(M.gender)] up!</span>", \
-							"<span class='notice'>You shake [M] trying to wake [P_THEM(M.gender)] up!</span>")
+		user.visible_message("<span class='notice'>[user] shakes [M] trying to wake [P_THEM(M)] up!</span>", \
+							"<span class='notice'>You shake [M] trying to wake [P_THEM(M)] up!</span>")
 	else
 		if(!M.IsSleeping())
 			if(M.has_bodypart(BP_HEAD) && (user.get_targetzone() == BP_HEAD))
@@ -136,10 +143,10 @@
 									"<span class='notice'>You bop [M] on the head!</span>")
 			else
 				user.visible_message("<span class='notice'>[user] hugs [M] in a firm bear-hug!</span>", \
-								"<span class='notice'>You hug [M] firmly to make [P_THEM(M.gender)] feel better!</span>")
+								"<span class='notice'>You hug [M] firmly to make [P_THEM(M)] feel better!</span>")
 		else
-			user.visible_message("<span class='notice'>[user] gently touches [M] trying to wake [P_THEM(M.gender)] up!</span>", \
-								"<span class='notice'>You gently touch [M] trying to wake [P_THEM(M.gender)] up!</span>")
+			user.visible_message("<span class='notice'>[user] gently touches [M] trying to wake [P_THEM(M)] up!</span>", \
+								"<span class='notice'>You gently touch [M] trying to wake [P_THEM(M)] up!</span>")
 	M.AdjustSleeping(-10 SECONDS)
 	M.AdjustParalysis(-3)
 	M.AdjustStunned(-3)
