@@ -276,7 +276,7 @@
 
 /obj/structure/closet/small_freezer
 	name = "small fridge"
-	cases = list("холодильник", "холодильника", "холодильнику", "холодильник", "холодильником", "холодильнике")
+	cases = list("мини-бар", "мини-бара", "мини-бару", "мини-бар", "мини-баром", "мини-баре")
 	desc = "Холодильник фирмы Einstein Electronics."
 	icon_state = "small_freezer_grey"
 	icon_closed = "small_freezer"
