@@ -46,6 +46,10 @@
 /datum/action/item_action/hands_free/switch_gun
 	name = "Switch Gun"
 
+/obj/item/weapon/gun/atom_init()
+	..()
+	setSerialNumber()
+
 /obj/item/weapon/gun/examine(mob/user)
 	..()
 	if(two_hand_weapon)

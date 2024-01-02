@@ -18,6 +18,7 @@
 
 /obj/item/weapon/melee/baton/atom_init()
 	. = ..()
+	setSerialNumber()
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
 

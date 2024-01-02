@@ -90,6 +90,8 @@
 
 	var/dyed_type
 
+	var/serialNumber = null
+
 	var/flash_protection = NONE
 	var/list/flash_protection_slots = list()
 	var/can_get_wet = TRUE
@@ -123,6 +125,9 @@
 		item_actions += B
 
 	return INITIALIZE_HINT_NORMAL
+
+/obj/item/proc/setSerialNumber()
+	serialNumber = rand(0, 999999)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -205,6 +210,8 @@
 		if(wet)
 			stat_flavor = "<span class='wet'>[stat_flavor]</span>"
 
+		if(serialNumber)
+			to_chat(user, "Серийный номер: [serialNumber]")
 		to_chat(user, stat_flavor)
 
 /obj/item/proc/mob_pickup(mob/user, hand_index=null)
