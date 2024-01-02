@@ -1,4 +1,5 @@
 /client
+	authenticate = 0
 		//////////////////////
 		//BLACK MAGIC THINGS//
 		//////////////////////

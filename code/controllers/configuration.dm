@@ -295,8 +295,8 @@ var/global/bridge_secret = null
 				if ("log_access")
 					config.log_access = 1
 
-				if ("sql_enabled")
-					config.sql_enabled = 1
+//				if ("sql_enabled")
+//					config.sql_enabled = 1
 
 				if ("log_say")
 					config.log_say = 1
@@ -409,8 +409,8 @@ var/global/bridge_secret = null
 				if ("forumurl")
 					config.forumurl = value
 
-				if ("guest_ban")
-					guests_allowed = 0
+//				if ("guest_ban")
+//					guests_allowed = 0
 
 				if ("usewhitelist")
 					config.usewhitelist = 1
