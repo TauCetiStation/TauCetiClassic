@@ -135,7 +135,7 @@
 
 /obj/item/statuette/atom_init(mapload)
 	. = ..()
-	var/statuette_number = rand(1, 4)
+	var/statuette_number = rand(1, 12)
 	icon_state = "statuette_[statuette_number]"
 
 /obj/item/vase
@@ -210,7 +210,7 @@
 
 /obj/item/bust
 	name = "bust"
-	desc = "Бюст должностного лица НаноТрейзен."
+	desc = "Гипсовый бюст должностного лица НаноТрейзен."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bust_1"
 
@@ -351,6 +351,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	icon_state = "water_cooler_grey"
 
 	anchored = TRUE
+	density = TRUE
 
 	var/obj/item/weapon/reagent_containers/food/drinks/water_cooler_bottle/bottle
 	var/cups = 7
