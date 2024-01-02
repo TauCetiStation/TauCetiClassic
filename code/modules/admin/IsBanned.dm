@@ -37,7 +37,8 @@
 		return // remove this for admin checks in bans too
 	// Check bans
 	var/ban = get_ban_blacklist(key, address, computer_id)
-	return ban ? ban : stickyban_check(..(), key, computer_id, address, real_bans_only, is_admin) //default pager ban stuff
+
+	return (ban || stickyban_check(..(), key, computer_id, address, real_bans_only, is_admin) || list("Login" = 1, "reason" = "Pass", "desc" = "pass"))
 
 /world/proc/get_ban_blacklist(key, address, computer_id)
 	var/ckey = ckey(key)
