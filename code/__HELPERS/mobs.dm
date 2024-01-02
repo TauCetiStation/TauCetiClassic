@@ -329,7 +329,7 @@
 			message += "<span class='warning'>Обнаруженные вещества в крови:</span><br>"
 			for(var/datum/reagent/R in C.reagents.reagent_list)
 				message += "&emsp; <span class='notice'>\
-					[R.overdose != 0 && R.volume >= R.overdose ? "<span class='warning'><b>OD: </b><span>" : ""]\
+					[R.overdose != 0 && R.volume >= R.overdose ? "<span class='warning'><b>OD: </b></span>" : ""]\
 					[round(R.volume, 1)]u [R.name]</span><br>"
 		if(C.virus2.len)
 			if(C.is_infected_with_zombie_virus())
