@@ -262,6 +262,7 @@
 					if(istype(choosen_object, /obj/item/organ/internal))
 						var/obj/item/organ/internal/H = choosen_object
 						BP.bodypart_organs -= choosen_object
+						H.remove_organ(choosen_object)
 						H.loc = get_turf(target)
 					remove_from_cavity(user, target, choosen_object, BP, tool)
 			if("Else")

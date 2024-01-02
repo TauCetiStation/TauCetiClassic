@@ -845,11 +845,11 @@ var/global/list/tourette_bad_words= list(
 			adjustBruteLoss(0.2)
 
 		//Heart
-		if(should_have_organ(O_HEART && !has_organ(O_HEART)))
+		if(should_have_organ(O_HEART) && !has_organ(O_HEART))
 			death()
 
 		//Lungs
-		if(should_have_organ(O_LUNGS && !has_organ(O_LUNGS)))
+		if(should_have_organ(O_LUNGS) && !has_organ(O_LUNGS))
 			adjustOxyLoss(1.5)
 
 		//Other

@@ -39,13 +39,13 @@
 		parent.bodypart_organs += src
 
 /obj/item/organ/internal/remove_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
-	..()
 
 	owner.organs -= src
 	owner.organs_by_name[organ_tag] -= src
 
 	if(parent)
 		parent.bodypart_organs -= src
+	return ..()
 
 
 
