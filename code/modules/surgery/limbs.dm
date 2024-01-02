@@ -184,6 +184,9 @@
 		if (B.brainmob && B.brainmob.mind)
 			B.brainmob.mind.transfer_to(target)
 			target.dna = B.brainmob.dna
+			target.timeofdeath = B.brainmob.timeofdeath
+			if(HAS_TRAIT(B.brainmob, TRAIT_NO_CLONE))
+				ADD_TRAIT(target, TRAIT_NO_CLONE, GENERIC_TRAIT) // so they cannot be cloned
 			QDEL_NULL(B.brainmob)
 		target.f_style = B.f_style
 		target.h_style = B.h_style
@@ -207,7 +210,6 @@
 		target.hair_painted = B.hair_painted
 		target.update_hair()
 		target.timeofdeath = min(target.timeofdeath, world.time - DEFIB_TIME_LIMIT) // so they cannot be defibbed
-		ADD_TRAIT(target, TRAIT_NO_CLONE, GENERIC_TRAIT) // so they cannot be cloned
 
 /datum/surgery_step/limb/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)

@@ -118,9 +118,6 @@
 			if(HAS_TRAIT(src, TRAIT_NO_CLONE))
 				ADD_TRAIT(BP.brainmob, TRAIT_NO_CLONE, GENERIC_TRAIT)
 
-			tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
-			timeofdeath = 0
-
 /obj/item/organ/external/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
 	brainmob.name = H.real_name
