@@ -276,12 +276,12 @@ SUBSYSTEM_DEF(shuttle)
 				shake_mobs_in_area(end_location, SOUTH)
 
 				//pods
-				try_launch_pod(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod1/transit, EAST, NORTH, WEST, "pod1")
-				try_launch_pod(/area/shuttle/escape_pod2/station, /area/shuttle/escape_pod2/transit, EAST, NORTH, WEST, "pod2")
-				try_launch_pod(/area/shuttle/escape_pod3/station, /area/shuttle/escape_pod3/transit, EAST, NORTH, WEST, "pod3")
-				try_launch_pod(/area/shuttle/escape_pod4/station, /area/shuttle/escape_pod4/transit, WEST, EAST, EAST, "pod4")
-				try_launch_pod(/area/shuttle/escape_pod5/station, /area/shuttle/escape_pod5/transit, NORTH, SOUTH, SOUTH, "pod5")
-				try_launch_pod(/area/shuttle/escape_pod6/station, /area/shuttle/escape_pod6/transit, NORTH, SOUTH, SOUTH, "pod6")
+				try_launch_pod(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod1/transit, EAST, WEST, "pod1")
+				try_launch_pod(/area/shuttle/escape_pod2/station, /area/shuttle/escape_pod2/transit, EAST, WEST, "pod2")
+				try_launch_pod(/area/shuttle/escape_pod3/station, /area/shuttle/escape_pod3/transit, EAST, WEST, "pod3")
+				try_launch_pod(/area/shuttle/escape_pod4/station, /area/shuttle/escape_pod4/transit, WEST, EAST, "pod4")
+				try_launch_pod(/area/shuttle/escape_pod5/station, /area/shuttle/escape_pod5/transit, NORTH, SOUTH, "pod5")
+				try_launch_pod(/area/shuttle/escape_pod6/station, /area/shuttle/escape_pod6/transit, NORTH, SOUTH, "pod6")
 				if(alert == 0)
 					announce_emer_left.play()
 				else
@@ -608,7 +608,7 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		return FALSE
 
-/datum/controller/subsystem/shuttle/proc/try_launch_pod(area/escape_pod_start, area/escape_pod_end, parallax_dir, move_content_dir, shake_dir, loc_name)
+/datum/controller/subsystem/shuttle/proc/try_launch_pod(area/escape_pod_start, area/escape_pod_end, move_content_dir, shake_dir, loc_name)
 	if(!locate(escape_pod_start) in world)
 		return
 	var/area/start = locate(escape_pod_start)
@@ -617,7 +617,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_lucky_shot.ogg'
 		if(prob(33))
 			ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg'
-		transit.parallax_movedir = parallax_dir
+		transit.parallax_movedir = move_content_dir
 		start.move_contents_to(transit, null, move_content_dir)
 		for(var/mob/M in transit)
 			M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
