@@ -75,7 +75,7 @@
 								"<span class='userdanger'>A torrent of metallic grey slurry violently bursts out of your eyes, ears, and mouth, and floods out of your skin!</span>")
 			//nanites coming out of your eyes
 			mob.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
-			addtimer(CALLBACK(mob, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 60 SECONDS, TIMER_STOPPABLE)
+			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 60 SECONDS, TIMER_STOPPABLE)
 			mob.apply_effects(stun = 10, weaken = 15, paralyze = 5, eyeblur = 5, agony = 25)
 			//nanites coming out of your ears
 			mob.ear_deaf += 30
