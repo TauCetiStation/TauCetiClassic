@@ -117,12 +117,14 @@
 	name = "sugar larvae crate"
 	content_mob = /mob/living/simple_animal/mouse/rat/newborn_moth
 
-/obj/structure/closet/critter/larvae/New()
+/obj/structure/closet/critter/larvae/atom_init()
 	content_mob = pick(/mob/living/simple_animal/mouse/rat/newborn_moth, /mob/living/simple_animal/grown_larvae/serpentid)
 	. = ..()
 
-/obj/structure/closet/critter/create_mob_inside()
-	var/mob/living/sugar_larvae = ..()
-	if(sugar_larvae)
+/obj/structure/closet/critter/larvae/create_mob_inside()
+	if(crit_fail)
+		return ..()
+	var/list/larvaes = ..()
+	for(var/mob/living/sugar_larvae as anything in larvaes)
 		create_spawner(/datum/spawner/living/sugar_larvae, sugar_larvae)
-	return sugar_larvae
+	return larvaes

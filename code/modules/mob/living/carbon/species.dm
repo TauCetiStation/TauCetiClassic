@@ -20,9 +20,6 @@
 	var/list/equip_overlays = list()
 	var/icon_template = 'icons/mob/human_races/template.dmi'
 	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
-	var/specie_shoe_blood_state = "shoeblood"
-	var/specie_hand_blood_state = "bloodyhands"
-	var/specie_suffix_fire_icon = "human"
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
@@ -1910,7 +1907,7 @@
 	qdel(I)
 	source.visible_message("<span class='warning'>[I] was swallowed by [source]!</span>",
 						   "<span class='notice'>You ate [I]. Delicious!</span>")
-	return COMPONENT_PREVENT_ATTACKBY
+	return COMPONENT_NO_AFTERATTACK
 
 /datum/species/serpentid/on_gain(mob/living/carbon/human/H)
 	..()
@@ -1918,12 +1915,12 @@
 	H.name = H.real_name
 	H.r_eyes = 255
 	H.update_hair()
-	RegisterSignal(H, COMSIG_HUMAN_ATTACKBY, PROC_REF(try_eat_item))
-	RegisterSignal(H, COMSIG_GRAB_KILL_UPGRADE, PROC_REF(try_tear_body))
+	RegisterSignal(H, COMSIG_PARENT_ATTACKBY, PROC_REF(try_eat_item))
+	RegisterSignal(H, COMSIG_S_CLICK_GRAB, PROC_REF(try_tear_body))
 	H.reagents.add_reagent("dexalinp", 3.0)
 
 /datum/species/serpentid/on_loose(mob/living/carbon/human/H, new_species)
-	UnregisterSignal(H, list(COMSIG_HUMAN_ATTACKBY, COMSIG_GRAB_KILL_UPGRADE))
+	UnregisterSignal(H, list(COMSIG_PARENT_ATTACKBY, COMSIG_S_CLICK_GRAB))
 	return ..()
 
 /datum/species/serpentid/on_life(mob/living/carbon/human/H)
@@ -1931,6 +1928,8 @@
 		H.fire_stacks += 0.2
 
 /datum/species/serpentid/proc/try_tear_body(mob/living/source, obj/item/weapon/grab/G)
+	if(!G.state < GRAB_KILL)
+		return
 	var/mob/living/assailant = source
 	if(!ishuman(G.affecting))
 		return FALSE
@@ -2025,7 +2024,7 @@
 /datum/species/moth/on_gain(mob/living/carbon/human/H)
 	H.real_name = "[pick(global.moth_first)] [pick(global.moth_second)]"
 	H.name = H.real_name
-	RegisterSignal(H, COMSIG_HUMAN_ATTACKBY, PROC_REF(try_eat_item))
+	RegisterSignal(H, COMSIG_PARENT_ATTACKBY, PROC_REF(try_eat_item))
 	return ..()
 
 /datum/species/moth/call_digest_proc(mob/living/M, datum/reagent/R)
@@ -2040,8 +2039,8 @@
 	qdel(I)
 	source.visible_message("<span class='warning'>[I] was swallowed by [source]!</span>",
 						   "<span class='notice'>You ate [I]. Delicious!</span>")
-	return COMPONENT_PREVENT_ATTACKBY
+	return COMPONENT_NO_AFTERATTACK
 
 /datum/species/moth/on_loose(mob/living/carbon/human/H, new_species)
-	UnregisterSignal(H, COMSIG_HUMAN_ATTACKBY)
+	UnregisterSignal(H, COMSIG_PARENT_ATTACKBY)
 	return ..()

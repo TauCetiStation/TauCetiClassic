@@ -123,9 +123,6 @@
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"
 	// Return this in response if you don't want afterattack to be called
 	#define COMPONENT_NO_AFTERATTACK 1
-/// from base of human/attackby(): (/obj/item, /mob/living, params)
-#define COMSIG_HUMAN_ATTACKBY "human_attackby"
-	#define COMPONENT_PREVENT_ATTACKBY 1
 /// from base of atom/examine(): (/mob)
 #define COMSIG_PARENT_EXAMINE "atom_examine"
 /// from base of mob/examinate(): (/mob)
@@ -342,8 +339,6 @@
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
 #define COMSIG_LIVING_BUMPED "living_bumped"
-///from grab/s_click(): (grab)
-#define COMSIG_GRAB_KILL_UPGRADE "grab_kill_upgrade"
 
 /// from /obj/effect/proc_holder/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
