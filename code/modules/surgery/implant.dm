@@ -153,6 +153,10 @@
 			gland.Inject(target)
 			BP.cavity = 0
 			return
+	if(istype(tool, /obj/item/organ/internal))
+		var/obj/item/organ/internal/H = tool
+		BP.bodypart_organs += tool
+		H.insert_organ(tool)
 	user.drop_from_inventory(tool, target)
 	BP.hidden = tool
 	BP.cavity = 0

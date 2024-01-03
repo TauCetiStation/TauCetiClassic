@@ -6,6 +6,7 @@
 
 	// Strings.
 	var/organ_tag   = null      // Unique identifier.
+	var/organ_races =  list(null) // for species (human, tajaran, vox, etc.)
 	var/mob/living/carbon/brain/brainmob = null // will be moved
 
 	// Damage vars.
@@ -41,7 +42,7 @@
 /obj/item/organ/internal/remove_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 
 	owner.organs -= src
-	owner.organs_by_name[organ_tag] -= src
+	owner.organs_by_name[organ_tag] = null
 
 	if(parent)
 		parent.bodypart_organs -= src
@@ -58,7 +59,6 @@
 /obj/item/organ/internal/proc/is_broken()
 	return damage >= min_broken_damage
 
-
 /obj/item/organ/internal/process()
 	//Process infections
 
@@ -72,6 +72,7 @@
 
 		//** Handle the effects of infections
 		var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
+		var/prev_organ_races = organ_races
 
 		if (germ_level > 0 && germ_level < INFECTION_LEVEL_ONE/2 && prob(30))
 			germ_level--
@@ -86,6 +87,10 @@
 			//spread germs
 			if (antibiotics < 5 && BP.germ_level < germ_level && ( BP.germ_level < INFECTION_LEVEL_ONE * 2 || prob(30) ))
 				BP.germ_level++
+
+		if(organ_races != prev_organ_races)
+			to_chat(owner, "<span class='warning'>You feel distortion inside body...</span>")
+			owner.adjustToxLoss(1.5)
 
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
@@ -142,6 +147,7 @@
 
 /obj/item/organ/internal/heart
 	name = "heart"
+	organ_races = list(HUMAN, VOX, SKRELL, DIONA)
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "heart"
 	organ_tag = O_HEART
@@ -186,6 +192,7 @@
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
+	organ_races = list(IPC)
 	icon_state = "prosthetic heart"
 
 	var/pumping_rate = 5
@@ -210,11 +217,13 @@
 
 /obj/item/organ/internal/heart/vox
 	name = "vox heart"
+	organ_races = list(VOX)
 	icon_state = "vox heart"
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
+	organ_races = list(HUMAN)
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "lungs"
 	organ_tag = O_LUNGS
@@ -231,21 +240,25 @@
 
 /obj/item/organ/internal/lungs/vox
 	name = "air capillary sack"
+	organ_races = list(VOX)
 	icon_state = "vox lungs"
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs/skrell
 	name = "respiration sac"
+	organ_races = list(SKRELL)
 	icon_state = "skrell lungs"
 	has_gills = TRUE
 
 /obj/item/organ/internal/lungs/diona
 	name = "virga inopinatus"
+	organ_races = list(DIONA)
 	icon_state = "diona lungs"
 	process_accuracy = 10
 
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
+	organ_races = list(IPC)
 	icon_state = "robotic lungs"
 
 	var/refrigerant_max = 50
@@ -301,6 +314,7 @@
 
 /obj/item/organ/internal/liver
 	name = "liver"
+	organ_races = list(HUMAN)
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "liver"
 	organ_tag = O_LIVER
@@ -316,14 +330,17 @@
 
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
+	organ_races = list(DIONA)
 	icon_state = "diona liver"
 
 /obj/item/organ/internal/liver/vox
 	name = "waste tract"
+	organ_races = list(VOX)
 	icon_state = "vox liver"
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
+	organ_races = list(IPC)
 	icon_state = "robotic liver"
 	var/accumulator_warning = 0
 
@@ -408,6 +425,7 @@
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
+	organ_races = list(HUMAN)
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "kidneys"
 	organ_tag = O_KIDNEYS
@@ -422,13 +440,16 @@
 
 /obj/item/organ/internal/kidneys/vox
 	name = "filtration bladder"
+	organ_races = list(VOX)
 
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
+	organ_races = list(DIONA)
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/kidneys/ipc
 	name = "self-diagnosis unit"
+	organ_races = list("machine")
 	parent_bodypart = BP_GROIN
 
 	var/next_warning = 0
@@ -496,11 +517,13 @@
 
 /obj/item/organ/internal/brain/diona
 	name = "main node nymph"
+	organ_races = list(DIONA)
 	icon_state = "diona brain"
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/brain/ipc
 	name = "positronic brain"
+	organ_races = list(IPC)
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
 	parent_bodypart = BP_CHEST
@@ -511,6 +534,7 @@
 
 /obj/item/organ/internal/eyes
 	name = "eyes"
+	organ_races = list(HUMAN, VOX, SKRELL, DIONA)
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "eyes"
 	organ_tag = O_EYES
@@ -518,6 +542,7 @@
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"
+	organ_races = list(HUMAN, VOX, SKRELL, DIONA, IPC)
 	icon_state = "biomechanical eyes"
 	robotic = 2
 
