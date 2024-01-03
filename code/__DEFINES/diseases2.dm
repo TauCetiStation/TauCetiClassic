@@ -17,5 +17,5 @@ var/global/list/virus_types_by_pool
 #define MICROBIOLOGY_NANITE 1
 
 /// Effects flags
-#define NANITE_SHOCK_IMMUNE 0 << 1
-#define NANITE_EMP_IMMUNE   1 << 1
+#define NANITE_SHOCK_IMMUNE (1<<0)
+#define NANITE_EMP_IMMUNE   (1<<1)
