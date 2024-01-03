@@ -66,9 +66,9 @@
 	switch(excess)
 		//Nanites getting rejected in massive amounts, but still enough to make a semi-orderly exit through vomit
 		if((NANITE_EXCESS_VOMIT + 0.1) to NANITE_EXCESS_BURST)
-			if(iscarbon(mob))
-				var/mob/living/carbon/C = mob
-				C.vomit(vomit_type = VOMIT_NANITE)
+			if(isliving(mob))
+				var/mob/living/L = mob
+				L.vomit(vomit_type = VOMIT_NANITE)
 		//Way too many nanites, they just leave through the closest exit before they harm/poison the host
 		if((NANITE_EXCESS_BURST + 0.1) to INFINITY)
 			mob.visible_message("<span class='userdanger'>A torrent of metallic grey slurry violently bursts out of [mob]'s face and floods out of [mob] skin!</span>",
@@ -77,12 +77,12 @@
 			mob.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
 			addtimer(CALLBACK(mob, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 60 SECONDS, TIMER_STOPPABLE)
 			mob.apply_effects(stun = 10, weaken = 15, paralyze = 5, eyeblur = 5, agony = 25)
-			if(iscarbon(mob))
-				var/mob/living/carbon/C = mob
-				//nanites coming out of your ears
-				C.ear_deaf += 30
+			//nanites coming out of your ears
+			mob.ear_deaf += 30
+			if(isliving(mob))
+				var/mob/living/L = mob
 				//nanites coming out of your mouth
-				C.vomit(vomit_type = VOMIT_NANITE)
+				L.vomit(vomit_type = VOMIT_NANITE)
 
 ///Modifies the current nanite volume, then checks if the nanites are depleted or exceeding the maximum amount
 /datum/disease2/disease/proc/adjust_nanites(amount, atom/host)
