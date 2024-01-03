@@ -5206,7 +5206,7 @@
 /area/station/rnd/robotics)
 "aGz" = (
 /obj/structure/stool/bed/chair/comfy/brown,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 28;
@@ -9267,7 +9267,7 @@
 /area/station/maintenance/brig)
 "bIL" = (
 /obj/structure/stool/bed/chair/comfy/black,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/wood,
 /area/station/civilian/cafeteria)
 "bJk" = (
@@ -9664,7 +9664,7 @@
 	},
 /area/station/security/interrogation)
 "bNq" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
@@ -9872,7 +9872,7 @@
 /area/station/civilian/locker)
 "bPR" = (
 /obj/structure/stool/bar,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -10392,7 +10392,7 @@
 /area/station/maintenance/atmos)
 "bXC" = (
 /obj/structure/stool/bed/chair/metal/red,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -11124,7 +11124,7 @@
 /area/station/hallway/secondary/arrival)
 "clg" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
@@ -11506,7 +11506,7 @@
 /area/station/maintenance/science)
 "cpb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -12658,7 +12658,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
@@ -13478,12 +13478,9 @@
 /obj/item/weapon/folder{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp{
-	icon_state = "stamp-rd";
+/obj/item/weapon/stamp/sci{
 	name = "research outpost rubber stamp";
 	pixel_y = 4;
-	stamp_border = "#7f4ba2";
-	stamp_color = "#9361b5";
 	stamp_message = "Research Outpost"
 	},
 /turf/simulated/floor{
@@ -15120,7 +15117,7 @@
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
@@ -15975,7 +15972,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "dvO" = (
@@ -17557,7 +17554,7 @@
 /area/station/rnd/brainstorm_center)
 "dMn" = (
 /obj/structure/stool/bar,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -20098,7 +20095,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/wood,
 /area/station/civilian/cafeteria)
 "erJ" = (
@@ -21224,7 +21221,7 @@
 /area/station/security/main)
 "eDU" = (
 /obj/structure/stool/bed/chair/pew/right,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -21802,7 +21799,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -21865,7 +21862,7 @@
 	dir = 4;
 	pixel_x = 22
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -25768,7 +25765,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "fFu" = (
@@ -26178,7 +26175,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "fKL" = (
@@ -28152,7 +28149,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "ghR" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -28253,7 +28250,7 @@
 "giV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
@@ -28629,7 +28626,7 @@
 /obj/machinery/atm{
 	pixel_y = -28
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
 "gnH" = (
@@ -30138,7 +30135,7 @@
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
@@ -30444,7 +30441,7 @@
 /obj/item/weapon/folder/blue{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/captain{
+/obj/item/weapon/stamp/cap{
 	pixel_y = 4
 	},
 /obj/item/device/megaphone,
@@ -31302,7 +31299,7 @@
 /area/station/engineering/engine)
 "gTX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "gUf" = (
@@ -31492,7 +31489,7 @@
 	},
 /area/station/aisat/antechamber_interior)
 "gVz" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -31653,7 +31650,7 @@
 /area/station/medical/reception)
 "gXv" = (
 /obj/structure/stool/bar,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -33494,7 +33491,7 @@
 /area/station/bridge/captain_quarters)
 "hsH" = (
 /obj/structure/stool/bed/chair/pew/left,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -34772,7 +34769,7 @@
 /area/station/engineering/atmos)
 "hKK" = (
 /obj/structure/stool/bed/chair/comfy/brown,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "black"
@@ -35115,7 +35112,7 @@
 	},
 /area/station/security/prison)
 "hPg" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -38363,7 +38360,7 @@
 /area/station/cargo/storage)
 "iFt" = (
 /obj/structure/stool/bed/chair/comfy/black,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
 "iFD" = (
@@ -39399,7 +39396,7 @@
 /area/station/security/prison)
 "iTv" = (
 /obj/structure/stool/bed/chair/pew/right,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -40706,7 +40703,7 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "jlG" = (
@@ -40857,7 +40854,7 @@
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -40994,7 +40991,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "black"
 	},
@@ -41610,7 +41607,7 @@
 /area/station/maintenance/chapel)
 "jwr" = (
 /obj/structure/stool/bed/chair/pew/left,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -42402,7 +42399,7 @@
 /obj/item/weapon/folder/red{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/hos{
+/obj/item/weapon/stamp/sec/hos{
 	pixel_y = 4
 	},
 /obj/item/clothing/head/beret/sec/hos{
@@ -42844,7 +42841,7 @@
 /area/station/cargo/storage)
 "jMJ" = (
 /obj/structure/stool/bed/chair/pew/left,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
@@ -47780,7 +47777,7 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
-/obj/item/weapon/stamp/cmo{
+/obj/item/weapon/stamp/med/cmo{
 	pixel_x = 12;
 	pixel_y = 6
 	},
@@ -47965,7 +47962,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "ldN" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/medical/reception)
 "leb" = (
@@ -49124,7 +49121,7 @@
 "lqU" = (
 /obj/structure/stool,
 /obj/machinery/light/small,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "arcade_carpet"
 	},
@@ -49234,7 +49231,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blue"
@@ -54242,7 +54239,7 @@
 "mDG" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper/wires,
-/obj/item/weapon/stamp/ce{
+/obj/item/weapon/stamp/eng/ce{
 	pixel_y = 6
 	},
 /obj/machinery/door_control{
@@ -56220,7 +56217,7 @@
 /area/station/maintenance/brig)
 "ndU" = (
 /obj/structure/stool/bed/chair/pew/left,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/effect/decal/cleanable/dirt,
@@ -56879,7 +56876,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -59475,7 +59472,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/blue2,
 /area/station/civilian/gym)
 "nTQ" = (
@@ -60521,7 +60518,7 @@
 /area/station/civilian/bar)
 "oib" = (
 /obj/structure/stool/bed/chair/pew/right,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal{
 	icon_state = "mosaic_1"
 	},
@@ -61451,7 +61448,7 @@
 /area/station/hallway/secondary/entry)
 "otj" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
@@ -63402,7 +63399,7 @@
 /obj/machinery/atm{
 	pixel_x = -28
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/wood,
 /area/station/civilian/cafeteria)
 "oSs" = (
@@ -63520,7 +63517,7 @@
 	layer = 2.7
 	},
 /obj/structure/stool/bed/chair/schair/wagon/bench,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "grass1"
 	},
@@ -65553,7 +65550,7 @@
 "pwJ" = (
 /obj/structure/table,
 /obj/item/weapon/folder/brown,
-/obj/item/weapon/stamp{
+/obj/item/weapon/stamp/cargo{
 	name = "recycler's rubber stamp";
 	stamp_message = "Recycler"
 	},
@@ -65788,7 +65785,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -69075,7 +69072,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "qqn" = (
@@ -73801,7 +73798,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/junction{
 	dir = 4;
 	icon_state = "pipe-j2"
@@ -73901,7 +73898,7 @@
 "rBz" = (
 /obj/structure/stool/bed/chair/comfy/brown,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "rBK" = (
@@ -75911,7 +75908,7 @@
 /area/shuttle/supply/station)
 "sbC" = (
 /obj/structure/stool/bed/chair/pew/left,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal{
@@ -76248,12 +76245,12 @@
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
 "sfL" = (
 /obj/structure/stool/bed/chair/metal/red,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -77468,7 +77465,7 @@
 	})
 "swq" = (
 /obj/structure/stool/bed/chair/comfy/brown,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "swr" = (
@@ -78645,7 +78642,7 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
-/obj/item/weapon/stamp/rd{
+/obj/item/weapon/stamp/sci/rd{
 	pixel_x = 3;
 	pixel_y = -7
 	},
@@ -81727,7 +81724,7 @@
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/device/taperecorder,
 /obj/item/clothing/shoes/leather,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/head/beret/black,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/device/lens/posterization,
@@ -83914,7 +83911,7 @@
 	},
 /area/station/security/armoury)
 "ucJ" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
@@ -85756,7 +85753,7 @@
 /obj/item/weapon/folder/brown{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/qm{
+/obj/item/weapon/stamp/cargo/qm{
 	pixel_y = 3
 	},
 /obj/structure/table/woodentable,
@@ -86467,7 +86464,7 @@
 	dir = 1;
 	pixel_y = -28
 	},
-/obj/item/weapon/stamp{
+/obj/item/weapon/stamp/cargo{
 	name = "cargo rubber stamp";
 	pixel_x = -2;
 	pixel_y = 3;
@@ -86748,7 +86745,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "uNo" = (
@@ -88535,7 +88532,7 @@
 /area/station/maintenance/science)
 "vjG" = (
 /obj/structure/stool/bed/chair/metal/red,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/sign/map/prometheus{
 	pixel_y = 32
 	},
@@ -91656,7 +91653,7 @@
 /obj/item/weapon/folder/blue{
 	pixel_x = 5
 	},
-/obj/item/weapon/stamp/internalaffairs,
+/obj/item/weapon/stamp/iaa,
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
 	pixel_y = -2
@@ -92885,7 +92882,7 @@
 /area/station/security/brig)
 "wlN" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "arcade_carpet"
 	},
@@ -99129,7 +99126,7 @@
 /obj/item/weapon/folder/blue{
 	pixel_x = 5
 	},
-/obj/item/weapon/stamp/internalaffairs,
+/obj/item/weapon/stamp/iaa,
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
 	pixel_y = -2

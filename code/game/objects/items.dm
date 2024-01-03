@@ -138,8 +138,7 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/Destroy()
-	for(var/datum/action/A in item_actions)
-		qdel(A)
+	QDEL_LIST(item_actions)
 	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc

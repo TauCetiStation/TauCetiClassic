@@ -14,23 +14,10 @@
 
 /obj/structure/closet/critter/proc/create_mob_inside()
 	var/mob/living/to_die
-	if(content_mob == /mob/living/simple_animal/shiba)
-		new/obj/item/weapon/bikehorn/dogtoy(src)
-	if(content_mob == /mob/living/simple_animal/chick)
-		var/num = rand(4, 6)
-		for(var/i = 0, i < num, i++)
-			to_die = new content_mob(loc)
-			to_die.health = to_die.health * (!crit_fail)
-	else if(content_mob == /mob/living/simple_animal/corgi)
-		var/num = rand(0, 1)
-		if(num) //No more matriarchy for cargo
-			content_mob = /mob/living/simple_animal/corgi/Lisa
-		to_die = new content_mob(loc)
-		to_die.health = to_die.health * (!crit_fail)
-	else
-		to_die = new content_mob(loc)
-		to_die.health = to_die.health * (!crit_fail)
-	return to_die
+	to_die = new content_mob(loc)
+	if(crit_fail)
+		to_die.health = 0
+	return list(to_die)
 
 /obj/structure/closet/critter/open()
 	if(!can_open())
@@ -64,6 +51,10 @@
 	name = "corgi crate"
 	content_mob = /mob/living/simple_animal/corgi //This statement is (not) false. See above.
 
+/obj/structure/closet/critter/corgi/atom_init()
+	content_mob = pick(/mob/living/simple_animal/corgi/Lisa, /mob/living/simple_animal/corgi)
+	. = ..()
+
 /obj/structure/closet/critter/cow
 	name = "cow crate"
 	content_mob = /mob/living/simple_animal/cow
@@ -76,6 +67,16 @@
 	name = "chicken crate"
 	content_mob = /mob/living/simple_animal/chick
 
+/obj/structure/closet/critter/chick/create_mob_inside()
+	var/mob/living/to_die
+	var/list/chicks = list()
+	var/num = rand(4, 6)
+	for(var/i in 1 to num)
+		to_die = new content_mob(loc)
+		to_die.health = to_die.health * (!crit_fail)
+		chicks += to_die
+	return chicks
+
 /obj/structure/closet/critter/cat
 	name = "cat crate"
 	content_mob = /mob/living/simple_animal/cat
@@ -87,6 +88,10 @@
 /obj/structure/closet/critter/shiba
 	name = "shiba crate"
 	content_mob = /mob/living/simple_animal/shiba
+
+/obj/structure/closet/critter/shiba/create_mob_inside()
+	new/obj/item/weapon/bikehorn/dogtoy(src)
+	return ..()
 
 /obj/structure/closet/critter/pig
 	name = "pig crate"

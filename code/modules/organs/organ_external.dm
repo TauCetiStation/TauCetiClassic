@@ -586,7 +586,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	//Eyes
 	if(species && species.eyes)
 		var/eyes_layer = -icon_layer
-
 		var/mutable_appearance/img_eyes_s = mutable_appearance(species.eyes_icon, species.eyes, eyes_layer)
 		if(species.eyes_glowing)
 			img_eyes_s.plane = LIGHTING_LAMPS_PLANE

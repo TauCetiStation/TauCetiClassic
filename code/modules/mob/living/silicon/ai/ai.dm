@@ -585,7 +585,7 @@ var/global/list/ai_verbs_default = list(
 
 	updatehealth()
 
-/mob/living/silicon/ai/reset_view(atom/A)
+/mob/living/silicon/ai/reset_view(atom/A, force_remote_viewing)
 	if(camera)
 		camera.set_light(0)
 	if(istype(A,/obj/machinery/camera))

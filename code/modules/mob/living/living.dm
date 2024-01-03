@@ -52,6 +52,13 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
+/mob/living/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover, /obj/item/projectile) && lying && stat != DEAD)
+		var/obj/item/projectile/P = mover
+		if(get_turf(P.original) == loc)
+			return FALSE
+	return ..()
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
@@ -1100,6 +1107,7 @@
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
+		SEND_SIGNAL(src, COMSIG_FLASH_EYES, intensity)
 		return TRUE
 	return FALSE
 
@@ -1546,7 +1554,10 @@
 		make_dizzy(150)
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "scared", /datum/mood_event/scared)
 
-/mob/living/carbon/human/trigger_syringe_fear()
+/mob/living/proc/pickup_ore()
+	return
+
+/mob/living/carbon/human/trigger_syringe_fear() // move to carbon/human
 	..()
 	if(prob(15))
 		var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN)
@@ -1554,3 +1565,7 @@
 		if(BP)
 			BP.take_damage(8, used_weapon = "Syringe") 	//half kithen-knife damage
 			to_chat(src, "<span class='warning'>You got a cut with a syringe.</span>")
+
+/mob/living/reset_view(atom/A, force_remote_viewing)
+	..()
+	src.force_remote_viewing = force_remote_viewing

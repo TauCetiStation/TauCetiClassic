@@ -183,6 +183,8 @@
 /// from mob/tryGrab(): (/mob/grabber, force_state, show_warnings)
 #define COMSIG_MOVABLE_TRY_GRAB "movable_try_grab"
 	#define COMPONENT_PREVENT_GRAB 1
+/// from /obj/item/weapon/grab/proc/s_click(): (/obj/item/weapon/grab)
+#define COMSIG_S_CLICK_GRAB "s_click_grab"
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
 ///from base of area/Entered(): (/area, /atom/OldLoc). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
@@ -404,3 +406,15 @@
 /// from /proc/health_analyze(): (list/args = list(message, scan_hallucination_boolean))
 /// Consumers are allowed to mutate the scan_results list to add extra information
 #define COMSIG_LIVING_HEALTHSCAN "living_healthscan"
+// send this signal to make effect impedrezene for mob/living
+#define COMSIG_IMPEDREZENE_DIGEST "impedrezene_digest"
+// send this signal to make effect flashing eyes for mob/living
+#define COMSIG_FLASH_EYES "flash_eyes"
+// send this signal to make effect enter water turf for mob/living/carbon/human
+#define COMSIG_HUMAN_ENTERED_WATER "human_entered_water"
+// send this signal to make effect exit water turf for mob/living/carbon/human
+#define COMSIG_HUMAN_EXITED_WATER "human_exited_water"
+// send this signal to disable gene for mob/living/carbon
+#define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
+// send this signal to handle disabilities in life for mob/living/carbon/human
+#define COMSIG_HANDLE_DISABILITIES "handle_disabilities"

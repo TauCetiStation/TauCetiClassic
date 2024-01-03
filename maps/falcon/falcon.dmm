@@ -220,7 +220,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -753,7 +753,7 @@
 	dir = 8;
 	pixel_x = 21
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "mosaic_1"
@@ -2332,7 +2332,7 @@
 	pixel_x = 28
 	},
 /obj/structure/stool/bed/chair/comfy/brown,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/dormitories/dormone)
 "adV" = (
@@ -3697,7 +3697,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -4146,7 +4146,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -4159,7 +4159,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -4718,7 +4718,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -4823,7 +4823,7 @@
 /obj/structure/sign/double/barsign{
 	pixel_y = 32
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/bar)
 "aiF" = (
@@ -5123,7 +5123,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "ajf" = (
@@ -5166,7 +5166,7 @@
 /area/station/civilian/gym)
 "ajj" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/gym)
 "ajk" = (
@@ -5415,7 +5415,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "mosaic_1"
@@ -5488,7 +5488,7 @@
 	dir = 4
 	},
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/locker)
 "ajQ" = (
@@ -5502,7 +5502,7 @@
 /area/station/civilian/locker)
 "ajS" = (
 /obj/structure/stool/bed/chair/pew/left,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "mosaic_1"
@@ -5540,7 +5540,7 @@
 /area/station/maintenance/escape)
 "ajW" = (
 /obj/structure/stool/bed/chair/pew/right,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal{
 	icon_state = "mosaic_1"
 	},
@@ -5967,7 +5967,7 @@
 /area/station/maintenance/escape)
 "ala" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -5984,7 +5984,7 @@
 	dir = 1
 	},
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/gym)
 "ald" = (
@@ -7180,7 +7180,7 @@
 	pixel_y = -28
 	},
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -10459,7 +10459,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
@@ -10565,7 +10565,7 @@
 /area/asteroid/mine/dwarf)
 "bez" = (
 /obj/structure/stool/bed/chair/metal/black,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11142,7 +11142,7 @@
 /obj/item/weapon/paper_bin{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/captain{
+/obj/item/weapon/stamp/cap{
 	pixel_y = 8
 	},
 /obj/item/weapon/pen/blue{
@@ -11591,7 +11591,7 @@
 "ccc" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
@@ -12230,7 +12230,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/dormitories/dormone)
 "cMi" = (
@@ -13416,7 +13416,7 @@
 /area/asteroid/research_outpost/spectro)
 "dNp" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
@@ -15229,7 +15229,7 @@
 "fJZ" = (
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/item/device/megaphone,
-/obj/item/weapon/stamp/qm,
+/obj/item/weapon/stamp/cargo/qm,
 /obj/machinery/light/smart,
 /obj/machinery/computer/guestpass{
 	dir = 1;
@@ -16538,7 +16538,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/obj/item/weapon/stamp/ce{
+/obj/item/weapon/stamp/eng/ce{
 	pixel_y = 13
 	},
 /obj/structure/sign/nanotrasen{
@@ -19921,7 +19921,7 @@
 /area/station/medical/reception)
 "kjB" = (
 /obj/structure/stool/bed/chair/pew/left,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "mosaic_1"
@@ -24268,7 +24268,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "apc left";
@@ -24751,11 +24751,7 @@
 /obj/structure/table/glass,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
-/obj/item/weapon/stamp{
-	icon_state = "stamp-cmo";
-	name = "medbay rubber stamp";
-	stamp_message = "Medbay"
-	},
+/obj/item/weapon/stamp/med,
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	pixel_y = -27;
@@ -27080,11 +27076,9 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stamp{
-	name = "cargo rubber stamp";
+/obj/item/weapon/stamp/cargo{
 	pixel_x = -3;
-	pixel_y = 3;
-	stamp_message = "Cargo"
+	pixel_y = 3
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -28512,7 +28506,7 @@
 "seD" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/hos,
+/obj/item/weapon/stamp/sec/hos,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -28
 	},
@@ -28969,7 +28963,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "mosaic_1"
@@ -29282,7 +29276,7 @@
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -29805,7 +29799,7 @@
 /area/station/maintenance/medbay)
 "twE" = (
 /obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "grass1"
 	},
@@ -31889,7 +31883,7 @@
 	network = list("Medical");
 	pixel_y = 25
 	},
-/obj/item/weapon/stamp/cmo{
+/obj/item/weapon/stamp/med/cmo{
 	pixel_x = 12;
 	pixel_y = 6
 	},
@@ -32663,7 +32657,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -34275,7 +34269,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/obj/item/weapon/stamp/rd{
+/obj/item/weapon/stamp/sci/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -34925,7 +34919,7 @@
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"

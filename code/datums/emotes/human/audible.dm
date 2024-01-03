@@ -18,7 +18,7 @@
 	)
 
 /datum/emote/human/laugh/get_impaired_msg(mob/user)
-	return "opens and closes [P_THEIR(user.gender)] mouth, smiling."
+	return "opens and closes [P_THEIR(user)] mouth, smiling."
 
 /datum/emote/human/laugh/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/laugh_by_gender_species = list(
@@ -54,7 +54,7 @@
 	)
 
 /datum/emote/human/giggle/get_impaired_msg(mob/user)
-	return "opens and closes [P_THEIR(user.gender)] mouth slightly, smiling."
+	return "opens and closes [P_THEIR(user)] mouth slightly, smiling."
 
 /datum/emote/human/grunt
 	key = "grunt"
@@ -77,7 +77,7 @@
 	)
 
 /datum/emote/human/grunt/get_impaired_msg(mob/user)
-	return "clenches [P_THEIR(user.gender)] teeth."
+	return "clenches [P_THEIR(user)] teeth."
 
 /datum/emote/human/grunt/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/grunt_by_gender_species = list(
@@ -117,7 +117,7 @@
 	)
 
 /datum/emote/human/groan/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user.gender)] mouth slightly."
+	return "opens [P_THEIR(user)] mouth slightly."
 
 /datum/emote/human/groan/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/grunt_by_gender_species = list(
@@ -163,7 +163,7 @@
 	)
 
 /datum/emote/human/scream/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user.gender)] mouth like a fish gasping for air!"
+	return "opens [P_THEIR(user)] mouth like a fish gasping for air!"
 
 /datum/emote/human/scream/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/scream_by_gender_species = list(
@@ -200,7 +200,7 @@
 	)
 
 /datum/emote/human/cough/get_impaired_msg(mob/user)
-	return "moves [P_THEIR(user.gender)] face forward as [P_THEY(user.gender)] open and close [P_THEIR(user.gender)] mouth!"
+	return "moves [P_THEIR(user)] face forward as [P_THEY(user)] open and close [P_THEIR(user)] mouth!"
 
 /datum/emote/human/cough/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_MBCOUGH, SOUNDIN_FBCOUGH)
@@ -227,7 +227,7 @@
 	)
 
 /datum/emote/human/hiccup/get_impaired_msg(mob/user)
-	return "spasms suddenly while opening [P_THEIR(user.gender)] mouth."
+	return "spasms suddenly while opening [P_THEIR(user)] mouth."
 
 /datum/emote/human/choke
 	key = "choke"
@@ -251,7 +251,7 @@
 	cloud = "cloud-gasp"
 
 /datum/emote/human/choke/get_impaired_msg(mob/user)
-	return "clutches [P_THEIR(user.gender)] throat desperately!"
+	return "clutches [P_THEIR(user)] throat desperately!"
 
 /datum/emote/human/snore
 	key = "snore"
@@ -272,7 +272,7 @@
 	)
 
 /datum/emote/human/snore/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user.gender)] mouth wide to take a breath."
+	return "opens [P_THEIR(user)] mouth wide to take a breath."
 
 // TO-DO: make so intentional sniffing reveals how a reagent solution held in hand smells?
 /datum/emote/human/sniff
@@ -356,7 +356,10 @@
 	)
 
 /datum/emote/human/sigh/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user.gender)] mouth."
+	return "opens [P_THEIR(user)] mouth."
+
+/datum/emote/human/sigh/get_sound(mob/living/carbon/human/user, intentional)
+	return get_sound_by_voice(user, SOUNDIN_SIGH_MALE, SOUNDIN_SIGH_FEMALE)
 
 /datum/emote/human/mumble
 	key = "mumble"
@@ -377,7 +380,7 @@
 	)
 
 /datum/emote/human/mumble/get_impaired_msg(mob/user)
-	return "opens and closes [P_THEIR(user.gender)] mouth."
+	return "opens and closes [P_THEIR(user)] mouth."
 
 /datum/emote/human/hmm_think
 	key = "hmm"
@@ -399,7 +402,7 @@
 	)
 
 /datum/emote/human/hmm_think/get_impaired_msg(mob/user)
-	return "scratches [P_THEIR(user.gender)] chin thougtfully..."
+	return "scratches [P_THEIR(user)] chin thougtfully..."
 
 /datum/emote/human/hmm_think/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_HMM_THINK_MALE, SOUNDIN_HMM_THINK_FEMALE)
@@ -424,7 +427,7 @@
 	)
 
 /datum/emote/human/hmm_question/get_impaired_msg(mob/user)
-	return "curls [P_THEIR(user.gender)] eyebrows questioningly..?"
+	return "curls [P_THEIR(user)] eyebrows questioningly..?"
 
 /datum/emote/human/hmm_question/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_HMM_QUESTION_MALE, SOUNDIN_HMM_QUESTION_FEMALE)
@@ -449,7 +452,7 @@
 	)
 
 /datum/emote/human/hmm_excited/get_impaired_msg(mob/user)
-	return "curls [P_THEIR(user.gender)] eyebrows excitedly!"
+	return "curls [P_THEIR(user)] eyebrows excitedly!"
 
 /datum/emote/human/hmm_excited/get_sound(mob/living/carbon/human/user, intentional)
 	return get_sound_by_voice(user, SOUNDIN_HMM_EXCLAIM_MALE, SOUNDIN_HMM_EXCLAIM_FEMALE)
