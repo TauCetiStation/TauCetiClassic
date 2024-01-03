@@ -68,11 +68,7 @@
 			SEND_SIGNAL(T.antag.current, COMSIG_ADD_MOOD_EVENT, "master_died", /datum/mood_event/master_died)
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
 
-	. = ..(gibbed)
-	if(virus2.len)
-		for(var/id in virus2)
-			var/datum/disease2/disease/V = virus2[id]
-			SEND_SIGNAL(V, COMSIG_MOB_DIED, src, gibbed)
+	..(gibbed)
 
 	SSStatistics.add_death_stat(src)
 

@@ -247,13 +247,6 @@
 		if (prob(10))
 			Stuttering(10)
 
-/mob/living/carbon/ian/emplode(severity)
-	. = ..()
-	if(. && virus2.len)
-		for(var/id in virus2)
-			var/datum/disease2/disease/V = virus2[id]
-			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, src, severity)
-
 /mob/living/carbon/ian/proc/handle_virus_updates()
 	if(status_flags & GODMODE)
 		return FALSE
@@ -284,7 +277,7 @@
 			if(isnull(V)) // Trying to figure out a runtime error that keeps repeating
 				CRASH("virus2 nulled before calling activate()")
 			else
-				SEND_SIGNAL(V, COMSIG_HANDLE_VIRUS, src)
+				SEND_SIGNAL(src, COMSIG_HANDLE_VIRUS)
 			// activate may have deleted the virus
 			if(!V)
 				continue
@@ -433,9 +426,4 @@
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
 
-	. = ..(gibbed)
-	if(virus2.len)
-		for(var/id in virus2)
-			var/datum/disease2/disease/V = virus2[id]
-			SEND_SIGNAL(V, COMSIG_MOB_DIED, src, gibbed)
-
+	return ..(gibbed)

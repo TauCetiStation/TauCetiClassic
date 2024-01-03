@@ -192,13 +192,6 @@
 
 	handle_virus_updates()
 
-/obj/machinery/hydroponics/emplode(severity)
-	. = ..()
-	if(. && virus2.len)
-		for(var/id in virus2)
-			var/datum/disease2/disease/V = virus2[id]
-			SEND_SIGNAL(V, COMSIG_ATOM_EMP_ACT, src, severity)
-
 /obj/machinery/hydroponics/proc/handle_virus_updates()
 	if(antibodies > 0)
 		adjustAntibodies(-1)
@@ -218,7 +211,7 @@
 		if(isnull(V))
 			CRASH("virus2 nulled before calling activate()")
 		else
-			SEND_SIGNAL(V, COMSIG_HANDLE_VIRUS, src)
+			SEND_SIGNAL(src, COMSIG_HANDLE_VIRUS)
 
 /obj/machinery/hydroponics/proc/ripen()
 	harvest = TRUE

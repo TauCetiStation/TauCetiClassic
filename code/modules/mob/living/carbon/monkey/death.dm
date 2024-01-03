@@ -19,9 +19,4 @@
 
 	update_canmove()
 
-	. = ..(gibbed)
-	if(. && virus2.len)
-		for(var/id in virus2)
-			var/datum/disease2/disease/V = virus2[id]
-			SEND_SIGNAL(V, COMSIG_MOB_DIED, src, gibbed)
-
+	return ..(gibbed)
