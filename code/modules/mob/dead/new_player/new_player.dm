@@ -79,8 +79,8 @@
 		return
 
 	if(href_list["lobby_setup"])
-		client << browse_rsc('html/prefs/dossier_empty.png')
-		client << browse_rsc('html/prefs/opacity7.png')
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/setup_character)		//Sending pictures to the client
+		assets.send(client)
 		client.prefs.ShowChoices(src)
 		return
 

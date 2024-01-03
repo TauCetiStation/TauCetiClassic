@@ -94,6 +94,12 @@
 		"none.png" = 'icons/obj/chess/board_none.png'
 	)
 
+/datum/asset/simple/setup_character
+	assets = list(
+		"dossier_empty.png" = 'html/prefs/dossier_empty.png',
+		"opacity7.png" = 'html/prefs/opacity7.png'
+	)
+
 /datum/asset/simple/error_handler_js
 	assets = list(
 		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js'

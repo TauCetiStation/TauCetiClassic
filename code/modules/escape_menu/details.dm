@@ -34,7 +34,6 @@ var/global/atom/movable/screen/escape_menu/details/escape_menu_details
 	var/new_maptext = {"
 		<span style='text-align: right; line-height: 0.7'>
 			ID Раунда: [global.round_id || "Не установлено"]<br />
-			Время в раунде: [worldtime2text()]<br />
 			Карта: [SSmapping.config?.map_name || "Загрузка..."]<br />
 		</span>
 	"}

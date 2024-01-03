@@ -50,8 +50,9 @@
 	if(!client)
 		qdel(src)
 		return
-	client << browse_rsc('html/prefs/dossier_empty.png')
-	client << browse_rsc('html/prefs/opacity7.png')
+
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/setup_character)		//Sending pictures to the client
+	assets.send(client)
 	client.prefs.ShowChoices(client.mob)
 	qdel(src)
 
@@ -172,7 +173,6 @@
 	var/datum/admin_help/current_ticket = client?.current_ticket
 
 	// This is null with a closed ticket.
-	// This is okay since the View Latest Ticket panel already tells you if your ticket is closed,  intentionally.
 	if (isnull(current_ticket))
 		return FALSE
 	return TRUE
