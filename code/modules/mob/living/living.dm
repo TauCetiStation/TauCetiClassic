@@ -52,6 +52,13 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
+/mob/living/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover, /obj/item/projectile) && lying && stat != DEAD)
+		var/obj/item/projectile/P = mover
+		if(get_turf(P.original) == loc)
+			return FALSE
+	return ..()
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
@@ -1546,6 +1553,9 @@
 	if(prob(40))
 		make_dizzy(150)
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "scared", /datum/mood_event/scared)
+
+/mob/living/proc/pickup_ore()
+	return
 
 /mob/living/carbon/human/trigger_syringe_fear() // move to carbon/human
 	..()

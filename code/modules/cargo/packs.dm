@@ -1844,6 +1844,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	num_contained = 5
 	contains = list(/obj/item/toy/spinningtoy,
 	                /obj/item/toy/sword,
+					/obj/item/toy/dualsword,
 	                /obj/item/toy/owl,
 	                /obj/item/toy/griffin,
 	                /obj/item/toy/nuke,
