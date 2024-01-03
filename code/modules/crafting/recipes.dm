@@ -13,6 +13,15 @@
 /datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
 	return
 
+/datum/crafting_recipe/crossbow_bolt
+	name = "Crossbow Bolt"
+	result = /obj/item/weapon/arrow
+	reqs = list(/obj/item/stack/rods = 1)
+	tools = list(/obj/item/weapon/wirecutters)
+	time = 1
+	required_proficiency = list(/datum/skill/construction = SKILL_LEVEL_NONE)
+
+
 /datum/crafting_recipe/can_grenade_igniter
 	name = "Can Grenade (igniter)"
 	result = /obj/item/weapon/grenade/cancasing

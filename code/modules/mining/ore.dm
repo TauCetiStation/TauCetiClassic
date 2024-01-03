@@ -8,6 +8,12 @@
 	var/points = 0
 	var/refined_type = null //What this ore defaults to being refined into
 
+/obj/item/weapon/ore/Crossed(atom/movable/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		if (L.stat == CONSCIOUS && !L.restrained())
+			L.pickup_ore()
+
 /obj/item/weapon/ore/uranium
 	name = "pitchblende"
 	icon_state = "Uranium ore"

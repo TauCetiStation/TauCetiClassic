@@ -7,18 +7,29 @@
 	implant_type = "r"
 
 /obj/item/weapon/implant/freedom/atom_init()
-	activation_emote = pick("blink", "eyebrow", "twitch", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
-	uses = rand(1, 5)
+	activation_emote = pick("blink", "eyebrow", "twitch", "frown", "nod", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
+	uses = rand(3, 5)
 	. = ..()
 
 
 /obj/item/weapon/implant/freedom/trigger(emote, mob/living/carbon/source)
 	if (uses < 1)
 		return 0
-	if (emote == activation_emote)
-		uses--
-		to_chat(source, "You feel a faint click.")
-		source.uncuff()
+	if (emote != activation_emote)
+		return
+	if (!source.handcuffed)
+		to_chat(source, "You need to be restricted to use freedom implant.")
+		return
+	uses--
+	to_chat(source, "You feel a faint click.")
+	source.uncuff()
+	source.SetParalysis(0)
+	source.SetStunned(0)
+	source.SetWeakened(0)
+	source.reagents.add_reagent("oxycodone", 5)
+	source.reagents.add_reagent("stimulants", 5)
+	source.reagents.add_reagent("tramadol", 10)
+	source.reagents.add_reagent("paracetamol", 20)
 	return
 
 

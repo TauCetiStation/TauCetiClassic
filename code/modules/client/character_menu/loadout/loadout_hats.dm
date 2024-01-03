@@ -94,3 +94,7 @@
 	berets["black"] = /obj/item/clothing/head/beret/black
 	berets["purple"] = /obj/item/clothing/head/beret/purple
 	gear_tweaks += new/datum/gear_tweak/path(berets)
+
+/datum/gear/head/chep
+	display_name = "Maid cap"
+	path = /obj/item/clothing/head/chep

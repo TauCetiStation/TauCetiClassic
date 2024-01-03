@@ -5,8 +5,6 @@
 
 //Revive from regenerative stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
-	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
-	C.purchasedpowers -= src
 	if(user.stat == DEAD)
 		dead_mob_list -= user
 		alive_mob_list += user
@@ -20,18 +18,22 @@
 	user.rejuvenate()
 	to_chat(user, "<span class='notice'>We have regenerated.</span>")
 	feedback_add_details("changeling_powers","CR")
+
+	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
+	var/obj/effect/proc_holder/changeling/fakedeath/A = locate(/obj/effect/proc_holder/changeling/fakedeath) in C.purchasedpowers
+	A.action.button_icon_state = "fake_death"
+	A.action.button.UpdateIcon()
+	qdel(src)
 	return TRUE
 
 /obj/effect/proc_holder/changeling/revive/can_sting(mob/user)
 	if(NOCLONE in user.mutations)
 		to_chat(user, "<span class='notice'>We could not regenerate. Something wrong with our DNA.</span>")
 		user.fake_death = 0
-		var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
-		C.purchasedpowers -= src //We dont need that power from now anyway.
+		qdel(src) //We dont need that power from now anyway.
 		return FALSE
 	if(user.stat != DEAD)//We are alive when using this... Why do we need to keep this ability and even rejuvenate, if revive must used from dead state?
-		var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
-		C.purchasedpowers -= src  //If we somehow acquired it, remove upon clicking, to prevent stasis breaking
+		qdel(src)  //If we somehow acquired it, remove upon clicking, to prevent stasis breaking
 		to_chat(user, "<span class='notice'>We need to stop any life activity in our body.</span>")
 		return FALSE
 	return ..()

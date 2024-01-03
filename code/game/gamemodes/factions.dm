@@ -407,6 +407,14 @@
 		if(R.antag && ckey(R.antag.key) == ckey)
 			return R
 
+/datum/faction/proc/get_active_members()
+	. = list()
+	for(var/datum/role/R in members)
+		var/mob/M = R.antag?.current
+		if(!M || !M.client)
+			continue
+		. += M
+
 /datum/faction/proc/check_crew()
 	var/total_human = 0
 	for(var/mob/living/carbon/human/H as anything in human_list)

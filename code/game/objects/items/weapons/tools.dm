@@ -164,6 +164,7 @@
 
 	origin_tech = "engineering=1" // R&D tech level
 
+	var/rigged = FALSE			// Welding tool is rigged TRUE/FALSE
 	var/active = FALSE          // Welding tool is off or on
 	var/welding = FALSE         // While welding something - TRUE
 	var/secured = TRUE          // Welder is secured or unsecured (able to attach rods to it to make a flamethrower)
@@ -188,7 +189,10 @@
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
 	if(src in user)
-		to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
+		if (rigged)
+			to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of mixture!")
+		else
+			to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
@@ -223,6 +227,23 @@
 		src.loc = F
 		add_fingerprint(user)
 		return
+	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
+		var/obj/item/weapon/reagent_containers/syringe/S = I
+		if(S.reagents.has_reagent("phoron", 5))
+			if(get_fuel() + 5 > max_fuel)
+				to_chat(user, "[src] is full, you cant inject anything into it.")
+			else if (active)
+				to_chat(user, "[src] is active, turn it off to inject.")
+			else
+				user.SetNextMove(CLICK_CD_INTERACT)
+				to_chat(user, "You inject the solution into the [src].")
+				log_admin("LOG: [key_name(user)] injected a weldingtool with phoron, rigging it to explode.")
+				message_admins("LOG: [key_name_admin(user)] injected a weldingtool with phoron, rigging it to explode. [ADMIN_JMP(user)]")
+				rigged = TRUE
+				S.reagents.remove_reagent("phoron", 5)
+				reagents.add_reagent("phoron", 5)
+		else
+			to_chat(user, "You need something dangerous to rig this tool.")
 	return ..()
 
 /obj/item/weapon/weldingtool/process()
@@ -298,7 +319,7 @@
 
 // Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount("fuel")
+	return reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron")
 
 /obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override, skills_speed_bonus = -0.4, can_move = FALSE)
 	target.add_overlay(welding_sparks)
@@ -373,7 +394,16 @@
 	if(!usr) return
 	active = !active
 	if (isOn())
-		if (use(1))
+		if (rigged)
+			var/turf/T = get_turf(src.loc)
+			var/phoron =  reagents.get_reagent_amount("phoron")
+			var/devast = (phoron >= 80) ? 1 : 0
+			var/area = ceil(phoron / 20)
+			log_admin("LOG: Rigged weldingtool explosion, last touched by [fingerprintslast]")
+			message_admins("LOG: Rigged weldingtool explosion, last touched by [fingerprintslast] [ADMIN_JMP(T)]")
+			explosion(T, devast, area, area * 2, area * 4)
+			qdel(src)
+		else if (use(1))
 			playsound(loc, 'sound/items/tools/welderactivate.ogg', VOL_EFFECTS_MASTER)
 			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			hitsound = SOUNDIN_LASERACT

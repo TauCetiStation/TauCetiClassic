@@ -55,6 +55,10 @@
 	restricted_species = list(TAJARAN, DIONA, VOX, IPC)
 	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
 
+/datum/job/warden/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		to_chat(H, "<span class='notice'>Вместо обычной охраны на эту станцию решили прислать профессиональных оперативников. Вы являетесь одним из них. В отличии от стандартного офицера охраны, вы обладаете продвинутым снаряжением, отличной подготовкой, имплантом лояльности и встроенным устройством для уничтожения тела после смерти.</span>")
+
 /datum/job/detective
 	title = "Detective"
 	flag = DETECTIVE
@@ -104,6 +108,11 @@
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
 	flags = JOB_FLAG_SECURITY|JOB_FLAG_IMPOSTER_PRIORITIZE
+
+/datum/job/officer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		to_chat(H, "<span class='notice'>Вместо обычной охраны на эту станцию решили прислать профессиональных оперативников. Вы являетесь одним из них. В отличии от стандартного офицера охраны, вы обладаете продвинутым снаряжением, отличной подготовкой, имплантом лояльности и встроенным устройством для уничтожения тела после смерти.</span>")
+		LAZYADD(skillsets, /datum/skillset/warden)
 
 /datum/job/forensic
 	title = "Forensic Technician"

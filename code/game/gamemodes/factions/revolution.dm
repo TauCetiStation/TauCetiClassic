@@ -232,16 +232,16 @@
 			loycount++
 
 	var/revpenalty = 10000
-	dat += {"<B><U>REVOLUTION STATS</U></B><BR>
-	<B>Number of Surviving Revolution Heads:</B> [foecount]<BR>
-	<B>Number of Surviving Command Staff:</B> [comcount]<BR>
-	<B>Number of Surviving Revolutionaries:</B> [revcount]<BR>
-	<B>Number of Surviving Loyal Crew:</B> [loycount]<BR><BR>
-	<B>Revolution Heads Arrested:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] Points)<BR>
-	<B>Revolution Heads Slain:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 500] Points)<BR>
-	<B>Command Staff Slain:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] Points)<BR>
-	<B>Revolution Successful:</B> [SSStatistics.score.traitorswon ? "Yes" : "No"] (-[SSStatistics.score.traitorswon * revpenalty] Points)<BR>
-	<B>All Revolution Heads Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
+	dat += {"<B><U>Революционная статистика</U></B><BR>
+	<B>Количество выживших глав революции:</B> [foecount]<BR>
+	<B>Количество выживших глав станции:</B> [comcount]<BR>
+	<B>Количество выживших революционеров:</B> [revcount]<BR>
+	<B>Количество выживших лоялистов:</B> [loycount]<BR><BR>
+	<B>Глав революции арестовано:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] очков)<BR>
+	<B>Глав революции убито:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 500] очков)<BR>
+	<B>Глав станции убито:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] очков)<BR>
+	<B>Революция преуспела:</B> [SSStatistics.score.traitorswon ? "Да" : "Нет"] (-[SSStatistics.score.traitorswon * revpenalty] очков)<BR>
+ 	<B>Все главы революции арестованы:</B> [SSStatistics.score.allarrested ? "Да (очки утроены)" : "Нет"]<BR>"}
 
 	return dat
 
