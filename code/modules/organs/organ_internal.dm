@@ -46,7 +46,7 @@
 
 	if(parent)
 		parent.bodypart_organs -= src
-	return ..()
+	..()
 
 
 
