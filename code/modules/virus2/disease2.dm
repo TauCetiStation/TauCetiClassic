@@ -22,13 +22,15 @@
 
 /datum/disease2/disease/New()
 	uniqueID = rand(0,10000)
-	..()
-	RegisterSignal(src, COMSIG_HANDLE_VIRUS, PROC_REF(on_process))
-	RegisterSignal(src, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
-	RegisterSignal(src, COMSIG_MOB_DIED, PROC_REF(on_death))
-	RegisterSignal(src, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(on_shock))
+	return ..()
 
-/datum/disease2/disease/proc/on_process(datum/source, atom/host)
+/datum/disease2/disease/proc/register_host(atom/host)
+	RegisterSignal(host, COMSIG_HANDLE_VIRUS, PROC_REF(on_process))
+	RegisterSignal(host, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
+	RegisterSignal(host, COMSIG_MOB_DIED, PROC_REF(on_death))
+	RegisterSignal(host, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(on_shock))
+
+/datum/disease2/disease/proc/on_process(datum/host)
 	if(istype(host, /obj/machinery/hydroponics))
 		adjust_nanites(regen_rate, host)
 		affect_plants(host)
@@ -101,23 +103,23 @@
 		if(NP.effect.effect_type & MICROBIOLOGY_NANITE)
 			remove_effect(NP)
 
-/datum/disease2/disease/proc/on_emp(datum/source, atom/host, severity)
+/datum/disease2/disease/proc/on_emp(datum/host, severity)
 	nanite_volume *= (rand(60, 90) * 0.01) //Lose 10-40% of nanites
 	adjust_nanites(-(rand(5, 50)), host) //Lose 5-50 flat nanite volume
 	for(var/datum/disease2/effectholder/NP as anything in effects)
-		NP.effect.on_emp(source, host, severity)
+		NP.effect.on_emp(src, host, severity)
 
-/datum/disease2/disease/proc/on_shock(datum/source, atom/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
+/datum/disease2/disease/proc/on_shock(datum/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
 	if(shock_damage < 1)
 		return
 	nanite_volume *= (rand(45, 80) * 0.01) //Lose 20-55% of nanites
 	adjust_nanites(-(rand(5, 50)), host)  //Lose 5-50 flat nanite volume
 	for(var/datum/disease2/effectholder/NP as anything in effects)
-		NP.effect.on_shock(source, host, shock_damage, current_source, siemens_coeff, def_zone, tesla_shock)
+		NP.effect.on_shock(src, host, shock_damage, current_source, siemens_coeff, def_zone, tesla_shock)
 
-/datum/disease2/disease/proc/on_death(datum/source, atom/host, gibbed)
+/datum/disease2/disease/proc/on_death(datum/host, gibbed)
 	for(var/datum/disease2/effectholder/NP as anything in effects)
-		NP.effect.on_death(source, host, gibbed)
+		NP.effect.on_death(src, host, gibbed)
 
 /datum/disease2/disease/proc/haseffect(datum/disease2/effect/checkeffect)
 	for(var/datum/disease2/effectholder/e in effects)
@@ -153,7 +155,6 @@
 		return
 	if(effects.len < max_symptoms)
 		effects += holder
-		holder.on_adding()
 
 /datum/disease2/disease/proc/radiate()
 	effects = shuffle(effects)
@@ -175,7 +176,6 @@
 	if(effects.len <= min_symptoms)
 		return FALSE
 	effects -= ef_holder
-	UnregisterSignal(ef_holder, COMSIG_HANDLE_VIRUS)
 	return TRUE
 
 /datum/disease2/disease/proc/reactsleeptoxin()

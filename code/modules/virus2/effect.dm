@@ -7,11 +7,8 @@
 	var/ticks = 0
 	var/cooldownticks = 0
 
-/datum/disease2/effectholder/proc/on_adding()
-	RegisterSignal(src, COMSIG_HANDLE_VIRUS, PROC_REF(on_process))
-
 /datum/disease2/effectholder/proc/on_process(datum/disease2/disease/virus, atom/host)
-	return effect.on_process(host, virus, src)
+	return effect.on_process(virus, host, src)
 
 /datum/disease2/effectholder/proc/runeffect(atom/host, datum/disease2/disease/disease)
 	if(cooldownticks > 0)
@@ -22,6 +19,7 @@
 			stage++
 		if(cooldownticks <= 0)
 			cooldownticks = effect.cooldown
+			on_process(disease, host)
 			if(!effect.effect_active)
 				return
 			if(!check_conditions(host, disease, src))
@@ -32,14 +30,14 @@
 				effect.activate_plant(host, src, disease)
 
 //If false, disables effects
-/datum/disease2/effectholder/proc/check_conditions(atom/A, datum/disease2/disease/disease)
+/datum/disease2/effectholder/proc/check_conditions(atom/host, datum/disease2/disease/disease)
 	//bloodloss = nanite loss. Programs suspended
-	if(ishuman(A) && effect.effect_type & MICROBIOLOGY_NANITE)
-		var/mob/living/carbon/human/H = A
+	if(ishuman(host) && effect.effect_type & MICROBIOLOGY_NANITE)
+		var/mob/living/carbon/human/H = host
 		var/probability_denied = clamp(BLOOD_VOLUME_OKAY - H.blood_amount(), 0, 100)
 		if(prob(probability_denied))
 			return FALSE
-	return effect.check_conditions(A, disease, src)
+	return effect.check_conditions(host, disease, src)
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////EFFECTS/////////////////////////////////
@@ -69,13 +67,16 @@
 /datum/disease2/effect/proc/check_conditions(atom/host, datum/disease2/disease/disease, datum/disease2/effectholder/holder)
 	return TRUE
 
-/datum/disease2/effect/proc/on_process(datum/disease2/disease/virus, atom/host)
-	effect_active = check_conditions(host, virus) && consume_nanites(use_rate, FALSE, virus, host)
+/datum/disease2/effect/proc/on_process(datum/disease2/disease/virus, atom/host, datum/disease2/effectholder/holder)
+	var/consume_success = consume_nanites(use_rate, FALSE, virus, host)
+	if(!consume_success && effect_active)
+		deactivate(host, holder, virus)
+	effect_active = check_conditions(host, virus) && consume_success
 
 /datum/disease2/effect/proc/consume_nanites(amount, force = FALSE, datum/disease2/disease/virus, atom/host)
 	return virus.consume_nanites(amount, force, host)
 
-/datum/disease2/effect/proc/on_death(datum/source, atom/host, gibbed)
+/datum/disease2/effect/proc/on_death(datum/disease2/disease/virus, atom/host, gibbed)
 	return
 
 /datum/disease2/effect/proc/software_error(type, atom/host, datum/disease2/disease/virus)
@@ -98,13 +99,13 @@
 					virus.remove_effect(ef_holder.effect)
 			virus.addeffect(virus.get_new_effectholder(rogue))
 
-/datum/disease2/effect/proc/on_emp(datum/source, atom/host, severity)
+/datum/disease2/effect/proc/on_emp(datum/disease2/disease/virus, atom/host, severity)
 	if((effect_type & MICROBIOLOGY_NANITE) && (program_flags & NANITE_EMP_IMMUNE) && prob(80 / severity))
-		software_error(null, host, source)
+		software_error(null, host, virus)
 
-/datum/disease2/effect/proc/on_shock(datum/source, atom/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
+/datum/disease2/effect/proc/on_shock(datum/disease2/disease/virus, atom/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
 	if((effect_type & MICROBIOLOGY_NANITE) && !(program_flags & NANITE_SHOCK_IMMUNE) && prob(10))
-		software_error(1, host, source)
+		software_error(1, host, virus)
 
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
