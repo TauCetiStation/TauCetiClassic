@@ -440,16 +440,19 @@
 
 /obj/item/organ/internal/kidneys/vox
 	name = "filtration bladder"
+	icon_state = "vox kidneys"
 	organ_races = list(VOX)
 
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
+	icon_state = "diona kidneys"
 	organ_races = list(DIONA)
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/kidneys/ipc
 	name = "self-diagnosis unit"
-	organ_races = list("machine")
+	icon_state = "prosthetic kidneys"
+	organ_races = list(HUMAN, IPC)
 	parent_bodypart = BP_GROIN
 
 	var/next_warning = 0
