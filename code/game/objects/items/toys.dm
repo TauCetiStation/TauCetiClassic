@@ -1170,7 +1170,7 @@ Owl & Griffin toys
 	name = "deck of cards"
 	desc = "A deck of space-grade playing cards."
 	icon = 'icons/obj/cards.dmi'
-	icon_state = "deck"
+	icon_state = "deck_full"
 	w_class = SIZE_TINY
 	var/list/cards = list()
 	var/normal_deck_size = 52 // How many cards should be in the full deck.
