@@ -36,7 +36,7 @@
 
 /obj/item/organ/proc/del_owner(mob/living/carbon/human/H)
 	loc = null
-	owner = H
+	owner = null
 
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	set_owner(H, S)
