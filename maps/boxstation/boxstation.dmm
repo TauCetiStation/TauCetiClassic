@@ -886,6 +886,11 @@
 /area/station/security/armoury)
 "abI" = (
 /obj/structure/closet/crate/freezer,
+/obj/item/organ/internal/eyes,
+/obj/item/organ/internal/heart,
+/obj/item/organ/internal/kidneys,
+/obj/item/organ/internal/liver,
+/obj/item/organ/internal/lungs,
 /turf/simulated/floor,
 /area/station/medical/surgery)
 "abJ" = (
@@ -40449,6 +40454,16 @@
 	},
 /area/station/security/checkpoint)
 "bul" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/organ/internal/kidneys/diona,
+/obj/item/organ/internal/kidneys/ipc,
+/obj/item/organ/internal/kidneys/vox,
+/obj/item/organ/internal/liver/diona,
+/obj/item/organ/internal/liver/vox,
+/obj/item/organ/internal/lungs/ipc,
+/obj/item/organ/internal/lungs/skrell,
+/obj/item/organ/internal/lungs/vox,
+/obj/item/organ/internal/lungs/diona,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -42055,9 +42070,16 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "bwR" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /obj/structure/closet/crate/freezer,
+/obj/item/organ/internal/eyes/ipc,
+/obj/item/organ/internal/heart/ipc,
+/obj/item/organ/internal/liver/ipc,
+/obj/item/organ/internal/lungs/ipc,
 /turf/simulated/floor,
-/area/station/medical/surgery2)
+/area/station/rnd/robotics)
 "bwS" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -123621,7 +123643,7 @@ cAb
 bTz
 bKt
 btc
-bwR
+abI
 bLF
 cGI
 cLj
@@ -126411,7 +126433,7 @@ aZB
 bbY
 cqW
 biD
-blu
+bwR
 boM
 bqT
 bqT
