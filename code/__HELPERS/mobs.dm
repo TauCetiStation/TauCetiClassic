@@ -379,7 +379,7 @@
 		if(found_bleed)
 			message += "<span class='warning'><b>Обнаружено артериальное кровотечение</b>. Для определения местоположения требуется МРТ сканер.</span><br>"
 		if(found_broken)
-			message += "<span class='warning'><b>Обнаружен перелом костей</b>. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'><b>Обнаружен перелом костей</b>. Для определения местоположения требуется МРТ сканер.</span><br>"
 		if(length(M.get_visible_implants(1)))
 			message += "<span class='warning'><b>Обнаружены инородные тела</b>. Для определения местоположения требуется МРТ сканер.</span><br>"
 		var/blood_volume = H.blood_amount()
