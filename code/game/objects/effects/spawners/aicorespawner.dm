@@ -5,7 +5,7 @@
 
 
 /obj/effect/spawner/newai/atom_init()
-	..()
+	. = ..()
 	if(!HAS_ROUND_ASPECT(ROUND_ASPECT_AI_TRIO))
 		qdel(src)
 		return
