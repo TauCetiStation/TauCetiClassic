@@ -381,7 +381,7 @@
 		if(found_broken)
 			message += "<span class='warning'><b>Обнаружен перелом костей</b>. Для определения местоположения требуется сканер тела.</span><br>"
 		if(length(M.get_visible_implants(1)))
-			message += "<span class='warning'><b>Обнаружены инородные тела</b>. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'><b>Обнаружены инородные тела</b>. Для определения местоположения требуется МРТ сканер.</span><br>"
 		var/blood_volume = H.blood_amount()
 		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
 		var/blood_type = H.dna.b_type
