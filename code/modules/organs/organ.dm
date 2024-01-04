@@ -34,7 +34,7 @@
 	loc = null
 	owner = H
 
-/obj/item/organ/proc/del_owner(mob/living/carbon/human/H, datum/species/S)
+/obj/item/organ/proc/del_owner(mob/living/carbon/human/H)
 	loc = null
 	owner = H
 

@@ -6,7 +6,7 @@
 
 	// Strings.
 	var/organ_tag   = null      // Unique identifier.
-	var/organ_races =  list(null) // for species (human, tajaran, vox, etc.)
+	var/list/organ_races =  list() // for species (human, tajaran, vox, etc.)
 	var/mob/living/carbon/brain/brainmob = null // will be moved
 
 	// Damage vars.
@@ -46,7 +46,7 @@
 
 	if(parent)
 		parent.bodypart_organs -= src
-	return ..()
+	..()
 
 
 
