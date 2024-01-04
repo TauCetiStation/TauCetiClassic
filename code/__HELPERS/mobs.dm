@@ -260,7 +260,7 @@
 		return TRUE
 	return FALSE
 
-/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information, scan_hallucination = FALSE)
+/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information, scan_hallucination = FALSE, advanced = FALSE)
 	var/message = ""
 	var/insurance_type
 
@@ -325,14 +325,14 @@
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.reagents.total_volume)
+		if(C.reagents.total_volume && advanced)
 			message += "<span class='warning'>Обнаруженные вещества в крови:</span><br>"
 			for(var/datum/reagent/R in C.reagents.reagent_list)
 				message += "&emsp; <span class='notice'>\
-					[R.overdose != 0 && R.volume >= R.overdose ? "<span class='warning'><b>OD: </b></span>" : ""]\
+					[R.overdose != 0 && R.volume >= R.overdose ? "<span class='bold warning'>OD: </span>" : ""]\
 					[round(R.volume, 1)]u [R.name]</span><br>"
 		if(C.virus2.len)
-			if(C.is_infected_with_zombie_virus())
+			if(C.is_infected_with_zombie_virus() && advanced)
 				message += "<span class='warning'>Внимание: Обнаруженна нетипичная активность патогена в крови!</span><br>"
 			for (var/ID in C.virus2)
 				if (ID in virusDB)
@@ -348,11 +348,11 @@
 		var/mob/living/carbon/human/H = M
 		if(!H.has_brain() && H.should_have_organ(O_BRAIN))
 			message += "<span class='warning'>У субъекта отсутствует мозг.</span><br>"
-		if(M.stat != DEAD)
+		if(M.stat != DEAD && advanced)
 			if(!M.key)
-				message += "<span class='warning'>Души не обнаружено.</span><br>" // they ghosted
+				message += "<span class='warning'>[user.my_religion ? "<span class ='bold [user.my_religion.style_text]'>Души</span>" : "Aктивности мозга"] не обнаружено.</span><br>" // they ghosted
 			else if(!M.client)
-				message += "<span class='warning'>Обнаружено ССД.</span><br>" // SSD
+				message += "<span class='warning'>Субъект в состоянии космического расстройства сна.</span><br>" // SSD
 	else if(M.getBrainLoss() >= 100)
 		message += "<span class='warning'>Мозг субъекта мёртв.</span><br>"
 	else if(M.getBrainLoss() >= 60)
