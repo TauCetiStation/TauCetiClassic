@@ -204,7 +204,7 @@
 		var/list/list_of_embed_types = list()
 		var/list/embed_object_shrapnel = list()
 		var/list/embed_object_implants = list()
-		var/list/embed_object_organs = list()
+		var/list/internal_object_organs = list()
 		var/list/embed_object_else = list()
 		for(var/embed_object in BP.implants)
 			if(istype(embed_object, /obj/item/weapon/shard/shrapnel))
@@ -215,21 +215,21 @@
 				continue
 			if(istype(embed_object, /obj/item/organ/internal))
 				BP.bodypart_organs.Copy()
-				embed_object_organs = BP.bodypart_organs
+				internal_object_organs = BP.bodypart_organs
 				continue
 			embed_object_else += embed_object
 		for(var/atom/embed_object as anything in embed_object_implants)
 			embed_object_implants[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		for(var/atom/embed_object as anything in BP.bodypart_organs)
-			embed_object_organs[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
+			internal_object_organs[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		for(var/atom/embed_object as anything in embed_object_else)
 			embed_object_else[embed_object] = image(icon = embed_object.icon, icon_state = embed_object.icon_state)
 		if(embed_object_shrapnel.len)
 			list_of_embed_types += list("Shrapnel" = image(icon = 'icons/obj/shards.dmi', icon_state = "shrapnellarge"))
 		if(embed_object_implants.len)
 			list_of_embed_types += list("Implants" = embed_object_implants[pick(embed_object_implants)])
-		if(embed_object_organs.len)
-			list_of_embed_types += list("Organs" = embed_object_organs[pick(embed_object_organs)])
+		if(internal_object_organs.len)
+			list_of_embed_types += list("Organs" = internal_object_organs[pick(internal_object_organs)])
 		if(embed_object_else.len)
 			list_of_embed_types += list("Else" = embed_object_else[pick(embed_object_else)])
 		var/list_to_choose = show_radial_menu(user, target, list_of_embed_types, radius = 30, require_near = TRUE, tooltips = TRUE)
@@ -261,7 +261,7 @@
 					remove_from_cavity(user, target, choosen_object, BP, tool)
 					target.sec_hud_set_implants()
 			if("Organs")
-				var/choosen_object = show_radial_menu(user, target, embed_object_organs, radius = 50, require_near = TRUE, tooltips = TRUE)
+				var/choosen_object = show_radial_menu(user, target, internal_object_organs, radius = 50, require_near = TRUE, tooltips = TRUE)
 				if(choosen_object)
 					if(istype(choosen_object, /obj/item/organ/internal))
 						var/obj/item/organ/internal/H = choosen_object
