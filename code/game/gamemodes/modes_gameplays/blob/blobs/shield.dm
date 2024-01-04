@@ -4,7 +4,7 @@
 	icon_state = "blob_idle"
 	desc = "Some blob creature thingy."
 	opacity = TRUE
-	max_integrity = 75
+	max_integrity = 85
 	fire_resist = 2
 
 /obj/structure/blob/shield/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -18,7 +18,7 @@
 	icon_state = "blob_reflect"
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
 	max_integrity = 30 //Normal blob
-	brute_resist = 1 //Normal is 4
+	brute_resist = 2 //Normal is 4
 	fire_resist = 1 //2 welder hits
 	var/static/list/reflects = list(/obj/item/projectile/energy, /obj/item/projectile/beam, /obj/item/projectile/pyrometer,
 		/obj/item/projectile/plasma, /obj/item/projectile/bullet/stunshot)

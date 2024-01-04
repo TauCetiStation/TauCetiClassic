@@ -9,10 +9,10 @@ var/global/list/blob_nodes = list()
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_core"
 	max_integrity = 200
-	fire_resist = 2
+	fire_resist = 2.5
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
-	var/point_rate = 2
+	var/point_rate = 1
 	var/last_resource_collection
 
 /obj/structure/blob/core/atom_init(mapload, client/new_overmind, h = 200, new_rate = 2)

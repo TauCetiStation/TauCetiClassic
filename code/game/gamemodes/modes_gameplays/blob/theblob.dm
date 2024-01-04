@@ -15,7 +15,7 @@
 	max_integrity = 30
 	var/health_timestamp = 0
 	var/brute_resist = 4
-	var/fire_resist = 1
+	var/fire_resist = 2
 	var/mob/camera/blob/OV //Optional
 
 	resistance_flags = CAN_BE_HIT
@@ -60,7 +60,7 @@
 /obj/structure/blob/atom_break(damage_flag)
 	. = ..()
 	update_icon()
-	
+
 /obj/structure/blob/atom_fix()
 	. = ..()
 	update_icon()

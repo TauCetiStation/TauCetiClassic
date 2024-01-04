@@ -16,5 +16,5 @@
 	resource_delay = world.time + 40 // 4 seconds
 	PulseAnimation()
 
-	OV.add_points(1)
+	OV.add_points(0.5)
 
