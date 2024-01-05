@@ -13,6 +13,8 @@
 	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), PROC_REF(try_catch))
 
 /datum/component/fishing/proc/try_catch(datum/source, obj/item/I, mob/living/user)
+	SIGNAL_HANDLER
+
 	if(istype(I, /obj/item/weapon/wirerod) && !user.is_busy())
 		INVOKE_ASYNC(src, PROC_REF(start_fishing), I, user)
 		return COMPONENT_NO_AFTERATTACK
