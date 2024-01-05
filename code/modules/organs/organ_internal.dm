@@ -503,7 +503,7 @@
 
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
 
-/obj/item/organ/internal/brain/internal/atom_init()
+/obj/item/organ/internal/brain/atom_init()
 	. = ..()
 	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
 	//WASSSSSUUUPPPP /N
