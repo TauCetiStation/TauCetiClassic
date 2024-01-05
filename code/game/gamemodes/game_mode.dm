@@ -208,6 +208,8 @@ var/global/list/datum/faction/preinit_factions
 	if(!(type in exclude_autotraitor_for))
 		CreateFaction(/datum/faction/traitor/auto, num_players())
 
+		addtimer(CALLBACK(src, PROC_REF(mutator_antag_spawn)), 0.5 MINUTE) //We make it clear that this is a lone role
+
 	SSticker.start_state = new /datum/station_state()
 	SSticker.start_state.count(TRUE)
 
@@ -230,6 +232,32 @@ var/global/list/datum/faction/preinit_factions
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	feedback_set_details("game_mode","[SSticker.mode]")
 	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
+
+/datum/game_mode/proc/mutator_antag_spawn()
+	var/fac_type
+	if(find_faction_by_type(/datum/faction/traitor)) //Mix antags
+		fac_type = /datum/faction/changeling
+	else if(find_faction_by_type(/datum/faction/changeling))
+		fac_type = /datum/faction/traitor
+	if(!fac_type)
+		fac_type = pick(/datum/faction/traitor, /datum/faction/changeling)
+
+	if(!length(player_list)) //Night shifts
+		return
+	log_mode("Mutator making a new role.")
+	log_admin("Mutator making a new role.")
+
+	var/datum/faction/FF = create_uniq_faction(fac_type)
+	for(var/mob/living/carbon/human/M in player_list)
+		if(M.stat == DEAD)
+			continue
+		if(isanyantag(M)) //No to nuke-changelings
+			continue
+		if(!FF.can_join_faction(M))
+			continue
+		if(add_faction_member(FF, M, FALSE, FALSE))
+			break
+	FF.OnPostSetup()
 
 /datum/game_mode/proc/GetScoreboard()
 	completition_text = "<h2>Фракции & Антагонисты</h2>"
