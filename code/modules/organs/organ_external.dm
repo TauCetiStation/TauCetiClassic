@@ -712,7 +712,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	cannot_amputate = TRUE
 
 	max_damage = 75
-	min_broken_damage = 35
+	min_broken_damage = 50
 	vital = TRUE
 	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
@@ -732,7 +732,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	cannot_amputate = TRUE
 
 	max_damage = 50
-	min_broken_damage = 35
+	min_broken_damage = 40
 	vital = TRUE
 	w_class = SIZE_NORMAL
 
@@ -756,7 +756,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	regen_bodypart_penalty = 100
 
 	max_damage = 75
-	min_broken_damage = 35
+	min_broken_damage = 50
 	vital = TRUE
 	w_class = SIZE_SMALL
 
@@ -947,7 +947,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	arterial_bleed_severity = 0.75
 	max_damage = 50
-	min_broken_damage = 30
+	min_broken_damage = 40
 	w_class = SIZE_SMALL
 	hitsound = list('sound/weapons/genhit1.ogg')
 
@@ -990,7 +990,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	arterial_bleed_severity = 0.75
 	max_damage = 50
-	min_broken_damage = 30
+	min_broken_damage = 40
 	w_class = SIZE_SMALL
 	hitsound = list('sound/weapons/genhit1.ogg')
 
@@ -1033,7 +1033,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	arterial_bleed_severity = 0.75
 	max_damage = 50
-	min_broken_damage = 30
+	min_broken_damage = 40
 	w_class = SIZE_SMALL
 	hitsound = list('sound/weapons/genhit1.ogg')
 
@@ -1065,7 +1065,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	arterial_bleed_severity = 0.75
 	max_damage = 50
-	min_broken_damage = 30
+	min_broken_damage = 40
 	w_class = SIZE_SMALL
 	hitsound = list('sound/weapons/genhit1.ogg')
 
