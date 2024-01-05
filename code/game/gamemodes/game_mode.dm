@@ -242,10 +242,11 @@ var/global/list/datum/faction/preinit_factions
 	if(!fac_type)
 		fac_type = pick(/datum/faction/traitor, /datum/faction/changeling)
 
-	if(!length(player_list)) //Night shifts
+	if(length(joined_player_list) < 22) //20 - min players for changeling mode
+		message_admins("Mutator: Too few players, no additional antagonist.")
 		return
-	log_mode("Mutator making a new role.")
-	log_admin("Mutator making a new role.")
+	log_mode("Mutator: Making a new role.")
+	message_admins("Mutator: Making a new role.")
 
 	var/datum/faction/FF = create_uniq_faction(fac_type)
 	for(var/mob/living/carbon/human/M in player_list)
