@@ -83,7 +83,7 @@
 		QDEL_NULL(brainmob)
 		return
 
-	var/obj/item/organ/internal/brain
+	var/obj/item/organ/internal/brain/brain
 	if(user)
 		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
 		brain = new(get_turf(user))
