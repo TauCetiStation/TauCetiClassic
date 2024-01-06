@@ -189,11 +189,10 @@
 		if(BP.stage == 3)
 			return FALSE
 
-		return BP && ((BP.open == 3 && BP.body_zone == BP_CHEST && target.op_stage.ribcage == 0) || (BP.open == 2) || (BP.body_zone = BP_HEAD && target.op_stage.skull == 0 && target.has_brain() && target.op_stage.brain_cut == 1))
+		return BP && ((target.op_stage.ribcage == 0 && BP.open == 2 && BP.body_zone == BP_CHEST) || (BP.body_zone = BP_HEAD && target.op_stage.skull == 0 && target.has_brain() && target.op_stage.brain_cut == 1))
 
 /datum/surgery_step/cavity/bodypart_manipulation/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.stage == 1)
 	user.visible_message("[user] starts poking around inside the incision on [target]'s [BP.name] with \the [tool].", \
 	"You start poking around inside the incision on [target]'s [BP.name] with \the [tool]" )
 	target.custom_pain("The pain in your chest is living hell!",1)
@@ -299,7 +298,7 @@
 	else
 		user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
 		"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>" )
-	BP.stage = 0
+	target.op_stage.ribcage = 1
 
 /datum/surgery_step/cavity/bodypart_manipulation/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
