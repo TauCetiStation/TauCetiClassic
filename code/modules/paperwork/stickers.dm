@@ -50,7 +50,7 @@
 
 /obj/item/weapon/paper/sticker/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(!istype(target, /obj/structure) && !ismachinery(target) && !ismob(target)) return
+	if(!istype(target, /obj/structure) && !ismachinery(target)) return
 	if(src.loc != user) return
 
 	var/list/click_params = params2list(params)
@@ -64,8 +64,8 @@
 	return
 
 /obj/item/weapon/paper/sticker/proc/resolve_stranded(datum/component/bounded/bounds)
-	if(get_dist(bounds.master, src) == 1 && isturf(loc))
-		step_towards(src, bounds.master)
+	if(get_dist(bounds.master, src) <= 1 && isturf(loc))
+		forceMove(bounds.master.loc)
 		var/dist = get_dist(src, get_turf(bounds.master))
 		if(dist >= bounds.min_dist && dist <= bounds.max_dist)
 			return TRUE
