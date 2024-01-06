@@ -268,10 +268,10 @@
 						BP.bodypart_organs -= choosen_object
 						H.remove_organ(choosen_object)
 						H.loc = get_turf(target)
-					if(istype(choosen_object, /obj/item/organ/internal/brain))
+					else if(istype(choosen_object, /obj/item/organ/internal/brain))
 						var/mob/living/simple_animal/borer/borer = target.has_brain_worms()
 						if(borer)
-						borer.detatch() //Should remove borer if the brain is removed - RR
+							borer.detatch() //Should remove borer if the brain is removed - RR
 					remove_from_cavity(user, target, choosen_object, BP, tool)
 			if("Else")
 				var/choosen_object = show_radial_menu(user, target, embed_object_else, radius = 50, require_near = TRUE, tooltips = TRUE)
