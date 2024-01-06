@@ -808,49 +808,49 @@ var/global/list/tourette_bad_words= list(
 			if(!E.len)
 				embedded_flag = 0
 
-
-		//Eyes
-		if(should_have_organ(O_EYES) && !has_organ(O_EYES))
-			blinded = 1
-		else if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
-			blinded = 1
-		else if(eye_blind)			//blindness, heals slowly over time
-			eye_blind = max(eye_blind-1,0)
-			blinded = 1
-		else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold) || istype(head, /obj/item/weapon/reagent_containers/glass/bucket))	//resting your eyes with a blindfold heals blurry eyes faster
-			adjustBlurriness(-3)
-			blinded = 1
-		else if(eye_blurry)	//blurry eyes heal slowly
-			adjustBlurriness(-1)
+/mob/living/carbon/human/proc/check_organ_status()
+	//Eyes
+	if(should_have_organ(O_EYES) && !has_organ(O_EYES))
+		blinded = 1
+	else if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
+		blinded = 1
+	else if(eye_blind)			//blindness, heals slowly over time
+		eye_blind = max(eye_blind-1,0)
+		blinded = 1
+	else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/blindfold) || istype(head, /obj/item/weapon/reagent_containers/glass/bucket))	//resting your eyes with a blindfold heals blurry eyes faster
+		adjustBlurriness(-3)
+		blinded = 1
+	else if(eye_blurry)	//blurry eyes heal slowly
+		adjustBlurriness(-1)
 
 		//Ears
-		if(sdisabilities & DEAF || HAS_TRAIT(src, TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
-			ear_deaf = max(ear_deaf, 1)
-		else if(ear_deaf)			//deafness, heals slowly over time
-			ear_deaf = max(ear_deaf-1, 0)
-		else if(istype(l_ear, /obj/item/clothing/ears/earmuffs) || istype(r_ear, /obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster
-			ear_damage = max(ear_damage-0.15, 0)
-			ear_deaf = max(ear_deaf, 1)
-		else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
-			ear_damage = max(ear_damage-0.05, 0)
+	if(sdisabilities & DEAF || HAS_TRAIT(src, TRAIT_DEAF))	//disabled-deaf, doesn't get better on its own
+		ear_deaf = max(ear_deaf, 1)
+	else if(ear_deaf)			//deafness, heals slowly over time
+		ear_deaf = max(ear_deaf-1, 0)
+	else if(istype(l_ear, /obj/item/clothing/ears/earmuffs) || istype(r_ear, /obj/item/clothing/ears/earmuffs))	//resting your ears with earmuffs heals ear damage faster
+		ear_damage = max(ear_damage-0.15, 0)
+		ear_deaf = max(ear_deaf, 1)
+	else if(ear_damage < 25)	//ear damage heals slowly under this threshold. otherwise you'll need earmuffs
+		ear_damage = max(ear_damage-0.05, 0)
 
 		//Liver
-		if(should_have_organ(O_LIVER) && !has_organ(O_LIVER))
-			adjustToxLoss(0.2)
-			blurEyes(0.5)
+	if(should_have_organ(O_LIVER) && !has_organ(O_LIVER))
+		adjustToxLoss(0.2)
+		blurEyes(0.5)
 
 		//Kidneys
-		if(should_have_organ(O_KIDNEYS) && !has_organ(O_KIDNEYS))
-			adjustToxLoss(0.4)
-			adjustBruteLoss(0.2)
+	if(should_have_organ(O_KIDNEYS) && !has_organ(O_KIDNEYS))
+		adjustToxLoss(0.4)
+		adjustBruteLoss(0.2)
 
 		//Heart
-		if(should_have_organ(O_HEART) && !has_organ(O_HEART))
-			death()
+	if(should_have_organ(O_HEART) && !has_organ(O_HEART))
+		death()
 
 		//Lungs
-		if(should_have_organ(O_LUNGS) && !has_organ(O_LUNGS))
-			adjustOxyLoss(1.5)
+	if(should_have_organ(O_LUNGS) && !has_organ(O_LUNGS))
+		rupture_lung()
 
 		//Other
 		if(stunned)

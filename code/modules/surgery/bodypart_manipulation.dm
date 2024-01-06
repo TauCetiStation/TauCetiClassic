@@ -156,7 +156,7 @@
 	if(istype(tool, /obj/item/organ/internal))
 		var/obj/item/organ/internal/H = tool
 		BP.bodypart_organs += tool
-		H.insert_organ(tool)
+		H.insert_organ(target)
 	user.drop_from_inventory(tool, target)
 	BP.hidden = tool
 	BP.cavity = 0
@@ -170,10 +170,10 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 //////////////////////////////////////////////////////////////////
-//					IMPLANT/ITEM REMOVAL SURGERY						//
+//					IMPLANT/ORGAN/ITEM REMOVAL SURGERY				//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/cavity/implant_removal
+/datum/surgery_step/cavity/bodypart_manipulation
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,	\
 	/obj/item/weapon/wirecutters = 75,	\
@@ -183,22 +183,23 @@
 	min_duration = 80
 	max_duration = 100
 
-/datum/surgery_step/cavity/implant_removal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/cavity/bodypart_manipulation/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		if(BP.stage == 3)
 			return FALSE
 
-		return BP && ((BP.open == 3 && BP.body_zone == BP_CHEST) || (BP.open == 2))
+		return BP && ((BP.open == 3 && BP.body_zone == BP_CHEST && target.op_stage.ribcage == 0) || (BP.open == 2) || (BP.body_zone = BP_HEAD && target.op_stage.skull == 1 && target.has_brain() && target.op_stage.brain_cut == 1))
 
-/datum/surgery_step/cavity/implant_removal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/cavity/bodypart_manipulation/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	if (BP.stage == 1)
 	user.visible_message("[user] starts poking around inside the incision on [target]'s [BP.name] with \the [tool].", \
 	"You start poking around inside the incision on [target]'s [BP.name] with \the [tool]" )
 	target.custom_pain("The pain in your chest is living hell!",1)
 	..()
 
-/datum/surgery_step/cavity/implant_removal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/cavity/bodypart_manipulation/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 	if(BP.implants.len || BP.bodypart_organs.len)
 		var/list/list_of_embed_types = list()
@@ -206,7 +207,7 @@
 		var/list/embed_object_implants = list()
 		var/list/internal_object_organs = list()
 		var/list/embed_object_else = list()
-		for(var/embed_object in BP.implants)
+		for(var/embed_object in BP.implants || BP.bodypart_organs)
 			if(istype(embed_object, /obj/item/weapon/shard/shrapnel))
 				embed_object_shrapnel += embed_object
 				continue
@@ -268,13 +269,9 @@
 						BP.bodypart_organs -= choosen_object
 						H.remove_organ(choosen_object)
 						H.loc = get_turf(target)
-					else if (istype(choosen_object, /obj/item/organ/internal/brain))
-						var/obj/item/organ/internal/brain/H
-						H = new(target.loc)
-						H.transfer_identity(target)
-					var/mob/living/simple_animal/borer/borer = target.has_brain_worms()
-
-					if(borer)
+					if(istype(choosen_object, /obj/item/organ/internal/brain))
+						var/mob/living/simple_animal/borer/borer = target.has_brain_worms()
+						if(borer)
 						borer.detatch() //Should remove borer if the brain is removed - RR
 					remove_from_cavity(user, target, choosen_object, BP, tool)
 			if("Else")
@@ -302,13 +299,14 @@
 	else
 		user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
 		"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>" )
+	BP.stage = 0
 
-/datum/surgery_step/cavity/implant_removal/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/cavity/bodypart_manipulation/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-	if (BP.implants.len)
+	if (BP.implants.len || BP.bodypart_organs.len)
 		var/fail_prob = 10
 		fail_prob += 100 - tool_quality(tool)
 		if (prob(fail_prob))
