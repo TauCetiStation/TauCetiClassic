@@ -50,7 +50,7 @@
 
 /obj/item/weapon/paper/sticker/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(!istype(target, /obj/structure) && !ismachinery(target)) return
+	if(!istype(target, /obj/structure) && !ismachinery(target) && !ismob(target)) return
 	if(src.loc != user) return
 
 	var/list/click_params = params2list(params)

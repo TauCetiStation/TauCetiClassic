@@ -129,7 +129,7 @@
 
 /obj/item/newtons_pendulum
 	name = "newton's pendulum"
-	cases = list("маятник ньютона", "маятника ньютона", "маятнику ньютона", "маятник ньютона", "маятником ньютона", "маятнике ньютона")
+	cases = list("маятник Ньютона", "маятника Ньютона", "маятнику Ньютона", "маятник Ньютона", "маятником Ньютона", "маятнике Ньютона")
 	desc = "Вечный двигатель в миниатюре."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "newtons_pendulum"
@@ -379,6 +379,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	. = ..()
 
 	icon_state = "water_cooler_[pick(list("red", "grey", "black", "white"))]"
+
+	cups = rand(cups, maxcups)
 
 	bottle = new(src)
 	update_icon()
