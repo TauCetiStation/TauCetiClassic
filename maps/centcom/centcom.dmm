@@ -18300,7 +18300,9 @@
 /turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aOt" = (
-/obj/structure/urinal,
+/obj/structure/urinal{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -24575,6 +24577,15 @@
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "red"
+	},
+/area/velocity)
+"dTz" = (
+/obj/structure/dryer{
+	dir = 8;
+	pixel_x = 6
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
 	},
 /area/velocity)
 "dUb" = (
@@ -78012,9 +78023,9 @@ asp
 asA
 aoo
 atH
+dTz
 atH
-atH
-atH
+dTz
 atH
 auc
 dFb
