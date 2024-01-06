@@ -31,6 +31,7 @@
 	RegisterSignal(host, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(on_shock))
 
 /datum/disease2/disease/proc/on_process(datum/host)
+	SIGNAL_HANDLER
 	if(istype(host, /obj/machinery/hydroponics))
 		adjust_nanites(regen_rate, host)
 		affect_plants(host)
@@ -104,12 +105,14 @@
 			remove_effect(NP)
 
 /datum/disease2/disease/proc/on_emp(datum/host, severity)
+	SIGNAL_HANDLER
 	nanite_volume *= (rand(60, 90) * 0.01) //Lose 10-40% of nanites
 	adjust_nanites(-(rand(5, 50)), host) //Lose 5-50 flat nanite volume
 	for(var/datum/disease2/effectholder/NP as anything in effects)
 		NP.effect.on_emp(src, host, severity)
 
 /datum/disease2/disease/proc/on_shock(datum/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
+	SIGNAL_HANDLER
 	if(shock_damage < 1)
 		return
 	nanite_volume *= (rand(45, 80) * 0.01) //Lose 20-55% of nanites
@@ -118,6 +121,7 @@
 		NP.effect.on_shock(src, host, shock_damage, current_source, siemens_coeff, def_zone, tesla_shock)
 
 /datum/disease2/disease/proc/on_death(datum/host, gibbed)
+	SIGNAL_HANDLER
 	for(var/datum/disease2/effectholder/NP as anything in effects)
 		NP.effect.on_death(src, host, gibbed)
 
