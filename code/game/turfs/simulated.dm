@@ -15,6 +15,10 @@
 
 /turf/simulated/atom_init()
 	..()
+
+	if(IS_EVEN(x) && IS_EVEN(y))
+		set_light(2, 1, "#fff9d4")
+
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/atom_init_late()

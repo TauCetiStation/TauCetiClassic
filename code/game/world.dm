@@ -8,7 +8,7 @@ var/global/it_is_a_snow_day = FALSE
 	enable_debugger()
 #endif
 
-	it_is_a_snow_day = prob(50)
+	it_is_a_snow_day = TRUE
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"

@@ -35,7 +35,7 @@
 		add_overlay(snow_fall_overlay)
 
 	if(IS_EVEN(x) && IS_EVEN(y))
-		set_light(1.4)
+		set_light(2, 1, "#fff9d4")
 
 	if(type == /turf/environment/snow)
 		if(prob(27)) // ~= 100*30/110
