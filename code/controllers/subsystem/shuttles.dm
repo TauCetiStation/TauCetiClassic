@@ -603,10 +603,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/check_emag(area/escape_pod)
 	var/obj/item/device/radio/intercom/pod/int = locate(/obj/item/device/radio/intercom/pod) in escape_pod
-	if(int.emagged)
-		return TRUE
-	else
-		return FALSE
+	return int.emagged
 
 /datum/controller/subsystem/shuttle/proc/try_launch_pod(area/escape_pod_start, area/escape_pod_end, move_content_dir, shake_dir, loc_name)
 	if(!locate(escape_pod_start) in world)
