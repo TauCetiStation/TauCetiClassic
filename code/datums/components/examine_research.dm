@@ -39,7 +39,7 @@ var/global/list/spented_examined_objects = list()
 	global.spented_examined_objects += parent
 
 /datum/component/examine_research/proc/calculate_research_value()
-	for(var/obj/object as anything in global.spented_examined_objects)
+	for(var/datum/object as anything in global.spented_examined_objects)
 		if(object.type == parent.type)
 			return 0
 	return points_value
