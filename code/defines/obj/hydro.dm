@@ -1277,6 +1277,7 @@
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
+	item_state_world = "sunflower_world"
 	damtype = BURN
 	force = 0
 	throwforce = 1

@@ -153,7 +153,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "vase_1"
 
-	var/list/canplace = list(/obj/item/weapon/reagent_containers/food/snacks/grown/harebell, /obj/item/weapon/grown/sunflower, /obj/item/weapon/reagent_containers/food/snacks/grown/mtear)
+	var/list/canplace = list(/obj/item/weapon/reagent_containers/food/snacks/grown/harebell, /obj/item/weapon/grown/sunflower, /obj/item/weapon/reagent_containers/food/snacks/grown/mtear, /obj/item/weapon/reagent_containers/food/snacks/grown/poppy)
 	var/obj/item/flower
 
 	var/image/flower_image
@@ -212,8 +212,8 @@
 	if(!flower)
 		return
 
-	flower_image = image(flower.icon, flower.icon_state)
-	flower_image.pixel_y = 4
+	flower_image = image(flower.icon, flower.item_state_world)
+	flower_image.pixel_y = 0
 	add_overlay(flower_image)
 	add_overlay(front_image)
 

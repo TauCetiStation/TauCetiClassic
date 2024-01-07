@@ -105,6 +105,7 @@
 	name = "poppy"
 	desc = "Long-used as a symbol of rest, peace, and death."
 	icon_state = "poppy"
+	item_state_world = "poppy_world"
 	potency = 30
 	filling_color = "#cc6464"
 
@@ -128,6 +129,7 @@
 	name = "harebell"
 	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
+	item_state_world = "harebell_world"
 	potency = 1
 	filling_color = "#d4b2c9"
 	slot_flags = SLOT_FLAGS_HEAD
@@ -260,6 +262,7 @@
 	name = "sprig of Messa's Tear"
 	desc = "A mountain climate herb with a soft, cold blue flower, known to contain an abundance of chemicals in it's flower useful to treating burns- Bad for the allergic to pollen."
 	icon_state = "mtear"
+	item_state_world = "mtear_world"
 	filling_color = "#70c470"
 	slot_flags = SLOT_FLAGS_HEAD
 

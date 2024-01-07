@@ -3,7 +3,7 @@
 	id = "water"
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	reagent_state = LIQUID
-	color = "#0064c8" // rgb: 0, 100, 200
+	color = "#1ca3ec"
 	custom_metabolism = 0.01
 	taste_message = null
 
