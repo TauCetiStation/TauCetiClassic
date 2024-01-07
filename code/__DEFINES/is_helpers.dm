@@ -118,6 +118,8 @@
 
 #define istagger(A) (istype(A, /obj/item/device/tagger))
 
+#define isdiagnostichud(A) (istype(A, /obj/item/clothing/glasses/hud/diagnostic))
+
 // GOONCHAT PORT
 
 #define isatom(A) (istype(A, /atom))
