@@ -59,7 +59,7 @@
 	return FALSE
 
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
-	. = PROJECTILE_ALL_OK
+	. = ..()
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/pyrometer) || (istype(P, /obj/item/projectile/plasma) && P.damage <= 20))
@@ -327,8 +327,12 @@
 	if(!I.force)
 		return TRUE
 
+	var/list/reflist = list(I.force)
+	SEND_SIGNAL(user, COMSIG_HUMAN_ATTACKED_BY, reflist)
+	var/item_force_amount = reflist[1]
+
 	//Apply weapon damage
-	var/force_with_melee_skill = apply_skill_bonus(user, I.force, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // +15% for each melee level
+	var/force_with_melee_skill = apply_skill_bonus(user, item_force_amount, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // +15% for each melee level
 	var/damage_flags = I.damage_flags()
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
