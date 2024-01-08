@@ -2630,6 +2630,10 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 25
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3069,9 +3073,14 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/folder/red,
 /obj/item/weapon/pen,
-/obj/machinery/alarm{
-	pixel_y = 28
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
 	},
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/book/manual/wiki/sop,
+/obj/item/vase,
+/obj/item/weapon/reagent_containers/food/snacks/grown/poppy,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5062,7 +5071,6 @@
 "aix" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/flask/barflask,
-/obj/item/weapon/book/manual/wiki/possible_threats,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5383,7 +5391,6 @@
 /area/station/security/main)
 "aiX" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/item/bust{
 	pixel_x = -15;
 	pixel_y = 6
@@ -7377,6 +7384,15 @@
 "amj" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/security/wooden_tv,
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
+	},
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/medical_chemistry,
+/obj/item/weapon/book/manual/wiki/medical_surgery,
+/obj/item/weapon/book/manual/wiki/engineering_hacking,
+/obj/item/mars_globe,
+/obj/item/weapon/book/manual/detective,
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "amk" = (
@@ -10515,7 +10531,6 @@
 /area/station/security/detectives_office)
 "arK" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/item/device/taperecorder,
 /obj/machinery/light/smart,
 /obj/structure/sign/poster/calendar{
@@ -13357,6 +13372,11 @@
 "awP" = (
 /obj/structure/table/glass,
 /obj/item/weapon/book/manual/wiki/guide_to_xenobiology,
+/obj/structure/bookcase/shelf{
+	pixel_y = -24
+	},
+/obj/item/weapon/book/manual/wiki/research_and_development,
+/obj/item/statuette,
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
 	},
@@ -23756,14 +23776,20 @@
 	},
 /area/station/rnd/hor)
 "aQu" = (
-/obj/machinery/alarm{
-	pixel_y = 26
-	},
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/science/rd,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/science/rd,
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
+	},
+/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/book/manual/wiki/sop,
+/obj/item/weapon/book/manual/wiki/guide_to_telescience,
+/obj/item/weapon/book/manual/wiki/research_and_development,
+/obj/item/weapon/book/manual/anomaly_testing,
+/obj/item/newtons_pendulum,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -24262,6 +24288,10 @@
 "aRo" = (
 /obj/machinery/light/smart{
 	dir = 8
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -25983,7 +26013,6 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/item/weapon/book/manual/wiki/possible_threats,
 /obj/machinery/computer/shop{
 	department = "Science";
 	dir = 8;
@@ -28457,13 +28486,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "aYF" = (
-/obj/machinery/light_switch{
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/light_switch{
+	pixel_y = 28
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
@@ -29125,6 +29154,15 @@
 	pixel_x = -8;
 	pixel_y = -2
 	},
+/obj/structure/bookcase/shelf{
+	pixel_y = -24
+	},
+/obj/item/weapon/book/manual/wiki/supply_crates,
+/obj/item/weapon/book/manual/wiki/chefs_recipes,
+/obj/item/weapon/book/manual/wiki/hydroponics,
+/obj/item/weapon/book/manual/wiki/barman_recipes,
+/obj/item/vase,
+/obj/item/weapon/grown/sunflower,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -30105,7 +30143,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "bbx" = (
-/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -31683,6 +31720,12 @@
 /obj/item/portrait/captain{
 	pixel_y = 32
 	},
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
+	},
+/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/book/manual/wiki/sop,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "beo" = (
@@ -34415,6 +34458,11 @@
 	},
 /area/station/medical/reception)
 "bjp" = (
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
+	},
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/medical_guide_to_medicine,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "red"
@@ -40479,9 +40527,11 @@
 /area/station/rnd/lab)
 "buj" = (
 /obj/structure/stool/bed/roller,
-/obj/machinery/light/smart{
-	dir = 1
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
 	},
+/obj/item/weapon/book/manual/wiki/medical_genetics,
+/obj/item/weapon/book/manual/stasis,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -41446,6 +41496,14 @@
 /obj/item/weapon/paper/depacc{
 	department_name = "Civilian"
 	},
+/obj/structure/bookcase/shelf{
+	pixel_y = -24
+	},
+/obj/item/weapon/book/manual/wiki/possible_threats{
+	pixel_x = 6
+	},
+/obj/item/weapon/book/manual/wiki/sop,
+/obj/item/statuette,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
@@ -42156,6 +42214,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -27
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -42618,10 +42677,6 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/supply_crates{
-	pixel_x = -4;
-	pixel_y = 7
-	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -44229,7 +44284,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/item/weapon/book/manual/wiki/medical_genetics,
 /obj/machinery/door_control{
 	id = "Genetics";
 	name = "Genetics";
@@ -57904,6 +57958,13 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the singularity chamber.";
+	layer = 4;
+	name = "Singularity Engine Telescreen";
+	network = list("Singularity");
+	pixel_y = 30
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -63948,9 +64009,6 @@
 /obj/machinery/requests_console/hop{
 	pixel_y = -30
 	},
-/obj/item/weapon/book/manual/wiki/possible_threats{
-	pixel_x = 6
-	},
 /obj/machinery/camera{
 	c_tag = "Head of Personnel's Office";
 	dir = 10
@@ -64341,6 +64399,9 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -64349,15 +64410,6 @@
 "cwY" = (
 /obj/machinery/newscaster{
 	pixel_y = 32
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
-"cwZ" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -72567,7 +72619,6 @@
 /obj/item/weapon/rcd_ammo,
 /obj/item/weapon/rcd_ammo,
 /obj/item/weapon/rcd_ammo,
-/obj/item/weapon/book/manual/wiki/possible_threats,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkyellow"
@@ -72830,9 +72881,9 @@
 /obj/machinery/requests_console/ce{
 	pixel_x = 32
 	},
-/obj/machinery/light_switch{
-	pixel_x = -8;
-	pixel_y = -22
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -30
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -73202,14 +73253,17 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "gTb" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
 /obj/structure/filingcabinet/chestdrawer/black{
 	req_access = list(40)
 	},
 /obj/item/weapon/paper/depacc{
 	department_name = "Medical"
+	},
+/obj/item/portrait/captain{
+	pixel_y = 32
+	},
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -76280,7 +76334,6 @@
 /area/station/maintenance/cargo)
 "jXb" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/item/weapon/folder/red,
 /turf/simulated/floor{
 	dir = 8;
@@ -77158,6 +77211,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "kRb" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -78140,7 +78197,6 @@
 	department = "Medical";
 	pixel_y = 24
 	},
-/obj/item/weapon/book/manual/wiki/possible_threats,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -78275,17 +78331,19 @@
 /area/station/cargo/office)
 "mbb" = (
 /obj/structure/table/glass,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/item/device/megaphone,
 /obj/item/weapon/defibrillator/compact/loaded,
-/obj/item/portrait/captain{
-	pixel_y = 32
-	},
 /obj/item/device/sensor_device,
 /obj/item/clothing/glasses/sunglasses/hud/med,
 /obj/item/clothing/accessory/stethoscope,
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
+	},
+/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/book/manual/wiki/medical_genetics,
+/obj/item/weapon/book/manual/wiki/sop,
+/obj/item/vase,
+/obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -78433,10 +78491,6 @@
 	},
 /area/station/medical/reception)
 "mih" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 20
-	},
 /obj/item/portrait/captain{
 	pixel_x = -32
 	},
@@ -78446,6 +78500,15 @@
 /obj/item/weapon/paper/depacc{
 	department_name = "Engineering"
 	},
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
+	},
+/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/book/manual/wiki/sop,
+/obj/item/weapon/book/manual/wiki/construction,
+/obj/item/weapon/book/manual/wiki/engineering_hacking,
+/obj/item/weapon/book/manual/wiki/supermatter_engine,
+/obj/item/earth_globe,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"
@@ -86179,13 +86242,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "wdR" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the singularity chamber.";
-	layer = 4;
-	name = "Singularity Engine Telescreen";
-	network = list("Singularity");
-	pixel_y = 30
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -114997,7 +115053,7 @@ ctQ
 cuw
 bvS
 bra
-cwZ
+aPE
 bxW
 cxO
 aMR
@@ -119561,7 +119617,7 @@ ais
 adO
 adh
 akj
-alj
+amE
 afV
 amj
 ana

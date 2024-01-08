@@ -213,7 +213,6 @@
 		return
 
 	flower_image = image(flower.icon, flower.item_state_world)
-	flower_image.pixel_y = 0
 	add_overlay(flower_image)
 	add_overlay(front_image)
 
