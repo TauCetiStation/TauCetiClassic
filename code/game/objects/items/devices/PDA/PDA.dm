@@ -1313,7 +1313,7 @@
 		add_overlay(image('icons/obj/pda.dmi', "pda_cartridge"))
 
 	var/mob/user = usr
-	if(nanomanager.get_open_ui(user, src))
+	if(nanomanager.get_open_ui(user, src, "main"))
 		icon_state = "[item_state_inventory]_using"
 	else
 		icon_state = item_state_inventory
