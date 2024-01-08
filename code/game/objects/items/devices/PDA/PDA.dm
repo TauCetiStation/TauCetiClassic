@@ -6,8 +6,10 @@
 	name = "PDA"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
 	icon = 'icons/obj/pda.dmi'
-	icon_state = "pda"
+	icon_state = "pda_grey"
 	item_state = "electronic"
+	item_state_world = "pda_grey_world"
+	item_state_inventory = "pda_grey"
 	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_ID | SLOT_FLAGS_BELT
 
@@ -50,7 +52,7 @@
 
 	var/list/cartmodes = list(40, 42, 43, 433, 44, 441, 45, 451, 46, 48, 47, 49) // If you add more cartridge modes add them to this list as well.
 	var/list/no_auto_update = list(1, 40, 43, 44, 441, 45, 451, 72, 73)		     // These modes we turn off autoupdate
-	var/list/update_every_five = list(3, 41, 433, 46, 47, 48, 49)			     // These we update every 5 ticks
+	var/list/update_every_five = list(3, 433, 46, 47, 48, 49)			     // These we update every 5 ticks
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -151,45 +153,35 @@
 		real_name = "[real_name]"
 
 	owner = real_name
-	name = "PDA-[real_name][ownjob ? " ([ownjob])" : ""]"
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
-	icon_state = "pda-m"
 
 /obj/item/device/pda/viro
 	default_cartridge = /obj/item/weapon/cartridge/medical
-	icon_state = "pda-v"
 
 /obj/item/device/pda/engineering
 	default_cartridge = /obj/item/weapon/cartridge/engineering
-	icon_state = "pda-e"
 
 /obj/item/device/pda/security
 	default_cartridge = /obj/item/weapon/cartridge/security
-	icon_state = "pda-s"
 
 /obj/item/device/pda/detective
 	default_cartridge = /obj/item/weapon/cartridge/detective
-	icon_state = "pda-det"
 
 /obj/item/device/pda/warden
 	default_cartridge = /obj/item/weapon/cartridge/security
-	icon_state = "pda-warden"
 
 /obj/item/device/pda/janitor
 	default_cartridge = /obj/item/weapon/cartridge/janitor
-	icon_state = "pda-j"
 	ttone = "slip"
 
 /obj/item/device/pda/science
 	default_cartridge = /obj/item/weapon/cartridge/signal/science
-	icon_state = "pda-tox"
 	ttone = "boom"
 
 /obj/item/device/pda/clown
 	default_cartridge = /obj/item/weapon/cartridge/clown
-	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
 
@@ -243,129 +235,94 @@
 
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
-	icon_state = "pda-mime"
 	message_silent = 1
 	ttone = "silence"
 
 /obj/item/device/pda/velocity
 	default_cartridge = /obj/item/weapon/cartridge/hos
-	icon_state = "pda-velocity"
 
 /obj/item/device/pda/velocity/doctor
 	default_cartridge = /obj/item/weapon/cartridge/medical
 
 /obj/item/device/pda/heads
 	default_cartridge = /obj/item/weapon/cartridge/head
-	icon_state = "pda-h"
 
 /obj/item/device/pda/heads/hop
 	default_cartridge = /obj/item/weapon/cartridge/hop
-	icon_state = "pda-hop"
 
 /obj/item/device/pda/heads/hos
 	default_cartridge = /obj/item/weapon/cartridge/hos
-	icon_state = "pda-hos"
 
 /obj/item/device/pda/heads/ce
 	default_cartridge = /obj/item/weapon/cartridge/ce
-	icon_state = "pda-ce"
 
 /obj/item/device/pda/heads/cmo
 	default_cartridge = /obj/item/weapon/cartridge/cmo
-	icon_state = "pda-cmo"
 
 /obj/item/device/pda/heads/rd
 	default_cartridge = /obj/item/weapon/cartridge/rd
-	icon_state = "pda-rd"
 
 /obj/item/device/pda/captain
 	default_cartridge = /obj/item/weapon/cartridge/captain
-	icon_state = "pda-c"
 	detonate = 0
 	//toff = 1
 
 /obj/item/device/pda/cargo
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
-	icon_state = "pda-cargo"
 
 /obj/item/device/pda/quartermaster
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
-	icon_state = "pda-q"
-
 /obj/item/device/pda/shaftminer
-	icon_state = "pda-miner"
 
 /obj/item/device/pda/syndicate
 	default_cartridge = /obj/item/weapon/cartridge/syndicate
 	default_pen = /obj/item/weapon/pen/edagger
-	icon_state = "pda-syn"
 	name = "Military PDA"
 	owner = "John Doe"
 	hidden = 1
 
 /obj/item/device/pda/chaplain
-	icon_state = "pda-holy"
 	ttone = "holy"
 
 /obj/item/device/pda/lawyer
 	default_cartridge = /obj/item/weapon/cartridge/lawyer
-	icon_state = "pda-lawyer"
 	ttone = "..."
 
 /obj/item/device/pda/lawyer2
 	default_cartridge = /obj/item/weapon/cartridge/lawyer
-	icon_state = "pda-lawyer-old"
 	ttone = "..."
 
 /obj/item/device/pda/botanist
 	//default_cartridge = /obj/item/weapon/cartridge/botanist
-	icon_state = "pda-hydro"
 
 /obj/item/device/pda/roboticist
-	icon_state = "pda-robot"
 
 /obj/item/device/pda/librarian
-	icon_state = "pda-libb"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a WGW-11 series e-reader."
-	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	message_silent = 1 //Quiet in the library!
 
 /obj/item/device/pda/reporter
-	icon_state = "pda-libc"
 
 /obj/item/device/pda/forensic
 	default_cartridge = /obj/item/weapon/cartridge/detective
-	icon = 'icons/obj/pda.dmi'
-	icon_state = "pda-forensic"
 
 /obj/item/device/pda/clear
-	icon_state = "pda-transp"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. This is model is a special edition with a transparent case."
-	note = "Congratulations, you have chosen the Thinktronic 5230 Personal Data Assistant Deluxe Special Max Turbo Limited Edition!"
 
 /obj/item/device/pda/chef
-	icon_state = "pda-chef"
 
 /obj/item/device/pda/barber
-	icon_state = "pda-barber"
 
 /obj/item/device/pda/bar
-	icon_state = "pda-bar"
 
 /obj/item/device/pda/atmos
 	default_cartridge = /obj/item/weapon/cartridge/atmos
-	icon_state = "pda-atmo"
 
 /obj/item/device/pda/chemist
 	default_cartridge = /obj/item/weapon/cartridge/chemistry
-	icon_state = "pda-chem"
 
 /obj/item/device/pda/geneticist
 	default_cartridge = /obj/item/weapon/cartridge/medical
-	icon_state = "pda-gene"
 
 /obj/item/device/pda/blueshield
-	icon_state = "pda-blu"
 	default_pen = /obj/item/weapon/pen/edagger/legitimate
 
 
@@ -518,6 +475,8 @@
 	if(old_ui && (mode == lastmode && ui_tick % 5 && (mode in update_every_five)))
 		return
 
+	update_icon()
+
 	lastmode = mode
 
 	var/title = "Personal Data Assistant"
@@ -647,8 +606,6 @@
 				data["convo_name"] = sanitize(c["owner"])
 				data["convo_job"] = sanitize(c["job"])
 				break
-	if(mode==41)
-		data_core.load_manifest()
 
 	if(mode==3)
 		var/turf/T = get_turf(user.loc)
@@ -834,6 +791,7 @@
 		if("Close")//Self explanatory
 			U.unset_machine()
 			ui.close()
+			update_icon()
 			return 0
 		if("Refresh")//Refresh, goes to the end of the proc.
 		if("Return")//Return
@@ -893,8 +851,6 @@
 			mode = 0
 		if("chatroom") // chatroom hub
 			mode = 5
-		if("41") //Manifest
-			mode = 41
 
 //MAIN FUNCTIONS===================================
 
@@ -1044,9 +1000,6 @@
 			ui.close()
 			to_chat(U, "[bicon(src)]<span class='notice'>Select transfer recipient.</span>")
 			pda_paymod = TRUE
-
-		if("Show Manifest")
-			mode = 41
 
 		if("target_acc_number")
 			target_account = text2num(input(U, "Enter an account number", name, target_account) as text)	//If "as num" I can't copy text from the buffer
@@ -1339,31 +1292,46 @@
 
 	if (mode == 2||mode == 21)//To clear message overlays.
 		newmessage = 0
-		update_icon()
 
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MASTER, 30)
 
+	update_icon()
+
 	return 1 // return 1 tells it to refresh the UI in NanoUI
 
 /obj/item/device/pda/update_icon()
 	..()
-
 	cut_overlays()
+	if(icon_state == item_state_world)
+		return
+
+	if(pen)
+		add_overlay(image('icons/obj/pda.dmi', "pda_pen"))
+	if(cartridge)
+		add_overlay(image('icons/obj/pda.dmi', "pda_cartridge"))
+
+	var/mob/user = usr
+	if(nanomanager.get_open_ui(user, src))
+		icon_state = "[item_state_inventory]_using"
+	else
+		icon_state = item_state_inventory
+		return
+
+
 	if(newmessage)
 		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
-	if(id)
-		var/id_overlay = get_id_overlay(id)
-		if(id_overlay)
-			add_overlay(image('icons/obj/pda.dmi', id_overlay))
+	else
+		switch(mode)
+			if(0)
+				add_overlay(image('icons/obj/pda.dmi', "screen-1"))
+			else
+				add_overlay(image('icons/obj/pda.dmi', "screen-2"))
 
-/obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
-	if(!I)
-		return
-	if(I.icon_state in ALLOWED_ID_OVERLAYS)
-		return I.icon_state
-	return "id"
+/obj/item/device/pda/update_world_icon()
+	..()
+	update_icon()
 
 /obj/item/device/pda/proc/detonate_act(obj/item/device/pda/P)
 	//TODO: sometimes these attacks show up on the message server
@@ -1441,7 +1409,6 @@
 				id.forceMove(get_turf(src))
 			to_chat(user, "<span class='notice'>You remove the ID from the [name].</span>")
 			id = null
-			update_icon()
 		else
 			to_chat(user, "<span class='notice'>This PDA does not have an ID in it.</span>")
 	else
@@ -1465,6 +1432,7 @@
 				pen.forceMove(get_turf(src))
 			to_chat(user, "<span class='notice'>You remove \the [pen] from \the [src].</span>")
 			pen = null
+			update_icon()
 		else
 			to_chat(user, "<span class='notice'>This PDA does not have a pen in it.</span>")
 	else
@@ -1644,6 +1612,7 @@
 	if(istype(I, /obj/item/weapon/cartridge) && !cartridge)
 		cartridge = I
 		user.drop_from_inventory(I, src)
+		update_icon()
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		nanomanager.update_uis(src) // update all UIs attached to src
 		if(cartridge.radio)
@@ -1688,6 +1657,7 @@
 		else
 			pen = I
 			user.drop_from_inventory(I, src)
+			update_icon()
 			to_chat(user, "<span class='notice'>You slide \the [I] into \the [src].</span>")
 	else
 		return ..()

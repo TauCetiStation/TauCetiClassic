@@ -578,6 +578,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]        >> undershirt
 	S["socks"]             >> socks
 	S["backbag"]           >> backbag
+	S["pdacol"]            >> pdacol
+	S["radiocol"]          >> radiocol
 	S["use_skirt"]         >> use_skirt
 
 	//Load prefs
@@ -661,6 +663,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
 	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
+	pdacol          = sanitize_integer(pdacol, 1, pdacolours.len, initial(pdacol))
+	radiocol        = sanitize_integer(radiocol, 1, radiocolours.len, initial(radiocol))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	neuter_gender_voice = sanitize_gender_voice(neuter_gender_voice)
 
@@ -772,6 +776,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]            << undershirt
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
+	S["pdacol"]                << pdacol
+	S["radiocol"]              << radiocol
 	S["use_skirt"]             << use_skirt
 	//Write prefs
 	S["alternate_option"]      << alternate_option

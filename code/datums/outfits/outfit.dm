@@ -288,6 +288,7 @@
 
 		var/obj/item/device/pda/pda = locate() in H // find closest pda
 		if(pda)
+			pda.icon_state = "pda_[lowertext(pdacolours[H.pdacol])]"
 			pda.ownjob = wear_id.assignment
 			pda.assign(H.real_name)
 

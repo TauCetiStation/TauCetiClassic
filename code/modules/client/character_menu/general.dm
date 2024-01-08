@@ -135,6 +135,8 @@
 				. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
 				. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
 			. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
+			. += "PDA Colour: <a href ='?_src_=prefs;preference=pdacol;task=input'>[pdacolours[pdacol]]</a><br>"
+			. += "Headset Colour: <a href = '?_src_=prefs;preference=radiocol;task=input'>[radiocolours[radiocol]]</a><br>"
 			. += "Using skirt uniform: <a href ='?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a>"
 
 	. += 								"</td>"
@@ -254,6 +256,10 @@
 					b_skin = rand(0,255)
 				if("bag")
 					backbag = rand(1, backbaglist.len)
+				if("pdacol")
+					pdacol = rand(1, pdacolours.len)
+				if("radiocol")
+					radiocol = rand(1, radiocolours.len)
 				if("use_skirt")
 					use_skirt = pick(TRUE, FALSE)
 				if("all")
@@ -455,6 +461,16 @@
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", backbaglist[backbag]) as null|anything in backbaglist
 					if(new_backbag)
 						backbag = backbaglist.Find(new_backbag)
+
+				if("pdacol")
+					var/new_pdacol = input(user, "Choose your character's colour of PDA:", "Character Preference", pdacolours[pdacol]) as null|anything in pdacolours
+					if(new_pdacol)
+						pdacol = pdacolours.Find(new_pdacol)
+
+				if("radiocol")
+					var/new_radiocol = input(user, "Choose your character's colour of Headset", "Character Preference", radiocolours[radiocol]) as null|anything in radiocolours
+					if(new_radiocol)
+						radiocol = radiocolours.Find(new_radiocol)
 
 				if("use_skirt")
 					use_skirt = !use_skirt

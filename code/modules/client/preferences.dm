@@ -87,6 +87,8 @@ var/global/list/preferences_datums = list()
 	var/undershirt = 1					//undershirt type
 	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
+	var/pdacol = 1
+	var/radiocol = 1
 	var/use_skirt = FALSE				//using skirt uniform version
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
@@ -495,6 +497,15 @@ var/global/list/preferences_datums = list()
 	if(backbag > 5 || backbag < 1)
 		backbag = 1 //Same as above
 	character.backbag = backbag
+
+	if(pdacol > 4 || pdacol < 1)
+		pdacol = 1
+	character.pdacol = pdacol
+
+	if(radiocol > 4 || radiocol < 1)
+		radiocol = 1
+	character.radiocol = radiocol
+
 	character.use_skirt = use_skirt
 
 	if(icon_updates)

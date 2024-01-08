@@ -18,6 +18,8 @@
 	undershirt = rand(1,undershirt_t.len)
 	socks = rand(1,socks_t.len)
 	backbag = 2
+	pdacol = 1
+	radiocol = 1
 	use_skirt = pick(TRUE, FALSE)
 	var/datum/species/S = all_species[species]
 	age = rand(S.min_age, S.max_age)

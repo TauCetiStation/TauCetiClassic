@@ -560,6 +560,8 @@ SUBSYSTEM_DEF(job)
 
 	spawnId(H, rank, alt_title)
 
+	recolour_headset(H)
+
 //		H.update_icons()
 
 	return TRUE
@@ -609,6 +611,9 @@ SUBSYSTEM_DEF(job)
 	H.equip_to_slot_or_del(new /obj/item/device/pda(H), SLOT_BELT)
 	if(locate(/obj/item/device/pda,H))
 		var/obj/item/device/pda/pda = locate(/obj/item/device/pda,H)
+		pda.icon_state = "pda_[lowertext(pdacolours[H.pdacol])]"
+		pda.item_state_world = "[pda.icon_state]_world"
+		pda.item_state_inventory = pda.icon_state
 		pda.ownjob = C.assignment
 		pda.assign(H.real_name)
 		pda.ownrank = C.rank
@@ -620,6 +625,13 @@ SUBSYSTEM_DEF(job)
 		MA.owner_PDA = pda //add PDA in /datum/money_account
 
 	return TRUE
+
+/datum/controller/subsystem/job/proc/recolour_headset(mob/living/carbon/human/H)
+	if(locate(/obj/item/device/radio/headset, H))
+		var/obj/item/device/radio/headset/Rad = locate(/obj/item/device/radio/headset, H)
+		Rad.icon_state = "headset_[lowertext(radiocolours[H.radiocol])]"
+		Rad.item_state_world = "[Rad.icon_state]_world"
+		Rad.item_state_inventory = Rad.icon_state
 
 /datum/controller/subsystem/job/proc/LoadJobs(jobsfile)
 	if(!config.load_jobs_from_txt)

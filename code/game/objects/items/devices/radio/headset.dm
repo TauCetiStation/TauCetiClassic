@@ -1,8 +1,10 @@
 /obj/item/device/radio/headset
 	name = "radio headset"
 	desc = "An updated, modular intercom that fits over the head. Takes encryption keys."
-	icon_state = "headset"
+	icon_state = "headset_grey"
 	item_state = "headset"
+	item_state_world = "headset_grey_world"
+	item_state_inventory = "headset_grey"
 	g_amt = 0
 	m_amt = 75
 	subspace_transmission = 1
@@ -150,15 +152,9 @@
 	ks1type = /obj/item/device/encryptionkey/binary
 
 /obj/item/device/radio/headset/headset_sec
-	name = "security radio headset"
-	desc = "This is used by your elite security force. To access the security channel, use :s."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "sec_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_sec
 
 /obj/item/device/radio/headset/headset_sec/alt
-	name = "security radio headset"
 	icon_state = "sec_headset_alt"
 
 /obj/item/device/radio/headset/headset_sec/nt_pmc
@@ -172,69 +168,29 @@
 	desc = "Buzzz.... That's nine-nine charlie, requesting backup. Buzzz.... To access the security channel, use :s."
 
 /obj/item/device/radio/headset/headset_int
-	name = "internal affairs radio headset"
-	desc = "The headset of the NanoTrasen dog. To access the security channel, use :s. For command, use :c."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "int_headset"
-	item_state = "int_headset"
 	ks2type = /obj/item/device/encryptionkey/headset_int
 
 /obj/item/device/radio/headset/headset_int/blueshield
-	name = "blueshield radio headset"
-	icon_state = "blueshield"
-	desc = "Headset of the guy that for some reason follows our heads of staff... To access the security channel, use :s. For command, use :c."
 
 /obj/item/device/radio/headset/headset_eng
-	name = "engineering radio headset"
-	desc = "When the engineers wish to chat like girls. To access the engineering channel, use :e. "
-	icon_state = "eng_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_eng
 
 /obj/item/device/radio/headset/headset_rob
-	name = "robotics radio headset"
-	desc = "Made specifically for the roboticists who cannot decide between departments. To access the engineering channel, use :e. For research, use :n."
-	icon_state = "rob_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_rob
 
 /obj/item/device/radio/headset/headset_med
-	name = "medical radio headset"
-	desc = "A headset for the trained staff of the medbay. To access the medical channel, use :m."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "med_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_med
 
 /obj/item/device/radio/headset/headset_sci
-	name = "science radio headset"
-	desc = "A sciency headset. Like usual. To access the science channel, use :n."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "sci_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_sci
 
 /obj/item/device/radio/headset/headset_medsci
-	name = "medical research radio headset"
-	desc = "A headset that is a result of the mating between medical and science. To access the medical channel, use :m. For science, use :n."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "medsci_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_medsci
 
 /obj/item/device/radio/headset/headset_com
-	name = "command radio headset"
-	desc = "A headset with a commanding channel. To access the command channel, use :c."
-	icon_state = "com_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_com
 
 /obj/item/device/radio/headset/heads/captain
-	name = "captain's headset"
-	desc = "The headset of the boss. Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :m - medical, :n - science."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "cap_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/captain
 	grid = TRUE
 
@@ -257,45 +213,20 @@
 	return
 
 /obj/item/device/radio/headset/heads/rd
-	name = "research director's headset"
-	desc = "Headset of the researching God. To access the science channel, use :n. For command, use :c."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "rd_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/rd
 	grid = TRUE
 
 /obj/item/device/radio/headset/heads/hos
-	name = "head of security's headset"
-	desc = "The headset of the man who protects your worthless lifes. To access the security channel, use :s. For command, use :c."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "hos_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/hos
 
 /obj/item/device/radio/headset/heads/ce
-	name = "chief engineer's headset"
-	desc = "The headset of the guy who is in charge of morons. To access the engineering channel, use :e. For command, use :c."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "ce_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/ce
 	grid = TRUE
 
 /obj/item/device/radio/headset/heads/cmo
-	name = "chief medical officer's headset"
-	desc = "The headset of the highly trained medical chief. To access the medical channel, use :m. For command, use :c."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "cmo_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/cmo
 
 /obj/item/device/radio/headset/heads/hop
-	name = "head of personnel's headset"
-	desc = "The headset of the guy who will one day be captain. Channels are as follows: :u - supply, :c - command, :s - security"
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "hop_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/hop
 /*
 /obj/item/device/radio/headset/headset_mine
@@ -313,11 +244,6 @@
 	ks2type = /obj/item/device/encryptionkey/heads/qm
 */
 /obj/item/device/radio/headset/headset_cargo
-	name = "supply radio headset"
-	desc = "A headset used by the QM and his slaves. To access the supply channel, use :u."
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "cargo_headset"
-	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_cargo
 
 /obj/item/device/radio/headset/ert

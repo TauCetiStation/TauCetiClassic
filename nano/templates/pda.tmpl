@@ -79,7 +79,6 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             <div class="itemContent">
                 {{:helper.link('Notekeeper', 'note', {'choice' : "1"}, null, 'fixedLeftWide')}}
                 {{:helper.link('Messenger', data.new_Message ? 'mail-closed' : 'mail-open', {'choice' : "2"}, null, 'fixedLeftWide')}}
-                {{:helper.link('Crew Manifest', 'contact', {'choice' : "41"}, null, 'fixedLeftWide')}}
 				<!-- {{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWide')}} -->
 				{{:helper.link('Finance Management', 'suitcase', {'choice' : "Finance"}, null, 'fixedLeftWide')}}
 				{{:helper.link('ГрузТорг', 'cart', {'choice' : "Shop"}, null, 'fixedLeftWide')}}
@@ -305,92 +304,6 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             </div>
         </div>
         {{:helper.link('Reply', 'comment', {'choice' : "Message", 'target': data.active_conversation}, null, 'fixedLeft')}}
-
-
-	{{else data.mode== 41}} <!-- Manifest uses cached data so we only use nanowriter when shit changes.-->
-	    <div class="item">
-            <center><table class="pmon"><tbody>
-                {{if data.cached.heads.length}}
-                    <tr><th colspan="4" class="command">Command</th></tr>
-                    {{for data.cached["heads"]}}
-                        {{if value.rank == "Captain"}}
-							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.sec.length}}
-                    <tr><th colspan="4" class="sec">Security</th></tr>
-                    {{for data.cached["sec"]}}
-                        {{if value.rank == "Head of Security"}}
-							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.eng.length}}
-                    <tr><th colspan="4" class="eng">Engineering</th></tr>
-                    {{for data.cached["eng"]}}
-                        {{if value.rank == "Chief Engineer"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.med.length}}
-                    <tr><th colspan="4" class="med">Medical</th></tr>
-                    {{for data.cached["med"]}}
-                        {{if value.rank == "Chief Medical Officer"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.sci.length}}
-                    <tr><th colspan="4" class="sci">Science</th></tr>
-                    {{for data.cached["sci"]}}
-                        {{if value.rank == "Research Director"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.civ.length}}
-                    <tr><th colspan="4" class="civ">Civilian</th></tr>
-                    {{for data.cached["civ"]}}
-                        {{if value.rank == "Head of Personnel"}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
-                        {{else}}
-                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                        {{/if}}
-                    {{/for}}
-                {{/if}}
-                {{if data.cached.misc.length}}
-                    <tr><th colspan="4" class="misc">Misc</th></tr>
-                    {{for data.cached["misc"]}}
-                        <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
-                        <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
-                    {{/for}}
-                {{/if}}
-            </tbody></table></center>
-        </div>
 
 
 	{{else data.mode == 3}}
