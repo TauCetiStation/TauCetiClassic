@@ -226,16 +226,24 @@
 			return ..()
 		var/mob/living/L = target
 		var/target_armor = L.run_armor_check(user.get_targetzone(), MELEE)
+
+		var/help_agony_amount = 35
+		var/harm_agony_addition = 30
+		var/list/reflist = list(help_agony_amount, harm_agony_addition)
+		SEND_SIGNAL(user, COMSIG_HUMAN_ATTACKED_BY, reflist)
+		help_agony_amount = reflist[1]
+		harm_agony_addition = reflist[2]
+
 		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			H.apply_effect(35, AGONY, target_armor)
+			H.apply_effect(help_agony_amount, AGONY, target_armor)
 			playsound(src, 'sound/weapons/hit_metalic.ogg', VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
 			H.visible_message("<span class='warning'>[user] hit [H] harmlessly with a telebaton.</span>")
 			H.log_combat(user, "hit harmlessly with [name]")
 			return
 		if(..())
-			L.apply_effect(30, AGONY, target_armor)
+			L.apply_effect(harm_agony_addition, AGONY, target_armor)
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			return
 	else

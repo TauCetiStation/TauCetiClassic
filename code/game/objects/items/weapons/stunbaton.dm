@@ -84,7 +84,11 @@
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(50))
 			return
-	M.apply_effect(agony, AGONY, 0)
+
+	var/list/reflist = list(agony)
+	SEND_SIGNAL(user, COMSIG_HUMAN_ATTACKED_BY, reflist)
+	M.apply_effect(reflist[1], AGONY, 0)
+
 	discharge()
 	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
