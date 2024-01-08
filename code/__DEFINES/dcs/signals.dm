@@ -249,6 +249,10 @@
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
 /// from /obj/item/weapon/stock_parts/cell
 #define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
+// from /obj/item/projectile/proc/on_hit(): (list/parameters)
+#define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"
+// from /obj/item/weapon/grenade/proc/activate(): (list/parameters)
+#define COMSIG_GRENADE_ACTIVATE "grenade_activate"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -339,6 +343,10 @@
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
 #define COMSIG_LIVING_BUMPED "living_bumped"
+// from /mob/living/proc/mob_bullet_act(): (list/parameters)
+#define COMSIG_MOB_BULLET_ACT "mob_bullet_act"
+// from /mob/living/carbon/human/attacked_by(): (list/parameters)
+#define COMSIG_HUMAN_ATTACKED_BY "human_attacked_by"
 
 /// from /obj/effect/proc_holder/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
