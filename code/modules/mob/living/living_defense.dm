@@ -107,6 +107,15 @@
 	return absorb
 
 /mob/living/proc/mob_bullet_act(obj/item/projectile/P, def_zone) // this one can be used to help with the order of code things to run.
+	var/list/reflist = list(P.damage, P.stun, P.weaken, P.stutter, P.agony, P.incendiary)
+	if(istype(P.firer))
+		SEND_SIGNAL(P.firer, COMSIG_MOB_BULLET_ACT, reflist)
+	P.damage = reflist[1]
+	P.stun = reflist[2]
+	P.weaken = reflist[3]
+	P.stutter = reflist[4]
+	P.agony = reflist[5]
+
 	return PROJECTILE_ALL_OK
 
 //this proc handles being hit by a thrown atom
