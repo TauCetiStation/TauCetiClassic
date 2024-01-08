@@ -104,6 +104,16 @@
 	return H
 
 /obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	var/list/reflist = list(paralyze, irradiate, stutter, eyeblur, drowsy, incendiary)
+	if(istype(firer))
+		SEND_SIGNAL(firer, COMSIG_PROJECTILE_ON_HIT, reflist)
+	paralyze = reflist[1]
+	irradiate = reflist[2]
+	stutter = reflist[3]
+	eyeblur = reflist[4]
+	drowsy = reflist[5]
+	incendiary = reflist[6]
+
 	impact_effect(effect_transform)		// generate impact effect
 	if(!isliving(target))
 		return 0
