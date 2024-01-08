@@ -119,7 +119,7 @@
 			break
 
 /obj/structure/bookcase/shelf/attackby(obj/O, mob/user)
-	if(!placeditem && O.type in canbeplaced)
+	if(!placeditem && (O.type in canbeplaced))
 		user.drop_from_inventory(O, src)
 		placeditem = O
 		var/list/placedoffsets = canbeplaced[O.type]
