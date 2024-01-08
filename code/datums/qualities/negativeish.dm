@@ -267,3 +267,13 @@ var/global/list/allergen_reagents_list
 		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, adjustBrainLoss), 50), 3 MINUTE)
 		return
 	H.adjustBrainLoss(60)
+
+/datum/quality/negativeish/dnd
+	name = "DnD"
+	desc = "Вы непредсказуемы, даже для самого себя."
+	requirement = "Сотрудник Службы Безопасности."
+
+	jobs_required = list("Security Officer", "Detective", "Security Cadet", "Head of Security", "Warden", "Forensic Technician")
+
+/datum/quality/negativeish/dnd/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_RANDOM_DAMAGE, QUALITY_TRAIT)
