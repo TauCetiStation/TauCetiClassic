@@ -50,6 +50,11 @@
 	if(active)
 		return
 
+	var/list/reflist = list(det_time)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_GRENADE_ACTIVATE, reflist)
+	det_time = reflist[1]
+
 	if(user)
 		msg_admin_attack("[user.name] ([user.ckey]) primed \a [src]", user)
 		var/turf/T = get_turf(src)
