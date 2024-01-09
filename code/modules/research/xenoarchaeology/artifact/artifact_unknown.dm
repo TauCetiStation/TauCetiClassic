@@ -16,10 +16,8 @@
 	var/need_init = TRUE
 	///how often do we scan
 	var/scan_delay = 2 SECONDS
-	///list of turfs around us
-	var/list/turf/turfs_around = list()
-	///list of mobs inside of turfs around us
-	var/list/mob/mobs_around = list()
+	///flag whether someone around
+	var/movement_around = FALSE
 	///touch cooldown to prevent spam in /bumped
 	var/touch_cooldown = 3 SECONDS
 	///last time mob touched us
@@ -28,7 +26,6 @@
 	max_integrity = 1000
 
 /obj/machinery/artifact/Destroy()
-	clear_turfs_around()
 	do_destroy_effects()
 	visible_message("<span class='danger'>[src] breaks in pieces, releasing a wave of energy</span>")
 	if(first_effect)
@@ -52,46 +49,11 @@
 
 	init_artifact_type()
 	if(first_effect?.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
-		init_turfs_around()
+		new /datum/proximity_monitor(src, 3)
 
-/**
- * Adds a entered/exited signal to each turf around RANGE_TURFS(3 , src)
- */
-/obj/machinery/artifact/proc/init_turfs_around()
-	for(var/turf/T as anything in RANGE_TURFS(3, src))
-		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
-		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
-		turfs_around += T
-
-/**
- * Clears both mob/turf lists, unregisters entered sinal
- */
-/obj/machinery/artifact/proc/clear_turfs_around()
-	for(var/turf/T in turfs_around)
-		UnregisterSignal(T, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
-		turfs_around -= T
-	for(var/M in mobs_around)
-		mobs_around -= M
-
-/**
- * Checks if entered atom is mob, adds it to proxy list
- */
-/obj/machinery/artifact/proc/turf_around_enter(atom/source, atom/movable/mover, atom/oldLoc)
-	if(ismob(mover))
-		mobs_around |= mover
-
-/**
- * Checks if exited atom is mob, removes it from proxy list
- */
-/obj/machinery/artifact/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)
-	mobs_around -= mover
-
-/**
- * Rebuilds proxy trigger zone, does this if after moved then stayed in one place for 3 seconds
- */
-/obj/machinery/artifact/proc/rebuild_zone()
-	clear_turfs_around()
-	init_turfs_around()
+/obj/machinery/artifact/HasProximity(atom/movable/AM)
+	if(isliving(AM))
+		movement_around = TRUE
 
 /**
  * Tries to toggle both effects on or off if trigger is correct
@@ -203,9 +165,10 @@
 			else toggle_effects_off(TRIGGER_NITRO)
 	//TRIGGER_PROXY ACTIVATION
 	if((first_effect?.trigger >= TRIGGER_PROXY || secondary_effect?.trigger >= TRIGGER_PROXY))
-		if(mobs_around.len != 0)
+		if(movement_around && (locate(/mob/living) in view(3, src)))
 			toggle_effects_on(TRIGGER_PROXY)
 		else
+			movement_around = FALSE
 			toggle_effects_off(TRIGGER_PROXY)
 
 /obj/machinery/artifact/examine(mob/user)
@@ -309,11 +272,6 @@
 		Bumped(pulledby)
 	first_effect?.UpdateMove()
 	secondary_effect?.UpdateMove()
-
-	if(first_effect?.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
-		if(turfs_around.len != 0)
-			clear_turfs_around()
-		addtimer(CALLBACK(src, .proc/init_turfs_around), 3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/machinery/artifact/update_icon()
 	var/check_activity = null

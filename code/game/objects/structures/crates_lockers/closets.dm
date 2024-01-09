@@ -67,12 +67,12 @@
 	for(var/obj/effect/dummy/chameleon/AD in src)
 		AD.forceMove(src.loc)
 
-	for(var/obj/I in src)
-		I.forceMove(src.loc)
-
 	for(var/mob/M in src)
 		M.forceMove(src.loc)
 		M.instant_vision_update(0)
+
+	for(var/obj/I in src)
+		I.forceMove(src.loc)
 
 /obj/structure/closet/proc/collect_contents()
 	var/itemcount = 0
@@ -91,11 +91,9 @@
 			I.forceMove(src)
 			itemcount++
 
-	for(var/mob/M in src.loc)
+	for(var/mob/living/M in loc)
 		if(itemcount >= storage_capacity)
 			break
-		if(istype (M, /mob/dead/observer))
-			continue
 		if(M.buckled)
 			continue
 
@@ -155,8 +153,14 @@
 		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
-	for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
-		A.ex_act(severity++)
+	for(var/atom/A in src)//pulls everything out of the locker and hits it with an explosion
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 	dump_contents()
 	qdel(src)
 
@@ -185,7 +189,6 @@
 			return FALSE
 		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100))
 			if(opened)
-				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message("[user] cut apart [src] with [WT].",
 				                     "<span class='notice'>You cut apart [src] with [WT].</span>")
 				deconstruct(TRUE)

@@ -2,6 +2,7 @@
 	name = "Organic Whip"
 	desc = "We reform one of our arms into whip."
 	helptext = "Can snatch, knock down, and damage in range depending on your intent, requires a lot of chemical for each use. Cannot be used while in lesser form."
+	button_icon_state = "arm_whip"
 	chemical_cost = 20
 	genomecost = 2
 	genetic_damage = 12
@@ -31,7 +32,7 @@
 /obj/item/weapon/changeling_whip/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(user))
 		return
-	if(user.incapacitated() || user.lying)
+	if(user.incapacitated())
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
@@ -74,11 +75,11 @@
 			if(def_zone == BP_CHEST || def_zone == BP_GROIN)	//limbs are easier to catch with a tentacle
 				grab_chance -= 20
 		if(!T.anchored && prob(grab_chance))
-			T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
+			T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, PROC_REF(end_whipping), T))
 	return ..()
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
-	if(T.Adjacent(host) && !host.get_inactive_hand() && !host.lying)
+	if(T.Adjacent(host) && !host.get_inactive_hand())
 		if(iscarbon(T))
 			host.Grab(T, GRAB_AGGRESSIVE, FALSE)
 		else if(isitem(T))

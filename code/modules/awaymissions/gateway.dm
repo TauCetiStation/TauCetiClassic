@@ -201,9 +201,9 @@
 		if(M.client)
 			M.client.screen += cinematic
 			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target, cinematic), 100)
+		addtimer(CALLBACK(src, PROC_REF(exit_from_transit), entered, target, cinematic), 100)
 	else
-		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target), 100)
+		addtimer(CALLBACK(src, PROC_REF(exit_from_transit), entered, target), 100)
 
 /obj/machinery/gateway/proc/exit_from_transit(atom/movable/entered, turf/target, atom/movable/screen/cinematic)
 	if(isliving(entered))

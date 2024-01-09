@@ -6,7 +6,7 @@
 	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"
 
-	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Blueshield Officer")
+	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Head of Security", "Captain", "Blueshield Officer")
 	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 	logo_state = "change-logoa"
 
@@ -25,7 +25,6 @@
 	var/changelingID = "Changeling" // flavor ID like Theta/Tau/etc.
 	var/unique_changeling_marker // unique ID like DNA but secret
 	var/geneticdamage = 0
-	var/isabsorbing = 0
 	var/geneticpoints = 5
 	var/list/purchasedpowers = list()
 	var/mimicing = ""
@@ -76,10 +75,10 @@
 		return FALSE
 
 	antag.current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	to_chat(antag.current, "<span class='danger'>Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</span>")
-
+	to_chat(antag.current, "<span class='danger'>Воспользуйтесь \":g message\" для коммуникации с остальными Генокрадами. Помните: вы поглощаете все образцы ДНК, которые поглотила ваша жертва-генокрад.</span>")
+	to_chat(antag.current, "<span class='notice'>Мы - Генокрад, существа из далёких уголков космоса. У нас есть задачи на этой станции, которые нужно выполнить, используя свою сообразительность и при необходимости свои генетические возможности (возле вкладки Status в правой-верхней части экрана, у вас появилась вкладка - Changelling, в которой можно приобрети и использовать новые мутации).</span>")
 	if(antag.current.mind && antag.current.mind.assigned_role == "Clown")
-		to_chat(antag.current, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
+		to_chat(antag.current, "Вы развились за пределы своей клоунской природы, что позволит вам пользоваться оружием без вреда для вас.")
 		REMOVE_TRAIT(antag.current, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	return TRUE
@@ -111,6 +110,9 @@
 
 /datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "changeling")
+	M.current.remove_changeling_powers(FALSE)
+	to_chat(antag.current, "<span class ='danger'>Ваш геном слабеет, а вместе с ним и засыпают ваши силы! \
+		ТЫ более не генокрад, и теперь нынешний облик - твой единственный!</span>")
 	. = ..()
 
 /datum/role/changeling/proc/changelingRegen()
@@ -138,7 +140,7 @@
 	. += "<br><b>Genomes Absorbed:</b> [absorbedcount]"
 	. += "<br><b>Stored Essences:</b><br>"
 	for(var/mob/living/parasite/essence/E in essences)
-		. += printplayerwithicon(E?.mind)
+		. += printplayer(E?.mind)
 		. += "<br>"
 	if(purchasedpowers.len)
 		. += "<br><b>[changelingID] used the following abilities: </b>"
@@ -181,17 +183,17 @@
 	var/mob/living/carbon/human/changeling = antag.current
 
 	if(absorbedamount == round(OVEREATING_AMOUNT / 2))
-		to_chat(changeling, "<span class='warning'>Absorbing that many made us realise that we are halfway to becoming a threat to all - even ourselves. We should be more careful with absorbings.</span>")
+		to_chat(changeling, "<span class='warning'>Поглощение многих генов заставило нас осознать, что мы на полпути к превращению в Мерзость - большую угрозу для всех, даже для нас. Нам следует быть аккуратнее с поглощениями.</span>")
 
 	else if(absorbedamount == OVEREATING_AMOUNT - 1)
-		to_chat(changeling, "<span class='warning'>We feel like we're near the edge to transforming to something way more brutal and inhuman - <B>and there will be no way back</B>.</span>")
+		to_chat(changeling, "<span class='warning'>Мы ощущаем грань, за которой находится еще более отвратительное и невообразимое человеку обличие - <B>это необратимо</B>.</span>")
 
 	else if(absorbedamount == OVEREATING_AMOUNT)
-		to_chat(changeling, "<span class='danger'>We feel our flesh mutate, ripping all our belongings from our body. Additional limbs burst out of our chest along with deadly claws - we've become <B>The Abomination</B>. The end approaches.</span>")
+		to_chat(changeling, "<span class='danger'>Мы ощущаем, как наша плоть мутирует. Мы забываем всё. Новые конечности прорываются наружу, на их концах - смертоносные когти. Мы преобразились. <B>Мы - МЕРЗОСТЬ</B>. Конец близится.</span>")
 		for(var/obj/item/I in changeling) //drops all items
 			changeling.drop_from_inventory(I)
 		changeling.Stun(10)
-		addtimer(CALLBACK(src, .proc/turn_to_abomination), 30)
+		addtimer(CALLBACK(src, PROC_REF(turn_to_abomination)), 30)
 
 /datum/role/changeling/proc/turn_to_abomination()
 	var/mob/living/carbon/human/changeling = antag.current
@@ -200,7 +202,7 @@
 	changeling.real_name = changeling.name
 	geneticpoints += 6
 
-	notify_ghosts("\A [changelingID], changeling as a new abomination, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Abomination")
+	notify_ghosts("\A [changelingID], changeling as a new abomination, at [get_area(changeling)]!", source = changeling, action = NOTIFY_ORBIT, header = "Abomination")
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			to_chat(M, "<font size='7' color='red'><b>A terrible roar is coming from somewhere around the station.</b></font>")

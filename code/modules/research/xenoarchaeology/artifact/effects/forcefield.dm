@@ -22,7 +22,7 @@
 			E.density = TRUE
 			E.anchored = TRUE
 			E.invisibility = 0
-		addtimer(CALLBACK(src, .proc/UpdateMove), 10)
+		addtimer(CALLBACK(src, PROC_REF(UpdateMove)), 10)
 	return FALSE
 
 /datum/artifact_effect/forcefield/process()

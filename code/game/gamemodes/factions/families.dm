@@ -32,6 +32,7 @@
 	. = ..()
 	AppendObjective(/datum/objective/gang/points)
 	AppendObjective(gang_objective_type)
+	AppendObjective(/datum/objective/gang/steal_lowrisk)
 
 /datum/faction/gang/custom_result()
 	var/alive_gangsters = 0

@@ -1,4 +1,3 @@
-
 #define MAP_EDGE_PAD 5
 
 // Meteors probability of spawning during a given wave
@@ -272,7 +271,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 /obj/effect/meteor/medium/meteor_effect()
 	..()
-	explosion(src.loc, 0, 1, 2, 3, 0)
+	explosion(src.loc, 0, 1, 2, 3, adminlog = FALSE)
 
 //Large-sized
 /obj/effect/meteor/big
@@ -284,6 +283,6 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 /obj/effect/meteor/big/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0)
+	explosion(src.loc, 1, 2, 3, 4, adminlog = FALSE)
 
 #undef MAP_EDGE_PAD

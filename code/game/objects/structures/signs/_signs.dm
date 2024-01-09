@@ -28,8 +28,10 @@
 			deconstruct(TRUE)
 		return
 	else if(istype(W, /obj/item/weapon/airlock_painter) && buildable_sign)
-		if(user.is_busy())
+		var/obj/item/weapon/airlock_painter/AP = W
+		if(!AP.can_use(user, 1))
 			return
+
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
 		var/obj/structure/sign/sign_type
@@ -63,17 +65,15 @@
 			if("Xenobiology")
 				sign_type = /obj/structure/sign/departments/xenobio
 
-		//Make sure user is adjacent still
-		if(!Adjacent(user))
+		if(!sign_type)
 			return
 
-		if(!sign_type)
+		if(!AP.use_tool(src, user, 30, 1))
 			return
 
 		//It's import to clone the pixel layout information
 		//Otherwise signs revert to being on the turf and
 		//move jarringly
-		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)
 		var/obj/structure/sign/newsign = new sign_type(get_turf(src))
 		newsign.pixel_x = pixel_x
 		newsign.pixel_y = pixel_y
@@ -85,7 +85,7 @@
 			visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
 
 /obj/structure/sign/deconstruct(disassembled)
-	if(resistance_flags & NODECONSTRUCT)
+	if(flags & NODECONSTRUCT)
 		return ..()
 	if(buildable_sign)
 		var/obj/item/sign_backing/SB = new(loc)

@@ -228,12 +228,14 @@
 	return 1
 
 /obj/machinery/computer/HolodeckControl/proc/loadIdProgram(id = "turnoff")
+	if(id == "turnoff" && ((current_scene && id == current_scene.holoscene_id) || !current_scene))
+		return
 	if(id in restricted_programs && !safety_disabled) return
 	current_scene = holoscene_templates[id]
 	loadProgram()
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram()
-
+	set waitfor = FALSE
 	if(world.time < (last_change + 25))
 		audible_message("<b>ERROR. Recalibrating projection apparatus.</b>")
 		return
@@ -270,12 +272,12 @@
 		holo_obj.flags_2 |= HOLOGRAM_2
 		holo_obj.price = 0
 
-	addtimer(CALLBACK(src, .proc/initEnv), 30, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(initEnv)), 30, TIMER_UNIQUE)
 
 /obj/machinery/computer/HolodeckControl/proc/initEnv()
 	for(var/obj/effect/landmark/L in linkedholodeck)
 		if(L.name=="Atmospheric Test Start")
-			addtimer(CALLBACK(src, .proc/startFire, L), 20)
+			addtimer(CALLBACK(src, PROC_REF(startFire), L), 20)
 
 		if(L.name=="Holocarp Spawn")
 			holographic_mobs += new /mob/living/simple_animal/hostile/carp/holodeck(L.loc)
@@ -325,3 +327,14 @@
 	active = 0
 	set_power_use(IDLE_POWER_USE)
 	current_scene = null
+
+/obj/machinery/computer/HolodeckControl/horizontal
+	supported_programs = list( \
+	"Empty Court" = "emptycourt", \
+	"Beach" = "beach",	\
+	"Desert" = "desert",	\
+	"Space" = "space",	\
+	"Snow Field" = "snowfield",	\
+	"Meeting Hall" = "meetinghall",	\
+	"Theatre" = "theatre", \
+	)

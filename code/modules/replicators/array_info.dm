@@ -36,3 +36,9 @@
 
 	presence_name = greek_pronunciation[letter_number] + "-[magnitude_string] Presence"
 	array_color = pick(REPLICATOR_COLORS)
+
+/datum/replicator_array_info/proc/get_array_units(datum/faction/replicators/faction)
+	. = list()
+	for(var/mob/living/simple_animal/hostile/replicator/R as anything in global.alive_replicators)
+		if(faction.ckey2info[R.last_controller_ckey] == src)
+			. += R

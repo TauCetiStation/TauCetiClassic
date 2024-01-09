@@ -4,9 +4,9 @@
 	If you are an antag or a head of staff, you get 2 votes
 */
 #define VOTE_WEIGHT_NONE   0
-#define VOTE_WEIGHT_LOW    0.3
+#define VOTE_WEIGHT_LOW    0.5
 #define VOTE_WEIGHT_NORMAL 1
-#define VOTE_WEIGHT_HIGH   2
+#define VOTE_WEIGHT_HIGH   1.5
 #define MINIMUM_VOTE_LIFETIME 15 MINUTES
 
 
@@ -36,6 +36,8 @@
 	//You can set this time to a nonzero value to force a minimum roundtime before the vote can be called
 
 	var/vote_period = null //overrides default config.vote_period
+
+	var/datum/vote_choice/winner
 
 /datum/poll/proc/init_choices()
 	for(var/ch in choice_types)
@@ -155,7 +157,6 @@
 			text += "Наибольший процент голосов: [PERCENT(max_votepercent)]%<br><br>"
 			invalid = TRUE
 
-	var/datum/vote_choice/winner = null
 	var/list/winners = list()
 	if(!invalid)
 		for(var/datum/vote_choice/V in choice_votes)

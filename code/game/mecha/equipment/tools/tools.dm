@@ -58,11 +58,11 @@
 				occupant_message("<font color='red'>[target] is firmly secured.</font>")
 		else if(istype(target, /obj/structure/droppod))
 			var/obj/structure/droppod/Drop = target
-			if(Drop.flags & STATE_DROPING || Drop.intruder || Drop.second_intruder)
+			if(Drop.stat_flags & STATE_DROPING || Drop.intruder || Drop.second_intruder)
 				return
 			var/T = chassis.loc
 			if(do_after_cooldown(Drop) && T == chassis.loc && src == chassis.selected\
-			&& !Drop.intruder && !Drop.second_intruder && !(Drop.flags & STATE_DROPING) && !(Drop.flags & STATE_AIMING))
+			&& !Drop.intruder && !Drop.second_intruder && !(Drop.stat_flags & STATE_DROPING) && !(Drop.stat_flags & STATE_AIMING))
 				cargo_holder.cargo += Drop
 				Drop.loc = chassis
 				occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
@@ -1159,7 +1159,7 @@
 	chassis.pixel_x = rand(-150, 150)
 	chassis.pixel_y = 500
 	animate(chassis, pixel_y = initial_y, pixel_x = initial_x, time = 20)
-	addtimer(CALLBACK(src, .proc/perform_drop), 20)
+	addtimer(CALLBACK(src, PROC_REF(perform_drop)), 20)
 
 
 /obj/item/mecha_parts/mecha_equipment/Drop_system/proc/perform_drop()

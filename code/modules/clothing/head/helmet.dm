@@ -99,8 +99,11 @@
 	armor = list(melee = 82, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.3
-	action_button_name = "Adjust helmet visor"
 	var/up = 0
+	item_action_types = list(/datum/action/item_action/hands_free/adjust_helmet_visor)
+
+/datum/action/item_action/hands_free/adjust_helmet_visor
+	name = "Adjust helmet visor"
 
 /obj/item/clothing/head/helmet/riot/attack_self()
 	toggle()
@@ -122,6 +125,7 @@
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the visor up on")
 		update_inv_mob() //so our mob-overlays update
+		update_item_actions()
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
@@ -154,6 +158,8 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "thunderdome helmet"
@@ -191,6 +197,10 @@
 	icon_state = "marinad"
 	item_state = "marinad_helmet"
 
+/obj/item/clothing/head/helmet/tactical/marinad/leader
+	name = "marine beret"
+	desc = "Sturdy kevlar beret in protective colors, issued to low-ranking NTCM officers."
+	icon_state = "beret_marinad"
 
 /obj/item/clothing/head/helmet/helmet_of_justice
 	name = "helmet of justice"
@@ -198,12 +208,16 @@
 	icon_state = "shitcuritron_0"
 	item_state = "helmet"
 	var/on = 0
-	action_button_name = "Toggle Helmet"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet)
+
+/datum/action/item_action/hands_free/toggle_helmet
+	name = "Toggle Helmet"
 
 /obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
 	on = !on
 	icon_state = "shitcuritron_[on]"
 	update_inv_mob()
+	update_item_actions()
 
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"
@@ -238,13 +252,6 @@
 	icon_state = "M35_Helmet"
 	item_state = "helmet"
 
-/obj/item/clothing/head/helmet/Waffen_SS_Helmet
-	name = "Waffen SS Helmet"
-	desc = "A helmet from SS uniform set."
-
-	icon_state = "SS_Helmet"
-	item_state = "helmet"
-
 /obj/item/clothing/head/helmet/syndilight
 	name = "light helmet"
 	desc = "Light and far less armored than it's assault counterpart, this helmet is used by stealthy operators."
@@ -260,6 +267,8 @@
 	item_state = "assaulthelmet_b"
 	armor = list(melee = 80, bullet = 70, laser = 55, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
+	flash_protection = FLASHES_FULL_PROTECTION
+	flash_protection_slots = list(SLOT_HEAD)
 
 /obj/item/clothing/head/helmet/syndiassault/atom_init()
 	. = ..()
@@ -316,3 +325,13 @@
 	desc = "An advanced helmet issued to blueshield officers."
 	icon_state = "blueshield_helmet"
 	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/durathread
+	name = "durathread helmet"
+	desc = "A helmet crafted from a bunch of metal, durathread, and God's help."
+	icon_state = "Durahelmet"
+	item_state = "Durahelmet"
+	armor = list(melee = 45, bullet = 15, laser = 50, energy = 35, bomb = 0, bio = 0, rad = 0)
+
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE

@@ -32,7 +32,7 @@
 								"<span class='notice'>You hear the flexing of powerful muscles and suddenly a crash as a body hits the floor.</span>")
 			return 0
 
-		usr.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+		usr.say(pick("РААААААААААААА!", "ХННННННННННААА!", "ГРАААААААААААААААХ!", "КРУШИИИИИИИИИИТЬ!", "АААААААААААААР!" ))
 		var/prevLayer = usr.layer
 		usr.layer = 9
 		var/cur_dir = usr.dir
@@ -50,7 +50,7 @@
 			if(i < 7) usr.pixel_y += 8
 			else usr.pixel_y -= 8
 			sleep(1)
-		playsound(usr, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
+		playsound(usr, 'sound/effects/explosion1.ogg', VOL_EFFECTS_MASTER)
 		for(tile in range(1, usr))
 			if(prob(50))
 				tile.break_tile()
@@ -158,7 +158,7 @@
 								"<span class='notice'>You hear the flexing of powerful muscles and suddenly a crash as a body hits the floor.</span>")
 			return 0
 
-		usr.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+		usr.say(pick("РААААААААААААА!", "ХННННННННННААА!", "ГРАААААААААААААААХ!", "КРУШИИИИИИИИИИТЬ!", "АААААААААААААР!" ))
 		var/prevLayer = usr.layer
 		usr.layer = 9
 		var/cur_dir = usr.dir
@@ -315,9 +315,9 @@
 		//	sleep(1)
 		//usr.anchored = FALSE
 		sleep(30)
-		usr.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+		usr.say(pick("РААААААААААААА!", "ХННННННННННААА!", "ГРАААААААААААААААХ!", "КРУШИИИИИИИИИИТЬ!", "АААААААААААААР!" ))
 		usr.visible_message("<span class='warning'><b>[usr.name] slams the ground with \his arms!</b></span>")
-		playsound(usr, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
+		playsound(usr, 'sound/effects/explosion1.ogg', VOL_EFFECTS_MASTER)
 		var/cur_dir = usr.dir
 		var/turf/T = get_turf(get_step(usr,cur_dir))
 		var/turf/simulated/floor/tile = T
@@ -416,7 +416,7 @@
 	. = ..()
 	if(QDELETED(src))
 		to_chat(user, "<span class='notice'>You destroy that girder!</span>")
-		user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+		user.say(pick("РААААААААААААА!", "ХННННННННННААА!", "ГРАААААААААААААААХ!", "КРУШИИИИИИИИИИТЬ!", "АААААААААААААР!" ))
 	else
 		to_chat(user, "<span class='notice'>You punch the girder.</span>")
 
@@ -435,7 +435,7 @@
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	if (prob(75))
 		to_chat(user, text("<span class='notice'>You destroy that girder!</span>"))
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		user.say(pick(";РААААААААААААА!", ";ХННННННННННААА!", ";ГРАААААААААААААААХ!", ";КРУШИИИИИИИИИИТЬ!", ";АААААААААААААР!" ))
 		deconstruct(TRUE)
 	else
 		to_chat(user, text("<span class='notice'>You punch the girder.</span>"))
@@ -485,7 +485,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/clown_joke
 	name = "Joke"
-	desc = ""
+	desc = "МЕГАШУТКА!"
 	panel = "Hulk"
 	charge_max = 350
 	clothes_req = 0

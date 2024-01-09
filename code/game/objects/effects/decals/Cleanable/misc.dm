@@ -224,7 +224,7 @@ var/global/list/toilet_overlay_cache = list()
 
 /obj/effect/decal/cleanable/gourd/atom_init()
 	..()
-	AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/try_faceplant_react))
+	AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING, CALLBACK(src, PROC_REF(try_faceplant_react)))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/decal/cleanable/gourd/atom_init_late()
@@ -233,15 +233,10 @@ var/global/list/toilet_overlay_cache = list()
 		if(G != src && G.type == type)
 			qdel(G)
 
-/obj/effect/decal/cleanable/gourd/Crossed(atom/movable/AM)
-	. = ..()
-	try_faceplant_react(AM)
-
 /obj/effect/decal/cleanable/gourd/proc/try_faceplant_react(atom/movable/AM)
 	if(!isliving(AM))
 		return
 	var/mob/living/L = AM
 	if(L.get_species() == UNATHI)
 		return
-	if(L.crawling)
-		L.vomit()
+	L.vomit()

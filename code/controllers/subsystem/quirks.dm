@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(quirks)
 
 /datum/controller/subsystem/quirks/proc/SetupQuirks()
 	// Sort by Positive, Negative, Neutral; and then by name
-	var/list/quirk_list = sortList(subtypesof(/datum/quirk), /proc/cmp_quirk_asc)
+	var/list/quirk_list = sortList(subtypesof(/datum/quirk), GLOBAL_PROC_REF(cmp_quirk_asc))
 
 	for(var/quirk_type in quirk_list)
 		var/datum/quirk/T = new quirk_type

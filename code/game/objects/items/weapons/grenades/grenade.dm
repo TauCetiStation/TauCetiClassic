@@ -1,6 +1,7 @@
 /obj/item/weapon/grenade
 	name = "grenade"
-	desc = "A hand held grenade, with an adjustable timer."
+	cases = list("граната", "гранаты", "гранате", "гранату", "гранатой", "гранате")
+	desc = "Ручная граната с настраиваемым таймером."
 	w_class = SIZE_TINY
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
@@ -13,21 +14,24 @@
 	var/det_time = 50
 	var/activate_sound = 'sound/weapons/armbomb.ogg'
 
-	action_button_name = "Activate Grenade"
+	item_action_types = list(/datum/action/item_action/hands_free/activate_grenade)
+
+/datum/action/item_action/hands_free/activate_grenade
+	name = "Activate Grenade"
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/user)
 	if(user.ClumsyProbabilityCheck(50))
-		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
+		to_chat(user, "<span class='warning'>Как эта штука работает?</span>")
 		activate(user)
 		add_fingerprint(user)
-		addtimer(CALLBACK(src, .proc/prime), 5)
+		addtimer(CALLBACK(src, PROC_REF(prime)), 5)
 		return 0
 	return 1
 
 /obj/item/weapon/grenade/examine(mob/user)
 	..()
 	if(!istype(src, /obj/item/weapon/grenade/cancasing)) // ghetto bomb examine verb: > You can't tell when it will explode!
-		to_chat(user, "The timer is set [det_time == 1 ? "for instant detonation" : "to [det_time/10]  seconds"].")
+		to_chat(user, "Таймер установлен [det_time == 1 ? "на моментальную детонацию" : "на [det_time/10]  секунд"].")
 
 /obj/item/weapon/grenade/attack_self(mob/user)
 	if(active)
@@ -35,7 +39,7 @@
 	if(!clown_check(user))
 		return
 
-	to_chat(user, "<span class='warning'>You prime \the [name]![det_time != 1 ? " [det_time/10] seconds!" : ""]</span>")
+	to_chat(user, "<span class='warning'>Вы активируете [CASE(src, ACCUSATIVE_CASE)]![det_time != 1 ? " [det_time/10] секунд!" : ""]</span>")
 	activate(user)
 	add_fingerprint(user)
 	if(iscarbon(user))
@@ -53,9 +57,10 @@
 			log_game("[key_name(usr)] has primed a [name] for detonation at [T.loc] [COORD(T)].")
 
 	icon_state = initial(icon_state) + "_active"
+	update_item_actions()
 	active = 1
 	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-	addtimer(CALLBACK(src, .proc/prime), det_time)
+	addtimer(CALLBACK(src, PROC_REF(prime)), det_time)
 
 /obj/item/weapon/grenade/proc/prime()
 	var/turf/T = get_turf(src)
@@ -71,7 +76,7 @@
 				det_time = 5 SECONDS
 			if(5 SECONDS)
 				det_time = 1
-		to_chat(user, "<span class='notice'>You set the [name] for [det_time == 1 ? "instant detonation" : "[det_time * 0.1] second detonation time"].</span>")
+		to_chat(user, "<span class='notice'>Вы устанавливаете [CASE(src, ACCUSATIVE_CASE)] на [det_time == 1 ? "моментальную детонацию" : "[det_time * 0.1] секунд до детонации"].</span>")
 		add_fingerprint(user)
 		return
 	return ..()
@@ -82,8 +87,8 @@
 	..()
 
 /obj/item/weapon/grenade/syndieminibomb
-	desc = "A syndicate manufactured explosive used to sow destruction and chaos."
 	name = "syndicate minibomb"
+	desc = "Изготовленное синдикатом взрывное устройство, предназначенное для разрушений и хаоса."
 	icon_state = "syndicate"
 	item_state = "flashbang"
 	origin_tech = "materials=3;magnets=4;syndicate=4"

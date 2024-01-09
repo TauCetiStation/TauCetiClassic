@@ -4,19 +4,21 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 	icon_state = "robot_rd"
 	icon_living = "robot_rd"
 	icon_dead = "robot_rd_died"
-	desc = "Digital Explorer Theory - 5. Its a robot with shiny wheels. Sometimes sparks fly out of its hull."
+	desc = "Теория цифровых проводников - 5. Робот с блестящими колесами. Иногда из его корпуса вылетают искры."
 
-	speak = list("Beep", "Beep-beep", "Beeeepsky",
-				 "One...two...three...more...",
-				 "Z-z-z-zero", "One...null...Beep",
-				 "Analyzing...", "Successfully",
-				 "...this is a joke", "La la la...beep",
-				 "Boom...", "Not enough time",
-				 "Science time", "ED-209 protect me", "Director, where are researches?")
+	speak = list("Бип", "Буп", "Биииибски...",
+				 "Раз...два...три...четыре...пять...",
+				 "Но-о-о-оль", "Один...нуль...Бип",
+				 "Анализирую...", "Успешно",
+				 "...это была шутка", "Ла ла ла... Бип",
+				 "Бум...", "Нет времени",
+				 "Время науки", "ED-209, защити меня", "Директор, где изучения?",
+				 "Ресурсы были?", "Бомбы взрывали?", "Форон в токсинной...",
+				 "Мехов изучили?", "РПЕД изучили?", "РД, когда улучшения?")
 
-	speak_emote = list("beeps", "rang out")
-	emote_hear = list("raises manipulators", "twists the scanner")
-	emote_see = list("spinning around", "turns the indicator on and off")
+	speak_emote = list("бикает", "пищит")
+	emote_hear = list("жужит манипуляторами", "щёлкает сканером")
+	emote_see = list("крутится", "включает и выключает индикатор")
 	speak_chance = 10
 	turns_per_move = 3
 	see_in_dark = 6
@@ -64,7 +66,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 
 /mob/living/simple_animal/det5/death()
 	..()
-	visible_message("<span class='bold'>[src]</span> rang out <span class='bold'>d-d-d-data received...d-d-d-destruction</span>")
+	visible_message("<span class='bold'>[src]</span> пищит <span class='bold'>Д-д-д-данные получены. У-у-у-уничтожение...</span>")
 	new /obj/effect/decal/cleanable/blood/gibs/robot(loc)// drob blood robots
 	new /obj/effect/gibspawner/robot(loc)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -92,15 +94,15 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 		explode()
 
 /mob/living/simple_animal/det5/proc/explode()	// explode
-	visible_message("<span class='bold'>[src]</span> rang out <span class='userdanger'>The #xplosi@n is prep@red, @-a-activate</span>")
-	explosion(get_turf(src), 0, 2, 2, 2, 1)
+	visible_message("<span class='bold'>[src]</span> пищит <span class='userdanger'>В@ры# п!дгот$влен, а-а-ак>ив&ция...</span>")
+	explosion(get_turf(src), 0, 2, 2, 2)
 	death()
 
 /mob/living/simple_animal/det5/emag_act(mob/user)
 	if(!emagged && emagged < 2)
 		act_emag = user.name
 		emagged = 1
-		to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>B-b-b-broken pro#oco%s %%ctivated</span>")
+		to_chat(user, "<span class='bold'>[src]</span> пищит <span class='userdanger'>В-в-в-!злома$ные про@ок№лы акт#ви*ов$ны...</span>")
 		return TRUE
 	return FALSE
 
@@ -108,45 +110,45 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 	if(health <=0)
 		return
 	if(emagged != 1)
-		commandtrigger = input("Enter the command.", , "Cancel") in list("Moving stop/start", "Speak stop/start", "Secretary (preparation of reports)", "Cancel")
+		commandtrigger = input("Введите команду.", , "Отмена") in list("Движение стоп/старт", "Говорить стоп/старт", "Секретарь (подготовка отчетов)", "Отмена")
 	else
-		commandtrigger = input("Enter the command.", , "Cancel") in list("Moving stop/start", "Speak stop/start", "Secretary (preparation of reports)", "Explode (50s)", "Explode (using motion sensor)", "Cancel")
+		commandtrigger = input("Введите команду.", , "Отмена") in list("Движение стоп/старт", "Говорить стоп/старт", "Секретарь (подготовка отчетов)", "Взрыв (50с)", "Взрыв (с датчиком движения)", "Отмена")
 
 	switch(commandtrigger)
-		if("Moving stop/start")
+		if("Движение стоп/старт")
 			if(turns_per_move == 1)
 				turns_per_move = 100
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is off</span>")
+				to_chat(user, "<span class='bold'>[src]</span> пищит <span class='bold'>Режим движения отключен</span>")
 				commandtrigger = 0
 			else
 				turns_per_move = 1
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is on</span>")
+				to_chat(user, "<span class='bold'>[src]</span> пищит <span class='bold'>Режим движения активирован</span>")
 				commandtrigger = 0
-		if("Speak stop/start")
+		if("Говорить стоп/старт")
 			if(speak_chance == 15)
 				speak_chance = 0
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is off</span>")
+				to_chat(user, "<span class='bold'>[src]</span> пищит <span class='bold'>Режим речи отключен</span>")
 				commandtrigger = 0
 			else
 				speak_chance = 15
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is on</span>")
+				to_chat(user, "<span class='bold'>[src]</span> пищит <span class='bold'>Режим речи активирован</span>")
 				commandtrigger = 0
-		if("Secretary (preparation of reports)")
+		if("Секретарь (подготовка отчетов)")
 			if(rdconsole == null)
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Console not found</span>")
+				to_chat(user, "<span class='bold'>[src]</span> пищит <span class='bold'>Консоль не найдена</span>")
 			else
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Print report</span>")
+				to_chat(user, "<span class='bold'>[src]</span> пищит <span class='bold'>Печать отчета</span>")
 				print()
 			commandtrigger = 0
-		if("Explode (50s)")
+		if("Взрыв (50с)")
 			if(emagged == 1)
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
+				to_chat(user, "<span class='bold'>[src]</span> пищит <span class='userdanger'>П#ото@ол сам!ун$что%ен&я а-а-акт%вир?вн</span>")
 				sleep(500)
 				explode()
 				commandtrigger = 0
-		if("Explode (using motion sensor)")
+		if("Взрыв (с датчиком движения)")
 			if(emagged == 1)
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d##struct m@de with t@rget @ctiv@t#d</span>")
+				to_chat(user, "<span class='bold'>[src]</span> пищит <span class='userdanger'>П#ото@ол сам!ун$что%ен&я c це%ью а-а-акт%вир?вн</span>")
 				if(!proximity_monitor)
 					proximity_monitor = new(src, 1)
 				commandtrigger = 0

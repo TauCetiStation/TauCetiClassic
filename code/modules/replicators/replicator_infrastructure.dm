@@ -72,8 +72,8 @@
 	R.visible_message("<span class='notice'>[R] is crumbling apart, holding the portal open.</span>")
 
 	drone_supply = R
-	RegisterSignal(drone_supply, list(COMSIG_PARENT_QDELETING), .proc/stop_drone_energy_supply)
-	RegisterSignal(drone_supply, list(COMSIG_MOVABLE_MOVED), .proc/check_drone_proximity)
+	RegisterSignal(drone_supply, list(COMSIG_PARENT_QDELETING), PROC_REF(stop_drone_energy_supply))
+	RegisterSignal(drone_supply, list(COMSIG_MOVABLE_MOVED), PROC_REF(check_drone_proximity))
 
 	drone_supply.sacrifice_powering = TRUE
 
@@ -401,10 +401,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	if(AM.invisibility <= 0)
 		return ..()
 
-	INVOKE_ASYNC(src, .proc/try_teleport, AM)
+	INVOKE_ASYNC(src, PROC_REF(try_teleport), AM)
 
 /obj/machinery/power/replicator_generator/proc/teleportation_checks(mob/living/simple_animal/hostile/replicator/R, obj/machinery/power/replicator_generator/target)
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return FALSE
 	if(target.next_teleportation > world.time)
 		return FALSE
@@ -419,7 +419,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 /obj/machinery/power/replicator_generator/proc/try_teleport(mob/living/simple_animal/hostile/replicator/R)
 	if(R.incapacitated())
 		return
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return
 	if(next_teleportation > world.time)
 		to_chat(R, "<span class='notice'>Can not teleport at this moment, please wait for [CEIL((next_teleportation - world.time) * 0.1)] seconds.</span>")
@@ -431,7 +431,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	visible_message("<span class='notice'>[src] appears to be charging up.</span>")
-	if(!do_after(R, 3 SECONDS, target=src, extra_checks=CALLBACK(src, .proc/teleportation_checks)))
+	if(!do_after(R, 3 SECONDS, target=src, extra_checks=CALLBACK(src, PROC_REF(teleportation_checks))))
 		return
 
 	var/list/pos_areas = list()
@@ -454,7 +454,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		return
 	if(R.loc != loc)
 		return
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return
 	if(R.incapacitated())
 		to_chat(R, "<span class='notice'>Unit too weak to support teleportation efforts.</span>")
@@ -493,8 +493,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 			R_teleporting.forceMove(RG.loc)
 			teleported_anyone = TRUE
 
-		addtimer(CALLBACK(src, /atom.proc/update_icon), teleportation_cooldown)
-		addtimer(CALLBACK(RG, /atom.proc/update_icon), teleportation_cooldown)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), teleportation_cooldown)
+		addtimer(CALLBACK(RG, TYPE_PROC_REF(/atom, update_icon)), teleportation_cooldown)
 
 		if(teleported_anyone)
 			playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
@@ -673,11 +673,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 /obj/structure/bluespace_corridor/attackby(obj/item/I, mob/user)
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(ispulsing(I) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
+	if(ispulsing(I) && !user.is_busy())
+		user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarm [src].</span>")
+		if(do_skilled(user, src, erase_time, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
 		// to-do: (replicators) add a sound here. the sound should be somewhat melancholic and mechanical. even though this web is made by enemies, it still is a magnificent thing
-		visible_message("<span class='notice'>[src] beeps loudly, before dissappearing.</span>")
-		qdel(src)
-		return
+			visible_message("<span class='notice'>[src] beeps loudly, before dissappearing.</span>")
+			qdel(src)
+			return
 
 	return ..()
 
@@ -835,7 +837,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	if(FR.replicators_launched >= REPLICATORS_CATAPULTED_TO_WIN && !victory)
 		FR.swarm_chat_message("The Swarm", "Mission accomplished.", 5)
 		victory = TRUE
-		INVOKE_ASYNC(FR, /datum/faction/replicators.proc/victory_animation, get_turf(src))
+		INVOKE_ASYNC(FR, TYPE_PROC_REF(/datum/faction/replicators, victory_animation), get_turf(src))
 
 /obj/machinery/swarm_powered/bluespace_catapult/examine(mob/user)
 	. = ..()

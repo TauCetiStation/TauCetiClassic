@@ -5,22 +5,27 @@
 
 /obj/item/weapon/storage/backpack
 	name = "backpack"
+	cases = list("рюкзак", "рюкзака", "рюкзаку", "рюкзак", "рюкзаком", "рюкзаке")
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
 	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
-	action_button_name = "Storage"
 	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	var/opened = 0
+	item_action_types = list(/datum/action/item_action/storage)
 
-/obj/item/weapon/storage/backpack/ui_action_click()
-	if(!opened)
-		open(loc)
+/datum/action/item_action/storage
+	name = "Storage"
+
+/datum/action/item_action/storage/Activate()
+	var/obj/item/weapon/storage/backpack/S = target
+	if(!S.opened)
+		S.open(S.loc)
 	else
-		close(loc)
-	opened = !opened
+		S.close(S.loc)
+	S.opened = !S.opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
 	if(length(use_sound))
@@ -75,6 +80,7 @@
 
 /obj/item/weapon/storage/backpack/santabag
 	name = "Santa's Gift Bag"
+	cases = list("мешок", "мешка", "мешку", "мешок", "мешком", "мешке")
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
@@ -124,6 +130,7 @@
 
 /obj/item/weapon/storage/backpack/satchel
 	name = "leather satchel"
+	cases = list("сумка", "сумки", "сумке", "сумку", "сумкой", "сумке")
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
 	item_state = "satchel"
@@ -133,7 +140,7 @@
 
 /obj/item/weapon/storage/backpack/satchel/withwallet/atom_init()
 	. = ..()
-	new /obj/item/weapon/storage/wallet/random(src)
+	new /obj/item/weapon/storage/wallet(src)
 
 /obj/item/weapon/storage/backpack/satchel/norm
 	name = "satchel"
@@ -232,6 +239,7 @@
 
 /obj/item/weapon/storage/backpack/kitbag
 	name = "kitbag"
+	cases = list("вещмешок", "вещмешка", "вещмешку", "вещмешок", "вещмешком", "вещмешке")
 	icon_state = "kitbag"
 
 /obj/item/weapon/storage/backpack/medbag
@@ -338,6 +346,7 @@
 
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "suspicious looking dufflebag"
+	cases = list("вещмешок", "вещмешка", "вещмешку", "вещмешок", "вещмешком", "вещмешке")
 	desc = "A large dufflebag for holding extra tactical supplies."
 	icon_state = "duffle-syndie"
 	item_state = "duffle-syndie"
@@ -384,9 +393,17 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/stack/medical/advanced/bruise_pack(src)
+	new /obj/item/stack/medical/advanced/ointment(src)
+	new /obj/item/clothing/gloves/latex/nitrile(src)
+	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
+	new /obj/item/weapon/reagent_containers/syringe/antiviral(src)
+	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/clothing/accessory/stethoscope(src)
+	new /obj/item/device/mmi(src)
 
 /obj/item/weapon/storage/backpack/henchmen
 	name = "wings"
+	cases = list("крылья", "крыльев", "крыльям", "крылья", "крыльями", "крыльях")
 	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
 	icon_state = "henchmen"
 

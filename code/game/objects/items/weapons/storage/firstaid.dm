@@ -122,6 +122,8 @@
 	use_to_pickup = 1
 	var/wrapper_color
 	var/label
+	m_amt = 50
+	g_amt = 50
 
 /obj/item/weapon/storage/pill_bottle/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W))
@@ -134,7 +136,7 @@
 		var/new_color = input(user, "Choose color!") as color|null
 		if(!new_color)
 			return
-		if(!Adjacent(usr) || !A.use(1))
+		if(!A.use_tool(src, user, 10, 1))
 			return
 		wrapper_color = new_color
 		update_icon()

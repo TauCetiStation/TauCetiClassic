@@ -79,6 +79,8 @@
 	L.Stun(1)
 	L.Weaken(1)
 	L.adjust_bodytemperature(-300)
+	if(!L.reagents)
+		return
 	L.reagents.add_reagent("frostoil", 15)
 
 /obj/structure/trap/damage
@@ -119,3 +121,61 @@
 	. = ..()
 	QDEL_IN(src, time_between_triggers)
 
+
+/obj/structure/trap/wizard
+	name = "IT'S A WIZARD TRAP"
+
+/obj/structure/trap/wizard/Crossed(atom/movable/AM)
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		if(iswizard(H))
+			return
+	return ..()
+
+/obj/structure/trap/wizard/stun
+	name = "shock trap"
+	desc = "A trap that will shock and render you immobile. You'd better avoid it."
+	icon_state = "trap-shock"
+
+/obj/structure/trap/wizard/stun/trap_effect(mob/living/L)
+	L.electrocute_act(30, src) // electrocute act does a message.
+	L.Stun(5)
+	L.Weaken(5)
+
+/obj/structure/trap/wizard/fire
+	name = "flame trap"
+	desc = "A trap that will set you ablaze. You'd better avoid it."
+	icon_state = "trap-fire"
+
+/obj/structure/trap/wizard/fire/trap_effect(mob/living/L)
+	to_chat(L, "<span class='danger'>Spontaneous combustion!</span>")
+	L.fire_act()
+	L.adjust_fire_stacks(5)
+	L.Weaken(1)
+
+/obj/structure/trap/wizard/chill
+	name = "frost trap"
+	desc = "A trap that will chill you to the bone. You'd better avoid it."
+	icon_state = "trap-frost"
+
+/obj/structure/trap/wizard/chill/trap_effect(mob/living/L)
+	to_chat(L, "<span class='danger'>You're frozen solid!</span>")
+	L.Stun(1)
+	L.Weaken(1)
+	L.adjust_bodytemperature(-300)
+	L.reagents.add_reagent("frostoil", 15)
+
+/obj/structure/trap/wizard/damage
+	name = "earth trap"
+	desc = "A trap that will summon a small earthquake, just for you. You'd better avoid it."
+	icon_state = "trap-earth"
+
+/obj/structure/trap/wizard/damage/trap_effect(mob/living/L)
+	to_chat(L, "<span class='danger'>The ground quakes beneath your feet!</span>")
+	L.Weaken(5)
+	L.adjustBruteLoss(35)
+
+/obj/structure/trap/wizard/damage/flare()
+	..()
+	var/obj/structure/rock/giant_rock = new (get_turf(src))
+	QDEL_IN(giant_rock, 200)

@@ -29,7 +29,7 @@
 	set_dir(dir)
 	if(movement_range > 20)
 		movement_range = 20
-	INVOKE_ASYNC(src, .proc/move, 1)
+	INVOKE_ASYNC(src, PROC_REF(move), 1)
 	. = ..()
 
 /obj/effect/accelerated_particle/Bump(atom/A)

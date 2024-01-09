@@ -11,14 +11,15 @@
 	mood_change = 2
 	timeout = 10 MINUTES
 
-/datum/mood_event/happiness
-	mood_change = 6
-	description = "<span class='bold nicegreen'>For no apparent reason I feel great! I love life!</span>"
-
 /datum/mood_event/drugged
 	mood_change = 6
 	description = "<span class='nicegreen'>Oh my god! What a thrill!</span>"
 	timeout = 1 MINUTES
+
+/datum/mood_event/blessing
+	description = "<span class='nicegreen'>Я был благословлен.</span>"
+	mood_change = 3
+	timeout = 5 MINUTES
 
 /datum/mood_event/drunk
 	mood_change = 1
@@ -67,3 +68,22 @@
 
 /datum/mood_event/besthug/add_effects(mob/friend)
 	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.name] makes me feel so happy!</span>"
+
+/datum/mood_event/wc_used
+	description = "<span class='nicegreen'>You feel clean and refreshed.</span>"
+	mood_change = 1
+	timeout = 10 MINUTE
+
+/datum/mood_event/clown_evil
+	description = "<span class='nicegreen'>You did something delightfully devilish. HONK!</span>"
+	mood_change = 5
+	timeout = 30 MINUTE
+
+/datum/mood_event/swole
+	description = "<span class='nicegreen'>I am getting swole!</span>"
+	timeout = 6 MINUTES
+
+/datum/mood_event/swole/add_effects(pain)
+	// 2.5 is stronger then cigs, because we believe in a healthy lifestyle!
+	// also getting swole loses nutriments so it has a sizable debuff which we need offset
+	mood_change = 2.5 + pain * 0.5

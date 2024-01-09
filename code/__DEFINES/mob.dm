@@ -59,6 +59,7 @@
 #define DEFAULT_VOMIT 0
 #define VOMIT_TOXIC 1
 #define VOMIT_BLOOD 2
+#define VOMIT_NANITE 3
 
 //intent defines
 #define INTENT_HELP   "help"

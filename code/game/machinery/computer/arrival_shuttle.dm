@@ -36,7 +36,7 @@ var/global/lastMove = 0
 		return
 	var/myArea = get_area(src)
 	if(SSshuttle.forbidden_atoms_check(myArea))
-		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
+		addtimer(CALLBACK(src, PROC_REF(try_move_from_station)), 600)
 		return
 	arrival_shuttle_move()
 
@@ -73,7 +73,7 @@ var/global/lastMove = 0
 	curr_location = fromArea
 
 	for(var/obj/machinery/light/small/L in fromArea)
-		L.brightness_color = "#00ff00"
+		L.force_override_color = "#00ff00"
 		L.color = "#00ff00"
 		L.update(0)
 
@@ -84,7 +84,7 @@ var/global/lastMove = 0
 	sleep(10)
 
 	for(var/obj/machinery/light/small/L in fromArea)
-		L.brightness_color = initial(L.brightness_color)
+		L.force_override_color = initial(L.force_override_color)
 		L.color = initial(L.color)
 		L.update(0)
 
@@ -120,7 +120,7 @@ var/global/lastMove = 0
 	open_doors(toArea, location)
 
 	if(location == ARRIVAL_SHUTTLE_EXODUS)
-		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
+		addtimer(CALLBACK(src, PROC_REF(try_move_from_station)), 600)
 
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)

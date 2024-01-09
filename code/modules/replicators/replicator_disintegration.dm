@@ -146,10 +146,12 @@
 
 	playsound_stealthy(A, 'sound/machines/cyclotron.ogg')
 
-	var/datum/callback/checks = CALLBACK(src, .proc/disintegrate_do_after_checks)
+	var/datum/callback/checks = CALLBACK(src, PROC_REF(disintegrate_do_after_checks))
 	var/effective_efficency = efficency
 	if(has_swarms_gift())
 		effective_efficency *= 1.5
+	if(breath_phoron)
+		effective_efficency *= 0.5
 
 	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / effective_efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2, extra_checks=checks))
 		qdel(D)
@@ -250,7 +252,7 @@
 /mob/living/simple_animal/hostile/replicator/proc/try_spawn_node(turf/T)
 	var/spawn_prob = 5
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	if(FR.nodes_to_spawn > 1 || (ckey && has_swarms_gift()))
+	if(FR.nodes_to_spawn > 1 || (is_controlled() && has_swarms_gift()))
 		spawn_prob = 50
 
 	if(!prob(spawn_prob))

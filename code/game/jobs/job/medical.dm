@@ -9,6 +9,7 @@
 	selection_color = "#ffddf0"
 	idtype = /obj/item/weapon/card/id/medGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_medical, access_morgue, access_paramedic, access_genetics, access_heads,
 		access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
@@ -28,6 +29,8 @@
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
+	department_stocks = list("Medical" = 40)
+	flags = JOB_FLAG_COMMAND|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_MEDBAY|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/doctor
 	title = "Medical Doctor"
@@ -58,8 +61,10 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
+	restricted_species = list(UNATHI, DIONA)
 
+	department_stocks = list("Medical" = 20)
+	flags = JOB_FLAG_MEDBAY
 
 /datum/job/paramedic
 	title = "Paramedic"
@@ -71,7 +76,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_research, access_mailsorting, access_medbay_storage, access_engineering_lobby)
+	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_research, access_medbay_storage, access_engineering_lobby)
 	salary = 120
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	outfit = /datum/outfit/job/paramedic
@@ -82,12 +87,11 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(IPC)
 
-// Slow species shouldn't be paramedics.
-/datum/job/paramedic/special_species_check(datum/species/S)
-	return S.speed_mod <= 1
+	department_stocks = list("Medical" = 15)
+	flags = JOB_FLAG_MEDBAY
 
+	restricted_species = list(DIONA)// Slow species shouldn't be paramedics.
 
 //Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
 /datum/job/chemist
@@ -107,6 +111,8 @@
 	outfit = /datum/outfit/job/chemist
 	skillsets = list("Chemist" = /datum/skillset/chemist)
 
+	department_stocks = list("Medical" = 10)
+	flags = JOB_FLAG_MEDBAY
 
 /datum/job/geneticist
 	title = "Geneticist"
@@ -124,6 +130,8 @@
 	outfit = /datum/outfit/job/geneticist
 	skillsets = list("Geneticist" = /datum/skillset/geneticist)
 
+	department_stocks = list("Medical" = 10)
+	flags = JOB_FLAG_MEDBAY
 
 /datum/job/virologist
 	title = "Virologist"
@@ -147,8 +155,10 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
+	restricted_species = list(UNATHI)
 
+	department_stocks = list("Medical" = 10)
+	flags = JOB_FLAG_MEDBAY
 
 /datum/job/psychiatrist
 	title = "Psychiatrist"
@@ -167,6 +177,10 @@
 	outfit = /datum/outfit/job/psychiatrist
 	skillsets = list("Psychiatrist" = /datum/skillset/psychiatrist)
 
+	restricted_species = list(UNATHI)
+
+	department_stocks = list("Medical" = 10)
+	flags = JOB_FLAG_MEDBAY
 
 /datum/job/intern
 	title = "Medical Intern"
@@ -183,3 +197,5 @@
 	outfit = /datum/outfit/job/intern
 	skillsets = list("Medical Intern" = /datum/skillset/intern)
 
+	department_stocks = list("Medical" = 5)
+	flags = JOB_FLAG_MEDBAY

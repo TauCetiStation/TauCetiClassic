@@ -6,7 +6,7 @@
 		return 0.0
 
 	var/price_fraction = price / target_price
-	if(price_fraction ** 2 > 1.6)
+	if(price_fraction ** 2 > 1.5)
 		return 0.0
 
 	return 1.05 * sqrt(1 - 0.66 * (price_fraction ** 2))

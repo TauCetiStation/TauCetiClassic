@@ -316,9 +316,9 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		def_zone = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM] //strikes only active hand
-		if(H.gloves)
-			var/obj/item/clothing/gloves/G = H.gloves
-			if(G.siemens_coefficient == 0)	return 0		//to avoid spamming with insulated glvoes on
+		siemens_coeff *= H.get_siemens_coefficient_organ(def_zone)
+		if(!siemens_coeff)
+			return
 
 	var/area/source_area
 	if(istype(power_source,/area))

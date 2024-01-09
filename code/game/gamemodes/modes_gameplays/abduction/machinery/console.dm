@@ -120,22 +120,6 @@
 	else
 		dat += "<span class='bad'>NO TELEPAD DETECTED</span></br>"
 
-	if(vest)
-		dat += "<h4> Agent Vest Mode</h4>"
-		var/mode = vest.mode
-		if(mode == VEST_STEALTH)
-			dat += "<a href='?src=\ref[src];flip_vest=1'>Combat</A>"
-			dat += "<span class='disabled'>Stealth</span>"
-		else
-			dat += "<span class='disabled'>Combat</span>"
-			dat += "<a href='?src=\ref[src];flip_vest=1'>Stealth</A>"
-
-		dat += "<br>"
-		dat += "<a href='?src=\ref[src];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<span class='gray bold'>Selected: </span>[vest.disguise ? "[vest.disguise.name]" : "Nobody"]"
-	else
-		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
-
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500, ntheme = CSS_THEME_ABDUCTOR)
 	popup.set_content(dat)
 	popup.open()
@@ -151,8 +135,6 @@
 	else if(href_list["teleporter_retrieve"])
 		if(do_after(usr, 7 SECONDS, FALSE, src))
 			TeleporterRetrieve()
-	else if(href_list["flip_vest"])
-		FlipVest()
 	else if(href_list["select_disguise"])
 		SelectDisguise()
 	else if(href_list["dispense"])
@@ -162,19 +144,14 @@
 			if("pistol")
 				Dispense(/obj/item/weapon/gun/energy/decloner/alien, 2)
 			if("permissions")
-				if(experiment && experiment.points >= 2)
-					experiment.points -= 2
-					visible_message("Addtitional permisions has been aquired! You can use all advanced baton's modes now!")
-					baton_modules_bought = TRUE
-				else
-					visible_message("Insufficent data!")
+				visible_message("Addtitional permisions has been aquired! You can use all advanced baton's modes now!")
+				baton_modules_bought = TRUE
 			if("adv_console")
 				visible_message("Agent Observation Console has been replaced with advanced one.")
-				for(var/obj/machinery/computer/security/abductor_ag/C in computer_list)
-					if(C.team == team)
-						camera = new(get_turf(C))
-						camera.console = src
-						qdel(C)
+				for(var/obj/machinery/computer/security/abductor_ag/C in range(2, src))
+					camera = new(get_turf(C))
+					camera.console = src
+					qdel(C)
 			if("baton")
 				Dispense(/obj/item/weapon/abductor_baton, 2)
 			if("helmet")
@@ -193,9 +170,7 @@
 				if(Dispense(/obj/item/clothing/glasses/hud/health/night))
 					new /obj/item/weapon/storage/visuals/surgery(pad.loc)
 			if("trans_gland")
-				var/obj/item/gland/abductor/G = Dispense(/obj/item/gland/abductor)
-				if(G)
-					G.team = team
+				Dispense(/obj/item/gland/abductor)
 			if("recall_implant")
 				var/obj/item/weapon/implanter/abductor/G = Dispense(/obj/item/weapon/implanter/abductor, 3)
 				if(G)
@@ -239,10 +214,6 @@
 	if(pad)
 		pad.Send()
 
-/obj/machinery/abductor/console/proc/FlipVest()
-	if(vest)
-		vest.flip_mode()
-
 /obj/machinery/abductor/console/proc/SelectDisguise()
 	var/list/entries = list()
 	var/tempname
@@ -257,20 +228,17 @@
 		vest.SetDisguise(chosen)
 
 /obj/machinery/abductor/console/proc/Initialize()
-	for(var/obj/machinery/abductor/pad/p in abductor_machinery_list)
-		if(p.team == team)
-			pad = p
-			break
+	for(var/obj/machinery/abductor/pad/p in range(2, src))
+		pad = p
+		break
 
-	for(var/obj/machinery/abductor/experiment/e in abductor_machinery_list)
-		if(e.team == team)
-			experiment = e
-			e.console = src
+	for(var/obj/machinery/abductor/experiment/e in range(2, src))
+		experiment = e
+		e.console = src
 
-	for(var/obj/machinery/computer/camera_advanced/abductor/c in abductor_machinery_list)
-		if(c.team == team)
-			camera = c
-			c.console = src
+	for(var/obj/machinery/computer/camera_advanced/abductor/c in range(2, src))
+		camera = c
+		c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
 	var/datum/icon_snapshot/entry = new

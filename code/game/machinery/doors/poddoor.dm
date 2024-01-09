@@ -5,8 +5,11 @@
 	icon_state = "pdoor1"
 	icon_state_open  = "pdoor0"
 	icon_state_close = "pdoor1"
+	layer = ABOVE_SAFEDOOR_LAYER
+	base_layer = ABOVE_SAFEDOOR_LAYER
+	layer_delta = SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
 	var/id = 1.0
-	explosion_resistance = 25
+	explosive_resistance = 3
 	block_air_zones = 0
 	door_open_sound  = 'sound/machines/blast_door.ogg'
 	door_close_sound = 'sound/machines/blast_door.ogg'
@@ -20,7 +23,7 @@
 	. = ..()
 	poddoor_list += src
 	if(density)
-		layer = base_layer + PODDOOR_CLOSED_MOD
+		layer = base_layer + layer_delta
 
 /obj/machinery/door/poddoor/Destroy()
 	poddoor_list -= src
@@ -83,8 +86,8 @@
 	do_animate("opening")
 	icon_state = icon_state_open
 	SSdemo.mark_dirty(src)
-	sleep(3)
-	explosion_resistance = 0
+	sleep(7)
+	explosive_resistance = 0
 	layer = base_layer
 	density = FALSE
 	set_opacity(FALSE)
@@ -94,13 +97,13 @@
 /obj/machinery/door/poddoor/do_close()
 	if(hasPower())
 		use_power(20)
+	layer = base_layer + layer_delta
 	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
 	icon_state = icon_state_close
 	SSdemo.mark_dirty(src)
 	sleep(3)
-	explosion_resistance = initial(explosion_resistance)
-	layer = base_layer + PODDOOR_CLOSED_MOD
+	explosive_resistance = initial(explosive_resistance)
 	density = TRUE
 	set_opacity(TRUE)
 	do_afterclose()

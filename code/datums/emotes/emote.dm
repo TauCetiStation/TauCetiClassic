@@ -1,4 +1,5 @@
 var/global/list/all_emotes
+var/global/list/emotes_for_emote_panel // for custom emote panel
 
 /*
  * Singleton emote datum.
@@ -44,11 +45,16 @@ var/global/list/all_emotes
 
 	// Visual cue with a cloud above head for some emotes.
 	var/cloud
+	// How long emote cloud will float above character.
+	var/cloud_duration = 3 SECONDS
 
 	var/list/state_checks
 
 /datum/emote/proc/get_emote_message_1p(mob/user)
 	return "<i>[message_1p]</i>"
+
+/datum/emote/proc/get_impaired_msg(mob/user)
+	return message_impaired_reception
 
 /datum/emote/proc/get_emote_message_3p(mob/user)
 	var/msg = message_3p
@@ -68,7 +74,7 @@ var/global/list/all_emotes
 	if(!msg)
 		return null
 
-	return "<b>[user]</b> <i>[msg]</i>"
+	return msg
 
 /datum/emote/proc/get_cooldown_group()
 	if(isnull(cooldown_group))
@@ -137,8 +143,9 @@ var/global/list/all_emotes
 		I.trigger(emote_key, user)
 
 	var/msg_1p = get_emote_message_1p(user)
-	var/msg_3p = get_emote_message_3p(user)
+	var/msg_3p = "<b>[user]</b> <i>[get_emote_message_3p(user)]</i>"
 	var/range = !isnull(emote_range) ? emote_range : world.view
+	var/deaf_impaired_msg = "<b>[user]</b> [get_impaired_msg(user)]"
 
 	if(!msg_1p)
 		msg_1p = msg_3p
@@ -147,9 +154,9 @@ var/global/list/all_emotes
 
 	if(msg_3p)
 		if(message_type & SHOWMSG_VISUAL)
-			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list)
+			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list, runechat_msg = get_emote_message_3p(user))
 		else if(message_type & SHOWMSG_AUDIO)
-			user.audible_message(msg_3p, message_impaired_reception, hearing_distance = range, ignored_mobs = observer_list)
+			user.audible_message(msg_3p, msg_1p, deaf_impaired_msg, hearing_distance = range, ignored_mobs = observer_list, runechat_msg = get_emote_message_3p(user), deaf_runechat_msg = get_impaired_msg(user))
 
 	else
 		to_chat(user, msg_1p)
@@ -163,6 +170,9 @@ var/global/list/all_emotes
 	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue
+
+		if(M in viewers(get_turf(user), world.view))
+			M.show_runechat_message(user, null, get_emote_message_3p(user), null, SHOWMSG_VISUAL)
 
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)
@@ -178,5 +188,5 @@ var/global/list/all_emotes
 /datum/emote/proc/add_cloud(mob/user)
 	var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)
 	emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	flick_overlay(emote_bubble, clients, 30)
-	QDEL_IN(emote_bubble, 3 SECONDS)
+	flick_overlay(emote_bubble, clients, cloud_duration)
+	QDEL_IN(emote_bubble, cloud_duration)

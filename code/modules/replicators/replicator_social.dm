@@ -11,7 +11,7 @@
 	if(objection_end_time < world.time)
 		return
 
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()

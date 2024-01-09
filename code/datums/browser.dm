@@ -34,8 +34,7 @@
 	add_stylesheet("font-awesome.css", 'html/font-awesome/css/all.min.css')
 
 /datum/browser/Destroy()
-	user.browsers -= window_id
-	UNSETEMPTY(user.browsers)
+	LAZYREMOVE(user.browsers, window_id)
 	return ..()
 
 /datum/browser/proc/add_head_content(nhead_content)
@@ -164,7 +163,7 @@
 					winset(user, "mapwindow", "focus=true")
 				break
 	if(timeout)
-		addtimer(CALLBACK(src, .proc/close), timeout)
+		addtimer(CALLBACK(src, PROC_REF(close)), timeout)
 
 /datum/browser/modal/proc/wait()
 	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout > world.time))
@@ -293,9 +292,11 @@
 	if(ref)
 		param = "\ref[ref]"
 
-	winset(user, windowid, "on-close=\".windowclose [param]\"")
+	var/window_param = "null"
+	if(windowid)
+		window_param = windowid
 
-	//world << "OnClose [user]: [windowid] : ["on-close=\".windowclose [param]\""]"
+	winset(user, windowid, "on-close=\".windowclose \\\"[param]\\\" \\\"[window_param]\"")
 
 
 // the on-close client verb
@@ -303,9 +304,12 @@
 // if a valid atom reference is supplied, call the atom's Topic() with "close=1"
 // otherwise, just reset the client mob's machine var.
 //
-/client/verb/windowclose(atomref as text)
+/client/verb/windowclose(atomref as text, windowid as text)
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
+
+	if(LAZYACCESS(browsers, windowid))
+		qdel(LAZYACCESS(browsers, windowid))
 
 	//world << "windowclose: [atomref]"
 	if(atomref!="null")				// if passed a real atomref

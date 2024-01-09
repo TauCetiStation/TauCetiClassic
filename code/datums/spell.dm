@@ -186,7 +186,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	before_cast(targets, user)
 	invocation(user)
 	if(charge_type == "recharge" && recharge)
-		INVOKE_ASYNC(src, .proc/start_recharge, user)
+		INVOKE_ASYNC(src, PROC_REF(start_recharge), user)
 	cast(targets, user)
 	after_cast(targets, user)
 

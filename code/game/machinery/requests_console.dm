@@ -53,11 +53,7 @@ var/global/list/departments_genitive = list()
 		// 9 = authentication before sending
 		// 10 = send announcement
 	var/silent = FALSE // set to TRUE for it not to beep all the time
-	var/announcementConsole = FALSE
-		// FALSE = This console cannot be used to send department announcements
-		// TRUE = This console can send department announcements
 	var/open = FALSE // TRUE if open
-	var/announceAuth = FALSE //Will be set to TRUE when you authenticate yourself for announcements
 	var/msgVerified = "" //Will contain the name of the person who varified it
 	var/msgStamped = "" //If a message is stamped, this will contain the stamp name
 	var/message = "";
@@ -188,20 +184,8 @@ var/global/list/departments_genitive = list()
 				dat += text("<A href='?src=\ref[src];department=[url_encode(to_dpt)]'>Отравить</A><BR>");
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Назад</A><BR>")
 
-			if(10)	//send announcement
-				dat += text("<B>Оповещение станции</B><BR><BR>")
-				if(announceAuth)
-					dat += text("<b>Авторизация принята</b><BR><BR>")
-				else
-					dat += text("Проведите вашей картой для авторизации.<BR><BR>")
-				dat += text("<b>Сообщение: </b>[message] <A href='?src=\ref[src];writeAnnouncement=1'>Написать</A><BR><BR>")
-				if (announceAuth && message)
-					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Отправить</A><BR>");
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Назад</A><BR>")
-
 			else	//main menu
 				screen = 0
-				announceAuth = FALSE
 				if (newmessagepriority == 1)
 					dat += text("<FONT COLOR='RED'>Есть новые сообщения</FONT><BR>")
 				if (newmessagepriority == 2)
@@ -211,8 +195,6 @@ var/global/list/departments_genitive = list()
 				dat += text("<A href='?src=\ref[src];setScreen=1'>Запросить помощь</A><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=2'>Запросить поставку</A><BR>")
 				dat += text("<A href='?src=\ref[src];setScreen=3'>Передать информацию анонимно</A><BR><BR>")
-				if(announcementConsole)
-					dat += text("<A href='?src=\ref[src];setScreen=10'>Отправить оповещение станции</A><BR><BR>")
 				if (silent)
 					dat += text("Звук <A href='?src=\ref[src];setSilent=0'>ВЫКЛ</A>")
 				else
@@ -234,7 +216,9 @@ var/global/list/departments_genitive = list()
 			return
 
 		var/new_message = sanitize(input(usr, "Напишите ваше сообщение:", "Ожидание Ввода", ""))
-		if(new_message)
+		if(!can_still_interact_with(usr))
+			return
+		if(length(new_message))
 			message = new_message
 			screen = 9
 			switch(href_list["priority"])
@@ -248,31 +232,6 @@ var/global/list/departments_genitive = list()
 			msgStamped = ""
 			screen = 0
 			priority = -1
-
-	if(href_list["writeAnnouncement"])
-		var/new_message = sanitize(input(usr, "Напишите ваше сообщение:", "Ожидание Ввода", "") as null|message)
-		if(new_message)
-			message = new_message
-			switch(href_list["priority"])
-				if("2")
-					priority = 2
-				else
-					priority = -1
-		else
-			message = ""
-			announceAuth = FALSE
-			screen = 0
-
-	if(href_list["sendAnnouncement"])
-		if(!announcementConsole)
-			return FALSE
-
-		announcement.play(department_genitive, message)
-		message_admins("[key_name_admin(usr)] has made a department announcement. [ADMIN_JMP(usr)]")
-
-		announceAuth = FALSE
-		message = ""
-		screen = 0
 
 	if(href_list["department"] && message)
 		var/log_msg = message
@@ -319,10 +278,6 @@ var/global/list/departments_genitive = list()
 			screen = 8
 		if(9)		//authentication
 			screen = 9
-		if(10)		//send announcement
-			if(!announcementConsole)
-				return FALSE
-			screen = 10
 		else		//main menu
 			to_dpt = ""
 			msgVerified = ""
@@ -342,24 +297,16 @@ var/global/list/departments_genitive = list()
 	updateUsrDialog()
 
 /obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user)
+	if(screen != 9)
+		return
 	if (istype(O, /obj/item/weapon/card/id))
-		if(screen == 9)
-			var/obj/item/weapon/card/id/T = O
-			msgVerified = text("<font color='green'><b>Подтверждено [T.registered_name] ([T.assignment])</b></font>")
-			updateUsrDialog()
-		if(screen == 10)
-			var/obj/item/weapon/card/id/ID = O
-			if (access_RC_announce in ID.GetAccess())
-				announceAuth = TRUE
-			else
-				announceAuth = FALSE
-				to_chat(user, "<span class='warning'>Вы не авторизованы для отправки оповещений на станцию.</span>")
-			updateUsrDialog()
+		var/obj/item/weapon/card/id/T = O
+		msgVerified = text("<font color='green'><b>Подтверждено [T.registered_name] ([T.assignment])</b></font>")
+		updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))
-		if(screen == 9)
-			var/obj/item/weapon/stamp/T = O
-			msgStamped = text("<font color='blue'><b>[T.name]</b></font>")
-			updateUsrDialog()
+		var/obj/item/weapon/stamp/T = O
+		msgStamped = text("<font color='blue'><b>[T.name]</b></font>")
+	updateUsrDialog()
 	return
 
 
@@ -370,55 +317,41 @@ var/global/list/departments_genitive = list()
 	department = "Кабинет Капитана"
 	department_genitive = "Кабинета Капитана"
 	departmentType = RC_ASSIST_INFO
-	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/captain
 
 /obj/machinery/requests_console/hop
 	name = "Head of Personnel RC"
 	department = "Кабинет ГП"
 	department_genitive = "Кабинета ГП"
 	departmentType = RC_ASSIST_INFO
-	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/hop
 
 /obj/machinery/requests_console/hos
 	name = "Head of Security RC"
 	department =  "Кабинет ГСБ"
 	department_genitive = "Кабинета ГСБ"
 	departmentType = RC_ASSIST_INFO
-	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/hos
 
 /obj/machinery/requests_console/rd
 	name = "Research Director RC"
 	department = "Кабинет ДИР"
 	department_genitive = "Кабинета ДИР"
 	departmentType = RC_ASSIST_INFO
-	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/rd
-
 /obj/machinery/requests_console/cmo
 	name = "Chief Medical Officer RC"
 	department = "Кабинет Главврача"
 	department_genitive = "Кабинета Главврача"
 	departmentType = RC_ASSIST_INFO
-	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/cmo
 
 /obj/machinery/requests_console/ce
 	name = "Chief Engineer RC"
 	department = "Кабинет СИ"
 	department_genitive = "Кабинета СИ"
 	departmentType = RC_INFO
-	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/ce
 
 /obj/machinery/requests_console/bridge
 	name = "Bridge Requests Console"
 	department = "Мостик"
 	department_genitive = "Мостика"
 	departmentType = RC_ASSIST_INFO
-	announcementConsole = TRUE
 
 // Security
 

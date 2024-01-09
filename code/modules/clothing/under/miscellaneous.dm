@@ -445,13 +445,6 @@
 	item_state = "sundress"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
-/obj/item/clothing/under/rank/mecha_operator
-	desc = "It's a slimming black with reinforced seams."
-	name = "pilot's jumpsuit"
-	icon_state = "robotics2"
-	item_state = "robotics"
-	flags = ONESIZEFITSALL
-
 /obj/item/clothing/under/rank/cadet
 	desc = ""
 	name = "security cadet's uniform"
@@ -463,15 +456,6 @@
 	name = "security cadet's jumpskirt"
 	icon_state = "skirt_cadet"
 	item_state = "skirt_cadet"
-
-/obj/item/clothing/under/rank/forensic_technician
-	desc = "It has a Forensics rank stripe on it."
-	name = "forensics jumpsuit"
-	icon_state = "forensicsred"
-	item_state = "forensicsred"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
-	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/cargo_fem
 	name = "quartermaster's dress"
@@ -514,12 +498,6 @@
 	icon_state = "bar_f"
 	item_state = "bar_f"
 
-/obj/item/clothing/under/kimono
-	name = "kimono"
-	icon_state = "kimono"
-	item_state = "kimono"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
 /obj/item/clothing/under/blacktango
 	name = "black tango dress"
 	desc = "Filled with latin fire."
@@ -556,12 +534,6 @@
 	desc = "The big drum sounds good only from a distance."
 	icon_state = "mafia_tan"
 	item_state = "mafia_tan"
-
-/obj/item/clothing/under/mafia/flappers
-	name = "flappers"
-	desc = "Nothing like the roaring 20s, flapping the night away on the dance floor."
-	icon_state = "flapper"
-	item_state = "flapper"
 
 /obj/item/clothing/under/rank/capcamsole
 	desc = "It's a blue feminine camisole with some gold markings denoting the rank of \"Captain\" and gold aquila on it."
@@ -694,13 +666,6 @@
 	item_state = "M35_Filde_Jacket_Officer"
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
 
-/obj/item/clothing/under/Waffen_SS_Form
-	name = "Waffen SS Form"
-	desc = "A special uniform for the SS."
-	icon_state = "SS_Form"
-	item_state = "SS_Form"
-	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
-
 /obj/item/clothing/under/jackbros
 	name = "jack bros outfit"
 	desc = "For when it's time to hee some hos."
@@ -789,3 +754,12 @@
 	desc = "Pair of old jeans combined with a red tank-top"
 	icon_state = "kung_suit"
 	w_class = SIZE_SMALL
+
+/obj/item/clothing/under/durathread
+	name = "durathread suit"
+	desc = "Made from duratread. It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
+	icon_state = "Durauniform"
+	item_state = "Durauniform"
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.8
+	armor = list(melee = 5, bullet = 0, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)

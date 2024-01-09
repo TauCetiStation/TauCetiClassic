@@ -6,7 +6,6 @@ var/global/list/closet_list = list()        //guess what? closets! /obj/structur
 var/global/list/crematorium_list = list()   //list if all /obj/structure/crematorium
 var/global/list/implant_list = list()       //list of all /obj/item/weapon/implant
 var/global/list/ladder_list = list()        //|====| <- /obj/structure/ladder
-var/global/list/list/landmarks_list = list()//assoc list of all landmarks created (name -> list of landmarks)
 var/global/list/mecha_tracking_list = list()//list of all /obj/item/mecha_parts/mecha_tracking
 var/global/list/surgery_steps = list()      //list of all surgery steps  |BS12
 var/global/list/crafting_recipes = list()   //list of all personal craft recipes
@@ -28,6 +27,7 @@ var/global/list/scrubber_huge_list = list()
 var/global/list/computer_list = list()
 var/global/list/RDcomputer_list = list()
 var/global/list/communications_list = list()
+var/global/list/med_record_consoles_list = list()
 var/global/list/station_alert_list = list()
 var/global/list/teleporter_list = list()
 var/global/list/radio_beacon_list = list()
@@ -66,6 +66,9 @@ var/global/list/the_station_areas = list()
 var/global/list/machines = list()
 var/global/list/vending_products = list() //this list is used to create product images in the vending machine window
 var/global/list/intercom_list = list()
+var/global/list/all_designs = list()
+var/global/list/all_supply_pack = list()
+var/global/list/all_command_microphones = list()
 
 var/global/list/spells_by_aspects = list()
 var/global/list/rites_by_aspects = list()

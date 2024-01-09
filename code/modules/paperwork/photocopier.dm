@@ -46,7 +46,7 @@
 
 	switch(action)
 		if("make_copy")
-			addtimer(CALLBACK(src, .proc/copy_operation, usr), 0)
+			addtimer(CALLBACK(src, PROC_REF(copy_operation), usr), 0)
 			. = TRUE
 		if("remove")
 			if(copyitem)
@@ -209,14 +209,8 @@
 	P.offset_y = LAZYCOPY(copy.offset_y)
 	var/image/img
 	for (var/i in 1 to copy.overlays.len)        //Iterates through stamps gray and puts a matching overlay onto the copy
-		if (findtext(copy.ico[i], "cap") || findtext(copy.ico[i], "cent"))
-			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-circle")
-		else if (findtext(copy.ico[i], "deny"))
-			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-x")
-		else if (findtext(copy.ico[i], "approve"))
-			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-check")
-		else
-			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-dots")
+		img = copy.ico[i]
+		img.color = "#7f7f7f" // 50% grey
 		img.pixel_x = copy.offset_x[i]
 		img.pixel_y = copy.offset_y[i]
 		P.add_overlay(img)

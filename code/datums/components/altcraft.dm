@@ -1,7 +1,7 @@
 /datum/component/altcraft/Initialize()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_CLICK_CTRL_SHIFT, .proc/show_radial_recipes)
+	RegisterSignal(parent, COMSIG_CLICK_CTRL_SHIFT, PROC_REF(show_radial_recipes))
 
 /datum/component/altcraft/proc/check_menu()
 	var/mob/living/carbon/human/H = parent
@@ -32,10 +32,10 @@
 		var/atom/craftable_atom = available_recipe_datum.result
 		recipes_radial.Add(list(initial(craftable_atom.name) = image(icon = initial(craftable_atom.icon), icon_state = initial(craftable_atom.icon_state))))
 		recipes_craft.Add(list(initial(craftable_atom.name) = available_recipe_datum))
-	INVOKE_ASYNC(src, .proc/radial_menu_enable, recipes_radial, recipes_craft, H, crafting_menu)
+	INVOKE_ASYNC(src, PROC_REF(radial_menu_enable), recipes_radial, recipes_craft, H, crafting_menu)
 
 /datum/component/altcraft/proc/radial_menu_enable(list/recipes_radial, list/recipes_craft, mob/H, datum/personal_crafting/crafting_menu)
-	var/recipe_chosen = show_radial_menu(H, H, recipes_radial, custom_check = CALLBACK(src, .proc/check_menu, H), require_near = TRUE, tooltips = TRUE)
+	var/recipe_chosen = show_radial_menu(H, H, recipes_radial, custom_check = CALLBACK(src, PROC_REF(check_menu), H), require_near = TRUE, tooltips = TRUE)
 	if(!recipe_chosen)
 		return
 	var/datum/crafting_recipe/chosen_recipe = recipes_craft[recipe_chosen]

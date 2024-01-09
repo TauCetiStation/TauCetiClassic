@@ -31,7 +31,7 @@
 /obj/structure/windoor_assembly/atom_init(mapload, dir = NORTH)
 	. = ..()
 	src.ini_dir = src.dir
-	update_nearby_tiles(need_rebuild = 1)
+	update_nearby_tiles()
 
 /obj/structure/windoor_assembly/Destroy()
 	density = FALSE
@@ -81,27 +81,27 @@
 			if(iswrenching(W) && !anchored)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
 				if(W.use_tool(src, user, 40, volume = 100))
-					if(src.anchored)
+					if(anchored)
 						return
 					to_chat(user, "<span class='notice'>You've secured the windoor assembly!</span>")
-					src.anchored = TRUE
-					if(src.secure)
-						src.name = "Secure Anchored Windoor Assembly"
+					anchored = TRUE
+					if(secure)
+						name = "Secure Anchored Windoor Assembly"
 					else
-						src.name = "Anchored Windoor Assembly"
+						name = "Anchored Windoor Assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
 			else if(iswrenching(W) && anchored)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
 				if(W.use_tool(src, user, 40, volume = 100))
-					if(!src.anchored)
+					if(!anchored)
 						return
 					to_chat(user, "<span class='notice'>You've unsecured the windoor assembly!</span>")
-					src.anchored = FALSE
-					if(src.secure)
-						src.name = "Secure Windoor Assembly"
+					anchored = FALSE
+					if(secure)
+						name = "Secure Windoor Assembly"
 					else
-						src.name = "Windoor Assembly"
+						name = "Windoor Assembly"
 
 			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
 			else if(istype(W, /obj/item/stack/rods) && !secure)
@@ -115,44 +115,44 @@
 						return
 
 					to_chat(user, "<span class='notice'>You reinforce the windoor.</span>")
-					src.secure = 1
-					if(src.anchored)
-						src.name = "Secure Anchored Windoor Assembly"
+					secure = 1
+					if(anchored)
+						name = "Secure Anchored Windoor Assembly"
 					else
-						src.name = "Secure Windoor Assembly"
+						name = "Secure Windoor Assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
 			else if(iscoil(W) && anchored)
 				var/obj/item/stack/cable_coil/CC = W
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
 				if(CC.use_tool(src, user, 40, amount = 1, volume = 100))
-					if(!src.anchored || src.state != "01")
+					if(!anchored || state != "01")
 						return
 					to_chat(user, "<span class='notice'>You wire the windoor!</span>")
-					src.state = "02"
-					if(src.secure)
-						src.name = "Secure Wired Windoor Assembly"
+					state = "02"
+					if(secure)
+						name = "Secure Wired Windoor Assembly"
 					else
-						src.name = "Wired Windoor Assembly"
+						name = "Wired Windoor Assembly"
 			else
 				..()
 
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(iscutter(W) && !src.electronics)
+			if(iscutter(W) && !electronics)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 				if(W.use_tool(src, user, 40, volume = 100))
-					if(src.state != "02")
+					if(state != "02")
 						return
 
 					to_chat(user, "<span class='notice'>You cut the windoor wires.!</span>")
 					new /obj/item/stack/cable_coil/random(get_turf(user), 1)
-					src.state = "01"
-					if(src.secure)
-						src.name = "Secure Anchored Windoor Assembly"
+					state = "01"
+					if(secure)
+						name = "Secure Anchored Windoor Assembly"
 					else
-						src.name = "Anchored Windoor Assembly"
+						name = "Anchored Windoor Assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
 			else if(istype(W, /obj/item/weapon/airlock_electronics))
@@ -161,14 +161,14 @@
 					user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 					user.drop_from_inventory(AE, src)
 					if(W.use_tool(src, user, 40, volume = 100))
-						if(src.electronics)
-							AE.loc = src.loc
+						if(electronics)
+							AE.loc = loc
 							return
 						to_chat(user, "<span class='notice'>You've installed the airlock electronics!</span>")
-						src.name = "Near finished Windoor Assembly"
-						src.electronics = AE
+						name = "Near finished Windoor Assembly"
+						electronics = AE
 					else
-						AE.loc = src.loc
+						AE.loc = loc
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(isscrewing(W))
@@ -182,10 +182,10 @@
 					var/obj/item/weapon/airlock_electronics/ae = electronics
 					ae = electronics
 					electronics = null
-					ae.loc = src.loc
+					ae.loc = loc
 
 			else if(istype(W, /obj/item/weapon/pen))
-				var/t = sanitize_safe(input(user, "Enter the name for the door.", src.name, input_default(src.created_name)), MAX_LNAME_LEN)
+				var/t = sanitize_safe(input(user, "Enter the name for the door.", name, input_default(created_name)), MAX_LNAME_LEN)
 				if(!t)
 					return
 				if(!Adjacent(usr))
@@ -196,58 +196,58 @@
 
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(isprying(W))
-				if(!src.electronics)
+				if(!electronics)
 					to_chat(usr, "<span class='warning'>The assembly is missing electronics.</span>")
 					return
-				usr << browse(null, "window=windoor_access")
 				user.visible_message("[user] pries the windoor into the frame.", "You start prying the windoor into the frame.")
 				if(W.use_tool(src, user, 40, volume = 100))
-					if(!src.electronics)
+					if(!electronics)
 						return
 
 					density = TRUE //Shouldn't matter but just incase
 					to_chat(user, "<span class='notice'>You finish the windoor!</span>")
 
 					if(secure)
-						var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(src.loc)
-						if(src.facing == "l")
+						var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(loc)
+						if(facing == "l")
 							windoor.icon_state = "leftsecureopen"
 							windoor.base_state = "leftsecure"
 						else
 							windoor.icon_state = "rightsecureopen"
 							windoor.base_state = "rightsecure"
-						windoor.set_dir(src.dir)
+						windoor.set_dir(dir)
 						windoor.density = FALSE
 
-						if(src.electronics.one_access)
+						if(electronics.one_access)
 							windoor.req_access = list()
-							windoor.req_one_access = src.electronics.conf_access
+							windoor.req_one_access = electronics.conf_access
 						else
-							windoor.req_access = src.electronics.conf_access
-						windoor.electronics = src.electronics
-						src.electronics.loc = windoor
+							windoor.req_access = electronics.conf_access
+						windoor.electronics = electronics
+						electronics.loc = windoor
 						if(created_name)
 							windoor.name = created_name
 
 
 					else
-						var/obj/machinery/door/window/windoor = new /obj/machinery/door/window(src.loc)
-						if(src.facing == "l")
+						var/obj/machinery/door/window/windoor = new (loc)
+						if(facing == "l")
 							windoor.icon_state = "leftopen"
 							windoor.base_state = "left"
 						else
 							windoor.icon_state = "rightopen"
 							windoor.base_state = "right"
-						windoor.set_dir(src.dir)
+						windoor.set_dir(dir)
 						windoor.density = FALSE
 
-						if(src.electronics.one_access)
+						if(electronics.one_access)
 							windoor.req_access = list()
-							windoor.req_one_access = src.electronics.conf_access
+							windoor.req_one_access = electronics.conf_access
 						else
-							windoor.req_access = src.electronics.conf_access
-						windoor.electronics = src.electronics
-						src.electronics.loc = windoor
+							windoor.req_access = electronics.conf_access
+						windoor.unres_sides = electronics.unres_sides
+						windoor.electronics = electronics
+						electronics.loc = windoor
 						if(created_name)
 							windoor.name = created_name
 						windoor.close()
@@ -272,12 +272,12 @@
 		to_chat(usr, "It is fastened to the floor; therefore, you can't rotate it!")
 		return 0
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1) //Compel updates before
+		update_nearby_tiles() //Compel updates before
 
 	set_dir(turn(src.dir, 270))
 
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles()
 
 	src.ini_dir = src.dir
 	update_icon()

@@ -92,7 +92,7 @@
 						user << browse_rsc(side, "side.png")
 						dat += {"<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>
 							Name: <a href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</a><br>
-							ID: <a href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</a><br>
+							ID: [active1.fields["id"]]<br>
 							Sex: <a href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</a><br>
 							Age: <a href='?src=\ref[src];choice=Edit Field;field=age'>[active1.fields["age"]]</a><br>
 							Home system: [active1.fields["home_system"]]<br>
@@ -100,7 +100,9 @@
 							Faction: [active1.fields["faction"]]<br>
 							Religion: [active1.fields["religion"]]<br>
 							Rank: <a href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</a><br>
-							Fingerprint: <a href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</a><br>
+							Fingerprint: [active1.fields["fingerprint"]]<br>
+							Insurance Account Number: [active1.fields["insurance_account_number"]]<br>
+							Insurance Type: [active1.fields["insurance_type"]]<br>
 							Physical Status: [active1.fields["p_stat"]]<br>
 							Mental Status: [active1.fields["m_stat"]]<br><br>
 							Employment/skills summary:<BR> [decode(active1.fields["notes"])]<br></td>
@@ -342,18 +344,6 @@ What a mess.*/
 							return FALSE
 						active1.fields["name"] = t1
 						PDA_Manifest.Cut()
-				if("id")
-					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(input("Please input id:", "Secure. records", input_default(active1.fields["id"]), null)  as text)
-						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
-							return FALSE
-						active1.fields["id"] = t1
-				if("fingerprint")
-					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(input("Please input fingerprint hash:", "Secure. records", input_default(active1.fields["fingerprint"]), null)  as text)
-						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
-							return FALSE
-						active1.fields["fingerprint"] = t1
 				if("sex")
 					if (istype(active1, /datum/data/record))
 						if (active1.fields["sex"] == "Male")

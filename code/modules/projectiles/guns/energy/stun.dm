@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/energy/taser
 	name = "taser gun"
-	desc = "A small, low capacity gun used for non-lethal takedowns."
+	desc = "Небольшой пистолет малой мощности, используемый для нелетальных захватов."
 	icon_state = "taser"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/electrode)
@@ -14,7 +14,7 @@
 
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
-	desc = "A small, low capacity gun used for non-lethal takedowns."
+	desc = "Небольшой пистолет малой мощности, используемый для нелетальных захватов."
 	icon_state = "taser"
 	fire_sound = 'sound/weapons/guns/gunpulse_Taser.ogg'
 	ammo_type = list(/obj/item/ammo_casing/energy/stun)
@@ -50,7 +50,7 @@
 
 /obj/item/weapon/gun/energy/taser/stunrevolver
 	name = "stun revolver"
-	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
+	desc = "Высокотехнологичный револьвер, стреляющий электрошоковыми патронами. Пополнить боезапас/зарядить оружие можно с помощью обычного зарядного устройства для энергетического оружия."
 	icon_state = "stunrevolver"
 	item_state = "taser"
 	origin_tech = "combat=3;materials=3;powerstorage=2"
@@ -59,7 +59,7 @@
 
 /obj/item/weapon/gun/energy/crossbow
 	name = "foam dart crossbow"
-	desc = "A weapon favored by many overactive children. Ages 8 and up."
+	desc = "Оружие, любимое многими гиперактивными детьми. Возрастной рейтинг 8+."
 	icon_state = "crossbow"
 	w_class = SIZE_TINY
 	item_state = "crossbow"
@@ -96,7 +96,7 @@
 
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	name = "Energy Crossbow"
-	desc = "A weapon favored by syndicate infiltration teams."
+	desc = "Оружие, высоко ценимое оперативниками синдиката"
 	w_class = SIZE_NORMAL
 	can_be_holstered = FALSE
 	force = 10

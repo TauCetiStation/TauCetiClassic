@@ -25,6 +25,7 @@ SUBSYSTEM_DEF(vote)
 
 	if(get_vote_time() < 0)
 		active_poll.check_winners()
+		SSStatistics.add_vote(active_poll)
 		stop_vote()
 
 /datum/controller/subsystem/vote/tgui_interact(mob/user, datum/tgui/ui)

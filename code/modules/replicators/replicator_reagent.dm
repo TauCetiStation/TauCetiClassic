@@ -3,6 +3,7 @@
 	R.my_atom = holder
 	R.add_reagent("prismaline", amount)
 	R.reaction(A, TOUCH, amount)
+	qdel(R)
 
 
 /datum/reagent/prismaline

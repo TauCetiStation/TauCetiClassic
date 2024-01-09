@@ -4,16 +4,12 @@
 	var/sting_icon = null
 	var/ranged = 1
 
-/obj/effect/proc_holder/changeling/sting/Click()
-	var/mob/user = usr
-	if(!user || !ischangeling(user))
-		return
+/obj/effect/proc_holder/changeling/sting/on_sting_choose(mob/user)
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!(C.chosen_sting))
 		set_sting(user)
 	else
 		unset_sting(user)
-	return
 
 /obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
 	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")
@@ -43,7 +39,7 @@
 		return FALSE
 	if(!isturf(user.loc))
 		return FALSE
-	if(!AStar(user, target.loc, /turf/proc/Distance, C.sting_range, simulated_only = FALSE))
+	if(!AStar(user, target.loc, TYPE_PROC_REF(/turf, Distance), C.sting_range, simulated_only = FALSE))
 		return FALSE //hope this ancient magic still works
 	if(ischangeling(target))
 		sting_feedback(user,target)
@@ -102,6 +98,7 @@
 	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
 	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
 	sting_icon = "sting_cryo"
+	button_icon_state = "sting_cryo"
 	chemical_cost = 15
 	genomecost = 1
 
@@ -119,6 +116,7 @@
 	desc = "Causes terror in the target."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
+	button_icon_state = "sting_lsd"
 	chemical_cost = 15
 	genomecost = 1
 
@@ -136,16 +134,16 @@
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
 	helptext = "Does not provide a warning to others. The victim will transform much like a changeling would."
 	sting_icon = "sting_transform"
+	button_icon_state = "sting_transform"
 	chemical_cost = 40
 	genomecost = 2
 	var/datum/dna/selected_dna = null
 
-/obj/effect/proc_holder/changeling/sting/transformation/Click()
-	var/mob/user = usr
+/obj/effect/proc_holder/changeling/sting/transformation/set_sting(mob/user)
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
-		names += "[DNA.real_name]"
+		names += "[DNA.original_character_name]"
 
 	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
 	if(!S)	return
@@ -169,8 +167,12 @@
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	target.visible_message("<span class='warning'>[target] transforms!</span>")
+	//save original
+	var/essence_name = target.dna.original_character_name
 	target.dna = selected_dna.Clone()
 	target.real_name = selected_dna.real_name
+	//unchange this
+	target.dna.original_character_name = essence_name
 	domutcheck(target, null)
 	target.UpdateAppearance()
 
@@ -186,6 +188,7 @@
 	desc = "We stealthily sting a target and extract their DNA."
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
 	sting_icon = "sting_extract"
+	button_icon_state = "sting_extract"
 	chemical_cost = 25
 	genomecost = 1
 	ranged = 0
@@ -219,6 +222,7 @@
 	desc = "We silently sting a human, completely deafening and silencing them for a short time."
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
 	sting_icon = "sting_mute"
+	button_icon_state = "sting_mute"
 	chemical_cost = 20
 	genomecost = 1
 
@@ -238,6 +242,7 @@
 
 	desc = "This sting completely blinds a target for a short time. The target does not notice they have been stung."
 	sting_icon = "sting_blind"
+	button_icon_state = "sting_blind"
 	chemical_cost = 25
 	genomecost = 1
 
@@ -246,7 +251,7 @@
 		return FALSE
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
 	target.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
-	addtimer(CALLBACK(target, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 30 SECONDS, TIMER_STOPPABLE)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 30 SECONDS, TIMER_STOPPABLE)
 	target.eye_blind = 20
 	target.blurEyes(40)
 	feedback_add_details("changeling_powers","BS")
@@ -255,6 +260,7 @@
 /obj/effect/proc_holder/changeling/sting/unfat
 	name = "Fat Sting"
 	desc = "We silently sting a human, forcing them to rapidly metabolize their fat."
+	button_icon_state = "sting_fat"
 	helptext = ""
 	sting_icon = "sting_fat"
 	chemical_cost = 5

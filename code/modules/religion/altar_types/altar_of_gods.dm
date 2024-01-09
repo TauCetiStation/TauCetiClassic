@@ -1,6 +1,6 @@
 /obj/structure/altar_of_gods
 	name = "Altar of the Gods"
-	desc = "An altar which allows the head of the church to choose a sect of religious teachings as well as provide sacrifices to earn favor."
+	desc = "Алтарь, позволяющий главе церкви выбирать религиозное учение и приносить жертвы для того, чтобы заработать милость богов."
 	icon = 'icons/obj/structures/chapel.dmi'
 	icon_state = "altar"
 	density = TRUE
@@ -22,22 +22,16 @@
 	// name = image
 	var/list/rite_images = list()
 
-	var/list/mob/mobs_around = list()
-	var/list/turf/turfs_around = list()
-
 /obj/structure/altar_of_gods/atom_init()
 	. = ..()
 	experiments = new
 	experiments.init_known_tech()
 
 	AddComponent(/datum/component/clickplace)
-	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), .proc/start_rite)
-	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), .proc/reset_rite)
-	init_turfs_around()
+	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), PROC_REF(start_rite))
+	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), PROC_REF(reset_rite))
 
 /obj/structure/altar_of_gods/Destroy()
-	mobs_around = null
-	turfs_around = null
 	if(religion)
 		religion.altars -= src
 	qdel(experiments)
@@ -98,7 +92,7 @@
 // This proc is used to sacrifice all items on altar. Returns TRUE if at least something was sacrificed.
 /obj/structure/altar_of_gods/proc/sacrifice(mob/user)
 	if(!religion || !religion.aspects.len)
-		to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
+		to_chat(user, "<span class ='warning'>Сначала выберите аспекты своей религии!</span>")
 		return FALSE
 
 	if(user.is_busy(src))
@@ -126,7 +120,7 @@
 
 		if(max_points > MIN_FAVOUR_GAIN)
 			religion.adjust_favor(max_points, user)
-			INVOKE_ASYNC(src, .proc/sacrifice_item, I)
+			INVOKE_ASYNC(src, PROC_REF(sacrifice_item), I)
 			sacrificed = TRUE
 
 		else if(max_points > 0)
@@ -146,11 +140,11 @@
 	if(user.mind && user.mind.holy_role >= HOLY_ROLE_PRIEST)
 		sacrifice(user)
 	else
-		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
+		to_chat(user, "<span class='warning'>Вы не знаете, как это использовать.</span>")
 
 /obj/structure/altar_of_gods/proc/can_interact(mob/user)
 	if(religion && user.my_religion != religion)
-		to_chat(user, "Are you a member of another religion.")
+		to_chat(user, "Вы последователь другой религии.")
 		return FALSE
 	if(!user.mind)
 		return FALSE
@@ -248,11 +242,11 @@
 		return
 
 	if(performing_rite)
-		to_chat(user, "<span class='warning'>You are already performing [performing_rite.name]!</span>")
+		to_chat(user, "<span class='warning'>Вы уже проводите [performing_rite.name]!</span>")
 		return
 
 	if(!Adjacent(user))
-		to_chat(user, "<span class='warning'>You are too far away!</span>")
+		to_chat(user, "<span class='warning'>Вы слишком далеко!</span>")
 		return
 
 	performing_rite = religion.rites_by_name[rite_name]
@@ -279,6 +273,7 @@
 	T.rite.religion = religion
 	T.rite.favor_cost = 0
 	T.rite.piety_cost = 0
+	T.rite.divine_power = round(sqrt(R.divine_power))
 	religion.adjust_favor(-R.favor_cost*2)
 	religion.adjust_piety(-R.piety_cost*2)
 
@@ -397,10 +392,6 @@
 			anchored = !anchored
 			visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-			if(anchored)
-				init_turfs_around()
-			else
-				clear_turfs_around()
 			return
 
 	if(anchored && use_religion_tools(C, user))
@@ -413,25 +404,14 @@
 		return TRUE
 	return ..()
 
-/obj/structure/altar_of_gods/proc/init_turfs_around()
-	for(var/turf/T as anything in RANGE_TURFS(3, src))
-		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
-		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
-		turfs_around += T
+/obj/structure/altar_of_gods/proc/get_members_around()
+	var/list/members = list()
 
-/obj/structure/altar_of_gods/proc/clear_turfs_around()
-	for(var/turf/T in turfs_around)
-		UnregisterSignal(T, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
-		turfs_around -= T
-	for(var/M in mobs_around)
-		mobs_around -= M
+	for(var/mob/living/M in range(3, src))
+		if(religion.is_member(M))
+			members += M
 
-/obj/structure/altar_of_gods/proc/turf_around_enter(atom/source, atom/movable/mover, atom/oldLoc)
-	if(ismob(mover))
-		mobs_around |= mover
-
-/obj/structure/altar_of_gods/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)
-	mobs_around -= mover
+	return members
 
 /obj/structure/altar_of_gods/proc/start_rite()
 	return

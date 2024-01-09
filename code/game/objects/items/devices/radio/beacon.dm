@@ -126,7 +126,7 @@
 		var/I = image('icons/obj/device.dmi', "medicon")
 		H.add_overlay(I)
 		to_chat(user, "<span class='notice'>Device has been planted. Timer counting down from [timer].</span>")
-		addtimer(CALLBACK(src, .proc/teleport, H, target_beacon, I), timer * 10)
+		addtimer(CALLBACK(src, PROC_REF(teleport), H, target_beacon, I), timer * 10)
 
 /obj/item/weapon/medical/teleporter/attack(mob/M, mob/user, def_zone)
 	return
@@ -141,9 +141,9 @@
 			s.start()
 			s2.start()
 			H.forceMove(get_turf(beacon))
-			var/obj/item/device/radio/radio = new (src)
-			radio.autosay("Тело телепортировано на маячок.", "Medical teleporter system", "Medical", 1355)
-			qdel(radio)
+			var/obj/item/device/radio/headset/headset_med/HM = new (src)
+			HM.autosay("Тело телепортировано на маячок.", "Medical teleporter system", "Medical", 1355)
+			qdel(HM)
 		if (src)
 			qdel(src)
 		H.cut_overlay(I)

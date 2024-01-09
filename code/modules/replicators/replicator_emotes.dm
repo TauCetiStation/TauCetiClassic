@@ -25,7 +25,7 @@
 			continue
 		if(get_dist(user, R) > emote_range)
 			continue
-		 if(R.ckey)
+		 if(R.is_controlled())
 		 	to_chat(R, "<span class='notice'>[HELP_LINK(R, user)]</span>")
 		 	continue
 
@@ -44,7 +44,7 @@
 	message_3p = "beeps."
 
 	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "You see a light flicker."
+	message_impaired_reception = "flickers."
 
 	message_miming = "makes robot noises."
 	message_muzzled = "makes a weak noise."

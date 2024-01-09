@@ -1,18 +1,6 @@
-/obj/item/weapon/storage/backpack/nuke
-	startswith = list(
-	/obj/item/weapon/reagent_containers/pill/cyanide,
-	/obj/item/weapon/crowbar/red,
-	/obj/item/ammo_box/magazine/stechkin,
-	/obj/item/clothing/accessory/holster/armpit,
-	/obj/item/weapon/pinpointer/nukeop,
-	/obj/item/weapon/kitchenknife/combat,
-	/obj/item/clothing/accessory/storage/syndi_vest,
-	/obj/item/weapon/mining_voucher/kit,
-	/obj/item/weapon/mining_voucher/armour,)
-
 /obj/item/weapon/storage/pouch/pistol_holster/stechkin
 	startswith = list(
-	/obj/item/weapon/gun/projectile/automatic/pistol,
+	/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,
 	)
 
 /datum/outfit/nuclear
@@ -27,11 +15,12 @@
 	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster/stechkin
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	belt = /obj/item/weapon/storage/belt/military
-	back = /obj/item/weapon/storage/backpack/nuke
+	back = PREFERENCE_BACKPACK
 	implants = list(
 		/obj/item/weapon/implant/dexplosive
 		)
 	survival_box = TRUE
+	backpack_contents = list(/obj/item/weapon/mining_voucher/kit, /obj/item/weapon/mining_voucher/armour)
 
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
@@ -42,24 +31,9 @@
 	/obj/item/weapon/gun/projectile/revolver,
 	)
 
-
-/obj/item/weapon/storage/backpack/nuke/commander
-	startswith = list(
-	/obj/item/weapon/reagent_containers/pill/cyanide,
-	/obj/item/weapon/crowbar/red,
-	/obj/item/ammo_box/speedloader/a357,
-	/obj/item/clothing/accessory/holster/armpit,
-	/obj/item/weapon/pinpointer/nukeop,
-	/obj/item/device/radio/uplink,
-	/obj/item/weapon/kitchenknife/combat,
-	/obj/item/clothing/accessory/storage/syndi_vest,
-	/obj/item/weapon/mining_voucher/kit,
-	/obj/item/weapon/mining_voucher/armour,)
-
 /datum/outfit/nuclear/leader
 	name = "Syndicate: Nuclear Commander"
 	id = /obj/item/weapon/card/id/syndicate/commander
-	back = /obj/item/weapon/storage/backpack/nuke/commander
 	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster/revolver
 
 /datum/outfit/nuclear/unathi_equip()
@@ -70,6 +44,9 @@
 
 /datum/outfit/nuclear/skrell_equip()
 	backpack_contents += list(/obj/item/device/modkit/skrell)
+
+/datum/outfit/nuclear/ipc_equip()
+	backpack_contents += list(/obj/item/rig_module/cooling_unit/advanced)
 
 /datum/outfit/nuclear/vox_equip()
 	backpack_contents += list(/obj/item/device/modkit/vox)

@@ -4,15 +4,20 @@
 	invisibility = 101
 	anchored = TRUE
 	density = FALSE
-	var/falling_type = /obj/random/scrap/moderate_weighted
 
-/obj/effect/falling_effect/atom_init(mapload, type = /obj/random/scrap/moderate_weighted)
+/obj/effect/falling_effect/atom_init(mapload, type, atom/movable/object)
 	..()
-	falling_type = type
+	if(object)
+		object.loc = src
+	else 
+		if(!type)
+			type = /obj/random/scrap/moderate_weighted
+		new type(src)
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/falling_effect/atom_init_late()
-	new falling_type(src)
+
 	var/atom/movable/dropped = pick(src.contents) //stupid, but allows to get spawn result without efforts if it is other type
 	dropped.loc = get_turf_loc(src)
 	var/initial_x = dropped.pixel_x
@@ -23,13 +28,13 @@
 	dropped.density = FALSE
 	dropped.opacity = 0
 	animate(dropped, pixel_y = initial_y, pixel_x = initial_x , time = 7)
-	addtimer(CALLBACK(dropped, /atom/movable.proc/end_fall), 7)
+	addtimer(CALLBACK(dropped, TYPE_PROC_REF(/atom/movable, end_fall)), 7)
 	qdel(src)
 
 /atom/movable/proc/end_fall()
 	for(var/atom/movable/AM in loc)
 		if(AM != src)
-			AM.ex_act(EXPLODE_DEVASTATE)
+			AM.ex_act(EXPLODE_DEVASTATE) // ouch
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	if(istype(src, /obj/structure/scrap))

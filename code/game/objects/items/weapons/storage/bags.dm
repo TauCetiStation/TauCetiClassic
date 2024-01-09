@@ -308,4 +308,4 @@
 	max_storage_space = 100
 	max_w_class = SIZE_BIG
 	w_class = SIZE_TINY
-	can_hold = list(/obj/item/weapon/coin,/obj/item/weapon/spacecash)
+	can_hold = list(/obj/item/weapon/coin,/obj/item/weapon/spacecash,/obj/item/weapon/ewallet)

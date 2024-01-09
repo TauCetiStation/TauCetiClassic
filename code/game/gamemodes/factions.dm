@@ -12,6 +12,8 @@
 	var/min_roles = 1
 	// Whether or not this faction accepts newspawn latejoiners
 	var/accept_latejoiners = FALSE
+	// Accepts roundstart populating. Set FALSE to make faction members list empty
+	var/rounstart_populate = TRUE
 
 	// Type of roles that should be in faction initially
 	var/datum/role/initroletype
@@ -103,6 +105,9 @@
 		return TRUE
 	if(!P.client.prefs.be_role.Find(required_pref) || jobban_isbanned(P, required_pref) || role_available_in_minutes(P, required_pref) || jobban_isbanned(P, "Syndicate"))
 		return FALSE
+	return TRUE
+
+/datum/faction/proc/can_latespawn_mob(mob/P)
 	return TRUE
 
 // Basically, they are members of the new faction
@@ -401,3 +406,24 @@
 	for(var/datum/role/R in members)
 		if(R.antag && ckey(R.antag.key) == ckey)
 			return R
+
+/datum/faction/proc/get_active_members()
+	. = list()
+	for(var/datum/role/R in members)
+		var/mob/M = R.antag?.current
+		if(!M || !M.client)
+			continue
+		. += M
+
+/datum/faction/proc/check_crew()
+	var/total_human = 0
+	for(var/mob/living/carbon/human/H as anything in human_list)
+		var/turf/human_loc = get_turf(H)
+		if(!human_loc || !is_station_level(human_loc.z))
+			continue
+		if(H.stat == DEAD)
+			continue
+		if(!H.mind || !H.client)
+			continue
+		total_human++
+	return total_human

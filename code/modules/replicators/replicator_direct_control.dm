@@ -16,7 +16,7 @@
 		R.set_leader(src)
 
 /mob/living/simple_animal/hostile/replicator/proc/set_leader(mob/living/simple_animal/hostile/replicator/R, alert=TRUE)
-	if(ckey)
+	if(is_controlled())
 		return FALSE
 	if(state == REPLICATOR_STATE_COMBAT)
 		return FALSE
@@ -24,7 +24,7 @@
 		return FALSE
 	if(R.a_intent != INTENT_HARM)
 		return FALSE
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return FALSE
 	if(R.controlling_drones >= REPLICATOR_MAX_CONTROLLED_DRONES)
 		if(alert)
@@ -40,11 +40,11 @@
 
 	leader.controlling_drones += 1
 
-	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVING), .proc/_repeat_leader_move)
-	RegisterSignal(R, list(COMSIG_MOB_REGULAR_CLICK), .proc/_repeat_leader_attack)
-	RegisterSignal(R, list(COMSIG_MOB_SET_A_INTENT), .proc/on_leader_intent_change)
-	RegisterSignal(R, list(COMSIG_MOB_SET_M_INTENT), .proc/on_leader_m_intent_change)
-	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING), .proc/forget_leader)
+	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVING), PROC_REF(_repeat_leader_move))
+	RegisterSignal(R, list(COMSIG_MOB_REGULAR_CLICK), PROC_REF(_repeat_leader_attack))
+	RegisterSignal(R, list(COMSIG_MOB_SET_A_INTENT), PROC_REF(on_leader_intent_change))
+	RegisterSignal(R, list(COMSIG_MOB_SET_M_INTENT), PROC_REF(on_leader_m_intent_change))
+	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING), PROC_REF(forget_leader))
 
 	excitement = 30
 
@@ -52,7 +52,7 @@
 	set_m_intent(leader.m_intent)
 	set_state(REPLICATOR_STATE_COMBAT)
 
-	INVOKE_ASYNC(src, /mob/living.proc/help_other, leader)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living, help_other), leader)
 
 	clear_priority_target()
 	LoseTarget()
@@ -71,7 +71,7 @@
 
 /mob/living/simple_animal/hostile/replicator/proc/repeat_leader_move(datum/source, atom/NewLoc, move_dir)
 	Move(get_step(get_turf(src), move_dir), move_dir)
-	INVOKE_ASYNC(src, /mob/living.proc/help_other, leader)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living, help_other), leader)
 
 /mob/living/simple_animal/hostile/replicator/proc/_repeat_leader_move(datum/source, atom/NewLoc, move_dir)
 	SIGNAL_HANDLER
@@ -129,7 +129,7 @@
 		next_pretend_delay_action = world.time + fake_delay + 1
 
 	if(fake_delay > 0)
-		addtimer(CALLBACK(src, .proc/repeat_leader_attack, source, target, params), fake_delay)
+		addtimer(CALLBACK(src, PROC_REF(repeat_leader_attack), source, target, params), fake_delay)
 		return
 	repeat_leader_attack(source, target, params)
 

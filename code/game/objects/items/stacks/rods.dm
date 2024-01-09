@@ -7,7 +7,7 @@
 	w_class = SIZE_SMALL
 	force = 2.0
 	throwforce = 5.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 20
 	m_amt = 1875
 	max_amount = 60
@@ -43,6 +43,17 @@
 			use(2)
 			if(!QDELETED(src) && replace)
 				user.put_in_hands(new_item)
+	if(iscutter(I))
+		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
+		user.visible_message(
+			"[user.name] cuts the [src], turning it into a crossbow bolt.",
+			"<span class='notice'>You cuts the [src], turning it into a crossbow bolt.</span>"
+			)
+		var/obj/item/weapon/arrow/new_item = new(user.loc)
+		use(1)
+		var/replace = (user.get_inactive_hand() == src)
+		if(!QDELETED(src) && replace)
+			user.put_in_hands(new_item)
 
 	else
 		return ..()
@@ -68,22 +79,18 @@
 			G.update_integrity(G.max_integrity)
 			G.density = TRUE
 			G.destroyed = FALSE
-			G.icon_state = "grille"
+			update_icon()
 
 		return FALSE
 
+	try_to_build_grille(user, build_loc)
 
-	if(get_amount() < 2)
-		to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
-		return
-	if(user.is_busy(src))
-		return
+/obj/item/stack/rods/proc/try_to_build_grille(mob/living/user, build_loc, spawn_unanchored = TRUE)
 	to_chat(usr, "<span class='notice'>Assembling grille...</span>")
-	if (!use_tool(usr, usr, 10))
+	if (!use_tool(src, usr, 20, 2))
 		return
-	if (!use(2))
-		return
-	var/obj/structure/grille/F = new /obj/structure/grille(build_loc)
-	user.try_take(F, build_loc)
-	to_chat(usr, "<span class='notice'>You assemble a grille.</span>")
+
+	var/obj/structure/grille/F = new(build_loc, spawn_unanchored)
+
+	to_chat(usr, "<span class='notice'>You assembled \a [F].</span>")
 	F.add_fingerprint(usr)

@@ -25,7 +25,7 @@
 		return
 
 	var/turf/T = pick(turfs)
-	var/obj/effect/anomaly/bluespace/cult_portal/C = new(T, TRUE)
+	var/obj/effect/anomaly/bluespace/cult_portal/C = new(T, TRUE, 2 MINUTES)
 	newAnomaly = C
 	C.spawns = max_constructs
 	C.send_request_to_ghost()
@@ -48,7 +48,7 @@
 	if(!newAnomaly)
 		newAnomaly = list()
 
-	INVOKE_ASYNC(src, .proc/spawn_portals)
+	INVOKE_ASYNC(src, PROC_REF(spawn_portals))
 
 /datum/event/anomaly/cult_portal/massive/proc/spawn_portals()
 	for(var/i in 1 to 50)

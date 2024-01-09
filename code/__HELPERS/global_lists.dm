@@ -115,7 +115,7 @@
 
 	// Create list for rituals to determine the value of things
 	var/list/money_type_by_cash_am = list()
-	var/list/type_cash = subtypesof(/obj/item/weapon/spacecash) - /obj/item/weapon/spacecash/ewallet
+	var/list/type_cash = subtypesof(/obj/item/weapon/spacecash)
 	for(var/money_type in type_cash)
 		var/obj/item/weapon/spacecash/cash = money_type
 		var/cash_am = "[initial(cash.worth)]"
@@ -218,7 +218,7 @@
 		var/datum/bridge_command/C = new command
 		global.bridge_commands[C.name] = C
 
-	sortTim(bridge_commands, /proc/cmp_bridge_commands)
+	sortTim(bridge_commands, GLOBAL_PROC_REF(cmp_bridge_commands))
 
 	global.metahelps = list()
 	for(var/help in subtypesof(/datum/metahelp))
@@ -248,6 +248,44 @@
 	global.all_emotes = list()
 	for(var/emote_type in subtypesof(/datum/emote))
 		global.all_emotes[emote_type] = new emote_type
+
+	global.emotes_for_emote_panel = list()
+	var/emote_icons = 'icons/misc/emotes.dmi'
+	var/mob/living/carbon/human/H = new /mob/living/carbon/human // meh initial doesn't work with lists
+	for(var/datum/emote/E as anything in H.default_emotes) // non-humans emotes but humans have them
+		if(initial(E.key) in icon_states(emote_icons))
+			global.emotes_for_emote_panel |= initial(E.key)
+	qdel(H)
+	for(var/datum/emote/E as anything in subtypesof(/datum/emote/human)) // humans emotes
+		if(initial(E.key) in icon_states(emote_icons))
+			global.emotes_for_emote_panel |= initial(E.key)
+	for(var/datum/species/S as anything in subtypesof(/datum/species)) // IPC emotes and etc.
+		S = new S
+		for(var/datum/emote/E as anything in S.emotes)
+			if(initial(E.key) in icon_states(emote_icons))
+				global.emotes_for_emote_panel |= initial(E.key)
+		qdel(S)
+
+	global.light_modes_by_type = list()
+	global.light_modes_by_name = list()
+	for(var/type as anything in subtypesof(/datum/light_mode))
+		var/datum/light_mode/LM = new type
+		light_modes_by_name[LM.name] = LM
+		light_modes_by_type[type] = LM
+
+	global.smartlight_presets = list()
+	for(var/datum/smartlight_preset/type as anything in subtypesof(/datum/smartlight_preset))
+		smartlight_presets[initial(type.name)] = type
+
+	global.virus_types_by_pool = list()
+	for(var/e in subtypesof(/datum/disease2/effect))
+		var/datum/disease2/effect/f = new e
+		var/list/L = f.pools
+		qdel(f)
+		if(!L.len)
+			continue
+		for(var/pool in L)
+			LAZYADD(virus_types_by_pool[pool], e)
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

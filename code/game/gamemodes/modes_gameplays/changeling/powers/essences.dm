@@ -45,7 +45,7 @@
 	if(phantom)
 		phantom.hide_phantom()
 	if(is_changeling)
-		rehost_timer_id = addtimer(CALLBACK(src, .proc/change_main_changeling), 10 MINUTES, TIMER_STOPPABLE)
+		rehost_timer_id = addtimer(CALLBACK(src, PROC_REF(change_main_changeling)), 10 MINUTES, TIMER_STOPPABLE)
 	return ..()
 
 /mob/living/parasite/essence/proc/change_main_changeling()
@@ -240,11 +240,10 @@
 			healthdoll.add_overlay(host.healthdoll.overlays)
 		if(healths && host.healths)
 			healths.icon_state = host.healths.icon_state
-		if(internals && host.internals)
-			internals.icon_state = host.internals.icon_state
 
 /obj/effect/proc_holder/changeling/manage_essencies
 	name = "Manage Essencies"
+	button_icon_state = "manage_essensies"
 	genomecost = 0
 	req_stat = UNCONSCIOUS
 	var/mob/living/parasite/essence/choosen_essence

@@ -1,4 +1,9 @@
 /atom
+	/// russian case forms of atom name in format
+	/// list(NOMINATIVE_CASE, GENITIVE_CASE, DATIVE_CASE, ACCUSATIVE_CASE, ABLATIVE_CASE, PREPOSITIONAL_CASE)
+	/// for usage with CASE macros (code/__DEFINES/_translation.dm)
+	var/list/cases = null
+
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 
@@ -29,6 +34,9 @@
 	var/list/remove_overlays
 	/// a very temporary list of overlays to add
 	var/list/add_overlays
+
+	/// parallax thing
+	var/list/clients_in_contents
 
 	///This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -65,6 +73,10 @@
 	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
 	///Damage under this value will be completely ignored
 	var/damage_deflection = 0
+
+	///How much this atom resists explosions by, in the end
+	///In terms of explosion, you can read it as additional distance for explosion to spend on this turf
+	var/explosive_resistance = 0
 
 	var/resistance_flags = FULL_INDESTRUCTIBLE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
@@ -204,17 +216,6 @@
 	return flags & INSERT_CONTAINER
 */
 
-/atom/proc/can_mob_interact(mob/user)
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			user.visible_message("<span class='warning'>[H] stares cluelessly at [isturf(loc) ? src : ismob(loc) ? src : "something"] and drools.</span>")
-			return FALSE
-		else if(prob(H.getBrainLoss()))
-			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
-			return FALSE
-	return TRUE
-
 /atom/proc/allow_drop()
 	return 1
 
@@ -350,6 +351,8 @@
 	return
 
 /atom/proc/ex_act()
+	//SHOULD_NOT_SLEEP(TRUE) // todo
+	set waitfor = FALSE
 	return
 
 /atom/proc/blob_act()
@@ -358,7 +361,8 @@
 /atom/proc/airlock_crush_act()
 	return
 
-/atom/proc/fire_act()
+// todo: exposed_temperature is only arg currently used, rest is some legacy (idk what they should do anyway)
+/atom/proc/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
 /atom/proc/singularity_act()
@@ -591,7 +595,7 @@
 /atom/proc/isinspace()
 	return isspaceturf(get_turf(src))
 
-/atom/proc/checkpass(passflag)
+/atom/proc/checkpass(passflag) // todo: define as macro
 	return pass_flags&passflag
 
 //This proc is called on the location of an atom when the atom is Destroy()'d
@@ -648,7 +652,7 @@
 			lube |= SLIDE_ICE
 
 		if(lube & SLIDE)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, spin), 1, 1))
 			C.take_bodypart_damage(2) // Was 5 -- TLE
 		else if(lube & SLIDE_ICE)
 			var/has_NOSLIP = FALSE
@@ -720,7 +724,7 @@
 
 /atom/proc/shake_act(severity, recursive = TRUE)
 	if(isturf(loc))
-		INVOKE_ASYNC(src, /atom.proc/do_shake_animation, severity, 1 SECOND)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, do_shake_animation), severity, 1 SECOND)
 
 /atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
 	return
@@ -728,7 +732,7 @@
 /turf/shake_act(severity, recursive = TRUE)
 	for(var/atom/A in contents)
 		A.shake_act(severity - 1)
-	INVOKE_ASYNC(src, /atom.proc/do_shake_animation, severity, 1 SECOND)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, do_shake_animation), severity, 1 SECOND)
 
 	if(severity >= 3)
 		for(var/dir_ in cardinal)

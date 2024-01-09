@@ -102,7 +102,7 @@
 
 		if("Other Signature")
 			mode = SEARCH_FOR_OBJECT
-			switch(tgui_alert(usr, "Search for AI signature or DNA fragment?" , "Signature Mode Select" , list("DNA", "AI System")))
+			switch(tgui_alert(usr, "Search for AI signature or DNA fragment?" , "Signature Mode Select" , list("DNA", "AI System", "Microphone")))
 				if("DNA")
 					var/DNAstring = sanitize(input("Input DNA string to search for." , "Please Enter String." , ""))
 					if(!DNAstring)
@@ -110,7 +110,7 @@
 					for(var/mob/living/carbon/M as anything in carbon_list)
 						if(!M.dna)
 							continue
-						if(M.dna.unique_enzymes == DNAstring)
+						if(M.dna.unique_enzymes && M.dna.unique_enzymes == DNAstring)
 							target = M
 							break
 				if("AI System")
@@ -122,39 +122,53 @@
 						return
 					target = target_ai
 					to_chat(usr, "You set the pinpointer to locate [target]")
+				if("Microphone")
+					if(!global.all_command_microphones.len)
+						to_chat(usr, "Failed to locate any microphone!")
+						return
+					var/target_micro = input("Select microphone to search for", "Microphone Select") as null|anything in global.all_command_microphones
+					if(!target_micro)
+						return
+					target = target_micro
+					to_chat(usr, "You set the pinpointer to locate [target]")
 
 	if(mode && target)
-		RegisterSignal(target, list(COMSIG_PARENT_QDELETING), .proc/reset_target)
+		RegisterSignal(target, list(COMSIG_PARENT_QDELETING), PROC_REF(reset_target))
 
 	return attack_self(usr)
 
 /obj/item/weapon/pinpointer/nukeop
 
-/obj/item/weapon/pinpointer/nukeop/attack_self(mob/user)
-	..()
-	if(mode == SEARCH_FOR_DISK)
-		to_chat(user, "<span class='notice'>Authentication Disk Locator active.</span>")
-	else
-		to_chat(user, "<span class='notice'>Shuttle Locator active.</span>")
+/obj/item/weapon/pinpointer/nukeop/verb/toggle_mode()
+	set category = "Object"
+	set name = "Toggle Pinpointer Mode"
+	set src in view(1)
 
-/obj/item/weapon/pinpointer/nukeop/process()
-	if(bomb_set)
-		mode = SEARCH_FOR_OBJECT
-		if(!istype(target, /obj/machinery/computer/syndicate_station))
+	reset_target()
+
+	switch(tgui_alert(usr, "Please select the mode you want to put the pinpointer in.", "Pinpointer Mode Select", list("Shuttle Location", "Disk", "Nuclear Warhead")))
+
+		if("Disk")
+			mode = SEARCH_FOR_DISK
+			to_chat(usr, "<span class='notice'>Authentication Disk Locator active.</span>")
+		if("Shuttle Location")
+			mode = SEARCH_FOR_OBJECT
 			target = locate(/obj/machinery/computer/syndicate_station)
-			if(!target)
-				icon_state = "pinonnull"
-				return
-			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)	//Plays a beep
-			visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
-			RegisterSignal(target, list(COMSIG_PARENT_QDELETING), .proc/reset_target)
-	else
-		if(istype(target, /obj/machinery/computer/syndicate_station))
-			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-			visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
-			reset_target()
-		mode = SEARCH_FOR_DISK
-	return ..()
+			to_chat(usr, "<span class='notice'>Shuttle Locator active.</span>")
+
+		if("Nuclear Warhead")
+			mode = SEARCH_FOR_OBJECT
+			for (var/obj/machinery/nuclearbomb/N in poi_list)
+				if(N.nuketype == "Syndi")
+					target = locate(N)
+					to_chat(usr, "<span class='notice'>Nuclear Warhead Locator active.</span>")
+
+	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+
+	if(mode && target)
+		RegisterSignal(target, list(COMSIG_PARENT_QDELETING), PROC_REF(reset_target))
+
+	return attack_self(usr)
 
 /proc/get_jobs_dna(list/required_positions)
 	var/list/players = list()

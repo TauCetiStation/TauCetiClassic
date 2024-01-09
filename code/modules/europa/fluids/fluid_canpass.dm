@@ -20,7 +20,7 @@
 /obj/structure/mineral_door/CanFluidPass(coming_from)
 	return !density
 
-/obj/structure/window/CanFluidPass(coming_from)
+/obj/structure/window/thin/CanFluidPass(coming_from)
 	if(coming_from == dir)
 		return !density
 	return TRUE

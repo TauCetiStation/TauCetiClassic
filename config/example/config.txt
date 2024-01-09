@@ -159,12 +159,22 @@ ALIEN_AVAILABLE_BY_TIME DIONA 40000
 ##Remove the # to let ghosts spin chairs
 #GHOST_INTERACTION
 
+## A ghosts max view range if they are a BYOND guest or regular account
+#GHOST_MAX_VIEW 10
+
+## A ghosts max view range if they are a byond/patron/boosty supporter
+#GHOST_MAX_VIEW_SUPPORTER 13
+
 ## Required time to respawn after death
 #DEATHTIME_REQUIRED 18000
 
-## Path to the python executable on the system.  Leave blank for default.
+## Path to the python executable on the system. Leave blank for default.
 ## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
 #PYTHON_PATH
+
+## GitHub PAT with no scopes to increase rate limits of GitHub requests.
+## Ignored when PYTHON_PATH is not set.
+#GITHUB_TOKEN
 
 ## Expected round length in minutes
 EXPECTED_ROUND_LENGTH 90
@@ -268,8 +278,16 @@ NO_JUNKYARD
 ## Saves some initialization time
 # NO_SPACE_LEVELS
 
+## Uncomment to allow drastic performence enhancemet measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
+# AUTO_LAG_SWITCH_POP 100
+
 ## Enables demo recordings, works slower on windows
 # RECORD_REPLAYS
+
+## Use persistent cache for better perfomance
+## You will need to occasionally clean ./cache/persistent yourself from old files
+## by removing folder or with ./script/clear_persistent_cache.sh
+#USE_PERSISTENT_CACHE
 
 ## Run server in sandbox mode - everyone has admin permissions without logs, bans
 ## not recommended if you host server without virt box/docker/etc. and do not restrict clients access to server

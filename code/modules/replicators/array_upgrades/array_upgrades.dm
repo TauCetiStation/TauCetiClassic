@@ -20,15 +20,9 @@
 
 	var/datum/replicator_array_upgrade/upgrade_type = choices[upgrade_name]
 
-	var/list/mob/living/simple_animal/hostile/replicator/array_units = list()
-	for(var/mob/living/simple_animal/hostile/replicator/R as anything in global.alive_replicators)
-		if(R.last_controller_ckey != last_controller_ckey)
-			continue
-		array_units += R
-
 	playsound(src, 'sound/magic/heal.ogg', VOL_EFFECTS_MASTER)
 	to_chat(src, "<span class='notice'>[initial(upgrade_type.name)] upgrade acquired. Adapting array drones...</span>")
-	RAI.acquire_upgrade(upgrade_type, array_units)
+	RAI.acquire_upgrade(upgrade_type)
 
 /datum/replicator_array_info
 	var/list/datum/replicator_array_upgrade/acquired_upgrades = list()
@@ -45,13 +39,13 @@
 	for(var/datum/replicator_array_upgrade/RAU as anything in acquired_upgrades)
 		RAU.remove_from_unit(R)
 
-/datum/replicator_array_info/proc/acquire_upgrade(upgrade_type, list/mob/living/simple_animal/hostile/replicator/array_units)
+/datum/replicator_array_info/proc/acquire_upgrade(upgrade_type)
 	var/datum/replicator_array_upgrade/RAU = new upgrade_type
 	RAU.on_acquire(src)
 
 	acquired_upgrades += RAU
 
-	for(var/mob/living/simple_animal/hostile/replicator/R as anything in array_units)
+	for(var/mob/living/simple_animal/hostile/replicator/R as anything in get_array_units(get_or_create_replicators_faction()))
 		RAU.add_to_unit(R)
 
 /datum/replicator_array_info/proc/get_upgrades_string()

@@ -42,7 +42,7 @@
 			visible_message("<span class='warning'><b>[src] begins to drill into \the [M].</b></span>")
 			playsound(src, 'sound/mecha/mechdrill.ogg', VOL_EFFECTS_MASTER)
 			anchored = TRUE
-			addtimer(CALLBACK(src, .proc/drill_mineral, M), drill_time)
+			addtimer(CALLBACK(src, PROC_REF(drill_mineral), M), drill_time)
 		else if(world.time >= cooldown && istype(A, /turf/simulated))
 			cooldown = world.time + 10
 			visible_message("<span class='warning'>[src] can't drill through \the [A].</span>")

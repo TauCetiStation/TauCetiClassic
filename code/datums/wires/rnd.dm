@@ -38,16 +38,16 @@ var/global/const/RND_WIRE_SHOCK   = 4
 	switch(index)
 		if(RND_WIRE_HACK)
 			R.hacked = !R.hacked
-			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
+			addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 100)
 
 		if(RND_WIRE_DISABLE)
 			R.disabled = !R.disabled
 			R.shock(usr, 50)
-			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
+			addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 100)
 
 		if(RND_WIRE_SHOCK)
 			R.shocked = !R.shocked
-			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
+			addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 100)
 
 /datum/wires/rnd/proc/pulse_reaction(index)
 	var/obj/machinery/r_n_d/R = holder

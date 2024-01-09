@@ -16,6 +16,8 @@
 	blocks_air = AIR_BLOCKED
 	temperature = TCMB
 
+	explosive_resistance = 1
+
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
@@ -92,6 +94,7 @@
 			return
 	mined_ore = 3 - severity
 	GetDrilled()
+
 /turf/simulated/mineral/Bumped(AM)
 	. = ..()
 	if(ishuman(AM))
@@ -346,7 +349,7 @@
 				M.flash_eyes()
 				if(prob(50))
 					M.Stun(5)
-			M.apply_effect(25, IRRADIATE)
+			irradiate_one_mob(M, 25)
 		for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
 			var/distance_rad_signal = get_dist(counter, src)
 			var/rads = 25 * sqrt(1 / (distance_rad_signal + 1))
@@ -491,6 +494,12 @@
 /turf/simulated/floor/plating/airless/asteroid
 	basetype = /turf/simulated/floor/plating/airless/asteroid
 	can_deconstruct = FALSE
+
+/turf/simulated/floor/plating/airless/asteroid/break_tile()
+	return
+
+/turf/simulated/floor/plating/airless/asteroid/burn_tile()
+	return
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
@@ -642,6 +651,18 @@
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
+
 	switch(severity)
 		if(EXPLODE_HEAVY)
 			if(prob(30))
@@ -695,20 +716,6 @@
 	dug = TRUE
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
-
-/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M)
-	..()
-	if(isrobot(M))
-		var/mob/living/silicon/robot/R = M
-		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_3,R)
-			else
-				return
 
 #undef MIN_TUNNEL_LENGTH
 #undef MAX_TUNNEL_LENGTH

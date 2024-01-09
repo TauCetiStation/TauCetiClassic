@@ -117,7 +117,7 @@
 	alarmed.airlocks_close(TRUE)
 
 	// alarm_manager.send_alarm(ALARM_BURGLAR)
-	// addtimer(CALLBACK(alarm_manager, /datum/alarm_handler/proc/clear_alarm, ALARM_BURGLAR), 1 MINUTES)
+	// addtimer(CALLBACK(alarm_manager, TYPE_PROC_REF(/datum/alarm_handler, clear_alarm), ALARM_BURGLAR), 1 MINUTES)
 
 	playsound(loc, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 

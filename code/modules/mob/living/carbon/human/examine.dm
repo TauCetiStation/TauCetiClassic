@@ -280,7 +280,7 @@
 		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 		if(C)
 			if(nutrition < (C.maxcharge*0.1))
-				msg += "His indicator of charge blinks red.\n"
+				msg += "[t_His] indicator of charge blinks red.\n"
 		else
 			msg += "[t_He] has no battery!\n"
 
@@ -459,11 +459,10 @@
 	for(var/implant in implants)
 		var/obj/item/organ/external/BP = implants[implant]
 		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their [BP.name]!</b></span>\n"
-	if(digitalcamo)
-		msg += "<span class='warning'>[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.</span>\n"
+
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(C.isabsorbing)
+		if(HAS_TRAIT_FROM(src, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT))
 			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
 		if(species.name == ABOMINATION)
 			if(C.absorbed_dna.len)
@@ -513,6 +512,7 @@
 			msg += "---------\n"
 		var/perpname = "wot"
 		var/medical = "None"
+		var/insurance_type
 
 		if(wear_id)
 			if(istype(wear_id,/obj/item/weapon/card/id))
@@ -528,10 +528,12 @@
 				for (var/datum/data/record/R in data_core.general)
 					if (R.fields["id"] == E.fields["id"])
 						medical = R.fields["p_stat"]
+						insurance_type = R.fields["insurance_type"]
 
 		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
-
+		if(insurance_type)
+			msg += "<span class = 'deptradio'>Страховка: [insurance_type]</span>\n"
 		var/obj/item/clothing/under/C = w_uniform
 		if(C?.sensor_mode >= SUIT_SENSOR_VITAL)
 			msg += "<span class = 'deptradio'>Damage Specifics:</span> (<font color='blue'>[round(getOxyLoss(), 1)]</font>/<font color='green'>[round(getToxLoss(), 1)]</font>/<font color='#FFA500'>[round(getFireLoss(), 1)]</font>/<font color='red'>[round(getBruteLoss(), 1)]</font>)<br>"
@@ -572,11 +574,6 @@
 	//someone here, but who?
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species && H.species.name != ABDUCTOR)
-			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
-				if(V.stealth_active)
-					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
-					return
 		if(H.isimplantedblueshield() && mind && (mind.assigned_role in protected_by_blueshield_list))
 			for(var/obj/item/weapon/implant/blueshield/B in H)
 				B.last_examined = world.time
@@ -594,6 +591,8 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "naked", /datum/mood_event/naked)
 
 	to_chat(user, msg)
+
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 // Only used for humans and other personal of station.

@@ -70,3 +70,5 @@
 	var/beauty_dead = -100.0
 
 	var/list/spawner_args = null
+
+	COOLDOWN_DECLARE(wc_use_cooldown)

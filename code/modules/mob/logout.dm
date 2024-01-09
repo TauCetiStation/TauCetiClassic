@@ -1,5 +1,6 @@
 /mob/Logout()
 	global.player_list -= src
+	global.keyloop_list -= src
 	set_typing_indicator(FALSE)
 	nanomanager.user_logout(src) // this is used to clean up (remove) this user's Nano UIs
 	SStgui.on_logout(src)

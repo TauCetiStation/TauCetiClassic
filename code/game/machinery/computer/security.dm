@@ -110,7 +110,7 @@
 							user << browse_rsc(side, "side.png")
 						dat += "<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>	\
 							Name: <A href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</A><BR> \
-							ID: <A href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</A><BR>\n	\
+							ID: [active1.fields["id"]]<BR>\n	\
 							Sex: <A href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</A><BR>\n	\
 							Age: <A href='?src=\ref[src];choice=Edit Field;field=age'>[active1.fields["age"]]</A><BR>\n	\
 							Home system: [active1.fields["home_system"]]<BR>\n	\
@@ -119,6 +119,8 @@
 							Religion: [active1.fields["religion"]]<BR>\n	\
 							Rank: <A href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</A><BR>\n	\
 							Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
+							Insurance Account Number: [active1.fields["insurance_account_number"]]<BR>\n \
+							Insurance Type: [active1.fields["insurance_type"]]<BR>\n \
 							Physical Status: [active1.fields["p_stat"]]<BR>\n	\
 							Mental Status: [active1.fields["m_stat"]]<BR></td>	\
 							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4 class=nearest>	\
@@ -457,18 +459,16 @@ What a mess.*/
 						if(!t1 || active1 != a1)
 							return FALSE
 						active1.fields["name"] = t1
-				if("id")
-					if(istype(active2, /datum/data/record))
-						var/t1 = sanitize(input("Please input id:", "Secure. records", input_default(active1.fields["id"]), null)  as text)
-						if(!t1 || active1 != a1)
-							return FALSE
-						active1.fields["id"] = t1
 				if("fingerprint")
 					if(istype(active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input fingerprint hash:", "Secure. records", input_default(active1.fields["fingerprint"]), null)  as text)
-						if(!t1 || active1 != a1)
+						if(!t1 || active1 != a1 || t1 == active1.fields["fingerprint"])
 							return FALSE
+
 						active1.fields["fingerprint"] = t1
+						active1.fields["insurance_account_number"] = 0
+						active1.fields["insurance_type"] = INSURANCE_NONE
+
 				if("sex")
 					if(istype(active1, /datum/data/record))
 						if(active1.fields["sex"] == "Male")

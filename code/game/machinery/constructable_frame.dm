@@ -196,7 +196,7 @@
 					if(!co.crit_fail)
 						part_list += co
 				//Sort the parts. This ensures that higher tier items are applied first.
-				part_list = sortTim(part_list, /proc/cmp_rped_sort)
+				part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
 
 				for(var/path in req_components)
 					while(req_components[path] > 0 && (locate(path) in part_list))
@@ -275,7 +275,7 @@ to destroy them and players will be able to make replacements.
 		var/vending_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
 		if(isnull(vending_name))
 			return
-		
+
 		var/obj/machinery/vending/vending_type = names_of_vendings[vending_name]
 
 		to_chat(user, "<span class='notice'>You set the board to [vending_name].</span>")
@@ -391,6 +391,15 @@ to destroy them and players will be able to make replacements.
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/capacitor = 2)
+
+
+/obj/item/weapon/circuitboard/reagentgrinder
+	name = "circuit board (All-In-One Grinder)"
+	board_type = "machine"
+	build_path = /obj/machinery/reagentgrinder
+	origin_tech = "biotech=2;engineering=1;materials=2"
+	req_components = list(
+		/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/item/weapon/circuitboard/cooler
 	name = "circuit board (Cooler)"
@@ -542,6 +551,54 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "programming=1"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1)
+
+/obj/item/weapon/circuitboard/smartfridge/attackby(obj/item/I, mob/user, params)
+	if(isscrewing(I))
+		var/static/list/names_of_smartfridges
+		var/static/list/radial_icons
+
+		if (!names_of_smartfridges || !radial_icons)
+			names_of_smartfridges = list()
+			radial_icons = list()
+
+			var/available_designs = list(
+				/obj/machinery/smartfridge/seeds,
+				/obj/machinery/smartfridge/chemistry,
+				/obj/machinery/smartfridge/secure/extract,
+				/obj/machinery/smartfridge/secure/virology,
+				/obj/machinery/smartfridge/drinks,
+				/obj/machinery/smartfridge) // Food
+
+			for(var/obj/machinery/smartfridge/type as anything in available_designs)
+				var/full_name = initial(type.name)
+				names_of_smartfridges[full_name] = type
+				// Icon stuff
+				var/atom/fridge_icon = image(initial(type.icon), initial(type.icon_state))
+				fridge_icon.add_overlay(icon(initial(type.icon), initial(type.content_overlay)))
+				fridge_icon.add_overlay(icon(initial(type.icon), "smartfridge-glass"))
+				radial_icons[full_name] = fridge_icon
+
+		var/smartfridge_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
+		if(isnull(smartfridge_name))
+			return
+
+		var/obj/machinery/smartfridge_type = names_of_smartfridges[smartfridge_name]
+		to_chat(user, "<span class='notice'>You set the board to [smartfridge_name].</span>")
+		name = "circuit board ([smartfridge_name])"
+		build_path = smartfridge_type
+
+		return
+	return ..()
+
+/obj/item/weapon/circuitboard/smartfridge/secure/bluespace
+	name = "circuit board (Bluespace Storage)"
+	build_path = /obj/machinery/smartfridge/secure/bluespace
+	board_type = "machine"
+	origin_tech = "programming=4;engineering=4;bluespace=4"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace = 3,
+							/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/monkey_recycler
 	name = "circuit board (Monkey Recycler)"

@@ -1,4 +1,41 @@
-//var/list/uplink_items = list()
+/// Selects a set number of unique items from the uplink, and deducts a percentage discount from them
+/proc/create_uplink_sales(num, category = "Discounts", limited_stock, list/sale_items)
+	var/list/sales = list()
+	var/list/sale_items_copy = sale_items.Copy()
+	for (var/i in 1 to num)
+		var/picked_category = pick(sale_items_copy)
+		var/datum/uplink_item/taken_item = pick_n_take(sale_items_copy[picked_category])
+		if(taken_item.cant_discount || taken_item.cost < 2)
+			continue
+		var/datum/uplink_item/uplink_item = new taken_item.type()
+		var/discount = uplink_item.get_discount()
+		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
+		uplink_item.limited_stock = limited_stock
+		if(uplink_item.cost >= 20) //Tough love for nuke ops
+			discount *= 0.5
+		uplink_item.category = category
+		uplink_item.cost = max(round(uplink_item.cost * (1 - discount)),1)
+		uplink_item.name += " ([round(((initial(uplink_item.cost)-uplink_item.cost)/initial(uplink_item.cost))*100)]% off!)"
+		uplink_item.desc += " Normally costs [initial(uplink_item.cost)] TC. All sales final. [pick(disclaimer)]"
+		uplink_item.item = taken_item.item
+		sales += uplink_item
+	return sales
+
+/// Returns by how much percentage do we reduce the price of the selected item
+/datum/uplink_item/proc/get_discount()
+	var/static/list/discount_types = list(
+		"small" = 4,
+		"medium" = 2,
+		"big" = 1,
+	)
+
+	switch(pickweight(discount_types))
+		if("big" )
+			return 0.75
+		if("medium")
+			return 0.5
+		else
+			return 0.25
 
 /proc/get_uplink_items(obj/item/device/uplink/uplink)
 	// If not already initialized..
@@ -35,6 +72,11 @@
 
 			uplink.uplink_items[I.category] += I
 
+		for(var/datum/uplink_item/I in uplink.extra_purchasable)
+			if(!uplink.uplink_items[I.category])
+				uplink.uplink_items[I.category] = list()
+			uplink.uplink_items[I.category] += I
+
 	return uplink.uplink_items
 
 // You can change the order of the list by putting datums before/after one another OR
@@ -47,6 +89,8 @@
 	var/item = null
 	var/cost = 0
 	var/last = 0 // Appear last
+	var/cant_discount = FALSE
+	var/limited_stock = FALSE
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
 
 	// used for dealer items
@@ -142,14 +186,14 @@
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round or 16-round magazines and is compatible \
 			with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	item = /obj/item/weapon/gun/projectile/automatic/pistol/stechkin
 	cost = 6
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/dangerous/deagle
 	name = "Desert Eagle"
 	desc = "A robust handgun that uses .50 AE ammo."
-	item = /obj/item/weapon/gun/projectile/automatic/deagle/weakened
+	item = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/weakened
 	cost = 8
 	uplink_types = list("dealer")
 
@@ -158,7 +202,7 @@
 /datum/uplink_item/dangerous/deagle_gold
 	name = "Desert Eagle Gold"
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
-	item = /obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
+	item = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/weakened/gold
 	cost = 9
 	uplink_types = list("dealer")
 
@@ -707,6 +751,13 @@
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
 
+/datum/uplink_item/device_tools/disk
+	name = "Diskette With Virus"
+	desc = "A floppy disk containing a virus to sabotage R&D systems. Insert this diskette into the R&D Server Controller to destroy scientific data."
+	item = /obj/item/weapon/disk/data/syndi
+	cost = 10
+	uplink_types = list("traitor")
+
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
 	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a \
@@ -765,7 +816,7 @@
 	name = "Syndicate Medical Small Kit"
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
-	cost = 5
+	cost = 2
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/bonepen
@@ -956,10 +1007,11 @@
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
-	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 5 telecrystals. \
+	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 10 telecrystals. \
 	The ability for an agent to open an uplink after their posessions have been stripped from them makes this implant excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
-	cost = 20
+	cost = 13
+	cant_discount = TRUE
 	uplink_types = list("traitor")
 
 /datum/uplink_item/implants/storage
@@ -999,6 +1051,7 @@
 
 /datum/uplink_item/telecrystals
 	category = "Telecrystals"
+	cant_discount = TRUE
 
 /datum/uplink_item/telecrystals/one
 	name = "1 Telecrystal"
@@ -1029,12 +1082,14 @@
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 10 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
+	cant_discount = TRUE
 
 /datum/uplink_item/badass/merch
 	name = "Syndicate Merchandise"
 	desc = "To show your loalty to the Syndicate! Contains new red t-shirt with Syndicate logo, red cap and a fancy baloon!"
 	item = /obj/item/weapon/storage/box/syndie_kit/merch
 	cost = 20
+	cant_discount = TRUE
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
@@ -1060,6 +1115,7 @@
 	desc = "Picking this choice will send you a random item from the list. Useful for when you cannot think of a strategy to finish your objectives with."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 0
+	cant_discount = TRUE
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U, mob/user)
 
@@ -1087,6 +1143,7 @@
 	desc = "A crate containing 40 telecrystals worth of random syndicate leftovers."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
+	cant_discount = TRUE
 	uplink_types = list("traitor")
 	var/crate_value = 40
 
@@ -1150,7 +1207,7 @@
 /datum/uplink_item/revolution/stechkin
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round magazines."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	item = /obj/item/weapon/gun/projectile/automatic/pistol/stechkin
 	cost = 5
 
 /datum/uplink_item/revolution/stechkin_ammo

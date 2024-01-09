@@ -2,6 +2,7 @@
 	name = "Regenerative Stasis"
 	desc = "We fall into a stasis, allowing us to regenerate."
 	helptext = "Can be used before or after death. Duration varies greatly."
+	button_icon_state = "fake_death"
 	chemical_cost = 20
 	genomecost = 0
 	req_dna = 1
@@ -29,7 +30,7 @@
 		user.fake_death = FALSE
 		return FALSE
 	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
-	addtimer(CALLBACK(src, .proc/give_revive_ability, user), rand(800, 2000))
+	addtimer(CALLBACK(src, PROC_REF(give_revive_ability), user), rand(800, 2000))
 
 	feedback_add_details("changeling_powers","FD")
 	return TRUE
@@ -54,13 +55,16 @@
 			else
 				to_chat(user, "<span class='notice'>We are ready to regenerate.</span>")
 				C.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
+				action.button_icon_state = "revive"
+				action.button.UpdateIcon()
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(C.instatis) //We already regenerating, no need to start second time in a row.
 		return FALSE
-	if(locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers)
-		to_chat(user, "<span class='notice'>We already prepared our ability.</span>")
+	var/obj/effect/proc_holder/changeling/revive/A = locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers
+	if(A)
+		A.try_to_sting(user)
 		return FALSE
 	if(user.fake_death)
 		return FALSE

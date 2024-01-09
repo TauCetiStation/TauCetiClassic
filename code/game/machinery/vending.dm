@@ -54,14 +54,14 @@
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
-	var/obj/item/weapon/spacecash/ewallet/ewallet
+	var/obj/item/weapon/ewallet/ewallet
 	var/datum/wires/vending/wires = null
 	var/scan_id = TRUE
 
 	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
 
 
-/obj/machinery/vending/atom_init(mapload)
+/obj/machinery/vending/atom_init()
 	. = ..()
 	wires = new(src)
 	src.anchored = TRUE
@@ -75,11 +75,11 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 
-	build_inventory(products, mapload)
+	build_inventory(products)
 	 //Add hidden inventory
-	build_inventory(contraband, mapload, hidden = 1)
-	build_inventory(premium, mapload, req_coin = 1)
-	build_inventory(syndie, mapload, req_emag = 1)
+	build_inventory(contraband, hidden = 1)
+	build_inventory(premium, req_coin = 1)
+	build_inventory(syndie, req_emag = 1)
 	power_change()
 	update_wires_check()
 
@@ -108,19 +108,9 @@
 	if(.)
 		malfunction()
 
-/obj/machinery/vending/proc/build_inventory(list/productlist, mapload, hidden = 0, req_coin = 0 , req_emag = 0)
+/obj/machinery/vending/proc/build_inventory(list/productlist, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(!hidden && !req_coin && !req_emag)
-			if(mapload && is_station_level(src.z) && !private)
-				var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
-				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
-				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
-
-				amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
-
-				if(!amount && prob(20)) //20% that empty slot will be not empty. For very low-pop rounds.
-					amount = 1
 
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
@@ -247,7 +237,7 @@
 		else
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
-	else if (istype(W, /obj/item/weapon/spacecash/ewallet))
+	else if (istype(W, /obj/item/weapon/ewallet))
 		user.drop_from_inventory(W, src)
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
@@ -297,15 +287,10 @@
 		if(check_accounts)
 			if(vendor_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
-				var/attempt_pin = 0
 				if(D)
-					if(D.security_level > 0)
-						attempt_pin = input("Enter pin code", "Vendor transaction") as num
-						if(isnull(attempt_pin))
-							to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
-							return
-						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
-
+					D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, usr)
+					if(usr.incapacitated() || !Adjacent(usr))
+						return
 					if(D)
 						var/transaction_amount = currently_vending.price
 						if(transaction_amount <= D.money)
@@ -382,7 +367,7 @@
 		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] <a href='byond://?src=\ref[src];remove_coin=1'>Remove</A><br>"
 
 	if (ewallet)
-		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
+		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.get_money() : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/vending))
@@ -431,15 +416,6 @@
 
 	else if (href_list["vend"] && vend_ready && !currently_vending)
 
-		if(isrobot(usr))
-			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-				to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-				return FALSE
-		else if(issilicon(usr))
-			to_chat(usr, "<span class='warning'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-			return FALSE
-
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 			flick(src.icon_deny, src)
@@ -453,8 +429,8 @@
 			vend(R, usr)
 		else
 			if (ewallet)
-				if (R.price <= ewallet.worth)
-					ewallet.worth -= R.price
+				if (R.price <= ewallet.get_money())
+					ewallet.remove_money(R.price)
 					vend(R, usr)
 				else
 					to_chat(usr, "<span class='warning'>The ewallet doesn't have enough money to pay for that.</span>")
@@ -525,7 +501,7 @@
 		var/slogan = pick(slogan_list)
 		speak(slogan)
 
-		addtimer(CALLBACK(src, .proc/say_slogan), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(say_slogan)), slogan_delay + rand(0, 1000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/machinery/vending/proc/shoot_inventory_timer()
 	if(stat & (BROKEN|NOPOWER))
@@ -534,16 +510,16 @@
 	if(shoot_inventory)
 		throw_item()
 
-		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(shoot_inventory_timer)), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT)
 
 /obj/machinery/vending/proc/update_wires_check()
 	if(stat & (BROKEN|NOPOWER))
 		return
 
 	if(slogan_list.len > 0 && !shut_up)
-		addtimer(CALLBACK(src, .proc/say_slogan), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(say_slogan)), rand(0, slogan_delay), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 	if(shoot_inventory)
-		addtimer(CALLBACK(src, .proc/shoot_inventory_timer), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(shoot_inventory_timer)), rand(100, 6000), TIMER_UNIQUE|TIMER_NO_HASH_WAIT|TIMER_OVERRIDE)
 
 /obj/machinery/vending/proc/speak(message)
 	if(stat & NOPOWER)
@@ -571,11 +547,17 @@
 				update_power_use()
 	update_power_use()
 
+/obj/machinery/vending/turn_light_off()
+	. = ..()
+	stat |= NOPOWER
+	icon_state = "[initial(icon_state)]-off"
+	update_power_use()
+
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
 	if(refill_canister)
 		//Dropping actual items
-		var/max_drop = rand(1, 3)
+		var/max_drop = rand(5, 7)
 		for(var/i = 1, i < max_drop, i++)
 			var/datum/data/vending_product/R = pick(src.product_records)
 			var/dump_path = R.product_path

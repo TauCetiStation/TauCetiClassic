@@ -24,7 +24,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	vessel.my_atom = src
 
 	blood_add(BLOOD_VOLUME_NORMAL)
-	addtimer(CALLBACK(src, .proc/fixblood), 1)
+	addtimer(CALLBACK(src, PROC_REF(fixblood)), 1)
 
 // Resets blood data
 /mob/living/carbon/human/proc/fixblood(clean = TRUE)
@@ -186,6 +186,8 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		if(BP.status & ORGAN_BLEEDING)
 			if(BP.open)
 				blood_max += 2 // Yer stomach is cut open
+			if(HAS_TRAIT(src, TRAIT_HEMOPHILIAC))
+				blood_max += 4
 
 			for(var/datum/wound/W in BP.wounds)
 				if(!open_wound && (W.damage_type == CUT || W.damage_type == PIERCE) && W.damage && !W.is_treated())
@@ -459,28 +461,45 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	blood_add(amount, injected.data)
 	var/datum/reagent/blood/our = blood_get()
 
-	if(blood_incompatible(injected.data["blood_type"], our.data["blood_type"]))
+	if(!blood_compatible(injected.data["blood_type"], our.data["blood_type"]))
 		reagents.add_reagent("toxin", amount * 0.5)
 	..()
 
-/proc/blood_incompatible(donor, receiver)
-	if(!donor || !receiver)
-		return FALSE
-	var/donor_antigen = copytext(donor, 1, -1)
-	var/receiver_antigen = copytext(receiver, 1, -1)
-	var/donor_rh = (findtext(donor, "+") > 0)
-	var/receiver_rh = (findtext(receiver, "+") > 0)
-	if(donor_rh && !receiver_rh) // Bad: "+" -> "-". Other combinations is ok
-		return TRUE
-	switch(receiver_antigen)
-		if("A")
-			if(donor_antigen != "A" && donor_antigen != "O")
-				return TRUE
-		if("B")
-			if(donor_antigen != "B" && donor_antigen != "O")
-				return TRUE
-		if("O")
-			if(donor_antigen != "O")
-				return TRUE
-		// AB is a universal receiver
-	return FALSE
+/proc/blood_compatible(blood_donor, blood_recipient)
+	var/static/list/blood_recipient_can_receive = list(
+		BLOOD_A_PLUS = list(
+			BLOOD_A_PLUS = TRUE, BLOOD_A_MINUS = TRUE,
+			BLOOD_O_PLUS = TRUE, BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_A_MINUS = list(
+			BLOOD_A_MINUS = TRUE,
+			BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_B_PLUS = list(
+			BLOOD_B_PLUS = TRUE, BLOOD_B_MINUS = TRUE,
+			BLOOD_O_PLUS = TRUE, BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_B_MINUS = list(
+			BLOOD_B_MINUS = TRUE,
+			BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_O_PLUS = list(
+			BLOOD_O_PLUS = TRUE, BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_O_MINUS = list(
+			BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_AB_PLUS = list(
+			BLOOD_A_PLUS  = TRUE, BLOOD_A_MINUS  = TRUE,
+			BLOOD_B_PLUS  = TRUE, BLOOD_B_MINUS  = TRUE,
+			BLOOD_O_PLUS  = TRUE, BLOOD_O_MINUS  = TRUE,
+			BLOOD_AB_PLUS = TRUE, BLOOD_AB_MINUS = TRUE
+			),
+		BLOOD_AB_MINUS = list(
+			BLOOD_A_MINUS  = TRUE,
+			BLOOD_B_MINUS  = TRUE,
+			BLOOD_O_MINUS  = TRUE,
+			BLOOD_AB_MINUS = TRUE
+			)
+		)
+	return blood_recipient_can_receive[blood_recipient][blood_donor]

@@ -303,7 +303,7 @@
 		return
 
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
-		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
+		if(isturf(BS.loc) && get_dist(BS, T) <= 35 && !BS.stop_automated_movement)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 	return
@@ -322,9 +322,9 @@
 
 /mob/camera/blob/proc/prompt_upgrade(obj/structure/blob/B)
 	var/list/datum/callback/blob_upgrade = list(
-		"Resource" = CALLBACK(src, .proc/create_resource),
-		"Node"     = CALLBACK(src, .proc/create_node),
-		"Factory"  = CALLBACK(src, .proc/create_factory),
+		"Resource" = CALLBACK(src, PROC_REF(create_resource)),
+		"Node"     = CALLBACK(src, PROC_REF(create_node)),
+		"Factory"  = CALLBACK(src, PROC_REF(create_factory)),
 	)
 	var/static/list/icon/upgrade_icon = list(
 		"Resource" = icon('icons/mob/blob.dmi', "radial_resource"),

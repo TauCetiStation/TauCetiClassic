@@ -31,6 +31,8 @@
 	return ..()
 
 /obj/machinery/r_n_d/server/RefreshParts()
+	..()
+
 	var/tot_rating = 0
 	for(var/obj/item/weapon/stock_parts/SP in src)
 		tot_rating += SP.rating
@@ -166,6 +168,7 @@
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
+	var/sabotage_time = 30 SECONDS
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
@@ -295,16 +298,48 @@
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)
 	..()
-	updateUsrDialog()
+	if(istype(D, /obj/item/weapon/disk/data/syndi))
+		sabotage(user, D)
+	else
+		updateUsrDialog()
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(!emagged)
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
+		sabotage_time = 15 SECOND
 		to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
 		return TRUE
 	return FALSE
+
+
+/obj/machinery/computer/rdservercontrol/proc/sabotage(mob/user, obj/item/weapon/disk/data/syndi/D)
+	if(!user.Adjacent(src))
+		return
+	if(!isliving(user))
+		return
+	if(!isanyantag(user))
+		return
+	to_chat(user, "<span class='warning'>Эта процедура займёт некоторое время...</span>")
+	playsound(src, 'sound/machines/req_alarm.ogg', VOL_EFFECTS_MASTER)
+	if(!do_after(user, sabotage_time, target = src))
+		return
+	qdel(D)
+	for(var/obj/machinery/r_n_d/server/s in rnd_server_list)
+		for(var/i in 1 to s.files.researched_tech.len)
+			s.files.forget_random_technology()
+	for(var/obj/machinery/computer/rdconsole/c in RDcomputer_list)
+		if(c.sabotagable)
+			explosion(c.loc, 0, 1, 3)
+	var/datum/faction/traitor/faction = find_faction_by_type(/datum/faction/traitor)
+	for(var/datum/role/traitor/T in faction.members)
+		for(var/datum/objective/research_sabotage/rs in T.objectives.objectives)
+			rs.already_completed = TRUE
+	add_fingerprint(user)
+	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='nicegreen'>Готово!</span>")
+
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"

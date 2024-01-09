@@ -1,3 +1,43 @@
+var/global/list/list/landmarks_list = list() // assoc list of all landmarks created (name -> list of landmarks)
+
+// todo:
+// 	instead of list by name, make list by type. Type is better, compilator and map editor can report any errors with types
+// 	replace all landmarks with default type on map for special types
+// 	remove all landmarks that not actually landmarks, like /obj/effect/landmark/loot_spawn (we have spawners for this)
+// 	landmark pick:
+// 		pick_landmarked_location(/obj/effect/landmark/blobstart)
+// 	remove all INITIALIZE_HINT_QDEL from landmarks, we can keep them for reuse and spawn_counter
+// 		this can hit maptick a little, less problem with mapthreads and bother lummox with https://www.byond.com/forum/post/2778883
+
+/proc/pick_landmarked_location(name, least_used = TRUE)
+	if(!length(landmarks_list[name]))
+		CRASH("Can't find landmark \"[name]\"!")
+
+	var/obj/effect/landmark/L
+
+	if(least_used)
+		var/list/candidates = list()
+		var/min = INFINITY
+
+		for(var/obj/effect/landmark/LM in landmarks_list[name])
+			if(LM.spawn_counter > min)
+				continue
+
+			if(LM.spawn_counter == min)
+				candidates += LM
+			else
+				min = LM.spawn_counter
+				candidates.Cut()
+				candidates += LM
+
+		L = pick(candidates)
+	else
+		L = pick(landmarks_list[name])
+
+	L.spawn_counter++
+
+	return get_turf(L)
+
 /obj/effect/landmark
 	name = "landmark"
 	icon = 'icons/hud/screen1.dmi'
@@ -7,6 +47,10 @@
 	plane = GAME_PLANE
 	unacidable = TRUE
 	invisibility = INVISIBILITY_ABSTRACT
+
+	var/spawn_counter = 0 // incremented and used by spawners, ignored by most other things
+	var/spawner_type
+	var/spawner_positions
 
 /obj/effect/landmark/New()
 	..()
@@ -27,12 +71,13 @@
 /obj/effect/landmark/atom_init()
 	. = ..()
 
+	// todo: move them all to own landmark types
 	switch(name)
 		if ("awaystart")
 			awaydestinations += src
-		if("Wizard")
+		/*if("Wizard")
 			wizardstart += loc
-			return INITIALIZE_HINT_QDEL
+			return INITIALIZE_HINT_QDEL*/
 		//prisoners
 		if("prisonwarp")
 			prisonwarp += loc
@@ -49,17 +94,19 @@
 		if("prisonsecuritywarp")
 			prisonsecuritywarp += loc
 			return INITIALIZE_HINT_QDEL
-		if("blobstart")
-			blobstart += loc
-			return INITIALIZE_HINT_QDEL
+		//if("blobstart") // also nuclear disk spawn loc
+		//	blobstart += src
 		if("xeno_spawn")
 			xeno_spawn += loc
 			return INITIALIZE_HINT_QDEL
-		if("ninjastart")
-			ninjastart += loc
-			return INITIALIZE_HINT_QDEL
-		if("eorgwarp")
-			eorgwarp += loc
+		//if("ninjastart") // "ninja", not "ninjastart"
+		//	ninjastart += src
+		//	return INITIALIZE_HINT_QDEL
+		//if("eorgwarp")
+		//	eorgwarp += loc
+		//	return INITIALIZE_HINT_QDEL
+		if("prisonerstart")
+			prisonerstart += loc
 			return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/sound_source
@@ -101,10 +148,7 @@
 // Assistats
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
-	icon_state = "Test Subject"
-
-/obj/effect/landmark/start/assistant/test_subject
-	name = "Test Subject"
+	icon_state = "Assistant"
 
 /obj/effect/landmark/start/assistant/waiter
 	name = "Waiter"
@@ -295,6 +339,9 @@
 // Roles
 /obj/effect/landmark/start/wizard
 	name = "Wizard"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "wiznerd_spawn"
+	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/velocity_officer
 	name = "Velocity Officer"
@@ -303,26 +350,11 @@
 /obj/effect/landmark/cops_spawn
 	name = "Space Cops"
 
-/obj/effect/landmark/cops_spawn/atom_init(mapload)
-	..()
-	global.copsstart += loc
-	return INITIALIZE_HINT_QDEL
-
 /obj/effect/landmark/dealer_spawn
 	name = "Dealer"
 
-/obj/effect/landmark/dealer_spawn/atom_init(mapload)
-	..()
-	global.dealerstart += loc
-	return INITIALIZE_HINT_QDEL
-
 /obj/effect/landmark/heist_spawn
 	name = "Heist"
-
-/obj/effect/landmark/heist_spawn/atom_init(mapload)
-	..()
-	global.heiststart += loc
-	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
@@ -390,7 +422,7 @@
 
 /obj/effect/landmark/costume/butler/atom_init()
 	..()
-	new /obj/item/clothing/suit/wcoat(loc)
+	new /obj/item/clothing/accessory/tie/waistcoat(loc)
 	new /obj/item/clothing/under/suit_jacket(loc)
 	new /obj/item/clothing/head/that(loc)
 	return INITIALIZE_HINT_QDEL
@@ -412,7 +444,7 @@
 
 /obj/effect/landmark/costume/prig/atom_init()
 	..()
-	new /obj/item/clothing/suit/wcoat(loc)
+	new /obj/item/clothing/accessory/tie/waistcoat(loc)
 	new /obj/item/clothing/glasses/monocle(loc)
 	var/CHOICE = pick( /obj/item/clothing/head/bowler, /obj/item/clothing/head/that)
 	new CHOICE(loc)
@@ -508,20 +540,31 @@
 	name = "Espionage Agent Start"
 
 /obj/effect/landmark/espionage_start/atom_init(mapload)
-	..()
-	global.espionageagent_start += loc
+	. = ..()
 	create_spawner(/datum/spawner/spy)
-	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/survival_start
 	name = "Survivalist Start"
 	var/spawnertype = /datum/spawner/survival
 
 /obj/effect/landmark/survival_start/atom_init(mapload)
-	..()
-	global.survivalist_start += loc
+	. = ..()
 	create_spawner(spawnertype)
-	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/survival_start/medic
 	spawnertype = /datum/spawner/survival/med
+
+/obj/effect/landmark/lone_op_spawn
+	name = "Solo operative"
+
+/obj/effect/landmark/junkyard_bum // don't exists on map, randomly spawned by junkyard generator
+	name = "Junkyard Bum"
+
+// generic event map landmarks
+/obj/effect/landmark/blue_team
+	name = "Blue Team"
+	icon_state = "x2"
+
+/obj/effect/landmark/red_team
+	name = "Red Team"
+	icon_state = "x"

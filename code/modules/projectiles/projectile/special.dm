@@ -316,9 +316,6 @@
 	var/display_fahrenheit = TRUE
 	var/display_kelvin = FALSE
 
-/obj/item/projectile/pyrometer/on_impact(atom/A)
-	return
-
 /obj/item/projectile/pyrometer/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	if(!firer)

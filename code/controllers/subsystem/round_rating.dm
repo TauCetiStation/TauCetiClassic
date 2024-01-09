@@ -183,7 +183,7 @@ SUBSYSTEM_DEF(rating)
 	voting = TRUE
 	already_started = TRUE
 
-	addtimer(CALLBACK(src, .proc/calculate_rating), voting_time)
+	addtimer(CALLBACK(src, PROC_REF(calculate_rating)), voting_time)
 
 	for(var/client/C in clients)
 		var/html = "<div class='rating'>"

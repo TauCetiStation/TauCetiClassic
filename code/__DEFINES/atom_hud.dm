@@ -6,6 +6,8 @@
 #define HEALTH_HUD			"health"
 /// a simple line rounding the mob's number health
 #define STATUS_HUD			"status"
+/// None, Standard, Premium, insurance type
+#define INSURANCE_HUD       "insurance"
 /// the job asigned to your ID
 #define ID_HUD				"id"
 /// wanted, released, parroled, security status
@@ -78,6 +80,9 @@
 #define ANTAG_HUD_GANGSTER      "antag_hud_gangster"
 #define ANTAG_HUD_SPACECOP      "antag_hud_cop"
 #define ANTAG_HUD_REPLICATOR    "antag_hud_replicator"
+#define ANTAG_HUD_PIRATES       "antag_hud_pirates"
+#define ANTAG_HUD_TEAMS_RED     "antag_hud_teams_red"
+#define ANTAG_HUD_TEAMS_BLUE    "antag_hud_teams_blue"
 
 
 /// cooldown for being shown the images for any particular data hud

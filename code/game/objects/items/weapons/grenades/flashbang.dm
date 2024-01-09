@@ -1,5 +1,6 @@
 /obj/item/weapon/grenade/flashbang
 	name = "flashbang"
+	cases = list("светошумовая граната", "светошумовой гранаты", "светошумовой гранате", "светошумовую гранату", "светошумовой гранатой", "светошумовой гранате")
 	icon_state = "flashbang"
 	item_state = "flashbang"
 	origin_tech = "materials=2;combat=1"
@@ -61,7 +62,7 @@
 
 
 	if(distance == 0 || loc == M.loc || loc == M)
-		to_chat(M, "<span class='userdanger'>The close blast from \the [src] severly disorients you!</span>")
+		to_chat(M, "<span class='userdanger'>Взрыв [CASE(src, GENITIVE_CASE)] сильно дезориентирует вас!</span>")
 		if(ear_safety > 1)
 			M.Stun(10)
 			M.Weaken(4)
@@ -108,28 +109,29 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(IO.damage >= IO.min_bruised_damage)
-			to_chat(M, "<span class='warning'>Your eyes start to burn badly!</span>")
+			to_chat(M, "<span class='warning'>Ваши глаза сильно щиплит!</span>")
 			if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
 				if(IO.damage >= IO.min_broken_damage)
-					to_chat(M, "<span class='warning'>You can't see anything!</span>")
+					to_chat(M, "<span class='warning'>Вы ничего не видите!</span>")
 		if(H.species.name == SHADOWLING) // BBQ from shadowling ~Zve
 			H.adjustFireLoss(rand(15, 25))
 	if(M.ear_damage >= 15)
-		to_chat(M, "<span class='warning'>Your ears start to ring badly!</span>")
+		to_chat(M, "<span class='warning'>Вы чувствуете сильный звон в ушах!</span>")
 		if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
 			if(prob(M.ear_damage - 5))
-				to_chat(M, "<span class='warning'>You can't hear anything!</span>")
+				to_chat(M, "<span class='warning'>Вы ничего не слышите!</span>")
 				M.sdisabilities |= DEAF
 	else if(M.ear_damage >= 5)
-		to_chat(M, "<span class='warning'>Your ears start to ring!</span>")
+		to_chat(M, "<span class='warning'>Вы чувствуете звон в ушах!</span>")
 	M.update_icons()
 
 ////////////////////
 //Clusterbang
 ////////////////////
 /obj/item/weapon/grenade/clusterbuster
-	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
 	name = "clusterbang"
+	cases = list("кластерная граната", "кластерной гранаты", "кластерной гранате", "кластерную гранату", "кластерной гранатой", "кластерной гранате")
+	desc = "Использование этого оружия может считаться военным преступлением в вашем регионе. Проконсультируйтесь с местным капитаном."
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang"
 	var/payload = /obj/item/weapon/grenade/flashbang/cluster
@@ -149,8 +151,9 @@
 //Clusterbang segment
 //////////////////////
 /obj/item/weapon/grenade/clusterbuster/segment
-	desc = "A smaller segment of a clusterbang. Better run."
 	name = "clusterbang segment"
+	cases = list("граната", "гранаты", "гранате", "гранату", "гранатой", "гранате")
+	desc = "Сегмент кластерной гранаты. Лучше убегай."
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang_segment"
 	numspawned = 2
@@ -161,14 +164,14 @@
 	payload = payload_type
 	active = TRUE
 	walk_away(src,loc,rand(1,4))
-	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
+	addtimer(CALLBACK(src, PROC_REF(prime)), rand(15,60))
 
 /obj/item/weapon/grenade/clusterbuster/segment/prime()
 	for(var/i in 1 to numspawned)
 		var/obj/item/weapon/grenade/P = new payload(src.loc)
 		P.active = 1
 		walk_away(P,loc,rand(1,4))
-		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
+		addtimer(CALLBACK(P, TYPE_PROC_REF(/obj/item/weapon/grenade, prime)), rand(15,60))
 	playsound(src, 'sound/weapons/armbomb.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	qdel(src)
 

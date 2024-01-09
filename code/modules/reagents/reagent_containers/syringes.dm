@@ -26,7 +26,7 @@
 /obj/item/weapon/reagent_containers/syringe/pickup(mob/living/user)
 	. = ..()
 	if(HAS_TRAIT_FROM(user, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
-		cause_syringe_fear(user)
+		user.trigger_syringe_fear()
 	update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/dropped(mob/user)
@@ -101,8 +101,8 @@
 
 					infect_limb(user, target)
 					user.visible_message("<span class='warning'>[user] takes a blood sample from [target].</span>", self_message = "<span class='notice'>You take a blood sample from [target]</span>", viewing_distance = 4)
-					if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
-						cause_syringe_fear(target)
+					if(HAS_TRAIT_FROM(T, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+						T.trigger_syringe_fear()
 
 			else //if not mob
 				if(!target.reagents.total_volume)
@@ -151,10 +151,10 @@
 					M.log_combat(user, "injected with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
 					reagents.reaction(target, INGEST)
-					if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
-						cause_syringe_fear(target)
+					if(HAS_TRAIT_FROM(M, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+						M.trigger_syringe_fear()
 				else
-					if(!L.try_inject(user, TRUE, TRUE))
+					if(!L.try_inject(user, TRUE, FALSE))
 						return
 					SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
 					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject self ([user.ckey]). Reagents: [contained]</font>")
@@ -175,8 +175,10 @@
 			else
 				trans = reagents.trans_to(target, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")
-			if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
-				cause_syringe_fear(target)
+			if(isliving(target))
+				var/mob/living/L = target
+				if(HAS_TRAIT_FROM(L, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
+					L.trigger_syringe_fear()
 			if (reagents.total_volume <= 0 && mode == SYRINGE_INJECT)
 				mode = SYRINGE_DRAW
 				update_icon()
@@ -220,7 +222,7 @@
 	add_fingerprint(usr)
 	update_icon()
 	if(HAS_TRAIT_FROM(target, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
-		cause_syringe_fear(target)
+		user.trigger_syringe_fear()
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
 	if(mode == SYRINGE_BROKEN)
@@ -280,7 +282,7 @@
 /obj/item/weapon/reagent_containers/ld50_syringe/pickup(mob/living/user)
 	. = ..()
 	if(HAS_TRAIT_FROM(user, TRAIT_SYRINGE_FEAR, QUALITY_TRAIT))
-		cause_syringe_fear(user)
+		user.trigger_syringe_fear()
 	update_icon()
 
 /obj/item/weapon/reagent_containers/ld50_syringe/dropped(mob/user)
@@ -414,7 +416,7 @@
 
 /obj/item/weapon/reagent_containers/ld50_syringe/choral/atom_init()
 	. = ..()
-	reagents.add_reagent("chloralhydrate", 50)
+	reagents.add_reagent("potassium_chloride", 50)
 	mode = SYRINGE_INJECT
 	update_icon()
 

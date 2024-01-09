@@ -7,14 +7,14 @@
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/giant_spider
 	name = "giant spider"
-	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
+	desc = "Мохнатый и черный с тёмно-красными глазами. У вас бегают мурашки по коже, когда вы смотрите на него."
 	var/butcher_state = 8 // Icon state for dead spider icons
 	icon_state = "guard"
 	icon_living = "guard"
 	icon_dead = "guard_dead"
 	icon_move = "guard_move"
-	speak_emote = list("chitters")
-	emote_hear = list("chitters")
+	speak_emote = list("шипит")
+	emote_hear = list("шипит")
 	speak_chance = 5
 	turns_per_move = 5
 	see_in_dark = 10
@@ -43,7 +43,7 @@
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/giant_spider/nurse
-	desc = "Furry and black, it makes you shudder to look at it. This one has brilliant green eyes."
+	desc = "Мохнатый и черный с зелеными глазами. У вас бегают мурашки по коже, когда вы смотрите на него."
 	icon_state = "nurse"
 	icon_living = "nurse"
 	icon_dead = "nurse_dead"
@@ -59,7 +59,7 @@
 
 //hunters have the most poison and move the fastest, so they can find prey
 /mob/living/simple_animal/hostile/giant_spider/hunter
-	desc = "Furry and black, it makes you shudder to look at it. This one has sparkling purple eyes."
+	desc = "Мохнатый и черный с фиолетовыми глазами. У вас бегают мурашки по коже, когда вы смотрите на него."
 	icon_state = "hunter"
 	icon_living = "hunter"
 	icon_dead = "hunter_dead"
@@ -71,14 +71,14 @@
 	poison_per_bite = 5
 	move_to_delay = 4
 
-/mob/living/simple_animal/hostile/giant_spider/AttackingTarget()
+/mob/living/simple_animal/hostile/giant_spider/UnarmedAttack(atom/target)
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.reagents)
 			L.reagents.add_reagent("toxin", poison_per_bite)
 			if(prob(poison_per_bite))
-				to_chat(L, "<span class='warning'>You feel a tiny prick.</span>")
+				to_chat(L, "<span class='warning'>Вы чувствуете слабый укол.</span>")
 				L.reagents.add_reagent(poison_type, 5)
 
 /mob/living/simple_animal/hostile/giant_spider/Life()

@@ -19,6 +19,10 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
+/datum/outfit/job/hos/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
+		implants += /obj/item/weapon/implant/obedience
+
 // WARDEN OUTFIT
 /datum/outfit/job/warden
 	name = OUTFIT_JOB_NAME("Warden")
@@ -38,6 +42,18 @@
 	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY
+
+/datum/outfit/job/warden/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		implants += /obj/item/weapon/implant/mind_protect/loyalty
+		implants += /obj/item/weapon/implant/dexplosive
+		head = /obj/item/clothing/head/soft/nt_pmc_cap
+		uniform = /obj/item/clothing/under/tactical
+		uniform_f = /obj/item/clothing/under/tactical
+		gloves = /obj/item/clothing/gloves/swat
+		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
+		glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
+		ADD_TRAIT(H, TRAIT_NO_CLONE, ROUNDSTART_TRAIT)
 
 // DETECTIVE OUTFIT
 /datum/outfit/job/detective
@@ -73,6 +89,15 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
+/datum/outfit/job/officer/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		implants += /obj/item/weapon/implant/mind_protect/loyalty
+		implants += /obj/item/weapon/implant/dexplosive
+		uniform = /obj/item/clothing/under/syndicate
+		uniform_f = /obj/item/clothing/under/syndicate
+		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
+		ADD_TRAIT(H, TRAIT_NO_CLONE, ROUNDSTART_TRAIT)
+
 // FORENSIC OUTFIT
 /datum/outfit/job/forensic
 	name = OUTFIT_JOB_NAME("Forensic Technician")
@@ -80,7 +105,7 @@
 	uniform = /obj/item/clothing/under/rank/forensic_technician
 	suit = /obj/item/clothing/suit/storage/forensics/red
 	gloves = /obj/item/clothing/gloves/black
-	shoes = /obj/item/clothing/shoes/red
+	shoes = /obj/item/clothing/shoes/laceup
 	belt = /obj/item/device/pda/forensic
 	l_ear = /obj/item/device/radio/headset/headset_sec
 
@@ -105,7 +130,11 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
-
+/datum/outfit/job/cadet/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		uniform = /obj/item/clothing/under/syndicate/tacticool
+		uniform_f = /obj/item/clothing/under/syndicate/tacticool
+		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
 
 /datum/outfit/job/blueshield
 	name = OUTFIT_JOB_NAME("Blueshield Officer")
