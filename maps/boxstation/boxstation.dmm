@@ -31900,6 +31900,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "beA" = (
@@ -31922,9 +31925,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light/smart{
-	dir = 1
+/obj/structure/bookcase/shelf{
+	pixel_y = 32
 	},
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/possible_threats,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "beC" = (
@@ -31953,6 +31958,9 @@
 	dir = 1;
 	name = "3000k apc top";
 	pixel_y = 28
+	},
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -32072,7 +32080,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/device/megaphone,
+/obj/item/device/megaphone{
+	pixel_y = 17
+	},
+/obj/item/weapon/pinpointer/advpinpointer,
+/obj/item/weapon/disk/nuclear,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "beQ" = (
@@ -32689,6 +32701,9 @@
 	pixel_y = -3
 	},
 /obj/structure/closet/secure_closet/captains,
+/obj/machinery/light/smart{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bfP" = (
@@ -33323,7 +33338,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/light/smart,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bgW" = (
@@ -34853,13 +34867,10 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bkh" = (
-/obj/structure/table/woodentable,
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 39;
 	pixel_y = 1
 	},
-/obj/item/weapon/pinpointer/advpinpointer,
-/obj/item/weapon/disk/nuclear,
 /obj/structure/bobross{
 	pixel_x = 32
 	},
@@ -34867,6 +34878,7 @@
 	c_tag = "Captain's Office";
 	dir = 8
 	},
+/obj/structure/stellarglobe,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bki" = (
@@ -79438,9 +79450,9 @@
 	},
 /area/station/hallway/primary/port)
 "npi" = (
-/obj/structure/bookcase,
-/obj/item/weapon/book/manual/wiki/possible_threats,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "npv" = (
@@ -121208,8 +121220,8 @@ bjV
 bjS
 bke
 bkh
-npi
 bkA
+npi
 bgW
 blB
 bkc

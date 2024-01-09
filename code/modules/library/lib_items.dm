@@ -100,7 +100,7 @@
 
 	var/obj/item/placeditem
 
-	var/list/canbeplaced = list(/obj/item/mars_globe = list(4, -6), /obj/item/venus_globe = list(4, -6), /obj/item/earth_globe = list(4, -6), /obj/item/yargon_globe = list(4, -6), /obj/item/newtons_pendulum = list(5, -8), /obj/item/statuette = list(4, -4), /obj/item/vase = list(3, 2), /obj/item/bust = list(-6, 4))
+	var/list/canbeplaced = list(/obj/item/mars_globe = list(4, -6), /obj/item/venus_globe = list(4, -6), /obj/item/earth_globe = list(4, -6), /obj/item/yargon_globe = list(4, -6), /obj/item/newtons_pendulum = list(5, -8), /obj/item/statuette = list(4, -4), /obj/item/vase = list(3, 2), /obj/item/bust = list(4, -6))
 
 /obj/structure/bookcase/shelf/atom_init()
 	..()

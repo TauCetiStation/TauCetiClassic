@@ -497,3 +497,84 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 		last_increment = increment
 
 	return last_increment
+
+/obj/structure/stellarglobe
+	name = "Stellar globe"
+	cases = list("звёздный глобус", "звёздного глобуса", "звёздному глобусу", "звёздный глобус", "звёздным глобусом", "звёздном глобусе")
+	desc = "Глобус звёздного сектора, подконтрольного НаноТрейзен."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "globe"
+
+	anchored = FALSE
+	density = TRUE
+
+	var/obj/item/weapon/reagent_containers/food/drinks/bottle/Bottle
+	var/image/BottleImage
+
+	var/opened = FALSE
+
+/obj/structure/stellarglobe/atom_init(mapload)
+	. = ..()
+
+	if(mapload)
+		Bottle = new /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac(src)
+		update_icon()
+
+/obj/structure/stellarglobe/update_icon()
+	cut_overlay(BottleImage)
+	if(opened)
+		icon_state = "globe_open"
+	else
+		icon_state = "globe"
+
+	if(!opened || !Bottle)
+		return
+
+	if(!BottleImage || BottleImage.icon_state != Bottle.icon_state)
+		BottleImage = image(Bottle.icon, Bottle.icon_state)
+
+		var/matrix/M = matrix()
+		M.Scale(0.5)
+		BottleImage.transform = M
+
+		BottleImage.pixel_y = 4
+		BottleImage.add_filter("bottle_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "globe_bottle_mask")))
+
+	add_overlay(BottleImage)
+
+/obj/structure/stellarglobe/attack_hand(mob/user)
+	if(!Adjacent(usr) || usr.incapacitated())
+		return
+
+	opened = !opened
+	update_icon()
+
+/obj/structure/stellarglobe/MouseDrop(mob/user)
+	. = ..()
+	if(!Adjacent(usr) || usr.incapacitated())
+		return
+	if(!user)
+		return
+	if(!Bottle || !opened)
+		return
+
+	if(ishuman(user))
+		user.put_in_hands(Bottle)
+	else
+		Bottle.forceMove(get_turf(user))
+
+	Bottle = null
+
+	to_chat(user, "<span class='notice'>Вы забрали бутылку.</span>")
+	update_icon()
+
+/obj/structure/stellarglobe/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/reagent_containers/food/drinks/bottle) && !Bottle && opened)
+		user.drop_from_inventory(I, src)
+
+		Bottle = I
+		update_icon()
+		return
+
+	return ..()
+
