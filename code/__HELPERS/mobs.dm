@@ -333,7 +333,7 @@
 					[round(R.volume, 1)]u [R.name]</span><br>"
 		if(C.virus2.len)
 			if(C.is_infected_with_zombie_virus() && advanced)
-				message += "<span class='warning'>Внимание: Обнаруженна нетипичная активность патогена в крови!</span><br>"
+				message += "<span class='warning'>Внимание: Обнаружена нетипичная активность патогена в крови!</span><br>"
 			for (var/ID in C.virus2)
 				if (ID in virusDB)
 					var/datum/data/record/V = virusDB[ID]
@@ -348,11 +348,6 @@
 		var/mob/living/carbon/human/H = M
 		if(!H.has_brain() && H.should_have_organ(O_BRAIN))
 			message += "<span class='warning'>У субъекта отсутствует мозг.</span><br>"
-		if(M.stat != DEAD && advanced)
-			if(!M.key)
-				message += "<span class='warning'>[user.my_religion ? "<span class ='bold [user.my_religion.style_text]'>Души</span>" : "Aктивности мозга"] не обнаружено.</span><br>" // they ghosted
-			else if(!M.client)
-				message += "<span class='warning'>Субъект в состоянии космического расстройства сна.</span><br>" // SSD
 	else if(M.getBrainLoss() >= 100)
 		message += "<span class='warning'>Мозг субъекта мёртв.</span><br>"
 	else if(M.getBrainLoss() >= 60)
