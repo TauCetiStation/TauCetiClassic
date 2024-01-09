@@ -391,7 +391,7 @@ var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА",
 
 
 /mob/proc/abiotic(full_body = 0)
-	if(full_body && ((l_hand.flags & ABSTRACT) || (r_hand && !(r_hand.flags & ABSTRACT)) || (back || wear_mask)))
+	if(full_body && ((l_hand.flags & ABSTRACT) || (r_hand && !(r_hand.flags & ABSTRACT)) || back || wear_mask))
 		return TRUE
 
 	if((l_hand && !(l_hand.flags & ABSTRACT)) || (r_hand && !(r_hand.flags & ABSTRACT)))
