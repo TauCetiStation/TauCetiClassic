@@ -277,3 +277,34 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/dnd/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_RANDOM_DAMAGE, QUALITY_TRAIT)
+	RegisterSignal(H, list(COMSIG_MOB_BULLET_ACT,
+						   COMSIG_HUMAN_ATTACKED_BY,
+						   COMSIG_PROJECTILE_ON_HIT,
+						   COMSIG_GRENADE_ACTIVATE), PROC_REF(try_randomize_nums))
+
+/datum/quality/negativeish/dnd/proc/modify_numbers(list/reflist)
+	for(var/num in 1 to reflist.len)
+		var/dice_value = "6d20"
+		if(reflist[num] <= 1)
+			continue
+		else if(reflist[num] <= 4)
+			dice_value = "1d4"
+		else if(reflist[num] <= 10)
+			dice_value = "2d6"
+		else if(reflist[num] <= 25)
+			dice_value = "3d8"
+		else if(reflist[num] <= 40)
+			dice_value = "5d8"
+		else if(reflist[num] <= 60)
+			dice_value = "3d20"
+		reflist[num] = roll(dice_value)
+
+/datum/quality/negativeish/dnd/proc/try_randomize_nums(datum/source, list/reflist)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(source, TRAIT_RANDOM_DAMAGE))
+		UnregisterSignal(source, list(COMSIG_MOB_BULLET_ACT,
+								   COMSIG_HUMAN_ATTACKED_BY,
+								   COMSIG_PROJECTILE_ON_HIT,
+								   COMSIG_GRENADE_ACTIVATE))
+		return
+	modify_numbers(reflist)

@@ -62,10 +62,6 @@
 	human_list += src
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), PROC_REF(mood_item_equipped))
-	RegisterSignal(src, list(COMSIG_MOB_BULLET_ACT,
-	                         COMSIG_HUMAN_ATTACKED_BY,
-							 COMSIG_PROJECTILE_ON_HIT,
-							 COMSIG_GRENADE_ACTIVATE), PROC_REF(try_randomize_nums))
 
 	if(dna)
 		dna.real_name = real_name
@@ -2526,26 +2522,3 @@
 			continue
 		F.attackby(B, src)
 		break
-
-/mob/living/carbon/human/proc/modify_numbers(list/reflist)
-	for(var/num in 1 to reflist.len)
-		var/dice_value = "6d20"
-		if(reflist[num] <= 1)
-			continue
-		else if(reflist[num] <= 4)
-			dice_value = "1d4"
-		else if(reflist[num] <= 10)
-			dice_value = "2d6"
-		else if(reflist[num] <= 25)
-			dice_value = "3d8"
-		else if(reflist[num] <= 40)
-			dice_value = "5d8"
-		else if(reflist[num] <= 60)
-			dice_value = "3d20"
-		reflist[num] = roll(dice_value)
-
-/mob/living/carbon/human/proc/try_randomize_nums(datum/source, list/reflist)
-	SIGNAL_HANDLER
-	if(!HAS_TRAIT(src, TRAIT_RANDOM_DAMAGE))
-		return
-	modify_numbers(reflist)
