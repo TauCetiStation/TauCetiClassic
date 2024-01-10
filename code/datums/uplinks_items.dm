@@ -673,7 +673,7 @@
 	name = "Chameleon Kit"
 	desc = "A set of clothes used to imitate the uniforms of Nanotrasen crewmembers."
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
-	cost = 2
+	cost = 3
 
 /datum/uplink_item/stealthy_tools/chameleon_penstamp
 	name = "Fake Bureucracy Set"
@@ -696,12 +696,6 @@
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 1
 	uplink_types = list("traitor")
-
-/datum/uplink_item/stealthy_tools/agent_card
-	name = "Agent Identification card"
-	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access from other identification cards. The access is cumulative, so scanning one card does not erase the access gained from another."
-	item = /obj/item/weapon/card/id/syndicate
-	cost = 4
 
 /datum/uplink_item/stealthy_tools/voice_changer
 	name = "Voice Changer"
