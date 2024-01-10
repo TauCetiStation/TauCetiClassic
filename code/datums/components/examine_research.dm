@@ -18,15 +18,15 @@ var/global/list/spented_examined_objects = list()
 		extra_check = _extra_check
 	else
 		extra_check = list(_extra_check)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/begin_scan)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
-/datum/component/examine_research/proc/begin_scan(datum/source, mob/user)
-	if(user.is_busy())
-		return
-	if(!ishuman(user))
-		return
-	if(!success_check(user))
-		return
+/datum/component/examine_research/proc/calculate_research_value()
+	for(var/datum/object as anything in global.spented_examined_objects)
+		if(object.type == parent.type)
+			return 0
+	return points_value
+
+/datum/component/examine_research/proc/begin_scan(mob/user)
 	to_chat(user, "<span class='notice'>You concentrate on scanning [parent].</span>")
 	if(!do_after(user, 50, FALSE, parent))
 		to_chat(user, "<span class='warning'>You stop scanning [parent].</span>")
@@ -37,12 +37,6 @@ var/global/list/spented_examined_objects = list()
 	to_chat(user, "<span class='notice'>[parent] scan earned you [points_value] research points.</span>")
 	linked_techweb.research_points += points_value
 	global.spented_examined_objects += parent
-
-/datum/component/examine_research/proc/calculate_research_value()
-	for(var/datum/object as anything in global.spented_examined_objects)
-		if(object.type == parent.type)
-			return 0
-	return points_value
 
 /datum/component/examine_research/proc/success_check(mob/living/carbon/human/user)
 	var/list/succes_checks = list()
@@ -59,3 +53,13 @@ var/global/list/spented_examined_objects = list()
 	if(diffs.len)
 		return FALSE
 	return TRUE
+
+/datum/component/examine_research/proc/on_examine(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if(user.is_busy())
+		return
+	if(!ishuman(user))
+		return
+	if(!success_check(user))
+		return
+	INVOKE_ASYNC(src, PROC_REF(begin_scan), user)

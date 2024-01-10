@@ -98,7 +98,7 @@
 /obj/item/clothing/glasses/hud/diagnostic/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot == SLOT_GLASSES)
-		to_chat(user, "<span class='info'>Вы можете получать очки исследований, проводя диагностику изобретений, связанных с роботами. Экипируйте очки для диагностики и осмотрите объект.</span>")
+		to_chat(user, "<span class='info'>Вы можете получать очки исследований, проводя диагностику изобретений, связанных с роботами. Осматривайте объекты в этих очках.</span>")
 
 /datum/action/item_action/hands_free/toggle_goggles
 	name = "Toggle Goggles"
