@@ -63,11 +63,13 @@ var/global/datum/notes_storage/note_cache_storage = new
 	var/show_edit = TRUE
 	var/repeat    = 0
 	var/volume    = DEFAULT_VOLUME
+	var/volume_type = VOL_EFFECTS_INSTRUMENT
 
-/datum/music_player/New(instrument, sound_path)
+/datum/music_player/New(instrument, sound_path, volume_type = VOL_EFFECTS_INSTRUMENT)
 	..()
 	src.instrument = instrument
 	src.sound_path = sound_path
+	src.volume_type = volume_type
 
 /datum/music_player/Destroy()
 	instrument = null
@@ -222,7 +224,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 		usr << browse(null, "window=musical_instrument_[instrument.name]")
 		usr.unset_machine(instrument)
 
-/datum/music_player/proc/playsong(mob/living/musician)
+/datum/music_player/proc/playsong(mob/living/musician, strict)
 	do
 		var/cur_oct[7]
 		var/cur_acc[7]
@@ -277,7 +279,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 						if(!S)
 							S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"] = sound("[sound_path]/[current_note].ogg")
 
-						playsound(instrument, S, VOL_EFFECTS_INSTRUMENT, volume, FALSE, null, null, falloff = 5)
+						playsound(instrument, S, volume_type, volume, FALSE, null, null, falloff = 5)
 
 				var/pause_time = COUNT_PAUSE(song_tempo)
 

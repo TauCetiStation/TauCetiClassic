@@ -127,3 +127,6 @@
 	// Reagent allergies.
 	var/list/allergies
 	var/next_allergy_message = 0
+
+	var/pda_chosen_ringtone
+	var/pda_custom_melody

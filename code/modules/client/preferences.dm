@@ -178,6 +178,9 @@ var/global/list/preferences_datums = list()
 	var/gear_tab = "General"
 	var/list/custom_items = list()
 
+	var/chosen_ringtone = "Thinktronic"
+	var/custom_melody = "E7,E7,E7"
+
 /datum/preferences/New(client/C)
 	parent = C
 	UI_style = global.available_ui_styles[1]
@@ -496,6 +499,8 @@ var/global/list/preferences_datums = list()
 		backbag = 1 //Same as above
 	character.backbag = backbag
 	character.use_skirt = use_skirt
+	character.pda_chosen_ringtone = chosen_ringtone
+	character.pda_custom_melody = custom_melody
 
 	if(icon_updates)
 		character.update_body()
