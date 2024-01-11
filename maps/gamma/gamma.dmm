@@ -54275,6 +54275,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/effect/landmark/start/cyborg,
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "keg" = (
@@ -103972,6 +103973,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/effect/landmark/start/cyborg,
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "ueu" = (
