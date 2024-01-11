@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(shuttle)
 							//pods
 					start_location = locate(/area/shuttle/escape_pod1/transit)
 					end_location = locate(/area/shuttle/escape_pod1/centcom)
-					if((prob(5)) || check_emag(start_location)) // 5% that they survive
+					if(prob(5) || check_emag(start_location)) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 						dock_act(end_location, "pod1")
 						dock_act(/area/centcom/evac, "pod1")
@@ -150,7 +150,7 @@ SUBSYSTEM_DEF(shuttle)
 
 					start_location = locate(/area/shuttle/escape_pod2/transit)
 					end_location = locate(/area/shuttle/escape_pod2/centcom)
-					if((prob(5)) || check_emag(start_location)) // 5% that they survive
+					if(prob(5) || check_emag(start_location)) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 						dock_act(end_location, "pod2")
 						dock_act(/area/centcom/evac, "pod2")
@@ -159,7 +159,7 @@ SUBSYSTEM_DEF(shuttle)
 
 					start_location = locate(/area/shuttle/escape_pod3/transit)
 					end_location = locate(/area/shuttle/escape_pod3/centcom)
-					if((prob(5)) || check_emag(start_location)) // 5% that they survive
+					if(prob(5) || check_emag(start_location)) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 						dock_act(end_location, "pod3")
 						dock_act(/area/centcom/evac, "pod3")
@@ -168,7 +168,7 @@ SUBSYSTEM_DEF(shuttle)
 
 					start_location = locate(/area/shuttle/escape_pod4/transit)
 					end_location = locate(/area/shuttle/escape_pod4/centcom)
-					if((prob(5)) || check_emag(start_location)) // 5% that they survive
+					if(prob(5) || check_emag(start_location)) // 5% that they survive
 						start_location.move_contents_to(end_location, null, NORTH)
 						dock_act(end_location, "pod4")
 						dock_act(/area/centcom/evac, "pod4")
