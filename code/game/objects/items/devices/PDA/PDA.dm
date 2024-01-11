@@ -824,6 +824,7 @@
 	if(mode in safe_pages)
 		mode = 0	//for safety
 	ui_interact(user) //NanoUI requires this proc
+	MP.playing = FALSE
 	return
 
 /obj/item/device/pda/Topic(href, href_list)
@@ -1019,6 +1020,7 @@
 
 			var/obj/item/device/pda/P = locate(href_list["target"])
 			create_message(U, P, !href_list["notap"])
+			MP.playing = FALSE
 			if(mode == 2)
 				if(href_list["target"] in conversations)            // Need to make sure the message went through, if not welp.
 					active_conversation = href_list["target"]
@@ -1992,6 +1994,10 @@
 	return TRUE
 
 /obj/item/device/pda/proc/play_ringtone()
+	if(usr.client && LAZYACCESS(usr.client.browsers, "main"))
+		MP.playing = FALSE
+		return
+
 	if(MP.playing)
 		return
 

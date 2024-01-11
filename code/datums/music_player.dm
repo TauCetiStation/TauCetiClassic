@@ -224,7 +224,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 		usr << browse(null, "window=musical_instrument_[instrument.name]")
 		usr.unset_machine(instrument)
 
-/datum/music_player/proc/playsong(mob/living/musician, strict)
+/datum/music_player/proc/playsong(mob/living/musician)
 	do
 		var/cur_oct[7]
 		var/cur_acc[7]
