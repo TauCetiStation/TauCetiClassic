@@ -99,6 +99,7 @@
 	chance_maxm = 20
 	pools = list(POOL_NEGATIVE_VIRUS)
 	var/activated = FALSE
+	var/signal_setup = TRUE
 	var/obj/item/organ/external/infected_organ = null //if infected part is removed, destroys itself
 
 /datum/disease2/effect/zombie/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -109,6 +110,10 @@
 		disease.dead = TRUE
 		UnregisterSignal(H, COMSIG_MOB_DIED)
 		return
+
+	if(signal_setup)
+		RegisterSignal(A, COMSIG_MOB_DIED, PROC_REF(handle_infected_death))
+		signal_setup = FALSE
 
 	if(!(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
 		return

@@ -146,13 +146,6 @@
 		Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
 		который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
 
-/mob/living/carbon/human/proc/handle_infected_death() //Death of human
-	if(species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
-		addtimer(CALLBACK(src, PROC_REF(prerevive_zombie)), 300)
-		to_chat(src, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
-			Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
-			который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
-
 /mob/living/carbon/human/proc/prerevive_zombie()
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	if(organs_by_name[O_BRAIN] && BP && !(BP.is_stump))
@@ -265,7 +258,6 @@
 	D.infectionchance = 100
 	D.antigen |= ANTIGEN_Z
 	D.spreadtype = DISEASE_SPREAD_BLOOD // not airborn and not contact, because spreading zombie virus through air or hugs is silly
-	Z.RegisterSignal(src, COMSIG_MOB_DIED, PROC_REF(handle_infected_death))
 
 	infect_virus2(src, D, forced = TRUE, ignore_antibiotics = TRUE)
 
