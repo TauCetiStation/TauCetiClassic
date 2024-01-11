@@ -190,10 +190,10 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 		newdesc = "Портрет [CAP.fields["name"]], главы [station_name_ru()]."
 	else if(HOP)
 		Heads_photo = image(HOP.fields["photo_f"])
-		newdesc = "Портрет [HOP.fields["name"]], главы кадровой службы [station_name_ru()]"
+		newdesc = "Портрет [HOP.fields["name"]], главы кадровой службы [station_name_ru()]."
 	else if(HOS)
 		Heads_photo = image(HOS.fields["photo_f"])
-		newdesc = "Портрет [HOS.fields["name"]], главы службы безопасности [station_name_ru()]"
+		newdesc = "Портрет [HOS.fields["name"]], главы службы безопасности [station_name_ru()]."
 
 	if(Heads_photo)
 		Heads_photo.add_filter("portrait_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "portrait_mask")))
