@@ -75,10 +75,10 @@ var/global/list/escape_menus = list()
 
 	page_holder.clear()
 
-	switch (menu_page)
-		if (PAGE_HOME)
+	switch(menu_page)
+		if(PAGE_HOME)
 			show_home_page()
-		if (PAGE_LEAVE_BODY)
+		if(PAGE_LEAVE_BODY)
 			show_leave_body_page()
 		if(PAGE_HELP)
 			show_help_page()

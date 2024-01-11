@@ -43,6 +43,17 @@
 		)
 	)
 
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/home_button(
+			null,
+			/* hud_owner = */ src,
+			src,
+			"Выход",
+			/* offset = */ 4,
+			CALLBACK(src, PROC_REF(exit_game)),
+		)
+	)
+
 /datum/escape_menu/proc/home_resume()
 	qdel(src)
 
@@ -55,6 +66,16 @@
 	assets.send(client)
 	client.prefs.ShowChoices(client.mob)
 	qdel(src)
+
+/datum/escape_menu/proc/exit_game()
+	if(!client)
+		qdel(src)
+		return
+	if(tgui_alert(client, "Вы хотите выйти из игры?", "Выйти", list("Да", "Нет"), 10 SECONDS) == "Да")
+		var/sound/sound = sound(pick('sound/misc/bangindonk.ogg', 'sound/misc/its_only_game.ogg', 'sound/misc/leavingtg.ogg', 'sound/misc/newroundsexy.ogg', 'sound/misc/sadtrombone.ogg'))
+		client << sound
+		sleep(15)
+		winset(client, null, "command=.quit")
 
 /atom/movable/screen/escape_menu/home_button
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
