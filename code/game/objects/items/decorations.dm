@@ -170,6 +170,7 @@
 var/global/list/station_head_portraits = list()
 ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 /obj/item/portrait/captain
+	desc = "Портрет главы станции."
 	icon_state = "portrait_empty"
 
 /obj/item/portrait/captain/atom_init()
