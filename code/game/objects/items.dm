@@ -764,7 +764,7 @@
 			return
 
 	// Use tool's fuel, stack sheets or charges if amount is set.
-	if(amount && !use(amount))
+	if(amount && !use(amount, user))
 		return
 
 	// Play tool sound at the end of tool usage,
