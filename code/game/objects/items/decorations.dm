@@ -174,7 +174,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 
 /obj/item/portrait/captain/atom_init()
 	. = ..()
-	desc = "Потрет главы [station_name_ru()]."
+	desc = "Портрет главы [station_name_ru()]."
 
 /proc/update_station_head_portraits()
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_station_head_portraits)), 10 MINUTES)
