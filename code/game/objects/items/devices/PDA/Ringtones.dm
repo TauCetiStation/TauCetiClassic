@@ -1,18 +1,8 @@
+var/global/max_custom_ringtone_length = 150
+
 var/global/standard_pda_ringtones = list(
 	/datum/ringtone/thinktronic,
 	/datum/ringtone/thinktronic2,
-	/datum/ringtone/doomer,
-	/datum/ringtone/clowntown,
-	/datum/ringtone/caramelldansen,
-	/datum/ringtone/mineshaft,
-	/datum/ringtone/raddish_radio,
-	/datum/ringtone/tajarsky_punch,
-	/datum/ringtone/shipniky,
-	/datum/ringtone/klubnika,
-	/datum/ringtone/space_burial,
-	/datum/ringtone/solgov,
-	/datum/ringtone/skeletones,
-	/datum/ringtone/band,
 	/datum/ringtone/flipflap,
 	/datum/ringtone/ring1,
 	/datum/ringtone/ring2,
@@ -37,6 +27,38 @@ var/global/pda_ringtones_prefs
 	name = "Thinktronic 2"
 	melody = "BPM: 167\nC6,G5/2,G/2,A5,G, ,B5,C6,"
 	replays = 0
+
+/datum/ringtone/flipflap
+	name = "Flip-Flap"
+	melody = "BPM: 188\nC5,Eb5,F5,G5/2,C6,C/1.8,G,F,E,C5,E,F,G/2,Ab5\nA/1.8,G,F,E"
+	replays = 0
+
+/datum/ringtone/ring1
+	name = "Ring 1"
+	melody = "BPM: 251\nB5/3,G5/3,B/3,G/3,B/3,G/3,B/3,G/3,B/3,G/3"
+	replays = 1
+
+/datum/ringtone/ring2
+	name = "Ring 2"
+	melody = "BPM: 251\nA5/3,G5/3,A/3,G/3,A/3,G/3,A/3,G/3,A/3,G/3"
+	replays = 1
+
+/datum/ringtone/ring3
+	name = "Ring 3"
+	melody = "BPM: 251\nD5/3,C5/3,D/3,C/3,D/3,C/3,D/3,C/3,D/3,C/3"
+	replays = 1
+
+/datum/ringtone/ring4
+	name = "Ring 4"
+	melody = "BPM: 251\nE5/3,G5/3,E/3,G/3,E/3,G/3,E/3,G/3,E/3,G/3"
+	replays = 1
+
+/datum/ringtone/ring5
+	name = "Ring 5"
+	melody = "BPM: 251\nF5/3,B#5/3,F/3,B/3,F/3,B/3,F/3,B/3,F/3,B/3"
+	replays = 1
+
+
 
 /datum/ringtone/doomer
 	name = "Doomer"
@@ -88,7 +110,6 @@ var/global/pda_ringtones_prefs
 	melody = "BPM: 116\nD5/3,D/3,D/3,F5,F/3,F/3,F/3,A5,A/3,A/3,A/3,D6,D/3\nD/3,D/3,F6,G6,A6, ,C5, ,F5, ,C5,F6/3,F/3,F/3,D6\nD/3,D/3,D/3,C6,C/3,C/3,C/3,A5,A/3,A/3,A/3,G5,E5\nF5, ,D5, ,F5, ,D5"
 	replays = 0
 
-
 /datum/ringtone/skeletones
 	name = "Skeletones"
 	melody = "BPM: 215\nD6-G6,D-G,A#5-C#6-F#6,A-C-F,B5,D6/2,B5/2, ,B5\nD6-G6/2,G-D,/2,A#5-C6-F6,A-C-F,B5, , , ,D6-G6,G-D\nA5-C6-F6,A-C-F,B5,D6/2,B5/2, ,B5/2,C6/2,D6,G5-E6\nG5-C6,D6,F5-B5, , ,"
@@ -98,33 +119,3 @@ var/global/pda_ringtones_prefs
 	name = "Band"
 	melody = "BPM: 301\nD5,A5,G5,Bb5,A, , ,F5,G,A,B, ,A,D, , , , , , , , ,\nD,A,G,B,A, , ,A5,G5,F5,E5, ,F5,C5, , , , , , , , ,\nD,A5,G5,Bb5,A5, , ,F5,G5,A5,B, ,A5,D5, , , , , ,D,\nE5,F5,G5, ,F5,D5, , , , ,D5,F5,E5,D5,C5, ,D5/0.1"
 	replays = 0
-
-/datum/ringtone/flipflap
-	name = "Flip-Flap"
-	melody = "BPM: 188\nC5,Eb5,F5,G5/2,C6,C/1.8,G,F,E,C5,E,F,G/2,Ab5\nA/1.8,G,F,E"
-	replays = 0
-
-/datum/ringtone/ring1
-	name = "Ring 1"
-	melody = "BPM: 251\nB5/3,G5/3,B/3,G/3,B/3,G/3,B/3,G/3,B/3,G/3"
-	replays = 1
-
-/datum/ringtone/ring2
-	name = "Ring 2"
-	melody = "BPM: 251\nA5/3,G5/3,A/3,G/3,A/3,G/3,A/3,G/3,A/3,G/3"
-	replays = 1
-
-/datum/ringtone/ring3
-	name = "Ring 3"
-	melody = "BPM: 251\nD5/3,C5/3,D/3,C/3,D/3,C/3,D/3,C/3,D/3,C/3"
-	replays = 1
-
-/datum/ringtone/ring4
-	name = "Ring 4"
-	melody = "BPM: 251\nE5/3,G5/3,E/3,G/3,E/3,G/3,E/3,G/3,E/3,G/3"
-	replays = 1
-
-/datum/ringtone/ring5
-	name = "Ring 5"
-	melody = "BPM: 251\nF5/3,B#5/3,F/3,B/3,F/3,B/3,F/3,B/3,F/3,B/3"
-	replays = 1

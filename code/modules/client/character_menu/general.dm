@@ -463,7 +463,7 @@
 					var/Tone = input(user, "Выберите рингтон:", "Character Preference", chosen_ringtone) as null|anything in global.pda_ringtones_prefs + "My Ringtone"
 					if(Tone && (Tone in global.pda_ringtones_prefs + "My Ringtone"))
 						if(Tone == "My Ringtone")
-							var/t = sanitize(input(user, "Введите новый рингтон") as message|null, 100, extra = FALSE, ascii_only = TRUE)
+							var/t = sanitize(input(user, "Введите новый рингтон") as message|null, global.max_custom_ringtone_length, extra = FALSE, ascii_only = TRUE)
 							if (!t)
 								return
 							custom_melody = t

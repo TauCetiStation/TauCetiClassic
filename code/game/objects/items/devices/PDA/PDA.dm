@@ -996,7 +996,7 @@
 			var/Tone = input(U, "Выберите рингтон", name) as null|anything in ringtones
 			if(Tone && (Tone in ringtones) && Adjacent(U))
 				if(Tone == Custom_Ringtone)
-					var/t = sanitize(input(U, "Введите новый рингтон") as message|null, 100, extra = FALSE, ascii_only = TRUE)
+					var/t = sanitize(input(U, "Введите новый рингтон") as message|null, global.max_custom_ringtone_length, extra = FALSE, ascii_only = TRUE)
 					if (!t || !Adjacent(U))
 						return
 					if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
