@@ -278,15 +278,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 						var/sound/S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"]
 						if(!S)
 							S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"] = sound("[sound_path]/[current_note].ogg")
-						switch(volume_type) //Сорян, бот сказал что у плейсаунд в графе volume_channel не может быть переменной, а только статическое значение. Пришлось импровизировать.
-							if(VOL_EFFECTS_MASTER)
-								playsound(instrument, S, VOL_EFFECTS_MASTER, volume, FALSE, null, null, falloff = 5)
-							if(VOL_EFFECTS_VOICE_ANNOUNCEMENT)
-								playsound(instrument, S, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, null, null, falloff = 5)
-							if(VOL_EFFECTS_MISC)
-								playsound(instrument, S, VOL_EFFECTS_MISC, volume, FALSE, null, null, falloff = 5)
-							if(VOL_EFFECTS_INSTRUMENT)
-								playsound(instrument, S, VOL_EFFECTS_INSTRUMENT, volume, FALSE, null, null, falloff = 5)
+						playsound(instrument, S, volume_type, volume, FALSE, null, null, falloff = 5)
 
 				var/pause_time = COUNT_PAUSE(song_tempo)
 
