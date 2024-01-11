@@ -287,6 +287,12 @@
 		for(var/pool in L)
 			LAZYADD(virus_types_by_pool[pool], e)
 
+	global.pda_ringtones_prefs = list()
+	for(var/ringtone in global.standard_pda_ringtones)
+		var/datum/ringtone/Ring = new ringtone
+		global.pda_ringtones_prefs += Ring.name
+		qdel(Ring)
+
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))

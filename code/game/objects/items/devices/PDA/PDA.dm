@@ -1008,13 +1008,13 @@
 
 						MP.repeat = Ringtone.replays
 						MP.parse_song_text(Ringtone.melody)
-						play_ringtone()
+						play_ringtone(ignore_presence = TRUE)
 				else
 					Ringtone = Tone
 
 					MP.repeat = Ringtone.replays
 					MP.parse_song_text(Ringtone.melody)
-					play_ringtone()
+					play_ringtone(ignore_presence = TRUE)
 
 		if("Message")
 
@@ -1993,10 +1993,11 @@
 		return FALSE
 	return TRUE
 
-/obj/item/device/pda/proc/play_ringtone()
-	if(usr.client && LAZYACCESS(usr.client.browsers, "main"))
-		MP.playing = FALSE
-		return
+/obj/item/device/pda/proc/play_ringtone(ignore_presence = FALSE)
+	if(!ignore_presence)
+		var/mob/user = usr
+		if(nanomanager.get_open_ui(user, src, "main"))
+			return
 
 	if(MP.playing)
 		return

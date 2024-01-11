@@ -14,7 +14,7 @@ var/global/standard_pda_ringtones = list(
 	/datum/ringtone/band,
 	)
 
-var/global/pda_ringtones_prefs = list("Thinktronic","Doomer","Clown Town","Caramelldansen","Mineshaft","Raddish Radio","Tajarsky Punch","Shipniky","Klubnika","Space Burial","SolGov Anthem","Skeletones","Band")
+var/global/pda_ringtones_prefs
 
 /datum/ringtone
 	var/name = "My Ringtone"
