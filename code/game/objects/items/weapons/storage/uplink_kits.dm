@@ -169,7 +169,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/chameleon
 	name = "Chameleon Kit"
-	desc = "Comes with all the clothes you need to impersonate most people.  Acting lessons sold seperately."
+	desc = "All necessary equipment for camouflage is provided. Acting lessons are taken separately."
 
 /obj/item/weapon/storage/box/syndie_kit/chameleon/atom_init()
 	. = ..()

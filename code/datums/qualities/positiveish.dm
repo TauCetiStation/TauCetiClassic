@@ -78,9 +78,8 @@
 	jobs_required = list("Clown")
 
 /datum/quality/positiveish/disguise/add_effect(mob/living/carbon/human/H, latespawn)
-	to_chat(H, "<span class='notice'>Карта в твоих руках способна менять свой внешний вид и имя владельца, а одежда в коробке заменит целый гардероб.</span>")
+	to_chat(H, "<span class='notice'>Одежда в выданной тебе коробке заменит целый гардероб, а карточка в ней позволит копировать доступы с других ID-карт!</span>")
 	H.equip_or_collect(new /obj/item/weapon/storage/box/syndie_kit/chameleon(H), SLOT_L_HAND)
-	H.equip_or_collect(new /obj/item/weapon/card/id/syndicate(H), SLOT_R_HAND)
 
 
 /datum/quality/positiveish/heavy_equipment
