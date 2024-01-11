@@ -442,11 +442,12 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	levelupdate()
 
 /turf/simulated/floor/attackby(obj/item/C, mob/user)
-
 	if(!C || !user)
 		return 0
+	. = ..()
+	if(.)
+		return
 	user.SetNextMove(CLICK_CD_INTERACT)
-
 	if(istype(C, /obj/item/weapon/sledgehammer))
 		var/obj/item/weapon/sledgehammer/S = C
 		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
