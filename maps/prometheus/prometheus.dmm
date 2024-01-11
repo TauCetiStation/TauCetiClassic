@@ -96888,6 +96888,10 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 4
 	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
+	},
 /turf/simulated/floor/bluegrid,
 /area/station/rnd/chargebay)
 "xlD" = (
