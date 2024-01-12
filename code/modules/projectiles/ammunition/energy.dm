@@ -71,6 +71,11 @@
 	projectile_type = /obj/item/projectile/energy/bolt/large
 	select_name = "heavy bolt"
 
+/obj/item/ammo_casing/energy/holy
+	projectile_type = /obj/item/projectile/energy/holy
+	select_name = "holy bolt"
+	fire_sound = 'sound/weapons/guns/gunshot_spikethrower.ogg'
+
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/item/projectile/beam/xray
 	e_cost = 50

@@ -97,3 +97,10 @@
 	disallow_job = TRUE
 
 	skillset_type = /datum/skillset/clown
+
+/datum/role/crusader
+	name = "Crusader"
+	id = "Crusader"
+	disallow_job = TRUE
+
+	skillset_type = /datum/skillset/chaplain

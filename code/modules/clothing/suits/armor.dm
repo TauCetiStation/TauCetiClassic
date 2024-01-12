@@ -433,6 +433,11 @@
 	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 25, bio = 0, rad = 10)
 	siemens_coefficient = 1.2
 
+/obj/item/clothing/suit/armor/crusader/libra
+	desc = "It's a chainmail with some cloth draped over. You are the tool of Libra's Judgement."
+	icon_state = "libra"
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 20, bomb = 25, bio = 0, rad = 10)
+
 /obj/item/clothing/suit/armor/vest/surplus
 	name = "surplus armor vest"
 	desc = "An armored vest with outdated armor plates, no longer used by galactic militaries. At least it's cheap."

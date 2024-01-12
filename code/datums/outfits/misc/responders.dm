@@ -582,6 +582,71 @@
 
 	H.sec_hud_set_ID()
 
+/datum/outfit/responders/crusader
+	name = "Responders: Crusader"
+	glasses = /obj/item/clothing/glasses/sunglasses/hud/chaplain
+	l_hand = /obj/item/clothing/head/helmet/crusader/holy
+	suit = /obj/item/clothing/suit/armor/crusader/libra
+	uniform = /obj/item/clothing/under/brown
+	shoes = /obj/item/clothing/shoes/boots
+	l_ear = /obj/item/device/radio/headset
+	belt = /obj/item/weapon/claymore/religion/crusader
+	back = /obj/item/weapon/storage/backpack/satchel/norm
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/soviet,
+	/obj/item/weapon/nullrod,
+	/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+	/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+	/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
+	)
+
+	id = /obj/item/weapon/card/id
+
+	suit_store = /obj/item/weapon/gun/energy/crossbow/crusader
+
+/datum/outfit/responders/crusader/post_equip(mob/living/carbon/human/H)
+	H.real_name = "Brother [pick("Andreus", "Bernarius", "Bertranius", "Gugonius", "Roberius", "Evrarius", "Jerarius", "Filippius", "Recharius", "Tibonius", "Jakeus", "Guillameus", "Odonius", "Arneus", "Piereus", "Jilberius", "Tomeus", "Armaneus")]"
+	H.name = H.real_name
+
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = "Crusader"
+	ID.rank = "Chaplain"
+
+	H.sec_hud_set_ID()
+
+	var/datum/religion/religion
+	if(global.libra_religion)
+		religion = global.libra_religion
+	else
+		religion = create_religion(/datum/religion/libra)
+	religion.add_member(H, HOLY_ROLE_PRIEST)
+
+/datum/outfit/responders/crusader/leader
+	name = "Responders: Crusader Leader"
+	l_hand = /obj/item/clothing/head/helmet/crusader/holy/leader
+	r_hand = /obj/item/weapon/nullrod/staff
+
+/datum/outfit/responders/crusader/leader/post_equip(mob/living/carbon/human/H)
+	H.real_name = "Magister [pick("Andreus", "Bernarius", "Bertranius", "Gugonius", "Roberius", "Evrarius", "Jerarius", "Filippius", "Recharius", "Tibonius", "Jakeus", "Guillameus", "Odonius", "Arneus", "Piereus", "Jilberius", "Tomeus", "Armaneus")]"
+	H.name = H.real_name
+
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = "Magister"
+	ID.rank = "Chaplain"
+
+	H.sec_hud_set_ID()
+
+
+	var/datum/religion/religion
+	if(global.libra_religion)
+		religion = global.libra_religion
+	else
+		religion = create_religion(/datum/religion/libra)
+	religion.add_member(H, HOLY_ROLE_HIGHPRIEST)
+
 /obj/item/weapon/storage/belt/security/ert
 	startswith = list(/obj/item/weapon/melee/baton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3)
 

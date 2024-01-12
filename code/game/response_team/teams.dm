@@ -75,3 +75,15 @@
 	probability = 20
 	faction = /datum/faction/responders/clowns
 	fixed_objective = /datum/objective/custom/clowns
+
+/datum/response_team/crusaders
+	name = "Crusaders"
+	spawner = /datum/spawner/responders/crusaders
+	spawners_amount = 6
+	probability = 20
+	faction = /datum/faction/responders/crusaders
+
+/datum/response_team/crusaders/New()
+	if(SSticker.mode.name == "Cult Of Blood")
+		probability = 50
+		spawners_amount = 10

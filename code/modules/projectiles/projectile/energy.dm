@@ -59,6 +59,21 @@
 	name = "largebolt"
 	damage = 20
 
+/obj/item/projectile/energy/holy
+	name = "holy bolt"
+	damage = 25
+	light_color = LIGHT_COLOR_PLASMA
+	light_power = 2
+	light_range = 2
+	icon_state = "omnilaser"
+
+/obj/item/projectile/energy/holy/on_hit(atom/target)
+	if(ishuman(target) && iscultist(target))
+		var/mob/living/carbon/human/H = target
+		H.Stun(3)
+		H.Weaken(3)
+		H.throw_at(get_edge_target_turf(H, dir), 1, 1, firer, spin = TRUE)
+
 /obj/item/projectile/energy/phoron
 	name = "phoron bolt"
 	icon_state = "energy"

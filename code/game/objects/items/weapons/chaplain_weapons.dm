@@ -440,6 +440,10 @@
 	/// Force for non-holy wielders.
 	var/def_force = 5
 
+/obj/item/weapon/claymore/religion/crusader
+	holy_force = 25
+	can_embed = FALSE
+
 /obj/item/weapon/claymore/religion/atom_init()
 	. = ..()
 	down_overlay = image('icons/effects/effects.dmi', icon_state = "at_shield2", layer = OBJ_LAYER - 0.01)

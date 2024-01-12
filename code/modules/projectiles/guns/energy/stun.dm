@@ -101,3 +101,17 @@
 	can_be_holstered = FALSE
 	force = 10
 	m_amt = 200000
+
+/obj/item/weapon/gun/energy/crossbow/crusader
+	name = "holy energy crossbow"
+	desc = "Энергетический арбалет, стреляющий священной энергией доброго божка, в которого верит стрелок."
+	icon_state = "crusader"
+	item_state = "crusader"
+	silenced = FALSE
+	ammo_type = list(/obj/item/ammo_casing/energy/holy)
+
+/obj/item/weapon/gun/energy/crossbow/crusader/special_check(mob/living/carbon/human/M)
+	if(!M.mind && !M.mind.holy_role && !iscultist(M))
+		to_chat(M, "<span class='notice'>Вам не хватает священной силы.</span>")
+		return FALSE
+	return TRUE

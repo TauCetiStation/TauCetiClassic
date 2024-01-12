@@ -288,6 +288,34 @@
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
+/obj/item/clothing/head/helmet/crusader/holy/atom_init()
+	. = ..()
+	var/obj/effect/effect/forcefield/F = new
+	AddComponent(/datum/component/forcefield, "holy field", 20, 3 SECONDS, 5 SECONDS, F, TRUE, TRUE)
+	name = "[pick("holy", "consecrated", "blessed", "hallowed")] crusader topfhelm"
+
+/obj/item/clothing/head/helmet/crusader/holy/proc/activate(mob/living/user)
+	if(user.mind && user.mind.holy_role && !iscultist(user))
+		SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
+
+/obj/item/clothing/head/helmet/crusader/holy/proc/deactivate(mob/living/user)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
+
+/obj/item/clothing/head/helmet/crusader/holy/equipped(mob/living/user, slot)
+	. = ..()
+
+	if(slot == SLOT_HEAD)
+		activate(user)
+
+/obj/item/clothing/head/helmet/crusader/holy/dropped(mob/living/user)
+	. = ..()
+	if(slot_equipped == SLOT_HEAD)
+		deactivate(user)
+
+/obj/item/clothing/head/helmet/crusader/holy/leader
+	name = "magister topfhelm"
+	icon_state = "crusader_leader"
+
 /obj/item/clothing/head/helmet/police
 	name = "police helmet"
 	desc = "Latest fashion of law enforcement organizations. It's big. Like, really big."
