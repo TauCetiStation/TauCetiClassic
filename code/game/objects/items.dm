@@ -3,7 +3,6 @@
 	icon = 'icons/obj/items.dmi'
 	w_class = SIZE_SMALL
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
-	var/abstract = 0
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
@@ -764,7 +763,7 @@
 			return
 
 	// Use tool's fuel, stack sheets or charges if amount is set.
-	if(amount && !use(amount))
+	if(amount && !use(amount, user))
 		return
 
 	// Play tool sound at the end of tool usage,
@@ -934,7 +933,7 @@
 	set category = "Object"
 
 	var/obj/item/I = get_active_hand()
-	if(I && !I.abstract)
+	if(I && !(I.flags & ABSTRACT))
 		I.showoff(src)
 
 /obj/item/proc/extinguish()
