@@ -8,6 +8,7 @@
 	var/gc_destroyed //Time when this object was destroyed.
 	var/list/active_timers
 	var/list/filter_data
+	var/list/cases = null /// for usage with CASE macros (code/__DEFINES/_translation.dm)
 
 #ifdef REFERENCE_TRACKING
 	var/running_find_references
