@@ -151,7 +151,8 @@ var/global/lastMove = 0
 				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
-	var/dat = "<center><div class='Section'>Местоположение: <b>[curr_location]</b><br>Готов к полету[!arrival_shuttle_ready_move() ? " через [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] [pluralize_russian(arrival_shuttle_ready_move()/10, "секунда", "секунды", "секунд")]" : ": сейчас"]<br><A href='?src=\ref[src];move=1'>Начать полёт</A></div></center>"
+	var/sec_word = pluralize_russian(lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time, "секунду", "секунды", "секунд")
+	var/dat = "<center><div class='Section'>Местоположение: <b>[curr_location]</b><br>Готовность к полёту[!arrival_shuttle_ready_move() ? " через [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] [sec_word]" : ": сейчас"]<br><A href='?src=\ref[src];move=1'>Начать полёт</A></div></center>"
 	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 400)
 	popup.set_content(dat)
 	popup.open()
@@ -180,7 +181,8 @@ var/global/lastMove = 0
 	icon_state = "wagon"
 
 /obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
-	var/dat = "<center>Местоположение:[curr_location]<br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] секунд" : ": сейчас"]<br><b><A href='?src=\ref[src];back=1'>Запросить шаттл обратно</A></b></center><br>"
+	var/sec_word = pluralize_russian(lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time, "секунду", "секунды", "секунд")
+	var/dat = "<center>Местоположение:[curr_location]<br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] [sec_word]" : ": сейчас"]<br><b><A href='?src=\ref[src];back=1'>Запросить шаттл обратно</A></b></center><br>"
 	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 200, 130)
 	popup.set_content(dat)
 	popup.open()
