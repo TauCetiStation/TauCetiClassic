@@ -7202,8 +7202,6 @@
 	},
 /area/station/maintenance/chapel)
 "bdt" = (
-/obj/structure/table/woodentable/fancy,
-/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8813,7 +8811,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "btA" = (
-/obj/structure/table/woodentable/fancy,
+/obj/structure/altar_of_gods,
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
 "btC" = (
@@ -12007,7 +12005,9 @@
 /turf/simulated/wall,
 /area/station/civilian/toilet)
 "bYM" = (
-/obj/structure/stool/bed/chair,
+/obj/structure/stool/bed/chair{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
 "bYQ" = (
@@ -16613,12 +16613,12 @@
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
 "cYk" = (
-/obj/structure/table/woodentable/fancy,
-/obj/item/weapon/storage/bible{
-	pixel_y = 6
+/obj/structure/table/woodentable,
+/obj/item/weapon/flora/pottedplant/small,
+/turf/simulated/floor{
+	icon_state = "grimy"
 	},
-/turf/simulated/floor,
-/area/station/civilian/chapel/mass_driver)
+/area/station/civilian/chapel/office)
 "cYl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/woodentable,
@@ -17081,6 +17081,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/item/weapon/nullrod,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
 "dfA" = (
@@ -20704,16 +20705,8 @@
 	},
 /area/station/engineering/break_room)
 "dWD" = (
-/obj/structure/table/woodentable/fancy,
-/obj/item/stack/sheet/wood{
-	amount = 20;
-	pixel_x = 5;
-	pixel_y = 8
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+/obj/structure/table/woodentable,
+/obj/item/weapon/flora/pottedplant/smallcactus,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -20807,11 +20800,13 @@
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/dormitories)
 "dYn" = (
-/obj/structure/stool/bed/chair,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/stool/bed/chair{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
@@ -22238,13 +22233,11 @@
 	},
 /area/station/security/checkpoint/medbay)
 "enI" = (
-/obj/machinery/door/morgue{
-	name = "Relic Closet";
-	req_access = list(22)
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
+/turf/simulated/wall,
 /area/station/civilian/chapel/office)
 "enL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -39385,15 +39378,6 @@
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1480;
-	name = "Confessional Intercom";
-	pixel_x = -26
-	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -42210,13 +42194,13 @@
 	},
 /area/station/cargo/office)
 "iAb" = (
-/obj/structure/table/woodentable/fancy,
-/obj/item/weapon/nullrod,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
 	pixel_y = -5
 	},
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -45854,6 +45838,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/stool/bed/chair{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
 "joD" = (
@@ -47060,6 +47047,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/landmark/start/chaplain,
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
 "jAp" = (
@@ -72152,14 +72140,14 @@
 	},
 /area/station/engineering/break_room)
 "oVg" = (
-/obj/machinery/door/morgue{
-	name = "Confession Booth (Chaplain)";
-	req_access = list(22)
-	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "blackchoco"
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1480;
+	name = "Confessional Intercom";
+	pixel_x = -26
 	},
+/turf/simulated/wall,
 /area/station/civilian/chapel/office)
 "oVi" = (
 /obj/structure/cable{
@@ -91964,6 +91952,7 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/photo_album,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
 "toV" = (
@@ -94695,12 +94684,13 @@
 	},
 /area/station/hallway/secondary/entry)
 "tVF" = (
-/obj/structure/stool/bed,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/item/weapon/bedsheet,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -94999,7 +94989,10 @@
 	},
 /area/station/medical/chemistry)
 "tZl" = (
-/obj/structure/altar_of_gods,
+/obj/machinery/door/morgue{
+	name = "Confession Booth (Chaplain)";
+	req_access = list(22)
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -101488,11 +101481,6 @@
 	icon_state = "graychoco"
 	},
 /area/station/security/prison)
-"vAB" = (
-/obj/effect/landmark/start/chaplain,
-/obj/structure/stool/bed/chair,
-/turf/simulated/floor,
-/area/station/civilian/chapel/mass_driver)
 "vAJ" = (
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -103233,6 +103221,9 @@
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
+	},
+/obj/structure/stool/bed/chair{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
@@ -160361,7 +160352,7 @@ iJP
 ykI
 aNI
 hVZ
-mDI
+cYk
 dWD
 iAb
 mDI
@@ -160618,9 +160609,9 @@ tVF
 jif
 oRe
 nAh
-enI
 daP
-tZl
+daP
+daP
 mDI
 hFS
 pOE
@@ -160877,7 +160868,7 @@ mDI
 mDI
 mDI
 mDI
-mDI
+tZl
 mDI
 qjw
 eiH
@@ -161391,7 +161382,7 @@ kKG
 tTM
 mMz
 mDI
-mDI
+enI
 mDI
 eiH
 eiH
@@ -161910,7 +161901,7 @@ hzG
 bdt
 dYn
 jos
-bYM
+tkH
 iCR
 plf
 plf
@@ -162163,11 +162154,11 @@ mDI
 mDI
 mDI
 yaY
-jzW
 btA
+tkH
 bYM
 vWI
-vAB
+tkH
 iCR
 plf
 plf
@@ -162421,10 +162412,10 @@ pYK
 pne
 nOh
 jzW
-cYk
-bYM
 tkH
 bYM
+bYM
+tkH
 iCR
 plf
 plf
