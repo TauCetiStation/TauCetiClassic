@@ -78,14 +78,14 @@
 
 /turf/environment/snow/ice/ChangeTurf(path)
 	if(path != type)
-		var/obj/effect/overlay/ice_hole/IH = locate() in contents
+		var/obj/structure/ice_hole/IH = locate() in contents
 		if(IH)
 			qdel(IH)
 	return ..()
 
 /turf/environment/snow/ice/attackby(obj/item/O, mob/user)
 	. = ..()
-	if(locate(/obj/effect/overlay/ice_hole) in range(4))
+	if(locate(/obj/structure/ice_hole) in range(4))
 		to_chat(user, "<span class='notice'>Too close to the other ice hole.</span>")
 		return
 	if(!O.has_edge())
@@ -97,7 +97,7 @@
 	var/type = src.type
 	if(!do_after(user, 20 SECONDS, target = src) || type != src.type)
 		return
-	new /obj/effect/overlay/ice_hole(src)
+	new /obj/structure/ice_hole(src)
 	playsound(src, 'sound/effects/shovel_digging.ogg', VOL_EFFECTS_MASTER)
 
 /atom/movable
@@ -198,39 +198,16 @@
 		qdel(src)
 
 
-/obj/effect/overlay/ice_hole
+/obj/structure/ice_hole
 	name = "ice hole"
 	icon = 'icons/turf/snow2.dmi'
 	icon_state = "ice_hole"
 	anchored = 1
-	var/fish_amount = 0
+	density = 1
 
-/obj/effect/overlay/ice_hole/atom_init()
+/obj/structure/ice_hole/atom_init()
 	. = ..()
-	fish_amount = rand(1, 30)
-
-/obj/effect/overlay/ice_hole/attackby(obj/O, mob/user)
-	. = ..()
-	if (istype(O, /obj/item/weapon/wirerod) && !user.is_busy())
-		if(fish_amount && fish_amount < 3)
-			to_chat(user, "<span class='warning'>Looks like there is almost no fish left in this location.</span>")
-		visible_message("<span class='notice'>[user] starts fishing.</span>")
-		if(do_after(user, 10 SECONDS, target = src))
-			if(!fish_amount)
-				to_chat(user, "<span class='warning'>No fish left here, time to change location.</span>")
-			else
-				if(prob(20))
-					fish_amount--
-					var/fish_path = pick(
-						prob(90);/obj/item/fish_carp,
-						prob(20);/obj/item/fish_carp/mega
-						)
-					var/obj/fish = new fish_path(loc, get_step(user, get_dir(src, user)))
-					visible_message("<span class='notice'>[user] has caught [fish].</span>")
-					return
-			visible_message("<span class='notice'>[user] fails to catch anything.</span>")
-		else
-			visible_message("<span class='notice'>[user] stops fishing.</span>")
+	AddComponent(/datum/component/fishing, list(/obj/item/fish_carp = 15, /obj/item/fish_carp/mega = 8, /obj/item/fish_carp/full_size = 5, /obj/item/fish_carp/over_size = 3, PATH_OR_RANDOM_PATH(/obj/random/mecha/wreckage) = 1, PATH_OR_RANDOM_PATH(/obj/random/cloth/shittysuit) = 1), 10 SECONDS, rand(1, 30) , 20)
 
 /obj/random/misc/all/high
 	spawn_nothing_chance = 40
@@ -309,3 +286,10 @@
 
 /obj/item/fish_carp/full_size
 	scale_icon = 1
+	meat_amount_max = 8
+	loot_amount = 6
+
+/obj/item/fish_carp/over_size
+	scale_icon = 2
+	meat_amount_max = 16
+	loot_amount = 12
