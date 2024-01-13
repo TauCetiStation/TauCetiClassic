@@ -424,7 +424,7 @@
 
 /obj/item/organ/internal/brain/ipc
 	name = "positronic brain"
-	cases = list("Позитронный мозг", "Позитронного мозга", "Позитронному мозгу", "Позитронный мозг", "Позитронным мозгом", "Позитронном мозге")
+	cases = list("позитронный мозг", "позитронного мозга", "позитронному мозгу", "позитронный мозг", "позитронным мозгом", "позитронном мозге")
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/brain/abomination
