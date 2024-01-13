@@ -162,7 +162,7 @@
 	icon_state = "sec_headset_alt"
 
 /obj/item/device/radio/headset/headset_sec/nt_pmc
-	name = "NT PMC Radio Headset. Works with default security frequency."
+	name = "NT PMC Radio Headset."
 	icon_state = "nt_pmc_earset"
 
 /obj/item/device/radio/headset/headset_sec/marinad

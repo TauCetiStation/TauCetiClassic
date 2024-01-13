@@ -31,7 +31,7 @@
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
-#define CEIL(x) (-round(-(x)))
+#define CEIL(x) ceil(x)
 
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) ( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
