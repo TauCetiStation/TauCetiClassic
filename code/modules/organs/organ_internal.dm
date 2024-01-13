@@ -381,7 +381,7 @@
 
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
-	cases = list("вакуоли", "вакуоль", "вакуолям", "вакуоли", "вакуолями", "вакуолях")
+	cases = list("вакуоль", "вакуоли", "вакуолям", "вакуоль", "вакуолью", "вакуоли")
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/kidneys/ipc

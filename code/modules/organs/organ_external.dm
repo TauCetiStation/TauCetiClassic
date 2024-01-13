@@ -720,7 +720,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/groin
 	name = "groin"
-	cases = list("паховая область", "паховой области", "паховой области", "паховую область", "паховой областью", "паховой области")
+	cases = list("пах", "паха", "паху", "пах", "пахом", "пахе")
 	artery_name = "iliac artery"
 
 	temp_coeff = 1.06
