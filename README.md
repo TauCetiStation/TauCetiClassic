@@ -18,7 +18,7 @@
 
 Если вы хотите сделать вклад в билд, обязательно прочитайте **[CONTRIBUTING](/.github/CONTRIBUTING.md)**.
 
-И присоединяйтесь к нашей дискорд-конференции, если у вас есть вопросы [#howto-code](https://discord.gg/cwpxfqxat3) или вы хотите что-то обсудить по коду [#rnd](https://discord.gg/XgMyvWNu4p)!
+И присоединяйтесь к нашей дискорд-конференции, если у вас есть вопросы (канал [#howto-code](https://discord.gg/cwpxfqxat3)) или вы хотите что-то обсудить по коду (канал [#rnd](https://discord.gg/XgMyvWNu4p))!
 
 * **Общее:**
   - [Contribution Guide](/.github/CONTRIBUTING.md)
