@@ -508,4 +508,4 @@
 		made_wet = TRUE
 
 	if(prob(50) && !made_wet)
-		user?.shoes.make_wet()
+		user.shoes?.make_wet()
