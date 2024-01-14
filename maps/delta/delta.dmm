@@ -17269,6 +17269,13 @@
 /obj/machinery/light/smart,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
+"dhd" = (
+/obj/structure/table/woodentable/fancy,
+/obj/item/device/cardpay,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/chapel)
 "dhg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -22233,10 +22240,7 @@
 	},
 /area/station/security/checkpoint/medbay)
 "enI" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
+/obj/machinery/light_switch,
 /turf/simulated/wall,
 /area/station/civilian/chapel/office)
 "enL" = (
@@ -26351,6 +26355,12 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
+"fhu" = (
+/obj/machinery/light_switch{
+	pixel_x = 24
+	},
+/turf/simulated/wall,
+/area/station/civilian/chapel/office)
 "fhK" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -31208,11 +31218,13 @@
 	},
 /area/station/bridge/teleporter)
 "glk" = (
-/obj/machinery/light/small,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 28;
 	pixel_y = -5
+	},
+/obj/machinery/light_switch{
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -39460,9 +39472,6 @@
 /area/station/maintenance/escape)
 "hVZ" = (
 /obj/structure/closet/wardrobe/chaplain_black,
-/obj/item/device/cardpay{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -69886,7 +69895,6 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -72145,7 +72153,7 @@
 	broadcasting = 1;
 	frequency = 1480;
 	name = "Confessional Intercom";
-	pixel_x = -26
+	pixel_y = -6
 	},
 /turf/simulated/wall,
 /area/station/civilian/chapel/office)
@@ -91390,6 +91398,10 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/fore)
+"thY" = (
+/obj/machinery/light_switch,
+/turf/simulated/wall,
+/area/station/civilian/chapel/mass_driver)
 "tif" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -99504,6 +99516,14 @@
 	icon_state = "darkbluechoco"
 	},
 /area/station/engineering/minisat_secure_area)
+"vcC" = (
+/obj/machinery/light_switch{
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/chapel/office)
 "vcL" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -160110,7 +160130,7 @@ mMq
 eCe
 wZE
 diz
-mtw
+dhd
 cUU
 gEm
 huZ
@@ -160609,7 +160629,7 @@ tVF
 jif
 oRe
 nAh
-daP
+vcC
 daP
 daP
 mDI
@@ -160861,7 +160881,7 @@ mfb
 xRL
 bwO
 mDI
-mDI
+fhu
 mDI
 aJW
 mDI
@@ -161382,7 +161402,7 @@ kKG
 tTM
 mMz
 mDI
-enI
+mDI
 mDI
 eiH
 eiH
@@ -161895,7 +161915,7 @@ iAk
 xAA
 sWL
 fhK
-mDI
+enI
 vZt
 hzG
 bdt
@@ -162658,7 +162678,7 @@ xJv
 bhy
 dLG
 iIt
-pne
+thY
 kkt
 xJL
 pAL
