@@ -72136,7 +72136,6 @@
 	},
 /area/station/engineering/break_room)
 "oVg" = (
-/obj/machinery/door/firedoor,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	frequency = 1480;
