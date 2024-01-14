@@ -3,6 +3,10 @@
 // Example: isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
 // Bad example: isabductor(A) istype(A, /mob/living/carbon/human/abductor)
 
+// META
+
+#define isweakref(D) (istype(D, /datum/weakref))
+
 // TURFS
 
 #define isenvironmentturf(A) (istype(A, /turf/environment))
