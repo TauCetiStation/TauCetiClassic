@@ -534,10 +534,7 @@
 	if (!istype(M))
 		return FALSE
 
-	if(M.species.flags[NO_BLOOD_TRAILS])
-		return FALSE
-
-	if(M.reagents.has_reagent("metatrombine"))
+	if(!M.can_bleed())
 		return FALSE
 
 	if (!istype(M.dna, /datum/dna))
@@ -652,7 +649,7 @@
 			lube |= SLIDE_ICE
 
 		if(lube & SLIDE)
-			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, spin), 1, 1))
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, CALLBACK(C, TYPE_PROC_REF(/mob/living/carbon, spin), 1, 1))
 			C.take_bodypart_damage(2) // Was 5 -- TLE
 		else if(lube & SLIDE_ICE)
 			var/has_NOSLIP = FALSE
@@ -663,7 +660,7 @@
 			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
 				if(C.force_moving) //If we're already slipping extend it
 					qdel(C.force_moving)
-				new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
+				new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1)	//spinning would be bad for ice, fucks up the next dir
 			else
 				C.inertia_dir = 0
 		return TRUE

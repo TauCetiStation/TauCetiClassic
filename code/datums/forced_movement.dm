@@ -4,16 +4,14 @@
 	var/atom/target
 	var/last_processed
 	var/steps_per_tick
-	var/allow_climbing
 	var/datum/callback/on_step
 	var/moved_at_all = FALSE
 
                                                              //as fast as ssfastprocess
-/datum/forced_movement/New(atom/movable/_victim, atom/_target, _steps_per_tick = 0.5, _allow_climbing = FALSE, datum/callback/_on_step = null)
+/datum/forced_movement/New(atom/movable/_victim, atom/_target, _steps_per_tick = 0.5, datum/callback/_on_step = null)
 	victim = _victim
 	target = _target
 	steps_per_tick = _steps_per_tick
-	allow_climbing = _allow_climbing
 	on_step = _on_step
 
 	. = ..()

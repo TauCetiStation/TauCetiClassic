@@ -2522,3 +2522,12 @@
 			continue
 		F.attackby(B, src)
 		break
+
+/mob/living/carbon/human/can_bleed()
+	if(!..())
+		return FALSE
+
+	if(species.flags[NO_BLOOD_TRAILS])
+		return FALSE
+
+	return TRUE

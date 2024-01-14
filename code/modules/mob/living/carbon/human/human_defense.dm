@@ -134,7 +134,7 @@
 		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armor = getarmor_organ(BP, BULLET)
 
-		var/delta = max(0, P.damage - (P.damage * (armor/100)))
+		var/delta = max(0, P.damage - (P.damage * (max(armor, 1)/100)))
 		if(delta)
 			apply_effect(delta,AGONY,armor)
 			//return Nope! ~Zve
@@ -142,8 +142,12 @@
 			P.sharp = 0
 			P.embed = 0
 
+		var/force =  (max(armor, 1)/P.damage)*100
+		if(prob(75) && force > 5)
+			var/severity = min(round(force / 20), 3)
+			spray_blood(get_dir(P, src), severity)
+
 		if(B.stoping_power)
-			var/force =  (armor/P.damage)*100
 			if (force <= 60 && force > 40)
 				apply_effects(B.stoping_power/2,B.stoping_power/2,0,0,B.stoping_power/2,0,0,armor)
 			else if(force <= 40)
@@ -353,9 +357,11 @@
 	var/bloody = 0
 	if(((I.damtype == BRUTE) || (I.damtype == HALLOSS)) && prob(25 + (force_with_melee_skill * 2)))
 		I.add_blood(src)	//Make the weapon bloody, not the person.
-		if(prob(33))
+		if(prob(75))
 			bloody = 1
 			var/turf/location = loc
+			var/severity = min(round(force_with_melee_skill / 20), 3)
+			spray_blood(get_dir(user, src), severity)
 			if(istype(location, /turf/simulated))
 				location.add_blood(src)
 			if(ishuman(user))
