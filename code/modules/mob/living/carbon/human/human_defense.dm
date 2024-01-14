@@ -145,7 +145,7 @@
 		if(prob(75))
 			var/damage = P.damage * blocked_mult(armor)
 			if(damage > 5)
-				var/severity = min(round(force / 20), 3)
+				var/severity = min(round(damage / 20), 3)
 				spray_blood(get_dir(P, src), severity)
 
 		if(B.stoping_power)
