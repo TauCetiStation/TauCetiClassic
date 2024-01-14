@@ -90,9 +90,6 @@
 	OOC_lobby_announcement = "<span class='warning'>В качестве эксперимента, НаноТрейзен решило разместить на спутнике станции целых три ядра ИИ.</span>"
 	desc = "Увеличено количество слотов ИИ до трёх."
 
-/datum/round_aspect/ai_trio/after_init()
-	SSticker.triai = TRUE
-
 /datum/round_aspect/elite_sec
 	name = ROUND_ASPECT_ELITE_SECURITY
 	desc = "Изменено снаряжение офицеров охраны. Увеличены цены на оружие в карго и РнД."

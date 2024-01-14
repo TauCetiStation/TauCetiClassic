@@ -260,7 +260,7 @@ RCD
 // shitspawn types, pls fix m_amt/g_amt if you want to use it somewhere
 /obj/item/weapon/rcd_ammo/bluespace
 	name = "highly compressed matter cartridge"
-	matter = 100
+	matter = 30
 
 /obj/item/weapon/rcd/bluespace
 	max_matter = 100

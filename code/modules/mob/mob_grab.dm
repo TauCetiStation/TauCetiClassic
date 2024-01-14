@@ -11,7 +11,7 @@
 	name = "grab"
 	icon = 'icons/hud/screen1.dmi'
 	icon_state = "reinforce"
-	flags = DROPDEL|NOBLUDGEON
+	flags = ABSTRACT|DROPDEL|NOBLUDGEON
 	var/atom/movable/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/assailant = null
@@ -23,7 +23,6 @@
 	var/dancing //determines if assailant and affecting keep looking at each other. Basically a wrestling position
 
 	layer = 21
-	abstract = 1
 	item_state = "nothing"
 	w_class = SIZE_BIG
 
