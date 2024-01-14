@@ -289,9 +289,8 @@
 
 	global.pda_ringtones_prefs = list()
 	for(var/ringtone in global.standard_pda_ringtones)
-		var/datum/ringtone/Ring = new ringtone
-		global.pda_ringtones_prefs += Ring.name
-		qdel(Ring)
+		var/datum/ringtone/Ring = ringtone
+		global.pda_ringtones_prefs += initial(Ring.name)
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
