@@ -17269,13 +17269,6 @@
 /obj/machinery/light/smart,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
-"dhd" = (
-/obj/structure/table/woodentable/fancy,
-/obj/item/device/cardpay,
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/civilian/chapel)
 "dhg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -19333,6 +19326,7 @@
 	dir = 4;
 	icon_state = "siding_thinplating_line"
 	},
+/obj/machinery/light_switch,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -22242,7 +22236,7 @@
 "enI" = (
 /obj/machinery/light_switch,
 /turf/simulated/wall,
-/area/station/civilian/chapel/office)
+/area/station/civilian/chapel/mass_driver)
 "enL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -26355,12 +26349,6 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
-"fhu" = (
-/obj/machinery/light_switch{
-	pixel_x = 24
-	},
-/turf/simulated/wall,
-/area/station/civilian/chapel/office)
 "fhK" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -81358,6 +81346,14 @@
 	icon_state = "redchecker"
 	},
 /area/station/hallway/primary/fore)
+"qUl" = (
+/obj/machinery/light_switch{
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/chapel/office)
 "qUz" = (
 /obj/structure/sink{
 	dir = 8;
@@ -91398,10 +91394,6 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/fore)
-"thY" = (
-/obj/machinery/light_switch,
-/turf/simulated/wall,
-/area/station/civilian/chapel/mass_driver)
 "tif" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -99516,14 +99508,6 @@
 	icon_state = "darkbluechoco"
 	},
 /area/station/engineering/minisat_secure_area)
-"vcC" = (
-/obj/machinery/light_switch{
-	pixel_x = 24
-	},
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/station/civilian/chapel/office)
 "vcL" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -101171,6 +101155,13 @@
 	icon_state = "gcircuit"
 	},
 /area/station/aisat/ai_chamber)
+"vwu" = (
+/obj/structure/table/woodentable/fancy,
+/obj/item/device/cardpay,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/chapel)
 "vwv" = (
 /obj/machinery/recharge_station,
 /obj/effect/landmark{
@@ -160130,7 +160121,7 @@ mMq
 eCe
 wZE
 diz
-dhd
+vwu
 cUU
 gEm
 huZ
@@ -160629,7 +160620,7 @@ tVF
 jif
 oRe
 nAh
-vcC
+qUl
 daP
 daP
 mDI
@@ -160881,7 +160872,7 @@ mfb
 xRL
 bwO
 mDI
-fhu
+mDI
 mDI
 aJW
 mDI
@@ -161665,7 +161656,7 @@ mQx
 eKY
 eyD
 tkH
-pne
+enI
 plf
 plf
 plf
@@ -161915,7 +161906,7 @@ iAk
 xAA
 sWL
 fhK
-enI
+mDI
 vZt
 hzG
 bdt
@@ -162678,7 +162669,7 @@ xJv
 bhy
 dLG
 iIt
-thY
+enI
 kkt
 xJL
 pAL
