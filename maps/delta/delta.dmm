@@ -112748,12 +112748,6 @@
 	icon_state = "darkred"
 	},
 /area/station/security/execution)
-"yaY" = (
-/obj/item/weapon/flora/random,
-/turf/simulated/floor{
-	icon_state = "blackchoco"
-	},
-/area/station/civilian/chapel/mass_driver)
 "yaZ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -162164,7 +162158,7 @@ mDI
 mDI
 mDI
 mDI
-yaY
+nOh
 btA
 tkH
 bYM
