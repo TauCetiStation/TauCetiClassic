@@ -134,7 +134,7 @@
 		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
 		var/armor = getarmor_organ(BP, BULLET)
 
-		var/delta = max(0, P.damage - (P.damage * (max(armor, 1)/100)))
+		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)
 			apply_effect(delta,AGONY,armor)
 			//return Nope! ~Zve
@@ -142,12 +142,14 @@
 			P.sharp = 0
 			P.embed = 0
 
-		var/force =  (max(armor, 1)/P.damage)*100
-		if(prob(75) && force > 5)
-			var/severity = min(round(force / 20), 3)
-			spray_blood(get_dir(P, src), severity)
+		if(prob(75))
+			var/damage = P.damage * blocked_mult(armor)
+			if(damage > 5)
+				var/severity = min(round(force / 20), 3)
+				spray_blood(get_dir(P, src), severity)
 
 		if(B.stoping_power)
+			var/force =  (max(armor, 1)/P.damage)*100
 			if (force <= 60 && force > 40)
 				apply_effects(B.stoping_power/2,B.stoping_power/2,0,0,B.stoping_power/2,0,0,armor)
 			else if(force <= 40)
