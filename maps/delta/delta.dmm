@@ -8431,6 +8431,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -19326,7 +19334,7 @@
 	dir = 4;
 	icon_state = "siding_thinplating_line"
 	},
-/obj/machinery/light_switch,
+/obj/item/weapon/storage/bible,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -36741,7 +36749,7 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/office)
 "htE" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -37093,6 +37101,11 @@
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -39376,6 +39389,9 @@
 /area/station/civilian/locker)
 "hVb" = (
 /obj/structure/stool/bed/chair/wood/normal{
+	dir = 4
+	},
+/obj/machinery/light/small{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -43025,6 +43041,10 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/science)
+"iID" = (
+/obj/machinery/light_switch,
+/turf/simulated/wall,
+/area/station/civilian/chapel)
 "iII" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics";
@@ -47783,6 +47803,10 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -55521,6 +55545,16 @@
 /obj/structure/stool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"lna" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/chapel)
 "lnd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -78126,7 +78160,7 @@
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
-/area/station/civilian/chapel)
+/area/station/civilian/chapel/office)
 "qjA" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -94691,9 +94725,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/structure/closet/wardrobe/chaplain_black,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -111361,6 +111393,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/recycler)
+"xLQ" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/chapel/office)
 "xLR" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/stool,
@@ -113539,7 +113579,6 @@
 /area/station/bridge/hop_office)
 "ykI" = (
 /obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp,
 /obj/machinery/alarm{
 	pixel_x = -28;
 	pixel_y = -6
@@ -159848,7 +159887,7 @@ kkE
 sfm
 cqB
 bpo
-cUU
+lna
 gDi
 nix
 nix
@@ -159862,7 +159901,7 @@ jjD
 gEm
 pKo
 abZ
-eiH
+iID
 kHU
 kHU
 lgc
@@ -160105,7 +160144,7 @@ mDI
 mDI
 ozQ
 jtl
-cUU
+ctU
 cUU
 qWs
 mMq
@@ -160362,7 +160401,7 @@ iAb
 mDI
 huw
 pwS
-cUU
+ctU
 cUU
 vLd
 tvk
@@ -160614,12 +160653,12 @@ jif
 oRe
 nAh
 qUl
-daP
+xLQ
 daP
 mDI
 hFS
 pOE
-cUU
+ctU
 cUU
 qWs
 mMq
