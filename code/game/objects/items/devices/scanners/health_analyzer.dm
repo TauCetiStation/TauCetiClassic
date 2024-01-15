@@ -59,9 +59,9 @@
 /obj/item/device/healthanalyzer/examine(mob/user)
 	. = ..()
 	if(advanced)
-		to_chat(user, "[CASE(src, NOMINATIVE_CASE)] имеет модуль анализатора реагентов, и может показывать находящиеся в пациенте реагенты!")
+		to_chat(user, "[capitalize(CASE(src, NOMINATIVE_CASE))] имеет модуль анализатора реагентов и может показывать находящиеся в пациенте реагенты!")
 	else
-		to_chat(user, "[CASE(src, NOMINATIVE_CASE)] может быть улучшен с помощью анализатора реагентов!")
+		to_chat(user, "[capitalize(CASE(src, NOMINATIVE_CASE))] может быть улучшен с помощью анализатора реагентов!")
 
 /obj/item/device/healthanalyzer/attackby(obj/item/I, mob/user, params)
 	. = ..()
