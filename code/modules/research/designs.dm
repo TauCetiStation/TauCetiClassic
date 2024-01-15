@@ -1763,7 +1763,7 @@ other types of metals and chemistry for reagents).
 	id = "chameleon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000)
-	build_path = /obj/item/weapon/storage/box/syndie_kit/chameleon
+	build_path = /obj/item/weapon/storage/box/syndie_kit/chameleon/without_id
 	category = list("Illegal")
 
 /datum/design/ai_detector

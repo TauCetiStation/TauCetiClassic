@@ -186,6 +186,24 @@
 	new /obj/item/weapon/card/id/syndicate(src)
 	make_exact_fit()
 
+/obj/item/weapon/storage/box/syndie_kit/chameleon/without_id
+	name = "Chameleon Kit"
+	desc = "All necessary equipment for camouflage is provided, but without special ID-card."
+
+/obj/item/weapon/storage/box/syndie_kit/chameleon/whitout_id/atom_init()
+	. = ..()
+	new /obj/item/clothing/under/chameleon(src)
+	new /obj/item/clothing/head/chameleon(src)
+	new /obj/item/clothing/suit/chameleon(src)
+	new /obj/item/clothing/shoes/chameleon(src)
+	new /obj/item/weapon/storage/backpack/chameleon(src)
+	new /obj/item/clothing/gloves/chameleon(src)
+	new /obj/item/clothing/mask/chameleon(src)
+	new /obj/item/clothing/glasses/chameleon(src)
+	new /obj/item/weapon/gun/projectile/chameleon(src)
+	new /obj/item/ammo_box/magazine/chameleon(src)
+	make_exact_fit()
+
 /obj/item/weapon/storage/box/syndie_kit/throwing_weapon
 	name = "box (F)"
 
