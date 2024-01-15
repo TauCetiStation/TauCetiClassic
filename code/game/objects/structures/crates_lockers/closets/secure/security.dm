@@ -209,7 +209,7 @@
 		for (var/i in 1 to 2)
 			new /obj/item/ammo_box/magazine/l13(src) //rubber
 
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
+	else if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
 		new /obj/item/weapon/gun/energy/taser/stunrevolver(src)
 
 	else
@@ -269,7 +269,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 		for (var/i in 1 to 3)
 			new /obj/item/ammo_box/magazine/glock/rubber(src)
 
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
+	else if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
 		new /obj/item/weapon/gun/energy/taser/stunrevolver(src)
 
 	else
@@ -421,7 +421,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 		for (var/i in 1 to 3)
 			new /obj/item/ammo_box/magazine/l13(src) //rubber
 
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
+	else if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
 		for (var/i in 1 to 3)
 			new /obj/item/weapon/gun/energy/taser/stunrevolver(src)
 
