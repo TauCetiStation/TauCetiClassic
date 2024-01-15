@@ -7031,6 +7031,15 @@
 	icon_state = "neutralfull"
 	},
 /area/station/hallway/primary/central)
+"bbU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/chapel)
 "bbY" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -10408,6 +10417,9 @@
 "bHx" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/hologram/holopad,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -24772,6 +24784,17 @@
 	icon_state = "blackchecker"
 	},
 /area/station/civilian/theatre)
+"eQa" = (
+/obj/structure/stool/bed/chair/metal/white,
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "mosaic_1"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/civilian/chapel)
 "eQj" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -32953,6 +32976,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"gBA" = (
+/obj/structure/stool/bed/chair/metal/white,
+/obj/effect/decal/turf_decal{
+	icon_state = "mosaic_1"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/civilian/chapel)
 "gBH" = (
 /obj/machinery/door/poddoor{
 	id = "justiceblast";
@@ -45564,11 +45599,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal{
 	icon_state = "mosaic_1"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -54369,10 +54404,17 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "kYy" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal{
+	icon_state = "mosaic_1"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "black"
+	icon_state = "blackchoco"
 	},
 /area/station/civilian/chapel)
 "kYA" = (
@@ -56932,6 +56974,12 @@
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/reception)
+"lDv" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/civilian/chapel)
 "lDx" = (
 /obj/machinery/door/window{
 	base_state = "rightsecure";
@@ -61754,6 +61802,21 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
+"mEC" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "mosaic_1"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/civilian/chapel)
 "mES" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -86289,12 +86352,12 @@
 	},
 /area/station/medical/reception)
 "rYm" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "mosaic_1"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -93501,6 +93564,19 @@
 	icon_state = "neutralfull"
 	},
 /area/station/hallway/primary/fore)
+"tGw" = (
+/obj/structure/stool/bed/chair/metal/white,
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "mosaic_1"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/civilian/chapel)
 "tGH" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/light/smart{
@@ -93620,6 +93696,9 @@
 	},
 /area/station/rnd/misc_lab)
 "tHA" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "black"
@@ -97263,6 +97342,19 @@
 	icon_state = "blackchoco"
 	},
 /area/station/tcommsat/computer)
+"uzr" = (
+/obj/structure/stool/bed/chair/metal/white,
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "mosaic_1"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/civilian/chapel)
 "uzw" = (
 /turf/simulated/floor{
 	icon_state = "bluecorner"
@@ -110299,7 +110391,9 @@
 /turf/simulated/floor,
 /area/station/maintenance/science)
 "xzO" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "black"
@@ -113107,9 +113201,6 @@
 	},
 /area/station/rnd/mixing)
 "ydP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "black"
@@ -158608,7 +158699,7 @@ eiH
 kUv
 ylb
 xzO
-kYy
+ydP
 ydP
 kUv
 eiH
@@ -158864,8 +158955,8 @@ tpQ
 jPy
 mMq
 eCe
-mMq
-eCe
+tGw
+eQa
 rYm
 qWs
 opy
@@ -159121,7 +159212,7 @@ tpQ
 vLd
 tvk
 sAQ
-tvk
+gBA
 sAQ
 jky
 vNd
@@ -159378,9 +159469,9 @@ tpQ
 qWs
 mMq
 eCe
-mMq
+uzr
 eCe
-wZE
+mEC
 kaL
 gEt
 cPN
@@ -159635,9 +159726,9 @@ kTC
 vLd
 tvk
 sAQ
-tvk
+gBA
 sAQ
-qus
+kYy
 diz
 mtw
 cUU
@@ -159892,8 +159983,8 @@ gDi
 nix
 nix
 bYd
-nix
-nix
+bbU
+lDv
 bHx
 diz
 iih
