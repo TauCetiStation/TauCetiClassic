@@ -181,8 +181,8 @@
 
 	if(istype(BP, /obj/item/organ/external/head))
 		var/obj/item/organ/external/head/B = BP
-		if (B.brainmob && B.brainmob.mind)
-			B.brainmob.mind.transfer_to(target)
+		if (B.brainmob)
+			B.brainmob.mind?.transfer_to(target)
 			target.dna = B.brainmob.dna
 			target.timeofdeath = B.brainmob.timeofdeath
 			if(HAS_TRAIT(B.brainmob, TRAIT_NO_CLONE))
