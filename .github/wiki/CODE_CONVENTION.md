@@ -324,7 +324,7 @@ for(var/atom in bag_of_atoms)
 
 //Хорошо:
 /mob/testmob/process(seconds_per_tick)
-	if(prob(SPT_PROB(10, seconds_per_tick))) // 10% шанса на событие в секунду
+	if(SPT_PROB(10, seconds_per_tick)) // 10% шанса на событие в секунду
 		event()
 ```
 
