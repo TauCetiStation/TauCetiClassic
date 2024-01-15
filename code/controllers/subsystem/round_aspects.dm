@@ -41,5 +41,6 @@ SUBSYSTEM_DEF(round_aspects)
 		to_chat(client,"[SSround_aspects.aspect.OOC_lobby_announcement]")
 
 /datum/controller/subsystem/round_aspects/proc/after_start()
+	SIGNAL_HANDLER
 	aspect.after_start()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
