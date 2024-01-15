@@ -21,8 +21,8 @@ var/global/list/spented_examined_objects = list()
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/examine_research/proc/calculate_research_value()
-	for(var/datum/object as anything in global.spented_examined_objects)
-		if(object.type == parent.type)
+	for(var/datum_type in global.spented_examined_objects)
+		if(datum_type == parent.type)
 			return 0
 	return points_value
 
@@ -36,7 +36,7 @@ var/global/list/spented_examined_objects = list()
 		return
 	to_chat(user, "<span class='notice'>[parent] scan earned you [points_value] research points.</span>")
 	linked_techweb.research_points += points_value
-	global.spented_examined_objects += parent
+	global.spented_examined_objects += parent.type
 
 /datum/component/examine_research/proc/success_check(mob/living/carbon/human/user)
 	var/list/succes_checks = list()
