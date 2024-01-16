@@ -8,10 +8,14 @@
 	var/gc_destroyed //Time when this object was destroyed.
 	var/list/active_timers
 	var/list/filter_data
+
 	/// russian case forms of atom name in format
 	/// list(NOMINATIVE_CASE, GENITIVE_CASE, DATIVE_CASE, ACCUSATIVE_CASE, ABLATIVE_CASE, PREPOSITIONAL_CASE)
 	/// for usage with CASE macros (code/__DEFINES/_translation.dm)
 	var/list/cases = null
+
+	/// our weak reference
+	var/datum/weakref/weak_reference
 
 #ifdef REFERENCE_TRACKING
 	var/running_find_references
@@ -22,7 +26,9 @@
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy(force = FALSE, ...)
+	SHOULD_CALL_PARENT(TRUE)
 	tag = null
+	weak_reference = null //ensure prompt GCing of weakref.
 
 	var/list/timers = active_timers
 	active_timers = null
