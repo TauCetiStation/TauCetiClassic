@@ -29,6 +29,7 @@
   - [New(), atom_init()](/.github/wiki/ABOUT_INIT.md)
   - [Про TGUI](/tgui/README.md)
   - [Сигналы, компоненты, элементы (hackmd)](https://hackmd.io/@tgstation/SignalsComponentsElements)
+  - [Сборщик мусора, Destroy, Harddeletes](/.github/wiki/HARDDELETES.md)
   - [Переводы на русский](/.github/wiki/TRANSLATION.md)
 * **Карта:**
   - [F.A.Q. по работе с картой](/.github/wiki/WORK_WITH_MAP.md)
