@@ -103,7 +103,7 @@
 	if(default_pen)
 		pen = new default_pen(src)
 
-	MP = new(src, "sound/musical_instruments/pda", VOL_EFFECTS_MASTER)
+	MP = new(src, "sound/musical_instruments/pda")
 	Ringtone = new Ringtone(src)
 
 	MP.repeat = Ringtone.replays
@@ -111,7 +111,8 @@
 
 	Custom_Ringtone = new(src)
 	for(var/rtone in global.standard_pda_ringtones)
-		ringtones += new rtone(src)
+		var/rtone_type = global.standard_pda_ringtones[rtone]
+		ringtones += new rtone_type(src)
 	ringtones += Custom_Ringtone
 
 /obj/item/device/pda/Destroy()
