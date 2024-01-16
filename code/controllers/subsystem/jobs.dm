@@ -619,16 +619,16 @@ SUBSYSTEM_DEF(job)
 		pda.owner_fingerprints += C.fingerprint_hash //save fingerprints in pda from ID card
 		MA.owner_PDA = pda //add PDA in /datum/money_account
 
-		if(H.pda_chosen_ringtone == "My Ringtone")
-			pda.Ringtone = pda.Custom_Ringtone
-			pda.Custom_Ringtone.melody = H.pda_custom_melody
-		else
-			for(var/datum/ringtone/Ring in pda.ringtones)
-				if(H.pda_chosen_ringtone == Ring.name)
-					pda.Ringtone = Ring
+		var/chosen_ringtone = H.client?.prefs.chosen_ringtone
+		if(chosen_ringtone)
+			if(chosen_ringtone == "My Ringtone")
+				pda.ringtone = pda.custom_ringtone
+				pda.custom_ringtone.melody = H.client.prefs.custom_melody
+			else
+				pda.ringtone = pda.ringtones[chosen_ringtone]
 
-		pda.MP.repeat = pda.Ringtone.replays
-		pda.MP.parse_song_text(pda.Ringtone.melody)
+			pda.chiptune_player.repeat = pda.ringtone.replays
+			pda.chiptune_player.parse_song_text(pda.ringtone.melody)
 
 	return TRUE
 

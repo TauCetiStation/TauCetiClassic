@@ -289,7 +289,7 @@
 
 	global.standard_pda_ringtones = list()
 	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
-		if(initial(Ring.ringtone_flags) & STANDARD_PDA_RINGTONE)
+		if(initial(Ring.standard_pda))
 			global.standard_pda_ringtones["[initial(Ring.name)]"] = Ring
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs

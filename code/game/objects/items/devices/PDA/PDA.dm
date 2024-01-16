@@ -81,9 +81,9 @@
 
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_pda_light)
 
-	var/datum/music_player/MP
-	var/datum/ringtone/Ringtone = /datum/ringtone/thinktronic
-	var/datum/ringtone/Custom_Ringtone
+	var/datum/music_player/chiptune_player
+	var/datum/ringtone/ringtone = /datum/ringtone/thinktronic
+	var/datum/ringtone/custom_ringtone
 
 	var/list/ringtones = list()
 
@@ -103,17 +103,17 @@
 	if(default_pen)
 		pen = new default_pen(src)
 
-	MP = new(src, "sound/musical_instruments/pda")
-	Ringtone = new Ringtone(src)
+	chiptune_player = new(src, "sound/musical_instruments/pda")
+	ringtone = new ringtone(src)
 
-	MP.repeat = Ringtone.replays
-	MP.parse_song_text(Ringtone.melody)
+	chiptune_player.repeat = ringtone.replays
+	chiptune_player.parse_song_text(ringtone.melody)
 
-	Custom_Ringtone = new(src)
+	custom_ringtone = new(src)
 	for(var/rtone in global.standard_pda_ringtones)
 		var/rtone_type = global.standard_pda_ringtones[rtone]
-		ringtones += new rtone_type(src)
-	ringtones += Custom_Ringtone
+		ringtones["[rtone]"] = new rtone_type(src)
+	ringtones["My Ringtone"] = custom_ringtone
 
 /obj/item/device/pda/Destroy()
 	var/datum/money_account/MA = get_account(owner_account)
@@ -129,12 +129,11 @@
 			QDEL_NULL(id)
 	QDEL_NULL(pen)
 
-	QDEL_NULL(MP)
-	for(var/datum/ringtone/R in ringtones)
-		QDEL_NULL(R)
+	QDEL_NULL(chiptune_player)
+	QDEL_LIST_ASSOC(ringtones)
 	ringtones = null
-	Custom_Ringtone = null
-	Ringtone = null
+	custom_ringtone = null
+	ringtone = null
 
 	return ..()
 
@@ -825,7 +824,7 @@
 	if(mode in safe_pages)
 		mode = 0	//for safety
 	ui_interact(user) //NanoUI requires this proc
-	MP.playing = FALSE
+	stop_ringtone()
 	return
 
 /obj/item/device/pda/Topic(href, href_list)
@@ -975,7 +974,7 @@
 		if("Toggle Ringer")//If viewing texts then erase them, if not then toggle silent status
 			message_silent = !message_silent
 			if(message_silent)
-				MP.playing = FALSE
+				stop_ringtone()
 		if("Clear")//Clears messages
 			if(href_list["option"] == "All")
 				tnote.Cut()
@@ -993,35 +992,35 @@
 				mode=2
 
 		if("Ringtone")
-			MP.playing = FALSE
+			stop_ringtone()
 			var/Tone = input(U, "Выберите рингтон", name) as null|anything in ringtones
 			if(Tone && (Tone in ringtones) && Adjacent(U))
-				if(Tone == Custom_Ringtone)
-					var/t = sanitize(input(U, "Введите новый рингтон") as message|null, global.max_custom_ringtone_length, extra = FALSE, ascii_only = TRUE)
+				if(Tone == "My Ringtone")
+					var/t = sanitize(input(U, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
 					if (!t || !Adjacent(U))
 						return
 					if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 						to_chat(U, "The PDA softly beeps.")
 						ui.close()
 					else
-						Custom_Ringtone.melody = t
-						Ringtone = Custom_Ringtone
+						custom_ringtone.melody = t
+						ringtone = custom_ringtone
 
-						MP.repeat = Ringtone.replays
-						MP.parse_song_text(Ringtone.melody)
+						chiptune_player.repeat = ringtone.replays
+						chiptune_player.parse_song_text(ringtone.melody)
 						play_ringtone(ignore_presence = TRUE)
 				else
-					Ringtone = Tone
+					ringtone = ringtones[Tone]
 
-					MP.repeat = Ringtone.replays
-					MP.parse_song_text(Ringtone.melody)
+					chiptune_player.repeat = ringtone.replays
+					chiptune_player.parse_song_text(ringtone.melody)
 					play_ringtone(ignore_presence = TRUE)
 
 		if("Message")
 
 			var/obj/item/device/pda/P = locate(href_list["target"])
 			create_message(U, P, !href_list["notap"])
-			MP.playing = FALSE
+			stop_ringtone()
 			if(mode == 2)
 				if(href_list["target"] in conversations)            // Need to make sure the message went through, if not welp.
 					active_conversation = href_list["target"]
@@ -2000,10 +1999,13 @@
 		if(nanomanager.get_open_ui(user, src, "main"))
 			return
 
-	if(MP.playing)
+	if(chiptune_player.playing)
 		return
 
-	MP.playing = TRUE
-	INVOKE_ASYNC(MP, TYPE_PROC_REF(/datum/music_player, playsong), null)
+	chiptune_player.playing = TRUE
+	INVOKE_ASYNC(chiptune_player, TYPE_PROC_REF(/datum/music_player, playsong), null)
+
+/obj/item/device/pda/proc/stop_ringtone()
+	chiptune_player.playing = FALSE
 
 #undef TRANSCATION_COOLDOWN

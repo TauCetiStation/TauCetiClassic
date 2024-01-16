@@ -499,8 +499,6 @@ var/global/list/preferences_datums = list()
 		backbag = 1 //Same as above
 	character.backbag = backbag
 	character.use_skirt = use_skirt
-	character.pda_chosen_ringtone = chosen_ringtone
-	character.pda_custom_melody = custom_melody
 
 	if(icon_updates)
 		character.update_body()
