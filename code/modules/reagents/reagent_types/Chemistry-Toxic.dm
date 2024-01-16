@@ -755,7 +755,7 @@
 					if(prob(25))
 						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
 						H.emote("scream")
-						H.adjustBruteLoss(5.5)
+						BP.sever_artery()
 			if(12 to 21)
 				var/obj/item/organ/internal/BP = H.organs_by_name[pick(H.species.has_organ)]
 				BP.take_damage(5)
