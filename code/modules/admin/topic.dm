@@ -1118,6 +1118,8 @@
 		dat += "<HR>"
 		for(var/type in subtypesof(/datum/modesbundle))
 			var/datum/modesbundle/bound_type = type
+			if(initial(bound_type.hide_for_shitspawn))
+				continue
 			var/bname = initial(bound_type.name)
 			dat += {"<A href='?src=\ref[src];c_mode2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [master_mode]"}
