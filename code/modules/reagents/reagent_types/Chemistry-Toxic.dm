@@ -773,7 +773,6 @@
 			if(31 to 50)
 				M.heal_bodypart_damage(0,5)
 				M.adjustOxyLoss(-2 * REM)
-				M.adjustBruteLoss(-2 * REM)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
