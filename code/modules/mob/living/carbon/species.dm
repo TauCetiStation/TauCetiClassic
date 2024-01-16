@@ -1622,7 +1622,6 @@
 
 	brute_mod = 0.5
 	burn_mod = 1.5
-	oxy_mod = 2
 	tox_mod = 0
 
 	flags = list(
