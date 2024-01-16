@@ -616,7 +616,7 @@ SUBSYSTEM_DEF(shuttle)
 		return
 	var/area/start = locate(escape_pod_start)
 	var/area/transit = locate(escape_pod_end)
-	if((alert == 0) || (check_emag(start)))
+	if(alert == 0 || check_emag(start))
 		var/ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_lucky_shot.ogg'
 		if(prob(33))
 			ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg'
