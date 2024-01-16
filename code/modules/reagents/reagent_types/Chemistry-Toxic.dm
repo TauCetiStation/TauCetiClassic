@@ -755,7 +755,7 @@
 					if(prob(25))
 						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
 						H.emote("scream")
-						BP.sever_artery()
+						H.adjustBruteLoss(5.5)
 			if(12 to 21)
 				var/obj/item/organ/internal/BP = H.organs_by_name[pick(H.species.has_organ)]
 				BP.take_damage(5)
@@ -773,6 +773,7 @@
 			if(31 to 50)
 				M.heal_bodypart_damage(0,5)
 				M.adjustOxyLoss(-2 * REM)
+				M.adjustBruteLoss(-2 * REM)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
