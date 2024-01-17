@@ -16,6 +16,9 @@
 	var/fat_limb_icons = FALSE
 	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
 	var/hud_offset_y = 0
+	var/r_skin = 0
+	var/g_skin = 0
+	var/b_skin = 0 // skins for races
 
 	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
 
@@ -1606,6 +1609,9 @@
 
 /datum/species/slime
 	name = SLIME
+	r_skin = 0
+	g_skin = 0
+	b_skin = 0
 	icobase = 'icons/mob/human_races/r_slime.dmi'
 	deform = 'icons/mob/human_races/r_slime.dmi'
 
@@ -1642,6 +1648,16 @@
 
 /datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)
+
+/datum/species/slime/proc/change_body_color(mob/living/carbon/human/H)
+	set name = "Change Color"
+	set category = "Slime Abilities"
+
+	var/new_color = input("Please select new body color", "Character Generation",rgb(r_skin,g_skin,b_skin)) as color
+	if(new_color)
+		r_skin = HEX_VAL_RED(new_color)
+		g_skin = HEX_VAL_GREEN(new_color)
+		b_skin = HEX_VAL_BLUE(new_color)
 
 /datum/species/abomination
 	name = ABOMINATION
