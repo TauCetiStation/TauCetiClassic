@@ -17,6 +17,7 @@
 
 	anchored = TRUE
 	var/screwed = TRUE
+	var/cancover = TRUE
 
 /obj/structure/fence/atom_init()
 	. = ..()
@@ -50,10 +51,14 @@
 /obj/structure/fence/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover,/obj/item/projectile))
 		return TRUE
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return TRUE
+	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
+		return TRUE
 	if(get_dir(loc, target) & dir)
 		return FALSE
-	else
-		return TRUE
+
+	return TRUE
 
 /obj/structure/fence/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	if(dir == to_dir)
@@ -64,8 +69,13 @@
 /obj/structure/fence/CheckExit(atom/movable/O, turf/target)
 	if(istype(O,/obj/item/projectile))
 		return TRUE
+	if(istype(O) && O.checkpass(PASSTABLE))
+		return TRUE
+	if(istype(O) && HAS_TRAIT(O, TRAIT_ARIBORN))
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
 		return FALSE
+
 	return TRUE
 
 /obj/structure/fence/verb/rotate()
@@ -78,10 +88,9 @@
 
 	if(screwed)
 		to_chat(usr, "It is fastened to the floor therefore you can't rotate it!")
-		return 0
+		return
 
 	set_dir(turn(dir, 90))
-	return
 
 /obj/structure/fence/on_climb(mob/living/climber, mob/living/user)
 	if(!screwed)
@@ -118,7 +127,9 @@
 	icon = 'icons/obj/fences.dmi'
 	icon_state = "fence_metal"
 
-	var/icon/Rail
+	cancover = FALSE
+
+	var/image/Rail
 
 /obj/structure/fence/metal/atom_init()
 	if(color)
@@ -129,8 +140,8 @@
 
 /obj/structure/fence/metal/proc/change_color(new_color)
 	cut_overlay(Rail)
-	Rail = icon(icon, "[icon_state]_color")
-	Rail.Blend(new_color, ICON_MULTIPLY)
+	Rail = image(icon, "[icon_state]_color")
+	Rail.color = new_color
 	add_overlay(Rail)
 
 /obj/structure/fence/metal/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
@@ -166,6 +177,8 @@
 	icon = 'icons/obj/fences.dmi'
 	icon_state = "fence_glass"
 
+	cancover = FALSE
+
 /obj/structure/fence/glass/deconstruct(disassembled)
 	new /obj/item/stack/sheet/glass(loc, 2)
 	..()
@@ -184,7 +197,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/gate, gates_list)
 	layer = INFRONT_MOB_LAYER
 	base_layer = INFRONT_MOB_LAYER
 
-	throwpass = 1
+	throwpass = TRUE
 
 	max_integrity = 50
 	resistance_flags = CAN_BE_HIT
@@ -199,10 +212,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/gate, gates_list)
 	var/id
 	var/open = FALSE
 
+	var/image/under_sprite
+
 /obj/machinery/door/gate/atom_init()
 	. = ..()
 	if(open)
 		icon_state = "turnstile_open"
+	under_sprite = image(icon, "[icon_state]_under")
+	under_sprite.layer = BELOW_MOB_LAYER
+	update_under_sprite()
 
 /obj/machinery/door/gate/bumpopen(mob/user)
 	return
@@ -210,10 +228,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/gate, gates_list)
 /obj/machinery/door/gate/try_open(mob/user)
 	return
 
+/obj/machinery/door/gate/proc/update_under_sprite()
+	cut_overlay(under_sprite)
+	under_sprite.icon_state = "[icon_state]_under"
+	add_overlay(under_sprite)
+
 /obj/machinery/door/gate/open()
 	if(open)
 		return
 	icon_state = "turnstile_open"
+	update_under_sprite()
 	flick("turnstile_open_flick", src)
 	open = TRUE
 
@@ -223,6 +247,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/gate, gates_list)
 	if(!open)
 		return
 	icon_state = "turnstile_closed"
+	update_under_sprite()
 	flick("turnstile_closed_flick", src)
 	open = FALSE
 
@@ -242,6 +267,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/gate, gates_list)
 
 /obj/machinery/door/gate/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover,/obj/item/projectile))
+		return TRUE
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return TRUE
+	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return TRUE
 	if(get_dir(loc, target) & dir)
 		if(!open)
@@ -268,6 +297,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/gate, gates_list)
 
 /obj/machinery/door/gate/CheckExit(atom/movable/O, turf/target)
 	if(istype(O,/obj/item/projectile))
+		return TRUE
+	if(istype(O) && O.checkpass(PASSTABLE))
+		return TRUE
+	if(istype(O) && HAS_TRAIT(O, TRAIT_ARIBORN))
 		return TRUE
 	if(get_dir(O.loc, target) == dir)
 		if(!open)

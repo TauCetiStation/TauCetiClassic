@@ -161,12 +161,6 @@
 	icon_state = "wood"
 	},
 /area/station/civilian/holodeck/source_theatre)
-"F" = (
-/obj/structure/fence/glass,
-/turf/simulated/floor/holofloor{
-	icon_state = "cult"
-	},
-/area/station/civilian/holodeck/source_theatre)
 
 (1,1,1) = {"
 a
@@ -184,7 +178,7 @@ A
 b
 k
 k
-F
+k
 l
 o
 o
@@ -196,7 +190,7 @@ n
 c
 k
 k
-F
+k
 l
 p
 p
@@ -208,7 +202,7 @@ n
 k
 k
 k
-F
+k
 l
 p
 p
@@ -220,7 +214,7 @@ n
 k
 k
 k
-F
+k
 l
 p
 p
@@ -232,7 +226,7 @@ n
 k
 k
 k
-F
+k
 l
 p
 p
@@ -244,7 +238,7 @@ n
 k
 k
 k
-F
+k
 l
 p
 p
@@ -256,7 +250,7 @@ n
 h
 k
 k
-F
+k
 l
 p
 p
@@ -268,7 +262,7 @@ n
 i
 k
 k
-F
+k
 l
 o
 o
