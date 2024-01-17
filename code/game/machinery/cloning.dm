@@ -261,7 +261,7 @@
 		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			go_out()
-			connected_message("Клон отбракован: сгнил.")
+			connected_message("Клон отбракован: мёртв.")
 			return
 
 		else if(src.occupant.cloneloss > (100 - src.heal_level))
