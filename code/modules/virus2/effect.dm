@@ -407,7 +407,7 @@
 
 /datum/disease2/effect/dna
 	name = "Reverse Pattern Syndrome"
-	desc = "Вирус приcоединяется к ДНК носителя, вызывая вредные мутации до его удаленния." //kirolt
+	desc = "Вирус приcоединяется к ДНК носителя, вызывая вредоносные мутации до его удаления."
 	level = 4
 	max_stage = 3
 	cooldown = 10
