@@ -117,7 +117,7 @@
 
 					dat += "<a href='byond://?src=\ref[src];scan=1'>Просканировать - [src.scanner.occupant]</a><br>"
 				else
-					scantemp = "Сканер не занят"
+					scantemp = "Сканер пуст"
 
 				dat += "Статус блокировки: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Заблокирован" : "Разблокирован"]</a><br>"
 
