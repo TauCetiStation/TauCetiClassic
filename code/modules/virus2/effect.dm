@@ -1046,7 +1046,7 @@
 
 /datum/disease2/effect/stimulant/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(20) || holder.stage	== 1)
-		to_chat(mob, "<span class = 'notice'>[pick("Вы хотите попрыгать вокруг.", "Вы хотите бегать.")]</span>")
+		to_chat(mob, "<span class = 'notice'>[pick("Вы хотите прыгать вокруг.", "Вы хотите бегать.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		if (mob.reagents.get_reagent_amount("stimulants") < 1)
 			to_chat(mob, "<span class='notice'>Вы чувствуете небольшой прилив сил.</span>")
