@@ -1326,7 +1326,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "acf" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
 	},
@@ -2433,7 +2433,13 @@
 /area/station/security/main)
 "afB" = (
 /obj/structure/table/glass,
-/obj/item/weapon/stamp/cmo,
+/obj/item/weapon/stamp/med/cmo{
+	pixel_x = 3
+	},
+/obj/item/device/microphone/cmo{
+	pixel_x = -7;
+	pixel_y = 10
+	},
 /turf/simulated/floor{
 	icon_state = "bluechecker"
 	},
@@ -4670,7 +4676,9 @@
 /area/station/medical/chemistry)
 "aBG" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/stamp/ce,
+/obj/item/device/microphone/ce{
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -5090,7 +5098,7 @@
 /area/station/solar/auxstarboard)
 "aGk" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -8460,7 +8468,7 @@
 	},
 /area/station/medical/psych)
 "bpO" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/light/smart{
 	dir = 4
 	},
@@ -11531,7 +11539,7 @@
 	},
 /area/station/security/interrogation)
 "bUL" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair{
 	dir = 4
 	},
@@ -13332,7 +13340,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/service_bedrooms)
 "cmX" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
 	},
@@ -17792,7 +17800,7 @@
 	},
 /area/station/engineering/break_room)
 "dlC" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -20245,7 +20253,7 @@
 	},
 /area/station/aisat/antechamber_interior)
 "dSt" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -20991,6 +20999,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},
@@ -21483,7 +21492,7 @@
 	},
 /area/station/civilian/dormitories/courtroom)
 "efb" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair{
 	dir = 4
 	},
@@ -24256,10 +24265,6 @@
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
 /obj/item/weapon/reagent_containers/glass/bottle/stoxin,
 /obj/item/clothing/suit/straight_jacket,
-/obj/structure/closet/secure_closet{
-	name = "Psychiatrist's Locker";
-	req_access = list(64)
-	},
 /obj/structure/sign/poster/official/help_others{
 	pixel_x = 32
 	},
@@ -24269,6 +24274,7 @@
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
+/obj/structure/closet/secure_closet/psycho,
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -27500,7 +27506,13 @@
 /area/station/bridge/teleporter)
 "fuu" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/wires,
+/obj/item/weapon/paper/wires{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/weapon/stamp/eng/ce{
+	pixel_x = 5
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -27603,7 +27615,7 @@
 	},
 /area/station/civilian/dormitories)
 "fvE" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -30383,7 +30395,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
 "gdp" = (
@@ -35251,7 +35263,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "hcM" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 8
 	},
@@ -38933,9 +38945,14 @@
 /area/station/security/armoury)
 "hPJ" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/hand_tele,
 /obj/machinery/requests_console/captain{
 	pixel_x = 32
+	},
+/obj/item/weapon/paper_bin{
+	pixel_y = 5
+	},
+/obj/item/weapon/stamp/cap{
+	pixel_x = 5
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -40184,7 +40201,7 @@
 	},
 /area/station/security/checkpoint/escape_custom_desk)
 "idn" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
 	},
@@ -40549,7 +40566,7 @@
 /area/station/maintenance/cargo)
 "ihe" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/stamp/internalaffairs,
+/obj/item/weapon/stamp/iaa,
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
 	pixel_y = -2
@@ -43855,6 +43872,10 @@
 	dir = 4
 	},
 /obj/item/weapon/phone,
+/obj/item/device/microphone/hos{
+	pixel_x = 7;
+	pixel_y = 11
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -45407,7 +45428,7 @@
 	req_access = list(20)
 	},
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/stamp/captain,
+/obj/item/device/microphone/cap,
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
 "jjk" = (
@@ -47202,7 +47223,7 @@
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 1;
 	icon_state = "box_corners_white"
@@ -47292,7 +47313,12 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/item/weapon/pinpointer/advpinpointer,
+/obj/item/weapon/pinpointer/advpinpointer{
+	pixel_x = 5
+	},
+/obj/item/weapon/hand_tele{
+	pixel_x = -7
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -50844,7 +50870,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "koo" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/green,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -52766,7 +52792,7 @@
 "kIC" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/item/weapon/stamp/qm{
+/obj/item/weapon/stamp/cargo/qm{
 	pixel_x = 6
 	},
 /obj/item/weapon/cartridge/quartermaster{
@@ -57269,7 +57295,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/wood,
 /area/station/storage/tools)
 "lHD" = (
@@ -57433,11 +57459,16 @@
 	},
 /obj/structure/table/woodentable,
 /obj/item/device/megaphone{
-	pixel_y = 4
+	pixel_y = 4;
+	pixel_x = -4
 	},
 /obj/item/device/flashlight/lamp{
 	on = 0;
 	pixel_x = -18;
+	pixel_y = 6
+	},
+/obj/item/device/microphone/hop{
+	pixel_x = 8;
 	pixel_y = 6
 	},
 /turf/simulated/floor/wood,
@@ -57602,6 +57633,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},
@@ -60250,7 +60282,7 @@
 /turf/simulated/floor,
 /area/station/storage/tech)
 "mpG" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -63520,7 +63552,7 @@
 	},
 /area/station/security/brig)
 "mZB" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "mZC" = (
@@ -63907,7 +63939,7 @@
 	pixel_y = 7;
 	req_access = list(2)
 	},
-/obj/item/weapon/stamp/hos{
+/obj/item/weapon/stamp/sec/hos{
 	pixel_x = -6;
 	pixel_y = 8
 	},
@@ -64804,7 +64836,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "npk" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
 	},
@@ -65203,7 +65235,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor/wood,
 /area/station/storage/tools)
 "nsv" = (
@@ -69082,7 +69114,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
 "ojc" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 8
 	},
@@ -69262,7 +69294,7 @@
 	},
 /area/station/hallway/primary/fore)
 "olT" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -70367,7 +70399,7 @@
 	},
 /area/station/security/checkpoint/escape)
 "oBy" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 1
 	},
@@ -75566,7 +75598,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "pGv" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "yellowcorner"
 	},
@@ -85071,7 +85103,7 @@
 	},
 /area/station/hallway/primary/central)
 "rKy" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair{
 	dir = 4
 	},
@@ -88487,16 +88519,21 @@
 /area/station/security/prison)
 "syE" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/monitorkey,
+/obj/item/weapon/paper/monitorkey{
+	pixel_x = 5
+	},
 /obj/item/weapon/cartridge/signal/science{
 	pixel_x = 4;
 	pixel_y = 6
 	},
 /obj/item/weapon/cartridge/signal/science{
-	pixel_x = -4;
 	pixel_y = 2
 	},
 /obj/item/weapon/cartridge/signal/science,
+/obj/item/device/microphone/rd{
+	pixel_y = 8;
+	pixel_x = -7
+	},
 /turf/simulated/floor{
 	icon_state = "whitechoco"
 	},
@@ -92302,7 +92339,7 @@
 /area/station/civilian/gym)
 "tun" = (
 /obj/structure/stool/bed/chair/metal/white,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "tur" = (
@@ -93261,7 +93298,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "tEg" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool,
 /turf/simulated/floor{
 	icon_state = "neutral"
@@ -95291,7 +95328,7 @@
 /obj/structure/table,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/stamp{
+/obj/item/weapon/stamp/cargo{
 	name = "recycler's rubber stamp";
 	stamp_message = "Recycler"
 	},
@@ -95672,7 +95709,7 @@
 	},
 /area/station/rnd/xenobiology)
 "uhY" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
 	},
@@ -97489,7 +97526,7 @@
 	},
 /area/station/engineering/atmos)
 "uDx" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
 	},
@@ -97581,7 +97618,7 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/machinery/light/small,
 /obj/effect/landmark{
 	name = "blobstart"
@@ -99319,7 +99356,7 @@
 	pixel_y = 6
 	},
 /obj/item/weapon/changeling_test,
-/obj/item/weapon/stamp/rd{
+/obj/item/weapon/stamp/sci/rd{
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -101582,7 +101619,7 @@
 /area/station/engineering/engine)
 "vBV" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/stamp/internalaffairs,
+/obj/item/weapon/stamp/iaa,
 /obj/item/weapon/stamp/denied{
 	pixel_x = 4;
 	pixel_y = -2
@@ -106382,7 +106419,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/clothing/shoes/leather,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/head/beret/black,
 /obj/item/device/cardpay{
 	dir = 1
@@ -111687,7 +111724,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "xQv" = (
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/effect/landmark/start/assistant,
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 1
 	},

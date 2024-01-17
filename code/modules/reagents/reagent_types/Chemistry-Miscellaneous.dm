@@ -49,7 +49,7 @@
 				if(self.data["blood_type"])
 					blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 				else
-					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O+"
+					blood_prop.blood_DNA[self.data["blood_DNA"]] = BLOOD_O_PLUS
 
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
@@ -58,7 +58,7 @@
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
-			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
+			blood_prop.blood_DNA["Non-Human DNA"] = BLOOD_A_PLUS
 
 	else if(isxeno(donor))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T

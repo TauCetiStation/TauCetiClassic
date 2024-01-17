@@ -98,16 +98,6 @@
 	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/spacecash)
 	flags_inv = HIDEJUMPSUIT
 
-
-/obj/item/clothing/suit/wcoat
-	name = "waistcoat"
-	desc = "For some classy, murderous fun."
-	icon_state = "vest"
-	item_state = "wcoat"
-	blood_overlay_type = "armor"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
-
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
 	desc = "A set of denim overalls."
@@ -334,7 +324,7 @@
 	name = "black trenchcoat"
 	desc = "A black trenchcoat."
 	icon_state = "dude_coat"
-	item_state = "jensensuit"
+	item_state = "dude_coat"
 
 //pyjamas
 //originally intended to be pinstripes >.>

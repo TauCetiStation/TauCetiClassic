@@ -61,7 +61,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
+	restricted_species = list(UNATHI, DIONA)
 
 	department_stocks = list("Medical" = 20)
 	flags = JOB_FLAG_MEDBAY
@@ -87,15 +87,11 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(IPC)
 
 	department_stocks = list("Medical" = 15)
 	flags = JOB_FLAG_MEDBAY
 
-// Slow species shouldn't be paramedics.
-/datum/job/paramedic/special_species_check(datum/species/S)
-	return S.speed_mod <= 1
-
+	restricted_species = list(DIONA)// Slow species shouldn't be paramedics.
 
 //Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
 /datum/job/chemist
@@ -159,7 +155,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
+	restricted_species = list(UNATHI)
 
 	department_stocks = list("Medical" = 10)
 	flags = JOB_FLAG_MEDBAY
@@ -180,6 +176,8 @@
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/psychiatrist
 	skillsets = list("Psychiatrist" = /datum/skillset/psychiatrist)
+
+	restricted_species = list(UNATHI)
 
 	department_stocks = list("Medical" = 10)
 	flags = JOB_FLAG_MEDBAY

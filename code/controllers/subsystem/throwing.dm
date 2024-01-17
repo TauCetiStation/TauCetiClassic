@@ -90,7 +90,7 @@ SUBSYSTEM_DEF(throwing)
 
 	SSthrowing.processing -= thrownthing
 	SSthrowing.currentrun -= thrownthing
-	thrownthing.throwing = null
+	thrownthing.throwing = FALSE
 	thrownthing = null
 	target = null
 	thrower = null
@@ -155,7 +155,7 @@ SUBSYSTEM_DEF(throwing)
 /datum/thrownthing/proc/finialize(hit = FALSE, atom/movable/AM)
 	set waitfor = 0
 	//done throwing, either because it hit something or it finished moving
-	if (QDELETED(thrownthing) || !thrownthing.throwing)
+	if(QDELETED(thrownthing))
 		return
 
 	thrownthing.throwing = FALSE

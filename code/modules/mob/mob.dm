@@ -234,9 +234,9 @@
 /mob/proc/restrained()
 	return
 
-/mob/proc/reset_view(atom/A)
+/mob/proc/reset_view(atom/A, force_remote_viewing)
 	if(client)
-		if(istype(A, /atom/movable))
+		if(isatom(A))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
@@ -439,43 +439,9 @@
 	client.prefs.selected_quality_name = null
 
 	M.key = key
+	M.name = M.key
 //	M.Login()	//wat
 	return
-
-/mob/verb/observe()
-	set name = "Observe"
-	set category = "OOC"
-	var/is_admin = FALSE
-
-	if(client.holder && (client.holder.rights & R_ADMIN))
-		is_admin = TRUE
-	else if(stat != DEAD || isnewplayer(src) || jobban_isbanned(src, "Observer"))
-		to_chat(usr, "<span class='notice'>You must be observing to use this!</span>")
-		return
-
-	if(is_admin && stat == DEAD)
-		is_admin = FALSE
-
-	var/list/creatures = getpois()
-
-	client.perspective = EYE_PERSPECTIVE
-
-	var/eye_name = null
-
-	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a mob!", ok, null, null) as null|anything in creatures
-
-	if(!eye_name)
-		return
-
-	var/mob/mob_eye = creatures[eye_name]
-
-	if(client && mob_eye)
-		client.eye = mob_eye
-		if(is_admin)
-			client.adminobs = 1
-			if(mob_eye == client.mob || client.eye == client.mob)
-				client.adminobs = 0
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -706,6 +672,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 					stat(null, "Time left: [max(GM.AI_win_timeleft / (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
+
+			if(SSmapping.loaded_map_module)
+				SSmapping.loaded_map_module.stat_entry(src)
 
 	if(client && client.holder)
 		if(statpanel("Tickets"))

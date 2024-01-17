@@ -1755,7 +1755,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/shoes/black,
 					/obj/item/clothing/shoes/black,
 					/obj/item/clothing/shoes/leather,
-					/obj/item/clothing/suit/wcoat,
+					/obj/item/clothing/accessory/tie/waistcoat,
 					/obj/item/clothing/under/suit_jacket/charcoal,
 					/obj/item/clothing/under/suit_jacket/navy,
 					/obj/item/clothing/under/suit_jacket/burgundy,
@@ -1844,6 +1844,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	num_contained = 5
 	contains = list(/obj/item/toy/spinningtoy,
 	                /obj/item/toy/sword,
+					/obj/item/toy/dualsword,
 	                /obj/item/toy/owl,
 	                /obj/item/toy/griffin,
 	                /obj/item/toy/nuke,
@@ -1871,7 +1872,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	num_contained = 2
 	contains = list(/obj/item/clothing/suit/pirate,
 					/obj/item/clothing/suit/judgerobe,
-					/obj/item/clothing/suit/wcoat,
+					/obj/item/clothing/accessory/tie/waistcoat,
 					/obj/item/clothing/suit/hastur,
 					/obj/item/clothing/suit/holidaypriest,
 					/obj/item/clothing/suit/hooded/skhima,

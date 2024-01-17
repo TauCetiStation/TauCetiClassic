@@ -11,6 +11,7 @@
 	alpha = 50
 	layer = 4
 	light_color = COLOR_BLUE
+	plane = LIGHTING_LAMPS_PLANE
 	anchored = TRUE
 	var/size = 1
 	var/energy = 0

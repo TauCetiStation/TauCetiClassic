@@ -1059,7 +1059,7 @@
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 				message_admins("<span class='notice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
 
-				qdel(M.client)
+				QDEL_IN(M.client, 2 SECONDS)
 				//qdel(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				if(!check_rights(R_BAN))   return
@@ -1084,7 +1084,7 @@
 				feedback_inc("ban_perma",1)
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
-				qdel(M.client)
+				QDEL_IN(M.client, 2 SECONDS)
 			if("Cancel")
 				return
 
@@ -1118,6 +1118,8 @@
 		dat += "<HR>"
 		for(var/type in subtypesof(/datum/modesbundle))
 			var/datum/modesbundle/bound_type = type
+			if(initial(bound_type.hide_for_shitspawn))
+				continue
 			var/bname = initial(bound_type.name)
 			dat += {"<A href='?src=\ref[src];c_mode2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [master_mode]"}

@@ -77,7 +77,7 @@
 
 /atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
 	var/turf/T = Safe_COORD_Location()
-	return T ? "[area_name ? "[get_area_name(T)] " : " "]([T.x],[T.y],[T.z])[admin_jump_ref ? " [ADMIN_JMP(T)]" : ""]" : "nonexistent location"
+	return T ? "[area_name ? "[get_area_name(T)] " : ""]([T.x],[T.y],[T.z])[admin_jump_ref ? " [ADMIN_JMP(T)]" : ""]" : "nonexistent location"
 
 // +- tg placeholder
 /atom/proc/Safe_COORD_Location()

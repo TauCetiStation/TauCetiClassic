@@ -50,6 +50,7 @@ var/global/bridge_secret = null
 	var/list/probabilities = list()		// relative probability of each mode
 	var/humans_need_surnames = 0
 	var/allow_random_events = 1			// enables random events mid-round when set to 1
+	var/alt_lobby_menu = 0 // event lobby
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1
@@ -824,22 +825,22 @@ var/global/bridge_secret = null
 /datum/configuration/proc/get_runnable_modes(datum/modesbundle/bundle)
 	var/list/datum/game_mode/runnable_modes = list()
 	var/list/runnable_modes_names = list()
-	for (var/type in bundle.possible_gamemodes)
+	for(var/type in bundle.possible_gamemodes)
 		var/datum/game_mode/M = new type()
-		if (!M.name || !(M.config_name in config_name_by_real))
+		if(!M.name || !(M.config_name in config_name_by_real))
 			qdel(M)
 			continue
-		if (probabilities[M.config_name] <= 0)
+		if(probabilities[M.config_name] <= 0)
 			qdel(M)
 			continue
-		if (global.master_last_mode == M.name)
+		if(global.master_last_mode == M.name)
 			qdel(M)
 			continue
-		if (global.modes_failed_start[M.name])
+		if(global.modes_failed_start[M.name])
 			qdel(M)
 			continue
-		var/mod_prob = probabilities[M.name]
-		if (M.can_start())
+		var/mod_prob = probabilities[M.config_name]
+		if(M.can_start())
 			runnable_modes[M] = mod_prob
 			runnable_modes_names += M.name
 	log_mode("Current pool of gamemodes([runnable_modes.len]):")

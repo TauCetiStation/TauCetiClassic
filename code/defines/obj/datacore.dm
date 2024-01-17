@@ -321,7 +321,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		var/datum/data/record/M = new()
 		M.fields["id"]			= id
 		M.fields["name"]		= H.real_name
-		M.fields["b_type"]		= H.b_type
+		M.fields["b_type"]		= H.dna.b_type
 		M.fields["b_dna"]		= H.dna.unique_enzymes ? H.dna.unique_enzymes : "None"
 		M.fields["mi_dis"]		= "None"
 		M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
@@ -360,7 +360,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		L.fields["rank"] 		= H.mind.assigned_role
 		L.fields["age"]			= H.age
 		L.fields["sex"]			= H.gender
-		L.fields["b_type"]		= H.b_type
+		L.fields["b_type"]		= H.dna.b_type
 		L.fields["b_dna"]		= H.dna.unique_enzymes ? H.dna.unique_enzymes : "None"
 		L.fields["enzymes"]		= H.dna.SE // Used in respawning
 		L.fields["home_system"]	= H.home_system

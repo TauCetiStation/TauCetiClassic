@@ -157,7 +157,7 @@
 
 	target.op_stage.ribcage = 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.open = 1
+	BP.open = 2
 
 //////////////////////////////////////////////////////////////////
 //					ALIEN EMBRYO SURGERY						//

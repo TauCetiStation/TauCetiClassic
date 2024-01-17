@@ -208,9 +208,9 @@ Message ends."}
 	var/dat = ..()
 	var/list/result = check_quarantaine()
 	if (detect_overminds() && (result["numOffStation"] + result["numSpace"]))
-		dat += "<span class='danger'>The AI has failed to enforce the quarantine.</span>"
+		dat += "<span class='danger'>ИИ не смог установить карантин.</span>"
 	else
-		dat += "<span class='good'>The AI has managed to enforce the quarantine.</span><BR>"
+		dat += "<span class='good'>ИИ смог установить карантин.</span><BR>"
 	return dat
 
 /datum/faction/blob_conglomerate/get_scorestat()
@@ -218,16 +218,16 @@ Message ends."}
 	var/datum/station_state/end = new
 	end.count()
 	var/list/result = check_quarantaine()
-	dat += {"<B><U>BLOB STATS</U></B><BR>
-	<b>Total blobs: [blobs.len]</b><br>
-	<b>Station Integrity: [round(end.score(start)*100)]%</b><br>
+	dat += {"<B><U>Статистика блоба</U></B><BR>
+	<b>Количество блобов: [blobs.len]</b><br>
+	<b>Целостность станции: [round(end.score(start)*100)]%</b><br>
 	<br>
-	<b>Quarantaine status:</b><br>
-	Dead humans: <b>[result["numDead"]]</b><br>
-	Alive humans still on board: <b>[result["numAlive"]]</b><br>
-	Humans in space: <b>[result["numSpace"]]</b><br>
-	Humans off-station: <b>[result["numOffStation"]]</b><br>
-	Pre-escapes: <b>[pre_escapees.len]</b><br>
+	<b>Состояние карантина:</b><br>
+	Экипажа мертво: <b>[result["numDead"]]</b><br>
+	Экипажа на борту станции: <b>[result["numAlive"]]</b><br>
+	Экипажа в космосе: <b>[result["numSpace"]]</b><br>
+	Экипажа вне станции: <b>[result["numOffStation"]]</b><br>
+	Счастливчики: <b>[pre_escapees.len]</b><br>
 	<HR>"}
 	return dat
 
