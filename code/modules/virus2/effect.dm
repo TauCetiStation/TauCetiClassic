@@ -205,7 +205,7 @@
 	name = "Regenerative Coma"
 	desc = "После получения серьёзных повреждений, вирус заставляет носителя впасть в кому, а затем быстро восстанавливает его."
 	level = 4
-	passive_message = "<span class='notice'>Боль от ран заставляет вас чувствовать себя сонным...</span>"
+	passive_message = "<span class='notice'>От боли в ранах вас клонит в сон...</span>"
 	var/active_coma = FALSE
 
 /datum/disease2/effect/heal/coma/can_heal(mob/living/carbon/human/M, datum/disease2/disease/disease)
