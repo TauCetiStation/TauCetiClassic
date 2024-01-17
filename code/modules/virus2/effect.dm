@@ -198,7 +198,7 @@
 	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
 		M.reagents.remove_reagent(R.id, actual_power)
 		if(prob(2))
-			to_chat(M, "<span class='notice'>Вы чувствуете небольшой жар, ваша кровь очищается.</span>") //kirolt
+			to_chat(M, "<span class='notice'>Вы чувствуете небольшой жар, ваша кровь очищается.</span>")
 	return 1
 
 /datum/disease2/effect/heal/coma
