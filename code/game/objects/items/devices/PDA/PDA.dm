@@ -121,7 +121,7 @@
 
 	return ..()
 
-/obj/item/device/pda/unable_to_play()
+/obj/item/device/pda/unable_to_play(mob/living/user)
 	return FALSE
 
 /obj/item/device/pda/examine(mob/user)
