@@ -409,20 +409,24 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/image/standing = U.get_standing_overlay(src, default_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood")
 		standing = update_height(standing)
 		overlays_standing[UNIFORM_LAYER] = standing
-		var/fem = ""
-		if(gender == FEMALE)
-			fem = "_fem"
 
 		for(var/obj/item/clothing/accessory/A in U.accessories)
-			var/tie_color = A.icon_state
-			var/image/tie
+			var/t_state = A.icon_state
+			var/icon_path = 'icons/mob/accessory.dmi'
+
 			if(A.icon_custom)
-				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
-			else
-				tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color][fem]", "layer" = -UNIFORM_LAYER + A.layer_priority)
-			tie.color = A.color
-			tie = human_update_offset(tie, TRUE)
-			standing.add_overlay(tie)
+				t_state += "_mob"
+				icon_path = A.icon_custom
+
+			if(gender == FEMALE && species.gender_limb_icons)
+				if("[t_state]_fem" in icon_states(icon_path))
+					t_state += "_fem"
+
+			var/image/accessory
+			accessory = image("icon" = icon_path, "icon_state" = t_state, "layer" = -UNIFORM_LAYER + A.layer_priority)
+			accessory.color = A.color
+			accessory = human_update_offset(accessory, TRUE)
+			standing.add_overlay(accessory)
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//

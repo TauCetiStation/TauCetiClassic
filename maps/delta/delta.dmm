@@ -20999,6 +20999,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},
@@ -57632,6 +57633,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},

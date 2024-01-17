@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(nanoui)
 		var/datum/nanoui/ui = currentrun[currentrun.len]
 		currentrun.len--
 		if(ui && ui.user && ui.src_object)
-			ui.process()
+			ui.process(wait * 0.1)
 		else
 			processing -= ui
 		if (MC_TICK_CHECK)

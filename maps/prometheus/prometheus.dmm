@@ -5565,6 +5565,7 @@
 	name = "Private Channel";
 	pixel_y = -31
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aKN" = (
@@ -100071,6 +100072,7 @@
 	name = "Private Channel";
 	pixel_y = -31
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "ycC" = (

@@ -34402,6 +34402,7 @@
 	pixel_x = -25;
 	pixel_y = -4
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "gfN" = (
@@ -119528,6 +119529,7 @@
 	pixel_x = 27;
 	pixel_y = -3
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "xmF" = (
