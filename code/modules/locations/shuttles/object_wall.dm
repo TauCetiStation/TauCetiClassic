@@ -50,7 +50,7 @@
 
 /obj/structure/object_wall/vox
 	name = "skipjack wall"
-	desc = "Стена шаттла покрыта граффити."
+	desc = "Стены шаттла, покрытые граффити."
 	icon = 'icons/locations/shuttles/vox_shuttle.dmi'
 	icon_state = "14,11"
 
