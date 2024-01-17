@@ -2561,7 +2561,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -7796,7 +7796,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/security)
 "sC" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor,
 /area/awaymission/labs/security)
 "sD" = (
@@ -8519,7 +8519,7 @@
 	},
 /area/awaymission/labs/medical)
 "us" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

@@ -468,29 +468,6 @@
 	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
 
-/obj/machinery/kitchen_machine/microwave/einstein_electronics
-	desc = "Микроволновка фирмы Einstein Electronics."
-	icon_state = "microwave_grey"
-
-	glow_icon_state = "microwave"
-
-/obj/machinery/kitchen_machine/microwave/einstein_electronics/atom_init()
-	. = ..()
-	icon_state = "microwave_[pick(list("red", "grey", "black", "white"))]"
-	off_icon = icon_state
-	on_icon = icon_state
-	broken_icon = "[icon_state]_br"
-	dirty_icon = "[icon_state]_di"
-	open_icon = "[icon_state]_o"
-
-/obj/machinery/kitchen_machine/microwave/einstein_electronics/start()
-	. = ..()
-	set_light(2, 0.5, "#ffaa66")
-
-/obj/machinery/kitchen_machine/microwave/einstein_electronics/abort()
-	. = ..()
-	set_light(0,0)
-
 /obj/machinery/kitchen_machine/oven
 	name = "oven"
 	desc = "Cookies are ready, dear."

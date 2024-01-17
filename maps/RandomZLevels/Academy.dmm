@@ -285,7 +285,7 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aU" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor/wood,
 /area/awaymission/academy/headmaster)
 "aV" = (

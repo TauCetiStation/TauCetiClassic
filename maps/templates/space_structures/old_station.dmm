@@ -343,7 +343,7 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
 "bR" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "blue"
@@ -1518,7 +1518,7 @@
 	},
 /area/space_structures/old_station/central/bridge)
 "iV" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "purple"
@@ -1833,7 +1833,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -5712,7 +5712,7 @@
 	},
 /area/space_structures/old_station/right)
 "IY" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "brownold"
 	},

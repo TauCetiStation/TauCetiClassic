@@ -5952,7 +5952,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/bridge)
 "aEc" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -6831,7 +6831,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aOj" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -17057,7 +17057,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "cJM" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -17524,7 +17524,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/hallway/outbranch)
 "cNY" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitegreen"
@@ -20528,7 +20528,7 @@
 	},
 /area/shuttle/escape_pod5/station)
 "dsx" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 5;
 	icon_state = "siding_wood_line"
@@ -24166,7 +24166,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "egM" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -36377,7 +36377,7 @@
 /obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/brig)
@@ -56115,7 +56115,7 @@
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62931,7 +62931,7 @@
 	},
 /area/station/civilian/dormitories/dormone)
 "lSo" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 9;
 	icon_state = "siding_wood_line"
@@ -64291,7 +64291,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "mev" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -65999,7 +65999,7 @@
 	},
 /area/station/civilian/hydroponics)
 "mxU" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
 	},
@@ -68454,7 +68454,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "mZJ" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "mZL" = (
@@ -74088,7 +74088,7 @@
 	},
 /area/station/engineering/atmos)
 "oem" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/camera{
 	c_tag = "Coworking";
 	dir = 4
@@ -74423,7 +74423,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/brig)
 "oib" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/alarm{
 	pixel_x = -28;
 	pixel_y = -6
@@ -81175,7 +81175,7 @@
 	},
 /area/station/rnd/lab)
 "pCQ" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -99504,7 +99504,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/storage_secure)
 "tmL" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -105601,7 +105601,7 @@
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/dormitories/theater)
 "usE" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -107102,7 +107102,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "uIU" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -111692,7 +111692,7 @@
 	},
 /area/station/medical/medbreak)
 "vHN" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor/wood{
 	icon_state = "wood14"
 	},
@@ -122809,7 +122809,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/equip)
 "xZz" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor/wood{
 	icon_state = "wood6"
 	},
@@ -123664,7 +123664,7 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "yjU" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkredcorners"

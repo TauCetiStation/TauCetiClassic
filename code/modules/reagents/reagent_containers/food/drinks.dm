@@ -101,26 +101,6 @@
 		var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
-	if(istype(target, /obj/structure/water_cooler)) //A dispenser. Transfer FROM it TO us.
-		var/obj/structure/water_cooler/Cooler = target
-		if(!Cooler.bottle)
-			return
-
-		if(!Cooler.bottle.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[Cooler] is empty.</span>")
-			return
-		if (!reagents.maximum_volume) // Locked or broken container
-			to_chat(user, "<span class='warning'> [src] can't hold this.</span>")
-			return
-		if(reagents.total_volume >= reagents.maximum_volume)
-			to_chat(user, "<span class='warning'>[src] is full.</span>")
-			return
-
-		var/trans = Cooler.bottle.reagents.trans_to(src, 5)
-		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
-		Cooler.update_icon()
-		Cooler.bottle.update_icon()
-
 	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty.</span>")

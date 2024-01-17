@@ -7208,7 +7208,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/structure/closet/small_freezer,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor{
@@ -9741,7 +9741,7 @@
 	},
 /area/asteroid/mine/west_outpost)
 "vJ" = (
-/obj/structure/closet/small_freezer,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
