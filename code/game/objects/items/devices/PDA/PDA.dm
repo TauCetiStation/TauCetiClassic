@@ -992,14 +992,12 @@
 						ui.close()
 					else
 						set_custom_ringtone(t)
-
 						play_ringtone(ignore_presence = TRUE)
 				else
 					set_ringtone(global.ringtones_by_names[Tone])
 					play_ringtone(ignore_presence = TRUE)
 
 		if("Message")
-
 			var/obj/item/device/pda/P = locate(href_list["target"])
 			create_message(U, P, !href_list["notap"])
 			stop_ringtone()

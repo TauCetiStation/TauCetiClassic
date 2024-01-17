@@ -624,9 +624,7 @@ SUBSYSTEM_DEF(job)
 			if(chosen_ringtone == "My Ringtone")
 				pda.set_custom_ringtone(H.client.prefs.custom_melody)
 			else
-				var/datum/ringtone/Ring = ringtones_by_names[chosen_ringtone]
-				pda.chiptune_player.repeat = Ring.replays
-				pda.chiptune_player.parse_song_text(Ring.melody)
+				pda.set_ringtone(ringtones_by_names[chosen_ringtone])
 
 	return TRUE
 
