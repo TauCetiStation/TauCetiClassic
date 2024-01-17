@@ -131,6 +131,7 @@
 
 /obj/item/organ/internal/heart
 	name = "heart"
+	cases = list("сердце", "сердца", "сердцу", "сердце", "сердцем", "сердце")
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
 	var/heart_status = HEART_NORMAL
@@ -166,6 +167,7 @@
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
+	cases = list("помпа системы охлаждения", "помпы системы охлаждения", "помпе системы охлаждения", "помпу системы охлаждения", "помпой системы охлаждения", "помпой системы охлаждения")
 
 	var/pumping_rate = 5
 	var/bruised_loss = 3
@@ -192,6 +194,7 @@
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
+	cases = list("лёгкие", "лёгких", "лёгким", "лёгкие", "лёгкими", "лёгких")
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
 
@@ -199,18 +202,22 @@
 
 /obj/item/organ/internal/lungs/vox
 	name = "air capillary sack"
+	cases = list("воздушно-капиллярный мешок", "воздушно-капиллярного мешка", "воздушно-капиллярному мешку", "воздушно-капиллярный мешок", "воздушно-капиллярным мешком", "воздушно-капиллярном мешке")
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs/skrell
 	name = "respiration sac"
+	cases = list("дыхательная сумка", "дыхательной сумки", "дыхательной сумке", "дыхательную сумку", "дыхательной сумкой", "дыхательной сумке")
 	has_gills = TRUE
 
 /obj/item/organ/internal/lungs/diona
 	name = "virga inopinatus"
+	cases = list("полая ветка", "полой ветки", "полой ветки", "полую ветку", "полой веткой", "полой ветке")
 	process_accuracy = 10
 
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
+	cases = list("охлаждающий элемент", "охлаждающего элемента", "охлаждающему элементу", "охлаждающий элемент", "охлаждающим элементом", "охлаждающем элементе")
 
 	var/refrigerant_max = 50
 	var/refrigerant = 50
@@ -265,18 +272,22 @@
 
 /obj/item/organ/internal/liver
 	name = "liver"
+	cases = list("печень", "печени", "печени", "печень", "печенью", "печени")
 	organ_tag = O_LIVER
 	parent_bodypart = BP_CHEST
 	process_accuracy = 10
 
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
+	cases = list("хлорофилловый мешок", "хлорофиллового мешка", "хлорофилловому мешку", "хлорофилловый мешок", "хлорофилловым мешком", "хлорофилловом мешке")
 
 /obj/item/organ/internal/liver/vox
 	name = "waste tract"
+	cases = list("канал отходов", "канала отходов", "каналу отходов", "канал отходов", "каналом отходов", "канале отходов")
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
+	cases = list("аккумулятор", "аккумулятора", "аккумулятору", "аккумулятор", "аккумулятором", "аккумуляторе")
 	var/accumulator_warning = 0
 
 /obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
@@ -360,18 +371,22 @@
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
+	cases = list("почки", "почек", "почкам", "почки", "почками", "почках")
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/kidneys/vox
 	name = "filtration bladder"
+	cases = list("фильтрующий пузырь", "фильтрующего пузыря", "фильтрующему пузырю", "фильтрующий пузырь", "фильтрующим пузырём", "фильтрующем пузыре")
 
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
+	cases = list("вакуоль", "вакуоли", "вакуолям", "вакуоль", "вакуолью", "вакуоли")
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/kidneys/ipc
 	name = "self-diagnosis unit"
+	cases = list("устройство самодиагностики", "устройства самодиагностики", "устройству самодиагностики", "устройство самодиагностики", "устройством самодиагностики", "устройстве самодиагностики")
 	parent_bodypart = BP_GROIN
 
 	var/next_warning = 0
@@ -398,28 +413,34 @@
 
 /obj/item/organ/internal/brain
 	name = "brain"
+	cases = list("мозг", "мозга", "мозгу", "мозг", "мозгом", "мозге")
 	organ_tag = O_BRAIN
 	parent_bodypart = BP_HEAD
 
 /obj/item/organ/internal/brain/diona
 	name = "main node nymph"
+	cases = list("главная нимфа", "главной нимфы", "главной нимфе", "главную нимфу", "главной нимфой", "главной нимфе")
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/brain/ipc
 	name = "positronic brain"
+	cases = list("позитронный мозг", "позитронного мозга", "позитронному мозгу", "позитронный мозг", "позитронным мозгом", "позитронном мозге")
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/brain/abomination
 	name = "deformed brain"
+	cases = list("деформированный мозг", "деформированного мозга", "деформированному мозгу", "деформированный мозг", "деформированным мозгом", "деформированном мозге")
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/eyes
 	name = "eyes"
+	cases = list("глаза", "глаз", "глазам", "глаза", "глазами", "глазах")
 	organ_tag = O_EYES
 	parent_bodypart = BP_HEAD
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"
+	cases = list("камеры", "камер", "камерам", "камеры", "камерами", "камерах")
 	robotic = 2
 
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
