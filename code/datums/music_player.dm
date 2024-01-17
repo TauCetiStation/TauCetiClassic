@@ -63,13 +63,11 @@ var/global/datum/notes_storage/note_cache_storage = new
 	var/show_edit = TRUE
 	var/repeat    = 0
 	var/volume    = DEFAULT_VOLUME
-	var/volume_channel = VOL_EFFECTS_INSTRUMENT
 
-/datum/music_player/New(instrument, sound_path, volume_channel = VOL_EFFECTS_INSTRUMENT)
+/datum/music_player/New(instrument, sound_path)
 	..()
 	src.instrument = instrument
 	src.sound_path = sound_path
-	src.volume_channel = volume_channel
 
 /datum/music_player/Destroy()
 	instrument = null
@@ -278,7 +276,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 						var/sound/S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"]
 						if(!S)
 							S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"] = sound("[sound_path]/[current_note].ogg")
-						playsound(instrument, S, volume_channel, volume, FALSE, null, null, falloff = 5)
+						playsound(instrument, S, VOL_EFFECTS_INSTRUMENT, volume, FALSE, null, null, falloff = 5)
 
 				var/pause_time = COUNT_PAUSE(song_tempo)
 
