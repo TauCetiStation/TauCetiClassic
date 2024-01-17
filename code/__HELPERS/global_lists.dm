@@ -287,10 +287,9 @@
 		for(var/pool in L)
 			LAZYADD(virus_types_by_pool[pool], e)
 
-	global.standard_pda_ringtones = list()
+	global.ringtones_by_names = list()
 	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
-		if(initial(Ring.standard_pda))
-			global.standard_pda_ringtones["[initial(Ring.name)]"] = Ring
+		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

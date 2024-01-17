@@ -258,7 +258,7 @@
 				if("use_skirt")
 					use_skirt = pick(TRUE, FALSE)
 				if("ringtone")
-					chosen_ringtone = pick(global.standard_pda_ringtones)
+					chosen_ringtone = pick(global.ringtones_by_names)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
@@ -460,7 +460,7 @@
 						backbag = backbaglist.Find(new_backbag)
 
 				if("ringtone")
-					var/list/pref_ringtones = global.standard_pda_ringtones + "My Ringtone"
+					var/list/pref_ringtones = global.ringtones_by_names + "My Ringtone"
 					var/Tone = input(user, "Выберите рингтон:", "Character Preference", chosen_ringtone) as null|anything in pref_ringtones
 					if(Tone && (Tone in pref_ringtones))
 						if(Tone == "My Ringtone")

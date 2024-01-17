@@ -622,13 +622,11 @@ SUBSYSTEM_DEF(job)
 		var/chosen_ringtone = H.client?.prefs.chosen_ringtone
 		if(chosen_ringtone)
 			if(chosen_ringtone == "My Ringtone")
-				pda.ringtone = pda.custom_ringtone
-				pda.custom_ringtone.melody = H.client.prefs.custom_melody
+				pda.set_custom_ringtone(H.client.prefs.custom_melody)
 			else
-				pda.ringtone = pda.ringtones[chosen_ringtone]
-
-			pda.chiptune_player.repeat = pda.ringtone.replays
-			pda.chiptune_player.parse_song_text(pda.ringtone.melody)
+				var/datum/ringtone/Ring = ringtones_by_names[chosen_ringtone]
+				pda.chiptune_player.repeat = Ring.replays
+				pda.chiptune_player.parse_song_text(Ring.melody)
 
 	return TRUE
 
