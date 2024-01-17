@@ -1283,6 +1283,93 @@
 	required_reagents = list("uranium" = 1, "cola" = 6)
 	result_amount = 6
 
+/datum/chemical_reaction/moonshine
+	name = "Moonshine"
+	id = "moonshine"
+	result = "moonshine"
+	required_reagents = list("nutriment" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/grenadine
+	name = "Grenadine Syrup"
+	id = "grenadine"
+	result = "grenadine"
+	required_reagents = list("berryjuice" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/wine
+	name = "Wine"
+	id = "wine"
+	result = "wine"
+	required_reagents = list("grapejuice" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/pwine
+	name = "Poison Wine"
+	id = "pwine"
+	result = "pwine"
+	required_reagents = list("poisonberryjuice" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+/datum/chemical_reaction/melonliquor
+	name = "Melon Liquor"
+	id = "melonliquor"
+	result = "melonliquor"
+	required_reagents = list("watermelonjuice" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/bluecuracao
+	name = "Blue Curacao"
+	id = "bluecuracao"
+	result = "bluecuracao"
+	required_reagents = list("orangejuice" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/spacebeer
+	name = "Space Beer"
+	id = "spacebeer"
+	result = "beer"
+	required_reagents = list("cornoil" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/gourdbeer
+	name = "Gourd Beer"
+	id = "gourdbeer"
+	result = "gourdbeer"
+	required_reagents = list("gourd" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/vodka
+	name = "Vodka"
+	id = "vodka"
+	result = "vodka"
+	required_reagents = list("potato" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/sake
+	name = "Sake"
+	id = "sake"
+	result = "sake"
+	required_reagents = list("rice" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/kahlua
+	name = "Kahlua"
+	id = "kahlua"
+	result = "kahlua"
+	required_reagents = list("coffee" = 5, "sugar" = 5)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 5
+
 /datum/chemical_reaction/gin_tonic
 	name = "Gin and Tonic"
 	id = "gintonic"
@@ -2104,110 +2191,18 @@ TODO: Convert everything to custom hair dye,
 
 
 // Barrel recipes
-/datum/chemical_reaction/alcohol/moonshine
-	name = "Moonshine"
-	id = "moonshine"
-	required_reagents = list("nutriment" = 2, "sugar" = 1)
+/datum/chemical_reaction/ice_to_water
+	name = "Ice to Water"
+	id = "ice_to_water"
+	required_reagents = list("ice" = 1)
 	required_catalysts = list("agium" = 1)
-	result = "moonshine"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
+	result = "water"
+	result_amount = 2
 
-/datum/chemical_reaction/alcohol/grenadine
-	name = "Grenadine"
-	id = "grenadine"
-	required_reagents = list("berryjuice" = 2, "sugar" = 1)
+/datum/chemical_reaction/water_to_nothing
+	name = "Water to Nothing"
+	id = "water_to_nothing"
+	required_reagents = list("water" = 1)
 	required_catalysts = list("agium" = 1)
-	result = "grenadine"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-/datum/chemical_reaction/alcohol/wine
-	name = "Wine"
-	id = "wine"
-	required_reagents = list("grapejuice" = 2, "sugar" = 1)
-	required_catalysts = list("agium" = 1)
-	result = "wine"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-/datum/chemical_reaction/alcohol/pwine
-	name = "Pwine"
-	id = "pwine"
-	required_reagents = list("poisonberryjuice" = 2, "sugar" = 1)
-	required_catalysts = list("agium" = 1)
-	result = "pwine"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-/datum/chemical_reaction/alcohol/melonliquor
-	name = "Melonliquor"
-	id = "melonliquor"
-	required_reagents = list("watermelonjuice" = 2, "sugar" = 1)
-	required_catalysts = list("agium" = 1)
-	result = "melonliquor"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-/datum/chemical_reaction/alcohol/bluecuracao
-	name = "Bluecuracao"
-	id = "bluecuracao"
-	required_reagents = list("orangejuice" = 2, "sugar" = 1)
-	required_catalysts = list("agium" = 1)
-	result = "bluecuracao"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-/datum/chemical_reaction/alcohol/beer
-	name = "Beer"
-	id = "beer"
-	required_reagents = list("cornoil" = 2, "sugar" = 1)
-	required_catalysts = list("agium" = 1)
-	result = "beer"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-/datum/chemical_reaction/alcohol/gourdbeer
-	name = "Gourdbeer"
-	id = "gourdbeer"
-	required_reagents = list("gourd" = 2, "sugar" = 1)
-	required_catalysts = list("agium" = 1)
-	result = "gourdbeer"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-/datum/chemical_reaction/alcohol/vodka
-	name = "Vodka"
-	id = "vodka"
-	required_reagents = list("potato" = 2, "sugar" = 1)
-	required_catalysts = list("agium" = 1)
-	result = "vodka"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-/datum/chemical_reaction/alcohol/sake
-	name = "Sake"
-	id = "sake"
-	required_reagents = list("rice" = 2, "sugar" = 1)
-	required_catalysts = list("agium" = 1)
-	result = "sake"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-/datum/chemical_reaction/alcohol/mead
-	name = "Mead"
-	id = "mead"
-	required_reagents = list("honey" = 2, "sugar" = 1)
-	required_catalysts = list("agium" = 1)
-	result = "mead"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
-
-/datum/chemical_reaction/alcohol/kahlua
-	name = "Kahlua"
-	id = "kahlua"
-	required_reagents = list("coffee" = 2, "sugar" = 1)
-	required_catalysts = list("agium" = 1)
-	result = "kahlua"
-	result_amount = 3
-	secondary_results = list("ethanol" = 0.25)
+	result = "nothing"
+	result_amount = 1
