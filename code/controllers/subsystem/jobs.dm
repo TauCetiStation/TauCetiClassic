@@ -621,7 +621,7 @@ SUBSYSTEM_DEF(job)
 
 		var/chosen_ringtone = H.client?.prefs.chosen_ringtone
 		if(chosen_ringtone)
-			pda.set_ringtone(chosen_ringtone, H.client.prefs.custom_melody)
+			pda.set_ringtone(chosen_ringtone, H.client?.prefs.custom_melody)
 
 	return TRUE
 
