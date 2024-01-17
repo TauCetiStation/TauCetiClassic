@@ -462,14 +462,15 @@
 				if("ringtone")
 					var/list/pref_ringtones = global.ringtones_by_names + "My Ringtone"
 					var/Tone = input(user, "Выберите рингтон:", "Character Preference", chosen_ringtone) as null|anything in pref_ringtones
-					if(Tone && (Tone in pref_ringtones))
-						if(Tone == "My Ringtone")
-							var/t = sanitize(input(user, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
-							if (!t)
-								return
-							custom_melody = t
+					if(!Tone)
+						return
+					if(Tone == "My Ringtone")
+						var/t = sanitize(input(user, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
+						if (!t)
+							return
+						custom_melody = t
 
-						chosen_ringtone = Tone
+					chosen_ringtone = Tone
 
 				if("use_skirt")
 					use_skirt = !use_skirt

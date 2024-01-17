@@ -982,7 +982,7 @@
 			stop_ringtone()
 			var/list/chose_ringtone = global.ringtones_by_names + "My Ringtone"
 			var/Tone = input(U, "Выберите рингтон", name) as null|anything in chose_ringtone
-			if(Tone && (Tone in chose_ringtone) && Adjacent(U))
+			if(Tone && Adjacent(U))
 				if(Tone == "My Ringtone")
 					var/t = sanitize(input(U, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
 					if (!t || !Adjacent(U))
@@ -991,10 +991,10 @@
 						to_chat(U, "The PDA softly beeps.")
 						ui.close()
 					else
-						set_custom_ringtone(t)
+						set_ringtone(Tone, t)
 						play_ringtone(ignore_presence = TRUE)
 				else
-					set_ringtone(global.ringtones_by_names[Tone])
+					set_ringtone(Tone)
 					play_ringtone(ignore_presence = TRUE)
 
 		if("Message")
@@ -1988,14 +1988,17 @@
 /obj/item/device/pda/proc/stop_ringtone()
 	chiptune_player.playing = FALSE
 
-/obj/item/device/pda/proc/set_ringtone(datum/ringtone/Ring)
+/obj/item/device/pda/proc/set_ringtone(ringtone, melody = null)
+	if(!Ring)
+		return
 	stop_ringtone()
-	chiptune_player.repeat = Ring.replays
-	chiptune_player.parse_song_text(Ring.melody)
 
-/obj/item/device/pda/proc/set_custom_ringtone(melody)
-	stop_ringtone()
-	chiptune_player.repeat = 1
-	chiptune_player.parse_song_text(melody)
+	if(melody && ringtone == "Custom Ringtone")
+		chiptune_player.repeat = 1
+		chiptune_player.parse_song_text(melody)
+	else
+		var/datum/ringtone/Ring = global.ringtones_by_names[ringtone]
+		chiptune_player.repeat = Ring.replays
+		chiptune_player.parse_song_text(Ring.melody)
 
 #undef TRANSCATION_COOLDOWN
