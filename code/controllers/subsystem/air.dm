@@ -184,7 +184,7 @@ SUBSYSTEM_DEF(air)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(!QDELETED(thing))
-			thing.process()
+			thing.process(wait * 0.1)
 		else
 			networks -= thing
 		if (MC_TICK_CHECK)
@@ -275,7 +275,7 @@ SUBSYSTEM_DEF(air)
 	while (currentrun.len)
 		var/obj/fire/F = currentrun[currentrun.len]
 		currentrun.len--
-		F.process()
+		F.process(wait * 0.1)
 		if (MC_TICK_CHECK)
 			return
 

@@ -178,7 +178,9 @@
 	remove_standing_overlay(X_FIRE_UPPER_LAYER)
 
 	if(on_fire)
-		overlays_standing[X_FIRE_UPPER_LAYER] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = icon_state + "_fire", layer = -X_FIRE_UPPER_LAYER)
+		var/image/over = image(icon = 'icons/mob/alienqueen.dmi', icon_state = icon_state + "_fire", layer = -X_FIRE_UPPER_LAYER)
+		over.plane = LIGHTING_LAMPS_PLANE
+		overlays_standing[X_FIRE_UPPER_LAYER] = over
 
 	apply_standing_overlay(X_FIRE_UPPER_LAYER)
 
@@ -186,7 +188,9 @@
 	remove_standing_overlay(X_FIRE_UPPER_LAYER)
 
 	if(on_fire)
-		overlays_standing[X_FIRE_UPPER_LAYER] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = replacetext(icon_state, "_old", "") + "_fire", layer = -X_FIRE_UPPER_LAYER)
+		var/image/over = image(icon = 'icons/mob/alienqueen.dmi', icon_state = replacetext(icon_state, "_old", "") + "_fire", layer = -X_FIRE_UPPER_LAYER)
+		over.plane = LIGHTING_LAMPS_PLANE
+		overlays_standing[X_FIRE_UPPER_LAYER] = over
 
 	apply_standing_overlay(X_FIRE_UPPER_LAYER)
 
@@ -199,7 +203,9 @@
 	update_fire_underlay()
 	//cut_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
 	if(on_fire)
-		overlays_standing[X_FIRE_UPPER_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_overlay", layer = -X_FIRE_UPPER_LAYER)
+		var/image/over = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_overlay", layer = -X_FIRE_UPPER_LAYER)
+		over.plane = LIGHTING_LAMPS_PLANE
+		overlays_standing[X_FIRE_UPPER_LAYER] = over
 		//overlays_standing[X_FIRE_LOWER_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_underlay", layer = -X_FIRE_LOWER_LAYER)
 		//add_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
 	//overlays_standing[X_FIRE_LOWER_LAYER] = null
@@ -215,7 +221,9 @@
 	update_fire_underlay()
 	//cut_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
 	if(on_fire)
-		overlays_standing[X_FIRE_UPPER_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_overlay", layer = -X_FIRE_UPPER_LAYER)
+		var/image/over = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_overlay", layer = -X_FIRE_UPPER_LAYER)
+		over.plane = LIGHTING_LAMPS_PLANE
+		overlays_standing[X_FIRE_UPPER_LAYER] = over
 		//overlays_standing[X_FIRE_LOWER_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_underlay", layer = -X_FIRE_LOWER_LAYER)
 		//add_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
 	//overlays_standing[X_FIRE_LOWER_LAYER] = null

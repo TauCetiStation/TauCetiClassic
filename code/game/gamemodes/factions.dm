@@ -12,6 +12,8 @@
 	var/min_roles = 1
 	// Whether or not this faction accepts newspawn latejoiners
 	var/accept_latejoiners = FALSE
+	// Accepts roundstart populating. Set FALSE to make faction members list empty
+	var/rounstart_populate = TRUE
 
 	// Type of roles that should be in faction initially
 	var/datum/role/initroletype
@@ -404,6 +406,14 @@
 	for(var/datum/role/R in members)
 		if(R.antag && ckey(R.antag.key) == ckey)
 			return R
+
+/datum/faction/proc/get_active_members()
+	. = list()
+	for(var/datum/role/R in members)
+		var/mob/M = R.antag?.current
+		if(!M || !M.client)
+			continue
+		. += M
 
 /datum/faction/proc/check_crew()
 	var/total_human = 0

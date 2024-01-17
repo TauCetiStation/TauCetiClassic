@@ -114,22 +114,23 @@ var/global/list/airlock_overlays = list()
 		return PROCESS_KILL
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
-	if(!issilicon(usr))
-		if(isElectrified())
-			if(!justzap)
-				if(shock(user, 100))
-					justzap = TRUE
-					spawn (10)
-						justzap = FALSE
-					return
-			else /*if(justzap)*/
-				return
-		else if(user.hallucination > 50 && prob(10) && !operating)
-			to_chat(user, "<span class='warning'><B>You feel a powerful shock course through your body!</B></span>")
-			user.adjustHalLoss(10)
-			user.AdjustStunned(10)
-			return
-	..(user)
+	if(issilicon(usr) || !iscarbon(user))
+		return ..()
+
+	if(isElectrified() && !justzap && shock(user, 100))
+		justzap = TRUE
+		spawn (10)
+			justzap = FALSE
+		return
+	//needs rewriting all hallucination += num to one proc/adjust_hallucination(num)
+	//so directly call status_effect for now
+	if(user.hallucination > 50)
+		user.apply_status_effect(/datum/status_effect/hallucination, 2 SECONDS)
+
+	if(SEND_SIGNAL(user, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, src) & STOP_BUMP)
+		return
+
+	return ..(user)
 
 /obj/machinery/door/airlock/finish_crush_wedge_animation()
 	playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 50, FALSE, 3)
@@ -625,9 +626,12 @@ var/global/list/airlock_overlays = list()
 	da.created_name = name
 	da.update_state()
 
-	electronics.loc = da
-	da.electronics = electronics
-	electronics = null
+	if(electronics)
+		electronics.loc = da
+		da.electronics = electronics
+		electronics = null
+	else
+		da.electronics = new (da)
 
 	qdel(src)
 

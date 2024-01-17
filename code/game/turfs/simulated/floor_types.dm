@@ -243,6 +243,11 @@
 /turf/simulated/floor/beach/water/waterpool
 	icon_state = "seadeep"
 
+/turf/simulated/floor/beach/water/waterpool/atom_init()
+	. = ..()
+	AddComponent(/datum/component/fishing, list(/obj/item/clothing/mask/snorkel = 10, /obj/item/clothing/shoes/swimmingfins = 10, /obj/item/weapon/bikehorn/rubberducky = 10, /obj/item/clothing/under/bathtowel = 10, /obj/item/weapon/reagent_containers/food/snacks/soap = 5, /mob/living/simple_animal/hostile/xenomorph = 1), 10 SECONDS, rand(1, 3) , 20)
+
+
 /turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
 	if(!istype(old_loc, /turf/simulated/floor/beach/water/waterpool))
@@ -257,6 +262,7 @@
 	return
 
 /mob/living/carbon/human/exited_water_turf()
+	SEND_SIGNAL(src, COMSIG_HUMAN_EXITED_WATER)
 	if(get_species() != SKRELL)
 		Stun(2)
 	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
@@ -273,6 +279,7 @@
 		playsound(src, 'sound/effects/water_turf_entered_obj.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/human/entered_water_turf()
+	SEND_SIGNAL(src, COMSIG_HUMAN_ENTERED_WATER)
 	if(get_species() != SKRELL)
 		Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)

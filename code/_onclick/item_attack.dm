@@ -24,6 +24,9 @@
 	return FALSE
 
 /mob/living/attackby(obj/item/I, mob/user, params)
+	if(..())
+		return TRUE
+
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself

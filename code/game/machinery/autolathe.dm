@@ -198,6 +198,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 /obj/machinery/autolathe/RefreshParts()
 	..()
+
 	var/mb_rating = 0
 	man_rating = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)

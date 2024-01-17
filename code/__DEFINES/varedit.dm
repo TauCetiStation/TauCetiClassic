@@ -27,6 +27,7 @@
 		/datum/controller/subsystem/junkyard,\
 		/datum/tgui_list_input,\
 		/datum/tgui_modal,\
+		/datum/map_module,\
 	)
 
 /* protected variables */

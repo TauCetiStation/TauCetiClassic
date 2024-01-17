@@ -26,7 +26,7 @@
 	var/body_zone = null              // Unique identifier of this limb.
 	var/datum/species/species
 	var/original_color
-	var/b_type = "A+"
+	var/b_type = BLOOD_A_PLUS
 	var/is_rejecting = FALSE
 
 	// Wound and structural data.
@@ -586,8 +586,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	//Eyes
 	if(species && species.eyes)
 		var/eyes_layer = -icon_layer
-
-		var/mutable_appearance/img_eyes_s = mutable_appearance('icons/mob/human_face.dmi', species.eyes, eyes_layer)
+		var/mutable_appearance/img_eyes_s = mutable_appearance(species.eyes_icon, species.eyes, eyes_layer)
 		if(species.eyes_glowing)
 			img_eyes_s.plane = LIGHTING_LAMPS_PLANE
 			img_eyes_s.layer = ABOVE_LIGHTING_LAYER
