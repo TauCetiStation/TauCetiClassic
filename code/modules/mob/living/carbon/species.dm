@@ -17,6 +17,9 @@
 	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
 	var/hud_offset_y = 0
 	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
+	var/r_skin = 0
+	var/g_skin = 0
+	var/b_skin = 0 // skins for races
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
