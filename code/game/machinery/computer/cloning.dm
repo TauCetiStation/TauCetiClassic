@@ -122,7 +122,7 @@
 				dat += "Статус блокировки: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Заблокирован" : "Разблокирован"]</a><br>"
 
 			if (!isnull(src.pod1))
-				dat += "Биомасса: <i>[src.pod1.biomass] единиц(а)</i><br>"
+				dat += "Биомасса: <i>[src.pod1.biomass].</i><br>"
 
 			// Database
 			dat += "<h4>Функции для управления базой данных</h4>"
