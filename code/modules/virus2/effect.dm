@@ -205,7 +205,7 @@
 	name = "Regenerative Coma"
 	desc = "После получения серьёзных повреждений, вирус заставляет носителя впасть в кому, а затем быстро восстанавливает его."
 	level = 4
-	passive_message = "<span class='notice'>Боль от ран заставляет вас чувствовать себя сонным...</span>"
+	passive_message = "<span class='notice'>От боли в ранах вас клонит в сон...</span>"
 	var/active_coma = FALSE
 
 /datum/disease2/effect/heal/coma/can_heal(mob/living/carbon/human/M, datum/disease2/disease/disease)
@@ -284,7 +284,7 @@
 	if(prob(20) || (holder.stage >= 1 && holder.stage <= 2))
 		to_chat(mob, "<span class='warning'>[pick("Вы чувствуете, как разваливаетесь на части.", "Ваша кожа осыпается, как пыль.")]</span>")
 	else if(holder.stage == 3)
-		to_chat(mob, "<span class='userdanger'>[pick("Вы чувствуете, как ваши мышцы слабеют.", "Ваша кожа отслаивается сама по себе.", "Вы как будто растворяетесь.")]</span>")
+		to_chat(mob, "<span class='userdanger'>[pick("Вы чувствуете, как слабеют ваши мышцы.", "Ваша кожа отслаивается сама по себе.", "Вы как будто растворяетесь.")]</span>")
 		mob.adjustBruteLoss(rand(6,10))
 
 /datum/disease2/effect/stage_boost
