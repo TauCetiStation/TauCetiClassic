@@ -16,10 +16,6 @@
 	var/fat_limb_icons = FALSE
 	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
 	var/hud_offset_y = 0
-	var/r_skin = 0
-	var/g_skin = 0
-	var/b_skin = 0 // skins for races
-
 	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
 
 	// Combat vars.
@@ -1609,9 +1605,6 @@
 
 /datum/species/slime
 	name = SLIME
-	r_skin = 0
-	g_skin = 0
-	b_skin = 0
 	icobase = 'icons/mob/human_races/r_slime.dmi'
 	deform = 'icons/mob/human_races/r_slime.dmi'
 
@@ -1625,10 +1618,6 @@
 	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
 
 	darksight = 3
-
-	brute_mod = 0.5
-	burn_mod = 1.5
-	tox_mod = 0
 
 	flags = list(
 	 NO_BREATHE = TRUE
