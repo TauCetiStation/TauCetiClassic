@@ -101,10 +101,7 @@
 
 	chiptune_player = new(src, "sound/musical_instruments/pda")
 
-	var/ringtone = pick(ringtones_by_names)
-	var/datum/ringtone/Ring = ringtones_by_names[ringtone]
-	chiptune_player.repeat = Ring.replays
-	chiptune_player.parse_song_text(Ring.melody)
+	set_ringtone(ringtones_by_names[pick(ringtones_by_names)])
 
 /obj/item/device/pda/Destroy()
 	var/datum/money_account/MA = get_account(owner_account)
@@ -1989,7 +1986,7 @@
 	chiptune_player.playing = FALSE
 
 /obj/item/device/pda/proc/set_ringtone(ringtone, melody = null)
-	if(!Ring)
+	if(!ringtone)
 		return
 	stop_ringtone()
 
