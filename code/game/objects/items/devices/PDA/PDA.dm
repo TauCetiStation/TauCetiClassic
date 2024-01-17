@@ -1991,10 +1991,12 @@
 	chiptune_player.playing = FALSE
 
 /obj/item/device/pda/proc/set_ringtone(datum/ringtone/Ring)
+	stop_ringtone()
 	chiptune_player.repeat = Ring.replays
 	chiptune_player.parse_song_text(Ring.melody)
 
 /obj/item/device/pda/proc/set_custom_ringtone(melody)
+	stop_ringtone()
 	chiptune_player.repeat = 1
 	chiptune_player.parse_song_text(melody)
 
