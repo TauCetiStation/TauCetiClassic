@@ -191,19 +191,19 @@
 
 /datum/disease2/effect/heal/chem
 	name = "Toxolysis"
-	desc = "Вирус быстро расщепляет все инородные химические вещества, попавшие в кровь."
+	desc = "Вирус быстро расщепляет инородные химические вещества, попавшие в кровь."
 	level = 4
 
 /datum/disease2/effect/heal/chem/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
 	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
 		M.reagents.remove_reagent(R.id, actual_power)
 		if(prob(2))
-			to_chat(M, "<span class='notice'>Вы чувствуете небольшое тепло, в то время как ваша кровь очищается.</span>")
+			to_chat(M, "<span class='notice'>Вы чувствуете небольшой жар, ваша кровь очищается.</span>") //kirolt
 	return 1
 
 /datum/disease2/effect/heal/coma
 	name = "Regenerative Coma"
-	desc = "Вирус заставляет носителя впасть в кому, подобную смерти, после получения серьёзных повреждений, а затем быстро восстанавливает их."
+	desc = "После получения серьёзных повреждений, вирус заставляет носителя впасть в кому, а затем быстро восстанавливает его."
 	level = 4
 	passive_message = "<span class='notice'>Боль от ран заставляет вас чувствовать себя сонным...</span>"
 	var/active_coma = FALSE
@@ -250,7 +250,7 @@
 
 /datum/disease2/effect/metabolism
 	name = "Metabolic Boost"
-	desc = "Вирус ускоряет метаболизм носителя, заставляя химические процессы протекать в два раза быстрее, но  при этом повышает аппетит."
+	desc = "Вирус ускоряет метаболизм, повышая аппетит, позваляет носителю усваивать вещества в два раза быстрее."
 	level = 4
 	cooldown = 60
 	max_stage = 5
@@ -265,7 +265,7 @@
 	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
 	if(!COOLDOWN_FINISHED(src, metabolicboost_message))
 		return
-	to_chat(M, "<span class='notice'>Ваш живот странно урчит, как будто бы ваш желудок работает быстрее обычного.</span>")
+	to_chat(M, "<span class='notice'>Вы чувствуете странное бульканье в желудке, как будто он работает гораздо быстрее, чем обычно.</span>")
 	COOLDOWN_START(src, metabolicboost_message, 1 MINUTES)
 
 /datum/disease2/effect/metabolism/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -300,11 +300,11 @@
 /datum/disease2/effect/stage_boost/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(disease.stage < disease.effects.len)
 		disease.stage = disease.effects.len
-		to_chat(mob, "<span class='notice'>Вы чувствуете небольшое тепло в области головы.</span>")
+		to_chat(mob, "<span class='notice'>Вы чувствуете небольшой жар в области головы.</span>")
 
 /datum/disease2/effect/gibbingtons
 	name = "Gibbingtons Syndrome"
-	desc = "Вирус генерирует сероводород в кровотоке, повреждая вены и артерии. В особых случаях, передозировка может привести к взрыву, который разнесёт носителя на кусочки."
+	desc = "Вирус производит сероводород в крови носителя, повреждая вены и артерии. В особых случаях, передозировка может привести к взрыву, который разнесёт носителя на кусочки."
 	level = 4
 	max_stage = 14
 	cooldown = 30
@@ -378,7 +378,7 @@
 				if(holder.stage == 7 && prob(20))
 					h.say(pick("О, банан?", "У тебя есть бананы?", "У-У-У-и-и","Уо Уо Уои ээи ээи иии ииии", "Ииик! Ииик!"))
 				else
-					to_chat(A, "<span class='danger'>[pick("Вы реально хотите бананов.", "Вы замечаете как начинаете постепенно деградировать.", "Вы становитесь ниже.", "Шерсть проступает на вашей коже.")]</span>")
+					to_chat(A, "<span class='danger'>[pick("Вы очень хотите бананов.", "Вы замечаете как начинаете постепенно деградировать.", "Вы становитесь ниже.", "Шерсть проступает на вашей коже.")]</span>")
 			if(8)
 				h.monkeyize()
 
@@ -407,7 +407,7 @@
 
 /datum/disease2/effect/dna
 	name = "Reverse Pattern Syndrome"
-	desc = "Вирус приcоединяется к ДНК носителя, вызывая вредные мутации до его удаленния."
+	desc = "Вирус приcоединяется к ДНК носителя, вызывая вредные мутации до его удаленния." //kirolt
 	level = 4
 	max_stage = 3
 	cooldown = 10
@@ -429,7 +429,7 @@
 
 /datum/disease2/effect/organs
 	name = "Shutdown Syndrome"
-	desc = "Вирус повреждает кости и мышечную ткань, медленно разрушая конечности носителя. Очень смертельно."
+	desc = "Вирус повреждает кости и мышечную ткань, медленно разрушая конечности носителя. Очень смертоносный."
 	level = 4
 	max_stage = 7
 	cooldown = 20
@@ -449,7 +449,7 @@
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
 				if (!(BP.status & ORGAN_DEAD))
 					BP.status |= ORGAN_DEAD
-					to_chat(H, "<span class='warning'>Вы больше не чувствуете какую-то конечность...</span>")
+					to_chat(H, "<span class='warning'>Вы больше не чувствуете какую-то конечность...</span>") //add cases
 					for (var/obj/item/organ/external/CHILD in BP.children)
 						CHILD.status |= ORGAN_DEAD
 				H.update_body()
@@ -478,7 +478,7 @@
 /datum/disease2/effect/bones/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1,2,3,4)
-			to_chat(mob, "<span class='notice'>[pick("Вы замечаете, что стали менее ловким.", "Вы двигаетесь более неуклюже, чем обычно.")]</span>")
+			to_chat(mob, "<span class='notice'>[pick("Вы замечаете, что стали менее ловким.", "Вы неуклюже двигаетесь.")]</span>")
 		if(5,6,7)
 			to_chat(mob, "<span class='notice'>[pick("Вы понимаете, что с вашими костями что-то не так.", "Ваши кости хрустят при движении.")]</span>")
 		if(8)
@@ -486,7 +486,7 @@
 				var/mob/living/carbon/human/H = mob
 				var/obj/item/organ/external/BP = pick(H.bodyparts)
 				BP.min_broken_damage = max(10, initial(BP.min_broken_damage) - 30)
-				to_chat(mob, "<span class='notice'>Вы поняли, что ваши конечности не такие крепкие, как прежде..</span>")
+				to_chat(mob, "<span class='notice'>Вы понимаете, что ваши конечности не такие крепкие, как прежде..</span>")
 
 /datum/disease2/effect/bones/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(A))
@@ -498,7 +498,7 @@
 
 /datum/disease2/effect/heal/starlight
 	name = "Starlight Condensation"
-	desc = "Вирус реагирует на звездный свет, вырабатывая регенерирующие химические вещества. Лучше всего работает при интоксикации."
+	desc = "Вирус реагирует на звездный свет, вырабатывая регенерирующие химические вещества. Лучше всего работает против интоксикации."
 	level = 3
 	passive_message = "<span class='notice'>Вы скучаете по ощущению звездного света на своей коже.</span>"
 
@@ -518,7 +518,7 @@
 
 /datum/disease2/effect/heal/starlight/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
 	if(M.getToxLoss())
-		passive_message = "<span class='notice'>Ваша кожа покалывает. А свет звёзд, похоже, исцеляет вас.</span>"
+		passive_message = "<span class='notice'>Ваша кожа покалывает. А свет звёзд исцеляет вас.</span>"
 	else
 		passive_message = initial(passive_message)
 	M.adjustToxLoss(-(4 * actual_power)) //most effective on toxins
@@ -547,7 +547,7 @@
 
 /datum/disease2/effect/heal/darkness
 	name = "Nocturnal Regeneration"
-	desc = "Вирус способен восстанавливать плоть хозяина в условиях недостаточного освещения, излечивая небольшие повреждения. Эффективен против механического травм."
+	desc = "Вирус способен восстанавливать плоть хозяина в условиях тусклого освещения, излечивая небольшие повреждения. Наиболее эффективен против механических повреждений."
 	level = 3
 	passive_message = "<span class='notice'>Вы чувствуете покалывание на коже, когда на неё падает свет.</span>"
 
@@ -593,7 +593,7 @@
 
 /datum/disease2/effect/fire/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(prob(50) || holder.stage == 1)
-		to_chat(mob, "<span class='warning'>[pick("Вы чувствуете, что стало слишком жарко.", "Вы слышите потрескивание.", "Вы чувствуете запах дыма.")]</span>")
+		to_chat(mob, "<span class='warning'>[pick("Вам жарко.", "Вы слышите потрескивание.", "Вы чувствуете запах дыма.")]</span>")
 	else if(prob(50) || holder.stage == 2)
 		mob.adjust_fire_stacks(1)
 		mob.IgniteMob()
@@ -602,7 +602,7 @@
 	else if(holder.stage == 3)
 		mob.adjust_fire_stacks(3)
 		mob.IgniteMob()
-		to_chat(mob, "<span class='userdanger'>Ваша кожа охвачена пламенем, словно вы попали в Ад!</span>")
+		to_chat(mob, "<span class='userdanger'>Ваша кожа всполыхает адским пламенем! </span>")
 		mob.emote("scream")
 
 /datum/disease2/effect/flesh_eating
@@ -648,7 +648,7 @@
 
 /datum/disease2/effect/sensory_restoration
 	name = "Sensory Restoration"
-	desc = "Вирус стимулирует циркуляцию крови, производство и замену тканей глаз и ушей, заставляя носителя регенерировать при их повреждении."
+	desc = "Вирус стимулирует регенерацию тканей глаз и ушей, позваляет носителю восстанавливать их при повреждении."
 	level = 3
 	max_stage = 4
 	cooldown = 1
@@ -832,7 +832,7 @@
 		to_chat(mob, "<span class='warning'>[pick("Вы чувствуете себя тупым.", "Вы на что-то уставились и смотрите.", "У вас текут слюни.")]</span>")
 		mob.adjustBrainLoss(5)
 	else if(holder.stage == 3)
-		to_chat(mob, "<span class='userdanger'>[pick("Вы на мгновение забыли, как дышать.", "Кто я?", "Как какать?.")]</span>") //Ayanami Rei
+		to_chat(mob, "<span class='userdanger'>[pick("Вы на мгновение забыли, как дышать.", "Кто я?", "Вы очень глупы.")]</span>") //Ayanami Rei
 		if(ishuman(mob) && prob(10))
 			var/mob/living/carbon/human/H = mob
 			var/obj/item/organ/internal/brain/IO = H.organs_by_name[O_BRAIN]
@@ -978,7 +978,7 @@
 
 /datum/disease2/effect/confusion
 	name = "Topographical Cretinism"
-	desc = "Вирус повреждает мозг, из-за чего носитель не может ориентироваться в пространстве."
+	desc = "Вирус повреждает мозг, вызывая сильную дезориентацию."
 	level = 2
 	max_stage = 3
 	cooldown = 60
@@ -1012,7 +1012,7 @@
 
 /datum/disease2/effect/weight_even
 	name = "Weight Even"
-	desc = "Вирус изменяет метаболизм хозяина, синтезируя питательные вещества из обычно несъедобных источников, делая его гораздо более эффективным, чем обычно."
+	desc = "Вирус изменяет метаболизм хозяина, делая его гораздо более эффективным, позволяет синтезировать питательные вещества из несъедобных источников."
 	level = 2
 	max_stage = 3
 	cooldown = 10
@@ -1037,7 +1037,7 @@
 
 /datum/disease2/effect/stimulant
 	name = "Adrenaline Extra"
-	desc = "Вирус синтезирует стимуляторы в кровотоке, давая хозяину много энергии и сил."
+	desc = "Вирус производит стимуляторы в крови, давая носителю много энергии и сил."
 	level = 2
 	max_stage = 3
 	cooldown = 10
@@ -1119,7 +1119,7 @@
 
 /datum/disease2/effect/drowsness
 	name = "Narcolepsy"
-	desc = "Вирус вызывает гормональный дисбаланс, в результате чего у хозяина появляются проблемы со сном и приступы внезапного засыпания."
+	desc = "Вирус влияет на гормональный баланс, вызывая у носителя нарколепсию."
 	level = 1
 	max_stage = 4
 	cooldown = 60
@@ -1175,7 +1175,7 @@
 
 /datum/disease2/effect/hungry
 	name = "Appetiser Effect"
-	desc = "Вирус изменяет метаболизм хозяина, делая его практически неспособным получать питание из пищи."
+	desc = "Вирус изменяет метаболизм носителя, делая его практически неспособным к усваиванию пищи."
 	level = 1
 	max_stage = 3
 	cooldown = 30
@@ -1277,7 +1277,7 @@
 
 /datum/disease2/effect/monitoring
 	name = "Monitoring"
-	desc = "Вирус производит наниты, которые отслеживают жизненно важные органы и местоположение хозяина, отправляя их в сенсорную сеть станции."
+	desc = "Вирус производит наниты, которые отслеживают состояние органов и местоположение носителя, отправляя информацию в сенсорную сеть станции."
 	level = 1
 	max_stage = 1
 	cooldown = 600
@@ -1381,7 +1381,7 @@
 
 /datum/disease2/effect/twitch
 	name = "Twitcher"
-	desc = "Вирус провоцирует беспорядочные мышечные спазмы, вызывая постоянные подергивания."
+	desc = "Вирус провоцирует беспорядочные мышечные спазмы."
 	level = 1
 	max_stage = 3
 	cooldown = 5
@@ -1430,7 +1430,7 @@
 
 /datum/disease2/effect/hemocoagulation
 	name = "Rapid Coagulation"
-	desc = "Вирус, производящий наниты, которые ускоряют свертывание крови при ранении хозяина, значительно снижая скорость кровотечения."
+	desc = "Вирус производит наниты, ускоряющие свертывание крови носителя, значительно снижая тяжесть кровотечений."
 	level = 1
 	max_stage = 2
 	cooldown = 40
