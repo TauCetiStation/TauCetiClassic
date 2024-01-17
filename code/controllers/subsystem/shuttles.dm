@@ -138,43 +138,12 @@ SUBSYSTEM_DEF(shuttle)
 					dock_act(end_location, "shuttle_escape")
 					dock_act(/area/centcom/evac, "shuttle_escape")
 
+
 							//pods
-					start_location = locate(/area/shuttle/escape_pod1/transit)
-					end_location = locate(/area/shuttle/escape_pod1/centcom)
-					if(prob(5) || check_emag(start_location)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod1")
-						dock_act(/area/centcom/evac, "pod1")
-
-					shake_mobs_in_area(end_location, EAST)
-
-					start_location = locate(/area/shuttle/escape_pod2/transit)
-					end_location = locate(/area/shuttle/escape_pod2/centcom)
-					if(prob(5) || check_emag(start_location)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod2")
-						dock_act(/area/centcom/evac, "pod2")
-
-					shake_mobs_in_area(end_location, EAST)
-
-					start_location = locate(/area/shuttle/escape_pod3/transit)
-					end_location = locate(/area/shuttle/escape_pod3/centcom)
-					if(prob(5) || check_emag(start_location)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod3")
-						dock_act(/area/centcom/evac, "pod3")
-
-					shake_mobs_in_area(end_location, EAST)
-
-					start_location = locate(/area/shuttle/escape_pod4/transit)
-					end_location = locate(/area/shuttle/escape_pod4/centcom)
-					if(prob(5) || check_emag(start_location)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod4")
-						dock_act(/area/centcom/evac, "pod4")
-
-					shake_mobs_in_area(end_location, WEST)
-
+					pod_docking(/area/shuttle/escape_pod1/transit, /area/shuttle/escape_pod1/centcom, "pod1")
+					pod_docking(/area/shuttle/escape_pod2/transit, /area/shuttle/escape_pod2/centcom, "pod2")
+					pod_docking(/area/shuttle/escape_pod3/transit, /area/shuttle/escape_pod3/centcom, "pod3")
+					pod_docking(/area/shuttle/escape_pod4/transit, /area/shuttle/escape_pod4/centcom, "pod4")
 					online = 0
 
 					return TRUE
@@ -612,7 +581,7 @@ SUBSYSTEM_DEF(shuttle)
 	return int.emagged
 
 /datum/controller/subsystem/shuttle/proc/try_launch_pod(area/escape_pod_start, area/escape_pod_end, move_content_dir, shake_dir, loc_name)
-	if(!locate(escape_pod_start) in world)
+	if(!locate(escape_pod_start) in all_areas)
 		return
 	var/area/start = locate(escape_pod_start)
 	var/area/transit = locate(escape_pod_end)
@@ -626,6 +595,15 @@ SUBSYSTEM_DEF(shuttle)
 			M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 		shake_mobs_in_area(transit, shake_dir)
 		undock_act(start, loc_name)
+
+/datum/controller/subsystem/shuttle/proc/pod_docking(area/start, area/end, loc_name)
+	var/area/transit = locate(start)
+	var/area/centcom = locate(end)
+	if(prob(5) || check_emag(transit)) // 5% that they survive
+		transit.move_contents_to(centcom, null, NORTH)
+		dock_act(centcom, loc_name)
+		dock_act(/area/centcom/evac, loc_name)
+	shake_mobs_in_area(centcom, EAST)
 
 
 /datum/controller/subsystem/shuttle/proc/set_eta_timeofday(flytime = SSshuttle.movetime)
