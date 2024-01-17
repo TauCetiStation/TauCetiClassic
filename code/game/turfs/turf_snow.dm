@@ -44,6 +44,7 @@
 			basedatum = new basedatum
 
 /turf/environment/snow/Destroy()
+	SHOULD_CALL_PARENT(FALSE)
 	return QDEL_HINT_LETMELIVE
 
 /turf/environment/snow/attack_paw(mob/user)
