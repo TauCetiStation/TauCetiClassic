@@ -1641,25 +1641,13 @@
 /datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_slime_digest(M)
 
-/datum/species/slime/verb/change_body_color()
-	set name = "Change Color"
-	set category = "Slime Human Abilities"
-
-	var/new_skin = input("Please select your new color.", "Character Generation") as color
-	if(new_skin)
-		r_skin = hex2num(copytext(new_skin, 2, 4))
-		g_skin = hex2num(copytext(new_skin, 4, 6))
-		b_skin = hex2num(copytext(new_skin, 6, 8))
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.apply_recolor()
-		H.update_hair()
-		H.update_body()
-		H.check_dna()
-
 /datum/species/slime/on_gain(mob/living/carbon/human/H)
 	..()
-	H.verbs += /datum/species/slime/verb/change_body_color
+	H.verbs += /mob/living/carbon/human/proc/slime_change_body_color
+
+/datum/species/slime/on_loose(mob/living/carbon/human/H)
+	..()
+	H.verbs -= /mob/living/carbon/human/proc/slime_change_body_color
 
 /datum/species/abomination
 	name = ABOMINATION

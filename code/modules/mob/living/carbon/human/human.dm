@@ -2031,6 +2031,20 @@
 	if(!BP.disfigured && !skipface) // we still text even tho the screen may be broken or hidden
 		me_emote("отображает на экране, \"<span class=\"emojify\">[S]</span>\"", intentional=TRUE)
 
+/mob/living/carbon/human/proc/slime_change_body_color()
+	set name = "Change Color"
+	set category = "Slime Human Abilities"
+
+	var/new_skin = input("Please select your new color.", "Character Generation") as color
+	if(new_skin)
+		r_skin = hex2num(copytext(new_skin, 2, 4))
+		g_skin = hex2num(copytext(new_skin, 4, 6))
+		b_skin = hex2num(copytext(new_skin, 6, 8))
+		apply_recolor()
+		update_hair()
+		update_body()
+		check_dna()
+
 
 
 /mob/living/carbon/human/has_brain()
