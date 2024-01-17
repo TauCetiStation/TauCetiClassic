@@ -607,7 +607,7 @@
 
 /datum/disease2/effect/flesh_eating
 	name = "Necrotizing Fasciitis"
-	desc = "Вирус агрессивно атакует клетки организма, подвергая некрозу ткани и органы."
+	desc = "Вирус атакует клетки организма, подвергая некрозу ткани и органы."
 	level = 3
 	max_stage = 4
 	cooldown = 30
