@@ -581,7 +581,7 @@
 /turf/simulated/floor,
 /area/station/security/range)
 "abe" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8306,7 +8306,7 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anL" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor,
 /area/station/maintenance/science)
@@ -13776,7 +13776,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 27
 	},
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -14290,7 +14290,7 @@
 	},
 /area/station/civilian/gym)
 "ayB" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/light/smart{
 	dir = 8
 	},
@@ -15431,7 +15431,7 @@
 /area/station/civilian/hydroponics)
 "aAH" = (
 /obj/structure/window/thin/reinforced,
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aAI" = (
@@ -17353,7 +17353,7 @@
 	},
 /area/station/civilian/toilet)
 "aEx" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -19834,10 +19834,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/machinery/kitchen_machine/microwave/einstein_electronics{
-	pixel_y = 5;
-	pixel_x = -1
-	},
+/obj/item/weapon/storage/box/donkpockets,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -23946,7 +23943,11 @@
 	name = "Brig dark left APC";
 	pixel_x = -27
 	},
-/obj/structure/closet/freezer,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -24490,7 +24491,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -24788,7 +24789,11 @@
 	},
 /area/station/storage/primary)
 "aSj" = (
-/obj/structure/closet/freezer,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/structure/table/glass,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -25877,7 +25882,8 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/mixing)
 "aUf" = (
-/obj/structure/closet/freezer,
+/obj/structure/table,
+/obj/item/weapon/storage/box/donkpockets,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -25888,9 +25894,9 @@
 	pixel_y = 32
 	},
 /obj/structure/table,
-/obj/machinery/kitchen_machine/microwave/einstein_electronics{
-	pixel_y = 8;
-	pixel_x = -1
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -25898,7 +25904,7 @@
 	},
 /area/station/rnd/scibreak)
 "aUh" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -28126,7 +28132,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "aXY" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "aXZ" = (
@@ -31969,7 +31975,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/structure/closet/small_freezer,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "beF" = (
@@ -34627,10 +34632,6 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/genetics_cloning)
-"bjJ" = (
-/obj/structure/closet/small_freezer,
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
 "bjK" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -34917,7 +34918,7 @@
 /turf/simulated/floor,
 /area/station/bridge/meeting_room)
 "bkl" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bkm" = (
@@ -36282,7 +36283,7 @@
 	},
 /area/station/civilian/kitchen)
 "bmt" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -38352,7 +38353,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "escape"
@@ -39711,7 +39712,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -46656,7 +46657,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -49414,7 +49415,7 @@
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/dormitories/dormthree)
 "bJM" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -55443,10 +55444,7 @@
 	pixel_y = 28
 	},
 /obj/structure/table/glass,
-/obj/machinery/kitchen_machine/microwave/einstein_electronics{
-	pixel_y = 8;
-	pixel_x = -1
-	},
+/obj/item/weapon/storage/box/donkpockets,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -70123,7 +70121,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 30
 	},
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -72288,7 +72286,7 @@
 /turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "fRZ" = (
-/obj/structure/water_cooler,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "fSb" = (
@@ -80504,10 +80502,7 @@
 /area/station/civilian/bar)
 "owL" = (
 /obj/structure/table/glass,
-/obj/machinery/kitchen_machine/microwave/einstein_electronics{
-	pixel_y = 8;
-	pixel_x = -1
-	},
+/obj/item/weapon/storage/box/donkpockets,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -82916,10 +82911,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/kitchen_machine/microwave/einstein_electronics{
-	pixel_y = 8;
-	pixel_x = -1
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whitegreen"
@@ -83141,7 +83132,6 @@
 	dir = 4;
 	network = list("SS13","Medical")
 	},
-/obj/structure/closet/small_freezer,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitegreen"
@@ -86139,7 +86129,11 @@
 	},
 /area/station/civilian/hydroponics)
 "vVm" = (
-/obj/structure/closet/freezer,
+/obj/structure/table/glass,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -113551,7 +113545,7 @@ cLY
 bIZ
 bXx
 cIi
-bjJ
+bQl
 boA
 aPq
 blL
