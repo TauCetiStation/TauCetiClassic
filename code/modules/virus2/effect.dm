@@ -1237,7 +1237,7 @@
 			return
 		switch(holder.stage)
 			if(1,2,3)
-				to_chat(H, "<span class='warning'>[pick("Ваш скальп чешется.", "Ваша кожа шелушится.")]</span>")
+				to_chat(H, "<span class='warning'>[pick("Ваша голова чешется.", "Ваша кожа шелушится.")]</span>")
 			if(4,5,6)
 				to_chat(H, "<span class='warning'>[pick("Начинают выпадать случайные волоски.", "Вы чувствуете, как лысеете с каждой секундой.")]</span>")
 			if(7)
