@@ -518,7 +518,7 @@
 
 /datum/disease2/effect/heal/starlight/heal(mob/living/carbon/human/M, datum/disease2/disease/disease, actual_power)
 	if(M.getToxLoss())
-		passive_message = "<span class='notice'>Ваша кожа покалывает. А свет звёзд исцеляет вас.</span>"
+		passive_message = "<span class='notice'>Ваша кожа покалывает, а звездный свет исцеляет вас.</span>"
 	else
 		passive_message = initial(passive_message)
 	M.adjustToxLoss(-(4 * actual_power)) //most effective on toxins
