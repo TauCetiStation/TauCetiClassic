@@ -284,7 +284,7 @@
 	if(prob(20) || (holder.stage >= 1 && holder.stage <= 2))
 		to_chat(mob, "<span class='warning'>[pick("Вы чувствуете, как разваливаетесь на части.", "Ваша кожа осыпается, как пыль.")]</span>")
 	else if(holder.stage == 3)
-		to_chat(mob, "<span class='userdanger'>[pick("Вы чувствуете, как ваши мышцы слабеют.", "Ваша кожа отслаивается сама по себе.", "Вы как будто растворяетесь.")]</span>")
+		to_chat(mob, "<span class='userdanger'>[pick("Вы чувствуете, как слабеют ваши мышцы.", "Ваша кожа отслаивается сама по себе.", "Вы как будто растворяетесь.")]</span>")
 		mob.adjustBruteLoss(rand(6,10))
 
 /datum/disease2/effect/stage_boost
