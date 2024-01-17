@@ -449,7 +449,7 @@
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
 				if (!(BP.status & ORGAN_DEAD))
 					BP.status |= ORGAN_DEAD
-					to_chat(H, "<span class='warning'>Вы больше не чувствуете какую-то конечность...</span>") //add cases
+					to_chat(H, "<span class='warning'>Вы больше не чувствуете [CASE(BP, ACCUSATIVE_CASE)]...</span>")
 					for (var/obj/item/organ/external/CHILD in BP.children)
 						CHILD.status |= ORGAN_DEAD
 				H.update_body()
