@@ -1640,11 +1640,11 @@
 
 /datum/species/slime/on_gain(mob/living/carbon/human/H)
 	..()
-	H.verbs += /mob/living/carbon/human/proc/slime_change_body_color
+	H.verbs += /mob/living/carbon/human/proc/slime_change_color
 
 /datum/species/slime/on_loose(mob/living/carbon/human/H)
 	..()
-	H.verbs -= /mob/living/carbon/human/proc/slime_change_body_color
+	H.verbs -= /mob/living/carbon/human/proc/slime_change_color
 
 /datum/species/abomination
 	name = ABOMINATION
