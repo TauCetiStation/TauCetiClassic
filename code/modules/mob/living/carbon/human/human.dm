@@ -2033,7 +2033,7 @@
 
 /mob/living/carbon/human/proc/slime_change_color()
 	set name = "Change Color"
-	set category = "Slime Human Abilities"
+	set category = "IC"
 
 	var/new_skin = input("Please select your new color.", "Character Generation") as color
 	if(new_skin)
