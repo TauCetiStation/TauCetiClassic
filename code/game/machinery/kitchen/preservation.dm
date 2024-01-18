@@ -456,13 +456,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 
 /obj/structure/composter/continuity_read(list/composter_record)
 	var/list/preserved_reagents = list()
-	for(var/obj/item/weapon/reagent_containers/itemtype as anything in composter_record)
-		if(itemtype in can_also_preserve)
-			new itemtype(internal_storage)
+	for(var/itemtype as anything in composter_record) //Нам надо создать предмет, потому что у выращенных овощей нет нутриентов пока они не пройдут атом_инит.
+		var/obj/item/I = new itemtype(internal_storage)
+		if(!istype(I, can_preserve))
 			continue
-		var/obj/item/weapon/reagent_containers/Item = new itemtype //Нам надо создать предмет, потому что у выращенных овощей нет нутриентов пока они не пройдут атом_инит.
+
+		var/obj/item/weapon/reagent_containers/Item = I
 		var/list/item_reagents = Item.list_reagents
 		qdel(Item)
+
 		for(var/reagent_name in item_reagents)
 			if(!preserved_reagents[reagent_name])
 				preserved_reagents[reagent_name] = item_reagents[reagent_name]
