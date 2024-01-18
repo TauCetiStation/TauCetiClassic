@@ -1,10 +1,9 @@
-#define MAX_BARRELS_SAVED 3
-#define MAX_TABLES_SAVED 2
-#define MAX_BOXES_SAVED 1
+#define COMPOST_MULTIPLYER 0.25
 
 var/global/list/preservation_barrels = list()
 var/global/list/preservation_tables = list()
 var/global/list/preservation_boxes = list()
+var/global/list/composters = list()
 
 ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 /obj/structure/preservation_barrel
@@ -416,6 +415,113 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 
 
 
-#undef MAX_BARRELS_SAVED
-#undef MAX_TABLES_SAVED
-#undef MAX_BOXES_SAVED
+ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
+/obj/structure/composter
+	name = "composter"
+	desc = "Для заготовления компоста."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "composter"
+
+	density = TRUE
+	anchored = TRUE
+
+	var/save_id = 0
+
+	var/obj/item/weapon/storage/internal/internal_storage
+
+	var/can_preserve = /obj/item/weapon/reagent_containers/food/snacks
+	var/list/can_also_preserve = list()
+
+/obj/structure/composter/botany
+	save_id = "botany"
+
+/obj/structure/composter/atom_init()
+	. = ..()
+
+	internal_storage = new(src)
+	internal_storage.set_slots(slots = 14, slot_size = SIZE_BIG, visible = FALSE)
+
+/obj/structure/composter/attackby(obj/item/I, mob/user, params)
+	if(internal_storage.can_be_inserted(I))
+		internal_storage.handle_item_insertion(I)
+
+	return ..()
+
+/obj/structure/composter/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	internal_storage.open(user)
+	..()
+
+
+
+/obj/structure/composter/continuity_read(list/composter_record)
+	var/list/preserved_reagents = list()
+	for(var/obj/item/weapon/reagent_containers/itemtype as anything in composter_record)
+		var/list/item_reagents = initial(itemtype.list_reagents)
+		for(var/reagent_name in item_reagents)
+			if(!preserved_reagents[reagent_name])
+				preserved_reagents[reagent_name] = item_reagents[reagent_name]
+			else
+				preserved_reagents[reagent_name] += item_reagents[reagent_name]
+
+	var/nutriment_amount = preserved_reagents["nutriment"] ? preserved_reagents["nutriment"] : 0
+	var/protein_amount = preserved_reagents["protein"] ? preserved_reagents["protein"] : 0
+	var/plantmatter_amount = preserved_reagents["plantmatter"] ? preserved_reagents["plantmatter"] : 0
+	var/dairy_amount = preserved_reagents["dairy"] ? preserved_reagents["dairy"] : 0
+
+	var/compost_amount = min(internal_storage.storage_slots, max(0, round((nutriment_amount - protein_amount * 2 + plantmatter_amount * 2 - dairy_amount) / COMPOST_MYLTIPLYER))) //nutriment and plantmatter is good, protein and diary is bad
+	if(!compost_amount)
+		return
+
+	for(1 to compost_amount)
+		new /obj/item/nutriment/compost(internal_storage)
+
+/obj/structure/composter/continuity_write()
+	var/list/composter_record = list()
+
+	var/i = 1
+	for(var/obj/item/I in internal_storage.contents)
+		if(istype(I, can_preserve) || (I.type in can_also_preserve))
+			composter_record["[i]"] = I.type
+			i++
+
+	return list2params(composter_record)
+
+
+
+/datum/continuity_object/composters
+	filename = "Composters"
+
+/datum/continuity_object/composters/load(savefile/S)
+	var/params_holder
+	S["Composters_Save"] >> params_holder
+	if(!params_holder)
+		return
+
+	var/list/composters_saves = params2list(params_holder)
+	for(var/save_id in composters_saves)
+		composters_saves[save_id] = params2list(composters_saves[save_id])
+
+	for(var/obj/structure/composter/Comp in global.composters)
+		var/composter_record = pick(composters_saves[Comp.save_id])
+		if(composter_record)
+			Comp.continuity_read(params2list(composter_record))
+			composters_saves[Comp.save_id] -= composter_record
+
+/datum/continuity_object/composters/save(savefile/S)
+	var/list/composters_saves = list()
+
+	for(var/obj/structure/composter/Comp in global.composters)
+		var/composter_record = Comp.continuity_write()
+
+		if(!composters_saves[Comp.save_id])
+			composters_saves[Comp.save_id] = list(composter_record)
+		else
+			composters_saves[Comp.save_id] += composter_record
+
+	for(var/save_id in composters_saves)
+		composters_saves[save_id] = list2params(composters_saves[save_id])
+
+	S["Boxes_Save"] << list2params(composters_saves)
+
+#undef COMPOST_MULTIPLYER
