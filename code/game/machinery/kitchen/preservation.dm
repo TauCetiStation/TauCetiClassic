@@ -20,6 +20,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 
 	var/save_id = 0
 
+	var/list/can_preserve = list("items" = /obj/item/weapon/reagent_containers/food/snacks/grown, "reagents" = /datum/reagent/consumable)
 	var/list/can_also_preserve = list("items" = list(), "reagents" = list(/datum/reagent/sugar))
 
 /obj/structure/preservation_barrel/kitchen
@@ -128,11 +129,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 	var/list/barrel_record = list("items" = list(), "reagents" = list())
 
 	for(var/obj/item/F in internal_storage.contents)
-		if(istype(F, /obj/item/weapon/reagent_containers/food/snacks/grown) || (F.type in can_also_preserve["items"]))
+		if(istype(F, can_preserve["items"]) || (F.type in can_also_preserve["items"]))
 			barrel_record["items"] += F.type
 
 	for(var/datum/reagent/R in reagents.reagent_list)
-		if(istype(R, /datum/reagent/consumable) || (R.type in can_also_preserve["reagents"]))
+		if(istype(R, can_preserve["reagents"]) || (R.type in can_also_preserve["reagents"]))
 			barrel_record["reagents"] += list("[R.id]" = "[R.volume]")
 
 	barrel_record["items"] = list2params(barrel_record["items"])
@@ -205,6 +206,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 
 	var/foods_offsets = list(list(-6, 10), list(6, 10), list(-6, -4), list(6, -4))
 
+	var/can_preserve = /obj/item/weapon/reagent_containers/food/snacks
+	var/list/can_also_preserve = list()
+
 /obj/structure/preservation_table/kitchen
 	save_id = "kitchen"
 
@@ -258,9 +262,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 	var/list/table_record = list()
 
 	var/i = 1
-	for(var/obj/item/weapon/reagent_containers/food/snacks/F in internal_storage.contents)
-		table_record["[i]"] = F.type
-		i++
+	for(var/obj/item/I in internal_storage.contents)
+		if(istype(I, can_preserve) || (I.type in can_also_preserve))
+			table_record["[i]"] = I.type
+			i++
 
 	return list2params(table_record)
 
@@ -319,6 +324,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 
 	var/icon/vegs_inside
 
+	var/can_preserve = /obj/item/weapon/reagent_containers/food/snacks/grown
+	var/list/can_also_preserve = list()
+
 /obj/structure/preservation_box/kitchen
 	save_id = "kitchen"
 
@@ -362,9 +370,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 	var/list/box_record = list()
 
 	var/i = 1
-	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/F in internal_storage.contents)
-		box_record["[i]"] = F.type
-		i++
+	for(var/obj/item/I in internal_storage.contents)
+		if(istype(I, can_preserve) || (I.type in can_also_preserve))
+			box_record["[i]"] = I.type
+			i++
 
 	return list2params(box_record)
 
