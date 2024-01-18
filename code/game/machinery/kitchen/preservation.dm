@@ -473,7 +473,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 	if(!compost_amount)
 		return
 
-	for(1 to compost_amount)
+	for(var/i in 1 to compost_amount)
 		new /obj/item/nutrient/compost(internal_storage)
 
 /obj/structure/composter/continuity_write()
