@@ -39,11 +39,9 @@ var/global/specops_shuttle_timeleft = 0
 
 		//All this does is announce the time before launch.
 		if(announcer)
-			var/seconds = max(round(rounded_time_left), 0)
-			var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
 			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
-				message = "ТРЕВОГА: осталось [seconds] [seconds_word]"
+				message = "ТРЕВОГА: осталось [rounded_time_left] секунд"
 				if(rounded_time_left==0)
 					message = "ТРЕВОГА: Шаттл начинает отстыковку"
 				announcer.autosay(message, "Automated Docking System", "Response Team")
@@ -125,11 +123,9 @@ var/global/specops_shuttle_timeleft = 0
 
 		//All this does is announce the time before launch.
 		if(announcer)
-			var/seconds = max(round(rounded_time_left), 0)
-			var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
 			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
-				message = "\"ТРЕВОГА: [seconds] [seconds_word] осталось\""
+				message = "\"ТРЕВОГА: [rounded_time_left] секунд осталось\""
 				if(rounded_time_left==0)
 					message = "\"ТРЕВОГА: Шаттл начинает отстыковку\""
 				announcer.autosay(message, "Automated Docking System", "Response Team")
@@ -205,13 +201,11 @@ var/global/specops_shuttle_timeleft = 0
 	return TRUE //yep, don't try do that
 
 /obj/machinery/computer/specops_shuttle/ui_interact(mob/user)
-	var/seconds = max(round(specops_shuttle_timelef), 0)
-	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	var/dat
 	if (temp)
 		dat = temp
 	else
-		dat += {"\nМестоположение: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Отправляющийся на [station_name_ru] через [seconds] [seconds_word].":specops_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
+		dat += {"\nМестоположение: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Отправляющийся на [station_name_ru] через ([specops_shuttle_timeleft] секунд.)":specops_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
 			[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*Шаттл специального назначения уже отправляется.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Шаттл стоит наготове..</a><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
 
 	var/datum/browser/popup = new(user, "computer", "Special Operations Shuttle", 575, 450)
@@ -219,8 +213,6 @@ var/global/specops_shuttle_timeleft = 0
 	popup.open()
 
 /obj/machinery/computer/specops_shuttle/Topic(href, href_list)
-	var/seconds = max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
-	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	. = ..()
 	if(!. || !allowed(usr))
 		return
