@@ -143,7 +143,7 @@
 
 /obj/item/statuette/atom_init(mapload)
 	. = ..()
-	var/statuette_number = rand(1, 12)
+	var/statuette_number = rand(1, 8)
 	icon_state = "statuette_[statuette_number]"
 
 /obj/item/vase
@@ -161,7 +161,7 @@
 
 /obj/item/vase/atom_init(mapload)
 	. = ..()
-	var/vase_number = rand(1, 15)
+	var/vase_number = rand(1, 10)
 	icon_state = "vase_[vase_number]"
 	front_image = image(icon, "[icon_state]_front")
 
