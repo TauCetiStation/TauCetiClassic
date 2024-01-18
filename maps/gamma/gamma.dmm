@@ -14420,6 +14420,7 @@
 /obj/machinery/camera{
 	c_tag = "Hydroponics Pasture"
 	},
+/obj/structure/composter/botany,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "ckE" = (

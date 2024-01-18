@@ -81573,6 +81573,7 @@
 /area/station/bridge/hop_office)
 "qex" = (
 /obj/structure/flora/junglebush,
+/obj/structure/composter/botany,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "qgb" = (

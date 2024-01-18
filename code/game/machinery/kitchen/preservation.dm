@@ -1,4 +1,4 @@
-#define COMPOST_MULTIPLYER 0.25
+#define COMPOST_MULTIPLIER 0.25
 
 var/global/list/preservation_barrels = list()
 var/global/list/preservation_tables = list()
@@ -469,12 +469,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 	var/plantmatter_amount = preserved_reagents["plantmatter"] ? preserved_reagents["plantmatter"] : 0
 	var/dairy_amount = preserved_reagents["dairy"] ? preserved_reagents["dairy"] : 0
 
-	var/compost_amount = min(internal_storage.storage_slots, max(0, round((nutriment_amount - protein_amount * 2 + plantmatter_amount * 2 - dairy_amount) / COMPOST_MYLTIPLYER))) //nutriment and plantmatter is good, protein and diary is bad
+	var/compost_amount = min(internal_storage.storage_slots, max(0, round((nutriment_amount - protein_amount * 2 + plantmatter_amount * 2 - dairy_amount) / COMPOST_MULTIPLIER))) //nutriment and plantmatter is good, protein and diary is bad
 	if(!compost_amount)
 		return
 
 	for(1 to compost_amount)
-		new /obj/item/nutriment/compost(internal_storage)
+		new /obj/item/nutrient/compost(internal_storage)
 
 /obj/structure/composter/continuity_write()
 	var/list/composter_record = list()
@@ -524,4 +524,4 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 
 	S["Boxes_Save"] << list2params(composters_saves)
 
-#undef COMPOST_MULTIPLYER
+#undef COMPOST_MULTIPLIER

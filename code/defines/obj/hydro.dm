@@ -1505,7 +1505,7 @@
 	mutmod = 0
 	yieldmod = 2
 
-/obj/item/nutriment/compost
+/obj/item/nutrient/compost
 	name = "compost"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "compost"
