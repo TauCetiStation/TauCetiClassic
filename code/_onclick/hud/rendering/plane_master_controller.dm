@@ -30,6 +30,7 @@
 	controlled_planes = list(
 		RENDER_PLANE_GAME,
 		RENDER_PLANE_NON_GAME,
+		RENDER_PLANE_ABOVE_GAME,
 	)
 
 INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)

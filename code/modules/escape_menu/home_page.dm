@@ -102,6 +102,7 @@
 		src,
 		/* hud_owner = */ src,
 		button_text,
+		escape_menu.client
 	)
 
 	vis_contents += home_button_text
@@ -138,15 +139,17 @@
 	maptext_width = 600
 	maptext_height = 50
 	pixel_x = -80
+	var/client/client
 
 	VAR_PRIVATE
 		button_text
 		hovered = FALSE
 
-/atom/movable/screen/escape_menu/home_button_text/atom_init(mapload, datum/hud/hud_owner, button_text)
+/atom/movable/screen/escape_menu/home_button_text/atom_init(mapload, datum/hud/hud_owner, button_text, client)
 	. = ..()
 
 	src.button_text = button_text
+	src.client = client
 	update_text()
 
 /// Sets the hovered state of the button, and updates the text
@@ -159,9 +162,7 @@
 
 /atom/movable/screen/escape_menu/home_button_text/proc/update_text()
 	var/atom/movable/screen/escape_menu/home_button/escape_menu_loc = loc
-
-	maptext = MAPTEXT_VCR_OSD_MONO("<span style='font-size: 24px; color: [istype(escape_menu_loc) ? escape_menu_loc.text_color() : "white"]'>[button_text]</span>")
-
+	maptext = "<span style='font-family:\"[client.prefs.escape_menu_font]\"; color:[istype(escape_menu_loc) ? escape_menu_loc.text_color() : "white"]; font-size: [client.prefs.escape_menu_size]px;'>[button_text]</span>"
 	if (hovered)
 		maptext = "<u>[maptext]</u>"
 

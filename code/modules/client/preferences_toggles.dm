@@ -384,6 +384,37 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb", "LTIP")
 
+/client/verb/change_font_escape_menu()
+	set name = "Escape Menu: Change Font"
+	set category = "Preferences"
+	set desc = "Toggle Font of Names of Items"
+
+	var/list/fonts = list("System", "Fixedsys", "Times New Roman", "Verdana", "Comic Sans MS", "VCR OSD Mono", "Custom Font")
+
+	var/font = input(usr, "Font of Names of Items:", "Font", prefs.escape_menu_font) as null|anything in fonts | prefs.escape_menu_font
+
+	if(font == "Custom Font")
+		font = sanitize(input("Enter the font that you have on your computer:", "Font") as null|text)
+
+	if(!font)
+		return
+
+	prefs.escape_menu_font = font
+
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "FEM")
+
+/client/verb/change_size_escape_menu()
+	set name = "Escape Menu: Change Size"
+	set category = "Preferences"
+	set desc = "Change Size of Names of Items"
+
+	prefs.escape_menu_size = input(usr, "Введите размер шрифта для главного меню (от 8 до 30)") as num
+
+	tooltip.font_size = clamp(prefs.escape_menu_size, 8, 30)
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "LEM")
+
 /client/verb/toggle_outline()
 	set name = "Toggle Outline"
 	set category = "Preferences"

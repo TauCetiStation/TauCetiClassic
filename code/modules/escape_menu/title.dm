@@ -31,5 +31,4 @@ var/global/atom/movable/screen/escape_menu/title/escape_menu_title
 			[station_name_ru()]
 		</span>
 	"}
-
-	maptext = "<font align='top'>" + subtitle_text + MAPTEXT_VCR_OSD_MONO(title_text) + "</font>"
+	maptext = "<font align='top'>" + subtitle_text + title_text + "</font>"

@@ -170,6 +170,7 @@ What is the naming convention for planes or layers?
 #define RENDER_PLANE_ABOVE_GAME 991
 #define RENDER_PLANE_NON_GAME 995
 #define RENDER_PLANE_MASTER 999
+#define RENDER_PLANE_MENU 1100
 
 //-------------------- HUD ---------------------
 //HUD layer defines

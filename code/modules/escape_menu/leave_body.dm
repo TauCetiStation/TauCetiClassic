@@ -9,7 +9,9 @@
 		/* pixel_offset = */ -105,
 		CALLBACK(src, PROC_REF(leave_suicide)),
 		/* button_overlay = */ "clown",
-	))
+		/* client = */ client,
+		)
+	)
 
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/leave_body_button(
@@ -19,6 +21,7 @@
 			/* pixel_offset = */ 0,
 			CALLBACK(src, PROC_REF(leave_ghost)),
 			/* button_overlay = */ "ghost",
+			/* client = */ client,
 		)
 	)
 
@@ -30,6 +33,7 @@
 			/* pixel_offset = */ 105,
 			CALLBACK(src, PROC_REF(open_home_page)),
 			/* button_overlay = */ "back",
+			/* client = */ client,
 		)
 	)
 
@@ -52,6 +56,7 @@
 	icon_state = "template"
 	maptext_width = 114
 	maptext_y = -32
+	var/client/owner
 
 	VAR_PRIVATE
 		datum/callback/on_click_callback
@@ -65,15 +70,17 @@
 	pixel_offset,
 	on_click_callback,
 	button_overlay,
+	client,
 )
 	. = ..()
 
 	src.on_click_callback = on_click_callback
 	src.tooltip_text = tooltip_text
+	src.owner = client
 
 	add_overlay(button_overlay)
 
-	maptext = MAPTEXT_VCR_OSD_MONO("<span b style='font-size: 16px; text-align: center'>[button_text]</span>")
+	maptext = "<span style='font-family:\"[owner.prefs.escape_menu_font]\"; font-size: [owner.prefs.escape_menu_size]px;'>[button_text]</span>"
 	screen_loc = "CENTER:[pixel_offset],CENTER-1"
 
 /atom/movable/screen/escape_menu/leave_body_button/Destroy()

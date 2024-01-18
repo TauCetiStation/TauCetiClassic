@@ -309,19 +309,6 @@
 /// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
 #define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
 
-/**
- * Prepares a text to be used for maptext, using a variable size font.
- *
- * More flexible but doesn't scale pixel perfect to BYOND icon resolutions.
- * (May be blurry.) Can use any size in pt or px.
- *
- * You MUST Specify the size when using the macro
- * For example: MAPTEXT_VCR_OSD_MONO("<span style='font-size: 24pt'>Some large maptext here</span>")
- */
-/// Prepares a text to be used for maptext, using a variable size font.
-/// Variable size font. More flexible but doesn't scale pixel perfect to BYOND icon resolutions. (May be blurry.) Can use any size in pt or px.
-#define MAPTEXT_VCR_OSD_MONO(text) {"<span style='font-family: \"VCR OSD Mono\"'>[##text]</span>"}
-
 //For crawl_can_use() in /mob/living
 #define IS_ABOVE(A, B) (A.layer > B.layer || A.plane > B.plane)
 
