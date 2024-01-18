@@ -112,10 +112,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 
 
 /obj/structure/preservation_barrel/continuity_read(list/barrel_record)
+	world.log << "reading: [list2params(barrel_record)]"
 	var/list/itemslist = params2list(barrel_record["items"])
 	var/list/reagentslist = params2list(barrel_record["reagents"])
 
-	for(var/itemtype in itemslist)
+	for(var/itemnum in itemslist)
+		var/itemtype = itemslist[itemnum]
 		new itemtype(internal_storage)
 
 	for(var/reagentid in reagentslist)
@@ -138,6 +140,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 	barrel_record["items"] = list2params(barrel_record["items"])
 	barrel_record["reagents"] = list2params(barrel_record["reagents"])
 
+	world.log << "saving: [list2params(barrel_record)]"
 	return list2params(barrel_record)
 
 
@@ -251,7 +254,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 
 
 /obj/structure/preservation_table/continuity_read(list/table_record)
-	for(var/itemtype in table_record)
+	world.log << "reading: [list2params(table_record)]"
+	for(var/itemnum in table_record)
+		var/itemtype = table_record[itemnum]
 		new itemtype(internal_storage)
 
 	start_processing_recipes()
@@ -266,6 +271,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 			table_record["[i]"] = I.type
 			i++
 
+	world.log << "saving: [list2params(table_record)]"
 	return list2params(table_record)
 
 
@@ -360,7 +366,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 
 
 /obj/structure/preservation_box/continuity_read(list/box_record)
-	for(var/itemtype in box_record)
+	world.log << "reading: [list2params(box_record)]"
+	for(var/itemnum in box_record)
+		var/itemtype = box_record[itemnum]
 		new itemtype(internal_storage)
 
 	update_icon()
@@ -374,6 +382,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 			box_record["[i]"] = I.type
 			i++
 
+	world.log << "saving: [list2params(box_record)]"
 	return list2params(box_record)
 
 
@@ -455,28 +464,34 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 
 
 /obj/structure/composter/continuity_read(list/composter_record)
+	world.log << "reading: [list2params(composter_record)]"
 	var/list/preserved_reagents = list()
-	for(var/itemtype as anything in composter_record) //Нам надо создать предмет, потому что у выращенных овощей нет нутриентов пока они не пройдут атом_инит.
+	for(var/itemnum in composter_record) //Нам надо создать предмет, потому что у выращенных овощей нет нутриентов пока они не пройдут атом_инит.
+		var/itemtype = composter_record[itemnum]
 		var/obj/item/I = new itemtype(internal_storage)
 		if(!istype(I, can_preserve))
 			continue
 
 		var/obj/item/weapon/reagent_containers/Item = I
-		var/list/item_reagents = Item.list_reagents
+		for(var/datum/reagent/reagent in Item.reagents.reagent_list)
+			if(!preserved_reagents[reagent.id])
+				preserved_reagents[reagent.id] = reagent.volume
+			else
+				preserved_reagents[reagent.id] += reagent.volume
 		qdel(Item)
 
-		for(var/reagent_name in item_reagents)
-			if(!preserved_reagents[reagent_name])
-				preserved_reagents[reagent_name] = item_reagents[reagent_name]
-			else
-				preserved_reagents[reagent_name] += item_reagents[reagent_name]
-
+	world.log << "preserved_reagents: [list2params(preserved_reagents)]"
 	var/nutriment_amount = preserved_reagents["nutriment"] ? preserved_reagents["nutriment"] : 0
+	world.log << "nutriment_amount: [nutriment_amount]"
 	var/protein_amount = preserved_reagents["protein"] ? preserved_reagents["protein"] : 0
+	world.log << "protein_amount: [protein_amount]"
 	var/plantmatter_amount = preserved_reagents["plantmatter"] ? preserved_reagents["plantmatter"] : 0
+	world.log << "plantmatter_amount: [plantmatter_amount]"
 	var/dairy_amount = preserved_reagents["dairy"] ? preserved_reagents["dairy"] : 0
+	world.log << "dairy_amount: [dairy_amount]"
 
-	var/compost_amount = min(internal_storage.storage_slots - contents.len, max(0, round((nutriment_amount - protein_amount * 2 + plantmatter_amount * 2 - dairy_amount) / COMPOST_MULTIPLIER))) //nutriment and plantmatter is good, protein and diary is bad
+	var/compost_amount = min(internal_storage.storage_slots - contents.len, max(0, round((nutriment_amount - protein_amount * 2 + plantmatter_amount * 2 - dairy_amount) * COMPOST_MULTIPLIER))) //nutriment and plantmatter is good, protein and diary is bad
+	world.log << "compost_amount: [compost_amount]"
 	if(!compost_amount)
 		return
 
@@ -492,12 +507,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 			composter_record["[i]"] = I.type
 			i++
 
+	world.log << "saving: [list2params(composter_record)]"
 	return list2params(composter_record)
 
 
 
 /datum/continuity_object/composters
-	filename = "Composters"
+	filename = "Preservation_Composters"
 
 /datum/continuity_object/composters/load(savefile/S)
 	var/params_holder
@@ -529,6 +545,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 	for(var/save_id in composters_saves)
 		composters_saves[save_id] = list2params(composters_saves[save_id])
 
-	S["Boxes_Save"] << list2params(composters_saves)
+	S["Composters_Save"] << list2params(composters_saves)
 
 #undef COMPOST_MULTIPLIER
