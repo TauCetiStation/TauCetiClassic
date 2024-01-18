@@ -111,7 +111,7 @@
 		to_chat(user, "<span class='notice'> You transfer [trans] units of the condiment to [target].</span>")
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
-	if(!reagents || (reagents && !reagents.reagent_list.len))
+	if(!reagents || (reagents && !reagents.reagent_list.len) && ("[initial(icon_state)]_empty" in icon_states(icon)))
 		icon_state = "[initial(icon_state)]_empty"
 		item_state = "[initial(icon_state)]_empty"
 		update_inv_mob()
