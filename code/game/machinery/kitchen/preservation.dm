@@ -38,7 +38,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 	. = ..()
 
 	if(Adjacent(user) && reagents.reagent_list.len)
-		to_chat(user, "Smells like: [reagents.get_master_reagent_name()]")
+		to_chat(user, "Пахнет как: [reagents.get_master_reagent_name()]")
 
 /obj/structure/preservation_barrel/atom_init()
 	. = ..()
