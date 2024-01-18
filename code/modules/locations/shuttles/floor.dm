@@ -6,25 +6,21 @@
 
 /turf/simulated/shuttle/floor/wagon
 	name = "floor"
-	cases = list("пол", "пола", "полу", "пол", "полом", "поле")
 	icon = 'icons/locations/shuttles/wagon.dmi'
 	icon_state = "floor"
 
 /turf/simulated/shuttle/floor/erokez
 	name = "floor"
-	cases = list("пол", "пола", "полу", "пол", "полом", "поле")
 	icon = 'icons/locations/shuttles/erokez.dmi'
 	icon_state = "floor1"
 
 /turf/simulated/shuttle/floor/cargo
 	name = "floor"
-	cases = list("пол", "пола", "полу", "пол", "полом", "поле")
 	icon = 'icons/locations/shuttles/cargofloor.dmi'
 	icon_state = "1"
 
 /turf/simulated/shuttle/floor/evac
 	name = "floor"
-	cases = list("пол", "пола", "полу", "пол", "полом", "поле")
 	icon = 'icons/locations/shuttles/evac_shuttle.dmi'
 	icon_state = "floor"
 
@@ -71,7 +67,6 @@
 
 /turf/simulated/shuttle/floor/vox
 	name = "floor"
-	cases = list("пол", "пола", "полу", "пол", "полом", "поле")
 	icon = 'icons/locations/shuttles/vox_shuttle.dmi'
 	icon_state = "floor"
 	nitrogen = 103.984

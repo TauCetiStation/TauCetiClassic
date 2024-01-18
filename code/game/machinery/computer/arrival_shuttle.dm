@@ -128,7 +128,7 @@ var/global/lastMove = 0
 	SSshuttle.undock_act(/area/velocity, "velocity_1")
 	SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
 	SSshuttle.undock_act(A)
-
+	// Sending message only on EXODUS
 	if(curr_location == locate(/area/shuttle/arrival/station))
 		SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
 		SSshuttle.undock_act(curr_location, "arrival_1")
