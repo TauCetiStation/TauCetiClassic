@@ -1,4 +1,4 @@
-#define COMPOST_MULTIPLIER 0.25
+#define COMPOST_MULTIPLIER 0.1
 
 var/global/list/preservation_barrels = list()
 var/global/list/preservation_tables = list()
@@ -459,7 +459,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 	for(var/obj/item/weapon/reagent_containers/itemtype as anything in composter_record)
 		if(itemtype in can_also_preserve)
 			new itemtype(internal_storage)
-		var/list/item_reagents = initial(itemtype.list_reagents)
+			continue
+		var/obj/item/weapon/reagent_containers/Item = new itemtype //Нам надо создать предмет, потому что у выращенных овощей нет нутриентов пока они не пройдут атом_инит.
+		var/list/item_reagents = Item.list_reagents
+		qdel(Item)
 		for(var/reagent_name in item_reagents)
 			if(!preserved_reagents[reagent_name])
 				preserved_reagents[reagent_name] = item_reagents[reagent_name]
