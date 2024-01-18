@@ -430,7 +430,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 	var/obj/item/weapon/storage/internal/internal_storage
 
 	var/can_preserve = /obj/item/weapon/reagent_containers/food/snacks
-	var/list/can_also_preserve = list()
+	var/list/can_also_preserve = list(/obj/item/nutrient/compost)
 
 /obj/structure/composter/botany
 	save_id = "botany"
@@ -457,6 +457,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 /obj/structure/composter/continuity_read(list/composter_record)
 	var/list/preserved_reagents = list()
 	for(var/obj/item/weapon/reagent_containers/itemtype as anything in composter_record)
+		if(itemtype in can_also_preserve)
+			new itemtype(internal_storage)
 		var/list/item_reagents = initial(itemtype.list_reagents)
 		for(var/reagent_name in item_reagents)
 			if(!preserved_reagents[reagent_name])
@@ -469,7 +471,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 	var/plantmatter_amount = preserved_reagents["plantmatter"] ? preserved_reagents["plantmatter"] : 0
 	var/dairy_amount = preserved_reagents["dairy"] ? preserved_reagents["dairy"] : 0
 
-	var/compost_amount = min(internal_storage.storage_slots, max(0, round((nutriment_amount - protein_amount * 2 + plantmatter_amount * 2 - dairy_amount) / COMPOST_MULTIPLIER))) //nutriment and plantmatter is good, protein and diary is bad
+	var/compost_amount = min(internal_storage.storage_slots - contents.len, max(0, round((nutriment_amount - protein_amount * 2 + plantmatter_amount * 2 - dairy_amount) / COMPOST_MULTIPLIER))) //nutriment and plantmatter is good, protein and diary is bad
 	if(!compost_amount)
 		return
 
