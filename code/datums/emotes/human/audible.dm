@@ -472,5 +472,40 @@
 		EMOTE_STATE(is_stat, CONSCIOUS)
 	)
 
+	// Mouth getting a bit dry
+	cooldown = 3 SECONDS
+
 /datum/emote/human/spit/get_sound(mob/user, emote_key, intentional)
 	return pick('sound/voice/spit_1.ogg','sound/voice/spit_2.ogg')
+
+/datum/emote/human/spit/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+	. = ..()
+	// We don't really have a hydration system, so this is the limit.
+	user.nutrition -= 10
+
+	var/obj/item/cover
+
+	if(user.wear_mask && (user.wear_mask.flags & MASKCOVERSMOUTH))
+		cover = user.wear_mask
+	else if(user.head && (user.head.flags & MASKCOVERSMOUTH))
+		cover = user.head
+
+	if(cover)
+		cover.make_wet()
+		return
+
+	var/turf/T = get_step(user, user.dir)
+
+	if(!T)
+		return
+
+	var/made_wet = FALSE
+
+	for(var/mob/living/carbon/C in T)
+		if(!C.shoes)
+			continue
+		C.shoes.make_wet()
+		made_wet = TRUE
+
+	if(prob(50) && !made_wet)
+		user.shoes?.make_wet()
