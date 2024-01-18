@@ -151,8 +151,9 @@ var/global/lastMove = 0
 				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
-	var/sec_word = pluralize_russian(lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time, "секунду", "секунды", "секунд")
-	var/dat = "<center><div class='Section'>Местоположение: <b>[curr_location]</b><br>Готовность к полёту[!arrival_shuttle_ready_move() ? " через [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] [sec_word]" : ": сейчас"]<br><A href='?src=\ref[src];move=1'>Начать полёт</A></div></center>"
+	var/seconds = max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
+	var/dat = "<center><div class='Section'>Местоположение: <b>[curr_location]</b><br>Готовность к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><A href='?src=\ref[src];move=1'>Начать полёт</A></div></center>"
 	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 400)
 	popup.set_content(dat)
 	popup.open()
