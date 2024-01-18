@@ -118,11 +118,13 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 	return TRUE //yep, don't try do that
 
 /obj/machinery/computer/syndicate_elite_shuttle/ui_interact(mob/user)
+	var/seconds = max(round(syndicate_elite_shuttle_timeleft), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	var/dat
 	if (temp)
 		dat = temp
 	else
-		dat  = {"\nМестоположение: [syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "Отправляющийся на [station_name_ru] через ([syndicate_elite_shuttle_timeleft] секунд.)":syndicate_elite_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
+		dat  = {"\nМестоположение: [syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "Отправляющийся на [station_name_ru] через [seconds] [seconds_word]":syndicate_elite_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
 			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*Шаттл элитного Синдиката уже отправляется.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Возвращение шаттла на материнский корабль</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
 
 	var/datum/browser/popup = new(user, "компьютер", "Шаттл специального назначения", 575, 450)
@@ -130,6 +132,8 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 	popup.open()
 
 /obj/machinery/computer/syndicate_elite_shuttle/Topic(href, href_list)
+	var/seconds = max(round(SYNDICATE_ELITE_MOVETIME/10), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	. = ..()
 	if(!. || !allowed(usr))
 		return
@@ -152,7 +156,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 			to_chat(usr, "<span class='warning'>Шаттл элитного Синдиката не может улететь.</span>")
 			return FALSE
 
-		to_chat(usr, "<span class='notice'>Шаттл элитного Синдиката прибудет на [station_name_ru] через [(SYNDICATE_ELITE_MOVETIME/10)] секунд.</span>")
+		to_chat(usr, "<span class='notice'>Шаттл элитного Синдиката прибудет на [station_name_ru] через [seconds] [seconds_word].</span>")
 
 		temp  = "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		syndicate_elite_shuttle_moving_to_station = TRUE

@@ -65,8 +65,10 @@
 	return TRUE
 
 /obj/machinery/computer/syndicate_station/ui_interact(mob/user)
+	var/seconds = max(round((lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	var/dat = {"Местоположение: [curr_location]<br>
-	Готов к полёту[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " через [max(round((lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] секунд" : ": сейчас"]<br>
+	Готов к полёту[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]<br>
 	<a href='?src=\ref[src];syndicate=1'>Пространство Синдиката</a><br>
 	<a href='?src=\ref[src];station_nw=1'>Северо-запад от [station_name_ru()]</a> |
 	<a href='?src=\ref[src];station_n=1'>К северу от [station_name_ru()]</a> |
