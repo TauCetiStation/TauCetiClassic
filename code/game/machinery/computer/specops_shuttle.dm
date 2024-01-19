@@ -13,6 +13,7 @@ var/global/specops_shuttle_timeleft = 0
 
 /obj/machinery/computer/specops_shuttle
 	name = "special operations shuttle control console"
+
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	light_color = "#00ffff"
@@ -28,7 +29,7 @@ var/global/specops_shuttle_timeleft = 0
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
 	var/message = "Неопознанный шаттл готовится к отстыковке"//Initial message shown.
 	if(announcer)
-		announcer.autosay(message, "Automated Docking System", "Response Team")
+		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 
 	while(specops_shuttle_time - world.timeofday > 0)
 		var/ticksleft = specops_shuttle_time - world.timeofday
@@ -45,7 +46,7 @@ var/global/specops_shuttle_timeleft = 0
 				message = "ТРЕВОГА: осталось [rounded_time_left] [rounded_time_left_seconds]"
 				if(rounded_time_left==0)
 					message = "ТРЕВОГА: Шаттл начинает отстыковку"
-				announcer.autosay(message, "Automated Docking System", "Response Team")
+				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
@@ -111,7 +112,7 @@ var/global/specops_shuttle_timeleft = 0
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
 	var/message = "\"Неопознанный шаттл готовится к стыковке.\""//Initial message shown.
 	if(announcer)
-		announcer.autosay(message, "Automated Docking System", "Response Team")
+		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 //		message = "ARMORED SQUAD TAKE YOUR POSITION ON GRAVITY LAUNCH PAD"
 //		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 
@@ -130,7 +131,7 @@ var/global/specops_shuttle_timeleft = 0
 				message = "\"ТРЕВОГА: осталось [rounded_time_left] [rounded_time_left_seconds]\""
 				if(rounded_time_left==0)
 					message = "\"ТРЕВОГА: Шаттл начинает отстыковку\""
-				announcer.autosay(message, "Automated Docking System", "Response Team")
+				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
