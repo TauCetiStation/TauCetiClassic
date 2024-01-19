@@ -21,6 +21,7 @@
 //Velocity Officer Shuttle
 /area/shuttle/officer
 	name = "Officer Shuttle"
+	cases = list("шаттл офицеров", "шаттла офицеров", "шаттлу офицеров", "шаттл офицеров", "шаттлом офицеров", "шаттле офицеров")
 
 /area/shuttle/officer/velocity
 	name = "NTS Velocity"
