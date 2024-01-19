@@ -1620,10 +1620,6 @@
 
 	darksight = 3
 
-	brute_mod = 0.5
-	burn_mod = 1.5
-	tox_mod = 0
-
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_SCAN = TRUE
