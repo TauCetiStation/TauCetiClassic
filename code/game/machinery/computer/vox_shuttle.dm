@@ -36,7 +36,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_stealth/attack_hand(mob/user)
 	if(!VOX_CAN_USE(user))
-		to_chat(user, "<span class='notice'>Вы понятия не имеете, как это использовать</span>")
+		to_chat(user, "<span class='notice'>Вы понятия не имеете, как это использовать.</span>")
 		return
 
 	. = ..()
