@@ -247,7 +247,7 @@ var/global/specops_shuttle_timeleft = 0
 			to_chat(usr, "<span class='warning'>Шаттл специального назначения не может улететь.</span>")
 			return FALSE
 
-		to_chat(usr, "<span class='notice'>Шаттл специального назначения прибудет на [station_name_ru] в [(SPECOPS_MOVETIME/10)] секунд.</span>")
+		to_chat(usr, "<span class='notice'>Шаттл специального назначения прибудет на [station_name_ru] через [(SPECOPS_MOVETIME/10)] секунд.</span>")
 
 		temp += "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
