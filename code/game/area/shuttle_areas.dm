@@ -24,6 +24,7 @@
 
 /area/shuttle/officer/velocity
 	name = "NTS Velocity"
+	cases = list("НТС Велосити", "НТС Велосити", "НТС Велосити", "НТС Велосити", "НТС Велосити", "НТС Велосити")
 	icon_state = "shuttle2"
 
 /area/shuttle/officer/transit
@@ -31,11 +32,13 @@
 
 /area/shuttle/officer/station
 	name = "NSS Exodus"
+	cases = list("КСН Исход", "КСН Исхода", "КСН Исходу", "КСН Исход", "КСН Исходом", "КСН Исходе")
 	icon_state = "shuttle"
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/shuttle/officer/centcom
 	name = "Centcomm"
+	cases = list("ЦентКом", "ЦентКома", "ЦентКому", "ЦентКом", "ЦентКомом", "ЦентКоме")
 	icon_state = "shuttle"
 
 //Station Supply Shuttle
@@ -54,6 +57,7 @@
 
 /area/shuttle/arrival/velocity
 	name = "NTS Velocity"
+	cases = list("НТС Велосити", "НТС Велосити", "НТС Велосити", "НТС Велосити", "НТС Велосити", "НТС Велосити")
 	icon_state = "shuttle2"
 	looped_ambience = 'sound/ambience/loop_velocity.ogg'
 
@@ -64,11 +68,13 @@
 
 /area/shuttle/arrival/transit
 	name = "Space"
+	cases = list("космос", "космоса", "космосу", "космос", "космосом", "космосе")
 	icon_state = "shuttle"
 	parallax_movedir = EAST
 
 /area/shuttle/arrival/station
 	name = "NSS Exodus"
+	cases = list("КСН Исход", "КСН Исхода", "КСН Исходу", "КСН Исход", "КСН Исходом", "КСН Исходе")
 	icon_state = "shuttle"
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 

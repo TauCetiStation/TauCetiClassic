@@ -89,9 +89,9 @@
 		return
 	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
-			to_chat(usr, "<span class='warning'>Вы бросили станции боевой вызов! Вы должны дать им хотя бы \
+			to_chat(usr, "<span class='warning'>Вы объявили станции войну! Вы должны дать им хотя бы \
 		 	[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
-		 	еще несколько минут, чтобы они успели приготовиться.</span>")
+		 	минут, чтобы они успели приготовиться.</span>")
 			return
 	else
 		war_device_activation_forbidden = TRUE

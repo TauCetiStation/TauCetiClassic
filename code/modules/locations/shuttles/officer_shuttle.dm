@@ -89,8 +89,10 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/officer_shuttle/ui_interact(mob/user)
+	var/seconds = max(round((lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	var/dat = {"Местоположение: [curr_location]<br>
-			Готов лететь[max(lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [max(round((lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] секунд" : ": сейчас"]<br>
+			Готов лететь[max(lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]<br>
 		<a href='?src=\ref[src];velocity=1'>Велосити Док 42</a> |
 		<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> |
 		<a href='?src=\ref[src];centcomm=1'>ЦентКом</a><br>"}

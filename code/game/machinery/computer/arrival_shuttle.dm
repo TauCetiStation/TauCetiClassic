@@ -21,7 +21,7 @@ var/global/lastMove = 0
 
 
 /obj/machinery/computer/arrival_shuttle/atom_init()
-//	curr_location= locate(/area/shuttle/arrival/velocity)
+	curr_location= locate(/area/shuttle/arrival/velocity)
 	arrival_note = "Трансферный шаттл пристыковался к [station_name_ru()]."
 	department_note = "Трансферный шаттл покинул [station_name_ru()]."
 	radio = new (src)
@@ -153,7 +153,7 @@ var/global/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/seconds = max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
 	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
-	var/dat = "<center><div class='Section'>Местоположение: <b>[curr_location]</b><br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><A href='?src=\ref[src];move=1'>Начать полёт</A></div></center>"
+	var/dat = "<center><div class='Section'>Местоположение: <b>[CASE(curr_location, NOMINATIVE_CASE)]</b><br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><A href='?src=\ref[src];move=1'>Начать полёт</A></div></center>"
 	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 400)
 	popup.set_content(dat)
 	popup.open()
@@ -184,7 +184,7 @@ var/global/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
 	var/seconds = max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
 	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
-	var/dat = "<center>Местоположение:[curr_location]<br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><b><A href='?src=\ref[src];back=1'>Запросить шаттл обратно</A></b></center><br>"
+	var/dat = "<center>Местоположение:[CASE(curr_location, NOMINATIVE_CASE)]<br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><b><A href='?src=\ref[src];back=1'>Запросить шаттл обратно</A></b></center><br>"
 	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 200, 130)
 	popup.set_content(dat)
 	popup.open()

@@ -40,8 +40,9 @@ var/global/specops_shuttle_timeleft = 0
 		//All this does is announce the time before launch.
 		if(announcer)
 			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
+			var/rounded_time_left_seconds = pluralize_russian(rounded_time_left, "секунду", "секунды", "секунд")
 			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
-				message = "ТРЕВОГА: осталось [rounded_time_left] секунд"
+				message = "ТРЕВОГА: осталось [rounded_time_left] [rounded_time_left_seconds]"
 				if(rounded_time_left==0)
 					message = "ТРЕВОГА: Шаттл начинает отстыковку"
 				announcer.autosay(message, "Automated Docking System", "Response Team")
@@ -124,8 +125,9 @@ var/global/specops_shuttle_timeleft = 0
 		//All this does is announce the time before launch.
 		if(announcer)
 			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
+			var/rounded_time_left_seconds = pluralize_russian(rounded_time_left, "секунду", "секунды", "секунд")
 			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
-				message = "\"ТРЕВОГА: [rounded_time_left] секунд осталось\""
+				message = "\"ТРЕВОГА: осталось [rounded_time_left] [rounded_time_left_seconds]\""
 				if(rounded_time_left==0)
 					message = "\"ТРЕВОГА: Шаттл начинает отстыковку\""
 				announcer.autosay(message, "Automated Docking System", "Response Team")
