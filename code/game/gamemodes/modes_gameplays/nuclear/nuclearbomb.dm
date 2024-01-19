@@ -268,9 +268,10 @@ var/global/bomb_set
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/bomb_set(mob/user)
-	if(!authorized || safety || cooldown)
-		to_chat(user, "<span class = 'red'>Не так быстро! Эта кнопка сработает снова через [cooldown] секунд!</span>")
+	if(cooldown)
+		to_chat(user, "<span class = 'red'>Не так быстро! Эта кнопка сработает снова через [cooldown] сек!</span>")
 		return
+	if(!authorized || safety)
 	if(timing)
 		timing = FALSE
 		set_security_level("red")
