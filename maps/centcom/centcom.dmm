@@ -407,6 +407,7 @@
 /obj/structure/mirror/magic{
 	pixel_x = 30
 	},
+/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6500,6 +6501,7 @@
 	name = "Waste Disposal"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/landmark/trololo,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -8781,17 +8783,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/velocity)
-"aty" = (
-/obj/structure/centcom_barrier,
-/obj/structure/sign/velocity_overlay{
-	desc = "Apply butt";
-	icon_state = "ch03";
-	name = "\improper stool"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/velocity)
 "atz" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "12,8"
@@ -8809,9 +8800,15 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "atB" = (
-/obj/machinery/door/poddoor,
-/turf/unsimulated/wall,
-/area/space)
+/obj/machinery/door/airlock/centcom{
+	req_access = list(101)
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/landmark/trololo,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/velocity)
 "atC" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "5,6"
@@ -8920,8 +8917,10 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "atP" = (
-/turf/simulated/shuttle/plating,
-/area/space)
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/velocity)
 "atQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -8937,13 +8936,6 @@
 	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship_hold)
-"atS" = (
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
-/turf/unsimulated/floor,
-/area/space)
 "atT" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
 	grilled = 1;
@@ -11163,8 +11155,10 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_x = -32
 	},
-/turf/simulated/shuttle/plating,
-/area/space)
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/velocity)
 "ayu" = (
 /obj/structure/object_wall/vox{
 	density = 0;
@@ -11300,7 +11294,6 @@
 	},
 /area/velocity)
 "ayJ" = (
-/obj/structure/centcom_barrier,
 /obj/structure/closet/toolcloset,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -11335,8 +11328,10 @@
 /area/shuttle/vox/arkship_hold)
 "ayO" = (
 /obj/machinery/door/poddoor,
-/turf/simulated/shuttle/plating,
-/area/space)
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/velocity)
 "ayP" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "12,2"
@@ -11503,6 +11498,7 @@
 /obj/structure/closet/emcloset{
 	pixel_x = 7
 	},
+/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -11687,6 +11683,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/effect/landmark/trololo,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -11712,8 +11709,7 @@
 	id = "velocity_main";
 	name = "Tunnel Door Control";
 	pixel_x = -1;
-	pixel_y = -24;
-	req_access = list(101)
+	pixel_y = -24
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -12029,8 +12025,7 @@
 	id = "velocity_main";
 	name = "Tunnel Door Control";
 	pixel_x = -1;
-	pixel_y = 24;
-	req_access = list(101)
+	pixel_y = 24
 	},
 /turf/unsimulated/floor,
 /area/velocity)
@@ -12050,8 +12045,8 @@
 /obj/machinery/door/airlock/hatch{
 	locked = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor4"
+/turf/simulated/shuttle/floor{
+	icon_state = "vwall12"
 	},
 /area/velocity/monorailwagon)
 "aAl" = (
@@ -20193,12 +20188,6 @@
 	icon_state = "grimy"
 	},
 /area/centcom/living)
-"aUM" = (
-/obj/machinery/door/airlock/hatch{
-	locked = 1
-	},
-/turf/simulated/shuttle/plating,
-/area/velocity/monorailwagon)
 "aUO" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -23193,6 +23182,7 @@
 	name = "Creed's Office";
 	req_access = list(108)
 	},
+/obj/effect/landmark/trololo,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -24317,14 +24307,14 @@
 	},
 /obj/machinery/door/poddoor,
 /turf/unsimulated/wall,
-/area/space)
+/area/velocity)
 "dqb" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_01"
 	},
 /obj/machinery/door/poddoor,
 /turf/unsimulated/wall,
-/area/space)
+/area/velocity)
 "drb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -24405,14 +24395,18 @@
 /obj/structure/rail_centcomm{
 	icon_state = "rail_03"
 	},
-/turf/simulated/shuttle/plating,
-/area/space)
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/velocity)
 "dwb" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_01"
 	},
-/turf/simulated/shuttle/plating,
-/area/space)
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/velocity)
 "dxb" = (
 /obj/structure/sink{
 	dir = 8;
@@ -25172,14 +25166,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/evac)
-"eOb" = (
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor,
-/area/velocity)
 "ePb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -25199,17 +25185,19 @@
 	icon_state = "rail_03"
 	},
 /obj/machinery/door/poddoor,
-/turf/simulated/shuttle/plating,
-/area/space)
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/velocity)
 "eRb" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_01"
 	},
 /obj/machinery/door/poddoor,
 /turf/unsimulated/floor{
-	icon_state = "circuit"
+	icon_state = "plating"
 	},
-/area/space)
+/area/velocity)
 "eSb" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -25323,6 +25311,7 @@
 	},
 /area/velocity)
 "feb" = (
+/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "brownold"
@@ -27009,12 +26998,6 @@
 	icon_state = "blue"
 	},
 /area/centcom/evac)
-"ife" = (
-/obj/structure/sign/warning/electricshock{
-	pixel_x = -32
-	},
-/turf/simulated/shuttle/plating,
-/area/space)
 "igb" = (
 /obj/structure/sign/mark{
 	icon_state = "rrt"
@@ -30886,7 +30869,7 @@
 	pixel_x = 32
 	},
 /turf/unsimulated/floor,
-/area/space)
+/area/velocity)
 "vSL" = (
 /obj/machinery/washing_machine,
 /obj/machinery/light/small{
@@ -79462,7 +79445,7 @@ asE
 quq
 arZ
 atV
-aao
+atB
 arZ
 aap
 auS
@@ -79479,7 +79462,7 @@ axS
 axY
 aaq
 arZ
-aao
+atB
 ayw
 ayA
 ayA
@@ -80508,7 +80491,7 @@ arZ
 eLb
 aut
 aoo
-aty
+aAb
 aAy
 aAG
 aoo
@@ -80747,7 +80730,7 @@ aao
 arZ
 arZ
 atV
-aao
+atB
 arZ
 dGb
 arZ
@@ -80765,7 +80748,7 @@ arZ
 eLb
 eNb
 ays
-eOb
+eCb
 arZ
 eNb
 apu
@@ -81515,10 +81498,10 @@ dcb
 dcb
 dcb
 aoo
-atB
+acd
 atP
 atP
-ife
+ayB
 atP
 hUb
 dNb
@@ -81551,7 +81534,7 @@ hrb
 atP
 atP
 atP
-atB
+acd
 aaM
 aaM
 aaM
@@ -81804,11 +81787,11 @@ aAj
 aAB
 aAB
 aAB
-aUM
+aAj
 dvb
 dvb
 dvb
-atB
+acd
 aaM
 aaM
 aaM
@@ -82065,7 +82048,7 @@ aTS
 dwb
 dwb
 dwb
-atB
+acd
 aaM
 aaM
 aaM
@@ -82286,7 +82269,7 @@ dcb
 dfb
 dcb
 aoo
-atB
+acd
 atP
 atP
 atP
@@ -82322,7 +82305,7 @@ aFi
 atP
 atP
 atP
-atB
+acd
 aaM
 aaM
 aaM
@@ -82544,41 +82527,41 @@ dcb
 dcb
 aoo
 aGI
-atS
-atS
+auJ
+auJ
 vPa
-atS
+auJ
 avr
-atS
-atS
-atS
+auJ
+auJ
+auJ
 avr
-atS
-atS
-atS
-atS
+auJ
+auJ
+auJ
+auJ
 avr
-atS
-atS
-atS
+auJ
+auJ
+auJ
 avr
-atS
+auJ
 vPa
-atS
-atS
-atS
+auJ
+auJ
+auJ
 ayR
-atS
-atS
+auJ
+auJ
 atE
-atS
-atS
-atS
-atS
-atS
+auJ
+auJ
+auJ
+auJ
+auJ
 atE
-atS
-atS
+auJ
+auJ
 aGI
 aaM
 aaM

@@ -1217,11 +1217,23 @@ var/global/centcom_barriers_stat = 1
 	if(!check_rights(R_FUN))
 		return
 
+	for(var/obj/effect/landmark/trololo/L as anything in landmarks_list["Rickroll"])
+		L.active = centcom_barriers_stat
 	for(var/obj/structure/centcom_barrier/B as anything in centcom_barrier_list)
 		B.density = centcom_barriers_stat
 
 	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
 	message_admins("[key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
+
+/obj/effect/landmark/trololo
+	name = "Rickroll"
+	var/message = "<i><span class='notice'>It's not the door you're looking for...</span></i>"
+	var/active = 1
+
+/obj/effect/landmark/trololo/Crossed(atom/movable/AM)
+	. = ..()
+	if(!active) return
+		to_chat(usr, "<span class='notice'><b><font size=3>Never Gonna Give You Up.</font></b></span>")
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"
