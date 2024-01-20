@@ -570,6 +570,10 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	name = "Warden"
 	icon_state = "warden"
 
+/area/station/security/brig_med
+	name = "Brig Med"
+	icon_state = "brig_med"
+
 /area/station/security/armoury
 	name = "Armory"
 	icon_state = "armory"
