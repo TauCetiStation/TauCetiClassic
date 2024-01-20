@@ -79,7 +79,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp
 	name = "Shuttle Console"
-	cases = list("консоль шаттла", "консоли шаттла", "консоле шаттла", "консоль шаттла", "консолью шаттла", "консоле шаттла")
+	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	icon = 'icons/locations/shuttles/computer_shuttle_mining.dmi'
 	state_broken_preset = null
 	state_nopower_preset = null
