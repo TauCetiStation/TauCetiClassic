@@ -767,9 +767,7 @@
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
 					for(var/obj/item/organ/external/BP in H.bodyparts)
 						BP.status = 0
-					for(var/obj/item/organ/internal/BP in H.organs)
 						BP.rejuvenate()
-						BP.take_damage(-10)
 					H.restore_blood()
 			if(31 to 50)
 				M.heal_bodypart_damage(0,5)
