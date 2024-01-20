@@ -12,7 +12,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle
 	name = "Mine-Science Shuttle Console"
-	cases = list("консоль шаттла Шахта-Наука", "консоли шаттла Шахта-Наука", "консоле шаттла Шахта-Наука", "консоль шаттла Шахта-Наука", "консолью шаттла Шахта-Наука", "консоле шаттла Шахта-Наука")
+	cases = list("консоль шаттла Шахта-Наука", "консоли шаттла Шахта-Наука", "консоли шаттла Шахта-Наука", "консоль шаттла Шахта-Наука", "консолью шаттла Шахта-Наука", "консоли шаттла Шахта-Наука")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	state_broken_preset = "commb"
