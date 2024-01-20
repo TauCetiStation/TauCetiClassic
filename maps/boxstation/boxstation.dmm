@@ -774,7 +774,6 @@
 "aby" = (
 /obj/machinery/light/small/emergency,
 /obj/structure/rack,
-/obj/item/weapon/storage/toolbox/mechanical,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -854,9 +853,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
 "abG" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "red"
@@ -1191,6 +1187,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -1424,6 +1423,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -1487,6 +1489,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -1561,6 +1564,10 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "acK" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/blood/APlus,
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/box/bodybags,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -1762,6 +1769,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -3483,8 +3491,6 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/item/ammo_box/shotgun/beanbag,
-/obj/item/ammo_box/shotgun/beanbag,
 /obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/storage/box/r4046/rubber,
 /obj/item/weapon/storage/box/r4046/teargas,
@@ -3495,6 +3501,8 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/weapon/storage/box/shotgun/buckshot,
+/obj/item/weapon/storage/box/shotgun/beanbag,
 /turf/simulated/floor,
 /area/station/security/armoury)
 "afS" = (
@@ -4833,6 +4841,7 @@
 	layer = 3.1
 	},
 /obj/machinery/door/window/southright,
+/obj/machinery/iv_drip,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whitered"
@@ -6335,13 +6344,15 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
 "akG" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/storage/visuals/surgery/full,
 /turf/simulated/floor,
 /area/station/security/brig_med)
 "akH" = (
@@ -6596,10 +6607,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -7552,7 +7561,7 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/obj/item/weapon/flora/random,
+/obj/machinery/optable,
 /turf/simulated/floor,
 /area/station/security/brig_med)
 "amD" = (
@@ -76124,6 +76133,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"jXQ" = (
+/obj/machinery/light/smart,
+/turf/simulated/wall/r_wall,
+/area/station/security/brig_med)
 "jYb" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
@@ -77528,6 +77541,13 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/engine)
+"lxV" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/brig_med)
 "lyb" = (
 /obj/structure/window/thin/reinforced{
 	dir = 8
@@ -85372,6 +85392,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"uBQ" = (
+/obj/machinery/light/smart,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/security/brig_med)
 "uBT" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "6,1"
@@ -85668,6 +85697,12 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"vqg" = (
+/obj/machinery/firealarm{
+	pixel_y = -5
+	},
+/turf/simulated/wall/r_wall,
+/area/station/security/brig_med)
 "vsv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -111927,7 +111962,7 @@ aah
 ahJ
 ahJ
 wcY
-ahJ
+vqg
 ahJ
 wcY
 ahJ
@@ -112184,7 +112219,7 @@ aah
 ahJ
 abY
 agI
-agI
+lxV
 akG
 amC
 ahJ
@@ -112438,7 +112473,7 @@ aaa
 aaa
 aaa
 aah
-ahJ
+jXQ
 abG
 acb
 acA
@@ -112955,7 +112990,7 @@ afj
 acO
 acE
 ajd
-ajd
+uBQ
 ahJ
 adK
 ahJ
