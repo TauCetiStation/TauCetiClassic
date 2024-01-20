@@ -84,6 +84,8 @@
 	H.mind = M.mind
 	H.ckey = M.ckey
 
+	post_equip_survivor(H)
+
 	visible_message("<span class='notice'>The cryopod hums and hisses as it slowly opens</span>")
 	playsound(src, 'sound/misc/riginternaloff.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
@@ -112,6 +114,9 @@
 /obj/structure/survivor_cryopod/proc/equip_survivor(mob/living/carbon/human/H)
 	return
 
+/obj/structure/survivor_cryopod/proc/post_equip_survivor(mob/living/carbon/human/H)
+	return
+
 /obj/structure/survivor_cryopod/nasa/equip_survivor(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), SLOT_SHOES)
@@ -129,3 +134,12 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/globose(H), SLOT_WEAR_SUIT)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/globose(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(H), SLOT_S_STORE)
+
+/obj/structure/survivor_cryopod/mercenary
+	survivor_memory = "Ты просыпаешься на борту подбитого \"Буцефала\", вспоминая про свою миссию на близлежащей станции."
+
+/obj/structure/survivor_cryopod/mercenary/equip_survivor(mob/living/carbon/human/H)
+	H.equipOutfit(/datum/outfit/mercenary)
+
+/obj/structure/survivor_cryopod/mercenary/post_equip_survivor(mob/living/carbon/human/H)
+	create_and_setup_role(/datum/role/mercenary, H, TRUE, TRUE)

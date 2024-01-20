@@ -193,3 +193,9 @@
 	structure_id = "Flagship"
 	desc = "Unknown shuttle"
 	mappath = "maps/templates/space_structures/flagship.dmm"
+
+/datum/map_template/space_structure/mercenary_ship
+	name = "Mercenary Ship"
+	structure_id = "mercenary_ship"
+	desc = "Unknown shuttle"
+	mappath = "maps/templates/space_structures/mercenary_ship.dmm"

@@ -77,8 +77,11 @@
 		if(corpseidjob)
 			W.assignment = corpseidjob
 		M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
+	additionalEffects(M)
 	qdel(src)
 
+/obj/effect/landmark/corpse/proc/additionalEffects(mob/living/carbon/human/H)
+	return
 
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
@@ -258,3 +261,20 @@
 	corpseradio = /obj/item/device/radio/headset/headset_sec
 	corpseshoes = /obj/item/clothing/shoes/boots
 	corpseid = 0
+
+/obj/effect/landmark/corpse/mercenary
+	name = "Unknown"
+	corpseuniform = /obj/item/clothing/under/tactical
+	corpsesuit = /obj/item/clothing/suit/armor/tactical
+	corpsehelmet = /obj/item/clothing/head/helmet/tactical
+	corpseshoes = /obj/item/clothing/shoes/boots
+	corpseid = 0
+
+/obj/effect/landmark/corpse/mercenary/additionalEffects(mob/living/carbon/human/H)
+	for(var/obj/O in H.contents)
+		if(prob(75))
+			O.make_old()
+
+/obj/effect/landmark/corpse/mercenary/captain
+	corpsehelmet = /obj/item/clothing/head/beret/black
+	corpsebelt = /obj/item/weapon/gun/projectile/revolver/mateba

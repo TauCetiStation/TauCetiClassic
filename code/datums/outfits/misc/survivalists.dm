@@ -49,3 +49,29 @@
 	/obj/item/weapon/storage/pill_bottle/dylovene,
 	/obj/item/weapon/storage/pill_bottle/tramadol
 	)
+
+/datum/outfit/mercenary
+	name = "Mercenary"
+	uniform = /obj/item/clothing/under/tactical
+	suit = /obj/item/clothing/suit/space/syndicate/striker
+	suit_store = /obj/item/weapon/gun/projectile/automatic/mini_uzi
+	glasses = /obj/item/clothing/glasses/night
+	shoes = /obj/item/clothing/shoes/boots
+	belt = /obj/item/weapon/storage/belt/security/tactical/merc
+	head = /obj/item/clothing/head/helmet/space/syndicate/striker
+	mask = /obj/item/clothing/mask/breath
+	back = /obj/item/weapon/storage/backpack/satchel/norm
+	gloves = /obj/item/clothing/gloves/combat
+	id = /obj/item/weapon/card/id
+
+	r_pocket = /obj/item/weapon/tank/emergency_oxygen/double
+	l_pocket = /obj/item/weapon/silencer
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+	/obj/item/clothing/head/helmet/tactical,
+	/obj/item/clothing/suit/armor/tactical
+	)
+
+/obj/item/weapon/storage/belt/security/tactical/merc
+	startswith = list(/obj/item/ammo_box/magazine/mac10 = 2, /obj/item/weapon/melee/energy/sword/black = 1, /obj/item/weapon/storage/fancy/cigarettes/dromedaryco = 1, /obj/item/weapon/lighter/zippo = 1)

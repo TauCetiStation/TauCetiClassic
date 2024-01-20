@@ -1,0 +1,600 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/environment/space,
+/area/space)
+"ab" = (
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/mercenary_ship)
+"ac" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/mercenary_ship)
+"ad" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_l"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"ae" = (
+/obj/machinery/light/small/emergency,
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"af" = (
+/obj/structure/object_wall/standart{
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/mercenary_ship)
+"ag" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_l"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"ai" = (
+/obj/machinery/power/port_gen/pacman/super,
+/obj/machinery/door/window/brigdoor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aj" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"ak" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/closet/medical_wall{
+	pixel_y = 32
+	},
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"al" = (
+/obj/machinery/light/small/emergency{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"am" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/closet/walllocker{
+	pixel_y = 32
+	},
+/obj/item/ammo_box/magazine/glock/extended,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"an" = (
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"ao" = (
+/obj/effect/decal/cleanable/blood/gibs/xeno,
+/obj/structure/closet/walllocker{
+	pixel_y = 32
+	},
+/obj/item/weapon/silencer,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"ap" = (
+/obj/effect/landmark/corpse/mercenary,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aq" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"ar" = (
+/obj/item/mine/incendiary/anchored,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"as" = (
+/obj/structure/survivor_cryopod/opened{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"at" = (
+/obj/structure/survivor_cryopod/mercenary{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"au" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"av" = (
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aw" = (
+/obj/effect/decal/cleanable/blood/gibs/xeno,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"ax" = (
+/obj/structure/alien/weeds,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"ay" = (
+/obj/structure/alien/weeds,
+/obj/structure/stool/bed/nest,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/obj/effect/landmark/corpse/mercenary/captain,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"az" = (
+/obj/structure/window/fulltile/reinforced,
+/obj/machinery/door/poddoor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aA" = (
+/obj/machinery/door/airlock/highsecurity,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aC" = (
+/obj/machinery/door/airlock/highsecurity,
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aD" = (
+/obj/machinery/light/small/emergency{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/landmark/corpse/mercenary,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aE" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aF" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aG" = (
+/obj/structure/alien/weeds,
+/obj/machinery/door/airlock/highsecurity{
+	locked = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aH" = (
+/obj/structure/alien/weeds/node,
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/mob/living/simple_animal/hostile/xenomorph{
+	alpha = 25;
+	health = 300;
+	maxHealth = 300
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aI" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/molten_item,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aJ" = (
+/obj/structure/survivor_cryopod/opened,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aK" = (
+/obj/structure/alien/resin,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aL" = (
+/obj/structure/alien/weeds,
+/obj/machinery/light/small/emergency,
+/obj/effect/decal/cleanable/molten_item,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aM" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/closet/emergency_wall{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aN" = (
+/obj/machinery/light/small/emergency,
+/obj/effect/decal/turf_decal/set_burned,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aO" = (
+/obj/structure/alien/weeds,
+/obj/structure/stool/bed/nest,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aQ" = (
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/mercenary_ship)
+"aR" = (
+/obj/machinery/power/port_gen/pacman/super,
+/obj/machinery/door/window/brigdoor{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aS" = (
+/obj/structure/alien/weeds,
+/obj/structure/stool/bed/nest,
+/obj/effect/landmark/corpse/mercenary,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aT" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/air_plant,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+"aU" = (
+/obj/structure/alien/resin/membrane,
+/turf/environment/space,
+/area/space_structures/mercenary_ship)
+"bG" = (
+/obj/structure/alien/weeds,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"bW" = (
+/obj/structure/alien/resin/membrane,
+/turf/environment/space,
+/area/space)
+"QC" = (
+/obj/structure/survivor_cryopod/opened{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
+
+(1,1,1) = {"
+ab
+ad
+af
+aa
+aa
+aq
+aA
+aq
+aa
+aa
+ab
+ad
+af
+"}
+(2,1,1) = {"
+ac
+aq
+aq
+aE
+aq
+aq
+ae
+aq
+aq
+aq
+aq
+aq
+aQ
+"}
+(3,1,1) = {"
+aa
+ac
+aq
+ai
+aj
+aq
+aC
+aq
+aj
+aR
+aq
+aQ
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+ac
+aq
+ak
+aj
+aD
+aj
+aM
+aq
+aQ
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aq
+al
+ar
+aq
+av
+aN
+aq
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aq
+av
+QC
+aq
+aJ
+av
+aq
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aq
+am
+as
+aq
+aJ
+aj
+aK
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aq
+aj
+at
+aq
+aJ
+ar
+aK
+bW
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aq
+an
+au
+aE
+au
+aI
+aS
+bW
+bW
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+ab
+aE
+ao
+av
+av
+ax
+ax
+aT
+bG
+bW
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+ag
+aq
+ap
+aw
+aF
+aI
+aO
+aO
+bW
+bW
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+ac
+aq
+aq
+aG
+aK
+aK
+aU
+bW
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aq
+ax
+ax
+ax
+aK
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aq
+ay
+aH
+aL
+aq
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aq
+ax
+aI
+ax
+aq
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+ac
+az
+az
+az
+aQ
+aa
+aa
+aa
+aa
+"}
