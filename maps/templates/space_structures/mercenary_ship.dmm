@@ -112,6 +112,7 @@
 	pixel_y = 32
 	},
 /obj/item/weapon/silencer,
+/obj/item/device/multitool,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
