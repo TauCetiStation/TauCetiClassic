@@ -1142,17 +1142,16 @@
 	},
 /area/station/security/armoury)
 "abY" = (
-/obj/effect/decal/turf_decal{
-	dir = 9;
-	icon_state = "warn"
-	},
 /obj/structure/stool/bed,
 /obj/machinery/camera{
 	c_tag = "Brig Center";
 	dir = 6;
 	network = list("SS13","Security")
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "red"
+	},
 /area/station/security/brig_med)
 "abZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -3919,12 +3918,11 @@
 	},
 /area/station/security/interrogation)
 "agI" = (
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /obj/structure/stool/bed,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
+	},
 /area/station/security/brig_med)
 "agJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -6353,7 +6351,10 @@
 	},
 /obj/structure/table/glass,
 /obj/item/weapon/storage/visuals/surgery/full,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
+	},
 /area/station/security/brig_med)
 "akH" = (
 /obj/machinery/door/firedoor,
@@ -7139,7 +7140,6 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	dir = 10;
 	icon_state = "red"
 	},
 /area/station/security/brig_med)
@@ -7557,12 +7557,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/range)
 "amC" = (
-/obj/effect/decal/turf_decal{
-	dir = 10;
-	icon_state = "warn"
-	},
 /obj/machinery/optable,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "red"
+	},
 /area/station/security/brig_med)
 "amD" = (
 /obj/effect/landmark/start/security_cadet,
@@ -77542,11 +77541,10 @@
 	},
 /area/station/engineering/engine)
 "lxV" = (
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
 	},
-/turf/simulated/floor,
 /area/station/security/brig_med)
 "lyb" = (
 /obj/structure/window/thin/reinforced{
