@@ -47,6 +47,13 @@
 	icon_state = "dark"
 	},
 /area/space_structures/mercenary_ship)
+"ah" = (
+/obj/structure/alien/weeds,
+/obj/item/weapon/disk/research_points/rare,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/mercenary_ship)
 "ai" = (
 /obj/machinery/power/port_gen/pacman/super,
 /obj/machinery/door/window/brigdoor,
@@ -565,7 +572,7 @@ aa
 aq
 ax
 aI
-ax
+ah
 aq
 aa
 aa
