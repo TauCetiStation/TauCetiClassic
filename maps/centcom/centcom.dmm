@@ -404,10 +404,10 @@
 	},
 /area/velocity)
 "aaI" = (
+/obj/structure/centcom_barrier,
 /obj/structure/mirror/magic{
 	pixel_x = 30
 	},
-/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -11495,10 +11495,10 @@
 	},
 /area/velocity)
 "azg" = (
+/obj/structure/centcom_barrier,
 /obj/structure/closet/emcloset{
 	pixel_x = 7
 	},
-/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
