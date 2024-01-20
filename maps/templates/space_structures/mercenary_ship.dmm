@@ -240,8 +240,6 @@
 /area/space_structures/mercenary_ship)
 "aH" = (
 /obj/structure/alien/weeds/node,
-/obj/structure/alien/weeds,
-/obj/structure/alien/weeds/node,
 /mob/living/simple_animal/hostile/xenomorph{
 	alpha = 25;
 	health = 300;
@@ -289,11 +287,9 @@
 	},
 /area/space_structures/mercenary_ship)
 "aN" = (
+/obj/machinery/light/small/emergency,
 /obj/effect/decal/turf_decal/set_burned,
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/machinery/light_construct/small{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -350,15 +346,6 @@
 /obj/structure/alien/resin/membrane,
 /turf/environment/space,
 /area/space)
-"QC" = (
-/obj/structure/survivor_cryopod/opened{
-	dir = 1
-	},
-/obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/space_structures/mercenary_ship)
 
 (1,1,1) = {"
 ab
@@ -440,8 +427,8 @@ aa
 aa
 aa
 aq
-av
-QC
+aj
+as
 aq
 aJ
 av

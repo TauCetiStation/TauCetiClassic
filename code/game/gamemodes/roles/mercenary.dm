@@ -8,7 +8,7 @@
 	if(!.)
 		return
 
-	if(prob(50))
+	if(prob(50) && mode_has_antags())
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
 	else
 		AppendObjective(/datum/objective/target/protect, TRUE)
