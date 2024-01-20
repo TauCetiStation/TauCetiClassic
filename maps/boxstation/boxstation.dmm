@@ -5383,7 +5383,7 @@
 /area/station/hallway/secondary/entry)
 "ajc" = (
 /obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitered"
