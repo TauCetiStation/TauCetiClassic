@@ -2,6 +2,8 @@
 	name = "Mercenary"
 	id = "Mercenary"
 	logo_state = "synd-logo"
+	skillset_type = /datum/skillset/officer
+	change_to_maximum_skills = TRUE
 
 /datum/role/mercenary/forgeObjectives()
 	. = ..()
