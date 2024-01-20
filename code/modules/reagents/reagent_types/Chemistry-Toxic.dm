@@ -769,11 +769,12 @@
 						BP.status = 0
 					for(var/obj/item/organ/internal/BP in H.organs)
 						BP.rejuvenate()
-						BP.status &= ~ORGAN_ARTERY_CUT
+						BP.take_damage(-10)
 					H.restore_blood()
 			if(31 to 50)
 				M.heal_bodypart_damage(0,5)
-				M.adjustOxyLoss(-2 * REM)
+				M.adjustOxyLoss(-4 * REM)
+				M.adjustToxLoss(-4 * REM)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
