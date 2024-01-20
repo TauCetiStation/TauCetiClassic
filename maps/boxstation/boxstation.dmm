@@ -778,6 +778,14 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/clothing/shoes/orange/candals{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/clothing/shoes/orange/candals{
+	pixel_x = -4;
+	pixel_y = -5
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -846,23 +854,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
 "abG" = (
-/obj/structure/table,
-/obj/item/clothing/under/color/orange{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/clothing/under/color/orange{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/obj/item/clothing/shoes/orange/candals{
-	pixel_x = -4;
-	pixel_y = -5
-	},
-/obj/item/clothing/shoes/orange/candals{
-	pixel_x = 14;
-	pixel_y = -5
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -870,7 +861,7 @@
 	dir = 9;
 	icon_state = "red"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "abH" = (
 /obj/machinery/deployable/barrier,
 /obj/item/device/radio/intercom{
@@ -1155,18 +1146,18 @@
 	},
 /area/station/security/armoury)
 "abY" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/machinery/camera{
-	c_tag = "Labor Shuttle Dock North";
-	dir = 6;
-	network = list("SS13","Security")
-	},
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
 	},
+/obj/structure/stool/bed,
+/obj/machinery/camera{
+	c_tag = "Brig Center";
+	dir = 6;
+	network = list("SS13","Security")
+	},
 /turf/simulated/floor,
-/area/station/security/processing)
+/area/station/security/brig_med)
 "abZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -1204,7 +1195,7 @@
 	dir = 1;
 	icon_state = "redcorner"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "acc" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
@@ -1429,21 +1420,15 @@
 /area/station/security/armoury)
 "acv" = (
 /obj/structure/cable{
+	d1 = 1;
 	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/closet/secure_closet/brig,
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "Dark Brig";
-	dir = 4;
-	name = "Brig dark right APC";
-	pixel_x = 27
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "acw" = (
 /obj/structure/table,
 /obj/machinery/vending/wallmed2{
@@ -1506,20 +1491,16 @@
 	dir = 1;
 	icon_state = "redcorner"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "acB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
-	},
-/obj/structure/closet/secure_closet/brig,
-/obj/machinery/light/smart{
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "acC" = (
 /obj/effect/decal/cleanable/generic,
 /turf/simulated/floor/plating,
@@ -1534,8 +1515,17 @@
 	},
 /area/station/security/execution)
 "acE" = (
-/turf/simulated/floor/plating,
-/area/station/security/processing)
+/obj/machinery/alarm{
+	pixel_y = 28
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/blood/APlus,
+/obj/item/bodybag/cryobag,
+/obj/item/weapon/storage/box/bodybags,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/security/brig_med)
 "acF" = (
 /obj/machinery/door_control{
 	id = "Armoury0";
@@ -1570,29 +1560,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/security/main)
-"acJ" = (
-/obj/machinery/door/airlock/external{
-	dir = 4;
-	locked = 1;
-	name = "Labor Camp Shuttle Airlock";
-	req_access = list(2)
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/security/processing)
 "acK" = (
-/obj/machinery/door_control{
-	id = "laborexit";
-	name = "Labor Doors";
-	pixel_x = 26
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "acL" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -1621,13 +1594,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "acO" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Dark Brig";
+	dir = 8;
+	name = "Brig dark left APC";
+	pixel_x = -27
 	},
-/turf/simulated/floor/plating,
-/area/station/security/processing)
+/turf/simulated/wall/r_wall,
+/area/station/security/brig_med)
 "acP" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
@@ -1792,7 +1766,7 @@
 	dir = 6;
 	icon_state = "red"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "adc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -2185,7 +2159,7 @@
 /obj/machinery/door/airlock/security/glass{
 	dir = 4;
 	id_tag = "laborexit";
-	name = "Labor Shuttle";
+	name = "Brig Med";
 	req_access = list(1)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -2197,7 +2171,7 @@
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "adL" = (
 /obj/structure/window/thin/reinforced{
 	dir = 8
@@ -3840,17 +3814,16 @@
 	},
 /area/station/security/brig)
 "agz" = (
-/obj/structure/table,
-/obj/item/stack/cable_coil/random,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "red"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "agA" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Warden's Office";
@@ -3942,8 +3915,9 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/structure/stool/bed,
 /turf/simulated/floor,
-/area/station/security/processing)
+/area/station/security/brig_med)
 "agJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -4222,18 +4196,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/warden)
 "ahh" = (
-/obj/structure/table/glass,
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/bodybag/cryobag,
-/obj/item/weapon/reagent_containers/blood/APlus,
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitered"
 	},
-/area/station/security/brig)
+/area/station/security/brig_med)
 "ahi" = (
 /obj/structure/table/woodentable,
 /obj/item/device/megaphone,
@@ -4594,17 +4561,8 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "ahJ" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/machinery/door/airlock/external{
-	dir = 4;
-	locked = 1;
-	name = "Labor Camp Shuttle Airlock";
-	req_access = list(2)
-	},
-/turf/simulated/floor/plating,
-/area/station/security/processing)
+/turf/simulated/wall/r_wall,
+/area/station/security/brig_med)
 "ahK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -4786,19 +4744,18 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "ahY" = (
-/obj/item/weapon/flora/random,
 /obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitered"
 	},
-/area/station/security/brig)
+/area/station/security/brig_med)
 "ahZ" = (
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/security/brig)
+/area/station/security/brig_med)
 "aia" = (
 /obj/structure/object_wall/pod{
 	icon_state = "3,0"
@@ -4880,7 +4837,7 @@
 	dir = 6;
 	icon_state = "whitered"
 	},
-/area/station/security/brig)
+/area/station/security/brig_med)
 "aii" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
@@ -5422,12 +5379,12 @@
 	dir = 4;
 	icon_state = "whitered"
 	},
-/area/station/security/brig)
+/area/station/security/brig_med)
 "ajd" = (
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/security/brig)
+/area/station/security/brig_med)
 "aje" = (
 /obj/item/device/radio/intercom{
 	frequency = 1449;
@@ -5715,11 +5672,12 @@
 /obj/machinery/vending/wallmed1{
 	pixel_y = 30
 	},
+/obj/item/weapon/storage/firstaid/adv,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
 	},
-/area/station/security/brig)
+/area/station/security/brig_med)
 "ajB" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
@@ -5761,7 +5719,7 @@
 	dir = 5;
 	icon_state = "whitered"
 	},
-/area/station/security/brig)
+/area/station/security/brig_med)
 "ajE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/stool/bed/chair/metal/red{
@@ -6036,9 +5994,6 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/chiefs_office)
-"akd" = (
-/turf/simulated/wall/r_wall,
-/area/station/security/processing)
 "ake" = (
 /obj/structure/table/woodentable/poker,
 /obj/item/toy/cards,
@@ -6388,7 +6343,7 @@
 	icon_state = "warn"
 	},
 /turf/simulated/floor,
-/area/station/security/processing)
+/area/station/security/brig_med)
 "akH" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -6649,7 +6604,7 @@
 	dir = 1;
 	icon_state = "redcorner"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "ald" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for the brig foyer.";
@@ -6756,9 +6711,6 @@
 	icon_state = "red"
 	},
 /area/station/security/brig)
-"alm" = (
-/turf/simulated/wall,
-/area/station/security/processing)
 "aln" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
@@ -6850,7 +6802,7 @@
 	req_access = list(1)
 	},
 /turf/simulated/floor/plating,
-/area/station/security/processing)
+/area/station/security/brig_med)
 "alw" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -7181,7 +7133,7 @@
 	dir = 10;
 	icon_state = "red"
 	},
-/area/station/security/processing)
+/area/station/security/brig_med)
 "alV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -7513,16 +7465,8 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "amu" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/structure/sign/warning/docking,
-/turf/simulated/floor/plating,
-/area/station/security/processing)
+/turf/simulated/wall,
+/area/station/security/brig_med)
 "amv" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -7604,13 +7548,13 @@
 /turf/simulated/floor/plating,
 /area/station/security/range)
 "amC" = (
-/obj/structure/computerframe,
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor,
-/area/station/security/processing)
+/area/station/security/brig_med)
 "amD" = (
 /obj/effect/landmark/start/security_cadet,
 /obj/machinery/door_control{
@@ -69510,7 +69454,7 @@
 	dir = 9;
 	icon_state = "whitered"
 	},
-/area/station/security/brig)
+/area/station/security/brig_med)
 "cVW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
@@ -86054,7 +85998,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/processing)
+/area/station/security/brig_med)
 "wdR" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the singularity chamber.";
@@ -111468,10 +111412,10 @@ aaa
 aah
 aah
 aah
-wcY
-ahJ
-acJ
-amu
+aaa
+aaa
+aaa
+aaa
 aah
 aaa
 aah
@@ -111725,10 +111669,10 @@ aah
 aah
 aaa
 aah
-acO
-acE
-acE
-acO
+aaa
+aaa
+aaa
+aaa
 aaa
 agO
 agO
@@ -111980,13 +111924,13 @@ aaa
 aaa
 aaa
 aah
-alm
-alm
+ahJ
+ahJ
 wcY
 ahJ
-acJ
+ahJ
 wcY
-alm
+ahJ
 agO
 alZ
 alZ
@@ -112237,13 +112181,13 @@ aaa
 aaa
 aaa
 aah
-alm
+ahJ
 abY
 agI
 agI
 akG
 amC
-alm
+ahJ
 aqd
 awE
 bLk
@@ -112494,7 +112438,7 @@ aaa
 aaa
 aaa
 aah
-alm
+ahJ
 abG
 acb
 acA
@@ -112751,13 +112695,13 @@ aaa
 aaa
 aaa
 aex
-alm
+ahJ
 agz
 acv
 acB
 acK
 adb
-alm
+ahJ
 afg
 afF
 cfP
@@ -113008,13 +112952,13 @@ aaa
 aaa
 aah
 afj
-akd
-akd
-akd
-akd
-akd
+acO
+acE
+ajd
+ajd
+ahJ
 adK
-akd
+ahJ
 ayr
 ayr
 ayr
@@ -113265,7 +113209,7 @@ aah
 aah
 aah
 afm
-adJ
+ahJ
 cVb
 ahh
 ahY
@@ -113522,7 +113466,7 @@ acX
 acX
 acX
 acX
-adJ
+ahJ
 ajA
 ajd
 ahZ
@@ -113779,7 +113723,7 @@ acX
 acY
 abr
 acY
-adM
+amu
 ajD
 ajc
 aih
