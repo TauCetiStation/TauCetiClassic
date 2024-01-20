@@ -289,9 +289,11 @@
 	},
 /area/space_structures/mercenary_ship)
 "aN" = (
-/obj/machinery/light/small/emergency,
 /obj/effect/decal/turf_decal/set_burned,
 /obj/effect/decal/cleanable/blood/gibs,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
