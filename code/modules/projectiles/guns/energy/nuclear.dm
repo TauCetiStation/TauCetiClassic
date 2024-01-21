@@ -24,6 +24,11 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/ion/small)
 	origin_tech = "combat=4;magnets=3"
 
+/obj/item/weapon/gun/energy/gun/hos/atom_init()
+	. = ..()
+	power_supply.maxcharge = 1600
+	power_supply.charge = 1600
+
 /obj/item/weapon/gun/energy/gun/adv
 	name = "Energy Gun Mark II"
 	desc = "Новейшая модель энергетического оружия. Передовая конструкция отличается улучшенной системой охлаждения и внутренней батареей."
