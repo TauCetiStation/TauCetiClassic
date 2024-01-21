@@ -202,7 +202,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 
 	var/save_id = 0
 
-	var/icon/foods_inside
+	var/image/foods_inside
 
 	var/foods_offsets = list(list(-6, 10), list(6, 10), list(-6, -4), list(6, -4))
 
@@ -239,12 +239,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 
 /obj/structure/preservation_table/update_icon()
 	cut_overlay(foods_inside)
-	foods_inside = icon('icons/effects/32x32.dmi', "blank")
+	if(!foods_inside)
+		foods_inside = image('icons/effects/32x32.dmi', "blank")
+	foods_inside.clear_filters()
 
 	var/i = 1
 	for(var/obj/item/F in internal_storage.contents)
 		var/list/offsets = foods_offsets[i]
-		foods_inside.Blend(icon(F.icon, F.icon_state), ICON_OVERLAY, offsets[1], offsets[2])
+		foods_inside.add_filter("add_food_[i]", 1, layering_filter(x = offsets[1], y = offsets[2], icon = icon(F.icon, F.icon_state)))
 		i++
 
 	add_overlay(foods_inside)
@@ -323,7 +325,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 
 	var/obj/item/weapon/storage/internal/internal_storage
 
-	var/icon/vegs_inside
+	var/image/vegs_inside
 
 	var/can_preserve = /obj/item/weapon/reagent_containers/food/snacks/grown
 	var/list/can_also_preserve = list()
@@ -350,12 +352,16 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 
 /obj/structure/preservation_box/update_icon()
 	cut_overlay(vegs_inside)
-	vegs_inside = icon('icons/effects/32x32.dmi', "blank")
+	if(!vegs_inside)
+		vegs_inside = image('icons/effects/32x32.dmi', "blank")
+	vegs_inside.clear_filters()
 
+	var/i = 1
 	for(var/obj/item/V in internal_storage.contents)
-		vegs_inside.Blend(icon(V.icon, V.icon_state), ICON_OVERLAY, rand(-7, 7), rand(0, 7))
+		vegs_inside.add_filter("add_veg_[i]", 1, layering_filter(x = rand(-7, 7), y = rand(0, 7), icon = icon(V.icon, V.icon_state)))
+		i++
 
-	vegs_inside.Blend(icon('icons/obj/kitchen.dmi', "preservation_box_mask"), ICON_AND)
+	vegs_inside.add_filter("vegs_mask", 1, alpha_mask_filter(icon = icon('icons/obj/kitchen.dmi', "preservation_box_mask")))
 
 	add_overlay(vegs_inside)
 
