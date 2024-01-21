@@ -1914,10 +1914,6 @@
 /obj/structure/stool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
-"adn" = (
-/obj/effect/decal/remains/human,
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
 "ado" = (
 /obj/machinery/flasher{
 	id = "solitary1"
@@ -77597,6 +77593,7 @@
 /obj/structure/stool/bed/chair/barber{
 	dir = 1
 	},
+/obj/effect/decal/remains/human,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "lzb" = (
@@ -121999,7 +121996,7 @@ aaa
 aef
 kjb
 adm
-adn
+aeJ
 aef
 adS
 adj
