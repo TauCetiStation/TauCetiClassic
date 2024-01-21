@@ -18,7 +18,7 @@
 	return result
 
 /proc/do_skilled(mob/user, atom/target,  delay, required_skills, multiplier, datum/callback/extra_checks=null)
-	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, multiplier), target = target, extra_checks = extra_checks)
+	return do_after(user, delay = min(delay, apply_skill_bonus(user, delay, required_skills, multiplier)), target = target, extra_checks = extra_checks)
 
 /proc/handle_fumbling(mob/user, atom/target, delay, required_skills, message_self = "", text_target = null, check_busy = TRUE, can_move = FALSE)
 	if(is_skill_competent(user, required_skills))
@@ -31,7 +31,7 @@
 	if(text_target)
 		used_item = text_target
 
-	var/required_time = apply_skill_bonus(user, delay, required_skills, -1) //increase time for each missing level
+	var/required_time = min(delay, apply_skill_bonus(user, delay, required_skills, -1)) / 5 //increase time for each missing level
 	if(!message_self)
 		display_message_self = "<span class='notice'>You fumble around figuring out how to use the [used_item].</span>"
 	if(required_time > 0)
