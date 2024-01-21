@@ -193,7 +193,7 @@
 	if(!job.is_species_permitted(client.prefs.species))
 		var/datum/quality/quality = SSqualities.qualities_by_name[client.prefs.selected_quality_name]
 		//skip check by quality
-		if(istype(quality, /datum/quality/unrestricted))
+		if(istype(quality, /datum/quality/quirkieish/unrestricted))
 			return TRUE
 		return FALSE
 	return TRUE
