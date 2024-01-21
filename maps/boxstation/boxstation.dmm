@@ -1640,8 +1640,8 @@
 	},
 /area/station/security/interrogation)
 "acQ" = (
-/obj/structure/firedoor_assembly,
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/decal/remains/xeno,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "acR" = (
@@ -1910,12 +1910,12 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "adm" = (
-/obj/item/clothing/suit/ianshirt,
-/obj/item/clothing/glasses/gglasses,
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/stool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "adn" = (
-/obj/item/clothing/shoes/laceup,
+/obj/effect/decal/remains/human,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "ado" = (
@@ -57351,9 +57351,7 @@
 /obj/item/stack/sheet/metal{
 	amount = 50
 	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -76427,10 +76425,8 @@
 	},
 /area/station/engineering/drone_fabrication)
 "kjb" = (
-/obj/structure/stool,
-/obj/effect/decal/remains/human,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/item/stack/sheet/metal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "kkb" = (
@@ -77593,6 +77589,13 @@
 /obj/structure/window/thin/reinforced,
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
+"lyh" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/stool/bed/chair/barber{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "lzb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -121992,7 +121995,7 @@ aaa
 aaa
 aef
 kjb
-aef
+adm
 adn
 aef
 adS
@@ -122248,9 +122251,9 @@ aaa
 aaa
 aaa
 ace
-aco
+lyh
 acQ
-adm
+aeJ
 aef
 cyv
 aeM
