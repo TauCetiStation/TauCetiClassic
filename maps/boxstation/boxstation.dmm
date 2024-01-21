@@ -76426,7 +76426,10 @@
 /area/station/engineering/drone_fabrication)
 "kjb" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/obj/item/stack/sheet/metal,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "kkb" = (
