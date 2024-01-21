@@ -12,6 +12,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 
 /obj/machinery/computer/syndicate_elite_shuttle
 	name = "Elite Syndicate Squad Shuttle Console"
+	cases = list("консоль управления элитным шаттлом отряда Синдиката", "консоли управления элитным шаттлом отряда Синдиката", "консоли управления элитным шаттлом отряда Синдиката", "консоль управления элитным шаттлом отряда Синдиката", "консолью управления элитным шаттлом отряда Синдиката", "консоли управления элитным шаттлом отряда Синдиката")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
 	state_broken_preset = "tcbossb"
@@ -41,8 +42,9 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 		if(announcer)
 			if(departpos == "station")
 				var/rounded_time_left = round(syndicate_elite_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
+				var/rounded_time_left_seconds = pluralize_russian(syndicate_elite_shuttle_timeleft, "секунду", "секунды", "секунд")
 				if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
-					message = "ТРЕВОГА: осталось [rounded_time_left] секунд"
+					message = "ТРЕВОГА: осталось [rounded_time_left] [rounded_time_left_seconds]"
 					if(rounded_time_left==0)
 						message = "ТРЕВОГА: Шаттл начинает отстыковку"
 					announcer.say(message)
@@ -51,7 +53,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 			else if(departpos == "syndimothership")
 				var/rounded_time_left = round(syndicate_elite_shuttle_timeleft)
 				if(rounded_time_left in message_tracker)
-					message = "Внимание, шаттл вернется на базу через [rounded_time_left] секунд. ВОЗВРАЩАЙТЕСЬ НА ШАТТЛ!"
+					message = "Внимание, шаттл вернется на базу через [rounded_time_left] [rounded_time_left_seconds]. ВОЗВРАЩАЙТЕСЬ НА ШАТТЛ!"
 					if(rounded_time_left==0)
 						message = "ТРЕВОГА: Шаттл пристыковался к материнскому кораблю. Добро пожаловать домой, солдаты."
 					announcer.say(message)
