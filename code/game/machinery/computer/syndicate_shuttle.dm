@@ -67,7 +67,7 @@
 /obj/machinery/computer/syndicate_station/ui_interact(mob/user)
 	var/seconds = max(round((lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
 	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
-	var/dat = {"Местоположение: [curr_location]<br>
+	var/dat = {"Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>
 	Готов к полёту[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]<br>
 	<a href='?src=\ref[src];syndicate=1'>Пространство Синдиката</a><br>
 	<a href='?src=\ref[src];station_nw=1'>Северо-запад от [station_name_ru()]</a> |
@@ -78,7 +78,7 @@
 	<a href='?src=\ref[src];station_se=1'>Юго-восток от [station_name_ru()]</a><br>
 	<a href='?src=\ref[src];mining=1'>К северо-востоку от шахтёрного астероида</a><br>"}
 
-	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450, ntheme = CSS_THEME_SYNDICATE)
+	var/datum/browser/popup = new(user, "computer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 575, 450, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
 	popup.open()
 

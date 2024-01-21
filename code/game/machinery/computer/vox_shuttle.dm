@@ -7,7 +7,7 @@
 var/global/announce_vox_departure = FALSE // Stealth systems - give an announcement or not.
 
 /obj/machinery/proc/console_say(text)
-	visible_message("<b>[src]</b> beeps, \"[text]\'")
+	visible_message("<b>[capitalize(CASE(src, NOMINATIVE_CASE))]</b> сигнализирует, \"[text]\'")
 
 /obj/machinery/computer/vox_stealth
 	name = "skipjack cloaking field terminal"
@@ -160,7 +160,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	var/time_seconds = round(time_to_move * 0.1)
 	var/sec_word = pluralize_russian(time_seconds, "секунду", "секунды", "секунд")
 	var/dat = {"Маскировочное Поле Skipjack: [announce_vox_departure ? "<span style='color: #ff0000;font-weight: bold;'>Деактивировано!</span>" : "<span style='color: #aa00aa'>Активировано!</span>"]<br><br>
-		Местоположение: [curr_location]<br>
+		Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>
 		Готов к полёту[time_to_move ? " через [time_seconds] [sec_word]" : ": Готово"]<br><br>
 		<a href='?src=\ref[src];start=1' style='width:100%;text-align:center'>Вернуться в далёкий космос</a>
 		<div class="center_div" style="position: relative;" >
@@ -169,7 +169,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		</div>
 		<a href='?src=\ref[src];mining=1' style='width:100%;text-align:center'>Шахтёрский астероид</a><br><br>"}
 
-	var/datum/browser/popup = new(user, "computer", "Shuttle", 500, 500)
+	var/datum/browser/popup = new(user, "computer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 500, 500)
 	popup.set_content(dat)
 	popup.open()
 

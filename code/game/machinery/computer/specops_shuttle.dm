@@ -128,9 +128,9 @@ var/global/specops_shuttle_timeleft = 0
 			var/rounded_time_left = round(specops_shuttle_timeleft)//Round time so that it will report only once, not in fractions.
 			var/rounded_time_left_seconds = pluralize_russian(rounded_time_left, "секунду", "секунды", "секунд")
 			if(rounded_time_left in message_tracker)//If that time is in the list for message announce.
-				message = "\"ТРЕВОГА: осталось [rounded_time_left] [rounded_time_left_seconds]\""
+				message = "ТРЕВОГА: осталось [rounded_time_left] [rounded_time_left_seconds]"
 				if(rounded_time_left==0)
-					message = "\"ТРЕВОГА: Шаттл начинает отстыковку\""
+					message = "ТРЕВОГА: Шаттл начинает отстыковку"
 				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.

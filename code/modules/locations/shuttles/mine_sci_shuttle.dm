@@ -11,7 +11,7 @@ var/global/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot = null
 var/global/area/asteroid/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle
-	name = "Mine-Science Shuttle Console"
+	name = ""
 	cases = list("консоль шаттла Шахта-Наука", "консоли шаттла Шахта-Наука", "консоли шаттла Шахта-Наука", "консоль шаттла Шахта-Наука", "консолью шаттла Шахта-Наука", "консоли шаттла Шахта-Наука")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
@@ -27,23 +27,25 @@ var/global/area/asteroid/mine_sci_curr_location = null
 			updateUsrDialog()
 
 /obj/machinery/computer/mine_sci_shuttle/ui_interact(mob/user)
+	var/seconds = max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	var/dat
 	if(autopilot)
 		var/shuttle_location = station_name_ru()
 		if(istype(autopilot.mine_sci_curr_location, MINE_DOCK))
-			shuttle_location = "Mining Station"
+			shuttle_location = "Шахтёрский аванпост"
 		else if(istype(autopilot.mine_sci_curr_location, SCI_DOCK))
-			shuttle_location = "Research"
-		dat += "<ul><li>Местоположение: [shuttle_location]</li>"
-		dat += {"<li>Готов лететь[max(autopilot.lastMove + MINE_SHUTTLE_MOVE_TIME + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " через [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] секунд" : ": сейчас"]</li>"}
+			shuttle_location = "Научный аванпост"
+		dat += "<ul><li>Местоположение: <b>[shuttle_location]</b></li>"
+		dat += {"<li>Готов лететь[max(autopilot.lastMove + MINE_SHUTTLE_MOVE_TIME + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]</li>"}
 		dat += "</ul>"
-		dat += "<a href='?src=\ref[src];mine=1'>Шахтёрский аванпост</a> |"
-		dat += "<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> |"
+		dat += "<a href='?src=\ref[src];mine=1'>Шахтёрский аванпост</a> | "
+		dat += "<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> | "
 		dat += "<a href='?src=\ref[src];sci=1'>Научный аванпост</a><br>"
 	else
 		dat = "Невозможно найти шаттл"
 
-	var/datum/browser/popup = new(user, "flightcomputer", "[src.name]", 365, 200)
+	var/datum/browser/popup = new(user, "flightcomputer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 365, 200)
 	popup.set_content(dat)
 	popup.open()
 

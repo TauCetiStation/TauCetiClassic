@@ -91,13 +91,13 @@
 /obj/machinery/computer/officer_shuttle/ui_interact(mob/user)
 	var/seconds = max(round((lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
 	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
-	var/dat = {"Местоположение: [capitalize(CASE(curr_location, NOMINATIVE_CASE))]<br>
+	var/dat = {"Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>
 			Готов лететь[max(lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]<br>
 		<a href='?src=\ref[src];velocity=1'>Велосити Док 42</a> |
 		<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> |
 		<a href='?src=\ref[src];centcomm=1'>ЦентКом</a><br>"}
 
-	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450)
+	var/datum/browser/popup = new(user, "computer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 575, 450)
 	popup.set_content(dat)
 	popup.open()
 
