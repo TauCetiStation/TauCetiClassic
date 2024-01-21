@@ -196,7 +196,7 @@ var/global/lastMove = 0
 
 	if(href_list["back"])
 		if(!arrival_shuttle_ready_move())
-			to_chat(usr, "<span class='notice'>Шаттл еще не готов к полёту.</span>")
+			to_chat(usr, "<span class='notice'>Шаттл ещё не готов к полёту.</span>")
 		else if(!moving && location == ARRIVAL_SHUTTLE_EXODUS)
 			to_chat(usr, "<span class='notice'>Шаттл получил запрос и будет отправлен в ближайшее время.</span>")
 			arrival_shuttle_move()
