@@ -180,17 +180,16 @@ var/global/list/ingredients_source = list(
 		visible_message("<span class='notice'>[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.</span>")
 	else if(href_list["cone"])
 		var/dispense_cone = text2num(href_list["cone"])
-		if(ingredients[dispense_cone] <= ingredients.len)
-			var/cone_name = get_icecream_flavour_string(dispense_cone)
-			if(ingredients[dispense_cone] >= 1)
-				ingredients[dispense_cone] -= 1
-				var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = new(src.loc)
-				I.cone_type = cone_name
-				I.icon_state = "icecream_cone_[cone_name]"
-				I.desc = "Delicious [cone_name] cone, but no ice cream."
-				visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
-			else
-				to_chat(usr, "<span class='warning'>There are no [cone_name] cones left!</span>")
+		var/cone_name = get_icecream_flavour_string(dispense_cone)
+		if(ingredients[dispense_cone] >= 1)
+			ingredients[dispense_cone] -= 1
+			var/obj/item/weapon/reagent_containers/food/snacks/icecream/I = new(src.loc)
+			I.cone_type = cone_name
+			I.icon_state = "icecream_cone_[cone_name]"
+			I.desc = "Delicious [cone_name] cone, but no ice cream."
+			visible_message("<span class='info'>[usr] dispenses a crunchy [cone_name] cone from [src].</span>")
+		else
+			to_chat(usr, "<span class='warning'>There are no [cone_name] cones left!</span>")
 	else if(href_list["make"])
 		make( usr, text2num(href_list["make"]) )
 	else if(href_list["eject"])
