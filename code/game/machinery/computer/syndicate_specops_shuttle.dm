@@ -64,7 +64,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 	if (syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
 
 	if (!syndicate_elite_can_move())
-		to_chat(usr, "<span class='warning'>Шаттл элитного Синдиката не может улететь.</span>")
+		to_chat(usr, "<span class='warning'>Шаттл элитного отряда Синдиката не может улететь.</span>")
 		return
 
 	var/area/startloc
@@ -125,9 +125,9 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 		dat = temp
 	else
 		dat  = {"\nМестоположение: [syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "Отправляющийся на [station_name_ru] через [seconds] [seconds_word]":syndicate_elite_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
-			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*Шаттл элитного Синдиката уже отправляется.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Возвращение шаттла на материнский корабль</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
+			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*Шаттл элитного отряда Синдиката уже отправляется.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Возвращение шаттла на материнский корабль</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
 
-	var/datum/browser/popup = new(user, "компьютер", "Шаттл специального назначения", 575, 450)
+	var/datum/browser/popup = new(user, "computer", "Шаттл специального назначения", 575, 450)
 	popup.set_content(dat)
 	popup.open()
 
