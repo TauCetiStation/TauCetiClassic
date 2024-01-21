@@ -394,6 +394,7 @@
 	if (admin_edit)
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons(M)]"
 
+	text += getExtraInfo()
 	if(objectives.objectives.len)
 		text += "<br><ul><b>Personal objectives:</b><br>"
 	else
@@ -497,4 +498,7 @@
 	return
 
 /datum/role/proc/remove_ui(datum/hud/hud)
+	return
+
+/datum/role/proc/getExtraInfo()
 	return

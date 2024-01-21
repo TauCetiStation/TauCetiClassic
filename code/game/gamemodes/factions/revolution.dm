@@ -340,6 +340,8 @@
 	if(add_faction_member(src, user, TRUE))
 		reasons[user.mind.key] = reason_string
 		to_chat(user, "<span class='notice'>You join the revolution!</span>")
+		message_admins("[user] ([user.client.key]) has joined the revolution with the reason: [reason_string]")
+		log_admin("[user] ([user.client.key]) has joined the revolution with the reason: [reason_string]")
 		return TRUE
 	return FALSE
 

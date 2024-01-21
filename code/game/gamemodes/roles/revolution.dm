@@ -23,6 +23,12 @@
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "rev_convert")
 	..()
 
+/datum/role/rev/getExtraInfo()
+	if(!istype(faction, /datum/faction/revolution))
+		return
+	var/datum/faction/revolution/R = faction
+	return "<br>Reason for joining: " + R.reasons[antag.key]
+
 /datum/role/rev/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, "<span class='warning'><FONT size = 3>С этого момента вы - Революционер! Распространяйте всюду ваше освободительное движение. Не вредите своим товарищам в борьбе за свободу. Вы можете определить своих союзников по красному ярлыку \"R\", а также своих лидеров по синему ярлыку \"R\". Помогайте им в вербовке, захвате или убийстве глав станции для достижения победы Революции!</FONT></span>")
