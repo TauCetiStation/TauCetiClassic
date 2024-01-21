@@ -21,9 +21,6 @@
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
 
-	//associative
-	var/list/reasons = list()
-
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
@@ -264,9 +261,6 @@
 	score_results += "<ul>"
 
 	var/have_objectives = FALSE
-	var/have_reason_string = FALSE
-	if(reasons.len)
-		have_reason_string = TRUE
 
 	var/list/name_by_members = list()
 	score_results += "<FONT size = 2><B>Members:</B></FONT><br>"
@@ -284,10 +278,6 @@
 				score_results += "<br>"
 				if(R.objectives.objectives.len)
 					have_objectives = TRUE
-			if(have_reason_string)
-				var/reason_string = reasons[R.antag.key]
-				if(reason_string)
-					score_results += "<DD><B>Reason to join the revolution:</B> [reason_string]</DD><BR>"
 
 		score_results += "</ul>"
 
@@ -304,12 +294,7 @@
 	var/datum/role/rev_leader/lead = get_member_by_mind(inviter.mind)
 	var/choice = tgui_alert(possible_rev, "Asked by [inviter]: Do you want to join the revolution?", "Join the Revolution!", list("No!","Yes!"))
 	if(choice == "Yes!")
-		var/reason_string = find_reason(possible_rev)
-		if(!reason_string)
-			to_chat(inviter, "<span class='bold warning'>[possible_rev] has no reason to support the revolution!</span>")
-			lead.rev_cooldown = world.time + 5 SECONDS
-			return FALSE
-		if(add_user_to_rev(possible_rev, reason_string))
+		if(add_user_to_rev(possible_rev))
 			to_chat(inviter, "<span class='bold_notice'>[possible_rev] has joined the revolution!</span>")
 			add_tc_to_headrev(inviter, lead)
 			return TRUE
@@ -322,23 +307,12 @@
 	return FALSE
 
 /datum/faction/revolution/proc/convert_revolutionare(mob/possible_rev)
-	var/reason_string = find_reason(possible_rev)
-	if(!reason_string)
-		return FALSE
-	if(add_user_to_rev(possible_rev, reason_string))
+	if(add_user_to_rev(possible_rev))
 		return TRUE
 	return FALSE
 
-/datum/faction/revolution/proc/find_reason(mob/user)
-	var/reason_string = sanitize_safe(input(user, "Please write the reason why you want to join the ranks of the revolution", "Write Reason") as null|message, MAX_REV_REASON_LEN)
-	if(!reason_string)
-		to_chat(user, "<span class='warning'>You have no reason to join the revolution!</span>")
-		return null
-	return reason_string
-
-/datum/faction/revolution/proc/add_user_to_rev(mob/user, reason_string)
+/datum/faction/revolution/proc/add_user_to_rev(mob/user)
 	if(add_faction_member(src, user, TRUE))
-		reasons[user.mind.key] = reason_string
 		to_chat(user, "<span class='notice'>You join the revolution!</span>")
 		return TRUE
 	return FALSE
