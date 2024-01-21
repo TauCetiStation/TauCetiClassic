@@ -908,8 +908,8 @@
 	desc = "An advanced helmet designed for work in special operations. Created using older design of armored hardsuits."
 	icon_state = "rig0-heavy"
 	item_state = "syndie_helm"
-	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
-	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
+	combat_armor = list(melee = 70, bullet = 70, laser = 65,energy = 50, bomb = 50, bio = 100, rad = 30)
+	space_armor = list(melee = 45, bullet = 30, laser = 30, energy = 45, bomb = 50, bio = 100, rad = 60)
 	rig_type = "heavy"
 
 /obj/item/clothing/suit/space/rig/syndi/heavy
@@ -920,7 +920,7 @@
 	rig_variant = "rig-heavy"
 	slowdown = 1.2
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair/adv, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/emp_shield)
-	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
+	combat_armor = list(melee = 70, bullet = 70, laser = 65,energy = 50, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 45, bullet = 30, laser = 30, energy = 45, bomb = 50, bio = 100, rad = 60)
 	combat_slowdown = 0.5
 

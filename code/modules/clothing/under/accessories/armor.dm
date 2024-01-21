@@ -35,5 +35,5 @@
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD | SLOT_FLAGS_TIE
 	slot = "dermal"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
 	flashbang_protection = TRUE
