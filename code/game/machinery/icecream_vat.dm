@@ -104,7 +104,6 @@ var/global/list/ingredients_source = list(
 							held_container.reagents.trans_to(I, 10)
 						if(I.reagents.total_volume < 10)
 							I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume)
-						updateDialog()
 					else
 						to_chat(user, "<span class='warning'>There is not enough [flavour_name] flavouring left! Insert more of the required ingredients.</span>")
 				else
@@ -118,7 +117,6 @@ var/global/list/ingredients_source = list(
 				to_chat(user, "<span class='info'>You insert [O] into [src].</span>")
 				user.drop_from_inventory(O, src)
 				held_container = O
-				updateDialog()
 		else
 			var/obj/item/weapon/reagent_containers/R = O
 			if(R.reagents)
@@ -128,8 +126,8 @@ var/global/list/ingredients_source = list(
 						add(ingredients_source[current_reagent.id], current_reagent.volume / 2)
 					else
 						add(MUCK, current_reagent.volume / 5)
-				updateDialog()
 				R.reagents.clear_reagents()
+		updateDialog()
 		return 1
 	else
 		..()
