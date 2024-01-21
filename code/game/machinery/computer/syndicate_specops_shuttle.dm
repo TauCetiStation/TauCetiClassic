@@ -52,6 +52,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 					//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 			else if(departpos == "syndimothership")
 				var/rounded_time_left = round(syndicate_elite_shuttle_timeleft)
+				var/rounded_time_left_seconds = pluralize_russian(syndicate_elite_shuttle_timeleft, "секунду", "секунды", "секунд")
 				if(rounded_time_left in message_tracker)
 					message = "Внимание, шаттл вернется на базу через [rounded_time_left] [rounded_time_left_seconds]. ВОЗВРАЩАЙТЕСЬ НА ШАТТЛ!"
 					if(rounded_time_left==0)
