@@ -13,7 +13,7 @@ var/global/specops_shuttle_timeleft = 0
 
 /obj/machinery/computer/specops_shuttle
 	name = "special operations shuttle control console"
-
+	cases = list("консоль управления шаттлом для специальных операций", "консоли управления шаттлом для специальных операций", "консоли управления шаттлом для специальных операций", "консоль управления шаттлом для специальных операций", "консолью управления шаттлом для специальных операций", "консоли управления шаттлом для специальных операций")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	light_color = "#00ffff"
