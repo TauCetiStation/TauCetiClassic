@@ -104,6 +104,7 @@ var/global/list/ingredients_source = list(
 							held_container.reagents.trans_to(I, 10)
 						if(I.reagents.total_volume < 10)
 							I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume)
+						updateDialog()
 					else
 						to_chat(user, "<span class='warning'>There is not enough [flavour_name] flavouring left! Insert more of the required ingredients.</span>")
 				else
@@ -117,6 +118,7 @@ var/global/list/ingredients_source = list(
 				to_chat(user, "<span class='info'>You insert [O] into [src].</span>")
 				user.drop_from_inventory(O, src)
 				held_container = O
+				updateDialog()
 		else
 			var/obj/item/weapon/reagent_containers/R = O
 			if(R.reagents)
@@ -126,6 +128,7 @@ var/global/list/ingredients_source = list(
 						add(ingredients_source[current_reagent.id], current_reagent.volume / 2)
 					else
 						add(MUCK, current_reagent.volume / 5)
+				updateDialog()
 				R.reagents.clear_reagents()
 		return 1
 	else
@@ -140,7 +143,7 @@ var/global/list/ingredients_source = list(
 	switch(make_type)
 		if(CONE_WAFFLE)
 			if(ingredients[INGR_FLOUR] > 0 && ingredients[INGR_SUGAR] > 0)
-				var/amount = max( min(ingredients[INGR_FLOUR], ingredients[INGR_SUGAR]), 5)
+				var/amount = min(ingredients[INGR_FLOUR], ingredients[INGR_SUGAR], 5)
 				ingredients[INGR_FLOUR] -= amount
 				ingredients[INGR_SUGAR] -= amount
 				ingredients[CONE_WAFFLE] += amount
@@ -149,7 +152,7 @@ var/global/list/ingredients_source = list(
 				to_chat(user, "<span class='notice'>You require sugar and flour to make waffle cones.</span>")
 		if(CONE_CHOC)
 			if(ingredients[FLAVOUR_CHOCOLATE] > 0 && ingredients[CONE_WAFFLE] > 0)
-				var/amount = min(ingredients[CONE_WAFFLE], ingredients[FLAVOUR_CHOCOLATE])
+				var/amount = min(ingredients[CONE_WAFFLE], ingredients[FLAVOUR_CHOCOLATE], 5)
 				ingredients[CONE_WAFFLE] -= amount
 				ingredients[FLAVOUR_CHOCOLATE] -= amount
 				ingredients[CONE_CHOC] += amount
@@ -158,7 +161,7 @@ var/global/list/ingredients_source = list(
 				to_chat(user, "<span class='notice'>You require waffle cones and chocolate flavouring to make chocolate cones.</span>")
 		if(ICECREAM_VANILLA)
 			if(ingredients[INGR_ICE] > 0 && ingredients[INGR_MILK] > 0)
-				var/amount = min(ingredients[INGR_ICE], ingredients[INGR_MILK])
+				var/amount = min(ingredients[INGR_ICE], ingredients[INGR_MILK], 5)
 				ingredients[INGR_ICE] -= amount
 				ingredients[INGR_MILK] -= amount
 				ingredients[ICECREAM_VANILLA] += amount
