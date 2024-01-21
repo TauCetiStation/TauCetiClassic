@@ -31,11 +31,11 @@
 			to_chat(user, "Уровень доступа ID карты [W:registered_name] не достаточен.")
 			return 0
 
-		var/choice = tgui_alert(user, text("Хотите авторизовать экстренный запуск шаттла? Вам по-прежнему требуется [] авторизации. Используйте кнопку сброс, чтобы отозвать все авторизации.", src.auth_need - src.authorized.len), "Запуск шаттла", list("Авторизовать", "Отмена", "Сброс"))
+		var/choice = tgui_alert(user, text("Хотите авторизовать экстренный запуск шаттла? Вам по-прежнему требуется [] авторизации.", src.auth_need - src.authorized.len), "Управление шаттлом", list("Авторизация", "Отмена", "Сброс"))
 		if(SSshuttle.location != 1 && user.get_active_hand() != W)
 			return 0
 		switch(choice)
-			if("Авторизовать")
+			if("Авторизация")
 				src.authorized -= W:registered_name
 				src.authorized += W:registered_name
 				if (src.auth_need - src.authorized.len > 0)
@@ -62,7 +62,7 @@
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(emagged)
 		return FALSE
-	var/choice = tgui_alert(user, "Вы хотите запустить шаттл?","Управление шаттлом", list("Запуск", "Отменить"))
+	var/choice = tgui_alert(user, "Вы хотите запустить шаттл?","Управление шаттлом", list("Запуск", "Отмена"))
 	if(SSshuttle.location == 1)
 		switch(choice)
 			if("Запуск")
