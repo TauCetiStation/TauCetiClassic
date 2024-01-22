@@ -7,8 +7,6 @@
 #define POOL_NEUTRAL_VIRUS "pool_neutral_virus"
 #define POOL_NEGATIVE_VIRUS "pool_negative_virus"
 
-var/global/list/virus_types_by_pool
-
 /// Disease amount excess nanites
 #define NANITE_EXCESS_VOMIT 100
 #define NANITE_EXCESS_BURST 350
