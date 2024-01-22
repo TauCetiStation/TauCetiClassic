@@ -12,7 +12,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 
 /obj/machinery/computer/syndicate_elite_shuttle
 	name = "Elite Syndicate Squad Shuttle Console"
-	cases = list("консоль управления элитным шаттлом отряда Синдиката", "консоли управления элитным шаттлом отряда Синдиката", "консоли управления элитным шаттлом отряда Синдиката", "консоль управления элитным шаттлом отряда Синдиката", "консолью управления элитным шаттлом отряда Синдиката", "консоли управления элитным шаттлом отряда Синдиката")
+	cases = list("консоль управления шаттлом элитного отряда Синдиката", "консоли управления шаттлом элитного отряда Синдиката", "консоли управления шаттлом элитного отряда Синдиката", "консоль управления шаттлом элитного отряда Синдиката", "консолью управления шаттлом элитного отряда Синдиката", "консоли управления шаттлом элитного отряда Синдиката")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
 	state_broken_preset = "tcbossb"
@@ -27,7 +27,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 	var/mob/living/silicon/decoy/announcer = locate() in syndicate_ship//We need a fake AI to announce some stuff below. Otherwise it will be wonky.
 
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
-	var/message = "ЭЛИТНЫЙ ШАТТЛ СИНДИКАТА ГОТОВИТСЯ К ВЗЛЁТУ"//Initial message shown.
+	var/message = "ШАТТЛ ЭЛИТНОГО ОТРЯДА СИНДИКАТА ГОТОВИТСЯ К ВЗЛЁТУ"//Initial message shown.
 	if(announcer)
 		announcer.say(message)
 
@@ -149,17 +149,17 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 			syndicate_elite_shuttle_time = world.timeofday + SYNDICATE_ELITE_MOVETIME
 			syndicate_elite_shuttle_move("syndimothership")
 		else
-			to_chat(usr, "<span class='notice'>Материнский корабль пока не разрешил шаттлу элитного Синдиката вернуться.</span>")
+			to_chat(usr, "<span class='notice'>Материнский корабль пока не разрешил шаттлу элитного отряда Синдиката вернуться.</span>")
 			return FALSE
 
 	else if (href_list["sendtostation"])
 		if(syndicate_elite_shuttle_at_station || syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return
 
 		if (!specops_can_move())
-			to_chat(usr, "<span class='warning'>Шаттл элитного Синдиката не может улететь.</span>")
+			to_chat(usr, "<span class='warning'>Шаттл элитного отряда Синдиката не может улететь.</span>")
 			return FALSE
 
-		to_chat(usr, "<span class='notice'>Шаттл элитного Синдиката прибудет на [station_name_ru] через [seconds] [seconds_word].</span>")
+		to_chat(usr, "<span class='notice'>Шаттл элитного отряда Синдиката прибудет на [station_name_ru] через [seconds] [seconds_word].</span>")
 
 		temp  = "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 		syndicate_elite_shuttle_moving_to_station = TRUE

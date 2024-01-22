@@ -41,7 +41,7 @@
 				if (src.auth_need - src.authorized.len > 0)
 					message_admins("[key_name_admin(user)] has authorized early shuttle launch")
 					log_game("[user.ckey] has authorized early shuttle launch")
-					visible_message("<span class='notice'><B>Тревога: осталось ещё [auth_need - authorized.len] авторизации, необходимых для экстренного запуска шаттла.</B></span>")
+					visible_message("<span class='notice'><B>Внимание! Для экстренного запуска шаттла осталось получить разрешений: [auth_need - authorized.len]</B></span>")
 				else
 					message_admins("[key_name_admin(user)] has launched the shuttle")
 					log_game("[user.ckey] has launched the shuttle early")
@@ -52,7 +52,7 @@
 
 			if("Отмена")
 				src.authorized -= W:registered_name
-				visible_message("<span class='notice'><B>Тревога: осталось ещё [auth_need - authorized.len] авторизации, необходимых для экстренного запуска шаттла.</B></span>")
+				visible_message("<span class='notice'><B>Внимание! Для экстренного запуска шаттла осталось получить разрешений: [auth_need - authorized.len]</B></span>")
 
 			if("Сброс")
 				visible_message("<span class='notice'><B>Все разрешения на сокращение времени запуска шаттла отменены!</B></span>")

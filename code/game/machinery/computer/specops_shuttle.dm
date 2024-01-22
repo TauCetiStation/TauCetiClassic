@@ -93,7 +93,7 @@ var/global/specops_shuttle_timeleft = 0
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
-		to_chat(M, "<span class='warning'>Вы прибыли на станцию Центрального командования. Операция завершена!</span>")
+		to_chat(M, "<span class='warning'>Вы прибыли на станцию ЦентКом. Операция завершена!</span>")
 
 	SSshuttle.dock_act(end_location)
 	SSshuttle.dock_act(/area/centcom/living, "centcomm_specops")
