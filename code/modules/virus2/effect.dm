@@ -31,7 +31,7 @@
 
 //If false, disables effects
 /datum/disease2/effectholder/proc/check_conditions(atom/host, datum/disease2/disease/disease)
-	//bloodloss = nanite loss. Programs suspended
+	//bloodloss = cell loss. Programs suspended
 	if(ishuman(host) && effect.effect_type & MICROBIOLOGY_NANITE)
 		var/mob/living/carbon/human/H = host
 		var/probability_denied = clamp(BLOOD_VOLUME_OKAY - H.blood_amount(), 0, 100)
@@ -55,7 +55,7 @@
 	var/effect_active = TRUE
 	var/effect_type = 0
 	//The following vars are customizable
-	var/use_rate = 0 			//Amount of nanites used while active
+	var/use_rate = 0 			//Amount of cells used while active
 	var/program_flags = NONE
 	var/list/rogue_mutate_type = list(/*datum/disease2/effect/confusion*/) //What this can turn into if it glitches.
 
@@ -68,13 +68,13 @@
 	return TRUE
 
 /datum/disease2/effect/proc/on_process(datum/disease2/disease/virus, atom/host, datum/disease2/effectholder/holder)
-	var/consume_success = consume_nanites(use_rate, FALSE, virus, host)
+	var/consume_success = consume_cells(use_rate, FALSE, virus, host)
 	if(!consume_success && effect_active)
 		deactivate(host, holder, virus)
 	effect_active = check_conditions(host, virus) && consume_success
 
-/datum/disease2/effect/proc/consume_nanites(amount, force = FALSE, datum/disease2/disease/virus, atom/host)
-	return virus.consume_nanites(amount, force, host)
+/datum/disease2/effect/proc/consume_cells(amount, force = FALSE, datum/disease2/disease/virus, atom/host)
+	return virus.consume_cells(amount, force, host)
 
 /datum/disease2/effect/proc/on_death(datum/disease2/disease/virus, atom/host, gibbed)
 	return
