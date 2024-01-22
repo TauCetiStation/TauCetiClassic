@@ -19,6 +19,7 @@
 /*
 /obj/mecha/combat/honker/atom_init()
 	. = ..()
+
 	weapons += new /datum/mecha_weapon/honker(src)
 	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar(src)
 	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar/mousetrap_mortar(src)

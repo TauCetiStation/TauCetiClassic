@@ -81424,11 +81424,11 @@
 	},
 /area/station/hallway/primary/fore)
 "txf" = (
-/obj/mecha/working/ripley,
 /obj/machinery/light/small,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/mecha/working/ripley/recycle_ripley,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "txw" = (

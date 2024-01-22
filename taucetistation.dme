@@ -330,6 +330,7 @@
 #include "code\datums\components\cult_eyes.dm"
 #include "code\datums\components\cult_halo.dm"
 #include "code\datums\components\epilepsy.dm"
+#include "code\datums\components\examine_research.dm"
 #include "code\datums\components\fishing.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forcefield.dm"
