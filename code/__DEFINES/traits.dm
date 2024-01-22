@@ -226,6 +226,7 @@
 
 // atom traits
 #define TRAIT_XENO_FUR "xeno_fur"
+#define TRAIT_CONDUCT "conduct"
 
 // trait sources
 #define EYE_DAMAGE_TRAIT "eye_damage"
