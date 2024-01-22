@@ -207,6 +207,7 @@
 
 /obj/structure/AIcore/deactivated/atom_init()
 	. = ..()
+	empty_playable_ai_cores += src
 	aicore_deactivated_list += src
 
 /obj/structure/AIcore/deactivated/Destroy()
