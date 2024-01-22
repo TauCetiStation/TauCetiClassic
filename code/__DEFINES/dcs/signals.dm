@@ -413,3 +413,21 @@
 #define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
 // send this signal to handle disabilities in life for mob/living/carbon/human
 #define COMSIG_HANDLE_DISABILITIES "handle_disabilities"
+
+/// virus signals
+// send this signal to handle /datum/disease2/effect/arousal for atoms: (power as num)
+#define COMSIG_NERVE_AROUSAL "nerve_arousal"
+// send this signal to handle /datum/disease2/effect/bactericidal_tannins for atoms: (power as num)
+#define COMSIG_BACTERICIDAL_EFFECT "bactericidal_effect"
+// send this signal to handle /datum/disease2/effect/gibbingtons for atoms: (power as num)
+#define COMSIG_AMMONIUM_NITRATE_EFFECT "ammonium_nitrate_effect"
+// send this signal to handle /datum/disease2/effect/fire for atoms: (power as num)
+#define COMSIG_HEATING_EFFECT "heating_effect"
+// send this signal to handle /datum/disease2/effect/radian for atoms: (power as num)
+#define COMSIG_RADIAN_EXPOSURE "radian_exposure"
+// send this signal to handle /datum/disease2/effect/conductivity for atoms: (power as num)
+#define COMSIG_ADJUST_CONDUCTIVITY "adjust_conductivity"
+// send this signal to handle /datum/disease2/effect/hallucinations for atoms: (power as num)
+#define COMSIG_HALLUCINATION_EFFECT "hallucination_effect"
+// send this signal to handle /datum/disease2/effect/anti_toxins for atoms: (power as num)
+#define COMSIG_ADJUST_TOXIN_RESIST "adjust_toxin_resist"
