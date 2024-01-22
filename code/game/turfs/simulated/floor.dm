@@ -185,6 +185,10 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	else if(is_grass_floor())
 		if(!(icon_state in list("grass1","grass2","grass3","grass4")))
 			icon_state = "grass[pick("1","2","3","4")]"
+	// volas why
+	else if(is_fairygrass_floor())
+		icon_state = "fairygrass[pick("1","2","3","4")]"
+		set_light(2, 1, COLOR_BLUE_LIGHT)
 	else if(is_wood_floor())
 		icon_state = "wood"
 
@@ -229,6 +233,12 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		return 1
 	else
 		return 0
+
+/turf/simulated/floor/proc/is_fairygrass_floor()
+	if(ispath(floor_type, /obj/item/stack/tile/fairygrass))
+		return TRUE
+	else
+		return FALSE
 
 /turf/simulated/floor/is_wood_floor()
 	if(ispath(floor_type, /obj/item/stack/tile/wood))
