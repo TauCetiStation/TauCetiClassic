@@ -314,6 +314,7 @@
 			myseed = new /obj/item/seeds/plumpmycelium
 		else
 			myseed = new /obj/item/seeds/weeds
+	myseed.planted(src)
 	planted = TRUE
 	age = 0
 	health = myseed.endurance
@@ -345,12 +346,13 @@
 		return
 
 	var/oldPlantName = myseed.plantname
-	if(myseed.mutatelist.len > 0)
-		var/mutantseed = pick(myseed.mutatelist)
-		qdel(myseed)
-		myseed = new mutantseed
-	else
+	if(myseed.mutatelist.len <= 0)
 		return
+
+	var/mutantseed = pick(myseed.mutatelist)
+	qdel(myseed)
+	myseed = new mutantseed
+	myseed.planted(src)
 
 	dead = FALSE
 	hardmutate()
@@ -372,6 +374,7 @@
 			qdel(myseed)
 		var/newWeed = pick(/obj/item/seeds/libertymycelium, /obj/item/seeds/angelmycelium, /obj/item/seeds/deathnettleseed, /obj/item/seeds/kudzuseed)
 		myseed = new newWeed
+		myseed.planted(src)
 		dead = FALSE
 		hardmutate()
 		planted = TRUE
@@ -643,6 +646,7 @@
 			to_chat(user, "You plant the [O.name]")
 			dead = FALSE
 			myseed = O
+			myseed.planted(src)
 			planted = TRUE
 			age = 1
 			health = myseed.endurance
