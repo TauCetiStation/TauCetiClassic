@@ -1989,7 +1989,10 @@
 		return
 	stop_ringtone()
 
-	if(melody && ringtone == "Custom Ringtone")
+	if(ringtone == "Custom Ringtone")
+		if(!melody)
+			return
+
 		chiptune_player.repeat = 1
 		chiptune_player.parse_song_text(melody)
 	else
