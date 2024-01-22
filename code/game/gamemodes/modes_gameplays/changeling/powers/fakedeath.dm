@@ -19,27 +19,7 @@
 		qdel(src) //We dont need that power from now anyway.
 		return FALSE
 
-	if(user.stat != DEAD)
-		if(user.fake_death)
-			var/fake_pick = pick(OXY, TOX, CLONE)
-			switch(fake_pick)
-				if(OXY)
-					user.adjustOxyLoss(rand(user.maxHealth * 2.1, user.maxHealth * 3))
-				if(TOX)
-					user.adjustToxLoss(rand(user.maxHealth * 2.1, user.maxHealth * 3))
-				if(CLONE)
-					user.adjustCloneLoss(rand(user.maxHealth * 2.1, user.maxHealth * 3))
-		role.instatis = TRUE
-		user.throw_alert("regen_stasis", /atom/movable/screen/alert/regen_stasis)
-		for(var/mob/M in role.essences)
-			M.throw_alert("regen_stasis", /atom/movable/screen/alert/regen_stasis)
-
-		to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
-		addtimer(CALLBACK(src, PROC_REF(give_revive_ability), user), rand(800, 2000))
-
-		feedback_add_details("changeling_powers","FD")
-
-	else if(ready2revive)
+	if(ready2revive)
 		user.clear_alert("regen_stasis")
 		for(var/mob/M in role.essences)
 			M.clear_alert("regen_stasis")
@@ -58,9 +38,31 @@
 		feedback_add_details("changeling_powers","CR")
 		return TRUE
 
+	if(user.stat != DEAD && user.fake_death)
+		var/fake_pick = pick(OXY, TOX, CLONE)
+		switch(fake_pick)
+			if(OXY)
+				user.adjustOxyLoss(rand(user.maxHealth * 2.1, user.maxHealth * 3))
+			if(TOX)
+				user.adjustToxLoss(rand(user.maxHealth * 2.1, user.maxHealth * 3))
+			if(CLONE)
+				user.adjustCloneLoss(rand(user.maxHealth * 2.1, user.maxHealth * 3))
+
+	role.instatis = TRUE
+	user.throw_alert("regen_stasis", /atom/movable/screen/alert/regen_stasis)
+	for(var/mob/M in role.essences)
+		M.throw_alert("regen_stasis", /atom/movable/screen/alert/regen_stasis)
+
+	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
+
+	addtimer(CALLBACK(src, PROC_REF(give_revive_ability), user), rand(800, 2000))
+
+	feedback_add_details("changeling_powers","FD")
+
 /obj/effect/proc_holder/changeling/fakedeath/proc/give_revive_ability(mob/living/user)
 	if(!role) //Shitspawn case
 		to_chat(user, "<span class='notice'>We could not regenerate. Something wrong with us.</span>")
+		user.fake_death = FALSE
 		qdel(src) //We dont need that power from now anyway.
 		return
 	role.instatis = FALSE
@@ -69,17 +71,18 @@
 	for(var/mob/M in role.essences)
 		M.clear_alert("regen_stasis")
 
+	if(NOCLONE in user.mutations)
+		to_chat(user, "<span class='notice'>We could not regenerate. something wrong with our DNA.</span>")
+		qdel(src)
+		return
 	if(user.stat != DEAD) //Player was resurrected before stasis completion
 		to_chat(user, "<span class='notice'>Our stasis was interrupted.</span>")
-		return
+		ready2revive = FALSE
 	else
-		if(NOCLONE in user.mutations)
-			to_chat(user, "<span class='notice'>We could not regenerate. something wrong with our DNA.</span>")
-		else
-			to_chat(user, "<span class='notice'>We are ready to regenerate.</span>")
-			action.button_icon_state = "revive"
-			action.button.UpdateIcon()
-			ready2revive = TRUE
+		to_chat(user, "<span class='notice'>We are ready to regenerate.</span>")
+		action.button_icon_state = "revive"
+		action.button.UpdateIcon()
+		ready2revive = TRUE
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
