@@ -70,5 +70,5 @@
 				SSshuttle.settimeleft( 10 )
 				emagged = 1
 				return TRUE
-			if("Отменить")
+			if("Отмена")
 				return FALSE
