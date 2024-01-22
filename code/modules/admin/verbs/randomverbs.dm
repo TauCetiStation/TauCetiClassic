@@ -878,7 +878,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		SSshuttle.incall()
 		SSshuttle.announce_crew_called.play()
 	else
-		var/eaccess = tgui_alert(src, "Предоставить доступ к техническим тонеллям для всех?", "Подтвердите", list("Да", "Нет"))
+		var/eaccess = tgui_alert(src, "Предоставить доступ к техническим тоннелям для всех?", "Подтвердите", list("Да", "Нет"))
 		SSshuttle.incall()
 		SSshuttle.announce_emer_called.play()
 
