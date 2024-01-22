@@ -413,7 +413,3 @@
 #define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
 // send this signal to handle disabilities in life for mob/living/carbon/human
 #define COMSIG_HANDLE_DISABILITIES "handle_disabilities"
-
-///Viruses
-// send this signal to /datum/disease2 for proccess effects: (atom/host)
-#define COMSIG_HANDLE_VIRUS "handle_virus"
