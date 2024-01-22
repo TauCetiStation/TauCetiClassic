@@ -980,19 +980,18 @@
 			var/list/chose_ringtone = global.ringtones_by_names + "My Ringtone"
 			var/Tone = input(U, "Выберите рингтон", name) as null|anything in chose_ringtone
 			if(Tone && Adjacent(U))
+				var/t
 				if(Tone == "My Ringtone")
-					var/t = sanitize(input(U, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
+					t = sanitize(input(U, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
 					if (!t || !Adjacent(U))
 						return
 					if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 						to_chat(U, "The PDA softly beeps.")
 						ui.close()
 					else
-						set_ringtone(Tone, t)
-						play_ringtone(ignore_presence = TRUE)
-				else
-					set_ringtone(Tone)
-					play_ringtone(ignore_presence = TRUE)
+
+				set_ringtone(Tone, t)
+				play_ringtone(ignore_presence = TRUE)
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
