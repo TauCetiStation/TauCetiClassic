@@ -1,19 +1,19 @@
 // Don't call this proc directly! Use defines create_spawner and create_spawners
 /proc/_create_spawners(type, num, list/arguments)
-	// arguments must have at least 1 element due to the use of arglist
-	if(!arguments.len)
-		arguments += null
-
 	if(!ispath(type, /datum/spawner))
 		CRASH("Attempted to create a spawner with wrong type: [type]")
 
 	var/datum/spawner/spawner
 
 	var/need_update = FALSE
-
 	// check if we should just update existing spawner
-	if(!length(arguments) && SSrole_spawners.spawners[type] && !SSrole_spawners.spawners[type].should_be_unique)
-		spawner = SSrole_spawners.spawners[type]
+	if(!length(arguments))
+		for(var/datum/spawner/S in SSrole_spawners.spawners)
+			if(S.type == type && !S.should_be_unique)
+				spawner = S
+
+		// arguments must have at least 1 element due to the use of arglist
+		arguments += null
 
 	if(!spawner)
 		spawner = new type(arglist(arguments))
@@ -720,3 +720,34 @@
 	H.key = C.key
 
 	create_and_setup_role(/datum/role/operative/lone, H, TRUE, TRUE)
+
+/*
+ * Midround wizard
+*/
+/datum/spawner/wizard_event
+	name = "Маг"
+	desc = "Вы просыпаетесь в Логове Волшебника, с неотложным заданием от Федерации магов."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	spawn_landmark_name = "Wizard"
+
+/datum/spawner/wizard_event/New()
+	. = ..()
+	desc = "Вы просыпаетесь в [pick("Логове Волшебника", "Убежище мага", "Винтерхолде", "Башне мага")] с неотложным заданием от Федерации магов."
+
+/datum/spawner/wizard_event/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = "Wizard The Unbenannt"
+	INVOKE_ASYNC(spectator.client, TYPE_PROC_REF(/client, create_human_apperance), H, new_name, TRUE)
+
+	H.loc = spawnloc
+	H.key = spectator.client.key
+
+	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
+	R.rename = FALSE
+	setup_role(R, TRUE)
