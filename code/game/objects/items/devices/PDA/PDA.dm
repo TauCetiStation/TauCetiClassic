@@ -1989,7 +1989,7 @@
 		return
 	stop_ringtone()
 
-	if(ringtone == "Custom Ringtone")
+	if(ringtone == "My Ringtone")
 		if(!melody)
 			return
 
