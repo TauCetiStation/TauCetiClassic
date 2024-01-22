@@ -56,7 +56,7 @@ var/global/syndicate_elite_shuttle_timeleft = 0
 				if(rounded_time_left in message_tracker)
 					message = "Внимание, шаттл вернется на базу через [rounded_time_left] [rounded_time_left_seconds]. ВОЗВРАЩАЙТЕСЬ НА ШАТТЛ!"
 					if(rounded_time_left==0)
-						message = "ТРЕВОГА: Шаттл пристыковался к материнскому кораблю. Добро пожаловать домой, солдаты."
+						message = "Внимание: Шаттл пристыковался к материнскому кораблю. Добро пожаловать домой, солдаты."
 					announcer.say(message)
 					message_tracker -= rounded_time_left
 		sleep(5)
