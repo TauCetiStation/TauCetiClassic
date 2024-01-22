@@ -295,7 +295,7 @@
 						if(timer_maint_revoke_id)
 							deltimer(timer_maint_revoke_id)
 							timer_maint_revoke_id = 0
-						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
+						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(revoke_maint_all_access), FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 		check_antagonists()
 		href_list["secretsadmin"] = "check_antagonist"
@@ -755,6 +755,11 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
 
+		if(jobban_isbanned(M, ROLE_IMPOSTER) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_IMPOSTER];jobban4=\ref[M]'>[ROLE_IMPOSTER]</a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_IMPOSTER];jobban4=\ref[M]'>[ROLE_IMPOSTER]</a></td>"
+
 		jobs += "</tr><tr align='center'>"
 
 		jobs += "</tr></table>"
@@ -1054,7 +1059,7 @@
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 				message_admins("<span class='notice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
 
-				qdel(M.client)
+				QDEL_IN(M.client, 2 SECONDS)
 				//qdel(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				if(!check_rights(R_BAN))   return
@@ -1079,7 +1084,7 @@
 				feedback_inc("ban_perma",1)
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
-				qdel(M.client)
+				QDEL_IN(M.client, 2 SECONDS)
 			if("Cancel")
 				return
 
@@ -1113,6 +1118,8 @@
 		dat += "<HR>"
 		for(var/type in subtypesof(/datum/modesbundle))
 			var/datum/modesbundle/bound_type = type
+			if(initial(bound_type.hide_for_shitspawn))
+				continue
 			var/bname = initial(bound_type.name)
 			dat += {"<A href='?src=\ref[src];c_mode2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [master_mode]"}
@@ -1764,6 +1771,13 @@
 			return
 		show_skills_panel(M)
 
+	else if(href_list["show_raspect"])
+		if(!SSround_aspects.aspect_name)
+			message_admins("Round Aspect: Absent.")
+			return
+		message_admins("Round Aspect: [SSround_aspects.aspect_name]. [SSround_aspects.aspect.desc]")
+		return
+
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
 		return create_object(usr)
@@ -2387,5 +2401,26 @@
 				log_admin("[key_name(usr)] disabled Demo recording for this round.")
 				message_admins("[key_name_admin(usr)] disabled Demo recording for this round.")
 
+			if("STOP_AIRNET")
+				if(!SSair.stop_airnet_processing)
+					to_chat(usr, "<span class='notice'>Airnet already broken.</span>")
+					return
+				if(tgui_alert(usr, "Трубы и прочая атмосферная машинерия перестанет штатно работать, это действие не обратимо. Вы уверены?", "Сломать Атмос?", list("Нет", "Да")) != "Да")
+					return
+
+				SSair.stop_airnet_processing = TRUE
+				log_admin("[key_name(usr)] broke airnet for this round.")
+				message_admins("[key_name_admin(usr)] broke airnet for this round.")
+
+			if("STOP_POWERNET")
+				if(!SSmachines.stop_powernet_processing)
+					to_chat(usr, "<span class='notice'>Powernet already broken.</span>")
+					return
+				if(tgui_alert(usr, "Проводка перестанет штатно работать, это действие не обратимо. Вы уверены?", "Сломать Проводку?", list("Нет", "Да")) != "Да")
+					return
+
+				SSmachines.stop_powernet_processing = TRUE
+				log_admin("[key_name(usr)] broke powernet for this round.")
+				message_admins("[key_name_admin(usr)] broke powernet for this round.")
 
 		show_lag_switch_panel()

@@ -136,3 +136,12 @@
 			user.visible_message("[user] has flipped [src]. It lands on [coinflip].",
  							 "<span class='notice'>You flip [src]. It lands on [coinflip].</span>",
 							 "<span class='italics'>You hear the clattering of loose change.</span>")
+
+/obj/item/weapon/coin/update_world_icon()
+	update_icon()
+
+/obj/item/weapon/coin/update_icon()
+	if(item_state_world && (flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)) // big inventory icon, if we have it
+		icon_state = "coin_[cmineral]_[coinflip]"
+	else // default or small icon
+		icon_state = "coin_[cmineral]_[coinflip]_world"

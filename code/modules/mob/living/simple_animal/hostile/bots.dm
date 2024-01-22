@@ -38,7 +38,7 @@
 	attacktext = "harmbaton"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 
-/mob/living/simple_animal/hostile/bot/secbot/AttackingTarget()
-	..()
+/mob/living/simple_animal/hostile/bot/secbot/UnarmedAttack(atom/target)
+	. = ..()
 	if(prob(20))
 		playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)

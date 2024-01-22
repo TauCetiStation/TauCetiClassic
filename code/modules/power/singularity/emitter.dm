@@ -37,10 +37,11 @@
 	RefreshParts()
 
 /obj/machinery/power/emitter/RefreshParts()
+	..()
+
 	var/max_firedelay = 120
 	var/firedelay = 120
 	var/min_firedelay = 24
-	var/power_usage = 350
 	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
 		max_firedelay -= 20 * L.rating
 		min_firedelay -= 4 * L.rating
@@ -48,9 +49,6 @@
 	maximum_fire_delay = max_firedelay
 	minimum_fire_delay = min_firedelay
 	fire_delay = firedelay
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		power_usage -= 50 * M.rating
-	active_power_usage = power_usage
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"

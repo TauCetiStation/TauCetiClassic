@@ -13,8 +13,25 @@
 		return
 	..()
 
+/mob/living/carbon/proc/can_catch_item()
+	if(!in_throw_mode)
+		return
+	if(incapacitated())
+		return
+	if(get_active_hand()) // yes, it returns thing in the hand, not the hand (#10051)
+		return
+	return TRUE
+
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	. = ..()
+	if(isitem(AM) && throwingdatum.speed < 5 && can_catch_item())
+		var/obj/item/I = AM
+		do_attack_animation(I, has_effect = FALSE)
+		put_in_active_hand(I)
+		visible_message("<span class='notice'>[src] catches [I].</span>", "<span class='notice'>You catch [I] in mid-air!</span>")
+		throw_mode_off()
+		return TRUE // aborts throw_impact
+
+	..()
 	if(!ismob(AM))
 		return
 
@@ -31,12 +48,15 @@
 					"<span class='warning'>[AM] falls on you!</span>",
 					"<span class='notice'>You hear something heavy fall.</span>")
 
-/mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/carbon/human/prob_miss(obj/item/projectile/P)
+	var/def_zone = get_zone_with_miss_chance(P.def_zone, src, P.get_miss_modifier())
+	if(!def_zone)
+		return TRUE
 	def_zone = check_zone(def_zone)
 	if(!has_bodypart(def_zone))
-		return PROJECTILE_FORCE_MISS //if they don't have the body part in question then the projectile just passes by.
-
-	return ..()
+		return TRUE
+	P.def_zone = def_zone // a bit junky, but it will either bump this one, or bump object
+	return FALSE
 
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
 	. = PROJECTILE_ALL_OK
@@ -63,7 +83,6 @@
 			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
 			P.agony /= 2
 		apply_effect(P.agony,AGONY,0)
-		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -82,8 +101,6 @@
 				if(hand && !(hand.flags & ABSTRACT))
 					drop_item()
 		P.on_hit(src)
-		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
-		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -99,7 +116,6 @@
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.pierce_protection & BP.body_part) // Is that body part being targeted covered?
 					visible_message("<span class='userdanger'>The [P.name] gets absorbed by [src]'s [C.name]!</span>")
-					qdel(P)
 					return PROJECTILE_ACTED
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
@@ -107,7 +123,6 @@
 		apply_damage(P.damage, P.damage_type, BP, armorblock, P.damage_flags(), P)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
-		qdel(P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -244,21 +259,9 @@
 			visible_message("<span class='userdanger'>[src] blocks [attack_text] with the [r_hand.name]!</span>")
 			return 1
 	if(wear_suit && isitem(wear_suit))
-		var/obj/item/I = wear_suit
-		if(prob(I.Get_shield_chance() - round(damage / 3) ))
-			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
-			var/list/turfs = list()
-			for(var/turf/T in orange(6))
-				if(isenvironmentturf(T)) continue
-				if(T.density) continue
-				if(T.x>world.maxx-6 || T.x<6)	continue
-				if(T.y>world.maxy-6 || T.y<6)	continue
-				turfs += T
-			if(!turfs.len) turfs += pick(/turf in orange(6))
-			var/turf/picked = pick(turfs)
-			if(!isturf(picked)) return
-			src.loc = picked
-			return 1
+		var/obj/item/clothing/suit/armor/vest/reactive/R = wear_suit
+		if(prob(R.Get_shield_chance() - round(damage / 3) ))
+			R.teleport_user(6, src, attack_text)
 
 /mob/living/carbon/human/emp_act(severity)
 	for(var/obj/O in src)
@@ -281,7 +284,7 @@
 		return FALSE
 
 	var/obj/item/organ/external/BP = get_bodypart(def_zone)
-	if (!BP)
+	if(!BP || BP.is_stump)
 		to_chat(user, "What [parse_zone(def_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
@@ -319,8 +322,10 @@
 		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>", ignored_mobs = alt_alpperances_vieawers)
 
 	var/armor = run_armor_check(BP, MELEE, "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
-	if(armor >= 100 || !I.force)
+	if(armor >= 100)
 		return FALSE
+	if(!I.force)
+		return TRUE
 
 	//Apply weapon damage
 	var/force_with_melee_skill = apply_skill_bonus(user, I.force, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // +15% for each melee level

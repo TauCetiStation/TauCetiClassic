@@ -5,7 +5,6 @@
 	icon_state = "idpainter"
 	density = TRUE
 	anchored = TRUE
-	//ghost_must_be_admin = TRUE
 	var/obj/item/weapon/card/id/storedcard = null
 	var/list/radial_chooses
 
@@ -60,15 +59,17 @@
 			for(var/P in typesof(/obj/item/weapon/card/id))
 				var/obj/item/weapon/card/id/C = new P
 				if(C.customizable_view == UNIVERSAL_VIEW)
-					radial_chooses[C] = image(icon = C.icon, icon_state = C.icon_state)
+					radial_chooses[C] = image(icon = C.icon, icon_state = initial(C.icon_state))
 
 		var/obj/item/weapon/card/id/C = show_radial_menu(user, src, radial_chooses, require_near = TRUE)
 		if(!C)
 			return
 
 		storedcard.icon = 'icons/obj/card.dmi'
-		storedcard.icon_state = C.icon_state
+		storedcard.item_state_inventory = initial(C.icon_state)
+		storedcard.item_state_world = C.item_state_world
 		storedcard.desc = C.desc
+		storedcard.update_world_icon()
 
 	else
 		to_chat(user, "<span class='notice'>The [src] is empty.</span>")

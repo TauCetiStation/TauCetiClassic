@@ -45,8 +45,12 @@ SUBSYSTEM_DEF(station_coloring)
 /datum/controller/subsystem/station_coloring/proc/color_area_objects(list/possible_areas, color) // paint in areas
 	for(var/type in possible_areas)
 		for(var/obj/structure/window/W in get_area_by_type(type)) //for in area is slow by refs, but we have a time while in lobby so just to-do-sometime
+			if(W.color) // has already been set by mapper
+				continue
 			W.change_color(color)
 		for(var/obj/machinery/door/window/D in get_area_by_type(type))
+			if(D.color)
+				continue
 			D.color = color
 
 /datum/controller/subsystem/station_coloring/proc/get_default_color()

@@ -63,9 +63,9 @@
 	// 16 is the entire screen diameter + 1. So mobs don't spawn on one side of the screen
 	AddComponent(/datum/component/spawn_area,
 		"asteroid",
-		CALLBACK(src, .proc/Spawn),
-		CALLBACK(src, .proc/Despawn),
-		CALLBACK(src, .proc/CheckSpawn),
+		CALLBACK(src, PROC_REF(Spawn)),
+		CALLBACK(src, PROC_REF(Despawn)),
+		CALLBACK(src, PROC_REF(CheckSpawn)),
 		8,
 		16,
 		1.2 MINUTES,
@@ -102,6 +102,37 @@
 
 /area/asteroid/mine/unexplored/safe/InitSpawnArea()
 	return
+
+/area/asteroid/mine/unexplored/dangerous
+	icon_state = "unexplored_dangerous"
+
+// More mobs at one time, ~3 fauna around player always
+/area/asteroid/mine/unexplored/dangerous/InitSpawnArea()
+	AddComponent(/datum/component/spawn_area,
+		"asteroid",
+		CALLBACK(src, PROC_REF(Spawn)),
+		CALLBACK(src, PROC_REF(Despawn)),
+		CALLBACK(src, PROC_REF(CheckSpawn)),
+		8,
+		16,
+		15 SECONDS,
+		2 MINUTES,
+	)
+
+/area/asteroid/mine/unexplored/dangerous/Entered(atom/movable/A, atom/OldLoc)
+	. = ..()
+	if(!ismob(A) || istype(A, /mob/living/simple_animal/hostile/asteroid))
+		return
+	var/mob/M = A
+	M.overlay_fullscreen("mine_veil", /atom/movable/screen/fullscreen/oxy, 7)
+	to_chat(A, "<span class='warning'>Suspension of particles obstructs the view. This area are more dangerous.</span>")
+
+/area/asteroid/mine/unexplored/dangerous/Exited(atom/movable/A, atom/NewLoc)
+	. = ..()
+	if(!ismob(A) || istype(A, /mob/living/simple_animal/hostile/asteroid))
+		return
+	var/mob/M = A
+	M.clear_fullscreen("mine_veil")
 
 /area/asteroid/mine/production
 	name = "Mining Station Starboard Wing"

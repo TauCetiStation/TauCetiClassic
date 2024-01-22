@@ -240,7 +240,6 @@
 
 	mannequin.gender = H.gender
 	mannequin.age = H.age
-	mannequin.b_type = H.b_type
 
 	mannequin.r_eyes = H.r_eyes
 	mannequin.g_eyes = H.g_eyes
@@ -308,7 +307,7 @@
 			selectedhairstyle = href_list["haircut"]
 			showui()
 		if("start")
-			INVOKE_ASYNC(src, .proc/dohaircut)
+			INVOKE_ASYNC(src, PROC_REF(dohaircut))
 			clear_character_previews()
 
 /obj/item/weapon/scissors/dropped(mob/user)

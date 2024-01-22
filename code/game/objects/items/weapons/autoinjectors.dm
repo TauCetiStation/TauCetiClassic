@@ -76,7 +76,7 @@
 	icon_state = "bonepen"
 	item_state = "bonepen"
 	volume = 30
-	list_reagents = list("nanocalcium" = 10, "mednanobots" = 0.3)
+	list_reagents = list("nanocalcium" = 30)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/nuka_cola
 	name = "nuka cola autoinjector"
@@ -109,3 +109,20 @@
 	item_state = "autonutriment"
 	volume = 15
 	list_reagents = list("space_drugs" = 15)
+
+// shitspawn only
+/obj/item/weapon/lazarus_injector/revive
+	name = "heal injector"
+	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise spacemans from the dead, making them become friendly to the user... or something like that. Five uses only."
+	loaded = 5
+
+/obj/item/weapon/lazarus_injector/revive/revive(mob/living/target, mob/living/user)
+	if(user.is_busy(src) || !do_after(user, 5 SECONDS, target = target))
+		return
+	target.revive()
+	loaded--
+	user.visible_message("<span class='notice'>[user] injects [target] with [src], completely healing it.</span>")
+	playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
+
+	if(!loaded)
+		icon_state = "lazarus_empty"

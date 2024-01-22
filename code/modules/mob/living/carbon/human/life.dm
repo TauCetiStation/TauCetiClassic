@@ -89,7 +89,7 @@
 	update_canmove()
 
 	//Update our name based on whether our face is obscured/disfigured
-	name = get_visible_name()
+	name = get_visible_name() // why in life wtf
 
 	//Species-specific update.
 	if(species)
@@ -148,11 +148,7 @@ var/global/list/tourette_bad_words= list(
 			   )
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if (prob(1) && !paralysis)
-			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
-			Paralyse(10)
-			make_jittery(1000)
+	SEND_SIGNAL(src, COMSIG_HANDLE_DISABILITIES)
 	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
 		if (prob(5) && !paralysis)
 			drop_item()
@@ -232,7 +228,7 @@ var/global/list/tourette_bad_words= list(
 					SetCrawling(TRUE)
 
 			if(13 to 18)
-				if(getBrainLoss() >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
+				if(getBrainLoss() >= 60 && (!HAS_TRAIT(src, TRAIT_STRONGMIND) || get_species() != SKRELL))
 					switch(rand(1, 3))
 						if(1)
 							say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
@@ -354,7 +350,6 @@ var/global/list/tourette_bad_words= list(
 
 	if(!(HAS_TRAIT(src, TRAIT_AV) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
 		internal = null
-		internals?.update_icon(src)
 		return null
 
 	//internal breath sounds
@@ -425,9 +420,8 @@ var/global/list/tourette_bad_words= list(
 	//Moved pressure calculations here for use in skip-processing check.
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
-	var/is_in_space = isspaceturf(get_turf(src))
 
-	if(!is_in_space) //space is not meant to change your body temperature.
+	if(environment.total_moles) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
 
 		//If you're on fire, you do not heat up or cool down based on surrounding gases.
@@ -437,9 +431,11 @@ var/global/list/tourette_bad_words= list(
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
 			adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
-	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
+	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE] && isspaceturf(get_turf(src)))
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
 			return
+		if(HAS_ROUND_ASPECT(ROUND_ASPECT_HIGH_SPACE_RADIATION))
+			irradiate_one_mob(src, 5)
 		if(!(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space)) && radiation < 100)
 			irradiate_one_mob(src, 5)
 
@@ -495,7 +491,6 @@ var/global/list/tourette_bad_words= list(
 			pressure_alert = -1
 		else
 			pressure_alert = -2
-			apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 			take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
 	//Check for contaminants before anything else because we don't want to skip it.
@@ -748,6 +743,8 @@ var/global/list/tourette_bad_words= list(
 					emote("gasp")
 			if(!reagents.has_reagent("inaprovaline"))
 				adjustOxyLoss(1)*/
+		if(species.flags[IS_SYNTHETIC])
+			hallucination = 0
 
 		if(hallucination)
 			if(hallucination >= 20)
@@ -782,6 +779,8 @@ var/global/list/tourette_bad_words= list(
 		if(paralysis)
 			blinded = 1
 			stat = UNCONSCIOUS
+			drop_from_inventory(l_hand)
+			drop_from_inventory(r_hand)
 			if(halloss > 0)
 				adjustHalLoss(-3)
 		else if(IsSleeping())
@@ -811,7 +810,9 @@ var/global/list/tourette_bad_words= list(
 
 
 		//Eyes
-		if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
+		if(should_have_organ(O_EYES) && !has_organ(O_EYES))
+			blinded = 1
+		else if(sdisabilities & BLIND || HAS_TRAIT(src, TRAIT_BLIND))	//disabled-blind, doesn't get better on its own
 			blinded = 1
 		else if(eye_blind)			//blindness, heals slowly over time
 			eye_blind = max(eye_blind-1,0)
@@ -877,6 +878,9 @@ var/global/list/tourette_bad_words= list(
 		healthdoll.cut_overlays()
 		healthdoll.icon_state = "healthdoll_EMPTY"
 		for(var/obj/item/organ/external/BP in bodyparts)
+			if(SEND_SIGNAL(BP, COMSIG_BODYPART_UPDATING_HEALTH_HUD, src) & COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD)
+				continue
+
 			if(!BP || BP.is_stump)
 				continue
 

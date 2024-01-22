@@ -23,7 +23,7 @@
 		keyslot1 = new ks1type(src)
 	if(ks2type)
 		keyslot2 = new ks2type(src)
-	INVOKE_ASYNC(src, .proc/recalculateChannels)
+	INVOKE_ASYNC(src, PROC_REF(recalculateChannels))
 
 /obj/item/device/radio/headset/Destroy()
 	qdel(keyslot1)
@@ -40,6 +40,85 @@
 		if(H.l_ear == src || H.r_ear == src)
 			return ..(freq, level)
 	return -1
+
+/obj/item/device/radio/headset/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/radio_grid))
+		if(grid)
+			to_chat(user, "<span class='userdanger'>There is already installed Shielded grid!</span>")
+			return
+		to_chat(user, "<span class='notice'>You attach [I] to [src]!</span>")
+		user.drop_from_inventory(I)
+		var/obj/item/device/radio_grid/new_grid = I
+		new_grid.attach(src)
+
+	else if(iscutter(I))
+		if(!grid)
+			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
+			return
+		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
+
+		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
+		new_grid.dettach(src)
+
+	else if(isscrewing(I))
+		if(!keyslot1 && !keyslot2)
+			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
+			return
+
+		for(var/ch_name in channels)
+			radio_controller.remove_object(src, radiochannels[ch_name])
+			secure_radio_connections[ch_name] = null
+		var/turf/T = get_turf(user)
+		if(keyslot1)
+			keyslot1.loc = T
+			keyslot1 = null
+		if(keyslot2)
+			keyslot2.loc = T
+			keyslot2 = null
+		recalculateChannels()
+		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset!</span>")
+
+	else if(istype(I, /obj/item/device/encryptionkey))
+		if(keyslot1 && keyslot2)
+			to_chat(user, "<span class='notice'>The headset can't hold another key!</span>")
+			return
+		if(!keyslot1)
+			user.drop_from_inventory(I, src)
+			keyslot1 = I
+		else
+			user.drop_from_inventory(I, src)
+			keyslot2 = I
+
+		recalculateChannels()
+
+	else
+		return ..()
+
+/obj/item/device/radio/headset/proc/recalculateChannels()
+	channels = list()
+	translate_binary = 0
+	translate_hive = 0
+	syndie = 0
+	for(var/obj/item/device/encryptionkey/Slot in list(keyslot1, keyslot2))
+		for(var/ch_name in Slot.channels)
+			if(ch_name in channels)
+				continue
+			channels += ch_name
+			channels[ch_name] = Slot.channels[ch_name]
+		if(Slot.translate_binary)
+			translate_binary = 1
+		if(Slot.translate_hive)
+			translate_hive = 1
+		if(Slot.syndie)
+			syndie = 1
+	for (var/ch_name in channels)
+		if(!radio_controller)
+			sleep(30) // Waiting for the radio_controller to be created.
+		if(!radio_controller)
+			name = "broken radio headset"
+			return
+		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 
 /obj/item/device/radio/headset/syndicate
 	syndie = 1
@@ -83,7 +162,7 @@
 	icon_state = "sec_headset_alt"
 
 /obj/item/device/radio/headset/headset_sec/nt_pmc
-	name = "NT PMC Radio Headset. Works with default security frequency."
+	name = "NT PMC Radio Headset."
 	icon_state = "nt_pmc_earset"
 
 /obj/item/device/radio/headset/headset_sec/marinad
@@ -271,81 +350,26 @@
 /obj/item/device/radio/headset/velocity/chief
 	ks2type = /obj/item/device/encryptionkey/headset_cargo
 
-/obj/item/device/radio/headset/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/radio_grid))
-		if(grid)
-			to_chat(user, "<span class='userdanger'>There is already installed Shielded grid!</span>")
-			return
-		to_chat(user, "<span class='notice'>You attach [I] to [src]!</span>")
-		user.drop_from_inventory(I)
-		var/obj/item/device/radio_grid/new_grid = I
-		new_grid.attach(src)
+/obj/item/device/radio/headset/team_red
+	name = "Team Red headset"
+	icon_state = "com_headset"
+	item_state = "headset"
+	subspace_transmission = FALSE
+	allow_settings = FALSE
+	freerange = TRUE
 
-	else if(iscutter(I))
-		if(!grid)
-			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
-			return
-		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
+/obj/item/device/radio/headset/team_red/atom_init()
+	. = ..()
+	set_frequency(FREQ_TEAM_RED)
 
-		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
-		new_grid.dettach(src)
+/obj/item/device/radio/headset/team_blue
+	name = "Team Red headset"
+	icon_state = "com_headset"
+	item_state = "headset"
+	subspace_transmission = FALSE
+	allow_settings = FALSE
+	freerange = TRUE
 
-	else if(isscrewing(I))
-		if(!keyslot1 && !keyslot2)
-			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
-			return
-
-		for(var/ch_name in channels)
-			radio_controller.remove_object(src, radiochannels[ch_name])
-			secure_radio_connections[ch_name] = null
-		var/turf/T = get_turf(user)
-		if(keyslot1)
-			keyslot1.loc = T
-			keyslot1 = null
-		if(keyslot2)
-			keyslot2.loc = T
-			keyslot2 = null
-		recalculateChannels()
-		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset!</span>")
-
-	else if(istype(I, /obj/item/device/encryptionkey))
-		if(keyslot1 && keyslot2)
-			to_chat(user, "<span class='notice'>The headset can't hold another key!</span>")
-			return
-		if(!keyslot1)
-			user.drop_from_inventory(I, src)
-			keyslot1 = I
-		else
-			user.drop_from_inventory(I, src)
-			keyslot2 = I
-
-		recalculateChannels()
-
-	else
-		return ..()
-
-/obj/item/device/radio/headset/proc/recalculateChannels()
-	channels = list()
-	translate_binary = 0
-	translate_hive = 0
-	syndie = 0
-	for(var/obj/item/device/encryptionkey/Slot in list(keyslot1, keyslot2))
-		for(var/ch_name in Slot.channels)
-			if(ch_name in channels)
-				continue
-			channels += ch_name
-			channels[ch_name] = Slot.channels[ch_name]
-		if(Slot.translate_binary)
-			translate_binary = 1
-		if(Slot.translate_hive)
-			translate_hive = 1
-		if(Slot.syndie)
-			syndie = 1
-	for (var/ch_name in channels)
-		if(!radio_controller)
-			sleep(30) // Waiting for the radio_controller to be created.
-		if(!radio_controller)
-			name = "broken radio headset"
-			return
-		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
+/obj/item/device/radio/headset/team_blue/atom_init()
+	. = ..()
+	set_frequency(FREQ_TEAM_BLUE)

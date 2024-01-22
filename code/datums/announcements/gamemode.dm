@@ -12,6 +12,16 @@
 			"Персонал должен предотвратить распространение заражения. " + \
 			"Активирован протокол изоляции экипажа станции."
 
+/datum/announcement/centcomm/blob/half
+	name = "Blob: Dangerous Level Spread"
+	subtitle = "Распространение биоугрозы"
+	sound = "commandreport"
+
+/datum/announcement/centcomm/blob/half/New()
+	message = "Биоугроза продолжает своё распространение на [station_name_ru()]. \
+			Персоналу предписывается любой ценой остановить распространение заражения по станции. \
+			Высылаем через шаттл карго дополнительные средства по борьбе с угрозой."
+
 /datum/announcement/centcomm/blob/critical
 	name = "Blob: Blob Critical Mass"
 	subtitle = "Тревога. Биоугроза"
@@ -245,3 +255,10 @@
 /datum/announcement/centcomm/replicator/doom/New()
 	message = "Тревога! Блюспэйс прорыв достиг критического гиперобъёма! Дестабилизация реальности неизбежна!"
 	sound = "construction_doom"
+
+/datum/announcement/centcomm/ert
+	title = "Оповещение ВКН Икар"
+	subtitle = "Приближается Шаттл"
+	name = "ERT Incoming"
+/datum/announcement/centcomm/ert/New()
+	message = "Наши сенсоры зафиксировали приближение неидентифицированного шаттла к [station_name_ru()] с активными процедурами стыковки. Готовьтесь встречать гостей."

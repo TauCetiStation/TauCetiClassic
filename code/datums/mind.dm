@@ -83,11 +83,12 @@
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
 
+	transfer_actions(new_character)
+
 	var/mob/old_character = current
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
 
-	transfer_actions(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
 	transfer_antag_huds(hud_to_transfer)
 
@@ -205,7 +206,7 @@
 	var/sorted_max = list()
 	for(var/skill_type in all_skills)
 		sorted_max[skill_type] = skills.get_max(skill_type)
-	sorted_max = sortTim(sorted_max, /proc/cmp_numeric_dsc, TRUE)
+	sorted_max = sortTim(sorted_max, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
 	var/row = 0
 	for(var/skill_type in sorted_max)
 		var/datum/skill/skill = all_skills[skill_type]
@@ -554,12 +555,23 @@
 		return R.GetFaction()
 	return FALSE
 
+/datum/mind/proc/IsPartOfFaction(datum/faction/F)
+	if(!length(antag_roles))
+		return FALSE
+
+	for(var/role_id in antag_roles)
+		var/datum/role/R = antag_roles[role_id]
+		if(R.GetFaction() == F)
+			return TRUE
+
+	return FALSE
+
 /datum/mind/proc/set_current(mob/new_current)
 	if(current)
 		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
 	current = new_current
 	if(current)
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(clear_current))
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER

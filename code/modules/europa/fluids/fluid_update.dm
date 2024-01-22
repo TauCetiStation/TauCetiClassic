@@ -1,5 +1,7 @@
-/atom/movable/update_nearby_tiles(need_rebuild)
-	. = ..(need_rebuild)
+// wtf is this, why we need additional init/del call everywhere for fluid_update
+
+/atom/movable/update_nearby_tiles()
+	. = ..()
 	fluid_update()
 
 /obj/structure/Destroy()

@@ -25,6 +25,10 @@
 	if(stat == DEAD)
 		return
 
+	//Handle species-specific deaths.
+	if(species?.handle_death(src, gibbed))
+		return // death handled by species
+
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
@@ -35,21 +39,14 @@
 	if(mind && is_station_level(z))
 		global.deaths_during_shift++
 
-	//Handle species-specific deaths.
-	if(species)
-		species.handle_death(src)
-
 	//Check for heist mode kill count.
 	if(find_faction_by_type(/datum/faction/heist))
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
-		INVOKE_ASYNC(src, .proc/emote, "deathgasp") //let the world KNOW WE ARE DEAD
+		INVOKE_ASYNC(src, PROC_REF(emote), "deathgasp") //let the world KNOW WE ARE DEAD
 
 		update_canmove()
-
-		if(is_infected_with_zombie_virus())
-			handle_infected_death(src)
 
 	tod = worldtime2text()		//weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
@@ -118,6 +115,8 @@
 		if(BP.vital)
 			death()
 			BP.brainmob.death()
+			if(HAS_TRAIT(src, TRAIT_NO_CLONE))
+				ADD_TRAIT(BP.brainmob, TRAIT_NO_CLONE, GENERIC_TRAIT)
 
 			tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
 			timeofdeath = 0

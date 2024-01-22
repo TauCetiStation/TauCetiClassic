@@ -13,7 +13,7 @@
 /obj/machinery/shield/atom_init()
 	set_dir(pick(1,2,3,4))
 	. = ..()
-	update_nearby_tiles(need_rebuild = 1)
+	update_nearby_tiles()
 
 /obj/machinery/shield/Destroy()
 	opacity = 0

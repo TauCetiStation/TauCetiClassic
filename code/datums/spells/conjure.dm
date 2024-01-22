@@ -87,11 +87,6 @@
 	unacidable = 1
 	can_block_air = TRUE
 
-/obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	for(var/mob/living/M in get_turf(loc))
-		M.bullet_act(Proj, def_zone)
-
 /obj/effect/forcefield/magic
 	var/mob/wizard
 

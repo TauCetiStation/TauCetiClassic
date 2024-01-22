@@ -37,6 +37,7 @@
 			playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
 			update_inv_mob()
 			H.update_sight()
+			update_item_actions()
 
 /obj/item/clothing/glasses/equipped(mob/user, slot)
 	. = ..()
@@ -55,12 +56,15 @@
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
 	item_state = "glasses"
-	action_button_name = "Toggle Goggles"
 	origin_tech = "magnets=2;engineering=2"
 	toggleable = TRUE
 	sightglassesmod = "meson"
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription mesons"
@@ -72,9 +76,12 @@
 	desc = "The goggles do nothing!"
 	icon_state = "purple"
 	item_state = "glasses"
-	action_button_name = "Toggle Goggles"
 	toggleable = TRUE
 	sightglassesmod = "sci"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
@@ -85,12 +92,14 @@
 	darkness_view = 7
 	toggleable = TRUE
 	sightglassesmod = "nvg"
-	action_button_name = "Toggle Goggles"
 	active = TRUE
 	off_state = "night"
 	activation_sound = 'sound/effects/glasses_on.ogg'
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
 
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
 	desc = "Yarr."
@@ -112,8 +121,11 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 	toggleable = TRUE
-	action_button_name = "Toggle Goggles"
 	vision_flags = SEE_OBJS
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/aviator_orange
 	name = "aviator glasses"
@@ -182,10 +194,13 @@
 	desc = "Protects the eyes from welders, approved by the mad scientist association."
 	icon_state = "welding-g"
 	item_state = "welding-g"
-	action_button_name = "Flip Welding Goggles"
 	flash_protection = FLASHES_FULL_PROTECTION
 	flash_protection_slots = list(SLOT_GLASSES)
 	var/up = 0
+	item_action_types = list(/datum/action/item_action/flip_welding_goggles)
+
+/datum/action/item_action/flip_welding_goggles
+	name = "Flip Welding Goggles"
 
 /obj/item/clothing/glasses/welding/attack_self()
 	toggle()
@@ -213,6 +228,7 @@
 			to_chat(usr, "You push \the [src] up out of your face.")
 
 		update_inv_mob()
+		update_item_actions()
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"
@@ -268,13 +284,16 @@
 	hud_types = list(DATA_HUD_SECURITY)
 	toggleable = TRUE
 	active = TRUE
-	action_button_name = "Switch Shades Mode"
 	activation_sound = 'sound/effects/glasses_switch.ogg'
-	sightglassesmod  = "sepia"
+	sightglassesmod  = "hos"
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	flash_protection = FLASHES_AMPLIFIER
 	flash_protection_slots = list(SLOT_GLASSES)
+	item_action_types = list(/datum/action/item_action/switch_shades_mode)
+
+/datum/action/item_action/switch_shades_mode
+	name = "Switch Shades Mode"
 
 /obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
 	. = ..()
@@ -298,10 +317,10 @@
 	invisa_view = 2
 	toggleable = TRUE
 	sightglassesmod = "thermal"
-	action_button_name = "Toggle Goggles"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protection = FLASHES_AMPLIFIER
 	flash_protection_slots = list(SLOT_GLASSES)
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
 
 /obj/item/clothing/glasses/thermal/attack_self(mob/user)
 	. = ..()
@@ -309,6 +328,9 @@
 		flash_protection = FLASHES_AMPLIFIER
 	else
 		flash_protection = NONE
+
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(ishuman(src.loc))
@@ -318,7 +340,7 @@
 			M.eye_blind = 3
 			M.blurEyes(15)
 			M.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
-			addtimer(CALLBACK(M, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
+			addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
 	..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
@@ -335,7 +357,10 @@
 	body_parts_covered = 0
 	toggleable = TRUE
 	off_state = "thermoncle_off"
-	action_button_name = "Toggle Monocle"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_monocle)
+
+/datum/action/item_action/hands_free/toggle_monocle
+	name = "Toggle Monocle"
 
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "optical thermal eyepatch"
@@ -344,7 +369,7 @@
 	item_state = "eyepatch"
 	body_parts_covered = 0
 	toggleable = FALSE
-	action_button_name = null
+	item_action_types = null
 
 /obj/item/clothing/glasses/thermal/jensen
 	name = "optical thermal implants"
@@ -363,11 +388,14 @@
 	darkness_view = 7
 	toggleable = TRUE
 	sightglassesmod = "nvg"
-	action_button_name = "Toggle Goggles"
 	active = TRUE
 	off_state = "healthhudnight"
 	hud_types = list(DATA_HUD_MEDICAL_ADV)
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/gar
 	name = "gar glasses"
@@ -384,7 +412,7 @@
 	icon_state = "garm"
 	item_state = "garm"
 	toggleable = FALSE
-	action_button_name = null
+	item_action_types = null
 
 /obj/item/clothing/glasses/sunglasses/hud/sechud/gar
 	name = "gar HUDsunglasses"
@@ -410,9 +438,12 @@
 /obj/item/clothing/glasses/sunglasses/noir
 	name = "noir sunglasses"
 	desc = "Somehow these seem even more out-of-date than normal sunglasses."
-	action_button_name = "Toggle Noir"
 	sightglassesmod = "greyscale"
 	toggleable = TRUE
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_noir)
+
+/datum/action/item_action/hands_free/toggle_noir
+	name = "Toggle Noir"
 
 /obj/item/clothing/glasses/sunglasses/noir/attack_self(mob/user)
 	toggle_noir()

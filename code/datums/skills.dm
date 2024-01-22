@@ -69,7 +69,7 @@
 
 /mob/living/proc/help_prank(mob/living/target)
 	if(target.a_intent == INTENT_HARM)
-		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but [P_THEY(target.gender)] rejects your help and pranks you instead!</span>")
+		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but [P_THEY(target)] rejects your help and pranks you instead!</span>")
 		to_chat(target, "<span class='notice'>You prank \the [src]!</span>")
 		apply_effects(stun = 1, weaken = 1)
 		return TRUE
@@ -103,15 +103,15 @@
 	LAZYREMOVE(target.helpers_skillsets, active_skillset)
 
 /mob/living/proc/on_start_help_other(mob/living/target)
-	visible_message("<span class='notice'>[src] puts [P_THEIR(gender)] hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)].</span>", "<span class='notice'>You put your hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)]. You need to stand still while doing this.</span>")
+	visible_message("<span class='notice'>[src] puts [P_THEIR(src)] hand on \the [target]'s shoulder, assisting [P_THEM(target)].</span>", "<span class='notice'>You put your hand on \the [target]'s shoulder, assisting [P_THEM(target)]. You need to stand still while doing this.</span>")
 
 /mob/living/proc/on_stop_help_other(mob/living/target)
-	visible_message("<span class='notice'>[src] removes [P_THEIR(gender)] hand from \the [target]'s shoulder.</span>", "<span class='notice'>You remove your hand from \the [target]'s shoulder.</span>")
+	visible_message("<span class='notice'>[src] removes [P_THEIR(src)] hand from \the [target]'s shoulder.</span>", "<span class='notice'>You remove your hand from \the [target]'s shoulder.</span>")
 
 /mob/living/proc/add_skills_buff(datum/skillset/skillset, time = -1)
 	LAZYDISTINCTADD(helpers_skillsets, skillset)
 	if(time != -1)
-		addtimer(CALLBACK(src, .proc/remove_skills_buff, skillset), time)
+		addtimer(CALLBACK(src, PROC_REF(remove_skills_buff), skillset), time)
 
 /mob/living/proc/remove_skills_buff(datum/skillset/skillset)
 	LAZYREMOVE(helpers_skillsets, skillset)

@@ -146,7 +146,7 @@
 
 	playsound_stealthy(A, 'sound/machines/cyclotron.ogg')
 
-	var/datum/callback/checks = CALLBACK(src, .proc/disintegrate_do_after_checks)
+	var/datum/callback/checks = CALLBACK(src, PROC_REF(disintegrate_do_after_checks))
 	var/effective_efficency = efficency
 	if(has_swarms_gift())
 		effective_efficency *= 1.5

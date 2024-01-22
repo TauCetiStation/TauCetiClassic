@@ -2,7 +2,8 @@
 /obj/machinery/light
 	name = "light fixture"
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "tube"
+	icon_state = "tube" // default value for map editors
+	var/base_icon_state = "tube"
 	desc = "A lighting fixture."
 	layer = LAMPS_LAYER
 	anchored = TRUE
@@ -12,6 +13,10 @@
 	active_power_usage = 20 // will be recalculated based on light intensity
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	interact_offline = TRUE
+	flags_2 = PROHIBIT_OVERLAYS_FOR_DEMO_2
+
+	glow_icon_state = "tube"
+	exposure_icon_state = "cone"
 
 	var/obj/item/weapon/light/inserted_bulb_type = /obj/item/weapon/light/tube
 	var/fitting = LAMP_FITTING_TUBE
@@ -34,13 +39,23 @@
 	var/rigged = FALSE // true if rigged to explode
 
 /obj/machinery/light/smart
+	icon_state = "stube"
+	base_icon_state = "tube" // not a typo
 	inserted_bulb_type = /obj/item/weapon/light/tube/smart
+
+	glow_icon_state = "stube"
+	exposure_icon_state = "cone"
+	glow_colored = TRUE
 
 /obj/machinery/light/small
 	desc = "A small lighting fixture."
 	icon_state = "bulb"
+	base_icon_state = "bulb"
 	fitting = LAMP_FITTING_BULB
 	inserted_bulb_type = /obj/item/weapon/light/bulb
+
+	glow_icon_state = "bulb"
+	exposure_icon_state = "circle"
 
 /obj/machinery/light/small/emergency
 	inserted_bulb_type = /obj/item/weapon/light/bulb/emergency
@@ -120,8 +135,7 @@
 				return
 			else if(trigger && status == LIGHT_OK && prob(min(60, switchcount*switchcount*0.01)))
 				status = LIGHT_BURNED
-				icon_state = "[initial(icon_state)]-burned"
-				on = FALSE
+				update_icon()
 				set_light(0)
 			else
 				set_light(new_range, new_power, new_color)
@@ -140,18 +154,27 @@
 	if(initial(inserted_bulb_type.smart))
 		update()
 
+/obj/machinery/light/turn_light_off()
+	on = FALSE
+	visible_message("<span class='danger'>[src] flickers and falls dark.</span>")
+	update(0)
+
 /obj/machinery/light/update_icon()
+	var/prefix = ""
+	if(inserted_bulb_type && initial(inserted_bulb_type.smart))
+		prefix = "s"
+
 	switch(status) // set icon_states
-		if(LIGHT_OK)
-			icon_state = "[initial(icon_state)][on ? "" : "-off"]"
 		if(LIGHT_EMPTY)
-			icon_state = "[initial(icon_state)]-empty"
+			icon_state = "[base_icon_state]-empty"
 			on = FALSE
+		if(LIGHT_OK)
+			icon_state = "[prefix][base_icon_state][on ? "" : "-off"]"
 		if(LIGHT_BURNED)
-			icon_state = "[initial(icon_state)]-burned"
+			icon_state = "[prefix][base_icon_state]-burned"
 			on = FALSE
 		if(LIGHT_BROKEN)
-			icon_state = "[initial(icon_state)]-broken"
+			icon_state = "[prefix][base_icon_state]-broken"
 			on = FALSE
 
 /obj/machinery/light/examine(mob/user)
@@ -463,4 +486,4 @@
 // explode the light
 /obj/machinery/light/proc/explode()
 	broken()	// break it first to give a warning
-	addtimer(CALLBACK(src, .proc/explosion, get_turf(src.loc), 0, 0, 2, 2), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(explosion), get_turf(src.loc), 0, 0, 2, 2), 3 SECONDS)

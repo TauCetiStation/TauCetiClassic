@@ -42,9 +42,11 @@
 			adjustBruteLoss(25)
 			emp_damage += 25
 
-/mob/living/simple_animal/hostile/cyber_horror/AttackingTarget()
-	..()
-	var/mob/living/L = target
+/mob/living/simple_animal/hostile/cyber_horror/UnarmedAttack(atom/A)
+	. = ..()
+	if(!isliving(A))
+		return
+	var/mob/living/L = A
 	if(L.reagents)
 		if(prob(nanobot_chance))
 			visible_message("<span class='warning'>[src] injects something from its flailing arm!</span>")

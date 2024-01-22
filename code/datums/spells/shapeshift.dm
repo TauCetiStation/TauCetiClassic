@@ -40,7 +40,7 @@
 			var/image/animal_image = image(icon = initial(animal.icon), icon_state = initial(animal.icon_state))
 			display_animals += list(initial(animal.name) = animal_image)
 		sortList(display_animals)
-		var/new_shapeshift_type = show_radial_menu(user, user, display_animals, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
+		var/new_shapeshift_type = show_radial_menu(user, user, display_animals, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 38, require_near = TRUE)
 		if(!new_shapeshift_type)
 			return
 		shapeshift_type = animal_list[new_shapeshift_type]
@@ -161,8 +161,8 @@
 		var/damapply = damage_percent * shape.maxHealth;
 		shape.apply_damage(damapply, source.convert_damage_type)
 
-	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DIED), .proc/shape_death)
-	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DIED), .proc/caster_death)
+	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DIED), PROC_REF(shape_death))
+	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DIED), PROC_REF(caster_death))
 
 /obj/shapeshift_holder/Destroy()
 	// Restore manages signal unregistering. If restoring is TRUE, we've already unregistered the signals and we're here

@@ -3,8 +3,7 @@ var/global/datum/configuration/config = null
 var/global/host = null
 var/global/join_motd = null
 var/global/host_announcements
-var/global/join_test_merge = null
-var/global/test_merges
+var/global/list/test_merges
 var/global/station_name = "NSS Exodus"
 var/global/station_name_ru = "КСН Исход"
 var/global/system_name = "Tau Ceti"
@@ -35,9 +34,6 @@ var/global/mouse_respawn_time = 5 //Amount of time that must pass between a play
 // Debug2 is used in conjunction with a lot of admin verbs and therefore is actually legit.
 var/global/Debug = 0	// global debug switch
 var/global/Debug2 = 1   // enables detailed job debug file in secrets
-
-//This was a define, but I changed it to a variable so it can be changed in-game.(kept the all-caps definition because... code...) -Errorage
-var/global/MAX_EXPLOSION_RANGE = 14
 
 var/global/eventchance = 10 //% per 5 mins
 var/global/event = 0

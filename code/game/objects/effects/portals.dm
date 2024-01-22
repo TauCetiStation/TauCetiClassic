@@ -30,11 +30,11 @@
 	return ..()
 
 /obj/effect/portal/Bumped(mob/M)
-	INVOKE_ASYNC(src, .proc/teleport, M)
+	INVOKE_ASYNC(src, PROC_REF(teleport), M)
 
 /obj/effect/portal/Crossed(atom/movable/AM)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/teleport, AM)
+	INVOKE_ASYNC(src, PROC_REF(teleport), AM)
 
 /obj/effect/portal/proc/can_teleport(atom/movable/M)
 	if(istype(M, /obj/effect)) //sparks don't teleport

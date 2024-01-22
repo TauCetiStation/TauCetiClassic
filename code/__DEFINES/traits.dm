@@ -181,6 +181,16 @@
 #define TRAIT_ARIBORN             "ariborn"
 #define TRAIT_NO_CRAWL            "nocrawl"
 #define TRAIT_HIDDEN_TRASH_GUN    "hidden_trash_gun"
+#define TRAIT_VISUAL_MINDSHIELD   "visual_mindshield"
+#define TRAIT_VISUAL_LOYAL        "visual_loyal"
+#define TRAIT_VISUAL_OBEY         "visual_obey"
+#define TRAIT_VISUAL_CHEM         "visual_chem"
+#define TRAIT_VISUAL_TRACK        "visual_track"
+#define TRAIT_HEMOPHILIAC         "hemophiliac"
+#define TRAIT_NO_DISPOSALS_DAMAGE "no_disposals_damage"
+#define TRAIT_FAKELOYAL_VISUAL    "fakeloyal_visual"
+#define TRAIT_CHANGELING_ABSORBING "changeling_absorbing"
+#define TRAIT_FAST_WALKER         "fast_walker"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -224,6 +234,9 @@
 #define QUIRK_TRAIT "quirk"
 #define VIRUS_TRAIT "virus"
 #define STATUS_EFFECT_TRAIT "status_effect"
+#define IMPLANT_TRAIT "implant"
+#define FAKE_IMPLANT_TRAIT "fake_implant"
+
 
 // airborn trait surces
 #define TRAIT_ARIBORN_FLYING "trait_ariborn_flying" // mob can fly by itself

@@ -128,6 +128,7 @@ What is the naming convention for planes or layers?
   #define HIGHEST_GAME_LAYER              50
 
 #define ABOVE_GAME_PLANE  -1
+#define SEETHROUGH_PLANE -3
 
 #define BLACKNESS_PLANE   0
 
@@ -145,6 +146,12 @@ What is the naming convention for planes or layers?
 
 //---------- -----LIGHTING -------------
 #define LIGHTING_PLANE 100
+#define LIGHTING_EXPOSURE_PLANE 101 // Light sources "cones"
+#define LIGHTING_LAMPS_SELFGLOW 102 // Light sources glow (lamps, doors overlay, etc.)
+#define LIGHTING_LAMPS_PLANE 103 // Light sources themselves (lamps, screens, etc.)
+#define LIGHTING_LAMPS_GLARE 104 // Light glare (optional setting)
+#define LIGHTING_LAMPS_RENDER_TARGET "*LIGHTING_LAMPS_RENDER_TARGET"
+
 #define ABOVE_LIGHTING_PLANE 120
   #define ABOVE_LIGHTING_LAYER 1
   #define RUNECHAT_LAYER 2

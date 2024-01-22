@@ -130,7 +130,7 @@
 /mob/living/simple_animal/hostile/bear/LoseTarget()
 	..(5)
 
-/mob/living/simple_animal/hostile/bear/AttackingTarget()
+/mob/living/simple_animal/hostile/bear/UnarmedAttack(atom/target)
 	if(!Adjacent(target))
 		return
 	me_emote(pick(list("slashes at [target].", "bites [target].")))

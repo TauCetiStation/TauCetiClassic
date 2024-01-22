@@ -247,7 +247,7 @@
 /obj/item/device/tagger/atom_init()
 	. = ..()
 
-	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/on_round_start)
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
 /obj/item/device/tagger/Destroy()
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
@@ -364,7 +364,7 @@
 					return
 				to_chat(user, "<span class='warning'>Маркировщик прикручен.</span>")
 				anchored = TRUE
-				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), .proc/unwrench)
+				RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
 				return
 			to_chat(user, "<span class='notice'>Маркировщик откручен.</span>")
 			anchored = FALSE
@@ -395,10 +395,6 @@
 		return FALSE
 	if(target.flags & ABSTRACT)
 		return FALSE
-	if(isitem(target))
-		var/obj/item/I = target
-		if(I.abstract)
-			return FALSE
 
 	return TRUE
 
@@ -408,8 +404,10 @@
 			return
 		if("Ценник")
 			price(target, user)
+			playsound(src, 'sound/items/label_printing.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		if("Бирка")
 			label(target, user)
+			playsound(src, 'sound/items/label_printing.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 
 /obj/item/device/tagger/proc/price(obj/target, mob/user)
 	if(target.price_tag)

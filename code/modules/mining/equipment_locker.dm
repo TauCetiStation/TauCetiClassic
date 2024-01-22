@@ -43,6 +43,8 @@
 	RefreshParts()
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()
+	..()
+
 	var/ore_pickup_rate_temp = 15
 	var/point_upgrade_temp = 1
 	var/sheet_per_ore_temp = 1
@@ -603,7 +605,7 @@
 
 /obj/item/weapon/resonator/proc/lower_recharge_time()
 	recharge_time = max(recharge_time * 0.965, 1.1 SECOND) // speed up reloading by 3.5% for each shot
-	addtimer(CALLBACK(src, .proc/reset_recharge_time), 5 SECOND, TIMER_UNIQUE|TIMER_OVERRIDE) // reset the recharge time if we haven't fired for 5 seconds
+	addtimer(CALLBACK(src, PROC_REF(reset_recharge_time)), 5 SECOND, TIMER_UNIQUE|TIMER_OVERRIDE) // reset the recharge time if we haven't fired for 5 seconds
 
 /obj/item/weapon/resonator/proc/reset_recharge_time()
 	recharge_time = initial(recharge_time)
@@ -619,7 +621,7 @@
 		charged = FALSE
 		playsound(src, 'sound/items/resonator_use.ogg', VOL_EFFECTS_MASTER)
 		new /obj/effect/resonance(get_turf(target))
-		addtimer(CALLBACK(src, .proc/recharge), recharge_time)
+		addtimer(CALLBACK(src, PROC_REF(recharge)), recharge_time)
 		lower_recharge_time()
 
 /obj/item/weapon/resonator/attack_self(mob/user)
@@ -801,7 +803,7 @@
 	minimum_distance = 3
 	icon_state = "mining_drone_offense"
 
-/mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
+/mob/living/simple_animal/hostile/mining_drone/UnarmedAttack(atom/target)
 	if(istype(target, /obj/item/weapon/ore))
 		CollectOre()
 		return

@@ -186,7 +186,7 @@
 	icon_state = "seed-shand"
 	species = "shand"
 	plantname = "S'Rendarr's Hand"
-	product_type = /obj/item/stack/medical/bruise_pack/tajaran
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/shand
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -202,7 +202,7 @@
 	icon_state = "seed-mtear"
 	species = "mtear"
 	plantname = "Messa's Tear"
-	product_type = /obj/item/stack/medical/ointment/tajaran
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mtear
 	lifespan = 50
 	endurance = 25
 	maturation = 3
@@ -857,6 +857,24 @@
 	maturation = 10
 	production = 10
 	yield = 3
+	potency = 10
+	plant_type = 0
+	growthstages = 6
+
+/obj/item/seeds/chureech_nut
+	name = "pack of Chur'eech seeds"
+	cases = list("пачка семян ореха Чур'их", "пачки семян ореха Чур'их", "пачке семян ореха Чур'их", "пачку семян ореха Чур'их", "пачкой семян ореха Чур'их", "пачке семян ореха Чур'их")
+	desc = "Эти семена вырастут в дерево, известное среди народа таяран своими обильными плодами орехов и съестными листьями."
+	icon_state = "seed-chureech"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "chureech"
+	plantname = "Chur'eech tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
+	lifespan = 55
+	endurance = 35
+	maturation = 10
+	production = 10
+	yield = 5
 	potency = 10
 	plant_type = 0
 	growthstages = 6

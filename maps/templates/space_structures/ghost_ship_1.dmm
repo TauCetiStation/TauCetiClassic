@@ -142,9 +142,8 @@
 	},
 /area/space_structures/ghostship)
 "av" = (
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
 	},
@@ -161,9 +160,8 @@
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "ay" = (
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -179,9 +177,8 @@
 /obj/machinery/light_construct{
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "aB" = (
 /obj/structure/artilleryplaceholder{
@@ -200,9 +197,8 @@
 	},
 /area/space_structures/ghostship)
 "aE" = (
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "aF" = (
 /turf/simulated/floor/airless,
@@ -271,11 +267,6 @@
 	icon_state = "swall_f10"
 	},
 /area/space_structures/ghostship)
-"aR" = (
-/turf/simulated/floor{
-	icon_state = "damaged3"
-	},
-/area/space_structures/ghostship)
 "aS" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/metal,
@@ -334,9 +325,8 @@
 	pixel_x = -4;
 	pixel_y = 5
 	},
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "ba" = (
 /obj/machinery/telecomms/relay,
@@ -372,9 +362,8 @@
 /obj/machinery/light_construct{
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "bg" = (
 /obj/machinery/power/emitter,
@@ -386,14 +375,6 @@
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
-	},
-/area/space_structures/ghostship)
-"bl" = (
-/obj/machinery/light_construct{
-	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "damaged1"
 	},
 /area/space_structures/ghostship)
 "bm" = (
@@ -507,11 +488,6 @@
 "bK" = (
 /turf/simulated/floor,
 /area/space_structures/ghostship)
-"bM" = (
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
-/area/space_structures/ghostship)
 "bN" = (
 /obj/machinery/light_construct,
 /turf/simulated/floor/airless/ceiling,
@@ -530,17 +506,8 @@
 /area/space_structures/ghostship)
 "bR" = (
 /obj/item/stack/sheet/metal,
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
-/area/space_structures/ghostship)
-"bS" = (
-/obj/machinery/light_construct{
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "bT" = (
 /obj/machinery/light_construct{
@@ -569,11 +536,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall8"
-	},
-/area/space_structures/ghostship)
-"bX" = (
-/turf/simulated/floor{
-	icon_state = "damaged5"
 	},
 /area/space_structures/ghostship)
 "bY" = (
@@ -634,9 +596,8 @@
 /area/space_structures/ghostship)
 "ch" = (
 /obj/structure/closet/toolcloset,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "ci" = (
 /turf/simulated/floor/plating/airless,
@@ -671,9 +632,8 @@
 /area/space_structures/ghostship)
 "cn" = (
 /obj/structure/scrap/vehicle,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "co" = (
 /turf/simulated/shuttle/wall{
@@ -693,19 +653,12 @@
 /mob/living/simple_animal/hostile/viscerator,
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
-"cs" = (
-/obj/structure/scrap/vehicle,
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
-/area/space_structures/ghostship)
 "ct" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "cu" = (
 /obj/structure/lattice,
@@ -767,12 +720,6 @@
 	},
 /turf/simulated/floor/airless/ceiling,
 /area/space_structures/ghostship)
-"cD" = (
-/obj/structure/scrap/vehicle,
-/turf/simulated/floor{
-	icon_state = "damaged5"
-	},
-/area/space_structures/ghostship)
 "cE" = (
 /obj/item/stack/sheet/plasteel,
 /turf/environment/space,
@@ -780,11 +727,6 @@
 "cG" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall1"
-	},
-/area/space_structures/ghostship)
-"cH" = (
-/turf/simulated/floor{
-	icon_state = "damaged4"
 	},
 /area/space_structures/ghostship)
 "cK" = (
@@ -874,15 +816,13 @@
 /area/space_structures/ghostship)
 "dd" = (
 /obj/machinery/door/unpowered/shuttle/officer,
-/turf/simulated/floor{
-	icon_state = "damaged5"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "dg" = (
 /obj/structure/scrap/guns,
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "dh" = (
 /obj/structure/artilleryplaceholder{
@@ -898,12 +838,6 @@
 	icon_state = "14"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space_structures/ghostship)
-"dq" = (
-/obj/structure/scrap/vehicle,
-/turf/simulated/floor{
-	icon_state = "damaged4"
-	},
 /area/space_structures/ghostship)
 "ds" = (
 /turf/simulated/shuttle/wall{
@@ -1026,12 +960,6 @@
 	},
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
-"Hy" = (
-/obj/item/stack/sheet/metal,
-/turf/simulated/floor{
-	icon_state = "damaged1"
-	},
-/area/space_structures/ghostship)
 "Hz" = (
 /obj/structure/artilleryplaceholder{
 	icon_state = "17"
@@ -1064,9 +992,8 @@
 /area/space_structures/ghostship)
 "NE" = (
 /obj/item/stack/rods,
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor,
 /area/space_structures/ghostship)
 "NH" = (
 /obj/machinery/computer/monitor,
@@ -1297,7 +1224,7 @@ aa
 cl
 ar
 aa
-aR
+aE
 aa
 aa
 aC
@@ -1332,7 +1259,7 @@ aa
 aa
 aa
 cX
-dq
+cn
 aa
 aa
 aH
@@ -1362,7 +1289,7 @@ aa
 aa
 aa
 cX
-bX
+aE
 aa
 aa
 aa
@@ -1387,18 +1314,18 @@ aC
 aa
 aa
 cE
-bM
+aE
 bg
 cX
 aa
 UP
 bK
 bV
-aR
+aE
 aa
 bq
 aC
-bX
+aE
 aT
 aa
 aa
@@ -1419,7 +1346,7 @@ dv
 aE
 aa
 aa
-cs
+cn
 aC
 aC
 aa
@@ -1487,11 +1414,11 @@ aC
 aa
 aa
 aC
-cH
+aE
 ci
 aS
 aa
-bM
+aE
 aC
 aa
 cE
@@ -1519,10 +1446,10 @@ aa
 bA
 aS
 aC
-bX
-bX
+aE
+aE
 dv
-bS
+bf
 aE
 aa
 aa
@@ -1545,17 +1472,17 @@ aa
 ao
 co
 ap
-bX
-bM
+aE
+aE
 aC
 aa
 aa
-cH
+aE
 aE
 nr
 dv
-bX
-bX
+aE
+aE
 aJ
 aC
 aC
@@ -1576,18 +1503,18 @@ aa
 ao
 bY
 ap
-bX
+aE
 nr
-cH
+aE
 aa
 bq
-cD
-bX
-Hy
+cn
+aE
+bR
 aJ
 dv
-bX
-bM
+aE
+aE
 aC
 aJ
 bY
@@ -1607,15 +1534,15 @@ aa
 ao
 bY
 ap
-bX
+aE
 aE
 aJ
-bX
+aE
 aa
 aC
 aE
 aC
-bM
+aE
 FT
 dv
 SG
@@ -1675,11 +1602,11 @@ aD
 bY
 bY
 ap
-bl
+aA
 aa
 aV
-bX
-cH
+aE
+aE
 aJ
 aJ
 bT
@@ -1706,7 +1633,7 @@ aD
 bY
 ap
 ds
-bX
+aE
 ct
 ci
 aa
@@ -1745,7 +1672,7 @@ bq
 dg
 NE
 aI
-bX
+aE
 aJ
 cq
 aJ
@@ -1766,15 +1693,15 @@ bi
 aj
 be
 av
-cH
+aE
 bR
 aI
 bZ
-cH
+aE
 aI
 cy
-bM
-bM
+aE
+aE
 nr
 aJ
 aJ
@@ -1797,7 +1724,7 @@ bc
 bc
 bc
 aL
-cH
+aE
 aZ
 aD
 bo
@@ -1892,9 +1819,9 @@ aa
 aa
 ao
 ca
-bM
-cH
-bM
+aE
+aE
+aE
 bU
 au
 aa
@@ -1926,7 +1853,7 @@ bU
 ap
 aJ
 aW
-bM
+aE
 aF
 ca
 aa

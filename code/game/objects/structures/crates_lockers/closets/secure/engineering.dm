@@ -1,12 +1,9 @@
 /obj/structure/closet/secure_closet/engineering_chief
 	name = "Chief Engineer's Locker"
 	req_access = list(access_ce)
-	icon_state = "securece1"
+	icon_state = "securece"
 	icon_closed = "securece"
-	icon_locked = "securece1"
-	icon_opened = "secureceopen"
-	icon_broken = "securecebroken"
-	icon_off = "secureceoff"
+	icon_opened = "securece_open"
 
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
 	if (prob(50))
@@ -24,7 +21,7 @@
 	new /obj/item/clothing/under/rank/chief_engineer(src)
 	new /obj/item/clothing/head/hardhat/white(src)
 	new /obj/item/clothing/head/welding(src)
-	new /obj/item/clothing/gloves/yellow(src)
+	new /obj/item/clothing/gloves/insulated(src)
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/weapon/cartridge/ce(src)
 	new /obj/item/device/radio/headset/heads/ce(src)
@@ -40,16 +37,13 @@
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "Electrical Supplies"
 	req_access = list(access_engine_equip)
-	icon_state = "secureengelec1"
+	icon_state = "secureengelec"
 	icon_closed = "secureengelec"
-	icon_locked = "secureengelec1"
-	icon_opened = "toolclosetopen"
-	icon_broken = "secureengelecbroken"
-	icon_off = "secureengelecoff"
+	icon_opened = "toolcloset_open"
 
 /obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
 	for (var/i in 1 to 2)
-		new /obj/item/clothing/gloves/yellow(src)
+		new /obj/item/clothing/gloves/insulated(src)
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/storage/toolbox/electrical(src)
 	for (var/i in 1 to 3)
@@ -60,12 +54,9 @@
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "Welding Supplies"
 	req_access = list(access_construction)
-	icon_state = "secureengweld1"
+	icon_state = "secureengweld"
 	icon_closed = "secureengweld"
-	icon_locked = "secureengweld1"
-	icon_opened = "toolclosetopen"
-	icon_broken = "secureengweldbroken"
-	icon_off = "secureengweldoff"
+	icon_opened = "toolcloset_open"
 
 /obj/structure/closet/secure_closet/engineering_welding/PopulateContents()
 	for (var/i in 1 to 3)
@@ -78,12 +69,9 @@
 /obj/structure/closet/secure_closet/engineering_personal
 	name = "Engineer's Locker"
 	req_access = list(access_engine_equip)
-	icon_state = "secureeng1"
+	icon_state = "secureeng"
 	icon_closed = "secureeng"
-	icon_locked = "secureeng1"
-	icon_opened = "secureengopen"
-	icon_broken = "secureengbroken"
-	icon_off = "secureengoff"
+	icon_opened = "secureeng_open"
 
 /obj/structure/closet/secure_closet/engineering_personal/PopulateContents()
 	if (prob(50))
@@ -108,12 +96,9 @@
 /obj/structure/closet/secure_closet/atmos_personal
 	name = "Technician's Locker"
 	req_access = list(access_atmospherics)
-	icon_state = "secureatm1"
+	icon_state = "secureatm"
 	icon_closed = "secureatm"
-	icon_locked = "secureatm1"
-	icon_opened = "secureatmopen"
-	icon_broken = "secureatmbroken"
-	icon_off = "secureatmoff"
+	icon_opened = "secureatm_open"
 
 /obj/structure/closet/secure_closet/atmos_personal/PopulateContents()
 	if (prob(50))

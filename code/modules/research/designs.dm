@@ -37,6 +37,9 @@ other types of metals and chemistry for reagents).
 	var/list/category = null        //Primarily used for Mech Fabricators, but can be used for anything
 	var/starts_unlocked = FALSE     //If true does not require any technologies and unlocked from the start
 
+/datum/design/New()
+	all_designs += src
+
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/seccamera
@@ -1088,7 +1091,7 @@ other types of metals and chemistry for reagents).
 	id = "high_cell"
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 60)
-	build_path = /obj/item/weapon/stock_parts/cell/high
+	build_path = /obj/item/weapon/stock_parts/cell/high/empty
 	construction_time=100
 	category = list("Stock Parts")
 
@@ -1098,7 +1101,7 @@ other types of metals and chemistry for reagents).
 	id = "super_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 70)
-	build_path = /obj/item/weapon/stock_parts/cell/super
+	build_path = /obj/item/weapon/stock_parts/cell/super/empty
 	construction_time=100
 	category = list("Stock Parts")
 
@@ -1108,7 +1111,7 @@ other types of metals and chemistry for reagents).
 	id = "hyper_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 70, MAT_SILVER = 150, MAT_GOLD = 150)
-	build_path = /obj/item/weapon/stock_parts/cell/hyper
+	build_path = /obj/item/weapon/stock_parts/cell/hyper/empty
 	construction_time=100
 	category = list("Stock Parts")
 
@@ -1119,7 +1122,7 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 800, MAT_GLASS = 160, MAT_SILVER = 300, MAT_GOLD = 300, MAT_DIAMOND = 160)
 //	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell/bluespace
+	build_path = /obj/item/weapon/stock_parts/cell/bluespace/empty
 	category = list("Stock Parts")
 
 
@@ -1756,13 +1759,48 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chameleon
 	name = "Chameleon Kit"
-	desc = "It's a set of clothes with dials on them."
+	desc = "A set of clothes with dials on them."
 	id = "chameleon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000)
 	build_path = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	category = list("Illegal")
 
+/datum/design/ai_detector
+	name = "Artificial Intelligence Detector"
+	desc = "A device disguised as a multitool. Detects the activity of artificial intelligence."
+	id = "ai_detector"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 500, MAT_GOLD = 500)
+	build_path = /obj/item/device/multitool/ai_detect
+	category = list("Illegal")
+
+/datum/design/smuggler_satch
+	name = "Smuggler's Satchel"
+	desc = "An unusual satchel that fits under the floor tiles."
+	id = "smuggler_satch"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000)
+	build_path = /obj/item/weapon/storage/backpack/satchel/flat
+	category = list("Illegal")
+
+/datum/design/voice_changer
+	name = "Voice Changer"
+	desc = "A gas mask with additional filters that affect the timbre of your voice."
+	id = "voice_changer"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_SILVER = 500)
+	build_path = /obj/item/clothing/mask/gas/voice
+	category = list("Illegal")
+
+/datum/design/camera_bug
+	name = "Camera Bug"
+	desc = "An illegal device for illicit snooping through the camera network."
+	id = "camera_bug"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 3000, MAT_DIAMOND = 2000, MAT_SILVER = 1000, MAT_GOLD = 500)
+	build_path = /obj/item/device/camera_bug
+	category = list("Illegal")
 
 /datum/design/bluespacebeaker
 	name = "bluespace beaker"
@@ -1911,6 +1949,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 8000, MAT_GLASS = 1000, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/gun/energy/laser
+	category = list("Weapons")
+
+/datum/design/laserpractice
+	name = "Practice Laser Gun"
+	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
+	id = "laserpractice"
+	build_type = PROTOLATHE
+	materials = list (MAT_METAL = 1250, MAT_GLASS = 250)
+	build_path = /obj/item/weapon/gun/energy/laser/practice
 	category = list("Weapons")
 
 /datum/design/lasercannon

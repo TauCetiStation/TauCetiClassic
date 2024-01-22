@@ -79,10 +79,10 @@
 	if(.)
 		me_emote("nashes at [.].")
 
-/mob/living/simple_animal/hostile/carp/AttackingTarget()
-	. =..()
-	var/mob/living/L = .
-	if(istype(L))
+/mob/living/simple_animal/hostile/carp/UnarmedAttack(atom/target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
 		if(prob(15))
 			L.Stun(1)
 			L.Weaken(3)

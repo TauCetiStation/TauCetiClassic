@@ -246,9 +246,11 @@
 	var/list/coord_of_pylons = list(1, 1)
 	var/list/beams = list()
 
-/obj/effect/anomaly/bluespace/cult_portal/atom_init(mapload, bound = FALSE)
+/obj/effect/anomaly/bluespace/cult_portal/atom_init(mapload, bound = FALSE, bound_extencion_cd)
 	. = ..()
 	need_bound = bound
+	if(bound_extencion_cd)
+		extencion_cd = bound_extencion_cd
 
 	enable()
 	notify_ghosts("Появился портал культа. Нажмите на него, чтобы стать конструктом.", source = src, action = NOTIFY_ATTACK, header = "Cult Portal")
@@ -271,7 +273,7 @@
 	if(ismob(B.parent))
 		var/mob/M = B.parent
 		if(M.ckey)
-			extencion_timers[M.ckey] = addtimer(CALLBACK(src, .proc/extencion, B), extencion_cd, TIMER_STOPPABLE)
+			extencion_timers[M.ckey] = addtimer(CALLBACK(src, PROC_REF(extencion), B), extencion_cd, TIMER_STOPPABLE)
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/remove_beam(datum/source)
 	beams -= source
@@ -293,8 +295,8 @@
 			P.icon_state = "pylon_glow"
 			if(prob(30)) // activate() is return /mob/living/simple_animal/hostile/pylon and since there is dynamic typing, it works
 				P = P.activate(null, global.cult_religion)
-			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_plane = ABOVE_LIGHTING_PLANE)
-			RegisterSignal(B, list(COMSIG_PARENT_QDELETING), .proc/remove_beam)
+			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_plane = LIGHTING_LAMPS_PLANE)
+			RegisterSignal(B, list(COMSIG_PARENT_QDELETING), PROC_REF(remove_beam))
 			beams += B
 
 		// Iterating through all possible coordinates
@@ -328,8 +330,22 @@
 	if(next_spawn > world.time)
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
-
-	var/type = pick(70; /mob/living/simple_animal/construct/harvester,\
+	var/type
+	if(SSholiday.holidays[HALLOWEEN])
+		type = pick(50; /mob/living/simple_animal/construct/wraith/hellknight_halloween,\
+					45; /mob/living/simple_animal/construct/wraith/envoy_halloween,\
+					40; /mob/living/simple_animal/construct/wraith/firewraith_halloween,\
+					30; /mob/living/simple_animal/construct/armoured/fire_halloween,\
+					25; /mob/living/simple_animal/construct/armoured/pain_halloween,\
+					20; /mob/living/simple_animal/construct/armoured/golem_halloween,\
+					35;	/mob/living/simple_animal/construct/builder/summoner_halloween,\
+					40;	/mob/living/simple_animal/construct/builder/firetower_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/necro_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/fireharvest_halloween,\
+					25; /mob/living/simple_animal/construct/harvester/boneshaper_halloween,\
+					)
+	else
+		type = pick(70; /mob/living/simple_animal/construct/harvester,\
 					50; /mob/living/simple_animal/construct/wraith,\
 					30; /mob/living/simple_animal/construct/armoured,\
 					40; /mob/living/simple_animal/construct/proteon,\
@@ -351,14 +367,29 @@
 		var/mob/slave = pick_n_take(candidates)
 		if(!slave) // I dont know why or how it can be null, but it can be null
 			continue
-		var/type = pick(
+		var/type
+		if(SSholiday.holidays[HALLOWEEN])
+			type = pick(50; /mob/living/simple_animal/construct/wraith/hellknight_halloween,\
+						45; /mob/living/simple_animal/construct/wraith/envoy_halloween,\
+						40; /mob/living/simple_animal/construct/wraith/firewraith_halloween,\
+						30; /mob/living/simple_animal/construct/armoured/fire_halloween,\
+						25; /mob/living/simple_animal/construct/armoured/pain_halloween,\
+						20; /mob/living/simple_animal/construct/armoured/golem_halloween,\
+						35;	/mob/living/simple_animal/construct/builder/summoner_halloween,\
+						40;	/mob/living/simple_animal/construct/builder/firetower_halloween,\
+						25; /mob/living/simple_animal/construct/harvester/necro_halloween,\
+						25; /mob/living/simple_animal/construct/harvester/fireharvest_halloween,\
+						25; /mob/living/simple_animal/construct/harvester/boneshaper_halloween,\
+						)
+		else
+			type = pick(
 				50; /mob/living/simple_animal/construct/wraith,\
 				50; /mob/living/simple_animal/construct/armoured,\
 				40; /mob/living/simple_animal/construct/proteon,\
 				30; /mob/living/simple_animal/construct/builder,\
 				10;/mob/living/simple_animal/construct/harvester,\
 				1;  /mob/living/simple_animal/construct/behemoth)
-		INVOKE_ASYNC(src, .proc/create_shell, slave, type)
+		INVOKE_ASYNC(src, PROC_REF(create_shell), slave, type)
 		spawns--
 
 	if(spawns == 0)
@@ -382,7 +413,8 @@
 	for(var/i in 1 to rand_num)
 		step(C, pick(alldirs))
 	if(need_bound)
-		var/datum/component/bounded/B = C.AddComponent(/datum/component/bounded, src, 0, 7)
+		to_chat(C, "<span class='danger'>Вы чувствуете, что портал нестабилен. Его уничтожение может низвергнуть вас обратно из этой реальности!</span>")
+		var/datum/component/bounded/B = C.AddComponent(/datum/component/bounded, src, 0, 7, null, CALLBACK(C, TYPE_PROC_REF(/mob/living/simple_animal/construct, death)))
 		var/mob/M = B.parent
 		if(M.ckey)
-			extencion_timers[M.ckey] = addtimer(CALLBACK(src, .proc/extencion, B), extencion_cd, TIMER_STOPPABLE)
+			extencion_timers[M.ckey] = addtimer(CALLBACK(src, PROC_REF(extencion), B), extencion_cd, TIMER_STOPPABLE)

@@ -49,11 +49,6 @@
 	display_name = "Suspenders"
 	path = /obj/item/clothing/suit/suspenders
 
-/datum/gear/suit/wcoat
-	display_name = "Waistcoat"
-	path = /obj/item/clothing/suit/wcoat
-	cost = 1
-
 /datum/gear/suit/kung
 	display_name = "Kung jacket"
 	path = /obj/item/clothing/suit/kung
@@ -209,3 +204,10 @@
 	shirt["dictator"] = /obj/item/clothing/suit/arstotzkashirt
 	shirt["toxic"] = /obj/item/clothing/suit/toxicshirt
 	gear_tweaks += new/datum/gear_tweak/path(shirt)
+
+/datum/gear/suit/raskinta
+	display_name = "Raskinta Uniform"
+	path = /obj/item/clothing/under/tactical/skrell
+	cost = 1
+	allowed_roles = list("Security Officer", "Security Cadet", "Warden", "Detective", "Head of Security", "Forensic Technician" )
+	whitelisted = SKRELL

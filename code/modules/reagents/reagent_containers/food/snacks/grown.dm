@@ -493,9 +493,14 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/hatchet) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/melee/energy))
 		to_chat(user, "<span class='notice'>You carve a face into [src]!</span>")
-		new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
-		qdel(src)
-		return
+		if (tgui_alert(usr, "Шлем или Декор?", "Что вырезать?", list("Шлем", "Декор")) == "Шлем")
+			new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
+			qdel(src)
+			return
+		else
+			new /obj/item/weapon/carved_pumpkin (user.loc)
+			qdel(src)
+			return
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/lime
@@ -646,7 +651,8 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/tomato_smudge(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	qdel(src)
@@ -701,7 +707,8 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/blood/splatter(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	reagents.reaction(get_turf(hit_atom))
@@ -722,32 +729,20 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 20), 1))
 	reagents.add_reagent("lube", 1+round((potency / 5), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
+	AddComponent(/datum/component/slippery, 8, NONE, CALLBACK(src, PROC_REF(AfterSlip)))
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/proc/AfterSlip(mob/living/carbon/human/M)
+	M.Stun(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/blood/oil(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='notice'>You hear a smack.</span>")
 	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
 		reagents.reaction(A)
 	qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(atom/movable/AM)
-	. = ..()
-	if (iscarbon(AM))
-		var/mob/living/carbon/C = AM
-
-		if (ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if ((H.shoes && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
-				return
-
-		C.stop_pulling()
-		to_chat(C, "<span class='notice'>You slipped on the [name]!</span>")
-		playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-		if(!C.buckled)
-			C.Stun(8)
-			C.Weaken(5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed_type = /obj/item/seeds/wheatseed
@@ -1066,7 +1061,8 @@
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	var/mob/M = usr
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
 	var/inner_teleport_radius = potency / 15
@@ -1119,3 +1115,17 @@
 	new/obj/effect/decal/cleanable/blood/oil(loc)
 	visible_message("<span class='notice'>The [name] has been squashed, causing a distortion in space-time.</span>","<span class='notice'>You hear a splat and a crackle.</span>")
 	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
+	name = "Сhur'eech nut"
+	cases = list("орех Чур'их", "ореха Чур'их", "ореху Чур'их", "орех Чур'их", "орехом Чур'их", "орехе Чур'их")
+	icon_state = "chureechnut"
+	desc = "Огромный орех небесного цвета, который славится поистине сладким вкусом."
+	potency = 10
+	seed_type = /obj/item/seeds/chureech_nut
+	filling_color = "#91ebff"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1 + round(potency / 5))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)

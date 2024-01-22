@@ -55,7 +55,7 @@
 		alarm_types_clear[type] += 1
 
 	if(!in_cooldown)
-		addtimer(CALLBACK(src, .proc/showQueueAlarms), 10 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(showQueueAlarms)), 10 SECONDS)
 
 /mob/living/silicon/proc/showQueueAlarms()
 	var/list/messages = list()

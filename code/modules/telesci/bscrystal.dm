@@ -26,7 +26,8 @@
 	return FALSE
 
 /obj/item/bluespace_crystal/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	if(blink_mob(hit_atom))
 		qdel(src)
 

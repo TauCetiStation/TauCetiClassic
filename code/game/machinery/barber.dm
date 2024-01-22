@@ -52,6 +52,8 @@
 	return ..()
 
 /obj/machinery/color_mixer/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		efficiency += M.rating
 
@@ -213,7 +215,7 @@
 	beakers["output"].reagents.add_reagent("customhairdye", chosen_quantity, list("r_color" = r_t,"g_color" = g_t,"b_color" = b_t))
 	if(isWireCut(COLOR_MIXER_OUTPUT_SAFETY))
 		var/turf/T = get_turf(pick(viewers(2, src)))
-		INVOKE_ASYNC(src, .proc/Spray_at, T)
+		INVOKE_ASYNC(src, PROC_REF(Spray_at), T)
 
 	use_power(50 * chosen_quantity)
 

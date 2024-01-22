@@ -15,7 +15,7 @@
 	var/deepfried = 0
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
-/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
+/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M, silent = FALSE)
 	if(!usr)	return
 	if(isliving(M))
 		var/mob/living/L = M
@@ -27,9 +27,8 @@
 			if(prob(50) && SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nasty_throat_feel", /datum/mood_event/nasty_throat_feel))
 				to_chat(H, "<span class='warning'>You feel like something enveloping in your throat...</span>")
 	if(!reagents.total_volume)
-		if(M == usr)
-			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
-		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
+		if(!silent)
+			M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>", "<span class='notice'>You finish eating \the [src].</span>")
 		if(food_type)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "food_type", food_moodlet)
 		SSStatistics.score.foodeaten++
@@ -47,7 +46,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
 	if(!reagents || !reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
 		M.drop_from_inventory(src)	//so icons update :[
@@ -112,7 +111,7 @@
 				else
 					reagents.trans_to_ingest(M, reagents.total_volume)
 				bitecount++
-				On_Consume(M)
+				On_Consume(M, silent)
 			return TRUE
 
 	return FALSE
@@ -410,7 +409,8 @@
 	list_reagents = list("nutriment" = 1, "egg" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new /obj/effect/decal/cleanable/egg_smudge(loc)
 	if(prob(13))
 		if(global.chicken_count < MAX_CHICKENS)
@@ -574,7 +574,7 @@
 	icon_state = "xenomeat"
 	filling_color = "#43de18"
 	bitesize = 6
-	list_reagents = list("protein" = 3, "vitamin" = 1)
+	list_reagents = list("protein" = 3, "vitamin" = 1, "xenojelly_un" = 5)
 	food_type = NATURAL_FOOD
 	food_moodlet = /datum/mood_event/natural_food
 
@@ -698,7 +698,7 @@
 	icon_state = "xburger"
 	filling_color = "#43de18"
 	bitesize = 2
-	list_reagents = list("protein" = 6, "vitamin" = 1)
+	list_reagents = list("protein" = 6, "vitamin" = 1, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
@@ -757,7 +757,8 @@
 	list_reagents = list("plantmatter" = 6, "banana" = 5, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
 	visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
 	qdel(src)
@@ -847,7 +848,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#43de18"
 	bitesize = 2
-	list_reagents = list("protein" = 10, "vitamin" = 2)
+	list_reagents = list("protein" = 10, "vitamin" = 2, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
@@ -858,7 +859,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#43de18"
 	bitesize = 2
-	list_reagents = list("protein" = 6, "vitamin" = 2)
+	list_reagents = list("protein" = 6, "vitamin" = 2, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
@@ -1945,7 +1946,7 @@
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/xeno
 	filling_color = "#8aff75"
-	list_reagents = list("protein" = 20, "nutriment" = 10, "vitamin" = 5)
+	list_reagents = list("protein" = 20, "nutriment" = 10, "vitamin" = 5, "xenojelly_un" = 5)
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
@@ -3425,3 +3426,80 @@
 	reagents.add_reagent("nutriment", 2)
 	reagents.add_reagent("sugar", 3)
 	icon_state = pick("candyheart_pink", "candyheart_green", "candyheart_blue", "candyheart_yellow")
+
+//Xeno species food
+
+/obj/item/weapon/reagent_containers/food/snacks/el_ehum
+	name = "El E'hum"
+	desc = "A thin pieces of bark from the elyu'a ail tree, smoked with seynyu'dra leaves. The finished dish tastes like ham. This meat is usually eaten with a portion of seinyu'dra bark, which can be carried around, making it indispensable for the Tajaran's treks."
+	icon_state = "el_ehum"
+	bitesize = 3
+	list_reagents = list("nutriment" = 3, "blackpepper" = 3, "bicaridine" = 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/rraasi
+	name = "Rraasi"
+	desc = "A popular food is tajaran, named after the one-eyed fish used in cooking. Slightly spicy flavor with crushed sei'draa. The dish is served cold on a heated plate. Popularized by the Innad clan, this extraordinarily spicy dish has become a favorite of many tajarans around the world. Rraasi, as a rule, does not harm a person in acceptable norms, but with its sharp taste it can shock."
+	icon_state = "rraasi"
+	bitesize = 3
+	trash = /obj/item/trash/plate
+	list_reagents = list("protein" = 3, "carpotoxin" = 3, "blackpepper" = 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/kaholket_alkeha
+	name = "Kahol'Ket Al'Keha"
+	desc = "A simple pie made with Cha'ich nuts and berries and baked in Elyu'a Eil."
+	icon_state = "kaholket_alkeha"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/kaholket_alkeha
+	slices_num = 5
+	trash = /obj/item/trash/plate
+	list_reagents = list("nutriment" = 12, "berryjuice" = 3, "vitamin" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/cakeslice/kaholket_alkeha
+	name = "Kahol'Ket Al'Keha"
+	desc = "A simple pie made with Cha'ich nuts and berries and baked in Elyu'a Eil."
+	icon_state = "kaholket_alkeha_slice"
+
+/obj/item/weapon/reagent_containers/food/snacks/jundarek
+	name = "Jun'Darek"
+	desc = "A fish dipped in salted wine."
+	icon_state = "jundarek"
+	bitesize = 5
+	trash = /obj/item/trash/snack_bowl
+	list_reagents = list("protein" = 3, "carpotoxin" = 3, "sodiumchloride" = 1, "wine" = 13)
+
+/obj/item/weapon/reagent_containers/food/snacks/soup/fushstvessina
+	name = "Fushst'vessina"
+	desc = "Cooked syrup, which is given a decorative shape and sprinkled with chaich nut flakes."
+	icon_state = "fushstvessina"
+	bitesize = 5
+	trash = /obj/item/trash/snack_bowl
+	list_reagents = list("protein" = 8, "vitamin" = 4, "rice" = 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/adjurahma
+	name = "Adjurah'Ma"
+	desc = "Cooked syrup, which is given a decorative shape and sprinkled with chaich nut flakes."
+	icon_state = "adjurahma"
+	bitesize = 3
+	list_reagents = list("nutriment" = 2, "water" = 7, "sugar" = 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/julma_tulkrash
+	name = "Jul'Ma Tul'Krush"
+	desc = "A very sweet broth made from fresh fat, meat and Jul'Ma"
+	icon_state = "julma_tulkrash"
+	bitesize = 5
+	trash = /obj/item/trash/snack_bowl
+	list_reagents = list("nutriment" = 2, "water" = 8, "protein" = 3, "vitamin" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/fasqhtongue
+	name = "Fasqh'tongue"
+	desc = "A dried and cured sissalika tongue cured in vinegar. Usually seasoned with something spicy. It is usually served straight in its entirety, occupying a good half a meter on the table."
+	icon_state = "fasqhtongue"
+	bitesize = 5
+	list_reagents = list("protein" = 4, "plantmatter" = 6, "blackpepper" = 3, "vitamin" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/kefeogeo
+	name = "Kefeogeo"
+	desc = "A small meat tenderloins dried in the sun in hot spices. It turns out a kind of jerky chips, which are very fond of children as a treat. Traditionally served on a plate of edible fern leaf by one of the younger members of the family."
+	icon_state = "kefeogeo"
+	bitesize = 4
+	food_type = NATURAL_FOOD
+	list_reagents = list("protein" = 7, "plantmatter" = 3, "sodiumchloride" = 1, "blackpepper" = 1)

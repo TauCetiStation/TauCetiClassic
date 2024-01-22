@@ -136,6 +136,7 @@
 				C.buckled.unbuckle_mob()
 	else
 		..()
+
 /*
  * Welding Tool
  */
@@ -147,7 +148,6 @@
 	icon_state = "welder"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	action_button_name = "Switch Welding tool"
 	usesound = 'sound/items/Welder2.ogg'
 
 	force = 3.0
@@ -164,6 +164,7 @@
 
 	origin_tech = "engineering=1" // R&D tech level
 
+	var/rigged = FALSE			// Welding tool is rigged TRUE/FALSE
 	var/active = FALSE          // Welding tool is off or on
 	var/welding = FALSE         // While welding something - TRUE
 	var/secured = TRUE          // Welder is secured or unsecured (able to attach rods to it to make a flamethrower)
@@ -171,6 +172,10 @@
 	var/image/welding_sparks    // Welding overlay for targets
 
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
+	item_action_types = list(/datum/action/item_action/hands_free/switch_welding_tool)
+
+/datum/action/item_action/hands_free/switch_welding_tool
+	name = "Switch Welding tool"
 
 /obj/item/weapon/weldingtool/atom_init()
 	. = ..()
@@ -179,12 +184,15 @@
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
 	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", layer = ABOVE_LIGHTING_LAYER)
-	welding_sparks.plane = ABOVE_LIGHTING_PLANE
+	welding_sparks.plane = LIGHTING_LAMPS_PLANE
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
 	if(src in user)
-		to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
+		if (rigged)
+			to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of mixture!")
+		else
+			to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
@@ -219,6 +227,23 @@
 		src.loc = F
 		add_fingerprint(user)
 		return
+	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
+		var/obj/item/weapon/reagent_containers/syringe/S = I
+		if(S.reagents.has_reagent("phoron", 5))
+			if(get_fuel() + 5 > max_fuel)
+				to_chat(user, "[src] is full, you cant inject anything into it.")
+			else if (active)
+				to_chat(user, "[src] is active, turn it off to inject.")
+			else
+				user.SetNextMove(CLICK_CD_INTERACT)
+				to_chat(user, "You inject the solution into the [src].")
+				log_admin("LOG: [key_name(user)] injected a weldingtool with phoron, rigging it to explode.")
+				message_admins("LOG: [key_name_admin(user)] injected a weldingtool with phoron, rigging it to explode. [ADMIN_JMP(user)]")
+				rigged = TRUE
+				S.reagents.remove_reagent("phoron", 5)
+				reagents.add_reagent("phoron", 5)
+		else
+			to_chat(user, "You need something dangerous to rig this tool.")
 	return ..()
 
 /obj/item/weapon/weldingtool/process()
@@ -294,12 +319,12 @@
 
 // Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount("fuel")
+	return reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron")
 
 /obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override, skills_speed_bonus = -0.4, can_move = FALSE)
 	target.add_overlay(welding_sparks)
-	INVOKE_ASYNC(src, .proc/start_welding, target)
-	var/datum/callback/checks  = CALLBACK(src, .proc/check_active_and_extra, extra_checks)
+	INVOKE_ASYNC(src, PROC_REF(start_welding), target)
+	var/datum/callback/checks  = CALLBACK(src, PROC_REF(check_active_and_extra), extra_checks)
 	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_skills_override = required_skills_override, skills_speed_bonus = skills_speed_bonus)
 	stop_welding()
 	target.cut_overlay(welding_sparks)
@@ -369,7 +394,16 @@
 	if(!usr) return
 	active = !active
 	if (isOn())
-		if (use(1))
+		if (rigged)
+			var/turf/T = get_turf(src.loc)
+			var/phoron =  reagents.get_reagent_amount("phoron")
+			var/devast = (phoron >= 80) ? 1 : 0
+			var/area = ceil(phoron / 20)
+			log_admin("LOG: Rigged weldingtool explosion, last touched by [fingerprintslast]")
+			message_admins("LOG: Rigged weldingtool explosion, last touched by [fingerprintslast] [ADMIN_JMP(T)]")
+			explosion(T, devast, area, area * 2, area * 4)
+			qdel(src)
+		else if (use(1))
 			playsound(loc, 'sound/items/tools/welderactivate.ogg', VOL_EFFECTS_MASTER)
 			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			hitsound = SOUNDIN_LASERACT
@@ -394,6 +428,7 @@
 		src.active = FALSE
 
 	update_inv_mob()
+	update_item_actions()
 
 // Decides whether or not to damage a player's eyes based on what they're wearing as protection
 // Note: This should probably be moved to mob
@@ -433,7 +468,7 @@
 				user.eye_blind = 5
 				user.adjustBlurriness(5)
 				user.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
-				addtimer(CALLBACK(user, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
+				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
 	return
 
 
@@ -523,7 +558,6 @@
 		QUALITY_PRYING = 0.7
 	)
 
-
 /obj/item/weapon/weldingtool/attack(mob/M, mob/user, def_zone)
 
 	if(ishuman(M))
@@ -540,7 +574,13 @@
 				to_chat(user, "<span class='rose'>You can't repair damage to your own body - it's against OH&S.</span>")
 				return
 
+		if(H.check_pierce_protection(target_zone = def_zone))
+			to_chat(user, "<span class='rose'>There is no exposed surface for repair.</span>")
+			return
+
 		if(BP.brute_dam)
+			if(!use(1, user))
+				return
 			BP.heal_damage(15,0,0,1)
 			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.name] with \the [src].</span>")
 		else
@@ -566,10 +606,13 @@
 	throwforce = 8
 	toolspeed = 0.7
 	attack_verb = list("drilled", "screwed", "jabbed")
-	action_button_name = "Change mode"
 	qualities = list(
 		QUALITY_WRENCHING = 1
 	)
+	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
+
+/datum/action/item_action/hands_free/change_mode
+	name = "Change mode"
 
 /obj/item/weapon/multi/hand_drill/attack_self(mob/user)
 	mode = !mode
@@ -586,6 +629,7 @@
 		)
 		icon_state = "drill_bolt"
 		to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
+	update_item_actions()
 
 /obj/item/weapon/multi/jaws_of_life
 	name = "Jaws of Life"
@@ -595,12 +639,15 @@
 	item_state = "jawsoflife"
 	origin_tech = "materials=2;engineering=2"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
-	action_button_name = "Change mode"
 	toolspeed = 0.7
 	sharp = 1
 	qualities = list(
 		QUALITY_CUTTING = 1
 	)
+	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
+
+/datum/action/item_action/hands_free/change_mode
+	name = "Change mode"
 
 /obj/item/weapon/multi/jaws_of_life/attack_self(mob/user)
 	mode = !mode
@@ -619,3 +666,4 @@
 		sharp = 1
 		icon_state = "jaws_cutter"
 		to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
+	update_item_actions()

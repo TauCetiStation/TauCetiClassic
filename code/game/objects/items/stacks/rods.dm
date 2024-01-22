@@ -7,7 +7,7 @@
 	w_class = SIZE_SMALL
 	force = 2.0
 	throwforce = 5.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 20
 	m_amt = 1875
 	max_amount = 60
@@ -43,6 +43,17 @@
 			use(2)
 			if(!QDELETED(src) && replace)
 				user.put_in_hands(new_item)
+	if(iscutter(I))
+		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
+		user.visible_message(
+			"[user.name] cuts the [src], turning it into a crossbow bolt.",
+			"<span class='notice'>You cuts the [src], turning it into a crossbow bolt.</span>"
+			)
+		var/obj/item/weapon/arrow/new_item = new(user.loc)
+		use(1)
+		var/replace = (user.get_inactive_hand() == src)
+		if(!QDELETED(src) && replace)
+			user.put_in_hands(new_item)
 
 	else
 		return ..()

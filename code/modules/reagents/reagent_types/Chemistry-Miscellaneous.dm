@@ -49,7 +49,7 @@
 				if(self.data["blood_type"])
 					blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 				else
-					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O+"
+					blood_prop.blood_DNA[self.data["blood_DNA"]] = BLOOD_O_PLUS
 
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
@@ -58,7 +58,7 @@
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
-			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
+			blood_prop.blood_DNA["Non-Human DNA"] = BLOOD_A_PLUS
 
 	else if(isxeno(donor))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
@@ -350,6 +350,8 @@
 /datum/reagent/diethylamine/reaction_mob(mob/M, method = TOUCH, volume)
 	if(volume >= 1 && ishuman(M))
 		var/mob/living/carbon/human/H = M
+		if(!H.species.flags[HAS_HAIR])
+			return
 		var/list/species_hair = list()
 		if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
 			for(var/i in hair_styles_list)
@@ -909,7 +911,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	. = ..()
 	var/obj/effect/effect/aqueous_foam/F = locate(/obj/effect/effect/aqueous_foam) in T
 	if(F)
-		INVOKE_ASYNC(F, /obj/effect/effect/aqueous_foam.proc/performAction) // So we don't instantinate a new object, but still make the room slightly colder.
+		INVOKE_ASYNC(F, TYPE_PROC_REF(/obj/effect/effect/aqueous_foam, performAction)) // So we don't instantinate a new object, but still make the room slightly colder.
 	else if(!T.density)
 		new /obj/effect/effect/aqueous_foam(T)
 

@@ -16,6 +16,12 @@
 /proc/cmp_name_dsc(atom/a, atom/b)
 	return sorttext(a.name, b.name)
 
+// list datums should have "order" variable, or it will throw error
+// because ":" checks for variable at runtime it's better 
+// not to use this cmp for heavy code or big lists
+/proc/cmp_general_order_asc(datum/A, datum/B)
+	return A:order - B:order
+
 var/global/cmp_field = "name"
 /proc/cmp_records_asc(datum/data/record/a, datum/data/record/b)
 	return sorttext(b.fields[cmp_field], a.fields[cmp_field])
@@ -93,3 +99,6 @@ var/global/cmp_field = "name"
 		. = sorttext(B["rank"], A["rank"])
 	if (!.)
 		. = sorttext(B["name"], A["name"])
+
+/proc/cmp_spawners_asc(datum/spawner/A, datum/spawner/B)
+	return A.priority - B.priority

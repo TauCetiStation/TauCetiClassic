@@ -12,11 +12,18 @@
 	throwforce = 6
 	w_class = SIZE_NORMAL
 	origin_tech = list("biotech" = 2, "powerstorage" = 1)
-	action_button_name = "Remove/Replace Paddles"
+	item_action_types = list(/datum/action/item_action/hands_free/paddles)
 
 	var/obj/item/weapon/shockpaddles/linked/paddles
 	var/obj/item/weapon/stock_parts/cell/bcell = null
 	var/charge_time = 1 SECONDS
+
+/datum/action/item_action/hands_free/paddles
+	name = "Remove/Replace Paddles"
+
+/datum/action/item_action/hands_free/paddles/Activate()
+	var/obj/item/weapon/defibrillator/S = target
+	S.toggle_paddles()
 
 /obj/item/weapon/defibrillator/atom_init() // starts without a cell for rnd
 	. = ..()
@@ -60,9 +67,6 @@
 
 	cut_overlays()
 	add_overlay(new_overlays)
-
-/obj/item/weapon/defibrillator/ui_action_click()
-	toggle_paddles()
 
 /obj/item/weapon/defibrillator/attack_hand(mob/user)
 	if(loc == user)
@@ -128,6 +132,7 @@
 
 	if(paddles.loc != src)
 		reattach_paddles(user) //Remove from their hands and back onto the defib unit
+		update_item_actions()
 		return
 
 	if(!slot_check())
@@ -136,6 +141,7 @@
 		if(!usr.put_in_hands(paddles)) //Detach the paddles into the user's hands
 			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
 		update_icon() //success
+		update_item_actions()
 
 //checks that the base unit is in the correct slot to be used
 /obj/item/weapon/defibrillator/proc/slot_check()
@@ -235,7 +241,7 @@
 /obj/item/weapon/shockpaddles/proc/set_cooldown(delay)
 	cooldown = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/reset_cooldown), delay, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), delay, TIMER_UNIQUE)
 
 /obj/item/weapon/shockpaddles/proc/reset_cooldown()
 	if(cooldown)
@@ -407,7 +413,7 @@
 		H.adjustFireLoss(burn_damage_amt)
 	H.updatehealth()
 
-	if(H.health < config.health_threshold_dead)
+	if((H.health < config.health_threshold_dead) || (H.suiciding))
 		make_announcement("buzzes, \"Defibrillation failed - Patinent's body is too wounded to sustain heart beating.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return

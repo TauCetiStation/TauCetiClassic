@@ -234,9 +234,9 @@
 /mob/proc/restrained()
 	return
 
-/mob/proc/reset_view(atom/A)
+/mob/proc/reset_view(atom/A, force_remote_viewing)
 	if(client)
-		if(istype(A, /atom/movable))
+		if(isatom(A))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
@@ -439,43 +439,9 @@
 	client.prefs.selected_quality_name = null
 
 	M.key = key
+	M.name = M.key
 //	M.Login()	//wat
 	return
-
-/mob/verb/observe()
-	set name = "Observe"
-	set category = "OOC"
-	var/is_admin = FALSE
-
-	if(client.holder && (client.holder.rights & R_ADMIN))
-		is_admin = TRUE
-	else if(stat != DEAD || isnewplayer(src) || jobban_isbanned(src, "Observer"))
-		to_chat(usr, "<span class='notice'>You must be observing to use this!</span>")
-		return
-
-	if(is_admin && stat == DEAD)
-		is_admin = FALSE
-
-	var/list/creatures = getpois()
-
-	client.perspective = EYE_PERSPECTIVE
-
-	var/eye_name = null
-
-	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a mob!", ok, null, null) as null|anything in creatures
-
-	if(!eye_name)
-		return
-
-	var/mob/mob_eye = creatures[eye_name]
-
-	if(client && mob_eye)
-		client.eye = mob_eye
-		if(is_admin)
-			client.adminobs = 1
-			if(mob_eye == client.mob || client.eye == client.mob)
-				client.adminobs = 0
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -707,6 +673,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
 
+			if(SSmapping.loaded_map_module)
+				SSmapping.loaded_map_module.stat_entry(src)
+
 	if(client && client.holder)
 		if(statpanel("Tickets"))
 			global.ahelp_tickets.stat_entry()
@@ -800,9 +769,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
 		was_lying = lying
 
-	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)))
-		drop_l_hand()
-		drop_r_hand()
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
@@ -1216,7 +1182,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		input_offsets["[d]"] = map_to
 		pos_dirs -= map_to
 
-	addtimer(CALLBACK(src, .proc/randomise_inputs), randomise_inputs_cooldown)
+	addtimer(CALLBACK(src, PROC_REF(randomise_inputs)), randomise_inputs_cooldown)
 
 /mob/proc/AdjustConfused(amount)
 	confused += amount
@@ -1278,9 +1244,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if("run")
 			if(drowsyness > 0)
 				. += 6
-			. += 1 + config.run_speed
+			. += config.run_speed
 		if("walk")
-			. += 2.5 + config.walk_speed
+			. += config.walk_speed
 
 // return TRUE if we failed our interaction
 /mob/proc/interact_prob_brain_damage(atom/object)

@@ -8,7 +8,7 @@
 			tally -= 2.5
 			nullify_debuffs = TRUE
 
-	if(!has_gravity(src))
+	if(!has_gravity(src) && !lying)
 		return tally - 1 // It's hard to be slowed down in space by... anything
 
 	if(iszombie(src))
@@ -21,6 +21,8 @@
 
 	if(lying)
 		tally += 7
+	if(m_intent == MOVE_INTENT_WALK && HAS_TRAIT(src, TRAIT_FAST_WALKER))
+		tally -= 1.5
 
 	if(!nullify_debuffs)
 		if(is_type_organ(O_HEART, /obj/item/organ/internal/heart/ipc)) // IPC's heart is a servomotor, damaging it influences speed.
@@ -91,7 +93,7 @@
 	if(item_slowdown)
 		if(item_slowdown < 0)
 			tally += item_slowdown
-		else if(!(species.flags[IS_SYNTHETIC] || chem_nullify_debuff))
+		else if(!chem_nullify_debuff)
 			weight_tally += item_slowdown
 
 	item_slowdown = back?.slowdown
@@ -130,17 +132,13 @@
 					tally += 2
 
 	var/turf/T = get_turf(src)
-	if(T)
+	if(T && (get_species() != SKRELL || shoes))
+		tally += T.get_fluid_depth() * 0.0075 // in basic, waterpool have 800 depth
+	if(T.slowdown)
 		tally += T.slowdown
-		var/obj/effect/fluid/F = locate(/obj/effect/fluid) in T
-		if(F)
-			tally += F.fluid_amount * 0.005
 
 	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
 		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
-
-	if(mood_additive_speed_modifier < 0 || !nullify_debuffs)
-		tally += mood_additive_speed_modifier
 
 	return (tally + config.human_delay)
 

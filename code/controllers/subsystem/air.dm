@@ -54,6 +54,8 @@ SUBSYSTEM_DEF(air)
 	var/map_init_levels = -1 // number of z-levels initialized under this type of SS.
 	var/list/queued_for_update
 
+	var/stop_airnet_processing = FALSE // todo: we really need to move pipes and machinery to own SS
+
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "\nC:{"
 	msg += "PN:[round(cost_pipenets,1)]|"
@@ -89,20 +91,22 @@ SUBSYSTEM_DEF(air)
 	var/timer = TICK_USAGE_REAL
 
 	if (currentpart == SSAIR_PIPENETS || !resumed)
-		process_pipenets(resumed)
-		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
+		if(!stop_airnet_processing)
+			process_pipenets(resumed)
+			cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+			if(state != SS_RUNNING)
+				return
+			resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY
 
 	if(currentpart == SSAIR_ATMOSMACHINERY)
-		timer = TICK_USAGE_REAL
-		process_atmos_machinery(resumed)
-		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
+		if(!stop_airnet_processing)
+			timer = TICK_USAGE_REAL
+			process_atmos_machinery(resumed)
+			cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+			if(state != SS_RUNNING)
+				return
+			resumed = 0
 		currentpart = SSAIR_TILES_CUR
 
 	// defer updating of self-zone-blocked turfs until after all other turfs have been updated.
@@ -180,7 +184,7 @@ SUBSYSTEM_DEF(air)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(!QDELETED(thing))
-			thing.process()
+			thing.process(wait * 0.1)
 		else
 			networks -= thing
 		if (MC_TICK_CHECK)
@@ -271,7 +275,7 @@ SUBSYSTEM_DEF(air)
 	while (currentrun.len)
 		var/obj/fire/F = currentrun[currentrun.len]
 		currentrun.len--
-		F.process()
+		F.process(wait * 0.1)
 		if (MC_TICK_CHECK)
 			return
 

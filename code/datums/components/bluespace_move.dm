@@ -14,7 +14,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.entry = entry
-	RegisterSignal(entry, list(COMSIG_PARENT_QDELETING), .proc/clear_entry)
+	RegisterSignal(entry, list(COMSIG_PARENT_QDELETING), PROC_REF(clear_entry))
 
 	var/atom/movable/AM = parent
 	src.prev_invisibility = prev_invisibility
@@ -25,14 +25,14 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		M.see_invisible = INVISIBILITY_LEVEL_TWO
-		RegisterSignal(M, list(COMSIG_MOB_CLICK), .proc/on_click)
+		RegisterSignal(M, list(COMSIG_MOB_CLICK), PROC_REF(on_click))
 
 	AM.alpha = 204
 
 	ADD_TRAIT(AM, TRAIT_BLUESPACE_MOVING, BLUESPACE_MOVE_COMPONENT_TRAIT)
 
-	RegisterSignal(AM, COMSIG_CLIENTMOB_MOVE, .proc/on_move_intent)
-	RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/on_movement)
+	RegisterSignal(AM, COMSIG_CLIENTMOB_MOVE, PROC_REF(on_move_intent))
+	RegisterSignal(AM, COMSIG_MOVABLE_MOVED, PROC_REF(on_movement))
 
 /datum/component/bluespace_move/Destroy()
 	// What happens if while in the bleuspace corridor subject turns invis? What about modvals, guys?
@@ -127,4 +127,4 @@
 	var/obj/structure/bluespace_corridor/BC = locate() in clicker.loc
 	if(!BC)
 		return
-	INVOKE_ASYNC(BC, /obj/structure/bluespace_corridor.proc/animate_obstacle)
+	INVOKE_ASYNC(BC, TYPE_PROC_REF(/obj/structure/bluespace_corridor, animate_obstacle))

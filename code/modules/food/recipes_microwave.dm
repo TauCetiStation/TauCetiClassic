@@ -755,6 +755,30 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sashimi
 
+/datum/recipe/microwave/julma_tulkrash
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/julma_tulkrash
+
+/datum/recipe/microwave/ajurahma
+	reagents = list("water" = 10, "sugar" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/adjurahma
+
+/datum/recipe/microwave/fushstvessina
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meatball,
+		/obj/item/weapon/reagent_containers/food/snacks/meatball,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/soup/fushstvessina
+
 //////////////////////////////////////////
 // bs12 food port stuff
 //////////////////////////////////////////

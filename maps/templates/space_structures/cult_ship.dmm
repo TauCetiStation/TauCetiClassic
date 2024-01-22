@@ -230,7 +230,7 @@
 "tJ" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/gun/projectile/automatic/glock/spec,
+/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec,
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "uJ" = (
@@ -348,7 +348,9 @@
 	},
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/door_assembly/door_assembly_hatch,
+/obj/structure/door_assembly/door_assembly_hatch{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/space_structures/cult_ship)
 "Af" = (

@@ -287,7 +287,8 @@ var/global/const/INGEST = 2
 						feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
 						add_reagent(C.result, C.result_amount*multiplier)
-						set_data(C.result, preserved_data)
+						if(preserved_data)
+							set_data(C.result, preserved_data)
 
 						//add secondary products
 						for(var/S in C.secondary_results)
@@ -371,34 +372,34 @@ var/global/const/INGEST = 2
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_mob, A, TOUCH, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_mob), A, TOUCH, R.volume+volume_modifier)
 				if(isturf(A))
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_turf, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_turf), A, R.volume+volume_modifier)
 				if(isobj(A))
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_obj), A, R.volume+volume_modifier)
 		if(INGEST)
 			for(var/datum/reagent/R in reagent_list)
 				if(ismob(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_mob, A, INGEST, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_mob), A, INGEST, R.volume+volume_modifier)
 				if(isturf(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_turf, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_turf), A, R.volume+volume_modifier)
 				if(isobj(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_obj), A, R.volume+volume_modifier)
 	return
 
 // adds new reagent by ID, mix it with those already present if needed
@@ -511,7 +512,7 @@ var/global/const/INGEST = 2
 /datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)
-		if (res != "") res += ","
+		if (res != "") res += ", "
 		res += A.name
 
 	return res
@@ -621,8 +622,8 @@ var/global/const/INGEST = 2
 
 	if(!isnull(user))
 		var/turf/T = get_turf(target)
-		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location [COORD(T)] [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] splashed [get_reagents()] on [target], location [COORD(T)]")
+		message_admins("[key_name_admin(user)] splashed ([splash.get_reagents()]) on [target], location [COORD(T)] [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [splash.get_reagents()] on [target], location [COORD(T)]")
 
 		if(ismob(target))
 			var/mob/living/L = target

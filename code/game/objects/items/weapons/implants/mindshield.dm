@@ -35,6 +35,7 @@
 /obj/item/weapon/implant/mind_protect/mindshield
 	name = "mindshield implant"
 	desc = "Protects against brainwashing."
+	implant_trait = TRAIT_VISUAL_MINDSHIELD
 
 /obj/item/weapon/implant/mind_protect/mindshield/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -51,6 +52,7 @@
 /obj/item/weapon/implant/mind_protect/loyalty
 	name = "loyalty implant"
 	desc = "Makes you loyal or such."
+	implant_trait = TRAIT_VISUAL_LOYAL
 
 /obj/item/weapon/implant/mind_protect/loyalty/inject(mob/living/carbon/C, def_zone)
 	. = ..()
@@ -75,7 +77,7 @@
 	if(.)
 		if(M.mind)
 			var/cleared_role = FALSE
-			var/list/remove_roles = list(TRAITOR, NUKE_OP, NUKE_OP_LEADER, HEADREV, GANGSTER_LEADER)
+			var/list/remove_roles = list(TRAITOR, NUKE_OP, NUKE_OP_LEADER, HEADREV, GANGSTER_LEADER, IMPOSTER)
 			for(var/role in remove_roles)
 				var/datum/role/R = M.mind.GetRole(role)
 				if(!R)
@@ -90,7 +92,6 @@
 		for(var/obj/item/weapon/implant/skill/S in M)
 			if(S.implanted)
 				S.meltdown()
-
 		START_PROCESSING(SSobj, src)
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
 
@@ -104,10 +105,10 @@
 	if(prob(1) && prob(25))//1/400
 		switch(rand(1, 4))
 			if(1)
-				to_chat(imp_in, "\italic You [pick("are sure", "think")] that NanoTrasen - is the best corporation in the whole Universe!")
+				to_chat(imp_in, "\italic Вы [pick("уверены", "считаете", "убеждены")], что НаноТрейзен - лучшая корпорация во всей Вселенной!")
 			if(2)
-				to_chat(imp_in, "\italic You [pick("are sure", "think")] that Captain is the greatest man who ever lived!")
+				to_chat(imp_in, "\italic Вы [pick("уверены", "считаете", "убеждены")], что Капитан - величайший человек, который когда-либо жил!")
 			if(3)
-				to_chat(imp_in, "\italic You want to give your life away in the name of NanoTrasen!")
+				to_chat(imp_in, "\italic Вы готовы отдать свою жизнь во славу НаноТрейзен!")
 			if(4)
-				to_chat(imp_in, "\italic You are confident that all what Heads of station do - is for a greater good!")
+				to_chat(imp_in, "\italic Вы уверены в том, что все действия НаноТрейзен приведут к всеобщему благу!")

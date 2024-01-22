@@ -24,6 +24,7 @@
 	status_flags = CANPARALYSE|CANPUSH
 	var/heal_rate = 1
 	var/plasma_rate = 5
+	var/acid_type = /obj/effect/alien/acid
 
 	var/heat_protection = 0.5
 	var/leaping = 0

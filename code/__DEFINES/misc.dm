@@ -3,6 +3,9 @@
 //gets all subtypes of type
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
+// gets final path from /obj/random, ignores item spawn nothing chance
+#define PATH_OR_RANDOM_PATH(path) (ispath(path, /obj/random) ? random2path(path) : path)
+
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
@@ -194,7 +197,7 @@
 
 // (Bay12 = -2), but we don't have that projectile code, so...
 #define PROJECTILE_FORCE_MISS -1
-#define PROJECTILE_ACTED 0 // it means that something else has took control of bullet_act() proc and it didn't run till the end.
+#define PROJECTILE_ACTED 0
 #define PROJECTILE_ABSORBED 2
 #define PROJECTILE_ALL_OK 3
 
@@ -316,6 +319,11 @@
 #define NOTIFY_ATTACK "attack"
 #define NOTIFY_ORBIT "orbit"
 
+#define TEST_MERGE_DEFAULT_TEXT "Loading..."
+
+#define TURF_DECALS_LIMIT 4 // max of /obj/effect/decal/turf_decal in one turf
+
+// todo: do something with this monster
 #define CAN_SMOOTH_WITH_WALLS list( \
 		/turf/unsimulated/wall, \
 		/turf/simulated/wall, \

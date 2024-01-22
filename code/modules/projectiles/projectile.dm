@@ -1,3 +1,5 @@
+// keep in mind that projectile is mutable object and should not be used to shot multiple objects at the same time
+
 /obj/item/projectile
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
@@ -10,7 +12,8 @@
 	appearance_flags = 0
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
-	var/mob/firer = null//Who shot it
+	var/mob/firer = null // who shot it, can be changed after reflecs/redirects
+	var/redirected = FALSE // if projectile was redirected and firer changed
 	var/silenced = 0	//Attack message
 	var/yo = null
 	var/xo = null
@@ -61,7 +64,7 @@
 										//  have to be recreated multiple times
 
 	var/list/proj_act_sound = null // this probably could be merged into the one below, because bullet_act is too specific, while on_impact (Bump) handles bullet_act too.
-	// ^ the one above used in bullet_act for mobs, while this one below used in on_impact() which happens after Bump() or killed by process. v
+	// ^ the one above used in bullet_act for mobs, while this one below used in on_hit() which happens after Bump() or killed by process. v
 	var/proj_impact_sound = null // originally made for big plasma ball hit sound, and its okay when both proj_act_sound and this one plays at the same time.
 
 /obj/item/projectile/atom_init()
@@ -78,6 +81,7 @@
 	for(var/obj/effect/projectile/P in tracer_list)
 		if(!P.deletes_itself)
 			qdel(P)
+	permutated.Cut()
 	tracer_list = null
 	firer = null
 	starting = null
@@ -99,7 +103,8 @@
 			return grab.affecting
 	return H
 
-/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) // why we have this and on_impact at the same time
+/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	impact_effect(effect_transform)		// generate impact effect
 	if(!isliving(target))
 		return 0
 	if(isanimal(target))
@@ -108,13 +113,10 @@
 	if(incendiary && blocked <= 100)
 		L.adjust_fire_stacks(incendiary)
 		L.IgniteMob(target)
-	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
-
-	//called when the projectile stops flying because it collided with something
-/obj/item/projectile/proc/on_impact(atom/A)
-	impact_effect(effect_transform)		// generate impact effect
 	if(proj_impact_sound)
 		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
+
+	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	return check_trajectory(target, src, pass_flags, flags)
@@ -141,6 +143,7 @@
 	current = starting_loc
 	if(new_firer)
 		firer = new_firer
+		redirected = TRUE
 
 	yo = new_y - starting_loc.y
 	xo = new_x - starting_loc.x
@@ -149,93 +152,52 @@
 /obj/item/projectile/proc/After_hit()
 	return
 
+/obj/item/projectile/proc/get_miss_modifier(mob/living/L)
+	var/distance = get_dist(starting, loc) //More distance = less damage, except for high fire power weapons.
+	var/miss_modifier = 0
+	if(distance <= 1) // cant miss almost pointblank (1 or 2 tiles between target and start)
+		return -100
+	if(damage && (distance > 7))
+		if(damage >= 50)
+			return -100 // so sniper rifle and PTR-rifle projectiles cannot miss
+		else
+			damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
+	if(istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
+		var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
+		if(daddy.target && (L in daddy.target)) //As opposed to no-delay pew pew
+			miss_modifier -= 60
+	return miss_modifier
+
+/obj/item/projectile/proc/check_miss(mob/living/L)
+	if(L.prob_miss(src))
+		L.visible_message("<span class = 'notice'>\The [src] misses [L] narrowly!</span>")
+		playsound(L.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
+		permutated.Add(L)
+		return TRUE
+	return FALSE
+
 /obj/item/projectile/Bump(atom/A, forced=0)
-	if(A == src)
-		return 0 //no
-
-	if(A == firer)
-		loc = A.loc
-		return 0 //cannot shoot yourself
-
-	if((bumped && !forced) || (A in permutated))
+	if((bumped && !forced))
 		return 0
 
-	var/forcedodge = 0 // force the projectile to pass
-	var/mob/living/M = isliving(A) ? A : null
-	var/mob/old_firer = firer
-	bumped = 1
-	if(firer && M)
-		if(!isliving(A))
-			loc = A.loc
-			return 0// nope.avi
-		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
-		var/miss_modifier = 0
-		if(damage && (distance > 7))
-			if(damage < 55)
-				damage = max(1, damage - round(damage * (((distance-6)*3)/100)))
-				miss_modifier = - 100 // so sniper rifle and PTR-rifle projectiles cannot miss
-		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
-			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
-			if (daddy.target && (original in daddy.target)) //As opposed to no-delay pew pew
-				miss_modifier -= 60
-		if(distance > 1)
-			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
-
-		if(!def_zone)
-			forcedodge = PROJECTILE_FORCE_MISS
-
-	if(!forcedodge)
-		if(M && ishuman(M))
-			M = check_living_shield(A)
-			A = M
-
-		forcedodge = A.bullet_act(src, def_zone) // searches for return value
+	var/turf/A_loc = isturf(A) ?  A : A.loc
+	bumped = TRUE
+	var/forcedodge = A.bullet_act(src, def_zone) // try to shot something
 
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
-		if(M)
-			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
-			playsound(M.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
-
-		if(istype(A, /turf))
-			loc = A
-		else
-			loc = A.loc
+		forceMove(A_loc)
 		bumped = FALSE // reset bumped variable!
 		permutated.Add(A)
 
 		return FALSE
 
-	else if(M)
-		if(silenced)
-			to_chat(M, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-		else if(!fake)
-			M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
-			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-		if(old_firer)
-			M.log_combat(old_firer, "shot with <b>[type]</b>", alert_admins = !fake)
-		else
-			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-			if(!fake)
-				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src]", M) //BS12 EDIT ALG
-
-
-	if(istype(A,/turf))
-		for(var/mob/Mob in A)
-			Mob.bullet_act(src, def_zone)
-
-	//stop flying
-	on_impact(A)
-
-	density = FALSE
-	invisibility = 101
 	qdel(src)
-	return 1
-
+	return TRUE
 
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/item/projectile) && (reverse_dir[dir] & mover.dir))
 		return prob(95)
-	return 1
+	return TRUE
 
 
 /obj/item/projectile/process(boolet_number = 1) // we add default arg value, because there is alot of uses of projectiles without guns (e.g turrets).
@@ -249,7 +211,7 @@
 			stoplag(1)
 			continue
 		if(kill_count-- < 1)
-			on_impact(src.loc) //for any final impact behaviours
+			bullet_act(src) //for any final impact behaviours
 			qdel(src)
 			return
 		if((!( current ) || loc == current))
@@ -268,17 +230,6 @@
 		Move(location.return_turf())
 		if(QDELING(src))
 			return
-
-		if(!bumped && !isturf(original))
-			if(loc == get_turf(original))
-				if(isturf(original.loc))
-					if(!(original in permutated))
-						if(Bump(original))
-							return
-				else//if target is in mecha/crate/MULE/etc
-					if(!(original.loc in permutated))
-						if(Bump(original.loc))
-							return
 
 		if(first_step)
 			if(boolet_number == 1) // so that it won't spam with muzzle effects incase of multiple pellets.
@@ -377,25 +328,11 @@
 	var/target = null
 	var/atom/result = null //To pass the bumped atom back to the gun.
 
+/obj/item/projectile/test/check_miss(mob/living/L)
+	return FALSE
+
 /obj/item/projectile/test/Bump(atom/A)
-	if(A == firer)
-		loc = A.loc
-		return //cannot shoot yourself
 	if(istype(A, /obj/item/projectile))
-		return
-	if(isliving(A))
-		result = A
-		bumped = TRUE
-		return
-	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window/thin))
-		return
-	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window/fulltile))
-		var/obj/structure/window/fulltile/FTW = A
-		if(!FTW.grilled)
-			return
-		else if(checkpass(PASSGRILLE))
-			return
-	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
 	result = A
 	bumped = TRUE
@@ -430,12 +367,6 @@
 			return 0
 
 		Move(location.return_turf())
-
-		if(!bumped && !isturf(original) && loc == get_turf(original))
-			if(isturf(original.loc))
-				Bump(original)
-			else
-				Bump(original.loc) //if target is in mecha/crate/MULE/etc
 
 /obj/item/projectile/proc/Range() ///tg/
 	return

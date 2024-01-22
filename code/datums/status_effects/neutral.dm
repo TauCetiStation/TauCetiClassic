@@ -26,7 +26,7 @@
 
 /atom/movable/screen/alert/status_effect/array_turn_back/proc/remember(mob/living/simple_animal/hostile/replicator/R)
 	remembered = R
-	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGIN, COMSIG_PARENT_QDELETING), .proc/forget)
+	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGIN, COMSIG_PARENT_QDELETING), PROC_REF(forget))
 
 /atom/movable/screen/alert/status_effect/array_turn_back/proc/forget(datum/source)
 	var/mob/living/simple_animal/hostile/replicator/R = mob_viewer

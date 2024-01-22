@@ -280,7 +280,7 @@
 		var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in IO
 		if(C)
 			if(nutrition < (C.maxcharge*0.1))
-				msg += "His indicator of charge blinks red.\n"
+				msg += "[t_His] indicator of charge blinks red.\n"
 		else
 			msg += "[t_He] has no battery!\n"
 
@@ -462,7 +462,7 @@
 
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(C.isabsorbing)
+		if(HAS_TRAIT_FROM(src, TRAIT_CHANGELING_ABSORBING, GENERIC_TRAIT))
 			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
 		if(species.name == ABOMINATION)
 			if(C.absorbed_dna.len)
@@ -574,11 +574,6 @@
 	//someone here, but who?
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species && H.species.name != ABDUCTOR)
-			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
-				if(V.stealth_active)
-					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
-					return
 		if(H.isimplantedblueshield() && mind && (mind.assigned_role in protected_by_blueshield_list))
 			for(var/obj/item/weapon/implant/blueshield/B in H)
 				B.last_examined = world.time

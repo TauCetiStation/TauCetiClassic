@@ -34,8 +34,8 @@
 	return 0
 
 /datum/aspect/proc/register_holy_turf(turf/simulated/floor/F, datum/religion/R)
-	RegisterSignal(F, list(COMSIG_ATOM_ENTERED), .proc/holy_turf_enter)
-	RegisterSignal(F, list(COMSIG_ATOM_EXITED), .proc/holy_turf_exit)
+	RegisterSignal(F, list(COMSIG_ATOM_ENTERED), PROC_REF(holy_turf_enter))
+	RegisterSignal(F, list(COMSIG_ATOM_EXITED), PROC_REF(holy_turf_exit))
 
 /datum/aspect/proc/holy_turf_enter(datum/source, atom/movable/mover, atom/oldLoc)
 	LAZYADD(affecting, mover)
@@ -254,7 +254,7 @@
 
 /datum/aspect/wacky/holy_turf_enter(datum/source, atom/movable/mover, atom/oldLoc)
 	..()
-	RegisterSignal(mover, list(COMSIG_MOB_SLIP), .proc/on_slip)
+	RegisterSignal(mover, list(COMSIG_MOB_SLIP), PROC_REF(on_slip))
 
 /datum/aspect/wacky/proc/on_slip(datum/source, weaken_duration, obj/slipped_on, lube)
 	var/mob/M = source
@@ -278,7 +278,7 @@
 
 /datum/aspect/lightbending/register_holy_turf(turf/simulated/floor/F, datum/religion/R)
 	..()
-	RegisterSignal(F.lighting_object, list(COMSIG_LIGHT_UPDATE_OBJECT), .proc/recalc_favor_gain)
+	RegisterSignal(F.lighting_object, list(COMSIG_LIGHT_UPDATE_OBJECT), PROC_REF(recalc_favor_gain))
 	recalc_favor_gain(F.lighting_object, F)
 
 /datum/aspect/lightbending/unregister_holy_turf(turf/simulated/floor/F, datum/religion/R)

@@ -38,15 +38,15 @@ var/global/const/AUTOLATHE_WIRE_DISABLE = 4
 		if(AUTOLATHE_WIRE_HACK)
 			A.hacked = !A.hacked
 			A.update_static_data(usr)
-			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 50)
+			addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 50)
 
 		if(AUTOLATHE_WIRE_SHOCK)
 			A.shocked = !A.shocked
-			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 50)
+			addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 50)
 
 		if(AUTOLATHE_WIRE_DISABLE)
 			A.disabled = !A.disabled
-			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 50)
+			addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 50)
 
 /datum/wires/autolathe/proc/pulse_reaction(index)
 	var/obj/machinery/autolathe/A = holder

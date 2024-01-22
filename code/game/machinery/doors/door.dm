@@ -9,24 +9,30 @@ var/global/list/wedge_image_cache = list()
 	opacity = 1
 	density = TRUE
 	can_block_air = TRUE
+
 	layer = DOOR_LAYER
+	var/base_layer = DOOR_LAYER
+	var/layer_delta = DOOR_CLOSED_MOD
+
 	power_channel = STATIC_ENVIRON
 	hud_possible = list(DIAG_AIRLOCK_HUD)
-	var/base_layer = DOOR_LAYER
 	var/icon_state_open  = "door0"
 	var/icon_state_close = "door1"
 
 	var/secondsElectrified = 0
-	var/visible = 1
 	var/p_open = 0
 	var/operating = 0
 	var/autoclose = 0
-	var/glass = 0
+	var/glass = 0 // glass doors are transparent when closed, also does something with door materials and icon
+	var/always_transparent = FALSE // will make closed door always transpanert, regardless "glass" flag
+	var/allow_passglass = TRUE // too many strange flags, future refactoring needed
 	var/normalspeed = 1
 	var/heat_proof = 0 // For glass airlocks/opacity firedoors
 	var/air_properties_vary_with_direction = 0
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
+	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	var/unres_sides = NONE
 
 	var/door_open_sound  = 'sound/machines/airlock/toggle.ogg'
 	var/door_close_sound = 'sound/machines/airlock/toggle.ogg'
@@ -43,19 +49,19 @@ var/global/list/wedge_image_cache = list()
 /obj/machinery/door/atom_init()
 	. = ..()
 	if(density)
-		layer = base_layer + DOOR_CLOSED_MOD //Above most items if closed
-		explosion_resistance = initial(explosion_resistance)
+		layer = base_layer + layer_delta //Above most items if closed
+		explosive_resistance = initial(explosive_resistance)
 		update_heat_protection(get_turf(src))
 	else
 		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
-		explosion_resistance = 0
+		explosive_resistance = 0
 
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_electrified()
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles()
 
 
 /obj/machinery/door/Destroy()
@@ -66,44 +72,23 @@ var/global/list/wedge_image_cache = list()
 	QDEL_NULL(wedged_item)
 	return ..()
 
-//process()
-	//return
+/obj/machinery/door/Bumped(atom/movable/AM)
+	if(p_open || operating)
+		return
+	if(world.time - last_bumped <= 7)
+		return //Can bump-open one airlock per animation. This is to prevent shock spam.
+	last_bumped = world.time
 
-/obj/machinery/door/Bumped(atom/AM)
-	if(p_open || operating) return
 	if(ismob(AM))
 		var/mob/M = AM
-		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
-		M.last_bumped = world.time
 		if(!M.restrained() && M.w_class >= SIZE_SMALL)
 			bumpopen(M)
 		return
 
-	if(isbot(AM))
-		var/obj/machinery/bot/bot = AM
-		if(check_access(bot.botcard) || emergency)
-			if(density)
-				open()
-		return
-
-	if(istype(AM, /obj/mecha))
-		var/obj/mecha/mecha = AM
-		if(density)
-			if(mecha.occupant && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)) || emergency)
-				open()
-			else
-				do_animate("deny")
-		return
-
-	if(istype(AM, /obj/structure/stool/bed/chair/wheelchair))
-		var/obj/structure/stool/bed/chair/wheelchair/wheel = AM
-		if(density)
-			if((wheel.pulling && allowed(wheel.pulling)) || emergency)
-				open()
-			else
-				do_animate("deny")
-		return
-	return
+	if(AM.w_class < SIZE_NORMAL) //Big item tries to open a door anyways
+		if(!length(AM.GetAccess()) || check_access(null)) //Door that requires access and we have a card
+			return
+	try_open(AM)
 
 /obj/machinery/door/AltClick(mob/user)
 	if(user.incapacitated())
@@ -145,7 +130,7 @@ var/global/list/wedge_image_cache = list()
 	return ..()
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && allow_passglass && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
 
@@ -156,33 +141,35 @@ var/global/list/wedge_image_cache = list()
 		return
 	try_open(user)
 
-/obj/machinery/door/proc/try_open(mob/user, obj/item/tool = null)
+/obj/machinery/door/proc/try_open(atom/movable/AM, obj/item/tool = null)
 	if(operating)
 		return
 
-	add_fingerprint(user)
+	if(ismob(AM))
+		var/mob/user = AM
+		add_fingerprint(user)
 
-	if(ishuman(user) && prob(40) && density)
-		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
-			var/armor_block = H.run_armor_check(BP_HEAD, "melee")
-			if(armor_block)
-				visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
-			else
-				visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
-			if(H.apply_damage(10, BRUTE, BP_HEAD, armor_block))
-				H.Stun(2)
-				H.Weaken(5)
-			return
+		if(ishuman(user) && prob(40) && density)
+			var/mob/living/carbon/human/H = user
+			if(H.getBrainLoss() >= 60)
+				playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
+				var/armor_block = H.run_armor_check(BP_HEAD, "melee")
+				if(armor_block)
+					visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
+				else
+					visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+				if(H.apply_damage(10, BRUTE, BP_HEAD, armor_block))
+					H.Stun(2)
+					H.Weaken(5)
+				return
 
-	user.SetNextMove(CLICK_CD_INTERACT)
-	var/atom/check_access = user
+		user.SetNextMove(CLICK_CD_INTERACT)
 
-	if(!requiresID())
-		check_access = null
+	if(!requiresID() && !check_access(null))
+		do_animate("deny")
+		return
 
-	if(allowed(check_access) || emergency)
+	if(allowed(AM))
 		if(density)
 			open()
 		else
@@ -191,6 +178,16 @@ var/global/list/wedge_image_cache = list()
 
 	if(density)
 		do_animate("deny")
+
+/obj/machinery/door/allowed(atom/movable/M)
+	if(emergency)
+		return TRUE
+	if(unrestricted_side(M))
+		return TRUE
+	return ..()
+
+/obj/machinery/door/proc/unrestricted_side(atom/opener) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	return get_dir(src, opener) & unres_sides
 
 /obj/machinery/door/attack_hand(mob/user)
 	if(user.a_intent == INTENT_GRAB && wedged_item && !user.get_active_hand())
@@ -372,7 +369,7 @@ var/global/list/wedge_image_cache = list()
 				density = TRUE
 				wedging = TRUE
 
-				INVOKE_ASYNC(src, .proc/crush_wedge_animation, I)
+				INVOKE_ASYNC(src, PROC_REF(crush_wedge_animation), I)
 				return
 
 	if(close_checks(forced))
@@ -436,7 +433,7 @@ var/global/list/wedge_image_cache = list()
 	I.forceMove(src)
 	wedged_item = I
 	update_icon()
-	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), .proc/on_wedge_destroy)
+	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), PROC_REF(on_wedge_destroy))
 
 /obj/machinery/door/proc/try_wedge_item(mob/living/user)
 	if(!can_wedge_items)
@@ -524,20 +521,20 @@ var/global/list/wedge_image_cache = list()
 	density = FALSE
 	sleep(4)
 	layer = base_layer
-	explosion_resistance = 0
+	explosive_resistance = 0
 	update_icon()
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/do_close()
+	layer = base_layer + layer_delta
 	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
 	sleep(2)
 	density = TRUE
 	sleep(4)
-	if(visible && !glass)
+	if(!always_transparent && !glass)
 		set_opacity(TRUE)
-	layer = base_layer + DOOR_CLOSED_MOD
-	explosion_resistance = initial(explosion_resistance)
+	explosive_resistance = initial(explosive_resistance)
 	do_afterclose()
 	update_icon()
 	update_nearby_tiles()
@@ -565,7 +562,7 @@ var/global/list/wedge_image_cache = list()
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/update_nearby_tiles(need_rebuild)
+/obj/machinery/door/update_nearby_tiles()
 	. = ..()
 
 	if(.)

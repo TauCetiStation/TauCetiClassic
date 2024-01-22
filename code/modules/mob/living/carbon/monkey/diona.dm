@@ -27,7 +27,7 @@
 	universal_speak = FALSE      // before becoming an adult. Use *chirp.
 	holder_type = /obj/item/weapon/holder/diona
 	blood_datum = /datum/dirt_cover/green_blood
-
+	var/tmp/image/eyes
 	var/list/saved_quirks
 
 /mob/living/carbon/monkey/diona/podman
@@ -48,11 +48,21 @@
 
 	spawner_args = list(/datum/spawner/living/podman/fake_nymph, 2 MINUTES)
 
+/mob/living/carbon/monkey/diona/update_icons()
+	. = ..()
+	update_eyes()
+
+/mob/living/carbon/monkey/diona/proc/update_eyes()
+	cut_overlay(eyes)
+	add_overlay(eyes)
+
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
 	gender = NEUTER
 	greaterform = DIONA
 	add_language(LANGUAGE_ROOTSPEAK)
+	eyes = image(icon, "eyes_[icon_state]", layer = ABOVE_LIGHTING_LAYER)
+	eyes.plane = LIGHTING_LAMPS_PLANE
 
 /mob/living/carbon/monkey/diona/podman/atom_init()
 	. = ..()
@@ -337,7 +347,7 @@
 	for(var/datum/language/L in M.languages)
 		add_language(L.name)
 
-	addtimer(CALLBACK(src, .proc/update_progression), 25)
+	addtimer(CALLBACK(src, PROC_REF(update_progression)), 25)
 
 /mob/living/carbon/monkey/diona/proc/update_progression()
 	if(!donors.len)

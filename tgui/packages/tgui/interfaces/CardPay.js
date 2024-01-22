@@ -2,106 +2,107 @@ import { useBackend } from '../backend';
 import { Box, Button, Icon, Grid } from '../components';
 import { Window } from '../layouts';
 
+import { SegmentDisplay } from '../components/SegmentDisplay';
+
 export const CardPay = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     numbers,
     reset_numbers,
-    enter_account,
-    pay_amount,
+    mode,
   } = data;
   const buttons = [];
   for (let row = 0; row < 3; row++) {
     for (let col = 1; col < 4; col++) {
       buttons.push(<Button
-        pl={2.4}
-        m={0.375}
-        lineHeight={1.5}
-        height={4}
-        width={4}
-        fontSize={2.57}
-        content={row * 3 + col}
+        className="cardpay_button cardpay_button--normal"
+        content={<Box className="cardpay_button-inside cardpay_button-inside--normal">{row * 3 + col}</Box>}
         onClick={() => act("pressnumber", { number: row * 3 + col })}
       />);
     }
   }
+
+  const getText = () => {
+    let result_text = "";
+    let numtext = numbers.toString();
+    switch (mode) {
+      case 'Mode_EnterPin':
+        result_text += "PIN:" + (numbers ? numtext: "-");
+        for (let excess = 1; excess <= 4 - numtext.length; excess++) {
+          result_text += "-";
+        }
+        break;
+      case 'Mode_Account':
+        result_text += "N°" + (numbers ? numtext : "-");
+        for (let excess = 1; excess <= 6 - numtext.length; excess++) {
+          result_text += "-";
+        }
+        break;
+      case 'Mode_Pay':
+        result_text += "N°" + (numbers ? numtext : "-");
+        for (let excess = 1; excess <= 6 - numtext.length; excess++) {
+          result_text += "-";
+        }
+        break;
+      case 'Mode_Idle':
+        for (let excess = 1; excess <= 3 - numtext.length; excess++) {
+          result_text += "-";
+        }
+        result_text += (numbers ? numtext : "-") + "$";
+        break;
+    }
+    return result_text;
+  };
+
   return (
-    <Window
-      width={170}
-      height={330}>
-      <Window.Content>
+    <Window theme=""
+      width={220}
+      height={340}
+      titleClassName="cardpay_window-titlebar">
+      <Window.Content className="cardpay_window-contents">
         <Box
-          fluid
-          backgroundColor="#191919"
-          textColor="#66AADD"
-          textAlign="center"
-          fontSize={2}
-          m={0.375}
-          mb={0.5}
+          className="cardpay_monitor"
         >
-          {(enter_account || pay_amount > 0) ? "#"+(numbers ? numbers : "------") : (numbers ? numbers : "---")+"$"}
+          <SegmentDisplay display_cells_amount={8} display_height={40} display_text={getText()} />
         </Box>
-        {buttons}
-        <Button
-          height={4}
-          width={4}
-          lineHeight={1.55}
-          pl={2}
-          m={0.375}
-          fontSize={2.5}
-          content={"X"}
-          color={"red"}
-          textColor={"darkred"}
-          bold={1}
-          onClick={() => act("clearnumbers")}
-        />
-        <Button
-          lineHeight={1.55}
-          pl={2.4}
-          m={0.375}
-          height={4}
-          width={4}
-          fontSize={2.5}
-          content={0}
-          onClick={() => act("pressnumber", { number: 0 })}
-        />
-        <Button
-          lineHeight={1.55}
-          pl={2}
-          m={0.375}
-          height={4}
-          width={4}
-          fontSize={2.5}
-          content={"O"}
-          color={"green"}
-          textColor={"darkgreen"}
-          bold={1}
-          onClick={() => act("approveprice")}
-        />
+        <Box width="158px" height="208px" position="absolute" left="32px" top="95px">
+          {buttons}
+          <Button
+            className="cardpay_button cardpay_button--red"
+            content={<Box className="cardpay_button-inside cardpay_button-inside--red">{"X"}</Box>}
+            onClick={() => act("clearnumbers")}
+          />
+          <Button
+            className="cardpay_button cardpay_button--normal"
+            content={<Box className="cardpay_button-inside cardpay_button-inside--normal">{0}</Box>}
+            onClick={() => act("pressnumber", { number: 0 })}
+          />
+          <Button
+            className="cardpay_button cardpay_button--green"
+            content={<Box className="cardpay_button-inside cardpay_button-inside--green">{"O"}</Box>}
+            onClick={() => act("approveprice")}
+          />
+        </Box>
+        <Box position="absolute" top="62px" left="25px" textColor="#333344" fontSize={0.85} bold={1}>
+          сброс
+          <Button
+            position="absolute"
+            top="15px"
+            left="10px"
+            className="cardpay_resethole"
+            onClick={() => act("toggleenteraccount")}
+          />
+        </Box>
         <Button
           selected={reset_numbers ? 1 : 0}
-          textAlign="center"
-          pl={4}
-          m={0.3}
-          width={6.25}
-          fontSize={2}
-          color={"grey"}
-          content={<Icon name="retweet" />}
+          position="absolute"
+          top="60px"
+          left="140px"
+          className="cardpay_switch"
+          content={<Box className="cardpay_switch-inside">|||</Box>}
           onClick={() => act("togglereset")}
-        />
-        <Button
-          selected={enter_account ? 1 : 0}
-          textAlign="center"
-          pl={4}
-          m={0.3}
-          width={6.25}
-          fontSize={2}
-          color={"grey"}
-          content={<Icon name="id-badge" />}
-          onClick={() => act("toggleenteraccount")}
         />
       </Window.Content>
     </Window>
   );
 };
-

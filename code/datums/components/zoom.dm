@@ -1,12 +1,12 @@
 /datum/action/zoom
 	name = "Toggle Zoom"
 	action_type = AB_INNATE
-	check_flags = AB_CHECK_INCAPACITATED | AB_CHECK_LYING | AB_CHECK_INSIDE | AB_CHECK_ACTIVE
+	check_flags = AB_CHECK_INCAPACITATED | AB_CHECK_INSIDE | AB_CHECK_ACTIVE
 	button_icon_state = "zoom"
 
 /datum/action/zoom/Activate()
 	SEND_SIGNAL(target, COMSIG_ZOOM_TOGGLE, owner)
-	
+
 /datum/component/zoom
 	var/zoom_view_range
 	var/can_move
@@ -16,13 +16,13 @@
 /datum/component/zoom/Initialize(_zoom_view_range, _can_move = FALSE)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	zoom_view_range = _zoom_view_range
 	can_move = _can_move
-	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), .proc/on_equip)
-	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/on_drop)
-	RegisterSignal(parent, list(COMSIG_ZOOM_TOGGLE), .proc/toggle_zoom)
-	RegisterSignal(parent, list(COMSIG_ITEM_BECOME_INACTIVE, COMSIG_PARENT_QDELETING), .proc/reset_zoom)
+	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), PROC_REF(on_equip))
+	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), PROC_REF(on_drop))
+	RegisterSignal(parent, list(COMSIG_ZOOM_TOGGLE), PROC_REF(toggle_zoom))
+	RegisterSignal(parent, list(COMSIG_ITEM_BECOME_INACTIVE, COMSIG_PARENT_QDELETING), PROC_REF(reset_zoom))
 	button = new(parent)
 
 /datum/component/zoom/Destroy()
@@ -57,7 +57,7 @@
 	else
 		reset_zoom()
 	to_chat(user, "<font color='[zoomer ? "notice" : "rose"]'>Zoom mode [zoomer ? "en" : "dis"]abled.</font>")
-	
+
 /datum/component/zoom/proc/reset_zoom()
 	SIGNAL_HANDLER
 	if(!zoomer)
@@ -74,6 +74,6 @@
 	zoomer = user
 	zoomer.hud_used?.show_hud(HUD_STYLE_REDUCED)
 	zoomer.client?.change_view(zoom_view_range)
-	RegisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), .proc/reset_zoom)
+	RegisterSignal(zoomer, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), PROC_REF(reset_zoom))
 	if(!can_move)
-		RegisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED), .proc/reset_zoom)
+		RegisterSignal(zoomer, list(COMSIG_MOVABLE_MOVED), PROC_REF(reset_zoom))

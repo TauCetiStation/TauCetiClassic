@@ -12,7 +12,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	// Register signals for mob transformation to prevent premature halo removal
-	RegisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_MONKEY_HUMANIZE, COMSIG_HUMAN_MONKEYIZE), .proc/set_halo)
+	RegisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_MONKEY_HUMANIZE, COMSIG_HUMAN_MONKEYIZE), PROC_REF(set_halo))
 	set_halo(target)
 
 /**
@@ -21,7 +21,6 @@
  * Adds the cult halo overlays, and adds the halo trait to the mob.
  */
 /datum/element/cult_halo/proc/set_halo(mob/living/target)
-	SIGNAL_HANDLER
 	if(!HAS_TRAIT(target, TRAIT_CULT_HALO))
 		ADD_TRAIT(target, TRAIT_CULT_HALO, RELIGION_TRAIT)
 	var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', "halo[rand(1, 6)]", EXTERNAL_APPEARANCE)
@@ -32,6 +31,10 @@
 		human_parent.apply_standing_overlay(EXTERNAL_APPEARANCE)
 	else
 		target.add_overlay(new_halo_overlay)
+
+/datum/element/cult_halo/proc/reset_halo(mob/living/target, mob/living/new_mob)
+	SIGNAL_HANDLER
+	set_halo(new_mob)
 
 /**
  * Detach proc

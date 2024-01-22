@@ -1,0 +1,1920 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aE" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "synd3,3"
+	},
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"bq" = (
+/obj/effect/landmark/corpse/syndicatesoldier{
+	corpsehelmet = /obj/item/clothing/head/helmet;
+	corpsegloves = /obj/item/clothing/gloves/black;
+	corpseshoes = /obj/item/clothing/shoes/boots
+	},
+/turf/simulated/floor{
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"by" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray_w"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"bC" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"ci" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/food/drinks/coffee,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"ck" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "blackcorner"
+	},
+/area/space_structures/flagship)
+"cw" = (
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"cE" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"cM" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"cN" = (
+/turf/simulated/floor/plating,
+/area/space_structures/flagship)
+"cZ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
+	},
+/area/space_structures/flagship)
+"du" = (
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/flagship)
+"dP" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"eF" = (
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"fo" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "synd1,1"
+	},
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"fq" = (
+/obj/structure/object_wall/standart{
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/flagship)
+"gl" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/bluegrid{
+	icon_state = "rcircuit"
+	},
+/area/space_structures/flagship)
+"gy" = (
+/obj/structure/dispenser/oxygen,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"gD" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray_e"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"gE" = (
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"hp" = (
+/obj/machinery/optable,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/flagship)
+"hK" = (
+/obj/machinery/door/airlock/highsecurity{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"im" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"ix" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkbrown"
+	},
+/area/space_structures/flagship)
+"iH" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor{
+	icon_state = "cult"
+	},
+/area/space_structures/flagship)
+"jL" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_y = 4
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/flagship)
+"kc" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"kt" = (
+/obj/structure/table/reinforced,
+/obj/item/clothing/head/beret/black,
+/obj/item/weapon/stamp/syndicate{
+	pixel_y = 10;
+	pixel_x = 9
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"kP" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"ll" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/flagship)
+"ln" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/flagship)
+"lE" = (
+/obj/structure/computerframe{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/flagship)
+"lJ" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"lM" = (
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"mj" = (
+/turf/simulated/floor{
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"ml" = (
+/obj/machinery/door/airlock/highsecurity,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"mE" = (
+/obj/machinery/light{
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkbluecorners"
+	},
+/area/space_structures/flagship)
+"nq" = (
+/obj/effect/decal/mecha_wreckage/mauler,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"nu" = (
+/obj/item/device/megaphone,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"nV" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_r"
+	},
+/turf/environment/space,
+/area/space_structures/flagship)
+"nX" = (
+/obj/effect/spawner/mob_spawn/drone,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"og" = (
+/obj/structure/rack,
+/obj/item/weapon/tank/jetpack/carbondioxide{
+	pixel_x = 4
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"pn" = (
+/obj/structure/stool/bed/chair/office/dark,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"pU" = (
+/obj/structure/rack,
+/turf/simulated/floor{
+	icon_state = "cult"
+	},
+/area/space_structures/flagship)
+"pZ" = (
+/obj/structure/mirror{
+	pixel_y = 32
+	},
+/obj/structure/sink{
+	pixel_y = 24
+	},
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/space_structures/flagship)
+"qt" = (
+/obj/structure/computerframe,
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"qv" = (
+/obj/structure/rack,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/structure/window/thin/reinforced,
+/obj/item/weapon/gun/projectile/automatic/pistol/wjpp,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"qw" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"qQ" = (
+/obj/structure/computerframe,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkbluecorners"
+	},
+/area/space_structures/flagship)
+"qS" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/syndicake,
+/obj/item/weapon/book/manual/nuclear{
+	pixel_y = -2;
+	pixel_x = 9
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"rl" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"sa" = (
+/obj/machinery/power/port_gen/riteg,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"sc" = (
+/turf/simulated/floor{
+	icon_state = "darkbluefull"
+	},
+/area/space_structures/flagship)
+"sw" = (
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/flagship)
+"sN" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray_we"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"tQ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/flagship)
+"ui" = (
+/obj/item/weapon/shard,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/flagship)
+"uv" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/phoron{
+	amount = 5;
+	layer = 2.9
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"uy" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/simulated/floor{
+	icon_state = "cult"
+	},
+/area/space_structures/flagship)
+"uZ" = (
+/obj/item/weapon/storage/firstaid/adv{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = 10
+	},
+/obj/item/stack/nanopaste{
+	pixel_x = -9;
+	pixel_y = 14
+	},
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitebluecorner"
+	},
+/area/space_structures/flagship)
+"vi" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"vE" = (
+/obj/machinery/door/airlock/highsecurity,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"wa" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/flagship)
+"wi" = (
+/obj/structure/computerframe{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"wX" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
+/area/space_structures/flagship)
+"xo" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "synd1,2"
+	},
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"xp" = (
+/turf/simulated/floor{
+	icon_state = "darkpurple";
+	dir = 1
+	},
+/area/space_structures/flagship)
+"xE" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/obj/effect/landmark/corpse/syndicatesoldier{
+	corpsehelmet = /obj/item/clothing/head/helmet;
+	corpsegloves = /obj/item/clothing/gloves/black;
+	corpseshoes = /obj/item/clothing/shoes/boots
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"xR" = (
+/obj/structure/table,
+/obj/item/ammo_box/magazine/stechkin{
+	pixel_x = 9
+	},
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/obj/item/ammo_box/magazine/wjpp{
+	pixel_x = -4
+	},
+/turf/simulated/floor{
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"yl" = (
+/turf/simulated/floor{
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"zf" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkbluecorners"
+	},
+/area/space_structures/flagship)
+"zA" = (
+/obj/structure/lattice,
+/obj/structure/door_assembly/door_assembly_vault,
+/turf/environment/space,
+/area/space_structures/flagship)
+"zY" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"Aj" = (
+/obj/item/weapon/shard,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"AB" = (
+/obj/effect/spawner/mob_spawn/drone,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"Bg" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_white"
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"Bl" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"Ca" = (
+/obj/structure/computerframe,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"Cj" = (
+/turf/environment/space,
+/area/space_structures/flagship)
+"CC" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitebluecorner"
+	},
+/area/space_structures/flagship)
+"CD" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"CR" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/plasteel{
+	amount = 15
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/flagship)
+"Dk" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/flagship)
+"DD" = (
+/obj/item/weapon/shard,
+/turf/simulated/floor{
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"DJ" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"Ed" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/environment/space,
+/area/space_structures/flagship)
+"Ee" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/environment/space,
+/area/space_structures/flagship)
+"Ej" = (
+/obj/machinery/sleeper/upgraded{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitebluecorner"
+	},
+/area/space_structures/flagship)
+"Eu" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen/blue{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"EM" = (
+/obj/item/stack/sheet/plasteel,
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space_structures/flagship)
+"ET" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "box_white"
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"FN" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"FP" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/simulated/floor{
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"FT" = (
+/turf/simulated/floor{
+	icon_state = "cult"
+	},
+/area/space_structures/flagship)
+"Ga" = (
+/obj/structure/computerframe,
+/turf/simulated/floor/plating,
+/area/space_structures/flagship)
+"GD" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "synd3,1"
+	},
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"GI" = (
+/obj/structure/lattice,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy,
+/turf/environment/space,
+/area/space_structures/flagship)
+"GJ" = (
+/obj/machinery/constructable_frame/machine_frame,
+/obj/item/weapon/circuitboard/smes,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"GT" = (
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot{
+	pixel_y = -6
+	},
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"GW" = (
+/obj/effect/decal/turf_decal/set_damaged{
+	icon_state = "wood_damaged_3"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/flagship)
+"Hb" = (
+/obj/effect/landmark/corpse/syndicatesoldier{
+	corpsehelmet = /obj/item/clothing/head/helmet;
+	corpsegloves = /obj/item/clothing/gloves/black;
+	corpseshoes = /obj/item/clothing/shoes/boots
+	},
+/turf/simulated/floor{
+	icon_state = "darkyellow"
+	},
+/area/space_structures/flagship)
+"Hc" = (
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space_structures/flagship)
+"HB" = (
+/obj/effect/decal/mecha_wreckage/gygax/dark,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"HR" = (
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"Iw" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "synd1,3"
+	},
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"Jc" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "synd2,1"
+	},
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"Jv" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "synd3,2"
+	},
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"JH" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"JO" = (
+/obj/item/weapon/scalpel/manager{
+	pixel_x = -11
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/flagship)
+"JS" = (
+/turf/simulated/floor/bluegrid{
+	icon_state = "rcircuit"
+	},
+/area/space_structures/flagship)
+"Nb" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "synd2,3"
+	},
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"Nr" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/weapon/stock_parts/cell/bluespace/empty,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"Nt" = (
+/obj/structure/rack,
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/head/helmet,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"NE" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"Og" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "synd2,2"
+	},
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"OT" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "whitebluecorner"
+	},
+/area/space_structures/flagship)
+"Pp" = (
+/obj/item/weapon/rack_parts,
+/turf/simulated/floor{
+	icon_state = "cult"
+	},
+/area/space_structures/flagship)
+"PU" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"PZ" = (
+/obj/machinery/door/airlock/highsecurity{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"Qa" = (
+/obj/structure/table/reinforced,
+/obj/item/device/megaphone,
+/obj/item/weapon/disk/research_points/rare{
+	pixel_y = 9;
+	pixel_x = 9
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"Qu" = (
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"Qw" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"QG" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"QV" = (
+/obj/structure/computerframe,
+/turf/simulated/floor{
+	icon_state = "darkbluecorners"
+	},
+/area/space_structures/flagship)
+"Re" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"Rj" = (
+/obj/structure/door_assembly/door_assembly_vault,
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space_structures/flagship)
+"RP" = (
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,
+/turf/simulated/floor/plating,
+/area/space_structures/flagship)
+"RX" = (
+/turf/simulated/floor{
+	icon_state = "darkredcorners"
+	},
+/area/space_structures/flagship)
+"SK" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater1"
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/flagship)
+"SU" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkbrown"
+	},
+/area/space_structures/flagship)
+"SX" = (
+/obj/machinery/door/airlock/highsecurity{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/flagship)
+"TO" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"TP" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"Up" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 10
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"UP" = (
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/floor{
+	icon_state = "darkredfull"
+	},
+/area/space_structures/flagship)
+"Wa" = (
+/obj/structure/rack,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/item/clothing/glasses/night,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"Wm" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/space_structures/flagship)
+"Wq" = (
+/obj/effect/spawner/mob_spawn/drone,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"Wv" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/civilian,
+/obj/item/clothing/head/helmet/space/syndicate/civilian,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"Wz" = (
+/obj/effect/decal/cleanable/blood/gibs/robot,
+/turf/simulated/floor/plating,
+/area/space_structures/flagship)
+"Xg" = (
+/obj/effect/spawner/mob_spawn/drone,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"Xk" = (
+/obj/machinery/power/port_gen/pacman,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"Yu" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"Yv" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkred"
+	},
+/area/space_structures/flagship)
+"ZF" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/floor/plating,
+/area/space_structures/flagship)
+"ZL" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/flagship)
+
+(1,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+EM
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(2,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Hc
+Hc
+Hc
+Cj
+Cj
+Cj
+Cj
+Hc
+Hc
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(3,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Cj
+Hc
+Rj
+Hc
+Hc
+Cj
+Hc
+Hc
+Cj
+Hc
+Hc
+Cj
+Hc
+Hc
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(4,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Cj
+Hc
+Hc
+Hc
+Hc
+Hc
+Hc
+Hc
+EM
+Cj
+Hc
+zA
+Hc
+Hc
+Hc
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(5,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Hc
+Hc
+Hc
+GI
+Ed
+Ed
+Ed
+Ed
+Hc
+Hc
+Hc
+Hc
+Hc
+Ed
+fq
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(6,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+sw
+Ed
+Ed
+Ed
+GW
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+wX
+gl
+cN
+cN
+Ed
+Ed
+Ed
+Ed
+fq
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(7,1,1) = {"
+Cj
+Cj
+Cj
+sw
+Ed
+Ed
+Ed
+Ga
+ZF
+FT
+Ed
+Ed
+Ed
+Ed
+Ed
+cN
+JS
+JS
+lE
+Ee
+Ed
+Ed
+Ed
+Ed
+fq
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(8,1,1) = {"
+Cj
+sw
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+FT
+FT
+Ed
+FP
+Yu
+zY
+Ee
+Ed
+SX
+Ed
+ck
+Ed
+Ed
+Ed
+Ed
+Ee
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+fq
+Cj
+Cj
+"}
+(9,1,1) = {"
+sw
+Ed
+Ed
+Ee
+Ed
+Ed
+Ed
+Ed
+pU
+iH
+Ed
+yl
+Hc
+Yv
+Ed
+jL
+ln
+ln
+ll
+ml
+OT
+JO
+CC
+Ed
+og
+ET
+Ed
+Ed
+Ed
+Ed
+Ed
+fq
+Cj
+"}
+(10,1,1) = {"
+by
+QV
+bC
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+PZ
+Ed
+Qw
+FN
+cM
+ml
+Dk
+Bl
+CD
+Hb
+Ed
+pZ
+cZ
+ui
+ml
+Bl
+DJ
+Wv
+Ed
+sa
+GJ
+Xk
+Ed
+fq
+"}
+(11,1,1) = {"
+sN
+kt
+sc
+zf
+Ed
+qt
+vi
+xE
+Wm
+nu
+Ed
+GD
+Jc
+fo
+Ed
+wa
+tQ
+tQ
+CR
+Ed
+uZ
+hp
+Ej
+Ed
+Bl
+CD
+DJ
+Ed
+kP
+Bl
+yl
+SK
+nV
+"}
+(12,1,1) = {"
+sN
+Qa
+sc
+JH
+ml
+JH
+PU
+gE
+AB
+eF
+vE
+Jv
+Og
+xo
+Ed
+Ed
+im
+hK
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+HR
+Bl
+kc
+ml
+Bl
+Bl
+yl
+SK
+nV
+"}
+(13,1,1) = {"
+sN
+Eu
+sc
+mE
+Ed
+Ca
+bC
+TO
+ci
+TP
+Ed
+aE
+Nb
+Iw
+Ed
+GT
+Qu
+Wq
+QG
+Ed
+xR
+wi
+qw
+Ed
+CD
+nX
+RX
+Ed
+zY
+Bl
+rl
+SK
+nV
+"}
+(14,1,1) = {"
+gD
+qQ
+vi
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+PZ
+Ed
+Xg
+UP
+cw
+ml
+xp
+Hc
+Hc
+mj
+ml
+yl
+lM
+Re
+ml
+Bl
+RX
+gy
+Ed
+Nr
+uv
+Up
+Ed
+du
+"}
+(15,1,1) = {"
+ZL
+Ed
+Ed
+Ed
+Ed
+cN
+Ed
+Ed
+FT
+uy
+Ed
+bq
+lM
+Yv
+Ed
+HB
+nq
+cE
+NE
+Ed
+DD
+dP
+Aj
+Ed
+cM
+Bg
+Ed
+Ed
+Ed
+Ed
+Ed
+du
+Cj
+"}
+(16,1,1) = {"
+Cj
+ZL
+Ed
+Ed
+Hc
+cN
+RP
+cN
+cN
+FT
+Ed
+pn
+qS
+lJ
+Ed
+Ed
+Ed
+SX
+Ed
+Ed
+qv
+Wa
+Nt
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+du
+Cj
+Cj
+"}
+(17,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Hc
+Hc
+Hc
+Hc
+cN
+Pp
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+cN
+SU
+ix
+Ed
+Ed
+Ed
+Ed
+Ed
+du
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(18,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Hc
+Hc
+Hc
+Hc
+Hc
+Ee
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+wX
+wX
+Wz
+Ed
+Ed
+Ed
+Ed
+du
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(19,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Cj
+Hc
+Hc
+Hc
+Hc
+Ed
+Hc
+Hc
+Hc
+Hc
+Hc
+Hc
+Hc
+cN
+cN
+Ed
+du
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(20,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Hc
+Hc
+Hc
+Hc
+Cj
+Hc
+Hc
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(21,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Hc
+Hc
+Cj
+Hc
+Cj
+Cj
+Hc
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}
+(22,1,1) = {"
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Hc
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+Cj
+"}

@@ -208,3 +208,10 @@
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
 /obj/item/device/transfer_valve/proc/c_state()
 	return
+
+// todo: check /obj/item/weapon/tank/ex_act(severity), need to pass explosion to content
+/obj/item/device/transfer_valve/ex_act(severity)
+	if(tank_one && tank_one.reaction_in_progress || tank_two && tank_two.reaction_in_progress) // give it time to explode
+		return // nope, spacemans wants to explode multiple bombs at the same time
+
+	return ..()

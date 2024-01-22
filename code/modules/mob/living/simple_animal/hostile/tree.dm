@@ -43,7 +43,7 @@
 	if(.)
 		me_emote("growls at [.]")
 
-/mob/living/simple_animal/hostile/tree/AttackingTarget()
+/mob/living/simple_animal/hostile/tree/UnarmedAttack(atom/target)
 	. =..()
 	var/mob/living/L = .
 	if(istype(L))

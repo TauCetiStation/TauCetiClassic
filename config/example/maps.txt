@@ -27,6 +27,17 @@ map gamma
 	votable
 endmap
 
+map gamma_snow
+	votable
+	voteweight 0.7
+endmap
+
+map delta
+	votable
+	minplayers 70
+	voteweight 2.0
+endmap
+
 map testmap
 endmap
 
@@ -43,8 +54,4 @@ endmap
 map stroechka
 	votable
 	maxplayers 10
-endmap
-
-map delta
-	disabled
 endmap
