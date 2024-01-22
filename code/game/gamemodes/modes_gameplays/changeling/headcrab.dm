@@ -28,10 +28,6 @@
 		to_chat(S,"<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Stun(3)
 
-	// Prevents having Regenerate verb after rebirth.
-	var/datum/role/changeling/C = M.GetRoleByType(/datum/role/changeling)
-	qdel(locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers)
-
 	// In case we did it out of stasis
 	if (C.instatis)
 		C.instatis = FALSE
