@@ -11,7 +11,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_stealth
 	name = "skipjack cloaking field terminal"
-	cases = list("терминал маскировочного поля \"Skipjack\"", "терминала маскировочного поля \"Skipjack\"", "терминалу \"Skipjack\"", "терминал маскировочного поля \"Skipjack\"", "терминалом маскировочного поля \"Skipjack\"", "терминале маскировочного поля \"Skipjack\"")
+	cases = list("терминал маскировочного поля \"Скипджек\"", "терминала маскировочного поля \"Скипджек\"", "терминалу \"Скипджек\"", "терминал маскировочного поля \"Скипджек\"", "терминалом маскировочного поля \"Скипджек\"", "терминале маскировочного поля \"Скипджек\"")
 	icon = 'icons/locations/shuttles/vox_pc.dmi'
 	icon_state = "vox_invs"
 	state_broken_preset = "tcbossb"
@@ -55,7 +55,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_station
 	name = "skipjack terminal"
-	cases = list("терминал \"Skipjack\"", "терминала \"Skipjack\"", "терминалу \"Skipjack\"", "терминал \"Skipjack\"", "терминалом \"Skipjack\"", "терминале \"Skipjack\"")
+	cases = list("терминал \"Скипджек\"", "терминала \"Скипджек\"", "терминалу \"Скипджек\"", "терминал \"Скипджек\"", "терминалом \"Скипджек\"", "терминале \"Скипджек\"")
 	icon = 'icons/locations/shuttles/vox_pc.dmi'
 	icon_state = "vox_cont"
 	state_broken_preset = "tcbossb"

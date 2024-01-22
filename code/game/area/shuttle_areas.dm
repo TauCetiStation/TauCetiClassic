@@ -275,7 +275,7 @@
 //Vox shuttle
 /area/shuttle/vox/arkship
 	name = "Vox Skipjack"
-	cases = list("шаттл Skipjack", "шаттла Skipjack", "шаттлу Skipjack", "шаттл Skipjack", "шаттлом Skipjack", "шаттле Skipjack")
+	cases = list("шаттл Скипджек", "шаттла Скипджек", "шаттлу Скипджек", "шаттл Скипджек", "шаттлом Скипджек", "шаттле Скипджек")
 	icon_state = "yellow"
 
 /area/shuttle/vox/arkship_hold
