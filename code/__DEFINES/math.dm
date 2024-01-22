@@ -31,7 +31,7 @@
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
-#define CEIL(x) (-round(-(x)))
+#define CEIL(x) ceil(x)
 
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) ( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
@@ -82,6 +82,14 @@
 
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
+
+/// Converts a probability/second chance to probability/seconds_per_tick chance
+/// For example, if you want an event to happen with a 10% per second chance, but your proc only runs every 5 seconds, do `if(prob(100*SPT_PROB_RATE(0.1, 5)))` or `if(prob(100*SPT_PROB_RATE(0.1, seconds_per_tick)))`
+#define SPT_PROB_RATE(prob_per_second, seconds_per_tick) (1 - (1 - (prob_per_second)) ** (seconds_per_tick))
+
+/// Like SPT_PROB_RATE but easier to use, simply put `if(SPT_PROB(10, 5))` or `if(SPT_PROB(10, seconds_per_tick))`
+#define SPT_PROB(prob_per_second_percent, seconds_per_tick) (prob(100*SPT_PROB_RATE((prob_per_second_percent)/100, (seconds_per_tick))))
+// )
 
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.

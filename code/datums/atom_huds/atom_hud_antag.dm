@@ -70,7 +70,10 @@
 
 	if(M.mind || new_icon_state) //in mindless mobs, only null is acceptable, otherwise we're antagging a mindless mob, meaning we should runtime
 		M.mind.antag_hud_icon_state = new_icon_state
-
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		holder.pixel_y = H.species.hud_offset_y
+		holder.pixel_x = H.species.hud_offset_x
 
 //MIND PROCS
 //these are called by mind.transfer_to()
