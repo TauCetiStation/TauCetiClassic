@@ -2035,6 +2035,9 @@
 	set name = "Change Color"
 	set category = "IC"
 
+	if(stat != CONSCIOUS)
+		return
+
 	var/new_skin = input("Please select your new color.", "Character Generation") as color
 	if(new_skin)
 		r_skin = hex2num(copytext(new_skin, 2, 4))
