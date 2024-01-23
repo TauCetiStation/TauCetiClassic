@@ -189,8 +189,6 @@
 /datum/spawner/living/clone
 	name = "Клон"
 	desc = "Вы появляетесь в своём новом теле."
-	time_for_registration = null
-	register_only = FALSE
 
 /datum/spawner/living/clone/spawn_body(mob/dead/spectator)
 	. = ..()
