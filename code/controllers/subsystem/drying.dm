@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(drying)
 		currentrun.len--
 
 		if(!QDELETED(thing) && thing.wet > 0)
-			thing.dry_process()
+			thing.dry_process(wait * 0.1)
 		else
 			SEND_SIGNAL(thing, COMSIG_ITEM_MAKE_DRY)
 			drying -= thing

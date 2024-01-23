@@ -170,8 +170,12 @@
 var/global/list/station_head_portraits = list()
 ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 /obj/item/portrait/captain
-	desc = "Портрет главы станции Исход."
+	desc = "Портрет главы станции."
 	icon_state = "portrait_empty"
+
+/obj/item/portrait/captain/atom_init()
+	. = ..()
+	desc = "Портрет главы [station_name_ru()]."
 
 /proc/update_station_head_portraits()
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(update_station_head_portraits)), 10 MINUTES)
@@ -184,13 +188,13 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 
 	if(CAP)
 		Heads_photo = image(CAP.fields["photo_f"])
-		newdesc = "Портрет [CAP.fields["name"]], главы станции Исход."
+		newdesc = "Портрет [CAP.fields["name"]], главы [station_name_ru()]."
 	else if(HOP)
 		Heads_photo = image(HOP.fields["photo_f"])
-		newdesc = "Портрет [HOP.fields["name"]], главы кадровой службы станции Исход."
+		newdesc = "Портрет [HOP.fields["name"]], главы кадровой службы [station_name_ru()]."
 	else if(HOS)
 		Heads_photo = image(HOS.fields["photo_f"])
-		newdesc = "Портрет [HOS.fields["name"]], главы службы безопасности станции Исход."
+		newdesc = "Портрет [HOS.fields["name"]], главы службы безопасности [station_name_ru()]."
 
 	if(Heads_photo)
 		Heads_photo.add_filter("portrait_mask", 1, alpha_mask_filter(icon = icon('icons/obj/stationobjs.dmi', "portrait_mask")))
