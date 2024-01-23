@@ -789,7 +789,7 @@ var/global/list/blacklisted_builds = list(
 	// winget() does not work for F1 and F2
 	for(var/key in testing_hotkeys)
 		if(!(key in list("F1","F2")) && !winget(src, "default-[key]", "command"))
-			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры и у вас поломался [key] хоткий.\nПожалуйста, потыкайте кодеров чем-нибудь на предмет использования winset() для макросов на кнопках.")
+			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры и у вас поломался [key] хоткей.\nПожалуйста, потыкайте кодеров чем-нибудь на предмет использования winset() для макросов на кнопках.")
 			break
 
 #define MAXIMAZED  (1<<0)
