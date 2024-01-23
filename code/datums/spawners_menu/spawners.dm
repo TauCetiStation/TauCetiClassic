@@ -73,9 +73,6 @@
 	// Flag if it's awaylable only for applications first, and will be rolled for spawn later
 	var/register_only = FALSE
 
-	// Allows to register more clients than positions, after roll random cliens will be spawned for available positions
-	var/register_no_limit = FALSE
-
 	// List of clients who checked for spawner
 	var/list/registered_candidates = list()
 
@@ -180,11 +177,6 @@
 
 	if(!can_spawn(spectator))
 		return
-
-	if(!register_no_limit)
-		if(positions < 1 || length(registered_candidates) > positions)
-			to_chat(spectator, "<span class='notice'>Нет свободных позиций для роли.</span>")
-			return
 
 	registered_candidates += spectator
 	spectator.registred_spawner = src
