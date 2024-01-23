@@ -460,11 +460,11 @@
 						backbag = backbaglist.Find(new_backbag)
 
 				if("ringtone")
-					var/list/pref_ringtones = global.ringtones_by_names + "My Ringtone"
+					var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
 					var/Tone = input(user, "Выберите рингтон:", "Character Preference", chosen_ringtone) as null|anything in pref_ringtones
 					if(!Tone)
 						return
-					if(Tone == "My Ringtone")
+					if(Tone == CUSTOM_RINGTONE_NAME)
 						var/t = sanitize(input(user, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
 						if (!t)
 							return

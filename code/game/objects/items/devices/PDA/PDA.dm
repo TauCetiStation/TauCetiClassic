@@ -977,11 +977,11 @@
 
 		if("Ringtone")
 			stop_ringtone()
-			var/list/chose_ringtone = global.ringtones_by_names + "My Ringtone"
+			var/list/chose_ringtone = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
 			var/Tone = input(U, "Выберите рингтон", name) as null|anything in chose_ringtone
 			if(Tone && Adjacent(U))
 				var/t
-				if(Tone == "My Ringtone")
+				if(Tone == CUSTOM_RINGTONE_NAME)
 					t = sanitize(input(U, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
 					if (!t || !Adjacent(U))
 						return
@@ -1989,7 +1989,7 @@
 		return
 	stop_ringtone()
 
-	if(ringtone == "My Ringtone")
+	if(ringtone == CUSTOM_RINGTONE_NAME)
 		if(!melody)
 			return
 

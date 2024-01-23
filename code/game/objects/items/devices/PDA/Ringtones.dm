@@ -1,7 +1,7 @@
 var/global/list/datum/ringtone/ringtones_by_names
 
 /datum/ringtone
-	var/name = "My Ringtone"
+	var/name = "Ringtone"
 	var/melody = "E7,E7,E7" //Не забудьте заменить отступы на новую строку на \n при вставке своих мелодий!
 	var/replays = 1
 
