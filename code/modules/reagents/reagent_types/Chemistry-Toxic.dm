@@ -766,13 +766,8 @@
 				if(H.set_species(SLIME))
 					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
 					for(var/obj/item/organ/external/BP in H.bodyparts)
-						BP.status = 0
 						BP.rejuvenate()
 					H.restore_blood()
-			if(31 to 50)
-				M.heal_bodypart_damage(0,5)
-				M.adjustOxyLoss(-4 * REM)
-				M.adjustToxLoss(-4 * REM)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
