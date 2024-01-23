@@ -142,6 +142,11 @@
 	handle_rotation()
 	return
 
+/obj/structure/stool/bed/chair/AltClick(mob/user)
+	if(!Adjacent(user))
+		return ..()
+	rotate()
+
 /obj/structure/stool/bed/chair/post_buckle_mob(mob/living/M)
 	. = ..()
 	if(buckled_mob && behind)
