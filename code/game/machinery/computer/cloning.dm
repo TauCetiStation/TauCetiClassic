@@ -310,7 +310,7 @@
 			else if(!config.revival_cloning)
 				temp = "Error: Unable to initiate cloning cycle."
 
-			else if(prob(25))
+			else if(prob(pod1.clone_mishap_chance))
 				pod1.growclone(C, TRUE)
 				var/mob/living/carbon/spawner = pod1.occupant
 				create_spawner(/datum/spawner/living/clone, spawner)
