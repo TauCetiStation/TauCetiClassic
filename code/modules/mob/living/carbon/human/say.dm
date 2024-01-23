@@ -205,28 +205,28 @@
 				R.talk_into(src,message,null,verb,speaking)
 				used_radios += r_ear
 
-		if("right ear")
+		if("right hand")
 			var/obj/item/device/radio/R
 			var/has_radio = 0
-			if(r_ear && istype(r_ear,/obj/item/device/radio))
-				R = r_ear
-				has_radio = 1
 			if(r_hand && istype(r_hand, /obj/item/device/radio))
 				R = r_hand
+				has_radio = 1
+			else if(r_ear && istype(r_ear,/obj/item/device/radio))
+				R = r_ear
 				has_radio = 1
 			if(has_radio)
 				R.talk_into(src,message,null,verb,speaking)
 				used_radios += R
 
 
-		if("left ear")
+		if("left hand")
 			var/obj/item/device/radio/R
 			var/has_radio = 0
-			if(l_ear && istype(l_ear,/obj/item/device/radio))
-				R = l_ear
-				has_radio = 1
 			if(l_hand && istype(l_hand,/obj/item/device/radio))
 				R = l_hand
+				has_radio = 1
+			else if(l_ear && istype(l_ear,/obj/item/device/radio))
+				R = l_ear
 				has_radio = 1
 			if(has_radio)
 				R.talk_into(src,message,null,verb,speaking)

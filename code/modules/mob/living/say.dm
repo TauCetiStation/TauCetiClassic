@@ -1,6 +1,6 @@
 var/global/list/department_radio_keys = list(
-	  ":r" = "right ear",	"#r" = "right ear",		".r" = "right ear",
-	  ":l" = "left ear",	"#l" = "left ear",		".l" = "left ear",
+	  ":r" = "right hand",	"#r" = "right hand",		".r" = "right hand",
+	  ":l" = "left hand",	"#l" = "left hand",		".l" = "left hand",
 	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
 	  ":h" = "department",	"#h" = "department",	".h" = "department",
 	  ":c" = "Command",		"#c" = "Command",		".c" = "Command",
@@ -17,8 +17,8 @@ var/global/list/department_radio_keys = list(
 	  ":d" = "dronechat",	"#d" = "dronechat",		".d" = "dronechat",
 	  ":z" = "mafia",		"#z" = "mafia",			".z" = "mafia",
 
-	  ":R" = "right ear",	"#R" = "right ear",		".R" = "right ear",
-	  ":L" = "left ear",	"#L" = "left ear",		".L" = "left ear",
+	  ":R" = "right hand",	"#R" = "right hand",		".R" = "right hand",
+	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
 	  ":I" = "intercom",	"#I" = "intercom",		".I" = "intercom",
 	  ":H" = "department",	"#H" = "department",	".H" = "department",
 	  ":C" = "Command",		"#C" = "Command",		".C" = "Command",
@@ -37,8 +37,8 @@ var/global/list/department_radio_keys = list(
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":к" = "right ear",	"#к" = "right ear",		".к" = "right ear",
-	  ":д" = "left ear",	"#д" = "left ear",		".д" = "left ear",
+	  ":к" = "right hand",	"#к" = "right hand",		".к" = "right hand",
+	  ":д" = "left hand",	"#д" = "left hand",		".д" = "left hand",
 	  ":ш" = "intercom",	"#ш" = "intercom",		".ш" = "intercom",
 	  ":р" = "department",	"#р" = "department",	".р" = "department",
 	  ":с" = "Command",		"#с" = "Command",		".с" = "Command",
@@ -55,8 +55,8 @@ var/global/list/department_radio_keys = list(
 	  ":в" = "dronechat",	"#в" = "dronechat",		".в" = "dronechat",
 	  ":я" = "mafia",		"#я" = "mafia",			".я" = "mafia",
 
-	  ":К" = "right ear",	"#К" = "right ear",		".К" = "right ear",
-	  ":Д" = "left ear",	"#Д" = "left ear",		".Д" = "left ear",
+	  ":К" = "right hand",	"#К" = "right hand",		".К" = "right hand",
+	  ":Д" = "left hand",	"#Д" = "left hand",		".Д" = "left hand",
 	  ":Ш" = "intercom",	"#Ш" = "intercom",		".Ш" = "intercom",
 	  ":Р" = "department",	"#Р" = "department",	".Р" = "department",
 	  ":С" = "Command",		"#С" = "Command",		".С" = "Command",
