@@ -221,7 +221,7 @@
 		Время завершения принудительных работ: [worldtime2text()]<br>
         <hr>Место для штампов.<br>
 	"}
-	var/obj/item/weapon/stamp/hos/S = new
+	var/obj/item/weapon/stamp/sec/hos/S = new
 	S.stamp_paper(P, "NT Security System")
 	P.update_icon()
 	P.updateinfolinks()
