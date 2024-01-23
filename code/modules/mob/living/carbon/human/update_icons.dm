@@ -801,9 +801,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += l_hand
 
-		var/t_state = l_hand.item_state
-		if(!t_state)
-			t_state = l_hand.icon_state
 		var/image/standing = l_hand.get_standing_overlay(src, l_hand.lefthand_file, SPRITE_SHEET_HELD, -L_HAND_LAYER, icon_state_appendix = "_l")
 		standing = human_update_offset(standing, FALSE)
 		standing.pixel_x += species.offset_features[OFFSET_GLOVES][1]
@@ -893,8 +890,6 @@ Please contact me on #coderbus IRC. ~Carn x
 				if(W.bandaged)
 					BP.bandaged = TRUE
 					var/image/I = image("icon" = 'icons/mob/bandages.dmi', "icon_state" = "[BP.body_zone]", "layer" = -BANDAGE_LAYER)
-					I.pixel_x = species.offset_features[OFFSET_HAIR][1]
-					I.pixel_y = species.offset_features[OFFSET_HAIR][2]
 					standing += I
 
 	if(standing.len)
