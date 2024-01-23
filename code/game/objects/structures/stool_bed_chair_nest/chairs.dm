@@ -129,6 +129,8 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(!Adjacent(usr))
+		return
 	if(!config.ghost_interaction && isobserver(usr))
 		return
 	if(ismouse(usr))
@@ -143,8 +145,6 @@
 	return
 
 /obj/structure/stool/bed/chair/AltClick(mob/user)
-	if(!Adjacent(user))
-		return ..()
 	rotate()
 
 /obj/structure/stool/bed/chair/post_buckle_mob(mob/living/M)
