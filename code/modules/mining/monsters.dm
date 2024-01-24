@@ -111,6 +111,14 @@
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(maxHealth * 0.4)
 
+/mob/living/simple_animal/hostile/asteroid/basilisk/high_tier
+	name = "Crystal Basilisk"
+	icon = 'icons/mob/monsters_asteroid/basilisk_high_tier.dmi'
+	view_targeting = FALSE
+	stat_attack = 1
+	vision_range = 6
+	idle_vision_range = 6
+
 ////////////Drone(miniBoss)/////////////
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/mining
@@ -120,6 +128,18 @@
 	w_class = SIZE_HUMAN
 	projectiletype = /obj/item/projectile/beam/xray
 
+/mob/living/simple_animal/hostile/retaliate/malf_drone/mining/high_tier
+	name = "Mining drone"
+	icon = 'icons/mob/monsters_asteroid/drone_high_tier.dmi'
+	icon_state = "drone"
+	icon_living = "drone"
+	icon_dead = "drone"
+	view_targeting = FALSE
+	stat_attack = 1
+	destroy_surroundings = TRUE
+
+/mob/living/simple_animal/hostile/retaliate/malf_drone/mining/high_tier/update_icon()
+	return
 
 ////////////////Goldgrub////////////////
 
@@ -224,6 +244,18 @@
 	alerted = FALSE
 	Reward()
 
+/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier
+	name = "Gluttony Goldgrub"
+	icon = 'icons/mob/monsters_asteroid/goldgrub_high_tier.dmi'
+	icon_state = "goldgrub"
+	icon_living = "goldgrub"
+	icon_aggro = "goldgrub_alert"
+	icon_dead = "goldgrub_dead"
+	pixel_x = -12
+	vision_range = 6
+	idle_vision_range = 6
+	search_objects = 2
+
 ////////////////Hivelord////////////////
 
 /mob/living/simple_animal/hostile/asteroid/hivelord
@@ -260,8 +292,11 @@
 	if(ranged_cooldown < 0)
 		OpenFire(A)
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/proc/create_brood()
+	return new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(loc)
+
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = create_brood()
 	A.GiveTarget(the_target)
 	A.friends = friends
 	A.faction = faction
@@ -277,6 +312,20 @@
 	var/obj/item/asteroid/hivelord_core/core = new /obj/item/asteroid/hivelord_core(loc)
 	core.corpse = src
 	loc = core  //put dead hivelord in droped core
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/high_tier
+	name = "Dust Hivelord"
+	icon = 'icons/mob/monsters_asteroid/hivelord_high_tier.dmi'
+	icon_state = "hivelord"
+	icon_living = "hivelord"
+	icon_aggro = "hivelord_alert"
+	vision_range = 6
+	idle_vision_range = 6
+	view_targeting = FALSE
+	stat_attack = 1
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/high_tier/create_brood()
+	return new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/high_tier(loc)
 
 /obj/item/asteroid/hivelord_core
 	name = "hivelord core"
@@ -333,7 +382,6 @@
 		qdel(src)
 	return ..()
 
-
 ////////////////Hivelordbrood////////////////
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
@@ -371,6 +419,19 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
 	return
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/high_tier
+	name = "dust hivelord brood"
+	icon = 'icons/mob/monsters_asteroid/hivelord_high_tier.dmi'
+	icon_state = "hivelord_brood"
+	icon_living = "hivelord_brood"
+	icon_aggro = "hivelord_brood"
+	icon_dead = "hivelord_brood"
+	maxHealth = 5
+	health = 5
+	melee_damage = 5
+	view_targeting = FALSE
+	stat_attack = 1
 
 ////////////////Goliath////////////////
 
@@ -418,11 +479,13 @@
 		return
 	icon_state = "Goliath_preattack"
 
+/mob/living/simple_animal/hostile/asteroid/goliath/proc/shoot_tentacle(turf/T)
+	new /obj/effect/goliath_tentacle/original(T, melee_damage)
+
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
-	var/tturf = get_turf(target)
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
-		new /obj/effect/goliath_tentacle/original(tturf, melee_damage)
+		shoot_tentacle(get_turf(target))
 		ranged_cooldown = ranged_cooldown_cap
 		icon_state = icon_aggro
 		pre_attack = 0
@@ -437,6 +500,21 @@
 	handle_preattack()
 	if(icon_state != icon_aggro)
 		icon_state = icon_aggro
+
+/mob/living/simple_animal/hostile/asteroid/goliath/high_tier
+	name = "Ancient goliath"
+	icon = 'icons/mob/monsters_asteroid/goliath_high_tier.dmi'
+	pixel_x = -12
+	move_to_delay = 30
+	ranged = TRUE
+	ranged_cooldown = 1
+	vision_range = 6
+	idle_vision_range = 6
+	view_targeting = FALSE
+	stat_attack = 1
+
+/mob/living/simple_animal/hostile/asteroid/goliath/high_tier/shoot_tentacle(turf/T)
+	new /obj/effect/goliath_tentacle/original/high_tier(T, melee_damage)
 
 /obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
@@ -456,17 +534,6 @@
 		A.gets_dug()
 	addtimer(CALLBACK(src, PROC_REF(Trip)), 20)
 
-/obj/effect/goliath_tentacle/original
-
-/obj/effect/goliath_tentacle/original/atom_init()
-	. = ..()
-	var/list/directions = cardinal.Copy()
-	for (var/i in 1 to 3)
-		var/spawndir = pick(directions)
-		directions -= spawndir
-		var/turf/T = get_step(src, spawndir)
-		new /obj/effect/goliath_tentacle(T, strength)
-
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
@@ -480,6 +547,34 @@
 		Trip()
 		return
 	. = ..()
+
+/obj/effect/goliath_tentacle/high_tier
+	icon = 'icons/mob/monsters_asteroid/goliath_high_tier.dmi'
+
+/obj/effect/goliath_tentacle/original
+
+/obj/effect/goliath_tentacle/original/proc/spawn_copies()
+	var/list/directions = cardinal.Copy()
+	for (var/i in 1 to 3)
+		var/spawndir = pick(directions)
+		directions -= spawndir
+		var/turf/T = get_step(src, spawndir)
+		new /obj/effect/goliath_tentacle(T, strength)
+
+/obj/effect/goliath_tentacle/original/atom_init()
+	. = ..()
+	spawn_copies()
+
+/obj/effect/goliath_tentacle/original/high_tier
+	icon = 'icons/mob/monsters_asteroid/goliath_high_tier.dmi'
+
+/obj/effect/goliath_tentacle/original/high_tier/spawn_copies()
+	var/list/directions = cardinal.Copy()
+	for (var/i in 1 to 3)
+		var/spawndir = pick(directions)
+		directions -= spawndir
+		var/turf/T = get_step(src, spawndir)
+		new /obj/effect/goliath_tentacle/high_tier(T, strength)
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
