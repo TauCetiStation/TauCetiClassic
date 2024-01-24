@@ -56,7 +56,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/basilisk.dmi'
 	icon_state = "Basilisk"
 	icon_living = "Basilisk"
 	icon_aggro = "Basilisk_alert"
@@ -126,7 +126,7 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/goldgrub.dmi'
 	icon_state = "Goldgrub"
 	icon_living = "Goldgrub"
 	icon_aggro = "Goldgrub_alert"
@@ -229,7 +229,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord
 	name = "hivelord"
 	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/hivelord.dmi'
 	icon_state = "Hivelord"
 	icon_living = "Hivelord"
 	icon_aggro = "Hivelord_alert"
@@ -281,7 +281,7 @@
 /obj/item/asteroid/hivelord_core
 	name = "hivelord core"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/hivelord.dmi'
 	icon_state = "Hivelod_core"
 	var/inert = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/corpse
@@ -339,7 +339,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
 	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/hivelord.dmi'
 	icon_state = "Hivelordbrood"
 	icon_living = "Hivelordbrood"
 	icon_aggro = "Hivelordbrood"
@@ -377,7 +377,7 @@
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
 	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/goliath.dmi'
 	icon_state = "Goliath"
 	icon_living = "Goliath"
 	icon_aggro = "Goliath_alert"
@@ -440,7 +440,7 @@
 
 /obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/goliath.dmi'
 	icon_state = "Goliath_tentacle"
 	var/strength
 
