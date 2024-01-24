@@ -634,7 +634,7 @@
 			On death, these nodules take control of the dead body, causing limited revivification, \
 			along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/weapon/storage/box/syndie_kit/romerol/nuke
-	cost = 40
+	cost = 50
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/stealthy_weapons/romerol_kit/traitor

@@ -214,7 +214,7 @@
 	desc += " Though, this box looks really important"
 	new /obj/item/weapon/reagent_containers/hypospray/combat/zombie(src)
 
-	var/garanted_item = pick(/obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol, /obj/item/weapon/grenade/chem_grenade/romerol, /obj/item/weapon/implanter/zombie)
+	var/garanted_item = pick(/obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol, /obj/item/weapon/grenade/chem_grenade/romerol)
 	new garanted_item (src)
 
 	if(prob(50))
@@ -222,7 +222,7 @@
 		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol(src)
 	if(prob(50))
 		new /obj/item/weapon/grenade/chem_grenade/romerol(src)
-	if(prob(50))
+	if(prob(30))
 		new /obj/item/weapon/implanter/zombie(src)
 	make_exact_fit()
 

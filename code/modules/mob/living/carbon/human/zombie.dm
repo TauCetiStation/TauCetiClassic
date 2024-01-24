@@ -163,35 +163,52 @@
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 	if(!organs_by_name[O_BRAIN] || !BP || BP.is_stump)
 		return
-	//zombie have NO_PAIN and can't adjust/sets halloss
-	setHalLoss(0)
-	//remove all blind-blur effects
-	cure_nearsighted(list(EYE_DAMAGE_TRAIT, GENETIC_MUTATION_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
-	sdisabilities &= ~BLIND
-	blinded = FALSE
-	setBlurriness(0)
-	handle_vision(TRUE)
 
 	if(!iszombie(src))
 		zombify()
 
-	//del wounds and embedded implants in limbs, heal
-	for(var/obj/item/organ/external/limb in bad_bodyparts)
-		limb.rejuvenate()
-
+	setToxLoss(0)
+	setOxyLoss(0)
 	setCloneLoss(0)
 	setBrainLoss(0)
+	setHalLoss(0)
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
-	nutrition = NUTRITION_LEVEL_NORMAL
+	setDrugginess(0)
 	SetSleeping(0)
+	SetDrunkenness(0)
+
+	nutrition = NUTRITION_LEVEL_NORMAL
 	radiation = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
 	restore_blood()
 	// make the icons look correct
 	if(HUSK in mutations)
 		mutations.Remove(HUSK)
+
+	if(reagents)
+		reagents.clear_reagents()
+
+	suiciding = FALSE
+
+	//remove all sight effects
+	cure_nearsighted(list(EYE_DAMAGE_TRAIT, GENETIC_MUTATION_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
+	sdisabilities &= ~BLIND
+	blinded = FALSE
+	setBlurriness(0)
+	handle_vision(TRUE)
+
+	ear_deaf = 0
+	ear_damage = 0
+
+	shock_stage = 0
+	var/obj/item/organ/internal/heart/Heart = organs_by_name[O_HEART]
+	Heart?.heart_normalize()
+
+	restore_all_bodyparts()
+	restore_all_organs()
+	cure_all_viruses()
 
 	// remove the character from the list of the dead
 	if(stat == DEAD)
@@ -506,7 +523,8 @@ var/global/list/zombie_list = list()
 	if(imp_in.stat != DEAD)
 		imp_in.adjustToxLoss(imp_in.maxHealth * 2.5)
 		imp_in.death(FALSE)
-	H.prerevive_zombie(imp_in)
+	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), 5 SECONDS)
+	to_chat(h, "<span class='cult'>Твоё сердце умолкает, а вместе с ним и хладеет твоё тело, и лишь голод начинает разгораться с невиданной силой!</span>")
 	qdel(src)
 
 /obj/item/weapon/implant/zombie/islegal()
