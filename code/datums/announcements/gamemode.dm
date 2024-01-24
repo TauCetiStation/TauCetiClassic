@@ -12,6 +12,16 @@
 			"Персонал должен предотвратить распространение заражения. " + \
 			"Активирован протокол изоляции экипажа станции."
 
+/datum/announcement/centcomm/blob/half
+	name = "Blob: Dangerous Level Spread"
+	subtitle = "Распространение биоугрозы"
+	sound = "commandreport"
+
+/datum/announcement/centcomm/blob/half/New()
+	message = "Биоугроза продолжает своё распространение на [station_name_ru()]. \
+			Персоналу предписывается любой ценой остановить распространение заражения по станции. \
+			Высылаем через шаттл карго дополнительные средства по борьбе с угрозой."
+
 /datum/announcement/centcomm/blob/critical
 	name = "Blob: Blob Critical Mass"
 	subtitle = "Тревога. Биоугроза"
@@ -217,3 +227,38 @@
 			"Приятного дня!"
 	sound = "xeno_crew_win"
 
+/* Replicators */
+/datum/announcement/centcomm/replicator
+	name = "Bluespace Breach: Detected"
+	subtitle = "Тревога! Блюспэйс прорыв"
+
+/datum/announcement/centcomm/replicator/construction_began/play(area/A)
+	message = "Обнаружено открытие блюспэйс прорыва в [initial(A.name)]. Полное раскрытие прорыва приведёт к дестабилизации реальности вокруг станции!"
+	sound = "construction_began"
+	..()
+
+/datum/announcement/centcomm/replicator/construction_quarter/play(area/A)
+	message = "Блюспэйс прорыв в [initial(A.name)] достиг 25% от критического гиперобъема."
+	sound = "construction_quarter"
+	..()
+
+/datum/announcement/centcomm/replicator/construction_half/play(area/A)
+	message = "Блюспэйс прорыв в [initial(A.name)] достиг 50% от критического гиперобъема."
+	sound = "construction_half"
+	..()
+
+/datum/announcement/centcomm/replicator/construction_three_quarters/play(area/A)
+	message = "Блюспэйс прорыв в [initial(A.name)] достиг 75% от критического гиперобъема."
+	sound = "construction_three_quarters"
+	..()
+
+/datum/announcement/centcomm/replicator/doom/New()
+	message = "Тревога! Блюспэйс прорыв достиг критического гиперобъёма! Дестабилизация реальности неизбежна!"
+	sound = "construction_doom"
+
+/datum/announcement/centcomm/ert
+	title = "Оповещение ВКН Икар"
+	subtitle = "Приближается Шаттл"
+	name = "ERT Incoming"
+/datum/announcement/centcomm/ert/New()
+	message = "Наши сенсоры зафиксировали приближение неидентифицированного шаттла к [station_name_ru()] с активными процедурами стыковки. Готовьтесь встречать гостей."

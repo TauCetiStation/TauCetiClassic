@@ -9,7 +9,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	state_broken_preset = "techb"
 	state_nopower_preset = "tech0"
 	light_color = "#b88b2e"
-	req_access = list(access_cargo)
+	req_access = list(access_cargoshop)
 	circuit = /obj/item/weapon/circuitboard/computer/cargo
 	var/requestonly = FALSE
 	var/contraband = FALSE

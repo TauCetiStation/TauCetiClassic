@@ -64,6 +64,8 @@ var/global/list/frozen_items = list()
 			return
 
 		var/obj/item/I = input(usr, "Please choose which object to retrieve.","Object recovery",null) as obj in frozen_items
+		if(!can_still_interact_with(usr))
+			return
 
 		if(!I || frozen_items.len == 0)
 			to_chat(user, "<span class='notice'>There is nothing to recover from storage.</span>")
@@ -165,6 +167,10 @@ var/global/list/frozen_items = list()
 		icon_state = "cryosleeper_left"
 	. = ..()
 
+/obj/machinery/cryopod/Destroy()
+	. = ..()
+	QDEL_NULL(announce)
+
 /obj/machinery/cryopod/proc/delete_objective(datum/objective/target/O)
 	if(!O)
 		return
@@ -197,7 +203,7 @@ var/global/list/frozen_items = list()
 
 	O.target = null
 
-	addtimer(CALLBACK(src, .proc/delete_objective, O), 1) //This should ideally fire after the occupant is deleted.
+	addtimer(CALLBACK(src, PROC_REF(delete_objective), O), 1) //This should ideally fire after the occupant is deleted.
 
 //Lifted from Unity stasis.dm and refactored. ~Zuhayr
 /obj/machinery/cryopod/process()
@@ -335,6 +341,18 @@ var/global/list/frozen_items = list()
 			PDA_Manifest.Cut()
 			break
 
+/obj/machinery/cryopod/AltClick(mob/user)
+	. = ..()
+	enter_pod(user)
+
+/obj/machinery/cryopod/relaymove(mob/user)
+	..()
+	go_out()
+
+/obj/machinery/cryopod/MouseDrop_T(mob/target, mob/user)
+	. = ..()
+	enter_pod(user)
+
 /obj/machinery/cryopod/verb/eject()
 	set name = "Eject Pod"
 	set category = "Object"
@@ -357,31 +375,33 @@ var/global/list/frozen_items = list()
 	set name = "Enter Pod"
 	set category = "Object"
 	set src in oview(1)
+	enter_pod(usr)
 
-	if(usr.incapacitated() || !(ishuman(usr)))
+/obj/machinery/cryopod/proc/enter_pod(mob/user)
+	if(user.incapacitated() || !(ishuman(user)))
 		return
 
-	if(!usr.IsAdvancedToolUser())
-		to_chat(usr, "<span class='notice'>You have no idea how to do that.</span>")
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='notice'>You have no idea how to do that.</span>")
 		return
 
 	if(occupant)
-		to_chat(usr, "<span class='notice'><B>The cryo pod is in use.</B></span>")
+		to_chat(user, "<span class='notice'><B>The cryo pod is in use.</B></span>")
 		return
 
-	for(var/mob/living/carbon/slime/M in range(1, usr))
-		if(M.Victim == usr)
-			to_chat(usr, "You're too busy getting your life sucked out of you.")
+	for(var/mob/living/carbon/slime/M in range(1, user))
+		if(M.Victim == user)
+			to_chat(user, "You're too busy getting your life sucked out of you.")
 			return
-	if(usr.is_busy())
+	if(user.is_busy())
 		return
-	visible_message("[usr] starts climbing into the cryo pod.", 3)
+	visible_message("[user] starts climbing into the cryo pod.", 3)
 	if(do_after(usr, 20, target = src))
 		if(occupant)
-			to_chat(usr, "<span class='notice'><B>The cryo pod is in use.</B></span>")
+			to_chat(user, "<span class='notice'><B>The cryo pod is in use.</B></span>")
 			return
-		insert(usr)
-		add_fingerprint(usr)
+		insert(user)
+		add_fingerprint(user)
 
 /obj/machinery/cryopod/proc/go_out()
 	occupant.forceMove(get_turf(src))

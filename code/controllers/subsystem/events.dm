@@ -21,6 +21,9 @@ SUBSYSTEM_DEF(events)
 
 	var/list/allowed_areas_for_events
 
+	var/custom_event_msg
+	var/custom_event_mode
+
 /datum/controller/subsystem/events/Initialize()
 	var/list/black_types = list(
 			/datum/event/anomaly,
@@ -37,13 +40,16 @@ SUBSYSTEM_DEF(events)
 
 /datum/controller/subsystem/events/fire()
 	for(var/datum/event/E in active_events)
-		E.process()
+		E.process(wait * 0.1)
 
 	for(var/i in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
 		var/datum/event_container/EC = event_containers[i]
-		EC.process()
+		EC.process(wait * 0.1)
 
 /datum/controller/subsystem/events/proc/start_roundstart_event()
+	if(!config.allow_random_events)
+		message_admins("RoundStart Event: No event, random events has been disabled by SERVER.")
+		return
 	var/datum/event_container/feature/EC = event_containers[EVENT_LEVEL_FEATURE]
 	for(var/i in 1 to rand(1, 3))
 		EC.start_event()
@@ -355,3 +361,32 @@ SUBSYSTEM_DEF(events)
 	var/list/possible_areas = typecache_filter_list(global.all_areas, allowed_areas_for_events)
 	if(length(possible_areas))
 		return pick(possible_areas)
+
+/datum/controller/subsystem/events/proc/setup_custom_event(text, mode)
+	custom_event_msg = text
+	custom_event_mode = mode
+
+	custom_event_announce()
+
+/datum/controller/subsystem/events/proc/custom_event_announce(user)
+	if(!custom_event_msg)
+		return
+
+	var/target = user || world
+
+	var/message = {"<h1 class='alert'>Custom Event</h1><br>
+<h2 class='alert'>A custom event is taking place. OOC Info:</h2><br>
+<span class='alert linkify'>[custom_event_msg]</span><br>
+<br>"}
+
+	to_chat(target, message)
+
+/datum/controller/subsystem/events/proc/custom_event_announce_bridge()
+	if(config.chat_bridge && custom_event_msg)
+		world.send2bridge(
+			type = list(BRIDGE_ANNOUNCE),
+			attachment_title = "Custom Event",
+			attachment_msg = custom_event_msg + "\nJoin now: <[BYOND_JOIN_LINK]>",
+			attachment_color = BRIDGE_COLOR_ANNOUNCE,
+			mention = BRIDGE_MENTION_EVENT,
+		)

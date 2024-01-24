@@ -27,12 +27,12 @@
 			new /obj/item/device/powersink(src)
 			new /obj/item/clothing/suit/space/syndicate(src)
 			new /obj/item/clothing/head/helmet/space/syndicate(src)
-			new /obj/item/clothing/gloves/yellow(src)
+			new /obj/item/clothing/gloves/insulated(src)
 			new /obj/item/weapon/plastique(src)
 
 		if("guns")
 			new /obj/item/weapon/gun/projectile/revolver/syndie(src)
-			new /obj/item/ammo_box/a357(src)
+			new /obj/item/ammo_box/speedloader/a357(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/weapon/plastique(src)
@@ -53,9 +53,9 @@
 			new /obj/item/device/flashlight/emp(src)
 
 		if("smoothoperator")
-			new /obj/item/weapon/gun/projectile/automatic/pistol(src)
+			new /obj/item/weapon/gun/projectile/automatic/pistol/stechkin(src)
 			new /obj/item/weapon/silencer(src)
-			new /obj/item/ammo_box/magazine/m9mm(src)
+			new /obj/item/ammo_box/magazine/stechkin(src)
 			new /obj/item/weapon/reagent_containers/food/snacks/soap/syndie(src)
 			new /obj/item/weapon/storage/bag/trash(src)
 			new /obj/item/bodybag(src)
@@ -71,6 +71,8 @@
 			new /obj/item/weapon/reagent_containers/glass/bottle/chefspecial(src)
 			new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
 			new /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/sanguisacid(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/bonebreaker(src)
 			new /obj/item/weapon/reagent_containers/syringe(src)
 			new /obj/item/weapon/gun/syringe/syndicate(src)
 
@@ -327,10 +329,10 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/scout
 	name = "scout kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/m12mm/hv,
-	/obj/item/ammo_box/magazine/m12mm/hp,
-	/obj/item/ammo_box/magazine/m12mm/imp,
-	/obj/item/ammo_box/magazine/m12mm = 3,
+	/obj/item/ammo_box/magazine/c20r/hv,
+	/obj/item/ammo_box/magazine/c20r/hp,
+	/obj/item/ammo_box/magazine/c20r/imp,
+	/obj/item/ammo_box/magazine/c20r = 3,
 	/obj/item/weapon/gun/projectile/automatic/c20r,
 	/obj/item/weapon/implanter/adrenaline,
 	/obj/item/weapon/reagent_containers/hypospray/combat,
@@ -341,7 +343,7 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman
 	name = "assaultman kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/a74mm = 3,
+	/obj/item/ammo_box/magazine/a74 = 3,
 	/obj/item/weapon/gun/projectile/automatic/a74,
 	/obj/item/weapon/shield/energy,
 	/obj/item/weapon/grenade/flashbang = 4,
@@ -360,9 +362,9 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker
 	name = "hacker kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/m12g = 4,
-	/obj/item/ammo_box/magazine/m12g/stun,
-	/obj/item/ammo_box/magazine/m12g/incendiary,
+	/obj/item/ammo_box/magazine/bulldog = 4,
+	/obj/item/ammo_box/magazine/bulldog/stun,
+	/obj/item/ammo_box/magazine/bulldog/incendiary,
 	/obj/item/weapon/gun/projectile/automatic/bulldog,
 	/obj/item/weapon/aiModule/freeform/syndicate,
 	/obj/item/weapon/grenade/spawnergrenade/manhacks,
@@ -388,7 +390,7 @@
 	startswith = list(
 	/obj/item/ammo_casing/r4046/explosive = 3,
 	/obj/item/ammo_casing/r4046/chem/EMP = 3,
-	/obj/item/ammo_box/magazine/drozd127,
+	/obj/item/ammo_box/magazine/drozd,
 	/obj/item/weapon/gun/projectile/automatic/drozd,
 	/obj/item/weapon/plastique = 4,
 	/obj/item/weapon/grenade/syndieminibomb = 2,
@@ -411,7 +413,7 @@
 /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner
 	name = "heavy machine gunner kit"
 	startswith = list(
-	/obj/item/ammo_box/magazine/m762 = 3,
+	/obj/item/ammo_box/magazine/saw = 3,
 	/obj/item/weapon/gun/projectile/automatic/l6_saw,
 	)
 
@@ -431,9 +433,9 @@
 	name = "chemical fighter kit"
 	startswith = list(
 	/obj/item/weapon/reagent_containers/watertank_backpack/syndie,
-	/obj/item/weapon/lighter/zippo,
+	/obj/item/weapon/lighter/zippo/syndi,
 	/obj/item/weapon/gun/projectile/revolver/syndie,
-	/obj/item/ammo_box/a357 = 2,
+	/obj/item/ammo_box/speedloader/a357 = 2,
 	/obj/item/weapon/melee/energy/sword,
 	/obj/item/weapon/grenade/chem_grenade/acid = 3,
 	/obj/item/weapon/grenade/chem_grenade/incendiary = 2,

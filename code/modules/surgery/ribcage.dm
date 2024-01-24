@@ -157,7 +157,7 @@
 
 	target.op_stage.ribcage = 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.open = 1
+	BP.open = 2
 
 //////////////////////////////////////////////////////////////////
 //					ALIEN EMBRYO SURGERY						//
@@ -323,17 +323,18 @@
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
+	user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [BP.name], gumming it up!</span>",
+		"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name], gumming it up!</span>")
+
+	if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
+		BP.take_damage(0, 6, used_weapon = tool)
+
+	else if(iswrenching(tool))
+		BP.take_damage(12, 0, used_weapon = tool)
+		BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
+
+	var/dam_amt = 2
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-		user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [IO], gumming it up!</span>",
-		"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [IO], gumming it up!</span>")
-		var/dam_amt = 2
-		if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
-			BP.take_damage(0, 6, used_weapon = tool)
-
-		else if(iswrenching(tool))
-			BP.take_damage(12, 0, used_weapon = tool)
-			BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
-
 		if(IO.damage > 0 && IO.robotic == 2)
 			IO.take_damage(dam_amt,0)
 
@@ -542,6 +543,7 @@
 	target.SetStunned(0)
 	target.SetWeakened(0)
 	target.SetParalysis(0)
+	target.timeofdeath = 0
 
 
 //////////////////////////////////////////////////////////////////

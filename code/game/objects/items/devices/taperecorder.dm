@@ -3,7 +3,8 @@
 	desc = "A device that can record up to an hour of dialogue and play it back. It automatically translates the content in playback."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorderidle"
-	item_state = "analyzer"
+	item_state_world = "taperecorderidle_world"
+	item_state = "recorder"
 	w_class = SIZE_TINY
 	m_amt = 60
 	g_amt = 30
@@ -25,7 +26,24 @@
 	var/list/icons_available
 	var/icon_directory = 'icons/hud/radial.dmi'
 
-	action_button_name = "Toggle Recorder"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_recorder)
+
+/obj/item/device/taperecorder/update_icon()
+	if(recording)
+		item_state_inventory = "taperecorderrecording"
+		item_state_world = "taperecorderrecording_world"
+	else if(playing)
+		item_state_inventory = "taperecorderplaying"
+		item_state_world = "taperecorderplaying_world"
+	else
+		item_state_inventory = "taperecorderidle"
+		item_state_world = "taperecorderidle_world"
+
+
+	update_world_icon()
+
+/datum/action/item_action/hands_free/toggle_recorder
+	name = "Toggle Recorder"
 
 /obj/item/device/taperecorder/Destroy()
 	deltimer(timer_to_destruct)
@@ -78,7 +96,7 @@
 		emagged = TRUE
 		recording = FALSE
 		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
-		icon_state = "taperecorderidle"
+		update_icon()
 		return TRUE
 	else
 		to_chat(user, "<span class='warning'>It is already emagged!</span>")
@@ -110,7 +128,7 @@
 		if(0)
 			explode()
 
-	timer_to_destruct = addtimer(CALLBACK(src, .proc/start_exp, sec - 1), 1 SECOND, TIMER_STOPPABLE)
+	timer_to_destruct = addtimer(CALLBACK(src, PROC_REF(start_exp), sec - 1), 1 SECOND, TIMER_STOPPABLE)
 
 /obj/item/device/taperecorder/proc/record()
 	if(usr.incapacitated())
@@ -118,11 +136,12 @@
 	if(emagged)
 		to_chat(usr, "<span class='warning'>The tape recorder makes a scratchy noise.</span>")
 		return
-	icon_state = "taperecorderrecording"
+	update_icon()
 	if(timerecorded < 3600 && !playing)
 		to_chat(usr, "<span class='notice'>Recording started.</span>")
 		recording = TRUE
 		timestamp += timerecorded
+		update_icon()
 		storedinfo += "\[[time2text(timerecorded * 10,"mm:ss")]\] Recording started."
 		for(timerecorded, timerecorded < 3600)
 			if(!recording)
@@ -130,7 +149,7 @@
 			timerecorded++
 			sleep(10)
 		recording = FALSE
-		icon_state = "taperecorderidle"
+		update_icon()
 		return
 	else
 		to_chat(usr, "<span class='notice'>Either your tape recorder's memory is full, or it is currently playing back its memory.</span>")
@@ -146,13 +165,13 @@
 		timestamp += timerecorded
 		storedinfo += "\[[time2text(timerecorded * 10,"mm:ss")]\] Recording stopped."
 		to_chat(usr, "<span class='notice'>Recording stopped.</span>")
-		icon_state = "taperecorderidle"
+		update_icon()
 		return
 	else if(playing)
 		playing = FALSE
 		var/turf/T = get_turf(src)
 		T.visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: Playback stopped.</font>")
-		icon_state = "taperecorderidle"
+		update_icon()
 		return
 
 /obj/item/device/taperecorder/proc/clear_memory()
@@ -183,7 +202,7 @@
 		to_chat(usr, "<span class='notice'>You're already playing!</span>")
 		return
 	playing = TRUE
-	icon_state = "taperecorderplaying"
+	update_icon()
 	to_chat(usr, "<span class='notice'>Playing started.</span>")
 	for(var/i = 1, timerecorded < 3600, sleep(10 * (playsleepseconds)))
 		if(!playing)
@@ -205,7 +224,7 @@
 			T.visible_message("[bicon(src)]<font color=Maroon><B>Tape Recorder</B>: Skipping [playsleepseconds] seconds of silence</font>")
 			playsleepseconds = 1
 		i++
-	icon_state = "taperecorderidle"
+	update_icon()
 	playing = FALSE
 	if(emagged)
 		start_exp(5)

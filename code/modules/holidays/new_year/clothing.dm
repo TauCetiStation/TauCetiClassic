@@ -53,7 +53,7 @@
 	icon_state = "coatcaptain"
 	hoodtype = /obj/item/clothing/head/wintercoat/captain
 	armor = list(melee = 35, bullet = 25, laser = 20, energy = 10, bomb = 15, bio = 0, rad = 0)
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/telebaton)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/telebaton)
 
 /obj/item/clothing/head/wintercoat/captain
 	name = "captain's winter hood"
@@ -64,7 +64,7 @@
 	icon_state = "coatsecurity"
 	hoodtype = /obj/item/clothing/head/wintercoat/security
 	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 25, bio = 0, rad = 0)
-	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/telebaton)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/telebaton)
 
 /obj/item/clothing/head/wintercoat/security
 	name = "security winter hood"

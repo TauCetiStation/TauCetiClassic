@@ -4,19 +4,26 @@ var/global/list/sting_paths
 /obj/effect/proc_holder/changeling/evolution_menu
 	name = "-Evolution Menu-" //Dashes are so it's listed before all the other abilities.
 	desc = "Choose our method of subjugation."
+	button_icon_state = "evolution"
 	genomecost = 0
 
 
 /obj/effect/proc_holder/changeling/evolution_menu/Click()
 	if(!usr || !ischangeling(usr))
 		return
-	var/datum/role/changeling/changeling = usr.mind.GetRoleByType(/datum/role/changeling)
+	sting_action(usr)
+
+/obj/effect/proc_holder/changeling/evolution_menu/can_sting(mob/user)
+	return TRUE
+
+/obj/effect/proc_holder/changeling/evolution_menu/sting_action(mob/user)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 
 	if(!sting_paths)
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
 
 	var/dat = create_menu(changeling)
-	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
@@ -346,7 +353,7 @@ var/global/list/sting_paths
 	if(!sting_paths)
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
 	if(C.purchasedpowers)
-		remove_changeling_powers(1)
+		remove_changeling_powers(TRUE)
 	// purchase free powers.
 	for(var/path in sting_paths)
 		var/obj/effect/proc_holder/changeling/S = new path()
@@ -378,23 +385,23 @@ var/global/list/sting_paths
 	chem_recharge_rate = initial(chem_recharge_rate)
 	chem_charges = min(chem_charges, chem_storage)
 	mimicing = ""
+	if(isliving(antag.current))
+		var/mob/living/L = antag.current
+		L.changeling_aug = FALSE
 
 /mob/proc/remove_changeling_powers(keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
 		if(ischangeling(src))
-			digitalcamo = 0
-			if(digitaldisguise)
-				digitaldisguise.override = 0
 			var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 			C.reset()
 			for(var/obj/effect/proc_holder/changeling/p in C.purchasedpowers)
 				if(!(p.genomecost == 0 && keep_free_powers))
-					C.purchasedpowers -= p
+					qdel(p)
 			if(hud_used)
 				C.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/role/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
-		if(power.name == P.name)
+		if(power.type == P.type)
 			return TRUE
 	return FALSE

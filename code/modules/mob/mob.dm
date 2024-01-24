@@ -28,6 +28,16 @@
 			mind.set_current(null)
 		if(mind.original == src)
 			mind.original = null
+
+	for(var/datum/action/action as anything in actions)
+		action.Remove(src)
+
+	if(buckled) // simpler version of /unbuckle_mob
+		buckled.buckled_mob = null
+		SEND_SIGNAL(buckled, COMSIG_MOVABLE_UNBUCKLE, src)
+		buckled.post_buckle_mob(src)
+		buckled = null
+
 	return ..()
 
 
@@ -139,8 +149,11 @@
 // todo:
 // * need to combine visible_message/audible_message to one proc (something like show_message) (maybe it will be a mess because of *_distance ?)
 // * need some version combined with playsound (one cycle for audio message and sound)
-/mob/visible_message(message, self_message, blind_message, viewing_distance = world.view, list/ignored_mobs)
+/mob/visible_message(message, self_message, blind_message, viewing_distance = world.view, list/ignored_mobs, runechat_msg)
 	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
+
+		if((!(M.sdisabilities & BLIND) && !M.blinded && !M.paralysis) && runechat_msg)
+			M.show_runechat_message(src, null, runechat_msg, null, SHOWMSG_VISUAL)
 
 		if(M == src && self_message)
 			to_chat(M, self_message)
@@ -152,10 +165,13 @@
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(message, blind_message, viewing_distance = world.view, list/ignored_mobs)
+/atom/proc/visible_message(message, blind_message, viewing_distance = world.view, list/ignored_mobs, runechat_msg)
 	//todo: for range<=1 combine SHOWMSG_FEEL with SHOWMSG_VISUAL like in custom_emote?
 	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
 		M.show_message(message, SHOWMSG_VISUAL, blind_message, SHOWMSG_AUDIO)
+
+		if((!(M.sdisabilities & BLIND) && !M.blinded && !M.paralysis) && runechat_msg)
+			M.show_runechat_message(src, null, runechat_msg, null, SHOWMSG_VISUAL)
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -164,8 +180,14 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/mob/audible_message(message, deaf_message, hearing_distance = world.view, self_message, list/ignored_mobs)
+/mob/audible_message(message, self_message, deaf_message, hearing_distance = world.view, list/ignored_mobs, runechat_msg, deaf_runechat_msg)
 	for(var/mob/M in (get_hearers_in_view(hearing_distance, src) - ignored_mobs))
+
+		if((M.sdisabilities & DEAF || M.ear_deaf) && deaf_runechat_msg)
+			M.show_runechat_message(src, null, deaf_runechat_msg, null, SHOWMSG_VISUAL)
+		else
+			if(runechat_msg)
+				M.show_runechat_message(src, null, runechat_msg, null, SHOWMSG_VISUAL)
 
 		if(self_message && M == src)
 			to_chat(M, self_message)
@@ -183,9 +205,15 @@
 // deaf_message (optional) is what deaf people will see.
 // hearing_distance (optional) is the range, how many tiles away the message can be heard.
 
-/atom/proc/audible_message(message, deaf_message, hearing_distance = world.view, list/ignored_mobs)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = world.view, list/ignored_mobs, runechat_msg, deaf_runechat_msg)
 	for(var/mob/M in (get_hearers_in_view(hearing_distance, src) - ignored_mobs))
 		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
+
+		if((M.sdisabilities & DEAF || M.ear_deaf) && deaf_runechat_msg)
+			M.show_runechat_message(src, null, deaf_runechat_msg, null, SHOWMSG_VISUAL)
+		else
+			if(runechat_msg)
+				M.show_runechat_message(src, null, runechat_msg, null, SHOWMSG_VISUAL)
 
 /mob/proc/findname(msg)
 	for(var/mob/M as anything in mob_list)
@@ -206,9 +234,9 @@
 /mob/proc/restrained()
 	return
 
-/mob/proc/reset_view(atom/A)
+/mob/proc/reset_view(atom/A, force_remote_viewing)
 	if(client)
-		if(istype(A, /atom/movable))
+		if(isatom(A))
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
@@ -326,6 +354,8 @@
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
+	if(stat == CONSCIOUS)
+		last_examined = A.name
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
@@ -409,43 +439,9 @@
 	client.prefs.selected_quality_name = null
 
 	M.key = key
+	M.name = M.key
 //	M.Login()	//wat
 	return
-
-/mob/verb/observe()
-	set name = "Observe"
-	set category = "OOC"
-	var/is_admin = FALSE
-
-	if(client.holder && (client.holder.rights & R_ADMIN))
-		is_admin = TRUE
-	else if(stat != DEAD || isnewplayer(src) || jobban_isbanned(src, "Observer"))
-		to_chat(usr, "<span class='notice'>You must be observing to use this!</span>")
-		return
-
-	if(is_admin && stat == DEAD)
-		is_admin = FALSE
-
-	var/list/creatures = getpois()
-
-	client.perspective = EYE_PERSPECTIVE
-
-	var/eye_name = null
-
-	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a mob!", ok, null, null) as null|anything in creatures
-
-	if(!eye_name)
-		return
-
-	var/mob/mob_eye = creatures[eye_name]
-
-	if(client && mob_eye)
-		client.eye = mob_eye
-		if(is_admin)
-			client.adminobs = 1
-			if(mob_eye == client.mob || client.eye == client.mob)
-				client.adminobs = 0
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -677,6 +673,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
 
+			if(SSmapping.loaded_map_module)
+				SSmapping.loaded_map_module.stat_entry(src)
+
 	if(client && client.holder)
 		if(statpanel("Tickets"))
 			global.ahelp_tickets.stat_entry()
@@ -699,7 +698,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 					if(Master)
 						stat(null)
 						for(var/datum/controller/subsystem/SS in Master.subsystems)
-							SS.stat_entry()
+							if(SS.flags & SS_SHOW_IN_MC_TAB)
+								SS.stat_entry()
 					cameranet.stat_entry()
 
 	if(listed_turf && client)
@@ -769,9 +769,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
 		was_lying = lying
 
-	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)))
-		drop_l_hand()
-		drop_r_hand()
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
@@ -834,13 +831,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 		SetWeakened(0, TRUE)
 	if(remove_flags & CANPARALYSE)
 		SetParalysis(0, TRUE)
-	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
-		update_canmove()
 	status_flags &= ~remove_flags
+	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN|FAKEDEATH))
+		update_canmove()
 
 /mob/proc/add_status_flags(add_flags)
 	if(add_flags & GODMODE)
 		stuttering = 0
+	if(add_flags & FAKEDEATH)
+		update_canmove()
 	status_flags |= add_flags
 
 // ========== CRAWLING ==========
@@ -860,7 +859,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	updateDrugginesOverlay()
 
 /mob/proc/updateDrugginesOverlay()
-	if(druggy)
+	if(druggy && get_species(src) != SKRELL)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
 		throw_alert("high", /atom/movable/screen/alert/high)
 	else
@@ -996,12 +995,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/GetSpell(spell_type)
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)
-		if(spell == spell_type)
+		if(spell.type == spell_type)
 			return spell
 
 	if(mind)
 		for(var/obj/effect/proc_holder/spell/spell in mind.spell_list)
-			if(spell == spell_type)
+			if(spell.type == spell_type)
 				return spell
 	return FALSE
 
@@ -1183,7 +1182,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		input_offsets["[d]"] = map_to
 		pos_dirs -= map_to
 
-	addtimer(CALLBACK(src, .proc/randomise_inputs), randomise_inputs_cooldown)
+	addtimer(CALLBACK(src, PROC_REF(randomise_inputs)), randomise_inputs_cooldown)
 
 /mob/proc/AdjustConfused(amount)
 	confused += amount
@@ -1238,3 +1237,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/set_lastattacker_info(mob/M)
 	lastattacker_name = M.real_name
 	lastattacker_key = M.key
+
+/mob/proc/m_intent_delay()
+	. = 0
+	switch(m_intent)
+		if("run")
+			if(drowsyness > 0)
+				. += 6
+			. += config.run_speed
+		if("walk")
+			. += config.walk_speed
+
+// return TRUE if we failed our interaction
+/mob/proc/interact_prob_brain_damage(atom/object)
+	return FALSE

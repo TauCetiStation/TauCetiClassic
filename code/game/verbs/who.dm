@@ -79,7 +79,7 @@
 #define SW_CSS_CLASS  4
 #define SW_ALL_PARAMS 4 //update this, if add more params
 
-#define SW_TR(CKEY, RANK, EXTRA) "<tr><td>&emsp;[CKEY]</td><td><b>[SSholiday.get_staffwho_prefix(CKEY.ckey) ? SSholiday.get_staffwho_prefix(ckey) + " " : ""][RANK]</b></td><td>[EXTRA]</td></tr>"
+#define SW_TR(CKEY, RANK, EXTRA) "<tr><td>&emsp;[CKEY]</td><td><b>[SSholiday.get_staffwho_prefix(CKEY.ckey) ? SSholiday.get_staffwho_prefix(CKEY.ckey) + " " : ""][RANK]</b></td><td>[EXTRA]</td></tr>"
 #define SW_INCREMENT(GROUP, CKEY, RANK, EXTRA) staffwho[GROUP][SW_WHOTEXT] += SW_TR(CKEY, RANK, EXTRA);staffwho[GROUP][SW_COUNT]++
 /client/verb/staffwho()
 	set category = "Admin"

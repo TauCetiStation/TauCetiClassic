@@ -11,6 +11,8 @@
 	var/damage = 0
 	var/damage_cap = 100 //Wall will break down to girders if damage reaches this point
 
+	explosive_resistance = 3
+
 	var/damage_overlay
 	var/static/damage_overlays[8]
 
@@ -29,41 +31,8 @@
 
 	var/sheet_type = /obj/item/stack/sheet/metal
 
-	canSmoothWith = list(
-		/turf/simulated/wall,
-		/turf/simulated/wall/r_wall,
-		/obj/structure/falsewall,
-		/obj/structure/falsewall/reinforced,
-		/obj/structure/girder,
-		/obj/structure/girder/reinforced,
-		/obj/machinery/door/airlock,
-		/obj/machinery/door/airlock/command,
-		/obj/machinery/door/airlock/security,
-		/obj/machinery/door/airlock/engineering,
-		/obj/machinery/door/airlock/medical,
-		/obj/machinery/door/airlock/virology,
-		/obj/machinery/door/airlock/maintenance,
-		/obj/machinery/door/airlock/freezer,
-		/obj/machinery/door/airlock/mining,
-		/obj/machinery/door/airlock/atmos,
-		/obj/machinery/door/airlock/research,
-		/obj/machinery/door/airlock/science,
-		/obj/machinery/door/airlock/neutral,
-		/obj/machinery/door/airlock/highsecurity,
-		/obj/machinery/door/airlock/vault,
-		/obj/machinery/door/airlock/external,
-		/obj/machinery/door/airlock/glass,
-		/obj/machinery/door/airlock/command/glass,
-		/obj/machinery/door/airlock/engineering/glass,
-		/obj/machinery/door/airlock/security/glass,
-		/obj/machinery/door/airlock/medical/glass,
-		/obj/machinery/door/airlock/virology/glass,
-		/obj/machinery/door/airlock/research/glass,
-		/obj/machinery/door/airlock/mining/glass,
-		/obj/machinery/door/airlock/atmos/glass,
-		/obj/machinery/door/airlock/science/glass,
-		/obj/machinery/door/airlock/science/neutral,
-		)
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS_FOR_WALLS
 	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/Destroy()
@@ -188,6 +157,18 @@
 	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity)
+	for(var/thing in contents)
+		var/atom/movable/movable_thing = thing
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += movable_thing
+
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			ChangeTurf(basetype)
@@ -227,8 +208,9 @@
 	ChangeTurf(/turf/simulated/floor/plating)
 
 	var/turf/simulated/floor/F = src
-	F.burn_tile()
-	F.icon_state = "wall_thermite"
+	F.burnt = TRUE
+	F.add_scorched_overlay("thermite")
+
 	to_chat(user, "<span class='warning'>Термит начинает плавить стену.</span>")
 
 	spawn(seconds_to_melt * 10)
@@ -471,6 +453,20 @@
 		place_poster(W,user)
 		return
 
+	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(W)
+		W.pixel_x = X_OFFSET(24, get_dir(user, src))
+		W.pixel_y = Y_OFFSET(24, get_dir(user, src))
+		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
+		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
+		return
+	else if((istype(W, /obj/item/wallclock) || istype(W, /obj/item/portrait)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(W)
+		W.pixel_x = X_OFFSET(32, get_dir(user, src))
+		W.pixel_y = Y_OFFSET(32, get_dir(user, src))
+		W.anchored = TRUE
+		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W, TRUE))
+		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W, TRUE))
 	else
 		return attack_hand(user)
 
@@ -485,7 +481,7 @@
 
 /turf/simulated/wall/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75))
+	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75) && iswallturf(src))
 		add_dent(WALL_DENT_SHOT, Proj.p_x, Proj.p_y)
 
 /turf/simulated/wall/proc/add_dent(denttype, x, y)
@@ -512,3 +508,12 @@
 
 	LAZYADD(dent_decals, decal)
 	add_overlay(decal)
+
+/turf/simulated/wall/proc/tied_object_reset_pixel_offset(obj/O, unanchor = FALSE)
+	O.pixel_y = rand(-8, 8)
+	O.pixel_x = rand(-9, 9)
+	UnregisterSignal(O, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(O, COMSIG_PARENT_QDELETING)
+
+	if(unanchor)
+		O.anchored = FALSE

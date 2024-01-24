@@ -6,7 +6,7 @@
 	value = -4
 	disability = TRUE
 	mob_trait = TRAIT_BLIND
-	gain_text = "<span class='danger'>Эй, кто выключил свет?</span>"
+	gain_text = "<span class='danger'>Вы ничего не видите.</span>"
 	lose_text = "<span class='notice'>К вам чудесным образом вернулось зрение!</span>"
 
 /datum/quirk/blindness/on_spawn()
@@ -33,11 +33,11 @@
 
 /datum/quirk/deafness
 	name = QUIRK_DEAF
-	desc = "Вы полностью и неизлечимо глухи."
+	desc = "Вы неизлечимо глухи."
 	value = -2
 	disability = TRUE
 	mob_trait = TRAIT_DEAF
-	gain_text = "<span class='danger'>Тут подозрительно тихо.</span>"
+	gain_text = "<span class='danger'>Вы оглохли.</span>"
 	lose_text = "<span class='notice'>Вы снова слышите!</span>"
 
 
@@ -54,11 +54,14 @@
 		NO_EMOTION = FALSE,
 	)
 
-
+/datum/quirk/epileptic/on_spawn()
+	if(!istype(quirk_holder))
+		return
+	quirk_holder.AddComponent(/datum/component/epilepsy, IS_EPILEPTIC_NOT_IN_PARALYSIS, (EPILEPSY_PARALYSE_EFFECT | EPILEPSY_JITTERY_EFFECT), QUIRK_TYPE_EPILEPSY)
 
 /datum/quirk/fatness
 	name = QUIRK_FATNESS
-	desc = "Вы, мягко скажем, полноваты."
+	desc = "Ваше ожирение не лечится."
 	value = -1
 	mob_trait = TRAIT_FAT
 	gain_text = "<span class='danger'>Вы чувствуете, что набрали несколько лишних килограмм.</span>"
@@ -81,7 +84,7 @@
 
 /datum/quirk/tourette
 	name = QUIRK_TOURETTE
-	desc = "У вас неизлечимые нервные тики."
+	desc = "У вас неизлечимый нервный тик."
 	value = -1
 	mob_trait = TRAIT_TOURETTE
 	gain_text = "<span class='danger'>Вас начинает трясти!</span>"
@@ -97,10 +100,10 @@
 
 /datum/quirk/nearsighted
 	name = QUIRK_NEARSIGHTED
-	desc = "Вы плохо видите без очков, однако появляетесь с парой таковых."
+	desc = "У вас близорукость, но вы появляетесь с очками."
 	value = -1
 	mob_trait = TRAIT_NEARSIGHT
-	gain_text = "<span class='danger'>Всё на расстоянии от вас выглядит размыто.</span>"
+	gain_text = "<span class='danger'>Вещи, находящиеся вдалеке, начинают выглядеть размыто.</span>"
 	lose_text = "<span class='notice'>Вы стали нормально видеть!</span>"
 
 /datum/quirk/nearsighted/on_spawn()
@@ -114,11 +117,11 @@
 
 /datum/quirk/nervous
 	name = QUIRK_NERVOUS
-	desc = "Вы постоянно на взводе."
+	desc = "Вы постоянно нервничаете."
 	value = -1
 	mob_trait = TRAIT_NERVOUS
 	gain_text = "<span class='danger'>Вы весь на нервах.</span>"
-	lose_text = "<span class='notice'>Вы чувствуете себя более расслабленно.</span>"
+	lose_text = "<span class='notice'>Вы меньше нервничаете.</span>"
 
 	req_species_flags = list(
 		NO_EMOTION = FALSE,
@@ -128,7 +131,7 @@
 
 /datum/quirk/stress_eater
 	name = QUIRK_STRESS_EATER
-	desc = "Когда вы испытываете боль, ваш голод усиливается."
+	desc = "Вы заедаете боль"
 	value = -1
 	mob_trait = TRAIT_STRESS_EATER
 	gain_text = "<span class='danger'>Боль пробуждает ваш голод.</span>"
@@ -156,7 +159,7 @@
 	desc = "Вы очень быстро напиваетесь."
 	value = -1
 	mob_trait = TRAIT_LIGHT_DRINKER
-	gain_text = "<span class='danger'>От одной лишь мысли об алкоголе у вас кружится голова.</span>"
+	gain_text = "<span class='danger'>У вас кружится голова от одной лишь мысли об алкоголе.</span>"
 	lose_text = "<span class='notice'>Вы перестали быть слишком чувствительными к алкоголю.</span>"
 
 	// Those are not affected by alcohol at all.
@@ -171,11 +174,11 @@
 
 /datum/quirk/nyctophobia
 	name = QUIRK_NYCTOPHOBIA
-	desc = "Всю вашу жизнь вас преследовал страх темноты. Ныряя во тьму вы инстинктивно настораживаетесь и действуете с осторожностью, познавая настоящий страх. Лишь источник света способен помочь вам."
+	desc = "Всю вашу жизнь вы боялись темноты. Находясь в темноте без света, вы инстинктивно ведете себя осторожно и постоянно испытываете чувство страха."
 	value = -1
 
-	gain_text = "<span class='notice'>Даже от мимолётной мысли о пребывании в темноте вас бросает в холодный пот.</span>"
-	lose_text = "<span class='notice'>Темнота больше не пугает вас!</span>"
+	gain_text = "<span class='notice'>Даже сама мысль о том, что вы находитесь в темноте, заставляет вас дрожать.</span>"
+	lose_text = "<span class='notice'>Вы больше не боитесь темноты!</span>"
 
 	req_species_flags = list(
 		NO_EMOTION = FALSE,
@@ -186,7 +189,7 @@
 /datum/quirk/nyctophobia/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 
-	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), .proc/on_move)
+	RegisterSignal(H, list(COMSIG_MOVABLE_MOVED), PROC_REF(on_move))
 
 /datum/quirk/nyctophobia/proc/on_move(datum/source, atom/oldLoc, dir)
 	var/mob/living/carbon/human/H = quirk_holder
@@ -201,7 +204,7 @@
 	var/mob/living/L = quirk_holder
 
 	L.emote("scream")
-	to_chat(quirk_holder, "<span class='warning'>Тише, тише, успокойся, дружище... Это всего-лишь темнота...</span>")
+	to_chat(quirk_holder, "<span class='warning'>Тише, тише, не торопись... Ты в темноте...</span>")
 
 	L.set_m_intent(MOVE_INTENT_WALK)
 	ADD_TRAIT(quirk_holder, TRAIT_NO_RUN, FEAR_TRAIT)
@@ -223,7 +226,7 @@
 
 /datum/quirk/genetic_degradation
 	name = QUIRK_GENETIC_DEGRADATION
-	desc = "Ужасная генетическая болезнь делает невозможной искусственную реконструкцию вашего ДНК."
+	desc = "Неизлечимое генетическое заболевание делает невозможным искусственное восстановление вашего ДНК."
 	value = -1
 
 	mob_trait = TRAIT_NO_CLONE
@@ -233,4 +236,19 @@
 		NO_SCAN = FALSE,
 		IS_PLANT = FALSE,
 		IS_SYNTHETIC = FALSE,
+	)
+
+
+
+/datum/quirk/hemophiliac
+	name = QUIRK_HEMOPHILIAC
+	desc = "Вы с рождения больны гемофилией - пониженной свертываемостью крови. Кровотечения для вас очень опасны!"
+	value = -1
+	mob_trait = TRAIT_HEMOPHILIAC
+
+	gain_text = "<span class='danger'>Вы чувствуете, насколько жидка кровь в ваших венах.</span>"
+	lose_text = "<span class='notice'>Ваша кровь неожиданно густеет!</span>"
+
+	req_species_flags = list(
+		NO_BLOOD = FALSE,
 	)

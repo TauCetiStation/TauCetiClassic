@@ -46,7 +46,7 @@ var/global/list/image/splatter_cache=list()
 				qdel(B)
 
 		drytime = world.time + DRYING_TIME * (amount + 1)
-		addtimer(CALLBACK(src, .proc/dry), drytime)
+		addtimer(CALLBACK(src, PROC_REF(dry)), drytime)
 
 /obj/effect/decal/cleanable/blood/update_icon()
 	color = basedatum.color
@@ -269,7 +269,7 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/mucus/atom_init()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/set_dry, 1), DRYING_TIME * 2)
+	addtimer(CALLBACK(src, PROC_REF(set_dry), 1), DRYING_TIME * 2)
 
 /obj/effect/decal/cleanable/mucus/proc/set_dry(value) // just to change var using timer, we need a whole new proc :(
 	dry = value

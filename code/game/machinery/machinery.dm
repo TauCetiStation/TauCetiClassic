@@ -170,15 +170,18 @@ Class Procs:
 	set_power_use(NO_POWER_USE)
 	machines -= src
 
+	stop_processing()
+
+	dropContents()
+	return ..()
+
+/obj/machinery/proc/stop_processing()
 	if (speed_process)
 		STOP_PROCESSING(SSfastprocess, src)
 	else if (process_last)
 		STOP_PROCESSING_NAMED(SSmachines, src, processing_second)
 	else
 		STOP_PROCESSING(SSmachines, src)
-
-	dropContents()
-	return ..()
 
 /obj/machinery/proc/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -290,15 +293,37 @@ Class Procs:
 
 /**
  * Can this particular `user` interact with the machine?
- * Calls `is_operational()` first.
- * If you're going to override it, in most cases don't forget: `. = ..()`
+ * Does not check access or distance
  */
 /obj/machinery/proc/can_interact_with(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(user.incapacitated())
+		return FALSE
+	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user))) //can we just swap it for IsAdvancedToolUser
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return FALSE
 	if(!is_operational() && !interact_offline)
 		return FALSE
 	if(panel_open && !interact_open)
 		return FALSE
-	if(!can_mob_interact(user))
+	if(user.interact_prob_brain_damage(src))
+		return FALSE
+
+	return TRUE
+
+/**
+ * Any input()/alert() pause proc, so sometimes we need to check after if user still around and can interact
+ * For topics and tgui_act
+ * todo: we need atom analogues for attack_hand/attackby/topic/etc.
+ */
+/obj/machinery/proc/can_still_interact_with(mob/user)
+	// in the future we maybe need to add or change to TGUI can_use_topic, should be fine now
+	if(usr.can_use_topic(src) != STATUS_INTERACTIVE || !can_interact_with(user))
+		usr.unset_machine(src)
+		return FALSE
+	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !allowed(user))
+		allowed_fail(user)
 		return FALSE
 
 	return TRUE
@@ -334,6 +359,10 @@ Class Procs:
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
 		return TRUE
+
+	if(!can_interact_with(usr))
+		return
+
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
@@ -383,11 +412,6 @@ Class Procs:
 
 // set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user)
-	if((user.lying || user.stat != CONSCIOUS) && !IsAdminGhost(user))
-		return TRUE
-	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return TRUE
 	if(!can_interact_with(user))
 		return TRUE
 	if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
@@ -415,7 +439,28 @@ Class Procs:
 	..()
 	RefreshParts()
 
-/obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
+/obj/machinery/proc/RefreshParts()
+	var/caprat = 0
+	var/binrat = 0
+
+	var/manrat = 0
+	var/lasrat = 0
+	var/scanrat = 0
+
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		caprat += C.rating
+	for(var/obj/item/weapon/stock_parts/matter_bin/C in component_parts)
+		binrat += C.rating
+
+	for(var/obj/item/weapon/stock_parts/manipulator/C in component_parts)
+		manrat += C.rating
+	for(var/obj/item/weapon/stock_parts/micro_laser/C in component_parts)
+		lasrat += C.rating
+	for(var/obj/item/weapon/stock_parts/scanning_module/C in component_parts)
+		scanrat += C.rating
+
+	idle_power_usage = initial(idle_power_usage) * caprat * CAPACITOR_POWER_MULTIPLIER * binrat * MATTERBIN_POWER_MULTIPLIER
+	active_power_usage = initial(active_power_usage) * manrat * MANIPULATOR_POWER_MULTIPLIER * lasrat * LASER_POWER_MULTIPLIER * scanrat * SCANER_POWER_MULTIPLIER
 	return
 
 /obj/machinery/proc/assign_uid()

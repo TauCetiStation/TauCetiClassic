@@ -252,7 +252,7 @@
 
 		enabled=0
 		updateTurrets()
-		addtimer(CALLBACK(src, .proc/emp_act_post), rand(60,600))
+		addtimer(CALLBACK(src, PROC_REF(emp_act_post)), rand(60,600))
 
 	..()
 

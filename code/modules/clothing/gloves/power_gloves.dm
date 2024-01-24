@@ -3,7 +3,7 @@
 #define GLOVES_MODE_STUN "stun"
 
 /obj/item/clothing/gloves/power
-	name = "Black gloves"
+	name = "black gloves"
 	desc = "Heaped gloves with a bunch of all sorts of electronics."
 	icon_state = "marinad"
 	item_state = "marinad"
@@ -13,11 +13,18 @@
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = ARMS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
-	action_button_name = "Toggle gloves"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_gloves)
 	origin_tech = "combat=5;powerstorage=5;magnets=4;syndicate=2"
+	species_restricted = null
 	var/cell_use = 0
 	var/selected_mode = GLOVES_MODE_OFF
 
+/datum/action/item_action/hands_free/toggle_gloves
+	name = "Toggle gloves"
+
+/datum/action/item_action/hands_free/toggle_gloves/Activate()
+	var/obj/item/clothing/gloves/power/S = target
+	S.toggle_gloves_mode(usr)
 
 /obj/item/clothing/gloves/power/atom_init()
 	. = ..()
@@ -29,9 +36,6 @@
 		to_chat(user, "Current mode: [selected_mode].")
 		if(cell)
 			to_chat(user, "Cell charge: [cell.charge].")
-
-/obj/item/clothing/gloves/power/ui_action_click()
-	toggle_gloves_mode(usr)
 
 /obj/item/clothing/gloves/power/proc/toggle_gloves_mode(mob/user)
 	if(!cell?.charge)
@@ -54,6 +58,7 @@
 			cell_use = 0
 			siemens_coefficient = 0
 	to_chat(user, "<span class='notice'>You change the power gloves mode to</span> <span class='danger'>[selected_mode]</span>.")
+	update_item_actions()
 
 /obj/item/clothing/gloves/power/proc/turn_off(mob/user)
 	selected_mode = GLOVES_MODE_OFF
@@ -78,7 +83,7 @@
 		if(cell)
 			cell.updateicon()
 			to_chat(user, "<span class='notice'>You unscrew the [cell] away from the [src].</span>")
-			user.put_in_any_hand_if_possible(cell)
+			user.put_in_hands(cell)
 			turn_off()
 			cell = null
 			return

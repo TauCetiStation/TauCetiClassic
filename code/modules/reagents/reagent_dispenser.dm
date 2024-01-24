@@ -174,16 +174,16 @@
 		return FALSE
 	switch(fuel_am)
 		if(0 to 100)
-			explosion(loc, -1, 1, 2)
+			explosion(loc, 0, 1, 2)
 		if(100 to 500)
 			explosion(loc, 0, 1, 3)
 		else
-			explosion(loc, 1, 2, 4)
+			explosion(loc, 0, 2, 4)
 	qdel(src)
 	return TRUE
 
-/obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, temperature, volume)
-	if(temperature > T0C+500)
+/obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > T0C+500)
 		if(explode())
 			return
 	return ..()
@@ -271,7 +271,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	reagents.add_reagent("beer",1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
-	explosion(src.loc,0,3,5,7,10)
+	explosion(src.loc,0,3,5,7)
 	qdel(src)
 
 /obj/structure/reagent_dispensers/virusfood
@@ -283,7 +283,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 
 /obj/structure/reagent_dispensers/virusfood/atom_init()
 	. = ..()
-	reagents.add_reagent("virusfood", 1000)
+	reagents.add_reagent("virusfood", 15)
 
 /obj/structure/reagent_dispensers/acid
 	name = "Sulphuric Acid Dispenser"

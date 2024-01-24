@@ -4,7 +4,6 @@
 
 /mob/living/carbon/Destroy()
 	carbon_list -= src
-	remove_from_all_data_huds()
 	return ..()
 
 /mob/living/carbon/Life()
@@ -79,6 +78,7 @@
 	var/const/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
 	var/const/safe_exhaled_max = 10 // Yes it's an arbitrary value who cares?
 	var/const/safe_toxins_max = 0.005
+	var/const/safe_fractol_max = 0.15
 	var/const/SA_para_min = 1
 	var/const/SA_sleep_min = 5
 	var/const/SA_giggle_min = 0.15
@@ -102,6 +102,15 @@
 	var/exhaled_pp = exhaling ? (exhaling / breath_total_moles) * breath_pressure : 0
 	var/poison_pp = poison ? (poison / breath_total_moles) * breath_pressure : 0
 	var/SA_pp = sleeping_agent ? (sleeping_agent / breath_total_moles) * breath_pressure : 0
+
+	// Anyone can breath this!
+	var/druggy_inhale_type = "fractol"
+	var/druggy_inhaling = breath_gas[druggy_inhale_type]
+	var/druggy_inhale_pp = druggy_inhaling ? (druggy_inhaling / breath_total_moles) * breath_pressure : 0
+
+	inhale_type = inhale_pp >= druggy_inhale_pp ? inhale_type : druggy_inhale_type
+	inhaling = inhale_pp >= druggy_inhale_pp ? inhaling : druggy_inhaling
+	inhale_pp = inhale_pp >= druggy_inhale_pp ? inhale_pp : druggy_inhale_pp
 
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
@@ -149,6 +158,14 @@
 				emote("cough")
 		else
 			co2overloadtime = null
+
+	if(druggy_inhale_pp > safe_fractol_max)
+		adjustDrugginess(1)
+		if(prob(5))
+			emote("twitch")
+			random_move()
+		else if(prob(7))
+			emote(pick("drool","moan","giggle"))
 
 	// Too much poison in the air.
 	if(poison_pp > safe_toxins_max)
@@ -296,15 +313,7 @@
 		return .
 
 	handle_phantom_move(NewLoc, Dir)
-	if(nutrition && stat != DEAD)
-		var/met_factor = get_metabolism_factor()
-		nutrition -= met_factor * 0.01
-		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-			var/pain = getHalLoss()
-			if(pain > 0)
-				nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
-		if(m_intent == "run")
-			nutrition -= met_factor * 0.01
+
 	if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
 		adjust_bodytemperature(2)
 
@@ -632,19 +641,6 @@
 	dna = newDNA
 
 // ++++ROCKDTBEN++++ MOB PROCS //END
-
-/mob/living/carbon/clean_blood()
-	. = ..()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.gloves)
-			H.gloves.clean_blood()
-			H.gloves.germ_level = 0
-		else
-			if(H.bloody_hands)
-				H.bloody_hands = 0
-				H.update_inv_slot(SLOT_GLOVES)
-			H.germ_level = 0
 
 //Throwing stuff
 /mob/living/carbon/throw_mode_off()
@@ -978,7 +974,7 @@
 /mob/living/carbon/proc/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
 	return
 
-/mob/living/carbon/get_nutrition()
+/mob/living/carbon/get_satiation()
 	return nutrition + (reagents.get_reagent_amount("nutriment") \
 					+ reagents.get_reagent_amount("plantmatter") \
 					+ reagents.get_reagent_amount("protein") \
@@ -1070,7 +1066,6 @@
 				if (internal)
 					internal.add_fingerprint(usr)
 					internal = null
-					internals?.update_icon(src)
 					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1080,7 +1075,6 @@
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
-					internals?.update_icon(src)
 					internalsound = 'sound/misc/internalon.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1134,6 +1128,9 @@
 /mob/living/carbon/update_sight()
 	if(!..())
 		return FALSE
+
+	if(HAS_TRAIT(src, TRAIT_BLUESPACE_MOVING))
+		return TRUE
 
 	if(blinded)
 		see_in_dark = 8
@@ -1296,3 +1293,16 @@
 				amount = max(amount, BODYTEMP_COOLING_MAX)
 
 	..(amount, min_temp, max_temp)
+
+/mob/living/carbon/handle_nutrition()
+	var/met_factor = get_metabolism_factor()
+	if(!met_factor)
+		return
+	var/nutrition_to_remove = 0
+	nutrition_to_remove += 0.16
+	if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
+		var/pain = getHalLoss()
+		if(pain > 0)
+			nutrition_to_remove += pain * 0.01
+	nutrition_to_remove *= met_factor
+	nutrition = max(0.0, nutrition - nutrition_to_remove)

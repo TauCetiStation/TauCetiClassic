@@ -16,8 +16,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, atom/firestarter)
+	return FALSE
 
-
+// todo: exposed_volume not used and idk what should do, should be removed
 /turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, atom/firestarter)
 	if(fire_protection > world.time - 300)
 		return FALSE
@@ -116,6 +117,53 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	return FALSE
 
+// todo: check effect/hotspot on tg, possible future refactoring needed
+// wrote it because create_fire() and /obj/fire will die right after spawn without fuel
+/obj/effect/firewave
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	blend_mode = BLEND_ADD
+
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "1"
+	light_color = LIGHT_COLOR_FIRE
+	layer = OBJ_LAYER
+	plane = LIGHTING_LAMPS_PLANE
+	flags = ABSTRACT
+
+/obj/effect/firewave/atom_init(mapload, temperature = 1000)
+	. = ..()
+
+	var/turf/T = get_turf(src)
+
+	if(isspaceturf(T))
+		return INITIALIZE_HINT_QDEL
+
+	var/datum/gas_mixture/air_contents = T.return_air()
+	if(!air_contents)
+		return INITIALIZE_HINT_QDEL
+
+	// todo: increase air temperature?
+	// todo: should FireBurn and fire_act be part of hotspot_expose?
+
+	var/fire_started = T.hotspot_expose(temperature) // can start real fire if possible
+
+	// part copypaste from obj/fire below
+	T.fire_act(exposed_temperature = temperature)
+
+	for(var/atom/A in T)
+		A.fire_act(exposed_temperature = temperature)
+
+	if(fire_started) // fire will handle visual
+		return INITIALIZE_HINT_QDEL
+
+	// else do temp fire flash
+	color = heat2color(temperature)
+	set_light(3, 3, color)
+
+	QDEL_IN(src, 2 SECONDS)
+
 /obj/fire
 	// Icon for fire on turfs.
 
@@ -128,6 +176,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	icon_state = "1"
 	light_color = LIGHT_COLOR_FIRE
 	layer = OBJ_LAYER
+	plane = LIGHTING_LAMPS_PLANE
 	flags = ABSTRACT
 
 	var/firelevel = 1 //Calculated by gas_mixture.calculate_firelevel()
@@ -264,6 +313,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 		total_fuel = gas_fuel + liquid_fuel
 		if(total_fuel <= 0.005)
+			#ifdef FIREDBG
+			log_debug("Burning canceled because no fuel!")
+			#endif
 			return FALSE
 
 		//*** Determine how fast the fire burns

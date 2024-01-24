@@ -16,7 +16,7 @@
 	key = "yawn"
 
 	message_1p = "You yawn."
-	message_3p = "yawns.."
+	message_3p = "yawns."
 
 	message_impaired_reception = "You hear someone yawn."
 
@@ -170,7 +170,7 @@
 	)
 
 /datum/emote/human/shake/get_emote_message_3p(mob/living/carbon/human/user)
-	return "<b>[user]</b> shakes [P_THEIR(user)] head."
+	return "shakes [P_THEIR(user)] head."
 
 
 /datum/emote/human/twitch
@@ -200,4 +200,4 @@
 	)
 
 /datum/emote/human/deathgasp/get_emote_message_3p(mob/living/carbon/human/user)
-	return "<b>[user]</b> seizes up and falls limp, [P_THEIR(user)] eyes dead and lifeless..."
+	return "seizes up and falls limp, [P_THEIR(user)] eyes dead and lifeless..."

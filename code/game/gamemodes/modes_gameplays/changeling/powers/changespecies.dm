@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/change_species
 	name = "Change Species"
 	desc = "We take on the apperance of a species that we have absorbed."
+	button_icon_state = "change_species"
 	chemical_cost = 5
 	genomecost = 0
 	req_dna = 1

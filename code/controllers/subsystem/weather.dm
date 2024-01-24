@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(weather)
 		var/datum/weather/W = pickweight(possible_weather_for_this_z)
 		run_weather(W.name, W.target_ztrait)
 		eligible_zlevels -= Z
-		addtimer(CALLBACK(src, .proc/make_z_eligible, Z), rand(5 MINUTES, 10 MINUTES) + W.weather_duration_upper, TIMER_UNIQUE) //Around 5-10 minutes between weathers
+		addtimer(CALLBACK(src, PROC_REF(make_z_eligible), Z), rand(5 MINUTES, 10 MINUTES) + W.weather_duration_upper, TIMER_UNIQUE) //Around 5-10 minutes between weathers
 
 /datum/controller/subsystem/weather/Initialize(start_timeofday)
 	..()

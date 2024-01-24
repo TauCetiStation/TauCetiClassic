@@ -69,6 +69,8 @@ Note: Must be placed west/left of and R&D console to function.
 	return am
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
+	..()
+
 	var/T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
@@ -219,7 +221,7 @@ Note: Must be placed west/left of and R&D console to function.
 	for(var/M in D.materials)
 		loaded_materials[M].amount = max(0, (loaded_materials[M].amount - (D.materials[M] / efficiency_coeff * amount)))
 
-	addtimer(CALLBACK(src, .proc/create_design, RNDD), 32 * amount / efficiency_coeff)
+	addtimer(CALLBACK(src, PROC_REF(create_design), RNDD), 32 * amount / efficiency_coeff)
 
 /obj/machinery/r_n_d/protolathe/proc/create_design(datum/rnd_queue_design/RNDD)
 	if(!linked_console)

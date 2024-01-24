@@ -1,3 +1,9 @@
+#define DESIRABLE_TWOHAND "For comfortable shooting, it is necessary that the inactive hand is free"
+#define ONLY_TWOHAND "To fire this weapon, the inactive hand MUST be free"
+//Please do not increase power in shake_camera(). It is really not needed for players.
+#define OPTIMAL_POWER_RECOIL 1
+#define DEFAULT_DURATION_RECOIL 1
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -15,7 +21,7 @@
 	force = 5.0
 	origin_tech = "combat=1"
 	attack_verb = list("struck", "hit", "bashed")
-	action_button_name = "Switch Gun"
+	item_action_types = list(/datum/action/item_action/hands_free/switch_gun)
 	can_be_holstered = TRUE
 	var/obj/item/ammo_casing/chambered = null
 	var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
@@ -37,6 +43,14 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
+/datum/action/item_action/hands_free/switch_gun
+	name = "Switch Gun"
+
+/obj/item/weapon/gun/examine(mob/user)
+	..()
+	if(two_hand_weapon)
+		to_chat(user, "<span class='warning'>[two_hand_weapon].</span>")
+
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
@@ -50,7 +64,7 @@
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
 	if(iswizard(M))
 		return FALSE
-	if(two_hand_weapon)
+	if(two_hand_weapon == ONLY_TWOHAND)
 		if(M.get_inactive_hand())
 			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
 			return FALSE
@@ -62,10 +76,16 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-
-	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
-	if(skill_recoil)
-		shake_camera(user, skill_recoil + 1, skill_recoil)
+	if(recoil > 0)
+		var/skill_recoil_duration = max(DEFAULT_DURATION_RECOIL, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
+		if(two_hand_weapon != DESIRABLE_TWOHAND)
+			shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
+		if(two_hand_weapon == DESIRABLE_TWOHAND)
+			//No OPTIMAL_POWER_RECOIL only for increasing user's motivation to drop other hand
+			if(user.get_inactive_hand())
+				shake_camera(user, recoil + 2, recoil + 1)
+			else
+				shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
@@ -246,3 +266,6 @@
 			return
 	else
 		return ..()
+
+#undef OPTIMAL_POWER_RECOIL
+#undef DEFAULT_DURATION_RECOIL

@@ -38,7 +38,9 @@
 							"agent helmet" 						=1,
 							"additional agent equipment" 		=1,
 							"additional scientist equipment" 	=1,
-							"silence gloves"					=3)
+							"transforming gland" 				=1,
+							"silence gloves"					=3,
+							"recall implant" 					=4)
 
 	var/baton_modules_bought = FALSE
 
@@ -97,7 +99,9 @@
 		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=agent_gear'>Additional agent equipment</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=scientist_gear'>Additional scientist equipment</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=trans_gland'>Transforming gland</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=silence_gloves'>Silence gloves</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=recall_implant'>Recall implant</A><br>"
 		dat += "<a href='?src=\ref[src];show_prices=1'>[show_price_list ? "Close Price List" : "Open Price List"]</a><br>"
 		if(show_price_list)
 			dat += "<div class='Section'>[get_price_list()]</div>"
@@ -116,22 +120,6 @@
 	else
 		dat += "<span class='bad'>NO TELEPAD DETECTED</span></br>"
 
-	if(vest)
-		dat += "<h4> Agent Vest Mode</h4>"
-		var/mode = vest.mode
-		if(mode == VEST_STEALTH)
-			dat += "<a href='?src=\ref[src];flip_vest=1'>Combat</A>"
-			dat += "<span class='disabled'>Stealth</span>"
-		else
-			dat += "<span class='disabled'>Combat</span>"
-			dat += "<a href='?src=\ref[src];flip_vest=1'>Stealth</A>"
-
-		dat += "<br>"
-		dat += "<a href='?src=\ref[src];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<span class='gray bold'>Selected: </span>[vest.disguise ? "[vest.disguise.name]" : "Nobody"]"
-	else
-		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
-
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500, ntheme = CSS_THEME_ABDUCTOR)
 	popup.set_content(dat)
 	popup.open()
@@ -147,8 +135,6 @@
 	else if(href_list["teleporter_retrieve"])
 		if(do_after(usr, 7 SECONDS, FALSE, src))
 			TeleporterRetrieve()
-	else if(href_list["flip_vest"])
-		FlipVest()
 	else if(href_list["select_disguise"])
 		SelectDisguise()
 	else if(href_list["dispense"])
@@ -158,19 +144,14 @@
 			if("pistol")
 				Dispense(/obj/item/weapon/gun/energy/decloner/alien, 2)
 			if("permissions")
-				if(experiment && experiment.points >= 2)
-					experiment.points -= 2
-					visible_message("Addtitional permisions has been aquired! You can use all advanced baton's modes now!")
-					baton_modules_bought = TRUE
-				else
-					visible_message("Insufficent data!")
+				visible_message("Addtitional permisions has been aquired! You can use all advanced baton's modes now!")
+				baton_modules_bought = TRUE
 			if("adv_console")
 				visible_message("Agent Observation Console has been replaced with advanced one.")
-				for(var/obj/machinery/computer/security/abductor_ag/C in computer_list)
-					if(C.team == team)
-						camera = new(get_turf(C))
-						camera.console = src
-						qdel(C)
+				for(var/obj/machinery/computer/security/abductor_ag/C in range(2, src))
+					camera = new(get_turf(C))
+					camera.console = src
+					qdel(C)
 			if("baton")
 				Dispense(/obj/item/weapon/abductor_baton, 2)
 			if("helmet")
@@ -188,6 +169,13 @@
 			if("scientist_gear")
 				if(Dispense(/obj/item/clothing/glasses/hud/health/night))
 					new /obj/item/weapon/storage/visuals/surgery(pad.loc)
+			if("trans_gland")
+				Dispense(/obj/item/gland/abductor)
+			if("recall_implant")
+				var/obj/item/weapon/implanter/abductor/G = Dispense(/obj/item/weapon/implanter/abductor, 3)
+				if(G)
+					var/obj/item/weapon/implant/abductor/I = G.imp
+					I.home = pad
 			if("silence_gloves")
 				Dispense(/obj/item/clothing/gloves/black/silence, 3)
 	else if(href_list["show_prices"])
@@ -226,10 +214,6 @@
 	if(pad)
 		pad.Send()
 
-/obj/machinery/abductor/console/proc/FlipVest()
-	if(vest)
-		vest.flip_mode()
-
 /obj/machinery/abductor/console/proc/SelectDisguise()
 	var/list/entries = list()
 	var/tempname
@@ -244,20 +228,17 @@
 		vest.SetDisguise(chosen)
 
 /obj/machinery/abductor/console/proc/Initialize()
-	for(var/obj/machinery/abductor/pad/p in abductor_machinery_list)
-		if(p.team == team)
-			pad = p
-			break
+	for(var/obj/machinery/abductor/pad/p in range(2, src))
+		pad = p
+		break
 
-	for(var/obj/machinery/abductor/experiment/e in abductor_machinery_list)
-		if(e.team == team)
-			experiment = e
-			e.console = src
+	for(var/obj/machinery/abductor/experiment/e in range(2, src))
+		experiment = e
+		e.console = src
 
-	for(var/obj/machinery/computer/camera_advanced/abductor/c in abductor_machinery_list)
-		if(c.team == team)
-			camera = c
-			c.console = src
+	for(var/obj/machinery/computer/camera_advanced/abductor/c in range(2, src))
+		camera = c
+		c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
 	var/datum/icon_snapshot/entry = new
@@ -281,15 +262,20 @@
 		gizmo = G
 		G.console = src
 		return FALSE
-	if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
+	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
 		var/obj/item/clothing/suit/armor/abductor/vest/V = O
 		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 		vest = V
 		return FALSE
-	if(istype(O, /obj/item/weapon/abductor_baton))
+	else if(istype(O, /obj/item/weapon/abductor_baton))
 		var/obj/item/weapon/abductor_baton/B = O
 		to_chat(user, "<span class='notice'>You link the advanced baton to the console.</span>")
 		B.console = src
+		return FALSE
+	else if(istype(O, /obj/item/gland/abductor))
+		experiment.points++
+		visible_message("Refunded!")
+		qdel(O)
 		return FALSE
 	return ..()
 
@@ -299,10 +285,9 @@
 		visible_message("Incoming supply!")
 		if(pad)
 			flick("alien-pad", pad)
-			new item(pad.loc)
+			. = new item(pad.loc)
 		else
-			new item(loc)
-		return TRUE
+			. = new item(loc)
 	else
 		visible_message("Insufficent data!")
 		return FALSE

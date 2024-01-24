@@ -40,7 +40,7 @@
 	if(BP.pumped <= 0 && old_pumped > 0)
 		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
 	else
-		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.002 * BP.pumped)
+		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.0005 * BP.pumped)
 
 	return BP.pumped - old_pumped
 
@@ -664,7 +664,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(BP.owner.species.name != BP.species.name)
 		chances *= 0.02
 
-	if(blood_incompatible(BP.owner.dna.b_type, BP.b_type))
+	if(!blood_compatible(BP.owner.dna.b_type, BP.b_type))
 		chances *= 0.4
 
 	if(prob(chances))

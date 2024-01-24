@@ -17,7 +17,7 @@
 /datum/rating_template/proc/get_result_message()
 	var/rating = "[CEIL(avg_rate)]"
 	var/datum/vote_choice/rating/choice = find_suitable_choice(rating)
-	return "[result_message]: <span class='far [choice.fa_icon]'></span> <span style='font-size: 10px'>([rating])</span><br>"
+	return "[result_message]: <span class='far [choice.fa_icon]'></span> <span style='font-size: 10px'>([avg_rate])</span><br>"
 
 /datum/rating_template/proc/find_suitable_choice(rating)
 	for(var/datum/vote_choice/choice in choices)
@@ -106,6 +106,8 @@ SUBSYSTEM_DEF(rating)
 	var/lowpop = 35
 
 	var/voting = FALSE
+	var/already_started = FALSE
+	var/voting_time = 1 MINUTE
 
 /datum/controller/subsystem/rating/Initialize(start_timeofday)
 	for(var/type in subtypesof(/datum/rating_template))
@@ -114,6 +116,9 @@ SUBSYSTEM_DEF(rating)
 
 /datum/controller/subsystem/rating/Topic(href, href_list)
 	if(!voting)
+		var/voting_time_minute = voting_time / (1 MINUTE)
+		var/rus_minute_word = pluralize_russian(voting_time_minute, "минута", "минуты", "минут")
+		to_chat(usr, "<span class='warning'>На голосование отводится всего [voting_time_minute] [rus_minute_word]. В следующий раз стоит быть пошустрее!</span>")
 		return
 
 	if(href_list["round_rating"] && href_list["rating_cat"])
@@ -127,7 +132,7 @@ SUBSYSTEM_DEF(rating)
 					if(usr.ckey in VC.voters)
 						VC.voters.Remove(usr.ckey)
 				choice.voters[usr.ckey] = 1
-				to_chat(usr, "<span class='info'>Ваша оценка: [rating].</span>")
+				to_chat(usr, "<span class='info'>[template.result_message]: [rating].</span>")
 
 /datum/controller/subsystem/rating/proc/get_template(category)
 	for(var/datum/rating_template/template in rating_templates)
@@ -174,8 +179,11 @@ SUBSYSTEM_DEF(rating)
 
 	return cached_templates_pool
 
-/datum/controller/subsystem/rating/proc/announce_rating_collection()
+/datum/controller/subsystem/rating/proc/start_rating_collection()
 	voting = TRUE
+	already_started = TRUE
+
+	addtimer(CALLBACK(src, PROC_REF(calculate_rating)), voting_time)
 
 	for(var/client/C in clients)
 		var/html = "<div class='rating'>"
@@ -206,6 +214,8 @@ SUBSYSTEM_DEF(rating)
 				continue
 			template.avg_rate += text2num(choice.text) * total_votes // :)
 			template.total_voters += total_votes
+		if(template.total_voters == 0)
+			continue
 		template.avg_rate = round(template.avg_rate / template.total_voters, 0.01)
 		SSStatistics.rating.ratings[category] = template.avg_rate
 

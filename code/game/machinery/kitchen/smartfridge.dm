@@ -22,6 +22,7 @@
 	var/seconds_electrified = 0;
 	var/shoot_inventory = 0
 	var/locked = 0
+	var/content_overlay = "smartfridge-food"
 	var/datum/wires/smartfridge/wires = null
 
 /obj/machinery/smartfridge/atom_init()
@@ -31,6 +32,19 @@
 	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null, type)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
+	create_fridge_states()
+
+/obj/machinery/smartfridge/update_icon()
+	create_fridge_states()
+
+/obj/machinery/smartfridge/proc/create_fridge_states()
+	cut_overlays()
+	if(stat & BROKEN)
+		icon_state = "smartfridge-broken"
+		add_overlay(image(icon, "smartfridge-glass-broken"))
+		return
+	add_overlay(image(icon, content_overlay))
+	add_overlay(image(icon, "smartfridge-glass"))
 
 /obj/machinery/smartfridge/Destroy()
 	QDEL_NULL(wires)
@@ -45,6 +59,8 @@
 		A.loc = loc
 
 /obj/machinery/smartfridge/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
 
@@ -56,10 +72,7 @@
 /obj/machinery/smartfridge/seeds
 	name = "MegaSeed Servitor"
 	desc = "When you need seeds fast!"
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "seeds"
-	icon_on = "seeds"
-	icon_off = "seeds-off"
+	content_overlay = "smartfridge-petri"
 
 /obj/machinery/smartfridge/seeds/accept_check(obj/item/O)
 	if(istype(O,/obj/item/seeds))
@@ -69,6 +82,7 @@
 /obj/machinery/smartfridge/chemistry
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
+	content_overlay = "smartfridge-chem"
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/storage/pill_bottle))
@@ -87,6 +101,7 @@
 	name = "Slime Extract Storage"
 	desc = "A refrigerated storage unit for slime extracts."
 	req_access = list(access_xenobiology)
+	content_overlay = "smartfridge-slime"
 
 /obj/machinery/smartfridge/secure/extract/accept_check(obj/item/O)
 	if(istype(O,/obj/item/slime_extract))
@@ -96,9 +111,8 @@
 /obj/machinery/smartfridge/secure/medbay
 	name = "Refrigerated Medicine Storage"
 	desc = "A refrigerated storage unit for storing medicine and chemicals."
-	icon_state = "smartfridge" //To fix the icon in the map editor.
-	icon_on = "smartfridge_chem"
 	req_one_access = list(access_medical, access_chemistry)
+	content_overlay = "smartfridge-chem"
 
 /obj/machinery/smartfridge/secure/medbay/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass))
@@ -113,9 +127,7 @@
 	name = "Refrigerated Virus Storage"
 	desc = "A refrigerated storage unit for storing viral material."
 	req_access = list(access_virology)
-	icon_state = "smartfridge_virology"
-	icon_on = "smartfridge_virology"
-	icon_off = "smartfridge_virology-off"
+	content_overlay = "smartfridge-viro"
 
 /obj/machinery/smartfridge/secure/virology/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
@@ -127,15 +139,46 @@
 /obj/machinery/smartfridge/chemistry/virology
 	name = "Smart Virus Storage"
 	desc = "A refrigerated storage unit for volatile sample storage."
+	content_overlay = "smartfridge-viro"
 
 
 /obj/machinery/smartfridge/drinks
 	name = "Drink Showcase"
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
+	content_overlay = "smartfridge-drink"
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/food/drinks) || istype(O,/obj/item/weapon/reagent_containers/food/condiment))
 		return 1
+
+/obj/machinery/smartfridge/secure/bluespace
+	name = "Bluespace Storage"
+	desc = "Очень вместительное хранилище вещей с гравировкой BB-tech"
+	icon_state = "bluespace"
+	icon_on = "bluespace"
+	icon_off = "bluespace-off"
+
+/obj/machinery/smartfridge/secure/bluespace/accept_check(obj/item/O)
+	if(istype(O, /obj/item/weapon/storage/bag) || istype(O, /obj/item/weapon/card/id) || istype(O, /obj/item/device/pda))
+		return FALSE
+	if(isitem(O))
+		return TRUE
+	return FALSE
+
+/obj/machinery/smartfridge/secure/bluespace/atom_init()
+	. = ..()
+	wires = new(src)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/smartfridge/secure/bluespace(null, type)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	RefreshParts()
+
+/obj/machinery/smartfridge/secure/bluespace/create_fridge_states()
+	return
+
+/obj/machinery/smartfridge/secure/bluespace/update_icon()
+	if(stat & BROKEN)
+		icon_state = "bluespace-broken"
 
 /obj/machinery/smartfridge/process()
 	if(!src.ispowered)
@@ -164,7 +207,7 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/user)
-	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
+	if(default_deconstruction_screwdriver(user, icon_off, icon_on, O))
 		return
 
 	if(exchange_parts(user, O))
@@ -178,15 +221,6 @@
 		return
 
 	default_deconstruction_crowbar(O)
-
-	if(isscrewing(O))
-		panel_open = !panel_open
-		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
-		cut_overlays()
-		if(panel_open)
-			add_overlay(image(icon, icon_panel))
-		nanomanager.update_uis(src)
-		return
 
 	if(is_wire_tool(O) && panel_open && wires.interact(user))
 		return

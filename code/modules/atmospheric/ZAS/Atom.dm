@@ -39,7 +39,7 @@
 		return TRUE
 
 //Convenience function for atoms to update turfs they occupy
-/atom/movable/proc/update_nearby_tiles(need_rebuild)
+/atom/movable/proc/update_nearby_tiles()
 	if(!SSair)
 		return FALSE
 
@@ -48,7 +48,7 @@
 
 	return TRUE
 
-/atom/var/can_block_air = FALSE
+/atom/var/can_block_air = FALSE // if true - object need also CanPass or c_airblock
 
 //Basically another way of calling CanPass(null, other, 0, 0).
 //Returns:

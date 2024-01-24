@@ -244,7 +244,7 @@
 	return 1
 
 /obj/singularity/proc/consume(atom/A)
-	var/gain = A.singularity_act(current_size)
+	var/gain = A.singularity_act(src, current_size)
 	src.energy += gain
 	return
 

@@ -11,9 +11,11 @@ SUBSYSTEM_DEF(machines)
 	var/list/currentrun = list()
 	var/list/powernets  = list()
 
+	var/stop_powernet_processing = FALSE
+
 /datum/controller/subsystem/machines/Initialize()
 	makepowernets()
-	fire()
+	fire(init_fire = TRUE)
 	..()
 
 /datum/controller/subsystem/machines/proc/makepowernets()
@@ -32,7 +34,7 @@ SUBSYSTEM_DEF(machines)
 	..("M:[processing.len]|PN:[powernets.len]")
 
 
-/datum/controller/subsystem/machines/fire(resumed = 0)
+/datum/controller/subsystem/machines/fire(resumed = FALSE, init_fire = FALSE)
 	if (!resumed)
 		for(var/datum/powernet/Powernet in powernets)
 			Powernet.reset() //reset the power state.
@@ -41,16 +43,17 @@ SUBSYSTEM_DEF(machines)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
-	var/seconds = wait * 0.1
 	while(currentrun.len)
 		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if (QDELETED(thing) || thing.process(seconds) == PROCESS_KILL)
+		if (QDELETED(thing) || thing.process(wait * 0.1) == PROCESS_KILL)
 			processing -= thing
 			processing_second -= thing
 			thing.isprocessing = FALSE
-		if (MC_TICK_CHECK)
-			return
+		if(init_fire)
+			CHECK_TICK
+		else if (MC_TICK_CHECK)
+			break
 
 /datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
 	for(var/A in cables)

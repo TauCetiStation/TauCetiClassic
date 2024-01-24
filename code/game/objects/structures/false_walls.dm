@@ -46,7 +46,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	opening = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, /obj/structure/falsewall/proc/toggle_open), 5)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 5)
 
 /obj/structure/falsewall/proc/toggle_open()
 	if(!QDELETED(src))
@@ -174,8 +174,7 @@
 	if(!active)
 		if(world.time > last_event + 15)
 			active = 1
-			for(var/mob/living/L in range(3, src))
-				L.apply_effect(12, IRRADIATE, 0)
+			irradiate_in_dist(get_turf(src), 12, 3)
 			for(var/turf/simulated/wall/mineral/uranium/T in range(3, src))
 				T.radiate()
 			last_event = world.time

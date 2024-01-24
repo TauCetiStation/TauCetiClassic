@@ -1,48 +1,32 @@
+/mob/proc/spawn_gibs()
+	gibs(loc, dna)
+
 //This is the proc for gibbing a mob. Cannot gib ghosts.
 //added different sort of gibs and animations. N
 /mob/proc/gib()
 	death(1)
-	var/atom/movable/overlay/animation = null
-	notransform = TRUE
-	canmove = 0
-	icon = null
-	invisibility = 101
 
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
+	spawn_gibs()
 
-//	flick("gibbed-m", animation)
-	gibs(loc, dna)
-
-	dead_mob_list -= src
-	spawn(15)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
+	qdel(src)
 
 /mob/proc/dust_process()
-	var/icon/I = build_disappear_icon(src)
-	var/atom/movable/overlay/animation = null
-	animation = new(loc)
-	animation.master = src
+	var/icon/I = build_disappear_icon(src, lying ? -lying_current : 0)
+	var/atom/movable/overlay/animation = new(loc)
+	animation.transform = transform
 	flick(I, animation)
 
 	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
 	emote("scream")
 	death(1)
-	notransform = TRUE
-	canmove = 0
-	icon = null
-	invisibility = 101
+	qdel(src)
 
-	QDEL_IN(animation, 20)
-	QDEL_IN(src, 20)
+	QDEL_IN(animation, 2 SECONDS)
 
 /mob/proc/dust()
-	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
-	dead_mob_list -= src
+	dust_process()
+	
 
 /mob/proc/death(gibbed)
 	SEND_SIGNAL(src, COMSIG_MOB_DIED, gibbed)

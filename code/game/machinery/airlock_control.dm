@@ -111,10 +111,17 @@
 	if(radio_controller)
 		set_frequency(frequency)
 
+	queue_smooth_neighbors()
+
 /obj/machinery/door/airlock/Destroy()
 	if(frequency && radio_controller)
 		radio_controller.remove_object(src,frequency)
 	return ..()
+
+/obj/machinery/door/airlock/turn_light_off()
+	if(lights && hasPower())
+		lights = 0
+		update_icon()
 
 /obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'

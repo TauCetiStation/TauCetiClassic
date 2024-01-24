@@ -6,6 +6,7 @@
 	opacity = 1
 	density = TRUE
 	smooth = SMOOTH_TRUE
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
 
 /turf/unsimulated/wall/iron
 	icon = 'icons/turf/walls/iron.dmi'

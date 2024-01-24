@@ -199,7 +199,7 @@
 		return
 
 	if(target && path.len == 0)
-		INVOKE_ASYNC(src, .proc/find_target_path)
+		INVOKE_ASYNC(src, PROC_REF(find_target_path))
 		return
 	if(path.len > 0 && target)
 		step_to(src, path[1])
@@ -246,13 +246,13 @@
 	signal.transmission_method = 1
 	signal.data = list("findbeacon" = "patrol")
 	frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
-	addtimer(CALLBACK(src, .proc/receive_patrol_path), 5)
+	addtimer(CALLBACK(src, PROC_REF(receive_patrol_path)), 5)
 
 /obj/machinery/bot/cleanbot/proc/receive_patrol_path()
 	if (!next_dest_loc)
 		next_dest_loc = closest_loc
 	if (next_dest_loc)
-		patrol_path = get_path_to(src, next_dest_loc, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=null)
+		patrol_path = get_path_to(src, next_dest_loc, TYPE_PROC_REF(/turf, Distance_cardinal), 0, 120, id=botcard, exclude=null)
 
 /obj/machinery/bot/cleanbot/proc/patrol_move()
 	if (patrol_path.len <= 0)

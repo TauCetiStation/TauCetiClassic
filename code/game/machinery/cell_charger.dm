@@ -21,6 +21,8 @@
 	RefreshParts()
 
 /obj/machinery/cell_charger/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
@@ -121,7 +123,7 @@
 
 	updateicon()
 
-/obj/machinery/cell_charger/deconstruct()
+/obj/machinery/cell_charger/deconstruct(disassembled = TRUE)
 	if(charging)
 		charging.forceMove(loc)
 		charging = null

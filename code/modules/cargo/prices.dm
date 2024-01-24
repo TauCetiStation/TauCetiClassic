@@ -92,7 +92,7 @@
 /obj/item/clothing/gloves/boxing/price = 63
 /obj/item/clothing/gloves/combat/price = 880
 /obj/item/clothing/gloves/rainbow/price = 443
-/obj/item/clothing/gloves/yellow/price = 2181
+/obj/item/clothing/gloves/insulated/price = 2181
 
 /obj/item/clothing/head/helmet/price = 3000
 /obj/item/clothing/head/helmet/gladiator/price = 432
@@ -120,7 +120,7 @@
 /obj/item/clothing/suit/armor/hos/price = 27000
 /obj/item/clothing/suit/armor/hos/jensen/price = 29500
 /obj/item/clothing/suit/armor/laserproof/price = 16500
-/obj/item/clothing/suit/armor/reactive/price = 50000
+/obj/item/clothing/suit/armor/vest/reactive/price = 50000
 /obj/item/clothing/suit/armor/swat/price = 33500
 /obj/item/clothing/suit/armor/tactical/price = 9990
 /obj/item/clothing/suit/captunic/price = 6000
@@ -253,11 +253,11 @@
 /obj/item/weapon/gun/energy/toxgun/price = 8300
 /obj/item/weapon/gun/energy/xray/price = 14000
 /obj/item/weapon/gun/grenadelauncher/price = 3000
-/obj/item/weapon/gun/projectile/automatic/colt1911/price = 6500
+/obj/item/weapon/gun/projectile/automatic/pistol/colt1911/price = 6500
 /obj/item/weapon/gun/projectile/grenade_launcher/m79/price = 2500
 /obj/item/weapon/gun/projectile/shotgun/price = 4000
 /obj/item/weapon/gun/projectile/shotgun/combat/price = 6500
-/obj/item/weapon/gun/projectile/automatic/glock/price = 3000
+/obj/item/weapon/gun/projectile/automatic/pistol/glock/price = 3000
 /obj/item/weapon/hand_tele/price = 8000
 /obj/item/weapon/hemostat/price = 1250
 /obj/item/weapon/implantcase/death_alarm/price = 750
@@ -282,7 +282,7 @@
 /obj/item/weapon/scalpel/price = 1250
 /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen/price = 222
 /obj/item/weapon/stamp/price = 3330
-/obj/item/weapon/stamp/captain/price = 25000
+/obj/item/weapon/stamp/cap/price = 25000
 /obj/item/weapon/stamp/clown/price = 9900
 /obj/item/weapon/stock_parts/price = 350
 /obj/item/weapon/storage/backpack/clown/price = 3000

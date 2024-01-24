@@ -102,7 +102,7 @@
 
 	current_research = initial(choosed_tech.name)
 	choosed_tech.researching = TRUE
-	start_activity(CALLBACK(src, .proc/research_tech, choosed_tech))
+	start_activity(CALLBACK(src, PROC_REF(research_tech), choosed_tech))
 
 /obj/structure/cult/tech_table/proc/research_tech(datum/building_agent/tech/choosed_tech)
 	religion.add_tech(choosed_tech.building_type)
@@ -130,7 +130,7 @@
 
 	to_chat(user, "<span class='notice'>Вы начали [in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)].</span>")
 	current_research = "[in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)]"
-	start_activity(CALLBACK(src, .proc/upgrade_aspect, choosed_aspect))
+	start_activity(CALLBACK(src, PROC_REF(upgrade_aspect), choosed_aspect))
 
 /obj/structure/cult/tech_table/proc/upgrade_aspect(datum/aspect/aspect_to_upgrade)
 	if(initial(aspect_to_upgrade.name) in religion)

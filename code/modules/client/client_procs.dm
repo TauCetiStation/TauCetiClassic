@@ -173,7 +173,7 @@ var/global/list/blacklisted_builds = list(
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			to_chat(src, "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
-			cmd_admin_mute(src.mob, mute_type, 1)
+			spam_automute(src.mob, mute_type)
 			return 1
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
 			to_chat(src, "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>")
@@ -197,6 +197,44 @@ var/global/list/blacklisted_builds = list(
 		return 0
 	fileaccess_timer = world.time + FTPDELAY	*/
 	return 1
+
+/proc/spam_automute(mob/M as mob, mute_type)
+	if(!config.automute_on)
+		return
+
+	if(!M.client)
+		return
+
+	var/muteunmute = "auto-muted"
+	var/mute_string = get_mute_text(mute_type)
+
+	if(!mute_string)
+		CRASH("Can't parse mute type: [mute_type]")
+
+	M.client.prefs.muted |= mute_type
+	log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]")
+	message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(M)] from [mute_string].")
+	to_chat(M, "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin.")
+	feedback_add_details("admin_verb","AUTOMUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/proc/get_mute_text(mute_type)
+	switch(mute_type)
+		if(MUTE_IC)
+			. = "IC (say and emote)"
+		if(MUTE_OOC)
+			. = "OOC"
+		if(MUTE_PRAY)
+			. = "pray"
+		if(MUTE_ADMINHELP)
+			. = "adminhelp, admin PM and ASAY"
+		if(MUTE_MENTORHELP)
+			. = "mentorhelp and mentor PM"
+		if(MUTE_DEADCHAT)
+			. = "deadchat and DSAY"
+		if(MUTE_ALL)
+			. = "everything"
+		else
+			return
 
 
 	///////////
@@ -286,11 +324,10 @@ var/global/list/blacklisted_builds = list(
 
 	connection_time = world.time
 
-	if(custom_event_msg && custom_event_msg != "")
-		to_chat(src, "<h1 class='alert'>Custom Event</h1>")
-		to_chat(src, "<h2 class='alert'>A custom event is taking place. OOC Info:</h2>")
-		to_chat(src, "<span class='alert'>[custom_event_msg]</span>")
-		to_chat(src, "<br>")
+	SSevents.custom_event_announce(src)
+
+	if(length(global.temp_player_verbs))
+		verbs |= global.temp_player_verbs
 
 	if( (world.address == address || !address) && !host )
 		host = key
@@ -340,6 +377,9 @@ var/global/list/blacklisted_builds = list(
 	if(!cob)
 		cob = new()
 
+	if(!media)
+		media = new(src)
+
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		to_chat(src, "<span class='warning'>Unable to access asset cache browser, \
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
@@ -347,8 +387,9 @@ var/global/list/blacklisted_builds = list(
 
 	handle_connect()
 
-	spawn(50)//should wait for goonchat initialization
-		handle_autokick_reasons()
+	spawn(50)//should wait for goonchat initialization for kick/redirect reasons
+		if(!handle_autokick_reasons())
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 
 	//////////////
 	//DISCONNECT//
@@ -377,6 +418,7 @@ var/global/list/blacklisted_builds = list(
 
 	return ..()
 
+// return TRUE if we need to kick/redirect player, else FALSE
 /client/proc/handle_autokick_reasons()
 	if(config.client_limit_panic_bunker_count != null)
 
@@ -404,7 +446,7 @@ var/global/list/blacklisted_builds = list(
 					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
 					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
 					QDEL_IN(src, 2 SECONDS)
-				return
+				return TRUE
 
 	if(config.registration_panic_bunker_age)
 		if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
@@ -412,7 +454,7 @@ var/global/list/blacklisted_builds = list(
 			message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
 			QDEL_IN(src, 2 SECONDS)
-			return
+			return TRUE
 
 	if(config.byond_version_min && byond_version < config.byond_version_min)
 		popup(src, "Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.", "Byond Verion")
@@ -420,7 +462,7 @@ var/global/list/blacklisted_builds = list(
 		log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
 		if(!holder)
 			QDEL_IN(src, 2 SECONDS)
-			return
+			return TRUE
 
 	if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
 		to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
@@ -431,7 +473,7 @@ var/global/list/blacklisted_builds = list(
 		log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
 		if(!holder)
 			QDEL_IN(src, 2 SECONDS)
-			return
+			return TRUE
 
 
 /client/proc/log_client_to_db(connectiontopic)
@@ -654,7 +696,7 @@ var/global/list/blacklisted_builds = list(
 		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
 
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/getFilesSlow, src, SSassets.preload, FALSE), 5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(getFilesSlow), src, SSassets.preload, FALSE), 5 SECONDS)
 
 /client/proc/generate_clickcatcher()
 	if(!void)
@@ -747,7 +789,7 @@ var/global/list/blacklisted_builds = list(
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
 					communication_hotkeys += key
 				if("Me")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.me")
 					communication_hotkeys += key
 				if("LOOC")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=looc")

@@ -55,7 +55,7 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/toEat = contents[1]
 		if(istype(toEat))
 			if(CanEat(user, M, toEat, "eat"))
-				toEat.On_Consume(M, user)
+				toEat.attack(M, user, user.get_targetzone(), TRUE)
 				if(toEat)
 					qdel(toEat)
 				cut_overlays()
@@ -70,12 +70,14 @@
 	icon_state = "spoon"
 	attack_verb = list("attacked", "poked")
 	overlay_food_string = "food_spoon"
+	m_amt = 250
 
 /obj/item/weapon/kitchen/utensil/pspoon
 	name = "plastic spoon"
 	desc = "Super dull action!"
 	icon_state = "pspoon"
 	attack_verb = list("attacked", "poked")
+	overlay_food_string = "food_spoon"
 
 /*
  * Forks
@@ -87,6 +89,7 @@
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
 	overlay_food_string = "food_fork"
+	m_amt = 300
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
@@ -104,14 +107,14 @@
 	desc = "How do people even hold this?"
 	force = 2
 	icon_state = "sticks"
-	overlay_food_string = "loaded_food"
+	overlay_food_string = "food_sticks"
 
 /obj/item/weapon/kitchen/utensil/pfork
 	name = "plastic fork"
 	desc = "Yay, no washing up to do."
 	icon_state = "pfork"
 	force = 0
-
+	overlay_food_string = "food_fork"
 
 /obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity, params)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
@@ -198,6 +201,22 @@
 	throw_speed = 6
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "throwing_knife"
+
+/obj/item/weapon/kitchenknife/makeshift_shiv
+	name = "glass shiv"
+	desc = "A shard of sharp glass with a rag tied around"
+	force = 9
+	throwforce = 5
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "glass"
+
+/obj/item/weapon/kitchenknife/makeshift_shiv/phoron
+	name = "phoron glass shiv"
+	desc = "A shard of sharp glass with a rag tied around. Considerably tougher than regular glass shiv."
+	force = 13
+	throwforce = 9
+	icon_state = "pglass"
+
 
 /*
  * Bucher's cleaver

@@ -11,7 +11,7 @@
 
 /obj/structure/object_wall/atom_init()
 	. = ..()
-	update_nearby_tiles(need_rebuild = 1)
+	update_nearby_tiles()
 
 /obj/structure/object_wall/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))

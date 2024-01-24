@@ -13,6 +13,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/active = 0
 	var/uplink_type = "traitor" //0 - traitor uplink, 1 - nuke
 	var/list/uplink_items = list()
+	var/list/extra_purchasable = list()
 
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
 /obj/item/device/uplink/interact(mob/user)
@@ -88,6 +89,9 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				var/datum/uplink_item/I = uplink[number]
 				if(I)
 					I.buy(src, usr)
+					if(I.limited_stock)
+						buyable_items -= I
+						extra_purchasable -= I
 					interact(usr)
 
 
@@ -173,6 +177,15 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	hidden_uplink = new(src)
 	hidden_uplink.uplink_type = "nuclear"
 
+	hidden_uplink.extra_purchasable += create_uplink_sales(rand(2,3), "Discounts", TRUE, get_uplink_items(hidden_uplink))
+
+	var/datum/faction/nuclear/F = find_faction_by_type(/datum/faction/nuclear)
+	if(!F)
+		return
+	if(!F.team_discounts.len)
+		F.team_discounts += create_uplink_sales(rand(3,5), "Team Discounts", FALSE, get_uplink_items(hidden_uplink))
+	hidden_uplink.extra_purchasable += F.team_discounts
+
 /obj/item/device/radio/uplink/attack_self(mob/user)
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
@@ -184,6 +197,10 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/radio/uplink/strike_leader/atom_init()
 	. = ..()
 	hidden_uplink.uses = 15
+
+/obj/item/device/radio/uplink/nukeop_leader/atom_init()
+	. = ..()
+	hidden_uplink.uses = 75
 
 /obj/item/device/multitool/uplink/atom_init()
 	. = ..()

@@ -1,3 +1,8 @@
+# Соглашения о коде
+
+> [!NOTE]
+> Апстрим [документация tg](https://github.com/tgstation/tgstation/blob/master/.github/guides/STANDARDS.md) где-то может быть более подробна и актуальна, но не обязательно соответствует нашему билду.
+
 ## Введение
 Code Convention - свод несложных правил по оформлению кода. Его наличие подразумевает, что все кто вносят свои изменения, с ним соглашаются и руководствуются им в полной мере. Обязательно прочтите всю статью, если зашли сюда в первый раз. Это очень важно.
 
@@ -285,6 +290,53 @@ for(var/atom in bag_of_atoms)
 	highest_alpha = thing.alpha
 ```
 
+### `process()` процедуры должны быть зависимы от таймингов сабсистем и использовать ``seconds_per_tick``
+
+На простом примере, если мы хотим, чтобы моб терял 2 жизни в секунду:
+
+```DM
+//Плохо:
+/mob/testmob
+	var/health = 100
+	var/health_loss_per_tick = 4 //Мы хотим терять 2 здоровья в секунду
+
+/mob/testmob/process() //сабсистема SSmobs запускается каждые 2 секунды
+	health -= health_loss_per_tick
+
+//Хорошо:
+/mob/testmob
+	var/health = 100
+	var/health_loss_per_second = 2
+
+/mob/testmob/process(seconds_per_tick)
+	health -= health_loss_per_second * seconds_per_tick
+```
+
+В первом примере моб теряет по 4 жизни каждый тик сабсистемы, и так как сабсистема мобов процессится каждые 2 секунды, то в итоге моб теряет по 2 жизни в секунду.
+
+Это не учитывает тайминги перед тиком сабсистмы и становится проблемой, если кто-то захочет изменить скорость работы (``wait``) сабсистемы мобов. Например, если сабсистема станет запускаться каждую секунду (в два раза быстрее), то и моб начнет терять жизни в 2 раза быстрее: по 4 в секунду вместо 2-х. И наоборот, если сабсистема будет запускаться реже.
+
+Решением является использование ``seconds_per_tick``. Сабсистема сама сообщает в ``process()``, как часто она запускается.
+
+Во втором примере мы сделали ``health_loss`` значением в секунду, и ориентировались на переданное сабсистемой значение для высчитывания итогового результата. И не важно, если сабсистема мобов станет запускаться чаще, или медленнее, скорость потери жизней в секунду останется преждней.
+
+Аналогично с ``prob()`` в процессинге:
+```
+//Плохо:
+/mob/testmob/process()
+	if(prob(10)) // 10% шанса на событие в тик, когда тик может быть разным
+		event()
+
+//Хорошо:
+/mob/testmob/process(seconds_per_tick)
+	if(SPT_PROB(10, seconds_per_tick)) // 10% шанса на событие в секунду
+		event()
+```
+
+``SPT_PROB`` конвертирует шанс на шанс в секунду и обеспечивает более постоянное значение, зависимое от скорости сабсистемы.
+
+*Стоит понимать, что ``seconds_per_tick`` - идеальное "среднее" значение скорости сабсистемы, оно не учитывает возможные лаги игры и замедление работы сабсистем из-за этого.*
+
 ### Особенности BYOND
 #### Использование `spawn()`
 Не используйте. Причины:
@@ -296,10 +348,10 @@ for(var/atom in bag_of_atoms)
 
 В зависимости от того, как используется спавн есть два пути замены:
 - Если **spawn(time)**:
-  - Как правило, такие спавны заменяются на ```addtimer(CALLBACK(thingtocall, thingtocall_path.proc/proc_name, args), time)```
+  - Как правило, такие спавны заменяются на ```addtimer(CALLBACK(thingtocall, TYPE_PROC_REF(thingtocall_path, proc_name), args), time)```
   - Если с помощью спавна лишь изменяется переменная датума, то лучше использовать ```VARSET_IN(datum, var, var_value, time)```.
 - Если **spawn()** или **spawn(0)**:
-  - Если спавн содержит единственный прок, то просто оберните его в ```INVOKE_ASYNC(thingtocall, thingtocall_path.proc/proc_name, args)```. Иначе перенесите всё содержимое спавна в новый прок, который уже и добавите в ```INVOKE_ASYNC(thingtocall, thingtocall_path.proc/proc_name, args)```
+  - Если спавн содержит единственный прок, то просто оберните его в ```INVOKE_ASYNC(thingtocall, TYPE_PROC_REF(thingtocall_path, proc_name), args)```. Иначе перенесите всё содержимое спавна в новый прок, который уже и добавите в ```INVOKE_ASYNC(thingtocall, TYPE_PROC_REF(thingtocall_path, proc_name), args)```
   - Если всё содержимое прока обернуто в спавн, то в самом проке прописать ```set waitfor = FALSE```
 
 Примеры замен под спойлерами ниже:
@@ -327,8 +379,8 @@ for(var/atom in bag_of_atoms)
 //Хорошо:
 /mob/some/class/proc/foo()
 	code
-	addtimer(CALLBACK(src, .proc/do_something_wrapper, variable), 20)
-	addtimer(CALLBACK(other_mob, /mob.proc/do_something_crazy, a, b), 40)
+	addtimer(CALLBACK(src, PROC_REF(do_something_wrapper), variable), 20)
+	addtimer(CALLBACK(other_mob, TYPE_PROC_REF(/mob, do_something_crazy), a, b), 40)
 	VARSET_IN(src, name, "Steve", 30)
 
 /mob/some/class/proc/do_something_wrapper(variable)
@@ -381,7 +433,7 @@ for(var/atom in bag_of_atoms)
 //Хорошо:
 /mob/some/class/proc/foo()
 	code
-	INVOKE_ASYNC(src, .proc/do_something_wrapper, variable)
+	INVOKE_ASYNC(src, PROC_REF(do_something_wrapper), variable)
 
 /mob/some/class/proc/do_something_wrapper(variable)
 	switch(variable)

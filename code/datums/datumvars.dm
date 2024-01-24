@@ -268,6 +268,9 @@
 		body += "<option value='?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
 		body += "<option value='?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
+		if(isAI(D))
+			body += "<option value>---</option>"
+			body += "<option value='?_src_=vars;allowmoving=\ref[D]'>Allow Moving</option>"
 		if(ishuman(D))
 			body += "<option value>---</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
@@ -284,6 +287,7 @@
 		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
 		body += "<option value='?_src_=vars;edit_filters=\ref[D]'>Edit Filters</option>"
 		body += "<option value='?_src_=vars;edit_particles=\ref[D]'>Edit Particles</option>"
+		body += "<option value='?_src_=vars;update_icon=\ref[D]'>Update icon</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
@@ -636,6 +640,12 @@ body
 			return
 		var/atom/A = locate(href_list["edit_particles"])
 		open_particles_editor(A)
+
+	else if(href_list["update_icon"])
+		if(!check_rights(R_DEBUG|R_ADMIN))
+			return
+		var/atom/A = locate(href_list["update_icon"])
+		A.update_icon()
 
 	else if(href_list["delthis"])
 		//Rights check are in cmd_admin_delete() proc
@@ -1090,4 +1100,17 @@ body
 			if("clearreags")
 				if(tgui_alert(usr, "Are you sure you want to clear reagents?", "Clear Reagents", list("Yes", "No")) == "Yes")
 					R.clear_reagents()
+
+	else if(href_list["allowmoving"])
+		if(!check_rights(R_FUN))
+			return
+
+		var/mob/living/silicon/ai/A = locate(href_list["allowmoving"])
+		if(!istype(A))
+			to_chat(usr, "This can only be done to instances of type /mob")
+			return
+
+		A.allow_walking()
+		to_chat(usr, "Toggled [A] moving")
+
 	return

@@ -9,8 +9,9 @@
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
-	salary = 160
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargoshop, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
+	salary = 0
+	starting_money = 60
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/qm
 	skillsets = list("Quartermaster" = /datum/skillset/quartermaster)
@@ -20,8 +21,10 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
+	restricted_species = list(TAJARAN, VOX, DIONA)
 
+	department_stocks = list("Cargo" = 40)
+	flags = JOB_FLAG_CARGO
 
 /datum/job/cargo_tech
 	title = "Cargo Technician"
@@ -33,12 +36,15 @@
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
-	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
-	salary = 50
+	access = list(access_maint_tunnels, access_cargo, access_cargoshop, access_mailsorting)
+	salary = 0
+	starting_money = 25
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/cargo_tech
 	skillsets = list("Cargo Technician" = /datum/skillset/cargotech)
 
+	department_stocks = list("Cargo" = 20)
+	flags = JOB_FLAG_CARGO
 
 /datum/job/mining
 	title = "Shaft Miner"
@@ -51,11 +57,14 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
-	salary = 80
+	salary = 0
+	starting_money = 30
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/mining
 	skillsets = list("Shaft Miner" = /datum/skillset/miner)
 
+	department_stocks = list("Cargo" = 10)
+	flags = JOB_FLAG_CARGO
 
 /datum/job/recycler
 	title = "Recycler"
@@ -68,7 +77,8 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mailsorting, access_recycler)
-	salary = 60
+	salary = 0
+	starting_money = 20
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/recycler
 	skillsets = list("Recycler" = /datum/skillset/recycler)
@@ -78,8 +88,9 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(DIONA)
 
+	department_stocks = list("Cargo" = 10)
+	flags = JOB_FLAG_CARGO
 
 //Food
 /datum/job/bartender
@@ -103,8 +114,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(TAJARAN)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/chef
 	title = "Chef"
@@ -128,8 +138,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(TAJARAN)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/hydro
 	title = "Botanist"
@@ -147,7 +156,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/hydro
 	skillsets = list("Botanist" = /datum/skillset/botanist)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/janitor
 	title = "Janitor"
@@ -164,7 +173,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/janitor
 	skillsets = list("Janitor" = /datum/skillset/janitor)
-
+	flags = JOB_FLAG_CIVIL
 
 //More or less assistants
 /datum/job/barber
@@ -183,7 +192,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/barber
 	skillsets = list("Barber" = /datum/skillset/barber)
-
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/librarian
 	title = "Librarian"
@@ -201,7 +210,7 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/librarian
 	skillsets = list("Librarian" = /datum/skillset/librarian)
-
+	flags = JOB_FLAG_CIVIL
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
 /datum/job/lawyer
@@ -225,8 +234,8 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX)
-
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+	flags = JOB_FLAG_CIVIL|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/clown
 	title = "Clown"
@@ -243,10 +252,14 @@
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
 	skillsets = list("Clown" = /datum/skillset/clown)
+	restricted_species = list(SKRELL)
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
 		ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+	H.real_name = pick(clown_names)
+	H.rename_self("clown")
 
 /datum/job/mime
 	title = "Mime"
@@ -262,9 +275,12 @@
 	salary = 20
 	outfit = /datum/outfit/job/mime
 	skillsets = list("Mime" = /datum/skillset/mime)
+	flags = JOB_FLAG_CIVIL
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
 		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/mimewall)
 		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/mime_speak)
 		H.miming = TRUE
+	H.real_name = pick(mime_names)
+	H.rename_self("mime")

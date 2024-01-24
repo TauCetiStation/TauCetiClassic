@@ -13,7 +13,7 @@
 // BUFFS //
 ///////////
 
-// line added for consistency, remove this line with first effect.
+#define STATUS_EFFECT_SWARMS_GIFT /datum/status_effect/swarm_gift
 
 /////////////
 // DEBUFFS //
@@ -27,11 +27,13 @@
 
 #define STATUS_EFFECT_REMOVE_GREASY /datum/status_effect/remove_trait/greasy_hands
 
+#define STATUS_EFFECT_CLUMSY /datum/status_effect/clumsy
+
 /////////////
 // NEUTRAL //
 /////////////
 
-// line added for consistency, remove this line with first effect.
+#define STATUS_EFFECT_ARRAY_TURN_BACK /datum/status_effect/array_turn_back
 
 // Stasis helpers
 

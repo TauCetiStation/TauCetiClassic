@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(vote)
 	wait = SS_WAIT_VOTE
 
 	flags = SS_KEEP_TIMING | SS_NO_INIT
-	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT | SS_SHOW_IN_MC_TAB
 
 	var/list/datum/poll/possible_polls = list()
 	var/datum/poll/active_poll
@@ -19,12 +19,13 @@ SUBSYSTEM_DEF(vote)
 	if(!active_poll)
 		return
 
-	active_poll.process()
+	active_poll.process(wait * 0.1)
 	if(!active_poll)//Need to check again because the active vote can be nulled during its process. For example if an admin forces start
 		return
 
 	if(get_vote_time() < 0)
 		active_poll.check_winners()
+		SSStatistics.add_vote(active_poll)
 		stop_vote()
 
 /datum/controller/subsystem/vote/tgui_interact(mob/user, datum/tgui/ui)
@@ -39,7 +40,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/tgui_data(mob/user)
 	var/list/data = ..()
 
-	var/is_admin = user.client.holder && (user.client.holder.rights & R_ADMIN)
+	var/is_admin = user.client.holder?.rights & R_ADMIN
 	data["isAdmin"] = is_admin
 
 	data["polls"] = list()
@@ -47,12 +48,10 @@ SUBSYSTEM_DEF(vote)
 
 	for(var/poll_path in possible_polls)
 		var/datum/poll/poll_inst = possible_polls[poll_path]
-		if(poll_inst.only_admin && !is_admin)
-			continue
 
 		var/list/poll = list(
 			"name" = poll_inst.name,
-			"ref" = "\ref[poll_inst]", // i hate every line of that
+			"type" = "[poll_path]", // i hate every line of that
 			"adminOnly" = poll_inst.only_admin,
 			"canStart" = poll_inst.can_start(),
 			"forceBlocked" = !!poll_inst.get_force_blocking_reason(),
@@ -99,13 +98,21 @@ SUBSYSTEM_DEF(vote)
 				active_poll.vote(choice, usr.client)
 
 		if("callVote")
-			var/datum/poll/poll = locate(params["pollRef"])
-			if(istype(poll) && (check_rights(R_ADMIN) || (!poll.only_admin && poll.can_start())))
-				start_vote(poll.type)
+			var/poll_path = text2path(params["pollRef"])
+			if(!(poll_path in possible_polls))
+				return TRUE
+
+			var/datum/poll/poll = possible_polls[poll_path]
+			if(check_rights(R_ADMIN) || (!poll.only_admin && poll.can_start()))
+				start_vote(poll)
 
 		if("toggleAdminOnly")
-			var/datum/poll/poll = locate(params["pollRef"])
-			if(istype(poll) && check_rights(R_ADMIN))
+			var/poll_path = text2path(params["pollRef"])
+			if(!(poll_path in possible_polls))
+				return TRUE
+
+			var/datum/poll/poll = possible_polls[poll_path]
+			if(check_rights(R_ADMIN))
 				poll.only_admin = !poll.only_admin
 
 		if("cancelVote")
@@ -114,17 +121,12 @@ SUBSYSTEM_DEF(vote)
 				stop_vote()
 	return TRUE
 
-/datum/controller/subsystem/vote/proc/start_vote(newvote)
+/datum/controller/subsystem/vote/proc/start_vote(datum/poll/poll)
 	if(active_poll)
 		return FALSE
 
-	var/datum/poll/poll
-
-	if(ispath(newvote) && (newvote in possible_polls))
-		poll = possible_polls[newvote]
-
 	//can_start check is done before calling this so that admins can skip it
-	if(!poll)
+	if(!istype(poll))
 		return FALSE
 
 	if(!poll.start())
@@ -162,30 +164,6 @@ SUBSYSTEM_DEF(vote)
 		vote_period = config.vote_period
 
 	return round((vote_start_time + vote_period - world.time)/10)
-
-/datum/controller/subsystem/vote/Topic(href, href_list[], hsrc)
-	if(href_list["vote"])
-		if(active_poll)
-			var/datum/vote_choice/choice = locate(href_list["vote"]) in active_poll.choices
-			if(istype(choice) && usr && usr.client)
-				active_poll.vote(choice, usr.client)
-
-	if(href_list["toggle_admin"])
-		var/datum/poll/poll = locate(href_list["toggle_admin"])
-		if(istype(poll) && check_rights(R_ADMIN))
-			poll.only_admin = !poll.only_admin
-
-	if(href_list["start_vote"])
-		var/datum/poll/poll = locate(href_list["start_vote"])
-		if(istype(poll) && (check_rights(R_ADMIN) || (!poll.only_admin && poll.can_start())))
-			start_vote(poll.type)
-
-	if(href_list["cancel"])
-		if(active_poll && check_rights())
-			to_chat(world, "<span class='vote'><b>[usr.key] отменил голосование \"[active_poll.name]\".</b></span>")
-			stop_vote()
-
-	usr.vote()
 
 /mob/verb/vote()
 	set category = "OOC"

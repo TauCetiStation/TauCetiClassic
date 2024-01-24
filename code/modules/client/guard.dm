@@ -1,3 +1,5 @@
+var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
+
 /datum/guard
 	var/client/holder
 	var/total_alert_weight = 0
@@ -26,7 +28,7 @@
 	if(!config.guard_enabled)
 		return
 
-	addtimer(CALLBACK(src, .proc/trigger_init), 20 SECONDS) // time for other systems to collect data
+	addtimer(CALLBACK(src, PROC_REF(trigger_init)), 20 SECONDS) // time for other systems to collect data
 
 /datum/guard/proc/trigger_init()
 	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < GUARD_CHECK_AGE)
@@ -41,11 +43,12 @@
 			process_autoban()
 
 /datum/guard/proc/do_announce()
+	log_admin("GUARD: new player [key_name(holder)] is suspicious with [total_alert_weight] weight[log_end] | [short_report]")
+
 	if(!total_alert_weight || total_alert_weight < 1)
 		return
 
 	message_admins("GUARD: new player [key_name_admin(holder)] is suspicious with [total_alert_weight] weight (<a href='?_src_=holder;guard=\ref[holder.mob]'>report</a>)", R_LOG)
-	log_admin("GUARD: new player [key_name(holder)] is suspicious with [total_alert_weight] weight[log_end]\nGUARD: [short_report]")
 
 	if(!bridge_reported)
 		bridge_reported = TRUE
@@ -96,9 +99,34 @@
 		Remember: next flags may be false-positives!<br>
 		Proxy: [geoip_data["proxy"]];<br> Mobile: [geoip_data["mobile"]];<br> Hosting: [geoip_data["hosting"]];<br> Ipintel: [geoip_data["ipintel"]];</div>"}
 
-		new_short_report += "Geoip:[geoip_data["proxy"]],[geoip_data["mobile"]],[geoip_data["hosting"]],[geoip_data["ipintel"]]; "
-
+		new_short_report += "Geoip([geoip_data["isp"]]):[geoip_data["proxy"]],[geoip_data["mobile"]],[geoip_data["hosting"]],[geoip_data["ipintel"]]; "
 		total_alert_weight += geoip_weight
+
+	/* blacklist */
+	if(geoip_processed && geoip_data["isp"])
+		var/blacklist_weight = 0
+
+		var/bad_isp = FALSE
+		var/bad_ip = FALSE
+
+		if(geoip_data["isp"] in guard_blacklist["ISP"])
+			bad_isp = TRUE
+
+		for(var/mask in guard_blacklist["ISP"]) 
+			if(findtext(holder.address, mask)) // real ip masks?
+				bad_isp = TRUE
+				break
+
+		if(bad_isp | bad_ip)
+			blacklist_weight += 1
+			new_report += {"<div class='Section'><h3>GeoIP Blacklist ([blacklist_weight]):</h3>
+			[bad_isp ? "ISP in blacklist; " : ""]
+			[bad_ip ? "IP in blacklist; " : ""]
+			</div>"}
+
+			new_short_report += "[bad_isp ? "BADISP " : ""][bad_ip ? "BADIP " : ""](tw: [blacklist_weight]); "
+
+		total_alert_weight += blacklist_weight
 
 	/* country */
 	if(geoip_processed && geoip_data["countryCode"] && length(config.guard_whitelisted_country_codes))
@@ -287,8 +315,8 @@
 	if(config.banappeals)
 		to_chat(holder, "<span class='red'>To try to resolve this matter head to [config.banappeals]</span>")
 
-	log_admin("Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
-	message_admins("Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
+	log_admin("GUARD: Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
+	message_admins("GUARD: Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
 
 	if(config.guard_autoban_sticky)
 		var/list/ban = list()

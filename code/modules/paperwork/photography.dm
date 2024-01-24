@@ -39,7 +39,7 @@
 
 /obj/item/weapon/photo/atom_init()
 	. = ..()
-	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/summon_ectoplasm)
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(summon_ectoplasm))
 
 /obj/item/weapon/photo/Destroy()
 	img = null
@@ -552,7 +552,7 @@
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
 	reloaded = FALSE
-	addtimer(CALLBACK(src, .proc/reload), 64)
+	addtimer(CALLBACK(src, PROC_REF(reload)), 64)
 
 /obj/item/device/camera/proc/reload()
 	icon_state = icon_on

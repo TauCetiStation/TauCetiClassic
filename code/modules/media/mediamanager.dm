@@ -28,12 +28,7 @@ function SetVolume(volume) {
 	</script>"}
 
 /mob/living/proc/update_music()
-	//world << "Update start"
-	if (client && client.media)
-		//world << "Media Exists"
-		client.media.update_music()
-	//else
-	//	testing("[src] - client: [client?"Y":"N"]; client.media: [client && client.media ? "Y":"N"]")
+	client?.media?.update_music()
 
 /area
 	// One media source per area.
@@ -53,22 +48,20 @@ function SetVolume(volume) {
 	var/volume = MEDIA_VOLUME
 
 	var/client/owner
-	var/mob/living/mob
 
 	var/const/window = "rpane.hosttracker"
 	//var/const/window = "mediaplayer" // For debugging.
 
-/datum/media_manager/New(mob/living/holder)
-	if(!istype(holder))
-		return
-	mob = holder
-	owner = mob.client
+/datum/media_manager/New(client/owner_)
+	owner = owner_
 	volume = MEDIA_VOLUME * owner.get_sound_volume(VOL_JUKEBOX)
+	if(isliving(owner.mob))
+		open()
 
 // Actually pop open the player in the background.
 /datum/media_manager/proc/open()
 	owner << browse(PLAYER_HTML, "window=[window]")
-	send_update()
+	update_music()
 
 // Tell the player to play something via JS.
 /datum/media_manager/proc/send_update()
@@ -90,9 +83,9 @@ function SetVolume(volume) {
 	if (!owner)
 		//testing("owner is null")
 		return
-	if(!isliving(mob))
+	if(!isliving(owner.mob))
 		return
-	var/area/A = get_area(mob)
+	var/area/A = get_area(owner.mob)
 	if(!A)
 		//testing("[owner] in [mob.loc].  Aborting.")
 		stop_music()

@@ -31,7 +31,7 @@
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
-#define CEIL(x) (-round(-(x)))
+#define CEIL(x) ceil(x)
 
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) ( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
@@ -82,6 +82,14 @@
 
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
+
+/// Converts a probability/second chance to probability/seconds_per_tick chance
+/// For example, if you want an event to happen with a 10% per second chance, but your proc only runs every 5 seconds, do `if(prob(100*SPT_PROB_RATE(0.1, 5)))` or `if(prob(100*SPT_PROB_RATE(0.1, seconds_per_tick)))`
+#define SPT_PROB_RATE(prob_per_second, seconds_per_tick) (1 - (1 - (prob_per_second)) ** (seconds_per_tick))
+
+/// Like SPT_PROB_RATE but easier to use, simply put `if(SPT_PROB(10, 5))` or `if(SPT_PROB(10, seconds_per_tick))`
+#define SPT_PROB(prob_per_second_percent, seconds_per_tick) (prob(100*SPT_PROB_RATE((prob_per_second_percent)/100, (seconds_per_tick))))
+// )
 
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.
@@ -161,28 +169,30 @@ var/global/normal_next
 #undef ACCURACY
 
 /proc/get_turf_in_angle(angle, turf/starting, increments)
-	var/pixel_x = 0
-	var/pixel_y = 0
+	var/step_x = sin(angle)
+	var/step_y = cos(angle)
+
+	var/valid_x = starting.x
+	var/valid_y = starting.y
+	var/new_x
+	var/new_y
+
 	for(var/i in 1 to increments)
-		pixel_x += sin(angle)+16*sin(angle)*2
-		pixel_y += cos(angle)+16*cos(angle)*2
-	var/new_x = starting.x
-	var/new_y = starting.y
-	while(pixel_x > 16)
-		pixel_x -= 32
-		new_x++
-	while(pixel_x < -16)
-		pixel_x += 32
-		new_x--
-	while(pixel_y > 16)
-		pixel_y -= 32
-		new_y++
-	while(pixel_y < -16)
-		pixel_y += 32
-		new_y--
-	new_x = clamp(new_x, 0, world.maxx)
-	new_y = clamp(new_y, 0, world.maxy)
-	return locate(new_x, new_y, starting.z)
+		new_x = valid_x + step_x
+		new_y = valid_y + step_y
+
+		if(new_x < 1 || new_x > world.maxx)
+			break
+		if(new_y < 1 || new_y > world.maxx)
+			break
+
+		valid_x = new_x
+		valid_y = new_y
+
+	valid_x = round(valid_x, 1)
+	valid_y = round(valid_y, 1)
+
+	return locate(valid_x, valid_y, starting.z)
 
 // Returns a list where [1] is all x values and [2] is all y values that overlap between the given pair of rectangles
 /proc/get_overlap(x1, y1, x2, y2, x3, y3, x4, y4)
@@ -216,3 +226,5 @@ var/global/normal_next
 
 //A parabola y = multiplier*x^2 + pike
 #define PARABOLIC_SCALING(x, pike, multiplier) (pike + multiplier * (x ** 2))
+
+#define HYPOTENUSE(Ax, Ay, Bx, By) (sqrt(abs(Ax - Bx) ** 2 + abs(Ay - By) ** 2)) //A squared + B squared = C squared

@@ -20,6 +20,9 @@
 		return
 	if (!user || !imp)
 		return
+	if (isskeleton(M))
+		to_chat(user, "<span class='warning'>Implant where?</span>")
+		return
 
 	user.visible_message("<span class ='userdanger'>[user] is attemping to implant [M].</span>")
 
@@ -143,3 +146,18 @@
 	imp = new /obj/item/weapon/implant/uplink(src)
 	. = ..()
 	update()
+
+/obj/item/weapon/implanter/abductor
+	name = "Strange implanter"
+
+/obj/item/weapon/implanter/abductor/atom_init()
+	imp = new /obj/item/weapon/implant/abductor(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/abductor/update()
+	if (imp)
+		icon_state = "cimplanter2"
+	else
+		icon_state = "cimplanter0"
+	return

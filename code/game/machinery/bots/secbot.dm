@@ -215,7 +215,7 @@
 					if(iscarbon(target))
 						playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 						icon_state = "[icon_state_arrest]"
-						addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
+						addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2)
 						var/mob/living/carbon/M = target
 						do_attack_animation(M)
 						M.apply_effect(60, AGONY, 0) // As much as a normal stunbaton
@@ -237,7 +237,7 @@
 							playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 							visible_message("<span class='danger'>[src] beats [target] with the stun baton!</span>")
 							icon_state = "[icon_state_arrest]"
-							addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
+							addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2)
 							do_attack_animation(target)
 							target.adjustBruteLoss(15)
 							if(target.stat != CONSCIOUS)
@@ -267,7 +267,7 @@
 					playsound(src, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -2)
 					mode = SECBOT_ARREST
 					visible_message("<span class='warning bold'>[src] is trying to put handcuffs on [target]!</span>")
-					addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PREP_ARREST), 60)
+					addtimer(CALLBACK(src, PROC_REF(subprocess), SECBOT_PREP_ARREST), 60)
 
 			else
 				forgetCurrentTarget()
@@ -286,7 +286,7 @@
 				return
 
 			else if(patrol_target)		// has patrol target already
-				INVOKE_ASYNC(src, .proc/subprocess, SECBOT_START_PATROL)
+				INVOKE_ASYNC(src, PROC_REF(subprocess), SECBOT_START_PATROL)
 
 			else					// no patrol target, so need a new one
 				find_patrol_target()
@@ -295,12 +295,12 @@
 
 		if(SECBOT_PATROL)		// patrol mode
 			patrol_step()
-			addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PATROL), 5)
+			addtimer(CALLBACK(src, PROC_REF(subprocess), SECBOT_PATROL), 5)
 
 		if(SECBOT_SUMMON)		// summoned to PDA
 			patrol_step()
-			addtimer(CALLBACK(src, .proc/subprocess, SECBOT_SUMMON), 4)
-			addtimer(CALLBACK(src, .proc/subprocess, SECBOT_SUMMON), 8)
+			addtimer(CALLBACK(src, PROC_REF(subprocess), SECBOT_SUMMON), 4)
+			addtimer(CALLBACK(src, PROC_REF(subprocess), SECBOT_SUMMON), 8)
 
 /obj/machinery/bot/secbot/proc/subprocess(oldmode)
 	switch(oldmode)
@@ -359,7 +359,7 @@
 				blockcount++
 				if(blockcount > 5)	// attempt 5 times before recomputing
 					// find new path excluding blocked turf
-					addtimer(CALLBACK(src, .proc/patrol_substep, next), 2)
+					addtimer(CALLBACK(src, PROC_REF(patrol_substep), next), 2)
 
 		else	// not a valid turf
 			mode = SECBOT_IDLE
@@ -396,7 +396,7 @@
 	new_destination = "__nearest__"
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
-	addtimer(CALLBACK(src, .proc/find_nearest_beacon_substep), 10)
+	addtimer(CALLBACK(src, PROC_REF(find_nearest_beacon_substep)), 10)
 
 /obj/machinery/bot/secbot/proc/find_nearest_beacon_substep()
 	awaiting_beacon = 0
@@ -536,7 +536,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /obj/machinery/bot/secbot/proc/calc_path(turf/avoid = null)
-	path = get_path_to(src, patrol_target, /turf/proc/Distance, 0, 120, id=botcard, exclude=avoid)
+	path = get_path_to(src, patrol_target, TYPE_PROC_REF(/turf, Distance), 0, 120, id=botcard, exclude=avoid)
 
 // look for a criminal in view of the bot
 
@@ -628,20 +628,6 @@
 		mode = SECBOT_HUNT
 
 //Secbot Construction
-
-/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
-	if(!issignaler(I)) //Eh, but we don't want people making secbots out of space helmets.
-		return ..()
-
-	var/obj/item/device/assembly/signaler/S = I
-	if(!S.secured)
-		return ..()
-
-	var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
-	user.put_in_hands(A)
-	to_chat(user, "<span class='notice'>You add \the [S] to the helmet.</span>")
-	qdel(S)
-	qdel(src)
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
 	if(iswelding(I) && !build_step)

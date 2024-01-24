@@ -45,14 +45,15 @@
 
 	religion.holy_turfs -= turf
 
-	turf.holy = null
+	if(istype(turf))
+		turf.holy = null
 
 	turf = null
 	religion = null
 	return ..()
 
 /datum/holy_turf/proc/create_timer(time_to_expire)
-	return addtimer(CALLBACK(religion, /datum/religion.proc/remove_holy_turf, turf), time_to_expire, TIMER_UNIQUE|TIMER_STOPPABLE)
+	return addtimer(CALLBACK(religion, TYPE_PROC_REF(/datum/religion, remove_holy_turf), turf), time_to_expire, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /datum/holy_turf/proc/update(reagent_volume)
 	var/time_to_expire = expiration_time - world.time + reagent_volume * 1 MINUTE

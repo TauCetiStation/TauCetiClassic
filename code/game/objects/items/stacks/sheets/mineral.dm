@@ -158,7 +158,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
  * Plastic
  */
 /obj/item/stack/sheet/mineral/plastic
-	name = "Plastic"
+	name = "plastic"
 	icon_state = "sheet-plastic"
 	origin_tech = "materials=3"
 	perunit = 2000

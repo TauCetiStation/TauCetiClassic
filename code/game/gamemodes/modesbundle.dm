@@ -1,7 +1,8 @@
 /datum/modesbundle
 	var/name
 	var/votable = TRUE
-	var/hidden = TRUE // for mode annouce
+	var/hide_mode_announce = TRUE
+	var/hide_for_shitspawn = FALSE
 	var/list/possible_gamemodes = list()
 
 /datum/modesbundle/proc/get_gamemodes_name()
@@ -23,6 +24,7 @@
 	/datum/game_mode/extended,
 	/datum/game_mode/heist,
 	/datum/game_mode/infestation,
+	/datum/game_mode/replicators,
 	/datum/game_mode/malfunction,
 	/datum/game_mode/nuclear,
 	/datum/game_mode/revolution,
@@ -50,6 +52,7 @@
 		/datum/game_mode/revolution,
 		/datum/game_mode/shadowling,
 		/datum/game_mode/families,
+		/datum/game_mode/replicators,
 	)
 
 /datum/modesbundle/mix
@@ -64,8 +67,8 @@
 
 /datum/modesbundle/extended
 	name = "Extended"
-	hidden = FALSE
-	possible_gamemodes = list(/datum/game_mode/extended)
+	hide_mode_announce = FALSE
+	possible_gamemodes = list(/datum/game_mode/extended, /datum/game_mode/junkyard)
 
 /datum/modesbundle/all
 	name = "Random"
@@ -86,13 +89,14 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction, /datum/game_mode/junkyard)
 	..()
 
 /datum/modesbundle/run_anyway
 	name = "Modes that will ALWAYS start"
 	votable = FALSE
-	hidden = FALSE
+	hide_mode_announce = FALSE
+	hide_for_shitspawn = TRUE
 	possible_gamemodes = list(/datum/game_mode/extended)
 
 /datum/modesbundle/run_anyway/get_gamemodes_name()

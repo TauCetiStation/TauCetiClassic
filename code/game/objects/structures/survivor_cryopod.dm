@@ -39,7 +39,7 @@
 	visible_message("<span class='notice'>Automatic cryosleep interruption process has begun, please stand by...</span>")
 	searching = TRUE
 	request_player()
-	addtimer(CALLBACK(src, .proc/stop_search), 350)
+	addtimer(CALLBACK(src, PROC_REF(stop_search)), 350)
 
 /obj/structure/survivor_cryopod/proc/request_player()
 	var/list/candidates = pollGhostCandidates("Survivor role is available. Would you like to play?", ROLE_GHOSTLY, IGNORE_SURVIVOR, 250, TRUE)

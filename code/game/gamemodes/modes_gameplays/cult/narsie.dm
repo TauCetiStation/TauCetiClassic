@@ -29,7 +29,7 @@
 /obj/singularity/narsie/atom_init(mapload, datum/religion/religion = global.cult_religion)
 	. = ..()
 	my_religion = religion
-	INVOKE_ASYNC(src, .proc/begin_the_end)
+	INVOKE_ASYNC(src, PROC_REF(begin_the_end))
 
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
@@ -58,7 +58,7 @@
 	new /datum/event/anomaly/cult_portal/massive(new /datum/event_meta(EVENT_LEVEL_MAJOR, "Massive Cult Portals"))
 	log_debug("Force starting event for nar-sie 'Massive Cult Portals'.")
 
-	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle.proc/incall, 0.3), 70)
+	addtimer(CALLBACK(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, incall), 0.3), 70)
 
 /obj/singularity/narsie/process()
 	eat()

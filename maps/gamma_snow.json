@@ -1,0 +1,14 @@
+{
+    "map_name": "Gamma Station (Snowy)",
+    "map_path": "gamma",
+    "map_file": "gamma.dmm",
+    "station_name": "NSS Gamma",
+    "station_name_ru": "КСН Гамма",
+    "station_image": "gamma",
+    "traits":[{
+        "Linkage": null,
+        "Environment Type": "Snow",
+        "Station": true,
+        "Snowstorm": true
+    }]
+}

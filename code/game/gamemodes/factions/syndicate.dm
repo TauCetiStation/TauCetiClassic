@@ -17,6 +17,8 @@
 
 	var/nuke_code
 
+	var/list/team_discounts = list()
+
 /datum/faction/nuclear/AdminPanelEntry()
 	var/dat = ..()
 	var/obj/item/weapon/disk/nuclear/nukedisk
@@ -54,7 +56,7 @@
 	if (!..())
 		return FALSE
 
-	max_roles = clamp((num_players/5), MIN_OPS, MAX_OPS)
+	max_roles = clamp((num_players/7), MIN_OPS, MAX_OPS)
 
 	// Looking for map to nuclear spawn points
 	return length(landmarks_list["Syndicate-Commander"]) > 0 && length(landmarks_list["Syndicate-Spawn"]) > 0
@@ -273,15 +275,15 @@
 	if (!diskdat)
 		diskdat = "Uh oh. Something has fucked up! Report this."
 
-	dat += {"<B><U>NUKE STATS</U></B><BR>
-	<B>Number of Operatives:</B> [foecount]<BR>
-	<B>Number of Surviving Crew:</B> [crewcount]<BR>
-	<B>Final Location of Nuke:</B> [bombdat]<BR>
-	<B>Final Location of Disk:</B> [diskdat]<BR><BR>
-	<B>Operatives Arrested:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] Points)<BR>
-	<B>Operatives Killed:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 250] Points)<BR>
-	<B>Station Destroyed:</B> [SSStatistics.score.nuked ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
-	<B>All Operatives Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
+	dat += {"<B><U>Ядерная статистика</U></B><BR>
+	<B>Количество оперативников:</B> [foecount]<BR>
+	<B>Количество выживших членов экипажа:</B> [crewcount]<BR>
+	<B>Местоположение ядерной бомбы:</B> [bombdat]<BR>
+	<B>Местоположение диска:</B> [diskdat]<BR><BR>
+	<B>Оперативников арестовано:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] очков)<BR>
+	<B>Оперативников убито:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 250] очков)<BR>
+	<B>Станция разрушена:</B> [SSStatistics.score.nuked ? "Да" : "Нет"] (-[nukedpenalty] очков)<BR>
+	<B>Все оперативники арестованы:</B> [SSStatistics.score.allarrested ? "Да (очки утроены)" : "Нет"]<BR>"}
 
 	return dat
 

@@ -91,7 +91,7 @@
 	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
-	if(RegularClickOn(A))
+	if(RegularClickOn(A, params))
 		return
 
 	if(incapacitated(NONE))
@@ -165,7 +165,9 @@
 	return
 
 // Click without any modifiers
-/mob/proc/RegularClickOn(atom/A)
+/mob/proc/RegularClickOn(atom/A, params)
+	if(SEND_SIGNAL(src, COMSIG_MOB_REGULAR_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
+		return FALSE
 	return FALSE
 
 //	Translates into attack_hand, etc.
@@ -186,7 +188,7 @@
 	if(!mutations.len)
 		return
 	if(a_intent == INTENT_HARM && (LASEREYES in mutations))
-		LaserEyes(A) // moved into a proc below
+		LaserEyes(A, params) // moved into a proc below
 	else if(TK in mutations)
 		ranged_attack_tk(A)
 
@@ -348,17 +350,17 @@
 	face_atom: turns the mob towards what you clicked on
 	cob_click: handles hotkeys for "craft or build"
 */
-/mob/proc/LaserEyes(atom/A)
+/mob/proc/LaserEyes(atom/A, params)
 	return
 
-/mob/living/carbon/human/LaserEyes(atom/A)
-	if(get_nutrition() > 300)
+/mob/living/carbon/human/LaserEyes(atom/A, params)
+	if(get_satiation() > 300)
 		..()
 		SetNextMove(CLICK_CD_MELEE)
 		var/obj/item/projectile/beam/LE = new (loc)
 		LE.damage = 20
 		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
-		LE.Fire(A, src)
+		LE.Fire(A, src, params)
 		nutrition = max(nutrition - rand(10, 40), 0)
 		handle_regular_hud_updates()
 	else
@@ -372,11 +374,15 @@
 	if(!dx && !dy) return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	usr.set_dir(NORTH)
-		else		usr.set_dir(SOUTH)
+		if(dy > 0)
+			set_dir(NORTH)
+		else
+			set_dir(SOUTH)
 	else
-		if(dx > 0)	usr.set_dir(EAST)
-		else		usr.set_dir(WEST)
+		if(dx > 0)
+			set_dir(EAST)
+		else
+			set_dir(WEST)
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 // This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)

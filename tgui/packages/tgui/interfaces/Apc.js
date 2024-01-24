@@ -48,7 +48,7 @@ const ApcContent = (props, context) => {
     siliconUser,
     malfCanHack,
     nightshiftLights,
-    nightshiftPreset,
+    smartlightMode,
     powerChannels,
   } = data;
   const isLocked = locked && !siliconUser;
@@ -181,16 +181,14 @@ const ApcContent = (props, context) => {
                 content={nightshiftLights ? 'Enabled' : 'Disabled'}
                 onClick={() => act('toggle_nightshift')} />
             )} />
-          {!!nightshiftLights && (
-            <LabeledList.Item
-              label="Night Shift Lighting Preset"
-              buttons={(
-                <Button
-                  icon="lightbulb-o"
-                  content={nightshiftPreset}
-                  onClick={() => act('change_nightshift')} />
-              )} />
-          )}
+          <LabeledList.Item
+            label="Current Lighting Mode"
+            buttons={(
+              <Button
+                icon="lightbulb-o"
+                content={smartlightMode}
+                onClick={() => act('change_smartlight')} />
+            )} />
         </LabeledList>
       </Section>
     </>

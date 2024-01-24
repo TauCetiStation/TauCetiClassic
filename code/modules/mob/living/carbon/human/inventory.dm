@@ -24,6 +24,11 @@
 					delay_clothing_equip_to_slot_if_possible(J, SLOT_WEAR_SUIT)
 					return 0
 
+		if(istype(I, /obj/item/weapon/card/id))
+			if(istype(H.wear_id, /obj/item/device/pda))
+				wear_id.attackby(I, H)
+				return
+
 		if(H.equip_to_appropriate_slot(I, TRUE))
 			return
 
@@ -152,7 +157,6 @@
 		wear_mask = null
 		if(internal)
 			internal = null
-			internals?.update_icon(src)
 		sec_hud_set_security_status()
 	else if (W == wear_id)
 		wear_id = null
@@ -286,7 +290,7 @@
 		if(SLOT_IN_BACKPACK)
 			if(get_active_hand() == W)
 				remove_from_mob(W)
-			W.loc = src.back
+			W.forceMove(src.back)
 		if(SLOT_TIE)
 			var/obj/item/clothing/under/uniform = w_uniform
 			uniform.attach_accessory(W, src)

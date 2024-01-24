@@ -27,6 +27,8 @@ var/global/list/GPS_list = list()
 	var/local = FALSE
 	var/emped = FALSE
 	var/turf/locked_location
+	/// if it is set, GPS will filter signals only with same frequency.
+	var/frequency
 
 /obj/item/device/gps/atom_init()
 	. = ..()
@@ -48,7 +50,7 @@ var/global/list/GPS_list = list()
 /obj/item/device/gps/emp_act(severity)
 	emped = TRUE
 	update_icon()
-	addtimer(CALLBACK(src, .proc/reboot), EMP_DISABLE_TIME)
+	addtimer(CALLBACK(src, PROC_REF(reboot)), EMP_DISABLE_TIME)
 
 /obj/item/device/gps/AltClick(mob/user)
 	if(user.incapacitated() || !user.Adjacent(src))
@@ -90,11 +92,12 @@ var/global/list/GPS_list = list()
 
 	// GPS signals
 	var/signals = list()
-	for(var/g in global.GPS_list)
-		var/obj/item/device/gps/G = g
-		var/turf/GT = get_turf(G)
+	for(var/obj/item/device/gps/G as anything in global.GPS_list)
 		if(!G.tracking || G == src)
 			continue
+		if(frequency != G.frequency)
+			continue
+		var/turf/GT = get_turf(G)
 		if((G.local || same_z) && (GT.z != T.z))
 			continue
 
@@ -208,6 +211,27 @@ var/global/list/GPS_list = list()
 		clear()
 	tagged = null
 	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+
+/obj/item/device/gps/team_red
+	gpstag = "RED"
+	frequency = FREQ_TEAM_RED
+
+/obj/item/device/gps/team_red/atom_init()
+	var/static/tag_number = 0
+	gpstag = "[gpstag][tag_number]"
+	tag_number++
+	return ..()
+
+/obj/item/device/gps/team_blue
+	gpstag = "BLUE"
+	frequency = FREQ_TEAM_BLUE
+
+/obj/item/device/gps/team_blue/atom_init()
+	var/static/tag_number = 0
+	gpstag = "[gpstag][tag_number]"
+	tag_number++
 	return ..()
 
 #undef EMP_DISABLE_TIME

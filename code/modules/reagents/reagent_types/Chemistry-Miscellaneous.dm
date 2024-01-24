@@ -37,7 +37,11 @@
 	if(!(volume >= 3))
 		return
 
-	if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
+	var/mob/living/carbon/donor = locate(self.data["donor"])
+	if(!istype(donor)) // if donor was deleted and ref changed to random thing
+		donor = null
+
+	if(!donor || ishuman(donor))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 		if(!blood_prop) //first blood!
 			blood_prop = new(T)
@@ -45,18 +49,18 @@
 				if(self.data["blood_type"])
 					blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 				else
-					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O+"
+					blood_prop.blood_DNA[self.data["blood_DNA"]] = BLOOD_O_PLUS
 
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
 
-	else if(istype(self.data["donor"], /mob/living/carbon/monkey))
+	else if(ismonkey(donor))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
-			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
+			blood_prop.blood_DNA["Non-Human DNA"] = BLOOD_A_PLUS
 
-	else if(istype(self.data["donor"], /mob/living/carbon/xenomorph))
+	else if(isxeno(donor))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
@@ -291,21 +295,21 @@
 				to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
 				alert_time = world.time
 			if(prob(60))
-				M.adjustOxyLoss(1)
+				M.losebreath = max(M.losebreath + 1, 2)
 		if(volume < 0.7)
 			if(prob(10))
 				M.AdjustStunned(-1)
 				M.AdjustWeakened(-1)
 		if(volume > 1)
 			if(prob(80))
-				M.adjustOxyLoss(1)
+				M.losebreath = max(M.losebreath + 1, 2)
 				M.drowsyness = min(40, (M.drowsyness + 2))
 			if(prob(3) & ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.invoke_vomit_async()
 		if(volume > 5)
 			if(prob(70))
-				M.adjustOxyLoss(1)
+				M.losebreath = max(M.losebreath + 1, 2)
 	if(holder.has_reagent("anti_toxin"))
 		holder.remove_reagent("nicotine", 0.065)
 	return TRUE
@@ -346,6 +350,8 @@
 /datum/reagent/diethylamine/reaction_mob(mob/M, method = TOUCH, volume)
 	if(volume >= 1 && ishuman(M))
 		var/mob/living/carbon/human/H = M
+		if(!H.species.flags[HAS_HAIR])
+			return
 		var/list/species_hair = list()
 		if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
 			for(var/i in hair_styles_list)
@@ -396,7 +402,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.invoke_vomit_async()
-		H.apply_effect(1,IRRADIATE,0)
+	irradiate_one_mob(M, 1)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
@@ -905,7 +911,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	. = ..()
 	var/obj/effect/effect/aqueous_foam/F = locate(/obj/effect/effect/aqueous_foam) in T
 	if(F)
-		INVOKE_ASYNC(F, /obj/effect/effect/aqueous_foam.proc/performAction) // So we don't instantinate a new object, but still make the room slightly colder.
+		INVOKE_ASYNC(F, TYPE_PROC_REF(/obj/effect/effect/aqueous_foam, performAction)) // So we don't instantinate a new object, but still make the room slightly colder.
 	else if(!T.density)
 		new /obj/effect/effect/aqueous_foam(T)
 

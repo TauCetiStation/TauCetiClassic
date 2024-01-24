@@ -25,7 +25,7 @@
 
 /datum/role/rev/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>")
+	to_chat(antag.current, "<span class='warning'><FONT size = 3>С этого момента вы - Революционер! Распространяйте всюду ваше освободительное движение. Не вредите своим товарищам в борьбе за свободу. Вы можете определить своих союзников по красному ярлыку \"R\", а также своих лидеров по синему ярлыку \"R\". Помогайте им в вербовке, захвате или убийстве глав станции для достижения победы Революции!</FONT></span>")
 
 /datum/role/rev/OnPostSetup(laterole)
 	. = ..()
@@ -37,7 +37,7 @@
 	required_pref = ROLE_REV
 	logo_state = "rev_head-logo"
 
-	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent", "Blueshield Officer")
+	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent", "Blueshield Officer")
 
 	antag_hud_type = ANTAG_HUD_REV
 	antag_hud_name = "hudheadrevolutionary"
@@ -53,6 +53,8 @@
 /datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()
 	antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
+	var/datum/action/RevConvert/action = new(antag.current)
+	action.Grant(antag.current)
 
 	// Show each head revolutionary up to 3 candidates
 	var/list/already_considered = list()
@@ -62,8 +64,15 @@
 		// Tell them about people they might want to contact.
 		var/mob/living/carbon/human/M = get_nt_opposed()
 		if(M && !isrevhead(M) && !(M in already_considered))
-			to_chat(rev_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
-			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
+			to_chat(rev_mob, "Надежные источники сообщают, что [M.real_name], возможно, захочет помочь вам достигнуть целей. Если вам нужна помощь, то можете обратится к данному сотруднику.")
+			rev_mob.mind.store_memory("<b>Потенциальный соратник</b>: [M.real_name]")
+
+/datum/role/rev_leader/RemoveFromRole(datum/mind/M, msg_admins)
+	if(M.current)
+		M.current.verbs -= /mob/living/carbon/human/proc/RevConvert
+		for(var/datum/action/RevConvert/A in M.current.actions)
+			A.Remove(M.current)
+	..()
 
 #define DEFAULT_REV_VERB_CD 600
 
@@ -73,6 +82,8 @@
 
 	if(!isrevhead(src))
 		verbs -= /mob/living/carbon/human/proc/RevConvert
+		for(var/datum/action/RevConvert/A in actions)
+			A.Remove(src)
 		return FALSE
 
 	var/list/Possible = list()
@@ -80,36 +91,39 @@
 		if(stat == CONSCIOUS && P.client && P.mind && (!isrev(P) || !isrevhead(P)))
 			Possible += P
 	if(!Possible.len)
-		to_chat(src, "<span class='warning'>There doesn't appear to be anyone available for you to convert here.</span>")
+		to_chat(src, "<span class='warning'>Рядом с вами нет никого, кто мог бы присоединиться к Революции.</span>")
 		return
 
 	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
 	if(!isrevhead(src))
 		verbs -= /mob/living/carbon/human/proc/RevConvert
+		for(var/datum/action/RevConvert/A in actions)
+			A.Remove(src)
 		return FALSE
 
 	if(isrevhead(M) || isrev(M))
-		to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
+		to_chat(src, "<span class='bold warning'>[M] уже революционер!</span>")
 	else if(M.ismindprotect())
-		to_chat(src, "<span class='warning'><b>[M] is implanted with a mind protected implant - Remove it first!</b></span>")
+		to_chat(src, "<span class='bold warning'>[M] под влиянием импланта защиты разума - сначало нужно его извлечь!</span>")
 	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
-		to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
+		to_chat(src, "<span class='bold warning'>[M] в черном списке!</span>")
 	else
 		var/datum/role/rev_leader/lead = mind.GetRole(HEADREV)
 		if(world.time < lead.rev_cooldown)
-			to_chat(src, "<span class='warning'>Wait few seconds before reconversion attempt.</span>")
+			to_chat(src, "<span class='warning'>Подождите 5 секунд перед попыткой повторной вербовки.</span>")
 			return
-		to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
+		to_chat(src, "<span class='warning'>Попытка вербовки [M]...</span>")
 		log_admin("[key_name(src)]) attempted to convert [M].")
 		message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
-		var/say_string = sanitize_safe(input("What you want to proclaim?", "Viva la revolution!", "") as text)
-		if(!say_string)
-			lead.rev_cooldown = world.time + 50
-			return
+		var/datum/faction/revolution/rev = lead.GetFaction()
+		rev.convert_revolutionare_by_invite(M, src)
 
-		say(say_string)
-		point_at(M)
-		SEND_SIGNAL(M, COMSIG_ADJUST_LOYALITY, lead ? -50 : -5, src)
-		lead.rev_cooldown = world.time + DEFAULT_REV_VERB_CD
+//==========Action==========
+/datum/action/RevConvert
+	name = "Recruitment"
+	action_type = AB_GENERIC
+	button_icon_state = "revconvert"
 
-#undef DEFAULT_REV_VERB_CD
+/datum/action/RevConvert/Trigger()
+	var/mob/living/carbon/human/H = owner
+	H.RevConvert()

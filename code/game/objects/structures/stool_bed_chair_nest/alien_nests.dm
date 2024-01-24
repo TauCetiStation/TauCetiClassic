@@ -19,13 +19,13 @@
 			"<span class='notice'>[user.name] pulls [L.name] free from the sticky nest!</span>",
 			"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",
 			"<span class='notice'>You hear squelching...</span>")
-		
+
 	else
 		L.visible_message(
 			"<span class='warning'>[L.name] struggles to break free of the gelatinous resin...</span>",
 			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",
 			"<span class='notice'>You hear squelching...</span>")
-		
+
 		if(!(do_after(L, 5 MINUTES, target = L) && buckled_mob == L))
 			return
 
@@ -58,3 +58,7 @@
 			playsound(loc, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/structure/bed/nest/post_buckle_mob(mob/living/buckling_mob)
+	. = ..()
+	buckling_mob.reagents.add_reagent("xenojelly_n", 30)

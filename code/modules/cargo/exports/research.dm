@@ -1,6 +1,6 @@
 // Sell tech levels
 /datum/export/tech
-	cost = 500
+	cost = 100
 	unit_name = "technology data disk"
 	export_types = list(/obj/item/weapon/disk/tech_disk)
 	var/list/techLevels = list()

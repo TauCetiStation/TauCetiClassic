@@ -14,6 +14,23 @@
 
 #define WARNING_DELAY 30 		//seconds between warnings.
 
+// These are used by supermatter and supermatter monitor program, mostly for UI updating purposes. Higher should always be worse!
+#define SUPERMATTER_ERROR -1		// Unknown status, shouldn't happen but just in case.
+#define SUPERMATTER_INACTIVE 0		// No or minimal energy
+#define SUPERMATTER_NORMAL 1		// Normal operation
+#define SUPERMATTER_NOTIFY 2		// Ambient temp > 80% of CRITICAL_TEMPERATURE
+#define SUPERMATTER_WARNING 3		// Ambient temp > CRITICAL_TEMPERATURE OR integrity damaged
+#define SUPERMATTER_DANGER 4		// Integrity < 50%
+#define SUPERMATTER_EMERGENCY 5		// Integrity < 25%
+#define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
+
+//If integrity percent remaining is less than these values, the monitor sets off the relevant alarm.
+#define SUPERMATTER_DELAM_PERCENT 100
+#define SUPERMATTER_EMERGENCY_PERCENT 50
+#define SUPERMATTER_DANGER_PERCENT 25
+#define SUPERMATTER_WARNING_PERCENT 5
+
+
 /obj/machinery/power/supermatter
 	name = "Supermatter"
 	desc = "A strangely translucent and iridescent crystal. <span class='warning'>You get headaches just from looking at it.</span>"
@@ -22,6 +39,11 @@
 	density = TRUE
 	anchored = FALSE
 	light_range = 4
+
+	appearance_flags = PIXEL_SCALE // no tile bound to allow distortion to render outside of direct view
+	///Effect holder for the displacement filter to distort the SM based on its activity level
+	var/atom/movable/distortion_effect/distort
+	var/last_status
 
 	resistance_flags = FULL_INDESTRUCTIBLE
 
@@ -77,14 +99,71 @@
 /obj/machinery/power/supermatter/atom_init()
 	. = ..()
 	radio = new (src)
-
+	distort = new(src)
 
 /obj/machinery/power/supermatter/Destroy()
 	qdel(radio)
+	QDEL_NULL(distort)
 	. = ..()
 
+/obj/machinery/power/supermatter/proc/get_status()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return SUPERMATTER_ERROR
+	var/datum/gas_mixture/air = T.return_air()
+	if(!air)
+		return SUPERMATTER_ERROR
+
+	var/integrity = round((damage / explosion_point) * 100)
+
+	if(integrity > SUPERMATTER_DELAM_PERCENT)
+		return SUPERMATTER_DELAMINATING
+
+	else if(integrity > SUPERMATTER_EMERGENCY_PERCENT)
+		return SUPERMATTER_EMERGENCY
+
+	else if(integrity > SUPERMATTER_DANGER_PERCENT)
+		return SUPERMATTER_DANGER
+
+	else if(integrity > SUPERMATTER_WARNING_PERCENT)
+		return SUPERMATTER_WARNING
+
+	else if(power < 5)
+		return SUPERMATTER_NORMAL
+	return SUPERMATTER_INACTIVE
+
+/obj/machinery/power/supermatter/proc/update_displacement()
+	cut_overlays()
+	switch(last_status)
+		if(SUPERMATTER_INACTIVE)
+			distort.icon = 'icons/effects/96x96.dmi'
+			distort.icon_state = "SM_base"
+			distort.pixel_x = -32
+			distort.pixel_y = -32
+		if(SUPERMATTER_NORMAL, SUPERMATTER_NOTIFY, SUPERMATTER_WARNING)
+			distort.icon = 'icons/effects/96x96.dmi'
+			distort.icon_state = "SM_base_active"
+			distort.pixel_x = -32
+			distort.pixel_y = -32
+		if(SUPERMATTER_DANGER)
+			distort.icon = 'icons/effects/160x160.dmi'
+			distort.icon_state = "SM_delam_1"
+			distort.pixel_x = -64
+			distort.pixel_y = -64
+		if(SUPERMATTER_EMERGENCY)
+			distort.icon = 'icons/effects/224x224.dmi'
+			distort.icon_state = "SM_delam_2"
+			distort.pixel_x = -96
+			distort.pixel_y = -96
+		if(SUPERMATTER_DELAMINATING)
+			distort.icon = 'icons/effects/288x288.dmi'
+			distort.icon_state = "SM_delam_3"
+			distort.pixel_x = -128
+			distort.pixel_y = -128
+	add_overlay(distort)
+
 /obj/machinery/power/supermatter/proc/explode()
-	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, ignorecap = TRUE)
 	qdel(src)
 	return
 
@@ -119,13 +198,17 @@
 				lastwarning = world.timeofday
 
 		if(damage > explosion_point)
+			var/rads = DETONATION_RADS
 			for(var/mob/living/mob in alive_mob_list)
 				if(ishuman(mob))
 					//Hilariously enough, running into a closet should make you get hit the hardest.
 					mob:hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
-				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
+				rads *=  sqrt(1 / (get_dist(mob, src) + 1))
 				mob.apply_effect(rads, IRRADIATE)
-
+			for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
+				var/distance_rad_signal = get_dist(counter, src)
+				rads *= sqrt(1 / (distance_rad_signal + 1))
+				counter.recieve_rad_signal(rads, distance_rad_signal)
 			explode()
 
 	//Ok, get the air from the turf
@@ -157,6 +240,12 @@
 		// in normal mode, base the produced energy around the heat
 		temp_factor = 60
 		icon_state = base_icon_state
+
+	// Checks if the status has changed, in order to update the displacement effect
+	var/current_status = get_status()
+	if(current_status != last_status)
+		last_status = current_status
+		update_displacement()
 
 	power = max( (removed.temperature * temp_factor / T0C) * oxygen + power, 0) //Total laser power plus an overload
 
@@ -192,11 +281,7 @@
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			l.hallucination = max(0, min(200, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1,get_dist(l, src)) ) ) )
-
-	for(var/mob/living/l in range(src, 8))
-		var/rads = (power / 10) * sqrt( 1 / get_dist(l, src) )
-		l.apply_effect(rads, IRRADIATE)
-
+	irradiate_in_dist(get_turf(src), power / 10, 8)
 	power -= (power/500)**3
 
 	return 1
@@ -249,9 +334,7 @@
 	user.drop_from_inventory(W)
 	user.SetNextMove(CLICK_CD_MELEE)
 	Consume(W)
-
-	user.apply_effect(150, IRRADIATE)
-
+	irradiate_one_mob(user, 150)
 
 /obj/machinery/power/supermatter/Bumped(atom/AM)
 	if(isliving(AM))
@@ -275,12 +358,14 @@
 	power += 200
 
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
-	for(var/mob/living/l in range(10))
-		if(l in view())
-			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", SHOWMSG_VISUAL,\
-				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", SHOWMSG_AUDIO)
-		else
-			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", SHOWMSG_AUDIO)
-		var/rads = 500 * sqrt( 1 / (get_dist(l, src) + 1) )
-		l.apply_effect(rads, IRRADIATE)
+	irradiate_in_dist(get_turf(src), 500, 10)
 
+/atom/movable/distortion_effect
+	name = ""
+	plane = ANOMALY_PLANE
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "SM_base"
+	pixel_x = -32
+	pixel_y = -32

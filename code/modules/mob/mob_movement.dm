@@ -83,7 +83,9 @@
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
-		return AIMove(n,direct,mob)
+		var/mob/living/silicon/ai/A = mob
+		if(!A.uses_legs)
+			return AIMove(n,direct,mob)
 
 	if(mob.notransform)
 		return//This is sota the goto stop mobs from moving var
@@ -124,13 +126,7 @@
 
 		mob.last_move_intent = world.time + 10
 
-		switch(mob.m_intent)
-			if("run")
-				if(mob.drowsyness > 0)
-					add_delay += 6
-				add_delay += 1 + config.run_speed
-			if("walk")
-				add_delay += 2.5 + config.walk_speed
+		add_delay += mob.m_intent_delay()
 
 		var/list/grabs = mob.GetGrabs()
 		if(grabs.len)
@@ -145,6 +141,9 @@
 		move_delay = world.time + add_delay //set move delay
 
 		//Relaymoves
+		if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
+			return mob.pulledby.relaymove(mob, direct)
+
 		if(mob.buckled) // Wheelchair driving!
 			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
@@ -155,8 +154,11 @@
 		moving = TRUE
 
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
+			// Someone please investigate why we can't do moving = TRUE *after* this check. ~Luduk
 			moving = FALSE
 			return
+
+		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVING, n, direct)
 
 		//Something with pulling things
 		if(grabs.len)
@@ -379,19 +381,19 @@
 
 /mob/proc/slip(weaken_duration, obj/slipped_on, lube)
 	SEND_SIGNAL(src, COMSIG_MOB_SLIP, weaken_duration, slipped_on, lube)
-	return FALSE
+	return TRUE
 
 /mob/living/carbon/slip(weaken_duration, obj/slipped_on, lube)
-	..()
-	return loc.handle_slip(src, weaken_duration, slipped_on, lube)
+	if(!loc.handle_slip(src, weaken_duration, slipped_on, lube))
+		return FALSE
 
-/mob/living/carbon/slime/slip()
-	..()
-	return FALSE
+	return ..()
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
+	if(species.flags[NO_SLIP])
+		return FALSE
 	if(!(lube & GALOSHES_DONT_HELP))
-		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP)))
+		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP) || (get_species() == SKRELL && !shoes)))
 			return FALSE
 	return ..()
 

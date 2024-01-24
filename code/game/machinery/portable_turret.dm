@@ -49,7 +49,7 @@
 	var/check_weapons = FALSE		//checks if it can shoot people that have a weapon they aren't authorized to have
 	var/check_access = TRUE			//if this is active, the turret shoots everything that does not meet the access requirements
 	var/check_anomalies = TRUE	//checks if it can shoot at unidentified lifeforms (ie xenos)
-	var/check_n_synth = FALSE		//if active, will shoot at anything not an AI or cyborg
+	var/check_n_synth = FALSE		//if active, will shoot at anything not an AI or cyborg, mechs included
 	var/shot_synth = FALSE			//if active and in letal, will shoot any cyborgs
 	var/ailock = FALSE					// AI cannot use this
 	var/special_control = FALSE	//AI (and only AI) can set shot_synth
@@ -110,11 +110,12 @@
 	installation = null
 	qdel(t_gun)
 	t_gun = null
+	clearlist(contents)
 	return ..()
 
 /obj/machinery/porta_turret/proc/setup()
-	qdel(t_gun)
-	t_gun = new installation(src)	//All energy-based weapons are applicable
+	if(!t_gun)
+		t_gun = new installation(src)	//All energy-based weapons are applicable
 	var/list/t_gun_ammo = t_gun.ammo_type
 	var/obj/item/ammo_casing/energy/t_gun_ammo_casing = t_gun_ammo[1]
 	projectile = t_gun_ammo_casing.BB.type
@@ -126,7 +127,7 @@
 	shot_sound = t_gun.fire_sound
 	eshot_sound = shot_sound
 
-	switch(installation)
+	switch(t_gun.type)
 		if(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag)
 			eprojectile = /obj/item/projectile/beam/lasertag/omni //This bolt will stun ERRYONE with a vest
 			reqpower = 100
@@ -302,7 +303,7 @@ var/global/list/turret_icons
 		stat &= ~NOPOWER
 		update_icon()
 	else
-		addtimer(CALLBACK(src, .proc/power_change_post), rand(1, 15))
+		addtimer(CALLBACK(src, PROC_REF(power_change_post)), rand(1, 15))
 	update_power_use()
 
 /obj/machinery/porta_turret/proc/power_change_post()
@@ -321,7 +322,7 @@ var/global/list/turret_icons
 				if(prob(70))
 					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
 					if(t_gun)
-						t_gun.loc = src.loc
+						t_gun.forceMove(get_turf(src))
 						t_gun.power_supply.charge = gun_charge
 						t_gun.update_icon()
 						t_gun = null
@@ -456,7 +457,6 @@ var/global/list/turret_icons
 
 	for(var/mob/M in mobs_in_view(world.view, src))
 		assess_and_assign(M, targets, secondarytargets)
-
 	if(!tryToShootAt(targets))
 		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
 			popDown() // no valid targets, close the cover
@@ -466,16 +466,21 @@ var/global/list/turret_icons
 		repair_damage(1)
 
 /obj/machinery/porta_turret/proc/assess_and_assign(mob/living/L, list/targets, list/secondarytargets)
-	switch(assess_living(L))
-		if(TURRET_PRIORITY_TARGET)
-			targets += L
-		if(TURRET_SECONDARY_TARGET)
-			secondarytargets += L
+	if(istype(L.loc, /obj/mecha))
+		var/obj/mecha/mech_target = L.loc
+		if(assess_mechs(mech_target) == TURRET_SECONDARY_TARGET)
+			secondarytargets += mech_target
+	else
+		switch(assess_living(L))
+			if(TURRET_PRIORITY_TARGET)
+				targets += L
+			if(TURRET_SECONDARY_TARGET)
+				secondarytargets += L
+
 
 /obj/machinery/porta_turret/proc/assess_living(mob/living/L)
 	if(!istype(L))
 		return TURRET_NOT_TARGET
-
 	if(L.invisibility >= INVISIBILITY_LEVEL_ONE) // Cannot see him. see_invisible is a mob-var
 		return TURRET_NOT_TARGET
 
@@ -485,7 +490,7 @@ var/global/list/turret_icons
 	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
-	if(!check_trajectory(L, src))	//check if we have true line of sight
+	if(!check_trajectory(L, src) && !istype(L.loc, /obj/mecha))	//check if we have true line of sight and not in mecha.
 		return TURRET_NOT_TARGET
 
 	if(isAI(L))		//don't accidentally kill the AI!
@@ -537,6 +542,28 @@ var/global/list/turret_icons
 		return 10
 
 	return H.assess_perp(src, check_access, check_weapons, check_records, check_arrest)
+
+/obj/machinery/porta_turret/proc/assess_mechs(obj/mecha/M)
+	if(!M.occupant)
+		return TURRET_NOT_TARGET //dont shoot empty guys, maybe the HOS parked it there "just in case"
+
+	if(assess_living(M.occupant) == TURRET_NOT_TARGET)
+		return TURRET_NOT_TARGET
+
+	if(!check_n_synth)
+		return TURRET_NOT_TARGET // targeting disabled
+
+	if(get_dist(src, M) > 7)
+		return TURRET_NOT_TARGET
+
+	if(!check_trajectory(M, src))
+		return TURRET_NOT_TARGET
+
+	if(!lethal)
+		return TURRET_NOT_TARGET
+
+	return TURRET_SECONDARY_TARGET
+
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/mob/living/targets)
 	if(targets.len && last_target && (last_target in targets) && target(last_target))
@@ -703,7 +730,7 @@ var/global/list/turret_icons
 	var/finish_name="turret"	//the name applied to the product turret
 	var/installation = null		//the gun type installed
 	var/gun_charge = 0			//the gun charge of the gun type installed
-
+	var/obj/item/weapon/gun/energy/e_gun
 
 /obj/machinery/porta_turret_construct/attackby(obj/item/I, mob/user)
 	//this is a bit unwieldy but self-explanatory
@@ -768,15 +795,15 @@ var/global/list/turret_icons
 			if(istype(I, /obj/item/weapon/gun/energy)) //the gun installation part
 				if(isrobot(user))
 					return
-				var/obj/item/weapon/gun/energy/E = I //typecasts the item to an energy gun
 				if(!user.unEquip(I))
 					to_chat(user, "<span class='notice'>\the [I] is stuck to your hand, you cannot put it in \the [src]</span>")
 					return
-				installation = I.type //installation becomes I.type
-				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
+				e_gun = I
+				installation = e_gun.type
+				gun_charge = e_gun.power_supply.charge //the gun's charge is stored in gun_charge
 				to_chat(user, "<span class='notice'>You add [I] to the turret.</span>")
 				build_step = 4
-				qdel(I) //delete the gun :(
+				e_gun.forceMove(src)
 				return
 
 			else if(iswrenching(I))
@@ -836,6 +863,8 @@ var/global/list/turret_icons
 					//The final step: create a full turret
 					var/obj/machinery/porta_turret/Turret = new (loc)
 					Turret.name = finish_name
+					Turret.t_gun = e_gun
+					e_gun.forceMove(Turret)
 					Turret.installation = installation
 					Turret.gun_charge = gun_charge
 					Turret.enabled = FALSE
@@ -851,13 +880,11 @@ var/global/list/turret_icons
 				return
 
 	if(istype(I, /obj/item/weapon/pen))	//you can rename turrets like bots!
-		var/t = sanitize_safe(input(user, "Enter new turret name", name, input_default(finish_name)), MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!Adjacent(user))
+		var/new_name = sanitize_safe(input(user, "Enter new turret name", name, input_default(finish_name)), MAX_NAME_LEN)
+		if(!length(new_name) || !Adjacent(user))
 			return
 
-		finish_name = t
+		finish_name = new_name
 		return
 
 	..()
@@ -874,15 +901,16 @@ var/global/list/turret_icons
 
 	switch(build_step)
 		if(4)
-			if(!installation)
+			if(!e_gun)
 				return
 			build_step = 3
-			var/obj/item/weapon/gun/energy/Gun = new installation(loc)
-			Gun.power_supply.charge = gun_charge
-			Gun.update_icon()
+			e_gun.power_supply.charge = gun_charge
+			e_gun.update_icon()
+			user.put_in_hands(e_gun)
+			e_gun = null
 			installation = null
 			gun_charge = 0
-			to_chat(user, "<span class='notice'>You remove [Gun] from the turret frame.</span>")
+			to_chat(user, "<span class='notice'>You remove [e_gun] from the turret frame.</span>")
 
 		if(5)
 			to_chat(user, "<span class='notice'>You remove the prox sensor from the turret frame.</span>")

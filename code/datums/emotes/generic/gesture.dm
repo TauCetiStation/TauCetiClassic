@@ -14,7 +14,7 @@
 
 /datum/emote/dance/do_emote(mob/user, emote_key, intentional)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/dance, user)
+	INVOKE_ASYNC(src, PROC_REF(dance), user)
 
 /datum/emote/dance/proc/dance(mob/user)
 	for(var/i in 1 to 20)

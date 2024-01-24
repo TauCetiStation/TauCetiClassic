@@ -85,14 +85,17 @@ var/global/list/ventcrawl_machinery = list(
 
 	L.handle_ventcrawl(src, returnPipenet())
 
+/mob/living/proc/ventcrawl_enter_delay()
+	var/time = 40
+	if(w_class)
+		time = w_class ** 2
+	return time
+
 /mob/living/proc/handle_ventcrawl(obj/machinery/atmospherics/vent_found, datum/pipeline/vent_found_parent)
 	if(is_busy())
 		return
 	to_chat(src, "You begin climbing into the ventilation system...")
-	var/time = 40
-	if(w_class)
-		time = w_class ** 2
-	if(!do_after(src, time, null, vent_found))
+	if(!do_after(src, ventcrawl_enter_delay(), null, vent_found))
 		return
 
 	if(!can_ventcrawl())

@@ -144,6 +144,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 	if(instrument.Adjacent(usr) && isliving(usr) && !issilicon(usr))
 		if(href_list["newsong"])
 			playing = FALSE
+			SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, FALSE)
 			song_lines.len = 0
 
 		else if(href_list["show_help"])
@@ -170,10 +171,12 @@ var/global/datum/notes_storage/note_cache_storage = new
 				return
 
 			song_tempo = clamp(new_tempo, 1, MAX_TEMPO_RATE)
+			SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_TEMPO_CHANGE, src)
 
 		else if(href_list["play"])
 			playing = TRUE
-			INVOKE_ASYNC(src, /datum/music_player.proc/playsong, usr)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/music_player, playsong), usr)
+			SEND_SIGNAL(usr, COMSIG_ATOM_STARTING_INSTRUMENT, src)
 
 		else if(href_list["newline"])
 			if(song_lines.len > MAX_LINES_COUNT)
@@ -201,6 +204,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 		else if(href_list["stop"])
 			playing = FALSE
+			SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, FALSE)
 
 		else if(href_list["import"])
 			var/song_text = sanitize(input("Please, paste the entire song formatted: ") as message|null, MAX_SONG_SIZE, extra = FALSE, ascii_only = TRUE)
@@ -210,6 +214,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 			parse_song_text(song_text)
 			playing = FALSE
+			SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, FALSE)
 
 		interact(usr)
 
@@ -239,6 +244,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 				for(var/note in splittext(notes[1], "-"))
 					if(!playing || instrument.unable_to_play(musician))
 						playing = FALSE
+						SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, FALSE)
 						return
 
 					if(length(note) == 0)
@@ -270,7 +276,6 @@ var/global/datum/notes_storage/note_cache_storage = new
 						var/sound/S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"]
 						if(!S)
 							S = global.note_cache_storage.instrument_sound_notes["[sound_path]/[current_note]"] = sound("[sound_path]/[current_note].ogg")
-
 						playsound(instrument, S, VOL_EFFECTS_INSTRUMENT, volume, FALSE, null, null, falloff = 5)
 
 				var/pause_time = COUNT_PAUSE(song_tempo)
@@ -279,10 +284,12 @@ var/global/datum/notes_storage/note_cache_storage = new
 					pause_time /= text2num(notes[2])
 
 				sleep(pause_time)
+		SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_REPEAT, TRUE)
 	while(repeat-- > 0)
 
 	repeat = 0
 	playing = FALSE
+	SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, TRUE)
 	interact(musician)
 
 /datum/music_player/proc/parse_song_text(song_text)

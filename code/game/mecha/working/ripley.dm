@@ -8,8 +8,12 @@
 	health = 200
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley
 	var/list/cargo = new
-	var/cargo_capacity = 15
+	var/cargo_capacity = 27
 	var/hides = 0
+
+/obj/mecha/working/ripley/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 1200, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/working/ripley/go_out()
 	..()
@@ -42,6 +46,10 @@
 	lights_power = 8
 	damage_absorption = list(BURN=0.5,BULLET=0.8,BOMB=0.5)
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley/firefighter
+
+/obj/mecha/working/ripley/firefighter/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 1400, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE!!!"
@@ -104,6 +112,13 @@
 /obj/mecha/working/ripley/mining/atom_init_late()
 	for(var/obj/item/mecha_parts/mecha_tracking/B in contents)//Deletes the beacon so it can't be found easily
 		qdel(B)
+
+/obj/mecha/working/ripley/recycle_ripley
+	name = "APLU \"Recycler\""
+
+/obj/mecha/working/ripley/recycle_ripley/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 100, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)

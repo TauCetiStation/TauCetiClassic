@@ -14,10 +14,12 @@
 	stat_type = /datum/stat/role/wizard
 
 	var/list/list_of_purchases = list()
+	///Used by midround wizard mainly for proper setup
+	var/rename = TRUE
 
 /datum/role/wizard/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
+	to_chat(antag.current, "<B>Вы - Космический Маг. Космическая Федерация Магов отправила вас выполнить определенные цели:</B>")
 
 /datum/role/wizard/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
@@ -28,7 +30,7 @@
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 
-	var/newname = sanitize_safe(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text, MAX_NAME_LEN)
+	var/newname = sanitize_safe(input(wizard_mob, "Вы - Космический Маг. Желаете ли вы изменить свое имя?", "Name change", randomname) as null|text, MAX_NAME_LEN)
 
 	if(!newname)
 		newname = randomname
@@ -66,15 +68,16 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), SLOT_R_STORE)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), SLOT_R_HAND)
 
-	to_chat(wizard_mob, "<span class='info'>You will find a list of available spells in your spell book. Choose your magic arsenal carefully.</span>")
-	to_chat(wizard_mob, "<span class='info'>In your pockets you will find a teleport scroll. Use it as needed.</span>")
-	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
+	to_chat(wizard_mob, "<span class='info'>Вы были достойны получить в свои руки Книгу Волшебства, открыв её вы найдете большой арсенал различных заклинаний. Выбирайте свои чародейские фокусы с умом.</span>")
+	to_chat(wizard_mob, "<span class='info'>У вас в карманах вы сможете найти Свиток Телепортации, который телепортирует вас в указанное место под покровом дыма. Используйте его при надобности.</span>")
+	wizard_mob.mind.store_memory("<B>Не забудьте приготовить свои заклинания.</B>")
 	wizard_mob.update_icons()
 
 /datum/role/wizard/OnPostSetup(laterole)
 	. = ..()
 	equip_wizard(antag.current)
-	INVOKE_ASYNC(src, .proc/name_wizard, antag.current)
+	if(rename)
+		INVOKE_ASYNC(src, PROC_REF(name_wizard), antag.current)
 
 /datum/role/wizard/forgeObjectives()
 	if(!..())
@@ -136,10 +139,10 @@
 
 /datum/role/wizard/RoleTopic(href, href_list, datum/mind/M, admin_auth)
 	if(href_list["wiz_tp"])
-		M.current.forceMove(pick(wizardstart))
+		M.current.forceMove(pick_landmarked_location("Wizard"))
 
 	else if(href_list["wiz_name"])
-		INVOKE_ASYNC(src, .proc/name_wizard, M.current)
+		INVOKE_ASYNC(src, PROC_REF(name_wizard), M.current)
 
 	else if(href_list["wiz_equip"])
 		equip_wizard(M.current)

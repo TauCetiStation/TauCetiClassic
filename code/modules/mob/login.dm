@@ -35,13 +35,17 @@
 
 /mob/Login()
 	player_list |= src
+
+	if(client.holder)
+		global.keyloop_list |= src
+	else if(stat != DEAD || !SSlag_switch?.measures[DISABLE_DEAD_KEYLOOP])
+		global.keyloop_list |= src
+
 	update_Login_details()
 	world.update_status()
 
 	client.images = null				//remove the images such as AIs being unable to see runes
 	client.screen = list()				//remove hud items just in case
-
-	QDEL_NULL(hud_used)		//remove the hud objects
 
 	create_mob_hud()
 
@@ -72,6 +76,13 @@
 	blocker.plane = ABOVE_HUD_PLANE
 	blocker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+	//Users with different eye_blur_effect pref OR client disconnected during eye_blurry effect
+	var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in client.screen
+	if(PM)
+		PM.remove_filter("eye_blur_angular")
+		PM.remove_filter("eye_blur_gauss")
+	clear_fullscreen("blurry")
+
 	// atom_huds
 	reload_huds()
 
@@ -89,3 +100,5 @@
 
 	if(client.click_intercept)
 		client.click_intercept.post_login()
+
+	client.change_view(world.view)

@@ -9,6 +9,14 @@
 	var/list/active_timers
 	var/list/filter_data
 
+	/// russian case forms of atom name in format
+	/// list(NOMINATIVE_CASE, GENITIVE_CASE, DATIVE_CASE, ACCUSATIVE_CASE, ABLATIVE_CASE, PREPOSITIONAL_CASE)
+	/// for usage with CASE macros (code/__DEFINES/_translation.dm)
+	var/list/cases = null
+
+	/// our weak reference
+	var/datum/weakref/weak_reference
+
 #ifdef REFERENCE_TRACKING
 	var/running_find_references
 	var/last_find_references = 0
@@ -18,7 +26,9 @@
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy(force = FALSE, ...)
+	SHOULD_CALL_PARENT(TRUE)
 	tag = null
+	weak_reference = null //ensure prompt GCing of weakref.
 
 	var/list/timers = active_timers
 	active_timers = null
@@ -62,7 +72,20 @@
 
 	return QDEL_HINT_QUEUE
 
-/datum/proc/process()
+/**
+ * This proc is called on a datum on every "cycle" if it is being processed by a subsystem. The time between each cycle is determined by the subsystem's "wait" setting.
+ * You can start and stop processing a datum using the START_PROCESSING and STOP_PROCESSING defines.
+ *
+ * Since the wait setting of a subsystem can be changed at any time, it is important that any rate-of-change that you implement in this proc is multiplied by the seconds_per_tick that is sent as a parameter,
+ * Additionally, any "prob" you use in this proc should instead use the SPT_PROB define to make sure that the final probability per second stays the same even if the subsystem's wait is altered.
+ * Examples where this must be considered:
+ * - Implementing a cooldown timer, use `mytimer -= seconds_per_tick`, not `mytimer -= 1`. This way, `mytimer` will always have the unit of seconds
+ * - Damaging a mob, do `L.adjustFireLoss(20 * seconds_per_tick)`, not `L.adjustFireLoss(20)`. This way, the damage per second stays constant even if the wait of the subsystem is changed
+ * - Probability of something happening, do `if(SPT_PROB(25, seconds_per_tick))`, not `if(prob(25))`. This way, if the subsystem wait is e.g. lowered, there won't be a higher chance of this event happening per second
+ *
+ * If you override this do not call parent, as it will return PROCESS_KILL. This is done to prevent objects that dont override process() from staying in the processing list
+ */
+/datum/proc/process(seconds_per_tick)
 	set waitfor = FALSE
 	STOP_PROCESSING(SSobj, src)
 	return FALSE
@@ -77,13 +100,17 @@
 /datum/proc/update_filters()
 	var/atom/A = src//Here's a "Fint Ushami" and this will work even with images.
 	A.filters = null
-	filter_data = sortTim(filter_data, /proc/cmp_filter_data_priority, TRUE)
+	filter_data = sortTim(filter_data, GLOBAL_PROC_REF(cmp_filter_data_priority), TRUE)
 	for(var/f in filter_data)
 		var/list/data = filter_data[f]
 		var/list/arguments = data.Copy()
 		arguments -= "priority"
 		A.filters += filter(arglist(arguments))
 	UNSETEMPTY(filter_data)
+
+/obj/item/update_filters()
+	. = ..()
+	update_item_actions()
 
 /datum/proc/transition_filter(name, time, list/new_params, easing, loop)
 	var/filter = get_filter(name)

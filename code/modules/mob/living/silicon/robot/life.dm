@@ -11,7 +11,6 @@
 	clamp_values()
 	handle_fire()
 	handle_regular_status_updates()
-	handle_actions()
 
 	if(client)
 		handle_regular_hud_updates()
@@ -144,6 +143,9 @@
 	if(!..())
 		return FALSE
 
+	if(HAS_TRAIT(src, TRAIT_BLUESPACE_MOVING))
+		return TRUE
+
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
 	see_in_dark = 8
@@ -244,7 +246,9 @@
 /mob/living/silicon/robot/update_fire()
 	if(on_fire)
 		underlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
-		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))
+		var/image/over = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay")
+		over.plane = LIGHTING_LAMPS_PLANE
+		add_overlay(over)
 	else
 		underlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
 		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))

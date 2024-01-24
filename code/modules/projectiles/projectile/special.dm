@@ -99,7 +99,7 @@
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			if(prob(15))
-				M.apply_effect((rand(30,80)),IRRADIATE)
+				irradiate_one_mob(M, rand(30, 80))
 				M.Stun(2)
 				M.Weaken(5)
 				visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", blind_message = "<span class='warning'>You hear the crunching of leaves.</span>")
@@ -315,9 +315,6 @@
 	var/display_celsium = TRUE
 	var/display_fahrenheit = TRUE
 	var/display_kelvin = FALSE
-
-/obj/item/projectile/pyrometer/on_impact(atom/A)
-	return
 
 /obj/item/projectile/pyrometer/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()

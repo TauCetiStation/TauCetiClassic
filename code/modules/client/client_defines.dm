@@ -123,3 +123,8 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+
+	///Tracks say() usage for ic/dchat while slowmode is enabled
+	COOLDOWN_DECLARE(say_slowmode)
+
+	var/is_in_spawner = FALSE

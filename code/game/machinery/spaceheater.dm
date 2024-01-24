@@ -65,6 +65,8 @@
 		to_chat(user, "There is no power cell installed.")
 
 /obj/machinery/space_heater/RefreshParts()
+	..()
+
 	var/laser = 0
 	var/cap = 0
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
@@ -179,7 +181,7 @@
 		var/value
 		if(href_list["temp"] == "custom")
 			value = input("Please input the target temperature", name) as num|null
-			if(isnull(value))
+			if(isnull(value) || !can_still_interact_with(usr))
 				return
 			value += T0C
 		else

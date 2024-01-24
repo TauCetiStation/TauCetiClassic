@@ -112,8 +112,9 @@
 			if(user.is_busy()) return
 			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
 			if(G.use_tool(src, usr, 20, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
-				INVOKE_ASYNC(GM, /atom/movable.proc/do_simple_move_animation, src)
+				var/atom/old_loc = GM.loc
 				GM.forceMove(src)
+				INVOKE_ASYNC(GM, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 				GM.instant_vision_update(1,src)
 				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
 				qdel(G)
@@ -129,8 +130,6 @@
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
 	user.drop_from_inventory(I, src)
-	//INVOKE_ASYNC(I, /atom/movable.proc/do_simple_move_animation, src)
-	//user.remove_from_mob(I, src)
 
 	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
 
@@ -196,8 +195,9 @@
 
 		target.log_combat(user, "placed in disposals")
 
-	INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src)
+	var/atom/old_loc = target.loc
 	target.forceMove(src)
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 	target.instant_vision_update(1,src)
 
 	user.visible_message(msg, self_message = self_msg)
@@ -238,8 +238,9 @@
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
 		//msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src)
+		var/atom/old_loc = target.loc
 		target.forceMove(src)
+		INVOKE_ASYNC(target, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), src, old_loc)
 
 		user.visible_message(msg, self_message = self_msg)
 
@@ -344,6 +345,18 @@
 
 		if(action == "eject")
 			eject()
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				if(HAS_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN))
+					to_chat(H, "<span class='notice'>Оп-па! Иди к [H.gender == FEMALE ? "мамочке" : "папочке"]!</span>")
+					addtimer(CALLBACK(null, PROC_REF(to_chat), H, "<span class='notice'>Так...</span>"), 1 SECOND)
+					addtimer(CALLBACK(null, PROC_REF(to_chat), H, "<span class='notice'>А патроны где?</span>"), 2 SECONDS)
+
+					var/weapon_type = PATH_OR_RANDOM_PATH(/obj/random/guns/set_special)
+					var/obj/item/weapon/gun/projectile/P = new weapon_type(loc)
+					P.magazine.make_empty()
+					QDEL_NULL(P.chambered)
+					REMOVE_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
 
 	return TRUE
 
@@ -368,21 +381,35 @@
 
 	// flush handle
 	if(flush)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-handle"))
+		add_overlay("dispover-handle")
 
 	// only handle is shown if no power
 	if(stat & NOPOWER || mode == -1)
 		return
 
+	var/list/status_overlay = list()
 	// 	check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-full"))
+		status_overlay.Add(image(icon = 'icons/obj/pipes/disposal.dmi',\
+							     icon_state = "dispover-full-light"))
+		set_light(1, 1, "#006381")
 
 	// charging and ready light
 	if(mode == 1)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-charge"))
+		status_overlay.Add(image(icon = 'icons/obj/pipes/disposal.dmi',\
+							     icon_state = "dispover-charge-light"))
+		add_overlay("dispover-charge")
+		set_light(1, 1, "#940101")
+
 	else if(mode == 2)
-		add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-ready"))
+		status_overlay.Add(image(icon = 'icons/obj/pipes/disposal.dmi',\
+							     icon_state = "dispover-ready-light"))
+		add_overlay("dispover-ready")
+		set_light(1, 1, "#0c8801")
+
+	for(var/image/I in status_overlay)
+		I.plane = LIGHTING_LAMPS_PLANE
+		add_overlay(I)
 
 // timed process
 // charge the gas reservoir and perform flush if ready
@@ -397,8 +424,8 @@
 	if( flush_count >= flush_every_ticks )
 		if( contents.len )
 			if(mode == 2)
-				feedback_inc("disposal_auto_flush",1)
-				INVOKE_ASYNC(src, .proc/flush)
+				feedback_inc("disposal_auto_flush", 1)
+				INVOKE_ASYNC(src, PROC_REF(flush))
 		flush_count = 0
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
@@ -435,14 +462,18 @@
 
 // perform a flush
 /obj/machinery/disposal/proc/flush()
-
 	flushing = 1
 	flick("[icon_state]-flush", src)
 
+	sleep(10)
+	if(last_sound < world.time + 1)
+		playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		last_sound = world.time
+	sleep(5) // wait for animation to finish
+
 	var/wrapcheck = 0
-	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
-												// travels through the pipes.
-	//Hacky test to get drones to mail themselves through disposals.
+	var/obj/structure/disposalholder/H = new(null, contents, air_contents)
+
 	for(var/mob/living/silicon/robot/drone/D in src)
 		wrapcheck = 1
 
@@ -452,19 +483,13 @@
 	if(wrapcheck == 1)
 		H.tomail = 1
 
+	if(!trunk)
+		expel(H)
+		return
 
-
-	sleep(10)
-	if(last_sound < world.time + 1)
-		playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		last_sound = world.time
-	sleep(5) // wait for animation to finish
-
-
-	H.init(src, air_contents)	// copy the contents of disposer to holder
 	air_contents = new(PRESSURE_TANK_VOLUME)	// new empty gas resv.
 
-	H.start(src) // start the holder processing movement
+	H.start(trunk) // start the holder processing movement
 	flushing = 0
 	// now reset disposal state
 	flush = 0
@@ -493,7 +518,7 @@
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 			AM.forceMove(src.loc)
 			AM.pipe_eject(0)
-			if(!isdrone(AM)) //Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z
+			if(!isdrone(AM) && !isreplicator(AM)) //Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z
 				AM.throw_at(target, 5, 2)
 
 		H.vent_gas(loc)
@@ -533,24 +558,25 @@
 
 	var/partialTag = "" //set by a partial tagger the first time round, then put in destinationTag if it goes through again.
 
-/obj/structure/disposalholder/Destroy()
-	qdel(gas)
-	active = 0
-	return ..()
+/obj/structure/disposalholder/atom_init(mapload, list/contained, datum/gas_mixture/flush_gas)
+	. = ..()
 
-// initialize a holder from the contents of a disposal unit
-/obj/structure/disposalholder/proc/init(obj/machinery/disposal/D, datum/gas_mixture/flush_gas)
-	gas = flush_gas	// transfer gas resv. into holder object -- let's be explicit about the data this proc consumes, please.
+	gas = flush_gas
 
 	//Check for any living mobs trigger hasmob.
 	//hasmob effects whether the package goes to cargo or its tagged destination.
-	for(var/mob/living/M in D)
-		if(M && M.stat != DEAD && !isdrone(M))
+	for(var/mob/living/M in contained)
+		if(M && M.stat != DEAD && !isdrone(M) && !isreplicator(M))
 			hasmob = 1
 
 	// now everything inside the disposal gets put into the holder
 	// note AM since can contain mobs or objs
-	for(var/atom/movable/AM in D)
+	for(var/atom/movable/AM in contained)
+		if(AM.name == "")
+			continue
+		if(!AM.simulated)
+			continue
+
 		AM.loc = src
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
@@ -565,6 +591,9 @@
 		if(isdrone(AM))
 			var/mob/living/silicon/robot/drone/drone = AM
 			src.destinationTag = drone.mail_destination
+		if(isreplicator(AM))
+			var/mob/living/simple_animal/hostile/replicator/R = AM
+			src.destinationTag = R.mail_destination
 		if(istype(AM, /obj/structure/closet/body_bag))
 			has_bodybag = 1
 		if(isobj(AM))
@@ -572,18 +601,18 @@
 			if(Object.price_tag)
 				src.destinationTag = "OnlineShop"
 
+/obj/structure/disposalholder/Destroy()
+	qdel(gas)
+	active = 0
+	return ..()
 
 // start the movement process
 // argument is the disposal unit the holder started in
-/obj/structure/disposalholder/proc/start(obj/machinery/disposal/D)
-	if(!D.trunk)
-		D.expel(src)	// no trunk connected, so expel immediately
-		return
-
-	loc = D.trunk
+/obj/structure/disposalholder/proc/start(obj/structure/disposalpipe/trunk/trunk)
+	loc = trunk
 	active = 1
 	set_dir(DOWN)
-	addtimer(CALLBACK(src, .proc/move), 1)
+	addtimer(CALLBACK(src, PROC_REF(move)), 1)
 
 // movement process, persists while holder is moving through pipes
 /obj/structure/disposalholder/proc/move()
@@ -594,13 +623,13 @@
 
 		if(hasmob && prob(3))
 			for(var/mob/living/H in src)
-				if(!isdrone(H)) //Drones use the mailing code to move through the disposal system,
+				if(!isdrone(H) && !isreplicator(H) && !HAS_TRAIT(H, TRAIT_NO_DISPOSALS_DAMAGE)) //Drones use the mailing code to move through the disposal system,
 					H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
 
 		if(has_bodybag && prob(3))
 			for(var/obj/structure/closet/body_bag/B in src)
 				for(var/mob/living/H in B)
-					if(!isdrone(H))
+					if(!isdrone(H) && !isreplicator(H) && !HAS_TRAIT(H, TRAIT_NO_DISPOSALS_DAMAGE))
 						H.take_overall_damage(20, 0, "Blunt Trauma")
 
 		if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
@@ -1004,7 +1033,7 @@
 	if(..())
 		return
 
-	if(istype(I, /obj/item/device/tagger))
+	if(istagger(I))
 		var/obj/item/device/tagger/O = I
 
 		if(O.currTag)// Tag set
@@ -1064,9 +1093,9 @@
 				P.icon_state = "deliverypizza[length(B.boxes)]"
 			else
 				P.icon_state = "deliverycrate[i]"
-			var/image/Img = image('icons/obj/storage.dmi', "[P.icon_state]-shop")
-			Img.appearance_flags = RESET_COLOR
-			P.add_overlay(Img)
+			P.lot_lock_image = image('icons/obj/storage.dmi', "[P.icon_state]-shop")
+			P.lot_lock_image.appearance_flags = RESET_COLOR
+			P.add_overlay(P.lot_lock_image)
 		P.modify_max_integrity(75)
 		P.atom_fix()
 		P.damage_deflection = 25
@@ -1078,9 +1107,9 @@
 			C.close()
 		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 		P.icon_state = "deliverycrate"
-		var/image/Img = image('icons/obj/storage.dmi', "deliverycrate-shop")
-		Img.appearance_flags = RESET_COLOR
-		P.add_overlay(Img)
+		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverycrate-shop")
+		P.lot_lock_image.appearance_flags = RESET_COLOR
+		P.add_overlay(P.lot_lock_image)
 		P.modify_max_integrity(75)
 		P.atom_fix()
 		P.damage_deflection = 25
@@ -1092,9 +1121,9 @@
 			C.close()
 		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 		P.icon_state = "deliverycloset"
-		var/image/Img = image('icons/obj/storage.dmi', "deliverycloset-shop")
-		Img.appearance_flags = RESET_COLOR
-		P.add_overlay(Img)
+		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverycloset-shop")
+		P.lot_lock_image.appearance_flags = RESET_COLOR
+		P.add_overlay(P.lot_lock_image)
 		P.modify_max_integrity(75)
 		P.atom_fix()
 		P.damage_deflection = 25
@@ -1105,9 +1134,9 @@
 		var/obj/structure/S = Item
 		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(S.loc))
 		P.icon_state = "deliverystructure"
-		var/image/Img = image('icons/obj/storage.dmi', "deliverystructure-shop")
-		Img.appearance_flags = RESET_COLOR
-		P.add_overlay(Img)
+		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverystructure-shop")
+		P.lot_lock_image.appearance_flags = RESET_COLOR
+		P.add_overlay(P.lot_lock_image)
 		P.modify_max_integrity(75)
 		P.atom_fix()
 		P.damage_deflection = 25
@@ -1116,7 +1145,21 @@
 	else
 		return
 
-	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+	var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, "[REF(Item)]", market_price)
+
+	var/static/list/category2color = list(
+		"Еда" = "#ff9300",
+		"Одежда" = "#a8e61d",
+		"Устройства" = "#da00ff",
+		"Инструменты" = "#da0000",
+		"Ресурсы" = "#00b7ef",
+		"Наборы" = "#fff200",
+		// "Разное" = no colour,
+	)
+
+	if(category2color[lot_category])
+		Item.color = category2color[lot_category]
 
 	global.shop_categories[lot_category]++
 
@@ -1146,11 +1189,11 @@
 /obj/structure/disposalpipe/sortjunction/proc/updatedesc()
 	desc = initial(desc)
 	if(sortType)
-		desc += "\nIt's filtering objects with the '[sortType]' tag."
+		desc += "\nIt's filtering objects with the '[istext(sortType) ? sortType : "multiple"]' tag."
 
 /obj/structure/disposalpipe/sortjunction/proc/updatename()
 	if(sortType)
-		name = "[initial(name)] ([sortType])"
+		name = "[initial(name)] ([istext(sortType) ? sortType : "multiple"])"
 	else
 		name = initial(name)
 
@@ -1167,7 +1210,7 @@
 
 /obj/structure/disposalpipe/sortjunction/atom_init()
 	. = ..()
-	if(sortType)
+	if(sortType && istext(sortType))
 		tagger_locations |= sortType
 
 	updatedir()
@@ -1179,7 +1222,7 @@
 	if(..())
 		return
 
-	if(istype(I, /obj/item/device/tagger))
+	if(istagger(I))
 		var/obj/item/device/tagger/O = I
 
 		if(O.currTag)// Tag set
@@ -1190,7 +1233,13 @@
 			updatedesc()
 
 /obj/structure/disposalpipe/sortjunction/proc/divert_check(checkTag)
-	return sortType == checkTag
+	if(sortType && istext(sortType))
+		return sortType == checkTag
+	else if(islist(sortType))
+		for(var/sortType_variant in sortType)
+			if(sortType_variant == checkTag)
+				return TRUE
+		return FALSE
 
 // next direction to move
 // if coming in from negdir, then next is primary dir or sortdir
@@ -1324,7 +1373,6 @@
 	// transfer to linked object (outlet or bin)
 
 /obj/structure/disposalpipe/trunk/transfer(obj/structure/disposalholder/H)
-
 	if(H.dir == DOWN)		// we just entered from a disposer
 		return ..()		// so do base transfer proc
 	// otherwise, go to the linked object
@@ -1410,7 +1458,19 @@
 		for(var/atom/movable/AM in H)
 			AM.forceMove(src.loc)
 			AM.pipe_eject(dir)
-			if(!isdrone(AM)) //Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
+
+			if(istype(AM, /obj/item/rocket))
+				var/obj/item/rocket/WH = AM
+				// long distance target will get us better accuracy in throwind datum
+				var/launch_target = get_turf_in_angle(dir2angle(dir)+WH.launch_angle, src.loc, 200)
+
+				var/datum/effect/effect/system/smoke_spread/smoke_effect = new
+				smoke_effect.set_up(1, 0, get_step(src.loc, dir))
+				INVOKE_ASYNC(smoke_effect, TYPE_PROC_REF(/datum/effect/effect/system/smoke_spread, start))
+
+				WH.throw_at(launch_target, 200, WH.launch_speed, spin = FALSE)
+
+			else if(!isdrone(AM) && !isreplicator(AM)) //Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
 				AM.throw_at(target, 3, 2)
 		H.vent_gas(src.loc)
 		qdel(H)
@@ -1490,6 +1550,22 @@
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
 	return
+
+/mob/proc/try_enter_disposal_system()
+	//Auto flush if we use this verb inside a disposal chute.
+	var/obj/machinery/disposal/D = loc
+	if(istype(D))
+		to_chat(src, "<span class='notice'>\The [D] acknowledges your signal.</span>")
+		D.flush_count = D.flush_every_ticks
+
+	var/turf/my_turf = get_turf(src)
+	// Otherwise you can enter by standing on a trunk.
+	var/obj/structure/disposalpipe/trunk/T = locate() in my_turf
+	if(istype(T) && T.layer > my_turf.layer && see_invisible > T.invisibility)
+		to_chat(src, "<span class='notice'>You enter into [T].</span>")
+		var/obj/structure/disposalholder/H = new(T, list(src), new /datum/gas_mixture)
+		H.tomail = TRUE
+		H.start(T)
 
 #undef SEND_PRESSURE
 #undef PRESSURE_TANK_VOLUME

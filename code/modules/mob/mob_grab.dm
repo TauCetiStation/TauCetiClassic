@@ -11,7 +11,7 @@
 	name = "grab"
 	icon = 'icons/hud/screen1.dmi'
 	icon_state = "reinforce"
-	flags = DROPDEL|NOBLUDGEON
+	flags = ABSTRACT|DROPDEL|NOBLUDGEON
 	var/atom/movable/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/assailant = null
@@ -23,7 +23,6 @@
 	var/dancing //determines if assailant and affecting keep looking at each other. Basically a wrestling position
 
 	layer = 21
-	abstract = 1
 	item_state = "nothing"
 	w_class = SIZE_BIG
 
@@ -259,7 +258,8 @@
 		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
-			L.adjustOxyLoss(1)
+			if(assailant.get_targetzone() == O_MOUTH)
+				L.losebreath = max(L.losebreath + 1, 2)
 
 	if(state >= GRAB_KILL)
 		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
@@ -402,6 +402,7 @@
 		affecting.set_dir(WEST)
 
 		set_state(GRAB_KILL)
+	SEND_SIGNAL(assailant, COMSIG_S_CLICK_GRAB, src)
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/grab/proc/confirm()

@@ -3,6 +3,10 @@
 // Example: isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
 // Bad example: isabductor(A) istype(A, /mob/living/carbon/human/abductor)
 
+// META
+
+#define isweakref(D) (istype(D, /datum/weakref))
+
 // TURFS
 
 #define isenvironmentturf(A) (istype(A, /turf/environment))
@@ -16,6 +20,8 @@
 #define isplatingturf(A) (istype(A, /turf/simulated/floor/plating))
 
 #define iswallturf(A) (istype(A, /turf/simulated/wall))
+
+#define iswaterturf(A) (istype(A, /turf/simulated/floor/beach/water) || istype(A, /turf/unsimulated/beach/water) || istype(A, /turf/unsimulated/jungle/water))
 
 // HUMAN
 
@@ -92,6 +98,8 @@
 
 #define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
 
+#define isreplicator(A) (istype(A, /mob/living/simple_animal/hostile/replicator))
+
 // MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -111,6 +119,10 @@
 #define isbot(A) (istype(A, /obj/machinery/bot))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
+
+#define istagger(A) (istype(A, /obj/item/device/tagger))
+
+#define isdiagnostichud(A) (istype(A, /obj/item/clothing/glasses/hud/diagnostic))
 
 // GOONCHAT PORT
 
@@ -193,11 +205,13 @@
 
 #define istraitor(H) isrole(TRAITOR, H)
 
+#define isimposter(H) isrole(IMPOSTER, H)
+
 #define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
 
 #define ismalf(H) isrole(MALF, H)
 
-#define isnukeop(H) isrole(NUKE_OP, H)
+#define isnukeop(H) (isrole(NUKE_OP, H) || isrole(NUKE_OP_LEADER, H) || isrole(SYNDIESQUADIE, H))
 
 #define iswizard(H) isrole(WIZARD, H)
 

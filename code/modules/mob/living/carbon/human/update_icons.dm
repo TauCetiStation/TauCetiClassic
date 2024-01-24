@@ -118,17 +118,20 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(S.sprite_sheets[sprite_sheet_slot])
 		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
+	if(!(t_state in icon_states(icon_path)))
+		icon_path = def_icon_path
+
 	var/fem = ""
 	if(H.gender == FEMALE && S.gender_limb_icons)
 		if(t_state != null)
 			if("[t_state]_fem" in icon_states(def_icon_path))
 				fem = "_fem"
 
-	var/image/I = image(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
+	var/mutable_appearance/I = mutable_appearance(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
 	I.color = color
 
 	if(dirt_overlay && bloodied_icon_state)
-		var/image/bloodsies = image(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
+		var/mutable_appearance/bloodsies = mutable_appearance(icon = 'icons/effects/blood.dmi', icon_state = bloodied_icon_state)
 		bloodsies.color = dirt_overlay.color
 		I.add_overlay(bloodsies)
 
@@ -184,6 +187,19 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/mutable_appearance/tatoo = mutable_appearance('icons/mob/human.dmi', "[vox_rank]_s", -BODY_LAYER)
 		tatoo.color = rgb(r_eyes, g_eyes, b_eyes)
 		standing += tatoo
+
+	if(species.name == UNATHI && !(HUSK in mutations))
+		var/obj/item/organ/external/Chest = bodyparts_by_name[BP_CHEST]
+		var/mutable_appearance/belly = mutable_appearance('icons/mob/human.dmi', "[gender]_belly[fat ? "_fat" : ""][Chest.pumped > Chest.pumped_threshold && !fat ? "_pumped" : ""]", -BODY_LAYER)
+		belly.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
+		standing += belly
+
+		var/obj/item/organ/external/Head = bodyparts_by_name[BP_HEAD]
+		if(Head && !Head.is_stump)
+			var/mutable_appearance/jaw = mutable_appearance('icons/mob/human.dmi', "[gender]_jaw", -BODY_LAYER)
+			jaw.color = RGB_CONTRAST(r_belly, g_belly, b_belly)
+			standing += jaw
+
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
@@ -316,10 +332,11 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_standing_overlay(FIRE_UPPER_LAYER)
 
 	if(on_fire)
-		var/image/under = image('icons/mob/OnFire.dmi', "human_underlay", layer = -FIRE_LOWER_LAYER)
-		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", layer = -FIRE_UPPER_LAYER)
+		var/image/under = image('icons/mob/OnFire.dmi', "[species.specie_suffix_fire_icon]_underlay", layer = -FIRE_LOWER_LAYER)
+		var/image/over = image('icons/mob/OnFire.dmi', "[species.specie_suffix_fire_icon]_overlay", layer = -FIRE_UPPER_LAYER)
 		under = update_height(under)
 		over = update_height(over)
+		over.plane = LIGHTING_LAMPS_PLANE
 		overlays_standing[FIRE_LOWER_LAYER] = under
 		overlays_standing[FIRE_UPPER_LAYER] = over
 
@@ -394,15 +411,22 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[UNIFORM_LAYER] = standing
 
 		for(var/obj/item/clothing/accessory/A in U.accessories)
-			var/tie_color = A.icon_state
-			var/image/tie
+			var/t_state = A.icon_state
+			var/icon_path = 'icons/mob/accessory.dmi'
+
 			if(A.icon_custom)
-				tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
-			else
-				tie = image("icon" = 'icons/mob/accessory.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
-			tie.color = A.color
-			tie = human_update_offset(tie, TRUE)
-			standing.add_overlay(tie)
+				t_state += "_mob"
+				icon_path = A.icon_custom
+
+			if(gender == FEMALE && species.gender_limb_icons)
+				if("[t_state]_fem" in icon_states(icon_path))
+					t_state += "_fem"
+
+			var/image/accessory
+			accessory = image("icon" = icon_path, "icon_state" = t_state, "layer" = -UNIFORM_LAYER + A.layer_priority)
+			accessory.color = A.color
+			accessory = human_update_offset(accessory, TRUE)
+			standing.add_overlay(accessory)
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
@@ -436,7 +460,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[GLOVES_LAYER] = standing
 	else
 		if(blood_DNA)
-			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
+			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_hand_blood_state)
 			bloodsies.color = hand_dirt_datum.color
 			bloodsies = human_update_offset(bloodsies, FALSE)
 			overlays_standing[GLOVES_LAYER]	= bloodsies
@@ -499,7 +523,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[SHOES_LAYER] = standing
 	else
 		if(feet_blood_DNA)
-			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state" = species.specie_shoe_blood_state)
 			bloodsies.color = feet_dirt_color.color
 			overlays_standing[SHOES_LAYER] = bloodsies
 		else
@@ -717,9 +741,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(client && hud_used)
 			client.screen += l_hand
 
-		var/t_state = l_hand.item_state
-		if(!t_state)
-			t_state = l_hand.icon_state
 		var/image/standing = l_hand.get_standing_overlay(src, l_hand.lefthand_file, SPRITE_SHEET_HELD, -L_HAND_LAYER, icon_state_appendix = "_l")
 		standing = human_update_offset(standing, FALSE)
 		overlays_standing[L_HAND_LAYER] = standing
@@ -783,7 +804,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/standing = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.open)
-			standing += image("icon" = 'icons/mob/surgery.dmi', "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
+			standing += image("icon" = species.surgery_icobase, "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
 
 	if(standing.len)
 		for(var/image/I in standing)

@@ -181,3 +181,15 @@
 	structure_id = "space_villa"
 	desc = "Unknown object"
 	mappath = "maps/templates/space_structures/space_villa.dmm"
+
+/datum/map_template/space_structure/old_station
+	name = "OldStation"
+	structure_id = "old_station"
+	desc = "Abandoned station"
+	mappath = "maps/templates/space_structures/old_station.dmm"
+
+/datum/map_template/space_structure/flagship
+	name = "Destroyed Flagship"
+	structure_id = "Flagship"
+	desc = "Unknown shuttle"
+	mappath = "maps/templates/space_structures/flagship.dmm"

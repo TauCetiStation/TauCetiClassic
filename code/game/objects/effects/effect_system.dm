@@ -166,6 +166,7 @@ steam.start() -- spawns the effect
 		location = get_turf(loca)
 
 /datum/effect/effect/system/spark_spread/start()
+	set waitfor = FALSE
 	var/i = 0
 	for(i=0, i<src.number, i++)
 		if(src.total_sparks > 20)
@@ -247,7 +248,7 @@ steam.start() -- spawns the effect
 	if (!..())
 		return 0
 	M.drop_item()
-	M.adjustOxyLoss(1)
+	M.losebreath = max(M.losebreath + 1, 2)
 	if (M.coughedtime != 1)
 		M.coughedtime = 1
 		M.emote("cough")
@@ -320,9 +321,7 @@ steam.start() -- spawns the effect
 	var/smoke_type = /obj/effect/effect/smoke
 
 /datum/effect/effect/system/smoke_spread/set_up(n = 5, c = 0, loca, direct)
-	if(n > 10)
-		n = 10
-	number = n
+	number = min(n, 10)
 	cardinals = c
 	if(istype(loca, /turf))
 		location = loca
@@ -332,28 +331,31 @@ steam.start() -- spawns the effect
 		direction = direct
 
 /datum/effect/effect/system/smoke_spread/start()
-	var/i = 0
-	for(i=0, i<src.number, i++)
-		if(src.total_smoke > 20)
-			return
+	var/list/pick_dist = new
+	for(var/i in 0 to (number-1))
+		pick_dist += round(sqrt(i))
+
+	for(var/i in 1 to src.number)
 		spawn(0)
 			if(holder)
 				src.location = get_turf(holder)
 			var/obj/effect/effect/smoke/smoke = new smoke_type(src.location)
-			src.total_smoke++
+
 			var/direction = src.direction
 			if(!direction)
 				if(src.cardinals)
 					direction = pick(cardinal)
 				else
 					direction = pick(alldirs)
-			for(i=0, i<pick(0,1,1,1,2,2,2,3), i++)
+
+			var/dist = pick(pick_dist)
+			pick_dist -= dist
+
+			for(var/j in 1 to dist)
 				sleep(10)
-				step(smoke,direction)
+				smoke.forceMove(get_step(smoke, direction)) // not step() because inertia
 			spawn(smoke.time_to_live*0.75+rand(10,30))
 				if (smoke) qdel(smoke)
-				src.total_smoke--
-
 
 /datum/effect/effect/system/smoke_spread/bad
 	smoke_type = /obj/effect/effect/smoke/bad
@@ -483,7 +485,7 @@ steam.start() -- spawns the effect
 	MakeSlippery()
 	icon_state = "[metal ? "m" : ""]foam"
 	playsound(src, 'sound/effects/bubbles2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-	addtimer(CALLBACK(src, .proc/disolve_stage, 1), 3 + metal * 3)
+	addtimer(CALLBACK(src, PROC_REF(disolve_stage), 1), 3 + metal * 3)
 
 /obj/effect/effect/foam/proc/MakeSlippery()
 	if(!metal)
@@ -494,10 +496,10 @@ steam.start() -- spawns the effect
 		if(1)
 			process()
 			checkReagents()
-			addtimer(CALLBACK(src, .proc/disolve_stage, 2), 120)
+			addtimer(CALLBACK(src, PROC_REF(disolve_stage), 2), 120)
 		if(2)
 			STOP_PROCESSING(SSobj, src)
-			addtimer(CALLBACK(src, .proc/disolve_stage, 3), 30)
+			addtimer(CALLBACK(src, PROC_REF(disolve_stage), 3), 30)
 
 		if(3)
 			if(metal)
@@ -616,13 +618,13 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/atom_init()
 	. = ..()
 	set_opacity(TRUE)
-	update_nearby_tiles(1)
+	update_nearby_tiles()
 
 
 
 /obj/structure/foamedmetal/Destroy()
 	density = FALSE
-	update_nearby_tiles(1)
+	update_nearby_tiles()
 	return ..()
 
 /obj/structure/foamedmetal/proc/updateicon()
@@ -724,15 +726,14 @@ steam.start() -- spawns the effect
 		var/light = 0
 		var/flash = 0
 
-		// Clamp all values to MAX_EXPLOSION_RANGE
 		if (round(amount/12) > 0)
-			devastation = min (MAX_EXPLOSION_RANGE, round(amount/12))
+			devastation = round(amount/12)
 
 		if (round(amount/6) > 0)
-			heavy = min (MAX_EXPLOSION_RANGE, round(amount/6))
+			heavy = round(amount/6)
 
 		if (round(amount/3) > 0)
-			light = min (MAX_EXPLOSION_RANGE, round(amount/3))
+			light = round(amount/3)
 
 		if (flash && flashing_factor)
 			flash += (round(amount/4) * flashing_factor)
