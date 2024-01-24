@@ -18,7 +18,7 @@
 	var/destroy_surroundings = TRUE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE //This makes it easier to hit hostile mobs, you only need to click on their tile, and is set back to 1 when they die
 	var/vision_range = 9 //How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
-
+	var/view_targeting = TRUE
 	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/idle_vision_range = 9 //If a mob is just idling around, it's vision range is limited to this. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/ranged_message = "fires" //Fluff text for ranged mobs
@@ -84,6 +84,10 @@
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
 	var/list/L = list()
+	if(!view_targeting)
+		var/list/Objects = orange(vision_range, src)
+		L += Objects
+		return L
 	if(search_objects)
 		var/list/Objects = oview(vision_range, src)
 		L += Objects
