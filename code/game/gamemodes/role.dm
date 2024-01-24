@@ -45,6 +45,8 @@
 
 	var/moveset_type
 
+	COOLDOWN_DECLARE(revolution_convert_cooldown)
+
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)

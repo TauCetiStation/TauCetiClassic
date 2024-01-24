@@ -632,7 +632,7 @@
 
 /obj/structure/sign/poster/revolution/process(mob/user)
 	for(var/atom/A in viewers(3, src))
-		SEND_SIGNAL(A, COMSIG_ADJUST_LOYALITY, -10, src)
+		SEND_SIGNAL(A, COMSIG_VIEW_POSTER)
 
 /obj/structure/sign/poster/revolution/random
 	name = "random official poster"

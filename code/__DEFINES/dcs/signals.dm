@@ -413,3 +413,10 @@
 #define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
 // send this signal to handle disabilities in life for mob/living/carbon/human
 #define COMSIG_HANDLE_DISABILITIES "handle_disabilities"
+
+#define COMSIG_CONVERTED_TO_REV "converted_to_rev"
+#define COMSIG_HEAR_REVCONVERT "hear_revconvert"
+#define COMSIG_VIEW_POSTER "view_poster"
+#define COMSIG_ATTACKED_BY_REVFLASHER "attacked_by_revflasher"
+#define COMSIG_HEAR_MEGAPHONE "hear_megaphone"
+#define COMSIG_ATTACKED_BY_TRANSPARANT "attacked_by_transparant"

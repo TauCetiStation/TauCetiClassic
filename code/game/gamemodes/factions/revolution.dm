@@ -35,7 +35,14 @@
 	if(SSshuttle)
 		SSshuttle.fake_recall = TRUE
 
-	return ..()
+	..()
+
+	for(var/mob/living/carbon/human/H as anything in global.human_list)
+		H.AddComponent(/datum/component/nanotrasen_loyality)
+
+/datum/faction/revolution/remove_role(datum/role/R)
+	. = ..()
+	R.antag.current.AddComponent(/datum/component/nanotrasen_loyality)
 
 /datum/faction/revolution/HandleRecruitedMind(datum/mind/M, laterole)
 	. = ..()
@@ -49,6 +56,7 @@
 			if(!S)
 				return
 			S.total_TC += 1
+		SEND_SIGNAL(M.current, COMSIG_CONVERTED_TO_REV)
 
 /datum/faction/revolution/forgeObjectives()
 	if(!..())
@@ -110,6 +118,7 @@
 	return dat
 
 /datum/faction/revolution/latespawn(mob/M)
+	M.AddComponent(/datum/component/nanotrasen_loyality)
 	if(M.mind.assigned_role in heads_positions)
 		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
 

@@ -110,6 +110,7 @@
 #define SS_WAIT_UNIT_TESTS   20
 #define SS_WAIT_SUN         600
 #define SS_WAIT_SMARTLIGHT  600
+#define SS_WAIT_LONG_PROCESS 600
 
 // SS runlevels
 

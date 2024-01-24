@@ -69,14 +69,6 @@
 	handcrafting = new()
 	AddComponent(/datum/component/altcraft)
 
-	var/loyality_num = DEFAULT_MAX_NANOTRASEN_LOYALITY
-	if(client?.prefs)
-		if(client.prefs.nanotrasen_relation == "Opposed")
-			loyality_num = 20
-		if(client.prefs.nanotrasen_relation == "Skeptical")
-			loyality_num = 50
-	AddComponent(/datum/component/nanotrasen_loyality, loyality_num, loyality_num)
-
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()

@@ -335,8 +335,7 @@
 /obj/item/weapon/transparant/attack(mob/living/M, mob/living/user, def_zone)
 	..()
 	M.show_message("<span class='red'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <span class='emojify bold'>[src.desc]</span></span>", SHOWMSG_VISUAL)
-	if(def_zone == BP_HEAD)
-		SEND_SIGNAL(M, COMSIG_ADJUST_LOYALITY, -20, src)
+	SEND_SIGNAL(M, COMSIG_ATTACKED_BY_TRANSPARANT, user, def_zone)
 
 /obj/item/weapon/transparant/update_icon()
 	if(blood_DNA)
