@@ -3,7 +3,7 @@
 /mob/living/simple_animal/hostile/retaliate/malf_drone
 	name = "Сombat drone"
 	desc = "Автоматический боевой дрон, вооруженный новейшим вооружением и обладающий высокой прочностью корпуса."
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/drone.dmi'
 	icon_state = "drone_100"
 	icon_living = "drone_100"
 	icon_dead = "drone_0"
