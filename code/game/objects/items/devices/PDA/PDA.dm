@@ -81,6 +81,8 @@
 
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_pda_light)
 
+	var/datum/music_player/chiptune_player
+
 /datum/action/item_action/hands_free/toggle_pda_light
 	name = "Toggle light"
 
@@ -97,6 +99,10 @@
 	if(default_pen)
 		pen = new default_pen(src)
 
+	chiptune_player = new(src, "sound/musical_instruments/pda")
+
+	set_ringtone(pick(ringtones_by_names))
+
 /obj/item/device/pda/Destroy()
 	var/datum/money_account/MA = get_account(owner_account)
 	if(MA)
@@ -110,7 +116,13 @@
 		else
 			QDEL_NULL(id)
 	QDEL_NULL(pen)
+
+	QDEL_NULL(chiptune_player)
+
 	return ..()
+
+/obj/item/device/pda/unable_to_play(mob/living/user)
+	return FALSE
 
 /obj/item/device/pda/examine(mob/user)
 	..()
@@ -796,6 +808,7 @@
 	if(mode in safe_pages)
 		mode = 0	//for safety
 	ui_interact(user) //NanoUI requires this proc
+	stop_ringtone()
 	return
 
 /obj/item/device/pda/Topic(href, href_list)
@@ -944,6 +957,8 @@
 			toff = !toff
 		if("Toggle Ringer")//If viewing texts then erase them, if not then toggle silent status
 			message_silent = !message_silent
+			if(message_silent)
+				stop_ringtone()
 		if("Clear")//Clears messages
 			if(href_list["option"] == "All")
 				tnote.Cut()
@@ -961,20 +976,27 @@
 				mode=2
 
 		if("Ringtone")
-			var/t = sanitize(input(U, "Please enter new ringtone", name, input_default(ttone)) as text, 20)
-			if (t && Adjacent(U))
-				if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
-					to_chat(U, "The PDA softly beeps.")
-					ui.close()
-				else
-					ttone = t
-			else
-				ui.close()
-				return 0
-		if("Message")
+			stop_ringtone()
+			var/list/chose_ringtone = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
+			var/Tone = input(U, "Выберите рингтон", name) as null|anything in chose_ringtone
+			if(Tone && Adjacent(U))
+				var/t
+				if(Tone == CUSTOM_RINGTONE_NAME)
+					t = sanitize(input(U, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
+					if (!t || !Adjacent(U))
+						return
+					if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
+						to_chat(U, "The PDA softly beeps.")
+						ui.close()
+					else
 
+				set_ringtone(Tone, t)
+				play_ringtone(ignore_presence = TRUE)
+
+		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
 			create_message(U, P, !href_list["notap"])
+			stop_ringtone()
 			if(mode == 2)
 				if(href_list["target"] in conversations)            // Need to make sure the message went through, if not welp.
 					active_conversation = href_list["target"]
@@ -1564,7 +1586,7 @@
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
 
 		if (!P.message_silent)
-			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+			P.play_ringtone()
 			P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
 
 		//Search for holder of the PDA.
@@ -1946,5 +1968,38 @@
 	if(!cartridge || !istype(cartridge, /obj/item/weapon/cartridge/cmo) || !id || !(access_cmo in id.access))
 		return FALSE
 	return TRUE
+
+/obj/item/device/pda/proc/play_ringtone(ignore_presence = FALSE)
+	if(!ignore_presence)
+		var/mob/user = usr
+		if(nanomanager.get_open_ui(user, src, "main"))
+			return
+
+	if(chiptune_player.playing)
+		return
+
+	chiptune_player.playing = TRUE
+	INVOKE_ASYNC(chiptune_player, TYPE_PROC_REF(/datum/music_player, playsong), null)
+
+/obj/item/device/pda/proc/stop_ringtone()
+	chiptune_player.playing = FALSE
+
+/obj/item/device/pda/proc/set_ringtone(ringtone, melody = null)
+	if(!ringtone)
+		return
+	stop_ringtone()
+
+	if(ringtone == CUSTOM_RINGTONE_NAME)
+		if(!melody)
+			return
+
+		chiptune_player.repeat = 1
+		chiptune_player.parse_song_text(melody)
+	else
+		var/datum/ringtone/Ring = global.ringtones_by_names[ringtone]
+		if(!Ring)
+			return
+		chiptune_player.repeat = Ring.replays
+		chiptune_player.parse_song_text(Ring.melody)
 
 #undef TRANSCATION_COOLDOWN
