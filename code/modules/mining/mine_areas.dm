@@ -105,6 +105,13 @@
 
 /area/asteroid/mine/unexplored/dangerous
 	icon_state = "unexplored_dangerous"
+	var/static/list/high_tier_spawn_list = list(
+		/mob/living/simple_animal/hostile/asteroid/goliath/high_tier = 5,
+		/mob/living/simple_animal/hostile/asteroid/basilisk/high_tier = 4,
+		/mob/living/simple_animal/hostile/asteroid/hivelord/high_tier = 3,
+		/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier = 2,
+		/mob/living/simple_animal/hostile/retaliate/malf_drone/mining/high_tier = 1
+	)
 
 // More mobs at one time, ~3 fauna around player always
 /area/asteroid/mine/unexplored/dangerous/InitSpawnArea()
@@ -118,6 +125,17 @@
 		15 SECONDS,
 		2 MINUTES,
 	)
+
+/area/asteroid/mine/unexplored/dangerous/Spawn(turf/T)
+	if(istype(T, /turf/simulated/floor/plating/airless/asteroid))
+		var/turf/simulated/floor/plating/airless/asteroid/AT = T
+		AT.gets_dug()
+
+	var/to_spawn = pickweight(high_tier_spawn_list)
+	var/atom/A = new to_spawn(T)
+	if(A)
+		return list(A)
+	return null
 
 /area/asteroid/mine/unexplored/dangerous/Entered(atom/movable/A, atom/OldLoc)
 	. = ..()
