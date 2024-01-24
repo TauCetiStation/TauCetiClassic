@@ -76,7 +76,7 @@
 	<a href='?src=\ref[src];station_sw=1'>К юго-западу от [station_name_ru()]</a> |
 	<a href='?src=\ref[src];station_s=1'>К югу от [station_name_ru()]</a> |
 	<a href='?src=\ref[src];station_se=1'>Юго-восток от [station_name_ru()]</a><br>
-	<a href='?src=\ref[src];mining=1'>К северо-востоку от шахтёрного астероида</a><br>"}
+	<a href='?src=\ref[src];mining=1'>К северо-востоку от шахтёрского астероида</a><br>"}
 
 	var/datum/browser/popup = new(user, "computer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 575, 450, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
