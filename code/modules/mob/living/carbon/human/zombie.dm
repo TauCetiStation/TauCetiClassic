@@ -524,7 +524,7 @@ var/global/list/zombie_list = list()
 		imp_in.adjustToxLoss(imp_in.maxHealth * 2.5)
 		imp_in.death(FALSE)
 	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, prerevive_zombie)), 5 SECONDS)
-	to_chat(h, "<span class='cult'>Твоё сердце умолкает, а вместе с ним и хладеет твоё тело, и лишь голод начинает разгораться с невиданной силой!</span>")
+	to_chat(H, "<span class='cult'>Твоё сердце умолкает, а вместе с ним и хладеет твоё тело, и лишь голод начинает разгораться с невиданной силой!</span>")
 	qdel(src)
 
 /obj/item/weapon/implant/zombie/islegal()
