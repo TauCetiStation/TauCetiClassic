@@ -132,7 +132,8 @@ var/global/lastMove = 0
 	if(curr_location == locate(/area/shuttle/arrival/station))
 		SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
 		SSshuttle.undock_act(curr_location, "arrival_1")
-		radio.autosay(department_note, "Система оповещения")
+		if (!radio_message_via_ai(department_note))
+			radio.autosay(department_note, "Система оповещения")
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
 	switch(arrival)
