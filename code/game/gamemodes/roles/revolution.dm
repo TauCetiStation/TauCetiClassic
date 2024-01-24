@@ -21,7 +21,7 @@
 
 /datum/role/rev/OnPostSetup(laterole)
 	. = ..()
-		antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
+	antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
 	var/datum/action/RevConvert/action = new(antag.current)
 	action.Grant(antag.current)
 
