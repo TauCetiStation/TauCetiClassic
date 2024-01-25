@@ -27,6 +27,10 @@
 
 /datum/role/rev/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "rev_convert")
+	if(M.current)
+		M.current.verbs -= /mob/living/carbon/human/proc/RevConvert
+		for(var/datum/action/RevConvert/A in M.current.actions)
+			A.Remove(M.current)
 	..()
 
 /datum/role/rev/Greet(greeting, custom)
@@ -103,7 +107,7 @@
 	say(say_string)
 	point_at(M)
 	SEND_SIGNAL(M, COMSIG_HEAR_REVCONVERT, src)
-	COOLDOWN_START(R, revolution_convert_cooldown, 1 MINUTE)
+	COOLDOWN_START(R, revolution_convert_cooldown, isrevhead(src) ? 3 MINUTES : 1 MINUTE)
 
 	if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
 		to_chat(src, "<span class='bold warning'>[M] в черном списке!</span>")
