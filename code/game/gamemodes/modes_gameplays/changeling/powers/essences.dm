@@ -126,6 +126,7 @@
 		host.say(message, TRUE)
 		H.special_voice = saved_special_voice
 		return
+	log_say("Essence [name]/[key] via changeling body: [message]")
 	host.say(message)
 
 /mob/living/parasite/essence/whisper(message as text)
