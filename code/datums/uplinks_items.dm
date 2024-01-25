@@ -1251,9 +1251,3 @@
 	desc = "These posters expose NT lies and promote violence towards monopolists, allowing to convert spacemen remotely."
 	item = /obj/item/weapon/storage/box/syndie_kit/revolution/posters
 	cost = 1
-
-/datum/uplink_item/revolution/headrev_implant
-	name = "HeadRev implant"
-	desc = "Device to implanting revolutionaries"
-	item = /obj/item/weapon/revhead_converter
-	cost = 20

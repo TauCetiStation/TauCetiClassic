@@ -684,7 +684,6 @@
 #include "code\game\gamemodes\modes_gameplays\nuclear\nuclear_challenge.dm"
 #include "code\game\gamemodes\modes_gameplays\nuclear\nuclearbomb.dm"
 #include "code\game\gamemodes\modes_gameplays\nuclear\pinpointer.dm"
-#include "code\game\gamemodes\modes_gameplays\revolution\revolution.dm"
 #include "code\game\gamemodes\modes_gameplays\shadowling\ascendant_shadowling.dm"
 #include "code\game\gamemodes\modes_gameplays\shadowling\shadowling_abilities.dm"
 #include "code\game\gamemodes\modes_gameplays\shadowling\shadowling_items.dm"
