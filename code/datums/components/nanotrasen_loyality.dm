@@ -45,7 +45,7 @@
 	if(!F)
 		qdel(src)
 		return
-	add_faction_member(F, parent, TRUE)
+	add_faction_member(F, parent, TRUE, TRUE)
 
 /datum/component/nanotrasen_loyality/Destroy()
 	STOP_PROCESSING(SSlongprocess, src)
@@ -58,24 +58,53 @@
 	return ..()
 
 /datum/component/nanotrasen_loyality/proc/converted_to_rev(datum/source)
+	SIGNAL_HANDLER
 	qdel(src)
 
 /datum/component/nanotrasen_loyality/proc/hear_revconvert(datum/source, mob/revolutioneer)
+	SIGNAL_HANDLER
 	var/mob/living/carbon/human/H = revolutioneer
 	adjust_anti_loyality(isrevhead(H) ? 50 : 5)
 
 /datum/component/nanotrasen_loyality/proc/view_poster(datum/source)
+	SIGNAL_HANDLER
+	if(!ishuman(source))
+		return
+	var/mob/living/carbon/human/H = source
+	if(!COOLDOWN_FINISHED(H, revposter_effect))
+		return
+	COOLDOWN_START(H, revposter_effect, 2 MINUTES)
 	adjust_anti_loyality(10)
 
 /datum/component/nanotrasen_loyality/proc/attacked_by_revflasher(datum/source)
+	SIGNAL_HANDLER
 	var/mob/living/carbon/human/H = source
 	if(!istype(H) || H.eyecheck() || H.blinded)
 		return
 	adjust_anti_loyality(100)
 
-/datum/component/nanotrasen_loyality/proc/hear_megaphone(datum/source)
+/datum/component/nanotrasen_loyality/proc/hear_megaphone(datum/source, mob/megaphone_user)
+	SIGNAL_HANDLER
+	if(!megaphone_user.mind.GetRole(REV) && !megaphone_user.mind.GetRole(HEADREV))
+		return
+	if(!ishuman(source))
+		return
+	var/mob/living/carbon/human/H = source
+	if(!COOLDOWN_FINISHED(H, megaphone_effect))
+		return
+	COOLDOWN_START(H, megaphone_effect, 15 SECONDS)
 	adjust_anti_loyality(20)
 
-/datum/component/nanotrasen_loyality/proc/attacked_by_transparant(datum/source, user, def_zone)
-	if(def_zone == BP_HEAD)
-		adjust_anti_loyality(20)
+/datum/component/nanotrasen_loyality/proc/attacked_by_transparant(datum/source, mob/attacker, def_zone)
+	SIGNAL_HANDLER
+	if(!attacker.mind.GetRole(REV) && !attacker.mind.GetRole(HEADREV))
+		return
+	if(def_zone != BP_HEAD)
+		return
+	if(!ishuman(source))
+		return
+	var/mob/living/carbon/human/H = source
+	if(!COOLDOWN_FINISHED(H, transparant_effect))
+		return
+	COOLDOWN_START(H, transparant_effect, 10 SECONDS)
+	adjust_anti_loyality(20)
