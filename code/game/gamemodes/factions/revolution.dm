@@ -24,6 +24,8 @@
 	//associative
 	var/list/reasons = list()
 
+	COOLDOWN_DECLARE(tc_regen)
+
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
@@ -41,8 +43,8 @@
 		H.AddComponent(/datum/component/nanotrasen_loyality)
 
 /datum/faction/revolution/remove_role(datum/role/R)
-	. = ..()
 	R.antag.current.AddComponent(/datum/component/nanotrasen_loyality)
+	..()
 
 /datum/faction/revolution/HandleRecruitedMind(datum/mind/M, laterole)
 	. = ..()
@@ -154,16 +156,18 @@
 				message_admins("Unable to add new heads of revolution.")
 				tried_to_add_revheads = world.time + 10 MINUTES
 
-	for(var/datum/role/rev/converted_rev in members)
-		for(var/datum/role/rev_leader/rev_head in members)
-			var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(rev_head.antag.current)
-			if(!U)
-				return
-			U.uses += 1
-			var/datum/component/gamemode/syndicate/S = rev_head.GetComponent(/datum/component/gamemode/syndicate)
-			if(!S)
-				return
-			S.total_TC += 1
+	if(COOLDOWN_FINISHED(src, tc_regen))
+		for(var/datum/role/rev/converted_rev in members)
+			for(var/datum/role/rev_leader/rev_head in members)
+				var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(rev_head.antag.current)
+				if(!U)
+					return
+				U.uses += 1
+				var/datum/component/gamemode/syndicate/S = rev_head.GetComponent(/datum/component/gamemode/syndicate)
+				if(!S)
+					return
+				S.total_TC += 1
+		COOLDOWN_START(src, tc_regen, 1 MINUTE)
 
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		command_report("Ваша низкая производительность вынуждает нас принять непростое решение о сокращении финансового обеспечения станции. В связи с этим вдвое уменьшены заработные платы всего персонала, за исключением сотрудников службы безопасности и командного состава.")
