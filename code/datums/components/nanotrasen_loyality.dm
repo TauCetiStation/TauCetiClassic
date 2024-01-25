@@ -1,6 +1,3 @@
-#define DEFAULT_MAX_NANOTRASEN_LOYALITY 100
-#define DEFAULT_TIMER_ADJUST_LOYALUTY 600
-
 /datum/component/nanotrasen_loyality
 	var/current_anti_loyality = 0
 
