@@ -32,6 +32,10 @@
 
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
+	COOLDOWN_DECLARE(revposter_effect)
+	COOLDOWN_DECLARE(megaphone_effect)
+	COOLDOWN_DECLARE(transparant_effect)
+
 /mob/living/carbon/human/atom_init(mapload, new_species)
 	AddComponent(/datum/component/mood)
 
