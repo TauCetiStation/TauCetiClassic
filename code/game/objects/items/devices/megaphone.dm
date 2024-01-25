@@ -47,7 +47,7 @@
 				for(var/mob/living/carbon/M in get_hearers_in_view(command_power, user))
 					if(M != user)
 						M.add_command_buff(usr, cooldown)
-						SEND_SIGNAL(M, COMSIG_HEAR_MEGAPHONE)
+						SEND_SIGNAL(M, COMSIG_HEAR_MEGAPHONE, user)
 			user.audible_message("<B>[user]</B> broadcasts, <FONT size=[max(3, command_power)]>\"[message]\"</FONT>")
 
 		spamcheck = 1
