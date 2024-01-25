@@ -116,29 +116,29 @@
 				buckled_to.propelled = 4
 			step(buckled_to, movementdirection)
 			sleep(1)
-			step(buckled_to, buckled_to.dir)
+			step(buckled_to, movementdirection)
 			if(buckled_to)
 				buckled_to.propelled = 3
 			sleep(1)
-			step(buckled_to, buckled_to.dir)
+			step(buckled_to, movementdirection)
 			sleep(1)
-			step(buckled_to, buckled_to.dir)
+			step(buckled_to, movementdirection)
 			if(buckled_to)
 				buckled_to.propelled = 2
 			sleep(2)
-			step(buckled_to, buckled_to.dir)
+			step(buckled_to, movementdirection)
 			if(buckled_to)
 				buckled_to.propelled = 1
 			sleep(2)
-			step(buckled_to, buckled_to.dir)
+			step(buckled_to, movementdirection)
 			if(buckled_to)
 				buckled_to.propelled = 0
 			sleep(3)
-			step(buckled_to, buckled_to.dir)
+			step(buckled_to, movementdirection)
 			sleep(3)
-			step(buckled_to, buckled_to.dir)
+			step(buckled_to, movementdirection)
 			sleep(3)
-			step(buckled_to, buckled_to.dir)
+			step(buckled_to, movementdirection)
 	else if (loc && istype(loc, /obj/item/mecha_parts/mecha_equipment/extinguisher))
 		var/obj/item/mecha_parts/mecha_equipment/extinguisher/ext = loc
 		if (ext.chassis)
