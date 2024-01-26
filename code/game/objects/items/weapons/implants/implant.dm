@@ -2,6 +2,7 @@
 #define MALFUNCTION_PERMANENT 2
 /obj/item/weapon/implant
 	name = "implant"
+	cases = list("имплант", "импланта", "импланту", "имплант", "имплантом", "импланте")
 	icon = 'icons/obj/device.dmi'
 	icon_state = "implant"
 	item_actions_special = TRUE
@@ -81,7 +82,7 @@
 	remove_item_actions(host)
 
 /obj/item/weapon/implant/proc/get_data()
-	return "No information available"
+	return "Информация недоступна"
 
 /obj/item/weapon/implant/proc/hear(message, source)
 	return
@@ -90,38 +91,39 @@
 	return 0
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
-	to_chat(imp_in, "<span class='warning'>You feel something melting inside [part ? "your [part.name]" : "you"]!</span>")
+	to_chat(imp_in, "<span class='warning'>Вы чувствуете, как в [part ? "your [part.name]" : "you"] что-то плавится!</span>")
 	if (part)
-		part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
+		part.take_damage(burn = 15, used_weapon = "Расплавленная электроника")
 	else
 		var/mob/living/M = imp_in
 		M.apply_damage(15,BURN)
 		M.sec_hud_set_implants()
 	name = "melted implant"
-	desc = "Charred circuit in melted plastic case. Wonder what that used to be..."
+	cases = list("расплавленный имплант", "расплавленного импланта", "расплавленному имлпанту", "расплавленный имплант", "расплавленным имплантом", "расплавленном импланте")
+	desc = "Обгоревшая плата в плавленной пластиковой оболочке. Интересно, для чего она была..."
 	icon_state = "implant_melted"
 	malfunction = MALFUNCTION_PERMANENT
 
 /obj/item/weapon/implant/tracking
 	name = "tracking implant"
-	desc = "Track with this."
+	cases = list("имплант слежения", "импланта слежения", "импланту слежения", "имплант слежения", "имплантом слежения", "импланте слежения")
+	desc = "Отслеживать - этим."
 	implant_trait = TRAIT_VISUAL_TRACK
 	var/id = 1.0
 
 /obj/item/weapon/implant/tracking/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-<b>Name:</b> Tracking Beacon<BR>
-<b>Life:</b> 10 minutes after death of host<BR>
-<b>Important Notes:</b> None<BR>
+	var/dat = {"<b>Характеристики импланта:</b><BR>
+<b>Наименование:</b> Имплант слежения<BR>
+<b>Срок годности:</b> 10 минут после смерти носителя<BR>
+<b>Важные примечания:</b> Отсутствуют<BR>
 <HR>
-<b>Implant Details:</b> <BR>
-<b>Function:</b> Continuously transmits low power signal. Useful for tracking.<BR>
-<b>Special Features:</b><BR>
-<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
-a malfunction occurs thereby securing safety of subject. The implant will melt and
-disintegrate into bio-safe elements.<BR>
-<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
-circuitry. As a result neurotoxins can cause massive damage.<HR>
+<b>Подробности:</b> <BR>
+<b>Фукнционал:</b> Издаёт низкочастотный сигнал на протяжении работы. Полезен для отслеживания.<BR>
+<b>Особенности:</b><BR>
+<i>Нейро-безопасный</i>- Особая структура оболочки поглощает избыточное напряжение, самоуничтожая чип
+при сбое без вреда для носителя. Имплант расплавится и распадётся на безопасные биокомпоненты.<BR>
+<b>Целостность:</b> Gradient создаёт небольшой риск перегрузки, способной сжечь
+электронику. В итоге нейротоксины могут причинить огромный вред носителю.<HR>
 Implant Specifics:<BR>"}
 	return dat
 
@@ -143,20 +145,21 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/dexplosive
 	name = "explosive"
-	desc = "And boom goes the weasel."
+	cases = list("разрывной имплант", "разрывного импланта", "разрывному импланту", "разрывной имплант", "разрывным имплантом", "разрывном импланте")
+	desc = "Трах-бабах и нет его!"
 	icon_state = "implant_evil"
 
 /obj/item/weapon/implant/dexplosive/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR>
-<b>Life:</b> Activates upon death.<BR>
-<b>Important Notes:</b> Explodes<BR>
+<b>Характеристики импланта:</b><BR>
+<b>Наименование:</b> Имплант управления персоналом Robust Corp RX-78<BR>
+<b>Срок годности:</b> Активируется посмертно.<BR>
+<b>Важные примечания:</b> Взрывается<BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-<b>Special Features:</b> Explodes<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+<b>Подробности:</b><BR>
+<b>Функционал:</b> Содержит миниатюрный радиоуправляемый заряд мощной взрывчатки, который детонирует при получении особого зашифрованного сигнала или при смерти носителя.<BR>
+<b>Особенности:</b> Взрывается<BR>
+<b>Целостность:</b> Иммунная система носителя периодически повреждает имплант, от чего он может работать со сбоями."}
 	return dat
 
 /obj/item/weapon/implant/dexplosive/trigger(emote, source)
@@ -176,23 +179,24 @@ Implant Specifics:<BR>"}
 //BS12 Explosive
 /obj/item/weapon/implant/explosive
 	name = "explosive implant"
-	desc = "A military grade micro bio-explosive. Highly dangerous."
-	var/elevel = "Localized Limb"
+	cases = list("взрывной имплант", "взрывного импланта", "взрывному импланту", "взрывной имплант", "взрывным имплантом", "взрывном импланте")
+	desc = "Военная миниатюрная био-взрывчатка. Очень опасна."
+	var/elevel = "Конкретная конечность"
 	var/phrase = "supercalifragilisticexpialidocious"
 	icon_state = "implant_evil"
 	flags = HEAR_TALK
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp RX-78 Intimidation Class Implant<BR>
-<b>Life:</b> Activates upon codephrase.<BR>
-<b>Important Notes:</b> Explodes<BR>
+<b>Характеристики импланта:</b><BR>
+<b>Наименование:</b> Шантаж-имплант Robust Corp RX-78<BR>
+<b>Срок годности:</b> Активируется от кодовой фразы.<BR>
+<b>Важные примечания:</b> Взрывается<BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-<b>Special Features:</b> Explodes<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+<b>Подробности:</b><BR>
+<b>Функционал:</b> Содержит миниатюрный радиоуправляемый заряд мощной взрывчатки, который детонирует при получении особого зашифрованного сигнала или при смерти носителя.<BR>
+<b>Особенности:</b> Взрывается<BR>
+<b>Целостность:</b> Иммунная система носителя периодически повреждает имплант, от чего он может работать со сбоями."}
 	return dat
 
 /obj/item/weapon/implant/explosive/hear_talk(mob/M, msg)
@@ -218,25 +222,25 @@ Implant Specifics:<BR>"}
 		need_gib = 1
 
 		if(ishuman(imp_in))
-			if (elevel == "Localized Limb")
+			if (elevel == "Конкретная конечность")
 				if(part) //For some reason, small_boom() didn't work. So have this bit of working copypaste.
-					imp_in.visible_message("<span class='warning'>Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!</span>")
+					imp_in.visible_message("<span class='warning'>Что-то пищит внутри [imp_in][part ? "'s [part.name]" : ""]!</span>")
 					playsound(src, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER)
 					sleep(25)
 					if (istype(part,/obj/item/organ/external/chest) ||	\
 						istype(part,/obj/item/organ/external/groin) ||	\
 						istype(part,/obj/item/organ/external/head))
-						part.take_damage(60, used_weapon = "Explosion") //mangle them instead
+						part.take_damage(60, used_weapon = "Взрыв") //mangle them instead
 						explosion(get_turf(imp_in), -1, -1, 2, 3)
 						qdel(src)
 					else
 						explosion(get_turf(imp_in), -1, -1, 2, 3)
 						part.droplimb(null, null, DROPLIMB_BLUNT)
 						qdel(src)
-			if (elevel == "Destroy Body")
+			if (elevel == "Разрыв тела")
 				explosion(get_turf(T), -1, 0, 1, 6)
 				T.gib()
-			if (elevel == "Full Explosion")
+			if (elevel == "Полноценный взрыв")
 				explosion(get_turf(T), 0, 1, 3, 6)
 				T.gib()
 
@@ -252,11 +256,11 @@ Implant Specifics:<BR>"}
 		t.hotspot_expose(3500,125)
 
 /obj/item/weapon/implant/explosive/implanted(mob/source)
-	elevel = tgui_alert(usr, "What sort of explosion would you prefer?", "Implant Intent", list("Localized Limb", "Destroy Body", "Full Explosion"))
+	elevel = tgui_alert(usr, "Как именно должен взорваться этот имплант?", "Заряд взрывчатки", list("Конкретная конечность", "Разрыв тела", "Полноценный взрыв"))
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
-	phrase = sanitize_safe(replace_characters(input("Choose activation phrase:") as text, replacechars))
-	usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0)
-	to_chat(usr, "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.")
+	phrase = sanitize_safe(replace_characters(input("Введите кодовую фразу:") as text, replacechars))
+	usr.mind.store_memory("Взрывной имплант [source] может активироваться, если произнести что-либо, что содержит фразу ''[src.phrase]'', <B>произнесите [src.phrase]</B> для активации.", 0)
+	to_chat(usr, "Взрывной имплант, введённый в [source], может активироваться, если произнести что-либо, что содержит фразу ''[src.phrase]'', <B>произнесите [src.phrase]</B> для активации.")
 	return 1
 
 /obj/item/weapon/implant/explosive/emp_act(severity)
@@ -284,7 +288,7 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/proc/small_boom()
 	if (ishuman(imp_in) && part)
-		imp_in.visible_message("<span class='warning'>Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!</span>")
+		imp_in.visible_message("<span class='warning'>В [imp_in][part ? "'s [part.name]" : ""] что-то пищит!</span>")
 		playsound(imp_in, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER)
 		spawn(25)
 			if (ishuman(imp_in) && part)
@@ -293,7 +297,7 @@ Implant Specifics:<BR>"}
 				if (istype(part,/obj/item/organ/external/chest) ||	\
 					istype(part,/obj/item/organ/external/groin) ||	\
 					istype(part,/obj/item/organ/external/head))
-					part.take_damage(60, used_weapon = "Explosion")	//mangle them instead
+					part.take_damage(60, used_weapon = "Взрыв")	//mangle them instead
 				else
 					part.droplimb(null, null, DROPLIMB_BLUNT)
 			explosion(get_turf(imp_in), -1, -1, 2, 3)
@@ -301,19 +305,20 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/adrenaline
 	name = "adrenaline implant"
-	desc = "Removes all stuns and knockdowns."
+	cases = list("адреналиновый имплант", "адреналинового импланта", "адреналиновому импланту", "адреналиновый имплант", "адреналиновым имплантом", "адреналиновом импланте")
+	desc = "Выручит от оглушения и поднимет на ноги."
 	icon_state = "implant"
 	uses = 3
 
 	item_action_types = list(/datum/action/item_action/implant/adrenaline_implant)
 
 /datum/action/item_action/implant/adrenaline_implant
-	name = "Adrenaline implant"
+	name = "Адреналиновый имплант"
 
 /datum/action/item_action/implant/adrenaline_implant/Activate()
 	var/obj/item/weapon/implant/adrenaline/S = target
 	S.uses--
-	to_chat(S.imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	to_chat(S.imp_in, "<span class='notice'>Вы чувствуете резкий прилив сил!</span>")
 	if(ishuman(S.imp_in))
 		var/mob/living/carbon/human/H = S.imp_in
 		H.setHalLoss(0)
@@ -331,27 +336,28 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/adrenaline/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
-<b>Life:</b> Five days.<BR>
-<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+<b>Характеристики импланта:</b><BR>
+<b>Наименование:</b> Адреналиновый имплант Cybersun Industries<BR>
+<b>Срок годности:</b> Пять дней.<BR>
+<b>Важные примечания:</b> <font color='red'>Нелегален</font><BR>
 <HR>
-<b>Implant Details:</b> Subjects injected with implant can activate a massive injection of adrenalin.<BR>
-<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
-<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
+<b>Подробности:</b> Носители импланта могут инициировать массивный выброс адреналина в крови.<BR>
+<b>Функционал:</b> Содержит наноботов, вызывающих стимул на огромное производство адреналина в теле носителя.<BR>
+<b>Особенности:</b> Предотвращает и позволяет преодолеть многие способы промывки мозгов.<BR>
+<b>Целостность:</b> Имплант можно использовать три раза, прежде чем иссякнут наноботы."}
 	return dat
 
 /obj/item/weapon/implant/emp
 	name = "emp implant"
-	desc = "Triggers an EMP."
+	cases = list("ЭМИ имплант", "ЭМИ импланта", "ЭМИ импланту", "ЭМИ имплант", "ЭМИ имплантом", "ЭМИ импланте")
+	desc = "Вызывает ЭМИ."
 	icon_state = "emp"
 	uses = 3
 
 	item_action_types = list(/datum/action/item_action/implant/emp_implant)
 
 /datum/action/item_action/implant/emp_implant
-	name = "EMP implant"
+	name = "ЭМИ имплант"
 
 /datum/action/item_action/implant/emp_implant/Activate()
 	var/obj/item/weapon/implant/emp/S = target
@@ -363,26 +369,27 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/chem
 	name = "chemical implant"
-	desc = "Injects things."
+	cases = list("химический имплант", "химического импланта", "химическому импланту", "химический имплант", "химическим имплантом", "химическом импланте")
+	desc = "Вводит в кровь всякое."
 	allow_reagents = 1
 	implant_trait = TRAIT_VISUAL_CHEM
 
 /obj/item/weapon/implant/chem/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp MJ-420 Prisoner Management Implant<BR>
-<b>Life:</b> Deactivates upon death but remains within the body.<BR>
-<b>Important Notes: Due to the system functioning off of nutrients in the implanted subject's body, the subject<BR>
-will suffer from an increased appetite.</B><BR>
+<b>Характеристики импланта:</b><BR>
+<b>Name:</b> Имплант контроля за заключёнными Robust Corp MJ-420<BR>
+<b>Срок годности:</b> Деактивируется посмертно, но остаётся целым внутри тела.<BR>
+<b>Важные примечания: Поскольку внутренние системы импланта работают за счёт питательных веществ в теле носителя, носитель<BR>
+будет испытывать более повышенный аппетит.</B><BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a small capsule that can contain various chemicals. Upon receiving a specially encoded signal<BR>
-the implant releases the chemicals directly into the blood stream.<BR>
-<b>Special Features:</b>
-<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 50 units.<BR>
-Can only be loaded while still in its original case.<BR>
-<b>Integrity:</b> Implant will last so long as the subject is alive. However, if the subject suffers from malnutrition,<BR>
-the implant may become unstable and either pre-maturely inject the subject or simply break."}
+<b>Подробности:</b><BR>
+<b>Функционал:</b> Содержит микрокапсулу, предназначенную для хранения химикатов. При получении особого зашифрованного сигнала,<BR>
+имплант вводит химикаты в кровеносную систему носителя.<BR>
+<b>Особенности:</b>
+<i>Микрокапсула</i>- Может заполнена любым химикатом с помощью простого шприца и вмещает в себя до 50 юнитов.<BR>
+Заполнение возможно только пока имплант находится внутри пластиковой оболочки.<BR>
+<b>Целостность:</b> Имплант остаётся активным до тех пор, пока носитель жив. Однако, если носитель страдает от недоедания,<BR>
+имплант дестабилизируется и либо вводит химикаты в кровь носителя раньше времени, либо же просто ломается."}
 	return dat
 
 
@@ -404,9 +411,9 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		return 0
 	var/mob/living/carbon/R = src.imp_in
 	reagents.trans_to(R, cause)
-	to_chat(R, "You hear a faint *beep*.")
+	to_chat(R, "Вы слышите еле слышное *бип*.")
 	if(!src.reagents.total_volume)
-		to_chat(R, "You hear a faint click from your chest.")
+		to_chat(R, "Из вашей груди доносится еле слышный щелчок.")
 		spawn(0)
 			qdel(src)
 	return
@@ -435,6 +442,7 @@ var/global/list/death_alarm_stealth_areas = list(
 )
 /obj/item/weapon/implant/death_alarm
 	name = "death alarm implant"
+	cases = ("имплант оповещения о смерти", "импланта оповещения о смерти", "импланту оповещения о смерти", "имплант оповещения о смерти", "имплантом оповещения о смерти", "импланте оповещения о смерти")
 	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
 	var/mobname = "Will Robinson"
 
@@ -444,15 +452,15 @@ var/global/list/death_alarm_stealth_areas = list(
 
 /obj/item/weapon/implant/death_alarm/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
-<b>Life:</b> Activates upon death.<BR>
-<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
+<b>Характеристики импланта:</b><BR>
+<b>Наименование:</b> Сенсор жизненных показателей работника типа \"Гарант прибыли\" NanoTrasen <BR>
+<b>Срок годности:</b> Активируется посмертно.<BR>
+<b>Важные примечания:</b> Оповещает экипаж о смерти носителя.<BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
-<b>Special Features:</b> Alerts crew to crewmember death.<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+<b>Подробности:</b><BR>
+<b>Функционал:</b> Содержит миниатюрный радиосигналлер, срабатывающий при прекращении жизнедеятельности носителя.<BR>
+<b>Особенности:</b> Оповещает экипаж о смерти носителя.<BR>
+<b>Целостность:</b> Иммунная система носителя периодически повреждает имплант, от чего он может работать со сбоями."}
 	return dat
 
 /obj/item/weapon/implant/death_alarm/process()
@@ -529,7 +537,7 @@ var/global/list/death_alarm_stealth_areas = list(
 	frequency = FREQ_TEAM_BLUE
 
 /obj/item/weapon/implant/compressed
-	name = "compressed matter implant"
+	name = "compressed matter implant" // этот имплант не используется и ниже содержит инфу для оповещалки о смерти
 	desc = "Based on compressed matter technology, can store a single item."
 	icon_state = "implant_evil"
 	var/activation_emote = "sigh"
@@ -576,7 +584,8 @@ var/global/list/death_alarm_stealth_areas = list(
 
 /obj/item/weapon/implant/cortical
 	name = "cortical stack"
-	desc = "A fist-sized mass of biocircuits and chips."
+	cases = list("кортикальный узел", "кортикального узла", "кортикальному узлу", "кортикальный узел", "кортикальным узлом", "кортикальном узле")
+	desc = "Куча биоплат и чипов, почти с кулак размером."
 	icon_state = "implant_evil"
 	///////////////////////////////////////////////////////////
 /obj/item/weapon/storage/internal/imp
@@ -587,14 +596,15 @@ var/global/list/death_alarm_stealth_areas = list(
 
 /obj/item/weapon/implant/storage
 	name = "storage implant"
-	desc = "Stores up to two big items in a bluespace pocket."
+	cases = list("имплант хранения", "импланта хранения", "импланту хранения", "имплант хранения", "имплантом хранения", "импланте хранения")
+	desc = "Может хранить до двух вещей большого размера в блюспейс кармане."
 	icon_state = "implant_evil"
 	origin_tech = "materials=2;magnets=4;bluespace=5;syndicate=4"
 	var/obj/item/weapon/storage/internal/imp/storage
 	item_action_types = list(/datum/action/item_action/implant/storage_implant)
 
 /datum/action/item_action/implant/storage_implant
-	name = "Bluespace pocket"
+	name = "Блюспейс карман"
 
 /datum/action/item_action/implant/storage_implant/Activate()
 	var/obj/item/weapon/implant/storage/S = target
@@ -618,37 +628,41 @@ var/global/list/death_alarm_stealth_areas = list(
 	return 0
 
 /obj/item/weapon/implant/obedience
-	name = "L.E.A.S.H. obedience implant"
-	desc = "Keep your herds obedient."
+	name = "L.E.A.S.H. obedience implant" // может быть другие варианты для перевода L.E.A.S.H.? Пока не знаю что конкретно подойдёт, хотя "Поводок" звучит очень даже по ОМОНовски
+	cases = list("имплант повиновения \"Поводок\"", "импланта повиновения \"Поводок\"", "импланту повиновения \"Поводок\"", "имплант повиновения \"Поводок\"", "имплантом повиновения \"Поводок\"", "импланте повиновения \"Поводок\"")
+	desc = "Делает ваше стадо послушным."
 
 /obj/item/weapon/implant/obedience/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Obedience Imbuer<BR>
-<b>Life:</b> Activates upon recieveing coded signal.<BR>
-<b>Important Notes:</b> Allows to shock host via special tool.<BR>
+<b>Характеристики импланта:</b><BR>
+<b>Наименование:</b> Внушитель послушания сотрудника типа \"Гарант прибыли\" NanoTrasen<BR>
+<b>Срок годности:</b> Активируется при получении зашифрованного сигнала.<BR>
+<b>Важные примечания:</b> Позволяет бить током носителя с помощью особого инструмента.<BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact signaler that triggers microtaser upon recieveing signal.<BR>
-<b>Special Features:</b> Less-than-lethal controlled shocks.<BR>
-<b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
+<b>Подробности:</b><BR>
+<b>Функционал:</b> Содержит миниатюрный сигналлер, активирующий встроенный микротазер по сигналу.<BR>
+<b>Особенности:</b> Нелетальный шокер на радиоуправлении.<BR>
+<b>Целостность:</b> Имплант не теряет функционал даже после смерти носителя, что позволяет пересадить его с помощью специальных приборов.<BR>
+Правда, эти приборы никогда на станцию не доставляются."}
 	return dat
 
 /obj/item/weapon/implant/blueshield
 	name = "blueshield implant"
-	desc = "Subtle brainwashing."
+	cases = list("имплант синего щита", "импланта синего щита", "импланту синего щита", "имплант синего щита", "имплантом синего щита", "импланте синего щита")
+	desc = "Нежно промывает мозг."
 	var/last_examined = 0
 
 /obj/item/weapon/implant/blueshield/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> NanoTrasen \"Blueshield\" Experimental Initiative<BR>
-<b>Life:</b> Activates upon injection.<BR>
-<b>Important Notes:</b> Subtly directs user to protect heads of staff.<BR>
+<b>Характеристики импланта:</b><BR>
+<b>Наименование:</b> Экспериментальная инициатива \"Синий щит\" Nanotrasen<BR>
+<b>Срок годности:</b> Активируется при вводе.<BR>
+<b>Важные примечания:</b> Незаметно заставляет носителя защищать членов командования.<BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains special hormones which affect host's brain.<BR>
-<b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
+<b>Подробности:</b><BR>
+<b>Функционал:</b> Содержит специальные гормоны, влияющие на мозг носителя.<BR>
+<b>Целостность:</b> Имплант не теряет функционал даже после смерти носителя, что позволяет пересадить его с помощью специальных приборов.<BR>
+Правда, эти приборы никогда на станцию не доставляются."}
 	return dat
 
 /obj/item/weapon/implant/blueshield/implanted(mob/source)
@@ -668,5 +682,6 @@ var/global/list/death_alarm_stealth_areas = list(
 
 /obj/item/weapon/implant/fake_loyal
 	name = "loyaIty implant"
-	desc = "Makes you loyal or such."
+	cases = list("имплант лояльности", "импланта лояльности", "импланту лояльности", "имплант лояльности", "имплантом лояльности", "импланте лояльности")
+	desc = "Делает лояльным. Или вроде того."
 	implant_trait = TRAIT_FAKELOYAL_VISUAL
