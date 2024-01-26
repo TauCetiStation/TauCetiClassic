@@ -302,7 +302,7 @@
 		message += "<span class='notice'>Обнаруженные повреждения, Механические/Термические:</span><br>"
 		if(length(damaged))
 			for(var/obj/item/organ/external/BP in damaged)
-				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
+				message += "<span class='notice'>&emsp; [capitalize(CASE(BP, NOMINATIVE_CASE))]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Кровотечение\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
 		else
 			message += "<span class='notice'>&emsp; Конечности целы.</span><br>"
 
@@ -350,7 +350,7 @@
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & ORGAN_BROKEN)
 				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
-					message += "<span class='warning'>Обнаружен незафиксированный перелом в [BP.name]. При транспортировке рекомендуется наложение шины.</span><br>"
+					message += "<span class='warning'>Обнаружен незафиксированный перелом в [capitalize(CASE(BP, NOMINATIVE_CASE))]. При транспортировке рекомендуется наложение шины.</span><br>"
 				if(!found_broken)
 					found_broken = TRUE
 
@@ -358,12 +358,12 @@
 				found_bleed = TRUE
 
 			if(BP.has_infected_wound())
-				message += "<span class='warning'>Обнаружена инфекция в [BP.name]. Рекомендуется дезинфекция.</span><br>"
+				message += "<span class='warning'>Обнаружена инфекция в [capitalize(CASE(BP, NOMINATIVE_CASE))]. Рекомендуется дезинфекция.</span><br>"
 
 		if(found_bleed)
-			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется МРТ Сканер.</span><br>"
 		if(found_broken)
-			message += "<span class='warning'>Обнаружен перелом костей. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'>Обнаружен перелом костей. Для определения местоположения требуется МРТ Сканер.</span><br>"
 
 		var/blood_volume = H.blood_amount()
 		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
