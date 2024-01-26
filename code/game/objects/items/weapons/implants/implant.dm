@@ -107,7 +107,7 @@
 /obj/item/weapon/implant/tracking
 	name = "tracking implant"
 	cases = list("имплант слежения", "импланта слежения", "импланту слежения", "имплант слежения", "имплантом слежения", "импланте слежения")
-	desc = "Отслеживать - этим."
+	desc = "Используется для отслеживания."
 	implant_trait = TRAIT_VISUAL_TRACK
 	var/id = 1.0
 
@@ -442,7 +442,7 @@ var/global/list/death_alarm_stealth_areas = list(
 )
 /obj/item/weapon/implant/death_alarm
 	name = "death alarm implant"
-	cases = ("имплант оповещения о смерти", "импланта оповещения о смерти", "импланту оповещения о смерти", "имплант оповещения о смерти", "имплантом оповещения о смерти", "импланте оповещения о смерти")
+	cases = list("имплант оповещения о смерти", "импланта оповещения о смерти", "импланту оповещения о смерти", "имплант оповещения о смерти", "имплантом оповещения о смерти", "импланте оповещения о смерти")
 	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
 	var/mobname = "Will Robinson"
 
