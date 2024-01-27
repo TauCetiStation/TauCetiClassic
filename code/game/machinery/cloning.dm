@@ -10,7 +10,7 @@
 /obj/machinery/clonepod
 	anchored = TRUE
 	name = "cloning pod"
-	cases = list("капсула клонирования", "капсулы клонирования","капсуле клонирования", "капсулу клонирования", "капсулой клонирования", "капсуле клонирования" )
+	cases = list("капсула клонирования", "капсулы клонирования", "капсуле клонирования", "капсулу клонирования", "капсулой клонирования", "капсуле клонирования" )
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE
 	icon = 'icons/obj/cloning.dmi'
