@@ -135,7 +135,8 @@
 				. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
 				. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
 			. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
-			. += "Using skirt uniform: <a href ='?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a>"
+			. += "Using skirt uniform: <a href ='?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
+			. += "PDA Ringtone: <a href ='?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
 
 	. += 								"</td>"
 	. += 							"</tr>"
@@ -256,6 +257,8 @@
 					backbag = rand(1, backbaglist.len)
 				if("use_skirt")
 					use_skirt = pick(TRUE, FALSE)
+				if("ringtone")
+					chosen_ringtone = pick(global.ringtones_by_names)
 				if("all")
 					randomize_appearance_for()	//no params needed
 		if("input")
@@ -455,6 +458,19 @@
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference", backbaglist[backbag]) as null|anything in backbaglist
 					if(new_backbag)
 						backbag = backbaglist.Find(new_backbag)
+
+				if("ringtone")
+					var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
+					var/Tone = input(user, "Выберите рингтон:", "Character Preference", chosen_ringtone) as null|anything in pref_ringtones
+					if(!Tone)
+						return
+					if(Tone == CUSTOM_RINGTONE_NAME)
+						var/t = sanitize(input(user, "Введите новый рингтон") as message|null, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
+						if (!t)
+							return
+						custom_melody = t
+
+					chosen_ringtone = Tone
 
 				if("use_skirt")
 					use_skirt = !use_skirt

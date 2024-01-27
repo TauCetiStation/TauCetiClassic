@@ -101,7 +101,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
 
-		if (S.volume <= 0) // no volume means no sound, early check to save on atmos calls 
+		if (S.volume <= 0) // no volume means no sound, early check to save on atmos calls
 			return
 
 		//sound volume falloff with pressure
