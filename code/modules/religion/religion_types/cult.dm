@@ -178,6 +178,45 @@
 	var/obj/item/weapon/storage/bible/tome/B = spawn_bible(cultist)
 	cultist.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 
+/datum/religion/cult/proc/give_implant(mob/living/carbon/human/cultist)
+	var/obj/item/weapon/implant/maelstrom/M = new(cultist)
+	M.inject(cultist, pick(BP_R_ARM, BP_L_ARM))
+
+#define RUNES_DRAW        "Runes draw"
+#define CONSTRUCTION_DRAW "Construction draw"
+
+/obj/item/weapon/implant/maelstrom
+	icon_state = "implant_blood"
+	item_action_types = list(/datum/action/item_action/implant/maelstrom)
+
+/obj/item/weapon/implant/maelstrom/atom_init()
+	. = ..()
+	AddElement(/datum/element/maelstrom)
+
+/datum/action/item_action/implant/maelstrom
+	name = "Maelstrom Implant"
+
+/*
+/obj/item/weapon/implant/maelstrom/inject(mob/living/carbon/C, def_zone)
+	. = ..()
+	religion = C.my_religion
+*/
+/obj/item/weapon/implantcase/maelstrom
+	name = "Glass Case- 'Maelstrom'"
+	desc = "A case containing an illegal implant."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "implantcase-r"
+
+/obj/item/weapon/implantcase/maelstrom/atom_init()
+	imp = new /obj/item/weapon/implant/maelstrom(src)
+	. = ..()
+
+/obj/effect/temp_visual/cult/sparks/purple
+	name = "purple sparks"
+	icon_state = "purplesparkles"
+
+#undef RUNES_DRAW
+#undef CONSTRUCTION_DRAW
 /datum/religion/cult/proc/area_entered(area/A, atom/movable/AM)
 	if(ishuman(AM))
 		humans_in_heaven += AM

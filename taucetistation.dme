@@ -363,6 +363,7 @@
 #include "code\datums\elements\awkward.dm"
 #include "code\datums\elements\beauty.dm"
 #include "code\datums\elements\digitalcamo.dm"
+#include "code\datums\elements\maelstrom.dm"
 #include "code\datums\emotes\emote.dm"
 #include "code\datums\emotes\misc.dm"
 #include "code\datums\emotes\state_checks.dm"

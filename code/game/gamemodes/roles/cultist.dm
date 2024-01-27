@@ -37,6 +37,15 @@
 	if(istype(C))
 		C.religion?.remove_member(M.current)
 
+/datum/role/cultist/maelstrom/equip_cultist(mob/living/carbon/human/mob)
+	if(mob.mind)
+		if(mob.mind.assigned_role == "Clown")
+			to_chat(mob, "Ваши тренировки позволили вам преодолеть клоунскую неуклюжесть, что позволит вам без вреда для себя применять любое вооружение.")
+			REMOVE_TRAIT(mob, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+	var/datum/faction/cult/C = faction
+	if(istype(C))
+		C.religion.give_implant(mob)
+
 /datum/role/cultist/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))
 		return
