@@ -113,7 +113,7 @@
 				dat += "Сканер не подключён!<br>"
 			else
 				if (src.scanner.occupant)
-					if(scantemp == "Сканер не занят") scantemp = "" // Stupid check to remove the text
+					if(scantemp == "Сканер пуст") scantemp = "" // Stupid check to remove the text
 
 					dat += "<a href='byond://?src=\ref[src];scan=1'>Просканировать - [src.scanner.occupant]</a><br>"
 				else
