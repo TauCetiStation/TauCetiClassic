@@ -1,6 +1,7 @@
 /obj/item/weapon/implant/freedom
 	name = "freedom implant"
-	desc = "Use this to escape from those evil Red Shirts."
+	cases = ("имплант освобождения", "импланта освобождения", "импланту освобождения", "имплант освобождения", "имплантом освобождения", "импланте освобождения")
+	desc = "Используйте это, чтоб удрать от злых Красных рубашек."
 	var/activation_emote = "blink"
 	uses = 1.0
 
@@ -18,10 +19,10 @@
 	if (emote != activation_emote)
 		return
 	if (!source.handcuffed)
-		to_chat(source, "You need to be restricted to use freedom implant.")
+		to_chat(source, "Имплант освобождения не работает, пока вы не связаны.")
 		return
 	uses--
-	to_chat(source, "You feel a faint click.")
+	to_chat(source, "Вы слышите как что-то легонько щёлкнуло.")
 	source.uncuff()
 	source.SetParalysis(0)
 	source.SetStunned(0)
@@ -41,19 +42,17 @@
 
 /obj/item/weapon/implant/freedom/get_data()
 	var/dat = {"
-		<b>Implant Specifications:</b><BR>
-		<b>Name:</b> Freedom Beacon<BR>
-		<b>Life:</b> optimum 5 uses<BR>
-		<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+		<b>Характеристики импланта:</b><BR>
+		<b>Наименование:</b> Маяк Свободы<BR>
+		<b>Срок годности:</b> оптимально до 5 применений<BR>
+		<b>Важные примечания:</b> <font color='red'>Нелегален</font><BR>
 		<HR>
-		<b>Implant Details:</b> <BR>
-		<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
-		mechanisms<BR>
-		<b>Special Features:</b><BR>
-		<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
-		<b>Integrity:</b> The battery is extremely weak and commonly after injection its
-		life can drive down to only 1 use.<HR>
-		No Implant Specifics"}
+		<b>Подробности:</b> <BR>
+		<b>Функционал:</b> Издаёт специализированный набор сигналов, призванных обойти замки в наручниках.<BR>
+		<b>Особенности:</b><BR>
+		<i>Нейросканирование</i>- Активируется от определённых теневых сигналов, подаваемых нервной системой носителя.<BR>
+		<b>Целостность:</b> Заряд аккумулятора в импланте очень слаб, часто сокращая его количество
+		применений лишь до одного использования.<HR>"}
 	return dat
 
 

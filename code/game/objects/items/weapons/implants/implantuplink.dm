@@ -1,6 +1,7 @@
 /obj/item/weapon/implant/uplink
 	name = "uplink"
-	desc = "Summon things."
+	cases = list("аплинк имплант", "аплинк импланта", "аплинк импланту", "аплинк имплант", "аплинк имплантом", "аплинк импланте")
+	desc = "Призывает всякое."
 	var/activation_emote = "blink"
 
 /obj/item/weapon/implant/uplink/atom_init()
@@ -10,7 +11,7 @@
 	. = ..()
 
 /obj/item/weapon/implant/uplink/implanted(mob/source)
-	activation_emote = input("Choose activation emote:") in list("blink", "eyebrow", "twitch", "frown", "nod", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
+	activation_emote = input("Выберите, от какой эмоции должна произойти активация:") in list("blink", "eyebrow", "twitch", "frown", "nod", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
 	source.mind.store_memory("Uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0)
 	to_chat(source, "The implanted uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 	return 1

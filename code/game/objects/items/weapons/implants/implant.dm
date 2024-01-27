@@ -1,5 +1,9 @@
 #define MALFUNCTION_TEMPORARY 1
 #define MALFUNCTION_PERMANENT 2
+#define YOURS_RU(atom) atom.gender == MALE && "вашем" \
+|| atom.gender == FEMALE && "вашей" \
+|| atom.gender == NEUTER && "вашем" \
+|| "ваших"
 /obj/item/weapon/implant
 	name = "implant"
 	cases = list("имплант", "импланта", "импланту", "имплант", "имплантом", "импланте")
@@ -123,8 +127,7 @@
 <i>Нейро-безопасный</i>- Особая структура оболочки поглощает избыточное напряжение, самоуничтожая чип
 при сбое без вреда для носителя. Имплант расплавится и распадётся на безопасные биокомпоненты.<BR>
 <b>Целостность:</b> Gradient создаёт небольшой риск перегрузки, способной сжечь
-электронику. В итоге нейротоксины могут причинить огромный вред носителю.<HR>
-Implant Specifics:<BR>"}
+электронику. В итоге нейротоксины могут причинить огромный вред носителю.<HR>"}
 	return dat
 
 /obj/item/weapon/implant/tracking/emp_act(severity)
