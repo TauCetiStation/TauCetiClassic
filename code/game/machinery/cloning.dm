@@ -330,7 +330,7 @@
 			src.locked = 0
 			to_chat(user, "Система разблокирована.")
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		to_chat(user, "<span class='notice'>[CASE(src, NOMINATIVE_CASE)] обрабатывает [CASE(W, NOMINATIVE_CASE)].</span>")
+		to_chat(user, "<span class='notice'>[CASE(src, NOMINATIVE_CASE)] обрабатывает [CASE(W, ACCUSATIVE_CASE)].</span>")
 		biomass += 50
 		qdel(W)
 		return
