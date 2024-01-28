@@ -358,7 +358,7 @@
 				found_bleed = TRUE
 
 			if(BP.has_infected_wound())
-				message += "<span class='warning'>Обнаружена инфекция в [capitalize(CASE(BP, NOMINATIVE_CASE))]. Рекомендуется дезинфекция.</span><br>"
+				message += "<span class='warning'>Обнаружена инфекция в [CASE(BP, NOMINATIVE_CASE)]. Рекомендуется дезинфекция.</span><br>"
 
 		if(found_bleed)
 			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется МРТ Сканер.</span><br>"
