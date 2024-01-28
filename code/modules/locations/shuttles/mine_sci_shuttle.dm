@@ -11,7 +11,7 @@ var/global/obj/machinery/computer/mine_sci_shuttle/flight_comp/autopilot = null
 var/global/area/asteroid/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle
-	name = ""
+	name = "Mine-Science Shuttle Console"
 	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
