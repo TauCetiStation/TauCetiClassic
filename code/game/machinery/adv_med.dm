@@ -363,7 +363,7 @@
 	else
 		dat = "<font color='red'> Ошибка: Не подключен сканер тела.</font>"
 
-	var/datum/browser/popup = new(user, "window=scanconsole", (capitalize(CASE(src, NOMINATIVE_CASE))), 530, 700, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "window=scanconsole", (CASE(src, NOMINATIVE_CASE)), 530, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
