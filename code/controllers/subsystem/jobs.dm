@@ -131,7 +131,7 @@ SUBSYSTEM_DEF(job)
 		if(!job)
 			continue
 
-		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
+		if(istype(job, GetJob("Anarchist"))) // We don't want to give him assistant, that's boring!
 			continue
 
 		if(job.title in command_positions) //If you want a command position, select it!
@@ -160,7 +160,7 @@ SUBSYSTEM_DEF(job)
 	// So we end up here which means every other job is unavailable, lets give him "assistant", since this is the only job without any spawn limit and restrictions.
 	if(player.mind && !player.mind.assigned_role)
 		Debug("GRJ Random job given, Player: [player], Job: Assistant")
-		AssignRole(player, "Assistant")
+		AssignRole(player, "Anarchist")
 		unassigned -= player
 
 /datum/controller/subsystem/job/proc/ResetOccupations()
@@ -286,7 +286,7 @@ SUBSYSTEM_DEF(job)
 	Debug("AC1, Candidates: [assistant_candidates.len]")
 	for(var/mob/dead/new_player/player in assistant_candidates)
 		Debug("AC1 pass, Player: [player]")
-		AssignRole(player, "Assistant")
+		AssignRole(player, "Anarchist")
 		assistant_candidates -= player
 	Debug("DO, AC1 end")
 
@@ -366,7 +366,7 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned)
 		if(player.client.prefs.alternate_option == BE_ASSISTANT)
 			Debug("AC2 Assistant located, Player: [player]")
-			AssignRole(player, "Assistant")
+			AssignRole(player, "Anarchist")
 
 	//For ones returning to lobby
 	for(var/mob/dead/new_player/player in unassigned)

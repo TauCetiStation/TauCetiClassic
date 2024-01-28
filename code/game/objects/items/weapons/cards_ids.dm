@@ -393,7 +393,7 @@
 					tgui_alert(usr, "Invalid name.")
 					return
 
-				var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant"))
+				var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Anarchist"))
 				if(!u)
 					tgui_alert(usr, "Invalid assignment.")
 					return

@@ -1,5 +1,5 @@
 /datum/job/assistant
-	title = "Assistant"
+	title = "Anarchist"
 	flag = ASSISTANT
 	department_flag = CIVILIAN
 	faction = "Station"
@@ -20,7 +20,7 @@
 		)
 	outfit = /datum/outfit/job/assistant
 	skillsets = list(
-		"Assistant"      = /datum/skillset/assistant,
+		"Anarchist"      = /datum/skillset/assistant,
 		"Test Subject"   = /datum/skillset/assistant/test_subject,
 		"Lawyer"         = /datum/skillset/assistant/lawyer,
 		"Mecha Operator" = /datum/skillset/assistant/mecha,

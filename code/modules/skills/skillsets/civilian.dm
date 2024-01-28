@@ -88,7 +88,7 @@
 /datum/skillset/janitor
 	name = "Janitor"
 /datum/skillset/assistant
-	name = "Assistant"
+	name = "Anarchist"
 	initial_skills = list(
 		/datum/skill/command = SKILL_LEVEL_TRAINED
 	)
