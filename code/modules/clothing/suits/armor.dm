@@ -14,7 +14,7 @@
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 45, laser = 40, energy = 45, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/vest/security
 	name = "security armor"
@@ -50,7 +50,7 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.4
-	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 45, laser = 40, energy = 45, bomb = 35, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/suit/storage/flak/atom_init()
@@ -221,14 +221,14 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	flags = ONESIZEFITSALL
-	armor = list(melee = 50, bullet = 55, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 55, laser = 25, energy = 30, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/storage/flak/blueshield
 	name = "blueshield armor vest"
 	desc = "It's heavy and somehow... comfortable?"
 	icon_state = "blueshield"
 	item_state = "armor"
-	armor = list(melee = 60, bullet = 55, laser = 50, energy = 35, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 60, bullet = 55, laser = 50, energy = 50, bomb = 35, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 
 //Reactive armor
@@ -256,7 +256,7 @@
 		add_fingerprint(user)
 	else
 		to_chat(user, "<span class='notice'>The reactive armor is now inactive. Solid protective system activated.</span>")
-		armor = list(melee = 50, bullet = 45, laser = 40, energy = 20, bomb = 0, bio = 0, rad = 0)
+		armor = list(melee = 50, bullet = 45, laser = 40, energy = 40, bomb = 0, bio = 0, rad = 0)
 		icon_state = "reactiveoff"
 		item_state = "reactiveoff"
 		add_fingerprint(user)
@@ -266,7 +266,7 @@
 	active = FALSE
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
-	armor = list(melee = 50, bullet = 45, laser = 40, energy = 20, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 45, laser = 40, energy = 40, bomb = 0, bio = 0, rad = 0)
 	..()
 
 /obj/item/clothing/suit/armor/vest/reactive/proc/teleport_user(range, mob/user, text)
@@ -430,14 +430,14 @@
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 25, bio = 0, rad = 10)
+	armor = list(melee = 50, bullet = 30, laser = 20, energy = 25, bomb = 25, bio = 0, rad = 10)
 	siemens_coefficient = 1.2
 
 /obj/item/clothing/suit/armor/vest/surplus
 	name = "surplus armor vest"
 	desc = "An armored vest with outdated armor plates, no longer used by galactic militaries. At least it's cheap."
 	icon_state = "armor_surplus_1"
-	armor = list(melee = 45, bullet = 40, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 45, bullet = 40, laser = 40, energy = 40, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/vest/surplus/atom_init()
 	. = ..()

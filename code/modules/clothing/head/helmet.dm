@@ -4,7 +4,7 @@
 	icon_state = "helmet"
 	flags = HEADCOVERSEYES
 	item_state = "helmet"
-	armor = list(melee = 50, bullet = 45, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 45, laser = 40,energy = 45, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEEARS|HIDEEYES
 	pierce_protection = HEAD
 	cold_protection = HEAD
@@ -201,7 +201,7 @@
 	icon_state = "swathelm"
 	item_state = "helmet"
 	flags = HEADCOVERSEYES
-	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
+	armor = list(melee = 62, bullet = 60, laser = 50,energy = 45, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.7
 
@@ -313,7 +313,7 @@
 	name = "heavy police helmet"
 	desc = "Latest fashion of law enforcement organizations. It's big. Like, really big. Golden marks on this helmet denote the higher rank of it's wearer."
 	icon_state = "police_helmet_heavy"
-	armor = list(melee = 55, bullet = 50, laser = 45,energy = 25, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 55, bullet = 50, laser = 45,energy = 45, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/laserproof/police
 	name = "inspector helmet"
@@ -332,13 +332,13 @@
 	name = "surplus helmet"
 	desc = "A simple steel helmet - a steelpot, if you will."
 	icon_state = "surplus_helmet"
-	armor = list(melee = 45, bullet = 40, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 45, bullet = 40, laser = 40,energy = 40, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/blueshield
 	name = "blueshield helmet"
 	desc = "An advanced helmet issued to blueshield officers."
 	icon_state = "blueshield_helmet"
-	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 60, bullet = 55, laser = 50,energy = 50, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
