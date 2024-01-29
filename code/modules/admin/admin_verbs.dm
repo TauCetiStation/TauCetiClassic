@@ -1233,7 +1233,7 @@ var/global/centcom_barriers_stat = 1
 /obj/effect/landmark/trololo/Crossed(atom/movable/AM)
 	. = ..()
 	if(!active) return
-		to_chat(usr, "<span class='notice'><b><font size=3>Never Gonna Give You Up.</font></b></span>")
+	to_chat(usr, "<span class='notice'><b><font size=3>Never Gonna Give You Up.</font></b></span>")
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"
