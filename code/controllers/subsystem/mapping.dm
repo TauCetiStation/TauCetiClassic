@@ -266,7 +266,7 @@ SUBSYSTEM_DEF(mapping)
 
 	if(config.system_name)
 		if(areas_by_type[/area/shuttle/arrival/velocity])
-			areas_by_type[/area/shuttle/arrival/velocity].name = "NTS Velocity, Dock 42"
+			areas_by_type[/area/shuttle/arrival/velocity].name = "НТС Велосити, док 42"
 	if(config.station_name)
 		if(areas_by_type[/area/shuttle/arrival/station])
 			areas_by_type[/area/shuttle/arrival/station].name = config.station_name

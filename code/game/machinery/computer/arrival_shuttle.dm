@@ -146,7 +146,7 @@ var/global/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/dat = "<center><div class='Section'>Shuttle location: <b>[curr_location]</b><br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><A href='?src=\ref[src];move=1'>Send</A></div></center>"
-	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 400)
+	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 330, 130)
 	popup.set_content(dat)
 	popup.open()
 
@@ -174,7 +174,7 @@ var/global/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
 	var/dat = "<center>Shuttle location: [curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
-	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 290, 130)
+	var/datum/browser/popup = new(user, "researchshuttle", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 290, 130)
 	popup.set_content(dat)
 	popup.open()
 
