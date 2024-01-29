@@ -49,15 +49,15 @@
 
 /obj/machinery/bodyscanner/proc/move_inside_checks(mob/target, mob/user)
 	if(occupant)
-		to_chat(user, "<span class='userdanger'>[capitalize(CASE(src, NOMINATIVE_CASE))] уже занят кем-то!</span>")
+		to_chat(user, "<span class='userdanger'>[C_CASE(src, NOMINATIVE_CASE)] уже занят кем-то!</span>")
 		return FALSE
-	if(!iscarbon(target))
+	if(!ishuman(target))
+		to_chat(user, "<span class='userdanger'>Это устройство может сканировать только гуманоидные формы жизни.</span>")
 		return FALSE
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(H.species.flags[NO_MED_HEALTH_SCAN])
-			to_chat(user, "<span class='userdanger'>Это существо нельзя сканировать</span>")
-			return FALSE
+	var/mob/living/carbon/human/H = target
+	if(H.species.flags[NO_MED_HEALTH_SCAN])
+		to_chat(user, "<span class='userdanger'>Это существо нельзя сканировать</span>")
+		return FALSE
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>У пациента не должно быть чего-либо в руках.</span>")
 		return FALSE
@@ -147,7 +147,7 @@
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = TRUE
-	var/next_print = 0
+	COOLDOWN_DECLARE(next_print)
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/body_scanconsole/atom_init()
@@ -207,7 +207,7 @@
 		var/list/extOrganData = list()
 		for(var/obj/item/organ/external/E in occupant.bodyparts)
 			var/list/organData = list()
-			organData["name"] = capitalize(CASE(E, NOMINATIVE_CASE))
+			organData["name"] = C_CASE(E, NOMINATIVE_CASE)
 			organData["open"] = E.open
 			organData["germ_level"] = get_germ_level_name(E.germ_level)
 			organData["bruteLoss"] = E.brute_dam
@@ -221,7 +221,7 @@
 			var/has_unknown_implant = FALSE
 			for(var/obj/I in E.implants)
 				var/list/implantSubData = list()
-				implantSubData["name"] = capitalize(CASE(I, NOMINATIVE_CASE))
+				implantSubData["name"] = C_CASE(I, NOMINATIVE_CASE)
 
 				if(!is_type_in_list(I, known_implants))
 					has_unknown_implant = TRUE
@@ -257,7 +257,7 @@
 		var/list/intOrganData = list()
 		for(var/obj/item/organ/internal/I in occupant.organs)
 			var/list/organData = list()
-			organData["name"] = capitalize(CASE(I, NOMINATIVE_CASE))
+			organData["name"] = C_CASE(I, NOMINATIVE_CASE)
 			organData["desc"] = I.desc
 			organData["germ_level"] = get_germ_level_name(I.germ_level)
 			organData["damage"] = I.damage
@@ -299,11 +299,11 @@
 	if(!connected || !connected.occupant)
 		return
 
-	if(next_print > world.time) //10 sec cooldown
+	if(!COOLDOWN_FINISHED(src, next_print)) //10 sec cooldown
 		to_chat(usr, "<span class='notice'>Консоль не может печатать так быстро!</span>")
 		return
 
-	next_print = world.time + 10 SECONDS
+	COOLDOWN_START(src, next_print, 10 SECONDS)
 	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
 
 	var/obj/item/weapon/paper/P = new(loc)
@@ -346,7 +346,7 @@
 	dat += "\tПовреждение мозга %: [occupant.getBrainLoss()]<BR>"
 
 	var/occupant_paralysis = occupant.AmountParalyzed()
-	dat += "Парализован на %: [occupant_paralysis] (осталось [round(occupant_paralysis / 4)] [pluralize_russian(round(occupant_paralysis / 4), "секунда", "секунды", "секунд")])<BR>"
+	dat += "Парализован на %: [occupant_paralysis] ([round(occupant_paralysis / 4)] [PLUR_SECONDS_LEFT(round(occupant_paralysis / 4))])<BR>"
 
 	dat += "Температура тела: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>"
 
@@ -355,14 +355,20 @@
 
 	var/blood_volume = occupant.blood_amount()
 	var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
-	dat += "\tУровень крови %: [blood_percent] ([blood_volume] [pluralize_russian(blood_volume, "юнит", "юнита", "юнитов")])<BR>"
+	dat += "\tУровень крови %: [blood_percent] ([blood_volume] [PLUR_UNITS(blood_volume)])<BR>"
 
 	if(occupant.reagents)
-		dat += "\tИнапровалин: [occupant.reagents.get_reagent_amount("inaprovaline")] [pluralize_russian(occupant.reagents.get_reagent_amount("inaprovaline"), "юнит", "юнита", "юнитов")]<BR>"
-		dat += "\tСнотворное: [occupant.reagents.get_reagent_amount("stoxin")] [pluralize_russian(occupant.reagents.get_reagent_amount("stoxin"), "юнит", "юнита", "юнитов")]<BR>"
-		dat += "\tДермалин: [occupant.reagents.get_reagent_amount("dermaline")] [pluralize_russian(occupant.reagents.get_reagent_amount("dermaline"), "юнит", "юнита", "юнитов")]<BR>"
-		dat += "\tБикаридин: [occupant.reagents.get_reagent_amount("bicaridine")] [pluralize_russian(occupant.reagents.get_reagent_amount("bicaridine"), "юнит", "юнита", "юнитов")]<BR>"
-		dat += "\tДексалин: [occupant.reagents.get_reagent_amount("dexalin")] [pluralize_russian(occupant.reagents.get_reagent_amount("dexalin"), "юнит", "юнита", "юнитов")]<BR>"
+		var/inaprovaline_amount = occupant.reagents.get_reagent_amount("inaprovaline")
+		var/stoxin_amount = occupant.reagents.get_reagent_amount("stoxin")
+		var/dermaline_amount = occupant.reagents.get_reagent_amount("dermaline")
+		var/bicaridine_amount = occupant.reagents.get_reagent_amount("bicaridine")
+		var/dexalin_amount = occupant.reagents.get_reagent_amount("dexalin")
+
+		dat += "\tИнапровалин: [inaprovaline_amount] [PLUR_UNITS(inaprovaline_amount)]<BR>"
+		dat += "\tСнотворное: [stoxin_amount] [PLUR_UNITS(stoxin_amount)]<BR>"
+		dat += "\tДермалин: [dermaline_amount] [PLUR_UNITS(dermaline_amount)]<BR>"
+		dat += "\tБикаридин: [bicaridine_amount] [PLUR_UNITS(bicaridine_amount)]<BR>"
+		dat += "\tДексалин: [dexalin_amount] [PLUR_UNITS(dexalin_amount)]<BR>"
 
 	dat += "<HR><table border='1'>"
 	dat += "<tr>"
