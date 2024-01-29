@@ -100,7 +100,7 @@
 
 	var/obj/item/placeditem
 
-	var/list/canbeplaced = list(/obj/item/mars_globe = list(4, -6), /obj/item/venus_globe = list(4, -6), /obj/item/earth_globe = list(4, -6), /obj/item/yargon_globe = list(4, -6), /obj/item/newtons_pendulum = list(5, -8), /obj/item/statuette = list(4, -4), /obj/item/vase = list(3, 2), /obj/item/bust = list(4, -6))
+	var/list/canbeplaced = list(/obj/item/mars_globe = list(4, -6), /obj/item/venus_globe = list(4, -6), /obj/item/earth_globe = list(4, -6), /obj/item/yargon_globe = list(4, -6), /obj/item/newtons_pendulum = list(5, -8), /obj/item/statuette = list(5, -5), /obj/item/vase = list(3, 2), /obj/item/bust = list(4, -6))
 
 /obj/structure/bookcase/shelf/atom_init()
 	..()
@@ -155,7 +155,7 @@
 		placeditem.pixel_y = placedoffsets[2]
 		add_overlay(placeditem)
 
-	if(placeditem ? contents.len - 1 : contents.len < 5)
+	if((placeditem ? contents.len - 1 : contents.len) < 5)
 		icon_state = "[shelficonstate]-[placeditem ? contents.len - 1 : contents.len]"
 	else
 		icon_state = "[shelficonstate]-5"
