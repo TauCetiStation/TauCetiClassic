@@ -46,7 +46,7 @@ var/global/specops_shuttle_timeleft = 0
 				message = "ТРЕВОГА: осталось [rounded_time_left] [rounded_time_left_seconds]"
 				if(rounded_time_left==0)
 					message = "ТРЕВОГА: Шаттл начинает отстыковку"
-				announcer.autosay(message, "A.L.I.C.E.", "Response Team")
+				announcer.autosay(message, "А.Л.И.С.А.", "Response Team")
 				message_tracker -= rounded_time_left//Remove the number from the list so it won't be called again next cycle.
 				//Should call all the numbers but lag could mean some issues. Oh well. Not much I can do about that.
 
