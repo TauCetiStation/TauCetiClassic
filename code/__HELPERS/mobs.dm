@@ -372,15 +372,15 @@
 				message += "<span class='warning'>Обнаружена инфекция в [CASE(BP, NOMINATIVE_CASE)]. Рекомендуется дезинфекция.</span><br>"
 
 		if(found_bleed)
-			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется медицинский сканер.</span><br>"
 		if(found_broken)
-			message += "<span class='warning'>Обнаружен перелом костей. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'>Обнаружен перелом костей. Для определения местоположения требуется медицинский сканер.</span><br>"
 
 		var/blood_volume = H.blood_amount()
 		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
 		var/blood_type = H.dna.b_type
 		if(blood_volume <= BLOOD_VOLUME_SAFE && blood_volume > BLOOD_VOLUME_OKAY)
-			message += "<span class='warning bold'>Внимание: Уровень крови НИЗКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice'>Группа крови : [blood_type]</span><br>"
+			message += "<span class='warning bold'>Внимание: Уровень крови НИЗКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice'>Группа крови: [blood_type]</span><br>"
 		else if(blood_volume <= BLOOD_VOLUME_OKAY)
 			message += "<span class='warning bold'>Внимание: Уровень крови КРИТИЧЕСКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice bold'>Группа крови: [blood_type]</span><br>"
 		else

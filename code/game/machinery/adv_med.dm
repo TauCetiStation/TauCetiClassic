@@ -4,7 +4,7 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
-	cases = list("МРТ сканер", "МРТ сканера", "МРТ сканеру", "МРТ сканер", "МРТ сканером", "МРТ сканере")
+	cases = list("медицинский сканер", "медицинского сканера", "медицинскому сканеру", "медицинский сканер", "медицинским сканером", "медицинском сканере")
 	desc = "Используется для более детального анализа состояния пациента."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
@@ -144,7 +144,7 @@
 	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield, /obj/item/weapon/implant/fake_loyal)
 	var/delete
 	name = "Body Scanner Console"
-	cases = list("консоль МРТ сканера", "консоли МРТ сканера", "консоли МРТ сканера", "консоль МРТ сканера", "консолью МРТ сканера", "консоли МРТ сканера")
+	cases = list("консоль медицинского сканера", "консоли медицинского сканера", "консоли медицинского сканера", "консоль медицинского сканера", "консолью медицинского сканера", "консоли медицинского сканера")
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = TRUE
