@@ -200,7 +200,7 @@
 		var/list/extOrganData = list()
 		for(var/obj/item/organ/external/E in occupant.bodyparts)
 			var/list/organData = list()
-			organData["name"] = capitalize(E.name)
+			organData["name"] = capitalize(CASE(E, NOMINATIVE_CASE))
 			organData["open"] = E.open
 			organData["germ_level"] = get_germ_level_name(E.germ_level)
 			organData["bruteLoss"] = E.brute_dam
@@ -211,17 +211,19 @@
 			organData["stump"] = E.is_stump
 
 			var/list/implantData = list()
+			var/has_unknown_implant = FALSE
 			for(var/obj/I in E.implants)
 				var/list/implantSubData = list()
-				implantSubData["name"] = null
+				implantSubData["name"] = capitalize(CASE(I, NOMINATIVE_CASE))
 
-				if(is_type_in_list(I, known_implants))
-					implantSubData["name"] = capitalize(sanitize(I.name))
+				if(!is_type_in_list(I, known_implants))
+					has_unknown_implant = TRUE
+					implantSubData["name"] = null
 
 				implantData.Add(list(implantSubData))
 
 			organData["implant"] = implantData
-			organData["implant_len"] = implantData.len
+			organData["unknown_implant"] = has_unknown_implant
 
 			var/list/organStatus = list()
 			if(E.status & ORGAN_BROKEN)
@@ -248,7 +250,7 @@
 		var/list/intOrganData = list()
 		for(var/obj/item/organ/internal/I in occupant.organs)
 			var/list/organData = list()
-			organData["name"] = capitalize(I.name)
+			organData["name"] = capitalize(CASE(I, NOMINATIVE_CASE))
 			organData["desc"] = I.desc
 			organData["germ_level"] = get_germ_level_name(I.germ_level)
 			organData["damage"] = I.damage
@@ -264,7 +266,6 @@
 		occupantData["intOrgan"] = intOrganData
 
 		occupantData["blind"] = occupant.sdisabilities & BLIND
-		occupantData["colourblind"] = occupant.daltonism
 		occupantData["nearsighted"] = HAS_TRAIT(occupant, TRAIT_NEARSIGHT)
 
 	data["occupant"] = occupantData
@@ -308,11 +309,11 @@
 	var/dat
 	var/mob/living/carbon/human/occupant = connected.occupant
 
-	dat = "<B>Информация о пациенте:</B><BR>" //Blah obvious
+	dat = "<B>Информация о пациенте:</B><BR>"
 	dat += "Станционное время: <B>[worldtime2text()]</B><BR>"
 
 	var/t1
-	switch(occupant.stat) // obvious, see what their status is
+	switch(occupant.stat)
 		if(0)
 			t1 = "В сознании"
 		if(1)
@@ -338,7 +339,7 @@
 	dat += "\tПовреждение мозга %: [occupant.getBrainLoss()]<BR>"
 
 	var/occupant_paralysis = occupant.AmountParalyzed()
-	dat += "Парализован на %: [occupant_paralysis] (осталось [round(occupant_paralysis / 4) [pluralize_russian(round(occupant_paralysis / 4), "секунда", "секунды", "секунд")]])<BR>"
+	dat += "Парализован на %: [occupant_paralysis] (осталось [round(occupant_paralysis / 4)] [pluralize_russian(round(occupant_paralysis / 4), "секунда", "секунды", "секунд")])<BR>"
 
 	dat += "Температура тела: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>"
 
@@ -347,7 +348,7 @@
 
 	var/blood_volume = occupant.blood_amount()
 	var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
-	dat += "\tУровень крови %: [blood_percent] ([blood_volume] [pluralize_russian(blood_volume, "юнит", "юнита", "юнитов")]])<BR>"
+	dat += "\tУровень крови %: [blood_percent] ([blood_volume] [pluralize_russian(blood_volume, "юнит", "юнита", "юнитов")])<BR>"
 
 	if(occupant.reagents)
 		dat += "\tИнапровалин: [occupant.reagents.get_reagent_amount("inaprovaline")] [pluralize_russian(occupant.reagents.get_reagent_amount("inaprovaline"), "юнит", "юнита", "юнитов")]<BR>"
@@ -358,7 +359,7 @@
 
 	dat += "<HR><table border='1'>"
 	dat += "<tr>"
-	dat += "<th>Часть тела<</th>"
+	dat += "<th>Часть тела</th>"
 	dat += "<th>Термические</th>"
 	dat += "<th>Механические</th>"
 	dat += "<th>Другое</th>"
