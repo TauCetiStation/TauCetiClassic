@@ -1458,7 +1458,19 @@
 		for(var/atom/movable/AM in H)
 			AM.forceMove(src.loc)
 			AM.pipe_eject(dir)
-			if(!isdrone(AM) && !isreplicator(AM)) //Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
+
+			if(istype(AM, /obj/item/rocket))
+				var/obj/item/rocket/WH = AM
+				// long distance target will get us better accuracy in throwind datum
+				var/launch_target = get_turf_in_angle(dir2angle(dir)+WH.launch_angle, src.loc, 200)
+
+				var/datum/effect/effect/system/smoke_spread/smoke_effect = new
+				smoke_effect.set_up(1, 0, get_step(src.loc, dir))
+				INVOKE_ASYNC(smoke_effect, TYPE_PROC_REF(/datum/effect/effect/system/smoke_spread, start))
+
+				WH.throw_at(launch_target, 200, WH.launch_speed, spin = FALSE)
+
+			else if(!isdrone(AM) && !isreplicator(AM)) //Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
 				AM.throw_at(target, 3, 2)
 		H.vent_gas(src.loc)
 		qdel(H)

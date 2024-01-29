@@ -433,7 +433,7 @@
 	lights_on = !lights_on
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
-		set_light(5)
+		set_light(5, 0.6)
 		playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 	else
 		set_light(0)
@@ -1197,3 +1197,15 @@
 /mob/living/silicon/robot/crawl()
 	toggle_all_components()
 	to_chat(src, "<span class='notice'>You toggle all your components.</span>")
+
+/mob/living/silicon/robot/pickup_ore()
+	var/turf/simulated/floor/F = get_turf(src)
+	var/obj/item/weapon/storage/bag/ore/B
+	if(istype(module, /obj/item/weapon/robot_module/miner))
+		for(var/bag in module.modules)
+			if(istype(bag, /obj/item/weapon/storage/bag/ore))
+				B = bag
+				if(B.max_storage_space == B.storage_space_used())
+					return
+				F.attackby(B, src)
+				break

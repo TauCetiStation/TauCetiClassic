@@ -116,7 +116,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/mob/living/M = mind.current
 		M.med_hud_set_status()
 	QDEL_NULL(adminMulti)
-	QDEL_NULL(spawners_menu)
 	return ..()
 
 //this is called when a ghost is drag clicked to something.
@@ -702,7 +701,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 
 	if(!spawners_menu)
-		spawners_menu = new(src)
+		spawners_menu = new()
 
 	spawners_menu.tgui_interact(src)
 

@@ -4,6 +4,7 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
+	cases = list("МРТ сканер", "МРТ сканера", "МРТ сканеру", "МРТ сканер", "МРТ сканером", "МРТ сканере")
 	desc = "Используется для более детального анализа состояния пациента."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
@@ -48,10 +49,15 @@
 
 /obj/machinery/bodyscanner/proc/move_inside_checks(mob/target, mob/user)
 	if(occupant)
-		to_chat(user, "<span class='userdanger'>Сканер уже занят кем-то!</span>")
+		to_chat(user, "<span class='userdanger'>[capitalize(CASE(src, NOMINATIVE_CASE))] уже занят кем-то!</span>")
 		return FALSE
 	if(!iscarbon(target))
 		return FALSE
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.species.flags[NO_MED_HEALTH_SCAN])
+			to_chat(user, "<span class='userdanger'>Это существо нельзя сканировать</span>")
+			return FALSE
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>У пациента не должно быть чего-либо в руках.</span>")
 		return FALSE
@@ -137,6 +143,7 @@
 	var/obj/machinery/bodyscanner/connected
 	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield, /obj/item/weapon/implant/fake_loyal)
 	name = "Body Scanner Console"
+	cases = list("консоль МРТ сканера", "консоли МРТ сканера", "консоли МРТ сканера", "консоль МРТ сканера", "консолью МРТ сканера", "консоли МРТ сканера")
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = TRUE

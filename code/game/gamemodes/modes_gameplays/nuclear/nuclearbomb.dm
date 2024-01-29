@@ -419,13 +419,6 @@ var/global/bomb_set
 	else
 		M.pixel_y = M.default_pixel_y
 
-/obj/machinery/nuclearbomb/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	if(buckled_mob)
-		buckled_mob.bullet_act(Proj)
-		if(buckled_mob.weakened || buckled_mob.health < 0 || buckled_mob.halloss > 80)
-			unbuckle_mob()
-
 /obj/machinery/nuclearbomb/MouseDrop(over_object, src_location, over_location)
 	..()
 	if(!istype(over_object, /obj/structure/droppod))
@@ -468,6 +461,8 @@ var/global/bomb_set
 		qdel(src)
 
 /obj/item/weapon/disk/nuclear/Destroy()
+	SHOULD_CALL_PARENT(FALSE)
+
 	var/turf/targetturf = pick_landmarked_location("blobstart", least_used = FALSE)
 	var/turf/diskturf = get_turf(src)
 	forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"

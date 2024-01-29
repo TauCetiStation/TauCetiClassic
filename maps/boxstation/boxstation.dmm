@@ -21106,8 +21106,7 @@
 	dir = 4
 	},
 /obj/structure/toilet{
-	dir = 8;
-	pixel_y = 8
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -30472,6 +30471,10 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -33567,6 +33570,10 @@
 "bhF" = (
 /obj/structure/cable,
 /obj/machinery/computer/smartlight,
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "bhG" = (
@@ -40999,8 +41006,8 @@
 	icon_state = "arrow"
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "loadingarea";
-	dir = 1
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -60931,6 +60938,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cor" = (
@@ -61319,7 +61327,7 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cps" = (
-/obj/mecha/working/ripley,
+/obj/mecha/working/ripley/recycle_ripley,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cpt" = (
@@ -61505,6 +61513,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpJ" = (
@@ -71903,8 +71912,8 @@
 	queue_display = 1
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "loadingarea";
-	dir = 8
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -82137,8 +82146,8 @@
 "qMF" = (
 /obj/structure/table,
 /obj/item/pens_bin{
-	pixel_y = 6;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /obj/item/weapon/pen,
 /obj/item/weapon/pen/blue,
@@ -84923,16 +84932,16 @@
 "tKI" = (
 /obj/machinery/ticket_machine,
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "loadingarea";
-	dir = 1
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "box_corners_white";
-	dir = 1
+	dir = 1;
+	icon_state = "box_corners_white"
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "box_corners_white";
-	dir = 4
+	dir = 4;
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)

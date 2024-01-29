@@ -140,7 +140,7 @@
 	. += "<br><b>Genomes Absorbed:</b> [absorbedcount]"
 	. += "<br><b>Stored Essences:</b><br>"
 	for(var/mob/living/parasite/essence/E in essences)
-		. += printplayerwithicon(E?.mind)
+		. += printplayer(E?.mind)
 		. += "<br>"
 	if(purchasedpowers.len)
 		. += "<br><b>[changelingID] used the following abilities: </b>"
