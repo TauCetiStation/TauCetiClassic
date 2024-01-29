@@ -29,7 +29,7 @@ var/global/specops_shuttle_timeleft = 0
 	var/message_tracker[] = list(0,1,2,3,5,10,30,45)//Create a a list with potential time values.
 	var/message = "Шаттл специального назначения готовится к отстыковке со станции [station_name_ru]."//Initial message shown.
 	if(announcer)
-		announcer.autosay(message, "A.L.I.C.E.", "Response Team")
+		announcer.autosay(message, "А.Л.И.С.А.", "Response Team")
 
 	while(specops_shuttle_time - world.timeofday > 0)
 		var/ticksleft = specops_shuttle_time - world.timeofday
