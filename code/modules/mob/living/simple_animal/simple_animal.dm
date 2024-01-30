@@ -432,7 +432,6 @@
 /mob/living/simple_animal/proc/handle_get_out()
 	if(istype(loc, /obj/machinery))
 		forceMove(get_turf(loc))
-		qdel(loc)
 	if(istype(loc, /obj/item/weapon/storage))
 		forceMove(get_turf(loc))
 	if(istype(loc, /mob/living))
