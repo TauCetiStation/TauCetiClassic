@@ -42,7 +42,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
 	/obj/item/weapon/reagent_containers/food/snacks/meat/human,
 	/obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct,
-
 	/obj/item/weapon/reagent_containers/food/snacks/aesirsalad,
 	/obj/item/weapon/reagent_containers/food/snacks/candy,
 	/obj/item/weapon/reagent_containers/food/snacks/candy/donor,
@@ -50,7 +49,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/cookie,
 	/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
 	/obj/item/weapon/reagent_containers/food/snacks/chocolateegg,
-
 	/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
 	/obj/item/weapon/reagent_containers/food/snacks/donut/classic,
 	/obj/item/weapon/reagent_containers/food/snacks/donut/syndie,
@@ -61,7 +59,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly,
 	/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia,
 	/obj/item/weapon/reagent_containers/food/snacks/donut/chaos,
-
 	/obj/item/weapon/reagent_containers/food/snacks/egg,
 	/obj/item/weapon/reagent_containers/food/snacks/egg/blue,
 	/obj/item/weapon/reagent_containers/food/snacks/egg/green,
@@ -73,10 +70,8 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/egg/yellow,
 	/obj/item/weapon/reagent_containers/food/snacks/friedegg,
 	/obj/item/weapon/reagent_containers/food/snacks/boiledegg,
-
 	/obj/item/weapon/reagent_containers/food/snacks/appendix,
 	/obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed,
-
 	/obj/item/weapon/reagent_containers/food/snacks/tofu,
 	/obj/item/weapon/reagent_containers/food/snacks/tofurkey,
 	/obj/item/weapon/reagent_containers/food/snacks/stuffing,
@@ -91,7 +86,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/meatball,
 	/obj/item/weapon/reagent_containers/food/snacks/sausage,
 	/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
-
 	/obj/item/weapon/reagent_containers/food/snacks/brainburger,
 	/obj/item/weapon/reagent_containers/food/snacks/ghostburger,
 	/obj/item/weapon/reagent_containers/food/snacks/cheeseburger,
@@ -108,7 +102,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/jellyburger/slime,
 	/obj/item/weapon/reagent_containers/food/snacks/jellyburger/cherry,
 	/obj/item/weapon/reagent_containers/food/snacks/superbiteburger,
-
 	/obj/item/weapon/reagent_containers/food/snacks/omelette,
 	/obj/item/weapon/reagent_containers/food/snacks/muffin,
 	/obj/item/weapon/reagent_containers/food/snacks/pie,
@@ -146,7 +139,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
 	/obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff,
 	/obj/item/weapon/reagent_containers/food/snacks/poppypretzel,
-
 	/obj/item/weapon/reagent_containers/food/snacks/soup/beetsoup,
 	/obj/item/weapon/reagent_containers/food/snacks/soup/stew,
 	/obj/item/weapon/reagent_containers/food/snacks/soup/mushroomsoup,
@@ -160,7 +152,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/soup/nettlesoup,
 	/obj/item/weapon/reagent_containers/food/snacks/soup/mysterysoup,
 	/obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup,
-
 	/obj/item/weapon/reagent_containers/food/snacks/hotchili,
 	/obj/item/weapon/reagent_containers/food/snacks/coldchili,
 	/obj/item/weapon/reagent_containers/food/snacks/enchiladas,
@@ -197,12 +188,10 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit,
 	/obj/item/weapon/reagent_containers/food/snacks/chawanmushi,
 	/obj/item/weapon/reagent_containers/food/snacks/appletart,
-
 	/obj/item/weapon/reagent_containers/food/snacks/tossedsalad,
 	/obj/item/weapon/reagent_containers/food/snacks/validsalad,
 	/obj/item/weapon/reagent_containers/food/snacks/olivyesalad,
 	/obj/item/weapon/reagent_containers/food/snacks/herbsalad,
-
 	/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread,
 	/obj/item/weapon/reagent_containers/food/snacks/breadslice,
 	/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/cheese,
@@ -217,7 +206,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/breadslice/banana,
 	/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/tofu,
 	/obj/item/weapon/reagent_containers/food/snacks/breadslice/tofu,
-
 	/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake,
 	/obj/item/weapon/reagent_containers/food/snacks/cakeslice,
 	/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/birthday,
@@ -240,7 +228,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/cakeslice/lemon,
 	/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/chocolate,
 	/obj/item/weapon/reagent_containers/food/snacks/cakeslice/chocolate,
-
 	/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita,
 	/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/margherita,
 	/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meat,
@@ -249,7 +236,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom,
 	/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetable,
 	/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetable,
-
 	/obj/item/weapon/reagent_containers/food/snacks/sliceable/cheesewheel,
 	/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 	/obj/item/weapon/reagent_containers/food/snacks/watermelonslice,
@@ -284,7 +270,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/bacon,
 	/obj/item/weapon/reagent_containers/food/snacks/telebacon,
 	/obj/item/weapon/reagent_containers/food/snacks/salmonsteak,
-
 	/obj/item/weapon/reagent_containers/food/snacks/candy/fudge,
 	/obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cherry,
 	/obj/item/weapon/reagent_containers/food/snacks/candy/fudge/cookies_n_cream,
@@ -351,7 +336,6 @@ var/global/list/preservable_dishes = list(
 	/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/purple,
 	/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/red,
 	/obj/item/weapon/reagent_containers/food/snacks/candyheart,
-
 	/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 	/obj/item/weapon/reagent_containers/food/snacks/el_ehum,
 	/obj/item/weapon/reagent_containers/food/snacks/rraasi,
@@ -396,7 +380,6 @@ var/global/list/preservable_reagents = list(
 	"cheese",
 	"beans",
 	"bread",
-
 	"water",
 	"holywater",
 	"unholywater",
@@ -404,7 +387,6 @@ var/global/list/preservable_reagents = list(
 	"sugar",
 	"ectoplasm",
 	"agium",
-
 	"orangejuice",
 	"tomatojuice",
 	"limejuice",
@@ -452,7 +434,6 @@ var/global/list/preservable_reagents = list(
 	"gargleblaster",
 	"hippiesdelight",
 	"lean",
-
 	"ethanol",
 	"beer",
 	"gourdbeer",
