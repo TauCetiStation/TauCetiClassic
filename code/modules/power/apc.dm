@@ -482,7 +482,7 @@
 			cell = W
 			user.visible_message(\
 				"<span class='warning'>[CASE(user, NOMINATIVE_CASE)] установил аккумулятор в [CASE(src, ACCUSATIVE_CASE)]!</span>",\
-				"You insert the power cell.")
+				"Вы устанавливаете аккумулятор в [CASE(src, ACCUSATIVE_CASE)].")
 			chargecount = 0
 			update_icon()
 
@@ -551,7 +551,7 @@
 					SSticker.hacked_apcs++
 					announce_hacker()
 				else
-					to_chat(user, "Ошибка [ locked ? "разблокировки" : "блокировки"].")
+					to_chat(user, "Ошибка [ locked ? "разблокировки" : "блокировки"] терминала [CASE(src, GENITIVE_CASE)].")
 
 	else if(iscoil(W) && !terminal && opened != APC_COVER_CLOSED && has_electronics != 2)
 		var/turf/TT = get_turf(src)

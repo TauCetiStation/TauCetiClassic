@@ -6,7 +6,7 @@ import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 export const Apc = (props, context) => {
   return (
     <Window
-      width={450}
+      width={500}
       height={445}>
       <Window.Content scrollable>
         <ApcContent />
@@ -23,7 +23,7 @@ const powerStatusMap = {
   },
   1: {
     color: 'average',
-    externalPowerText: 'Низкое напряжение сети',
+    externalPowerText: 'Низкое напряжение в сети',
     chargingText: 'Заряжается',
   },
   0: {
@@ -60,7 +60,7 @@ const ApcContent = (props, context) => {
   return (
     <>
       <InterfaceLockNoticeBox />
-      <Section title="Оборудование">
+      <Section title="Сеть">
         <LabeledList>
           <LabeledList.Item
             label="Вводный автомат"
@@ -169,7 +169,7 @@ const ApcContent = (props, context) => {
             buttons={(
               <Button
                 icon={coverLocked ? 'lock' : 'unlock'}
-                content={coverLocked ? 'Закрыта' : 'Открыта'}
+                content={coverLocked ? 'Заблокирована' : 'Разблокирована'}
                 disabled={isLocked}
                 onClick={() => act('cover')} />
             )} />

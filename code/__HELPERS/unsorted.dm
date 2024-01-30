@@ -1629,12 +1629,12 @@ var/global/list/WALLITEMS = typecacheof(list(
 // Format a power value in W, kW, MW, or GW
 /proc/DisplayPower(powerused)
 	if(powerused < 1000) // Less than a kW
-		return "[powerused] W"
+		return "[powerused] Вт"
 	if(powerused < 1000000) // Less than a MW
-		return "[round((powerused * 0.001), 0.01)] kW"
+		return "[round((powerused * 0.001), 0.01)] кВт"
 	if(powerused < 1000000000) // Less than a GW
-		return "[round((powerused * 0.000001), 0.001)] MW"
-	return "[round((powerused * 0.000000001), 0.0001)] GW"
+		return "[round((powerused * 0.000001), 0.001)] МВт"
+	return "[round((powerused * 0.000000001), 0.0001)] ГВт"
 
 //Returns a list of all locations (except the area) the movable is within.
 /proc/get_nested_locs(atom/movable/AM, include_turf = FALSE)
