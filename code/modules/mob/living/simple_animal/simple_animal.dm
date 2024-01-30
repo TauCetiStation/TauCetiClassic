@@ -429,6 +429,17 @@
 /mob/living/simple_animal/proc/evolve_to_young_adult()
 	return
 
+/mob/living/simple_animal/proc/handle_get_out()
+	if(istype(loc, /obj/machinery))
+		forceMove(get_turf(loc))
+		qdel(loc)
+	if(istype(loc, /obj/item/weapon/storage))
+		forceMove(get_turf(loc))
+	if(istype(loc, /mob/living))
+		forceMove(get_turf(loc))
+		var/mob/living/L = loc
+		L.apply_damage(melee_damage)
+
 /mob/living/simple_animal/proc/handle_evolving()
 	if(stat == DEAD)
 		return
@@ -448,4 +459,5 @@
 				speed -= 0.5
 				melee_damage = 2
 		return
+	handle_get_out()
 	evolve_to_young_adult()

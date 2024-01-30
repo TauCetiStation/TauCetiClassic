@@ -62,6 +62,18 @@
 	. = ..()
 	to_chat(src, "<span class='userdanger'>Вы агрессивная форма жизни в стадии развития до взрослой особи. Ваша сила укуса растёт.</span>")
 
+/mob/living/simple_animal/proc/handle_get_out()
+	if(istype(loc, /obj))
+		forceMove(get_turf(loc))
+		qdel(loc)
+	if(istype(loc, /obj/item/weapon/storage))
+		forceMove(get_turf(loc))
+		qdel(loc)
+	if(istype(loc, /mob/living))
+		forceMove(get_turf(loc))
+		var/mob/living/L = loc
+		L.apply_damage(melee_damage)
+
 /mob/living/simple_animal/grown_larvae/snake/evolve_to_young_adult()
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 	smoke.set_up(10, 0, loc)
