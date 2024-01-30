@@ -258,6 +258,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	if((HUSK in mutations) || (head && (head.flags & BLOCKHAIR)) || (wear_mask && (wear_mask.flags & BLOCKHAIR)) || (wear_suit && (wear_suit.flags & BLOCKHAIR)) || (w_uniform && (w_uniform.flags & BLOCKHAIR)))
 		return
 
+	var/list/standing = list()
+
 	if(f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
 		if(facial_hair_style)
@@ -272,7 +274,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			facial_s = human_update_offset(facial_s, TRUE)
 			facial_s.pixel_x += species.offset_features[OFFSET_FACE][1]
 			facial_s.pixel_y += species.offset_features[OFFSET_FACE][2]
-			overlays_standing[HAIR_LAYER] = facial_s
+			standing += facial_s
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)) && !(wear_mask && (wear_mask.flags & BLOCKHEADHAIR)) && !(wear_suit && (wear_suit.flags & BLOCKHEADHAIR)) && !(w_uniform && (w_uniform.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
@@ -294,7 +296,9 @@ Please contact me on #coderbus IRC. ~Carn x
 			MA = human_update_offset(MA, TRUE)
 			MA.pixel_x += species.offset_features[OFFSET_HAIR][1]
 			MA.pixel_y += species.offset_features[OFFSET_HAIR][2]
-			overlays_standing[HAIR_LAYER] = MA
+			standing += MA
+	if(standing.len)
+		overlays_standing[HAIR_LAYER] = standing
 
 	apply_standing_overlay(HAIR_LAYER)
 
@@ -889,8 +893,6 @@ Please contact me on #coderbus IRC. ~Carn x
 				if(W.bandaged)
 					BP.bandaged = TRUE
 					var/image/I = image("icon" = 'icons/mob/bandages.dmi', "icon_state" = "[BP.body_zone]", "layer" = -BANDAGE_LAYER)
-					I.pixel_x = species.offset_features[OFFSET_HAIR][1]
-					I.pixel_y = species.offset_features[OFFSET_HAIR][2]
 					standing += I
 
 	if(standing.len)

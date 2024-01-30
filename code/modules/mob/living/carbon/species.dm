@@ -151,6 +151,7 @@
 		OFFSET_ACCESSORY = list(0,0),
 		OFFSET_HAIR = list(0,0),
 	)
+
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 
 	var/list/survival_kit_items = list(/obj/item/clothing/mask/breath,

@@ -182,6 +182,7 @@
 
 /turf/simulated/shuttle/floor
 	name = "floor"
+	cases = list("пол", "пола", "полу", "пол", "полом", "поле")
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
