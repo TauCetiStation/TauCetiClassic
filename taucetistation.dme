@@ -1481,6 +1481,7 @@
 #include "code\modules\cargo\supplyshuttle.dm"
 #include "code\modules\cargo\exports\gear.dm"
 #include "code\modules\cargo\exports\large_objects.dm"
+#include "code\modules\cargo\exports\luxury.dm"
 #include "code\modules\cargo\exports\manifest.dm"
 #include "code\modules\cargo\exports\money.dm"
 #include "code\modules\cargo\exports\parts.dm"
