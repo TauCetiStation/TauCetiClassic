@@ -35,7 +35,7 @@
 	to_chat(src, "<span class='userdanger'>Вы агрессивная форма жизни практикующая канибализм, так как мясо вашего вида очень вкусное.</span>")
 
 /mob/living/simple_animal/grown_larvae/serpentid/evolve_to_young_adult()
-	var/mob/living/simple_animal/grown_larvae/snake/S = new(loc)
+	var/mob/living/simple_animal/grown_larvae/snake/S = new(get_turf(loc))
 	mind.transfer_to(S)
 	qdel(src)
 
@@ -67,7 +67,7 @@
 	smoke.set_up(10, 0, loc)
 	smoke.start()
 	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
-	var/mob/living/carbon/human/serpentid/S = new(loc)
+	var/mob/living/carbon/human/serpentid/S = new(get_turf(loc))
 	mind.transfer_to(S)
 	create_and_setup_role(/datum/role/animal, S)
 	var/lore = "Вы агрессивная форма жизни с примитивным интеллектом уровня обезьяны. Вторжение в вашу комфортную зону означает агрессию по отношению к вам. Представителей своего вида вы предпочитаете видеть в качестве завтрака. Своей хваткой вы способны разрывать тела на части. Ваша цель - выжить."
@@ -90,7 +90,7 @@
 	to_chat(src, "<span class='userdanger'>Вы дружелюбная форма жизни в стадии развития до взрослой особи. Помните, чем больше вы растёте, тем больше в вас мяса.</span>")
 
 /mob/living/simple_animal/grown_larvae/small_moth/evolve_to_young_adult()
-	var/mob/living/carbon/human/moth/M = new(loc)
+	var/mob/living/carbon/human/moth/M = new(get_turf(loc))
 	mind.transfer_to(M)
 	create_and_setup_role(/datum/role/animal, M)
 	var/lore = "Вы всеядная форма жизни с примитивным интеллектом уровня обезьяны, предпочитающая питаться падалью. В число ваших врагов входят только Серпентиды, отношение к остальным зачастую нейтральное. Ваша цель - выжить."
@@ -137,7 +137,7 @@
 	addtimer(CALLBACK(src, .proc/handle_evolving), 100, TIMER_UNIQUE)
 
 /mob/living/simple_animal/mouse/rat/newborn_moth/evolve_to_young_adult()
-	var/mob/living/simple_animal/grown_larvae/small_moth/moth = new(loc)
+	var/mob/living/simple_animal/grown_larvae/small_moth/moth = new(get_turf(loc))
 	mind.transfer_to(moth)
 	qdel(src)
 
