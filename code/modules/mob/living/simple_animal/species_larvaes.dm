@@ -62,7 +62,7 @@
 	. = ..()
 	to_chat(src, "<span class='userdanger'>Вы агрессивная форма жизни в стадии развития до взрослой особи. Ваша сила укуса растёт.</span>")
 
-/mob/living/simple_animal/proc/handle_get_out()
+/mob/living/simple_animal/grown_larvae/snake/handle_get_out()
 	if(istype(loc, /obj))
 		forceMove(get_turf(loc))
 		qdel(loc)
@@ -104,6 +104,7 @@
 /mob/living/simple_animal/grown_larvae/small_moth/evolve_to_young_adult()
 	var/mob/living/carbon/human/moth/M = new(loc)
 	mind.transfer_to(M)
+	create_and_setup_role(/datum/role/animal, M)
 	var/lore = "Вы всеядная форма жизни с примитивным интеллектом уровня обезьяны, предпочитающая питаться падалью. В число ваших врагов входят только Серпентиды, отношение к остальным зачастую нейтральное. Ваша цель - выжить."
 	to_chat(M, "<span class='userdanger'>[lore]</span>")
 	M.mind.store_memory(lore)
