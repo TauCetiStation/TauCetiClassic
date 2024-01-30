@@ -31,7 +31,7 @@
 	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head. And now you can hide it in some hats!"
 	icon_state = "dermal"
 	siemens_coefficient = 0.6
-	pierce_protection = HEAD
+	pierce_protection = null
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD | SLOT_FLAGS_TIE
 	slot = "dermal"
