@@ -24,8 +24,8 @@
 	var/static/list/laugh_by_gender_species = list(
 		"[SKRELL][FEMALE]" = SOUNDIN_LAUGH_SKRELL_FEMALE,
 		"[SKRELL][MALE]" = SOUNDIN_LAUGH_SKRELL_MALE,
-		"[SERPENTID][NEUTER]" = SOUNDIN_LAUGH_SERPENTID,
-		"[MOTH][NEUTER]" = SOUNDIN_LAUGH_SERPENTID,
+		"[SERPENTID][NEUTER]" = SOUNDIN_LAUGH_INSECTOID,
+		"[MOTH][NEUTER]" = SOUNDIN_LAUGH_INSECTOID,
 	)
 
 	var/hash = "[user.get_species()][user.gender]"
@@ -81,8 +81,8 @@
 
 /datum/emote/human/grunt/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/grunt_by_gender_species = list(
-		"[SERPENTID]" = SOUNDIN_GRUNT_SERPENTID,
-		"[MOTH]" = SOUNDIN_GRUNT_SERPENTID,
+		"[SERPENTID]" = SOUNDIN_GRUNT_INSECTOID,
+		"[MOTH]" = SOUNDIN_GRUNT_INSECTOID,
 	)
 
 	var/hash = "[user.get_species()]"
@@ -121,8 +121,8 @@
 
 /datum/emote/human/groan/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/grunt_by_gender_species = list(
-		"[SERPENTID]" = SOUNDIN_GRUNT_SERPENTID,
-		"[MOTH]" = SOUNDIN_GRUNT_SERPENTID,
+		"[SERPENTID]" = SOUNDIN_GRUNT_INSECTOID,
+		"[MOTH]" = SOUNDIN_GRUNT_INSECTOID,
 	)
 
 	var/hash = "[user.get_species()]"
@@ -167,8 +167,8 @@
 
 /datum/emote/human/scream/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/scream_by_gender_species = list(
-		"[SERPENTID]" = SOUNDIN_SCREAM_SERPENTID,
-		"[MOTH]" = SOUNDIN_SCREAM_SERPENTID,
+		"[SERPENTID]" = SOUNDIN_SCREAM_INSECTOID,
+		"[MOTH]" = SOUNDIN_SCREAM_INSECTOID,
 	)
 	var/hash = "[user.get_species()]"
 
