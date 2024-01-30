@@ -19,8 +19,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 
 	var/save_id = 0
 
-	var/list/can_preserve = list("items" = /obj/item/weapon/reagent_containers/food/snacks/grown, "reagents" = /datum/reagent/consumable)
-	var/list/can_also_preserve = list("items" = list(), "reagents" = list(/datum/reagent/sugar))
+	var/list/can_also_preserve = list()
+	var/list/can_also_preserve_reagents = list()
 
 /obj/structure/preservation_barrel/kitchen
 	save_id = "kitchen"
@@ -129,11 +129,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_barrel, preservation_barrels)
 	var/list/barrel_record = list("items" = list(), "reagents" = list())
 
 	for(var/obj/item/F in internal_storage.contents)
-		if(istype(F, can_preserve["items"]) || (F.type in can_also_preserve["items"]))
+		if(F.type in global.preservable_vegetables + can_also_preserve)
 			barrel_record["items"] += F.type
 
 	for(var/datum/reagent/R in reagents.reagent_list)
-		if(istype(R, can_preserve["reagents"]) || (R.type in can_also_preserve["reagents"]))
+		if(R.id in global.preservable_reagents + can_also_preserve_reagents)
 			barrel_record["reagents"] += list("[R.id]" = "[R.volume]")
 
 	barrel_record["items"] = list2params(barrel_record["items"])
@@ -206,7 +206,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 
 	var/foods_offsets = list(list(-6, 10), list(6, 10), list(-6, -4), list(6, -4))
 
-	var/can_preserve = /obj/item/weapon/reagent_containers/food/snacks
 	var/list/can_also_preserve = list()
 
 /obj/structure/preservation_table/kitchen
@@ -266,7 +265,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_table, preservation_tables)
 
 	var/i = 1
 	for(var/obj/item/I in internal_storage.contents)
-		if(istype(I, can_preserve) || (I.type in can_also_preserve))
+		if(I.type in global.preservable_vegetables + global.preservable_dishes + can_also_preserve)
 			table_record["[i]"] = I.type
 			i++
 
@@ -327,7 +326,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 
 	var/image/vegs_inside
 
-	var/can_preserve = /obj/item/weapon/reagent_containers/food/snacks/grown
 	var/list/can_also_preserve = list()
 
 /obj/structure/preservation_box/kitchen
@@ -379,7 +377,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/preservation_box, preservation_boxes)
 
 	var/i = 1
 	for(var/obj/item/I in internal_storage.contents)
-		if(istype(I, can_preserve) || (I.type in can_also_preserve))
+		if(I.type in global.preservable_vegetables + can_also_preserve)
 			box_record["[i]"] = I.type
 			i++
 
@@ -438,7 +436,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 
 	var/obj/item/weapon/storage/internal/internal_storage
 
-	var/can_preserve = /obj/item/weapon/reagent_containers/food/snacks
 	var/list/can_also_preserve = list(/obj/item/nutrient/compost)
 
 /obj/structure/composter/botany
@@ -468,7 +465,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 	for(var/itemnum in composter_record) //Нам надо создать предмет, потому что у выращенных овощей нет нутриентов пока они не пройдут атом_инит.
 		var/itemtype = composter_record[itemnum]
 		var/obj/item/I = new itemtype(internal_storage)
-		if(!istype(I, can_preserve))
+		if(I.type in can_also_preserve)
 			continue
 
 		var/obj/item/weapon/reagent_containers/Item = I
@@ -496,7 +493,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/composter, composters)
 
 	var/i = 1
 	for(var/obj/item/I in internal_storage.contents)
-		if(istype(I, can_preserve) || (I.type in can_also_preserve))
+		if(I.type in global.preservable_vegetables + global.preservable_dishes + can_also_preserve)
 			composter_record["[i]"] = I.type
 			i++
 
