@@ -45,6 +45,7 @@
 	req_access = list(25)
 	refill_canister = /obj/item/weapon/vending_refill/boozeomat
 	private = TRUE
+	var/obj/item/device/radio/intercom/radio
 
 /obj/machinery/vending/boozeomat/atom_init()
 	. = ..()
@@ -56,7 +57,7 @@
 		var/mob/living/carbon/human/H = user
 		if(H.age < 21)
 			to_chat(H, "<span class='warning'>Мы не выдаём алкогольную продукцию лицам младше 21 года. Охрана оповещена.</span>")
-			radio.autosay("[H.name] попытал[H.gender == "female" ? "ась" : "ся"] приобрести алкоголь не достигнув возраста 21 года. Необходимо провести воспитательную беседу.", "[name]", freq = radiochannels["Security"])
+			radio.autosay("[H.name] попытал[H.gender == "female" ? "ась" : "ся"] приобрести алкоголь не достигнув возраста 21 года. Необходимо провести воспитательную беседу в [loc.loc.name].", "[name]", freq = radiochannels["Security"])
 			flick(icon_deny, src)
 		else
 			..()
