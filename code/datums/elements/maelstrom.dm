@@ -1,4 +1,7 @@
 #define MAX_RUNES_ON_MOB 5
+
+#define COMSIG_ATTACK_HAND_FULTOPORTAL "attackhand_fultonportal"
+
 /datum/element/maelstrom
 	element_flags = ELEMENT_DETACH
 	var/list/datum/building_agent/available_runes = list(new /datum/building_agent/rune/maelstrom/portal_beacon(),
@@ -16,6 +19,7 @@
 	. = ..()
 	RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	RegisterSignal(target, COMSIG_AFTER_TELEPORT, PROC_REF(prevent_paralysing))
+	RegisterSignal(target, COMSIG_ATTACK_HAND_FULTOPORTAL, PROC_REF(open_uplink))
 
 /datum/element/maelstrom/Detach(datum/target)
 	. = ..()
@@ -29,6 +33,29 @@
 	SIGNAL_HANDLER
 	return COMPONENT_NO_PARALYZE
 teleporting_runes
+
+
+/datum/element/maelstrom/proc/open_uplink(datum/source, mob/living/user)
+	/obj/item/weapon/kitchenknife/ritual/calling_up
+	/obj/item/weapon/grenade/curse
+	/*	var/datum/building_agent/choice = show_radial_menu(user, src, items_image, tooltips = TRUE, require_near = TRUE)
+	if(!choice)
+		return
+
+	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
+		return
+
+	if(istype(choice, /datum/building_agent/tool/cult/tome))
+		religion.spawn_bible(loc)
+	else
+		new choice.building_type(loc)
+
+	religion.adjust_favor(-choice.favor_cost)
+	religion.adjust_piety(-choice.piety_cost)
+	playsound(src, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
+	icon_state = "forge_active"
+	VARSET_IN(src, icon_state, "forge_inactive", 10)*/
+
 /obj/effect/decal/cleanable/crayon/maelstrom
 	var/datum/rune/power
 	var/creator_ckey
@@ -50,11 +77,11 @@ teleporting_runes
 
 /datum/building_agent/rune/maelstrom/wall
 	name = "Призыв Стены"
-	rune_type = /datum/rune/maelstrom
+	rune_type = /datum/rune/maelstrom/wall
 
 /datum/building_agent/rune/maelstrom/bloodboil
 	name = "Кипение Крови"
-	rune_type = /datum/rune/cult/bloodboil
+	rune_type = /datum/rune/maelstrom/bloodboil
 
 /datum/element/maelstrom/proc/begin_draw(mob/user)
 	if(rune_choices_image.len < available_runes.len)
@@ -274,31 +301,77 @@ ADD_TO_GLOBAL_LIST(/datum/rune/maelstrom/teleport, teleporting_runes)
 	name = "Призыв Стены"
 	var/obj/effect/forcefield/cult/alt_app/wall
 
-/datum/rune/maelstrom/Destroy()
+/datum/rune/maelstrom/wall/Destroy()
 	QDEL_NULL(wall)
 	return ..()
 
-/datum/rune/maelstrom/can_action(mob/living/carbon/user)
+/datum/rune/maelstrom/wall/can_action(mob/living/carbon/user)
 	if(!wall)
 		action(user)
 		return FALSE
 	return TRUE
 
-/datum/rune/maelstrom/action(mob/living/carbon/user)
+/datum/rune/maelstrom/wall/action(mob/living/carbon/user)
 	if(wall)
-		to_chat(user, "<span class='userdanger'>Ваша кровь перестает течь в руне, и вы чувствуете, как пространство над руной начинает редеть.</span>")
+		to_chat(user, "<span class='userdanger'>Ваша сила перестает течь в руне, и вы чувствуете, как пространство над руной начинает редеть.</span>")
 		QDEL_NULL(wall)
 	else
 		wall = new /obj/effect/forcefield/cult/alt_app(get_turf(holder))
-		to_chat(user, "<span class='userdanger'>Ваша кровь начинает течь в руне, и вы чувствуете, как пространство над руной начинает сгущаться.</span>")
+		to_chat(user, "<span class='userdanger'>Ваша сила начинает течь в руне, и вы чувствуете, как пространство над руной начинает сгущаться.</span>")
 
 	user.take_bodypart_damage(2, 0)
 
-/datum/rune/cult/portal_beacon
+/datum/rune/maelstrom/portal_beacon
 	name = "Маяк Портала Культа"
 	words = list("travel", "hell", "technology")
 
-/datum/rune/cult/portal_beacon/can_action(mob/living/carbon/user)
+/datum/rune/maelstrom/portal_beacon/can_action(mob/living/carbon/user)
 	return FALSE
 
-/obj/effect/anomaly/bluespace/fulton
+/obj/effect/anomaly/bluespace/fulton/attack_hand(mob/living/user)
+	SEND_SIGNAL(user, COMSIG_ATTACK_HAND_FULTOPORTAL)
+
+/datum/rune/maelstrom/bloodboil
+	name = "Кипение Крови"
+	words = list("destroy", "blood", "see")
+
+/datum/rune/maelstrom/bloodboil/proc/nearest_acolytes()
+	var/list/acolytes = list()
+	for(var/mob/living/carbon/C in range(1, holder))
+		if(SEND_SIGNAL(C, COMSIG_BLOODBOIL_COUNT_ACOLYTE) & COMPONENT_MAELSTROM_MEMBER)
+			acolytes += C
+	return acolytes
+
+/datum/rune/maelstrom/bloodboil/proc/nearest_heretics()
+	var/list/heretics = list()
+	for(var/mob/living/heretic in view(5, holder))
+		if(SEND_SIGNAL(heretic, COMSIG_BLOODBOIL_COUNT_AFFECTED) & COMPONENT_NO_BLOODBOIL)
+			heretics += heretic
+
+/datum/rune/cult/bloodboil/can_action(mob/living/carbon/user)
+	var/list/acolytes = nearest_acolytes()
+	if(length(acolytes) < 3)
+		to_chat(user, "<span class='cult'>Вам необходимо как минимум 3 культиста вокруг руны.</span>")
+		return FALSE
+	var/list/heretics = nearest_heretics()
+	if(length(heretics) < 1)
+		to_chat(user, "<span class='cult'>Никого нет рядом.</span>")
+		return FALSE
+	return TRUE
+
+/datum/rune/cult/bloodboil/action(mob/living/carbon/user)
+	var/list/acolytes = nearest_acolytes()
+	var/list/heretics = nearest_heretics()
+	if(length(heretics) < 1)
+		to_chat(user, "<span class='cult'>Никого нет рядом.</span>")
+		return
+	var/damage_for_acolytes = length(heretics) * 30 / length(acolytes)
+	var/damage_modifier = length(acolytes) * 30
+
+	for(var/mob/living/carbon/M in heretics)
+		M.take_overall_damage(damage_modifier * 0.1, damage_for_acolytes * 0.9)
+		to_chat(M, "<span class='userdanger'>Твоя кровь кипит!</span>")
+		if(prob(5) && M)
+			M.gib()
+	for(var/mob/living/L in acolytes)
+		L.take_overall_damage(damage_for_acolytes * 0.1, damage_for_acolytes * 0.9)
