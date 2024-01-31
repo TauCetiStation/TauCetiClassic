@@ -68,7 +68,7 @@
 		var/mob/living/carbon/human/H = user
 		if(H.age < 21)
 			to_chat(H, "<span class='warning'>Мы не продаём табачную продукцию лицам младше 21 года. Охрана оповещена.</span>")
-			radio.autosay("[H.name] попытал[H.gender == "male" ? "ся" : "ась"] приобрести сигареты не достигнув возраста 21 года. Необходимо провести воспитательную беседу.", "[name]", freq = radiochannels["Security"])
+			radio.autosay("[H.name] попытал[H.gender == "female" ? "ась" : "ся"] приобрести сигареты не достигнув возраста 21 года. Необходимо провести воспитательную беседу.", "[name]", freq = radiochannels["Security"])
 			flick(icon_deny, src)
 		else
 			..()
