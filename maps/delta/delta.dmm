@@ -24246,6 +24246,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor,
 /area/station/civilian/chapel/mass_driver)
 "eLj" = (
@@ -52221,7 +52222,7 @@
 	icon_state = "siding_wood_line"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "grimy"
 	},
 /area/station/civilian/chapel/office)
 "kCx" = (
@@ -62362,7 +62363,7 @@
 	icon_state = "siding_wood_line"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "grimy"
 	},
 /area/station/civilian/chapel/office)
 "mMA" = (
@@ -93570,8 +93571,8 @@
 	dir = 8;
 	icon_state = "mosaic_1"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -94158,6 +94159,18 @@
 	icon_state = "graychoco"
 	},
 /area/station/rnd/xenobiology)
+"tMO" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "mosaic_1"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/civilian/chapel)
 "tMS" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/structure/window/thin,
@@ -103353,9 +103366,6 @@
 /area/station/civilian/locker)
 "vWI" = (
 /obj/machinery/hologram/holopad,
-/obj/effect/decal/turf_decal/alpha/white{
-	icon_state = "bot_old"
-	},
 /obj/structure/stool/bed/chair{
 	dir = 1
 	},
@@ -104436,7 +104446,7 @@
 	icon_state = "siding_wood_line"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "grimy"
 	},
 /area/station/civilian/chapel/office)
 "wjm" = (
@@ -159209,7 +159219,7 @@ teT
 atv
 cUU
 tpQ
-vLd
+tMO
 tvk
 sAQ
 gBA
