@@ -166,7 +166,9 @@
 		area.apc = src
 		opened = APC_COVER_OPENED
 		operating = 0
-		name = "Щиток ([area.name])"
+		name = "[area.name] APC"
+		for(var/case in cases)
+			cases[cases.Find(case)] = case + " [CASE(area, GENITIVE_CASE)]"
 		stat |= MAINT
 		update_icon()
 		addtimer(CALLBACK(src, PROC_REF(update)), 5)
@@ -216,10 +218,14 @@
 	//if area isn't specified use current
 	if(isarea(A) && src.areastring == null)
 		src.area = A
-		name = "Щиток ([area.name])"
+		name = "[area.name] APC"
+		for(var/case in cases)
+			cases[cases.Find(case)] = case + " [CASE(area, GENITIVE_CASE)]"
 	else
 		src.area = get_area_by_name(areastring)
-		name = "Щиток ([area.name])"
+		name = "[area.name] APC"
+		for(var/case in cases)
+			cases[cases.Find(case)] = case + " [CASE(area, GENITIVE_CASE)]"
 	area.apc = src
 	update_icon()
 
@@ -428,13 +434,13 @@
 				area.poweralert(FALSE, src)
 				if((stat & BROKEN) || malfhack)
 					user.visible_message(\
-						"<span class='warning'>[CASE(user, NOMINATIVE_CASE)] отломал плату в [CASE(src, PREPOSITIONAL_CASE)]!</span>",\
+						"<span class='warning'>[user.name] отломал плату в [CASE(src, PREPOSITIONAL_CASE)]!</span>",\
 						"Вы отломали сгоревшую плату и извлекли её остатки.",
 						"Что-то треснуло!")
 					//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 				else
 					user.visible_message(\
-						"<span class='warning'>[CASE(user, NOMINATIVE_CASE)] извлёк плату из [CASE(src, GENITIVE_CASE)]!</span>",\
+						"<span class='warning'>[user.name] извлёк плату из [CASE(src, GENITIVE_CASE)]!</span>",\
 						"Вы извлекли плату.")
 					new /obj/item/weapon/module/power_control(loc)
 		else if(opened != APC_COVER_REMOVED) // cover isn't removed
@@ -443,7 +449,7 @@
 
 	else if(isprying(W) && opened == APC_COVER_CLOSED)
 		if(stat & BROKEN)
-			user.visible_message("<span class='warning'>[CASE(user, NOMINATIVE_CASE)] пытается открыть крышку [CASE(src, GENITIVE_CASE)].</span>", "<span class='notice'>Вы пытаетесь открыть крышку [CASE(src, GENITIVE_CASE)].</span>")
+			user.visible_message("<span class='warning'>[user.name] пытается открыть крышку [CASE(src, GENITIVE_CASE)].</span>", "<span class='notice'>Вы пытаетесь открыть крышку [CASE(src, GENITIVE_CASE)].</span>")
 			if(W.use_tool(src, user, 25, volume = 25))
 				opened = APC_COVER_OPENED
 				locked = FALSE
@@ -481,7 +487,7 @@
 			user.drop_from_inventory(W, src)
 			cell = W
 			user.visible_message(\
-				"<span class='warning'>[CASE(user, NOMINATIVE_CASE)] установил аккумулятор в [CASE(src, ACCUSATIVE_CASE)]!</span>",\
+				"<span class='warning'>[user.name] установил аккумулятор в [CASE(src, ACCUSATIVE_CASE)]!</span>",\
 				"Вы устанавливаете аккумулятор в [CASE(src, ACCUSATIVE_CASE)].")
 			chargecount = 0
 			update_icon()
@@ -574,7 +580,7 @@
 				return
 			C.use(10)
 			user.visible_message(\
-				"<span class='warning'>[CASE(user, NOMINATIVE_CASE)] подключил проводку в [CASE(src, PREPOSITIONAL_CASE)]!</span>",\
+				"<span class='warning'>[user.name] подключил проводку в [CASE(src, PREPOSITIONAL_CASE)]!</span>",\
 				"Вы подключили проводку в [CASE(src, PREPOSITIONAL_CASE)].")
 			make_terminal()
 			terminal.connect_to_network()
@@ -610,7 +616,7 @@
 		if(opened == APC_COVER_REMOVED)
 			opened = APC_COVER_OPENED
 		user.visible_message(\
-			"<span class='warning'>[CASE(user, NOMINATIVE_CASE)] заменил сломанную крышку [CASE(src, GENITIVE_CASE)].</span>",\
+			"<span class='warning'>[user.name] заменил сломанную крышку [CASE(src, GENITIVE_CASE)].</span>",\
 			"Вы заменили сломанную крышку [CASE(src, GENITIVE_CASE)].")
 		qdel(W)
 		update_icon()
@@ -623,7 +629,7 @@
 		to_chat(user, "Вы заменяете сломанный корпус [CASE(src, GENITIVE_CASE)].")
 		if(W.use_tool(src, user, 50, volume = 50))
 			user.visible_message(\
-				"<span class='warning'>[CASE(user, NOMINATIVE_CASE)] заменил сломанный корпус [CASE(src, GENITIVE_CASE)].</span>",\
+				"<span class='warning'>[user.name] заменил сломанный корпус [CASE(src, GENITIVE_CASE)].</span>",\
 				"Вы заменили сломанный корпус [CASE(src, GENITIVE_CASE)].")
 			qdel(W)
 			stat &= ~BROKEN
@@ -637,7 +643,7 @@
 		if(issilicon(user))
 			return wires.interact(user)
 		user.SetNextMove(CLICK_CD_MELEE)
-		user.visible_message("<span class='warning'>[CASE(user, NOMINATIVE_CASE)] ударил [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)]!</span>", \
+		user.visible_message("<span class='warning'>[user.name] ударил [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)]!</span>", \
 			"<span class='warning'>Вы ударили [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)]!</span>", \
 			"Вы слышите удар.")
 		return wires.interact(user)
@@ -651,13 +657,13 @@
 	if(!disassembled || emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/metal(loc)
 		user?.visible_message(\
-			"<span class='warning'>[CASE(user, NOMINATIVE_CASE)] режет [CASE(src, ACCUSATIVE_CASE)].</span>",\
+			"<span class='warning'>[user.name] режет [CASE(src, ACCUSATIVE_CASE)].</span>",\
 			"Вы демонтировали сломанный [CASE(src, ACCUSATIVE_CASE)].",\
 			"<span class='warning'>Вы слышите сварку.</span>")
 	else
 		new /obj/item/apc_frame(loc)
 		user?.visible_message(\
-				"<span class='warning'>[CASE(user, NOMINATIVE_CASE)] срезает [CASE(src, ACCUSATIVE_CASE)] со стены.</span>",\
+				"<span class='warning'>[user.name] срезает [CASE(src, ACCUSATIVE_CASE)] со стены.</span>",\
 				"Вы демонтировали [CASE(src, ACCUSATIVE_CASE)] со стены.",\
 				"<span class='warning'>Вы слышите сварку.</span>")
 
@@ -684,7 +690,7 @@
 			else if(src.cell && src.cell.charge > 500 && H.a_intent == INTENT_GRAB)
 				if(H.nutrition < C.maxcharge*0.9)
 					if(src.cell.charge)
-						to_chat(user, "<span class='notice'>Вы вставляете пальцы в [CASE(src, ACCUSATIVE_CASE)], чтобы выкачать немного энергии.</span>")
+						to_chat(user, "<span class='notice'>Вы вставляете провод в разъём [CASE(src, ACCUSATIVE_CASE)], чтобы подзарядиться.</span>")
 						while(H.nutrition < C.maxcharge)
 							if(do_after(user,10,target = src) && H.a_intent == INTENT_GRAB)
 								if(!src.cell)
@@ -743,7 +749,7 @@
 			cell.updateicon()
 
 			src.cell = null
-			user.visible_message("<span class='warning'>[CASE(user, NOMINATIVE_CASE)] извлёк аккумулятор из [CASE(src, GENITIVE_CASE)]!</span>", "Вы извлекаете аккумулятор из [CASE(src, GENITIVE_CASE)].")
+			user.visible_message("<span class='warning'>[user.name] извлёк аккумулятор из [CASE(src, GENITIVE_CASE)]!</span>", "Вы извлекаете аккумулятор из [CASE(src, GENITIVE_CASE)].")
 			charging = APC_NOT_CHARGING
 			update_icon()
 		return
