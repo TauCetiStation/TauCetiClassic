@@ -795,7 +795,7 @@
 /obj/machinery/power/apc/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Apc", name)
+		ui = new(user, src, "Apc", "[capitalize(CASE(src, NOMINATIVE_CASE))]")
 		ui.open()
 
 /obj/machinery/power/apc/tgui_data(mob/user)
