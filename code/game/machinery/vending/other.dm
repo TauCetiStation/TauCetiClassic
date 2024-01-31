@@ -55,6 +55,27 @@
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 	private = FALSE
 
+	var/obj/item/device/radio/intercom/radio
+
+
+/obj/machinery/vending/cigarette/atom_init()
+	. = ..()
+	radio = new(src)
+
+/obj/machinery/vending/cigarette/vend(datum/data/vending_product/R, mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.age < 21)
+			to_chat(H, "<span class='warning'>Мы не продаём табачную продукцию лицам, не достигшим 21 года. Охрана оповещена.</span>")
+			radio.autosay("[H.name] попытал[H.gender == "male" ? "ся" : "ась"] приобрести сигареты не достигнув возраста 21 года. Необходимо провести воспитательную беседу", "[name]", freq = radiochannels["Security"])
+			flick(icon_deny, src)
+		else
+			..()
+
+/obj/machinery/vending/cigarette/Destroy()
+	QDEL_NULL(radio)
+	return ..()
+
 /obj/machinery/vending/security
 	name = "SecTech"
 	desc = "A security equipment vendor."
@@ -215,7 +236,7 @@
 		/obj/item/clothing/head/sushi_band = 1,
 		/obj/item/weapon/kitchen/utensil/spoon = 2,
 		/obj/item/weapon/kitchen/rollingpin = 2,
-		/obj/item/weapon/kitchenknife/butch = 2,		
+		/obj/item/weapon/kitchenknife/butch = 2,
 	)
 	syndie = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,

@@ -346,7 +346,7 @@
 	,IS_SOCIAL = TRUE
 	)
 
-	min_age = 25
+	min_age = 18
 	max_age = 85
 
 	is_common = TRUE
@@ -392,7 +392,7 @@
 	flesh_color = "#34af10"
 	base_color = "#066000"
 
-	min_age = 25
+	min_age = 18
 	max_age = 85
 
 	is_common = TRUE
@@ -471,7 +471,7 @@
 	flesh_color = "#afa59e"
 	base_color = "#333333"
 
-	min_age = 25
+	min_age = 18
 	max_age = 85
 
 	is_common = TRUE
@@ -538,7 +538,7 @@
 	blood_datum_path = /datum/dirt_cover/purple_blood
 	flesh_color = "#8cd7a3"
 
-	min_age = 25
+	min_age = 18
 	max_age = 150
 
 	is_common = TRUE
