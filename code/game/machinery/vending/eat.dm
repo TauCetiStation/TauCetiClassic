@@ -46,6 +46,25 @@
 	refill_canister = /obj/item/weapon/vending_refill/boozeomat
 	private = TRUE
 
+/obj/machinery/vending/boozeomat/atom_init()
+	. = ..()
+	radio = new(src)
+	radio.canhear_range = 0
+
+/obj/machinery/vending/boozeomat/vend(datum/data/vending_product/R, mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.age < 21)
+			to_chat(H, "<span class='warning'>Мы не выдаём алкогольную продукцию лицам младше 21 года. Охрана оповещена.</span>")
+			radio.autosay("[H.name] попытал[H.gender == "female" ? "ась" : "ся"] приобрести алкоголь не достигнув возраста 21 года. Необходимо провести воспитательную беседу.", "[name]", freq = radiochannels["Security"])
+			flick(icon_deny, src)
+		else
+			..()
+
+/obj/machinery/vending/boozeomat/Destroy()
+	QDEL_NULL(radio)
+	return ..()
+
 /obj/machinery/vending/coffee
 	name = "Hot Drinks machine"
 	desc = "A vending machine which dispenses hot drinks."
