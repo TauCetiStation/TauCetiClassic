@@ -61,12 +61,13 @@
 /obj/machinery/vending/cigarette/atom_init()
 	. = ..()
 	radio = new(src)
+	radio.canhear_range = 0
 
 /obj/machinery/vending/cigarette/vend(datum/data/vending_product/R, mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.age < 21)
-			to_chat(H, "<span class='warning'>Мы не продаём табачную продукцию лицам, не достигшим 21 года. Охрана оповещена.</span>")
+			to_chat(H, "<span class='warning'>Мы не продаём табачную продукцию лицам младше 21 года. Охрана оповещена.</span>")
 			radio.autosay("[H.name] попытал[H.gender == "male" ? "ся" : "ась"] приобрести сигареты не достигнув возраста 21 года. Необходимо провести воспитательную беседу.", "[name]", freq = radiochannels["Security"])
 			flick(icon_deny, src)
 		else
