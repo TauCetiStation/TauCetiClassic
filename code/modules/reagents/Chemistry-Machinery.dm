@@ -119,7 +119,7 @@
 		var/mob/living/carbon/human/H = usr
 		if(H.age < 21)
 			to_chat(user, "<span class='warning'>Мы не наливаем алкоголь лицам младше 21 года.</span>")
-Э			return
+			return
 
 	switch(action)
 		if("change_amount")
