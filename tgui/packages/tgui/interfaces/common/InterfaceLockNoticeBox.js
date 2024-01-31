@@ -29,7 +29,7 @@ export const InterfaceLockNoticeBox = (props, context) => {
       <NoticeBox color="grey">
         <Flex align="center">
           <Flex.Item>
-          Интерфейс:
+            Интерфейс:
           </Flex.Item>
           <Flex.Item grow={1} />
           <Flex.Item>
