@@ -115,11 +115,6 @@
 /obj/machinery/chem_dispenser/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
 		return
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		if(H.age < 21)
-			to_chat(user, "<span class='warning'>Мы не наливаем алкоголь лицам младше 21 года.</span>)
-			return
 
 	switch(action)
 		if("change_amount")
@@ -333,6 +328,16 @@
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
 	required_skills = list()
 	resistance_flags = FULL_INDESTRUCTIBLE
+
+/obj/machinery/chem_dispenser/beer/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(H.age < 21)
+			to_chat(user, "<span class='warning'>Мы не наливаем алкоголь лицам младше 21 года.</span>)
+			return
+
+	..()
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
