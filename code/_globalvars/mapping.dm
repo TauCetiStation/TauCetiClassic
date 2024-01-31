@@ -9,7 +9,6 @@ var/global/list/global_map = null
 	//3 - AI satellite
 	//5 - empty space
 
-var/global/list/wizardstart = list()
 var/global/list/newplayer_start = list()
 var/global/list/latejoin = list()
 var/global/list/prisonwarp = list()	//prisoners go to these

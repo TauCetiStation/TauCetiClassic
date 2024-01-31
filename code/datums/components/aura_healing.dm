@@ -91,7 +91,7 @@
 
 	return ..()
 
-/datum/component/aura_healing/process(delta_time)
+/datum/component/aura_healing/process(seconds_per_tick)
 	var/list/remove_alerts_from = current_alerts.Copy()
 
 	var/alert_category = "aura_healing_[REF(src)]"
@@ -112,27 +112,27 @@
 			H.color = healing_color
 
 		if (iscarbon(candidate) || issilicon(candidate))
-			candidate.adjustBruteLoss(-brute_heal * delta_time)
-			candidate.adjustFireLoss(-burn_heal * delta_time)
+			candidate.adjustBruteLoss(-brute_heal * seconds_per_tick)
+			candidate.adjustFireLoss(-burn_heal * seconds_per_tick)
 
 		if (iscarbon(candidate))
-			candidate.adjustToxLoss(-toxin_heal * delta_time)
+			candidate.adjustToxLoss(-toxin_heal * seconds_per_tick)
 
-			candidate.adjustOxyLoss(-suffocation_heal * delta_time)
-			candidate.adjustHalLoss(-stamina_heal * delta_time)
-			candidate.adjustCloneLoss(-clone_heal * delta_time)
+			candidate.adjustOxyLoss(-suffocation_heal * seconds_per_tick)
+			candidate.adjustHalLoss(-stamina_heal * seconds_per_tick)
+			candidate.adjustCloneLoss(-clone_heal * seconds_per_tick)
 
 			//for (var/organ in organ_healing)
-			//	candidate.adjustOrganLoss(organ, -organ_healing[organ] * delta_time)
+			//	candidate.adjustOrganLoss(organ, -organ_healing[organ] * seconds_per_tick)
 
 			if(ishuman(candidate))
 				var/mob/living/carbon/human/H = candidate
 				if(H.blood_amount() < BLOOD_VOLUME_NORMAL)
-					H.blood_add(blood_heal * delta_time)
+					H.blood_add(blood_heal * seconds_per_tick)
 
 		else if (isanimal(candidate))
 			var/mob/living/simple_animal/simple_candidate = candidate
-			simple_candidate.heal_overall_damage(simple_heal * delta_time * 0.2, simple_heal * delta_time * 0.2)
+			simple_candidate.heal_overall_damage(simple_heal * seconds_per_tick * 0.2, simple_heal * seconds_per_tick * 0.2)
 		candidate.updatehealth()
 
 	for (var/mob/remove_alert_from as anything in remove_alerts_from)

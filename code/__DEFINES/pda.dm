@@ -1,0 +1,3 @@
+#define MAX_CUSTOM_RINGTONE_LENGTH 150
+
+#define CUSTOM_RINGTONE_NAME "My Ringtone"

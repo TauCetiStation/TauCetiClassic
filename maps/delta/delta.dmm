@@ -20999,6 +20999,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},
@@ -44757,7 +44758,7 @@
 	},
 /area/station/medical/reception)
 "jcc" = (
-/obj/mecha/working/ripley,
+/obj/mecha/working/ripley/recycle_ripley,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "jco" = (
@@ -57458,8 +57459,8 @@
 	},
 /obj/structure/table/woodentable,
 /obj/item/device/megaphone{
-	pixel_y = 4;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 4
 	},
 /obj/item/device/flashlight/lamp{
 	on = 0;
@@ -57632,6 +57633,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},
@@ -88529,8 +88531,8 @@
 	},
 /obj/item/weapon/cartridge/signal/science,
 /obj/item/device/microphone/rd{
-	pixel_y = 8;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	icon_state = "whitechoco"

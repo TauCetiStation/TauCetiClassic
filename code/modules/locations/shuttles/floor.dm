@@ -78,6 +78,8 @@
 //Привет! Как дела?
 //======
 //Привет! Как дела?
+// =====
+// Привет от транс депа! Как дела?
 /turf/environment/space/shuttle
 	icon = 'icons/locations/shuttles/space.dmi'
 	icon_state = "1swall_s"

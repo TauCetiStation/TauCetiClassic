@@ -498,7 +498,7 @@
 
 	switch(denttype)
 		if(WALL_DENT_SHOT)
-			decal.icon_state = "bullet_hole"
+			decal.icon_state = "bullet_hole[rand(1,2)]"
 			decal.pixel_x = clamp(x, -15, 15) // because sprite size
 			decal.pixel_y = clamp(y, -15, 15)
 		if(WALL_DENT_HIT)

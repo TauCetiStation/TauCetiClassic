@@ -214,9 +214,7 @@ RCD
 	return TRUE
 
 /obj/item/weapon/rcd/tool_start_check(mob/user, amount)
-	. = ..()
-	if(.)
-		return matter >= amount
+	return matter >= amount
 
 /obj/item/weapon/rcd/borg/use(amount, mob/user)
 	if(!isrobot(user))
@@ -224,11 +222,9 @@ RCD
 	return user:cell:use(amount * 30)
 
 /obj/item/weapon/rcd/borg/tool_start_check(mob/user, amount)
-	. = ..()
-	if(.)
-		if(!isrobot(user))
-			return FALSE
-		return user:cell:charge >= (amount * 30)
+	if(!isrobot(user))
+		return FALSE
+	return user:cell:charge >= (amount * 30)
 
 /obj/item/weapon/rcd/borg/atom_init()
 	. = ..()
@@ -260,7 +256,7 @@ RCD
 // shitspawn types, pls fix m_amt/g_amt if you want to use it somewhere
 /obj/item/weapon/rcd_ammo/bluespace
 	name = "highly compressed matter cartridge"
-	matter = 100
+	matter = 30
 
 /obj/item/weapon/rcd/bluespace
 	max_matter = 100
