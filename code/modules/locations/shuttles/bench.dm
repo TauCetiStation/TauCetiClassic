@@ -1,12 +1,14 @@
 /obj/structure/stool/bed/chair/schair/wagon
 	name = "Shuttle Chair"
-	desc = "You sit in this. Either by will or force."
+	cases = list("кресло шаттла", "кресла шаттла", "креслу шаттла", "кресло шаттла", "креслом шаттла", "кресле шаттла")
+	desc = "Вы сидите на этом. Либо по своей воле, либо добровольно-принудительно."
 	icon = 'icons/locations/shuttles/bench.dmi'
 	icon_state = "chair"
 
 /obj/structure/stool/bed/chair/schair/wagon/bench
 	name = "Bench"
-	desc = "You sit in this. Either by will or force."
+	cases = list("лавка", "лавки", "лавке", "лавку", "лавкой", "лавке")
+	desc = "Вы сидите на этом. Либо по своей воле, либо по принуждению."
 	icon = 'icons/locations/shuttles/bench.dmi'
 	icon_state = "bench_1"
 

@@ -1332,6 +1332,13 @@
 	do_colouration = FALSE
 	ipc_head_compatible = "Default"
 
+/datum/sprite_accessory/hair/ipc_litso
+	name = "litso IPC screen"
+	icon_state = "ipc_litso"
+	species_allowed = list(IPC)
+	do_colouration = FALSE
+	ipc_head_compatible = "Default"
+
 	//UNATHI HAIRS
 
 /datum/sprite_accessory/hair/una_small_horns

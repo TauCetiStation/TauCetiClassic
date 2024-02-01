@@ -91431,10 +91431,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "rGb" = (
-/obj/mecha/working/ripley,
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/mecha/working/ripley/recycle_ripley,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "rGe" = (
