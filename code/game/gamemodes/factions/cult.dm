@@ -160,3 +160,64 @@
 
 	if(possible_targets.len)
 		sacrifice_target = pick(possible_targets)
+
+
+
+
+#define F_MAELSTROMCULT
+
+/datum/faction/maelstrom
+	name = F_MAELSTROMCULT
+	ID = F_MAELSTROMCULT
+	logo_state = "cult-logo"
+	required_pref = ROLE_CULTIST
+
+	initroletype = /datum/role/cultist
+
+	min_roles = 3
+	max_roles = 3
+
+	stat_type = /datum/stat/faction/cult
+
+	// For objectives
+	var/datum/mind/sacrifice_target = null
+	var/list/sacrificed = list()
+
+/datum/faction/maelstrom/HandleRecruitedMind(datum/mind/M, laterole)
+	. = ..()
+	if(.)
+		M.current.Paralyse(5)
+
+/datum/faction/maelstrom/forgeObjectives()
+	if(!..())
+		return FALSE
+
+	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice
+
+	var/objectives_weight = 0
+	while(objectives_weight < 5)
+		var/datum/objective/O = AppendObjective(pick(possibles_objectives), TRUE)
+		if(istype(O, /datum/objective/target/sacrifice) || istype(O, /datum/objective/cult/job_convert))
+			objectives_weight += 1.0
+			continue //Still in possibles_objectives
+		var/datum/objective/cult/C = O
+		objectives_weight += C.weight
+		possibles_objectives -= C.type
+
+	return TRUE
+
+/datum/faction/maelstrom/proc/get_unconvertables()
+	var/list/ucs = list()
+	for(var/mob/living/carbon/human/player as anything in global.human_list)
+		if(!player.client)
+			continue
+		if(player.mind.GetRole(CULTIST))
+			continue
+		ucs += player.mind
+	return ucs
+
+/datum/faction/maelstrom/proc/find_sacrifice_target()
+	var/list/possible_targets = get_unconvertables()
+
+	if(possible_targets.len)
+		sacrifice_target = pick(possible_targets)
