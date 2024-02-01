@@ -4,7 +4,8 @@
 
 /datum/element/maelstrom
 	element_flags = ELEMENT_DETACH
-	var/list/datum/building_agent/available_runes = list(new /datum/building_agent/rune/maelstrom/portal_beacon(),
+	var/list/datum/building_agent/available_runes = list(new /datum/building_agent/rune/maelstrom/convert(),
+														new /datum/building_agent/rune/maelstrom/portal_beacon(),
 														new /datum/building_agent/rune/maelstrom/teleport(),
 														new /datum/building_agent/rune/maelstrom/wall(),
 														new /datum/building_agent/rune/maelstrom/bloodboil()
@@ -38,6 +39,7 @@ teleporting_runes
 /datum/element/maelstrom/proc/open_uplink(datum/source, mob/living/user)
 	/obj/item/weapon/kitchenknife/ritual/calling_up
 	/obj/item/weapon/grenade/curse
+	/obj/item/weapon/implantcase/maelstrom korobka
 	/*	var/datum/building_agent/choice = show_radial_menu(user, src, items_image, tooltips = TRUE, require_near = TRUE)
 	if(!choice)
 		return
@@ -66,6 +68,10 @@ teleporting_runes
 
 /datum/building_agent/rune/maelstrom
 	building_type = /obj/effect/decal/cleanable/crayon/maelstrom
+
+/datum/building_agent/rune/maelstrom/convert
+	name = "Маяк Портала Культа"
+	rune_type = /datum/rune/maelstrom/convert
 
 /datum/building_agent/rune/maelstrom/portal_beacon
 	name = "Маяк Портала Культа"
@@ -348,7 +354,7 @@ ADD_TO_GLOBAL_LIST(/datum/rune/maelstrom/teleport, teleporting_runes)
 		if(SEND_SIGNAL(heretic, COMSIG_BLOODBOIL_COUNT_AFFECTED) & COMPONENT_NO_BLOODBOIL)
 			heretics += heretic
 
-/datum/rune/cult/bloodboil/can_action(mob/living/carbon/user)
+/datum/rune/maelstrom/bloodboil/can_action(mob/living/carbon/user)
 	var/list/acolytes = nearest_acolytes()
 	if(length(acolytes) < 3)
 		to_chat(user, "<span class='cult'>Вам необходимо как минимум 3 культиста вокруг руны.</span>")
@@ -359,7 +365,7 @@ ADD_TO_GLOBAL_LIST(/datum/rune/maelstrom/teleport, teleporting_runes)
 		return FALSE
 	return TRUE
 
-/datum/rune/cult/bloodboil/action(mob/living/carbon/user)
+/datum/rune/maelstrom/bloodboil/action(mob/living/carbon/user)
 	var/list/acolytes = nearest_acolytes()
 	var/list/heretics = nearest_heretics()
 	if(length(heretics) < 1)
@@ -375,3 +381,21 @@ ADD_TO_GLOBAL_LIST(/datum/rune/maelstrom/teleport, teleporting_runes)
 			M.gib()
 	for(var/mob/living/L in acolytes)
 		L.take_overall_damage(damage_for_acolytes * 0.1, damage_for_acolytes * 0.9)
+
+/*
+/obj/effect/rune/proc/do_invoke_glow()
+	set waitfor = FALSE
+	animate(src, transform = matrix()*2, alpha = 0, time = 5, flags = ANIMATION_END_NOW) //fade out
+	sleep(0.5 SECONDS)
+	animate(src, transform = matrix(), alpha = 255, time = 0, flags = ANIMATION_END_NOW)
+*/
+
+/datum/rune/maelstrom/convert
+	name = "Обращение"
+	//words = list("travel", "hell", "technology")
+
+/datum/rune/maelstrom/convert/action(mob/living/carbon/user)
+	for(var/mob/living/L in holder.loc)
+		if(!L.mind?.GetRole(CULTIST))
+			var/datum/faction/F = create_uniq_faction(/datum/faction/cult)
+			add_faction_member(F, L, TRUE)
