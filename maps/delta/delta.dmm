@@ -94150,18 +94150,6 @@
 	icon_state = "graychoco"
 	},
 /area/station/rnd/xenobiology)
-"tMO" = (
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "mosaic_1"
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "blackchoco"
-	},
-/area/station/civilian/chapel)
 "tMS" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /obj/structure/window/thin,
@@ -159210,7 +159198,7 @@ teT
 atv
 cUU
 tpQ
-tMO
+vLd
 tvk
 sAQ
 gBA
