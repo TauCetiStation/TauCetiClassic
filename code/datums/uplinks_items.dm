@@ -633,7 +633,7 @@
 	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
 			On death, these nodules take control of the dead body, causing limited revivification, \
 			along with slurred speech, aggression, and the ability to infect others with this agent."
-	item = /obj/item/weapon/storage/box/syndie_kit/romerol/nuke
+	item = /obj/item/weapon/storage/box/syndie_kit/romerol
 	cost = 50
 	uplink_types = list("nuclear")
 

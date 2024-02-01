@@ -167,9 +167,10 @@
 	if(holder.stage > 9) //rip
 		activated = TRUE
 		H.suiciding = TRUE
-		UnregisterSignal(H, COMSIG_MOB_DIED)
 		H.adjustOxyLoss(max(H.maxHealth * 2 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss(), 0))
 		H.updatehealth()
+		H.death()
+		UnregisterSignal(H, COMSIG_MOB_DIED)
 		disease.dead = TRUE
 
 /datum/disease2/effect/zombie/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
