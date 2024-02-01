@@ -47,6 +47,14 @@
 	exposure_icon_state = "cone"
 	glow_colored = TRUE
 
+/obj/machinery/light/smart/floor
+	icon_state = "sfloorbulb"
+	base_icon_state = "floorbulb"
+	flags = NODECONSTRUCT
+
+	glow_icon_state = "floorsbulb"
+	exposure_icon_state = null
+
 /obj/machinery/light/small
 	desc = "A small lighting fixture."
 	icon_state = "bulb"
@@ -56,6 +64,14 @@
 
 	glow_icon_state = "bulb"
 	exposure_icon_state = "circle"
+
+/obj/machinery/light/small/floor
+	icon_state = "floorbulb"
+	base_icon_state = "floorbulb"
+	flags = NODECONSTRUCT
+
+	glow_icon_state = "floorbulb"
+	exposure_icon_state = null
 
 /obj/machinery/light/small/emergency
 	inserted_bulb_type = /obj/item/weapon/light/bulb/emergency
