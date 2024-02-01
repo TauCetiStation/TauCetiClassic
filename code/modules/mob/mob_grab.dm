@@ -255,7 +255,6 @@
 				qdel(src)
 				return PROCESS_KILL
 			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
-		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
 			if(assailant.get_targetzone() == O_MOUTH)

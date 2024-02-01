@@ -619,6 +619,10 @@ SUBSYSTEM_DEF(job)
 		pda.owner_fingerprints += C.fingerprint_hash //save fingerprints in pda from ID card
 		MA.owner_PDA = pda //add PDA in /datum/money_account
 
+		var/chosen_ringtone = H.client?.prefs.chosen_ringtone
+		if(chosen_ringtone)
+			pda.set_ringtone(chosen_ringtone, H.client?.prefs.custom_melody)
+
 	return TRUE
 
 /datum/controller/subsystem/job/proc/LoadJobs(jobsfile)
