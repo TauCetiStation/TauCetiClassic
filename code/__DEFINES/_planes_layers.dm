@@ -180,12 +180,12 @@ What is the naming convention for planes or layers?
   #define ABOVE_HUD_LAYER 1
   #define HUD_TOOLTIP_LAYER 2
 
-///Plane of the "splash" icon used that shows on the lobby screen.
-#define SPLASHSCREEN_PLANE 9998
-
 /// Plane related to the menu when pressing Escape.
-/// Needed so that we can apply a blur effect to EVERYTHING, and guarantee we are above all UI. Nothing should ever be above this.
-#define ESCAPE_MENU_PLANE 9999
+/// Needed so that we can apply a blur effect to EVERYTHING, and guarantee we are above all UI.
+#define ESCAPE_MENU_PLANE 5000
+
+///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
+#define SPLASHSCREEN_PLANE 9999
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"

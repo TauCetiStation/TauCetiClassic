@@ -153,6 +153,12 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 
+/atom/movable/screen/fullscreen/escape_menu
+	icon = 'icons/hud/screen1_full.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "escape_menu"
+	plane = ESCAPE_MENU_PLANE
+
 #undef FULLSCREEN_LAYER
 #undef SCREEN_BLIND_LAYER
 #undef SCREEN_DAMAGE_LAYER
