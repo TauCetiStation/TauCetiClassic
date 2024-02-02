@@ -58,7 +58,7 @@
 //TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
 	name = "Cloning Data Disk"
-	cases = list("диск с информацией для клонирования", "диска с информацией для клонирования", "диску с информацией для клонирования", "диск с информацией для клонирования", "диском с информацией для клонирования", "диске с информацией для клонирования")
+	cases = list("диск с ДНК", "диска с ДНК", "диску с ДНК", "диск с ДНК", "диском с ДНК", "диске с ДНК")
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
