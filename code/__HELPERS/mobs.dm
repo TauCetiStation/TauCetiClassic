@@ -299,7 +299,7 @@
 	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
-		message += "<span class='notice'>Обнаруженные повреждения, Механические/Термические:</span><br>"
+		message += "<span class='notice'>Обнаруженные повреждения:</span><br>"
 		if(length(damaged))
 			for(var/obj/item/organ/external/BP in damaged)
 				message += "<span class='notice'>&emsp; [capitalize(CASE(BP, NOMINATIVE_CASE))]: \
