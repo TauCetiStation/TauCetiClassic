@@ -300,8 +300,8 @@
 				for(var/missing_zone in occupant.get_missing_bodyparts())
 					dat += "<tr>"
 					storedinfo += "<tr>"
-					dat += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Не обнаружено</td>"
-					storedinfo += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Не обнаружено</td>"
+					dat += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Отсуствует</td>"
+					storedinfo += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Отсуствует</td>"
 					dat += "</tr>"
 					storedinfo += "</tr>"
 				for(var/obj/item/organ/internal/IO in occupant.organs)

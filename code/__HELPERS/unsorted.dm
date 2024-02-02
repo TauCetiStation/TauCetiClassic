@@ -1080,13 +1080,13 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/parse_zone(zone)
 	switch(zone)
 		if(BP_L_ARM)
-			return "left arm"
+			return "Левая рука"
 		if(BP_R_ARM)
-			return "right arm"
+			return "Правая рука"
 		if(BP_L_LEG)
-			return "left leg"
+			return "Левая нога"
 		if(BP_R_LEG)
-			return "right leg"
+			return "Правая нога"
 		else
 			return zone
 
