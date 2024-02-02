@@ -530,8 +530,8 @@ SUBSYSTEM_DEF(shuttle)
 
 		msg += export_text + "\n"
 		var/tax = round(E.total_cost * SSeconomy.tax_cargo_export * 0.01)
-		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на экспорт", "NTS Велосити", tax)
-		charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Прибыль с экспорта", "NTS Велосити", E.total_cost - tax)
+		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на экспорт", "НТС Велосити", tax)
+		charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Прибыль с экспорта", "НТС Велосити", E.total_cost - tax)
 		E.export_end()
 
 	centcom_message = msg

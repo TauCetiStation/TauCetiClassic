@@ -269,7 +269,7 @@ var/global/list/wire_daltonism_colors = list()
 	switch(action)
 		if("cut")
 			if(I && iscutter(I))
-				cut_wire_color(target_wire)
+				cut_wire_color(target_wire, L)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
 			else
@@ -302,7 +302,7 @@ var/global/list/wire_daltonism_colors = list()
 /**
  * Called when wires cut/mended.
  */
-/datum/wires/proc/update_cut(index, mended)
+/datum/wires/proc/update_cut(index, mended, mob/user)
 	return
 
 /**
@@ -398,17 +398,17 @@ var/global/list/wire_daltonism_colors = list()
 //////////////////////////////
 // Cut Wire Colour/Index procs
 //////////////////////////////
-/datum/wires/proc/cut_wire_color(color)
+/datum/wires/proc/cut_wire_color(color, mob/user)
 	var/index = get_index_by_color(color)
-	cut_wire_index(index)
+	cut_wire_index(index, user)
 
-/datum/wires/proc/cut_wire_index(index)
+/datum/wires/proc/cut_wire_index(index, mob/user)
 	if(is_index_cut(index))
 		wires_status &= ~index
-		update_cut(index, TRUE)
+		update_cut(index, TRUE, user)
 	else
 		wires_status |= index
-		update_cut(index, FALSE)
+		update_cut(index, FALSE, user)
 
 /datum/wires/proc/random_cut()
 	var/r = rand(1, wires.len)
@@ -416,7 +416,8 @@ var/global/list/wire_daltonism_colors = list()
 
 /datum/wires/proc/cut_all()
 	for(var/i = 1; i < MAX_FLAG && i < (1 << wire_count); i += i)
-		cut_wire_index(i)
+		wires_status |= i
+		update_cut(i, FALSE)
 
 /datum/wires/proc/is_all_cut()
 	if(wires_status == (1 << wire_count) - 1)
