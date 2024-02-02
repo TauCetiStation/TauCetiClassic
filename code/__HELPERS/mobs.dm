@@ -361,7 +361,7 @@
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & ORGAN_BROKEN)
 				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
-					message += "<span class='warning'>Обнаружен незафиксированный перелом в [CASE(BP, DATIVE_CASE)]. При транспортировке рекомендуется наложение шины.</span><br>"
+					message += "<span class='warning'>Обнаружен незафиксированный перелом в [CASE(BP, PREPOSITIONAL_CASE)]. При транспортировке рекомендуется наложение шины.</span><br>"
 				if(!found_broken)
 					found_broken = TRUE
 
