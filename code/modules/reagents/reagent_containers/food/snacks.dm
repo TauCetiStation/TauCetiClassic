@@ -658,7 +658,7 @@
 	name = "cheeseburger"
 	desc = "The cheese adds a good flavor."
 	icon_state = "cheeseburger"
-	list_reagents = list("nutriment" = 4, "cheese" = 4, "vitamin" = 1)
+	list_reagents = list("nutriment" = 8, "cheese" = 8, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 	name = "burger"
@@ -666,7 +666,7 @@
 	icon_state = "hburger"
 	filling_color = "#d63c3c"
 	bitesize = 2
-	list_reagents = list("nutriment" = 2, "protein" = 4, "vitamin" = 1)
+	list_reagents = list("nutriment" = 4, "protein" = 8, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
 	name = "Fillet -o- Carp Sandwich"
@@ -1042,7 +1042,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#eddd00"
 	bitesize = 2
-	list_reagents = list("nutriment" = 4)
+	list_reagents = list("nutriment" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/soydope
 	name = "Soy Dope"
@@ -1068,7 +1068,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#eddd00"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("nutriment" = 12)
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	name = "Fortune cookie"
@@ -2639,7 +2639,7 @@
 	desc = "Unrelated to dogs, maybe."
 	icon_state = "hotdog"
 	bitesize = 2
-	list_reagents = list("protein" = 6)
+	list_reagents = list("protein" = 12)
 
 /obj/item/weapon/reagent_containers/food/snacks/flatbread
 	name = "flatbread"
