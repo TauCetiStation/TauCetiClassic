@@ -56,6 +56,12 @@
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
+/atom/movable/screen/plane_master/seethrough
+	name = "seethrough plane master"
+	plane = SEETHROUGH_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = RENDER_PLANE_GAME
+
 /atom/movable/screen/plane_master/ghost
 	name = "ghost plane master"
 	plane = GHOST_PLANE

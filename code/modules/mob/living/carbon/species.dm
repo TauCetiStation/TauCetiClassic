@@ -14,6 +14,8 @@
 	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
+	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
+	var/hud_offset_y = 0
 
 	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
 
@@ -130,6 +132,26 @@
 		,O_LIVER   = /obj/item/organ/internal/liver
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
+
+	///Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.
+	var/list/offset_features = list(
+		OFFSET_UNIFORM = list(0,0),
+		OFFSET_ID = list(0,0),
+		OFFSET_GLOVES = list(0,0),
+		OFFSET_GLASSES = list(0,0),
+		OFFSET_EARS = list(0,0),
+		OFFSET_SHOES = list(0,0),
+		OFFSET_S_STORE = list(0,0),
+		OFFSET_FACEMASK = list(0,0),
+		OFFSET_HEAD = list(0,0),
+		OFFSET_FACE = list(0,0),
+		OFFSET_BELT = list(0,0),
+		OFFSET_BACK = list(0,0),
+		OFFSET_SUIT = list(0,0),
+		OFFSET_NECK = list(0,0),
+		OFFSET_ACCESSORY = list(0,0),
+		OFFSET_HAIR = list(0,0),
+	)
 
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 

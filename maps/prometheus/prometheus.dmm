@@ -5565,6 +5565,7 @@
 	name = "Private Channel";
 	pixel_y = -31
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aKN" = (
@@ -81423,11 +81424,11 @@
 	},
 /area/station/hallway/primary/fore)
 "txf" = (
-/obj/mecha/working/ripley,
 /obj/machinery/light/small,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/mecha/working/ripley/recycle_ripley,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "txw" = (
@@ -100071,6 +100072,7 @@
 	name = "Private Channel";
 	pixel_y = -31
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "ycC" = (

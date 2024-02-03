@@ -182,6 +182,7 @@
 
 /turf/simulated/shuttle/floor
 	name = "floor"
+	cases = list("пол", "пола", "полу", "пол", "полом", "поле")
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -242,6 +243,11 @@
 
 /turf/simulated/floor/beach/water/waterpool
 	icon_state = "seadeep"
+
+/turf/simulated/floor/beach/water/waterpool/atom_init()
+	. = ..()
+	AddComponent(/datum/component/fishing, list(/obj/item/clothing/mask/snorkel = 10, /obj/item/clothing/shoes/swimmingfins = 10, /obj/item/weapon/bikehorn/rubberducky = 10, /obj/item/clothing/under/bathtowel = 10, /obj/item/weapon/reagent_containers/food/snacks/soap = 5, /mob/living/simple_animal/hostile/xenomorph = 1), 10 SECONDS, rand(1, 3) , 20)
+
 
 /turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
