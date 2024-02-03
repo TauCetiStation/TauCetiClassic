@@ -637,11 +637,6 @@
 	cost = 50
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/stealthy_weapons/romerol_kit/traitor
-	uplink_types = list("traitor")
-	item = /obj/item/weapon/storage/box/syndie_kit/romerol
-	cost = 70
-	cant_discount = TRUE
 
 // STEALTHY TOOLS
 
