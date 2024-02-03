@@ -279,6 +279,11 @@
 // from base of mob/RegularClickOn(): (atom/target, params)
 #define COMSIG_MOB_REGULAR_CLICK "regular_click"
 	#define COMPONENT_CANCEL_CLICK 1
+// from base of mob/RegularClickOn(): (mob/user, params)
+#define COMSIG_ATOM_REGULAR_CLICKED "atom_clicked"
+#define CYBERPSYCHO "cyberpsycho"
+#define COMSIG_IMPLANT_INJECTED "implant_injected"
+#define COMSIG_IMPLANT_REMOVAL "implant_removal"
 /// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)

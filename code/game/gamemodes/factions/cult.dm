@@ -164,7 +164,7 @@
 
 
 
-#define F_MAELSTROMCULT
+#define F_MAELSTROMCULT "Maelstrom"
 
 /datum/faction/maelstrom
 	name = F_MAELSTROMCULT

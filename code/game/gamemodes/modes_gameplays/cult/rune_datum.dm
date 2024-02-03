@@ -1,6 +1,6 @@
 /datum/rune
 	var/name
-	var/obj/effect/rune/holder
+	var/obj/effect/holder
 	var/datum/religion/religion
 	// Used only for sprite generation
 	var/list/words = list()
