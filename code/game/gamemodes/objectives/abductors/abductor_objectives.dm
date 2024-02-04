@@ -5,7 +5,7 @@
 	var/team
 
 /datum/objective/experiment/New()
-	explanation_text = "Experiment on [target_amount] humans."
+	explanation_text = "Провести эксперименты с [target_amount] людьми."
 
 /datum/objective/experiment/check_completion()
 	. = OBJECTIVE_LOSS
@@ -30,14 +30,14 @@
 	completed = OBJECTIVE_WIN
 
 /datum/objective/abductee/steal
-	explanation_text = "Steal all"
+	explanation_text = "Украсть"
 
 /datum/objective/abductee/steal/New()
-	var/target = pick(list("pets","lights","monkeys","fruits","shoes","bars of soap"))
+	var/target = pick(list("питомцев","лампочки","обезьян","фрукты","ботинки","куски мыла"))
 	explanation_text += " [target]."
 
 /datum/objective/abductee/capture
-	explanation_text = "Capture"
+	explanation_text = "Захват"
 
 /datum/objective/abductee/capture/New()
 	var/list/jobs = get_job_datums()
@@ -46,89 +46,89 @@
 			jobs -= J
 	if(jobs.len > 0)
 		var/datum/job/target = pick(jobs)
-		explanation_text += " a [target.title]."
+		explanation_text += "представителя [target.title]."
 	else
-		explanation_text += " someone."
+		explanation_text += " кого-либо."
 
 /datum/objective/abductee/shuttle
-	explanation_text = "You must escape the station! Get the shuttle called!"
+	explanation_text = "Вы должны покинуть станцию! Вызовите шаттл!"
 
 /datum/objective/abductee/noclone
-	explanation_text = "Don't allow anyone to be cloned."
+	explanation_text = "Не допустите клонирование членов экипажа."
 
 /datum/objective/abductee/blazeit
-	explanation_text = "Your body must be improved. Ingest as many drugs as you can."
+	explanation_text = "Вы должны стать лучше. Принимайте больше лекарств и наркотиков."
 
 /datum/objective/abductee/yumyum
-	explanation_text = "You are hungry. Eat as much food as you can find."
+	explanation_text = "Вы ОЧЕНЬ голодны. Найдите и съешьте как можно больше еды"
 
 /datum/objective/abductee/insane
-	explanation_text = "You see you see what they cannot you see the open door you seeE you SEeEe you SEe yOU seEee SHOW THEM ALL"
+	explanation_text = "Они не видят того, что видишь ты. П̷̮͒о̵͓͋к̵̤̆ӓ̴̱ж̷̹͊и̶̰̑ ̷͈̚и̸͔̓м̴̰̅ ̶͖͘э̸͙͌т̸̻̒о̷̹̑."
 
 /datum/objective/abductee/cannotmove
-	explanation_text = "Convince the crew that you are a paraplegic."
+	explanation_text = "Убедите экипаж в том, что у вас нет ног..."
 
 /datum/objective/abductee/deadbodies
-	explanation_text = "Start a collection of corpses. Don't kill people to get these corpses."
+	explanation_text = "Начните коллекционировать трупы. Не убивайте ради получения новых экспонатов!"
 
 /datum/objective/abductee/floors
-	explanation_text = "Replace all the floor tiles with carpeting, wooden boards, or grass."
+	explanation_text = "Замените обычную плитку чем-то более интересным."
 
 /datum/objective/abductee/powerunlimited
-	explanation_text = "Flood the station's powernet with as much electricity as you can."
+	explanation_text = "Достигните максимальной выработки энергии."
 
 /datum/objective/abductee/pristine
-	explanation_text = "Ensure the station is in absolutely pristine condition."
+	explanation_text = "Убедитесь в том, что станция останется в нормальном состоянии."
 
 /datum/objective/abductee/window
-	explanation_text = "Replace all normal windows with reinforced windows."
+	explanation_text = "Укрепите каждое окно на станции решёткой."
 
 /datum/objective/abductee/nations
-	explanation_text = "Ensure your department prospers over all else."
+	explanation_text = "Убедитесь в том, что ваш отдел - самый лучший на станции."
 
 /datum/objective/abductee/abductception
-	explanation_text = "You have been changed forever. Find the ones that did this to you and give them a taste of their own medicine."
+	explanation_text = "Найдите своих обидчиков и отомстите им..."
 
 /datum/objective/abductee/ghosts
-	explanation_text = "Conduct a seance with the spirits of the afterlife."
+	explanation_text = "Проведите сеанс с духами загробного мира."
 
 /datum/objective/abductee/summon
-	explanation_text = "Conduct a ritual to summon an elder god."
+	explanation_text = "Совершите ритуал для призыва божества."
 
 /datum/objective/abductee/machine
-	explanation_text = "You are secretly an android. Interface with as many machines as you can to boost your own power."
+	explanation_text = "Вы считаете себя андроидом. Будьте более похожим на андроида."
 
 /datum/objective/abductee/prevent
-	explanation_text = "You have been enlightened. This knowledge must not escape. Ensure nobody else can become enlightened."
+	explanation_text = "Вы достигли Просвящения. Не дайте никому более его достичь!"
 
 /datum/objective/abductee/calling
-	explanation_text = "Call forth a spirit from the other side."
+	explanation_text = "Вызовите духа погибшего члена экипажа."
 
 /datum/objective/abductee/calling/New()
 	var/mob/dead/D = pick(dead_mob_list)
 	if(D)
-		explanation_text = "You know that [D] has perished. Call them from the spirit realm."
+		explanation_text = "Вы знаете, что [D] умер. Вызови его дух в реальность!"
 
 /datum/objective/abductee/social_experiment
-	explanation_text = "This is a secret social experiment conducted by Nanotrasen. Convince the crew that this is the truth."
+	explanation_text = "Убедите всех в том, что события на станции - это секретный социальный эксперимент НТ."
 
 /datum/objective/abductee/vr
-	explanation_text = "It's all an entirely virtual simulation within an underground vault. Convince the crew to escape the shackles of VR."
+	explanation_text = "Убедите всех в том, что всё вокруг - компьютерная симуляция."
 
 /datum/objective/abductee/pets
-	explanation_text = "Nanotrasen is abusing the animals! Save as many as you can!"
+	explanation_text = "НаноТрейзен не соблюдает права животных! Спаси их!"
 
 /datum/objective/abductee/defect
-	explanation_text = "Defect from your employer."
+	explanation_text = "Уволься с работы."
 
 /datum/objective/abductee/promote
-	explanation_text = "Climb the corporate ladder all the way to the top!"
+	explanation_text = "Пройди по карьерной лестницы на самый верх!"
 
 /datum/objective/abductee/science
-	explanation_text = "So much lies undiscovered. Look deeper into the machinations of the universe."
+	explanation_text = "Столько всего тайн хранит в себе космическая мгла... Раскрой их!"
 
 /datum/objective/abductee/build
-	explanation_text = "Expand the station."
+	explanation_text = "Расширь станцию."
 
 /datum/objective/abductee/pragnant
-	explanation_text = "You are pregnant and soon due. Find a safe place to deliver your baby."
+	explanation_text = "Вы беременны и скоро родите. Найдите подходящее для этого место."
