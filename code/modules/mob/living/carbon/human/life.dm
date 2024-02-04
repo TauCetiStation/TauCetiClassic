@@ -699,8 +699,8 @@ var/global/list/tourette_bad_words= list(
 				update_inv_wear_suit()
 				update_size_class()
 
-	AdjustConfused(-1)
-	AdjustDrunkenness(-1)
+	AdjustConfused(-2)
+	AdjustDrunkenness(-2)
 	// decrement dizziness counter, clamped to 0
 	if((crawling) || (buckled))
 		dizziness = max(0, dizziness - 15)

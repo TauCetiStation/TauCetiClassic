@@ -9,7 +9,7 @@
 
 /datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration, updating_canmove)
 	if(isnum(set_duration))
-		duration = set_duration
+		duration = set_duration / 2
 	. = ..()
 	if(.)
 		if(updating_canmove)
