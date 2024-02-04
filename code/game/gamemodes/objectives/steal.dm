@@ -54,7 +54,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"ядерную пушку" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"алмазную дверь" = /obj/item/weapon/pickaxe/drill/diamond_drill,
 		"сумку для хранения" = /obj/item/weapon/storage/backpack/holding,
-		"батарейку с гиперёмкостью" = /obj/item/weapon/stock_parts/cell/hyper,
+		"гиперёмкую батарейку" = /obj/item/weapon/stock_parts/cell/hyper,
 		"10 алмазов" = /obj/item/stack/sheet/mineral/diamond,
 		"50 золотых слитков" = /obj/item/stack/sheet/mineral/gold,
 		"25 слитков очищенного урана" = /obj/item/stack/sheet/mineral/uranium,
@@ -72,7 +72,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	steal_target = items_to_steal[target_name]
 	if (!steal_target )
 		steal_target = possible_items_special[target_name]
-	explanation_text = "Steal [target_name]."
+	explanation_text = "Украдите [target_name]."
 	return steal_target
 
 
