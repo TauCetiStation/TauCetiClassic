@@ -163,6 +163,6 @@
 				for (var/i in 1 to 15)
 					new /obj/item/stack/sheet/mineral/tritium(ng.loc)
 			if(8 to 10)
-				new /obj/structure/stool/bed/chair/pedalgen(ng.loc)
+				new /obj/machinery/power/port_gen/pacman/money(ng.loc)
 			else
 				new /obj/structure/closet/crate/solar(ng.loc)
