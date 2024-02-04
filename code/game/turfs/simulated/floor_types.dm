@@ -243,6 +243,8 @@
 
 /turf/simulated/floor/beach/water/waterpool
 	icon_state = "seadeep"
+	var/mob_liquid_height = 18
+	var/mob_liquid_depth = -8
 
 /turf/simulated/floor/beach/water/waterpool/atom_init()
 	. = ..()
@@ -252,34 +254,45 @@
 /turf/simulated/floor/beach/water/waterpool/Entered(atom/movable/AM, atom/old_loc)
 	..()
 	if(!istype(old_loc, /turf/simulated/floor/beach/water/waterpool))
-		AM.entered_water_turf()
+		AM.entered_water_turf(src)
 
 /turf/simulated/floor/beach/water/waterpool/Exited(atom/movable/AM, atom/new_loc)
 	..()
 	if(!istype(new_loc, /turf/simulated/floor/beach/water/waterpool))
-		AM.exited_water_turf()
+		AM.exited_water_turf(src)
 
-/atom/movable/proc/exited_water_turf()
+/atom/movable/proc/exited_water_turf(turf/simulated/floor/beach/water/waterpool/waterturf)
 	return
 
-/mob/living/carbon/human/exited_water_turf()
+///The alpha mask used on mobs submerged in liquid turfs
+#define MOB_LIQUID_TURF_MASK "mob_liquid_turf_mask"
+///The height of the mask itself in the icon state. Changes to the icon requires a change to this define
+#define MOB_LIQUID_TURF_MASK_HEIGHT 32
+
+/mob/living/carbon/human/exited_water_turf(turf/simulated/floor/beach/water/waterpool/waterturf)
 	SEND_SIGNAL(src, COMSIG_HUMAN_EXITED_WATER)
 	if(get_species() != SKRELL)
 		Stun(2)
 	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
+	if(!get_filter(MOB_LIQUID_TURF_MASK))
+		return
+	var/icon/carbon_icon = icon(icon)
+	animate(get_filter(MOB_LIQUID_TURF_MASK), y = ((64 - carbon_icon.Height()) * 0.5) - MOB_LIQUID_TURF_MASK_HEIGHT, time = 1.7)
+	animate(src, pixel_y = pixel_y - waterturf.mob_liquid_depth, time = 1.7, flags = ANIMATION_PARALLEL)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), MOB_LIQUID_TURF_MASK), 1.7)
 
-/mob/living/silicon/robot/exited_water_turf()
+/mob/living/silicon/robot/exited_water_turf(turf/simulated/floor/beach/water/waterpool/waterturf)
 	Stun(2)
 	playsound(src, 'sound/effects/water_turf_exited_mob.ogg', VOL_EFFECTS_MASTER)
 
-/atom/movable/proc/entered_water_turf()
+/atom/movable/proc/entered_water_turf(turf/simulated/floor/beach/water/waterpool/waterturf)
 	return
 
-/obj/item/entered_water_turf()
+/obj/item/entered_water_turf(turf/simulated/floor/beach/water/waterpool/waterturf)
 	if(throwing)
 		playsound(src, 'sound/effects/water_turf_entered_obj.ogg', VOL_EFFECTS_MASTER)
 
-/mob/living/carbon/human/entered_water_turf()
+/mob/living/carbon/human/entered_water_turf(turf/simulated/floor/beach/water/waterpool/waterturf)
 	SEND_SIGNAL(src, COMSIG_HUMAN_ENTERED_WATER)
 	if(get_species() != SKRELL)
 		Stun(2)
@@ -287,8 +300,15 @@
 	wear_suit?.make_wet()
 	w_uniform?.make_wet()
 	shoes?.make_wet()
+	var/icon/carbon_icon = icon(icon)
+	var/height_to_use = (64 - carbon_icon.Height()) * 0.5 //gives us the right height based on carbon's icon height relative to the 64 high alpha mask
+	//The mask is spawned below the mob, then the animate() raises it up, giving the illusion of dropping into water, combining with the animate to actual drop the pixel_y into the water
+	add_filter(MOB_LIQUID_TURF_MASK, 1, alpha_mask_filter(0, height_to_use - MOB_LIQUID_TURF_MASK_HEIGHT, icon('icons/turf/alpha_64.dmi', "liquid_alpha"), null, MASK_INVERSE))
 
-/mob/living/silicon/robot/entered_water_turf()
+	animate(get_filter(MOB_LIQUID_TURF_MASK), y = height_to_use - (MOB_LIQUID_TURF_MASK_HEIGHT - waterturf.mob_liquid_height), time = 1.7)
+	animate(src, pixel_y = pixel_y + waterturf.mob_liquid_depth, time = 1.7, flags = ANIMATION_PARALLEL)
+
+/mob/living/silicon/robot/entered_water_turf(turf/simulated/floor/beach/water/waterpool/waterturf)
 	Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
 	if(stat != CONSCIOUS)
