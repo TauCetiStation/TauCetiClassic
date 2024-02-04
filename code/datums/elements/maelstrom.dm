@@ -28,7 +28,16 @@
 
 /datum/element/maelstrom/proc/on_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(begin_draw), user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		INVOKE_ASYNC(src, PROC_REF(begin_draw), user)
+		return
+	var/obj/item/weapon/implant/I = parent
+	if(!istype(I))
+		return
+	// works only when implanted to hands
+	if(I.part && (I.part == H.get_bodypart(BP_L_ARM) || I.part == H.get_bodypart(BP_R_ARM)))
+		INVOKE_ASYNC(src, PROC_REF(begin_draw), user)
 
 /datum/element/maelstrom/proc/re_enable_detecting_inject(datum/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
@@ -369,6 +378,10 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, teleporting_run
 	if(!tp_runes.len)
 		to_chat(user, "<span class='warning'>Рун телепорта с id - </span><span class='cult'>[id]</span> <span class='warning'>не обнаружено</span>")
 		return FALSE
+	var/list/acolytes = nearest_acolytes()
+	if(length(acolytes) < 2)
+		to_chat(user, "<span class='cult'>Требуется не менее 2 культиста вокруг руны!</span>")
+		return FALSE
 	return TRUE
 
 /datum/rune/maelstrom/teleport/proc/get_runes_by_type(rune_type)
@@ -451,6 +464,10 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, teleporting_run
 
 /datum/rune/maelstrom/wall/can_action(mob/living/carbon/user)
 	if(!wall)
+		var/list/acolytes = nearest_acolytes()
+		if(length(acolytes) < 2)
+			to_chat(user, "<span class='cult'>Требуется не менее 2 культиста вокруг руны!</span>")
+			return FALSE
 		action(user)
 		return FALSE
 	return TRUE
@@ -484,7 +501,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, teleporting_run
 /datum/rune/maelstrom/bloodboil/get_choice_image()
 	return image('icons/hud/screen_spells.dmi', icon_state = "blood_boil")
 
-/datum/rune/maelstrom/bloodboil/proc/nearest_acolytes()
+/datum/rune/maelstrom/proc/nearest_acolytes()
 	var/list/acolytes = list()
 	for(var/mob/living/carbon/C in range(1, holder))
 		if(SEND_SIGNAL(C, COMSIG_DETECT_MAELSTROM_IMPLANT) & COMPONENT_IMPLANT_DETECTED)
