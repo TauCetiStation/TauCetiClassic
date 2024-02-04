@@ -82,7 +82,7 @@
 		if(!autoprocess)
 			dat += "<a href='byond://?src=\ref[src];task=autoprocess'>Автопроцесс</a>"
 		else
-			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Остановить автоматическое выполнение</a>"
+			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Остановить автопроцесс</a>"
 	else
 		dat += "<span class='disabled'>Автоматическое выполнение</span>"
 	dat += "<br><tt>[temp]</tt><br>"
