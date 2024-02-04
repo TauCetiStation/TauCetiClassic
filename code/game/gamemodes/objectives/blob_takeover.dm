@@ -1,5 +1,5 @@
 /datum/objective/blob_takeover
-	explanation_text = "We must grow and expand. Fill this station with our spores. Cover X station tiles."
+	explanation_text = "Мы должны расти и расширяться. Заполним станцию спорами. Покроем определенное пространство станции"
 	var/invade_tiles = 0
 
 /datum/objective/blob_takeover/PostAppend()
@@ -8,7 +8,7 @@
 	if (!istype(F))
 		return FALSE
 	invade_tiles = F.blobwincount
-	explanation_text = "We must grow and expand. Fill this station with our spores. Cover [invade_tiles] station tiles."
+	explanation_text = "Мы должны расти и расширяться. Заполним станцию спорами. Покроем [invade_tiles] плиток станции."
 	return TRUE
 
 /datum/objective/blob_takeover/check_completion()

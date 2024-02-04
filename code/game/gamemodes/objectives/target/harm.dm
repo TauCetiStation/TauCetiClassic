@@ -2,7 +2,7 @@
 	var/already_completed = 0
 
 /datum/objective/target/harm/format_explanation()
-	return "Make an example of [target.current.real_name], the [target.assigned_role]. Break one of their bones, detach one of their limbs or disfigure their face. Make sure they're alive when you do it."
+	return "Преподайте урок [target.current.real_name], представителю [target.assigned_role]. Сломайте ему кость, оторвите ему любую конечность или превратите его лицо в кашу! Убедитесь, что он выживет после выполнения цели."
 
 /datum/objective/target/harm/check_completion()
 	if(already_completed)
