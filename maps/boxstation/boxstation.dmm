@@ -73707,6 +73707,15 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"hBK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/construction)
 "hBN" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -115410,7 +115419,7 @@ chV
 bZu
 cmA
 ckc
-aht
+hBK
 bTH
 chV
 qyj
