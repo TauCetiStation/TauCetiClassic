@@ -58727,15 +58727,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
-"chZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/effect/landmark{
-	name = "blobstart"
-	},
-/turf/simulated/floor/plating,
-/area/station/construction)
 "cib" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
@@ -81192,6 +81183,12 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
+"pFZ" = (
+/obj/effect/landmark{
+	name = "aspect_newgen"
+	},
+/turf/simulated/floor/plating,
+/area/station/engineering/engine)
 "pGd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -114650,8 +114647,8 @@ uns
 crH
 mfF
 mfF
-cAR
-cAR
+pFZ
+pFZ
 nxV
 nxV
 crH
@@ -115413,7 +115410,7 @@ chV
 bZu
 cmA
 ckc
-chZ
+aht
 bTH
 chV
 qyj

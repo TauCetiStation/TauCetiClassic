@@ -44229,6 +44229,16 @@
 	icon_state = "purplecorner"
 	},
 /area/station/rnd/hor)
+"iVW" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/effect/landmark{
+	name = "aspect_newgen"
+	},
+/turf/simulated/floor,
+/area/station/engineering/engine)
 "iWg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -105692,6 +105702,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/effect/landmark{
+	name = "aspect_newgen"
+	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "wAr" = (
@@ -139501,7 +139514,7 @@ drK
 xbm
 qYD
 qER
-qER
+iVW
 wAn
 mMT
 eui

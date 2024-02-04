@@ -32,6 +32,8 @@
 	. = ..()
 	handle_rotation()
 	Generator = new /obj/machinery/power/dynamo(src)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ALTERNATIVE_GENERATORS))
+		Generator.power_produced *= 5
 	if(anchored)
 		Generator.loc = loc
 		Generator.connect_to_network()

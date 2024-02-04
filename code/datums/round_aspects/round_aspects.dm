@@ -37,7 +37,7 @@
 	name = ROUND_ASPECT_REARM_ENERGY
 	desc = "Всё огнестрельное оружие заменено на энергетическое, повышена цена и количество ресурсов для создания огнестрельного оружия."
 
-/datum/round_aspect/rearm_energy/after_init()
+/datum/round_aspect/rearm_energy/after_start()
 	for(var/datum/design/smg/smg in global.all_designs)
 		for(var/M in smg.materials)
 			smg.materials[M] *= 5
@@ -45,14 +45,13 @@
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
 		b.cost *= 50
 
-/datum/round_aspect/rearm_energy/after_start()
 	new /datum/event/feature/area/replace/station_rearmament_energy
 
 /datum/round_aspect/rearm_ballistic
 	name = ROUND_ASPECT_REARM_BULLETS
 	desc = "Всё энергооружие заменено на огнестрельное, повышена цена и количество ресурсов для создания энергооружия."
 
-/datum/round_aspect/rearm_ballistic/after_init()
+/datum/round_aspect/rearm_ballistic/after_start()
 	for(var/datum/design/nuclear_gun/ng in global.all_designs)
 		for(var/M in ng.materials)
 			ng.materials[M] *= 5
@@ -75,7 +74,6 @@
 	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
 		e.cost *= 50
 
-/datum/round_aspect/rearm_ballistic/after_start()
 	new /datum/event/feature/area/replace/station_rearmament_bullets
 
 /datum/round_aspect/no_common_rchannel
@@ -99,7 +97,7 @@
 	name = ROUND_ASPECT_ELITE_SECURITY
 	desc = "Изменено снаряжение офицеров охраны. Увеличены цены на оружие в карго и РнД."
 
-/datum/round_aspect/elite_sec/after_init()
+/datum/round_aspect/elite_sec/after_start()
 	for(var/datum/design/nuclear_gun/ng in global.all_designs)
 		for(var/M in ng.materials)
 			ng.materials[M] *= 5
@@ -128,7 +126,6 @@
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
 		b.cost *= 50
 
-/datum/round_aspect/elite_sec/after_start()
 	new /datum/event/feature/area/replace/sec_rearmament_elite
 
 /datum/round_aspect/more_random_events
@@ -139,3 +136,33 @@
 	name = ROUND_ASPECT_ALTERNATIVE_RESEARCH
 	desc = "Взрывы газовых бомб стали приносить меньше научных очков."
 	afterspawn_IC_announcement = "<span class='warning'>Научно-исследовательский Совет НаноТрейзен стал в меньшей мере интересоваться изучением взрывчатых свойств форона.</span>"
+
+/datum/round_aspect/alt_generators
+	name = ROUND_ASPECT_ALTERNATIVE_GENERATORS
+	desc = "Сингулярность, суперматерия и тесла удалена, вместо них на инженерном складе появились другие генераторы."
+
+/datum/round_aspect/alt_generators/after_start()
+	for(var/datum/supply_pack/engine/tesla_gen/tg in global.all_supply_pack)
+		tg.cost *= 50
+	for(var/datum/supply_pack/engine/sing_gen/sg in global.all_supply_pack)
+		sg.cost *= 50
+	for(var/datum/supply_pack/smbig/sm in global.all_supply_pack)
+		sm.cost *= 50
+
+	for(var/obj/machinery/the_singularitygen/gen in world)
+		qdel(gen)
+	for(var/obj/machinery/power/supermatter/sm in world)
+		qdel(sm)
+
+	for(var/obj/effect/landmark/ng as anything in landmarks_list["aspect_newgen"])
+		switch(rand(1,13))
+			if(1 to 3)
+				new /obj/machinery/power/port_gen/riteg(ng.loc)
+			if(4 to 7)
+				new /obj/machinery/power/port_gen/pacman/mrs(ng.loc)
+				for (var/i in 1 to 15)
+					new /obj/item/stack/sheet/mineral/tritium(ng.loc)
+			if(8 to 10)
+				new /obj/structure/stool/bed/chair/pedalgen(ng.loc)
+			else
+				new /obj/structure/closet/crate/solar(ng.loc)

@@ -75084,6 +75084,12 @@
 /obj/item/weapon/caution,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"oqk" = (
+/obj/effect/landmark{
+	name = "aspect_newgen"
+	},
+/turf/simulated/floor/plating,
+/area/station/engineering/engine)
 "oqA" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /turf/simulated/floor{
@@ -165012,7 +165018,7 @@ nny
 hUC
 jLl
 jLl
-jLl
+oqk
 nwT
 sNT
 bnx
@@ -165269,7 +165275,7 @@ nny
 hUC
 jLl
 jLl
-jLl
+oqk
 mZG
 mZG
 bnx

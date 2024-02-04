@@ -28540,6 +28540,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/effect/landmark{
+	name = "aspect_newgen"
+	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "gmV" = (
@@ -95184,6 +95187,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
+"wPb" = (
+/obj/effect/landmark{
+	name = "aspect_newgen"
+	},
+/turf/simulated/floor/plating,
+/area/station/engineering/engine)
 "wPe" = (
 /turf/simulated/wall/r_wall,
 /area/station/storage/primary)
@@ -138481,7 +138490,7 @@ cmk
 mXc
 mXc
 fdY
-fdY
+wPb
 tye
 tye
 rrZ
