@@ -50,7 +50,6 @@ var/global/list/preferences_datums = list()
 	var/tooltip_size = 8
 
 	var/escape_menu_font = "Verdana"
-	var/escape_menu_size = 24
 
 	var/outline_enabled = TRUE
 	var/outline_color = COLOR_BLUE_LIGHT

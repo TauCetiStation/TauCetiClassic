@@ -47,7 +47,9 @@
 
 /atom/movable/screen/escape_menu/home_button/text/atom_init(mapload, datum/hud/hud_owner, datum/escape_menu/escape_menu, button_text, offset, on_click_callback)
 	. = ..()
-	home_button_text.maptext = "<span style='font-family:\"[escape_menu.client.prefs.escape_menu_font]\"; color: white; font-size: [round(escape_menu.client.prefs.escape_menu_size * 1.1)]px;'>[button_text]</span>"
+	home_button_text.maptext_width = 800
+	home_button_text.maptext_height = 100
+	home_button_text.maptext = "<span style='font-family:\"[escape_menu.client.prefs.escape_menu_font]\"; color: white; font-size: 27px;'>[button_text]</span>"
 	vis_contents += home_button_text
 
 /atom/movable/screen/escape_menu/home_button/text/MouseEntered(location, control, params)

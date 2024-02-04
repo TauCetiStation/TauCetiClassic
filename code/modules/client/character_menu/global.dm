@@ -105,10 +105,6 @@
 	. += 					"<td width='45%'>Change Font of Escape Menu:</td>"
 	. +=					"<td><a href='?_src_=prefs;preference=change_font_escape_menu'><b>[escape_menu_font]</b></a></td>"
 	. += 				"</tr>"
-	. += 				"<tr>"
-	. += 					"<td width='45%'>Change Escape Menu Size:</td>"
-	. +=					"<td><a href='?_src_=prefs;preference=change_size_escape_menu'><b>[escape_menu_size]</b></a></td>"
-	. += 				"</tr>"
 	. += 			"</table>"
 	. += 		"</td>"
 	. += 	"</tr>"
@@ -160,9 +156,6 @@
 
 		if("change_font_escape_menu")
 			parent?.change_font_escape_menu()
-
-		if("change_size_escape_menu")
-			parent?.change_size_escape_menu()
 
 		if("outline_enabled")
 			outline_enabled = !outline_enabled

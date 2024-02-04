@@ -371,7 +371,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tooltip"]           >> tooltip
 	S["tooltip_size"]      >> tooltip_size
 	S["tooltip_font"]      >> tooltip_font
-	S["escape_menu_size"]  >> escape_menu_size
 	S["escape_menu_font"]  >> escape_menu_font
 	S["outline_enabled"]   >> outline_enabled
 	S["outline_color"]     >> outline_color
@@ -431,7 +430,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
 	tooltip_size 	= sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
-	escape_menu_size = sanitize_integer(escape_menu_size, 8, 30, initial(escape_menu_size))
 	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
 	outline_color 	= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
 	eorg_enabled 	= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
@@ -506,7 +504,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tooltip"]           << tooltip
 	S["tooltip_size"]      << tooltip_size
 	S["tooltip_font"]      << tooltip_font
-	S["escape_menu_size"]  << escape_menu_size
 	S["escape_menu_font"]  << escape_menu_font
 	S["emote_panel"]       << custom_emote_panel
 

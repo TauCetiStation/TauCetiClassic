@@ -162,7 +162,7 @@
 
 /atom/movable/screen/escape_menu/home_button_text/proc/update_text()
 	var/atom/movable/screen/escape_menu/home_button/escape_menu_loc = loc
-	maptext = "<span style='font-family:\"[client.prefs.escape_menu_font]\"; color:[istype(escape_menu_loc) ? escape_menu_loc.text_color() : "white"]; font-size: [client.prefs.escape_menu_size]px;'>[button_text]</span>"
+	maptext = "<span style='font-family:\"[client.prefs.escape_menu_font]\"; color:[istype(escape_menu_loc) ? escape_menu_loc.text_color() : "white"]; font-size: 24px;'>[button_text]</span>"
 	if (hovered)
 		maptext = "<u>[maptext]</u>"
 

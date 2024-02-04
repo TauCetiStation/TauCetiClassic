@@ -404,17 +404,6 @@
 	prefs.save_preferences()
 	feedback_add_details("admin_verb", "FEM")
 
-/client/verb/change_size_escape_menu()
-	set name = "Escape Menu: Change Size"
-	set category = "Preferences"
-	set desc = "Change Size of Names of Items"
-
-	prefs.escape_menu_size = input(usr, "Введите размер шрифта для главного меню (от 8 до 30)") as num
-
-	tooltip.font_size = clamp(prefs.escape_menu_size, 8, 30)
-	prefs.save_preferences()
-	feedback_add_details("admin_verb", "LEM")
-
 /client/verb/toggle_outline()
 	set name = "Toggle Outline"
 	set category = "Preferences"

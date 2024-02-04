@@ -80,7 +80,7 @@
 
 	add_overlay(button_overlay)
 
-	maptext = "<span style='font-family:\"[owner.prefs.escape_menu_font]\"; font-size: [owner.prefs.escape_menu_size]px;'>[button_text]</span>"
+	maptext = "<span style='font-family:\"[owner.prefs.escape_menu_font]\"; font-size: 24px;'>[button_text]</span>"
 	screen_loc = "CENTER:[pixel_offset],CENTER-1"
 
 /atom/movable/screen/escape_menu/leave_body_button/Destroy()
