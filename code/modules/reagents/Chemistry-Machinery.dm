@@ -688,7 +688,7 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
-	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
+	required_skills = list()
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -819,7 +819,6 @@
 
 
 	var/list/holdingitems = list()
-	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/reagentgrinder/atom_init()
 	. = ..()
