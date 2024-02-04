@@ -28,7 +28,7 @@
 
 /datum/objective/gang/steal_lowrisk/select_target()
 	steal_target = find_and_check_target()
-	explanation_text = "Steal [initial(steal_target.name)]."
+	explanation_text = "Украдите [initial(steal_target.name)]."
 
 var/global/list/lowrisk_objectives_cache
 
