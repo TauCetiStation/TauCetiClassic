@@ -352,7 +352,7 @@
 		scantemp = "Ошибка: невозможно получить ДНК пациента."
 		return
 	if(subject.suiciding)
-		scantemp = "Ошибка: мозг пациента не реагирует на сканирование."
+		scantemp = "Ошибка: мозг пациента мёртв."
 		return
 	if((!subject.ckey) || (!subject.client))
 		scantemp = "Ошибка: мозг пациента мёртв."
