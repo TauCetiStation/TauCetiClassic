@@ -16,7 +16,7 @@
 					n_p ++
 		target_amount = min(target_amount, n_p)
 
-	explanation_text = "Поглотите [target_amount] генома."
+	explanation_text = "[target_amount] - столько геномов нам нужно поглотить..."
 	return target_amount
 
 /datum/objective/absorb/check_completion()

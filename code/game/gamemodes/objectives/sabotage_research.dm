@@ -1,5 +1,5 @@
 /datum/objective/research_sabotage
-	explanation_text = "Саботируйте сервера Отдела Исследований. Для этого вам выдана специальная дискетта, вставьте её в консоль управления серверной."
+	explanation_text = "Саботируйте сервера Отдела Исследований. Для этого вам выдана специальная дискетта, вставьте её в консоль управления серверной ОИ."
 	required_equipment = /obj/item/weapon/disk/data/syndi
 	var/already_completed = FALSE
 
