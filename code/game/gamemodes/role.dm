@@ -384,7 +384,7 @@
 		text += "<ul>"
 		if(faction.objective_holder)
 			if(faction.objective_holder.objectives.len)
-				text += "<ul><b>Faction objectives:</b><br>"
+				text += "<ul><b>Задачи фракции:</b><br>"
 			text += faction.objective_holder.GetObjectiveString(FALSE, admin_edit, M)
 			if(faction.objective_holder.objectives.len)
 				text += "</ul>"
@@ -395,9 +395,9 @@
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons(M)]"
 
 	if(objectives.objectives.len)
-		text += "<br><ul><b>Personal objectives:</b><br>"
+		text += "<br><ul><b>Персональные задачи:</b><br>"
 	else
-		text += "<br>No objectives available<br>"
+		text += "<br>Вам не выдали никаких задач<br>"
 	text += objectives.GetObjectiveString(FALSE, admin_edit, M, src)
 	if(objectives.objectives.len)
 		text += "</ul>"
