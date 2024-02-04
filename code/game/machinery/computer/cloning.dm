@@ -84,7 +84,7 @@
 		else
 			dat += "<a href='byond://?src=\ref[src];task=stopautoprocess'>Остановить автопроцесс</a>"
 	else
-		dat += "<span class='disabled'>Автоматическое выполнение</span>"
+		dat += "<span class='disabled'>Автопроцесс</span>"
 	dat += "<br><tt>[temp]</tt><br>"
 
 	switch(src.menu)
