@@ -149,9 +149,9 @@
 	for(var/datum/supply_pack/smbig/sm in global.all_supply_pack)
 		sm.cost *= 50
 
-	for(var/obj/machinery/the_singularitygen/gen in world)
+	for(var/obj/machinery/the_singularitygen/gen in machines)
 		qdel(gen)
-	for(var/obj/machinery/power/supermatter/sm in world)
+	for(var/obj/machinery/power/supermatter/sm in machines)
 		qdel(sm)
 
 	for(var/obj/effect/landmark/ng as anything in landmarks_list["aspect_newgen"])
