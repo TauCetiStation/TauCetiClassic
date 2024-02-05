@@ -7,7 +7,3 @@ disallow_relative_proc_definitions = true
 
 [debugger]
 engine = "auxtools"
-
-[map_renderer.render_passes]
-icon-smoothing = false
-icon-smoothing-2016 = true
