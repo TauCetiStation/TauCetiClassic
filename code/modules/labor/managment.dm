@@ -6,7 +6,8 @@
 	name = "prisoner card"
 	desc = "A card used to provide ID and labor accounting."
 	icon_state = "labor"
-	//TODO: add item_state
+	item_state = "orange-id"
+	item_state_world = "labor_world"
 	rank = "Prisoner"
 	assignment = "Prisoner"
 	var/broken_laws
