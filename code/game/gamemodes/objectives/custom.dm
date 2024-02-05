@@ -26,7 +26,7 @@
 		if(81 to 90)
 			explanation_text = "Убить всех обезьян на станции."
 		else
-			explanation_text = "80% членов экипажа должно покинуть станции на шаттле."
+			explanation_text = "Минимум 80% членов экипажа должно покинуть станцию на шаттле."
 
 /datum/objective/custom/clowns
 	explanation_text = "Взломай столько вещей, сколько сможешь! ХОООНК!"
