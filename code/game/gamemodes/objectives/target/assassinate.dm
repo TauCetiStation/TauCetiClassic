@@ -12,6 +12,11 @@
 /datum/objective/target/assassinate/brutally/format_explanation()
 	return "Assassinate [target.current.real_name], the [target.assigned_role] in the most brutal way possible."
 
+/datum/objective/target/assassinate/brutally/can_be_target(datum/mind/possible_target)
+	. = ..()
+	if(.)
+		return !(possible_target.GetRole(CYBERPSYCHO))
+
 /datum/objective/target/assassinate_heads/format_explanation()
 	return "Assassinate Heads of Staff."
 
