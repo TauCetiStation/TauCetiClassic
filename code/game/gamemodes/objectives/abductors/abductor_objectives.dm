@@ -33,7 +33,7 @@
 	explanation_text = "Украсть"
 
 /datum/objective/abductee/steal/New()
-	var/target = pick(list("питомцев","лампочки","обезьян","фрукты","ботинки","куски мыла"))
+	var/target = pick(list("всех питомцев","все лампочки","всех обезьян","все фрукты","все ботинки","всё мыло"))
 	explanation_text += " [target]."
 
 /datum/objective/abductee/capture
@@ -48,7 +48,7 @@
 		var/datum/job/target = pick(jobs)
 		explanation_text += "представителя [target.title]."
 	else
-		explanation_text += " кого-либо."
+		explanation_text += "кого-либо."
 
 /datum/objective/abductee/shuttle
 	explanation_text = "Вы должны покинуть станцию! Вызовите шаттл!"

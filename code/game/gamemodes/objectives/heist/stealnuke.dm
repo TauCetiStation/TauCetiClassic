@@ -1,5 +1,5 @@
 /datum/objective/heist/stealnuke
-	explanation_text = "Украдите ядерную бомбу."
+	explanation_text = "Украсть каждую ядерную бомбу."
 	var/list/arkship_areas = list(/area/shuttle/vox/arkship, /area/shuttle/vox/arkship_hold, /area/shuttle/vox/transit)
 
 /datum/objective/heist/stealnuke/check_completion()
