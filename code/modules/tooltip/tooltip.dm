@@ -55,6 +55,7 @@ Notes:
 		//Initialize some vars
 		init = 1
 		owner << output(list2params(list(world.icon_size, control)), "[control]:tooltip.init")
+
 	showing = 1
 
 	if (title && content)
@@ -64,6 +65,7 @@ Notes:
 		title = "<p>[title]</p>"
 	else if (!title && content)
 		content = "<p>[content]</p>"
+
 	//Make our dumb param object
 	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
 
