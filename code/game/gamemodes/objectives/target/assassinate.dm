@@ -9,6 +9,9 @@
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
 
+/datum/objective/target/assassinate/brutally/format_explanation()
+	return "Assassinate [target.current.real_name], the [target.assigned_role] in the most brutal way possible."
+
 /datum/objective/target/assassinate_heads/format_explanation()
 	return "Assassinate Heads of Staff."
 

@@ -67,8 +67,10 @@
 	//manually set move_delay for vehicles so we don't inherit any mob movement penalties
 	//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
 	user.client?.move_delay = world.time
+	if(HAS_TRAIT(user, TRAIT_FULL_CONFUSION))
+		direction = pick(alldirs)
 	//drunk driving
-	if(user.confused)
+	else if(user.confused)
 		direction = user.confuse_input(direction)
 	return Move(get_step(src, direction))
 

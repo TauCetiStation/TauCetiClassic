@@ -29,6 +29,7 @@
 
 #define STATUS_EFFECT_CLUMSY /datum/status_effect/clumsy
 
+#define STATUS_EFFECT_FULL_CONFUSION /datum/status_effect/full_confusion
 /////////////
 // NEUTRAL //
 /////////////

@@ -229,7 +229,7 @@
 		robot.UnlinkSelf()
 		robot.emagged = TRUE
 
-/mob/living/carbon/proc/fake_loyal_implant_replacement()
+/mob/living/proc/fake_loyal_implant_replacement()
 	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
 		qdel(L)
 	var/obj/item/weapon/implant/fake_loyal/F = new(src)

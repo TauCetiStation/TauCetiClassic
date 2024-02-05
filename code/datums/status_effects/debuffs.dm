@@ -269,6 +269,23 @@
 	desc = "Вы чувствуете головокружение."
 	icon_state = "woozy"
 
+/datum/status_effect/full_confusion
+	tick_interval = 0
+	status_type = STATUS_EFFECT_FULL_CONFUSION
+	alert_type = null
+
+/datum/status_effect/full_confusion/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	ADD_TRAIT(owner, TRAIT_FULL_CONFUSION, id)
+	return ..()
+
+/datum/status_effect/full_confusion/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_FULL_CONFUSION, id)
+
+//--------------------------------------------
+//---------------Hallucination----------------
+//--------------------------------------------
 /// Hallucination status effect. How most hallucinations end up happening.
 /datum/status_effect/hallucination
 	id = "hallucination"

@@ -193,7 +193,10 @@
 							return
 
 		else
-			if(mob.confused && !mob.crawling)
+			if(HAS_TRAIT(mob, TRAIT_FULL_CONFUSION))
+				direct = pick(alldirs)
+				n = get_step(get_turf(mob), direct)
+			else if(mob.confused && !mob.crawling)
 				direct = mob.confuse_input(direct)
 				n = get_step(get_turf(mob), direct)
 			. = mob.SelfMove(n, direct)

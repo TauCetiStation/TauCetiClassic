@@ -32,7 +32,7 @@
 	if(!istype(H))
 		INVOKE_ASYNC(src, PROC_REF(begin_draw), user)
 		return
-	var/obj/item/weapon/implant/I = parent
+	var/obj/item/weapon/implant/I = source
 	if(!istype(I))
 		return
 	// works only when implanted to hands
@@ -95,6 +95,19 @@
 						blood_brother.forceMove(T)
 			if(!do_after(user, 1 SECOND, needhand = TRUE, target = src, can_move = TRUE, progress = FALSE))
 				return
+
+// poisoned blade
+/obj/item/weapon/kitchenknife/ritual/calling_up/afterattack(atom/target, mob/user, proximity, params)
+	if(!isliving(target))
+		return
+	var/mob/living/L = target
+	//not backstab
+	if(get_dir(L, user) != get_dir(user, L))
+		L.apply_status_effect(STATUS_EFFECT_FULL_CONFUSION, 10 SECONDS)
+		return
+	if(!L.reagents)
+		return
+	L.reagents.add_reagent("chloralhydrate", 5)
 
 /obj/item/weapon/grenade/curse
 	icon = 'icons/obj/cult.dmi'
@@ -555,13 +568,23 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, teleporting_run
 	return (locate(/mob/living) in get_turf(holder))
 
 /datum/rune/maelstrom/convert/action(mob/living/carbon/user)//user is cultist nado
+	var/list/acolytes = nearest_acolytes()
 	for(var/mob/living/L in holder.loc)
 		if(!L.client)
 			continue
 		if(L.ismindprotect())
+			if(length(acolytes) < 2)
+				to_chat(user, "<span class='cult'>Для разрушения защиты разума необходимо как минимум 2 культиста вокруг руны.</span>")
+				continue
+			// Remove all implants except maelstrom and loyalty
 			for(var/obj/item/weapon/implant/I in L)
-				if(!istype(I, /obj/item/weapon/implant/maelstrom))
-					I.implant_removal(L)
+				if(istype(I, /obj/item/weapon/implant/mind_protect/loyalty))
+					continue
+				if(istype(I, /obj/item/weapon/implant/maelstrom))
+					continue
+				I.implant_removal(L)
+			// Replace loyalty by fake implant
+			L.fake_loyal_implant_replacement()
 			L.ghostize(can_reenter_corpse = FALSE)
 			create_spawner(/datum/spawner/living, L)
 			continue
