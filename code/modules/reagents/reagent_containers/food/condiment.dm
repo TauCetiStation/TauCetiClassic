@@ -112,7 +112,7 @@
 		to_chat(user, "<span class='notice'> You transfer [trans] units of the condiment to [target].</span>")
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
-	if((!reagents || (reagents && !reagents.reagent_list.len)) && (emptystate != 0))
+	if(emptystate && (!reagents || reagents.total_volume <= 0))
 		icon_state = "[emptystate]_empty"
 		item_state = "[emptystate]_empty"
 		update_inv_mob()
@@ -302,14 +302,14 @@
 	name = "soy sauce"
 	desc = "A salty soy-based flavoring."
 	icon_state = "soysauce"
-	emptystate = 0
+	emptystate = null
 	list_reagents = list("soysauce" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/hotsauce
 	name = "hot sauce"
 	desc = "You can almost TASTE the stomach ulcers now!"
 	icon_state = "hotsauce"
-	emptystate = 0
+	emptystate = null
 	list_reagents = list("capsaicin" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/ketchup
@@ -323,14 +323,13 @@
 	name = "cold sauce"
 	desc = "Leaves the tongue numb in its passage."
 	icon_state = "coldsauce"
-	emptystate = 0
+	emptystate = null
 	list_reagents = list("frostoil" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/cornoil
 	name = "corn oil"
 	desc = "A delicious oil used in cooking. Made from corn."
 	icon_state = "cornoil"
-	emptystate = 0
 	list_reagents = list("cornoil" = 40)
 
 // SUPPLEMENTS
@@ -357,7 +356,7 @@
 	name = "pepper mill"
 	desc = "Often used to flavor food or make people sneeze."
 	icon_state = "peppermillsmall"
-	emptystate = 0
+	emptystate = null
 	possible_transfer_amounts = list(1,20) // for the clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
@@ -367,5 +366,5 @@
 	name = "honey pot"
 	desc = "Sweet and healthy!"
 	icon_state = "honey"
-	emptystate = 0
+	emptystate = null
 	list_reagents = list("honey" = 40)
