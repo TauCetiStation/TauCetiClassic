@@ -497,10 +497,15 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 
 			make_plating()
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		if(is_catwalk())
+		else if(is_catwalk())
 			if(broken)
 				return
 			ReplaceWithLattice()
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		else if(istype(src, /turf/simulated/floor/catwalk_floor))
+			var/turf/simulated/floor/catwalk_floor/CF = src
+			CF.toggle_cower()
+			to_chat(user, "<span class='warning'>Вы открутили крышку.</span>")
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		return
 

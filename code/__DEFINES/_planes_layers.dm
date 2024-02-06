@@ -101,6 +101,7 @@ What is the naming convention for planes or layers?
   #define GAS_FILTER_LAYER                2.48
   #define GAS_PUMP_LAYER                  2.49
   #define LOW_OBJ_LAYER                   2.491 // Currently used only by unused machinery
+  #define CATWALK_LAYER                   2.5   // catwalk overlay of /turf/open/floor/plating/catwalk_floor
   #define SAFEDOOR_LAYER                  2.5   // firedoors, poddoors, and someone used this for safe for some reason
   #define ABOVE_SAFEDOOR_LAYER            2.51  // poddoors default, they should be around SAFEDOOR_LAYER (see SAFEDOOR_CLOSED_MOD_*) but little above firedoors
   #define BELOW_CONTAINERS_LAYER          2.7   // Below closets, crates...
