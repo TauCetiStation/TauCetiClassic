@@ -12,7 +12,7 @@
 /obj/structure/cable/heavyduty/attackby(obj/item/W, mob/user)
 
 	var/turf/T = src.loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
 
 	if(iscutter(W))

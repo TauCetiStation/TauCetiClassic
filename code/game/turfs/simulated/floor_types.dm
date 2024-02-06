@@ -139,7 +139,7 @@
 	name = "plating"
 	icon_state = "plating"
 	floor_type = null
-	intact = 0
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	footstep = FOOTSTEP_PLATING
 
 /turf/simulated/floor/plating/airless
@@ -407,7 +407,7 @@
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = HEAT_CAPACITY_VACUUM
-	intact = 0
+	underfloor_accessibility = UNDERFLOOR_VISIBLE
 	footstep = FOOTSTEP_CATWALK
 
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
