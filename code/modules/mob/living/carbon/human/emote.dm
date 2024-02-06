@@ -10,6 +10,7 @@
 		/datum/emote/roar,
 		/datum/emote/clickable/help,
 	)
+	var/debug_test_tally = 2.3
 
 /mob/living/carbon/human/load_default_emotes()
 	default_emotes += subtypesof(/datum/emote/human)
