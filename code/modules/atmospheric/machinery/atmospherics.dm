@@ -265,9 +265,6 @@ Pipelines + Other Objects -> Pipe network
 		underlays += icon_manager.get_atmos_icon("underlay", direction, color_cache_name(node), "exposed" + icon_connect_type)
 
 /obj/machinery/atmospherics/proc/update_underlays()
-	SIGNAL_HANDLER
-	SHOULD_CALL_PARENT(TRUE)
-
 	if(check_icon_cache())
 		return TRUE
 	else
