@@ -51,7 +51,7 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
 		speed_coeff += P.rating
 
-	clone_mishap_chance = clamp(50/efficiency, 0, 25)
+	clone_mishap_chance = 1-((efficiency+16)*0.04164256575)
 	heal_level = (efficiency * 15) + 10
 	if(heal_level > 100)
 		heal_level = 100
