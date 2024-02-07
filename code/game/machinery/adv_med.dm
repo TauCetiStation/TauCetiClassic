@@ -293,15 +293,15 @@
 						dat += "<td>[capitalize(CASE(BP, NOMINATIVE_CASE))]</td><td>[burnDamText]</td><td>[bruteDamText]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 						storedinfo += "<td>[capitalize(CASE(BP, NOMINATIVE_CASE))]</td><td>[burnDamText]</td><td>[bruteDamText]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 					else
-						dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Не обнаружено</td>"
-						storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Не обнаружено</td>"
+						dat += "<td>[capitalize(parse_zone_ru(BP.body_zone))]</td><td>-</td><td>-</td><td>Не обнаружено</td>"
+						storedinfo += "<td>[capitalize(parse_zone_ru(BP.body_zone))]</td><td>-</td><td>-</td><td>Не обнаружено</td>"
 					dat += "</tr>"
 					storedinfo += "</tr>"
 				for(var/missing_zone in occupant.get_missing_bodyparts())
 					dat += "<tr>"
 					storedinfo += "<tr>"
-					dat += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Отсуствует</td>"
-					storedinfo += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Отсуствует</td>"
+					dat += "<td>[capitalize(parse_zone_ru(missing_zone))]</td><td>-</td><td>-</td><td>Отсуствует</td>"
+					storedinfo += "<td>[capitalize(parse_zone_ru(missing_zone))]</td><td>-</td><td>-</td><td>Отсуствует</td>"
 					dat += "</tr>"
 					storedinfo += "</tr>"
 				for(var/obj/item/organ/internal/IO in occupant.organs)
