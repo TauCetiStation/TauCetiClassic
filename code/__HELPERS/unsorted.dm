@@ -1097,7 +1097,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(BP_R_ARM)
 			return "правая рука"
 		if(BP_L_LEG)
-			return "Левая нога"
+			return "левая нога"
 		if(BP_R_LEG)
 			return "Правая нога"
 		else
