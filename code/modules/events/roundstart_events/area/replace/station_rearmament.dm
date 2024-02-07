@@ -4,7 +4,7 @@
 		/obj/item/weapon/gun/plasma = /obj/item/weapon/gun/projectile/revolver/doublebarrel,
 		/obj/item/weapon/gun/energy/laser = /obj/item/weapon/gun/projectile/automatic/l13,
 		/obj/item/ammo_box/magazine/plasma = /obj/item/ammo_box/shotgun/beanbag,
-		/obj/item/weapon/gun/energy/gun = /obj/item/ammo_box/magazine/l13,
+		/obj/item/weapon/gun/energy/gun = /obj/item/ammo_box/magazine/l13/lethal,
 	)
 
 /datum/event/feature/area/replace/station_rearmament_energy
