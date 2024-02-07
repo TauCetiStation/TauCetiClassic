@@ -1099,7 +1099,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(BP_L_LEG)
 			return "левая нога"
 		if(BP_R_LEG)
-			return "Правая нога"
+			return "правая нога"
 		else
 			return zone
 
