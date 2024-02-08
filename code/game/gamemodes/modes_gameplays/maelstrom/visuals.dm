@@ -25,3 +25,6 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
+/obj/effect/temp_visual/portal
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "bluespace_wormhole_exit"

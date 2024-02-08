@@ -412,11 +412,12 @@
 	popup.set_content(dat)
 	popup.open()
 
-
-/mob/dead/new_player/proc/create_character()
+/mob/dead/new_player/create_character()
 	spawning = 1
 	close_spawn_windows()
+	return ..()
 
+/mob/dead/proc/create_character()
 	var/mob/living/carbon/human/new_character
 
 	var/datum/species/chosen_species
@@ -478,12 +479,12 @@
 	if(client)
 		client.clear_character_previews()
 
-/mob/dead/new_player/proc/has_admin_rights()
+/mob/dead/proc/has_admin_rights()
 	return (client && client.holder && (client.holder.rights & R_ADMIN))
 
-/mob/dead/new_player/proc/is_species_whitelisted(datum/species/S)
+/mob/dead/proc/is_species_whitelisted(datum/species/S)
 	if(!S)
-		return 1
+		return TRUE
 	return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !S.flags[IS_WHITELISTED]
 
 /mob/dead/new_player/get_species()

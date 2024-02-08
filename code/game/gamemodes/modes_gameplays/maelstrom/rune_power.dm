@@ -224,7 +224,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, teleporting_run
 
 /datum/rune/maelstrom/convert
 	name = "Свести с ума"
-	//words = list("travel", "hell", "technology")
 
 /datum/rune/maelstrom/convert/get_choice_image()
 	return image('icons/hud/screen_spells.dmi', icon_state = "convert")
@@ -234,8 +233,9 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, teleporting_run
 
 /datum/rune/maelstrom/convert/action(mob/living/carbon/user)//user is cultist nado
 	var/list/acolytes = nearest_acolytes()
-	for(var/mob/living/L in holder.loc)
+	for(var/mob/living/L in get_turf(holder))
 		if(!L.client)
+			to_chat(user, "<span class='cult'>На руне существо без разума.</span>")
 			continue
 		if(L.ismindprotect())
 			if(length(acolytes) < 2)
@@ -251,8 +251,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, teleporting_run
 			// Replace loyalty by fake implant
 			L.fake_loyal_implant_replacement()
 			L.ghostize(can_reenter_corpse = FALSE)
-			create_spawner(/datum/spawner/living, L)
+			create_spawner(/datum/spawner/living/maelstrom, L)
 			continue
-		if(!L.mind?.GetRole(CYBERPSYCHO))
+		if(L.mind && !L.mind.GetRole(CYBERPSYCHO))
 			var/datum/faction/F = create_uniq_faction(/datum/faction/maelstrom)
 			add_faction_member(F, L, TRUE)

@@ -45,6 +45,7 @@
 		new choice.building_type(uplink.loc)
 
 	playsound(src, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
+	new /obj/effect/temp_visual/portal(uplink.loc)
 	new /obj/effect/temp_visual/cult/sparks/purple(uplink.loc)
 
 	qdel(uplink)
