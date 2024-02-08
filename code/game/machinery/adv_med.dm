@@ -4,7 +4,7 @@
 /obj/machinery/bodyscanner
 	var/locked
 	name = "Body Scanner"
-	cases = list("МРТ сканер", "МРТ сканера", "МРТ сканеру", "МРТ сканер", "МРТ сканером", "МРТ сканере")
+	cases = list("медицинский сканер", "медицинского сканера", "медицинскому сканеру", "медицинский сканер", "медицинским сканером", "медицинском сканере")
 	desc = "Используется для более детального анализа состояния пациента."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
@@ -144,7 +144,7 @@
 	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield, /obj/item/weapon/implant/fake_loyal)
 	var/delete
 	name = "Body Scanner Console"
-	cases = list("консоль МРТ сканера", "консоли МРТ сканера", "консоли МРТ сканера", "консоль МРТ сканера", "консолью МРТ сканера", "консоли МРТ сканера")
+	cases = list("консоль медицинского сканера", "консоли медицинского сканера", "консоли медицинского сканера", "консоль медицинского сканера", "консолью медицинского сканера", "консоли медицинского сканера")
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
 	anchored = TRUE
@@ -290,18 +290,18 @@
 					if(!(BP.is_stump))
 						var/burnDamText = BP.burn_dam > 0 ? "<span class='orange'>[BP.burn_dam]</span>" : "-/-"
 						var/bruteDamText = BP.brute_dam > 0 ? "<span class='red'>[BP.brute_dam]</span>" : "-/-"
-						dat += "<td>[BP.name]</td><td>[burnDamText]</td><td>[bruteDamText]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
-						storedinfo += "<td>[BP.name]</td><td>[burnDamText]</td><td>[bruteDamText]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						dat += "<td>[capitalize(CASE(BP, NOMINATIVE_CASE))]</td><td>[burnDamText]</td><td>[bruteDamText]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						storedinfo += "<td>[capitalize(CASE(BP, NOMINATIVE_CASE))]</td><td>[burnDamText]</td><td>[bruteDamText]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 					else
-						dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
-						storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
+						dat += "<td>[capitalize(parse_zone_ru(BP.body_zone))]</td><td>-</td><td>-</td><td>Не обнаружено</td>"
+						storedinfo += "<td>[capitalize(parse_zone_ru(BP.body_zone))]</td><td>-</td><td>-</td><td>Не обнаружено</td>"
 					dat += "</tr>"
 					storedinfo += "</tr>"
 				for(var/missing_zone in occupant.get_missing_bodyparts())
 					dat += "<tr>"
 					storedinfo += "<tr>"
-					dat += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
-					storedinfo += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
+					dat += "<td>[capitalize(parse_zone_ru(missing_zone))]</td><td>-</td><td>-</td><td>Отсуствует</td>"
+					storedinfo += "<td>[capitalize(parse_zone_ru(missing_zone))]</td><td>-</td><td>-</td><td>Отсуствует</td>"
 					dat += "</tr>"
 					storedinfo += "</tr>"
 				for(var/obj/item/organ/internal/IO in occupant.organs)
@@ -343,12 +343,12 @@
 					if(!organ_status && !infection)
 						infection = "Не обнаружено:"
 
-					var/organ_damage_text = IO.damage > 0 ? "<span class='red'>[IO.damage]</span>" : "-/-"
+					var/organ_damage_text = IO.damage > 0 ? "<span class='red'>[capitalize(CASE(IO, NOMINATIVE_CASE))]</span>" : "-/-"
 					dat += "<tr>"
-					dat += "<td>[IO.name]</td><td>N/A</td><td>[organ_damage_text]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+					dat += "<td>[capitalize(CASE(IO, NOMINATIVE_CASE))]</td><td>N/A</td><td>[organ_damage_text]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 					dat += "</tr>"
 					storedinfo += "<tr>"
-					storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[organ_damage_text]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+					storedinfo += "<td>[capitalize(CASE(IO, NOMINATIVE_CASE))]</td><td>N/A</td><td>[organ_damage_text]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 					storedinfo += "</tr>"
 				dat += "</table>"
 				storedinfo += "</table>"
@@ -363,7 +363,7 @@
 	else
 		dat = "<font color='red'> Ошибка: Не подключен сканер тела.</font>"
 
-	var/datum/browser/popup = new(user, "window=scanconsole", src.name, 530, 700, ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "window=scanconsole", (CASE(src, NOMINATIVE_CASE)), 530, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
@@ -389,11 +389,11 @@
 	t1 += "Станционное время: <B>[worldtime2text()]</B><BR>"
 	switch(occupant.stat) // obvious, see what their status is
 		if(CONSCIOUS)
-			t1 += "Status: <B>В сознании</B>"
+			t1 += "Cтатус: <B>В сознании</B>"
 		if(UNCONSCIOUS)
-			t1 += "Status: <B>Без сознания</B>"
+			t1 += "Статус: <B>Без сознания</B>"
 		else
-			t1 += "Status: <B><span class='warning'>*Мёртв*</span></B>"
+			t1 += "Статус: <B><span class='warning'>*Мёртв*</span></B>"
 	t1 += additional_info
 	P.info = t1
 	P.name = "Результаты сканирования [occupant.name]"
