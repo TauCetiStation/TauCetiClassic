@@ -277,8 +277,8 @@
 /datum/status_effect/full_confusion/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_FULL_CONFUSION, id)
-	return ..()
 
 /datum/status_effect/full_confusion/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_FULL_CONFUSION, id)

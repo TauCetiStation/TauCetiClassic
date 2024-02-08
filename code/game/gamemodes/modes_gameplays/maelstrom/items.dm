@@ -41,18 +41,22 @@
 				return
 
 // poisoned blade
-/obj/item/weapon/kitchenknife/ritual/calling_up/afterattack(atom/target, mob/user, proximity, params)
-	if(!isliving(target))
+/obj/item/weapon/kitchenknife/ritual/calling_up/attack(mob/living/M, mob/living/user, def_zone)
+	. = ..()
+	if(!.)
 		return
-	var/mob/living/L = target
 	//not backstab
-	if(get_dir(L, user) != get_dir(user, L))
-		L.apply_status_effect(STATUS_EFFECT_FULL_CONFUSION, 10 SECONDS)
-		qdel(src)
-		return
-	if(!L.reagents)
-		return
-	L.reagents.add_reagent("chloralhydrate", 5)
+	var/dir_target = get_dir(M, user)
+	var/dir_assassin = get_dir(user, M)
+	for(var/direction_target in list(dir_target, turn(dir_target, -90), turn(dir_target, 90)))
+		if(dir_assassin == direction_target)
+			if(!M.reagents)
+				return
+			M.reagents.add_reagent("chloralhydrate", 1)
+			qdel(src)
+			return
+
+	M.apply_status_effect(STATUS_EFFECT_FULL_CONFUSION, 10 SECONDS)
 	qdel(src)
 
 /obj/item/weapon/grenade/curse
