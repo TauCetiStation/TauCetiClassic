@@ -1,9 +1,3 @@
-#define MAX_RUNES_ON_MOB 5
-
-#define COMSIG_ATTACK_HAND_FULTOPORTAL "attackhand_fultonportal"
-#define COMSIG_DETECT_MAELSTROM_IMPLANT "detect_maelstrom_implant"
-	#define COMPONENT_IMPLANT_DETECTED 1
-
 /datum/element/maelstrom
 	element_flags = ELEMENT_DETACH
 	var/list/datum/building_agent/available_runes = list(new /datum/building_agent/rune/maelstrom/convert(),

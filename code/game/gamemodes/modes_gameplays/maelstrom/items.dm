@@ -54,12 +54,12 @@
 	var/dir_target = M.dir
 	//not backstab - confuse
 	if(diros in list(dir_target, turn(dir_target, -45), turn(dir_target, 45)))
-		M.apply_status_effect(STATUS_EFFECT_FULL_CONFUSION, 10 SECONDS)
+		M.apply_status_effect(STATUS_EFFECT_FULL_CONFUSION, 15 SECONDS)
 		qdel(src)
 		return
 	// reagents defined in atoms by null
 	if(!M.reagents)
-		return 
+		return
 	M.reagents.add_reagent("chloralhydrate", 1)
 	qdel(src)
 
@@ -99,7 +99,7 @@
 		if(SEND_SIGNAL(L, COMSIG_DETECT_MAELSTROM_IMPLANT) & COMPONENT_IMPLANT_DETECTED)
 			L.reagents.add_reagent("stimulants", 3)
 			continue
-		L.AdjustConfused(10)
+		L.apply_status_effect(STATUS_EFFECT_FULL_CONFUSION, 7 SECONDS)
 		L.make_jittery(150)
 	light_off_range(surroundings, get_turf(src))
 	qdel(src)

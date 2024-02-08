@@ -249,6 +249,12 @@
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
 /// from /obj/item/weapon/stock_parts/cell
 #define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
+// from base of weapon/implant/inject(): (mob/living/carbon/user)
+#define COMSIG_IMPLANT_INJECTED "implant_injected"
+// from base of weapon/implant/implant_removal(): (mob/living/carbon/user)
+#define COMSIG_IMPLANT_REMOVAL "implant_removal"
+// from base of /datum/rune/maelstrom/portal_beacon/can_action(): (mob/living/carbon/user)
+#define COMSIG_ATTACK_HAND_FULTOPORTAL "attackhand_fulton_portal"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -281,9 +287,6 @@
 	#define COMPONENT_CANCEL_CLICK 1
 // from base of mob/RegularClickOn(): (mob/user, params)
 #define COMSIG_ATOM_REGULAR_CLICKED "atom_clicked"
-#define CYBERPSYCHO "cyberpsycho"
-#define COMSIG_IMPLANT_INJECTED "implant_injected"
-#define COMSIG_IMPLANT_REMOVAL "implant_removal"
 /// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
@@ -402,6 +405,10 @@
 #define COMSIG_BODYPART_UPDATING_HEALTH_HUD "bodypart_updating_health_hud"
 	/// Return to override that bodypart's health hud with your own icon
 	#define COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD (1<<0)
+
+// send this signal for check implants in mob
+#define COMSIG_DETECT_MAELSTROM_IMPLANT "detect_maelstrom_implant"
+	#define COMPONENT_IMPLANT_DETECTED 1
 
 /// from /proc/health_analyze(): (list/args = list(message, scan_hallucination_boolean))
 /// Consumers are allowed to mutate the scan_results list to add extra information

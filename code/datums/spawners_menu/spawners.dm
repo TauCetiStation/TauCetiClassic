@@ -789,6 +789,8 @@
 		var/datum/job/job = SSjob.GetJob(rank)
 		if(!job)
 			avaible_ranks -= rank
+		if(!job.is_position_available())
+			avaible_ranks -= rank
 		if(!job.player_old_enough(spectator.client))
 			avaible_ranks -= rank
 		if(!job.map_check())

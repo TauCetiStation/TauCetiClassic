@@ -178,10 +178,6 @@
 	var/obj/item/weapon/storage/bible/tome/B = spawn_bible(cultist)
 	cultist.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 
-#define RUNES_DRAW        "Runes draw"
-#define CONSTRUCTION_DRAW "Construction draw"
-#undef RUNES_DRAW
-#undef CONSTRUCTION_DRAW
 /datum/religion/cult/proc/area_entered(area/A, atom/movable/AM)
 	if(ishuman(AM))
 		humans_in_heaven += AM

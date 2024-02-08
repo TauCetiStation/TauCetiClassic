@@ -163,7 +163,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, teleporting_run
 
 /datum/rune/maelstrom/portal_beacon
 	name = "Маяк Портала Культа"
-	words = list("travel", "hell", "technology")
 
 /datum/rune/maelstrom/portal_beacon/get_choice_image()
 	return image('icons/hud/screen_spells.dmi', icon_state = "portal")
@@ -174,7 +173,6 @@ ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, teleporting_run
 
 /datum/rune/maelstrom/bloodboil
 	name = "Кипение Крови"
-	words = list("destroy", "blood", "see")
 
 /datum/rune/maelstrom/bloodboil/get_choice_image()
 	return image('icons/hud/screen_spells.dmi', icon_state = "blood_boil")
