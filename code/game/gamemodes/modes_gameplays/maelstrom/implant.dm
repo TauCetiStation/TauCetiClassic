@@ -1,6 +1,7 @@
 
 /obj/item/weapon/implant/maelstrom
 	icon_state = "implant_blood"
+	icon = 'icons/obj/items.dmi'
 	item_action_types = list(/datum/action/item_action/implant/maelstrom)
 
 /obj/item/weapon/implant/maelstrom/atom_init()
