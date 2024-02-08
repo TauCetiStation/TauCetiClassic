@@ -45,18 +45,22 @@
 	. = ..()
 	if(!.)
 		return
-	//not backstab
-	var/dir_target = get_dir(M, user)
-	var/dir_assassin = get_dir(user, M)
-	for(var/direction_target in list(dir_target, turn(dir_target, -90), turn(dir_target, 90)))
-		if(dir_assassin == direction_target)
-			if(!M.reagents)
-				return
-			M.reagents.add_reagent("chloralhydrate", 1)
-			qdel(src)
-			return
-
-	M.apply_status_effect(STATUS_EFFECT_FULL_CONFUSION, 10 SECONDS)
+	// attacking himself
+	if(M == user)
+		M.apply_status_effect(STATUS_EFFECT_FULL_CONFUSION, 10 SECONDS)
+		qdel(src)
+		return
+	var/diros = get_dir(M, user)
+	var/dir_target = M.dir
+	//not backstab - confuse
+	if(diros in list(dir_target, turn(dir_target, -45), turn(dir_target, 45)))
+		M.apply_status_effect(STATUS_EFFECT_FULL_CONFUSION, 10 SECONDS)
+		qdel(src)
+		return
+	// reagents defined in atoms by null
+	if(!M.reagents)
+		return 
+	M.reagents.add_reagent("chloralhydrate", 1)
 	qdel(src)
 
 /obj/item/weapon/grenade/curse
