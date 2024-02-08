@@ -1,9 +1,6 @@
 #define MALFUNCTION_TEMPORARY 1
 #define MALFUNCTION_PERMANENT 2
-#define YOURS_RU(atom) atom.gender == MALE && "вашем" \
-|| atom.gender == FEMALE && "вашей" \
-|| atom.gender == NEUTER && "вашем" \
-|| "ваших"
+
 /obj/item/weapon/implant
 	name = "implant"
 	cases = list("имплант", "импланта", "импланту", "имплант", "имплантом", "импланте")
