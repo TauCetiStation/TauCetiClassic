@@ -7,9 +7,7 @@
 														new /datum/building_agent/rune/maelstrom/bloodboil()
 														)
 	var/static/list/rune_choices_image = list()
-	//var/scribing = FALSE
 	var/static/list/rune_next = list()
-	//var/list/runes_by_ckey
 
 /datum/element/maelstrom/Attach(datum/target)
 	. = ..()
