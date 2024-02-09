@@ -198,3 +198,5 @@ var/global/static/list/color_by_hex = list(
 var/global/list/deconverted_roles = list()
 
 var/global/list/reagents_list = typecacheof(/datum/reagent)
+
+var/global/list/virus_types_by_pool

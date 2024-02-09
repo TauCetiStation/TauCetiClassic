@@ -189,7 +189,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Cryo", "Cryo Cell")
+		ui = new(user, src, "Cryo", "Криокапсула")
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/tgui_act(action, list/params, datum/tgui/ui)

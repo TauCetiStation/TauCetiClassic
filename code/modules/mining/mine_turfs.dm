@@ -457,7 +457,16 @@
 	. = ..()
 
 /turf/simulated/mineral/random/caves
+	mineralChance = 5
+
+/turf/simulated/mineral/random/caves/high_chance
+	icon_state = "rock_cave_highchance"
 	mineralChance = 25
+	mineralSpawnChanceList = list("Phoron" = 25, "Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 5, "Diamond" = 10)
+
+/turf/simulated/mineral/random/caves/high_chance/atom_init()
+	icon_state = "rock"
+	return ..()
 
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
