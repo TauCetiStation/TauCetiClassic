@@ -456,7 +456,7 @@
 			infection = "Не обнаружено:"
 
 		dat += "<tr>"
-		dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+		dat += "<td>[C_CASE(IO, NOMINATIVE_CASE)]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 		dat += "</tr>"
 
 	dat += "</table>"
