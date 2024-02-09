@@ -207,7 +207,11 @@
 		var/list/extOrganData = list()
 		for(var/obj/item/organ/external/E in occupant.bodyparts)
 			var/list/organData = list()
+
 			organData["name"] = C_CASE(E, NOMINATIVE_CASE)
+			if(E.is_stump)
+				organData["name"] = capitalize(parse_zone_ru(E.body_zone))
+
 			organData["open"] = E.open
 			organData["germ_level"] = get_germ_level_name(E.germ_level)
 			organData["bruteLoss"] = E.brute_dam
@@ -216,8 +220,6 @@
 			organData["maxHealth"] = E.max_damage
 			organData["broken"] = E.min_broken_damage
 			organData["stump"] = E.is_stump
-			if(E.is_stump)
-				organData["name"] = capitalize(parse_zone_ru(E.body_zone))
 
 			var/list/implantData = list()
 			var/has_unknown_implant = FALSE
@@ -272,7 +274,6 @@
 		for(var/obj/item/organ/internal/I in occupant.organs)
 			var/list/organData = list()
 			organData["name"] = C_CASE(I, NOMINATIVE_CASE)
-			organData["desc"] = I.desc
 			organData["germ_level"] = get_germ_level_name(I.germ_level)
 			organData["damage"] = I.damage
 			organData["maxHealth"] = I.min_broken_damage
