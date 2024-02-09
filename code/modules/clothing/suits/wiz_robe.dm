@@ -15,7 +15,6 @@
 	desc = "Ho ho ho. Merrry X-mas!"
 	icon_state = "santahat"
 	flags = HEADCOVERSEYES | BLOCKHAIR
-	body_parts_covered = HEAD
 
 /obj/item/clothing/head/wizard/ushanka
 	name = "ushanka"
@@ -23,7 +22,6 @@
 	flags_inv = HIDEEARS
 	icon_state = "ushanka_black_brown-down"
 	var/ushanka_state = "ushanka_black_brown"
-	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/head/wizard/ushanka/atom_init()
