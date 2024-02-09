@@ -358,7 +358,7 @@
 		scantemp = "Ошибка: мозг пациента мёртв."
 		return
 	if((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
-		scantemp = "<span class='bad'>Пациент не содержит достаточное количество материала для клонирования.</span>"
+		scantemp = "<span class='bad'>Геном пациента повреждён и не пригоден для клонирования.</span>"
 		return
 	if(!isnull(find_record(subject.ckey)))
 		scantemp = "Пациент уже находится в базе данных."
