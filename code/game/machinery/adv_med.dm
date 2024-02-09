@@ -354,21 +354,8 @@
 		dat += "В лобной доле обнаружено новообразование, возможно злокачественное. Рекомендуется хирургическое вмешательство.<BR/>"
 
 	var/blood_volume = occupant.blood_amount()
-	var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
+	var/blood_percent =  (blood_volume / BLOOD_VOLUME_NORMAL) * 100
 	dat += "\tУровень крови %: [blood_percent] ([blood_volume] [PLUR_UNITS(blood_volume)])<BR>"
-
-	if(occupant.reagents)
-		var/inaprovaline_amount = occupant.reagents.get_reagent_amount("inaprovaline")
-		var/stoxin_amount = occupant.reagents.get_reagent_amount("stoxin")
-		var/dermaline_amount = occupant.reagents.get_reagent_amount("dermaline")
-		var/bicaridine_amount = occupant.reagents.get_reagent_amount("bicaridine")
-		var/dexalin_amount = occupant.reagents.get_reagent_amount("dexalin")
-
-		dat += "\tИнапровалин: [inaprovaline_amount] [PLUR_UNITS(inaprovaline_amount)]<BR>"
-		dat += "\tСнотворное: [stoxin_amount] [PLUR_UNITS(stoxin_amount)]<BR>"
-		dat += "\tДермалин: [dermaline_amount] [PLUR_UNITS(dermaline_amount)]<BR>"
-		dat += "\tБикаридин: [bicaridine_amount] [PLUR_UNITS(bicaridine_amount)]<BR>"
-		dat += "\tДексалин: [dexalin_amount] [PLUR_UNITS(dexalin_amount)]<BR>"
 
 	dat += "<HR><table border='1'>"
 	dat += "<tr>"
