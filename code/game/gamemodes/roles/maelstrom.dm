@@ -49,7 +49,7 @@
 			to_chat(mob, "Ваши тренировки позволили вам преодолеть клоунскую неуклюжесть, что позволит вам без вреда для себя применять любое вооружение.")
 			REMOVE_TRAIT(mob, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
-	if(SEND_SIGNAL(mob, COMSIG_DETECT_MAELSTROM_IMPLANT) & COMPONENT_IMPLANT_DETECTED)
+	if(HAS_TRAIT(mob, TRAIT_CULT_IMPLANT))
 		return
 	give_implant(mob)
 

@@ -3,6 +3,7 @@
 	icon_state = "implant_blood"
 	icon = 'icons/obj/items.dmi'
 	item_action_types = list(/datum/action/item_action/implant/maelstrom)
+	implant_trait = TRAIT_CULT_IMPLANT
 
 /obj/item/weapon/implant/maelstrom/atom_init()
 	. = ..()

@@ -16,7 +16,7 @@
 	return ..()
 
 /obj/item/weapon/kitchenknife/ritual/calling_up/attack_self(mob/user)
-	if(!(SEND_SIGNAL(user, COMSIG_DETECT_MAELSTROM_IMPLANT) & COMPONENT_IMPLANT_DETECTED))
+	if(!HAS_TRAIT(user, TRAIT_CULT_IMPLANT))
 		return
 	if(!COOLDOWN_FINISHED(src, incall_cd))
 		return
@@ -68,7 +68,7 @@
 	icon_state = "curse_grenade"
 
 /obj/item/weapon/grenade/curse/attack_self(mob/user)
-	if(SEND_SIGNAL(user, COMSIG_DETECT_MAELSTROM_IMPLANT) & COMPONENT_IMPLANT_DETECTED)
+	if(HAS_TRAIT(user, TRAIT_CULT_IMPLANT))
 		return ..()
 
 /obj/item/weapon/grenade/curse/prime()
@@ -96,7 +96,7 @@
 			throw_living = TRUE
 		if(throw_living)
 			L.throw_at(get_step(L, get_dir(src, L)), 1, 1)
-		if(SEND_SIGNAL(L, COMSIG_DETECT_MAELSTROM_IMPLANT) & COMPONENT_IMPLANT_DETECTED)
+		if(HAS_TRAIT(L, TRAIT_CULT_IMPLANT))
 			L.reagents.add_reagent("stimulants", 3)
 			continue
 		L.apply_status_effect(STATUS_EFFECT_FULL_CONFUSION, 7 SECONDS)

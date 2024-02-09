@@ -67,9 +67,6 @@
 
 	add_item_actions(C)
 
-	SEND_SIGNAL(src, COMSIG_IMPLANT_INJECTED, C)
-
-
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
 	forceMove(C)
 	imp_in = C
@@ -77,13 +74,10 @@
 	C.sec_hud_set_implants()
 	add_item_actions(C)
 
-	SEND_SIGNAL(src, COMSIG_IMPLANT_INJECTED, C)
-
 /obj/item/weapon/implant/proc/implant_removal(mob/host)
 	if(implant_trait && istype(host))
 		REMOVE_TRAIT(host, implant_trait, IMPLANT_TRAIT)
 	remove_item_actions(host)
-	SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVAL, host)
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
