@@ -80,7 +80,7 @@
 
 /datum/rune/maelstrom/teleport/proc/get_runes_by_type(rune_type)
 	var/list/valid_runes = list()
-	for(var/obj/effect/decal/cleanable/crayon/maelstrom/R as anything in global.teleporting_runes)
+	for(var/obj/effect/decal/cleanable/crayon/maelstrom/R as anything in global.maelstrom_teleporting_runes)
 		if(!istype(R.power, rune_type))
 			continue
 		if(is_station_level(R.loc.z))
@@ -122,7 +122,7 @@
 	if(!companions.len)
 		return
 	for(var/mob/living/M in list(user) + companions)
-		if(SEND_SIGNAL(M, COMSIG_DETECT_MAELSTROM_IMPLANT) & COMPONENT_IMPLANT_DETECTED)
+		if(HAS_TRAIT(M, TRAIT_CULT_IMPLANT))
 			continue
 		M.Paralyse(2 SECONDS)
 
@@ -166,7 +166,6 @@
 	return image('icons/hud/screen_spells.dmi', icon_state = "portal")
 
 /datum/rune/maelstrom/portal_beacon/can_action(mob/living/carbon/user)
-	SEND_SIGNAL(holder, COMSIG_ATTACK_HAND_FULTOPORTAL, user)
 	return FALSE
 
 /datum/rune/maelstrom/bloodboil
@@ -178,14 +177,14 @@
 /datum/rune/maelstrom/proc/nearest_acolytes()
 	var/list/acolytes = list()
 	for(var/mob/living/carbon/C in range(1, holder))
-		if(SEND_SIGNAL(C, COMSIG_DETECT_MAELSTROM_IMPLANT) & COMPONENT_IMPLANT_DETECTED)
+		if(HAS_TRAIT(C, TRAIT_CULT_IMPLANT))
 			acolytes += C
 	return acolytes
 
 /datum/rune/maelstrom/bloodboil/proc/nearest_heretics()
 	var/list/heretics = list()
 	for(var/mob/living/heretic in view(5, holder))
-		if(SEND_SIGNAL(heretic, COMSIG_DETECT_MAELSTROM_IMPLANT) & COMPONENT_IMPLANT_DETECTED)
+		if(HAS_TRAIT(heretic, TRAIT_CULT_IMPLANT))
 			continue
 		heretics += heretic
 	return heretics
