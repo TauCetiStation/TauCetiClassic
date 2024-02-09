@@ -2,9 +2,9 @@
 	name = "wizard hat"
 	desc = "Strange-looking hat-wear that most certainly belongs to a real magic user."
 	icon_state = "wizard"
-	//Not given any special protective value since the magic robes are full-body protection --NEO
 	siemens_coefficient = 0.4
-	body_parts_covered = 0
+	armor = list(melee = 30, bullet = 10, laser = 10,energy = 20, bomb = 20, bio = 20, rad = 20)
+	flashbang_protection = TRUE
 
 /obj/item/clothing/head/wizard/atom_init(mapload, ...)
 	. = ..()
