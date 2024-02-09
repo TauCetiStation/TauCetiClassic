@@ -9,14 +9,18 @@
 	var/static/list/rune_choices_image = list()
 	var/static/list/rune_next = list()
 
+/datum/element/maelstrom/New()
+	. = ..()
+	if(rune_choices_image.len == 0)
+		rune_choices()
+
 /datum/element/maelstrom/Attach(datum/target)
 	. = ..()
 	RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
-	RegisterSignal(target, COMSIG_IMPLANT_INJECTED, PROC_REF(user_registration))
 
 /datum/element/maelstrom/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_IMPLANT_INJECTED, COMSIG_DETECT_MAELSTROM_IMPLANT))
+	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK_SELF))
 
 /datum/element/maelstrom/proc/get_agent_radial_menu(list/datum/building_agent/BA, mob/user)
 	for(var/datum/building_agent/B in BA)
@@ -65,34 +69,17 @@
 		rune_choices_image[B] = image(icon = R.get_choice_image())
 		qdel(R)
 
-/datum/element/maelstrom/proc/begin_draw(mob/user)
-	if(rune_choices_image.len < available_runes.len)
-		rune_choices()
-	scribe_rune(user)
-
 /datum/element/maelstrom/proc/on_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/H = user
 	if(!istype(H))
-		INVOKE_ASYNC(src, PROC_REF(begin_draw), user)
+		INVOKE_ASYNC(src, PROC_REF(scribe_rune), user)
 		return
 	var/obj/item/weapon/implant/I = source
 	if(!istype(I))
 		return
 	// works only when implanted to hands
 	if(I.part && (I.part == H.get_bodypart(BP_L_ARM) || I.part == H.get_bodypart(BP_R_ARM)))
-		INVOKE_ASYNC(src, PROC_REF(begin_draw), user)
-
-/datum/element/maelstrom/proc/re_enable_detecting_inject(datum/source, mob/living/carbon/user)
-	SIGNAL_HANDLER
-	RegisterSignal(source, COMSIG_IMPLANT_INJECTED, PROC_REF(user_registration))
-
-/datum/element/maelstrom/proc/user_registration(datum/source, mob/living/carbon/user)
-	SIGNAL_HANDLER
-	UnregisterSignal(source, COMSIG_IMPLANT_INJECTED)
-	RegisterSignal(source, COMSIG_IMPLANT_REMOVAL, PROC_REF(re_enable_detecting_inject))
-	RegisterSignal(user, COMSIG_DETECT_MAELSTROM_IMPLANT, PROC_REF(detect_maelstrom_implant))
-
-/datum/element/maelstrom/proc/detect_maelstrom_implant(datum/source)
-	SIGNAL_HANDLER
-	return COMPONENT_IMPLANT_DETECTED
+		INVOKE_ASYNC(src, PROC_REF(scribe_rune), user)
+		return
+	to_chat(user, "<span class='warning'>Это должно вживляться в руку!</span>")
