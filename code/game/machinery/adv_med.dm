@@ -262,7 +262,7 @@
 
 			organData["name"] = capitalize(parse_zone_ru(bp_type))
 			organData["missing"] = TRUE
-			organData["totalLoss"] = FALSE
+			organData["totalLoss"] = 0
 
 			organData["status"] = organStatus
 
