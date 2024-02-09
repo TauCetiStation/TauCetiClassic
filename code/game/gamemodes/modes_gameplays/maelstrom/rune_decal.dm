@@ -1,6 +1,6 @@
-var/global/list/teleporting_runes = list()
+var/global/list/maelstrom_teleporting_runes = list()
 
-ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, teleporting_runes)
+ADD_TO_GLOBAL_LIST(/obj/effect/decal/cleanable/crayon/maelstrom, maelstrom_teleporting_runes)
 /obj/effect/decal/cleanable/crayon/maelstrom
 	var/datum/rune/power
 	var/creator_ckey
