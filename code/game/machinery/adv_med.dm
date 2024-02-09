@@ -163,7 +163,7 @@
 /obj/machinery/body_scanconsole/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "BodyScanner", name, 690, 600)
+		ui = new(user, src, "BodyScanner", C_CASE(src, NOMINATIVE_CASE), 690, 600)
 		ui.open()
 
 /obj/machinery/body_scanconsole/tgui_data(mob/user)
@@ -216,6 +216,8 @@
 			organData["maxHealth"] = E.max_damage
 			organData["broken"] = E.min_broken_damage
 			organData["stump"] = E.is_stump
+			if(E.is_stump)
+				organData["name"] = capitalize(parse_zone_ru(E.body_zone))
 
 			var/list/implantData = list()
 			var/has_unknown_implant = FALSE
@@ -249,6 +251,18 @@
 
 			if(E.status & ORGAN_ARTERY_CUT)
 				organData["internalBleeding"] = TRUE
+
+			extOrganData.Add(list(organData))
+
+		for(var/bp_type in occupant.get_missing_bodyparts())
+			var/list/organData = list()
+			var/list/organStatus = list()
+
+			organData["name"] = capitalize(parse_zone_ru(bp_type))
+			organData["missing"] = TRUE
+			organData["totalLoss"] = FALSE
+
+			organData["status"] = organStatus
 
 			extOrganData.Add(list(organData))
 
@@ -376,20 +390,20 @@
 		var/arterial_bleeding = ""
 		var/rejecting = ""
 		if(BP.status & ORGAN_ARTERY_CUT)
-			arterial_bleeding = "<br><b>Arterial bleeding</b></br>"
+			arterial_bleeding = "<br><b>Артериальное кровотечение</b></br>"
 		if(BP.status & ORGAN_SPLINTED)
 			splint = "Наложена шина:"
 		if(BP.status & ORGAN_BLEEDING)
 			bled = "Кровотечение:"
 		if(BP.status & ORGAN_BROKEN)
-			AN = "[BP.broken_description]:"
+			AN = "capitalize([BP.broken_description]):"
 		if(BP.is_robotic())
 			robot = "Протез:"
 		if(BP.open)
 			open = "Вскрытое:"
 		if(BP.is_rejecting)
 			rejecting = "Генетическое отторжение:"
-		if(BP.germ_level)
+		if(BP.germ_level >= INFECTION_LEVEL_ONE)
 			infected = "[get_germ_level_name(BP.germ_level)]:"
 
 		var/unknown_body = 0
@@ -405,14 +419,14 @@
 			AN = "Не обнаружено:"
 
 		if(!(BP.is_stump))
-			dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+			dat += "<td>[C_CASE(BP, NOMINATIVE_CASE)]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 		else
-			dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Отсутствует</td>"
+			dat += "<td>[capitalize(parse_zone_ru(BP.body_zone))]</td><td>-</td><td>-</td><td>Отсутствует</td>"
 		dat += "</tr>"
 
 	for(var/missing_zone in occupant.get_missing_bodyparts())
 		dat += "<tr>"
-		dat += "<td>[parse_zone(missing_zone)]</td><td>-</td><td>-</td><td>Отсутствует</td>"
+		dat += "<td>[capitalize(parse_zone_ru(missing_zone))]</td><td>-</td><td>-</td><td>Отсутствует</td>"
 		dat += "</tr>"
 
 	for(var/obj/item/organ/internal/IO in occupant.organs)
@@ -435,7 +449,7 @@
 			if(occupant.is_lung_ruptured())
 				organ_status = "Разрыв легкого:"
 
-		if(IO.germ_level)
+		if(IO.germ_level >= INFECTION_LEVEL_ONE)
 			infection = "[get_germ_level_name(IO.germ_level)]:"
 		if(!organ_status && !infection)
 			infection = "Не обнаружено:"

@@ -268,7 +268,8 @@ const BodyScannerMainOrgansExternal = (props) => {
               color={
                 ((!!o.status.dead
                   || !!o.internalBleeding
-                  || !!o.stump)
+                  || !!o.stump
+                  || !!o.missing)
                   && 'bad')
                 || ((!!o.lungRuptured
                   || !!o.status.broken
@@ -321,6 +322,8 @@ const BodyScannerMainOrgansExternal = (props) => {
                   {reduceOrganStatus([
                     !!o.internalBleeding && 'Артериальное кровотечение',
                     !!o.status.dead && 'ОТКАЗ',
+                    !!o.stump && 'Культя',
+                    !!o.missing && 'Отсутствует',
                   ])}
                 </Box>
                 <Box color="average">
@@ -331,7 +334,7 @@ const BodyScannerMainOrgansExternal = (props) => {
                     !!o.open && 'Открытый разрез',
                   ])}
                 </Box>
-                {o.implant.map((s) => (s.name ? (
+                {o.implant?.map((s) => (s.name ? (
                   <Box color="good">
                     {s.name}
                   </Box>
