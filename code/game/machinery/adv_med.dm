@@ -350,7 +350,7 @@
 	if(occupant.virus2.len)
 		dat += "В кровотоке обнаружен вирусный патоген.<BR>"
 
-	dat += "\tЗдоровье %: [occupant.health] ([t1])</font><BR>"
+	dat += "\tЗдоровье %: [occupant.health] ([t1])<BR>"
 	dat += "\t-Механические %: [occupant.getBruteLoss()]<BR>"
 	dat += "\t-Асфиксия %: [occupant.getOxyLoss()]<BR>"
 	dat += "\t-Интоксикация %: [occupant.getToxLoss()]<BR>"
