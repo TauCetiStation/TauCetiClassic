@@ -99,7 +99,7 @@
 	explanation_text = "Вы считаете себя андроидом. Будьте более похожим на андроида."
 
 /datum/objective/abductee/prevent
-	explanation_text = "Вы достигли Просвещения. Не дайте никому более его достичь!"
+	explanation_text = "Вы достигли просвещения. Не дайте никому более его достичь!"
 
 /datum/objective/abductee/calling
 	explanation_text = "Вызовите духа погибшего члена экипажа."
