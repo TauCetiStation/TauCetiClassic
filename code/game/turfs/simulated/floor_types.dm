@@ -21,6 +21,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/floor/light/atom_init_late()
+	..()
 	update_icon()
 	name = initial(name)
 
@@ -339,6 +340,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/floor/grass/atom_init_late()
+	..()
 	update_icon()
 	for(var/direction in cardinal)
 		if(istype(get_step(src,direction),/turf/simulated/floor))
