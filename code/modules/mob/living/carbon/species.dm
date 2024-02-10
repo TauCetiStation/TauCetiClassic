@@ -1923,7 +1923,7 @@
 		H.fire_stacks += 0.2
 
 /datum/species/serpentid/proc/try_tear_body(mob/living/source, obj/item/weapon/grab/G)
-	if(!G.state < GRAB_KILL)
+	if(G.state < GRAB_KILL)
 		return
 	var/mob/living/assailant = source
 	if(!ishuman(G.affecting))
