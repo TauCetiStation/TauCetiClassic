@@ -24,7 +24,7 @@
 		if(71 to 80)
 			explanation_text = "Уничтожьте ИИ."
 		if(81 to 90)
-			explanation_text = "Убить всех обезьян на станции."
+			explanation_text = "Убейте всех обезьян на станции."
 		else
 			explanation_text = "Минимум 80% членов экипажа должно покинуть станцию на шаттле."
 
