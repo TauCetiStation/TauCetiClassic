@@ -1223,16 +1223,13 @@ var/global/centcom_barriers_stat = 1
 
 /obj/effect/landmark/trololo
 	name = "Rickroll"
-	//var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	//NOPE
 	var/message = "<i><span class='notice'>It's not the door you're looking for...</span></i>"
 	var/active = 1
-	var/lchannel = 999
 
 /obj/effect/landmark/trololo/Crossed(atom/movable/AM)
 	. = ..()
 	if(!active) return
-	/*if(iscarbon(M))
-		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/
+	to_chat(usr, "<span class='notice'><b><font size=3>Never gonna give you up.</font></b></span>")
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"
