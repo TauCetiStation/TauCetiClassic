@@ -22,7 +22,7 @@
 	return completed
 
 /datum/objective/proc/completion_to_string(tags = TRUE)
-	var/result = "ПРОВАЛ"
+	var/result = "Ошибка"
 	if(completed == OBJECTIVE_WIN)
 		result = "УСПЕХ"
 		if(tags)
