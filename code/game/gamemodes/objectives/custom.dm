@@ -22,7 +22,7 @@
 		if(61 to 70)
 			explanation_text = "Перекройте подачу энергии на станции."
 		if(71 to 80)
-			explanation_text = "Уничтожить ИИ."
+			explanation_text = "Уничтожьте ИИ."
 		if(81 to 90)
 			explanation_text = "Убить всех обезьян на станции."
 		else
