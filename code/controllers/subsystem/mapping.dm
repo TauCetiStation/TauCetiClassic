@@ -273,7 +273,7 @@ SUBSYSTEM_DEF(mapping)
 		if(areas_by_type[/area/shuttle/officer/station])
 			areas_by_type[/area/shuttle/officer/station].name = config.station_name
 	if(areas_by_type[/area/velocity/monorailwagon])
-		areas_by_type[/area/velocity/monorailwagon].name = "NTS Velocity, Dock 42, Monorail Metro Station"
+		areas_by_type[/area/velocity/monorailwagon].name = "НТС Велосити, док 42, Станция Метро"
 
 /datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
 	if(!VM.MakeNextMap())
