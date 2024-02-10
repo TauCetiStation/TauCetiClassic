@@ -1,5 +1,5 @@
 /datum/objective/escape
-	explanation_text = "Сбегите на шаттле или экстренной капсуле, находясь на свободе."
+	explanation_text = "Сбегите на шаттле или в спасательной капсуле, находясь на свободе."
 
 /datum/objective/escape/check_completion()
 	if(issilicon(owner.current))
