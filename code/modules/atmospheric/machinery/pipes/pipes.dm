@@ -14,6 +14,29 @@
 
 	undertile = TRUE
 
+/* todo: need to add turf signals and make them work
+/obj/machinery/atmospherics/pipe/atom_init()
+	..()
+
+	check_force_hide()
+	RegisterSignal(loc, COMSIG_TURF_CHANGED, PROC_REF(check_force_hide))
+
+// this shitty part exists only for /visible pipes, when unexpectedly we need to make them invisible under walls
+// it has nothing to do with the component, and should be rewritten in the future
+/obj/machinery/atmospherics/pipe/proc/check_force_hide()
+	SIGNAL_HANDLER
+	world.log << "[src] turf changed to [loc]"
+	if(!undertile) // for undertile it is already resolved by component
+		var/turf/T = get_turf(src)
+		if(T.density)
+			ADD_TRAIT(src, TRAIT_T_RAY_VISIBLE, REF(src))
+			alpha = 128
+			invisibility = INVISIBILITY_MAXIMUM
+		else
+			REMOVE_TRAIT(src, TRAIT_T_RAY_VISIBLE, REF(src))
+			alpha = initial(alpha)
+			invisibility = initial(invisibility)*/
+
 /obj/machinery/atmospherics/pipe/Destroy()
 	if(SSair.stop_airnet_processing)
 		return ..()

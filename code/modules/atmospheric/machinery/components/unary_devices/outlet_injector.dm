@@ -21,7 +21,7 @@
 	frequency = 0
 	var/id = null
 
-	undertile = TRUE
+	undertile = FALSE
 	layer = GAS_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on

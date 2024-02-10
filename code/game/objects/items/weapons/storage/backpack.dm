@@ -333,7 +333,7 @@
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
 
-	AddElement(/datum/element/undertile, use_alpha = TRUE)
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE, use_anchor = TRUE)
 
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "suspicious looking dufflebag"

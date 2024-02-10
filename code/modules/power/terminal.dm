@@ -10,7 +10,7 @@
 	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
 	anchored = TRUE
-	layer = 2.6 // a bit above wires
+	layer = POWER_TERMINAL
 
 /obj/machinery/power/terminal/atom_init()
 	. = ..()

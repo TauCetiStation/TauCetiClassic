@@ -10,7 +10,7 @@
 	idle_power_usage = 100
 	connect_types = CONNECT_TYPE_REGULAR | CONNECT_TYPE_SCRUBBER | CONNECT_TYPE_SUPPLY
 
-	undertile = TRUE
+	undertile = FALSE
 
 	// Prevent unauthorized usage
 	req_access = list(access_atmospherics)

@@ -7,6 +7,8 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/welded = FALSE //Used on pumps and scrubbers
 	var/showpipe = FALSE
 
+	plane = FLOOR_PLANE
+
 	var/list/datum/pipeline/parents
 	var/list/datum/gas_mixture/airs
 

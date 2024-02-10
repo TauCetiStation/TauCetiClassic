@@ -31,7 +31,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
-	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
+	layer = POWER_CABLES
 	color = COLOR_RED
 	max_integrity = 5
 	resistance_flags = CAN_BE_HIT

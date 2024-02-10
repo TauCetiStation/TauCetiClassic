@@ -21,7 +21,7 @@
 	name = "dual-port air vent"
 	desc = "Has a valve and pump attached to it. There are two ports."
 
-	undertile = TRUE
+	undertile = FALSE
 
 	use_power = NO_POWER_USE
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
@@ -82,7 +82,7 @@
 	var/obj/machinery/atmospherics/node1 = NODE1
 	var/obj/machinery/atmospherics/node2 = NODE2
 
-	if(!T.is_plating() && node1 && node2 && node1.undertile && node2.undertile && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
+	if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && node1 && node2 && node1.undertile && node2.undertile && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
 		vent_icon += "h"
 
 	if(!powered())
@@ -103,7 +103,7 @@
 		var/obj/machinery/atmospherics/node1 = NODE1
 		var/obj/machinery/atmospherics/node2 = NODE2
 
-		if(!T.is_plating() && node1 && node2 && node1.undertile && node2.undertile && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
+		if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && node1 && node2 && node1.undertile && node2.undertile && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
 			return
 		else
 			if (node1)
