@@ -355,7 +355,7 @@
 		scantemp = "Ошибка: мозг пациента мёртв."
 		return
 	if((!subject.ckey) || (!subject.client))
-		scantemp = "Ошибка: мозг пациента мёртв."
+		scantemp = "Ошибка: сканирование не удалось."
 		return
 	if((NOCLONE in subject.mutations && src.scanner.scan_level < 4) || HAS_TRAIT(subject, TRAIT_NO_CLONE))
 		scantemp = "<span class='bad'>Геном пациента повреждён и не пригоден для клонирования.</span>"
