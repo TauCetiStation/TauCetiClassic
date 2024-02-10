@@ -15,7 +15,7 @@
 
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SCRUBBER //connects to regular and scrubber pipes
 
-	undertile = TRUE
+	undertile = FALSE
 	layer = GAS_SCRUBBER_LAYER
 	frequency = 1439
 
@@ -104,7 +104,7 @@
 
 		var/obj/machinery/atmospherics/node = NODE1
 
-		if(!T.is_plating() && node && node.undertile && istype(node, /obj/machinery/atmospherics/pipe))
+		if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && node && node.undertile && istype(node, /obj/machinery/atmospherics/pipe))
 			return
 		else
 			if(node)

@@ -253,8 +253,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/add_underlay(turf/T, obj/machinery/atmospherics/node, direction, icon_connect_type)
 	if(node)
-		//todo: check for underfloor_accessibility instead of is_plating
-		if(!T.is_plating() && undertile && istype(node, /obj/machinery/atmospherics/pipe))
+		if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && undertile && istype(node, /obj/machinery/atmospherics/pipe))
 			//underlays += icon_manager.get_atmos_icon("underlay_down", direction, color_cache_name(node))
 			underlays += icon_manager.get_atmos_icon("underlay", direction, color_cache_name(node), "down" + icon_connect_type)
 		else
