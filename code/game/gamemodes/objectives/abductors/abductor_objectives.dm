@@ -57,7 +57,7 @@
 	explanation_text = "Не допустите клонирование членов экипажа."
 
 /datum/objective/abductee/blazeit
-	explanation_text = "Вы должны стать лучше. Принимайте больше лекарств и наркотиков."
+	explanation_text = "Вы должны стать лучше. Принимайте как можно больше лекарств."
 
 /datum/objective/abductee/yumyum
 	explanation_text = "Вы ОЧЕНЬ голодны. Найдите и съешьте как можно больше еды"
