@@ -5,7 +5,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "combat_hypo"
 	volume = 60
-	list_reagents = list("stimulants" = 30, "oxycodone" = 15, "doctorsdelight" = 15)
+	list_reagents = list("stimulants" = 30, "tricordrazine" = 20, "oxycodone" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/combat/atom_init()
 	. = ..()
