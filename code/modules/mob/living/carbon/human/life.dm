@@ -782,7 +782,7 @@ var/global/list/tourette_bad_words= list(
 			drop_from_inventory(l_hand)
 			drop_from_inventory(r_hand)
 			if(halloss > 0)
-				adjustHalLoss(-3)
+				adjustHalLoss(-4)
 		else if(IsSleeping())
 			blinded = TRUE
 		//CONSCIOUS
@@ -790,9 +790,9 @@ var/global/list/tourette_bad_words= list(
 			stat = CONSCIOUS
 			if(halloss > 0)
 				if((crawling) || (buckled))
-					adjustHalLoss(-3)
+					adjustHalLoss(-4)
 				else
-					adjustHalLoss(-1)
+					adjustHalLoss(-2)
 
 		if(stat == UNCONSCIOUS)
 			if(client)

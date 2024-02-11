@@ -269,7 +269,7 @@
 		else
 			stat = CONSCIOUS
 			if(halloss > 0)
-				adjustHalLoss(-1)
+				adjustHalLoss(-2)
 
 		//Eyes
 		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own

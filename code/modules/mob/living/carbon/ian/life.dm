@@ -361,16 +361,16 @@
 			blinded = TRUE
 			stat = UNCONSCIOUS
 			if(halloss > 0)
-				adjustHalLoss(-3)
+				adjustHalLoss(-4)
 		else if(IsSleeping())
 			blinded = TRUE
 		else if(crawling)
 			if(halloss > 0)
-				adjustHalLoss(-3)
+				adjustHalLoss(-4)
 		else
 			stat = CONSCIOUS
 			if(halloss > 0)
-				adjustHalLoss(-1)
+				adjustHalLoss(-2)
 
 		//Eyes
 		if(sdisabilities & BLIND)	//disabled-blind, doesn't get better on its own
