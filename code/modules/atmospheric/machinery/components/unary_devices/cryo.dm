@@ -5,6 +5,7 @@
 	icon_state = "pod-off"
 
 	layer = ABOVE_WINDOW_LAYER
+	plane = GAME_PLANE
 	light_color = "#ffffff"
 	density = FALSE
 	anchored = TRUE
