@@ -1162,7 +1162,7 @@ var/global/list/tourette_bad_words= list(
 		shock_stage = max(shock_stage, 61)
 	else
 		shock_stage = min(shock_stage, 160)
-		shock_stage = max(shock_stage-2, 0)
+		shock_stage = max(shock_stage-4, 0)
 		return
 
 	if(shock_stage == 10)

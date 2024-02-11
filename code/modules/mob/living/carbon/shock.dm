@@ -7,8 +7,8 @@
 	src.traumatic_shock = 			\
 	1	* getOxyLoss() + 		\
 	0.7	* getToxLoss() + 		\
-	1.5	* getFireLoss() + 		\
-	1.2	* getBruteLoss() + 		\
+	1.3	* getFireLoss() + 		\
+	1	* getBruteLoss() + 		\
 	1.7	* getCloneLoss() + 		\
 	2	* src.halloss
 
@@ -46,11 +46,11 @@
 		var/mob/living/carbon/human/M = src
 		for(var/obj/item/organ/external/BP in M.bodyparts)
 			if(BP.is_stump)
-				src.traumatic_shock += 60
+				src.traumatic_shock += 40
 			else if((BP.status & ORGAN_BROKEN) || BP.open)
-				src.traumatic_shock += 30
+				src.traumatic_shock += 20
 				if(BP.status & ORGAN_SPLINTED)
-					src.traumatic_shock -= 25
+					src.traumatic_shock -= 15
 
 	if(src.traumatic_shock < 0)
 		src.traumatic_shock = 0
