@@ -5,7 +5,7 @@
 	icon_state = "stimpen"
 	item_state = "autoinjector_empty"
 	volume = 15
-	list_reagents = list("doctorsdelight" = 5, "stimulants" = 1, "bicaridine" = 2.5, "oxycodone" = 2.5, "kelotane" = 5)
+	list_reagents = list("stimulants" = 10, "oxycodone" = 5)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine
 	name = "bicaridine autoinjector"

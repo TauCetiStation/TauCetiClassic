@@ -322,10 +322,8 @@ Implant Specifics:<BR>"}
 	S.imp_in.SetParalysis(0)
 	S.imp_in.SetStunned(0)
 	S.imp_in.SetWeakened(0)
-	S.imp_in.reagents.add_reagent("tricordrazine", 20)
-	S.imp_in.reagents.add_reagent("doctorsdelight", 25)
 	S.imp_in.reagents.add_reagent("oxycodone", 5)
-	S.imp_in.reagents.add_reagent("stimulants", 4)
+	S.imp_in.reagents.add_reagent("stimulants", 10)
 	if (!S.uses)
 		qdel(S)
 
