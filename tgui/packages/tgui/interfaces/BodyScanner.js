@@ -17,7 +17,7 @@ import { Window } from '../layouts';
 const stats = [
   ['good', 'Стабильное'],
   ['average', 'Критическое'],
-  ['bad', 'МЁРТВ'],
+  ['bad', 'Мёртв'],
 ];
 
 const abnormalities = [
@@ -322,7 +322,7 @@ const BodyScannerMainOrgansExternal = (props) => {
                 <Box color="bad" bold>
                   {reduceOrganStatus([
                     !!o.internalBleeding && 'Артериальное кровотечение',
-                    !!o.status.dead && 'ОТКАЗ',
+                    !!o.status.dead && 'Отказ',
                     !!o.stump && 'Культя',
                     !!o.missing && 'Отсутствует',
                   ])}
@@ -412,7 +412,7 @@ const BodyScannerMainOrgansInternal = (props) => {
                 {reduceOrganStatus([
                   !!o.robotic && <Box color="label">Протез</Box>,
                   !!o.assisted && <Box color="label">Вспомогательный имплант</Box>,
-                  !!o.dead && <Box color="bad" bold>ОТКАЗ</Box>,
+                  !!o.dead && <Box color="bad" bold>Отказ</Box>,
                 ])}
               </Box>
             </Table.Cell>
