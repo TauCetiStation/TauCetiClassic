@@ -11,7 +11,6 @@ import {
   ProgressBar,
   Section,
   Table,
-  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -263,7 +262,9 @@ const BodyScannerMainOrgansExternal = (props) => {
           <Table.Cell textAlign="right">Дополнительные сведения</Table.Cell>
         </Table.Row>
         {props.organs.map((o, i) => (
-          <Table.Row key={i} textTransform="capitalize">
+          <Table.Row key={i}
+            textTransform="capitalize"
+            backgroundColor={(i % 2 !== 0) && "rgba(255, 255, 255, 0.05)"}>
             <Table.Cell
               color={
                 ((!!o.status.dead
@@ -374,7 +375,9 @@ const BodyScannerMainOrgansInternal = (props) => {
           <Table.Cell textAlign="right">Дополнительные сведения</Table.Cell>
         </Table.Row>
         {props.organs.map((o, i) => (
-          <Table.Row key={i} textTransform="capitalize">
+          <Table.Row key={i}
+            textTransform="capitalize"
+            backgroundColor={(i % 2 !== 0) && "rgba(255, 255, 255, 0.05)"}>
             <Table.Cell
               color={
                 ((!!o.dead || !!o.broken) && 'bad')
