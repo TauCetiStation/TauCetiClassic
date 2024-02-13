@@ -397,7 +397,7 @@
 		if(BP.status & ORGAN_BLEEDING)
 			bled = "Кровотечение:"
 		if(BP.status & ORGAN_BROKEN)
-			AN = "capitalize([BP.broken_description]):"
+			AN = "[capitalize(BP.broken_description)]:"
 		if(BP.is_robotic())
 			robot = "Протез:"
 		if(BP.open)
