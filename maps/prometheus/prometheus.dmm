@@ -804,6 +804,7 @@
 	name = "Medbay";
 	req_access = list(5)
 	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7838,12 +7839,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "bqp" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "Medbay";
-	name = "Medbay Doors Control";
-	pixel_x = 28
-	},
 /obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
@@ -18872,6 +18867,7 @@
 	name = "Medbay";
 	req_access = list(5)
 	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39928,6 +39924,7 @@
 	name = "Medbay";
 	req_access = list(5)
 	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

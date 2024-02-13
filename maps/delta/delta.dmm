@@ -2393,9 +2393,9 @@
 	dir = 4;
 	id_tag = "MedbayFoyerOut";
 	name = "Medbay";
-	req_one_access = list(2,5);
-	unres_sides = 8
+	req_one_access = list(2,5)
 	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -2974,9 +2974,9 @@
 	dir = 4;
 	id_tag = "med_second_ex";
 	name = "Medbay Side Entrance";
-	req_access = list(5);
-	unres_sides = 8
+	req_access = list(5)
 	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
@@ -47251,9 +47251,9 @@
 	},
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Treatment Center";
-	req_access = list(5);
-	unres_sides = 2
+	req_access = list(5)
 	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -54194,9 +54194,9 @@
 	dir = 4;
 	id_tag = "MedbayFoyerOut";
 	name = "Medbay";
-	req_one_access = list(2,5);
-	unres_sides = 8
+	req_one_access = list(2,5)
 	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -75622,9 +75622,9 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
-	req_one_access = list(2,5);
-	unres_sides = 2
+	req_one_access = list(2,5)
 	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -89129,9 +89129,9 @@
 	},
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Treatment Center";
-	req_access = list(5);
-	unres_sides = 2
+	req_access = list(5)
 	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -103748,9 +103748,9 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
-	req_one_access = list(2,5);
-	unres_sides = 2
+	req_one_access = list(2,5)
 	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
