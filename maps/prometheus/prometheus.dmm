@@ -799,11 +799,10 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyerIn";
+	dir = 4;
+	id_tag = "Medbay";
 	name = "Medbay";
-	req_access = list(5);
-	unres_sides = 2;
-	dir = 4
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
