@@ -8900,7 +8900,7 @@
 	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyer";
+	id = "MedbayFoyerIn";
 	name = "Medbay Doors Control";
 	pixel_x = 5;
 	pixel_y = -10;
@@ -121741,11 +121741,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/medical/reception)
