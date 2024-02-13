@@ -457,3 +457,8 @@
 	cam["z"] = z
 	cam["isonstation"] = is_station_level(z)
 	return cam
+
+/obj/machinery/camera/atom_religify(datum/religion/R)
+	if(!status)
+		return
+	deconstruct(FALSE)
