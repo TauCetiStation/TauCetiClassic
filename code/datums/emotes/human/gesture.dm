@@ -95,11 +95,15 @@
 
 	message_type = SHOWMSG_VISUAL
 
+	sound = list('sound/misc/clap_1.ogg', 'sound/misc/clap_2.ogg', 'sound/misc/clap_3.ogg', 'sound/misc/clap_4.ogg')
+
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_one_hand_usable),
 	)
 
+/datum/emote/human/clap/get_sound(mob/living/carbon/human/user, intentional)
+ 	return pick(sound)
 
 /datum/emote/human/wave
 	key = "wave"
