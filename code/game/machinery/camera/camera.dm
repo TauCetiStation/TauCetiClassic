@@ -459,6 +459,5 @@
 	return cam
 
 /obj/machinery/camera/atom_religify(datum/religion/R)
-	if(!status)
-		return
 	deconstruct(FALSE)
+	return TRUE
