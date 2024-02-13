@@ -2374,12 +2374,6 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "MedbayFoyerOut";
-	name = "Medbay";
-	req_one_access = list(2,5)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
@@ -2387,6 +2381,13 @@
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "MedbayFoyerOut";
+	name = "Medbay";
+	req_one_access = list(2,5);
+	unres_sides = 4
 	},
 /turf/simulated/floor{
 	icon_state = "bluechoco"
@@ -2951,12 +2952,6 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "med_second_ex";
-	name = "Medbay Side Entrance";
-	req_access = list(5)
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -2967,6 +2962,13 @@
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "med_second_ex";
+	name = "Medbay Side Entrance";
+	req_access = list(5);
+	unres_sides = 4
 	},
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
@@ -24827,9 +24829,6 @@
 "eQU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -47235,16 +47234,17 @@
 /area/station/hallway/primary/central)
 "jBX" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Treatment Center";
-	req_access = list(5)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Treatment Center";
+	req_access = list(5);
+	unres_sides = 2
 	},
 /turf/simulated/floor{
 	icon_state = "bluechoco"
@@ -54174,12 +54174,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "MedbayFoyerOut";
-	name = "Medbay";
-	req_one_access = list(2,5)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
@@ -54187,6 +54181,13 @@
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "MedbayFoyerOut";
+	name = "Medbay";
+	req_one_access = list(2,5);
+	unres_sides = 4
 	},
 /turf/simulated/floor{
 	icon_state = "bluechoco"
@@ -89109,10 +89110,6 @@
 /area/station/civilian/theatre)
 "sEZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Treatment Center";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
@@ -89121,6 +89118,11 @@
 	id = "medbay_biohazard";
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
+	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Treatment Center";
+	req_access = list(5);
+	unres_sides = 2
 	},
 /turf/simulated/floor{
 	icon_state = "bluechoco"
@@ -90155,9 +90157,6 @@
 "sSj" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
-	},
-/obj/machinery/light/small{
-	dir = 4
 	},
 /obj/machinery/firealarm{
 	dir = 4;
