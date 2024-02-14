@@ -224,7 +224,7 @@
 		if(ishuman(imp_in))
 			if (elevel == "Конкретная конечность")
 				if(part) //For some reason, small_boom() didn't work. So have this bit of working copypaste.
-					imp_in.visible_message("<span class='warning'>Что-то пищит внутри [imp_in][part ? "'s [part.name]" : ""]!</span>")
+					imp_in.visible_message("<span class='warning'>Что-то пищит внутри [imp_in] [part ? "'s [part.name]" : ""]!</span>")
 					playsound(src, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER)
 					sleep(25)
 					if (istype(part,/obj/item/organ/external/chest) ||	\

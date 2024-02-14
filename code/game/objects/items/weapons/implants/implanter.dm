@@ -1,6 +1,6 @@
 /obj/item/weapon/implanter
 	name = "implanter"
-	cases = list("")
+	cases = list("имплантер", "имплантера", "имплантеру", "имплантер", "имплантером", "имплантере")
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implanter0"
 	item_state = "syringe_0"
@@ -22,16 +22,16 @@
 	if (!user || !imp)
 		return
 	if (isskeleton(M))
-		to_chat(user, "<span class='warning'>Implant where?</span>")
+		to_chat(user, "<span class='warning'>А где имплант?</span>")
 		return
 
-	user.visible_message("<span class ='userdanger'>[user] is attemping to implant [M].</span>")
+	user.visible_message("<span class ='userdanger'>[user] пытается импланировать [M].</span>")
 
 	if(M == user || (!user.is_busy() && do_after(user, 50, target = M)))
 		if(src && imp)
 			M.log_combat(user, "implanted with [name]")
 			if(imp.implanted(M))
-				user.visible_message("<span class ='userdanger'>[M] has been implanted by [user].</span>", "You implanted the implant into [M].")
+				user.visible_message("<span class ='userdanger'>[M] [(ANYMORPH(M, "был", "была", "было", "были"))] [(ANYMORPH(M, "имплантирован", "имплантирована", "имплантировано", "имплантированы"))] [user].</span>", "Вы вживили имплантат в [M].")
 				imp.inject(M, def_zone)
 				imp = null
 				update()

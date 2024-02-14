@@ -36,8 +36,8 @@
 
 
 /obj/item/weapon/implant/freedom/implanted(mob/living/carbon/source)
-	source.mind.store_memory("Freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0)
-	to_chat(source, "The implanted freedom implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
+	source.mind.store_memory("Имплантат свободы можно активировать с помощью эмоции [src.activation_emote], <B>скажите *[src.activation_emote]</B> чтобы попытаться активировать его.", 0)
+	to_chat(source, "Имплантат свободы можно активировать с помощью эмоции [src.activation_emote], <B>скажите *[src.activation_emote]</B> чтобы попытаться активировать его.")
 	return 1
 
 
