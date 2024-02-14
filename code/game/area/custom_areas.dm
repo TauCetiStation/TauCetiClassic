@@ -14,6 +14,7 @@
 /area/velocity/monorailwagon
 	name = "Velocity Monorail Wagon"
 	icon_state = "velocity_wagon"
+	ambience = 'sound/ambience/monorail_arrival.ogg'
 
 //Alien base
 /area/custom/alien

@@ -1,8 +1,3 @@
-#define POOL_POSITIVE_VIRUS "pool_positive_virus"
-#define POOL_NEUTRAL_VIRUS "pool_neutral_virus"
-#define POOL_NEGATIVE_VIRUS "pool_negative_virus"
-var/global/list/virus_types_by_pool
-
 /datum/disease2/disease
 	var/infectionchance = 70
 	var/speed = 1
@@ -20,9 +15,113 @@ var/global/list/virus_types_by_pool
 	var/list/affected_species = list(HUMAN , UNATHI , SKRELL , TAJARAN)
 	var/list/spread_types = list(DISEASE_SPREAD_AIRBORNE = 2, DISEASE_SPREAD_CONTACT = 2, DISEASE_SPREAD_BLOOD = 6)
 
+	var/cells_volume = 100		//amount of cells in the system, used as fuel for nanite programs
+	var/max_cells = 500		//maximum amount of cells in the system
+	var/regen_rate = 0.5		//cells generated per second
+	var/safety_threshold = 50	//how low cells will get before they stop processing
+
 /datum/disease2/disease/New()
 	uniqueID = rand(0,10000)
-	..()
+	return ..()
+
+/datum/disease2/disease/proc/register_host(atom/host)
+	RegisterSignal(host, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
+	RegisterSignal(host, COMSIG_MOB_DIED, PROC_REF(on_death))
+	RegisterSignal(host, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(on_shock))
+
+/datum/disease2/disease/proc/on_process(datum/host)
+	if(istype(host, /obj/machinery/hydroponics))
+		adjust_cells(regen_rate, host)
+		affect_plants(host)
+	else if(iscarbon(host))
+		var/mob/living/carbon/mob = host
+		if(!IS_IN_STASIS(mob))
+			adjust_cells(regen_rate, host)
+		activate(mob)
+
+/datum/disease2/disease/proc/consume_cells(amount, force = FALSE, atom/host)
+	if(!force)
+		if(safety_threshold && (cells_volume - amount < safety_threshold))
+			return FALSE
+	adjust_cells(-amount, host)
+	return (cells_volume > 0)
+
+/**
+ * Handles how nanites leave the host's body if they find out that they're currently exceeding the maximum supported amount
+ *
+ * IC explanation:
+ * Normally nanites simply discard excess volume by slowing replication or 'sweating' it out in imperceptible amounts,
+ * but if there is a large excess volume, likely due to a programming change that leaves them unable to support their current volume,
+ * the nanites attempt to leave the host as fast as necessary to prevent nanite poisoning. This can range from minor oozing to nanites
+ * rapidly bursting out from every possible pathway, causing temporary inconvenience to the host.
+ */
+/datum/disease2/disease/proc/reject_excess_cells(atom/host)
+	if(!isliving(host))
+		return
+	var/mob/living/mob = host
+	var/excess = cells_volume - max_cells
+	cells_volume = max_cells
+
+	switch(excess)
+		//Nanites getting rejected in massive amounts, but still enough to make a semi-orderly exit through vomit
+		if((NANITE_EXCESS_VOMIT + 0.1) to NANITE_EXCESS_BURST)
+			if(isliving(mob))
+				var/mob/living/L = mob
+				L.vomit(vomit_type = VOMIT_NANITE)
+		//Way too many nanites, they just leave through the closest exit before they harm/poison the host
+		if((NANITE_EXCESS_BURST + 0.1) to INFINITY)
+			mob.visible_message("<span class='userdanger'>A torrent of metallic grey slurry violently bursts out of [mob]'s face and floods out of [mob] skin!</span>",
+								"<span class='userdanger'>A torrent of metallic grey slurry violently bursts out of your eyes, ears, and mouth, and floods out of your skin!</span>")
+			//nanites coming out of your eyes
+			mob.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
+			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob, cure_nearsighted), EYE_DAMAGE_TEMPORARY_TRAIT), 60 SECONDS, TIMER_STOPPABLE)
+			mob.apply_effects(stun = 10, weaken = 15, paralyze = 5, eyeblur = 5, agony = 25)
+			//nanites coming out of your ears
+			mob.ear_deaf += 30
+			if(isliving(mob))
+				var/mob/living/L = mob
+				//nanites coming out of your mouth
+				L.vomit(vomit_type = VOMIT_NANITE)
+
+///Modifies the current cells volume, then checks if the cells are depleted or exceeding the maximum amount
+/datum/disease2/disease/proc/adjust_cells(amount, atom/host)
+	cells_volume += amount
+	if(!istype(host))
+		return
+	//a large loss of cells is accompanied by a small amount of blood loss in humans
+	if(amount <= -5)
+		if(ishuman(host))
+			var/mob/living/carbon/human/H = host
+			// Normal blood value is 560, value when cells can deactivate is 336
+			H.blood_remove(abs(amount))
+	if(cells_volume > max_cells)
+		reject_excess_cells(host)
+	if(cells_volume > 0 || !iscarbon(host))
+		return
+	for(var/datum/disease2/effectholder/NP as anything in effects)
+		if(NP.effect.effect_type & MICROBIOLOGY_NANITE)
+			remove_effect(NP)
+
+/datum/disease2/disease/proc/on_emp(datum/host, severity)
+	SIGNAL_HANDLER
+	cells_volume *= (rand(60, 90) * 0.01) //Lose 10-40% of cells
+	adjust_cells(-(rand(5, 50)), host) //Lose 5-50 flat cell volume
+	for(var/datum/disease2/effectholder/NP as anything in effects)
+		NP.effect.on_emp(src, host, severity)
+
+/datum/disease2/disease/proc/on_shock(datum/host, shock_damage, obj/current_source, siemens_coeff, def_zone, tesla_shock)
+	SIGNAL_HANDLER
+	if(shock_damage < 1)
+		return
+	cells_volume *= (rand(45, 80) * 0.01) //Lose 20-55% of cells
+	adjust_cells(-(rand(5, 50)), host)  //Lose 5-50 flat cell volume
+	for(var/datum/disease2/effectholder/NP as anything in effects)
+		NP.effect.on_shock(src, host, shock_damage, current_source, siemens_coeff, def_zone, tesla_shock)
+
+/datum/disease2/disease/proc/on_death(datum/host, gibbed)
+	SIGNAL_HANDLER
+	for(var/datum/disease2/effectholder/NP as anything in effects)
+		NP.effect.on_death(src, host, gibbed)
 
 /datum/disease2/disease/proc/haseffect(datum/disease2/effect/checkeffect)
 	for(var/datum/disease2/effectholder/e in effects)
@@ -44,10 +143,14 @@ var/global/list/virus_types_by_pool
 	if(!possible_effects.len)
 		return null
 
-	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
-	holder.effect = pick(possible_effects)
-	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
+	var/datum/disease2/effectholder/holder = get_new_effectholder(pick(possible_effects))
 	return holder
+
+/datum/disease2/disease/proc/get_new_effectholder(datum/disease2/effect/based_effect)
+	var/datum/disease2/effectholder/new_ef_holder = new /datum/disease2/effectholder
+	new_ef_holder.effect = based_effect
+	new_ef_holder.chance = rand(based_effect.chance_minm, based_effect.chance_maxm)
+	return new_ef_holder
 
 /datum/disease2/disease/proc/addeffect(datum/disease2/effectholder/holder)
 	if(holder == null)
@@ -71,9 +174,15 @@ var/global/list/virus_types_by_pool
 /datum/disease2/disease/proc/reactphoron()
 	addeffect(getrandomeffect(4,4))
 
+/datum/disease2/disease/proc/remove_effect(datum/disease2/effectholder/ef_holder)
+	if(effects.len <= min_symptoms)
+		return FALSE
+	effects -= ef_holder
+	return TRUE
+
 /datum/disease2/disease/proc/reactsleeptoxin()
-	if(effects.len > min_symptoms)
-		effects -= pick(effects) //remove random effect
+	//remove random effect
+	remove_effect(pick(effects))
 
 /datum/disease2/disease/proc/get_random_effect_total(minlvl = 1, maxlvl = 4, pool_name = null)
 	var/static/list/pool_distribution = list(
@@ -96,13 +205,12 @@ var/global/list/virus_types_by_pool
 	if(!effects_pool_list.len)
 		//recursive
 		return get_random_effect_total(max(minlvl - 1, 1), maxlvl + 1, pickedpool)
-	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
+
 	var/datum/disease2/effect/effect = pick(effects_pool_list)
+	var/datum/disease2/effectholder/holder = get_new_effectholder(effect)
 	effects_pool_list -= effect
-	holder.effect = effect
 	for(var/eff as anything in effects_pool_list)
 		qdel(eff)
-	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	return holder
 
 /datum/disease2/disease/proc/makerandom(greater = 0, spread_vector)
@@ -238,12 +346,11 @@ var/global/list/virus_types_by_pool
 	disease.uniqueID = uniqueID
 	disease.affected_species = affected_species.Copy()
 	for(var/datum/disease2/effectholder/holder in effects)
-		var/datum/disease2/effectholder/newholder = new /datum/disease2/effectholder
-		newholder.effect = new holder.effect.type
+		var/datum/disease2/effect/copied_effect = new holder.effect.type
+		var/datum/disease2/effectholder/newholder = get_new_effectholder(copied_effect)
 		newholder.chance = holder.chance
 		newholder.multiplier = holder.multiplier
 		newholder.effect.copy(holder, newholder, holder.effect)
-		//newholder.stage = holder.stage
 		disease.effects += newholder
 	return disease
 
