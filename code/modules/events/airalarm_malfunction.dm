@@ -1,33 +1,15 @@
 /datum/event/air_alarm_malfunction/start()
 	var/obj/machinery/alarm/airalarm = acquire_random_airalarm()
-	airalarm.remote_control = FALSE
-	airalarm.aidisabled = TRUE
 	if(prob(50))
-		airalarm.breach_detection = FALSE
-	if(prob(30))
-		airalarm.pressure_dangerlevel *= 2
-		airalarm.oxygen_dangerlevel *= 2
-		airalarm.co2_dangerlevel *= 2
-		airalarm.phoron_dangerlevel *= 2
-		airalarm.temperature_dangerlevel *= 2
-		airalarm.other_dangerlevel *= 2
-	else if(prob(50))
-		airalarm.pressure_dangerlevel = 0
-		airalarm.oxygen_dangerlevel = 0
-		airalarm.co2_dangerlevel = 0
-		airalarm.phoron_dangerlevel = 0
-		airalarm.temperature_dangerlevel = 0
-		airalarm.other_dangerlevel = 0
-	if(prob(1))
-		for(var/device_id in airalarm.alarm_area.air_scrub_names)
-			airalarm.send_signal(device_id, list("power"= 1, "panic_siphon"= 1))
-		for(var/device_id in airalarm.alarm_area.air_vent_names)
-			airalarm.send_signal(device_id, list("power"= 0))
-	if(prob(1))
-		for(var/device_id in airalarm.alarm_area.air_vent_names)
-			airalarm.send_signal(device_id, list("power"= 1, "checks"= "default", "set_external_pressure"= ONE_ATMOSPHERE * 10) )
+		airalarm.enable_siphon_mode()
+	else
+		airalarm.enable_highpressure_mode()
+	for(var/obj/machinery/alarm/allied_alarms in airalarm.alarm_area)
+		allied_alarms.remote_control = FALSE
+		allied_alarms.aidisabled = TRUE
+		allied_alarms.breach_detection = FALSE
+		allied_alarms.disable_sensors()
 
-var/global/list/air_alarms = list()
 /datum/event/air_alarm_malfunction/proc/acquire_random_airalarm()
 	var/list/acquire_airalarms = list()
 	for(var/obj/machinery/alarm/airalarm as anything in global.air_alarms)
