@@ -79,5 +79,6 @@
 	. = ..()
 
 	hide(source, UNDERFLOOR_INTERACTABLE)
+	UnregisterSignal(source, COMSIG_OBJ_LEVELUPDATE)
 
 #undef ALPHA_UNDERTILE
