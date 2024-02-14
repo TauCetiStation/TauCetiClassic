@@ -1,5 +1,6 @@
 /obj/item/weapon/implanter
 	name = "implanter"
+	cases = list("")
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implanter0"
 	item_state = "syringe_0"
