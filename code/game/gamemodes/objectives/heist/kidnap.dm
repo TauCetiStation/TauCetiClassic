@@ -1,5 +1,5 @@
 /datum/objective/target/kidnap/format_explanation()
-	return "Дома у нас потребовали принести вместе с собой [target.current.real_name], представителя [target.assigned_role]. Заберите цель живой."
+	return "На Ковчеге у нас потребовали принести вместе с собой [target.current.real_name], представителя [target.assigned_role]. Нужно забрать цель живой."
 
 /datum/objective/target/kidnap/find_target()
 	var/list/jobs = list("Roboticist" , "Medical Doctor" , "Chemist" , "Station Engineer")
