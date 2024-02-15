@@ -375,10 +375,10 @@
 		to_chat(user, "<span class='notice'>Вы не имеете ни малейшего понятия, как это использовать.</span>")
 		return
 	if(D.have_data == TRUE)
-		to_chat(user, "<span class='notice'>На диск уже загружены данные.</span>")
+		to_chat(user, "<span class='notice'>На дискету уже загружены данные.</span>")
 		return
 	add_fingerprint(user)
-	to_chat(user, "<span class='warning'>Вы начинаете перемещать данные на диск...</span>")
+	to_chat(user, "<span class='warning'>Вы начинаете перемещать данные на дискету...</span>")
 	if(!do_after(user, 1 MINUTE, target = src))
 		return
 	D.have_data = TRUE
