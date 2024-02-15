@@ -140,7 +140,7 @@
 
 /datum/role/traitor/syndcall/Greet(greeting, custom)
 	..()
-	to_chat(antag.current, "<span class='userdanger'> <B>ВНИМАНИЕ:</B> Вы слышите зов Синдиката...</span>")
+	to_chat(antag.current, "<span class='userdanger'> <B>ВНИМАНИЕ:</B> Вы слышите сигналы от Синдиката...</span>")
 
 /datum/role/traitor/syndcall/OnPostSetup(laterole)
 	. = ..()

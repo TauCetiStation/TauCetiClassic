@@ -320,7 +320,7 @@
 		text += "<img src='logo_[tempstate].png' style='position:relative; top:10px;'/>" // change to base64?
 
 	var/icon/logo = get_logo_icon()
-	text += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[mind.key]</b> [client.gender == MALE ? "был" : "была"] <b>[mind.name]</b> ("
+	text += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[mind.key]</b> [M.client.gender == MALE ? "был" : "была"] <b>[mind.name]</b> ("
 	if(M)
 		if(M.stat == DEAD)
 			text += "[M.gender == MALE ? "погиб" : "погибла"]"

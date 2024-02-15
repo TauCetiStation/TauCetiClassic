@@ -7,7 +7,7 @@
 			str_target = "листами металла"
 			target_amount = pick(150, 200)
 		if(2)
-			str_target = "стеклом"
+			str_target = "листами стекла"
 			target_amount = pick(150, 200)
 		if(3)
 			str_target = "листами пластали"
