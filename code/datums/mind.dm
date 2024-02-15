@@ -452,7 +452,7 @@
 			R.Topic(href, href_list)
 
 	else if (href_list["obj_announce"])
-		to_chat(src.current, "<span class='notice'>Your objectives are:</span>")
+		to_chat(src.current, "<span class='notice'>Ваши задачи:</span>")
 		for (var/role in antag_roles)
 			var/datum/role/R = antag_roles[role]
 			R.AnnounceObjectives()
