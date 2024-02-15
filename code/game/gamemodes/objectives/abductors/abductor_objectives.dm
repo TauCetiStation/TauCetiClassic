@@ -87,7 +87,7 @@
 	explanation_text = "Убедитесь в том, что ваш отдел - самый лучший на станции."
 
 /datum/objective/abductee/abductception
-	explanation_text = "Найдите своих обидчиков и отомстите им..."
+	explanation_text = "Вы изменились навсегда. Найдите тех, кто так поступил с вами, и дайте им попробовать их собственное лекарство"
 
 /datum/objective/abductee/ghosts
 	explanation_text = "Проведите сеанс с духами загробного мира."
