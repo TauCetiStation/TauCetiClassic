@@ -92,6 +92,7 @@
 /mob/living/simple_animal/grown_larvae/small_moth/evolve_to_young_adult()
 	var/mob/living/carbon/human/moth/M = new(get_turf(loc))
 	mind.transfer_to(M)
+	M.mind.name = M.real_name
 	create_and_setup_role(/datum/role/animal, M)
 	var/lore = "Вы всеядная форма жизни с примитивным интеллектом уровня обезьяны, предпочитающая питаться падалью. В число ваших врагов входят только Серпентиды, отношение к остальным зачастую нейтральное. Ваша цель - выжить."
 	to_chat(M, "<span class='userdanger'>[lore]</span>")
