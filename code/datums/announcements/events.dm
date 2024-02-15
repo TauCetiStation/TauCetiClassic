@@ -144,7 +144,7 @@
 
 /datum/announcement/centcomm/comms_blackout_traitor
 	name = "Event: Traitor Communication Blackout"
-	message = "Зафиксирован несанкционированный доступ к хранилищу данным центрального узла телеко%ци˝ ВРА^ж<.3-БЗЗЗЗЗЗТ"
+	message = "Зафиксирован несанкционированный доступ к хранилищу данных центрального узла телеко%ци˝ ВРА^ж<.3-БЗЗЗЗЗЗТ"
 	sound = "commandreport"
 
 /datum/announcement/centcomm/dust
