@@ -99,7 +99,7 @@
 		if (GREET_SYNDBEACON)
 			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы стали агентом Синдиката, предав НаноТрейзен</span>")
 		else
-			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Сидниката, предатель.</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката, предатель.</span>")
 
 	return TRUE
 
