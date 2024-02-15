@@ -95,7 +95,7 @@
 		if (GREET_AUTOTRAITOR)
 			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката,  предатель.<br>Ваш разум прояснился, вы поняли что являетесь спящим агентом Синдиката. Пришло время отдать им свой долг...</span>")
 		if (GREET_LATEJOIN)
-			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката, предатель.<br>Ваша задача, как агента - получить доверие экипажа и выполнить задачи любой ценой.</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката, предатель.<br>Ваша задача, как агента - внедриться в экипаж станции и выполнить задачи любой ценой.</span>")
 		if (GREET_SYNDBEACON)
 			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы стали агентом Синдиката, предав НаноТрейзен</span>")
 		else
