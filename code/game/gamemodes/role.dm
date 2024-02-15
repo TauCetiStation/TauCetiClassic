@@ -354,12 +354,12 @@
 			count++
 		if (!faction)
 			if(win)
-				text += "<br><font color='green'><B>\The [name] was successful!</B></font>"
-				feedback_add_details("[id]_success","SUCCESS")
+				text += "<br><font color='green'><B>\The [name] [user.gender == MALE ? "смог" : "смогла"] выполнить свои задания!</B></font>"
+				feedback_add_details("[id]_success","УСПЕХ")
 				SSStatistics.score.roleswon++
 			else
-				text += "<br><font color='red'><B>\The [name] has failed.</B></font>"
-				feedback_add_details("[id]_success","FAIL")
+				text += "<br><font color='red'><B>\The [name] [user.gender == MALE ? "не смог" : "не смогла"] выполнить свои задания.</B></font>"
+				feedback_add_details("[id]_success","ПРОВАЛ")
 		text += "</ul>"
 
 	return text
