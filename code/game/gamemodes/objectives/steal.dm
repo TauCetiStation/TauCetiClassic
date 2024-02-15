@@ -51,7 +51,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 
 	var/static/possible_items_special[] = list(
 		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
-		"ядерную пушку" = /obj/item/weapon/gun/energy/gun/nuclear,
+		"продвинутое энергооружие" = /obj/item/weapon/gun/energy/gun/nuclear,
 		"алмазную дверь" = /obj/item/weapon/pickaxe/drill/diamond_drill,
 		"сумку для хранения" = /obj/item/weapon/storage/backpack/holding,
 		"гиперёмкую батарейку" = /obj/item/weapon/stock_parts/cell/hyper,
