@@ -6,7 +6,7 @@
 
 /datum/objective/download/proc/gen_amount_goal()
 	target_amount = rand(10,20)
-	explanation_text = "Скачайте [target_amount] гигабайт данных."
+	explanation_text = "Скачайте [target_amount]  [pluralize_russian(seconds, "исследовательский уровень", "исследовательских уровней", "исследовательских уровней")]."
 	return target_amount
 
 /datum/objective/download/check_completion()
