@@ -296,11 +296,11 @@
 	if(hide_logo)
 		text += "<b>[mind.key]</b> was <b>[name]</b> ("
 		if(!M)
-			text += "body destroyed"
+			text += "тело уничтожено"
 		else if(M.stat == DEAD)
-			text += "died"
+			text += "[M.gender == MALE ? "погиб" : "погибла"]"
 		else
-			text += "survived"
+			text += "[M.gender == MALE ? "выжил" : "выжила"]"
 		text += ")"
 		return text
 	if(!M)
@@ -320,16 +320,16 @@
 		text += "<img src='logo_[tempstate].png' style='position:relative; top:10px;'/>" // change to base64?
 
 	var/icon/logo = get_logo_icon()
-	text += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[mind.key]</b> was <b>[mind.name]</b> ("
+	text += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[mind.key]</b> [client.gender == MALE ? "был" : "была"] <b>[mind.name]</b> ("
 	if(M)
 		if(M.stat == DEAD)
-			text += "died"
+			text += "[M.gender == MALE ? "погиб" : "погибла"]"
 		else
-			text += "survived"
+			text += "[M.gender == MALE ? "выжил" : "выжила"]"
 		if(M.real_name != mind.name)
-			text += " as <b>[M.real_name]</b>"
+			text += " будучи <b>[M.real_name]</b>"
 	else
-		text += "body destroyed"
+		text += "тело уничтожено"
 	text += ")"
 
 	return text
@@ -340,12 +340,13 @@
 /datum/role/proc/Declare()
 	var/win = TRUE
 	var/text = ""
+	var/mob/M = null
 	text = printplayer(antag)
 	if(objectives.objectives.len > 0)
 		var/count = 1
 		text += "<ul>"
 		for(var/datum/objective/objective in objectives.GetObjectives())
-			text += "<B>Objective #[count]</B>: [GetObjectiveDescription(objective)]"
+			text += "<B>Задача #[count]</B>: [GetObjectiveDescription(objective)]"
 			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
 			if(objective.completed == OBJECTIVE_LOSS) //If one objective fails, then you did not win.
 				win = FALSE
@@ -354,11 +355,11 @@
 			count++
 		if (!faction)
 			if(win)
-				text += "<br><font color='green'><B>\The [name] [user.gender == MALE ? "смог" : "смогла"] выполнить свои задания!</B></font>"
+				text += "<br><font color='green'><B>\The [name] [M.gender == MALE ? "смог" : "смогла"] выполнить свои задания!</B></font>"
 				feedback_add_details("[id]_success","УСПЕХ")
 				SSStatistics.score.roleswon++
 			else
-				text += "<br><font color='red'><B>\The [name] [user.gender == MALE ? "не смог" : "не смогла"] выполнить свои задания.</B></font>"
+				text += "<br><font color='red'><B>\The [name] [M.gender == MALE ? "не смог" : "не смогла"] выполнить свои задания.</B></font>"
 				feedback_add_details("[id]_success","ПРОВАЛ")
 		text += "</ul>"
 
@@ -397,7 +398,7 @@
 	if(objectives.objectives.len)
 		text += "<br><ul><b>Персональные задачи:</b><br>"
 	else
-		text += "<br>Вам не выдали никаких задач<br>"
+		text += "<br>Вам не выдали никаких задач.<br>"
 	text += objectives.GetObjectiveString(FALSE, admin_edit, M, src)
 	if(objectives.objectives.len)
 		text += "</ul>"
@@ -459,10 +460,10 @@
 	if(objectives.objectives.len)
 		var/icon/logo = get_logo_icon()
 		text += "<b>[bicon(logo, css = "style='position:relative; top:10;'")] [name]</b>"
-		text += "<ul><b>[capitalize(name)] objectives:</b><br>"
+		text += "<ul><b>[capitalize(name)] задачи:</b><br>"
 		var/obj_count = 1
 		for(var/datum/objective/O in objectives.objectives)
-			text += "<b>Objective #[obj_count++]</b>: [O.explanation_text]<br>"
+			text += "<b>Задача #[obj_count++]</b>: [O.explanation_text]<br>"
 		text += "</ul>"
 	to_chat(antag.current, text)
 
