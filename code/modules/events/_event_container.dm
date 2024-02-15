@@ -181,6 +181,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 	severity = EVENT_LEVEL_MUNDANE
 	available_events = list(
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Nothing",            /datum/event/nothing,                                 1100),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "APC Damage",         /datum/event/apc_damage,                              200,  list(ASSIGNMENT_ENGINEER = 60)),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "PDA Spam",           /datum/event/pda_spam,                                0,    list(ASSIGNMENT_ANY = 4),       0, 1, 0, 25, 50),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Lotto",        /datum/event/money_lotto,                             0,    list(ASSIGNMENT_ANY = 1), ONESHOT, 1, 0,  5, 15),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Hacker",       /datum/event/money_hacker,                            0,    list(ASSIGNMENT_ANY = 4), ONESHOT, 1, 0, 10, 25),
