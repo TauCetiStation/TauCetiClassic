@@ -92,7 +92,7 @@
 	return 0
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
-	to_chat(imp_in, "<span class='warning'>Вы чувствуете, как в [part ? "your [part.name]" : "you"] что-то плавится!</span>")
+	to_chat(imp_in, "<span class='warning'>Вы чувствуете, как в [part ? "в вашей [CASE(part, GENITIVE_CASE)]" : "вас"] что-то плавится!</span>")
 	if (part)
 		part.take_damage(burn = 15, used_weapon = "Расплавленная электроника")
 	else
@@ -230,7 +230,7 @@
 					if (istype(part,/obj/item/organ/external/chest) ||	\
 						istype(part,/obj/item/organ/external/groin) ||	\
 						istype(part,/obj/item/organ/external/head))
-						part.take_damage(60, used_weapon = "Взрыв") //mangle them instead
+						part.take_damage(60, used_weapon = "Explosion") //mangle them instead
 						explosion(get_turf(imp_in), -1, -1, 2, 3)
 						qdel(src)
 					else
