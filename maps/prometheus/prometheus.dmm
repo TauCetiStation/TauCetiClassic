@@ -795,13 +795,14 @@
 	},
 /area/station/medical/hallway)
 "abh" = (
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "Medbay";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyerIn";
+	name = "Medbay";
+	req_access = list(5);
+	unres_sides = 2;
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -5565,6 +5566,7 @@
 	name = "Private Channel";
 	pixel_y = -31
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aKN" = (
@@ -18856,12 +18858,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "ecF" = (
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "Medbay";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
@@ -18870,6 +18866,12 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "Medbay";
+	name = "Medbay";
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -39915,17 +39917,17 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "Medbay";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/structure/sign/departments/medbay/alt{
 	pixel_y = -32
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "Medbay";
+	name = "Medbay";
+	req_access = list(5)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -81423,11 +81425,11 @@
 	},
 /area/station/hallway/primary/fore)
 "txf" = (
-/obj/mecha/working/ripley,
 /obj/machinery/light/small,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/mecha/working/ripley/recycle_ripley,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "txw" = (
@@ -100071,6 +100073,7 @@
 	name = "Private Channel";
 	pixel_y = -31
 	},
+/obj/effect/spawner/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "ycC" = (

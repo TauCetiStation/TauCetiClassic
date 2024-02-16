@@ -929,20 +929,18 @@ var/global/list/admin_verbs_hideable = list(
 	set category = "Preferences"
 
 	prefs.chat_toggles ^= CHAT_ATTACKLOGS
-	if (prefs.chat_toggles & CHAT_ATTACKLOGS)
-		to_chat(usr, "You now will get attack log messages")
-	else
-		to_chat(usr, "You now won't get attack log messages")
+	prefs.save_preferences()
+	to_chat(src, "You now [(prefs.chat_toggles & CHAT_ATTACKLOGS) ? "will" : "won't"] get attack log messages.")
+	feedback_add_details("admin_verb","TALM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_noclient_attacklogs()
 	set name = "Toggle No Client Attack Log Messages"
 	set category = "Preferences"
 
 	prefs.chat_toggles ^= CHAT_NOCLIENT_ATTACK
-	if (prefs.chat_toggles & CHAT_NOCLIENT_ATTACK)
-		to_chat(usr, "You now will get attack log messages for mobs that don't have a client")
-	else
-		to_chat(usr, "You now won't get attack log messages for mobs that don't have a client")
+	prefs.save_preferences()
+	to_chat(src, "You now [(prefs.chat_toggles & CHAT_NOCLIENT_ATTACK) ? "will" : "won't"] get attack log messages for mobs that don't have a client.")
+	feedback_add_details("admin_verb","TNCALM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggleghostwriters()
 	set name = "Toggle ghost writers"
@@ -977,11 +975,9 @@ var/global/list/admin_verbs_hideable = list(
 	set category = "Preferences"
 
 	prefs.chat_toggles ^= CHAT_DEBUGLOGS
-	if (prefs.chat_toggles & CHAT_DEBUGLOGS)
-		to_chat(usr, "You now will get debug log messages")
-	else
-		to_chat(usr, "You now won't get debug log messages")
-
+	prefs.save_preferences()
+	to_chat(src, "You now [(prefs.chat_toggles & CHAT_DEBUGLOGS) ? "will" : "won't"] get debug log messages.")
+	feedback_add_details("admin_verb","TDLM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/man_up(mob/T as mob in player_list)
 	set category = "Fun"
@@ -1227,16 +1223,13 @@ var/global/centcom_barriers_stat = 1
 
 /obj/effect/landmark/trololo
 	name = "Rickroll"
-	//var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	//NOPE
 	var/message = "<i><span class='notice'>It's not the door you're looking for...</span></i>"
 	var/active = 1
-	var/lchannel = 999
 
 /obj/effect/landmark/trololo/Crossed(atom/movable/AM)
 	. = ..()
 	if(!active) return
-	/*if(iscarbon(M))
-		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/
+	to_chat(usr, "<span class='notice'><b><font size=3>Never gonna give you up.</font></b></span>")
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"

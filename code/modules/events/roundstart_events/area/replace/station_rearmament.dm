@@ -1,26 +1,15 @@
 /datum/event/feature/area/replace/station_rearmament_bullets
-	special_area_types = list(/area/station/security/warden, /area/station/security/armoury, /area/station/security/hos,
-	/area/station/security/main, /area/station/security/checkpoint, /area/station/medical/reception, /area/station/bridge)
+	special_area_types = list(/area/station/security/armoury)
 	replace_types = list(
-		/obj/item/weapon/gun/energy/gun/head = /obj/item/weapon/gun/projectile/revolver/detective,
-		/obj/item/weapon/gun/energy/taser = /obj/item/weapon/gun/projectile/automatic/pistol/glock,
 		/obj/item/weapon/gun/plasma = /obj/item/weapon/gun/projectile/revolver/doublebarrel,
 		/obj/item/weapon/gun/energy/laser = /obj/item/weapon/gun/projectile/automatic/l13,
-		/obj/item/weapon/gun/energy/gun/hos = /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec,
 		/obj/item/ammo_box/magazine/plasma = /obj/item/ammo_box/shotgun/beanbag,
-		/obj/item/weapon/gun/energy/gun = /obj/item/ammo_box/magazine/l13,
-		/obj/structure/displaycase/captain = /obj/structure/displaycase/captain, //so that weapons in displaycase are not deleted
+		/obj/item/weapon/gun/energy/gun = /obj/item/ammo_box/magazine/l13/lethal,
 	)
 
 /datum/event/feature/area/replace/station_rearmament_energy
-	special_area_types = list(/area/station/security/warden, /area/station/security/armoury, /area/station/security/hos,
-	/area/station/security/main, /area/station/security/checkpoint, /area/station/medical/reception, /area/station/bridge, /area/station/security/blueshield,
-	/area/station/security/blueshield/shuttle)
+	special_area_types = list(/area/station/security/armoury)
 	replace_types = list(
-		/obj/item/weapon/gun/energy/taser = /obj/item/weapon/gun/energy/taser/stunrevolver,
-		/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec = /obj/item/weapon/gun/energy/gun/hos,
-		/obj/item/ammo_box/magazine/glock/extended = /obj/item/weapon/storage/box/flashbangs,
-		/obj/item/weapon/gun/projectile/automatic/pistol/glock = /obj/item/weapon/gun/energy/taser/stunrevolver,
 		/obj/item/ammo_box/magazine/glock/rubber = /obj/item/device/radio_grid,
 		/obj/item/ammo_box/magazine/glock = /obj/item/weapon/grenade/empgrenade,
 		/obj/item/weapon/gun/projectile/shotgun/combat = /obj/item/weapon/gun/energy/lasercannon,
@@ -35,9 +24,6 @@
 	special_area_types = list(/area/station/security/armoury)
 	replace_types = list(
 		/obj/item/weapon/shield/riot = /obj/item/weapon/shield/riot/tele,
-		/obj/item/weapon/gun/projectile/automatic/pistol/glock = /obj/item/weapon/gun/projectile/automatic/l13,
-		/obj/item/ammo_box/magazine/glock/rubber = /obj/item/ammo_box/magazine/l13,
-		/obj/item/ammo_box/magazine/glock = /obj/item/ammo_box/magazine/l13/lethal,
 		/obj/item/ammo_box/shotgun/beanbag = /obj/item/ammo_box/eight_shells/stunshot,
 		/obj/item/weapon/gun/energy/laser = /obj/item/weapon/gun/energy/lasercannon,
 		/obj/item/weapon/gun/energy/gun = /obj/item/weapon/gun/energy/gun/nuclear,
