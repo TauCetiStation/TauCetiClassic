@@ -19256,8 +19256,16 @@
 	},
 /area/station/hallway/primary/central)
 "dEr" = (
-/turf/simulated/wall/r_wall,
-/area/station/medical/genetics_cloning)
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/medbay)
 "dEz" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -27516,6 +27524,16 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "red"
@@ -33679,10 +33697,6 @@
 /obj/machinery/door_control{
 	id = "genetic_shutters";
 	name = "Genetic Shutters"
-	},
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = -6;
-	pixel_y = 12
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -62151,6 +62165,7 @@
 /area/station/hallway/primary/central)
 "mKN" = (
 /obj/item/device/radio/intercom{
+	broadcasting = 1;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_y = 22
@@ -80803,7 +80818,7 @@
 /obj/structure/drain{
 	drainage = 2
 	},
-/obj/effect/decal/turf_decal/blue{
+/obj/effect/decal/turf_decal/alpha/blue{
 	icon_state = "box_white"
 	},
 /turf/simulated/floor{
@@ -92156,6 +92171,10 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -6;
+	pixel_y = 12
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -93365,6 +93384,7 @@
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -94206,7 +94226,17 @@
 	},
 /area/station/medical/storage)
 "tPU" = (
-/obj/structure/closet/secure_closet/personal/patient,
+/obj/structure/closet/secure_closet/personal,
+/obj/item/clothing/under/color/white,
+/obj/item/clothing/under/color/white,
+/obj/item/clothing/under/color/white,
+/obj/item/clothing/under/color/white,
+/obj/item/clothing/under/color/white,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/shoes/white,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -108842,6 +108872,9 @@
 /area/station/civilian/dormitories)
 "xnl" = (
 /obj/machinery/dna_scannernew,
+/obj/structure/sign/poster/calendar{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -109944,7 +109977,7 @@
 	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
-/area/station/medical/genetics_cloning)
+/area/station/medical/genetics)
 "xxp" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -112964,12 +112997,12 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/research/glass{
 	name = "Genetics Lab";
-	req_access = list(5,9)
+	req_access = list(9)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
-/area/station/medical/genetics_cloning)
+/area/station/medical/genetics)
 "ydN" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -150228,7 +150261,7 @@ hzE
 xEU
 taF
 fMG
-vqz
+nib
 mKN
 uSH
 tsT
@@ -150746,7 +150779,7 @@ xxm
 rKS
 pFz
 qPa
-dEr
+rSa
 hOR
 hOR
 hOR
@@ -151003,7 +151036,7 @@ xxm
 ttD
 pFz
 tEY
-dEr
+rSa
 rpZ
 sjU
 sOk
@@ -151256,7 +151289,7 @@ bZk
 bZk
 bZk
 bZk
-dEr
+bZk
 xnl
 pFz
 tPU
@@ -151513,11 +151546,11 @@ lId
 odS
 pkM
 nkI
-dEr
+sew
 dkC
 bmn
 enb
-dEr
+rSa
 hwM
 miY
 bxe
@@ -151770,11 +151803,11 @@ vdj
 bTd
 pUP
 xot
-dEr
+sew
 vqz
 kmW
 vqz
-dEr
+rSa
 rtq
 rSa
 elV
