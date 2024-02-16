@@ -118,6 +118,13 @@
 
 	back = /obj/item/weapon/storage/backpack/clown
 
+/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!visualsOnly)
+		ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+	H.real_name = pick(clown_names)
+	H.rename_self("clown")
+
+
 // MIME OUTFIT
 /datum/outfit/job/mime
 	name = OUTFIT_JOB_NAME("Mime")
