@@ -19264,6 +19264,13 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "genetic_shutters";
+	name = "Genetic Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/medbay)
 "dEz" = (
@@ -88550,6 +88557,13 @@
 	icon_state = "pdoor0";
 	id = "scince_lab_shutters";
 	name = "Science Lab Shutters";
+	opacity = 0
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "genetic_shutters";
+	name = "Genetic Shutters";
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
