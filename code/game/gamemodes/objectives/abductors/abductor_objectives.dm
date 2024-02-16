@@ -5,7 +5,7 @@
 	var/team
 
 /datum/objective/experiment/New()
-	explanation_text = "Провести эксперименты с [target_amount] людьми."
+	explanation_text = "Провести эксперименты над [target_amount] людьми."
 
 /datum/objective/experiment/check_completion()
 	. = OBJECTIVE_LOSS

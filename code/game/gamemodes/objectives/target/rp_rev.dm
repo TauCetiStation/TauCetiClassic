@@ -1,5 +1,5 @@
 /datum/objective/target/rp_rev/format_explanation()
-	return "Захватите, завербуйте или сгоните со станции [target.current.real_name], представителя [target.assigned_role]. Ликвидация разрешена, если нет иных способов сдерживания."
+	return "Захватите, завербуйте или прогоните со станции [target.current.real_name], представителя [target.assigned_role]. Ликвидация разрешена, если нет иных способов сдерживания."
 
 // less violent rev objectives
 /datum/objective/target/rp_rev/check_completion()
