@@ -201,18 +201,17 @@
 
 
 	if(iswrenching(I))
-		anchored = !!anchored
-
-		if(ispipe)
-			density = FALSE
-			AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
-		else
-			density = TRUE
-			RemoveElement(/datum/element/undertile)
+		anchored = !anchored
 
 		if(anchored)
+			if(ispipe)
+				density = FALSE
+				AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 			to_chat(user, "You attach the [nicetype] to the underfloor.")
 		else
+			if(ispipe)
+				density = TRUE
+				RemoveElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 			to_chat(user, "You detach the [nicetype] from the underfloor.")
 
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
