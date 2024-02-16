@@ -502,6 +502,12 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 				return
 			ReplaceWithLattice()
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+			// todo: move catwalk to standart smooth system
+			for(var/direction in cardinal)
+				var/turf/T = get_step(src,direction)
+				if(T.is_catwalk())
+					var/turf/simulated/floor/plating/airless/catwalk/CW=T
+					CW.update_icon(0)
 		return
 
 	if(istype(C, /obj/item/stack/rods))

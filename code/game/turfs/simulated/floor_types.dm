@@ -409,7 +409,7 @@
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = HEAT_CAPACITY_VACUUM
-	underfloor_accessibility = UNDERFLOOR_VISIBLE
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	footstep = FOOTSTEP_CATWALK
 
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
