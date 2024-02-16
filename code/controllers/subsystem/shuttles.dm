@@ -456,11 +456,13 @@ SUBSYSTEM_DEF(shuttle)
 			from = locate(SUPPLY_STATION_AREATYPE)
 			dest = locate(SUPPLY_DOCK_AREATYPE)
 			undock_act(/area/station/cargo/storage, "supply_dock")
+			dock_act(/area/velocity, "velocity_dock")
 			at_station = 0
 		if(0)
 			from = locate(SUPPLY_DOCK_AREATYPE)
 			dest = locate(SUPPLY_STATION_AREATYPE)
 			dock_act(/area/station/cargo/storage, "supply_dock")
+			undock_act(/area/velocity, "velocity_dock")
 			at_station = 1
 	moving = 0
 

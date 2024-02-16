@@ -210,6 +210,6 @@
 /mob/living/silicon/update_canmove(no_transform)
 	return
 
-/mob/living/silicon/vomit()
+/mob/living/silicon/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	return
 

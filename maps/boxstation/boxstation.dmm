@@ -32115,7 +32115,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
-	req_access = list(5)
+	req_access = list(5);
+	unres_sides = 2
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -48319,18 +48320,6 @@
 	icon_state = "white"
 	},
 /area/station/civilian/dormitories)
-"bHX" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerIn";
-	name = "Medbay Doors Control";
-	pixel_y = 28
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitebluecorner"
-	},
-/area/station/medical/hallway)
 "bHY" = (
 /turf/simulated/wall,
 /area/station/medical/medbreak)
@@ -81597,12 +81586,6 @@
 	c_tag = "Medbay North";
 	network = list("SS13","Medical")
 	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerOut";
-	name = "Medbay Doors Control";
-	pixel_y = 28
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -82440,12 +82423,13 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "qZb" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyerOut";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyerIn";
+	name = "Medbay";
+	req_access = list(5);
+	unres_sides = 2
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -125148,7 +125132,7 @@ gMb
 dxb
 kcb
 bjk
-bHX
+bTK
 ldb
 bjl
 byr
