@@ -95,11 +95,11 @@
 		if (GREET_AUTOTRAITOR)
 			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката,  предатель.<br>Ваш разум прояснился, вы поняли что являетесь спящим агентом Синдиката. Пришло время отдать им свой долг...</span>")
 		if (GREET_LATEJOIN)
-			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката, предатель.<br>Ваша задача, как агента - получить доверие экипажа и выполнить задачи любой ценой.</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката, предатель.<br>Ваша задача, как агента - внедриться в экипаж станции и выполнить задачи любой ценой.</span>")
 		if (GREET_SYNDBEACON)
 			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы стали агентом Синдиката, предав НаноТрейзен</span>")
 		else
-			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Сидниката, предатель.</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката, предатель.</span>")
 
 	return TRUE
 
@@ -140,7 +140,7 @@
 
 /datum/role/traitor/syndcall/Greet(greeting, custom)
 	..()
-	to_chat(antag.current, "<span class='userdanger'> <B>ВНИМАНИЕ:</B> Вы слышите сигналы от Синдиката...</span>")
+	to_chat(antag.current, "<span class='userdanger'> <B>ВНИМАНИЕ:</B> Вы слышите зов Синдиката...</span>")
 
 /datum/role/traitor/syndcall/OnPostSetup(laterole)
 	. = ..()
