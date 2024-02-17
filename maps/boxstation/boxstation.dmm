@@ -32115,9 +32115,9 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
-	req_access = list(5);
-	unres_sides = 2
+	req_access = list(5)
 	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -72208,19 +72208,10 @@
 /obj/effect/landmark/start/paramedic,
 /obj/machinery/door_control{
 	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerOut";
-	name = "Medbay Doors Control";
-	pixel_x = 26;
-	pixel_y = -1;
-	req_access = list(5)
-	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
 	id = "MedbayFoyerIn";
 	name = "Medbay Doors Control";
 	pixel_x = 26;
-	pixel_y = 12;
-	req_access = list(5)
+	pixel_y = 12
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -82426,9 +82417,9 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
-	req_access = list(5);
-	unres_sides = 2
+	req_access = list(5)
 	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
