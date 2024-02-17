@@ -2,7 +2,7 @@
 
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
-		to_chat(src, "<span class='warning'>You cannot afford this.</span>")
+		to_chat(src, "<span class='warning'>Не хватает ресурсов.</span>")
 		return FALSE
 	add_points(-cost)
 	return TRUE
@@ -12,7 +12,7 @@
 /mob/camera/blob/verb/transport_core()
 	set category = "Blob"
 	set name = "Jump to Core"
-	set desc = "Transport back to your core."
+	set desc = "Перемещение к ядру."
 
 	if(blob_core)
 		flash_color(src, "#187914", 20)
@@ -21,13 +21,13 @@
 /mob/camera/blob/verb/jump_to_node()
 	set category = "Blob"
 	set name = "Jump to Node"
-	set desc = "Transport back to a selected node."
+	set desc = "Перемещение к выбранной ноде."
 
 	if(blob_nodes.len)
 		var/list/nodes = list()
 		for(var/obj/structure/blob/node/N in blob_nodes)
 			nodes[N.given_name] = N
-		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
+		var/node_name = input(src, "Выберите узел для перехода.", "Перемещение между узлами") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			flash_color(src, "#187914", 20)
@@ -36,7 +36,7 @@
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
 	set name = "Create/Upgrade Shield Blob (10)"
-	set desc = "Create a shield blob. Use it again on existing shield blob to upgrade it into a reflective blob."
+	set desc = "Создать укрепленного блоба. Используйте снова для получения рефлективной версии."
 
 	var/turf/T = get_turf(src)
 	create_shield(T)
@@ -46,11 +46,11 @@
 	var/obj/structure/blob/B = locate() in T
 
 	if(!B)//We are on a blob
-		to_chat(src, "There is no blob here!")
+		to_chat(src, "Это место не захвачено!")
 		return
 
 	if(!isblobnormal(B) && !isblobshield(B)) //Not special blob nor shield to upgrade
-		to_chat(src, "Unable to use this blob, find a normal one.")
+		to_chat(src, "Этого блоба использовать нельзя. Найдите другого.")
 		return
 
 	if(!can_buy(10))
@@ -58,7 +58,7 @@
 
 	if(isblobshield(B))
 		if(B.get_integrity() < B.max_integrity / 2)
-			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified!</span>")
+			to_chat(src, "<span class='warning'>Этот укрепленный блоб слишком поврежден для улучшения!</span>")
 			return
 		B.change_to(/obj/structure/blob/shield/reflective, src)
 	else
@@ -67,7 +67,7 @@
 /mob/camera/blob/verb/relocate_core_power()
 	set category = "Blob"
 	set name = "Relocate Core (70)"
-	set desc = "Swaps a node and your core."
+	set desc = "Меняет местами ядро и узел."
 
 	relocate_core()
 
@@ -75,10 +75,10 @@
 	var/turf/T = get_turf(src)
 	var/obj/structure/blob/node/B = locate() in T
 	if(!B)
-		to_chat(src, "<span class='warning'>You must be on a blob node!</span>")
+		to_chat(src, "<span class='warning'>Вы должны быть на узле!</span>")
 		return
 	if(isspaceturf(T))
-		to_chat(src, "<span class='warning'>You cannot relocate your core here!</span>")
+		to_chat(src, "<span class='warning'>Вы не можете переместить сюда своё ядро!</span>")
 		return
 	if(!can_buy(70))
 		return
@@ -89,7 +89,7 @@
 /mob/camera/blob/verb/blobbernaut_power()
 	set category = "Blob"
 	set name = "Create Blobbernaut (40)"
-	set desc = "Create a shield blob. Use it again on existing shield blob to upgrade it into a reflective blob."
+	set desc = "Создаёт мощного и умного блоббернаута."
 
 	create_blobbernaut()
 
@@ -97,24 +97,24 @@
 	var/turf/T = get_turf(src)
 	var/obj/structure/blob/factory/B = locate() in T
 	if(!B)
-		to_chat(src, "<span class='warning'>You must be on a factory blob!</span>")
+		to_chat(src, "<span class='warning'>Вы должны быть на производящей ячейке!</span>")
 		return
 	if(B.naut) //if it already made a blobbernaut, it can't do it again
-		to_chat(src, "<span class='warning'>This factory blob is already sustaining a blobbernaut.</span>")
+		to_chat(src, "<span class='warning'>Эта ячейка уже производит блоббернаута.</span>")
 		return
 	if(B.get_integrity() < B.max_integrity * 0.5)
-		to_chat(src, "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>")
+		to_chat(src, "<span class='warning'>Эта ячейка слишком повреждена для производства ячейки.</span>")
 		return
 	if(blob_points < 40)
-		to_chat(src, "<span class='warning'>You cannot afford this.</span>")
+		to_chat(src, "<span class='warning'>Вы не можете себе этого позволить.</span>")
 		return FALSE
 
 	B.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
-	to_chat(src, "<span class='notice'>You attempt to produce a blobbernaut.</span>")
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
+	to_chat(src, "<span class='notice'>Вы начинаете производство блоббернаута.</span>")
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Вы хотите стать блоббернаутом?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		B.max_integrity = B.max_integrity * 0.25 //factories that produced a blobbernaut have much lower health
-		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
+		B.visible_message("<span class='warning'><b>Блоббернаут [pick("вырывается", "выплевывается", "выходит")] из ячейки!</b></span>")
 		playsound(B.loc, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 50)
 		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 		flick("blobbernaut_produce", blobber)
@@ -127,12 +127,12 @@
 		var/mob/dead/observer/C = pick(candidates)
 		blobber.key = C.key
 		playsound(blobber, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-		to_chat(blobber, "<b>You are a blobbernaut!</b> \
-		<br>You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='danger'but will slowly die if not near the blob </span> or if the factory that made you is killed. \
+		to_chat(blobber, "<b>Вы - блоббернаут!</b> \
+		<br>Вы мощны и вас сложно убить, вы восстанавливаетесь при нахождении рядом с ячейками, <span class='danger'но медленно умираете, если не находитесь рядом с блобом </span> или если фабрика, которая создала вас - уничтожена. \
 		<br>You can communicate with other blobbernauts and overminds<BR>")
 		add_points(-40)
 	else
-		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.</span>")
+		to_chat(src, "<span class='warning'>Вы не смогли произвести блоббернаута. Ваши очки возвращены. Попробуйте позже.</span>")
 		B.naut = null
 
 /mob/camera/blob/verb/create_resource_power()
