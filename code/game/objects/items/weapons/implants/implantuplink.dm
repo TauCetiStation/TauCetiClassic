@@ -12,8 +12,8 @@
 
 /obj/item/weapon/implant/uplink/implanted(mob/source)
 	activation_emote = input("Выберите, от какой эмоции должна произойти активация:") in list("blink", "eyebrow", "twitch", "frown", "nod", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
-	source.mind.store_memory("Uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0)
-	to_chat(source, "The implanted uplink implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
+	source.mind.store_memory("Имплантат аплинка можно активировать с помощью эмоции [src.activation_emote], <B>скажите *[src.activation_emote]</B> чтобы попытаться активировать его.", 0)
+	to_chat(source, "Имплантат свободы можно активировать с помощью эмоции [src.activation_emote], <B>скажите *[src.activation_emote]</B> чтобы попытаться активировать его.")
 	return 1
 
 
