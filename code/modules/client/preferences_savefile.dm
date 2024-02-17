@@ -266,8 +266,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["b_type"] << null
 
 	if(current_version < 49)
-		if(ROLE_IMPOSTER in be_role)
-			be_role -= ROLE_IMPOSTER
+		if("Imposter" in be_role)
+			be_role -= "Imposter"
 		S["be_role"] << be_role
 
 //
