@@ -5,6 +5,7 @@
 
 /obj/structure/blob
 	name = "blob"
+	cases = list("блоб", "блоба", "блобу", "блоба", "блобом", "блобе")
 	icon = 'icons/mob/blob.dmi'
 	light_range = 3
 	desc = "Одно из порождений блоба..."
