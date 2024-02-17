@@ -443,7 +443,7 @@ var/global/list/death_alarm_stealth_areas = list(
 /obj/item/weapon/implant/death_alarm
 	name = "death alarm implant"
 	cases = list("имплант оповещения о смерти", "импланта оповещения о смерти", "импланту оповещения о смерти", "имплант оповещения о смерти", "имплантом оповещения о смерти", "импланте оповещения о смерти")
-	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
+	desc = "Сигнализация, отслеживающая жизненные показатели хозяина и передающая радиосообщение в случае смерти."
 	var/mobname = "Will Robinson"
 
 /obj/item/weapon/implant/death_alarm/inject(mob/living/carbon/C, def_zone)
@@ -526,7 +526,7 @@ var/global/list/death_alarm_stealth_areas = list(
 	var/turf/T = get_turf(imp_in)
 
 	var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-	a.autosay("[imp_in.real_name] has died at ([T.x], [T.y]) coordinates!", "[mobname]'s Death Alarm", freq = frequency)
+	a.autosay("[imp_in.real_name] умер на ([T.x], [T.y]) координатах!", "[mobname]'s Death Alarm", freq = frequency)
 	STOP_PROCESSING(SSobj, src)
 	qdel(a)
 
