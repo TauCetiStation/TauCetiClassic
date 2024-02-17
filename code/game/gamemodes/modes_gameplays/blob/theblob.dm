@@ -7,7 +7,7 @@
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
 	light_range = 3
-	desc = "Одно из созданий блоба..."
+	desc = "Одно из порождений блоба..."
 	density = FALSE
 	anchored = TRUE
 	can_block_air = TRUE
