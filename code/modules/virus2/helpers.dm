@@ -110,6 +110,7 @@
 		var/datum/disease2/disease/D = disease.getcopy()
 //		log_debug("Adding virus")
 		M.virus2["[D.uniqueID]"] = D
+		D.register_host(M)
 		M.med_hud_set_status()
 
 /obj/machinery/hydroponics/proc/infect_planttray_virus2(datum/disease2/disease/source)
@@ -119,6 +120,7 @@
 		return
 	var/datum/disease2/disease/D = source.getcopy()
 	virus2["[D.uniqueID]"] = D
+	D.register_host(src)
 
 //Infects mob M with random lesser disease, if he doesn't have one
 /proc/infect_mob_random_lesser(mob/living/carbon/M)

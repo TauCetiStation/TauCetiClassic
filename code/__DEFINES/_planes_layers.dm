@@ -86,8 +86,11 @@ What is the naming convention for planes or layers?
 #define ANOMALY_PLANE -21
 #define ANOMALY_RENDER_TARGET "*ANOM_RENDER_TARGET"
 
+// underfloor, floor and game planes have common layout order
+// in some cases object can be switched between these planes
+// FLOOR plane disables ambitn occlusion, UNDERFLOOR exists for undertile component
+#define UNDERFLOOR_PLANE -8
 #define FLOOR_PLANE -7
-
 #define GAME_PLANE -4
   #define BELOW_TURF_LAYER                1.9
   //efine TURF_LAYER                      2     // For easy recordkeeping; this is a byond define
@@ -96,6 +99,9 @@ What is the naming convention for planes or layers?
   #define GAS_PIPE_HIDDEN_SUPPLY_LAYER    2.33
   #define GAS_PIPE_HIDDEN_SCRUBBER_LAYER  2.34
   #define GAS_PIPE_HIDDEN_LAYER           2.35
+  #define POWER_CABLES_HEAVY              2.39
+  #define TURF_CAP_LAYER                  2.4   // cap on grid_floor and possible other future floors who can do UNDERFLOOR_VISIBLE, should be above hidden pipes
+  #define POWER_CABLES                    2.44
   #define GAS_SCRUBBER_LAYER              2.46
   #define GAS_PIPE_VISIBLE_LAYER          2.47
   #define GAS_FILTER_LAYER                2.48
@@ -103,6 +109,7 @@ What is the naming convention for planes or layers?
   #define LOW_OBJ_LAYER                   2.491 // Currently used only by unused machinery
   #define SAFEDOOR_LAYER                  2.5   // firedoors, poddoors, and someone used this for safe for some reason
   #define ABOVE_SAFEDOOR_LAYER            2.51  // poddoors default, they should be around SAFEDOOR_LAYER (see SAFEDOOR_CLOSED_MOD_*) but little above firedoors
+  #define POWER_TERMINAL                  2.6
   #define BELOW_CONTAINERS_LAYER          2.7   // Below closets, crates...
   #define CONTAINER_STRUCTURE_LAYER       2.8   // Layer for closets, crates, bags, racks, tables
   #define DOOR_LAYER                      2.82

@@ -28,23 +28,20 @@
 		to_chat(S,"<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
 		S.Stun(3)
 
-	// Prevents having Regenerate verb after rebirth.
-	var/datum/role/changeling/C = M.GetRoleByType(/datum/role/changeling)
-	qdel(locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers)
-
 	// In case we did it out of stasis
-	if (C.instatis)
-		C.instatis = FALSE
+	if(role.instatis)
+		role.instatis = FALSE
 		user.fake_death = FALSE
+	for(var/obj/effect/proc_holder/changeling/fakedeath/A in role.purchasedpowers)
+		A.action.button_icon_state = "fake_death"
+		A.action.button.UpdateIcon()
+		A.ready2revive = FALSE
 
 	var/mob/living/simple_animal/headcrab/crab = new(get_turf(user))
 	crab.origin = M
 	M.transfer_to(crab)
 	for(var/mob/living/parasite/essence/E in user)
-		E.exit_host()
-		E.loc = crab
-		if(E.client)
-			E.client.eye = crab
+		E.transfer(crab)
 	to_chat(crab,"<span class='warning'>You burst out of the remains of your former body in a shower of gore!</span>")
 	feedback_add_details("changeling_powers","LR")
 	if(ismob(user))
@@ -141,7 +138,7 @@
 		A.action.button.UpdateIcon()
 		M.changeling_update_languages(C.absorbed_languages)
 		for(var/mob/living/parasite/essence/E in src)
-			E.enter_host(M)
+			E.transfer(M)
 	if(iscarbon(loc))
 		var/mob/living/carbon/carbon = loc
 		carbon.gib()

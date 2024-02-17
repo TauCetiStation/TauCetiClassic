@@ -8900,7 +8900,7 @@
 	},
 /obj/machinery/door_control{
 	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyer";
+	id = "MedbayFoyerIn";
 	name = "Medbay Doors Control";
 	pixel_x = 5;
 	pixel_y = -10;
@@ -11316,23 +11316,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"bEB" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyer";
-	name = "Medbay Doors Control";
-	pixel_x = -28;
-	pixel_y = 28;
-	range = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
 "bED" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
@@ -28767,7 +28750,6 @@
 /obj/machinery/computer/general_air_control{
 	dir = 4;
 	frequency = 1443;
-	level = 3;
 	name = "Distribution and Waste Monitor";
 	sensors = list("mair_in_meter"="Mixed                                                                Air                                                                In","air_sensor"="Mixed                                                                Air                                                                Supply                                                                Tank","mair_out_meter"="Mixed                                                                Air                                                                Out","dloop_atm_meter"="Distribution                                                                Loop","wloop_atm_meter"="Waste                                                                Loop")
 	},
@@ -31602,14 +31584,15 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/dormitories/dormone)
 "fGo" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyerIn";
+	name = "Medbay";
+	req_access = list(5)
+	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -51194,11 +51177,6 @@
 	},
 /area/station/medical/hallway/outbranch)
 "jxI" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "";
@@ -54871,15 +54849,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "klE" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyerIn";
+	name = "Medbay";
+	req_access = list(5)
+	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -55077,28 +55056,6 @@
 	},
 /turf/simulated/floor,
 /area/station/gateway)
-"knA" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyer";
-	name = "Medbay Doors Control";
-	pixel_x = 28;
-	pixel_y = 28;
-	range = 8
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
 "knH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -72389,7 +72346,6 @@
 "nOz" = (
 /obj/machinery/computer/general_air_control{
 	frequency = 1443;
-	level = 3;
 	name = "Distribution and Waste Monitor";
 	sensors = list("mair_in_meter"="Mixed                                                                Air                                                                In","air_sensor"="Mixed                                                                Air                                                                Supply                                                                Tank","mair_out_meter"="Mixed                                                                Air                                                                Out","dloop_atm_meter"="Distribution                                                                Loop","wloop_atm_meter"="Waste                                                                Loop")
 	},
@@ -111888,11 +111844,6 @@
 	},
 /area/station/medical/virology)
 "vJK" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
@@ -111902,6 +111853,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyerIn";
+	name = "Medbay";
+	req_access = list(5)
+	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -121777,11 +121734,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/medical/reception)
@@ -158659,7 +158611,7 @@ mSG
 gzu
 vec
 klE
-bEB
+sgh
 sgh
 ivX
 mAI
@@ -159173,7 +159125,7 @@ jzn
 gMv
 gMv
 vJK
-knA
+seX
 seX
 ljS
 ldW

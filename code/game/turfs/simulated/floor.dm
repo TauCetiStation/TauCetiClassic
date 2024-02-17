@@ -351,7 +351,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	icon_plating = "plating"
 	set_light(0)
 	floor_type = null
-	intact = 0
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	broken = 0
 	burnt = 0
 
@@ -365,7 +365,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 /turf/simulated/floor/proc/make_plasteel_floor(obj/item/stack/tile/plasteel/T = null)
 	broken = 0
 	burnt = 0
-	intact = 1
+	underfloor_accessibility = UNDERFLOOR_HIDDEN
 	set_light(0)
 	if(T)
 		if(istype(T,/obj/item/stack/tile/plasteel))
@@ -392,7 +392,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 /turf/simulated/floor/proc/make_light_floor(obj/item/stack/tile/light/T = null)
 	broken = 0
 	burnt = 0
-	intact = 1
+	underfloor_accessibility = UNDERFLOOR_HIDDEN
 	if(T)
 		if(istype(T,/obj/item/stack/tile/light))
 			floor_type = T.type
@@ -410,7 +410,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 /turf/simulated/floor/proc/make_grass_floor(obj/item/stack/tile/grass/T = null)
 	broken = 0
 	burnt = 0
-	intact = 1
+	underfloor_accessibility = UNDERFLOOR_HIDDEN
 	if(T)
 		if(istype(T,/obj/item/stack/tile/grass))
 			floor_type = T.type
@@ -428,7 +428,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 /turf/simulated/floor/proc/make_wood_floor(obj/item/stack/tile/wood/T = null)
 	broken = 0
 	burnt = 0
-	intact = 1
+	underfloor_accessibility = UNDERFLOOR_HIDDEN
 	if(T)
 		if(istype(T,/obj/item/stack/tile/wood))
 			floor_type = T.type
@@ -497,10 +497,21 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 
 			make_plating()
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		if(is_catwalk())
+		else if(is_catwalk())
 			if(broken)
 				return
 			ReplaceWithLattice()
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+			// todo: move catwalk to standart smooth system
+			for(var/direction in cardinal)
+				var/turf/T = get_step(src,direction)
+				if(T.is_catwalk())
+					var/turf/simulated/floor/plating/airless/catwalk/CW=T
+					CW.update_icon(0)
+		else if(istype(src, /turf/simulated/floor/grid_floor))
+			var/turf/simulated/floor/grid_floor/GF = src
+			GF.toggle_cower()
+			to_chat(user, "<span class='warning'>Вы открутили решетку.</span>")
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		return
 
@@ -532,13 +543,16 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 				if(!T.use(1))
 					return
 				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
-				if(istype(T,/obj/item/stack/tile/carpet))
+				if(istype(T, /obj/item/stack/tile/carpet))
 					ChangeTurf(T.turf_type) // for smoothing we need to change type
+					return
+				if(istype(T, /obj/item/stack/tile/grid))
+					ChangeTurf(T.turf_type)
 					return
 				floor_type = T.type
 				icon = initial(T.turf_type.icon)
 				name = initial(T.turf_type.name)
-				intact = 1
+				underfloor_accessibility = UNDERFLOOR_HIDDEN
 				if(istype(T,/obj/item/stack/tile/light))
 					var/obj/item/stack/tile/light/L = T
 					set_lightfloor_state(L.state)
