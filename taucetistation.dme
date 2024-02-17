@@ -697,6 +697,7 @@
 #include "code\game\gamemodes\objectives\capture.dm"
 #include "code\game\gamemodes\objectives\custom.dm"
 #include "code\game\gamemodes\objectives\download.dm"
+#include "code\game\gamemodes\objectives\download_tcoms_data.dm"
 #include "code\game\gamemodes\objectives\escape.dm"
 #include "code\game\gamemodes\objectives\hijack.dm"
 #include "code\game\gamemodes\objectives\nuclear.dm"
