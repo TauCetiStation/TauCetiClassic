@@ -49,6 +49,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)),
 	null,
 	new/datum/stack_recipe("floor tile", /obj/item/stack/tile/plasteel, 1, 4, 20, required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)),
+	new/datum/stack_recipe("grid floor tile", /obj/item/stack/tile/grid, 1, 4, 20, required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)),
 	new/datum/stack_recipe("metal rod", /obj/item/stack/rods, 1, 2, 60, required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)),
 	null,
 	new/datum/stack_recipe("computer frame", /obj/structure/computerframe, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)),
