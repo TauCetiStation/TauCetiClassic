@@ -74836,12 +74836,6 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/medical_intern,
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerIn";
-	name = "Medbay Doors Control";
-	pixel_y = 28
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
@@ -75614,12 +75608,13 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
-	req_one_access = list(2,5)
+	req_access = list(5);
+	unres_sides = 2
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -103745,7 +103740,8 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
-	req_one_access = list(2,5)
+	req_access = list(5);
+	unres_sides = 2
 	},
 /turf/simulated/floor{
 	icon_state = "bluechoco"
@@ -112893,12 +112889,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "ycu" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerIn";
-	name = "Medbay Doors Control";
-	pixel_y = 28
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"

@@ -11316,23 +11316,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"bEB" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyer";
-	name = "Medbay Doors Control";
-	pixel_x = -28;
-	pixel_y = 28;
-	range = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 2
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
 "bED" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
@@ -31601,14 +31584,15 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/dormitories/dormone)
 "fGo" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyerIn";
+	name = "Medbay";
+	req_access = list(5);
+	unres_sides = 2
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -54870,14 +54854,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "klE" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 2
+	},
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyerIn";
+	name = "Medbay";
+	req_access = list(5);
+	unres_sides = 2
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -55076,28 +55061,6 @@
 	},
 /turf/simulated/floor,
 /area/station/gateway)
-"knA" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyer";
-	name = "Medbay Doors Control";
-	pixel_x = 28;
-	pixel_y = 28;
-	range = 8
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
 "knH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -111886,11 +111849,6 @@
 	},
 /area/station/medical/virology)
 "vJK" = (
-/obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
@@ -111899,6 +111857,12 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1
+	},
+/obj/machinery/door/airlock/medical/glass{
+	id_tag = "MedbayFoyerIn";
+	name = "Medbay";
+	req_access = list(5);
+	unres_sides = 2
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -158657,7 +158621,7 @@ mSG
 gzu
 vec
 klE
-bEB
+sgh
 sgh
 ivX
 mAI
@@ -159171,7 +159135,7 @@ jzn
 gMv
 gMv
 vJK
-knA
+seX
 seX
 ljS
 ldW

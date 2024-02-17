@@ -1090,6 +1090,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		else
 			return zone
 
+/proc/parse_zone_ru(zone)
+	switch(zone)
+		if(BP_L_ARM)
+			return "левая рука"
+		if(BP_R_ARM)
+			return "правая рука"
+		if(BP_L_LEG)
+			return "левая нога"
+		if(BP_R_LEG)
+			return "правая нога"
+		else
+			return zone
+
 /*
  Gets the turf this atom's *ICON* appears to inhabit
  It takes into account:

@@ -260,7 +260,7 @@
 		return TRUE
 	return FALSE
 
-/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information, scan_hallucination = FALSE)
+/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat, hide_advanced_information, scan_hallucination = FALSE, advanced = FALSE)
 	var/message = ""
 	var/insurance_type
 
@@ -299,10 +299,14 @@
 	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
-		message += "<span class='notice'>Обнаруженные повреждения, Механические/Термические:</span><br>"
+		message += "<span class='notice'>Обнаруженные повреждения:</span><br>"
 		if(length(damaged))
 			for(var/obj/item/organ/external/BP in damaged)
-				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
+				message += "<span class='notice'>&emsp; [capitalize(CASE(BP, NOMINATIVE_CASE))]: \
+					[(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0]\
+					[(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'> \[Кровотечение\]</span>" : "&emsp;"] - \
+					[(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]\
+					[BP.controller.bodypart_type == BODYPART_ROBOTIC ? " (Кибернетический)" : ""]</span><br>"
 		else
 			message += "<span class='notice'>&emsp; Конечности целы.</span><br>"
 
@@ -321,24 +325,31 @@
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
-			message += "<span class='warning'>Внимание: обнаружено неизвестное вещество в крови:</span><br>"
+		if(C.reagents.total_volume && advanced)
+			message += "<span class='warning'>Обнаруженные вещества в крови:</span><br>"
+			for(var/datum/reagent/R in C.reagents.reagent_list)
+				message += "&emsp; <span class='notice'>\
+					[R.overdose != 0 && R.volume >= R.overdose ? "<span class='bold warning'>OD: </span>" : ""]\
+					[round(R.volume, 1)]u [R.name]</span><br>"
 		if(C.virus2.len)
+			if(C.is_infected_with_zombie_virus() && advanced)
+				message += "<span class='warning'>Внимание: Обнаружена нетипичная активность патогена в крови!</span><br>"
 			for (var/ID in C.virus2)
 				if (ID in virusDB)
 					var/datum/data/record/V = virusDB[ID]
 					message += "<span class='warning'>Внимание: Обнаружен патоген [V.fields["name"]] в крови. Известный антиген: [V.fields["antigen"]]</span><br>"
-//			user.oldshow_message(text("<span class='warning'>Warning: Unknown pathogen detected in subject's blood.</span>"))
 		if(C.roundstart_quirks.len)
 			message += "\t<span class='info'>Объект имеет следующие физиологические особенности: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
 		to_chat(user, "<span class='warning'>Объект, по-видимому, был некачественно клонирован.</span>")
-	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
-		message += "<span class='notice'>Анализ крови обнаружил [M.reagents:get_reagent_amount("inaprovaline")] лечебных юнитов.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Объект страдает от аномальной активности мозга. Рекомендуется дополнительное сканирование.</span><br>"
-	else if(M.getBrainLoss() >= 100 || (ishuman(M) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
-		message += "<span class='warning'>Мозг субъекта мёртв.</span>"
+	else if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!H.has_brain() && H.should_have_organ(O_BRAIN))
+			message += "<span class='warning'>У субъекта отсутствует мозг.</span><br>"
+	else if(M.getBrainLoss() >= 100)
+		message += "<span class='warning'>Мозг субъекта мёртв.</span><br>"
 	else if(M.getBrainLoss() >= 60)
 		message += "<span class='warning'>Обнаружено тяжелое повреждение головного мозга. Вероятна умственная отсталость.</span><br>"
 	else if(M.getBrainLoss() >= 10)
@@ -350,7 +361,7 @@
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & ORGAN_BROKEN)
 				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
-					message += "<span class='warning'>Обнаружен незафиксированный перелом в [BP.name]. При транспортировке рекомендуется наложение шины.</span><br>"
+					message += "<span class='warning'>Обнаружен незафиксированный перелом в [CASE(BP, PREPOSITIONAL_CASE)]. При транспортировке рекомендуется наложение шины.</span><br>"
 				if(!found_broken)
 					found_broken = TRUE
 
@@ -358,18 +369,18 @@
 				found_bleed = TRUE
 
 			if(BP.has_infected_wound())
-				message += "<span class='warning'>Обнаружена инфекция в [BP.name]. Рекомендуется дезинфекция.</span><br>"
+				message += "<span class='warning'>Обнаружена инфекция в [CASE(BP, PREPOSITIONAL_CASE)]. Рекомендуется дезинфекция.</span><br>"
 
 		if(found_bleed)
-			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется медицинский сканер.</span><br>"
 		if(found_broken)
-			message += "<span class='warning'>Обнаружен перелом костей. Для определения местоположения требуется сканер тела.</span><br>"
+			message += "<span class='warning'>Обнаружен перелом костей. Для определения местоположения требуется медицинский сканер.</span><br>"
 
 		var/blood_volume = H.blood_amount()
 		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
 		var/blood_type = H.dna.b_type
 		if(blood_volume <= BLOOD_VOLUME_SAFE && blood_volume > BLOOD_VOLUME_OKAY)
-			message += "<span class='warning bold'>Внимание: Уровень крови НИЗКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice'>Группа крови : [blood_type]</span><br>"
+			message += "<span class='warning bold'>Внимание: критический уровень крови: [blood_percent]% [blood_volume]сл.</span><span class='notice'>Группа крови: [blood_type]</span><br>"
 		else if(blood_volume <= BLOOD_VOLUME_OKAY)
 			message += "<span class='warning bold'>Внимание: Уровень крови КРИТИЧЕСКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice bold'>Группа крови: [blood_type]</span><br>"
 		else

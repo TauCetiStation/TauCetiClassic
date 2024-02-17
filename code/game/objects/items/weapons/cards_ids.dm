@@ -249,7 +249,7 @@
 
 /obj/item/weapon/card/id/blueshield
 	name = "identification card"
-	desc = "A card issued to blueshield officer."
+	desc = "ID карта офицера, которая олицетворяет личный щит командования станции и представителей Центрального Командования."
 	icon_state = "blueshield"
 	item_state = "int_id"
 	item_state_world = "blueshield_world"

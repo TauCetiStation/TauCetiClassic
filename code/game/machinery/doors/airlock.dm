@@ -226,6 +226,8 @@ var/global/list/airlock_overlays = list()
 // returns 1 if shocked, 0 otherwise
 // The preceding comment was borrowed from the grille's shock script
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
+	if(!Adjacent(user))
+		return 0
 	if(!hasPower())		// unpowered, no shock
 		return 0
 	if(hasShocked)

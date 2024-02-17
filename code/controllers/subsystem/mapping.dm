@@ -266,12 +266,14 @@ SUBSYSTEM_DEF(mapping)
 
 	if(config.system_name)
 		if(areas_by_type[/area/shuttle/arrival/velocity])
-			areas_by_type[/area/shuttle/arrival/velocity].name = "[config.system_name] Transfer Station 13"
+			areas_by_type[/area/shuttle/arrival/velocity].name = "НТС Велосити, док 42"
 	if(config.station_name)
 		if(areas_by_type[/area/shuttle/arrival/station])
 			areas_by_type[/area/shuttle/arrival/station].name = config.station_name
 		if(areas_by_type[/area/shuttle/officer/station])
 			areas_by_type[/area/shuttle/officer/station].name = config.station_name
+	if(areas_by_type[/area/velocity/monorailwagon])
+		areas_by_type[/area/velocity/monorailwagon].name = "NTS Velocity, Dock 42, Monorail Metro Station"
 
 /datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
 	if(!VM.MakeNextMap())
