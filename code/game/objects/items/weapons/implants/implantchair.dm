@@ -1,5 +1,6 @@
 /obj/machinery/implantchair
-	name = "loyalty implanter"
+	name = "loyalty implanter modifier"
+	cases = list("Модификатор имплантера лояльности", "имплантера лояльности", "имплантеру лояльности", "имплантер лояльности", "имплантером лояльности", "имплантере лояльности")
 	desc = "Used to implant occupants with loyalty implants."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
