@@ -2326,7 +2326,6 @@
 /obj/machinery/computer/general_air_control{
 	dir = 8;
 	frequency = 1444;
-	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
@@ -2353,7 +2352,6 @@
 /obj/machinery/computer/general_air_control{
 	dir = 4;
 	frequency = 1444;
-	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
@@ -70586,7 +70584,6 @@
 "qJU" = (
 /obj/machinery/computer/general_air_control{
 	frequency = 1444;
-	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
@@ -74133,7 +74130,6 @@
 /obj/machinery/computer/general_air_control{
 	dir = 4;
 	frequency = 1443;
-	level = 3;
 	name = "Distribution and Waste Monitor";
 	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
 	},

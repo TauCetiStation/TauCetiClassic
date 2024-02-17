@@ -8,6 +8,7 @@
 /atom/movable/plane_master_controller/game
 	name = PLANE_MASTERS_GAME
 	controlled_planes = list(
+		UNDERFLOOR_PLANE,
 		FLOOR_PLANE,
 		GAME_PLANE,
 		ABOVE_GAME_PLANE,

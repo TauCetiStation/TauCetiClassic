@@ -62402,7 +62402,6 @@
 "mOt" = (
 /obj/machinery/computer/general_air_control{
 	frequency = 1444;
-	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter  In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter  Out")
 	},
