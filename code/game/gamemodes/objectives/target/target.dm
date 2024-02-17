@@ -58,5 +58,5 @@ var/global/list/target_objectives = list()
 	return TRUE
 
 /datum/objective/target/proc/format_explanation()
-	return "Тут не написано текста для обьяснения. Тип задания - [type]. Задача это - [target.name], веселись."
+	return "Тут не написано текста для обьяснения. Тип задания - [type]. Задача - [target.name], веселись."
 
