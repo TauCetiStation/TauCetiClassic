@@ -2,7 +2,7 @@
 	name = "strong blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_idle"
-	desc = "Some blob creature thingy."
+	desc = "Одно из созданий блоба..."
 	opacity = TRUE
 	max_integrity = 75
 	fire_resist = 2
