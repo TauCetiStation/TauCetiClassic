@@ -23,7 +23,6 @@ By design, d1 is the smallest direction and d2 is the highest
 
 // the power cable object
 /obj/structure/cable
-	level = 1 //is underfloor
 	anchored =1
 	var/datum/powernet/powernet
 	name = "power cable"
@@ -32,7 +31,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
-	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
+	layer = POWER_CABLES
 	color = COLOR_RED
 	max_integrity = 5
 	resistance_flags = CAN_BE_HIT
@@ -68,13 +67,10 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	d2 = text2num(copytext(icon_state, dash+1))
 
-	var/turf/T = src.loc			// hide if turf is not intact
-
-	if(level==1)
-		hide(T.intact)
 	cable_list += src //add it to the global cable list
 	update_icon()
 
+	AddElement(/datum/element/undertile, use_alpha = TRUE)
 
 /obj/structure/cable/Destroy()						// called when a cable is deleted
 	if(SSmachines.stop_powernet_processing)
@@ -88,16 +84,8 @@ By design, d1 is the smallest direction and d2 is the highest
 // General procedures
 ///////////////////////////////////
 
-//If underfloor, hide the cable
-/obj/structure/cable/hide(i)
-	if(level == 1 && istype(loc, /turf))
-		invisibility = i ? 101 : 0
-	updateicon()
-
-/obj/structure/cable/proc/updateicon()
+/obj/structure/cable/update_icon()
 	icon_state = "[d1]-[d2]"
-	alpha = invisibility ? 127 : 255
-
 
 // returns the powernet this cable belongs to
 /obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
@@ -132,7 +120,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/attackby(obj/item/W, mob/user)
 
 	var/turf/T = src.loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
 
 	if(iscutter(W))
@@ -528,7 +516,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away.</span>")
 		return
 
-	if(F.intact)		// if floor is intact, complain
+	if(F.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)		// if floor is intact, complain
 		to_chat(user, "<span class='warning'>You can't lay cable there unless the floor tiles are removed.</span>")
 		return
 
@@ -553,7 +541,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		C.d1 = 0 //it's a O-X node cable
 		C.d2 = dirn
 		C.add_fingerprint(user)
-		C.updateicon()
+		C.update_icon()
 
 		//create a new powernet with the cable, if needed it will be merged later
 		var/datum/powernet/PN = new
@@ -577,7 +565,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/turf/T = C.loc
 
-	if(!isturf(T) || T.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
+	if(!isturf(T) || T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)		// sanity checks, also stop use interacting with T-scanner revealed cable
 		return
 
 	if(get_dist(C, user) > 1)		// make sure it's close enough
@@ -592,7 +580,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	// one end of the clicked cable is pointing towards us
 	if(C.d1 == dirn || C.d2 == dirn)
-		if(U.intact)						// can't place a cable if the floor is complete
+		if(U.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 			to_chat(user, "<span class='warning'>You can't lay cable there unless the floor tiles are removed.</span>")
 			return
 		else
@@ -614,7 +602,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			NC.d1 = 0
 			NC.d2 = fdirn
 			NC.add_fingerprint()
-			NC.updateicon()
+			NC.update_icon()
 
 			//create a new powernet with the cable, if needed it will be merged later
 			var/datum/powernet/newPN = new()
@@ -657,7 +645,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		C.d2 = nd2
 
 		C.add_fingerprint()
-		C.updateicon()
+		C.update_icon()
 
 		C.mergeConnectedNetworks(C.d1) //merge the powernets...
 		C.mergeConnectedNetworks(C.d2) //...in the two new cable directions

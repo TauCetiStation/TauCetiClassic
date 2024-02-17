@@ -1,10 +1,9 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1.0
 	var/turf/basetype = /turf/environment/space
-	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
-	var/intact = 1
 	var/can_deconstruct = FALSE
+
+	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
 
 	//Properties for open tiles (/floor)
 	var/airless = FALSE
@@ -271,14 +270,12 @@
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
-			O.hide(src.intact)
+		if(O.initialized)
+			SEND_SIGNAL(O, COMSIG_OBJ_LEVELUPDATE, underfloor_accessibility)
 
 // override for environment turfs, since they should never hide anything
 /turf/environment/levelupdate()
-	for(var/obj/O in src)
-		if(O.level == 1)
-			O.hide(0)
+	return
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
@@ -479,11 +476,9 @@
 ////////////////
 
 /turf/singularity_act(obj/singularity/S, current_size)
-	if(intact)
+	if(underfloor_accessibility == UNDERFLOOR_HIDDEN)
 		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
-			if(O.level != 1)
-				continue
-			if(O.invisibility == 101)
+			if(HAS_TRAIT(O, TRAIT_UNDERFLOOR))
 				O.singularity_act(S, current_size)
 	ChangeTurf(/turf/environment/space)
 	return(2)

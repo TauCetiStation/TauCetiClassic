@@ -15,7 +15,7 @@
 
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SCRUBBER //connects to regular and scrubber pipes
 
-	level = PIPE_HIDDEN_LEVEL
+	undertile = FALSE
 	layer = GAS_SCRUBBER_LAYER
 	frequency = 1439
 
@@ -93,6 +93,7 @@
 			scrubber_icon += "[use_power ? "[scrubbing ? "on" : "in"]" : "off"]"
 
 	add_overlay(icon_manager.get_atmos_icon("device", , , scrubber_icon))
+	update_underlays()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_underlays()
 	if(..())
@@ -103,7 +104,7 @@
 
 		var/obj/machinery/atmospherics/node = NODE1
 
-		if(!T.is_plating() && node && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
+		if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && node && node.undertile && istype(node, /obj/machinery/atmospherics/pipe))
 			return
 		else
 			if(node)
@@ -185,10 +186,6 @@
 		use_power(power_draw)
 
 	update_parents()
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/hide(i) //to make the little pipe section invisible, the icon changes.
-	update_icon()
-	update_underlays()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))

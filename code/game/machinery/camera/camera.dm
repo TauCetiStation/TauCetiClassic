@@ -7,7 +7,9 @@
 	idle_power_usage = 5
 	active_power_usage = 10
 	layer = 5
-
+	max_integrity = 25
+	damage_deflection = 5
+	integrity_failure = 0.2
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -455,3 +457,7 @@
 	cam["z"] = z
 	cam["isonstation"] = is_station_level(z)
 	return cam
+
+/obj/machinery/camera/atom_religify(datum/religion/R)
+	deconstruct(FALSE)
+	return TRUE
