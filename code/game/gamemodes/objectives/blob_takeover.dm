@@ -8,7 +8,7 @@
 	if (!istype(F))
 		return FALSE
 	invade_tiles = F.blobwincount
-	explanation_text = "Мы должны расти и расширяться. Заполним станцию спорами. Мы захватим [pluralize_russian(invade_tiles, "плитка", "плитки", "плиток")] для полного контроля станции."
+	explanation_text = "Мы должны расти и расширяться. Заполним станцию спорами. Мы захватим [pluralize_russian(invade_tiles, "плитка", "плитки", "плиток")] для полного контроля."
 	return TRUE
 
 /datum/objective/blob_takeover/check_completion()
