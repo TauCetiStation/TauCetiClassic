@@ -128,7 +128,7 @@
 		blobber.key = C.key
 		playsound(blobber, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 		to_chat(blobber, "<b>Вы - блоббернаут!</b> \
-		<br>Вы мощны и вас сложно убить, вы восстанавливаетесь при нахождении рядом с ячейками, <span class='danger'но медленно умираете, если не находитесь рядом с блобом </span> или если фабрика, которая создала вас - уничтожена. \
+		<br>Вы сильны и выносливы. Вы восстанавливаетесь при нахождении рядом с ячейками, <span class='danger'но медленно умираете, если не находитесь рядом с блобом </span> или если фабрика, которая создала вас - уничтожена. \
 		<br>You can communicate with other blobbernauts and overminds<BR>")
 		add_points(-40)
 	else
