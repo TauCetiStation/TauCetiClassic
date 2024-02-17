@@ -16,7 +16,7 @@
 					n_p ++
 		target_amount = min(target_amount, n_p)
 
-	explanation_text = "[target_amount] - столько геномов нам нужно поглотить..."
+	explanation_text = "Нам нужно поглотить [pluralize_russian(target_amount, "геном", "генома", "геномов")]."
 	return target_amount
 
 /datum/objective/absorb/check_completion()
