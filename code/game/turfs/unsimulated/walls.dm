@@ -16,7 +16,6 @@
 
 /turf/unsimulated/wall/fakeglass
 	name = "window"
-	icon = 'icons/turf/walls/fakeglass.dmi'
 	icon_state = "box"
 	opacity = FALSE
 	smooth = SMOOTH_TRUE
