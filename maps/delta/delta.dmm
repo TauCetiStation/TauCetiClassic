@@ -1167,11 +1167,8 @@
 	},
 /area/station/security/checkpoint/escape)
 "abQ" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerOut";
-	name = "Medbay Doors Control";
-	pixel_y = -26
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -1967,6 +1964,16 @@
 /obj/item/clothing/mask/bandana/skull,
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"adh" = (
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitebluecorner"
+	},
+/area/station/medical/hallway)
 "adi" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/effect/decal/cleanable/dirt,
@@ -2374,12 +2381,6 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "MedbayFoyerOut";
-	name = "Medbay";
-	req_one_access = list(2,5)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
@@ -2388,6 +2389,13 @@
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "MedbayFoyerOut";
+	name = "Medbay";
+	req_one_access = list(2,5)
+	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -2951,12 +2959,6 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "med_second_ex";
-	name = "Medbay Side Entrance";
-	req_access = list(5)
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -2968,6 +2970,13 @@
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "med_second_ex";
+	name = "Medbay Side Entrance";
+	req_access = list(5)
+	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
@@ -24828,9 +24837,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -45011,8 +45017,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 29
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -47235,10 +47242,6 @@
 /area/station/hallway/primary/central)
 "jBX" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Treatment Center";
-	req_access = list(5)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -47246,6 +47249,11 @@
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Treatment Center";
+	req_access = list(5)
+	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -54174,12 +54182,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "MedbayFoyerOut";
-	name = "Medbay";
-	req_one_access = list(2,5)
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	dir = 4;
@@ -54188,6 +54190,13 @@
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "MedbayFoyerOut";
+	name = "Medbay";
+	req_one_access = list(2,5)
+	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -62402,7 +62411,6 @@
 "mOt" = (
 /obj/machinery/computer/general_air_control{
 	frequency = 1444;
-	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter  In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter  Out")
 	},
@@ -74837,12 +74845,6 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/medical_intern,
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerIn";
-	name = "Medbay Doors Control";
-	pixel_y = 28
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
@@ -75615,12 +75617,13 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
 	req_one_access = list(2,5)
 	},
-/obj/structure/disposalpipe/segment,
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -89114,10 +89117,6 @@
 /area/station/civilian/theatre)
 "sEZ" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Treatment Center";
-	req_access = list(5)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
@@ -89127,6 +89126,11 @@
 	name = "Medbay Biohazard Blast Doors";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Treatment Center";
+	req_access = list(5)
+	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -90160,9 +90164,6 @@
 "sSj" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
-	},
-/obj/machinery/light/small{
-	dir = 4
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -103748,6 +103749,7 @@
 	name = "Medbay";
 	req_one_access = list(2,5)
 	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "bluechoco"
 	},
@@ -112894,12 +112896,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "ycu" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerIn";
-	name = "Medbay Doors Control";
-	pixel_y = 28
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -112908,10 +112904,6 @@
 	c_tag = "Medbay Wing Entry";
 	dir = 5;
 	network = list("SS13","Medical")
-	},
-/obj/machinery/computer/guestpass{
-	dir = 8;
-	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -152644,7 +152636,7 @@ jMv
 pxa
 cAq
 qDS
-jMv
+adh
 pxa
 pxa
 uVF

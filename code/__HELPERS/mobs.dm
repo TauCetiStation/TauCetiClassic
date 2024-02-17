@@ -299,14 +299,14 @@
 	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
-		message += "<span class='notice'>Обнаруженные повреждения, Механические/Термические:</span><br>"
+		message += "<span class='notice'>Обнаруженные повреждения:</span><br>"
 		if(length(damaged))
 			for(var/obj/item/organ/external/BP in damaged)
-				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: \
+				message += "<span class='notice'>&emsp; [capitalize(CASE(BP, NOMINATIVE_CASE))]: \
 					[(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0]\
-					[(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'> \[Bleeding\]</span>" : "&emsp;"] - \
+					[(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'> \[Кровотечение\]</span>" : "&emsp;"] - \
 					[(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]\
-					[BP.controller.bodypart_type == BODYPART_ROBOTIC ? " (Cybernetic)" : ""]</span><br>"
+					[BP.controller.bodypart_type == BODYPART_ROBOTIC ? " (Кибернетический)" : ""]</span><br>"
 		else
 			message += "<span class='notice'>&emsp; Конечности целы.</span><br>"
 
@@ -361,7 +361,7 @@
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & ORGAN_BROKEN)
 				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
-					message += "<span class='warning'>Обнаружен незафиксированный перелом в [BP.name]. При транспортировке рекомендуется наложение шины.</span><br>"
+					message += "<span class='warning'>Обнаружен незафиксированный перелом в [CASE(BP, PREPOSITIONAL_CASE)]. При транспортировке рекомендуется наложение шины.</span><br>"
 				if(!found_broken)
 					found_broken = TRUE
 
@@ -369,19 +369,18 @@
 				found_bleed = TRUE
 
 			if(BP.has_infected_wound())
-				message += "<span class='warning'>Обнаружена инфекция в [BP.name]. Рекомендуется дезинфекция.</span><br>"
+				message += "<span class='warning'>Обнаружена инфекция в [CASE(BP, PREPOSITIONAL_CASE)]. Рекомендуется дезинфекция.</span><br>"
 
 		if(found_bleed)
-			message += "<span class='warning'><b>Обнаружено артериальное кровотечение</b>. Для определения местоположения требуется МРТ сканер.</span><br>"
+			message += "<span class='warning'>Обнаружено артериальное кровотечение. Для определения местоположения требуется медицинский сканер.</span><br>"
 		if(found_broken)
-			message += "<span class='warning'><b>Обнаружен перелом костей</b>. Для определения местоположения требуется МРТ сканер.</span><br>"
-		if(length(M.get_visible_implants(SIZE_MINUSCULE)))
-			message += "<span class='warning'><b>Обнаружены инородные тела</b>. Для определения местоположения требуется МРТ сканер.</span><br>"
+			message += "<span class='warning'>Обнаружен перелом костей. Для определения местоположения требуется медицинский сканер.</span><br>"
+
 		var/blood_volume = H.blood_amount()
 		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
 		var/blood_type = H.dna.b_type
 		if(blood_volume <= BLOOD_VOLUME_SAFE && blood_volume > BLOOD_VOLUME_OKAY)
-			message += "<span class='warning bold'>Внимание: Уровень крови НИЗКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice'>Группа крови : [blood_type]</span><br>"
+			message += "<span class='warning bold'>Внимание: критический уровень крови: [blood_percent]% [blood_volume]сл.</span><span class='notice'>Группа крови: [blood_type]</span><br>"
 		else if(blood_volume <= BLOOD_VOLUME_OKAY)
 			message += "<span class='warning bold'>Внимание: Уровень крови КРИТИЧЕСКИЙ: [blood_percent]% [blood_volume]сл.</span><span class='notice bold'>Группа крови: [blood_type]</span><br>"
 		else
@@ -415,3 +414,21 @@
 		return pick(user.neuter_gender_voice == MALE ? male_sounds : female_sounds)
 
 	return pick(male_sounds)
+
+/proc/get_germ_level_name(germ_level)
+	switch(germ_level)
+		if(INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
+			return "Лёгкая инфекция"
+		if(INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
+			return "Лёгкая инфекция+"
+		if(INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
+			return "Лёгкая инфекция++"
+		if(INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
+			return "Острая инфекция"
+		if(INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
+			return "Острая инфекция+"
+		if(INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
+			return "Острая инфекция++"
+		if(INFECTION_LEVEL_THREE to INFINITY)
+			return "Сепсис"
+	return

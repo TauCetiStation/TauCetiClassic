@@ -21,7 +21,7 @@
 	name = "dual-port air vent"
 	desc = "Has a valve and pump attached to it. There are two ports."
 
-	level = PIPE_HIDDEN_LEVEL
+	undertile = FALSE
 
 	use_power = NO_POWER_USE
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
@@ -82,7 +82,7 @@
 	var/obj/machinery/atmospherics/node1 = NODE1
 	var/obj/machinery/atmospherics/node2 = NODE2
 
-	if(!T.is_plating() && node1 && node2 && node1.level == PIPE_HIDDEN_LEVEL && node2.level == PIPE_HIDDEN_LEVEL && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
+	if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && node1 && node2 && node1.undertile && node2.undertile && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
 		vent_icon += "h"
 
 	if(!powered())
@@ -91,6 +91,7 @@
 		vent_icon += "[use_power ? "[pump_direction ? "out" : "in"]" : "off"]"
 
 	add_overlay(icon_manager.get_atmos_icon("device", , , vent_icon))
+	update_underlays()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/update_underlays()
 	if(..())
@@ -102,7 +103,7 @@
 		var/obj/machinery/atmospherics/node1 = NODE1
 		var/obj/machinery/atmospherics/node2 = NODE2
 
-		if(!T.is_plating() && node1 && node2 && node1.level == PIPE_HIDDEN_LEVEL && node2.level == PIPE_HIDDEN_LEVEL && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
+		if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && node1 && node2 && node1.undertile && node2.undertile && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
 			return
 		else
 			if (node1)
@@ -113,10 +114,6 @@
 				add_underlay(T, node2, dir, node2.icon_connect_type)
 			else
 				add_underlay(T, node2, dir)
-
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/hide(i)
-	update_icon()
-	update_underlays()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/process_atmos()
 	last_flow_rate = 0

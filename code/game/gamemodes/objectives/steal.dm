@@ -7,7 +7,6 @@ ADD_TO_POIFS_LIST(/obj/item/weapon/tank/jetpack/oxygen)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/captain)
 ADD_TO_POIFS_LIST(/obj/item/device/aicard)
 ADD_TO_POIFS_LIST(/obj/item/blueprints)
-ADD_TO_POIFS_LIST(/obj/item/clothing/suit/space/nasavoid)
 ADD_TO_POIFS_LIST(/obj/item/weapon/tank)
 ADD_TO_POIFS_LIST(/obj/item/slime_extract)
 ADD_TO_POIFS_LIST(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi)
@@ -47,7 +46,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"капитанский целеуказатель" = /obj/item/weapon/pinpointer,
 		"абляционный бронежилет" = /obj/item/clothing/suit/armor/laserproof,
 		"золотой огнетушитель" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
-	)
+  )
 
 	var/static/possible_items_special[] = list(
 		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
