@@ -268,7 +268,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 49)
 		if("Imposter" in be_role)
 			be_role -= "Imposter"
-		S["be_role"] << be_role
+			S["be_role"] << be_role
 
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
