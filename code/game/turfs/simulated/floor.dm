@@ -497,7 +497,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 
 			make_plating()
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		if(is_catwalk())
+		else if(is_catwalk())
 			if(broken)
 				return
 			ReplaceWithLattice()
@@ -508,6 +508,11 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 				if(T.is_catwalk())
 					var/turf/simulated/floor/plating/airless/catwalk/CW=T
 					CW.update_icon(0)
+		else if(istype(src, /turf/simulated/floor/grid_floor))
+			var/turf/simulated/floor/grid_floor/GF = src
+			GF.toggle_cower()
+			to_chat(user, "<span class='warning'>Вы открутили решетку.</span>")
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		return
 
 	if(istype(C, /obj/item/stack/rods))
@@ -538,8 +543,11 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 				if(!T.use(1))
 					return
 				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
-				if(istype(T,/obj/item/stack/tile/carpet))
+				if(istype(T, /obj/item/stack/tile/carpet))
 					ChangeTurf(T.turf_type) // for smoothing we need to change type
+					return
+				if(istype(T, /obj/item/stack/tile/grid))
+					ChangeTurf(T.turf_type)
 					return
 				floor_type = T.type
 				icon = initial(T.turf_type.icon)

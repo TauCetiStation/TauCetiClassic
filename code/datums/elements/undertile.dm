@@ -2,6 +2,7 @@
 #define ALPHA_UNDERTILE 128
 
 ///Add to an object if you want to be able to be hidden under tiles
+///If you allow object to be undertile, you need to add checks for TRAIT_UNDERFLOOR && UNDERFLOOR_INTERACTABLE for any interactions
 /datum/element/undertile
 	element_flags = ELEMENT_BESPOKE | COMPONENT_DUPE_HIGHLANDER
 	id_arg_index = 2
@@ -43,7 +44,7 @@
 	var/turf/T = get_turf(source)
 
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		source.plane = FLOOR_PLANE // We do this so that turfs that allow you to see what's underneath them don't have to be on the game plane (which causes ambient occlusion weirdness)
+		source.plane = UNDERFLOOR_PLANE
 		ADD_TRAIT(source, TRAIT_UNDERFLOOR, REF(src))
 
 		if(tile_overlay)
