@@ -32,6 +32,8 @@ var/global/bomb_set
 	var/nuketype = ""
 	var/cur_code
 	var/datum/announcement/station/nuke/announce_nuke = new
+	var/cooldown = 0
+	var/siren_cooldown = 0
 
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()
@@ -50,8 +52,14 @@ var/global/bomb_set
 		bomb_set = TRUE //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
 		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
+		if(timeleft <= 100 && world.time >= siren_cooldown)
+			for(var/mob/M in player_list)
+				if(!isnewplayer(M))
+					M.playsound_local(null, 'sound/machines/nuke_siren.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, 30, vary = FALSE, frequency = null, ignore_environment = TRUE)
+			siren_cooldown = world.time + 32 SECONDS
 		if(timeleft <= 0)
 			explode()
+	cooldown = max(cooldown - 2, 0)
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
 	if(isscrewing(O))
@@ -260,7 +268,8 @@ var/global/bomb_set
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/bomb_set(mob/user)
-	if(!authorized || safety)
+	if(cooldown || !authorized || safety)
+		to_chat(user, "<span class = 'red'>Не так быстро! Эта кнопка сработает снова через [cooldown] сек!</span>")
 		return
 	if(timing)
 		timing = FALSE
@@ -271,6 +280,7 @@ var/global/bomb_set
 		set_security_level("delta")
 		notify_ghosts("[src] has been activated!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
 		timing = TRUE
+	cooldown = 60
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/deploy(mob/user)
@@ -354,7 +364,10 @@ var/global/bomb_set
 	detonated = TRUE
 	safety = TRUE
 	update_icon()
-	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 5)
+	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 10)
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/machines/Alarm_reverb.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	if(SSticker)
 		SSticker.explosion_in_progress = TRUE
 	sleep(100)
@@ -492,6 +505,9 @@ var/global/bomb_set
 		return
 	detonated = TRUE
 	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 30)
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/machines/Alarm_reverb.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	update_icon()
 	addtimer(CALLBACK(src, PROC_REF(fail)), 13 SECONDS) //Good taste, right?
 
