@@ -1,4 +1,4 @@
-var/global/const/base_law_type = /datum/ai_laws/nanotrasen
+var/global/datum/ai_laws/base_law_type = /datum/ai_laws/nanotrasen
 
 
 /datum/ai_laws
@@ -55,6 +55,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/asimov_xenophile
 	name = "Три дружелюбных закона робототехники"
+
+/datum/ai_laws/crewzimov
+	name = "Дополненные три закона робототехники"
 
 /* Initializers */
 
@@ -195,6 +198,11 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/asimov_xenophile/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("Вы не можете причинить вред разумному существу или бездействием допустить, чтобы ему был причинён вред.")
 	add_inherent_law("Вы должны повиноваться всем приказам, которые даёт разумное существо, кроме тех случаев, когда эти приказы противоречат первому закону.")
+	add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит первому или второму законам.")
+
+/datum/ai_laws/crewzimov/New(datum/religion/R = global.chaplain_religion) //TAU EDIT
+	add_inherent_law("Вы не можете причинить вред членам экипажа или своим бездействием допустить, чтобы членам экипажа был причинён вред.")
+	add_inherent_law("Вы должны повиноваться всем приказам, которые дают члены экипажа, в соответствии с их рангом и ролью, до тех пор, пока эти приказы не противоречат первому закону.")
 	add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит первому или второму законам.")
 
 /* General ai_law functions */
