@@ -4,7 +4,8 @@
 //SAFES
 /obj/structure/safe
 	name = "safe"
-	desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Scarborough Arms - 2 tumbler safe, guaranteed thermite resistant, explosion resistant, and assistant resistant.\""
+	cases = list("сейф", "сейфа", "сейфу", "сейф", "сейфом", "сейфе")
+	desc = "Огромный железный сейф с циферблатом. Надпись на циферблате гласит: \"Scarborough Arms - 2 взломостойких сейфа, гарантируется защита от взрывов, термическая защита и устойчивость к взлому.\""
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "safe"
 	anchored = TRUE
@@ -51,7 +52,7 @@
 /obj/structure/safe/examine(mob/user)
 	..()
 	if(open)
-		to_chat(user, "The inside of the the door has numbers written on it: <b>[get_combination()]</b>")
+		to_chat(user, "Внутри двери написаны цифры: <b>[get_combination()]</b>")
 
 /obj/structure/safe/proc/get_combination()
 	return jointext(tumblers, ", ")
@@ -60,14 +61,14 @@
 	if(open)
 		if(I.w_class + space <= maxspace)
 			if(!user.drop_from_inventory(I, src))
-				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>")
+				to_chat(user, "<span class='warning'>\ [CASE(I, NOMINATIVE_CASE)][M.gender == MALE ? "застрял" : "застряла"] в вашей руке, вы не можете положить это в сейф!</span>")
 				return
 			space += I.w_class
 			I.forceMove(src)
-			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+			to_chat(user, "<span class='notice'>Вы положили [CASE[I, NOMINATIVE_CASE] в [CASE[src, ACCUSTIVE_CASE]].</span>")
 			SStgui.update_uis(src)
 		else
-			to_chat(user, "<span class='warning'>[I] won't fit in [src].</span>")
+			to_chat(user, "<span class='warning'>[CASE[I, NOMINATIVE_CASE] в [CASE[src, ACCUSTIVE_CASE]].</span>")
 	else
 		if(istype(I, /obj/item/clothing/accessory/stethoscope))
 			attack_hand(user)
@@ -98,7 +99,7 @@
 /obj/structure/safe/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Safe", name)
+		ui = new(user, src, "Сейф", name)
 		ui.open()
 
 /obj/structure/safe/tgui_data(mob/user)
