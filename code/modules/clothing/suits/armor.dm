@@ -10,7 +10,8 @@
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
-	desc = "An armored vest that protects against some damage."
+	cases = list("бронежилет","бронежилета","бронежилету","бронежилет","бронежилетом","о бронежилете")
+	desc = "Бронежилет, защищающий от незначительных повреждений."
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
@@ -18,27 +19,31 @@
 
 /obj/item/clothing/suit/armor/vest/security
 	name = "security armor"
-	desc = "An armored vest that protects against some damage. This one has NanoTrasen corporate badge."
+	cases = list("бронежилет Службы Безопасности","бронежилета Службы Безопасности","бронежилету Службы Безопасности","бронежилет Службы Безопасности","бронежилетом Службы Безопасности","о бронежилете Службы Безопасности")
+	desc = "Бронежилет, защищающий от незначительных повреждений. На нём есть корпоративная нашивка НаноТранзен."
 	icon_state = "armorsec"
 	item_state = "armor"
 
 /obj/item/clothing/suit/armor/vest/fullbody
 	name = "fullbody armor"
-	desc = "A set of armor covering the entire body. Primarily used by various law-enforcements across the galaxy."
+	cases = list("полнотелый бронежилет","полнотельного бронежилета","полнотельному бронежилету","полнотельный бронежилет","полнотельным бронежилетом","о полнотельном бронежилете")
+	desc = "Комплект брони, покрывающий всё тело. Преимущественно используется различными правоохранительными органами по всей галактике."
 	icon_state = "armor_fullbody"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/armor/vest/fullbody/psy_robe
 	name = "purple robes"
-	desc = "Heavy, royal purple robes threaded with psychic amplifiers and weird, bulbous lenses. Do not machine wash."
+	cases = list("пурпурная роба","пурпурной робы","пурпурной робе","пурпурную робу","пурпурной робой","о пурпурной робе")
+	desc = "Тяжелые королевские пурпурные одеяния, инкрутированные психическими усилителями и странными, выпуклыми линзами. Не подлежит машинной стирке."
 	icon_state = "psyamp"
 	item_state = "psyamp"
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 0, bio = 100, rad = 100)
 
 /obj/item/clothing/suit/storage/flak
 	name = "security armor"
-	desc = "An armored vest that protects against some damage. This one has four pockets for storage."
+	cases = list("бронежилет Службы Безопасности с разгрузкой","бронежилета Службы Безопасности с разгрузкой","бронежилету Службы Безопасности с разгрузкой","бронежилет Службы Безопасности с разгрузкой","бронежилетом Службы Безопасности с разгрузкой","о бронежилете Службы Безопасности с разгрузкой")
+	desc = "Бронежилет, защищающий от незначительных повреждений. На нём прикреплена разрузка, позволяющая хранить до четырёх предметов."
 	icon_state = "armorsec"
 	item_state = "armor"
 	blood_overlay_type = "armor"
@@ -60,27 +65,31 @@
 
 /obj/item/clothing/suit/storage/flak/police
 	name = "police armor"
-	desc = "An armored vest that protects against some damage. This one has four pockets for storage and a custom paintjob in colors of OCD."
+	cases = list("полицейский бронежилет","полицейского бронежилета","полицейскому бронежилету","полицейский бронежилет","полицейским бронежилетом","о полицейском бронежилете")
+	desc = "Бронежилет, защищающий от незначительных повреждений. На нём прикреплена разрузка, позволяющая хранить до четырёх предметов, а также индивидуальная окраска в цветах \'ООБПБП\'."
 	icon_state = "police_armor"
 	flags = HEAR_TALK
 
 /obj/item/clothing/suit/storage/flak/police/fullbody
 	name = "police fullbody armor"
-	desc = "A set of armor covering the entire body. This variant is used by OCD and is painted accordingly."
+	cases = list("полнотелый полицейский бронежилет","полнотельного полицейского бронежилета","полнотельному полицейскому бронежилету","полнотелый полицейский бронежилет","полнотельным полицейским бронежилетом","о полнотельном полицейском бронежилете")
+	desc = "Комплект брони, покрывающий всё тело. Этот экземпляр используется \'ООБПБП\' и окрашен в соответствующие цвета."
 	icon_state = "police_armor_fullbody"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/storage/flak/police/fullbody/heavy
 	name = "heavy fullbody armor"
-	desc = "A set of armor used by special weapons and tactics units of OCD. Justice will be served."
+	cases = list("тяжелый полнотелый бронежилет","тяжелого полнотелого бронежилета","тяжелому полнотелому бронежилету","тяжелый полнотелый бронежилет","тяжелым полнотелым бронежилетом","о тяжелом полнотелом бронежилете")
+	desc = "Комплект брони, используемый подразделениями специального назначения \'ООБПБП\'. Правосудие будет соблюдено."
 	icon_state = "police_armor_heavy"
 	slowdown = 0.2
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/marinad
 	name = "marine armor"
-	desc = "This thing will protect you from any angry flora or fauna."
+	cases = list("бронежилет морпеха","бронежилета морпеха","бронежилету морпеха","бронежилет морпеха","бронежилетом морпеха","о бронежилете морпеха")
+	desc = "Это однозначно защитит тебя от враждебно настроенной флоры и фауны."
 	icon_state = "marinad"
 	item_state = "marinad_armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -91,14 +100,16 @@
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
-	desc = "An armoured jacket with gold rank pips and livery."
+	cases = list("куртка Надзирателя","куртки Надзирателя","куртке Надзирателя","куртку Надзирателя","курткой Надзирателя","о куртке Надзирателя")
+	desc = "Бронированная куртка с золотыми нашивками и ливреей."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/suit/storage/flak/warden
 	name = "Warden's jacket"
-	desc = "An armoured jacket with gold rank pips and livery."
+	cases = list("куртка Надзирателя","куртки Надзирателя","куртке Надзирателя","куртку Надзирателя","курткой Надзирателя","о куртке Надзирателя")
+	desc = "Бронированная куртка с золотыми нашивками и ливреей."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -106,7 +117,8 @@
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
-	desc = "Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security."
+	cases = list("бронированное пальто","бронированного пальто","бронированному пальто","бронированное пальто","бронированным пальто","о бронированном пальто")
+	desc = "Легкое кожаное бронированное пальто, предназначенное для повседневного ношения высокопоставленными офицерами. Украшено гербом безопасности НаноТранзен."
 	icon_state = "leather_overcoat-sec"
 	item_state = "hostrench"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -115,7 +127,8 @@
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
-	desc = "A greatcoat enhanced with a special alloy for some protection and style."
+	cases = list("бронированная шинель","бронированной шинели","бронированной шинели","бронированную шинель","бронированной шинелью","о бронированной шинели")
+	desc = "Великолепное пальто, усиленное специальным сплавом для дополнительной защиты и стиля."
 	icon_state = "hos"
 	item_state = "hos"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -126,7 +139,8 @@
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
-	desc = "A suit of armor with heavy padding to protect against melee attacks."
+	cases = list("защитный костюм для подавления беспорядков","защитного костюма для подавления беспорядков","защитному костюму для подавления беспорядков","защитный костюм для подавления беспорядков","защитным костюмом для подавления беспорядков","о защитном костюме для подавления беспорядков")
+	desc = "Бронекостюм с тяжелой подкладкой для защиты от атак в ближнем бою."
 	icon_state = "riot"
 	item_state = "swat_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -136,7 +150,8 @@
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof fullbody armor"
-	desc = "A set of armor covering the entire body that excels in protecting the wearer against high-velocity solid projectiles."
+	cases = list("пуленепробиваемый полнотелый бронежилет","пуленепробиваемого полнотелого бронежилета","пуленепробиваемому полнотелому бронежилету","пуленепробиваемый полнотелый бронежилет","пуленепробиваемым полнотелым бронежилетом","о пуленепробиваемом полнотелом бронежилете")
+	desc = "Комплект брони, покрывающий всё тело и отлично защищающий носителя от твердых высокоскоростных снарядов."
 	icon_state = "bulletproof_fullbody"
 	item_state = "bulletproof_fullbody"
 	blood_overlay_type = "armor"
@@ -147,7 +162,8 @@
 
 /obj/item/clothing/suit/storage/flak/bulletproof
 	name = "bulletproof fullbody armor"
-	desc = "A set of armor covering the entire body that excels in protecting the wearer against high-velocity solid projectiles."
+	cases = list("пуленепробиваемый полнотелый бронежилет","пуленепробиваемого полнотелого бронежилета","пуленепробиваемому полнотелому бронежилету","пуленепробиваемый полнотелый бронежилет","пуленепробиваемым полнотелым бронежилетом","о пуленепробиваемом полнотелом бронежилете")
+	desc = "Комплект брони, покрывающий всё тело и отлично защищающий носителя от твердых высокоскоростных снарядов."
 	icon_state = "bulletproof_fullbody"
 	item_state = "bulletproof_fullbody"
 	blood_overlay_type = "armor"
@@ -164,7 +180,8 @@
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "ablative fullbody armor"
-	desc = "A set of armor covering the entire body that excels in protecting the wearer against energy projectiles."
+	cases = list("аблятивный полнотелый бронежилет","аблятивного полнотелого бронежилета","аблятивному полнотелому бронежилету","аблятивный полнотелый бронежилет","аблятивным полнотелым бронежилетом","об аблятивном полнотелом бронежилете")
+	desc = "Комплект брони, покрывающий всё тело и отлично защищающий носителя от энергетических снарядов."
 	icon_state = "armor_reflec"
 	item_state = "armor_reflec"
 	blood_overlay_type = "armor"
@@ -183,13 +200,15 @@
 
 /obj/item/clothing/suit/armor/laserproof/police
 	name = "police ablative armor"
-	desc = "An experimental model of ablative armor issued in limited numbers to special units of OCD. This set of armor protects not only against lasers but is also sturdy enough to withstand other damage types."
+	cases = list("аблятивный полицейский бронежилет","аблятивного полицейского бронежилета","аблятивному полицейскому бронежилету","аблятивный полицейский бронежилет","аблятивным полицейским бронежилетом","об аблятивном полицейском бронежилете")
+	desc = "Экспериментальная модель аблятивной брони, выпущенная в ограниченном количестве для специальных подразделений \'ООБПБП\'. Этот комплект брони защищает не только от лазеров, но также достаточно прочен, чтобы выдерживать другие виды повреждений."
 	icon_state = "police_armor_inspector"
 	armor = list(melee = 35, bullet = 35, laser = 65, energy = 75, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/swat
 	name = "swat suit"
-	desc = "A heavily armored suit that protects against moderate damage. Used in special operations."
+	cases = list("костюм спецназа","костюма спецназа","костюму спецназа","костюм спецназа","костюмом спецназа","о костюме спецназа")
+	desc = "Тяжелый бронированный костюм, защищающий от умеренного количества повреждений. Используется в специальных операциях."
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	gas_transfer_coefficient = 0.01
@@ -206,7 +225,8 @@
 
 /obj/item/clothing/suit/armor/swat/officer
 	name = "officer jacket"
-	desc = "An armored jacket used in special operations."
+	cases = list("офицерская куртка","офицерской куртки","офицерской куртке","офицерскую куртку","офицерской курткой","об офицерской куртке")
+	desc = "Бронированная куртка, используемая в специальных операциях."
 	icon_state = "detective_trenchcoat_brown"
 	item_state = "detective_trenchcoat_brown"
 	blood_overlay_type = "coat"
@@ -216,7 +236,8 @@
 
 /obj/item/clothing/suit/armor/det_suit
 	name = "armor"
-	desc = "An armored vest with a detective's badge on it."
+	cases = list("бронежилет детектива","бронежилета детектива","бронежилету детектива","бронежилет детектива","бронежилетом детектива","о бронежилете детектива")
+	desc = "Бронежилет с значком детектива."
 	icon_state = "detective-armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
@@ -225,16 +246,19 @@
 
 /obj/item/clothing/suit/storage/flak/blueshield
 	name = "blueshield armor vest"
-	desc = "It's heavy and somehow... comfortable?"
+	cases = list("бронежилет Синего Щита","бронежилета Синего Щита","бронежилету Синего Щита","бронежилет Синего Щита","бронежилетом Синего Щита","о бронежилете Синего Щита")
+	desc = "Он тяжелый и каким-то образом... удобный?"
 	icon_state = "blueshield"
 	item_state = "armor"
 	armor = list(melee = 60, bullet = 55, laser = 50, energy = 35, bomb = 35, bio = 0, rad = 0)
+	flags = ONESIZEFITSALL
 
 //Reactive armor
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
 /obj/item/clothing/suit/armor/vest/reactive
 	name = "experimental teleport armor"
-	desc = "High-tech armor with a huge bunch of sensors and fancy stuff inside. But why was this armor entrusted to a scientist?"
+	cases = list("экспериментальная броня-телепортер","экспериментальной брони-телепортера","экспериментальной броне-телепортеру","экспериментальную броню-телепортер","экспериментальной броней-телепортером","об экспериментальной броне-телепортере")
+	desc = "Высокотехнологичная броня с обилием датчиков и забавных устройств внутри. Но почему эта броня была доверена учёному?"
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
@@ -248,13 +272,13 @@
 /obj/item/clothing/suit/armor/vest/reactive/attack_self(mob/user)
 	active = !(active)
 	if(active)
-		to_chat(user, "<span class='notice'>The reactive armor is now active. Solid protective system deactivated.</span>")
+		to_chat(user, "<span class='notice'>Система реактивной брони - активирована. Система твердотельной брони - деактивирована.</span>")
 		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 		icon_state = "reactive"
 		item_state = "reactive"
 		add_fingerprint(user)
 	else
-		to_chat(user, "<span class='notice'>The reactive armor is now inactive. Solid protective system activated.</span>")
+		to_chat(user, "<span class='notice'>Система реактивной брони - деактивирована. Система твердотельной брони - активирована.</span>")
 		armor = list(melee = 50, bullet = 45, laser = 40, energy = 20, bomb = 0, bio = 0, rad = 0)
 		icon_state = "reactiveoff"
 		item_state = "reactiveoff"
@@ -270,7 +294,7 @@
 
 /obj/item/clothing/suit/armor/vest/reactive/proc/teleport_user(range, mob/user, text)
 	if(!isnull(text))
-		visible_message("<span class='userdanger'>The reactive teleport system flings [user.name] clear of [text]!</span>")
+		visible_message("<span class='userdanger'>Система реактивной телепортации перемещает [user.name] в сторону от [text]!</span>")
 	var/list/turfs = list()
 	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 	smoke.set_up(5, 0, user.loc)
@@ -303,7 +327,8 @@
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "Cent. Com. armor"
-	desc = "A suit that protects against some damage."
+	cases = list("Броня Центрального Командования","брони Центрального Командования","броне Центрального Командования","броню Центрального Командования","бронёй Центрального Командования","о броне Центрального Командования")
+	desc = "Костюм, защищающий от незначительных повреждений."
 	icon_state = "centcom"
 	item_state = "centcom"
 	w_class = SIZE_NORMAL//bulky item
@@ -316,7 +341,8 @@
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
-	desc = "A heavily armored suit that protects against moderate damage."
+	cases = list("тяжелая броня","тяжелой брони","тяжелой броне","тяжелую броню","тяжелой бронёй","о тяжелой броне")
+	desc = "Тяжелоукреплённый костюм, защищающий от значительных повреждений."
 	icon_state = "heavy"
 	item_state = "swat_suit"
 	w_class = SIZE_NORMAL//bulky item
@@ -334,21 +360,24 @@
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "thunderdome suit (red)"
-	desc = "Reddish armor."
+	cases = list("красный костюм \'Thunderdome\'","красного костюма \'Thunderdome\'","красному костюму \'Thunderdome\'","красный костюм \'Thunderdome\'","красным костюмом \'Thunderdome\'","о красном костюме \'Thunderdome\'")
+	desc = "Красноватая броня."
 	icon_state = "tdred"
 	item_state = "tdred"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/armor/tdome/green
 	name = "thunderdome suit (green)"
-	desc = "Pukish armor."
+	cases = list("зелёный костюм \'Thunderdome\'","зелёного костюма \'Thunderdome\'","зелёному костюму \'Thunderdome\'","зелёный костюм \'Thunderdome\'","зелёным костюмом \'Thunderdome\'","о зелёном костюме \'Thunderdome\'")
+	desc = "Бледно-зелёная броня."
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/armor/tactical
 	name = "tactical armor"
-	desc = "A suit of armor most often used by Special Weapons and Tactics squads. Includes padded vest with pockets along with shoulder and kneeguards."
+	cases = list("тактическая броня","тактической брони","тактической броне","тактическую броню","тактической бронёй","о тактической броне")
+	desc = "Комплект брони, наиболее часто используемый отрядами специального назначения и тактического вооружения. Включает в себя жилет с подкладкой и карманами, а также наколенники и наплечники."
 	icon_state = "swatarmor"
 	item_state = "armor"
 	var/obj/item/weapon/gun/holstered = null
@@ -368,30 +397,31 @@
 	if(!holstered)
 		var/obj/item/I = usr.get_active_hand()
 		if(!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
-			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
+			to_chat(usr, "<span class='notice'>У вас должно быть оружие в руках, чтобы поместить его в кобуру.</span>")
 			return
 		if(!I.can_be_holstered)
-			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
+			to_chat(usr, "<span class='warning'>Данное оружие не поместится в \the belt!</span>")
 			return
 		holstered = usr.get_active_hand()
 		usr.drop_from_inventory(holstered, src)
 		usr.visible_message("<span class='notice'>\The [usr] holsters \the [holstered].</span>", "You holster \the [holstered].")
 	else
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-			to_chat(usr, "<span class='warning'>You need an empty hand to draw the gun!</span>")
+			to_chat(usr, "<span class='warning'>Вам нужны свободные руки, чтобы достать оружие!</span>")
 		else
 			if(usr.a_intent == INTENT_HARM)
-				usr.visible_message("<span class='warning'>\The [usr] draws \the [holstered], ready to shoot!</span>", \
-				"<span class='warning'>You draw \the [holstered], ready to shoot!</span>")
+				usr.visible_message("<span class='warning'>[usr] извлекает из кобуры \the [holstered], готовясь к выстрелу!</span>", \
+				"<span class='warning'>Вы извлекаете из кобуры \the [holstered], готовые выстрелить!</span>")
 			else
-				usr.visible_message("<span class='notice'>\The [usr] draws \the [holstered], pointing it at the ground.</span>", \
-				"<span class='notice'>You draw \the [holstered], pointing it at the ground.</span>")
+				usr.visible_message("<span class='notice'>[usr] достает из \the [holstered], направляя его вниз.</span>", \
+				"<span class='notice'>Вы достаете \the [holstered], направляя его вниз.</span>")
 			usr.put_in_hands(holstered)
 		holstered = null
 
 /obj/item/clothing/suit/armor/syndiassault
 	name = "assault armor"
-	desc = "Heavy armored suit designed to endure all types of damage, from punches to heavy lasers."
+	cases = list("штурмовая броня","штурмовой брони","штурмовой броне","штурмовую броню","штурмовой бронёй","о штурмовой броне")
+	desc = "Тяжелый бронированный костюм, разработанный для выдерживания всех видов урона, начиная от простых ударов и заканчивая мощными лазерами."
 	icon_state = "assaultarmor"
 	item_state = "assaultarmor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -404,7 +434,8 @@
 
 /obj/item/clothing/suit/armor/syndilight
 	name = "recon armor"
-	desc = "Light-weight armored vest designed for scouting and recon missions. Provides solid protection, despite all the lightness. Now in fullbody format!"
+	cases = list("броня разведчика","брони разведчика","броне разведчика","броню разведчика","бронёй разведчика","о броне разведчика")
+	desc = "Легкий бронированный жилет, предназначенный для разведывательных миссий. Обеспечивает надежную защиту, несмотря на всю легкость. Теперь в полнотельном формате!"
 	icon_state = "lightarmor"
 	item_state = "lightarmor"
 	armor = list(melee = 50, bullet = 40, laser = 40, energy = 70, bomb = 50, bio = 0, rad = 50)
@@ -415,7 +446,8 @@
 
 /obj/item/clothing/suit/armor/m66_kevlarvest
 	name = "M66 Tactical Vest"
-	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
+	cases = list("тактический бронежилет М66","М66","тактическому бронежилету М66","тактический бронежилет М66","тактическим бронежилетом М66","о тактическом бронежилете М66")
+	desc = "Черный тактический жилет из кевлара, используемый частными охранными фирмами. Очень тактичный."
 	icon_state = "M66_KevlarVest"
 	item_state = "armor"
 	blood_overlay_type = "armor"
@@ -424,7 +456,8 @@
 
 /obj/item/clothing/suit/armor/crusader
 	name = "crusader tabard"
-	desc = "It's a chainmail with some cloth draped over. Non nobis domini and stuff."
+	cases = list("табард крестоносца","табарда крестоносца","табарду крестоносца","табард крестоносца","табардом крестоносца","о табарде крестоносца")
+	desc = "Это кольчуга с тканью, накинутой сверху. \'Non nobis domini\' и так далее..."
 	icon_state = "crusader"
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -434,7 +467,8 @@
 
 /obj/item/clothing/suit/armor/vest/surplus
 	name = "surplus armor vest"
-	desc = "An armored vest with outdated armor plates, no longer used by galactic militaries. At least it's cheap."
+	cases = list("протёртый бронежилет"," потёртого бронежилета","потёртому бронежилету","потёртый бронежилет","потёртым бронежилетом","о потёртом бронежилете")
+	desc = "Бронежилет с устаревшими бронепластинами, который больше не используется галактическими военными. Но, по крайней мере, он дешевый."
 	icon_state = "armor_surplus_1"
 	armor = list(melee = 45, bullet = 40, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
 
@@ -444,14 +478,16 @@
 
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"
-	desc = "A vest made of durathread and a bunch of rags, tied with wires."
+	cases = list("дюратканевый жилет","дюратканевого жилета","дюратканевому жилету","дюратканевый жилет","дюратканевым жилетом","о дюратканевом жилете")
+	desc = "Жилет, изготовленный из дюраткани и кучи тряпок, скреплённых проводами."
 	icon_state = "Duraarmor"
 	item_state = "Duraarmor"
 	armor = list(melee = 45, bullet = 15, laser = 50, energy = 35, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/duracoat
 	name = "durathread coat"
-	desc = "A coat made from durathread, looks stylish."
+	cases = list("дюратканевый плащ","дюратканевого плаща","дюратканевому плащу","дюратканевый плащ","дюратканевым плащом","о дюратканевом плаще")
+	desc = "Плащ, изготовленный из дюраткани, выглядит стильно."
 	icon_state = "Duracoat"
 	item_state = "Duracoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
