@@ -44,7 +44,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"гипоспрей" = /obj/item/weapon/reagent_containers/hypospray/cmo,
 		"телепортационную броню научрука" = /obj/item/clothing/suit/armor/vest/reactive,
 		"капитанский целеуказатель" = /obj/item/weapon/pinpointer,
-		"абляционный бронежилет" = /obj/item/clothing/suit/armor/laserproof,
+		"аблятивный бронежилет" = /obj/item/clothing/suit/armor/laserproof,
 		"золотой огнетушитель" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
   )
 
