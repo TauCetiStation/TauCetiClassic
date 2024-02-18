@@ -64,8 +64,8 @@ const Dialer = (properties, context) => {
       <Button
         disabled={open || right && !locked}
         icon={"arrow-" + (right ? "right" : "left")}
-        content={(right ? "Right" : "Left") + " " + amount}
-        iconPosition={right ? "right" : "left"}
+        content={(right ? "Направо" : "Налево") + " " + amount}
+        iiconPosition={right ? "right" : "left"}
         onClick={() => act(!right ? "turnright" : "turnleft", {
           num: amount,
         })}
@@ -77,7 +77,7 @@ const Dialer = (properties, context) => {
       <Button
         disabled={locked}
         icon={open ? "lock" : "lock-open"}
-        content={open ? "Close" : "Open"}
+        content={open ? "Закрыть" : "Открыть"}
         mb="0.5rem"
         onClick={() => act('open')}
       /><br />
@@ -132,16 +132,16 @@ const Help = (properties, context) => {
   return (
     <Section
       className="Safe__help"
-      title="Safe opening instructions (because you all keep forgetting)">
+      title="Инструкция для открытия сейфа (ведь вы всё всегда забываете...)">
       <Box>
-        1. Turn the dial left to the first number.<br />
-        2. Turn the dial right to the second number.<br />
-        3. Continue repeating this process for each number,
-        switching between left and right each time.<br />
-        4. Open the safe.
+        1. Поверните ручку сейфа влево до первой цифры.<br />
+        2. Поверните ручку сейфа вправо до второй цифры.<br />
+        3. Продолжайте повторять этот процесс для каждого числа.
+        каждый раз переворачивая налево и направо.<br />
+        4. Откройте сейф.
       </Box>
       <Box bold>
-        To lock fully, turn the dial to the left after closing the safe.
+        Для полной блокировки, поверните ручку налево после закрытия.
       </Box>
     </Section>
   );
