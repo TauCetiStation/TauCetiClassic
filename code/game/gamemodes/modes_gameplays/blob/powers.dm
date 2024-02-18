@@ -103,7 +103,7 @@
 		to_chat(src, "<span class='warning'>Эта ячейка уже производит блоббернаута.</span>")
 		return
 	if(B.get_integrity() < B.max_integrity * 0.5)
-		to_chat(src, "<span class='warning'>Эта ячейка слишком повреждена для производства ячейки.</span>")
+		to_chat(src, "<span class='warning'>Эта ячейка слишком повреждена для производства блоббернаута.</span>")
 		return
 	if(blob_points < 40)
 		to_chat(src, "<span class='warning'>Вы не можете себе этого позволить.</span>")
