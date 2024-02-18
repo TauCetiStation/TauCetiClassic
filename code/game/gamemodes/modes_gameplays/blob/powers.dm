@@ -50,7 +50,7 @@
 		return
 
 	if(!isblobnormal(B) && !isblobshield(B)) //Not special blob nor shield to upgrade
-		to_chat(src, "Этого блоба использовать нельзя. Найдите другого.")
+		to_chat(src, "Этого блоба использовать нельзя. Найдите нормального блоба.")
 		return
 
 	if(!can_buy(10))
@@ -155,7 +155,7 @@
 		return
 
 	if(!isblobnormal(B))
-		to_chat(src, "Этого блоба использовать нельзя. Найдите другого.")
+		to_chat(src, "Этого блоба использовать нельзя. Найдите нормального блоба.")
 		return
 
 	for(var/obj/structure/blob/resource/blob in orange(4, T))
@@ -188,7 +188,7 @@
 		return
 
 	if(!isblobnormal(B))
-		to_chat(src, "Этого блоба использовать нельзя. Найдите другого.")
+		to_chat(src, "Этого блоба использовать нельзя. Найдите нормального блоба.")
 		return
 
 	for(var/obj/structure/blob/node/blob in orange(5, T))
@@ -220,7 +220,7 @@
 		return
 
 	if(!isblobnormal(B))
-		to_chat(src, "Этого блоба использовать нельзя. Найдите другого.")
+		to_chat(src, "Этого блоба использовать нельзя. Найдите нормального блоба.")
 		return
 
 	for(var/obj/structure/blob/factory/blob in orange(7, T))
