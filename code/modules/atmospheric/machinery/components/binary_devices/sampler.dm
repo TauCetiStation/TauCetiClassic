@@ -10,7 +10,7 @@
 	idle_power_usage = 100
 	connect_types = CONNECT_TYPE_REGULAR | CONNECT_TYPE_SCRUBBER | CONNECT_TYPE_SUPPLY
 
-	level = PIPE_HIDDEN_LEVEL
+	undertile = FALSE
 
 	// Prevent unauthorized usage
 	req_access = list(access_atmospherics)
@@ -65,11 +65,6 @@
 		var/obj/machinery/atmospherics/node2 = NODE2
 		add_underlay(T, node1, get_dir(src, node1), node1 ? node1.icon_connect_type : "")
 		add_underlay(T, node2, get_dir(src, node2), node2 ? node2.icon_connect_type : "")
-
-/obj/machinery/atmospherics/components/binary/sampler/hide(i)
-	if(level == PIPE_HIDDEN_LEVEL && istype(loc, /turf/simulated))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
-	update_underlays()
 
 /obj/machinery/atmospherics/components/binary/sampler/process_atmos()
 	if(!powered())

@@ -117,7 +117,6 @@
 	item_state = "card-id"
 	item_state_world = "data_world"
 	layer = 3
-	level = 2
 	desc = "Эта дискета содержит координаты легендарной планеты Клоунов. Обращайтесь с ней осторожно."
 	function = "teleporter"
 	data = "Clown Land"

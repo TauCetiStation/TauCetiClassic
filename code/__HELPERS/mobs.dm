@@ -414,3 +414,21 @@
 		return pick(user.neuter_gender_voice == MALE ? male_sounds : female_sounds)
 
 	return pick(male_sounds)
+
+/proc/get_germ_level_name(germ_level)
+	switch(germ_level)
+		if(INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
+			return "Лёгкая инфекция"
+		if(INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
+			return "Лёгкая инфекция+"
+		if(INFECTION_LEVEL_ONE_PLUS_PLUS to INFECTION_LEVEL_TWO)
+			return "Лёгкая инфекция++"
+		if(INFECTION_LEVEL_TWO to INFECTION_LEVEL_TWO_PLUS)
+			return "Острая инфекция"
+		if(INFECTION_LEVEL_TWO_PLUS to INFECTION_LEVEL_TWO_PLUS_PLUS)
+			return "Острая инфекция+"
+		if(INFECTION_LEVEL_TWO_PLUS_PLUS to INFECTION_LEVEL_THREE)
+			return "Острая инфекция++"
+		if(INFECTION_LEVEL_THREE to INFINITY)
+			return "Сепсис"
+	return
