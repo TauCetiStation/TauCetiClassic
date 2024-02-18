@@ -68,7 +68,7 @@
 /atom/movable/screen/blob/jump_to_node
 	icon_state = "ui_tonode"
 	name = "Перемещение к узлу"
-	desc = "Вы передвигаетесь к выбранному узлу."
+	desc = "Вы перемещаетесь к выбранному узлу."
 	screen_loc = ui_inventory
 
 /atom/movable/screen/blob/jump_to_node/Click()
@@ -79,7 +79,7 @@
 /atom/movable/screen/blob/jump_to_core
 	icon_state = "ui_tocore"
 	name = "Перемещение к ядру"
-	desc = "Вы передвигаетесь к своему ядру."
+	desc = "Вы перемещаетесь к своему ядру."
 	screen_loc = ui_zonesel
 
 /atom/movable/screen/blob/jump_to_core/Click()

@@ -10,7 +10,7 @@
 // Power verbs
 
 /mob/camera/blob/verb/transport_core()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Перемещение к ядру"
 	set desc = "Перемещение к ядру."
 
@@ -19,7 +19,7 @@
 		src.loc = blob_core.loc
 
 /mob/camera/blob/verb/jump_to_node()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Перемещение к ноде"
 	set desc = "Перемещение к выбранной ноде."
 
@@ -34,7 +34,7 @@
 			src.loc = chosen_node.loc
 
 /mob/camera/blob/verb/create_shield_power()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Создать укрепленного блоба (10)"
 	set desc = "Создать укрепленного блоба. Используйте снова для получения рефлективной версии."
 
@@ -65,7 +65,7 @@
 		B.change_to(/obj/structure/blob/shield)
 
 /mob/camera/blob/verb/relocate_core_power()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Перемещение ядра (70)"
 	set desc = "Меняет местами ядро и узел."
 
@@ -87,7 +87,7 @@
 	B.forceMove(old_turf)
 
 /mob/camera/blob/verb/blobbernaut_power()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Создать блоббернаута (40)"
 	set desc = "Создаёт мощного и умного блоббернаута."
 
@@ -136,7 +136,7 @@
 		B.naut = null
 
 /mob/camera/blob/verb/create_resource_power()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Создать ресурсную ячейку (40)"
 	set desc = "Создать ресурсную ячейку, которая производит ресурсы раз в секунду."
 
@@ -169,7 +169,7 @@
 
 
 /mob/camera/blob/verb/create_node_power()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Создать узел блоба (60)"
 	set desc = "Создать узел блоба."
 
@@ -202,7 +202,7 @@
 	B.change_to(/obj/structure/blob/node)
 
 /mob/camera/blob/verb/create_factory_power()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Создать производящую ячейку (60)"
 	set desc = "Создать производящую ячейку."
 
@@ -235,7 +235,7 @@
 	factory_blobs += F
 
 /mob/camera/blob/verb/revert()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Удалить блоба"
 	set desc = "Удаляет блоба."
 
@@ -256,7 +256,7 @@
 
 
 /mob/camera/blob/verb/expand_blob_power()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Расширение (5)"
 	set desc = "Попытка создать нового блоба. При нахождении на плитке предмета, он будет разрушен и будет медленно поглощаться."
 
@@ -284,7 +284,7 @@
 
 
 /mob/camera/blob/verb/rally_spores_power()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Призыв спор (5)"
 	set desc = "Призыв спор на указанную локацию."
 
@@ -309,7 +309,7 @@
 	return
 
 /mob/camera/blob/verb/rename_node(obj/structure/blob/node/target in view())
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Переименовать узел"
 	set desc = "Переименовать узел"
 
