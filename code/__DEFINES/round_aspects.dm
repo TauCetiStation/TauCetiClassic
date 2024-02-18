@@ -18,5 +18,5 @@
 
 #define ROUND_ASPECT_ALTERNATIVE_RESEARCH "Alternative Research"
 
-#define ROUND_ASPECT_CREWZIMOW_LAWSET "Crewzimow Laws"
+#define ROUND_ASPECT_CREWZIMOV_LAWSET "Crewzimov Laws"
 

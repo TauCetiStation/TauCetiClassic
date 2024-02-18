@@ -137,9 +137,9 @@
 	desc = "Взрывы газовых бомб стали приносить меньше научных очков."
 	afterspawn_IC_announcement = "<span class='warning'>Научно-исследовательский Совет НаноТрейзен стал в меньшей мере интересоваться изучением взрывчатых свойств форона.</span>"
 
-/datum/round_aspect/crewzimow
-	name = ROUND_ASPECT_CREWZIMOW_LAWSET
+/datum/round_aspect/crewzimov
+	name = ROUND_ASPECT_CREWZIMOV_LAWSET
 	desc = "Изменён набор законов ИИ."
 
-/datum/round_aspect/crewzimow/after_init()
+/datum/round_aspect/crewzimov/after_init()
 	base_law_type = /datum/ai_laws/crewzimov
