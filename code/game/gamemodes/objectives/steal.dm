@@ -36,7 +36,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"антикварный лазер капитана" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
 		"ручной телепортер" = /obj/item/weapon/hand_tele,
 		"реактивный ранец капитана" = /obj/item/weapon/tank/jetpack/oxygen,
-		"функциональный ИИ" = /obj/item/device/aicard,
+		"функционирующий ИИ" = /obj/item/device/aicard,
 		"чертежи станции" = /obj/item/blueprints,
 		"скафандр НАСА" = /obj/item/clothing/suit/space/nasavoid,
 		"аугментированные очки ГСБ" = /obj/item/clothing/glasses/hud/hos_aug,
@@ -126,7 +126,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 					found_amount++
 				return found_amount>=target
 
-		if("функциональный ИИ")
+		if("функционирующий ИИ")
 			for(var/obj/item/device/aicard/C in all_items) //Check for ai card
 				for(var/mob/living/silicon/ai/M in C)
 					if(isAI(M) && M.stat != DEAD) //See if any AI's are alive inside that card.
@@ -158,7 +158,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	return OBJECTIVE_LOSS
 
 /datum/objective/steal/non_heads_items/get_possible_items()
-	return list("функциональный ИИ" = /obj/item/device/aicard,
+	return list("функционирующий ИИ" = /obj/item/device/aicard,
                 "скафандр НАСА" = /obj/item/clothing/suit/space/nasavoid,
                 "кусок мяса корги" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
                 "аблятивный бронежилет" = /obj/item/clothing/suit/armor/laserproof,
