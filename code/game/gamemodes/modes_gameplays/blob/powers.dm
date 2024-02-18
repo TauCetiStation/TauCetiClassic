@@ -110,7 +110,7 @@
 		return FALSE
 
 	B.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
-	to_chat(src, "<span class='notice'>Вы начинаете производство блоббернаута.</span>")
+	to_chat(src, "<span class='notice'>Вы начинаете создание блоббернаута.</span>")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Вы хотите стать блоббернаутом?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		B.max_integrity = B.max_integrity * 0.25 //factories that produced a blobbernaut have much lower health
