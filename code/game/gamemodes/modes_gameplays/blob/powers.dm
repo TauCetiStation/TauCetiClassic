@@ -10,7 +10,7 @@
 // Power verbs
 
 /mob/camera/blob/verb/transport_core()
-	set category = "Способности блоба"
+	set category = "Blob"
 	set name = "Перемещение к ядру"
 	set desc = "Перемещение к ядру."
 
