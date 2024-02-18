@@ -159,7 +159,7 @@
 		return
 
 	for(var/obj/structure/blob/resource/blob in orange(4, T))
-		to_chat(src, "Здесь уже есть ресурсная ячейка, поставьте другую на 4 плитки дальше!")
+		to_chat(src, "Здесь уже есть ресурсная ячейка, поставьте другую на 4 клетки дальше от ближайшей")
 		return
 
 	if(!can_buy(40))
@@ -184,7 +184,7 @@
 	var/obj/structure/blob/B = locate() in T
 
 	if(!B)//We are on a blob
-		to_chat(src, "Эта зона не захвачена!")
+		to_chat(src, "Здесь нет блоба!")
 		return
 
 	if(!isblobnormal(B))
@@ -192,7 +192,7 @@
 		return
 
 	for(var/obj/structure/blob/node/blob in orange(5, T))
-		to_chat(src, "Здесь уже есть узел, поставьте другой на 4 плитки дальше!")
+		to_chat(src, "Здесь уже есть узел, поставьте другой на 5 плиток дальше!")
 		return
 
 	if(!can_buy(60))
@@ -216,7 +216,7 @@
 
 	var/obj/structure/blob/B = locate() in T
 	if(!B)
-		to_chat(src, "Эта зона не захвачена!")
+		to_chat(src, "!")
 		return
 
 	if(!isblobnormal(B))
@@ -245,7 +245,7 @@
 /mob/camera/blob/verb/remove_blob(turf/T)
 	var/obj/structure/blob/B = locate() in T
 	if(!B)
-		to_chat(src, "Вы должны контролировать эту точку!")
+		to_chat(src, "Здесь нет блоба!")
 		return
 
 	if(isblobcore(B))
