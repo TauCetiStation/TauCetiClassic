@@ -33,7 +33,7 @@
 			target_amount = 1
 			loot = "ионную пушку"
 
-	explanation_text = "Мы заинтересованы в этом барахле... Украдём [loot]."
+	explanation_text = "Мы заинтересованы в аппаратуре с этой станции... Украдём [loot]."
 	return TRUE
 
 /datum/objective/heist/loot/check_completion()
