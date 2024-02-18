@@ -61,20 +61,20 @@
 	if(open)
 		if(I.w_class + space <= maxspace)
 			if(!user.drop_from_inventory(I, src))
-				to_chat(user, "<span class='warning'>\ [CASE(I, NOMINATIVE_CASE)][M.gender == MALE ? "застрял" : "застряла"] в вашей руке, вы не можете положить это в сейф!</span>")
+				to_chat(user, "<span class='warning'>[CASE(I, NOMINATIVE_CASE)][user.gender == MALE ? "застрял" : "застряла"] в вашей руке, вы не можете положить это в сейф!</span>")
 				return
 			space += I.w_class
 			I.forceMove(src)
-			to_chat(user, "<span class='notice'>Вы положили [CASE[I, NOMINATIVE_CASE] в [CASE[src, ACCUSTIVE_CASE]].</span>")
+			to_chat(user, "<span class='notice'>Вы положили [CASE(I, NOMINATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>")
 			SStgui.update_uis(src)
 		else
-			to_chat(user, "<span class='warning'>[CASE[I, NOMINATIVE_CASE] в [CASE[src, ACCUSTIVE_CASE]].</span>")
+			to_chat(user, "<span class='warning'>[CASE(I, NOMINATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>")
 	else
 		if(istype(I, /obj/item/clothing/accessory/stethoscope))
 			attack_hand(user)
 			return
 		else
-			to_chat(user, "<span class='warning'>You can't put [I] into the safe while it is closed!</span>")
+			to_chat(user, "<span class='warning'>Вы не можете положить [CASE(I, NOMINATIVE_CASE)] в сейф, ведь он закрыт!</span>")
 			return
 
 /obj/structure/safe/blob_act()
@@ -134,9 +134,9 @@
 	switch(action)
 		if("open")
 			if(!check_unlocked() && !open)
-				to_chat(user, "<span class='warning'>You cannot open [src], as its lock is engaged!</span>")
+				to_chat(user, "<span class='warning'>Вы не можете открыть [CASE(src, ACCUSATIVE_CASE)] из за замка!</span>")
 				return FALSE
-			to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
+			to_chat(user, "<span class='notice'>Вы [open ? "закрыли" : "открыли"] [CASE(src, ACCUSATIVE_CASE)].</span>")
 			open = !open
 			update_icon()
 			return TRUE
@@ -152,10 +152,10 @@
 					current_tumbler_index = 1
 
 				if(!invalid_turn && dial == tumblers[current_tumbler_index])
-					notify_user(user, canhear, list("TINK", "KRINK", "PLINK"), ticks, i)
+					notify_user(user, canhear, list("ПОАК", "КРИНК", "ПЛЮНК"), ticks, i)
 					current_tumbler_index++
 				else
-					notify_user(user, canhear, list("clack", "scrape", "clank"), ticks, i)
+					notify_user(user, canhear, list("клак", "скрап", "кланк"), ticks, i)
 			check_unlocked()
 			return TRUE
 		if("turnleft")
@@ -170,10 +170,10 @@
 					current_tumbler_index = 1
 
 				if(!invalid_turn && dial == tumblers[current_tumbler_index])
-					notify_user(user, canhear, list("TONK", "KRUNK", "PLUNK"), ticks, i)
+					notify_user(user, canhear, list("ПОАК", "КРИНК", "ПЛЮНК"), ticks, i)
 					current_tumbler_index++
 				else
-					notify_user(user, canhear, list("click", "chink", "clink"), ticks, i)
+					notify_user(user, canhear, list("клик", "чик", "клюнк"), ticks, i)
 			check_unlocked()
 			return TRUE
 		if("retrieve")
@@ -195,7 +195,7 @@
 /obj/structure/safe/proc/check_unlocked()
 	if(current_tumbler_index > number_of_tumblers)
 		locked = FALSE
-		visible_message("<span class='boldnotice'>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</span>")
+		visible_message("<span class='boldnotice'>[pick("Спринг", "Спранг", "Спрунг", "Кланк", "Крюнк")]!</span>")
 		return TRUE
 	locked = TRUE
 	return FALSE
@@ -207,9 +207,9 @@
 	if(!canhear)
 		return
 	if(current_tick == 2)
-		to_chat(user, "<span class='italics'>The sounds from [src] are too fast and blend together.</span>")
+		to_chat(user, "<span class='italics'>Звуки из [CASE(src, GENITIVE_CASE)] смешиваются из за быстрого перекручивания.</span>")
 	if(total_ticks == 1 || prob(SOUND_CHANCE))
-		to_chat(user, "<span class='italics'>You hear a [pick(sounds)] from [src].</span>")
+		to_chat(user, "<span class='italics'>Вы слышите [pick(sounds)] из [CASE(src, GENITIVE_CASE)].</span>")
 
 //FLOOR SAFES
 /obj/structure/safe/floor
