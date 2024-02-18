@@ -12,7 +12,7 @@ export const Safe = (properties, context) => {
   } = data;
   return (
     <Window
-      width={625}
+      width={670}
       height={760}
       theme="ntos">
       <Window.Content>
