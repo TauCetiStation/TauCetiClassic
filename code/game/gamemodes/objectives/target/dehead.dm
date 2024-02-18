@@ -2,7 +2,7 @@
 	required_equipment = /obj/item/device/biocan
 
 /datum/objective/target/dehead/format_explanation()
-	return "Положите голову [target.current.real_name] в банку с биогелем и храните её с собой."
+	return "Положите голову [target.current.real_name] в банку с биогелем. Она должна оставаться у вас и желательно в сохранности."
 
 /datum/objective/target/dehead/check_completion()
 	if(!target)//If it's a free objective.
