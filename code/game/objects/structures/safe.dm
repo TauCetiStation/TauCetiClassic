@@ -99,7 +99,7 @@
 /obj/structure/safe/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Сейф", name)
+		ui = new(user, src, "Safe", C_CASE(src, NOMINATIVE_CASE))
 		ui.open()
 
 /obj/structure/safe/tgui_data(mob/user)
