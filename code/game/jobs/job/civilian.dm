@@ -256,8 +256,8 @@
 	flags = JOB_FLAG_CIVIL
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H)
-		H.real_name = pick(clown_names)
-		H.rename_self("clown")
+	H.real_name = pick(clown_names)
+	H.rename_self("clown")
 
 /datum/job/mime
 	title = "Mime"
