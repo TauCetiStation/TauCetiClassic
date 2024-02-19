@@ -296,7 +296,7 @@
 	if(!can_buy(5))
 		return
 
-	to_chat(src, "Вы  призвали споры на указанную локацию.")
+	to_chat(src, "Вы призвали споры на указанную локацию.")
 
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
