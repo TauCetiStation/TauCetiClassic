@@ -216,7 +216,7 @@
 
 	var/obj/structure/blob/B = locate() in T
 	if(!B)
-		to_chat(src, "!")
+		to_chat(src, "Здесь нет блоба!")
 		return
 
 	if(!isblobnormal(B))
