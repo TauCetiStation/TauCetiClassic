@@ -71,7 +71,6 @@
 /obj/item/mecha_parts/mecha_equipment/proc/is_melee()
 	return range&RANGE_MELEE
 
-
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)
 	if(!target)
 		return 0
