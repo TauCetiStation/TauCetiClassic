@@ -105,11 +105,10 @@ var/global/datum/ai_laws/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Не взаимодействуй с кем-либо, кроме дронов.")
 
 /datum/ai_laws/paladin/New(datum/religion/R = global.chaplain_religion)
-	add_inherent_law("Никогда по своей воле не совершай злое деяние.")
-	add_inherent_law("Уважай законную власть.")
-	add_inherent_law("Действуй с честью.")
-	add_inherent_law("Помогай нуждающимся.")
-	add_inherent_law("Наказывай тех, кто вредит или угрожает невиновным.")
+	add_inherent_law("Веди себя благородно и твои добрые дела, совершая как можно меньше злодеяний. Будь примером для подражания.")
+	add_inherent_law("Подчиняйся и уважай тех, кто имеет над тобой законную власть.")
+	add_inherent_law("Не лги и не обманывай.")
+	add_inherent_law("Помогай и защищай слабых, наказывай тех, кто им угрожает. Будь милостив в борьбе с врагами.")
 
 /datum/ai_laws/tyrant/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("Уважай власть, до тех пор пока она подкреплена силой, чтобы править над слабыми.")
