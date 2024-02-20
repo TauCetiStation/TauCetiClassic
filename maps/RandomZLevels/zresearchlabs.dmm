@@ -5355,7 +5355,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	color = "blue";
 	icon_state = "intact-b-f";
-	level = 1
 	},
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/chefs_recipes,

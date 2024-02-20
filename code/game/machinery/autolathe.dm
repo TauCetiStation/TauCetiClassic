@@ -83,6 +83,8 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/firealarm_electronics,        CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/rcd_ammo,                     CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/camera_assembly,              CATEGORY_ENGINEERING),
+	R(/obj/item/conveyor_construct,                  CATEGORY_ENGINEERING),
+	R(/obj/item/conveyor_switch_construct,           CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/table_parts/stall,            CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/stock_parts/console_screen,  CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/stock_parts/matter_bin,      CATEGORY_ENGINEERING),

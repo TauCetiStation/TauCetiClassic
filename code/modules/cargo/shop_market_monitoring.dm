@@ -53,5 +53,5 @@
 	// Paying taxes on the item.
 	var/tax = round(shop_lot["postpayment"] * shop_lot["tax"] * 0.01)
 
-	charge_to_account(global.centcomm_account.account_number, global.station_account.account_number, "Налог на экспорт [shop_lot["name"]] из [CARGOSHOPNAME]", "NTS Велосити", -tax)
-	charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на экспорт", "NTS Велосити", tax)
+	charge_to_account(global.centcomm_account.account_number, global.station_account.account_number, "Налог на экспорт [shop_lot["name"]] из [CARGOSHOPNAME]", "НТС Велосити", -tax)
+	charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на экспорт", "НТС Велосити", tax)

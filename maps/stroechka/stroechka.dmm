@@ -1153,7 +1153,6 @@
 /obj/machinery/computer/general_air_control{
 	dir = 4;
 	frequency = 1444;
-	level = 3;
 	name = "Incinerator Monitor";
 	sensors = list("inc_meter"="Incinerator pipe meter","incinerator_sensor"="Incinerator sensor")
 	},

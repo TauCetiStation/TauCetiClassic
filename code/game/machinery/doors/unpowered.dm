@@ -18,6 +18,7 @@
 /obj/machinery/door/unpowered/shuttle
 	icon = 'icons/turf/shuttle.dmi'
 	name = "door"
+	cases = list("дверь", "двери", "двери", "дверь", "дверью", "двери")
 	icon_state = "door1"
 	opacity = 1
 	density = TRUE

@@ -795,15 +795,16 @@
 	},
 /area/station/medical/hallway)
 "abh" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/door/airlock/medical/glass{
 	dir = 4;
 	id_tag = "Medbay";
 	name = "Medbay";
 	req_access = list(5)
 	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2325,7 +2326,6 @@
 /obj/machinery/computer/general_air_control{
 	dir = 8;
 	frequency = 1444;
-	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
@@ -2352,7 +2352,6 @@
 /obj/machinery/computer/general_air_control{
 	dir = 4;
 	frequency = 1444;
-	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
@@ -7838,12 +7837,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "bqp" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "Medbay";
-	name = "Medbay Doors Control";
-	pixel_x = 28
-	},
 /obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
@@ -18857,12 +18850,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "ecF" = (
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "Medbay";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
@@ -18872,6 +18859,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "Medbay";
+	name = "Medbay";
+	req_access = list(5)
+	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39916,18 +39910,19 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/machinery/door/airlock/medical/glass{
-	dir = 4;
-	id_tag = "Medbay";
-	name = "Medbay";
-	req_access = list(5)
-	},
 /obj/structure/sign/departments/medbay/alt{
 	pixel_y = -32
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/medical/glass{
+	dir = 4;
+	id_tag = "Medbay";
+	name = "Medbay";
+	req_access = list(5)
+	},
+/obj/effect/unrestricted_side/west,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -70585,7 +70580,6 @@
 "qJU" = (
 /obj/machinery/computer/general_air_control{
 	frequency = 1444;
-	level = 3;
 	name = "Supermatter Monitor";
 	sensors = list("in_sm_meter"="Supermatter In","sm_sensor"="Supermatter","out_sm_meter"="Supermatter Out")
 	},
@@ -74132,7 +74126,6 @@
 /obj/machinery/computer/general_air_control{
 	dir = 4;
 	frequency = 1443;
-	level = 3;
 	name = "Distribution and Waste Monitor";
 	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
 	},

@@ -21,6 +21,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/floor/light/atom_init_late()
+	..()
 	update_icon()
 	name = initial(name)
 
@@ -139,7 +140,7 @@
 	name = "plating"
 	icon_state = "plating"
 	floor_type = null
-	intact = 0
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	footstep = FOOTSTEP_PLATING
 
 /turf/simulated/floor/plating/airless
@@ -182,6 +183,7 @@
 
 /turf/simulated/shuttle/floor
 	name = "floor"
+	cases = list("пол", "пола", "полу", "пол", "полом", "поле")
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -339,6 +341,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/floor/grass/atom_init_late()
+	..()
 	update_icon()
 	for(var/direction in cardinal)
 		if(istype(get_step(src,direction),/turf/simulated/floor))
@@ -407,7 +410,7 @@
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = HEAT_CAPACITY_VACUUM
-	intact = 0
+	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	footstep = FOOTSTEP_CATWALK
 
 /turf/simulated/floor/plating/airless/catwalk/atom_init()

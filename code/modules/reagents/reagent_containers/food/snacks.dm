@@ -658,7 +658,7 @@
 	name = "cheeseburger"
 	desc = "The cheese adds a good flavor."
 	icon_state = "cheeseburger"
-	list_reagents = list("nutriment" = 4, "cheese" = 4, "vitamin" = 1)
+	list_reagents = list("nutriment" = 8, "cheese" = 8, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 	name = "burger"
@@ -666,7 +666,7 @@
 	icon_state = "hburger"
 	filling_color = "#d63c3c"
 	bitesize = 2
-	list_reagents = list("nutriment" = 2, "protein" = 4, "vitamin" = 1)
+	list_reagents = list("nutriment" = 4, "protein" = 8, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
 	name = "Fillet -o- Carp Sandwich"
@@ -940,11 +940,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no Raisins"
 	icon_state = "4no_raisins"
-	desc = "Best raisins in the universe. Not sure why."
+	desc = "Most nutritious raisins in the universe. Not sure why."
 	filling_color = "#343834"
 	w_class = SIZE_MIDGET
-	bitesize = 2
-	list_reagents = list("plantmatter" = 1, "sugar" = 1)
+	bitesize = 6
+	list_reagents = list("plantmatter" = 3, "sugar" = 3)
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
 
@@ -1042,7 +1042,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#eddd00"
 	bitesize = 2
-	list_reagents = list("nutriment" = 4)
+	list_reagents = list("nutriment" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/soydope
 	name = "Soy Dope"
@@ -1068,7 +1068,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#eddd00"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("nutriment" = 12)
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	name = "Fortune cookie"
@@ -2639,7 +2639,7 @@
 	desc = "Unrelated to dogs, maybe."
 	icon_state = "hotdog"
 	bitesize = 2
-	list_reagents = list("protein" = 6)
+	list_reagents = list("protein" = 12)
 
 /obj/item/weapon/reagent_containers/food/snacks/flatbread
 	name = "flatbread"

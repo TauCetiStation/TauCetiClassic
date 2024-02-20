@@ -4,7 +4,6 @@
 
 // ===
 /area
-	level = null
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
