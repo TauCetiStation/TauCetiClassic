@@ -1,4 +1,5 @@
 #define CHANCE_OF_NO_ASPECT 70
+
 SUBSYSTEM_DEF(round_aspects)
 	name = "Round Aspects"
 	init_order = SS_INIT_ASPECTS

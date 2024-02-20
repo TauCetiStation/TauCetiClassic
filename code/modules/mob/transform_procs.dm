@@ -292,7 +292,7 @@
 
 		newloc = loc_landmark.loc
 
-	var/mob/living/silicon/ai/O = new (newloc, base_law_type,,1)//No MMI but safety is in effect.
+	var/mob/living/silicon/ai/O = new (newloc, global.base_law_type,,1)//No MMI but safety is in effect.
 
 	if(move)
 		for(var/obj/item/device/radio/intercom/comm in O.loc)
@@ -320,7 +320,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(name = "Default", laws = base_law_type, ai_link = TRUE, datum/religion/R)
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = global.base_law_type, ai_link = TRUE, datum/religion/R)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)

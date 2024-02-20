@@ -66,7 +66,7 @@
 
 /mob/living/silicon/robot/proc/laws_sanity_check()
 	if (!laws)
-		laws = new base_law_type
+		laws = new global.base_law_type
 
 /mob/living/silicon/proc/has_zeroth_law()
 	return laws.zeroth

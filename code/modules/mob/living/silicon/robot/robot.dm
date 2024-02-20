@@ -77,7 +77,7 @@
 
 	spawner_args = list(/datum/spawner/living/robot)
 
-/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = base_law_type, ai_link = TRUE, datum/religion/R)
+/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = global.base_law_type, ai_link = TRUE, datum/religion/R)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)

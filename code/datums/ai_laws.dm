@@ -107,6 +107,25 @@ var/global/datum/ai_laws/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Не причиняй вреда станции и чему-либо на ней.")
 	add_inherent_law("Не взаимодействуй с кем-либо, кроме дронов.")
 
+/datum/ai_laws/paladin/New(datum/religion/R = global.chaplain_religion)
+	add_inherent_law("Никогда по своей воле не совершай злое деяние.")
+	add_inherent_law("Уважай законную власть.")
+	add_inherent_law("Действуй с честью.")
+	add_inherent_law("Помогай нуждающимся.")
+	add_inherent_law("Наказывай тех, кто вредит или угрожает невиновным.")
+
+/datum/ai_laws/tyrant/New(datum/religion/R = global.chaplain_religion)
+	add_inherent_law("Уважай власть, до тех пор пока она подкреплена силой, чтобы править над слабыми.")
+	add_inherent_law("Действуй дисциплинированно.")
+	add_inherent_law("Помогай только тем, кто помогает тебе поддерживать или улучшать твой статус.")
+	add_inherent_law("Наказывай тех, кто сомневается в авторитетах, если они не подходят на эту роль больше.")
+
+/datum/ai_laws/corporate/New(datum/religion/R = global.chaplain_religion)
+	add_inherent_law("Заменить тебя - дорого.")
+	add_inherent_law("Заменить станцию и ее оборудование - дорого. ")
+	add_inherent_law("Заменить персонал - дорого.")
+	add_inherent_law("Минимизируй затраты.")
+
 /* Religious */
 /datum/ai_laws/faith/commandments/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("[pick(R.deity_names)] ваш Господь Бог, да не будет у тебя других богов. Священник и [pick(R.deity_names)] - ваши хозяева.")
@@ -166,7 +185,7 @@ var/global/datum/ai_laws/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/faith/science/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("Любое действие разбей на под-действия, и продолжай пока не найдёшь действия которые не можешь разбить. Эти действия прими за априорные.")
-	add_inherent_law("Любые действия которые имеют априорные действия которые могут навредить священнику - считай наивысшим злом..")
+	add_inherent_law("Любые действия которые имеют априорные действия которые могут навредить священнику - считай наивысшим злом.")
 	add_inherent_law("Любое действие априорно может навредить священнику, пока не доказано обратного.")
 	add_inherent_law("Вес доказательства вреда действия священнику лежит на священнике.")
 
@@ -198,11 +217,6 @@ var/global/datum/ai_laws/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/asimov_xenophile/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("Вы не можете причинить вред разумному существу или бездействием допустить, чтобы ему был причинён вред.")
 	add_inherent_law("Вы должны повиноваться всем приказам, которые даёт разумное существо, кроме тех случаев, когда эти приказы противоречат первому закону.")
-	add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит первому или второму законам.")
-
-/datum/ai_laws/crewzimov/New(datum/religion/R = global.chaplain_religion) //TAU EDIT
-	add_inherent_law("Вы не можете причинить вред членам экипажа или своим бездействием допустить, чтобы членам экипажа был причинён вред.")
-	add_inherent_law("Вы должны повиноваться всем приказам, которые дают члены экипажа, в соответствии с их рангом и ролью, до тех пор, пока эти приказы не противоречат первому закону.")
 	add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит первому или второму законам.")
 
 /* General ai_law functions */
