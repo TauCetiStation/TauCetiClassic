@@ -141,10 +141,7 @@
 /datum/quality/negativeish/salackyi
 	name = "Салацькый"
 	desc = "Ну що хлопче, готовий?"
-	requirement = "Все, кроме СБ и глав."
-
-/datum/quality/negativeish/salackyi/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	return !(H.mind.assigned_role in global.command_positions) && !(H.mind.assigned_role in global.security_positions)
+	requirement = "Нема."
 
 /datum/quality/negativeish/salackyi/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Тебе известны новые языки. Нажми 'IC > Check Known Languages' чтобы узнать какие.</span>")
