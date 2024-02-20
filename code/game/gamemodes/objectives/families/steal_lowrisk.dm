@@ -1,6 +1,6 @@
 /datum/objective/gang/steal_lowrisk
     var/obj/item/steal_target
-    var/static/items_to_steal = list(/obj/item/weapon/card/id/captains_spare,
+    var/items_to_steal = list(/obj/item/weapon/card/id/captains_spare,
 									 /obj/item/weapon/disk/nuclear,
 									 /obj/item/weapon/stamp/med/cmo,
 									 /obj/item/weapon/stamp/hop,
@@ -28,7 +28,7 @@
 
 /datum/objective/gang/steal_lowrisk/select_target()
 	steal_target = find_and_check_target()
-	explanation_text = "Украдите [initial(steal_target.name)]."
+	explanation_text = "Украдите [CASE(steal_target, NOMINATIVE_CASE)]."
 
 var/global/list/lowrisk_objectives_cache
 
