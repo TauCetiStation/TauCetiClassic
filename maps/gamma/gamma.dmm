@@ -20502,9 +20502,7 @@
 /obj/item/device/radio/intercom/pod{
 	pixel_y = -10
 	},
-/obj/structure/stool/bed/chair/schair/wagon/blue{
-	dir = 2
-	},
+/obj/structure/stool/bed/chair/schair/wagon/yellow,
 /turf/simulated/shuttle/floor/erokez{
 	dir = 4;
 	icon_state = "floor"
@@ -36587,7 +36585,7 @@
 /area/station/civilian/bar)
 "gCM" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -38017,7 +38015,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -66129,7 +66127,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -66432,7 +66430,7 @@
 	layer = 4;
 	pixel_x = -10
 	},
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -76256,7 +76254,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -77126,7 +77124,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -93125,7 +93123,7 @@
 /area/station/security/checkpoint)
 "rZG" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -102417,7 +102415,7 @@
 /area/station/hallway/primary/central)
 "tOZ" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -109027,7 +109025,7 @@
 	},
 /area/station/medical/reception)
 "vej" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 1
 	},
 /obj/machinery/light/small{
