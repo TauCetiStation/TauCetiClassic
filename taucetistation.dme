@@ -1636,6 +1636,7 @@
 #include "code\modules\events\camera_damage.dm"
 #include "code\modules\events\carp_migration.dm"
 #include "code\modules\events\communications_blackout.dm"
+#include "code\modules\events\cult_maelstrom.dm"
 #include "code\modules\events\cult_portals.dm"
 #include "code\modules\events\dust.dm"
 #include "code\modules\events\economic_event.dm"
