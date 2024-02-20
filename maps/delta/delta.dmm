@@ -28961,7 +28961,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/service_bedrooms)
 "fLe" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 1
 	},
 /obj/item/device/radio/intercom/pod{
@@ -33824,7 +33824,7 @@
 /area/station/hallway/secondary/mine_sci_shuttle)
 "gMz" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -39386,7 +39386,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
 "hUZ" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue,
+/obj/structure/stool/bed/chair/schair/wagon/yellow,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -55088,7 +55088,7 @@
 	},
 /area/station/security/brig)
 "liB" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue,
+/obj/structure/stool/bed/chair/schair/wagon/yellow,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -69876,7 +69876,7 @@
 	},
 /area/station/engineering/break_room)
 "oub" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 1
 	},
 /obj/item/device/radio/intercom/pod{
@@ -69978,7 +69978,7 @@
 /area/station/hallway/primary/port)
 "ouU" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -79035,7 +79035,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -104259,7 +104259,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
