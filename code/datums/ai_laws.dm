@@ -56,9 +56,6 @@ var/global/datum/ai_laws/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/asimov_xenophile
 	name = "Три дружелюбных закона робототехники"
 
-/datum/ai_laws/crewzimov
-	name = "Дополненные три закона робототехники"
-
 /* Initializers */
 
 /datum/ai_laws/asimov/New(datum/religion/R = global.chaplain_religion)
