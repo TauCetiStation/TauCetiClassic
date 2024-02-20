@@ -2006,6 +2006,7 @@
 				NO_GENDERS = TRUE,
 				NO_FAT = TRUE,
 				)
+	restricted_inventory_slots = list(SLOT_WEAR_ID, SLOT_BELT)
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 	blood_datum_path = /datum/dirt_cover/gray_blood
