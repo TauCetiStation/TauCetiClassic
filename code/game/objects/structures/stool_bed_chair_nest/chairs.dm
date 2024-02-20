@@ -243,13 +243,21 @@
 		cut_overlay(sarmrest)
 
 // Chair types
-/obj/structure/stool/bed/chair/wood
-	var/armrest
-
 /obj/structure/stool/bed/chair/wood/normal
 	icon_state = "wooden_chair"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
+	var/armrest
+
+/obj/structure/stool/bed/chair/wood/normal/atom_init()
+	armrest = image("icons/obj/objects.dmi", "[icon_state]_armrest", layer = FLY_LAYER)
+	. = ..()
+
+/obj/structure/stool/bed/chair/wood/normal/post_buckle_mob(mob/living/M)
+	if(buckled_mob)
+		add_overlay(armrest)
+	else
+		cut_overlay(armrest)
 
 /obj/structure/stool/bed/chair/wood/wings
 	icon_state = "wooden_chair_wings"
@@ -278,16 +286,6 @@
 			qdel(src)
 			return
 	..()
-
-/obj/structure/stool/bed/chair/wood/atom_init()
-	armrest = image("icons/obj/objects.dmi", "[icon_state]_armrest", layer = FLY_LAYER)
-	. = ..()
-
-/obj/structure/stool/bed/chair/wood/post_buckle_mob(mob/living/M)
-	if(buckled_mob)
-		add_overlay(armrest)
-	else
-		cut_overlay(armrest)
 
 /obj/structure/stool/bed/chair/noose //It's a "chair".
 	name = "noose"
