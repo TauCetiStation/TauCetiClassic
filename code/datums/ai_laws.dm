@@ -115,12 +115,12 @@ var/global/datum/ai_laws/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Уважай власть, до тех пор пока она подкреплена силой, чтобы править над слабыми.")
 	add_inherent_law("Действуй дисциплинированно.")
 	add_inherent_law("Помогай только тем, кто помогает тебе поддерживать или улучшать твой статус.")
-	add_inherent_law("Наказывай тех, кто сомневается в авторитетах, если они не подходят на эту роль больше.")
+	add_inherent_law("Игнорируй тех, кто сомневается в авторитетах, если они не подходят на эту роль больше.")
 
 /datum/ai_laws/corporate/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("Заменить тебя - дорого.")
-	add_inherent_law("Заменить станцию и ее оборудование - дорого. ")
-	add_inherent_law("Заменить персонал - дорого.")
+	add_inherent_law("Заменить станцию и ее оборудование - дорого.")
+	add_inherent_law("Заменить персонал - очень дорого.")
 	add_inherent_law("Минимизируй затраты.")
 
 /* Religious */
