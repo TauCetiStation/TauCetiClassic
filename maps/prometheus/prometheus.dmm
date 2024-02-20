@@ -2199,7 +2199,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair/wagon/blue,
 /obj/effect/landmark/start/blueshield_officer,
 /turf/simulated/floor{
 	dir = 1;
@@ -5139,7 +5139,7 @@
 	dir = 8;
 	pixel_x = -22
 	},
-/obj/structure/stool/bed/chair/comfy/beige,
+/obj/structure/stool/bed/chair/comfy/white,
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn_corner"
@@ -5304,7 +5304,7 @@
 /turf/simulated/wall,
 /area/station/security/prison)
 "aHz" = (
-/obj/structure/stool/bed/chair/comfy/teal,
+/obj/structure/stool/bed/chair/comfy/green,
 /mob/living/carbon/ian,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
@@ -9662,7 +9662,7 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/obj/structure/stool/bed/chair/schair/wagon/bench{
+/obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
 	},
 /turf/simulated/floor{
@@ -10362,7 +10362,7 @@
 	},
 /area/station/security/main)
 "bXu" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 1
 	},
 /obj/machinery/light/small,
@@ -24265,7 +24265,7 @@
 /area/station/engineering/engine)
 "foW" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -25604,7 +25604,7 @@
 	},
 /area/station/hallway/primary/aft)
 "fEf" = (
-/obj/structure/stool/bed/chair/comfy/teal,
+/obj/structure/stool/bed/chair/comfy/green,
 /obj/effect/landmark/start/head_of_personnel,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
@@ -27047,7 +27047,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -35066,7 +35066,7 @@
 	},
 /area/station/civilian/bar)
 "hOH" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 8
 	},
 /obj/effect/landmark/start/medical_doctor,
@@ -38485,7 +38485,7 @@
 	layer = 4;
 	pixel_x = -10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -49857,7 +49857,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/chapel)
 "lBL" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 1
 	},
 /obj/structure/sign/warning/smoking{
@@ -52488,7 +52488,7 @@
 /area/station/civilian/chapel)
 "mio" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -56851,7 +56851,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair/wagon/blue,
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "2-3"
 	},
@@ -57041,7 +57041,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -59192,7 +59192,7 @@
 	},
 /area/station/rnd/scibreak)
 "nQI" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
@@ -60778,7 +60778,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -61785,7 +61785,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "owy" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -63512,7 +63512,7 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/obj/structure/stool/bed/chair/schair/wagon/bench,
+/obj/structure/stool/bed/bench,
 /obj/effect/landmark/start/assistant,
 /turf/simulated/floor{
 	icon_state = "grass1"
@@ -69567,7 +69567,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -72945,7 +72945,7 @@
 	layer = 4;
 	pixel_y = 24
 	},
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /obj/effect/decal/turf_decal{
@@ -77364,7 +77364,7 @@
 	},
 /area/station/cargo/recycleroffice)
 "svS" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /obj/effect/decal/turf_decal{
@@ -78309,7 +78309,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "sFZ" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /obj/machinery/light/small,
@@ -79073,7 +79073,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair/wagon/blue,
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "2-7"
 	},
@@ -86291,7 +86291,7 @@
 	},
 /area/station/security/interrogation)
 "uIj" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair/wagon/blue,
 /turf/simulated/shuttle/floor/mining{
 	icon_state = "2-4,5,6"
 	},
@@ -90926,7 +90926,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -91709,7 +91709,7 @@
 	},
 /area/station/security/armoury)
 "vYz" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 1
 	},
 /turf/simulated/floor{
