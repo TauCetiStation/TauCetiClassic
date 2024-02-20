@@ -37,7 +37,7 @@
 	explanation_text += " [target]."
 
 /datum/objective/abductee/capture
-	explanation_text = "Захват"
+	explanation_text = "Захватить"
 
 /datum/objective/abductee/capture/New()
 	var/list/jobs = get_job_datums()
@@ -63,7 +63,7 @@
 	explanation_text = "Вы ОЧЕНЬ голодны. Найдите и съешьте как можно больше еды"
 
 /datum/objective/abductee/insane
-	explanation_text = "Они не видят того, что видишь ты. П̷̮͒о̵͓͋к̵̤̆ӓ̴̱ж̷̹͊и̶̰̑ ̷͈̚и̸͔̓м̴̰̅ ̶͖͘э̸͙͌т̸̻̒о̷̹̑."
+	explanation_text = "Они не видят того, что видишь ты. Покажи им это."
 
 /datum/objective/abductee/cannotmove
 	explanation_text = "Убедите экипаж в том, что у вас нет ног..."

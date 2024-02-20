@@ -491,7 +491,7 @@
 				if(R)
 					R.Deconvert()
 
-			to_chat(src, "<span class='warning'><Font size = 3><B>Наноботы [is_mind_shield ? "импланта защиты разума" : "импланта лояльности"] очистили твой разум от вредных для корпорации мыслей.</B></Font></span>")
+			to_chat(src, "<span class='warning'><Font size = 3><B>Наноботы [is_mind_shield ? "импланта защиты разума" : "импланта лояльности"] очистили ваш разум от вредных для корпорации мыслей.</B></Font></span>")
 
 	else if (href_list["common"])
 		switch(href_list["common"])

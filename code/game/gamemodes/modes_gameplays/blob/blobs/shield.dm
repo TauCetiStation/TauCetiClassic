@@ -16,7 +16,7 @@
 
 /obj/structure/blob/shield/reflective
 	name = "reflective blob"
-	cases = list("рефлективный блоб", "рефлективного блоба", "рефлективному блобу", "рефлективного блоба", "рефлективным блобом", "рефлективном блобе")
+	cases = list("отражающий блоб", "отражающего блоба", "отражающему блобу", "отражающего блоба", "отражающим блобом", "отражающем блобе")
 	icon_state = "blob_reflect"
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
 	max_integrity = 30 //Normal blob
