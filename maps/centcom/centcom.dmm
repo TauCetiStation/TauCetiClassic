@@ -17,7 +17,7 @@
 /turf/environment/space,
 /area/space)
 "aac" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue,
+/obj/structure/stool/bed/chair/schair/wagon/green,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aad" = (
