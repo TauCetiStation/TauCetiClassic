@@ -2401,7 +2401,7 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "age" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/green{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -3756,7 +3756,7 @@
 /turf/environment/space,
 /area/shuttle/syndicate_elite/mothership)
 "ajv" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/vox,
@@ -5834,7 +5834,7 @@
 /turf/simulated/floor/plating/airless,
 /area/shuttle/syndicate/start)
 "anH" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/green{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -11293,7 +11293,7 @@
 /turf/environment/space,
 /area/shuttle/specops/centcom)
 "ayL" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -17498,7 +17498,7 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "aML" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
 /obj/structure/sign/poster/contraband/random{
@@ -17509,7 +17509,7 @@
 	},
 /area/shuttle/syndicate_elite/mothership)
 "aMM" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -17582,7 +17582,7 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "aMV" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -18779,7 +18779,7 @@
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/elite_squad)
 "aPr" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
@@ -18800,7 +18800,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -21201,7 +21201,7 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aYP" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/green{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -25553,7 +25553,7 @@
 	},
 /area/velocity)
 "fDb" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue,
+/obj/structure/stool/bed/chair/schair/wagon/red,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk";
 	oxygen = 21.8366
@@ -26902,7 +26902,7 @@
 	},
 /area/centcom/specops)
 "hYb" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 1
 	},
 /obj/machinery/light/small,
