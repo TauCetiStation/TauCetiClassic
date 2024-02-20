@@ -20,7 +20,6 @@
 	var/sound_attach_equip = 'sound/mecha/mecha_attack_equip.ogg'
 	var/sound_detach_equip = 'sound/mecha/mech_detach_equip.ogg'
 
-
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)
 	sleep(equip_cooldown)
 	set_ready_state(1)
