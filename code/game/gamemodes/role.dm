@@ -298,9 +298,9 @@
 		if(!M)
 			text += "тело уничтожено"
 		else if(M.stat == DEAD)
-			text += "[M.gender == MALE ? "погиб" : "погибла"]"
+			text += "выжил[VERB_RU(M)]"
 		else
-			text += "[M.gender == MALE ? "выжил" : "выжила"]"
+			text += "выжил[VERB_RU(M)]"
 		text += ")"
 		return text
 	if(!M)
@@ -325,7 +325,7 @@
 		if(M.stat == DEAD)
 			text += "[M.gender == MALE ? "погиб" : "погибла"]"
 		else
-			text += "[M.gender == MALE ? "выжил" : "выжила"]"
+			text += "выжил[VERB_RU(M)]"
 		if(M.real_name != mind.name)
 			text += " будучи <b>[M.real_name]</b>"
 	else
