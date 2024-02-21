@@ -21902,12 +21902,12 @@
 /area/station/civilian/locker)
 "ejY" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/storage/flak/bulletproof{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/suit/armor/bulletproof{
+/obj/item/clothing/suit/storage/flak/bulletproof,
+/obj/item/clothing/suit/storage/flak/bulletproof{
 	pixel_x = 3;
 	pixel_y = -3
 	},

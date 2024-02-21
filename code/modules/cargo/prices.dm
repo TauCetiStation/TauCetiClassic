@@ -96,12 +96,11 @@
 
 /obj/item/clothing/head/helmet/price = 3000
 /obj/item/clothing/head/helmet/gladiator/price = 432
-/obj/item/clothing/head/helmet/HoS/dermal/price = 12888
 /obj/item/clothing/head/helmet/cap/price = 3866
 /obj/item/clothing/head/helmet/helmet_of_justice/price = 9166
 /obj/item/clothing/head/helmet/space/price = 8700
 /obj/item/clothing/head/helmet/space/rig/price = 12300
-/obj/item/clothing/head/helmet/tactical/price = 4444
+/obj/item/clothing/head/helmet/marinad/price = 4444
 /obj/item/clothing/head/helmet/space/sk/price = 100
 /obj/item/clothing/head/welding/price = 250
 /obj/item/clothing/head/helmet/thunderdome/price = 0
@@ -115,14 +114,12 @@
 /obj/item/clothing/shoes/boots/swat/price = 3200
 
 /obj/item/clothing/suit/armor/price = 5000
-/obj/item/clothing/suit/armor/bulletproof/price = 18500
+/obj/item/clothing/suit/storage/flak/bulletproof/price = 18500
 /obj/item/clothing/suit/armor/captain/price = 9990
 /obj/item/clothing/suit/armor/hos/price = 27000
-/obj/item/clothing/suit/armor/hos/jensen/price = 29500
 /obj/item/clothing/suit/armor/laserproof/price = 16500
 /obj/item/clothing/suit/armor/vest/reactive/price = 50000
 /obj/item/clothing/suit/armor/swat/price = 33500
-/obj/item/clothing/suit/armor/tactical/price = 9990
 /obj/item/clothing/suit/captunic/price = 6000
 /obj/item/clothing/suit/ianshirt/price = 3000
 /obj/item/clothing/suit/space/price = 15000

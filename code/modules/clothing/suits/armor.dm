@@ -16,12 +16,6 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/armor/vest/security
-	name = "security armor"
-	desc = "An armored vest that protects against some damage. This one has NanoTrasen corporate badge."
-	icon_state = "armorsec"
-	item_state = "armor"
-
 /obj/item/clothing/suit/armor/vest/fullbody
 	name = "fullbody armor"
 	desc = "A set of armor covering the entire body. Primarily used by various law-enforcements across the galaxy."
@@ -89,13 +83,6 @@
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/clothing/head/helmet)
 
-/obj/item/clothing/suit/armor/vest/warden
-	name = "Warden's jacket"
-	desc = "An armoured jacket with gold rank pips and livery."
-	icon_state = "warden_jacket"
-	item_state = "armor"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-
 /obj/item/clothing/suit/storage/flak/warden
 	name = "Warden's jacket"
 	desc = "An armoured jacket with gold rank pips and livery."
@@ -103,15 +90,6 @@
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	flags = null
-
-/obj/item/clothing/suit/armor/vest/leather
-	name = "security overcoat"
-	desc = "Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security."
-	icon_state = "leather_overcoat-sec"
-	item_state = "hostrench"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored coat"
@@ -132,17 +110,6 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 80, bullet = 10, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
-	flags_inv = HIDEJUMPSUIT
-
-/obj/item/clothing/suit/armor/bulletproof
-	name = "bulletproof fullbody armor"
-	desc = "A set of armor covering the entire body that excels in protecting the wearer against high-velocity solid projectiles."
-	icon_state = "bulletproof_fullbody"
-	item_state = "bulletproof_fullbody"
-	blood_overlay_type = "armor"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	pierce_protection = UPPER_TORSO|LOWER_TORSO
-	armor = list(melee = 10, bullet = 80, laser = 20, energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/storage/flak/bulletproof
@@ -300,33 +267,6 @@
 
 //All of the armor below is mostly unused
 
-
-/obj/item/clothing/suit/armor/centcomm
-	name = "Cent. Com. armor"
-	desc = "A suit that protects against some damage."
-	icon_state = "centcom"
-	item_state = "centcom"
-	w_class = SIZE_NORMAL//bulky item
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0
-
-/obj/item/clothing/suit/armor/heavy
-	name = "heavy armor"
-	desc = "A heavily armored suit that protects against moderate damage."
-	icon_state = "heavy"
-	item_state = "swat_suit"
-	w_class = SIZE_NORMAL//bulky item
-	gas_transfer_coefficient = 0.90
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1.5
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	siemens_coefficient = 0
-
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -345,49 +285,6 @@
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
 	siemens_coefficient = 1
-
-/obj/item/clothing/suit/armor/tactical
-	name = "tactical armor"
-	desc = "A suit of armor most often used by Special Weapons and Tactics squads. Includes padded vest with pockets along with shoulder and kneeguards."
-	icon_state = "swatarmor"
-	item_state = "armor"
-	var/obj/item/weapon/gun/holstered = null
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 0.5
-	armor = list(melee = 60, bullet = 65, laser = 50, energy = 60, bomb = 40, bio = 0, rad = 0)
-
-/obj/item/clothing/suit/armor/tactical/verb/holster()
-	set name = "Holster"
-	set category = "Object"
-	set src in usr
-	if(!isliving(usr)) return
-	if(usr.incapacitated())
-		return
-
-	if(!holstered)
-		var/obj/item/I = usr.get_active_hand()
-		if(!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
-			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
-			return
-		if(!I.can_be_holstered)
-			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
-			return
-		holstered = usr.get_active_hand()
-		usr.drop_from_inventory(holstered, src)
-		usr.visible_message("<span class='notice'>\The [usr] holsters \the [holstered].</span>", "You holster \the [holstered].")
-	else
-		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
-			to_chat(usr, "<span class='warning'>You need an empty hand to draw the gun!</span>")
-		else
-			if(usr.a_intent == INTENT_HARM)
-				usr.visible_message("<span class='warning'>\The [usr] draws \the [holstered], ready to shoot!</span>", \
-				"<span class='warning'>You draw \the [holstered], ready to shoot!</span>")
-			else
-				usr.visible_message("<span class='notice'>\The [usr] draws \the [holstered], pointing it at the ground.</span>", \
-				"<span class='notice'>You draw \the [holstered], pointing it at the ground.</span>")
-			usr.put_in_hands(holstered)
-		holstered = null
 
 /obj/item/clothing/suit/armor/syndiassault
 	name = "assault armor"
@@ -412,15 +309,6 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	flags_inv = HIDEJUMPSUIT
-
-/obj/item/clothing/suit/armor/m66_kevlarvest
-	name = "M66 Tactical Vest"
-	desc = "Black tactical kevlar vest, used by private security coropation. So tactics."
-	icon_state = "M66_KevlarVest"
-	item_state = "armor"
-	blood_overlay_type = "armor"
-	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)
-	siemens_coefficient = 0.7
 
 /obj/item/clothing/suit/armor/crusader
 	name = "crusader tabard"

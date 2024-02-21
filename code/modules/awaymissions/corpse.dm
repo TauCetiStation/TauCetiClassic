@@ -126,7 +126,7 @@
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/coloured
 	corpsehelmet = /obj/item/clothing/head/helmet/swat
-	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
+	corpsesuit = /obj/item/clothing/suit/storage/flak/bulletproof
 	corpseid = 0
 	specie = UNATHI
 
@@ -232,7 +232,7 @@
 	name = "Bridge Officer"
 	corpseradio = /obj/item/device/radio/headset/heads/hop
 	corpseuniform = /obj/item/clothing/under/rank/centcom_officer
-	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
+	corpsesuit = /obj/item/clothing/suit/storage/flak/bulletproof
 	corpseshoes = /obj/item/clothing/shoes/black
 	corpseglasses = /obj/item/clothing/glasses/sunglasses
 	corpseid = 1
@@ -241,7 +241,7 @@
 /obj/effect/landmark/corpse/commander
 	name = "Commander"
 	corpseuniform = /obj/item/clothing/under/rank/centcom_commander
-	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
+	corpsesuit = /obj/item/clothing/suit/storage/flak/bulletproof
 	corpseradio = /obj/item/device/radio/headset/heads/captain
 	corpseglasses = /obj/item/clothing/glasses/eyepatch
 	corpsemask = /obj/item/clothing/mask/cigarette/cigar/cohiba

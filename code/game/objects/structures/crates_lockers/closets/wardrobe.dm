@@ -412,7 +412,7 @@
 	new /obj/item/device/radio/headset/headset_sec/marinad(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/marinad(src)
 	new /obj/item/clothing/gloves/security/marinad(src)
-	new /obj/item/clothing/head/helmet/tactical/marinad(src)
+	new /obj/item/clothing/head/helmet/marinad/marinad(src)
 	new /obj/item/clothing/suit/marinad(src)
 	new /obj/item/clothing/under/tactical/marinad(src)
 	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)

@@ -27,7 +27,7 @@
 			/obj/item/clothing/glasses/gar/super,
 			/obj/item/clothing/glasses/thermal,
 			/obj/item/clothing/head/helmet/battlebucket,
-			/obj/item/clothing/head/helmet/tactical/marinad
+			/obj/item/clothing/head/helmet/marinad/marinad
 	)
 
 /obj/structure/planetarium_spawner/attack_hand(mob/user)

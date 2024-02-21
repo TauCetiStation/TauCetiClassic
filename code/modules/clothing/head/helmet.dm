@@ -92,18 +92,6 @@
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "helmet_warden"
 
-/obj/item/clothing/head/helmet/HoS
-	name = "head of security's hat"
-	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoshat"
-	item_state = "hoshat"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	flags_inv = HIDEEARS
-	body_parts_covered = 0
-	siemens_coefficient = 0.8
-	force = 0
-	hitsound = list()
-
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
@@ -195,23 +183,17 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	siemens_coefficient = 1
 
-/obj/item/clothing/head/helmet/tactical
-	name = "tactical helmet"
-	desc = "An armored helmet capable of being fitted with a multitude of attachments."
-	icon_state = "swathelm"
-	item_state = "helmet"
+/obj/item/clothing/head/helmet/marinad
+	name = "marine helmet"
+	desc = "Spectrum alloy helmet. Lightweight and ready for action."
+	icon_state = "marinad"
+	item_state = "marinad_helmet"
 	flags = HEADCOVERSEYES
 	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.7
 
-/obj/item/clothing/head/helmet/tactical/marinad
-	name = "marine helmet"
-	desc = "Spectrum alloy helmet. Lightweight and ready for action."
-	icon_state = "marinad"
-	item_state = "marinad_helmet"
-
-/obj/item/clothing/head/helmet/tactical/marinad/leader
+/obj/item/clothing/head/helmet/marinad/leader
 	name = "marine beret"
 	desc = "Sturdy kevlar beret in protective colors, issued to low-ranking NTCM officers."
 	icon_state = "beret_marinad"
@@ -233,14 +215,6 @@
 	update_inv_mob()
 	update_item_actions()
 
-/obj/item/clothing/head/helmet/warden/blue
-	name = "warden's hat"
-	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
-	icon_state = "policehelm"
-	item_state = "helmet"
-	force = 0
-	hitsound = list()
-
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
 	desc = "An ancient helmet made of bronze and leather."
@@ -253,18 +227,6 @@
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
-
-/obj/item/clothing/head/helmet/M89_Helmet
-	name = "M89 Helmet"
-	desc = "Combat helmet used by the private security corporation."
-	icon_state = "m89_helmet"
-	item_state = "helmet"
-
-/obj/item/clothing/head/helmet/M35_Helmet
-	name = "M35 Helmet"
-	desc = "The Basic werhmacht army helmet."
-	icon_state = "M35_Helmet"
-	item_state = "helmet"
 
 /obj/item/clothing/head/helmet/syndilight
 	name = "light helmet"

@@ -4014,7 +4014,7 @@
 "zr" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/suit/armor/vest/security,
+/obj/item/clothing/suit/armor/vest/fullbody,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -6206,7 +6206,7 @@
 /turf/simulated/floor/whitegreed,
 /area/space_structures/old_station/satellite)
 "Mf" = (
-/obj/item/clothing/head/helmet/tactical/marinad,
+/obj/item/clothing/head/helmet/marinad/marinad,
 /obj/structure/alien/weeds,
 /turf/simulated/floor{
 	icon_state = "dark"
