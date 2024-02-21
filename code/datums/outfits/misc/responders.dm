@@ -492,7 +492,7 @@
 	uniform = /obj/item/clothing/under/tactical/marinad
 	suit = /obj/item/clothing/suit/marinad
 	suit_store = /obj/item/weapon/gun/projectile/automatic/m41a
-	head = /obj/item/clothing/head/helmet/marinad/marinad
+	head = /obj/item/clothing/head/helmet/marinad
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	gloves = /obj/item/clothing/gloves/security/marinad
 	belt = /obj/item/weapon/storage/belt/security/tactical/marines
@@ -529,7 +529,7 @@
 /datum/outfit/responders/marines/leader
 	name = "Responders: Marine Squad Leader"
 
-	head = /obj/item/clothing/head/helmet/marinad/marinad/leader
+	head = /obj/item/clothing/head/helmet/marinad/leader
 	suit_store = /obj/item/weapon/gun/projectile/automatic/m41a/launcher
 
 	backpack_contents = list(
