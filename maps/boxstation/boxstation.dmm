@@ -10850,7 +10850,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/dormitory)
 "asl" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "asm" = (
@@ -12872,7 +12872,7 @@
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "avU" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/black,
@@ -24823,7 +24823,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -30035,7 +30035,7 @@
 	},
 /area/station/tcommsat/computer)
 "bbu" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -30818,7 +30818,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/bridge/meeting_room)
 "bcP" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -32428,7 +32428,7 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "bfw" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "bfx" = (
@@ -32483,7 +32483,7 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bfD" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -33074,7 +33074,7 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bgH" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -34727,7 +34727,7 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bkf" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/structure/cable{
@@ -35435,7 +35435,7 @@
 	},
 /area/station/rnd/hallway)
 "blp" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/structure/cable{
@@ -56765,7 +56765,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "cbR" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = -32
@@ -65895,7 +65895,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cBA" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -72234,7 +72234,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "fXV" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/black,
 /area/station/security/vacantoffice)
 "fYb" = (
@@ -73949,7 +73949,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "hRb" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
@@ -78472,7 +78472,7 @@
 	},
 /area/station/medical/genetics)
 "mrb" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/carpet,
@@ -86407,7 +86407,7 @@
 /turf/simulated/floor,
 /area/station/construction)
 "wER" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/item/device/radio/intercom{

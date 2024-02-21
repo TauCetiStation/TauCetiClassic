@@ -3975,7 +3975,7 @@
 /turf/simulated/floor,
 /area/station/medical/cryo)
 "atk" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet,
@@ -20621,7 +20621,7 @@
 	},
 /area/station/security/prison)
 "dVA" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -33480,7 +33480,7 @@
 	},
 /area/station/engineering/atmos/supermatter)
 "gIj" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/structure/cable{
@@ -47970,7 +47970,7 @@
 /area/station/security/brig)
 "jJK" = (
 /obj/effect/landmark/start/captain,
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -49793,7 +49793,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "kdy" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -62654,7 +62654,7 @@
 	},
 /area/station/rnd/hallway/lobby)
 "mQH" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -68540,7 +68540,7 @@
 	},
 /area/station/civilian/gym)
 "oci" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -84658,7 +84658,7 @@
 	},
 /area/station/tcommsat/chamber)
 "rHq" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor{

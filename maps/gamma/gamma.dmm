@@ -4076,7 +4076,7 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "amw" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red,
@@ -13273,7 +13273,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "bZc" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
@@ -13713,7 +13713,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "cdw" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -19040,7 +19040,7 @@
 	},
 /area/station/civilian/bar)
 "dcO" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
@@ -19084,7 +19084,7 @@
 /turf/simulated/floor/engine/carbon_dioxide,
 /area/station/engineering/atmos)
 "ddB" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/wood{
@@ -19116,7 +19116,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "deo" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /mob/living/simple_animal/mouse,
@@ -22930,7 +22930,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "dTP" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -25127,7 +25127,7 @@
 	},
 /area/station/medical/patient_a)
 "eqA" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/structure/curtain/open/bed{
@@ -26766,7 +26766,7 @@
 	},
 /area/station/tcommsat/chamber)
 "eHv" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -29426,7 +29426,7 @@
 	},
 /area/station/bridge/meeting_room)
 "fkE" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = 32
@@ -31472,7 +31472,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "fEZ" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -36100,7 +36100,7 @@
 	},
 /area/station/medical/hallway)
 "gxL" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue,
@@ -39203,7 +39203,7 @@
 	},
 /area/station/civilian/kitchen)
 "hcB" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /mob/living/simple_animal/mouse,
@@ -41307,7 +41307,7 @@
 	},
 /area/station/medical/storage)
 "hAC" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "hAG" = (
@@ -44739,7 +44739,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "ikh" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/blue,
 /area/station/hallway/secondary/entry)
 "ikj" = (
@@ -54369,7 +54369,7 @@
 	},
 /area/station/engineering/atmos)
 "kfm" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "kfo" = (
@@ -55452,7 +55452,7 @@
 	},
 /area/station/hallway/primary/central)
 "krD" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
@@ -57525,7 +57525,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "kON" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/carpet,
@@ -57991,7 +57991,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "kTX" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "kUb" = (
@@ -60918,7 +60918,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "lxN" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /mob/living/simple_animal/mouse,
@@ -63079,7 +63079,7 @@
 /turf/simulated/floor/wood,
 /area/station/medical/patients_rooms)
 "lTW" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -69685,7 +69685,7 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
 "nmc" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/wood{
@@ -70072,7 +70072,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "npS" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -70586,7 +70586,7 @@
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "nvV" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/wood,
 /area/station/maintenance/science)
 "nvW" = (
@@ -72321,7 +72321,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "nNZ" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/set_damaged,
@@ -81109,7 +81109,7 @@
 	},
 /area/station/rnd/hor)
 "pCL" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -91140,7 +91140,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "rDE" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -96088,7 +96088,7 @@
 	},
 /area/station/rnd/hallway)
 "sCK" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/machinery/light/small,
@@ -99107,7 +99107,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "thW" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
@@ -99267,7 +99267,7 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "tjX" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/black,
@@ -102423,7 +102423,7 @@
 	},
 /area/shuttle/escape_pod1/station)
 "tPg" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
@@ -104865,7 +104865,7 @@
 	},
 /area/station/security/brig)
 "umP" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
@@ -113955,7 +113955,7 @@
 	},
 /area/station/engineering/monitoring)
 "wdg" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/effect/landmark/start/assistant,
 /obj/machinery/light/small{
 	dir = 4
@@ -117957,7 +117957,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/science)
 "wWd" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -119735,7 +119735,7 @@
 	},
 /area/station/engineering/rust)
 "xpw" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /mob/living/simple_animal/mouse,

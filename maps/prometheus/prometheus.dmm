@@ -3943,7 +3943,7 @@
 	},
 /area/station/civilian/locker)
 "atj" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -9260,7 +9260,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "bIL" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/effect/landmark/start/assistant,
 /turf/simulated/floor/wood,
 /area/station/civilian/cafeteria)
@@ -15963,7 +15963,7 @@
 	},
 /area/station/storage/primary)
 "dvK" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
@@ -16318,7 +16318,7 @@
 	},
 /area/station/security/armoury)
 "dyZ" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
@@ -17563,7 +17563,7 @@
 	},
 /area/station/rnd/xenobiology)
 "dMp" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
@@ -20084,7 +20084,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "erE" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/machinery/firealarm{
@@ -25757,7 +25757,7 @@
 /area/station/civilian/theatre)
 "fFg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
@@ -26166,13 +26166,6 @@
 	icon_state = "red"
 	},
 /area/station/security/lobby)
-"fKI" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8
-	},
-/obj/effect/landmark/start/assistant,
-/turf/simulated/floor/carpet,
-/area/station/civilian/library)
 "fKL" = (
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel/office)
@@ -28335,7 +28328,7 @@
 	},
 /area/station/engineering/engine)
 "gjL" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "apc top";
@@ -28420,7 +28413,7 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "glo" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "glB" = (
@@ -31884,7 +31877,7 @@
 	},
 /area/station/rnd/mixing)
 "hag" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -40696,7 +40689,7 @@
 	},
 /area/station/security/armoury)
 "jlF" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
@@ -44302,7 +44295,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "kiD" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -56866,7 +56859,7 @@
 	},
 /area/station/cargo/office)
 "nka" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -63386,7 +63379,7 @@
 	},
 /area/station/security/prison)
 "oSp" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -69065,7 +69058,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "qqm" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/effect/landmark/start/assistant,
@@ -73891,7 +73884,7 @@
 	},
 /area/station/civilian/garden)
 "rBz" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
@@ -77458,7 +77451,7 @@
 	name = "Tribunal"
 	})
 "swq" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/effect/landmark/start/assistant,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
@@ -80776,7 +80769,7 @@
 	},
 /area/station/medical/sleeper)
 "tnn" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -86735,7 +86728,7 @@
 	},
 /area/station/medical/virology)
 "uNi" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -124325,7 +124318,7 @@ pyq
 bkN
 pFd
 qqm
-fKI
+qqm
 vSi
 qqm
 bEv

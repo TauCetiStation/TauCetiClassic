@@ -4817,7 +4817,7 @@
 /turf/simulated/wall,
 /area/station/civilian/cold_room)
 "aiE" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/structure/sign/double/barsign{
@@ -10457,7 +10457,7 @@
 	},
 /area/station/medical/sleeper)
 "aYW" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
@@ -14556,7 +14556,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/stool/bed/chair/comfy/green,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "eWS" = (
@@ -18931,7 +18931,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/structure/cable{
@@ -24943,7 +24943,7 @@
 /turf/environment/space,
 /area/space)
 "oSW" = (
-/obj/structure/stool/bed/chair/comfy/green{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -30364,7 +30364,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/stool/bed/chair/comfy/green,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "tUr" = (
@@ -34612,7 +34612,7 @@
 /area/station/maintenance/auxsolarport)
 "xSt" = (
 /mob/living/simple_animal/fox/Renault,
-/obj/structure/stool/bed/chair/comfy/green{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
