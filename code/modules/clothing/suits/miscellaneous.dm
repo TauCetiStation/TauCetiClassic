@@ -558,14 +558,6 @@
 	name = "black robe"
 	icon_state = "black_robe"
 
-/obj/item/clothing/suit/armor/vest/cuirass
-	name = "cuirass"
-	desc = "A metal armor, which cover torso."
-	icon_state = "cuirass"
-	item_state = "cuirass"
-	blood_overlay_type = "armor"
-	armor = list(melee = 50, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
-
 /obj/item/clothing/suit/goodman_jacket
 	name = "brown jacket"
 	desc = "A good jacket for good men."
