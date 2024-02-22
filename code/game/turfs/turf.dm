@@ -1,10 +1,11 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
-	level = 1.0
+	luminosity = 1
+
 	var/turf/basetype = /turf/environment/space
-	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
-	var/intact = 1
 	var/can_deconstruct = FALSE
+
+	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
 
 	//Properties for open tiles (/floor)
 	var/airless = FALSE
@@ -40,6 +41,20 @@
 
 	var/list/turf_decals
 
+	var/dynamic_lighting = TRUE
+	var/force_lighting_update = FALSE
+
+	var/tmp/lighting_corners_initialised = FALSE
+
+	///Our lighting object.
+	var/tmp/atom/movable/lighting_object/lighting_object
+	///Lighting Corner datums.
+	var/tmp/datum/lighting_corner/lighting_corner_NE
+	var/tmp/datum/lighting_corner/lighting_corner_SE
+	var/tmp/datum/lighting_corner/lighting_corner_SW
+	var/tmp/datum/lighting_corner/lighting_corner_NW
+
+	var/tmp/has_opaque_atom = FALSE // Not to be confused with opacity, this will be TRUE if there's any opaque atom on the tile.
 
 /**
   * Turf Initialize
@@ -271,14 +286,12 @@
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
-			O.hide(src.intact)
+		if(O.initialized)
+			SEND_SIGNAL(O, COMSIG_OBJ_LEVELUPDATE, underfloor_accessibility)
 
 // override for environment turfs, since they should never hide anything
 /turf/environment/levelupdate()
-	for(var/obj/O in src)
-		if(O.level == 1)
-			O.hide(0)
+	return
 
 // Removes all signs of lattice on the pos of the turf -Donkieyo
 /turf/proc/RemoveLattice()
@@ -324,9 +337,11 @@
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
 	var/old_force_lighting_update = force_lighting_update
-	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
-	var/old_corners = corners
+	var/old_lighting_corner_NE = lighting_corner_NE
+	var/old_lighting_corner_SE = lighting_corner_SE
+	var/old_lighting_corner_SW = lighting_corner_SW
+	var/old_lighting_corner_NW = lighting_corner_NW
 
 	var/old_basetype = basetype
 	var/old_flooded = flooded
@@ -403,11 +418,15 @@
 
 	queue_smooth_neighbors(W)
 
+	lighting_corner_NE = old_lighting_corner_NE
+	lighting_corner_SE = old_lighting_corner_SE
+	lighting_corner_SW = old_lighting_corner_SW
+	lighting_corner_NW = old_lighting_corner_NW
+
 	if(SSlighting.initialized)
 		recalc_atom_opacity()
 		lighting_object = old_lighting_object
-		affecting_lights = old_affecting_lights
-		corners = old_corners
+
 		if (force_lighting_update || old_force_lighting_update || old_opacity != opacity || dynamic_lighting != old_dynamic_lighting)
 			reconsider_lights()
 
@@ -479,11 +498,9 @@
 ////////////////
 
 /turf/singularity_act(obj/singularity/S, current_size)
-	if(intact)
+	if(underfloor_accessibility == UNDERFLOOR_HIDDEN)
 		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
-			if(O.level != 1)
-				continue
-			if(O.invisibility == 101)
+			if(HAS_TRAIT(O, TRAIT_UNDERFLOOR))
 				O.singularity_act(S, current_size)
 	ChangeTurf(/turf/environment/space)
 	return(2)

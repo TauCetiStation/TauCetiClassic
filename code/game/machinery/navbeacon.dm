@@ -7,7 +7,6 @@
 	icon_state = "navbeacon0-f"
 	name = "Navigation Beacon"
 	desc = "A radio beacon used for bot navigation."
-	level = 1		// underfloor
 	layer = 2.5
 	anchored = TRUE
 	interact_offline = TRUE
@@ -25,9 +24,9 @@
 /obj/machinery/navbeacon/atom_init()
 	. = ..()
 	set_codes()
-	var/turf/T = loc
-	hide(T.intact)
 	radio_controller.add_object(src, freq, RADIO_NAVBEACONS)
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
 /obj/machinery/navbeacon/Destroy()
 	if(radio_controller)
@@ -52,23 +51,8 @@
 		else
 			codes[e] = "1"
 
-
-	// called when turf state changes
-	// hide the object if turf is intact
-/obj/machinery/navbeacon/hide(intact)
-	invisibility = intact ? 101 : 0
-	updateicon()
-
-	// update the icon_state
 /obj/machinery/navbeacon/proc/updateicon()
-	var/state="navbeacon[open]"
-
-	if(invisibility)
-		icon_state = "[state]-f"	// if invisible, set icon to faded version
-									// in case revealed by T-scanner
-	else
-		icon_state = "[state]"
-
+	icon_state = "navbeacon[open]"
 
 	// look for a signal of the form "findbeacon=X"
 	// where X is any
@@ -102,7 +86,7 @@
 
 /obj/machinery/navbeacon/attackby(obj/item/I, mob/user)
 	var/turf/T = loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return		// prevent intraction when T-scanner revealed
 
 	if(isscrewing(I))
@@ -135,7 +119,7 @@
 	var/ai = isAI(user) || isobserver(user)
 
 	var/turf/T = loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return		// prevent intraction when T-scanner revealed
 
 	if(!open && !ai)	// can't alter controls if not open, unless you're an AI

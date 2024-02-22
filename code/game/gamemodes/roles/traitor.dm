@@ -25,10 +25,12 @@
 	switch(rand(1,120))
 		if(1 to 20)
 			AppendObjective(/datum/objective/target/assassinate, TRUE)
-		if(21 to 40)
+		if(21 to 30)
 			AppendObjective(/datum/objective/target/harm, TRUE)
+		if(31 to 40)
+			AppendObjective(/datum/objective/download_telecommunications_data, FALSE)
 		if(41 to 50)
-			AppendObjective(/datum/objective/research_sabotage, TRUE)
+			AppendObjective(/datum/objective/research_sabotage, FALSE)
 		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else
@@ -146,95 +148,3 @@
 	. = ..()
 	var/mob/living/carbon/human/H = antag.current
 	H.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(antag.current), SLOT_R_STORE)
-
-/datum/role/traitor/imposter
-	name = IMPOSTER
-	id = IMPOSTER
-	required_pref = ROLE_IMPOSTER
-	//No restricts, everyone can be a imposter
-	restricted_jobs = list()
-	//Challenge
-	give_uplink = FALSE
-	telecrystals = 0
-
-/datum/role/traitor/imposter/add_one_objective(datum/mind/traitor)
-	switch(rand(1, 100))
-		//most imposters is just stealers
-		if(1 to 70)
-			var/datum/job/J = SSjob.GetJob(antag.assigned_role)
-			//remove objectives for heads of staff to steal own items
-			if(J && (J.flags & JOB_FLAG_HEAD_OF_STAFF))
-				AppendObjective(/datum/objective/steal/non_heads_items, TRUE)
-			else
-				AppendObjective(/datum/objective/steal, TRUE)
-		if(71 to 80)
-			AppendObjective(/datum/objective/target/assassinate, TRUE)
-		if(81 to 90)
-			AppendObjective(/datum/objective/target/harm, TRUE)
-		else
-			AppendObjective(/datum/objective/target/dehead, TRUE)
-
-/datum/role/traitor/imposter/proc/add_killhead_objectives()
-	var/list/heads = get_living_heads()
-	for(var/datum/mind/head_mind in heads)
-		if(antag == head_mind)
-			continue
-		var/datum/objective/target/assassinate/killhead_obj = AppendObjective(/datum/objective/target/assassinate, TRUE)
-		if(killhead_obj)
-			killhead_obj.target = head_mind
-
-/datum/role/traitor/imposter/create_traitor_objectives()
-	if(issilicon(antag.current))
-		//probability 10% for default silent assassin AI
-		if(prob(10))
-			log_mode("IMPOSTERS: silicon imposter ([antag.current]) has standart objectives")
-			return ..()
-		//probability 90% for peace-protecter AI
-		AppendObjective(/datum/objective/target/protect, TRUE)
-		AppendObjective(/datum/objective/target/protect, TRUE)
-		AppendObjective(/datum/objective/survive)
-		log_mode("IMPOSTERS: silicon imposter ([antag.current]) has protect objectives")
-		//and 10% prob to hijack shuttle when has protect objective
-		if(prob(10))
-			AppendObjective(/datum/objective/block)
-			log_mode("IMPOSTERS: silicon [antag.current] has hijack with protect objectives")
-		return
-	//5% prob to killhead objectives for non-silicon imposter
-	if(prob(5))
-		add_killhead_objectives()
-		log_mode("IMPOSTERS: Non-silicon imposter ([antag.current]) has killhead objectives")
-		return
-	//default traitor objectives
-	for(var/i in 1 to 3)
-		add_one_objective()
-	//Setup last objective
-	switch(rand(1, 100))
-		//Escape is more interesting
-		if(1 to 90)
-			AppendObjective(/datum/objective/escape)
-		if(91 to 99)
-			AppendObjective(/datum/objective/survive)
-		else
-			AppendObjective(/datum/objective/hijack)
-	log_mode("IMPOSTERS: Non-silicon imposter ([antag.current]) has standart traitor objectives")
-
-/datum/role/traitor/imposter/OnPostSetup(laterole)
-	. = ..()
-	if(antag.current.isloyal() && iscarbon(antag.current))
-		var/mob/living/carbon/C = antag.current
-		C.fake_loyal_implant_replacement()
-	// Free a unit from AI
-	if(isrobot(antag.current))
-		var/mob/living/silicon/robot/robot = antag.current
-		robot.UnlinkSelf()
-		robot.emagged = TRUE
-
-/mob/living/carbon/proc/fake_loyal_implant_replacement()
-	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
-		qdel(L)
-	var/obj/item/weapon/implant/fake_loyal/F = new(src)
-	F.inject(src, BP_CHEST)
-
-// Now dont show green/red text
-/datum/role/traitor/imposter/GetObjectiveDescription(datum/objective/objective)
-	return "[objective.explanation_text]"

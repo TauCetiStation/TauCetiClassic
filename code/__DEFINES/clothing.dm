@@ -66,6 +66,24 @@
 #define SPRITE_SHEET_FEET "feet"
 #define SPRITE_SHEET_GLOVES "gloves"
 
+#define OFFSET_UNIFORM "uniform"
+#define OFFSET_ID "id"
+#define OFFSET_GLOVES "gloves"
+#define OFFSET_GLASSES "glasses"
+#define OFFSET_EARS "ears"
+#define OFFSET_SHOES "shoes"
+#define OFFSET_S_STORE "s_store"
+#define OFFSET_FACEMASK "mask"
+#define OFFSET_HEAD "head"
+#define OFFSET_FACE "face"
+#define OFFSET_BELT "belt"
+#define OFFSET_BACK "back"
+#define OFFSET_SUIT "suit"
+#define OFFSET_NECK "neck"
+#define OFFSET_HELD "held"
+#define OFFSET_ACCESSORY "accessory"
+#define OFFSET_HAIR "hair"
+
 //Sol translation for dog slots.
 #define SLOT_MOUTH SLOT_WEAR_MASK  // 2
 #define SLOT_NECK  SLOT_HANDCUFFED // 3 (Ian actually is a cat! ~if you know what i mean)

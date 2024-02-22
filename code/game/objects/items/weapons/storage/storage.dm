@@ -407,6 +407,10 @@
 		return
 
 	var/turf/T = get_turf(src)
+
+	if(HAS_TRAIT(src, TRAIT_UNDERFLOOR) && T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+		return
+
 	hide_from(usr)
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T, NoUpdate = TRUE)

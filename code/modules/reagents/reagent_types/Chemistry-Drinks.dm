@@ -229,7 +229,7 @@
 	name = "Hot Chocolate"
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
-	nutriment_factor = 2
+	nutriment_factor = 1
 	color = "#403010" // rgb: 64, 48, 16
 	adj_temp = 5
 	taste_message = "chocolate"
