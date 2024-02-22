@@ -3594,7 +3594,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "aga" = (
 /obj/machinery/door/airlock/external{
@@ -3665,7 +3665,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "agk" = (
 /obj/machinery/light/smart{
@@ -3706,7 +3706,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "agq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -4823,7 +4823,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "aie" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -5038,7 +5038,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "aiw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -5245,7 +5245,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "aiM" = (
 /obj/machinery/door/firedoor{
@@ -28887,7 +28887,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "aZv" = (
 /obj/machinery/door/firedoor{
@@ -29202,7 +29202,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "aZT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -29305,7 +29305,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "baf" = (
 /obj/machinery/door/firedoor,
@@ -33743,7 +33743,7 @@
 	icon_state = "2,2"
 	},
 /turf/environment/space,
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "bhX" = (
 /obj/machinery/requests_console/internal_affairs{
@@ -38506,7 +38506,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "bqM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -39548,7 +39548,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "bsK" = (
 /obj/structure/table,
@@ -40672,7 +40672,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "buG" = (
 /obj/machinery/atmospherics/components/binary/pump/on,
@@ -44026,7 +44026,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bAo" = (
 /obj/machinery/light/smart{
@@ -44257,7 +44257,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bAK" = (
 /obj/machinery/newscaster{
@@ -45545,7 +45545,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bDf" = (
 /obj/machinery/newscaster{
@@ -46901,7 +46901,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bFA" = (
 /obj/structure/cable{
@@ -48742,7 +48742,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bII" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -48995,7 +48995,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bJi" = (
 /turf/simulated/wall,
@@ -49071,7 +49071,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bJs" = (
 /obj/machinery/recharge_station,
@@ -56541,7 +56541,7 @@
 	dir = 1;
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "caT" = (
 /obj/structure/sign/mark{
@@ -58729,21 +58729,21 @@
 	dir = 1;
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cic" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cid" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cie" = (
 /obj/structure/bookcase/manuals/engineering,
@@ -59142,7 +59142,7 @@
 	dir = 1;
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cjy" = (
 /obj/item/weapon/paper,
