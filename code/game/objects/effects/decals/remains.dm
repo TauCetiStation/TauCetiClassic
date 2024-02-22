@@ -16,7 +16,7 @@
 /obj/effect/decal/remains/xeno
 	name = "remains"
 	cases = list("останки", "останков", "останкам", "останки", "останками", "останках")
-	desc = "Они похожи на останки чего-то... инопланетного."
+	desc = "Они похожи на останки чего-то... не человеческого."
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remainsxeno"
