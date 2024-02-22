@@ -190,11 +190,6 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Игра начинается...</span>")
 
-	// Discuss your stuff after the round ends.
-	if(config.ooc_round_autotoggle)
-		to_chat(world, "<span class='warning bold'>OOC-канал отключен для всех на время раунда!</span>")
-		ooc_allowed = FALSE
-
 	var/init_start = world.timeofday
 
 	log_mode("Current master mode is [master_mode]")
@@ -205,15 +200,26 @@ SUBSYSTEM_DEF(ticker)
 
 		var/list/datum/game_mode/runnable_modes = config.get_runnable_modes(bundle)
 		if(!runnable_modes.len)
-			runnable_modes = config.get_always_runnable_modes()
-
-		if(!runnable_modes.len)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Невозможно выбрать игровой режим.</B> Возвращение в предыгровое лобби.")
+
+			//In case of empty sevrver, no infinity votes
+			var/no_ready = TRUE
+			for(var/mob/dead/new_player/P as anything in new_player_list)
+				if(P.client && P.ready)
+					no_ready = FALSE
+					break
+			if(no_ready)
+				master_mode = "Extended"
+				world.save_mode("Extended")
+
 			// Players can initiate gamemode vote again
 			var/datum/poll/gamemode_vote = SSvote.possible_polls[/datum/poll/gamemode]
-			if(gamemode_vote)
-				gamemode_vote.reset_next_vote()
+			if(!gamemode_vote)
+				return FALSE
+			gamemode_vote.reset_next_vote()
+			if(gamemode_vote.can_start())
+				SSvote.start_vote(gamemode_vote)
 			return FALSE
 
 		// hiding forced gamemode in secret
@@ -255,7 +261,12 @@ SUBSYSTEM_DEF(ticker)
 		SSjob.ResetOccupations()
 		return FALSE
 
-	if(!bundle || !bundle.hide_mode_announce)
+	// Discuss your stuff after the round ends.
+	if(config.ooc_round_autotoggle)
+		to_chat(world, "<span class='warning bold'>OOC-канал отключен для всех на время раунда!</span>")
+		ooc_allowed = FALSE
+
+	if(!bundle || !bundle.hidden)
 		mode.announce()
 
 	setup_economy()
