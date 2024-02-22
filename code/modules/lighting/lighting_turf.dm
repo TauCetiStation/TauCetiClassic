@@ -15,10 +15,8 @@
 		qdel(lighting_object,force=TRUE) //Shitty fix for lighting objects persisting after death
 
 	var/area/A = loc
-	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
-		return
-
-	new/atom/movable/lighting_object(src)
+	if (A.dynamic_lighting && light_sources)
+		new/atom/movable/lighting_object(src)
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
@@ -89,16 +87,3 @@
 	
 	lighting_corners_initialised = TRUE
 
-/turf/proc/set_dynamic_lighting(new_dynamic_lighting = DYNAMIC_LIGHTING_ENABLED)
-	if (new_dynamic_lighting == dynamic_lighting)
-		return FALSE
-
-	dynamic_lighting = new_dynamic_lighting
-
-	if (IS_DYNAMIC_LIGHTING(src))
-		lighting_build_overlay()
-	else
-		if (lighting_object)
-			lighting_clear_overlay()
-
-	return TRUE

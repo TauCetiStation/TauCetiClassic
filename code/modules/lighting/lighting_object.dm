@@ -17,7 +17,7 @@
 	var/needs_update = FALSE
 	var/turf/myturf
 
-/atom/movable/lighting_object/atom_init(mapload)
+/atom/movable/lighting_object/atom_init(mapload, lazy = FALSE)
 	. = ..()
 	verbs.Cut()
 
@@ -25,10 +25,13 @@
 	if (myturf.lighting_object)
 		qdel(myturf.lighting_object, force = TRUE)
 	myturf.lighting_object = src
-	myturf.luminosity = 0
 
-	for(var/turf/environment/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-		S.update_starlight()
+	// For lazy init we just skip all math and queue and set it as dark tile right away
+	// any light sourse affecting turf will update it later
+	if(lazy)
+		icon_state = "dark"
+		color = null
+		return .
 
 	needs_update = TRUE
 	SSlighting.objects_queue += src
@@ -142,4 +145,7 @@
 	return
 
 /atom/movable/lighting_object/forceMove(atom/destination, keep_pulling)
+	return
+
+/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
 	return

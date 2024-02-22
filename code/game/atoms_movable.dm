@@ -128,20 +128,32 @@
 		Moved(oldloc, Dir)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	var/same_z_level = FALSE
+
+	var/turf/old_turf = get_turf(OldLoc)
+	var/turf/new_turf = get_turf(src)
+
+	if (old_turf?.z == new_turf?.z)
+		same_z_level = TRUE
+
 	if(!ISDIAGONALDIR(Dir))
-		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, same_z_level)
 
 		if(moving_diagonally)
 			return
 
 	for(var/atom/movable/AM in contents)
-		AM.locMoved(OldLoc, Dir)
+		AM.locMoved(OldLoc, Dir, same_z_level)
 
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
 
 	update_parallax_contents()
+
+	 // Cycle through the light sources on this atom and tell them to update.
+	for(var/datum/light_source/L as anything in light_sources)
+		L.source_atom.update_light()
 
 	if (orbiters)
 		for (var/thing in orbiters)
@@ -150,12 +162,11 @@
 	if (orbiting)
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
-	return
 
-/atom/movable/proc/locMoved(atom/OldLoc, Dir)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
+/atom/movable/proc/locMoved(atom/OldLoc, Dir, same_z_level)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir, same_z_level)
 	for(var/atom/movable/AM in contents)
-		AM.locMoved(OldLoc, Dir)
+		AM.locMoved(OldLoc, Dir, same_z_level)
 
 /atom/movable/proc/setLoc(T, teleported=0)
 	loc = T

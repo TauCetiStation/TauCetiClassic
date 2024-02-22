@@ -7,5 +7,6 @@
         "Environment Type": "Snow",
         "Station": true,
         "Snowstorm": true
-    }]
+    }],
+    "environment_lighting": "snow map random"
 }

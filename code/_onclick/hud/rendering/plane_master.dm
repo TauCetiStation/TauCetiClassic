@@ -209,6 +209,44 @@
 		add_filter("add_lamps_to_glare", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
 		add_filter("lamps_glare", 1, radial_blur_filter(size = 0.05))
 
+// second, simple and unsimulated, lighting system for environment lighting like starlight
+// blends on lighting plane and illuminates masked turfs
+// can be used for any global light, planetary sun/sky including
+// for local environment lighting look for the plane below 
+/atom/movable/screen/plane_master/environment_lighting
+	name = "environment lighting plane master"
+	plane = ENVIRONMENT_LIGHTING_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = LIGHTING_PLANE
+	blend_mode_override = BLEND_ADD
+
+/atom/movable/screen/plane_master/environment_lighting/apply_effects(mob/mymob)
+	remove_filter("guassian_blur")
+
+	if(!istype(mymob))
+		return
+
+	add_filter("guassian_blur", 1, gauss_blur_filter(10))
+
+// this plane is for coloring global environment light
+// by default every z-level has one fullscreen object with envyronment color
+// that will be placed on users screens to color space/planet globally
+/atom/movable/screen/plane_master/environment_lighting_color
+	name = "environment lighting color plane master"
+	plane = ENVIRONMENT_LIGHTING_COLOR_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = ENVIRONMENT_LIGHTING_PLANE
+	blend_mode_override = BLEND_MULTIPLY
+
+// for local environment lighting, can be used for areas
+// currently we blend it at environment_lighting first just to use same blur filter
+/atom/movable/screen/plane_master/environment_lighting_local
+	name = "environment lighting local plane master"
+	plane = ENVIRONMENT_LIGHTING_LOCAL_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = ENVIRONMENT_LIGHTING_PLANE
+	blend_mode_override = BLEND_ADD
+
 /atom/movable/screen/plane_master/above_lighting
 	name = "above lighting plane master"
 	plane = ABOVE_LIGHTING_PLANE
