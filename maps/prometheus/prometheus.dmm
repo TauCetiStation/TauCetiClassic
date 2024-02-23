@@ -9744,7 +9744,7 @@
 	dir = 1;
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "bOu" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -15637,7 +15637,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "drr" = (
 /obj/effect/decal/cleanable/dirt,
@@ -20097,7 +20097,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "erK" = (
 /obj/structure/lattice,
@@ -22881,7 +22881,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "eYN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -26527,7 +26527,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "fOU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -29187,7 +29187,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "gud" = (
 /obj/effect/decal/cleanable/dirt,
@@ -38629,7 +38629,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "iJh" = (
 /obj/item/weapon/reagent_containers/dropper/precision,
@@ -44639,7 +44639,7 @@
 	dir = 1;
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "koo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -55021,7 +55021,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "mLZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -56891,7 +56891,7 @@
 	dir = 1;
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "nkt" = (
 /obj/machinery/door/firedoor,
@@ -57906,7 +57906,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "nyK" = (
 /obj/machinery/light/small{
@@ -62207,7 +62207,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "oCm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -76966,7 +76966,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "sqy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -77666,7 +77666,7 @@
 	dir = 1;
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "syh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -78774,7 +78774,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "sMa" = (
 /turf/simulated/floor{
@@ -83061,7 +83061,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "tQt" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -87270,7 +87270,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "uTK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -90514,7 +90514,7 @@
 	dir = 1;
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "vID" = (
 /obj/machinery/light/smart,
@@ -94789,7 +94789,7 @@
 	dir = 1;
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "wLz" = (
 /obj/structure/closet/emcloset,
