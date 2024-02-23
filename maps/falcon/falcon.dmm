@@ -12176,7 +12176,7 @@
 	dir = 1;
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cJy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -14793,7 +14793,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "fkm" = (
 /obj/structure/cable{
@@ -14964,7 +14964,7 @@
 	dir = 1;
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "fub" = (
 /obj/item/weapon/crowbar/red,
@@ -16923,7 +16923,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "hqn" = (
 /turf/simulated/wall/r_wall,
@@ -17874,7 +17874,7 @@
 	dir = 1;
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "iqS" = (
 /turf/simulated/wall/r_wall,
@@ -20228,7 +20228,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "kya" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -27326,7 +27326,7 @@
 	dir = 1;
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "qQs" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -27525,7 +27525,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "qZX" = (
 /obj/machinery/light/smart{
@@ -28819,7 +28819,7 @@
 	dir = 1;
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "ssk" = (
 /obj/effect/decal/cleanable/dirt,
@@ -30200,7 +30200,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "tOr" = (
 /obj/item/device/radio/intercom{
@@ -33344,7 +33344,7 @@
 	dir = 1;
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "wMu" = (
 /obj/machinery/door/firedoor{
@@ -34228,7 +34228,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "xCK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
