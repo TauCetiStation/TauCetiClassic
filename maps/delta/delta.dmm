@@ -4353,7 +4353,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "ayd" = (
 /obj/machinery/door/firedoor{
@@ -9724,7 +9724,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bCr" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
@@ -16452,7 +16452,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "cVT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -25916,7 +25916,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "fdo" = (
 /obj/structure/flora/junglebush,
@@ -32226,7 +32226,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "gvb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -33400,7 +33400,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "gHD" = (
 /obj/structure/table/woodentable,
@@ -38572,7 +38572,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "hKE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -52436,7 +52436,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "kFO" = (
 /obj/machinery/shower/free{
@@ -69866,7 +69866,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "otY" = (
 /obj/item/weapon/flora/random,
@@ -76863,7 +76863,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "pVv" = (
 /obj/machinery/requests_console/detective{
@@ -82446,7 +82446,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "riw" = (
 /obj/machinery/power/apc{
@@ -91761,7 +91761,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "tmK" = (
 /obj/machinery/light/smart{
@@ -97937,7 +97937,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "uJZ" = (
 /obj/machinery/door/firedoor{
