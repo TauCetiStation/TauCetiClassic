@@ -10,7 +10,6 @@
 	var/propelled = FALSE // Check for fire-extinguisher-driven chairs
 
 	var/behind = null
-	var/behind_buckled = null
 
 	var/roll_sound = null // Janicart and office chair use this when moving.
 
@@ -245,6 +244,7 @@
 // Chair types
 /obj/structure/stool/bed/chair/wood/normal
 	icon_state = "wooden_chair"
+	behind = "wooden_chair_behind"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 	var/armrest
@@ -254,6 +254,7 @@
 	. = ..()
 
 /obj/structure/stool/bed/chair/wood/normal/post_buckle_mob(mob/living/M)
+	. = ..()
 	if(buckled_mob)
 		add_overlay(armrest)
 	else
