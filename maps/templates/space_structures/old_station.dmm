@@ -4014,7 +4014,7 @@
 "zr" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/suit/armor/vest/fullbody,
+/obj/item/clothing/suit/storage/flak,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
