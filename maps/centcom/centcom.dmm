@@ -28343,8 +28343,7 @@
 /area/centcom/control)
 "mhb" = (
 /obj/machinery/door/airlock/multi_tile/glass{
-	dir = 4;
-	req_access = list(101)
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	dir = 4;
