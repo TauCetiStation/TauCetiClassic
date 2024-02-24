@@ -19,7 +19,7 @@
 	name = "mech spawner"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x"
-	aspect = ROUND_ASPECT_MECHS
+	aspect = ROUND_ASPECT_MECHAS
 
 /obj/effect/spawner/aspect/mech/gygax
 	name = "security gygax spawner"

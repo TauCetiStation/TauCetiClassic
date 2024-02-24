@@ -63,9 +63,6 @@
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
 		b.cost *= 25
 
-
-
-
 /datum/round_aspect/agent_of_high_affairs
 	name = ROUND_ASPECT_HF_AGENT
 	desc = "АВД была выдана цепь командования. Во всех глав был вставлен имплант подчинения."
