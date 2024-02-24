@@ -29,8 +29,8 @@
 /datum/round_aspect/proc/after_start() //after round start
 	return
 
-/datum/round_aspect/mechs
-	name = ROUND_ASPECT_MECHS
+/datum/round_aspect/mechas
+	name = ROUND_ASPECT_MECHAS
 	desc = "Добавлены мехи во все отделы."
 
 /datum/round_aspect/mechs/after_start()
