@@ -33,7 +33,7 @@
 	name = ROUND_ASPECT_MECHAS
 	desc = "Добавлены мехи во все отделы."
 
-/datum/round_aspect/mechs/after_start()
+/datum/round_aspect/mechas/after_start()
 	new /datum/event/feature/area/replace/sec_rearmament_mech
 	for(var/datum/design/nuclear_gun/ng in global.all_designs)
 		for(var/M in ng.materials)
