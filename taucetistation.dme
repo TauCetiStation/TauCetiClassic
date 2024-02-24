@@ -998,7 +998,7 @@
 #include "code\game\objects\effects\decals\Cleanable\misc.dm"
 #include "code\game\objects\effects\decals\Cleanable\robots.dm"
 #include "code\game\objects\effects\decals\Cleanable\tracks.dm"
-#include "code\game\objects\effects\spawners\aicorespawner.dm"
+#include "code\game\objects\effects\spawners\aspects_spawners.dm"
 #include "code\game\objects\effects\spawners\bombspawner.dm"
 #include "code\game\objects\effects\spawners\gibspawner.dm"
 #include "code\game\objects\effects\spawners\lootdrop.dm"
