@@ -31,7 +31,7 @@
 
 /datum/round_aspect/mechs
 	name = ROUND_ASPECT_MECHS
-	desc = "Добавлены мехи во всех отделы."
+	desc = "Добавлены мехи во все отделы."
 
 /datum/round_aspect/mechs/after_start()
 	new /datum/event/feature/area/replace/sec_rearmament_mech
