@@ -19,7 +19,7 @@
 
 /obj/item/clothing/suit/armor/vest/security
 	name = "security armor"
-	cases = list("бронежилет Службы Безопасности", "бронежилета Службы Безопасности", "бронежилету Службы Безопасности", "бронежилет Службы Безопасности", "бронежилетом Службы Безопасности", "бронежилете Службы Безопасности")
+	cases = list("бронежилет охраны", "бронежилета охраны", "бронежилету охраны", "бронежилет охраны", "бронежилетом охраны", "бронежилете охраны")
 	desc = "Бронежилет, защищающий от незначительных повреждений. На нём есть корпоративная нашивка НаноТрейзен."
 	icon_state = "armorsec"
 	item_state = "armor"
@@ -42,8 +42,8 @@
 
 /obj/item/clothing/suit/storage/flak
 	name = "security armor"
-	cases = list("бронежилет Службы Безопасности с разгрузкой", "бронежилета Службы Безопасности с разгрузкой", "бронежилету Службы Безопасности с разгрузкой", "бронежилет Службы Безопасности с разгрузкой", "бронежилетом Службы Безопасности с разгрузкой", "бронежилете Службы Безопасности с разгрузкой")
-	desc = "Бронежилет, защищающий от незначительных повреждений. На нём прикреплена разгрузка, позволяющая хранить до четырёх предметов."
+	cases = list("броня охраны", "брони охраны", "броне охраны", "броню охраны", "бронёй охраны", "броне охраны")
+	desc = "Броня, защищающая от незначительных повреждений. На ней прикреплена разгрузка, позволяющая хранить до четырёх предметов."
 	icon_state = "armorsec"
 	item_state = "armor"
 	blood_overlay_type = "armor"
@@ -100,16 +100,16 @@
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
-	cases = list("куртка надзирателя", "куртки надзирателя", "куртке надзирателя", "куртку надзирателя", "курткой надзирателя", "куртке надзирателя")
-	desc = "Бронированная куртка с золотыми нашивками и ливреей."
+	cases = list("куртка смотрителя", "куртки смотрителя", "куртке смотрителя", "куртку смотрителя", "курткой смотрителя", "куртке смотрителя")
+	desc = "Бронированная куртка с золотыми нашивками и ливреями."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/suit/storage/flak/warden
 	name = "Warden's jacket"
-	cases = list("куртка надзирателя", "куртки надзирателя", "куртке надзирателя", "куртку надзирателя", "курткой надзирателя", "куртке надзирателя")
-	desc = "Бронированная куртка с золотыми нашивками и ливреей."
+	cases = list("куртка смотрителя", "куртки смотрителя", "куртке смотрителя", "куртку смотрителя", "курткой смотрителя", "куртке смотрителя")
+	desc = "Бронированная куртка с золотыми нашивками и ливреями."
 	icon_state = "warden_jacket"
 	item_state = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
@@ -294,7 +294,7 @@
 
 /obj/item/clothing/suit/armor/vest/reactive/proc/teleport_user(range, mob/user, text)
 	if(!isnull(text))
-		visible_message("<span class='userdanger'>Система реактивной телепортации перемещает [user.name] в сторону от [text]!</span>")
+		visible_message("<span class='userdanger'>Система реактивной телепортации перемещает [user.name] в сторону от [CASE(text, GENITIVE_CASE)]!</span>")
 	var/list/turfs = list()
 	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 	smoke.set_up(5, 0, user.loc)
@@ -322,12 +322,14 @@
 	return TRUE
 
 
+
+
 //All of the armor below is mostly unused
 
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "Cent. Com. armor"
-	cases = list("броня Центрального Командования", "брони Центрального Командования", "броне Центрального Командования", "броню Центрального Командования", "бронёй Центрального Командования", "броне Центрального Командования")
+	cases = list("броня центрального командования", "брони центрального командования", "броне центрального командования", "броню центрального командования", "бронёй центрального командования", "броне центрального командования")
 	desc = "Костюм, защищающий от незначительных повреждений."
 	icon_state = "centcom"
 	item_state = "centcom"
@@ -385,6 +387,38 @@
 	slowdown = 0.5
 	armor = list(melee = 60, bullet = 65, laser = 50, energy = 60, bomb = 40, bio = 0, rad = 0)
 
+
+/obj/item/clothing/suit/armor/tactical/verb/holster()
+	set name = "Holster"
+	set category = "Object"
+	set src in usr
+	if(!isliving(usr)) return
+	if(usr.incapacitated())
+		return
+
+	if(!holstered)
+		var/obj/item/I = usr.get_active_hand()
+		if(!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
+			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
+			return
+		if(!I.can_be_holstered)
+			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
+			return
+		holstered = usr.get_active_hand()
+		usr.drop_from_inventory(holstered, src)
+		usr.visible_message("<span class='notice'>\The [usr] holsters \the [holstered].</span>", "You holster \the [holstered].")
+	else
+		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))
+			to_chat(usr, "<span class='warning'>You need an empty hand to draw the gun!</span>")
+		else
+			if(usr.a_intent == INTENT_HARM)
+				usr.visible_message("<span class='warning'>\The [usr] draws \the [holstered], ready to shoot!</span>", \
+				"<span class='warning'>You draw \the [holstered], ready to shoot!</span>")
+			else
+				usr.visible_message("<span class='notice'>\The [usr] draws \the [holstered], pointing it at the ground.</span>", \
+				"<span class='notice'>You draw \the [holstered], pointing it at the ground.</span>")
+			usr.put_in_hands(holstered)
+		holstered = null
 
 /obj/item/clothing/suit/armor/syndiassault
 	name = "assault armor"
