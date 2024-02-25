@@ -17,7 +17,7 @@
 	var/needs_update = FALSE
 	var/turf/myturf
 
-/atom/movable/lighting_object/atom_init(mapload, lazy = FALSE)
+/atom/movable/lighting_object/atom_init(mapload)
 	. = ..()
 	verbs.Cut()
 
@@ -26,9 +26,10 @@
 		qdel(myturf.lighting_object, force = TRUE)
 	myturf.lighting_object = src
 
-	// For lazy init we just skip all math and queue and set it as dark tile right away
-	// any light sourse affecting turf will update it later
-	if(lazy)
+	// any lighting source will add us to the queue anyway
+	// saves us init time on objects that don't have any lightins sources around
+	// todo: do on-demand spawn like corners, but we need something for darkness
+	if(!SSlighting.initialized)
 		icon_state = "dark"
 		color = null
 		return .

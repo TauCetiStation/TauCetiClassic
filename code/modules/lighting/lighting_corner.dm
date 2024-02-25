@@ -118,7 +118,9 @@
 	#endif
 	cache_mx = round(mx, LIGHTING_ROUND_VALUE)
 
-	var/atom/movable/lighting_object/lighting_object = master_NE?.lighting_object
+	var/atom/movable/lighting_object/lighting_object
+
+	lighting_object = master_NE?.lighting_object
 	if (lighting_object && !lighting_object.needs_update)
 		lighting_object.needs_update = TRUE
 		SSlighting.objects_queue += lighting_object

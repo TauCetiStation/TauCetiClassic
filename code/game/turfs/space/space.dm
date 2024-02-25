@@ -30,12 +30,9 @@
 	initialized = TRUE
 	icon_state = SPACE_ICON_STATE
 
-
 	var/area/A = loc
 	if(A.dynamic_lighting)
-		// spawns semi lazy initialized lighting objects
-		// todo: move it to real time spawn like corners (but don't delete it if unused?)
-		new/atom/movable/lighting_object(src, TRUE)
+		new/atom/movable/lighting_object(src)
 
 	if(level_light_source)
 		ENABLE_LEVEL_LIGHTING(src)
