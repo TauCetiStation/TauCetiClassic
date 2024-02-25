@@ -294,7 +294,7 @@
 
 /obj/item/clothing/suit/armor/vest/reactive/proc/teleport_user(range, mob/user, text)
 	if(!isnull(text))
-		visible_message("<span class='userdanger'>Система реактивной телепортации перемещает [user.name] в сторону от [CASE(text, GENITIVE_CASE)]!</span>")
+		visible_message("<span class='userdanger'>Система реактивной телепортации перемещает [user.name] в сторону от [text]!</span>")
 	var/list/turfs = list()
 	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 	smoke.set_up(5, 0, user.loc)
