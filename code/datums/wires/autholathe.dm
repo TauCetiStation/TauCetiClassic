@@ -17,13 +17,14 @@ var/global/const/AUTOLATHE_WIRE_DISABLE = 4
 	var/obj/machinery/autolathe/A = holder
 	return A.panel_open
 
-/datum/wires/autolathe/update_cut(index, mended)
+/datum/wires/autolathe/update_cut(index, mended, mob/user)
 	var/obj/machinery/autolathe/A = holder
 
 	switch(index)
 		if(AUTOLATHE_WIRE_HACK)
 			A.hacked = !mended
-			A.update_static_data(usr)
+			if(user)
+				A.update_static_data(user)
 
 		if(AUTOLATHE_WIRE_SHOCK)
 			A.shocked = !mended

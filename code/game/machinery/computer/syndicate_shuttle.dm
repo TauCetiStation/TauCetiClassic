@@ -3,6 +3,7 @@
 
 /obj/machinery/computer/syndicate_station
 	name = "syndicate shuttle terminal"
+	cases = list("терминал шаттла Синдиката", "терминала шаттла Синдиката", "терминалу шаттла Синдиката", "терминал шаттла Синдиката", "терминалом шаттла Синдиката", "терминале шаттла Синдиката")
 	circuit = /obj/item/weapon/circuitboard/computer/syndicate_shuttle
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
@@ -64,18 +65,20 @@
 	return TRUE
 
 /obj/machinery/computer/syndicate_station/ui_interact(mob/user)
-	var/dat = {"Location: [curr_location]<br>
-	Ready to move[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
-	<a href='?src=\ref[src];syndicate=1'>Syndicate Space</a><br>
-	<a href='?src=\ref[src];station_nw=1'>North West of SS13</a> |
-	<a href='?src=\ref[src];station_n=1'>North of SS13</a> |
-	<a href='?src=\ref[src];station_ne=1'>North East of SS13</a><br>
-	<a href='?src=\ref[src];station_sw=1'>South West of SS13</a> |
-	<a href='?src=\ref[src];station_s=1'>South of SS13</a> |
-	<a href='?src=\ref[src];station_se=1'>South East of SS13</a><br>
-	<a href='?src=\ref[src];mining=1'>North East of the Mining Asteroid</a><br>"}
+	var/seconds = max(round((lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
+	var/dat = {"Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>
+	Готов к полёту[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]<br>
+	<a href='?src=\ref[src];syndicate=1'>Пространство Синдиката</a><br>
+	<a href='?src=\ref[src];station_nw=1'>Северо-запад от [station_name_ru()]</a> |
+	<a href='?src=\ref[src];station_n=1'>К северу от [station_name_ru()]</a> |
+	<a href='?src=\ref[src];station_ne=1'>Северо-восток от [station_name_ru()]</a><br>
+	<a href='?src=\ref[src];station_sw=1'>Юго-запад от [station_name_ru()]</a> |
+	<a href='?src=\ref[src];station_s=1'>К югу от [station_name_ru()]</a> |
+	<a href='?src=\ref[src];station_se=1'>Юго-восток от [station_name_ru()]</a><br>
+	<a href='?src=\ref[src];mining=1'>Северо-восток от шахтёрского астероида</a><br>"}
 
-	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450, ntheme = CSS_THEME_SYNDICATE)
+	var/datum/browser/popup = new(user, "computer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 575, 450, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
 	popup.open()
 
@@ -86,9 +89,9 @@
 		return
 	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
-			to_chat(usr, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
+			to_chat(usr, "<span class='warning'>Вы объявили станции войну! Вы должны дать им хотя бы \
 		 	[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
-		 	more minutes to allow them to prepare.</span>")
+		 	минут, чтобы они успели приготовиться.</span>")
 			return
 	else
 		war_device_activation_forbidden = TRUE
@@ -114,6 +117,7 @@
 
 /obj/item/weapon/circuitboard/computer/syndicate_shuttle
 	name = "Syndicate Shuttle (Computer Board)"
+	cases = list("шаттл Синдиката (Компьютерная плата)", "шаттла Синдиката (Компьютерная плата)", "шаттлу Синдиката (Компьютерная плата)", "шаттл Синдиката (Компьютерная плата)", "шаттлом Синдиката (Компьютерная плата)", "шаттле Синдиката (Компьютерная плата)")
 	build_path = /obj/machinery/computer/syndicate_station
 
 #undef SYNDICATE_SHUTTLE_MOVE_TIME
