@@ -1665,8 +1665,11 @@
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "acN" = (
-/turf/simulated/floor/carpet,
-/area/station/security/main)
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/space)
 "acO" = (
 /obj/structure/cable/yellow,
 /obj/machinery/power/emitter{
@@ -2006,11 +2009,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "adv" = (
-/obj/structure/closet/secure_closet/injection,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "black"
 	},
-/area/station/security/prison)
+/area/space)
 "adw" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -2021,47 +2026,27 @@
 	},
 /area/station/engineering/monitoring)
 "adx" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/prison)
+/area/space)
 "ady" = (
-/obj/machinery/camera/motion{
-	c_tag = "Brig Execution Chamber";
-	dir = 1;
-	network = list("SS13","Security")
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/machinery/recharger,
+/obj/structure/table,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkredfull"
 	},
-/area/station/security/prison)
+/area/space)
 "adz" = (
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "Dark Brig";
-	dir = 4;
-	name = "Brig dark right APC";
-	pixel_x = 27
+/obj/structure/closet/secure_closet/security,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkredfull"
 	},
-/area/station/security/prison)
+/area/station/security/main)
 "adA" = (
 /obj/structure/toilet,
 /turf/simulated/floor{
@@ -2102,11 +2087,11 @@
 	},
 /area/station/aisat/antechamber_interior)
 "adD" = (
-/obj/structure/closet/secure_closet/security,
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
-	icon_state = "orangechoco"
+	icon_state = "graychoco"
 	},
-/area/station/security/main)
+/area/space)
 "adE" = (
 /obj/machinery/hydroponics/constructable,
 /turf/simulated/floor{
@@ -3880,58 +3865,39 @@
 	},
 /area/space)
 "ahM" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/lockbox/mind_shields,
-/obj/item/weapon/storage/box/chemimp{
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/box/cdeathalarm_kit,
-/obj/item/weapon/storage/box/trackimp{
-	pixel_y = -3
-	},
+/obj/structure/closet/wardrobe/red,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	dir = 9;
+	icon_state = "redfull"
 	},
-/area/station/security/range)
+/area/space)
 "ahN" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/changeling_tests,
+/obj/structure/closet/secure_closet/security,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "darkredfull"
 	},
-/area/station/security/range)
+/area/space)
 "ahO" = (
-/obj/structure/rack,
-/obj/item/ammo_box/shotgun/beanbag{
-	pixel_y = -3
+/obj/item/weapon/storage/fancy/donut_box{
+	pixel_y = 8
 	},
-/obj/item/ammo_box/shotgun/beanbag{
-	pixel_y = 3
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
+/obj/structure/table,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "redfull"
 	},
-/area/station/security/range)
+/area/space)
 "ahP" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal,
-/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
-	pixel_y = 6
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+/obj/machinery/computer/cargo/request{
+	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "graychoco"
 	},
 /area/space)
 "ahQ" = (
@@ -3943,15 +3909,11 @@
 	},
 /area/station/civilian/theatre)
 "ahR" = (
-/obj/machinery/bot/secbot/beepsky{
-	auto_patrol = 0;
-	name = "Officer Beepsky"
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
+/obj/item/weapon/reagent_containers/food/snacks/donut/classic,
+/obj/structure/table,
+/obj/item/device/flash,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "redfull"
 	},
 /area/space)
 "ahS" = (
@@ -4095,21 +4057,11 @@
 	},
 /area/space)
 "aii" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/flashbangs{
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/box/teargas{
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/box/teargas,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	dir = 1;
+	icon_state = "red"
 	},
-/area/station/security/range)
+/area/station/security/main)
 "aij" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/lights/tubes,
@@ -4118,78 +4070,37 @@
 	},
 /area/station/engineering/engine)
 "aik" = (
-/obj/structure/rack,
-/obj/item/ammo_box/magazine/plasma{
-	pixel_x = -6
-	},
-/obj/item/ammo_box/magazine/plasma{
-	pixel_x = 5
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	dir = 1;
+	icon_state = "redcorner"
 	},
-/area/station/security/range)
+/area/station/security/main)
 "ail" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/projectile/grenade_launcher/m79,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	dir = 4;
+	icon_state = "redcorner"
 	},
-/area/station/security/range)
+/area/station/security/hos)
 "aim" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/r4046/teargas{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/box/r4046/rubber{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/box/r4046/EMP,
+/obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+	icon_state = "bot_old"
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "graychoco"
 	},
-/area/space)
+/area/station/security/hos)
 "ain" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/plasma/p104sass{
-	pixel_y = 2
-	},
-/obj/item/weapon/gun/plasma{
-	pixel_y = -4
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	icon_state = "graychoco"
 	},
-/area/space)
+/area/station/security/hos)
 "aio" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/ionrifle{
-	pixel_y = -3
-	},
-/obj/item/weapon/gun/energy/ionrifle{
-	pixel_y = 3
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	dir = 1;
+	icon_state = "red"
 	},
-/area/space)
+/area/station/security/hos)
 "aip" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
@@ -4200,19 +4111,9 @@
 	},
 /area/station/civilian/dormitories/courtroom)
 "aiq" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = -3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = 3
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	dir = 4;
+	icon_state = "redcorner"
 	},
 /area/space)
 "air" = (
@@ -4247,28 +4148,18 @@
 	},
 /area/station/cargo/miningoffice)
 "ait" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/gun{
-	pixel_y = -4
-	},
-/obj/item/weapon/gun/energy/gun{
-	pixel_y = 4
-	},
-/obj/item/weapon/gun/energy/gun,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+/obj/machinery/hologram/holopad{
+	pixel_y = -16
 	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	dir = 1;
+	icon_state = "redcorner"
 	},
 /area/space)
 "aiu" = (
-/obj/machinery/flasher/portable,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
-	},
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	dir = 1;
+	icon_state = "red"
 	},
 /area/space)
 "aiv" = (
@@ -4516,11 +4407,12 @@
 	},
 /area/station/rnd/misc_lab)
 "aiX" = (
-/obj/machinery/vending/donut,
+/obj/machinery/vending/security,
 /turf/simulated/floor{
-	icon_state = "blackchoco"
+	dir = 9;
+	icon_state = "red"
 	},
-/area/station/security/armoury)
+/area/station/security/main)
 "aiY" = (
 /obj/machinery/disposal,
 /turf/simulated/floor{
@@ -4668,6 +4560,37 @@
 	icon_state = "white"
 	},
 /area/station/medical/hallway)
+"ajr" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"ajs" = (
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/security/main)
+"ajt" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/security/main)
+"aju" = (
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/security/hos)
+"ajv" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/security/hos)
 "ajw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -4707,6 +4630,60 @@
 	icon_state = "whitechoco"
 	},
 /area/station/rnd/hallway/lobby)
+"ajy" = (
+/turf/simulated/floor{
+	icon_state = "redcorner"
+	},
+/area/station/security/hos)
+"ajz" = (
+/turf/simulated/floor{
+	icon_state = "red"
+	},
+/area/station/security/hos)
+"ajA" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redcorner"
+	},
+/area/station/security/hos)
+"ajB" = (
+/obj/structure/chalkboard{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"ajC" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/security/main)
+"ajD" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/security/main)
+"ajE" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/security/hos)
+"ajF" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/security/hos)
 "ajG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -4727,6 +4704,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"ajH" = (
+/obj/effect/landmark/start/security_officer,
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "red"
+	},
+/area/station/security/hos)
+"ajI" = (
+/obj/item/clothing/mask/gas/sechailer,
+/obj/structure/table,
+/turf/simulated/floor{
+	icon_state = "redfull"
+	},
+/area/station/security/hos)
 "ajJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -4738,12 +4732,41 @@
 	icon_state = "redchecker"
 	},
 /area/station/hallway/primary/fore)
+"ajK" = (
+/obj/structure/table,
+/obj/random/foods/donuts,
+/turf/simulated/floor{
+	icon_state = "redfull"
+	},
+/area/station/security/hos)
+"ajL" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/station/security/hos)
 "ajM" = (
 /obj/structure/object_wall/mining{
 	icon_state = "4-9"
 	},
 /turf/environment/space,
 /area/shuttle/mining/station)
+"ajN" = (
+/obj/machinery/computer/shop{
+	department = "Security";
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"ajO" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "redcorner"
+	},
+/area/station/security/main)
 "ajP" = (
 /obj/machinery/computer/aifixer{
 	req_access = list(29)
@@ -4755,6 +4778,108 @@
 	icon_state = "graychoco"
 	},
 /area/station/rnd/robotics)
+"ajQ" = (
+/obj/structure/table,
+/obj/item/device/megaphone,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/main)
+"ajR" = (
+/obj/structure/table,
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_y = -32
+	},
+/obj/machinery/recharger,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/main)
+"ajS" = (
+/obj/structure/table,
+/obj/machinery/recharger/wallcharger{
+	pixel_y = -30
+	},
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/main)
+"ajT" = (
+/obj/structure/table,
+/obj/item/weapon/razor,
+/obj/item/weapon/handcuffs,
+/obj/machinery/recharger/wallcharger{
+	pixel_y = -30
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/main)
+"ajU" = (
+/obj/machinery/disposal,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/main)
+"ajV" = (
+/obj/machinery/mech_bay_recharge_port,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/main)
+"ajW" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "recharge_floor"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/main)
+"ajX" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/simulated/floor/bluegrid,
+/area/station/security/main)
+"ajY" = (
+/obj/machinery/door_control{
+	id = "armouryaccess";
+	name = "Armory Blast Doors";
+	pixel_y = -26
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/main)
+"ajZ" = (
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/hos)
+"aka" = (
+/obj/machinery/computer/shop{
+	department = "Security";
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/hos)
+"akb" = (
+/obj/machinery/disposal,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/security/hos)
 "akc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -4771,6 +4896,27 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/bridge)
+"akd" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/security/hos)
+"ake" = (
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "redfull"
+	},
+/area/station/security/hos)
+"akf" = (
+/obj/structure/table,
+/obj/item/device/taperecorder,
+/turf/simulated/floor{
+	icon_state = "redfull"
+	},
+/area/station/security/hos)
 "akg" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -4796,6 +4942,133 @@
 	icon_state = "neutralchoco"
 	},
 /area/station/medical/cryo)
+"akh" = (
+/obj/item/weapon/flora/random,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/space)
+"aki" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"akj" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/hos)
+"akk" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space)
+"akl" = (
+/obj/structure/closet/l3closet/security,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
+"akm" = (
+/obj/structure/closet/bombclosetsecurity,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
+"akn" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"ako" = (
+/obj/machinery/door_control{
+	id = "armouryaccess";
+	name = "Armory Blast Doors";
+	pixel_y = 26;
+	req_access = list(3)
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"akp" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"akq" = (
+/obj/structure/rack,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/kitchenknife/combat,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"akr" = (
+/obj/structure/rack,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"aks" = (
+/obj/structure/closet/secure_closet/pistols,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"akt" = (
+/obj/machinery/deployable/barrier,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"aku" = (
+/obj/structure/table/glass,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 20
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/station/security/hos)
 "akv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -4811,6 +5084,19 @@
 	icon_state = "dark"
 	},
 /area/station/aisat)
+"akx" = (
+/obj/structure/dryer{
+	pixel_y = 20
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/station/security/hos)
+"aky" = (
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space)
 "akz" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 4;
@@ -4825,11 +5111,92 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/lobby)
+"akA" = (
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 8;
+	icon_state = "siding_line"
+	},
+/obj/structure/drain,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space)
+"akB" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space)
+"akC" = (
+/obj/effect/decal/turf_decal{
+	dir = 9;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
+"akD" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
+"akE" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"akF" = (
+/obj/effect/decal/turf_decal{
+	dir = 5;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"akG" = (
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/station/security/hos)
+"akH" = (
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/station/security/hos)
+"akI" = (
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 8;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space)
 "akJ" = (
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
 /area/station/hallway/primary/central)
+"akK" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/structure/drain,
+/turf/simulated/floor{
+	icon_state = "freezerfloor2"
+	},
+/area/space)
 "akL" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -4838,6 +5205,27 @@
 	icon_state = "whitepurplecorner"
 	},
 /area/station/rnd/hallway)
+"akM" = (
+/obj/effect/decal/turf_decal{
+	dir = 10;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
+"akN" = (
+/obj/effect/decal/turf_decal{
+	dir = 3;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
+"akO" = (
+/obj/effect/decal/turf_decal{
+	dir = 3;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
 "akP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/turf_decal/wood/dark{
@@ -4848,6 +5236,19 @@
 	icon_state = "wooden"
 	},
 /area/station/hallway/secondary/exit)
+"akQ" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn_corner"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"akR" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn_corner"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
 "akS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -4859,6 +5260,13 @@
 	icon_state = "grimy"
 	},
 /area/station/civilian/library)
+"akT" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
 "akU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -4871,12 +5279,164 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"akV" = (
+/obj/structure/rack,
+/obj/item/weapon/melee/baton,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/weapon/shield/riot,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/main)
+"akW" = (
+/obj/structure/rack,
+/obj/item/weapon/melee/baton,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/weapon/shield/riot,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"akX" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/storage/flak/bulletproof,
+/obj/item/clothing/suit/storage/flak/bulletproof,
+/obj/item/clothing/suit/storage/flak/bulletproof,
+/obj/item/clothing/head/helmet/bulletproof,
+/obj/item/clothing/head/helmet/bulletproof,
+/obj/item/clothing/head/helmet/bulletproof,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"akY" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/head/helmet/laserproof,
+/obj/item/clothing/head/helmet/laserproof,
+/obj/item/clothing/head/helmet/laserproof,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"akZ" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"ala" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"alb" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
 "alc" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
 /area/station/hallway/secondary/entry)
+"ald" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/station/security/hos)
+"ale" = (
+/obj/machinery/deployable/barrier,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor,
+/area/space)
+"alf" = (
+/obj/machinery/washing_machine,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space)
+"alg" = (
+/obj/item/weapon/flora/random,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space)
+"alh" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space)
+"ali" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space)
 "alj" = (
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 10;
@@ -4887,6 +5447,211 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
+"alk" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/lockbox/mind_shields,
+/obj/item/weapon/storage/box/chemimp{
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/box/cdeathalarm_kit,
+/obj/item/weapon/storage/box/trackimp{
+	pixel_y = -3
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/range)
+"all" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/changeling_tests,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/range)
+"alm" = (
+/obj/structure/rack,
+/obj/item/ammo_box/shotgun/beanbag{
+	pixel_y = -3
+	},
+/obj/item/ammo_box/shotgun/beanbag{
+	pixel_y = 3
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/range)
+"aln" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal,
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
+	pixel_y = 6
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space)
+"alo" = (
+/obj/machinery/bot/secbot/beepsky{
+	auto_patrol = 0;
+	name = "Officer Beepsky"
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"alp" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/flashbangs{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/teargas{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/box/teargas,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/range)
+"alq" = (
+/obj/structure/rack,
+/obj/item/ammo_box/magazine/plasma{
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/plasma{
+	pixel_x = 5
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/range)
+"alr" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/grenade_launcher/m79,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/range)
+"als" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/r4046/teargas{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/box/r4046/rubber{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/box/r4046/EMP,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space)
+"alt" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/plasma/p104sass{
+	pixel_y = 2
+	},
+/obj/item/weapon/gun/plasma{
+	pixel_y = -4
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space)
+"alu" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/ionrifle{
+	pixel_y = -3
+	},
+/obj/item/weapon/gun/energy/ionrifle{
+	pixel_y = 3
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space)
+"alv" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/laser{
+	pixel_y = -3
+	},
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/laser{
+	pixel_y = 3
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space)
+"alw" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = -4
+	},
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = 4
+	},
+/obj/item/weapon/gun/energy/gun,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space)
+"alx" = (
+/obj/machinery/flasher/portable,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/space)
+"aly" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "bar_floor2"
+	},
+/area/space)
 "alz" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -4903,12 +5668,33 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"alA" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "blackchecker"
+	},
+/area/space)
 "alB" = (
 /turf/simulated/floor{
 	dir = 3;
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"alC" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/space)
+"alD" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/armoury)
 "alS" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/firealarm{
@@ -13485,15 +14271,24 @@
 /area/station/rnd/hor)
 "cgR" = (
 /turf/simulated/floor{
-	icon_state = "orangefull"
-	},
-/area/space)
-"cgZ" = (
-/obj/structure/stool/bed/chair/metal/white,
-/turf/simulated/floor{
-	icon_state = "orangefull"
+	icon_state = "redcorner"
 	},
 /area/station/security/prison)
+"cgZ" = (
+/obj/machinery/camera/motion{
+	c_tag = "Brig Execution Chamber";
+	dir = 1;
+	network = list("SS13","Security")
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/main)
 "cha" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
@@ -13516,8 +14311,11 @@
 	},
 /area/station/hallway/primary/fore)
 "chf" = (
-/turf/simulated/floor/beach/water/waterpool,
-/area/space)
+/obj/machinery/vending/donut,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/main)
 "chj" = (
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -13555,11 +14353,20 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "chB" = (
-/obj/structure/stool/bed/chair/metal/white,
-/turf/simulated/floor{
-	icon_state = "orangefull"
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/area/space)
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Dark Brig";
+	dir = 4;
+	name = "Brig dark right APC";
+	pixel_x = 27
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/main)
 "chU" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/light/small{
@@ -17023,8 +17830,11 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "cYc" = (
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /turf/simulated/floor{
-	icon_state = "orangefull"
+	icon_state = "graychoco"
 	},
 /area/station/security/hos)
 "cYg" = (
@@ -19543,9 +20353,9 @@
 /area/station/civilian/locker)
 "dGp" = (
 /turf/simulated/floor{
-	icon_state = "orangechoco"
+	icon_state = "neutralfull"
 	},
-/area/space)
+/area/station/security/prison)
 "dGz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
 	dir = 4;
@@ -19586,7 +20396,8 @@
 /area/station/engineering/chiefs_office)
 "dGY" = (
 /turf/simulated/floor{
-	icon_state = "orangechoco"
+	dir = 8;
+	icon_state = "redcorner"
 	},
 /area/station/security/prison)
 "dHb" = (
@@ -19612,13 +20423,11 @@
 	},
 /area/station/hallway/primary/starboard)
 "dHv" = (
-/obj/structure/stool/bed/chair/metal/white{
-	dir = 1
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "orangefull"
-	},
-/area/station/security/hos)
+/turf/simulated/floor/plating,
+/area/space)
 "dHA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -19647,10 +20456,23 @@
 	},
 /area/station/cargo/storage)
 "dHR" = (
-/turf/simulated/floor{
-	icon_state = "orangefull"
+/obj/structure/table,
+/obj/item/device/radio/off{
+	pixel_y = 6
 	},
-/area/station/security/prison)
+/obj/item/device/radio/off{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/device/radio/off,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/main)
 "dHT" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=SW-FC";
@@ -35139,9 +35961,9 @@
 /area/station/civilian/chapel)
 "huz" = (
 /turf/simulated/floor{
-	icon_state = "orangechoco"
+	icon_state = "graychoco"
 	},
-/area/station/security/hos)
+/area/space)
 "huB" = (
 /obj/structure/table/woodentable/poker,
 /obj/item/weapon/dice/d20,
@@ -41401,8 +42223,16 @@
 	},
 /area/station/hallway/primary/central)
 "iSl" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/closet/secure_closet/injection,
 /turf/simulated/floor{
-	icon_state = "orangechoco"
+	icon_state = "dark"
 	},
 /area/station/security/main)
 "iSo" = (
@@ -49490,10 +50320,15 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/supermatter)
 "kJs" = (
-/turf/simulated/floor{
-	icon_state = "graychoco"
+/obj/effect/landmark/start/security_officer,
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
 	},
-/area/station/security/brig)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "red"
+	},
+/area/station/security/prison)
 "kJD" = (
 /turf/simulated/floor{
 	icon_state = "greenblue"
@@ -51702,8 +52537,15 @@
 	},
 /area/station/hallway/secondary/exit)
 "lmF" = (
-/turf/simulated/floor/beach/water/waterpool,
-/area/station/security/hos)
+/obj/effect/landmark/start/security_officer,
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "red"
+	},
+/area/space)
 "lmM" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -57535,8 +58377,13 @@
 	},
 /area/station/maintenance/science)
 "mIU" = (
-/turf/simulated/floor/carpet,
-/area/station/security/hos)
+/obj/machinery/computer/security{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "redfull"
+	},
+/area/station/security/prison)
 "mIZ" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
@@ -69225,11 +70072,11 @@
 	},
 /area/station/medical/medbreak)
 "pCL" = (
-/obj/structure/stool/bed/chair/metal/white{
-	dir = 4
-	},
+/obj/structure/table,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/folder/blue,
 /turf/simulated/floor{
-	icon_state = "orangefull"
+	icon_state = "redfull"
 	},
 /area/space)
 "pDa" = (
@@ -75751,8 +76598,11 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/break_room)
 "riq" = (
-/turf/simulated/wall,
-/area/shuttle/escape_pod3/station)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/space)
 "riw" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -83780,10 +84630,13 @@
 	},
 /area/station/hallway/primary/fore)
 "tif" = (
-/obj/structure/table/woodentable/fancy,
-/turf/simulated/floor{
-	icon_state = "orangefull"
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
+/obj/structure/plasticflaps{
+	opacity = 1
+	},
+/turf/simulated/floor/plating,
 /area/space)
 "tit" = (
 /obj/structure/cable{
@@ -89708,9 +90561,8 @@
 	},
 /area/station/rnd/xenobiology)
 "uJW" = (
-/obj/effect/landmark/start/security_officer,
-/turf/simulated/floor{
-	icon_state = "orangechoco"
+/turf/simulated/floor/bluegrid{
+	icon_state = "rcircuit"
 	},
 /area/space)
 "uJZ" = (
@@ -89746,11 +90598,19 @@
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "uKd" = (
-/turf/simulated/floor/carpet,
+/obj/structure/window/thin/reinforced,
+/obj/machinery/door/window/eastleft,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space)
 "uKe" = (
-/obj/machinery/washing_machine,
-/turf/simulated/floor/beach/water/waterpool,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor/bluegrid{
+	icon_state = "rcircuit"
+	},
 /area/space)
 "uKh" = (
 /turf/simulated/floor{
@@ -155243,16 +156103,16 @@ onb
 onb
 hlv
 tfj
-tfj
-tfj
-tfj
-tfj
-kJs
-kJs
-kJs
-kJs
-kJs
-kJs
+dGY
+dGY
+dGY
+dGY
+aeH
+aeH
+aeH
+aeH
+aeH
+aeH
 aeH
 aeH
 aeH
@@ -155500,16 +156360,16 @@ onb
 onb
 onb
 tfj
-tfj
-tfj
-tfj
-tfj
-kJs
-kJs
-kJs
-kJs
-kJs
-kJs
+dGp
+dGp
+dGp
+dGp
+bRZ
+bRZ
+bRZ
+bRZ
+bRZ
+bRZ
 bRZ
 bRZ
 bRZ
@@ -155757,21 +156617,21 @@ onb
 onb
 hlv
 tfj
-tfj
-tfj
-tfj
-tfj
-afw
-afw
-afw
-afw
-afw
-afw
+cgR
+cgR
+cgR
+cgR
 cin
 cin
 cin
 cin
-cin
+ajs
+ajC
+ajO
+ajO
+ajO
+afw
+afw
 cin
 iXe
 iXe
@@ -156018,12 +156878,12 @@ hlv
 aav
 hlv
 hlv
+dHR
+chf
 wHE
 wHE
-iSl
-iSl
-wHE
-wHE
+ajt
+ajD
 wHE
 wHE
 adF
@@ -156273,15 +157133,15 @@ hlv
 abD
 acx
 aav
-adv
+aav
 hlv
-iSl
-iSl
-iSl
-iSl
-iSl
-iSl
-iSl
+wHE
+wHE
+wHE
+aiX
+ajs
+ajC
+ajQ
 wHE
 cjS
 adL
@@ -156528,17 +157388,17 @@ onb
 onb
 hlv
 aav
+aav
+aav
 acH
 adr
-adx
-hlv
 iSl
-iSl
-iSl
-iSl
-iSl
-iSl
-iSl
+wHE
+adz
+aii
+ajs
+ajC
+ajR
 wHE
 tnw
 adL
@@ -156781,21 +157641,21 @@ qZx
 hlv
 onb
 onb
-hlv
+onb
 hlv
 hlv
 aav
+aav
+aav
 acS
 ads
-ady
-hlv
-iSl
-iSl
-iSl
-iSl
-iSl
-iSl
-iSl
+cgZ
+wHE
+adz
+aii
+ajs
+ajC
+ajS
 wHE
 tqK
 adL
@@ -157038,21 +157898,21 @@ qZx
 hlv
 onb
 onb
+onb
 hlv
+aav
 aav
 aav
 abI
 adh
 adt
+chB
+wHE
 adz
-hlv
-iSl
-iSl
-iSl
-iSl
-iSl
-iSl
-iSl
+aii
+ajs
+ajC
+ajT
 wHE
 jKp
 adL
@@ -157295,6 +158155,7 @@ vym
 vym
 iia
 iia
+onb
 hlv
 hlv
 hlv
@@ -157303,13 +158164,12 @@ hlv
 hlv
 hlv
 hlv
-dGY
-dGp
-uJW
-adD
-iSl
-iSl
-iSl
+cci
+ady
+aii
+ajs
+ajC
+ajU
 wHE
 tnw
 adL
@@ -157553,20 +158413,20 @@ iia
 iia
 iia
 onb
+onb
+onb
 hlv
 aaW
 aaW
 aaW
 aaW
 aaW
-hlv
-dGY
-dGp
-uJW
-adD
-iSl
-iSl
-iSl
+cci
+ahN
+aii
+ajs
+ajC
+ajV
 wHE
 myH
 adK
@@ -157810,20 +158670,20 @@ iia
 iia
 iia
 onb
+onb
+onb
 hlv
 aaW
 aaW
 aaW
 aaW
 aaW
-hlv
-dGY
-dGp
-uJW
-adD
-iSl
-iSl
-wHE
+cci
+ahN
+aii
+ajs
+ajC
+ajW
 wHE
 wHE
 wHE
@@ -158067,30 +158927,30 @@ iia
 iia
 iia
 onb
+onb
+onb
 hlv
 aaW
 aaW
 aaW
 aaW
 aaW
-hlv
-dGY
-dGp
-dGp
-iSl
-iSl
-iSl
+cci
+ahN
+aii
+ajs
+ajC
+ajX
 wHE
-acN
-acN
-acN
-acN
-acN
+akl
+akC
+akM
+akV
 iTl
-ahM
+alk
 aia
 aif
-aii
+alp
 jtS
 jtS
 jtS
@@ -158324,30 +159184,30 @@ onb
 onb
 onb
 onb
+onb
+onb
 hlv
 aaW
 aaW
 adl
 aaW
 aaW
-aaW
-dGY
-dGp
-dGp
-iSl
-iSl
-iSl
+cci
+acN
+aik
+ajs
+ajC
+ajY
 wHE
-acN
-acN
-acN
-acN
-acN
+akm
+akD
+akN
+akV
 iTl
-ahN
+all
 aia
 aif
-aik
+alq
 cci
 aiv
 dMt
@@ -158581,30 +159441,30 @@ onb
 onb
 onb
 onb
+onb
+onb
 hlv
 aaW
 aaW
 aaW
 aaW
 aaW
-hlv
-dGY
-dGp
-dGp
+uKe
 huz
-huz
-huz
-mIU
-mIU
-mIU
-mIU
-mIU
-mIU
+aim
+aju
+ajE
+ajZ
+akj
+akn
+akE
+akO
+akW
 iTl
-ahO
+alm
 aia
 aif
-ail
+alr
 cci
 aiv
 dMt
@@ -158616,7 +159476,7 @@ aiF
 agw
 agA
 agD
-aiX
+alD
 uNw
 agQ
 agQ
@@ -158838,30 +159698,30 @@ onb
 onb
 onb
 onb
+onb
+onb
 hlv
 aaW
 aaW
 aaW
 aaW
-aaW
-hlv
-dGp
-dGp
-dGp
-huz
-huz
-huz
-hgX
-mIU
-mIU
-mIU
-mIU
-mIU
+uJW
 cci
-ahP
+aiL
+ail
+aju
+ajE
+ajZ
+akj
+akn
+akE
+akO
+akX
+cci
+aln
 aib
 aig
-aim
+als
 cci
 dKa
 dMt
@@ -159095,30 +159955,30 @@ onb
 onb
 onb
 onb
+onb
+onb
 hlv
 aaW
 aaW
 aaW
 aaW
-aaW
-hlv
-dGp
-dGp
-dGp
-huz
-huz
-huz
-hgX
-mIU
-mIU
-mIU
-mIU
-mIU
+uJW
 cci
-ahR
+ahM
+aio
+aju
+ajE
+aka
+hgX
+ako
+akE
+akO
+akY
+cci
+alo
 aib
 aig
-ain
+alt
 cci
 dKa
 dMt
@@ -159126,7 +159986,7 @@ dKa
 cci
 aiz
 aiC
-aiC
+alA
 aiI
 agQ
 aiR
@@ -159352,8 +160212,8 @@ onb
 onb
 onb
 onb
-hlv
-hlv
+onb
+onb
 hlv
 hlv
 hlv
@@ -159361,21 +160221,21 @@ hlv
 hlv
 cci
 cci
-dGp
-huz
+cci
+hgX
+ajv
+ajF
 hgX
 hgX
-hgX
-mIU
-mIU
-mIU
-mIU
-mIU
-ahL
+akp
+akE
+akQ
+akZ
+alh
 ahS
 aic
 aig
-aio
+alu
 cci
 dKa
 dMt
@@ -159615,24 +160475,24 @@ tcq
 tcq
 onb
 onb
-hlv
-cgR
-cgR
-cgR
+onb
+tif
+uKd
+ahP
 cYc
-cYc
-cYc
+ain
+ain
+akb
 hgX
-mIU
-mIU
-mIU
-mIU
-mIU
-ahL
+akq
+akE
+akR
+ala
+ali
 ahT
 aid
 aig
-aiq
+alv
 cci
 dKa
 dMt
@@ -159873,26 +160733,26 @@ tcq
 onb
 onb
 onb
-cgR
-cgR
-cgR
-cYc
-cYc
-cYc
+dHv
+huz
+huz
+ain
+ain
+ain
+akd
 hgX
-mIU
-mIU
-mIU
-mIU
-mIU
+akr
+akE
+akO
+alb
 cci
 ahW
 aib
 aig
-ait
+alw
 cci
 cci
-cci
+aly
 cci
 cci
 cci
@@ -160130,24 +160990,24 @@ tcq
 onb
 onb
 onb
-dHR
-dHR
-cgR
-cYc
-cYc
-cYc
-mIU
-mIU
-mIU
-mIU
-mIU
-mIU
+hlv
+tfj
+huz
+ain
+ain
+ain
+ain
+hgX
+aks
+akF
+akT
+ald
 cci
 ahY
 aib
 aig
-aiu
-aiu
+alx
+alx
 cci
 uOF
 uOF
@@ -160376,42 +161236,42 @@ plf
 plf
 plf
 xLI
-tcq
-tcq
-tcq
-tcq
-tcq
-tcq
-tcq
-tcq
-onb
-onb
+xLI
+xLI
+xLI
+xLI
+xLI
+xLI
+xLI
+xLI
 hlv
-dHR
-dHR
-pCL
-pCL
-cYc
-cYc
+hlv
+hlv
+hlv
+kJs
+lmF
+aiq
+ajy
+ajH
+ajH
 hgX
-mIU
-mIU
-mIU
-mIU
-uKd
+akt
+akt
+akt
+ale
 cci
 ahY
 aib
 aig
-aiu
-aiu
+alx
+alx
 cci
 uOF
 uOF
 aiw
 tot
 uOF
-uOF
+aly
 aiI
 agQ
 aiR
@@ -160632,36 +161492,36 @@ plf
 plf
 plf
 plf
-xLI
-xLI
-xLI
-xLI
-xLI
-xLI
-xLI
-xLI
-xLI
+hUq
+hUq
+hUq
+hUq
+hUq
+hUq
+hUq
+hUq
+hUq
+qZx
+qZx
+qZx
 hlv
-hlv
-hlv
-dHR
-cgZ
-tif
-tif
-dHv
-cYc
+mIU
+ahO
+aiu
+ajz
+ajI
+ake
 hgX
-mIU
-mIU
-mIU
-mIU
-uKd
+akt
+akt
+akt
+ale
 cci
 ahZ
 aie
 aih
-aiu
-aiu
+alx
+alx
 cci
 uOF
 dNY
@@ -160900,14 +161760,14 @@ hUq
 hUq
 qZx
 qZx
+qZx
 hlv
-dHR
-chB
-tif
-tif
-dHv
-cYc
-hgX
+lmF
+lmF
+aiu
+ajz
+ajH
+ajH
 hgX
 hgX
 hgX
@@ -161157,19 +162017,19 @@ hUq
 hUq
 qZx
 qZx
+qZx
 hlv
-dHR
-chB
-tif
-tif
-dHv
-cYc
+pCL
+ahR
+aiu
+ajz
+ajK
+akf
 hgX
-lmF
-lmF
-lmF
-lmF
-chf
+aku
+akG
+akH
+alf
 cci
 uLd
 uLd
@@ -161414,19 +162274,19 @@ hUq
 hUq
 qZx
 qZx
+qZx
 hlv
-dHR
-cgR
-cgR
-cgR
-cYc
-cYc
+acN
+acN
+ait
+ajA
+ajL
+ajL
 hgX
-lmF
-lmF
-lmF
-lmF
-chf
+akx
+akH
+akH
+alf
 cci
 uLd
 uLd
@@ -161671,19 +162531,19 @@ hUq
 hUq
 qZx
 qZx
+qZx
 hlv
-dHR
-cgR
-cgR
-cgR
-cgR
-cgR
-chf
-chf
-chf
-uKe
-chf
-chf
+adD
+huz
+huz
+huz
+huz
+huz
+akk
+aky
+aky
+aky
+alg
 cci
 uLd
 uLd
@@ -161696,7 +162556,7 @@ cci
 uLd
 coD
 uLd
-uLd
+alC
 aiI
 agQ
 aiR
@@ -161928,19 +162788,19 @@ plf
 qZx
 qZx
 qZx
+qZx
 hlv
-dHR
-cgR
-cgR
-cgR
-cgR
-cgR
+adv
+riq
+riq
+riq
+riq
+akh
 cci
-chf
-chf
-chf
-chf
-chf
+akA
+akI
+akA
+akI
 cci
 uLd
 uLd
@@ -162185,19 +163045,19 @@ plf
 qZx
 qZx
 qZx
+qZx
 hlv
-dHR
-cgR
-cgR
-cgR
-cgR
-cgR
+adx
+adx
+ajr
+ajB
+ajN
+aki
 cci
-chf
-chf
-chf
-chf
-chf
+akB
+akK
+akB
+akK
 cci
 uLd
 uLd
@@ -162442,7 +163302,7 @@ plf
 qZx
 tms
 tms
-riq
+tms
 hlv
 cci
 cci
@@ -162985,7 +163845,7 @@ aed
 aej
 aem
 aes
-cdI
+dHv
 cdI
 cdI
 cdI
