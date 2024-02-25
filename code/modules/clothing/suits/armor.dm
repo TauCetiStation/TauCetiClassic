@@ -382,6 +382,7 @@
 	desc = "Комплект брони, наиболее часто используемый отрядами специального назначения и тактического вооружения. Включает в себя жилет с подкладкой и карманами, а также наколенники и наплечники."
 	icon_state = "swatarmor"
 	item_state = "armor"
+	var/obj/item/weapon/gun/holstered = null
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	slowdown = 0.5
@@ -394,7 +395,7 @@
 	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
-		
+
 	if(!holstered)
 		var/obj/item/I = usr.get_active_hand()
 		if(!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
