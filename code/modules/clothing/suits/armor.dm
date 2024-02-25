@@ -387,7 +387,6 @@
 	slowdown = 0.5
 	armor = list(melee = 60, bullet = 65, laser = 50, energy = 60, bomb = 40, bio = 0, rad = 0)
 
-
 /obj/item/clothing/suit/armor/tactical/verb/holster()
 	set name = "Holster"
 	set category = "Object"
@@ -395,7 +394,7 @@
 	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
-
+		
 	if(!holstered)
 		var/obj/item/I = usr.get_active_hand()
 		if(!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
