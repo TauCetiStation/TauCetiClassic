@@ -1,7 +1,3 @@
-var/global/list/lighting_update_lights = list() // List of lighting sources  queued for update.
-var/global/list/lighting_update_corners = list() // List of lighting corners  queued for update.
-var/global/list/lighting_update_objects = list() // List of lighting objects queued for update.
-
 SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
 
@@ -11,8 +7,12 @@ SUBSYSTEM_DEF(lighting)
 	flags = SS_TICKER
 	msg_lobby = "Включаем свет..."
 
+	var/static/list/sources_queue = list() // List of lighting sources queued for update.
+	var/static/list/corners_queue = list() // List of lighting corners queued for update.
+	var/static/list/objects_queue = list() // List of lighting objects queued for update.
+
 /datum/controller/subsystem/lighting/stat_entry()
-	..("L:[global.lighting_update_lights.len]|C:[global.lighting_update_corners.len]|O:[global.lighting_update_objects.len]")
+	..("L:[sources_queue.len]|C:[corners_queue.len]|O:[objects_queue.len]")
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)
 	if(!initialized)
@@ -48,9 +48,9 @@ SUBSYSTEM_DEF(lighting)
 	if(!init_fire)
 		MC_SPLIT_TICK
 
-	while (global.lighting_update_lights.len)
-		var/datum/light_source/L = global.lighting_update_lights[global.lighting_update_lights.len]
-		global.lighting_update_lights.len--
+	while (sources_queue.len)
+		var/datum/light_source/L = sources_queue[sources_queue.len]
+		sources_queue.len--
 
 		L.update_corners()
 
@@ -67,25 +67,25 @@ SUBSYSTEM_DEF(lighting)
 
 	var/i = 0
 
-	for (i in 1 to global.lighting_update_corners.len)
-		var/datum/lighting_corner/C = global.lighting_update_corners[i]
+	for (i in 1 to corners_queue.len)
+		var/datum/lighting_corner/C = corners_queue[i]
 
-		C.update_objects()
 		C.needs_update = FALSE
+		C.update_objects()
 		if(init_fire)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
 			break
 	if (i)
-		global.lighting_update_corners.Cut(1, i+1)
+		corners_queue.Cut(1, i+1)
 		i = 0
 
 
 	if(!init_fire)
 		MC_SPLIT_TICK
 
-	for (i in 1 to global.lighting_update_objects.len)
-		var/atom/movable/lighting_object/O = global.lighting_update_objects[i]
+	for (i in 1 to objects_queue.len)
+		var/atom/movable/lighting_object/O = objects_queue[i]
 
 		if (QDELETED(O))
 			continue
@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(lighting)
 		else if (MC_TICK_CHECK)
 			break
 	if (i)
-		global.lighting_update_objects.Cut(1, i+1)
+		objects_queue.Cut(1, i+1)
 
 /datum/controller/subsystem/lighting/Recover()
 	initialized = SSlighting.initialized
