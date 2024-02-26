@@ -421,6 +421,10 @@
 	. = ..()
 	update_icon(1)
 
+/turf/simulated/floor/plating/airless/catwalk/Destroy()
+	environment_underlay = null
+	return ..()
+
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	if(environment_underlay)
 		underlays -= environment_underlay
