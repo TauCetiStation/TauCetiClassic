@@ -1328,6 +1328,7 @@
 	. = ..()
 	spawn(5)
 		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
+		reagents.add_reagent("pacid", round(potency, 1))
 		reagents.add_reagent("sanguisacid", round(potency, 1))
 		force = round((5 + potency / 2.5), 1)
 
