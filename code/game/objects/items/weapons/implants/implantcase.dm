@@ -37,7 +37,7 @@
 			to_chat(user, "<span class='warning'>[C_CASE(src, NOMINATIVE_CASE)] [(ANYMORPH(src, "полон", "полна", "полно", "полны"))]</span>")
 		else
 			I.reagents.trans_to(src.imp, 5)
-			to_chat(user, "<span class='notice'>Вы вводите 5 единиц раствора. Теперь в шприце содержится [I.reagents.total_volume] [PLUR_UNITS(units)].</span>")
+			to_chat(user, "<span class='notice'>Вы вводите 5 единиц раствора. Теперь в шприце содержится [I.reagents.total_volume] [PLUR_UNITS(I.reagents.total_volume)].</span>")
 
 	else if(istype(I, /obj/item/weapon/implanter))
 		var/obj/item/weapon/implanter/IMP = I
