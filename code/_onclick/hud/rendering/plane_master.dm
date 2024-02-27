@@ -116,6 +116,12 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
+/atom/movable/screen/plane_master/lighting/apply_effects(mob/mymob)
+	if(!istype(mymob))
+		return
+
+	mymob.overlay_fullscreen("lighting_backdrop_darkness", /atom/movable/screen/fullscreen/meta/darkness)
+
 /atom/movable/screen/plane_master/exposure
 	name = "exposure plane master"
 	plane = LIGHTING_EXPOSURE_PLANE
@@ -220,6 +226,8 @@
 	render_relay_plane = LIGHTING_PLANE
 	blend_mode_override = BLEND_ADD
 
+	var/atom/movable/screen/fullscreen/meta/environment_lighting_color/color_filter
+
 /atom/movable/screen/plane_master/environment_lighting/apply_effects(mob/mymob)
 	remove_filter("guassian_blur")
 
@@ -228,15 +236,18 @@
 
 	add_filter("guassian_blur", 1, gauss_blur_filter(10))
 
-// this plane is for coloring global environment light
-// by default every z-level has one fullscreen object with envyronment color
-// that will be placed on users screens to color space/planet globally
-/atom/movable/screen/plane_master/environment_lighting_color
-	name = "environment lighting color plane master"
-	plane = ENVIRONMENT_LIGHTING_COLOR_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_plane = ENVIRONMENT_LIGHTING_PLANE
-	blend_mode_override = BLEND_MULTIPLY
+	// by default every z-level has one object as environment color holder
+	// we place it on user screen to color plane globally
+	color_filter = mymob.overlay_fullscreen("environment_lighting_color", /atom/movable/screen/fullscreen/meta/environment_lighting_color)
+
+	if(mymob.z)
+		color_filter.attach_to_level(mymob.z)
+
+	RegisterSignal(mymob, COMSIG_MOB_Z_CHANGED, PROC_REF(update_level), override = TRUE)
+
+/atom/movable/screen/plane_master/environment_lighting/proc/update_level(mob/source, new_z)
+	if(color_filter)
+		color_filter.attach_to_level(new_z)
 
 // for local environment lighting, can be used for areas
 // currently we blend it at environment_lighting first just to use same blur filter

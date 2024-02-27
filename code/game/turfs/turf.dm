@@ -77,10 +77,6 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
-	var/area/A = loc
-	if(A.dynamic_lighting)
-		new/atom/movable/lighting_object(src)
-
 	if(level_light_source)
 		ENABLE_LEVEL_LIGHTING(src)
 

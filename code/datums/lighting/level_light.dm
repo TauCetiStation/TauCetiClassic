@@ -14,6 +14,10 @@ var/global/list/datum/level_lighting_effect/lighting_effects
 	name = "starlight"
 	colors = list("#87d5ff")
 
+/datum/level_lighting_effect/centcomm
+	name = "centcomm"
+	colors = list("#ffcc99")
+
 /* events */
 /datum/level_lighting_effect/narsie
 	name = "narsie"

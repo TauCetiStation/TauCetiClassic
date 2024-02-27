@@ -102,3 +102,7 @@
 		client.click_intercept.post_login()
 
 	client.change_view(world.view)
+
+	var/turf/T = get_turf(src)
+	if(T && last_z != T.z)
+		update_z(T.z)

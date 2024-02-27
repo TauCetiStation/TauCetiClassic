@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(lighting)
 		if(T.opacity || T.has_opaque_atom)
 			continue
 		for(var/turf/T2 in RANGE_TURFS(1, T))
-			if(T2.level_light_source)
+			if(T2.level_light_source && !T2.has_opaque_atom)
 				ENABLE_LEVEL_LIGHTING(T)
 				break
 		CHECK_TICK

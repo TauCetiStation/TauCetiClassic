@@ -128,22 +128,15 @@
 		Moved(oldloc, Dir)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-	var/same_z_level = FALSE
-
-	var/turf/old_turf = get_turf(OldLoc)
-	var/turf/new_turf = get_turf(src)
-
-	if (old_turf?.z == new_turf?.z)
-		same_z_level = TRUE
-
 	if(!ISDIAGONALDIR(Dir))
-		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir, same_z_level)
+		// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
 
 		if(moving_diagonally)
 			return
 
 	for(var/atom/movable/AM in contents)
-		AM.locMoved(OldLoc, Dir, same_z_level)
+		AM.locMoved(OldLoc, Dir)
 
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
@@ -163,10 +156,11 @@
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
 
-/atom/movable/proc/locMoved(atom/OldLoc, Dir, same_z_level)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir, same_z_level)
+// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
+/atom/movable/proc/locMoved(atom/OldLoc, Dir)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
 	for(var/atom/movable/AM in contents)
-		AM.locMoved(OldLoc, Dir, same_z_level)
+		AM.locMoved(OldLoc, Dir)
 
 /atom/movable/proc/setLoc(T, teleported=0)
 	loc = T

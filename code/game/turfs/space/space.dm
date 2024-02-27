@@ -30,10 +30,6 @@
 	initialized = TRUE
 	icon_state = SPACE_ICON_STATE
 
-	var/area/A = loc
-	if(A.dynamic_lighting)
-		new/atom/movable/lighting_object(src)
-
 	if(level_light_source)
 		ENABLE_LEVEL_LIGHTING(src)
 

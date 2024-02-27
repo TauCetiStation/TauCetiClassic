@@ -3,7 +3,7 @@
 
 	anchored      = TRUE
 
-	icon             = LIGHTING_ICON
+	icon             = 'icons/effects/lighting_object.dmi'
 	icon_state       = "transparent"
 	color            = LIGHTING_BASE_MATRIX
 	plane            = LIGHTING_PLANE
@@ -113,7 +113,7 @@
 	else if(!set_luminosity)
 		icon_state = "dark"
 		color = null
-	else
+	else if(set_luminosity)
 		icon_state = null
 		color = list(
 			rr, rg, rb, 00,

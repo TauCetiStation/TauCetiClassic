@@ -136,31 +136,10 @@ var/global/list/available_ui_styles = list(
 
 	mymob.add_to_hud(src)
 
-	update_level_color_filter()
-	// todo: level change signal
-	RegisterSignal(mymob, list(COMSIG_MOVABLE_LOC_MOVED, COMSIG_MOVABLE_MOVED), PROC_REF(check_level_update))
-
 	if(client.void)
 		client.screen += client.void
 
 	return TRUE
-
-/datum/hud/proc/check_level_update(datum/source, OldLoc, Dir, same_z_level)
-	SIGNAL_HANDLER
-
-	if(!same_z_level)
-		update_level_color_filter()
-
-/datum/hud/proc/update_level_color_filter()
-	if(!SSmapping.initialized || !ismob(mymob) || !mymob.client)
-		return
-
-	for(var/obj/effect/level_color_holder/current_holder in mymob.client.screen)
-		mymob.client.screen -= current_holder
-
-	var/turf/T = get_turf(mymob)
-	var/datum/space_level/L = SSmapping.get_level(T.z)
-	mymob.client.screen += L.color_holder
 
 //Version denotes which style should be displayed. blank or FALSE means "next version"   //khem, what? return is not used anywhere
 /datum/hud/proc/show_hud(version = 0)

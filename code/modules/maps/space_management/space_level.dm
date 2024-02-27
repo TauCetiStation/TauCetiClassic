@@ -1,4 +1,4 @@
-/datum/space_level
+/datum/space_level // not only space, bad naming
 	var/name = "NAME MISSING"
 	var/list/traits
 	var/z_value = 1 //actual z placement

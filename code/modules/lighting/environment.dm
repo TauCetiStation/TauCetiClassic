@@ -1,5 +1,15 @@
 // environment lighting - second unsimulated lighting system for z-levels and areas
 
+// z-level mask we use to apply environment color for clients
+// done as a separate effect so we can change it in a centralised way and apply animations
+/obj/effect/level_color_holder
+	name = "environment_lighting_holder"
+	icon = 'icons/hud/screen1_full.dmi'
+	icon_state = "white"
+	plane = ENVIRONMENT_LIGHTING_PLANE
+	appearance_flags = NO_CLIENT_COLOR | PIXEL_SCALE
+	var/locked = FALSE
+
 // shared image we use as mask for environment turfs
 var/global/image/level_light_mask = create_level_light_mask() // global
 /proc/create_level_light_mask()
@@ -24,19 +34,6 @@ var/global/obj/effect/area_unsimulated_light_mask = create_area_light_mask()
 
 	return E
 
-// z-level mask we use to apply environment color for clients
-// done as a separate effect so we can change it in a centralised way and apply animations
-// todo: make it possible to use for any screen size, should do transform for client.view
-/obj/effect/level_color_holder
-	name = "environment_lighting_holder"
-	icon = 'icons/blank.dmi'
-	icon_state = "white"
-	screen_loc = "CENTER"
-	plane = ENVIRONMENT_LIGHTING_COLOR_PLANE
-	appearance_flags = NO_CLIENT_COLOR | PIXEL_SCALE
-	transform = matrix(15, 0, 0, 0, 15, 0)
-	var/locked = FALSE
-
 // adds level lighting mask to turfs around if any level_light_source nearby
 // SSlighting does this once globally during initialization
 /turf/proc/recast_level_light(old)
@@ -50,7 +47,7 @@ var/global/obj/effect/area_unsimulated_light_mask = create_area_light_mask()
 			continue
 		var/has_level_source_around = FALSE
 		for(var/turf/T2 in RANGE_TURFS(1, T))
-			if(T2.level_light_source)
+			if(T2.level_light_source && !T2.has_opaque_atom)
 				has_level_source_around = TRUE
 				break
 		if(has_level_source_around)
