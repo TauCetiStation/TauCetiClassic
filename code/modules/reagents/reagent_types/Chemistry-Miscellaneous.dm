@@ -408,7 +408,7 @@
 	id = "rh"
 	description = "Fertilizers. Extremely effective fertilizers that promote plant longevity."
 	reagent_state = LIQUID
-	color = "#9df753"
+	color = "#0b8600"
 
 /datum/reagent/robust_harvest/on_diona_digest(mob/living/M)
 	..()
