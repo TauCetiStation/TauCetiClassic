@@ -334,7 +334,7 @@
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "bb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair{
 	dir = 4
 	},
 /obj/item/device/flashlight/seclite,
@@ -493,7 +493,7 @@
 /turf/simulated/floor/airless/ceiling,
 /area/space_structures/ghostship)
 "bO" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair{
 	dir = 4
 	},
 /turf/simulated/floor/airless,
