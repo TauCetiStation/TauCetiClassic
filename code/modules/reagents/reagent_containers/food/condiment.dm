@@ -302,6 +302,7 @@
 	name = "soy sauce"
 	desc = "A salty soy-based flavoring."
 	icon_state = "soysauce"
+	item_state = "soysauce"
 	emptystate = null
 	list_reagents = list("soysauce" = 40)
 
@@ -309,6 +310,7 @@
 	name = "hot sauce"
 	desc = "You can almost TASTE the stomach ulcers now!"
 	icon_state = "hotsauce"
+	item_state = "hotsauce"
 	emptystate = null
 	list_reagents = list("capsaicin" = 30)
 
@@ -316,6 +318,7 @@
 	name = "ketchup"
 	desc = "You feel more American already."
 	icon_state = "ketchup"
+	item_state = "ketchup"
 	emptystate = "ketchup"
 	list_reagents = list("ketchup" = 50)
 
@@ -323,6 +326,7 @@
 	name = "cold sauce"
 	desc = "Leaves the tongue numb in its passage."
 	icon_state = "coldsauce"
+	item_state = "coldsauce"
 	emptystate = null
 	list_reagents = list("frostoil" = 30)
 
@@ -330,6 +334,8 @@
 	name = "corn oil"
 	desc = "A delicious oil used in cooking. Made from corn."
 	icon_state = "cornoil"
+	item_state = "cornoil"
+	emptystate = null
 	list_reagents = list("cornoil" = 40)
 
 // SUPPLEMENTS
@@ -346,6 +352,7 @@
 	name = "salt shaker"
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
+	item_state = "saltshakersmall"
 	emptystate = "saltshakersmall"
 	possible_transfer_amounts = list(1,20) // for the clown turning the lid off
 	amount_per_transfer_from_this = 1
@@ -356,6 +363,7 @@
 	name = "pepper mill"
 	desc = "Often used to flavor food or make people sneeze."
 	icon_state = "peppermillsmall"
+	item_state = "peppermillsmall"
 	emptystate = null
 	possible_transfer_amounts = list(1,20) // for the clown turning the lid off
 	amount_per_transfer_from_this = 1
@@ -366,5 +374,6 @@
 	name = "honey pot"
 	desc = "Sweet and healthy!"
 	icon_state = "honey"
+	item_state = "honey"
 	emptystate = null
 	list_reagents = list("honey" = 40)

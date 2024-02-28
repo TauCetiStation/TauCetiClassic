@@ -68,6 +68,29 @@
 
 	return ..()
 
+/obj/machinery/computer/communications/attackby(obj/item/W, mob/user, params)
+	. = ..()
+	try_log_in(W, user)
+
+/obj/machinery/computer/communications/proc/try_log_in(obj/item/A, mob/user)
+	var/obj/item/weapon/card/id/I
+	if(A)
+		if(!istype(A, /obj/item/weapon/card/id))
+			return FALSE
+		I = A
+	else
+		I = user.get_active_hand()
+		if(istype(I, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = I
+			I = pda.id
+		if(!istype(I))
+			return FALSE
+	if(check_access(I))
+		authenticated = 1
+	if((access_captain in I.access) || (access_hop in I.access) || (access_hos in I.access))
+		authenticated = 2
+	return TRUE
+
 /obj/machinery/computer/communications/Topic(href, href_list)
 	. = ..()
 	if(!.)
@@ -89,15 +112,12 @@
 			if(isobserver(M))
 				authenticated = 2
 			else
-				var/obj/item/weapon/card/id/I = M.get_active_hand()
-				if (istype(I, /obj/item/device/pda))
-					var/obj/item/device/pda/pda = I
-					I = pda.id
-				if (I && istype(I))
-					if(check_access(I))
-						authenticated = 1
-					if((access_captain in I.access) || (access_hop in I.access) || (access_hos in I.access))
-						authenticated = 2
+				if(!try_log_in(null, M))
+					if(iscarbon(M))
+						var/mob/living/carbon/C = M
+						try_log_in(C.get_slot_ref(SLOT_WEAR_ID), C)
+			updateUsrDialog()
+			return
 		if("logout")
 			authenticated = 0
 

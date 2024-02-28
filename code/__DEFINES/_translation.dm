@@ -140,3 +140,12 @@
                || atom.gender == FEMALE && w_female \
                || atom.gender == NEUTER && w_neuter \
                || w_plural
+
+// Capitalize Case: тоже самое, что и CASE, только превращает первую букву в заглавную
+#define C_CASE(atom, case) capitalize(CASE(atom, case))
+
+// Часто встречаемые pluralize_russian(). Не забывайте про существование нецелых чисел и округления - они тоже влияют.
+#define PLUR_UNITS(units) pluralize_russian(units, "юнит", "юнита", "юнитов")
+
+#define PLUR_SECONDS_LEFT(seconds) pluralize_russian(seconds, "секунда", "секунды", "секунд") // "Осталась 1 секунда". Не путайте с нижним.
+#define PLUR_SECONDS_IN(seconds)   pluralize_russian(seconds, "секунду", "секунды", "секунд") // "Через 1 секунду". Не путайте с верхним.
