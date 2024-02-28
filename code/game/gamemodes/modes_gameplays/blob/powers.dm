@@ -171,7 +171,7 @@
 /mob/camera/blob/verb/create_node_power()
 	set category = "Blob"
 	set name = "Создать узел блоба (60)"
-	set desc = "Создать узел блоба."
+	set desc = "Создаёт узел."
 
 
 	var/turf/T = get_turf(src)
