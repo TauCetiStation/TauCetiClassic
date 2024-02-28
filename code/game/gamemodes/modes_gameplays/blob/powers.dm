@@ -132,7 +132,7 @@
 		<br>You can communicate with other blobbernauts and overminds<BR>")
 		add_points(-40)
 	else
-		to_chat(src, "<span class='warning'>Вы не смогли произвести блоббернаута. Ваши очки возвращены. Попробуйте позже.</span>")
+		to_chat(src, "<span class='warning'>Вы не смогли произвести блоббернаута. Ваша энергия возвращена. Попробуйте позже.</span>")
 		B.naut = null
 
 /mob/camera/blob/verb/create_resource_power()
@@ -159,7 +159,7 @@
 		return
 
 	for(var/obj/structure/blob/resource/blob in orange(4, T))
-		to_chat(src, "Здесь уже есть ресурсная ячейка, поставьте другую на 4 клетки дальше от ближайшей")
+		to_chat(src, "Здесь уже есть ресурсная ячейка, другую ресурсную ячейку можно поставить на 4 клетки дальше от ближайшей")
 		return
 
 	if(!can_buy(40))
@@ -192,7 +192,7 @@
 		return
 
 	for(var/obj/structure/blob/node/blob in orange(5, T))
-		to_chat(src, "Здесь уже есть узел, поставьте другой на 5 плиток дальше!")
+		to_chat(src, "Здесь уже есть узел, другой узел можно поставить на 5 плиток дальше!")
 		return
 
 	if(!can_buy(60))
@@ -224,7 +224,7 @@
 		return
 
 	for(var/obj/structure/blob/factory/blob in orange(7, T))
-		to_chat(src, "Здесь уже есть производящая ячейка, поставьте другую на 7 плиток дальше!!")
+		to_chat(src, "Здесь уже есть производящая ячейка, другую производящую ячейку можно поставить на 7 плиток дальше!")
 		return
 
 	if(!can_buy(60))
@@ -258,7 +258,7 @@
 /mob/camera/blob/verb/expand_blob_power()
 	set category = "Blob"
 	set name = "Расширение (5)"
-	set desc = "Попытка создать нового блоба. При нахождении на плитке предмета, он будет разрушен и будет медленно поглощаться."
+	set desc = "Попытка создать нового блоба. При возможности, всё что находится на плитке будет уничтожено и появится новый блоб."
 
 	var/turf/T = get_turf(src)
 	expand_blob(T)

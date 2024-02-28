@@ -7,7 +7,7 @@
 		if(1)
 			loot_type = /obj/structure/particle_accelerator
 			target_amount = 6
-			loot = "полный комплект ускоритель частиц"
+			loot = "полный комплект ускоритель частиц (6 частей)"
 		if(2)
 			loot_type = /obj/machinery/the_singularitygen
 			target_amount = 1
