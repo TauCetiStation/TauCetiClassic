@@ -100,7 +100,7 @@
 		to_chat(src, "<span class='warning'>Вы должны быть на производящей ячейке!</span>")
 		return
 	if(B.naut) //if it already made a blobbernaut, it can't do it again
-		to_chat(src, "<span class='warning'>Эта ячейка уже производит блоббернаута.</span>")
+		to_chat(src, "<span class='warning'>Эта ячейка уже поддерживает блоббернаута.</span>")
 		return
 	if(B.get_integrity() < B.max_integrity * 0.5)
 		to_chat(src, "<span class='warning'>Эта ячейка слишком повреждена для производства блоббернаута.</span>")
