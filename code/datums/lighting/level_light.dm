@@ -21,18 +21,20 @@ var/global/list/datum/level_lighting_effect/lighting_effects
 /* events */
 /datum/level_lighting_effect/narsie
 	name = "narsie"
-	colors = list("#444444", "#222222", "#662222")
+	colors = list("#444444", "#222222", "#773333")
 	transition_delay = 15 SECONDS
 	reset_after = FALSE
+	lock_after = TRUE
 
 /* aurora */
 /datum/level_lighting_effect/random_aurora
 	name = "random aurora"
 	reset_after = TRUE
-	transition_delay = 3 SECONDS
+	transition_delay = 5 SECONDS
 
-/datum/level_lighting_effect/random_aurora/New()
-	for(var/i in 1 to 20)
+/datum/level_lighting_effect/random_aurora/New(duration = 60 SECONDS)
+	var/transitions = ceil(duration/transition_delay)
+	for(var/i in 1 to transitions)
 		colors += list(color_lightness_max(random_color(), 0.70))
 
 /* Planetary lighting */
@@ -42,3 +44,7 @@ var/global/list/datum/level_lighting_effect/lighting_effects
 
 /datum/level_lighting_effect/snow_map_random/New()
 	colors = list(pick(colors))
+
+/datum/level_lighting_effect/junkyard
+	name = "junkyard"
+	colors = list("##5f5f5f") // junkyard is already colorful, gray to add darkness works better
