@@ -20,8 +20,8 @@
 
 /mob/camera/blob/verb/jump_to_node()
 	set category = "Blob"
-	set name = "Перемещение к ноде"
-	set desc = "Перемещение к выбранной ноде."
+	set name = "Перемещение к узлу"
+	set desc = "Перемещение к выбранному узлу."
 
 	if(blob_nodes.len)
 		var/list/nodes = list()
@@ -36,7 +36,7 @@
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
 	set name = "Создать укрепленного блоба (10)"
-	set desc = "Создать укрепленного блоба. Используйте снова для получения рефлективной версии."
+	set desc = "Создать укрепленного блоба. Используйте снова для получения отражающей версии."
 
 	var/turf/T = get_turf(src)
 	create_shield(T)
