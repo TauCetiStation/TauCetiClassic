@@ -3869,7 +3869,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "akw" = (
 /obj/effect/decal/turf_decal{
@@ -4546,7 +4546,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "arm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -5340,7 +5340,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "azw" = (
 /obj/structure/closet/crate,
@@ -16503,7 +16503,7 @@
 	dir = 1;
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cEZ" = (
 /obj/random/vending/snack,
@@ -20691,7 +20691,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "duD" = (
 /obj/machinery/light/smart{
@@ -25294,7 +25294,7 @@
 	dir = 1;
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "esQ" = (
 /obj/structure/window/thin/reinforced{
@@ -27133,7 +27133,7 @@
 	dir = 1;
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "eMs" = (
 /obj/structure/cable{
@@ -29473,7 +29473,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "fkX" = (
 /obj/structure/transit_tube{
@@ -34662,7 +34662,7 @@
 	dir = 1;
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "giP" = (
 /obj/machinery/telecomms/hub/preset,
@@ -45893,7 +45893,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "iuU" = (
 /obj/structure/object_wall/mining{
@@ -56524,7 +56524,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "kCx" = (
 /obj/structure/cable{
@@ -67296,7 +67296,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "mNS" = (
 /obj/structure/cable{
@@ -68873,7 +68873,7 @@
 	dir = 1;
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "nda" = (
 /obj/machinery/camera{
@@ -69134,7 +69134,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "ngk" = (
 /obj/effect/decal/turf_decal/set_damaged,
@@ -74473,7 +74473,7 @@
 	icon_state = "2,2"
 	},
 /turf/environment/space,
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "oiJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -77063,7 +77063,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "oLJ" = (
 /obj/structure/table,
@@ -80660,7 +80660,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "pxM" = (
 /turf/simulated/wall/r_wall,
@@ -84371,7 +84371,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "qkQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
@@ -97493,7 +97493,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "sRF" = (
 /obj/structure/stool/bed/chair/metal{
@@ -99997,7 +99997,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "trr" = (
 /turf/simulated/floor/wood{
@@ -103112,7 +103112,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "tWZ" = (
 /obj/structure/safe,
@@ -105096,7 +105096,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "uoF" = (
 /obj/structure/grille,
@@ -106374,7 +106374,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "uCE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -107544,7 +107544,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "uPd" = (
 /obj/machinery/door/firedoor,
@@ -110574,7 +110574,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "vvL" = (
 /obj/structure/cable{
