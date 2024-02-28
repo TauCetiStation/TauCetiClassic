@@ -25,7 +25,7 @@
 
 /obj/machinery/bot/farmbot
 	name = "Farmbot"
-	desc = "The botanist's best friend."
+	desc = "The botanist's best friend. Uses 'E-Z' as fertilizer."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "farmbot0"
 	density = TRUE
@@ -83,9 +83,7 @@
 	updateUsrDialog()
 
 /obj/machinery/bot/farmbot/proc/get_total_ferts()
-	var/total_fert = 0
-	for (var/obj/item/nutrient/fert in contents)
-		total_fert++
+	var/total_fert = tank.reagents.get_reagent_amount("E-Z")
 	return total_fert
 
 /obj/machinery/bot/farmbot/ui_interact(mob/user)
@@ -143,8 +141,6 @@
 			setting_ignoreMushrooms = !setting_ignoreMushrooms
 		else if(href_list["eject"])
 			flick("farmbot_hatch",src)
-			for (var/obj/item/nutrient/fert in contents)
-				fert.loc = get_turf(src)
 
 	updateUsrDialog()
 
@@ -156,11 +152,6 @@
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
-
-	else if (istype(W, /obj/item/nutrient))
-		if ( get_total_ferts() >= Max_Fertilizers )
-			to_chat(user, "The fertilizer storage is full!")
-			return
 		to_chat(user, "<span class='notice'>You insert [W] into [src]</span>.")
 		user.drop_from_inventory(W, src)
 		flick("farmbot_hatch",src)
@@ -198,9 +189,6 @@
 	if ( tank )
 		tank.loc = Tsec
 
-	for ( var/obj/item/nutrient/fert in contents )
-		if ( prob(50) )
-			fert.loc = Tsec
 
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
@@ -259,16 +247,7 @@
 		return 0
 
 	if ( mode == FARMBOT_MODE_FERTILIZE )
-		//Find which fertilizer to use
-		var/obj/item/nutrient/fert
-		for ( var/obj/item/nutrient/nut in contents )
-			fert = nut
-			break
-		if ( !fert )
-			target = null
-			mode = 0
-			return
-		fertilize(fert)
+		fertilize()
 
 	if ( mode == FARMBOT_MODE_WEED )
 		weed()
@@ -372,29 +351,18 @@
 		src.frustration++
 
 
-/obj/machinery/bot/farmbot/proc/fertilize(obj/item/nutrient/fert)
-	if ( !fert )
+/obj/machinery/bot/farmbot/proc/fertilize()
+	if (!get_total_ferts())
 		target = null
 		mode = 0
 		return 0
 
-	if ( emagged ) // Warning, hungry humans detected: throw fertilizer at them
-		spawn(0)
-			fert.loc = src.loc
-			fert.throw_at(target, 16, 3, src)
-		visible_message("<span class='warning'><b>[src] launches [fert.name] at [target.name]!</b></span>")
-		flick("farmbot_broke", src)
-		spawn (FARMBOT_EMAG_DELAY)
-			mode = 0
-			target = null
-		return 1
-
 	else // feed them plants~
 		var/obj/machinery/hydroponics/tray = target
 		tray.nutrilevel = 10
-		tray.yieldmod = fert.yieldmod
-		tray.mutmod = fert.mutmod
-		qdel(fert)
+		tray.yieldmod = 1
+		tray.mutmod = 1
+		qdel()
 		tray.update_icon()
 		icon_state = "farmbot_fertile"
 		mode = FARMBOT_MODE_WAITING

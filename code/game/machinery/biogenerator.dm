@@ -142,9 +142,9 @@
 			dat += "</div>"
 			dat += "<h3>Nutrients:</h3>"
 			dat += "<div class='Section'>"
-			dat += "E-Z-Nutrient: <A href='?src=\ref[src];action=create;item=ez'>Make</A><A href='?src=\ref[src];action=create;item=ez5'>x5</A> ([10/efficiency])<BR>"
-			dat += "Left 4 Zed: <A href='?src=\ref[src];action=create;item=l4z'>Make</A><A href='?src=\ref[src];action=create;item=l4z5'>x5</A> ([20/efficiency])<BR>"
-			dat += "Robust Harvest: <A href='?src=\ref[src];action=create;item=rh'>Make</A><A href='?src=\ref[src];action=create;item=rh5'>x5</A> ([25/efficiency])<BR>"
+			dat += "60 E-Z-Nutrient: <A href='?src=\ref[src];action=create;item=ez'>Make</A>([60/efficiency])<BR>"
+			dat += "60 Left 4 Zed: <A href='?src=\ref[src];action=create;item=l4z'>Make</A>([120/efficiency])<BR>"
+			dat += "60 Robust Harvest: <A href='?src=\ref[src];action=create;item=rh'>Make</A>([150/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Leather:</h3>"
 			dat += "<div class='Section'>"
@@ -224,150 +224,196 @@
 		update_icon()
 		updateUsrDialog()
 		sleep(30)
-		return 0
+		return FALSE
 
 /obj/machinery/biogenerator/proc/create_product(create)
 	switch(create)
 		if("milk")
-			if (check_cost(20/efficiency)) return 0
-			else beaker.reagents.add_reagent("milk",10)
+			if (check_cost(20/efficiency))
+				return FALSE
+			else
+				beaker.reagents.add_reagent("milk",10)
 		if("cream")
-			if (check_cost(30/efficiency)) return 0
-			else beaker.reagents.add_reagent("cream",10)
+			if (check_cost(30/efficiency))
+				return FALSE
+			else
+				beaker.reagents.add_reagent("cream",10)
 		if("meat")
-			if (check_cost(80/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+			if (check_cost(80/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("monkey")
-			if(check_cost(250/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+			if(check_cost(250/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
 		if("ez")
-			if (check_cost(10/efficiency)) return 0
-			else new/obj/item/nutrient/ez(src.loc)
+			if (check_cost(60/efficiency))
+				return FALSE
+			else
+				beaker.reagents.add_reagent("ez", 60)
 		if("l4z")
-			if (check_cost(20/efficiency)) return 0
-			else new/obj/item/nutrient/l4z(src.loc)
+			if (check_cost(120/efficiency))
+				return FALSE
+			else
+				beaker.reagents.add_reagent("lfz", 60)
 		if("rh")
-			if (check_cost(25/efficiency)) return 0
-			else new/obj/item/nutrient/rh(src.loc)
-		if("ez5") //It's not an elegant method, but it's safe and easy. -Cheridan
-			if (check_cost(50/efficiency)) return 0
+			if (check_cost(150/efficiency))
+				return FALSE
 			else
-				new/obj/item/nutrient/ez(src.loc)
-				new/obj/item/nutrient/ez(src.loc)
-				new/obj/item/nutrient/ez(src.loc)
-				new/obj/item/nutrient/ez(src.loc)
-				new/obj/item/nutrient/ez(src.loc)
-		if("l4z5")
-			if (check_cost(100/efficiency)) return 0
-			else
-				new/obj/item/nutrient/l4z(src.loc)
-				new/obj/item/nutrient/l4z(src.loc)
-				new/obj/item/nutrient/l4z(src.loc)
-				new/obj/item/nutrient/l4z(src.loc)
-				new/obj/item/nutrient/l4z(src.loc)
-		if("rh5")
-			if (check_cost(125/efficiency)) return 0
-			else
-				new/obj/item/nutrient/rh(src.loc)
-				new/obj/item/nutrient/rh(src.loc)
-				new/obj/item/nutrient/rh(src.loc)
-				new/obj/item/nutrient/rh(src.loc)
-				new/obj/item/nutrient/rh(src.loc)
+				beaker.reagents.add_reagent("rh", 60)
 		if("meat5")
-			if (check_cost(400/efficiency)) return 0
+			if (check_cost(400/efficiency))
+				return FALSE
 			else
-				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
-				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
-				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
-				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
-				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new /obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("wallet")
-			if (check_cost(100/efficiency)) return 0
-			else new/obj/item/weapon/storage/wallet(src.loc)
+			if (check_cost(100/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/wallet(src.loc)
 		if("bkbag")
-			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/weapon/storage/bag/bookbag(src.loc)
+			if (check_cost(200/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/bag/bookbag(src.loc)
 		if("bibag")
-			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/weapon/storage/bag/bio(src.loc)
+			if (check_cost(200/efficiency)) return FALSE
+			else new /obj/item/weapon/storage/bag/bio(src.loc)
 		if("chbag")
-			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/weapon/storage/bag/chemistry(src.loc)
+			if (check_cost(200/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/bag/chemistry(src.loc)
 		if("ptbag")
-			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/weapon/storage/bag/plants(src.loc)
+			if (check_cost(200/efficiency))
+				return FALSE
+			else new /obj/item/weapon/storage/bag/plants(src.loc)
 		if("mnbag")
-			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/weapon/storage/bag/ore(src.loc)
+			if (check_cost(200/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/bag/ore(src.loc)
 		if("gloves")
-			if (check_cost(250/efficiency)) return 0
-			else new/obj/item/clothing/gloves/botanic_leather(src.loc)
+			if (check_cost(250/efficiency))
+				return FALSE
+			else
+				new /obj/item/clothing/gloves/botanic_leather(src.loc)
 		if("bshoes")
-			if (check_cost(250/efficiency)) return 0
-			else new/obj/item/clothing/shoes/brown(src.loc)
+			if (check_cost(250/efficiency))
+				return FALSE
+			else
+				new /obj/item/clothing/shoes/brown(src.loc)
 		if("tbelt")
-			if (check_cost(300/efficiency)) return 0
-			else new/obj/item/weapon/storage/belt/utility(src.loc)
+			if (check_cost(300/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/belt/utility(src.loc)
 		if("sbelt")
-			if (check_cost(300/efficiency)) return 0
-			else new/obj/item/weapon/storage/belt/security(src.loc)
+			if (check_cost(300/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/belt/security(src.loc)
 		if("mbelt")
-			if (check_cost(300/efficiency)) return 0
-			else new/obj/item/weapon/storage/belt/medical(src.loc)
+			if (check_cost(300/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/belt/medical(src.loc)
 		if("satchel")
-			if (check_cost(400/efficiency)) return 0
-			else new/obj/item/weapon/storage/backpack/satchel(src.loc)
+			if (check_cost(400/efficiency))
+				return FALSE
+			else
+				new/obj/item/weapon/storage/backpack/satchel(src.loc)
 		if("cashbag")
-			if (check_cost(400/efficiency)) return 0
-			else new/obj/item/weapon/storage/bag/cash(src.loc)
+			if (check_cost(400/efficiency))
+				return FALSE
+			else
+				new/obj/item/weapon/storage/bag/cash(src.loc)
 		if("spounch")
-			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/weapon/storage/pouch/small_generic(src.loc)
+			if (check_cost(200/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/pouch/small_generic(src.loc)
 		if("mpounch")
-			if (check_cost(500/efficiency)) return 0
-			else new/obj/item/weapon/storage/pouch/medium_generic(src.loc)
+			if (check_cost(500/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/pouch/medium_generic(src.loc)
 		if("lpounch")
-			if (check_cost(1000/efficiency)) return 0
-			else new/obj/item/weapon/storage/pouch/large_generic(src.loc)
+			if (check_cost(1000/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/pouch/large_generic(src.loc)
 		if("medpouch")
-			if (check_cost(300/efficiency)) return 0
-			else new/obj/item/weapon/storage/pouch/medical_supply(src.loc)
+			if (check_cost(300/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/pouch/medical_supply(src.loc)
 		if("vpounch")
-			if (check_cost(300/efficiency)) return 0
-			else new/obj/item/weapon/storage/pouch/flare/vial(src.loc)
+			if (check_cost(300/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/pouch/flare/vial(src.loc)
 		if("etpounch")
-			if (check_cost(300/efficiency)) return 0
-			else new/obj/item/weapon/storage/pouch/engineering_tools(src.loc)
+			if (check_cost(300/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/pouch/engineering_tools(src.loc)
 		if("espounch")
-			if (check_cost(300/efficiency)) return 0
-			else new/obj/item/weapon/storage/pouch/engineering_supply(src.loc)
+			if (check_cost(300/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/pouch/engineering_supply(src.loc)
 		if("apounch")
-			if (check_cost(350/efficiency)) return 0
-			else new/obj/item/weapon/storage/pouch/ammo(src.loc)
+			if (check_cost(350/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/pouch/ammo(src.loc)
 		if("ppounch")
-			if (check_cost(350/efficiency)) return 0
-			else new/obj/item/weapon/storage/pouch/pistol_holster(src.loc)
+			if (check_cost(350/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/pouch/pistol_holster(src.loc)
 		if("bpounch")
-			if (check_cost(350/efficiency)) return 0
-			else new/obj/item/weapon/storage/pouch/baton_holster(src.loc)
+			if (check_cost(350/efficiency))
+				return FALSE
+			else
+				new /obj/item/weapon/storage/pouch/baton_holster(src.loc)
 		if("jacket")
-			if (check_cost(500/efficiency)) return 0
-			else new/obj/item/clothing/suit/jacket/leather(src.loc)
+			if (check_cost(500/efficiency))
+				return FALSE
+			else
+				new /obj/item/clothing/suit/jacket/leather(src.loc)
 		if("overcoat")
-			if (check_cost(1000/efficiency)) return 0
-			else new/obj/item/clothing/suit/jacket/leather/overcoat(src.loc)
+			if (check_cost(1000/efficiency))
+				return FALSE
+			else
+				new /obj/item/clothing/suit/jacket/leather/overcoat(src.loc)
 		if("rags")
-			if (check_cost(40/efficiency)) return 0
-			else new/obj/item/stack/medical/bruise_pack/rags(src.loc, null, null, null, 0)
+			if (check_cost(40/efficiency))
+				return FALSE
+			else
+				new /obj/item/stack/medical/bruise_pack/rags(src.loc, null, null, null, 0)
 		if("cloth")
-			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/stack/sheet/cloth(src.loc, null, null, null, 0)
+			if (check_cost(200/efficiency))
+				return FALSE
+			else
+				new /obj/item/stack/sheet/cloth(src.loc, null, null, null, 0)
 		if("rags5")
-			if (check_cost(200/efficiency)) return 0
-			else new/obj/item/stack/medical/bruise_pack/rags(src.loc, 5, null, null, 0)
+			if (check_cost(200/efficiency))
+				return FALSE
+			else
+				new /obj/item/stack/medical/bruise_pack/rags(src.loc, 5, null, null, 0)
 		if("cloth5")
-			if (check_cost(1000/efficiency)) return 0
-			else new/obj/item/stack/sheet/cloth(src.loc, 5, null, null, 0)
+			if (check_cost(1000/efficiency))
+				return FALSE
+			else
+				new /obj/item/stack/sheet/cloth(src.loc, 5, null, null, 0)
 	processing = 0
 	menustat = "complete"
 	update_icon()

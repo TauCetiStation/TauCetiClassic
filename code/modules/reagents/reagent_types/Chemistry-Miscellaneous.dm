@@ -375,6 +375,47 @@
 		H.update_hair()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// Fertilizers ///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/datum/reagent/ez_nutriment
+	name = "E-Z-Nutrient"
+	id = "ez"
+	description = "Fertilizers. They have the ability to slightly change the plant's gene code."
+	reagent_state = LIQUID
+	color = "#043a07"
+
+/datum/reagent/ez_nutriment/on_diona_digest(mob/living/M)
+	..()
+	M.nutrition += 1 * REM
+	return FALSE
+
+/datum/reagent/lfz
+	name = "Left 4 Zed"
+	id = "lfz"
+	description = "Unstable fertilizers. They can either kill the plant or mutate it."
+	reagent_state = LIQUID
+	color = "#1b043a"
+
+/datum/reagent/lfz/on_diona_digest(mob/living/M)
+	..()
+	M.nutrition += 0.5 * REM
+	return FALSE
+
+/datum/reagent/robust_harvest
+	name = "Robust Harvest"
+	id = "rh"
+	description = "Fertilizers. Extremely effective fertilizers that promote plant longevity."
+	reagent_state = LIQUID
+	color = "#9df753"
+
+/datum/reagent/robust_harvest/on_diona_digest(mob/living/M)
+	..()
+	M.nutrition += 1.5 * REM
+	return FALSE
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Chemlights ///////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 

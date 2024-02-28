@@ -6816,7 +6816,7 @@
 	pixel_y = 5
 	},
 /obj/item/weedkiller/triclopyr,
-/obj/item/nutrient/ez,
+/obj/item/weapon/reagent_containers/glass/bottle/ez_nutriment,
 /obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/machinery/light_switch{

@@ -409,18 +409,7 @@
 
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/nutrient))
-		var/obj/item/nutrient/myNut = O
-		user.remove_from_mob(O)
-		nutrilevel = min(nutrilevel + 10, maxnutri)
-		yieldmod = myNut.yieldmod
-		mutmod = myNut.mutmod
-		to_chat(user, "You adding the nutrient solution in [src].")
-		playsound(src, 'sound/items/cork_and_liquid.ogg', VOL_EFFECTS_MASTER, 90)
-		qdel(O)
-		update_icon()
-
-	else if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
+	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/weapon/reagent_containers/reagent_source = O
 		var/datum/reagents/S = new /datum/reagents()
 
@@ -482,6 +471,18 @@
 					mutatepest()
 				else
 					to_chat(user, "Nothing happens...")
+
+		if(S.has_reagent("ez", 1))
+			adjustNutri(round(S.get_reagent_amount("ez")*1))
+			mutmod = 1
+
+		if(S.has_reagent("lfz", 1))
+			adjustNutri(round(S.get_reagent_amount("lfz")*0.5))
+			mutmod = 2
+
+		if(S.has_reagent("rh", 1))
+			adjustNutri(round(S.get_reagent_amount("rh")*1.5))
+			mutmod = 0
 
 		// Antitoxin binds shit pretty well. So the tox goes significantly down
 		if(S.has_reagent("anti_toxin", 1))

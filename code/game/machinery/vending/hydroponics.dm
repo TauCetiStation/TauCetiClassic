@@ -7,9 +7,9 @@
 	light_color = "#34ff7b"
 	icon_deny = "nutri-deny"
 	products = list(
-		/obj/item/nutrient/ez = 45,
-		/obj/item/nutrient/l4z = 25,
-		/obj/item/nutrient/rh = 15,
+		/obj/item/weapon/reagent_containers/glass/bottle/ez_nutriment = 9,
+		/obj/item/weapon/reagent_containers/glass/bottle/lfz = 5,
+		/obj/item/weapon/reagent_containers/glass/bottle/robust_harvest = 3,
 		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1,
 		/obj/item/weapon/pestspray = 20,
 		/obj/item/weapon/reagent_containers/syringe = 5,

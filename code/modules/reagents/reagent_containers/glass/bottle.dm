@@ -264,3 +264,18 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle2"
 	list_reagents = list("hair_growth_accelerator" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/ez_nutriment
+	name = "'E-Z Nutriment' bottle"
+	desc = "A small bottle of 'E-Z Nutriment'."
+	list_reagents = list("ez" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/robust_harvest
+	name = "'Robust Harvest' bottle"
+	desc = "A small bottle of 'Robust Harvest'."
+	list_reagents = list("rh" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/lfz
+	name = "'Left 4 Zed' bottle"
+	desc = "A small bottle of 'Left 4 Zed'."
+	list_reagents = list("lfz" = 30)
