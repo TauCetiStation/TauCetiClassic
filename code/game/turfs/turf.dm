@@ -342,7 +342,7 @@
 	// BYOND never deletes turfs, when you "delete" a turf, it actually morphs the turf into a new one.
 	// Running procs do NOT get stopped due to this.
 	var/old_opacity = opacity
-	var/old_lighting_object = lighting_object // todo
+	var/old_lighting_object = lighting_object
 	var/old_lighting_corner_NE = lighting_corner_NE
 	var/old_lighting_corner_SE = lighting_corner_SE
 	var/old_lighting_corner_SW = lighting_corner_SW

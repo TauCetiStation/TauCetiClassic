@@ -206,7 +206,6 @@
 
 /atom/movable/screen/fullscreen/meta/environment_lighting_color/proc/end_transition(obj/effect/level_color_holder/new_holder)
 	if(!current_holder)
-		world.log << "end_transition to [new_holder?.color]"
 		color = null
 		vis_contents += new_holder
 		current_holder = new_holder

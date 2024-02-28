@@ -101,7 +101,7 @@
 			instance.del_on_map_removal = FALSE
 			instance.screen_loc = "[map_name]:CENTER"
 
-			instance.apply_effects(user)
+			instance.apply_effects(user, iscamera = TRUE)
 			user.client.register_map_obj(instance)
 
 		user.client.register_map_obj(cam_background)

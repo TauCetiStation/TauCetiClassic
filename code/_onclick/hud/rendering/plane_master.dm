@@ -25,7 +25,7 @@
 	apply_effects(mymob)
 
 //For filters and other effects
-/atom/movable/screen/plane_master/proc/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/proc/apply_effects(mob/mymob, iscamera = FALSE)
 	return
 
 ///Level below the floor, for undertile component
@@ -52,7 +52,7 @@
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/game_world/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/game_world/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("AO")
 	if(istype(mymob) && mymob?.client?.prefs?.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
@@ -83,7 +83,7 @@
 	plane = GHOST_ILLUSION_PLANE
 	render_relay_plane = RENDER_PLANE_ABOVE_GAME
 
-/atom/movable/screen/plane_master/ghost_illusion/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/ghost_illusion/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("ghost_illusion")
 	add_filter("ghost_illusion", 1, motion_blur_filter(x = 3, y = 3))
 
@@ -116,11 +116,11 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lighting/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/lighting/apply_effects(mob/mymob, iscamera = FALSE)
 	if(!istype(mymob))
 		return
 
-	mymob.overlay_fullscreen("lighting_backdrop_darkness", /atom/movable/screen/fullscreen/meta/darkness)
+	mymob.overlay_fullscreen("darkness", /atom/movable/screen/fullscreen/meta/darkness)
 
 /atom/movable/screen/plane_master/exposure
 	name = "exposure plane master"
@@ -131,7 +131,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/exposure/apply_effects(mob/mymob) // todo: prefs
+/atom/movable/screen/plane_master/exposure/apply_effects(mob/mymob, iscamera = FALSE) // todo: prefs
 	remove_filter("blur_exposure")
 	if(!istype(mymob))
 		return
@@ -153,7 +153,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lamps_selfglow/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/lamps_selfglow/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("add_lamps_to_selfglow")
 	remove_filter("lamps_selfglow_bloom")
 
@@ -202,7 +202,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lamps_glare/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/lamps_glare/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("add_lamps_to_glare")
 	remove_filter("lamps_glare")
 
@@ -228,11 +228,15 @@
 
 	var/atom/movable/screen/fullscreen/meta/environment_lighting_color/color_filter
 
-/atom/movable/screen/plane_master/environment_lighting/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/environment_lighting/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("guassian_blur")
 
 	if(!istype(mymob))
 		return
+
+	// i have no idea how to make this plane work on the cameras
+	if(iscamera)
+		alpha = 0
 
 	add_filter("guassian_blur", 1, gauss_blur_filter(10))
 

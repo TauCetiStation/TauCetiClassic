@@ -10,7 +10,7 @@
 	appearance_flags = NO_CLIENT_COLOR | PIXEL_SCALE
 	var/locked = FALSE
 
-// shared image we use as mask for environment turfs
+// shared image we use as a mask for environment turfs
 var/global/image/level_light_mask = create_level_light_mask() // global
 /proc/create_level_light_mask()
 	var/image/I = image('icons/blank.dmi', "white")
