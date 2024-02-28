@@ -257,12 +257,12 @@
 			if (check_cost(120/efficiency))
 				return FALSE
 			else
-				beaker.reagents.add_reagent("lfz", 60)
-		if("rh")
+				beaker.reagents.add_reagent("left4zed", 60)
+		if("robust_harvest")
 			if (check_cost(150/efficiency))
 				return FALSE
 			else
-				beaker.reagents.add_reagent("rh", 60)
+				beaker.reagents.add_reagent("robust_harvest", 60)
 		if("meat5")
 			if (check_cost(400/efficiency))
 				return FALSE

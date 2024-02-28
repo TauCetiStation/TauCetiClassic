@@ -393,7 +393,7 @@
 
 /datum/reagent/lfz
 	name = "Left 4 Zed"
-	id = "lfz"
+	id = "left4zed"
 	description = "Unstable fertilizers. They can either kill the plant or mutate it."
 	reagent_state = LIQUID
 	color = "#1b043a"
@@ -405,7 +405,7 @@
 
 /datum/reagent/robust_harvest
 	name = "Robust Harvest"
-	id = "rh"
+	id = "robust_harvest"
 	description = "Fertilizers. Extremely effective fertilizers that promote plant longevity."
 	reagent_state = LIQUID
 	color = "#0b8600"

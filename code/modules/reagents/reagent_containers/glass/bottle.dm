@@ -273,9 +273,9 @@
 /obj/item/weapon/reagent_containers/glass/bottle/robust_harvest
 	name = "'Robust Harvest' bottle"
 	desc = "A small bottle of 'Robust Harvest'."
-	list_reagents = list("rh" = 30)
+	list_reagents = list("robust_harvest" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/lfz
 	name = "'Left 4 Zed' bottle"
 	desc = "A small bottle of 'Left 4 Zed'."
-	list_reagents = list("lfz" = 30)
+	list_reagents = list("left4zed" = 30)

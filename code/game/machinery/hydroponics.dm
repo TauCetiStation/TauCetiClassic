@@ -476,12 +476,12 @@
 			adjustNutri(round(S.get_reagent_amount("ez")*1))
 			mutmod = 1
 
-		if(S.has_reagent("lfz", 1))
-			adjustNutri(round(S.get_reagent_amount("lfz")*0.5))
+		if(S.has_reagent("left4zed", 1))
+			adjustNutri(round(S.get_reagent_amount("left4zed")*0.5))
 			mutmod = 2
 
-		if(S.has_reagent("rh", 1))
-			adjustNutri(round(S.get_reagent_amount("rh")*1.5))
+		if(S.has_reagent("robust_harvest", 1))
+			adjustNutri(round(S.get_reagent_amount("robust_harvest")*1.5))
 			mutmod = 0
 
 		// Antitoxin binds shit pretty well. So the tox goes significantly down
