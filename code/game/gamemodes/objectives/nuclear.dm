@@ -1,5 +1,5 @@
 /datum/objective/nuclear
-	explanation_text = "Уничтожьте станцию собственной ядерной бомбой."
+	explanation_text = "Уничтожьте станцию ядерной бомбой."
 
 /datum/objective/nuclear/check_completion()
 	if(..())
