@@ -74,7 +74,7 @@ var/global/list/command_positions = list(
 	"Chief Medical Officer"
 )
 
-var/global/list/nt_representative_positions = list(
+var/global/list/centcom_positions = list(
 	"Blueshield Officer",
 	"Internal Affairs Agent"
 )
