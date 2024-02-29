@@ -1,12 +1,12 @@
 /datum/job/blueshield
 	title = "Blueshield Officer"
 	flag = BLUESHIELD
-	department_flag = ENGSEC
+	department_flag = NTREPRESENT
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "NanoTrasen officials"
-	selection_color = "#ddddff"
+	supervisors = "The Central Command"
+	selection_color = "#93ba9a"
 	idtype = /obj/item/weapon/card/id/blueshield
 	access = list(access_blueshield, access_heads, access_maint_tunnels,
 				  access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby,
@@ -28,16 +28,16 @@
 /datum/job/lawyer
 	title = "Internal Affairs Agent"
 	flag = LAWYER
-	department_flag = CIVILIAN
+	department_flag = NTREPRESENT
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "The Central Command"
-	selection_color = "#dddddd"
+	selection_color = "#93ba9a"
 	idtype = /obj/item/weapon/card/id/int
 	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	salary = 200
-	minimal_player_ingame_minutes = 1560
+	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/lawyer
 	skillsets = list("Internal Affairs Agent" = /datum/skillset/internal_affairs)
 	/*
