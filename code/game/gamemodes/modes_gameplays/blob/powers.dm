@@ -204,7 +204,7 @@
 /mob/camera/blob/verb/create_factory_power()
 	set category = "Blob"
 	set name = "Создать производящую ячейку (60)"
-	set desc = "Создать производящую ячейку."
+	set desc = "Создаёт производящую ячейку."
 
 
 	var/turf/T = get_turf(src)
