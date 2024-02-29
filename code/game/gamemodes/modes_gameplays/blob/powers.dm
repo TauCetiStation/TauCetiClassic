@@ -36,7 +36,7 @@
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
 	set name = "Создать укрепленного блоба (10)"
-	set desc = "Создать укрепленного блоба. Используйте снова для получения отражающей версии."
+	set desc = "Создаёт укрепленного блоба. Используйте снова для получения отражающей версии."
 
 	var/turf/T = get_turf(src)
 	create_shield(T)
@@ -138,7 +138,7 @@
 /mob/camera/blob/verb/create_resource_power()
 	set category = "Blob"
 	set name = "Создать ресурсную ячейку (40)"
-	set desc = "Создать ресурсную ячейку, которая производит ресурсы раз в секунду."
+	set desc = "Создаёт ресурсную ячейку, которая производит ресурсы раз в секунду."
 
 
 	var/turf/T = get_turf(src)
@@ -171,7 +171,7 @@
 /mob/camera/blob/verb/create_node_power()
 	set category = "Blob"
 	set name = "Создать узел блоба (60)"
-	set desc = "Создать узел блоба."
+	set desc = "Создаёт узел."
 
 
 	var/turf/T = get_turf(src)
@@ -204,7 +204,7 @@
 /mob/camera/blob/verb/create_factory_power()
 	set category = "Blob"
 	set name = "Создать производящую ячейку (60)"
-	set desc = "Создать производящую ячейку."
+	set desc = "Создаёт производящую ячейку."
 
 
 	var/turf/T = get_turf(src)
@@ -311,7 +311,7 @@
 /mob/camera/blob/verb/rename_node(obj/structure/blob/node/target in view())
 	set category = "Blob"
 	set name = "Переименовать узел"
-	set desc = "Переименовать узел"
+	set desc = "Переименовывает узел блоба"
 
 	if(!target)
 		return
