@@ -12,7 +12,7 @@
 			"штамп СИ" =  /obj/item/weapon/stamp/eng/ce,
 			"штамп завхоза" = /obj/item/weapon/stamp/cargo/qm,
 			"пульт удалённого управления \"Медблок\"" = /obj/item/device/remote_device/chief_medical_officer,
-			"пульт удалённого управления \"Главы\"" = /obj/item/device/remote_device/captain,
+			"пульт удалённого управления \"Командный\"" = /obj/item/device/remote_device/captain,
 			"пульт удалённого управления \"Инженерный\"" = /obj/item/device/remote_device/chief_engineer,
 			"пульт удалённого управления \"Научный\"" = /obj/item/device/remote_device/research_director,
 			"пульт удалённого управления \"Снабжение\"" = /obj/item/device/remote_device/quartermaster,
