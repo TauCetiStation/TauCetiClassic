@@ -453,7 +453,7 @@ var/global/list/death_alarm_stealth_areas = list(
 /obj/item/weapon/implant/death_alarm/get_data()
 	var/dat = {"
 <b>Характеристики импланта:</b><BR>
-<b>Наименование:</b> Сенсор жизненных показателей работника типа \"Гарант прибыли\" NanoTrasen <BR>
+<b>Наименование:</b> Сенсор жизненных показателей работника типа \"Гарант прибыли\" НаноТрейзен <BR>
 <b>Срок годности:</b> Активируется посмертно.<BR>
 <b>Важные примечания:</b> Оповещает экипаж о смерти носителя.<BR>
 <HR>
@@ -480,19 +480,19 @@ var/global/list/death_alarm_stealth_areas = list(
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			if(is_type_in_list(t, global.death_alarm_stealth_areas))
 				//give the syndies a bit of stealth
-				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
+				a.autosay("[mobname] умер в космосе!", "Оповещение о смерти [mobname]")
 			else
-				a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
+				a.autosay("[mobname] умер в [CASE(t, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
 			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 		if ("emp")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			var/name = prob(50) ? t.name : pick(teleportlocs)
-			a.autosay("[mobname] has died in [name]!", "[mobname]'s Death Alarm")
+			a.autosay("[mobname] умер в [CASE(name, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
 			qdel(a)
 		else
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
+			a.autosay("[mobname] умер в-в-в- бз-з-з-з-з...", "Оповещение о смерти [mobname]")
 			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 
@@ -526,7 +526,7 @@ var/global/list/death_alarm_stealth_areas = list(
 	var/turf/T = get_turf(imp_in)
 
 	var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-	a.autosay("[imp_in.real_name] умер на ([T.x], [T.y]) координатах!", "[mobname]'s Death Alarm", freq = frequency)
+	a.autosay("[imp_in.real_name] умер на ([T.x], [T.y]) координатах!", "Оповещение о смерти [mobname]'", freq = frequency)
 	STOP_PROCESSING(SSobj, src)
 	qdel(a)
 
@@ -590,6 +590,7 @@ var/global/list/death_alarm_stealth_areas = list(
 	///////////////////////////////////////////////////////////
 /obj/item/weapon/storage/internal/imp
 	name = "bluespace pocket"
+	cases = list("блюспейс карман", "блюспейс кармана", "блюспейс карману", "блюспейс карман", "блюспейс карманом", "блюспейс кармане")
 	max_w_class = SIZE_SMALL
 	storage_slots = 2
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
