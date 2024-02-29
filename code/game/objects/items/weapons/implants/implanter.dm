@@ -25,7 +25,7 @@
 		to_chat(user, "<span class='warning'>А где имплант?</span>")
 		return
 
-	user.visible_message("<span class ='userdanger'>[user] пытается импланировать [M].</span>")
+	user.visible_message("<span class ='userdanger'>[user] пытается имплантировать [M].</span>")
 
 	if(M == user || (!user.is_busy() && do_after(user, 50, target = M)))
 		if(src && imp)
