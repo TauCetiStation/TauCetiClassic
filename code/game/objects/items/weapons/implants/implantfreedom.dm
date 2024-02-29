@@ -23,7 +23,7 @@
 		to_chat(source, "Имплант свободы не работает, пока вы не связаны.")
 		return
 	uses--
-	to_chat(source, "Вы слышите как что-то легонько щёлкнуло.")
+	to_chat(source, "Вы слышите, как что-то легонько щёлкнуло.")
 	source.uncuff()
 	source.SetParalysis(0)
 	source.SetStunned(0)
