@@ -6,7 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "The Central Command"
-	selection_color = "#93ba9a"
+	selection_color = "#6c7391"
 	idtype = /obj/item/weapon/card/id/blueshield
 	access = list(access_blueshield, access_heads, access_maint_tunnels,
 				  access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby,
@@ -33,7 +33,7 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "The Central Command"
-	selection_color = "#93ba9a"
+	selection_color = "#6c7391"
 	idtype = /obj/item/weapon/card/id/int
 	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	salary = 200
