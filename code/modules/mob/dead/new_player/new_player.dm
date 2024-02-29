@@ -343,7 +343,7 @@
 		dat += "<div class='clearBoth'>Choose from the following open positions:</div>"
 		var/list/categorizedJobs = list(
 			"Command" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
-			"NT Representatives" = list(jobs = list(), titles = representative_jobs_positions, color = "#435446"),
+			"NT Representatives" = list(jobs = list(), titles = centcom_positions, color = "#435446"),
 			"Engineering" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
 			"Security" = list(jobs = list(), titles = security_positions, color = "#ff9999"),
 			"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),
