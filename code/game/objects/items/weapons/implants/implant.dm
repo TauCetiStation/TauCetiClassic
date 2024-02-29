@@ -488,7 +488,7 @@ var/global/list/death_alarm_stealth_areas = list(
 		if ("emp")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			var/name = prob(50) ? t.name : pick(teleportlocs)
-			a.autosay("[mobname] умер в [CASE(name, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
+			a.autosay("[mobname] умер в [CASE(t, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
 			qdel(a)
 		else
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
