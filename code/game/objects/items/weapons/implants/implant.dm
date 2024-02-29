@@ -410,7 +410,7 @@
 		return 0
 	var/mob/living/carbon/R = src.imp_in
 	reagents.trans_to(R, cause)
-	to_chat(R, "Вы слышите еле слышное *бип*.")
+	to_chat(R, "Вы слышите тихое *бип*.")
 	if(!src.reagents.total_volume)
 		to_chat(R, "Из вашей груди доносится еле слышный щелчок.")
 		spawn(0)
