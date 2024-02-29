@@ -191,7 +191,7 @@ var/global/list/protected_by_blueshield_list = list(
 
 	switch(head_rank)	//What departments do we manage?
 		if("Admin")
-			own_department = list("heads", "sec", "eng", "med", "sci", "civ", "misc")	//all except bots
+			own_department = list("heads", "centcom", "sec", "eng", "med", "sci", "civ", "misc")	//all except bots
 		if("Captain")
 			own_department = list("sec", "eng", "med", "sci", "civ", "misc")	//exept "heads", repetitions we don't need
 		if("Head of Personnel")
