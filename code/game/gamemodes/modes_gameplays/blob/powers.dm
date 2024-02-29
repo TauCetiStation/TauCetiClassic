@@ -12,7 +12,7 @@
 /mob/camera/blob/verb/transport_core()
 	set category = "Blob"
 	set name = "Перемещение к ядру"
-	set desc = "Перемещение к ядру."
+	set desc = "Вы перемещаетесь к своему ядру."
 
 	if(blob_core)
 		flash_color(src, "#187914", 20)
