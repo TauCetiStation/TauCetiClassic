@@ -17,7 +17,7 @@
 			"пульт удалённого управления \"Научный\"" = /obj/item/device/remote_device/research_director,
 			"пульт удалённого управления \"Снабжение\"" = /obj/item/device/remote_device/quartermaster,
 			"пульт удалённого управления \"Служба Безопасности\"" = /obj/item/device/remote_device/head_of_security,
-			"пульт удалённого управления \"Гражд. отделы\"" = /obj/item/device/remote_device/head_of_personal,
+			"пульт удалённого управления \"Гражданские отделы\"" = /obj/item/device/remote_device/head_of_personal,
 			"плюшевого космокита" =  /obj/item/toy/plushie/space_whale,
 			"лицехвата Ламарра"	= /obj/item/clothing/mask/facehugger/lamarr,
 			"дермальную накладку" = /obj/item/clothing/accessory/armor/dermal
