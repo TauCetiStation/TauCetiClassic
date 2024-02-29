@@ -96,7 +96,7 @@
 			if(S.implanted)
 				S.meltdown()
 		START_PROCESSING(SSobj, src)
-		to_chat(M, "НаноЬТрейзен - лучшая корпорация во всей Вселенной!")
+		to_chat(M, "НаноТрейзен - лучшая корпорация во всей Вселенной!")
 
 /obj/item/weapon/implant/mind_protect/loyalty/process()
 	if (!implanted || !imp_in)
