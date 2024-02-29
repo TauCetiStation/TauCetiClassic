@@ -138,7 +138,7 @@
 /mob/camera/blob/verb/create_resource_power()
 	set category = "Blob"
 	set name = "Создать ресурсную ячейку (40)"
-	set desc = "Создать ресурсную ячейку, которая производит ресурсы раз в секунду."
+	set desc = "Создаёт ресурсную ячейку, которая производит ресурсы раз в секунду."
 
 
 	var/turf/T = get_turf(src)
