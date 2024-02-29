@@ -311,7 +311,7 @@
 /mob/camera/blob/verb/rename_node(obj/structure/blob/node/target in view())
 	set category = "Blob"
 	set name = "Переименовать узел"
-	set desc = "Переименовать узел"
+	set desc = "Переименовывает узел блоба"
 
 	if(!target)
 		return
