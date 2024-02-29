@@ -471,7 +471,7 @@
 					if(I.implanted)
 						qdel(I)
 			H.sec_hud_set_implants()
-			to_chat(H, "<span class='notice'><Font size =3><B>Ваш имплант [is_mind_shield ? "защиты разума" : "лояльности"] был деактивирован.</B></FONT></span>")
+			to_chat(H, "<span class='notice'><Font size =3><B>Your [is_mind_shield ? "mind shield" : "loyalty"] implant has been deactivated.</B></FONT></span>")
 		if(href_list["implant"] == "add")
 			var/obj/item/weapon/implant/mind_protect/mindshield/L
 			if(is_mind_shield)
@@ -482,7 +482,8 @@
 				L.inject(H)
 
 			H.sec_hud_set_implants()
-			to_chat(H, "<span class='warning'><Font size =3><B>Вы каким-то образом стали получателем импланта [is_mind_shield ? "защиты разума" : "лояльности"], и он был активирован!</B></FONT></span>")
+			to_chat(H, "<span class='warning'><Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
+			 and it just activated!</B></FONT></span>")
 			for(var/type in list(TRAITOR, CULTIST, HEADREV, REV))
 				if(is_mind_shield && (type == HEADREV || type == TRAITOR))
 					continue
@@ -490,7 +491,7 @@
 				if(R)
 					R.Deconvert()
 
-			to_chat(src, "<span class='warning'><Font size = 3><B>Наноботы в импанте [is_mind_shield ? "защите разума" : "лояльности"] удаляет все дурные мысли о компании.</B></Font></span>")
+			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
 
 	else if (href_list["common"])
 		switch(href_list["common"])
