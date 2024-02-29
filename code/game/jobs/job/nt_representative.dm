@@ -17,6 +17,12 @@
 	outfit = /datum/outfit/job/blueshield
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 	skillsets = list("Blueshield Officer" = /datum/skillset/blueshield)
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
+		~Luduk
+	*/
 	flags = JOB_FLAG_NTREPRESENTATIVE
 
 /datum/job/lawyer

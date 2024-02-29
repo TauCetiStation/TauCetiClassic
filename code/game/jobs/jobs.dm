@@ -68,8 +68,12 @@ var/global/list/command_positions = list(
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
-	"Chief Medical Officer",
-	"Blueshield Officer"
+	"Chief Medical Officer"
+)
+
+var/global/list/nt_representative_positions = list(
+	"Blueshield Officer",
+	"Internal Affairs Agent"
 )
 
 var/global/list/security_positions = list(
@@ -111,7 +115,6 @@ var/global/list/science_positions = list(
 
 var/global/list/civilian_positions = list(
 	"Head of Personnel",
-	"Internal Affairs Agent",
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner",
