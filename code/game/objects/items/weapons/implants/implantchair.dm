@@ -73,7 +73,7 @@
 		return
 	for(var/mob/living/carbon/slime/M in range(1, G.affecting))
 		if(M.Victim == G.affecting)
-			to_chat(user, "[G.affecting:name] не помещаются в [CASE(src, NOMINATIVE_CASE)], потому что у них на голове защелкнута слизь.")
+			to_chat(user, "[G.affecting:name] не помещаются в [CASE(src, NOMINATIVE_CASE)], потому что у них на голове слизистая защёлка.")
 			return
 	var/mob/M = G.affecting
 	if(put_mob(M))
