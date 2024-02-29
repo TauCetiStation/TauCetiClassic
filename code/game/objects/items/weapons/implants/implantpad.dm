@@ -1,7 +1,7 @@
 /obj/item/weapon/implantpad
 	name = "implantpad"
 	cases = list("анализатор имплантов", "анализатора имплантов", "анализатору имплантов", "анализатор имплантов", "анализатором имплантов", "анализаторе имплантов")
-	desc = "Используется для анализа имплнатов."
+	desc = "Используется для анализа имплантов."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantpad-0"
 	item_state = "electronic"
