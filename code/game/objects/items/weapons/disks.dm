@@ -2,7 +2,6 @@
 /obj/item/weapon/disk
 	icon = 'icons/obj/disks.dmi'
 	w_class = SIZE_MINUSCULE
-	item_state = "card-id"
 	icon_state = "datadisk0"
 
 /obj/item/weapon/disk/nuclear
