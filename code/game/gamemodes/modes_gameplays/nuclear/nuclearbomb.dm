@@ -437,43 +437,6 @@ var/global/bomb_set
 			visible_message("<span class='notice'>[usr] put [src] into [D]!</span>","<span class='notice'>You succesfully put [src] into [D]!</span>")
 			D.verbs += /obj/structure/droppod/proc/Nuclear
 
-//==========DAT FUKKEN DISK===============
-/obj/item/weapon/disk
-	icon = 'icons/obj/items.dmi'
-	w_class = SIZE_MINUSCULE
-	item_state = "card-id"
-	icon_state = "datadisk0"
-
-/obj/item/weapon/disk/nuclear
-	name = "nuclear authentication disk"
-	desc = "Better keep this safe."
-	icon_state = "nucleardisk"
-
-/obj/item/weapon/disk/nuclear/atom_init()
-	. = ..()
-	poi_list += src
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/disk/nuclear/process()
-	var/turf/disk_loc = get_turf(src)
-	if(!is_centcom_level(disk_loc.z) && !is_station_level(disk_loc.z))
-		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
-		qdel(src)
-
-/obj/item/weapon/disk/nuclear/Destroy()
-	SHOULD_CALL_PARENT(FALSE)
-
-	var/turf/targetturf = pick_landmarked_location("blobstart", least_used = FALSE)
-	var/turf/diskturf = get_turf(src)
-	forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
-	message_admins("[src] has been destroyed in ([COORD(diskturf)] - [ADMIN_JMP(diskturf)]). Moving it to ([COORD(targetturf)] - [ADMIN_JMP(targetturf)]).")
-	log_game("[src] has been destroyed in [COORD(diskturf)]. Moving it to [COORD(targetturf)].")
-
-	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
-
-#undef TIMER_MIN
-#undef TIMER_MAX
-
 /obj/machinery/nuclearbomb/fake
 	var/false_activation = FALSE
 
