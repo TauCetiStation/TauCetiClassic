@@ -5,7 +5,10 @@
 	item_state = "card-id"
 	icon_state = "datadisk0"
 
-// /obj/item/weapon/disk/random - if needed?
+/obj/item/weapon/disk/atom_init()
+	. = ..()
+	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
+	src.icon_state = "datadisk[diskcolor]"
 
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
@@ -52,6 +55,7 @@
 	..()
 	if(have_data == TRUE)
 		to_chat(user, "<span class='notice'>Память дискеты заполнена.</span>")
+
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
