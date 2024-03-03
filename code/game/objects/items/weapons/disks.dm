@@ -5,11 +5,6 @@
 	item_state = "card-id"
 	icon_state = "datadisk0"
 
-/obj/item/weapon/disk/atom_init()
-	. = ..()
-	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
-	src.icon_state = "datadisk[diskcolor]"
-
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
@@ -47,7 +42,6 @@
 	desc = "Печально известная и исключительно нелегальная модель дискеты, такие часто используются корпоративными шпионами для кражи данных."
 	origin_tech = "magnets=5;programming=5;syndicate=3"
 	icon_state = "syndidisk"
-	item_state = "card-id"
 	w_class = SIZE_TINY
 	var/have_data = FALSE
 
@@ -56,14 +50,11 @@
 	if(have_data == TRUE)
 		to_chat(user, "<span class='notice'>Память дискеты заполнена.</span>")
 
-
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
 	name = "Cloning Data Disk"
 	cases = list("ДНК-дискета", "ДНК-дискеты", "ДНК-дискете", "ДНК-дискету", "ДНК-дискетой", "ДНК-дискете")
-	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
-	item_state = "card-id"
 	w_class = SIZE_TINY
 	var/datum/dna2/record/buf=null
 	var/read_only = 0 //Well,it's still a floppy disk
@@ -79,7 +70,7 @@
 //Disk stuff.
 /obj/item/weapon/disk/data/atom_init()
 	. = ..()
-	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
+	var/diskcolor = pick(0,1,2,3,4,5,6,7,8,9)
 	src.icon_state = "datadisk[diskcolor]"
 	add_overlay("datadisk-gene")
 
@@ -122,8 +113,6 @@
 /obj/item/weapon/disk/design_disk
 	name = "Empty Disk"
 	desc = "Wow. Is that a save icon?"
-	icon_state = "datadisk2"
-	item_state = "card-id"
 	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
@@ -131,6 +120,8 @@
 
 /obj/item/weapon/disk/design_disk/atom_init()
 	. = ..()
+	var/diskcolor = pick(0,1,2,3,4,5,6,7,8,9)
+	src.icon_state = "datadisk[diskcolor]"
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 
@@ -142,8 +133,6 @@
 /obj/item/weapon/disk/tech_disk
 	name = "Empty Disk"
 	desc = "Wow. Is that a save icon?"
-	icon_state = "datadisk2"
-	item_state = "card-id"
 	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
@@ -151,14 +140,15 @@
 
 /obj/item/weapon/disk/tech_disk/atom_init()
 	. = ..()
+	var/diskcolor = pick(0,1,2,3,4,5,6,7,8,9)
+	src.icon_state = "datadisk[diskcolor]"
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/disk/research_points
 	name = "Important Disk"
 	desc = "Looks a disk with some important information stored. Scientists might know what to do with it"
-	icon_state = "datadisk2"
-	item_state = "card-id"
+	icon_state = "datadisk10"
 	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
@@ -182,8 +172,7 @@
 	name = "Smartlight upgrade programm"
 	desc = "Programm for expanding capabilities of Central Lighting Control Console"
 
-	icon_state = "datadisk0"
-	item_state = "card-id"
+	icon_state = "holodisk"
 	w_class = SIZE_TINY
 
 	var/light_mode = /datum/light_mode/default
