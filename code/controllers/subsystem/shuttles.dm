@@ -486,7 +486,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
 	if(isliving(A))
 		return TRUE
-	if(istype(A, /obj/item/weapon/disk/nuclear))
+	if(istype(A,/obj/item/weapon/disk/nuclear))
 		return TRUE
 	if(istype(A,/obj/machinery/nuclearbomb))
 		return TRUE
