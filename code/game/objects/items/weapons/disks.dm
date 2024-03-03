@@ -75,8 +75,9 @@
 //Disk stuff.
 /obj/item/weapon/disk/data/atom_init()
 	. = ..()
-	var/diskcolor = pick(0,1,2)
+	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
 	src.icon_state = "datadisk[diskcolor]"
+	add_overlay("datadisk-gene")
 
 /obj/item/weapon/disk/data/proc/Initialize()
 	buf = new
