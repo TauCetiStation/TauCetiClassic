@@ -1100,6 +1100,7 @@
 #include "code\game\objects\items\weapons\cosmetics.dm"
 #include "code\game\objects\items\weapons\defibrillator.dm"
 #include "code\game\objects\items\weapons\dice.dm"
+#include "code\game\objects\items\weapons\disks.dm"
 #include "code\game\objects\items\weapons\dna_injector.dm"
 #include "code\game\objects\items\weapons\explosives.dm"
 #include "code\game\objects\items\weapons\flamethrower.dm"

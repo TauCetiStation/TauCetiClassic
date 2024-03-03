@@ -1,9 +1,11 @@
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/disks.dmi'
 	w_class = SIZE_MINUSCULE
 	item_state = "card-id"
 	icon_state = "datadisk0"
+
+// /obj/item/weapon/disk/random - if needed?
 
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
@@ -56,7 +58,6 @@
 /obj/item/weapon/disk/data
 	name = "Cloning Data Disk"
 	cases = list("ДНК-дискета", "ДНК-дискеты", "ДНК-дискете", "ДНК-дискету", "ДНК-дискетой", "ДНК-дискете")
-	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
 	w_class = SIZE_TINY
@@ -116,7 +117,6 @@
 /obj/item/weapon/disk/design_disk
 	name = "Empty Disk"
 	desc = "Wow. Is that a save icon?"
-	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
 	w_class = SIZE_TINY
@@ -137,7 +137,6 @@
 /obj/item/weapon/disk/tech_disk
 	name = "Empty Disk"
 	desc = "Wow. Is that a save icon?"
-	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
 	w_class = SIZE_TINY
@@ -153,7 +152,6 @@
 /obj/item/weapon/disk/research_points
 	name = "Important Disk"
 	desc = "Looks a disk with some important information stored. Scientists might know what to do with it"
-	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
 	w_class = SIZE_TINY
@@ -179,7 +177,6 @@
 	name = "Smartlight upgrade programm"
 	desc = "Programm for expanding capabilities of Central Lighting Control Console"
 
-	icon = 'icons/obj/cloning.dmi' // wtf, why all disk icons in cloning.dmi?
 	icon_state = "datadisk0"
 	item_state = "card-id"
 	w_class = SIZE_TINY
