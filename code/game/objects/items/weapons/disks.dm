@@ -3,11 +3,16 @@
 	icon = 'icons/obj/disks.dmi'
 	w_class = SIZE_MINUSCULE
 	icon_state = "datadisk0"
+	item_state = "datadisk0"
+	item_state_world = "datadisk0_world"
+	item_state_inventory = "datadisk0"
 
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
-	desc = "Better keep this safe."
+	desc = "Лучше хранить это в безопасном месте."
 	icon_state = "nucleardisk"
+	item_state_world = "nucleardisk_world"
+	item_state_inventory = "nucleardisk"
 
 /obj/item/weapon/disk/nuclear/atom_init()
 	. = ..()
@@ -17,7 +22,7 @@
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)
 	if(!is_centcom_level(disk_loc.z) && !is_station_level(disk_loc.z))
-		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
+		to_chat(get(src, /mob), "<span class='danger'>Кажется ты что-то потерял...</span>")
 		qdel(src)
 
 /obj/item/weapon/disk/nuclear/Destroy()
@@ -33,21 +38,6 @@
 
 #undef TIMER_MIN
 #undef TIMER_MAX
-
-/obj/item/weapon/disk/data/syndi
-
-/obj/item/weapon/disk/telecomms
-	name = "Suspicious Disk"
-	desc = "Печально известная и исключительно нелегальная модель дискеты, такие часто используются корпоративными шпионами для кражи данных."
-	origin_tech = "magnets=5;programming=5;syndicate=3"
-	icon_state = "syndidisk"
-	w_class = SIZE_TINY
-	var/have_data = FALSE
-
-/obj/item/weapon/disk/telecomms/examine(mob/user)
-	..()
-	if(have_data == TRUE)
-		to_chat(user, "<span class='notice'>Память дискеты заполнена.</span>")
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -69,9 +59,11 @@
 //Disk stuff.
 /obj/item/weapon/disk/data/atom_init()
 	. = ..()
-	var/diskcolor = pick(0,1,2,3,4,5,6,7,8,9)
-	src.icon_state = "datadisk[diskcolor]"
-	add_overlay("datadisk-gene")
+	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
+	icon_state = "datadisk[diskcolor]"
+	item_state = "datadisk[diskcolor]"
+	item_state_world = "datadisk[diskcolor]_world"
+	item_state_inventory = "datadisk[diskcolor]"
 
 /obj/item/weapon/disk/data/proc/Initialize()
 	buf = new
@@ -90,6 +82,23 @@
 	buf.dna.unique_enzymes = md5(buf.dna.real_name)
 	buf.dna.UI=list(0x066,0x000,0x033,0x000,0x000,0x000,0xAF0,0x000,0x000,0x000,0x033,0x066,0x0FF,0x4DB,0x002,0x690)
 	buf.dna.UpdateUI()
+
+/obj/item/weapon/disk/data/syndi
+
+/obj/item/weapon/disk/telecomms
+	name = "Suspicious Disk"
+	desc = "Печально известная и исключительно нелегальная модель дискеты, такие часто используются корпоративными шпионами для кражи данных."
+	origin_tech = "magnets=5;programming=5;syndicate=3"
+	icon_state = "syndidisk"
+	item_state_world = "syndidisk_world"
+	item_state_inventory = "syndidisk"
+	w_class = SIZE_TINY
+	var/have_data = FALSE
+
+/obj/item/weapon/disk/telecomms/examine(mob/user)
+	..()
+	if(have_data == TRUE)
+		to_chat(user, "<span class='notice'>Память дискеты заполнена.</span>")
 
 /obj/item/weapon/disk/data/monkey
 	name = "data disk - 'Mr. Muggles'"
@@ -111,7 +120,7 @@
 ////////////////////////////////////////
 /obj/item/weapon/disk/design_disk
 	name = "Empty Disk"
-	desc = "Wow. Is that a save icon?"
+	desc = "Вау, это та самая дискета с сохранением?"
 	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
@@ -119,19 +128,22 @@
 
 /obj/item/weapon/disk/design_disk/atom_init()
 	. = ..()
-	var/diskcolor = pick(0,1,2,3,4,5,6,7,8,9)
-	src.icon_state = "datadisk[diskcolor]"
+	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
+	icon_state = "datadisk[diskcolor]"
+	item_state = "datadisk[diskcolor]"
+	item_state_world = "datadisk[diskcolor]_world"
+	item_state_inventory = "datadisk[diskcolor]"
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 
-/***************************************************************
-**						Technology Datums					  **
-**	Includes all the various technoliges and what they make.  **
-***************************************************************/
+/*************************************************************
+**                     Technology Datums                    **
+** Includes all the various technoliges and what they make. **
+**************************************************************/
 
 /obj/item/weapon/disk/tech_disk
 	name = "Empty Disk"
-	desc = "Wow. Is that a save icon?"
+	desc = "Вау, это та самая дискета с сохранением?"
 	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
@@ -139,15 +151,20 @@
 
 /obj/item/weapon/disk/tech_disk/atom_init()
 	. = ..()
-	var/diskcolor = pick(0,1,2,3,4,5,6,7,8,9)
-	src.icon_state = "datadisk[diskcolor]"
+	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
+	icon_state = "datadisk[diskcolor]"
+	item_state = "datadisk[diskcolor]"
+	item_state_world = "datadisk[diskcolor]_world"
+	item_state_inventory = "datadisk[diskcolor]"
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/disk/research_points
 	name = "Important Disk"
-	desc = "Looks a disk with some important information stored. Scientists might know what to do with it"
-	icon_state = "datadisk10"
+	desc = "Похоже на диске хранится важная информация. Ученые возможно знают что с этим делать."
+	icon_state = "datadisk9"
+	item_state_world = "datadisk9"
+	item_state_inventory = "datadisk9"
 	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
@@ -169,16 +186,16 @@
 
 /obj/item/weapon/disk/smartlight_programm
 	name = "Smartlight upgrade programm"
-	desc = "Programm for expanding capabilities of Central Lighting Control Console"
-
+	desc = "Программа для расширения возможностей для центральной консоли управления освещением."
 	icon_state = "holodisk"
+	item_state_world = "holodisk"
+	item_state_inventory = "holodisk"
 	w_class = SIZE_TINY
-
 	var/light_mode = /datum/light_mode/default
 
 /obj/item/weapon/disk/smartlight_programm/atom_init()
 	var/datum/light_mode/LM = light_mode
-	desc += "\nIt contains next programm: \"[initial(LM.name)] lighting mode\""
+	desc += "\nЭто содержит следующую программу: \"[initial(LM.name)] режим освещения.\""
 	return ..()
 
 /obj/item/weapon/disk/smartlight_programm/soft
