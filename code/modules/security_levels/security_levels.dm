@@ -17,6 +17,8 @@
 		var/datum/announcement/station/code/code_announce
 		switch(level)
 			if(SEC_LEVEL_GREEN)
+				if(security_level == SEC_LEVEL_DELTA)
+					SSsmartlight.reset_smartlight()
 				security_level = SEC_LEVEL_GREEN
 				code_announce = new /datum/announcement/station/code/downtogreen
 
@@ -32,6 +34,8 @@
 					code_announce = new /datum/announcement/station/code/uptoblue
 				else
 					code_announce = new /datum/announcement/station/code/downtoblue
+				if(security_level == SEC_LEVEL_DELTA)
+					SSsmartlight.reset_smartlight()
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
@@ -45,6 +49,8 @@
 					code_announce = new /datum/announcement/station/code/uptored
 				else
 					code_announce = new /datum/announcement/station/code/downtored
+				if(security_level == SEC_LEVEL_DELTA)
+					SSsmartlight.reset_smartlight()
 				security_level = SEC_LEVEL_RED
 
 				var/obj/machinery/computer/communications/CC = locate() in communications_list
@@ -57,7 +63,6 @@
 						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_red"))
 				deltimer(delta_timer_id)
 				delta_timer_id = 0
-				SSsmartlight.reset_smartlight()
 
 			if(SEC_LEVEL_DELTA)
 				security_level = SEC_LEVEL_DELTA
