@@ -189,13 +189,13 @@
 /turf/environment/space,
 /area/space_structures/cult_ship)
 "rK" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 4
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
 	pixel_y = -5
+	},
+/obj/structure/stool/bed/chair/schair/wagon/red{
+	dir = 4
 	},
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
@@ -246,10 +246,10 @@
 /area/space_structures/cult_ship)
 "vb" = (
 /obj/effect/decal/cleanable/blood/drip,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/space_structures/cult_ship)
 "vh" = (
@@ -295,7 +295,7 @@
 /area/space_structures/cult_ship)
 "wR" = (
 /obj/effect/decal/cleanable/blood/drip,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/evac/eng2,
@@ -343,7 +343,7 @@
 /turf/simulated/floor/engine/cult/lava,
 /area/space_structures/cult_ship)
 "zS" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/drip,
@@ -391,10 +391,10 @@
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "EN" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "Fe" = (
@@ -445,7 +445,7 @@
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/space_structures/cult_ship)
 "Hg" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/gibs,
@@ -465,7 +465,7 @@
 /turf/environment/space,
 /area/space)
 "Ia" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
 /turf/simulated/floor/engine/cult/lava,
@@ -509,13 +509,13 @@
 /area/space_structures/cult_ship)
 "LA" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 4
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
 	pixel_y = -5
+	},
+/obj/structure/stool/bed/chair/schair/wagon/red{
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/space_structures/cult_ship)
@@ -566,9 +566,6 @@
 /turf/environment/space,
 /area/space_structures/cult_ship)
 "Ph" = (
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 4
-	},
 /obj/machinery/power/apc/largecell{
 	dir = 8;
 	name = "largecell apc left";
@@ -578,6 +575,9 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/structure/stool/bed/chair/schair/wagon/red{
+	dir = 4
 	},
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
