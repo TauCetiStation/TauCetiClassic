@@ -297,7 +297,7 @@ SUBSYSTEM_DEF(shuttle)
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					undock_act(start_location, "pod2")
-					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge || /area/station/civilian/gym, "pod2")
+					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge || /area/station/maintenance/dormitory, "pod2")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
@@ -308,7 +308,7 @@ SUBSYSTEM_DEF(shuttle)
 					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					undock_act(start_location, "pod3")
-					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig || /area/station/security/prison, "pod3")
+					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig, "pod3")
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
