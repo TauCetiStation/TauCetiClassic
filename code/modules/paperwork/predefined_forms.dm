@@ -13,7 +13,7 @@ var/global/list/predefined_forms_list = list(
 		),
 		"HR" = list(
 			"color"= "#496a7c",
-			"name" = "Отдел Кадров",
+			"name" = "Отдел кадров",
 			"content" = list(
 				/datum/form/hr/temp_access,
 				/datum/form/hr/const_access,
@@ -26,7 +26,7 @@ var/global/list/predefined_forms_list = list(
 		),
 		"Medical" = list(
 			"color"= "#c4d8af",
-			"name" = "Медицинское Управление",
+			"name" = "Медицинский отдел",
 			"content" = list(
 				/datum/form/med/prescription,
 				/datum/form/med/surgery,
@@ -34,6 +34,8 @@ var/global/list/predefined_forms_list = list(
 				/datum/form/med/chem_tracking,
 				/datum/form/med/work_incapacity,
 				/datum/form/med/chem_request
+				/datum/form/med/psych_exam
+				/datum/form/med/medical_services
 				)
 		),
 		"RnD" = list(
@@ -59,7 +61,7 @@ var/global/list/predefined_forms_list = list(
 		),
 		"Security" = list(
 			"color"= "#d6a2a4",
-			"name" = "Служба Безопасности",
+			"name" = "Служба безопасности",
 			"content" = list(
 				/datum/form/sec/investigation,
 				/datum/form/sec/raport,
@@ -74,9 +76,11 @@ var/global/list/predefined_forms_list = list(
 		),
 		"Engineering" = list(
 			"color"= "#ebc66e",
-			"name" = "Инженерный Отдел",
+			"name" = "Инженерный отдел",
 			"content" = list(
 				/datum/form/eng/maintentance
+				/datum/form/eng/repair
+				/datum/form/eng/report
 			)
 		),
 		"Important" = list(
@@ -190,11 +194,11 @@ var/global/list/predefined_forms_list = list(
         Железная руда: [field], Металл: [field], Пласталь: [field]
         Песок: [field], Стекло: [field], Укрепленное стекло: [field]
         Золотая руда: [field], Золотой слиток(слитки): [field]
-        Серебряная руда: [field], Серебряный слиток(слитки): [field] 
+        Серебряная руда: [field], Серебряный слиток(слитки): [field]
         Неочищенная плазма: [field], Твердая плазма: [field]
         Уран: [field], Очищенный уран: [field]
         Алмаз: [field], Ограненный алмаз(алмазы): [field]
-        Разное: [field] 
+        Разное: [field]
         [hr]Составитель: [sfield]
         Принимающий сотрудник: [sfield]
         [hr][small]*В случае получения разрешения на заказ он должен быть отмечен штампом "Одобрено" и штампом Квартирмейстера. Заказы, не получившие разрешения со стороны Глав или Квартирмейстера, должны быть отмечены штампом "Отказано". В случае отсутствия Глав, Квартирмейстер сам может решать, что заказывать, а что нет. После заполнения, накладная должна храниться в картотеке до конца смены.[/small]
@@ -307,8 +311,8 @@ var/global/list/predefined_forms_list = list(
         Текущая должность: [field]
         Причина: [field]
         [hr]Составитель: [sfield]
-        Текущий начальник отдела: [sfield] 
-        Глава Отдела Кадров: [sfield] 
+        Текущий начальник отдела: [sfield]
+        Глава Отдела Кадров: [sfield]
         [hr]Место для штампов.
 	"}
 
@@ -396,7 +400,7 @@ var/global/list/predefined_forms_list = list(
 	"}
 
 /datum/form/med/chem_request
-    index = "3G"
+    index = "3F"
     name = "Заказ химикам"
     content = @{"
         [center][large][b]Медицинское Управление КСН "Исход"[/b]
@@ -404,6 +408,42 @@ var/global/list/predefined_forms_list = list(
         Необходимые препараты: [field]
         Количество: [field]
         [hr]Заказчик: [sfield]
+	"}
+
+/datum/form/med/psych_exam
+    index = "3G"
+    name = "Форма для справки о прохождении психиатрического осмотра"
+	content = @{"
+		[center][large][b]Медицинское Управление КСН "Исход"[/b]
+		Справка о прохождении психиатрического осмотра[/large][/center]
+		[hr]Полное имя сотрудника: [field]
+		Пол: [field]
+		Возраст: [field]
+		Должность: [field]
+		[hr]Оценка психического состояния: [field]
+		Выявленные расстройства: [field]
+		Дополнительная информация: [field]
+		Примечания: [field]
+		[hr]Врач, проводивший осмотр: [sfield]
+		Главный врач: [sfield]
+		[hr][small]*Этот документ подтверждает прохождение работником станции психиатрического осмотра.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/med/medical_services
+    index = "3H"
+    name = "Справка об оказании медицинских услуг"
+	content = @{"
+		[center][large][b]Медицинское Управление КСН "Исход"[/b]
+		Справка об оказании медицинских услуг[/large][/center]
+		[hr]Полное имя пациента: [field]
+		Должность: [field]
+		Диагноз: [field]
+		Оказанная медицинская помощь: [field]
+		[hr]Лечащий врач: [sfield]
+		[hr][small]*Приложить результаты сканирования пациента.[/small]
+		[small]**Приложить форму 3B при наличии.[/small]
+		[hr]Место для штампов.
 	"}
 
 /datum/form/rnd/experiment
@@ -494,7 +534,7 @@ var/global/list/predefined_forms_list = list(
         Полное имя передающего: [field]
         Категория шагохода: [field]
         Модель шагохода: [field]
-        Причина выдачи: [field] 
+        Причина выдачи: [field]
         [hr]Получатель: [sfield]
         Передающий: [sfield]
         [hr]Место для штампов.
@@ -552,7 +592,7 @@ var/global/list/predefined_forms_list = list(
         Должность заказчика: [field]
         Категория шагохода: [field]
         Модель шагохода: [field]
-        Причина: [field] 
+        Причина: [field]
         [hr]Заказчик: [sfield]
         Специалист по производству экзоскелетов: [sfield]
         [hr]Место для штампов.
@@ -848,6 +888,40 @@ var/global/list/predefined_forms_list = list(
         Главный Инженер: [sfield]
         [hr][small]*Подписывая этот документ, я обязываюсь выполнить всю намеченную работу до конца, и несу полную ответственность за проведения работ на этой территории, до тех пор пока не сдам объект в полностью готовом состоянии и не предъявлю работу своему начальству.[/small]
         [hr]Место для штампов.
+	"}
+
+/datum/form/eng/repair
+	index = "6B"
+	name = "Документ по ремонтным работам"
+	content = @{"
+		[center][large][b]Инженерный Отдел КСН "Исход"[/b]
+		Документ по ремонтным работам[/center][/large]
+		[hr]Полное имя ответственного за ремонт: [field]
+		Полное имя помощника(ов)(при наличии): [field]
+		[hr]Место проведения работ: [field]
+		Объекты, подлежащие ремонту: [field]
+		Затраченные материалы и компоненты: [field]
+		[hr]Ответственный за ремонт: [sfield]
+		Помощник(и): [sfield]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/eng/report
+	index = "6C"
+	name = "Форма для отчёта о работе отдела"
+	content = @{"
+		[center][large][b]Инженерный Отдел КСН "Исход"[/b]
+		Отчёт о работе отдела[/center][/large]
+		[hr]Главный инженер: [field]
+		Сотрудники отдела: [field]
+		[hr]Тип силовой установки: [field]
+		Статус силовой установки: [field]
+		Выходная мощность: [field]
+		Статус атмосферного отсека: [field]
+		[hr]Оценка готовновсти отдела к ЧС и ЧП: [field]
+		Примечания: [field]
+		[hr]Главный инженер: [sfield]
+		[hr]Место для штампов.
 	"}
 
 /datum/form/command/shuttle
