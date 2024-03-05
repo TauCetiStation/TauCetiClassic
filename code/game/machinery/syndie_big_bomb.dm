@@ -32,12 +32,6 @@
 	var/defused = FALSE		//is the bomb capable of exploding?
 	var/degutted = FALSE	//is the bomb even a bomb anymore?
 	var/for_objective = FALSE
-	var/list/areas_for_objective = list(/area/station/bridge/captain_quarters,
-										/area/station/security/armoury,
-										/area/station/rnd/storage,
-										/area/station/ai_monitored/eva,
-										/area/station/tcommsat,
-										/area/station/engineering/atmos)
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
@@ -94,7 +88,8 @@
 					var/can_be_planted = FALSE
 					var/turf/bombturf = get_turf(src)
 					var/area/A = get_area(bombturf)
-					for(var/area in areas_for_objective)
+					var/datum/objective/bomb/b
+					for(var/area in b.areas_for_objective)
 						if(istype(A, area))
 							can_be_planted = TRUE
 					if(!can_be_planted)
@@ -173,11 +168,11 @@
 	if(tgui_alert(user, "Would you like to start the countdown now?",, list("Yes","No")) == "Yes" && Adjacent(user) && isliving(user))
 		if(defused || degutted || !anchored)
 			if(degutted)
-				loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing</span>.")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing.</span>")
 			else if(defused)
-				loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required</span>.")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required.</span>")
 			else if(!anchored)
-				loc.visible_message("<span class='notice'>[bicon(src)] Device error: Device must be anchored</span>.")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: Device must be anchored.</span>")
 			return
 		else
 			loc.visible_message("<span class='warning'>[bicon(src)] [timer] seconds until detonation, please clear the area.</span>")
