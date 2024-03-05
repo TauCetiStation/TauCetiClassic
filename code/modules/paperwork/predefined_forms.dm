@@ -411,8 +411,8 @@ var/global/list/predefined_forms_list = list(
 	"}
 
 /datum/form/med/psych_exam
-    index = "3G"
-    name = "Форма для справки о прохождении психиатрического осмотра"
+	index = "3G"
+	name = "Форма для справки о прохождении психиатрического осмотра"
 	content = @{"
 		[center][large][b]Медицинское Управление КСН "Исход"[/b]
 		Справка о прохождении психиатрического осмотра[/large][/center]
@@ -431,8 +431,8 @@ var/global/list/predefined_forms_list = list(
 	"}
 
 /datum/form/med/medical_services
-    index = "3H"
-    name = "Справка об оказании медицинских услуг"
+	index = "3H"
+	name = "Справка об оказании медицинских услуг"
 	content = @{"
 		[center][large][b]Медицинское Управление КСН "Исход"[/b]
 		Справка об оказании медицинских услуг[/large][/center]
