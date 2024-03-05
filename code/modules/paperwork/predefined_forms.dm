@@ -33,8 +33,8 @@ var/global/list/predefined_forms_list = list(
 				/datum/form/med/autopsy,
 				/datum/form/med/chem_tracking,
 				/datum/form/med/work_incapacity,
-				/datum/form/med/chem_request
-				/datum/form/med/psych_exam
+				/datum/form/med/chem_request,
+				/datum/form/med/psych_exam,
 				/datum/form/med/medical_services
 				)
 		),
@@ -78,8 +78,8 @@ var/global/list/predefined_forms_list = list(
 			"color"= "#ebc66e",
 			"name" = "Инженерный отдел",
 			"content" = list(
-				/datum/form/eng/maintentance
-				/datum/form/eng/repair
+				/datum/form/eng/maintentance,
+				/datum/form/eng/repair,
 				/datum/form/eng/report
 			)
 		),
