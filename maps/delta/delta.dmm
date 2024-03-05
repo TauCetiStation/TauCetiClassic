@@ -1978,9 +1978,6 @@
 /area/station/security/hos)
 "adm" = (
 /obj/machinery/computer/security,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -4305,9 +4302,6 @@
 	},
 /area/station/security/brig)
 "ahk" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -4316,6 +4310,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -4641,10 +4636,9 @@
 	},
 /area/station/security/brig)
 "ahL" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
+	dir = 8;
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
@@ -6020,6 +6014,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -7571,6 +7568,9 @@
 /obj/effect/decal/turf_decal/alpha/white{
 	icon_state = "bot_old"
 	},
+/obj/machinery/light_switch{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -8274,13 +8274,8 @@
 	},
 /area/station/security/prison)
 "anZ" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 1;
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
@@ -10270,6 +10265,7 @@
 	pixel_y = 8
 	},
 /obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -10760,16 +10756,13 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "asf" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/light/smart{
+	dir = 1
 	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "redcorner"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
 /area/station/security/brig)
 "asg" = (
 /obj/structure/cable{
@@ -11071,6 +11064,7 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -11223,6 +11217,11 @@
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6
+	},
+/obj/machinery/camera{
+	c_tag = "Brig Desk";
+	dir = 9;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -11415,9 +11414,6 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
-	},
-/obj/machinery/light/smart{
-	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -12023,16 +12019,6 @@
 	},
 /area/station/security/brig)
 "atX" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -12041,6 +12027,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -12703,11 +12694,6 @@
 	},
 /obj/machinery/computer/secure_data{
 	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "Brig Desk";
-	dir = 7;
-	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -21489,9 +21475,6 @@
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 1";
 	name = "Cell 1 Locker"
-	},
-/obj/machinery/light/smart{
-	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -59687,6 +59670,9 @@
 "kWX" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/hos,
+/obj/machinery/light_switch{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -164479,7 +164465,7 @@ agB
 afi
 aeH
 aeH
-dSL
+ahL
 aeH
 amm
 aeb
@@ -164993,7 +164979,7 @@ aol
 aol
 agi
 aol
-ahL
+anZ
 alA
 alA
 aiF
@@ -165779,7 +165765,7 @@ sSo
 adp
 evI
 atV
-auy
+aeH
 xyC
 avl
 avH
@@ -166290,8 +166276,8 @@ aml
 apO
 apk
 arA
+adp
 asf
-anZ
 atX
 aeH
 gmw
