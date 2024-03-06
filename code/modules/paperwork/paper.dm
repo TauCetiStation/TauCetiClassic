@@ -319,6 +319,7 @@
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[sfield\]", "<span class=\"sign_field\"></span>")
 	t = "<font face=\"[font]\" color=\"[P.colour]\">[t]</font>"
+	t = replacetext(t, "\[sname\]", station_name_ru())
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
 //Count the fields
