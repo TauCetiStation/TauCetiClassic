@@ -15,7 +15,7 @@ var/global/const/FORENSIC           =(1<<10)
 var/global/const/CADET              =(1<<11)
 var/global/const/TECHNICASSISTANT   =(1<<12)
 
-var/global/const/NTREPRESENT        =(1<<1)
+var/global/const/CENTCOMREPRESENT   =(1<<1)
 
 var/global/const/LAWYER             =(1<<0)
 var/global/const/BLUESHIELD  		=(1<<1)

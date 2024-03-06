@@ -1,7 +1,7 @@
 /datum/job/blueshield
 	title = "Blueshield Officer"
 	flag = BLUESHIELD
-	department_flag = NTREPRESENT
+	department_flag = CENTCOMREPRESENT
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -23,12 +23,12 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	flags = JOB_FLAG_NTREPRESENTATIVE
+	flags = JOB_FLAG_CENTCOMREPRESENTATIVE
 
 /datum/job/lawyer
 	title = "Internal Affairs Agent"
 	flag = LAWYER
-	department_flag = NTREPRESENT
+	department_flag = CENTCOMREPRESENT
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
@@ -47,4 +47,4 @@
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
-	flags = JOB_FLAG_NTREPRESENTATIVE|JOB_FLAG_BLUESHIELD_PROTEC
+	flags = JOB_FLAG_CENTCOMREPRESENTATIVE|JOB_FLAG_BLUESHIELD_PROTEC
