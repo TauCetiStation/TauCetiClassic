@@ -64,7 +64,7 @@
 		if(2)
 			take_bodypart_damage(10)
 			Stun(rand(1,5))
-	if(src.stat != DEAD)
+	if(stat != DEAD)
 		flash_eyes(affect_silicon = 1)
 		to_chat(src, "<span class='warning'><B>*BZZZT*</B></span>")
 		to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
