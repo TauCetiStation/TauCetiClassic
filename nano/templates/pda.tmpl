@@ -323,7 +323,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     {{/for}}
                 {{/if}}
                 {{if data.cached.centcom.length}}
-                    <tr><th colspan="4" class="command">CentCom representatives</th></tr>
+                    <tr><th colspan="4" class="centcom">CentCom representatives</th></tr>
                     {{for data.cached["centcom"]}}
                         {{if value.rank == "Internal Affairs Agent"}}
 							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
