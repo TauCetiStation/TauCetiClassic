@@ -369,8 +369,6 @@
 						else // Put heads at top of non-command jobs
 							if(job.title in command_positions)
 								jobs.Insert(1, job)
-							if(job.title in centcom_positions)
-								jobs.Insert(1, job)
 							else
 								jobs += job
 				if(!categorized)
