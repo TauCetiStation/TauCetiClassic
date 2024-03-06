@@ -37,7 +37,7 @@
 	idtype = /obj/item/weapon/card/id/int
 	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	salary = 200
-	minimal_player_ingame_minutes = 2400
+	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/lawyer
 	skillsets = list("Internal Affairs Agent" = /datum/skillset/internal_affairs)
 	/*
