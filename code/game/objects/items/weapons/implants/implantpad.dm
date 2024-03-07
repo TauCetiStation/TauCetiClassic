@@ -58,7 +58,7 @@
 					<A href='byond://?src=\ref[src];tracking_id=1'>+</A>
 					<A href='byond://?src=\ref[src];tracking_id=10'>+</A><BR>"}
 		else
-			dat += "Упаковка от импланта пуста."
+			dat += "Футляр от импланта пуст."
 	else
 		dat += "Пожалуйста, вставьте упаковку с имплантом внутри!"
 
