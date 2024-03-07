@@ -60,7 +60,7 @@
 		else
 			dat += "Футляр от импланта пуст."
 	else
-		dat += "Пожалуйста, вставьте упаковку с имплантом внутри!"
+		dat += "Пожалуйста, вставьте футляр с имплантом внутри!"
 
 	var/datum/browser/popup = new(user, "implantpad", (C_CASE(src, NOMINATIVE_CASE)))
 	popup.set_content(dat)
