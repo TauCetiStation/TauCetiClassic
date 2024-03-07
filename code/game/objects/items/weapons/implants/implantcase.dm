@@ -114,7 +114,7 @@
 /obj/item/weapon/implantcase/mindshield
 	name = "Glass Case - 'MindShield'"
 	cases = list("cтеклянный футляр - 'Защита разума'", "cтеклянного футляра - 'Cвобода'", "cтеклянному футляру - 'Cвобода'", "cтеклянный футляр - 'Cвобода'", "cтеклянным футляром - 'Cвобода'", "cтеклянном футляре - 'Cвобода'")
-	desc = "Футляр, содержащий имплант \"Защита разума\""
+	desc = "Футляр, содержащий имплант защиты разума"
 	gender = MALE
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
