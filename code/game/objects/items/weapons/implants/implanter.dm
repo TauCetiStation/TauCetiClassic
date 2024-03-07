@@ -31,7 +31,7 @@
 		if(src && imp)
 			M.log_combat(user, "implanted with [name]")
 			if(imp.implanted(M))
-				user.visible_message("<span class ='userdanger'>[M] [(ANYMORPH(M, "был", "была", "было", "были"))] [(ANYMORPH(M, "имплантирован", "имплантирована", "имплантировано", "имплантированы"))] [user].</span>", "Вы вживили имплантат в [M].")
+				user.visible_message("<span class ='userdanger'>[M] [VERB_RU(M)] [(ANYMORPH(M, "имплантирован", "имплантирована", "имплантировано", "имплантированы"))] [user].</span>", "Вы вживили имплантат в [M].")
 				imp.inject(M, def_zone)
 				imp = null
 				update()
