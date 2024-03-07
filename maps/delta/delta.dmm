@@ -14467,6 +14467,18 @@
 /obj/machinery/deployable/barrier,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"ayg" = (
+/obj/structure/stool,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/gym)
 "ayh" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -14497,6 +14509,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"ayl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/gym)
 "aym" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -14916,13 +14939,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "ayY" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/maintenance{
-	name = "Dormitory Maintenance";
-	req_access = list(12)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "wooden-2"
+	},
+/area/station/civilian/gym)
 "ayZ" = (
 /obj/structure/sign/poster/official/space_cops{
 	pixel_x = 32
@@ -15123,6 +15149,9 @@
 	icon_state = "delivery"
 	},
 /obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /turf/simulated/floor,
 /area/station/maintenance/dormitory)
 "azy" = (
@@ -15778,10 +15807,7 @@
 	},
 /area/station/cargo/miningoffice)
 "aAG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/maintenance/dormitory)
 "aAH" = (
@@ -15923,21 +15949,17 @@
 /turf/simulated/floor,
 /area/station/maintenance/dormitory)
 "aAV" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "aAW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
 	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor,
+/area/station/maintenance/dormitory)
 "aAX" = (
 /obj/effect/decal/remains/robot,
 /turf/simulated/floor/wood,
@@ -15974,13 +15996,14 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/dormitory)
 "aBb" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
+/turf/simulated/floor/wood,
+/area/station/civilian/dormitories)
 "aBc" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -16009,10 +16032,7 @@
 	},
 /area/station/civilian/gym)
 "aBg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -41230,14 +41250,19 @@
 	},
 /area/station/bridge)
 "gyC" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+	dir = 6
 	},
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "gyJ" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/sheet/rglass{
@@ -51662,13 +51687,19 @@
 	},
 /area/station/cargo/lobby)
 "iXa" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/area/station/civilian/gym)
+/turf/simulated/floor,
+/area/station/maintenance/dormitory)
 "iXe" = (
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 39;
@@ -53921,13 +53952,19 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/barbershop)
 "jyc" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/area/station/civilian/gym)
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "jye" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -67169,14 +67206,17 @@
 	},
 /area/station/cargo/qm)
 "mFs" = (
-/obj/structure/stool,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+	dir = 9
 	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor,
+/area/station/maintenance/dormitory)
 "mFv" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -166162,13 +166202,13 @@ awV
 axv
 fbW
 ayj
-ayk
-awf
-axT
-aAG
-ayY
-wQU
 gyC
+mFs
+aAG
+aAW
+aAL
+aAV
+aBb
 kSw
 xUx
 xpn
@@ -166419,7 +166459,7 @@ awW
 axw
 fbW
 aAu
-ayn
+iXa
 avu
 avu
 avu
@@ -166676,7 +166716,7 @@ awX
 gmw
 axD
 ayP
-ayn
+iXa
 ayW
 avx
 avx
@@ -166933,7 +166973,7 @@ awY
 axx
 axD
 avu
-aym
+jyc
 ayX
 avx
 azp
@@ -167190,7 +167230,7 @@ awZ
 axz
 axD
 avu
-ayn
+iXa
 avx
 avx
 avx
@@ -167447,7 +167487,7 @@ axa
 axA
 axD
 axT
-aym
+jyc
 avx
 azi
 azq
@@ -167704,7 +167744,7 @@ axd
 axB
 axD
 axT
-aym
+jyc
 avx
 azj
 avu
@@ -168225,8 +168265,8 @@ azs
 avx
 ncp
 mpG
-jyc
-iXa
+aBg
+ayY
 ncp
 ncp
 ncp
@@ -168482,8 +168522,8 @@ avx
 avx
 gDh
 ncp
-aAW
-mFs
+ncp
+ayg
 ige
 ncp
 ncp
@@ -168738,9 +168778,9 @@ aAN
 aAO
 avx
 ncp
-aAV
-aBb
-aBg
+ncp
+ncp
+ayl
 iLa
 iLa
 aBk
@@ -168995,7 +169035,7 @@ aAN
 aAN
 avx
 tNG
-aAW
+ncp
 aBe
 aBh
 aBi
