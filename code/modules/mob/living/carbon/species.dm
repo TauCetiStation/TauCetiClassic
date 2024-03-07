@@ -1906,7 +1906,7 @@
 
 /datum/species/serpentid/on_gain(mob/living/carbon/human/H)
 	..()
-	H.real_name = "Giant Armoured Snake"
+	H.real_name = pick(global.serpentid_names)
 	H.name = H.real_name
 	H.r_eyes = 255
 	H.update_hair()
