@@ -163,7 +163,7 @@
 	name = "Important Disk"
 	desc = "Похоже на диске хранится важная информация. Ученые возможно знают что с этим делать."
 	icon_state = "datadisk9"
-	item_state_world = "datadisk9"
+	item_state_world = "datadisk9_world"
 	item_state_inventory = "datadisk9"
 	w_class = SIZE_TINY
 	m_amt = 30
@@ -188,7 +188,7 @@
 	name = "Smartlight upgrade programm"
 	desc = "Программа для расширения возможностей для центральной консоли управления освещением."
 	icon_state = "holodisk"
-	item_state_world = "holodisk"
+	item_state_world = "holodisk_world"
 	item_state_inventory = "holodisk"
 	w_class = SIZE_TINY
 	var/light_mode = /datum/light_mode/default
