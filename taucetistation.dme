@@ -826,7 +826,6 @@
 #include "code\game\machinery\navbeacon.dm"
 #include "code\game\machinery\newscaster.dm"
 #include "code\game\machinery\OpTable.dm"
-#include "code\game\machinery\overview.dm"
 #include "code\game\machinery\PDApainter.dm"
 #include "code\game\machinery\podmen.dm"
 #include "code\game\machinery\portable_turret.dm"
