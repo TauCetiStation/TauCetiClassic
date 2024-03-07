@@ -115,10 +115,10 @@
 
 /obj/structure/closet/critter/larvae
 	name = "sugar larvae crate"
-	content_mob = /mob/living/simple_animal/mouse/rat/newborn_moth
+	content_mob = /mob/living/simple_animal/grown_larvae/newborn_moth
 
 /obj/structure/closet/critter/larvae/atom_init()
-	content_mob = pick(/mob/living/simple_animal/mouse/rat/newborn_moth, /mob/living/simple_animal/grown_larvae/serpentid)
+	content_mob = pick(/mob/living/simple_animal/grown_larvae/newborn_moth, /mob/living/simple_animal/grown_larvae/serpentid)
 	. = ..()
 
 /obj/structure/closet/critter/larvae/create_mob_inside()

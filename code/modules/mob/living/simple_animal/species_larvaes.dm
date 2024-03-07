@@ -1,3 +1,27 @@
+/mob/living/simple_animal/grown_larvae/proc/evolve_to_young_adult()
+	return
+
+/mob/living/simple_animal/grown_larvae/proc/handle_evolving()
+	if(stat == DEAD)
+		return
+	if(!mind || !client || !key)
+		addtimer(CALLBACK(src, .proc/handle_evolving), 100, TIMER_UNIQUE)
+		return
+	if(evolv_stage < 4)
+		addtimer(CALLBACK(src, .proc/handle_evolving), 100, TIMER_UNIQUE)
+		evolv_stage++
+		switch(evolv_stage)
+			if(2)
+				maxHealth = 20
+				health += 20
+			if(3)
+				maxHealth = 40
+				health += 40
+				speed -= 0.5
+				melee_damage = 2
+		return
+	evolve_to_young_adult()
+
 /mob/living/simple_animal/grown_larvae
 	name = "larvae"
 	desc = "It's a little alien skittery critter. Hiss."
@@ -99,13 +123,14 @@
 	M.mind.store_memory(lore)
 	qdel(src)
 
-/mob/living/simple_animal/mouse/rat/newborn_moth
+/mob/living/simple_animal/grown_larvae/newborn_moth
 	name = "Newborn moth"
 	real_name = "Newborn moth"
 	desc = "It's a little alien skittery critter. Hiss."
-	health = 5
 	maxHealth = 5
-	melee_damage = 0
+	health = 5
+	melee_damage = 2
+	ventcrawler = 0
 	icon_state = "newborn_moth"
 	icon_living = "newborn_moth"
 	icon_dead = "small_moth_dead"
@@ -125,24 +150,27 @@
 	bodytemperature = 293
 	holder_type = null
 	faction = "neutral"
-	ventcrawler = 2
 	has_arm = FALSE
 	has_leg = FALSE
 
-/mob/living/simple_animal/mouse/rat/newborn_moth/Login()
+/mob/living/simple_animal/grown_larvae/newborn_moth/atom_init()
+	. = ..()
+	AddComponent(/datum/component/gnawing)
+
+/mob/living/simple_animal/grown_larvae/newborn_moth/Login()
 	. = ..()
 	to_chat(src, "<span class='userdanger'>Вы дружелюбная форма жизни готовая съесть что-угодно.</span>")
 
-/mob/living/simple_animal/mouse/rat/newborn_moth/atom_init()
+/mob/living/simple_animal/grown_larvae/newborn_moth/atom_init()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/handle_evolving), 100, TIMER_UNIQUE)
 
-/mob/living/simple_animal/mouse/rat/newborn_moth/evolve_to_young_adult()
+/mob/living/simple_animal/grown_larvae/newborn_moth/evolve_to_young_adult()
 	var/mob/living/simple_animal/grown_larvae/small_moth/moth = new(get_turf(loc))
 	mind.transfer_to(moth)
 	qdel(src)
 
-/mob/living/simple_animal/mouse/rat/newborn_moth/death()
+/mob/living/simple_animal/grown_larvae/newborn_moth/death()
 	if(butcher_results)
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
