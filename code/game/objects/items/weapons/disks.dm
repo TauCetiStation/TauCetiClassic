@@ -2,6 +2,7 @@
 /obj/item/weapon/disk
 	icon = 'icons/obj/disks.dmi'
 	w_class = SIZE_MINUSCULE
+	cases = list("дискета", "дискеты", "дискете", "дискету", "дискетой", "дискете")
 	icon_state = "datadisk0"
 	item_state = "datadisk0"
 	item_state_world = "datadisk0_world"
