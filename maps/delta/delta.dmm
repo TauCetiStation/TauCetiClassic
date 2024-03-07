@@ -4565,6 +4565,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/weapon/paper/depacc{
+	department_name = "Security"
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -6685,7 +6688,8 @@
 /obj/machinery/door_control{
 	id = "armouryaccess";
 	name = "Armory Blast Doors";
-	pixel_y = -26
+	pixel_y = -26;
+	req_access = list(3)
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
@@ -14463,20 +14467,6 @@
 /obj/machinery/deployable/barrier,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
-"ayg" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
 "ayh" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -14506,20 +14496,6 @@
 	dir = 6
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
-"ayl" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor,
 /area/station/maintenance/dormitory)
 "aym" = (
 /obj/structure/cable{
@@ -14570,20 +14546,6 @@
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
-"ayq" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
 "ayr" = (
 /obj/structure/grille{
 	destroyed = 1
@@ -14929,12 +14891,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/dormitory)
-"ayU" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
 "ayV" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -15141,20 +15097,6 @@
 "azu" = (
 /turf/simulated/wall,
 /area/station/bridge/captain_quarters)
-"azv" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/maintenance/dormitory)
 "azw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment{
@@ -15181,7 +15123,6 @@
 	icon_state = "delivery"
 	},
 /obj/effect/decal/cleanable/blood,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/maintenance/dormitory)
 "azy" = (
@@ -15381,20 +15322,6 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
-"azR" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/turf/simulated/floor,
-/area/station/maintenance/dormitory)
 "azS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -15805,7 +15732,7 @@
 /obj/effect/decal/cleanable/vomit{
 	icon_state = "vomit_4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aAC" = (
 /obj/item/clothing/mask/breath{
@@ -15862,10 +15789,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "aAI" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+/obj/machinery/door/firedoor,
+/obj/structure/barricade/wooden{
+	layer = 2.8;
+	name = "doorway barricade"
 	},
-/turf/simulated/floor,
+/obj/machinery/door/airlock/maintenance{
+	name = "Dormitory Maintenance";
+	req_access = list(12)
+	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aAJ" = (
 /obj/structure/rack,
@@ -15908,8 +15841,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aAM" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor,
+/obj/item/weapon/crowbar/red,
+/turf/simulated/floor/wood,
 /area/station/maintenance/dormitory)
 "aAN" = (
 /obj/structure/blob/tunelled,
@@ -15962,14 +15895,10 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "aAS" = (
-/obj/machinery/camera{
-	c_tag = "Gym East";
-	dir = 7
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/fancy/crayons,
+/turf/simulated/floor/wood,
+/area/station/maintenance/dormitory)
 "aAT" = (
 /obj/structure/table/reinforced,
 /obj/structure/cable{
@@ -16010,27 +15939,13 @@
 	},
 /area/station/civilian/gym)
 "aAX" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/machinery/door/airlock/maintenance{
-	dir = 4;
-	name = "Dormitory Maintenance";
-	req_access = list(12)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/gym)
+/obj/effect/decal/remains/robot,
+/turf/simulated/floor/wood,
+/area/station/maintenance/dormitory)
 "aAY" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor,
+/obj/item/device/camera/oldcamera,
+/obj/structure/table/woodentable,
+/turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aAZ" = (
 /obj/structure/table,
@@ -16055,10 +15970,8 @@
 	},
 /area/station/rnd/xenobiology)
 "aBa" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/turf/simulated/floor/plating,
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/wood,
 /area/station/maintenance/dormitory)
 "aBb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -167276,8 +167189,8 @@ awu
 awZ
 axz
 axD
-ayU
-azv
+avu
+ayn
 avx
 avx
 avx
@@ -167533,7 +167446,7 @@ awv
 axa
 axA
 axD
-aAI
+axT
 aym
 avx
 azi
@@ -168047,7 +167960,7 @@ aww
 aww
 axC
 axD
-ayg
+ayk
 azx
 aAL
 azy
@@ -168304,7 +168217,7 @@ awx
 axe
 axD
 axD
-ayl
+ayn
 axT
 avx
 azk
@@ -168560,8 +168473,8 @@ avO
 awy
 axf
 axD
-axR
-ayq
+ayK
+aym
 avu
 avx
 avx
@@ -168817,14 +168730,14 @@ avP
 awz
 axg
 axD
-axS
-ayl
+aye
+ayn
 avu
 avx
 aAN
 aAO
 avx
-aAS
+ncp
 aAV
 aBb
 aBg
@@ -169074,8 +168987,8 @@ suL
 suL
 suL
 awb
-avu
-ayl
+axS
+ayn
 ayJ
 avx
 aAN
@@ -169332,14 +169245,14 @@ awC
 awC
 awb
 axT
-ayl
-ayK
+ayn
+axR
 avx
 avx
 avx
 avx
 dJL
-aAX
+dJL
 dJL
 dJL
 cym
@@ -169589,15 +169502,15 @@ awa
 axh
 awb
 avu
-ayl
+ayn
+axT
 aAB
-avu
 ayS
 azm
 azm
 avx
 aAY
-avu
+aAS
 dJL
 plf
 kHU
@@ -169846,15 +169759,15 @@ awD
 axi
 awb
 avu
-azR
-azy
-aAM
-aAM
-azy
-azy
-azy
+ayn
+avu
+axT
+axT
+avu
+avu
+aAI
 aBa
-aye
+aBa
 dJL
 kHU
 rbK
@@ -170108,10 +170021,10 @@ avu
 ayZ
 axT
 avu
-axT
 aAU
-avu
-awh
+avx
+aAM
+aAX
 dJL
 plf
 htC
