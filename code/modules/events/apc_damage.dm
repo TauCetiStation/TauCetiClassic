@@ -3,7 +3,6 @@
 
 /datum/event/apc_damage/start()
 	var/obj/machinery/power/apc/A = acquire_random_apc()
-	notify_ghosts("[A.name] is coming!", source=A, action=NOTIFY_ORBIT, header="[A.name]")
 	var/severity_range = rand(7,15)
 	if(severity == EVENT_LEVEL_MODERATE)
 		severity_range = rand(15,23)
