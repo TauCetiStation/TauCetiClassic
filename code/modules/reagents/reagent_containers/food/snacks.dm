@@ -940,11 +940,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no Raisins"
 	icon_state = "4no_raisins"
-	desc = "Best raisins in the universe. Not sure why."
+	desc = "Most nutritious raisins in the universe. Not sure why."
 	filling_color = "#343834"
 	w_class = SIZE_MIDGET
-	bitesize = 2
-	list_reagents = list("plantmatter" = 1, "sugar" = 1)
+	bitesize = 6
+	list_reagents = list("plantmatter" = 3, "sugar" = 3)
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
 

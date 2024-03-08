@@ -167,38 +167,35 @@
 		A.Bumped(src)
 
 
+
 /atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE)
-	if(destination)
-		if(pulledby && !keep_pulling)
-			pulledby.stop_pulling()
-		var/atom/oldloc = loc
-		var/same_loc = (oldloc == destination)
-		var/area/old_area = get_area(oldloc)
-		var/area/destarea = get_area(destination)
+	if(!destination)
+		return
+	if(pulledby && !keep_pulling)
+		pulledby.stop_pulling()
+	var/atom/oldloc = loc
+	var/same_loc = (oldloc == destination)
+	var/area/old_area = get_area(oldloc)
+	var/area/destarea = get_area(destination)
+	loc = destination
+	if(!keep_moving_diagonally)
+		moving_diagonally = FALSE
+	if(!same_loc)
+		if(oldloc)
+			oldloc.Exited(src, destination)
+			if(old_area && old_area != destarea)
+				old_area.Exited(src, destination)
+		for(var/atom/movable/AM in oldloc)
+			AM.Uncrossed(src)
+		destination.Entered(src, oldloc)
+		if(destarea && old_area != destarea)
+			destarea.Entered(src, oldloc)
 
-		loc = destination
-
-		if(!keep_moving_diagonally)
-			moving_diagonally = FALSE
-
-		if(!same_loc)
-			if(oldloc)
-				oldloc.Exited(src, destination)
-				if(old_area && old_area != destarea)
-					old_area.Exited(src, destination)
-			for(var/atom/movable/AM in oldloc)
-				AM.Uncrossed(src)
-			destination.Entered(src, oldloc)
-			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
-
-			for(var/atom/movable/AM in destination)
-				if(AM == src)
-					continue
-				AM.Crossed(src, oldloc)
-		Moved(oldloc, 0)
-		return TRUE
-	return FALSE
+		for(var/atom/movable/AM in destination)
+			if(AM == src)
+				continue
+			AM.Crossed(src, oldloc)
+	Moved(oldloc, 0)
 
 /mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
 	if(!keep_pulling)

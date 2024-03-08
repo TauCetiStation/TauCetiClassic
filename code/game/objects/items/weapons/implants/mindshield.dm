@@ -77,7 +77,7 @@
 	if(.)
 		if(M.mind)
 			var/cleared_role = FALSE
-			var/list/remove_roles = list(TRAITOR, NUKE_OP, NUKE_OP_LEADER, HEADREV, GANGSTER_LEADER, IMPOSTER)
+			var/list/remove_roles = list(TRAITOR, NUKE_OP, NUKE_OP_LEADER, HEADREV, GANGSTER_LEADER)
 			for(var/role in remove_roles)
 				var/datum/role/R = M.mind.GetRole(role)
 				if(!R)

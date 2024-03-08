@@ -200,11 +200,14 @@
 #define COMSIG_INSTRUMENT_REPEAT "instrument_repeat"
 ///sent to the instrument when tempo changes, skipped on new: (datum/music_player)
 #define COMSIG_INSTRUMENT_TEMPO_CHANGE "instrument_tempo_change"
-// /obj
+
+// /obj signals
 /// from base of datum/religion_rites/reset_rite_wrapper(): ()
 #define COMSIG_OBJ_RESET_RITE "obj_reset_rite"
 /// from base of datum/religion_rites/start(): ()
 #define COMSIG_OBJ_START_RITE "obj_start_rite"
+///from base of /turf/proc/levelupdate(). (underfloor_accessibility)
+#define COMSIG_OBJ_LEVELUPDATE "obj_levelupdate"
 
 // /obj/item signals
 /// from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)

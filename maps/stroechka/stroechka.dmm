@@ -1153,7 +1153,6 @@
 /obj/machinery/computer/general_air_control{
 	dir = 4;
 	frequency = 1444;
-	level = 3;
 	name = "Incinerator Monitor";
 	sensors = list("inc_meter"="Incinerator pipe meter","incinerator_sensor"="Incinerator sensor")
 	},
@@ -1665,7 +1664,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "da" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench,
+/obj/structure/stool/bed/bench,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
@@ -1798,7 +1797,7 @@
 	},
 /area/station/cargo/storage)
 "dj" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench{
+/obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
 	},
 /obj/structure/cable{
@@ -4007,7 +4006,7 @@
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
 "jW" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench{
+/obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
 	},
 /turf/simulated/floor,
@@ -6580,7 +6579,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "EP" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench{
+/obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
 	},
 /obj/structure/cable{
@@ -6613,7 +6612,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "Fe" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench{
+/obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -6700,14 +6699,14 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "FA" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench,
+/obj/structure/stool/bed/bench,
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "FB" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench,
+/obj/structure/stool/bed/bench,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -8145,7 +8144,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "Qo" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench,
+/obj/structure/stool/bed/bench,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "Qp" = (
