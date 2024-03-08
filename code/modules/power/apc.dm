@@ -554,7 +554,7 @@
 
 	else if(iscoil(W) && !terminal && opened != APC_COVER_CLOSED && has_electronics != 2)
 		var/turf/TT = get_turf(src)
-		if(TT.intact)
+		if(TT.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first.</span>")
 			return
 		var/obj/item/stack/cable_coil/C = W

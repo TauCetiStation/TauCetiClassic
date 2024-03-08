@@ -14,3 +14,10 @@
 /datum/event/communications_blackout/start()
 	for(var/obj/machinery/telecomms/T in telecomms_list)
 		T.emplode(1)
+
+/datum/event/communications_blackout/traitor
+	announcement = new /datum/announcement/centcomm/comms_blackout_traitor
+
+/datum/event/communications_blackout/traitor/announce()
+	announcement.play()
+

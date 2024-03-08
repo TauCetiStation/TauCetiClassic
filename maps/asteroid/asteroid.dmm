@@ -3116,6 +3116,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "gw" = (
@@ -3129,7 +3130,7 @@
 "gx" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	id = "research"
+	id = "researchshaft"
 	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
@@ -3216,6 +3217,11 @@
 /area/asteroid/research_outpost/power)
 "gO" = (
 /obj/machinery/portable_atmospherics/powered/pump,
+/obj/machinery/driver_button{
+	id = "researchshaft";
+	layer = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "gP" = (
@@ -13256,6 +13262,10 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
+"WK" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/power)
 "Xb" = (
 /obj/structure/sign/departments/science{
 	icon_state = "science2";
@@ -59261,7 +59271,7 @@ eF
 eF
 fU
 gv
-eF
+WK
 hO
 eF
 ja

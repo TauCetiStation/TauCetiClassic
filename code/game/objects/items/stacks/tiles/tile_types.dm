@@ -135,3 +135,20 @@
 	item_state = "tile-carpet-cyan"
 	turf_type = /turf/simulated/floor/carpet/cyan
 	carpet_icon_state = "cyancarpet"
+
+/*
+ * Catwalk tiles
+ */
+
+/obj/item/stack/tile/grid
+	name = "grid tile"
+	singular_name = "grid floor tile"
+	icon_state = "fr_tile"
+	w_class = SIZE_SMALL
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 3
+	throw_range = 20
+	flags = CONDUCT
+	max_amount = 60
+	turf_type = /turf/simulated/floor/grid_floor
