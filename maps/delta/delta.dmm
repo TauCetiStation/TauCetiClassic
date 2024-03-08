@@ -2257,7 +2257,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/northright{
 	name = "Brig Desk";
-	req_access = list(63)
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -4532,9 +4532,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/item/weapon/paper/depacc{
-	department_name = "Security"
-	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -10219,7 +10216,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/northleft{
 	name = "Brig Desk";
-	req_access = list(63)
+	req_access = list(2)
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -12392,7 +12389,7 @@
 	dir = 4;
 	id_tag = "laborexit";
 	name = "Labor Shuttle";
-	req_access = list(1)
+	req_access = list(63)
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -12768,7 +12765,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
 	name = "Labor Shuttle";
-	req_access = list(1)
+	req_access = list(63)
 	},
 /turf/simulated/floor/plating,
 /area/station/security/processing)
@@ -14555,7 +14552,7 @@
 /obj/machinery/door/airlock/security/glass{
 	dir = 4;
 	name = "Solitary Confinement Maintenance";
-	req_access = list(1)
+	req_access = list(63)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -62582,7 +62579,7 @@
 	desc = "Used to monitor areas of the Security Division.";
 	dir = 1;
 	name = "Security Monitor";
-	network = list("Security");
+	network = list("Security", "Prison");
 	pixel_y = -27
 	},
 /turf/simulated/floor{
