@@ -111146,7 +111146,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "bluecorner"
+	icon_state = "neutralcorner"
 	},
 /area/station/security/lobby)
 "xAm" = (
