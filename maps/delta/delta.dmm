@@ -31840,6 +31840,7 @@
 	req_access = list(12,24)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "efW" = (
@@ -93758,9 +93759,11 @@
 /area/station/medical/virology)
 "tdy" = (
 /obj/machinery/hydroponics/soil,
-/obj/item/weapon/minihoe,
-/obj/machinery/light/smart{
+/obj/machinery/light_construct{
 	dir = 8
+	},
+/obj/item/weapon/light/tube{
+	status = 2
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
@@ -100080,7 +100083,7 @@
 "uKd" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/device/plant_analyzer,
-/obj/machinery/light/smart{
+/obj/machinery/light_construct{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -168071,11 +168074,11 @@ afZ
 afZ
 afZ
 afZ
-afZ
-afZ
-afZ
+uNw
+uNw
+uNw
 aiY
-afZ
+uNw
 afZ
 asu
 arw
@@ -168297,7 +168300,7 @@ plf
 plf
 plf
 plf
-kxB
+lgc
 kHU
 cci
 cgR
@@ -171128,8 +171131,8 @@ plf
 plf
 plf
 plf
-kxB
-kxB
+lgc
+lgc
 kHU
 plf
 plf
@@ -171644,9 +171647,9 @@ plf
 plf
 plf
 plf
-plf
 kHU
-plf
+kHU
+kHU
 vst
 fNT
 wzd
@@ -171655,7 +171658,7 @@ vst
 kHU
 kHU
 kHU
-kHU
+plf
 plf
 adI
 aeS
@@ -171901,9 +171904,9 @@ plf
 plf
 plf
 plf
-kxB
-kxB
-plf
+lgc
+lgc
+kHU
 plf
 emV
 hFb
@@ -171911,7 +171914,7 @@ jJr
 plf
 plf
 plf
-plf
+kHU
 kHU
 kHU
 adI
@@ -172168,7 +172171,7 @@ jKp
 plf
 plf
 plf
-plf
+kHU
 kHU
 plf
 adI
@@ -172425,7 +172428,7 @@ plf
 plf
 plf
 plf
-plf
+kHU
 kHU
 plf
 adI
@@ -172682,7 +172685,7 @@ plf
 plf
 plf
 plf
-kxB
+lgc
 kHU
 plf
 adI
@@ -172725,7 +172728,7 @@ aze
 aza
 plf
 plf
-kHU
+plf
 kHU
 plf
 kHU
@@ -172939,7 +172942,7 @@ plf
 plf
 plf
 plf
-kxB
+lgc
 kHU
 kHU
 kHU
@@ -172982,7 +172985,7 @@ aAJ
 aza
 plf
 plf
-kHU
+plf
 pka
 plf
 kHU
@@ -173196,30 +173199,30 @@ plf
 plf
 plf
 plf
-kxB
-kxB
-kxB
-kxB
-plf
-plf
-kxB
-kxB
-plf
-plf
-plf
-kxB
-kxB
-plf
-plf
-plf
-kxB
-kxB
-kxB
-kxB
-kxB
-kxB
-kxB
-plf
+lgc
+lgc
+lgc
+lgc
+kHU
+kHU
+lgc
+lgc
+kHU
+kHU
+kHU
+lgc
+lgc
+kHU
+kHU
+kHU
+lgc
+lgc
+lgc
+lgc
+lgc
+lgc
+lgc
+kHU
 kHU
 apq
 aqs
@@ -173239,7 +173242,7 @@ avx
 avx
 plf
 plf
-kHU
+plf
 pka
 plf
 dZC
@@ -173476,7 +173479,7 @@ plf
 plf
 plf
 plf
-plf
+kHU
 plf
 apq
 aqr
@@ -173733,7 +173736,7 @@ plf
 plf
 plf
 plf
-plf
+kHU
 kHU
 apq
 apq
@@ -173751,7 +173754,7 @@ avx
 avx
 avx
 avx
-kHU
+plf
 plf
 plf
 plf
@@ -173990,7 +173993,7 @@ plf
 plf
 plf
 plf
-kxB
+lgc
 kHU
 kHU
 plf
@@ -174008,7 +174011,7 @@ kHU
 plf
 plf
 kHU
-kHU
+plf
 plf
 jor
 plf
@@ -174247,25 +174250,25 @@ plf
 plf
 plf
 plf
-kxB
-kxB
-plf
-plf
+lgc
+lgc
+kHU
+kHU
 atF
 atz
 aur
 atF
-plf
-plf
-plf
 kHU
-kxB
-kxB
 kHU
+kHU
+kHU
+lgc
+lgc
+kHU
+kHU
+kHU
+lgc
 plf
-plf
-kxB
-kxB
 plf
 plf
 plf
