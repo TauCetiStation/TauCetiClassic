@@ -1511,9 +1511,6 @@
 	name = "Execution Blast";
 	opacity = 0
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -2426,6 +2423,7 @@
 	},
 /area/station/security/hos)
 "adY" = (
+/obj/machinery/light/small,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredcorners"
@@ -3467,7 +3465,10 @@
 	},
 /area/station/security/main)
 "afI" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -4259,14 +4260,13 @@
 	},
 /area/station/security/warden)
 "ahb" = (
-/obj/machinery/computer/security{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkred"
+	icon_state = "graychoco"
 	},
-/area/station/security/warden)
+/area/station/security/main)
 "ahc" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -4497,19 +4497,16 @@
 	id = "Brig Lockdown Blast Doors";
 	name = "Brig Lockdown";
 	pixel_x = 6;
-	pixel_y = -4;
 	req_access = list(2)
 	},
 /obj/machinery/door_control{
 	id = "hos_blast";
 	name = "Privacy Shutters";
-	pixel_x = -6;
-	pixel_y = -4;
-	req_access = list(2)
+	pixel_x = -6
 	},
 /obj/item/weapon/stamp/sec/hos{
 	pixel_x = -6;
-	pixel_y = 8
+	pixel_y = 12
 	},
 /obj/item/device/taperecorder{
 	pixel_x = 7;
@@ -4847,9 +4844,12 @@
 	},
 /area/station/security/armoury)
 "aib" = (
-/obj/structure/filingcabinet/chestdrawer/black,
+/obj/structure/closet/secure_closet/warden,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "aic" = (
@@ -4964,13 +4964,15 @@
 	},
 /area/station/security/main)
 "ain" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	name = "Warden's Office";
-	req_access = list(3)
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
 	},
 /turf/simulated/floor{
-	icon_state = "darkorangechoco"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "aio" = (
@@ -5134,6 +5136,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -5150,14 +5153,21 @@
 	},
 /area/station/security/main)
 "aiD" = (
-/obj/machinery/computer/prisoner{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkred"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/area/station/security/warden)
+/obj/effect/decal/turf_decal/set_burned,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/simulated/floor,
+/area/station/storage/emergency3)
 "aiE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -5254,29 +5264,13 @@
 	},
 /area/station/security/prison)
 "aiL" = (
-/obj/machinery/door/firedoor{
+/obj/machinery/computer/security{
 	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/door/airlock/highsecurity{
-	dir = 4;
-	name = "Secure Armoury Section";
-	req_access = list(3)
 	},
 /turf/simulated/floor{
-	icon_state = "darkorangechoco"
+	icon_state = "dark"
 	},
-/area/station/security/armoury)
+/area/station/security/warden)
 "aiM" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5341,11 +5335,11 @@
 	},
 /area/station/civilian/dormitories/courtroom)
 "aiT" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
+/obj/machinery/computer/prisoner{
+	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "aiU" = (
@@ -5393,18 +5387,35 @@
 	},
 /area/station/security/main)
 "aiY" = (
-/obj/structure/closet/secure_closet/warden,
-/turf/simulated/floor{
-	icon_state = "darkred"
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
-/area/station/security/warden)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/airlock/highsecurity{
+	dir = 4;
+	name = "Secure Armoury Section";
+	req_access = list(3)
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/armoury)
 "aiZ" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "aja" = (
@@ -5913,7 +5924,10 @@
 "ajO" = (
 /obj/structure/table/woodentable,
 /obj/item/device/microphone/hos,
-/obj/item/clothing/head/beret/sec/hos,
+/obj/item/clothing/head/beret/sec/hos{
+	pixel_x = 12;
+	pixel_y = 12
+	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -6035,13 +6049,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -6225,8 +6239,7 @@
 	id = "Armoury0";
 	name = "Armoury Access";
 	pixel_x = -7;
-	pixel_y = 25;
-	req_access = list(2)
+	pixel_y = 25
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
@@ -7420,11 +7433,16 @@
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
 /obj/item/clothing/shoes/orange,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -9112,11 +9130,14 @@
 	},
 /area/station/security/prison)
 "apv" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	icon_state = "red"
+/obj/structure/filingcabinet/chestdrawer/black,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
 	},
-/area/station/security/prison)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/warden)
 "apw" = (
 /obj/structure/dumbbells_rack,
 /turf/simulated/floor{
@@ -9165,7 +9186,7 @@
 	req_access = list(3)
 	},
 /turf/simulated/floor{
-	icon_state = "darkorangechoco"
+	icon_state = "blackchoco"
 	},
 /area/station/security/warden)
 "apA" = (
@@ -9390,9 +9411,14 @@
 /area/station/storage/emergency3)
 "apR" = (
 /obj/structure/cable{
-	d1 = 4;
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -10006,8 +10032,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "aqW" = (
@@ -10030,22 +10055,16 @@
 	},
 /area/station/security/warden)
 "aqX" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/disposalpipe/segment,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkred"
+	icon_state = "red"
 	},
-/area/station/security/warden)
+/area/station/security/prison)
 "aqY" = (
 /obj/effect/decal/turf_decal{
 	dir = 3;
@@ -11194,8 +11213,7 @@
 	pixel_y = -32
 	},
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "asE" = (
@@ -11224,9 +11242,11 @@
 	pixel_x = 22
 	},
 /obj/machinery/light/smart,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "asG" = (
@@ -11292,13 +11312,8 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/obj/machinery/camera{
-	c_tag = "Warden's Office";
-	network = list("SS13","Security")
-	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "asM" = (
@@ -11464,8 +11479,7 @@
 	id = "armouryaccess";
 	name = "Armory Blast Doors";
 	pixel_x = 7;
-	pixel_y = 26;
-	req_access = list(3)
+	pixel_y = 26
 	},
 /obj/machinery/door_control{
 	id = "ArmorDoors";
@@ -12834,8 +12848,7 @@
 	layer = 4.1
 	},
 /turf/simulated/floor{
-	dir = 9;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "avd" = (
@@ -13013,8 +13026,7 @@
 /obj/item/weapon/paper/brig_arsenal,
 /obj/item/weapon/pen/red,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "avw" = (
@@ -13428,8 +13440,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "awl" = (
@@ -13718,8 +13729,7 @@
 	pixel_x = 16
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "awM" = (
@@ -13736,8 +13746,7 @@
 	pixel_x = -6
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkred"
+	icon_state = "dark"
 	},
 /area/station/security/warden)
 "awN" = (
@@ -16558,6 +16567,16 @@
 	icon_state = "darkorangechoco"
 	},
 /area/station/security/execution)
+"aCa" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	name = "Warden's Office";
+	req_access = list(3)
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/security/warden)
 "aCh" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -91888,6 +91907,9 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering/minisat_secure_area)
 "sEz" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -159737,7 +159759,7 @@ vxm
 wtb
 lGt
 brW
-asO
+aiD
 afS
 plf
 hpt
@@ -164630,7 +164652,7 @@ hlv
 aiA
 aph
 ard
-apv
+aqX
 arl
 aBs
 arz
@@ -166426,7 +166448,7 @@ agj
 ahj
 ahn
 avc
-ahb
+aiL
 aqV
 asD
 awB
@@ -166685,8 +166707,8 @@ ahn
 awM
 aha
 aqW
-aiT
-ain
+aiZ
+aCa
 aje
 afO
 amj
@@ -166942,7 +166964,7 @@ awB
 awL
 ahd
 aiI
-aiY
+aib
 arg
 arp
 ars
@@ -167199,7 +167221,7 @@ awB
 avv
 aiE
 aiJ
-aiZ
+ain
 arg
 arq
 art
@@ -167456,7 +167478,7 @@ awB
 awk
 ahc
 aiM
-aib
+apv
 arg
 arq
 aru
@@ -167711,8 +167733,8 @@ agU
 bUn
 awB
 asL
-aiD
-aqX
+aiT
+aiM
 asF
 awB
 asK
@@ -167969,7 +167991,7 @@ afZ
 afZ
 afZ
 afZ
-aiL
+aiY
 afZ
 afZ
 asu
@@ -170013,7 +170035,7 @@ adG
 afV
 aiq
 afH
-afH
+afI
 agA
 aef
 asP
@@ -170270,7 +170292,7 @@ oYL
 wHE
 aeM
 aef
-aef
+ahb
 afN
 aef
 cin
@@ -171812,7 +171834,7 @@ kHU
 adI
 aeT
 aef
-afI
+aef
 aka
 afQ
 ahB
