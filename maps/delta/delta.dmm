@@ -6201,12 +6201,15 @@
 /area/station/security/armoury)
 "akm" = (
 /obj/structure/table,
-/obj/item/device/taperecorder,
 /obj/machinery/camera{
 	c_tag = "Security Office";
 	dir = 1;
 	network = list("SS13","Security")
 	},
+/obj/item/toy/figure/secofficer{
+	pixel_y = 12
+	},
+/obj/item/device/taperecorder,
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
@@ -8895,6 +8898,9 @@
 /area/station/security/prison)
 "aoY" = (
 /obj/machinery/hologram/holopad,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "aoZ" = (
@@ -9133,6 +9139,9 @@
 /obj/structure/filingcabinet/chestdrawer/black,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/toy/figure/warden{
+	pixel_y = 14
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -14918,6 +14927,7 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
+/obj/item/weapon/cigbutt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "ayR" = (
