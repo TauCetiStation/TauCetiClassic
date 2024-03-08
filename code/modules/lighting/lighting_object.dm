@@ -10,6 +10,8 @@
 	mouse_opacity    = MOUSE_OPACITY_TRANSPARENT
 	invisibility     = INVISIBILITY_LIGHTING
 
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | NO_CLIENT_COLOR
+
 	simulated = FALSE
 	flags = NOREACT
 	flags_2 = PROHIBIT_FOR_DEMO_2 // can corrupt the demo
