@@ -56,8 +56,8 @@
 
 /atom/movable/screen/blob/blob_help
 	icon_state = "ui_help"
-	name = "Blob Help"
-	desc = "Help on playing blob!"
+	name = "Руководство для игры"
+	desc = "Помогите! Я не умею играть на этом..."
 	screen_loc = "WEST:6,NORTH:-3"
 
 /atom/movable/screen/blob/blob_help/Click()
@@ -67,8 +67,8 @@
 
 /atom/movable/screen/blob/jump_to_node
 	icon_state = "ui_tonode"
-	name = "Jump to Node"
-	desc = "Moves your camera to a selected blob node."
+	name = "Перемещение к узлу"
+	desc = "Вы перемещаетесь к выбранному узлу."
 	screen_loc = ui_inventory
 
 /atom/movable/screen/blob/jump_to_node/Click()
@@ -78,8 +78,8 @@
 
 /atom/movable/screen/blob/jump_to_core
 	icon_state = "ui_tocore"
-	name = "Jump to Core"
-	desc = "Moves your camera to your blob core."
+	name = "Перемещение к ядру"
+	desc = "Вы перемещаетесь к своему ядру."
 	screen_loc = ui_zonesel
 
 /atom/movable/screen/blob/jump_to_core/Click()
@@ -90,8 +90,8 @@
 
 /atom/movable/screen/blob/shield
 	icon_state = "ui_shield"
-	name = "Upgrade blob to shield (10)"
-	desc = "Create a shield blob. <br>Use it again on existing shield blob to upgrade it into a reflective blob."
+	name = "Укрепить блоба (10)"
+	desc = "Создаёт укрепленного блоба. <br>Используйте снова на укреплённом блобе для улучшения в отражающего блоба."
 	screen_loc = ui_id
 
 /atom/movable/screen/blob/shield/Click()
@@ -101,8 +101,8 @@
 
 /atom/movable/screen/blob/resource_blob
 	icon_state = "ui_resource"
-	name = "Produce Resource Blob (40)"
-	desc = "Produces a resource blob for 40 resources.<br>Resource blobs will give you resources every few seconds."
+	name = "Создать ресурсную ячейку (40)"
+	desc = "Создаёт ресурсную ячейку блоба.<br>Ячейка создаёт ресурсы раз в несколько секунд."
 	screen_loc = ui_belt
 
 /atom/movable/screen/blob/resource_blob/Click()
@@ -112,8 +112,8 @@
 
 /atom/movable/screen/blob/node_blob
 	icon_state = "ui_node"
-	name = "Produce Node Blob (60)"
-	desc = "Produces a node blob for 60 resources.<br>Node blobs will expand and activate nearby resource and factory blobs."
+	name = "Создать узел блоба (60)"
+	desc = "Создаёт узел блоба.<br>Узел ускоряет работу производящих и ресурсных ячеек, в то же время захватывая пространство возле себя."
 	screen_loc = ui_back
 
 /atom/movable/screen/blob/node_blob/Click()
@@ -123,8 +123,8 @@
 
 /atom/movable/screen/blob/factory_blob
 	icon_state = "ui_factory"
-	name = "Produce Factory Blob (60)"
-	desc = "Produces a factory blob for 60 resources.<br>Factory blobs will produce spores every few seconds."
+	name = "Создать производящую ячейку (60)"
+	desc = "Создаёт производящую ячейку.<br>Производящие ячейки создают споры блоба раз в несколько секунд."
 	screen_loc = ui_rhand
 
 /atom/movable/screen/blob/factory_blob/Click()
@@ -134,8 +134,8 @@
 
 /atom/movable/screen/blob/blobbernaut
 	icon_state = "ui_blobbernaut"
-	name = "Produce Blobbernaut (40)"
-	desc = "Produces a strong, smart blobbernaut from a factory blob for (40) resources.<br>The factory blob used will become fragile and unable to produce spores."
+	name = "Создать блоббернаута (40)"
+	desc = "Создаёт крепкого и умного блоббернаута.<br>Производящая ячейка, создавшая блоббернаута, становится неактивной и хрупкой до смерти блоббернаута."
 	screen_loc = ui_lhand
 
 /atom/movable/screen/blob/blobbernaut/Click()
@@ -145,8 +145,8 @@
 
 /atom/movable/screen/blob/rally_spores
 	icon_state = "ui_spore"
-	name = "Rally Spores (5)"
-	desc = "Rally the spores to move to your location"
+	name = "Призыв спор (5)"
+	desc = "Призовите споры в выбранную локацию."
 	screen_loc = ui_storage1
 
 /atom/movable/screen/blob/rally_spores/Click()
@@ -156,8 +156,8 @@
 
 /atom/movable/screen/blob/relocate_core
 	icon_state = "ui_swap"
-	name = "Relocate Core (80)"
-	desc = "Swaps a node and your core for 80 resources."
+	name = "Перемещение ядра (80)"
+	desc = "Выбранный узел меняется с ядром местами."
 	screen_loc = ui_storage2
 
 /atom/movable/screen/blob/relocate_core/Click()

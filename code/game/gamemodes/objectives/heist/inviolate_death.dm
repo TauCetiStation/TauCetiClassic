@@ -3,7 +3,7 @@
 var/global/vox_kills = 0 //Used to check the Inviolate.
 
 /datum/objective/heist/inviolate_death
-	explanation_text = "Follow the Inviolate. Minimise death and loss of resources."
+	explanation_text = "Следуйте принципу неприкосновенности. Не допустите большого количества жертв."
 
 /datum/objective/heist/inviolate_death/check_completion()
 	if(vox_kills > MAX_VOX_KILLS)

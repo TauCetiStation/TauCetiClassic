@@ -1,5 +1,5 @@
 /datum/objective/download_telecommunications_data
-	explanation_text = "Download important data from the telecommunications hub to the disk provided to you."
+	explanation_text = "Скачайте важную информацию с телекоммуникационного узла на выданную вам дискету."
 	required_equipment = /obj/item/weapon/disk/telecomms
 
 /datum/objective/download_telecommunications_data/check_completion()
