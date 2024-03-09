@@ -1,5 +1,6 @@
 /obj/structure/blob/resource
 	name = "resource blob"
+	cases = list("ресурсная ячейка", "ресурсной ячейки", "ресурсной ячейке", "ресурсную ячейку", "ресурсной ячейкой", "ресурсной ячейке")
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_resource"
 	max_integrity = 30

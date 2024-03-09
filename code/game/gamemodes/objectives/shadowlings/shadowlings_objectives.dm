@@ -1,5 +1,5 @@
 /datum/objective/enthrall
-	explanation_text = "Ascend to your true form by use of the Ascendance ability. This may only be used with 50% of crew as collective thralls, while hatched, and is unlocked with the Collective Mind ability."
+	explanation_text = "Возвысьтесь в свою истинную форму. Вы сможете это сделать, только если 50% экипажа будет вашими рабами."
 
 /datum/objective/enthrall/check_completion()
 	var/datum/faction/shadowlings/S = faction

@@ -176,7 +176,7 @@
 		add_fingerprint(user)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.job == "Clown")
+			if(H.job == "Clown" || stage_of_effect == 2)
 				to_chat(user, "<span class = 'notice'>You concentrate your power into a one big bad joke and make the [src] much stronger.</span>")
 				on = TRUE
 
@@ -1602,6 +1602,7 @@ Owl & Griffin toys
 
 /obj/item/toy/plushie/space_whale
 	name = "space whale"
+	cases = list("плюшевый космокит", "плюшевого космокита", "плюшевому космокиту", "плюшевого космокита", "плюшевым космокитом", "плюшевом космоките")
 	icon_state = "tau_kit"
 
 /obj/item/toy/plushie/girly_corgi
