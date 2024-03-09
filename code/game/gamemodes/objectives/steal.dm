@@ -33,29 +33,29 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	var/target_name
 	var/list/items_to_steal = list()
 	var/static/possible_items[] = list(
-		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
-		"a hand teleporter" = /obj/item/weapon/hand_tele,
-		"a captain's jetpack" = /obj/item/weapon/tank/jetpack/oxygen,
-		"a functional AI" = /obj/item/device/aicard,
-		"the station blueprints" = /obj/item/blueprints,
-		"a head of security's augmented shades" = /obj/item/clothing/glasses/hud/hos_aug,
-		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray/cmo,
-		"a Research Director's teleport armor" = /obj/item/clothing/suit/armor/vest/reactive,
-		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
-		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
-		"the golden fire extinguisher" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
-	)
+		"антикварный лазер капитана" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
+		"ручной телепортер" = /obj/item/weapon/hand_tele,
+		"реактивный ранец капитана" = /obj/item/weapon/tank/jetpack/oxygen,
+		"функционирующий ИИ" = /obj/item/device/aicard,
+		"чертежи станции" = /obj/item/blueprints,
+		"аугментированные очки ГСБ" = /obj/item/clothing/glasses/hud/hos_aug,
+		"кусок мяса корги" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		"гипоспрей" = /obj/item/weapon/reagent_containers/hypospray/cmo,
+		"телепортационную броню научрука" = /obj/item/clothing/suit/armor/vest/reactive,
+		"капитанский целеуказатель" = /obj/item/weapon/pinpointer,
+		"аблятивная броня" = /obj/item/clothing/suit/armor/laserproof,
+		"золотой огнетушитель" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
+  )
 
 	var/static/possible_items_special[] = list(
 		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
-		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
-		"diamond drill" = /obj/item/weapon/pickaxe/drill/diamond_drill,
-		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
-		"hyper-capacity cell" = /obj/item/weapon/stock_parts/cell/hyper,
-		"10 diamonds" = /obj/item/stack/sheet/mineral/diamond,
-		"50 gold bars" = /obj/item/stack/sheet/mineral/gold,
-		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
+		"продвинутое энергооружие" = /obj/item/weapon/gun/energy/gun/nuclear,
+		"алмазную дрель" = /obj/item/weapon/pickaxe/drill/diamond_drill,
+		"сумку для хранения" = /obj/item/weapon/storage/backpack/holding,
+		"гиперёмкую батарейку" = /obj/item/weapon/stock_parts/cell/hyper,
+		"10 алмазов" = /obj/item/stack/sheet/mineral/diamond,
+		"50 золотых слитков" = /obj/item/stack/sheet/mineral/gold,
+		"25 слитков очищенного урана" = /obj/item/stack/sheet/mineral/uranium,
 	)
 
 /datum/objective/steal/proc/get_possible_items()
@@ -70,7 +70,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	steal_target = items_to_steal[target_name]
 	if (!steal_target )
 		steal_target = possible_items_special[target_name]
-	explanation_text = "Steal [target_name]."
+	explanation_text = "Украдите [target_name]."
 	return steal_target
 
 
@@ -80,17 +80,17 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 
 /datum/objective/steal/select_target()
 	var/list/possible_items_all = possible_items+possible_items_special+"custom"
-	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
+	var/new_target = input("Выберите цель:", "Цель задачи", steal_target) as null|anything in possible_items_all
 	if (!new_target)
 		return FALSE
 	if (new_target == "custom")
-		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
+		var/obj/item/custom_target = input("Выберите цель задачи:","Цель") as null|anything in typesof(/obj/item)
 		if (!custom_target)
 			return FALSE
 		var/tmp_obj = new custom_target
 		var/custom_name = tmp_obj:name
 		qdel(tmp_obj)
-		custom_name = sanitize_safe(input("Enter target name:", "Objective target", input_default(custom_name)) as text|null)
+		custom_name = sanitize_safe(input("Введите название цели:", "Цель задачи", input_default(custom_name)) as text|null)
 		if (!custom_name)
 			return FALSE
 		target_name = custom_name
@@ -106,16 +106,16 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	if(!isliving(owner.current))	return OBJECTIVE_LOSS
 	var/list/all_items = owner.current.GetAllContents()
 	switch (target_name)
-		if("28 moles of phoron (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
+		if("28 молей форона (полный бак)","10 алмазов","50 золотых слитков","25 слитков очищенного урана")
 			var/target_amount = text2num(target_name)//Non-numbers are ignored.
 			var/found_amount = 0.0//Always starts as zero.
 
 			for(var/obj/item/I in all_items) //Check for phoron tanks
 				if(istype(I, steal_target))
-					found_amount += (target_name == "28 moles of phoron (full tank)" ? (I:air_contents:gas["phoron"]) : (I:amount))
+					found_amount += (target_name == "28 молей форона (полный бак)" ? (I:air_contents:gas["phoron"]) : (I:amount))
 			return found_amount>=target_amount
 
-		if("50 coins (in bag)")
+		if("50 монеток (в мешочке)")
 			var/obj/item/weapon/moneybag/B = locate() in all_items
 
 			if(B)
@@ -125,7 +125,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 					found_amount++
 				return found_amount>=target
 
-		if("a functional AI")
+		if("функционирующий ИИ")
 			for(var/obj/item/device/aicard/C in all_items) //Check for ai card
 				for(var/mob/living/silicon/ai/M in C)
 					if(isAI(M) && M.stat != DEAD) //See if any AI's are alive inside that card.
@@ -157,9 +157,8 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	return OBJECTIVE_LOSS
 
 /datum/objective/steal/non_heads_items/get_possible_items()
-	return list("a functional AI" = /obj/item/device/aicard,
-                "a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
-                "a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-                "an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
-                "the golden fire extinguisher" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
+	return list("функционирующий ИИ" = /obj/item/device/aicard,
+                "кусок мяса корги" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+                "аблятивная броня" = /obj/item/clothing/suit/armor/laserproof,
+                "золотой огнетушитель" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
 	)

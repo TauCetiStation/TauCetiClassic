@@ -6,6 +6,7 @@ var/global/list/blob_nodes = list()
 
 /obj/structure/blob/core
 	name = "blob core"
+	cases = list("ядро блоба", "ядра блоба", "ядру блоба", "ядро блоба", "ядром блоба", "ядре блоба")
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_core"
 	max_integrity = 200

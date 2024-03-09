@@ -49,7 +49,7 @@ var/global/list/target_objectives = list()
 	return targets
 
 /datum/objective/target/select_target()
-	var/new_target = input("Select target:", "Objective target", null) as null|anything in get_targets()
+	var/new_target = input("Выберите цель:", "Цель задания", null) as null|anything in get_targets()
 	if(!new_target)
 		return FALSE
 	auto_target = FALSE
@@ -58,5 +58,5 @@ var/global/list/target_objectives = list()
 	return TRUE
 
 /datum/objective/target/proc/format_explanation()
-	return "Somebody didn't override the format explanation text here. Objective type is [type]. Target is [target.name], have fun."
+	return "Тут не написано текста для обьяснения. Тип задания - [type]. Задача - [target.name], веселись."
 
