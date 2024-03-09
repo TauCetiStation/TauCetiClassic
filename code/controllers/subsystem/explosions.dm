@@ -239,6 +239,12 @@ SUBSYSTEM_DEF(explosions)
 		if(prob(40) && dist < flame_range && !isspaceturf(explode) && !explode.density)
 			flameturf += explode
 
+		for(var/datum/objective/bomb/b in global.global_objectives)
+			var/area/A = get_area(epicenter)
+			for(var/area in b.areas_for_objective)
+				if(istype(A, area) && devastation_range >= 1)
+					b.already_completed = TRUE
+
 // Explosion SFX defines...
 /// The probability that a quaking explosion will make the station creak per unit. Maths!
 #define QUAKE_CREAK_PROB 30
@@ -455,5 +461,5 @@ SUBSYSTEM_DEF(explosions)
 				continue
 			EX_ACT(movable_thing, EXPLODE_LIGHT)
 		cost_low_mov_atom = MC_AVERAGE(cost_low_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-	
+
 	currentpart = SSEXPLOSIONS_TURFS

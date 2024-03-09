@@ -31,7 +31,6 @@
 	var/active = FALSE		//is the bomb counting down?
 	var/defused = FALSE		//is the bomb capable of exploding?
 	var/degutted = FALSE	//is the bomb even a bomb anymore?
-	var/for_objective = FALSE
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
@@ -40,10 +39,6 @@
 		explosion(loc, 2, 5, 11)
 		degutted = TRUE // prevent double caboom
 		qdel(src)
-		var/datum/faction/traitor/faction = find_faction_by_type(/datum/faction/traitor)
-		for(var/datum/role/traitor/T in faction.members)
-			for(var/datum/objective/bomb/b in T.objectives.objectives)
-				b.already_completed = TRUE
 
 /obj/machinery/syndicatebomb/atom_break()
 	if(!try_detonate())
@@ -84,18 +79,6 @@
 				add_fingerprint(user)
 				if(!do_skill_checks(user))
 					return
-				if(for_objective)
-					var/can_be_planted = FALSE
-					var/turf/bombturf = get_turf(src)
-					var/area/A = get_area(bombturf)
-					var/datum/objective/bomb/b
-					for(var/area in b.areas_for_objective)
-						if(istype(A, area))
-							can_be_planted = TRUE
-					if(!can_be_planted)
-						to_chat(user, "<span class='notice'>For some reason, you can't attach bomb here.</span>")
-						return
-
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
 				anchored = TRUE
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
