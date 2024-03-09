@@ -1,5 +1,5 @@
 /datum/objective/target/assassinate/format_explanation()
-	return "Assassinate [target.current.real_name], the [target.assigned_role]."
+	return "Ликвидируйте [target.current.real_name], представителя [target.assigned_role]."
 
 /datum/objective/target/assassinate/check_completion()
 	var/mob/M = target.current
@@ -10,7 +10,7 @@
 	return OBJECTIVE_WIN
 
 /datum/objective/target/assassinate_heads/format_explanation()
-	return "Assassinate Heads of Staff."
+	return "Ликвидируйте глав станции."
 
 /datum/objective/target/assassinate_heads/check_completion()
 	var/list/heads = get_living_heads()
