@@ -38,7 +38,7 @@
 	BP.status &= ~ORGAN_ARTERY_CUT
 	if (ishuman(user) && prob(40))
 		var/mob/living/carbon/human/H = user
-		H.bloody_hands(target, 0)
+		H.dirty_hands_transfers(target, 0)
 
 /datum/surgery_step/fix_vein/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

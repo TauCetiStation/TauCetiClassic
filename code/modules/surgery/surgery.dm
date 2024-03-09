@@ -50,7 +50,7 @@
 	if(ishuman(user) && prob(60))
 		var/mob/living/carbon/human/H = user
 		if(blood_level)
-			H.bloody_hands(target, 0)
+			H.dirty_hands_transfers(target, 0)
 		if(blood_level > 1)
 			H.bloody_body(target, 0)
 	return

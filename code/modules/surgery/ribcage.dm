@@ -411,7 +411,7 @@
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.bloody_body(target)
-		H.bloody_hands(target, 0)
+		H.dirty_hands_transfers(target, 0)
 //////////////////////////////////////////////////////////////////
 //				EXTRACTING IPC'S BRAIN							//
 //////////////////////////////////////////////////////////////////

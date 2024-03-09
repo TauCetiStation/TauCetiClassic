@@ -979,7 +979,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 		if(ishuman(U))
 			var/mob/living/carbon/human/human_user = U
-			human_user.bloody_hands(H)
+			human_user.dirty_hands_transfers(H)
 
 	selection.forceMove(get_turf(S))
 
