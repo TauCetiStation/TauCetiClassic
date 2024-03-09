@@ -32,7 +32,6 @@
 /atom/movable/screen/plane_master/underfloor
 	name = "underfloor plane master"
 	plane = UNDERFLOOR_PLANE
-	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
@@ -40,7 +39,6 @@
 /atom/movable/screen/plane_master/floor
 	name = "floor plane master"
 	plane = FLOOR_PLANE
-	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
@@ -48,7 +46,6 @@
 /atom/movable/screen/plane_master/game_world
 	name = "game world plane master"
 	plane = GAME_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
@@ -61,7 +58,6 @@
 	name = "above game world plane master"
 	plane = ABOVE_GAME_PLANE
 	render_relay_plane = GAME_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/seethrough
@@ -73,7 +69,6 @@
 /atom/movable/screen/plane_master/ghost
 	name = "ghost plane master"
 	plane = GHOST_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_NON_GAME
 
@@ -90,7 +85,6 @@
 /atom/movable/screen/plane_master/point
 	name = "point plane master"
 	plane = POINT_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
@@ -104,14 +98,13 @@
 	plane = BLACKNESS_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_MULTIPLY
-	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR | PIXEL_SCALE
+	appearance_flags = parent_type::appearance_flags | PIXEL_SCALE
 	//byond internal end
 	render_relay_plane = RENDER_PLANE_GAME
 
 /atom/movable/screen/plane_master/lighting
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
@@ -119,7 +112,7 @@
 /atom/movable/screen/plane_master/exposure
 	name = "exposure plane master"
 	plane = LIGHTING_EXPOSURE_PLANE
-	appearance_flags = PLANE_MASTER|PIXEL_SCALE //should use client color
+	appearance_flags = parent_type::appearance_flags | PIXEL_SCALE
 	blend_mode = BLEND_ADD
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -141,7 +134,6 @@
 /atom/movable/screen/plane_master/lamps_selfglow
 	name = "lamps selfglow plane master"
 	plane = LIGHTING_LAMPS_SELFGLOW
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_ADD
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -180,7 +172,6 @@
 /atom/movable/screen/plane_master/lamps
 	name = "lamps plane master"
 	plane = LIGHTING_LAMPS_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	blend_mode_override = BLEND_OVERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -191,7 +182,6 @@
 /atom/movable/screen/plane_master/lamps_glare
 	name = "lamps glare plane master"
 	plane = LIGHTING_LAMPS_GLARE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode_override = BLEND_OVERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
@@ -212,7 +202,6 @@
 /atom/movable/screen/plane_master/above_lighting
 	name = "above lighting plane master"
 	plane = ABOVE_LIGHTING_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
@@ -281,6 +270,5 @@
 /atom/movable/screen/plane_master/camera_static
 	name = "camera static plane master"
 	plane = CAMERA_STATIC_PLANE
-	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
