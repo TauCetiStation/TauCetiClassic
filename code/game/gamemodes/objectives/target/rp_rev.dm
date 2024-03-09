@@ -1,5 +1,5 @@
 /datum/objective/target/rp_rev/format_explanation()
-	return "Capture, convert or exile from station [target.current.real_name], the [target.assigned_role]. Assassinate if you have no choice."
+	return "Захватите, завербуйте или прогоните со станции [target.current.real_name], представителя [target.assigned_role]. Ликвидация разрешена, если у вас нет выбора."
 
 // less violent rev objectives
 /datum/objective/target/rp_rev/check_completion()

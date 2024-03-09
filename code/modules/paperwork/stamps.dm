@@ -48,6 +48,7 @@
 
 /obj/item/weapon/stamp/cap
 	name = "captain's rubber stamp"
+	cases = list("штамп капитана", "штампа капитана", "штампу капитана", "штамп капитана", "штампом капитана", "штампе капитана")
 	dye_color = DYE_CAPTAIN
 	stamp_message = "Captain"
 	stamp_color = "#2b4e95"
@@ -64,6 +65,7 @@
 
 /obj/item/weapon/stamp/hop
 	name = "head of personnel's rubber stamp"
+	cases = list("штамп ГП", "штампа ГП", "штампу ГП", "штамп ГП", "штампом ГП", "штампе ГП")
 	dye_color = DYE_HOP
 	stamp_message = "Head of Personnel"
 	stamp_color = "#2789cd"
@@ -79,6 +81,7 @@
 
 /obj/item/weapon/stamp/sec/hos
 	name = "head of security's rubber stamp"
+	cases = list("штамп ГСБ", "штампа ГСБ", "штампу ГСБ", "штамп ГСБ", "штампом ГСБ", "штампе ГСБ")
 	stamp_message = "Head of Security"
 	stamp_handle_colored = TRUE
 
@@ -91,6 +94,7 @@
 
 /obj/item/weapon/stamp/eng/ce
 	name = "chief engineer's rubber stamp"
+	cases = list("штамп СИ", "штампа СИ", "штампу СИ", "штамп СИ", "штампом СИ", "штампе СИ")
 	stamp_message = "Chief Engineer"
 	stamp_handle_colored = TRUE
 
@@ -103,6 +107,7 @@
 
 /obj/item/weapon/stamp/sci/rd
 	name = "research director's rubber stamp"
+	cases = list("штамп НР", "штампа НР", "штампу НР", "штамп НР", "штампом НР", "штампе НР")
 	stamp_message = "Research Director"
 	stamp_handle_colored = TRUE
 
@@ -115,6 +120,7 @@
 
 /obj/item/weapon/stamp/med/cmo
 	name = "chief medical officer's rubber stamp"
+	cases = list("штамп главврача", "штампа главврача", "штампу главврача", "штамп главврача", "штампом главврача", "штампе главврача")
 	stamp_message = "Chief Medical Officer"
 	stamp_handle_colored = TRUE
 
@@ -127,6 +133,7 @@
 
 /obj/item/weapon/stamp/cargo/qm
 	name = "quartermaster's rubber stamp"
+	cases = list("штамп завхоза", "штампа завхоза", "штампу завхоза", "штамп завхоза", "штампом завхоза", "штампе завхоза")
 	stamp_message = "Quartermaster"
 	stamp_handle_colored = TRUE
 

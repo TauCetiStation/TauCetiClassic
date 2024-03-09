@@ -1,5 +1,5 @@
 /datum/objective/research_sabotage
-	explanation_text = "Sabotage the R&D servers and systems. Insert the diskette you were given into the R&D Server Controller to complete the objective."
+	explanation_text = "Саботируйте сервера Отдела Исследований. Для этого вам выдана специальная дискета, вставьте её в консоль управления серверной ОИ для выполнения задания."
 	required_equipment = /obj/item/weapon/disk/data/syndi
 	var/already_completed = FALSE
 
@@ -7,5 +7,3 @@
 	if(!already_completed)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
-
-/obj/item/weapon/disk/data/syndi

@@ -1,5 +1,6 @@
 /obj/structure/blob/node
 	name = "blob node"
+	cases = list("узел блоба", "узла блоба", "узлу блоба", "узел блоба", "узлом блоба", "узле блоба")
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_node"
 	max_integrity = 100
