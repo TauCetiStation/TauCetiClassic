@@ -22,7 +22,7 @@
 	if (!user || !imp)
 		return
 	if (isskeleton(M))
-		to_chat(user, "<span class='warning'>А где имплант?</span>")
+		to_chat(user, "<span class='warning'>Куда имплантировать-то?</span>")
 		return
 
 	user.visible_message("<span class ='userdanger'>[user] пытается имплантировать [M].</span>")
