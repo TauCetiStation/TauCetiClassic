@@ -4076,7 +4076,7 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "amw" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red,
@@ -13273,7 +13273,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "bZc" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
@@ -13713,7 +13713,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "cdw" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -19040,7 +19040,7 @@
 	},
 /area/station/civilian/bar)
 "dcO" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
@@ -19084,7 +19084,7 @@
 /turf/simulated/floor/engine/carbon_dioxide,
 /area/station/engineering/atmos)
 "ddB" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/wood{
@@ -19116,7 +19116,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "deo" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /mob/living/simple_animal/mouse,
@@ -20502,9 +20502,7 @@
 /obj/item/device/radio/intercom/pod{
 	pixel_y = -10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
-	dir = 2
-	},
+/obj/structure/stool/bed/chair/schair/wagon/yellow,
 /turf/simulated/shuttle/floor/erokez{
 	dir = 4;
 	icon_state = "floor"
@@ -22932,7 +22930,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "dTP" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -24579,7 +24577,7 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
 "elR" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench{
+/obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
 	},
 /turf/simulated/floor/garden{
@@ -25129,7 +25127,7 @@
 	},
 /area/station/medical/patient_a)
 "eqA" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/structure/curtain/open/bed{
@@ -26768,7 +26766,7 @@
 	},
 /area/station/tcommsat/chamber)
 "eHv" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -29428,7 +29426,7 @@
 	},
 /area/station/bridge/meeting_room)
 "fkE" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = 32
@@ -31474,7 +31472,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "fEZ" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -34548,7 +34546,7 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
 "ghk" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -36102,7 +36100,7 @@
 	},
 /area/station/medical/hallway)
 "gxL" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue,
@@ -36587,7 +36585,7 @@
 /area/station/civilian/bar)
 "gCM" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -37467,7 +37465,7 @@
 	},
 /area/station/security/armoury)
 "gLa" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 1
 	},
 /obj/effect/landmark/start/paramedic,
@@ -38017,7 +38015,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -38920,7 +38918,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "gZo" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench,
+/obj/structure/stool/bed/bench,
 /turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
@@ -39183,7 +39181,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "hcd" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -39205,7 +39203,7 @@
 	},
 /area/station/civilian/kitchen)
 "hcB" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /mob/living/simple_animal/mouse,
@@ -41139,7 +41137,7 @@
 	},
 /area/station/cargo/recycleroffice)
 "hyL" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /obj/machinery/light/smart,
@@ -41309,7 +41307,7 @@
 	},
 /area/station/medical/storage)
 "hAC" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "hAG" = (
@@ -44412,7 +44410,7 @@
 	},
 /area/station/medical/sleeper)
 "ihe" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 4
 	},
 /obj/structure/sign/warning/nosmoking/circle{
@@ -44741,7 +44739,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "ikh" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/blue,
 /area/station/hallway/secondary/entry)
 "ikj" = (
@@ -54371,7 +54369,7 @@
 	},
 /area/station/engineering/atmos)
 "kfm" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "kfo" = (
@@ -55454,7 +55452,7 @@
 	},
 /area/station/hallway/primary/central)
 "krD" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
@@ -55941,7 +55939,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/monitoring)
 "kwN" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -57527,7 +57525,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "kON" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/carpet,
@@ -57993,7 +57991,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "kTX" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "kUb" = (
@@ -58516,7 +58514,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "kYE" = (
-/obj/structure/stool/bed/chair/comfy/teal,
+/obj/structure/stool/bed/chair/comfy/green,
 /obj/effect/landmark/start/paramedic,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -60920,7 +60918,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "lxN" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /mob/living/simple_animal/mouse,
@@ -61715,7 +61713,7 @@
 /turf/simulated/floor/carpet/black,
 /area/station/security/tribunal)
 "lGr" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -63081,7 +63079,7 @@
 /turf/simulated/floor/wood,
 /area/station/medical/patients_rooms)
 "lTW" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -66129,7 +66127,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -66432,7 +66430,7 @@
 	layer = 4;
 	pixel_x = -10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -69687,7 +69685,7 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
 "nmc" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/wood{
@@ -70074,7 +70072,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "npS" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -70588,7 +70586,7 @@
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "nvV" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/wood,
 /area/station/maintenance/science)
 "nvW" = (
@@ -72323,7 +72321,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "nNZ" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/set_damaged,
@@ -76256,7 +76254,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -77126,7 +77124,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -81111,7 +81109,7 @@
 	},
 /area/station/rnd/hor)
 "pCL" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -91142,7 +91140,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
 "rDE" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -93125,7 +93123,7 @@
 /area/station/security/checkpoint)
 "rZG" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -93267,7 +93265,7 @@
 	},
 /area/station/security/blueshield)
 "sbr" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 4
 	},
 /obj/machinery/light/small,
@@ -96090,7 +96088,7 @@
 	},
 /area/station/rnd/hallway)
 "sCK" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/machinery/light/small,
@@ -99109,7 +99107,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "thW" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
@@ -99269,7 +99267,7 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "tjX" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/black,
@@ -102417,7 +102415,7 @@
 /area/station/hallway/primary/central)
 "tOZ" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -102425,7 +102423,7 @@
 	},
 /area/shuttle/escape_pod1/station)
 "tPg" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
@@ -104867,7 +104865,7 @@
 	},
 /area/station/security/brig)
 "umP" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /obj/effect/landmark/start/assistant,
@@ -109027,7 +109025,7 @@
 	},
 /area/station/medical/reception)
 "vej" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -113957,7 +113955,7 @@
 	},
 /area/station/engineering/monitoring)
 "wdg" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/effect/landmark/start/assistant,
 /obj/machinery/light/small{
 	dir = 4
@@ -116322,7 +116320,7 @@
 	},
 /area/station/security/forensic_office)
 "wCO" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
@@ -117959,7 +117957,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/science)
 "wWd" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -119209,7 +119207,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "xjX" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -119737,7 +119735,7 @@
 	},
 /area/station/engineering/rust)
 "xpw" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /mob/living/simple_animal/mouse,
