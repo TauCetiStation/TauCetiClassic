@@ -446,6 +446,7 @@ var/global/bomb_set
 
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
+	cases = list("дискета ядерной аутентификации", "дискеты ядерной аутентификации", "дискете ядерной аутентификации", "дискетой ядерной аутентификации", "дискете ядерной аутентификации")
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 

@@ -1,5 +1,5 @@
 /datum/objective/custom
-	explanation_text = "Just be yourself"
+	explanation_text = "Просто будь собой"
 	completed = OBJECTIVE_WIN
 
 //if user passed - means that this will be called as an explicit custom objective and will require user input
@@ -8,7 +8,7 @@
 		return
 	if(faction)
 		src.faction = faction
-	var/txt = input(user, "What should be the text of this objective?", "Custom objective", "Just be yourself")
+	var/txt = input(user, "Что должно быть в тексте задачи?", "Настраиваемая задача.", "Просто будь собой.")
 	explanation_text = txt
 
 /datum/objective/custom/wishgranter
@@ -16,17 +16,17 @@
 /datum/objective/custom/wishgranter/New()
 	switch(rand(1,100))
 		if(1 to 50)
-			explanation_text = "Steal [pick("a hand teleporter", "the Captain's antique laser gun", "a jetpack", "the Captain's ID", "the Captain's jumpsuit")]."
+			explanation_text = "Укради [pick("ручной телепортер", "антикварный лазер капитана", "реактивный ранец", "ID-карту капитана", "капитанскую униформу")]."
 		if(51 to 60)
-			explanation_text = "Destroy 70% or more of the station's phoron tanks."
+			explanation_text = "Уничтожьте 70% баков с фороном на станции."
 		if(61 to 70)
-			explanation_text = "Cut power to 80% or more of the station's tiles."
+			explanation_text = "Перекройте подачу энергии на станции."
 		if(71 to 80)
-			explanation_text = "Destroy the AI."
+			explanation_text = "Уничтожьте ИИ."
 		if(81 to 90)
-			explanation_text = "Kill all monkeys aboard the station."
+			explanation_text = "Убейте всех обезьян на станции."
 		else
-			explanation_text = "Make certain at least 80% of the station evacuates on the shuttle."
+			explanation_text = "Минимум 80% членов экипажа должно покинуть станцию на шаттле."
 
 /datum/objective/custom/clowns
-	explanation_text = "Emag as many things as you can! HONK!"
+	explanation_text = "Взломай столько вещей, сколько сможешь! ХОООНК!"
