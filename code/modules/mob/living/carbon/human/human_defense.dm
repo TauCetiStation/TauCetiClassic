@@ -362,7 +362,7 @@
 				var/mob/living/carbon/human/H = user
 				if(get_dist(H, src) <= 1) //people with TK won't get smeared with blood
 					H.bloody_body(src)
-					H.dirty_hands_transfers(src)
+					H.bloody_hands(src)
 
 		switch(hit_area)
 			if(BP_HEAD)//Harder to score a stun but if you do it lasts a bit longer
@@ -410,7 +410,7 @@
 
 	BP.embed(I, null, null, created_wound)
 
-/mob/living/carbon/human/dirty_hands_transfers(mob/living/carbon/human/source, amount = 2)
+/mob/living/carbon/human/bloody_hands(mob/living/carbon/human/source, amount = 2)
 	if (gloves)
 		if(istype(gloves, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/GL = gloves

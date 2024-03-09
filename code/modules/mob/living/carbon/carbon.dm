@@ -893,7 +893,7 @@
 	else
 		return initial(pixel_x)
 
-/mob/living/carbon/proc/dirty_hands_transfers(mob/living/source, amount = 2)
+/mob/living/carbon/proc/bloody_hands(mob/living/source, amount = 2)
 	return
 
 /mob/living/carbon/proc/bloody_body(mob/living/source)

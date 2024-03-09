@@ -197,7 +197,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 					if(BP.applied_pressure)
 						if(ishuman(BP.applied_pressure))
 							var/mob/living/carbon/human/H = BP.applied_pressure
-							H.dirty_hands_transfers(src, 0)
+							H.bloody_hands(src, 0)
 						// somehow you can apply pressure to every wound on the organ at the same time
 						// you're basically forced to do nothing at all, so let's make it pretty effective
 						var/min_eff_damage = max(0, W.damage - 10) / 6 // still want a little bit to drip out, for effect
@@ -342,7 +342,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 				var/mob/living/carbon/human/H = A
 				if(!H.lying)
 					H.bloody_body(src)
-					H.dirty_hands_transfers(src)
+					H.bloody_hands(src)
 					var/blinding = FALSE
 					if(ran_zone() == BP_HEAD)
 						blinding = TRUE

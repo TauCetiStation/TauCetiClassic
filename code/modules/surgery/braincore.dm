@@ -121,7 +121,7 @@
 	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
 	if (ishuman(user))
 		user:bloody_body(target)
-		user:dirty_hands_transfers(target, 0)
+		user:bloody_hands(target, 0)
 
 /datum/surgery_step/brain/insert_brain
 	allowed_tools = list(
