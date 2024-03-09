@@ -3,8 +3,6 @@
 
 #define MINIMUM_USEFUL_LIGHT_RANGE 1.4
 
-#define LIGHTING_FALLOFF        1 // type of falloff to use for lighting; 1 for circular, 2 for square
-#define LIGHTING_LAMBERTIAN     0 // use lambertian shading for light sources
 #define LIGHTING_HEIGHT         1 // height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone
 #define LIGHTING_ROUND_VALUE    (1 / 64) //Value used to round lumcounts, values smaller than 1/129 don't matter (if they do, thanks sinking points), greater values will make lighting less precise, but in turn increase performance, VERY SLIGHTLY.
 
@@ -52,7 +50,6 @@
 
 /// Parse the hexadecimal color into lumcounts of each perspective.
 #define PARSE_LIGHT_COLOR(source) \
-do { \
 	if (source.light_color) { \
 		var/__light_color = source.light_color; \
 		source.lum_r = GETREDPART(__light_color) / 255; \
@@ -62,8 +59,9 @@ do { \
 		source.lum_r = 1; \
 		source.lum_g = 1; \
 		source.lum_b = 1; \
-	}; \
-} while (FALSE)
+	};
+
+#define GET_LUM_FROM_COLOR(color) (GETREDPART(color) + GETGREENPART(color) + GETBLUEPART(color))/3
 
 
 // this comes from 1 source turf + 1 source cast turf + plane blur that touches another turf
