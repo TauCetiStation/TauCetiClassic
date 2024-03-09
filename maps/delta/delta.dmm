@@ -3953,7 +3953,7 @@
 /area/station/medical/genetics)
 "agw" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/storage/emergency3)
 "agx" = (
 /obj/machinery/power/apc{
@@ -5158,6 +5158,9 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/storage/emergency3)
@@ -8918,9 +8921,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -8932,6 +8932,7 @@
 	icon_state = "1-4"
 	},
 /obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "aoW" = (
@@ -9465,6 +9466,9 @@
 	pixel_y = -32
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/storage/emergency3)
 "apR" = (
@@ -10715,6 +10719,9 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/turf_decal/set_burned,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "arP" = (
@@ -10915,6 +10922,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "asb" = (
@@ -11411,6 +11421,9 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/turf_decal/set_burned,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/storage/emergency3)
 "asP" = (
@@ -14318,7 +14331,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/maintenance/dormitory)
 "axF" = (
 /obj/structure/cable{
@@ -14520,11 +14533,17 @@
 "axZ" = (
 /obj/structure/cable{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/plating,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -22
+	},
+/turf/simulated/floor,
 /area/station/maintenance/dormitory)
 "aya" = (
 /obj/random/foods/food_trash,
@@ -14594,7 +14613,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/maintenance/dormitory)
 "ayl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -14927,7 +14946,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/maintenance/brig)
 "ayM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -15516,7 +15535,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/maintenance/dormitory)
 "azV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -15952,20 +15971,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aAK" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -22
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/station/maintenance/brig)
 "aAL" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -38902,7 +38910,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/maintenance/brig)
 "fUZ" = (
 /turf/simulated/wall,
@@ -50596,6 +50604,7 @@
 /area/station/medical/hallway)
 "iEb" = (
 /obj/structure/rack,
+/obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
@@ -83469,8 +83478,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "qCm" = (
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/station/maintenance/brig)
 "qCA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -86057,7 +86068,7 @@
 /area/station/civilian/dormitories/courtroom)
 "riS" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/storage/emergency3)
 "riX" = (
 /obj/structure/cable{
@@ -93072,6 +93083,7 @@
 	},
 /area/station/rnd/hallway/lobby)
 "sTE" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "sTP" = (
@@ -160632,7 +160644,7 @@ ajm
 oYL
 vst
 aBw
-oYL
+kzh
 vst
 dnn
 uBW
@@ -160871,8 +160883,8 @@ aAz
 afA
 jXs
 kzh
-oYL
-oYL
+kzh
+kzh
 awf
 vst
 vst
@@ -161123,7 +161135,7 @@ twC
 twC
 twC
 mZr
-pHC
+dGY
 giN
 afC
 ilF
@@ -161379,8 +161391,8 @@ nRu
 caY
 twC
 ady
-ilF
-ilF
+koi
+koi
 aeB
 afG
 agI
@@ -161389,7 +161401,7 @@ kDn
 oYL
 oOR
 oOR
-qCm
+aAK
 coD
 oYL
 oYL
@@ -162150,7 +162162,7 @@ twC
 twC
 twC
 qDH
-aIf
+qCm
 dGp
 amH
 amO
@@ -162660,8 +162672,8 @@ plf
 vst
 xnv
 kzh
-oYL
-oYL
+kzh
+kzh
 afX
 afb
 uNs
@@ -163986,7 +163998,7 @@ aAn
 fLY
 avx
 awh
-aym
+ayn
 avx
 hFn
 hVa
@@ -164758,7 +164770,7 @@ axr
 axM
 fbW
 aAx
-aAK
+axZ
 aCb
 avx
 mDV
@@ -164970,7 +164982,7 @@ vst
 tnw
 uST
 vst
-oYL
+kzh
 xsY
 kIM
 uNs
@@ -165529,8 +165541,8 @@ axt
 axO
 fbW
 ayH
-aym
-azh
+ayn
+ayb
 azo
 avx
 gSP
@@ -165740,8 +165752,8 @@ plf
 cci
 kzh
 ulk
-fGV
-fGV
+wIW
+wIW
 iBx
 acH
 oPg
@@ -166814,9 +166826,9 @@ axw
 fbW
 aAu
 iXa
-avu
-avu
-avu
+axT
+axT
+axT
 avx
 azA
 azF
@@ -167841,7 +167853,7 @@ axa
 axA
 axD
 axT
-jyc
+iXa
 avx
 azi
 azq
@@ -169860,7 +169872,7 @@ mZr
 myH
 dNY
 kzh
-oYL
+kzh
 agV
 amJ
 ana
@@ -170411,7 +170423,7 @@ suL
 awb
 aAo
 aym
-avu
+axT
 ayZ
 axT
 avu
@@ -172979,7 +172991,7 @@ aBF
 awJ
 awJ
 axE
-axZ
+awJ
 azU
 aAJ
 aza
