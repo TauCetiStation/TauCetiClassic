@@ -415,10 +415,10 @@
 		if(istype(gloves, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/GL = gloves
 			GL.add_blood(source)
-			GL.dirt_transfers = amount
+			GL.dirt_transfers += amount
 	else
 		add_blood(source)
-		dirty_hands_transfers = amount
+		dirty_hands_transfers += amount
 
 /mob/living/carbon/human/bloody_body(mob/living/carbon/human/source)
 	if(wear_suit)

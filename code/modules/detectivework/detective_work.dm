@@ -3,16 +3,16 @@
 /atom/var/list/suit_fibers
 
 /atom/proc/add_fibers(mob/living/carbon/human/M)
-	if(M.gloves && istype(M.gloves, /obj/item/clothing/gloves))
+	if(M.gloves && istype(M.gloves, /obj/item/clothing/gloves)) //transfer dirt from gloves to touched objects
 		var/obj/item/clothing/gloves/G = M.gloves
-		if(G.dirt_transfers) //bloodied gloves transfer blood to touched objects
+		if(G.dirt_transfers)
 			if(G.blood_DNA)
 				if(!blood_DNA)
 					blood_DNA = list()
 				blood_DNA |= G.blood_DNA.Copy()
-		add_dirt_cover(G.dirt_overlay)
-		G.dirt_transfers--
-	else if(M.dirty_hands_transfers)
+			add_dirt_cover(G.dirt_overlay)
+			G.dirt_transfers--
+	else if(M.dirty_hands_transfers) //transfer dirt from hands to touched objects
 		add_dirt_cover(M.hand_dirt_datum)
 		if(M.blood_DNA)
 			if(!blood_DNA)
