@@ -1,4 +1,5 @@
-//==========DAT FUKKEN DISK===============
+/* Nuke disk */
+
 /obj/item/weapon/disk
 	icon = 'icons/obj/disks.dmi'
 	w_class = SIZE_MINUSCULE
@@ -40,8 +41,8 @@
 #undef TIMER_MIN
 #undef TIMER_MAX
 
-//The return of data disks?? Just for transferring between genetics machine/cloning machine.
-//TO-DO: Make the genetics machine accept them.
+/* Genetic disks */
+
 /obj/item/weapon/disk/data
 	name = "Cloning Data Disk"
 	cases = list("ДНК-дискета", "ДНК-дискеты", "ДНК-дискете", "ДНК-дискету", "ДНК-дискетой", "ДНК-дискете")
@@ -116,9 +117,8 @@
 	buf.dna.SE=new_SE
 	buf.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
 
-////////////////////////////////////////
-//Disks for transporting design datums//
-////////////////////////////////////////
+/* RND design disks */
+
 /obj/item/weapon/disk/design_disk
 	name = "Empty Disk"
 	desc = "Вау, это та самая дискета с сохранением?"
@@ -137,10 +137,7 @@
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 
-/*************************************************************
-**                     Technology Datums                    **
-** Includes all the various technoliges and what they make. **
-**************************************************************/
+/* RND tech disks */
 
 /obj/item/weapon/disk/tech_disk
 	name = "Empty Disk"
@@ -183,7 +180,7 @@
 
 	stored_points = rand(10, 20)*1000
 
-/* Programms */
+/* Smartlight disks */
 
 /obj/item/weapon/disk/smartlight_programm
 	name = "Smartlight upgrade programm"
