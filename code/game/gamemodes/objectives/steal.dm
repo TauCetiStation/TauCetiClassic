@@ -43,7 +43,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"гипоспрей" = /obj/item/weapon/reagent_containers/hypospray/cmo,
 		"телепортационную броню научрука" = /obj/item/clothing/suit/armor/vest/reactive,
 		"капитанский целеуказатель" = /obj/item/weapon/pinpointer,
-		"аблятивная броня" = /obj/item/clothing/suit/armor/laserproof,
+		"аблятивную броню" = /obj/item/clothing/suit/armor/laserproof,
 		"золотой огнетушитель" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
   )
 
@@ -159,6 +159,6 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 /datum/objective/steal/non_heads_items/get_possible_items()
 	return list("функционирующий ИИ" = /obj/item/device/aicard,
                 "кусок мяса корги" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-                "аблятивная броня" = /obj/item/clothing/suit/armor/laserproof,
+                "аблятивную броню" = /obj/item/clothing/suit/armor/laserproof,
                 "золотой огнетушитель" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
 	)

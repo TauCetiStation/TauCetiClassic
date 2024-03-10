@@ -46,7 +46,7 @@
 			jobs -= J
 	if(jobs.len > 0)
 		var/datum/job/target = pick(jobs)
-		explanation_text += "представителя [target.title]."
+		explanation_text += "[target.title]."
 	else
 		explanation_text += "кого-либо."
 

@@ -1,5 +1,5 @@
 /datum/objective/target/assassinate/format_explanation()
-	return "Ликвидируйте [target.current.real_name], представителя [target.assigned_role]."
+	return "Ликвидируйте [target.current.real_name], [target.assigned_role]."
 
 /datum/objective/target/assassinate/check_completion()
 	var/mob/M = target.current
