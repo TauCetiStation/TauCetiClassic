@@ -1,9 +1,8 @@
 /obj/structure/blob/shield
 	name = "strong blob"
-	cases = list("укреплённый блоб", "укреплённого блоба", "укреплённому блобу", "укреплённого блоба", "укреплённым блобом", "укреплённом блобе")
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_idle"
-	desc = "Одно из порождений блоба..."
+	desc = "Some blob creature thingy."
 	opacity = TRUE
 	max_integrity = 75
 	fire_resist = 2
@@ -16,7 +15,6 @@
 
 /obj/structure/blob/shield/reflective
 	name = "reflective blob"
-	cases = list("отражающий блоб", "отражающего блоба", "отражающему блобу", "отражающего блоба", "отражающим блобом", "отражающем блобе")
 	icon_state = "blob_reflect"
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
 	max_integrity = 30 //Normal blob

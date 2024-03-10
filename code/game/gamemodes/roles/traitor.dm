@@ -93,15 +93,15 @@
 	var/icon/logo = get_logo_icon()
 	switch(greeting)
 		if (GREET_ROUNDSTART)
-			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката, предатель.</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You are a Syndicate agent, a Traitor.</span>")
 		if (GREET_AUTOTRAITOR)
-			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката,  предатель.<br>Ваш разум прояснился, вы поняли что являетесь спящим агентом Синдиката. Пришло время отдать им свой долг...</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You are now a Traitor.<br>Your memory clears up as you remember your identity as a sleeping agent of the Syndicate. It's time to pay your debt to them. </span>")
 		if (GREET_LATEJOIN)
-			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката, предатель.<br>Ваша задача, как агента - внедриться в экипаж станции и выполнить задачи любой ценой.</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You are a Traitor.<br>As a Syndicate agent, your goal is to infiltrate the crew and accomplish your objectives at all costs.</span>")
 		if (GREET_SYNDBEACON)
-			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы стали агентом Синдиката, предав НаноТрейзен</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You have joined the ranks of the Syndicate and thus became a traitor to the Nanotrasen!</span>")
 		else
-			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>Вы - агент Синдиката, предатель.</span>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You are a Traitor.</span>")
 
 	return TRUE
 
@@ -142,7 +142,7 @@
 
 /datum/role/traitor/syndcall/Greet(greeting, custom)
 	..()
-	to_chat(antag.current, "<span class='userdanger'> <B>ВНИМАНИЕ:</B> Вы слышите зов Синдиката...</span>")
+	to_chat(antag.current, "<span class='userdanger'> <B>ATTENTION:</B> You hear a call from the Syndicate...</span>")
 
 /datum/role/traitor/syndcall/OnPostSetup(laterole)
 	. = ..()

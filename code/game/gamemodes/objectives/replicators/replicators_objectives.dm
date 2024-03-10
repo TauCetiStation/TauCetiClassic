@@ -1,5 +1,5 @@
 /datum/objective/replicator_replicate
-	explanation_text = "Соорудите блюспейс-катапульту и отправьте с неё не меньше чем 20 репликаторов!"
+	explanation_text = "Construct a Bluespace Catapult and launch at least 20 replicators with it!"
 
 /datum/objective/replicator_replicate/check_completion()
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
