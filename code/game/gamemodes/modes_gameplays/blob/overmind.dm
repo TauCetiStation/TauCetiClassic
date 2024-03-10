@@ -39,15 +39,15 @@
 	blob_help()
 
 /mob/camera/blob/proc/blob_help()
-	to_chat(src, "<span class='notice'>Вы являетесь сверхразумом блоба.</span>")
-	to_chat(src, "Вы можете контролировать блоба, расширяться и атаковать тех, кто пытается помешать вам! С помощью спор вы сможете делать себе прислужников, взывая их к телам павших врагов.")
-	to_chat(src, "<b>Нормальный блоб</b> является вашей основной частью для расширения, которую можно будет улучшить.")
-	to_chat(src, "<b>Укреплённый блоб</b> является укрепленной версией нормального блоба. Он невосприимчив к огню, используйте это в свою пользу. Улучшите эту часть снова, чтобы получить отражающую версию, способную отражать лазеры.")
-	to_chat(src, "<b>Ресурсная ячейка</b> является основным способом добычи ресурсов, постройте их как можно больше в начале, чтобы всегда иметь достаточно ресурсов. Она улучшается от нахождения рядом с ядром или узлом; если расположить её очень далеко, то ресурсы производиться не будут.")
-	to_chat(src, "<b>Узел блоба</b> подобно ядру, может расширяться. Однако, он сам не производит ресурсы, но может повысить эффективность ближних к ней ячеек.")
-	to_chat(src, "<b>Производящая ячейка</b> создаёт споры. Генерация ускоряется от нахождения рядом с ядром или узлом; если расположить её очень далеко, то споры воспроизводиться не будут.")
-	to_chat(src, "<b>Блоббернауты</b> могут быть созданы из производящей ячейки, их тяжело убить, они сильно бьют и обладают средней мобильностью. Ячейка, которая была использована для производства единицы, временно не сможет производить споры и станет более хрупкой.")
-	to_chat(src, "<b>Хоткеи:</b> Click = расширить блоба / CTRL Click =  удалить ИЛИ переименовать узел блоба / Shift Click = улучшение блоба / Middle Mouse Click = призыв спор / Alt Click = создание щита")
+	to_chat(src, "<span class='notice'>You are the overmind!</span>")
+	to_chat(src, "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as...")
+	to_chat(src, "<b>Normal Blob</b> will expand your reach and allow you to upgrade into special blobs that perform certain functions.")
+	to_chat(src, "<b>Shield Blob</b> is a strong and expensive blob which can take more damage. It is fireproof and can block air, use this to protect yourself from station fires. Use it again on existing shield blob to upgrade it into a reflective blob that can deflect lasers.")
+	to_chat(src, "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all.")
+	to_chat(src, "<b>Node Blob</b> is a blob which will grow, like the core. Unlike the core it won't give you a small income but it can power resource and factory blobs to increase their rate.")
+	to_chat(src, "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores.")
+	to_chat(src, "<b>Blobbernauts</b> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become fragile and briefly unable to produce spores.")
+	to_chat(src, "<b>Shortcuts:</b> Click = Expand Blob / CTRL Click = Remove Blob OR Rename Node / Shift Click = Upgrade Blob / Middle Mouse Click = Rally Spores / Alt Click = Create Shield")
 
 /mob/camera/blob/proc/update_health_hud()
 	if(blob_core && hud_used)
@@ -67,7 +67,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "Вы не можете говорить.")
+			to_chat(src, "You cannot send IC messages (muted).")
 			return
 		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -86,7 +86,7 @@
 		return
 
 	message = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
-	message = "<span style='color:#EE4000'><i><span class='game say'>Телепатическая связь, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></span>"
+	message = "<span style='color:#EE4000'><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message]</span></span></i></span>"
 
 	for(var/M in mob_list)
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
@@ -102,11 +102,11 @@
 	..()
 	if(statpanel("Status"))
 		if(blob_core)
-			stat(null, "Здоровье ядра: [blob_core.get_integrity()]")
-		stat(null, "Сохранено энергии: [blob_points]/[max_blob_points]")
-		stat(null, "Прогресс: [blobs.len]/[b_congl.blobwincount]")
-		stat(null, "Количество узлов блоба: [blob_nodes.len]")
-		stat(null, "Всего ядер: [blob_cores.len]")
+			stat(null, "Core Health: [blob_core.get_integrity()]")
+		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+		stat(null, "Progress: [blobs.len]/[b_congl.blobwincount]")
+		stat(null, "Total Nodes: [blob_nodes.len]")
+		stat(null, "Total Cores: [blob_cores.len]")
 
 /mob/camera/blob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = FALSE

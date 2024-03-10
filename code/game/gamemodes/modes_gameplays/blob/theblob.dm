@@ -5,10 +5,9 @@
 
 /obj/structure/blob
 	name = "blob"
-	cases = list("блоб", "блоба", "блобу", "блоба", "блобом", "блобе")
 	icon = 'icons/mob/blob.dmi'
 	light_range = 3
-	desc = "Одно из порождений блоба..."
+	desc = "Some blob creature thingy."
 	density = FALSE
 	anchored = TRUE
 	can_block_air = TRUE
@@ -61,7 +60,7 @@
 /obj/structure/blob/atom_break(damage_flag)
 	. = ..()
 	update_icon()
-
+	
 /obj/structure/blob/atom_fix()
 	. = ..()
 	update_icon()

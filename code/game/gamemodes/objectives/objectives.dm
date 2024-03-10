@@ -2,7 +2,7 @@
 	var/datum/mind/owner = null				//Who owns the objective.
 	var/datum/faction/faction = null 		//Is the objective faction-wide?
 
-	var/explanation_text = "Свободная задача"	//What that person is supposed to do.
+	var/explanation_text = "Free Objective"	//What that person is supposed to do.
 	var/completed = OBJECTIVE_LOSS			//currently only used for custom objectives.
 
 	var/target_amount = 0					//If they are focused on a particular number. Steal objectives have their own counter.
@@ -22,17 +22,17 @@
 	return completed
 
 /datum/objective/proc/completion_to_string(tags = TRUE)
-	var/result = "Ошибка"
+	var/result = "Error"
 	if(completed == OBJECTIVE_WIN)
-		result = "УСПЕХ"
+		result = "SUCCESS"
 		if(tags)
 			result = "<font color='green'><b>[result]</b></font>"
 	if(completed == OBJECTIVE_HALFWIN)
-		result = "ЧАСТИЧНО"
+		result = "HALF"
 		if(tags)
 			result = "<font color='orange'><b>[result]</b></font>"
 	if(completed == OBJECTIVE_LOSS)
-		result = "ПРОВАЛ"
+		result = "FAIL"
 		if(tags)
 			result = "<font color='red'><b>[result]</b></font>"
 	return result
@@ -67,6 +67,6 @@
 	var/where = H.equip_in_one_of_slots(RE, slots)
 	H.update_icons()
 	if(where)
-		to_chat(H, "Вам выдали дополнительное снаряжение для выполнения задания.")
+		to_chat(H, "You have been given additional equipment for the mission.")
 	else
-		to_chat(H, "Увы, вы потеряли дополнительное снаряжение для выполнения задания.")
+		to_chat(H, "Unfortunately you have lost additional equipment for the mission.")

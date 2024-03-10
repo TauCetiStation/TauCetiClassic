@@ -1,6 +1,5 @@
 /obj/structure/blob/factory
 	name = "factory blob"
-	cases = list("производящая ячейка", "производящей ячейки", "производящей ячейке", "производящую ячейку", "производящей ячейкой", "производящей ячейке")
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
 	max_integrity = 100
