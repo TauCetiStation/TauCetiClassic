@@ -8,7 +8,6 @@
 	color            = LIGHTING_BASE_MATRIX
 	plane            = LIGHTING_PLANE
 	mouse_opacity    = MOUSE_OPACITY_TRANSPARENT
-	invisibility     = INVISIBILITY_LIGHTING
 
 	simulated = FALSE
 	flags = NOREACT

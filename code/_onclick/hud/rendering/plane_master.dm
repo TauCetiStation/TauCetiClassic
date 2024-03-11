@@ -109,6 +109,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
+	invisibility = INVISIBILITY_LIGHTING
+
 /atom/movable/screen/plane_master/lighting/apply_effects(mob/mymob, iscamera = FALSE)
 	if(!istype(mymob))
 		return
@@ -123,6 +125,8 @@
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
+
+	invisibility = INVISIBILITY_LIGHTING
 
 /atom/movable/screen/plane_master/exposure/apply_effects(mob/mymob, iscamera = FALSE) // todo: prefs
 	remove_filter("blur_exposure")
@@ -144,6 +148,8 @@
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
+
+	invisibility = INVISIBILITY_LIGHTING
 
 /atom/movable/screen/plane_master/lamps_selfglow/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("add_lamps_to_selfglow")
