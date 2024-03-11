@@ -12,7 +12,7 @@ var/global/list/datum/level_lighting_effect/lighting_effects
 /* space lighting */
 /datum/level_lighting_effect/starlight
 	name = "starlight"
-	colors = list("#87d5ff")
+	colors = list("#7650a6")
 
 /datum/level_lighting_effect/centcomm
 	name = "centcomm"
