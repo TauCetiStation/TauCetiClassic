@@ -5,9 +5,6 @@
 	w_class = SIZE_MINUSCULE
 	cases = list("дискета", "дискеты", "дискете", "дискету", "дискетой", "дискете")
 	icon_state = "datadisk0"
-	item_state = "datadisk0"
-	item_state_world = "datadisk0_world"
-	item_state_inventory = "datadisk0"
 
 /obj/item/weapon/disk/nuclear
 	name = "nuclear authentication disk"
@@ -63,9 +60,9 @@
 	. = ..()
 	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
 	icon_state = "datadisk[diskcolor]"
-	item_state = "datadisk[diskcolor]"
 	item_state_world = "datadisk[diskcolor]_world"
 	item_state_inventory = "datadisk[diskcolor]"
+	update_world_icon()
 
 /obj/item/weapon/disk/data/proc/Initialize()
 	buf = new
@@ -131,11 +128,11 @@
 	. = ..()
 	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
 	icon_state = "datadisk[diskcolor]"
-	item_state = "datadisk[diskcolor]"
 	item_state_world = "datadisk[diskcolor]_world"
 	item_state_inventory = "datadisk[diskcolor]"
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
+	update_world_icon()
 
 /* RND tech disks */
 
@@ -151,11 +148,11 @@
 	. = ..()
 	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
 	icon_state = "datadisk[diskcolor]"
-	item_state = "datadisk[diskcolor]"
 	item_state_world = "datadisk[diskcolor]_world"
 	item_state_inventory = "datadisk[diskcolor]"
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
+	update_world_icon()
 
 /obj/item/weapon/disk/research_points
 	name = "Important Disk"
