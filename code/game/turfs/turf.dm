@@ -3,8 +3,8 @@
 	
 	// base turf luminosity, works against byond native darkness
 	// most likely you shouldn't touch it
-	// currently direcly used only by starlight
-	// light subsystem uses lighting_object's for luminosity
+	// currently direcly used only by starlight/environment lighting
+	// dynamic lighting subsystem uses lighting_object's for luminosity
 	luminosity = 0
 
 	var/turf/basetype = /turf/environment/space

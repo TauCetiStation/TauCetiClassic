@@ -1,4 +1,12 @@
 // environment lighting - second unsimulated lighting system for z-levels and areas
+// still WiP and need some sorting
+//
+// todo:
+// * move level color holder to SSenviromnent and merge SSenviromnent into SSmapping
+// * add better instruments to create /area/ lighting
+//   * update get_lumcount to properly count lums from the area
+// * update Set Level Light verb and add animation setup
+// * more globally - update parallax, do better blending
 
 // z-level mask we use to apply environment color for clients
 // done as a separate effect so we can change it in a centralised way and apply animations

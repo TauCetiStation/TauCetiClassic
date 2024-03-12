@@ -25,9 +25,9 @@
 		qdel(myturf.lighting_object, force = TRUE)
 	myturf.lighting_object = src
 
+	// just in case if something spawns us before initialization
 	// any lighting source will add us to the queue anyway
-	// saves us init time on objects that don't have any lightins sources around
-	// todo: do on-demand spawn like corners, but we need something for darkness
+	// saves us init time on objects that don't have any lighting sources around
 	if(!SSlighting.initialized)
 		icon_state = "dark"
 		color = null
@@ -112,7 +112,7 @@
 	else if(!set_luminosity)
 		icon_state = "dark"
 		color = null
-	else if(set_luminosity)
+	else
 		icon_state = null
 		color = list(
 			rr, rg, rb, 00,

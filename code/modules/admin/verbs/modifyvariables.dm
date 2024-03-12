@@ -491,9 +491,6 @@
 						return
 					O.set_light(l_power = var_new)
 				if("dynamic_lighting")
-					if(!isarea(O))
-						to_chat(usr, "This can only be used on instances of type /area")
-						return
 					var/var_new = tgui_alert(usr, "dynamic_lighting",, list("ENABLED", "DISABLED"))
 					switch(var_new)
 						if("ENABLED")

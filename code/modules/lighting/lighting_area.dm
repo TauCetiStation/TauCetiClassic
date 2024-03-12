@@ -1,4 +1,3 @@
-// todo we need it?
 /area/proc/set_dynamic_lighting(new_dynamic_lighting = TRUE)
 	if (new_dynamic_lighting == dynamic_lighting)
 		return FALSE

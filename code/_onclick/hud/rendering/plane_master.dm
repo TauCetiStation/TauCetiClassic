@@ -128,7 +128,7 @@
 
 	invisibility = INVISIBILITY_LIGHTING
 
-/atom/movable/screen/plane_master/exposure/apply_effects(mob/mymob, iscamera = FALSE) // todo: prefs
+/atom/movable/screen/plane_master/exposure/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("blur_exposure")
 	if(!istype(mymob))
 		return

@@ -293,17 +293,7 @@
 								A.vars[variable] = O.vars[variable]
 
 		if("num")
-			var/new_value
-
-			if(variable == "dynamic_lighting")
-				new_value = tgui_alert(usr, "dynamic_lighting",, list("ENABLED", "DISABLED"))
-				switch(new_value)
-					if("ENABLED")
-						new_value = TRUE
-					if("DISABLED")
-						new_value = FALSE
-			else
-				new_value = input("Enter new number:","Num", O.vars[variable]) as num|null
+			var/new_value = input("Enter new number:","Num", O.vars[variable]) as num|null
 
 			if(isnull(new_value))
 				return

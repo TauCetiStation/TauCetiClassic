@@ -11,7 +11,7 @@
 		return
 
 	if(choice == "Custom")
-		var/hex_color = input(usr, "Pick new level lighting color", "Level color") as color|null
+		var/hex_color = input(usr, "Pick new level lighting color", "Level color") as text
 
 		if(!hex_color)
 			return
