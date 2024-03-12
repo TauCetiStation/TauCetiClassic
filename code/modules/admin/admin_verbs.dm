@@ -90,6 +90,7 @@ var/global/list/admin_verbs_variables = list(
 	/client/proc/mass_apply_status_effect,
 	/client/proc/add_smartlight_preset,
 	/client/proc/set_area_smartlight,
+	/client/proc/set_level_light,
 	/client/proc/debug_bloom,
 )
 var/global/list/admin_verbs_ban = list(

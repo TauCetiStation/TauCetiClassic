@@ -183,5 +183,5 @@ var/global/list/toilet_list = list()
 		if(!is_station_level(bomb.z))
 			continue
 		var/area/A = SSevents.findEventArea()
-		var/list/turfs = get_area_turfs(A, TRUE, black_list=list(/turf/simulated/wall, /turf/simulated/wall/r_wall))
+		var/list/turfs = get_area_turfs(A, TRUE, ignore_blocked = TRUE)
 		bomb.forceMove(pick(turfs))

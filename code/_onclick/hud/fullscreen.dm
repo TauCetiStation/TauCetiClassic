@@ -153,6 +153,63 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 
+/atom/movable/screen/fullscreen/meta/darkness
+	icon = 'icons/hud/screen1_full.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "white"
+	color = "#000000"
+	plane = LIGHTING_PLANE
+	blend_mode = BLEND_ADD
+
+/atom/movable/screen/fullscreen/meta/environment_lighting_color
+	icon = 'icons/hud/screen1_full.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "white"
+	plane = ENVIRONMENT_LIGHTING_PLANE
+	blend_mode = BLEND_MULTIPLY
+
+	var/obj/effect/level_color_holder/current_holder
+
+// changes z-level color masks when moving between levels
+/atom/movable/screen/fullscreen/meta/environment_lighting_color/proc/attach_to_level(new_z)
+	SIGNAL_HANDLER
+
+	if(!SSmapping.initialized)
+		return
+
+	var/datum/space_level/L = SSmapping.get_level(new_z)
+	var/obj/effect/level_color_holder/new_holder = L.color_holder
+
+	if(!current_holder)
+		end_transition(new_holder)
+		return
+
+	if(current_holder == new_holder)
+		return
+
+	var/obj/effect/level_color_holder/old_holder = current_holder
+	vis_contents.Cut()
+	current_holder = null
+
+	// same color - we don't need animation
+	if(old_holder.color == new_holder.color)
+		end_transition(new_holder)
+		return
+
+	// should be possible to do it with just animation and without callback, but it's already too complicated
+	// ...
+	// also this looks bad when there is already animation on the holder (aurora), 
+	// maybe i should just remove it completely or do some opacity transaction between two holders
+	animate(src, time = 0, color = old_holder.color)
+	animate(time = 1 SECONDS, color = new_holder.color)
+	addtimer(CALLBACK(src, PROC_REF(end_transition), new_holder), 1 SECONDS)
+
+/atom/movable/screen/fullscreen/meta/environment_lighting_color/proc/end_transition(obj/effect/level_color_holder/new_holder)
+	if(!current_holder)
+		color = null
+		vis_contents += new_holder
+		current_holder = new_holder
+
 #undef FULLSCREEN_LAYER
 #undef SCREEN_BLIND_LAYER
 #undef SCREEN_DAMAGE_LAYER

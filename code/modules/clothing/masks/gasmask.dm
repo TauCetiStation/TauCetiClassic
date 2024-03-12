@@ -139,7 +139,7 @@
 			cooldown = world.time + 2 SECOND
 		last_phrase_text = phrase_text
 
-		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, 100, FALSE)
+		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, 100, FALSE, falloff = 5)
 		usr.visible_message("[usr] compli-o-nator, <font color='red' size='4'><b>\"[phrase_text]\"</b></font>")
 
 /obj/item/clothing/mask/gas/sechailer/police
