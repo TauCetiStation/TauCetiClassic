@@ -169,7 +169,7 @@
 		else
 			new_text += letter
 
-	return new_text
+	return html_encode(capitalize(new_text))
 
 /proc/slur(text)
 
