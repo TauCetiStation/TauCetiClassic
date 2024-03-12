@@ -277,6 +277,10 @@
 	for(var/datum/smartlight_preset/type as anything in subtypesof(/datum/smartlight_preset))
 		smartlight_presets[initial(type.name)] = type
 
+	global.lighting_effects = list()
+	for(var/datum/level_lighting_effect/type as anything in subtypesof(/datum/level_lighting_effect))
+		lighting_effects[initial(type.name)] = type
+
 	global.virus_types_by_pool = list()
 	for(var/e in subtypesof(/datum/disease2/effect))
 		var/datum/disease2/effect/f = new e

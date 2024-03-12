@@ -3,12 +3,11 @@
 
 	anchored      = TRUE
 
-	icon             = LIGHTING_ICON
+	icon             = 'icons/effects/lighting_object.dmi'
 	icon_state       = "transparent"
 	color            = LIGHTING_BASE_MATRIX
 	plane            = LIGHTING_PLANE
 	mouse_opacity    = MOUSE_OPACITY_TRANSPARENT
-	invisibility     = INVISIBILITY_LIGHTING
 
 	simulated = FALSE
 	flags = NOREACT
@@ -25,10 +24,14 @@
 	if (myturf.lighting_object)
 		qdel(myturf.lighting_object, force = TRUE)
 	myturf.lighting_object = src
-	myturf.luminosity = 0
 
-	for(var/turf/environment/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-		S.update_starlight()
+	// just in case if something spawns us before initialization
+	// any lighting source will add us to the queue anyway
+	// saves us init time on objects that don't have any lighting sources around
+	if(!SSlighting.initialized)
+		icon_state = "dark"
+		color = null
+		return .
 
 	needs_update = TRUE
 	SSlighting.objects_queue += src
@@ -142,4 +145,7 @@
 	return
 
 /atom/movable/lighting_object/forceMove(atom/destination, keep_pulling)
+	return
+
+/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
 	return

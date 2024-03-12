@@ -57,6 +57,13 @@
 				. += S.z_value
 				break
 
+// Get a list of all z which have any of the specified traits
+/datum/controller/subsystem/mapping/proc/levels_not_having_any_trait(list/traits)
+	. = list()
+	for(var/datum/space_level/S as anything in z_list)
+		if(!length(traits & S.traits))
+			. += S.z_value
+
 // Prefer not to use this one too often
 /datum/controller/subsystem/mapping/proc/get_station_center()
 	var/station_z = levels_by_trait(ZTRAIT_STATION)[1]

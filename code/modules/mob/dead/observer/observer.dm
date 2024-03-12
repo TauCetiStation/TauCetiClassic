@@ -118,6 +118,12 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	QDEL_NULL(adminMulti)
 	return ..()
 
+/mob/dead/observer/Life()
+	if(client)
+		var/turf/T = get_turf(src)
+		if(T && last_z != T.z)
+			update_z(T.z)
+
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)
 	if(!usr || !over) return
