@@ -884,7 +884,7 @@
 		blood_overlay = null
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
-		G.transfer_blood = 0
+		G.dirt_transfers = 0
 	update_inv_mob()
 
 /obj/item/add_dirt_cover()

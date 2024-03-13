@@ -3,7 +3,7 @@
 	var/owner
 	// string, anything
 	var/explanation_text
-	// string, ["УСПЕХ" as SUCCESS, "ЧАСТИЧНО" as HALF, "ПРОВАЛ" as FAIL]
+	// string, ["SUCCESS", "HALF", "FAIL"]
 	var/completed
 	// string, byond_type
 	var/__type

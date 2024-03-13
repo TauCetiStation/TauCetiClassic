@@ -1,5 +1,5 @@
 /datum/objective/target/debrain/format_explanation()
-	return "Украдите мозг [target.current.real_name]."
+	return "Steal the brain of [target.current.real_name]."
 
 /datum/objective/target/debrain/check_completion()
 	if(!target)//If it's a free objective.

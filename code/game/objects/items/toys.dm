@@ -1602,7 +1602,6 @@ Owl & Griffin toys
 
 /obj/item/toy/plushie/space_whale
 	name = "space whale"
-	cases = list("плюшевый космокит", "плюшевого космокита", "плюшевому космокиту", "плюшевого космокита", "плюшевым космокитом", "плюшевом космоките")
 	icon_state = "tau_kit"
 
 /obj/item/toy/plushie/girly_corgi
