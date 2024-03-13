@@ -7,7 +7,7 @@
 	name = "Centcom"
 	icon_state = "centcom"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/centcom/control
 	name = "Centcom Control"
@@ -46,7 +46,7 @@
 	name = "Thunderdome"
 	icon_state = "thunder"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/centcom/tdome/tdome1
 	name = "Thunderdome (Team 1)"
