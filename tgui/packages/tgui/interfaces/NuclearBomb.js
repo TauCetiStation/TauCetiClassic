@@ -32,7 +32,7 @@ const NukeKeypad = (props, context) => {
                 fontSize="20px"
                 height="25px"
                 lineHeight={1.25}
-                disabled={code==="ERROR" && key!=="R" || !hasDisk || !deployed}
+                disabled={code==="ОШИБКА" && key!=="R" || !hasDisk || !deployed}
                 onClick={() => act('type', { digit: key })} />
             ))}
           </Grid.Column>
@@ -60,21 +60,21 @@ export const NuclearBomb = (props, context) => {
       width={237}
       height={400}>
       <Window.Content>
-        <Section title="Status" fill buttons={(
+        <Section title="Статус" fill buttons={(
           <Button
             color={deployed ? "green" : "red"}
-            content={deployed ? "Deployed" : "Undeployed"}
+            content={deployed ? "Развернута" : "Не развернута"}
             icon={"power-off"}
             disabled={!safety || timing}
             onClick={() => act('deploy')}
           />
         )}>
           <LabeledList>
-            <LabeledList.Item label="Authentication Disk">
+            <LabeledList.Item label="Диск аутентификации">
               <Button
                 selected={hasDisk}
                 icon={"eject"}
-                content={hasDisk ? "Inserted" : "None"}
+                content={hasDisk ? "Вставлен" : "Не вставлен"}
                 disabled={!deployed}
                 onClick={() => act(hasDisk ? 'ejectDisk' : 'insertDisk')}
               />
@@ -87,13 +87,13 @@ export const NuclearBomb = (props, context) => {
             position="center">
             {code && (code) || (
               <Box textColor={authorized ? "green" : "red"}>
-                {authorized ? "ALLOWED" : hasDisk ? "ENTER CODE" : deployed ? "INSERT DISK" : "DEPLOY"}
+                {authorized ? "ДОСТУП РАЗРЕШЁН" : hasDisk ? "ВВЕДИТЕ КОД" : deployed ? "ВСТАВЬТЕ ДИСК" : "ДИСК НЕ ВСТАВЛЕН"}
               </Box>)}
           </Box>
           <NukeKeypad />
           <br />
           <LabeledList>
-            <LabeledList.Item label="Time Left">
+            <LabeledList.Item label="Осталось времени">
               <ProgressBar
                 value={timeLeft / timerMax}
                 ranges={{
@@ -101,10 +101,10 @@ export const NuclearBomb = (props, context) => {
                   average: [0.25, 0.65],
                   bad: [-Infinity, 0.25],
                 }}>
-                {timeLeft} seconds
+                {timeLeft} секунд
               </ProgressBar>
             </LabeledList.Item>
-            <LabeledList.Item label="Time Regulator">
+            <LabeledList.Item label="Регулятор таймера">
               <Button
                 icon="fast-backward"
                 disabled={!authorized || timeLeft <= timerMin}
@@ -130,21 +130,21 @@ export const NuclearBomb = (props, context) => {
                 onClick={() => act('adjustTimer', { time: timerMax })}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Safety">
+            <LabeledList.Item label="Безопасность">
               <Button
                 selected={safety}
                 icon={safety ? "toggle-on" : "toggle-off"}
-                content={safety ? "Enabled" : "Disabled"}
+                content={safety ? "Включена" : "Отключена"}
                 disabled={!authorized || timing && !safety}
                 onClick={() => act('toggleSafety')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Timer">
+            <LabeledList.Item label="Таймер">
               <Button
                 selected={timing}
                 icon={"power-off"}
                 disabled={!authorized || safety}
-                content={timing ? "Enabled" : "Disabled"}
+                content={timing ? "Включён" : "Отключён"}
                 onClick={() => act('bombSet')}
               />
             </LabeledList.Item>
