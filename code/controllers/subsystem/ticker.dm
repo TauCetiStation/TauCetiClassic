@@ -200,27 +200,27 @@ SUBSYSTEM_DEF(ticker)
 
 		var/list/datum/game_mode/runnable_modes = config.get_runnable_modes(bundle)
 		if(!runnable_modes.len)
-			current_state = GAME_STATE_PREGAME
-			to_chat(world, "<B>Невозможно выбрать игровой режим.</B> Возвращение в предыгровое лобби.")
-
-			//In case of empty sevrver, no infinity votes
 			var/no_ready = TRUE
 			for(var/mob/dead/new_player/P as anything in new_player_list)
 				if(P.client && P.ready)
 					no_ready = FALSE
 					break
-			if(no_ready)
-				master_mode = "Extended"
-				world.save_mode("Extended")
 
-			// Players can initiate gamemode vote again
-			var/datum/poll/gamemode_vote = SSvote.possible_polls[/datum/poll/gamemode]
-			if(!gamemode_vote)
+			if(no_ready) //In case of empty sevrver, no infinity votes
+				runnable_modes = config.get_always_runnable_modes()
+
+			else //Let player choose something else
+				current_state = GAME_STATE_PREGAME
+				to_chat(world, "<B>Невозможно выбрать игровой режим.</B> Возвращение в предыгровое лобби.")
+				SSticker.start_ASAP = FALSE //To prevent starts spam
+
+				var/datum/poll/gamemode_vote = SSvote.possible_polls[/datum/poll/gamemode]
+				if(!gamemode_vote)
+					return FALSE
+				gamemode_vote.reset_next_vote()
+				if(gamemode_vote.can_start())
+					SSvote.start_vote(gamemode_vote)
 				return FALSE
-			gamemode_vote.reset_next_vote()
-			if(gamemode_vote.can_start())
-				SSvote.start_vote(gamemode_vote)
-			return FALSE
 
 		// hiding forced gamemode in secret
 		if(istype(bundle, /datum/modesbundle/all/secret) && secret_force_mode != "Secret")
@@ -266,7 +266,7 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<span class='warning bold'>OOC-канал отключен для всех на время раунда!</span>")
 		ooc_allowed = FALSE
 
-	if(!bundle || !bundle.hidden)
+	if(!bundle || !bundle.hide_mode_announce)
 		mode.announce()
 
 	setup_economy()
