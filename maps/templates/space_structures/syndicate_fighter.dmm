@@ -73,7 +73,7 @@
 	},
 /area/space_structures/syndicate_fighter)
 "i" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor4{

@@ -7,7 +7,7 @@
 	name = "Velocity Dock 42"
 	icon_state = "velocity"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	ambience = null
 	looped_ambience = 'sound/ambience/loop_velocity.ogg'
 
@@ -27,7 +27,7 @@
 	name = "Syndicate Mothership"
 	icon_state = "syndie-ship"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	looped_ambience = 'sound/ambience/loop_nuke_ops.ogg'
 
 /area/custom/syndicate_mothership/control
@@ -54,7 +54,7 @@
 /area/custom/beach
 	name = "Keelin's private beach"
 	icon_state = "null"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = FALSE
 	requires_power = 0
 
 //ENEMY
@@ -62,13 +62,11 @@
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/custom/wizard_station
 	name = "Wizard's Den"
 	icon_state = "yellow"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /area/custom/tophat
 	name = "Tophat"
@@ -78,7 +76,7 @@
 	name = "Cult Heaven"
 	icon_state = "cult-heaven"
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	is_force_ambience = TRUE
 	looped_ambience = 'sound/ambience/ambiruin7_looped.ogg'
 	ambience = list(
@@ -94,10 +92,10 @@
 	name = "Space Dojo"
 	icon_state = "red"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/custom/arena
 	name = "Deathmatch Arena"
 	icon_state = "red"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE

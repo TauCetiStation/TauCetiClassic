@@ -30,7 +30,7 @@
 /area/mafia
 	name = "Mafia Minigame"
 	icon_state = "mafia"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = FALSE
 	requires_power = FALSE
 
 /datum/map_template/mafia

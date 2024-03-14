@@ -29,11 +29,11 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 		new/datum/stack_recipe("light office chair", /obj/structure/stool/bed/chair/office/light, 5, one_per_turf = TRUE, on_floor = TRUE),
 		), 5),
 	new/datum/stack_recipe_list("comfy chairs", list(
-		new/datum/stack_recipe("beige comfy chair", /obj/structure/stool/bed/chair/comfy/beige, 2, one_per_turf = TRUE, on_floor = TRUE),
 		new/datum/stack_recipe("black comfy chair", /obj/structure/stool/bed/chair/comfy/black, 2, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("beige comfy chair", /obj/structure/stool/bed/chair/comfy/white, 2, one_per_turf = TRUE, on_floor = TRUE),
 		new/datum/stack_recipe("brown comfy chair", /obj/structure/stool/bed/chair/comfy/brown, 2, one_per_turf = TRUE, on_floor = TRUE),
 		new/datum/stack_recipe("lime comfy chair", /obj/structure/stool/bed/chair/comfy/lime, 2, one_per_turf = TRUE, on_floor = TRUE),
-		new/datum/stack_recipe("teal comfy chair", /obj/structure/stool/bed/chair/comfy/teal, 2, one_per_turf = TRUE, on_floor = TRUE),
+		new/datum/stack_recipe("teal comfy chair", /obj/structure/stool/bed/chair/comfy/green, 2, one_per_turf = TRUE, on_floor = TRUE),
 		), 2),
 	new/datum/stack_recipe_list("Cabinets", list(
 			new/datum/stack_recipe("Light filling cabinet", /obj/structure/filingcabinet/filingcabinet, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
