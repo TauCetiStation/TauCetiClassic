@@ -2,7 +2,7 @@
 								//Enables in-depth debug messages to runtime log (used for debugging)
 //#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
-//#define EARLY_PROFILE  // uncomment to automatically start profiler at the world init, not waiting
+#define EARLY_PROFILE  // uncomment to automatically start profiler at the world init, not waiting
                          // for the subsystems initialization. Allows to collect data for the early init phase
 
 /***** All toggles for the GC ref finder *****/
