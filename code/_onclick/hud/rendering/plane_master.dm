@@ -25,14 +25,13 @@
 	apply_effects(mymob)
 
 //For filters and other effects
-/atom/movable/screen/plane_master/proc/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/proc/apply_effects(mob/mymob, iscamera = FALSE)
 	return
 
 ///Level below the floor, for undertile component
 /atom/movable/screen/plane_master/underfloor
 	name = "underfloor plane master"
 	plane = UNDERFLOOR_PLANE
-	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
@@ -40,7 +39,6 @@
 /atom/movable/screen/plane_master/floor
 	name = "floor plane master"
 	plane = FLOOR_PLANE
-	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
@@ -48,11 +46,10 @@
 /atom/movable/screen/plane_master/game_world
 	name = "game world plane master"
 	plane = GAME_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/game_world/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/game_world/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("AO")
 	if(istype(mymob) && mymob?.client?.prefs?.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
@@ -61,7 +58,6 @@
 	name = "above game world plane master"
 	plane = ABOVE_GAME_PLANE
 	render_relay_plane = GAME_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
 /atom/movable/screen/plane_master/seethrough
@@ -73,7 +69,6 @@
 /atom/movable/screen/plane_master/ghost
 	name = "ghost plane master"
 	plane = GHOST_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_NON_GAME
 
@@ -83,14 +78,13 @@
 	plane = GHOST_ILLUSION_PLANE
 	render_relay_plane = RENDER_PLANE_ABOVE_GAME
 
-/atom/movable/screen/plane_master/ghost_illusion/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/ghost_illusion/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("ghost_illusion")
 	add_filter("ghost_illusion", 1, motion_blur_filter(x = 3, y = 3))
 
 /atom/movable/screen/plane_master/point
 	name = "point plane master"
 	plane = POINT_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
@@ -104,28 +98,37 @@
 	plane = BLACKNESS_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_MULTIPLY
-	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR | PIXEL_SCALE
+	appearance_flags = parent_type::appearance_flags | PIXEL_SCALE
 	//byond internal end
 	render_relay_plane = RENDER_PLANE_GAME
 
 /atom/movable/screen/plane_master/lighting
 	name = "lighting plane master"
 	plane = LIGHTING_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
+	invisibility = INVISIBILITY_LIGHTING
+
+/atom/movable/screen/plane_master/lighting/apply_effects(mob/mymob, iscamera = FALSE)
+	if(!istype(mymob))
+		return
+
+	mymob.overlay_fullscreen("darkness", /atom/movable/screen/fullscreen/meta/darkness)
+
 /atom/movable/screen/plane_master/exposure
 	name = "exposure plane master"
 	plane = LIGHTING_EXPOSURE_PLANE
-	appearance_flags = PLANE_MASTER|PIXEL_SCALE //should use client color
+	appearance_flags = parent_type::appearance_flags | PIXEL_SCALE
 	blend_mode = BLEND_ADD
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/exposure/apply_effects(mob/mymob) // todo: prefs
+	invisibility = INVISIBILITY_LIGHTING
+
+/atom/movable/screen/plane_master/exposure/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("blur_exposure")
 	if(!istype(mymob))
 		return
@@ -141,13 +144,14 @@
 /atom/movable/screen/plane_master/lamps_selfglow
 	name = "lamps selfglow plane master"
 	plane = LIGHTING_LAMPS_SELFGLOW
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_ADD
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lamps_selfglow/apply_effects(mob/mymob)
+	invisibility = INVISIBILITY_LIGHTING
+
+/atom/movable/screen/plane_master/lamps_selfglow/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("add_lamps_to_selfglow")
 	remove_filter("lamps_selfglow_bloom")
 
@@ -180,7 +184,6 @@
 /atom/movable/screen/plane_master/lamps
 	name = "lamps plane master"
 	plane = LIGHTING_LAMPS_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	blend_mode_override = BLEND_OVERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -191,12 +194,11 @@
 /atom/movable/screen/plane_master/lamps_glare
 	name = "lamps glare plane master"
 	plane = LIGHTING_LAMPS_GLARE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode_override = BLEND_OVERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/lamps_glare/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/lamps_glare/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("add_lamps_to_glare")
 	remove_filter("lamps_glare")
 
@@ -209,10 +211,56 @@
 		add_filter("add_lamps_to_glare", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))
 		add_filter("lamps_glare", 1, radial_blur_filter(size = 0.05))
 
+// second, simple and unsimulated, lighting system for environment lighting like starlight
+// blends on lighting plane and illuminates masked turfs
+// can be used for any global light, planetary sun/sky including
+// for local environment lighting look for the plane below 
+/atom/movable/screen/plane_master/environment_lighting
+	name = "environment lighting plane master"
+	plane = ENVIRONMENT_LIGHTING_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = LIGHTING_PLANE
+	blend_mode_override = BLEND_ADD
+
+	var/atom/movable/screen/fullscreen/meta/environment_lighting_color/color_filter
+
+/atom/movable/screen/plane_master/environment_lighting/apply_effects(mob/mymob, iscamera = FALSE)
+	remove_filter("guassian_blur")
+
+	if(!istype(mymob))
+		return
+
+	// i have no idea how to make this plane work on the cameras
+	if(iscamera)
+		alpha = 0
+
+	add_filter("guassian_blur", 1, gauss_blur_filter(10))
+
+	// by default every z-level has one object as environment color holder
+	// we place it on user screen to color plane globally
+	color_filter = mymob.overlay_fullscreen("environment_lighting_color", /atom/movable/screen/fullscreen/meta/environment_lighting_color)
+
+	if(mymob.z)
+		color_filter.attach_to_level(mymob.z)
+
+	RegisterSignal(mymob, COMSIG_MOB_Z_CHANGED, PROC_REF(update_level), override = TRUE)
+
+/atom/movable/screen/plane_master/environment_lighting/proc/update_level(mob/source, new_z)
+	if(color_filter)
+		color_filter.attach_to_level(new_z)
+
+// for local environment lighting, can be used for areas
+// currently we blend it at environment_lighting first just to use same blur filter
+/atom/movable/screen/plane_master/environment_lighting_local
+	name = "environment lighting local plane master"
+	plane = ENVIRONMENT_LIGHTING_LOCAL_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = ENVIRONMENT_LIGHTING_PLANE
+	blend_mode_override = BLEND_ADD
+
 /atom/movable/screen/plane_master/above_lighting
 	name = "above lighting plane master"
 	plane = ABOVE_LIGHTING_PLANE
-	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME
 
@@ -281,6 +329,5 @@
 /atom/movable/screen/plane_master/camera_static
 	name = "camera static plane master"
 	plane = CAMERA_STATIC_PLANE
-	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_GAME

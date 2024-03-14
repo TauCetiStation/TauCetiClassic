@@ -413,18 +413,23 @@
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	footstep = FOOTSTEP_CATWALK
 
+	var/image/environment_underlay
+
+	level_light_source = TRUE
+
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
 	update_icon(1)
 
-	var/env_light_color = SSenvironment.turf_light_color[z]
-	if(env_light_color)
-		set_light(1.5, l_color = env_light_color)
+/turf/simulated/floor/plating/airless/catwalk/Destroy()
+	environment_underlay = null
+	return ..()
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
-	underlays.Cut()
-	var/image/I = SSenvironment.turf_image[z]
-	underlays += I
+	if(environment_underlay)
+		underlays -= environment_underlay
+	environment_underlay = SSenvironment.turf_image[z]
+	underlays |= environment_underlay
 
 	var/dirs = 0
 	for(var/direction in cardinal)

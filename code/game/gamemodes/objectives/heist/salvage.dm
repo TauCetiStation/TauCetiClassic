@@ -4,16 +4,16 @@
 /datum/objective/heist/salvage/find_target()
 	switch(rand(1, 3))
 		if(1)
-			str_target = "листами металла"
+			str_target = "metal"
 			target_amount = pick(150, 200)
 		if(2)
-			str_target = "листами стекла"
+			str_target = "glass"
 			target_amount = pick(150, 200)
 		if(3)
-			str_target = "листами пластали"
+			str_target = "plasteel"
 			target_amount = pick(20, 30, 40, 50)
 
-	explanation_text = "Разграбить станцию и сбежать с [target_amount] [str_target]."
+	explanation_text = "Ransack the station and escape with [target_amount] [str_target]."
 	return TRUE
 
 /datum/objective/heist/salvage/check_completion()

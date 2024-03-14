@@ -1,5 +1,5 @@
 /datum/objective/escape
-	explanation_text = "Сбегите на шаттле или в спасательной капсуле, находясь на свободе."
+	explanation_text = "Escape on the shuttle or an escape pod alive and free."
 
 /datum/objective/escape/check_completion()
 	if(issilicon(owner.current))
@@ -29,6 +29,10 @@
 	if(istype(check_area, /area/shuttle/escape_pod3/centcom))
 		return OBJECTIVE_WIN
 	if(istype(check_area, /area/shuttle/escape_pod4/centcom))
+		return OBJECTIVE_WIN
+	if(istype(check_area, /area/shuttle/escape_pod5/centcom))
+		return OBJECTIVE_WIN
+	if(istype(check_area, /area/shuttle/escape_pod6/centcom))
 		return OBJECTIVE_WIN
 	else
 		return OBJECTIVE_LOSS
