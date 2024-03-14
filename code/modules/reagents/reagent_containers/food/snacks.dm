@@ -2536,7 +2536,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/blin
 	name = "blin"
-	desc = "A bleyat blin."
+	desc = "Традиционное мучное изделие округлой формы."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "blin"
 	item_state_world = "blin_world"
