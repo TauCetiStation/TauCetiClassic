@@ -1184,7 +1184,8 @@
 	for (var/obj/item/weapon/grown/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
-		if (beaker.reagents.total_volume <= O.reagents.total_volume)
+		var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+		if (space <= O.reagents.total_volume)
 			break
 		O.reagents.trans_to(beaker, O.reagents.total_volume)
 		remove_object(O)
