@@ -8,6 +8,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/dough
 
+/datum/recipe/microwave/blin
+	reagents = list("flour" = 5, "milk" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/blin
+
 /datum/recipe/microwave/boiledegg
 	reagents = list("water" = 5)
 	items = list(
