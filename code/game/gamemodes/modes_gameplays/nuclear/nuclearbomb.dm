@@ -52,11 +52,11 @@ var/global/bomb_set
 		bomb_set = TRUE //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
 		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
-		if(timeleft <= 100 && world.time >= nuclear_siren_cooldown)
+		if(timeleft <= 120 && world.time >= nuclear_siren_cooldown)
 			for(var/mob/M in player_list)
 				if(!isnewplayer(M))
-					M.playsound_local(null, 'sound/machines/nuke_siren.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, 30, vary = FALSE, frequency = null, ignore_environment = TRUE)
-			nuclear_siren_cooldown = world.time + 32 SECONDS
+					M.playsound_local(null, 'sound/machines/nuke_siren.ogg', VOL_EFFECTS_MASTER, 60, vary = FALSE, frequency = null, ignore_environment = FALSE)
+			nuclear_siren_cooldown = world.time + 8 SECONDS
 		if(timeleft <= 0)
 			explode()
 	nuclear_siren_cooldown = max(nuclear_siren_cooldown - 2, 0)
@@ -369,7 +369,7 @@ var/global/bomb_set
 	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 10)
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			M.playsound_local(null, 'sound/machines/Alarm_reverb.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+			M.playsound_local(null, 'sound/machines/Alarm_reverb.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = FALSE)
 	if(SSticker)
 		SSticker.explosion_in_progress = TRUE
 	sleep(100)
