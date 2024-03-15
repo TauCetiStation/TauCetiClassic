@@ -217,7 +217,7 @@
 			trueCord_y += rand(-15, 15)
 
 		var/turf/target = locate(trueCord_x, trueCord_y, z_co)
-		var/spawn_time = 21 - ((crystals.len) * 5)
+		var/spawn_time = 1 + (max_crystals - crystals.len) * 5
 		last_target = target
 		var/area/A = get_area(target)
 		flick("pad-beam", telepad)
