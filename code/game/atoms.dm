@@ -1,5 +1,3 @@
-var/global/list/all_fire_types = list(RED_FIRE, PLASMA_FIRE)
-
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
