@@ -7,5 +7,3 @@
 	if(!already_completed)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
-
-/obj/item/weapon/disk/data/syndi

@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(lighting)
 	init_order    = SS_INIT_LIGHTING
 	wait          = SS_WAIT_LIGHTING
 
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_SHOW_IN_MC_TAB
 	msg_lobby = "Включаем свет..."
 
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
@@ -16,31 +16,25 @@ SUBSYSTEM_DEF(lighting)
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)
 	if(!initialized)
-		if (config.starlight)
-			for(var/I in global.all_areas)
-				var/area/A = I
-				if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
-					A.luminosity = 0
+		cast_level_light_globally()
 
-		create_all_lighting_objects()
-		initialized = TRUE
-
+	initialized = TRUE
 	fire(init_fire = TRUE)
 
 	..()
 
-/datum/controller/subsystem/lighting/proc/create_all_lighting_objects()
-	for(var/area/A in global.all_areas)
-		if(!IS_DYNAMIC_LIGHTING(A))
+// adds level lighting mask to turfs around if any level_light_source nearby
+// /turf/proc/recast_level_light() but globally
+/datum/controller/subsystem/lighting/proc/cast_level_light_globally()
+	for(var/turf/T in world)
+		if(T.level_light_source)
 			continue
-
-		for(var/turf/T in A)
-
-			if(!IS_DYNAMIC_LIGHTING(T))
-				continue
-
-			new/atom/movable/lighting_object(T)
-			CHECK_TICK
+		if(T.opacity || T.has_opaque_atom)
+			continue
+		for(var/turf/T2 in RANGE_TURFS(1, T))
+			if(T2.level_light_source && !T2.has_opaque_atom)
+				ENABLE_LEVEL_LIGHTING(T)
+				break
 		CHECK_TICK
 
 /datum/controller/subsystem/lighting/fire(resumed = FALSE, init_fire = FALSE)
