@@ -16,7 +16,7 @@ const NukeKeypad = (props, context) => {
   } = data;
   return (
     <Box
-      width="218px"
+      width="306px"
       align="center">
       <Grid width="35%">
         {keypadKeys.map(keyColumn => (
@@ -57,7 +57,7 @@ export const NuclearBomb = (props, context) => {
   } = data;
   return (
     <Window
-      width={237}
+      width={326}
       height={400}>
       <Window.Content>
         <Section title="Статус" fill buttons={(
