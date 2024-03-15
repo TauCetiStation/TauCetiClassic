@@ -317,18 +317,18 @@
 
 	if(on_fire)
 		if(L.on_fire) // If they were also on fire
-			var/firesplit = (fire_stack_list[RED_FIRE] + L.fire_stack_list[RED_FIRE]) / 2
+			var/firesplit = (count_red_fire_stacks() + L.count_red_fire_stacks()) / 2
 			set_fire_stacks(firesplit, fire_type = RED_FIRE)
 			L.set_fire_stacks(firesplit, fire_type = RED_FIRE)
 		else // If they were not
-			adjust_fire_stacks(-(fire_stack_list[RED_FIRE] / 2), fire_type = RED_FIRE)
-			L.adjust_fire_stacks(fire_stack_list[RED_FIRE], fire_type = RED_FIRE)
+			adjust_fire_stacks(-(count_red_fire_stacks() / 2), fire_type = RED_FIRE)
+			L.adjust_fire_stacks(count_red_fire_stacks(), fire_type = RED_FIRE)
 			if(L.IgniteMob()) // Ignite them
 				log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
 
 	else if(L.on_fire) // If they were on fire and we were not
-		L.adjust_fire_stacks(-(fire_stack_list[RED_FIRE] / 2), fire_type = RED_FIRE)
-		adjust_fire_stacks(L.fire_stack_list[RED_FIRE], fire_type = RED_FIRE)
+		L.adjust_fire_stacks(-(count_red_fire_stacks() / 2), fire_type = RED_FIRE)
+		adjust_fire_stacks(L.count_red_fire_stacks(), fire_type = RED_FIRE)
 		IgniteMob() // Ignite us
 
 /mob/living/proc/handle_fire()
@@ -345,7 +345,7 @@
 		return
 	for(var/obj/item/I in contents)
 		if(I.wet)
-			I.wet -= fire_stack_list[RED_FIRE]
+			I.wet -= count_red_fire_stacks()
 			adjust_fire_stacks(-20, RED_FIRE)
 			break
 	var/turf/location = get_turf(src)
