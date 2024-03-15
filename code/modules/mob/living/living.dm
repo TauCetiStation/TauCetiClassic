@@ -577,8 +577,7 @@
 	bodytemperature = T20C
 	sdisabilities = 0
 	disabilities = 0
-	ExtinguishMob()
-	fire_stacks = 0
+	set_fire_stacks(0)
 	suiciding = FALSE
 
 	// fix blindness and deafness
@@ -959,15 +958,14 @@
 		var/mob/living/carbon/CM = L
 		if(CM.on_fire)
 			if(!CM.canmove && !CM.crawling)	return
-			CM.fire_stacks -= 5
+			CM.adjust_fire_stacks(-5)
 			CM.Stun(5)
 			CM.Weaken(5)
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
 				"<span class='rose'>You stop, drop, and roll!</span>")
-			if(fire_stacks <= 0)
+			if(count_fire_stacks() <= 0)
 				CM.visible_message("<span class='danger'>[CM] has successfully extinguished themselves!</span>", \
 					"<span class='notice'>You extinguish yourself.</span>")
-				ExtinguishMob()
 			return
 		if(CM.handcuffed && (CM.last_special <= world.time))
 			CM.next_move = world.time + 100

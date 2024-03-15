@@ -66,7 +66,7 @@
 /obj/structure/trap/fire/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'>Spontaneous combustion!</span>")
 	L.fire_act()
-	L.adjust_fire_stacks(5)
+	L.adjust_fire_stacks(5, RED_FIRE)
 	L.Weaken(1)
 
 /obj/structure/trap/chill
@@ -150,7 +150,7 @@
 /obj/structure/trap/wizard/fire/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'>Spontaneous combustion!</span>")
 	L.fire_act()
-	L.adjust_fire_stacks(5)
+	L.adjust_fire_stacks(5, RED_FIRE)
 	L.Weaken(1)
 
 /obj/structure/trap/wizard/chill

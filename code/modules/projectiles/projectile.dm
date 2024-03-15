@@ -111,7 +111,7 @@
 		return 0
 	var/mob/living/L = target
 	if(incendiary && blocked <= 100)
-		L.adjust_fire_stacks(incendiary)
+		L.adjust_fire_stacks(incendiary, RED_FIRE)
 		L.IgniteMob(target)
 	if(proj_impact_sound)
 		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)

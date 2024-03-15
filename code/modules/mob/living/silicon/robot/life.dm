@@ -9,12 +9,12 @@
 
 	//Status updates, death etc.
 	clamp_values()
-	handle_fire()
 	handle_regular_status_updates()
 
 	if(client)
 		handle_regular_hud_updates()
 		update_items()
+	handle_fire()
 	if (src.stat != DEAD) //still using power
 		add_ingame_age()
 		use_power()
@@ -235,20 +235,17 @@
 /mob/living/silicon/robot/handle_fire()
 	if(..())
 		return
-	if(fire_stacks > 0)
+	if(count_fire_stacks() > 0)
 		adjustFireLoss(4)
-		fire_stacks--
-		fire_stacks = max(0, fire_stacks)
 	else
-		ExtinguishMob()
-		return TRUE
+		. = TRUE
 
 /mob/living/silicon/robot/update_fire()
+	cut_overlay("fire_overlay")
 	if(on_fire)
-		underlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
 		var/image/over = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay")
 		over.plane = LIGHTING_LAMPS_PLANE
-		add_overlay(over)
-	else
-		underlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
-		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))
+		if(fire_stack_list[PLASMA_FIRE] > 0)
+			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
+			over.color = "#8fff00"
+		add_overlay(over, "fire_overlay")

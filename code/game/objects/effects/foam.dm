@@ -159,7 +159,7 @@
 			var/mob/living/L = A
 			if(L.get_species() == SLIME) // If only ExtinguishMob wasn't so vague, this could be there.
 				L.adjustToxLoss(rand(15, 20))
-			L.ExtinguishMob()
+			L.set_fire_stacks(0, RED_FIRE)
 		else if(istype(A, /obj/structure/bonfire)) // Currently very snowflakey please fix later ~Luduk.
 			var/obj/structure/bonfire/B = A
 			B.extinguish()

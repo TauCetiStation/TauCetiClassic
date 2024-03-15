@@ -190,7 +190,7 @@
 			var/mob/living/L = A
 			if(prob(20))
 				L.emote("scream")
-			L.adjust_fire_stacks(fire_stack_strength)
+			L.adjust_fire_stacks(fire_stack_strength, RED_FIRE)
 			L.IgniteMob()
 
 /obj/structure/bonfire/process()

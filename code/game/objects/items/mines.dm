@@ -116,7 +116,7 @@
 	explosion(loc, 0, 0, 2)
 	if(isliving(obj))
 		var/mob/living/M = obj
-		M.adjust_fire_stacks(10)
+		M.adjust_fire_stacks(10, RED_FIRE)
 		M.IgniteMob()
 
 /obj/item/mine/incendiary/anchored

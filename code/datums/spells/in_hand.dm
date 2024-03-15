@@ -140,7 +140,7 @@
 	if(isliving(target))
 		var/mob/living/M = target
 		M.fire_act()
-		M.adjust_fire_stacks(5)
+		M.adjust_fire_stacks(5, RED_FIRE)
 	explosion(get_turf(target), 0, 0, 1, adminlog = FALSE)
 	return ..()
 

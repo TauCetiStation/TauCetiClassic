@@ -559,11 +559,11 @@
 				H.w_uniform.add_fingerprint(M)
 
 			if(on_fire && M != src)
-				fire_stacks--
+				adjust_fire_stacks(-1, RED_FIRE)
+				adjust_fire_stacks(-20, PLASMA_FIRE)
 				M.visible_message("<span class='danger'>[M] trying to extinguish [src].</span>", \
 								"<span class='rose'>You trying to extinguish [src].</span>")
-				if(fire_stacks <= 0)
-					ExtinguishMob()
+				if(count_fire_stacks() <= 0)
 					M.visible_message("<span class='danger'>[M] has successfully extinguished [src]!</span>", \
 									"<span class='notice'>You extinguish [src]!</span>")
 			else if(lying)

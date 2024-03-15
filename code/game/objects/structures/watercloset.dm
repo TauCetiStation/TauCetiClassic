@@ -528,8 +528,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 	if(isliving(O))
 		var/mob/living/L = O
-		L.ExtinguishMob()
-		L.fire_stacks = -20 //Douse ourselves with water to avoid fire more easily
+		L.set_fire_stacks(0, RED_FIRE) //Douse ourselves with water to avoid fire more easily
 		to_chat(L, "<span class='warning'>You've been drenched in water!</span>")
 	if(iscarbon(O))
 		var/mob/living/carbon/M = O

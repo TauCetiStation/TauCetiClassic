@@ -1,3 +1,5 @@
+var/global/list/all_fire_types = list(RED_FIRE, PLASMA_FIRE)
+
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
@@ -62,6 +64,9 @@
 	var/uses_integrity = FALSE
 
 	var/list/armor // TODO armor gatum?
+
+	var/list/fire_stack_list = list(RED_FIRE = 0, PLASMA_FIRE = 0)
+
 	VAR_PRIVATE/atom_integrity //defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%

@@ -179,7 +179,7 @@
 	if(!isliving(M))
 		return
 	if(method == TOUCH)
-		M.adjust_fire_stacks(volume / 10)
+		M.adjust_fire_stacks(volume / 10, RED_FIRE)
 
 /datum/reagent/space_cleaner
 	name = "Space cleaner"

@@ -540,7 +540,7 @@
 		var/mob/living/carbon/M = target
 		M.Stun(1)
 		M.Weaken(2)
-		M.adjust_fire_stacks(20)
+		M.adjust_fire_stacks(20, RED_FIRE)
 		M.IgniteMob()
 
 /obj/effect/proc_holder/spell/aoe_turf/hulk_spit

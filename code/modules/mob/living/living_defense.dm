@@ -254,7 +254,7 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	if(fire_stacks > 0 && !on_fire)
+	if(count_fire_stacks() > 0 && !on_fire)
 		on_fire = 1
 		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='warning'>[src] catches fire!</span>",
@@ -267,15 +267,42 @@
 	if(on_fire)
 		playsound(src, 'sound/effects/extinguish_mob.ogg', VOL_EFFECTS_MASTER)
 		on_fire = 0
-		fire_stacks = 0
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
 		update_fire()
 
-/mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
-	if(on_fire && fire_stacks <= 0)
+/mob/living/proc/set_fire_stacks(amount, fire_type)
+	if(!fire_type)
+		for(var/i in global.all_fire_types)
+			fire_stack_list[i] = amount
+	else
+		fire_stack_list[fire_type] = amount
+	if(count_fire_stacks() > 0)
+		update_fire()
+		return
+	if(on_fire)
+		ExtinguishMob()
+
+/atom/proc/count_fire_stacks()
+	var/amount = 0
+	for(var/i in global.all_fire_types)
+		amount += fire_stack_list[i]
+	return amount
+
+/atom/proc/count_red_fire_stacks()
+	return fire_stack_list[RED_FIRE]
+
+/mob/living/proc/adjust_fire_stacks(add_fire_stacks = 0, fire_type) //Adjusting the amount of fire_stacks we have on person
+	if(!fire_type)
+		for(var/i in global.all_fire_types)
+			fire_stack_list[i] = clamp(fire_stack_list[i] + add_fire_stacks, -20, 20)
+	else
+		fire_stack_list[fire_type] = clamp(fire_stack_list[fire_type] + add_fire_stacks, -20, 20)
+	if(count_fire_stacks() > 0)
+		update_fire()
+		return
+	if(on_fire)
 		ExtinguishMob()
 
 /mob/living/proc/SpreadFire(mob/living/L)
@@ -284,52 +311,54 @@
 
 	if(on_fire)
 		if(L.on_fire) // If they were also on fire
-			var/firesplit = (fire_stacks + L.fire_stacks)/2
-			fire_stacks = firesplit
-			L.fire_stacks = firesplit
+			var/firesplit = (fire_stack_list[RED_FIRE] + L.fire_stack_list[RED_FIRE]) / 2
+			set_fire_stacks(firesplit, fire_type = RED_FIRE)
+			L.set_fire_stacks(firesplit, fire_type = RED_FIRE)
 		else // If they were not
-			fire_stacks /= 2
-			L.fire_stacks += fire_stacks
+			adjust_fire_stacks(-(fire_stack_list[RED_FIRE] / 2), fire_type = RED_FIRE)
+			L.adjust_fire_stacks(fire_stack_list[RED_FIRE], fire_type = RED_FIRE)
 			if(L.IgniteMob()) // Ignite them
 				log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
 
 	else if(L.on_fire) // If they were on fire and we were not
-		L.fire_stacks /= 2
-		fire_stacks += L.fire_stacks
+		L.adjust_fire_stacks(-(fire_stack_list[RED_FIRE] / 2), fire_type = RED_FIRE)
+		adjust_fire_stacks(L.fire_stack_list[RED_FIRE], fire_type = RED_FIRE)
 		IgniteMob() // Ignite us
 
 /mob/living/proc/handle_fire()
-	if(fire_stacks < 0)
-		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
+	/*
+	if(count_fire_stacks() < 0)
+		set_fire_stacks(min(0, fire_stacks + 1))//So we dry ourselves back to default, nonflammable.
+	*/
 	if(!on_fire)
 		return TRUE //the mob is no longer on fire, no need to do the rest.
-	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.1) //the fire is slowly consumed
-	else
-		ExtinguishMob()
+
+	adjust_fire_stacks(-0.1) //the fire is slowly consumed
+
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.get_by_flag(XGM_GAS_OXIDIZER) < 1)
+	if(G.get_by_flag(XGM_GAS_OXIDIZER) < 1 && (count_fire_stacks() - count_red_fire_stacks()) <= 0)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	for(var/obj/item/I in contents)
 		if(I.wet)
-			ExtinguishMob()
+			I.wet -= fire_stack_list[RED_FIRE]
+			adjust_fire_stacks(-20, RED_FIRE)
 			break
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(fire_burn_temperature(), 50)
 
 /mob/living/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	adjust_fire_stacks(0.5)
+	adjust_fire_stacks(0.5, RED_FIRE)
 	IgniteMob()
 
 //Finds the effective temperature that the mob is burning at.
 /mob/living/proc/fire_burn_temperature()
-	if (fire_stacks <= 0)
+	if(count_fire_stacks() <= 0)
 		return 0
 
 	//Scale quadratically so that single digit numbers of fire stacks don't burn ridiculously hot.
 	//lower limit of 700 K, same as matches and roughly the temperature of a cool flame.
-	return max(2.25 * round(FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE * (fire_stacks / FIRE_MAX_FIRESUIT_STACKS) ** 2), 700)
+	return max(2.25 * round(FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE * (count_fire_stacks() / FIRE_MAX_FIRESUIT_STACKS) ** 2), 700)
 
 /mob/living/proc/regular_hud_updates()
 	update_action_buttons()

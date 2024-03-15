@@ -236,6 +236,9 @@
 		//overlays_standing[LAYERIAN_LOWER_FIRE] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay", "layer"=-LAYERIAN_LOWER_FIRE)
 		var/image/over = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", "layer"=-LAYERIAN_UPPER_FIRE)
 		over.plane = LIGHTING_LAMPS_PLANE
+		if(fire_stack_list[PLASMA_FIRE] > 0)
+			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
+			over.color = "#8fff00"
 		overlays_standing[LAYERIAN_UPPER_FIRE] = over
 
 	//apply_standing_overlay(LAYERIAN_LOWER_FIRE)

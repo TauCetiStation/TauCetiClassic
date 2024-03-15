@@ -914,14 +914,13 @@
 /mob/living/silicon/robot/proc/updateicon()
 
 	cut_overlays()
+	update_fire()
 	if(stat == CONSCIOUS)
 		add_overlay("eyes")
 		cut_overlays()
 		add_overlay("eyes-[icon_state]")
 	else
 		cut_overlay("eyes")
-
-	update_fire()
 
 	if(opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
 		if(wiresexposed)

@@ -212,3 +212,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define WATER_CHOKE_EPILEPSY (1<<1)
 
 #define STANDARD_PDA_RINGTONE (1<<0)
+
+#define RED_FIRE "red_fire"
+#define PLASMA_FIRE "plasma_fire"

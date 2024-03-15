@@ -773,7 +773,7 @@
 	if(!isliving(M))
 		return
 	if(method == TOUCH)
-		M.adjust_fire_stacks(volume / 15)
+		M.adjust_fire_stacks(volume / 15, RED_FIRE)
 		return
 
 
