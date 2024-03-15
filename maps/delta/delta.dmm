@@ -3975,7 +3975,7 @@
 /turf/simulated/floor,
 /area/station/medical/cryo)
 "atk" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet,
@@ -4353,7 +4353,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "ayd" = (
 /obj/machinery/door/firedoor{
@@ -7189,7 +7189,7 @@
 	},
 /area/station/bridge/ai_upload)
 "bcR" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -9724,7 +9724,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bCr" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
@@ -16452,7 +16452,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "cVT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -20621,7 +20621,7 @@
 	},
 /area/station/security/prison)
 "dVA" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -24536,7 +24536,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "eNZ" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -25916,7 +25916,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "fdo" = (
 /obj/structure/flora/junglebush,
@@ -28961,7 +28961,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/service_bedrooms)
 "fLe" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 1
 	},
 /obj/item/device/radio/intercom/pod{
@@ -32226,7 +32226,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "gvb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -33400,7 +33400,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "gHD" = (
 /obj/structure/table/woodentable,
@@ -33480,7 +33480,7 @@
 	},
 /area/station/engineering/atmos/supermatter)
 "gIj" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/structure/cable{
@@ -33551,7 +33551,7 @@
 	},
 /area/station/security/brig)
 "gJd" = (
-/obj/structure/stool/bed/chair/comfy/teal,
+/obj/structure/stool/bed/chair/comfy/green,
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
@@ -33824,7 +33824,7 @@
 /area/station/hallway/secondary/mine_sci_shuttle)
 "gMz" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -38572,7 +38572,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "hKE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -39386,7 +39386,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
 "hUZ" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair/wagon/yellow,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -45209,7 +45209,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/supermatter)
 "jgt" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -47970,7 +47970,7 @@
 /area/station/security/brig)
 "jJK" = (
 /obj/effect/landmark/start/captain,
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -49793,7 +49793,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "kdy" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -51521,7 +51521,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/stool/bed/chair/comfy/teal,
+/obj/structure/stool/bed/chair/comfy/green,
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "kuF" = (
@@ -52436,7 +52436,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "kFO" = (
 /obj/machinery/shower/free{
@@ -55088,7 +55088,7 @@
 	},
 /area/station/security/brig)
 "liB" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair/wagon/yellow,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -57017,7 +57017,7 @@
 	},
 /area/station/rnd/lab)
 "lEf" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /obj/machinery/light/smart,
@@ -58939,7 +58939,7 @@
 	dir = 8;
 	icon_state = "siding_wood_line"
 	},
-/obj/structure/stool/bed/chair/comfy/teal,
+/obj/structure/stool/bed/chair/comfy/green,
 /mob/living/carbon/ian,
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
@@ -62654,7 +62654,7 @@
 	},
 /area/station/rnd/hallway/lobby)
 "mQH" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
@@ -68540,7 +68540,7 @@
 	},
 /area/station/civilian/gym)
 "oci" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -69866,7 +69866,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "otY" = (
 /obj/item/weapon/flora/random,
@@ -69876,7 +69876,7 @@
 	},
 /area/station/engineering/break_room)
 "oub" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 1
 	},
 /obj/item/device/radio/intercom/pod{
@@ -69978,7 +69978,7 @@
 /area/station/hallway/primary/port)
 "ouU" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -76863,7 +76863,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "pVv" = (
 /obj/machinery/requests_console/detective{
@@ -77033,7 +77033,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "pXL" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -79035,7 +79035,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -82446,7 +82446,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "riw" = (
 /obj/machinery/power/apc{
@@ -84658,7 +84658,7 @@
 	},
 /area/station/tcommsat/chamber)
 "rHq" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -91761,7 +91761,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "tmK" = (
 /obj/machinery/light/smart{
@@ -97937,7 +97937,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "uJZ" = (
 /obj/machinery/door/firedoor{
@@ -104259,7 +104259,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{

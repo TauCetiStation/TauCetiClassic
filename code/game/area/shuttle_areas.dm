@@ -12,7 +12,7 @@
 	icon_state = "shuttle"
 	requires_power = 0
 	valid_territory = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/shuttle/atom_init()
 	if(!canSmoothWithAreas)

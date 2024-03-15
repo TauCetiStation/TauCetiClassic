@@ -17,7 +17,6 @@
 	var/obj/machinery/camera/active_camera = null
 	var/last_pic = 1.0
 	var/list/network = list("SS13")
-	var/mapping = 0//For the overview file, interesting bit of code.
 
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
@@ -101,7 +100,7 @@
 			instance.del_on_map_removal = FALSE
 			instance.screen_loc = "[map_name]:CENTER"
 
-			instance.apply_effects(user)
+			instance.apply_effects(user, iscamera = TRUE)
 			user.client.register_map_obj(instance)
 
 		user.client.register_map_obj(cam_background)

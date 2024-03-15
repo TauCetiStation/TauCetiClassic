@@ -53,6 +53,8 @@
 	return .
 
 /turf/simulated/mineral/atom_init_late()
+	if(!istype(src)) // someone already made us as cave turf
+		return
 	..()
 	MineralSpread()
 	update_overlays()
