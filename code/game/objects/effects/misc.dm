@@ -29,6 +29,10 @@
 	light_color = LIGHT_COLOR_FIRE
 	light_range = LIGHT_RANGE_FIRE
 
+/obj/effect/dummy/lighting_obj/moblight/fire/green
+	name = "acid_fire"
+	light_color = COLOR_LIME
+
 /obj/effect/dummy/lighting_obj/moblight/atom_init(mapload, _color, _range, _power, _duration)
 	. = ..()
 	if(!ismob(loc))

@@ -21,6 +21,7 @@
 		process_killswitch()
 		process_locks()
 	update_canmove()
+	handle_environment(loc.return_air())
 
 /mob/living/silicon/robot/proc/clamp_values()
 
@@ -241,11 +242,17 @@
 		. = TRUE
 
 /mob/living/silicon/robot/update_fire()
-	cut_overlay("fire_overlay")
+	cut_overlay(fire_overlay)
 	if(on_fire)
-		var/image/over = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay")
-		over.plane = LIGHTING_LAMPS_PLANE
-		if(fire_stack_list[PLASMA_FIRE] > 0)
-			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
-			over.color = "#8fff00"
-		add_overlay(over, "fire_overlay")
+		fire_overlay = mutable_appearance("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", plane = LIGHTING_LAMPS_PLANE)
+		if(count_plasma_fire_stacks() > 0)
+			fire_overlay.appearance_flags |= RESET_COLOR|RESET_ALPHA
+			fire_overlay.color = COLOR_LIME
+		add_overlay(fire_overlay)
+
+/mob/living/silicon/robot/handle_environment(datum/gas_mixture/environment)
+	. = ..()
+	for(var/g in environment.gas)
+		if(gas_data.flags[g] & XGM_GAS_CONTAMINANT && environment.gas[g] > gas_data.overlay_limit[g] + 1)
+			pl_effects()
+			break

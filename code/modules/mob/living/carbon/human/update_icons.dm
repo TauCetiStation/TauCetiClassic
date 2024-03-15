@@ -361,11 +361,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		under = update_height(under)
 		over = update_height(over)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(fire_stack_list[PLASMA_FIRE] > 0)
+		if(count_plasma_fire_stacks() > 0)
 			under.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
-			under.color = "#8fff00"
-			over.color = "#8fff00"
+			under.color = COLOR_LIME
+			over.color = COLOR_LIME
 		overlays_standing[FIRE_LOWER_LAYER] = under
 		overlays_standing[FIRE_UPPER_LAYER] = over
 

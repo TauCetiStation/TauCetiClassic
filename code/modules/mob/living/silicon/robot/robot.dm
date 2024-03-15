@@ -75,6 +75,8 @@
 	// Radial menu for choose module
 	var/static/list/choose_module
 
+	var/mutable_appearance/fire_overlay
+
 	spawner_args = list(/datum/spawner/living/robot)
 
 /mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
@@ -880,6 +882,14 @@
 			var/obj/item/broken_device = cell_component.wrapped
 			to_chat(attacker, "You remove \the [broken_device].")
 			attacker.put_in_active_hand(broken_device)
+	if(on_fire)
+		adjust_fire_stacks(-1, RED_FIRE)
+		adjust_fire_stacks(-20, PLASMA_FIRE)
+		attacker.visible_message("<span class='danger'>[attacker] trying to extinguish [src].</span>", \
+						"<span class='rose'>You trying to extinguish [src].</span>")
+		if(count_fire_stacks() <= 0)
+			attacker.visible_message("<span class='danger'>[attacker] has successfully extinguished [src]!</span>", \
+							"<span class='notice'>You extinguish [src]!</span>")
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
 	//check if it doesn't require any access at all

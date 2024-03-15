@@ -76,9 +76,11 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 //	if(istype(back,/obj/item/weapon/storage/backpack))
 //		back.contaminate()
 
-/mob/proc/pl_effects()
+/mob/living/proc/pl_effects()
+	adjust_fire_stacks(1, PLASMA_FIRE)
 
 /mob/living/carbon/human/pl_effects()
+	. = ..()
 	//Handles all the bad things phoron can do.
 
 	//Contamination

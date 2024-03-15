@@ -180,9 +180,9 @@
 	if(on_fire)
 		var/image/over = image(icon = 'icons/mob/alienqueen.dmi', icon_state = icon_state + "_fire", layer = -X_FIRE_UPPER_LAYER)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(fire_stack_list[PLASMA_FIRE] > 0)
+		if(count_plasma_fire_stacks() > 0)
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
-			over.color = "#8fff00"
+			over.color = COLOR_LIME
 		overlays_standing[X_FIRE_UPPER_LAYER] = over
 
 	apply_standing_overlay(X_FIRE_UPPER_LAYER)
@@ -193,9 +193,9 @@
 	if(on_fire)
 		var/image/over = image(icon = 'icons/mob/alienqueen.dmi', icon_state = replacetext(icon_state, "_old", "") + "_fire", layer = -X_FIRE_UPPER_LAYER)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(fire_stack_list[PLASMA_FIRE] > 0)
+		if(count_plasma_fire_stacks() > 0)
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
-			over.color = "#8fff00"
+			over.color = COLOR_LIME
 		overlays_standing[X_FIRE_UPPER_LAYER] = over
 
 	apply_standing_overlay(X_FIRE_UPPER_LAYER)
@@ -207,17 +207,13 @@
 	remove_standing_overlay(X_FIRE_UPPER_LAYER)
 
 	update_fire_underlay()
-	//cut_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
 	if(on_fire)
 		var/image/over = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_overlay", layer = -X_FIRE_UPPER_LAYER)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(fire_stack_list[PLASMA_FIRE] > 0)
+		if(count_plasma_fire_stacks() > 0)
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
-			over.color = "#8fff00"
+			over.color = COLOR_LIME
 		overlays_standing[X_FIRE_UPPER_LAYER] = over
-		//overlays_standing[X_FIRE_LOWER_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_underlay", layer = -X_FIRE_LOWER_LAYER)
-		//add_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
-	//overlays_standing[X_FIRE_LOWER_LAYER] = null
 
 	apply_standing_overlay(X_FIRE_UPPER_LAYER)
 
@@ -228,17 +224,13 @@
 	remove_standing_overlay(X_FIRE_UPPER_LAYER)
 
 	update_fire_underlay()
-	//cut_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
 	if(on_fire)
 		var/image/over = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_overlay", layer = -X_FIRE_UPPER_LAYER)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(fire_stack_list[PLASMA_FIRE] > 0)
+		if(count_plasma_fire_stacks() > 0)
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
-			over.color = "#8fff00"
+			over.color = COLOR_LIME
 		overlays_standing[X_FIRE_UPPER_LAYER] = over
-		//overlays_standing[X_FIRE_LOWER_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_underlay", layer = -X_FIRE_LOWER_LAYER)
-		//add_overlay(overlays_standing[X_FIRE_LOWER_LAYER])
-	//overlays_standing[X_FIRE_LOWER_LAYER] = null
 
 	apply_standing_overlay(X_FIRE_UPPER_LAYER)
 
@@ -254,7 +246,11 @@
 	underlays.Cut()
 
 	if(on_fire)
-		underlays += image(icon = 'icons/mob/OnFire.dmi', icon_state = fire_underlay_state)
+		var/image/underfire = image(icon = 'icons/mob/OnFire.dmi', icon_state = fire_underlay_state)
+		if(count_plasma_fire_stacks() > 0)
+			underfire.appearance_flags |= RESET_COLOR|RESET_ALPHA
+			underfire.color = COLOR_LIME
+		underlays += underfire
 
 
 //Xeno Overlays Indexes//////////

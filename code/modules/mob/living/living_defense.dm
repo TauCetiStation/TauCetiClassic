@@ -255,18 +255,21 @@
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(count_fire_stacks() > 0 && !on_fire)
-		on_fire = 1
+		on_fire = TRUE
 		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
-		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
+		if(count_plasma_fire_stacks() > 0)
+			new /obj/effect/dummy/lighting_obj/moblight/green_fire(src)
+		else
+			new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
 		playsound(src, 'sound/effects/extinguish_mob.ogg', VOL_EFFECTS_MASTER)
-		on_fire = 0
+		on_fire = FALSE
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
@@ -293,12 +296,15 @@
 /atom/proc/count_red_fire_stacks()
 	return fire_stack_list[RED_FIRE]
 
+/atom/proc/count_plasma_fire_stacks()
+	return fire_stack_list[PLASMA_FIRE]
+
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks = 0, fire_type) //Adjusting the amount of fire_stacks we have on person
 	if(!fire_type)
 		for(var/i in global.all_fire_types)
-			fire_stack_list[i] = clamp(fire_stack_list[i] + add_fire_stacks, -20, 20)
+			fire_stack_list[i] = clamp(fire_stack_list[i] + add_fire_stacks, 0, 20)
 	else
-		fire_stack_list[fire_type] = clamp(fire_stack_list[fire_type] + add_fire_stacks, -20, 20)
+		fire_stack_list[fire_type] = clamp(fire_stack_list[fire_type] + add_fire_stacks, 0, 20)
 	if(count_fire_stacks() > 0)
 		update_fire()
 		return
@@ -326,16 +332,14 @@
 		IgniteMob() // Ignite us
 
 /mob/living/proc/handle_fire()
-	/*
-	if(count_fire_stacks() < 0)
-		set_fire_stacks(min(0, fire_stacks + 1))//So we dry ourselves back to default, nonflammable.
-	*/
 	if(!on_fire)
 		return TRUE //the mob is no longer on fire, no need to do the rest.
 
 	adjust_fire_stacks(-0.1) //the fire is slowly consumed
 
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
+	var/datum/gas_mixture/G = loc.return_air()
+	// Check if we're standing in an oxygenless environment
+	// Green fire is still burns in airless
 	if(G.get_by_flag(XGM_GAS_OXIDIZER) < 1 && (count_fire_stacks() - count_red_fire_stacks()) <= 0)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
