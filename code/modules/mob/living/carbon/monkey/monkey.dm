@@ -94,8 +94,13 @@
 /mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
 	if(stat != DEAD) // lets put this shit somewhere here
 		stabilize_body_temperature()
-
-	if(!environment || (flags & GODMODE))
+	if(!environment)
+		return
+	for(var/g in environment.gas)
+		if(gas_data.flags[g] & XGM_GAS_CONTAMINANT && environment.gas[g] > gas_data.overlay_limit[g] + 1)
+			pl_effects()
+			break
+	if(flags & GODMODE)
 		return
 	handle_monkey_pressure(environment)
 	handle_monkey_temperature(environment)
