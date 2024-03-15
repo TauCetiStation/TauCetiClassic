@@ -50,6 +50,7 @@
 	return rgb(RGB[1],RGB[2],RGB[3])
 
 // make hex color brighter before one value is #ff
+// todo: replace with color_lightness_max
 /proc/adjust_to_white(color)
 	var/list/RGB[3]
 	RGB[1] = HEX_VAL_RED(color)
@@ -66,3 +67,20 @@
 		RGB[i] += min_diff
 
 	return rgb(RGB[1],RGB[2],RGB[3])
+
+/// Ensures that the lightness value of a color must be greater than the provided minimum.
+/proc/color_lightness_max(color, min_lightness)
+	var/list/rgb = rgb2num(color)
+	var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
+	hsl[3] = max(hsl[3], min_lightness)
+	var/list/transformed_rgb = hsl2rgb(hsl[1], hsl[2], hsl[3])
+	return rgb(transformed_rgb[1], transformed_rgb[2], transformed_rgb[3])
+
+/// Ensures that the lightness value of a color must be less than the provided maximum.
+/proc/color_lightness_min(color, max_lightness)
+	var/list/rgb = rgb2num(color)
+	var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
+	// Ensure high lightness (Minimum of 90%)
+	hsl[3] = min(hsl[3], max_lightness)
+	var/list/transformed_rgb = hsl2rgb(hsl[1], hsl[2], hsl[3])
+	return rgb(transformed_rgb[1], transformed_rgb[2], transformed_rgb[3])

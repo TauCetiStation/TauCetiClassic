@@ -18,6 +18,9 @@
 
 	if(client)
 		handle_regular_hud_updates()
+		var/turf/T = get_turf(src)
+		if(T && last_z != T.z)
+			update_z(T.z)
 
 /mob/living/proc/update_health_hud()
 	if(!healths)
