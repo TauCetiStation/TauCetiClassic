@@ -260,9 +260,9 @@
 		visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
 		if(count_plasma_fire_stacks() > 0)
-			new /obj/effect/dummy/lighting_obj/moblight/green_fire(src)
+			new /obj/effect/dummy/lighting_obj/moblight/fire/green(src)
 		else
-			new/obj/effect/dummy/lighting_obj/moblight/fire(src)
+			new /obj/effect/dummy/lighting_obj/moblight/fire(src)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 		update_fire()
 
