@@ -362,9 +362,7 @@
 	lastcycle = world.time
 	harvest = FALSE
 	weedlevel = 0 // Reset
-
-	sleep(5) // Wait a while
-	update_icon()
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 5)
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
 
 
