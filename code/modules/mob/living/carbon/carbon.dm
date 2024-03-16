@@ -560,7 +560,7 @@
 
 			if(on_fire && M != src)
 				adjust_fire_stacks(-1, RED_FIRE)
-				adjust_fire_stacks(-20, PLASMA_FIRE)
+				adjust_fire_stacks(-20, ACID_FIRE)
 				M.visible_message("<span class='danger'>[M] trying to extinguish [src].</span>", \
 								"<span class='rose'>You trying to extinguish [src].</span>")
 				if(count_fire_stacks() <= 0)

@@ -884,7 +884,7 @@
 			attacker.put_in_active_hand(broken_device)
 	if(on_fire)
 		adjust_fire_stacks(-1, RED_FIRE)
-		adjust_fire_stacks(-20, PLASMA_FIRE)
+		adjust_fire_stacks(-20, ACID_FIRE)
 		attacker.visible_message("<span class='danger'>[attacker] trying to extinguish [src].</span>", \
 						"<span class='rose'>You trying to extinguish [src].</span>")
 		if(count_fire_stacks() <= 0)

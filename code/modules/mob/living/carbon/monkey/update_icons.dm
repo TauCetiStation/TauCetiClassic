@@ -163,7 +163,7 @@
 		//overlays_standing[M_FIRE_LOWER_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay", layer = -M_FIRE_LOWER_LAYER)
 		var/image/over = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", layer = -M_FIRE_UPPER_LAYER)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(count_plasma_fire_stacks() > 0)
+		if(count_acid_fire_stacks() > 0)
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			over.color = COLOR_LIME
 		overlays_standing[M_FIRE_UPPER_LAYER] = over
@@ -178,7 +178,7 @@
 
 	if(on_fire)
 		var/image/undefire = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_underlay")
-		if(count_plasma_fire_stacks() > 0)
+		if(count_acid_fire_stacks() > 0)
 			undefire.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			undefire.color = COLOR_LIME
 		underlays += undefire

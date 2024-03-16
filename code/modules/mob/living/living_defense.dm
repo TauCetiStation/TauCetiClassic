@@ -259,7 +259,7 @@
 		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
-		if(count_plasma_fire_stacks() > 0)
+		if(count_acid_fire_stacks() > 0)
 			new /obj/effect/dummy/lighting_obj/moblight/fire/green(src)
 		else
 			new /obj/effect/dummy/lighting_obj/moblight/fire(src)
@@ -296,8 +296,8 @@
 /atom/proc/count_red_fire_stacks()
 	return fire_stack_list[RED_FIRE]
 
-/atom/proc/count_plasma_fire_stacks()
-	return fire_stack_list[PLASMA_FIRE]
+/atom/proc/count_acid_fire_stacks()
+	return fire_stack_list[ACID_FIRE]
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks = 0, fire_type) //Adjusting the amount of fire_stacks we have on person
 	if(!fire_type)

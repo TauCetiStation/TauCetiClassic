@@ -361,7 +361,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		under = update_height(under)
 		over = update_height(over)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(count_plasma_fire_stacks() > 0)
+		if(count_acid_fire_stacks() > 0)
 			under.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			under.color = COLOR_LIME

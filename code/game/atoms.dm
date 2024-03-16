@@ -63,7 +63,7 @@
 
 	var/list/armor // TODO armor gatum?
 
-	var/list/fire_stack_list = list(RED_FIRE = 0, PLASMA_FIRE = 0)
+	var/list/fire_stack_list = list(RED_FIRE = 0, ACID_FIRE = 0)
 
 	VAR_PRIVATE/atom_integrity //defaults to max_integrity
 	var/max_integrity = 500

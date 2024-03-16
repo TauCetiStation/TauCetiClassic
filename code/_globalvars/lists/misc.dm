@@ -200,4 +200,4 @@ var/global/list/reagents_list = typecacheof(/datum/reagent)
 
 var/global/list/virus_types_by_pool
 
-var/global/list/all_fire_types = list(RED_FIRE, PLASMA_FIRE)
+var/global/list/all_fire_types = list(RED_FIRE, ACID_FIRE)

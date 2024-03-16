@@ -245,7 +245,7 @@
 	cut_overlay(fire_overlay)
 	if(on_fire)
 		fire_overlay = mutable_appearance("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", plane = LIGHTING_LAMPS_PLANE)
-		if(count_plasma_fire_stacks() > 0)
+		if(count_acid_fire_stacks() > 0)
 			fire_overlay.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			fire_overlay.color = COLOR_LIME
 		add_overlay(fire_overlay)

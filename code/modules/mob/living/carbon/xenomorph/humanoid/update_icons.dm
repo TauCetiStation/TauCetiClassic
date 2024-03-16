@@ -180,7 +180,7 @@
 	if(on_fire)
 		var/image/over = image(icon = 'icons/mob/alienqueen.dmi', icon_state = icon_state + "_fire", layer = -X_FIRE_UPPER_LAYER)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(count_plasma_fire_stacks() > 0)
+		if(count_acid_fire_stacks() > 0)
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			over.color = COLOR_LIME
 		overlays_standing[X_FIRE_UPPER_LAYER] = over
@@ -193,7 +193,7 @@
 	if(on_fire)
 		var/image/over = image(icon = 'icons/mob/alienqueen.dmi', icon_state = replacetext(icon_state, "_old", "") + "_fire", layer = -X_FIRE_UPPER_LAYER)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(count_plasma_fire_stacks() > 0)
+		if(count_acid_fire_stacks() > 0)
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			over.color = COLOR_LIME
 		overlays_standing[X_FIRE_UPPER_LAYER] = over
@@ -210,7 +210,7 @@
 	if(on_fire)
 		var/image/over = image(icon = 'icons/mob/OnFire.dmi', icon_state = "human_overlay", layer = -X_FIRE_UPPER_LAYER)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(count_plasma_fire_stacks() > 0)
+		if(count_acid_fire_stacks() > 0)
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			over.color = COLOR_LIME
 		overlays_standing[X_FIRE_UPPER_LAYER] = over
@@ -227,7 +227,7 @@
 	if(on_fire)
 		var/image/over = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_overlay", layer = -X_FIRE_UPPER_LAYER)
 		over.plane = LIGHTING_LAMPS_PLANE
-		if(count_plasma_fire_stacks() > 0)
+		if(count_acid_fire_stacks() > 0)
 			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			over.color = COLOR_LIME
 		overlays_standing[X_FIRE_UPPER_LAYER] = over
@@ -247,7 +247,7 @@
 
 	if(on_fire)
 		var/image/underfire = image(icon = 'icons/mob/OnFire.dmi', icon_state = fire_underlay_state)
-		if(count_plasma_fire_stacks() > 0)
+		if(count_acid_fire_stacks() > 0)
 			underfire.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			underfire.color = COLOR_LIME
 		underlays += underfire
