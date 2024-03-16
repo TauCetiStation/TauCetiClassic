@@ -32,7 +32,7 @@ const NukeKeypad = (props, context) => {
                 fontSize="20px"
                 height="25px"
                 lineHeight={1.25}
-                disabled={code==="ОШИБКА" && key!=="R" || !hasDisk || !deployed}
+                disabled={code==="ERROR" && key!=="R" || !hasDisk || !deployed}
                 onClick={() => act('type', { digit: key })} />
             ))}
           </Grid.Column>
@@ -130,7 +130,7 @@ export const NuclearBomb = (props, context) => {
                 onClick={() => act('adjustTimer', { time: timerMax })}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Безопасность">
+            <LabeledList.Item label="Предохранитель">
               <Button
                 selected={safety}
                 icon={safety ? "toggle-on" : "toggle-off"}

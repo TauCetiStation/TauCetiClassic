@@ -73,7 +73,7 @@ var/global/bomb_set
 				to_chat(user, "Вы вкрутили панель управления в [CASE(src, ACCUSATIVE_CASE)].")
 		else
 			if(!opened)
-				to_chat(user, "[CASE(src, NOMINATIVE_CASE)] жужжит, панель управления все ещё заблокирована!")
+				to_chat(user, "[C_CASE(src, NOMINATIVE_CASE)] жужжит, панель управления все ещё заблокирована!")
 			if(opened)
 				opened = FALSE
 				to_chat(user, "Вы вкрутили панель управления в [CASE(src, ACCUSATIVE_CASE)].")
@@ -270,7 +270,7 @@ var/global/bomb_set
 		var/area/nuclearbombloc = get_area(loc)
 		announce_nuke.play(nuclearbombloc)
 		set_security_level("delta")
-		notify_ghosts("[CASE(src, NOMINATIVE_CASE)] была активирована!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
+		notify_ghosts("[C_CASE(src, NOMINATIVE_CASE)] была активирована!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
 		timing = TRUE
 	update_icon()
 
@@ -287,10 +287,10 @@ var/global/bomb_set
 		if(user.incapacitated())
 			return FALSE
 		if(!ishuman(user))
-			to_chat(user, "<span class = 'red'>Ты не можешь сделать это!</span>")
+			to_chat(user, "<span class = 'red'>Вы не можете сделать это!</span>")
 			return FALSE
 		if(!istype(get_area(src), /area/station)) // If outside of station
-			to_chat(user, "<span class = 'red'>Бомба не может быть здесь расположена...</span>")
+			to_chat(user, "<span class = 'red'>Бомба не может быть здесь развёрнута...</span>")
 			return FALSE
 		if(!ishuman(user) && !isobserver(user))
 			to_chat(user, "<span class = 'red'>Ты не можешь сделать это!</span>")
@@ -462,7 +462,7 @@ var/global/bomb_set
 /obj/machinery/nuclearbomb/fake/examine(mob/user, distance)
 	. = ..()
 	if(isnukeop(user) || isobserver(user))
-		to_chat(user, "<span class ='boldwarning'>Это - обманка!</span>")
+		to_chat(user, "<span class ='boldwarning'>Это обманка!</span>")
 
 /obj/machinery/nuclearbomb/fake/process() //Yes, it's alike normal, but not exactly
 	if(timing && !detonated)
@@ -482,7 +482,7 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/fake/deploy(mob/user)
 	if(false_activation)
-		to_chat(user, "<span class = 'red'>Бомба не реагирует, она сломана?</span>")
+		to_chat(user, "<span class = 'red'>Бомба не реагирует, возможно она сломана?</span>")
 		return
 	if(!isnukeop(user))
 		to_chat(user, "<span class = 'red'>Бомба не реагирует, она сломана?</span>")
