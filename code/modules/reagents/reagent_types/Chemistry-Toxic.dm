@@ -103,7 +103,7 @@
 	if(!isliving(M))
 		return
 	if(method == TOUCH)
-		M.adjust_fire_stacks(volume / 5, PLASMA_FIRE)
+		M.adjust_fire_stacks(volume / 5, RED_FIRE)
 
 /datum/reagent/toxin/lexorin
 	name = "Lexorin"
