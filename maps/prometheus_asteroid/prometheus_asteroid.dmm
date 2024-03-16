@@ -6939,7 +6939,7 @@
 	},
 /area/asteroid/mine/production)
 "Cw" = (
-/turf/simulated/mineral/random/caves,
+/turf/simulated/mineral/random/caves/high_chance,
 /area/asteroid/mine/unexplored/dangerous)
 "Cz" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{

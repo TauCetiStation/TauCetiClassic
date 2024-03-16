@@ -14,7 +14,25 @@
 
 	feedback_add_details("admin_verb","DG2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/toggle_profiler()
+	set category = "Debug"
+	set name = "Toggle Profiler"
 
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(tgui_alert(usr, "Be sure you know what you are doing. You want to [config.auto_profile ? "STOP": "START"] Byond Profiler?",, list("Yes","No")) != "Yes")
+		return
+
+	config.auto_profile = !config.auto_profile
+
+	if(config.auto_profile)
+		SSprofiler.StartProfiling()
+	else
+		SSprofiler.StopProfiling()
+
+	message_admins("[key_name(src)] toggled byond profiler [config.auto_profile ? "on" : "off"].")
+	log_admin("[key_name(src)] toggled byond profiler [config.auto_profile ? "on" : "off"].")
 
 /* 21st Sept 2010
 Updated by Skie -- Still not perfect but better!

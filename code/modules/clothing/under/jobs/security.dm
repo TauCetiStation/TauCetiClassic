@@ -14,7 +14,7 @@
 	icon_state = "warden"
 	item_state = "warden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/security
@@ -23,7 +23,7 @@
 	icon_state = "security"
 	item_state = "secred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/security/skirt
@@ -62,7 +62,7 @@
 	icon_state = "detective"
 	item_state = "detective"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/det/max_payne
@@ -70,19 +70,19 @@
 	desc = "Style suit for those who want vengence."
 	icon_state = "max"
 	item_state = "max"
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/det/black
 	name = "black hard-worn suit"
 	icon_state = "detective2"
 	item_state = "detective2"
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/det/slob
 	name = "white hard-worn suit with grey pants"
 	icon_state = "polsuit"
 	item_state = "polsuit"
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/det/slob/verb/rollup()
 	set name = "Roll suit sleeves"
@@ -102,14 +102,14 @@
 	icon_state = "forensicsred"
 	item_state = "forensicsred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
 
 /obj/item/clothing/under/rank/forensic_technician/black
 	icon_state = "forensicsblack"
 	item_state = "forensicsblack"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9
 
 /*
@@ -121,7 +121,7 @@
 	icon_state = "hos"
 	item_state = "hosred"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.8
 
 /obj/item/clothing/under/rank/head_of_security/turtleneck
@@ -168,5 +168,5 @@
 	icon_state = "blueshield"
 	item_state = "blueshield"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.9

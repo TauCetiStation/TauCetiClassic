@@ -3,12 +3,11 @@
 
 	anchored      = TRUE
 
-	icon             = LIGHTING_ICON
+	icon             = 'icons/effects/lighting_object.dmi'
 	icon_state       = "transparent"
 	color            = LIGHTING_BASE_MATRIX
 	plane            = LIGHTING_PLANE
 	mouse_opacity    = MOUSE_OPACITY_TRANSPARENT
-	invisibility     = INVISIBILITY_LIGHTING
 
 	simulated = FALSE
 	flags = NOREACT
@@ -25,17 +24,21 @@
 	if (myturf.lighting_object)
 		qdel(myturf.lighting_object, force = TRUE)
 	myturf.lighting_object = src
-	myturf.luminosity = 0
 
-	for(var/turf/environment/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-		S.update_starlight()
+	// just in case if something spawns us before initialization
+	// any lighting source will add us to the queue anyway
+	// saves us init time on objects that don't have any lighting sources around
+	if(!SSlighting.initialized)
+		icon_state = "dark"
+		color = null
+		return .
 
 	needs_update = TRUE
-	global.lighting_update_objects += src
+	SSlighting.objects_queue += src
 
 /atom/movable/lighting_object/Destroy(force)
 	if (force)
-		global.lighting_update_objects     -= src
+		SSlighting.objects_queue -= src
 		if (loc != myturf)
 			var/turf/oldturf = get_turf(myturf)
 			var/turf/newturf = get_turf(loc)
@@ -71,16 +74,10 @@
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-	var/list/corners = myturf.corners
-	var/datum/lighting_corner/cr = dummy_lighting_corner
-	var/datum/lighting_corner/cg = dummy_lighting_corner
-	var/datum/lighting_corner/cb = dummy_lighting_corner
-	var/datum/lighting_corner/ca = dummy_lighting_corner
-	if (corners) //done this way for speed
-		cr = corners[3] || dummy_lighting_corner
-		cg = corners[2] || dummy_lighting_corner
-		cb = corners[4] || dummy_lighting_corner
-		ca = corners[1] || dummy_lighting_corner
+	var/datum/lighting_corner/cr = myturf.lighting_corner_SW || dummy_lighting_corner
+	var/datum/lighting_corner/cg = myturf.lighting_corner_SE || dummy_lighting_corner
+	var/datum/lighting_corner/cb = myturf.lighting_corner_NW || dummy_lighting_corner
+	var/datum/lighting_corner/ca = myturf.lighting_corner_NE || dummy_lighting_corner
 
 	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
 
@@ -148,4 +145,7 @@
 	return
 
 /atom/movable/lighting_object/forceMove(atom/destination, keep_pulling)
+	return
+
+/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
 	return

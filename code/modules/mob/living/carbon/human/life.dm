@@ -1135,7 +1135,7 @@ var/global/list/tourette_bad_words= list(
 			if(isnull(V)) // Trying to figure out a runtime error that keeps repeating
 				CRASH("virus2 nulled before calling activate()")
 			else
-				V.activate(src)
+				V.on_process(src)
 			// activate may have deleted the virus
 			if(!V) continue
 

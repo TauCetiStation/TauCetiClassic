@@ -629,20 +629,6 @@
 
 //Secbot Construction
 
-/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
-	if(!issignaler(I)) //Eh, but we don't want people making secbots out of space helmets.
-		return ..()
-
-	var/obj/item/device/assembly/signaler/S = I
-	if(!S.secured)
-		return ..()
-
-	var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
-	user.put_in_hands(A)
-	to_chat(user, "<span class='notice'>You add \the [S] to the helmet.</span>")
-	qdel(S)
-	qdel(src)
-
 /obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
 	if(iswelding(I) && !build_step)
 		var/obj/item/weapon/weldingtool/WT = I
