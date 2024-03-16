@@ -419,8 +419,6 @@
 #define COMSIG_NERVE_AROUSAL "nerve_arousal"
 // send this signal to handle /datum/disease2/effect/bactericidal_tannins for atoms: (power as num)
 #define COMSIG_BACTERICIDAL_EFFECT "bactericidal_effect"
-// send this signal to handle /datum/disease2/effect/gibbingtons for atoms: (power as num)
-#define COMSIG_AMMONIUM_NITRATE_EFFECT "ammonium_nitrate_effect"
 // send this signal to handle /datum/disease2/effect/fire for atoms: (power as num)
 #define COMSIG_HEATING_EFFECT "heating_effect"
 // send this signal to handle /datum/disease2/effect/radian for atoms: (power as num)

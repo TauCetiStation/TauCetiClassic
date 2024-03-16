@@ -338,8 +338,7 @@
 			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob/, gib)), 50)
 
 /datum/disease2/effect/gibbingtons/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	A.adjustHealth(holder.stage / 10)
-	SEND_SIGNAL(A, COMSIG_AMMONIUM_NITRATE_EFFECT, holder.stage)
+	A.react_to_nitrate(A, holder.stage)
 
 /datum/disease2/effect/vomit
 	name = "Haematemesis's Syndrome"

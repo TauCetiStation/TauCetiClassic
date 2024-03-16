@@ -61,12 +61,8 @@
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 	var/list/mutatelist = list()
 
-/obj/item/seeds/proc/planted(obj/machinery/hydroponics/tray)
-	RegisterSignal(tray, COMSIG_AMMONIUM_NITRATE_EFFECT, PROC_REF(react_to_nitrate))
-
 /obj/item/seeds/proc/react_to_nitrate(obj/machinery/hydroponics/source, nitrate_power)
-	SIGNAL_HANDLER
-	source.adjustHealth(nitrate_power)
+	source.adjustHealth(nitrate_power / 10)
 
 /obj/item/seeds/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
@@ -116,7 +112,6 @@
 	growthstages = 5
 
 /obj/item/seeds/blackpepper/react_to_nitrate(obj/machinery/hydroponics/source, nitrate_power)
-	SIGNAL_HANDLER
 	if(prob(nitrate_power * 10))
 		mutatelist = list(/obj/item/seeds/gatfruit)
 		source.mutatespecie()
