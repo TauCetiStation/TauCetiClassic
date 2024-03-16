@@ -61,6 +61,9 @@
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 	var/list/mutatelist = list()
 
+/obj/item/seeds/proc/planted(obj/machinery/hydroponics/tray)
+	return
+
 /obj/item/seeds/proc/react_to_nitrate(obj/machinery/hydroponics/source, nitrate_power)
 	source.adjustHealth(nitrate_power / 10)
 
