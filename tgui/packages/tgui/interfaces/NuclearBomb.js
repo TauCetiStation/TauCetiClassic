@@ -61,23 +61,27 @@ export const NuclearBomb = (props, context) => {
       height={400}>
       <Window.Content>
         <Section title="Статус" fill buttons={(
-          <Button
-            color={deployed ? "green" : "red"}
-            content={deployed ? "Развернута" : "Не развернута"}
-            icon={"power-off"}
-            disabled={!safety || timing}
-            onClick={() => act('deploy')}
-          />
+          <Box textAlign="right">
+            <Button
+              color={deployed ? "green" : "red"}
+              content={deployed ? "Развернута" : "Не развернута"}
+              icon={"power-off"}
+              disabled={!safety || timing}
+              onClick={() => act('deploy')}
+            />
+          </Box>
         )}>
           <LabeledList>
             <LabeledList.Item label="Диск аутентификации">
-              <Button
-                selected={hasDisk}
-                icon={"eject"}
-                content={hasDisk ? "Вставлен" : "Не вставлен"}
-                disabled={!deployed}
-                onClick={() => act(hasDisk ? 'ejectDisk' : 'insertDisk')}
-              />
+              <Box textAlign="right">
+                <Button
+                  selected={hasDisk}
+                  icon={"eject"}
+                  content={hasDisk ? "Вставлен" : "Не вставлен"}
+                  disabled={!deployed}
+                  onClick={() => act(hasDisk ? 'ejectDisk' : 'insertDisk')}
+                />
+              </Box>
             </LabeledList.Item>
           </LabeledList>
           <br />
@@ -134,7 +138,7 @@ export const NuclearBomb = (props, context) => {
               <Button
                 selected={safety}
                 icon={safety ? "toggle-on" : "toggle-off"}
-                content={safety ? "Включена" : "Отключена"}
+                content={safety ? "Включён" : "Отключён"}
                 disabled={!authorized || timing && !safety}
                 onClick={() => act('toggleSafety')}
               />
