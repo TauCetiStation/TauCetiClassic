@@ -213,7 +213,10 @@
 				var/obj/effect/fluid/F = locate() in T
 				if(F)
 					F.electrocute_act(60)
-			siemens_coefficient *= C.siemens_coefficient
+			var/cloth_siemens_modifier = C.siemens_coefficient
+			if(HAS_TRAIT(src, TRAIT_CONDUCT))
+				cloth_siemens_modifier++
+			siemens_coefficient *= cloth_siemens_modifier
 
 	return siemens_coefficient
 
