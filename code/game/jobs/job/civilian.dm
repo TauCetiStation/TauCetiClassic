@@ -140,6 +140,11 @@
 	*/
 	flags = JOB_FLAG_CIVIL
 
+/datum/job/chef/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!visualsOnly)
+		ADD_TRAIT(H, TRAIT_BORK_SKILLCHIP, GENERIC_TRAIT)
+	return ..()
+
 /datum/job/hydro
 	title = "Botanist"
 	flag = BOTANIST
