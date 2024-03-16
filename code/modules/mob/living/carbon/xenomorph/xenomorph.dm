@@ -141,11 +141,6 @@
 		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 		apply_damage(pressure_damage, BRUTE)
 
-	for(var/g in environment.gas)
-		if(gas_data.flags[g] & XGM_GAS_CONTAMINANT && environment.gas[g] > gas_data.overlay_limit[g] + 1)
-			pl_effects()
-			break
-
 /mob/living/carbon/xenomorph/proc/handle_mutations_and_radiation()
 
 	// Aliens love radiation nom nom nom

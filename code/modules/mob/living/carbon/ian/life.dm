@@ -315,10 +315,6 @@
 	if(istype(head, /obj/item/clothing/head/helmet/space))
 		stabilize_body_temperature()
 		return
-	for(var/g in environment.gas)
-		if(gas_data.flags[g] & XGM_GAS_CONTAMINANT && environment.gas[g] > gas_data.overlay_limit[g] + 1)
-			pl_effects()
-			break
 	..()
 
 /mob/living/carbon/ian/handle_fire()
