@@ -670,3 +670,8 @@ var/global/list/death_alarm_stealth_areas = list(
 	name = "loyaIty implant"
 	desc = "Makes you loyal or such."
 	implant_trait = TRAIT_FAKELOYAL_VISUAL
+
+/obj/item/weapon/implant/bork
+	name = "B0RK-X3 skillchip"
+	desc = "A specialised form of self defence, developed by skilled sous-chef de cuisines. No man fights harder than a chef to defend his kitchen"
+	implant_trait = TRAIT_BORK_SKILLCHIP
