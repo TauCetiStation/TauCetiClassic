@@ -3362,7 +3362,6 @@
 	icon_state = "sucker_mystery"
 	filling_color = "#ffffff"
 	bitesize = 3
-	list_reagents = list("adminordrazine" = 0.25)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/mystery/atom_init()
 	. = ..()
