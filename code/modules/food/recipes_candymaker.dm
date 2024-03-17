@@ -192,7 +192,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/purple
 
 /datum/recipe/candy/sucker_mystery
-	reagents = list("anti_toxin" = 5, "stoxin" = 5, "toxin" = 5, "carpotoxin" = 5)
+	reagents = list("anti_toxin" = 5, "stoxin" = 5, "toxin" = 5,)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker,
 		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/green,
