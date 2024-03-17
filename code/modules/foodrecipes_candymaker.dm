@@ -200,7 +200,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/blue,
 		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/orange,
 		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/yellow,
-		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/purple
+		/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/purple,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/mystery
 
@@ -490,7 +490,7 @@
 	reagents = list()
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean,
-		/obj/item/weapon/reagent_containers/food/snacks/popcorn
+		/obj/item/weapon/reagent_containers/food/snacks/popcorn,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/popcorn
 
