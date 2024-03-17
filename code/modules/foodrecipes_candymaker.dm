@@ -486,6 +486,14 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/cola
 
+/datum/recipe/candy/jellybean_popcorn
+	reagents = list()
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/candy/jellybean,
+		/obj/item/weapon/reagent_containers/food/snacks/popcorn
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/candy/jellybean/popcorn
+
 /datum/recipe/candy/jellybean_wtf
 	reagents = list("space_drugs" = 5)
 	items = list(
