@@ -4,6 +4,7 @@
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
+	special_armor = list(BULLET_DODGE = -15)
 	flags_inv = 0
 	siemens_coefficient = 0.9
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardhat)
