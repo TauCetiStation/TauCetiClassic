@@ -3,6 +3,7 @@
 	name = "magboots"
 	icon_state = "magboots0"
 	item_state = "magboots"
+	special_armor = list(BULLET_DODGE = -10)
 	var/magpulse = 0
 	var/magboot_state = "magboots"
 	var/slowdown_off = 2
