@@ -335,6 +335,7 @@ BLIND     // can't see anything
 	sprite_sheet_slot = SPRITE_SHEET_GLOVES
 
 	dyed_type = DYED_GLOVES
+	special_armor = list(BULLET_DODGE = -5)
 
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
@@ -411,6 +412,9 @@ BLIND     // can't see anything
 	valid_accessory_slots = list("armband", "decor")
 	restricted_accessory_slots = list("armband")
 
+/obj/item/clothing/suit/proc/recalculate_special_armor(mob/user)
+	return
+
 /obj/item/clothing/proc/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	return
 
@@ -426,6 +430,7 @@ BLIND     // can't see anything
 	item_state = "space"
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	special_armor = list(BULLET_DODGE = -15)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 	pierce_protection = HEAD
@@ -454,6 +459,7 @@ BLIND     // can't see anything
 	slowdown = 1.5
 	equip_time = 100 // Bone White - time to equip/unequip. see /obj/item/attack_hand (items.dm) and /obj/item/clothing/mob_can_equip (clothing.dm)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
+	special_armor = list(BULLET_DODGE = -15)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
