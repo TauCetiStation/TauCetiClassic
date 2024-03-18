@@ -181,7 +181,7 @@
 		L.visible_message("<span class = 'notice'>\The [src] misses [L] narrowly!</span>")
 		playsound(L.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
 		permutated.Add(L)
-		animatation_displace_reset(M)
+		animatation_displace_reset(L)
 		return TRUE
 	return FALSE
 
