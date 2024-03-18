@@ -49,7 +49,7 @@
 					"<span class='notice'>You hear something heavy fall.</span>")
 
 /mob/living/carbon/human/prob_miss(obj/item/projectile/P)
-	var/def_zone = get_zone_with_miss_chance(P.def_zone, src, P.get_miss_modifier())
+	var/def_zone = get_zone_with_miss_chance(P.def_zone, src, P.get_miss_modifier(src))
 	if(!def_zone)
 		return TRUE
 	def_zone = check_zone(def_zone)

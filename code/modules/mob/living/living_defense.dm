@@ -46,7 +46,7 @@
 	return P.impact_force
 
 /mob/living/proc/prob_miss(obj/item/projectile/P)
-	return prob(20 + P.get_miss_modifier()) // no bopyparts -> no reason to check def_zone
+	return prob(20 + P.get_miss_modifier(src)) // no bopyparts -> no reason to check def_zone
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/impact_force = get_projectile_impact_force(P, def_zone)
