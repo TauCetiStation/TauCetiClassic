@@ -8,6 +8,31 @@
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.4
 
+/obj/item/clothing/suit/armor/recalculate_special_armor(mob/user)
+	if(istype(user.back, /obj/item/weapon/storage/backpack))
+		special_armor = list(BULLET_DODGE = -100)
+		return
+	if((body_parts_covered & UPPER_TORSO) && (body_parts_covered & LOWER_TORSO)  && (body_parts_covered & ARMS)  && (body_parts_covered & LEGS))
+		special_armor = list(BULLET_DODGE = 0)
+		return
+	if((cold_protection & UPPER_TORSO) && (cold_protection & LOWER_TORSO)  && (cold_protection & ARMS)  && (cold_protection & LEGS))
+		special_armor = list(BULLET_DODGE = -15)
+	if(armor[MELEE] > 70)
+		special_armor = list(BULLET_DODGE = 0)
+		return
+	special_armor = list(BULLET_DODGE = 15)
+
+/obj/item/clothing/suit/armor/equipped(mob/user, slot)
+	. = ..()
+	if(slot != SLOT_WEAR_SUIT)
+		return
+	recalculate_special_armor(user)
+
+/obj/item/clothing/suit/armor/dropped(mob/user)
+	. = ..()
+	if(slot_equipped == SLOT_WEAR_SUIT)
+		special_armor = list(BULLET_DODGE = 0)
+
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
 	cases = list("бронежилет", "бронежилета", "бронежилету", "бронежилет", "бронежилетом", "бронежилете")
@@ -62,6 +87,29 @@
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
+
+/obj/item/clothing/suit/storage/flak/recalculate_special_armor(mob/user)
+	if(istype(user.back, /obj/item/weapon/storage/backpack))
+		special_armor = list(BULLET_DODGE = -100)
+		return
+	if((body_parts_covered & UPPER_TORSO) && (body_parts_covered & LOWER_TORSO)  && (body_parts_covered & ARMS)  && (body_parts_covered & LEGS))
+		special_armor = list(BULLET_DODGE = 0)
+		return
+	if((cold_protection & UPPER_TORSO) && (cold_protection & LOWER_TORSO)  && (cold_protection & ARMS)  && (cold_protection & LEGS))
+		special_armor = list(BULLET_DODGE = -15)
+		return
+	special_armor = list(BULLET_DODGE = 15)
+
+/obj/item/clothing/suit/storage/flak/equipped(mob/user, slot)
+	. = ..()
+	if(slot != SLOT_WEAR_SUIT)
+		return
+	recalculate_special_armor(user)
+
+/obj/item/clothing/suit/storage/flak/dropped(mob/user)
+	. = ..()
+	if(slot_equipped == SLOT_WEAR_SUIT)
+		special_armor = list(BULLET_DODGE = 0)
 
 /obj/item/clothing/suit/storage/flak/police
 	name = "police armor"
