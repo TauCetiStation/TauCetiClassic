@@ -111,6 +111,8 @@
 	TCB.on_unwield = CALLBACK(src, PROC_REF(on_unwield))
 	AddComponent(/datum/component/twohanded, TCB)
 
+	special_armor = list(BULLET_DODGE = (-reflect_chance * DUALSABER_BLOCK_CHANCE_MODIFIER - 5))
+
 /obj/item/weapon/dualsaber/proc/on_wield()
 	set_light(2)
 	w_class = SIZE_SMALL

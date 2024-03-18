@@ -189,6 +189,7 @@
 		var/datum/role/changeling/C = M.mind.GetRoleByType(/datum/role/changeling)
 		if(C.absorbedcount)
 			remaining_uses +=  C.absorbedcount
+	special_armor = list(BULLET_DODGE = -block_chance)
 
 /obj/item/weapon/shield/changeling/Get_shield_chance()
 	if(!remaining_uses)

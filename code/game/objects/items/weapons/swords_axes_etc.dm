@@ -19,9 +19,12 @@
 /*
  * Sword
  */
+/obj/item/weapon/melee/energy/sword
+	var/block_chance = 40
+
 /obj/item/weapon/melee/energy/sword/Get_shield_chance()
 	if(active)
-		return 40
+		return block_chance
 	return 0
 
 /obj/item/weapon/melee/energy/add_blood()
@@ -45,6 +48,7 @@
 			light_color = COLOR_PINK
 		if("black")
 			light_color = COLOR_GRAY
+	special_armor = list(BULLET_DODGE = -block_chance)
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if (user.ClumsyProbabilityCheck(50))
@@ -313,6 +317,10 @@
 /*
  * Energy Shield
  */
+/obj/item/weapon/shield/energy/atom_init()
+	. = ..()
+	special_armor = list(BULLET_DODGE = -block_chance)
+
 /obj/item/weapon/shield/energy/Get_shield_chance()
 	if(active)
 		return block_chance

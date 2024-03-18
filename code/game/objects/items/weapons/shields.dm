@@ -18,6 +18,7 @@
 	SCB.on_sweep_push_success = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/shield, on_sweep_push_success))
 
 	AddComponent(/datum/component/swiping, SCB)
+	special_armor = list(BULLET_DODGE = -block_chance)
 
 /obj/item/weapon/shield/proc/on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/living/user)
 	var/datum/component/swiping/SW = GetComponent(/datum/component/swiping)
