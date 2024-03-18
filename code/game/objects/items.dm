@@ -378,6 +378,7 @@
 	if(user && user.loc != loc && isturf(loc))
 		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
+	SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 	flags_2 &= ~IN_INVENTORY
 	if(flags & DROPDEL)
 		qdel(src)

@@ -8,10 +8,8 @@
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.4
 
-/obj/item/clothing/suit/armor/recalculate_special_armor(mob/user)
-	if(istype(user.back, /obj/item/weapon/storage/backpack))
-		special_armor = list(BULLET_DODGE = -100)
-		return
+/obj/item/clothing/suit/armor/atom_init()
+	. = ..()
 	if((cold_protection & UPPER_TORSO) && (cold_protection & LOWER_TORSO)  && (cold_protection & ARMS)  && (cold_protection & LEGS))
 		special_armor = list(BULLET_DODGE = -15)
 		return
@@ -22,20 +20,6 @@
 		special_armor = list(BULLET_DODGE = 0)
 		return
 	special_armor = list(BULLET_DODGE = 15)
-
-/obj/item/clothing/suit/armor/equipped(mob/user, slot)
-	. = ..()
-	if(slot != SLOT_WEAR_SUIT)
-		return
-	RegisterSignal(user, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_back_check))
-	RegisterSignal(user, COMSIG_ITEM_DROPPED, PROC_REF(equip_back_check))
-	recalculate_special_armor(user)
-
-/obj/item/clothing/suit/armor/dropped(mob/user)
-	. = ..()
-	UnregisterSignal(user, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-	if(slot_equipped == SLOT_WEAR_SUIT)
-		special_armor = list(BULLET_DODGE = 0)
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"
@@ -92,10 +76,8 @@
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = SIZE_TINY)
 
-/obj/item/clothing/suit/storage/flak/recalculate_special_armor(mob/user)
-	if(istype(user.back, /obj/item/weapon/storage/backpack))
-		special_armor = list(BULLET_DODGE = -100)
-		return
+/obj/item/clothing/suit/storage/flak/atom_init(mob/user)
+	. = ..()
 	if((cold_protection & UPPER_TORSO) && (cold_protection & LOWER_TORSO)  && (cold_protection & ARMS)  && (cold_protection & LEGS))
 		special_armor = list(BULLET_DODGE = -15)
 		return
@@ -103,20 +85,6 @@
 		special_armor = list(BULLET_DODGE = 0)
 		return
 	special_armor = list(BULLET_DODGE = 15)
-
-/obj/item/clothing/suit/storage/flak/equipped(mob/user, slot)
-	. = ..()
-	if(slot != SLOT_WEAR_SUIT)
-		return
-	RegisterSignal(user, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_back_check))
-	RegisterSignal(user, COMSIG_ITEM_DROPPED, PROC_REF(equip_back_check))
-	recalculate_special_armor(user)
-
-/obj/item/clothing/suit/storage/flak/dropped(mob/user)
-	. = ..()
-	UnregisterSignal(user, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
-	if(slot_equipped == SLOT_WEAR_SUIT)
-		special_armor = list(BULLET_DODGE = 0)
 
 /obj/item/clothing/suit/storage/flak/police
 	name = "police armor"

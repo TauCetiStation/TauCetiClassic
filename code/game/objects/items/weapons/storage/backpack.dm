@@ -32,10 +32,37 @@
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	return ..()
 
+/obj/item/weapon/storage/backpack/proc/equip_armor_check(datum/user, datum/item, slot)
+	SIGNAL_HANDLER
+	if(istype(item, /obj/item/clothing/suit/armor))
+		special_armor = list(BULLET_DODGE = -100)
+		return
+	if(istype(item, /obj/item/clothing/suit/storage/flak))
+		special_armor = list(BULLET_DODGE = -100)
+
+/obj/item/weapon/storage/backpack/proc/deequip_armor_check(datum/user, datum/item, slot)
+	SIGNAL_HANDLER
+	if(istype(item, /obj/item/clothing/suit/armor))
+		special_armor = list(BULLET_DODGE = 0)
+		return
+	if(istype(item, /obj/item/clothing/suit/storage/flak))
+		special_armor = list(BULLET_DODGE = 0)
+
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
 	if (slot == SLOT_BACK && length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	..(user, slot)
+	if(slot == SLOT_BACK)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			equip_armor_check(H, H.wear_suit)
+		RegisterSignal(user, COMSIG_MOB_EQUIPPED, PROC_REF(equip_armor_check), TRUE)
+		RegisterSignal(user, COMSIG_MOB_DROPPED, PROC_REF(deequip_armor_check))
+
+/obj/item/weapon/storage/backpack/dropped(mob/user)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_MOB_EQUIPPED, COMSIG_MOB_DROPPED))
+	special_armor = list(BULLET_DODGE = 0)
 
 /*
  * Backpack Types

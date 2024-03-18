@@ -412,14 +412,6 @@ BLIND     // can't see anything
 	valid_accessory_slots = list("armband", "decor")
 	restricted_accessory_slots = list("armband")
 
-/obj/item/clothing/suit/proc/recalculate_special_armor(mob/user)
-	return
-
-/obj/item/clothing/suit/proc/equip_back_check(datum/source, mob/user, slot)
-	SIGNAL_HANDLER
-	if(istype(source, /obj/item/weapon/storage/backpack))
-		recalculate_special_armor(user)
-
 /obj/item/clothing/proc/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	return
 

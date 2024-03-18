@@ -290,6 +290,8 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)
 #define COMSIG_MOB_EQUIPPED "mob_equipped"
+///from base of item/dropped(): (obj/item/I)
+#define COMSIG_MOB_DROPPED "mob_dropped"
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"
 	#define COMSIG_ACCESS_ALLOWED 1
