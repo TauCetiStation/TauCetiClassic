@@ -174,7 +174,6 @@
 	var/dodge_modifier = 0
 	for(var/obj/O in all_slots)
 		dodge_modifier += O.special_armor[BULLET_DODGE]
-		world.log << "[O.name] - [O.special_armor[BULLET_DODGE]], total: [dodge_modifier]"
 	return miss_modifier + dodge_modifier
 
 /obj/item/projectile/proc/check_miss(mob/living/L)
@@ -182,6 +181,7 @@
 		L.visible_message("<span class = 'notice'>\The [src] misses [L] narrowly!</span>")
 		playsound(L.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
 		permutated.Add(L)
+		animatation_displace_reset(M)
 		return TRUE
 	return FALSE
 

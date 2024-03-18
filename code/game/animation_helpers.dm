@@ -336,3 +336,9 @@
 		return
 	is_invis_anim = FALSE
 	invisibility = old_invisibility
+
+/proc/animatation_displace_reset(atom/A, x_n = 2, y_n = 2, speed = 3)
+	var/x_o = initial(A.pixel_x)
+	var/y_o = initial(A.pixel_y)
+	animate(A, pixel_x = x_o+rand(-x_n, x_n), pixel_y = y_o+rand(-y_n, y_n), time = speed, easing = ELASTIC_EASING|EASE_IN)
+	animate(pixel_x = x_o, pixel_y = y_o, time = speed, easing = CIRCULAR_EASING|EASE_OUT)
