@@ -12,11 +12,11 @@
 	if(istype(user.back, /obj/item/weapon/storage/backpack))
 		special_armor = list(BULLET_DODGE = -100)
 		return
+	if((cold_protection & UPPER_TORSO) && (cold_protection & LOWER_TORSO)  && (cold_protection & ARMS)  && (cold_protection & LEGS))
+		special_armor = list(BULLET_DODGE = -15)
 	if((body_parts_covered & UPPER_TORSO) && (body_parts_covered & LOWER_TORSO)  && (body_parts_covered & ARMS)  && (body_parts_covered & LEGS))
 		special_armor = list(BULLET_DODGE = 0)
 		return
-	if((cold_protection & UPPER_TORSO) && (cold_protection & LOWER_TORSO)  && (cold_protection & ARMS)  && (cold_protection & LEGS))
-		special_armor = list(BULLET_DODGE = -15)
 	if(armor[MELEE] > 70)
 		special_armor = list(BULLET_DODGE = 0)
 		return
@@ -26,6 +26,7 @@
 	. = ..()
 	if(slot != SLOT_WEAR_SUIT)
 		return
+	RegisterSignal(user, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_back_check))
 	recalculate_special_armor(user)
 
 /obj/item/clothing/suit/armor/dropped(mob/user)
@@ -92,11 +93,10 @@
 	if(istype(user.back, /obj/item/weapon/storage/backpack))
 		special_armor = list(BULLET_DODGE = -100)
 		return
-	if((body_parts_covered & UPPER_TORSO) && (body_parts_covered & LOWER_TORSO)  && (body_parts_covered & ARMS)  && (body_parts_covered & LEGS))
-		special_armor = list(BULLET_DODGE = 0)
-		return
 	if((cold_protection & UPPER_TORSO) && (cold_protection & LOWER_TORSO)  && (cold_protection & ARMS)  && (cold_protection & LEGS))
 		special_armor = list(BULLET_DODGE = -15)
+	if((body_parts_covered & UPPER_TORSO) && (body_parts_covered & LOWER_TORSO)  && (body_parts_covered & ARMS)  && (body_parts_covered & LEGS))
+		special_armor = list(BULLET_DODGE = 0)
 		return
 	special_armor = list(BULLET_DODGE = 15)
 
@@ -104,6 +104,7 @@
 	. = ..()
 	if(slot != SLOT_WEAR_SUIT)
 		return
+	RegisterSignal(user, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_back_check))
 	recalculate_special_armor(user)
 
 /obj/item/clothing/suit/storage/flak/dropped(mob/user)
