@@ -77,7 +77,7 @@
 	var/shitcurity_mode = FALSE
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_mask)
-
+	special_armor = list(BULLET_DODGE = -15)
 
 	var/static/list/phrases_lawful = list(
 		"Не двигаться!" = 'sound/voice/complionator/lawful_ne_dvigatsya.ogg',
