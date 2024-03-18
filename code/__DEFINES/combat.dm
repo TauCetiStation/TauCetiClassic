@@ -43,6 +43,9 @@
 #define EYE_BLUR  "eye_blur"
 #define DROWSY    "drowsy"
 
+// Special Armor
+#define BULLET_DODGE "bullet_dodge"
+
 // Attack visual effects
 #define ATTACK_EFFECT_SMASH  "smash"
 #define ATTACK_EFFECT_PUNCH  "punch"
