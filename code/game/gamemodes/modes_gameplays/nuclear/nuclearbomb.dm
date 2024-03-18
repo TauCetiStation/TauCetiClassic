@@ -278,10 +278,11 @@ var/global/bomb_set
 		set_security_level("red")
 	else
 		var/area/nuclearbombloc = get_area(loc)
-		set_security_level("delta")
 		announce_nuke.play(nuclearbombloc)
 		notify_ghosts("[src] has been activated!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
 		timing = TRUE
+		sleep(90)
+		set_security_level("delta")
 	COOLDOWN_START(src, cd_activate, 60 SECONDS)
 	update_icon()
 
