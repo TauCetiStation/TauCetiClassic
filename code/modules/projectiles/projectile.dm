@@ -155,7 +155,7 @@
 /obj/item/projectile/proc/get_miss_modifier(mob/living/L)
 	var/distance = get_dist(starting, loc) //More distance = less damage, except for high fire power weapons.
 	var/miss_modifier = 0
-	if(distance <= 1) // cant miss almost pointblank (1 or 2 tiles between target and start)
+	if(distance < 1) // cant miss almost pointblank (1 or 2 tiles between target and start)
 		return -100
 	if(damage && (distance > 7))
 		if(damage >= 50)
