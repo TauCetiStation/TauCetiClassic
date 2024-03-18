@@ -36,21 +36,25 @@
 	if (slot == SLOT_BACK && length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	..(user, slot)
-	if(slot == SLOT_BACK)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(istype(H.wear_suit, /obj/item/clothing/suit))
-				var/obj/item/clothing/suit/S = H.wear_suit
-				S.recalculate_special_armor(user)
+	if(slot != SLOT_BACK)
+		return
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(istype(H.wear_suit, /obj/item/clothing/suit))
+		var/obj/item/clothing/suit/S = H.wear_suit
+		S.recalculate_special_armor(user)
 
 /obj/item/weapon/storage/backpack/dropped(mob/user)
 	. = ..()
-	if(slot_equipped == SLOT_BACK)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(istype(H.wear_suit, /obj/item/clothing/suit))
-				var/obj/item/clothing/suit/S = H.wear_suit
-				S.recalculate_special_armor(user)
+	if(slot_equipped != SLOT_BACK)
+		return
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(istype(H.wear_suit, /obj/item/clothing/suit))
+		var/obj/item/clothing/suit/S = H.wear_suit
+		S.recalculate_special_armor(user)
 
 /*
  * Backpack Types
