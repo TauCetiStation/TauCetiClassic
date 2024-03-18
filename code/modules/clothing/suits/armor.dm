@@ -27,10 +27,12 @@
 	if(slot != SLOT_WEAR_SUIT)
 		return
 	RegisterSignal(user, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_back_check))
+	RegisterSignal(user, COMSIG_ITEM_DROPPED, PROC_REF(equip_back_check))
 	recalculate_special_armor(user)
 
 /obj/item/clothing/suit/armor/dropped(mob/user)
 	. = ..()
+	UnregisterSignal(user, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	if(slot_equipped == SLOT_WEAR_SUIT)
 		special_armor = list(BULLET_DODGE = 0)
 
@@ -105,10 +107,12 @@
 	if(slot != SLOT_WEAR_SUIT)
 		return
 	RegisterSignal(user, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_back_check))
+	RegisterSignal(user, COMSIG_ITEM_DROPPED, PROC_REF(equip_back_check))
 	recalculate_special_armor(user)
 
 /obj/item/clothing/suit/storage/flak/dropped(mob/user)
 	. = ..()
+	UnregisterSignal(user, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	if(slot_equipped == SLOT_WEAR_SUIT)
 		special_armor = list(BULLET_DODGE = 0)
 
