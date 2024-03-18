@@ -5,6 +5,7 @@
 	flags = HEADCOVERSEYES
 	item_state = "helmet"
 	armor = list(melee = 50, bullet = 45, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)
+	special_armor = list(BULLET_DODGE = -15)
 	flags_inv = HIDEEARS|HIDEEYES
 	pierce_protection = HEAD
 	cold_protection = HEAD
@@ -30,12 +31,16 @@
 		holochip.add_action(user)
 		holochip.update_freq(holochip.frequency)
 	..()
+	if(slot == SLOT_S_STORE)
+		special_armor = list(BULLET_DODGE = 0)
 
 /obj/item/clothing/head/helmet/dropped(mob/user)
 	if(holochip)
 		holochip.remove_action(user)
 		holochip.deactivate_holomap()
 	..()
+	if(slot_equipped == SLOT_S_STORE)
+		special_armor = list(BULLET_DODGE = -15)
 
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/holochip))
