@@ -55,7 +55,7 @@ var/global/bomb_set
 		if(timeleft <= 120 && world.time >= nuclear_siren_cooldown)
 			for(var/mob/M in player_list)
 				if(!isnewplayer(M))
-					M.playsound_local(null, 'sound/machines/nuke_siren.ogg', VOL_EFFECTS_MASTER, 60, vary = FALSE, frequency = null, ignore_environment = FALSE)
+					M.playsound_local(null, 'sound/effects/siren-single.ogg', VOL_EFFECTS_MASTER, 60, vary = FALSE, frequency = null, ignore_environment = FALSE)
 			nuclear_siren_cooldown = world.time + 8 SECONDS
 		if(timeleft <= 0)
 			explode()
