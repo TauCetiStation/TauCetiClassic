@@ -46,6 +46,17 @@
 /datum/action/item_action/hands_free/switch_gun
 	name = "Switch Gun"
 
+/obj/item/weapon/gun/equipped(mob/user, slot)
+	. = ..()
+	if(slot != SLOT_BACK)
+		return
+	special_armor = list(BULLET_DODGE = 5)
+
+/obj/item/weapon/gun/dropped(mob/user)
+	. = ..()
+	if(slot_equipped == SLOT_BACK)
+		special_armor = list(BULLET_DODGE = 0)
+
 /obj/item/weapon/gun/examine(mob/user)
 	..()
 	if(two_hand_weapon)
