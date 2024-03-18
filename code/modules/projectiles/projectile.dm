@@ -166,7 +166,16 @@
 		var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
 		if(daddy.target && (L in daddy.target)) //As opposed to no-delay pew pew
 			miss_modifier -= 60
-	return miss_modifier
+
+	var/list/all_slots = L.get_equipped_items()
+	if(!all_slots || all_slots.len <= 0)
+		return miss_modifier
+
+	var/dodge_modifier = 0
+	for(var/obj/O in all_slots)
+		dodge_modifier += O.special_armor[BULLET_DODGE]
+		world.log << "[O.name] - [O.special_armor[BULLET_DODGE]], total: [dodge_modifier]"
+	return miss_modifier + dodge_modifier
 
 /obj/item/projectile/proc/check_miss(mob/living/L)
 	if(L.prob_miss(src))
