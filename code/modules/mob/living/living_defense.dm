@@ -299,7 +299,7 @@
 /atom/proc/count_acid_fire_stacks()
 	return fire_stack_list[ACID_FIRE]
 
-/mob/living/proc/adjust_fire_stacks(add_fire_stacks = 0, fire_type) //Adjusting the amount of fire_stacks we have on person
+/mob/living/proc/adjust_fire_stacks(add_fire_stacks, fire_type = null) //Adjusting the amount of fire_stacks we have on person
 	if(!fire_type)
 		for(var/i in global.all_fire_types)
 			fire_stack_list[i] = clamp(fire_stack_list[i] + add_fire_stacks, 0, 20)
