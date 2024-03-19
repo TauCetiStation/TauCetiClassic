@@ -193,12 +193,8 @@
 							return
 
 		else
-			if(HAS_TRAIT(mob, TRAIT_FULL_CONFUSION))
-				direct = pick(alldirs)
-				n = get_step(get_turf(mob), direct)
-			else if(mob.confused && !mob.crawling)
-				direct = mob.confuse_input(direct)
-				n = get_step(get_turf(mob), direct)
+			direct = mob.get_confusion_walk_dir(direct)
+			n = get_step(get_turf(mob), direct)
 			. = mob.SelfMove(n, direct)
 
 		for(var/obj/item/weapon/grab/G in grabs)
@@ -218,6 +214,12 @@
 			mob.throwing = FALSE
 
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
+
+/mob/proc/get_confusion_walk_dir(direct)
+	if(HAS_TRAIT(src, TRAIT_FULL_CONFUSION))
+		return pick(alldirs)
+	if(confused && !crawling)
+		return confuse_input(direct)
 
 /mob/proc/random_move()
 	if(isturf(loc) && !isspaceturf(loc) || (canmove && !incapacitated()))
