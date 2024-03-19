@@ -744,7 +744,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/ko = paralysis || stat || (status_flags & FAKEDEATH)
 
 	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
-	lying = (ko || weakened || crawling) && !anchored
+	lying = (ko || weakened || crawling || tentacle_capped) && !anchored
 	canmove = !(ko || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 
 	if(buckled)

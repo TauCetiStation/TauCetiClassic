@@ -560,6 +560,15 @@
 /obj/effect/goliath_tentacle/high_tier
 	icon = 'icons/mob/monsters_asteroid/goliath_high_tier.dmi'
 
+/obj/effect/goliath_tentacle/high_tier/Trip()
+	for(var/mob/living/M in src.loc)
+		visible_message("<span class='userdanger'>The [src.name] captured [M.name]!</span>")
+		playsound(M, 'sound/misc/goliath_tentacle_hit.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		var/datum/status_effect/incapacitating/capture_and_damage/S = M.has_status_effect(STATUS_EFFECT_CAPTURE)
+		if(!S)
+			M.apply_status_effect(STATUS_EFFECT_CAPTURE, -1, TRUE)
+	qdel(src)
+
 /obj/effect/goliath_tentacle/original
 
 /obj/effect/goliath_tentacle/original/proc/spawn_copies()
@@ -584,6 +593,15 @@
 		directions -= spawndir
 		var/turf/T = get_step(src, spawndir)
 		new /obj/effect/goliath_tentacle/high_tier(T, strength)
+
+/obj/effect/goliath_tentacle/original/high_tier/Trip()
+	for(var/mob/living/M in src.loc)
+		visible_message("<span class='userdanger'>The [src.name] captured [M.name]!</span>")
+		playsound(M, 'sound/misc/goliath_tentacle_hit.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		var/datum/status_effect/incapacitating/capture_and_damage/S = M.has_status_effect(STATUS_EFFECT_CAPTURE)
+		if(!S)
+			M.apply_status_effect(STATUS_EFFECT_CAPTURE, -1, TRUE)
+	qdel(src)
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"

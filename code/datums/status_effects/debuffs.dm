@@ -177,6 +177,49 @@
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
 
+
+/datum/status_effect/incapacitating/capture_and_damage
+	id = "capture"
+	alert_type = /atom/movable/screen/alert/status_effect/paralysis
+	tick_interval = 30
+
+/datum/status_effect/incapacitating/capture_and_damage/proc/cap_by_tentacle()
+	owner.tentacle_overlay = mutable_appearance('icons/mob/monsters_asteroid/human_affected_tentacle.dmi', "tentacle_captured", EXTERNAL_APPEARANCE)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_parent = owner
+		human_parent.overlays_standing[EXTERNAL_APPEARANCE] = human_parent.tentacle_overlay
+		human_parent.apply_standing_overlay(EXTERNAL_APPEARANCE)
+	else
+		owner.add_overlay(owner.tentacle_overlay)
+
+/datum/status_effect/incapacitating/capture_and_damage/proc/decap_by_tentacle()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_parent = owner
+		human_parent.remove_standing_overlay(EXTERNAL_APPEARANCE)
+	else
+		owner.cut_overlay(EXTERNAL_APPEARANCE)
+
+/datum/status_effect/incapacitating/capture_and_damage/on_apply()
+	. = ..()
+	if(!.)
+		return
+	if(!owner.tentacle_capped)
+		cap_by_tentacle()
+	owner.tentacle_capped = TRUE
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
+
+/datum/status_effect/incapacitating/capture_and_damage/on_remove()
+	if(owner.tentacle_capped)
+		decap_by_tentacle()
+	owner.tentacle_capped = FALSE
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
+	return ..()
+
+/datum/status_effect/incapacitating/capture_and_damage/tick()
+	owner.adjustBruteLoss(2)
+
 /datum/status_effect/remove_trait
 	id = "remove_traits"
 	tick_interval = 10

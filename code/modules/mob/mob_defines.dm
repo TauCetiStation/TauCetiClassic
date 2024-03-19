@@ -108,6 +108,8 @@
 	var/nutrition = NUTRITION_LEVEL_NORMAL//Carbon
 	var/dna_inject_count = 0
 
+	var/tentacle_capped = FALSE
+	var/mutable_appearance/tentacle_overlay
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/paralysis = FALSE
 	var/stunned = FALSE

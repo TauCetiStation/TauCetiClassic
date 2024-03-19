@@ -29,6 +29,8 @@
 
 #define STATUS_EFFECT_CLUMSY /datum/status_effect/clumsy
 
+#define STATUS_EFFECT_CAPTURE /datum/status_effect/incapacitating/capture_and_damage
+
 /////////////
 // NEUTRAL //
 /////////////

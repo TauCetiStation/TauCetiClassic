@@ -855,6 +855,12 @@
 
 	var/mob/living/L = usr
 
+	var/datum/status_effect/incapacitating/capture_and_damage/capture_effect = L.has_status_effect(STATUS_EFFECT_CAPTURE)
+	if(capture_effect)
+		if(capture_effect.duration == -1)
+			capture_effect.duration = world.time + 10 SECONDS
+		L.visible_message("<span class='danger'>[L] resists from tentacle grab!</span>")
+
 	//Getting out of someone's inventory.
 
 	if(istype(src.loc,/obj/item/weapon/holder))
