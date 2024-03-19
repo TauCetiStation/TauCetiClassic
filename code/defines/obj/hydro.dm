@@ -61,11 +61,8 @@
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 	var/list/mutatelist = list()
 
-/obj/item/seeds/proc/planted(obj/machinery/hydroponics/tray)
+/obj/item/seeds/proc/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
 	return
-
-/obj/item/seeds/proc/react_to_nitrate(obj/machinery/hydroponics/source, nitrate_power)
-	source.adjustHealth(nitrate_power / 10)
 
 /obj/item/seeds/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
@@ -114,10 +111,12 @@
 	plant_type = 0
 	growthstages = 5
 
-/obj/item/seeds/blackpepper/react_to_nitrate(obj/machinery/hydroponics/source, nitrate_power)
-	if(prob(nitrate_power * 10))
+/obj/item/seeds/blackpepper/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/gibbingtons))
+		return
+	if(prob(holder.stage * 10))
 		mutatelist = list(/obj/item/seeds/gatfruit)
-		source.mutatespecie()
+		tray.mutatespecie()
 
 /obj/item/seeds/chiliseed
 	name = "pack of chili seeds"
@@ -239,13 +238,10 @@
 	production = 5
 	endurance = 20
 
-/obj/item/seeds/tobacco/planted(obj/machinery/hydroponics/tray)
-	. = ..()
-	RegisterSignal(tray, COMSIG_NERVE_AROUSAL, PROC_REF(mutate_to_space_tobacco))
-
-/obj/item/seeds/tobacco/proc/mutate_to_space_tobacco(datum/source, arousal_power)
-	SIGNAL_HANDLER
-	if(prob(arousal_power * 10))
+/obj/item/seeds/tobacco/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/arousal))
+		return
+	if(prob(holder.stage * 10))
 		mutatelist |= /obj/item/seeds/tobacco_space
 
 /obj/item/seeds/shandseed
@@ -264,13 +260,10 @@
 	plant_type = 0
 	growthstages = 3
 
-/obj/item/seeds/shandseed/planted(obj/machinery/hydroponics/tray)
-	. = ..()
-	RegisterSignal(tray, COMSIG_NERVE_AROUSAL, PROC_REF(mutate_to_tobacco))
-
-/obj/item/seeds/shandseed/proc/mutate_to_tobacco(datum/source, arousal_power)
-	SIGNAL_HANDLER
-	if(prob(arousal_power * 10))
+/obj/item/seeds/shandseed/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/arousal))
+		return
+	if(prob(holder.stage * 10))
 		mutatelist |= /obj/item/seeds/tobacco
 
 /obj/item/seeds/mtearseed
@@ -530,13 +523,10 @@
 	oneharvest = 1
 	growthstages = 3
 
-/obj/item/seeds/poppyseed/planted(obj/machinery/hydroponics/tray)
-	. = ..()
-	RegisterSignal(tray, COMSIG_HEATING_EFFECT, PROC_REF(mutate_to_fraxinella))
-
-/obj/item/seeds/poppyseed/proc/mutate_to_fraxinella(datum/source, heat_power)
-	SIGNAL_HANDLER
-	if(prob(heat_power * 10))
+/obj/item/seeds/poppyseed/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/fire))
+		return
+	if(prob(holder.stage * 10))
 		mutatelist |= /obj/item/seeds/fraxinella
 
 /obj/item/seeds/potatoseed
@@ -626,13 +616,10 @@
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/durathread)
 
-/obj/item/seeds/wheatseed/planted(obj/machinery/hydroponics/tray)
-	. = ..()
-	RegisterSignal(tray, COMSIG_RADIAN_EXPOSURE, PROC_REF(mutate_to_meatwheat))
-
-/obj/item/seeds/wheatseed/proc/mutate_to_meatwheat(datum/source, rad_power)
-	SIGNAL_HANDLER
-	if(prob(rad_power * 10))
+/obj/item/seeds/wheatseed/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/radian))
+		return
+	if(prob(holder.stage * 10))
 		mutatelist |= /obj/item/seeds/meatwheat
 
 /obj/item/seeds/riceseed
@@ -778,15 +765,12 @@
 	growthstages = 3
 	plant_type = 2
 
-/obj/item/seeds/chantermycelium/planted(obj/machinery/hydroponics/tray)
-	. = ..()
-	RegisterSignal(tray, COMSIG_ADJUST_CONDUCTIVITY, PROC_REF(mutate_to_jupiter_cups))
-
-/obj/item/seeds/chantermycelium/proc/mutate_to_jupiter_cups(obj/machinery/hydroponics/source, conductivity_adjust)
-	SIGNAL_HANDLER
-	if(prob(conductivity_adjust * 10))
+/obj/item/seeds/chantermycelium/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/conductivity))
+		return
+	if(prob(holder.stage * 10))
 		mutatelist = list(/obj/item/seeds/jupitercup)
-		source.mutatespecie()
+		tray.mutatespecie()
 
 /obj/item/seeds/towermycelium
 	name = "pack of tower-cap mycelium"
@@ -1080,13 +1064,10 @@
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/ambrosiadeusseed)
 
-/obj/item/seeds/ambrosiavulgarisseed/planted(obj/machinery/hydroponics/tray)
-	. = ..()
-	RegisterSignal(tray, COMSIG_BACTERICIDAL_EFFECT, PROC_REF(mutate_to_tea))
-
-/obj/item/seeds/ambrosiavulgarisseed/proc/mutate_to_tea(datum/source, bactericidal_power)
-	SIGNAL_HANDLER
-	if(prob(bactericidal_power * 10))
+/obj/item/seeds/ambrosiavulgarisseed/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/bactericidal_tannins))
+		return
+	if(prob(holder.stage * 10))
 		mutatelist |= /obj/item/seeds/tea
 
 /obj/item/seeds/ambrosiadeusseed
@@ -1359,20 +1340,16 @@
 	plant_type = 0
 	growthstages = 2
 
-/obj/item/seeds/grassseed/planted(obj/machinery/hydroponics/tray)
-	. = ..()
-	RegisterSignal(tray, COMSIG_HALLUCINATION_EFFECT, PROC_REF(mutate_to_fairygrass))
-	RegisterSignal(tray, COMSIG_ADJUST_TOXIN_RESIST, PROC_REF(mutate_to_kudzu))
-
-/obj/item/seeds/grassseed/proc/mutate_to_kudzu(datum/source, toxin_resist_adjust)
-	if(toxin_resist_adjust < 5)
+/obj/item/seeds/grassseed/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(istype(E, /datum/disease2/effect/hallucinations))
+		if(prob(holder.stage * 10))
+			mutatelist |= /obj/item/seeds/fairy_grass
 		return
-	if(prob(toxin_resist_adjust * 10))
-		mutatelist |= /obj/item/seeds/kudzuseed
-
-/obj/item/seeds/grassseed/proc/mutate_to_fairygrass(datum/source, drug_power)
-	if(prob(drug_power * 10))
-		mutatelist |= /obj/item/seeds/fairy_grass
+	if(istype(E, /datum/disease2/effect/anti_toxins))
+		if(holder.stage < 5)
+			return
+		if(prob(holder.stage * 10))
+			mutatelist |= /obj/item/seeds/kudzuseed
 
 /obj/item/seeds/cocoapodseed
 	name = "pack of cocoa pod seeds"
