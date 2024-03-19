@@ -275,7 +275,7 @@
 			qdel(F)
 		update_fire()
 
-/mob/living/proc/set_fire_stacks(amount, fire_type)
+/mob/living/proc/set_fire_stacks(amount, fire_type = null)
 	if(!fire_type)
 		for(var/i in global.all_fire_types)
 			fire_stack_list[i] = amount
