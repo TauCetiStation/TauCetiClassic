@@ -213,11 +213,9 @@
 				var/obj/effect/fluid/F = locate() in T
 				if(F)
 					F.electrocute_act(60)
-			var/cloth_siemens_modifier = C.siemens_coefficient
-			if(HAS_TRAIT(src, TRAIT_CONDUCT))
-				cloth_siemens_modifier++
-			siemens_coefficient *= cloth_siemens_modifier
-
+			siemens_coefficient *= C.siemens_coefficient
+	if(HAS_TRAIT(src, TRAIT_CONDUCT))
+		siemens_coefficient++
 	return siemens_coefficient
 
 //this proc returns the armour value for a particular external organ.
