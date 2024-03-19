@@ -59,18 +59,26 @@
 			return FALSE
 	return ..()
 
+/mob/living/proc/try_confused_bump(atom/A)
+	if(ismovable(A) || !is_blocked_turf(A))
+		return
+	if(!(HAS_TRAIT(src, TRAIT_FULL_CONFUSION) || confused))
+		return
+	if(stat != CONSCIOUS || m_intent != MOVE_INTENT_RUN || lying)
+		return
+	playsound(get_turf(src), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
+	visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
+	apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
+	Stun(1)
+	Weaken(2)
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
 		return
 	SEND_SIGNAL(src, COMSIG_LIVING_BUMPED, A)
-	if(!ismovable(A) || is_blocked_turf(A))
-		if((HAS_TRAIT(src, TRAIT_FULL_CONFUSION) || confused) && (stat == CONSCIOUS && m_intent == MOVE_INTENT_RUN && !lying))
-			playsound(get_turf(src), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
-			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
-			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
-			Stun(1)
-			Weaken(2)
+
+	try_confused_bump(A,)
 
 	if(ismob(A))
 		var/mob/M = A
