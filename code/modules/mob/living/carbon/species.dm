@@ -2031,10 +2031,19 @@
 	if(!istype(I, /obj/item/clothing) && !istype(I, /obj/item/organ))
 		return
 	source.nutrition += max(0, NUTRITION_LEVEL_FULL - source.nutrition / 4)
-	new /obj/effect/decal/cleanable/ash(get_turf(source))
-	qdel(I)
-	source.visible_message("<span class='warning'>[I] was swallowed by [source]!</span>",
-						   "<span class='notice'>You ate [I]. Delicious!</span>")
+	if(istype(I, /obj/item/clothing))
+		var/obj/O = I
+		if(O.oldificated)
+			to_chat(source, "<span class='warning'>[I] was already spoiled!</span>")
+		else
+			O.make_old()
+			source.visible_message("<span class='warning'>[I] were chewed by [source]!</span>",
+								"<span class='notice'>You chew a hole in [I]. Yummy!</span>")
+	else
+		new /obj/effect/decal/cleanable/ash(get_turf(source))
+		qdel(I)
+		source.visible_message("<span class='warning'>[I] was swallowed by [source]!</span>",
+							"<span class='notice'>You ate [I]. Delicious!</span>")
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/species/moth/on_loose(mob/living/carbon/human/H, new_species)
