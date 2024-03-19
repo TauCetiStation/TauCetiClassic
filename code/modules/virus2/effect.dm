@@ -1229,7 +1229,7 @@
 
 /datum/disease2/effect/anti_toxins
 	name = "Aggresive Resistance"
-	desc = "The virus produces nanites into the host that destroy toxins by locally increasing temperature."
+	desc = "The virus produces nanites into the host that destroy toxins by locally burning them off."
 	level = 2
 	max_stage = 5
 	cooldown = 5
