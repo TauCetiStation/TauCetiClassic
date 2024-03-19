@@ -63,7 +63,7 @@
 	add_language(LANGUAGE_ROOTSPEAK)
 	eyes = image(icon, "eyes_[icon_state]", layer = ABOVE_LIGHTING_LAYER)
 	eyes.plane = LIGHTING_LAMPS_PLANE
-	luminosity = TRUE
+	luminosity = 1
 
 /mob/living/carbon/monkey/diona/podman/atom_init()
 	. = ..()
