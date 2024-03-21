@@ -1,3 +1,7 @@
+#define IDCOMPUTER_SCREEN_ACCESS 1
+#define IDCOMPUTER_SCREEN_MANIFEST 2
+#define IDCOMPUTER_SCREEN_PRINT 3
+
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	desc = "Terminal for programming NanoTrasen employee ID cards to access parts of the station."
@@ -8,7 +12,7 @@
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null		//card that gives access to this console
 	var/obj/item/weapon/card/id/modify = null	//the card we will change
-	var/mode = 0.0
+	var/mode = 0
 	var/printing = null
 	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_PRO)
@@ -88,8 +92,17 @@
 	nanomanager.update_uis(src)
 	attack_hand(user)
 
-/obj/machinery/computer/card/ui_interact(mob/user, ui_key="main", datum/nanoui/ui=null)
-	var/data[0]
+/obj/machinery/computer/card/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/computer/card/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ComputerCard")
+		ui.open()
+
+/obj/machinery/computer/card/tgui_data(mob/user)
+	var/list/data = list()
 	data["src"] = "\ref[src]"
 	data["station_name"] = station_name()
 	data["mode"] = mode
@@ -117,48 +130,51 @@
 	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
 	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
 
-	if (modify && is_centcom())
-		var/list/all_centcom_access = list()
-		for(var/access in get_all_centcom_access())
-			all_centcom_access.Add(list(list(
-				"desc" = replacetext(get_centcom_access_desc(access), " ", "&nbsp"),
-				"ref" = access,
-				"allowed" = (access in modify.access) ? 1 : 0)))
-
-		data["all_centcom_access"] = all_centcom_access
-	else if (modify)
-		var/list/regions = list()
-		for(var/i = 1; i <= 7; i++)
-			var/list/accesses = list()
-			var/region_allowed = 0
-			for(var/access in get_region_accesses(i))
-				if (get_access_desc(access))
-					region_allowed += (access in modify.access) ? 1 : 0
-					accesses.Add(list(list(
-						"desc" = replacetext(get_access_desc(access), " ", "&nbsp"),
+	switch(mode)
+		if(IDCOMPUTER_SCREEN_ACCESS)
+			if (modify && is_centcom())
+				var/list/all_centcom_access = list()
+				for(var/access in get_all_centcom_access())
+					all_centcom_access.Add(list(list(
+						"desc" = replacetext(get_centcom_access_desc(access), " ", "&nbsp"),
 						"ref" = access,
 						"allowed" = (access in modify.access) ? 1 : 0)))
 
-			regions.Add(list(list(
-				"name" = get_region_accesses_name(i),
-				"accesses" = accesses,
-				"id" = i,
-				"region_allowed" =  (region_allowed == length(get_region_accesses(i)) ? 1 : 0))))
+				data["all_centcom_access"] = all_centcom_access
+			else if (modify)
+				var/list/regions = list()
+				for(var/i = 1; i <= 7; i++)
+					var/list/accesses = list()
+					var/region_allowed = 0
+					for(var/access in get_region_accesses(i))
+						if (get_access_desc(access))
+							region_allowed += (access in modify.access) ? 1 : 0
+							accesses.Add(list(list(
+								"desc" = replacetext(get_access_desc(access), " ", "&nbsp"),
+								"ref" = access,
+								"allowed" = (access in modify.access) ? 1 : 0)))
 
-		data["regions"] = regions
+					regions.Add(list(list(
+						"name" = get_region_accesses_name(i),
+						"accesses" = accesses,
+						"id" = i,
+						"region_allowed" =  (region_allowed == length(get_region_accesses(i)) ? 1 : 0))))
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "identification_computer.tmpl", src.name, 600, 700)
-		ui.set_initial_data(data)
-		ui.open()
+				data["regions"] = regions
 
-/obj/machinery/computer/card/Topic(href, href_list)
+		if(IDCOMPUTER_SCREEN_MANIFEST)
+
+		if(IDCOMPUTER_SCREEN_PRINT)
+			if (modify)
+				tgui_act()
+	return data
+
+/obj/machinery/computer/card/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
-	switch(href_list["choice"])
+	switch(action)
 		if ("modify")
 			if (modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
@@ -209,19 +225,19 @@
 				H.sec_hud_set_ID()
 
 		if("access")
-			if(href_list["allowed"])
+			if(params["allowed"])
 				if(is_authenticated())
-					var/access_type = text2num(href_list["access_target"])
-					var/access_allowed = text2num(href_list["allowed"])
+					var/access_type = text2num(params["access_target"])
+					var/access_allowed = text2num(params["allowed"])
 					if(access_type in (is_centcom() ? get_all_centcom_access() : get_all_accesses()))
 						modify.access -= access_type
 						if(!access_allowed)
 							modify.access += access_type
 		if("access_region")
 			if(is_authenticated())
-				var/region_id = text2num(href_list["region_id"])
+				var/region_id = text2num(params["region_id"])
 				var/region_accesses = get_region_accesses(region_id)
-				var/region_allowed = text2num(href_list["region_allowed"])
+				var/region_allowed = text2num(params["region_allowed"])
 				modify.access -= region_accesses
 				if(!region_allowed)
 					modify.access += region_accesses
@@ -230,7 +246,7 @@
 				modify.access += get_all_accesses()
 		if ("assign")
 			if (is_authenticated() && modify)
-				var/t1 = sanitize(href_list["assign_target"] , 45)
+				var/t1 = sanitize(params["assign_target"] , 45)
 				var/new_salary = 0
 				var/datum/job/jobdatum
 				if(t1 == "Custom")
@@ -264,7 +280,7 @@
 		if ("reg")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))
-					var/temp_name = sanitize_name(href_list["reg"])
+					var/temp_name = sanitize_name(params["reg"])
 					if(temp_name)
 						modify.registered_name = temp_name
 					else
@@ -274,7 +290,7 @@
 		if ("account")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))
-					var/datum/money_account/account = get_account(text2num(href_list["account"]))
+					var/datum/money_account/account = get_account(text2num(params["account"]))
 					if(account)
 						modify.associated_account_number = account.account_number
 					else
@@ -282,7 +298,7 @@
 			nanomanager.update_uis(src)
 
 		if ("mode")
-			mode = text2num(href_list["mode_target"])
+			mode = text2num(params["mode_target"])
 
 		if ("print")
 			if (!printing)
