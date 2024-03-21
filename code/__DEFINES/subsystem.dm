@@ -19,6 +19,7 @@
 // Subsystem init_order, from highest priority to lowest priority
 // The numbers just define the ordering, they are meaningless otherwise.
 
+#define SS_INIT_PROFILER      100
 #define SS_INIT_ASPECTS       86
 #define SS_INIT_INPUT         85
 #define SS_INIT_RATING        14

@@ -720,9 +720,6 @@
 	if(isturf(loc))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, do_shake_animation), severity, 1 SECOND)
 
-/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
-	return
-
 /turf/shake_act(severity, recursive = TRUE)
 	for(var/atom/A in contents)
 		A.shake_act(severity - 1)

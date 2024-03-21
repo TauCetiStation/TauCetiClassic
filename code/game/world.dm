@@ -8,6 +8,11 @@ var/global/it_is_a_snow_day = FALSE
 	enable_debugger()
 #endif
 
+#ifdef EARLY_PROFILE
+	Profile(PROFILE_RESTART)
+	Profile(PROFILE_RESTART, type = "sendmaps")
+#endif
+
 	it_is_a_snow_day = prob(50)
 
 	if(byond_version < RECOMMENDED_VERSION)

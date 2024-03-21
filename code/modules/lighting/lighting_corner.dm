@@ -118,25 +118,42 @@
 	#endif
 	cache_mx = round(mx, LIGHTING_ROUND_VALUE)
 
-	var/atom/movable/lighting_object/lighting_object = master_NE?.lighting_object
-	if (lighting_object && !lighting_object.needs_update)
-		lighting_object.needs_update = TRUE
-		SSlighting.objects_queue += lighting_object
-	
-	lighting_object = master_SE?.lighting_object
-	if (lighting_object && !lighting_object.needs_update)
-		lighting_object.needs_update = TRUE
-		SSlighting.objects_queue += lighting_object
-	
-	lighting_object = master_SW?.lighting_object
-	if (lighting_object && !lighting_object.needs_update)
-		lighting_object.needs_update = TRUE
-		SSlighting.objects_queue += lighting_object
-	
-	lighting_object = master_NW?.lighting_object
-	if (lighting_object && !lighting_object.needs_update)
-		lighting_object.needs_update = TRUE
-		SSlighting.objects_queue += lighting_object
+	var/atom/movable/lighting_object/lighting_object
+	var/area/master_area
+
+	// currently we spawn lighting_object's on demand, but don't delete them after for future reuse
+
+	if(master_NE)
+		master_area = master_NE.loc
+		if(master_area.dynamic_lighting)
+			lighting_object = master_NE.lighting_object || new /atom/movable/lighting_object(master_NE)
+			if (!lighting_object.needs_update)
+				lighting_object.needs_update = TRUE
+				SSlighting.objects_queue += lighting_object
+
+	if(master_SE)
+		master_area = master_SE.loc
+		if(master_area.dynamic_lighting)
+			lighting_object = master_SE.lighting_object || new /atom/movable/lighting_object(master_SE)
+			if (!lighting_object.needs_update)
+				lighting_object.needs_update = TRUE
+				SSlighting.objects_queue += lighting_object
+
+	if(master_SW)
+		master_area = master_SW.loc
+		if(master_area.dynamic_lighting)
+			lighting_object = master_SW.lighting_object || new /atom/movable/lighting_object(master_SW)
+			if (!lighting_object.needs_update)
+				lighting_object.needs_update = TRUE
+				SSlighting.objects_queue += lighting_object
+
+	if(master_NW)
+		master_area = master_NW.loc
+		if(master_area.dynamic_lighting)
+			lighting_object = master_NW.lighting_object || new /atom/movable/lighting_object(master_NW)
+			if (!lighting_object.needs_update)
+				lighting_object.needs_update = TRUE
+				SSlighting.objects_queue += lighting_object
 
 	self_destruct_if_idle()
 

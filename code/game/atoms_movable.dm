@@ -129,6 +129,7 @@
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	if(!ISDIAGONALDIR(Dir))
+		// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
 
 		if(moving_diagonally)
@@ -143,6 +144,10 @@
 
 	update_parallax_contents()
 
+	 // Cycle through the light sources on this atom and tell them to update.
+	for(var/datum/light_source/L as anything in light_sources)
+		L.source_atom.update_light()
+
 	if (orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing
@@ -150,8 +155,8 @@
 	if (orbiting)
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
-	return
 
+// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
 /atom/movable/proc/locMoved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
 	for(var/atom/movable/AM in contents)
