@@ -397,7 +397,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos/atom_init()
 	. = ..()
-	var/datum/reagent/random_reagent = reagents.add_reagent(pick(global.reagents_list), 5)
+	reagents.add_reagent(pick(global.reagents_list), 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
