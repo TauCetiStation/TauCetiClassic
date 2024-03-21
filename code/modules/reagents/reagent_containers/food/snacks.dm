@@ -397,9 +397,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos/atom_init()
 	. = ..()
-	var/datum/reagent/random_reagent = pick(global.reagents_list)
-	var/datum/reagent/R = new random_reagent(src)
-	reagents.add_reagent(R.id, 3)
+	var/datum/reagent/random_reagent = reagents.add_reagent(pick(global.reagents_list), 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
@@ -3365,9 +3363,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/mystery/atom_init()
 	. = ..()
-	var/datum/reagent/random_reagent = pick(global.reagents_list)
-	var/datum/reagent/R = new random_reagent(src)
-	reagents.add_reagent(R.id, 5)
+	var/datum/reagent/random_reagent = reagents.add_reagent(pick(global.reagents_list), 5)
 
 ///////////////////////////////////////////
 // WORM GYMS :3
