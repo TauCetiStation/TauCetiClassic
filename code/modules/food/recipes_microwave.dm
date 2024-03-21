@@ -95,7 +95,6 @@
 		/obj/item/weapon/reagent_containers/food/snacks/donut/choco
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
-  
 /datum/recipe/microwave/human/burger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human,
