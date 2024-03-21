@@ -3363,7 +3363,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/mystery/atom_init()
 	. = ..()
-	var/datum/reagent/random_reagent = reagents.add_reagent(pick(global.reagents_list), 5)
+	reagents.add_reagent(pick(global.reagents_list), 5)
 
 ///////////////////////////////////////////
 // WORM GYMS :3
