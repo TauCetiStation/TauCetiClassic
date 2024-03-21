@@ -570,8 +570,10 @@
 	/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
 	)
 
-/datum/outfit/responders/clown/post_equip(mob/living/carbon/human/H)
+/datum/outfit/responders/clown/pre_equip(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+
+/datum/outfit/responders/clown/post_equip(mob/living/carbon/human/H)
 	H.real_name = "[pick(clown_names)], Clown That Emags Things"
 	H.name = H.real_name
 
