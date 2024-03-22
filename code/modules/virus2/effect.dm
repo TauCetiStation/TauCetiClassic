@@ -682,7 +682,7 @@
 /datum/disease2/effect/fire/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustSProduct(-(holder.stage / 3))
 	A.adjustSEnd(-(holder.stage / 3))
-	SEND_SIGNAL(A, /datum/disease2/effect/fire, holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 /datum/disease2/effect/flesh_eating
 	name = "Necrotizing Fasciitis"
@@ -809,7 +809,7 @@
 
 /datum/disease2/effect/radian/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustMutationmod(holder.stage)
-	SEND_SIGNAL(A, /datum/disease2/effect/radian, holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 /datum/disease2/effect/killertoxins
 	name = "Toxification Syndrome"
@@ -1000,7 +1000,7 @@
 
 /datum/disease2/effect/arousal/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustSPot(holder.stage)
-	SEND_SIGNAL(A, /datum/disease2/effect/arousal, holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 ////////////////////////STAGE 2/////////////////////////////////
 
@@ -1052,7 +1052,7 @@
 
 /datum/disease2/effect/hallucinations/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.mutate(lifemut = holder.stage, endmut = holder.stage, productmut = holder.stage, yieldmut = holder.stage, potmut = holder.stage)
-	SEND_SIGNAL(A, /datum/disease2/effect/hallucinations, holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 /datum/disease2/effect/deaf
 	name = "Hard of Hearing Syndrome"
@@ -1246,7 +1246,7 @@
 
 /datum/disease2/effect/anti_toxins/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustToxic(-holder.stage)
-	SEND_SIGNAL(A, /datum/disease2/effect/anti_toxins, holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 /datum/disease2/effect/bactericidal_tannins
 	name = "Bactericidal Tannins"
@@ -1266,7 +1266,7 @@
 
 /datum/disease2/effect/bactericidal_tannins/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustPests(-holder.stage)
-	SEND_SIGNAL(A, /datum/disease2/effect/bactericidal_tannins, holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 ////////////////////////STAGE 1/////////////////////////////////
 
@@ -1695,4 +1695,4 @@
 
 /datum/disease2/effect/conductivity/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustWater(holder.stage)
-	SEND_SIGNAL(A, /datum/disease2/effect/conductivity, holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
