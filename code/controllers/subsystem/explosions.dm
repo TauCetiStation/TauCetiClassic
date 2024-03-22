@@ -239,11 +239,6 @@ SUBSYSTEM_DEF(explosions)
 		if(prob(40) && dist < flame_range && !isspaceturf(explode) && !explode.density)
 			flameturf += explode
 
-		for(var/datum/objective/bomb/b in global.global_objectives)
-			var/area/A = get_area(epicenter)
-			for(var/area in b.areas_for_objective)
-				if(istype(A, area) && devastation_range >= 1)
-					b.already_completed = TRUE
 
 // Explosion SFX defines...
 /// The probability that a quaking explosion will make the station creak per unit. Maths!
