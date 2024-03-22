@@ -119,7 +119,7 @@
 /mob/living/carbon/xenomorph/handle_fire()
 	if(..())
 		return
-	adjustFireLoss(12)
+	adjustFireLoss(ALIEN_FIRE_BURNING_AMOUNT)
 	return
 //END FIRE CODE
 

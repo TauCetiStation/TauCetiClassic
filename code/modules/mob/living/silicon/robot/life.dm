@@ -237,7 +237,7 @@
 	if(..())
 		return
 	if(count_fire_stacks() > 0)
-		adjustFireLoss(4)
+		adjustFireLoss(ROBOT_FIRE_BURNING_AMOUNT)
 	else
 		. = TRUE
 

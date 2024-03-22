@@ -259,3 +259,12 @@
 #define LOGOUT_GHOST 2
 #define LOGOUT_REENTER 3
 #define LOGOUT_SWAP 4 // not so safe, check other things if available
+
+// Handle fire and fire stacks
+#define MIN_FIRE_STACKS 0
+#define MAX_FIRE_STACKS 20
+#define RELEASED_DRYING_MOISTURE 20
+#define LIVING_FIRE_CONSUME_STACKS 0.1
+#define LIVING_FIRE_ACT_ADDING_STACKS 0.5
+#define ROBOT_FIRE_BURNING_AMOUNT 4
+#define ALIEN_FIRE_BURNING_AMOUNT 12

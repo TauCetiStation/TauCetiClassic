@@ -302,9 +302,9 @@
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks, fire_type = null) //Adjusting the amount of fire_stacks we have on person
 	if(!fire_type)
 		for(var/i in global.all_fire_types)
-			fire_stack_list[i] = clamp(fire_stack_list[i] + add_fire_stacks, 0, 20)
+			fire_stack_list[i] = clamp(fire_stack_list[i] + add_fire_stacks, MIN_FIRE_STACKS, MAX_FIRE_STACKS)
 	else
-		fire_stack_list[fire_type] = clamp(fire_stack_list[fire_type] + add_fire_stacks, 0, 20)
+		fire_stack_list[fire_type] = clamp(fire_stack_list[fire_type] + add_fire_stacks, MIN_FIRE_STACKS, MAX_FIRE_STACKS)
 	if(count_fire_stacks() > 0)
 		update_fire()
 		return
@@ -335,7 +335,7 @@
 	if(!on_fire)
 		return TRUE //the mob is no longer on fire, no need to do the rest.
 
-	adjust_fire_stacks(-0.1) //the fire is slowly consumed
+	adjust_fire_stacks(-LIVING_FIRE_CONSUME_STACKS) //the fire is slowly consumed
 
 	var/datum/gas_mixture/G = loc.return_air()
 	// Check if we're standing in an oxygenless environment
@@ -346,13 +346,13 @@
 	for(var/obj/item/I in contents)
 		if(I.wet)
 			I.wet -= count_red_fire_stacks()
-			adjust_fire_stacks(-20, RED_FIRE)
+			adjust_fire_stacks(-RELEASED_DRYING_MOISTURE, RED_FIRE)
 			break
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(fire_burn_temperature(), 50)
 
 /mob/living/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	adjust_fire_stacks(0.5, RED_FIRE)
+	adjust_fire_stacks(LIVING_FIRE_ACT_ADDING_STACKS, RED_FIRE)
 	IgniteMob()
 
 //Finds the effective temperature that the mob is burning at.
