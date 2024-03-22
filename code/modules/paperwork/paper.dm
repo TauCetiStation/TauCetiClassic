@@ -319,6 +319,7 @@
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[sfield\]", "<span class=\"sign_field\"></span>")
 	t = "<font face=\"[font]\" color=\"[P.colour]\">[t]</font>"
+	t = replacetext(t, "\[sname\]", station_name_ru())
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
 //Count the fields
@@ -352,6 +353,7 @@
 		\[u\] - \[/u\] : Makes the text <u>underlined</u>.<br>
 		\[large\] - \[/large\] : Increases the <font size = \"4\">size</font> of the text.<br>
 		\[sign\] : Inserts a signature of your name in a foolproof way.<br>
+		\[sname\] : Inserts the current station name. <br>
 		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
