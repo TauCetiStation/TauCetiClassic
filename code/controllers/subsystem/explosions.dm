@@ -239,7 +239,6 @@ SUBSYSTEM_DEF(explosions)
 		if(prob(40) && dist < flame_range && !isspaceturf(explode) && !explode.density)
 			flameturf += explode
 
-
 // Explosion SFX defines...
 /// The probability that a quaking explosion will make the station creak per unit. Maths!
 #define QUAKE_CREAK_PROB 30
