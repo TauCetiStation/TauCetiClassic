@@ -397,7 +397,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos/atom_init()
 	. = ..()
-	reagents.add_reagent(pick(global.reagents_list), 5)
+	reagents.add_reagent(pick(global.chemical_reagents_list), 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
@@ -3363,7 +3363,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/sucker/mystery/atom_init()
 	. = ..()
-	reagents.add_reagent(pick(global.reagents_list), 5)
+	reagents.add_reagent(pick(global.chemical_reagents_list), 5)
 
 ///////////////////////////////////////////
 // WORM GYMS :3
