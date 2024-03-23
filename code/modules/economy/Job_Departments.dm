@@ -10,8 +10,6 @@ var/global/list/station_departments = list("Command", "CentCom representatives",
 /datum/job/captain/head_position = 1
 
 /datum/job/lawyer/department = "CentCom representatives"
-/datum/job/lawyer/head_position = 1
-
 /datum/job/blueshield/department = "CentCom representatives"
 
 /datum/job/hop/department = "Civilian"
