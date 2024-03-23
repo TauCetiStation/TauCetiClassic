@@ -80,3 +80,6 @@
 #define CONNECT_TYPE_SUPPLY     2
 #define CONNECT_TYPE_SCRUBBER   4
 #define CONNECT_TYPE_HE         8
+
+// Just 300 gradus Celcium
+#define KELVIN_AIR_TURBULENT_CONVECTION 573

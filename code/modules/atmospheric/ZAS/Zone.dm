@@ -155,6 +155,16 @@ Class Procs:
 	air.group_multiplier = contents.len + 1
 
 /zone/proc/tick()
+	if(air.temperature > KELVIN_AIR_TURBULENT_CONVECTION)
+		for(var/turf/simulated/U as anything in contents)
+			if(U.distort)
+				continue
+			U.distort = new(U)
+			if(prob(50))
+				U.distort.icon_state = "[U.distort.icon_state]2"
+			U.distort.anchored = TRUE
+			U.add_overlay(U.distort)
+			addtimer(CALLBACK(U, TYPE_PROC_REF(/turf/simulated, nullify_distort)), rand(5, 15) SECONDS)
 	if(air.temperature >= PHORON_FLASHPOINT && !(src in SSair.active_fire_zones) && air.check_combustability() && contents.len)
 		var/turf/T = pick(contents)
 		if(istype(T))
