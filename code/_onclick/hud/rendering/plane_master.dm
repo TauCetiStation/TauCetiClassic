@@ -108,6 +108,11 @@
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_plane = RENDER_PLANE_GAME
+	// because of multiple different blends it more easy to apply client.color on the plane master
+	// BUT we should disable client.color for any atoms that use lighting plane or plane 
+	// that blends on it (uses LIGHTING_PLANE as render_relay_plane)
+	// so we don't apply client.color twice (just add NO_CLIENT_COLOR to atom appearance_flags)
+	appearance_flags = parent_type::appearance_flags & ~NO_CLIENT_COLOR // enables CLIENT_COLOR on plane
 
 	invisibility = INVISIBILITY_LIGHTING
 
@@ -115,7 +120,7 @@
 	if(!istype(mymob))
 		return
 
-	mymob.overlay_fullscreen("darkness", /atom/movable/screen/fullscreen/meta/darkness)
+	mymob.overlay_fullscreen("darkness", /atom/movable/screen/fullscreen/darkness)
 
 /atom/movable/screen/plane_master/exposure
 	name = "exposure plane master"
@@ -222,7 +227,7 @@
 	render_relay_plane = LIGHTING_PLANE
 	blend_mode_override = BLEND_ADD
 
-	var/atom/movable/screen/fullscreen/meta/environment_lighting_color/color_filter
+	var/atom/movable/screen/fullscreen/environment_lighting_color/color_filter
 
 /atom/movable/screen/plane_master/environment_lighting/apply_effects(mob/mymob, iscamera = FALSE)
 	remove_filter("guassian_blur")
@@ -238,7 +243,7 @@
 
 	// by default every z-level has one object as environment color holder
 	// we place it on user screen to color plane globally
-	color_filter = mymob.overlay_fullscreen("environment_lighting_color", /atom/movable/screen/fullscreen/meta/environment_lighting_color)
+	color_filter = mymob.overlay_fullscreen("environment_lighting_color", /atom/movable/screen/fullscreen/environment_lighting_color)
 
 	if(mymob.z)
 		color_filter.attach_to_level(mymob.z)
