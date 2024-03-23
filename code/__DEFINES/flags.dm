@@ -112,6 +112,9 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_DNA             "no_dna"
 #define FUR                "fur"
 #define NO_GENDERS         "no_genders"
+#define NO_SLIP            "no_slip"
+
+#define NO_MED_HEALTH_SCAN "no_med_health_scan"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
@@ -188,7 +191,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define JOB_FLAG_NON_HUMAN 128
 #define JOB_FLAG_HEAD_OF_STAFF 256
 #define JOB_FLAG_BLUESHIELD_PROTEC 512
-#define JOB_FLAG_IMPOSTER_PRIORITIZE 1024
 
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise
@@ -199,6 +201,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HOLOMAP_NUCLEAR_COLOR "#e30000"
 #define HOLOMAP_VOX_COLOR "#3bcccc"
 #define HOLOMAP_ERT_COLOR "#0b74b4"
+#define HOLOMAP_TEAM_COLOR "#00bb00"
 
 #define IS_EPILEPTIC_NOT_IN_PARALYSIS (1<<0)
 
@@ -207,3 +210,5 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define ALCOHOL_TOLERANCE_EPILEPSY (1<<0)
 #define WATER_CHOKE_EPILEPSY (1<<1)
+
+#define STANDARD_PDA_RINGTONE (1<<0)

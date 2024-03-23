@@ -53,6 +53,9 @@
 	return .
 
 /turf/simulated/mineral/atom_init_late()
+	if(!istype(src)) // someone already made us as cave turf
+		return
+	..()
 	MineralSpread()
 	update_overlays()
 
@@ -457,7 +460,16 @@
 	. = ..()
 
 /turf/simulated/mineral/random/caves
+	mineralChance = 5
+
+/turf/simulated/mineral/random/caves/high_chance
+	icon_state = "rock_cave_highchance"
 	mineralChance = 25
+	mineralSpawnChanceList = list("Phoron" = 25, "Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 5, "Diamond" = 10)
+
+/turf/simulated/mineral/random/caves/high_chance/atom_init()
+	icon_state = "rock"
+	return ..()
 
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
@@ -648,6 +660,7 @@
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
+	..()
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
@@ -716,20 +729,6 @@
 	dug = TRUE
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
-
-/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M)
-	..()
-	if(isrobot(M))
-		var/mob/living/silicon/robot/R = M
-		if(istype(R.module, /obj/item/weapon/robot_module/miner))
-			if(istype(R.module_state_1,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_1,R)
-			else if(istype(R.module_state_2,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_2,R)
-			else if(istype(R.module_state_3,/obj/item/weapon/storage/bag/ore))
-				attackby(R.module_state_3,R)
-			else
-				return
 
 #undef MIN_TUNNEL_LENGTH
 #undef MAX_TUNNEL_LENGTH

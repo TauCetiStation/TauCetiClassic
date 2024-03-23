@@ -284,6 +284,7 @@
 //Spraycan stuff
 
 /obj/item/toy/crayon/spraycan
+	name = "spray can"
 	icon_state = "spraycan_cap"
 	desc = "A metallic container containing tasty paint."
 	var/capped = 1
@@ -293,7 +294,6 @@
 
 /obj/item/toy/crayon/spraycan/atom_init()
 	. = ..()
-	name = "spray can"
 	update_icon()
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)

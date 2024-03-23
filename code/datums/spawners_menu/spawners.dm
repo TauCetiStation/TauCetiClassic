@@ -1,19 +1,19 @@
 // Don't call this proc directly! Use defines create_spawner and create_spawners
 /proc/_create_spawners(type, num, list/arguments)
-	// arguments must have at least 1 element due to the use of arglist
-	if(!arguments.len)
-		arguments += null
-
 	if(!ispath(type, /datum/spawner))
 		CRASH("Attempted to create a spawner with wrong type: [type]")
 
 	var/datum/spawner/spawner
 
 	var/need_update = FALSE
-
 	// check if we should just update existing spawner
-	if(!length(arguments) && SSrole_spawners.spawners[type] && !SSrole_spawners.spawners[type].should_be_unique)
-		spawner = SSrole_spawners.spawners[type]
+	if(!length(arguments))
+		for(var/datum/spawner/S in SSrole_spawners.spawners)
+			if(S.type == type && !S.should_be_unique)
+				spawner = S
+
+		// arguments must have at least 1 element due to the use of arglist
+		arguments += null
 
 	if(!spawner)
 		spawner = new type(arglist(arguments))
@@ -38,6 +38,8 @@
 		flick_overlay(I, list(ghost.client), 10 SECONDS)
 
 		to_chat(ghost, "<span class='ghostalert'>Доступны новые роли в меню возрождения!</span>")
+
+	return spawner
 
 /datum/spawner
 	// Name of spawner, wow
@@ -71,9 +73,6 @@
 	// Flag if it's awaylable only for applications first, and will be rolled for spawn later
 	var/register_only = FALSE
 
-	// Allows to register more clients than positions, after roll random cliens will be spawned for available positions
-	var/register_no_limit = FALSE
-
 	// List of clients who checked for spawner
 	var/list/registered_candidates = list()
 
@@ -89,12 +88,15 @@
 
 	// Cooldown between the opportunity become a role
 	var/cooldown = 10 MINUTES
+	// Set this if you want to share cooldown between several spawners, can be type or unique key
+	var/cooldown_type
+
+	// optionally you can link faction for additional field in meny "playing"
+	var/datum/faction/faction // todo: print faction logo in spawn menu?
 
 	// id of timers
 	var/registration_timer_id
 	var/availability_timer_id
-
-#define SPAWNER_AUTOROLL_ROUND_START
 
 /datum/spawner/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -114,7 +116,6 @@
 	if(time_while_available)
 		availability_timer_id = QDEL_IN(src, time_while_available)
 
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/Destroy()
 	SSrole_spawners.remove_from_list(src)
@@ -136,13 +137,15 @@
 		if(!SSrole_spawners.spawners_cooldown[C.ckey])
 			SSrole_spawners.spawners_cooldown[C.ckey] = list()
 		var/list/ckey_cooldowns = SSrole_spawners.spawners_cooldown[C.ckey]
-		ckey_cooldowns[type] = world.time + cooldown
+		var/cooldown_key = cooldown_type ? cooldown_type : type
+		ckey_cooldowns[cooldown_key] = world.time + cooldown
 
 /datum/spawner/proc/check_cooldown(mob/dead/spectator)
 	if(SSrole_spawners.spawners_cooldown[spectator.ckey])
 		var/list/ckey_cooldowns = SSrole_spawners.spawners_cooldown[spectator.ckey]
-		if(world.time < ckey_cooldowns[type])
-			var/timediff = round((ckey_cooldowns[type] - world.time) * 0.1)
+		var/cooldown_key = cooldown_type ? cooldown_type : type
+		if(world.time < ckey_cooldowns[cooldown_key])
+			var/timediff = round((ckey_cooldowns[cooldown_key] - world.time) * 0.1)
 			to_chat(spectator, "<span class='danger'>Вы сможете снова зайти за эту роль через [timediff] секунд!</span>")
 			return FALSE
 	return TRUE
@@ -175,27 +178,19 @@
 	if(!can_spawn(spectator))
 		return
 
-	if(!register_no_limit)
-		if(positions < 1 || length(registered_candidates) > positions)
-			to_chat(spectator, "<span class='notice'>Нет свободных позиций для роли.</span>")
-			return
-
 	registered_candidates += spectator
 	spectator.registred_spawner = src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
 	spectator.registred_spawner = null
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
 
 	if(!length(registered_candidates))
-		//SSrole_spawners.trigger_ui_update()
 		return
 
 	var/list/filtered_candidates = list()
@@ -209,7 +204,6 @@
 	registered_candidates.Cut()
 
 	if(!length(filtered_candidates))
-		//SSrole_spawners.trigger_ui_update()
 		return
 
 	shuffle(filtered_candidates)
@@ -222,7 +216,6 @@
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
-	//SSrole_spawners.trigger_ui_update()
 
 /datum/spawner/proc/do_spawn(mob/dead/spectator)
 	if(!can_spawn(spectator))
@@ -259,9 +252,6 @@
 		return FALSE
 	if(!ranks)
 		return TRUE
-	if(jobban_isbanned(spectator, "Syndicate"))
-		to_chat(spectator, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")
-		return FALSE
 	for(var/rank in ranks)
 		if(jobban_isbanned(spectator, rank))
 			to_chat(spectator, "<span class='danger'>Роль - \"[name]\" для Вас заблокирована!</span>")
@@ -722,3 +712,34 @@
 	H.key = C.key
 
 	create_and_setup_role(/datum/role/operative/lone, H, TRUE, TRUE)
+
+/*
+ * Midround wizard
+*/
+/datum/spawner/wizard_event
+	name = "Маг"
+	desc = "Вы просыпаетесь в Логове Волшебника, с неотложным заданием от Федерации магов."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	spawn_landmark_name = "Wizard"
+
+/datum/spawner/wizard_event/New()
+	. = ..()
+	desc = "Вы просыпаетесь в [pick("Логове Волшебника", "Убежище мага", "Винтерхолде", "Башне мага")] с неотложным заданием от Федерации магов."
+
+/datum/spawner/wizard_event/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = "Wizard The Unbenannt"
+	INVOKE_ASYNC(spectator.client, TYPE_PROC_REF(/client, create_human_apperance), H, new_name, TRUE)
+
+	H.loc = spawnloc
+	H.key = spectator.client.key
+
+	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
+	R.rename = FALSE
+	setup_role(R, TRUE)

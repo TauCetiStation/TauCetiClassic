@@ -50,6 +50,7 @@ var/global/bridge_secret = null
 	var/list/probabilities = list()		// relative probability of each mode
 	var/humans_need_surnames = 0
 	var/allow_random_events = 1			// enables random events mid-round when set to 1
+	var/alt_lobby_menu = 0 // event lobby
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1
@@ -196,7 +197,6 @@ var/global/bridge_secret = null
 	var/obj/effect/statclick/statclick
 
 	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
-	var/starlight = FALSE	// Whether space turfs have ambient light or not
 	var/nightshift = FALSE
 
 	var/list/maplist = list()
@@ -205,6 +205,12 @@ var/global/bridge_secret = null
 	var/load_junkyard = TRUE
 	var/load_mine = TRUE
 	var/load_space_levels = TRUE
+
+#ifdef EARLY_PROFILE
+	var/auto_profile = TRUE
+#else
+	var/auto_profile = FALSE
+#endif
 
 	var/auto_lag_switch_pop = FALSE
 
@@ -679,6 +685,9 @@ var/global/bridge_secret = null
 				if("no_space_levels")
 					config.load_space_levels = FALSE
 
+				if("auto_profile")
+					config.auto_profile = TRUE
+
 				if("auto_lag_switch_pop")
 					config.auto_lag_switch_pop = text2num(value)
 
@@ -749,8 +758,6 @@ var/global/bridge_secret = null
 					config.organ_regeneration_multiplier = value / 100
 				if("craft_recipes_visibility")
 					config.craft_recipes_visibility = TRUE
-				if("starlight")
-					config.starlight = TRUE
 				if("nightshift")
 					config.nightshift = TRUE
 				if("deathmatch_arena")

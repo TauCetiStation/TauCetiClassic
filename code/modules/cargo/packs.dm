@@ -54,7 +54,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 	var/contents_cost = 0.0
 	for(var/item_type in contains)
-		for(var/datum/export/E in exports_list)
+		for(var/datum/export/E in global.exports_list)
 			if(E.applies_to_type(item_type))
 				var/amount = 1
 				if(sheet_amount > 0 && (ispath(item_type, /obj/item/stack/sheet) || ispath(item_type, /obj/item/stack/tile)))
@@ -1844,6 +1844,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	num_contained = 5
 	contains = list(/obj/item/toy/spinningtoy,
 	                /obj/item/toy/sword,
+					/obj/item/toy/dualsword,
 	                /obj/item/toy/owl,
 	                /obj/item/toy/griffin,
 	                /obj/item/toy/nuke,

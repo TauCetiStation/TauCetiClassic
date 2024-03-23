@@ -167,6 +167,7 @@
 	icon_state = "gripper"
 
 	can_hold = list(
+		/obj/item/bluespace_crystal,
 		/obj/item/weapon/tank,
 		/obj/item/device/assembly/signaler,
 		/obj/item/device/gps,

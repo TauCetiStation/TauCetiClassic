@@ -178,6 +178,9 @@ var/global/list/preferences_datums = list()
 	var/gear_tab = "General"
 	var/list/custom_items = list()
 
+	var/chosen_ringtone = "Flip-Flap"
+	var/custom_melody = "E7,E7,E7"
+
 /datum/preferences/New(client/C)
 	parent = C
 	UI_style = global.available_ui_styles[1]

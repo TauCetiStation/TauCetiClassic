@@ -12,23 +12,3 @@
 	else
 		vis_contents -= typing_indicator
 		typing = FALSE
-
-/mob/verb/say_wrapper()
-	set name = ".Say"
-	set hidden = TRUE
-
-	set_typing_indicator(TRUE)
-	var/message = input("","say (text)") as text|null
-	if(message)
-		say_verb(message)
-	set_typing_indicator(FALSE)
-
-/mob/verb/emote_wrapper()
-	set name = ".Me"
-	set hidden = TRUE
-
-	set_typing_indicator(TRUE)
-	var/message = input("","me (text)") as text|null
-	if(message)
-		me_verb(message)
-	set_typing_indicator(FALSE)

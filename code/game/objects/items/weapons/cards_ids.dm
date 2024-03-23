@@ -117,7 +117,6 @@
 	item_state = "card-id"
 	item_state_world = "data_world"
 	layer = 3
-	level = 2
 	desc = "Эта дискета содержит координаты легендарной планеты Клоунов. Обращайтесь с ней осторожно."
 	function = "teleporter"
 	data = "Clown Land"
@@ -198,6 +197,10 @@
 	return
 
 /obj/item/weapon/card/id/proc/assign(real_name)
+	if(!istext(real_name))
+		stack_trace("Expected text, got reference")
+		real_name = "[real_name]"
+
 	name = "[real_name]'s ID Card[assignment ? " ([assignment])" : ""]"
 	registered_name = real_name
 
@@ -246,7 +249,7 @@
 
 /obj/item/weapon/card/id/blueshield
 	name = "identification card"
-	desc = "A card issued to blueshield officer."
+	desc = "ID карта офицера, которая олицетворяет личный щит командования станции и представителей Центрального Командования."
 	icon_state = "blueshield"
 	item_state = "int_id"
 	item_state_world = "blueshield_world"

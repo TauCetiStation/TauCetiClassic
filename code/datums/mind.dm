@@ -47,7 +47,6 @@
 
 	var/datum/job/assigned_job
 
-	var/list/special_verbs = list()
 	var/list/antag_roles = list()		// All the antag roles we have.
 
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
@@ -553,6 +552,17 @@
 	var/datum/role/R = GetRole(role_id)
 	if(R)
 		return R.GetFaction()
+	return FALSE
+
+/datum/mind/proc/IsPartOfFaction(datum/faction/F)
+	if(!length(antag_roles))
+		return FALSE
+
+	for(var/role_id in antag_roles)
+		var/datum/role/R = antag_roles[role_id]
+		if(R.GetFaction() == F)
+			return TRUE
+
 	return FALSE
 
 /datum/mind/proc/set_current(mob/new_current)

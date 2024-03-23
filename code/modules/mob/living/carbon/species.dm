@@ -14,6 +14,10 @@
 	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
+	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
+	var/hud_offset_y = 0
+
+	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
@@ -69,7 +73,7 @@
 	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
 
 	var/darksight = 2
-	var/nighteyes = 0
+	var/nighteyes = FALSE
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
@@ -77,8 +81,11 @@
 
 	var/list/flags = list()       // Various specific features.
 
+	var/specie_suffix_fire_icon = "human"
 	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
 	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
+	var/specie_shoe_blood_state = "shoeblood"
+	var/specie_hand_blood_state = "bloodyhands"
 	var/flesh_color = "#ffc896" //Pink.
 	var/base_color      //Used when setting species.
 
@@ -125,6 +132,26 @@
 		,O_LIVER   = /obj/item/organ/internal/liver
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
+
+	///Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.
+	var/list/offset_features = list(
+		OFFSET_UNIFORM = list(0,0),
+		OFFSET_ID = list(0,0),
+		OFFSET_GLOVES = list(0,0),
+		OFFSET_GLASSES = list(0,0),
+		OFFSET_EARS = list(0,0),
+		OFFSET_SHOES = list(0,0),
+		OFFSET_S_STORE = list(0,0),
+		OFFSET_FACEMASK = list(0,0),
+		OFFSET_HEAD = list(0,0),
+		OFFSET_FACE = list(0,0),
+		OFFSET_BELT = list(0,0),
+		OFFSET_BACK = list(0,0),
+		OFFSET_SUIT = list(0,0),
+		OFFSET_NECK = list(0,0),
+		OFFSET_ACCESSORY = list(0,0),
+		OFFSET_HAIR = list(0,0),
+	)
 
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 
@@ -408,7 +435,7 @@
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
 	darksight = 8
-	nighteyes = 1
+	nighteyes = TRUE
 
 	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
@@ -1447,7 +1474,7 @@
 /datum/species/zombie
 	name = ZOMBIE
 	darksight = 8
-	nighteyes = 1
+	nighteyes = TRUE
 	dietflags = DIET_OMNI
 
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
@@ -1473,7 +1500,6 @@
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0
-	speed_mod = -0.2
 	speed_mod_no_shoes = -1
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
@@ -1524,7 +1550,7 @@
 
 	brute_mod = 2
 	burn_mod = 1.2
-	speed_mod = -0.8
+	speed_mod = -0.6
 
 	tail = "tajaran_zombie"
 
@@ -1575,7 +1601,7 @@
 
 	brute_mod = 1.6
 	burn_mod = 0.90
-	speed_mod = -0.2
+	speed_mod = 0.1
 
 	tail = "unathi_zombie"
 
