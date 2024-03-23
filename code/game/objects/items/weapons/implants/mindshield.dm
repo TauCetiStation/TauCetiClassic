@@ -1,12 +1,13 @@
 /obj/item/weapon/implant/mind_protect
 	name = "Abstract Implant"
+	cases = list("абстрактный имплант", "абстрактного импланта", "абстрактному импланту", "абстрактный имплант", "абстрактным имплантом", "абстрактном импланте")
 
 /obj/item/weapon/implant/mind_protect/implanted(mob/M)
 	if(!ishuman(M) || !M.mind)
 		return TRUE
 	var/mob/living/carbon/human/H = M
 	if(isrevhead(H) || isshadowling(H) || isshadowthrall(H)|| iswizard(H))
-		M.visible_message("<span class='warning'>[M] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
+		M.visible_message("<span class='warning'>[M] похоже, сопротивляется имплантату!</span>", "<span class='warning'>Вы чувствуете, что что-то мешает вашим мыслям, но вы сопротивляетесь этому!</span>")
 		return FALSE
 
 	var/list/role_to_deconvert = list(REV, GANGSTER)
@@ -16,14 +17,14 @@
 			R.Deconvert()
 
 	if(iscultist(H))
-		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
+		to_chat(H, "<span class='warning'>Вы чувствуете, что что-то мешает вашим мыслям, но вы сопротивляетесь этому!</span>")
 		return FALSE
 	else
-		to_chat(H, "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
+		to_chat(H, "<span class='notice'Вы ощущаете покой и безопасность. Теперь вы защищены от промывания мозгов.</span>")
 
 	if(prob(50) && !H.isSynthetic())
-		H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \
-		"<span class='userdanger'>Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!</span>")
+		H.visible_message("[H] внезапно становится очень красным и начинает корчиться. В воздухе появляется странный запах....", \
+		"<span class='userdanger'>Внезапно ужасная боль пронзает ваше тело! Ваш разум в полном беспорядке! Кровь пульсирует и начинает гореть! Боль НЕВЫНОСИМА!!!</span>")
 		H.adjustBrainLoss(80)
 
 	for(var/obj/item/weapon/implant/skill/S in H)
@@ -34,24 +35,26 @@
 
 /obj/item/weapon/implant/mind_protect/mindshield
 	name = "mindshield implant"
-	desc = "Protects against brainwashing."
+	cases = list("имплант защиты разума", "импланта защиты разума", "импланту защиты разума", "имплант защиты разума", "имплантом защиты разума", "импланте защиты разума")
+	desc = "Защищает от промывания мозгов."
 	implant_trait = TRAIT_VISUAL_MINDSHIELD
 
 /obj/item/weapon/implant/mind_protect/mindshield/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Nanotrasen Employee Management Implant<BR>
-				<b>Life:</b> Ten years.<BR>
-				<b>Important Notes:</b> Personnel injected with this device are much more resistant to brainwashing and propaganda.<BR>
+	var/dat = {"<b>Характеристики импланта:</b><BR>
+				<b>Наименование:</b> Имплант НаноТрейзен по защите разума персонала<BR>
+				<b>Срок годности:</b> Ten years.<BR>
+				<b>Важные примечания:</b> Лица, которым вводится это устройство, гораздо более устойчивы к промыванию мозгов и пропаганде.<BR>
 				<HR>
-				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a small pod of nanobots that protects the host's mental functions from manipulation.<BR>
-				<b>Special Features:</b> Will prevent and cure most forms of brainwashing and propaganda.<BR>
-				<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
+				<b>Подробности:</b><BR>
+				<b>Функционал:</b> Содержит небольшую капсулу с наноботами, защищающую психические функции носителя от манипуляций.<BR>
+				<b>Особенности:</b> Предотвращает и блокирует большинство форм промывания мозгов и пропаганды.<BR>
+				<b>Целостность:</b> Имплантат будет работать до тех пор, пока наноботы находятся в кровотоке."}
 	return dat
 
 /obj/item/weapon/implant/mind_protect/loyalty
 	name = "loyalty implant"
-	desc = "Makes you loyal or such."
+	cases = list("имплант лояльности", "импланта лояльности", "импланту лояльности", "имплант лояльности", "имплантом лояльности", "импланте лояльности")
+	desc = "Делает вас лояльным или что-то вроде того."
 	implant_trait = TRAIT_VISUAL_LOYAL
 
 /obj/item/weapon/implant/mind_protect/loyalty/inject(mob/living/carbon/C, def_zone)
@@ -60,16 +63,16 @@
 
 /obj/item/weapon/implant/mind_protect/loyalty/get_data()
 	var/dat = {"
-	<b>Implant Specifications:</b><BR>
-	<b>Name:</b> Nanotrasen Employee Management Implant<BR>
+	<b>Характеристики импланта:</b><BR>
+	<b>Наименование:</b> Имплант для управления персоналом НаноТрейзен<BR>
 	<b>Life:</b> Ten years.<BR>
-	<b>Important Notes:</b> Personnel injected with this device tend to be much more loyal to the company.<BR>
-	<b>Warning:</b> Usage without special equipment may cause heavy injuries and severe brain damage.<BR>
+	<b>Важные примечания:</b> Персонал, которому вводится это устройство, как правило, гораздо более лоялен компании.<BR>
+	<b>Предупреждение:</b> Использование без специального оборудования может привести к тяжелым травмам и серьезным повреждениям мозга.<BR>
 	<HR>
-	<b>Implant Details:</b><BR>
-	<b>Function:</b> Contains a small pod of nanobots that manipulate the host's mental functions.<BR>
-	<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-	<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
+	<b>Подробности:</b><BR>
+	<b>Функционал:</b> Содержит небольшую капсулу с наноботами, которые манипулируют психическими функциями носителя.<BR>
+	<b>Особенности:</b> Предотвращает и блокирует большинство форм промывания мозгов.<BR>
+	<b>Целостность:</b> Имплантат будет работать до тех пор, пока наноботы находятся в кровотоке."}
 	return dat
 
 /obj/item/weapon/implant/mind_protect/loyalty/implanted(mob/M)
@@ -87,13 +90,13 @@
 
 			if(cleared_role)
 				// M.mind.remove_objectives() Uncomment this if you're feeling suicidal, and inable to see player's objectives.
-				to_chat(M, "<span class='danger'>You were implanted with [src] and now you must serve NT. Your old mission doesn't matter now.</span>")
+				to_chat(M, "<span class='danger'>Вам вживили [CASE(src, NOMINATIVE_CASE)], и теперь вы должны служить НТ. Ваша прежняя миссия больше не имеет значения. Слава НТ!</span>")
 
 		for(var/obj/item/weapon/implant/skill/S in M)
 			if(S.implanted)
 				S.meltdown()
 		START_PROCESSING(SSobj, src)
-		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
+		to_chat(M, "НаноТрейзен - лучшая корпорация во всей Вселенной!")
 
 /obj/item/weapon/implant/mind_protect/loyalty/process()
 	if (!implanted || !imp_in)
