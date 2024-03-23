@@ -1,31 +1,29 @@
-import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { Button, LabeledList, Box, Section, Table, Tabs } from '../components';
-import { Window } from '../layouts';
+import { Fragment } from "inferno";
+import { useBackend } from "../backend";
+import { Box, Button, LabeledList, Section, Tabs } from "../components";
+import { Window } from "../layouts";
 import { AccessList } from './common/AccessList';
 
 export const ComputerCard = (props, context) => {
   const { act, data } = useBackend(context);
-
-
   let menuBlock = (
     <Tabs>
       <Tabs.Tab
         icon="id-card"
         selected={data.mode === 0}
-        onClick={() => act("mode", { mode: 1 })} >
+        onClick={() => act("mode", { mode: 0 })} >
         Access Modification
       </Tabs.Tab>
       <Tabs.Tab
         icon="folder-open"
         selected={data.mode === 1}
-        onClick={() => act("mode", { mode: 2 })}>
+        onClick={() => act("mode", { mode: 1 })}>
         Crew Manifest
       </Tabs.Tab>
       <Tabs.Tab
         icon="scroll"
         selected={data.mode === 2}
-        onClick={() => act("mode", { mode: 3 })}>
+        onClick={() => act("mode", { mode: 2 })}>
         Records
       </Tabs.Tab>
     </Tabs>
@@ -37,20 +35,18 @@ export const ComputerCard = (props, context) => {
       <LabeledList>
         <LabeledList.Item label="Target Identity">
           <Button
-            icon={data.target_name ? 'eject' : 'id-card'}
-            selected={data.target_name}
-            content={data.target_name
-              ? "Remove Card: " + data.target_name
-              : "-----"}
+            icon={data.modify_name ? 'eject' : 'id-card'}
+            selected={data.modify_name}
+            content={data.modify_name ? data.modify_name : "-----"}
+            tooltip={data.modify_name ? "Eject ID" : "Insert ID"}
             onClick={() => act("modify")} />
         </LabeledList.Item>
         <LabeledList.Item label="Authorized Identity">
           <Button
-            icon={data.scan_name ? 'sign-out-alt' : 'id-card'}
+            icon={data.scan_name ? 'eject' : 'id-card'}
             selected={data.scan_name}
-            content={data.scan_name
-              ? "Log Out: " + data.scan_name
-              : "-----"}
+            content={data.scan_name ? data.scan_name : "-----"}
+            tooltip={data.scan_name ? "Eject ID" : "Insert ID"}
             onClick={() => act("scan")} />
         </LabeledList.Item>
       </LabeledList>
@@ -74,11 +70,11 @@ export const ComputerCard = (props, context) => {
           </Section>
         );
       } else {
-        bodyBlock = (
+        <Fragment>
           <AccessList
             accesses={data.regions}
             selectedList={data.selectedAccess}
-            accessMod={ref => act('set', {
+            accessMod={ref => act('access', {
               access: ref,
             })}
             grantAll={() => act('grant_all')}
@@ -89,8 +85,12 @@ export const ComputerCard = (props, context) => {
             denyDep={ref => act('deny_region', {
               region: ref,
             })} />
-        );
-      }
+          <Button
+            icon="id-card"
+            content={data.printmsg}
+            disabled={!data.canprint}
+            onClick={() => act("issue")} />
+        </Fragment>      }
       break;
 
     case 2: // Crew Manifest
@@ -100,7 +100,6 @@ export const ComputerCard = (props, context) => {
             Not logged in.
           </Section>
         );
-      } else {
         bodyBlock = (
           <Section color={data.manifest ? "red" : ""}>
             Crew Manifest:
@@ -148,7 +147,7 @@ export const ComputerCard = (props, context) => {
                   </Table.Cell>
                 )}
               </Table.Row>
-              {data.records.map(record => (
+              {data.records(record => (
                 <Table.Row key={record.timestamp}>
                   <Table.Cell>{record.transferee}</Table.Cell>
                   <Table.Cell>{record.oldvalue}</Table.Cell>

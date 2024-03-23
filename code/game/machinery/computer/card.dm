@@ -1,6 +1,6 @@
-#define IDCOMPUTER_SCREEN_ACCESS 1
-#define IDCOMPUTER_SCREEN_MANIFEST 2
-#define IDCOMPUTER_SCREEN_PRINT 3
+#define IDCOMPUTER_SCREEN_ACCESS 0
+#define IDCOMPUTER_SCREEN_MANIFEST 1
+#define IDCOMPUTER_SCREEN_PRINT 2
 
 /obj/machinery/computer/card
 	name = "Identification Computer"
@@ -108,10 +108,10 @@
 	data["mode"] = mode
 	data["printing"] = printing
 	data["manifest"] = data_core ? data_core.html_manifest(monochrome=0) : null
-	data["target_name"] = modify ? modify.name : "-----"
-	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
+	data["modify_name"] = modify ? modify.name : FALSE
+	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : FALSE
 	data["target_rank"] = get_target_rank()
-	data["scan_name"] = scan ? scan.name : "-----"
+	data["scan_name"] = scan ? scan.name : FALSE
 	data["authenticated"] = is_authenticated()
 	data["has_modify"] = !!modify
 	data["account_number"] = modify ? modify.associated_account_number : null
@@ -167,6 +167,12 @@
 		if(IDCOMPUTER_SCREEN_PRINT)
 			if (modify)
 				tgui_act()
+	return data
+
+/obj/machinery/computer/card/tgui_static_data(mob/user)
+	var/list/data = list()
+	data["regions"] = get_accesslist_static_data(REGION_GENERAL, REGION_COMMAND)
+	data["centcom_access"] = is_centcom()
 	return data
 
 /obj/machinery/computer/card/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
