@@ -1814,16 +1814,6 @@
 	icon_state = "engine"
 	},
 /area/custom/arena)
-"aeN" = (
-/obj/machinery/light{
-	dir = 4;
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/arena)
 "aeO" = (
 /obj/random/melee,
 /turf/unsimulated/floor{
@@ -1841,22 +1831,6 @@
 "aeQ" = (
 /obj/mecha/combat/marauder/loaded{
 	operation_req_access = list()
-	},
-/obj/machinery/light{
-	dir = 8;
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/arena)
-"aeR" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/machinery/light{
-	dir = 8;
-	invisibility = 101;
-	name = "invisible light fixture"
 	},
 /turf/unsimulated/floor{
 	icon_state = "engine"
@@ -1916,17 +1890,6 @@
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
-"aeY" = (
-/obj/effect/decal/cleanable/blood/gibs,
-/obj/machinery/light{
-	dir = 1;
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/arena)
 "aeZ" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "8,0";
@@ -1947,16 +1910,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/arrival/velocity)
-"afc" = (
-/obj/machinery/light{
-	dir = 1;
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/arena)
 "afd" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor{
@@ -1977,17 +1930,6 @@
 /obj/structure/stool/bed/chair/schair/wagon/green,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
-"afg" = (
-/obj/machinery/light{
-	dir = 1;
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/obj/random/guns/energy_weapon,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/arena)
 "afh" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,16"
@@ -2013,27 +1955,6 @@
 /area/centcom/control)
 "afm" = (
 /obj/random/guns/projectile_assault,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/arena)
-"afn" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/machinery/light{
-	dir = 1;
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/arena)
-"afo" = (
-/obj/machinery/light{
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/obj/effect/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -2240,11 +2161,6 @@
 "afO" = (
 /obj/mecha/combat/marauder/mauler{
 	operation_req_access = list()
-	},
-/obj/machinery/light{
-	dir = 4;
-	invisibility = 101;
-	name = "invisible light fixture"
 	},
 /turf/unsimulated/floor{
 	icon_state = "engine"
@@ -4655,9 +4571,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/light{
-	dir = 1;
-	invisibility = 101;
-	name = "invisible light fixture"
+	dir = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "bar"
@@ -10202,20 +10116,6 @@
 /obj/item/weapon/retractor/alien,
 /obj/structure/table/abductor{
 	dir = 8;
-	icon_state = "table_1tileendtable"
-	},
-/turf/unsimulated/floor/abductor,
-/area/custom/abductor_ship)
-"awX" = (
-/obj/item/weapon/cautery/alien,
-/obj/item/weapon/circular_saw/alien,
-/obj/item/weapon/paper/abductor,
-/obj/machinery/light{
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/obj/structure/table/abductor{
-	dir = 4;
 	icon_state = "table_1tileendtable"
 	},
 /turf/unsimulated/floor/abductor,
@@ -20378,15 +20278,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/vox/arkship)
-"aXI" = (
-/obj/machinery/light{
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/arena)
 "aXK" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "7,15"
@@ -21617,10 +21508,6 @@
 /area/custom/abductor_ship)
 "bce" = (
 /obj/effect/landmark/abductor/console,
-/obj/machinery/light{
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bcf" = (
@@ -21648,10 +21535,6 @@
 "bcj" = (
 /obj/effect/landmark/abductor/console{
 	team = 2
-	},
-/obj/machinery/light{
-	invisibility = 101;
-	name = "invisible light fixture"
 	},
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
@@ -21923,10 +21806,6 @@
 /obj/effect/landmark/abductor/console{
 	team = 3
 	},
-/obj/machinery/light{
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bel" = (
@@ -21944,10 +21823,6 @@
 "ben" = (
 /obj/effect/landmark/abductor/console{
 	team = 4
-	},
-/obj/machinery/light{
-	invisibility = 101;
-	name = "invisible light fixture"
 	},
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
@@ -26232,16 +26107,6 @@
 	icon_state = "blue"
 	},
 /area/centcom/evac)
-"hJb" = (
-/obj/machinery/light{
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/obj/random/guns/energy_weapon,
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/arena)
 "hJA" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
@@ -49193,7 +49058,7 @@ bek
 bcv
 bcL
 bcv
-awX
+awE
 bdU
 aaM
 aaM
@@ -50985,14 +50850,14 @@ bcj
 bcv
 bcL
 bcv
-awX
+awE
 ssN
 eBl
 ben
 bcv
 bcL
 bcv
-awX
+awE
 bdU
 aaM
 aaM
@@ -86839,17 +86704,17 @@ aHB
 aHB
 aHB
 aWF
-hJb
+aWH
 aHB
 afq
 afd
 aWF
-aeN
+aWF
 aWF
 aWF
 afq
 aHB
-afg
+aWH
 aWF
 aHB
 aHB
@@ -87863,25 +87728,25 @@ aaM
 aaM
 aHB
 aeM
-aXI
+aWF
 aHB
 aXY
 aWF
 aWF
 aWF
-aXI
+aWF
 aHB
 aWF
 aeS
 aWF
 aHB
-aeY
+afd
 aWF
 aWF
 aWF
 aXY
 aHB
-afn
+aeM
 aWF
 aHB
 aaM
@@ -89405,25 +89270,25 @@ aaM
 aaM
 aHB
 aWF
-afo
+aeM
 aHB
 aXY
 aWF
 aWF
 aWF
-aXI
+aWF
 aHB
 aWF
 aeS
 aWF
 aHB
-afc
+aWF
 aWF
 aWF
 aWF
 aXY
 aHB
-afc
+aWF
 aWF
 aHB
 aaM
@@ -90437,17 +90302,17 @@ aHB
 aHB
 aHB
 aWF
-hJb
+aWH
 aHB
 afq
 aWF
 aWF
-aeR
+aeM
 aWF
 aWF
 afq
 aHB
-afg
+aWH
 aWF
 aHB
 aHB
