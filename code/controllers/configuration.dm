@@ -206,6 +206,12 @@ var/global/bridge_secret = null
 	var/load_mine = TRUE
 	var/load_space_levels = TRUE
 
+#ifdef EARLY_PROFILE
+	var/auto_profile = TRUE
+#else
+	var/auto_profile = FALSE
+#endif
+
 	var/auto_lag_switch_pop = FALSE
 
 	var/record_replays = FALSE
@@ -678,6 +684,9 @@ var/global/bridge_secret = null
 
 				if("no_space_levels")
 					config.load_space_levels = FALSE
+
+				if("auto_profile")
+					config.auto_profile = TRUE
 
 				if("auto_lag_switch_pop")
 					config.auto_lag_switch_pop = text2num(value)
