@@ -5,7 +5,6 @@
 	w_class = SIZE_MINUSCULE
 	cases = list("дискета", "дискеты", "дискете", "дискету", "дискетой", "дискете")
 	icon_state = "datadisk0"
-	item_state = "datadisk0"
 	item_state_world = "datadisk0_world"
 	item_state_inventory = "datadisk0"
 
@@ -60,12 +59,11 @@
 
 //Disk stuff.
 /obj/item/weapon/disk/data/atom_init()
-	. = ..()
 	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
 	icon_state = "datadisk[diskcolor]"
-	item_state = "datadisk[diskcolor]"
 	item_state_world = "datadisk[diskcolor]_world"
 	item_state_inventory = "datadisk[diskcolor]"
+	. = ..()
 
 /obj/item/weapon/disk/data/proc/Initialize()
 	buf = new
@@ -128,14 +126,13 @@
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/atom_init()
-	. = ..()
 	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
 	icon_state = "datadisk[diskcolor]"
-	item_state = "datadisk[diskcolor]"
 	item_state_world = "datadisk[diskcolor]_world"
 	item_state_inventory = "datadisk[diskcolor]"
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
+	. = ..()
 
 /* RND tech disks */
 
@@ -148,14 +145,13 @@
 	var/datum/tech/stored
 
 /obj/item/weapon/disk/tech_disk/atom_init()
-	. = ..()
 	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
 	icon_state = "datadisk[diskcolor]"
-	item_state = "datadisk[diskcolor]"
 	item_state_world = "datadisk[diskcolor]_world"
 	item_state_inventory = "datadisk[diskcolor]"
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
+	. = ..()
 
 /obj/item/weapon/disk/research_points
 	name = "Important Disk"
