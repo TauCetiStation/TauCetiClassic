@@ -306,6 +306,10 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	name = "Kitchen"
 	icon_state = "kitchen"
 
+/area/station/civilian/kitchen/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_COOKING_AREA, GENERIC_TRAIT)
+
 /area/station/civilian/cold_room
 	name = "Cold Room"
 	icon_state = "coldroom"

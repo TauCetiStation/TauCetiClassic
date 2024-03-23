@@ -193,6 +193,7 @@
 #define TRAIT_FAKELOYAL_VISUAL    "fakeloyal_visual"
 #define TRAIT_CHANGELING_ABSORBING "changeling_absorbing"
 #define TRAIT_FAST_WALKER         "fast_walker"
+#define TRAIT_BORK_SKILLCHIP      "bork_skillchip"
 #define TRAIT_FULL_CONFUSION      "full_confusion"
 #define TRAIT_CULT_IMPLANT        "cult_implant"
 
@@ -201,6 +202,7 @@
  * Use [/atom/movable/proc/become_area_sensitive(trait_source)] to properly enable it. How you remove it isn't as important.
  */
 #define TRAIT_AREA_SENSITIVE "area-sensitive"
+#define TRAIT_COOKING_AREA "cooking_area"
 
 /*
  * Used for items that have different behaviour when they are two-hand wielded

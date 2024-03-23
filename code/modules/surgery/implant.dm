@@ -283,7 +283,7 @@
 		fail_prob += 100 - tool_quality(tool)
 		if (prob(fail_prob))
 			var/obj/item/weapon/implant/imp = BP.implants[1]
-			user.visible_message("<span class='warning'>Something beeps inside [target]'s [BP.name]!</span>")
+			user.visible_message("<span class='warning'>Внутри [CASE(BP, GENITIVE_CASE)] [target] что-то пищит!</span>")
 			playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			spawn(25)
 				imp.activate()

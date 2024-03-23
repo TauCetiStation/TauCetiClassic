@@ -8,6 +8,7 @@
 	color            = LIGHTING_BASE_MATRIX
 	plane            = LIGHTING_PLANE
 	mouse_opacity    = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = parent_type::appearance_flags | NO_CLIENT_COLOR
 
 	simulated = FALSE
 	flags = NOREACT
@@ -71,31 +72,31 @@
 	// Oh it's also shorter line wise.
 	// Including with these comments.
 
-	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-	var/datum/lighting_corner/cr = myturf.lighting_corner_SW || dummy_lighting_corner
-	var/datum/lighting_corner/cg = myturf.lighting_corner_SE || dummy_lighting_corner
-	var/datum/lighting_corner/cb = myturf.lighting_corner_NW || dummy_lighting_corner
-	var/datum/lighting_corner/ca = myturf.lighting_corner_NE || dummy_lighting_corner
+	// See lighting_corner.dm for why these values are what they are.
+	var/datum/lighting_corner/corner_red = myturf.lighting_corner_SW || dummy_lighting_corner
+	var/datum/lighting_corner/corner_green = myturf.lighting_corner_SE || dummy_lighting_corner
+	var/datum/lighting_corner/corner_blue = myturf.lighting_corner_NW || dummy_lighting_corner
+	var/datum/lighting_corner/corner_alpha = myturf.lighting_corner_NE || dummy_lighting_corner
 
-	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
+	var/max = max(corner_red.cache_mx, corner_green.cache_mx, corner_blue.cache_mx, corner_alpha.cache_mx)
 
-	var/rr = cr.cache_r
-	var/rg = cr.cache_g
-	var/rb = cr.cache_b
+	var/rr = corner_red.cache_r
+	var/rg = corner_red.cache_g
+	var/rb = corner_red.cache_b
 
-	var/gr = cg.cache_r
-	var/gg = cg.cache_g
-	var/gb = cg.cache_b
+	var/gr = corner_green.cache_r
+	var/gg = corner_green.cache_g
+	var/gb = corner_green.cache_b
 
-	var/br = cb.cache_r
-	var/bg = cb.cache_g
-	var/bb = cb.cache_b
+	var/br = corner_blue.cache_r
+	var/bg = corner_blue.cache_g
+	var/bb = corner_blue.cache_b
 
-	var/ar = ca.cache_r
-	var/ag = ca.cache_g
-	var/ab = ca.cache_b
+	var/ar = corner_alpha.cache_r
+	var/ag = corner_alpha.cache_g
+	var/ab = corner_alpha.cache_b
 
 	#if LIGHTING_SOFT_THRESHOLD != 0
 	var/set_luminosity = max > LIGHTING_SOFT_THRESHOLD
@@ -113,7 +114,7 @@
 		icon_state = "dark"
 		color = null
 	else
-		icon_state = null
+		icon_state = "corners" // here we use prepared mask with r/g/b/a channels for each corner
 		color = list(
 			rr, rg, rb, 00,
 			gr, gg, gb, 00,
