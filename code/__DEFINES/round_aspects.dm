@@ -18,3 +18,4 @@
 
 #define ROUND_ASPECT_ALTERNATIVE_RESEARCH "Alternative Research"
 
+#define ROUND_ASPECT_RANDOM_LAWSET "Random Laws"

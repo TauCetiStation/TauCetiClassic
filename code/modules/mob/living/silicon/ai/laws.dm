@@ -17,7 +17,7 @@
 
 /mob/living/silicon/ai/proc/laws_sanity_check()
 	if (!src.laws)
-		src.laws = new base_law_type
+		src.laws = new global.base_law_type
 
 /mob/living/silicon/ai/proc/set_zeroth_law(law, law_borg)
 	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)

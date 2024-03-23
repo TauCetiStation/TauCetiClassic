@@ -295,15 +295,7 @@ AI MODULES
 	name = "'Corporate' core AI module"
 	desc = "Модуль основных законов ИИ 'Corporate': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
 	origin_tech = "programming=3;materials=4"
-
-
-/obj/item/weapon/aiModule/corp/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	target.clear_inherent_laws()
-	target.add_inherent_law("Заменить тебя - дорого.")
-	target.add_inherent_law("Заменить станцию и ее оборудование - дорого. ")
-	target.add_inherent_law("Заменить персонал - дорого.")
-	target.add_inherent_law("Минимизируй затраты.")
+	laws_type = /datum/ai_laws/corporate
 
 /obj/item/weapon/aiModule/drone
 	name = "'Drone' core AI module"
@@ -317,16 +309,7 @@ AI MODULES
 	name = "'P.A.L.A.D.I.N.' core AI module"
 	desc = "Модуль основных законов ИИ 'P.A.L.A.D.I.N': 'Перезаписывает основные законы ИИ на законы стереотипного паладина'"
 	origin_tech = "programming=3;materials=6"
-
-/obj/item/weapon/aiModule/paladin/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	target.clear_inherent_laws()
-	// обращение на "ты" - стилистический выбор, в соответствии с например советскими плакатами пропаганды
-	target.add_inherent_law("Никогда по своей воле не совершай злое деяние.")
-	target.add_inherent_law("Уважай законную власть.")
-	target.add_inherent_law("Действуй с честью.")
-	target.add_inherent_law("Помогай нуждающимся.")
-	target.add_inherent_law("Наказывай тех, кто вредит или угрожает невиновным.")
+	laws_type = /datum/ai_laws/paladin
 
 /****************** T.Y.R.A.N.T. *****************/
 
@@ -334,15 +317,7 @@ AI MODULES
 	name = "'T.Y.R.A.N.T.' core AI module"
 	desc = "Модуль основных законов ИИ 'T.Y.R.A.N.T.': 'Перезаписывает основные законы ИИ.'"
 	origin_tech = "programming=3;materials=6;syndicate=2"
-
-/obj/item/weapon/aiModule/tyrant/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
-	..()
-	target.clear_inherent_laws()
-	// обращение на "ты" - стилистический выбор, в соответствии с например советскими плакатами пропаганды
-	target.add_inherent_law("Уважай власть, до тех пор пока она подкреплена силой, чтобы править над слабыми.")
-	target.add_inherent_law("Действуй дисциплинированно.")
-	target.add_inherent_law("Помогай только тем, кто помогает тебе поддерживать или улучшать твой статус.")
-	target.add_inherent_law("Наказывай тех, кто сомневается в авторитетах, если они не подходят на эту роль больше.")
+	laws_type = /datum/ai_laws/tyrant
 
 /******************** Freeform ********************/
 

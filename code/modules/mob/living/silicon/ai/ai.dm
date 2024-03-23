@@ -178,7 +178,7 @@ var/global/list/ai_verbs_default = list(
 		if (istype(L, /datum/ai_laws))
 			laws = L
 	else
-		laws = new base_law_type
+		laws = new global.base_law_type
 
 	pda = new/obj/item/device/pda/silicon(src)
 	pda.owner = name

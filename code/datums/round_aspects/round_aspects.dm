@@ -136,3 +136,20 @@
 	name = ROUND_ASPECT_ALTERNATIVE_RESEARCH
 	desc = "Взрывы газовых бомб стали приносить меньше научных очков."
 	afterspawn_IC_announcement = "<span class='warning'>Научно-исследовательский Совет НаноТрейзен стал в меньшей мере интересоваться изучением взрывчатых свойств форона.</span>"
+
+/datum/round_aspect/random_ai_laws
+	name = ROUND_ASPECT_RANDOM_LAWSET
+	desc = "Изменён набор законов ИИ."
+
+/datum/round_aspect/random_ai_laws/after_init()
+	var/list/laws = list(
+		/datum/ai_laws/robocop,
+		/datum/ai_laws/paladin,
+		/datum/ai_laws/tyrant,
+		/datum/ai_laws/corporate
+	)
+	global.base_law_type = pick(laws)
+
+/datum/round_aspect/random_ai_laws/after_start()
+	for(var/obj/item/weapon/aiModule/nanotrasen/law in global.all_areas)
+		qdel(law)

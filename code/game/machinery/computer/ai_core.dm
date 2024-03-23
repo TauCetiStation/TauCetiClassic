@@ -5,11 +5,15 @@
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
 	var/state = 0
-	var/datum/ai_laws/laws = new /datum/ai_laws/nanotrasen
+	var/datum/ai_laws/laws
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
 
 	resistance_flags = CAN_BE_HIT
+
+/obj/structure/AIcore/atom_init()
+	. = ..()
+	laws = new base_law_type
 
 /obj/structure/AIcore/Destroy()
 	QDEL_NULL(circuit)
