@@ -271,6 +271,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		broken = TRUE
 	else if(is_carpet_floor())
 		damage_state = "carpet_damaged"
+		broken = TRUE
 	else if(is_grass_floor())
 		src.icon_state = "ironsand[pick("1","2","3")]"
 		broken = TRUE
