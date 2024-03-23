@@ -8988,6 +8988,10 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/machinery/door/poddoor/shutters{
+	id = "mine_shuttes";
+	name = "Shuttle Dock Shutters"
+	},
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -11908,7 +11912,6 @@
 /area/shuttle/vox/arkship)
 "aAJ" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	dir = 8;
 	id = "DropPodGarage"
 	},
 /obj/structure/sign/warning/pods{
@@ -12378,7 +12381,6 @@
 /area/centcom/specops)
 "aBJ" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	dir = 8;
 	id = "DropPodGarage"
 	},
 /turf/unsimulated/floor{
@@ -13647,7 +13649,6 @@
 /area/centcom/specops)
 "aEK" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	dir = 4;
 	id = "Mecha"
 	},
 /turf/unsimulated/floor{
@@ -17216,7 +17217,6 @@
 /area/custom/syndicate_mothership/elite_squad)
 "aNj" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	dir = 8;
 	id = "Esyndimech";
 	name = "Mech Bay"
 	},
@@ -18281,7 +18281,6 @@
 /area/shuttle/syndicate_elite/mothership)
 "aPt" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	dir = 8;
 	id = "Esyndimech";
 	name = "Mech Bay"
 	},
