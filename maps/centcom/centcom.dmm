@@ -7400,18 +7400,8 @@
 	icon_state = "engine"
 	},
 /area/velocity)
-"aro" = (
-/obj/machinery/door/poddoor/shutters{
-	dir = 4;
-	id = "ck_warehouse";
-	name = "Warehouse Shutters"
-	},
-/obj/machinery/door/firedoor,
-/turf/unsimulated/floor,
-/area/velocity)
 "arp" = (
 /obj/machinery/door/poddoor/shutters{
-	dir = 8;
 	id = "ck_warehouse";
 	name = "Warehouse Shutters"
 	},
@@ -78704,7 +78694,7 @@ weI
 bXb
 cbb
 cgb
-aro
+arp
 cib
 weI
 cgb
