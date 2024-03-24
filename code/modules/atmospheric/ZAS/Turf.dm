@@ -3,11 +3,12 @@
 
 /turf/var/needs_air_update = FALSE
 /turf/var/datum/gas_mixture/air
+/*
 /turf/var/atom/movable/distortion_effect/distort
 /turf/proc/nullify_distort()
 	cut_overlay(distort)
 	QDEL_NULL(distort)
-
+*/
 /turf/var/air_unsim_multiplier = 0
 /turf/environment/snow/air_unsim_multiplier = 45 // speeds up zone air equalization process with snow turfs
 #ifdef ZASDBG

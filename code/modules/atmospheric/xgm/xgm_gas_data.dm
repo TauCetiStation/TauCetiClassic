@@ -46,13 +46,14 @@
 	var/layer = TURF_LAYER
 
 	var/temperature_range = list(0, INFINITY)
+	var/plane
 
-/proc/getGasTileOverlay(icon_state, layer)
+/proc/getGasTileOverlay(icon_state, layer, plane)
 	var/atom/movable/AM = new(null)
 	AM.simulated = FALSE
 
 	var/image/I = image('icons/effects/tile_effects.dmi', icon_state = icon_state, layer = layer)
-	I.plane = GAME_PLANE
+	I.plane = plane || GAME_PLANE
 	I.appearance_flags |= KEEP_APART
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
@@ -87,7 +88,7 @@
 	for(var/p in subtypesof(/datum/xgm_temperature_overlay))
 		var/datum/xgm_temperature_overlay/overlay = new p
 
-		gas_data.tile_overlay[overlay.id] = getGasTileOverlay(overlay.icon_state, overlay.layer)
+		gas_data.tile_overlay[overlay.id] = getGasTileOverlay(overlay.icon_state, overlay.layer, overlay.plane)
 		gas_data.temperature_range[overlay.id] = overlay.temperature_range
 
 	return gas_data
