@@ -191,7 +191,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Vermin Infestation", /datum/event/infestation,                             100,  list(ASSIGNMENT_JANITOR = 100)),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Wallrot",            /datum/event/wallrot,                                 0,    list(ASSIGNMENT_ENGINEER = 30, ASSIGNMENT_BOTANIST = 50)),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Xenohive",           /datum/event/feature/area/maintenance_spawn/xenohive, 300),
-	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Camera Damage",      /datum/event/camera_damage,                           200,  list(ASSIGNMENT_ENGINEER = 60)),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Camera Malfunction", /datum/event/camera_damage,                           200,  list(ASSIGNMENT_ENGINEER = 60)),
 	)
 
 /datum/event_container/moderate
@@ -241,7 +241,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Meteor Wave",             /datum/event/meteor_wave,       0, list(ASSIGNMENT_ENGINEER = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Lone Syndicate Agent",    /datum/event/lone_op,         100, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Abduction",               /datum/event/abduction,         0, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
-		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Camera Damage",           /datum/event/camera_damage,     0, list(ASSIGNMENT_ENGINEER = 25)),
+		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Camera Blackout",         /datum/event/camera_damage,     0, list(ASSIGNMENT_ENGINEER = 25)),
 	)
 
 #undef ASSIGNMENT_ANY
