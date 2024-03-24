@@ -94,6 +94,9 @@ RCD
 	if(!choice) //closed radial menu
 		return
 
+	if(!user.Adjacent(src))
+		return
+
 	mode = choice
 
 	to_chat(user, "<span class='notice'>Changed mode to '[mode]'</span>")
