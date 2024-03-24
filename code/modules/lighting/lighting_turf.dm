@@ -6,56 +6,49 @@
 	lighting_corner_NW?.vis_update()
 
 /turf/proc/lighting_clear_overlay()
-	if (lighting_object)
-		qdel(lighting_object, TRUE)
+	if(!lighting_object)
+		return
 
-// Builds a lighting object for us, but only if our area is dynamic.
+	qdel(lighting_object, TRUE) //Shitty fix for lighting objects persisting after death
+
 /turf/proc/lighting_build_overlay()
-	if (lighting_object)
-		qdel(lighting_object,force=TRUE) //Shitty fix for lighting objects persisting after death
-
-	var/area/A = loc
-	if (!IS_DYNAMIC_LIGHTING(A) && !light_sources)
+	if(lighting_object)
 		return
 
 	new/atom/movable/lighting_object(src)
 
 // Used to get a scaled lumcount.
 /turf/proc/get_lumcount(minlum = 0, maxlum = 1)
-	if (!lighting_object)
+	var/area/A = loc
+	if(!A.dynamic_lighting) // white unsim area
+		// todo: do proper calculation of lums from area overlay
 		return 1
 
-	var/totallums = 0
+	var/static_lums = 0
+	if(level_light_source && SSmapping.initialized) // todo: casts
+		var/datum/space_level/SL = SSmapping.z_list[z]
+		static_lums = GET_LUM_FROM_COLOR(SL.color_holder)
+
+	var/total_dynamic_lums = 0
 	var/datum/lighting_corner/L
 	L = lighting_corner_NE
 	if (L)
-		totallums += L.lum_r + L.lum_b + L.lum_g
+		total_dynamic_lums += L.lum_r + L.lum_b + L.lum_g
 	L = lighting_corner_SE
 	if (L)
-		totallums += L.lum_r + L.lum_b + L.lum_g
+		total_dynamic_lums += L.lum_r + L.lum_b + L.lum_g
 	L = lighting_corner_SW
 	if (L)
-		totallums += L.lum_r + L.lum_b + L.lum_g
+		total_dynamic_lums += L.lum_r + L.lum_b + L.lum_g
 	L = lighting_corner_NW
 	if (L)
-		totallums += L.lum_r + L.lum_b + L.lum_g
-		
+		total_dynamic_lums += L.lum_r + L.lum_b + L.lum_g
 
-	totallums /= 12 // 4 corners, each with 3 channels, get the average.
+	total_dynamic_lums /= 12 // 4 corners, each with 3 channels, get the average.
 
-	totallums = (totallums - minlum) / (maxlum - minlum)
+	total_dynamic_lums = (max(total_dynamic_lums, static_lums) - minlum) / (maxlum - minlum)
 
-	return CLAMP01(totallums)
-
-// Returns a boolean whether the turf is on soft lighting.
-// Soft lighting being the threshold at which point the overlay considers
-// itself as too dark to allow sight and see_in_dark becomes useful.
-// So basically if this returns true the tile is unlit black.
-/turf/proc/is_softly_lit()
-	if (!lighting_object)
-		return FALSE
-
-	return !lighting_object.luminosity
+	return CLAMP01(total_dynamic_lums)
 
 // Can't think of a good name, this proc will recalculate the has_opaque_atom variable.
 /turf/proc/recalc_atom_opacity()
@@ -89,16 +82,3 @@
 	
 	lighting_corners_initialised = TRUE
 
-/turf/proc/set_dynamic_lighting(new_dynamic_lighting = DYNAMIC_LIGHTING_ENABLED)
-	if (new_dynamic_lighting == dynamic_lighting)
-		return FALSE
-
-	dynamic_lighting = new_dynamic_lighting
-
-	if (IS_DYNAMIC_LIGHTING(src))
-		lighting_build_overlay()
-	else
-		if (lighting_object)
-			lighting_clear_overlay()
-
-	return TRUE

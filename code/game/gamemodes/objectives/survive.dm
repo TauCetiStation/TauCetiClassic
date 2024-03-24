@@ -1,5 +1,5 @@
 /datum/objective/survive
-	explanation_text = "Выжить до конца смены."
+	explanation_text = "Stay alive until the end."
 
 /datum/objective/survive/check_completion()
 	var/mob/M = owner.current

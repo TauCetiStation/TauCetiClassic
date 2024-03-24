@@ -161,8 +161,8 @@
 						if(H.gloves && H.gloves.clean_blood())
 							H.gloves.germ_level = 0
 						else
-							if(H.bloody_hands)
-								H.bloody_hands = 0
+							if(H.dirty_hands_transfers)
+								H.dirty_hands_transfers = 0
 								H.update_inv_slot(SLOT_GLOVES)
 							H.germ_level = 0
 			H.clean_blood()

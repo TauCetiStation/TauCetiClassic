@@ -1,5 +1,5 @@
 /datum/objective/borer_survive
-	explanation_text = "Выжить в носителе до конца смены."
+	explanation_text = "Survive in a host until the end of the round."
 
 /datum/objective/borer_survive/check_completion()
 	if(owner && owner.current)
@@ -9,7 +9,7 @@
 	return OBJECTIVE_LOSS
 
 /datum/objective/borer_reproduce
-	explanation_text = "Дать хоть одно потомство."
+	explanation_text = "Reproduce at least once."
 
 /datum/objective/borer_reproduce/check_completion()
 	if(owner && owner.current)

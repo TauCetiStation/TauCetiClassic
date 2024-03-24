@@ -1,6 +1,6 @@
 /datum/objective/capture/proc/gen_amount_goal()
 	target_amount = rand(5,10)
-	explanation_text = "Накопите [target_amount] очков захвата."
+	explanation_text = "Accumulate [target_amount] capture points."
 	return target_amount
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.

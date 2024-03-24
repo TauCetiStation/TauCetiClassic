@@ -123,7 +123,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/solar
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	dynamic_lighting = TRUE
 	valid_territory = 0
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 	sound_environment = SOUND_AREA_SMALL_METALLIC
@@ -306,6 +306,10 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	name = "Kitchen"
 	icon_state = "kitchen"
 
+/area/station/civilian/kitchen/atom_init()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_COOKING_AREA, GENERIC_TRAIT)
+
 /area/station/civilian/cold_room
 	name = "Cold Room"
 	icon_state = "coldroom"
@@ -374,7 +378,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 /area/station/civilian/holodeck
 	name = "Holodeck"
 	icon_state = "Holodeck"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = FALSE
 
 /area/station/civilian/holodeck/alphadeck
 	name = "Holodeck Alpha"

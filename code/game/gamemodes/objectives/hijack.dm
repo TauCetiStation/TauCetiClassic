@@ -1,5 +1,5 @@
 /datum/objective/hijack
-	explanation_text = "Украдите шаттл, посланный НТ, и отправьте его на базу Синдиката. Разрешается применять любые меры, никто, кроме вас, не должен улететь на нём."
+	explanation_text = "Hijack the emergency shuttle by escaping alone. You are free to use any means."
 
 /datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat != CONSCIOUS)

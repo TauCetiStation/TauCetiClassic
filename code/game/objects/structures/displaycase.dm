@@ -298,7 +298,6 @@
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
-	cases = list("лицехват Ламарр", "лицехвата Ламарра", "лицехвату Ламарру", "лицехвата Ламарра", "лицехватом Ламарром", "лицехвате Ламарре")
 	desc = "The worst she might do is attempt to... couple with your head."//hope we don't get sued over a harmless reference, rite?
 	sterile = 1
 	gender = FEMALE

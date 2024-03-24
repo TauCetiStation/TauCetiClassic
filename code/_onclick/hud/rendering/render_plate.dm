@@ -40,7 +40,7 @@
 	plane = RENDER_PLANE_GAME
 	render_relay_plane = RENDER_PLANE_MASTER
 
-/atom/movable/screen/plane_master/rendering_plate/game_world/apply_effects(mob/mymob)
+/atom/movable/screen/plane_master/rendering_plate/game_world/apply_effects(mob/mymob, iscamera = FALSE)
 	// singularity
 	remove_filter("singularity_0")
 	remove_filter("singularity_1")
