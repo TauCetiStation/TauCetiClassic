@@ -42,6 +42,7 @@
 	var/species_common_language = FALSE // If TRUE, racial language will be forced by default when speaking.
 
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
+	var/list/remains = list(/obj/effect/decal/remains/xeno)
 	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
 	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
 	var/list/bodypart_butcher_results

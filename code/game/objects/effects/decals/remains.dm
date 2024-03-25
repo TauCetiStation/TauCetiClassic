@@ -1,6 +1,7 @@
 /obj/effect/decal/remains/human
 	name = "remains"
-	desc = "They look like human remains. They have a strange aura about them."
+	cases = list("останки", "останков", "останкам", "останки", "останками", "останках")
+	desc = "Они похожи на останки человека."
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
@@ -8,12 +9,14 @@
 
 /obj/effect/decal/remains/human/burned
 	name = "burned remains"
-	desc = "They look like burned human remains. They have a strange aura about them."
+	cases = list("обгоревшие останки", "обгоревших останков", "обгоревшим останкам", "обгоревшие останки", "обгоревшими останками", "обгоревших останках")
+	desc = "Они похожи на останки человека."
 	icon_state = "remains_burned"
 
 /obj/effect/decal/remains/xeno
 	name = "remains"
-	desc = "They look like the remains of something... alien. They have a strange aura about them."
+	cases = list("останки", "останков", "останкам", "останки", "останками", "останках")
+	desc = "Они похожи на останки чего-то... не человеческого."
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remainsxeno"
@@ -21,12 +24,14 @@
 
 /obj/effect/decal/remains/xeno/burned
 	name = "burned remains"
-	desc = "They look like burned remains of something... alien. They have a strange aura about them."
+	cases = list("обгоревшие останки", "обгоревших останков", "обгоревшим останкам", "обгоревшие останки", "обгоревшими останками", "обгоревших останках")
+	desc = "Они похожи на обгоревшие останки чего-то... не человеческого."
 	icon_state = "remainsxeno_burned"
 
 /obj/effect/decal/remains/robot
 	name = "remains"
-	desc = "They look like the remains of something mechanical. They have a strange aura about them."
+	cases = list("останки", "останков", "останкам", "останки", "останками", "останках")
+	desc = "Они похожи на останки чего-то... механического."
 	gender = PLURAL
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "remainsrobot"

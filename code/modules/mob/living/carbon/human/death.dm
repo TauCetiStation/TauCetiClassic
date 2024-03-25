@@ -21,6 +21,36 @@
 	new /obj/effect/decal/remains/human/burned(loc)
 	dust_process()
 
+/mob/living/carbon/human/tajaran/dust()
+	new /obj/effect/decal/cleanable/ash(loc)
+	new /obj/effect/decal/remains/xeno/burned(loc)
+	dust_process()
+
+/mob/living/carbon/human/diona/dust()
+	new /obj/effect/decal/cleanable/ash(loc)
+	new /obj/effect/decal/remains/xeno/burned(loc)
+	dust_process()
+
+/mob/living/carbon/human/skrell/dust()
+	new /obj/effect/decal/cleanable/ash(loc)
+	new /obj/effect/decal/remains/xeno/burned(loc)
+	dust_process()
+
+/mob/living/carbon/human/unathi/dust()
+	new /obj/effect/decal/cleanable/ash(loc)
+	new /obj/effect/decal/remains/xeno/burned(loc)
+	dust_process()
+
+/mob/living/carbon/human/vox/dust()
+	new /obj/effect/decal/cleanable/ash(loc)
+	new /obj/effect/decal/remains/xeno/burned(loc)
+	dust_process()
+
+/mob/living/carbon/human/machine/dust()
+	new /obj/effect/decal/cleanable/ash(loc)
+	new /obj/effect/decal/remains/robot(loc)
+	dust_process()
+
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
