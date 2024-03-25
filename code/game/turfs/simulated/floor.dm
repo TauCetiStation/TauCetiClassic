@@ -235,10 +235,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		return 0
 
 /turf/simulated/floor/proc/is_fairygrass_floor()
-	if(ispath(floor_type, /obj/item/stack/tile/fairygrass))
-		return TRUE
-	else
-		return FALSE
+	return ispath(floor_type, /obj/item/stack/tile/fairygrass)
 
 /turf/simulated/floor/is_wood_floor()
 	if(ispath(floor_type, /obj/item/stack/tile/wood))
