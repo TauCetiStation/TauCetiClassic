@@ -24,7 +24,7 @@
 /obj/machinery/computer/card/proc/is_authenticated()
 	return scan ? check_access(scan) : 0
 
-/obj/machinery/computer/card/proc/get_target_rank()
+/obj/machinery/computer/card/proc/get_modify_rank()
 	return modify && modify.assignment ? modify.assignment : "Unassigned"
 
 /obj/machinery/computer/card/proc/format_jobs(list/jobs)
@@ -32,8 +32,8 @@
 	for(var/job in jobs)
 		formatted.Add(list(list(
 			"display_name" = replacetext(job, " ", "&nbsp"),
-			"target_rank" = get_target_rank(),
-				"job" = job)))
+			"modify_rank" = get_modify_rank(),
+			"job" = job)))
 
 	return formatted
 
@@ -89,7 +89,7 @@
 			datum_account = null	//delete information if there is something in the variable
 
 	playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	nanomanager.update_uis(src)
+	SStgui.update_uis(src)
 	attack_hand(user)
 
 /obj/machinery/computer/card/ui_interact(mob/user)
@@ -109,15 +109,15 @@
 	data["printing"] = printing
 	data["manifest"] = data_core ? data_core.html_manifest(monochrome=0) : null
 	data["modify_name"] = modify ? modify.name : FALSE
-	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : FALSE
-	data["target_rank"] = get_target_rank()
+	data["modify_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
+	data["modify_rank"] = get_modify_rank()
 	data["scan_name"] = scan ? scan.name : FALSE
+	data["scan_rank"] = scan ? scan.rank : FALSE
 	data["authenticated"] = is_authenticated()
-	data["has_modify"] = !!modify
 	data["account_number"] = modify ? modify.associated_account_number : null
 	data["salary"] = datum_account ? datum_account.owner_salary : "not_found"
 	data["centcom_access"] = is_centcom()
-	data["all_centcom_access"] = null
+	data["all_centcom_access"] = is_centcom() ? TRUE : FALSE
 	data["regions"] = null
 
 	data["engineering_jobs"] = format_jobs(engineering_positions)
@@ -165,14 +165,7 @@
 		if(IDCOMPUTER_SCREEN_MANIFEST)
 
 		if(IDCOMPUTER_SCREEN_PRINT)
-			if (modify)
-				tgui_act()
-	return data
-
-/obj/machinery/computer/card/tgui_static_data(mob/user)
-	var/list/data = list()
-	data["regions"] = get_accesslist_static_data(REGION_GENERAL, REGION_COMMAND)
-	data["centcom_access"] = is_centcom()
+			printing = 1
 	return data
 
 /obj/machinery/computer/card/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -233,7 +226,7 @@
 		if("access")
 			if(params["allowed"])
 				if(is_authenticated())
-					var/access_type = text2num(params["access_target"])
+					var/access_type = text2num(params["access_modify"])
 					var/access_allowed = text2num(params["allowed"])
 					if(access_type in (is_centcom() ? get_all_centcom_access() : get_all_accesses()))
 						modify.access -= access_type
@@ -252,7 +245,7 @@
 				modify.access += get_all_accesses()
 		if ("assign")
 			if (is_authenticated() && modify)
-				var/t1 = sanitize(params["assign_target"] , 45)
+				var/t1 = sanitize(params["assign_modify"] , 45)
 				var/new_salary = 0
 				var/datum/job/jobdatum
 				if(t1 == "Custom")
@@ -304,7 +297,7 @@
 			nanomanager.update_uis(src)
 
 		if ("mode")
-			mode = text2num(params["mode_target"])
+			mode = text2num(params["mode_modify"])
 
 		if ("print")
 			if (!printing)

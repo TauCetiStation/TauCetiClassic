@@ -24,11 +24,10 @@ export const ComputerCard = (props, context) => {
         icon="scroll"
         selected={data.mode === 2}
         onClick={() => act("mode", { mode: 2 })}>
-        Records
+        Print
       </Tabs.Tab>
     </Tabs>
   );
-
 
   let authBlock = (
     <Section title="Authentication">
@@ -49,14 +48,27 @@ export const ComputerCard = (props, context) => {
             tooltip={data.scan_name ? "Eject ID" : "Insert ID"}
             onClick={() => act("scan")} />
         </LabeledList.Item>
+        <LabeledList.Item label="Registered Name">
+          <Button
+            icon={!data.modify_owner || data.modify_owner === "Unknown" ? "exclamation-triangle" : "pencil-alt"}
+            selected={data.modify_name}
+            content={data.modify_owner}
+            onClick={() => act("reg")} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Account Number">
+          <Button
+            icon={data.account_number ? "pencil-alt" : "exclamation-triangle"}
+            selected={data.account_number}
+            content={data.account_number ? data.account_number : "None"}
+            onClick={() => act("account")} />
+        </LabeledList.Item>
       </LabeledList>
     </Section>
   );
 
   let bodyBlock;
-
   switch (data.mode) {
-    case 1: // Access Modification
+    case 0: // Access Modification
       if (!data.authenticated || !data.scan_name) {
         bodyBlock = (
           <Section title="Warning" color="red">
@@ -69,12 +81,124 @@ export const ComputerCard = (props, context) => {
             No card to modify.
           </Section>
         );
-      } else {
-        <Fragment>
+      } else { (
+        <Fragment title="Department Job">
+          <LabeledList>
+            <LabeledList.Item label="Special">
+              {data.jobs_top.map(v => (
+                <Button
+                  selected={v === data.modify_rank}
+                  key={v} content={v}
+                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
+                  onClick={() => act("assign", { assign_target: v })} />
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Engineering">
+              {data.engineering_jobs.map(v => (
+                <Button
+                  selected={v === data.modify_rank}
+                  key={v} content={v}
+                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
+                  onClick={() => act("assign", { assign_target: v })} />
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Medical">
+              {data.medical_jobs.map(v => (
+                <Button
+                  selected={v === data.modify_rank}
+                  key={v} content={v}
+                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
+                  onClick={() => act("assign", { assign_target: v })} />
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Science">
+              {data.science_jobs.map(v => (
+                <Button
+                  selected={v === data.modify_rank}
+                  key={v} content={v}
+                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
+                  onClick={() => act("assign", { assign_target: v })} />
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Security">
+              {data.security_jobs.map(v => (
+                <Button
+                  selected={v === data.modify_rank}
+                  key={v} content={v}
+                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
+                  onClick={() => act("assign", { assign_target: v })} />
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Service">
+              {data.jobs_service.map(v => (
+                <Button
+                  selected={v === data.modify_rank}
+                  key={v} content={v}
+                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
+                  onClick={() => act("assign", { assign_target: v })} />
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Supply">
+              {data.jobs_supply.map(v => (
+                <Button
+                  selected={v === data.modify_rank}
+                  key={v} content={v}
+                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
+                  onClick={() => act("assign", { assign_target: v })} />
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Civilan">
+              {data.civilian_jobs.map(v => (
+                <Button
+                  selected={v === data.modify_rank}
+                  key={v} content={v}
+                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
+                  onClick={() => act("assign", { assign_target: v })} />
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Restricted">
+              {data.jobs_karma.map(v => (
+                <Button
+                  selected={v === data.modify_rank}
+                  key={v} content={v}
+                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
+                  onClick={() => act("assign", { assign_target: v })} />
+              ))}
+            </LabeledList.Item>
+            {!!data.iscentcom && (
+              <LabeledList.Item label="CentCom">
+                {data.centcom_jobs.map(v => (
+                  <Button
+                    selected={v === data.modify_rank}
+                    key={v} content={v}
+                    color={data.jobFormats[v] ? data.jobFormats[v] : "purple"}
+                    onClick={() => act("assign", { assign_target: v })} />
+                ))}
+              </LabeledList.Item>
+            )}
+            <LabeledList.Item label="Demotions">
+              <Button
+                disabled={"Terminated" === data.modify_rank}
+                selected={"Demoted" === data.modify_rank}
+                tooltip="Civilian access, 'demoted' title."
+                key="Demoted" content="Demoted"
+                color="red" icon="times"
+                onClick={() => act("demote")} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Non-Crew">
+              <Button
+                disabled={"Terminated" === data.modify_rank}
+                selected={"Demoted" === data.modify_rank}
+                tooltip="Zero access. Not crew."
+                key="Demoted" content="Demoted"
+                color="red" icon="eraser"
+                onClick={() => act("terminate")} />
+            </LabeledList.Item>
+          </LabeledList>
           <AccessList
             accesses={data.regions}
             selectedList={data.selectedAccess}
-            accessMod={ref => act('access', {
+            accessMod={ref => act('set', {
               access: ref,
             })}
             grantAll={() => act('grant_all')}
@@ -85,95 +209,25 @@ export const ComputerCard = (props, context) => {
             denyDep={ref => act('deny_region', {
               region: ref,
             })} />
-          <Button
-            icon="id-card"
-            content={data.printmsg}
-            disabled={!data.canprint}
-            onClick={() => act("issue")} />
-        </Fragment>      }
+        </Fragment>
+      ); }
       break;
 
-    case 2: // Crew Manifest
-      if (!data.authenticated || !data.scan_name) {
-        bodyBlock = (
-          <Section title="Warning" color="red">
-            Not logged in.
-          </Section>
-        );
-        bodyBlock = (
-          <Section color={data.manifest ? "red" : ""}>
-            Crew Manifest:
-            {data.manifest ? data.manifest : "Now"}
-          </Section>
-        );
-      }
+    case 1: // Crew Manifest
+      bodyBlock = (
+        <Section color={data.manifest ? "red" : ""}>
+          Crew Manifest:
+          {data.manifest ? data.manifest : "Now"}
+        </Section>
+      );
       break;
 
-    case 3: // records
-      if (!data.authenticated) {
+    case 2: // print
+      if (data.printing) {
         bodyBlock = (
           <Section title="Warning" color="red">
-            Not logged in.
-          </Section>
-        );
-      } else if (!data.records.length) {
-        bodyBlock = (
-          <Section title="Records">
-            No records.
-          </Section>
-        );
-      } else {
-        bodyBlock = (
-          <Section title="Records" buttons={
-            <Button
-              icon="times"
-              content="Delete All Records"
-              disabled={!data.authenticated
-                || data.records.length === 0
-                || data.target_dept}
-              onClick={() => act('wipe_all_logs')} />
-          }>
-            <Table>
-              <Table.Row>
-                <Table.Cell bold>Crewman</Table.Cell>
-                <Table.Cell bold>Old Rank</Table.Cell>
-                <Table.Cell bold>New Rank</Table.Cell>
-                <Table.Cell bold>Authorized By</Table.Cell>
-                <Table.Cell bold>Time</Table.Cell>
-                <Table.Cell bold>Reason</Table.Cell>
-                {!!data.iscentcom && (
-                  <Table.Cell bold>
-                    Deleted By
-                  </Table.Cell>
-                )}
-              </Table.Row>
-              {data.records(record => (
-                <Table.Row key={record.timestamp}>
-                  <Table.Cell>{record.transferee}</Table.Cell>
-                  <Table.Cell>{record.oldvalue}</Table.Cell>
-                  <Table.Cell>{record.newvalue}</Table.Cell>
-                  <Table.Cell>{record.whodidit}</Table.Cell>
-                  <Table.Cell>{record.timestamp}</Table.Cell>
-                  <Table.Cell>{record.reason}</Table.Cell>
-                  {!!data.iscentcom && (
-                    <Table.Cell>
-                      {record.deletedby}
-                    </Table.Cell>
-                  )}
-                </Table.Row>
-              ))}
-            </Table>
-            {!!data.iscentcom && (
-              <Box>
-                <Button
-                  icon="pencil-alt"
-                  content="Delete MY Records"
-                  color="purple"
-                  disabled={!data.authenticated
-                    || data.records.length === 0}
-                  onClick={() => act('wipe_my_logs')} />
-              </Box>
-            )}
+            Printing...
+            Thank you for your patience!
           </Section>
         );
       }
