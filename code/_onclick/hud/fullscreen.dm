@@ -153,25 +153,28 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 
-/atom/movable/screen/fullscreen/meta/darkness
+
+/atom/movable/screen/fullscreen/darkness
 	icon = 'icons/hud/screen1_full.dmi'
 	screen_loc = "CENTER-7,CENTER-7"
 	icon_state = "white"
 	color = "#000000"
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_ADD
+	appearance_flags = RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
 
-/atom/movable/screen/fullscreen/meta/environment_lighting_color
+/atom/movable/screen/fullscreen/environment_lighting_color
 	icon = 'icons/hud/screen1_full.dmi'
 	screen_loc = "CENTER-7,CENTER-7"
 	icon_state = "white"
 	plane = ENVIRONMENT_LIGHTING_PLANE
 	blend_mode = BLEND_MULTIPLY
+	appearance_flags = RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
 
 	var/obj/effect/level_color_holder/current_holder
 
 // changes z-level color masks when moving between levels
-/atom/movable/screen/fullscreen/meta/environment_lighting_color/proc/attach_to_level(new_z)
+/atom/movable/screen/fullscreen/environment_lighting_color/proc/attach_to_level(new_z)
 	SIGNAL_HANDLER
 
 	if(!SSmapping.initialized)
@@ -204,7 +207,7 @@
 	animate(time = 1 SECONDS, color = new_holder.color)
 	addtimer(CALLBACK(src, PROC_REF(end_transition), new_holder), 1 SECONDS)
 
-/atom/movable/screen/fullscreen/meta/environment_lighting_color/proc/end_transition(obj/effect/level_color_holder/new_holder)
+/atom/movable/screen/fullscreen/environment_lighting_color/proc/end_transition(obj/effect/level_color_holder/new_holder)
 	if(!current_holder)
 		color = null
 		vis_contents += new_holder
