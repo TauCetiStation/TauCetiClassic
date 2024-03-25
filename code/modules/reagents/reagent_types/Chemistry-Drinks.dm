@@ -747,6 +747,12 @@
 	M.slurring += slurr_adj
 	M.AdjustConfused(confused_adj)
 
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ALKO))
+		M.adjustBruteLoss(-boozepwr)
+		M.adjustFireLoss(-boozepwr)
+		M.AdjustWeakened(-boozepwr)
+		M.adjustHalLoss(-boozepwr)
+
 	return TRUE
 
 /datum/reagent/consumable/ethanol/on_skrell_digest(mob/living/M)

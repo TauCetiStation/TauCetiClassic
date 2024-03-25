@@ -170,3 +170,8 @@
 	name = ROUND_ASPECT_ALTERNATIVE_RESEARCH
 	desc = "Взрывы газовых бомб стали приносить меньше научных очков."
 	afterspawn_IC_announcement = "<span class='warning'>Научно-исследовательский Совет НаноТрейзен стал в меньшей мере интересоваться изучением взрывчатых свойств форона.</span>"
+
+/datum/round_aspect/alko
+	name = ROUND_ASPECT_ALKO
+	desc = "Алкоголь лечит физические повреждения."
+	afterspawn_IC_announcement = "<span class='success'>Из-за действий очень странной аномалии, весь алкоголь на станции и рядом с ней получил лечебные свойства.</span>"
