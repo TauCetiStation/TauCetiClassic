@@ -361,8 +361,8 @@
 	clawfootstep = FOOTSTEP_GRASS
 
 /turf/simulated/floor/fairy/atom_init()
+	. = ..()
 	update_icon()
-	return ..()
 
 /turf/simulated/floor/plating/ironsand
 	name = "Iron Sand"
