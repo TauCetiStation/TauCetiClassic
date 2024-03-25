@@ -985,7 +985,7 @@
 
 /datum/disease2/effect/arousal
 	name = "Parasympathetic Arousal"
-	desc = "The virus produces nanites in the host, which leads to an increase in parasympathetic activity of the heart and restoration of homeostasis."
+	desc = "The virus leads to an increase in parasympathetic activity of the heart and restoration of host's homeostasis."
 	level = 3
 	max_stage = 10
 	cooldown = 5
@@ -1230,7 +1230,7 @@
 
 /datum/disease2/effect/anti_toxins
 	name = "Aggresive Resistance"
-	desc = "The virus produces nanites into the host that destroy toxins by locally burning them off."
+	desc = "The virus destroy toxins in host by locally burning them off."
 	level = 2
 	max_stage = 5
 	cooldown = 5
@@ -1250,7 +1250,7 @@
 
 /datum/disease2/effect/bactericidal_tannins
 	name = "Bactericidal Tannins"
-	desc = "The virus produces nanites into the host that can neutralize free radicals which cause different diseases."
+	desc = "The virus can neutralize free radicals which cause different diseases in host."
 	level = 2
 	max_stage = 5
 	cooldown = 5
@@ -1664,7 +1664,7 @@
 
 /datum/disease2/effect/conductivity
 	name = "Electrical Conductivity"
-	desc = "The virus produces nanites in the host that increase the amount of conductive reagents around all its surfaces."
+	desc = "The virus increase the amount of conductive reagents around all host's surfaces."
 	level = 1
 	max_stage = 4
 	cooldown = 20
