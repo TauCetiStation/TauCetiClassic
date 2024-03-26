@@ -1023,26 +1023,25 @@
 		mob_container = brain.container
 	else
 		return
-	if(mob_container.forceMove(src.loc))//ejecting mob container
 
-		playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, null, -3)
-		log_message("[mob_container] moved out.")
-		log_admin("[key_name(mob_container)] has moved out of [src.type] with name [src.name]")
-		occupant.reset_view()
+	mob_container.forceMove(src.loc)
+	playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, null, -3)
+	log_message("[mob_container] moved out.")
+	log_admin("[key_name(mob_container)] has moved out of [src.type] with name [src.name]")
+	occupant.reset_view()
 
-		src.occupant << browse(null, "window=exosuit")
-		if(src.occupant.hud_used && src.last_user_hud && !isMMI(mob_container))
-			occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
+	src.occupant << browse(null, "window=exosuit")
+	if(src.occupant.hud_used && src.last_user_hud && !isMMI(mob_container))
+		occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 
-		if(isMMI(mob_container))
-			var/obj/item/device/mmi/mmi = mob_container
-			if(mmi.brainmob)
-				occupant.loc = mmi
-			src.occupant.canmove = 0
-		src.occupant = null
-		src.icon_state = reset_icon()+"-open"
-		set_dir(dir_in)
-	return
+	if(isMMI(mob_container))
+		var/obj/item/device/mmi/mmi = mob_container
+		if(mmi.brainmob)
+			occupant.loc = mmi
+		src.occupant.canmove = 0
+	src.occupant = null
+	src.icon_state = reset_icon()+"-open"
+	set_dir(dir_in)
 
 /////////////////////////
 ////// Access stuff /////

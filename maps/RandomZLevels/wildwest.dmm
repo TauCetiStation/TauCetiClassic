@@ -830,7 +830,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "cZ" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -1026,7 +1026,7 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/mines)
 "dK" = (
-/obj/structure/stool/bed/chair/comfy/beige,
+/obj/structure/stool/bed/chair/comfy/white,
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/mines)
 "dL" = (
@@ -1088,7 +1088,7 @@
 	},
 /area/awaymission/wildwest/mines)
 "dX" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -1114,7 +1114,7 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ec" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /turf/simulated/floor/carpet,
@@ -1309,7 +1309,7 @@
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eH" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/gibs/body{
@@ -1382,7 +1382,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "eU" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 1;
 	icon_state = "comfychair_beige"
 	},
@@ -1542,7 +1542,7 @@
 /turf/simulated/wall/mineral/sandstone,
 /area/awaymission/wildwest/mines)
 "fu" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
@@ -1844,7 +1844,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "gs" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/gibs/body{
