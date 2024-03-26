@@ -265,6 +265,51 @@
 	idle_vision_range = 6
 	search_objects = 2
 
+/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier/atom_init()
+	. = ..()
+	wanted_objects += /obj/structure/ore_box
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier/GiveTarget(new_target)
+	target = new_target
+	if(target != null)
+		if(istype(target, /obj/item/weapon/ore))
+			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
+			stance = HOSTILE_STANCE_ATTACK
+			return
+		if(istype(target, /obj/structure/ore_box))
+			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
+			stance = HOSTILE_STANCE_ATTACK
+			return
+		if(isliving(target) && !search_objects)
+			Aggro()
+			stance = HOSTILE_STANCE_ATTACK
+			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
+			retreat_distance = 10
+			minimum_distance = 10
+			Burrow()
+
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier/UnarmedAttack(atom/A)
+	if(istype(A, /obj/structure/ore_box))
+		stop_that_box(A)
+		return
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier/proc/stop_that_box(obj/structure/ore_box/B)
+	switch(rand(1, 3))
+		if(1)
+			B.dump_box_contents()
+			return
+		if(2)
+			if(B.pulledby)
+				B.pulledby.stop_pulling()
+			start_pulling(B)
+		if(3)
+			if(B.stored_ore.len)
+				visible_message("<span class='danger'>The [src] sniffs the [B]!</span>")
+				return
+			B.deconstruct()
+
 ////////////////Hivelord////////////////
 
 /mob/living/simple_animal/hostile/asteroid/hivelord
