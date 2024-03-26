@@ -1,6 +1,6 @@
 import { Fragment } from "inferno";
 import { useBackend } from "../backend";
-import { Box, Button, LabeledList, Section, Tabs } from "../components";
+import { NoticeBox, Button, LabeledList, Section, Tabs } from "../components";
 import { Window } from "../layouts";
 import { AccessList } from './common/AccessList';
 
@@ -71,145 +71,104 @@ export const ComputerCard = (props, context) => {
     case 0: // Access Modification
       if (!data.authenticated || !data.scan_name) {
         bodyBlock = (
-          <Section title="Warning" color="red">
+          <NoticeBox title="Warning" color="red">
             Not logged in.
-          </Section>
+          </NoticeBox>
         );
       } else if (!data.modify_name) {
         bodyBlock = (
-          <Section title="Card Missing" color="red">
+          <NoticeBox title="Card Missing" color="red">
             No card to modify.
-          </Section>
+          </NoticeBox>
         );
       } else { (
-        <Fragment title="Department Job">
+        <Section title="Department Job and Access">
           <LabeledList>
             <LabeledList.Item label="Special">
               {data.jobs_top.map(v => (
                 <Button
                   selected={v === data.modify_rank}
                   key={v} content={v}
+                  color={data.format_jobs[v] ? data.format_jobs[v] : ""}
+                  onClick={() => act("assign", { assign_modify: v })} />
+              ))}
+            </LabeledList.Item>
+            <LabeledList.Item label="Command">
+              {data.command_jobs.map(v => (
+                <Button
+                  key={v} content={v}
                   color={data.jobFormats[v] ? data.jobFormats[v] : ""}
-                  onClick={() => act("assign", { assign_target: v })} />
+                  onClick={() => act("assign", { assign_modify: v })} />
               ))}
             </LabeledList.Item>
             <LabeledList.Item label="Engineering">
               {data.engineering_jobs.map(v => (
                 <Button
-                  selected={v === data.modify_rank}
                   key={v} content={v}
                   color={data.jobFormats[v] ? data.jobFormats[v] : ""}
-                  onClick={() => act("assign", { assign_target: v })} />
+                  onClick={() => act("assign", { assign_modify: v })} />
               ))}
             </LabeledList.Item>
             <LabeledList.Item label="Medical">
               {data.medical_jobs.map(v => (
                 <Button
-                  selected={v === data.modify_rank}
                   key={v} content={v}
                   color={data.jobFormats[v] ? data.jobFormats[v] : ""}
-                  onClick={() => act("assign", { assign_target: v })} />
+                  onClick={() => act("assign", { assign_modify: v })} />
               ))}
             </LabeledList.Item>
             <LabeledList.Item label="Science">
               {data.science_jobs.map(v => (
                 <Button
-                  selected={v === data.modify_rank}
                   key={v} content={v}
                   color={data.jobFormats[v] ? data.jobFormats[v] : ""}
-                  onClick={() => act("assign", { assign_target: v })} />
+                  onClick={() => act("assign", { assign_modify: v })} />
               ))}
             </LabeledList.Item>
             <LabeledList.Item label="Security">
               {data.security_jobs.map(v => (
                 <Button
-                  selected={v === data.modify_rank}
                   key={v} content={v}
                   color={data.jobFormats[v] ? data.jobFormats[v] : ""}
-                  onClick={() => act("assign", { assign_target: v })} />
+                  onClick={() => act("assign", { assign_modify: v })} />
               ))}
             </LabeledList.Item>
-            <LabeledList.Item label="Service">
-              {data.jobs_service.map(v => (
-                <Button
-                  selected={v === data.modify_rank}
-                  key={v} content={v}
-                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
-                  onClick={() => act("assign", { assign_target: v })} />
-              ))}
-            </LabeledList.Item>
-            <LabeledList.Item label="Supply">
-              {data.jobs_supply.map(v => (
-                <Button
-                  selected={v === data.modify_rank}
-                  key={v} content={v}
-                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
-                  onClick={() => act("assign", { assign_target: v })} />
-              ))}
-            </LabeledList.Item>
-            <LabeledList.Item label="Civilan">
+            <LabeledList.Item label="Civilian">
               {data.civilian_jobs.map(v => (
                 <Button
-                  selected={v === data.modify_rank}
                   key={v} content={v}
                   color={data.jobFormats[v] ? data.jobFormats[v] : ""}
-                  onClick={() => act("assign", { assign_target: v })} />
+                  onClick={() => act("assign", { assign_modify: v })} />
               ))}
             </LabeledList.Item>
-            <LabeledList.Item label="Restricted">
-              {data.jobs_karma.map(v => (
-                <Button
-                  selected={v === data.modify_rank}
-                  key={v} content={v}
-                  color={data.jobFormats[v] ? data.jobFormats[v] : ""}
-                  onClick={() => act("assign", { assign_target: v })} />
-              ))}
-            </LabeledList.Item>
-            {!!data.iscentcom && (
+            {!!data.is_centcom && (
               <LabeledList.Item label="CentCom">
                 {data.centcom_jobs.map(v => (
                   <Button
-                    selected={v === data.modify_rank}
                     key={v} content={v}
-                    color={data.jobFormats[v] ? data.jobFormats[v] : "purple"}
-                    onClick={() => act("assign", { assign_target: v })} />
+                    color={data.jobFormats[v] ? data.jobFormats[v] : ""}
+                    onClick={() => act("assign", { assign_modify: v })} />
                 ))}
               </LabeledList.Item>
             )}
-            <LabeledList.Item label="Demotions">
-              <Button
-                disabled={"Terminated" === data.modify_rank}
-                selected={"Demoted" === data.modify_rank}
-                tooltip="Civilian access, 'demoted' title."
-                key="Demoted" content="Demoted"
-                color="red" icon="times"
-                onClick={() => act("demote")} />
-            </LabeledList.Item>
-            <LabeledList.Item label="Non-Crew">
-              <Button
-                disabled={"Terminated" === data.modify_rank}
-                selected={"Demoted" === data.modify_rank}
-                tooltip="Zero access. Not crew."
-                key="Demoted" content="Demoted"
-                color="red" icon="eraser"
-                onClick={() => act("terminate")} />
+            <LabeledList.Item>
+              <AccessList
+                accesses={data.regions}
+                selectedList={data.selectedAccess}
+                accessMod={ref => act('set', {
+                  access: ref,
+                })}
+                grantAll={() => act('grant_all')}
+                denyAll={() => act('clear_all')}
+                grantDep={ref => act('grant_region', {
+                  region: ref,
+                })}
+                denyDep={ref => act('deny_region', {
+                  region: ref,
+                })} />
             </LabeledList.Item>
           </LabeledList>
-          <AccessList
-            accesses={data.regions}
-            selectedList={data.selectedAccess}
-            accessMod={ref => act('set', {
-              access: ref,
-            })}
-            grantAll={() => act('grant_all')}
-            denyAll={() => act('clear_all')}
-            grantDep={ref => act('grant_region', {
-              region: ref,
-            })}
-            denyDep={ref => act('deny_region', {
-              region: ref,
-            })} />
-        </Fragment>
+        </Section>
       ); }
       break;
 
@@ -225,19 +184,19 @@ export const ComputerCard = (props, context) => {
     case 2: // print
       if (data.printing) {
         bodyBlock = (
-          <Section title="Warning" color="red">
+          <NoticeBox title="Warning" color="blue">
             Printing...
             Thank you for your patience!
-          </Section>
+          </NoticeBox>
         );
       }
       break;
 
     default:
       bodyBlock = (
-        <Section title="Warning" color="red">
+        <NoticeBox title="Warning" color="red">
           ERROR: Unknown Mode.
-        </Section>
+        </NoticeBox>
       );
   }
 

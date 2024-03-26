@@ -120,6 +120,7 @@
 	data["all_centcom_access"] = is_centcom() ? TRUE : FALSE
 	data["regions"] = null
 
+	data["command_jobs"] = format_jobs(command_positions)
 	data["engineering_jobs"] = format_jobs(engineering_positions)
 	data["medical_jobs"] = format_jobs(medical_positions)
 	data["science_jobs"] = format_jobs(science_positions)
@@ -279,22 +280,22 @@
 		if ("reg")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))
-					var/temp_name = sanitize_name(params["reg"])
+					var/temp_name = sanitize(input("Who is this ID for?", "Name", modify.registered_name) as text | null)
 					if(temp_name)
 						modify.registered_name = temp_name
 					else
 						visible_message("<span class='notice'>[src] buzzes rudely.</span>")
-			nanomanager.update_uis(src)
+			SStgui.update_uis(src)
 
 		if ("account")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))
-					var/datum/money_account/account = get_account(text2num(params["account"]))
+					var/datum/money_account/account = sanitize_numbers(input("Account Number", "Input Number", modify.associated_account_number) as text | null)
 					if(account)
-						modify.associated_account_number = account.account_number
+						modify.associated_account_number = account
 					else
 						to_chat(usr, "<span class='warning'> Account with such number does not exist!</span>")
-			nanomanager.update_uis(src)
+			SStgui.update_uis(src)
 
 		if ("mode")
 			mode = text2num(params["mode_modify"])
@@ -304,7 +305,7 @@
 				printing = 1
 				spawn(50)
 					printing = null
-					nanomanager.update_uis(src)
+					SStgui.update_uis(src)
 
 					var/obj/item/weapon/paper/P = new(loc)
 					if (mode)
