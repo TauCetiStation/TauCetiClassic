@@ -115,7 +115,7 @@ var/global/list/department_radio_keys = list(
 
 	//log
 	var/area/A = get_area(src)
-	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
+	log_say("[key_name(src)] : \[[A ? A.name : "NULLSPACE"][message_mode?"/[message_mode]":""]\]: [message]")
 
 	//handle nonverbal and sign languages here
 	if (speaking)

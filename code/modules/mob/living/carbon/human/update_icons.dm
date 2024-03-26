@@ -171,6 +171,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(BODY_LAYER)
 
 	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
@@ -247,6 +250,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()
+	if(!simulated)
+		return
+
 	//Reset our hair
 	remove_standing_overlay(HAIR_LAYER)
 
@@ -304,6 +310,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_mutations()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(MUTATIONS_LAYER)
 
 	var/list/standing = list()
@@ -341,6 +350,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Call when target overlay should be added/removed
 /mob/living/carbon/human/update_targeted()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(TARGETED_LAYER)
 
 	if(targeted_by && target_locked)
@@ -352,6 +364,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_fire() //TG-stuff, fire layer
+	if(!simulated)
+		return
+
 	remove_standing_overlay(FIRE_LOWER_LAYER)
 	remove_standing_overlay(FIRE_UPPER_LAYER)
 
@@ -371,6 +386,9 @@ Please contact me on #coderbus IRC. ~Carn x
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
+	if(!simulated)
+		return
+
 	..()
 	if(notransform)
 		return
@@ -408,6 +426,9 @@ Please contact me on #coderbus IRC. ~Carn x
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
 /mob/living/carbon/human/update_inv_w_uniform()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(UNIFORM_LAYER)
 
 	var/default_path = 'icons/mob/uniform.dmi'
@@ -462,6 +483,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_wear_id()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(ID_LAYER)
 	if(wear_id)
 		wear_id.screen_loc = ui_id
@@ -476,6 +500,9 @@ Please contact me on #coderbus IRC. ~Carn x
 	apply_standing_overlay(ID_LAYER)
 
 /mob/living/carbon/human/update_inv_gloves()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(GLOVES_LAYER)
 	if(gloves)
 		if(client && hud_used && hud_used.hud_shown)
@@ -501,6 +528,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_glasses()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(GLASSES_LAYER)
 
 	if(glasses)
@@ -519,6 +549,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_ears()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(EARS_LAYER)
 
 	if(l_ear || r_ear)
@@ -549,6 +582,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_shoes()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(SHOES_LAYER)
 
 	if(shoes)
@@ -575,6 +611,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_s_store()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(SUIT_STORE_LAYER)
 
 	if(s_store)
@@ -595,6 +634,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_head()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(HEAD_LAYER)
 
 	if(head)
@@ -625,6 +667,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_belt()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(BELT_LAYER)
 
 	if(belt)
@@ -641,6 +686,9 @@ Please contact me on #coderbus IRC. ~Carn x
 	apply_standing_overlay(BELT_LAYER)
 
 /mob/living/carbon/human/update_inv_wear_suit()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(SUIT_LAYER)
 	var/default_path = 'icons/mob/suit.dmi'
 
@@ -693,6 +741,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_pockets()
+	if(!simulated)
+		return
+
 	if(l_store)
 		l_store.screen_loc = ui_storage1
 		if(client && hud_used)
@@ -704,6 +755,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_wear_mask()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(FACEMASK_LAYER)
 
 	if(istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/accessory))
@@ -722,6 +776,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_back()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(BACK_LAYER)
 
 	if(back)
@@ -738,6 +795,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_hud()	//TODO: do away with this if possible
+	if(!simulated)
+		return
+
 	if(client)
 		client.screen |= contents
 		if(hud_used)
@@ -746,6 +806,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_handcuffed()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(HANDCUFF_LAYER)
 
 	if(handcuffed)
@@ -761,6 +824,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_legcuffed()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(LEGCUFF_LAYER)
 
 	if(legcuffed)
@@ -775,6 +841,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_r_hand()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(R_HAND_LAYER)
 
 	if(r_hand)
@@ -794,6 +863,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_inv_l_hand()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(L_HAND_LAYER)
 
 	if(l_hand)
@@ -812,6 +884,9 @@ Please contact me on #coderbus IRC. ~Carn x
 	apply_standing_overlay(L_HAND_LAYER)
 
 /mob/living/carbon/human/proc/update_tail_showing()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(TAIL_LAYER)
 
 	if((random_tail_holder || species.tail) && species.flags[HAS_TAIL] && !(HUSK in mutations) && bodyparts_by_name[BP_CHEST])
@@ -848,6 +923,9 @@ Please contact me on #coderbus IRC. ~Carn x
 //Adds a collar overlay above the helmet layer if the suit has one
 //	Suit needs an identically named sprite in icons/mob/collar.dmi
 /mob/living/carbon/human/proc/update_collar()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(COLLAR_LAYER)
 
 	if(wear_suit)
@@ -865,6 +943,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/proc/update_surgery()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(SURGERY_LAYER)
 
 	var/list/standing = list()
@@ -880,6 +961,9 @@ Please contact me on #coderbus IRC. ~Carn x
 	apply_standing_overlay(SURGERY_LAYER)
 
 /mob/living/carbon/human/proc/update_bandage()
+	if(!simulated)
+		return
+
 	remove_standing_overlay(BANDAGE_LAYER)
 
 	var/list/standing = list()
@@ -921,6 +1005,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 //Cutting any human's overlay that we dont want to offset.
 /mob/living/carbon/human/proc/update_height(image/I)
+	if(!simulated)
+		return
+
 	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi',"Cut1")
 	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi',"Cut2")
 	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi',"Cut3")

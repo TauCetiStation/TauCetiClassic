@@ -55,6 +55,8 @@
 	qdel(src)
 
 /obj/item/mine/proc/try_trigger(atom/movable/AM)
+	if(!AM.simulated)
+		return
 	if(isliving(AM) || istype(AM, /obj/mecha))
 		if(anchored)
 			AM.visible_message("<span class='danger'>[AM] steps on [src]!</span>")

@@ -346,6 +346,13 @@ var/global/list/wire_daltonism_colors = list()
 	else
 		CRASH("[color] is not a key in wires.")
 
+/datum/wires/proc/get_color_by_index(index)
+	for(var/col in wires)
+		var/other_index = wires[col]
+		if(index == other_index)
+			return col
+
+	CRASH("[index] is not an index in wires")
 
 ////////////////////////////
 // Is Index/Colour Cut procs

@@ -78,6 +78,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/storage/pill_bottle,                   CATEGORY_MEDICAL),
 	R(/obj/item/stack/cable_coil/random,             CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/module/power_control,         CATEGORY_ENGINEERING),
+	R(/obj/item/weapon/circuitboard/manipulator,     CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/airlock_electronics,          CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/airalarm_electronics,         CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/firealarm_electronics,        CATEGORY_ENGINEERING),

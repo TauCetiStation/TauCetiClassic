@@ -123,6 +123,9 @@
 				if(!anchored)
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return
+				if(issilicon(user) && istype(P, /obj/item/weapon/circuitboard/manipulator))
+					to_chat(user, "<span class='warning'>Sorry! Automatic protocols preventing AI from becoming too powerful can't allow you to assemble this!</span>")
+					return
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "machine")
 					if(!user.drop_from_inventory(P, src))

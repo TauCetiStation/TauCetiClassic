@@ -17,6 +17,10 @@
 		var/mob/M = nuser
 		nuser = M.client
 
+	if(!nuser)
+		qdel(src)
+		return
+
 	user = nuser
 	LAZYSET(user.browsers, nwindow_id, src)
 	window_id = nwindow_id
@@ -92,6 +96,9 @@
 </html>"}
 
 /datum/browser/proc/open()
+	if(!user)
+		return
+
 	var/window_size
 	if(width && height)
 		window_size = "size=[width]x[height];"

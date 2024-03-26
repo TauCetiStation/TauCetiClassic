@@ -60,13 +60,13 @@
 	if(notransform)
 		return
 
-	if(client.click_intercept)
+	if(client && client.click_intercept)
 		client.click_intercept.InterceptClickOn(src, params, A)
 		return
 
 	var/list/modifiers = params2list(params)
 
-	if(client.cob && client.cob.in_building_mode)
+	if(client && client.cob && client.cob.in_building_mode)
 		cob_click(client, modifiers)
 		return
 
@@ -312,7 +312,8 @@
 			user.listed_turf = null
 		else
 			user.listed_turf = T
-			user.client.statpanel = T.name
+			if(user.client)
+				user.client.statpanel = T.name
 
 /mob/living/AltClick(mob/living/user)
 	/*
