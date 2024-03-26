@@ -121,7 +121,7 @@
 		CALLBACK(src, PROC_REF(Despawn)),
 		CALLBACK(src, PROC_REF(CheckSpawn)),
 		8,
-		16,
+		12,
 		15 SECONDS,
 		2 MINUTES,
 	)
