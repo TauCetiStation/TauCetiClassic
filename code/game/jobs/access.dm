@@ -468,7 +468,6 @@
 		"Emergency Response Team",
 		"Emergency Response Team Leader",
 		"Organized Crimes Department",
-		"NanoTrasen Representative",
 		)
 
 /proc/get_all_velocity_jobs()
