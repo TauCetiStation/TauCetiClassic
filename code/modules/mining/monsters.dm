@@ -296,6 +296,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier/proc/stop_that_box(obj/structure/ore_box/B)
+	target = null
 	switch(rand(1, 3))
 		if(1)
 			B.dump_box_contents()
