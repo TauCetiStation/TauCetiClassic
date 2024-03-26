@@ -20,4 +20,4 @@
 
 #define ROUND_ASPECT_MECHAS "Mechs For Everyone"
 
-#define ROUND_ASPECT_ALKO "Healing Alcohol"
+#define ROUND_ASPECT_HEALING_ALCOHOL "Healing Alcohol"

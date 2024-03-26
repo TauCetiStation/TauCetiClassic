@@ -1495,28 +1495,28 @@
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
 		Paralyse(3)
 		drowsyness = max(drowsyness, 3)
-		heal_mod = -5
+		heal_mod = 10
 		return
 
 	if(drunkenness >= DRUNKENNESS_BLUR)
 		eye_blurry = max(eye_blurry, 2)
-		heal_mod = -3
+		heal_mod = 8
 
 	if(drunkenness >= DRUNKENNESS_SLUR)
 		if(drowsyness)
 			drowsyness = max(drowsyness, 3)
 		slurring = max(slurring, 3)
-		heal_mod = -1
+		heal_mod = 4
 
 	if(drunkenness >= DRUNKENNESS_CONFUSED)
 		MakeConfused(2)
-		heal_mod = -2
+		heal_mod = 6
 
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ALKO))
-		adjustBruteLoss(heal_mod*1)
-		adjustFireLoss(heal_mod*1)
-		AdjustWeakened(heal_mod*0.5)
-		adjustHalLoss(heal_mod*2)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HEALING_ALCOHOL))
+		adjustBruteLoss(heal_mod * (-1))
+		adjustFireLoss(heal_mod * (-1))
+		AdjustWeakened(heal_mod * (-0.5))
+		adjustHalLoss(heal_mod * (-2))
 
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()
