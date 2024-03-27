@@ -62,3 +62,6 @@
 #define SOUND_AREA_LARGE_METALLIC SOUND_ENVIRONMENT_QUARRY
 #define SOUND_AREA_SMALL_METALLIC SOUND_ENVIRONMENT_BATHROOM
 #define SOUND_AREA_ASTEROID SOUND_ENVIRONMENT_CAVE
+
+#define EMP_DEFAULT 'sound/effects/EMPulse.ogg'
+#define EMP_SEBB 'sound/effects/sound_effects_sebb_explode.ogg'
