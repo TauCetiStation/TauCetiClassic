@@ -610,8 +610,7 @@
 	for(var/mob/living/M in src.loc)
 		visible_message("<span class='userdanger'>The [src.name] captured [M.name]!</span>")
 		playsound(M, 'sound/misc/goliath_tentacle_hit.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
-		var/datum/status_effect/incapacitating/capture_and_damage/S = M.has_status_effect(STATUS_EFFECT_CAPTURE)
-		if(!S)
+		if(!M.has_status_effect(STATUS_EFFECT_CAPTURE))
 			M.apply_status_effect(STATUS_EFFECT_CAPTURE, -1, TRUE)
 	qdel(src)
 
@@ -644,8 +643,16 @@
 	for(var/mob/living/M in src.loc)
 		visible_message("<span class='userdanger'>The [src.name] captured [M.name]!</span>")
 		playsound(M, 'sound/misc/goliath_tentacle_hit.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
-		var/datum/status_effect/incapacitating/capture_and_damage/S = M.has_status_effect(STATUS_EFFECT_CAPTURE)
-		if(!S)
+		if(isrobot(M))
+			var/mob/living/silicon/robot/robo = M
+			robo.drop_ore()
+			M.Weaken(strength * 0.1)
+			continue
+		if(!iscarbon(M))
+			M.Weaken(strength * 0.1)
+			M.adjustBruteLoss(strength * 0.4) // 40% pure damage of Goliath force
+			continue
+		if(!M.has_status_effect(STATUS_EFFECT_CAPTURE))
 			M.apply_status_effect(STATUS_EFFECT_CAPTURE, -1, TRUE)
 	qdel(src)
 
