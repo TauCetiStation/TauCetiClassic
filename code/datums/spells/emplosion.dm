@@ -8,6 +8,6 @@
 /obj/effect/proc_holder/spell/targeted/emplosion/cast(list/targets)
 
 	for(var/mob/living/target in targets)
-		empulse(target.loc, emp_heavy, emp_light, custom_sound = EMP_SEBB)
+		empulse(target.loc, emp_heavy, emp_light, custom_effects = EMP_SEBB)
 
 	return

@@ -6,7 +6,7 @@
 	pixel_y = -175
 	appearance_flags = RESET_COLOR
 
-/proc/empulse(turf/epicenter, heavy_range, light_range, log=0, custom_sound = EMP_DEFAULT)
+/proc/empulse(turf/epicenter, heavy_range, light_range, log=0, custom_effects = EMP_DEFAULT)
 	if(!epicenter) return
 
 	if(!istype(epicenter, /turf))
@@ -20,7 +20,7 @@
 
 	SEND_SIGNAL(SSexplosions, COMSIG_EXPLOSIONS_EMPULSE, epicenter, heavy_range, light_range)
 
-	if(heavy_range >= 4)
+	if(custom_effects == EMP_SEBB)
 		var/obj/effect/overlay/temp/sebb/S = new(epicenter)
 		S.anchored = TRUE
 		QDEL_IN(S, 1 SECOND)
@@ -35,7 +35,7 @@
 	if(heavy_range > light_range)
 		light_range = heavy_range
 	for(var/mob/M in range(heavy_range, epicenter))
-		M.playsound_local(null, custom_sound, VOL_EFFECTS_MASTER, null, FALSE)
+		M.playsound_local(null, custom_effects, VOL_EFFECTS_MASTER, null, FALSE)
 
 	for(var/atom/T in range(light_range, epicenter))
 		var/distance = get_dist(epicenter, T)

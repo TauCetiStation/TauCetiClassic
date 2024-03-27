@@ -7,7 +7,7 @@
 
 /obj/item/weapon/grenade/empgrenade/prime()
 	..()
-	if(empulse(src, 4, 10, custom_sound = EMP_SEBB))
+	if(empulse(src, 4, 10, custom_effects = EMP_SEBB))
 		qdel(src)
 	return
 
