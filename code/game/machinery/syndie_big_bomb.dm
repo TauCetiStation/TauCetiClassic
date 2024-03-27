@@ -2,11 +2,12 @@
 	name = "suspicious beacon"
 	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
 	origin_tech = "bluespace=1;syndicate=7"
+	var/bomb_type = /obj/machinery/syndicatebomb
 
 /obj/item/device/radio/beacon/syndicate_bomb/attack_self(mob/user)
 	if(user)
 		to_chat(user, "<span class='notice'>Locked In</span>")
-		new /obj/machinery/syndicatebomb( user.loc )
+		new bomb_type( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 	return
@@ -24,12 +25,12 @@
 	use_power = NO_POWER_USE
 
 	var/datum/wires/syndicatebomb/wires = null
+	var/min_timer = 60
 	var/timer = 60
 	var/open_panel = FALSE	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
 	var/defused = FALSE		//is the bomb capable of exploding?
 	var/degutted = FALSE	//is the bomb even a bomb anymore?
-
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
@@ -67,7 +68,7 @@
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
-	to_chat(user, "A digital display on it reads \"[timer]\".")
+	to_chat(user, "<span class='notice'>A digital display on it reads \"[timer]\".</span>")
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user)
 	if(iswrenching(I))
@@ -75,10 +76,12 @@
 			if(!isturf(src.loc) || isspaceturf(src.loc))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
+				add_fingerprint(user)
 				if(!do_skill_checks(user))
 					return
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
 				anchored = TRUE
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place</span>")
 		else
@@ -87,6 +90,7 @@
 					return
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor</span>")
 				anchored = FALSE
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
@@ -135,28 +139,23 @@
 		return
 	if(degutted)
 		to_chat(user, "<span class='notice'>The bomb's explosives have been removed, the [open_panel ? "wires" : "buttons"] are useless now.</span>")
-		return 1
-	if(anchored)
-		if(!active)
-			settings(user)
-		else
-			to_chat(user, "<span class='notice'>The bomb is bolted to the floor!</span>")
-			return 1
-	else if(!active)
-		settings(user)
+		return TRUE
+	settings(user)
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
-	newtime = clamp(newtime, 60, 60000)
-	if(Adjacent(user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
+	newtime = clamp(newtime, min_timer, 60000)
+	if(!active && Adjacent(user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
 		timer = newtime
 		loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer] seconds.</span>")
 	if(tgui_alert(user, "Would you like to start the countdown now?",, list("Yes","No")) == "Yes" && Adjacent(user) && isliving(user))
-		if(defused || active || degutted)
+		if(defused || degutted || !anchored)
 			if(degutted)
-				loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing</span>")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing.</span>")
 			else if(defused)
-				loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required</span>")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required.</span>")
+			else if(!anchored)
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: Device must be anchored.</span>")
 			return
 		else
 			loc.visible_message("<span class='warning'>[bicon(src)] [timer] seconds until detonation, please clear the area.</span>")
