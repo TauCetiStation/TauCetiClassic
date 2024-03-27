@@ -21,7 +21,7 @@
 	resistance_flags = CAN_BE_HIT
 
 /obj/structure/blob/atom_init()
-	blobs += src
+	track_blobtile()
 	set_dir(pick(1, 2, 4, 8))
 	. = ..()
 	update_icon()
@@ -37,6 +37,8 @@
 	update_nearby_tiles()
 	return ..()
 
+/obj/structure/blob/proc/track_blobtile()
+	blobs += src
 
 /obj/structure/blob/CanPass(atom/movable/mover, turf/target, height=0)
 	if(!height)
@@ -60,7 +62,7 @@
 /obj/structure/blob/atom_break(damage_flag)
 	. = ..()
 	update_icon()
-	
+
 /obj/structure/blob/atom_fix()
 	. = ..()
 	update_icon()
@@ -215,3 +217,17 @@ var/global/datum/blob_colour/B = new()
 	fcopy(I, "icons/mob/blob_result.dmi")
 
 */
+
+/obj/structure/blob/tunelled
+	icon_state = "blob"
+	light_range = 0
+
+/obj/structure/blob/tunelled/track_blobtile()
+	return
+
+/obj/structure/blob/tunelled/factory
+	name = "factory blob"
+	icon_state = "blob_factory"
+
+/obj/structure/blob/tunelled/update_icon()
+	return
