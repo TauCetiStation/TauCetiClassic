@@ -913,13 +913,16 @@
 
 /mob/living/silicon/robot/proc/updateicon()
 
+	var/image/eyes = image(icon, src, "eyes-[icon_state]", ABOVE_LIGHTING_LAYER)
+	eyes.plane = LIGHTING_LAMPS_PLANE
+
 	cut_overlays()
 	if(stat == CONSCIOUS)
-		add_overlay("eyes")
+		add_overlay(eyes)
 		cut_overlays()
-		add_overlay("eyes-[icon_state]")
+		add_overlay(eyes)
 	else
-		cut_overlay("eyes")
+		cut_overlay(eyes)
 
 	update_fire()
 
