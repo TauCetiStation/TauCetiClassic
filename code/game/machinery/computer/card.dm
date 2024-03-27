@@ -118,7 +118,7 @@
 	data["salary"] = datum_account ? datum_account.owner_salary : "not_found"
 	data["centcom_access"] = is_centcom()
 	data["all_centcom_access"] = is_centcom() ? TRUE : FALSE
-	data["regions"] = null
+	data["regions"] = get_accesslist_static_data(REGION_GENERAL, is_centcom() ? REGION_CENTCOMM : REGION_COMMAND)
 
 	data["command_jobs"] = format_jobs(command_positions)
 	data["engineering_jobs"] = format_jobs(engineering_positions)
@@ -246,7 +246,7 @@
 				modify.access += get_all_accesses()
 		if ("assign")
 			if (is_authenticated() && modify)
-				var/t1 = sanitize(params["assign_modify"] , 45)
+				var/t1 = params["assign_modify"]
 				var/new_salary = 0
 				var/datum/job/jobdatum
 				if(t1 == "Custom")
