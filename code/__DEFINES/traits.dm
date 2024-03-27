@@ -194,6 +194,8 @@
 #define TRAIT_CHANGELING_ABSORBING "changeling_absorbing"
 #define TRAIT_FAST_WALKER         "fast_walker"
 #define TRAIT_BORK_SKILLCHIP      "bork_skillchip"
+#define TRAIT_FULL_CONFUSION      "full_confusion"
+#define TRAIT_CULT_IMPLANT        "cult_implant"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

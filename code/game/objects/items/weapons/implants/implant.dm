@@ -69,7 +69,6 @@
 
 	add_item_actions(C)
 
-
 /obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
 	forceMove(C)
 	imp_in = C

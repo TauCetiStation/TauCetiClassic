@@ -168,6 +168,8 @@
 /mob/proc/RegularClickOn(atom/A, params)
 	if(SEND_SIGNAL(src, COMSIG_MOB_REGULAR_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
 		return FALSE
+	if(SEND_SIGNAL(A, COMSIG_ATOM_REGULAR_CLICKED, src, params) & COMPONENT_CANCEL_CLICK)
+		return FALSE
 	return FALSE
 
 //	Translates into attack_hand, etc.

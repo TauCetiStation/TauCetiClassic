@@ -200,3 +200,14 @@
 	wiki_ref = "Abductor"
 	time_for_registration = null
 	register_only = FALSE
+
+/datum/spawner/living/maelstrom
+	name = "Промытое Мальстромом тело"
+	desc = "Новообращённый член известной банды оккультистов основной источник доходов которых — незаконный оборот запрещённых медикаментов и наркотиков. Берут заказы на убийства, выполняя их с особой жестокостью."
+
+/datum/spawner/living/maelstrom/spawn_body(mob/dead/spectator)
+	. = ..()
+	if(!mob.mind || mob.mind.GetRole(CYBERPSYCHO))
+		return
+	var/datum/faction/maelstrom/faction = create_uniq_faction(/datum/faction/maelstrom)
+	add_faction_member(faction, mob, TRUE, FALSE)

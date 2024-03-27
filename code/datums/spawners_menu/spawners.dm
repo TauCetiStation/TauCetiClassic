@@ -62,6 +62,9 @@
 	// Roles and jobs that will be checked for jobban and minutes
 	var/list/ranks
 
+	// Jobs that will be checked for jobban and minutes etc and chosen to equip body
+	var/list/jobs_list_equip
+
 	// How many times can be used, number or INFINITY
 	var/positions = 0
 	// Flag if spawner should not be created with multile positions
@@ -276,6 +279,24 @@
 		return
 	var/jump_to = pick(landmarks_list[spawn_landmark_name])
 	spectator.forceMove(get_turf(jump_to))
+
+/datum/spawner/proc/get_avaible_jobs(mob/dead/spectator)
+	var/list/avaible_ranks = jobs_list_equip.Copy()
+	for(var/rank in avaible_ranks)
+		if(jobban_isbanned(spectator, rank))
+			avaible_ranks -= rank
+		if(role_available_in_minutes(spectator, rank))
+			avaible_ranks -= rank
+		var/datum/job/job = SSjob.GetJob(rank)
+		if(!job)
+			avaible_ranks -= rank
+		if(!job.is_position_available())
+			avaible_ranks -= rank
+		if(!job.player_old_enough(spectator.client))
+			avaible_ranks -= rank
+		if(!job.map_check())
+			avaible_ranks -= rank
+	return avaible_ranks
 
 /*
  * Families
@@ -743,3 +764,52 @@
 	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
 	R.rename = FALSE
 	setup_role(R, TRUE)
+
+/datum/spawner/maelstrom
+	name = "Мальстромовец"
+	desc = "Член известной банды оккультистов основной источник доходов которых — незаконный оборот запрещённых медикаментов и наркотиков, в том числе гиперцина. Берут заказы на убийства, выполняя их с особой жестокостью."
+	cooldown = 30 SECONDS
+	jobs_list_equip = list("Cargo Technician",
+							"Shaft Miner",
+							"Recycler",
+							"Chef",
+							"Bartender",
+							"Botanist",
+							"Clown",
+							"Mime",
+							"Chaplain",
+							"Janitor",
+							"Barber",
+							"Librarian",
+							"Assistant")
+
+/datum/spawner/maelstrom/can_spawn(mob/dead/spectator)
+	if(!check_cooldown(spectator))
+		return FALSE
+	var/list/free_ranks = get_avaible_jobs(spectator)
+	if(!free_ranks.len)
+		to_chat(spectator, "<B>В данный момент эта роль для вас заблокирована.</B>")
+		return FALSE
+	return TRUE
+
+/datum/spawner/maelstrom/spawn_body(mob/dead/spectator)
+	var/mob/living/carbon/human/character = spectator.create_character()
+	var/list/free_ranks = get_avaible_jobs(spectator)
+	var/rank = pick(free_ranks)
+	SSjob.AssignRole(character, rank, 1)
+	SSjob.EquipRank(character, rank, TRUE)
+	var/spawnloc = pick(global.latejoin)
+	var/list/allowed_spawnlocs = global.xeno_spawn.Copy()
+	for(var/spawn_loc in allowed_spawnlocs)
+		if(!istype(get_area(spawn_loc), /area/station/maintenance))
+			allowed_spawnlocs -= spawn_loc
+	if(allowed_spawnlocs.len)
+		spawnloc = pick(allowed_spawnlocs)
+	new /obj/effect/temp_visual/maelstrom/blood/out(spawnloc)
+	character.forceMove(spawnloc, keep_buckled = TRUE)
+	SSticker.mode.latespawn(character)
+	global.data_core.manifest_inject(character)
+	SSticker.minds += character.mind
+	joined_player_list += character.ckey
+	var/datum/faction/maelstrom/faction = create_uniq_faction(/datum/faction/maelstrom)
+	add_faction_member(faction, character, FALSE, TRUE)

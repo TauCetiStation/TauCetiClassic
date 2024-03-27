@@ -148,3 +148,9 @@
 	. = ..()
 	var/mob/living/carbon/human/H = antag.current
 	H.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(antag.current), SLOT_R_STORE)
+
+/mob/living/proc/fake_loyal_implant_replacement()
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
+		qdel(L)
+	var/obj/item/weapon/implant/fake_loyal/F = new(src)
+	F.inject(src, BP_CHEST)

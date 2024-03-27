@@ -101,7 +101,7 @@
 	if(!convertees_needed)
 		return OBJECTIVE_WIN
 
-	var/datum/faction/cult/C = faction
+	var/datum/faction/C = faction
 	if(istype(C))
 		var/convertees = 0
 		for(var/datum/role/R in C.members)

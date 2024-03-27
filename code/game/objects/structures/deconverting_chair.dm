@@ -3,7 +3,7 @@
 	name = "electrotherapy chair"
 	desc = "Latest development in the field of brainwashing. This thing is almost guaranteed to bring back loyalty to your crew!"
 	icon_state = "echair0"
-	var/list/roles_to_deconvert = list(SHADOW_THRALL, CULTIST)
+	var/list/roles_to_deconvert = list(SHADOW_THRALL, CULTIST, CYBERPSYCHO)
 	var/on_cooldown = FALSE
 
 /obj/structure/stool/bed/chair/electrotherapy/atom_init()
