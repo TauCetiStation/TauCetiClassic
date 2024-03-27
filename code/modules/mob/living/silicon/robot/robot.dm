@@ -1209,3 +1209,12 @@
 					return
 				F.attackby(B, src)
 				break
+
+/mob/living/silicon/robot/proc/drop_ore()
+	var/turf/F = get_turf(src)
+	if(istype(module, /obj/item/weapon/robot_module/miner))
+		for(var/obj/item/weapon/storage/bag/ore/bag in module.modules)
+			bag.hide_from(src)
+			for(var/obj/item/I in bag.contents)
+				bag.remove_from_storage(I, F, NoUpdate = TRUE)
+			bag.finish_bulk_removal()
