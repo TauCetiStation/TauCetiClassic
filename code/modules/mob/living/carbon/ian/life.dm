@@ -315,7 +315,6 @@
 	if(istype(head, /obj/item/clothing/head/helmet/space))
 		stabilize_body_temperature()
 		return
-
 	..()
 
 /mob/living/carbon/ian/handle_fire()

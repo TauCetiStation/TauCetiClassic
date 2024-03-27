@@ -79,6 +79,7 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 /mob/proc/pl_effects()
 
 /mob/living/carbon/human/pl_effects()
+
 	//Handles all the bad things phoron can do.
 
 	//Contamination

@@ -228,24 +228,28 @@
 	apply_standing_overlay(LAYERIAN_TARGETED)
 
 /mob/living/carbon/ian/update_fire()
-	//remove_standing_overlay(LAYERIAN_LOWER_FIRE)
 	remove_standing_overlay(LAYERIAN_UPPER_FIRE)
 
 	update_fire_underlay()
 	if(on_fire)
-		//overlays_standing[LAYERIAN_LOWER_FIRE] = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay", "layer"=-LAYERIAN_LOWER_FIRE)
 		var/image/over = image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay", "layer"=-LAYERIAN_UPPER_FIRE)
 		over.plane = LIGHTING_LAMPS_PLANE
+		if(count_acid_fire_stacks() > 0)
+			over.appearance_flags |= RESET_COLOR|RESET_ALPHA
+			over.color = COLOR_LIME
 		overlays_standing[LAYERIAN_UPPER_FIRE] = over
 
-	//apply_standing_overlay(LAYERIAN_LOWER_FIRE)
 	apply_standing_overlay(LAYERIAN_UPPER_FIRE)
 
 /mob/living/carbon/ian/proc/update_fire_underlay()
 	underlays.Cut()
 
 	if(on_fire)
-		underlays += image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_underlay")
+		var/image/underfire = image(icon = 'icons/mob/OnFire.dmi', icon_state = "generic_underlay")
+		if(count_acid_fire_stacks() > 0)
+			underfire.appearance_flags |= RESET_COLOR|RESET_ALPHA
+			underfire.color = COLOR_LIME
+		underlays += underfire
 
 //#undef LAYERIAN_LOWER_FIRE
 #undef LAYERIAN_BACK

@@ -47,9 +47,9 @@
 		return
 	var/mob/living/L = AM
 	if(L.crawling)
-		L.adjust_fire_stacks(10)
-	if(L.fire_stacks <= 5)
-		L.adjust_fire_stacks(5)
+		L.adjust_fire_stacks(10, RED_FIRE)
+	if(L.count_fire_stacks() <= 5)
+		L.adjust_fire_stacks(5, RED_FIRE)
 
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel
@@ -76,7 +76,7 @@
 		if(O.CanPass(null, S, 0))
 			new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(O, amount * 0.25, d)
 			for(var/mob/living/L in O.loc)
-				L.adjust_fire_stacks(10)
+				L.adjust_fire_stacks(10, RED_FIRE)
 			O.hotspot_expose((T20C * 2) + 380, 500) //Light flamethrower fuel on fire immediately.
 
 	amount *= 0.25
@@ -85,4 +85,4 @@
 	. = ..()
 	if(isliving(AM))
 		var/mob/living/L = AM
-		L.adjust_fire_stacks(5)
+		L.adjust_fire_stacks(5, RED_FIRE)
