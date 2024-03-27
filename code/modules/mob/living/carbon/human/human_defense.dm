@@ -1,3 +1,4 @@
+#define PROTECTION_TO_MULTIPLE(p) (100 - min(p, 100)) * 0.01
 /mob/living/carbon/human/getHalLoss()
 	if(species.flags[NO_PAIN])
 		return 0
@@ -224,10 +225,10 @@
 	var/protection = 100
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
 
-	protection *= (100 - min(BP.pumped * 0.3,100)) * 0.01
+	protection *= PROTECTION_TO_MULTIPLE(BP.pumped * 0.3)
 	for(var/obj/item/clothing/C in protective_gear)
 		if(C.body_parts_covered & BP.body_part)
-			protection *= (100 - min(C.armor[type], 100)) * 0.01
+			protection *= PROTECTION_TO_MULTIPLE(C.armor[type])
 
 	return 100 - protection
 
