@@ -72,7 +72,7 @@ SUBSYSTEM_DEF(shuttle)
 	ordernum = rand(1, 9000)
 	pod_station_area = typecacheof(list(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod2/station, /area/shuttle/escape_pod3/station, /area/shuttle/escape_pod4/station))
 
-	if(!exports_list.len)
+	if(!global.exports_list.len)
 		setupExports()
 
 	for(var/typepath in subtypesof(/datum/supply_pack))
@@ -421,7 +421,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(!shuttle)
 		return
 
-	if(!exports_list.len) // No exports list? Generate it!
+	if(!global.exports_list.len) // No exports list? Generate it!
 		setupExports()
 
 	var/msg = ""
@@ -435,7 +435,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(sold_atoms)
 		sold_atoms += "."
 
-	for(var/a in exports_list)
+	for(var/a in global.exports_list)
 		var/datum/export/E = a
 		var/export_text = E.total_printout()
 		if(!export_text)

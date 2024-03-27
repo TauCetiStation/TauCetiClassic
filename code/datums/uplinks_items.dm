@@ -866,7 +866,7 @@
 	name = "Binary Translator Key"
 	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
-	cost = 3
+	cost = 1
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/encryptionkey

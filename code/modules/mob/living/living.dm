@@ -1476,6 +1476,7 @@
 	drunkenness = max(value, drunkenness)
 
 /mob/living/proc/handle_drunkenness()
+	var/heal_mod = 0.0
 	if(drunkenness <= 0)
 		drunkenness = 0
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
@@ -1494,18 +1495,28 @@
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
 		Paralyse(3)
 		drowsyness = max(drowsyness, 3)
+		heal_mod = 10.0
 		return
 
 	if(drunkenness >= DRUNKENNESS_BLUR)
 		eye_blurry = max(eye_blurry, 2)
+		heal_mod = 8.0
 
 	if(drunkenness >= DRUNKENNESS_SLUR)
 		if(drowsyness)
 			drowsyness = max(drowsyness, 3)
 		slurring = max(slurring, 3)
+		heal_mod = 4.0
 
 	if(drunkenness >= DRUNKENNESS_CONFUSED)
 		MakeConfused(2)
+		heal_mod = 6.0
+
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HEALING_ALCOHOL))
+		adjustBruteLoss(-1.0 * heal_mod)
+		adjustFireLoss(-1.0 * heal_mod)
+		AdjustWeakened(-0.5 * heal_mod)
+		adjustHalLoss(-2.0 * heal_mod)
 
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()

@@ -73,7 +73,7 @@
 	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
 
 	var/darksight = 2
-	var/nighteyes = 0
+	var/nighteyes = FALSE
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
@@ -435,7 +435,7 @@
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
 	darksight = 8
-	nighteyes = 1
+	nighteyes = TRUE
 
 	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
@@ -1474,7 +1474,7 @@
 /datum/species/zombie
 	name = ZOMBIE
 	darksight = 8
-	nighteyes = 1
+	nighteyes = TRUE
 	dietflags = DIET_OMNI
 
 	icobase = 'icons/mob/human_races/r_zombie.dmi'

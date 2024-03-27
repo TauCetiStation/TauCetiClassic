@@ -62,6 +62,7 @@
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = 0
+	dynamic_lighting = FALSE
 
 /area/custom/wizard_station
 	name = "Wizard's Den"
@@ -98,4 +99,4 @@
 	name = "Deathmatch Arena"
 	icon_state = "red"
 	requires_power = 0
-	dynamic_lighting = TRUE
+	dynamic_lighting = FALSE

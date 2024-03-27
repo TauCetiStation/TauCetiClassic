@@ -47,4 +47,4 @@ var/global/list/datum/level_lighting_effect/lighting_effects
 
 /datum/level_lighting_effect/junkyard
 	name = "junkyard"
-	colors = list("##5f5f5f") // junkyard is already colorful, gray to add darkness works better
+	colors = list("#5f5f5f") // junkyard is already colorful, gray to add darkness works better
