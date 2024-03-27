@@ -149,7 +149,7 @@
 /obj/item/rocket/emp/trigger(atom/target)
 	if(!exploded)
 		exploded = TRUE
-		empulse(target, 5, 10, custom_sound = EMP_SEBB)
+		empulse(target, 5, 10)
 
 /* Armor-piercing */
 
