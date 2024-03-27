@@ -10,13 +10,32 @@
 	resistance_flags = CAN_BE_HIT
 
 	canSmoothWith = list(
-		/turf/simulated/wall,
-		/turf/simulated/wall/r_wall,
-		/obj/structure/falsewall,
-		/obj/structure/falsewall/reinforced,
+		/turf/simulated/wall, \
+		/turf/simulated/wall/yellow, \
+		/turf/simulated/wall/red, \
+		/turf/simulated/wall/purple, \
+		/turf/simulated/wall/green, \
+		/turf/simulated/wall/beige, \
+		/turf/simulated/wall/r_wall, \
+		/turf/simulated/wall/r_wall/yellow, \
+		/turf/simulated/wall/r_wall/red, \
+		/turf/simulated/wall/r_wall/purple, \
+		/turf/simulated/wall/r_wall/green, \
+		/turf/simulated/wall/r_wall/beige, \
+		/obj/structure/falsewall, \
+		/obj/structure/falsewall/yellow, \
+		/obj/structure/falsewall/red, \
+		/obj/structure/falsewall/purple, \
+		/obj/structure/falsewall/green, \
+		/obj/structure/falsewall/beige, \
+		/obj/structure/falsewall/reinforced, \
+		/obj/structure/falsewall/reinforced/yellow, \
+		/obj/structure/falsewall/reinforced/red, \
+		/obj/structure/falsewall/reinforced/purple, \
+		/obj/structure/falsewall/reinforced/green, \
+		/obj/structure/falsewall/reinforced/beige, \
 		/obj/structure/girder,
-		/obj/structure/girder/reinforced,
-		/obj/structure/girder/cult,
+		/obj/structure/girder/reinforced
 	)
 	smooth = SMOOTH_TRUE
 
