@@ -2542,6 +2542,16 @@
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
 
+/obj/item/weapon/reagent_containers/food/snacks/blin
+	name = "blin"
+	desc = "Первый - комом!"
+	icon = 'icons/obj/food.dmi'
+	icon_state = "blin"
+	item_state_world = "blin_world"
+	filling_color = "#fabc60"
+	bitesize = 2
+	list_reagents = list("nutriment" = 5)
+
 /obj/item/weapon/reagent_containers/food/snacks/bun
 	name = "bun"
 	desc = "A base for any self-respecting burger."
