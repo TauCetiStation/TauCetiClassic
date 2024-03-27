@@ -919,3 +919,30 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	..()
 	M.adjustToxLoss(REM)
 	return FALSE
+
+/datum/reagent/consumable/drink/liquidelectricity
+	name = "Liquid Electricity"
+	description = "The blood of some aliens, and the stuff that keeps them going. It works like an energy drink."
+	id = "liquidelectricity"
+	nutriment_factor = 5
+	taste_strength = 5
+	color = "#97ee63"
+	taste_message = "pure electricity"
+
+/datum/reagent/consumable/drink/liquidelectricity/on_general_digest(mob/living/M)
+	..()
+	var/shock_power = rand(5, 10)
+	if(prob(shock_power * 10))
+		M.electrocute_act(shock_power)
+
+/datum/reagent/consumable/drink/liquidelectricity/reaction_mob(mob/M, method=TOUCH, volume)
+	. = ..()
+	new /obj/effect/effect/sparks/electricity_spark(get_turf(M))
+
+/datum/reagent/consumable/drink/liquidelectricity/reaction_obj(obj/O, volume)
+	. = ..()
+	new /obj/effect/effect/sparks/electricity_spark(get_turf(O))
+
+/datum/reagent/consumable/drink/liquidelectricity/reaction_turf(turf/T, volume)
+	. = ..()
+	new /obj/effect/effect/sparks/electricity_spark(T)

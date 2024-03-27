@@ -214,7 +214,8 @@
 				if(F)
 					F.electrocute_act(60)
 			siemens_coefficient *= C.siemens_coefficient
-
+	if(HAS_TRAIT(src, TRAIT_CONDUCT))
+		siemens_coefficient++
 	return siemens_coefficient
 
 //this proc returns the armour value for a particular external organ.

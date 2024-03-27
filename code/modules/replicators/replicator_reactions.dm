@@ -18,7 +18,7 @@
 // Disintegration time per 1 unit of material. By default is 1
 /atom/proc/get_unit_disintegration_time()
 	var/tick_modifier = 1.0
-	if(flags & CONDUCT)
+	if((flags & CONDUCT) || HAS_TRAIT(src, TRAIT_CONDUCT))
 		tick_modifier *= REPLICATOR_REWARD_CONDUCTIVE_TICK_MODIFIER
 
 	return REPLICATOR_TICKS_PER_MATERIAL * tick_modifier

@@ -1129,3 +1129,101 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 1 + round(potency / 5))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
+	seed_type = /obj/item/seeds/gatfruit
+	name = "gatfruit"
+	desc = "It smells like burning."
+	icon_state = "gatfruit"
+	potency = 25
+	filling_color = "#020108"
+	trash = /obj/item/weapon/gun/projectile/revolver
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit/atom_init()
+	. = ..()
+	reagents.add_reagent("potassium", 1 + round(potency / 25, 1))
+	reagents.add_reagent("carbon", 1 + round(potency / 10, 1))
+	reagents.add_reagent("nitrogen", 1 + round(potency / 10, 1))
+	reagents.add_reagent("sulfur", 1 + round(potency / 10, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
+	seed_type = /obj/item/seeds/tobacco
+	name = "tobacco leaves"
+	desc = "Dry them out to make some smokes."
+	icon_state = "stobacco_leaves"
+	potency = 10
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
+	reagents.add_reagent("vitamin", 1 + round(potency / 10, 1))
+	reagents.add_reagent("nicotine", 1 + round(potency / 10, 1))
+	reagents.add_reagent("dexalinp", 1 + round(potency / 10, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
+	seed_type = /obj/item/seeds/tobacco
+	name = "tobacco leaves"
+	desc = "Dry them out to make some smokes."
+	icon_state = "tobacco_leaves"
+	potency = 10
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tobacco/atom_init()
+	. = ..()
+	reagents.add_reagent("nicotine", 1 + round(potency / 10, 1))
+	reagents.add_reagent("dexalin", 1 + round(potency / 10, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella
+	seed_type = /obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella
+	name = "fraxinella"
+	desc = "A beautiful light pink flower."
+	icon_state = "fraxinella"
+	potency = 30
+	filling_color = "#cc6464"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1 + round((potency / 10), 1))
+	reagents.add_reagent("thermite", 1 + round((potency / 10), 1))
+	bitesize = 1 + round(reagents.total_volume / 3, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/jupitercup
+	seed_type = /obj/item/seeds/jupitercup
+	name = "Jupiter Cups"
+	desc = "A strange red mushroom, its surface is moist and slick. You wonder how many tiny worms have met their fate inside."
+	icon_state = "jupitercup"
+	filling_color = "#97ee63"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/jupitercup/atom_init()
+	. = ..()
+	reagents.add_reagent("liquidelectricity", 1 + round((potency / 25), 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
+	seed_type = /obj/item/seeds/tea_astra
+	name = "Tea Astra tips"
+	icon_state = "tea_astra_leaves"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra/atom_init()
+	. = ..()
+	reagents.add_reagent("sodiumchloride", 1)
+	reagents.add_reagent("sugar", 1)
+	reagents.add_reagent("vitamin", 1 + round(potency / 10, 1))
+	reagents.add_reagent("tea", 1 + round(potency / 10, 1))
+	reagents.add_reagent("synaptizine", 1 + round(potency / 10, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tea
+	seed_type = /obj/item/seeds/tea
+	name = "Tea Aspera tips"
+	desc = "These aromatic tips of the tea plant can be dried to make tea."
+	icon_state = "tea_aspera_leaves"
+	potency = 10
+	filling_color = "#125709"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/tea/atom_init()
+	. = ..()
+	reagents.add_reagent("tea", 1 + round(potency / 10, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)

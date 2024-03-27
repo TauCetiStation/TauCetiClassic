@@ -371,7 +371,7 @@
 
 /datum/disease2/effect/gibbingtons
 	name = "Gibbingtons Syndrome"
-	desc = "The virus synthesizes hydrogen sulphide in the bloodstream, damaging host's veins and arteries. In extreme cases, overdose of hydrogen sulphide may also cause host to explode in a shower of gore."
+	desc = "The virus synthesizes hydrogen sulphide or ammonium nitrate in the bloodstream, damaging host's veins and arteries. In extreme cases, overdose of hydrogen sulphide may also cause host to explode in a shower of gore."
 	level = 4
 	max_stage = 14
 	cooldown = 30
@@ -403,6 +403,10 @@
 			mob.apply_effect(5, WEAKEN)
 			mob.make_jittery(50)
 			addtimer(CALLBACK(mob, TYPE_PROC_REF(/mob/, gib)), 50)
+
+/datum/disease2/effect/gibbingtons/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustHealth(holder.stage / 10)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 /datum/disease2/effect/vomit
 	name = "Haematemesis's Syndrome"
@@ -675,6 +679,11 @@
 		to_chat(mob, "<span class='userdanger'>Your skin erupts into an inferno!</span>")
 		mob.emote("scream")
 
+/datum/disease2/effect/fire/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustSProduct(-(holder.stage / 3))
+	A.adjustSEnd(-(holder.stage / 3))
+	A.myseed.react_to_disease_effect(A, src, holder)
+
 /datum/disease2/effect/flesh_eating
 	name = "Necrotizing Fasciitis"
 	desc = "The virus aggressively attacks body cells, necrotizing tissues and organs."
@@ -800,6 +809,7 @@
 
 /datum/disease2/effect/radian/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustMutationmod(holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 /datum/disease2/effect/killertoxins
 	name = "Toxification Syndrome"
@@ -973,6 +983,25 @@
 		countBPhealed++
 		BP.heal_damage(1 / parts.len, 1 / parts.len, robo_repair = TRUE)
 
+/datum/disease2/effect/arousal
+	name = "Parasympathetic Arousal"
+	desc = "The virus leads to an increase in parasympathetic activity of the heart and restoration of host's homeostasis."
+	level = 3
+	max_stage = 10
+	cooldown = 5
+	pools = list(POOL_NEUTRAL_VIRUS)
+
+/datum/disease2/effect/arousal/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(holder.stage > 8)
+		mob.reagents.add_reagent("dexalin", holder.stage / 3)
+		return
+	var/random_syntesis = pick("nitrogen", "inaprovaline", "lexorin")
+	mob.reagents.add_reagent(random_syntesis, holder.stage / 3)
+
+/datum/disease2/effect/arousal/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustSPot(holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
+
 ////////////////////////STAGE 2/////////////////////////////////
 
 /datum/disease2/effect/beard
@@ -1020,6 +1049,10 @@
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='userdanger'>[pick("Oh, your head...", "Your head pounds.", "They're everywhere! Run!", "Something in the shadows...")]</span>")
 		mob.hallucination = max(mob.hallucination, 100)
+
+/datum/disease2/effect/hallucinations/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.mutate(lifemut = holder.stage, endmut = holder.stage, productmut = holder.stage, yieldmut = holder.stage, potmut = holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 /datum/disease2/effect/deaf
 	name = "Hard of Hearing Syndrome"
@@ -1194,6 +1227,46 @@
 /datum/disease2/effect/mute/deactivate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	REMOVE_TRAIT(mob, TRAIT_MUTE, VIRUS_TRAIT)
 	trait_added = FALSE
+
+/datum/disease2/effect/anti_toxins
+	name = "Aggresive Resistance"
+	desc = "The virus destroy toxins in host by locally burning them off."
+	level = 2
+	max_stage = 5
+	cooldown = 5
+	pools = list(POOL_NEUTRAL_VIRUS, POOL_NEGATIVE_VIRUS)
+	var/stop_creating_kudzu = FALSE
+
+/datum/disease2/effect/anti_toxins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(!mob.getToxLoss())
+		return
+	mob.take_bodypart_damage(brute = 0, burn = holder.stage / 2)
+	if(holder.stage > 2)
+		mob.adjustToxLoss(-holder.stage)
+
+/datum/disease2/effect/anti_toxins/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustToxic(-holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
+
+/datum/disease2/effect/bactericidal_tannins
+	name = "Bactericidal Tannins"
+	desc = "The virus can neutralize free radicals which cause different diseases in host."
+	level = 2
+	max_stage = 5
+	cooldown = 5
+	pools = list(POOL_POSITIVE_VIRUS)
+
+/datum/disease2/effect/bactericidal_tannins/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(!ishuman(mob))
+		mob.reagents.add_reagent("spaceacillin", holder.stage)
+		return
+	var/mob/living/carbon/human/H = mob
+	var/obj/item/organ/external/BP = pick(H.bodyparts)
+	BP.germ_level -= holder.stage
+
+/datum/disease2/effect/bactericidal_tannins/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustPests(-holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)
 
 ////////////////////////STAGE 1/////////////////////////////////
 
@@ -1588,3 +1661,38 @@
 /datum/disease2/effect/hemocoagulation/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	REMOVE_TRAIT(A, TRAIT_HEMOCOAGULATION, VIRUS_TRAIT)
 	trait_added = FALSE
+
+/datum/disease2/effect/conductivity
+	name = "Electrical Conductivity"
+	desc = "The virus increase the amount of conductive reagents around all host's surfaces."
+	level = 1
+	max_stage = 4
+	cooldown = 20
+	pools = list(POOL_NEGATIVE_VIRUS, POOL_NEUTRAL_VIRUS)
+	var/trait_added = FALSE
+
+/datum/disease2/effect/conductivity/activate_mob(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(holder.stage >= 1)
+		var/turf/simulated/mob_turf = get_turf(mob)
+		if(!istype(mob_turf, /turf/simulated))
+			return
+		mob_turf.make_wet_floor()
+	if(holder.stage >= 3 && ishuman(mob))
+		var/mob/living/carbon/human/H = mob
+		var/obj/item/I = pick(H.get_all_slots())
+		if(!istype(I))
+			return
+		I.make_wet()
+	else if(holder.stage >= 2)
+		var/obj/item/I = mob.get_active_hand()
+		if(!istype(I))
+			return
+		I.make_wet()
+	if(holder.stage >= 4)
+		if(!trait_added)
+			trait_added = TRUE
+			ADD_TRAIT(mob, TRAIT_CONDUCT, VIRUS_TRAIT)
+
+/datum/disease2/effect/conductivity/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	A.adjustWater(holder.stage)
+	A.myseed.react_to_disease_effect(A, src, holder)

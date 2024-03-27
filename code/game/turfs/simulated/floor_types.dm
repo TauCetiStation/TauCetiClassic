@@ -348,6 +348,22 @@
 			var/turf/simulated/floor/FF = get_step(src,direction)
 			FF.update_icon() //so siding get updated properly
 
+/turf/simulated/floor/fairy
+	name = "fairygrass patch"
+	desc = "Something about this grass makes you want to frolic. Or get high."
+	icon_state = "fairygrass1"
+	floor_type = /obj/item/stack/tile/fairygrass
+	light_range = 2
+	light_power = 0.80
+	light_color = COLOR_BLUE_LIGHT
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+
+/turf/simulated/floor/fairy/atom_init()
+	. = ..()
+	update_icon()
+
 /turf/simulated/floor/plating/ironsand
 	name = "Iron Sand"
 	icon_state = "ironsand1"
