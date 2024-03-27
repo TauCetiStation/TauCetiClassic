@@ -2969,6 +2969,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -3238,6 +3239,21 @@
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
+"afq" = (
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
+/obj/machinery/alarm{
+	pixel_y = -32
+	},
+/obj/effect/spawner/aspect/mech/gygax,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/warden)
 "afr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -5958,6 +5974,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -7658,6 +7675,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/effect/spawner/aspect/mech/gygax/ultra,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -11192,19 +11210,11 @@
 	},
 /area/station/security/range)
 "asD" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
-/obj/machinery/alarm{
-	pixel_y = -32
-	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "redcorner"
 	},
-/area/station/security/warden)
+/area/station/security/main)
 "asE" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
@@ -23882,8 +23892,10 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
 "cin" = (
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
-	icon_state = "redcorner"
+	dir = 8;
+	icon_state = "red"
 	},
 /area/station/security/main)
 "ciq" = (
@@ -85354,9 +85366,6 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
-"qZx" = (
-/turf/simulated/wall/r_wall,
-/area/station/security/prison)
 "qZH" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/disposalpipe/segment,
@@ -166514,7 +166523,7 @@ ahn
 avc
 aiL
 aqV
-asD
+afq
 awB
 ajf
 sMu
@@ -168556,7 +168565,7 @@ ahy
 amq
 aeR
 aeK
-ahY
+cin
 aik
 afL
 ajC
@@ -170359,7 +170368,7 @@ aef
 ahb
 afN
 aef
-cin
+asD
 afZ
 aks
 akF
@@ -171644,7 +171653,7 @@ ahY
 ait
 ajA
 ahY
-ahY
+cin
 wHE
 akx
 akH
