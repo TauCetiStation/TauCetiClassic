@@ -56,6 +56,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	looped_ambience = 'sound/ambience/loop_maintenance.ogg'
 	valid_territory = 0
 	sound_environment = SOUND_AREA_MAINTENANCE
+	ambience = list('sound/ambience/maintambience.ogg', 'sound/ambience/ambimaint3.ogg', 'sound/ambience/ambimaint5.ogg')
 
 /area/station/maintenance/eva
 	name = "EVA Maintenance"
