@@ -45,8 +45,7 @@
 	SSdemo.mark_dirty(I)
 	SSdemo.mark_dirty(user)
 
-	var/datum/status_effect/incapacitating/capture_and_damage/capture_effect = has_status_effect(STATUS_EFFECT_CAPTURE)
-	if(capture_effect && I.sharp && I.force >= 10)
+	if(has_status_effect(STATUS_EFFECT_CAPTURE) && I.sharp && I.force >= 10)
 		remove_status_effect(STATUS_EFFECT_CAPTURE)
 		return TRUE
 
