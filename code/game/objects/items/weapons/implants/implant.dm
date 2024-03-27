@@ -361,7 +361,7 @@
 /datum/action/item_action/implant/emp_implant/Activate()
 	var/obj/item/weapon/implant/emp/S = target
 	if (S.uses > 0)
-		empulse(S.imp_in, 3, 5)
+		empulse(S.imp_in, 3, 5, custom_sound = EMP_SEBB)
 		S.uses--
 		if (!S.uses)
 			qdel(S)
