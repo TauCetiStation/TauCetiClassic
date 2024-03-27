@@ -203,6 +203,8 @@
 	. = ..()
 	if(!.)
 		return
+	if(!(iscarbon(owner) && isrobot(owner)))
+		return
 	if(!owner.tentacle_capped)
 		cap_by_tentacle()
 	owner.tentacle_capped = TRUE
