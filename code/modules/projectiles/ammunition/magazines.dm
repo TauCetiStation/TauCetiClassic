@@ -521,6 +521,8 @@
 	icon_state = "[initial(icon_state)]-[has_overcharge() ? "oc" : CEIL(power_supply.charge / power_supply.maxcharge * 5) * 20]"
 
 /obj/item/ammo_box/magazine/plasma/emp_act(severity)
+	if(isnull(power_supply))
+		return
 	power_supply.use(round(power_supply.charge / severity))
 	update_icon()
 	..()
