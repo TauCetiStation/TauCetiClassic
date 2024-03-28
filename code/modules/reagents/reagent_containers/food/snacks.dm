@@ -1163,7 +1163,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe
 	name = "Burned mess"
-	cases = list("угольки", "угольков", "уголькам", "угольки", "угольками", "угольках")
+	cases = list("cгоревшее месиво", "cгоревшего месива", "cгоревшее месиво", "cгоревшим месивом", "cгоревшим месивом", "cгоревшем месиве")
 	desc = "Someone should be demoted from chef for this."
 	icon_state = "badrecipe"
 	filling_color = "#211f02"
