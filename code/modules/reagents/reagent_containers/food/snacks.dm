@@ -1024,7 +1024,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "Space Twinkie"
-	cases = list("космо-твинки", "космо-твинка", "космо-твинку", "космо-твинки", "космо-твинком", "космо-твинке")
+	cases = list("космо-пирожное", "космо-пирожного", "космо-пирожному", "космо-пирожное", "космо-пирожным", "космо-пирожном")
 	icon_state = "space_twinkie"
 	desc = "Guaranteed to survive longer then you will."
 	filling_color = "#ffe591"
