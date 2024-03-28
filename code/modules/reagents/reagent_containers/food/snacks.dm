@@ -915,7 +915,7 @@
 	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/human/kabob
-	name = "-kabob"
+	name = "kabob"
 	cases = list("кебаб", "кебаба", "кебабу", "кебаб", "кебабом", "кебабе")
 	icon_state = "kabob"
 	desc = "A human meat, on a stick."
@@ -1943,7 +1943,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/olivyesalad
 	name = "Olivye salad"
-	cases = list("оливье", "оливье", "оливье", "оливье", "оливье", "оливье")
+	cases = list("салат оливье", "салата оливье", "салату оливье", "салат оливье", "салатом оливье", "салате оливье")
 	desc = "It's a traditional salad dish in Russian cuisine."
 	icon_state = "olivyesalad"
 	trash = /obj/item/trash/snack_bowl
