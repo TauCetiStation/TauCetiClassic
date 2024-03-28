@@ -1077,7 +1077,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles
 	name = "chinese newdles"
-	cases = list("китайский невдлес", "китайского невделс", "китайскому невдлес", "китайский невдлес", "китайским невдлес", "китайском невдлес")
+	cases = list("китайская лапша", "китайской лапши", "китайской лапше", "китайскую лапшу", "китайской лапшой", "китайской лапше")
 	desc = "Made fresh, weekly!"
 	icon_state = "chinese3"
 	trash = /obj/item/trash/chinese3
