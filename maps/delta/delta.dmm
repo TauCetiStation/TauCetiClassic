@@ -11090,6 +11090,7 @@
 	dir = 1;
 	icon_state = "box_corners_white"
 	},
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -15228,6 +15229,7 @@
 	name = "apc top";
 	pixel_y = 28
 	},
+/obj/effect/spawner/aspect/mech/phazon,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "cIm" = (
@@ -17441,6 +17443,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -18268,6 +18271,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -21012,7 +21016,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
-/obj/effect/spawner/newai,
+/obj/effect/spawner/aspect/newai,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},
@@ -37840,6 +37844,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"hDb" = (
+/obj/machinery/atmospherics/pipe/simple/visible/fuel,
+/obj/effect/spawner/aspect/mech/ff_engi,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/engineering/atmos)
 "hDc" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -49733,6 +49744,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "kcS" = (
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -50002,6 +50014,7 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -57635,7 +57648,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
-/obj/effect/spawner/newai,
+/obj/effect/spawner/aspect/newai,
 /turf/simulated/floor/bluegrid{
 	icon_state = "gcircuit"
 	},
@@ -59215,6 +59228,7 @@
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -59888,6 +59902,7 @@
 	c_tag = "Honk Office";
 	dir = 8
 	},
+/obj/effect/spawner/aspect/mech/honker,
 /turf/simulated/floor{
 	icon_state = "redbluefull"
 	},
@@ -60302,6 +60317,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -61893,6 +61909,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "yellowfull"
 	},
@@ -62101,6 +62118,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -66217,6 +66235,7 @@
 	name = "Brig down APC";
 	pixel_y = -27
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -66584,6 +66603,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "nHx" = (
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -72043,6 +72063,13 @@
 	icon_state = "darkredfull"
 	},
 /area/station/security/brig/equipment)
+"oTv" = (
+/obj/effect/spawner/aspect/mech/gygax,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/station/security/warden)
 "oTC" = (
 /obj/structure/table/woodentable,
 /obj/item/device/paicard,
@@ -73218,6 +73245,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
+"pip" = (
+/obj/effect/spawner/aspect/mech/gygax,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/security/main)
 "pis" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -77755,6 +77788,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "yellowfull"
 	},
@@ -82904,6 +82938,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
@@ -91238,6 +91273,12 @@
 	icon_state = "blackchoco"
 	},
 /area/station/medical/cryo)
+"tge" = (
+/obj/effect/spawner/aspect/mech/ripley_mine,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
+/area/station/cargo/miningoffice)
 "tgi" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -100470,6 +100511,19 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
+"voC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/spawner/aspect/mech/ripley_engi,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/engineering/engine)
 "voI" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -101333,6 +101387,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -102603,6 +102658,7 @@
 	dir = 4
 	},
 /obj/machinery/hologram/holopad,
+/obj/effect/spawner/aspect/mech/gygax/ultra,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -106397,6 +106453,13 @@
 	icon_state = "cafeteria"
 	},
 /area/station/security/prison)
+"wIa" = (
+/obj/effect/spawner/aspect/mech/medical,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteblue"
+	},
+/area/station/medical/sleeper)
 "wIf" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -110931,6 +110994,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -136825,7 +136889,7 @@ dup
 dup
 nRV
 bOD
-cmG
+hDb
 xqQ
 bme
 oJD
@@ -139171,9 +139235,9 @@ bau
 nkc
 dij
 qfJ
-blI
+voC
 mGk
-blI
+voC
 qfJ
 blI
 qFo
@@ -154113,7 +154177,7 @@ mMZ
 gMr
 acj
 xBh
-wlv
+wIa
 mMZ
 gMr
 lwH
@@ -154370,7 +154434,7 @@ uhm
 cCo
 mRc
 czh
-wlv
+wIa
 mMZ
 gMr
 lwH
@@ -159442,8 +159506,8 @@ sDB
 twC
 nsI
 vxm
-vxm
-vxm
+tge
+tge
 jWU
 wTB
 lGt
@@ -166147,7 +166211,7 @@ aoj
 uDI
 tDg
 dGY
-nTP
+oTv
 nTP
 pBY
 aox
@@ -166901,8 +166965,8 @@ afw
 nHb
 wGW
 pNw
-eZh
-eZh
+pip
+pip
 rbY
 luP
 krl

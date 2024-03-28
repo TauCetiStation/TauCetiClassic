@@ -2124,6 +2124,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -3027,6 +3028,7 @@
 	},
 /area/station/security/brig)
 "afd" = (
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -3671,6 +3673,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "bluecorner"
 	},
@@ -4273,6 +4276,7 @@
 	},
 /area/station/security/brig)
 "ahn" = (
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluecorner"
@@ -5298,6 +5302,7 @@
 /area/station/security/brig)
 "aiP" = (
 /obj/machinery/hologram/holopad,
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -14230,6 +14235,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -14476,6 +14482,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -24186,6 +24193,7 @@
 /obj/structure/sign/poster/official/the_owl{
 	pixel_x = 32
 	},
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -30641,6 +30649,7 @@
 /area/station/rnd/xenobiology)
 "bcw" = (
 /obj/structure/stool/bed/chair/office/dark,
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -45508,6 +45517,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -49441,6 +49451,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor,
 /area/station/medical/hallway)
 "bKg" = (
@@ -49802,6 +49813,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -54198,6 +54210,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -58072,6 +58085,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "caution"
@@ -60921,7 +60935,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
-/obj/effect/spawner/newai,
+/obj/effect/spawner/aspect/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cor" = (
@@ -61496,7 +61510,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
-/obj/effect/spawner/newai,
+/obj/effect/spawner/aspect/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpJ" = (
@@ -64490,6 +64504,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cxJ" = (
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "caution"
@@ -68243,6 +68258,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "cJr" = (
@@ -70552,6 +70568,10 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
+"eeq" = (
+/obj/effect/spawner/aspect/mech/phazon,
+/turf/simulated/floor/wood,
+/area/station/bridge/captain_quarters)
 "efb" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -70755,6 +70775,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowcorner"
@@ -72055,6 +72076,7 @@
 /area/station/bridge)
 "fNb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -72476,6 +72498,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"
@@ -73342,6 +73365,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "hhb" = (
@@ -77248,6 +77272,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whitebluecorner"
 	},
@@ -78104,6 +78129,12 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"lZh" = (
+/obj/effect/spawner/aspect/mech/gygax/ultra,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/hos)
 "lZM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor,
@@ -79248,6 +79279,16 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"npC" = (
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 4
+	},
+/obj/effect/spawner/aspect/mech/ff_engi,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "caution"
+	},
+/area/station/engineering/atmos)
 "nqb" = (
 /obj/structure/mineral_door/wood,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -80314,6 +80355,12 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/toilet)
+"oxO" = (
+/obj/effect/spawner/aspect/mech/ripley_engi,
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
+/area/station/engineering/engine)
 "oyb" = (
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -82823,6 +82870,7 @@
 	dir = 4;
 	network = list("SS13","Engineering")
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "rtF" = (
@@ -86752,6 +86800,7 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/effect/spawner/aspect/mech/honker,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "xwm" = (
@@ -113601,7 +113650,7 @@ cuf
 ljQ
 cls
 civ
-pAV
+oxO
 cBT
 aaa
 aaa
@@ -113858,7 +113907,7 @@ dbK
 ljQ
 fWB
 civ
-pAV
+oxO
 cBT
 aaa
 aah
@@ -120996,7 +121045,7 @@ bjS
 bke
 bkh
 bkA
-bfC
+eeq
 bgW
 blB
 bkc
@@ -121194,7 +121243,7 @@ acr
 adq
 agg
 aej
-agL
+lZh
 agd
 agv
 ahk
@@ -121804,7 +121853,7 @@ snv
 snv
 bVS
 bSV
-kif
+npC
 bVD
 cwe
 anD
