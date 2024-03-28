@@ -275,7 +275,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/donor
 	name = "Donor Candy"
-	cases = list("конфета донор", "конфеты донор", "конфете донор", "конфету донор", "конфетой донор", "конфете донор")
+	cases = list("гемотаген", "гемотагена", "гемотагену", "гемотаген", "гематогенои", "гемотагене")
 	desc = "A little treat for blood donors."
 	trash = /obj/item/trash/candy
 	bitesize = 5
@@ -285,7 +285,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
-	cases = list("сладкий попкорн", "сладкого попкорна", "сладкому попкорну", "сладкий попкорн", "сладким попкорном", "сладком попкорне")
+	cases = list("конфетная кукуруза", "конфетной кукурузы", "конфетной кукурузе", "конфетную кукурузу", "конфетной кукурузой", "конфетной кукурузе")
 	desc = "It's a handful of candy corn. Cannot be stored in a detective's hat, alas."
 	icon_state = "candy_corn"
 	filling_color = "#fffcb0"
@@ -517,7 +517,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/tofurkey
 	name = "Tofurkey"
-	cases = list("тофейка", "тофейки", "тофейку", "тофейку", "тофейкой", "тофейке")
+	cases = list("тофу индейка", "тофу индейки", "тофу индейку", "тофу индейку", "тофу индейкой", "тофу индейке")
 	desc = "A fake turkey made from tofu."
 	icon_state = "tofurkey"
 	filling_color = "#fffee0"
@@ -579,7 +579,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/bearmeat
 	name = "bear meat"
-	cases = list("медвежье мясо", "медвежьего мясу", "медвежьему мясу","медвежье мясо", "медвежьим мясом", "медвежьем мясе")
+	cases = list("медвежатина", "медвежатины", "медвежатине","медвежатину", "медвежатиной", "медвежатине")
 	desc = "A very manly slab of meat."
 	icon_state = "bearmeat"
 	filling_color = "#db0000"
@@ -620,7 +620,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meatball
 	name = "meatball"
-	cases = list("мясной шарик", "мясного шарика", "мясному шарику", "мясного шарика", "мясным шариком", "мясном шарике")
+	cases = list("фрикаделька", "фрикадельки", "фрикадельке", "фрикадельку", "фрикаделькой", "фрикадельке")
 	desc = "A great meal all round."
 	icon_state = "meatball"
 	filling_color = "#db0000"
@@ -788,7 +788,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	name = "Banana Cream Pie"
-	cases = list("банановый кремовый пирог", "бананового кремового пирога", "банановому кремовому пирогу", "банановый кремовый пирог", "банановым кремовым пирогом", "банановом кремовом пироге")
+	cases = list("пирог с банановым кремом", "пирога с банановым кремом", "пирогу с банановым кремом", "пирог с банановым кремом", "пирогом с банановым кремом", "пироге с банановым кремом")
 	desc = "Just like back home, on clown planet! HONK!"
 	icon_state = "pie"
 	trash = /obj/item/trash/plate
@@ -843,8 +843,8 @@
 	list_reagents = list("protein" = 10, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
-	name = "Soylen Virdians"
-	cases = list("сойлен вирдианцы", "сойлена вирдианцы", "сойлену вирдианцы", "сойлена вирдианцы", "сойленом вирдианцы", "сойлене вирдианцы")
+	name = "Soylent Virdians"
+	cases = list("сойлент вирдианцы", "сойлента вирдианцы", "сойленту вирдианцы", "сойлента вирдианцы", "сойлентом вирдианцы", "сойленте вирдианцы")
 	desc = "Not made of people. Honest." //Actually honest for once.
 	icon_state = "soylent_yellow"
 	trash = /obj/item/trash/waffles
@@ -883,7 +883,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie
 	name = "plump pie"
-	cases = list("пухлый пирог", "пухлого пирога", "пухлому пирогу", "пухлый пирог", "пухлым пирогом", "пухлом пироге")
+	cases = list("толостошлемник", "толостошлемника", "толостошлемнику", "толостошлемник", "толостошлемником", "толостошлемнике")
 	desc = "I bet you love stuff made out of plump helmets!"
 	icon_state = "plump_pie"
 	filling_color = "#b8279b"
@@ -1024,7 +1024,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "Space Twinkie"
-	cases = list("космо-пирожное", "космо-пирожного", "космо-пирожному", "космо-пирожное", "космо-пирожным", "космо-пирожном")
+	cases = list("космо-твинки", "космо-твинки", "космо-твинки", "космо-твинки", "космо-твинки", "космо-твинки")
 	icon_state = "space_twinkie"
 	desc = "Guaranteed to survive longer then you will."
 	filling_color = "#ffe591"
