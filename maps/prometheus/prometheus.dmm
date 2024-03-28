@@ -3159,7 +3159,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 8;
 	id = "qm_warehouse";
 	name = "Warehouse Shutters"
 	},
@@ -3258,7 +3257,6 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "CE";
 	name = "CE Shutters";
@@ -5621,7 +5619,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "Security_KPP";
 	opacity = 0
@@ -7733,7 +7730,6 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 8;
 	id = "Captain_private"
 	},
 /obj/machinery/door/firedoor{
@@ -7897,7 +7893,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "Chem";
 	name = "Chemistry Shutters";
@@ -12844,7 +12839,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "RD";
 	name = "RD Shutters";
@@ -19314,7 +19308,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Skynet_launch";
 	name = "Mech Bay"
 	},
@@ -21787,7 +21780,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "chapel";
 	name = "Privacy Shutters";
@@ -22361,7 +22353,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "chapel";
 	name = "Privacy Shutters";
@@ -25101,7 +25092,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Gateway_shutters";
 	name = "Gateway Shutters"
 	},
@@ -27429,7 +27419,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "CMO";
 	name = "CMO Shutters";
@@ -28856,7 +28845,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "CE";
 	name = "CE Shutters";
@@ -28954,7 +28942,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
@@ -29707,7 +29694,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "Security_KPP";
 	opacity = 0
@@ -37235,21 +37221,6 @@
 	icon_state = "dark"
 	},
 /area/station/rnd/brainstorm_center)
-"iqy" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "shutter0";
-	id = "Security_private";
-	opacity = 0
-	},
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint)
 "iqA" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/lights/mixed{
@@ -39382,7 +39353,6 @@
 /obj/structure/sign/nanotrasen,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "CE";
 	name = "CE Shutters";
@@ -40989,7 +40959,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 8;
 	id = "qm_warehouse";
 	name = "Warehouse Shutters"
 	},
@@ -49978,7 +49947,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "CE";
 	name = "CE Shutters";
@@ -50298,23 +50266,6 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
-"lGu" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	dir = 8;
-	icon_state = "shutter0";
-	id = "CMO";
-	name = "CMO Shutters";
-	opacity = 0
-	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/cmo)
 "lGH" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -51827,7 +51778,6 @@
 /obj/structure/cable,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "CMO";
 	name = "CMO Shutters";
@@ -56483,7 +56433,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
@@ -56894,7 +56843,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Gateway_shutters";
 	name = "Gateway Shutters"
 	},
@@ -59046,7 +58994,6 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "Medical_Psychiatry";
 	name = "Privacy Shutters";
@@ -61287,7 +61234,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Gateway_shutters_entrance";
 	name = "Gateway Shutters"
 	},
@@ -66248,24 +66194,6 @@
 	icon_state = "dark"
 	},
 /area/station/cargo/recycleroffice)
-"pFn" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "shutter0";
-	id = "Chem";
-	name = "Chemistry Shutters";
-	opacity = 0
-	},
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/chemistry)
 "pFp" = (
 /obj/machinery/computer/crew,
 /obj/structure/sign/nanotrasen{
@@ -66962,7 +66890,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "Chem";
 	name = "Chemistry Shutters";
@@ -71881,7 +71808,6 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 8;
 	id = "Captain_private"
 	},
 /obj/machinery/door/firedoor{
@@ -71943,7 +71869,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "CE";
 	name = "CE Shutters";
@@ -75319,7 +75244,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Gateway_shutters_entrance";
 	name = "Gateway Shutters"
 	},
@@ -87108,7 +87032,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "RD";
 	name = "RD Shutters";
@@ -89415,7 +89338,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "CMO";
 	name = "CMO Shutters";
@@ -96479,7 +96401,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
@@ -120819,8 +120740,8 @@ jSM
 jSM
 gSs
 gSs
-iqy
-iqy
+rrD
+rrD
 jAH
 gSs
 gSs
@@ -121311,7 +121232,7 @@ aMO
 ngU
 ngU
 vuJ
-lGu
+lZQ
 ngU
 ngU
 kpp
@@ -122839,7 +122760,7 @@ eSb
 wAI
 wAI
 wAI
-pFn
+bqU
 pOF
 fsW
 mwc

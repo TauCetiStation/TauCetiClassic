@@ -192,8 +192,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out";
-	dir = 4
+	id = "Out"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -236,8 +235,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out2";
-	dir = 4
+	id = "Out2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -898,8 +896,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out2";
-	dir = 4
+	id = "Out2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -3997,8 +3994,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "Skynet_launch";
-	name = "Mech Bay";
-	dir = 8
+	name = "Mech Bay"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -8383,8 +8379,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out2";
-	dir = 4
+	id = "Out2"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -8622,8 +8617,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out";
-	dir = 4
+	id = "Out"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -9229,8 +9223,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out";
-	dir = 4
+	id = "Out"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"

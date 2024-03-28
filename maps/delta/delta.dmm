@@ -855,7 +855,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
@@ -7564,7 +7563,6 @@
 /obj/structure/table/reinforced/stall,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
@@ -8298,7 +8296,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "CE_private";
 	opacity = 0
@@ -8356,7 +8353,6 @@
 /obj/structure/table/woodentable,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "bar_reva_shuttes";
 	name = "Bar Shutters";
@@ -13546,7 +13542,6 @@
 /obj/item/weapon/bell,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
@@ -33369,7 +33364,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "Medical_Psychiatry";
 	name = "Privacy Shutters";
@@ -38676,7 +38670,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "Medical_lobby";
 	name = "Medical Lobby Shutters";
@@ -46679,7 +46672,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 8;
 	id = "mine_shuttes";
 	name = "Shuttle Dock Shutters"
 	},
@@ -50157,7 +50149,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "Corporate_lounge_shutters";
 	name = "Corporate Lounge Shutters";
@@ -51360,7 +51351,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "heads_meeting";
 	name = "Meeting Room Window Shields";
@@ -61063,7 +61053,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "bar_reva_shuttes";
 	name = "Bar Shutters";
@@ -64838,7 +64827,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "pr_kitch_shuttes"
 	},
 /turf/simulated/floor/plating,
@@ -66452,7 +66440,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "surgery_shutters";
 	name = "Surgery Shutters";
@@ -66918,7 +66905,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
@@ -79163,7 +79149,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "bar_reva_shuttes";
 	name = "Bar Shutters";
@@ -79253,7 +79238,6 @@
 /obj/item/weapon/bell,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "bar_reva_shuttes";
 	name = "Bar Shutters";
@@ -79371,7 +79355,6 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Visit Shutters";
 	name = "Visit Shutters"
 	},
@@ -80061,7 +80044,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "cmo_shutters";
 	name = "CMO Shutters";
@@ -80627,7 +80609,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "Corporate_lounge_shutters";
 	name = "Corporate Lounge Shutters";
@@ -83348,7 +83329,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
@@ -85334,7 +85314,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "Medical_lobby";
 	name = "Medical Lobby Shutters";
@@ -85894,7 +85873,6 @@
 /obj/item/weapon/storage/wallet/random,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "bar_reva_shuttes";
 	name = "Bar Shutters";
@@ -90051,7 +90029,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "CE_private";
 	opacity = 0
@@ -96184,7 +96161,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 8;
 	id = "vac_offic";
 	name = "Vacant Office"
 	},
@@ -100278,7 +100254,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
@@ -107079,7 +107054,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "warehouse_shuttes";
 	name = "Warehouse Shutters"
 	},
@@ -108352,7 +108326,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "teleporter_in_shutter";
 	name = "Teleporters In Shutter"
 	},
@@ -112852,7 +112825,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "kitchen_shuttes";
 	name = "KitchenShutters";
