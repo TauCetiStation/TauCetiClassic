@@ -275,7 +275,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/donor
 	name = "Donor Candy"
-	cases = list("донорская конфета", "донорской конфеты", "донорской конфете", "донорскую конфету", "донорской конфетой", "донорской конфете")
+	cases = list("конфета донор", "конфеты донор", "конфете донор", "конфету донор", "конфетой донор", "конфете донор")
 	desc = "A little treat for blood donors."
 	trash = /obj/item/trash/candy
 	bitesize = 5
@@ -535,7 +535,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	name = "carp fillet"
-	cases = list("карповое филе", "карпового филе", "карповому филе", "карповое филе", "карповым филе", "карповом филе")
+	cases = list("филе карпа", "филе карпа", "филе карпа", "филе карпа", "филе карпа", "филе карпа")
 	desc = "A fillet of spess carp meat"
 	icon_state = "fishfillet"
 	filling_color = "#ffdefe"
@@ -685,7 +685,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cheeseburger
 	name = "cheeseburger"
-	cases = list("сырный бургер", "сырного бургера", "сырному бургеру", "сырный бургер", "сырным бургером", "сырном бургере")
+	cases = list("чизбургер", "чизбургера", "чизбургеру", "чизбургер", "чизбургером", "чизбургере")
 	desc = "The cheese adds a good flavor."
 	icon_state = "cheeseburger"
 	list_reagents = list("nutriment" = 8, "cheese" = 8, "vitamin" = 1)
@@ -739,7 +739,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger
 	name = "Clown Burger"
-	cases = list("клоунский бургер", "клоунского бургера", "клоунскому бургеру", "клоунский бургер", "клоунским бургером", "клоунском бургере")
+	cases = list("клоун-бургер", "клоун-бургера", "клоун-бургеру", "клоун-бургер", "клоун-бургером", "клоун-бургере")
 	desc = "This tastes funny... And HONKS!"
 	icon_state = "clownburger"
 	filling_color = "#ff00ff"
@@ -788,7 +788,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	name = "Banana Cream Pie"
-	cases = list("банановый пирог с кремом", "бананового пирога с кремом", "банановому пирогу с кремом", "банановый пирог с кремом", "банановым пирогом с кремом", "банановом пироге с кремом")
+	cases = list("банановый кремовый пирог", "бананового кремового пирога", "банановому кремовому пирогу", "банановый кремовый пирог", "банановым кремовым пирогом", "банановом кремовом пироге")
 	desc = "Just like back home, on clown planet! HONK!"
 	icon_state = "pie"
 	trash = /obj/item/trash/plate
@@ -834,7 +834,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
 	name = "Soylent Green"
-	cases = list("сойлент зелёный", "сойлента зелёного", "сойленту залёному", "сойлента залёного", "сойлентом зелёным", "сойленте зелёном")
+	cases = list("зелёный сойлент", "зелёного сойлент", "зелёному сойленту", "зелёного сойлента", "зелёным сойлентом", "зелёном сойленте")
 	desc = "Not made of people. Honest." //Totally people.
 	icon_state = "soylent_green"
 	trash = /obj/item/trash/waffles
@@ -1024,7 +1024,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "Space Twinkie"
-	cases = list("космический твинки", "космического твинки", "космическому твинки", "космический твинки", "космическим твинки", "космическом твинка")
+	cases = list("космо-твинки", "космо-твинка", "космо-твинку", "космо-твинки", "космо-твинком", "космо-твинке")
 	icon_state = "space_twinkie"
 	desc = "Guaranteed to survive longer then you will."
 	filling_color = "#ffe591"
@@ -1115,7 +1115,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/fries
 	name = "Space Fries"
-	cases = list("космическая картошка фри", "космической картошки фри", "космической картошке фри", "космическую картошку фри", "космической картошкой фри", "космической картошке фри")
+	cases = list("космо-фри", "космо-фри", "космо-фри", "космо-фри", "космо-фри", "космо-фри")
 	desc = "AKA: French Fries, Freedom Fries, etc."
 	icon_state = "fries"
 	trash = /obj/item/trash/plate
@@ -1204,7 +1204,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 	name = "Poppy pretzel"
-	cases = list("Маковый крендель", "макового кренделя", "маковому кренделю", "маковый крендель", "маковым кренделем", "маковом кренделе")
+	cases = list("маковый крендель", "макового кренделя", "маковому кренделю", "маковый крендель", "маковым кренделем", "маковом кренделе")
 	desc = "It's all twisted up!"
 	icon_state = "poppypretzel"
 	bitesize = 2
@@ -1398,7 +1398,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup
 	name = "Wish Soup"
-	cases = list("Суп-самозванец", "Супа-самозванца", "Супу-самозванцу", "Суп-самозванец", "Супом-самозванцем", "Супе-самозванце")
+	cases = list("суп-самозванец", "супа-самозванца", "супу-самозванцу", "суп-самозванец", "супом-самозванцем", "супе-самозванце")
 	desc = "I wish this was soup."
 	icon_state = "wishsoup"
 	trash = /obj/item/trash/snack_bowl
@@ -1797,7 +1797,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries
 	name = "Carrot Fries"
-	cases = list("морковный картофель фри", "морковного картофеля фри", "морковному картофелю фри", "морковный картофель фри", "морковным картофелем фри", "морковном картофеле фри")
+	cases = list("марковка-фри", "марковка-фри", "марковка-фри", "марковка-фри", "марковка-фри", "марковка-фри")
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
 	trash = /obj/item/trash/plate
@@ -2715,7 +2715,7 @@
 // slicable into 3xdoughslices
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough
 	name = "flat dough"
-	cases = list("плоское тесто", "плоского теста", "плоскому тесту", "плоское тесто", "плоским тестом", "плоском тесте")
+	cases = list("раскатанное тесто", "раскатанного теста", "раскатанному тесту", "раскатанное тесто", "раскатанным тестом", "раскатанном тесте")
 	desc = "A flattened dough."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "flat dough"
@@ -2955,7 +2955,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
 	name = "Turkey"
-	cases = list("идейка", "идейки", "идейке", "идейку", "идейкой", "идейке")
+	cases = list("индейка", "индейки", "индейке", "индейку", "индейкой", "индейке")
 	desc = "A traditional turkey served with stuffing."
 	icon_state = "turkey"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
@@ -2965,7 +2965,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
 	name = "turkey serving"
-	cases = list("порция идейки", "порции идейки", "порции идейки", "порцию идейки", "порцией идейки", "порции идейки")
+	cases = list("порция индейки", "порции индейки", "порции индейки", "порцию индейки", "порцией индейки", "порции индейки")
 	desc = "A serving of some tender and delicious turkey."
 	icon_state = "turkeyslice"
 	trash = /obj/item/trash/plate
