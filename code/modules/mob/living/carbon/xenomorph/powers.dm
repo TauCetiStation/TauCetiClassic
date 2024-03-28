@@ -220,7 +220,7 @@
 /obj/effect/proc_holder/spell/targeted/screech/cast(list/targets, mob/user = usr)
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
 	alien.adjustToxLoss(-plasma_cost)
-	alien.create_shriekwave()
+	alien.create_shriekwave(shriekwaves_left = 15)
 	for(var/mob/living/L as anything in targets)
 		if(L.stat == DEAD || isxeno(L) || L.flags & GODMODE)
 			continue
