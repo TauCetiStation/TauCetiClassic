@@ -1299,7 +1299,7 @@
 	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup
-	name = "Tomato soup"
+	name = "Blood soup"
 	cases = list("кровавый суп", "кровавого супа", "кровавому супу", "кровавый суп", "кровавым супом", "кровавом супе")
 	desc = "Smells like copper."
 	icon_state = "tomatosoup"
