@@ -83,9 +83,9 @@ export const ComputerCard = (props, context) => {
         );
       } else {
         bodyBlock = (
-          <Fragment>
-            <Section title="Card Modification">
-              <LabeledList title="Department">
+          <Fragment title="Card Modification">
+            <Section title="Department">
+              <LabeledList>
                 <LabeledList.Item label="Command">
                   {data.command_jobs.map(v => (
                     <Button
@@ -146,25 +146,18 @@ export const ComputerCard = (props, context) => {
                 )}
               </LabeledList>
             </Section>
-            <Section>
-              <LabeledList title="Access">
-                <LabeledList.Item>
-                  <AccessList
-                    accesses={data.regions}
-                    selectedList={data.access_type}
-                    accessMod={ref => act('access', {
-                      access: ref,
-                    })}
-                    grantAll={() => act('access_full')}
-                    denyAll={() => act('clear_all')}
-                    grantDep={ref => act('access', {
-                      region: ref,
-                    })}
-                    denyDep={ref => act('access', {
-                      region: ref,
-                    })} />
-                </LabeledList.Item>
-              </LabeledList>
+            <Section title="Access List">
+              <AccessList
+                accesses={data.regions}
+                selectedList={data.selectedAccess}
+                accessMod={ref => act('access', {
+                  access: ref,
+                })}
+                grantAll={() => act('access_full')}
+                denyAll={() => act('clear_all')}
+                grantDep={ref => act('access_region', {
+                  region: ref,
+                })} />
             </Section>
           </Fragment>
         );
