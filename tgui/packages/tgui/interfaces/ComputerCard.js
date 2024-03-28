@@ -23,7 +23,8 @@ export const ComputerCard = (props, context) => {
       <Tabs.Tab
         icon="scroll"
         selected={data.mode === 2}
-        onClick={() => act("mode", { mode: 2 })}>
+        onClick={() => act("mode", { mode: 2 })}
+        onClick={() => act("print")}>
         Print
       </Tabs.Tab>
     </Tabs>

@@ -300,7 +300,7 @@
 			SStgui.update_uis(src)
 
 		if ("mode")
-			mode = text2num(params["mode_modify"])
+			mode = text2num(params["mode"])
 
 		if ("print")
 			if (!printing)
