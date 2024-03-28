@@ -1069,7 +1069,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/tao
 	name = "Admiral Yamamoto carp"
-	cases = list("карп Адмирала Ямамато", "карпа Адмирала Ямамато", "карпу Адмирала Ямамато", "карпа адмирала ямамото", "карпом Адмирала Ямамато", "карпе Адмирала Ямамато")
+	cases = list("карп адмирала Ямамато", "карпа адмирала Ямамато", "карпу адмирала Ямамато", "карпа адмирала Ямамото", "карпом адмирала Ямамато", "карпе адмирала Ямамато")
 	desc = "Tastes like chicken."
 	icon_state = "chinese2"
 	trash = /obj/item/trash/chinese2
