@@ -454,7 +454,7 @@
 
 /obj/item/ammo_box/magazine/plasma
 	name = "plasma weapon battery pack"
-	desc = "Специальный корпус аккумулятора с защитой от ЭМИ. Используется метод быстрой зарядки. Имеет стандартизированные размеры и может использоваться с любым плазмотроном данной серии. Возможна замена элемента питания."
+	desc = "Специальный корпус аккумулятора использующий метод быстрой зарядки. Имеет стандартизированные размеры и может использоваться с любым плазмотроном данной серии. Возможна замена элемента питания."
 	icon_state = "plasma_clip"
 	origin_tech = "combat=2"
 	ammo_type = null // unused, those are inside guns of this type.
@@ -520,8 +520,10 @@
 	// yes, it stops reporting accurate data for icon if its overflowing with energy till it drops charge under certain amount.
 	icon_state = "[initial(icon_state)]-[has_overcharge() ? "oc" : CEIL(power_supply.charge / power_supply.maxcharge * 5) * 20]"
 
-/obj/item/ammo_box/magazine/plasma/emp_act() // just incase if someone adds emp_act in parent.
-	return
+/obj/item/ammo_box/magazine/plasma/emp_act(severity)
+	power_supply.use(round(power_supply.charge / severity))
+	update_icon()
+	..()
 
 /obj/item/ammo_box/magazine/drozd
 	name = "Drozd magazine (12.7mm)"
