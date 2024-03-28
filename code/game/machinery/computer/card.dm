@@ -118,15 +118,15 @@
 	data["salary"] = datum_account ? datum_account.owner_salary : "not_found"
 	data["centcom_access"] = is_centcom()
 	data["all_centcom_access"] = is_centcom() ? TRUE : FALSE
-	data["regions"] = get_accesslist_static_data(REGION_GENERAL, is_centcom() ? REGION_CENTCOMM : REGION_COMMAND)
+	data["regions"] = null
 
-	data["command_jobs"] = format_jobs(command_positions)
-	data["engineering_jobs"] = format_jobs(engineering_positions)
-	data["medical_jobs"] = format_jobs(medical_positions)
-	data["science_jobs"] = format_jobs(science_positions)
-	data["security_jobs"] = format_jobs(security_positions)
-	data["civilian_jobs"] = format_jobs(civilian_positions)
-	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
+	data["command_jobs"] = command_positions
+	data["engineering_jobs"] = engineering_positions
+	data["medical_jobs"] = medical_positions
+	data["science_jobs"] = science_positions
+	data["security_jobs"] = security_positions
+	data["civilian_jobs"] = civilian_positions
+	data["centcom_jobs"] = get_all_centcom_jobs()
 
 	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
 	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
@@ -244,6 +244,9 @@
 		if("access_full")
 			if(is_authenticated())
 				modify.access += get_all_accesses()
+		if("clear_all")
+			if(is_authenticated())
+				modify.access -= get_all_accesses()
 		if ("assign")
 			if (is_authenticated() && modify)
 				var/t1 = params["assign_modify"]
@@ -276,7 +279,6 @@
 
 					if(datum_account)
 						datum_account.set_salary(new_salary, jobdatum.salary_ratio)	//set the new salary equal to job
-
 		if ("reg")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))

@@ -81,107 +81,94 @@ export const ComputerCard = (props, context) => {
             No card to modify.
           </NoticeBox>
         );
-      } else { (
-        <Fragment>
-          <Section title="Department Job">
-            <LabeledList>
-              <LabeledList.Item label="Command">
-                {data.command_jobs.map(v => (
-                  <Button
-                    selected={v === data.modify_rank}
-                    key={v} content={v}
-                    onClick={() => act("assign", { assign_target: v })} />
-                ))}
-              </LabeledList.Item>
-              <LabeledList.Item label="Engineering">
-                {data.engineering_jobs.map(v => (
-                  <Button
-                    selected={v === data.modify_rank}
-                    key={v} content={v}
-                    onClick={() => act("assign", { assign_target: v })} />
-                ))}
-              </LabeledList.Item>
-              <LabeledList.Item label="Medical">
-                {data.medical_jobs.map(v => (
-                  <Button
-                    selected={v === data.modify_rank}
-                    key={v} content={v}
-                    onClick={() => act("assign", { assign_target: v })} />
-                ))}
-              </LabeledList.Item>
-              <LabeledList.Item label="Science">
-                {data.science_jobs.map(v => (
-                  <Button
-                    selected={v === data.modify_rank}
-                    key={v} content={v}
-                    onClick={() => act("assign", { assign_target: v })} />
-                ))}
-              </LabeledList.Item>
-              <LabeledList.Item label="Security">
-                {data.security_jobs.map(v => (
-                  <Button
-                    selected={v === data.modify_rank}
-                    key={v} content={v}
-                    onClick={() => act("assign", { assign_target: v })} />
-                ))}
-              </LabeledList.Item>
-              <LabeledList.Item label="Civilian">
-                {data.civilian_jobs.map(v => (
-                  <Button
-                    selected={v === data.modify_rank}
-                    key={v} content={v}
-                    onClick={() => act("assign", { assign_target: v })} />
-                ))}
-              </LabeledList.Item>
-              {!!data.is_centcom && (
-                <LabeledList.Item label="CentCom">
-                  {data.centcom_jobs.map(v => (
+      } else {
+        bodyBlock = (
+          <Fragment>
+            <Section title="Card Modification">
+              <LabeledList title="Department">
+                <LabeledList.Item label="Command">
+                  {data.command_jobs.map(v => (
                     <Button
+                      selected={v === data.modify_rank}
                       key={v} content={v}
-                      onClick={() => act("assign", { assign_target: v })} />
+                      onClick={() => act("assign", { assign_modify: v })} />
                   ))}
                 </LabeledList.Item>
-              )}
-              <LabeledList.Item label="Demotion">
-                <Button
-                  selected={"Demoted" === data.modify_rank}
-                  key="Demoted" content="Demoted"
-                  tooltip="Civilian access, 'demoted' title."
-                  color="red" icon="times"
-                  onClick={() => act("demote")} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Non-Crew">
-                <Button
-                  disabled={"Terminated" === data.modify_rank}
-                  key="Terminate" content="Terminated"
-                  tooltip="Zero access. Not crew."
-                  color="red" icon="eraser"
-                  onClick={() => act("terminate")} />
-              </LabeledList.Item>
-            </LabeledList>
-          </Section>
-          <Section title="Access">
-            <LabeledList>
-              <LabeledList.Item>
-                <AccessList
-                  accesses={data.regions}
-                  selectedList={data.selectedAccess}
-                  accessMod={ref => act('set', {
-                    access: ref,
-                  })}
-                  grantAll={() => act('grant_all')}
-                  denyAll={() => act('clear_all')}
-                  grantDep={ref => act('grant_region', {
-                    region: ref,
-                  })}
-                  denyDep={ref => act('deny_region', {
-                    region: ref,
-                  })} />
-              </LabeledList.Item>
-            </LabeledList>
-          </Section>
-        </Fragment>
-      ); }
+                <LabeledList.Item label="Engineering">
+                  {data.engineering_jobs.map(v => (
+                    <Button
+                      selected={v === data.modify_rank}
+                      key={v} content={v}
+                      onClick={() => act("assign", { assign_modify: v })} />
+                  ))}
+                </LabeledList.Item>
+                <LabeledList.Item label="Medical">
+                  {data.medical_jobs.map(v => (
+                    <Button
+                      selected={v === data.modify_rank}
+                      key={v} content={v}
+                      onClick={() => act("assign", { assign_modify: v })} />
+                  ))}
+                </LabeledList.Item>
+                <LabeledList.Item label="Science">
+                  {data.science_jobs.map(v => (
+                    <Button
+                      selected={v === data.modify_rank}
+                      key={v} content={v}
+                      onClick={() => act("assign", { assign_modify: v })} />
+                  ))}
+                </LabeledList.Item>
+                <LabeledList.Item label="Security">
+                  {data.security_jobs.map(v => (
+                    <Button
+                      selected={v === data.modify_rank}
+                      key={v} content={v}
+                      onClick={() => act("assign", { assign_modify: v })} />
+                  ))}
+                </LabeledList.Item>
+                <LabeledList.Item label="Civilian">
+                  {data.civilian_jobs.map(v => (
+                    <Button
+                      selected={v === data.modify_rank}
+                      key={v} content={v}
+                      onClick={() => act("assign", { assign_modify: v })} />
+                  ))}
+                </LabeledList.Item>
+                {!!data.is_centcom && (
+                  <LabeledList.Item label="CentCom">
+                    {data.centcom_jobs.map(v => (
+                      <Button
+                        selected={v === data.modify_rank}
+                        key={v} content={v}
+                        onClick={() => act("assign", { assign_modify: v })} />
+                    ))}
+                  </LabeledList.Item>
+                )}
+              </LabeledList>
+            </Section>
+            <Section>
+              <LabeledList title="Access">
+                <LabeledList.Item>
+                  <AccessList
+                    accesses={data.regions}
+                    selectedList={data.access_type}
+                    accessMod={ref => act('access', {
+                      access: ref,
+                    })}
+                    grantAll={() => act('access_full')}
+                    denyAll={() => act('clear_all')}
+                    grantDep={ref => act('access', {
+                      region: ref,
+                    })}
+                    denyDep={ref => act('access', {
+                      region: ref,
+                    })} />
+                </LabeledList.Item>
+              </LabeledList>
+            </Section>
+          </Fragment>
+        );
+      }
       break;
 
     case 1: // Crew Manifest
