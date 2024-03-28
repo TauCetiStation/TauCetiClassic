@@ -66,6 +66,10 @@
 	QDEL_NULL(magazine)
 	return ..()
 
+/obj/item/weapon/gun/plasma/emp_act()
+	update_icon()
+	..()
+
 /obj/item/weapon/gun/plasma/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()
 	..()
