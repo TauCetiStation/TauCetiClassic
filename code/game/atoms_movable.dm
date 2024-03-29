@@ -32,14 +32,6 @@
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
 	var/list/area_sensitive_contents
 
-/atom/movable/atom_init(mapload, ...)
-	. = ..()
-
-	if (can_block_air && isturf(loc))
-		var/turf/T = loc
-		if(!T.can_block_air)
-			T.can_block_air = TRUE
-
 /atom/movable/Destroy()
 
 	var/turf/T = loc
