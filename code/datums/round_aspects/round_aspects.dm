@@ -175,3 +175,29 @@
 	name = ROUND_ASPECT_HEALING_ALCOHOL
 	desc = "Алкоголь лечит физические повреждения."
 	afterspawn_IC_announcement = "<span class='success'>Гибсонские ученые доказали, что умеренное потребление алкоголя продливает жизнь.</span>"
+
+/datum/round_aspect/traitor_sec
+	name = ROUND_ASPECT_TRAITOR_SECURITY
+	desc = "Предатель среди охранников."
+	var/traitor_spawned = FALSE
+
+/datum/round_aspect/traitor_sec/after_start()
+	if(!traitor_spawned)
+		addtimer(CALLBACK(src, PROC_REF(spawn_traitor)), 5 MINUTES)
+
+/datum/round_aspect/traitor_sec/proc/spawn_traitor()
+	if(traitor_spawned)
+		return
+	var/list/possible_traitors = list()
+	var/mob/living/traitor
+	for(var/mob/living/L as anything in living_list)
+		if(!jobban_isbanned(L, "Syndicate") && ((L.job == "Security Officer") || (L.job == "Security Cadet") || (L.job == "Warden")))
+			possible_traitors += L
+
+	if(possible_traitors.len == 0)
+		after_start()
+	traitor = pick(possible_traitors)
+	traitor_spawned = TRUE
+	var/datum/role/traitor/security/R = SSticker.mode.CreateRole(/datum/role/traitor/security, traitor)
+	setup_role(R, TRUE)
+	message_admins("[traitor.name] become a security traitor!")

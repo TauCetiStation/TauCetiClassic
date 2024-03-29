@@ -59,6 +59,7 @@
 #define SYNDIESQUADIE "Syndicate Commando"
 #define TRAITOR "Traitor"
 #define TRAITORCHAN "TraitorChan"
+#define SECURITY_TRAITOR "Security Traitor"
 #define UNDERCOVER_COP "Undercover Officer"
 #define VOXRAIDER "Vox Raider"
 #define WIZARD "Wizard"

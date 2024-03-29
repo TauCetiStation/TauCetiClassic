@@ -180,6 +180,18 @@
 		/datum/skill/melee = SKILL_LEVEL_PRO
 	)
 
+/datum/skillset/traitorsec
+	name = SECURITY_TRAITOR
+	initial_skills = list(
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/combat_mech = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_PRO,
+		/datum/skill/engineering = SKILL_LEVEL_TRAINED,
+		/datum/skill/construction = SKILL_LEVEL_TRAINED
+	)
+
 /datum/skillset/shadowling
 	name = SHADOWLING
 	initial_skills = list(

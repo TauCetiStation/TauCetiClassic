@@ -148,3 +148,20 @@
 	. = ..()
 	var/mob/living/carbon/human/H = antag.current
 	H.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(antag.current), SLOT_R_STORE)
+
+/datum/role/traitor/security
+	name = SECURITY_TRAITOR
+	id = SECURITY_TRAITOR
+	required_pref = ROLE_TRAITOR
+	give_uplink = FALSE
+	antag_hud_type = ANTAG_HUD_SEC_TRAITOR
+	antag_hud_name = "hudsectraitor"
+	restricted_jobs = list() //usless
+	skillset_type = /datum/skillset/traitorsec
+	change_to_maximum_skills = TRUE
+
+/datum/role/traitor/security/Greet(greeting, custom)
+	antag.current.playsound_local(null, 'sound/antag/traitorsecalert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	var/icon/logo = get_logo_icon()
+	to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You <B>hate</B> your job... Huge risks, many responsibilities and a pittance salary. Someone noticed this and decided to bribe you. You need to complete several tasks, after which you will receive money that will last for the rest of your life.</span>")
+	return TRUE
