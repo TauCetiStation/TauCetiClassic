@@ -13864,10 +13864,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/door/airlock/security{
-	dir = 4;
-	name = "Detective's Office";
-	req_one_access = list(4,68)
+/obj/machinery/door/morgue{
+	name = "Detective's Office"
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
