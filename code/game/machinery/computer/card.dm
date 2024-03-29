@@ -129,25 +129,9 @@
 					all_centcom_access.Add(list(list(
 						"ref" = access,
 						"allowed" = (access in modify.access) ? 1 : 0)))
-
 				data["all_centcom_access"] = all_centcom_access
 			else if (modify)
-				var/list/regions = list()
-				for(var/i = 1; i <= 7; i++)
-					var/list/accesses = list()
-					var/region_allowed = 0
-					for(var/access in get_region_accesses(i))
-						if (get_access_desc(access))
-							region_allowed += (access in modify.access) ? 1 : 0
-							accesses.Add(list(list(
-								"ref" = access,
-								"allowed" = (access in modify.access) ? 1 : 0)))
-					regions.Add(list(list(
-						"name" = get_region_accesses_name(i),
-						"accesses" = accesses,
-						"id" = i,
-						"region_allowed" =  (region_allowed == length(get_region_accesses(i)) ? 1 : 0))))
-				data["regions"] = regions
+				data["regions"] = get_accesslist_static_data(1, is_centcom() ? REGION_CENTCOMM : 7)
 
 		if(IDCOMPUTER_SCREEN_MANIFEST)
 
@@ -220,20 +204,16 @@
 							modify.access += access_type
 		if("access_region")
 			if(is_authenticated())
-				var/region_id = text2num(params["region_id"])
-				var/region_accesses = get_region_accesses(region_id)
-				var/region_allowed = text2num(params["region_allowed"])
-				modify.access -= region_accesses
-				if(!region_allowed)
-					modify.access += region_accesses
+				var/region = text2num(params["region"])
+				if(isnull(region) || region < 1 || region > (is_centcom() ? REGION_CENTCOMM : 7))
+					return
+				modify.access += get_region_accesses(region)
 		if("deny_region")
 			if(is_authenticated())
-				var/region_id = text2num(params["region_id"])
-				var/region_accesses = get_region_accesses(region_id)
-				var/region_allowed = text2num(params["region_allowed"])
-				modify.access += region_accesses
-				if(region_allowed)
-					modify.access -= region_accesses
+				var/region = text2num(params["region"])
+				if(isnull(region) || region < 1 || region > (is_centcom() ? REGION_CENTCOMM : 7))
+					return
+				modify.access -= get_region_accesses(region)
 		if("access_full")
 			if(is_authenticated())
 				modify.access += get_all_accesses()
