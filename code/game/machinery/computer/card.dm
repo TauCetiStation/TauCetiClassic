@@ -327,3 +327,7 @@
 	name = "CentCom Identification Computer"
 	circuit = /obj/item/weapon/circuitboard/card/centcom
 	req_access = list(access_cent_captain)
+
+#undef IDCOMPUTER_SCREEN_ACCESS
+#undef IDCOMPUTER_SCREEN_MANIFEST
+#undef IDCOMPUTER_SCREEN_PRINT
