@@ -73,7 +73,7 @@ var/global/bomb_set
 				to_chat(user, "Вы вкрутили панель управления в [CASE(src, ACCUSATIVE_CASE)].")
 		else
 			if(!opened)
-				to_chat(user, "[C_CASE(src, NOMINATIVE_CASE)] жужжит, панель управления все ещё заблокирована!")
+				to_chat(user, "[C_CASE(src, NOMINATIVE_CASE)] жужжит, а панель управления всё ещё заблокирована!")
 			if(opened)
 				opened = FALSE
 				to_chat(user, "Вы вкрутили панель управления в [CASE(src, ACCUSATIVE_CASE)].")
@@ -106,16 +106,16 @@ var/global/bomb_set
 					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает что-то прорезать в [CASE(src, ACCUSATIVE_CASE)], будто [user.gender == MALE ? "он" : "она"] знает, что нужно делать.", "С [CASE(O, ABLATIVE_CASE)] вы начинаете прорезать первый слой...")
 
 					if(O.use_tool(src, user, SKILL_TASK_CHALLENGING, amount = 5, volume = 50))
-						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает перерезать что-то в [CASE(src, DATIVE_CASE)].", "Вы прорезали первый слой.")
+						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает прорезать что-то в [CASE(src, DATIVE_CASE)].", "Вы прорезали первый слой.")
 						removal_stage = 1
 				return FALSE
 			if(1)
 				if(isprying(O))
-					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает бить по [CASE(src, DATIVE_CASE)].", "Вы начали открывать крышку с помощью [CASE(O, GENITIVE_CASE)]...")
+					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает бить по [CASE(src, DATIVE_CASE)].", "Вы начали вскрывать крышку с помощью [CASE(O, GENITIVE_CASE)]...")
 					if(user.is_busy())
 						return FALSE
 					if(O.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
-						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает бить по [CASE(src, DATIVE_CASE)].", "Вы открыли крышку.")
+						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает бить по [CASE(src, DATIVE_CASE)].", "Вы вскрыли крышку.")
 						removal_stage = 2
 				return FALSE
 			if(2)
@@ -131,7 +131,7 @@ var/global/bomb_set
 					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает что-то прорезать в [CASE(src, ACCUSATIVE_CASE)]. Снова.", "Вы начинаете разрезать защитную пластину с помощью [CASE(O, GENITIVE_CASE)]")
 
 					if(O.use_tool(src, user, SKILL_TASK_DIFFICULT , amount = 5, volume = 50))
-						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает перерезать что-то в [CASE(src, DATIVE_CASE)].", "Вы закончили разрезать защитную пластину.")
+						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает прорезать что-то в [CASE(src, DATIVE_CASE)].", "Вы закончили разрезать защитную пластину.")
 						removal_stage = 3
 				return FALSE
 			if(3)
@@ -149,7 +149,7 @@ var/global/bomb_set
 						return FALSE
 					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает бить [CASE(src, GENITIVE_CASE)].", "Вы начинаете взламывать последний защитный слой.")
 					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
-						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает бить [CASE(src, GENITIVE_CASE)].", "Теперь вы можете напрямую взаимодействовать с механизмом [CASE(src, GENITIVE_CASE)]. Use screwdriver to open control panel")
+						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает бить [CASE(src, GENITIVE_CASE)].", "Теперь вы можете напрямую взаимодействовать с механизмом [CASE(src, GENITIVE_CASE)]. Отверткой откройте панель управления")
 						removal_stage = 5
 				return FALSE
 	return ..()
@@ -485,7 +485,7 @@ var/global/bomb_set
 		to_chat(user, "<span class = 'red'>Бомба не реагирует, возможно она сломана?</span>")
 		return
 	if(!isnukeop(user))
-		to_chat(user, "<span class = 'red'>Бомба не реагирует, она сломана?</span>")
+		to_chat(user, "<span class = 'red'>Бомба не реагирует. Может она сломана?</span>")
 		return
 	if(tgui_alert(user, "Активация фальшивой бомбы. Продолжить?", "Активация фальшивки", list("Да","Нет")) != "Да")
 		return
