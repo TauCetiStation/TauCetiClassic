@@ -7403,7 +7403,8 @@
 "arp" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "ck_warehouse";
-	name = "Warehouse Shutters"
+	name = "Warehouse Shutters";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /turf/unsimulated/floor,
@@ -29180,6 +29181,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"osr" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "ck_warehouse";
+	name = "Warehouse Shutters";
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/unsimulated/floor,
+/area/velocity)
 "otb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,7"
@@ -78958,7 +78968,7 @@ weI
 bYb
 ccb
 cgb
-arp
+osr
 cib
 weI
 cgb
