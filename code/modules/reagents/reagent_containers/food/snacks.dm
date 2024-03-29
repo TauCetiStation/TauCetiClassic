@@ -1184,7 +1184,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
 	name = "Spacy Liberty Duff"
-	cases = list("Спейси Либерти пудинг, "Спейси Либерти пудинга", "Спейси Либерти пудингу", "Спейси Либерти пудинг", "Спейси Либерти пудингом", "Спейси Либерти пудинге")
+	cases = list("Спейси Либерти пудинг", "Спейси Либерти пудинга", "Спейси Либерти пудингу", "Спейси Либерти пудинг", "Спейси Либерти пудингом", "Спейси Либерти пудинге")
 	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
 	icon_state = "spacylibertyduff"
 	trash = /obj/item/trash/snack_bowl
