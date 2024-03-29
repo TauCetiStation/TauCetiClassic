@@ -194,14 +194,14 @@
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
 		if("access")
-			if(params["allowed"])
-				if(is_authenticated())
-					var/access_type = text2num(params["access"])
-					var/access_allowed = text2num(params["allowed"])
-					if(access_type in (is_centcom() ? get_all_centcom_access() : get_all_accesses()))
-						modify.access -= access_type
-						if(!access_allowed)
-							modify.access += access_type
+			if(is_authenticated())
+				var/access = text2num(params["access"])
+				var/list/changable = is_centcom() ? get_all_centcom_access() + get_all_accesses() : get_all_accesses()
+				if(access in changable)
+					if(access in modify.access)
+						modify.access -= access
+					else
+						modify.access += access
 		if("access_region")
 			if(is_authenticated())
 				var/region = text2num(params["region"])
