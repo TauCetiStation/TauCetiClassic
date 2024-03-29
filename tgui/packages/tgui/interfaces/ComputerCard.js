@@ -23,8 +23,7 @@ export const ComputerCard = (props, context) => {
       <Tabs.Tab
         icon="scroll"
         selected={data.mode === 2}
-        onClick={() => act("mode", { mode: 2 })}
-        onClick={() => act("print")}>
+        onClick={() => act("mode", { mode: 2 })}>
         Print
       </Tabs.Tab>
     </Tabs>
@@ -84,7 +83,7 @@ export const ComputerCard = (props, context) => {
         );
       } else {
         bodyBlock = (
-          <Fragment title="Card Modification">
+          <Fragment>
             <Section title="Department">
               <LabeledList>
                 <LabeledList.Item label="Command">
@@ -135,6 +134,11 @@ export const ComputerCard = (props, context) => {
                       onClick={() => act("assign", { assign_modify: v })} />
                   ))}
                 </LabeledList.Item>
+                <LabeledList.Item label="Custom">
+                  <Button label="Custom"
+                    key="Custom" content="Custom"
+                    onClick={() => act("assign", { assign_modify: "Custom" })} />
+                </LabeledList.Item>
                 {!!data.is_centcom && (
                   <LabeledList.Item label="CentCom">
                     {data.centcom_jobs.map(v => (
@@ -145,6 +149,22 @@ export const ComputerCard = (props, context) => {
                     ))}
                   </LabeledList.Item>
                 )}
+                <LabeledList.Item label="Demotions">
+                  <Button
+                    disabled={"Demoted" === data.modify_rank}
+                    key="Demoted" content="Demoted"
+                    tooltip="Civilian access, 'demoted' title."
+                    color="red" icon="times"
+                    onClick={() => act("demote")} />
+                </LabeledList.Item>
+                <LabeledList.Item label="Non-Crew">
+                  <Button
+                    disabled={"Terminated" === data.modify_rank}
+                    key="Terminate" content="Terminated"
+                    tooltip="Zero access. Not crew."
+                    color="red" icon="eraser"
+                    onClick={() => act("terminate")} />
+                </LabeledList.Item>
               </LabeledList>
             </Section>
             <Section title="Access List">
@@ -158,6 +178,9 @@ export const ComputerCard = (props, context) => {
                 denyAll={() => act('clear_all')}
                 grantDep={ref => act('access_region', {
                   region: ref,
+                })}
+                denyDep={ref => act('deny_region', {
+                  region: ref,
                 })} />
             </Section>
           </Fragment>
@@ -167,9 +190,8 @@ export const ComputerCard = (props, context) => {
 
     case 1: // Crew Manifest
       bodyBlock = (
-        <Section color={data.manifest ? "red" : ""}>
-          Crew Manifest:
-          {data.manifest ? data.manifest : "Now"}
+        <Section>
+          {data.manifest}
         </Section>
       );
       break;
@@ -194,7 +216,7 @@ export const ComputerCard = (props, context) => {
   }
 
   return (
-    <Window resizable>
+    <Window width={920} height={845} resizable>
       <Window.Content scrollable>
         {menuBlock}
         {authBlock}

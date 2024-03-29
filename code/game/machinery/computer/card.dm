@@ -27,16 +27,6 @@
 /obj/machinery/computer/card/proc/get_modify_rank()
 	return modify && modify.assignment ? modify.assignment : "Unassigned"
 
-/obj/machinery/computer/card/proc/format_jobs(list/jobs)
-	var/list/formatted = list()
-	for(var/job in jobs)
-		formatted.Add(list(list(
-			"display_name" = replacetext(job, " ", "&nbsp"),
-			"modify_rank" = get_modify_rank(),
-			"job" = job)))
-
-	return formatted
-
 /obj/machinery/computer/card/AltClick(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
@@ -118,7 +108,7 @@
 	data["salary"] = datum_account ? datum_account.owner_salary : "not_found"
 	data["centcom_access"] = is_centcom()
 	data["all_centcom_access"] = is_centcom() ? TRUE : FALSE
-	data["regions"] = null
+	data["selectedAccess"] = modify ? modify.access : list()
 
 	data["command_jobs"] = command_positions
 	data["engineering_jobs"] = engineering_positions
@@ -143,25 +133,7 @@
 
 				data["all_centcom_access"] = all_centcom_access
 			else if (modify)
-				var/list/regions = list()
-				for(var/i = 1; i <= 7; i++)
-					var/list/accesses = list()
-					var/region_allowed = 0
-					for(var/access in get_region_accesses(i))
-						if (get_access_desc(access))
-							region_allowed += (access in modify.access) ? 1 : 0
-							accesses.Add(list(list(
-								"desc" = replacetext(get_access_desc(access), " ", "&nbsp"),
-								"ref" = access,
-								"allowed" = (access in modify.access) ? 1 : 0)))
-
-					regions.Add(list(list(
-						"name" = get_region_accesses_name(i),
-						"accesses" = accesses,
-						"id" = i,
-						"region_allowed" =  (region_allowed == length(get_region_accesses(i)) ? 1 : 0))))
-
-				data["regions"] = regions
+				data["regions"] = 	data["regions"] = get_accesslist_static_data(REGION_GENERAL, REGION_COMMAND)
 
 		if(IDCOMPUTER_SCREEN_MANIFEST)
 
@@ -223,11 +195,10 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
-
 		if("access")
 			if(params["allowed"])
 				if(is_authenticated())
-					var/access_type = text2num(params["access_modify"])
+					var/access_type = text2num(params["access"])
 					var/access_allowed = text2num(params["allowed"])
 					if(access_type in (is_centcom() ? get_all_centcom_access() : get_all_accesses()))
 						modify.access -= access_type
@@ -238,9 +209,15 @@
 				var/region_id = text2num(params["region_id"])
 				var/region_accesses = get_region_accesses(region_id)
 				var/region_allowed = text2num(params["region_allowed"])
-				modify.access -= region_accesses
 				if(!region_allowed)
 					modify.access += region_accesses
+		if("deny_region")
+			if(is_authenticated())
+				var/region_id = text2num(params["region_id"])
+				var/region_accesses = get_region_accesses(region_id)
+				var/region_allowed = text2num(params["region_allowed"])
+				if(region_allowed)
+					modify.access -= region_accesses
 		if("access_full")
 			if(is_authenticated())
 				modify.access += get_all_accesses()
@@ -249,7 +226,7 @@
 				modify.access -= get_all_accesses()
 		if ("assign")
 			if (is_authenticated() && modify)
-				var/t1 = params["assign_modify"]
+				var/t1 = sanitize(params["assign_modify"])
 				var/new_salary = 0
 				var/datum/job/jobdatum
 				if(t1 == "Custom")
@@ -294,7 +271,7 @@
 				if (Adjacent(usr) || issilicon(usr))
 					var/datum/money_account/account = sanitize_numbers(input("Account Number", "Input Number", modify.associated_account_number) as text | null)
 					if(account)
-						modify.associated_account_number = account
+						modify.associated_account_number = account.account_number
 					else
 						to_chat(usr, "<span class='warning'> Account with such number does not exist!</span>")
 			SStgui.update_uis(src)
@@ -332,7 +309,12 @@
 
 						for(var/A in modify.access)
 							P.info += "  [get_access_desc(A)]"
-
+		if ("demote")
+			if (is_authenticated())
+				modify.assignment = "Demoted"
+				modify.access = list()
+				if(datum_account)
+					datum_account.set_salary(0)		//no salary
 		if ("terminate")
 			if (is_authenticated())
 				modify.assignment = "Terminated"
