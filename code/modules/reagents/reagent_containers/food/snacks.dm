@@ -285,7 +285,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
-	cases = list("сладкая кукуруза", "сладкой кукурузы", сладкой кукурузе", "сладкую кукурузу", "сладкой кукурузой", "сладкой кукурузе")
+	cases = list("сладкая кукуруза", "сладкой кукурузы", "сладкой кукурузе", "сладкую кукурузу", "сладкой кукурузой", "сладкой кукурузе")
 	desc = "It's a handful of candy corn. Cannot be stored in a detective's hat, alas."
 	icon_state = "candy_corn"
 	filling_color = "#fffcb0"
