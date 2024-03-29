@@ -127,13 +127,27 @@
 				var/list/all_centcom_access = list()
 				for(var/access in get_all_centcom_access())
 					all_centcom_access.Add(list(list(
-						"desc" = replacetext(get_centcom_access_desc(access), " ", "&nbsp"),
 						"ref" = access,
 						"allowed" = (access in modify.access) ? 1 : 0)))
 
 				data["all_centcom_access"] = all_centcom_access
 			else if (modify)
-				data["regions"] = 	data["regions"] = get_accesslist_static_data(REGION_GENERAL, REGION_COMMAND)
+				var/list/regions = list()
+				for(var/i = 1; i <= 7; i++)
+					var/list/accesses = list()
+					var/region_allowed = 0
+					for(var/access in get_region_accesses(i))
+						if (get_access_desc(access))
+							region_allowed += (access in modify.access) ? 1 : 0
+							accesses.Add(list(list(
+								"ref" = access,
+								"allowed" = (access in modify.access) ? 1 : 0)))
+					regions.Add(list(list(
+						"name" = get_region_accesses_name(i),
+						"accesses" = accesses,
+						"id" = i,
+						"region_allowed" =  (region_allowed == length(get_region_accesses(i)) ? 1 : 0))))
+				data["regions"] = regions
 
 		if(IDCOMPUTER_SCREEN_MANIFEST)
 
@@ -209,6 +223,7 @@
 				var/region_id = text2num(params["region_id"])
 				var/region_accesses = get_region_accesses(region_id)
 				var/region_allowed = text2num(params["region_allowed"])
+				modify.access -= region_accesses
 				if(!region_allowed)
 					modify.access += region_accesses
 		if("deny_region")
@@ -216,6 +231,7 @@
 				var/region_id = text2num(params["region_id"])
 				var/region_accesses = get_region_accesses(region_id)
 				var/region_allowed = text2num(params["region_allowed"])
+				modify.access += region_accesses
 				if(region_allowed)
 					modify.access -= region_accesses
 		if("access_full")
