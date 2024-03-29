@@ -3,11 +3,11 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 49
+#define SAVEFILE_VERSION_MAX 50
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
-#define SAVEFILE_VERSION_SPECIES_JOBS 48 // job preferences after breaking changes to any /datum/job/
+#define SAVEFILE_VERSION_SPECIES_JOBS 50 // job preferences after breaking changes to any /datum/job/
 #define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
 //breaking changes is when you remove any existing quirk/job or change their restrictions
 //Don't forget to bump SAVEFILE_VERSION_MAX too

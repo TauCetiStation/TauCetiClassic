@@ -191,6 +191,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define JOB_FLAG_NON_HUMAN 128
 #define JOB_FLAG_HEAD_OF_STAFF 256
 #define JOB_FLAG_BLUESHIELD_PROTEC 512
+#define JOB_FLAG_CENTCOMREPRESENTATIVE 1024
 
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise
