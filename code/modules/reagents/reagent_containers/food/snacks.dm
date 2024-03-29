@@ -252,7 +252,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/aesirsalad
 	name = "Aesir salad"
-	cases = list("салат асов", "салата асова", "салату асову", "салата асова", "салатом асовым", "салате асове")
+	cases = list("салат асов", "салата асов", "салату асов", "салата асов", "салатом асов", "салате асов")
 	desc = "Probably too incredible for mortal men to fully enjoy."
 	icon_state = "aesirsalad"
 	trash = /obj/item/trash/snack_bowl
@@ -275,7 +275,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/donor
 	name = "Donor Candy"
-	cases = list("гемотаген", "гемотагена", "гемотагену", "гемотаген", "гематогенои", "гемотагене")
+	cases = list("гематоген", "гематогена", "гематогену", "гематоген", "гематогенои", "гематогене")
 	desc = "A little treat for blood donors."
 	trash = /obj/item/trash/candy
 	bitesize = 5
@@ -285,7 +285,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
-	cases = list("конфетная кукуруза", "конфетной кукурузы", "конфетной кукурузе", "конфетную кукурузу", "конфетной кукурузой", "конфетной кукурузе")
+	cases = list("сладкая кукуруза", "сладкой кукурузы", сладкой кукурузе", "сладкую кукурузу", "сладкой кукурузой", "сладкой кукурузе")
 	desc = "It's a handful of candy corn. Cannot be stored in a detective's hat, alas."
 	icon_state = "candy_corn"
 	filling_color = "#fffcb0"
@@ -323,7 +323,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "Chocolate Bar"
-	cases = list("шоколадная плитка", "шоколадной плитки", "шоколадной плитке", "шоколадную плитку", "шоколадной плиткой", "шоколадной плитке")
+	cases = list("шоколад", "шоколада", "шоколаду", "шоколад", "шоколадом", "шоколаде")
 	desc = "Such sweet, fattening food."
 	icon_state = "chocolatebar"
 	filling_color = "#7d5f46"
@@ -546,7 +546,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
 	name = "Fish Fingers"
-	cases = list("рыбные палочка", "рыбных палочек", "рыбным палочкам", "рыбные палочки", "рыбными палочками", "рыбных палочках")
+	cases = list("рыбные палочки", "рыбных палочек", "рыбным палочкам", "рыбные палочки", "рыбными палочками", "рыбных палочках")
 	desc = "A finger of fish."
 	icon_state = "fishfingers"
 	filling_color = "#ffdefe"
@@ -557,7 +557,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
-	cases = list("огромный грибной кусок", "огромного грибного куска", "огромному грибному куску", "огромный грибной кусок", "огромным грибным куском", "огромном грибному куске")
+	cases = list("огромный грибной ломтик", "огромного грибного ломтика", "огромному грибному ломтику", "огромный грибной ломтик", "огромным грибным ломтиком", "огромном грибном ломтике")
 	desc = "A slice from a huge mushroom."
 	icon_state = "hugemushroomslice"
 	filling_color = "#e0d7c5"
@@ -769,7 +769,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette
 	name = "Omelette Du Fromage"
-	cases = list("омлет дю фромаж", "омлетадю фромажа", "омлету дю фромажу", "омлет дю фромаж", "омлетом дю фромажем", "омлете дю фромаже")
+	cases = list("омлет дю фромаж", "омлета дю фромаж", "омлету дю фромаж", "омлет дю фромаж", "омлетом дю фромаж", "омлете дю фромаж")
 	desc = "That's all you can say!"
 	icon_state = "omelette"
 	trash = /obj/item/trash/plate
@@ -788,7 +788,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pie
 	name = "Banana Cream Pie"
-	cases = list("пирог с банановым кремом", "пирога с банановым кремом", "пирогу с банановым кремом", "пирог с банановым кремом", "пирогом с банановым кремом", "пироге с банановым кремом")
+	cases = list("банановый пирог", "бананового пирога", "банановому пирогу", "банановый пирог", "банановым пирогом", "банановом пироге")
 	desc = "Just like back home, on clown planet! HONK!"
 	icon_state = "pie"
 	trash = /obj/item/trash/plate
@@ -824,7 +824,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
 	name = "Eggplant Parmigiana"
-	cases = list("баклажан с пармезаном", "баклажана с пармезаном", "баклажану с пармезаном", "баклажан с пармезаном", "баклажаном с пармезаном", "баклажане с пармезаном")
+	cases = list("баклажан пармиджано", "баклажана пармиджано", "баклажану пармиджано", "баклажан пармиджано", "баклажаном пармиджано", "баклажане пармиджано")
 	desc = "The only good recipe for eggplant."
 	icon_state = "eggplantparm"
 	trash = /obj/item/trash/plate
@@ -844,7 +844,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 	name = "Soylent Virdians"
-	cases = list("сойлент вирдианцы", "сойлента вирдианцы", "сойленту вирдианцы", "сойлента вирдианцы", "сойлентом вирдианцы", "сойленте вирдианцы")
+	cases = list("вирдиановый сойлент", "вирдианового сойлента", "вирдиановому сойленту", "вирдианового сойлента", "вирдиановым сойлентом", "вирдиановом сойленте")
 	desc = "Not made of people. Honest." //Actually honest for once.
 	icon_state = "soylent_yellow"
 	trash = /obj/item/trash/waffles
@@ -883,7 +883,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie
 	name = "plump pie"
-	cases = list("толостошлемник", "толостошлемника", "толостошлемнику", "толостошлемник", "толостошлемником", "толостошлемнике")
+	cases = list("пирог из толстошлемника", "пирога из толстошлемника", "пирогу из толстошлемника", "пирог из толстошлемника", "пирогом из толстошлемника", "пироге из толстошлемника")
 	desc = "I bet you love stuff made out of plump helmets!"
 	icon_state = "plump_pie"
 	filling_color = "#b8279b"
@@ -1007,7 +1007,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no Raisins"
-	cases = list("изюм", "изюма", "изюму", "изюм", "изюмом", "изюме")
+	cases = list("изюм про100так", "изюма про100так", "изюму про100так", "изюм про100так", "изюмом про100так", "изюме про100так")
 	icon_state = "4no_raisins"
 	desc = "Most nutritious raisins in the universe. Not sure why."
 	filling_color = "#343834"
@@ -1061,7 +1061,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball
 	name = "Sweet & Sour Chicken Balls"
-	cases = list("кисло-сладкие куриные шарики", "кисло-сладких куриных шариков", "кисло-сладким куриным шарикам", "кисло-сладких куриных шариков", "кисло-сладкими куриными шариками", "кисло-сладких куриных шариках")
+	cases = list("кисло-сладкие куриные фрикадельки", "кисло-сладких куриных фрикадельков", "кисло-сладким куриным фрикаделькам", "кисло-сладких куриных фрикадельков", "кисло-сладкими куриными фрикадельками", "кисло-сладких куриных фрикадельках")
 	desc = "Is this chicken cooked? The odds are better than wok paper scissors."
 	icon_state = "chickenball"
 	trash = /obj/item/trash/snack_bowl
@@ -1106,7 +1106,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 	name = "Loaded Baked Potato"
-	cases = list("запечёный картофель", "запеченого картофеля", "запеченому картофелю", "запеченый картофель", "запеченым картофелем", "запеченом картофеле")
+	cases = list("запечёный картофель", "запечёного картофеля", "запечёному картофелю", "запечёный картофель", "запечёным картофелем", "запечёном картофеле")
 	desc = "Totally baked."
 	icon_state = "loadedbakedpotato"
 	filling_color = "#9c7a68"
@@ -1184,7 +1184,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
 	name = "Spacy Liberty Duff"
-	cases = list("Спейси Либерти Дафф", "Спейси Либерти Дафф", "Спейси Либерти Дафф", "Спейси Либерти Дафф", "Спейси Либерти Дафф", "Спейси Либерти Дафф")
+	cases = list("Спейси Либерти пудинг, "Спейси Либерти пудинга", "Спейси Либерти пудингу", "Спейси Либерти пудинг", "Спейси Либерти пудингом", "Спейси Либерти пудинге")
 	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
 	icon_state = "spacylibertyduff"
 	trash = /obj/item/trash/snack_bowl
