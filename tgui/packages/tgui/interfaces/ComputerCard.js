@@ -139,7 +139,7 @@ export const ComputerCard = (props, context) => {
                     key="Custom" content="Custom"
                     onClick={() => act("assign", { assign_modify: "Custom" })} />
                 </LabeledList.Item>
-                {!!data.is_centcom && (
+                {!!data.centcom_access && (
                   <LabeledList.Item label="CentCom">
                     {data.centcom_jobs.map(v => (
                       <Button
