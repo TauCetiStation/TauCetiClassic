@@ -134,7 +134,7 @@
 				data["regions"] = get_accesslist_static_data(1, is_centcom() ? REGION_CENTCOMM : 7)
 
 		if(IDCOMPUTER_SCREEN_MANIFEST)
-
+			data["manifest"] = data_core.get_manifest()
 		if(IDCOMPUTER_SCREEN_PRINT)
 			printing = 1
 	return data

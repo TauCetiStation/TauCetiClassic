@@ -3,6 +3,7 @@ import { useBackend } from "../backend";
 import { NoticeBox, Button, LabeledList, Section, Tabs } from "../components";
 import { Window } from "../layouts";
 import { AccessList } from './common/AccessList';
+import { CrewManifest } from "./common/CrewManifest";
 
 export const ComputerCard = (props, context) => {
   const { act, data } = useBackend(context);
@@ -190,9 +191,7 @@ export const ComputerCard = (props, context) => {
 
     case 1: // Crew Manifest
       bodyBlock = (
-        <Section>
-          {data.manifest}
-        </Section>
+        <CrewManifest />
       );
       break;
 
