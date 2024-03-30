@@ -65492,6 +65492,7 @@
 /obj/structure/table/woodentable/fancy/black,
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/aiModule/antimov,
+/obj/item/weapon/aiModule/nanotrasen,
 /obj/item/weapon/aiModule/oneHuman{
 	pixel_y = 10
 	},
@@ -75815,7 +75816,7 @@
 /area/station/civilian/locker)
 "pIu" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/aiModule/nanotrasen,
+/obj/item/weapon/aiModule/crewsimov,
 /obj/item/weapon/aiModule/protectStation{
 	pixel_y = 10
 	},
