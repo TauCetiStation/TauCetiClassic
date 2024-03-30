@@ -24,7 +24,10 @@ export const ComputerCard = (props, context) => {
       <Tabs.Tab
         icon="scroll"
         selected={data.mode === 2}
-        onClick={() => act("mode", { mode: 2 })}>
+        onClick={() => {
+          act("mode", { mode: 2 });
+          act("print");
+        }}>
         Print
       </Tabs.Tab>
     </Tabs>
@@ -199,8 +202,7 @@ export const ComputerCard = (props, context) => {
       if (data.printing) {
         bodyBlock = (
           <NoticeBox title="Warning" color="blue">
-            Printing...
-            Thank you for your patience!
+            Printing... The computer is currently busy. Thank you for your patience!
           </NoticeBox>
         );
       }

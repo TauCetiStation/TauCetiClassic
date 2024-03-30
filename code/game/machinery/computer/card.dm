@@ -136,7 +136,7 @@
 		if(IDCOMPUTER_SCREEN_MANIFEST)
 			data["manifest"] = data_core.get_manifest()
 		if(IDCOMPUTER_SCREEN_PRINT)
-			printing = 1
+			printing = 0
 	return data
 
 /obj/machinery/computer/card/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
