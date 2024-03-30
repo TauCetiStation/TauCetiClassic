@@ -13426,15 +13426,6 @@
 /area/station/rnd/xenobiology)
 "awZ" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/device/multitool,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
@@ -38962,6 +38953,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -28
 	},
+/obj/machinery/autolathe,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -42581,6 +42573,15 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/device/multitool,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -71413,7 +71414,6 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "fec" = (
-/obj/machinery/autolathe,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
