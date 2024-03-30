@@ -551,6 +551,12 @@ th.command {
     color: #ffffff;
 }
 
+th.centcom {
+    background: #6c7391;
+    font-weight: bold;
+    color: #ffffff;
+}
+
 th.sec {
     background: #8e0000;
     font-weight: bold;

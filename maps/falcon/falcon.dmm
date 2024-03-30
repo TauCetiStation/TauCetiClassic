@@ -8368,7 +8368,7 @@
 	name = "Common Channel";
 	pixel_y = -20
 	},
-/obj/effect/spawner/newai,
+/obj/effect/spawner/aspect/newai ,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "apT" = (
@@ -12502,7 +12502,7 @@
 	name = "Custom Channel";
 	pixel_y = 19
 	},
-/obj/effect/spawner/newai,
+/obj/effect/spawner/aspect/newai ,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cYF" = (
