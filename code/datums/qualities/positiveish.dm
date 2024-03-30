@@ -115,12 +115,6 @@
 	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
 	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
 
-/datum/quality/positiveish/all_affairs/add_effect(mob/living/carbon/human/H, latespawn)
-	to_chat(H, "<span class='notice'>На твоей карточке полный доступ, но необязательно показывать его перед персоналом - вдруг кто-то захочет отнять?</span>")
-	var/obj/item/weapon/card/id/id = H.get_idcard()
-	id.access = get_all_accesses()
-
-
 /datum/quality/positiveish/cultural_heritage
 	name = "Cultural Heritage"
 	desc = "Всё племя скинулось на то, чтобы заиметь тебе в космос крутой космический костюм. Лучше оправдать их надежды!"
