@@ -275,7 +275,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/donor
 	name = "Donor Candy"
-	cases = list("гематоген", "гематогена", "гематогену", "гематоген", "гематогенои", "гематогене")
+	cases = list("гематоген", "гематогена", "гематогену", "гематоген", "гематогеном", "гематогене")
 	desc = "A little treat for blood donors."
 	trash = /obj/item/trash/candy
 	bitesize = 5
@@ -1270,7 +1270,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/milosoup
 	name = "Milosoup"
-	cases = list("суп майло", "супа майло", "супу майло", "суп майло", "супом майло", "супе майло")
+	cases = list("мисо суп", "мисо супа", " мисо супу", "мисо суп", "мисо супом", "мисо супе")
 	desc = "The universes best soup! Yum!!!"
 	icon_state = "milosoup"
 	trash = /obj/item/trash/snack_bowl
@@ -1299,7 +1299,7 @@
 	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup
-	name = "Blood soup"
+	name = "Tomato soup"
 	cases = list("кровавый суп", "кровавого супа", "кровавому супу", "кровавый суп", "кровавым супом", "кровавом супе")
 	desc = "Smells like copper."
 	icon_state = "tomatosoup"
@@ -1617,7 +1617,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/fishandchips
 	name = "Fish and Chips"
-	cases = list("рыба и чипсы", "рыбы и чипсы", "рыбе и чипсы", "рыбе и чипсы", "рыбой и чипсы", "рыбе и чипсы")
+	cases = list("рыба и чипсы", "рыба и чипсы", "рыба и чипсы", "рыба и чипсы", "рыба и чипсы", "рыба и чипсы")
 	desc = "I do say so myself chap."
 	icon_state = "fishandchips"
 	filling_color = "#e3d796"
@@ -1759,7 +1759,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 	name = "Spaghetti"
-	cases = list("паста с томатом", "пасты с томатом", "пасте с томатом", "пасту с томатом", "пастой с томатом", "пастес томатом")
+	cases = list("паста с томатом", "пасты с томатом", "пасте с томатом", "пасту с томатом", "пастой с томатом", "пасте с томатом")
 	desc = "Spaghetti and crushed tomatoes. Just like your abusive father used to make!"
 	icon_state = "pastatomato"
 	trash = /obj/item/trash/plate
@@ -1797,7 +1797,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries
 	name = "Carrot Fries"
-	cases = list("марковка-фри", "марковка-фри", "марковка-фри", "марковка-фри", "марковка-фри", "марковка-фри")
+	cases = list("морковка-фри", "морковка-фри", "морковка-фри", "морковка-фри", "морковка-фри", "морковка-фри")
 	desc = "Tasty fries from fresh Carrots."
 	icon_state = "carrotfries"
 	trash = /obj/item/trash/plate
@@ -1891,7 +1891,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
 	name = "plump helmet biscuit"
-	cases = list("пухлый шлем бисквита", "пухлого шлема бисквита", "пухлому шлему бисквита", "пухлый шлем бисквита", "пухлым шлемом бисквита", "пухлом шлеме бисквита")
+	cases = list("пирожное из толстошлемника", "пирожного из толстошлемника", "пирожному шлему бисквита", "пирожное из толстошлемник", "пирожным из толстошлемник", "пирожном из толстошлемник")
 	desc = "This is a finely-prepared plump helmet biscuit. The ingredients are exceptionally minced plump helmet, and well-minced dwarven wheat flour."
 	icon_state = "phelmbiscuit"
 	filling_color = "#cfb4c4"
@@ -1923,7 +1923,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/tossedsalad
 	name = "tossed salad"
-	cases = list("брошенный салат", "брошенного салата", "брошенному салату", "брошенный салат", "брошенным салатом", "брошенном салате")
+	cases = list("нарезанный салат", "нарезанного салата", "нарезанному салату", "нарезанный салат", "нарезанным салатом", "нарезанном салате")
 	desc = "A proper salad, basic and simple, with little bits of carrot, tomato and apple intermingled. Vegan!"
 	icon_state = "herbsalad"
 	trash = /obj/item/trash/snack_bowl
@@ -1933,7 +1933,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/validsalad
 	name = "valid salad"
-	cases = list("действительный салат", "действительного салата", "действительному салату", "действительный салат", "действительным салатом", "действительном салате")
+	cases = list("валидный салат", "валиднного салата", "валидному салату", "валидный салат", "валидным салатом", "валидном салате")
 	desc = "It's just a salad of questionable 'herbs' with meatballs and fried potato slices. Nothing suspicious about it."
 	icon_state = "validsalad"
 	trash = /obj/item/trash/snack_bowl
@@ -1953,7 +1953,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart
 	name = "golden apple streusel tart"
-	cases = list("золотой яблочный штрейзель", "золотого яблочного штрейзеля", "золотому яблочному штрейзелю", "золотого яблочного штрейзеля", "золотым яблочным штрейзелем", "золотом яблочном штрейзеле")
+	cases = list("золотой яблочный штрудель", "золотого яблочного штруделя", "золотому яблочному штруделю", "золотой яблочный штрудель", "золотым яблочным штруделем", "золотом яблочном штруделе")
 	desc = "A tasty dessert that won't make it through a metal detector."
 	icon_state = "gappletart"
 	trash = /obj/item/trash/plate
@@ -2078,7 +2078,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat
 	name = "meatbread loaf"
-	cases = list("", "", "", "", "", "")
+	cases = list("мясной хлеб", "мясного хлеба", "мясному хлебу", "мясным хлебом", "мясным хлебом", "мясном хлебе")
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman."
 	icon_state = "meatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
@@ -2087,7 +2087,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
 	name = "meatbread slice"
-	cases = list("мясной хлеб", "мясного хлеба", "мясному хлебу", "мясным хлебом", "мясным хлебом", "мясном хлебе")
+	cases = list("ломтик мясного хлеба", "ломтика мясного хлеба", "ломтику мясного хлеба", "ломтик мясного хлеба", "ломтиком мясного хлеба", "ломтике мясного хлебе")
 	desc = "A slice of delicious meatbread."
 	icon_state = "meatbreadslice"
 	filling_color = "#ff7575"
@@ -2133,7 +2133,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/banana
 	name = "Banana-nut bread"
-	cases = list("бананово-ореховый хлеб", "бананово-орехового хлеба", "бананово-ореховому хлебу", "бананово-ореховый хлеб", "бананово-ореховым хлебом", "бананово-ореховом хлебе")
+	cases = list("банановый хлеб", "бананового хлеба", "банановому хлебу", "банановый хлеб", "банановым хлебом", "банановом хлебе")
 	desc = "A heavenly and filling treat."
 	icon_state = "bananabread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/banana
@@ -2142,7 +2142,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/banana
 	name = "Banana-nut bread slice"
-	cases = list("ломтик бананово-орехового хлеба", "ломтика бананово-орехового хлеба", "ломтику бананово-орехового хлеба", "ломтик бананово-орехового хлеба", "ломтиком бананово-орехового хлеба", "ломтике бананово-орехового хлеба")
+	cases = list("ломтик бананового хлеба", "ломтика бананового хлебаа", "ломтику бананового хлеба", "ломтик бананового хлеба", "ломтиком бананового хлеба", "ломтике бананового хлеба")
 	desc = "A slice of delicious banana bread."
 	icon_state = "bananabreadslice"
 	filling_color = "#ede5ad"
@@ -2277,7 +2277,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/cheese
 	name = "Cheese Cake"
-	cases = list("сырный торт", "сырного торта", "сырному торту", "сырный торт", "сырным тортом", "сырном торте")
+	cases = list("чизкейк", "чизкейка", "чизкейку", "чизкейк", "чизкейком", "чизкейке")
 	desc = "DANGEROUSLY cheesy."
 	icon_state = "cheesecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/cheese
@@ -2675,7 +2675,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
 	name = "green eggs and ham"
-	cases = list("имитация паучьего яйца с мясом", "имитации паучьего яйца с мясом", "имитации паучьего яйца с мясом", "имитацию паучьего яйца с мясом", "имитацией паучьего яйца с мясом", "имитации паучьего яйца с мясом")
+	cases = list("паучья яичница с ветчиной", "паучьей яичницы с ветчиной", "паучьей яичнице с ветчиной", "паучью яичницу с ветчиной", "паучьей яичницей с ветчиной", "паучьей яичнице с ветчиной")
 	desc = "Would you eat them on a train? Would you eat them on a plane? Would you eat them on a state of the art corporate deathtrap floating through space?"
 	icon_state = "spidereggsham"
 	trash = /obj/item/trash/plate
@@ -2843,7 +2843,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 	name = "raw meatball"
-	cases = list("сырой мясной шарик", "сырого мясного шарика", "сырому мясному шарику", "сырой мясной шарик", "сырым мясным шариком", "сыром мясном шарике")
+	cases = list("сырая фрикаделька", "сырой фрикадельки", "сырой фрикадельке", "сырую фрикадельку", "сырой фрикаделькой", "сырой фрикадельке")
 	desc = "A raw meatball."
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "rawmeatball"
@@ -2899,7 +2899,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/wrap
 	name = "egg wrap"
-	cases = list("рап с яйцом", "рапа с яйцом", "рапу с яйцом", "рап с яйцом", "рапом с яйцом", "рапе с яйцом")
+	cases = list("тортилья с яйцом", "тортильи с яйцом", "тортилье с яйцом", "тортилью с яйцом", "тортильей с яйцом", "тортилье с яйцом")
 	desc = "The precursor to Pigs in a Blanket."
 	icon_state = "wrap"
 	bitesize = 2
@@ -3010,7 +3010,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/telebacon
 	name = "Tele Bacon"
-	cases = list("теле бекон", "теле бекона", "теле бекону", "теле бекон", "теле беконом", "теле беконе")
+	cases = list("теле-сало", "теле-сала", "теле-салу", "теле-сало", "теле-салом", "теле-сале")
 	desc = "It tastes a little odd but it is still delicious."
 	icon_state = "bacon_tele"
 	bitesize = 1
@@ -3091,7 +3091,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/taffy
 	name = "Saltwater Taffy"
-	cases = list("ириска", "", "ириске", "ириску", "ириской", "ириске")
+	cases = list("ириска", "ириски", "ириске", "ириску", "ириской", "ириске")
 	desc = "Old fashioned saltwater taffy. Chewy!"
 	icon_state = "candy1"
 	filling_color = "#7d5f46"
@@ -3123,7 +3123,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/cotton/red
 	name = "cotton candy"
-	cases = list("сахарная вата", "сахарной ваты", "сахарной вате", "сахарную вату", "сахарной ватой", "сахарной вате")
+	cases = list("красная сахарная вата", "красной сахарной ваты", "красной сахарной вате", "красную сахарную вату", "красной сахарной ватой", "красной сахарной вате")
 	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
 	icon_state = "cottoncandy_red"
 	filling_color = "#801e28"
@@ -3133,7 +3133,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/cotton/blue
 	name = "cotton candy"
-	cases = list("красная сахарная вата", "красной сахарной ваты", "красной сахарной вате", "красную сахарную вату", "красной сахарной ватой", "красной сахарной вате")
+	cases = list("синяя сахарная вата", "синей сахарной ваты", "синей сахарной вате", "синюю сахарную вату", "синим сахарной ватой", "синем сахарной вате")
 	desc = "Light and fluffy, it's like eating a cloud made from sugar!"
 	icon_state = "cottoncandy_blue"
 	filling_color = "#863333"
@@ -3216,7 +3216,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm
 	name = "gummy worm"
-	cases = list("мармеладный червяк", "мармеладного червяка", "мармеладному червяку", "мармеладного червяка", "мармеладным червяком", "мармеладном червяке")
+	cases = list("мармеладный червячок", "мармеладного червячка", "мармеладному червячку", "мармеладного червячка", "мармеладным червячком", "мармеладном червячке")
 	desc = "An edible worm, made from gelatin."
 	icon_state = "gworm"
 	filling_color = "#ffffff"
@@ -3351,7 +3351,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/red
 	name = "gummy worm"
-	cases = list("красный мармеладный червяк", "красного мармеладного червяка", "красному мармеладному червяку", "красного мармеладного червяка", "красным мармеладным червяком", "красном мармеладном червяке")
+	cases = list("красный мармеладный червячок", "красного мармеладного червячка", "красному мармеладному червячку", "красного мармеладного червячка", "красным мармеладным червячком", "красном мармеладном червячке")
 	desc = "An edible worm, made from gelatin. It's red!"
 	icon_state = "gworm_red"
 	filling_color = "#801e28"
@@ -3360,7 +3360,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/blue
 	name = "gummy worm"
-	cases = list("синий мармеладный червяк", "синего мармеладного червяка", "синему мармеладному червяку", "синего мармеладного червяка", "синим мармеладным червяком", "синем мармеладном червяке")
+	cases = list("синий мармеладный червячок", "синего мармеладного червячка", "синему мармеладному червячку", "синего мармеладного червячка", "синим мармеладным червячком", "синем мармеладном червячке")
 	desc = "An edible worm, made from gelatin. It's blue!"
 	icon_state = "gworm_blue"
 	filling_color = "#863333"
@@ -3369,7 +3369,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/green
 	name = "gummy worm"
-	cases = list("зелёный мармеладный червяк", "зелёного мармеладного червяка", "зелёному мармеладному червяку", "зелёного мармеладного червяка", "зелёным мармеладным червяком", "зелёном мармеладном червяке")
+	cases = list("зелёный мармеладный червячок", "зелёного мармеладного червячка", "зелёному мармеладному червячку", "зелёного мармеладного червячка", "зелёным мармеладным червячком", "зелёном мармеладном червячке")
 	desc = "An edible worm, made from gelatin. It's green!"
 	icon_state = "gworm_green"
 	filling_color = "#365e30"
@@ -3378,7 +3378,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/yellow
 	name = "gummy worm"
-	cases = list("жёлтый мармеладный червяк", "жёлтого мармеладного червяка", "жёлтому мармеладному червяку", "жёлтого мармеладного червяка", "жёлтым мармеладным червяком", "жёлтом мармеладном червяке")
+	cases = list("жёлтый мармеладный червячок", "жёлтого мармеладного червячка", "жёлтому мармеладному червячку", "жёлтого мармеладного червячка", "жёлтым мармеладным червячком", "жёлтом мармеладном червячке")
 	desc = "An edible worm, made from gelatin. It's yellow!"
 	icon_state = "gworm_yellow"
 	filling_color = "#863333"
@@ -3387,7 +3387,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/orange
 	name = "gummy worm"
-	cases = list("оранжевый мармеладный червяк", "оранжевого мармеладного червяка", "оранжевому мармеладному червяку", "оранжевого мармеладного червяка", "оранжевым мармеладным червяком", "оранжевом мармеладном червяке")
+	cases = list("оранжевый мармеладный червячок", "оранжевого мармеладного червячка", "оранжевому мармеладному червячку", "оранжевого мармеладного червячка", "оранжевым мармеладным червячком", "оранжевом мармеладном червячке")
 	desc = "An edible worm, made from gelatin. It's orange!"
 	icon_state = "gworm_orange"
 	filling_color = "#e78108"
@@ -3396,7 +3396,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/purple
 	name = "gummy worm"
-	cases = list("фиолетовый мармеладный червяк", "мармеладного червяка", "фиолетовому мармеладному червяку", "фиолетового мармеладного червяка", "фиолетовым мармеладным червяком", "фиолетовом мармеладном червяке")
+	cases = list("фиолетовый мармеладный червячок", "мармеладного червячка", "фиолетовому мармеладному червячку", "фиолетового мармеладного червячка", "фиолетовым мармеладным червячком", "фиолетовом мармеладном червячке")
 	desc = "An edible worm, made from gelatin. It's purple!"
 	icon_state = "gworm_purple"
 	filling_color = "#993399"
@@ -3405,7 +3405,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/pink
 	name = "gummy worm"
-	cases = list("розовый мармеладный червяк", "розового мармеладного червяка", "розовому мармеладному червяку", "розового мармеладного червяка", "розовом мармеладным червяком", "розовом мармеладном червяке")
+	cases = list("розовый мармеладный червячок", "розового мармеладного червячка", "розовому мармеладному червячку", "розового мармеладного червячка", "розовом мармеладным червячком", "розовом мармеладном червякче")
 	desc = "An edible worm, made from gelatin. It's pink!"
 	icon_state = "gworm_pink"
 	filling_color = "#fc73a7"
@@ -3414,7 +3414,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf
 	name = "gummy worm"
-	cases = list("wtf мармеладный червяк", "wtf мармеладного червяка", "wtf мармеладному червяку", "wtf мармеладного червяка", "wtf мармеладным червяком", "wtf мармеладном червяке")
+	cases = list("wtf мармеладный червячок", "wtf мармеладного червячка", "wtf мармеладному червячку", "wtf мармеладного червячка", "wtf мармеладным червячком", "wtf мармеладном червчяке")
 	desc = "An edible worm. Did it just move?"
 	icon_state = "gworm_wtf"
 	filling_color = "#60a584"
@@ -3423,7 +3423,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/rainbow
 	name = "gummy worm"
-	cases = list("радужный мармеладный червяк", "радужного мармеладного червяка", "радужному мармеладному червяку", "радужного мармеладного червяка", "радужным мармеладным червяком", "радужном мармеладном червяке")
+	cases = list("радужный мармеладный червячок", "радужного мармеладного червячка", "радужному мармеладному червячку", "радужного мармеладного червячка", "радужным мармеладным червячком", "радужном мармеладном червячке")
 	desc = "An edible worm, made from gelatin. It's rainbow!"
 	icon_state = "gworm_rainbow"
 	filling_color = "#c8a5dc"
@@ -3548,7 +3548,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/candybar
 	name = "candy bar"
-	cases = list("шоколадная плитка", "шоколадной плитки", "шоколадной плитке", "шоколадную плитку", "шоколадной плиткой", "шоколадной плитке")
+	cases = list("конфета", "конфеты", "конфете", "конфету", "конфетой", "конфете")
 	desc = "Nougat, love it or hate it."
 	icon_state = "candy"
 	trash = /obj/item/trash/candy
@@ -3704,7 +3704,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/el_ehum
 	name = "El E'hum"
-	cases = list("Эль-Э'хум", "Эля-Э'хума", "Элю-Э'хуму", "Эль-Э'хум", "Элем-Э'хумом", "Эле-Э'хуме")
+	cases = list("Эль-Э'хум", "Эль-Э'хума", "Эль-Э'хуму", "Эль-Э'хум", "Эль-Э'хумом", "Эль-Э'хуме")
 	desc = "A thin pieces of bark from the elyu'a ail tree, smoked with seynyu'dra leaves. The finished dish tastes like ham. This meat is usually eaten with a portion of seinyu'dra bark, which can be carried around, making it indispensable for the Tajaran's treks."
 	icon_state = "el_ehum"
 	bitesize = 3
@@ -3721,7 +3721,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/kaholket_alkeha
 	name = "Kahol'Ket Al'Keha"
-	cases = list("Кахол'Кет Ал'Кэха", "Кахол'Кета Ал'Кэхи", "Кахол'Кету Ал'Кэхе", "Кахол'Кета Ал'Кэху", "Кахол'Кетом Ал'Кэхой", "Кахол'Кете Ал'Кэхе")
+	cases = list("Кахол'Кет Ал'Кэха", "Кахол'Кет Ал'Кэхи", "Кахол'Кет Ал'Кэхе", "Кахол'Кет Ал'Кэху", "Кахол'Кет Ал'Кэхой", "Кахол'Кет Ал'Кэхе")
 	desc = "A simple pie made with Cha'ich nuts and berries and baked in Elyu'a Eil."
 	icon_state = "kaholket_alkeha"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/kaholket_alkeha
@@ -3731,13 +3731,13 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/kaholket_alkeha
 	name = "Kahol'Ket Al'Keha"
-	cases = list("Кахол'Кет Ал'Кэха", "Кахол'Кета Ал'Кэхи", "Кахол'Кету Ал'Кэхе", "Кахол'Кета Ал'Кэху", "Кахол'Кетом Ал'Кэхой", "Кахол'Кете Ал'Кэхе")
+	cases = list("Кахол'Кет Ал'Кэха", "Кахол'Кет Ал'Кэхи", "Кахол'Кет Ал'Кэхе", "Кахол'Кет Ал'Кэху", "Кахол'Кет Ал'Кэхой", "Кахол'Кет Ал'Кэхе")
 	desc = "A simple pie made with Cha'ich nuts and berries and baked in Elyu'a Eil."
 	icon_state = "kaholket_alkeha_slice"
 
 /obj/item/weapon/reagent_containers/food/snacks/jundarek
 	name = "Jun'Darek"
-	cases = list("Джун'Дарек", "Джун'Дарька", "Джун'Дарьку", "Джун'Дарька", "Джун'Дарьком", "Джун'Дарьке")
+	cases = list("Джун'Дарек", "Джун'Дарека", "Джун'Дареку", "Джун'Дарека", "Джун'Дареком", "Джун'Дареке")
 	desc = "A fish dipped in salted wine."
 	icon_state = "jundarek"
 	bitesize = 5
@@ -3746,7 +3746,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/fushstvessina
 	name = "Fushst'vessina"
-	cases = list("Фушшст'вессина", "Фушшст'вессиной", "Фушшст'вессиной", "Фушшст'вессину", "Фушшст'вессиной", "Фушшст'вессине")
+	cases = list("Фушшст'вессина", "Фушшст'вессине", "Фушшст'вессину", "Фушшст'вессину", "Фушшст'вессиной", "Фушшст'вессине")
 	desc = "Cooked syrup, which is given a decorative shape and sprinkled with chaich nut flakes."
 	icon_state = "fushstvessina"
 	bitesize = 5
@@ -3755,7 +3755,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/adjurahma
 	name = "Adjurah'Ma"
-	cases = list("Ажурах'Ма", "Ажураха'Ма", "Ажураху'Ма", "Ажураха'Ма", "Ажурахом'Ма", "Ажурахе'Ма")
+	cases = list("Ажурах'Ма", "Ажурах'Ма", "Ажурах'Ма", "Ажурах'Ма", "Ажурах'Ма", "Ажурах'Ма")
 	desc = "Cooked syrup, which is given a decorative shape and sprinkled with chaich nut flakes."
 	icon_state = "adjurahma"
 	bitesize = 3
@@ -3763,7 +3763,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/julma_tulkrash
 	name = "Jul'Ma Tul'Krush"
-	cases = list("Джюл'Ма Тюл'Краш", "Джюла'Ма Тюл'Краша", "Джюлу'Ма Тюл'Крашу", "Джюла'Ма Тюл'Краш", "Джюлом'Ма Тюл'Крашой", "Джюле'Ма Тюл'Краше")
+	cases = list("Джюл'Ма Тюл'Краш", "Джюл'Ма Тюл'Краша", "Джюл'Ма Тюл'Крашу", "Джюл'Ма Тюл'Краш", "Джюл'Ма Тюл'Крашой", "Джюл'Ма Тюл'Краше")
 	desc = "A very sweet broth made from fresh fat, meat and Jul'Ma"
 	icon_state = "julma_tulkrash"
 	bitesize = 5
@@ -3772,7 +3772,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/fasqhtongue
 	name = "Fasqh'tongue"
-	cases = list("Фаск'хтонг", "Фаска'хтонга", "Фаску'хтонгу", "Фаска'хтонга", "Фаском'хтонгом", "Фаске'хтонге")
+	cases = list("Фаск'хтонг", "Фаск'хтонга", "Фаск'хтонгу", "Фаск'хтонга", "Фаск'хтонгом", "Фаск'хтонге")
 	desc = "A dried and cured sissalika tongue cured in vinegar. Usually seasoned with something spicy. It is usually served straight in its entirety, occupying a good half a meter on the table."
 	icon_state = "fasqhtongue"
 	bitesize = 5
