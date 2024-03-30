@@ -115,14 +115,6 @@
 	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
 	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
 
-
-/datum/quality/positiveish/all_affairs
-	name = "All Affairs"
-	desc = "У тебя полный доступ. Да начнётся расследование."
-	requirement = "Агент Внутренних Дел."
-
-	jobs_required = list("Internal Affairs Agent")
-
 /datum/quality/positiveish/all_affairs/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>На твоей карточке полный доступ, но необязательно показывать его перед персоналом - вдруг кто-то захочет отнять?</span>")
 	var/obj/item/weapon/card/id/id = H.get_idcard()
