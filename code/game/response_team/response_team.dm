@@ -191,3 +191,52 @@ var/global/can_call_ert
 		chosen_team = pick(valid_teams)
 
 	return chosen_team
+
+/obj/structure/distress_signal_button
+	name = "Send Distress Signal"
+	desc = "It's a perfect for the bad joke."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "sound_button_on"
+	anchored = TRUE
+	resistance_flags = FULL_INDESTRUCTIBLE
+	COOLDOWN_DECLARE(toggle_sig_button)
+
+/obj/structure/distress_signal_button/attack_hand(mob/user, list/modifiers)
+	if(!COOLDOWN_FINISHED(src, toggle_sig_button))
+		to_chat(user, "<span class='warning'>Click!</span>")
+		return
+	COOLDOWN_START(src, toggle_sig_button, 5 SECONDS)
+	flick("sound_button_down", src)
+	icon_state = "sound_button_off"
+	addtimer(CALLBACK(src, PROC_REF(release_cooldown)), 4 SECONDS)
+
+	if(!SSticker)
+		to_chat(user, "<span class='warning'>Игра еще не загрузилась!</span>")
+		return
+	if(SSticker.current_state == 1)
+		to_chat(user, "<span class='warning'>Раунд еще не начался!</span>")
+		return
+	if(SSticker.ert_call_in_progress)
+		to_chat(user, "<span class='warning'>Маяк бедствия был отправлен недавно!</span>")
+		return
+	SSticker.ert_call_in_progress = TRUE
+	VARSET_IN(SSticker, ert_call_in_progress, FALSE, rand(10, 15) MINUTES)
+
+	playsound(src, 'sound/AI/distressbeacon.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+
+	log_admin("[user.key] used Distress Signal Transmitter.")
+
+	var/datum/response_team/team = get_random_responders()
+	create_spawners(team.spawner, 1)
+	var/datum/faction/responders/ERT = SSticker.mode.CreateFaction(team.faction)
+	if(!team.fixed_objective)
+		var/datum/objective/custom/C = new /datum/objective/custom
+		C.explanation_text = "Help [user] on the station."
+		ERT.AppendObjective(C)
+	else
+		ERT.AppendObjective(team.fixed_objective)
+
+/obj/structure/distress_signal_button/proc/release_cooldown()
+	flick("sound_button_up", src)
+	icon_state = "sound_button_on"
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 50, FALSE)

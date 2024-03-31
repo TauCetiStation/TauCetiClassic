@@ -187,6 +187,7 @@ var/global/specops_shuttle_timeleft = 0
 		S.specops_shuttle_timereset = world.time + SPECOPS_RETURN_DELAY
 
 	qdel(announcer)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(specops_return)), 1 MINUTE)
 
 /proc/specops_can_move()
 	if(specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom)

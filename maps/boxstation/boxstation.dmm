@@ -33090,9 +33090,7 @@
 /area/station/bridge/meeting_room)
 "bgI" = (
 /obj/structure/table/woodentable,
-/obj/item/mars_globe{
-	pixel_x = 9
-	},
+/obj/structure/distress_signal_button,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "bgJ" = (
