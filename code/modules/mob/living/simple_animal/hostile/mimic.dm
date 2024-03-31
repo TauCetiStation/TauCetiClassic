@@ -137,9 +137,13 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	var/destroy_objects = 0
 	var/knockdown_people = 0
 
-/mob/living/simple_animal/hostile/mimic/copy/atom_init(mapload, obj/copy, mob/living/creator)
+/mob/living/simple_animal/hostile/mimic/copy/atom_init(mapload, obj/copy, mob/living/creator, destroy_original = 0)
 	. = ..()
 	CopyObject(copy, creator)
+	if(!destroy_original)
+		copy.forceMove(src)
+	else
+		qdel(copy)
 
 /mob/living/simple_animal/hostile/mimic/copy/death()
 
@@ -157,7 +161,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/creator)
 
-	if((isitem(O) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
+	if((isitem(O) || istype(O, /obj/structure) || ismachinery(O)) && !is_type_in_list(O, protected_objects))
 
 		O.loc = src
 		name = O.name
