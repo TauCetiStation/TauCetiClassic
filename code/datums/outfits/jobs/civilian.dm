@@ -120,3 +120,4 @@
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/chaplain
+	backpack_contents = list(/obj/item/jacobs_ladder)
