@@ -67,6 +67,12 @@
 				cuffs = new type
 
 			target.equip_to_slot_if_possible(cuffs, SLOT_HANDCUFFED)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				H.underwear = 7
+				H.undershirt = 31
+				H.socks = 23
+				H.update_body()
 			target.attack_log += "\[[time_stamp()]\] <font color='orange'>[user.name] ([user.ckey]) placed on our [target.slot_id_to_name(SLOT_HANDCUFFED)] ([cuffs])</font>"
 			user.attack_log += "\[[time_stamp()]\] <font color='red'>Placed on [target.name]'s ([target.ckey]) [target.slot_id_to_name(SLOT_HANDCUFFED)] ([cuffs])</font>"
 			return TRUE

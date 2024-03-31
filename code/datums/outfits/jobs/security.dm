@@ -54,6 +54,10 @@
 		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
 		glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 		ADD_TRAIT(H, TRAIT_NO_CLONE, ROUNDSTART_TRAIT)
+	H.underwear = 7
+	H.undershirt = 31
+	H.socks = 23
+	H.update_body()
 
 // DETECTIVE OUTFIT
 /datum/outfit/job/detective
