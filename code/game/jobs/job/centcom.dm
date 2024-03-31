@@ -48,3 +48,6 @@
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 	flags = JOB_FLAG_CENTCOMREPRESENTATIVE|JOB_FLAG_BLUESHIELD_PROTEC
+
+/datum/job/lawyer/get_access()
+	return get_all_accesses()

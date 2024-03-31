@@ -66,6 +66,7 @@
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/weapon/storage/briefcase/centcomm(src)
 	new /obj/item/device/radio/headset/headset_int(src)
+	new /obj/item/weapon/gun/energy/taser(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel's Locker"
@@ -79,9 +80,6 @@
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		new /obj/item/weapon/gun/projectile/revolver/detective(src)
 		new /obj/item/ammo_box/speedloader/c38(src)
-
-	else
-		new /obj/item/weapon/gun/energy/gun/head(src)
 
 	new /obj/item/device/remote_device/head_of_personal(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
