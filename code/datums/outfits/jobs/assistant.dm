@@ -4,6 +4,8 @@
 
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/black
+	backpack_contents = list(/obj/item/toy/balloon/arrest)
+
 
 /datum/outfit/job/assistant/lawyer
 	name = OUTFIT_JOB_NAME("Lawyer")
