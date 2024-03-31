@@ -73,6 +73,7 @@ var/global/list/common_loot = list(
 		/obj/item/weapon/mop = 1,
 		/obj/item/weapon/reagent_containers/glass/bucket = 1,
 		/obj/item/toy/crayon/spraycan = 1,
+		/obj/item/weapon/bikehorn/gold = 1,
 		) = 1,
 
 	list(
@@ -88,6 +89,7 @@ var/global/list/common_loot = list(
 		/obj/item/weapon/storage/wallet = 1,
 		/obj/item/clothing/glasses/science = 1,
 		/obj/item/clothing/glasses/meson = 1,
+		/obj/item/weapon/bikehorn/gold = 1,
 		) = 1,
 
 	list(
@@ -103,6 +105,7 @@ var/global/list/common_loot = list(
 		/obj/item/device/assembly/timer = 1,
 		/obj/item/device/assembly/igniter = 1,
 		/obj/item/weapon/packageWrap = 1,
+		/obj/item/weapon/bikehorn/gold = 1,
 		) = 1,
 
 	list(
@@ -112,12 +115,14 @@ var/global/list/common_loot = list(
 		/obj/item/weapon/reagent_containers/syringe = 1,
 		/obj/item/weapon/reagent_containers/glass/beaker = 1,
 		/obj/item/weapon/reagent_containers/glass/rag = 1,
-		/obj/item/weapon/reagent_containers/food/condiment/sugar = 1
+		/obj/item/weapon/reagent_containers/food/condiment/sugar = 1,
+		/obj/item/weapon/bikehorn/gold = 1,
 		) = 1,
 
 	list(
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/beer = 1,
 		/obj/item/weapon/reagent_containers/food/drinks/coffee = 1,
+		/obj/item/weapon/bikehorn/gold = 1,
 		) = 1,
 
 	list(
@@ -131,6 +136,7 @@ var/global/list/common_loot = list(
 		/obj/effect/spawner/lootdrop/glowstick = 1,
 		/obj/item/clothing/head/hardhat/red = 1,
 		/obj/item/device/flashlight/flare = 1,
+		/obj/item/weapon/bikehorn/gold = 1,
 		) = 1,
 	)
 
