@@ -39,7 +39,7 @@
 /obj/structure/ladder/atom_init()
 	ladder_list += src
 	..()
-	//return INITIALIZE_HINT_LATELOAD
+	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/ladder/atom_init_late()
 	for(var/obj/structure/ladder/L in ladder_list)
