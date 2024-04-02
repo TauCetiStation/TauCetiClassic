@@ -41,7 +41,6 @@
 /datum/faction/heist/proc/AppendVoxInviolateObjectives()
 	//-All- vox raids have these two (one) objectives. Failing them loses the game.
 	AppendObjective(/datum/objective/heist/inviolate_crew)
-	AppendObjective(/datum/objective/heist/inviolate_death)
 
 /datum/faction/heist/OnPostSetup()
 	. = ..()
