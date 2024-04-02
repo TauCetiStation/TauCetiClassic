@@ -84,6 +84,14 @@
 	icon_opened = "hopsecure_open"
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
+	//weapon replacement
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+		new /obj/item/weapon/gun/projectile/automatic/pistol/glock(src)
+		new /obj/item/ammo_box/magazine/glock/rubber
+		new /obj/item/ammo_box/magazine/glock/rubber
+
+	else
+		new /obj/item/weapon/gun/energy/taser(src)
 
 	new /obj/item/device/remote_device/head_of_personal(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
