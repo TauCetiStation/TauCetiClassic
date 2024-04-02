@@ -54,11 +54,13 @@
 	//weapon replacement
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		new /obj/item/weapon/gun/projectile/automatic/pistol/glock(src)
+		new /obj/item/weapon/gun/projectile/automatic/pistol/glock(src)
 		new /obj/item/ammo_box/magazine/glock/rubber
 		new /obj/item/ammo_box/magazine/glock/rubber
 
 	else
-		new /obj/item/weapon/gun/energy/taser(src)
+		new /obj/item/weapon/gun/energy/taser/stunrevolver(src)
+		new /obj/item/weapon/gun/energy/taser/stunrevolver(src)
 
 	new /obj/item/weapon/storage/backpack/satchel(src)
 	new /obj/item/clothing/under/suit_jacket/burgundy(src)
