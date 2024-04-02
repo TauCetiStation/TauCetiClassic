@@ -186,7 +186,7 @@ var/global/list/datum/faction/preinit_factions
 /datum/game_mode/proc/latespawn(mob/mob) //Check factions, see if anyone wants a latejoiner
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_TRAITOR_SECURITY))
 		var/datum/round_aspect/traitor_sec/aspect = SSround_aspects.aspect
-		if(!aspect.traitor_spawned && ((mob.job == "Security Officer") || (mob.job == "Security Cadet") || (mob.job == "Warden")))
+		if((ROLE_TRAITOR in mob.client.prefs.be_role) && !jobban_isbanned(mob, "Syndicate") && !aspect.traitor_spawned && ((mob.job == "Security Officer") || (mob.job == "Security Cadet") || (mob.job == "Warden")))
 			var/datum/role/traitor/security/R = SSticker.mode.CreateRole(/datum/role/traitor/security, mob)
 			setup_role(R, TRUE)
 			aspect.traitor_spawned = TRUE

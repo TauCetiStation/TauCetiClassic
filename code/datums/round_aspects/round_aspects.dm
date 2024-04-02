@@ -191,7 +191,7 @@
 	var/list/possible_traitors = list()
 	var/mob/living/traitor
 	for(var/mob/living/L as anything in living_list)
-		if(!jobban_isbanned(L, "Syndicate") && ((L.job == "Security Officer") || (L.job == "Security Cadet") || (L.job == "Warden")))
+		if((ROLE_TRAITOR in L.client.prefs.be_role) && !jobban_isbanned(L, "Syndicate") && ((L.job == "Security Officer") || (L.job == "Security Cadet") || (L.job == "Warden")))
 			possible_traitors += L
 
 	if(possible_traitors.len == 0)
