@@ -249,7 +249,7 @@
 
 		new_text += new_letter
 
-	return html_encode(new_text)
+	return html_encode(capitalize(new_text))
 
 /proc/Gibberish(text, p) // Any value higher than 70 for p will cause letters to be replaced instead of added
 	text = html_decode(text)
