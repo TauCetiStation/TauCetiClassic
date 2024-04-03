@@ -197,10 +197,12 @@
 
 //this proc returns the Siemens coefficient of electrical resistivity for a particular external organ.
 /mob/living/carbon/human/proc/get_siemens_coefficient_organ(obj/item/organ/external/BP)
-	if (!BP)
-		return 1.0
-
 	var/siemens_coefficient = 1.0
+
+	if(!BP)
+		if(HAS_TRAIT(src, TRAIT_CONDUCT))
+			siemens_coefficient++
+		return siemens_coefficient
 
 	var/list/clothing_items = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
 	for(var/obj/item/clothing/C in clothing_items)
