@@ -14,7 +14,6 @@
 											"Advertising is legalized lying! But don't let that put you off our great deals!", \
 											"You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.")
 
-
 /datum/event/brand_intelligence/start()
 	for(var/obj/machinery/vending/V in machines)
 		if(!is_station_level(V.z))
@@ -32,38 +31,15 @@
 
 
 /datum/event/brand_intelligence/tick()
-	if(!originMachine || originMachine.shut_up)	//if every machine is infected, or if the original vending machine is missing or has it's voice switch flipped
+	//if every machine is infected, or if the original vending machine is missing or has it's voice switch flipped
+	if(!vendingMachines.len || !originMachine || originMachine.shut_up)
 		end()
 		kill()
 		return
 
-	if(!vendingMachines.len)	//if every machine is infected
-		infectedVendingMachines.Add(originMachine)
-		for(var/obj/machinery/vending/upriser in infectedVendingMachines)
-			if(QDELETED(upriser))
-				continue
-			var/mob/living/simple_animal/hostile/mimic/copy/M = new(upriser.loc, upriser, null) // it will delete upriser on creation and override any machine checks
-			M.faction = "profit"
-			M.speak = rampant_speeches.Copy()
-			M.speak_chance = 7
-
-			switch(rand(1, 100)) // for 30% chance, they're stronger
-				if(1 to 70) // these are usually weak
-					var/adjusted_health = max(M.health-20, 20) // don't make it negative-health
-					M.health = adjusted_health
-					M.maxHealth = adjusted_health
-				if(71 to 80) // has more health
-					var/bonus_health = 15+rand(1, 7)*5
-					M.health += bonus_health
-					M.maxHealth += bonus_health
-					M.desc += " This one seems extra robust..."
-				if(81 to 90) // does stronger damage
-					M.melee_damage += 2+rand(1, 6) // 3~8
-					M.desc += " This one seems extra painful..."
-				if(91 to 100) // moves faster
-					M.move_to_delay /= 2 // just half
-					M.desc += " This one seems more agile..."
-		kill()
+	if(!IS_MULTIPLE(activeFor, 5))
+		return
+	if(!prob(15))
 		return
 	var/obj/machinery/vending/infectedMachine = pick(vendingMachines)
 	vendingMachines.Remove(infectedMachine)
@@ -71,16 +47,36 @@
 	infectedMachine.shut_up = 0
 	infectedMachine.shoot_inventory = 1
 
-	if(IS_MULTIPLE(activeFor, 8))
-		originMachine.speak(pick("Try our aggressive new marketing strategies!", \
-									"You should buy products to feed your lifestyle obsession!", \
-									"Consume!", \
-									"Your money can buy happiness!", \
-									"Engage direct marketing!", \
-									"Advertising is legalized lying! But don't let that put you off our great deals!", \
-									"You don't want to buy anything? Yeah, well I didn't want to buy your mom either."))
+	if(IS_MULTIPLE(activeFor, 12))
+		originMachine.speak(pick(rampant_speeches))
 
 /datum/event/brand_intelligence/end()
 	for(var/obj/machinery/vending/infectedMachine in infectedVendingMachines)
 		infectedMachine.shut_up = 1
 		infectedMachine.shoot_inventory = 0
+
+/datum/event/brand_intelligence/alive_vends/tick()
+	//if the original vending machine is missing or has it's voice switch flipped
+	if(!originMachine || originMachine.shut_up)
+		end()
+		kill()
+		return
+	//if not every machine is infected
+	if(vendingMachines.len)
+		var/obj/machinery/vending/infectedMachine = pick(vendingMachines)
+		vendingMachines.Remove(infectedMachine)
+		infectedVendingMachines.Add(infectedMachine)
+		infectedMachine.shut_up = 0
+		infectedMachine.shoot_inventory = 1
+
+		if(IS_MULTIPLE(activeFor, 8))
+			originMachine.speak(pick(rampant_speeches))
+		return
+
+	infectedVendingMachines.Add(originMachine)
+	for(var/obj/machinery/vending/upriser in infectedVendingMachines)
+		if(QDELETED(upriser))
+			continue
+		var/mob/living/simple_animal/hostile/mimic/copy/vending/M = new(upriser.loc, upriser, null) // it will delete upriser on creation and override any machine checks
+		M.speak = rampant_speeches.Copy()
+	kill()
