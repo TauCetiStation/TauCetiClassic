@@ -13,10 +13,13 @@
 											"Engage direct marketing!", \
 											"Advertising is legalized lying! But don't let that put you off our great deals!", \
 											"You don't want to buy anything? Yeah, well, I didn't want to buy your mom either.")
+	var/static/list/protected_from_malf = list(/obj/machinery/vending/wallmed1, /obj/machinery/vending/wallmed2)
 
 /datum/event/brand_intelligence/start()
 	for(var/obj/machinery/vending/V in machines)
 		if(!is_station_level(V.z))
+			continue
+		if(is_type_in_list(V, protected_from_malf))
 			continue
 		vendingMachines.Add(V)
 

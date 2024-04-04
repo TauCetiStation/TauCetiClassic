@@ -163,7 +163,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	return . - creator
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/is_object_copyallowed(obj/O)
-	return (isitem(O) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects)
+	return ((isitem(O) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/creator)
 	if(!is_object_copyallowed(O))
@@ -227,7 +227,6 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 /mob/living/simple_animal/hostile/mimic/copy/vending
 	faction = "profit"
 	speak_chance = 7
-	var/static/list/protected_from_malf = list(/obj/machinery/vending/wallmed1, /obj/machinery/vending/wallmed2)
 
 /mob/living/simple_animal/hostile/mimic/copy/vending/atom_init(mapload, obj/copy, mob/living/creator)
 	. = ..()
@@ -257,7 +256,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			desc += " This one seems more agile..."
 
 /mob/living/simple_animal/hostile/mimic/copy/vending/is_object_copyallowed(obj/O)
-	return (ismachinery(O)) && !is_type_in_list(O, protected_from_malf)
+	return ismachinery(O)
 
 /mob/living/simple_animal/hostile/mimic/copy/vending/target_found(datum/target)
 	return
