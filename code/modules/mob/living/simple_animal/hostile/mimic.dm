@@ -38,12 +38,12 @@
 	has_head = TRUE
 
 /mob/living/simple_animal/hostile/mimic/proc/target_found(datum/target)
-	me_emote("growls at [.]")
+	me_emote("growls at [target]")
 
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
-		target_found()
+		target_found(.)
 
 
 
