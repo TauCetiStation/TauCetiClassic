@@ -116,11 +116,13 @@
 	data["science_jobs"] = science_positions
 	data["security_jobs"] = security_positions
 	data["civilian_jobs"] = civilian_positions
+	data["nt_representatives"] = centcom_positions
 	data["centcom_jobs"] = get_all_centcom_jobs()
 
 	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
 	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
-
+//{data.fast_full_access (
+//{data.fast_modify_region ( - thinking...
 	switch(mode)
 		if(IDCOMPUTER_SCREEN_ACCESS)
 			if (modify && is_centcom())
@@ -131,7 +133,7 @@
 						"allowed" = (access in modify.access) ? 1 : 0)))
 				data["all_centcom_access"] = all_centcom_access
 			else if (modify)
-				data["regions"] = get_accesslist_static_data(1, is_centcom() ? REGION_CENTCOMM : 7)
+				data["regions"] = get_accesslist_static_data(REGION_GENERAL, is_centcom() ? REGION_CENTCOMM : REGION_COMMAND)
 
 		if(IDCOMPUTER_SCREEN_MANIFEST)
 			data["manifest"] = data_core.get_manifest()
@@ -255,22 +257,20 @@
 		if ("reg")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))
-					var/temp_name = sanitize(input("Who is this ID for?", "Name", modify.registered_name) as text | null)
+					var/temp_name = sanitize_name(input("Who is this ID for?", "Name", modify.registered_name) as text | null)
 					if(temp_name)
 						modify.registered_name = temp_name
 					else
 						visible_message("<span class='notice'>[src] buzzes rudely.</span>")
-			SStgui.update_uis(src)
 
 		if ("account")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))
-					var/datum/money_account/account = sanitize_numbers(input("Account Number", "Input Number", modify.associated_account_number) as text | null)
+					var/datum/money_account/account = get_account(input("Account Number", "Input Number", modify.associated_account_number) as text | null)
 					if(account)
 						modify.associated_account_number = account.account_number
 					else
 						to_chat(usr, "<span class='warning'> Account with such number does not exist!</span>")
-			SStgui.update_uis(src)
 
 		if ("mode")
 			mode = text2num(params["mode"])
@@ -305,12 +305,6 @@
 
 						for(var/A in modify.access)
 							P.info += "  [get_access_desc(A)]"
-		if ("demote")
-			if (is_authenticated())
-				modify.assignment = "Demoted"
-				modify.access = list()
-				if(datum_account)
-					datum_account.set_salary(0)		//no salary
 		if ("terminate")
 			if (is_authenticated())
 				modify.assignment = "Terminated"

@@ -98,6 +98,14 @@ export const ComputerCard = (props, context) => {
                       onClick={() => act("assign", { assign_modify: v })} />
                   ))}
                 </LabeledList.Item>
+                <LabeledList.Item label="NT Representatives">
+                  {data.nt_representatives.map(v => (
+                    <Button
+                      selected={v === data.modify_rank}
+                      key={v} content={v}
+                      onClick={() => act("assign", { assign_modify: v })} />
+                  ))}
+                </LabeledList.Item>
                 <LabeledList.Item label="Engineering">
                   {data.engineering_jobs.map(v => (
                     <Button
@@ -159,7 +167,7 @@ export const ComputerCard = (props, context) => {
                     key="Demoted" content="Demoted"
                     tooltip="Civilian access, 'demoted' title."
                     color="red" icon="times"
-                    onClick={() => act("demote")} />
+                    onClick={() => act("terminate")} />
                 </LabeledList.Item>
                 <LabeledList.Item label="Non-Crew">
                   <Button
