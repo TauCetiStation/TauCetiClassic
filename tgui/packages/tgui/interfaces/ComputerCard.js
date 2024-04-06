@@ -179,7 +179,7 @@ export const ComputerCard = (props, context) => {
                 </LabeledList.Item>
               </LabeledList>
             </Section>
-            <Section title="Access List">
+            <Section>
               <AccessList
                 accesses={data.regions}
                 selectedList={data.selectedAccess}
