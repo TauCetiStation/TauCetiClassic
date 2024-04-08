@@ -193,7 +193,7 @@
 							return
 
 		else
-			direct = mob.get_confusion_walk_dir(direct)
+			direct = mob.get_walk_dir(direct)
 			n = get_step(get_turf(mob), direct)
 			. = mob.SelfMove(n, direct)
 
@@ -215,11 +215,13 @@
 
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
-/mob/proc/get_confusion_walk_dir(direct)
+/mob/proc/get_walk_dir(direct)
 	if(HAS_TRAIT(src, TRAIT_FULL_CONFUSION))
-		return pick(alldirs)
-	if(confused && !crawling)
-		return confuse_input(direct)
+		. = pick(alldirs)
+	else if(confused && !crawling)
+		. = confuse_input(direct)
+	else
+		. = direct
 
 /mob/proc/random_move()
 	if(isturf(loc) && !isspaceturf(loc) || (canmove && !incapacitated()))

@@ -67,7 +67,7 @@
 	//manually set move_delay for vehicles so we don't inherit any mob movement penalties
 	//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
 	user.client?.move_delay = world.time
-	direction = user.get_confusion_walk_dir(direction)
+	direction = user.get_walk_dir(direction)
 	return Move(get_step(src, direction))
 
 /obj/vehicle/proc/can_move()
