@@ -1,5 +1,5 @@
 import { Fragment } from "inferno";
-import { useBackend } from "../backend";
+import { useBackend, useLocalState } from "../backend";
 import { NoticeBox, Button, LabeledList, Section, Tabs } from "../components";
 import { Window } from "../layouts";
 import { AccessList } from './common/AccessList';
@@ -186,13 +186,17 @@ export const ComputerCard = (props, context) => {
                 accessMod={ref => act('access', {
                   access: ref,
                 })}
-                grantAll={() => act('access_full')}
-                denyAll={() => act('clear_all')}
-                grantDep={ref => act('access_region', {
-                  region: ref,
+                {...(!!data.fast_full_access && {
+                  grantAll: () => act('access_full'),
+                  denyAll: () => act('clear_all'),
                 })}
-                denyDep={ref => act('deny_region', {
-                  region: ref,
+                {...(!!data.fast_modify_region && {
+                  grantDep: (ref) => act('access_region', {
+                    region: ref,
+                  }),
+                  denyDep: (ref) => act('deny_region', {
+                    region: ref,
+                  }),
                 })} />
             </Section>
           </Fragment>

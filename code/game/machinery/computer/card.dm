@@ -272,9 +272,6 @@
 					else
 						to_chat(usr, "<span class='warning'> Account with such number does not exist!</span>")
 
-		if ("mode")
-			mode = text2num(params["mode"])
-
 		if ("print")
 			if (!printing)
 				printing = 1
