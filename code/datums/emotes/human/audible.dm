@@ -285,6 +285,9 @@
 		EMOTE_STATE(is_present_bodypart, BP_HEAD),
 	)
 
+/datum/emote/human/sneeze/get_sound(mob/living/carbon/human/user, intentional)
+	return get_sound_by_voice(user, SOUNDIN_SNEEZE_MALE, SOUNDIN_SNEEZE_FEMALE)
+
 
 /datum/emote/human/gasp
 	key = "gasp"
@@ -307,6 +310,9 @@
 	)
 
 	cloud = "cloud-gasp"
+
+/datum/emote/human/gasp/get_sound(mob/living/carbon/human/user, intentional)
+	return get_sound_by_voice(user, SOUNDIN_GASP_MALE, SOUNDIN_GASP_FEMALE)
 
 
 /datum/emote/human/sigh

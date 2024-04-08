@@ -323,13 +323,36 @@
 
 #define TURF_DECALS_LIMIT 4 // max of /obj/effect/decal/turf_decal in one turf
 
+#define WALLS_COLORS list("blue", "yellow", "red", "purple", "green", "beige")
+
 // todo: do something with this monster
+//       port smooth groups from tg/other sane server
 #define CAN_SMOOTH_WITH_WALLS list( \
 		/turf/unsimulated/wall, \
 		/turf/simulated/wall, \
+		/turf/simulated/wall/yellow, \
+		/turf/simulated/wall/red, \
+		/turf/simulated/wall/purple, \
+		/turf/simulated/wall/green, \
+		/turf/simulated/wall/beige, \
 		/turf/simulated/wall/r_wall, \
+		/turf/simulated/wall/r_wall/yellow, \
+		/turf/simulated/wall/r_wall/red, \
+		/turf/simulated/wall/r_wall/purple, \
+		/turf/simulated/wall/r_wall/green, \
+		/turf/simulated/wall/r_wall/beige, \
 		/obj/structure/falsewall, \
+		/obj/structure/falsewall/yellow, \
+		/obj/structure/falsewall/red, \
+		/obj/structure/falsewall/purple, \
+		/obj/structure/falsewall/green, \
+		/obj/structure/falsewall/beige, \
 		/obj/structure/falsewall/reinforced, \
+		/obj/structure/falsewall/reinforced/yellow, \
+		/obj/structure/falsewall/reinforced/red, \
+		/obj/structure/falsewall/reinforced/purple, \
+		/obj/structure/falsewall/reinforced/green, \
+		/obj/structure/falsewall/reinforced/beige, \
 		/obj/structure/girder, \
 		/obj/structure/girder/reinforced, \
 		/obj/structure/windowsill, \

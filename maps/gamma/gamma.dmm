@@ -11350,6 +11350,7 @@
 	},
 /obj/item/weapon/aiModule/purge,
 /obj/item/weapon/aiModule/antimov,
+/obj/item/weapon/aiModule/nanotrasen,
 /obj/item/weapon/aiModule/teleporterOffline,
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -63005,7 +63006,7 @@
 /area/station/civilian/chapel/mass_driver)
 "lSN" = (
 /obj/structure/table,
-/obj/item/weapon/aiModule/nanotrasen,
+/obj/item/weapon/aiModule/crewsimov,
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
