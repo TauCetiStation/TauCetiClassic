@@ -285,7 +285,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/crewsimov
 	name = "'Crewsimov' core AI module"
-	desc = "Модуль основных законов ИИ 'Crewsimov': 'Перезаписывает основные законы ИИ на 3 адаптированных для экипада закона робототехники Азимова.'"
+	desc = "Модуль основных законов ИИ 'Crewsimov': 'Перезаписывает основные законы ИИ на 3 адаптированных для экипажа закона робототехники Азимова.'"
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/crewsimov
 
