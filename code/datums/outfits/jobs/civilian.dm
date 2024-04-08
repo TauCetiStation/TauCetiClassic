@@ -125,3 +125,7 @@
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/chaplain
+
+/datum/outfit/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(SSholiday.holidays[APRIL_FOOLS])
+		H.equip_or_collect(new /obj/item/jacobs_ladder(H), SLOT_IN_BACKPACK)
