@@ -303,7 +303,7 @@ var/global/bomb_set
 			to_chat(user, "<span class = 'red'>Бомба не может быть развёрнута здесь.</span>")
 			return FALSE
 
-		to_chat(user, "<span class = 'red'>Вы закрываете несколько панелей, чтобы сделать [CASE(src, ACCUSATIVE_CASE)] развернутой.</span>")
+		to_chat(user, "<span class = 'red'>Вы закрываете несколько панелей, чтобы подготовить [CASE(src, ACCUSATIVE_CASE)] к активации.</span>")
 		visible_message("<span class = 'red'>С характерным щелчком, анкерные болты выскочили из [CASE(src, GENITIVE_CASE)] и прикрепили её к полу!</span>")
 		deployed = TRUE
 		anchored = TRUE
