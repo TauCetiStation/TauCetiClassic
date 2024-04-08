@@ -430,7 +430,7 @@ var/global/bomb_set
 	if(!timing && !auth && !buckled_mob)
 		if(usr.is_busy())
 			return
-		visible_message("<span class='notice'>[CASE(usr, NOMINATIVE_CASE)] начал вставлять [CASE(src, ACCUSATIVE_CASE)] внутрь [CASE(D, GENITIVE_CASE)]!</span>","<span class='notice'>Вы начали вставлять [CASE(src, ACCUSATIVE_CASE)] внутрь [CASE(D, GENITIVE_CASE)]!</span>")
+		visible_message("<span class='notice'>[CASE(usr, NOMINATIVE_CASE)] начал загружать [CASE(src, ACCUSATIVE_CASE)] внутрь [CASE(D, GENITIVE_CASE)]!</span>","<span class='notice'>Вы начали загружать [CASE(src, ACCUSATIVE_CASE)] внутрь [CASE(D, GENITIVE_CASE)]!</span>")
 		if(do_after(usr, 100, 1, src) && !timing && !auth && !buckled_mob)
 			D.Stored_Nuclear = src
 			loc = D
