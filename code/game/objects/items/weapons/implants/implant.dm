@@ -479,18 +479,18 @@ var/global/list/death_alarm_stealth_areas = list(
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			if(is_type_in_list(t, global.death_alarm_stealth_areas))
 				//give the syndies a bit of stealth
-				a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в космосе!", "Оповещение о смерти [mobname]")
+				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else
-				a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в [CASE(t, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
+				a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
 			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 		if ("emp")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в [CASE(t, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
+			a.autosay("[mobname] has died in [name]!", "[mobname]'s Death Alarm")
 			qdel(a)
 		else
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в-в-в- бз-з-з-з-з...", "Оповещение о смерти [mobname]")
+			a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
 			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 
