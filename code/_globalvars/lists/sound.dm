@@ -50,6 +50,8 @@ var/global/list/SOUNDIN_WOO_MALE 	= list('sound/voice/woo/woo_male_1.ogg', 'soun
 var/global/list/SOUNDIN_WOO_FEMALE 	= list('sound/voice/woo/woo_female_1.ogg', 'sound/voice/woo/woo_female_2.ogg', 'sound/voice/woo/woo_female_3.ogg', 'sound/voice/woo/woo_female_4.ogg', 'sound/voice/woo/woo_female_5.ogg')
 var/global/list/SOUNDIN_SIGH_MALE   = list('sound/voice/sigh/sigh_male.ogg')
 var/global/list/SOUNDIN_SIGH_FEMALE = list('sound/voice/sigh/sigh_female.ogg')
+var/global/list/SOUNDIN_GASP_MALE   = list('sound/voice/gasp/gasp_male_1.ogg', 'sound/voice/gasp/gasp_male_2.ogg', 'sound/voice/gasp/gasp_male_3.ogg', 'sound/voice/gasp/gasp_male_4.ogg')
+var/global/list/SOUNDIN_GASP_FEMALE   = list('sound/voice/gasp/gasp_female_1.ogg', 'sound/voice/gasp/gasp_female_2.ogg', 'sound/voice/gasp/gasp_female_3.ogg', 'sound/voice/gasp/gasp_female_4.ogg', 'sound/voice/gasp/gasp_female_5.ogg')
 var/global/list/SOUNDIN_SNEEZE_MALE   	= list('sound/voice/sneeze/sneeze_male.ogg', 'sound/voice/sneeze/sneeze_neutral.ogg')
 var/global/list/SOUNDIN_SNEEZE_FEMALE   = list('sound/voice/sneeze/sneeze_female.ogg', 'sound/voice/sneeze/sneeze_neutral.ogg')
 
