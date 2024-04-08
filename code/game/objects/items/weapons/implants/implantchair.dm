@@ -1,6 +1,7 @@
 /obj/machinery/implantchair
-	name = "loyalty implanter"
-	desc = "Used to implant occupants with loyalty implants."
+	name = "loyalty implanter modifier"
+	cases = list("модификатор имплантера лояльности", "модификатора имплантера лояльности", "модификатору имплантера лояльности", "модификатор имплантера лояльности", "модификатор имплантера лояльности", "модификатор имплантера лояльности")
+	desc = "Используется для вживления пациентам имплантатов лояльности."
 	icon = 'icons/obj/machines/implantchair.dmi'
 	icon_state = "implantchair"
 	density = TRUE
@@ -25,21 +26,21 @@
 	var/health_text = ""
 	if(src.occupant)
 		if(src.occupant.health <= -100)
-			health_text = "<FONT color=red>Dead</FONT>"
+			health_text = "<FONT color=red>Мёртв</FONT>"
 		else if(src.occupant.health < 0)
 			health_text = "<FONT color=red>[round(src.occupant.health,0.1)]</FONT>"
 		else
 			health_text = "[round(src.occupant.health,0.1)]"
 
-	var/dat ="<B>Implanter Status</B><BR>"
+	var/dat ="<B>Статус импланта</B><BR>"
 
-	dat +="<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>" : "<FONT color=red>None</FONT>"]<BR>"
-	dat += "<B>Implants:</B> [src.implant_list.len ? "[implant_list.len]" : "<A href='?src=\ref[src];replenish=1'>Replenish</A>"]<BR>"
+	dat +="<B>Пациент:</B> [src.occupant ? "<BR>Имя: [src.occupant]<BR>Здоровье: [health_text]<BR>" : "<FONT color=red>Отсуствует</FONT>"]<BR>"
+	dat += "<B>Импланты:</B> [src.implant_list.len ? "[implant_list.len]" : "<A href='?src=\ref[src];replenish=1'>Пополнить</A>"]<BR>"
 	if(src.occupant)
-		dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>"
+		dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Имплант</A>" : "Перезарядка"]<BR>"
 	user.set_machine(src)
 
-	var/datum/browser/popup = new(user, "implant")
+	var/datum/browser/popup = new(user, "implant", (C_CASE(src, NOMINATIVE_CASE)))
 	popup.set_content(dat)
 	popup.open()
 
@@ -72,7 +73,7 @@
 		return
 	for(var/mob/living/carbon/slime/M in range(1, G.affecting))
 		if(M.Victim == G.affecting)
-			to_chat(user, "[G.affecting:name] will not fit into the [src.name] because they have a slime latched onto their head.")
+			to_chat(user, "[G.affecting:name] не помещаются в [CASE(src, NOMINATIVE_CASE)], потому что у них на голове слизистая защёлка.")
 			return
 	var/mob/M = G.affecting
 	if(put_mob(M))
@@ -99,10 +100,10 @@
 
 /obj/machinery/implantchair/proc/put_mob(mob/living/carbon/M)
 	if(!iscarbon(M))
-		to_chat(usr, "<span class='warning'><B>The [src.name] cannot hold this!</B></span>")
+		to_chat(usr, "<span class='warning'><B>[C_CASE(src, NOMINATIVE_CASE)] не может хранить это!</B></span>")
 		return
 	if(src.occupant)
-		to_chat(usr, "<span class='warning'><B>The [src.name] is already occupied!</B></span>")
+		to_chat(usr, "<span class='warning'><B>[C_CASE(src, NOMINATIVE_CASE)] уже занят кем-то!!</B></span>")
 		return
 	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
@@ -119,7 +120,7 @@
 	if (!iscarbon(M))
 		return
 	for(var/obj/item/weapon/implant/mind_protect/mindshield/imp in implant_list)
-		visible_message("<span class='userdanger'>[M] has been implanted by the [src.name].</span>")
+		visible_message("<span class='userdanger'>[M] был[VERB_RU(M)] [(ANYMORPH(M, "имплантирован", "имплантирована", "имплантировано", "имплантированы"))] [src.name].</span>")
 		if(imp.implanted(M))
 			imp.inject(M)
 		implant_list -= imp

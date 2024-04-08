@@ -7,7 +7,6 @@ ADD_TO_POIFS_LIST(/obj/item/weapon/tank/jetpack/oxygen)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/captain)
 ADD_TO_POIFS_LIST(/obj/item/device/aicard)
 ADD_TO_POIFS_LIST(/obj/item/blueprints)
-ADD_TO_POIFS_LIST(/obj/item/clothing/suit/space/nasavoid)
 ADD_TO_POIFS_LIST(/obj/item/weapon/tank)
 ADD_TO_POIFS_LIST(/obj/item/slime_extract)
 ADD_TO_POIFS_LIST(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi)
@@ -39,7 +38,6 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"a captain's jetpack" = /obj/item/weapon/tank/jetpack/oxygen,
 		"a functional AI" = /obj/item/device/aicard,
 		"the station blueprints" = /obj/item/blueprints,
-		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 		"a head of security's augmented shades" = /obj/item/clothing/glasses/hud/hos_aug,
 		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
 		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray/cmo,

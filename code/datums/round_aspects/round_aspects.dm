@@ -29,6 +29,40 @@
 /datum/round_aspect/proc/after_start() //after round start
 	return
 
+/datum/round_aspect/mechas
+	name = ROUND_ASPECT_MECHAS
+	desc = "Добавлены мехи во все отделы."
+
+/datum/round_aspect/mechas/after_start()
+	new /datum/event/feature/area/replace/sec_rearmament_mech
+	for(var/datum/design/nuclear_gun/ng in global.all_designs)
+		for(var/M in ng.materials)
+			ng.materials[M] *= 5
+	for(var/datum/design/stunrevolver/sr in global.all_designs)
+		for(var/M in sr.materials)
+			sr.materials[M] *= 5
+	for(var/datum/design/smg/smg in global.all_designs)
+		for(var/M in smg.materials)
+			smg.materials[M] *= 5
+	for(var/datum/design/lasercannon/lc in global.all_designs)
+		for(var/M in lc.materials)
+			lc.materials[M] *= 5
+	for(var/datum/design/laserrifle/lr in global.all_designs)
+		for(var/M in lr.materials)
+			lr.materials[M] *= 5
+	for(var/datum/design/plasma_10_gun/plsm in global.all_designs)
+		for(var/M in plsm.materials)
+			plsm.materials[M] *= 5
+	for(var/datum/design/plasma_104_gun/plsmsh in global.all_designs)
+		for(var/M in plsmsh.materials)
+			plsmsh.materials[M] *= 5
+
+	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
+		e.cost *= 25
+
+	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
+		b.cost *= 25
+
 /datum/round_aspect/agent_of_high_affairs
 	name = ROUND_ASPECT_HF_AGENT
 	desc = "АВД была выдана цепь командования. Во всех глав был вставлен имплант подчинения."
@@ -136,3 +170,8 @@
 	name = ROUND_ASPECT_ALTERNATIVE_RESEARCH
 	desc = "Взрывы газовых бомб стали приносить меньше научных очков."
 	afterspawn_IC_announcement = "<span class='warning'>Научно-исследовательский Совет НаноТрейзен стал в меньшей мере интересоваться изучением взрывчатых свойств форона.</span>"
+
+/datum/round_aspect/healing_alkohol
+	name = ROUND_ASPECT_HEALING_ALCOHOL
+	desc = "Алкоголь лечит физические повреждения."
+	afterspawn_IC_announcement = "<span class='success'>Гибсонские ученые доказали, что умеренное потребление алкоголя продливает жизнь.</span>"

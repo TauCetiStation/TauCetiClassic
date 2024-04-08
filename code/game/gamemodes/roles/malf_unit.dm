@@ -35,7 +35,7 @@
 	for(var/datum/AI_Module/module in current_ai.current_modules)
 		qdel(module)
 
-	current_ai.laws = new /datum/ai_laws/nanotrasen
+	current_ai.laws = new /datum/ai_laws/crewsimov
 	current_ai.show_laws()
 	current_ai.icon_state = "ai"
 
