@@ -482,7 +482,7 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/fake/deploy(mob/user)
 	if(false_activation)
-		to_chat(user, "<span class = 'red'>Бомба не реагирует, возможно она сломана?</span>")
+		to_chat(user, "<span class = 'red'>Бомба не реагирует. Может она сломана?</span>")
 		return
 	if(!isnukeop(user))
 		to_chat(user, "<span class = 'red'>Бомба не реагирует. Может она сломана?</span>")
