@@ -103,7 +103,7 @@ var/global/bomb_set
 						return FALSE
 					if(user.is_busy())
 						return FALSE
-					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает что-то прорезать в [CASE(src, ACCUSATIVE_CASE)], будто [user.gender == MALE ? "он" : "она"] знает, что нужно делать.", "С [CASE(O, ABLATIVE_CASE)] вы начинаете прорезать первый слой...")
+					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает что-то прорезать в [CASE(src, ACCUSATIVE_CASE)], будто [user.gender == MALE ? "он" : "она"] знает, что нужно делать.", "С [CASE(O, ABLATIVE_CASE)] вы начинаете разваривать первый слой...")
 
 					if(O.use_tool(src, user, SKILL_TASK_CHALLENGING, amount = 5, volume = 50))
 						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает прорезать что-то в [CASE(src, DATIVE_CASE)].", "Вы прорезали первый слой.")
