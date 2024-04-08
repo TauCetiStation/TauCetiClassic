@@ -121,8 +121,7 @@
 
 	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
 	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
-//{data.fast_full_access (
-//{data.fast_modify_region ( - thinking...
+
 	switch(mode)
 		if(IDCOMPUTER_SCREEN_ACCESS)
 			if (modify && is_centcom())
@@ -134,7 +133,6 @@
 				data["all_centcom_access"] = all_centcom_access
 			else if (modify)
 				data["regions"] = get_accesslist_static_data(REGION_GENERAL, is_centcom() ? REGION_CENTCOMM : REGION_COMMAND)
-
 		if(IDCOMPUTER_SCREEN_MANIFEST)
 			data["manifest"] = data_core.get_manifest()
 		if(IDCOMPUTER_SCREEN_PRINT)
@@ -174,7 +172,6 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
-
 		if ("scan")
 			if (scan)
 				if(ishuman(usr))
@@ -207,13 +204,13 @@
 		if("access_region")
 			if(is_authenticated())
 				var/region = text2num(params["region"])
-				if(isnull(region) || region < 1 || region > (is_centcom() ? REGION_CENTCOMM : 7))
+				if(isnull(region) || region < REGION_GENERAL || region > (is_centcom() ? REGION_CENTCOMM : REGION_COMMAND))
 					return
 				modify.access += get_region_accesses(region)
 		if("deny_region")
 			if(is_authenticated())
 				var/region = text2num(params["region"])
-				if(isnull(region) || region < 1 || region > (is_centcom() ? REGION_CENTCOMM : 7))
+				if(isnull(region) || region < REGION_GENERAL || region > (is_centcom() ? REGION_CENTCOMM : REGION_COMMAND))
 					return
 				modify.access -= get_region_accesses(region)
 		if("access_full")
@@ -262,16 +259,14 @@
 						modify.registered_name = temp_name
 					else
 						visible_message("<span class='notice'>[src] buzzes rudely.</span>")
-
 		if ("account")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))
-					var/datum/money_account/account = get_account(input("Account Number", "Input Number", modify.associated_account_number) as text | null)
+					var/datum/money_account/account = get_account(text2num(input("Account Number", "Input Number", modify.associated_account_number) as text | null))
 					if(account)
 						modify.associated_account_number = account.account_number
 					else
 						to_chat(usr, "<span class='warning'> Account with such number does not exist!</span>")
-
 		if ("print")
 			if (!printing)
 				printing = 1
@@ -308,7 +303,6 @@
 				modify.access = list()
 				if(datum_account)
 					datum_account.set_salary(0)		//no salary
-
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 
