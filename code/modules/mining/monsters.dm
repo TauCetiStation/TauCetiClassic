@@ -127,6 +127,13 @@
 	stat_attack = 1
 	vision_range = 6
 	idle_vision_range = 6
+	projectiletype = /obj/item/projectile/temp/hot/high_tier_basilisk
+
+/obj/item/projectile/temp/hot/high_tier_basilisk
+	icon_state = "declone"
+	temperature = 2000
+	nodamage = FALSE
+	damage = 15
 
 ////////////Drone(miniBoss)/////////////
 
