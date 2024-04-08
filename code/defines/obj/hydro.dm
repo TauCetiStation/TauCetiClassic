@@ -861,20 +861,22 @@
 	plant_type = 0
 	growthstages = 6
 
-/obj/item/seeds/korta_nut
-	name = "pack of korta nut seeds"
-	desc = "These seeds grow into korta nut bushes, native to Tajaran."
-	icon_state = "seed-korta"
+/obj/item/seeds/chureech_nut
+	name = "pack of Chur'eech seeds"
+	cases = list("пачка семян ореха Чур'их", "пачки семян ореха Чур'их", "пачке семян ореха Чур'их", "пачку семян ореха Чур'их", "пачкой семян ореха Чур'их", "пачке семян ореха Чур'их")
+	desc = "Эти семена вырастут в дерево, известное среди народа таяран своими обильными плодами орехов и съестными листьями."
+	icon_state = "seed-chureech"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
-	species = "kortanut"
-	plantname = "Korta Nut Bush"
-	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/korta_nut
+	species = "chureech"
+	plantname = "Chur'eech tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut
 	lifespan = 55
 	endurance = 35
 	maturation = 10
 	production = 10
 	yield = 5
 	potency = 10
+	plant_type = 0
 	growthstages = 6
 
 /obj/item/seeds/ambrosiavulgarisseed
@@ -1326,6 +1328,7 @@
 	. = ..()
 	spawn(5)
 		reagents.add_reagent("nutriment", 1 + round((potency / 50), 1))
+		reagents.add_reagent("pacid", round(potency, 1))
 		reagents.add_reagent("sanguisacid", round(potency, 1))
 		force = round((5 + potency / 2.5), 1)
 

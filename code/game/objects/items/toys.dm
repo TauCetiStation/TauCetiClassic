@@ -19,10 +19,19 @@
 	throw_range = 20
 	force = 0
 
-
 /*
  * Balloons
  */
+
+/obj/item/toy/balloon/arrest
+	name = "arreyst balloon"
+	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
+	icon = 'icons/obj/balloons.dmi'
+	icon_state = "arrestballoon"
+	item_state = "arrestballoon"
+	lefthand_file = 'icons/mob/inhands/balloons_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/balloons_righthand.dmi'
+
 /obj/item/toy/balloon
 	name = "water balloon"
 	desc = "A translucent balloon. There's nothing in it."
@@ -176,7 +185,7 @@
 		add_fingerprint(user)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.job == "Clown")
+			if(H.job == "Clown" || stage_of_effect == 2)
 				to_chat(user, "<span class = 'notice'>You concentrate your power into a one big bad joke and make the [src] much stronger.</span>")
 				on = TRUE
 
@@ -488,6 +497,13 @@
 		if("black")
 			light_color = COLOR_GRAY
 
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list()
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
+
 /obj/item/toy/sword/attack_self(mob/user)
 	active = !active
 	if (active)
@@ -512,6 +528,18 @@
 	add_fingerprint(user)
 	return
 
+/obj/item/toy/sword/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/sword))
+		to_chat(user, "<span class='notice'>You attach the ends of the two \
+			toy energy swords, making a single double-bladed toy weapon! \
+			You're cool.</span>")
+		var/obj/item/toy/dualsword/newsword = new(user.loc)
+		user.unEquip(I)
+		user.unEquip(src)
+		qdel(I)
+		qdel(src)
+		user.put_in_hands(newsword)
+
 /obj/item/toy/katana
 	name = "replica katana"
 	desc = "Woefully underpowered in D20."
@@ -525,6 +553,90 @@
 	throwforce = 5
 	w_class = SIZE_SMALL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
+
+/obj/item/toy/dualsword
+	name = "double-bladed energy sword"
+	desc = "Handle with care."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "dualsaber0"
+	var/active = FALSE
+	w_class = SIZE_TINY
+	attack_verb = list("attacked", "struck", "hit")
+	var/blade_color = "blue"
+	sweep_step = 2
+	var/wieldsound = 'sound/weapons/saberon.ogg'
+	var/unwieldsound = 'sound/weapons/saberoff.ogg'
+	var/hitsound_wielded = list('sound/weapons/blade1.ogg')
+
+/obj/item/toy/dualsword/atom_init()
+	. = ..()
+	blade_color = pick("red", "blue", "green", "purple", "yellow", "pink", "black")
+	switch(blade_color)
+		if("red")
+			light_color = COLOR_RED
+		if("blue")
+			light_color = COLOR_BLUE
+		if("green")
+			light_color = COLOR_GREEN
+		if("purple")
+			light_color = COLOR_PURPLE
+		if("yellow")
+			light_color = COLOR_YELLOW
+		if("pink")
+			light_color = COLOR_PINK
+		if("black")
+			light_color = COLOR_GRAY
+
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list()
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/dualsword, can_swipe))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/dualsword, can_swipe))
+	SCB.on_get_sweep_objects = CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/dualsword, get_sweep_objs))
+	AddComponent(/datum/component/swiping, SCB)
+
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.wieldsound = wieldsound
+	TCB.unwieldsound = unwieldsound
+	TCB.attacksound = hitsound_wielded
+	TCB.on_wield = CALLBACK(src, PROC_REF(on_wield))
+	TCB.on_unwield = CALLBACK(src, PROC_REF(on_unwield))
+	AddComponent(/datum/component/twohanded, TCB)
+
+/obj/item/toy/dualsword/proc/on_wield()
+	set_light(2)
+	w_class = SIZE_SMALL
+	flags_2 |= CANT_BE_INSERTED
+	return FALSE
+
+/obj/item/toy/dualsword/proc/on_unwield()
+	set_light(0)
+	flags_2 &= ~CANT_BE_INSERTED
+	w_class = initial(w_class)
+	return FALSE
+
+/obj/item/toy/dualsword/proc/can_swipe(mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
+
+/obj/item/toy/dualsword/proc/get_sweep_objs(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
+	var/list/directions_opposite = list()
+	for(var/dir_ in directions)
+		directions_opposite += turn(dir_, 180)
+
+	var/list/sweep_objects = list()
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions, sweep_delay)
+	sweep_objects += new /obj/effect/effect/weapon_sweep(start, I, directions_opposite, sweep_delay)
+	return sweep_objects
+
+/obj/item/toy/dualsword/update_icon()
+	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
+		icon_state = "dualsaber[blade_color]1"
+	else
+		icon_state = "dualsaber0"
+	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 
 /*
  * Snap pops

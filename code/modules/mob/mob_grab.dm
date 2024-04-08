@@ -11,7 +11,7 @@
 	name = "grab"
 	icon = 'icons/hud/screen1.dmi'
 	icon_state = "reinforce"
-	flags = DROPDEL|NOBLUDGEON
+	flags = ABSTRACT|DROPDEL|NOBLUDGEON
 	var/atom/movable/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/assailant = null
@@ -23,7 +23,6 @@
 	var/dancing //determines if assailant and affecting keep looking at each other. Basically a wrestling position
 
 	layer = 21
-	abstract = 1
 	item_state = "nothing"
 	w_class = SIZE_BIG
 
@@ -59,6 +58,10 @@
 
 	if(SEND_SIGNAL(target, COMSIG_MOVABLE_TRY_GRAB, src, force_state, show_warnings) & COMPONENT_PREVENT_GRAB)
 		return FALSE
+
+	var/area/A = get_area(target)
+	if(force_state <= GRAB_NECK && HAS_TRAIT(src, TRAIT_BORK_SKILLCHIP) && HAS_TRAIT(A, TRAIT_COOKING_AREA))
+		force_state = GRAB_NECK
 
 	Grab(target, force_state, show_warnings)
 	return TRUE
@@ -256,7 +259,6 @@
 				qdel(src)
 				return PROCESS_KILL
 			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
-		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
 			if(assailant.get_targetzone() == O_MOUTH)
@@ -403,6 +405,7 @@
 		affecting.set_dir(WEST)
 
 		set_state(GRAB_KILL)
+	SEND_SIGNAL(assailant, COMSIG_S_CLICK_GRAB, src)
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/grab/proc/confirm()

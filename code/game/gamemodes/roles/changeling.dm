@@ -110,6 +110,9 @@
 
 /datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "changeling")
+	M.current.remove_changeling_powers(FALSE)
+	to_chat(antag.current, "<span class ='danger'>Ваш геном слабеет, а вместе с ним и засыпают ваши силы! \
+		ТЫ более не генокрад, и теперь нынешний облик - твой единственный!</span>")
 	. = ..()
 
 /datum/role/changeling/proc/changelingRegen()
@@ -137,7 +140,7 @@
 	. += "<br><b>Genomes Absorbed:</b> [absorbedcount]"
 	. += "<br><b>Stored Essences:</b><br>"
 	for(var/mob/living/parasite/essence/E in essences)
-		. += printplayerwithicon(E?.mind)
+		. += printplayer(E?.mind)
 		. += "<br>"
 	if(purchasedpowers.len)
 		. += "<br><b>[changelingID] used the following abilities: </b>"
@@ -199,7 +202,7 @@
 	changeling.real_name = changeling.name
 	geneticpoints += 6
 
-	notify_ghosts("\A [changelingID], changeling as a new abomination, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Abomination")
+	notify_ghosts("\A [changelingID], changeling as a new abomination, at [get_area(changeling)]!", source = changeling, action = NOTIFY_ORBIT, header = "Abomination")
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			to_chat(M, "<font size='7' color='red'><b>A terrible roar is coming from somewhere around the station.</b></font>")

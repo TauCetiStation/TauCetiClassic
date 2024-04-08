@@ -2,8 +2,12 @@
 /datum/outfit/job/assistant
 	name = OUTFIT_JOB_NAME("Assistant Gear")
 
-	uniform = /obj/item/clothing/under/test_subject
+	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/black
+
+/datum/outfit/job/assistant/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(SSholiday.holidays[APRIL_FOOLS])
+		H.equip_or_collect(new /obj/item/toy/balloon/arrest(H), SLOT_IN_BACKPACK)
 
 /datum/outfit/job/assistant/lawyer
 	name = OUTFIT_JOB_NAME("Lawyer")

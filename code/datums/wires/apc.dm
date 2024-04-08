@@ -18,17 +18,19 @@ var/global/const/APC_WIRE_AI_CONTROL  = 8
 	var/obj/machinery/power/apc/A = holder
 	return A.wiresexposed
 
-/datum/wires/apc/update_cut(index, mended)
+/datum/wires/apc/update_cut(index, mended, mob/user)
 	var/obj/machinery/power/apc/A = holder
 
 	switch(index)
 		if(APC_WIRE_MAIN_POWER1, APC_WIRE_MAIN_POWER2)
 			if(!mended)
-				A.shock(usr, 50)
+				if(user)
+					A.shock(user, 50)
 				A.shorted = TRUE
 			else if(!is_index_cut(APC_WIRE_MAIN_POWER1) && !is_index_cut(APC_WIRE_MAIN_POWER2))
 				A.shorted = FALSE
-				A.shock(usr, 50)
+				if(user)
+					A.shock(user, 50)
 
 		if(APC_WIRE_AI_CONTROL)
 			if(!mended)

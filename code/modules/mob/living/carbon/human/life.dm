@@ -89,7 +89,7 @@
 	update_canmove()
 
 	//Update our name based on whether our face is obscured/disfigured
-	name = get_visible_name()
+	name = get_visible_name() // why in life wtf
 
 	//Species-specific update.
 	if(species)
@@ -148,11 +148,7 @@ var/global/list/tourette_bad_words= list(
 			   )
 
 /mob/living/carbon/human/proc/handle_disabilities()
-	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if (prob(1) && !paralysis)
-			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
-			Paralyse(10)
-			make_jittery(1000)
+	SEND_SIGNAL(src, COMSIG_HANDLE_DISABILITIES)
 	if ((disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH)) && !reagents.has_reagent("dextromethorphan"))
 		if (prob(5) && !paralysis)
 			drop_item()
@@ -882,6 +878,9 @@ var/global/list/tourette_bad_words= list(
 		healthdoll.cut_overlays()
 		healthdoll.icon_state = "healthdoll_EMPTY"
 		for(var/obj/item/organ/external/BP in bodyparts)
+			if(SEND_SIGNAL(BP, COMSIG_BODYPART_UPDATING_HEALTH_HUD, src) & COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD)
+				continue
+
 			if(!BP || BP.is_stump)
 				continue
 
@@ -1136,7 +1135,7 @@ var/global/list/tourette_bad_words= list(
 			if(isnull(V)) // Trying to figure out a runtime error that keeps repeating
 				CRASH("virus2 nulled before calling activate()")
 			else
-				V.activate(src)
+				V.on_process(src)
 			// activate may have deleted the virus
 			if(!V) continue
 

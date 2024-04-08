@@ -164,7 +164,7 @@
 			return
 
 		var/turf/T = get_turf(user)
-		if(T.intact) // is the floor plating removed ?
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 			to_chat(user, "<span class='warning'>You must first remove the floor plating!</span>")
 			return
 

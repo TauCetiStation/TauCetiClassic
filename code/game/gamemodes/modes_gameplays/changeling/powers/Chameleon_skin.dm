@@ -2,6 +2,7 @@
 	name = "Chameleon Skin"
 	desc = "Our skin pigmentation rapidly changes to suit our current environment."
 	helptext = "Allows us to become invisible after a few seconds of standing still. Can be toggled on and off."
+	button_icon_state = "chameleon_skin"
 	genomecost = 1
 	chemical_cost = 0
 	req_human = 1

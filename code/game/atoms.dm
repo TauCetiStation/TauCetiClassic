@@ -2,7 +2,6 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 
-	var/level = 2
 	var/flags = 0
 	var/flags_2 = 0
 	var/list/fingerprints
@@ -29,6 +28,9 @@
 	var/list/remove_overlays
 	/// a very temporary list of overlays to add
 	var/list/add_overlays
+
+	/// parallax thing
+	var/list/clients_in_contents
 
 	///This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -717,9 +719,6 @@
 /atom/proc/shake_act(severity, recursive = TRUE)
 	if(isturf(loc))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, do_shake_animation), severity, 1 SECOND)
-
-/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
-	return
 
 /turf/shake_act(severity, recursive = TRUE)
 	for(var/atom/A in contents)

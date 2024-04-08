@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/hivemind_upload
 	name = "Hive Channel"
 	desc = "Allows us to channel DNA in the airwaves to allow other changelings to absorb it."
+	button_icon_state = "hivemind_channel"
 	chemical_cost = 10
 	genomecost = 0
 
@@ -35,6 +36,7 @@
 /obj/effect/proc_holder/changeling/hivemind_download
 	name = "Hive Absorb"
 	desc = "Allows us to absorb DNA that has been channeled to the airwaves. Does not count towards absorb objectives."
+	button_icon_state = "hive_absorb"
 	chemical_cost = 20
 	genomecost = 0
 

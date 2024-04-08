@@ -31,7 +31,7 @@ var/global/const/VENDING_WIRE_SHUT_UP    = 16
 	. += "The [V.scan_id ? "purple" : "yellow"] light is on."
 	. += "The blue light is [V.shut_up ? "off" : "on"]."
 
-/datum/wires/vending/update_cut(index, mended)
+/datum/wires/vending/update_cut(index, mended, mob/user)
 	var/obj/machinery/vending/V = holder
 
 	switch(index)

@@ -131,9 +131,7 @@
 	return ..()
 
 /obj/effect/decal/cleanable/vomit/proc/stop_light()
-	sleep(rand(150,300))
-	if(!src) return
-	set_light(0)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, set_light), 0), rand(150, 300))
 
 /obj/effect/decal/cleanable/shreds
 	name = "shreds"
@@ -233,15 +231,10 @@ var/global/list/toilet_overlay_cache = list()
 		if(G != src && G.type == type)
 			qdel(G)
 
-/obj/effect/decal/cleanable/gourd/Crossed(atom/movable/AM)
-	. = ..()
-	try_faceplant_react(AM)
-
 /obj/effect/decal/cleanable/gourd/proc/try_faceplant_react(atom/movable/AM)
 	if(!isliving(AM))
 		return
 	var/mob/living/L = AM
 	if(L.get_species() == UNATHI)
 		return
-	if(L.lying || L.crawling)
-		L.vomit()
+	L.vomit()

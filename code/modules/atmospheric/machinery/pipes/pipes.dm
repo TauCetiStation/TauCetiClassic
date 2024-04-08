@@ -12,10 +12,30 @@
 
 	var/alert_pressure = 170 * ONE_ATMOSPHERE
 
+	undertile = TRUE
+
+/* todo: need to add turf signals and make them work
 /obj/machinery/atmospherics/pipe/atom_init()
-	if(istype(get_turf(src), /turf/simulated/wall) || istype(get_turf(src), /turf/simulated/shuttle/wall) || istype(get_turf(src), /turf/unsimulated/wall))
-		level = PIPE_HIDDEN_LEVEL
-	. = ..()
+	..()
+
+	check_force_hide()
+	RegisterSignal(loc, COMSIG_TURF_CHANGED, PROC_REF(check_force_hide))
+
+// this shitty part exists only for /visible pipes, when unexpectedly we need to make them invisible under walls
+// it has nothing to do with the component, and should be rewritten in the future
+/obj/machinery/atmospherics/pipe/proc/check_force_hide()
+	SIGNAL_HANDLER
+	world.log << "[src] turf changed to [loc]"
+	if(!undertile) // for undertile it is already resolved by component
+		var/turf/T = get_turf(src)
+		if(T.density)
+			ADD_TRAIT(src, TRAIT_T_RAY_VISIBLE, REF(src))
+			alpha = 128
+			invisibility = INVISIBILITY_MAXIMUM
+		else
+			REMOVE_TRAIT(src, TRAIT_T_RAY_VISIBLE, REF(src))
+			alpha = initial(alpha)
+			invisibility = initial(invisibility)*/
 
 /obj/machinery/atmospherics/pipe/Destroy()
 	if(SSair.stop_airnet_processing)
@@ -39,8 +59,7 @@
 	parent = null
 
 /obj/machinery/atmospherics/pipe/atmos_init()
-	var/turf/T = loc
-	hide(!T.is_plating())
+	update_icon()
 	..()
 
 /obj/machinery/atmospherics/pipe/nullifyNode(I)
@@ -48,14 +67,6 @@
 	..()
 	if(oldN)
 		oldN.build_network()
-
-/obj/machinery/atmospherics/pipe/hides_under_flooring()
-	return level != PIPE_VISIBLE_LEVEL
-
-/obj/machinery/atmospherics/pipe/hide(i)
-	if(level == PIPE_HIDDEN_LEVEL && istype(loc, /turf/simulated))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
-	update_icon()
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
 	//Return TRUE if parent should continue checking other pipes
