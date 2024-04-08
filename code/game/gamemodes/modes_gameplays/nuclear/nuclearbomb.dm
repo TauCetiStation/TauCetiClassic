@@ -290,7 +290,7 @@ var/global/bomb_set
 			to_chat(user, "<span class = 'red'>Вы не можете сделать это!</span>")
 			return FALSE
 		if(!istype(get_area(src), /area/station)) // If outside of station
-			to_chat(user, "<span class = 'red'>Бомба не может быть здесь развёрнута...</span>")
+			to_chat(user, "<span class = 'red'>Бомба не может быть развёрнута здесь.</span>")
 			return FALSE
 		if(!ishuman(user) && !isobserver(user))
 			to_chat(user, "<span class = 'red'>Ты не можешь сделать это!</span>")
