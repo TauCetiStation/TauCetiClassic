@@ -642,6 +642,9 @@
 		if(species.flags[NO_PAIN]) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
 			. = 0
 		electrocution_animation(40)
+		// heart attack if ~150 free kW in powernet
+		if(. > 50)
+			attack_heart(50, 50)
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["skill"])
