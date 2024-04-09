@@ -55,7 +55,7 @@
 	name = "Sleep Toxin"
 	id = "stoxin"
 	result = "stoxin"
-	required_reagents = list("chlorine" = 1, "sugar" = 4)
+	required_reagents = list("chloralhydrate" = 1, "sugar" = 4)
 	result_amount = 5
 
 /datum/chemical_reaction/sterilizine
@@ -465,6 +465,13 @@
 		S.start()
 	holder.clear_reagents()
 	return
+
+/datum/chemical_reaction/chloralhydrate
+	name = "Chloral Hydrate"
+	id = "chloralhydrate"
+	result = "chloralhydrate"
+	required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
+	result_amount = 1
 
 /datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v @ TG Port
 	name = "Mute toxin"
