@@ -369,15 +369,17 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
-	switch(data["ticks"])
-		if(1)
-			M.AdjustConfused(2)
-			M.drowsyness += 2
-		if(2 to 199)
-			M.Stun(30)
-			M.Weaken(30)
-		if(200 to INFINITY)
-			M.SetSleeping(20 SECONDS)
+
+	if(data["ticks"] % 50 == 0)
+		M.drowsyness += 10
+
+	if(data["ticks"] >= 200)
+		M.SetSleeping(20 SECONDS)
+	else if(data["ticks"] % 5 == 0)
+		M.Stun(1.5)
+		M.Weaken(3.5)
+	else if(prob(25))
+		M.MakeConfused(2)
 
 /datum/reagent/toxin/potassium_chloride
 	name = "Potassium Chloride"
