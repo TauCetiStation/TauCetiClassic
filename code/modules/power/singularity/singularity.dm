@@ -170,7 +170,7 @@
 				current_size = STAGE_THREE
 				w_class = SIZE_GYGANT
 				grav_pull = 8
-				consume_range = 1
+				consume_range = 2
 				dissipate_delay = 4
 				dissipate_track = 0
 				dissipate_strength = 20
@@ -179,7 +179,7 @@
 				current_size = STAGE_FOUR
 				w_class = SIZE_GARGANTUAN
 				grav_pull = 10
-				consume_range = 1
+				consume_range = 3
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
@@ -187,7 +187,7 @@
 			current_size = STAGE_FIVE
 			w_class = SIZE_GARGANTUAN
 			grav_pull = 10
-			consume_range = 1
+			consume_range = 4
 			dissipate = 0 //It cant go smaller due to e loss
 	if(current_size == allowed_size)
 		log_investigate("<font color='red'>grew to size [current_size]</font>",INVESTIGATE_SINGULO)
@@ -385,27 +385,16 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
-	var/atom/movable/singularity_effect/singulo_effect
-	var/atom/movable/singularity_swirl/singulo_swirl
 	var/atom/movable/singularity_lens/singulo_lens
 
 /obj/singularity/gravitational/atom_init()
 	. = ..()
 
-	add_filter("singa_ring", 1, bloom_filter(rgb(100,0,0), 2, 2, 255))
-
 	animate(src, transform = turn(matrix(), -120), time = 5, loop = -1, flags = ANIMATION_PARALLEL)
 	animate(transform = turn(matrix(), -240), time = 7, loop = -1)
 	animate(transform = turn(matrix(), 0), time = 5, loop = -1)
 
-	animate(get_filter("singa_ring"), size = 1, offset = 1, time = 5, loop = -1, easing = CIRCULAR_EASING, flags = ANIMATION_PARALLEL)
-	animate(size = 2, offset = 2, time = 10, loop = -1, easing = CIRCULAR_EASING)
-
 /obj/singularity/gravitational/Destroy()
-	vis_contents -= singulo_swirl
-	QDEL_NULL(singulo_swirl)
-	vis_contents -= singulo_effect
-	QDEL_NULL(singulo_effect)
 	vis_contents -= singulo_lens
 	QDEL_NULL(singulo_lens)
 	return ..()
@@ -415,92 +404,44 @@
 		singulo_lens = new(src)
 		vis_contents += singulo_lens
 
-	if(!singulo_swirl)
-		singulo_swirl = new(src)
-		vis_contents += singulo_swirl
-
-	if(!singulo_effect)
-		singulo_effect = new(src)
-		vis_contents += singulo_effect
-
 	switch(stage)
 		if(STAGE_ONE)
 			icon = 'icons/obj/singularity.dmi'
 			icon_state = "singularity_s1"
 			pixel_x = 0
 			pixel_y = 0
-			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_1
-			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_1
 			animate(singulo_lens, transform = matrix().Scale(0.5), time = 25)
 			singulo_lens.pixel_x = -128
 			singulo_lens.pixel_y = -128
-			animate(singulo_swirl, transform = matrix().Scale(0.25), time = 25)
-			singulo_swirl.pixel_x = -128
-			singulo_swirl.pixel_y = -128
-			animate(singulo_effect, transform = matrix().Scale(0.015), time = 25)
-			singulo_effect.pixel_x = -128
-			singulo_effect.pixel_y = -128
 		if(STAGE_TWO )
 			icon = 'icons/effects/96x96.dmi'
 			icon_state = "singularity_s3"
 			pixel_x = -32
 			pixel_y = -32
-			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_1
-			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_2
 			animate(singulo_lens, transform = matrix().Scale(0.75), time = 25)
 			singulo_lens.pixel_x = -96
 			singulo_lens.pixel_y = -96
-			animate(singulo_swirl, transform = matrix().Scale(0.5), time = 25)
-			singulo_swirl.pixel_x = -96
-			singulo_swirl.pixel_y = -96
-			animate(singulo_effect, transform = matrix().Scale(0.19), time = 25)
-			singulo_effect.pixel_x = -96
-			singulo_effect.pixel_y = -96
 		if(STAGE_THREE)
 			icon = 'icons/effects/160x160.dmi'
 			icon_state = "singularity_s5"
 			pixel_x = -64
 			pixel_y = -64
-			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_2
-			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_2
 			animate(singulo_lens, transform = matrix().Scale(1.25), time = 25)
 			singulo_lens.pixel_x = -64
 			singulo_lens.pixel_y = -64
-			animate(singulo_swirl, transform = matrix().Scale(0.75), time = 25)
-			singulo_swirl.pixel_x = -64
-			singulo_swirl.pixel_y = -64
-			animate(singulo_effect, transform = matrix().Scale(0.3), time = 25)
-			singulo_effect.pixel_x = -64
-			singulo_effect.pixel_y = -64
 		if(STAGE_FOUR)
 			icon = 'icons/effects/224x224.dmi'
 			icon_state = "singularity_s7"
 			pixel_x = -96
 			pixel_y = -96
-			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_2
-			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_3
 			animate(singulo_lens, transform = matrix().Scale(1.75), time = 25)
 			singulo_lens.pixel_x = -32
 			singulo_lens.pixel_y = -32
-			animate(singulo_swirl, transform = matrix().Scale(1), time = 25)
-			singulo_swirl.pixel_x = -32
-			singulo_swirl.pixel_y = -32
-			animate(singulo_effect, transform = matrix().Scale(0.41), time = 25)
-			singulo_effect.pixel_x = -32
-			singulo_effect.pixel_y = -32
 		if(STAGE_FIVE)
 			icon = 'icons/effects/288x288.dmi'
 			icon_state = "singularity_s9"
 			pixel_x = -128
 			pixel_y = -128
-			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_3
-			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_3
 			animate(singulo_lens, transform = matrix().Scale(3), time = 25)
 			singulo_lens.pixel_x = 0
 			singulo_lens.pixel_y = 0
-			animate(singulo_swirl, transform = matrix().Scale(1.5), time = 25)
-			singulo_swirl.pixel_x = 0
-			singulo_swirl.pixel_y = 0
-			animate(singulo_effect, transform = matrix().Scale(0.5), time = 25)
-			singulo_effect.pixel_x = 0
-			singulo_effect.pixel_y = 0

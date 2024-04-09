@@ -127,7 +127,7 @@
 	name = "Gravitational Singularity"
 	desc = "A gravitational singularity."
 	icon = 'icons/obj/singularity.dmi'
-	icon_state = "singularity_s11"
+	icon_state = "singularity_s1"
 	plane = SINGULARITY_PLANE
 	layer = SINGULARITY_LAYER
 
@@ -206,7 +206,7 @@
 
 	if(!on)
 		icon = 'icons/obj/singularity.dmi'
-		icon_state = "singularity_s11"
+		icon_state = "singularity_s1"
 		pixel_x = 0
 		pixel_y = 0
 		return
