@@ -4,6 +4,7 @@
 
 /area/space
 	name = "Space"
+	cases = list("космическое пространство", "космического пространства", "космическому пространству", "космическое пространство", "космическим пространством", "космическом пространстве")
 	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
@@ -27,6 +28,7 @@
 
 /area/start            // will be unused once kurper gets his login interface patch done
 	name = "start area"
+	cases = list("стартовая локация", "космического пространства", "космическому пространству", "космическое пространство", "космическим пространством", "космическом пространстве")
 	icon_state = "start"
 	requires_power = 0
 	dynamic_lighting = FALSE
@@ -35,3 +37,4 @@
 // other environment areas
 /area/space/snow
 	name = "Snow field"
+	cases = list("снежное поле", "снежного поля", "снежному полю", "снежное поле", "снежным полем", "снежном поле")
