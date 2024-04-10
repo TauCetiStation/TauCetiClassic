@@ -479,18 +479,18 @@ var/global/list/death_alarm_stealth_areas = list(
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			if(is_type_in_list(t, global.death_alarm_stealth_areas))
 				//give the syndies a bit of stealth
-				a.autosay("[mobname] [(ANYMORPH(M, "умер", "умерла", "умерло", "умерли"))] в космосе!", "Оповещение о смерти [mobname]")
+				a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в космосе!", "Оповещение о смерти [mobname]")
 			else
-				a.autosay("[mobname] [(ANYMORPH(M, "умер", "умерла", "умерло", "умерли"))] в [CASE(t, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
+				a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в [CASE(t, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
 			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 		if ("emp")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("[mobname] [(ANYMORPH(M, "умер", "умерла", "умерло", "умерли"))] в [CASE(t, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
+			a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в [CASE(t, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
 			qdel(a)
 		else
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("[mobname] [(ANYMORPH(M, "умер", "умерла", "умерло", "умерли"))] в-в-в- бз-з-з-з-з...", "Оповещение о смерти [mobname]")
+			a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в-в-в- бз-з-з-з-з...", "Оповещение о смерти [mobname]")
 			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 
@@ -524,7 +524,7 @@ var/global/list/death_alarm_stealth_areas = list(
 	var/turf/T = get_turf(imp_in)
 
 	var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-	a.autosay("[imp_in.real_name] [(ANYMORPH(imp_in, "умер", "умерла", "умерло", "умерли"))] на координатах ([T.x], [T.y])!", "Оповещение о смерти [mobname]'", freq = frequency)
+	a.autosay("[imp_in.real_name] [(ANYMORPH(imp_in, "погиб", "погибла", "погибло", "погибли"))] на координатах ([T.x], [T.y])!", "Оповещение о смерти [mobname]'", freq = frequency)
 	STOP_PROCESSING(SSobj, src)
 	qdel(a)
 

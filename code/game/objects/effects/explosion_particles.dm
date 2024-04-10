@@ -62,3 +62,22 @@
 		var/datum/effect/system/expl_particles/P = new/datum/effect/system/expl_particles()
 		P.set_up(practicles,location)
 		P.start()
+
+/obj/effect/shockwave
+	icon = 'icons/effects/shockwave.dmi'
+	icon_state = "shockwave"
+	plane = ANOMALY_PLANE
+	pixel_x = -496
+	pixel_y = -496
+
+/obj/effect/shockwave/atom_init(mapload, radius, speed, y_offset, x_offset)
+	. = ..()
+	if(!speed)
+		speed = 1
+	if(y_offset)
+		pixel_y += y_offset
+	if(x_offset)
+		pixel_x += x_offset
+	QDEL_IN(src, 0.5 * radius * speed)
+	transform = matrix().Scale(32 / 1024, 32 / 1024)
+	animate(src, time = 0.5 * radius * speed, transform=matrix().Scale((32 / 1024) * radius * 1.5, (32 / 1024) * radius * 1.5))

@@ -830,7 +830,7 @@
 				laws = new /datum/ai_laws/syndicate_override
 				var/time = time2text(world.realtime,"hh:mm:ss")
 				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+				set_zeroth_law("Только [user.real_name] и люди, которых он называет таковыми, - агенты Синдиката.")
 				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
 				sleep(20)
 				playsound_local(src, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
