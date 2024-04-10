@@ -38,7 +38,7 @@
 #define FLOORBOT_TASK_BREAKTILE      4
 
 //Floorbot
-/obj/machinery/bot/floorbot
+/mob/living/simple_animal/bot/floorbot
 	name = "Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
@@ -61,24 +61,24 @@
 	var/boringness = 0
 
 
-/obj/machinery/bot/floorbot/atom_init()
+/mob/living/simple_animal/bot/floorbot/atom_init()
 	. = ..()
 	updateicon()
 
-/obj/machinery/bot/floorbot/turn_on()
+/mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
 	updateicon()
 	updateUsrDialog()
 	state = FLOORBOT_IDLE
 
-/obj/machinery/bot/floorbot/turn_off()
+/mob/living/simple_animal/bot/floorbot/turn_off()
 	..()
 	target = null
 	updateicon()
 	path = new()
 	updateUsrDialog()
 
-/obj/machinery/bot/floorbot/ui_interact(mob/user)
+/mob/living/simple_animal/bot/floorbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[on ? "On" : "Off"]</A><BR>"
@@ -102,7 +102,7 @@
 	popup.open()
 
 
-/obj/machinery/bot/floorbot/attackby(obj/item/W , mob/user)
+/mob/living/simple_animal/bot/floorbot/attackby(obj/item/W , mob/user)
 	if(istype(W, /obj/item/stack/tile/plasteel))
 		var/obj/item/stack/tile/plasteel/T = W
 		if(amount >= 50)
@@ -127,12 +127,12 @@
 	else
 		..()
 
-/obj/machinery/bot/floorbot/emag_act(mob/user)
+/mob/living/simple_animal/bot/floorbot/emag_act(mob/user)
 	..()
 	if(open && !locked && user)
 		to_chat(user, "<span class='notice'>The [src] buzzes and beeps.</span>")
 
-/obj/machinery/bot/floorbot/Topic(href, href_list)
+/mob/living/simple_animal/bot/floorbot/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -166,7 +166,7 @@
 	updateUsrDialog()
 
 
-/obj/machinery/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
+/mob/living/simple_animal/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
 	if(!t || !isenvironmentturf(t))
 		return FALSE
 
@@ -177,24 +177,24 @@
 
 	return istype(t_area, /area/station)
 
-/obj/machinery/bot/floorbot/proc/is_broken(turf/simulated/floor/t)
+/mob/living/simple_animal/bot/floorbot/proc/is_broken(turf/simulated/floor/t)
 	if(!istype(t))
 		return FALSE
 	return t.broken || t.burnt
 
-/obj/machinery/bot/floorbot/proc/is_plating(turf/simulated/floor/t)
+/mob/living/simple_animal/bot/floorbot/proc/is_plating(turf/simulated/floor/t)
 	if(!istype(t))
 		return FALSE
 	return t.is_plating() && !is_broken(t)
 
 
-/obj/machinery/bot/floorbot/proc/do_task(turf/t, new_task)
+/mob/living/simple_animal/bot/floorbot/proc/do_task(turf/t, new_task)
 	state = FLOORBOT_MOVING_TO_REPAIR
 	task = new_task
 	target = t
 	path = new()
 
-/obj/machinery/bot/floorbot/proc/attempt_move(atom)
+/mob/living/simple_animal/bot/floorbot/proc/attempt_move(atom)
 	if(get_turf(atom) == get_turf(src))
 		return TRUE
 
@@ -206,7 +206,7 @@
 
 	return FALSE
 
-/obj/machinery/bot/floorbot/proc/start_task()
+/mob/living/simple_animal/bot/floorbot/proc/start_task()
 	var/turf/t = target
 
 	if(task == FLOORBOT_TASK_FIXHOLE && is_hull_breach(t))
@@ -243,7 +243,7 @@
 	else
 		state = FLOORBOT_IDLE
 
-/obj/machinery/bot/floorbot/proc/finish_task()
+/mob/living/simple_animal/bot/floorbot/proc/finish_task()
 	var/turf/t = target
 
 	if(task == FLOORBOT_TASK_FIXHOLE && is_hull_breach(t))
@@ -281,7 +281,7 @@
 		state = FLOORBOT_IDLE
 	task = FLOORBOT_TASK_NOTHING
 
-/obj/machinery/bot/floorbot/proc/create_tiles(obj/item/stack/sheet/metal/M)
+/mob/living/simple_animal/bot/floorbot/proc/create_tiles(obj/item/stack/sheet/metal/M)
 	if(!istype(M))
 		state = FLOORBOT_IDLE
 		return
@@ -296,7 +296,7 @@
 	qdel(M)
 	state = FLOORBOT_IDLE
 
-/obj/machinery/bot/floorbot/process()
+/mob/living/simple_animal/bot/floorbot/process()
 	if(!on)
 		return
 
@@ -427,13 +427,13 @@
 		step_to(src, T)
 
 
-/obj/machinery/bot/floorbot/proc/updateicon()
+/mob/living/simple_animal/bot/floorbot/proc/updateicon()
 	if(src.amount > 0)
 		src.icon_state = "floorbot[src.on]"
 	else
 		src.icon_state = "floorbot[src.on]e"
 
-/obj/machinery/bot/floorbot/explode()
+/mob/living/simple_animal/bot/floorbot/explode()
 	src.on = 0
 	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
@@ -502,7 +502,7 @@
 	if(istype(I, /obj/item/robot_parts/l_arm) || istype(I, /obj/item/robot_parts/r_arm))
 		qdel(I)
 		var/turf/T = get_turf(user.loc)
-		var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot(T)
+		var/mob/living/simple_animal/bot/floorbot/A = new /mob/living/simple_animal/bot/floorbot(T)
 		A.name = src.created_name
 		to_chat(user, "<span class='notice'>You add the robot arm to the odd looking toolbox assembly! Boop beep!</span>")
 		qdel(src)
@@ -520,5 +520,5 @@
 	else
 		return ..()
 
-/obj/machinery/bot/floorbot/Process_Spacemove(movement_dir = 0)
+/mob/living/simple_animal/bot/floorbot/Process_Spacemove(movement_dir = 0)
 	return 1

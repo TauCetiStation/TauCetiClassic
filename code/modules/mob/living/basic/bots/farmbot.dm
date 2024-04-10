@@ -23,7 +23,7 @@
 #define FARMBOT_EMAG_DELAY			60 //How long of a delay after doing one of the emagged attack actions
 #define FARMBOT_ACTION_DELAY		35 //How long of a delay after doing one of the normal actions
 
-/obj/machinery/bot/farmbot
+/mob/living/simple_animal/bot/farmbot
 	name = "Farmbot"
 	desc = "The botanist's best friend."
 	icon = 'icons/obj/aibots.dmi'
@@ -50,12 +50,12 @@
 	var/path[] = new() // used for pathing
 	var/frustration
 
-/obj/machinery/bot/farmbot/atom_init()
+/mob/living/simple_animal/bot/farmbot/atom_init()
 	..()
 	icon_state = "farmbot[src.on]"
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/bot/farmbot/atom_init_late()
+/mob/living/simple_animal/bot/farmbot/atom_init_late()
 	botcard = new /obj/item/weapon/card/id(src)
 	botcard.access = req_access
 
@@ -64,31 +64,31 @@
 	if ( !tank ) //An admin must have spawned the farmbot! Better give it a tank.
 		tank = new /obj/structure/reagent_dispensers/watertank(src)
 
-/obj/machinery/bot/farmbot/Bump(atom/M) //Leave no door unopened!
+/mob/living/simple_animal/bot/farmbot/Bump(atom/M) //Leave no door unopened!
 	if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
 		var/obj/machinery/door/D = M
 		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
 			D.open()
 			src.frustration = 0
 
-/obj/machinery/bot/farmbot/turn_on()
+/mob/living/simple_animal/bot/farmbot/turn_on()
 	. = ..()
 	src.icon_state = "farmbot[src.on]"
 	updateUsrDialog()
 
-/obj/machinery/bot/farmbot/turn_off()
+/mob/living/simple_animal/bot/farmbot/turn_off()
 	..()
 	src.path = new()
 	src.icon_state = "farmbot[src.on]"
 	updateUsrDialog()
 
-/obj/machinery/bot/farmbot/proc/get_total_ferts()
+/mob/living/simple_animal/bot/farmbot/proc/get_total_ferts()
 	var/total_fert = 0
 	for (var/obj/item/nutrient/fert in contents)
 		total_fert++
 	return total_fert
 
-/obj/machinery/bot/farmbot/ui_interact(mob/user)
+/mob/living/simple_animal/bot/farmbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Hyrdoponic Assisting Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -118,7 +118,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/bot/farmbot/Topic(href, href_list)
+/mob/living/simple_animal/bot/farmbot/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -148,7 +148,7 @@
 
 	updateUsrDialog()
 
-/obj/machinery/bot/farmbot/attackby(obj/item/weapon/W, mob/user)
+/mob/living/simple_animal/bot/farmbot/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(user))
 			locked = !locked
@@ -170,7 +170,7 @@
 	else
 		..()
 
-/obj/machinery/bot/farmbot/emag_act(mob/user)
+/mob/living/simple_animal/bot/farmbot/emag_act(mob/user)
 	..()
 	if(user)
 		to_chat(user, "<span class='warning'>You short out [src]'s plant identifier circuits.</span>")
@@ -185,7 +185,7 @@
 	spawn(150)
 		mode = 0
 
-/obj/machinery/bot/farmbot/explode()
+/mob/living/simple_animal/bot/farmbot/explode()
 	src.on = 0
 	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
@@ -211,7 +211,7 @@
 	qdel(src)
 	return
 
-/obj/machinery/bot/farmbot/process()
+/mob/living/simple_animal/bot/farmbot/process()
 	//set background = 1
 
 	if(!src.on)
@@ -243,7 +243,7 @@
 			move_to_target()
 	return
 
-/obj/machinery/bot/farmbot/proc/use_farmbot_item()
+/mob/living/simple_animal/bot/farmbot/proc/use_farmbot_item()
 	if ( !target )
 		mode = 0
 		return 0
@@ -282,7 +282,7 @@
 
 
 
-/obj/machinery/bot/farmbot/proc/find_target()
+/mob/living/simple_animal/bot/farmbot/proc/find_target()
 	if ( emagged ) //Find a human and help them!
 		for ( var/mob/living/carbon/human/human in view(7,src) )
 			if (human.stat == DEAD)
@@ -311,7 +311,7 @@
 				return 1
 		return 0
 
-/obj/machinery/bot/farmbot/proc/GetNeededMode(obj/machinery/hydroponics/tray)
+/mob/living/simple_animal/bot/farmbot/proc/GetNeededMode(obj/machinery/hydroponics/tray)
 	if ( !tray.planted || tray.dead )
 		return 0
 	if ( tray.myseed.plant_type == 1 && setting_ignoreWeeds )
@@ -330,7 +330,7 @@
 
 	return 0
 
-/obj/machinery/bot/farmbot/proc/move_to_target()
+/mob/living/simple_animal/bot/farmbot/proc/move_to_target()
 	//Mostly copied from medibot code.
 
 	if(src.frustration > 8)
@@ -372,7 +372,7 @@
 		src.frustration++
 
 
-/obj/machinery/bot/farmbot/proc/fertilize(obj/item/nutrient/fert)
+/mob/living/simple_animal/bot/farmbot/proc/fertilize(obj/item/nutrient/fert)
 	if ( !fert )
 		target = null
 		mode = 0
@@ -406,7 +406,7 @@
 			icon_state = "farmbot[src.on]"
 		return 1
 
-/obj/machinery/bot/farmbot/proc/weed()
+/mob/living/simple_animal/bot/farmbot/proc/weed()
 	icon_state = "farmbot_hoe"
 	spawn(FARMBOT_ANIMATION_TIME)
 		icon_state = "farmbot[src.on]"
@@ -439,7 +439,7 @@
 		tray.weedlevel = 0
 		tray.update_icon()
 
-/obj/machinery/bot/farmbot/proc/water()
+/mob/living/simple_animal/bot/farmbot/proc/water()
 	if ( !tank || tank.reagents.total_volume < 1 )
 		mode = 0
 		target = null
@@ -481,7 +481,7 @@
 		spawn(FARMBOT_ACTION_DELAY)
 			mode = 0
 
-/obj/machinery/bot/farmbot/proc/refill()
+/mob/living/simple_animal/bot/farmbot/proc/refill()
 	if ( !tank || !tank.reagents.total_volume > 600 || !istype(target,/obj/structure/sink) )
 		mode = 0
 		target = null
@@ -551,7 +551,7 @@
 	else if(isprox(I) && build_step == 3)
 		build_step++
 		to_chat(user, "You complete the Farmbot! Beep boop.")
-		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot(get_turf(src))
+		var/mob/living/simple_animal/bot/farmbot/S = new /mob/living/simple_animal/bot/farmbot(get_turf(src))
 		S.name = src.created_name
 		qdel(I)
 		qdel(src)

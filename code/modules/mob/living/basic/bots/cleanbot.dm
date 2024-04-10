@@ -12,7 +12,7 @@
 
 
 //Cleanbot
-/obj/machinery/bot/cleanbot
+/mob/living/simple_animal/botcleanbot
 	name = "Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
@@ -40,7 +40,7 @@
 	var/next_dest
 	var/next_dest_loc
 
-/obj/machinery/bot/cleanbot/atom_init()
+/mob/living/simple_animal/bot/cleanbot/atom_init()
 	. = ..()
 	get_targets()
 	icon_state = "cleanbot[on]"
@@ -56,17 +56,17 @@
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
-/obj/machinery/bot/cleanbot/Destroy()
+/mob/living/simple_animal/bot/cleanbot/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,beacon_freq)
 	return ..()
 
-/obj/machinery/bot/cleanbot/turn_on()
+/mob/living/simple_animal/bot/cleanbot/turn_on()
 	. = ..()
 	icon_state = "cleanbot[on]"
 	updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/turn_off()
+/mob/living/simple_animal/bot/cleanbot/turn_off()
 	..()
 	if(target)
 		target.targeted_by = null
@@ -77,7 +77,7 @@
 	path = new()
 	updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/ui_interact(mob/user)
+/mob/living/simple_animal/bot/cleanbot/ui_interact(mob/user)
 	var/dat
 	dat += text({"
 		<TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
@@ -100,7 +100,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/bot/cleanbot/Topic(href, href_list)
+/mob/living/simple_animal/bot/cleanbot/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -129,7 +129,7 @@
 			to_chat(usr, "<span class='notice'>You press the weird button.</span>")
 	updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/attackby(obj/item/weapon/W, mob/user)
+/mob/living/simple_animal/bot/cleanbot/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(allowed(usr) && !open && !emagged)
 			locked = !locked
@@ -144,7 +144,7 @@
 	else
 		return ..()
 
-/obj/machinery/bot/cleanbot/emag_act(mob/user)
+/mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		if(user)
@@ -152,10 +152,10 @@
 		oddbutton = 1
 		screwloose = 1
 
-/obj/machinery/bot/cleanbot/is_on_patrol()
+/mob/living/simple_animal/bot/cleanbot/is_on_patrol()
 	return should_patrol
 
-/obj/machinery/bot/cleanbot/process()
+/mob/living/simple_animal/bot/cleanbot/process()
 	if(!on)
 		return
 	if(cleaning)
@@ -216,7 +216,7 @@
 
 	oldloc = loc
 
-/obj/machinery/bot/cleanbot/proc/find_target_path()
+/mob/living/simple_animal/bot/cleanbot/proc/find_target_path()
 	if(!target)
 		return
 	path = get_path_to(src, get_turf(target), /turf/proc/Distance_cardinal, 0, 30, id=botcard)
@@ -231,7 +231,7 @@
 			else
 				patrol_move()
 
-/obj/machinery/bot/cleanbot/proc/find_patrol_path()
+/mob/living/simple_animal/bot/cleanbot/proc/find_patrol_path()
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(beacon_freq)
 
 	if(!frequency)
@@ -247,13 +247,13 @@
 	frequency.post_signal(src, signal, filter = RADIO_NAVBEACONS)
 	addtimer(CALLBACK(src, PROC_REF(receive_patrol_path)), 5)
 
-/obj/machinery/bot/cleanbot/proc/receive_patrol_path()
+/mob/living/simple_animal/bot/cleanbot/proc/receive_patrol_path()
 	if (!next_dest_loc)
 		next_dest_loc = closest_loc
 	if (next_dest_loc)
 		patrol_path = get_path_to(src, next_dest_loc, TYPE_PROC_REF(/turf, Distance_cardinal), 0, 120, id=botcard, exclude=null)
 
-/obj/machinery/bot/cleanbot/proc/patrol_move()
+/mob/living/simple_animal/bot/cleanbot/proc/patrol_move()
 	if (patrol_path.len <= 0)
 		return
 
@@ -272,7 +272,7 @@
 	else
 		failed_steps = 0
 
-/obj/machinery/bot/cleanbot/receive_signal(datum/signal/signal)
+/mob/living/simple_animal/bot/cleanbot/receive_signal(datum/signal/signal)
 	var/recv = signal.data["beacon"]
 	var/valid = signal.data["patrol"]
 	if(!recv || !valid)
@@ -290,7 +290,7 @@
 		next_dest_loc = signal.source.loc
 		next_dest = signal.data["next_patrol"]
 
-/obj/machinery/bot/cleanbot/proc/get_targets()
+/mob/living/simple_animal/bot/cleanbot/proc/get_targets()
 	src.target_types = list()
 	target_types += /obj/effect/decal/cleanable/blood/oil
 	target_types += /obj/effect/decal/cleanable/blood/gibs/robot
@@ -318,7 +318,7 @@
 		target_types += /obj/effect/decal/cleanable/blood/drip
 		target_types += /obj/effect/decal/cleanable/blood/trail_holder
 
-/obj/machinery/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
+/mob/living/simple_animal/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
 	anchored = TRUE
 	icon_state = "cleanbot-c"
 	visible_message("<span class='warning'>[src] begins to clean up the [target]</span>")
@@ -336,7 +336,7 @@
 		anchored = FALSE
 		target = null
 
-/obj/machinery/bot/cleanbot/explode()
+/mob/living/simple_animal/bot/cleanbot/explode()
 	on = 0
 	visible_message("<span class='warning bold'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
@@ -358,7 +358,7 @@
 	if(istype(I, /obj/item/robot_parts/l_arm) || istype(I, /obj/item/robot_parts/r_arm))
 		qdel(I)
 		var/turf/T = get_turf(loc)
-		var/obj/machinery/bot/cleanbot/A = new /obj/machinery/bot/cleanbot(T)
+		var/mob/living/simple_animal/bot/cleanbot/A = new /mob/living/simple_animal/bot/cleanbot(T)
 		A.name = created_name
 		to_chat(user, "<span class='notice'>You add the robot arm to the bucket and sensor assembly. Beep boop!</span>")
 		qdel(src)

@@ -1,4 +1,4 @@
-/obj/machinery/bot/secbot
+/mob/living/simple_animal/bot/secbot
 	name = "Securitron"
 	desc = "A little security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
@@ -45,7 +45,7 @@
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
 
-/obj/machinery/bot/secbot/beepsky
+/mob/living/simple_animal/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
 	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
 	idcheck = 0
@@ -61,7 +61,7 @@
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 
 
-/obj/machinery/bot/secbot/atom_init()
+/mob/living/simple_animal/bot/secbot/atom_init()
 	. = ..()
 	botcard = new /obj/item/weapon/card/id(src)
 	var/datum/job/cadet/C = new/datum/job/cadet
@@ -72,13 +72,13 @@
 
 	update_icon()
 
-/obj/machinery/bot/secbot/turn_on()
+/mob/living/simple_animal/bot/secbot/turn_on()
 	..()
 	same_pos_count = 0
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/bot/secbot/turn_off()
+/mob/living/simple_animal/bot/secbot/turn_off()
 	..()
 	target = null
 	oldtarget_name = null
@@ -88,7 +88,7 @@
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/bot/secbot/ui_interact(mob/user)
+/mob/living/simple_animal/bot/secbot/ui_interact(mob/user)
 	var/dat
 
 	dat += text({"
@@ -117,7 +117,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/bot/secbot/Topic(href, href_list)
+/mob/living/simple_animal/bot/secbot/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -144,7 +144,7 @@
 
 	updateUsrDialog()
 
-/obj/machinery/bot/secbot/attackby(obj/item/weapon/W, mob/user)
+/mob/living/simple_animal/bot/secbot/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(emagged)
 			to_chat(user, "<span class='warning'>ERROR</span>")
@@ -160,12 +160,12 @@
 		beingAttacked(W, user)
 
 
-/obj/machinery/bot/secbot/proc/beingAttacked(obj/item/weapon/W, mob/user)
+/mob/living/simple_animal/bot/secbot/proc/beingAttacked(obj/item/weapon/W, mob/user)
 	if(!isscrewing(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 
-/obj/machinery/bot/secbot/proc/forgetCurrentTarget()
+/mob/living/simple_animal/bot/secbot/proc/forgetCurrentTarget()
 	target = null
 	last_found = world.time
 	mode = SECBOT_IDLE
@@ -173,7 +173,7 @@
 	frustration = 0
 	anchored = FALSE
 
-/obj/machinery/bot/secbot/emag_act(mob/user)
+/mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		if(user)
@@ -189,10 +189,10 @@
 		update_icon()
 		mode = SECBOT_IDLE
 
-/obj/machinery/bot/secbot/is_on_patrol()
+/mob/living/simple_animal/bot/secbot/is_on_patrol()
 	return mode == SECBOT_START_PATROL
 
-/obj/machinery/bot/secbot/process()
+/mob/living/simple_animal/bot/secbot/process()
 	if(!on)
 		return
 	if(!inaction_check())
@@ -302,7 +302,7 @@
 			addtimer(CALLBACK(src, PROC_REF(subprocess), SECBOT_SUMMON), 4)
 			addtimer(CALLBACK(src, PROC_REF(subprocess), SECBOT_SUMMON), 8)
 
-/obj/machinery/bot/secbot/proc/subprocess(oldmode)
+/mob/living/simple_animal/bot/secbot/proc/subprocess(oldmode)
 	switch(oldmode)
 		if(SECBOT_PREP_ARREST)
 			if(!target) //All will be cleared in /process()
@@ -333,12 +333,12 @@
 				patrol_step()
 
 
-/obj/machinery/bot/secbot/update_icon()
+/mob/living/simple_animal/bot/secbot/update_icon()
 	icon_state = "secbot[on]"
 
 // perform a single patrol step
 
-/obj/machinery/bot/secbot/proc/patrol_step()
+/mob/living/simple_animal/bot/secbot/proc/patrol_step()
 	if(loc == patrol_target)		// reached target
 		at_patrol_target()
 		return
@@ -367,7 +367,7 @@
 	else	// no path, so calculate new one
 		mode = SECBOT_START_PATROL
 
-/obj/machinery/bot/secbot/proc/patrol_substep(turf/next)
+/mob/living/simple_animal/bot/secbot/proc/patrol_substep(turf/next)
 	calc_path(next)
 	if(path.len == 0)
 		find_patrol_target()
@@ -375,7 +375,7 @@
 		blockcount = 0
 
 // finds a new patrol target
-/obj/machinery/bot/secbot/proc/find_patrol_target()
+/mob/living/simple_animal/bot/secbot/proc/find_patrol_target()
 	send_status()
 	if(awaiting_beacon)			// awaiting beacon response
 		awaiting_beacon++
@@ -391,14 +391,14 @@
 
 // finds the nearest beacon to self
 // signals all beacons matching the patrol code
-/obj/machinery/bot/secbot/proc/find_nearest_beacon()
+/mob/living/simple_animal/bot/secbot/proc/find_nearest_beacon()
 	nearest_beacon = null
 	new_destination = "__nearest__"
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
 	addtimer(CALLBACK(src, PROC_REF(find_nearest_beacon_substep)), 10)
 
-/obj/machinery/bot/secbot/proc/find_nearest_beacon_substep()
+/mob/living/simple_animal/bot/secbot/proc/find_nearest_beacon_substep()
 	awaiting_beacon = 0
 	if(nearest_beacon)
 		set_destination(nearest_beacon)
@@ -408,14 +408,14 @@
 		speak("Disengaging patrol mode.")
 		send_status()
 
-/obj/machinery/bot/secbot/proc/at_patrol_target()
+/mob/living/simple_animal/bot/secbot/proc/at_patrol_target()
 	find_patrol_target()
 
 
 // sets the current destination
 // signals all beacons matching the patrol code
 // beacons will return a signal giving their locations
-/obj/machinery/bot/secbot/proc/set_destination(new_dest)
+/mob/living/simple_animal/bot/secbot/proc/set_destination(new_dest)
 	new_destination = new_dest
 	post_signal(beacon_freq, "findbeacon", "patrol")
 	awaiting_beacon = 1
@@ -424,8 +424,8 @@
 // receive a radio signal
 // used for beacon reception
 
-/obj/machinery/bot/secbot/receive_signal(datum/signal/signal)
-	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/bot/secbot/receive_signal([signal.debug_print()])")
+/mob/living/simple_animal/bot/secbot/receive_signal(datum/signal/signal)
+	//log_admin("DEBUG \[[world.timeofday]\]: /mob/living/simple_animal/bot/secbot/receive_signal([signal.debug_print()])")
 	if(!on)
 		return
 
@@ -496,11 +496,11 @@
 
 
 // send a radio signal with a single data key/value pair
-/obj/machinery/bot/secbot/proc/post_signal(freq, key, value)
+/mob/living/simple_animal/bot/secbot/proc/post_signal(freq, key, value)
 	post_signal_multiple(freq, list("[key]" = value))
 
 // send a radio signal with multiple data key/values
-/obj/machinery/bot/secbot/proc/post_signal_multiple(freq, list/keyval)
+/mob/living/simple_animal/bot/secbot/proc/post_signal_multiple(freq, list/keyval)
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(freq)
 	if(!frequency)
 		return
@@ -520,7 +520,7 @@
 		frequency.post_signal(src, signal)
 
 // signals bot status etc. to controller
-/obj/machinery/bot/secbot/proc/send_status()
+/mob/living/simple_animal/bot/secbot/proc/send_status()
 	if(!(src && loc && loc.loc))
 		return
 	var/list/kv = list(
@@ -535,12 +535,12 @@
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/obj/machinery/bot/secbot/proc/calc_path(turf/avoid = null)
+/mob/living/simple_animal/bot/secbot/proc/calc_path(turf/avoid = null)
 	path = get_path_to(src, patrol_target, TYPE_PROC_REF(/turf, Distance), 0, 120, id=botcard, exclude=avoid)
 
 // look for a criminal in view of the bot
 
-/obj/machinery/bot/secbot/proc/look_for_perp()
+/mob/living/simple_animal/bot/secbot/proc/look_for_perp()
 	anchored = FALSE
 	for(var/mob/living/L in view(7, src)) //Let's find us a criminal
 		if(L.stat != CONSCIOUS)
@@ -571,7 +571,7 @@
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-/obj/machinery/bot/secbot/proc/assess_perp(mob/living/perp)
+/mob/living/simple_animal/bot/secbot/proc/assess_perp(mob/living/perp)
 	var/threatcount = 0
 
 	if(!istype(perp))
@@ -583,7 +583,7 @@
 	threatcount = perp.assess_perp(src, FALSE, idcheck, FALSE, check_records)
 	return threatcount
 
-/obj/machinery/bot/secbot/Bump(atom/M) //Leave no door unopened!
+/mob/living/simple_animal/bot/secbot/Bump(atom/M) //Leave no door unopened!
 	if(istype(M, /obj/machinery/door) && !isnull(botcard))
 		var/obj/machinery/door/D = M
 		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard) && !istype(D,/obj/machinery/door/poddoor))
@@ -593,11 +593,11 @@
 		loc = M.loc
 		frustration = 0
 
-/obj/machinery/bot/secbot/proc/speak(message)
+/mob/living/simple_animal/bot/secbot/proc/speak(message)
 	audible_message("<span class='name'>[src]</span> beeps, \"[message]\"")
 
 
-/obj/machinery/bot/secbot/explode()
+/mob/living/simple_animal/bot/secbot/explode()
 	walk_to(src,0)
 	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
@@ -621,7 +621,7 @@
 	new /obj/effect/decal/cleanable/blood/oil(loc)
 	qdel(src)
 
-/obj/machinery/bot/secbot/attack_alien(mob/living/carbon/xenomorph/user)
+/mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/xenomorph/user)
 	..()
 	if(!isxeno(target))
 		target = user
@@ -654,7 +654,7 @@
 	else if(istype(I, /obj/item/weapon/melee/baton) && (build_step >= 3))
 		build_step++
 		to_chat(user, "You complete the Securitron! Beep boop.")
-		var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot
+		var/mob/living/simple_animal/bot/secbot/S = new /mob/living/simple_animal/bot/secbot
 		S.loc = get_turf(src)
 		S.name = created_name
 		qdel(I)

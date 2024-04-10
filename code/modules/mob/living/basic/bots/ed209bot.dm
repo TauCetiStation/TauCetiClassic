@@ -1,4 +1,4 @@
-/obj/machinery/bot/secbot/ed209
+/mob/living/simple_animal/bot/secbot/ed209
 	name = "ED-209 Security Robot"
 	desc = "A security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
@@ -28,7 +28,7 @@
 	var/lasertag_color = ""
 
 
-/obj/machinery/bot/secbot/ed209/atom_init(mapload, created_name, created_lasercolor)
+/mob/living/simple_animal/bot/secbot/ed209/atom_init(mapload, created_name, created_lasercolor)
 	. = ..()
 	if(created_name)
 		name = created_name
@@ -49,10 +49,10 @@
 			name = pick("RED RAMPAGE","RED ROVER","RED KILLDEATH MURDERBOT")
 
 
-/obj/machinery/bot/secbot/ed209/update_icon()
+/mob/living/simple_animal/bot/secbot/ed209/update_icon()
 	icon_state = "[lasertag_color]ed209[on]"
 
-/obj/machinery/bot/secbot/ed209/can_interact_with(mob/user)
+/mob/living/simple_animal/bot/secbot/ed209/can_interact_with(mob/user)
 	if(!..())
 		return FALSE
 
@@ -64,7 +64,7 @@
 
 	return TRUE
 
-/obj/machinery/bot/secbot/ed209/ui_interact(mob/user)
+/mob/living/simple_animal/bot/secbot/ed209/ui_interact(mob/user)
 	var/dat
 
 	dat += text({"
@@ -98,7 +98,7 @@
 	popup.open()
 
 
-/obj/machinery/bot/secbot/ed209/beingAttacked(obj/item/weapon/W, mob/user)
+/mob/living/simple_animal/bot/secbot/ed209/beingAttacked(obj/item/weapon/W, mob/user)
 	if(!isscrewing(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
@@ -106,12 +106,12 @@
 			shootAt(user)
 
 
-/obj/machinery/bot/secbot/ed209/emag_act(mob/user)
+/mob/living/simple_animal/bot/secbot/ed209/emag_act(mob/user)
 	..()
 	if(open && !locked)
 		projectile = null
 
-/obj/machinery/bot/secbot/ed209/process()
+/mob/living/simple_animal/bot/secbot/ed209/process()
 	if(!on)
 		return
 
@@ -141,7 +141,7 @@
 
 // perform a single patrol step
 
-/obj/machinery/bot/secbot/ed209/patrol_step()
+/mob/living/simple_animal/bot/secbot/ed209/patrol_step()
 	if(loc == patrol_target)		// reached target
 		at_patrol_target()
 		return
@@ -177,7 +177,7 @@
 
 // look for a criminal in view of the bot
 
-/obj/machinery/bot/secbot/ed209/look_for_perp()
+/mob/living/simple_animal/bot/secbot/ed209/look_for_perp()
 	if(!on)
 		return
 
@@ -213,7 +213,7 @@
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
-/obj/machinery/bot/secbot/ed209/assess_perp(mob/living/perp)
+/mob/living/simple_animal/bot/secbot/ed209/assess_perp(mob/living/perp)
 	var/threatcount = ..()
 
 	if(lasertag_color && ishuman(perp))
@@ -237,7 +237,7 @@
 
 	return threatcount
 
-/obj/machinery/bot/secbot/ed209/explode()
+/mob/living/simple_animal/bot/secbot/ed209/explode()
 	walk_to(src, 0)
 	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
@@ -281,7 +281,7 @@
 	qdel(src)
 
 
-/obj/machinery/bot/secbot/ed209/proc/shootAt(mob/target)
+/mob/living/simple_animal/bot/secbot/ed209/proc/shootAt(mob/target)
 	if(lastfired && world.time - lastfired < shot_delay)
 		return
 	lastfired = world.time
@@ -319,14 +319,14 @@
 	A.xo = U.x - T.x
 	A.process()
 
-/obj/machinery/bot/secbot/ed209/attack_alien(mob/living/carbon/xenomorph/user)
+/mob/living/simple_animal/bot/secbot/ed209/attack_alien(mob/living/carbon/xenomorph/user)
 	..()
 	if(!isxeno(target))
 		target = user
 		mode = SECBOT_HUNT
 
 
-/obj/machinery/bot/secbot/ed209/emp_act(severity)
+/mob/living/simple_animal/bot/secbot/ed209/emp_act(severity)
 	if(severity == 2 && prob(70))
 		..(severity - 1)
 	else
@@ -475,7 +475,7 @@
 				build_step++
 				to_chat(user, "<span class='notice'>You complete the ED-209.</span>")
 				var/turf/T = get_turf(src)
-				new /obj/machinery/bot/secbot/ed209(T, created_name, lasertag_color)
+				new /mob/living/simple_animal/bot/secbot/ed209(T, created_name, lasertag_color)
 				qdel(I)
 				qdel(src)
 				did_something = TRUE
@@ -484,20 +484,20 @@
 		return ..()
 
 
-/obj/machinery/bot/secbot/ed209/proc/turn_on_cb()
+/mob/living/simple_animal/bot/secbot/ed209/proc/turn_on_cb()
 	on_timer_id = null
 	turn_on()
 
-/obj/machinery/bot/secbot/ed209/turn_on()
+/mob/living/simple_animal/bot/secbot/ed209/turn_on()
 	if (!isnull(on_timer_id))
 		return
 	return ..()
 
-/obj/machinery/bot/secbot/ed209/Destroy()
+/mob/living/simple_animal/bot/secbot/ed209/Destroy()
 	deltimer(on_timer_id)
 	return ..()
 
-/obj/machinery/bot/secbot/ed209/bullet_act(obj/item/projectile/Proj, def_zone)
+/mob/living/simple_animal/bot/secbot/ed209/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(on && istype(Proj, /obj/item/projectile/beam/lasertag))
 		var/obj/item/projectile/beam/lasertag/L = Proj
@@ -506,8 +506,8 @@
 			qdel(Proj)
 			on_timer_id = addtimer(CALLBACK(src, PROC_REF(turn_on_cb)), 100, TIMER_STOPPABLE)
 
-/obj/machinery/bot/secbot/ed209/bluetag
+/mob/living/simple_animal/bot/secbot/ed209/bluetag
 	lasertag_color = "blue"
 
-/obj/machinery/bot/secbot/ed209/redtag
+/mob/living/simple_animal/bot/secbot/ed209/redtag
 	lasertag_color = "red"

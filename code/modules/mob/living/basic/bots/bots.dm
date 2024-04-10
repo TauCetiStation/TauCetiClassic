@@ -31,11 +31,12 @@
 /mob/living/simple_animal/bot()
 	. = ..()
 	bots_list += src
-/*
-/obj/machinery/bot/Destroy()
+
+/obj/machinery/bot/death()
 	bots_list -= src
+	gib()
 	return ..()
-*/
+
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)	return 0
 	on = 1
@@ -46,13 +47,6 @@
 	on = 0
 	set_light(0)
 
-/mob/living/simple_animal/bot/proc/explode()
-	qdel(src)
-/*
-/mob/living/simple_animal/bot/deconstruct(disassembled)
-	explode()
-	..()
-*/
 /mob/living/simple_animal/bot/emag_act(mob/user)
 	if(emagged >= 2)
 		return FALSE
@@ -65,38 +59,15 @@
 		emagged = 2
 		return TRUE
 	return FALSE
-/*
+
 /obj/machinery/bot/examine(mob/user)
 	..()
-	if(get_integrity() == max_integrity)
+	if(maxHealth == health)
 		return
-	if(get_integrity() > max_integrity / 3)
+	if(maxHealth > health / 3)
 		to_chat(user, "<span class='warning'>[src]'s parts look loose.</span>")
 	else
 		to_chat(user, "<span class='danger'>[src]'s parts look very loose!</span>")
-*/
-/*
-/obj/machinery/bot/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
-	switch(damage_type)
-		if(BRUTE)
-			return damage_amount * brute_dam_coeff
-		if(BURN)
-			return damage_amount * fire_dam_coeff
-*/
-/mob/living/simple_animal/bot/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
-	. = ..()
-	if(.)
-		new /obj/effect/decal/cleanable/blood/oil(loc)
-
-/mob/living/simple_animal/bot/attack_alien(mob/living/carbon/xenomorph/user)
-	. = ..()
-	if(.)
-		visible_message("<span class='warning'><B>[user] has slashed [src]!</B></span>")
-
-/mob/living/simple_animal/bot/attack_animal(mob/living/simple_animal/user)
-	. = ..()
-	if(.)
-		visible_message("<span class='warning'><B>[user] has slashed [src]!</B></span>")
 
 /mob/living/simple_animal/bot/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewing(W))
@@ -105,11 +76,11 @@
 			to_chat(user, "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>")
 	else if(iswelding(W))
 		if(W.use(0, user))
-			if(get_integrity() < max_integrity)
+			if(maxHealth < health)
 				if(open)
 					user.visible_message("<span class='warning'>[user] start repair [src]!</span>","<span class='notice'>You start repair [src]!</span>")
 					if(W.use_tool(src, user, 20, volume = 50))
-						repair_damage(10)
+						heal_overall_damage(10,10)
 						user.visible_message("<span class='warning'>[user] repaired [src]!</span>","<span class='notice'>You repaired [src]!</span>")
 				else
 					to_chat(user, "<span class='notice'>Unable to repair with the maintenance panel closed.</span>")
@@ -121,13 +92,13 @@
 /mob/living/simple_animal/bot/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
-			deconstruct()
+			gib()
 			return
 		if(EXPLODE_HEAVY)
-			take_damage(20, BRUTE, BOMB)
+			adjustBruteLoss(20)
 		if(EXPLODE_LIGHT)
 			if(prob(50))
-				take_damage(5, BRUTE, BOMB)
+				adjustBruteLoss(5)
 
 /mob/living/simple_animal/bot/emp_act(severity)
 	var/was_on = on
@@ -144,9 +115,6 @@
 
 /mob/living/simple_animal/bot/attack_ai(mob/user)
 	attack_hand(user)
-
-/mob/living/simple_animal/bot/is_operational()
-	return TRUE
 
 /mob/living/simple_animal/bot/proc/inaction_check()
 	if(is_on_patrol() && (x_last == x && y_last == y))

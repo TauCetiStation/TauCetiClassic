@@ -3,7 +3,7 @@
 //MEDBOT ASSEMBLY
 
 
-/obj/machinery/bot/medbot
+/mob/living/simple_animal/bot/medbot
 	name = "Medibot"
 	desc = "Маленький робо-доктор. Он выглядит озадаченно."
 	icon = 'icons/obj/aibots.dmi'
@@ -37,7 +37,7 @@
 	var/declare_treatment = 1 //When attempting to treat a patient, should it notify everyone wearing medhuds?
 	var/shut_up = 0 //self explanatory :)
 
-/obj/machinery/bot/medbot/mysterious
+/mob/living/simple_animal/bot/medbot/mysterious
 	name = "Mysterious Medibot"
 	desc = "Медибот-загадка международного уровня."
 	skin = "bezerk"
@@ -60,7 +60,7 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/bot/medbot/atom_init()
+/mob/living/simple_animal/bot/medbot/atom_init()
 	..()
 	botcard = new /obj/item/weapon/card/id(src)
 	if(isnull(botcard_access) || (botcard_access.len < 1))
@@ -72,12 +72,12 @@
 	add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/bot/medbot/turn_on()
+/mob/living/simple_animal/bot/medbot/turn_on()
 	. = ..()
 	icon_state = "medibot[on]"
 	updateUsrDialog()
 
-/obj/machinery/bot/medbot/turn_off()
+/mob/living/simple_animal/bot/medbot/turn_off()
 	..()
 	patient = null
 	oldpatient = null
@@ -88,7 +88,7 @@
 	icon_state = "medibot[on]"
 	updateUsrDialog()
 
-/obj/machinery/bot/medbot/ui_interact(mob/user)
+/mob/living/simple_animal/bot/medbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A><BR>"
@@ -125,7 +125,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/bot/medbot/Topic(href, href_list)
+/mob/living/simple_animal/bot/medbot/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -170,7 +170,7 @@
 
 	updateUsrDialog()
 
-/obj/machinery/bot/medbot/attackby(obj/item/weapon/W, mob/user)
+/mob/living/simple_animal/bot/medbot/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(allowed(user) && !open && !emagged)
 			locked = !locked
@@ -201,12 +201,12 @@
 	else
 		..()
 
-/obj/machinery/bot/medbot/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+/mob/living/simple_animal/bot/medbot/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
 	if(. && !QDELING(src))
 		step(src, reverse_dir[attack_dir])
 
-/obj/machinery/bot/medbot/emag_act(mob/user)
+/mob/living/simple_animal/bot/medbot/emag_act(mob/user)
 	..()
 
 	var/list/viewing = list()
@@ -231,7 +231,7 @@
 		on = 1
 		icon_state = "medibot[on]"
 
-/obj/machinery/bot/medbot/process()
+/mob/living/simple_animal/bot/medbot/process()
 	//set background = 1
 
 	if(!on)
@@ -330,7 +330,7 @@
 
 	return
 
-/obj/machinery/bot/medbot/proc/assess_patient(mob/living/carbon/C)
+/mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	//Time to see if they need medical help!
 	if(C.stat == DEAD)
 		return 0 //welp too late for them!
@@ -362,7 +362,7 @@
 
 	return 0
 
-/obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
+/mob/living/simple_animal/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
 	if(!on)
 		return
 
@@ -443,18 +443,18 @@
 	return
 
 
-/obj/machinery/bot/medbot/proc/speak(message)
+/mob/living/simple_animal/bot/medbot/proc/speak(message)
 	if((!on) || (!message))
 		return
 	visible_message("[src] beeps, \"[message]\"")
 	return
 
-/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj, def_zone)
+/mob/living/simple_animal/bot/medbot/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		stunned = min(stunned+10,20)
 
-/obj/machinery/bot/medbot/explode()
+/mob/living/simple_animal/bot/medbot/explode()
 	on = 0
 	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
@@ -481,7 +481,7 @@
 	qdel(src)
 	return
 
-/obj/machinery/bot/medbot/Bump(atom/M) //Leave no door unopened!
+/mob/living/simple_animal/bot/medbot/Bump(atom/M) //Leave no door unopened!
 	if((istype(M, /obj/machinery/door)) && (!isnull(botcard)))
 		var/obj/machinery/door/D = M
 		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard) && !istype(D,/obj/machinery/door/poddoor))
@@ -493,7 +493,7 @@
 	return
 
 /* terrible
-/obj/machinery/bot/medbot/Bumped(atom/movable/M)
+/mob/living/simple_animal/bot/medbot/Bumped(atom/movable/M)
 	spawn(0)
 		if(M)
 			var/turf/T = get_turf(src)
@@ -589,7 +589,7 @@
 				build_step++
 				to_chat(user, "<span class='notice'>You complete the Medibot! Beep boop.</span>")
 				var/turf/T = get_turf(src)
-				var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
+				var/mob/living/simple_animal/bot/medbot/S = new /mob/living/simple_animal/bot/medbot(T)
 				S.skin = skin
 				S.name = created_name
 				if(skin)
