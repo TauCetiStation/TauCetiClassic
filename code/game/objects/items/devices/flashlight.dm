@@ -13,6 +13,7 @@
 	var/on = 0
 	var/button_sound = 'sound/items/flashlight.ogg' // Sound when using light
 	var/brightness_on = 5 //luminosity when on
+	var/lightcolor = "#ffffff"
 	var/last_button_sound = 0 // Prevents spamming for Object lights
 
 /datum/action/item_action/hands_free/toggle_flashlight
@@ -20,18 +21,13 @@
 
 /obj/item/device/flashlight/atom_init()
 	. = ..()
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		set_light(0)
+	update_brightness()
 	update_item_actions()
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
+		set_light(brightness_on, 0.6, lightcolor)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
@@ -99,7 +95,11 @@
 
 		if(ishuman(M) || ismonkey(M))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind
-				to_chat(user, "<span class='notice'>[M] pupils does not react to the light!</span>")
+				to_chat(user, "<span class='notice'>[M] pupils or screen does not react to the light!</span>")
+			else if(H.species.flags[IS_SYNTHETIC])
+				to_chat(user, "<span class='warning'>[M]'s robotic screen glances the flash back at you. You wonder whether that was wise.</span>")
+				user.flash_eyes()
+				M.flash_eyes() // attacker and machine get flashed
 			else if(XRAY in M.mutations)	//mob has X-RAY vision
 				M.flash_eyes() //Yes, you can still get flashed wit X-Ray.
 				to_chat(user, "<span class='notice'>[M] pupils give an eerie glow!</span>")
@@ -164,6 +164,13 @@
 	item_state = "lampgreen"
 	brightness_on = 4
 
+/obj/item/device/flashlight/lamp/small
+	desc = "Маленькая лампа."
+	icon_state = "lampsmall"
+	brightness_on = 3
+	lightcolor = "#ffb46b"
+
+	glow_icon_state = "lampsmall"
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
 	set name = "Toggle light"
@@ -312,7 +319,8 @@
 /obj/item/device/flashlight/emp/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-
+	if(!on)
+		return
 	if(emp_cur_charges)
 		emp_cur_charges--
 

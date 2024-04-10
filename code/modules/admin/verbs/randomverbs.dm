@@ -356,6 +356,9 @@ Ccomp's first proc.
 	G.has_enabled_antagHUD = 2
 	G.can_reenter_corpse = 1
 
+	if(G.ckey && SSrole_spawners.spawners_cooldown[G.ckey])
+		SSrole_spawners.spawners_cooldown[G.ckey] = null
+
 	to_chat(G, "<span class='notice'><B>You may now respawn. You should roleplay as if you learned nothing about the round during your time with the dead.</B></span>")
 	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the 30 minute respawn limit")
 	message_admins("Admin [key_name_admin(usr)] allowed [key_name_admin(G)] to bypass the 30 minute respawn limit")
@@ -502,7 +505,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.b_type = record_found.fields["b_type"]
+		new_character.dna.b_type = record_found.fields["b_type"]
 	else
 		new_character.gender = pick(MALE,FEMALE)
 		var/datum/preferences/A = new()
@@ -518,11 +521,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(G_found.mind && !G_found.mind.active)
 		G_found.mind.transfer_to(new_character)	//be careful when doing stuff like this! I've already checked the mind isn't in use
-		new_character.mind.special_verbs = list()
 	else
 		new_character.mind_initialize()
 	if(!new_character.mind.assigned_role)
-		new_character.mind.assigned_role = "Test Subject"//If they somehow got a null assigned role.
+		new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
 
 	//DNA
 	if(record_found)//Pull up their name from database records if they did have a mind.
@@ -632,9 +634,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "Please wait until the game starts!")
 		return
 
-	if(!holder.secrets_menu["custom_announce"])
-		holder.secrets_menu["custom_announce"] = new /datum/secrets_menu/custom_announce(usr.client)
-	holder.secrets_menu["custom_announce"].interact()
+	if(!holder.tgui_secrets["custom_announce"])
+		holder.tgui_secrets["custom_announce"] = new /datum/tgui_secrets/custom_announce(usr.client)
+	holder.tgui_secrets["custom_announce"].interact(usr)
 
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -851,35 +853,35 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
+	if(tgui_alert(src, "Вы уверены?", "Подтвердите", list("Да", "Нет")) != "Да")
 		return
 
 	if(SSshuttle.fake_recall)
-		var/choice = input("The shuttle will just return if you call it. What you want to do?") in list(
-					"Cancel shuttle call",
-					"Call it anyway",
-					"Call and allow it to fly to station")
+		var/choice = input("Шаттл просто вернется, если вы его вызовете. Что вы хотите сделать?") in list(
+					"Отменить вызов шаттла",
+					"Вызвать в любом случае",
+					"Вызвать и позвольте ему прилететь на станцию")
 		switch(choice)
-			if("Cancel shuttle call")
+			if("Отменить вызов шаттла")
 				return
-			if("Call and allow it to fly to station")
+			if("Вызвать и позволить ему прилететь на станцию")
 				SSshuttle.fake_recall = FALSE
 				SSshuttle.time_for_fake_recall = 0
 				log_admin("[key_name(usr)] disabled shuttle fake recall.")
 				message_admins("<span class='info'>[key_name_admin(usr)] disabled shuttle fake recall.</span>")
 
-	var/type = tgui_alert(src, "It's emergency shuttle or crew transfer?", "Confirm", list("Emergency", "Crew transfer"))
+	var/type = tgui_alert(src, "Это экстренный шаттл или смена экипажа?", "Подтвердите", list("Экстренный", "Смена экипажа"))
 
-	if(type == "Crew transfer")
+	if(type == "Смена экипажа")
 		SSshuttle.shuttlealert(1)
 		SSshuttle.incall()
 		SSshuttle.announce_crew_called.play()
 	else
-		var/eaccess = tgui_alert(src, "Grant acces to maints for everyone?", "Confirm", list("Yes", "No"))
+		var/eaccess = tgui_alert(src, "Предоставить доступ к техническим тоннелям для всех?", "Подтвердите", list("Да", "Нет"))
 		SSshuttle.incall()
 		SSshuttle.announce_emer_called.play()
 
-		if(eaccess == "Yes")
+		if(eaccess == "Да")
 			make_maint_all_access(FALSE)
 
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -894,7 +896,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes") return
+	if(tgui_alert(src, "Вы уверены?", "Подтвердите", list("Да", "Нет")) != "Да") return
 
 	if(!SSticker || SSshuttle.location || SSshuttle.direction == 0)
 		return

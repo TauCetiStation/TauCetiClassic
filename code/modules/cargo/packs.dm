@@ -31,6 +31,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	var/additional_costs = 0.0
 
 /datum/supply_pack/New()
+	all_supply_pack += src
 	true_manifest += "<ul>"
 	for(var/path in contains)
 		if(!path)
@@ -53,7 +54,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 	var/contents_cost = 0.0
 	for(var/item_type in contains)
-		for(var/datum/export/E in exports_list)
+		for(var/datum/export/E in global.exports_list)
 			if(E.applies_to_type(item_type))
 				var/amount = 1
 				if(sheet_amount > 0 && (ispath(item_type, /obj/item/stack/sheet) || ispath(item_type, /obj/item/stack/tile)))
@@ -113,7 +114,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/toy/crayon/spraycan,
 					/obj/item/weapon/wrapping_paper,
 					/obj/item/weapon/wrapping_paper,
-					/obj/item/weapon/wrapping_paper)
+					/obj/item/weapon/wrapping_paper,
+					/obj/item/weapon/paper_refill)
 	crate_name = "Arts and Crafts crate"
 	group = "Operations"
 
@@ -130,6 +132,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/stamp/approve,
 					/obj/item/weapon/clipboard,
 					/obj/item/weapon/paper_bin,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
 					/obj/item/weapon/pen/red,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen,
@@ -156,7 +160,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	group = "Security"
 	hidden = TRUE
 
-/datum/supply_pack/weapons
+/datum/supply_pack/energy
 	name = "Weapons crate"
 	contains = list(/obj/item/weapon/melee/baton,
 					/obj/item/weapon/melee/baton,
@@ -170,7 +174,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_brig
 	group = "Security"
 
-/datum/supply_pack/pistol
+/datum/supply_pack/ballistic/pistol
 	name = "9mm pistol crate"
 	contains = list(/obj/item/weapon/gun/projectile/automatic/pistol/glock,
 					/obj/item/weapon/gun/projectile/automatic/pistol/glock,
@@ -181,7 +185,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_brig
 	group = "Security"
 
-/datum/supply_pack/pistol_magazine
+/datum/supply_pack/ballistic/pistol_magazine
 	name = "9mm magazine"
 	contains = list(/obj/item/ammo_box/magazine/glock,
 					/obj/item/ammo_box/magazine/glock,
@@ -195,7 +199,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/pistol_magazine_rubber
+/datum/supply_pack/ballistic/pistol_magazine_rubber
 	name = "9mm magazine (rubber)"
 	contains = list(/obj/item/ammo_box/magazine/glock/rubber,
 					/obj/item/ammo_box/magazine/glock/rubber,
@@ -291,7 +295,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/erifle
+/datum/supply_pack/energy/erifle
 	name = "Energy marksman crate"
 	contains = list(/obj/item/clothing/suit/armor/laserproof,
 					/obj/item/clothing/suit/armor/laserproof,
@@ -305,7 +309,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/shotgunammo_nonlethal
+/datum/supply_pack/ballistic/shotgunammo_nonlethal
 	name = "Shotgun shells (non-lethal)"
 	contains = list(/obj/item/ammo_box/eight_shells/beanbag,
 					/obj/item/ammo_box/eight_shells/beanbag,
@@ -321,7 +325,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Shotgun shells (non-lethal) crate"
 	group = "Security"
 
-/datum/supply_pack/shotgunammo_slug
+/datum/supply_pack/ballistic/shotgunammo_slug
 	name = "Shotgun shells (slug)"
 	contains = list(/obj/item/ammo_box/eight_shells,
 					/obj/item/ammo_box/eight_shells,
@@ -334,7 +338,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/shotgunammo_buckshot
+/datum/supply_pack/ballistic/shotgunammo_buckshot
 	name = "Shotgun shells (buckshot)"
 	contains = list(/obj/item/ammo_box/eight_shells/buckshot,
 					/obj/item/ammo_box/eight_shells/buckshot,
@@ -358,7 +362,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	hidden = TRUE
 	group = "Security"
 
-/datum/supply_pack/r4046
+/datum/supply_pack/ballistic/r4046
 	name = "40x46mm rubber grenades"
 	contains = list(/obj/item/weapon/storage/box/r4046/rubber,
 					/obj/item/weapon/storage/box/r4046/rubber)
@@ -368,7 +372,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/m79
+/datum/supply_pack/ballistic/m79
 	name = "m79 grenade launcher"
 	contains = list(/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 					/obj/item/weapon/storage/box/r4046/rubber)
@@ -378,7 +382,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/ion_rifle
+/datum/supply_pack/energy/ion_rifle
 	name = "ion rifles"
 	contains = list(/obj/item/weapon/gun/energy/ionrifle,
 					/obj/item/weapon/gun/energy/ionrifle)
@@ -388,7 +392,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/expenergy
+/datum/supply_pack/energy/expenergy
 	name = "Experimental energy gear crate"
 	contains = list(/obj/item/clothing/suit/armor/laserproof,
 					/obj/item/clothing/suit/armor/laserproof,
@@ -1625,6 +1629,17 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Toner cartridges"
 	group = "Supply"
 
+/datum/supply_pack/papers
+	name = "Paper packs"
+	contains = list(/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill)
+	crate_name = "Paper packs"
+	group = "Supply"
+
 /datum/supply_pack/vest
 	name = "Vest Crate"
 	contains = list(/obj/item/clothing/accessory/storage/brown_vest,
@@ -1740,7 +1755,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/shoes/black,
 					/obj/item/clothing/shoes/black,
 					/obj/item/clothing/shoes/leather,
-					/obj/item/clothing/suit/wcoat,
+					/obj/item/clothing/accessory/tie/waistcoat,
 					/obj/item/clothing/under/suit_jacket/charcoal,
 					/obj/item/clothing/under/suit_jacket/navy,
 					/obj/item/clothing/under/suit_jacket/burgundy,
@@ -1829,6 +1844,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	num_contained = 5
 	contains = list(/obj/item/toy/spinningtoy,
 	                /obj/item/toy/sword,
+					/obj/item/toy/dualsword,
 	                /obj/item/toy/owl,
 	                /obj/item/toy/griffin,
 	                /obj/item/toy/nuke,
@@ -1856,7 +1872,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	num_contained = 2
 	contains = list(/obj/item/clothing/suit/pirate,
 					/obj/item/clothing/suit/judgerobe,
-					/obj/item/clothing/suit/wcoat,
+					/obj/item/clothing/accessory/tie/waistcoat,
 					/obj/item/clothing/suit/hastur,
 					/obj/item/clothing/suit/holidaypriest,
 					/obj/item/clothing/suit/hooded/skhima,

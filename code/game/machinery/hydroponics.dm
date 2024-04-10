@@ -49,6 +49,8 @@
 	RefreshParts()
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
+	..()
+
 	var/tmp_capacity = 0
 	for (var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		tmp_capacity += M.rating
@@ -209,7 +211,7 @@
 		if(isnull(V))
 			CRASH("virus2 nulled before calling activate()")
 		else
-			V.affect_plants(src)
+			V.on_process(src)
 
 /obj/machinery/hydroponics/proc/ripen()
 	harvest = TRUE

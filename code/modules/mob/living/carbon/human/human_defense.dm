@@ -48,12 +48,15 @@
 					"<span class='warning'>[AM] falls on you!</span>",
 					"<span class='notice'>You hear something heavy fall.</span>")
 
-/mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/carbon/human/prob_miss(obj/item/projectile/P)
+	var/def_zone = get_zone_with_miss_chance(P.def_zone, src, P.get_miss_modifier())
+	if(!def_zone)
+		return TRUE
 	def_zone = check_zone(def_zone)
 	if(!has_bodypart(def_zone))
-		return PROJECTILE_FORCE_MISS //if they don't have the body part in question then the projectile just passes by.
-
-	return ..()
+		return TRUE
+	P.def_zone = def_zone // a bit junky, but it will either bump this one, or bump object
+	return FALSE
 
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
 	. = PROJECTILE_ALL_OK
@@ -75,11 +78,9 @@
 				return PROJECTILE_FORCE_MISS // complete projectile permutation
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
-		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
-		if(check_pierce_protection(BP))
-			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
-			P.agony /= 2
-		apply_effect(P.agony,AGONY,0)
+		var/armor = run_armor_check(def_zone, BULLET)
+		apply_effect(P.agony, AGONY, armor)
+		apply_damage(P.damage, P.damage_type, def_zone, (armor * P.armor_multiplier), P.flags, P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -281,7 +282,7 @@
 		return FALSE
 
 	var/obj/item/organ/external/BP = get_bodypart(def_zone)
-	if (!BP)
+	if(!BP || BP.is_stump)
 		to_chat(user, "What [parse_zone(def_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
@@ -319,8 +320,10 @@
 		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>", ignored_mobs = alt_alpperances_vieawers)
 
 	var/armor = run_armor_check(BP, MELEE, "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
-	if(armor >= 100 || !I.force)
+	if(armor >= 100)
 		return FALSE
+	if(!I.force)
+		return TRUE
 
 	//Apply weapon damage
 	var/force_with_melee_skill = apply_skill_bonus(user, I.force, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // +15% for each melee level
@@ -410,12 +413,10 @@
 		if(istype(gloves, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/GL = gloves
 			GL.add_blood(source)
-			GL.transfer_blood = amount
-			GL.bloody_hands_mob = source
+			GL.dirt_transfers += amount
 	else
 		add_blood(source)
-		bloody_hands = amount
-		bloody_hands_mob = source
+		dirty_hands_transfers += amount
 
 /mob/living/carbon/human/bloody_body(mob/living/carbon/human/source)
 	if(wear_suit)

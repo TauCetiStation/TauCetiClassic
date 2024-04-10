@@ -6,6 +6,7 @@
 	w_class = SIZE_SMALL
 	origin_tech = "combat=4;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/smg
+	has_ammo_counter = TRUE
 	can_be_holstered = FALSE
 	var/alarmed = FALSE
 	var/should_alarm_when_empty = FALSE
@@ -68,6 +69,7 @@
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	should_alarm_when_empty = TRUE
 	can_be_silenced = TRUE
+	has_ammo_counter = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "L6 SAW"
@@ -80,6 +82,7 @@
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	has_cover = TRUE
 	two_hand_weapon = ONLY_TWOHAND
+	has_ammo_counter = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
@@ -163,6 +166,7 @@
 	icon_state = "borg_smg"
 	initial_mag = /obj/item/ammo_box/magazine/borg45
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
+	has_ammo_counter = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/borg/update_icon()
 	return
@@ -286,3 +290,72 @@
 		return ..()
 	gl.attack_self(user)
 
+/obj/item/weapon/gun/projectile/automatic/m41a
+	name = "M41A pulse rifle"
+	desc = "Импульсная винтовка М41А, принятая на вооружение в КМП НТ. Малая поражающая способность с лихвой компенсируется количеством свинца, выпускаемого по противнику. Использует безгильзовые патроны 10х24 мм."
+	icon_state = "pulserifle"
+	item_state = "pulserifle"
+	fire_sound = 'sound/weapons/guns/gunshot_m41.ogg'
+	initial_mag = /obj/item/ammo_box/magazine/m41a
+	w_class = SIZE_SMALL
+	two_hand_weapon = DESIRABLE_TWOHAND
+	fire_delay = 1
+
+/obj/item/weapon/gun/projectile/automatic/m41a/process_chamber()
+	return ..(1, 1, 1)
+
+/obj/item/weapon/gun/projectile/automatic/m41a/launcher
+	desc = "\"Я хочу познакомить тебя со своим другом. Это - импульсная винтовка М41, десять миллиметров, здесь и здесь есть тридцатимиллиметровый гранатомет. Держи.\""
+	icon_state = "pulseriflegl"
+	var/using_gl = FALSE
+	var/obj/item/weapon/gun/projectile/grenade_launcher/underslung/marines/launcher
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_gl_m41)
+
+/datum/action/item_action/hands_free/toggle_gl_m41
+	name = "Toggle GL"
+
+/datum/action/item_action/hands_free/toggle_gl_m41/Activate()
+	var/obj/item/weapon/gun/projectile/automatic/m41a/launcher/S = target
+	S.toggle_gl(usr)
+
+/obj/item/weapon/gun/projectile/automatic/m41a/launcher/examine(mob/user)
+	. = ..()
+	to_chat(user, "It's [launcher.name] is [launcher.get_ammo() ? "loaded" : "unloaded"].")
+
+/obj/item/weapon/gun/projectile/automatic/m41a/launcher/proc/toggle_gl(mob/user)
+	using_gl = !using_gl
+	if(using_gl)
+		user.visible_message("<span class='warning'>[user] presses a button, activating their [launcher]!</span>",\
+		"<span class='warning'>You activate your [launcher].</span>",\
+		"You hear an ominous click.")
+	else
+		user.visible_message("<span class='notice'>[user] presses a button, deciding to stop the bombings.</span>",\
+		"<span class='notice'>You deactivate your [launcher].</span>",\
+		"You hear a click.")
+	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
+	update_icon()
+
+/obj/item/weapon/gun/projectile/automatic/m41a/launcher/atom_init()
+	. = ..()
+	launcher = new (src)
+
+/obj/item/weapon/gun/projectile/automatic/m41a/launcher/update_icon()
+	..()
+	if(using_gl)
+		var/image/gl = image('icons/obj/gun.dmi', "pulseriflegl1")
+		add_overlay(gl)
+
+/obj/item/weapon/gun/projectile/automatic/m41a/launcher/afterattack(atom/target, mob/user, proximity, params)
+	if(!using_gl)
+		return ..()
+	launcher.afterattack(target, user, proximity, params)
+
+/obj/item/weapon/gun/projectile/automatic/m41a/launcher/attackby(obj/item/I, mob/user, params)
+	if(!using_gl)
+		return ..()
+	launcher.attackby(I, user)
+
+/obj/item/weapon/gun/projectile/automatic/m41a/launcher/attack_self(mob/user)
+	if(!using_gl)
+		return ..()
+	launcher.attack_self(user)

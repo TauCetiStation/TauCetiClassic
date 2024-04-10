@@ -59,6 +59,8 @@
 	acceptable_items |= /obj/item/weapon/reagent_containers/food/snacks/grown
 
 /obj/machinery/kitchen_machine/RefreshParts()
+	..()
+
 	var/E
 	var/max_items = 10
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)

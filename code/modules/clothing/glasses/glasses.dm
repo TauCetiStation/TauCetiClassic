@@ -87,6 +87,7 @@
 	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
 	icon_state = "night"
+	item_state_world = "night_w"
 	item_state = "glasses"
 	origin_tech = "magnets=2"
 	darkness_view = 7
@@ -285,7 +286,7 @@
 	toggleable = TRUE
 	active = TRUE
 	activation_sound = 'sound/effects/glasses_switch.ogg'
-	sightglassesmod  = "sepia"
+	sightglassesmod  = "hos"
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	flash_protection = FLASHES_AMPLIFIER

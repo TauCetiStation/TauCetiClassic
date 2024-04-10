@@ -1070,7 +1070,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/clothing/shoes/laceup,
 /obj/item/clothing/under/gentlesuit,
-/obj/item/clothing/suit/wcoat,
+/obj/item/clothing/accessory/tie/waistcoat,
 /obj/item/clothing/head/that,
 /obj/item/weapon/staff/gentcane,
 /turf/simulated/floor/plating,

@@ -319,6 +319,7 @@
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[sfield\]", "<span class=\"sign_field\"></span>")
 	t = "<font face=\"[font]\" color=\"[P.colour]\">[t]</font>"
+	t = replacetext(t, "\[sname\]", station_name_ru())
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
 //Count the fields
@@ -352,6 +353,7 @@
 		\[u\] - \[/u\] : Makes the text <u>underlined</u>.<br>
 		\[large\] - \[/large\] : Increases the <font size = \"4\">size</font> of the text.<br>
 		\[sign\] : Inserts a signature of your name in a foolproof way.<br>
+		\[sname\] : Inserts the current station name. <br>
 		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
@@ -665,6 +667,11 @@
 /obj/item/weapon/paper/brig_arsenal
 	name = "Armory Inventory"
 	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>3 Riot Sets:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Helmet<li>Riot Suit</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>8 Security Masks<br>3 Pistols Glock 17<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>3 Energy Guns<br>2 Ion Rifle<br>3 Laser rifles <br>1 L10-c Carbine<br>1 104-sass Shotgun<br>2 Plasma weapon battery packs<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 teargas, 7 rounds)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 m79 Grenade Box (40x46 EMP, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
+
+/obj/item/weapon/paper/brig_arsenal/atom_init()
+	. = ..()
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY) || HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+		info = "A program is underway to re-equip NanoTrasen security. The current list has not yet been compiled, we apologize."
 
 /obj/item/weapon/paper/firing_range
 	name = "Firing Range Instructions"

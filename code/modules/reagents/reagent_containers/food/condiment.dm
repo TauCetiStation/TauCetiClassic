@@ -36,10 +36,11 @@
 	desc = "Just your average condiment container."
 	icon = 'icons/obj/condiments.dmi'
 	icon_state = "condiment"
+	item_state = "condiment"
+	var/emptystate = "condiment"
 	flags = OPENCONTAINER
 	possible_transfer_amounts = list(1,5,10)
 	volume = 50
-	var/empty_icon = "condiment" // Empty state icon
 
 /obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user)
 	return
@@ -111,9 +112,14 @@
 		to_chat(user, "<span class='notice'> You transfer [trans] units of the condiment to [target].</span>")
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
-	if((!reagents || (reagents && !reagents.reagent_list.len)) && empty_icon)
-		icon_state = empty_icon
-		return
+	if(emptystate && (!reagents || reagents.total_volume <= 0))
+		icon_state = "[emptystate]_empty"
+		item_state = "[emptystate]_empty"
+		update_inv_mob()
+	else
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
+		update_inv_mob()
 
 	if(reagents.reagent_list.len == 1) // So here we change the desc if condiment contains multiple reagents
 		desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
@@ -271,7 +277,7 @@
 	desc = "A small bag filled with some flour."
 	icon_state = "flour"
 	item_state = "flour"
-	empty_icon = "flour"
+	emptystate = "flour"
 	list_reagents = list("flour" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
@@ -279,7 +285,7 @@
 	desc = "Tastey space sugar!"
 	icon_state = "sugar"
 	item_state = "sugar"
-	empty_icon = "sugar"
+	emptystate = "sugar"
 	list_reagents = list("sugar" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/rice
@@ -287,7 +293,7 @@
 	desc = "Salt. From space oceans, presumably. Good for cooking!"
 	icon_state = "rice"
 	item_state = "rice"
-	empty_icon = "rice"
+	emptystate = "rice"
 	list_reagents = list("rice" = 30)
 
 // SAUCES
@@ -296,35 +302,40 @@
 	name = "soy sauce"
 	desc = "A salty soy-based flavoring."
 	icon_state = "soysauce"
-	empty_icon = "soysauce"
+	item_state = "soysauce"
+	emptystate = null
 	list_reagents = list("soysauce" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/hotsauce
 	name = "hot sauce"
 	desc = "You can almost TASTE the stomach ulcers now!"
 	icon_state = "hotsauce"
-	empty_icon = "hotsauce"
+	item_state = "hotsauce"
+	emptystate = null
 	list_reagents = list("capsaicin" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/ketchup
 	name = "ketchup"
 	desc = "You feel more American already."
 	icon_state = "ketchup"
-	empty_icon = "ketchup"
+	item_state = "ketchup"
+	emptystate = "ketchup"
 	list_reagents = list("ketchup" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/coldsauce
 	name = "cold sauce"
 	desc = "Leaves the tongue numb in its passage."
 	icon_state = "coldsauce"
-	empty_icon = "coldsauce"
+	item_state = "coldsauce"
+	emptystate = null
 	list_reagents = list("frostoil" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/cornoil
 	name = "corn oil"
 	desc = "A delicious oil used in cooking. Made from corn."
 	icon_state = "cornoil"
-	empty_icon = "cornoil"
+	item_state = "cornoil"
+	emptystate = null
 	list_reagents = list("cornoil" = 40)
 
 // SUPPLEMENTS
@@ -334,14 +345,15 @@
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
 	item_state = "enzyme"
-	empty_icon = "enzyme"
+	emptystate = "enzyme"
 	list_reagents = list("enzyme" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker
 	name = "salt shaker"
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
-	empty_icon = "emptyshaker"
+	item_state = "saltshakersmall"
+	emptystate = "saltshakersmall"
 	possible_transfer_amounts = list(1,20) // for the clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
@@ -351,7 +363,8 @@
 	name = "pepper mill"
 	desc = "Often used to flavor food or make people sneeze."
 	icon_state = "peppermillsmall"
-	empty_icon = "peppermillsmall"
+	item_state = "peppermillsmall"
+	emptystate = null
 	possible_transfer_amounts = list(1,20) // for the clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
@@ -361,5 +374,6 @@
 	name = "honey pot"
 	desc = "Sweet and healthy!"
 	icon_state = "honey"
-	empty_icon = "honey"
+	item_state = "honey"
+	emptystate = null
 	list_reagents = list("honey" = 40)

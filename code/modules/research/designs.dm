@@ -37,6 +37,9 @@ other types of metals and chemistry for reagents).
 	var/list/category = null        //Primarily used for Mech Fabricators, but can be used for anything
 	var/starts_unlocked = FALSE     //If true does not require any technologies and unlocked from the start
 
+/datum/design/New()
+	all_designs += src
+
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/seccamera
@@ -1088,7 +1091,7 @@ other types of metals and chemistry for reagents).
 	id = "high_cell"
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 60)
-	build_path = /obj/item/weapon/stock_parts/cell/high
+	build_path = /obj/item/weapon/stock_parts/cell/high/empty
 	construction_time=100
 	category = list("Stock Parts")
 
@@ -1098,7 +1101,7 @@ other types of metals and chemistry for reagents).
 	id = "super_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 70)
-	build_path = /obj/item/weapon/stock_parts/cell/super
+	build_path = /obj/item/weapon/stock_parts/cell/super/empty
 	construction_time=100
 	category = list("Stock Parts")
 
@@ -1108,7 +1111,7 @@ other types of metals and chemistry for reagents).
 	id = "hyper_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 70, MAT_SILVER = 150, MAT_GOLD = 150)
-	build_path = /obj/item/weapon/stock_parts/cell/hyper
+	build_path = /obj/item/weapon/stock_parts/cell/hyper/empty
 	construction_time=100
 	category = list("Stock Parts")
 
@@ -1119,7 +1122,7 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 800, MAT_GLASS = 160, MAT_SILVER = 300, MAT_GOLD = 300, MAT_DIAMOND = 160)
 //	construction_time=100
-	build_path = /obj/item/weapon/stock_parts/cell/bluespace
+	build_path = /obj/item/weapon/stock_parts/cell/bluespace/empty
 	category = list("Stock Parts")
 
 
@@ -1948,6 +1951,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/energy/laser
 	category = list("Weapons")
 
+/datum/design/laserpractice
+	name = "Practice Laser Gun"
+	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
+	id = "laserpractice"
+	build_type = PROTOLATHE
+	materials = list (MAT_METAL = 1250, MAT_GLASS = 250)
+	build_path = /obj/item/weapon/gun/energy/laser/practice
+	category = list("Weapons")
+
 /datum/design/lasercannon
 	name = "Laser Cannon"
 	desc = "A heavy duty laser cannon."
@@ -2315,27 +2327,6 @@ other types of metals and chemistry for reagents).
 			build_type = PROTOLATHE
 			materials = list(MAT_SILVER = 2500, MAT_GOLD = 3000, "iron" = 15, "copper" = 10)
 			build_path = /obj/item/weapon/banhammer */
-
-////////////////////////////////////////
-//Disks for transporting design datums//
-////////////////////////////////////////
-
-/obj/item/weapon/disk/design_disk
-	name = "Empty Disk"
-	desc = "Wow. Is that a save icon?"
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk2"
-	item_state = "card-id"
-	w_class = SIZE_TINY
-	m_amt = 30
-	g_amt = 10
-	var/datum/design/blueprint
-
-/obj/item/weapon/disk/design_disk/atom_init()
-	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
-
 
 /////////////////////////////////////////
 //////////////Borg Upgrades//////////////

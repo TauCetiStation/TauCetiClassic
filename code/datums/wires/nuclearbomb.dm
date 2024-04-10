@@ -22,7 +22,7 @@ var/global/const/NUKE_WIRE_SAFETY = 4
 	. += "The device is [N.safety ? "quiet" : "whirring"]."
 	. += "The lights are [N.lighthack ? "static" : "functional"]."
 
-/datum/wires/nuclearbomb/update_cut(index, mended)
+/datum/wires/nuclearbomb/update_cut(index, mended, mob/user)
 	var/obj/machinery/nuclearbomb/N = holder
 
 	switch(index)
