@@ -27,29 +27,35 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/engineering/engine
 	name = "Engineering"
+	cases = list("инженерный отдел", "инженерного отдела", "инженерному отдел", "инженерный отдел", "инженерным отделом", "инженерном отделе")
 	icon_state = "engine_smes"
 	ambience = list('sound/ambience/engine_1.ogg', 'sound/ambience/engine_2.ogg', 'sound/ambience/engine_3.ogg', 'sound/ambience/engine_4.ogg')
 
 /area/station/engineering/singularity
 	name = "Singularity Area"
+	cases = list("зона сингулярности", "зоны сингулярности", "зоне сингулярности", "зону сингулярности", "зоной сингулярности", "зоне сингулярности")
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/station/engineering/break_room
 	name = "Engineering Break Room"
+	cases = list("комната отдыха для инженеров", "комнаты отдыха для инженеров", "комнате отдыха для инженеров", "комнату отдыха для инженеров", "комнатой отдыха для инженеров", "комнате отдыха для инженеров")
 	sound_environment = SOUND_AREA_DEFAULT
 
 /area/station/engineering/chiefs_office
 	name = "Chief Engineer's office"
+	cases = list("кабинет главного инженера", "кабинета главного инженера", "кабинету главного инженера", "кабинет главного инженера", "кабинетом главного инженера", "кабинете главного инженера")
 	icon_state = "engine_control"
 	sound_environment = SOUND_AREA_DEFAULT
 
 /area/station/engineering/atmos
 	name = "Atmospherics"
+	cases = list("атмосферный отдел", "атмосферного отдела", "атмосферному отдел", "атмосферный отдел", "атмосферным отделом", "атмосферном отделе")
 	icon_state = "atmos"
 	ambience = list('sound/ambience/atmos_1.ogg', 'sound/ambience/atmos_2.ogg')
 
 /area/station/engineering/drone_fabrication
 	name = "Drone Fabrication"
+	cases = list("дронная", "дронной", "дронной", "дронную", "дронной", "дронной")
 
 //Maintenance
 /area/station/maintenance
