@@ -27,38 +27,37 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/engineering/engine
 	name = "Engineering"
-	cases = list("инженерный отдел", "инженерного отдела", "инженерному отдел", "инженерный отдел", "инженерным отделом", "инженерном отделе")
 	icon_state = "engine_smes"
 	ambience = list('sound/ambience/engine_1.ogg', 'sound/ambience/engine_2.ogg', 'sound/ambience/engine_3.ogg', 'sound/ambience/engine_4.ogg')
 
 /area/station/engineering/singularity
 	name = "Singularity Area"
-	cases = list("зона сингулярности", "зоны сингулярности", "зоне сингулярности", "зону сингулярности", "зоной сингулярности", "зоне сингулярности")
+	cases = list("зона двигателя", "зоны двигателя", "зоне двигателя", "зона двигателя", "зоной двигателя", "зоне двигателя")
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 /area/station/engineering/break_room
 	name = "Engineering Break Room"
-	cases = list("комната отдыха для инженеров", "комнаты отдыха для инженеров", "комнате отдыха для инженеров", "комнату отдыха для инженеров", "комнатой отдыха для инженеров", "комнате отдыха для инженеров")
+	cases = list("комната отдыха инженеров", "комнаты отдыха инженеров", "комнате отдыха инженеров", "комната отдыха инженеров", "комнатой отдыха инженеров", "комнате отдыха инженеров")
 	sound_environment = SOUND_AREA_DEFAULT
 
 /area/station/engineering/chiefs_office
 	name = "Chief Engineer's office"
-	cases = list("кабинет главного инженера", "кабинета главного инженера", "кабинету главного инженера", "кабинет главного инженера", "кабинетом главного инженера", "кабинете главного инженера")
+	cases = list("кабинет старшего инженера", "кабинета старшего инженера", "кабинету старшего инженера", "кабинет старшего инженера", "кабинетом старшего инженера", "кабинете старшего инженера")
 	icon_state = "engine_control"
 	sound_environment = SOUND_AREA_DEFAULT
 
 /area/station/engineering/atmos
 	name = "Atmospherics"
-	cases = list("атмосферный отдел", "атмосферного отдела", "атмосферному отдел", "атмосферный отдел", "атмосферным отделом", "атмосферном отделе")
+	cases = list("атмосферный отдел", "атмосферного отдела", "атмосферному отделу", "атмосферный отдел", "атмосферным отделом", "атмосферном отделе")
 	icon_state = "atmos"
 	ambience = list('sound/ambience/atmos_1.ogg', 'sound/ambience/atmos_2.ogg')
 
 /area/station/engineering/drone_fabrication
 	name = "Drone Fabrication"
-	cases = list("дронная", "дронной", "дронной", "дронную", "дронной", "дронной")
 
 //Maintenance
 /area/station/maintenance
+	cases = list ("техническое помещение", "технического помещения", "техническому помещению", "техническое помещение", "техническим помещением", "техническом помещении")
 	looped_ambience = 'sound/ambience/loop_maintenance.ogg'
 	valid_territory = 0
 	sound_environment = SOUND_AREA_MAINTENANCE
@@ -66,34 +65,42 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/maintenance/eva
 	name = "EVA Maintenance"
+	cases = list("техническое помещение ВКД", "технического помещения ВКД", "техническому помещению ВКД", "техническое помещение ВКД", "техническим помещением ВКД", "техническом помещении ВКД")
 	icon_state = "fpmaint"
 
 /area/station/maintenance/escape
 	name = "Escape Shuttle Maintenance"
+	cases = list("техническое помещение отбытия", "технического помещения отбытия", "техническому помещения отбытия", "техническое помещение отбытия", "техническим помещением отбытия", "техническом помещении отбытия")
 	icon_state = "fmaint"
 
 /area/station/maintenance/dormitory
 	name = "Dormitory Maintenance"
+	cases = list ("техническое помещение дормиторий", "технического помещения дормиторий", "техническому помещению дормиторий", "техническое помещение дормиторий", "техническим помещением дормиторий", "техническом помещении дормиторий")
 	icon_state = "fsmaint"
 
 /area/station/maintenance/chapel
 	name = "Chapel Maintenance"
+	cases = list ("техническое помещение церкви", "технического помещения церкви", "техническому помещению церкви", "техническое помещение церкви", "техническим помещением церкви", "техническом помещении церкви")
 	icon_state = "fsmaint"
 
 /area/station/maintenance/medbay
 	name = "Medbay Maintenance"
+	cases = list ("техническое помещение медблока", "технического помещения медблока", "техническому помещению медблока", "техническое помещение медблока", "техническим помещением медблока", "техническом помещении медблока")
 	icon_state = "asmaint"
 
 /area/station/maintenance/science
 	name = "Science Maintenance"
+	cases = list ("техническое помещение отдела исследований", "технического помещения отдела исследований", "техническому помещению отдела исследований", "техническое помещение отдела исследований", "техническим помещением отдела исследований", "техническом помещении отдела исследований")
 	icon_state = "asmaint"
 
 /area/station/maintenance/bridge
 	name = "Bridge Maintenance"
+	cases = list ("техническое помещение мостика", "технического помещения мостика", "техническому помещению мостика", "техническое помещение мостика", "техническим помещением мостика", "техническом помещении мостика")
 	icon_state = "maintcentral"
 
 /area/station/maintenance/cargo
 	name = "Cargo Maintenance"
+	cases = list ("техническое помещение отдела снабжения", "технического помещения отдела снабжения", "техническому помещению отдела снабжения", "техническое помещение отдела снабжения", "техническим помещением отдела снабжения", "техническом помещении отдела снабжения")
 	icon_state = "pmaint"
 
 /area/station/maintenance/engineering
