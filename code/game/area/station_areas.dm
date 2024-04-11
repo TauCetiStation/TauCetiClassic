@@ -26,7 +26,8 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/engineering/engine
-	name = "Engineering"
+	name = "Engine Room"
+	cases = list("машинное отделение", "машинного отделения", "машинному отделению", "машинное отделение", "машинным отделением", "машинном отделение")
 	icon_state = "engine_smes"
 	ambience = list('sound/ambience/engine_1.ogg', 'sound/ambience/engine_2.ogg', 'sound/ambience/engine_3.ogg', 'sound/ambience/engine_4.ogg')
 
@@ -48,12 +49,13 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/engineering/atmos
 	name = "Atmospherics"
-	cases = list("отдел по контролю станционной атмосферы", "отдела по контролю станционной атмосферы", "отделу по контролю станционной атмосферы", "отдел по контролю станционной атмосферы", "отделом по контролю атмосферным отделом", "отделе по контролю атмосферным отделом")
+	cases = list("атмосферный отдел", "атмосферного отдела", "атмосферному отделу", "атмосферный отдел", "атмосферным отделом", "атмосферном отделе")
 	icon_state = "atmos"
 	ambience = list('sound/ambience/atmos_1.ogg', 'sound/ambience/atmos_2.ogg')
 
 /area/station/engineering/drone_fabrication
 	name = "Drone Fabrication"
+	cases = list("дронная", "дронной", "дронной", "дронную", "дронной", "дронной")
 
 //Maintenance
 /area/station/maintenance
@@ -115,11 +117,12 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/maintenance/atmos
 	name = "Atmospherics Maintenance"
-	cases = list("техническое помещение отдела контроля станционной атмосферы", "технического помещения отдела контроля станционной атмосферы", "техническим помещением отдела контроля станционной атмосферы", "техническое помещение отдела контроля станционной атмосферы", "техническим помещением отдела контроля станционной атмосферы", "техническом помещении отдела контроля станционной атмосферы")
+	cases = list("техническое помещение атмосферного отдела", "технического помещения атмосферного отдела", "техническим помещением атмосферного отдела", "техническое помещение атмосферного отдела", "техническим помещением атмосферного отдела", "техническом помещении атмосферного отдела")
 	icon_state = "amaint"
 
 /area/station/maintenance/disposal
 	name = "Waste Disposal"
+	cases = list("комната утилизации отходов", "комнаты утилизации отходов", "комнате утилизации отходов", "комнату утилизации отходов", "комнатой утилизации отходов", "комнате утилизации отходов")
 	icon_state = "disposal"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
@@ -132,6 +135,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/construction/assembly_line //Derelict Assembly Line
 	name = "Assembly Line"
+	cases = list("cборочная линия", "cборочной линии", "сборочной линии", "сборочную линию", "сборочной линией", "сборочной линии")
 	icon_state = "ass_line"
 	power_equip = 0
 	power_light = 0
@@ -220,6 +224,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	name = "Asteroid Shuttle Hallway"
 	icon_state = "mine_sci_shuttle"
 
+//not used
 /area/station/hallway/secondary/Podbay
 	name = "Pod bay"
 	icon_state = "escape"
@@ -248,12 +253,12 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/bridge/teleporter
 	name = "Teleporter"
-	cases = list("мостовой телепортер", "мостового телепортера", "мостовым телепортером", "мостовой телепортер", "мостовым телепортером", "мостовом телепортере")
+	cases = list("телепортер", "телепортера", "телепортеру", "телепортер", "телепортером", "телепортере")
 	icon_state = "teleporter"
 
 /area/station/bridge/ai_upload
 	name = "AI Upload Chamber"
-	cases = list("комната смены законов ИИ", "комнаты смены законов ИИ", "комнате смены законов ИИ", "комната смены законов ИИ", "комнатой смены законов ИИ", "комнате смены законов ИИ")
+	cases = list("комната загрузки законов ИИ", "комнаты смены законов ИИ", "комнате смены законов ИИ", "комната смены законов ИИ", "комнатой смены законов ИИ", "комнате смены законов ИИ")
 	icon_state = "ai_upload"
 	ambience = null
 	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
@@ -261,11 +266,13 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/bridge/comms
 	name = "Communications Relay"
+	cases = list("коммуникационное реле", "коммуникационного реле", "коммуникационному реле", "коммуникационное реле", "коммуникационным реле", "коммуникационной реле")
 	icon_state = "tcomsatcham"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/bridge/server
-	name = "Messaging Server Room"
+	name = "PDA Server Room"
+	cases = list("серверная ПДА", "серверной ПДА", "серверной ПДА", "серверную ПДА", "серверной ПДА", "серверной ПДА")
 	icon_state = "server"
 	is_force_ambience = TRUE
 	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
@@ -273,6 +280,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/bridge/nuke_storage
 	name = "Vault"
+	cases = list("хранилище", "хранилища", "хранилище", "хранилище", "хранилищем", "хранилище")
 	icon_state = "nuke_storage"
 	is_force_ambience = TRUE
 	ambience = list('sound/ambience/vault_1.ogg')
@@ -280,6 +288,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/bridge/cmf_room
 	name = "CMF altering room"
+	cases = list("КМФ комната", "КМФ комнаты", "КМФ комнате", "КМФ комнату", "КМФ комнатой", "КМФ комнате")
 	icon_state = "cmf"
 	is_force_ambience = TRUE
 	ambience = list('sound/ambience/bridge_1.ogg')
@@ -289,15 +298,18 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/dormitories
 	name = "Dormitories"
+	cases = list("дормоторий", "дормотория", "дормоторию", "дормоторий", "дормоторием", "дормотории")
 	icon_state = "Sleep"
 
 /area/station/civilian/toilet
 	name = "Dormitory Toilets"
+	cases = list("туалеты дормоторий", "туалетов дормотория", "туалетам дормотория", "туалеты дормоторий", "туалетами дормоторием", "туалетах дормотория")
 	icon_state = "toilet"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/civilian/dormitories/security
 	name = "Security Wing Dormitories"
+	cases = list("охранное крыло дормоторий", "охранного крыла дормоторий", "охранному крылу дормоторий", "охранное крыло дормоторий", "охранным крылом дормоторий", "охранном крыле дормоторий")
 
 /area/station/civilian/dormitories/male
 	name = "Male Dorm"
@@ -307,28 +319,34 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/locker
 	name = "Locker Room"
+	cases = list("раздевалка", "раздевалки", "раздевалке", "раздевалку", "раздевалкой", "раздевалке")
 	icon_state = "locker"
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/civilian/locker/locker_toilet
 	name = "Locker Toilets"
+	cases = list("раздевалка туалетов", "раздевалки туалетов", "раздевалке туалетов", "раздевалку туалетов", "раздевалкой туалетов", "раздевалке туалетов")
 	icon_state = "toilet"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/civilian/fitness
 	name = "Fitness Room"
+	cases = list("фитнес зал", "фитнес зала", "фитнес залу", "фитнес зал", "фитнес залом", "фитнес зале")
 	icon_state = "fitness"
 
 /area/station/civilian/cafeteria
 	name = "Cafeteria"
+	cases = list("кафетерия", "кафетерии", "кафетерию", "кафетерий", "кафетерием", "кафетерии")
 	icon_state = "cafeteria"
 
 /area/station/civilian/gym
 	name = "Gym"
+	cases = list("спортзал", "спортзала", "спортзалу", "спортзал", "спортзалом", "спортзале")
 	icon_state = "fitness"
 
 /area/station/civilian/kitchen
 	name = "Kitchen"
+	cases = list("кухня", "кухни", "кухне", "кухню", "кухней", "кухне")
 	icon_state = "kitchen"
 
 /area/station/civilian/kitchen/atom_init()
@@ -346,6 +364,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/bar
 	name = "Bar"
+	cases = list("бар", "бара", "бару", "бар", "баром", "баре")
 	icon_state = "bar"
 
 /area/station/civilian/playroom
@@ -472,6 +491,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/gateway
 	name = "Gateway"
+	cases = list("врата", "врат", "вратам", "врата", "вратами", "вратах")
 	icon_state = "teleporter"
 
 //MedBay
@@ -764,6 +784,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/ai_monitored/eva
 	name = "EVA Storage"
+	cases = list("хранилище ВКД", "хранилища ВКД", "хранилище ВКД", "хранилище ВКД", "хранилищем ВКД", "хранилище ВКД")
 	icon_state = "eva"
 
 /area/station/storage/tools

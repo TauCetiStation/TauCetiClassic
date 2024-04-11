@@ -28,7 +28,7 @@
 
 /area/start            // will be unused once kurper gets his login interface patch done
 	name = "start area"
-	cases = list("стартовая локация", "космического пространства", "космическому пространству", "космическое пространство", "космическим пространством", "космическом пространстве")
+	cases = list("стартовая локация", "стартовой локации", "стартовой локации", "стартовую локацию", "стартовой локацией", "стартовой локации")
 	icon_state = "start"
 	requires_power = 0
 	dynamic_lighting = FALSE
