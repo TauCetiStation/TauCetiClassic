@@ -1,4 +1,4 @@
-/obj/effect/overlay/temp/sebb
+/obj/effect/overlay/temp/heavy_emp
 	icon = 'icons/effects/sebb.dmi'
 	icon_state = "sebb_explode"
 	layer = ABOVE_LIGHTING_PLANE
@@ -21,7 +21,7 @@
 	SEND_SIGNAL(SSexplosions, COMSIG_EXPLOSIONS_EMPULSE, epicenter, heavy_range, light_range)
 
 	if(custom_effects == EMP_SEBB)
-		var/obj/effect/overlay/temp/sebb/S = new(epicenter)
+		var/obj/effect/overlay/temp/heavy_emp/S = new(epicenter)
 		S.anchored = TRUE
 		QDEL_IN(S, 1 SECOND)
 	else if(heavy_range > 1)
