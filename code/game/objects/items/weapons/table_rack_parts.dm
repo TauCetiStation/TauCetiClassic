@@ -69,6 +69,7 @@
 /*
  * Reinforced Table Parts
  */
+
 /obj/item/weapon/table_parts/reinforced
 	build_time = SKILL_TASK_AVERAGE
 
@@ -79,14 +80,37 @@
 	return FALSE
 
 /*
- * Glass Table Parts
+ * Reinforced Glass Table Parts
  */
-/obj/item/weapon/table_parts/glass/attack_tools(obj/item/W, mob/user)
+
+/obj/item/weapon/table_parts/rglass
+	build_time = SKILL_TASK_AVERAGE
+
+/obj/item/weapon/table_parts/rglass/attack_tools(obj/item/W, mob/user)
 	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
 
+/*
+ * Glass Table Parts
+ */
+ 
+/obj/item/weapon/table_parts/glass/attack_tools(obj/item/W, mob/user)
+	if(iswrenching(W))
+		deconstruct(TRUE, user)
+		return TRUE
+		
+	else if(istype(W, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = W
+		if (R.use(4))
+			new /obj/item/weapon/table_parts/rglass( user.loc )
+			to_chat(user, "<span class='notice'>You reinforce the [name].</span>")
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You need at least four rods to do this.</span>")
+		return TRUE
+	return FALSE
 
 /*
  * Wooden Table Parts
