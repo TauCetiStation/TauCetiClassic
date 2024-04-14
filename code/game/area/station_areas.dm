@@ -298,18 +298,18 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/dormitories
 	name = "Dormitories"
-	cases = list("дормоторий", "дормотория", "дормоторию", "дормоторий", "дормоторием", "дормотории")
+	cases = list("дормиторий", "дормитория", "дормиторию", "дормиторий", "дормиторием", "дормитории")
 	icon_state = "Sleep"
 
 /area/station/civilian/toilet
 	name = "Dormitory Toilets"
-	cases = list("туалеты дормоторий", "туалетов дормотория", "туалетам дормотория", "туалеты дормоторий", "туалетами дормоторием", "туалетах дормотория")
+	cases = list("туалеты дормиторий", "туалетов дормитория", "туалетам дормитория", "туалеты дормиторий", "туалетами дормиториев", "туалетах дормитория")
 	icon_state = "toilet"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/civilian/dormitories/security
 	name = "Security Wing Dormitories"
-	cases = list("охранное крыло дормоторий", "охранного крыла дормоторий", "охранному крылу дормоторий", "охранное крыло дормоторий", "охранным крылом дормоторий", "охранном крыле дормоторий")
+	cases = list("охранное крыло дормиторий", "охранного крыла дормиторий", "охранному крылу дормиторий", "охранное крыло дормиторий", "охранным крылом дормиторий", "охранном крыле дормиторий")
 
 /area/station/civilian/dormitories/male
 	name = "Male Dorm"
@@ -336,7 +336,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/cafeteria
 	name = "Cafeteria"
-	cases = list("кафетерия", "кафетерии", "кафетерию", "кафетерий", "кафетерием", "кафетерии")
+	cases = list("кафетерий", "кафетерия", "кафетерию", "кафетерий", "кафетерием", "кафетерии")
 	icon_state = "cafeteria"
 
 /area/station/civilian/gym
@@ -355,11 +355,13 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/cold_room
 	name = "Cold Room"
+	cases = list("холодильная камера", "холодильной камеры", "холодильной камере", "холодильная камера", "холодильной камерой","холодильной камере")
 	icon_state = "coldroom"
 	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/civilian/barbershop
 	name = "Barbershop"
+	cases = list("барбершоп", "барбершопа", "барбершопу", "барбершоп", "барбершопом", "барбершопе")
 	icon_state = "barbershop"
 
 /area/station/civilian/bar
@@ -369,14 +371,17 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/playroom
 	name = "Play Room"
+	cases = list("игровая комната", "игровой комнаты", "игровой комнате", "игровая комната", "игровой комнатой", "игровой комнате")
 	icon_state = "fitness"
 
 /area/station/civilian/theatre
 	name = "Theatre"
+	cases = list("театр", "театра", "театру", "театр", "театром", "театре")
 	icon_state = "Theatre"
 
 /area/station/civilian/library
 	name = "Library"
+	cases = list("библиотека", "библиотеки", "библиотеке", "библиотека", "библиотекой", "библиотеке")
 	icon_state = "library"
 
 /area/station/civilian/chapel
@@ -408,16 +413,19 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/garden
 	name = "Garden"
+	cases = list("сад", "сада", "саду", "сад", "садом", "саде")
 	icon_state = "garden"
 	looped_ambience = 'sound/ambience/loop_garden.ogg'
 	sound_environment = SOUND_ENVIRONMENT_ALLEY
 
 /area/station/civilian/janitor
 	name = "Custodial Closet"
+	cases = list("коморка уборщика", "коморки уборщика", "коморке уборщика", "коморка уборщика", "коморкой уборщика", "коморке уборщика")
 	icon_state = "janitor"
 
 /area/station/civilian/hydroponics
 	name = "Hydroponics"
+	cases = list("гидропоники", "гидропоник", "гидропоникам", "гидропоник", "гидропониками","гидропониках")
 	icon_state = "hydro"
 
 //Holodeck
@@ -498,6 +506,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/medical
 	name = "Medbay"
+	cases = list("медблок", "медблока", "медблоку", "медблок", "медблоком", "медблоке")
 	icon_state = "medbay"
 	ambience = list('sound/ambience/medbay_1.ogg', 'sound/ambience/medbay_2.ogg', 'sound/ambience/medbay_3.ogg', 'sound/ambience/medbay_4.ogg', 'sound/ambience/medbay_5.ogg')
 
@@ -508,74 +517,91 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/medical/reception
 	name = "Medbay Reception"
+	cases = list("приёмная медблока","приёмной медблока","приёмной медблока", "приёмная медблока","приёмной медблока","приёмной медблока")
 	icon_state = "medbay"
 
 /area/station/medical/storage
 	name = "Medbay Storage"
+	cases = list("склад медблока", "склада медблока", "складу медблока", "склад медблока", "складом медблока", "складе медблока")
 	icon_state = "medbay3"
 
 /area/station/medical/medbreak
 	name = "Medbay Breaktime Room"
+	cases = list("комната отдыха медблока", "комнаты отдыха медблока", "комнате отдыха медблока", "комната отдыха медблока", "комнатой отдыха медблока", "комнате отдыха медблока")
 	icon_state = "medbay3"
 
 /area/station/medical/psych
 	name = "Psych Room"
+	cases = list("кабинет психолога", "кабинета психолога", "кабинету психолога", "кабинет психолога", "кабинетом психолога", "кабинете психолога")
 	icon_state = "medbay3"
 
 /area/station/medical/patients_rooms
 	name = "Patient's Rooms"
+	cases = list("палаты пациентов", "палат пацицентов", "палатам пациентов", "палаты пациентов", "палатами пациентов", "палатах пациентов")
 	icon_state = "patients"
 
 /area/station/medical/patient_a
 	name = "Patient Room One"
+	cases = list("палата пациента №1", "палаты пациента №1", "палате пациента №1", "палата пациента №1", "палатой пациента №1", "палате пациента №1")
 	icon_state = "patients"
 
 /area/station/medical/patient_b
 	name = "Patient Room Two"
+	cases = list("палата пациента №2", "палаты пациента №2", "палате пациента №2", "палата пациента №2", "палатой пациента №2", "палате пациента №2")
 	icon_state = "patients"
 
 /area/station/medical/cmo
 	name = "Chief Medical Officer's office"
+	cases = list("кабинет главврача", "кабинету главврача", "кабинетом главврача", "кабинет главврача", "кабинетом главврача", "кабинете главврача")
 	icon_state = "CMO"
 
 /area/station/medical/virology
 	name = "Virology"
+	cases = list("вирусология", "вирусологии", "вирусологии", "вирусология", "вирусологией", "вирусологии")
 	icon_state = "virology"
 
 /area/station/medical/morgue
 	name = "Morgue"
+	cases = list("морг", "морга", "моргу", "морг", "моргом", "морге")
 	icon_state = "morgue"
 	ambience = list('sound/ambience/morgue_1.ogg', 'sound/ambience/morgue_2.ogg', 'sound/ambience/morgue_3.ogg')
 	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/medical/chemistry
 	name = "Chemistry"
+	cases = list("химия", "химии", "химии", "химия", "химией", "химии")
 	icon_state = "chem"
 	ambience = list('sound/ambience/chemistry_1.ogg', 'sound/ambience/chemistry_2.ogg')
 
 /area/station/medical/surgery
 	name = "Operating Theatre 1"
+	cases = list("операционная №1", "операционной №1", "операционной №1", "операционная №1", "операционной №1", "операционной №1")
 	icon_state = "surgery"
 	ambience = list('sound/ambience/surgery_1.ogg', 'sound/ambience/surgery_2.ogg')
 
 /area/station/medical/surgery2
 	name = "Operating Theatre 2"
+	cases = list("операционная №2", "операционной №2", "операционной №2", "операционная №2", "операционной №2", "операционной №2")
 	icon_state = "surgery"
 
 /area/station/medical/surgeryobs
 	name = "Operation Observation Room"
+	cases = list("комната наблюдения за операциями", "комнаты наблюдения за операциями", "комнате наблюдения за операциями", "комната наблюдения за операциями", "комнатой наблюдения за операцией", "комнате наблюдения за операциями")
 	icon_state = "surgery"
 
 /area/station/medical/cryo
 	name = "Cryogenics"
+	cases = list("криогенные камеры", "криогенных камер", "криогенным камерам", "криогенные камеры", "криогенными камерами", "криогенных камерах")
 	icon_state = "cryo"
 
 /area/station/medical/genetics
 	name = "Genetics Lab"
+	cases = list("генетика", "генетики", "генетике", "генетика", "генетикой", "генетике")
 	icon_state = "genetics"
 
 /area/station/medical/genetics_cloning
 	name = "Cloning Lab"
+	cases = list("отдел клонирования", "отдела клонирования", "отделу клонирования", "отдел клонирования", "отделом клонирования", "отделе клонирования")
 	icon_state = "cloning"
 
 /area/station/medical/sleeper
