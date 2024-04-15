@@ -97,6 +97,9 @@
 	var/list/flash_protection_slots = list()
 	var/can_get_wet = TRUE
 
+/**
+  * Doesn't call parent, see [/atom/proc/atom_init]
+  */
 /obj/item/atom_init()
 	SHOULD_CALL_PARENT(FALSE)
 	if(initialized)
@@ -106,9 +109,14 @@
 	if(light_power && light_range)
 		update_light()
 
-	if(opacity && isturf(src.loc))
-		var/turf/T = src.loc
+	if(opacity && isturf(loc))
+		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	if(can_block_air && isturf(loc))
+		var/turf/T = loc
+		if(!T.can_block_air)
+			T.can_block_air = TRUE
 
 	if(uses_integrity)
 		if (!armor)
