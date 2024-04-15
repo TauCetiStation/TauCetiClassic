@@ -634,11 +634,13 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/security/interrogation
 	name = "Interrogation"
+	cases = list("допросная", "допросной", "допросной", "допросная", "допросной", "допросной")
 	icon_state = "interrogation"
 	looped_ambience = 'sound/ambience/loop_interrogation.ogg'
 
 /area/station/security/execution
 	name = "Execution"
+	cases = list("комната казни", "комнаты казни", "комнате казни", "комната казни", "комнатой казни", "комнате казни")
 	icon_state = "execution_room"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
@@ -650,9 +652,11 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/security/prison/toilet
 	name = "Prison Toilet"
+	cases = list("тюремный туалет", "тюремного туалета", "тюремному туалету", "тюремный туалет", "тюремным туалетом", "тюремном туалете")
 
 /area/station/security/warden
 	name = "Warden"
+	cases = list("кабинет смотрителя", "кабинета смотрителя", "кабинету смотрителя", "кабинет смотрителя", "кабинетом смотрителя", "кабинете смотрителя")
 	icon_state = "warden"
 
 /area/station/security/armoury
@@ -663,53 +667,65 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/security/hos
 	name = "Head of Security's Office"
+	cases = list("кабинет главы службы безопасности", "кабинета главы службы безопасности", "кабинету главы службы безопасности", "кабинет главы службы безопасности", "кабинетом главы службы безопасности", "кабинете главы службы безопасности")
 	icon_state = "sec_hos"
 
 /area/station/security/detectives_office
 	name = "Detective's Office"
+	cases = list("кабинет детектива", "кабинета детектива", "кабинету детектива", "кабинет детектива", "кабинетом детектива", "кабинете детектива")
 	icon_state = "detective"
 	ambience = list('sound/ambience/detective_1.ogg')
 
 /area/station/security/forensic_office
 	name = "Forensic's Office"
+	cases = list("кабинет криминалистики", "кабинета криминалистики", "кабинету  криминалистики", "кабинет  криминалистики", "кабинетом  криминалистики", "кабинете  криминалистики")
 	icon_state = "detective"
 	ambience = list('sound/ambience/detective_1.ogg')
 
 /area/station/security/range
 	name = "Firing Range"
+	cases = list("стрельбище", "стрельбища", "стрельбищу", "стрельбище", "стрельбищем", "стрельбище")
 	icon_state = "firingrange"
 
 /area/station/security/processing
 	name = "Labor Shuttle Dock"
+	cases = list("док трудового шаттла", "дока трудового шаттла", "доку трудового шаттла", "док трудового шаттла", "доком трудового шаттла", "доке трудового шаттла")
 	icon_state = "sec_processing"
 
 /area/station/security/checkpoint
 	name = "Security Checkpoint"
+	cases = list("КПП службы безопасности", "КПП службы безопасности", "КПП службы безопасности", "КПП службы безопасности", "КПП службы безопасности", "КПП службы безопасности")
 	icon_state = "security"
 
 /area/station/security/vacantoffice
 	name = "Coworking"
+	cases  = list("рабочий кабинет", "рабочего кабинета", "рабочему кабинету", "рабочий кабинет","рабочим кабинетом", "рабочем кабинете")
 	icon_state = "security"
 	ambience = list('sound/ambience/vacant_1.ogg')
 
 /area/station/security/iaa_office
 	name = "Internal Affairs"
+	cases = list("кабинет АВД", "кабинета АВД", "кабинету АВД", "кабинет АВД", "кабинетом АВД", "кабинете АВД")
 	icon_state = "law"
 
 /area/station/security/blueshield
 	name = "Blueshield Office"
+	cases = list("кабинет СЩ", "кабинета СЩ", "кабинету СЩ", "кабинет СЩ", "кабинетом СЩ", "кабинете СЩ")
 	icon_state = "law"
 
 /area/station/security/blueshield/shuttle
 	name = "Blueshield Shuttle"
+	cases = list("шаттл СЩ", "шаттла СЩ", "шаттлу СЩ", "шаттл СЩ", "шаттлом СЩ", "шаттле СЩ")
 
 /area/station/security/lawyer_office
 	name = "Lawyer Office"
+	cases = list("кабинет адвоката", "кабинета адвоката", "кабинету адвоката", "кабинет адвоката", "кабинетом адвоката", "кабинете адвоката")
 	icon_state = "law"
 
 //Cargo bay
 /area/station/cargo
 	name = "Quartermasters"
+	cases = list("отдел снабжения", "отдела снабжения", "отделу снабжения", "отдел снабжения", "отделом снабжения", "отделе снабжения")
 	icon_state = "quart"
 
 /area/station/cargo/office
@@ -719,28 +735,34 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/cargo/storage
 	name = "Cargo Bay"
+	cases = list("склад отдела снабжения", "склада отдела снабжения", "складу отделу снабжения", "склад отдела снабжения", "складом отделом снабжения", "складе отдела снабжения")
 	icon_state = "quartstorage"
 	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/cargo/qm
 	name = "Quartermaster's Office"
+	cases = list("кабинет завхоза", "кабинета завхоза", "кабинету завхоза", "кабинет завхоза", "кабинетом завхоза", "кабинете завхоза")
 	icon_state = "quart"
 
 /area/station/cargo/recycler
 	name = "Recycler"
+	cases = list("отдел переработки", "отдела переработки", "отделу переработки", "отдел переработки", "отделом переработки", "отделе переработки")
 	icon_state = "recycler"
 
 /area/station/cargo/recycleroffice
 	name = "Recycleroffice"
+	cases = list("кабинет переработчиков", "кабинета переработчиков", "кабинету переработчиков", "кабинет переработчиков", "кабинетом переработчиков", "кабинете переработчиков")
 	icon_state = "recycleroffice"
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/cargo/miningbreaktime
 	name = "Cargo Breaktime Room"
+	cases = list("комната отдыха отдела снабжения", "комнаты отдыха отдела снабжения", "комнате отдыха отдела снабжения", "комната отдыха отдела снабжения", "комнатой отдыха отдела снабжения", "комнате отдыха отдела снабжения")
 	icon_state = "miningbreaktime"
 
 /area/station/cargo/miningoffice
 	name = "Mining office"
+	cases = list("кабинет шахтёров", "кабинета шахтёров", "кабинету шахтёров", "кабинет шахтёров", "кабинетом шахтёров", "кабинете шахтёров")
 	icon_state = "miningoffice"
 
 //rnd (Research and Development)
