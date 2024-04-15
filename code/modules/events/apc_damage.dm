@@ -18,7 +18,7 @@
 			else if(prob(50))
 				apc.toggle_power_use()
 			else
-				apc.disable_main_power()
+				apc.make_short_circuit()
 
 			apc.update()
 			apc.update_icon()

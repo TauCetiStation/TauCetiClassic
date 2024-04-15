@@ -1377,7 +1377,7 @@
 	lighting = prob(50) ? APC_CHANNEL_OFF : lighting
 	environ = prob(50) ? APC_CHANNEL_OFF : environ
 
-/obj/machinery/power/apc/proc/disable_main_power()
+/obj/machinery/power/apc/proc/make_short_circuit()
 	shorted = TRUE
 
 #undef APC_WAIT_FOR_CHARGE
