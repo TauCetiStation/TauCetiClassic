@@ -5,7 +5,8 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb
 	name = "Nuclear Fission Explosive"
-	desc = "Uh oh. RUN!!!!"
+	cases = list("ядерная боеголовка", "ядерной боеголовки", "ядерной боеголовке", "ядерную боеголовку", "ядерной боеголовкой", "ядерной боеголовке")
+	desc = "Ох... БЕЖИМ!!!!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
 	density = TRUE
@@ -59,23 +60,23 @@ var/global/bomb_set
 		if(removal_stage == 5)
 			if(!opened)
 				opened = TRUE
-				to_chat(user, "You unscrew the control panel of [src].")
+				to_chat(user, "Вы открутили панель управления у [CASE(src, GENITIVE_CASE)].")
 			else
 				opened = FALSE
-				to_chat(user, "You screw the control panel of [src] back on.")
+				to_chat(user, "Вы вкрутили панель управления в [CASE(src, ACCUSATIVE_CASE)].")
 		else if(auth)
 			if(!opened)
 				opened = TRUE
-				to_chat(user, "You unscrew the control panel of [src].")
+				to_chat(user, "Вы открутили панель управления у [CASE(src, GENITIVE_CASE)].")
 			else
 				opened = FALSE
-				to_chat(user, "You screw the control panel of [src] back on.")
+				to_chat(user, "Вы вкрутили панель управления в [CASE(src, ACCUSATIVE_CASE)].")
 		else
 			if(!opened)
-				to_chat(user, "The [src] emits a buzzing noise, the panel staying locked in.")
+				to_chat(user, "[C_CASE(src, NOMINATIVE_CASE)] жужжит, а панель управления всё ещё заблокирована!")
 			if(opened)
 				opened = FALSE
-				to_chat(user, "You screw the control panel of [src] back on.")
+				to_chat(user, "Вы вкрутили панель управления в [CASE(src, ACCUSATIVE_CASE)].")
 		update_icon()
 		return FALSE
 
@@ -98,23 +99,23 @@ var/global/bomb_set
 					if(!WT.isOn())
 						return FALSE
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						to_chat(user, "<span class = 'red'>You need more fuel to complete this task.</span>")
+						to_chat(user, "<span class = 'red'>Вам нужно больше топлива для выполнения этой задачи.</span>")
 						return FALSE
 					if(user.is_busy())
 						return FALSE
-					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
+					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает что-то прорезать в [CASE(src, ACCUSATIVE_CASE)], будто [user.gender == MALE ? "он" : "она"] знает, что нужно делать.", "С [CASE(O, ABLATIVE_CASE)] вы начинаете разваривать первый слой...")
 
 					if(O.use_tool(src, user, SKILL_TASK_CHALLENGING, amount = 5, volume = 50))
-						user.visible_message("[user] finishes cutting something on [src].", "You cut thru first layer.")
+						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает прорезать что-то в [CASE(src, DATIVE_CASE)].", "Вы прорезали первый слой.")
 						removal_stage = 1
 				return FALSE
 			if(1)
 				if(isprying(O))
-					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
+					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает бить по [CASE(src, DATIVE_CASE)].", "Вы начали вскрывать крышку с помощью [CASE(O, GENITIVE_CASE)]...")
 					if(user.is_busy())
 						return FALSE
 					if(O.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
-						user.visible_message("[user] finishes smashing [src].", "You force open covers.")
+						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает бить по [CASE(src, DATIVE_CASE)].", "Вы вскрыли крышку.")
 						removal_stage = 2
 				return FALSE
 			if(2)
@@ -123,32 +124,32 @@ var/global/bomb_set
 					if(!WT.isOn())
 						return FALSE
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						to_chat(user, "<span class = 'red'>You need more fuel to complete this task.</span>")
+						to_chat(user, "<span class = 'red'>Вам нужно больше топлива для выполнения этой задачи.</span>")
 						return FALSE
 					if(user.is_busy())
 						return FALSE
-					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
+					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает что-то прорезать в [CASE(src, ACCUSATIVE_CASE)]. Снова.", "Вы начинаете разрезать защитную пластину с помощью [CASE(O, GENITIVE_CASE)]")
 
 					if(O.use_tool(src, user, SKILL_TASK_DIFFICULT , amount = 5, volume = 50))
-						user.visible_message("[user] finishes cutting something on [src].", "You cut apart the safety plate.")
+						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает прорезать что-то в [CASE(src, DATIVE_CASE)].", "Вы закончили разрезать защитную пластину.")
 						removal_stage = 3
 				return FALSE
 			if(3)
 				if(iswrenching(O))
 					if(user.is_busy())
 						return FALSE
-					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
+					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает ковыряться внутри [CASE(src, GENITIVE_CASE)].", "Вы начали откручивать предохраняющие болты...")
 					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
-						user.visible_message("[user] begins poking inside [src].", "You unwrench bolts.")
+						user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает ковыряться внутри [CASE(src, GENITIVE_CASE)].", "Вы открутили предохраняющие болты.")
 						removal_stage = 4
 				return FALSE
 			if(4)
 				if(isprying(O))
 					if(user.is_busy())
 						return FALSE
-					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
+					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает бить [CASE(src, GENITIVE_CASE)].", "Вы начинаете взламывать последний защитный слой.")
 					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
-						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
+						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает бить [CASE(src, GENITIVE_CASE)].", "Теперь вы можете напрямую взаимодействовать с механизмом [CASE(src, GENITIVE_CASE)]. Отверткой откройте панель управления")
 						removal_stage = 5
 				return FALSE
 	return ..()
@@ -159,7 +160,7 @@ var/global/bomb_set
 /obj/machinery/nuclearbomb/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "NuclearBomb", name)
+		ui = new(user, src, "NuclearBomb", C_CASE(src, NOMINATIVE_CASE))
 		ui.open()
 
 /obj/machinery/nuclearbomb/tgui_data(mob/user)
@@ -269,7 +270,7 @@ var/global/bomb_set
 		var/area/nuclearbombloc = get_area(loc)
 		announce_nuke.play(nuclearbombloc)
 		set_security_level("delta")
-		notify_ghosts("[src] has been activated!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
+		notify_ghosts("[C_CASE(src, NOMINATIVE_CASE)] была активирована!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
 		timing = TRUE
 	update_icon()
 
@@ -277,8 +278,8 @@ var/global/bomb_set
 	if(deployed)
 		if(timing)
 			return FALSE
-		to_chat(user, "<span class = 'red'>You close several panels to make [src] undeployed.</span>")
-		visible_message("<span class = 'red'>The anchoring bolts slide back into the depths of [src] and timer has stopped.</span>")
+		to_chat(user, "<span class = 'red'>Вы закрываете несколько панелей, чтобы сделать [CASE(src, ACCUSATIVE_CASE)] неразвернутой.</span>")
+		visible_message("<span class = 'red'>Анкерные болты возвращаются внутрь [CASE(src, GENITIVE_CASE)], таймер остановился.</span>")
 		deployed = FALSE
 		anchored = FALSE
 		eject_disk(user)
@@ -286,24 +287,24 @@ var/global/bomb_set
 		if(user.incapacitated())
 			return FALSE
 		if(!ishuman(user))
-			to_chat(user, "<span class = 'red'>You don't have the dexterity to do this!</span>")
+			to_chat(user, "<span class = 'red'>Вы не можете сделать это!</span>")
 			return FALSE
 		if(!istype(get_area(src), /area/station)) // If outside of station
-			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
+			to_chat(user, "<span class = 'red'>Бомба не может быть развёрнута здесь.</span>")
 			return FALSE
 		if(!ishuman(user) && !isobserver(user))
-			to_chat(user, "<span class = 'red'>You don't have the dexterity to do this!</span>")
+			to_chat(user, "<span class = 'red'>Ты не можешь сделать это!</span>")
 			return FALSE
 		var/turf/current_location = get_turf(user)//What turf is the user on?
 		if((!current_location || is_centcom_level(current_location.z)) && isnukeop(user))//If turf was not found or they're on z level 2.
-			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
+			to_chat(user, "<span class = 'red'>Это плохая идея ставить бомбу на своей базе.</span>")
 			return FALSE
 		if(!istype(get_area(src), /area/station)) // If outside of station
-			to_chat(user, "<span class = 'red'>Bomb cannot be deployed here.</span>")
+			to_chat(user, "<span class = 'red'>Бомба не может быть развёрнута здесь.</span>")
 			return FALSE
 
-		to_chat(user, "<span class = 'red'>You adjust some panels to make [src] deployed.</span>")
-		visible_message("<span class = 'red'>With a steely snap, bolts slide out of [src] and anchor it to the flooring!</span>")
+		to_chat(user, "<span class = 'red'>Вы закрываете несколько панелей, чтобы подготовить [CASE(src, ACCUSATIVE_CASE)] к активации.</span>")
+		visible_message("<span class = 'red'>С характерным щелчком, анкерные болты выскочили из [CASE(src, GENITIVE_CASE)] и прикрепили её к полу!</span>")
 		deployed = TRUE
 		anchored = TRUE
 		if(!lighthack)
@@ -346,7 +347,7 @@ var/global/bomb_set
 		timeleft = TIMER_MAX
 		set_security_level("red")
 		flick("nuclearbomb1", src)
-		visible_message("<span class='notice'>\The [src] flicks with green. Looks like the safety fuse prevented explosion.</span>")
+		visible_message("<span class='notice'>Огоньки на [CASE(src, DATIVE_CASE)] загорелись зелёным цветом. Похоже, что предохранитель предотвратил взрыв.</span>")
 		update_icon()
 		return
 	if(detonated)
@@ -385,13 +386,13 @@ var/global/bomb_set
 		if(N)
 			N.nukes_left = FALSE
 		else
-			to_chat(world, "<B>The station was destoyed by the nuclear blast!</B>")
+			to_chat(world, "<B>Станция была уничтожена ядерным взрывом!</B>")
 
 		SSticker.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
 														//kinda shit but I couldn't  get permission to do what I wanted to do.
 
 		if(!SSticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-			to_chat(world, "<B>Resetting in 45 seconds!</B>")
+			to_chat(world, "<B>Перезапуск через 45 секунд!</B>")
 
 			feedback_set_details("end_error","nuke - unhandled ending")
 
@@ -429,12 +430,12 @@ var/global/bomb_set
 	if(!timing && !auth && !buckled_mob)
 		if(usr.is_busy())
 			return
-		visible_message("<span class='notice'>[usr] start putting [src] into [D]!</span>","<span class='notice'>You start putting [src] into [D]!</span>")
+		visible_message("<span class='notice'>[CASE(usr, NOMINATIVE_CASE)] начал загружать [CASE(src, ACCUSATIVE_CASE)] внутрь [CASE(D, GENITIVE_CASE)]!</span>","<span class='notice'>Вы начали загружать [CASE(src, ACCUSATIVE_CASE)] внутрь [CASE(D, GENITIVE_CASE)]!</span>")
 		if(do_after(usr, 100, 1, src) && !timing && !auth && !buckled_mob)
 			D.Stored_Nuclear = src
 			loc = D
 			D.icon_state = "dropod_opened_n[D.item_state]"
-			visible_message("<span class='notice'>[usr] put [src] into [D]!</span>","<span class='notice'>You succesfully put [src] into [D]!</span>")
+			visible_message("<span class='notice'>[usr] put [src] into [D]!</span>","<span class='notice'>Вы успешно вставили [CASE(src, ACCUSATIVE_CASE)] внутрь [CASE(D, GENITIVE_CASE)]!</span>")
 			D.verbs += /obj/structure/droppod/proc/Nuclear
 
 /obj/machinery/nuclearbomb/fake
@@ -461,7 +462,7 @@ var/global/bomb_set
 /obj/machinery/nuclearbomb/fake/examine(mob/user, distance)
 	. = ..()
 	if(isnukeop(user) || isobserver(user))
-		to_chat(user, "<span class ='boldwarning'>This is a fake one!</span>")
+		to_chat(user, "<span class ='boldwarning'>Это обманка!</span>")
 
 /obj/machinery/nuclearbomb/fake/process() //Yes, it's alike normal, but not exactly
 	if(timing && !detonated)
@@ -481,12 +482,12 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/fake/deploy(mob/user)
 	if(false_activation)
-		to_chat(user, "<span class = 'red'>It doesn't react. Maybe broken?</span>")
+		to_chat(user, "<span class = 'red'>Бомба не реагирует. Может она сломана?</span>")
 		return
 	if(!isnukeop(user))
-		to_chat(user, "<span class = 'red'>It doesn't react. Maybe broken?</span>")
+		to_chat(user, "<span class = 'red'>Бомба не реагирует. Может она сломана?</span>")
 		return
-	if(tgui_alert(user, "False decoy activation. Continue?", "Decoy activation", list("Yes","No")) != "Yes")
+	if(tgui_alert(user, "Активация фальшивой бомбы. Продолжить?", "Активация фальшивки", list("Да","Нет")) != "Да")
 		return
 	deployed = TRUE
 	anchored = TRUE

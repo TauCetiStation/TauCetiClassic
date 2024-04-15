@@ -320,7 +320,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/crewsimov, ai_link = TRUE, datum/religion/R)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)

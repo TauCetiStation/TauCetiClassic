@@ -28471,7 +28471,7 @@
 /area/station/bridge/meeting_room)
 "aYH" = (
 /obj/structure/table,
-/obj/item/weapon/aiModule/nanotrasen,
+/obj/item/weapon/aiModule/crewsimov,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "aYI" = (
@@ -30920,6 +30920,7 @@
 /obj/item/weapon/aiModule/purge,
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/aiModule/antimov,
+/obj/item/weapon/aiModule/nanotrasen,
 /obj/item/weapon/aiModule/teleporterOffline,
 /obj/structure/window/thin/reinforced{
 	dir = 4

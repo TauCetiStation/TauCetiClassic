@@ -69,6 +69,7 @@ var/global/list/intercom_list = list()
 var/global/list/all_designs = list()
 var/global/list/all_supply_pack = list()
 var/global/list/all_command_microphones = list()
+var/global/list/global_objectives = list() //objectives that need to be completed by several factions or roles
 
 var/global/list/spells_by_aspects = list()
 var/global/list/rites_by_aspects = list()
