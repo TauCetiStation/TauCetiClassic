@@ -27,7 +27,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/engineering/engine
 	name = "Engine Room"
-	cases = list("машинное отделение", "машинного отделения", "машинному отделению", "машинное отделение", "машинным отделением", "машинном отделение")
+	cases = list("машинное отделение", "машинного отделения", "машинному отделению", "машинное отделение", "машинным отделением", "машинном отделении")
 	icon_state = "engine_smes"
 	ambience = list('sound/ambience/engine_1.ogg', 'sound/ambience/engine_2.ogg', 'sound/ambience/engine_3.ogg', 'sound/ambience/engine_4.ogg')
 
