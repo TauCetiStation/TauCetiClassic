@@ -154,22 +154,27 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/solar/auxport
 	name = "Fore Port Solar Array"
+	cases = list("северо-западные солнечные панели", "северо-западных солнечных панелей", "северо-западным солнечным панелям", "северо-западные солнечные панели", "северо-западными солнечными панелями", "северо-западных солнечных панелях")
 	icon_state = "panelsA"
 
 /area/station/solar/auxstarboard
 	name = "Fore Starboard Solar Array"
+	cases = list("северо-восточные солнечные панели", "северо-восточных солнечных панелей", "северо-восточным солнечным панелям", "северо-восточные солнечные панели", "северо-восточными солнечными панелями", "северо-восточных солнечных панелях")
 	icon_state = "panelsA"
 
 /area/station/solar/starboard
 	name = "Aft Starboard Solar Array"
+	cases = list("юго-восточные солнечные панели", "юго-восточных солнечных панелей", "юго-восточным солнечным панелям", "юго-восточные солнечные панели", "юго-восточными солнечными панелями", "юго-восточных солнечных панелях")
 	icon_state = "panelsS"
 
 /area/station/solar/port
 	name = "Aft Port Solar Array"
+	cases = list("юго-западные солнечные панели", "юго-западных солнечных панелей", "юго-западным солнечным панелям", "юго-западные солнечные панели", "юго-западными солнечными панелями", "юго-западных солнечных панелях")
 	icon_state = "panelsP"
 
 /area/station/maintenance/auxsolarport
 	name = "Fore Port Solar Maintenance"
+	cases = list()
 	icon_state = "SolarcontrolA"
 
 /area/station/maintenance/starboardsolar
@@ -190,38 +195,47 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/hallway/primary/fore
 	name = "Fore Primary Hallway"
+	cases = list("северный коридор", "северного коридора", "северному коридору", "северный коридор", "северным коридором", "северном коридоре")
 	icon_state = "hallF"
 
 /area/station/hallway/primary/starboard
 	name = "Starboard Primary Hallway"
+	cases = list("восточный коридор", "восточного коридора", "восточному коридору", "восточный коридор", "восточным коридором", "восточном коридоре")
 	icon_state = "hallS"
 
 /area/station/hallway/primary/aft
 	name = "Aft Primary Hallway"
+	cases = list("южный коридор", "южного коридора", "южному коридору", "южный коридор", "южным коридором", "южном коридоре")
 	icon_state = "hallA"
 
 /area/station/hallway/primary/port
 	name = "Port Primary Hallway"
+	cases = list("западный коридор", "западного коридора", "западному коридору", "западный коридор", "западным коридором", "западном коридоре")
 	icon_state = "hallP"
 
 /area/station/hallway/primary/central
 	name = "Central Primary Hallway"
+	cases = list("центральный коридор", "центрального коридора", "центральному коридору", "центральный коридор", "центральным коридором", "центральном коридоре")
 	icon_state = "hallC"
 
 /area/station/hallway/secondary/exit
 	name = "Escape Shuttle Hallway"
+	cases = list("коридор отбытия", "коридора отбытия", "коридору отбытия", "коридор отбытия", "коридором отбытия", "коридоре отбытия")
 	icon_state = "escape"
 
 /area/station/hallway/secondary/arrival
 	name = "Arrival Shuttle Hallway"
+	cases = list("коридор прибытия", "коридора прибытия", "коридору прибытия", "коридор прибытия", "коридором прибытия", "коридоре прибытия")
 	icon_state = "arrival"
 
 /area/station/hallway/secondary/entry
 	name = "Entry Shuttles Hallway"
+	cases = list("станционные доки", "станционных доков", "станционным докам", "станционные доки", "станционными доками", "станционных доках")
 	icon_state = "entry"
 
 /area/station/hallway/secondary/mine_sci_shuttle
 	name = "Asteroid Shuttle Hallway"
+	cases = list("шахтёрский док", "шахтёрского дока", "шахтёрскому доку", "шахтёрский док", "шахтёрским доком", "шахтёрском доке")
 	icon_state = "mine_sci_shuttle"
 
 //not used
