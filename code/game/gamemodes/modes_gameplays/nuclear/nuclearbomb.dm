@@ -267,10 +267,8 @@ var/global/bomb_set
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/bomb_set(mob/user)
-	var/seconds = max(round(COOLDOWN_TIMELEFT(src, cd_activate) * 0.1, 1), 0)
-	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	if(!COOLDOWN_FINISHED(src, cd_activate) || !authorized || safety)
-		to_chat(user, "<span class = 'red'>Не так быстро! Эта кнопка сработает снова через [seconds] [seconds_word]!</span>")
+		to_chat(user, "<span class = 'red'>Не так быстро! Эта кнопка сработает снова через [round(COOLDOWN_TIMELEFT(src, cd_activate) * 0.1, 1)] [PLUR_SECONDS_LEFT(round(COOLDOWN_TIMELEFT(src, cd_activate) * 0.1, 1))]!</span>")
 		return
 	if(timing)
 		timing = FALSE
@@ -278,11 +276,9 @@ var/global/bomb_set
 	else
 		var/area/nuclearbombloc = get_area(loc)
 		announce_nuke.play(nuclearbombloc)
-		set_security_level("delta")
 		notify_ghosts("[C_CASE(src, NOMINATIVE_CASE)] была активирована!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
 		timing = TRUE
-		sleep(90)
-		set_security_level("delta")
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(set_security_level), "delta"), 9 SECONDS)
 	COOLDOWN_START(src, cd_activate, 60 SECONDS)
 	update_icon()
 
