@@ -50,6 +50,10 @@ var/global/list/SOUNDIN_WOO_MALE 	= list('sound/voice/woo/woo_male_1.ogg', 'soun
 var/global/list/SOUNDIN_WOO_FEMALE 	= list('sound/voice/woo/woo_female_1.ogg', 'sound/voice/woo/woo_female_2.ogg', 'sound/voice/woo/woo_female_3.ogg', 'sound/voice/woo/woo_female_4.ogg', 'sound/voice/woo/woo_female_5.ogg')
 var/global/list/SOUNDIN_SIGH_MALE   = list('sound/voice/sigh/sigh_male.ogg')
 var/global/list/SOUNDIN_SIGH_FEMALE = list('sound/voice/sigh/sigh_female.ogg')
+var/global/list/SOUNDIN_GASP_MALE   = list('sound/voice/gasp/gasp_male_1.ogg', 'sound/voice/gasp/gasp_male_2.ogg', 'sound/voice/gasp/gasp_male_3.ogg', 'sound/voice/gasp/gasp_male_4.ogg')
+var/global/list/SOUNDIN_GASP_FEMALE   = list('sound/voice/gasp/gasp_female_1.ogg', 'sound/voice/gasp/gasp_female_2.ogg', 'sound/voice/gasp/gasp_female_3.ogg', 'sound/voice/gasp/gasp_female_4.ogg', 'sound/voice/gasp/gasp_female_5.ogg')
+var/global/list/SOUNDIN_SNEEZE_MALE   	= list('sound/voice/sneeze/sneeze_male.ogg', 'sound/voice/sneeze/sneeze_neutral.ogg')
+var/global/list/SOUNDIN_SNEEZE_FEMALE   = list('sound/voice/sneeze/sneeze_female.ogg', 'sound/voice/sneeze/sneeze_neutral.ogg')
 
 // Human's pain
 var/global/list/SOUNDIN_FEMALE_LIGHT_PAIN   = list('sound/voice/mob/pain/female/light_1.ogg', 'sound/voice/mob/pain/female/light_2.ogg', 'sound/voice/mob/pain/female/light_3.ogg', 'sound/voice/mob/pain/female/light_4.ogg', 'sound/voice/mob/pain/female/light_5.ogg', 'sound/voice/mob/pain/female/light_6.ogg', 'sound/voice/mob/pain/female/light_7.ogg', 'sound/voice/mob/pain/female/light_8.ogg')
@@ -72,6 +76,8 @@ var/global/list/SOUNDIN_XENOMORPH_GROWL = list('sound/voice/xenomorph/growl_1.og
 var/global/list/SOUNDIN_HUNTER_LEAP = list('sound/voice/xenomorph/leap_1.ogg', 'sound/voice/xenomorph/leap_2.ogg')
 var/global/list/SOUNDIN_XENOMORPH_CHESTBURST = list('sound/voice/xenomorph/chestburst_1.ogg', 'sound/voice/xenomorph/chestburst_2.ogg')
 var/global/list/SOUNDIN_XENOMORPH_SPLITACID = list('sound/voice/xenomorph/spitacid_1.ogg', 'sound/voice/xenomorph/spitacid_2.ogg')
+// Silicon's sound
+var/global/list/SOUNDIN_SILICON_PAIN = list('sound/voice/silicon/damage/borg_damage-1.ogg', 'sound/voice/silicon/damage/borg_damage-2.ogg', 'sound/voice/silicon/damage/borg_damage-3.ogg')
 // Beepsky
 var/global/list/SOUNDIN_BEEPSKY = list('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
 

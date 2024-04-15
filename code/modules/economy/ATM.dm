@@ -251,13 +251,13 @@ log transactions
 							for(var/insurance_type in SSeconomy.insurance_quality_decreasing)
 								dat += "<b>Insurance type|price:</b> [insurance_type]|$[SSeconomy.insurance_prices[insurance_type]]<br>"
 								var/insurance_price = SSeconomy.insurance_prices[insurance_type]
-								var/insurance_price_with_time_addition
+								var/insurance_price_with_time_addition // An additional $10 for every remaining minute before payday
 								if(insurance_price != 0)
 									insurance_price_with_time_addition = insurance_price + time_addition
 								else
 									insurance_price_with_time_addition = 0
-								dat += "<A href='?src=\ref[src];choice=change_insurance_immediately;insurance_type=[insurance_type];insurance_price=[insurance_price];presented_price=[insurance_price_with_time_addition]'>Change immediately ($[insurance_price_with_time_addition])</a> "
-								dat += "<A href='?src=\ref[src];choice=change_preferred_insurance;insurance_type=[insurance_type];insurance_price=[insurance_price]]'>Make a preferrence</a><br><br>"
+								dat += "<A href='?src=\ref[src];choice=change_insurance_immediately;insurance_type=[insurance_type];price_shown_to_client=[insurance_price]'>Change immediately ($[insurance_price_with_time_addition])</a> "
+								dat += "<A href='?src=\ref[src];choice=change_preferred_insurance;insurance_type=[insurance_type];price_shown_to_client=[insurance_price]]'>Make a preferrence</a><br><br>"
 						else
 							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=0'>Back</a><br><br>"
 							dat += "Error, this money account is not connected to your medical record, please check this info and try again.<br>"
@@ -497,13 +497,24 @@ log transactions
 					return
 
 				var/insurance_type = href_list["insurance_type"]
-				var/insurance_price = text2num(href_list["insurance_price"])
-				var/presented_price = text2num(href_list["presented_price"])
+				if(!(insurance_type in SSeconomy.insurance_quality_decreasing))
+					return
 
-				if(insurance_price != SSeconomy.insurance_prices[insurance_type])
+				var/insurance_price = SSeconomy.insurance_prices[insurance_type]
+
+				var/time_addition = round((SSeconomy.endtime - world.timeofday) / 600) * 10 // An additional $10 for every remaining minute before payday
+				var/insurance_price_with_addition = insurance_price + time_addition
+				if(insurance_price == 0)
+					insurance_price_with_addition = 0
+
+				var/price_shown_to_client = text2num(href_list["price_shown_to_client"])
+				if(isnull(price_shown_to_client))
+					return
+
+				if(price_shown_to_client != insurance_price)
 					tgui_alert(usr, "Price of this insurance was changed. Press \"Refresh\" and try again.")
 					return
-				if(authenticated_account.money < presented_price)
+				if(authenticated_account.money < insurance_price_with_addition)
 					tgui_alert(usr, "You don't have enough money.")
 					return
 
@@ -514,19 +525,27 @@ log transactions
 				R.fields["insurance_type"] = insurance_type
 
 				authenticated_account.owner_preferred_insurance_type = insurance_type
-				authenticated_account.owner_max_insurance_payment = max(presented_price, authenticated_account.owner_max_insurance_payment)
-				if(insurance_price > 0)
-					charge_to_account(authenticated_account.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -presented_price)
+				authenticated_account.owner_max_insurance_payment = max(insurance_price_with_addition, authenticated_account.owner_max_insurance_payment)
+				if(insurance_price_with_addition > 0)
+					charge_to_account(authenticated_account.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price_with_addition)
 					var/med_account_number = global.department_accounts["Medical"].account_number
-					charge_to_account(med_account_number, med_account_number,"[insurance_type] Insurance payment", "NT Insurance", presented_price)
+					charge_to_account(med_account_number, med_account_number,"[insurance_type] Insurance payment", "NT Insurance", insurance_price_with_addition)
 
 			if("change_preferred_insurance")
 				if(!authenticated_account)
 					return
 
 				var/insurance_type = href_list["insurance_type"]
-				var/insurance_price = text2num(href_list["insurance_price"])
-				if(insurance_price != SSeconomy.insurance_prices[insurance_type])
+				if(!(insurance_type in SSeconomy.insurance_quality_decreasing))
+					return
+
+				var/insurance_price = SSeconomy.insurance_prices[insurance_type]
+
+				var/price_shown_to_client = text2num(href_list["price_shown_to_client"])
+				if(isnull(price_shown_to_client))
+					return
+
+				if(price_shown_to_client != insurance_price)
 					tgui_alert(usr, "Price of this insurance was changed. Press \"Refresh\" and try again.")
 					return
 

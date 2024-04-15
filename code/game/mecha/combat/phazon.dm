@@ -107,3 +107,12 @@
 	if (href_list["phasing"])
 		switch_phasing()
 	return
+
+/obj/mecha/combat/phazon/captain/atom_init() // for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/gravcatapult(src)
+	ME.attach(src)

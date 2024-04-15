@@ -762,7 +762,7 @@
 	name = "rice stalk"
 	desc = "Rice to see you."
 	gender = PLURAL
-	icon_state = "rice"
+	icon_state = "ricestalk"
 	filling_color = "#fff8db"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk/atom_init()

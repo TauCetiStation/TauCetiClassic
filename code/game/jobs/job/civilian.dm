@@ -140,6 +140,12 @@
 	*/
 	flags = JOB_FLAG_CIVIL
 
+/datum/job/chef/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!visualsOnly)
+		var/obj/item/weapon/implant/bork/B = new(H)
+		B.inject(H, BP_HEAD)
+	return ..()
+
 /datum/job/hydro
 	title = "Botanist"
 	flag = BOTANIST
@@ -211,31 +217,6 @@
 	outfit = /datum/outfit/job/librarian
 	skillsets = list("Librarian" = /datum/skillset/librarian)
 	flags = JOB_FLAG_CIVIL
-
-//var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
-/datum/job/lawyer
-	title = "Internal Affairs Agent"
-	flag = LAWYER
-	department_flag = CIVILIAN
-	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "The Central Command"
-	selection_color = "#dddddd"
-	idtype = /obj/item/weapon/card/id/int
-	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
-	salary = 200
-	minimal_player_ingame_minutes = 1560
-	outfit = /datum/outfit/job/lawyer
-	skillsets = list("Internal Affairs Agent" = /datum/skillset/internal_affairs)
-	/*
-		HEY YOU!
-		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
-		~Luduk
-	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
-	flags = JOB_FLAG_CIVIL|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/clown
 	title = "Clown"
