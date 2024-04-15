@@ -43,6 +43,18 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
+/datum/outfit/job/warden/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		implants += /obj/item/weapon/implant/mind_protect/loyalty
+		implants += /obj/item/weapon/implant/dexplosive
+		head = /obj/item/clothing/head/soft/nt_pmc_cap
+		uniform = /obj/item/clothing/under/tactical
+		uniform_f = /obj/item/clothing/under/tactical
+		gloves = /obj/item/clothing/gloves/swat
+		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
+		glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
+		ADD_TRAIT(H, TRAIT_NO_CLONE, ROUNDSTART_TRAIT)
+
 // DETECTIVE OUTFIT
 /datum/outfit/job/detective
 	name = OUTFIT_JOB_NAME("Detective")
@@ -77,6 +89,15 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
+/datum/outfit/job/officer/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		implants += /obj/item/weapon/implant/mind_protect/loyalty
+		implants += /obj/item/weapon/implant/dexplosive
+		uniform = /obj/item/clothing/under/syndicate
+		uniform_f = /obj/item/clothing/under/syndicate
+		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
+		ADD_TRAIT(H, TRAIT_NO_CLONE, ROUNDSTART_TRAIT)
+
 // FORENSIC OUTFIT
 /datum/outfit/job/forensic
 	name = OUTFIT_JOB_NAME("Forensic Technician")
@@ -109,21 +130,9 @@
 
 	back_style = BACKPACK_STYLE_SECURITY
 
+/datum/outfit/job/cadet/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		uniform = /obj/item/clothing/under/syndicate/tacticool
+		uniform_f = /obj/item/clothing/under/syndicate/tacticool
+		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
 
-
-/datum/outfit/job/blueshield
-	name = OUTFIT_JOB_NAME("Blueshield Officer")
-
-	uniform = /obj/item/clothing/under/rank/blueshield
-	shoes = /obj/item/clothing/shoes/boots
-	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
-
-	l_ear = /obj/item/device/radio/headset/headset_int/blueshield
-	belt = /obj/item/device/pda/blueshield
-
-	r_pocket = /obj/item/device/flash
-	r_pocket_back = /obj/item/weapon/handcuffs
-	l_pocket = /obj/item/weapon/pinpointer/heads
-
-	implants = list(
-		/obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/blueshield)

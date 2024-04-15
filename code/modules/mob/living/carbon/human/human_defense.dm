@@ -78,11 +78,9 @@
 				return PROJECTILE_FORCE_MISS // complete projectile permutation
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
-		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
-		if(check_pierce_protection(BP))
-			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
-			P.agony /= 2
-		apply_effect(P.agony,AGONY,0)
+		var/armor = run_armor_check(def_zone, BULLET)
+		apply_effect(P.agony, AGONY, armor)
+		apply_damage(P.damage, P.damage_type, def_zone, (armor * P.armor_multiplier), P.flags, P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -415,12 +413,10 @@
 		if(istype(gloves, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/GL = gloves
 			GL.add_blood(source)
-			GL.transfer_blood = amount
-			GL.bloody_hands_mob = source
+			GL.dirt_transfers += amount
 	else
 		add_blood(source)
-		bloody_hands = amount
-		bloody_hands_mob = source
+		dirty_hands_transfers += amount
 
 /mob/living/carbon/human/bloody_body(mob/living/carbon/human/source)
 	if(wear_suit)

@@ -1,13 +1,7 @@
 /atom
-	/// russian case forms of atom name in format
-	/// list(NOMINATIVE_CASE, GENITIVE_CASE, DATIVE_CASE, ACCUSATIVE_CASE, ABLATIVE_CASE, PREPOSITIONAL_CASE)
-	/// for usage with CASE macros (code/__DEFINES/_translation.dm)
-	var/list/cases = null
-
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 
-	var/level = 2
 	var/flags = 0
 	var/flags_2 = 0
 	var/list/fingerprints
@@ -725,9 +719,6 @@
 /atom/proc/shake_act(severity, recursive = TRUE)
 	if(isturf(loc))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, do_shake_animation), severity, 1 SECOND)
-
-/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
-	return
 
 /turf/shake_act(severity, recursive = TRUE)
 	for(var/atom/A in contents)

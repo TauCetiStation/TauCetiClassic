@@ -2124,6 +2124,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -3027,6 +3028,7 @@
 	},
 /area/station/security/brig)
 "afd" = (
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -3594,7 +3596,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "aga" = (
 /obj/machinery/door/airlock/external{
@@ -3665,12 +3667,13 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "agk" = (
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "bluecorner"
 	},
@@ -3706,7 +3709,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "agq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -4006,7 +4009,7 @@
 /area/station/security/brig)
 "agR" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -4182,7 +4185,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -4273,6 +4276,7 @@
 	},
 /area/station/security/brig)
 "ahn" = (
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluecorner"
@@ -4823,7 +4827,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "aie" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -5038,7 +5042,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "aiw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -5245,7 +5249,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod3/station)
 "aiM" = (
 /obj/machinery/door/firedoor{
@@ -5298,6 +5302,7 @@
 /area/station/security/brig)
 "aiP" = (
 /obj/machinery/hologram/holopad,
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10850,7 +10855,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/dormitory)
 "asl" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
 "asm" = (
@@ -12872,7 +12877,7 @@
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "avU" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/black,
@@ -14230,6 +14235,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -14476,6 +14482,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -14930,7 +14937,7 @@
 	},
 /area/station/hallway/primary/starboard)
 "azR" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 1
 	},
 /obj/machinery/computer/security/telescreen{
@@ -14964,7 +14971,7 @@
 	},
 /area/station/ai_monitored/eva)
 "azU" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 1
 	},
 /obj/machinery/computer/security/telescreen{
@@ -18460,7 +18467,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aGB" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -18473,7 +18480,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/science)
 "aGD" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /obj/effect/decal/turf_decal{
@@ -20163,7 +20170,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aJO" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -21106,8 +21113,7 @@
 	dir = 4
 	},
 /obj/structure/toilet{
-	dir = 8;
-	pixel_y = 8
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -22075,7 +22081,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/structure/stool/bed/chair/comfy/beige,
+/obj/structure/stool/bed/chair/comfy/white,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brownold"
@@ -24187,6 +24193,7 @@
 /obj/structure/sign/poster/official/the_owl{
 	pixel_x = 32
 	},
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -24824,7 +24831,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -28464,7 +28471,7 @@
 /area/station/bridge/meeting_room)
 "aYH" = (
 /obj/structure/table,
-/obj/item/weapon/aiModule/nanotrasen,
+/obj/item/weapon/aiModule/crewsimov,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "aYI" = (
@@ -28888,7 +28895,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "aZv" = (
 /obj/machinery/door/firedoor{
@@ -29203,7 +29210,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "aZT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -29306,7 +29313,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "baf" = (
 /obj/machinery/door/firedoor,
@@ -30036,7 +30043,7 @@
 	},
 /area/station/tcommsat/computer)
 "bbu" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -30472,6 +30479,10 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -30638,6 +30649,7 @@
 /area/station/rnd/xenobiology)
 "bcw" = (
 /obj/structure/stool/bed/chair/office/dark,
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -30815,7 +30827,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/bridge/meeting_room)
 "bcP" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -30908,6 +30920,7 @@
 /obj/item/weapon/aiModule/purge,
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/aiModule/antimov,
+/obj/item/weapon/aiModule/nanotrasen,
 /obj/item/weapon/aiModule/teleporterOffline,
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -32114,6 +32127,7 @@
 	name = "Medbay";
 	req_access = list(5)
 	},
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -32424,7 +32438,7 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "bfw" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "bfx" = (
@@ -32479,7 +32493,7 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bfD" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -33070,7 +33084,7 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bgH" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet/blue2,
@@ -33567,6 +33581,10 @@
 "bhF" = (
 /obj/structure/cable,
 /obj/machinery/computer/smartlight,
+/obj/machinery/power/apc{
+	name = "apc down";
+	pixel_y = -28
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "bhG" = (
@@ -33735,7 +33753,7 @@
 	icon_state = "2,2"
 	},
 /turf/environment/space,
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "bhX" = (
 /obj/machinery/requests_console/internal_affairs{
@@ -34081,7 +34099,7 @@
 /area/station/civilian/chapel/altar)
 "biH" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -34342,7 +34360,7 @@
 /turf/environment/space,
 /area/shuttle/mining/station)
 "bjo" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -34719,7 +34737,7 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bkf" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/structure/cable{
@@ -35427,7 +35445,7 @@
 	},
 /area/station/rnd/hallway)
 "blp" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /obj/structure/cable{
@@ -36786,7 +36804,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -38498,7 +38516,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "bqM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -39540,7 +39558,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "bsK" = (
 /obj/structure/table,
@@ -40628,7 +40646,7 @@
 	},
 /area/station/cargo/recycleroffice)
 "buC" = (
-/obj/structure/stool/bed/chair/comfy/teal,
+/obj/structure/stool/bed/chair/comfy/green,
 /obj/machinery/camera{
 	c_tag = "Medbay South";
 	dir = 4;
@@ -40664,7 +40682,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "buG" = (
 /obj/machinery/atmospherics/components/binary/pump/on,
@@ -40999,8 +41017,8 @@
 	icon_state = "arrow"
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "loadingarea";
-	dir = 1
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -44018,7 +44036,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bAo" = (
 /obj/machinery/light/smart{
@@ -44249,7 +44267,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bAK" = (
 /obj/machinery/newscaster{
@@ -45505,6 +45523,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -45537,7 +45556,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bDf" = (
 /obj/machinery/newscaster{
@@ -46834,7 +46853,7 @@
 /area/station/medical/patients_rooms)
 "bFu" = (
 /obj/machinery/light/small,
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -46893,7 +46912,7 @@
 	name = "shuttle window";
 	opacity = 0
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bFA" = (
 /obj/structure/cable{
@@ -47009,7 +47028,7 @@
 	layer = 4;
 	pixel_x = 10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -48312,18 +48331,6 @@
 	icon_state = "white"
 	},
 /area/station/civilian/dormitories)
-"bHX" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerIn";
-	name = "Medbay Doors Control";
-	pixel_y = 28
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitebluecorner"
-	},
-/area/station/medical/hallway)
 "bHY" = (
 /turf/simulated/wall,
 /area/station/medical/medbreak)
@@ -48746,7 +48753,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bII" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -48999,7 +49006,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bJi" = (
 /turf/simulated/wall,
@@ -49075,7 +49082,7 @@
 /obj/structure/object_wall/pod{
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod2/station)
 "bJs" = (
 /obj/machinery/recharge_station,
@@ -49450,6 +49457,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor,
 /area/station/medical/hallway)
 "bKg" = (
@@ -49811,6 +49819,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -54207,6 +54216,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -54892,7 +54902,6 @@
 /obj/machinery/computer/general_air_control{
 	dir = 4;
 	frequency = 1443;
-	level = 3;
 	name = "Distribution and Waste Monitor";
 	sensors = list("mair_in_meter"="Mixed Air In","air_sensor"="Mixed Air Supply Tank","mair_out_meter"="Mixed Air Out","dloop_atm_meter"="Distribution Loop","wloop_atm_meter"="Waste Loop")
 	},
@@ -56171,7 +56180,7 @@
 	layer = 4;
 	pixel_x = -10
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -56546,7 +56555,7 @@
 	dir = 1;
 	icon_state = "1,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "caT" = (
 /obj/structure/sign/mark{
@@ -56770,7 +56779,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "cbR" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/wood/normal,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_x = -32
@@ -58082,6 +58091,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "caution"
@@ -58734,21 +58744,21 @@
 	dir = 1;
 	icon_state = "2,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cic" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
 	icon_state = "1,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cid" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
 	icon_state = "0,0"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cie" = (
 /obj/structure/bookcase/manuals/engineering,
@@ -59147,7 +59157,7 @@
 	dir = 1;
 	icon_state = "0,2"
 	},
-/turf/environment/space/shuttle,
+/turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cjy" = (
 /obj/item/weapon/paper,
@@ -59650,13 +59660,13 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "cla" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench,
+/obj/structure/stool/bed/bench,
 /turf/simulated/floor/garden{
 	icon_state = "asteroid"
 	},
 /area/station/civilian/garden)
 "clb" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench{
+/obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
 	},
 /turf/simulated/floor/garden{
@@ -60931,6 +60941,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
+/obj/effect/spawner/aspect/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cor" = (
@@ -61319,7 +61330,7 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cps" = (
-/obj/mecha/working/ripley,
+/obj/mecha/working/ripley/recycle_ripley,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cpt" = (
@@ -61505,6 +61516,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
+/obj/effect/spawner/aspect/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpJ" = (
@@ -64498,6 +64510,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cxJ" = (
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "caution"
@@ -65898,7 +65911,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cBA" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -68251,6 +68264,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "cJr" = (
@@ -68963,7 +68977,7 @@
 	},
 /area/station/civilian/garden)
 "cLR" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench{
+/obj/structure/stool/bed/bench{
 	dir = 1;
 	icon_state = "bench_2"
 	},
@@ -69093,7 +69107,7 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "cMn" = (
-/obj/structure/stool/bed/chair/schair/wagon/bench{
+/obj/structure/stool/bed/bench{
 	dir = 1
 	},
 /turf/simulated/floor/garden{
@@ -70560,6 +70574,10 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
+"eeq" = (
+/obj/effect/spawner/aspect/mech/phazon,
+/turf/simulated/floor/wood,
+/area/station/bridge/captain_quarters)
 "efb" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -70763,6 +70781,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowcorner"
@@ -71903,8 +71922,8 @@
 	queue_display = 1
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "loadingarea";
-	dir = 8
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -72064,6 +72083,7 @@
 /area/station/bridge)
 "fNb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -72211,19 +72231,10 @@
 /obj/effect/landmark/start/paramedic,
 /obj/machinery/door_control{
 	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerOut";
-	name = "Medbay Doors Control";
-	pixel_x = 26;
-	pixel_y = -1;
-	req_access = list(5)
-	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
 	id = "MedbayFoyerIn";
 	name = "Medbay Doors Control";
 	pixel_x = 26;
-	pixel_y = 12;
-	req_access = list(5)
+	pixel_y = 12
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -72246,7 +72257,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "fXV" = (
-/obj/structure/stool/bed/chair/comfy/black,
+/obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/black,
 /area/station/security/vacantoffice)
 "fYb" = (
@@ -72494,6 +72505,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"
@@ -73333,7 +73345,7 @@
 	},
 /area/station/engineering/break_room)
 "hgb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -73360,6 +73372,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "hhb" = (
@@ -73407,7 +73420,7 @@
 	},
 /area/shuttle/mining/station)
 "hkb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/mining{
@@ -73578,7 +73591,7 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/library)
 "hsb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
 	},
 /obj/machinery/light/smart,
@@ -73961,7 +73974,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "hRb" = (
-/obj/structure/stool/bed/chair/comfy/black{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
@@ -75900,7 +75913,7 @@
 	},
 /area/station/security/checkpoint)
 "jIb" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 8
 	},
 /obj/machinery/light/smart{
@@ -77267,6 +77280,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whitebluecorner"
 	},
@@ -78124,6 +78138,12 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"lZh" = (
+/obj/effect/spawner/aspect/mech/gygax/ultra,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/hos)
 "lZM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor,
@@ -78484,7 +78504,7 @@
 	},
 /area/station/medical/genetics)
 "mrb" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
 	},
 /turf/simulated/floor/carpet,
@@ -79268,6 +79288,16 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"npC" = (
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 4
+	},
+/obj/effect/spawner/aspect/mech/ff_engi,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "caution"
+	},
+/area/station/engineering/atmos)
 "nqb" = (
 /obj/structure/mineral_door/wood,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -80146,7 +80176,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -80334,6 +80364,12 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/toilet)
+"oxO" = (
+/obj/effect/spawner/aspect/mech/ripley_engi,
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
+/area/station/engineering/engine)
 "oyb" = (
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -81588,12 +81624,6 @@
 	c_tag = "Medbay North";
 	network = list("SS13","Medical")
 	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "MedbayFoyerOut";
-	name = "Medbay Doors Control";
-	pixel_y = 28
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -82137,8 +82167,8 @@
 "qMF" = (
 /obj/structure/table,
 /obj/item/pens_bin{
-	pixel_y = 6;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /obj/item/weapon/pen,
 /obj/item/weapon/pen/blue,
@@ -82431,12 +82461,13 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "qZb" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyerOut";
+	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
 	req_access = list(5)
 	},
-/obj/machinery/door/firedoor,
+/obj/effect/unrestricted_side/south,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -82848,6 +82879,7 @@
 	dir = 4;
 	network = list("SS13","Engineering")
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "rtF" = (
@@ -84097,7 +84129,7 @@
 	},
 /area/station/medical/virology)
 "sJb" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -84923,16 +84955,16 @@
 "tKI" = (
 /obj/machinery/ticket_machine,
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "loadingarea";
-	dir = 1
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "box_corners_white";
-	dir = 1
+	dir = 1;
+	icon_state = "box_corners_white"
 	},
 /obj/effect/decal/turf_decal/alpha/blue{
-	icon_state = "box_corners_white";
-	dir = 4
+	dir = 4;
+	icon_state = "box_corners_white"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -86424,7 +86456,7 @@
 /turf/simulated/floor,
 /area/station/construction)
 "wER" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
@@ -86777,6 +86809,7 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/effect/spawner/aspect/mech/honker,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "xwm" = (
@@ -113626,7 +113659,7 @@ cuf
 ljQ
 cls
 civ
-pAV
+oxO
 cBT
 aaa
 aaa
@@ -113883,7 +113916,7 @@ dbK
 ljQ
 fWB
 civ
-pAV
+oxO
 cBT
 aaa
 aah
@@ -121021,7 +121054,7 @@ bjS
 bke
 bkh
 bkA
-bfC
+eeq
 bgW
 blB
 bkc
@@ -121219,7 +121252,7 @@ acr
 adq
 agg
 aej
-agL
+lZh
 agd
 agv
 ahk
@@ -121829,7 +121862,7 @@ snv
 snv
 bVS
 bSV
-kif
+npC
 bVD
 cwe
 anD
@@ -125139,7 +125172,7 @@ gMb
 dxb
 kcb
 bjk
-bHX
+bTK
 ldb
 bjl
 byr

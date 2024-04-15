@@ -3,8 +3,6 @@ var/global/list/wedge_image_cache = list()
 /obj/machinery/door
 	name = "Door"
 	desc = "It opens and closes."
-	icon = 'icons/obj/doors/Doorint.dmi'
-	icon_state = "door1"
 	anchored = TRUE
 	opacity = 1
 	density = TRUE
@@ -585,5 +583,6 @@ var/global/list/wedge_image_cache = list()
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
+	icon_state = "door1"
 	door_open_sound  = 'sound/machines/shutter_open.ogg'
 	door_close_sound = 'sound/machines/shutter_close.ogg'

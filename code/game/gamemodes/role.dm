@@ -25,6 +25,7 @@
 	var/logo_state
 	var/logo_file = 'icons/misc/logos.dmi'
 
+	var/hide_logo = FALSE
 	// What faction this role is associated with.
 	var/datum/faction/faction
 	// The actual antag mind.
@@ -289,9 +290,19 @@
 				return FALSE
 	return TRUE
 
-/datum/role/proc/printplayerwithicon(datum/mind/mind)
+/datum/role/proc/printplayer(datum/mind/mind)
 	var/text = ""
 	var/mob/M = mind.current
+	if(hide_logo)
+		text += "<b>[mind.key]</b> was <b>[name]</b> ("
+		if(!M)
+			text += "body destroyed"
+		else if(M.stat == DEAD)
+			text += "died"
+		else
+			text += "survived"
+		text += ")"
+		return text
 	if(!M)
 		var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 		text += "[bicon(sprotch, css = "style='position: relative;top:10px;'")]"
@@ -329,9 +340,7 @@
 /datum/role/proc/Declare()
 	var/win = TRUE
 	var/text = ""
-
-	text = printplayerwithicon(antag)
-
+	text = printplayer(antag)
 	if(objectives.objectives.len > 0)
 		var/count = 1
 		text += "<ul>"

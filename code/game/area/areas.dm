@@ -4,7 +4,6 @@
 
 // ===
 /area
-	level = null
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
@@ -12,6 +11,9 @@
 	//Keeping this on the default plane, GAME_PLANE, will make area overlays fail to render on FLOOR_PLANE.
 	plane = AREA_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	luminosity = 0
+	var/dynamic_lighting = TRUE
 
 	var/static/global_uid = 0
 	var/uid
@@ -140,16 +142,9 @@ var/global/list/ghostteleportlocs = list()
 
 	..()
 
-	if(requires_power)
-		luminosity = 0
-	else
-		if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
-			dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-			luminosity = 0
-		else if(dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
-			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	if(dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
-		dynamic_lighting = config.starlight ? DYNAMIC_LIGHTING_ENABLED : DYNAMIC_LIGHTING_DISABLED
+	if(!dynamic_lighting)
+		luminosity = 1
+		add_overlay(area_unsimulated_light_mask)
 
 	update_areasize()
 	power_change() // all machines set to current power level, also updates lighting icon

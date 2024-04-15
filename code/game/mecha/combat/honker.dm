@@ -16,14 +16,14 @@
 	max_equip = 3
 	var/squeak = 0
 
-/*
-/obj/mecha/combat/honker/atom_init()
+/obj/mecha/combat/honker/clown/atom_init() // for aspect
 	. = ..()
-	weapons += new /datum/mecha_weapon/honker(src)
-	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar(src)
-	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar/mousetrap_mortar(src)
-	selected_weapon = weapons[1]
-*/
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/mousetrap_mortar(src)
+	ME.attach(src)
 
 
 /obj/mecha/combat/honker/melee_action(target)

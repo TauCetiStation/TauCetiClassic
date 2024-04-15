@@ -52,6 +52,13 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
+/mob/living/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover, /obj/item/projectile) && lying && stat != DEAD)
+		var/obj/item/projectile/P = mover
+		if(get_turf(P.original) == loc)
+			return FALSE
+	return ..()
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
@@ -1469,6 +1476,7 @@
 	drunkenness = max(value, drunkenness)
 
 /mob/living/proc/handle_drunkenness()
+	var/heal_mod = 0.0
 	if(drunkenness <= 0)
 		drunkenness = 0
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
@@ -1487,18 +1495,28 @@
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
 		Paralyse(3)
 		drowsyness = max(drowsyness, 3)
+		heal_mod = 10.0
 		return
 
 	if(drunkenness >= DRUNKENNESS_BLUR)
 		eye_blurry = max(eye_blurry, 2)
+		heal_mod = 8.0
 
 	if(drunkenness >= DRUNKENNESS_SLUR)
 		if(drowsyness)
 			drowsyness = max(drowsyness, 3)
 		slurring = max(slurring, 3)
+		heal_mod = 4.0
 
 	if(drunkenness >= DRUNKENNESS_CONFUSED)
 		MakeConfused(2)
+		heal_mod = 6.0
+
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HEALING_ALCOHOL))
+		adjustBruteLoss(-1.0 * heal_mod)
+		adjustFireLoss(-1.0 * heal_mod)
+		AdjustWeakened(-0.5 * heal_mod)
+		adjustHalLoss(-2.0 * heal_mod)
 
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()
@@ -1546,6 +1564,9 @@
 	if(prob(40))
 		make_dizzy(150)
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "scared", /datum/mood_event/scared)
+
+/mob/living/proc/pickup_ore()
+	return
 
 /mob/living/carbon/human/trigger_syringe_fear() // move to carbon/human
 	..()

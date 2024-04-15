@@ -12,17 +12,18 @@ var/global/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle
 	name = "Arrival Shuttle Console"
+	cases = list("консоль трансферного шаттла", "консоли трансферного шаттла", "консоли трансферного шаттла", "консоль трансферного шаттла", "консолью трансферного шаттла", "консоли трансферного шаттла")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "wagon"
-	var/arrival_note = "Arrival shuttle docked with the NSS Exodus."
-	var/department_note = "Arrival shuttle left the NSS Exodus."
+	var/arrival_note = "Трансферный шаттл пристыковался к КСН Исход."
+	var/department_note = "Трансферный шаттл покинул КСН Исход."
 	var/obj/item/device/radio/intercom/radio
 
 
 /obj/machinery/computer/arrival_shuttle/atom_init()
-//	curr_location= locate(/area/shuttle/arrival/velocity)
-	arrival_note = "Arrival shuttle docked with the [station_name()]."
-	department_note = "Arrival shuttle left the [station_name()]."
+	curr_location= locate(/area/shuttle/arrival/velocity)
+	arrival_note = "Трансферный шаттл пристыковался к [station_name_ru()]."
+	department_note = "Трансферный шаттл покинул [station_name_ru()]."
 	radio = new (src)
 	. = ..()
 
@@ -109,7 +110,7 @@ var/global/lastMove = 0
 	// Sending message only on EXODUS
 	if (destLocation == ARRIVAL_SHUTTLE_EXODUS)
 		if (!radio_message_via_ai(arrival_note))
-			radio.autosay(arrival_note, "Arrivals Alert System")
+			radio.autosay(arrival_note, "Система оповещения")
 
 	location = destLocation
 	play_flying_sound(toArea)
@@ -127,6 +128,12 @@ var/global/lastMove = 0
 	SSshuttle.undock_act(/area/velocity, "velocity_1")
 	SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
 	SSshuttle.undock_act(A)
+	// Sending message only on EXODUS
+	if(curr_location == locate(/area/shuttle/arrival/station))
+		SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
+		SSshuttle.undock_act(curr_location, "arrival_1")
+		if (!radio_message_via_ai(department_note))
+			radio.autosay(department_note, "Система оповещения")
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
 	switch(arrival)
@@ -145,8 +152,10 @@ var/global/lastMove = 0
 				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
-	var/dat = "<center><div class='Section'>Shuttle location: <b>[curr_location]</b><br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><A href='?src=\ref[src];move=1'>Send</A></div></center>"
-	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 400)
+	var/seconds = max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
+	var/dat = "<center><div class='Section'>Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><A href='?src=\ref[src];move=1'>Начать полёт</A></div></center>"
+	var/datum/browser/popup = new(user, "researchshuttle", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 330, 130)
 	popup.set_content(dat)
 	popup.open()
 
@@ -158,23 +167,26 @@ var/global/lastMove = 0
 
 	if(href_list["move"])
 		if(!arrival_shuttle_ready_move())
-			to_chat(usr, "<span class='notice'>Shuttle is not ready to move yet.</span>")
+			to_chat(usr, "<span class='notice'>Шаттл ещё не готов к полёту.</span>")
 		else if(!moving && location == ARRIVAL_SHUTTLE_VELOCITY)
-			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
+			to_chat(usr, "<span class='notice'>Шаттл получил запрос и будет отправлен в ближайшее время.</span>")
 			arrival_shuttle_move()
 		else
-			to_chat(usr, "<span class='notice'>Shuttle is already moving or docked with station.</span>")
+			to_chat(usr, "<span class='notice'>Шаттл уже движется или состыкован со станцией.</span>")
 
 		usr.client.guard.velocity_console = TRUE
 
 /obj/machinery/computer/arrival_shuttle/dock
 	name = "Arrival Shuttle Communication Console"
+	cases = list("консоль связи трансферного шаттла", "консоли связи трансферного шаттла", "консоли связи трансферного шаттла", "консоль связи трансферного шаттла", "консолью связи трансферного шаттла", "консоли связи трансферного шаттла")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "wagon"
 
 /obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
-	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
-	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 200, 130)
+	var/seconds = max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
+	var/dat = "<center>Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>Готов к полёту[!arrival_shuttle_ready_move() ? " через [seconds] [seconds_word]" : ": сейчас"]<br><b><A href='?src=\ref[src];back=1'>Запросить шаттл обратно</A></b></center><br>"
+	var/datum/browser/popup = new(user, "researchshuttle", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 290, 130)
 	popup.set_content(dat)
 	popup.open()
 
@@ -185,12 +197,12 @@ var/global/lastMove = 0
 
 	if(href_list["back"])
 		if(!arrival_shuttle_ready_move())
-			to_chat(usr, "<span class='notice'>Shuttle is not ready to move yet.</span>")
+			to_chat(usr, "<span class='notice'>Шаттл ещё не готов к полёту.</span>")
 		else if(!moving && location == ARRIVAL_SHUTTLE_EXODUS)
-			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
+			to_chat(usr, "<span class='notice'>Шаттл получил запрос и будет отправлен в ближайшее время.</span>")
 			arrival_shuttle_move()
 		else
-			to_chat(usr, "<span class='notice'>Shuttle is already moving or docked with station.</span>")
+			to_chat(usr, "<span class='notice'>Шаттл уже движется или состыкован со станцией.</span>")
 
 		usr.client.guard.velocity_console_dock = TRUE
 

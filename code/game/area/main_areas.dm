@@ -29,7 +29,7 @@
 	name = "start area"
 	icon_state = "start"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = FALSE
 	has_gravity = 1
 
 // other environment areas

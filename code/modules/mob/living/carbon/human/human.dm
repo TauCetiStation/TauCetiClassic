@@ -922,13 +922,13 @@
 
 
 /mob/living/carbon/human/abiotic(full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask || src.head || src.shoes || src.w_uniform || src.wear_suit || src.glasses || src.l_ear || src.r_ear || src.gloves)))
-		return 1
+	if(full_body && ((l_hand && !(l_hand.flags & ABSTRACT)) || (r_hand && !(r_hand.flags & ABSTRACT)) || (back || wear_mask || head || shoes || w_uniform || wear_suit || glasses || l_ear || r_ear || gloves)))
+		return TRUE
 
-	if( (src.l_hand && !src.l_hand.abstract) || (src.r_hand && !src.r_hand.abstract) )
-		return 1
+	if((l_hand && !(l_hand.flags & ABSTRACT)) || (r_hand && !(r_hand.flags & ABSTRACT)))
+		return TRUE
 
-	return 0
+	return FALSE
 
 
 /mob/living/carbon/human/proc/check_dna()
@@ -1465,14 +1465,14 @@
 	if(usr != src)
 		return 0 //something is terribly wrong
 
-	if(!bloody_hands)
+	if(!dirty_hands_transfers)
 		verbs -= /mob/living/carbon/human/proc/bloody_doodle
 
 	if(src.gloves)
 		to_chat(src, "<span class='warning'>[src.gloves] мешают вам это сделать.</span>")
 		return
 
-	var/max_length = bloody_hands * 30 //tweeter style
+	var/max_length = dirty_hands_transfers * 30 //tweeter style
 	var/message = sanitize(input(src, "Напишите сообщение. Оно не должно быть более [max_length] символов.", "Писание кровью", ""))
 
 	if(message)
@@ -1489,7 +1489,7 @@
 			return
 
 		var/used_blood_amount = round(length(message) / 30, 1)
-		bloody_hands = max(0, bloody_hands - used_blood_amount) //use up some blood
+		dirty_hands_transfers = max(0, dirty_hands_transfers - used_blood_amount) //use up some blood
 
 		if(length_char(message) > max_length)
 			message = "[copytext_char(message, 1, max_length+1)]~"
@@ -2507,8 +2507,17 @@
 		gloves.clean_blood()
 		gloves.germ_level = 0
 	else
-		bloody_hands = 0
-		bloody_hands_mob = null
+		dirty_hands_transfers = 0
 		QDEL_NULL(hand_dirt_datum)
 		update_inv_slot(SLOT_GLOVES)
 		germ_level = 0
+
+/mob/living/carbon/human/pickup_ore()
+	var/turf/simulated/floor/F = get_turf(src)
+	var/obj/item/weapon/storage/bag/ore/B
+	for(var/obj/item/weapon/storage/bag/ore/bag in list(l_store , r_store, l_hand, r_hand, belt, s_store))
+		B = bag
+		if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
+			continue
+		F.attackby(B, src)
+		break

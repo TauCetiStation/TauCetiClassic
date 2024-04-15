@@ -293,19 +293,7 @@
 								A.vars[variable] = O.vars[variable]
 
 		if("num")
-			var/new_value
-
-			if(variable == "dynamic_lighting")
-				new_value = tgui_alert(usr, "dynamic_lighting",, list("DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"))
-				switch(new_value)
-					if("DYNAMIC_LIGHTING_DISABLED")
-						new_value = DYNAMIC_LIGHTING_DISABLED
-					if("DYNAMIC_LIGHTING_ENABLED")
-						new_value = DYNAMIC_LIGHTING_ENABLED
-					if("DYNAMIC_LIGHTING_FORCED")
-						new_value = DYNAMIC_LIGHTING_FORCED
-			else
-				new_value = input("Enter new number:","Num", O.vars[variable]) as num|null
+			var/new_value = input("Enter new number:","Num", O.vars[variable]) as num|null
 
 			if(isnull(new_value))
 				return
@@ -368,8 +356,6 @@
 									A.set_light(new_value)
 								if("light_power")
 									A.set_light(l_power = new_value)
-								if("dynamic_lighting")
-									A.set_dynamic_lighting(new_value)
 								if("resize")
 									A.vars[variable] = new_value
 									A.update_transform()
@@ -437,8 +423,6 @@
 									A.set_light(new_value)
 								if("light_power")
 									A.set_light(l_power = new_value)
-								if("dynamic_lighting")
-									A.set_dynamic_lighting(new_value)
 								if("resize")
 									A.vars[variable] = new_value
 									A.update_transform()

@@ -59,10 +59,6 @@
 	mood_change = -3
 	timeout = 1 MINUTE
 
-/datum/mood_event/depression
-	description = "<span class='boldwarning'>I feel bad for no apparent reason. My life sucks...</span>"
-	mood_change = -6
-
 /datum/mood_event/puke
 	description = "<span class='warning'>I puked. Gross!</span>"
 	mood_change = -3

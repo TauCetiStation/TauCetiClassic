@@ -30,10 +30,10 @@
 	..()
 	defence_action.Remove(user)
 
-
-/*
 /obj/mecha/combat/durand/atom_init()
 	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 3000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+	/*
 	weapons += new /datum/mecha_weapon/ballistic/lmg(src)
 	weapons += new /datum/mecha_weapon/ballistic/scattershot(src)
 	selected_weapon = weapons[1]
@@ -109,3 +109,7 @@
 	force = 40
 	wreckage = /obj/effect/decal/mecha_wreckage/durand/vindicator
 	animated = 1
+
+/obj/mecha/combat/durand/vindicator/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4600, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))

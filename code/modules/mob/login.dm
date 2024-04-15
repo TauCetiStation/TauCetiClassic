@@ -65,17 +65,6 @@
 		client.eye = src
 		client.perspective = MOB_PERSPECTIVE
 
-	//Some weird magic to block users who cant see lighting normally
-	var/atom/movable/screen/blocker = new /atom/movable/screen()
-	blocker.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	blocker.icon = 'icons/effects/chaos.dmi'
-	blocker.icon_state = "8"
-	blocker.blend_mode = BLEND_MULTIPLY
-	blocker.color = list(1,1,1,0,1,1,1,0,1,1,1,0,0,0,0,1,0,0,0,1)
-	blocker.alpha = 255
-	blocker.plane = ABOVE_HUD_PLANE
-	blocker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
 	//Users with different eye_blur_effect pref OR client disconnected during eye_blurry effect
 	var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in client.screen
 	if(PM)
@@ -91,8 +80,6 @@
 
 	add_click_catcher()
 
-	client.screen += blocker
-
 	if(isAI(src))
 		client.show_popup_menus = 0
 	else
@@ -102,3 +89,7 @@
 		client.click_intercept.post_login()
 
 	client.change_view(world.view)
+
+	var/turf/T = get_turf(src)
+	if(T && last_z != T.z)
+		update_z(T.z)
