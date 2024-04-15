@@ -409,6 +409,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/chapel/mass_driver
 	name = "Chapel Mass Driver"
+	cases = list("электромагнитная катапульта церкви", "электромагнитной катапульты церкви", "электромагнитной катапульте церкви", "электромагнитная катапульта церкви", "электромагнитной катапультой церкви", "электромагнитной катапульте церкви")
 	icon_state = "massdriver"
 
 /area/station/civilian/garden
@@ -517,7 +518,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/medical/reception
 	name = "Medbay Reception"
-	cases = list("приёмная медблока","приёмной медблока","приёмной медблока", "приёмная медблока","приёмной медблока","приёмной медблока")
+	cases = list("приёмная медблока","приёмной медблока","приёмной медблока", "приёмную медблока","приёмной медблока","приёмной медблока")
 	icon_state = "medbay"
 
 /area/station/medical/storage
@@ -606,25 +607,30 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/medical/sleeper
 	name = "Emergency Treatment Centre"
+	cases = list("центр неотложной помощи", "центра неотложной помощи", "центру неотложной помощи", "центр неотложной помощи", "центром неотложной помощи", "центре неотложной помощи")
 	icon_state = "exam_room"
 
 //Security
 
 /area/station/security/main
 	name = "Security Office"
+	cases = list("офис службы безопасности", "офиса службы безопасности", "офису службы безопасности", "офис службы безопасности", "офисом службы безопасности", "офисе службы безопасности")
 	icon_state = "security"
 
 /area/station/security/lobby
 	name = "Security lobby"
+	cases = list("приёмная службы безопасности","приёмной службы безопасности","приёмной службы безопасности", "приёмную службы безопасности","приёмной службы безопасности","приёмной службы безопасности")
 	icon_state = "security"
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/security/brig
 	name = "Brig"
+	cases = list("бриг", "брига", "бригу", "бриг", "бригом", "бриге")
 	icon_state = "brig"
 
 /area/station/security/brig/solitary_confinement
 	name = "Solitary Confinement"
+	cases = list("одиночная камера", "одиночной камеры", "одиночной камере", "одиночнуб камеру", "одиночной камерой", "одиночной камере")
 
 /area/station/security/interrogation
 	name = "Interrogation"
@@ -638,6 +644,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/security/prison
 	name = "Prison Wing"
+	cases = list("тюремное крыло", "тюремного крыла", "тюремному крылу", "тюремное крыло", "тюремным крылом", "тюремном крыле")
 	icon_state = "sec_prison"
 	ambience = list('sound/ambience/prison_1.ogg')
 
@@ -650,6 +657,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/security/armoury
 	name = "Armory"
+	cases = list("оружейная", "оружейной", "оружейной", "оружейную", "оружейной", "оружейной")
 	icon_state = "armory"
 	looped_ambience = 'sound/ambience/loop_armory.ogg'
 
@@ -815,64 +823,77 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/storage/tools
 	name = "Auxiliary Tool Storage"
+	cases = list("вспомогательный склад инструментов", "вспомогательного склада инструментов", "вспомогательну складу инструментов", "вспомогательный склад инструментов", "вспомогательным складом инструментов", "вспомогательном складе инструментов")
 	icon_state = "storage"
 
 /area/station/storage/primary
 	name = "Primary Tool Storage"
+	cases = list("основной склад инструментов", "основного склада инструментов", "основному складу инструментов", "основной склад инструментов", "основным складом инструментов", "основном складе инструментов")
 	icon_state = "primarystorage"
 
 /area/station/storage/emergency
 	name = "Starboard Emergency Storage"
+	cases = list("экстренное хранилище по правому борту", "центрального экстренного хранилища", "центральному экстренному хранилищу", "центральное экстренное хранилище", "центральным экстренным хранилищем", "центральном экстренном хранилище")
 	icon_state = "emergencystorage"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/storage/emergency2
 	name = "Port Emergency Storage"
+	cases = list("портовое экстренное хранилище", "портового экстренного хранилища", "портовому экстренному хранилищу", "портовое экстренное хранилище", "портовым экстренным хранилищем", "портовом экстренном хранилище")
 	icon_state = "emergencystorage"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/storage/emergency3
 	name = "Central Emergency Storage"
+	cases = list("центральное экстренное хранилище", "центрального экстренного хранилища", "центральному экстренному хранилищу", "центральное экстренное хранилище", "центральным экстренным хранилищем", "центральном экстренном хранилище")
 	icon_state = "emergencystorage"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/storage/tech
 	name = "Technical Storage"
+	cases = list("техническое хранилище", "технического хранилища", "техническому хранилищу", "техническое хранилище", "техническим хранилищем", "техническом хранилище")
 	icon_state = "auxstorage"
 
 /area/station/storage/tech/north
 	name = "North Technical Storage"
+	cases = list("северное техническое хранилище", "северного технического хранилища", "северному техническому хранилищу", "северное техническое хранилище", "северным техническим хранилищем", "северном техническом хранилище")
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 //AI
 
 /area/station/aisat
 	name = "AI Satellite Exterior"
+	cases = list("внешний перемитр спутника ИИ", "внешниго перемитра спутника ИИ", "внешнему перемитру спутника ИИ", "внешний перемитр спутника ИИ", "внешним перемитром спутника ИИ", "внешнем перемитре спутника ИИ")
 	icon_state = "storage"
 	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
 	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/ai_monitored/storage_secure
 	name = "Secure Storage"
+	cases = list("защищённое хранилище", "защищённого хранилища", "защищённому хранилищу", "защищённое хранилище", "защищённым хранилищем", "защищённом хранилище")
 	icon_state = "storage"
 	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
 	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/aisat/ai_chamber
 	name = "AI Chamber"
+	cases = list("ядро ИИ", "ядра ИИ", "ядру ИИ", "ядро ИИ", "ядром ИИ", "ядре ИИ")
 	icon_state = "ai_chamber"
 	ambience = 'sound/ambience/aicore.ogg'
 
 /area/station/aisat/antechamber
 	name = "AI Satellite"
+	cases = list("спутник ИИ", "спутника ИИ", "спутнику ИИ", "спутник ИИ", "спутником ИИ", "спутнике ИИ")
 	icon_state = "ai"
 
 /area/station/aisat/antechamber_interior
 	name = "AI Satellite Antechamber"
+	cases = list("вестибюль спутника ИИ", "вестибюля спутника ИИ", "вестибюлю спутника ИИ", "вестибюль спутника ИИ", "вестибюлем спутника ИИ", "вестибюле спутника ИИ")
 	icon_state = "ai"
 
 /area/station/aisat/teleport
 	name = "AI Satellite Teleporter Room"
+	cases = list("спутник ИИ", "спутника ИИ", "спутнику ИИ", "спутник ИИ", "спутником ИИ", "спутнике ИИ")
 	icon_state = "teleporter"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
@@ -886,10 +907,12 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/tcommsat/chamber
 	name = "Telecoms Central Compartment"
+	cases = list("центральный отсек телекоммуникаций", "центрального отсека телекоммуникаций", "центральному отсеку телекоммуникаций", "центральный отсек телекоммуникаций", "центральным отсеком телекоммуникаций", "центральном отсеке телекоммуникаций")
 	icon_state = "tcomsatcham"
 	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/tcommsat/computer
 	name = "Telecoms Control Room"
+	cases = list("спутник ИИ", "спутника ИИ", "спутнику ИИ", "спутник ИИ", "спутником ИИ", "спутнике ИИ")
 	icon_state = "tcomsatcomp"
 	sound_environment = SOUND_AREA_DEFAULT
