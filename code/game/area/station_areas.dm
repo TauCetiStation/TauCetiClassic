@@ -946,7 +946,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/aisat/teleport
 	name = "AI Satellite Teleporter Room"
-	cases = list("телепортер спутника ИИ", "телепортера спутника ИИ", "телепортеру спутнику ИИ", "телепортер спутник ИИ", "телепортером спутником ИИ", "телепортере спутнике ИИ")
+	cases = list("телепортер спутника ИИ", "телепортера спутника ИИ", "телепортеру спутнику ИИ", "телепортер спутник ИИ", "телепортером спутником ИИ", "телепортере спутника ИИ")
 	icon_state = "teleporter"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
