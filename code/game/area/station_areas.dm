@@ -630,7 +630,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/security/brig/solitary_confinement
 	name = "Solitary Confinement"
-	cases = list("одиночная камера", "одиночной камеры", "одиночной камере", "одиночнуб камеру", "одиночной камерой", "одиночной камере")
+	cases = list("карцер", "карцера", "карцеру", "карцер", "карцером", "карцере")
 
 /area/station/security/interrogation
 	name = "Interrogation"
@@ -735,7 +735,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/cargo/storage
 	name = "Cargo Bay"
-	cases = list("склад отдела снабжения", "склада отдела снабжения", "складу отделу снабжения", "склад отдела снабжения", "складом отделом снабжения", "складе отдела снабжения")
+	cases = list("склад ОС", "склада ОС", "складу ОС", "склад ОС", "складом ОС", "складе ОС")
 	icon_state = "quartstorage"
 	sound_environment = SOUND_AREA_LARGE_METALLIC
 
@@ -751,23 +751,24 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/cargo/recycleroffice
 	name = "Recycleroffice"
-	cases = list("кабинет переработчиков", "кабинета переработчиков", "кабинету переработчиков", "кабинет переработчиков", "кабинетом переработчиков", "кабинете переработчиков")
+	cases = list("офис переработчиков", "офиса переработчиков", "офису переработчиков", "офис переработчиков", "офисом переработчиков", "офисе переработчиков")
 	icon_state = "recycleroffice"
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/cargo/miningbreaktime
 	name = "Cargo Breaktime Room"
-	cases = list("комната отдыха отдела снабжения", "комнаты отдыха отдела снабжения", "комнате отдыха отдела снабжения", "комната отдыха отдела снабжения", "комнатой отдыха отдела снабжения", "комнате отдыха отдела снабжения")
+	cases = list("комната отдыха ОС", "комнаты отдыха ОС", "комнате отдыха ОС", "комната отдыха ОС", "комнатой отдыха ОС", "комнате отдыха ОС")
 	icon_state = "miningbreaktime"
 
 /area/station/cargo/miningoffice
 	name = "Mining office"
-	cases = list("кабинет шахтёров", "кабинета шахтёров", "кабинету шахтёров", "кабинет шахтёров", "кабинетом шахтёров", "кабинете шахтёров")
+	cases = list("офис шахтёров", "офиса шахтёров", "офису шахтёров", "офис шахтёров", "офисом шахтёров", "офисе шахтёров")
 	icon_state = "miningoffice"
 
 //rnd (Research and Development)
 
 /area/station/rnd
+	cases = list("отдел исследований и разработки", "отдела исследований и разработки", "отделу исследований и разработки", "отдел исследований и разработки", "отделом исследований и разработки", "отделе исследований и разработки")
 	ambience = list('sound/ambience/rnd_1.ogg', 'sound/ambience/rnd_2.ogg')
 
 /area/station/rnd/lab
@@ -781,43 +782,53 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/rnd/xenobiology
 	name = "Xenobiology Lab"
+	cases = list("ксенобиология", "ксенобиологии", "ксенобиологии", "ксенобиология", "ксенобиологией", "ксенобиологии")
 	icon_state = "scixeno"
 
 /area/station/rnd/storage
 	name = "Toxins Storage"
+	cases = list("склад газов ОИР", "склада газов ОИР", "складу газов ОИР", "склад газов ОИР", "складом газов ОИР", "складе газов ОИР")
 	icon_state = "toxstorage"
 	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/rnd/test_area
 	name = "Toxins Test Site"
+	cases = list("тестовый полигон", "тестового полигона", "тестовому полигону", "тестовый полигон", "тестовым полигоном", "тестовом полигоне")
 	icon_state = "toxtest"
 
 /area/station/rnd/mixing
 	name = "Toxins Mixing Room"
+	cases = list("лаборатория по изучению свойств газообразных элементов", "лаборатории по изучению свойств газообразных элементов", "лаборатории по изучению свойств газообразных элементов", "лаборатория по изучению свойств газообразных элементов", "лабораторией по изучению свойств газообразных элементов", "лаборатории по изучению свойств газообразных элементов")
 	icon_state = "toxmix"
 
 /area/station/rnd/misc_lab
 	name = "Miscellaneous Research"
+	cases = list("изолятор ОИР", "изолятора ОИР", "изолятору ОИР", "изолятор ОИР", "изолятором ОИР", "изоляторе ОИР")
 	icon_state = "scimisc"
 
 /area/station/rnd/telesci
 	name = "Telescience Lab"
+	cases = list("отдел теленауки", "отдела теленауки", "отделу теленауки", "отдел теленауки", "отделом теленауки", "отделе теленауки")
 	icon_state = "scitele"
 
 /area/station/rnd/tox_launch
 	name = "Toxins Launch Roon"
+	cases = list("комната запуска бомб", "комнаты запуска бомб", "комнате запуска бомб", "комната запуска бомб", "комнатой запуска бомб", "комнате запуска бомб")
 	icon_state = "toxlaunch"
 
 /area/station/rnd/scibreak
 	name = "Science Breaktime Room"
+	cases = list("комната отдыха ОИР", "комнаты отдыха ОИР", "комнате отдыха ОИР", "комната отдыха ОИР", "комнатой отдыха ОИР", "комнате отдыха ОИР")
 	icon_state = "scirest"
 
 /area/station/rnd/hor
 	name = "Research Director's Office"
+	cases = list("кабинет научрука", "кабинета научрука", "кабинету научрука", "кабинет научрука", "кабинетом научрука", "кабинете научрука")
 	icon_state = "head_quarters"
 
 /area/station/rnd/server
 	name = "Server Room"
+	cases = list("серверная ОИР", "серверной ОИР", "серверной ОИР", "серверная ОИР", "серверной ОИР", "серверной ОИР")
 	icon_state = "server"
 	is_force_ambience = TRUE
 	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
@@ -825,15 +836,18 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/rnd/chargebay
 	name = "Mech Bay"
+	cases = list("склад мехов", "склада мехов", "складу мехов", "склад мехов", "складом мехов", "складе мехов")
 	icon_state = "mechbay"
 
 /area/station/rnd/robotics
 	name = "Robotics Lab"
+	cases = list("отдел робототехники", "отдела робототехники", "отделу робототехники", "отдел робототехники", "отделом робототехники", "отделе робототехники")
 	icon_state = "scirobo"
 	ambience = list('sound/ambience/robotics_1.ogg', 'sound/ambience/robotics_2.ogg')
 
 /area/station/rnd/brainstorm_center
 	name = "Brainstorm Center"
+	cases = list("центр мозгового штурма", "центра мозгового штурма", "центру мозгового штурма", "центр мозгового штурма", "центром мозгового штурма", "центре мозгового штурма")
 	icon_state = "bs"
 
 //Storage
