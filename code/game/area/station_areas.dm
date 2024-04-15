@@ -936,6 +936,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 // Telecommunications Satellite
 
 /area/station/tcommsat
+	cases = list("центр управления телекоммуникациями", "центра управления телекоммуникациями", "центру управления телекоммуникациями", "центр управления телекоммуникациями", "центром управления телекоммуникациями", "центре управления телекоммуникациями")
 	is_force_ambience = TRUE
 	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
 	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
@@ -943,12 +944,10 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/tcommsat/chamber
 	name = "Telecoms Central Compartment"
-	cases = list("центральный отсек телекоммуникаций", "центрального отсека телекоммуникаций", "центральному отсеку телекоммуникаций", "центральный отсек телекоммуникаций", "центральным отсеком телекоммуникаций", "центральном отсеке телекоммуникаций")
 	icon_state = "tcomsatcham"
 	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/tcommsat/computer
 	name = "Telecoms Control Room"
-	cases = list("спутник ИИ", "спутника ИИ", "спутнику ИИ", "спутник ИИ", "спутником ИИ", "спутнике ИИ")
 	icon_state = "tcomsatcomp"
 	sound_environment = SOUND_AREA_DEFAULT
