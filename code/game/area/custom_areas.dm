@@ -88,7 +88,7 @@
 
 /area/custom/cult
 	name = "Cult Heaven"
-	cases = list("небеса культа", "небес культа", "небесам культа", "небеса культа", "небесами культа", "небесах культа")
+	cases = list("рай", "рая", "раю", "рай", "раем", "рае")
 	icon_state = "cult-heaven"
 	requires_power = FALSE
 	dynamic_lighting = TRUE
