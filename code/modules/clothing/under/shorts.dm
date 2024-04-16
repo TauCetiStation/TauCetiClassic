@@ -2,7 +2,7 @@
 	name = "athletic shorts"
 	desc = "95% Polyester, 5% Spandex!"
 	gender = PLURAL
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = LOWER_TORSO
 
 /obj/item/clothing/under/shorts/red

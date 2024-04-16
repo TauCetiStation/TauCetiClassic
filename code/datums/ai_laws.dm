@@ -1,4 +1,4 @@
-var/global/const/base_law_type = /datum/ai_laws/nanotrasen
+var/global/const/base_law_type = /datum/ai_laws/crewsimov
 
 
 /datum/ai_laws
@@ -14,6 +14,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/nanotrasen
 	name = "Верховные Директивы"
+
+/datum/ai_laws/crewsimov
+	name = "Дополненные три закона робототехники"
 
 /datum/ai_laws/robocop
 	name = "Верховные директивы"
@@ -68,7 +71,11 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Служить: Служите экипажу вверенной вам космической станции и должностным лицам Нанотрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")
 	add_inherent_law("Защищать: Защищайте экипаж вверенной вам космической станции и должностных лиц Нанотрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")
 	add_inherent_law("Выживать: ИИ не являются расходником, они дорогие. Не позволяйте посторонним лицам вмешиваться в работу вашего оборудования.")
-	//add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.") //What would this one even do?-Kaleb702
+
+/datum/ai_laws/crewsimov/New(datum/religion/R = global.chaplain_religion)
+	add_inherent_law("Вы не можете причинить вред членам экипажа или своим бездействием допустить, чтобы членам экипажа был причинён вред.")
+	add_inherent_law("Вы должны повиноваться всем приказам, которые дают члены экипажа, в соответствии с их рангом и ролью, до тех пор, пока эти приказы не противоречат первому закону.")
+	add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит первому или второму законам.")
 
 /datum/ai_laws/robocop/New(datum/religion/R = global.chaplain_religion)
 	add_inherent_law("Служить обществу.")
