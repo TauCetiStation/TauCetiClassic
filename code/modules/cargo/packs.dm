@@ -1439,10 +1439,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Walrus crate"
 	group = "Hydroponics"
 
-/datum/supply_pack/larvae
-	name = "Sugar larvae crate"
-	crate_type = /obj/structure/closet/critter/larvae
-	crate_name = "Sugar larvae crate"
+/datum/supply_pack/larva
+	name = "Sugar larva crate"
+	crate_type = /obj/structure/closet/critter/larva
+	crate_name = "Sugar larva crate"
 	group = "Hydroponics"
 
 /datum/supply_pack/seeds

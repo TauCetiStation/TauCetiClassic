@@ -113,18 +113,18 @@
 	name = "walrus crate"
 	content_mob = /mob/living/simple_animal/walrus
 
-/obj/structure/closet/critter/larvae
-	name = "sugar larvae crate"
+/obj/structure/closet/critter/larva
+	name = "sugar larva crate"
 	content_mob = /mob/living/simple_animal/grown_larvae/newborn_moth
 
-/obj/structure/closet/critter/larvae/atom_init()
+/obj/structure/closet/critter/larva/atom_init()
 	content_mob = pick(/mob/living/simple_animal/grown_larvae/newborn_moth, /mob/living/simple_animal/grown_larvae/serpentid)
 	. = ..()
 
-/obj/structure/closet/critter/larvae/create_mob_inside()
+/obj/structure/closet/critter/larva/create_mob_inside()
 	if(crit_fail)
 		return ..()
-	var/list/larvaes = ..()
-	for(var/mob/living/sugar_larvae as anything in larvaes)
-		create_spawner(/datum/spawner/living/sugar_larvae, sugar_larvae)
-	return larvaes
+	var/list/larvae = ..()
+	for(var/mob/living/sugar_larva as anything in larvae)
+		create_spawner(/datum/spawner/living/sugar_larva, sugar_larva)
+	return larvae

@@ -23,7 +23,7 @@
 	evolve_to_young_adult()
 
 /mob/living/simple_animal/grown_larvae
-	name = "larvae"
+	name = "larva"
 	desc = "It's a little alien skittery critter. Hiss."
 	icon = 'icons/mob/animal.dmi'
 	health = 10
@@ -49,7 +49,7 @@
 		stat("Прогресс роста: [evolv_stage * 25]/100")
 
 /mob/living/simple_animal/grown_larvae/serpentid
-	name = "Nabber larvae"
+	name = "Nabber larva"
 	icon_state = "larvae-serpentid"
 	icon_living = "larvae-serpentid"
 	icon_dead = "larvae-serpentid_dead"
@@ -179,7 +179,7 @@
 
 //sweet to attract hungry assistants
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/alien_meat
-	name = "Larvae meat"
+	name = "Larva meat"
 	desc = "Meat. Sometimes liquid, sometimes jelly-like, sometimes crunchy and sweet. Despite the texture, it smells delicious."
 	icon_state = "xenomeat"
 	filling_color = "#cadaba"
