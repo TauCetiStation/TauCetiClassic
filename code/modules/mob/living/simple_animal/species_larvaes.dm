@@ -56,7 +56,7 @@
 
 /mob/living/simple_animal/grown_larvae/serpentid/Login()
 	. = ..()
-	to_chat(src, "<span class='userdanger'>Вы агрессивная форма жизни практикующая канибализм, так как мясо вашего вида очень вкусное.</span>")
+	to_chat(src, "<span class='userdanger'>Вы агрессивная форма жизни практикующая каннибализм, так как мясо вашего вида очень вкусное.</span>")
 
 /mob/living/simple_animal/grown_larvae/serpentid/evolve_to_young_adult()
 	var/mob/living/simple_animal/grown_larvae/snake/S = new(get_turf(loc))
