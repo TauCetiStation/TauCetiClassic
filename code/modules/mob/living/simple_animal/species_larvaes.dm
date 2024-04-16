@@ -159,7 +159,7 @@
 
 /mob/living/simple_animal/grown_larvae/newborn_moth/Login()
 	. = ..()
-	to_chat(src, "<span class='userdanger'>Вы дружелюбная форма жизни готовая съесть что-угодно.</span>")
+	to_chat(src, "<span class='userdanger'>Вы дружелюбная форма жизни, готовая съесть что угодно.</span>")
 
 /mob/living/simple_animal/grown_larvae/newborn_moth/atom_init()
 	. = ..()
