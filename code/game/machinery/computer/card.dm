@@ -106,8 +106,7 @@
 	data["authenticated"] = is_authenticated()
 	data["account_number"] = modify ? modify.associated_account_number : null
 	data["salary"] = datum_account ? datum_account.owner_salary : "not_found"
-	data["centcom_access"] = is_centcom()
-	data["all_centcom_access"] = is_centcom() ? TRUE : FALSE
+	data["centcom_access"] = is_centcom() ? TRUE : FALSE
 	data["selectedAccess"] = modify ? modify.access : list()
 
 	data["command_jobs"] = command_positions
@@ -135,8 +134,6 @@
 				data["regions"] = get_accesslist_static_data(REGION_GENERAL, is_centcom() ? REGION_CENTCOMM : REGION_COMMAND)
 		if(IDCOMPUTER_SCREEN_MANIFEST)
 			data["manifest"] = data_core.get_manifest()
-		if(IDCOMPUTER_SCREEN_PRINT)
-			printing = 0
 	return data
 
 /obj/machinery/computer/card/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -267,6 +264,8 @@
 						modify.associated_account_number = account.account_number
 					else
 						to_chat(usr, "<span class='warning'> Account with such number does not exist!</span>")
+		if ("mode")
+			mode = text2num(params["mode"])
 		if ("print")
 			if (!printing)
 				printing = 1
