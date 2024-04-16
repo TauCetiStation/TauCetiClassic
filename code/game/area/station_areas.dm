@@ -815,7 +815,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/rnd/mixing
 	name = "Toxins Mixing Room"
-	cases = list("лаборатория изучения форона", "лаборатории изучения форона", "лаборатории изучения форона", "лаборатория изучения форона", "лабораторией изучения форона", "лаборатории изучения форона")
+	cases = list("токсинная", "токсинной", "токсинной", "токсинная", "токсинной", "токсинной")
 	icon_state = "toxmix"
 
 /area/station/rnd/misc_lab
