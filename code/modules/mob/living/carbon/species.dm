@@ -1897,7 +1897,7 @@
 /datum/species/serpentid/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
 	SIGNAL_HANDLER
 	if(!istype(I, /obj/item/weapon/holder))
-		if(!istype(I, /obj/item/organ/external))
+		if(!isbodypart(I))
 			return
 		var/obj/item/organ/external/BP = I
 		if(BP.is_robotic())
