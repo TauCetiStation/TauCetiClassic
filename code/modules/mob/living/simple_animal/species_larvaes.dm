@@ -71,6 +71,9 @@
 				new path(loc)
 	qdel(src)
 
+/mob/living/simple_animal/grown_larvae/serpentid/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	get_scooped(attacker)
+
 /mob/living/simple_animal/grown_larvae/snake
 	name = "Snake"
 	desc = "Hiss"
@@ -101,6 +104,9 @@
 	S.mind.store_memory(lore)
 	qdel(src)
 
+/mob/living/simple_animal/grown_larvae/snake/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	get_scooped(attacker)
+
 /mob/living/simple_animal/grown_larvae/small_moth
 	name = "Young moth"
 	icon_state = "small_moth"
@@ -125,6 +131,9 @@
 	to_chat(M, "<span class='userdanger'>[lore]</span>")
 	M.mind.store_memory(lore)
 	qdel(src)
+
+/mob/living/simple_animal/grown_larvae/small_moth/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	get_scooped(attacker)
 
 /mob/living/simple_animal/grown_larvae/newborn_moth
 	name = "Newborn moth"
@@ -180,6 +189,9 @@
 			for(var/i = 1 to butcher_results[path])
 				new path(loc)
 	qdel(src)
+
+/mob/living/simple_animal/grown_larvae/newborn_moth/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	get_scooped(attacker)
 
 //sweet to attract hungry assistants
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge/alien_meat
