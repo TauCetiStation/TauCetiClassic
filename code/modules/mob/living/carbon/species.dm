@@ -1896,8 +1896,12 @@
 
 /datum/species/serpentid/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
 	SIGNAL_HANDLER
-	if(!istype(I, /obj/item/weapon/holder) && !istype(I, /obj/item/organ))
-		return
+	if(!istype(I, /obj/item/weapon/holder))
+		if(!istype(I, /obj/item/organ/external))
+			return
+		var/obj/item/organ/external/BP = I
+		if(BP.is_robotic())
+			return
 	source.nutrition += max(0, NUTRITION_LEVEL_FULL - source.nutrition)
 	qdel(I)
 	source.visible_message("<span class='warning'>[I] was swallowed by [source]!</span>",

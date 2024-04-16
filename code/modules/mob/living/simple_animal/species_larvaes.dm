@@ -53,6 +53,7 @@
 	icon_state = "larvae-serpentid"
 	icon_living = "larvae-serpentid"
 	icon_dead = "larvae-serpentid_dead"
+	holder_type = /obj/item/weapon/holder/nabber
 
 /mob/living/simple_animal/grown_larvae/serpentid/Login()
 	. = ..()
@@ -81,6 +82,7 @@
 	speed = 1
 	has_arm = FALSE
 	has_leg = FALSE
+	holder_type = /obj/item/weapon/holder/snake
 
 /mob/living/simple_animal/grown_larvae/snake/Login()
 	. = ..()
@@ -108,6 +110,7 @@
 	maxbodytemp = 301
 	heat_damage_per_tick = 9
 	bodytemperature = 293
+	holder_type = /obj/item/weapon/holder/moth_small
 
 /mob/living/simple_animal/grown_larvae/small_moth/Login()
 	. = ..()
@@ -152,6 +155,7 @@
 	faction = "neutral"
 	has_arm = FALSE
 	has_leg = FALSE
+	holder_type = /obj/item/weapon/holder/mothroach
 
 /mob/living/simple_animal/grown_larvae/newborn_moth/atom_init()
 	. = ..()
