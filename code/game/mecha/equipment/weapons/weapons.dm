@@ -57,7 +57,7 @@
 	P.original = target
 	P.starting = P.loc
 	P.current = P.loc
-	P.firer = chassis.occupant
+	P.firer = chassis
 	if(isbrain(chassis.occupant))
 		P.def_zone = ran_zone()
 	else
