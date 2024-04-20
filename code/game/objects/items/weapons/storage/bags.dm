@@ -49,6 +49,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
 	item_state = "trashbag"
+	item_state_world = "trashbag_world"
 
 	w_class = SIZE_TINY
 	max_w_class = SIZE_SMALL
@@ -94,17 +95,26 @@
 	switch(w_class)
 		if(2)
 			icon_state = "[initial(icon_state)]"
+			item_state_inventory = "[initial(icon_state)]"
+			item_state_world = "[initial(icon_state)]_world"
 		if(3)
 			icon_state = "[initial(icon_state)]1"
+			item_state_inventory = "[initial(icon_state)]1"
+			item_state_world = "[initial(icon_state)]1_world"
 		if(4)
 			icon_state = "[initial(icon_state)]2"
+			item_state_inventory = "[initial(icon_state)]2"
+			item_state_world = "[initial(icon_state)]2_world"
 		if(5 to INFINITY)
 			icon_state = "[initial(icon_state)]3"
+			item_state_inventory = "[initial(icon_state)]3"
+			item_state_world = "[initial(icon_state)]3_world"
 
 /obj/item/weapon/storage/bag/trash/bluespace
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
+	item_state_world = "bluetrashbag_world"
 	max_storage_space = 56
 
 
