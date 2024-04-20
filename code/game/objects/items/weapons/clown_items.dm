@@ -181,6 +181,23 @@
  * Bike Horns
  */
 
+/obj/item/weapon/bikehorn/gold
+	name = "golden bike horn"
+	desc = "Golden? Clearly, it's made with bananium! Honk!"
+	icon = 'icons/obj/golden_bikehorn.dmi'
+	icon_state = "gold_horn"
+	item_state = "bike_horn"
+	COOLDOWN_DECLARE(golden_horn_cooldown)
+
+/obj/item/weapon/bikehorn/gold/honk(mob/user)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, golden_horn_cooldown))
+		return
+	var/turf/T = get_turf(src)
+	for(var/mob/living/M in ohearers(7, T))
+		M.SpinAnimation(7, 1)
+	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
+
 /obj/item/weapon/bikehorn
 	name = "bike horn"
 	desc = "A horn off of a bicycle."

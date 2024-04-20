@@ -170,3 +170,8 @@
 	name = ROUND_ASPECT_ALTERNATIVE_RESEARCH
 	desc = "Взрывы газовых бомб стали приносить меньше научных очков."
 	afterspawn_IC_announcement = "<span class='warning'>Научно-исследовательский Совет НаноТрейзен стал в меньшей мере интересоваться изучением взрывчатых свойств форона.</span>"
+
+/datum/round_aspect/healing_alkohol
+	name = ROUND_ASPECT_HEALING_ALCOHOL
+	desc = "Алкоголь лечит физические повреждения."
+	afterspawn_IC_announcement = "<span class='success'>Гибсонские ученые доказали, что умеренное потребление алкоголя продливает жизнь.</span>"
