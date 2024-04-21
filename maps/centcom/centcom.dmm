@@ -2914,7 +2914,7 @@
 	color = "#ff3333";
 	icon_state = "bcircuit"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "ahV" = (
 /obj/structure/window/thin/reinforced,
 /obj/structure/shuttle/engine/heater{
@@ -3290,7 +3290,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplating"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aiJ" = (
 /obj/structure/table/woodentable,
 /obj/item/device/pda/syndicate{
@@ -3331,7 +3331,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aiO" = (
 /obj/mecha/combat/marauder/mauler,
 /obj/machinery/door_control{
@@ -3344,7 +3344,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplating"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aiP" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech1";
@@ -3353,7 +3353,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floordown"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aiQ" = (
 /obj/machinery/body_scanconsole{
 	known_implants = list(/obj/item/weapon/implant/cortical)
@@ -3430,7 +3430,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aja" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -3492,7 +3492,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floordown"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aji" = (
 /obj/machinery/computer/pod{
 	id = "syndicate_elite";
@@ -17164,7 +17164,7 @@
 	color = "#ff3333";
 	icon_state = "bcircuit"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aNd" = (
 /obj/item/weapon/folder/red{
 	pixel_y = 4
@@ -17179,7 +17179,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aNf" = (
 /obj/item/toy/prize/mauler{
 	pixel_y = 4
@@ -17210,7 +17210,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aNi" = (
 /obj/machinery/computer/pod{
 	dir = 4;
@@ -17228,7 +17228,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aNk" = (
 /obj/item/device/megaphone{
 	pixel_y = 2
@@ -17407,7 +17407,7 @@
 	color = "#ff3333";
 	icon_state = "bcircuit"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aNF" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -18293,7 +18293,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplating"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aPu" = (
 /obj/machinery/door_control{
 	id = "Esyndimech";
@@ -18305,7 +18305,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aPv" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -18320,7 +18320,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aPw" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech3";
@@ -18329,7 +18329,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aPx" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech3";
@@ -18338,7 +18338,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorup"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aPy" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -18359,7 +18359,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aPB" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Living Quarters";
@@ -18413,7 +18413,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorup"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aPH" = (
 /obj/structure/object_wall/standart{
 	icon_state = "wall3"
@@ -18434,7 +18434,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplating"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aPJ" = (
 /obj/mecha/combat/marauder/mauler,
 /obj/machinery/door_control{
@@ -18447,7 +18447,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplating"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "aPK" = (
 /obj/structure/rack,
 /obj/item/ammo_box/magazine/a74{
@@ -29419,6 +29419,9 @@
 	icon_state = "dark"
 	},
 /area/centcom/evac)
+"oXd" = (
+/turf/simulated/shuttle/floor/vox,
+/area/custom/syndicate_mothership/droppod_garage)
 "oZb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "5,10"
@@ -30104,7 +30107,7 @@
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/custom/syndicate_mothership/droppod_garage)
 "uEN" = (
 /obj/effect/step_trigger/teleporter/random{
 	name = "escapeshuttle_leave_noghosts";
@@ -30269,11 +30272,24 @@
 	name = "plating"
 	},
 /area/velocity)
+"xrP" = (
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
+/area/custom/syndicate_mothership/droppod_garage)
 "xsM" = (
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"xzy" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/custom/syndicate_mothership/droppod_garage)
 "xzP" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -69212,14 +69228,14 @@ qTT
 qTT
 aMJ
 mAb
-mAb
-mAb
-mAb
+xzy
+xzy
+xzy
 aNj
 aPt
 aPt
-mAb
-aPH
+xzy
+xzy
 aPH
 aNS
 aNR
@@ -69469,12 +69485,12 @@ xsM
 xsM
 xsM
 aNf
-mAb
+xzy
 ahU
 aiN
-xsM
-xsM
-xsM
+xrP
+xrP
+xrP
 aPw
 aNE
 aPH
@@ -69726,12 +69742,12 @@ aja
 aja
 fqy
 aNg
-mAb
+xzy
 aiI
 aiP
-fqy
-fqy
-fqy
+oXd
+oXd
+oXd
 aPx
 aPI
 aPH
@@ -69983,12 +69999,12 @@ aNY
 aNd
 fqy
 ajr
-mAb
+xzy
 aNe
 aiN
-xsM
-fqy
-xsM
+xrP
+oXd
+xrP
 aPw
 aNe
 aPH
@@ -70240,14 +70256,14 @@ ajg
 ajg
 fqy
 aNk
-mAb
-mAb
-mAb
+xzy
+xzy
+xzy
 uDv
-fqy
+oXd
 aPv
-mAb
-mAb
+xzy
+xzy
 aPH
 aPH
 aPO
@@ -70497,12 +70513,12 @@ fqy
 fqy
 fqy
 aNp
-mAb
+xzy
 aNc
 aiZ
-xsM
-fqy
-xsM
+xrP
+oXd
+xrP
 aPA
 aNc
 mAb
@@ -70754,12 +70770,12 @@ mAb
 aPQ
 aMK
 mAb
-mAb
+xzy
 aiO
 ajh
-fqy
-fqy
-fqy
+oXd
+oXd
+oXd
 aPG
 aPJ
 mAb
@@ -71011,12 +71027,12 @@ mAb
 abR
 abR
 mAb
-mAb
+xzy
 aNh
 aiZ
-xsM
+xrP
 aPu
-xsM
+xrP
 aPA
 aNh
 mAb
@@ -71268,14 +71284,14 @@ aaM
 aaM
 aaM
 dMd
-mAb
-mAb
-mAb
-mAb
-mAb
-mAb
-mAb
-mAb
+xzy
+xzy
+xzy
+xzy
+xzy
+xzy
+xzy
+xzy
 mAb
 aNZ
 aaM

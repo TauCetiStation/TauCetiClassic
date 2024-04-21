@@ -41,7 +41,6 @@
 
 /area/custom/syndicate_mothership/elite_squad
 	name = "Syndicate Elite Squad"
-	cases = list("элитный отряд Синдиката", "элитного отряда Синдиката", "элитному отряду Синдиката", "элитный отряд Синдиката", "элитным отрядом Синдиката", "элитном отряде Синдиката")
 	icon_state = "syndie-elite"
 
 /area/custom/syndicate_mothership/armory
@@ -50,8 +49,8 @@
 	icon_state = "syndie-armory"
 
 /area/custom/syndicate_mothership/droppod_garage
-	name = "Drop pod garage"
-	cases = list("гараж с десантными капсулами", "гаража с десантными капсулами", "гаражу с десантными капсулами", "гараж с десантными капсулами", "гаражом с десантными капсулами", "гараже с десантными капсулами")
+	name = "Mech garage"
+	cases = list("гараж с мехами", "гаража с мехами", "гаражу с мехами", "гараж с мехами", "гаражом с мехами", "гараже с мехами")
 
 //EXTRA
 /area/custom/planet/clown
@@ -105,7 +104,7 @@
 
 /area/custom/ninjaspawn
 	name = "Space Dojo"
-	cases = list("космический Додзё", "космического Додзё", "космическому Додзё", "космический Додзё", "космическим Додзё", "космическом Додзё")
+	cases = list("космическое Додзё", "космического Додзё", "космическому Додзё", "космическое Додзё", "космическим Додзё", "космическом Додзё")
 	icon_state = "red"
 	requires_power = 0
 	dynamic_lighting = TRUE

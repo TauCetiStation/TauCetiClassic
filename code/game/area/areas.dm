@@ -1,7 +1,7 @@
 // Areas.dm
 
 
-
+// Do not translate this area
 // ===
 /area
 	name = "Space"
