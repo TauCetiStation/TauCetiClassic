@@ -95,6 +95,8 @@
 	name = "warning cone"
 	icon_state = "cone"
 	item_state_world = "cone_world"
+	body_parts_covered = HEAD
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/rack_parts
 	name = "rack parts"
