@@ -200,15 +200,8 @@ SUBSYSTEM_DEF(ticker)
 
 		var/list/datum/game_mode/runnable_modes = config.get_runnable_modes(bundle)
 		if(!runnable_modes.len)
-			var/no_ready = TRUE
-			for(var/mob/dead/new_player/P as anything in new_player_list)
-				if(P.client && P.ready)
-					no_ready = FALSE
-					break
-
-			if(no_ready) //In case of empty sevrver, no infinity votes
+			if(!totalPlayersReady) //In case of empty server, no infinity votes
 				runnable_modes = config.get_always_runnable_modes()
-
 			else //Let player choose something else
 				current_state = GAME_STATE_PREGAME
 				to_chat(world, "<B>Невозможно выбрать игровой режим.</B> Возвращение в предыгровое лобби.")
