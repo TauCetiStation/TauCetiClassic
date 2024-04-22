@@ -38,14 +38,20 @@
 					H.update_body()
 			if("Undershirt")
 				var/list/undershirt_options
-				undershirt_options = undershirt_t
+				if(gender == MALE)
+					undershirt_options = undershirt_m
+				else
+					undershirt_options = undershirt_f
 				var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
 				if(new_undershirt && Adjacent(user))
 					H.undershirt = undershirt_options.Find(new_undershirt)
 					H.update_body()
 			if("Socks")
 				var/list/socks_options
-				socks_options = socks_t
+				if(gender == MALE)
+					socks_options = socks_m
+				else
+					socks_options = socks_f
 				var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_options
 				if(new_socks && Adjacent(user))
 					H.socks = socks_options.Find(new_socks)

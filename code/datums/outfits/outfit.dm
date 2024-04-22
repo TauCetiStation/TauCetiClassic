@@ -66,7 +66,8 @@
 	var/list/prevent_survival_kit_items = list()
 
 	// (flavor_misc.dm)
-	var/datum/sprite_accessory/outfit_undershirt = null   /// Any undershirt. string. no paths...
+	var/datum/sprite_accessory/outfit_undershirt_m = null   /// Any undershirt. string. no paths...
+	var/datum/sprite_accessory/outfit_undershirt_f = null
 	var/datum/sprite_accessory/outfit_underwear_m = null  /// "White", "Grey", "Green", "Blue", "Black", "Mankini", "None"
 	var/datum/sprite_accessory/outfit_underwear_f = null  /// "Red", "White", "Yellow", "Blue", "Black", "Thong", "None"
 
@@ -185,8 +186,16 @@
 
 	equip_slots(H, slot2type)
 
-	if(outfit_undershirt)
-		H.undershirt = undershirt_t.Find(outfit_undershirt)
+	if(outfit_undershirt_m || outfit_undershirt_f)
+		var/list/undershirt_options
+		var/outfit_undershirt
+		if(H.gender == MALE)
+			undershirt_options = undershirt_m
+			outfit_undershirt = outfit_undershirt_m
+		else
+			undershirt_options = undershirt_f
+			outfit_undershirt = outfit_undershirt_f
+		H.undershirt = undershirt_m.Find(outfit_undershirt)
 		H.update_body()
 
 	if(outfit_underwear_m || outfit_underwear_f)

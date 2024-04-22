@@ -132,8 +132,14 @@
 					. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
 				else
 					. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
-				. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
-				. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
+				if(gender == MALE)
+					. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_m[undershirt]]</a><br>"
+				else
+					. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_f[undershirt]]</a><br>"
+				if(gender == MALE)
+					. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_m[socks]]</a><br>"
+				else
+					. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_f[socks]]</a><br>"
 			. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
 			. += "PDA Ringtone: <a href ='?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
@@ -240,9 +246,15 @@
 					else
 						underwear = rand(1, underwear_f.len)
 				if("undershirt")
-					undershirt = rand(1,undershirt_t.len)
+					if(gender == MALE)
+						undershirt = rand(1,undershirt_m.len)
+					else
+						undershirt = rand(1,undershirt_f.len)
 				if("socks")
-					socks = rand(1,socks_t.len)
+					if(gender == MALE)
+						socks = rand(1,socks_m.len)
+					else
+						socks = rand(1,socks_f.len)
 				if("eyes")
 					r_eyes = rand(0,255)
 					g_eyes = rand(0,255)
@@ -405,21 +417,24 @@
 						underwear_options = underwear_m
 					else
 						underwear_options = underwear_f
-
 					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear_options[underwear]) as null|anything in underwear_options
 					if(new_underwear)
 						underwear = underwear_options.Find(new_underwear)
-
 				if("undershirt")
 					var/list/undershirt_options
-					undershirt_options = undershirt_t
-
+					if(gender == MALE)
+						undershirt_options = undershirt_m
+					else
+						undershirt_options = undershirt_f
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt_options[undershirt]) as null|anything in undershirt_options
 					if (new_undershirt)
 						undershirt = undershirt_options.Find(new_undershirt)
 				if("socks")
 					var/list/socks_options
-					socks_options = socks_t
+					if(gender == MALE)
+						socks_options = socks_m
+					else
+						socks_options = socks_f
 					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks_options[socks]) as null|anything in socks_options
 					if(new_socks)
 						socks = socks_options.Find(new_socks)
