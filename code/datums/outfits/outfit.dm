@@ -195,7 +195,7 @@
 		else
 			undershirt_options = undershirt_f
 			outfit_undershirt = outfit_undershirt_f
-		H.undershirt = undershirt_m.Find(outfit_undershirt)
+		H.undershirt = undershirt_options.Find(outfit_undershirt)
 		H.update_body()
 
 	if(outfit_underwear_m || outfit_underwear_f)
