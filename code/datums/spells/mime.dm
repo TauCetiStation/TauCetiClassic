@@ -14,11 +14,11 @@
 	user.miming = !user.miming
 	if(!user.miming)
 		name = "Start miming"
-		REMOVE_TRAIT(user, TRAIT_MIMING, QUALITY_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_MIMING, GENERIC_TRAIT)
 		to_chat(user, "<span class='warning'>You break your vow of silence.</span>")
 	else
 		name = "Stop miming"
-		ADD_TRAIT(user, TRAIT_MIMING, QUALITY_TRAIT)
+		ADD_TRAIT(user, TRAIT_MIMING, GENERIC_TRAIT)
 		to_chat(user, "<span class='notice'>You make a vow of silence.</span>")
 
 /obj/effect/proc_holder/spell/targeted/forcewall/mimewall
