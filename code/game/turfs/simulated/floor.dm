@@ -425,7 +425,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	levelupdate()
 
 //This proc will place a turf into tile. Hate this
-/turf/simulated/floor/proc/place_floor(obj/item/C, mob/user)
+/turf/simulated/floor/proc/place_floor(obj/item/C)
 	var/obj/item/stack/tile/T = C
 	if(!T.use(1))
 		return
