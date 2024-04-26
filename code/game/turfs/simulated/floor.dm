@@ -424,8 +424,8 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	update_icon()
 	levelupdate()
 
-//This proc will replace a turf into tile. Hate this
-/turf/simulated/floor/proc/replace_floor(obj/item/C, mob/user)
+//This proc will place a turf into tile. Hate this
+/turf/simulated/floor/proc/place_floor(obj/item/C, mob/user)
 	var/obj/item/stack/tile/T = C
 	if(!T.use(1))
 		return
@@ -452,6 +452,21 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	update_icon()
 	levelupdate()
 
+//Proc for make turf into plating 
+/turf/simulated/floor/proc/remove_floor(obj/item/C, mob/user)
+	if(broken || burnt)
+		to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
+	else
+		if(is_wood_floor())
+			to_chat(user, "<span class='warning'>Вы с трудом отодрали доски, сломав их.</span>")
+		else
+			var/obj/item/I = new floor_type(src)
+			if(is_light_floor())
+				var/obj/item/stack/tile/light/L = I
+				L.on = get_lightfloor_on()
+				L.state = get_lightfloor_state()
+			to_chat(user, "<span class='warning'>Вы демонтировали плитку.</span>")
+		make_plating()
 
 //This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
 //If no argument is given a new one will be made.
@@ -497,23 +512,9 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 				to_chat(user, "<span class='notice'>Похоже, лампочка в порядке, менять её не нужно.</span>")
 
 	if(isprying(C) && !is_plating() && !is_catwalk())
-		if(broken || burnt)
-			to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
-		else
-			if(is_wood_floor())
-				to_chat(user, "<span class='warning'>Вы с трудом отодрали доски, сломав их.</span>")
-			else
-				var/obj/item/I = new floor_type(src)
-				if(is_light_floor())
-					var/obj/item/stack/tile/light/L = I
-					L.on = get_lightfloor_on()
-					L.state = get_lightfloor_state()
-				to_chat(user, "<span class='warning'>Вы демонтировали плитку.</span>")
-
-		make_plating()
+		remove_floor(C, user)
 		// Can't play sounds from areas. - N3X
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-
 		return
 
 	if(isscrewing(C))
@@ -571,12 +572,11 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 			var/obj/item/CB = user.get_inactive_hand()
 			if (!isprying(CB))
 				return
-			new floor_type(src)
-			make_plating()
-			replace_floor(C, /obj/item/stack/tile)
+			remove_floor(CB, user)
+			place_floor(C)
 		if(is_plating())
 			if(!broken && !burnt)
-				replace_floor(C, /obj/item/stack/tile)
+				place_floor(C)
 			else
 				to_chat(user, "<span class='notice'>Эта секция слишком повреждена, чтобы выдержать покрытие. Используйте сварочный аппарат для ремонта.</span>")
 
