@@ -568,7 +568,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	if(istype(C, /obj/item/stack/tile))
 		if (is_catwalk())
 			to_chat(user, "<span class='warning'>Помост не приспособлен для установки на нем покрытия.</span>")
-		if (!is_plating() && !(broken || burnt))
+		if (!is_plating())
 			var/obj/item/CB = user.get_inactive_hand()
 			if (!isprying(CB))
 				return
