@@ -466,7 +466,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 				L.on = get_lightfloor_on()
 				L.state = get_lightfloor_state()
 			to_chat(user, "<span class='warning'>Вы демонтировали плитку.</span>")
-		make_plating()
+	make_plating()
 
 //This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
 //If no argument is given a new one will be made.
