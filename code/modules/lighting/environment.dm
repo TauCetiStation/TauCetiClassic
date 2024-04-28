@@ -68,3 +68,5 @@ var/global/obj/effect/area_unsimulated_light_mask = create_area_light_mask()
 				break
 		if(has_level_source_around)
 			LEVEL_LIGHTING_CAST(T)
+		else
+			RESET_LEVEL_LIGHTING(T)

@@ -75,7 +75,7 @@
 	turf.luminosity = LEVEL_LIGHT_LUMINOSITY
 
 #define LEVEL_LIGHTING_CAST(turf) \
-	turf.underlays += global.level_light_cast_mask
+	turf.underlays |= list(global.level_light_cast_mask)
 
 #define RESET_LEVEL_LIGHTING(turf) \
 	turf.underlays -= list(global.level_light_source_mask, global.level_light_cast_mask); \
