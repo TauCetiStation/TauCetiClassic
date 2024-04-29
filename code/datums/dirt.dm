@@ -59,6 +59,10 @@
 	name = "xeno blood"
 	color = "#05ee05"
 
+/datum/dirt_cover/hemolymph
+	name = "hemolymph"
+	color = "#525252"
+
 /datum/dirt_cover/proc/add_dirt(datum/dirt_cover/A)
 	var/red = (hex2num(copytext(color,2,4)) + hex2num(copytext(A.color,2,4))) / 2
 	var/green = (hex2num(copytext(color,4,6)) + hex2num(copytext(A.color,4,6))) / 2
