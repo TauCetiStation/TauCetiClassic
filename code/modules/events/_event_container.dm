@@ -211,6 +211,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Ion Storm",               /datum/event/ionstorm,                  0,     list(ASSIGNMENT_AI = 50, ASSIGNMENT_CYBORG = 50, ASSIGNMENT_ENGINEER = 15, ASSIGNMENT_SCIENTIST = 5)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Borer Infestation",       /datum/event/borer_infestation,         40,    list(ASSIGNMENT_SECURITY = 30), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Immovable Rod",           /datum/event/immovable_rod,             0,     list(ASSIGNMENT_ENGINEER = 30), ONESHOT),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Brand Intelligence",      /datum/event/brand_intelligence,        50,    list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Space Dust",              /datum/event/space_dust,                50,    list(ASSIGNMENT_ENGINEER = 50)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Grid Check",              /datum/event/grid_check,                0,     list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Organ Failure",           /datum/event/organ_failure,             0,     list(ASSIGNMENT_MEDICAL = 150), ONESHOT),
@@ -230,9 +231,12 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 /datum/event_container/moderate/New()
 	. = ..()
 	if(SSholiday.holidays[APRIL_FOOLS])
+		for(var/datum/event_meta/EM in available_events)
+			if(EM.name == "Brand Intelligence")
+				available_events -= EM
+				qdel(EM)
+				break
 		available_events += new /datum/event_meta(EVENT_LEVEL_MODERATE, "Brand Intelligence", /datum/event/brand_intelligence/alive_vends, 50, list(ASSIGNMENT_ENGINEER = 1000), ONESHOT)
-	else
-		available_events += new /datum/event_meta(EVENT_LEVEL_MODERATE, "Brand Intelligence", /datum/event/brand_intelligence, 50, list(ASSIGNMENT_ENGINEER = 25), ONESHOT)
 
 /datum/event_container/major
 	severity = EVENT_LEVEL_MAJOR
