@@ -377,7 +377,7 @@
 	/// Number of the resulting atoms is allowed per turf, 0 to disable limit
 	var/max_per_turf = 0
 	/// Enable or disable preview overlay
-	var/build_outline = FALSE // todo: rename
+	var/build_outline = FALSE
 	/// Restrict building only for these floor types
 	var/list/turf/floor_path
 	/// Skills to check for building time
