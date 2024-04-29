@@ -55,8 +55,8 @@
 
 	var/manifest = global.data_core.get_manifest()
 	var/no_cargonauts = TRUE
-	for(var/civ in manifest["civ"])
-		if(civ["active"] == "Active" && (civ["rank"] in list("Quartermaster", "Cargo Technician")))
+	for(var/car in manifest["car"])
+		if(car["active"] == "Active" && (car["rank"] in list("Quartermaster", "Cargo Technician")))
 			no_cargonauts = FALSE
 			break
 	data["no_cargonauts"] = no_cargonauts

@@ -382,6 +382,18 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                         {{/if}}
                     {{/for}}
                 {{/if}}
+                {{if data.cached.car.length}}
+                    <tr><th colspan="4" class="cargo">Cargo</th></tr>
+                    {{for data.cached["car"]}}
+                        {{if value.rank == "Quartermaster"}}
+                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                        {{else}}
+                            <tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                        {{/if}}
+                    {{/for}}
+                {{/if}}
                 {{if data.cached.civ.length}}
                     <tr><th colspan="4" class="civ">Civilian</th></tr>
                     {{for data.cached["civ"]}}

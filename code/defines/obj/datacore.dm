@@ -37,6 +37,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	var/eng[0]
 	var/med[0]
 	var/sci[0]
+	var/car[0]
 	var/civ[0]
 	var/bot[0]
 	var/misc[0]
@@ -74,6 +75,14 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = science_positions.Find(real_rank))
 			in_department = TRUE
 
+		if(real_rank in science_positions)
+			car[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = science_positions.Find(real_rank))
+			in_department = TRUE
+
+		if(real_rank in cargo_positions)
+			car[++car.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = science_positions.Find(real_rank))
+			in_department = TRUE
+
 		if(real_rank in civilian_positions)
 			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = civilian_positions.Find(real_rank))
 			in_department = TRUE
@@ -91,6 +100,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	sortTim(eng,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
 	sortTim(med,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
 	sortTim(sci,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
+	sortTim(car,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
 	sortTim(civ,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
 	sortTim(bot,   GLOBAL_PROC_REF(cmp_job_titles), FALSE)
 
@@ -100,6 +110,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	remove_priority_field(eng)
 	remove_priority_field(med)
 	remove_priority_field(sci)
+	remove_priority_field(car)
 	remove_priority_field(civ)
 	remove_priority_field(bot)
 
@@ -110,6 +121,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		"eng" = eng,\
 		"med" = med,\
 		"sci" = sci,\
+		"car" = car,\
 		"civ" = civ,\
 		"bot" = bot,\
 		"misc" = misc\
@@ -180,6 +192,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		"eng" = "Engineering",\
 		"med" = "Medical",\
 		"sci" = "Science",\
+		"car" = "Cargo",\
 		"civ" = "Civilian",\
 		"bot" = "Silicon",\
 		"misc" = "Miscellaneous"\

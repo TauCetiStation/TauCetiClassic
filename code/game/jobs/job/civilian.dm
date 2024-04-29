@@ -2,11 +2,11 @@
 /datum/job/qm
 	title = "Quartermaster"
 	flag = QUARTERMASTER
-	department_flag = CIVILIAN
+	department_flag = CARGO
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = "the captain"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargoshop, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
@@ -29,11 +29,11 @@
 /datum/job/cargo_tech
 	title = "Cargo Technician"
 	flag = CARGOTECH
-	department_flag = CIVILIAN
+	department_flag = CARGO
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the quartermaster and the head of personnel"
+	supervisors = "the quartermaster and the captain"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargoshop, access_mailsorting)
@@ -49,11 +49,11 @@
 /datum/job/mining
 	title = "Shaft Miner"
 	flag = MINER
-	department_flag = CIVILIAN
+	department_flag = CARGO
 	faction = "Station"
 	total_positions = 3
 	spawn_positions = 3
-	supervisors = "the quartermaster and the head of personnel"
+	supervisors = "the quartermaster and the captain"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
@@ -69,11 +69,11 @@
 /datum/job/recycler
 	title = "Recycler"
 	flag = RECYCLER
-	department_flag = CIVILIAN
+	department_flag = CARGO
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the quartermaster and the head of personnel"
+	supervisors = "the quartermaster and the captain"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mailsorting, access_recycler)

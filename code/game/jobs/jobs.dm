@@ -4,16 +4,16 @@ var/global/const/ENGSEC             =(1<<0)
 var/global/const/CAPTAIN            =(1<<0)
 var/global/const/HOS                =(1<<1)
 var/global/const/WARDEN             =(1<<2)
-var/global/const/DETECTIVE          =(1<<3)
-var/global/const/OFFICER            =(1<<4)
-var/global/const/CHIEF              =(1<<5)
-var/global/const/ENGINEER           =(1<<6)
-var/global/const/ATMOSTECH          =(1<<7)
-var/global/const/AI                 =(1<<8)
-var/global/const/CYBORG             =(1<<9)
-var/global/const/FORENSIC           =(1<<10)
-var/global/const/CADET              =(1<<11)
-var/global/const/TECHNICASSISTANT   =(1<<12)
+var/global/const/DETECTIVE          =(1<<4)
+var/global/const/OFFICER            =(1<<5)
+var/global/const/CHIEF              =(1<<6)
+var/global/const/ENGINEER           =(1<<7)
+var/global/const/ATMOSTECH          =(1<<8)
+var/global/const/AI                 =(1<<9)
+var/global/const/CYBORG             =(1<<10)
+var/global/const/FORENSIC           =(1<<11)
+var/global/const/CADET              =(1<<12)
+var/global/const/TECHNICASSISTANT   =(1<<13)
 
 var/global/const/CENTCOMREPRESENT   =(1<<1)
 
@@ -37,7 +37,14 @@ var/global/const/XENOARCHAEOLOGIST  =(1<<11)
 var/global/const/INTERN             =(1<<12)
 var/global/const/RESEARCHASSISTANT  =(1<<13)
 
-var/global/const/CIVILIAN           =(1<<3)
+var/global/const/CARGO				=(1<<3)
+
+var/global/const/QUARTERMASTER      =(1<<0)
+var/global/const/CARGOTECH          =(1<<1)
+var/global/const/RECYCLER           =(1<<2)
+var/global/const/MINER              =(1<<3)
+
+var/global/const/CIVILIAN           =(1<<4)
 
 var/global/const/HOP                =(1<<0)
 var/global/const/BARTENDER          =(1<<1)
@@ -45,15 +52,11 @@ var/global/const/BOTANIST           =(1<<2)
 var/global/const/CHEF               =(1<<3)
 var/global/const/JANITOR            =(1<<4)
 var/global/const/LIBRARIAN          =(1<<5)
-var/global/const/QUARTERMASTER      =(1<<6)
-var/global/const/CARGOTECH          =(1<<7)
-var/global/const/MINER              =(1<<8)
-var/global/const/CHAPLAIN           =(1<<9)
-var/global/const/CLOWN              =(1<<10)
-var/global/const/MIME               =(1<<11)
-var/global/const/ASSISTANT          =(1<<12)
-var/global/const/RECYCLER           =(1<<13)
-var/global/const/BARBER             =(1<<14)
+var/global/const/CHAPLAIN           =(1<<6)
+var/global/const/CLOWN              =(1<<7)
+var/global/const/MIME               =(1<<8)
+var/global/const/ASSISTANT          =(1<<9)
+var/global/const/BARBER             =(1<<10)
 
 
 var/global/list/assistant_occupations = list(
@@ -68,6 +71,7 @@ Order of ranks in *_positions lists below is used to sort crew manifest by such 
 var/global/list/command_positions = list(
 	"Captain",
 	"Head of Personnel",
+	"Quartermaster",
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
@@ -116,12 +120,15 @@ var/global/list/science_positions = list(
 	"Research Assistant"
 )
 
-var/global/list/civilian_positions = list(
-	"Head of Personnel",
+var/global/list/cargo_positions = list(
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner",
-	"Recycler",
+	"Recycler"
+)
+
+var/global/list/civilian_positions = list(
+	"Head of Personnel",
 	"Chef",
 	"Bartender",
 	"Botanist",
@@ -143,6 +150,7 @@ var/global/list/nonhuman_positions = list(
 var/global/list/heads_positions = list(
 	"Captain",
 	"Head of Personnel",
+	"Quartermaster",
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
@@ -152,6 +160,7 @@ var/global/list/heads_positions = list(
 var/global/list/protected_by_blueshield_list = list(
 	"Captain",
 	"Head of Personnel",
+	"Quartermaster",
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
@@ -191,9 +200,9 @@ var/global/list/protected_by_blueshield_list = list(
 
 	switch(head_rank)	//What departments do we manage?
 		if("Admin")
-			own_department = list("heads", "centcom", "sec", "eng", "med", "sci", "civ", "misc")	//all except bots
+			own_department = list("heads", "centcom", "sec", "eng", "med", "sci", "car", "civ", "misc")	//all except bots
 		if("Captain")
-			own_department = list("sec", "eng", "med", "sci", "civ", "misc")	//exept "heads", repetitions we don't need
+			own_department = list("sec", "eng", "med", "sci", "car", "civ", "misc")	//exept "heads", repetitions we don't need
 		if("Head of Personnel")
 			own_department = list("civ", "misc")
 		if("Head of Security")
@@ -205,7 +214,7 @@ var/global/list/protected_by_blueshield_list = list(
 		if("Chief Medical Officer")
 			own_department = list("med")
 		if("Quartermaster")
-			own_department = list("civ")
+			own_department = list("car")
 
 	for(var/department in own_department)
 		for(var/person in all_staff[department])
@@ -220,6 +229,7 @@ var/global/list/protected_by_blueshield_list = list(
 					continue
 				if(head_rank != "Admin" && person["rank"] == "Blueshield Officer")
 					continue
+			if(department == "car")
 				if(head_rank == "Quartermaster" && !QM_staff.Find(person["rank"]))	//QM only rules his boys
 					continue
 

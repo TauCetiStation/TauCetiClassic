@@ -224,6 +224,10 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	name = "Head of Personnel's Office"
 	icon_state = "head_quarters"
 
+/area/station/cargo/qm
+	name = "Quartermaster's Office"
+	icon_state = "quart"
+
 /area/station/bridge/teleporter
 	name = "Teleporter"
 	icon_state = "teleporter"
@@ -640,10 +644,6 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	name = "Cargo Bay"
 	icon_state = "quartstorage"
 	sound_environment = SOUND_AREA_LARGE_METALLIC
-
-/area/station/cargo/qm
-	name = "Quartermaster's Office"
-	icon_state = "quart"
 
 /area/station/cargo/recycler
 	name = "Recycler"
