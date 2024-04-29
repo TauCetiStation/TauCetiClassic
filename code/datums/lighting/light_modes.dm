@@ -206,5 +206,12 @@ var/global/list/datum/light_mode/light_modes_by_name // for admins, may differ i
 	power = DEFAULT_POWER
 	range = 6
 
+/datum/light_mode/code_delta
+	name = "Code Delta"
+
+	color = "#ff0915"
+	power = DEFAULT_POWER
+	range = 6
+
 #undef DEFAULT_RANGE
 #undef DEFAULT_POWER
