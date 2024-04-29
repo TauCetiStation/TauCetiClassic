@@ -47,8 +47,8 @@
 	if(get_player_count(check_ready) < minimum_player_count)
 		log_mode("[name] not start because number of players who Ready is less than minimum number of players.")
 		return FALSE
-	if(config.is_bundle_by_name(master_mode) && get_player_count(FALSE) < minimum_players_bundles)
-		log_mode("[name] not start because number of players is less than minimum number of players in bundle.")
+	if(config.is_bundle_by_name(master_mode) && get_player_count(check_ready) < minimum_players_bundles)
+		log_mode("[name] not start because number of players who Ready is less than minimum number of players in bundle.")
 		return FALSE
 	if(!CanPopulateFaction(check_ready))
 		log_mode("[name] not start because pre-filling of the faction failed.")
