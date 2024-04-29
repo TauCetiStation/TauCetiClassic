@@ -9,7 +9,7 @@
 	supervisors = "the captain"
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargoshop, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
+	access = list(access_heads, access_maint_tunnels, access_mailsorting, access_cargo, access_cargoshop, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 	salary = 0
 	starting_money = 60
 	minimal_player_ingame_minutes = 960
