@@ -45,6 +45,7 @@
 	new /obj/item/clothing/head/soft(src)
 	new /obj/item/weapon/mining_voucher(src)
 	new /obj/item/weapon/survivalcapsule(src)
+	new /obj/item/device/flash(src)
 	new /obj/item/clothing/accessory/medal/cargo(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
