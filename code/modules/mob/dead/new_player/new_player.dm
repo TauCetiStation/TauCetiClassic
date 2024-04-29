@@ -349,6 +349,7 @@
 			"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),
 			"Synthetic" = list(jobs = list(), titles = nonhuman_positions, color = "#ccffcc"),
 			"Service" = list(jobs = list(), titles = civilian_positions, color = "#cccccc"),
+			"Cargo" = list(jobs = list(), titles = cargo_positions, color = "#90642c"),
 			"Medical" = list(jobs = list(), titles = medical_positions, color = "#99ffe6", colBreak = TRUE),
 			"Science" = list(jobs = list(), titles = science_positions, color = "#e6b3e6"),
 		)
