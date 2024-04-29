@@ -15,7 +15,6 @@
 
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
 
-	var/own_light
 	var/image/environment_underlay
 
 	level_light_source = TRUE
@@ -47,8 +46,6 @@
 
 	icon = 'icons/turf/floors/glass/phoron_glass.dmi'
 
-	own_light = "#6927C5"
-
 /turf/simulated/floor/glass/reinforced/phoron
 	name = "reinforced phoron glass floor"
 	desc = "Do jump on it, jump on it while in a mecha, it can take it."
@@ -56,5 +53,3 @@
 	floor_type = /turf/simulated/floor/glass/reinforced/phoron
 
 	icon = 'icons/turf/floors/glass/phoron_glass_reinforced.dmi'
-
-	own_light = "#ff0000"
