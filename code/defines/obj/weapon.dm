@@ -362,6 +362,17 @@
 	table_type = /obj/structure/table/reinforced
 	debris = list(/obj/item/stack/sheet/metal, /obj/item/stack/rods)
 
+/obj/item/weapon/table_parts/rglass
+	name = "reinforced glass table parts"
+	desc = "No longer fragile"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "rglass_tableparts"
+	m_amt = 2500
+	g_amt = 3750
+	flags = CONDUCT
+	table_type = /obj/structure/table/rglass
+	debris = list(/obj/item/stack/rods, /obj/item/stack/sheet/glass)
+
 /obj/item/weapon/table_parts/stall
 	name = "stall table parts"
 	desc = "Stall table parts."
