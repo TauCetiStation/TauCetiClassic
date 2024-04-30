@@ -83947,6 +83947,7 @@
 /obj/item/weapon/aiModule/purge,
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/aiModule/antimov,
+/obj/item/weapon/aiModule/nanotrasen,
 /obj/item/weapon/aiModule/teleporterOffline,
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -87900,7 +87901,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "vaM" = (
-/obj/item/weapon/aiModule/nanotrasen,
+/obj/item/weapon/aiModule/crewsimov,
 /obj/machinery/light/smart{
 	dir = 8
 	},

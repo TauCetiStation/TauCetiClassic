@@ -1439,6 +1439,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Walrus crate"
 	group = "Hydroponics"
 
+/datum/supply_pack/larva
+	name = "Sugar larva crate"
+	crate_type = /obj/structure/closet/critter/larva
+	crate_name = "Sugar larva crate"
+	group = "Hydroponics"
+
 /datum/supply_pack/seeds
 	name = "Seeds crate"
 	contains = list(/obj/item/seeds/chiliseed,

@@ -162,6 +162,12 @@ var/global/list/image/fluidtrack_cache=list()
 	coming_state = "claw1"
 	going_state  = "claw2"
 
+/obj/effect/decal/cleanable/blood/tracks/snake
+	name = "wet tracks"
+	desc = "They look like still wet tracks left by a giant snake."
+	coming_state = "snake1"
+	going_state  = "snake2"
+
 /obj/effect/decal/cleanable/blood/tracks/wheels
 	name = "wet tracks"
 	desc = "Whoops..."

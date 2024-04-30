@@ -271,6 +271,8 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		broken = TRUE
 	else if(is_carpet_floor())
 		damage_state = "carpet_damaged"
+	else if(istype(src, /turf/simulated/floor/glass))
+		damage_state = "glass_damaged_[pick("1","2","3")]"
 		broken = TRUE
 	else if(is_grass_floor())
 		src.icon_state = "ironsand[pick("1","2","3")]"
@@ -424,6 +426,47 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	update_icon()
 	levelupdate()
 
+//This proc will place a turf into tile. Hate this
+/turf/simulated/floor/proc/place_floor(obj/item/C)
+	var/obj/item/stack/tile/T = C
+	if(!T.use(1))
+		return
+	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
+	if(T.use_change_turf)
+		ChangeTurf(T.turf_type)
+		return
+	floor_type = T.type
+	icon = initial(T.turf_type.icon)
+	name = initial(T.turf_type.name)
+	underfloor_accessibility = UNDERFLOOR_HIDDEN
+	if(istype(T,/obj/item/stack/tile/light))
+		var/obj/item/stack/tile/light/L = T
+		set_lightfloor_state(L.state)
+		set_lightfloor_on(L.on)
+	if(istype(T,/obj/item/stack/tile/grass))
+		for(var/direction in cardinal)
+			if(istype(get_step(src,direction),/turf/simulated/floor))
+				var/turf/simulated/floor/FF = get_step(src,direction)
+				FF.update_icon() //so siding gets updated properly
+	update_icon()
+	levelupdate()
+
+//Proc for make turf into plating 
+/turf/simulated/floor/proc/remove_floor(obj/item/C, mob/user)
+	if(broken || burnt)
+		to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
+	else
+		if(is_wood_floor())
+			to_chat(user, "<span class='warning'>Вы с трудом отодрали доски, сломав их.</span>")
+		else
+			var/obj/item/I = new floor_type(src)
+			if(is_light_floor())
+				var/obj/item/stack/tile/light/L = I
+				L.on = get_lightfloor_on()
+				L.state = get_lightfloor_state()
+			to_chat(user, "<span class='warning'>Вы демонтировали плитку.</span>")
+	make_plating()
+
 //This proc will make a turf into a wood floor. Fun eh? Insert the wood tile to be used as the argument
 //If no argument is given a new one will be made.
 /turf/simulated/floor/proc/make_wood_floor(obj/item/stack/tile/wood/T = null)
@@ -468,23 +511,9 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 				to_chat(user, "<span class='notice'>Похоже, лампочка в порядке, менять её не нужно.</span>")
 
 	if(isprying(C) && !is_plating() && !is_catwalk())
-		if(broken || burnt)
-			to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
-		else
-			if(is_wood_floor())
-				to_chat(user, "<span class='warning'>Вы с трудом отодрали доски, сломав их.</span>")
-			else
-				var/obj/item/I = new floor_type(src)
-				if(is_light_floor())
-					var/obj/item/stack/tile/light/L = I
-					L.on = get_lightfloor_on()
-					L.state = get_lightfloor_state()
-				to_chat(user, "<span class='warning'>Вы демонтировали плитку.</span>")
-
-		make_plating()
+		remove_floor(C, user)
 		// Can't play sounds from areas. - N3X
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-
 		return
 
 	if(isscrewing(C))
@@ -538,36 +567,17 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	if(istype(C, /obj/item/stack/tile))
 		if (is_catwalk())
 			to_chat(user, "<span class='warning'>Помост не приспособлен для установки на нем покрытия.</span>")
+		if (!is_plating())
+			var/obj/item/CB = user.get_inactive_hand()
+			if (!isprying(CB))
+				return
+			remove_floor(CB, user)
+			place_floor(C)
 		if(is_plating())
 			if(!broken && !burnt)
-				var/obj/item/stack/tile/T = C
-				if(!T.use(1))
-					return
-				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
-				if(istype(T, /obj/item/stack/tile/carpet))
-					ChangeTurf(T.turf_type) // for smoothing we need to change type
-					return
-				if(istype(T, /obj/item/stack/tile/grid))
-					ChangeTurf(T.turf_type)
-					return
-				floor_type = T.type
-				icon = initial(T.turf_type.icon)
-				name = initial(T.turf_type.name)
-				underfloor_accessibility = UNDERFLOOR_HIDDEN
-				if(istype(T,/obj/item/stack/tile/light))
-					var/obj/item/stack/tile/light/L = T
-					set_lightfloor_state(L.state)
-					set_lightfloor_on(L.on)
-				if(istype(T,/obj/item/stack/tile/grass))
-					for(var/direction in cardinal)
-						if(istype(get_step(src,direction),/turf/simulated/floor))
-							var/turf/simulated/floor/FF = get_step(src,direction)
-							FF.update_icon() //so siding gets updated properly
-				update_icon()
-				levelupdate()
+				place_floor(C)
 			else
 				to_chat(user, "<span class='notice'>Эта секция слишком повреждена, чтобы выдержать покрытие. Используйте сварочный аппарат для ремонта.</span>")
-
 
 	if(iscoil(C))
 		if(is_plating() || is_catwalk())

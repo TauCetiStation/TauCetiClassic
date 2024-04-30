@@ -12,16 +12,16 @@ var/global/list/datum/level_lighting_effect/lighting_effects
 /* space lighting */
 /datum/level_lighting_effect/starlight
 	name = "starlight"
-	colors = list("#7650a6")
+	colors = list("#4c6c8d")
 
 /datum/level_lighting_effect/centcomm
 	name = "centcomm"
-	colors = list("#ffcc99")
+	colors = list("#75499d")
 
 /* events */
 /datum/level_lighting_effect/narsie
 	name = "narsie"
-	colors = list("#444444", "#222222", "#773333")
+	colors = list("#444444", "#222222", "#af243a")
 	transition_delay = 15 SECONDS
 	reset_after = FALSE
 	lock_after = TRUE
@@ -40,7 +40,7 @@ var/global/list/datum/level_lighting_effect/lighting_effects
 /* Planetary lighting */
 /datum/level_lighting_effect/snow_map_random
 	name = "snow map random"
-	colors = list("#3399ff", "#ff99cc", "#ff6699", "#777777") // not yellow snow pls
+	colors = list("#13131f", "#363b4c", "#ebfffa", "#806963") // not yellow snow pls
 
 /datum/level_lighting_effect/snow_map_random/New()
 	colors = list(pick(colors))
