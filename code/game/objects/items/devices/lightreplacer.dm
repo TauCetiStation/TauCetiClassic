@@ -3,7 +3,7 @@
 	desc = "A device to automatically replace lights. Refill with reinforced glass."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
-	item_state = "lightreplacer0"
+	item_state = "electronic"
 	item_state_world = "lightreplacer0_world"
 
 	flags = CONDUCT
