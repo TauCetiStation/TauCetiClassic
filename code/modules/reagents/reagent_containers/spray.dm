@@ -384,21 +384,18 @@
 
 /obj/item/weapon/reagent_containers/spray/maintenance/update_icon()
 	if(reagents.total_volume < 200)
-		icon_state = "cleaner75"
 		item_state_world = "cleaner75_world"
 		item_state_inventory = "cleaner75"
 	if(reagents.total_volume < 125)
-		icon_state = "cleaner50"
 		item_state_world = "cleaner50_world"
 		item_state_inventory = "cleaner50"
 	if(reagents.total_volume < 75)
-		icon_state = "cleaner25"
 		item_state_world = "cleaner25_world"
 		item_state_inventory = "cleaner25"
 	if(reagents.total_volume == 0)
-		icon_state = "cleaner_empty"
 		item_state_world = "cleaner_empty_world"
 		item_state_inventory = "cleaner_empty"
+	update_world_icon()
 
 //space cleaner
 ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_list)
@@ -410,21 +407,18 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 
 /obj/item/weapon/reagent_containers/spray/cleaner/update_icon()
 	if(reagents.total_volume < 200)
-		icon_state = "cleaner75"
 		item_state_world = "cleaner75_world"
 		item_state_inventory = "cleaner75"
 	if(reagents.total_volume < 125)
-		icon_state = "cleaner50"
 		item_state_world = "cleaner50_world"
 		item_state_inventory = "cleaner50"
 	if(reagents.total_volume < 75)
-		icon_state = "cleaner25"
 		item_state_world = "cleaner25_world"
 		item_state_inventory = "cleaner25"
 	if(reagents.total_volume == 0)
-		icon_state = "cleaner_empty"
 		item_state_world = "cleaner_empty_world"
 		item_state_inventory = "cleaner_empty"
+	update_world_icon()
 
 /obj/item/weapon/reagent_containers/spray/cleaner/drone
 	name = "space cleaner"
@@ -547,21 +541,18 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 
 /obj/item/weapon/reagent_containers/spray/lube/update_icon()
 	if(reagents.total_volume < 200)
-		icon_state = "cleaner75"
 		item_state_world = "cleaner75_world"
 		item_state_inventory = "cleaner75"
 	if(reagents.total_volume < 125)
-		icon_state = "cleaner50"
 		item_state_world = "cleaner50_world"
 		item_state_inventory = "cleaner50"
 	if(reagents.total_volume < 75)
-		icon_state = "cleaner25"
 		item_state_world = "cleaner25_world"
 		item_state_inventory = "cleaner25"
 	if(reagents.total_volume == 0)
-		icon_state = "cleaner_empty"
 		item_state_world = "cleaner_empty_world"
 		item_state_inventory = "cleaner_empty"
+	update_world_icon()
 //Water Gun
 /obj/item/weapon/reagent_containers/spray/watergun
 	name = "hyper soaker"

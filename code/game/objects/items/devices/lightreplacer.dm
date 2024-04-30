@@ -1,9 +1,9 @@
 /obj/item/device/lightreplacer
 	name = "light replacer"
 	desc = "A device to automatically replace lights. Refill with reinforced glass."
-
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
+	item_state = "lightreplacer0"
 	item_state_world = "lightreplacer0_world"
 
 	flags = CONDUCT
@@ -88,9 +88,9 @@
 /obj/item/device/lightreplacer/update_icon()
 	icon_state = "lightreplacer[emagged]"
 	if(uses == 0)
-		icon_state = "lightreplacer0_empty"
 		item_state_world = "lightreplacer0_empty_world"
 		item_state_inventory = "lightreplacer0_empty"
+	update_world_icon()
 
 /obj/item/device/lightreplacer/emag_act(mob/user)
 	emagged = !emagged
