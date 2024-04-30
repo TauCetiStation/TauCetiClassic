@@ -85,7 +85,6 @@
 
 	backpack_contents = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
-		/obj/item/weapon/bikehorn,
 		/obj/item/weapon/stamp/clown,
 		/obj/item/toy/crayon/rainbow,
 		/obj/item/weapon/storage/fancy/crayons,
@@ -93,6 +92,12 @@
 		)
 
 	back = /obj/item/weapon/storage/backpack/clown
+
+/datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(SSholiday.holidays[APRIL_FOOLS])
+		H.equip_or_collect(new /obj/item/weapon/bikehorn/gold(H), SLOT_IN_BACKPACK)
+		return
+	H.equip_or_collect(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
 
 // MIME OUTFIT
 /datum/outfit/job/mime
@@ -120,3 +125,7 @@
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/device/pda/chaplain
+
+/datum/outfit/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(SSholiday.holidays[APRIL_FOOLS])
+		H.equip_or_collect(new /obj/item/jacobs_ladder(H), SLOT_IN_BACKPACK)

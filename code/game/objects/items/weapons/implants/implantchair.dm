@@ -120,7 +120,7 @@
 	if (!iscarbon(M))
 		return
 	for(var/obj/item/weapon/implant/mind_protect/mindshield/imp in implant_list)
-		visible_message("<span class='userdanger'>[M] был имплантирован [src.name].</span>")
+		visible_message("<span class='userdanger'>[M] был[VERB_RU(M)] [(ANYMORPH(M, "имплантирован", "имплантирована", "имплантировано", "имплантированы"))] [src.name].</span>")
 		if(imp.implanted(M))
 			imp.inject(M)
 		implant_list -= imp

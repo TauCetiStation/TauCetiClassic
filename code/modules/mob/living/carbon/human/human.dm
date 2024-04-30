@@ -154,6 +154,12 @@
 /mob/living/carbon/human/skeleton/atom_init(mapload)
 	. = ..(mapload, SKELETON)
 
+/mob/living/carbon/human/serpentid/atom_init(mapload)
+	. = ..(mapload, SERPENTID)
+
+/mob/living/carbon/human/moth/atom_init(mapload)
+	. = ..(mapload, MOTH)
+
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
 	..()
@@ -388,8 +394,6 @@
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return TRUE
-	if (istype(buckled, /obj/structure/stool/bed/nest))
 		return TRUE
 	return 0
 

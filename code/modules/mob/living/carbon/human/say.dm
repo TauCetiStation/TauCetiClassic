@@ -97,7 +97,7 @@
 		return emote(copytext(message, 2), intentional = TRUE)
 
 	//check if we are miming
-	if (miming && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
+	if (HAS_TRAIT(src, TRAIT_MIMING) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
 		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 		return
 
