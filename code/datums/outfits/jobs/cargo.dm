@@ -7,7 +7,7 @@
 	shoes =  /obj/item/clothing/shoes/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 
-	l_ear =  /obj/item/device/radio/headset/headset_cargo
+	l_ear =  /obj/item/device/radio/headset/heads/qm
 	belt = /obj/item/device/pda/quartermaster
 
 // CARGOTECH OUTFIT
