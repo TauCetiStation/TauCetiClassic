@@ -167,7 +167,7 @@ export const ComputerCard = (props, context) => {
                     key="Demoted" content="Demoted"
                     tooltip="Civilian access, 'demoted' title."
                     color="red" icon="times"
-                    onClick={() => act("terminate")} />
+                    onClick={() => act("demote")} />
                 </LabeledList.Item>
                 <LabeledList.Item label="Non-Crew">
                   <Button
@@ -229,7 +229,7 @@ export const ComputerCard = (props, context) => {
   }
 
   return (
-    <Window width={925} height={845} resizable>
+    <Window width={925} height={850} resizable>
       <Window.Content scrollable>
         {menuBlock}
         {authBlock}

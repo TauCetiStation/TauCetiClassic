@@ -296,9 +296,12 @@
 
 						for(var/A in modify.access)
 							P.info += "  [get_access_desc(A)]"
-		if ("terminate")
+		if ("terminate", "demote")
 			if (is_authenticated())
-				modify.assignment = "Terminated"
+				if(action == "terminate")
+					modify.assignment = "Terminated"
+				else if(action == "demote")
+					modify.assignment = "Demoted"
 				modify.access = list()
 				if(datum_account)
 					datum_account.set_salary(0)		//no salary
