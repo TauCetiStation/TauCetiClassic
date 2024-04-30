@@ -231,6 +231,16 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta/alien(EVENT_LEVEL_MODERATE, "Alien Infestation", /datum/event/alien_infestation,         0,     list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_MEDICAL = 15), ONESHOT, 1, 35),
 	)
 
+/datum/event_container/moderate/New()
+	. = ..()
+	if(SSholiday.holidays[APRIL_FOOLS])
+		for(var/datum/event_meta/EM in available_events)
+			if(EM.name == "Brand Intelligence")
+				available_events -= EM
+				qdel(EM)
+				break
+		available_events += new /datum/event_meta(EVENT_LEVEL_MODERATE, "Brand Intelligence", /datum/event/brand_intelligence/alive_vends, 50, list(ASSIGNMENT_ENGINEER = 1000), ONESHOT)
+
 /datum/event_container/major
 	severity = EVENT_LEVEL_MAJOR
 	available_events = list(
