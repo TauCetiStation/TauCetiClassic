@@ -383,6 +383,9 @@
 	item_state_inventory = "cleaner_empty"
 
 /obj/item/weapon/reagent_containers/spray/maintenance/update_icon()
+	if(reagents.total_volume > 200)
+		item_state_world = "cleaner_world"
+		item_state_inventory = "cleaner"
 	if(reagents.total_volume < 200)
 		item_state_world = "cleaner75_world"
 		item_state_inventory = "cleaner75"
