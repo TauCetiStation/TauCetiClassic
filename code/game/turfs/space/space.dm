@@ -31,7 +31,7 @@
 	icon_state = SPACE_ICON_STATE
 
 	if(level_light_source)
-		ENABLE_LEVEL_LIGHTING(src)
+		LEVEL_LIGHTING_SOURCE(src)
 
 	if(light_power && light_range)
 		update_light()
