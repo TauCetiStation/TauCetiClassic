@@ -1298,6 +1298,7 @@
 #include "code\game\turfs\turf_snow.dm"
 #include "code\game\turfs\unsimulated.dm"
 #include "code\game\turfs\floor\carpets.dm"
+#include "code\game\turfs\floor\glass.dm"
 #include "code\game\turfs\floor\grid_plating.dm"
 #include "code\game\turfs\simulated\floor.dm"
 #include "code\game\turfs\simulated\floor_types.dm"

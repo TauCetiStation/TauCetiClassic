@@ -271,6 +271,8 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		broken = TRUE
 	else if(is_carpet_floor())
 		damage_state = "carpet_damaged"
+	else if(istype(src, /turf/simulated/floor/glass))
+		damage_state = "glass_damaged_[pick("1","2","3")]"
 		broken = TRUE
 	else if(is_grass_floor())
 		src.icon_state = "ironsand[pick("1","2","3")]"
@@ -430,10 +432,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	if(!T.use(1))
 		return
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
-	if(istype(T, /obj/item/stack/tile/carpet))
-		ChangeTurf(T.turf_type) // for smoothing we need to change type
-		return
-	if(istype(T, /obj/item/stack/tile/grid))
+	if(T.use_change_turf)
 		ChangeTurf(T.turf_type)
 		return
 	floor_type = T.type
