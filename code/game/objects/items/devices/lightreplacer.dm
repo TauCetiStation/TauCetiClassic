@@ -86,7 +86,6 @@
 		lamp_type = valid_lamp_types[new_type]
 
 /obj/item/device/lightreplacer/update_icon()
-	icon_state = "lightreplacer[emagged]"
 	if(uses == 0)
 		item_state_world = "lightreplacer0_empty_world"
 		item_state_inventory = "lightreplacer0_empty"
