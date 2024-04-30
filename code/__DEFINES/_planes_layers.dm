@@ -153,15 +153,19 @@ What is the naming convention for planes or layers?
 
 //---------- -----LIGHTING -------------
 #define LIGHTING_PLANE 100
-#define LIGHTING_EXPOSURE_PLANE 101 // Light sources "cones"
-#define LIGHTING_LAMPS_SELFGLOW 102 // Light sources glow (lamps, doors overlay, etc.)
-#define LIGHTING_LAMPS_PLANE 103 // Light sources themselves (lamps, screens, etc.)
-#define LIGHTING_LAMPS_GLARE 104 // Light glare (optional setting)
+
+#define LIGHTING_EXPOSURE_PLANE 102 // Light sources "cones"
+#define LIGHTING_LAMPS_SELFGLOW 103 // Light sources glow (lamps, doors overlay, etc.)
+#define LIGHTING_LAMPS_PLANE 104 // Light sources themselves (lamps, screens, etc.)
+#define LIGHTING_LAMPS_GLARE 105 // Light glare (optional setting)
+
 #define LIGHTING_LAMPS_RENDER_TARGET "*LIGHTING_LAMPS_RENDER_TARGET"
+#define DYNAMIC_LIGHTING_RENDER_TARGET "*DYNAMIC_LIGHTING_RENDER_TARGET"
 
 #define ENVIRONMENT_LIGHTING_PLANE 110
 #define ENVIRONMENT_LIGHTING_COLOR_PLANE 111
 #define ENVIRONMENT_LIGHTING_LOCAL_PLANE 112
+#define DYNAMIC_LIGHTING_PLANE 115 // light objects
 
 #define ABOVE_LIGHTING_PLANE 120
   #define ABOVE_LIGHTING_LAYER 1
