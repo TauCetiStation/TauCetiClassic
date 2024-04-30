@@ -16,6 +16,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //EXODUS
 
+// Respectful request when adding new zones, add RU cases. Since zones are starting to be actively used in translation.
+
 ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 //Engineering

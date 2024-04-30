@@ -1,3 +1,9 @@
+ ///////////
+ ///GAMMA///
+ ///////////
+
+// Respectful request when adding new zones, add RU cases. Since zones are starting to be actively used in translation.
+
 /area/station/engineering/monitoring
 	name = "Engineering Monitoring Room"
 	cases = list("комната наблюдения ИО")

@@ -2,6 +2,8 @@
  //CENTCOM//
  ///////////
 
+// Respectful request when adding new zones, add RU cases. Since zones are starting to be actively used in translation.
+
 //Centcom
 /area/centcom
 	name = "Centcom"
@@ -38,13 +40,9 @@
 	name = "Centcom Special Ops"
 	cases = list("штаб спец.сил ЦК", "штаба спец.сил ЦК", "штабу спец.сил ЦК", "штаб спец.сил ЦК", "штабом спец.сил ЦК", "штабе спец.сил ЦК")
 
-/area/centcom/creed
-	name = "Creed's Office"
-	cases = list("офис Крида", "офиса Крида", "офису Крида", "офис Крида", "офисом Крида", "офисе Крида")
-
 /area/centcom/holding
-	name = "Holding Facility"
-	cases = list("пропускной пункт", "пропускного пункта", "пропускному пункту", "пропускной пункт", "пропускном пункте", "пропускном пункте")
+	name = "Centcom Checkpoint"
+	cases = list("КПП ЦК", "КПП ЦК", "КПП ЦК", "КПП ЦК", "КПП ЦК", "КПП ЦК")
 
 /area/centcom/bar
 	name = "Centcom Bar"

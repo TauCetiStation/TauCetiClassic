@@ -2,6 +2,8 @@
  //MAIN AREAS//
  //////////////
 
+ // Respectful request when adding new zones, add RU cases. Since zones are starting to be actively used in translation.
+
 /area/space
 	name = "Space"
 	cases = list("космическое пространство", "космического пространства", "космическому пространству", "космическое пространство", "космическим пространством", "космическом пространстве")

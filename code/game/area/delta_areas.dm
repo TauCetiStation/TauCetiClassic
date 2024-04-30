@@ -1,6 +1,12 @@
+ ///////////
+ ///DELTA///
+ ///////////
+
+// Respectful request when adding new zones, add RU cases. Since zones are starting to be actively used in translation.
+
 /area/station/engineering/atmos/supermatter
 	name = "Supermatter Construction Area"
-	cases = list("зона потдела снабжениятройки двигателя на суперматерии", "зоны потдела снабжениятройки двигателя на суперматерии", "зоне потдела снабжениятройки двигателя на суперматерии", "зона потдела снабжениятройки двигателя на суперматерии", "зоной потдела снабжениятройки двигателя на суперматерии", "зоне потдела снабжениятройки двигателя на суперматерии")
+	cases = list("строительная зона суперматерии", "строительной зоны суперматерии", "строительной зоне суперматерии", "строительную зону суперматерии", "строительной зоной суперматерии", "строительной зоне суперматерии")
 	power_equip = 0
 	power_light = 0
 	power_environ = 0
@@ -43,11 +49,12 @@
 
 /area/station/cargo/lobby
 	name = "Cargo Lobby"
+	cases = list("приёмная отдела снабжения", "приёмной отдела снабжения", "приёмной отдела снабжения", "приёмную отдела снабжения", "приёмной отдела снабжения", "приёмной отдела снабжения")
 
 /area/station/security/checkpoint/escape
 	name = "Security Escape Checkpoint"
 	cases = list("КПП отбытия", "КПП отбытия", "КПП отбытия", "КПП отбытия", "КПП отбытия", "КПП отбытия")
-//not used
+
 /area/station/security/checkpoint/escape_custom_desk
 	name = "Custom Escape Desk"
 

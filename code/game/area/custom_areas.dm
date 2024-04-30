@@ -2,6 +2,8 @@
  //CUSTOM//
  //////////
 
+ // Respectful request when adding new zones, add RU cases. Since zones are starting to be actively used in translation.
+
 //VELOCITY
 /area/velocity
 	name = "Velocity Dock 42"
@@ -17,6 +19,26 @@
 	cases = list("монорельсовый вагон Велосити", "монорельсового вагона Велосити", "монорельсовому вагону Велосити", "монорельсовый вагон Велосити", "монорельсовым вагоном Велосити", "монорельсовом вагоне Велосити")
 	icon_state = "velocity_wagon"
 	ambience = 'sound/ambience/monorail_arrival.ogg'
+
+/area/velocity/checkpoint
+	name = "Velocity Checkpoint"
+	cases = list("КПП Велосити", "КПП Велосити", "КПП Велосити", "КПП Велосити", "КПП Велосити", "КПП Велосити")
+
+/area/velocity/waitingroom
+	name = "Velocity Waiting Hall"
+	cases = list("зал ожидания Велосити", "зала ожидания Велосити", "залу ожидания Велосити", "зал ожидания Велосити", "залом ожидания Велосити", "зале ожидания Велосити")
+
+/area/velocity/dormitories
+	name = "Velocity Dormitories"
+	cases = list("дормиторий Велосити", "дормитория Велосити", "дормиторию Велосити", "дормиторий Велосити", "дормиторием Велосити", "дормитории Велосити")
+
+/area/velocity/locker
+	name = "Velocity Locker Room"
+	cases = list("раздевалка Велосити", "раздевалки Велосити", "раздевалке Велосити", "раздевалку Велосити", "раздевалкой Велосити", "раздевалке Велосити")
+
+/area/velocity/exit
+	name = "Escape Velocity Hallway"
+	cases = list("коридор отбытия Велосити", "коридора отбытия Велосити", "коридору отбытия Велосити", "коридор отбытия Велосити", "коридором отбытия Велосити", "коридоре отбытия Велосити")
 
 //Alien base
 /area/custom/alien

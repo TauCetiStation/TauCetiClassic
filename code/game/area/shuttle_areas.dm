@@ -6,6 +6,8 @@
 //place to another. Look at escape shuttle for example.
 //All shuttles show now be under shuttle since we have smooth-wall code.
 
+// Respectful request when adding new zones, add RU cases. Since zones are starting to be actively used in translation.
+
 /area/shuttle
 	name = "Shuttle"
 	cases = list("шаттл", "шаттла", "шаттлу", "шаттл", "шаттлом", "шаттле")
