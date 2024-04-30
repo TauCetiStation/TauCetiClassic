@@ -15,8 +15,8 @@
 	randomize_eyes_color()
 	randomize_skin_color()
 	underwear = rand(1,underwear_m.len)
-	undershirt = rand(1,undershirt_m.len)
-	socks = rand(1,socks_m.len)
+	undershirt = rand(1,undershirt_t.len)
+	socks = rand(1,socks_t.len)
 	backbag = 2
 	use_skirt = pick(TRUE, FALSE)
 	var/datum/species/S = all_species[species]

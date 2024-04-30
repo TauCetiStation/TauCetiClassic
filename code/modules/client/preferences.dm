@@ -486,11 +486,11 @@ var/global/list/preferences_datums = list()
 		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
 	character.underwear = underwear
 
-	if(undershirt > undershirt_m.len || undershirt < 1)
+	if(undershirt > undershirt_t.len || undershirt < 1)
 		undershirt = 0
 	character.undershirt = undershirt
 
-	if(socks > socks_m.len || socks < 1)
+	if(socks > socks_t.len || socks < 1)
 		socks = 0
 	character.socks = socks
 

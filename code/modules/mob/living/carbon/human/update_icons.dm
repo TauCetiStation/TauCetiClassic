@@ -221,7 +221,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			MA = update_height(MA, TRUE)
 			standing += MA
 
-	if((undershirt > 0) && (undershirt < undershirt_m.len) && species.flags[HAS_UNDERWEAR])
+	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
 			var/mutable_appearance/MA = mutable_appearance('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s_[g]", -BODY_LAYER)
 			MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
@@ -229,7 +229,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			MA = update_height(MA, TRUE)
 			standing += MA
 
-	if(!fat && socks > 0 && socks < socks_m.len && species.flags[HAS_UNDERWEAR])
+	if(!fat && socks > 0 && socks < socks_t.len && species.flags[HAS_UNDERWEAR])
 		var/obj/item/organ/external/r_foot = bodyparts_by_name[BP_R_LEG]
 		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
 		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
