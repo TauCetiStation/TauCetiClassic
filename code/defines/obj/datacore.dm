@@ -75,10 +75,6 @@ using /obj/effect/datacore/proc/manifest_inject( )
 			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = science_positions.Find(real_rank))
 			in_department = TRUE
 
-		if(real_rank in science_positions)
-			car[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = science_positions.Find(real_rank))
-			in_department = TRUE
-
 		if(real_rank in cargo_positions)
 			car[++car.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = science_positions.Find(real_rank))
 			in_department = TRUE
