@@ -26,7 +26,7 @@
 			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",
 			"<span class='notice'>You hear squelching...</span>")
 
-		if(!(do_after(L, 3 MINUTES, needhand = FALSE, target = L) && buckled_mob == L))
+		if(!(do_after(L, 3 MINUTES, target = L) && buckled_mob == L))
 			return
 
 	L.pixel_y = L.default_pixel_y
