@@ -74942,7 +74942,7 @@
 "ovN" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/weapon/reagent_containers/spray,
+/obj/item/weapon/reagent_containers/spray/maintenance,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor{
 	dir = 9;
