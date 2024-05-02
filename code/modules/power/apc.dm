@@ -424,7 +424,7 @@
 	if(isprying(W) && opened != APC_COVER_CLOSED)
 		if(has_electronics == 1)
 			if(terminal)
-				to_chat(user, "<span class='warning'>Отключите проводку.</span>")
+				to_chat(user, "<span class='warning'>Отключите щиток от питания.</span>")
 				return
 			if(user.is_busy(src))
 				return
