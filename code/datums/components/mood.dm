@@ -331,22 +331,22 @@
 
 	switch(L.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			add_event(null, "nutrition", /datum/mood_event/fat)
+			add_event(null, "nutrition", /datum/mood_event/nutrition_effects/fat)
 
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-			add_event(null, "nutrition", /datum/mood_event/wellfed)
+			add_event(null, "nutrition", /datum/mood_event/nutrition_effects/wellfed)
 
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-			add_event(null, "nutrition", /datum/mood_event/fed)
+			add_event(null, "nutrition", /datum/mood_event/nutrition_effects/fed)
 
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
 			clear_event(null, "nutrition")
 
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			add_event(null, "nutrition", /datum/mood_event/hungry)
+			add_event(null, "nutrition", /datum/mood_event/nutrition_effects/hungry)
 
 		if(0 to NUTRITION_LEVEL_STARVING)
-			add_event(null, "nutrition", /datum/mood_event/starving)
+			add_event(null, "nutrition", /datum/mood_event/nutrition_effects/starving)
 
 /datum/component/mood/proc/HandleShock()
 	if(!iscarbon(parent))

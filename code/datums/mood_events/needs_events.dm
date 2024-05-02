@@ -1,21 +1,21 @@
 //nutrition
-/datum/mood_event/fat
+/datum/mood_event/nutrition_effects/fat
 	description = "<span class='warning'><B>I'm so fat...</B></span>" //muh fatshaming
 	mood_change = -6
 
-/datum/mood_event/wellfed
+/datum/mood_event/nutrition_effects/wellfed
 	description = "<span class='nicegreen'>I'm stuffed!</span>"
 	mood_change = 8
 
-/datum/mood_event/fed
+/datum/mood_event/nutrition_effects/fed
 	description = "<span class='nicegreen'>I have recently had some food.</span>"
 	mood_change = 5
 
-/datum/mood_event/hungry
+/datum/mood_event/nutrition_effects/hungry
 	description = "<span class='warning'>I'm getting a bit hungry.</span>"
 	mood_change = -6
 
-/datum/mood_event/starving
+/datum/mood_event/nutrition_effects/starving
 	description = "<span class='boldwarning'>I'm starving!</span>"
 	mood_change = -10
 
@@ -40,11 +40,14 @@
 	description = "<span class='boldwarning'>You feel like you could die any moment now.</span>"
 	mood_change = -20
 
+
+//lonely
+
 /datum/mood_event/lonely
 	description = "<span class='warning'>I feel lonely... I better talk to somebody, for real.</span>"
 	mood_change = -6
 
-/datum/mood_event/very_lonely
+/datum/mood_event/lonely/very_lonely
 	description = "<span class='boldwarning'>Am I the loneliest being in the universe?... I need to be heard!</span>"
 	mood_change = -12
 
