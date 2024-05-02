@@ -739,7 +739,7 @@
 				else
 					to_chat(user, "<span class='notice'>Ваш аккумулятор полностью заряжен.</span>")
 			else
-				to_chat(user, "Напряжение в [CASE(src, PREPOSITIONAL_CASE)] слишком мало.")
+				to_chat(user, "Критически низкое напряжение в [CASE(src, PREPOSITIONAL_CASE)].")
 			return
 
 	if(usr == user && opened != APC_COVER_CLOSED && !issilicon(user) && !isobserver(user))
