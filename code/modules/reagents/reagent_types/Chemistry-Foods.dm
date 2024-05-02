@@ -382,7 +382,7 @@
 
 /datum/reagent/consumable/dry_ramen/on_general_digest(mob/living/M)
 	..()
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/food_effects/junk_food)
 
 /datum/reagent/consumable/hot_ramen
 	name = "Hot Ramen"
@@ -395,7 +395,7 @@
 
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
 	..()
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/food_effects/junk_food)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/hell_ramen
@@ -409,7 +409,7 @@
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
 	..()
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/food_effects/junk_food)
 	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
 /datum/reagent/consumable/hot_hell_ramen
@@ -423,7 +423,7 @@
 
 /datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
 	..()
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/food_effects/junk_food)
 	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
 /datum/reagent/consumable/rice

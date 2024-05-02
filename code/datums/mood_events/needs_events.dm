@@ -20,23 +20,23 @@
 	mood_change = -10
 
 //pain
-/datum/mood_event/mild_pain
+/datum/mood_event/pain_effects/mild_pain
 	description = "<span class='warning'>I'm in pain.</span>"
 	mood_change = -2
 
-/datum/mood_event/moderate_pain
+/datum/mood_event/pain_effects/moderate_pain
 	description = "<span class='warning'>It hurts so much!</span>"
 	mood_change = -4
 
-/datum/mood_event/intense_pain
+/datum/mood_event/pain_effects/intense_pain
 	description = "<span class='warning'>The pain is excrutiating!</span>"
 	mood_change = -6
 
-/datum/mood_event/unspeakable_pain
+/datum/mood_event/pain_effects/unspeakable_pain
 	description = "<span class='boldwarning'>Please, just end the pain!</span>"
 	mood_change = -12
 
-/datum/mood_event/agony
+/datum/mood_event/pain_effects/agony
 	description = "<span class='boldwarning'>You feel like you could die any moment now.</span>"
 	mood_change = -20
 
@@ -50,22 +50,22 @@
 
 // Food
 
-/datum/mood_event/junk_food
+/datum/mood_event/food_effects/junk_food
 	description = "<span class='warning'>This food is hurting me!</span>"
 	mood_change = -2
 	timeout = 3 MINUTES
 
-/datum/mood_event/natural_food
+/datum/mood_event/food_effects/natural_food
 	description = "<span class='nicegreen'>Very nice to eat wholesome and natural food.</span>"
 	mood_change = 1
 	timeout = 3 MINUTES
 
-/datum/mood_event/tasty_food
+/datum/mood_event/food_effects/tasty_food
 	description = "<span class='nicegreen'>This food tastes good, I like it.</span>"
 	mood_change = 2
 	timeout = 3 MINUTES
 
-/datum/mood_event/very_tasty_food
+/datum/mood_event/food_effects/very_tasty_food
 	description = "<span class='bold nicegreen'>This food tastes just divine!</span>"
 	mood_change = 4
 	timeout = 5 MINUTES

@@ -357,19 +357,19 @@
 		if(C.traumatic_shock < 10)
 			clear_event(null, "pain")
 		else
-			add_event(null, "pain", /datum/mood_event/mild_pain)
+			add_event(null, "pain", /datum/mood_event/pain_effects/mild_pain)
 
 		return
 
 	switch(C.shock_stage)
 		if(0 to 30)
-			add_event(null, "pain", /datum/mood_event/moderate_pain)
+			add_event(null, "pain", /datum/mood_event/pain_effects/moderate_pain)
 		if(30 to 60)
-			add_event(null, "pain", /datum/mood_event/intense_pain)
+			add_event(null, "pain", /datum/mood_event/pain_effects/intense_pain)
 		if(60 to 120)
-			add_event(null, "pain", /datum/mood_event/unspeakable_pain)
+			add_event(null, "pain", /datum/mood_event/pain_effects/unspeakable_pain)
 		if(120 to INFINITY)
-			add_event(null, "pain", /datum/mood_event/agony)
+			add_event(null, "pain", /datum/mood_event/pain_effects/agony)
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A, atom/OldLoc)
 	SIGNAL_HANDLER

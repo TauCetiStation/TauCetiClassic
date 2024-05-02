@@ -15,7 +15,7 @@
 	var/datum/reagent/liquid_fuel
 	var/start_brightness = 4
 	food_type = JUNK_FOOD
-	food_moodlet = /datum/mood_event/junk_food
+	food_moodlet = /datum/mood_event/food_effects/junk_food
 	item_action_types = list(/datum/action/item_action/hands_free/break_glowstick)
 
 /datum/action/item_action/hands_free/break_glowstick
