@@ -195,6 +195,7 @@
 #define TRAIT_FAST_WALKER         "fast_walker"
 #define TRAIT_BORK_SKILLCHIP      "bork_skillchip"
 #define TRAIT_MIMING              "miming"
+#define TRAIT_UNDER_PAINKILLER "under_painkiller"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

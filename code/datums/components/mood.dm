@@ -354,11 +354,17 @@
 	var/mob/living/carbon/C = parent
 
 	if(C.shock_stage <= 0)
-		if(C.traumatic_shock < 10)
+		if(C.traumatic_shock < 10 || C.reagents.has_reagent("oxycodone", "tramadol"))
+			ADD_TRAIT(C, TRAIT_UNDER_PAINKILLER, GENERIC_TRAIT)
 			clear_event(null, "pain")
 		else
 			add_event(null, "pain", /datum/mood_event/mild_pain)
+			if(!C.reagents.has_reagent("oxycodone", "tramadol"))
+				REMOVE_TRAIT(C, TRAIT_UNDER_PAINKILLER, GENERIC_TRAIT)
 
+		return
+
+	if(HAS_TRAIT(C, TRAIT_UNDER_PAINKILLER))
 		return
 
 	switch(C.shock_stage)
