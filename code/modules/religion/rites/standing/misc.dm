@@ -193,6 +193,7 @@
 			R.friends = religion.members
 
 		user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
+		favor_cost = initial(favor_cost)
 	return TRUE
 
 /*
