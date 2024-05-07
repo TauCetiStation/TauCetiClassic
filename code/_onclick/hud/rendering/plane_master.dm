@@ -122,6 +122,14 @@
 
 	mymob.overlay_fullscreen("darkness", /atom/movable/screen/fullscreen/darkness)
 
+/atom/movable/screen/plane_master/dynamic_lighting
+	name = "dynamic lighting plane master"
+	plane = DYNAMIC_LIGHTING_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_plane = LIGHTING_PLANE
+	blend_mode_override = BLEND_ADD
+	render_target = DYNAMIC_LIGHTING_RENDER_TARGET
+
 /atom/movable/screen/plane_master/exposure
 	name = "exposure plane master"
 	plane = LIGHTING_EXPOSURE_PLANE
@@ -224,7 +232,7 @@
 	name = "environment lighting plane master"
 	plane = ENVIRONMENT_LIGHTING_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_plane = LIGHTING_PLANE
+	render_relay_plane = DYNAMIC_LIGHTING_PLANE
 	blend_mode_override = BLEND_ADD
 
 	var/atom/movable/screen/fullscreen/environment_lighting_color/color_filter

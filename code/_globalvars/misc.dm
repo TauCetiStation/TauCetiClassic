@@ -58,3 +58,5 @@ var/global/timezoneOffset = 0       // The difference betwen midnight (of the ho
 var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.
 
 var/global/playsound_frequency_admin = 0	// Admin var for shitspawn via Secrets panel
+
+var/global/nuclear_siren_cooldown = 0

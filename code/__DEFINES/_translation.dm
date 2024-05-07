@@ -119,10 +119,10 @@
 
 // Прошедшее время глагола
 // "делал[VERB_RU(src)]"
-#define VERB_RU(atom) atom.gender == MALE && "" \
-               || atom.gender == FEMALE && "а" \
+#define VERB_RU(atom) atom.gender == FEMALE && "а" \
                || atom.gender == NEUTER && "о" \
-               || "и"
+               || atom.gender == PLURAL && "и" \
+               || ""
 // Прошедшее время возвратного глагола
 // "отказал[VERB2_RU(src)] взять предмет"
 #define VERB2_RU(atom) atom.gender == MALE && "ся" \

@@ -732,6 +732,18 @@
 	LH.pixel_y = p_y
 
 /*
+ * reinforced glass table
+ */
+ 
+/obj/structure/table/rglass
+	name = "reinforced glass table"
+	desc = "A reinforced version of the glass table"
+	icon = 'icons/obj/smooth_structures/rglass.dmi'
+	max_integrity = 100
+	parts = /obj/item/weapon/table_parts/rglass
+	flipable = FALSE
+
+/*
  * Racks
  */
 /obj/structure/rack // TODO subtype of table?

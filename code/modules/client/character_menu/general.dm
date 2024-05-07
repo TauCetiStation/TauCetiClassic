@@ -405,15 +405,12 @@
 						underwear_options = underwear_m
 					else
 						underwear_options = underwear_f
-
 					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear_options[underwear]) as null|anything in underwear_options
 					if(new_underwear)
 						underwear = underwear_options.Find(new_underwear)
-
 				if("undershirt")
 					var/list/undershirt_options
 					undershirt_options = undershirt_t
-
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt_options[undershirt]) as null|anything in undershirt_options
 					if (new_undershirt)
 						undershirt = undershirt_options.Find(new_undershirt)

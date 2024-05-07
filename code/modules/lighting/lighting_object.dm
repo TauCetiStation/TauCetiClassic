@@ -6,7 +6,7 @@
 	icon             = 'icons/effects/lighting_object.dmi'
 	icon_state       = "transparent"
 	color            = LIGHTING_BASE_MATRIX
-	plane            = LIGHTING_PLANE
+	plane            = DYNAMIC_LIGHTING_PLANE
 	mouse_opacity    = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = parent_type::appearance_flags | NO_CLIENT_COLOR
 

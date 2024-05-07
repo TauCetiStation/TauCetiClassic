@@ -69,11 +69,14 @@
 
 // adds lighting mask to turf, see more in comments to environment_lighting plane
 // we add this to underlays because else it will corrupt turf icon in context menu / other places
-// does not cast light around, must be done separately
-#define ENABLE_LEVEL_LIGHTING(turf) \
-	turf.underlays |= list(global.level_light_mask); \
-	if(turf.level_light_source) turf.luminosity = LEVEL_LIGHT_LUMINOSITY
+// does not check if underlay already exists, must be done separately
+#define LEVEL_LIGHTING_SOURCE(turf) \
+	turf.underlays += global.level_light_source_mask; \
+	turf.luminosity = LEVEL_LIGHT_LUMINOSITY
 
-#define DISABLE_LEVEL_LIGHTING(turf) \
-	turf.underlays -= global.level_light_mask; \
+#define LEVEL_LIGHTING_CAST(turf) \
+	turf.underlays |= list(global.level_light_cast_mask)
+
+#define RESET_LEVEL_LIGHTING(turf) \
+	turf.underlays -= list(global.level_light_source_mask, global.level_light_cast_mask); \
 	turf.luminosity = initial(turf.luminosity)
