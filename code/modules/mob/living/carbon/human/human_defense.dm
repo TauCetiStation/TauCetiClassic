@@ -1,4 +1,4 @@
-#define PROTECTION_TO_MULTIPLE(p) (100 - min(p, 100)) * 0.01
+#define PROTECTION_TO_MULTIPLE(p) ((100 - min(p, 100)) * 0.01)
 /mob/living/carbon/human/getHalLoss()
 	if(species.flags[NO_PAIN])
 		return 0
@@ -183,14 +183,14 @@
 
 	if(def_zone)
 		if(isbodypart(def_zone))
-			return get_protection_multiple_organ(def_zone, type)
+			return 100 - get_protection_multiple_organ(def_zone, type) * 100
 		var/obj/item/organ/external/BP = get_bodypart(def_zone)
-		return get_protection_multiple_organ(BP, type)
+		return 100 - get_protection_multiple_organ(BP, type) * 100
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/obj/item/organ/external/BP in bodyparts)
-		armorval += get_protection_multiple_organ(BP, type)
+		armorval += 100 - get_protection_multiple_organ(BP, type)
 		organnum++
 	return (armorval/max(organnum, 1))
 
@@ -220,15 +220,14 @@
 /mob/living/carbon/human/proc/get_protection_multiple_organ(obj/item/organ/external/BP, type)
 	if(!type || !BP)
 		return 0
-	var/protection = 100
+	var/protection = 1
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
-
 	protection *= PROTECTION_TO_MULTIPLE(BP.pumped * 0.3)
 	for(var/obj/item/clothing/C in protective_gear)
 		if(C.body_parts_covered & BP.body_part)
 			protection *= PROTECTION_TO_MULTIPLE(C.armor[type])
 
-	return 100 - protection
+	return protection
 
 /mob/living/carbon/human/proc/check_head_coverage()
 
