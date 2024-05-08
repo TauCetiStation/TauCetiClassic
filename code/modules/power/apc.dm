@@ -487,7 +487,7 @@
 			user.drop_from_inventory(W, src)
 			cell = W
 			user.visible_message(\
-				"<span class='warning'>[user.name] установил аккумулятор в [CASE(src, ACCUSATIVE_CASE)]!</span>",\
+				"<span class='warning'>[user.name] установил[VERB_RU(user)] аккумулятор в [CASE(src, ACCUSATIVE_CASE)]!</span>",\
 				"Вы устанавливаете аккумулятор в [CASE(src, ACCUSATIVE_CASE)].")
 			chargecount = 0
 			update_icon()
@@ -616,7 +616,7 @@
 		if(opened == APC_COVER_REMOVED)
 			opened = APC_COVER_OPENED
 		user.visible_message(\
-			"<span class='warning'>[user.name] заменил сломанную крышку [CASE(src, GENITIVE_CASE)].</span>",\
+			"<span class='warning'>[user.name] заменяет сломанную крышку [CASE(src, GENITIVE_CASE)].</span>",\
 			"Вы заменили сломанную крышку [CASE(src, GENITIVE_CASE)].")
 		qdel(W)
 		update_icon()
@@ -629,7 +629,7 @@
 		to_chat(user, "Вы заменяете сломанный корпус [CASE(src, GENITIVE_CASE)]...")
 		if(W.use_tool(src, user, 50, volume = 50))
 			user.visible_message(\
-				"<span class='warning'>[user.name] заменил сломанный корпус [CASE(src, GENITIVE_CASE)].</span>",\
+				"<span class='warning'>[user.name] заменил[VERB_RU(user)] сломанный корпус [CASE(src, GENITIVE_CASE)].</span>",\
 				"Вы заменили сломанный корпус [CASE(src, GENITIVE_CASE)].")
 			qdel(W)
 			stat &= ~BROKEN
@@ -737,7 +737,7 @@
 					src.charging = APC_CHARGING
 
 				else
-					to_chat(user, "<span class='notice'>Ваш аккумулятор полностью заряжен.</span>")
+					to_chat(user, "<span class='notice'>Ваша батарея полностью заряжена.</span>")
 			else
 				to_chat(user, "Критически низкое напряжение в [CASE(src, PREPOSITIONAL_CASE)].")
 			return
@@ -749,7 +749,7 @@
 			cell.updateicon()
 
 			src.cell = null
-			user.visible_message("<span class='warning'>[user.name] извлёк аккумулятор из [CASE(src, GENITIVE_CASE)]!</span>", "Вы извлекаете аккумулятор из [CASE(src, GENITIVE_CASE)].")
+			user.visible_message("<span class='warning'>[user.name] извлекает аккумулятор из [CASE(src, GENITIVE_CASE)]!</span>", "Вы извлекаете аккумулятор из [CASE(src, GENITIVE_CASE)].")
 			charging = APC_NOT_CHARGING
 			update_icon()
 		return
