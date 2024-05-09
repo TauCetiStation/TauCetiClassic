@@ -270,11 +270,7 @@
 	prefs.eye_blur_effect = !prefs.eye_blur_effect
 	to_chat(src, "Blur effect: [prefs.eye_blur_effect ? "Enabled" : "Old design"].")
 	prefs.save_preferences()
-	var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in screen
-	if(mob.eye_blurry)
-		PM.remove_filter("eye_blur_angular")
-		PM.remove_filter("eye_blur_gauss")
-		mob.clear_fullscreen("blurry")
+	update_plane_masters_effects(/atom/movable/screen/plane_master/game_world)
 	feedback_add_details("admin_verb","EBE")
 
 /client/verb/set_parallax_quality()

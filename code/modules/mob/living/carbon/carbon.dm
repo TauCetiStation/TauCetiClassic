@@ -1139,7 +1139,7 @@
 		return FALSE
 
 	sight = initial(sight)
-	lighting_alpha = initial(lighting_alpha)
+	var/new_lighting_alpha = initial(lighting_alpha)
 
 	var/datum/species/S = all_species[get_species()]
 	if(S)
@@ -1150,7 +1150,7 @@
 	if(changeling_aug)
 		sight |= SEE_MOBS
 		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 	if(XRAY in mutations)
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
@@ -1164,22 +1164,25 @@
 			if(0)
 				O.togge_huds()
 				if(!druggy)
-					lighting_alpha = initial(lighting_alpha)
+					new_lighting_alpha = initial(lighting_alpha)
 					see_invisible = SEE_INVISIBLE_LIVING
 			if(1)
 				see_in_dark = 8
 				if(!druggy)
-					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+					new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 			if(2)
 				sight |= SEE_MOBS
 				see_in_dark = initial(see_in_dark)
 				if(!druggy)
-					lighting_alpha = initial(lighting_alpha)
+					new_lighting_alpha = initial(lighting_alpha)
 					see_invisible = SEE_INVISIBLE_LEVEL_TWO
 			if(3)
 				sight |= SEE_TURFS
 				if(!druggy)
-					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+					new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+	if(lighting_alpha != new_lighting_alpha) // i hate that we do sight update every tick
+		set_lighting_alpha(new_lighting_alpha)
 
 	return TRUE
 

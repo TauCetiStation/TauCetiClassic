@@ -26,11 +26,11 @@
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
 		return FALSE
-
 	hud_used = new hud_type(src)
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
 	hud_used.show_hud(istype(loc, /obj/mecha) ? HUD_STYLE_REDUCED : HUD_STYLE_STANDARD)
 	update_sight()
+
 	return TRUE
 
 /mob/Login()
@@ -49,6 +49,11 @@
 
 	create_mob_hud()
 
+	// todo: need to keep plane masters between client reconnects and mob changes
+	// PM's are always part of client and rendering so mobs HUD container doesn't fit semantically
+	if(client) // magic
+		client.init_plane_masters()
+
 	client.pixel_x = 0
 	client.pixel_y = 0
 	next_move = 1
@@ -64,13 +69,6 @@
 	else
 		client.eye = src
 		client.perspective = MOB_PERSPECTIVE
-
-	//Users with different eye_blur_effect pref OR client disconnected during eye_blurry effect
-	var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in client.screen
-	if(PM)
-		PM.remove_filter("eye_blur_angular")
-		PM.remove_filter("eye_blur_gauss")
-	clear_fullscreen("blurry")
 
 	// atom_huds
 	reload_huds()
