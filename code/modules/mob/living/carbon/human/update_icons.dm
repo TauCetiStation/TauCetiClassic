@@ -215,7 +215,13 @@ Please contact me on #coderbus IRC. ~Carn x
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
-			var/mutable_appearance/MA = mutable_appearance('icons/mob/human.dmi', "underwear[underwear]_[g]_s", -BODY_LAYER)
+			var/mutable_appearance/MA = mutable_appearance('icons/mob/human_underwear.dmi', "underwear[underwear]_[g]_s", -BODY_LAYER)
+			MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
+			MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
+			MA = update_height(MA, TRUE)
+			standing += MA
+		else if(fat)
+			var/mutable_appearance/MA = mutable_appearance('icons/mob/human_underwear_fat.dmi', "underwear[underwear]_[g]_s", -BODY_LAYER)
 			MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 			MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 			MA = update_height(MA, TRUE)
@@ -228,12 +234,27 @@ Please contact me on #coderbus IRC. ~Carn x
 			MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 			MA = update_height(MA, TRUE)
 			standing += MA
+		else if(fat)
+			var/mutable_appearance/MA = mutable_appearance('icons/mob/human_undershirt_fat.dmi', "undershirt[undershirt]_s_[g]", -BODY_LAYER)
+			MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
+			MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
+			MA = update_height(MA, TRUE)
+			standing += MA
 
 	if(!fat && socks > 0 && socks < socks_t.len && species.flags[HAS_UNDERWEAR])
 		var/obj/item/organ/external/r_foot = bodyparts_by_name[BP_R_LEG]
 		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
 		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
 			var/mutable_appearance/MA = mutable_appearance('icons/mob/human_socks.dmi', "socks[socks]_s_[g]", -BODY_LAYER)
+			MA.pixel_x += species.offset_features[OFFSET_SHOES][1]
+			MA.pixel_y += species.offset_features[OFFSET_SHOES][2]
+			MA = update_height(MA, TRUE)
+			standing += MA
+	else if(fat && socks > 0 && socks < socks_t.len && species.flags[HAS_UNDERWEAR])
+		var/obj/item/organ/external/r_foot = bodyparts_by_name[BP_R_LEG]
+		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
+		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
+			var/mutable_appearance/MA = mutable_appearance('icons/mob/human_socks_fat.dmi', "socks[socks]_s_[g]", -BODY_LAYER)
 			MA.pixel_x += species.offset_features[OFFSET_SHOES][1]
 			MA.pixel_y += species.offset_features[OFFSET_SHOES][2]
 			MA = update_height(MA, TRUE)
