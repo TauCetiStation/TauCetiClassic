@@ -51,7 +51,7 @@
 			has_extinguisher = null
 		else
 			has_extinguisher.forceMove(loc)
-			visible_message("<span class='notice'>[src] opens and \the fire [has_extinguisher] falls out!</span>")
+			visible_message("<span class='notice'>[src] opens and \the [has_extinguisher] falls out!</span>")
 			has_extinguisher = null
 		opened = TRUE
 	else
