@@ -278,7 +278,7 @@
 //Gas alerts
 /atom/movable/screen/alert/oxy
 	name = "Удушение"
-	desc = "У вас не выходит дышать!"
+	desc = "По каким-то причинам, вы не можете дышать!"
 	icon_state = "oxy"
 
 /atom/movable/screen/alert/tox_in_air
