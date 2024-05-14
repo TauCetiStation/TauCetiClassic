@@ -412,7 +412,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/chapel/office
 	name = "Chapel Office"
-	cases = list("офис священика", "офиса священика", "офису священика", "офис священика", "офисом священика", "офисе священика")
+	cases = list("офис священника", "офиса священника", "офису священника", "офис священника", "офисом священника", "офисе священника")
 	icon_state = "chapeloffice"
 	sound_environment = SOUND_AREA_DEFAULT
 
