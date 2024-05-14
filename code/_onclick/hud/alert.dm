@@ -278,7 +278,7 @@
 //Gas alerts
 /atom/movable/screen/alert/oxy
 	name = "Удушение"
-	desc = "У вас не выходит дышать!"
+	desc = "По каким-то причинам, вы не можете дышать!"
 	icon_state = "oxy"
 
 /atom/movable/screen/alert/tox_in_air
@@ -363,7 +363,7 @@
 
 /atom/movable/screen/alert/alien_fire
 // This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
-	name = "Возгарание"
+	name = "Возгорание"
 	desc = "Горячо! Бегите подальше от огня! Полежите на вашей траве, чтобы немного исцелиться."
 	icon_state = "alien_fire"
 	alerttooltipstyle = "alien"
