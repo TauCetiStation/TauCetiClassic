@@ -30,6 +30,9 @@
 	environment_underlay = SSenvironment.turf_image[z]
 	underlays |= environment_underlay
 
+/turf/simulated/floor/glass/make_plating()
+	ChangeTurf(/turf/simulated/floor/plating)
+
 /turf/simulated/floor/glass/reinforced
 	name = "reinforced glass floor"
 	desc = "Do jump on it, it can take it."
