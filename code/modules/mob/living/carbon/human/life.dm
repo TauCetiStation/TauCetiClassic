@@ -1022,8 +1022,6 @@ var/global/list/tourette_bad_words= list(
 	else
 		clear_fullscreen("impaired")
 
-	update_eye_blur()
-
 	if(!machine)
 		var/isRemoteObserve = 0
 		if((REMOTE_VIEW in mutations) && remoteview_target)
