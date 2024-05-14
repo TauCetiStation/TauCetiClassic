@@ -25,24 +25,23 @@
 
 	invisibility = INVISIBILITY_LIGHTING
 
-/atom/movable/screen/plane_master/lighting/apply_effects(client/client, map_view)
+/atom/movable/screen/plane_master/lighting/update_effects(client/client)
 	if(!..())
 		return
 
-	if(!map_view)
+	if(!assigned_map)
 		RegisterSignal(client.mob, COMSIG_MOB_LIGHTING_ALPHA_CHANGED, PROC_REF(update_alpha), override = TRUE)
 
 	// about backdrops and why we need it https://www.byond.com/forum/?post=2141928
-	if(map_view)
+	if(assigned_map)
 		// todo rewrite fullscreens
 		var/atom/movable/screen/fullscreen/darkness/fs = new
-		fs.set_map_view(map_view)
+		fs.set_map_view(assigned_map)
 		client.screen += fs
 	else
 		client.mob.overlay_fullscreen("darkness", /atom/movable/screen/fullscreen/darkness)
 
 /atom/movable/screen/plane_master/lighting/proc/update_alpha(mob/source, value)
-	world.log << "update_alpha [value]"
 	alpha = value
 
 /atom/movable/screen/plane_master/dynamic_lighting
@@ -65,16 +64,16 @@
 
 	var/atom/movable/screen/fullscreen/environment_lighting_color/color_filter
 
-/atom/movable/screen/plane_master/environment_lighting/apply_effects(client/client, map_view)
+/atom/movable/screen/plane_master/environment_lighting/update_effects(client/client)
 	if(!..())
 		return
 
 	add_filter("guassian_blur", 1, gauss_blur_filter(10))
 
-	if(map_view)
+	if(assigned_map)
 		// todo rewrite fullscreens
 		var/atom/movable/screen/fullscreen/environment_lighting_color/fs = new
-		fs.set_map_view(map_view)
+		fs.set_map_view(assigned_map)
 		fs.attach_to_level(client.mob.z) // placeholder color before i think about a way to set it as camera.z level
 		client.screen += fs
 	else
@@ -113,7 +112,7 @@
 
 	invisibility = INVISIBILITY_LIGHTING
 
-/atom/movable/screen/plane_master/exposure/apply_effects(client/client, map_view)
+/atom/movable/screen/plane_master/exposure/update_effects(client/client)
 	if(!..())
 		return
 
@@ -135,7 +134,7 @@
 
 	invisibility = INVISIBILITY_LIGHTING
 
-/atom/movable/screen/plane_master/lamps_selfglow/apply_effects(client/client, map_view)
+/atom/movable/screen/plane_master/lamps_selfglow/update_effects(client/client)
 	if(!..())
 		return
 
@@ -174,7 +173,7 @@
 	blend_mode = BLEND_OVERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-/atom/movable/screen/plane_master/lamps_glare/apply_effects(client/client, map_view)
+/atom/movable/screen/plane_master/lamps_glare/update_effects(client/client)
 	if(!..())
 		return
 

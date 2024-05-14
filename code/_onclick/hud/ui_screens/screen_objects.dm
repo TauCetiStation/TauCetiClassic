@@ -24,7 +24,7 @@
 /**
   * Doesn't call parent, see [/atom/proc/atom_init]
   */
-/atom/movable/screen/atom_init()
+/atom/movable/screen/atom_init(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")

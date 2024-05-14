@@ -3,7 +3,7 @@
 //////////////////////////
 
 /proc/make_datum_references_lists()
-	global.all_plane_masters = init_paths(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate
+	global.default_plane_masters = init_paths(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate
 
 	//Hair - Initialise all /datum/sprite_accessory/hair into an list indexed by hair-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/hair))

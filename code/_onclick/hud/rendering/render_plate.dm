@@ -36,7 +36,7 @@
 #define SINGULO_RENDER_TARGET_3 PM_RENDER_NAME(/atom/movable/screen/plane_master/singularity_3)
 #define DISTORTION_RENDER_TARGET PM_RENDER_NAME(/atom/movable/screen/plane_master/distortion)
 
-/atom/movable/screen/plane_master/rendering_plate/game_world/apply_effects(client/client, map_view)
+/atom/movable/screen/plane_master/rendering_plate/game_world/update_effects(client/client, map_view)
 	if(!..())
 		return
 

@@ -2,7 +2,7 @@
 	name = "parallax whitifier plane master"
 	plane = PLANE_SPACE
 
-/atom/movable/screen/plane_master/parallax_white/apply_effects(client/client, map_view)
+/atom/movable/screen/plane_master/parallax_white/update_effects(client/client)
 	if(!..())
 		return
 

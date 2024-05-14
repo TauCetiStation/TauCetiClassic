@@ -16,14 +16,14 @@
 	plane = GAME_PLANE
 	blend_mode = BLEND_OVERLAY
 
-/atom/movable/screen/plane_master/game_world/apply_effects(client/client, map_view)
+/atom/movable/screen/plane_master/game_world/update_effects(client/client)
 	if(!..())
 		return
 
 	if(client.prefs?.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
-	if(!map_view) // todo: don't reapply filter if it's already exists?
+	if(!assigned_map) // todo: don't reapply filter if it's already exists?
 		client.mob.clear_fullscreen("blurry")
 		if(client.mob.eye_blurry)
 			if(client.prefs?.eye_blur_effect)
@@ -55,7 +55,7 @@
 	plane = GHOST_ILLUSION_PLANE
 	render_relay_planes = list(RENDER_PLANE_ABOVE_GAME)
 
-/atom/movable/screen/plane_master/ghost_illusion/apply_effects(client/client, map_view)
+/atom/movable/screen/plane_master/ghost_illusion/update_effects(client/client)
 	if(!..())
 		return
 

@@ -420,22 +420,7 @@
 	if(!client)
 		return
 
-	client.update_plane_masters_effects(/atom/movable/screen/plane_master/game_world)
-
-/*	if(client.prefs.eye_blur_effect)
-		var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in client.screen
-		if(eye_blurry)
-			PM.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
-			PM.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
-		else
-			PM.remove_filter("eye_blur_angular")
-			PM.remove_filter("eye_blur_gauss")
-
-	else
-		if(eye_blurry)
-			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
-		else
-			clear_fullscreen("blurry")*/
+	client.update_plane_masters(/atom/movable/screen/plane_master/game_world)
 
 // ============================================================
 

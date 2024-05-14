@@ -35,7 +35,7 @@
 	// I wasted 6 hours on this. :agony:
 	map_name = "camera_console_\ref[src]_map"
 
-	cam_screen = new(null, map_name, "clear", global.all_plane_masters.Copy())
+	cam_screen = new(null, map_name, "clear", global.default_plane_masters.Copy())
 
 	var/obj/item/weapon/circuitboard/security/board = circuit
 	if(istype(C))

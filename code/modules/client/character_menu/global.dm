@@ -177,7 +177,7 @@
 		if("ambientocclusion")
 			ambientocclusion = !ambientocclusion
 			if(parent && parent.screen && parent.screen.len)
-				parent.update_plane_masters_effects(/atom/movable/screen/plane_master/game_world)
+				parent.update_plane_masters(/atom/movable/screen/plane_master/game_world)
 
 		if("lobbyanimation")
 			lobbyanimation = !lobbyanimation // shouldn't prefs changes be saved somewhere here?

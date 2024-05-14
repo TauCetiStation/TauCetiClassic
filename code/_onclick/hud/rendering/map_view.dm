@@ -23,7 +23,9 @@
 	// who is using map_view currently
 	var/list/datum/weakref/viewers = list()
 
-/atom/movable/screen/map_view/atom_init(mapload, map_view, background_state = "clear", add_planes = global.all_plane_masters)
+/atom/movable/screen/map_view/atom_init(mapload, map_view, background_state = "clear", add_planes)
+	. = ..()
+
 	// Initialize map objects
 	assigned_map = map_view
 	screen_loc = "[map_view]:[screen_loc]"
@@ -34,8 +36,6 @@
 	background.icon_state = background_state
 
 	attached_planes = add_planes
-
-	return ..()
 
 /atom/movable/screen/map_view/Destroy()
 	for(var/datum/weakref/client_ref in viewers)
@@ -59,8 +59,13 @@
 	client.screen += background
 	client.screen += src
 
-	for(var/mytype in global.all_plane_masters)
-		new mytype(null, client, assigned_map)
+	for(var/mytype in attached_planes)
+		var/atom/movable/screen/plane_master/PM = new mytype(null, assigned_map)
+
+		PM.update_effects(client)
+
+		client.screen += PM
+		client.screen += PM.generate_relays()
 
 /atom/movable/screen/map_view/proc/hide_from(client/client)
 	client.screen -= background

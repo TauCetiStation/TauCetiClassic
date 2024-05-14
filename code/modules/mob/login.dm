@@ -33,6 +33,7 @@
 
 	return TRUE
 
+// be wary client might disappear here mid execution because byond
 /mob/Login()
 	player_list |= src
 
@@ -44,15 +45,12 @@
 	update_Login_details()
 	world.update_status()
 
-	client.images = null				//remove the images such as AIs being unable to see runes
-	client.screen = list()				//remove hud items just in case
+	client.images = null //remove the images such as AIs being unable to see runes
+	client.screen = list() //remove hud items just in case
 
 	create_mob_hud()
 
-	// todo: need to keep plane masters between client reconnects and mob changes
-	// PM's are always part of client and rendering so mobs HUD container doesn't fit semantically
-	if(client) // magic
-		client.init_plane_masters()
+	client.set_main_screen_plane_masters()
 
 	client.pixel_x = 0
 	client.pixel_y = 0
@@ -69,6 +67,8 @@
 	else
 		client.eye = src
 		client.perspective = MOB_PERSPECTIVE
+
+	client.update_plane_masters()
 
 	// atom_huds
 	reload_huds()
