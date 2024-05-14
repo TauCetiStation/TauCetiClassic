@@ -49,8 +49,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master/proc/update_effects(client/client)
 	SHOULD_CALL_PARENT(TRUE)
 
-	world.log << "UE [type] [client]"
-
 	clear_filters()
 
 	if(!client)
@@ -58,7 +56,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 	return TRUE
 
-// client side
+/* client side */
 
 /client/proc/set_main_screen_plane_masters()
 	if(!global.client_plane_masters[ckey])
