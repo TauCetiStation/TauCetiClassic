@@ -6,8 +6,14 @@
 	if(!..())
 		return
 
+	// todo: parallax layers don't exists on the parallax PM while on camera map
+	// probably after fullscreens rewrite need to change /atom/movable/screen/parallax_layer to screen/fullscreen/...
+	// and move them to plane_master/parallax/update_effects
+	if(assigned_map) 
+		return
+
 	if(client.parallax_layers) // works like enabled/disabled flag
-		// from my understanding it just turns default static space plane into white mask for parallax effect
+		// it just turns default static space plane (with old space sprite) into white mask for parallax effect
 		color = list(
 			0, 0, 0, 0,
 			0, 0, 0, 0,

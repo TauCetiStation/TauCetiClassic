@@ -86,8 +86,8 @@
 	name = "background"
 	icon = 'icons/hud/map_backgrounds.dmi'
 	icon_state = "clear"
-	layer = GAME_PLANE
-	plane = GAME_PLANE
+	layer = 999
+	plane = RENDER_PLANE_ABOVE_GAME
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
