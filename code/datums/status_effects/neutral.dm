@@ -1,6 +1,6 @@
 /atom/movable/screen/alert/status_effect/array_turn_back
 	name = "Возвращение"
-	desc = "Воздействуйте на репликатор, которым вы управляли до этого."
+	desc = "Воздействуйте на оболочку, которой управляли до этого."
 	icon_state = "swarm_turn_back"
 
 	var/mob/living/simple_animal/hostile/replicator/remembered

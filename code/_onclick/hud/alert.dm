@@ -389,7 +389,7 @@
 //changeling
 /atom/movable/screen/alert/regen_stasis
 	name = "Регенеративный стазис"
-	desc = "Вы вошли в стазис. Просто подождите немного."
+	desc = "Вы вошли в стазис. Просто немного подождите."
 	icon_state = "regen_stasis"
 
 //IANS
