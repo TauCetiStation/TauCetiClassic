@@ -236,6 +236,7 @@
 #define TRAIT_XENO_FUR "xeno_fur"
 // Trait from being under the floor in some manner
 #define TRAIT_UNDERFLOOR "underfloor"
+#define TRAIT_CONDUCT "conduct"
 
 // trait sources
 #define EYE_DAMAGE_TRAIT "eye_damage"
