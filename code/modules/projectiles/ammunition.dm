@@ -158,7 +158,7 @@
 	if(A)
 		A.loc = get_turf(src.loc)
 		user.put_in_hands(A)
-		to_chat(user, "<span class='notice'>Вы снимаете оболочку с [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы вытаскиваете патрон из [CASE(src,GENITIVE_CASE)]!</span>")
 		update_icon()
 
 /obj/item/ammo_box/update_icon()
