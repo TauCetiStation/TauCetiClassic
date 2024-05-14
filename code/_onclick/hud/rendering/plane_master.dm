@@ -86,5 +86,5 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		screen -= PM
 		qdel(PM)
 
-	screen += set_main_screen_plane_masters()
+	set_main_screen_plane_masters()
 	update_plane_masters()
