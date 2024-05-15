@@ -75,15 +75,3 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		if(map_view && map_view != plane.assigned_map)
 			continue
 		plane.update_effects(src)
-
-/client/verb/reload_plane_masters()
-	set name = "Reload render planes"
-	set category = "OOC"
-
-	global.client_plane_masters[ckey] = null
-	for(var/atom/movable/screen/plane_master/PM in screen)
-		screen -= PM
-		qdel(PM)
-
-	set_main_screen_plane_masters()
-	update_plane_masters()
