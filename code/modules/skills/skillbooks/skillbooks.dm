@@ -10,6 +10,7 @@
 	var/list/skills
 
 /obj/item/weapon/book/skillbook/atom_init()
+	. = ..()
 	desc = "Boosts work efficiency for following tasks while in hands:\n"
 
 	bonus_skillset = new
