@@ -30,7 +30,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 	if(map_view)
 		assigned_map = map_view
-		// flexible loc CORNER to CORNER should work too
 		// don't use fixed size, it can break map_view scaling
 		screen_loc = "[map_view]:1,1"
 

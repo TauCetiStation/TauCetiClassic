@@ -79,6 +79,7 @@
 /atom/movable/screen/fullscreen/proc/set_map_view(map_view)
 	assigned_map = map_view
 	screen_loc = "[map_view]:1,1"
+	appearance_flags |= TILE_BOUND // stops fullscreens from resizing external map views
 
 /atom/movable/screen/fullscreen/Destroy()
 	QDEL_NULL(screen_part)
