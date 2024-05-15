@@ -143,6 +143,18 @@
 	new /obj/item/weapon/book/manual/detective(src)
 	update_icon()
 
+/obj/structure/bookcase/skills
+	name = "Professional manuals"
+
+/obj/structure/bookcase/skills/atom_init()
+	. = ..()
+
+	for(var/type in subtypesof(/obj/item/weapon/book/skillbook))
+		new type(src)
+		new type(src)
+
+	update_icon()
+
 /*
  * Book
  */
@@ -194,7 +206,8 @@
 
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 	else
-		to_chat(user, "This book is completely blank!")
+		if(!istype(src, /obj/item/weapon/book/skillbook))
+			to_chat(user, "This book is completely blank!")
 
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(carved)
