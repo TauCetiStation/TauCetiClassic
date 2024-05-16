@@ -93,7 +93,7 @@
 
 /area/station/civilian/market
 	name = "Marketplace"
-	cases = list("базар", "базара", "базару", "базар", "базаром", "базаре")
+	cases = list("рынок", "рынка", "рынку", "рынок", "рынком", "рынке")
 	icon_state = "locker"
 	power_equip = 0
 	power_light = 0
