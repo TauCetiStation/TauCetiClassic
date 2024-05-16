@@ -93,5 +93,10 @@
 			return
 		to_chat(user, "<span class='notice'>You extract some seeds from the [S.name].</span>")
 		new /obj/item/seeds/grassseed(loc)
-
+	else if(istype(O, /obj/item/stack/tile/fairygrass))
+		var/obj/item/stack/tile/fairygrass/F = O
+		if(!F.use(1))
+			return
+		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
+		new /obj/item/seeds/fairy_grass(loc)
 	return

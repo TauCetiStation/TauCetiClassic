@@ -67,6 +67,10 @@ var/global/list/SOUNDIN_MALE_WHINER_PAIN    = list('sound/voice/mob/pain/male/pa
 // Skrell's emotes
 var/global/list/SOUNDIN_LAUGH_SKRELL_MALE = list('sound/voice/laugh/skrell_male/laugh_male-1.ogg', 'sound/voice/laugh/skrell_male/laugh_male-2.ogg', 'sound/voice/laugh/skrell_male/laugh_male-3.ogg', 'sound/voice/laugh/skrell_male/laugh_male-4.ogg', 'sound/voice/laugh/skrell_male/laugh_male-5.ogg', 'sound/voice/laugh/skrell_male/laugh_male-6.ogg', 'sound/voice/laugh/skrell_male/laugh_male-7.ogg','sound/voice/laugh/skrell_male/laugh_male-8.ogg', 'sound/voice/laugh/skrell_male/laugh_male-9.ogg')
 var/global/list/SOUNDIN_LAUGH_SKRELL_FEMALE = list('sound/voice/laugh/skrell_female/laugh_female-1.ogg', 'sound/voice/laugh/skrell_female/laugh_female-2.ogg', 'sound/voice/laugh/skrell_female/laugh_female-3.ogg', 'sound/voice/laugh/skrell_female/laugh_female-4.ogg', 'sound/voice/laugh/skrell_female/laugh_female-5.ogg', 'sound/voice/laugh/skrell_female/laugh_female-6.ogg', 'sound/voice/laugh/skrell_female/laugh_female-7.ogg','sound/voice/laugh/skrell_female/laugh_female-8.ogg', 'sound/voice/laugh/skrell_female/laugh_female-9.ogg')
+// Insectoid's emotes
+var/global/list/SOUNDIN_LAUGH_INSECTOID = list('sound/voice/Bug.ogg')
+var/global/list/SOUNDIN_GRUNT_INSECTOID = list('sound/voice/BugHiss.ogg')
+var/global/list/SOUNDIN_SCREAM_INSECTOID = list('sound/voice/BugBuzz.ogg')
 // Xenomorph's emotes
 var/global/list/SOUNDIN_XENOMORPH_TALK  = list('sound/voice/xenomorph/talk_1.ogg', 'sound/voice/xenomorph/talk_2.ogg', 'sound/voice/xenomorph/talk_3.ogg', 'sound/voice/xenomorph/talk_4.ogg')
 var/global/list/SOUNDIN_XENOMORPH_ROAR  = list('sound/voice/xenomorph/roar_1.ogg', 'sound/voice/xenomorph/roar_2.ogg')

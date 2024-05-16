@@ -44,7 +44,7 @@
 ///////////////////////
 
 /atom/movable/warp_effect
-	plane = ANOMALY_PLANE
+	plane = DISTORTION_PLANE
 	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_anti_lens"

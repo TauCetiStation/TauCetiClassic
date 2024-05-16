@@ -49,6 +49,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
+	item_state_world = "soap_world"
 	w_class = SIZE_TINY
 	throwforce = 0
 	throw_speed = 4
@@ -64,14 +65,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
 	icon_state = "soapnt"
+	item_state_world = "soapnt_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of condoms."
 	icon_state = "soapdeluxe"
+	item_state_world = "soapdeluxe_world"
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/syndie
 	desc = "An untrustworthy bar of soap. Smells of fear."
 	icon_state = "soapsyndie"
+	item_state_world = "soapsyndie_world"
 	list_reagents = list("cleaner" = 3, "cyanide" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/soap/afterattack(atom/target, mob/user, proximity, params)

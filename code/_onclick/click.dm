@@ -419,6 +419,7 @@
 	else if(modifiers[RIGHT_CLICK])
 		C.cob.remove_build_overlay(C)
 
+// todo: move to fullscreens?
 /atom/movable/screen/click_catcher
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "click_catcher"

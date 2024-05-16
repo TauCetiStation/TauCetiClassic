@@ -20,9 +20,17 @@
 
 // shared image we use as a mask for environment turfs
 var/global/image/level_light_mask = create_level_light_mask() // global
-/proc/create_level_light_mask()
+
+
+// shared images we use as a mask for environment turfs
+var/global/image/level_light_source_mask = create_level_light_mask()
+var/global/image/level_light_cast_mask = create_level_light_mask(120)
+
+/proc/create_level_light_mask(alpha)
 	var/image/I = image('icons/blank.dmi', "white")
 	I.plane = ENVIRONMENT_LIGHTING_PLANE
+	if(alpha)
+		I.alpha = alpha
 
 	return I
 
@@ -59,6 +67,6 @@ var/global/obj/effect/area_unsimulated_light_mask = create_area_light_mask()
 				has_level_source_around = TRUE
 				break
 		if(has_level_source_around)
-			ENABLE_LEVEL_LIGHTING(T)
+			LEVEL_LIGHTING_CAST(T)
 		else
-			DISABLE_LEVEL_LIGHTING(T)
+			RESET_LEVEL_LIGHTING(T)

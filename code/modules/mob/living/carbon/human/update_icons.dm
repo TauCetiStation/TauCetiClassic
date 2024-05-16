@@ -118,7 +118,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(S.sprite_sheets[sprite_sheet_slot])
 		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
-	if(!(t_state in icon_states(icon_path)))
+	if(!("[t_state][icon_state_appendix]" in icon_states(icon_path)))
 		icon_path = def_icon_path
 
 	var/fem = ""
@@ -223,7 +223,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
-			var/mutable_appearance/MA = mutable_appearance('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s", -BODY_LAYER)
+			var/mutable_appearance/MA = mutable_appearance('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s_[g]", -BODY_LAYER)
 			MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 			MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 			MA = update_height(MA, TRUE)
@@ -233,7 +233,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/obj/item/organ/external/r_foot = bodyparts_by_name[BP_R_LEG]
 		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
 		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
-			var/mutable_appearance/MA = mutable_appearance('icons/mob/human_socks.dmi', "socks[socks]_s", -BODY_LAYER)
+			var/mutable_appearance/MA = mutable_appearance('icons/mob/human_socks.dmi', "socks[socks]_s_[g]", -BODY_LAYER)
 			MA.pixel_x += species.offset_features[OFFSET_SHOES][1]
 			MA.pixel_y += species.offset_features[OFFSET_SHOES][2]
 			MA = update_height(MA, TRUE)

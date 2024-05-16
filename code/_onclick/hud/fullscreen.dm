@@ -5,6 +5,9 @@
 /mob
 	var/list/screens = list()
 
+// todo: need to update fullscreens for better support of outer map views
+// meta-fullscreens (darkness, starlight) should not be a part of mob, but client
+
 /mob/proc/overlay_fullscreen(category, type, severity)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
 	if (!screen || screen.type != type)
@@ -73,12 +76,20 @@
 	var/severity = 0
 	var/atom/movable/screen/fullscreen/screen_part
 
+/atom/movable/screen/fullscreen/proc/set_map_view(map_view)
+	assigned_map = map_view
+	screen_loc = "[map_view]:1,1"
+	appearance_flags |= TILE_BOUND // stops fullscreens from resizing external map views
+
 /atom/movable/screen/fullscreen/Destroy()
 	QDEL_NULL(screen_part)
 	severity = 0
 	return ..()
 
 /atom/movable/screen/fullscreen/proc/update_for_view(client_view)
+	if(assigned_map) // used in external map view, no need to resize
+		return
+
 	if (screen_loc == "CENTER-7,CENTER-7" && view != client_view)
 		var/list/actualview = getviewsize(client_view)
 		view = client_view
