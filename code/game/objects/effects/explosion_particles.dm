@@ -66,7 +66,7 @@
 /obj/effect/shockwave
 	icon = 'icons/effects/shockwave.dmi'
 	icon_state = "shockwave"
-	plane = ANOMALY_PLANE
+	plane = DISTORTION_PLANE
 	pixel_x = -496
 	pixel_y = -496
 

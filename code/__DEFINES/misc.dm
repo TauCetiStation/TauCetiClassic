@@ -6,6 +6,8 @@
 // gets final path from /obj/random, ignores item spawn nothing chance
 #define PATH_OR_RANDOM_PATH(path) (ispath(path, /obj/random) ? random2path(path) : path)
 
+#define PM_RENDER_NAME(path) "*[path]: render name"
+
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
