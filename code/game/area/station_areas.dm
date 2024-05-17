@@ -186,7 +186,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/maintenance/portsolar
 	name = "Aft Port Solar Maintenance"
-	cases = list("юго-западные солнечные тоннели", "юго-западных техтоннелей", "юго-западным техтоннелям", "юго-западные техтоннели", "юго-западными техтоннелями", "юго-западных техтоннелях")
+	cases = list("юго-западные солнечные техтоннели", "юго-западных техтоннелей", "юго-западным техтоннелям", "юго-западные техтоннели", "юго-западными техтоннелями", "юго-западных техтоннелях")
 	icon_state = "SolarcontrolP"
 
 /area/station/maintenance/auxsolarstarboard
