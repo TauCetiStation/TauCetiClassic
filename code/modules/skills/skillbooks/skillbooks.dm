@@ -56,7 +56,7 @@
 		bonus_skillset.set_value(skill_type, level)
 
 		var/datum/skill/S = all_skills[skill_type]
-		desc += "[S.name]: up to [S.custom_ranks[level]] level; "
+		desc += "[S.name]: up to [S.custom_ranks[level] + 1] level; "
 
 /obj/item/weapon/book/skillbook/equipped(mob/living/user, slot)
 	..()
@@ -159,6 +159,14 @@
 
 	skills = list(
 		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
+	)
+
+/obj/item/weapon/book/skillbook/chemistry
+	name = "Skills 101: Surgery"
+
+	skills = list(
+		/datum/skill/surgery = SKILL_LEVEL_TRAINED,
+		/datum/skill/medical = SKILL_LEVEL_NOVICE,
 	)
 
 /obj/item/weapon/book/skillbook/exosuits
