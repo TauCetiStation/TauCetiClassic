@@ -161,7 +161,7 @@
 		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
 	)
 
-/obj/item/weapon/book/skillbook/chemistry
+/obj/item/weapon/book/skillbook/surgery
 	name = "Skills 101: Surgery"
 
 	skills = list(
