@@ -977,5 +977,5 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	name = "Cyborg Station"
 	cases = list("киборг станция", "киборг станции", "киборг станции", "киборг станцию", "киборг станцией", "киборг станции")
 	icon_state = "tcomsatcham"
-	looped_ambience = 'sound/ambience/loop_cyborgstation.ogg'
+	looped_ambience = 'sound/ambience/cyborgstation.ogg'
 	sound_environment = SOUND_AREA_SMALL_METALLIC
