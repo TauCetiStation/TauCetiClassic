@@ -16325,6 +16325,7 @@
 /area/station/maintenance/brig)
 "dyJ" = (
 /obj/structure/bookcase/manuals/engineering,
+/obj/item/weapon/book/skillbook/engineering,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -28724,6 +28725,7 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/item/weapon/book/skillbook/robust,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -47423,6 +47425,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/book/skillbook/science,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -63808,6 +63811,7 @@
 "oWS" = (
 /obj/structure/table/glass,
 /obj/item/weapon/scalpel,
+/obj/item/weapon/book/skillbook/surgery,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -74779,10 +74783,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "rOi" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
-/obj/random/misc/book,
+/obj/structure/bookcase/skills,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -83606,6 +83607,7 @@
 /obj/item/clothing/gloves/latex{
 	pixel_y = -12
 	},
+/obj/item/weapon/book/skillbook/chemistry,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -92472,6 +92474,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
+/obj/random/misc/book,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -92504,6 +92507,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/weapon/book/skillbook/medical,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"

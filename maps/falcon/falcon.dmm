@@ -5586,9 +5586,7 @@
 /turf/simulated/wall,
 /area/station/maintenance/escape)
 "akc" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
+/obj/structure/bookcase/skills,
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
@@ -8369,7 +8367,7 @@
 	name = "Common Channel";
 	pixel_y = -20
 	},
-/obj/effect/spawner/aspect/newai ,
+/obj/effect/spawner/aspect/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "apT" = (
@@ -12503,7 +12501,7 @@
 	name = "Custom Channel";
 	pixel_y = 19
 	},
-/obj/effect/spawner/aspect/newai ,
+/obj/effect/spawner/aspect/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cYF" = (

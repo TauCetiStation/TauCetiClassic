@@ -17224,6 +17224,7 @@
 /obj/item/weapon/handcuffs/cable,
 /obj/item/weapon/reagent_containers/blood/APlus,
 /obj/structure/table/glass,
+/obj/item/weapon/book/skillbook/surgery,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aEo" = (
@@ -54814,7 +54815,6 @@
 	dir = 4;
 	network = list("SS13","Engineering")
 	},
-/obj/item/weapon/book/skillbook/engineering,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -58769,6 +58769,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/item/weapon/book/skillbook/engineering,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
