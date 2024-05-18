@@ -183,14 +183,8 @@
 
 /obj/item/weapon/book/attack_self(mob/user)
 	if(carved)
-		if(store)
-			to_chat(user, "<span class='notice'>[store] falls out of [title]!</span>")
-			store.loc = get_turf(src.loc)
-			store = null
-			return
-		else
-			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
-			return
+		handle_carved(user)
+		return
 	if(src.dat)
 		if(istype(src, /obj/item/weapon/book/manual/wiki)) // wiki books has own styling so no browser/popup
 			var/window_size
@@ -208,6 +202,17 @@
 	else
 		if(!istype(src, /obj/item/weapon/book/skillbook))
 			to_chat(user, "This book is completely blank!")
+
+/obj/item/weapon/book/proc/handle_carved(mob/user)
+	if(!carved)
+		return
+
+	if(store)
+		to_chat(user, "<span class='notice'>[store] falls out of [title]!</span>")
+		store.loc = get_turf(src.loc)
+		store = null
+	else
+		to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(carved)
@@ -302,6 +307,8 @@
 	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You open up the book and show it to [M]. </span>", \
 			"<span class='notice'> [user] opens up a book and shows it to [M]. </span>")
+		if(!length(dat))
+			return
 		var/datum/browser/popup = new(M, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
 		popup.set_content("<TT><I>Penned by [author].</I></TT> <BR>[dat]")
 		popup.open()
