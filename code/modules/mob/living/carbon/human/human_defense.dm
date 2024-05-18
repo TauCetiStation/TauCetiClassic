@@ -190,7 +190,7 @@
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/obj/item/organ/external/BP in bodyparts)
-		armorval += 100 - get_protection_multiple_organ(BP, type)
+		armorval += 100 - get_protection_multiple_organ(BP, type) * 100
 		organnum++
 	return (armorval/max(organnum, 1))
 
