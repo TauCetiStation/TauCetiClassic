@@ -15561,6 +15561,7 @@
 	c_tag = "Kitchen";
 	dir = 1
 	},
+/obj/item/weapon/book/skillbook/chemistry,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -17223,6 +17224,7 @@
 /obj/item/weapon/handcuffs/cable,
 /obj/item/weapon/reagent_containers/blood/APlus,
 /obj/structure/table/glass,
+/obj/item/weapon/book/skillbook/surgery,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aEo" = (
@@ -19736,6 +19738,7 @@
 /obj/item/weapon/paper/firing_range,
 /obj/item/weapon/screwdriver,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/book/skillbook/robust,
 /turf/simulated/floor,
 /area/station/security/range)
 "aIZ" = (
@@ -21426,6 +21429,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/item/weapon/book/skillbook/science,
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
@@ -56028,10 +56032,7 @@
 	},
 /area/station/civilian/library)
 "bYM" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
-/obj/random/misc/book,
+/obj/structure/bookcase/skills,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -58353,6 +58354,8 @@
 /area/station/engineering/atmos)
 "chb" = (
 /obj/structure/bookcase/manuals/medical,
+/obj/item/weapon/book/skillbook/chemistry,
+/obj/item/weapon/book/skillbook/medical,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -58766,6 +58769,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/item/weapon/book/skillbook/engineering,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -63926,6 +63930,7 @@
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
+/obj/random/misc/book,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
