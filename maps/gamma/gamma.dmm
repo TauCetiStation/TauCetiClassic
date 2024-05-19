@@ -10726,6 +10726,7 @@
 	dir = 1
 	},
 /obj/item/weapon/book/manual/wiki/chefs_recipes,
+/obj/item/weapon/book/skillbook/chemistry,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -50415,10 +50416,7 @@
 	},
 /area/station/medical/virology)
 "jqk" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
-/obj/random/misc/book,
+/obj/structure/bookcase/skills,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -54081,6 +54079,7 @@
 "kcE" = (
 /obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/weapon/book/skillbook/surgery,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "kcL" = (
@@ -56562,6 +56561,7 @@
 	pixel_x = 24
 	},
 /obj/structure/bookcase/manuals/engineering,
+/obj/item/weapon/book/skillbook/engineering,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -75721,6 +75721,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/weapon/book/skillbook/science,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -86669,6 +86670,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/item/weapon/book/skillbook/medical,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -88880,6 +88882,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/item/weapon/book/skillbook/robust,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -89817,6 +89820,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
+/obj/random/misc/book,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
