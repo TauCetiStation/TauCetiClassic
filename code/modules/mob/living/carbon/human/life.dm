@@ -1199,7 +1199,7 @@ var/global/list/tourette_bad_words= list(
 		Weaken(20)
 
 	if(shock_stage >= 150)
-		shock_stage == 150
+		shock_stage = 150
 		Stun(10)
 		Weaken(20)
 
