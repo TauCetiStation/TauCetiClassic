@@ -163,8 +163,6 @@
 	if(A && non_native_bump)
 		A.Bumped(src)
 
-
-
 /atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE)
 	if(!destination)
 		return

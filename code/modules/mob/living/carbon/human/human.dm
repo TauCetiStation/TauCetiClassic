@@ -1581,7 +1581,7 @@
 		var/list/sliders_data = tables_data[category]
 
 		for(var/datum/skill/s as anything in sliders_data)
-			var/datum/skill/skill = all_skills[s]
+			var/datum/skill/skill = global.all_skills[s]
 			var/slider_id = skill.name
 			var/slider_value = mind.skills.get_value(s)
 			var/slider_min_value = SKILL_LEVEL_MIN

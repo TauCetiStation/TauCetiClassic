@@ -295,6 +295,8 @@
 	#define COMSIG_ACCESS_ALLOWED 1
 ///from base of /mob/proc/update_z: (new_z)
 #define COMSIG_MOB_Z_CHANGED "mob_z_changed"
+///from base of /mob/proc/set_lighting_alpha(): (value)
+#define COMSIG_MOB_LIGHTING_ALPHA_CHANGED "LIGHTING_ALPHA_CHANGED"
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()

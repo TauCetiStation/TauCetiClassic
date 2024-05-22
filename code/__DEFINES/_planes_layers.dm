@@ -77,14 +77,9 @@ What is the naming convention for planes or layers?
 #define SINGULARITY_EFFECT_PLANE_1 -24
 #define SINGULARITY_EFFECT_PLANE_2 -23
 #define SINGULARITY_EFFECT_PLANE_3 -22
-#define SINGULO_RENDER_TARGET_0 "*SINGULOEFFECT_RENDER_TARGET_0"
-#define SINGULO_RENDER_TARGET_1 "*SINGULOEFFECT_RENDER_TARGET_1"
-#define SINGULO_RENDER_TARGET_2 "*SINGULOEFFECT_RENDER_TARGET_2"
-#define SINGULO_RENDER_TARGET_3 "*SINGULOEFFECT_RENDER_TARGET_3"
 
-//ANOMALIES EFFECT
-#define ANOMALY_PLANE -21
-#define ANOMALY_RENDER_TARGET "*ANOM_RENDER_TARGET"
+//DISPLACEMENT EFFECT
+#define DISTORTION_PLANE -21
 
 // underfloor, floor and game planes have common layout order
 // in some cases object can be switched between these planes
@@ -137,7 +132,7 @@ What is the naming convention for planes or layers?
 #define ABOVE_GAME_PLANE  -1
 #define SEETHROUGH_PLANE -3
 
-#define BLACKNESS_PLANE   0
+//#define BLACKNESS_PLANE   0 // also default byond plane. We don't render it, don't use it
 
 #define SINGULARITY_PLANE 10
   #define SINGULARITY_LAYER 1
@@ -146,7 +141,6 @@ What is the naming convention for planes or layers?
 #define AREA_PLANE 60
 
 #define GHOST_ILLUSION_PLANE 79
-  #define GHOST_ILLUSION_RENDER_TARGET "*GHOST_ILLUSION_RENDER_TARGET"
 
 #define GHOST_PLANE 80
 #define POINT_PLANE 90
@@ -154,18 +148,15 @@ What is the naming convention for planes or layers?
 //---------- -----LIGHTING -------------
 #define LIGHTING_PLANE 100
 
-#define LIGHTING_EXPOSURE_PLANE 102 // Light sources "cones"
-#define LIGHTING_LAMPS_SELFGLOW 103 // Light sources glow (lamps, doors overlay, etc.)
-#define LIGHTING_LAMPS_PLANE 104 // Light sources themselves (lamps, screens, etc.)
-#define LIGHTING_LAMPS_GLARE 105 // Light glare (optional setting)
+#define DYNAMIC_LIGHTING_PLANE 101 // light objects
 
-#define LIGHTING_LAMPS_RENDER_TARGET "*LIGHTING_LAMPS_RENDER_TARGET"
-#define DYNAMIC_LIGHTING_RENDER_TARGET "*DYNAMIC_LIGHTING_RENDER_TARGET"
+#define ENVIRONMENT_LIGHTING_PLANE 105
+#define ENVIRONMENT_LIGHTING_LOCAL_PLANE 106
 
-#define ENVIRONMENT_LIGHTING_PLANE 110
-#define ENVIRONMENT_LIGHTING_COLOR_PLANE 111
-#define ENVIRONMENT_LIGHTING_LOCAL_PLANE 112
-#define DYNAMIC_LIGHTING_PLANE 115 // light objects
+#define LIGHTING_EXPOSURE_PLANE 110 // Light sources "cones"
+#define LIGHTING_LAMPS_SELFGLOW 111 // Light sources glow (lamps, doors overlay, etc.)
+#define LIGHTING_LAMPS_PLANE 112 // Light sources themselves (lamps, screens, etc.)
+#define LIGHTING_LAMPS_GLARE 113 // Light glare (optional setting)
 
 #define ABOVE_LIGHTING_PLANE 120
   #define ABOVE_LIGHTING_LAYER 1
@@ -196,9 +187,6 @@ What is the naming convention for planes or layers?
 
 ///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
 #define SPLASHSCREEN_PLANE 9999
-
-///Plane master controller keys
-#define PLANE_MASTERS_GAME "plane_masters_game"
 
 //--------------------MISC-----------------------
 //modifiers for /obj/machinery/door (and subtypes) layers

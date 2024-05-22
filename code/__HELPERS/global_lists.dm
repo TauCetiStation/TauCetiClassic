@@ -3,6 +3,8 @@
 //////////////////////////
 
 /proc/make_datum_references_lists()
+	global.default_plane_masters = init_paths(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate
+
 	//Hair - Initialise all /datum/sprite_accessory/hair into an list indexed by hair-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/hair))
 		var/datum/sprite_accessory/hair/H = new path()
@@ -327,11 +329,9 @@
 /proc/init_paths(prototype, list/L)
 	if(!istype(L))
 		L = list()
-		for(var/path in typesof(prototype))
-			if(path == prototype)
-				continue
-			L+= path
-		return L
+	for(var/path in subtypesof(prototype))
+		L+= path
+	return L
 
 /proc/gen_hex_by_color()
 	if(!hex_by_color)
