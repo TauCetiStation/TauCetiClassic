@@ -6,7 +6,7 @@
 
 /area/station/engineering/monitoring
 	name = "Engineering Monitoring Room"
-	cases = list("комната наблюдения ИО")
+	cases = list("комната наблюдения инженерного отдела", "комнаты наблюдения инженерного отдела", "комнате наблюдения инженерного отдела", "комнату наблюдения инженерного отдела", "комнатой наблюдения инженерного отдела", "комнате наблюдения инженерного отдела")
 
 /area/station/engineering/rust
 	name = "Tokamak Core"
