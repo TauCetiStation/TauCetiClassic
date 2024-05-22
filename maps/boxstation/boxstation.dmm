@@ -39168,9 +39168,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "brZ" = (
 /obj/structure/stool,
 /obj/structure/cable{
@@ -40232,9 +40230,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "btS" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -41012,9 +41008,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bvm" = (
 /obj/machinery/door/window/southright{
 	name = "Bar Door";
@@ -42251,9 +42245,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bxk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -42984,9 +42976,7 @@
 /area/station/rnd/server)
 "byA" = (
 /turf/simulated/wall/r_wall,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "byB" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -43011,15 +43001,11 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "byD" = (
 /obj/machinery/computer/aifixer,
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "byE" = (
 /turf/simulated/wall/r_wall,
 /area/station/bridge/teleporter)
@@ -43828,9 +43814,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bzX" = (
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/light/small{
@@ -43842,9 +43826,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bzY" = (
 /obj/effect/decal/turf_decal{
 	dir = 10;
@@ -44785,15 +44767,11 @@
 	},
 /obj/machinery/blackbox_recorder,
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bBR" = (
 /obj/machinery/message_server,
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bBS" = (
 /obj/machinery/computer/teleporter,
 /turf/simulated/floor/plating,

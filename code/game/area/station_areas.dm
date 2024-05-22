@@ -972,3 +972,10 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	name = "Telecoms Control Room"
 	icon_state = "tcomsatcomp"
 	sound_environment = SOUND_AREA_DEFAULT
+
+/area/station/tcommsat/cyborg
+	name = "Cyborg Station"
+	cases = list("зарядная станция киборгов", "зарядной станции киборгов", "зарядной станции киборгов", "зарядную станцию киборгов", "зарядной станцией киборгов", "зарядной станции киборгов")
+	icon_state = "tcomsatcham"
+	ambience = 'sound/ambience/cyborgstation.ogg'
+	sound_environment = SOUND_AREA_SMALL_METALLIC
