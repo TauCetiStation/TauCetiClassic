@@ -597,6 +597,13 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		else
 			to_chat(user, "<span class='warning'>Сначала нужно удалить покрытие.</span>")
 
+	if(ispulsing(C))
+		if(istype(src, /turf/simulated/floor/glass))
+			var/turf/simulated/floor/glass/GF = src
+			GF.toggle_underfloor()
+			to_chat(user, "<span class='warning'>Вы переключили видимость под плиткой.</span>")
+			C.play_tool_sound(src)
+
 	if(istype(C, /obj/item/weapon/shovel))
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)

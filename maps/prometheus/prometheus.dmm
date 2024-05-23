@@ -4680,9 +4680,7 @@
 	dir = 4;
 	icon_state = "darkblue"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "azW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -16325,6 +16323,7 @@
 /area/station/maintenance/brig)
 "dyJ" = (
 /obj/structure/bookcase/manuals/engineering,
+/obj/item/weapon/book/skillbook/engineering,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -19943,9 +19942,7 @@
 	dir = 8;
 	icon_state = "darkblue"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "epH" = (
 /obj/structure/closet/secure_closet/miner,
 /obj/machinery/light_switch{
@@ -28724,6 +28721,7 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/item/weapon/book/skillbook/robust,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -31594,9 +31592,7 @@
 	dir = 8;
 	icon_state = "darkblue"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "gWA" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -41443,9 +41439,7 @@
 	pixel_x = -28
 	},
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "jtU" = (
 /obj/machinery/door/airlock/maintenance{
 	dir = 4;
@@ -47423,6 +47417,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/book/skillbook/science,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -48058,9 +48053,7 @@
 	dir = 8;
 	icon_state = "darkblue"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "leJ" = (
 /obj/machinery/light/small,
 /obj/machinery/firealarm{
@@ -62036,9 +62029,7 @@
 /obj/machinery/recharge_station,
 /obj/effect/landmark/start/cyborg,
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "ozG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/spiderling_remains,
@@ -63808,6 +63799,7 @@
 "oWS" = (
 /obj/structure/table/glass,
 /obj/item/weapon/scalpel,
+/obj/item/weapon/book/skillbook/surgery,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -64115,9 +64107,7 @@
 "pbY" = (
 /obj/machinery/computer/aifixer,
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "pcf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -66225,9 +66215,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "pFa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -71295,9 +71283,7 @@
 /area/station/maintenance/dormitory)
 "qUa" = (
 /turf/simulated/wall/r_wall,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "qUi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -74779,10 +74765,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "rOi" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
-/obj/random/misc/book,
+/obj/structure/bookcase/skills,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -76188,9 +76171,7 @@
 	},
 /obj/effect/landmark/start/cyborg,
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "see" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/monkeycubes{
@@ -76612,9 +76593,7 @@
 	dir = 4;
 	icon_state = "darkblue"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "skR" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
@@ -83606,6 +83585,7 @@
 /obj/item/clothing/gloves/latex{
 	pixel_y = -12
 	},
+/obj/item/weapon/book/skillbook/chemistry,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -90727,9 +90707,7 @@
 	pixel_x = 22
 	},
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "vLf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /obj/structure/cable{
@@ -92472,6 +92450,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
+/obj/random/misc/book,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -92504,6 +92483,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/weapon/book/skillbook/medical,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -94474,9 +94454,7 @@
 	dir = 4;
 	icon_state = "darkblue"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "wGA" = (
 /obj/machinery/door/window/southright{
 	name = "Bar Door";
