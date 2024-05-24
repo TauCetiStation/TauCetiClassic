@@ -1218,13 +1218,13 @@ FIRE ALARM
 	var/msg
 	switch(get_security_level())
 		if("green")
-			msg = "<font color='green'><b>Зелёный</b></font>"
+			msg = "<font color='green'><b>зелёный</b></font>"
 		if("blue")
-			msg = "<font color='blue'><b>Синий</b></font>"
+			msg = "<font color='blue'><b>синий</b></font>"
 		if("red")
-			msg = "<font color='red'><b>Красный</b></font>"
+			msg = "<font color='red'><b>красный</b></font>"
 		if("delta")
-			msg = "<font color='purple'><b>Дельта</b></font>"
+			msg = "<font color='purple'><b>дельта</b></font>"
 	to_chat(user, "Маленький индикатор указывает на то, что сейчас на станции код безопасности - [msg].")
 
 /obj/machinery/firealarm/atom_init(mapload, dir, building)
