@@ -192,7 +192,7 @@
 /datum/announcement/centcomm/irod
 	name = "Event: Immovable Rod"
 	subtitle = "Общая Тревога"
-	message = "Цитирую вопрос из ЦентКома. Какого хрена это было?!"
+	message = "Цитирую вопрос из Центкома. Какого хрена это было?!"
 	sound = "irod"
 
 /datum/announcement/centcomm/infestation
