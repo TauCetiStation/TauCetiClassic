@@ -108,21 +108,21 @@ var/global/list/quiet_alarm_areas = typecacheof(typesof(/area/station/maintenanc
 /proc/num2seclevel(num)
 	switch(num)
 		if(SEC_LEVEL_GREEN)
-			return "green"
+			return "зелёный"
 		if(SEC_LEVEL_BLUE)
-			return "blue"
+			return "синий"
 		if(SEC_LEVEL_RED)
-			return "red"
+			return "красный"
 		if(SEC_LEVEL_DELTA)
-			return "delta"
+			return "дельта"
 
 /proc/seclevel2num(seclevel)
 	switch( lowertext(seclevel) )
-		if("green")
+		if("зелёный")
 			return SEC_LEVEL_GREEN
-		if("blue")
+		if("синий")
 			return SEC_LEVEL_BLUE
-		if("red")
+		if("красный")
 			return SEC_LEVEL_RED
-		if("delta")
+		if("дельта")
 			return SEC_LEVEL_DELTA
