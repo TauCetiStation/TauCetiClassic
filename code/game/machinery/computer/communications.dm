@@ -469,7 +469,7 @@
 		return
 
 	if(sent_strike_team == 1)
-		to_chat(user, "Центком не выделяет шаттл на этот сектор. Все контракты расторгнуты.")
+		to_chat(user, "Центком отказал в запросе шаттла на станцию. Все контракты расторгнуты.")
 		return
 
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
