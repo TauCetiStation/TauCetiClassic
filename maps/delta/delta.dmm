@@ -2340,10 +2340,7 @@
 	},
 /area/station/security/execution)
 "adQ" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
-/obj/random/misc/book,
+/obj/structure/bookcase/skills,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -11737,6 +11734,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/item/weapon/book/skillbook/robust,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -29486,6 +29484,7 @@
 	amount = 5
 	},
 /obj/item/weapon/circuitboard/crew,
+/obj/item/weapon/book/skillbook/surgery,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "dBW" = (
@@ -31342,6 +31341,7 @@
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/chefs_recipes,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/weapon/book/skillbook/chemistry,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -54183,6 +54183,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/book/skillbook/science,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -64392,6 +64393,7 @@
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/item/weapon/storage/fancy/donut_box,
+/obj/item/weapon/book/skillbook/medical,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -71509,6 +71511,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bookcase,
 /obj/effect/decal/cleanable/cobweb2,
+/obj/item/weapon/book/skillbook/exosuits,
 /turf/simulated/floor/wood,
 /area/station/maintenance/medbay)
 "nDw" = (
@@ -82241,6 +82244,11 @@
 	icon_state = "whitehall"
 	},
 /area/station/rnd/hallway)
+"qlV" = (
+/obj/structure/bookcase,
+/obj/random/misc/book,
+/turf/simulated/floor/wood,
+/area/station/maintenance/medbay)
 "qmi" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -85422,6 +85430,7 @@
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
 	},
+/obj/item/weapon/book/skillbook/engineering,
 /turf/simulated/floor/wood,
 /area/station/engineering/break_room)
 "raz" = (
@@ -89124,6 +89133,8 @@
 "rUm" = (
 /obj/structure/bookcase,
 /obj/effect/decal/cleanable/cobweb2,
+/obj/random/misc/book,
+/obj/random/misc/book,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "rUr" = (
@@ -92137,6 +92148,7 @@
 	c_tag = "Librarian";
 	dir = 1
 	},
+/obj/random/misc/book,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -144759,7 +144771,7 @@ yga
 wBm
 ehP
 pPp
-ehP
+qlV
 yga
 viL
 hJH
