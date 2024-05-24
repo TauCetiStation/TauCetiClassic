@@ -36,7 +36,7 @@
 	sound = "artillery"
 /datum/announcement/centcomm/bsa/play(area/A)
 	if(A)
-		message = "Тревога! Обнаружен огонь блюспейс артиллерии на [A.name]. Приготовиться к удару."
+		message = "Тревога! Обнаружен огонь блюспейс артиллерии по [CASE(A, DATIVE_CASE)]. Приготовиться к удару."
 	..()
 
 /datum/announcement/centcomm/aliens
@@ -64,7 +64,7 @@
 	message = "На станции обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: неизвестно."
 /datum/announcement/centcomm/anomaly/bluespace/play(area/A)
 	if(A)
-		message = "На [station_name_ru()] обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На [station_name_ru()] обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/massive_portals
@@ -83,7 +83,7 @@
 	sound = "fluxanom"
 /datum/announcement/centcomm/anomaly/flux/play(area/A)
 	if(A)
-		message = "На [station_name_ru()] зафиксирован гиперэнерегетический волновой поток. Ожидаемое местоположение: [A.name]."
+		message = "На [station_name_ru()] зафиксирован гиперэнерегетический волновой поток. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/gravity
@@ -92,7 +92,7 @@
 	sound = "gravanom"
 /datum/announcement/centcomm/anomaly/gravity/play(area/A)
 	if(A)
-		message = "На [station_name_ru()] обнаружена гравитационная аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На [station_name_ru()] обнаружена гравитационная аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/pyro
@@ -101,7 +101,7 @@
 	sound = "pyroanom"
 /datum/announcement/centcomm/anomaly/pyro/play(area/A)
 	if(A)
-		message = "На [station_name_ru()] обнаружена пирокластическая аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На [station_name_ru()] обнаружена пирокластическая аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/vortex
@@ -110,7 +110,7 @@
 	sound = "vortexanom"
 /datum/announcement/centcomm/anomaly/vortex/play(area/A)
 	if(A)
-		message = "На [station_name_ru()] зафиксирована вихревая аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На [station_name_ru()] зафиксирована вихревая аномалия. Ожидаемое местоположение: [CASE(A, NOMINATIVE_CASE)]."
 	..()
 
 /datum/announcement/centcomm/brand
