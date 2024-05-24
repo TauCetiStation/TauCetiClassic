@@ -142,8 +142,8 @@
 					set_security_level(tmp_alertlevel)
 					if(security_level != old_level)
 						//Only notify the admins if an actual change happened
-						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()]. [ADMIN_JMP(usr)]")
+						log_game("[key_name(usr)] сменил код тревоги на [get_security_level()].")
+						message_admins("[key_name_admin(usr)] сменил код тревоги на [get_security_level()]. [ADMIN_JMP(usr)]")
 						switch(security_level)
 							if(SEC_LEVEL_GREEN)
 								feedback_inc("alert_comms_green",1)
