@@ -246,7 +246,7 @@
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				to_chat(usr, "<span class='notice'>Сообщение отправлено!</span>")
+				to_chat(usr, "<span class='notice'>Сообщение отправлено.</span>")
 				log_say("[key_name(usr)] has made an IA Centcomm announcement: [input]")
 				CM.cooldown = 55
 
