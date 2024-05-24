@@ -364,7 +364,7 @@
 				dat += "<BR><A HREF='?src=\ref[src];operation=login'>Авторизироваться в систему</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=messagelist'>Список сообщений</A>"
 		if(STATE_CALLSHUTTLE)
-			dat += "Вы уверены, что хотите вызвать шаттл? <A HREF='?src=\ref[src];operation=callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=main'>ОТМЕНА</A>"
+			dat += "Вы уверены, что хотите вызвать шаттл? <A HREF='?src=\ref[src];operation=callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=main'>НЕТ</A>"
 		if(STATE_CANCELSHUTTLE)
 			dat += "Вы уверены, что хотите отозвать шаттл? <A HREF='?src=\ref[src];operation=cancelshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=main'>НЕТ</A>"
 		if(STATE_MESSAGELIST)
@@ -382,7 +382,7 @@
 				return
 		if(STATE_DELMESSAGE)
 			if (src.currmsg)
-				dat += "Вы уверены, что хотите удалить это сообщение? <A HREF='?src=\ref[src];operation=delmessage2'>ДА</A> | <A HREF='?src=\ref[src];operation=viewmessage'>ОТМЕНА</A>"
+				dat += "Вы уверены, что хотите удалить это сообщение? <A HREF='?src=\ref[src];operation=delmessage2'>ДА</A> | <A HREF='?src=\ref[src];operation=viewmessage'>НЕТ</A>"
 			else
 				src.state = STATE_MESSAGELIST
 				attack_hand(user)
@@ -426,7 +426,7 @@
 			dat += "<BR><A HREF='?src=\ref[src];operation=ai-messagelist'>Список сообщений</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=ai-status'>Установить текст на дисплеях</A>"
 		if(STATE_CALLSHUTTLE)
-			dat += "Вы уверены, что хотите вызвать шаттл? <A HREF='?src=\ref[src];operation=ai-callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=ai-main'>ОТМЕНА</A>"
+			dat += "Вы уверены, что хотите вызвать шаттл? <A HREF='?src=\ref[src];operation=ai-callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=ai-main'>НЕТ</A>"
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
@@ -441,7 +441,7 @@
 				return null
 		if(STATE_DELMESSAGE)
 			if(src.aicurrmsg)
-				dat += "Вы уверены, что хотите удалить это сообщение? <A HREF='?src=\ref[src];operation=ai-delmessage2'>ДА</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>ОТМЕНА</A>"
+				dat += "Вы уверены, что хотите удалить это сообщение? <A HREF='?src=\ref[src];operation=ai-delmessage2'>ДА</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>НЕТ</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
 				attack_hand(user)
