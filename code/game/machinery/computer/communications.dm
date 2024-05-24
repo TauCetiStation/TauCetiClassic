@@ -494,7 +494,7 @@
 	return
 
 /proc/init_shift_change(mob/user, force = 0)
-	if ((!( SSticker ) || SSshuttle.location))
+	if((!( SSticker ) || SSshuttle.location))
 		return
 
 	if(SSshuttle.direction == -1)
@@ -512,11 +512,12 @@
 			return
 
 		if(sent_strike_team == 1)
-		to_chat(user, "Центком не выделяет шаттл на этот сектор. Все контракты расторгнуты.")
+			to_chat(user, "Центком не выделяет шаттл на этот сектор. Все контракты расторгнуты.")
 			return
 
+
 		if(world.time < 54000) // 30 minute grace period to let the game get going
-		to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [round((54000-world.time)/600)] минут до повторного вызова."))//may need to change "/600"
+			to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [round((54000-world.time)/600)] минут до повторного вызова.")//may need to change "/600"
 			return
 
 	SSshuttle.shuttlealert(1)
