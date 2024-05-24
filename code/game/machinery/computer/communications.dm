@@ -242,7 +242,7 @@
 				if(CM.cooldown)
 					to_chat(usr, "<span class='warning'>Обработка информации. Ожидайте.</span>")
 					return
-				var/input = sanitize(input(usr, "Передайте оповещение Центкому через блюспейс-связь.  Не злоупотребляйте этой возможностью, иначе вы будете уволены или понижены..  Передача сообщения не гарантирует ответ. Между сообщениями есть промежуток в 30 секунд, поэтому они должны содержать полную информацию.", "Чтобы отменить, отправьте пустое сообщение.", ""))
+				var/input = sanitize(input(usr, "Передайте оповещение Центкому через блюспейс-связь.  Не злоупотребляйте этой возможностью, иначе вы будете уволены или понижены...  Передача сообщения не гарантирует ответ. Между сообщениями есть промежуток в 30 секунд, поэтому они должны содержать полную информацию.", "Чтобы отменить, отправьте пустое сообщение.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
@@ -257,7 +257,7 @@
 				if(CM.cooldown)
 					to_chat(usr, "<span class='warning'>Обработка информации. Ожидайте.</span>")
 					return
-				var/input = sanitize(input(usr, "Передайте оповещение \[НЕВЕРОЯТНО КРУТЫМ ПАРНЯМ\] через блюспейс-связь.  Не злоупотребляйте этой возможностью, иначе вы будете уволены или понижены..  Передача сообщения не гарантирует ответ. Между сообщениями есть промежуток в 30 секунд, поэтому они должны содержать полную информацию.", "Чтобы отменить, отправьте пустое сообщение.", ""))
+				var/input = sanitize(input(usr, "Передайте оповещение \[НЕВЕРОЯТНО КРУТЫМ ПАРНЯМ\] через блюспейс-связь.  Не злоупотребляйте этой возможностью, иначе вы будете уволены или понижены...  Передача сообщения не гарантирует ответ. Между сообщениями есть промежуток в 30 секунд, поэтому они должны содержать полную информацию.", "Чтобы отменить, отправьте пустое сообщение.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
@@ -319,7 +319,7 @@
 	if(emagged)
 		return FALSE
 	src.emagged = 1
-	to_chat(user, "Вы настроили консоль коммуникаций на другую частоту!")
+	to_chat(user, "Вы сбили изначальную частоту консоли коммуникаций!")
 	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
@@ -397,11 +397,11 @@
 			dat += "<li> Линия 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
 			dat += " Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Красный код тревоги</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Изоляция</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая опасность!</A><BR><HR>"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая опасность</A><BR><HR>"
 		if(STATE_ALERT_LEVEL)
 			dat += "Текущий код тревоги: [get_security_level()]<BR>"
 			if(security_level == SEC_LEVEL_DELTA)
-				dat += "<font color='red'><b>Активирован механизм самоуничтожения. Деактивируйте механизм для снижения кода</b></font>"
+				dat += "<font color='red'><b>Активирован механизм самоуничтожения. Деактивируйте механизм для снижения кода.</b></font>"
 			else
 				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Синий</A><BR>"
 				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Зелёный</A>"
@@ -458,10 +458,10 @@
 			dat += "Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=default'>Стандартный режим</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Красный код тревоги</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Изоляция</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая опасность!</A><BR><HR>"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая опасность</A><BR><HR>"
 
 
-	dat += "<BR>[(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Главно меню</A> | " : ""]"
+	dat += "<BR>[(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Главное меню</A> | " : ""]"
 	return dat
 
 /proc/call_shuttle_proc(mob/user)
