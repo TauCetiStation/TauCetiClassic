@@ -2,7 +2,7 @@
 /obj/machinery/computer/communications
 	name = "Communications Console"
 	cases = list("консоль коммуникаций", "консоли коммуникаций", "консоли коммуникаций", "консоли коммуникаций", "консолью коммуникаций", "консоли коммуникаций")
-	desc = "Эта консоль имеет очень большой функционал для контроля станции. Все ещё в разработке!"
+	desc = "Эта консоль имеет очень большой функционал для контроля станции."
 	icon_state = "comm"
 	light_color = "#0099ff"
 	req_access = list(access_heads)
@@ -160,7 +160,7 @@
 		if("announce")
 			if(src.authenticated == 2)
 				if(last_announcement > world.time)
-					to_chat(usr, "<span class='warning'>Красный индикатор загорелся на консоли. Вероятно, здесь стоит ограничитель на оповещения...</span>")
+					to_chat(usr, "<span class='warning'>Красный индикатор загорелся на консоли. Вероятно, вы не можете делать оповещения так быстро!</span>")
 					return
 				else
 					last_announcement = world.time + 1 MINUTE
@@ -246,7 +246,7 @@
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				to_chat(usr, "<span class='notice'>Сообщение отправлено!</span>")
+				to_chat(usr, "<span class='notice'>Сообщение отправлено.</span>")
 				log_say("[key_name(usr)] has made an IA Centcomm announcement: [input]")
 				CM.cooldown = 55
 
@@ -469,7 +469,7 @@
 		return
 
 	if(sent_strike_team == 1)
-		to_chat(user, "Центком не выделяет шаттл на этот сектор. Все контракты расторгнуты.")
+		to_chat(user, "Центком отказал в запросе шаттла на станцию. Все контракты расторгнуты.")
 		return
 
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
@@ -512,7 +512,7 @@
 			return
 
 		if(sent_strike_team == 1)
-			to_chat(user, "Центком не выделяет шаттл на этот сектор. Все контракты расторгнуты.")
+			to_chat(user, "Центком отказал в запросе шаттла на станцию. Все контракты расторгнуты.")
 			return
 
 
