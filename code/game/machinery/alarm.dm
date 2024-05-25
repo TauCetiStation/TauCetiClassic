@@ -1225,7 +1225,7 @@ FIRE ALARM
 			msg = "<font color='red'><b>красный</b></font>"
 		if("delta")
 			msg = "<font color='purple'><b>дельта</b></font>"
-	to_chat(user, "Маленький индикатор указывает на то, что сейчас на станции код безопасности - [msg].")
+	to_chat(user, "Маленький индикатор указывает на то, что сейчас на станции код тревоги - [msg].")
 
 /obj/machinery/firealarm/atom_init(mapload, dir, building)
 	. = ..()
