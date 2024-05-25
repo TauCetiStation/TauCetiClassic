@@ -1217,13 +1217,13 @@ FIRE ALARM
 	. = ..()
 	var/msg
 	switch(get_security_level())
-		if("green")
+		if("зелёный")
 			msg = "<font color='green'><b>зелёный</b></font>"
-		if("blue")
+		if("синий")
 			msg = "<font color='blue'><b>синий</b></font>"
-		if("red")
+		if("красный")
 			msg = "<font color='red'><b>красный</b></font>"
-		if("delta")
+		if("дельта")
 			msg = "<font color='purple'><b>дельта</b></font>"
 	to_chat(user, "Маленький индикатор указывает на то, что сейчас на станции код тревоги - [msg].")
 
