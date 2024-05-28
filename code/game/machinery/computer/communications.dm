@@ -508,7 +508,7 @@
 	// if force is 0, some things may stop the shuttle call
 	if(!force)
 		if(SSshuttle.deny_shuttle)
-			to_chat(user, "У нас нет доступного шаттла в этом секторе, пожалуйста подождите.")
+			to_chat(user, "Центком не имеет доступного шаттла в этом секторе, пожалуйста подождите.")
 			return
 
 		if(sent_strike_team == 1)
