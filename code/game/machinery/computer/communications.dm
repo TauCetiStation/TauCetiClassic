@@ -160,7 +160,7 @@
 		if("announce")
 			if(src.authenticated == 2)
 				if(last_announcement > world.time)
-					to_chat(usr, "<span class='warning'>Красный индикатор загорелся на консоли. Вероятно, вы не можете делать оповещения так быстро!</span>")
+					to_chat(usr, "<span class='warning'>На консоли загорелся красный индикатор. Вероятно, вы не можете делать оповещения так быстро!</span>")
 					return
 				else
 					last_announcement = world.time + 1 MINUTE
