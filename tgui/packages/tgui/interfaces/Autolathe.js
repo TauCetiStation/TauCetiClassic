@@ -153,11 +153,7 @@ const MaterialAmount = (props, context) => {
             csspath,
           ])}
           position="relative"
-          style={style}>
-          <Tooltip
-            position="bottom"
-            content={toTitleCase(name)} />
-        </Box>
+          style={style} />
       </Flex.Item>
       <Flex.Item>
         <Box
