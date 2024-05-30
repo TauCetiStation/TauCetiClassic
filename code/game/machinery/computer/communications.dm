@@ -401,7 +401,7 @@
 		if(STATE_ALERT_LEVEL)
 			dat += "Текущий код тревоги: [get_security_level()]<BR>"
 			if(security_level == SEC_LEVEL_DELTA)
-				dat += "<font color='red'><b>Активирован механизм самоуничтожения. Деактивируйте механизм для снижения кода.</b></font>"
+				dat += "<font color='red'><b>Активирован механизм самоуничтожения. Деактивируйте механизм для снижения кода или эвакуируйтесь.</b></font>"
 			else
 				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Синий</A><BR>"
 				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Зелёный</A>"
