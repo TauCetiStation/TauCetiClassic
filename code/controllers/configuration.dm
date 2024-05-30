@@ -840,7 +840,7 @@ var/global/bridge_secret = null
 			qdel(M)
 			continue
 		if(global.master_last_mode == M.name)
-			if(M.name == "Extended" && M.name == "Traitor") //So we can start on lowpop
+			if(M.name == "Extended" || M.name == "Traitor") //So we can start on lowpop
 				continue
 			qdel(M)
 			continue
