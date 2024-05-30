@@ -839,7 +839,9 @@ var/global/bridge_secret = null
 		if(probabilities[M.config_name] <= 0)
 			qdel(M)
 			continue
-		if(global.master_last_mode == M.name && M.name != "Extended")
+		if(global.master_last_mode == M.name)
+			if(M.name == "Extended" && M.name == "Traitor") //So we can start on lowpop
+				continue
 			qdel(M)
 			continue
 		if(global.modes_failed_start[M.name])
