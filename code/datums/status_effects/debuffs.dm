@@ -203,7 +203,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!(iscarbon(owner) && isrobot(owner)))
+	if(!iscarbon(owner) && !isrobot(owner))
 		return
 	if(!owner.tentacle_capped)
 		cap_by_tentacle()
