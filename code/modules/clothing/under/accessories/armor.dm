@@ -2,7 +2,7 @@
 	name = "armor plate"
 	desc = "Time for some serious protection."
 	icon_state = "armor"
-	slot = "armor"
+	slot = "armor_plate"
 	armor = list(melee = 50, bullet = 45, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
 	pierce_protection = UPPER_TORSO|LOWER_TORSO
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
