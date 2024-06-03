@@ -1,12 +1,3 @@
-/*
-	remove_overlay(X_FIRE_LAYER)
-	if(on_fire && fire_reagent)
-		var/image/I = image("icon" = 'icons/mob/OnFire.dmi', "icon_state"="alien_fire", "layer"=-FIRE_UPPER_LAYER)
-		I.appearance_flags |= RESET_COLOR|RESET_ALPHA
-		I.color = "#e01e1e"
-		overlays_standing[FIRE_UPPER_LAYER] = I
-		apply_overlay(FIRE_UPPER_LAYER)
-*/
 /mob/living/simple_animal/hostile/asteroid
 	vision_range = 2
 	min_oxy = 0
