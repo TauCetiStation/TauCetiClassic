@@ -18,8 +18,8 @@
 	desc = "Worn by a Captain to show their class. Also has some space for armor plate."
 	icon_state = "captunic"
 	item_state = "bio_suit"
-	valid_accessory_slots = list("armband", "decor", "armor_plate")
-	restricted_accessory_slots = list("armband", "armor_plate")
+	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armband", "armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 	flags_inv = HIDEJUMPSUIT
 

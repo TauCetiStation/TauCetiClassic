@@ -52,8 +52,8 @@
 	name = "captain's winter coat"
 	icon_state = "coatcaptain"
 	hoodtype = /obj/item/clothing/head/wintercoat/captain
-	valid_accessory_slots = list("armband", "decor", "armor_plate")
-	restricted_accessory_slots = list("armband", "armor_plate")
+	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armband", "armor")
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/telebaton)
 
 /obj/item/clothing/head/wintercoat/captain
