@@ -180,7 +180,7 @@
 
 /datum/status_effect/incapacitating/capture_and_damage
 	id = "capture"
-	alert_type = /atom/movable/screen/alert/status_effect/paralysis
+	alert_type = /atom/movable/screen/alert/status_effect/tough_paralysis
 	tick_interval = 30
 
 /datum/status_effect/incapacitating/capture_and_damage/proc/cap_by_tentacle()

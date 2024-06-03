@@ -340,8 +340,8 @@
 			or shoot a gun to move around via Newton's 3rd Law of motion."
 	icon_state = "weightless"
 
-/atom/movable/screen/alert/status_effect/paralysis
-	name = "Paralysis"
+/atom/movable/screen/alert/status_effect/tough_paralysis
+	name = "Tough Paralysis"
 	desc = "You've paralysed. Considering how helpless you are."
 	icon_state = "paralysis"
 
