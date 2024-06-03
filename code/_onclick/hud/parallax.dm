@@ -44,7 +44,7 @@
 		return FALSE
 
 	var/client/C = mymob.client
-	switch(C.prefs.parallax)
+	switch(C.prefs.get_pref(/datum/pref/player/graphics/parallax))
 		if (PARALLAX_INSANE)
 			C.parallax_throttle = FALSE
 			C.parallax_layers_max = 4

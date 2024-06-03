@@ -90,7 +90,8 @@
 
 	//ghosts
 	for(var/mob/M as anything in observer_list)	//does this include players who joined as observers as well?
-		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
+		// nearby mobs already included, we need to add only observers out of view who need it
+		if(M.client && M.client.prefs.get_pref(/datum/pref/player/chat/ghostears))
 			listening |= M
 
 	//Pass whispers on to anything inside the immediate listeners.

@@ -226,7 +226,7 @@
 	if(!speaker || isobserver(speaker))
 		return
 
-	if(!client || !client.prefs.show_runechat)
+	if(!client || !client.prefs.get_pref(/datum/pref/player/ui/runechat))
 		return
 
 	if(SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(speaker, TRAIT_BYPASS_MEASURES))

@@ -608,7 +608,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!config.deathmatch_arena)
 		return
 	for(var/mob/living/M in global.player_list)
-		if(!M.client.prefs.eorg_enabled)
+		if(!M.client.prefs.get_pref(/datum/pref/player/game/endroundarena))
 			continue
 		spawn_gladiator(M)
 

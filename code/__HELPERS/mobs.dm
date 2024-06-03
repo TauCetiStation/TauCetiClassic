@@ -106,7 +106,7 @@
 	var/holding = user.get_active_hand()
 	var/datum/progressbar/progbar
 	if (progress)
-		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
+		if(user.client?.prefs.get_pref(/datum/pref/player/game/progressbar))
 			progbar = new(user, time, target)
 		else
 			progress = FALSE
@@ -183,7 +183,7 @@
 
 	var/datum/progressbar/progbar
 	if (progress)
-		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
+		if(user.client?.prefs.get_pref(/datum/pref/player/game/progressbar))
 			progbar = new(user, delay, target)
 		else
 			progress = FALSE

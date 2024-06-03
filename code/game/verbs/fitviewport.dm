@@ -1,7 +1,7 @@
 /client/verb/onresize()
 	set hidden = TRUE
 
-	if(prefs.auto_fit_viewport && !isnewplayer(mob))
+	if(prefs.get_pref(/datum/pref/player/ui/auto_fit_viewport) && !isnewplayer(mob))
 		fit_viewport()
 
 /client/verb/fit_viewport()

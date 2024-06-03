@@ -14,6 +14,7 @@
 #define MESSAGE_TYPE_ATTACKLOG "attacklog"
 #define MESSAGE_TYPE_DEBUG "debug"
 
+#define DEFAULT_OOC_COLOR "#002eb8" // consider updating preferences if you change this value, or else it will be used only for new players
 
 // To chat defines
 #define to_chat_private(usr, msg, type) to_chat(usr, msg, type, confidential = TRUE)

@@ -8,6 +8,11 @@ var/global/list/preferences_datums = list()
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
 /datum/preferences
 	var/client/parent
+
+	// list of new PLAYER datumized preferences
+	var/list/datum/pref/player/player_settings = list()
+	var/player_settings_dirty = FALSE // list of dirty DOMAINS!!
+
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -26,17 +31,7 @@ var/global/list/preferences_datums = list()
 	var/list/cid_list = list()
 	var/ignore_cid_warning = 0
 
-	//game-preferences
-	var/UI_style = null
-	var/UI_style_color = "#ffffff"
-	var/UI_style_alpha = 255
-	var/aooccolor = "#b82e00"
-	var/ooccolor = "#002eb8"
-	var/toggles = TOGGLES_DEFAULT
-	var/chat_toggles = TOGGLES_DEFAULT_CHAT
-	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-	var/clientfps = -1
 
 	// Custom Keybindings
 	var/list/key_bindings = list()
@@ -45,32 +40,7 @@ var/global/list/preferences_datums = list()
 	// so that the visual focus indicator matches reality.
 	var/hotkeys = TRUE
 
-	var/tooltip = TRUE
-	var/tooltip_font = "Small Fonts"
-	var/tooltip_size = 8
-
-	var/outline_enabled = TRUE
-	var/outline_color = COLOR_BLUE_LIGHT
-	var/eorg_enabled = TRUE
-
-	var/show_runechat = TRUE
-
 	var/list/custom_emote_panel = list()
-
-	//TGUI
-	var/tgui_fancy = TRUE
-	var/tgui_lock = FALSE
-
-	//sound volume preferences
-	var/snd_music_vol = 100
-	var/snd_ambient_vol = 100
-	var/snd_effects_master_vol = 100
-	var/snd_effects_voice_announcement_vol = 100
-	var/snd_effects_misc_vol = 100
-	var/snd_effects_instrument_vol = 100
-	var/snd_notifications_vol = 100
-	var/snd_admin_vol = 100
-	var/snd_jukebox_vol = 100
 
 	//antag preferences
 	var/list/be_role = list()
@@ -162,16 +132,6 @@ var/global/list/preferences_datums = list()
 	var/randomslot = 0
 	// jukebox volume
 	var/volume = 100
-	var/parallax = PARALLAX_HIGH
-	var/ambientocclusion = TRUE
-	var/auto_fit_viewport = TRUE
-	var/lobbyanimation = FALSE
-	// lighting settings
-	var/glowlevel = GLOW_MED // or bloom
-	var/lampsexposure = TRUE // idk how we should name it
-	var/lampsglare = FALSE // aka lens flare
-	//Impacts performance clientside
-	var/eye_blur_effect = TRUE
 
   //custom loadout
 	var/list/gear = list()
@@ -183,8 +143,12 @@ var/global/list/preferences_datums = list()
 
 /datum/preferences/New(client/C)
 	parent = C
-	UI_style = global.available_ui_styles[1]
 	custom_emote_panel = global.emotes_for_emote_panel
+
+	for(var/datum/pref/player/P as anything in subtypesof(/datum/pref/player))
+		if(initial(P.category) && initial(P.name))
+			player_settings[initial(P.type)] = new P
+
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -195,6 +159,22 @@ var/global/list/preferences_datums = list()
 	real_name = random_name(gender)
 	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
 	C?.set_macros()
+
+// replaced with macro for speed
+///datum/preferences/proc/get_pref(type)
+//	return player_settings[type].value
+
+/datum/preferences/proc/set_pref(type, new_value)
+	var/datum/pref/player/write_pref = player_settings[type]
+	world.log << "writting [write_pref.name] / [type]"
+
+	if(write_pref.update_value(new_value, parent))
+		mark_dirty() // mark_dirty(domain) -> adds to SS / or timer
+
+// mark as needed to update
+/datum/preferences/proc/mark_dirty()
+	player_settings_dirty = TRUE
+	//SSpreferences.mark_dirty(src)
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return

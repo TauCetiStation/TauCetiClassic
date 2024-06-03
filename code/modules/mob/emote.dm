@@ -11,7 +11,7 @@
 		to_chat(src, "<span class='warning'>You cannot send deadchat emotes (muted).</span>")
 		return
 
-	if(!(client.prefs.chat_toggles & CHAT_DEAD))
+	if(!client.prefs.get_pref(/datum/pref/player/chat/dead))
 		to_chat(src, "<span class='warning'>You have deadchat muted.</span>")
 		return
 
@@ -37,10 +37,13 @@
 		if(isnewplayer(M))
 			continue
 
-		if(M.client && M.client.holder && (M.client.holder.rights & R_ADMIN) && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to admins
+		if(!M.client)
+			continue
+
+		if(M.client.holder && (M.client.holder.rights & R_ADMIN) && M.client.prefs.get_pref(/datum/pref/player/chat/dead)) // Show the emote to admins
 			to_chat(M, tracker + message)
 
-		else if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD)) // Show the emote to regular ghosts with deadchat toggled on
+		else if(M.stat == DEAD && M.client.prefs.get_pref(/datum/pref/player/chat/dead)) // Show the emote to regular ghosts with deadchat toggled on
 			to_chat(M, tracker + message)
 
 /mob/atom_init()
@@ -86,13 +89,14 @@
 		if(!M.client)
 			continue
 
+		var/is_in_view = FALSE
 		if(M in viewers(get_turf(src), world.view))
 			M.show_runechat_message(src, null, message, null, SHOWMSG_VISUAL)
+			is_in_view = TRUE
 
-		switch(M.client.prefs.chat_ghostsight)
-			if(CHAT_GHOSTSIGHT_ALL)
-				// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
+		// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
+		if(is_in_view)
+			to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
+		else if (M.client.prefs.get_pref(/datum/pref/player/chat/ghostsight))
+			if(intentional || !M.client.prefs.get_pref(/datum/pref/player/chat/ghostantispam))
 				to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")
-			if(CHAT_GHOSTSIGHT_ALLMANUAL)
-				if(intentional)
-					to_chat(M, "[FOLLOW_LINK(M, src)] [msg]")

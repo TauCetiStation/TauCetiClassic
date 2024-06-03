@@ -116,7 +116,7 @@
 	if(!..())
 		return
 
-	var/enabled = client.prefs?.lampsexposure || FALSE
+	var/enabled = client.prefs?.get_pref(/datum/pref/player/graphics/lampsexposure)
 
 	if(enabled)
 		alpha = 255
@@ -138,7 +138,7 @@
 	if(!..())
 		return
 
-	var/level = client.prefs?.glowlevel || FALSE
+	var/level = client.prefs?.get_pref(/datum/pref/player/graphics/glowlevel)
 
 	if(isnull(level))
 		return
@@ -177,7 +177,7 @@
 	if(!..())
 		return
 
-	var/enabled = client.prefs?.lampsglare || FALSE
+	var/enabled = client.prefs?.get_pref(/datum/pref/player/graphics/lampsglare)
 
 	if(enabled)
 		add_filter("add_lamps_to_glare", 1, layering_filter(render_source = LIGHTING_LAMPS_RENDER_TARGET, blend_mode = BLEND_OVERLAY))

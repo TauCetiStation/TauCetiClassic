@@ -223,247 +223,26 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 		CRASH("type mismatch for volume_channel or volume channel is not set.")
 
 	if(volume_channel & VOL_MUSIC)
-		. = prefs.snd_music_vol
+		. = prefs.get_pref(/datum/pref/player/audio/lobby)
 	else if(volume_channel & VOL_AMBIENT)
-		. = prefs.snd_ambient_vol
+		. = prefs.get_pref(/datum/pref/player/audio/ambient)
 	else if(volume_channel & VOL_EFFECTS_MASTER)
-		. = prefs.snd_effects_master_vol
+		. = prefs.get_pref(/datum/pref/player/audio/effect_master)
 		switch(volume_channel) // now for sub categories
 			if(VOL_EFFECTS_VOICE_ANNOUNCEMENT)
-				. *= prefs.snd_effects_voice_announcement_vol * 0.01
+				. *= prefs.get_pref(/datum/pref/player/audio/effect_announcement) * 0.01
 			if(VOL_EFFECTS_MISC)
-				. *= prefs.snd_effects_misc_vol * 0.01
+				. *= prefs.get_pref(/datum/pref/player/audio/effect_misc) * 0.01
 			if(VOL_EFFECTS_INSTRUMENT)
-				. *= prefs.snd_effects_instrument_vol * 0.01
+				. *= prefs.get_pref(/datum/pref/player/audio/effect_instrument) * 0.01
 	else if(volume_channel & VOL_NOTIFICATIONS)
-		. = prefs.snd_notifications_vol
+		. = prefs.get_pref(/datum/pref/player/audio/notifications)
 	else if(volume_channel & VOL_ADMIN)
-		. = prefs.snd_admin_vol
+		. = prefs.get_pref(/datum/pref/player/audio/admin_sound)
 	else if(volume_channel & VOL_JUKEBOX)
-		. = prefs.snd_jukebox_vol
+		. = prefs.get_pref(/datum/pref/player/audio/jukebox)
 	else
 		CRASH("unknown volume_channel: [volume_channel]")
 
 	if(. > 0)
 		. = max(0.002, VOL_LINEAR_TO_NON(.)) // max(master slider won't kill sub slider's volume if both are less than max value).
-
-/client/proc/set_sound_volume(volume_channel, vol)
-	vol = clamp(vol, 0, 100)
-
-	switch(volume_channel)
-		if(VOL_MUSIC)
-			prefs.snd_music_vol = vol
-			mob.playsound_music_update_volume(volume_channel, CHANNEL_MUSIC)
-		if(VOL_AMBIENT)
-			prefs.snd_ambient_vol = vol
-			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT)
-			mob.playsound_music_update_volume(volume_channel, CHANNEL_AMBIENT_LOOP)
-		if(VOL_EFFECTS_MASTER)
-			prefs.snd_effects_master_vol = vol
-		if(VOL_EFFECTS_VOICE_ANNOUNCEMENT)
-			prefs.snd_effects_voice_announcement_vol = vol
-		if(VOL_EFFECTS_MISC)
-			prefs.snd_effects_misc_vol = vol
-		if(VOL_EFFECTS_INSTRUMENT)
-			prefs.snd_effects_instrument_vol = vol
-		if(VOL_NOTIFICATIONS)
-			prefs.snd_notifications_vol = vol
-		if(VOL_ADMIN)
-			prefs.snd_admin_vol = vol
-			mob.playsound_music_update_volume(volume_channel, CHANNEL_ADMIN)
-		if(VOL_JUKEBOX)
-			var/old_vol = prefs.snd_jukebox_vol
-
-			prefs.snd_jukebox_vol = vol
-
-			if(istype(media)) // will be updated in "/mob/living/Login()" if changed in lobby.
-				media.update_volume()
-
-				if(!vol && old_vol) // only play/stop if last change is a mute or unmute state.
-					media.stop_music()
-				else if(vol && !old_vol)
-					media.update_music()
-
-/client/proc/update_volume(href_list)
-	var/slider
-	var/vol_raw
-
-	switch(href_list["proc"])
-		if("sliderMoved")
-			slider = text2num(href_list["slider"])
-			vol_raw = text2num(href_list["volume"])
-		if("save")
-			if(prefs.save_preferences())
-				to_chat(src, "Preferences Saved.")
-			else
-				to_chat(src, "Preferences saving failed due to unknown reason.")
-			return
-		if("testVolume")
-			mob.playsound_local(null, 'sound/weapons/saberon.ogg', text2num(href_list["slider"]), vary = FALSE, channel = CHANNEL_VOLUMETEST)
-			return
-		else
-			return
-
-	if(!isnum(vol_raw) || !isnum(slider))
-		return
-
-	set_sound_volume(slider, vol_raw)
-
-/client/verb/show_volume_controls()
-	set name = ".showvolumecontrols"
-	set hidden = TRUE
-
-	if(!prefs_ready)
-		to_chat(src, "Preferences not ready, please wait and try again.")
-		return
-
-	var/list/tables_data = list(
-		"Music" = list(
-			"Master" = "[VOL_MUSIC]"
-			),
-		"Ambient" = list(
-			"Master" = "[VOL_AMBIENT]"
-			),
-		"Effects" = list(
-			"Master" = "[VOL_EFFECTS_MASTER]",
-			"Voice" = "[VOL_EFFECTS_VOICE_ANNOUNCEMENT]",
-			"Misc" = "[VOL_EFFECTS_MISC]",
-			"Music Instruments" = "[VOL_EFFECTS_INSTRUMENT]"
-			),
-		"Notifications" = list(
-			"Master" = "[VOL_NOTIFICATIONS]"
-			),
-		"Admin Music/Sounds" = list(
-			"Master" = "[VOL_ADMIN]"
-			),
-		"Jukebox" = list(
-			"Master" = "[VOL_JUKEBOX]"
-			)
-		)
-
-	var/list/prefs_vol_values = list(
-		"[VOL_MUSIC]" = prefs.snd_music_vol,
-		"[VOL_AMBIENT]" = prefs.snd_ambient_vol,
-		"[VOL_EFFECTS_MASTER]" = prefs.snd_effects_master_vol,
-		"[VOL_EFFECTS_VOICE_ANNOUNCEMENT]" = prefs.snd_effects_voice_announcement_vol,
-		"[VOL_EFFECTS_MISC]" = prefs.snd_effects_misc_vol,
-		"[VOL_EFFECTS_INSTRUMENT]" = prefs.snd_effects_instrument_vol,
-		"[VOL_NOTIFICATIONS]" = prefs.snd_notifications_vol,
-		"[VOL_ADMIN]" = prefs.snd_admin_vol,
-		"[VOL_JUKEBOX]" = prefs.snd_jukebox_vol
-		)
-
-	var/list/sliders_hint = list(
-		"[VOL_MUSIC]" = "Lobby music.",
-		"[VOL_AMBIENT]" = "Music and sound effects of ambient type.",
-		"[VOL_EFFECTS_MASTER]" = "Controls all sound effects.",
-		"[VOL_EFFECTS_VOICE_ANNOUNCEMENT]" = "Voiced global announcements.",
-		"[VOL_EFFECTS_MISC]" = "Anything spammy that may annoy e.g.: tesla engine.",
-		"[VOL_EFFECTS_INSTRUMENT]" = "Music instruments.",
-		"[VOL_NOTIFICATIONS]" = "OOC notifications such as admin PM, cloning.",
-		"[VOL_ADMIN]" = "Admin sounds and music.",
-		"[VOL_JUKEBOX]" = "In-game jukebox's volume."
-		)
-
-	var/dat = {"
-		<style>
-			.volume_slider {
-				width: 100%;
-				position: relative;
-				padding: 0;
-			}
-			table {
-				line-height: 5px;
-				width: 100%;
-				border-collapse: collapse;
-				border: 1px solid;
-				padding: 0;
-			}
-			td {
-				width: 25%;
-			}
-			td:nth-child(2n+0) {
-				width: 65%;
-			}
-			td:nth-child(3n+0) {
-				width: 10%;
-			}
-			caption {
-				line-height: normal;
-				color: white;
-				background-color: #444;
-				font-weight: bold;
-			}
-		</style>
-		"}
-
-	for(var/category in tables_data)
-		dat += {"
-			<table>
-				<caption>[category]</caption>
-		"}
-
-		var/list/sliders_data = tables_data[category]
-
-		for(var/slider_name in sliders_data)
-			var/slider_id = sliders_data[slider_name]
-			var/slider_value = prefs_vol_values[slider_id]
-			var/slider_hint = sliders_hint[slider_id]
-			dat += {"
-				<tr>
-					<td>
-						[slider_name] <span title="[slider_hint]">(?)</span>:
-					</td>
-					<td>
-						<input type="range" class="volume_slider" min="0" max="100" value="[slider_value]" id="[slider_id]" onchange="updateVolume([slider_id])">
-					</td>
-					<td>
-						<p><b><center><a href='?_src_=updateVolume&proc=testVolume&slider=[slider_id]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
-					</td>
-				</tr>
-			"}
-
-		dat += {"
-			</table>
-		"}
-
-	dat +={"
-		<p><span id="notice">&nbsp;</span></p>
-		<input type="button" min="0" max="100" value="Save" id="myRange" onclick="saveVolume()">
-
-		<script>
-			var volumeUpdating = false
-
-			function saveVolume() {
-				window.location = 'byond://?_src_=updateVolume&proc=save';
-				showHint('check \"Preferences Saved\" message in chat, if nothing push \"Save\" again.')
-			}
-
-			function updateVolume(slider_id) {
-				if (!volumeUpdating) {
-					volumeUpdating = true;
-					setTimeout(function() {
-						setVolume(slider_id);
-					}, 300);
-				}
-
-			}
-
-			function setVolume(slider_id) {
-				var vol = document.getElementById(slider_id).value;
-				window.location = 'byond://?_src_=updateVolume&proc=sliderMoved&slider=' + slider_id + '&volume=' + vol;
-				volumeUpdating = false;
-
-				document.getElementById(slider_id + "_value").innerHTML = vol;
-			}
-
-			function showHint(text) {
-				document.getElementById("notice").innerHTML = '<b>Hint: ' + text + '</b>';
-			}
-
-		</script>
-		"}
-
-	var/datum/browser/popup = new(usr, "volcontrols", "Audio Settings:", 620, 500, null, CSS_THEME_LIGHT)
-	popup.set_content(dat)
-	popup.open()

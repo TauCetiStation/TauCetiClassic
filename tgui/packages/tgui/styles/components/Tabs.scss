@@ -70,7 +70,7 @@ $fg-map: colors.$fg-map !default;
   background-color: $tab-color;
   color: $text-color;
   min-height: 2.25em;
-  min-width: 4em;
+  min-width: 3em;
 }
 
 .Tab:not(.Tab--selected):hover {

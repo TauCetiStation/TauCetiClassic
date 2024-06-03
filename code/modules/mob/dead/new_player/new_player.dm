@@ -43,7 +43,7 @@
 	if(global.custom_lobby_image)
 		client << browse(global.custom_lobby_image, "file=titlescreen.gif;display=0") // png? jpg?
 	else
-		if(client.prefs.lobbyanimation)
+		if(client.prefs.get_pref(/datum/pref/player/graphics/lobbyanimation))
 			client << browse(global.lobby_screens[global.lobby_screen]["mp4"], "file=[global.lobby_screen].mp4;display=0")
 		client << browse(global.lobby_screens[global.lobby_screen]["png"], "file=[global.lobby_screen].png;display=0")
 
@@ -128,6 +128,10 @@
 			spawn_as_observer()
 
 			return
+
+	if(href_list["lobby_settings"])
+		client.client_settings()
+		return
 
 	if(href_list["lobby_join"])
 		if(config.alt_lobby_menu)

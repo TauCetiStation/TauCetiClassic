@@ -27,7 +27,7 @@
 	var/area			= null
 	var/mentorhelped = FALSE
 	var/supporter = 0
-	var/prefs_ready = FALSE
+	var/prefs_ready = FALSE // drop it to datum
 
 		///////////////
 		//SOUND STUFF//

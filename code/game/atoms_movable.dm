@@ -449,10 +449,10 @@
 
 /client/var/list/image/outlined_item = list()
 /atom/movable/proc/apply_outline(color)
-	if(anchored || !usr.client.prefs.outline_enabled)
+	if(anchored || !usr.client.prefs.get_pref(/datum/pref/player/ui/outline))
 		return
 	if(!color)
-		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
+		color = usr.client.prefs.get_pref(/datum/pref/player/ui/outline_color) || COLOR_BLUE_LIGHT
 	if(usr.client.outlined_item[src])
 		return
 

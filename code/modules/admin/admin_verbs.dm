@@ -13,7 +13,6 @@ var/global/list/admin_verbs_admin = list(
 	/datum/admins/proc/toggleenter,		//toggles whether people can join the current game,
 	/datum/admins/proc/toggleguests,	//toggles whether guests can join the current game,
 	/datum/admins/proc/announce,		//priority announce something to all clients,
-	/client/proc/colorooc,				//allows us to set a custom colour for everythign we say in ooc,
 	/client/proc/admin_ghost,			//allows us to ghost/reenter body at will,
 	/client/proc/toggle_view_range,		//changes how far we can see,
 	/client/proc/cmd_admin_pm_context,	//right-click adminPM interface,
@@ -44,8 +43,6 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/check_antagonists,
 	/client/proc/admin_memo,			//admin memo system. show/delete/write. +SERVER needed to delete admin memos of others,
 	/client/proc/dsay,					//talk in deadchat using our ckey/fakekey,
-	/client/proc/toggleprayers,			//toggles prayers on/off,
-	/client/proc/toggle_hear_radio,		//toggles whether we hear the radio,
 	/client/proc/secrets,
 	/datum/admins/proc/toggleooc,		//toggles ooc on/off for everyone,
 	/datum/admins/proc/togglelooc,		//toggles looc on/off for everyone,
@@ -55,9 +52,6 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_say,			//admin-only ooc chat,
 	/client/proc/free_slot,			//frees slot for chosen job,
 	/client/proc/cmd_admin_change_custom_event,
-	/client/proc/toggleattacklogs,
-	/client/proc/toggle_noclient_attacklogs,
-	/client/proc/toggledebuglogs,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
 	/client/proc/man_up,
@@ -187,7 +181,6 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/enable_debug_verbs,
 	/*/client/proc/callproc,*/
 //	/proc/machine_upgrade,
-	/client/proc/toggledebuglogs,
 	/client/proc/view_runtimes,
 	/client/proc/getdebuglogsbyid,
 	/client/proc/cmd_display_del_log,
@@ -237,13 +230,10 @@ var/global/list/admin_verbs_hideable = list(
 	/datum/admins/proc/library_recycle_bin,
 	/client/proc/deadmin_self,
 //	/client/proc/deadchat,
-	/client/proc/toggleprayers,
-	/client/proc/toggle_hear_radio,
 	/datum/admins/proc/show_traitor_panel,
 	/datum/admins/proc/toggleenter,
 	/datum/admins/proc/toggleguests,
 	/datum/admins/proc/announce,
-	/client/proc/colorooc,
 	/client/proc/admin_ghost,
 	/client/proc/toggle_view_range,
 	/client/proc/getserverlogs,
@@ -497,20 +487,6 @@ var/global/list/admin_verbs_hideable = list(
 	if (holder)
 		holder.Secrets()
 	feedback_add_details("admin_verb","S") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	return
-
-/client/proc/colorooc()
-	set category = "OOC"
-	set name = "Set Admin OOC Color"
-	if(!holder)
-		return
-	if(!config.allow_admin_ooccolor)
-		to_chat(usr, "<span class='warning'>Currently disabled by config.</span>")
-	var/new_aooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-	if(new_aooccolor)
-		prefs.aooccolor = normalize_color(new_aooccolor)
-		prefs.save_preferences()
-	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 /client/proc/stealth()
@@ -927,24 +903,6 @@ var/global/list/admin_verbs_hideable = list(
 	var/datum/atom_hud/A = global.huds[ANTAG_HUD_TRAITOR]
 	return A.hudusers[mob]
 
-/client/proc/toggleattacklogs()
-	set name = "Toggle Attack Log Messages"
-	set category = "Preferences"
-
-	prefs.chat_toggles ^= CHAT_ATTACKLOGS
-	prefs.save_preferences()
-	to_chat(src, "You now [(prefs.chat_toggles & CHAT_ATTACKLOGS) ? "will" : "won't"] get attack log messages.")
-	feedback_add_details("admin_verb","TALM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/toggle_noclient_attacklogs()
-	set name = "Toggle No Client Attack Log Messages"
-	set category = "Preferences"
-
-	prefs.chat_toggles ^= CHAT_NOCLIENT_ATTACK
-	prefs.save_preferences()
-	to_chat(src, "You now [(prefs.chat_toggles & CHAT_NOCLIENT_ATTACK) ? "will" : "won't"] get attack log messages for mobs that don't have a client.")
-	feedback_add_details("admin_verb","TNCALM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/toggleghostwriters()
 	set name = "Toggle ghost writers"
 	set category = "Server"
@@ -972,15 +930,6 @@ var/global/list/admin_verbs_hideable = list(
 			config.allow_drone_spawn = 1
 			to_chat(src, "<b>Enabled maint drones.</b>")
 			message_admins("Admin [key_name_admin(usr)] has enabled maint drones.")
-
-/client/proc/toggledebuglogs()
-	set name = "Toggle Debug Log Messages"
-	set category = "Preferences"
-
-	prefs.chat_toggles ^= CHAT_DEBUGLOGS
-	prefs.save_preferences()
-	to_chat(src, "You now [(prefs.chat_toggles & CHAT_DEBUGLOGS) ? "will" : "won't"] get debug log messages.")
-	feedback_add_details("admin_verb","TDLM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/man_up(mob/T as mob in player_list)
 	set category = "Fun"

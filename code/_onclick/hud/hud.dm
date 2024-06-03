@@ -11,10 +11,10 @@
 
 // The default UI style is the first one in the list
 var/global/list/available_ui_styles = list(
-	"White" = 'icons/hud/screen1_White.dmi',
-	"Midnight" = 'icons/hud/screen1_Midnight.dmi',
-	"old" = 'icons/hud/screen1_old.dmi',
-	"Orange" = 'icons/hud/screen1_Orange.dmi'
+	UI_STYLE_WHITE = 'icons/hud/screen1_White.dmi',
+	UI_STYLE_MIDNIGHT = 'icons/hud/screen1_Midnight.dmi',
+	UI_STYLE_OLD = 'icons/hud/screen1_old.dmi',
+	UI_STYLE_ORANGE = 'icons/hud/screen1_Orange.dmi'
 	)
 
 /proc/ui_style2icon(ui_style)
@@ -46,7 +46,7 @@ var/global/list/available_ui_styles = list(
 
 	if (!ui_style)
 		// will fall back to the default if any of these are null
-		ui_style = ui_style2icon(mymob.client?.prefs?.UI_style)
+		ui_style = ui_style2icon(mymob.client?.prefs?.get_pref(/datum/pref/player/ui/ui_style))
 
 	instantiate()
 

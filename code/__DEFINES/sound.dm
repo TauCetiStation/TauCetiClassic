@@ -14,9 +14,13 @@
 // jukebox not a VOL_MUSIC sub category because jukebox plays thru javascript, which is not boynd's sound datum.
 #define VOL_JUKEBOX (1<<8)
 
-//Misc
-#define VOL_LINEAR_TO_NON(vol_raw) ((20 ** clamp(vol_raw * 0.01, 0, 1.0)) - 0.99) / (20 - 0.99) // this converts byond's linear volume into non linear (don't change anything without heavy testing with debug, even 0.01 difference may break the sound or functions that connects with this).
-#define SANITIZE_VOL(vol) vol * 0.5 // environment setting can overload sound that use 100% volume (0.5 actually is max, if you want pure sound with anything).
+// converts raw preference volume (1-100) to non linear coefficient (0-1) we apply for SANITIZE_VOL(playsound volume) 
+// to get final client volume before any others environment effects
+// (don't change anything without heavy testing with debug, even 0.01 difference may break the sound or functions that connects with this).
+#define VOL_LINEAR_TO_NON(vol_raw) ((20 ** clamp(vol_raw * 0.01, 0, 1.0)) - 0.99) / (20 - 0.99)
+// environment settings can overload sound that uses 100% volume, so we cap default volume at 50%
+// (which means our build is quieter than others!!!)
+#define SANITIZE_VOL(vol) vol * 0.5
 
 //sound channels, max is 1024
 #define CHANNEL_AMBIENT 1

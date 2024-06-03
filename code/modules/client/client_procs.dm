@@ -147,7 +147,6 @@ var/global/list/blacklisted_builds = list(
 		if("usr")		hsrc = mob
 		if("prefs")		return prefs.process_link(usr,href_list)
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
-		if("updateVolume")	return update_volume(href_list)
 
 	switch(href_list["action"])
 		if ("openLink")
@@ -289,21 +288,21 @@ var/global/list/blacklisted_builds = list(
 	update_supporter_status()
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
-	prefs = preferences_datums[ckey]
+	prefs = global.preferences_datums[ckey]
 	if(prefs)
 		prefs.parent = src
 	else
 		prefs = new /datum/preferences(src)
-		preferences_datums[ckey] = prefs
+		global.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
-	fps = (prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
+	fps = prefs.get_pref(/datum/pref/player/graphics/fps)
 
 	var/cur_date = time2text(world.realtime, "YYYY/MM/DD hh:mm:ss")
 	if("[computer_id]" in prefs.cid_list)
 		prefs.cid_list["[computer_id]"]["last_seen"] = cur_date
 	else
-		prefs.cid_list["[computer_id]"] = list("first_seen"=cur_date, "last_seen"=cur_date)
+		prefs.cid_list["[computer_id]"] = list("first_seen"=cur_date, "last_seen"=cur_date)//todo
 
 	if(prefs.cid_list.len > 2)
 		log_admin("[ckey] has [prefs.cid_list.len] different computer_id.")
@@ -370,7 +369,7 @@ var/global/list/blacklisted_builds = list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(prefs.auto_fit_viewport)
+	if(prefs.get_pref(/datum/pref/player/ui/auto_fit_viewport))
 		fit_viewport()
 
 	if(!cob)

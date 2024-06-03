@@ -122,6 +122,7 @@ var/global/lobby_screen = "lobby"
 			<div class="container_nav"><div class="container_nav_rot">
 				<a class="menu_a" href='?src=\ref[src];lobby_setup=1'>SETUP</a>
 	"}
+	dat += "<br>"
 
 	if(config.alt_lobby_menu)
 		dat += {"<a class="menu_a" href='?src=\ref[src];event_join=1'>JOIN</a>"}
@@ -136,6 +137,7 @@ var/global/lobby_screen = "lobby"
 		dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>[has_quality ? QUALITY_READY : QUALITY_NOT_READY]</a>"}
 
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_settings=1'>SETTINGS</a>"}
 	dat += "<br><br>"
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>"}
 
@@ -143,7 +145,7 @@ var/global/lobby_screen = "lobby"
 	
 	if(global.custom_lobby_image)
 		dat += {"<img src="titlescreen.gif" class="background" alt="">"}
-	else if (client.prefs.lobbyanimation)
+	else if (client.prefs.get_pref(/datum/pref/player/graphics/lobbyanimation))
 		dat += {"
 		<video class="background" width="400" height="400" loop mute autoplay>
 			<source src="[global.lobby_screen].mp4" type="video/mp4">

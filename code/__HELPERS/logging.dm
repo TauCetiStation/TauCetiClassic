@@ -48,7 +48,7 @@
 		global.game_log << "\[[time_stamp()]]DEBUG: [text][log_end]"
 
 	for(var/client/C as anything in admins)
-		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
+		if(C.prefs.get_pref(/datum/pref/player/chat/debug_log))
 			to_chat_debug(C, "DEBUG: [text]")
 
 /proc/log_asset(text)
@@ -170,7 +170,7 @@
 /proc/log_gc(text)
 	global.gc_log << "\[[time_stamp()]] [text][log_end]"
 	for(var/client/C in global.admins)
-		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
+		if(C.prefs.get_pref(/datum/pref/player/chat/debug_log))
 			to_chat(C, "GC DEBUG: [text]")
 #endif
 

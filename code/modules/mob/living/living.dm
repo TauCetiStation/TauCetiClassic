@@ -1154,7 +1154,7 @@
 /mob/living/proc/do_item_attack_animation(atom/A, visual_effect_icon, visual_effect_color)
 	var/list/viewing = list()
 	for(var/mob/M in viewers(A))
-		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+		if(M.client?.prefs.get_pref(/datum/pref/player/game/melee_animation))
 			viewing |= M.client
 
 	//Show an image of the wielded weapon over the person who got dunked.

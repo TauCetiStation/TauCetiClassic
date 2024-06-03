@@ -306,14 +306,14 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if (R.client && !R.client.prefs.get_pref(/datum/pref/player/chat/radio)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 		if(isnewplayer(R)) // we don't want new players to hear messages. rare but generates runtimes.
 			continue
 
 		// Ghosts hearing all radio chat don't want to hear syndicate intercepts, they're duplicates
-		if(data == BROADCAST_MODE_SYNDICATE && isobserver(R) && R.client && (R.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
+		if(data == BROADCAST_MODE_SYNDICATE && isobserver(R) && R.client && R.client.prefs.get_pref(/datum/pref/player/chat/ghostradio))
 			continue
 
 		// --- Check for compression ---
@@ -586,7 +586,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 	  /* --- Loop through the receivers and categorize them --- */
 
-		if (R.client && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
+		if (R.client && !R.client.prefs.get_pref(/datum/pref/player/chat/radio)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			continue
 
 

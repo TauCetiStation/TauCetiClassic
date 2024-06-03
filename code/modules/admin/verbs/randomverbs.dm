@@ -834,7 +834,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/viewy = clamp(input("Enter view height (1-127)") as num, 1, 127) * 2 + 1
 
 	change_view("[viewx]x[viewy]")
-	if(prefs.auto_fit_viewport)
+	if(prefs.get_pref(/datum/pref/player/ui/auto_fit_viewport))
 		fit_viewport()
 
 	log_admin("[key_name(usr)] changed their view range to [viewx]x[viewy].")

@@ -27,6 +27,7 @@ $primary: #4972a1 !default;
 $good: #5baa27 !default;
 $average: #f08f11 !default;
 $bad: #db2828 !default;
+$neutral: #767676 !default;
 $label: #7e90a7 !default;
 
 // Background and foreground color lightness ratios
@@ -61,6 +62,7 @@ $_gen_map: (
   'good': $good,
   'average': $average,
   'bad': $bad,
+  'neutral': $neutral,
   'label': $label,
 );
 

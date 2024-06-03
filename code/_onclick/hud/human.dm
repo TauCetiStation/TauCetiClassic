@@ -1,6 +1,6 @@
 /mob/living/carbon/human/add_to_hud(datum/hud/hud)
-	hud.ui_color = client.prefs.UI_style_color
-	hud.ui_alpha = client.prefs.UI_style_alpha
+	hud.ui_color = client.prefs.get_pref(/datum/pref/player/ui/ui_style_color)
+	hud.ui_alpha = 255 - floor(255*client.prefs.get_pref(/datum/pref/player/ui/ui_style_opacity)/100)
 
 	..(hud, FALSE)
 

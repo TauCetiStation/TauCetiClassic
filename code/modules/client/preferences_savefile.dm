@@ -55,17 +55,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 16)
 		S["aooccolor"] << S["ooccolor"]
-		aooccolor = ooccolor
-
-	if(current_version < 25)
-		var/const/SOUND_ADMINHELP = 1
-		var/const/SOUND_MIDI = 2
-		var/const/SOUND_AMBIENCE = 4
-		var/const/SOUND_LOBBY = 8
-		var/const/SOUND_STREAMING = 64
-
-		toggles &= ~(SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_STREAMING)
-		S["toggles"] << toggles
 
 	if(current_version < 26)
 		for(var/role in be_role)
@@ -74,6 +63,123 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 44)
 		custom_emote_panel = global.emotes_for_emote_panel
+
+	// moving prefs to new system
+	//if(current_version < 50)
+	if(TRUE)
+		// audio
+		set_pref(/datum/pref/player/audio/lobby, S["snd_music_vol"])
+		set_pref(/datum/pref/player/audio/ambient, S["snd_ambient_vol"])
+		set_pref(/datum/pref/player/audio/effect_master, S["snd_effects_master_vol"])
+		set_pref(/datum/pref/player/audio/effect_announcement, S["snd_effects_voice_announcement_vol"])
+		set_pref(/datum/pref/player/audio/effect_misc, S["snd_effects_misc_vol"])
+		set_pref(/datum/pref/player/audio/effect_instrument, S["snd_effects_instrument_vol"])
+		set_pref(/datum/pref/player/audio/notifications, S["snd_notifications_vol"])
+		set_pref(/datum/pref/player/audio/jukebox, S["snd_jukebox_vol"])
+		set_pref(/datum/pref/player/audio/admin_sound, S["snd_admin_vol"])
+
+		// ui
+		set_pref(/datum/pref/player/ui/auto_fit_viewport, S["auto_fit_viewport"])
+		set_pref(/datum/pref/player/ui/ui_style, S["UI_style"])
+		set_pref(/datum/pref/player/ui/ui_style_color, S["UI_style_color"])
+		var/converted_alpha = 100 - floor(100*S["UI_style_alpha"]/255)
+		set_pref(/datum/pref/player/ui/ui_style_opacity, converted_alpha)
+		set_pref(/datum/pref/player/ui/outline, S["outline_enabled"])
+		set_pref(/datum/pref/player/ui/outline_color, S["outline_color"])
+		set_pref(/datum/pref/player/ui/runechat, S["show_runechat"])
+		set_pref(/datum/pref/player/ui/tooltip, S["tooltip"])
+		set_pref(/datum/pref/player/ui/tooltip_font, S["tooltip_font"])
+		set_pref(/datum/pref/player/ui/tooltip_size, S["tooltip_size"])
+
+		//set_pref(/datum/pref/player/ui/..., S["tgui_fancy"]) // removed, we don't support ie8 already and 516 is coming
+		set_pref(/datum/pref/player/ui/tgui_lock, S["tgui_lock"])
+
+		// graphics
+		var/converted_fps = S["clientfps"] == -1 ? RECOMMENDED_FPS : S["clientfps"] // before -1 was for default, but it's confusing and we don't change it too often
+		set_pref(/datum/pref/player/graphics/fps, converted_fps)
+
+		var/converted_parallax
+		switch(S["parallax"])
+			if(-1)
+				converted_parallax = PARALLAX_INSANE
+			if(0)
+				converted_parallax = PARALLAX_HIGH
+			if(1)
+				converted_parallax = PARALLAX_MED
+			if(2)
+				converted_parallax = PARALLAX_LOW
+			if(3)
+				converted_parallax = PARALLAX_DISABLE
+		set_pref(/datum/pref/player/graphics/parallax, converted_parallax)
+		set_pref(/datum/pref/player/graphics/lobbyanimation, S["lobbyanimation"])
+
+		var/converted_blur_effect = !S["eye_blur_effect"]
+		set_pref(/datum/pref/player/graphics/legacy_blur, converted_blur_effect)
+
+		set_pref(/datum/pref/player/graphics/ambientocclusion, S["ambientocclusion"])
+
+		var/converted_glowlevel
+		switch(S["glowlevel"])
+			if(0)
+				converted_glowlevel = GLOW_HIGH
+			if(1)
+				converted_glowlevel = GLOW_MED
+			if(2)
+				converted_glowlevel = GLOW_LOW
+			if(3)
+				converted_glowlevel = GLOW_DISABLE
+		set_pref(/datum/pref/player/graphics/glowlevel, converted_glowlevel)
+		set_pref(/datum/pref/player/graphics/lampsexposure, S["lampsexposure"])
+		set_pref(/datum/pref/player/graphics/lampsglare, S["lampsglare"])
+
+		// game
+		#define SHOW_ANIMATIONS	16
+		#define SHOW_PROGBAR	32
+		set_pref(/datum/pref/player/game/melee_animation, S["toggles"] & SHOW_ANIMATIONS)
+		set_pref(/datum/pref/player/game/progressbar, S["toggles"] & SHOW_PROGBAR)
+		#undef SHOW_ANIMATIONS
+		#undef SHOW_PROGBAR
+
+		set_pref(/datum/pref/player/game/endroundarena, S["eorg_enabled"])
+
+		// chat
+		set_pref(/datum/pref/player/chat/ooccolor, S["ooccolor"])
+		set_pref(/datum/pref/player/chat/aooccolor, S["aooccolor"])
+
+		var/const/CHAT_OOC = 1
+		var/const/CHAT_DEAD = 2
+		var/const/CHAT_GHOSTEARS = 4 // merged into /ghostears
+		//var/const/CHAT_NOCLIENT_ATTACK = 8 // merged into new /attack_log
+		var/const/CHAT_PRAYER = 16
+		var/const/CHAT_RADIO = 32
+		//var/const/CHAT_ATTACKLOGS = 64 // merged into new /attack_log
+		var/const/CHAT_DEBUGLOGS = 128
+		var/const/CHAT_LOOC = 256
+		var/const/CHAT_GHOSTRADIO = 512
+		//var/const/CHAT_GHOSTNPC = 1024 // merged into new /ghostantispam
+		var/const/CHAT_CKEY = 2048
+
+		set_pref(/datum/pref/player/chat/ooc, S["chat_toggles"] & CHAT_OOC)
+		set_pref(/datum/pref/player/chat/dead, S["chat_toggles"] & CHAT_DEAD)
+		set_pref(/datum/pref/player/chat/ghostears, S["chat_toggles"] & CHAT_GHOSTEARS)
+		set_pref(/datum/pref/player/chat/prayers, S["chat_toggles"] & CHAT_PRAYER)
+		set_pref(/datum/pref/player/chat/radio, S["chat_toggles"] & CHAT_RADIO)
+		set_pref(/datum/pref/player/chat/debug_log, S["chat_toggles"] & CHAT_DEBUGLOGS)
+		set_pref(/datum/pref/player/chat/looc, S["chat_toggles"] & CHAT_LOOC)
+		set_pref(/datum/pref/player/chat/ghostradio, S["chat_toggles"] & CHAT_GHOSTRADIO)
+		set_pref(/datum/pref/player/chat/show_ckey, S["chat_toggles"] & CHAT_CKEY)
+
+		var/const/CHAT_GHOSTSIGHT_ALL = 1
+		//var/const/CHAT_GHOSTSIGHT_ALLMANUAL = 2 // merged into new /ghostantispam
+		var/const/CHAT_GHOSTSIGHT_NEARBYMOBS = 3
+
+		var/converted_chat_ghostsight
+		switch(S["chat_ghostsight"])
+			if(CHAT_GHOSTSIGHT_ALL)
+				converted_chat_ghostsight = TRUE
+			if(CHAT_GHOSTSIGHT_NEARBYMOBS)
+				converted_chat_ghostsight = FALSE
+		set_pref(/datum/pref/player/chat/ghostsight, converted_chat_ghostsight)
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
@@ -348,60 +454,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 
 	//Account data
-	S["cid_list"]			>> cid_list
-	S["ignore_cid_warning"]	>> ignore_cid_warning
+	S["cid_list"]			>> cid_list // ?
+	S["ignore_cid_warning"]	>> ignore_cid_warning // todo: meta & payer messages system
 
 	//General preferences
-	S["ooccolor"]          >> ooccolor
-	S["aooccolor"]         >> aooccolor
-	S["lastchangelog"]     >> lastchangelog
-	S["UI_style"]          >> UI_style
-	S["UI_style_color"]    >> UI_style_color
-	S["UI_style_alpha"]    >> UI_style_alpha
-	S["clientfps"]         >> clientfps
-	S["default_slot"]      >> default_slot
-	S["chat_toggles"]      >> chat_toggles
-	S["toggles"]           >> toggles
-	S["chat_ghostsight"]   >> chat_ghostsight
-	S["randomslot"]        >> randomslot
-	S["permamuted"]        >> permamuted
-	S["permamuted"]        >> muted
-	S["parallax"]          >> parallax
-	S["ambientocclusion"]  >> ambientocclusion
-	S["glowlevel"]         >> glowlevel
-	S["lampsexposure"]     >> lampsexposure
-	S["lampsglare"]        >> lampsglare
-	S["eye_blur_effect"]   >> eye_blur_effect
-	S["auto_fit_viewport"] >> auto_fit_viewport
-	S["lobbyanimation"]    >> lobbyanimation
-	S["tooltip"]           >> tooltip
-	S["tooltip_size"]      >> tooltip_size
-	S["tooltip_font"]      >> tooltip_font
-	S["outline_enabled"]   >> outline_enabled
-	S["outline_color"]     >> outline_color
-	S["eorg_enabled"]      >> eorg_enabled
-	S["show_runechat"]     >> show_runechat
+	S["lastchangelog"]     >> lastchangelog //meta
+	S["default_slot"]      >> default_slot // meta
+	S["randomslot"]        >> randomslot // meta
+	S["permamuted"]        >> permamuted // wtf move to bans
+	S["permamuted"]        >> muted // wtf2
+
 	S["emote_panel"]       >> custom_emote_panel
 
 	// Custom hotkeys
-	S["key_bindings"] >> key_bindings
+	S["key_bindings"] >> key_bindings // later
 	check_keybindings()
-	S["hotkeys"]      >> hotkeys
-
-	//TGUI
-	S["tgui_fancy"]		>> tgui_fancy
-	S["tgui_lock"]		>> tgui_lock
-
-	//Sound preferences
-	S["snd_music_vol"]                      >> snd_music_vol
-	S["snd_ambient_vol"]                    >> snd_ambient_vol
-	S["snd_effects_master_vol"]             >> snd_effects_master_vol
-	S["snd_effects_voice_announcement_vol"]	>> snd_effects_voice_announcement_vol
-	S["snd_effects_misc_vol"]               >> snd_effects_misc_vol
-	S["snd_effects_instrument_vol"]         >> snd_effects_instrument_vol
-	S["snd_notifications_vol"]              >> snd_notifications_vol
-	S["snd_admin_vol"]                      >> snd_admin_vol
-	S["snd_jukebox_vol"]                    >> snd_jukebox_vol
+	S["hotkeys"]      >> hotkeys // later
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
@@ -409,50 +477,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_preferences(needs_update, S) // needs_update = savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	ooccolor		= normalize_color(sanitize_hexcolor(ooccolor, initial(ooccolor)))
-	aooccolor		= normalize_color(sanitize_hexcolor(aooccolor, initial(aooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
-	clientfps		= sanitize_integer(clientfps, -1, 1000, -1)
 	default_slot	= sanitize_integer(default_slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
-	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
-	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
-	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
-	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
-	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
 	key_bindings 	= sanitize_keybindings(key_bindings)
 	hotkeys 		= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
-	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
-	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
-	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
-	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
-	glowlevel		= sanitize_integer(glowlevel, GLOW_HIGH, GLOW_DISABLE, initial(glowlevel))
-	eye_blur_effect = sanitize_integer(eye_blur_effect, 0, 1, initial(eye_blur_effect))
-	lampsexposure	= sanitize_integer(lampsexposure, 0, 1, initial(lampsexposure))
-	lampsglare		= sanitize_integer(lampsglare, 0, 1, initial(lampsglare))
-	lobbyanimation	= sanitize_integer(lobbyanimation, 0, 1, initial(lobbyanimation))
-	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
-	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
-	tooltip_size 	= sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
-	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
-	outline_color 	= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
-	eorg_enabled 	= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
-	show_runechat	= sanitize_integer(show_runechat, 0, 1, initial(show_runechat))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
 	custom_emote_panel  = sanitize_emote_panel(custom_emote_panel)
-
-	snd_music_vol	= sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
-	snd_ambient_vol = sanitize_integer(snd_ambient_vol, 0, 100, initial(snd_ambient_vol))
-	snd_effects_master_vol	= sanitize_integer(snd_effects_master_vol, 0, 100, initial(snd_effects_master_vol))
-	snd_effects_voice_announcement_vol	= sanitize_integer(snd_effects_voice_announcement_vol, 0, 100, initial(snd_effects_voice_announcement_vol))
-	snd_effects_misc_vol	= sanitize_integer(snd_effects_misc_vol, 0, 100, initial(snd_effects_misc_vol))
-	snd_effects_instrument_vol	= sanitize_integer(snd_effects_instrument_vol, 0, 100, initial(snd_effects_instrument_vol))
-	snd_notifications_vol	= sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
-	snd_admin_vol	= sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
-	snd_jukebox_vol = sanitize_integer(snd_jukebox_vol, 0, 100, initial(snd_jukebox_vol))
 
 	if(needs_update >= 0) //save the updated version
 		var/old_default_slot = default_slot
@@ -485,30 +518,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignore_cid_warning"] << ignore_cid_warning
 
 	//general preferences
-	S["ooccolor"]          << ooccolor
-	S["aooccolor"]         << aooccolor
 	S["lastchangelog"]     << lastchangelog
-	S["UI_style"]          << UI_style
-	S["UI_style_color"]    << UI_style_color
-	S["UI_style_alpha"]    << UI_style_alpha
-	S["clientfps"]         << clientfps
 	S["default_slot"]      << default_slot
-	S["toggles"]           << toggles
-	S["chat_toggles"]      << chat_toggles
-	S["chat_ghostsight"]   << chat_ghostsight
 	S["randomslot"]        << randomslot
 	S["permamuted"]        << permamuted
-	S["parallax"]          << parallax
-	S["ambientocclusion"]  << ambientocclusion
-	S["glowlevel"]         << glowlevel
-	S["eye_blur_effect"]   << eye_blur_effect
-	S["lampsexposure"]     << lampsexposure
-	S["lampsglare"]        << lampsglare
-	S["lobbyanimation"]    << lobbyanimation
-	S["auto_fit_viewport"] << auto_fit_viewport
-	S["tooltip"]           << tooltip
-	S["tooltip_size"]      << tooltip_size
-	S["tooltip_font"]      << tooltip_font
 	S["emote_panel"]       << custom_emote_panel
 
 
@@ -516,24 +529,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["key_bindings"] << key_bindings
 	S["hotkeys"]      << hotkeys
 
-	S["outline_enabled"] << outline_enabled
-	S["outline_color"]   << outline_color
-	S["eorg_enabled"]    << eorg_enabled
-	S["show_runechat"]   << show_runechat
-	//TGUI
-	S["tgui_fancy"]		<< tgui_fancy
-	S["tgui_lock"]		<< tgui_lock
-
-	//Sound preferences
-	S["snd_music_vol"]                      << snd_music_vol
-	S["snd_ambient_vol"]                    << snd_ambient_vol
-	S["snd_effects_master_vol"]             << snd_effects_master_vol
-	S["snd_effects_voice_announcement_vol"] << snd_effects_voice_announcement_vol
-	S["snd_effects_misc_vol"]               << snd_effects_misc_vol
-	S["snd_effects_instrument_vol"]         << snd_effects_instrument_vol
-	S["snd_notifications_vol"]              << snd_notifications_vol
-	S["snd_admin_vol"]                      << snd_admin_vol
-	S["snd_jukebox_vol"]                    << snd_jukebox_vol
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)
@@ -547,7 +542,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 
 	//Character
-	S["OOC_Notes"]             >> metadata
+	S["OOC_Notes"]             >> metadata // move to new player pref
 	S["real_name"]             >> real_name
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]                >> gender

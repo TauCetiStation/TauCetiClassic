@@ -736,5 +736,5 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	client.change_view("[viewx]x[viewy]")
-	if(client.prefs.auto_fit_viewport)
+	if(client.prefs.get_pref(/datum/pref/player/ui/auto_fit_viewport))
 		client.fit_viewport()

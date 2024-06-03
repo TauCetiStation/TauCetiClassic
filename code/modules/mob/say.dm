@@ -63,7 +63,7 @@
 			return
 
 	if(client)
-		if (!(client.prefs.chat_toggles & CHAT_DEAD)) // User preference check
+		if (!client.prefs.get_pref(/datum/pref/player/chat/dead)) // User preference check
 			to_chat(src, "<span class='red'> You have deadchat muted.</span>")
 			return
 
@@ -80,7 +80,7 @@
 		name = real_name
 	if(name != real_name)
 		alt_name = " (died as [real_name])"
-	if(client.prefs.chat_toggles & CHAT_CKEY)
+	if(client.prefs.get_pref(/datum/pref/player/chat/show_ckey))
 		name += " ([key])"
 
 	var/rendered = "<span class='game deadsay linkify emojify'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[message]\"</span></span>"
@@ -89,13 +89,13 @@
 		var/tracker = "[FOLLOW_LINK(M, src)] "
 		if(isnewplayer(M))
 			continue
-		if(M.client && M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
+		if(M.client && M.stat == DEAD && M.client.prefs.get_pref(/datum/pref/player/chat/dead))
 			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
 				continue
 			to_chat(M, tracker + rendered)
 			continue
 
-		if(M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD) ) // Show the message to admins with deadchat toggled on
+		if(M.client && M.client.holder && M.client.prefs.get_pref(/datum/pref/player/chat/dead)) // Show the message to admins with deadchat toggled on
 			to_chat(M, tracker + rendered)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
 
 

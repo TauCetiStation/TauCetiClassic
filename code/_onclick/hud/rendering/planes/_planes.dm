@@ -20,17 +20,18 @@
 	if(!..())
 		return
 
-	if(client.prefs?.ambientocclusion)
+	if(client.prefs?.get_pref(/datum/pref/player/graphics/ambientocclusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
 	if(!assigned_map) // todo: don't reapply filter if it's already exists?
 		client.mob.clear_fullscreen("blurry")
 		if(client.mob.eye_blurry)
-			if(client.prefs?.eye_blur_effect)
+			if(client.prefs?.get_pref(/datum/pref/player/graphics/legacy_blur))
+				// alternative filter for users with weak PC
+				client.mob.overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
+			else
 				add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(client.mob.eye_blurry * 0.1, 0.2, 0.6)))
 				add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(client.mob.eye_blurry * 0.05, 0.1, 0.25)))
-			else // alternative filter for users with weak PC
-				client.mob.overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
 
 /atom/movable/screen/plane_master/game_world_above
 	name = "above game world plane master"
