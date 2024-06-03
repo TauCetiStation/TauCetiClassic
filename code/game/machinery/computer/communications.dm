@@ -361,7 +361,7 @@
 
 				dat += "<BR><A HREF='?src=\ref[src];operation=status'>Установить оповещение на дисплеи</A>"
 			else
-				dat += "<BR><A HREF='?src=\ref[src];operation=login'>Авторизироваться в систему</A>"
+				dat += "<BR><A HREF='?src=\ref[src];operation=login'>Авторизироваться</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=messagelist'>Список сообщений</A>"
 		if(STATE_CALLSHUTTLE)
 			dat += "Вы уверены, что хотите вызвать шаттл? <A HREF='?src=\ref[src];operation=callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=main'>НЕТ</A>"
