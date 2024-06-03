@@ -154,6 +154,12 @@
 /mob/living/carbon/human/skeleton/atom_init(mapload)
 	. = ..(mapload, SKELETON)
 
+/mob/living/carbon/human/serpentid/atom_init(mapload)
+	. = ..(mapload, SERPENTID)
+
+/mob/living/carbon/human/moth/atom_init(mapload)
+	. = ..(mapload, MOTH)
+
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
 	..()
@@ -388,8 +394,6 @@
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return TRUE
-	if (istype(buckled, /obj/structure/stool/bed/nest))
 		return TRUE
 	return 0
 
@@ -1577,7 +1581,7 @@
 		var/list/sliders_data = tables_data[category]
 
 		for(var/datum/skill/s as anything in sliders_data)
-			var/datum/skill/skill = all_skills[s]
+			var/datum/skill/skill = global.all_skills[s]
 			var/slider_id = skill.name
 			var/slider_value = mind.skills.get_value(s)
 			var/slider_min_value = SKILL_LEVEL_MIN

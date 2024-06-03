@@ -209,9 +209,7 @@
 	prefs.ambientocclusion = !prefs.ambientocclusion
 	to_chat(src, "Ambient Occlusion: [prefs.ambientocclusion ? "Enabled" : "Disabled"].")
 	prefs.save_preferences()
-	if(length(screen))
-		var/atom/movable/screen/plane_master/game_world/PM = locate() in screen
-		PM.apply_effects(mob)
+	update_plane_masters(/atom/movable/screen/plane_master/game_world)
 	feedback_add_details("admin_verb","TAC")
 
 /client/verb/set_glow_level()
@@ -234,9 +232,7 @@
 
 	to_chat(src, "Glow level: [new_setting].")
 	prefs.save_preferences()
-	if(length(screen))
-		var/atom/movable/screen/plane_master/lamps_selfglow/PM = locate() in screen
-		PM.apply_effects(mob)
+	update_plane_masters(/atom/movable/screen/plane_master/lamps_selfglow)
 	feedback_add_details("admin_verb","LGL")
 
 /client/verb/toggle_lamp_exposure()
@@ -246,9 +242,7 @@
 	prefs.lampsexposure = !prefs.lampsexposure
 	to_chat(src, "Lamp exposure: [prefs.lampsexposure ? "Enabled" : "Disabled"].")
 	prefs.save_preferences()
-	if(length(screen))
-		var/atom/movable/screen/plane_master/exposure/EXP = locate() in screen
-		EXP.apply_effects(mob)
+	update_plane_masters(/atom/movable/screen/plane_master/exposure)
 	feedback_add_details("admin_verb","LEXP")
 
 /client/verb/toggle_lamps_glare()
@@ -258,9 +252,7 @@
 	prefs.lampsglare = !prefs.lampsglare
 	to_chat(src, "Glare: [prefs.lampsglare ? "Enabled" : "Disabled"].")
 	prefs.save_preferences()
-	if(length(screen))
-		var/atom/movable/screen/plane_master/lamps_glare/PM = locate() in screen
-		PM.apply_effects(mob)
+	update_plane_masters(/atom/movable/screen/plane_master/lamps_glare)
 	feedback_add_details("admin_verb","GLR")
 
 /client/verb/eye_blur_effect()
@@ -270,11 +262,7 @@
 	prefs.eye_blur_effect = !prefs.eye_blur_effect
 	to_chat(src, "Blur effect: [prefs.eye_blur_effect ? "Enabled" : "Old design"].")
 	prefs.save_preferences()
-	var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in screen
-	if(mob.eye_blurry)
-		PM.remove_filter("eye_blur_angular")
-		PM.remove_filter("eye_blur_gauss")
-		mob.clear_fullscreen("blurry")
+	update_plane_masters(/atom/movable/screen/plane_master/game_world)
 	feedback_add_details("admin_verb","EBE")
 
 /client/verb/set_parallax_quality()

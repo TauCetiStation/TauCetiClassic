@@ -78,7 +78,7 @@
 		Entered(AM)
 
 	if(level_light_source)
-		ENABLE_LEVEL_LIGHTING(src)
+		LEVEL_LIGHTING_SOURCE(src)
 
 	if(light_power && light_range)
 		update_light()
@@ -138,7 +138,7 @@
 /proc/get_projectile_bump_target(turf/T, obj/item/projectile/mover)
 	// Obstacle to use if no preferred target is found
 	var/atom/rollback_obstacle
-	
+
 	// First check objects to block exit
 	rollback_obstacle = get_exit_bump_target(T, mover)
 
@@ -187,7 +187,7 @@
 /proc/get_bump_target(turf/T, atom/movable/mover as mob|obj)
 	// Obstacle to use if no preferred target is found
 	var/atom/rollback_obstacle
-	
+
 	// First check objects to block exit
 	rollback_obstacle = get_exit_bump_target(T, mover)
 
