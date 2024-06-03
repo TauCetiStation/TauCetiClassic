@@ -347,7 +347,7 @@
 				if (src.authenticated==2)
 					dat += "<BR><A HREF='?src=\ref[src];operation=announce'>Сделать оповещение</A>"
 					if(src.emagged == 0)
-						dat += "<BR><A HREF='?src=\ref[src];operation=MessageCentcomm'>Отправить экстренное оповещение Центкому</A>"
+						dat += "<BR><A HREF='?src=\ref[src];operation=MessageCentcomm'>Отправить экстренное сообщение Центкому</A>"
 					else
 						dat += "<BR><A HREF='?src=\ref[src];operation=MessageSyndicate'>Отправить экстренное оповещение \[НЕВЕРОЯТНО КРУТЫМ ПАРНЯМ\]</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=RestoreBackup'>Восстановить изначальные данные</A>"
