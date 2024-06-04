@@ -249,7 +249,7 @@
 			create_spawner(/datum/spawner/living/maelstrom, L)
 			continue
 		var/have_tough_incapacitating = FALSE
-		for(var/datum/status_effect/incapacitating/effect in convert_target.status_effects)
+		for(var/datum/status_effect/incapacitating/effect in L.status_effects)
 			if(effect.id == "stasis_bag")
 				continue
 			if(effect.id == "weakened")
