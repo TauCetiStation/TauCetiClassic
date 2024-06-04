@@ -810,3 +810,7 @@
 	spectator.add_character_to_players(character)
 	var/datum/faction/maelstrom/faction = create_uniq_faction(/datum/faction/maelstrom)
 	add_faction_member(faction, character, FALSE, TRUE)
+
+	var/obj/item/weapon/card/id/maint_access_card = new(H)
+	maint_access_card.access = list(access_maint_tunnels)
+	character.equip_or_collect(maint_access_card, SLOT_IN_BACKPACK)
