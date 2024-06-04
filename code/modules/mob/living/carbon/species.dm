@@ -1923,8 +1923,8 @@
 	return ..()
 
 /datum/species/serpentid/on_life(mob/living/carbon/human/H)
-	if(!H.on_fire && H.fire_stacks < 2)
-		H.fire_stacks += 0.2
+	if(!H.on_fire && H.count_red_fire_stacks() < MAX_NATURAL_FIRE_STACKS_SEPRENTID)
+		H.adjust_fire_stacks(LIFE_ADJUSTED_FIRE_STACKS_SERPENTID, fire_type = RED_FIRE)
 
 /datum/species/serpentid/proc/try_tear_body(mob/living/source, obj/item/weapon/grab/G)
 	if(G.state < GRAB_KILL)
