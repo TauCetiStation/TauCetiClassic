@@ -228,11 +228,34 @@
 
 	return observer
 
-/mob/dead/new_player/proc/AttemptLateSpawn(rank)
-	if (src != usr)
-		return 0
+/mob/dead/new_player/proc/latespawn_job_giving(rank)
+	SSjob.AssignRole(src, rank, latejoin = TRUE)
+	var/mob/living/carbon/human/character = create_character()
+	SSjob.EquipRank(character, rank, joined_late = TRUE)
+	return character
+
+/mob/dead/new_player/proc/create_and_setup_latespawn_character(rank)
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
+		return null
+	spawning = 1
+	close_spawn_windows()
+	var/mob/living/carbon/human/character = latespawn_job_giving(rank)
+	return character
+
+/mob/dead/new_player/proc/add_character_to_players(mob/living/carbon/human/character)
+	SSticker.mode.latespawn(character)
+	if(character.mind.assigned_role != "Cyborg")
+		data_core.manifest_inject(character)
+		SSticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
+	else
+		character.Robotize()
+	joined_player_list += character.ckey
+	if(character.client)
+		character.client.guard.time_velocity_spawn = world.timeofday
+
+/mob/dead/new_player/proc/AttemptLateSpawn(rank)
+	if(src != usr)
 		return 0
 	if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
 		to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game for non-observers!</span>")
@@ -240,61 +263,26 @@
 	if(!IsJobAvailable(rank))
 		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
 		return 0
-
-	spawning = 1
-	close_spawn_windows()
-
-	SSjob.AssignRole(src, rank, 1)
-
-	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-
-
-	SSjob.EquipRank(character, rank, TRUE)					//equips the human
-
+	var/mob/living/carbon/human/character = create_and_setup_latespawn_character()
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSqualities.give_quality(character, TRUE)
 		character.PutDisabilityMarks()
-
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
-
 		// IsJobAvailable for AI checks that there is an empty core available in this list
 		var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
 		empty_playable_ai_cores -= C
-
 		character.loc = C.loc
-
 		character = character.AIize(move=0) // AIize the character, but don't move them yet
-
 		show_location_blurb(character.client)
-		//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
 		SSticker.mode.latespawn(character)
-
 		qdel(C)
 		qdel(src)
 		return
-
 	character.forceMove(pick(latejoin), keep_buckled = TRUE)
 	show_location_blurb(character.client)
-
-	SSticker.mode.latespawn(character)
-
-	//SSticker.mode.latespawn(character)
-
-	if(character.mind.assigned_role != "Cyborg")
-		data_core.manifest_inject(character)
-		SSticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
-	//	AnnounceArrival(character, rank)
-
-	else
-		character.Robotize()
-
-	joined_player_list += character.ckey
-
-	if(character.client)
-		character.client.guard.time_velocity_spawn = world.timeofday
-
+	add_character_to_players(character)
 	qdel(src)
 
 /mob/dead/new_player/proc/AnnounceArrival(mob/living/carbon/human/character, rank)

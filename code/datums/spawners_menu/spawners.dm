@@ -793,11 +793,10 @@
 	return TRUE
 
 /datum/spawner/maelstrom/spawn_body(mob/dead/spectator)
-	var/mob/living/carbon/human/character = spectator.create_character()
 	var/list/free_ranks = get_avaible_jobs(spectator)
 	var/rank = pick(free_ranks)
-	SSjob.AssignRole(character, rank, 1)
-	SSjob.EquipRank(character, rank, TRUE)
+	var/mob/living/carbon/human/character = create_and_setup_latespawn_character(rank)
+
 	var/spawnloc = pick(global.latejoin)
 	var/list/allowed_spawnlocs = global.xeno_spawn.Copy()
 	for(var/spawn_loc in allowed_spawnlocs)
@@ -807,9 +806,7 @@
 		spawnloc = pick(allowed_spawnlocs)
 	new /obj/effect/temp_visual/maelstrom/blood/out(spawnloc)
 	character.forceMove(spawnloc, keep_buckled = TRUE)
-	SSticker.mode.latespawn(character)
-	global.data_core.manifest_inject(character)
-	SSticker.minds += character.mind
-	joined_player_list += character.ckey
+
+	spectator.add_character_to_players(character)
 	var/datum/faction/maelstrom/faction = create_uniq_faction(/datum/faction/maelstrom)
 	add_faction_member(faction, character, FALSE, TRUE)
