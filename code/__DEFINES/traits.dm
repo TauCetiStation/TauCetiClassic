@@ -193,12 +193,15 @@
 #define TRAIT_FAKELOYAL_VISUAL    "fakeloyal_visual"
 #define TRAIT_CHANGELING_ABSORBING "changeling_absorbing"
 #define TRAIT_FAST_WALKER         "fast_walker"
+#define TRAIT_BORK_SKILLCHIP      "bork_skillchip"
+#define TRAIT_MIMING              "miming"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
  * Use [/atom/movable/proc/become_area_sensitive(trait_source)] to properly enable it. How you remove it isn't as important.
  */
 #define TRAIT_AREA_SENSITIVE "area-sensitive"
+#define TRAIT_COOKING_AREA "cooking_area"
 
 /*
  * Used for items that have different behaviour when they are two-hand wielded
@@ -233,6 +236,7 @@
 #define TRAIT_XENO_FUR "xeno_fur"
 // Trait from being under the floor in some manner
 #define TRAIT_UNDERFLOOR "underfloor"
+#define TRAIT_CONDUCT "conduct"
 
 // trait sources
 #define EYE_DAMAGE_TRAIT "eye_damage"

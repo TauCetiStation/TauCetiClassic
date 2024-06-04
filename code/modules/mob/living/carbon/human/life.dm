@@ -1022,8 +1022,6 @@ var/global/list/tourette_bad_words= list(
 	else
 		clear_fullscreen("impaired")
 
-	update_eye_blur()
-
 	if(!machine)
 		var/isRemoteObserve = 0
 		if((REMOTE_VIEW in mutations) && remoteview_target)
@@ -1062,7 +1060,7 @@ var/global/list/tourette_bad_words= list(
 		if(G.vision_flags) // MESONS
 			sight |= G.vision_flags
 		if(!isnull(G.lighting_alpha))
-			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
+			set_lighting_alpha(min(lighting_alpha, G.lighting_alpha))
 		if(G.sightglassesmod && (G.active || !G.toggleable))
 			sightglassesmod = G.sightglassesmod
 		else

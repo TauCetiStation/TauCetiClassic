@@ -2124,6 +2124,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -3027,6 +3028,7 @@
 	},
 /area/station/security/brig)
 "afd" = (
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -3671,6 +3673,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "bluecorner"
 	},
@@ -4273,6 +4276,7 @@
 	},
 /area/station/security/brig)
 "ahn" = (
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "bluecorner"
@@ -5298,6 +5302,7 @@
 /area/station/security/brig)
 "aiP" = (
 /obj/machinery/hologram/holopad,
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -14230,6 +14235,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -14476,6 +14482,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -15554,6 +15561,7 @@
 	c_tag = "Kitchen";
 	dir = 1
 	},
+/obj/item/weapon/book/skillbook/chemistry,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -17216,6 +17224,7 @@
 /obj/item/weapon/handcuffs/cable,
 /obj/item/weapon/reagent_containers/blood/APlus,
 /obj/structure/table/glass,
+/obj/item/weapon/book/skillbook/surgery,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aEo" = (
@@ -19729,6 +19738,7 @@
 /obj/item/weapon/paper/firing_range,
 /obj/item/weapon/screwdriver,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/book/skillbook/robust,
 /turf/simulated/floor,
 /area/station/security/range)
 "aIZ" = (
@@ -21419,6 +21429,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/item/weapon/book/skillbook/science,
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
@@ -24186,6 +24197,7 @@
 /obj/structure/sign/poster/official/the_owl{
 	pixel_x = 32
 	},
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -28463,7 +28475,7 @@
 /area/station/bridge/meeting_room)
 "aYH" = (
 /obj/structure/table,
-/obj/item/weapon/aiModule/nanotrasen,
+/obj/item/weapon/aiModule/crewsimov,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "aYI" = (
@@ -30641,6 +30653,7 @@
 /area/station/rnd/xenobiology)
 "bcw" = (
 /obj/structure/stool/bed/chair/office/dark,
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -30911,6 +30924,7 @@
 /obj/item/weapon/aiModule/purge,
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/aiModule/antimov,
+/obj/item/weapon/aiModule/nanotrasen,
 /obj/item/weapon/aiModule/teleporterOffline,
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -39192,9 +39206,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "brZ" = (
 /obj/structure/stool,
 /obj/structure/cable{
@@ -40256,9 +40268,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "btS" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -41036,9 +41046,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bvm" = (
 /obj/machinery/door/window/southright{
 	name = "Bar Door";
@@ -42275,9 +42283,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bxk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -43023,9 +43029,7 @@
 /area/station/rnd/server)
 "byA" = (
 /turf/simulated/wall/r_wall,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "byB" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -43050,15 +43054,11 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "byD" = (
 /obj/machinery/computer/aifixer,
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "byE" = (
 /turf/simulated/wall/r_wall,
 /area/station/bridge/teleporter)
@@ -43867,9 +43867,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bzX" = (
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/light/small{
@@ -43881,9 +43879,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bzY" = (
 /obj/effect/decal/turf_decal{
 	dir = 10;
@@ -44824,15 +44820,11 @@
 	},
 /obj/machinery/blackbox_recorder,
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bBR" = (
 /obj/machinery/message_server,
 /turf/simulated/floor/bluegrid,
-/area/station/bridge/comms{
-	name = "Cyborg Station"
-	})
+/area/station/tcommsat/cyborg)
 "bBS" = (
 /obj/machinery/computer/teleporter,
 /turf/simulated/floor/plating,
@@ -45513,6 +45505,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -49446,6 +49439,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor,
 /area/station/medical/hallway)
 "bKg" = (
@@ -49807,6 +49801,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -54203,6 +54198,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -56014,10 +56010,7 @@
 	},
 /area/station/civilian/library)
 "bYM" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
-	},
-/obj/random/misc/book,
+/obj/structure/bookcase/skills,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -58077,6 +58070,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "caution"
@@ -58338,6 +58332,8 @@
 /area/station/engineering/atmos)
 "chb" = (
 /obj/structure/bookcase/manuals/medical,
+/obj/item/weapon/book/skillbook/chemistry,
+/obj/item/weapon/book/skillbook/medical,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -58751,6 +58747,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/item/weapon/book/skillbook/engineering,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -60926,7 +60923,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
-/obj/effect/spawner/newai,
+/obj/effect/spawner/aspect/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cor" = (
@@ -61501,7 +61498,7 @@
 /obj/effect/landmark{
 	name = "tripai"
 	},
-/obj/effect/spawner/newai,
+/obj/effect/spawner/aspect/newai,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpJ" = (
@@ -63911,6 +63908,7 @@
 /obj/machinery/newscaster{
 	pixel_x = 28
 	},
+/obj/random/misc/book,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -64495,6 +64493,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cxJ" = (
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "caution"
@@ -68248,6 +68247,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "cJr" = (
@@ -70557,6 +70557,10 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
+"eeq" = (
+/obj/effect/spawner/aspect/mech/phazon,
+/turf/simulated/floor/wood,
+/area/station/bridge/captain_quarters)
 "efb" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -70760,6 +70764,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowcorner"
@@ -72061,6 +72066,7 @@
 /area/station/bridge)
 "fNb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -72482,6 +72488,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"
@@ -73348,6 +73355,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "hhb" = (
@@ -77255,6 +77263,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whitebluecorner"
 	},
@@ -78112,6 +78121,12 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"lZh" = (
+/obj/effect/spawner/aspect/mech/gygax/ultra,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/hos)
 "lZM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor,
@@ -79256,6 +79271,16 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"npC" = (
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 4
+	},
+/obj/effect/spawner/aspect/mech/ff_engi,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "caution"
+	},
+/area/station/engineering/atmos)
 "nqb" = (
 /obj/structure/mineral_door/wood,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -80322,6 +80347,12 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/toilet)
+"oxO" = (
+/obj/effect/spawner/aspect/mech/ripley_engi,
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
+/area/station/engineering/engine)
 "oyb" = (
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
@@ -82831,6 +82862,7 @@
 	dir = 4;
 	network = list("SS13","Engineering")
 	},
+/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "rtF" = (
@@ -86760,6 +86792,7 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/effect/spawner/aspect/mech/honker,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "xwm" = (
@@ -113609,7 +113642,7 @@ cuf
 ljQ
 cls
 civ
-pAV
+oxO
 cBT
 aaa
 aaa
@@ -113866,7 +113899,7 @@ dbK
 ljQ
 fWB
 civ
-pAV
+oxO
 cBT
 aaa
 aah
@@ -121004,7 +121037,7 @@ bjS
 bke
 bkh
 bkA
-bfC
+eeq
 bgW
 blB
 bkc
@@ -121202,7 +121235,7 @@ acr
 adq
 agg
 aej
-agL
+lZh
 agd
 agv
 ahk
@@ -121812,7 +121845,7 @@ snv
 snv
 bVS
 bSV
-kif
+npC
 bVD
 cwe
 anD

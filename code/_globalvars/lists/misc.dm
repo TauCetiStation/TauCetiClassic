@@ -126,6 +126,7 @@ var/global/static/list/radial_question = list(
 var/global/list/hex_by_color
 
 // Use /hex2color(hex) for find color
+// what palette are these colors from? why we need it?
 var/global/static/list/color_by_hex = list(
 	"black" = "#000000",
 	"navy_blue" = "#000080",

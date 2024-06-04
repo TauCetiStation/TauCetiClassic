@@ -214,7 +214,7 @@
 
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
-		source_turf.luminosity = CEILING(light_range, 1)
+		source_turf.luminosity = CEILING(light_range, 1) // temp change for view()
 		for(var/turf/T in view(CEILING(light_range, 1), source_turf))
 			if(!T.has_opaque_atom)
 				if (!T.lighting_corners_initialised)

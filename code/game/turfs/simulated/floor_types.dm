@@ -348,6 +348,22 @@
 			var/turf/simulated/floor/FF = get_step(src,direction)
 			FF.update_icon() //so siding get updated properly
 
+/turf/simulated/floor/fairy
+	name = "fairygrass patch"
+	desc = "Something about this grass makes you want to frolic. Or get high."
+	icon_state = "fairygrass1"
+	floor_type = /obj/item/stack/tile/fairygrass
+	light_range = 2
+	light_power = 0.80
+	light_color = COLOR_BLUE_LIGHT
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+
+/turf/simulated/floor/fairy/atom_init()
+	. = ..()
+	update_icon()
+
 /turf/simulated/floor/plating/ironsand
 	name = "Iron Sand"
 	icon_state = "ironsand1"
@@ -413,18 +429,23 @@
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	footstep = FOOTSTEP_CATWALK
 
+	var/image/environment_underlay
+
+	level_light_source = TRUE
+
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
 	update_icon(1)
 
-	var/env_light_color = SSenvironment.turf_light_color[z]
-	if(env_light_color)
-		set_light(1.5, l_color = env_light_color)
+/turf/simulated/floor/plating/airless/catwalk/Destroy()
+	environment_underlay = null
+	return ..()
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
-	underlays.Cut()
-	var/image/I = SSenvironment.turf_image[z]
-	underlays += I
+	if(environment_underlay)
+		underlays -= environment_underlay
+	environment_underlay = SSenvironment.turf_image[z]
+	underlays |= environment_underlay
 
 	var/dirs = 0
 	for(var/direction in cardinal)

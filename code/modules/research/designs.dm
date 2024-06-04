@@ -2328,27 +2328,6 @@ other types of metals and chemistry for reagents).
 			materials = list(MAT_SILVER = 2500, MAT_GOLD = 3000, "iron" = 15, "copper" = 10)
 			build_path = /obj/item/weapon/banhammer */
 
-////////////////////////////////////////
-//Disks for transporting design datums//
-////////////////////////////////////////
-
-/obj/item/weapon/disk/design_disk
-	name = "Empty Disk"
-	desc = "Wow. Is that a save icon?"
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk2"
-	item_state = "card-id"
-	w_class = SIZE_TINY
-	m_amt = 30
-	g_amt = 10
-	var/datum/design/blueprint
-
-/obj/item/weapon/disk/design_disk/atom_init()
-	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
-
-
 /////////////////////////////////////////
 //////////////Borg Upgrades//////////////
 /////////////////////////////////////////

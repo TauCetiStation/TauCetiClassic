@@ -154,6 +154,12 @@
 /mob/living/carbon/human/skeleton/atom_init(mapload)
 	. = ..(mapload, SKELETON)
 
+/mob/living/carbon/human/serpentid/atom_init(mapload)
+	. = ..(mapload, SERPENTID)
+
+/mob/living/carbon/human/moth/atom_init(mapload)
+	. = ..(mapload, MOTH)
+
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
 	..()
@@ -388,8 +394,6 @@
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return TRUE
-	if (istype(buckled, /obj/structure/stool/bed/nest))
 		return TRUE
 	return 0
 
@@ -1465,14 +1469,14 @@
 	if(usr != src)
 		return 0 //something is terribly wrong
 
-	if(!bloody_hands)
+	if(!dirty_hands_transfers)
 		verbs -= /mob/living/carbon/human/proc/bloody_doodle
 
 	if(src.gloves)
 		to_chat(src, "<span class='warning'>[src.gloves] мешают вам это сделать.</span>")
 		return
 
-	var/max_length = bloody_hands * 30 //tweeter style
+	var/max_length = dirty_hands_transfers * 30 //tweeter style
 	var/message = sanitize(input(src, "Напишите сообщение. Оно не должно быть более [max_length] символов.", "Писание кровью", ""))
 
 	if(message)
@@ -1489,7 +1493,7 @@
 			return
 
 		var/used_blood_amount = round(length(message) / 30, 1)
-		bloody_hands = max(0, bloody_hands - used_blood_amount) //use up some blood
+		dirty_hands_transfers = max(0, dirty_hands_transfers - used_blood_amount) //use up some blood
 
 		if(length_char(message) > max_length)
 			message = "[copytext_char(message, 1, max_length+1)]~"
@@ -1577,7 +1581,7 @@
 		var/list/sliders_data = tables_data[category]
 
 		for(var/datum/skill/s as anything in sliders_data)
-			var/datum/skill/skill = all_skills[s]
+			var/datum/skill/skill = global.all_skills[s]
 			var/slider_id = skill.name
 			var/slider_value = mind.skills.get_value(s)
 			var/slider_min_value = SKILL_LEVEL_MIN
@@ -2507,8 +2511,7 @@
 		gloves.clean_blood()
 		gloves.germ_level = 0
 	else
-		bloody_hands = 0
-		bloody_hands_mob = null
+		dirty_hands_transfers = 0
 		QDEL_NULL(hand_dirt_datum)
 		update_inv_slot(SLOT_GLOVES)
 		germ_level = 0

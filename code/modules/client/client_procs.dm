@@ -257,7 +257,6 @@ var/global/list/blacklisted_builds = list(
 
 	to_chat(src, "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>")
 
-
 	clients += src
 	directory[ckey] = src
 
