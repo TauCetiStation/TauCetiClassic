@@ -795,6 +795,11 @@
 /datum/spawner/maelstrom/spawn_body(mob/dead/spectator)
 	var/list/free_ranks = get_avaible_jobs(spectator)
 	var/rank = pick(free_ranks)
+	//create new clear mind without spells and notes
+	spectator.create_mind()
+	//get unexisted in station name
+	spectator.mind.name = random_name(spectator.gender)
+
 	var/mob/living/carbon/human/character = spectator.create_and_setup_latespawn_character(rank)
 
 	var/spawnloc = pick(global.latejoin)
