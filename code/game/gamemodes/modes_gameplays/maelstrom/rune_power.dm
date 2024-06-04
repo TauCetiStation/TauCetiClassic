@@ -248,6 +248,16 @@
 			L.ghostize(can_reenter_corpse = FALSE)
 			create_spawner(/datum/spawner/living/maelstrom, L)
 			continue
+		var/have_tough_incapacitating = FALSE
+		for(var/datum/status_effect/incapacitating/effect in convert_target.status_effects)
+			if(effect.id == "stasis_bag")
+				continue
+			if(effect.id == "weakened")
+				continue
+			have_tough_incapacitating = TRUE
+		if(!have_tough_incapacitating)
+			to_chat(user, "<span class='cult'>Цели должны быть ограничены в передвижении!</span>")
+			continue
 		if(L.mind && !L.mind.GetRole(CYBERPSYCHO))
 			var/datum/faction/F = create_uniq_faction(/datum/faction/maelstrom)
 			add_faction_member(F, L, TRUE)
