@@ -795,7 +795,7 @@
 /datum/spawner/maelstrom/spawn_body(mob/dead/spectator)
 	var/list/free_ranks = get_avaible_jobs(spectator)
 	var/rank = pick(free_ranks)
-	var/mob/living/carbon/human/character = create_and_setup_latespawn_character(rank)
+	var/mob/living/carbon/human/character = spectator.create_and_setup_latespawn_character(rank)
 
 	var/spawnloc = pick(global.latejoin)
 	var/list/allowed_spawnlocs = global.xeno_spawn.Copy()
@@ -811,6 +811,6 @@
 	var/datum/faction/maelstrom/faction = create_uniq_faction(/datum/faction/maelstrom)
 	add_faction_member(faction, character, FALSE, TRUE)
 
-	var/obj/item/weapon/card/id/maint_access_card = new(H)
+	var/obj/item/weapon/card/id/maint_access_card = new(character)
 	maint_access_card.access = list(access_maint_tunnels)
 	character.equip_or_collect(maint_access_card, SLOT_IN_BACKPACK)

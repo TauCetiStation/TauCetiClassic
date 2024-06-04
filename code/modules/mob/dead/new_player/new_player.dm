@@ -8,7 +8,6 @@
 	hud_possible = list()
 
 	var/ready             = FALSE
-	var/spawning          = FALSE // Referenced when you want to delete the new_player later on in the code.
 	var/totalPlayers      = FALSE // Player counts for the Lobby tab
 	var/totalPlayersReady = FALSE
 	var/client/my_client
@@ -228,32 +227,6 @@
 
 	return observer
 
-/mob/dead/new_player/proc/latespawn_job_giving(rank)
-	SSjob.AssignRole(src, rank, latejoin = TRUE)
-	var/mob/living/carbon/human/character = create_character()
-	SSjob.EquipRank(character, rank, joined_late = TRUE)
-	return character
-
-/mob/dead/new_player/proc/create_and_setup_latespawn_character(rank)
-	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
-		to_chat(usr, "<span class='warning'>The round is either not ready, or has already finished...</span>")
-		return null
-	spawning = 1
-	close_spawn_windows()
-	var/mob/living/carbon/human/character = latespawn_job_giving(rank)
-	return character
-
-/mob/dead/new_player/proc/add_character_to_players(mob/living/carbon/human/character)
-	SSticker.mode.latespawn(character)
-	if(character.mind.assigned_role != "Cyborg")
-		data_core.manifest_inject(character)
-		SSticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
-	else
-		character.Robotize()
-	joined_player_list += character.ckey
-	if(character.client)
-		character.client.guard.time_velocity_spawn = world.timeofday
-
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(src != usr)
 		return 0
@@ -405,51 +378,6 @@
 	close_spawn_windows()
 	return ..()
 
-/mob/dead/proc/create_character()
-	var/mob/living/carbon/human/new_character
-
-	var/datum/species/chosen_species
-	if(client.prefs.species)
-		chosen_species = all_species[client.prefs.species]
-	if(chosen_species)
-		// Have to recheck admin due to no usr at roundstart. Latejoins are fine though.
-		if(is_species_whitelisted(chosen_species) || has_admin_rights())
-			new_character = new(loc, client.prefs.species)
-
-	if(!new_character)
-		new_character = new(loc)
-
-	new_character.lastarea = get_area(loc)
-	if(client.prefs.language)
-		new_character.add_language(client.prefs.language, LANGUAGE_NATIVE)
-
-	if(SSticker.random_players)
-		new_character.gender = pick(MALE, FEMALE)
-		client.prefs.real_name = random_name(new_character.gender)
-		client.prefs.randomize_appearance_for(new_character)
-	else
-		client.prefs.copy_to(new_character)
-
-	playsound_stop(CHANNEL_MUSIC) // MAD JAMS cant last forever yo
-
-	if(mind)
-		mind.active = 0					//we wish to transfer the key manually
-		mind.original = new_character
-		mind.transfer_to(new_character)					//won't transfer key since the mind is not active
-
-	new_character.name = real_name
-	new_character.dna.ready_dna(new_character)
-	new_character.dna.UpdateSE()
-	new_character.dna.original_character_name = new_character.real_name
-	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)
-	var/old_base_metabolism = new_character.get_metabolism_factor()
-	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
-
-	if(key)
-		new_character.key = key		//Manually transfer the key to log them in
-
-	return new_character
-
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = data_core.html_manifest(OOC = 1)
 
@@ -459,21 +387,6 @@
 
 /mob/dead/new_player/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	return FALSE
-
-/mob/dead/new_player/proc/close_spawn_windows()
-	src << browse(null, "window=latechoices") //closes late choices window
-	src << browse(null, "window=playersetup") //closes the player setup window
-	src << browse(null, "window=preferences_window")
-	if(client)
-		client.clear_character_previews()
-
-/mob/dead/proc/has_admin_rights()
-	return (client && client.holder && (client.holder.rights & R_ADMIN))
-
-/mob/dead/proc/is_species_whitelisted(datum/species/S)
-	if(!S)
-		return TRUE
-	return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !S.flags[IS_WHITELISTED]
 
 /mob/dead/new_player/get_species()
 	var/datum/species/chosen_species
