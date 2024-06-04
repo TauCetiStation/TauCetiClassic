@@ -228,7 +228,7 @@
 
 /datum/rune/maelstrom/convert/action(mob/living/carbon/user)//user is cultist nado
 	var/list/acolytes = nearest_acolytes()
-	for(var/mob/living/L in get_turf(holder))
+	for(var/mob/living/carbon/human/L in get_turf(holder))
 		if(!L.client)
 			to_chat(user, "<span class='cult'>На руне существо без разума.</span>")
 			continue
