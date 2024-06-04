@@ -122,6 +122,19 @@
 		M.OpenCraftingMenu()
 		usr.next_move = world.time + 6
 
+/atom/movable/screen/inventory/surrend
+	name = "surrend!"
+	icon = 'icons/hud/screen1_Midnight.dmi'
+	icon_state = "surrend"
+	screen_loc = ui_surrend
+
+	copy_flags = NONE
+
+/atom/movable/screen/inventory/surrend/action()
+	if(check_state())
+		var/mob/living/M = usr
+		M.emote("surr", intentional = TRUE)
+
 /atom/movable/screen/inventory/mask
 	name = "mask"
 	icon_state = "mask"

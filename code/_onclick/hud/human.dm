@@ -8,6 +8,7 @@
 		/atom/movable/screen/inventory/hand/r,
 		/atom/movable/screen/inventory/hand/l,
 		/atom/movable/screen/inventory/craft,
+		/atom/movable/screen/inventory/surrend,
 		/atom/movable/screen/drop,
 		/atom/movable/screen/swap/first,
 		/atom/movable/screen/swap/second,
