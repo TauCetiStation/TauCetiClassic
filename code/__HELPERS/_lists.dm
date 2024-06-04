@@ -852,3 +852,5 @@
 
 // Adds I to L, initalizing L if necessary, if I is not already in L
 #define LAZYDISTINCTADD(L, I) if(!L) { L = list(); } L |= I;
+
+#define LAZY_INIT_INDEX_LIST(L, args) if(!L) L = args

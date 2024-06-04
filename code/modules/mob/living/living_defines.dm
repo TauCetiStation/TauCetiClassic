@@ -70,4 +70,6 @@
 
 	var/list/spawner_args = null
 
+	var/list/fire_stack_list
+
 	COOLDOWN_DECLARE(wc_use_cooldown)
