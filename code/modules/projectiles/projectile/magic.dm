@@ -6,8 +6,6 @@
 	light_range = 2
 	nodamage = 1
 	flag = "magic"
-	hud_state   = null // not need
-	hud_state_empty = null
 
 	var/power_of_spell = 1
 

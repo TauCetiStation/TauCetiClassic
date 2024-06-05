@@ -9,19 +9,6 @@
 	var/modifystate = 0
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
-	var/obj/item/projectile/energy/M
-
-/obj/item/weapon/gun/energy/get_ammo_type()
-	if(!ammo_type)
-		return list("unknown", "unknown")
-	else
-		return list(M.hud_state, M.hud_state_empty)
-
-/obj/item/weapon/gun/energy/get_ammo_count()
-	if(!power_supply)
-		return 0
-	else
-		return power_supply.charge
 
 /obj/item/weapon/gun/energy/emp_act(severity)
 	power_supply.use(round(power_supply.charge / severity))
