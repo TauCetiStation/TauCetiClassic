@@ -82,36 +82,122 @@
 		EMOTE_STATE(has_robot_module, /obj/item/weapon/robot_module/security),
 	)
 
-
 /datum/emote/robot/confirm
 	key = "confirm"
-	emote_message_3p = "emits an affirmative blip."
+
+	message_1p = "You emits affirmative blip."
+	message_3p = "emits an affirmative blip."
+
+	message_impaired_production = "makes a noise."
+	message_impaired_reception = "flickers."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/synth_yes.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
 
 /datum/emote/robot/deny
 	key = "deny"
-	emote_message_3p = "emits a negative blip."
+
+	message_1p = "You emits negative blip."
+	message_3p = "emits a negative blip."
+
+	message_impaired_production = "makes a noise."
+	message_impaired_reception = "flickers."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/synth_no.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
 
 /datum/emote/robot/scary
 	key = "scary"
-	emote_message_3p = "emits a disconcerting tone."
 
-/datum/emote/robot/dwoop
-	key = "dwoop"
-	emote_message_1p_target = "You chirp happily at TARGET!"
-	emote_message_1p = "You chirp happily."
-	emote_message_3p_target = "chirps happily at TARGET!"
-	emote_message_3p = "chirps happily.
+	message_1p = "You emits disconcerting tone."
+	message_3p = "emits a disconcerting tone."
+
+	message_impaired_production = "makes a noise."
+	message_impaired_reception = "flickers."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/synth_alert.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
+
+/datum/emote/robot/woop
+	key = "woop"
+
+	message_1p = "You chirp happily."
+	message_3p = "chirps happily."
+
+	message_impaired_production = "makes a weak noise."
+	message_impaired_reception = "flickers."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/dwoop.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
 
 /datum/emote/robot/boop
-	key = "roboboop"
-	emote_message_1p_target = "You boop at TARGET!"
-	emote_message_1p = "You boop."
-	emote_message_3p_target = "boops at TARGET!"
-	emote_message_3p = "boops."
+	key = "boop"
+
+	message_1p = "You boop."
+	message_3p = "boops."
+
+	message_impaired_production = "makes a weak noise."
+	message_impaired_reception = "flickers."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/roboboop.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
 
 /datum/emote/robot/robochirp
 	key = "robochirp"
-	emote_message_1p_target = "You chirp at TARGET!"
-	emote_message_1p = "You chirp."
-	emote_message_3p_target = "chirps at TARGET!"
-	emote_message_3p = "chirps."
+
+	message_1p = "You chirp."
+	message_3p = "chirps."
+
+	message_impaired_production = "makes a weak noise."
+	message_impaired_reception = "flickers."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/robochirp.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
