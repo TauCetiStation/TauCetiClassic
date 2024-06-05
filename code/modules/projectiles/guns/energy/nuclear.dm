@@ -7,6 +7,7 @@
 	origin_tech = "combat=3;magnets=2"
 	can_be_holstered = TRUE
 	modifystate = 2
+	flags_gun_features = "have_ammobar"
 
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
 	..()

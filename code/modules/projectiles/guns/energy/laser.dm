@@ -10,6 +10,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 	slot_flags = SLOT_FLAGS_BACK
 	can_be_holstered = FALSE
+	flags_gun_features = "have_ammobar"
 
 /obj/item/weapon/gun/energy/laser/atom_init()
 	. = ..()

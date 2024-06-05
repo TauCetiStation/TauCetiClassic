@@ -150,13 +150,11 @@
 
 	var/obj/item/weapon/gun/G = mymob.get_active_hand()
 
-	if(!(G.flags_gun_features & HAVE_AMMOBAR))
-		return
-	mymob.client.screen += src
+	if((G.flags_gun_features & HAVE_AMMOBAR))
+		mymob.client.screen += src
 
 	if(!istype(G) || !(G.flags_gun_features & HAVE_AMMOBAR) || !G.get_ammo_type() || isnull(G.get_ammo_count()))
 		mymob.client.screen -= src
-		return
 
 	var/list/ammo_type = G.get_ammo_type()
 	var/rounds = G.get_ammo_count()
@@ -357,7 +355,7 @@
 							return O_EYES
 				return BP_HEAD
 
-/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/mymob)
+/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
 	if(choice != selecting)
 		selecting = choice
 		var/mob/living/L = usr
