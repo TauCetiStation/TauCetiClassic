@@ -6,7 +6,7 @@
 	rune_type = /datum/rune/maelstrom/convert
 
 /datum/building_agent/rune/maelstrom/portal_beacon
-	name = "Маяк Портала Культа"
+	name = "Призыв предмета"
 	rune_type = /datum/rune/maelstrom/portal_beacon
 
 /datum/building_agent/rune/maelstrom/teleport
