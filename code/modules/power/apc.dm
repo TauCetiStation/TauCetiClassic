@@ -167,8 +167,11 @@
 		opened = APC_COVER_OPENED
 		operating = 0
 		name = "[area.name] APC"
-		for(var/case in cases)
-			cases[cases.Find(case)] = case + " [CASE(area, GENITIVE_CASE)]"
+		for(var/i in 1 to length(cases))
+			var/case = cases[i]
+			cases[i] = case + " [CASE(area, GENITIVE_CASE)]"
+		// for(var/i in cases)
+			// cases[cases.Find(case)] = case + " [CASE(area, GENITIVE_CASE)]"
 		stat |= MAINT
 		update_icon()
 		addtimer(CALLBACK(src, PROC_REF(update)), 5)
@@ -219,13 +222,15 @@
 	if(isarea(A) && src.areastring == null)
 		src.area = A
 		name = "[area.name] APC"
-		for(var/case in cases)
-			cases[cases.Find(case)] = case + " [CASE(area, GENITIVE_CASE)]"
+		for(var/i in 1 to length(cases))
+			var/case = cases[i]
+			cases[i] = case + " [CASE(area, GENITIVE_CASE)]"
 	else
 		src.area = get_area_by_name(areastring)
 		name = "[area.name] APC"
-		for(var/case in cases)
-			cases[cases.Find(case)] = case + " [CASE(area, GENITIVE_CASE)]"
+		for(var/i in 1 to length(cases))
+			var/case = cases[i]
+			cases[i] = case + " [CASE(area, GENITIVE_CASE)]"
 	area.apc = src
 	update_icon()
 
