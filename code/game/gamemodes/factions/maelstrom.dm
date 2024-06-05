@@ -9,6 +9,19 @@
 	min_roles = 3
 	max_roles = 4
 
+/datum/faction/maelstrom/HandleRecruitedRole(datum/role/R)
+	. = ..()
+	var/obj/effect/proc_holder/spell/targeted/communicate/pda/spell = locate(/obj/effect/proc_holder/spell/targeted/communicate/pda) in R.antag.spell_list
+	if(spell)
+		R.antag.current.RemoveSpell(spell)
+	R.antag.AddSpell(new /obj/effect/proc_holder/spell/targeted/communicate/pda)
+
+/datum/faction/maelstrom/HandleRemovedRole(datum/role/R)
+	. = ..()
+	var/obj/effect/proc_holder/spell/targeted/communicate/pda/spell = locate(/obj/effect/proc_holder/spell/targeted/communicate/pda) in R.antag.spell_list
+	if(spell)
+		R.antag.current.RemoveSpell(spell)
+
 /datum/faction/maelstrom/proc/is_acceptable_recruit(datum/mind/M)
 	for(var/datum/objective/target/O in GetObjectives())
 		if(O.target == M)

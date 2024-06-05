@@ -425,3 +425,15 @@
 
 /obj/effect/proc_holder/spell/targeted/communicate/fastener
 	charge_max = 100
+
+/obj/effect/proc_holder/spell/targeted/communicate/pda/cast(list/targets, mob/user = usr)
+	var/obj/item/device/pda/sender = locate(/obj/item/device/pda in user)
+	if(!sender)
+		return
+	var/list/plist = sender.available_pdas()
+	if(plist.len > 0)
+		var/c = input(usr, "Введите получателя сообщения") as null|anything in sortList(plist)
+		if(!c) // if the user hasn't selected a PDA file we can't send a message
+			return
+		var/selected = plist[c]
+		sender.create_message(usr, selected)
