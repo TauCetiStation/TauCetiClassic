@@ -201,3 +201,23 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 	)
+
+/datum/emote/robot/calling
+	key = "call"
+
+	message_1p = "You're calling."
+	message_3p = "calling."
+
+	message_impaired_production = "makes a weak noise."
+	message_impaired_reception = "flickers."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/longwhistle_robot.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
