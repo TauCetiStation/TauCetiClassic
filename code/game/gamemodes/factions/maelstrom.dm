@@ -9,6 +9,12 @@
 	min_roles = 3
 	max_roles = 4
 
+/datum/faction/maelstrom/proc/is_acceptable_recruit(datum/mind/M)
+	for(var/datum/objective/target/O in GetObjectives())
+		if(O.target == M)
+			return FALSE
+	return TRUE
+
 /datum/faction/maelstrom/HandleRecruitedMind(datum/mind/M, laterole)
 	. = ..()
 	if(.)

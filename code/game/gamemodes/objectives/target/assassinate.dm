@@ -17,6 +17,11 @@
 	if(.)
 		return !(possible_target.GetRole(CYBERPSYCHO))
 
+/datum/objective/target/assassinate/brutally/can_be_target(datum/mind/possible_target)
+	if(faction && (possible_target in faction.members))
+		return FALSE
+	return ..()
+
 /datum/objective/target/assassinate_heads/format_explanation()
 	return "Assassinate Heads of Staff."
 

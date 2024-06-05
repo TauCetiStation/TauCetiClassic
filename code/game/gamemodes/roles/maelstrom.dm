@@ -38,6 +38,9 @@
 	// can be null
 	if(laterole == FALSE)
 		return ..()
+	if(istype(faction, /datum/faction/maelstrom))
+		var/datum/faction/maelstrom/ML = faction
+		return ML.is_acceptable_recruit(M)
 	return TRUE
 
 /datum/role/cyberpsycho/proc/equip_cultist(mob/living/carbon/human/mob)
