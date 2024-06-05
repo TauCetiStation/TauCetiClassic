@@ -195,6 +195,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	icon_state = "SolarcontrolA"
 
 //Hallway
+
 /area/station/hallway
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 
@@ -235,7 +236,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/hallway/secondary/entry
 	name = "Entry Shuttles Hallway"
-	cases = list("станцинженерного отделанные доки", "станцинженерного отделанных доков", "станцинженерного отделанным докам", "станцинженерного отделанные доки", "станцинженерного отделанными доками", "станцинженерного отделанных доках")
+	cases = list("коридор доков", "коридора доков", "коридору доков", "коридор доков", "коридором доков", "коридоре доков")
 	icon_state = "entry"
 
 /area/station/hallway/secondary/mine_sci_shuttle
