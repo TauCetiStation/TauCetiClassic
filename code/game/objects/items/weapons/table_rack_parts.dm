@@ -109,7 +109,7 @@
 			to_chat(user, "<span class='notice'>You reinforce the [name].</span>")
 			qdel(src)
 		else
-			to_chat(user, "<span class='warning'>You need at least four rods to do this.</span>")
+			to_chat(user, "<span class='warning'>You need at least two rods to do this.</span>")
 		return TRUE
 	return FALSE
 
