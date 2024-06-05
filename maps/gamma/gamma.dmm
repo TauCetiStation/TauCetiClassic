@@ -2043,7 +2043,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "adE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -3512,7 +3512,7 @@
 /obj/structure/disposalpipe/tagger/partial{
 	sort_tag = "Мусоросброс"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "ahv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -3729,7 +3729,7 @@
 	codes_txt = "patrol;next_patrol=DS";
 	location = "DN-W"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "ajA" = (
 /obj/machinery/light_switch{
@@ -4046,7 +4046,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "amh" = (
 /obj/machinery/computer/secure_data,
@@ -4107,7 +4107,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "amF" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -4120,7 +4120,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/garden)
 "amV" = (
 /obj/structure/stool,
@@ -4147,7 +4147,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "amX" = (
 /obj/structure/disposalpipe/segment{
@@ -5048,7 +5048,7 @@
 	icon_state = "pipe-c";
 	layer = 1.9
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "awc" = (
 /obj/structure/rack,
@@ -5482,7 +5482,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "aAw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -6004,7 +6004,7 @@
 	dir = 4;
 	sortType = "Коворкинг"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aEF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -8178,7 +8178,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bbD" = (
 /obj/machinery/door/firedoor{
@@ -8767,7 +8767,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bht" = (
 /obj/structure/cable{
@@ -11640,7 +11640,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "bIO" = (
 /obj/structure/window/thin/reinforced,
@@ -12920,7 +12920,9 @@
 "bVd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/medical/reception)
 "bVf" = (
 /obj/item/device/radio/intercom{
@@ -13521,7 +13523,7 @@
 /obj/structure/disposalpipe/junction{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "cbK" = (
 /obj/machinery/firealarm{
@@ -13816,7 +13818,7 @@
 	dir = 1;
 	sortType = "Подсобка Уборщика"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ces" = (
 /obj/effect/decal/cleanable/dirt,
@@ -14073,7 +14075,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "cgN" = (
 /obj/structure/table,
@@ -14528,7 +14530,7 @@
 /obj/structure/disposalpipe/sortjunction/untagged{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "clz" = (
 /obj/machinery/door/airlock/external{
@@ -14955,7 +14957,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "cqR" = (
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
@@ -15078,7 +15080,7 @@
 /obj/structure/disposalpipe/junction{
 	dir = 8
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "crY" = (
 /obj/structure/table,
@@ -16776,7 +16778,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/garden)
 "cHz" = (
 /obj/effect/decal/cleanable/vomit,
@@ -18965,7 +18967,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "dbo" = (
 /obj/effect/landmark/start/recycler,
@@ -19838,7 +19840,7 @@
 /obj/structure/disposalpipe/segment{
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "dlQ" = (
 /obj/structure/table/reinforced,
@@ -20351,7 +20353,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "drd" = (
 /obj/machinery/media/jukebox/bar,
@@ -20896,7 +20898,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "dwA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -21419,7 +21421,7 @@
 /obj/structure/disposalpipe/junction{
 	icon_state = "pipe-j2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "dCa" = (
 /obj/structure/table,
@@ -21685,7 +21687,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
 /area/station/hallway/secondary/entry)
 "dEM" = (
 /obj/machinery/door/firedoor,
@@ -22491,7 +22496,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "dNW" = (
 /turf/simulated/floor{
@@ -22632,7 +22637,7 @@
 	dir = 1;
 	icon_state = "pipe-j2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "dPd" = (
 /obj/effect/decal/cleanable/dirt,
@@ -23492,7 +23497,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "ebf" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
@@ -24215,7 +24220,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "eht" = (
 /turf/simulated/wall,
@@ -24338,7 +24343,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "eiv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -27005,7 +27010,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/garden)
 "eKu" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -27448,7 +27453,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ePC" = (
 /obj/machinery/light/smart,
@@ -27497,7 +27502,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "ePR" = (
 /obj/effect/decal/cleanable/dirt,
@@ -27686,7 +27691,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "eSi" = (
 /obj/structure/noticeboard{
@@ -28415,7 +28420,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "eZe" = (
 /obj/structure/window/thin/reinforced{
@@ -29020,7 +29025,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "fgC" = (
 /obj/effect/decal/cleanable/dirt,
@@ -30565,9 +30570,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/hallway/primary/bridgehall)
-"fuI" = (
-/turf/simulated/floor/grid_floor,
-/area/station/hallway/primary/central)
 "fuP" = (
 /obj/structure/stool/bed/chair/metal/black,
 /obj/effect/decal/cleanable/blood/oil,
@@ -31700,7 +31702,7 @@
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "fGO" = (
 /obj/structure/cable{
@@ -33901,7 +33903,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "gbc" = (
 /obj/structure/disposalpipe/segment{
@@ -34038,7 +34040,7 @@
 	dir = 4;
 	sortType = list("Ординаторская","Хранилище Медбея","Генетика","Морг","Офис СМО","Химия","Вирусология")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "gdg" = (
 /obj/structure/bookcase/manuals/security,
@@ -36267,7 +36269,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "gyS" = (
 /obj/machinery/computer/security/mining{
@@ -36762,7 +36764,10 @@
 	dir = 2;
 	icon_state = "pipe-j2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellow"
+	},
 /area/station/hallway/primary/bridgehall)
 "gED" = (
 /obj/machinery/light/smart,
@@ -38005,7 +38010,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "gOL" = (
 /obj/effect/decal/turf_decal/set_damaged,
@@ -38133,7 +38138,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "red"
+	},
 /area/station/hallway/secondary/exit)
 "gQb" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -39547,7 +39555,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "hfC" = (
 /turf/simulated/floor{
@@ -40524,7 +40532,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "hrc" = (
 /obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
@@ -43940,7 +43948,10 @@
 "ice" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
 /area/station/hallway/primary/central)
 "icm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -44005,7 +44016,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "icW" = (
 /obj/machinery/smartfridge/secure/virology,
@@ -44183,7 +44194,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "ieH" = (
 /obj/structure/window/fulltile/reinforced{
@@ -44825,7 +44836,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "ikz" = (
 /obj/machinery/door_control{
@@ -46124,7 +46135,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "iwE" = (
 /obj/structure/disposalpipe/segment{
@@ -47999,7 +48010,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "iPP" = (
 /obj/structure/table/glass,
@@ -48657,7 +48668,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "iXc" = (
 /turf/simulated/floor/engine{
@@ -49422,7 +49433,7 @@
 	dir = 4;
 	sortType = list("Кухня","Бар","Кафетерий","Ботаника")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "jga" = (
 /obj/machinery/door/airlock/maintenance{
@@ -51489,7 +51500,7 @@
 	icon_state = "pipe-c";
 	layer = 1.9
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "jzX" = (
 /obj/effect/decal/cleanable/mucus,
@@ -51509,7 +51520,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "jAk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -52987,7 +52998,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/garden)
 "jPs" = (
 /obj/structure/cable{
@@ -53370,7 +53381,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "jTV" = (
 /obj/structure/window/thin/reinforced{
@@ -53550,7 +53561,9 @@
 "jWO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/medical/reception)
 "jWS" = (
 /turf/simulated/wall,
@@ -53682,7 +53695,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "jXR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -53799,7 +53812,7 @@
 /obj/structure/disposalpipe/tagger{
 	sort_tag = "Мусоросброс"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "jYK" = (
 /obj/machinery/navbeacon{
@@ -54763,7 +54776,7 @@
 	dir = 8;
 	sortType = list("Тренажерный Зал","Барбершоп","Гардероб","Храм")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "kka" = (
 /obj/machinery/door/airlock/external{
@@ -55723,7 +55736,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "kup" = (
 /obj/machinery/shower{
@@ -57257,7 +57270,7 @@
 	dir = 1;
 	sortType = list("Мусоросброс","Карго Офис","Кабинет Завхоза","OnlineShop")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "kLK" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -57624,7 +57637,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "kQv" = (
 /obj/structure/stool/bed/chair/metal,
@@ -58525,7 +58538,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "kYs" = (
 /obj/structure/largecrate,
@@ -59523,7 +59536,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "lhk" = (
 /obj/structure/stool/bed/chair/comfy/black,
@@ -59934,7 +59947,10 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
 /area/station/civilian/dormitories)
 "lln" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
@@ -62269,7 +62285,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "lLo" = (
 /turf/simulated/wall,
@@ -62730,7 +62746,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "lQC" = (
 /obj/machinery/door/airlock/glass{
@@ -64698,7 +64714,7 @@
 	dir = 1;
 	sortType = list("Мусоросброс","Карго Офис","Кабинет Завхоза","OnlineShop")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "mjq" = (
 /obj/machinery/door/firedoor,
@@ -64965,7 +64981,7 @@
 	dir = 8;
 	icon_state = "pipe-j2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "mmz" = (
 /obj/machinery/light/smart{
@@ -66391,7 +66407,7 @@
 	dir = 2;
 	sortType = list("Парк","Производство Дронов","Кабинет ГП","Роботехника","�?сследования Плазмы","Ординаторская","Комната Отдыха �?нженеров","Хранилище Медбея","Офис Главы �?сследований","Генетика","Морг","Двигатель","Офис Главного �?нженера","Атмосферный Контроль","Комната отдыха РнД","Офис СМО","Ксенобиология","Каюта Капитана","Конференц-Зал","Химия","Научная лаборатория","Вирусология","Прочие �?сследования")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "mBQ" = (
 /obj/structure/closet/secure_closet/personal/patient,
@@ -67120,7 +67136,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "mLx" = (
 /obj/effect/decal/cleanable/dirt,
@@ -67362,7 +67378,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "mOe" = (
 /turf/simulated/floor{
@@ -68053,7 +68069,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "mWs" = (
 /obj/structure/cable{
@@ -68307,7 +68323,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "mZa" = (
 /obj/structure/transit_tube{
@@ -68446,7 +68462,7 @@
 /obj/structure/disposalpipe/junction{
 	dir = 8
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "mZU" = (
 /obj/structure/cable{
@@ -68477,7 +68493,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "mZX" = (
 /obj/machinery/door/airlock{
@@ -70264,22 +70280,13 @@
 	},
 /area/station/hallway/secondary/exit)
 "nrN" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/grid_floor,
-/area/station/civilian/garden)
+/area/station/hallway/primary/central)
 "nrR" = (
 /obj/structure/reagent_dispensers/acid{
 	density = 0;
@@ -71122,7 +71129,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "nBJ" = (
 /obj/structure/closet/secure_closet/personal,
@@ -71448,7 +71455,7 @@
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "nEM" = (
 /obj/item/weapon/table_parts,
@@ -71981,7 +71988,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "nKo" = (
 /obj/structure/cable/yellow{
@@ -72495,7 +72502,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "nQa" = (
 /obj/machinery/firealarm{
@@ -73371,7 +73378,7 @@
 	icon_state = "pipe-c";
 	layer = 1.9
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "nWX" = (
 /obj/structure/window/thin/reinforced,
@@ -74867,7 +74874,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "onc" = (
 /obj/machinery/vending/cigarette,
@@ -75909,7 +75916,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "oAb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -78075,7 +78082,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/garden)
 "oVs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -80808,7 +80815,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "pyY" = (
 /obj/machinery/light/smart{
@@ -81818,7 +81825,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "pKY" = (
 /obj/structure/disposalpipe/segment{
@@ -83076,7 +83083,7 @@
 	dir = 1;
 	sortType = list("Мусоросброс","Карго Офис","Кабинет Завхоза","OnlineShop")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "pWM" = (
 /obj/structure/stool,
@@ -83391,7 +83398,9 @@
 	},
 /area/station/civilian/dormitories/dormthree)
 "pZU" = (
-/turf/simulated/floor/glass,
+/turf/simulated/floor{
+	icon_state = "darkbluefull"
+	},
 /area/station/bridge)
 "pZV" = (
 /obj/structure/sign/departments/security,
@@ -84227,7 +84236,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/garden)
 "qiv" = (
 /obj/structure/closet/secure_closet/personal/patient,
@@ -86137,17 +86146,20 @@
 	},
 /area/station/rnd/server)
 "qBU" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/grid_floor,
-/area/station/hallway/secondary/entry)
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/hallway/primary/central)
 "qCa" = (
 /obj/machinery/seed_extractor,
 /obj/machinery/alarm{
@@ -86608,7 +86620,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "qHw" = (
 /obj/structure/cable{
@@ -86763,7 +86775,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "qIZ" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -87108,7 +87120,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "qMA" = (
 /obj/item/weapon/defibrillator/loaded,
@@ -87138,7 +87150,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "qMI" = (
 /obj/machinery/hologram/holopad,
@@ -87406,7 +87418,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "qOg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -87428,7 +87440,7 @@
 "qOD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "qOG" = (
 /obj/machinery/vending/coffee,
@@ -87898,7 +87910,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "qUf" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -88942,7 +88954,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/medical/reception)
 "rdY" = (
 /obj/item/weapon/scrap_lump,
@@ -89500,7 +89514,7 @@
 "rlk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "rlD" = (
 /obj/machinery/light/smart{
@@ -89552,7 +89566,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "rmb" = (
 /obj/structure/flora/junglebush/large{
@@ -91033,7 +91047,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "rAT" = (
 /obj/effect/decal/cleanable/dirt,
@@ -91560,7 +91574,7 @@
 	dir = 1;
 	sortType = "Ассистентская"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "rHB" = (
 /obj/machinery/computer/mecha,
@@ -93245,7 +93259,7 @@
 /obj/structure/disposalpipe/junction{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "saS" = (
 /obj/machinery/door/poddoor/cargo{
@@ -93397,7 +93411,7 @@
 	dir = 1;
 	sortType = list("Карго Офис","Кабинет Завхоза")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "sce" = (
 /obj/machinery/light/smart,
@@ -93447,7 +93461,7 @@
 /obj/structure/disposalpipe/tagger/partial{
 	sort_tag = "Мусоросброс"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "scP" = (
 /obj/structure/window/fulltile/reinforced{
@@ -93655,7 +93669,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "seX" = (
 /obj/structure/cable{
@@ -93978,7 +93992,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "sik" = (
 /obj/machinery/space_heater,
@@ -95197,7 +95211,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/garden)
 "stP" = (
 /obj/machinery/door/morgue{
@@ -95511,7 +95525,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "sww" = (
 /obj/structure/bookcase{
@@ -95858,18 +95872,15 @@
 	},
 /area/station/maintenance/bridge)
 "sAL" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 2
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "graychoco"
 	},
-/turf/simulated/floor/grid_floor,
-/area/station/hallway/secondary/exit)
+/area/station/hallway/secondary/entry)
 "sAP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -95965,7 +95976,7 @@
 	dir = 4;
 	sortType = list("Офис ГСБ","Агенция Внутренних Дел","Снаряжение СБ","Детектив","Офис Синего Щита","Зал Суда")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "sBU" = (
 /obj/random/scrap/safe_even,
@@ -96762,7 +96773,7 @@
 /obj/structure/disposalpipe/sortjunction{
 	sortType = list("Мусоросброс","Карго Офис","Кабинет Завхоза","Парк","Офис ГСБ","Агенция Внутренних Дел","Снаряжение СБ","Детектив","Офис Синего Щита","Тренажерный Зал","Барбершоп","Гардероб","Храм","Кухня","Бар","Кафетерий","Ботаника","Ассистенсткая","Библиотека","Подсобка Уборщика","OnlineShop")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "sJn" = (
 /obj/machinery/atmospherics/components/binary/pump,
@@ -98505,7 +98516,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "tbE" = (
 /obj/structure/table/woodentable,
@@ -99781,7 +99792,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "toX" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -100265,7 +100276,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "tsY" = (
 /obj/structure/cable{
@@ -100406,7 +100417,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ttS" = (
 /obj/structure/disposalpipe/segment{
@@ -100508,7 +100519,7 @@
 	dir = 8;
 	sortType = "Библиотека"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "tup" = (
 /obj/machinery/door/firedoor,
@@ -102161,7 +102172,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "tLQ" = (
 /obj/machinery/light/small{
@@ -104291,7 +104302,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ugY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -104782,7 +104793,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ulS" = (
 /obj/structure/cable{
@@ -105194,12 +105205,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
-"upn" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/grid_floor,
-/area/station/hallway/primary/bridgehall)
 "upp" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/security/bodycam,
@@ -106010,7 +106015,7 @@
 /obj/structure/disposalpipe/junction{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "uxh" = (
 /obj/structure/cable{
@@ -106451,7 +106456,10 @@
 	dir = 8;
 	sortType = list("Комната Отдыха �?нженеров","Двигатель","Офис Главного �?нженера","Атмосферный Контроль")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
 /area/station/hallway/primary/bridgehall)
 "uCN" = (
 /obj/machinery/camera{
@@ -106789,7 +106797,7 @@
 	dir = 1;
 	sortType = "Барбершоп"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "uFX" = (
 /obj/structure/stool,
@@ -108247,7 +108255,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "uUZ" = (
 /obj/effect/decal/turf_decal{
@@ -108274,7 +108282,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "uVl" = (
 /obj/structure/rack,
@@ -108587,7 +108595,7 @@
 	dir = 2;
 	sortType = list("Мусоросброс","OnlineShop")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "uYa" = (
 /obj/random/scrap/safe_even,
@@ -108788,7 +108796,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "uZW" = (
 /obj/item/weapon/shard{
@@ -108857,7 +108865,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/hallway/secondary/entry)
 "vaP" = (
 /obj/structure/window/thin/reinforced{
@@ -109551,7 +109561,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "vjT" = (
 /turf/simulated/floor{
@@ -111103,7 +111113,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "vCL" = (
 /obj/structure/cable{
@@ -111914,7 +111924,7 @@
 "vJO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "vJQ" = (
 /obj/machinery/door/firedoor,
@@ -112307,7 +112317,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "vNn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -112953,7 +112963,7 @@
 /obj/structure/disposalpipe/junction{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "vTd" = (
 /obj/structure/stool/bar,
@@ -113522,7 +113532,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "vYs" = (
 /obj/item/weapon/flora/random,
@@ -115102,7 +115112,7 @@
 	dir = 8;
 	sortType = "Гардероб"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "wov" = (
 /mob/living/carbon/monkey,
@@ -115818,7 +115828,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "wuC" = (
 /obj/structure/object_wall/cargo{
@@ -116274,7 +116286,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "wBQ" = (
 /obj/structure/cable{
@@ -118023,7 +118035,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "wWt" = (
 /obj/structure/cable{
@@ -121709,7 +121721,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "xLY" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -122419,7 +122431,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "xVh" = (
 /turf/simulated/wall,
@@ -123260,7 +123272,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ydN" = (
 /obj/structure/stool/bed/chair/office/light{
@@ -138096,7 +138108,7 @@ mcz
 cqM
 dqY
 lwb
-dqY
+sAL
 vaO
 njd
 fws
@@ -140116,7 +140128,7 @@ fWY
 wkA
 xGF
 lYL
-sAL
+wkA
 nWQ
 kQj
 ebc
@@ -140138,7 +140150,7 @@ gaV
 tbs
 gaV
 gaV
-qBU
+wyB
 gaV
 aho
 fGM
@@ -147827,7 +147839,7 @@ eMy
 jnt
 cXL
 qHr
-fuI
+nJA
 bvo
 lyo
 uyl
@@ -149626,7 +149638,7 @@ uWJ
 vwA
 uWJ
 jfX
-qTW
+qBU
 puj
 inE
 sfm
@@ -149650,7 +149662,7 @@ kor
 hrA
 aeV
 ice
-ice
+wGe
 ePx
 wGe
 iCx
@@ -153730,7 +153742,7 @@ dqF
 suD
 uEA
 bYG
-rlk
+nrN
 rlk
 rlk
 rlk
@@ -156063,7 +156075,7 @@ uEd
 abK
 nVU
 rfV
-nrN
+tRb
 mgZ
 nVU
 aco
@@ -156834,7 +156846,7 @@ uEd
 abO
 nVU
 jDy
-nrN
+tRb
 rKL
 nVU
 kVA
@@ -157091,7 +157103,7 @@ uEd
 kVA
 qKd
 rfV
-nrN
+tRb
 wlK
 uoP
 bCP
@@ -158864,7 +158876,7 @@ bBh
 gOh
 hdx
 fpc
-upn
+qzL
 uth
 gIY
 uth
