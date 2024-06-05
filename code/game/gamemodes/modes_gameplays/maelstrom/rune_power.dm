@@ -236,15 +236,11 @@
 			if(length(acolytes) < 2)
 				to_chat(user, "<span class='cult'>Для разрушения защиты разума необходимо как минимум 2 культиста вокруг руны.</span>")
 				continue
-			// Remove all implants except maelstrom and loyalty
+			// Remove all implants except maelstrom
 			for(var/obj/item/weapon/implant/I in L)
-				if(istype(I, /obj/item/weapon/implant/mind_protect/loyalty))
-					continue
 				if(istype(I, /obj/item/weapon/implant/maelstrom))
 					continue
 				I.implant_removal(L)
-			// Replace loyalty by fake implant
-			L.fake_loyal_implant_replacement()
 			L.ghostize(can_reenter_corpse = FALSE)
 			create_spawner(/datum/spawner/living/maelstrom, L)
 			continue
