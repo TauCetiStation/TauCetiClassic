@@ -22,8 +22,6 @@
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
-	var/hud_state   = "unknown"  //Bullet type on the Ammo HUD
-	var/hud_state_empty = "unknown"
 
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center

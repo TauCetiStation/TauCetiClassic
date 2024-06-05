@@ -46,8 +46,6 @@
 #define HOLY_HUD			"holy"
 //Alien embryo hud
 #define ALIEN_EMBRYO_HUD	"alien_embryo"
-//Ammo huds
-#define AMMO_HUD 			"ammo"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
