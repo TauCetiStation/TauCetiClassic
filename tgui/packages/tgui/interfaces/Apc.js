@@ -178,7 +178,7 @@ const ApcContent = (props, context) => {
             buttons={(
               <Button
                 icon="lightbulb-o"
-                content={nightshiftLights ? 'Вкл.' : 'Выкл.'}
+                content={nightshiftLights ? 'Вкл' : 'Выкл'}
                 onClick={() => act('toggle_nightshift')} />
             )} />
           <LabeledList.Item
