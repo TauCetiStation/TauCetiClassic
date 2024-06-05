@@ -3,6 +3,8 @@
 //Please do not increase power in shake_camera(). It is really not needed for players.
 #define OPTIMAL_POWER_RECOIL 1
 #define DEFAULT_DURATION_RECOIL 1
+#define HAVE_AMMOBAR 2
+
 
 /obj/item/weapon/gun
 	name = "gun"
@@ -39,6 +41,7 @@
 	var/fire_delay = 6
 	var/last_fired = 0
 	var/two_hand_weapon = FALSE
+	var/flags_gun_features = "have_ammobar"
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -199,6 +202,12 @@
 
 /obj/item/weapon/gun/proc/can_hit(mob/living/target, mob/living/user)
 	return chambered.BB.check_fire(target,user)
+
+/obj/item/weapon/gun/proc/get_ammo_type()
+	return FALSE
+
+/obj/item/weapon/gun/proc/get_ammo_count()
+	return FALSE
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)

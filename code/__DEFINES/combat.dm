@@ -111,3 +111,7 @@
 #define MOVESET_TYPE "moveset_type"
 #define MOVESET_ROLES "moveset_role"
 #define MOVESET_QUALITY "moveset_quality"
+
+//Weapon flags (shows ammo and etc.)
+#define HAVE_AMMOBAR "have_ammobar"
+

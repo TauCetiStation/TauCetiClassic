@@ -132,6 +132,75 @@
 	update_icon(hud.mymob)
 	hud.mymob.nutrition_icon = src
 
+
+//Show ammo
+/atom/movable/screen/ammo
+	name = "ammo"
+	icon = 'icons/hud/screen_gen.dmi'
+	icon_state = "ammo"
+	screen_loc = ui_ammohud
+
+	copy_flags = NONE
+
+/atom/movable/screen/ammo/living/add_to_hud(datum/hud/hud)
+	var/mob/mymob = hud.mymob
+
+	if(!mymob?.client)
+		return
+
+	var/obj/item/weapon/gun/G = mymob.get_active_hand()
+
+	if(!(G.flags_gun_features & HAVE_AMMOBAR))
+		return
+	mymob.client.screen += src
+
+	if(!istype(G) || !(G.flags_gun_features & HAVE_AMMOBAR) || !G.get_ammo_type() || isnull(G.get_ammo_count()))
+		mymob.client.screen -= src
+		return
+
+	var/list/ammo_type = G.get_ammo_type()
+	var/rounds = G.get_ammo_count()
+
+	var/hud_state = ammo_type[1]
+	var/hud_state_empty = ammo_type[2]
+
+	overlays.Cut()
+
+	var/empty = image('icons/hud/screen_gen.dmi', src, "[hud_state_empty]")
+
+	if(rounds == 0)
+		overlays += empty
+
+	else
+		var/atom/movable/screen/ammo/F = new /atom/movable/screen/ammo(src)
+		F.icon_state = "frame"
+		mymob.client.screen += F
+		flick("[hud_state_empty]_flash", F)
+		spawn(20)
+			mymob.client.screen -= F
+			qdel(F)
+			overlays += empty
+			overlays += image('icons/hud/screen_gen.dmi', src, "[hud_state]")
+
+	rounds = num2text(rounds)
+
+	//Handle the amount of rounds
+	switch(length(rounds))
+		if(1)
+			overlays += image('icons/hud/screen_gen.dmi', src, "o[rounds[1]]")
+		if(2)
+			overlays += image('icons/hud/screen_gen.dmi', src, "o[rounds[2]]")
+			overlays += image('icons/hud/screen_gen.dmi', src, "t[rounds[1]]")
+		if(3)
+			overlays += image('icons/hud/screen_gen.dmi', src, "o[rounds[3]]")
+			overlays += image('icons/hud/screen_gen.dmi', src, "t[rounds[2]]")
+			overlays += image('icons/hud/screen_gen.dmi', src, "h[rounds[1]]")
+		else //"0" is still length 1 so this means it's over 999
+			overlays += image('icons/hud/screen_gen.dmi', src, "o9")
+			overlays += image('icons/hud/screen_gen.dmi', src, "t9")
+			overlays += image('icons/hud/screen_gen.dmi', src, "h9")
+
+
 // Gun screens
 /atom/movable/screen/gun
 	name = "gun"
@@ -288,7 +357,7 @@
 							return O_EYES
 				return BP_HEAD
 
-/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
+/atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/mymob)
 	if(choice != selecting)
 		selecting = choice
 		var/mob/living/L = usr

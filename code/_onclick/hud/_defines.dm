@@ -94,6 +94,7 @@
 #define ui_health "EAST-1:28,CENTER-1:17"
 #define ui_mood "EAST-1:28,CENTER:17"
 #define ui_internal "EAST-1:28,CENTER-3:19"
+#define ui_ammohud "EAST-1:28,CENTER+1:13"
 
 //aliens
 #define ui_alien_nightvision "EAST-1:28,CENTER-1:15" //aliens have the nightvision display where humans have the pressure damage indicator.
