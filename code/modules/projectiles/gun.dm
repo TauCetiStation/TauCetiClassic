@@ -3,8 +3,6 @@
 //Please do not increase power in shake_camera(). It is really not needed for players.
 #define OPTIMAL_POWER_RECOIL 1
 #define DEFAULT_DURATION_RECOIL 1
-#define HAVE_AMMOBAR 2
-
 
 /obj/item/weapon/gun
 	name = "gun"
