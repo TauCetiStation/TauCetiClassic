@@ -126,8 +126,8 @@
 	icon_state = "plasticbag"
 	item_state = "plasticbag"
 
-	w_class = SIZE_TINY
-	max_w_class = SIZE_NORMAL
+	w_class = SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BOX_STORAGE
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
