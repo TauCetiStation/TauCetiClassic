@@ -7,6 +7,8 @@
 	flag = BULLET
 	embed = 1
 	sharp = 1
+	hud_state   = "rifle"  //Bullet type on the Ammo HUD
+	hud_state_empty = "rifle_empty"
 	var/stoping_power = 0
 
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
