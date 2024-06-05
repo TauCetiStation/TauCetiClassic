@@ -62,6 +62,8 @@
 
 
 /datum/emote/robot/law
+	key = "law"
+
 	message_1p = "You show your legal authorization barcode."
 	message_3p = "shows it's legal authorization barcode."
 
@@ -81,21 +83,35 @@
 	)
 
 
-/datum/emote/robot/halt
-	message_1p = "You skreech with your speakers, \"Halt! Security!\""
-	message_3p = "skreeches with it's skeapers, \"Halt! Security!\""
+/datum/emote/robot/confirm
+	key = "confirm"
+	emote_message_3p = "emits an affirmative blip."
 
-	message_impaired_production = "makes a loud noise."
-	message_impaired_reception = "flickers with red."
+/datum/emote/robot/deny
+	key = "deny"
+	emote_message_3p = "emits a negative blip."
 
-	message_miming = "makes loud robot noises."
-	message_muzzled = "makes a loud noise."
+/datum/emote/robot/scary
+	key = "scary"
+	emote_message_3p = "emits a disconcerting tone."
 
-	message_type = SHOWMSG_AUDIO
+/datum/emote/robot/dwoop
+	key = "dwoop"
+	emote_message_1p_target = "You chirp happily at TARGET!"
+	emote_message_1p = "You chirp happily."
+	emote_message_3p_target = "chirps happily at TARGET!"
+	emote_message_3p = "chirps happily.
 
-	sound = 'sound/voice/halt.ogg'
+/datum/emote/robot/boop
+	key = "roboboop"
+	emote_message_1p_target = "You boop at TARGET!"
+	emote_message_1p = "You boop."
+	emote_message_3p_target = "boops at TARGET!"
+	emote_message_3p = "boops."
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(has_robot_module, /obj/item/weapon/robot_module/security),
-	)
+/datum/emote/robot/robochirp
+	key = "robochirp"
+	emote_message_1p_target = "You chirp at TARGET!"
+	emote_message_1p = "You chirp."
+	emote_message_3p_target = "chirps at TARGET!"
+	emote_message_3p = "chirps."
