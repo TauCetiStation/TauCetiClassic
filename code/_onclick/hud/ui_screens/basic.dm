@@ -153,7 +153,7 @@
 	var/mob/mymob = hud.mymob
 	..()
 	update_icon(hud.mymob)
-	hud.mymob.ammo_hud = src
+	hud.mymob.ammo_hud += src
 
 	if(!mymob.client)
 		return
