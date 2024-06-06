@@ -183,7 +183,7 @@
 	)
 
 /datum/emote/robot/robochirp
-	key = "robochirp"
+	key = "chirp"
 
 	message_1p = "You chirp."
 	message_3p = "chirps."
