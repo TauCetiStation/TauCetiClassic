@@ -205,7 +205,7 @@
 /datum/emote/robot/calling
 	key = "call"
 
-	message_1p = "You're calling."
+	message_1p = "You're dialing."
 	message_3p = "calling."
 
 	message_impaired_production = "makes a weak noise."
