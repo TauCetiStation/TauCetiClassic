@@ -25,6 +25,23 @@
 #define PREF_PLAYER_GAME "game"
 #define PREF_PLAYER_KEYBINDS "keybinds"
 
+///datum/pref/player/graphics/zoom
+#define ICON_SCALE_AUTO "0"
+#define ICON_SCALE_16   "0.5"
+#define ICON_SCALE_32   "1"
+#define ICON_SCALE_48   "1.5"
+#define ICON_SCALE_64   "2"
+#define ICON_SCALE_80   "2.5"
+#define ICON_SCALE_96   "3"
+#define ICON_SCALE_112  "3.5"
+#define ICON_SCALE_128  "4"
+
+///datum/pref/player/graphics/zoom_mode
+#define SCALING_METHOD_NORMAL "normal"
+#define SCALING_METHOD_DISTORT "distort"
+#define SCALING_METHOD_BLUR "blur"
+
+
 ///datum/pref/player/graphics/glowlevel
 #define GLOW_HIGH    "high"
 #define GLOW_MED     "med"

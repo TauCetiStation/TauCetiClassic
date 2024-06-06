@@ -369,6 +369,8 @@ var/global/list/blacklisted_builds = list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	init_zoom()
+
 	if(prefs.get_pref(/datum/pref/player/ui/auto_fit_viewport))
 		fit_viewport()
 
@@ -833,6 +835,11 @@ var/global/list/disconnected_ckey_by_stat = list()
 
 	view = new_size
 	mob.reload_fullscreen()
+
+/client/proc/init_zoom()
+	var/zoom = prefs.get_pref(/datum/pref/player/graphics/zoom)
+	var/zoom_mode = prefs.get_pref(/datum/pref/player/graphics/zoom_mode)
+	winset(src, "mapwindow.map", "zoom=[zoom];zoom-mode=[zoom_mode]")
 
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)

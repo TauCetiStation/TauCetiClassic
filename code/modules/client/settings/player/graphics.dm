@@ -12,6 +12,40 @@
 	if(client)
 		client.fps = value
 
+/datum/pref/player/graphics/zoom
+	name = "Масштабирование"
+	description = "Масштабирование основного игрового экрана."
+	value_type = PREF_TYPE_SELECT
+	value = ICON_SCALE_AUTO
+	value_parameters = list(
+		ICON_SCALE_AUTO = "Авто",
+		ICON_SCALE_16 = "x"+ICON_SCALE_16,
+		ICON_SCALE_32 = "x"+ICON_SCALE_32,
+		ICON_SCALE_48 = "x"+ICON_SCALE_48,
+		ICON_SCALE_64 = "x"+ICON_SCALE_64,
+		ICON_SCALE_80 = "x"+ICON_SCALE_80,
+		ICON_SCALE_96 = "x"+ICON_SCALE_96,
+		ICON_SCALE_112 = "x"+ICON_SCALE_112,
+		ICON_SCALE_128 = "x"+ICON_SCALE_128
+	)
+
+/datum/pref/player/graphics/zoom/on_update(client/client, old_value)
+	winset(client, "mapwindow.map", "zoom=[value]")
+
+/datum/pref/player/graphics/zoom_mode
+	name = "Метод масштабирования"
+	description = "."
+	value_type = PREF_TYPE_SELECT
+	value = SCALING_METHOD_DISTORT
+	value_parameters = list(
+		SCALING_METHOD_BLUR = "Point Sampling",
+		SCALING_METHOD_NORMAL = "Bilinear",
+		SCALING_METHOD_DISTORT = "Nearest Neighbor"
+	)
+
+/datum/pref/player/graphics/zoom_mode/on_update(client/client, old_value)
+	winset(client, "mapwindow.map", "zoom-mode=[value]")
+
 /datum/pref/player/graphics/ambientocclusion
 	name = "Ambient Occlusion"
 	description = "Добавляет затенение для объектов в игре."
