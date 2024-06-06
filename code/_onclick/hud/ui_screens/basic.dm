@@ -132,17 +132,24 @@
 	update_icon(hud.mymob)
 	hud.mymob.nutrition_icon = src
 
-
 //Show ammo
+#define AMMO_HUD_ICON_NORMAL 1
+#define AMMO_HUD_ICON_EMPTY 2
+
 /atom/movable/screen/ammo
 	name = "ammo"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "ammo"
 	screen_loc = ui_ammohud
-
+	var/warned = FALSE // shows out of ammo
+	var/atom/movable/flash_holder
 	copy_flags = NONE
 
 /atom/movable/screen/ammo/add_to_hud(datum/hud/hud)
+	flash_holder = new
+	flash_holder.icon_state = "frame"
+	flash_holder.icon = icon
+
 	var/mob/mymob = hud.mymob
 	..()
 	update_icon(hud.mymob)
@@ -159,31 +166,42 @@
 	if(!istype(G) || !(G.flags_gun_features & HAVE_AMMOBAR) || !G.get_ammo_type() || isnull(G.get_ammo_count()))
 		mymob.client.screen -= src
 
-	var/list/ammo_type = G.get_ammo_type()
-	var/rounds = G.get_ammo_count()
-
-	var/hud_state = ammo_type[1]
-	var/hud_state_empty = ammo_type[2]
-
+/atom/movable/screen/ammo/proc/update_hud(mob/living/user, list/ammo_type, rounds)
 	overlays.Cut()
 
-	var/empty = image('icons/hud/screen_gen.dmi', src, "[hud_state_empty]")
+	if(rounds <= 0)
+		overlays += image('icons/hud/screen_gen.dmi', src, "o0")
+		var/image/empty_state = image('icons/hud/screen_gen.dmi', src, ammo_type[AMMO_HUD_ICON_EMPTY])
+		overlays += empty_state
+		if(warned)
+			return
+		warned = TRUE
+		flick("[ammo_type[AMMO_HUD_ICON_EMPTY]]_flash", flash_holder)
+		return
 
-	if(rounds == 0)
-		overlays += empty
-
-	else
-		var/atom/movable/screen/ammo/F = new /atom/movable/screen/ammo(src)
-		F.icon_state = "frame"
-		mymob.client.screen += F
-		flick("[hud_state_empty]_flash", F)
-		spawn(20)
-			mymob.client.screen -= F
-			qdel(F)
-			overlays += image('icons/hud/screen_gen.dmi', src, "[hud_state]")
+	warned = FALSE
+	overlays += image('icons/hud/screen_gen.dmi', src, "[ammo_type[AMMO_HUD_ICON_NORMAL]]")
 
 	rounds = num2text(rounds)
 
+	//Handle the amount of rounds
+	switch(length(rounds))
+		if(1)
+			overlays += image('icons/hud/screen_gen.dmi', src, "o[rounds[1]]")
+		if(2)
+			overlays += image('icons/hud/screen_gen.dmi', src, "o[rounds[2]]")
+			overlays += image('icons/hud/screen_gen.dmi', src, "t[rounds[1]]")
+		if(3)
+			overlays += image('icons/hud/screen_gen.dmi', src, "o[rounds[3]]")
+			overlays += image('icons/hud/screen_gen.dmi', src, "t[rounds[2]]")
+			overlays += image('icons/hud/screen_gen.dmi', src, "h[rounds[1]]")
+		else //"0" is still length 1 so this means it's over 999
+			overlays += image('icons/hud/screen_gen.dmi', src, "o9")
+			overlays += image('icons/hud/screen_gen.dmi', src, "t9")
+			overlays += image('icons/hud/screen_gen.dmi', src, "h9")
+
+#undef AMMO_HUD_ICON_NORMAL
+#undef AMMO_HUD_ICON_EMPTY
 	//Handle the amount of rounds
 	switch(length(rounds))
 		if(1)
