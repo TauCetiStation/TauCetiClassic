@@ -206,7 +206,7 @@
 	key = "call"
 
 	message_1p = "You're dialing."
-	message_3p = "calling."
+	message_3p = "dialling."
 
 	message_impaired_production = "makes a weak noise."
 	message_impaired_reception = "flickers."
