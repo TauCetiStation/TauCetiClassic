@@ -142,10 +142,13 @@
 
 	copy_flags = NONE
 
-/atom/movable/screen/ammo/living/add_to_hud(datum/hud/hud)
+/atom/movable/screen/ammo/add_to_hud(datum/hud/hud)
 	var/mob/mymob = hud.mymob
+	..()
+	update_icon(hud.mymob)
+	hud.mymob.ammo_hud = src
 
-	if(!mymob?.client)
+	if(!mymob.client)
 		return
 
 	var/obj/item/weapon/gun/G = mymob.get_active_hand()
@@ -177,7 +180,6 @@
 		spawn(20)
 			mymob.client.screen -= F
 			qdel(F)
-			overlays += empty
 			overlays += image('icons/hud/screen_gen.dmi', src, "[hud_state]")
 
 	rounds = num2text(rounds)
