@@ -168,8 +168,7 @@
 		operating = 0
 		name = "[area.name] APC"
 		for(var/i in 1 to length(cases))
-			var/case = cases[i]
-			cases[i] = case + " [CASE(area, GENITIVE_CASE)]"
+			cases[i] = cases[i] + " [CASE(area, GENITIVE_CASE)]"
 		// for(var/i in cases)
 			// cases[cases.Find(case)] = case + " [CASE(area, GENITIVE_CASE)]"
 		stat |= MAINT
