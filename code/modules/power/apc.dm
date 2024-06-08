@@ -925,7 +925,7 @@
 			var/mode_name = input(usr, "Выберите режим освещения.") as null|anything in available_modes
 
 			if(!COOLDOWN_FINISHED(src, smartlight_switch))
-				to_chat(usr, "<span class='warning'>\"Умный свет\" в процессе переключения!</span>")
+				to_chat(usr, "<span class='warning'>Системы предохранения не позволяют поставить новый режим так быстро, немного подождите.</span>")
 				return
 
 			if(mode_name)
