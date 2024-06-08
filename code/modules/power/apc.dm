@@ -222,8 +222,7 @@
 		src.area = A
 		name = "[area.name] APC"
 		for(var/i in 1 to length(cases))
-			var/case = cases[i]
-			cases[i] = case + " [CASE(area, GENITIVE_CASE)]"
+			cases[i] = cases[i] + " [CASE(area, GENITIVE_CASE)]"
 	else
 		src.area = get_area_by_name(areastring)
 		name = "[area.name] APC"
