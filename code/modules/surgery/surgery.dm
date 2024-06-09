@@ -144,7 +144,7 @@
 	if(M.species.flags[IS_SYNTHETIC])
 		skillcheck = /datum/skill/engineering
 
-	if(!handle_fumbling(user, M, SKILL_TASK_CHALLENGING, list(skillcheck = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
+	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, list(skillcheck = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
 		return
 
 	for(var/datum/surgery_step/S in surgery_steps)
