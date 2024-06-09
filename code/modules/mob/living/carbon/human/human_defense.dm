@@ -1,3 +1,4 @@
+#define PROTECTION_TO_MULTIPLE(p) ((100 - min(p, 100)) * 0.01)
 /mob/living/carbon/human/getHalLoss()
 	if(species.flags[NO_PAIN])
 		return 0
@@ -130,9 +131,9 @@
 		var/obj/item/projectile/bullet/B = P
 
 		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
-		var/armor = getarmor_organ(BP, BULLET)
+		var/armor = get_protection_multiple_organ(BP, BULLET)
 
-		var/delta = max(0, P.damage - (P.damage * (armor/100)))
+		var/delta = max(0, P.damage - P.damage * armor)
 		if(delta)
 			apply_effect(delta,AGONY,armor)
 			//return Nope! ~Zve
@@ -182,23 +183,25 @@
 
 	if(def_zone)
 		if(isbodypart(def_zone))
-			return getarmor_organ(def_zone, type)
+			return 100 - get_protection_multiple_organ(def_zone, type) * 100
 		var/obj/item/organ/external/BP = get_bodypart(def_zone)
-		return getarmor_organ(BP, type)
+		return 100 - get_protection_multiple_organ(BP, type) * 100
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/obj/item/organ/external/BP in bodyparts)
-		armorval += getarmor_organ(BP, type)
+		armorval += 100 - get_protection_multiple_organ(BP, type) * 100
 		organnum++
 	return (armorval/max(organnum, 1))
 
 //this proc returns the Siemens coefficient of electrical resistivity for a particular external organ.
 /mob/living/carbon/human/proc/get_siemens_coefficient_organ(obj/item/organ/external/BP)
-	if (!BP)
-		return 1.0
-
 	var/siemens_coefficient = 1.0
+
+	if(!BP)
+		if(HAS_TRAIT(src, TRAIT_CONDUCT))
+			siemens_coefficient++
+		return siemens_coefficient
 
 	var/list/clothing_items = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
 	for(var/obj/item/clothing/C in clothing_items)
@@ -212,22 +215,21 @@
 				if(F)
 					F.electrocute_act(60)
 			siemens_coefficient *= C.siemens_coefficient
-
+	if(HAS_TRAIT(src, TRAIT_CONDUCT))
+		siemens_coefficient++
 	return siemens_coefficient
 
 //this proc returns the armour value for a particular external organ.
-/mob/living/carbon/human/proc/getarmor_organ(obj/item/organ/external/BP, type)
+/mob/living/carbon/human/proc/get_protection_multiple_organ(obj/item/organ/external/BP, type)
 	if(!type || !BP)
 		return 0
-	var/protection = 0
+	var/protection = 1
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
+	protection *= PROTECTION_TO_MULTIPLE(BP.pumped * 0.3)
+	for(var/obj/item/clothing/C in protective_gear)
+		if(C.body_parts_covered & BP.body_part)
+			protection *= PROTECTION_TO_MULTIPLE(C.armor[type])
 
-	protection += BP.pumped * 0.3
-	for(var/gear in protective_gear)
-		if(gear && istype(gear ,/obj/item/clothing))
-			var/obj/item/clothing/C = gear
-			if(istype(C) && (C.body_parts_covered & BP.body_part))
-				protection += C.armor[type]
 	return protection
 
 /mob/living/carbon/human/proc/check_head_coverage()

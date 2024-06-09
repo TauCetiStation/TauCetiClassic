@@ -96,7 +96,7 @@
 			if(S.implanted)
 				S.meltdown()
 		START_PROCESSING(SSobj, src)
-		to_chat(M, "НаноТрейзен - лучшая корпорация во всей Вселенной!")
+		to_chat(M, "<span class='italics'>НаноТрейзен - лучшая корпорация во всей Вселенной!</span>")
 
 /obj/item/weapon/implant/mind_protect/loyalty/process()
 	if (!implanted || !imp_in)
@@ -108,10 +108,10 @@
 	if(prob(1) && prob(25))//1/400
 		switch(rand(1, 4))
 			if(1)
-				to_chat(imp_in, "\italic Вы [pick("уверены", "считаете", "убеждены")], что НаноТрейзен - лучшая корпорация во всей Вселенной!")
+				to_chat(imp_in, "<span class='italics'>Вы [pick("уверены", "считаете", "убеждены")], что НаноТрейзен - лучшая корпорация во всей Вселенной!</span>")
 			if(2)
-				to_chat(imp_in, "\italic Вы [pick("уверены", "считаете", "убеждены")], что Капитан - величайший человек, который когда-либо жил!")
+				to_chat(imp_in, "<span class='italics'>Вы [pick("уверены", "считаете", "убеждены")], что Капитан - величайший человек, который когда-либо жил!</span>")
 			if(3)
-				to_chat(imp_in, "\italic Вы готовы отдать свою жизнь во славу НаноТрейзен!")
+				to_chat(imp_in, "<span class='italics'>Вы готовы отдать свою жизнь во славу НаноТрейзен!</span>")
 			if(4)
-				to_chat(imp_in, "\italic Вы уверены в том, что все действия НаноТрейзен приведут к всеобщему благу!")
+				to_chat(imp_in, "<span class='italics'>Вы уверены в том, что все действия НаноТрейзен приведут к всеобщему благу!</span>")

@@ -396,44 +396,29 @@
  */
 /mob/proc/blurEyes(amount)
 	if(amount > 0)
-		eye_blurry = max(amount, eye_blurry)
-	update_eye_blur()
+		update_eye_blur(max(amount, eye_blurry))
 
 /**
  * Adjust the current blurriness of the mobs vision by amount
  */
 /mob/proc/adjustBlurriness(amount)
-	eye_blurry = max(eye_blurry + amount, 0)
-	update_eye_blur()
+	update_eye_blur(max(eye_blurry + amount, 0))
 
 /**
  * Set the mobs blurriness of vision to an amount
  */
 /mob/proc/setBlurriness(amount)
-	eye_blurry = max(amount, 0)
-	update_eye_blur()
+	update_eye_blur(max(amount, 0))
 
 /**
  * Apply the blurry overlays to a mobs clients screen
  */
-/mob/proc/update_eye_blur()
-	if(!client)
-		return
+/mob/proc/update_eye_blur(value)
+	if(eye_blurry != value)
+		eye_blurry = value
 
-	if(client.prefs.eye_blur_effect)
-		var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in client.screen
-		if(eye_blurry)
-			PM.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
-			PM.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
-		else
-			PM.remove_filter("eye_blur_angular")
-			PM.remove_filter("eye_blur_gauss")
-
-	else
-		if(eye_blurry)
-			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
-		else
-			clear_fullscreen("blurry")
+		if(client)
+			client.update_plane_masters(/atom/movable/screen/plane_master/game_world)
 
 // ============================================================
 
@@ -1360,7 +1345,7 @@
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>",
 							"<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
 			vomitsound = get_sound_by_voice(src, SOUNDIN_MRIGVOMIT, SOUNDIN_FRIGVOMIT)
-			eye_blurry = max(10, eye_blurry)
+			blurEyes(10)
 			losebreath += 20
 		else
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
@@ -1499,7 +1484,7 @@
 		return
 
 	if(drunkenness >= DRUNKENNESS_BLUR)
-		eye_blurry = max(eye_blurry, 2)
+		blurEyes(2)
 		heal_mod = 8.0
 
 	if(drunkenness >= DRUNKENNESS_SLUR)

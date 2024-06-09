@@ -1,7 +1,7 @@
 // Areas.dm
 
 
-
+// Do not translate this area name
 // ===
 /area
 	name = "Space"
@@ -493,7 +493,7 @@ var/global/list/ghostteleportlocs = list()
 		else
 			H.AdjustStunned(1)
 			H.AdjustWeakened(1)
-		to_chat(mob, "<span class='notice'>The sudden appearance of gravity makes you fall to the floor!</span>")
+		to_chat(mob, "<span class='notice'>Внезапное появление гравитации заставляет вас упасть на пол!</span>")
 
 /proc/has_gravity(atom/AT, turf/T)
 	if(!T)

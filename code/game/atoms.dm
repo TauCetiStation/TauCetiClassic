@@ -106,7 +106,8 @@
 // /turf/atom_init
 // /turf/environment/space/atom_init
 // /mob/dead/atom_init
-// /obj/item
+// /obj/item/atom_init
+// /atom/movable/screen/atom_init
 
 // Read commentary above if you want to create:
 // /atom/movable/atom_init

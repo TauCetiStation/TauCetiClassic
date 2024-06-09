@@ -1,6 +1,6 @@
 /turf/simulated/floor/glass
 	name = "glass floor"
-	desc = "Don't jump on it, or do, I'm not your mom."
+	desc = "Магия зеркал позволяет добиться естественного освещения и красивой эстетики, абсолютно безопасным для станции способом."
 
 	floor_type = /obj/item/stack/tile/glass
 
@@ -13,7 +13,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-	underfloor_accessibility = UNDERFLOOR_VISIBLE
+	underfloor_accessibility = UNDERFLOOR_HIDDEN
 
 	var/image/environment_underlay
 
@@ -30,9 +30,19 @@
 	environment_underlay = SSenvironment.turf_image[z]
 	underlays |= environment_underlay
 
+/turf/simulated/floor/glass/make_plating()
+	ChangeTurf(/turf/simulated/floor/plating)
+
+/turf/simulated/floor/glass/proc/toggle_underfloor()
+	if(underfloor_accessibility == UNDERFLOOR_VISIBLE)
+		underfloor_accessibility = UNDERFLOOR_HIDDEN
+	else
+		underfloor_accessibility = UNDERFLOOR_VISIBLE
+
+	levelupdate()
+
 /turf/simulated/floor/glass/reinforced
 	name = "reinforced glass floor"
-	desc = "Do jump on it, it can take it."
 
 	floor_type = /obj/item/stack/tile/glass/reinforced
 
@@ -40,7 +50,6 @@
 
 /turf/simulated/floor/glass/phoron
 	name = "phoron glass floor"
-	desc = "Studies by the Nanotrasen Materials Safety Division have not yet determined if this is safe to jump on, do so at your own risk."
 
 	floor_type = /turf/simulated/floor/glass/phoron
 
@@ -48,7 +57,6 @@
 
 /turf/simulated/floor/glass/reinforced/phoron
 	name = "reinforced phoron glass floor"
-	desc = "Do jump on it, jump on it while in a mecha, it can take it."
 
 	floor_type = /turf/simulated/floor/glass/reinforced/phoron
 
