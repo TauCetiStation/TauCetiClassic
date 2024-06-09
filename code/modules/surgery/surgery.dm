@@ -140,11 +140,13 @@
 	if(ishuman(M))
 		covered = get_human_covering(M)
 
-	var/skillcheck = /datum/skill/surgery
-	if(M.species.flags[IS_SYNTHETIC])
-		skillcheck = /datum/skill/engineering
+	var/skillcheck = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[IS_SYNTHETIC])
+			skillcheck = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
-	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, list(skillcheck = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
+	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, skillcheck, "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
 		return
 
 	for(var/datum/surgery_step/S in surgery_steps)
