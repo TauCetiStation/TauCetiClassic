@@ -7,34 +7,36 @@ import { CrewManifest } from "./common/CrewManifest";
 
 export const ComputerCard = (props, context) => {
   const { act, data } = useBackend(context);
-  const [mode, setMode] = useLocalState(context, 'mode', 0);
+  const [mode, setMode] = useLocalState(context, 'mode', data.mode);
+  const ChangeMode = (mode) => {
+    setMode(mode);
+    act("mode", { mode });
+  };
+
+  if (mode !== data.mode) {
+    setMode(data.mode);
+  }
+
   let menuBlock = (
     <Tabs>
       <Tabs.Tab
         icon="id-card"
-        selected={data.mode && mode === 0}
-        onClick={() => {
-          act("mode", { mode: 0 });
-          setMode(0);
-        }}>
+        selected={mode === 0}
+        onClick={() => ChangeMode(0)}>
         Access Modification
       </Tabs.Tab>
       <Tabs.Tab
         icon="folder-open"
-        selected={data.mode && mode === 1}
-        onClick={() => {
-          act("mode", { mode: 1 });
-          setMode(1);
-        }}>
+        selected={mode === 1}
+        onClick={() => ChangeMode(1)}>
         Crew Manifest
       </Tabs.Tab>
       <Tabs.Tab
         icon="scroll"
-        selected={data.mode && mode === 2}
+        selected={mode === 2}
         onClick={() => {
           act("print");
-          act("mode", { mode: 2 });
-          setMode(2);
+          ChangeMode(2);
         }}>
         Print
       </Tabs.Tab>
@@ -79,7 +81,7 @@ export const ComputerCard = (props, context) => {
   );
 
   let bodyBlock;
-  switch (data.mode && mode) {
+  switch (mode) {
     case 0: // Access Modification
       if (!data.authenticated || !data.scan_name) {
         bodyBlock = (
