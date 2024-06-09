@@ -12,7 +12,7 @@
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null		//card that gives access to this console
 	var/obj/item/weapon/card/id/modify = null	//the card we will change
-	var/mode = 0
+	var/mode = IDCOMPUTER_SCREEN_ACCESS
 	var/printing = null
 	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_PRO)
@@ -265,7 +265,10 @@
 					else
 						to_chat(usr, "<span class='warning'> Account with such number does not exist!</span>")
 		if ("mode")
-			mode = text2num(params["mode"])
+			var/static/list/valid_modes = list(IDCOMPUTER_SCREEN_ACCESS, IDCOMPUTER_SCREEN_MANIFEST, IDCOMPUTER_SCREEN_PRINT)
+			var/new_mode = text2num(params["mode"])
+			if(new_mode in valid_modes)
+				mode = new_mode
 		if ("print")
 			if (!printing)
 				printing = 1
