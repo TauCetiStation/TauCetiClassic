@@ -76,12 +76,10 @@
 
 	if(vision_for_dead || stat != DEAD)
 		if(blinded)
-			throw_alert("blind", /atom/movable/screen/alert/blind)
 			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		else if(is_vision_obstructed() && !(XRAY in mutations))
 			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		else
-			clear_alert("blind")
 			clear_fullscreen("blind", 0)
 		if(machine)
 			if (!(machine.check_eye(src)))
