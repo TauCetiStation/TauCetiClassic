@@ -13,6 +13,7 @@
 		chambered.loc = get_turf(src)//Eject casing
 		chambered.SpinAnimation(5, 1)
 		chambered = null
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
 	update_icon()
 
 /obj/item/weapon/gun/projectile/grenade_launcher/proc/try_chambering(obj/item/I, mob/user)
@@ -24,6 +25,7 @@
 		playsound(src, 'sound/weapons/guns/reload_m79.ogg', VOL_EFFECTS_MASTER)
 		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 		chambered = AC
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
 		update_icon()	//I.E. fix the desc
 		I.update_icon()
 

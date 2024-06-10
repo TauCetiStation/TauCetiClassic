@@ -7,7 +7,7 @@
 	origin_tech = "combat=3;magnets=2"
 	can_be_holstered = TRUE
 	modifystate = 2
-	flags_gun_features = "have_ammobar"
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
 	..()
@@ -67,6 +67,7 @@
 	if((power_supply.charge / power_supply.maxcharge) != 1)
 		if(!failcheck())	return 0
 		power_supply.give(100)
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
 		update_icon()
 	return 1
 

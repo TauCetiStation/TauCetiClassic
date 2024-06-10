@@ -10,7 +10,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 	slot_flags = SLOT_FLAGS_BACK
 	can_be_holstered = FALSE
-	flags_gun_features = "have_ammobar"
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 /obj/item/weapon/gun/energy/laser/atom_init()
 	. = ..()
@@ -35,6 +35,7 @@
 
 /obj/item/weapon/gun/energy/laser/selfcharging/proc/update_selfrecharger_icon()
 	SIGNAL_HANDLER
+	SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
 	update_icon()
 
 /obj/item/weapon/gun/energy/laser/selfcharging/Destroy()

@@ -13,7 +13,6 @@
 	can_be_holstered = FALSE
 	two_hand_weapon = ONLY_TWOHAND
 	var/bolt_open = FALSE
-	two_hand_weapon = TRUE
 
 /obj/item/weapon/gun/projectile/heavyrifle/update_icon()
 	icon_state = "[initial(icon_state)][bolt_open ? "-open" : ""]"

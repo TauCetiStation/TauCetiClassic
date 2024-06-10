@@ -39,13 +39,18 @@
 	var/fire_delay = 6
 	var/last_fired = 0
 	var/two_hand_weapon = FALSE
-	var/flags_gun_features = "have_ammobar"
+	var/feature_flags = WEAPON_HAVE_AMMOBAR // TODO: Refactor to add two handed weapon logic instead of bool/string var
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
 /datum/action/item_action/hands_free/switch_gun
 	name = "Switch Gun"
+
+/obj/item/weapon/gun/atom_init()
+	. = ..()
+	if(feature_flags & WEAPON_HAVE_AMMOBAR)
+		AddComponent(/datum/component/weapon_ammo_bar)
 
 /obj/item/weapon/gun/examine(mob/user)
 	..()
@@ -191,6 +196,7 @@
 	else
 		shoot_with_empty_chamber(user)
 	process_chamber()
+	SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
 	update_icon()
 	update_inv_mob()
 

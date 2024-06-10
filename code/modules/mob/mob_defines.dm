@@ -38,8 +38,7 @@
 	var/atom/movable/screen/neurotoxin_icon = null
 	var/atom/movable/screen/healthdoll = null
 	var/atom/movable/screen/nutrition_icon = null
-	var/list/atom/movable/screen/ammo_hud_list = list()
-	var/atom/movable/screen/ammo_hud = null
+	var/atom/movable/screen/ammo/ammo_hud = null
 
 
 	var/atom/movable/screen/pwr_display = null

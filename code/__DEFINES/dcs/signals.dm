@@ -253,6 +253,9 @@
 /// from /obj/item/weapon/stock_parts/cell
 #define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
 
+/// from /obj/item/weapon/gun
+#define COSMIG_GUN_AMMO_CHANGED "gun_ammo_changed"
+
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
 #define COMSIG_HAND_IS "hand_is"

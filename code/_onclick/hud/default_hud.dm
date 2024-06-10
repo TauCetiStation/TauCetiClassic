@@ -6,8 +6,7 @@
 		/atom/movable/screen/complex/act_intent,
 		/atom/movable/screen/move_intent,
 		/atom/movable/screen/zone_sel,
-		/atom/movable/screen/pull,
-		/atom/movable/screen/ammo,
+		/atom/movable/screen/pull
 	))
 
 	if(add_health)

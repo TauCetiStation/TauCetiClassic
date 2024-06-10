@@ -113,5 +113,5 @@
 #define MOVESET_QUALITY "moveset_quality"
 
 //Weapon flags (shows ammo and etc.)
-#define HAVE_AMMOBAR "have_ammobar"
+#define WEAPON_HAVE_AMMOBAR (1<<0)
 

@@ -9,7 +9,7 @@
 	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 	modifystate = 0
-	flags_gun_features = "have_ammobar"
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	if(severity <= 2)

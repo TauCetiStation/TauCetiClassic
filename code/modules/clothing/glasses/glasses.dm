@@ -276,6 +276,17 @@
 	icon_state = "sunhud"
 	hud_types = list(DATA_HUD_SECURITY)
 
+/obj/item/clothing/glasses/sunglasses/hud/sechud/equipped(mob/user, slot)
+	if(slot == SLOT_GLASSES && user.hud_used)
+		user.hud_used.init_screen(/atom/movable/screen/ammo)
+		user.ammo_hud?.update_icon(user)
+	..()
+
+/obj/item/clothing/glasses/sunglasses/hud/sechud/dropped(mob/user)
+	if(user.hud_used && user.ammo_hud)
+		user.ammo_hud.remove_from_hud(user.hud_used)
+	..()
+
 /obj/item/clothing/glasses/hud/hos_aug
 	name = "augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."

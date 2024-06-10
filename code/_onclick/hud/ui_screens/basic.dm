@@ -133,54 +133,77 @@
 	hud.mymob.nutrition_icon = src
 
 //Show ammo
-#define AMMO_HUD_ICON_NORMAL 1
-#define AMMO_HUD_ICON_EMPTY 2
+#define AMMO_HUD_TYPE_NONE 1
+#define AMMO_HUD_TYPE_RIFLE 2
+#define AMMO_HUD_TYPE_ENERGY 3
+#define AMMO_HUD_TYPE_PLASMA 4
 
 /atom/movable/screen/ammo
 	name = "ammo"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "ammo"
 	screen_loc = ui_ammohud
-	var/warned = FALSE // shows out of ammo
-	var/atom/movable/flash_holder
 	copy_flags = NONE
 
 /atom/movable/screen/ammo/add_to_hud(datum/hud/hud)
-	flash_holder = new
-	flash_holder.icon_state = "frame"
-	flash_holder.icon = icon
-
-	var/mob/mymob = hud.mymob
 	..()
 	update_icon(hud.mymob)
-	hud.mymob.ammo_hud += src
+	hud.mymob.ammo_hud = src
 
-	if(!mymob.client)
-		return
+/atom/movable/screen/ammo/remove_from_hud(datum/hud/hud)
+	. = ..()
+	hud.mymob.ammo_hud = null
 
-	var/obj/item/weapon/gun/G = mymob.get_active_hand()
-
-	if((G.flags_gun_features & HAVE_AMMOBAR))
-		mymob.client.screen += src
-
-	if(!istype(G) || !(G.flags_gun_features & HAVE_AMMOBAR) || !G.get_ammo_type() || isnull(G.get_ammo_count()))
-		mymob.client.screen -= src
-
-/atom/movable/screen/ammo/update_icon(mob/living/user, list/ammo_type, rounds)
+/atom/movable/screen/ammo/update_icon(mob/living/user)
 	overlays.Cut()
 
-	if(rounds <= 0)
-		overlays += image('icons/hud/screen_gen.dmi', src, "o0")
-		var/image/empty_state = image('icons/hud/screen_gen.dmi', src, ammo_type[AMMO_HUD_ICON_EMPTY])
-		overlays += empty_state
-		if(warned)
-			return
-		warned = TRUE
-		flick("[ammo_type[AMMO_HUD_ICON_EMPTY]]_flash", flash_holder)
+	// Setting frame
+
+	var/rounds = 0
+
+	var/ammo_type = AMMO_HUD_TYPE_NONE
+
+	var/obj/item/weapon/gun/gun = user.get_active_hand()
+	if(istype(gun) && (gun.feature_flags & WEAPON_HAVE_AMMOBAR))
+		if(istype(gun, /obj/item/weapon/gun/projectile))
+			ammo_type = AMMO_HUD_TYPE_RIFLE
+			var/obj/item/weapon/gun/projectile/projectile_gun = gun
+			rounds = projectile_gun.get_ammo()
+		else
+			var/obj/item/weapon/stock_parts/cell/found_cell = null
+			if(istype(gun, /obj/item/weapon/gun/energy))
+				ammo_type = AMMO_HUD_TYPE_ENERGY
+				var/obj/item/weapon/gun/energy/energy_gun = gun
+				found_cell = energy_gun.power_supply
+			if(istype(gun, /obj/item/weapon/gun/plasma))
+				ammo_type = AMMO_HUD_TYPE_PLASMA
+				var/obj/item/weapon/gun/plasma/plasma_gun = gun
+				found_cell = plasma_gun.magazine?.power_supply
+			if(found_cell)
+				rounds = round(999 * (found_cell.charge / found_cell.maxcharge))
+	else
 		return
 
-	warned = FALSE
-	overlays += image('icons/hud/screen_gen.dmi', src, "[ammo_type[AMMO_HUD_ICON_NORMAL]]")
+	overlays += image('icons/hud/screen_gen.dmi', src, "ammo")
+
+	if(rounds <= 0)
+		overlays += image('icons/hud/screen_gen.dmi', src, "o0_flash")
+		switch(ammo_type)
+			if(AMMO_HUD_TYPE_NONE)
+				overlays += image('icons/hud/screen_gen.dmi', src, "empty_flash")
+			if(AMMO_HUD_TYPE_RIFLE)
+				overlays += image('icons/hud/screen_gen.dmi', src, "rifle_empty")
+			else
+				overlays += image('icons/hud/screen_gen.dmi', src, "battery_empty_flash")
+		return
+
+	switch(ammo_type)
+		if(AMMO_HUD_TYPE_RIFLE)
+			overlays += image('icons/hud/screen_gen.dmi', src, "rifle")
+		if(AMMO_HUD_TYPE_ENERGY)
+			overlays += image('icons/hud/screen_gen.dmi', src, "laser")
+		if(AMMO_HUD_TYPE_PLASMA)
+			overlays += image('icons/hud/screen_gen.dmi', src, "plasma")
 
 	rounds = num2text(rounds)
 
@@ -200,24 +223,11 @@
 			overlays += image('icons/hud/screen_gen.dmi', src, "t9")
 			overlays += image('icons/hud/screen_gen.dmi', src, "h9")
 
-#undef AMMO_HUD_ICON_NORMAL
-#undef AMMO_HUD_ICON_EMPTY
-	//Handle the amount of rounds
-	switch(length(rounds))
-		if(1)
-			overlays += image('icons/hud/screen_gen.dmi', src, "o[rounds[1]]")
-		if(2)
-			overlays += image('icons/hud/screen_gen.dmi', src, "o[rounds[2]]")
-			overlays += image('icons/hud/screen_gen.dmi', src, "t[rounds[1]]")
-		if(3)
-			overlays += image('icons/hud/screen_gen.dmi', src, "o[rounds[3]]")
-			overlays += image('icons/hud/screen_gen.dmi', src, "t[rounds[2]]")
-			overlays += image('icons/hud/screen_gen.dmi', src, "h[rounds[1]]")
-		else //"0" is still length 1 so this means it's over 999
-			overlays += image('icons/hud/screen_gen.dmi', src, "o9")
-			overlays += image('icons/hud/screen_gen.dmi', src, "t9")
-			overlays += image('icons/hud/screen_gen.dmi', src, "h9")
 
+#undef AMMO_HUD_TYPE_NONE
+#undef AMMO_HUD_TYPE_RIFLE
+#undef AMMO_HUD_TYPE_ENERGY
+#undef AMMO_HUD_TYPE_PLASMA
 
 // Gun screens
 /atom/movable/screen/gun

@@ -8,7 +8,7 @@
 	cell_type = /obj/item/weapon/stock_parts/cell/super
 	var/mode = 2
 	fire_delay = 10
-	flags_gun_features = "have_ammobar"
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 /obj/item/weapon/gun/energy/pulse_rifle/cyborg/newshot()
 	if(isrobot(src.loc))
