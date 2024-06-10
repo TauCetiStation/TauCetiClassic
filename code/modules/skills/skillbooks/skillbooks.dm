@@ -144,7 +144,7 @@
 		/datum/skill/medical = SKILL_LEVEL_NOVICE,
 		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
 		/datum/skill/construction = SKILL_LEVEL_NOVICE,
-		/datum/skill/engineering = SKILL_LEVEL_NOVICE,
+		/datum/skill/engineering = SKILL_LEVEL_TRAINED,
 		/datum/skill/chemistry = SKILL_LEVEL_NOVICE,
 	)
 
