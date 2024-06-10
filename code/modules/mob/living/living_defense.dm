@@ -254,7 +254,6 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	LAZY_INIT_INDEX_LIST(fire_stack_list, list(0,0))
 	if(count_fire_stacks() > 0 && !on_fire)
 		on_fire = TRUE
 		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
@@ -277,11 +276,12 @@
 		update_fire()
 
 /mob/living/proc/set_fire_stacks(amount, fire_type = null)
-	LAZY_INIT_INDEX_LIST(fire_stack_list, list(0,0))
 	if(!fire_type)
 		for(var/i in 1 to EXISTED_FIRE_TYPES)
+			LAZY_ASSOC_LIST_INIT(fire_stack_list, i)
 			fire_stack_list[i] = amount
 	else
+		LAZY_ASSOC_LIST_INIT(fire_stack_list, fire_type)
 		fire_stack_list[fire_type] = amount
 	if(count_fire_stacks() > 0)
 		update_fire()
@@ -290,26 +290,27 @@
 		ExtinguishMob()
 
 /mob/living/proc/count_fire_stacks()
-	LAZY_INIT_INDEX_LIST(fire_stack_list, list(0,0))
 	var/amount = 0
 	for(var/i in 1 to EXISTED_FIRE_TYPES)
+		LAZY_ASSOC_LIST_INIT(fire_stack_list, i)
 		amount += fire_stack_list[i]
 	return amount
 
 /mob/living/proc/count_red_fire_stacks()
-	LAZY_INIT_INDEX_LIST(fire_stack_list, list(0,0))
+	LAZY_ASSOC_LIST_INIT(fire_stack_list, RED_FIRE)
 	return fire_stack_list[RED_FIRE]
 
 /mob/living/proc/count_acid_fire_stacks()
-	LAZY_INIT_INDEX_LIST(fire_stack_list, list(0,0))
+	LAZY_ASSOC_LIST_INIT(fire_stack_list, ACID_FIRE)
 	return fire_stack_list[ACID_FIRE]
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks, fire_type = null) //Adjusting the amount of fire_stacks we have on person
-	LAZY_INIT_INDEX_LIST(fire_stack_list, list(0,0))
 	if(!fire_type)
 		for(var/i in 1 to EXISTED_FIRE_TYPES)
+			LAZY_ASSOC_LIST_INIT(fire_stack_list, i)
 			fire_stack_list[i] = clamp(fire_stack_list[i] + add_fire_stacks, MIN_FIRE_STACKS, MAX_FIRE_STACKS)
 	else
+		LAZY_ASSOC_LIST_INIT(fire_stack_list, fire_type)
 		fire_stack_list[fire_type] = clamp(fire_stack_list[fire_type] + add_fire_stacks, MIN_FIRE_STACKS, MAX_FIRE_STACKS)
 	if(count_fire_stacks() > 0)
 		update_fire()
