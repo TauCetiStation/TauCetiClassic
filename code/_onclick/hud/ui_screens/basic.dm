@@ -166,7 +166,7 @@
 	if(!istype(G) || !(G.flags_gun_features & HAVE_AMMOBAR) || !G.get_ammo_type() || isnull(G.get_ammo_count()))
 		mymob.client.screen -= src
 
-/atom/movable/screen/ammo/proc/update_hud(mob/living/user, list/ammo_type, rounds)
+/atom/movable/screen/ammo/update_icon(mob/living/user, list/ammo_type, rounds)
 	overlays.Cut()
 
 	if(rounds <= 0)

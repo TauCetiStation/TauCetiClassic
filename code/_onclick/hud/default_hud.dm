@@ -7,6 +7,7 @@
 		/atom/movable/screen/move_intent,
 		/atom/movable/screen/zone_sel,
 		/atom/movable/screen/pull,
+		/atom/movable/screen/ammo,
 	))
 
 	if(add_health)
