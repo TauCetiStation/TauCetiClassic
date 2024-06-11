@@ -282,8 +282,8 @@
 		user.ammo_hud?.update_icon(user)
 	..()
 
-/obj/item/clothing/glasses/sunglasses/hud/sechud/dropped(mob/user, slot)
-	if(user.hud_used && user.ammo_hud && slot == SLOT_L_HAND || SLOT_R_HAND)
+/obj/item/clothing/glasses/sunglasses/hud/sechud/dropped(mob/user)
+	if(user.hud_used && user.ammo_hud)
 		user.ammo_hud.remove_from_hud(user.hud_used)
 	..()
 
