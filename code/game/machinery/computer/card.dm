@@ -39,7 +39,8 @@
 	set name = "Eject ID Card"
 	set src in oview(1)
 
-	if(!usr || usr.incapacitated() || issilicon(usr))	return
+	if(!usr || usr.incapacitated() || issilicon(usr))
+		return
 
 	if(modify)
 		if(!do_skill_checks(usr))
