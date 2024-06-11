@@ -195,6 +195,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	icon_state = "SolarcontrolA"
 
 //Hallway
+
 /area/station/hallway
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 
@@ -235,7 +236,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/hallway/secondary/entry
 	name = "Entry Shuttles Hallway"
-	cases = list("станцинженерного отделанные доки", "станцинженерного отделанных доков", "станцинженерного отделанным докам", "станцинженерного отделанные доки", "станцинженерного отделанными доками", "станцинженерного отделанных доках")
+	cases = list("коридор доков", "коридора доков", "коридору доков", "коридор доков", "коридором доков", "коридоре доков")
 	icon_state = "entry"
 
 /area/station/hallway/secondary/mine_sci_shuttle
@@ -285,7 +286,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/bridge/comms
 	name = "Communications Relay"
-	cases = list("коммуникацинженерного отделанное реле", "коммуникацинженерного отделанного реле", "коммуникацинженерного отделанному реле", "коммуникацинженерного отделанное реле", "коммуникацинженерного отделанным реле", "коммуникацинженерного отделанной реле")
+	cases = list("коммуникационное отделанное реле", "коммуникационного отделанного реле", "коммуникационному отделанному реле", "коммуникационное отделанное реле", "коммуникационным отделанным реле", "коммуникационном отделанном реле")
 	icon_state = "tcomsatcham"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
@@ -400,7 +401,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/library
 	name = "Library"
-	cases = list("библинженерного отделатека", "библинженерного отделатеки", "библинженерного отделатеке", "библинженерного отделатека", "библинженерного отделатекой", "библинженерного отделатеке")
+	cases = list("библиотека", "библиотеки", "библиотеке", "библиотека", "библиотекой", "библиотеке")
 	icon_state = "library"
 
 /area/station/civilian/chapel
@@ -597,13 +598,13 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/medical/surgery
 	name = "Operating Theatre 1"
-	cases = list("операцинженерного отделанная №1", "операцинженерного отделанной №1", "операцинженерного отделанной №1", "операцинженерного отделанная №1", "операцинженерного отделанной №1", "операцинженерного отделанной №1")
+	cases = list("операционная №1", "операционной №1", "операционной №1", "операционная №1", "операционной №1", "операционной №1")
 	icon_state = "surgery"
 	ambience = list('sound/ambience/surgery_1.ogg', 'sound/ambience/surgery_2.ogg')
 
 /area/station/medical/surgery2
 	name = "Operating Theatre 2"
-	cases = list("операцинженерного отделанная №2", "операцинженерного отделанной №2", "операцинженерного отделанной №2", "операцинженерного отделанная №2", "операцинженерного отделанной №2", "операцинженерного отделанной №2")
+	cases = list("операционная №2", "операционной №2", "операционной №2", "операционная №2", "операционной №2", "операционной №2")
 	icon_state = "surgery"
 
 /area/station/medical/surgeryobs
@@ -613,7 +614,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/medical/cryo
 	name = "Cryogenics"
-	cases = list("кринженерного отделагенные камеры", "кринженерного отделагенных камер", "кринженерного отделагенным камерам", "кринженерного отделагенные камеры", "кринженерного отделагенными камерами", "кринженерного отделагенных камерах")
+	cases = list("криогенные камеры", "криогенных камерах", "криогенным камерам", "криогенные камеры", "криогенными камерами", "криогенных камерах")
 	icon_state = "cryo"
 
 /area/station/medical/genetics
@@ -803,7 +804,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/rnd/xenobiology
 	name = "Xenobiology Lab"
-	cases = list("ксенобинженерного отделалогия", "ксенобинженерного отделалогии", "ксенобинженерного отделалогии", "ксенобинженерного отделалогия", "ксенобинженерного отделалогией", "ксенобинженерного отделалогии")
+	cases = list("ксенобиологии", "ксенобиологии", "ксенобиология", "ксенобиологией", "ксенобиологии")
 	icon_state = "scixeno"
 
 /area/station/rnd/storage

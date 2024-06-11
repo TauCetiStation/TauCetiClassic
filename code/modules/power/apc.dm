@@ -83,7 +83,8 @@
 
 /obj/machinery/power/apc
 	name = "area power controller"
-	desc = "A control terminal for the area electrical systems."
+	cases = list("электрический щит", "электрического щита", "электрическому щиту", "электрический щит", "электрическим щитом", "электрическом щите")
+	desc = "Устройство для распределения электроэнергии между потребителями в области."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "apc0"
 	anchored = TRUE
@@ -166,6 +167,10 @@
 		opened = APC_COVER_OPENED
 		operating = 0
 		name = "[area.name] APC"
+		for(var/i in 1 to length(cases))
+			cases[i] = cases[i] + " [CASE(area, GENITIVE_CASE)]"
+		// for(var/i in cases)
+			// cases[cases.Find(case)] = case + " [CASE(area, GENITIVE_CASE)]"
 		stat |= MAINT
 		update_icon()
 		addtimer(CALLBACK(src, PROC_REF(update)), 5)
@@ -216,9 +221,13 @@
 	if(isarea(A) && src.areastring == null)
 		src.area = A
 		name = "[area.name] APC"
+		for(var/i in 1 to length(cases))
+			cases[i] = cases[i] + " [CASE(area, GENITIVE_CASE)]"
 	else
 		src.area = get_area_by_name(areastring)
 		name = "[area.name] APC"
+		for(var/i in 1 to length(cases))
+			cases[i] = cases[i] + " [CASE(area, GENITIVE_CASE)]"
 	area.apc = src
 	update_icon()
 
@@ -230,24 +239,24 @@
 	..()
 	if (in_range(user, src))
 		if(stat & BROKEN)
-			to_chat(user, "Looks broken.")
+			to_chat(user, "Похоже, не работает.")
 			return
 		if(opened != APC_COVER_CLOSED)
 			if(has_electronics && terminal)
-				to_chat(user, "The cover is [opened == APC_COVER_REMOVED ? "removed" : "open"] and the power cell is [ cell ? "installed" : "missing"].")
+				to_chat(user, "Крышка [opened == APC_COVER_REMOVED ? "снята" : "открыта"] и [ cell ? "установлен" : "извлечён"] аккумулятор.")
 			else if(!has_electronics && terminal)
-				to_chat(user, "There are some wires but no any electronics.")
+				to_chat(user, "Проводка подключена, но не хватает платы.")
 			else if(has_electronics && !terminal)
-				to_chat(user, "Electronics installed but not wired.")
+				to_chat(user, "Плата установлена, но проводка не подключена.")
 			else
-				to_chat(user, "There is no electronics nor connected wires.")
+				to_chat(user, "Не хватает платы и проводки.")
 		else
 			if(stat & MAINT)
-				to_chat(user, "The cover is closed. Something wrong with it: it doesn't work.")
+				to_chat(user, "Крышка закрыта, но, похоже, щиток сломан.")
 			else if(malfhack)
-				to_chat(user, "The cover is broken. It may be hard to force it open.")
+				to_chat(user, "Крышка помята и не поддаётся.")
 			else
-				to_chat(user, "The cover is closed.")
+				to_chat(user, "Крышка закрыта.")
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
@@ -417,24 +426,24 @@
 	if(isprying(W) && opened != APC_COVER_CLOSED)
 		if(has_electronics == 1)
 			if(terminal)
-				to_chat(user, "<span class='warning'>Disconnect wires first.</span>")
+				to_chat(user, "<span class='warning'>Отключите щиток от питания.</span>")
 				return
 			if(user.is_busy(src))
 				return
-			to_chat(user, "You are trying to remove the power control board...") // lpeters - fixed grammar issues
+			to_chat(user, "Вы пытаетесь извлечь плату...") // lpeters - fixed grammar issues
 			if(W.use_tool(src, user, 50, volume = 50))
 				has_electronics = 0
 				area.poweralert(FALSE, src)
 				if((stat & BROKEN) || malfhack)
 					user.visible_message(\
-						"<span class='warning'>[user.name] has broken the power control board inside [src.name]!</span>",\
-						"You broke the charred power control board and remove the remains.",
-						"You hear a crack!")
+						"<span class='warning'>[user.name] отломал плату в [CASE(src, PREPOSITIONAL_CASE)]!</span>",\
+						"Вы отломали сгоревшую плату и извлекли её остатки.",
+						"Что-то треснуло!")
 					//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 				else
 					user.visible_message(\
-						"<span class='warning'>[user.name] has removed the power control board from [src.name]!</span>",\
-						"You remove the power control board.")
+						"<span class='warning'>[user.name] извлёк плату из [CASE(src, GENITIVE_CASE)]!</span>",\
+						"Вы извлекли плату.")
 					new /obj/item/weapon/module/power_control(loc)
 		else if(opened != APC_COVER_REMOVED) // cover isn't removed
 			opened = APC_COVER_CLOSED
@@ -442,19 +451,19 @@
 
 	else if(isprying(W) && opened == APC_COVER_CLOSED)
 		if(stat & BROKEN)
-			user.visible_message("<span class='warning'>[user.name] try open [src.name] cover.</span>", "<span class='notice'>You try open [src.name] cover.</span>")
+			user.visible_message("<span class='warning'>[user.name] пытается открыть крышку [CASE(src, GENITIVE_CASE)].</span>", "<span class='notice'>Вы пытаетесь открыть крышку [CASE(src, GENITIVE_CASE)].</span>")
 			if(W.use_tool(src, user, 25, volume = 25))
 				opened = APC_COVER_OPENED
 				locked = FALSE
 				if(cell)
-					to_chat(user, "<span class='notice'>Power cell from [src.name] is dropped</span>")
+					to_chat(user, "<span class='notice'>Из [CASE(src, GENITIVE_CASE)] выпал аккумулятор.</span>")
 					cell.forceMove(user.loc)
 					cell = null
 				update_icon()
 
 		else if(!(stat & BROKEN) || !malfhack)
 			if(coverlocked && !(stat & MAINT))
-				to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
+				to_chat(user, "<span class='warning'>Крышка [CASE(src, GENITIVE_CASE)] заблокирована.</span>")
 				return
 			else
 				opened = APC_COVER_OPENED
@@ -462,81 +471,81 @@
 
 	else if(iswrenching(W) && opened != APC_COVER_CLOSED && (stat & BROKEN))
 		if(coverlocked)
-			to_chat(user, "<span class='notice'>Remove security APC bolts.</span>")
+			to_chat(user, "<span class='notice'>Вы откручиваете защитные болты.</span>")
 			if(W.use_tool(src, user, 5, volume = 5))
 				coverlocked = FALSE
 				update_icon()
 		else
-			to_chat(user, "<span class='warning'>APC bolts alredy removed.</span>")
+			to_chat(user, "<span class='warning'>Защитные болты уже откручены.</span>")
 
 	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened != APC_COVER_CLOSED) // trying to put a cell inside
 		if(cell)
-			to_chat(user, "There is a power cell already installed.")
+			to_chat(user, "В [CASE(src, PREPOSITIONAL_CASE)] уже есть аккумулятор.")
 			return
 		else
 			if(stat & MAINT)
-				to_chat(user, "<span class='warning'>There is no connector for your power cell.</span>")
+				to_chat(user, "<span class='warning'>В [CASE(src, PREPOSITIONAL_CASE)] отсутствует разъём для аккумулятора.</span>")
 				return
 			user.drop_from_inventory(W, src)
 			cell = W
 			user.visible_message(\
-				"<span class='warning'>[user.name] has inserted the power cell to [src.name]!</span>",\
-				"You insert the power cell.")
+				"<span class='warning'>[user.name] установил[VERB_RU(user)] аккумулятор в [CASE(src, ACCUSATIVE_CASE)]!</span>",\
+				"Вы устанавливаете аккумулятор в [CASE(src, ACCUSATIVE_CASE)].")
 			chargecount = 0
 			update_icon()
 
 	else if	(isscrewing(W)) // haxing
 		if(opened != APC_COVER_CLOSED)
 			if(cell)
-				to_chat(user, "<span class='warning'>Close the APC first.</span>") // Less hints more mystery!
+				to_chat(user, "<span class='warning'>Закройте крышку [CASE(src, GENITIVE_CASE)].</span>") // Less hints more mystery!
 				return
 			else
 				if(has_electronics == 1 && terminal)
 					has_electronics = 2
 					stat &= ~MAINT
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-					to_chat(user, "You screw the circuit electronics into place.")
+					to_chat(user, "Вы прикручиваете плату.")
 				else if(has_electronics == 2)
 					has_electronics = 1
 					stat |= MAINT
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-					to_chat(user, "You unfasten the electronics.")
+					to_chat(user, "Вы откручиваете плату.")
 				else // has_electronics == 0
-					to_chat(user, "<span class='warning'>There is nothing to secure.</span>")
+					to_chat(user, "<span class='warning'>Нечего прикручивать.</span>")
 					return
 				update_icon()
 
 		else if(emagged)
-			to_chat(user, "The interface is broken.")
+			to_chat(user, "Терминал сломан.")
 		else if(!(stat & BROKEN))
 			wiresexposed = !wiresexposed
-			to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
+			to_chat(user, "Провода [wiresexposed ? "извлечены" : "вложены"]")
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda)) // trying to unlock the interface with an ID card
 		if(emagged)
-			to_chat(user, "The interface is broken.")
+			to_chat(user, "Терминал сломан.")
 		else if(opened != APC_COVER_CLOSED)
-			to_chat(user, "You must close the cover to swipe an ID card.")
+			to_chat(user, "Закройте крышку [CASE(src, GENITIVE_CASE)].")
 		else if(wiresexposed)
-			to_chat(user, "You must close the panel")
+			to_chat(user, "Закрутите крышку [CASE(src, GENITIVE_CASE)].")
 		else if(stat & (BROKEN|MAINT))
-			to_chat(user, "Nothing happens.")
+			to_chat(user, "Ничего не происходит.")
 		else
 			if(allowed(usr) && !wires.is_index_cut(APC_WIRE_IDSCAN))
 				locked = !locked
-				to_chat(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
+				to_chat(user, "Вы [ locked ? "заблокировали" : "разблокировали"] терминал [CASE(src, GENITIVE_CASE)].")
 				update_icon()
 			else
-				to_chat(user, "<span class='warning'>Access denied.</span>")
+				to_chat(user, "<span class='warning'>Доступ запрещён.</span>")
 
 	else if(istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack)) // trying to unlock with an emag card
 		if(opened != APC_COVER_CLOSED)
-			to_chat(user, "You must close the cover to swipe an ID card.")
+			to_chat(user, "Закройте крышку [CASE(src, GENITIVE_CASE)], перед тем как провести ID картой.")
 		else if(wiresexposed)
-			to_chat(user, "You must close the panel first")
+			to_chat(user, "Закрутите крышку [CASE(src, GENITIVE_CASE)].")
 		else if(stat & (BROKEN|MAINT))
-			to_chat(user, "Nothing happens.")
+			to_chat(user, "Ничего не происходит.")
 		else
 			if(user.is_busy(src))
 				return
@@ -545,24 +554,24 @@
 				if(prob(50))
 					emagged = 1
 					locked = 0
-					to_chat(user, "You emag the APC interface.")
+					to_chat(user, "Вы взламываете терминал [CASE(src, GENITIVE_CASE)].")
 					update_icon()
 					SSticker.hacked_apcs++
 					announce_hacker()
 				else
-					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
+					to_chat(user, "Ошибка [ locked ? "разблокировки" : "блокировки"] терминала [CASE(src, GENITIVE_CASE)].")
 
 	else if(iscoil(W) && !terminal && opened != APC_COVER_CLOSED && has_electronics != 2)
 		var/turf/TT = get_turf(src)
 		if(TT.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first.</span>")
+			to_chat(user, "<span class='warning'>Вскройте пол перед [CASE(src, ABLATIVE_CASE)].</span>")
 			return
 		var/obj/item/stack/cable_coil/C = W
 		if(C.get_amount() < 10)
-			to_chat(user, "<span class='warning'>You need more wires.</span>")
+			to_chat(user, "<span class='warning'>Нужно больше проводов.</span>")
 			return
 		if(user.is_busy()) return
-		to_chat(user, "You start adding cables to the APC frame...")
+		to_chat(user, "Вы вставляете провода в [CASE(src, ACCUSATIVE_CASE)].")
 		if(C.use_tool(src, user, 20, volume = 50) && C.get_amount() >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
@@ -573,8 +582,8 @@
 				return
 			C.use(10)
 			user.visible_message(\
-				"<span class='warning'>[user.name] has added cables to the APC frame!</span>",\
-				"You add cables to the APC frame.")
+				"<span class='warning'>[user.name] подключил проводку в [CASE(src, PREPOSITIONAL_CASE)]!</span>",\
+				"Вы подключили проводку в [CASE(src, PREPOSITIONAL_CASE)].")
 			make_terminal()
 			terminal.connect_to_network()
 
@@ -583,23 +592,23 @@
 
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && !((stat & BROKEN) || malfhack))
 		if(user.is_busy()) return
-		to_chat(user, "You trying to insert the power control board into the frame...")
+		to_chat(user, "Вы пытаетесь установить плату в [CASE(src, ACCUSATIVE_CASE)]")
 		if(W.use_tool(src, user, 10, volume = 50))
 			has_electronics = 1
-			to_chat(user, "You place the power control board inside the frame.")
+			to_chat(user, "Вы устанавливаете плату в [CASE(src, ACCUSATIVE_CASE)].")
 			qdel(W)
 
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && ((stat & BROKEN) || malfhack))
-		to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>")
+		to_chat(user, "<span class='warning'>Плата не подходит из-за поломки корпуса [CASE(src, GENITIVE_CASE)].</span>")
 		return
 
 	else if(iswelding(W) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.get_fuel() < 3)
-			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 			return
-		to_chat(user, "You start welding the APC frame...")
+		to_chat(user, "Вы режете корпус [CASE(src, GENITIVE_CASE)].")
 		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
 			deconstruct(TRUE, user)
 			return
@@ -609,21 +618,21 @@
 		if(opened == APC_COVER_REMOVED)
 			opened = APC_COVER_OPENED
 		user.visible_message(\
-			"<span class='warning'>[user.name] has replaced the damaged APC frontal panel with a new one.</span>",\
-			"You replace the damaged APC frontal panel with a new one.")
+			"<span class='warning'>[user.name] заменяет сломанную крышку [CASE(src, GENITIVE_CASE)].</span>",\
+			"Вы заменили сломанную крышку [CASE(src, GENITIVE_CASE)].")
 		qdel(W)
 		update_icon()
 
 	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && ((stat & BROKEN) || malfhack))
 		if(has_electronics)
-			to_chat(user, "You cannot repair this APC until you remove the electronics still inside.")
+			to_chat(user, "Перед починкой отключите и извлеките компоненты [CASE(src, GENITIVE_CASE)].")
 			return
 		if(user.is_busy()) return
-		to_chat(user, "You begin to replace the damaged APC frame...")
+		to_chat(user, "Вы заменяете сломанный корпус [CASE(src, GENITIVE_CASE)]...")
 		if(W.use_tool(src, user, 50, volume = 50))
 			user.visible_message(\
-				"<span class='warning'>[user.name] has replaced the damaged APC frame with new one.</span>",\
-				"You replace the damaged APC frame with new one.")
+				"<span class='warning'>[user.name] заменил[VERB_RU(user)] сломанный корпус [CASE(src, GENITIVE_CASE)].</span>",\
+				"Вы заменили сломанный корпус [CASE(src, GENITIVE_CASE)].")
 			qdel(W)
 			stat &= ~BROKEN
 			malfai = null
@@ -636,9 +645,9 @@
 		if(issilicon(user))
 			return wires.interact(user)
 		user.SetNextMove(CLICK_CD_MELEE)
-		user.visible_message("<span class='warning'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", \
-			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
-			"You hear bang")
+		user.visible_message("<span class='warning'>[user.name] ударил [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)]!</span>", \
+			"<span class='warning'>Вы ударили [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)]!</span>", \
+			"Вы слышите удар.")
 		return wires.interact(user)
 	else
 		..()
@@ -650,15 +659,15 @@
 	if(!disassembled || emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
 		new /obj/item/stack/sheet/metal(loc)
 		user?.visible_message(\
-			"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
-			"You disassembled the broken APC frame.",\
-			"<span class='warning'>You hear welding.</span>")
+			"<span class='warning'>[user.name] режет [CASE(src, ACCUSATIVE_CASE)].</span>",\
+			"Вы демонтировали сломанный [CASE(src, ACCUSATIVE_CASE)].",\
+			"<span class='warning'>Вы слышите сварку.</span>")
 	else
 		new /obj/item/apc_frame(loc)
 		user?.visible_message(\
-				"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
-				"You cut the APC frame from the wall.",\
-				"<span class='warning'>You hear welding.</span>")
+				"<span class='warning'>[user.name] срезает [CASE(src, ACCUSATIVE_CASE)] со стены.</span>",\
+				"Вы демонтировали [CASE(src, ACCUSATIVE_CASE)] со стены.",\
+				"<span class='warning'>Вы слышите сварку.</span>")
 
 	..()
 
@@ -678,32 +687,32 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				to_chat(H, "<span class='warning'>The APC power currents surge eratically, damaging your chassis!</span>")
+				to_chat(H, "<span class='warning'>Скачок напряжения в [CASE(src, PREPOSITIONAL_CASE)] повреждает ваш корпус!</span>")
 				H.adjustFireLoss(10,0)
 			else if(src.cell && src.cell.charge > 500 && H.a_intent == INTENT_GRAB)
 				if(H.nutrition < C.maxcharge*0.9)
 					if(src.cell.charge)
-						to_chat(user, "<span class='notice'>You slot your fingers into the APC interface and start siphon off some of the stored charge for your own use.</span>")
+						to_chat(user, "<span class='notice'>Вы вставляете провод в разъём [CASE(src, ACCUSATIVE_CASE)], чтобы подзарядиться.</span>")
 						while(H.nutrition < C.maxcharge)
 							if(do_after(user,10,target = src) && H.a_intent == INTENT_GRAB)
 								if(!src.cell)
-									to_chat(user, "<span class='notice'>There is no cell.</span>")
+									to_chat(user, "<span class='notice'>Нет аккумулятора.</span>")
 									break
 								else if(emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted)
 									break
 								else if(H.nutrition > C.maxcharge*0.9)
-									to_chat(user, "<span class='notice'>You're fully charge.</span>")
+									to_chat(user, "<span class='notice'>Ваш аккумулятор полностью заряжен.</span>")
 									break
 								else if(src.cell.charge < src.cell.maxcharge*0.1)
-									to_chat (user, "<span class='notice'>There is not enough charge to draw from that APC.</span>")
+									to_chat (user, "<span class='notice'>Напряжение в [CASE(src, PREPOSITIONAL_CASE)] слишком мало.</span>")
 									break
 
 								else if(cell.use(500))
 									H.nutrition += C.maxcharge*0.1
-									to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
+									to_chat(user, "<span class='notice'>Зарядка. Уровень батареи: [round(100.0*H.nutrition/C.maxcharge)]%.</span>")
 
 							else
-								to_chat (user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
+								to_chat (user, "<span class='warning'>Прерывание зарядки.</span>")
 								break
 					else
 
@@ -718,7 +727,7 @@
 						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 						s.set_up(3, 1, src)
 						s.start()
-						to_chat (user, "<span class='warning'>Something wrong with that APC.</span>")
+						to_chat (user, "<span class='warning'>Что-то не так с [CASE(src, ABLATIVE_CASE)].</span>")
 						H.adjustFireLoss(10,0)
 						return
 
@@ -730,9 +739,9 @@
 					src.charging = APC_CHARGING
 
 				else
-					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
+					to_chat(user, "<span class='notice'>Ваша батарея полностью заряжена.</span>")
 			else
-				to_chat(user, "There is no charge to draw from that APC.")
+				to_chat(user, "Критически низкое напряжение в [CASE(src, PREPOSITIONAL_CASE)].")
 			return
 
 	if(usr == user && opened != APC_COVER_CLOSED && !issilicon(user) && !isobserver(user))
@@ -742,7 +751,7 @@
 			cell.updateicon()
 
 			src.cell = null
-			user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>", "You remove the power cell.")
+			user.visible_message("<span class='warning'>[user.name] извлекает аккумулятор из [CASE(src, GENITIVE_CASE)]!</span>", "Вы извлекаете аккумулятор из [CASE(src, GENITIVE_CASE)].")
 			charging = APC_NOT_CHARGING
 			update_icon()
 		return
@@ -750,7 +759,7 @@
 	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
-	to_chat(user, "You don't want to break these things");
+	to_chat(user, "Вам незачем это ломать.");
 	return
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
@@ -788,7 +797,7 @@
 /obj/machinery/power/apc/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Apc", name)
+		ui = new(user, src, "Apc", "[capitalize(CASE(src, NOMINATIVE_CASE))]")
 		ui.open()
 
 /obj/machinery/power/apc/tgui_data(mob/user)
@@ -809,7 +818,7 @@
 
 		"powerChannels" = list(
 			list(
-				"title" = "Equipment",
+				"title" = "Оборудование",
 				"powerLoad" = DisplayPower(lastused_equip),
 				"status" = equipment,
 				"topicParams" = list(
@@ -819,7 +828,7 @@
 				)
 			),
 			list(
-				"title" = "Lighting",
+				"title" = "Освещение",
 				"powerLoad" = DisplayPower(lastused_light),
 				"status" = lighting,
 				"topicParams" = list(
@@ -829,7 +838,7 @@
 				)
 			),
 			list(
-				"title" = "Environment",
+				"title" = "Жизнеобеспечение",
 				"powerLoad" = DisplayPower(lastused_environ),
 				"status" = environ,
 				"topicParams" = list(
@@ -865,7 +874,7 @@
 		    )                                                              \
 		) // No AI control or hacked by other MalfAI
 			if(!loud)
-				to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
+				to_chat(user, "<span class='warning'>Удалённый доступ отключен!</span>")
 			return FALSE
 
 	else // Human
@@ -895,11 +904,11 @@
 			. = TRUE
 		if("toggle_nightshift")
 			if(SSsmartlight.forced_admin_mode)
-				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
+				to_chat(usr, "<span class='notice'>Ничего не происходит.</span>")
 				return
 
 			if(!COOLDOWN_FINISHED(src, smartlight_switch))
-				to_chat(usr, "<span class='warning'>[src]'s smart lighting circuit breaker is still cycling!</span>")
+				to_chat(usr, "<span class='warning'>\"Умный свет\" в процессе переключения!</span>")
 				return
 
 			COOLDOWN_START(src, smartlight_switch, 4 SECONDS)
@@ -907,14 +916,14 @@
 			. = TRUE
 		if("change_smartlight")
 			if(SSsmartlight.forced_admin_mode)
-				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
+				to_chat(usr, "<span class='notice'>Ничего не происходит.</span>")
 				return
 
 			var/list/datum/light_mode/available_modes = smartlight_preset.get_user_available_modes()
-			var/mode_name = input(usr, "Please choose lighting mode.") as null|anything in available_modes
+			var/mode_name = input(usr, "Выберите режим освещения.") as null|anything in available_modes
 
 			if(!COOLDOWN_FINISHED(src, smartlight_switch))
-				to_chat(usr, "<span class='warning'>[src]'s smart lighting circuit breaker is still cycling!</span>")
+				to_chat(usr, "<span class='warning'>Системы предохранения не позволяют поставить новый режим так быстро, немного подождите.</span>")
 				return
 
 			if(mode_name)
@@ -963,9 +972,9 @@
 
 /obj/machinery/power/apc/proc/malf_hack(mob/living/silicon/ai/ai)
 	if(ai.malfhacking)
-		to_chat(ai, "<span class='warning'>You are already hacking an APC.</span>")
+		to_chat(ai, "<span class='warning'>Вы уже взламываете [CASE(src, ACCUSATIVE_CASE)].</span>")
 		return FALSE
-	to_chat(ai, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
+	to_chat(ai, "Перепрошивка платы [CASE(src, GENITIVE_CASE)] займёт немного времени. Вы не можете совершать другие действия по время перепрошивки.")
 	ai.malfhack = src
 	ai.malfhacking = TRUE
 	addtimer(CALLBACK(src, PROC_REF(malf_hack_done), ai), 600)
@@ -981,7 +990,7 @@
 			malfai = ai.parent
 		else
 			malfai = ai
-		to_chat(ai, "Hack complete. The APC is now under your exclusive control.")
+		to_chat(ai, "Взлом совершён. [CASE(src, NOMINATIVE_CASE)] под вашим личным контролем.")
 		announce_hacker()
 		update_icon()
 
@@ -1035,7 +1044,7 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				visible_message("<span class='warning'>The [src.name] suddenly lets out a blast of smoke and some sparks!</span>", blind_message = "<span class='warning'>You hear sizzling electronics.</span>")
+				visible_message("<span class='warning'>Из [CASE(src, GENITIVE_CASE)] валит сноп дыма и искр!</span>", blind_message = "<span class='warning'>Вы слышите искрение электроники.</span>")
 
 
 /obj/machinery/power/apc/surplus()
