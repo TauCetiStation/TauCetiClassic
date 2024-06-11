@@ -14,6 +14,7 @@
 	var/cover_open = FALSE //does gun cover is open
 	var/obj/item/ammo_box/magazine/magazine
 	var/has_ammo_counter = FALSE
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 /obj/item/weapon/gun/projectile/atom_init()
 	. = ..()

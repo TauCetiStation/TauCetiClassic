@@ -12,6 +12,7 @@
 	can_be_holstered = FALSE
 	feature_flags = WEAPON_HAVE_AMMOBAR
 
+
 /obj/item/weapon/gun/energy/laser/atom_init()
 	. = ..()
 	if(power_supply)

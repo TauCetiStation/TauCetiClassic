@@ -12,6 +12,7 @@
 	var/should_alarm_when_empty = FALSE
 	var/can_be_silenced = FALSE
 
+
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"

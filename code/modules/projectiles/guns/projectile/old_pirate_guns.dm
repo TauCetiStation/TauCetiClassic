@@ -5,12 +5,14 @@
 	silenced = 1
 	initial_mag = /obj/item/ammo_box/magazine/a28/nonlethal
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 /obj/item/weapon/gun/projectile/automatic/silenced/nonlethal
 	name = "Silenced pistol NL"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "silenced_pistol_nl"
 	initial_mag = /obj/item/ammo_box/magazine/silenced_pistol/nonlethal
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 /obj/item/ammo_box/magazine/a28/nonlethal
 	name = "A28 magazine (.556NL)"

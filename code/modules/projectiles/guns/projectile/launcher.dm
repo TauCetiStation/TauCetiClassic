@@ -5,6 +5,7 @@
 	initial_mag = /obj/item/ammo_box/magazine/internal/m79
 	can_be_holstered = FALSE
 	two_hand_weapon = ONLY_TWOHAND
+	feature_flags = 0
 
 /obj/item/weapon/gun/projectile/grenade_launcher/proc/unchamber()
 	playsound(src, 'sound/weapons/guns/m79_out.ogg', VOL_EFFECTS_MASTER)

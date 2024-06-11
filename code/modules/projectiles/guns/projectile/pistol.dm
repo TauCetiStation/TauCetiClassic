@@ -2,6 +2,7 @@
 	name = "pistol"
 	can_be_holstered = TRUE
 	w_class = SIZE_SMALL
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 /obj/item/weapon/gun/projectile/automatic/pistol/silenced
 	name = "silenced pistol"
@@ -96,6 +97,7 @@
 	can_be_shortened = FALSE
 	fire_sound = 'sound/weapons/guns/gunshot_derringer.ogg'
 	recoil = 2
+	feature_flags = 0
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate
 	name = "Oppressor"

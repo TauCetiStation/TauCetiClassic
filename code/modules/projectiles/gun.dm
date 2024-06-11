@@ -39,7 +39,7 @@
 	var/fire_delay = 6
 	var/last_fired = 0
 	var/two_hand_weapon = FALSE
-	var/feature_flags = WEAPON_HAVE_AMMOBAR // TODO: Refactor to add two handed weapon logic instead of bool/string var
+	var/feature_flags = 0 // TODO: Refactor to add two handed weapon logic instead of bool/string var
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'

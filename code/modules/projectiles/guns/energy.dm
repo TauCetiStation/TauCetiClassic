@@ -3,6 +3,7 @@
 	name = "energy gun"
 	desc = "A basic energy-based gun."
 	can_be_holstered = FALSE
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 	var/obj/item/weapon/stock_parts/cell/power_supply //What type of power cell this uses
 	var/cell_type = /obj/item/weapon/stock_parts/cell

@@ -70,6 +70,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	can_be_holstered = TRUE
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
+	feature_flags = 0
 	var/charge_tick = 0
 
 
