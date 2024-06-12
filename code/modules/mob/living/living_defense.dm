@@ -278,11 +278,9 @@
 /mob/living/proc/set_fire_stacks(amount, fire_type = null)
 	if(!fire_type)
 		for(var/i in global.all_fire_types)
-			LAZY_ASSOC_LIST_INIT(fire_stack_list, i)
-			fire_stack_list[i] = amount
+			LAZYSET(fire_stack_list, i, amount)
 	else
-		LAZY_ASSOC_LIST_INIT(fire_stack_list, fire_type)
-		fire_stack_list[fire_type] = amount
+		LAZYSET(fire_stack_list, fire_type, amount)
 	if(count_fire_stacks() > 0)
 		update_fire()
 		return
@@ -292,25 +290,35 @@
 /mob/living/proc/count_fire_stacks()
 	var/amount = 0
 	for(var/i in global.all_fire_types)
-		LAZY_ASSOC_LIST_INIT(fire_stack_list, i)
-		amount += fire_stack_list[i]
+		var/amount_of_type = LAZYACCESS(fire_stack_list, i)
+		if(isnull(amount_of_type))
+			amount_of_type = 0
+		amount += amount_of_type
 	return amount
 
 /mob/living/proc/count_red_fire_stacks()
-	LAZY_ASSOC_LIST_INIT(fire_stack_list, RED_FIRE)
-	return fire_stack_list[RED_FIRE]
+	. = LAZYACCESS(fire_stack_list, RED_FIRE)
+	if(isnull(.))
+		return 0
 
 /mob/living/proc/count_acid_fire_stacks()
-	LAZY_ASSOC_LIST_INIT(fire_stack_list, ACID_FIRE)
-	return fire_stack_list[ACID_FIRE]
+	. = LAZYACCESS(fire_stack_list, ACID_FIRE)
+	if(isnull(.))
+		return 0
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks, fire_type = null) //Adjusting the amount of fire_stacks we have on person
 	if(!fire_type)
 		for(var/i in global.all_fire_types)
-			LAZY_ASSOC_LIST_INIT(fire_stack_list, i)
+			if(!fire_stack_list)
+				fire_stack_list = list()
+			if(isnull(fire_stack_list[i]))
+				fire_stack_list[i] = 0
 			fire_stack_list[i] = clamp(fire_stack_list[i] + add_fire_stacks, MIN_FIRE_STACKS, MAX_FIRE_STACKS)
 	else
-		LAZY_ASSOC_LIST_INIT(fire_stack_list, fire_type)
+		if(!fire_stack_list)
+			fire_stack_list = list()
+		if(isnull(fire_stack_list[fire_type]))
+			fire_stack_list[fire_type] = 0
 		fire_stack_list[fire_type] = clamp(fire_stack_list[fire_type] + add_fire_stacks, MIN_FIRE_STACKS, MAX_FIRE_STACKS)
 	if(count_fire_stacks() > 0)
 		update_fire()

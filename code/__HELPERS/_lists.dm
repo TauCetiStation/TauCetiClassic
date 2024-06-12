@@ -852,4 +852,3 @@
 
 // Adds I to L, initalizing L if necessary, if I is not already in L
 #define LAZYDISTINCTADD(L, I) if(!L) { L = list(); } L |= I;
-#define LAZY_ASSOC_LIST_INIT(L, K) if(!L) { L = list(); L[K] = 0; }
