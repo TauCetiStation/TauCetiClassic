@@ -156,7 +156,7 @@ var/global/list/tourette_bad_words= list(
 				emote("cough")
 				return
 
-	if(HAS_TRAIT(src, NEARSIGHTED) && eye_blurry <= 10)
+	if((disabilities & NEARSIGHTED || HAS_TRAIT(src, TRAIT_NEARSIGHT)) && eye_blurry <= 8)
 		if(glasses)
 			var/obj/item/clothing/glasses/G = glasses
 			if(G.prescription)
