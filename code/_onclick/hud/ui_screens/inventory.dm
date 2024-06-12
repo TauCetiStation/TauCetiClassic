@@ -133,12 +133,8 @@
 /atom/movable/screen/inventory/surrend/action()
 	if(check_state())
 		var/mob/living/M = usr
-		switch(tgui_alert(usr, "Вы уверены?", "Сдаться?", list("Да", "Нет")))
-			if("Да")
-				M.emote("surr", intentional = TRUE)
-			else
-				return
-
+		if(tgui_alert(usr, "Вы уверены?", "Сдаться?", list("Да", "Нет")) == "Да")
+			M.emote("surr", intentional = TRUE)
 
 /atom/movable/screen/inventory/mask
 	name = "mask"
