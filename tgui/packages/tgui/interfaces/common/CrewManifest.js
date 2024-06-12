@@ -40,7 +40,7 @@ const HBC = role => {
 
 const ManifestTable = group => {
   return (
-    group.length > 0 && (
+    group > 0 && (
       <Table>
         <Table.Row header color="white">
           <Table.Cell width="50%">Name</Table.Cell>
