@@ -139,6 +139,11 @@
 	description = "Absolutely nothing."
 	taste_message = "nothing... how?"
 
+/datum/reagent/consumable/drink/nothing/on_general_digest(mob/living/M)
+	..()
+	if(HAS_TRAIT(M, TRAIT_MIMING))
+		M.heal_bodypart_damage(1, 1)
+
 /datum/reagent/consumable/drink/potato_juice
 	name = "Potato Juice"
 	id = "potato"
@@ -229,7 +234,7 @@
 	name = "Hot Chocolate"
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
-	nutriment_factor = 2
+	nutriment_factor = 1
 	color = "#403010" // rgb: 64, 48, 16
 	adj_temp = 5
 	taste_message = "chocolate"
@@ -1582,6 +1587,11 @@
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
 	taste_message = "mphhhh"
+
+/datum/reagent/consumable/ethanol/silencer/on_general_digest(mob/living/M)
+	..()
+	if(HAS_TRAIT(M, TRAIT_MIMING))
+		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/consumable/ethanol/silencer/on_general_digest(mob/living/M)
 	..()

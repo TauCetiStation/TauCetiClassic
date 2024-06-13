@@ -257,7 +257,6 @@ var/global/list/blacklisted_builds = list(
 
 	to_chat(src, "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>")
 
-
 	clients += src
 	directory[ckey] = src
 
@@ -324,11 +323,10 @@ var/global/list/blacklisted_builds = list(
 
 	connection_time = world.time
 
-	if(custom_event_msg && custom_event_msg != "")
-		to_chat(src, "<h1 class='alert'>Custom Event</h1>")
-		to_chat(src, "<h2 class='alert'>A custom event is taking place. OOC Info:</h2>")
-		to_chat(src, "<span class='alert'>[custom_event_msg]</span>")
-		to_chat(src, "<br>")
+	SSevents.custom_event_announce(src)
+
+	if(length(global.temp_player_verbs))
+		verbs |= global.temp_player_verbs
 
 	if( (world.address == address || !address) && !host )
 		host = key
@@ -771,7 +769,6 @@ var/global/list/blacklisted_builds = list(
 	if(!D?.key_bindings)
 		return
 	movement_keys = list()
-	var/list/communication_hotkeys = list()
 	for(var/key in D.key_bindings)
 		for(var/kb_name in D.key_bindings[key])
 			switch(kb_name)
@@ -783,24 +780,6 @@ var/global/list/blacklisted_builds = list(
 					movement_keys[key] = WEST
 				if("South")
 					movement_keys[key] = SOUTH
-				if("Say")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.say") // ".say" is wrapper over say, see in code\modules\mob\typing_indicator.dm
-					communication_hotkeys += key
-				if("OOC")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
-					communication_hotkeys += key
-				if("Me")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.me")
-					communication_hotkeys += key
-				if("LOOC")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=looc")
-					communication_hotkeys += key
-
-	// winget() does not work for F1 and F2
-	for(var/key in communication_hotkeys)
-		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
-			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
-			break
 
 #define MAXIMAZED  (1<<0)
 #define FULLSCREEN (1<<1)

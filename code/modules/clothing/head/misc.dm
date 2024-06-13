@@ -398,18 +398,6 @@
 	body_parts_covered = HEAD
 	flags_inv = BLOCKHAIR
 
-/obj/item/clothing/head/WAFFEN_SS_Cap
-	name = "Waffen SS Cap"
-	desc = "An officer's SS cap."
-	icon_state = "SS_cap"
-	item_state = "that"
-
-/obj/item/clothing/head/Nazi_Officer_Cap
-	name = "Nazi Officer Cap"
-	desc = "A nazi officer's cap."
-	icon_state = "officer_cap"
-	item_state = "that"
-
 /obj/item/clothing/head/orange_bandana
 	name = "orange bandana"
 	desc = "Hey, I think we're missing a hazard vest..."

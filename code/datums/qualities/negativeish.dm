@@ -36,60 +36,6 @@
 	H.health = 50
 	H.maxHealth = 50
 
-
-/datum/quality/negativeish/depression
-	name = "Depression"
-	desc = "Ты в депрессии и чувствуешь себя уныло. Так и живём."
-	requirement = "Нет."
-
-/datum/quality/negativeish/depression/add_effect(mob/living/carbon/human/H, latespawn)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "roundstart_depression", /datum/mood_event/depression)
-
-
-/datum/quality/negativeish/true_keeper
-	name = "True Keeper"
-	desc = "Ты не должен покидать бриг ЛЮБОЙ ЦЕНОЙ. Он ведь загнётся без твоего надзора!"
-	requirement = "Смотритель."
-
-	jobs_required = list(
-		"Warden",
-	)
-
-/datum/quality/negativeish/true_keeper/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
-	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
-
-/datum/quality/negativeish/true_keeper/proc/on_enter(datum/source, area/A, atom/OldLoc)
-	if(istype(A, /area/station/security))
-		SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "true_keeper_failure")
-
-/datum/quality/negativeish/true_keeper/proc/on_exit(datum/source, area/A, atom/NewLoc)
-	if(istype(A, /area/station/security))
-		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "true_keeper_failure", /datum/mood_event/true_keeper_failure)
-
-
-/datum/quality/negativeish/rts
-	name = "RTS"
-	desc = "Ты не должен покидать мостик. Ты ведь мозг станции, а мозг должен быть в самом защищенном месте."
-	requirement = "Капитан."
-
-	jobs_required = list(
-		"Captain",
-	)
-
-/datum/quality/negativeish/rts/add_effect(mob/living/carbon/human/H, latespawn)
-	RegisterSignal(H, COMSIG_ENTER_AREA, PROC_REF(on_enter))
-	RegisterSignal(H, COMSIG_EXIT_AREA, PROC_REF(on_exit))
-
-/datum/quality/negativeish/rts/proc/on_enter(datum/source, area/A, atom/OldLoc)
-	if(istype(A, /area/station/bridge))
-		SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "rts_failure")
-
-/datum/quality/negativeish/rts/proc/on_exit(datum/source, area/A, atom/NewLoc)
-	if(istype(A, /area/station/bridge))
-		SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "rts_failure", /datum/mood_event/rts_failure)
-
-
 /datum/quality/negativeish/soulless
 	name = "Soulless"
 	desc = "У тебя нет души."
@@ -234,15 +180,6 @@ var/global/list/allergen_reagents_list
 		var/reagent = pick(global.allergen_reagents_list)
 		LAZYSET(H.allergies, reagent, ALLERGY_UNDISCOVERED)
 
-
-/datum/quality/negativeish/dumb
-	name = "Dumb"
-	desc = "Ты несколько раз упал головой на тулбокс и отупел."
-	requirement = "Нет."
-
-/datum/quality/negativeish/dumb/add_effect(mob/living/carbon/human/H, latespawn)
-	H.adjustBrainLoss(rand(30, 99))
-
 /datum/quality/negativeish/trypanophobia
 	name = "Trypanophobia"
 	desc = "Ты с самого детства боишься уколов."
@@ -310,3 +247,23 @@ var/global/list/allergen_reagents_list
 
 /datum/quality/negativeish/proudandwalking/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_NO_CRAWL, QUALITY_TRAIT)
+
+/datum/quality/negativeish/awkward
+	name = "Awkward"
+	desc = "Ты слон в посудной лавке, ходячая авария, постоянно ударяешься о что-нибудь."
+	requirement = "Нет."
+
+/datum/quality/negativeish/awkward/add_effect(mob/living/carbon/human/H, latespawn)
+	H.AddElement(/datum/element/awkward)
+
+/datum/quality/negativeish/dumb
+	name = "Dumb"
+	desc = "Ты несколько раз упал головой на тулбокс и отупел."
+	requirement = "Нет."
+
+/datum/quality/negativeish/dumb/add_effect(mob/living/carbon/human/H, latespawn)
+	if(latespawn)
+		//60 for nasty airlock-bumping, make a light effect for latespawning humans
+		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, adjustBrainLoss), 50), 3 MINUTE)
+		return
+	H.adjustBrainLoss(60)

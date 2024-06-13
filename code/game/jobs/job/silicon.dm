@@ -11,6 +11,7 @@
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 	give_loadout_items = FALSE
+	flags = JOB_FLAG_NON_HUMAN
 
 /datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -37,6 +38,7 @@
 	alt_titles = list("Android", "Robot")
 	minimal_player_ingame_minutes = 1800
 	give_loadout_items = FALSE
+	flags = JOB_FLAG_NON_HUMAN
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

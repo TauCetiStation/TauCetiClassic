@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(diseases)
 		currentrun.len--
 
 		if(thing)
-			thing.process()
+			thing.process(wait * 0.1)
 		else
 			processing -= thing
 

@@ -14,7 +14,25 @@
 
 	feedback_add_details("admin_verb","DG2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/toggle_profiler()
+	set category = "Debug"
+	set name = "Toggle Profiler"
 
+	if(!check_rights(R_DEBUG))
+		return
+
+	if(tgui_alert(usr, "Be sure you know what you are doing. You want to [config.auto_profile ? "STOP": "START"] Byond Profiler?",, list("Yes","No")) != "Yes")
+		return
+
+	config.auto_profile = !config.auto_profile
+
+	if(config.auto_profile)
+		SSprofiler.StartProfiling()
+	else
+		SSprofiler.StopProfiling()
+
+	message_admins("[key_name(src)] toggled byond profiler [config.auto_profile ? "on" : "off"].")
+	log_admin("[key_name(src)] toggled byond profiler [config.auto_profile ? "on" : "off"].")
 
 /* 21st Sept 2010
 Updated by Skie -- Still not perfect but better!
@@ -384,9 +402,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		to_chat(world, "* [areatype]")
 
 /client/proc/robust_dress_shop()
-	var/list/baseoutfits = list("Naked", "As Job...")
+	var/list/baseoutfits = list("Naked", "As Job...", "As Responder...")
 	var/list/outfits = list()
-	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)
+	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job) - typesof(/datum/outfit/responders)
 
 	for(var/datum/outfit/O as anything in paths)
 		if(initial(O.name))
@@ -409,6 +427,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		dresscode = job_outfits[dresscode]
 		if(isnull(dresscode))
 			return
+
+	else if(dresscode == "As Responder...")
+		var/list/responder_paths = subtypesof(/datum/outfit/responders)
+		var/list/responder_outfits = list()
+		for(var/datum/outfit/O as anything in responder_paths)
+			responder_outfits[initial(O.name)] = O
+
+		dresscode = input("Select responder equipment", "Robust quick dress shop") as null|anything in sortList(responder_outfits)
+		dresscode = responder_outfits[dresscode]
+		if(isnull(dresscode))
+			return
+
 
 	return dresscode
 

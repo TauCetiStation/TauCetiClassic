@@ -49,7 +49,7 @@
 				if(self.data["blood_type"])
 					blood_prop.blood_DNA[self.data["blood_DNA"]] = self.data["blood_type"]
 				else
-					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O+"
+					blood_prop.blood_DNA[self.data["blood_DNA"]] = BLOOD_O_PLUS
 
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
@@ -58,7 +58,7 @@
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
-			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
+			blood_prop.blood_DNA["Non-Human DNA"] = BLOOD_A_PLUS
 
 	else if(isxeno(donor))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
@@ -350,6 +350,8 @@
 /datum/reagent/diethylamine/reaction_mob(mob/M, method = TOUCH, volume)
 	if(volume >= 1 && ishuman(M))
 		var/mob/living/carbon/human/H = M
+		if(!H.species.flags[HAS_HAIR])
+			return
 		var/list/species_hair = list()
 		if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
 			for(var/i in hair_styles_list)
@@ -917,3 +919,30 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	..()
 	M.adjustToxLoss(REM)
 	return FALSE
+
+/datum/reagent/consumable/drink/liquidelectricity
+	name = "Liquid Electricity"
+	description = "The blood of some aliens, and the stuff that keeps them going. It works like an energy drink."
+	id = "liquidelectricity"
+	nutriment_factor = 5
+	taste_strength = 5
+	color = "#97ee63"
+	taste_message = "pure electricity"
+
+/datum/reagent/consumable/drink/liquidelectricity/on_general_digest(mob/living/M)
+	..()
+	var/shock_power = rand(5, 10)
+	if(prob(shock_power * 10))
+		M.electrocute_act(shock_power)
+
+/datum/reagent/consumable/drink/liquidelectricity/reaction_mob(mob/M, method=TOUCH, volume)
+	. = ..()
+	new /obj/effect/effect/sparks/electricity_spark(get_turf(M))
+
+/datum/reagent/consumable/drink/liquidelectricity/reaction_obj(obj/O, volume)
+	. = ..()
+	new /obj/effect/effect/sparks/electricity_spark(get_turf(O))
+
+/datum/reagent/consumable/drink/liquidelectricity/reaction_turf(turf/T, volume)
+	. = ..()
+	new /obj/effect/effect/sparks/electricity_spark(T)

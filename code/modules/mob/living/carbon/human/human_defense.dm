@@ -1,3 +1,4 @@
+#define PROTECTION_TO_MULTIPLE(p) ((100 - min(p, 100)) * 0.01)
 /mob/living/carbon/human/getHalLoss()
 	if(species.flags[NO_PAIN])
 		return 0
@@ -48,12 +49,15 @@
 					"<span class='warning'>[AM] falls on you!</span>",
 					"<span class='notice'>You hear something heavy fall.</span>")
 
-/mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/carbon/human/prob_miss(obj/item/projectile/P)
+	var/def_zone = get_zone_with_miss_chance(P.def_zone, src, P.get_miss_modifier())
+	if(!def_zone)
+		return TRUE
 	def_zone = check_zone(def_zone)
 	if(!has_bodypart(def_zone))
-		return PROJECTILE_FORCE_MISS //if they don't have the body part in question then the projectile just passes by.
-
-	return ..()
+		return TRUE
+	P.def_zone = def_zone // a bit junky, but it will either bump this one, or bump object
+	return FALSE
 
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
 	. = PROJECTILE_ALL_OK
@@ -75,11 +79,9 @@
 				return PROJECTILE_FORCE_MISS // complete projectile permutation
 
 	if(istype(P, /obj/item/projectile/bullet/weakbullet))
-		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
-		if(check_pierce_protection(BP))
-			visible_message("<span class='userdanger'>The [P.name] hits [src]'s armor!</span>")
-			P.agony /= 2
-		apply_effect(P.agony,AGONY,0)
+		var/armor = run_armor_check(def_zone, BULLET)
+		apply_effect(P.agony, AGONY, armor)
+		apply_damage(P.damage, P.damage_type, def_zone, (armor * P.armor_multiplier), P.flags, P)
 		if(istype(wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
@@ -129,9 +131,9 @@
 		var/obj/item/projectile/bullet/B = P
 
 		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
-		var/armor = getarmor_organ(BP, BULLET)
+		var/armor = get_protection_multiple_organ(BP, BULLET)
 
-		var/delta = max(0, P.damage - (P.damage * (armor/100)))
+		var/delta = max(0, P.damage - P.damage * armor)
 		if(delta)
 			apply_effect(delta,AGONY,armor)
 			//return Nope! ~Zve
@@ -181,23 +183,25 @@
 
 	if(def_zone)
 		if(isbodypart(def_zone))
-			return getarmor_organ(def_zone, type)
+			return 100 - get_protection_multiple_organ(def_zone, type) * 100
 		var/obj/item/organ/external/BP = get_bodypart(def_zone)
-		return getarmor_organ(BP, type)
+		return 100 - get_protection_multiple_organ(BP, type) * 100
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
 	for(var/obj/item/organ/external/BP in bodyparts)
-		armorval += getarmor_organ(BP, type)
+		armorval += 100 - get_protection_multiple_organ(BP, type) * 100
 		organnum++
 	return (armorval/max(organnum, 1))
 
 //this proc returns the Siemens coefficient of electrical resistivity for a particular external organ.
 /mob/living/carbon/human/proc/get_siemens_coefficient_organ(obj/item/organ/external/BP)
-	if (!BP)
-		return 1.0
-
 	var/siemens_coefficient = 1.0
+
+	if(!BP)
+		if(HAS_TRAIT(src, TRAIT_CONDUCT))
+			siemens_coefficient++
+		return siemens_coefficient
 
 	var/list/clothing_items = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes) // What all are we checking?
 	for(var/obj/item/clothing/C in clothing_items)
@@ -211,22 +215,21 @@
 				if(F)
 					F.electrocute_act(60)
 			siemens_coefficient *= C.siemens_coefficient
-
+	if(HAS_TRAIT(src, TRAIT_CONDUCT))
+		siemens_coefficient++
 	return siemens_coefficient
 
 //this proc returns the armour value for a particular external organ.
-/mob/living/carbon/human/proc/getarmor_organ(obj/item/organ/external/BP, type)
+/mob/living/carbon/human/proc/get_protection_multiple_organ(obj/item/organ/external/BP, type)
 	if(!type || !BP)
 		return 0
-	var/protection = 0
+	var/protection = 1
 	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
+	protection *= PROTECTION_TO_MULTIPLE(BP.pumped * 0.3)
+	for(var/obj/item/clothing/C in protective_gear)
+		if(C.body_parts_covered & BP.body_part)
+			protection *= PROTECTION_TO_MULTIPLE(C.armor[type])
 
-	protection += BP.pumped * 0.3
-	for(var/gear in protective_gear)
-		if(gear && istype(gear ,/obj/item/clothing))
-			var/obj/item/clothing/C = gear
-			if(istype(C) && (C.body_parts_covered & BP.body_part))
-				protection += C.armor[type]
 	return protection
 
 /mob/living/carbon/human/proc/check_head_coverage()
@@ -281,7 +284,7 @@
 		return FALSE
 
 	var/obj/item/organ/external/BP = get_bodypart(def_zone)
-	if (!BP)
+	if(!BP || BP.is_stump)
 		to_chat(user, "What [parse_zone(def_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
@@ -319,8 +322,10 @@
 		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>", ignored_mobs = alt_alpperances_vieawers)
 
 	var/armor = run_armor_check(BP, MELEE, "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
-	if(armor >= 100 || !I.force)
+	if(armor >= 100)
 		return FALSE
+	if(!I.force)
+		return TRUE
 
 	//Apply weapon damage
 	var/force_with_melee_skill = apply_skill_bonus(user, I.force, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // +15% for each melee level
@@ -410,12 +415,10 @@
 		if(istype(gloves, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/GL = gloves
 			GL.add_blood(source)
-			GL.transfer_blood = amount
-			GL.bloody_hands_mob = source
+			GL.dirt_transfers += amount
 	else
 		add_blood(source)
-		bloody_hands = amount
-		bloody_hands_mob = source
+		dirty_hands_transfers += amount
 
 /mob/living/carbon/human/bloody_body(mob/living/carbon/human/source)
 	if(wear_suit)

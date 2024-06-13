@@ -171,15 +171,6 @@
 	ADD_TRAIT(H, TRAIT_VACCINATED, QUALITY_TRAIT)
 
 
-/datum/quality/positiveish/happiness
-	name = "Happiness"
-	desc = "Ты очень-очень счастлив! Жизнь прекрасна и люди на станции прекрасны!!!"
-	requirement = "Нет."
-
-/datum/quality/positiveish/happiness/add_effect(mob/living/carbon/human/H, latespawn)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "roundstart_happiness", /datum/mood_event/happiness)
-
-
 /datum/quality/positiveish/polyglot
 	name = "Polyglot"
 	desc = "Ты знаешь все языки."
@@ -195,7 +186,7 @@
 
 
 /datum/quality/positiveish/freakish_linguist
-	name = "Freakish linguist"
+	name = "Freakish Linguist"
 	desc = "Ты знаешь все языки. Абсолютно все. Но какой ценой?"
 	requirement = "Мим."
 
@@ -399,3 +390,34 @@
 
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H)
 	ADD_TRAIT(H, TRAIT_HIDDEN_TRASH_GUN, QUALITY_TRAIT)
+
+
+/datum/quality/positiveish/rollercoaster
+	name = "Roller Coaster"
+	desc = "Случайная встреча с подопытным в техах научила тебя безболезненно кататься по мусорным трубам."
+	requirement = "Нет."
+
+/datum/quality/positiveish/rollercoaster/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_NO_DISPOSALS_DAMAGE, QUALITY_TRAIT)
+
+/datum/quality/positiveish/spaceartist
+	name = "Space Artist"
+	desc = "Как же быть актёром в космосе, но без космического скафандра?"
+	requirement = "Клоун, Мим."
+	jobs_required = list("Clown", "Mime")
+
+/datum/quality/positiveish/spaceartist/add_effect(mob/living/carbon/human/H)
+	if(H.job == "Clown")
+		H.equip_to_slot(new /obj/item/clothing/suit/space/clown, SLOT_R_HAND)
+		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/clown, SLOT_L_HAND)
+	else if(H.job == "Mime")
+		H.equip_to_slot(new /obj/item/clothing/suit/space/mime, SLOT_R_HAND)
+		H.equip_to_slot(new /obj/item/clothing/head/helmet/space/mime, SLOT_L_HAND)
+
+/datum/quality/positiveish/fastwalker
+	name = "Fast Walker"
+	desc = "Упражнения спортивной ходьбой по таяранской методике дали свои плоды - ты способен передвигаться быстро, бесшумно и аккуратно, когда не бежишь."
+	requirement = "Нет."
+
+/datum/quality/positiveish/fastwalker/add_effect(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_FAST_WALKER, QUALITY_TRAIT)

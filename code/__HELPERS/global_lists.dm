@@ -3,6 +3,8 @@
 //////////////////////////
 
 /proc/make_datum_references_lists()
+	global.default_plane_masters = init_paths(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate
+
 	//Hair - Initialise all /datum/sprite_accessory/hair into an list indexed by hair-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/hair))
 		var/datum/sprite_accessory/hair/H = new path()
@@ -277,6 +279,10 @@
 	for(var/datum/smartlight_preset/type as anything in subtypesof(/datum/smartlight_preset))
 		smartlight_presets[initial(type.name)] = type
 
+	global.lighting_effects = list()
+	for(var/datum/level_lighting_effect/type as anything in subtypesof(/datum/level_lighting_effect))
+		lighting_effects[initial(type.name)] = type
+
 	global.virus_types_by_pool = list()
 	for(var/e in subtypesof(/datum/disease2/effect))
 		var/datum/disease2/effect/f = new e
@@ -286,6 +292,10 @@
 			continue
 		for(var/pool in L)
 			LAZYADD(virus_types_by_pool[pool], e)
+
+	global.ringtones_by_names = list()
+	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
+		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
@@ -319,11 +329,9 @@
 /proc/init_paths(prototype, list/L)
 	if(!istype(L))
 		L = list()
-		for(var/path in typesof(prototype))
-			if(path == prototype)
-				continue
-			L+= path
-		return L
+	for(var/path in subtypesof(prototype))
+		L+= path
+	return L
 
 /proc/gen_hex_by_color()
 	if(!hex_by_color)

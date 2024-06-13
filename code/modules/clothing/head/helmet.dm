@@ -37,7 +37,7 @@
 		holochip.deactivate_holomap()
 	..()
 
-/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user)
+/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/holochip))
 		if(flags & ABSTRACT)
 			return    //You can't insert holochip in abstract item.
@@ -65,6 +65,20 @@
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
 
+	if(!issignaler(I)) //Eh, but we don't want people making secbots out of space helmets.
+		return ..()
+
+	var/obj/item/device/assembly/signaler/S = I
+	if(!S.secured)
+		to_chat(user, "<span class='notice'>The signaler not secured.</span>")
+		return ..()
+
+	var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
+	user.put_in_hands(A)
+	to_chat(user, "<span class='notice'>You add \the [I] to the helmet.</span>")
+	qdel(I)
+	qdel(src)
+
 /obj/item/clothing/head/helmet/psyamp
 	name = "psychic amplifier"
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
@@ -77,18 +91,6 @@
 	name = "warden's helmet"
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "helmet_warden"
-
-/obj/item/clothing/head/helmet/HoS
-	name = "head of security's hat"
-	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoshat"
-	item_state = "hoshat"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	flags_inv = HIDEEARS
-	body_parts_covered = 0
-	siemens_coefficient = 0.8
-	force = 0
-	hitsound = list()
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -197,6 +199,10 @@
 	icon_state = "marinad"
 	item_state = "marinad_helmet"
 
+/obj/item/clothing/head/helmet/tactical/marinad/leader
+	name = "marine beret"
+	desc = "Sturdy kevlar beret in protective colors, issued to low-ranking NTCM officers."
+	icon_state = "beret_marinad"
 
 /obj/item/clothing/head/helmet/helmet_of_justice
 	name = "helmet of justice"
@@ -246,13 +252,6 @@
 	name = "M35 Helmet"
 	desc = "The Basic werhmacht army helmet."
 	icon_state = "M35_Helmet"
-	item_state = "helmet"
-
-/obj/item/clothing/head/helmet/Waffen_SS_Helmet
-	name = "Waffen SS Helmet"
-	desc = "A helmet from SS uniform set."
-
-	icon_state = "SS_Helmet"
 	item_state = "helmet"
 
 /obj/item/clothing/head/helmet/syndilight

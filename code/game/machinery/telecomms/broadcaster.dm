@@ -212,10 +212,10 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 	@param data:
 		If specified:
-				1 -- Will only broadcast to intercoms
-				2 -- Will only broadcast to intercoms and station-bounced radios
-				3 -- Broadcast to syndicate frequency
-				4 -- AI can't track down this person. Useful for imitation broadcasts where you can't find the actual mob
+				BROADCAST_MODE_INTERCOMS -- Will only broadcast to intercoms
+				BROADCAST_MODE_INTERCOMS_AND_RADIOS -- Will only broadcast to intercoms and station-bounced radios
+				BROADCAST_MODE_SYNDICATE -- Broadcast to syndicate frequency
+				BROADCAST_MODE_NO_TRACK_AI -- AI can't track down this person. Useful for imitation broadcasts where you can't find the actual mob
 
 	@param compression:
 		If 0, the signal is audible
@@ -243,7 +243,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 	// --- Broadcast only to intercom devices ---
 
-	if(data == 1)
+	if(data == BROADCAST_MODE_INTERCOMS)
 
 		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
 			if(R.receive_range(display_freq, level) > -1)
@@ -251,11 +251,11 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
 
-	else if(data == 2)
+	else if(data == BROADCAST_MODE_INTERCOMS_AND_RADIOS)
 
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
 
-			if(istype(R, /obj/item/device/radio/headset))
+			if(R.subspace_transmission)
 				continue
 
 			if(R.receive_range(display_freq, level) > -1)
@@ -263,7 +263,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 	// --- Broadcast to syndicate radio! ---
 
-	else if(data == 3)
+	else if(data == BROADCAST_MODE_SYNDICATE)
 
 		var/datum/radio_frequency/syndicateconnection = radio_controller.return_frequency(SYND_FREQ)
 
@@ -313,7 +313,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 			continue
 
 		// Ghosts hearing all radio chat don't want to hear syndicate intercepts, they're duplicates
-		if(data == 3 && isobserver(R) && R.client && (R.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
+		if(data == BROADCAST_MODE_SYNDICATE && isobserver(R) && R.client && (R.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			continue
 
 		// --- Check for compression ---
@@ -429,7 +429,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 		var/part_a = "<span class='[part_a_span]'><span class='name'>" // goes in the actual output
 		var/part_b_extra = ""
-		if(data == 3) // intercepted radio message
+		if(data == BROADCAST_MODE_SYNDICATE) // intercepted radio message
 			part_b_extra = " <i>(Intercepted)</i>"
 		var/part_b = "</span><b> \[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"
@@ -529,7 +529,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 	// --- Broadcast only to intercom devices ---
 
-	if(data == 1)
+	if(data == BROADCAST_MODE_INTERCOMS)
 		for (var/obj/item/device/radio/intercom/R in connection.devices["[RADIO_CHAT]"])
 			var/turf/position = get_turf(R)
 			if(position && position.z == level)
@@ -538,7 +538,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
 
-	else if(data == 2)
+	else if(data == BROADCAST_MODE_INTERCOMS_AND_RADIOS)
 		for (var/obj/item/device/radio/R in connection.devices["[RADIO_CHAT]"])
 
 			if(istype(R, /obj/item/device/radio/headset))
@@ -550,7 +550,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 	// --- Broadcast to syndicate radio! ---
 
-	else if(data == 3)
+	else if(data == BROADCAST_MODE_SYNDICATE)
 		var/datum/radio_frequency/syndicateconnection = radio_controller.return_frequency(SYND_FREQ)
 
 		for (var/obj/item/device/radio/R in syndicateconnection.devices["[RADIO_CHAT]"])
@@ -658,7 +658,7 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 
 		var/part_a = "<span class='[part_a_span]'><span class='name'>" // goes in the actual output
 		var/part_b_extra = ""
-		if(data == 3) // intercepted radio message
+		if(data == BROADCAST_MODE_SYNDICATE) // intercepted radio message
 			part_b_extra = " <i>(Intercepted)</i>"
 		var/part_b = "</span><b> \[[freq_text]\][part_b_extra]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 		var/part_c = "</span></span>"

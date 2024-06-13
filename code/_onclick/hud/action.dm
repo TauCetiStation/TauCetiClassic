@@ -4,10 +4,9 @@
 #define AB_GENERIC 4
 
 #define AB_CHECK_INCAPACITATED 2
-#define AB_CHECK_LYING 4
-#define AB_CHECK_ALIVE 8
-#define AB_CHECK_INSIDE 16
-#define AB_CHECK_ACTIVE 32
+#define AB_CHECK_ALIVE 4
+#define AB_CHECK_INSIDE 8
+#define AB_CHECK_ACTIVE 16
 
 
 /datum/action
@@ -113,9 +112,6 @@
 	if(check_flags & AB_CHECK_INCAPACITATED)
 		if(owner.incapacitated(restrained_check))
 			return FALSE
-	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying)
-			return FALSE
 	if(check_flags & AB_CHECK_ALIVE)
 		if(owner.stat != CONSCIOUS)
 			return FALSE
@@ -205,6 +201,7 @@
 		img = image(I.icon, src , I.icon_state)
 	else if(owner.button_icon && owner.button_icon_state)
 		img = image(owner.button_icon,src,owner.button_icon_state)
+
 	img.pixel_x = 0
 	img.pixel_y = 0
 	add_overlay(img)
@@ -259,8 +256,6 @@
 	if(!client)
 		return FALSE
 
-	sync_lighting_plane_alpha()
-
 	if(stat == DEAD)
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = 8
@@ -270,12 +265,10 @@
 
 	return TRUE
 
-///Set the lighting plane hud alpha to the mobs lighting_alpha var
-/mob/proc/sync_lighting_plane_alpha()
-	if(hud_used)
-		var/atom/movable/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if(L)
-			L.alpha = lighting_alpha
+/mob/proc/set_lighting_alpha(value)
+	if(lighting_alpha != value)
+		lighting_alpha = value
+		SEND_SIGNAL(src, COMSIG_MOB_LIGHTING_ALPHA_CHANGED, value)
 
 /datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
 	var/row = round((number-1)/AB_MAX_COLUMNS)
@@ -311,7 +304,7 @@
 	return !(target in user)
 
 /datum/action/item_action/hands_free
-	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE|AB_CHECK_ALIVE
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_INSIDE|AB_CHECK_ALIVE
 
 
 //Preset for spells

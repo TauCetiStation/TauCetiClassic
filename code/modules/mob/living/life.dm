@@ -18,6 +18,9 @@
 
 	if(client)
 		handle_regular_hud_updates()
+		var/turf/T = get_turf(src)
+		if(T && last_z != T.z)
+			update_z(T.z)
 
 /mob/living/proc/update_health_hud()
 	if(!healths)
@@ -73,18 +76,16 @@
 
 	if(vision_for_dead || stat != DEAD)
 		if(blinded)
-			throw_alert("blind", /atom/movable/screen/alert/blind)
 			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		else if(is_vision_obstructed() && !(XRAY in mutations))
 			overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 		else
-			clear_alert("blind")
 			clear_fullscreen("blind", 0)
 		if(machine)
 			if (!(machine.check_eye(src)))
 				reset_view(null)
 		else
-			if(!client.adminobs && !force_remote_viewing)
+			if(!client?.adminobs && !force_remote_viewing)
 				reset_view(null)
 
 

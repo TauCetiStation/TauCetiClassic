@@ -468,7 +468,6 @@
 		"Emergency Response Team",
 		"Emergency Response Team Leader",
 		"Organized Crimes Department",
-		"NanoTrasen Representative",
 		)
 
 /proc/get_all_velocity_jobs()
@@ -548,7 +547,12 @@
 			return ID.registered_name
 
 /proc/get_all_job_icons() //For all existing HUD icons
-	return joblist + list("Prisoner")
+	return joblist
+
+/proc/get_all_misc_job_icons() //Use for all misc and custom job hud icons if you ever need one!
+	return list("Prisoner",
+				"Marine",
+				"Marine Squad Leader")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
@@ -576,6 +580,8 @@
 	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
 		return "Centcom"
 	if(jobName in get_all_velocity_jobs())
+		return jobName
+	if(jobName in get_all_misc_job_icons())
 		return jobName
 	return "Unknown" //Return unknown if none of the above apply
 

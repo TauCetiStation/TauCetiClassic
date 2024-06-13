@@ -66,9 +66,6 @@ Thus, the two variables affect pump operation are set in New():
 		add_underlay(T, NODE1, turn(dir, -180))
 		add_underlay(T, NODE2, dir)
 
-/obj/machinery/atmospherics/components/binary/pump/hide(i)
-	update_underlays()
-
 /obj/machinery/atmospherics/components/binary/pump/process_atmos()
 	last_flow_rate = 0
 	last_power_draw = 0

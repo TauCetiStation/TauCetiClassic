@@ -395,10 +395,6 @@
 		return FALSE
 	if(target.flags & ABSTRACT)
 		return FALSE
-	if(isitem(target))
-		var/obj/item/I = target
-		if(I.abstract)
-			return FALSE
 
 	return TRUE
 
@@ -408,8 +404,10 @@
 			return
 		if("Ценник")
 			price(target, user)
+			playsound(src, 'sound/items/label_printing.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		if("Бирка")
 			label(target, user)
+			playsound(src, 'sound/items/label_printing.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 
 /obj/item/device/tagger/proc/price(obj/target, mob/user)
 	if(target.price_tag)
