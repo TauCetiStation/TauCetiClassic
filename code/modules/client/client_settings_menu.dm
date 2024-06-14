@@ -2,7 +2,7 @@
 	var/datum/client_settings/settings
 
 /client/verb/client_settings()
-	set name = "#prefs"
+	set name = "Settings"
 	set category = "Preferences"
 
 	if(!prefs_ready)
@@ -50,7 +50,7 @@
 		))
 
 	world.log << "CS: tgui_data [length(data["settings"])]"
-	//world.log << json_encode(data)
+	world.log << json_encode(data)
 
 
 	return data
