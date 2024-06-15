@@ -1,6 +1,6 @@
 /atom/movable/screen/alert/status_effect/swarm_gift
-	name = "Swarm's Gift"
-	desc = "The Swarm gifts you with increased efficency, as well as muffled disintegration noises. Prosper and multiply!"
+	name = "Подарок роя"
+	desc = "Рой дарит вам повышенную эффективность, а также приглушенные звуки переработки. Процветайте и размножайтесь!"
 	icon_state = "swarm_gift"
 
 /atom/movable/screen/alert/status_effect/swarm_gift/Click()
