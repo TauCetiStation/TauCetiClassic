@@ -60,6 +60,43 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		return TRUE
 	return is_alien_whitelisted(src, S.name) || !config.usealienwhitelist || !S.flags[IS_WHITELISTED]
 
+/mob/dead/proc/create_character_without_mind()
+	spawning = 1
+	close_spawn_windows()
+
+	var/mob/living/carbon/human/new_character
+
+	var/datum/species/chosen_species
+	if(client.prefs.species)
+		chosen_species = all_species[client.prefs.species]
+	if(chosen_species)
+		// Have to recheck admin due to no usr at roundstart. Latejoins are fine though.
+		if(is_species_whitelisted(chosen_species) || has_admin_rights())
+			new_character = new(loc, client.prefs.species)
+
+	if(!new_character)
+		new_character = new(loc)
+
+	new_character.lastarea = get_area(loc)
+	if(client.prefs.language)
+		new_character.add_language(client.prefs.language, LANGUAGE_NATIVE)
+
+
+	playsound_stop(CHANNEL_MUSIC) // MAD JAMS cant last forever yo
+
+	new_character.real_name = random_name(new_character.gender)
+	new_character.dna.ready_dna(new_character)
+	new_character.dna.UpdateSE()
+	new_character.dna.original_character_name = new_character.real_name
+	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)
+	var/old_base_metabolism = new_character.get_metabolism_factor()
+	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
+
+	if(key)
+		new_character.key = key		//Manually transfer the key to log them in
+
+	return new_character
+
 /mob/dead/proc/create_character()
 	var/mob/living/carbon/human/new_character
 
@@ -104,6 +141,16 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		new_character.key = key		//Manually transfer the key to log them in
 
 	return new_character
+
+/mob/dead/proc/job_giving(rank)
+	var/mob/living/carbon/human/character = create_character_without_mind()
+	var/datum/job/job = SSjob.GetJob(rank)
+	character.mind.assigned_job = job
+	character.mind.assigned_role = rank
+	character.mind.role_alt_title = SSjob.GetPlayerAltTitle(character, rank)
+	job.current_positions++
+	SSjob.EquipRank(character, rank, joined_late = TRUE)
+	return character
 
 /mob/dead/proc/latespawn_job_giving(rank)
 	SSjob.AssignRole(src, rank, latejoin = TRUE)

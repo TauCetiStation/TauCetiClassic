@@ -236,7 +236,7 @@
 	if(!IsJobAvailable(rank))
 		to_chat(usr, "<span class='notice'>[rank] is not available. Please try another.</span>")
 		return 0
-	var/mob/living/carbon/human/character = create_and_setup_latespawn_character()
+	var/mob/living/carbon/human/character = create_and_setup_latespawn_character(rank)
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSqualities.give_quality(character, TRUE)

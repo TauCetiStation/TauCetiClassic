@@ -776,7 +776,6 @@
 							"Bartender",
 							"Botanist",
 							"Clown",
-							"Mime",
 							"Chaplain",
 							"Janitor",
 							"Barber",
@@ -796,7 +795,7 @@
 	var/list/free_ranks = get_avaible_jobs(spectator)
 	var/rank = pick(free_ranks)
 
-	var/mob/living/carbon/human/character = M.create_and_setup_latespawn_character(rank)
+	var/mob/living/carbon/human/character = spectator.job_giving(rank)
 
 	var/spawnloc = pick(global.latejoin)
 	var/list/allowed_spawnlocs = global.xeno_spawn.Copy()
