@@ -182,8 +182,8 @@
 	afterspawn_IC_announcement = "<span class='success'>Нанятые на стороне менеджеры утверждают, что доступ на шлюзах лишь вредит продуктивности станции и повышает расходы на их починку после неизбежного взлома.</span>"
 
 /datum/round_aspect/egalitarianism/after_start()
-	for(var/obj/machinery/door/airlock/airlock in world)
-		if(!is_station_level(airlock.z))
+	for(var/obj/machinery/door/airlock/airlock in global.airlock_list)
+		if(!is_station_level(airlock.z) && !is_mining_level(airlock.z))
 			continue
 		airlock.req_access = list()
 		airlock.req_one_access = list()
