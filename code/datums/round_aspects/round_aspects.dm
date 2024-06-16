@@ -174,4 +174,16 @@
 /datum/round_aspect/healing_alkohol
 	name = ROUND_ASPECT_HEALING_ALCOHOL
 	desc = "Алкоголь лечит физические повреждения."
-	afterspawn_IC_announcement = "<span class='success'>Гибсонские ученые доказали, что умеренное потребление алкоголя продливает жизнь.</span>"
+	afterspawn_IC_announcement = "<span class='success'>Гибсонские ученые доказали, что умеренное потребление алкоголя продлевает жизнь.</span>"
+
+/datum/round_aspect/egalitarianism
+	name = ROUND_ASPECT_NO_ACCESS
+	desc = "Все на станции равны, поэтому и доступ на шлюзах убран."
+	afterspawn_IC_announcement = "<span class='success'>Нанятые на стороне менеджеры утверждают, что доступ на шлюзах лишь вредит продуктивности станции и повышает расходы на их починку после неизбежного взлома.</span>"
+
+/datum/round_aspect/egalitarianism/after_start()
+	for(var/obj/machinery/door/airlock/airlock in world)
+		if(!is_station_level(airlock.z))
+			continue
+		airlock.req_access = list()
+		airlock.req_one_access = list()
