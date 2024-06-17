@@ -28,7 +28,7 @@
 			tally += IO ? IO.damage / 5 : 20 // If it's servomotor somehow is missing, it's absence should be treated as 100 damage to it.
 
 		if(HAS_TRAIT(src, TRAIT_FAT))
-			tally += 0.25
+			tally += 0.7
 
 		if(embedded_flag)
 			handle_embedded_objects() // Moving with objects stuck in you can cause bad times.
