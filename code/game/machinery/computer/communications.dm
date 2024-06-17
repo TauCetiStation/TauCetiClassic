@@ -349,7 +349,7 @@
 					if(src.emagged == 0)
 						dat += "<BR><A HREF='?src=\ref[src];operation=MessageCentcomm'>Отправить экстренное сообщение Центкому</A>"
 					else
-						dat += "<BR><A HREF='?src=\ref[src];operation=MessageSyndicate'>Отправить экстренное сообщение \[НЕВЕРОЯТНО КРУТЫМ ПАРНЯМ\]</A>"
+						dat += "<BR><A HREF='?src=\ref[src];operation=MessageSyndicate'>Отправить экстренное сообщение \[НЕИЗВЕСТНЫМ\]</A>"
 						dat += "<BR><A HREF='?src=\ref[src];operation=RestoreBackup'>Восстановить изначальные данные</A>"
 
 				dat += "<BR><A HREF='?src=\ref[src];operation=changeseclevel'>Сменить код тревоги</A>"
