@@ -21,6 +21,9 @@
 /obj/structure/lattice,
 /turf/environment/space,
 /area/space)
+"ag" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/unexplored)
 "ah" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube,
@@ -96,6 +99,10 @@
 /obj/structure/lattice,
 /turf/environment/space,
 /area/space)
+"as" = (
+/obj/structure/pit/closed/grave,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/unexplored/dangerous)
 "at" = (
 /obj/structure/transit_tube{
 	icon_state = "D-NW"
@@ -156,8 +163,9 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/transit_tube,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "aC" = (
@@ -541,15 +549,17 @@
 /area/asteroid/research_outpost/hallway)
 "bw" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "rdorm1";
-	name = "Dorm 1";
-	dir = 4
+	name = "Dorm 1"
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -598,10 +608,10 @@
 	icon_state = "warn"
 	},
 /obj/machinery/power/apc{
-	pixel_x = -27;
-	dir = 8;
 	custom_smartlight_preset = "RnD";
-	name = "RnD left APC"
+	dir = 8;
+	name = "RnD left APC";
+	pixel_x = -27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/maintstore1)
@@ -623,15 +633,17 @@
 /area/asteroid/research_outpost/hallway)
 "bF" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "rdorm2";
-	name = "Dorm 2";
-	dir = 4
+	name = "Dorm 2"
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/carpet,
@@ -729,11 +741,13 @@
 /area/asteroid/research_outpost/spectro)
 "bR" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Spectrometry Lab Sample Preparation";
-	req_access = list(65);
+	req_access = list(65)
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -924,10 +938,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "RnD";
-	name = "RnD right APC"
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -955,6 +969,10 @@
 	icon_state = "whitecorner"
 	},
 /area/asteroid/research_outpost/hallway)
+"cn" = (
+/mob/living/simple_animal/hostile/asteroid/goliath,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/unexplored/dangerous)
 "co" = (
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
@@ -1045,10 +1063,10 @@
 	},
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD top APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
@@ -1105,15 +1123,17 @@
 /area/asteroid/research_outpost/hallway)
 "cE" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "rbath";
-	name = "Bathroom";
-	dir = 4
+	name = "Bathroom"
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1210,6 +1230,15 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
+"cO" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/unexplored)
+"cP" = (
+/mob/living/simple_animal/hostile/asteroid/goliath,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/unexplored)
 "cQ" = (
 /obj/machinery/chem_dispenser,
 /turf/simulated/floor{
@@ -1224,10 +1253,10 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "RnD";
-	name = "RnD right APC"
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1489,17 +1518,16 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD top APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplecorner"
 	},
 /area/asteroid/research_outpost/anomaly)
 "dt" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -1507,8 +1535,11 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Anomalous Materials Sample Preparation";
-	req_access = list(65);
+	req_access = list(65)
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1821,17 +1852,19 @@
 /area/asteroid/research_outpost/atmos)
 "dZ" = (
 /obj/machinery/door/airlock/atmos{
+	dir = 4;
 	name = "Outpost Atmospherics";
-	req_one_access = list(65,10,24);
-	dir = 4
+	req_one_access = list(65,10,24)
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -1928,10 +1961,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD top APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/hallway)
@@ -1997,7 +2030,9 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "et" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -2261,7 +2296,6 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "eU" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2271,6 +2305,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -2343,11 +2380,10 @@
 /area/asteroid/research_outpost/anomaly)
 "eY" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Anomalous Materials";
-	req_access = list(65);
-	dir = 4
+	req_access = list(65)
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2357,6 +2393,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -2436,15 +2475,17 @@
 /area/asteroid/research_outpost/anomaly)
 "fd" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Anomalous Materials";
-	req_access = list(65);
-	dir = 4
+	req_access = list(65)
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -2648,12 +2689,11 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/transit_tube{
-	icon_state = "NW-SE"
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/asteroid/research_outpost/entry)
+/area/asteroid/mine/production)
 "fy" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2794,10 +2834,10 @@
 	dir = 8
 	},
 /obj/machinery/power/apc{
-	pixel_x = -27;
-	dir = 8;
 	custom_smartlight_preset = "RnD";
-	name = "RnD left APC"
+	dir = 8;
+	name = "RnD left APC";
+	pixel_x = -27
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
@@ -2843,11 +2883,13 @@
 /area/asteroid/research_outpost/power)
 "fQ" = (
 /obj/machinery/door/airlock/engineering{
+	dir = 4;
 	name = "Outpost Power";
-	req_one_access = list(65,10,24);
+	req_one_access = list(65,10,24)
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "fR" = (
@@ -3038,17 +3080,6 @@
 	icon_state = "white"
 	},
 /area/asteroid/research_outpost/hallway)
-"gr" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/transit_tube{
-	icon_state = "D-SW"
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/entry)
 "gs" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -3078,12 +3109,14 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "gv" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "gw" = (
@@ -3097,7 +3130,7 @@
 "gx" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	id = "research"
+	id = "researchshaft"
 	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
@@ -3184,6 +3217,11 @@
 /area/asteroid/research_outpost/power)
 "gO" = (
 /obj/machinery/portable_atmospherics/powered/pump,
+/obj/machinery/driver_button{
+	id = "researchshaft";
+	layer = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "gP" = (
@@ -3314,12 +3352,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "vault";
-	name = "Mainframe floor";
-	nitrogen = 100;
-	oxygen = 0;
-	temperature = 80
+	icon_state = "dark"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "hd" = (
@@ -3379,10 +3412,12 @@
 /turf/simulated/wall,
 /area/asteroid/research_outpost/entry)
 "hq" = (
-/obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/med)
@@ -3579,15 +3614,17 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research Shuttle Dock";
-	req_access = list(65);
-	dir = 4
+	req_access = list(65)
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -3744,12 +3781,11 @@
 /area/asteroid/research_outpost/med)
 "if" = (
 /obj/machinery/door/airlock/medical/glass{
+	dir = 4;
 	id_tag = "";
 	name = "Medbay";
-	req_one_access = list(65,5);
-	dir = 4
+	req_one_access = list(65,5)
 	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3759,6 +3795,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -3831,15 +3870,17 @@
 /area/asteroid/mine/west_outpost)
 "il" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Temporary Storage";
-	req_access = list(65);
-	dir = 4
+	req_access = list(65)
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -3920,7 +3961,6 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "is" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3930,6 +3970,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -4225,12 +4268,11 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/transit_tube{
-	icon_state = "D-SE"
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/asteroid/research_outpost/entry)
+/area/asteroid/research_outpost/atmos)
 "iV" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -4317,7 +4359,6 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "ja" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/camera{
 	c_tag = "Research Outpost Hallway Starboard";
 	network = list("Research","SS13");
@@ -4338,6 +4379,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -4391,10 +4435,10 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD top APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4511,8 +4555,10 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "jp" = (
-/obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -4569,7 +4615,6 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "jy" = (
-/obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -4580,6 +4625,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -4781,9 +4829,9 @@
 /obj/structure/table,
 /obj/item/weapon/newspaper,
 /obj/machinery/power/apc{
-	pixel_y = -27;
+	custom_smartlight_preset = "RnD";
 	name = "RnD down APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = -27
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -4796,10 +4844,10 @@
 	icon_state = "warn"
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "RnD";
-	name = "RnD right APC"
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -5145,11 +5193,10 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "kG" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Isolation room 4";
-	req_access = list(65);
-	dir = 4
+	req_access = list(65)
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -5160,6 +5207,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/outpost_misc_lab)
@@ -5214,8 +5264,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment{
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -5299,7 +5348,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -5307,8 +5355,11 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Loading Area";
-	req_access = list(65);
+	req_access = list(65)
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -5391,10 +5442,10 @@
 	dir = 1
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD top APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/tempstorage)
@@ -5523,10 +5574,10 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
+	custom_smartlight_preset = "RnD";
 	dir = 1;
 	name = "RnD top APC";
-	custom_smartlight_preset = "RnD"
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5547,6 +5598,7 @@
 /obj/item/clothing/suit/space/globose/science,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/globose/science,
+/obj/item/clothing/shoes/magboots,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/machinery/light/smart{
 	dir = 1
@@ -5620,10 +5672,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "RnD";
-	name = "RnD right APC"
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
@@ -5803,6 +5855,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/globose/science,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/globose/science,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -5879,9 +5932,9 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Equipment storage";
-	req_access = list(65);
-	dir = 4
+	req_access = list(65)
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
@@ -5987,10 +6040,10 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "RnD";
-	name = "RnD right APC"
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso1)
@@ -6028,10 +6081,10 @@
 	specialfunctions = 4
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "RnD";
-	name = "RnD right APC"
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/harvesting)
@@ -6076,10 +6129,10 @@
 	dir = 4
 	},
 /obj/machinery/power/apc{
-	pixel_x = 27;
-	dir = 4;
 	custom_smartlight_preset = "RnD";
-	name = "RnD right APC"
+	dir = 4;
+	name = "RnD right APC";
+	pixel_x = 27
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
@@ -6290,13 +6343,15 @@
 /area/asteroid/research_outpost/longtermstorage)
 "nr" = (
 /obj/machinery/door/airlock/maintenance{
-	req_one_access = list(12,65);
-	dir = 4
+	dir = 4;
+	req_one_access = list(12,65)
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
@@ -7054,9 +7109,9 @@
 /area/asteroid/mine/living_quarters)
 "pf" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "miningdorm1";
-	name = "Room 1";
-	dir = 4
+	name = "Room 1"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -7267,13 +7322,15 @@
 	},
 /area/asteroid/mine/abandoned)
 "pC" = (
-/turf/simulated/floor/plating/airless/asteroid,
-/area/asteroid/mine/unexplored)
+/turf/simulated/mineral/random/caves/high_chance,
+/area/asteroid/mine/unexplored/dangerous)
 "pD" = (
-/obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/gearstore)
@@ -7460,9 +7517,9 @@
 /area/asteroid/mine/living_quarters)
 "qc" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "miningdorm3";
-	name = "Room 3";
-	dir = 4
+	name = "Room 3"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -7644,9 +7701,9 @@
 /area/asteroid/mine/abandoned)
 "qD" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	name = "Mining Bridge";
-	req_one_access = list(54,65);
-	dir = 4
+	req_one_access = list(54,65)
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -7795,9 +7852,9 @@
 /area/asteroid/mine/explored)
 "qW" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	id_tag = "miningdorm2";
-	name = "Room 2";
-	dir = 4
+	name = "Room 2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -8018,25 +8075,14 @@
 	},
 /area/asteroid/mine/abandoned)
 "rx" = (
-/obj/effect/decal/turf_decal{
-	dir = 10;
-	icon_state = "ast_warn"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "asteroidfloor"
-	},
-/area/asteroid/mine/unexplored)
+/turf/simulated/mineral/random/high_chance,
+/area/asteroid/mine/unexplored/dangerous)
 "ry" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "ast_warn"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "asteroidfloor"
-	},
-/area/asteroid/mine/unexplored)
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/unexplored/dangerous)
 "rz" = (
 /obj/effect/decal/turf_decal{
-	dir = 6;
+	dir = 10;
 	icon_state = "ast_warn"
 	},
 /turf/simulated/floor/airless{
@@ -8076,11 +8122,6 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/abandoned)
-"rE" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
-/area/asteroid/mine/unexplored)
 "rF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -8195,7 +8236,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "circuit"
+	icon_state = "wood"
 	},
 /area/asteroid/mine/explored)
 "rZ" = (
@@ -8632,9 +8673,9 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc{
-	name = "Cargo left APC";
 	custom_smartlight_preset = "Cargo";
 	dir = 8;
+	name = "Cargo left APC";
 	pixel_x = -27
 	},
 /turf/simulated/floor,
@@ -8928,10 +8969,10 @@
 	pixel_y = 1
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
-	name = "Cargo top APC";
 	custom_smartlight_preset = "Cargo";
-	dir = 1
+	dir = 1;
+	name = "Cargo top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8996,15 +9037,17 @@
 	},
 /area/asteroid/mine/maintenance)
 "uk" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "mining_west_outpost_inner";
 	locked = 1;
-	name = "Mining External Access";
-	dir = 4
+	name = "Mining External Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -9384,9 +9427,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/mining/glass{
+	dir = 4;
 	name = "Mining Station EVA";
-	req_access = list(54);
-	dir = 4
+	req_access = list(54)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -9455,14 +9498,6 @@
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
-/area/asteroid/mine/west_outpost)
-"vl" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "vm" = (
 /obj/machinery/recharge_station,
@@ -9743,13 +9778,15 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "vQ" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "mining_west_outpost_outer";
 	locked = 1;
 	name = "Mining External Access";
-	req_access = list(10,13);
+	req_access = list(10,13)
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -9869,9 +9906,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	pixel_y = -27;
+	custom_smartlight_preset = "Cargo";
 	name = "Cargo down APC";
-	custom_smartlight_preset = "Cargo"
+	pixel_y = -27
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -10106,11 +10143,14 @@
 /area/asteroid/mine/living_quarters)
 "wH" = (
 /obj/machinery/door/airlock/mining/glass{
+	dir = 4;
 	name = "Break Room";
-	req_access = list(54);
-	dir = 4
+	req_access = list(54)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -10413,8 +10453,8 @@
 /area/asteroid/mine/living_quarters)
 "xl" = (
 /obj/machinery/door/airlock{
-	name = "Toilet";
-	dir = 4
+	dir = 4;
+	name = "Toilet"
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -10460,10 +10500,10 @@
 	pixel_y = 1
 	},
 /obj/machinery/power/apc{
-	pixel_y = 27;
-	name = "Cargo top APC";
 	custom_smartlight_preset = "Cargo";
-	dir = 1
+	dir = 1;
+	name = "Cargo top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -10717,13 +10757,15 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "yg" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "mining_east_outer";
 	locked = 1;
 	name = "Mining External Access";
-	req_access = list(10,13);
+	req_access = list(10,13)
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -10807,11 +10849,12 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "yC" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
@@ -10963,9 +11006,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/mining/glass{
+	dir = 4;
 	name = "Mining Station Bridge";
-	req_access = list(48);
-	dir = 4
+	req_access = list(48)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -11020,9 +11063,9 @@
 	icon_state = "bot"
 	},
 /obj/machinery/power/apc{
-	pixel_y = -27;
+	custom_smartlight_preset = "Cargo";
 	name = "Cargo down APC";
-	custom_smartlight_preset = "Cargo"
+	pixel_y = -27
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
@@ -11081,6 +11124,19 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/explored)
+"zy" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/transit_tube{
+	icon_state = "D-NE"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/entry)
 "zz" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "mining_east_sensor";
@@ -11102,15 +11158,17 @@
 /turf/environment/space,
 /area/shuttle/mining/outpost)
 "zB" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "mining_east_inner";
 	locked = 1;
-	name = "Mining External Access";
-	dir = 4
+	name = "Mining External Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -11156,8 +11214,12 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
 "zH" = (
-/obj/structure/pit/closed/grave,
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/effect/decal/turf_decal{
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
 /area/asteroid/mine/unexplored)
 "zJ" = (
 /obj/structure/disposalpipe/segment{
@@ -11226,9 +11288,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/mining/glass{
+	dir = 4;
 	name = "Mining Station Bridge";
-	req_access = list(48);
-	dir = 4
+	req_access = list(48)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -11275,8 +11337,13 @@
 	},
 /area/asteroid/mine/living_quarters)
 "zX" = (
-/mob/living/simple_animal/hostile/asteroid/goliath,
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
 /area/asteroid/mine/unexplored)
 "zY" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
@@ -11325,7 +11392,6 @@
 /area/asteroid/research_outpost/hallway)
 "Ac" = (
 /obj/machinery/mineral/input,
-/obj/machinery/door/firedoor,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 4;
 	icon_state = "loadingarea"
@@ -11333,6 +11399,9 @@
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 4;
 	icon_state = "arrow"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/production)
@@ -11416,14 +11485,6 @@
 	icon_state = "blue"
 	},
 /area/asteroid/research_outpost/entry)
-"Ao" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/entry)
 "Ap" = (
 /turf/simulated/floor{
 	icon_state = "Stairs2_wide"
@@ -11499,11 +11560,11 @@
 "Az" = (
 /obj/machinery/door/poddoor{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "out_misclab";
 	name = "Test Chamber Blast Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
@@ -11559,11 +11620,8 @@
 /area/asteroid/research_outpost/hallway)
 "AO" = (
 /obj/structure/table,
-/obj/item/weapon/stamp{
-	icon_state = "stamp-rd";
+/obj/item/weapon/stamp/sci{
 	name = "research outpost rubber stamp";
-	stamp_border = "#7f4ba2";
-	stamp_color = "#9361b5";
 	stamp_message = "Research Outpost"
 	},
 /obj/item/weapon/pen,
@@ -11581,10 +11639,12 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "AU" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	name = "Mining Shuttle Airlock";
-	req_access = list(48);
+	req_access = list(48)
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -11730,6 +11790,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/globose/science,
 /obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/globose/science,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/item/device/radio/intercom{
@@ -11742,10 +11803,12 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "Bx" = (
-/obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore1)
@@ -11897,9 +11960,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/power/apc{
-	name = "Cargo left APC";
 	custom_smartlight_preset = "Cargo";
 	dir = 8;
+	name = "Cargo left APC";
 	pixel_x = -27
 	},
 /turf/simulated/floor{
@@ -11926,6 +11989,7 @@
 /area/asteroid/research_outpost/longtermstorage)
 "Dh" = (
 /obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/space/rig/science,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/science,
@@ -12182,6 +12246,19 @@
 "Hg" = (
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
+"HX" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/transit_tube{
+	icon_state = "D-SW"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/entry)
 "Ib" = (
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = -32
@@ -12210,11 +12287,6 @@
 	},
 /area/asteroid/mine/explored)
 "Ie" = (
-/obj/machinery/camera{
-	c_tag = "Shuttle Airlock";
-	dir = 8;
-	network = list("MINE")
-	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "mining_internal";
 	name = "mining conveyor"
@@ -12341,9 +12413,8 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/transit_tube{
-	icon_state = "D-NE"
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
@@ -12449,11 +12520,24 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
+"Lq" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/transit_tube{
+	icon_state = "NW-SE"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/entry)
 "Lz" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	name = "Mining Bridge";
-	req_access = list(54);
-	dir = 4
+	req_access = list(54)
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -12506,6 +12590,11 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
 	pixel_y = 30
+	},
+/obj/machinery/camera{
+	c_tag = "Mining production";
+	dir = 6;
+	network = list("MINE")
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -12609,6 +12698,12 @@
 /obj/structure/lattice,
 /turf/environment/space,
 /area/space)
+"NN" = (
+/obj/structure/transit_tube{
+	icon_state = "D-SE"
+	},
+/turf/simulated/wall,
+/area/asteroid/research_outpost/entry)
 "NR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -12717,6 +12812,17 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/production)
+"Pu" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/transit_tube,
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/hallway)
 "Py" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -12983,12 +13089,13 @@
 /area/asteroid/mine/explored)
 "Ue" = (
 /obj/machinery/camera{
-	c_tag = "Production Room";
+	c_tag = "Mining";
 	dir = 8;
 	network = list("MINE")
 	},
 /turf/simulated/floor{
-	icon_state = "vaultfull"
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/asteroid/mine/production)
 "Uf" = (
@@ -13155,6 +13262,10 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
+"WK" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/power)
 "Xb" = (
 /obj/structure/sign/departments/science{
 	icon_state = "science2";
@@ -13227,9 +13338,29 @@
 	icon_state = "white"
 	},
 /area/asteroid/research_outpost/hallway)
+"XC" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost)
 "XD" = (
-/turf/simulated/floor/plating/airless,
-/area/space)
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "Yb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -13269,7 +13400,9 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "Ye" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "Yf" = (
@@ -13319,6 +13452,17 @@
 	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
+"Zn" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/eva)
 "Zz" = (
 /turf/simulated/mineral/random/low_chance,
 /area/asteroid/mine/unexplored/safe)
@@ -28148,11 +28292,11 @@ lA
 lA
 lA
 uU
-vl
-vl
+kR
+kR
 wH
-vl
-vl
+kR
+kR
 uU
 uU
 uU
@@ -28568,7 +28712,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -28825,7 +28969,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -29587,7 +29731,7 @@ ac
 ac
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -29690,9 +29834,9 @@ lA
 lA
 lA
 uU
-ik
+kR
 uk
-ik
+kR
 uU
 xe
 xO
@@ -29857,7 +30001,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -29962,14 +30106,14 @@ ac
 ac
 ac
 ad
-aI
+px
 ad
 ad
 ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -30461,9 +30605,9 @@ lA
 uF
 uM
 uU
-ik
+kR
 vQ
-ik
+kR
 uU
 xh
 uU
@@ -30617,7 +30761,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -30722,7 +30866,7 @@ rc
 vR
 qZ
 uU
-kR
+XC
 uU
 ys
 lA
@@ -30884,7 +31028,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -31768,7 +31912,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -32176,7 +32320,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -32191,7 +32335,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -32289,7 +32433,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ac
@@ -32546,7 +32690,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -32973,21 +33117,21 @@ ad
 ad
 ad
 ad
-aI
+rx
 si
 si
 lA
 lA
 lA
+ry
+ry
+rx
 pC
 pC
-aI
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -33210,45 +33354,45 @@ ad
 ad
 ad
 ad
+ag
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+pC
+pC
+pC
+rx
+rx
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+rx
+rx
 pC
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-aI
 pC
 pC
 pC
 pC
-pC
-pC
-pC
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
 ad
 ad
 ad
@@ -33470,42 +33614,42 @@ ad
 ad
 ad
 ad
+ag
+ag
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+pC
+rx
+rx
+rx
+ry
+ry
+rx
+rx
+rx
+rx
+ry
+ry
+ry
+rx
 pC
 pC
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-aI
-aI
-pC
-pC
-aI
-aI
-aI
-aI
 pC
 pC
 pC
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
 ac
 ac
 ac
@@ -33727,41 +33871,42 @@ ad
 ad
 ad
 ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ry
+ry
+pC
+pC
+pC
+pC
+rx
+rx
+rx
+ry
+ry
+rx
+rx
+rx
+rx
+rx
+rx
+rx
+ry
+rx
+rx
+rx
+rx
 pC
 pC
 pC
 pC
 pC
-pC
-pC
-pC
-pC
-pC
-ad
-ad
-ad
-ad
-aI
-aI
-aI
-pC
-pC
-aI
-aI
-aI
-aI
-aI
-aI
-aI
-pC
-aI
-aI
-aI
-aI
-ad
-ad
-ad
-ad
 ac
 ac
 ac
@@ -33773,7 +33918,6 @@ ac
 ac
 ac
 ac
-ac
 ad
 ad
 ad
@@ -33788,7 +33932,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -33966,7 +34110,7 @@ ad
 ad
 ad
 ad
-pC
+ag
 ad
 ad
 ad
@@ -33990,37 +34134,37 @@ ad
 ad
 ad
 ad
-pC
-pC
-pC
-pC
-pC
-pC
-aI
-aI
-aI
-pC
-pC
-pC
-aI
-aI
-ad
-ad
-ad
-aI
-aI
-aI
+ag
+ag
+ry
+ry
+ry
+ry
+rx
+rx
+rx
+ry
+ry
+ry
+rx
+rx
 pC
 pC
 pC
-aI
-aI
-aI
-ad
-ad
-ad
-ac
-ac
+rx
+rx
+rx
+ry
+ry
+ry
+rx
+rx
+rx
+pC
+pC
+pC
+pC
+pC
 kO
 kO
 kO
@@ -34081,7 +34225,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -34222,14 +34366,9 @@ ad
 ad
 ad
 ad
-pC
-pC
-pC
-ad
-ad
-ad
-ad
-ad
+ag
+ag
+ag
 ad
 ad
 ad
@@ -34255,29 +34394,34 @@ pC
 pC
 pC
 pC
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+ry
+rx
+rx
 pC
 pC
 pC
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-aI
+pC
+pC
+pC
+rx
+rx
+ry
+ry
+ry
+ry
+rx
 pC
 pC
 pC
 pC
-aI
-ad
-ad
-ad
-ad
-ac
+pC
 kO
 st
 st
@@ -34472,25 +34616,17 @@ ei
 ei
 hj
 ei
-pC
-pC
+ag
+ag
 ad
 ad
 ad
-pC
-pC
-pC
-pC
-pC
-pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+ag
+ag
+ag
+ag
+ag
+ag
 ad
 ad
 ad
@@ -34514,27 +34650,35 @@ pC
 pC
 pC
 pC
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
 pC
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ac
+ry
+ry
+ry
+ry
+rx
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+ry
+ry
+ry
+ry
+pC
+pC
+pC
+pC
+pC
 kO
 st
 sv
@@ -34553,7 +34697,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -34729,49 +34873,22 @@ oq
 oq
 dJ
 ei
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
 ad
 ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-pC
-aI
-aI
 ad
 ad
 ad
@@ -34789,9 +34906,36 @@ ad
 pC
 pC
 pC
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+ry
+rx
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+ry
+ry
+ry
+pC
+pC
+pC
 kO
 st
 sw
@@ -34859,7 +35003,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -34986,32 +35130,17 @@ ei
 ei
 ei
 ei
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
 ad
 ad
 ad
@@ -35026,29 +35155,44 @@ ad
 ad
 ad
 pC
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
 pC
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+ry
+rx
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+ry
+pC
+pC
+pC
 kO
 st
 sx
@@ -35246,6 +35390,24 @@ ei
 ei
 ei
 ei
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+px
+ad
+ad
 pC
 pC
 pC
@@ -35253,59 +35415,41 @@ pC
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
 pC
 pC
 pC
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
+pC
+pC
+pC
+pC
+rx
+pC
+ry
+ry
+ry
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 st
 sy
@@ -35503,66 +35647,66 @@ bM
 pA
 rn
 rs
-rx
+rz
+ag
+ag
+cO
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 pC
 pC
-rE
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 st
 sz
@@ -35594,7 +35738,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -35760,66 +35904,66 @@ qS
 pA
 ro
 qS
-ry
+zH
+ag
+ag
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 pC
 pC
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 st
 st
@@ -36017,64 +36161,64 @@ qT
 jQ
 rn
 bM
-rz
-rE
+zX
+cO
+ag
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 pC
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ac
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
 kO
 kO
 kO
@@ -36274,64 +36418,64 @@ ei
 ei
 ei
 ei
+ag
+ag
+cO
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 pC
 pC
-rE
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 sp
 sp
@@ -36528,6 +36672,23 @@ pQ
 qk
 ei
 ei
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 pC
 pC
 pC
@@ -36536,59 +36697,42 @@ pC
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 sp
 sr
@@ -36780,6 +36924,28 @@ ad
 ad
 ad
 ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 pC
 pC
 pC
@@ -36792,60 +36958,38 @@ pC
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 sq
 ss
@@ -36922,7 +37066,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -37038,6 +37182,25 @@ ad
 ad
 ad
 ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 pC
 pC
 pC
@@ -37047,62 +37210,43 @@ pC
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 sp
 sr
@@ -37297,69 +37441,69 @@ ad
 ad
 ad
 ad
+ag
+ag
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 pC
 pC
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 sp
 sp
@@ -37538,10 +37682,26 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ag
+ag
+ag
 ad
 ad
 ad
@@ -37558,65 +37718,49 @@ ad
 pC
 pC
 pC
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 kO
 kO
@@ -37633,9 +37777,9 @@ kO
 kO
 kO
 kO
-ac
-ad
-ad
+pC
+pC
+pC
 ad
 ad
 ad
@@ -37684,7 +37828,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -37828,54 +37972,54 @@ ad
 ad
 ad
 ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 st
 st
@@ -37889,10 +38033,10 @@ kO
 kO
 kO
 kO
-ac
-ac
-ad
-ad
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -37939,7 +38083,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -38084,55 +38228,55 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 st
 sD
@@ -38145,18 +38289,18 @@ st
 kO
 kO
 kO
-ac
-ac
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-aI
+px
 ad
 ad
 ad
@@ -38341,55 +38485,55 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 st
 sE
@@ -38401,13 +38545,13 @@ tm
 st
 kO
 kO
-ac
-ac
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -38461,7 +38605,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -38598,55 +38742,55 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
 kO
 st
 sF
@@ -38657,14 +38801,14 @@ tz
 tH
 st
 kO
-ac
-ac
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -38704,7 +38848,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -38853,57 +38997,57 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 st
 sG
@@ -38914,14 +39058,14 @@ st
 tI
 st
 kO
-ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -39087,10 +39231,10 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -39111,56 +39255,56 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 st
 sH
@@ -39171,14 +39315,14 @@ sU
 tJ
 st
 kO
-ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -39368,56 +39512,56 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 st
 st
@@ -39428,14 +39572,14 @@ st
 st
 st
 kO
-ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -39491,7 +39635,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -39625,56 +39769,56 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 kO
 kO
 kO
@@ -39685,14 +39829,14 @@ kO
 kO
 kO
 kO
-ac
-ad
-ad
-ad
-ad
-ac
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -39729,7 +39873,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -39753,7 +39897,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -39882,74 +40026,74 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -39997,7 +40141,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -40139,74 +40283,74 @@ ad
 ad
 ad
 ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
-ac
-ac
-ac
-ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -40388,82 +40532,82 @@ ad
 ad
 ad
 ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+px
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -40653,74 +40797,74 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -40765,7 +40909,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -40777,7 +40921,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -40873,7 +41017,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -40910,74 +41054,74 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -41152,89 +41296,89 @@ ad
 ad
 ad
 ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+px
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -41420,78 +41564,78 @@ ad
 ad
 ad
 ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+px
+ad
+ad
+ad
+ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -41532,7 +41676,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -41682,73 +41826,73 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -41939,73 +42083,73 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -42196,73 +42340,73 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+rx
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -42299,7 +42443,7 @@ ac
 ac
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -42311,8 +42455,8 @@ ad
 ad
 ad
 ad
-aI
-aI
+px
+px
 ad
 ad
 ad
@@ -42322,7 +42466,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -42418,14 +42562,14 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -42454,72 +42598,72 @@ ad
 ad
 ad
 ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+rx
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -42711,72 +42855,72 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -42968,71 +43112,71 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -43180,7 +43324,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -43225,72 +43369,72 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-aI
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+px
 ad
 ad
 ad
@@ -43334,7 +43478,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -43483,70 +43627,70 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -43740,70 +43884,70 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -43854,7 +43998,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -43870,7 +44014,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ac
 ac
 ac
@@ -43953,7 +44097,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -43997,70 +44141,70 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -44256,68 +44400,68 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -44373,7 +44517,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -44513,68 +44657,68 @@ ad
 ad
 ad
 ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -44620,7 +44764,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -44764,74 +44908,74 @@ ad
 ad
 ad
 ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+px
+ad
+ad
+ad
+ad
+ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -45029,65 +45173,65 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -45152,7 +45296,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -45286,65 +45430,65 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -45545,68 +45689,68 @@ ad
 ad
 ad
 ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
+px
 ad
 ad
 ad
@@ -45802,22 +45946,22 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -45826,39 +45970,39 @@ ac
 ac
 ac
 ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -46016,7 +46160,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -46061,18 +46205,18 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -46083,39 +46227,39 @@ ac
 ac
 ac
 ac
-ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -46160,14 +46304,14 @@ kO
 ac
 ad
 ad
-aI
+px
 ad
 ad
 ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -46318,18 +46462,18 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ac
 ac
@@ -46342,37 +46486,37 @@ ac
 ac
 ac
 ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -46424,9 +46568,9 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
-aI
+px
 ad
 ad
 ad
@@ -46575,18 +46719,18 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ac
 ac
 ac
@@ -46599,37 +46743,37 @@ ac
 ac
 ac
 ac
-ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
 ad
@@ -46835,15 +46979,15 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ac
 ac
 ac
@@ -46856,37 +47000,37 @@ ac
 ac
 ac
 ac
-ac
-ac
+pC
+pC
+pC
+pC
+pC
+rx
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ad
 ad
-ad
-aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aI
+px
 ad
 ad
 ad
@@ -46947,7 +47091,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -47092,15 +47236,15 @@ ad
 ad
 ad
 aI
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ac
 ac
 aa
@@ -47115,32 +47259,32 @@ ac
 ac
 ac
 ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-zH
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+as
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ac
 ad
 ad
@@ -47298,7 +47442,7 @@ ac
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -47352,9 +47496,9 @@ ad
 ad
 ad
 ad
-ad
-ad
-ad
+pC
+pC
+pC
 ac
 ac
 ac
@@ -47374,30 +47518,30 @@ ac
 ac
 ac
 ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
 pC
 pC
-ac
-zH
 pC
 pC
-ac
-ac
-ac
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+ry
+ry
+pC
+as
+ry
+ry
+pC
+pC
+pC
 ac
 ad
 ad
@@ -47448,7 +47592,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -47610,8 +47754,8 @@ ad
 ad
 ad
 ac
-ac
-ac
+pC
+pC
 ac
 ac
 ac
@@ -47631,30 +47775,30 @@ ac
 ac
 ac
 ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-zH
 pC
 pC
 pC
 pC
-zX
 pC
 pC
 pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+as
+ry
+ry
+ry
+ry
+cn
+ag
+ag
+ag
 ac
 ad
 ad
@@ -47867,51 +48011,51 @@ ac
 ac
 ac
 ac
-ac
-ac
-ac
-ac
-ac
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ac
-ac
-ac
-ac
-ac
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ac
-ac
-ac
-ac
-ad
-ad
-ac
 pC
 pC
-pC
-zX
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
 pC
 pC
 pC
 pC
 pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+ry
+ry
+ry
+cn
+ry
+ry
+ag
+ag
+ag
 ac
 ad
 ad
@@ -48147,28 +48291,28 @@ ac
 ac
 ac
 ad
+pC
+pC
+pC
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 ac
 ad
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ad
-ac
-ac
-ac
-zX
 pC
 pC
 pC
-pC
-zX
-pC
+cn
+ry
+ry
+ry
+ag
+cP
+ag
 ac
 ad
 ad
@@ -48188,14 +48332,14 @@ oN
 oP
 tX
 uo
-ia
-ia
-ia
+XD
+XD
+XD
 uo
 uo
-qd
-qd
-qd
+XD
+XD
+XD
 uo
 uo
 ww
@@ -48416,16 +48560,16 @@ ac
 ac
 ac
 ac
+pC
 ac
-ac
-pC
-pC
-pC
-pC
-pC
-pC
-pC
-pC
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
 ac
 ad
 ad
@@ -48676,14 +48820,14 @@ ac
 ac
 ac
 ac
-pC
-pC
-pC
-zX
-pC
-pC
-zX
-pC
+ag
+ag
+ag
+cP
+ag
+ag
+cP
+ag
 ac
 ad
 ad
@@ -48729,7 +48873,7 @@ lA
 kO
 ac
 ad
-aI
+px
 ad
 ad
 ad
@@ -48934,13 +49078,13 @@ ac
 ac
 ac
 ac
-pC
-pC
-pC
-pC
-pC
-pC
-pC
+ag
+ag
+ag
+ag
+ag
+ag
+ag
 ac
 ad
 ad
@@ -49191,12 +49335,12 @@ ac
 ac
 ac
 ac
-pC
-pC
-pC
-zX
-pC
-pC
+ag
+ag
+ag
+cP
+ag
+ag
 ac
 ac
 ac
@@ -49449,10 +49593,10 @@ ac
 ac
 ac
 ac
-pC
-pC
-pC
-pC
+ag
+ag
+ag
+ag
 ac
 ac
 ac
@@ -49619,12 +49763,12 @@ mo
 mo
 mo
 mo
-bL
-gr
-fx
+hp
+HX
+Lq
+zy
 Kc
-bL
-iU
+NN
 nB
 aa
 aa
@@ -50028,13 +50172,13 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -50505,15 +50649,15 @@ aa
 aa
 lA
 uo
-ia
-ia
+XD
+XD
 uo
-ia
-ia
+XD
+XD
 uo
-ia
+uo
 zT
-ia
+uo
 uo
 uo
 uo
@@ -50653,11 +50797,11 @@ Bc
 aW
 kS
 hp
-hP
-hP
-hP
-hP
-hP
+pD
+pD
+pD
+pD
+pD
 mp
 pV
 ql
@@ -50793,7 +50937,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -51258,7 +51402,7 @@ ac
 ac
 ac
 mY
-XD
+rN
 ar
 aa
 aa
@@ -51515,7 +51659,7 @@ aa
 mY
 aa
 ar
-XD
+rN
 ar
 aa
 kO
@@ -51676,10 +51820,10 @@ ar
 ar
 ar
 hp
-Ao
+Kc
 hL
-Ao
-Ao
+Kc
+Kc
 hp
 mc
 mr
@@ -51772,7 +51916,7 @@ aa
 aa
 aa
 ar
-XD
+rN
 ar
 kO
 kO
@@ -51928,9 +52072,9 @@ YV
 YV
 aX
 bh
-ap
-ap
-ap
+aB
+aB
+aB
 bh
 Rb
 ht
@@ -52029,7 +52173,7 @@ aa
 aa
 aa
 ar
-XD
+rN
 ar
 rK
 rK
@@ -52286,7 +52430,7 @@ aa
 aa
 aa
 ar
-XD
+rN
 rK
 rK
 rK
@@ -52346,7 +52490,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -52543,7 +52687,7 @@ aa
 aa
 aa
 ar
-XD
+rN
 rK
 rK
 aa
@@ -52598,7 +52742,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -52703,7 +52847,7 @@ eS
 ao
 cL
 da
-dC
+aR
 hq
 if
 hq
@@ -52800,7 +52944,7 @@ aa
 aa
 aa
 ar
-XD
+rN
 ar
 aa
 aa
@@ -53057,7 +53201,7 @@ aa
 aa
 aa
 ar
-XD
+rN
 ar
 aa
 aa
@@ -53111,7 +53255,7 @@ ad
 ad
 ad
 ad
-aI
+px
 ad
 ad
 ad
@@ -53314,7 +53458,7 @@ aa
 aa
 aa
 ar
-XD
+rN
 ar
 aa
 aa
@@ -54117,11 +54261,11 @@ zA
 zA
 zA
 zA
-kc
-kc
-kc
-kc
-kc
+ws
+fx
+fx
+fx
+ws
 Be
 aa
 ar
@@ -55145,11 +55289,11 @@ zA
 zA
 zA
 zA
-kc
+ws
 Ye
 Ye
-kc
-kc
+ws
+ws
 Be
 aa
 ar
@@ -55402,10 +55546,10 @@ zA
 zA
 zA
 zA
-kc
+ws
 wN
 Bu
-kc
+ws
 aa
 Be
 aa
@@ -55650,19 +55794,19 @@ lA
 lA
 lA
 lA
-kc
-kc
+ws
+ws
 zk
-kc
-kc
+ws
+ws
 aa
 aa
 aa
-kc
+ws
 Mc
 AU
 AU
-kc
+ws
 aa
 Be
 aa
@@ -55907,19 +56051,19 @@ lA
 lA
 lA
 ws
-kc
+ws
 xz
 zm
 Wc
-kc
 ws
 ws
 ws
-kc
+ws
+ws
 Qe
 Ze
 Hf
-kc
+ws
 ws
 BA
 Bh
@@ -56681,7 +56825,7 @@ kc
 wb
 xu
 zn
-zn
+Ue
 Ad
 Rd
 zn
@@ -56935,9 +57079,9 @@ vC
 uD
 uD
 vC
-yC
+Zn
 vd
-yC
+Zn
 yP
 zh
 ws
@@ -57056,8 +57200,8 @@ aa
 aa
 aa
 aa
-ap
-aB
+aR
+Pu
 aR
 bh
 bw
@@ -57827,8 +57971,8 @@ aa
 aa
 aa
 aa
-ap
-aB
+aR
+Pu
 aR
 bh
 bF
@@ -58220,16 +58364,16 @@ vD
 vD
 vD
 vD
-jT
+yC
 zB
-jT
+yC
 ws
 ws
 ws
 Ge
 ws
 Oe
-Ue
+Te
 Ef
 Qz
 AV
@@ -58991,9 +59135,9 @@ lA
 lA
 lA
 vD
-jT
+yC
 yg
-jT
+yC
 ws
 Hd
 ws
@@ -59127,7 +59271,7 @@ eF
 eF
 fU
 gv
-gv
+WK
 hO
 eF
 ja
@@ -59631,11 +59775,11 @@ aa
 aa
 aa
 aa
-aE
-aE
-aE
-aE
-aE
+bI
+iU
+iU
+iU
+bI
 ee
 eI
 ee

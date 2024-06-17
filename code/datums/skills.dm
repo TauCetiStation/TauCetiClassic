@@ -1,9 +1,14 @@
+// container for all character skillsets, we keep it in mind
 /datum/skills
+	// current "active" skillset we use for skill checks
+	// skill value here is based on user choice (so he can fake own skills, hide antag bonuses for example)
+	// and maximum depends on "available" skillset
 	var/datum/skillset/active = new
+	// just a holder for maximums of all "available_skillsets"
 	var/datum/skillset/available = new
 
+	// all skillsets added to the mind, like starting profession skillsets, antag skillsets, etc.
 	var/list/available_skillsets
-
 
 /datum/skills/proc/get_value(skill)
 	return active.get_value(skill)
@@ -26,8 +31,8 @@
 		active.set_value(skill, get_max(skill))
 
 /datum/skills/proc/add_available_skillset(skillset_type)
-    LAZYADD(available_skillsets, global.all_skillsets[skillset_type])
-    update_available()
+	LAZYADD(available_skillsets, global.all_skillsets[skillset_type])
+	update_available()
 
 /datum/skills/proc/remove_available_skillset(skillset_type)
 	for(var/datum/skillset/s as anything in available_skillsets)
@@ -69,7 +74,7 @@
 
 /mob/living/proc/help_prank(mob/living/target)
 	if(target.a_intent == INTENT_HARM)
-		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but [P_THEY(target.gender)] rejects your help and pranks you instead!</span>")
+		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but [P_THEY(target)] rejects your help and pranks you instead!</span>")
 		to_chat(target, "<span class='notice'>You prank \the [src]!</span>")
 		apply_effects(stun = 1, weaken = 1)
 		return TRUE
@@ -103,10 +108,10 @@
 	LAZYREMOVE(target.helpers_skillsets, active_skillset)
 
 /mob/living/proc/on_start_help_other(mob/living/target)
-	visible_message("<span class='notice'>[src] puts [P_THEIR(gender)] hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)].</span>", "<span class='notice'>You put your hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)]. You need to stand still while doing this.</span>")
+	visible_message("<span class='notice'>[src] puts [P_THEIR(src)] hand on \the [target]'s shoulder, assisting [P_THEM(target)].</span>", "<span class='notice'>You put your hand on \the [target]'s shoulder, assisting [P_THEM(target)]. You need to stand still while doing this.</span>")
 
 /mob/living/proc/on_stop_help_other(mob/living/target)
-	visible_message("<span class='notice'>[src] removes [P_THEIR(gender)] hand from \the [target]'s shoulder.</span>", "<span class='notice'>You remove your hand from \the [target]'s shoulder.</span>")
+	visible_message("<span class='notice'>[src] removes [P_THEIR(src)] hand from \the [target]'s shoulder.</span>", "<span class='notice'>You remove your hand from \the [target]'s shoulder.</span>")
 
 /mob/living/proc/add_skills_buff(datum/skillset/skillset, time = -1)
 	LAZYDISTINCTADD(helpers_skillsets, skillset)

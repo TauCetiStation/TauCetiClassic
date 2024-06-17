@@ -3,6 +3,7 @@
 
 /obj/effect/proc_holder/changeling/implant_managment
 	name = "Implant Managment"
+	button_icon_state = "implant_managment"
 	req_human = TRUE
 	can_be_used_in_abom_form = FALSE
 	genomecost = 0
@@ -16,6 +17,12 @@
 
 /obj/effect/proc_holder/changeling/implant_managment/Click()
 	setup_brows(usr)
+
+/obj/effect/proc_holder/changeling/implant_managment/can_sting(mob/user)
+	return TRUE
+
+/obj/effect/proc_holder/changeling/implant_managment/sting_action(mob/user)
+	setup_brows(user)
 
 /obj/effect/proc_holder/changeling/implant_managment/proc/setup_brows(mob/user)
 	var/dat = create_menu(user)

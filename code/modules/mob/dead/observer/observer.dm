@@ -33,7 +33,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/next_point_to = 0
 
 	var/datum/orbit_menu/orbit_menu
-	var/datum/spawners_menu/spawners_menu
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
@@ -117,8 +116,13 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/mob/living/M = mind.current
 		M.med_hud_set_status()
 	QDEL_NULL(adminMulti)
-	QDEL_NULL(spawners_menu)
 	return ..()
+
+/mob/dead/observer/Life()
+	if(client)
+		var/turf/T = get_turf(src)
+		if(T && last_z != T.z)
+			update_z(T.z)
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)
@@ -429,11 +433,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!length(custom_sprites))
 		if(config.customitems_info_url)
-			to_chat(src, "<span class='notice'>You don't have any ghost sprites. <a href='[config.customitems_info_url]'>Read more about Fluff</a> and how to get them.</span>")
+			to_chat(src, "<span class='notice'>You don't have any custom ghost sprites. <a href='[config.customitems_info_url]'>Read more about Fluff</a> and how to get them.</span>")
 		else
-			to_chat(src, "<span class='notice'>You don't have any ghost sprites.</span>")
-
-		return
+			to_chat(src, "<span class='notice'>You don't have any custom ghost sprites.</span>")
 
 	if(body_icon)
 		custom_sprites += "--body--"
@@ -647,13 +649,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/updateghostsight()
 	switch(lighting_alpha)
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+			set_lighting_alpha(LIGHTING_PLANE_ALPHA_INVISIBLE)
 		else
-			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			set_lighting_alpha(LIGHTING_PLANE_ALPHA_VISIBLE)
 	update_sight()
 
 
@@ -705,7 +707,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 
 	if(!spawners_menu)
-		spawners_menu = new(src)
+		spawners_menu = new()
 
 	spawners_menu.tgui_interact(src)
 
@@ -713,3 +715,26 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
+
+/mob/dead/observer/verb/change_view_range()
+	set name = "Change View Range"
+	set desc = "Change your view range"
+	set category = "Ghost"
+
+	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM])
+		to_chat(usr, "<span class='warning'>That verb is currently globally disabled.</span>")
+		return
+
+	var/max_view_range = client.supporter ? config.ghost_max_view_supporter : config.ghost_max_view
+
+	var/viewx = clamp(input("Enter view width ([world.view]-[max_view_range])") as num|null, world.view, max_view_range) * 2 + 1
+	var/viewy = clamp(input("Enter view height ([world.view]-[max_view_range])") as num|null, world.view, max_view_range) * 2 + 1
+
+	if(!client)
+		return
+	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM])
+		return
+
+	client.change_view("[viewx]x[viewy]")
+	if(client.prefs.auto_fit_viewport)
+		client.fit_viewport()

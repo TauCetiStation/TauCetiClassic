@@ -51,6 +51,8 @@
 	pixel_x = initial(pixel_x)
 
 /obj/machinery/monkey_recycler/RefreshParts()
+	..()
+
 	var/req_grind = 5
 	var/cubes_made = 1
 	for(var/obj/item/weapon/stock_parts/manipulator/B in component_parts)

@@ -25,7 +25,6 @@
 	// Pipe colors and icon states are handled by an image cache - so color and icon should
 	//  be null. For mapping purposes color is defined in the object definitions.
 	icon = null
-	alpha = 255
 
 /obj/machinery/atmospherics/pipe/simple/SetInitDirections()
 	if(dir in cornerdirs)
@@ -84,8 +83,6 @@
 	if(!check_icon_cache())
 		return
 
-	alpha = 255
-
 	cut_overlays()
 
 	var/obj/machinery/atmospherics/node1 = NODE1
@@ -110,7 +107,7 @@
 
 /obj/machinery/atmospherics/pipe/simple/visible
 	icon_state = "intact"
-	level = PIPE_VISIBLE_LEVEL
+	undertile = FALSE
 	layer = GAS_PIPE_VISIBLE_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers
@@ -156,8 +153,7 @@
 
 /obj/machinery/atmospherics/pipe/simple/hidden
 	icon_state = "intact"
-	level = PIPE_HIDDEN_LEVEL
-	alpha = 128		//set for the benefit of mapping - this is reset to opaque when the pipe is spawned in game
+	undertile = TRUE
 
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers
 	name = "Scrubbers pipe"

@@ -6,6 +6,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
+	item_state_world = "waterbackpack_world"
 	flags = OPENCONTAINER
 	w_class = SIZE_NORMAL
 
@@ -110,6 +111,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
+	item_state_world = "mister_world"
 	w_class = SIZE_NORMAL
 	throwforce = 0 //we shall not abuse
 	amount_per_transfer_from_this = 25
@@ -150,6 +152,7 @@
 	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
+	item_state_world = "waterbackpackjani_world"
 	noz = /obj/item/weapon/reagent_containers/spray/mister/janitor
 	list_reagents = list("cleaner" = 500)
 
@@ -159,6 +162,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "misterjani"
 	item_state = "misterjani"
+	item_state_world = "misterjani_world"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5, 10)
 	spray_size = 1
@@ -169,6 +173,7 @@
 	desc = "A W.A.R.C.R.I.M.E.S. brand chemical backpack with nozzle to cover bodies in fresh chemical burns."
 	icon_state = "waterbackpacknuke"
 	item_state = "waterbackpacknuke"
+	item_state_world = "waterbackpacknuke"
 	volume = 1600
 	noz = /obj/item/weapon/reagent_containers/spray/mister/syndie
 	list_reagents = list("lexorin" = 200, "mindbreaker" = 200, "alphaamanitin" = 200, "space_drugs" = 200, "pacid" = 200, "fuel" = 200, "condensedcapsaicin" = 200, "stoxin" = 200)
@@ -192,6 +197,7 @@
 	desc = "Breath of death."
 	icon_state = "misternuke"
 	item_state = "misternuke"
+	item_state_world = "misternuke"
 	triple_shot = TRUE
 	spray_size = 4
 	spray_sizes = list(2)

@@ -2,7 +2,6 @@
 	layer = TURF_LAYER
 	plane = GAME_PLANE
 
-	var/level = 2
 	var/flags = 0
 	var/flags_2 = 0
 	var/list/fingerprints
@@ -29,6 +28,9 @@
 	var/list/remove_overlays
 	/// a very temporary list of overlays to add
 	var/list/add_overlays
+
+	/// parallax thing
+	var/list/clients_in_contents
 
 	///This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -72,6 +74,9 @@
 
 	var/resistance_flags = FULL_INDESTRUCTIBLE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
+	var/can_block_air = FALSE // shared flag between /turf/s and /movable/s, you should use it only for movables
+	                          // if you want to set it true for object then remember to create CanPass or c_airblock methods or it will do nothing (pls refactor it)
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -101,9 +106,12 @@
 // /turf/atom_init
 // /turf/environment/space/atom_init
 // /mob/dead/atom_init
-// /obj/item
+// /obj/item/atom_init
+// /atom/movable/screen/atom_init
 
-//Do also note that this proc always runs in New for /mob/dead
+// Read commentary above if you want to create:
+// /atom/movable/atom_init
+
 /atom/proc/atom_init(mapload, ...)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -114,9 +122,14 @@
 	if(light_power && light_range)
 		update_light()
 
-	if(opacity && isturf(src.loc))
-		var/turf/T = src.loc
+	if(opacity && isturf(loc))
+		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	if(can_block_air && isturf(loc))
+		var/turf/T = loc
+		if(!T.can_block_air)
+			T.can_block_air = TRUE
 
 	if(uses_integrity)
 		if (!armor)
@@ -717,9 +730,6 @@
 /atom/proc/shake_act(severity, recursive = TRUE)
 	if(isturf(loc))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, do_shake_animation), severity, 1 SECOND)
-
-/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
-	return
 
 /turf/shake_act(severity, recursive = TRUE)
 	for(var/atom/A in contents)

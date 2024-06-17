@@ -2,8 +2,11 @@
  //MAIN AREAS//
  //////////////
 
+ // Respectful request when adding new zones, add RU cases. Since zones are starting to be actively used in translation.
+
 /area/space
 	name = "Space"
+	cases = list("космическое пространство", "космического пространства", "космическому пространству", "космическое пространство", "космическим пространством", "космическом пространстве")
 	icon_state = "space"
 	requires_power = 1
 	always_unpowered = 1
@@ -27,11 +30,13 @@
 
 /area/start            // will be unused once kurper gets his login interface patch done
 	name = "start area"
+	cases = list("стартовая локация", "стартовой локации", "стартовой локации", "стартовую локацию", "стартовой локацией", "стартовой локации")
 	icon_state = "start"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = FALSE
 	has_gravity = 1
 
 // other environment areas
 /area/space/snow
 	name = "Snow field"
+	cases = list("снежное поле", "снежного поля", "снежному полю", "снежное поле", "снежным полем", "снежном поле")

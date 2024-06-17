@@ -21,7 +21,7 @@ export const InterfaceLockNoticeBox = (props, context) => {
     siliconUser = data.siliconUser,
     locked = data.locked,
     onLockStatusChange = () => act('lock'),
-    accessText = 'an ID card',
+    accessText = 'ID-картой',
   } = props;
   // For silicon users
   if (siliconUser) {
@@ -29,7 +29,7 @@ export const InterfaceLockNoticeBox = (props, context) => {
       <NoticeBox color="grey">
         <Flex align="center">
           <Flex.Item>
-            Interface lock status:
+            Интерфейс:
           </Flex.Item>
           <Flex.Item grow={1} />
           <Flex.Item>
@@ -37,7 +37,7 @@ export const InterfaceLockNoticeBox = (props, context) => {
               m={0}
               color={locked ? 'red' : 'green'}
               icon={locked ? 'lock' : 'unlock'}
-              content={locked ? 'Locked' : 'Unlocked'}
+              content={locked ? 'Заблокирован' : 'Разблокирован'}
               onClick={() => {
                 if (onLockStatusChange) {
                   onLockStatusChange(!locked);
@@ -51,8 +51,8 @@ export const InterfaceLockNoticeBox = (props, context) => {
   // For everyone else
   return (
     <NoticeBox>
-      Swipe {accessText}{' '}
-      to {locked ? 'unlock' : 'lock'} this interface.
+      Проведите {accessText}{' '}
+      для {locked ? 'разблокировки' : 'блокировки'}.
     </NoticeBox>
   );
 };

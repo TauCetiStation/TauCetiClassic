@@ -22,6 +22,9 @@
 	QDEL_NULL(overload_action)
 	return ..()
 
+/obj/mecha/combat/gygax/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 3000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
 	..()
@@ -30,6 +33,15 @@
 /obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	overload_action.Remove(user)
+
+/obj/mecha/combat/gygax/security/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/repair_droid(src)
+	ME.attach(src)
 
 /obj/mecha/combat/gygax/ultra
 	desc = "A highly improved version of Gygax exosuit."
@@ -42,6 +54,19 @@
 	max_temperature = 30000
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/ultra
 	animated = 1
+
+/obj/mecha/combat/gygax/ultra/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4600, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
+/obj/mecha/combat/gygax/ultra/security/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/repair_droid(src)
+	ME.attach(src)
 
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit used by Nanotrasen Death Squads. A significantly upgraded Gygax security mech."
@@ -67,6 +92,7 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
 	ME.attach(src)
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/combat/gygax/dark/add_cell(obj/item/weapon/stock_parts/cell/C=null)
 	if(C)

@@ -2,16 +2,16 @@
 	name = "secure locker"
 	desc = "It's an immobile card-locked storage unit."
 	icon = 'icons/obj/closet.dmi'
-	icon_state = "secure1"
 	density = TRUE
 	opened = 0
 	locked = 1
 	var/large = 1
+	icon_state = "secure"
 	icon_closed = "secure"
-	var/icon_locked = "secure1"
-	icon_opened = "secureopen"
-	var/icon_broken = "securebroken"
-	var/icon_off = "secureoff"
+	icon_opened = "secure_open"
+	var/overlay_locked = "locked"
+	var/overlay_unlocked = "unlocked"
+	var/overlay_welded = "welded"
 	wall_mounted = 0 //never solid (You can always pass over it)
 	max_integrity = 200
 	damage_deflection = 30
@@ -22,12 +22,16 @@
 	return ..()
 
 /obj/structure/closet/secure_closet/close()
-	if(..())
-		if(broken)
-			icon_state = src.icon_off
-		return 1
-	else
-		return 0
+	. = ..()
+
+	if(.)
+		update_icon()
+
+/obj/structure/closet/secure_closet/open()
+	. = ..()
+
+	if(.)
+		update_icon()
 
 /obj/structure/closet/secure_closet/AltClick(mob/user)
 	if(!user.incapacitated() && Adjacent(user) && user.IsAdvancedToolUser())
@@ -72,15 +76,15 @@
 	if(opened  || istype(W, /obj/item/weapon/grab))
 		return ..()
 	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/dualsaber)) && !src.broken)
+		// emag copypaste :(
 		broken = 1
 		locked = 0
 		user.SetNextMove(CLICK_CD_MELEE)
 		desc = "It appears to be broken."
-		icon_state = icon_off
-		flick(icon_broken, src)
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)
 		spark_system.start()
+		update_icon()
 		playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
@@ -97,8 +101,11 @@
 	locked = 0
 	user.SetNextMove(CLICK_CD_MELEE)
 	desc = "It appears to be broken."
-	icon_state = icon_off
-	flick(icon_broken, src)
+	var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+	spark_system.set_up(5, 0, src.loc)
+	spark_system.start()
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	update_icon()
 	visible_message("<span class='notice'>The locker has been sliced open by [user] with an electromagnetic card!</span>", blind_message = "<span class='warning'>You hear a faint electrical spark.</span>", viewing_distance = 3)
 	return TRUE
 
@@ -127,14 +134,30 @@
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
-/obj/structure/closet/secure_closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
+/obj/structure/closet/secure_closet/update_icon()
 	cut_overlays()
-	if(!opened)
-		if(locked)
-			icon_state = icon_locked
-		else
-			icon_state = icon_closed
-		if(welded)
-			add_overlay("welded")
-	else
+
+	if(opened)
 		icon_state = icon_opened
+		return
+
+	icon_state = icon_closed
+
+	if(welded)
+		add_overlay(overlay_welded)
+
+	if(broken)
+		return
+
+	if(locked)
+		add_overlay(overlay_locked)
+	else
+		add_overlay(overlay_unlocked)
+
+
+/obj/structure/closet/secure_closet/psycho
+	name = "Psychiatrist's Locker"
+	req_access = list(access_psychiatrist)
+
+/obj/structure/closet/secure_closet/psycho/PopulateContents()
+	new /obj/item/device/healthanalyzer/psychology(src)

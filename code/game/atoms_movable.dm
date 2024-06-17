@@ -27,19 +27,10 @@
 
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
-	var/list/clients_in_contents
 	var/freeze_movement = FALSE
 
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
 	var/list/area_sensitive_contents
-
-/atom/movable/atom_init(mapload, ...)
-	. = ..()
-
-	if (can_block_air && isturf(loc))
-		var/turf/T = loc
-		if(!T.can_block_air)
-			T.can_block_air = TRUE
 
 /atom/movable/Destroy()
 
@@ -130,6 +121,7 @@
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	if(!ISDIAGONALDIR(Dir))
+		// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
 
 		if(moving_diagonally)
@@ -144,6 +136,10 @@
 
 	update_parallax_contents()
 
+	 // Cycle through the light sources on this atom and tell them to update.
+	for(var/datum/light_source/L as anything in light_sources)
+		L.source_atom.update_light()
+
 	if (orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing
@@ -151,8 +147,8 @@
 	if (orbiting)
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
-	return
 
+// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
 /atom/movable/proc/locMoved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
 	for(var/atom/movable/AM in contents)
@@ -167,39 +163,34 @@
 	if(A && non_native_bump)
 		A.Bumped(src)
 
-
 /atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE)
-	if(destination)
-		if(pulledby && !keep_pulling)
-			pulledby.stop_pulling()
-		var/atom/oldloc = loc
-		var/same_loc = (oldloc == destination)
-		var/area/old_area = get_area(oldloc)
-		var/area/destarea = get_area(destination)
+	if(!destination)
+		return
+	if(pulledby && !keep_pulling)
+		pulledby.stop_pulling()
+	var/atom/oldloc = loc
+	var/same_loc = (oldloc == destination)
+	var/area/old_area = get_area(oldloc)
+	var/area/destarea = get_area(destination)
+	loc = destination
+	if(!keep_moving_diagonally)
+		moving_diagonally = FALSE
+	if(!same_loc)
+		if(oldloc)
+			oldloc.Exited(src, destination)
+			if(old_area && old_area != destarea)
+				old_area.Exited(src, destination)
+		for(var/atom/movable/AM in oldloc)
+			AM.Uncrossed(src)
+		destination.Entered(src, oldloc)
+		if(destarea && old_area != destarea)
+			destarea.Entered(src, oldloc)
 
-		loc = destination
-
-		if(!keep_moving_diagonally)
-			moving_diagonally = FALSE
-
-		if(!same_loc)
-			if(oldloc)
-				oldloc.Exited(src, destination)
-				if(old_area && old_area != destarea)
-					old_area.Exited(src, destination)
-			for(var/atom/movable/AM in oldloc)
-				AM.Uncrossed(src)
-			destination.Entered(src, oldloc)
-			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
-
-			for(var/atom/movable/AM in destination)
-				if(AM == src)
-					continue
-				AM.Crossed(src, oldloc)
-		Moved(oldloc, 0)
-		return TRUE
-	return FALSE
+		for(var/atom/movable/AM in destination)
+			if(AM == src)
+				continue
+			AM.Crossed(src, oldloc)
+	Moved(oldloc, 0)
 
 /mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
 	if(!keep_pulling)
@@ -548,6 +539,10 @@
 #define GEIGER_RANGE 15
 
 /proc/irradiate_one_mob(mob/living/victim, rad_dose)
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		if(H.species.flags[IS_SYNTHETIC])
+			return
 	victim.apply_effect(rad_dose, IRRADIATE)
 	to_chat(victim, "<span class='warning'>[victim.get_radiation_message(rad_dose)]</span>")
 	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
@@ -559,6 +554,10 @@
 
 /proc/irradiate_in_dist(turf/source_turf, rad_dose, effect_distance)
 	for(var/mob/living/L in range(source_turf, effect_distance))
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.species.flags[IS_SYNTHETIC])
+				continue
 		var/neighbours_in_turf = 0
 		for(var/mob/living/neighbour in L.loc)
 			if(neighbour == L)

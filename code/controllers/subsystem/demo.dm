@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(demo)
 						row_list += this_appearance
 					else
 						// do a diff with the previous turf to save those bytes
-						row_list += encode_appearance(this_appearance, istext(last_appearance) ? null : last_appearance, encoded_type = T.type)
+						row_list += encode_appearance(this_appearance, istext(last_appearance) ? null : last_appearance, encoded_type = T.type, remove_overlays = T.flags_2 & PROHIBIT_OVERLAYS_FOR_DEMO_2)
 				last_appearance = this_appearance
 		if(rle_count > 1)
 			row_list += rle_count
@@ -190,7 +190,7 @@ SUBSYSTEM_DEF(demo)
 			M.demo_last_loc = M.loc
 		var/appearance_string = "="
 		if(M.appearance != M.demo_last_appearance)
-			appearance_string = encode_appearance(M.appearance, M.demo_last_appearance, encoded_type = M.type)
+			appearance_string = encode_appearance(M.appearance, M.demo_last_appearance, encoded_type = M.type, remove_overlays = M.flags_2 & PROHIBIT_OVERLAYS_FOR_DEMO_2)
 			M.demo_last_appearance = M.appearance
 		dirty_updates += "\ref[M] [loc_string] [appearance_string]"
 		if(MC_TICK_CHECK)
@@ -217,7 +217,7 @@ SUBSYSTEM_DEF(demo)
 		else if(ismovable(M.loc))
 			loc_string = "\ref[M.loc]"
 		M.demo_last_appearance = M.appearance
-		new_updates += "\ref[M] [loc_string] [encode_appearance(M.appearance, encoded_type = M.type)]"
+		new_updates += "\ref[M] [loc_string] [encode_appearance(M.appearance, encoded_type = M.type, remove_overlays = M.flags_2 & PROHIBIT_OVERLAYS_FOR_DEMO_2)]"
 		if(MC_TICK_CHECK)
 			canceled = TRUE
 			break
@@ -235,7 +235,7 @@ SUBSYSTEM_DEF(demo)
 		var/turf/T = marked_turfs[marked_turfs.len]
 		marked_turfs.len--
 		if(T && T.appearance != T.demo_last_appearance)
-			turf_updates += "([T.x],[T.y],[T.z])=[encode_appearance(T.appearance, T.demo_last_appearance, encoded_type = T.type)]"
+			turf_updates += "([T.x],[T.y],[T.z])=[encode_appearance(T.appearance, T.demo_last_appearance, encoded_type = T.type, remove_overlays = T.flags_2 & PROHIBIT_OVERLAYS_FOR_DEMO_2)]"
 			T.demo_last_appearance = T.appearance
 			if(MC_TICK_CHECK)
 				canceled = TRUE
@@ -249,7 +249,7 @@ SUBSYSTEM_DEF(demo)
 /datum/controller/subsystem/demo/proc/encode_init_obj(atom/movable/M)
 	M.demo_last_loc = M.loc
 	M.demo_last_appearance = M.appearance
-	var/encoded_appearance = encode_appearance(M.appearance, encoded_type = M.type)
+	var/encoded_appearance = encode_appearance(M.appearance, encoded_type = M.type, remove_overlays = M.flags_2 & PROHIBIT_OVERLAYS_FOR_DEMO_2)
 	var/list/encoded_contents = list()
 	for(var/C in M.contents)
 		var/atom/A = C
@@ -258,7 +258,7 @@ SUBSYSTEM_DEF(demo)
 	return "\ref[M]=[encoded_appearance][(encoded_contents.len ? "([jointext(encoded_contents, ",")])" : "")]"
 
 // please make sure the order you call this function in is the same as the order you write
-/datum/controller/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/encoded_type = null)
+/datum/controller/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/encoded_type = null, remove_overlays = FALSE)
 	if(appearance == null)
 		return "n"
 	if(appearance == diff_appearance)
@@ -299,7 +299,7 @@ SUBSYSTEM_DEF(demo)
 			inted[i] += round(old_list[i] * 255)
 		color_string = jointext(inted, ",")
 	var/overlays_string = "\[]"
-	if(appearance.overlays.len)
+	if(appearance.overlays.len && !remove_overlays)
 		var/list/overlays_list = list()
 		for(var/i in 1 to appearance.overlays.len)
 			var/image/overlay = appearance.overlays[i]

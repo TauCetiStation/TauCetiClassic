@@ -3,12 +3,8 @@
 
 #define MINIMUM_USEFUL_LIGHT_RANGE 1.4
 
-#define LIGHTING_FALLOFF        1 // type of falloff to use for lighting; 1 for circular, 2 for square
-#define LIGHTING_LAMBERTIAN     0 // use lambertian shading for light sources
 #define LIGHTING_HEIGHT         1 // height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone
 #define LIGHTING_ROUND_VALUE    (1 / 64) //Value used to round lumcounts, values smaller than 1/129 don't matter (if they do, thanks sinking points), greater values will make lighting less precise, but in turn increase performance, VERY SLIGHTLY.
-
-#define LIGHTING_ICON 'icons/effects/lighting_object.dmi' // icon used for lighting shading effects
 
 // If the max of the lighting lumcounts of each spectrum drops below this, disable luminosity on the lighting objects.
 // Set to zero to disable soft lighting. Luminosity changes then work if it's lit at all.
@@ -33,14 +29,6 @@
 #define LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE 128 //For lighting alpha, small amounts lead to big changes. even at 128 its hard to figure out what is dark and what is light, at 64 you almost can't even tell.
 #define LIGHTING_PLANE_ALPHA_INVISIBLE 0
 
-//lighting area defines
-#define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
-#define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
-#define DYNAMIC_LIGHTING_FORCED 2 //dynamic lighting enabled even if the area doesn't require power
-#define DYNAMIC_LIGHTING_IFSTARLIGHT 3 //dynamic lighting enabled only if starlight is.
-#define IS_DYNAMIC_LIGHTING(A) A.dynamic_lighting
-
-
 //code assumes higher numbers override lower numbers.
 #define LIGHTING_NO_UPDATE 0
 #define LIGHTING_VIS_UPDATE 1
@@ -50,3 +38,45 @@
 #define FLASH_LIGHT_DURATION 2
 #define FLASH_LIGHT_POWER 3
 #define FLASH_LIGHT_RANGE 3.8
+
+/// Returns the red part of a #RRGGBB hex sequence as number
+#define GETREDPART(hexa) hex2num(copytext(hexa, 2, 4))
+
+/// Returns the green part of a #RRGGBB hex sequence as number
+#define GETGREENPART(hexa) hex2num(copytext(hexa, 4, 6))
+
+/// Returns the blue part of a #RRGGBB hex sequence as number
+#define GETBLUEPART(hexa) hex2num(copytext(hexa, 6, 8))
+
+/// Parse the hexadecimal color into lumcounts of each perspective.
+#define PARSE_LIGHT_COLOR(source) \
+	if (source.light_color) { \
+		var/__light_color = source.light_color; \
+		source.lum_r = GETREDPART(__light_color) / 255; \
+		source.lum_g = GETGREENPART(__light_color) / 255; \
+		source.lum_b = GETBLUEPART(__light_color) / 255; \
+	} else { \
+		source.lum_r = 1; \
+		source.lum_g = 1; \
+		source.lum_b = 1; \
+	};
+
+#define GET_LUM_FROM_COLOR(color) (GETREDPART(color) + GETGREENPART(color) + GETBLUEPART(color))/3
+
+
+// this comes from 1 source turf + 1 source cast turf + plane blur that touches another turf
+#define LEVEL_LIGHT_LUMINOSITY 3
+
+// adds lighting mask to turf, see more in comments to environment_lighting plane
+// we add this to underlays because else it will corrupt turf icon in context menu / other places
+// does not check if underlay already exists, must be done separately
+#define LEVEL_LIGHTING_SOURCE(turf) \
+	turf.underlays += global.level_light_source_mask; \
+	turf.luminosity = LEVEL_LIGHT_LUMINOSITY
+
+#define LEVEL_LIGHTING_CAST(turf) \
+	turf.underlays |= list(global.level_light_cast_mask)
+
+#define RESET_LEVEL_LIGHTING(turf) \
+	turf.underlays -= list(global.level_light_source_mask, global.level_light_cast_mask); \
+	turf.luminosity = initial(turf.luminosity)

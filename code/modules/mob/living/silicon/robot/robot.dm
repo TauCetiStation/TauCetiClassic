@@ -77,7 +77,7 @@
 
 	spawner_args = list(/datum/spawner/living/robot)
 
-/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
+/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/crewsimov, ai_link = TRUE, datum/religion/R)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -337,6 +337,7 @@
 		icon_state = module_sprites[new_icon_state]
 
 	radio.config(module.channels)
+	radio.recalculateChannels()
 
 /mob/living/silicon/robot/proc/build_combat_borg()
 	var/mob/living/silicon/robot/combat/C = new(get_turf(src))
@@ -432,7 +433,7 @@
 	lights_on = !lights_on
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
-		set_light(5)
+		set_light(5, 0.6)
 		playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 	else
 		set_light(0)
@@ -829,7 +830,7 @@
 				laws = new /datum/ai_laws/syndicate_override
 				var/time = time2text(world.realtime,"hh:mm:ss")
 				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+				set_zeroth_law("Только [user.real_name] и люди, которых он называет таковыми, - агенты Синдиката.")
 				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
 				sleep(20)
 				playsound_local(src, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
@@ -1196,3 +1197,15 @@
 /mob/living/silicon/robot/crawl()
 	toggle_all_components()
 	to_chat(src, "<span class='notice'>You toggle all your components.</span>")
+
+/mob/living/silicon/robot/pickup_ore()
+	var/turf/simulated/floor/F = get_turf(src)
+	var/obj/item/weapon/storage/bag/ore/B
+	if(istype(module, /obj/item/weapon/robot_module/miner))
+		for(var/bag in module.modules)
+			if(istype(bag, /obj/item/weapon/storage/bag/ore))
+				B = bag
+				if(B.max_storage_space == B.storage_space_used())
+					return
+				F.attackby(B, src)
+				break

@@ -5,7 +5,7 @@
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
 	var/state = 0
-	var/datum/ai_laws/laws = new /datum/ai_laws/nanotrasen
+	var/datum/ai_laws/laws = new /datum/ai_laws/crewsimov
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
 
@@ -207,6 +207,7 @@
 
 /obj/structure/AIcore/deactivated/atom_init()
 	. = ..()
+	empty_playable_ai_cores += src
 	aicore_deactivated_list += src
 
 /obj/structure/AIcore/deactivated/Destroy()

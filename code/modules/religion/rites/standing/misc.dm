@@ -65,7 +65,7 @@
 	name = "Молитва"
 	desc = "За добрые слова вы получаете немного favor'а."
 	ritual_length = (2 MINUTES)
-	ritual_invocations = list("Господи помилуй, О Гопсподи помилуй...",
+	ritual_invocations = list("Господи помилуй, О Господи помилуй...",
 							  "...Воставше от сна, припадаем Тебе, Блаже, и ангельскую песнь воспоем Тебе...",
 							  "...Свят будь, Боже, Богородица помилуй нас...",
 							  "...Господи помилуй...",
@@ -144,11 +144,11 @@
  */
 /datum/religion_rites/standing/animation
 	name = "Анимация"
-	desc = "Возрождает вещи на алтаре."
+	desc = "Возрождает вещи на алтаре. Цена ритуала зависит от количества оживляемых предметов!"
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Я обращаюсь к тебе - Всевышний...",
 							  "...свет, дарованный мудростью возвратившихся богов...",
-							  "...Они наделили Анимацию человеческими страстями и чувствами...", 
+							  "...Они наделили Анимацию человеческими страстями и чувствами...",
 							  "...Анимация, пришедшая из Нового Царства, радуйся свету!...",)
 	invoke_msg = "Я обращаюсь к тебе! Я взываю! Очнись ото сна!"
 	favor_cost = 80
@@ -157,6 +157,12 @@
 		ASPECT_SPAWN = 1,
 		ASPECT_WEAPON = 1,
 	)
+
+/datum/religion_rites/standing/animation/proc/calculate_new_cost(item_to_anim)
+	favor_cost = round((initial(favor_cost) * religion.members.len * item_to_anim / divine_power), 10)
+
+/datum/religion_rites/standing/animation/reset_rite()
+	favor_cost = initial(favor_cost)
 
 /datum/religion_rites/standing/animation/on_chosen(mob/user, obj/AOG)
 	if(!..())
@@ -167,7 +173,7 @@
 	if(!anim_items)
 		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
 		return FALSE
-	favor_cost = round((initial(favor_cost) * religion.members.len * anim_items / divine_power), 10)
+	calculate_new_cost(anim_items)
 	religion.update_rites()
 	return TRUE
 
@@ -180,7 +186,7 @@
 	for(var/obj/item/O in get_turf(AOG))
 		anim_items += O
 
-	favor_cost = round((initial(favor_cost) * religion.members.len * anim_items.len) / divine_power, 10)
+	calculate_new_cost(anim_items.len)
 	religion.update_rites()
 
 	if(!religion.check_costs(favor_cost, piety_cost, user))
@@ -193,6 +199,7 @@
 			R.friends = religion.members
 
 		user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
+	reset_rite()
 	return TRUE
 
 /*
@@ -366,7 +373,7 @@
 	if(!istype(animal))
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
 		return FALSE
-	animal.maxHealth *= divine_power
+	animal.maxHealth = clamp(initial(animal.maxHealth) * divine_power, 0, max(animal.maxHealth, 300))
 	animal.rejuvenate()
 
 	return TRUE

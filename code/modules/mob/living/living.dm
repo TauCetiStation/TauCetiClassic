@@ -52,12 +52,20 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
+/mob/living/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover, /obj/item/projectile) && lying && stat != DEAD)
+		var/obj/item/projectile/P = mover
+		if(get_turf(P.original) == loc)
+			return FALSE
+	return ..()
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
 		return
+	SEND_SIGNAL(src, COMSIG_LIVING_BUMPED, A)
 	if(!ismovable(A) || is_blocked_turf(A))
-		if(confused && stat == CONSCIOUS && m_intent == "run")
+		if(confused && stat == CONSCIOUS && m_intent == MOVE_INTENT_RUN && !lying)
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
 			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
@@ -388,36 +396,29 @@
  */
 /mob/proc/blurEyes(amount)
 	if(amount > 0)
-		eye_blurry = max(amount, eye_blurry)
-	update_eye_blur()
+		update_eye_blur(max(amount, eye_blurry))
 
 /**
  * Adjust the current blurriness of the mobs vision by amount
  */
 /mob/proc/adjustBlurriness(amount)
-	eye_blurry = max(eye_blurry + amount, 0)
-	update_eye_blur()
+	update_eye_blur(max(eye_blurry + amount, 0))
 
 /**
  * Set the mobs blurriness of vision to an amount
  */
 /mob/proc/setBlurriness(amount)
-	eye_blurry = max(amount, 0)
-	update_eye_blur()
+	update_eye_blur(max(amount, 0))
 
 /**
  * Apply the blurry overlays to a mobs clients screen
  */
-/mob/proc/update_eye_blur()
-	if(!client)
-		return
-	var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-	if(eye_blurry)
-		game_plane_master_controller.add_filter("eye_blur_angular", 1, angular_blur_filter(16, 16, clamp(eye_blurry * 0.1, 0.2, 0.6)))
-		game_plane_master_controller.add_filter("eye_blur_gauss", 1, gauss_blur_filter(clamp(eye_blurry * 0.05, 0.1, 0.25)))
-	else
-		game_plane_master_controller.remove_filter("eye_blur_angular")
-		game_plane_master_controller.remove_filter("eye_blur_gauss")
+/mob/proc/update_eye_blur(value)
+	if(eye_blurry != value)
+		eye_blurry = value
+
+		if(client)
+			client.update_plane_masters(/atom/movable/screen/plane_master/game_world)
 
 // ============================================================
 
@@ -519,6 +520,9 @@
 /mob/living/proc/restore_all_bodyparts()
 	return
 
+/mob/living/proc/restore_all_organs()
+	return
+
 /mob/living/proc/revive()
 	rejuvenate()
 	if(buckled)
@@ -584,6 +588,7 @@
 			Heart?.heart_normalize()
 
 	restore_all_bodyparts()
+	restore_all_organs()
 	cure_all_viruses()
 
 	// remove the character from the list of the dead
@@ -1087,6 +1092,7 @@
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
+		SEND_SIGNAL(src, COMSIG_FLASH_EYES, intensity)
 		return TRUE
 	return FALSE
 
@@ -1338,19 +1344,13 @@
 		if(masked)
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>",
 							"<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
-			if(gender == FEMALE)
-				vomitsound = SOUNDIN_FRIGVOMIT
-			else
-				vomitsound = SOUNDIN_MRIGVOMIT
-			eye_blurry = max(10, eye_blurry)
+			vomitsound = get_sound_by_voice(src, SOUNDIN_MRIGVOMIT, SOUNDIN_FRIGVOMIT)
+			blurEyes(10)
 			losebreath += 20
 		else
 			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
 							"<span class='warning'>You throw up!</span>")
-			if(gender == FEMALE)
-				vomitsound = SOUNDIN_FEMALEVOMIT
-			else
-				vomitsound = SOUNDIN_MALEVOMIT
+			vomitsound = get_sound_by_voice(src, SOUNDIN_MALEVOMIT, SOUNDIN_FEMALEVOMIT)
 		make_jittery(max(35 - jitteriness, 0))
 		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
 	else
@@ -1461,6 +1461,7 @@
 	drunkenness = max(value, drunkenness)
 
 /mob/living/proc/handle_drunkenness()
+	var/heal_mod = 0.0
 	if(drunkenness <= 0)
 		drunkenness = 0
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
@@ -1479,18 +1480,28 @@
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
 		Paralyse(3)
 		drowsyness = max(drowsyness, 3)
+		heal_mod = 10.0
 		return
 
 	if(drunkenness >= DRUNKENNESS_BLUR)
-		eye_blurry = max(eye_blurry, 2)
+		blurEyes(2)
+		heal_mod = 8.0
 
 	if(drunkenness >= DRUNKENNESS_SLUR)
 		if(drowsyness)
 			drowsyness = max(drowsyness, 3)
 		slurring = max(slurring, 3)
+		heal_mod = 4.0
 
 	if(drunkenness >= DRUNKENNESS_CONFUSED)
 		MakeConfused(2)
+		heal_mod = 6.0
+
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HEALING_ALCOHOL))
+		adjustBruteLoss(-1.0 * heal_mod)
+		adjustFireLoss(-1.0 * heal_mod)
+		AdjustWeakened(-0.5 * heal_mod)
+		adjustHalLoss(-2.0 * heal_mod)
 
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()
@@ -1539,7 +1550,10 @@
 		make_dizzy(150)
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "scared", /datum/mood_event/scared)
 
-/mob/living/carbon/human/trigger_syringe_fear()
+/mob/living/proc/pickup_ore()
+	return
+
+/mob/living/carbon/human/trigger_syringe_fear() // move to carbon/human
 	..()
 	if(prob(15))
 		var/bodypart_name = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_GROIN)
@@ -1547,3 +1561,7 @@
 		if(BP)
 			BP.take_damage(8, used_weapon = "Syringe") 	//half kithen-knife damage
 			to_chat(src, "<span class='warning'>You got a cut with a syringe.</span>")
+
+/mob/living/reset_view(atom/A, force_remote_viewing)
+	..()
+	src.force_remote_viewing = force_remote_viewing

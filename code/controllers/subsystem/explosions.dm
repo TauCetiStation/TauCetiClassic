@@ -431,6 +431,7 @@ SUBSYSTEM_DEF(explosions)
 		timer = TICK_USAGE_REAL
 		var/list/local_high_mov_atom = high_mov_atom
 		high_mov_atom = list()
+		//todo: maybe check for atom.simulated and ABSTRACT flag, currently it calls ex_act for lighting
 		for(var/atom/movable/movable_thing as anything in local_high_mov_atom)
 			if(QDELETED(movable_thing))
 				continue
@@ -454,5 +455,5 @@ SUBSYSTEM_DEF(explosions)
 				continue
 			EX_ACT(movable_thing, EXPLODE_LIGHT)
 		cost_low_mov_atom = MC_AVERAGE(cost_low_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-	
+
 	currentpart = SSEXPLOSIONS_TURFS

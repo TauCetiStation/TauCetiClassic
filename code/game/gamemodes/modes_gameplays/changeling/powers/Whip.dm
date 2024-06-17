@@ -2,6 +2,7 @@
 	name = "Organic Whip"
 	desc = "We reform one of our arms into whip."
 	helptext = "Can snatch, knock down, and damage in range depending on your intent, requires a lot of chemical for each use. Cannot be used while in lesser form."
+	button_icon_state = "arm_whip"
 	chemical_cost = 20
 	genomecost = 2
 	genetic_damage = 12

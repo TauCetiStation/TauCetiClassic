@@ -15,7 +15,7 @@
 	var/deepfried = 0
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
-/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
+/obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M, silent = FALSE)
 	if(!usr)	return
 	if(isliving(M))
 		var/mob/living/L = M
@@ -27,9 +27,8 @@
 			if(prob(50) && SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nasty_throat_feel", /datum/mood_event/nasty_throat_feel))
 				to_chat(H, "<span class='warning'>You feel like something enveloping in your throat...</span>")
 	if(!reagents.total_volume)
-		if(M == usr)
-			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
-		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
+		if(!silent)
+			M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>", "<span class='notice'>You finish eating \the [src].</span>")
 		if(food_type)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "food_type", food_moodlet)
 		SSStatistics.score.foodeaten++
@@ -47,7 +46,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
 	return
 
-/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/snacks/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
 	if(!reagents || !reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
 		M.drop_from_inventory(src)	//so icons update :[
@@ -112,7 +111,7 @@
 				else
 					reagents.trans_to_ingest(M, reagents.total_volume)
 				bitecount++
-				On_Consume(M)
+				On_Consume(M, silent)
 			return TRUE
 
 	return FALSE
@@ -398,9 +397,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/donut/chaos/atom_init()
 	. = ..()
-	var/datum/reagent/random_reagent = pick(global.reagents_list)
-	var/datum/reagent/R = new random_reagent(src)
-	reagents.add_reagent(R.id, 3)
+	reagents.add_reagent(pick(global.chemical_reagents_list), 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
@@ -659,7 +656,7 @@
 	name = "cheeseburger"
 	desc = "The cheese adds a good flavor."
 	icon_state = "cheeseburger"
-	list_reagents = list("nutriment" = 4, "cheese" = 4, "vitamin" = 1)
+	list_reagents = list("nutriment" = 8, "cheese" = 8, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeyburger
 	name = "burger"
@@ -667,7 +664,7 @@
 	icon_state = "hburger"
 	filling_color = "#d63c3c"
 	bitesize = 2
-	list_reagents = list("nutriment" = 2, "protein" = 4, "vitamin" = 1)
+	list_reagents = list("nutriment" = 4, "protein" = 8, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
 	name = "Fillet -o- Carp Sandwich"
@@ -912,6 +909,16 @@
 	bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 	list_reagents = list("nutriment" = 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/cornflakesbox
+	name = "cornflakes box"
+	desc = "Хрустящие кукурузные хлопья"
+	icon_state = "cereal_box"
+	filling_color = "#fcb954"
+	bitesize = 2
+	list_reagents = list("nutriment" = 2, "vitamin" = 2, "honey" = 2)
+	food_type = VERY_TASTY_FOOD
+	food_moodlet = /datum/mood_event/very_tasty_food
+
 /obj/item/weapon/reagent_containers/food/snacks/popcorn/atom_init()
 	. = ..()
 	unpopped = rand(1,10)
@@ -941,11 +948,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no Raisins"
 	icon_state = "4no_raisins"
-	desc = "Best raisins in the universe. Not sure why."
+	desc = "Most nutritious raisins in the universe. Not sure why."
 	filling_color = "#343834"
 	w_class = SIZE_MIDGET
-	bitesize = 2
-	list_reagents = list("plantmatter" = 1, "sugar" = 1)
+	bitesize = 6
+	list_reagents = list("plantmatter" = 3, "sugar" = 3)
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
 
@@ -1043,7 +1050,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#eddd00"
 	bitesize = 2
-	list_reagents = list("nutriment" = 4)
+	list_reagents = list("nutriment" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/soydope
 	name = "Soy Dope"
@@ -1069,7 +1076,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#eddd00"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("nutriment" = 12)
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	name = "Fortune cookie"
@@ -2535,6 +2542,16 @@
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
 
+/obj/item/weapon/reagent_containers/food/snacks/blin
+	name = "blin"
+	desc = "Первый - комом!"
+	icon = 'icons/obj/food.dmi'
+	icon_state = "blin"
+	item_state_world = "blin_world"
+	filling_color = "#fabc60"
+	bitesize = 2
+	list_reagents = list("nutriment" = 5)
+
 /obj/item/weapon/reagent_containers/food/snacks/bun
 	name = "bun"
 	desc = "A base for any self-respecting burger."
@@ -2640,7 +2657,7 @@
 	desc = "Unrelated to dogs, maybe."
 	icon_state = "hotdog"
 	bitesize = 2
-	list_reagents = list("protein" = 6)
+	list_reagents = list("protein" = 12)
 
 /obj/item/weapon/reagent_containers/food/snacks/flatbread
 	name = "flatbread"
@@ -3128,6 +3145,14 @@
 	bitesize = 3
 	list_reagents = list("grapejuice" = 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/pink
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's pink!"
+	icon_state = "gworm_pink"
+	filling_color = "#fc73a7"
+	bitesize = 3
+	list_reagents = list("watermelonjuice" = 2)
+
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf
 	name = "gummy worm"
 	desc = "An edible worm. Did it just move?"
@@ -3135,6 +3160,14 @@
 	filling_color = "#60a584"
 	bitesize = 3
 	list_reagents = list("space_drugs" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/rainbow
+	name = "gummy worm"
+	desc = "An edible worm, made from gelatin. It's rainbow!"
+	icon_state = "gworm_rainbow"
+	filling_color = "#c8a5dc"
+	bitesize = 4
+	list_reagents = list("nutriment" = 20, "psilocybin" = 1)
 
 ///////////////////////////////////////////
 // JELLY BEANS :3
@@ -3330,6 +3363,17 @@
 	filling_color = "#993399"
 	bitesize = 3
 	list_reagents = list("grapejuice" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/mystery
+	name = "sucker?"
+	desc = "???"
+	icon_state = "sucker_mystery"
+	filling_color = "#ffffff"
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/sucker/mystery/atom_init()
+	. = ..()
+	reagents.add_reagent(pick(global.chemical_reagents_list), 5)
 
 ///////////////////////////////////////////
 // WORM GYMS :3

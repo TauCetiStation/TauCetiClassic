@@ -142,23 +142,6 @@
 			return 1
 	return 0
 
-/obj/structure/table/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-
-	if(. == PROJECTILE_ABSORBED)
-		return
-
-	// try to shot mobs under table
-	var/list/mobs = list()
-	for(var/mob/living/M in get_turf(loc)) // todo: check only for crawling/lying
-		if(M in Proj.permutated)
-			continue
-		mobs += M
-
-	if(length(mobs))
-		var/mob/M = pick(mobs)
-		M.bullet_act(Proj, def_zone)
-
 //checks if projectile 'P' from turf 'from' can hit whatever is behind the table. Returns 1 if it can, 0 if bullet stops.
 /obj/structure/table/proc/check_cover(obj/item/projectile/P, turf/from)
 	var/turf/cover = flipped ? get_turf(src) : get_step(loc, get_dir(from, loc))
@@ -747,6 +730,18 @@
 
 	LH.pixel_x = p_x
 	LH.pixel_y = p_y
+
+/*
+ * reinforced glass table
+ */
+ 
+/obj/structure/table/rglass
+	name = "reinforced glass table"
+	desc = "A reinforced version of the glass table"
+	icon = 'icons/obj/smooth_structures/rglass.dmi'
+	max_integrity = 100
+	parts = /obj/item/weapon/table_parts/rglass
+	flipable = FALSE
 
 /*
  * Racks

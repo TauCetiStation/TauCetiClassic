@@ -8,11 +8,15 @@
 	var/icobase = 'icons/mob/human_races/r_human.dmi'    // Normal icon set.
 	var/deform = 'icons/mob/human_races/r_def_human.dmi' // Mutated icon set.
 	var/damage_mask = TRUE
+	var/eyes_icon = 'icons/mob/human_face.dmi'
 	var/eyes = "eyes"                                    // Icon for eyes.
 	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
 	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
+	var/hud_offset_x = 0                                 // As above, but specifically for the HUD indicator.
+	var/hud_offset_y = 0                                 // As above, but specifically for the HUD indicator.
+	var/blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/footprints
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
@@ -68,7 +72,7 @@
 	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
 
 	var/darksight = 2
-	var/nighteyes = 0
+	var/nighteyes = FALSE
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
@@ -76,8 +80,11 @@
 
 	var/list/flags = list()       // Various specific features.
 
+	var/specie_suffix_fire_icon = "human"
 	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
 	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
+	var/specie_shoe_blood_state = "shoeblood"
+	var/specie_hand_blood_state = "bloodyhands"
 	var/flesh_color = "#ffc896" //Pink.
 	var/base_color      //Used when setting species.
 
@@ -125,6 +132,26 @@
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
+	///Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.
+	var/list/offset_features = list(
+		OFFSET_UNIFORM = list(0,0),
+		OFFSET_ID = list(0,0),
+		OFFSET_GLOVES = list(0,0),
+		OFFSET_GLASSES = list(0,0),
+		OFFSET_EARS = list(0,0),
+		OFFSET_SHOES = list(0,0),
+		OFFSET_S_STORE = list(0,0),
+		OFFSET_FACEMASK = list(0,0),
+		OFFSET_HEAD = list(0,0),
+		OFFSET_FACE = list(0,0),
+		OFFSET_BELT = list(0,0),
+		OFFSET_BACK = list(0,0),
+		OFFSET_SUIT = list(0,0),
+		OFFSET_NECK = list(0,0),
+		OFFSET_ACCESSORY = list(0,0),
+		OFFSET_HAIR = list(0,0),
+	)
+
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 
 	var/list/survival_kit_items = list(/obj/item/clothing/mask/breath,
@@ -159,6 +186,8 @@
 	var/default_mood_event
 
 	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
+
+	var/surgery_icobase = 'icons/mob/surgery.dmi'
 
 
 /datum/species/New()
@@ -236,6 +265,9 @@
 
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
 	SHOULD_CALL_PARENT(TRUE)
+
+	if(flags[NO_GENDERS])
+		H.gender = NEUTER
 
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
@@ -366,15 +398,24 @@
 
 	skeleton_type = SKELETON_UNATHI
 
+	sprite_sheets = list(
+		SPRITE_SHEET_HEAD     = 'icons/mob/species/unathi/helmet.dmi',
+		SPRITE_SHEET_SUIT     = 'icons/mob/species/unathi/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
+	)
+
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
 
 /datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.unathi_equip(H)
 
-/datum/species/unathi/on_gain(mob/living/M)
+/datum/species/unathi/on_gain(mob/living/carbon/human/M)
 	..()
 	M.verbs += /mob/living/carbon/human/proc/air_sample
+	M.r_belly = HEX_VAL_RED(base_color)
+	M.g_belly = HEX_VAL_GREEN(base_color)
+	M.b_belly = HEX_VAL_BLUE(base_color)
 
 /datum/species/unathi/on_loose(mob/living/M, new_species)
 	M.verbs -= /mob/living/carbon/human/proc/air_sample
@@ -393,7 +434,7 @@
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
 	darksight = 8
-	nighteyes = 1
+	nighteyes = TRUE
 
 	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
@@ -436,6 +477,12 @@
 
 	skeleton_type = SKELETON_TAJARAN
 
+	sprite_sheets = list(
+		SPRITE_SHEET_HEAD     = 'icons/mob/species/tajaran/helmet.dmi',
+		SPRITE_SHEET_SUIT     = 'icons/mob/species/tajaran/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
+	)
+
 /datum/species/tajaran/on_gain(mob/living/M)
 	..()
 	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
@@ -464,7 +511,7 @@
 	has_gendered_icons = FALSE
 
 	speed_mod = 1.5
-	speed_mod_no_shoes = -1.6
+	speed_mod_no_shoes = -2.2
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -497,6 +544,11 @@
 
 	skeleton_type = SKELETON_SKRELL
 
+	sprite_sheets = list(
+		SPRITE_SHEET_HEAD = 'icons/mob/species/skrell/helmet.dmi',
+		SPRITE_SHEET_SUIT = 'icons/mob/species/skrell/suit.dmi'
+	)
+
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
 
@@ -511,6 +563,7 @@
 	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	tail = "vox_prim"
 	has_gendered_icons = FALSE
+	surgery_icobase = 'icons/mob/species/vox/surgery.dmi'
 
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
@@ -537,6 +590,7 @@
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE
 		,IS_SOCIAL = TRUE
+		,NO_GENDERS = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -585,10 +639,6 @@
 	skeleton_type = SKELETON_VOX
 
 	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
-
-/datum/species/vox/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
@@ -681,6 +731,7 @@
 	,NO_PAIN = TRUE
 	,NO_FAT = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
@@ -749,6 +800,7 @@
 	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -792,10 +844,6 @@
 	var/regen_mod = 1.0
 	// Podmen don't.
 	var/regen_limbs = TRUE
-
-/datum/species/diona/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/diona/regen(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -887,6 +935,7 @@
 	,HAS_LIPS = TRUE
 	,HAS_HAIR = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -931,6 +980,7 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
+	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
 
 	eyes = null
 
@@ -980,6 +1030,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1011,7 +1062,7 @@
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
 
 	min_age = 1
-	max_age = 125
+	max_age = 50
 
 	is_common = TRUE
 
@@ -1070,16 +1121,13 @@
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_VOMIT = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	blood_datum_path = /datum/dirt_cover/gray_blood
 
 	min_age = 100
 	max_age = 500
-
-/datum/species/abductor/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_abductor_digest(M)
@@ -1129,10 +1177,7 @@
 		,BP_R_LEG  = /obj/item/organ/external/r_leg/skeleton
 		)
 
-	has_organ = list(
-		 O_BRAIN   = /obj/item/organ/internal/brain
-		,O_EYES    = /obj/item/organ/internal/eyes
-		)
+	has_organ = list()
 
 	min_age = 1
 	max_age = 1000
@@ -1141,7 +1186,6 @@
 
 /datum/species/skeleton/on_gain(mob/living/carbon/human/H)
 	..()
-	H.gender = NEUTER
 	H.remove_status_flags(CANSTUN|CANPARALYSE)
 
 /datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
@@ -1242,6 +1286,12 @@
 	attack_verb = list("slash", "claw", "lacerate")
 	damage = 35
 
+/datum/unarmed_attack/claws/serpentid
+	attack_verb = list("mauled", "slashed", "struck", "pierced")
+	damage = 6
+	sharp = 1
+	edge = 1
+
 /datum/species/shadowling
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
@@ -1292,6 +1342,7 @@
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	burn_mod = 2
@@ -1301,10 +1352,6 @@
 
 	min_age = 1
 	max_age = 10000
-
-/datum/species/shadowling/on_gain(mob/living/carbon/human/H)
-	..()
-	H.gender = NEUTER
 
 /datum/species/shadowling/regen(mob/living/carbon/human/H)
 	H.nutrition = NUTRITION_LEVEL_NORMAL //i aint never get hongry
@@ -1365,6 +1412,7 @@
 		NO_EMOTION = TRUE,
 		NO_FAT = TRUE,
 		IS_SOCIAL = TRUE,
+		NO_GENDERS = TRUE,
 		)
 
 	has_organ = list(
@@ -1431,7 +1479,7 @@
 /datum/species/zombie
 	name = ZOMBIE
 	darksight = 8
-	nighteyes = 1
+	nighteyes = TRUE
 	dietflags = DIET_OMNI
 
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
@@ -1457,7 +1505,6 @@
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0
-	speed_mod = -0.2
 	speed_mod_no_shoes = -1
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
@@ -1508,7 +1555,7 @@
 
 	brute_mod = 2
 	burn_mod = 1.2
-	speed_mod = -0.8
+	speed_mod = -0.6
 
 	tail = "tajaran_zombie"
 
@@ -1559,7 +1606,7 @@
 
 	brute_mod = 1.6
 	burn_mod = 0.90
-	speed_mod = -0.2
+	speed_mod = 0.1
 
 	tail = "unathi_zombie"
 
@@ -1656,6 +1703,7 @@
 	,NO_VOMIT = TRUE
 	,NO_EMOTION = TRUE
 	,NO_PAIN = TRUE
+	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -1776,3 +1824,232 @@
 		H.remove_from_mob(I)
 	H.dust()
 	return TRUE
+
+/datum/species/serpentid
+	name = SERPENTID
+	icobase = 'icons/mob/human_races/r_serpentid.dmi'
+	deform = 'icons/mob/human_races/r_serpentid.dmi'
+	damage_mask = FALSE
+	has_gendered_icons = FALSE
+	eyes_icon = 'icons/mob/serpentid_face.dmi'
+	eyes = "serpentid_eyes"
+	base_color = "#336600"
+	flesh_color = "#525252"
+	blood_datum_path = /datum/dirt_cover/hemolymph
+	specie_shoe_blood_state = "snakeshoeblood"
+	specie_hand_blood_state = "snakebloodyhands"
+	specie_suffix_fire_icon = "generic"
+	min_age = 18
+	max_age = 40
+	hud_offset_y = 8
+	brute_mod = 0.9
+	burn_mod = 1.35
+	oxy_mod = 0.5
+	speed_mod = -0.5
+	total_health = 200
+	flags = list(
+		NO_SCAN = TRUE,
+		NO_DNA = TRUE,
+		NO_FAT = TRUE,
+		IS_SOCIAL = TRUE,
+		NO_GENDERS = TRUE,
+		NO_SLIP = TRUE,
+		NO_MINORCUTS = TRUE,
+		NO_MED_HEALTH_SCAN = TRUE,
+		)
+	has_organ = list(
+		 O_HEART   = /obj/item/organ/internal/heart
+		,O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes
+		,O_LUNGS   = /obj/item/organ/internal/lungs
+		,O_LIVER   = /obj/item/organ/internal/liver/serpentid
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
+	restricted_inventory_slots = list(SLOT_L_EAR, SLOT_R_EAR, SLOT_SHOES, SLOT_GLASSES, SLOT_GLOVES, SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_WEAR_MASK)
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT + 50
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 80
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
+	unarmed_type = /datum/unarmed_attack/claws/serpentid
+	blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/snake
+	darksight = 8
+	offset_features = list(
+		OFFSET_UNIFORM = list(0,0),
+		OFFSET_ID = list(0,0),
+		OFFSET_GLOVES = list(0,8),
+		OFFSET_GLASSES = list(0,9),
+		OFFSET_EARS = list(0,9),
+		OFFSET_SHOES = list(0,0),
+		OFFSET_S_STORE = list(0,0),
+		OFFSET_FACEMASK = list(0,9),
+		OFFSET_HEAD = list(0,9),
+		OFFSET_FACE = list(0,8),
+		OFFSET_BELT = list(0,0),
+		OFFSET_BACK = list(0,7),
+		OFFSET_SUIT = list(0,0),
+		OFFSET_NECK = list(0,7),
+		OFFSET_ACCESSORY = list(0,0),
+		OFFSET_HAIR = list(0,9),
+	)
+
+/datum/species/serpentid/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_serpentid_digest(M)
+
+/datum/species/serpentid/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
+	SIGNAL_HANDLER
+	if(!istype(I, /obj/item/weapon/holder))
+		if(!isbodypart(I))
+			return
+		var/obj/item/organ/external/BP = I
+		if(BP.is_robotic())
+			return
+	source.nutrition += max(0, NUTRITION_LEVEL_FULL - source.nutrition)
+	qdel(I)
+	source.visible_message("<span class='warning'>[I] was swallowed by [source]!</span>",
+						   "<span class='notice'>You ate [I]. Delicious!</span>")
+	return COMPONENT_NO_AFTERATTACK
+
+/datum/species/serpentid/on_gain(mob/living/carbon/human/H)
+	..()
+	H.real_name = pick(global.serpentid_names)
+	H.name = H.real_name
+	H.r_eyes = 255
+	H.update_hair()
+	RegisterSignal(H, COMSIG_PARENT_ATTACKBY, PROC_REF(try_eat_item))
+	RegisterSignal(H, COMSIG_S_CLICK_GRAB, PROC_REF(try_tear_body))
+	H.reagents.add_reagent("dexalinp", 3.0)
+
+/datum/species/serpentid/on_loose(mob/living/carbon/human/H, new_species)
+	UnregisterSignal(H, list(COMSIG_PARENT_ATTACKBY, COMSIG_S_CLICK_GRAB))
+	return ..()
+
+/datum/species/serpentid/on_life(mob/living/carbon/human/H)
+	if(!H.on_fire && H.fire_stacks < 2)
+		H.fire_stacks += 0.2
+
+/datum/species/serpentid/proc/try_tear_body(mob/living/source, obj/item/weapon/grab/G)
+	if(G.state < GRAB_KILL)
+		return
+	var/mob/living/assailant = source
+	if(!ishuman(G.affecting))
+		return FALSE
+
+	if(assailant.is_busy()) //can't stack the attempts
+		return FALSE
+
+	var/mob/living/carbon/human/H = G.affecting
+	var/hit_zone = assailant.get_targetzone()
+	var/obj/item/organ/external/L = H.get_bodypart(hit_zone)
+	if(!L || (L.is_stump) || istype(L, /obj/item/organ/external/chest) || istype(L, /obj/item/organ/external/groin))
+		return FALSE
+	var/limb_time = rand(40,60)
+	if(istype(L, /obj/item/organ/external/head))
+		limb_time = rand(90,110)
+
+	assailant.visible_message("<span class='shadowling'>[assailant] begins pulling on [H]'s [L.name] with incredible strength!</span>", \
+					"<span class='shadowling'>You begin to pull on [H]'s [L.name] with incredible strength!</span>")
+
+	if(!do_after(assailant, limb_time, TRUE, H))
+		to_chat(assailant, "<span class='notice'>You stop ripping off the limb.</span>")
+		return FALSE
+
+	if(!L || (L.is_stump))
+		return FALSE
+
+	if(L.is_robotic())
+		L.take_damage(rand(30,40), 0, 0)
+		assailant.visible_message("<span class='shadowling'>You hear [H]'s [L.name] being pulled beyond its load limits!</span>", \
+						"<span class='shadowling'>[H]'s [L.name] begins to tear apart!</span>")
+	else
+		assailant.visible_message("<span class='shadowling'>You hear the bones in [H]'s [L.name] snap with a sickening crunch!</span>", \
+						"<span class='shadowling'>[H]'s [L.name] bones snap with a satisfying crunch!</span>")
+		L.take_damage(rand(15,25), 0, 0)
+		L.fracture()
+
+	assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>ripped the [L.name] off of [H.name] ([H.ckey]) 1/2 progress</font>")
+	H.attack_log += text("\[[time_stamp()]\] <font color='orange'>had their [L.name] ripped off by [assailant.name] ([assailant.ckey]) 1/2 progress</font>")
+	log_attack("[assailant.name] ([assailant.ckey]) ripped the [L.name] off of [H.name] ([H.ckey]) 1/2 progress")
+
+	if(!do_after(assailant, limb_time, TRUE, H))
+		to_chat(assailant, "<span class='notice'>You stop ripping off the limb.</span>")
+		return FALSE
+
+	if(!L || (L.is_stump))
+		return FALSE
+
+	assailant.visible_message("<span class='shadowling'>[assailant] rips [H]'s [L.name] away from \his body!</span>", \
+					"<span class='shadowling'>[H]'s [L.name] rips away from \his body!</span>")
+	assailant.attack_log += text("\[[time_stamp()]\] <font color='red'>ripped the [L.name] off of [H.name] ([H.ckey]) 2/2 progress</font>")
+	H.attack_log += text("\[[time_stamp()]\] <font color='orange'>had their [L.name] ripped off by [assailant.name] ([assailant.ckey]) 2/2 progress</font>")
+	log_attack("[assailant.name] ([assailant.ckey]) ripped the [L.name] off of [H.name] ([H.ckey]) 2/2 progress")
+
+	L.droplimb(TRUE, FALSE, DROPLIMB_EDGE)
+
+	return TRUE
+
+/datum/species/moth
+	name = MOTH
+	flesh_color = "00FF00"
+	icobase = 'icons/mob/human_races/r_moth.dmi'
+	deform = 'icons/mob/human_races/r_moth.dmi'
+	tail = "moth_wings"
+	flags = list(
+				NO_BREATHE = TRUE,
+				NO_BLOOD = TRUE,
+				NO_EMBED = TRUE,
+				RAD_IMMUNE = TRUE,
+				VIRUS_IMMUNE = TRUE,
+				NO_FINGERPRINT = TRUE,
+				NO_SCAN = TRUE,
+				NO_MED_HEALTH_SCAN = TRUE,
+				NO_MINORCUTS = TRUE,
+				NO_VOMIT = TRUE,
+				NO_EMOTION = TRUE,
+				HAS_TAIL = TRUE,
+				NO_DNA = TRUE,
+				NO_PAIN = TRUE,
+				NO_GENDERS = TRUE,
+				NO_FAT = TRUE,
+				)
+	restricted_inventory_slots = list(SLOT_WEAR_ID, SLOT_BELT, SLOT_L_EAR, SLOT_R_EAR)
+	unarmed_type = /datum/unarmed_attack/claws
+	dietflags = DIET_OMNI
+	blood_datum_path = /datum/dirt_cover/gray_blood
+	butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/candy/fudge/alien_meat = 5)
+	damage_mask = FALSE
+	min_age = 1
+	max_age = 5
+	darksight = 8
+	nighteyes = 1
+
+/datum/species/moth/on_gain(mob/living/carbon/human/H)
+	H.real_name = "[pick(global.moth_first)] [pick(global.moth_second)]"
+	H.name = H.real_name
+	RegisterSignal(H, COMSIG_PARENT_ATTACKBY, PROC_REF(try_eat_item))
+	return ..()
+
+/datum/species/moth/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_moth_digest(M)
+
+/datum/species/moth/proc/try_eat_item(mob/living/carbon/human/source, obj/item/I, user, params)
+	SIGNAL_HANDLER
+	if(!istype(I, /obj/item/clothing) && !istype(I, /obj/item/organ))
+		return
+	source.nutrition += max(0, NUTRITION_LEVEL_FULL - source.nutrition / 4)
+	if(istype(I, /obj/item/clothing))
+		var/obj/O = I
+		if(O.oldificated)
+			to_chat(source, "<span class='warning'>[I] was already spoiled!</span>")
+		else
+			O.make_old()
+			source.visible_message("<span class='warning'>[I] were chewed by [source]!</span>",
+								"<span class='notice'>You chew a hole in [I]. Yummy!</span>")
+	else
+		new /obj/effect/decal/cleanable/ash(get_turf(source))
+		qdel(I)
+		source.visible_message("<span class='warning'>[I] was swallowed by [source]!</span>",
+							"<span class='notice'>You ate [I]. Delicious!</span>")
+	return COMPONENT_NO_AFTERATTACK
+
+/datum/species/moth/on_loose(mob/living/carbon/human/H, new_species)
+	UnregisterSignal(H, COMSIG_PARENT_ATTACKBY)
+	return ..()

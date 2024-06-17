@@ -3,7 +3,6 @@
 	icon = 'icons/obj/items.dmi'
 	w_class = SIZE_SMALL
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
-	var/abstract = 0
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
@@ -63,9 +62,13 @@
 	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
-	var/item_state = null         // has priority over icon_state for on-mob sprites
-	var/item_state_world = null   // has priority over icon_state for world (not in inventory) sprites
-	var/icon_override = null      // Used to override hardcoded clothing dmis in human clothing proc (see also icon_custom)
+	// optional world/inventory icon_state overrides
+	var/item_state_world = null      // has priority over icon_state for item world (not in inventory) sprites
+	var/item_state_inventory = null  // has priority over icon_state for item inventory sprites, defaults to initial(icon_state)
+
+	// other icon overrides
+	var/item_state = null            // has priority over icon_state for on-mob sprites
+	var/icon_override = null         // Used to override hardcoded clothing dmis in human clothing proc (see also icon_custom)
 
 	/* Species-specific sprite sheets for inventory sprites
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
@@ -94,6 +97,9 @@
 	var/list/flash_protection_slots = list()
 	var/can_get_wet = TRUE
 
+/**
+  * Doesn't call parent, see [/atom/proc/atom_init]
+  */
 /obj/item/atom_init()
 	SHOULD_CALL_PARENT(FALSE)
 	if(initialized)
@@ -103,9 +109,14 @@
 	if(light_power && light_range)
 		update_light()
 
-	if(opacity && isturf(src.loc))
-		var/turf/T = src.loc
+	if(opacity && isturf(loc))
+		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	if(can_block_air && isturf(loc))
+		var/turf/T = loc
+		if(!T.can_block_air)
+			T.can_block_air = TRUE
 
 	if(uses_integrity)
 		if (!armor)
@@ -134,8 +145,7 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/Destroy()
-	for(var/datum/action/A in item_actions)
-		qdel(A)
+	QDEL_LIST(item_actions)
 	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -761,7 +771,7 @@
 			return
 
 	// Use tool's fuel, stack sheets or charges if amount is set.
-	if(amount && !use(amount))
+	if(amount && !use(amount, user))
 		return
 
 	// Play tool sound at the end of tool usage,
@@ -882,7 +892,7 @@
 		blood_overlay = null
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
-		G.transfer_blood = 0
+		G.dirt_transfers = 0
 	update_inv_mob()
 
 /obj/item/add_dirt_cover()
@@ -931,7 +941,7 @@
 	set category = "Object"
 
 	var/obj/item/I = get_active_hand()
-	if(I && !I.abstract)
+	if(I && !(I.flags & ABSTRACT))
 		I.showoff(src)
 
 /obj/item/proc/extinguish()
@@ -1064,11 +1074,10 @@
 	if(!item_state_world)
 		return
 
-	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state == item_state_world)
+	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
 		// moving to inventory, restore icon (big inventory icon)
-		icon_state = initial(icon_state)
-
-	if(!(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state != item_state_world)
+		icon_state = item_state_inventory ? item_state_inventory : initial(icon_state)
+	else
 		// moving to world, change icon (small world icon)
 		icon_state = item_state_world
 

@@ -6,7 +6,8 @@
 
 /obj/machinery/computer/security/erokez
 	name = "security camera monitor"
-	desc = "Used to access the various cameras on the station."
+	cases = list("монитор камер видеонаблюдения", "монитора камер видеонаблюдения", "монитору камер видеонаблюдения", "монитор камер видеонаблюдения", "монитором камер видеонаблюдения", "мониторе камер видеонаблюдения")
+	desc = "Используется для доступа к различным камерам на станции."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "erokez"
 	light_color = "#ffffbb"
@@ -20,7 +21,8 @@
 
 /obj/machinery/computer/crew/erokez
 	name = "crew monitoring computer"
-	desc = "Used to monitor active health sensors built into most of the crew's uniforms."
+	cases = list("компьютер контроля за состоянием экипажа", "компьютера контроля за состоянием экипажа", "компьютеру контроля за состоянием экипажа", "компьютер контроля за состоянием экипажа", "компьютером контроля за состоянием экипажа", "компьютере контроля за состоянием экипажа")
+	desc = "Используется для мониторинга активных датчиков состояния здоровья, встроенных в большую часть униформы экипажа."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "erokezz"
 	light_color = "#315ab4"

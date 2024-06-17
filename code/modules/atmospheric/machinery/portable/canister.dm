@@ -128,6 +128,9 @@
 	create_gas()
 	update_icon()
 
+/obj/machinery/portable_atmospherics/canister/blob_act()
+	qdel(src)
+
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type && start_pressure)
 		air_contents.adjust_gas(gas_type, MolesForPressure())
@@ -141,7 +144,7 @@
 
 /obj/machinery/portable_atmospherics/canister/anesthetic/create_gas()
 	var/list/air_mix = StandardAirMix()
-	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "sleeping_agent", air_mix["sleeping_agent"])
+	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "sleeping_agent", air_mix["nitrogen"])
 
 #define HOLDING     1
 #define CONNECTED   2
@@ -372,7 +375,7 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/tgui_act(action, params)
 	. = ..()
-	if(. || issilicon(usr))
+	if(. || isAI(usr))
 		return
 	switch(action)
 		if("relabel")
