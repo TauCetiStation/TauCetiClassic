@@ -427,13 +427,21 @@
 	charge_max = 100
 
 /obj/effect/proc_holder/spell/targeted/communicate/pda/cast(list/targets, mob/user = usr)
-	var/obj/item/device/pda/sender = locate(/obj/item/device/pda in user)
+	var/obj/item/device/pda/sender
+	for(var/obj/item/device/pda/P in user.contents)
+		if(P.owner == user.real_name)
+			sender = P
+			break
+		sender = P
+
 	if(!sender)
+		to_chat(user, "<span class='notice'>Messaging server is not found.</span>")
 		return
 	var/list/plist = sender.available_pdas()
 	if(plist.len > 0)
 		var/c = input(usr, "Введите получателя сообщения") as null|anything in sortList(plist)
 		if(!c) // if the user hasn't selected a PDA file we can't send a message
+			to_chat(user, "<span class='notice'>Select user.</span>")
 			return
 		var/selected = plist[c]
 		sender.create_message(usr, selected)

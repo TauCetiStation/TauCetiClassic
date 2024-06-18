@@ -776,6 +776,7 @@
 							"Bartender",
 							"Botanist",
 							"Clown",
+							"Mime",
 							"Chaplain",
 							"Janitor",
 							"Barber",
@@ -808,8 +809,12 @@
 	character.forceMove(spawnloc, keep_buckled = TRUE)
 
 	spectator.add_character_to_players(character)
-	var/datum/faction/maelstrom/faction = create_uniq_faction(/datum/faction/maelstrom)
-	add_faction_member(faction, character, FALSE, TRUE)
+
+	var/datum/faction/maelstrom/faction = create_uniq_faction(/datum/faction/maelstrom, give_objectives = FALSE)
+	add_faction_member(faction, character, FALSE, TRUE, FALSE)
+	var/list/faction_objectives = faction.GetObjectives()
+	if(faction_objectives.len <= 0)
+		faction.forgeObjectives()
 
 	var/obj/item/weapon/card/id/maint_access_card = new(character)
 	maint_access_card.access = list(access_maint_tunnels)
