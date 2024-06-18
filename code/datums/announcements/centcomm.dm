@@ -33,5 +33,5 @@
 	name = "Central Command Higher Dimensional Affairs"
 	subtitle = "Центральное Командование"
 	sound = "portal"
-/datum/announcement/centcomm/narsie_summon/New(mob/user, area/A)
+/datum/announcement/centcomm/narsie_summon/New(mob/user)
 	message = "Зафиксирована блюспейс аномалия в [CASE((get_area(user)), PREPOSITIONAL_CASE)], возможно раскрытие неизвестного портала."
