@@ -153,7 +153,21 @@ var/global/list/protected_by_blueshield_list = list(
 	"Internal Affairs Agent"
 )
 
-
+var/global/list/jobs_maelstrom = list(
+	"Cargo Technician",
+	"Shaft Miner",
+	"Recycler",
+	"Chef",
+	"Bartender",
+	"Botanist",
+	"Clown",
+	"Mime",
+	"Chaplain",
+	"Janitor",
+	"Barber",
+	"Librarian",
+	"Assistant"
+)
 
 /proc/get_job_datums()
 	var/list/occupations = list()
