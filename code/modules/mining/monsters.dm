@@ -175,7 +175,7 @@
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
 	search_objects = 1
-
+	pixel_x = -12
 	var/list/ore_types_eaten = list()
 	var/alerted = FALSE
 	var/ore_eaten = 1
@@ -254,11 +254,11 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier
 	name = "Gluttony Goldgrub"
 	icon = 'icons/mob/monsters_asteroid/goldgrub_high_tier.dmi'
-	icon_state = "goldgrub"
-	icon_living = "goldgrub"
-	icon_aggro = "goldgrub_alert"
-	icon_dead = "goldgrub_dead"
-	pixel_x = -12
+	icon_state = "Goldgrub"
+	icon_living = "Goldgrub"
+	icon_aggro = "Goldgrub_alert"
+	icon_dead = "Goldgrub_dead"
+	pixel_x = 0
 	vision_range = 6
 	idle_vision_range = 6
 	search_objects = 2
@@ -315,10 +315,10 @@
 	name = "hivelord"
 	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
 	icon = 'icons/mob/monsters_asteroid/hivelord.dmi'
-	icon_state = "Hivelord"
-	icon_living = "Hivelord"
-	icon_aggro = "Hivelord_alert"
-	icon_dead = "Hivelord_dead"
+	icon_state = "hivelord"
+	icon_living = "hivelord"
+	icon_aggro = "hivelord_alert"
+	icon_dead = "hivelord_dead"
 	icon_gib = "syndicate_gib"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 14
@@ -384,7 +384,7 @@
 	name = "hivelord core"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
 	icon = 'icons/mob/monsters_asteroid/hivelord.dmi'
-	icon_state = "Hivelod_core"
+	icon_state = "hivelord_core_high_tier"
 	var/inert = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/corpse
 
@@ -415,7 +415,7 @@
 /obj/item/asteroid/hivelord_core/proc/make_inert()
 	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
-	icon_state = "Hivelord_dead"
+	icon_state = "hivelord_dead"
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
 	if(inert)
@@ -441,10 +441,10 @@
 	name = "hivelord brood"
 	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
 	icon = 'icons/mob/monsters_asteroid/hivelord.dmi'
-	icon_state = "Hivelordbrood"
-	icon_living = "Hivelordbrood"
-	icon_aggro = "Hivelordbrood"
-	icon_dead = "Hivelordbrood"
+	icon_state = "hivelord_brood"
+	icon_living = "hivelord_brood"
+	icon_aggro = "hivelord_brood"
+	icon_dead = "hivelord_brood"
 	icon_gib = "syndicate_gib"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 0
@@ -515,6 +515,7 @@
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
 	idle_vision_range = 5
+	pixel_x = -12
 	var/pre_attack = 0
 
 /mob/living/simple_animal/hostile/asteroid/goliath/atom_init()
