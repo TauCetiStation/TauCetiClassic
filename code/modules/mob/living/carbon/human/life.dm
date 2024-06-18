@@ -1154,7 +1154,7 @@ var/global/list/tourette_bad_words= list(
 	if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
 		shock_stage = max(shock_stage, 61)
 
-	if(traumatic_shock >= 80)
+	if(traumatic_shock >= 80 && shock_stage <= 150)
 		shock_stage += 1
 	else if(health < config.health_threshold_softcrit)
 		shock_stage = max(shock_stage, 61)
