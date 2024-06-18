@@ -767,21 +767,12 @@
 
 /datum/spawner/maelstrom
 	name = "Мальстромовец"
-	desc = "Член известной банды оккультистов основной источник доходов которых — незаконный оборот запрещённых медикаментов и наркотиков, в том числе гиперцина. Берут заказы на убийства, выполняя их с особой жестокостью."
+	desc = "Член известной банды оккультистов, основной источник доходов которых — незаконный оборот запрещённых медикаментов и наркотиков, в том числе гиперцина. Берут заказы на убийства, выполняя их с особой жестокостью."
 	cooldown = 30 SECONDS
-	jobs_list_equip = list("Cargo Technician",
-							"Shaft Miner",
-							"Recycler",
-							"Chef",
-							"Bartender",
-							"Botanist",
-							"Clown",
-							"Mime",
-							"Chaplain",
-							"Janitor",
-							"Barber",
-							"Librarian",
-							"Assistant")
+
+/datum/spawner/maelstrom/New()
+	. = ..()
+	jobs_list_equip = global.jobs_maelstrom.Copy()
 
 /datum/spawner/maelstrom/can_spawn(mob/dead/spectator)
 	if(!check_cooldown(spectator))
