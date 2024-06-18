@@ -32,9 +32,9 @@
 	var/datum/building_agent/rune/cult/choice = get_agent_radial_menu(rune_choices_image, user)
 	if(!choice)
 		return
-
 	if(rune_next[user.ckey] > world.time)
-		to_chat(user, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[user.ckey] - world.time) * 0.1)+1] секунд!</span>")
+		var/timeleft = round((rune_next[user.ckey] - world.time) * 0.1) + 1
+		to_chat(user, "<span class='warning'>Ты сможешь разметить следующую руну через [timeleft] [PLUR_SECONDS_IN(timeleft)]!</span>")
 		return
 	rune_next[user.ckey] = world.time + 10 SECONDS
 
