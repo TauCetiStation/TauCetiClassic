@@ -359,6 +359,7 @@
 #include "code\datums\components\twohanded.dm"
 #include "code\datums\components\visible_radius.dm"
 #include "code\datums\components\waddle.dm"
+#include "code\datums\components\willpower.dm"
 #include "code\datums\components\wrench_to_table.dm"
 #include "code\datums\components\zoom.dm"
 #include "code\datums\components\gamemodes\gamemode.dm"

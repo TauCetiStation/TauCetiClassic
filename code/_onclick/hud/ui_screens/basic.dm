@@ -113,6 +113,15 @@
 
 	copy_flags = NONE
 
+/atom/movable/screen/health_doll/action()
+	var/datum/component/willpower/willpower = usr.GetComponent(/datum/component/willpower)
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(H.species.flags[NO_WILLPOWER])
+			return
+		to_chat(usr, "<span class='notice'>Сила Воли: <b>[willpower.willpower_points]</b></span>")
+	willpower.do_select_effect()
+
 /atom/movable/screen/health_doll/add_to_hud(datum/hud/hud)
 	..()
 	hud.mymob.healthdoll = src

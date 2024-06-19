@@ -76,6 +76,8 @@
 
 	var/flags = 0
 
+	var/willpower = 1
+
 /datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 
@@ -93,6 +95,9 @@
 	if (H.mind)
 		H.mind.skills.add_available_skillset(get_skillset(H))
 		H.mind.skills.maximize_active_skills()
+
+	SEND_SIGNAL(H, COMSIG_ADD_WILLPOWER, 1, "job")
+
 	post_equip(H, visualsOnly)
 	return TRUE
 
