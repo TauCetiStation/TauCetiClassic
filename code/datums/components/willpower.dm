@@ -114,5 +114,5 @@
 
 /datum/willpower_effect/fat/do_effect(mob/living/carbon/human/user)
 	..()
-	user.nutrition = NUTRITION_LEVEL_HUNGRY
+	user.nutrition = NUTRITION_LEVEL_STARVING+50
 	user.overeatduration = 0
