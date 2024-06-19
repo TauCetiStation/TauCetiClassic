@@ -26,6 +26,7 @@
 	throw_range = 2
 
 	moveset_type = /datum/combat_moveset/human
+	var/leap_cooldown_time = 0 SECOND
 
 	beauty_living = 0
 	beauty_dead = -1500
@@ -1766,19 +1767,8 @@
 /atom/movable/screen/leap/update_icon()
 	icon_state = "[initial(icon_state)]_[on]"
 
-/atom/movable/screen/leap/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.toggle_leap()
-
-/mob/living/carbon/human/proc/toggle_leap(message = 1)
-	leap_icon.on = !leap_icon.on
-	leap_icon.update_icon()
-	if(message)
-		to_chat(src, "<span class='notice'>You will [leap_icon.on ? "now" : "no longer"] leap at enemies!</span>")
-
-/mob/living/carbon/human/ClickOn(atom/A, params)
-	if(leap_icon && leap_icon.on && A != src)
+/mob/living/carbon/human/MiddleClickOn(atom/A, params)
+	if(HAS_TRAIT(src, TRAIT_CAN_LEAP))
 		leap_at(A)
 	else
 		..()
@@ -1786,7 +1776,7 @@
 #define MAX_LEAP_DIST 4
 
 /mob/living/carbon/human/proc/leap_at(atom/A)
-	if(leap_icon.time_used > world.time)
+	if(leap_cooldown_time >= 0)
 		to_chat(src, "<span class='warning'>You are too fatigued to leap right now!</span>")
 		return
 
@@ -1801,8 +1791,8 @@
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
-	leap_icon.time_used = world.time + leap_icon.cooldown
 	add_status_flags(LEAPING)
+	leap_cooldown_time = 10 SECONDS
 	pass_flags |= PASSTABLE
 	stop_pulling()
 
@@ -1815,7 +1805,6 @@
 			if(V.on)
 				V.overload()
 
-	toggle_leap()
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, PROC_REF(leap_end), prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)

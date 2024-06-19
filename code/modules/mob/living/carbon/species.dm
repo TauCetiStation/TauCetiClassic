@@ -655,22 +655,14 @@
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
-		H.leap_icon = new /atom/movable/screen/leap()
-
-		if(H.hud_used)
-			H.leap_icon.add_to_hud(H.hud_used)
-
+		ADD_TRAIT(H, TRAIT_CAN_LEAP, ROUNDSTART_TRAIT)
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
 	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
 	if(name != VOX_ARMALIS)
-		if(H.leap_icon)
-			if(H.hud_used)
-				H.leap_icon.remove_from_hud(H.hud_used)
-			QDEL_NULL(H.leap_icon)
-
+		REMOVE_TRAIT(H, TRAIT_CAN_LEAP, ROUNDSTART_TRAIT)
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
 	..()
