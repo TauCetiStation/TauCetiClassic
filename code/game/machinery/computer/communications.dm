@@ -98,7 +98,7 @@
 		return
 
 	if (!is_station_level(z))
-		to_chat(usr, "<span class='warning'><b>Невозможно установить связь</b>:</span> Вы слишком далеко от станции!")
+		to_chat(usr, "<span class='warning'><b>Невозможно установить соединение</b>:</span> Вы слишком далеко от станции!")
 		return FALSE
 	if(!href_list["operation"])
 		return FALSE
