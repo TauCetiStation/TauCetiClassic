@@ -733,9 +733,6 @@ var/global/list/tourette_bad_words= list(
 		// the analgesic effect wears off slowly
 		analgesic = max(0, analgesic - 1)
 
-		if(leap_cooldown_time >= 0)
-			leap_cooldown_time -= 1 SECOND
-
 		//UNCONSCIOUS. NO-ONE IS HOME
 		if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
 			Paralyse(3)

@@ -21,17 +21,18 @@
 
 	var/last_massage = 0
 	var/massages_done_right = 0
+	var/leap_mode = LEAP_MODE_OFF
 	attack_push_vis_effect = ATTACK_EFFECT_PUNCH
 	attack_disarm_vis_effect = ATTACK_EFFECT_DISARM
 	throw_range = 2
 
 	moveset_type = /datum/combat_moveset/human
-	var/leap_cooldown_time = 0 SECOND
 
 	beauty_living = 0
 	beauty_dead = -1500
 
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
+	COOLDOWN_DECLARE(leap_cooldown)
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
 	AddComponent(/datum/component/mood)
@@ -1767,8 +1768,8 @@
 /atom/movable/screen/leap/update_icon()
 	icon_state = "[initial(icon_state)]_[on]"
 
-/mob/living/carbon/human/MiddleClickOn(atom/A, params)
-	if(HAS_TRAIT(src, TRAIT_CAN_LEAP))
+/mob/living/carbon/human/ClickOn(atom/A, params)
+	if(leap_mode == LEAP_MODE_ON)
 		leap_at(A)
 	else
 		..()
@@ -1776,7 +1777,7 @@
 #define MAX_LEAP_DIST 4
 
 /mob/living/carbon/human/proc/leap_at(atom/A)
-	if(leap_cooldown_time >= 0)
+	if(!COOLDOWN_FINISHED(src, leap_cooldown))
 		to_chat(src, "<span class='warning'>You are too fatigued to leap right now!</span>")
 		return
 
@@ -1792,7 +1793,7 @@
 		return
 
 	add_status_flags(LEAPING)
-	leap_cooldown_time = 10 SECONDS
+	COOLDOWN_START(src, leap_cooldown, 10 SECOND)
 	pass_flags |= PASSTABLE
 	stop_pulling()
 
