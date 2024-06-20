@@ -498,7 +498,7 @@
 		return
 
 	if(SSshuttle.direction == -1)
-		to_chat(user, "Шаттл возвращается к отделению Центкома, вызов невозможен.")
+		to_chat(user, "Шаттл возвращается к Центкому, вызов невозможен.")
 		return
 
 	if(SSshuttle.online)
