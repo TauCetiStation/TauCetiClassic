@@ -126,5 +126,3 @@
 	// Reagent allergies.
 	var/list/allergies
 	var/next_allergy_message = 0
-
-	var/willpower_amount = 1

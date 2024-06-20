@@ -420,5 +420,3 @@
 #define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
 // send this signal to handle disabilities in life for mob/living/carbon/human
 #define COMSIG_HANDLE_DISABILITIES "handle_disabilities"
-
-#define COMSIG_ADD_WILLPOWER "add_willpower"
