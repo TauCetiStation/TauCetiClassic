@@ -2,7 +2,7 @@
 /obj/machinery/computer/communications
 	name = "Communications Console"
 	cases = list("консоль коммуникаций", "консоли коммуникаций", "консоли коммуникаций", "консоль коммуникаций", "консолью коммуникаций", "консоли коммуникаций")
-	desc = "Эта консоль имеет очень большой функционал для контроля станции."
+	desc = "Эта консоль имеет функционал для управления станцией."
 	icon_state = "comm"
 	light_color = "#0099ff"
 	req_access = list(access_heads)
