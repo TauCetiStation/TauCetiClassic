@@ -1,4 +1,4 @@
-﻿/datum/willpower_effect
+/datum/willpower_effect
 	var/name = "Эффект воли"
 	var/desc = "Крутое описание."
 	var/cost = 1
