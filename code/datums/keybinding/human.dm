@@ -44,13 +44,4 @@
 
 /datum/keybinding/human/leap/down(client/user)
 	var/mob/living/carbon/human/H = user.mob
-	if(!HAS_TRAIT(H, TRAIT_CAN_LEAP))
-		to_chat(H, "<span class='notice'>Вы не умеете прыгать!</span>")
-		return
-	switch(H.leap_mode)
-		if(LEAP_MODE_OFF)
-			to_chat(H, "<span class='notice'>Вы попытаетесь совершить прыжок.</span>")
-			H.leap_mode = LEAP_MODE_ON
-		else
-			to_chat(H, "<span class='notice'>Вы не будете пытаться совершить прыжок.</span>")
-			H.leap_mode = LEAP_MODE_OFF
+	H.switch_leap()

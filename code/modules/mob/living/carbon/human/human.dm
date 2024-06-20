@@ -1768,6 +1768,27 @@
 /atom/movable/screen/leap/update_icon()
 	icon_state = "[initial(icon_state)]_[on]"
 
+/mob/living/carbon/human/proc/switch_leap()
+	if(!HAS_TRAIT(src, TRAIT_CAN_LEAP))
+		to_chat(src, "<span class='notice'>Вы не умеете прыгать!</span>")
+		return
+	switch(leap_mode)
+		if(LEAP_MODE_OFF)
+			to_chat(src, "<span class='notice'>Вы попытаетесь совершить прыжок.</span>")
+			leap_mode = LEAP_MODE_ON
+		else
+			to_chat(src, "<span class='notice'>Вы не будете пытаться совершить прыжок.</span>")
+			leap_mode = LEAP_MODE_OFF
+
+/datum/action/leap
+	name = "Switch Leap"
+	button_icon_state = "leap"
+	action_type = AB_INNATE
+
+/datum/action/leap/Trigger()
+	var/mob/living/carbon/human/H = owner
+	H.switch_leap()
+
 /mob/living/carbon/human/ClickOn(atom/A, params)
 	if(leap_mode == LEAP_MODE_ON)
 		leap_at(A)

@@ -656,6 +656,8 @@
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
 		ADD_TRAIT(H, TRAIT_CAN_LEAP, ROUNDSTART_TRAIT)
+		var/datum/action/leap/A = new(H)
+		A.Grant(H)
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
 	..()
@@ -663,6 +665,8 @@
 /datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
 	if(name != VOX_ARMALIS)
 		REMOVE_TRAIT(H, TRAIT_CAN_LEAP, ROUNDSTART_TRAIT)
+		var/datum/action/leap/A = locate() in H.actions
+		qdel(A)
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
 	..()
