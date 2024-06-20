@@ -32,12 +32,8 @@
 
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
-	var/datum/component/willpower/human_willpower
-
 /mob/living/carbon/human/atom_init(mapload, new_species)
 	AddComponent(/datum/component/mood)
-	AddComponent(/datum/component/willpower)
-	human_willpower = GetComponent(/datum/component/willpower)
 
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm

@@ -114,19 +114,19 @@
 	copy_flags = NONE
 
 /atom/movable/screen/health_doll/Click(location, control, params)
+	if(!ishuman(usr))
+		return
+	var/mob/living/carbon/human/H = usr
 	var/list/modifiers = params2list(params)
-	var/datum/component/willpower/willpower = usr.GetComponent(/datum/component/willpower)
 	var/willpower_amount
-	if(ishuman(usr))
-		if(modifiers[SHIFT_CLICK])
-			var/mob/living/carbon/human/H = usr
-			if(H.species.flags[NO_WILLPOWER])
-				willpower_amount = "<span class='boldwarning'>НЕТ</span>"
-			else
-				willpower_amount = willpower.willpower_points
-			to_chat(usr, "<span class='notice'>Сила Воли: <b>[willpower_amount]</b>.</span>")
+	if(modifiers[SHIFT_CLICK])
+		if(H.species.flags[NO_WILLPOWER])
+			willpower_amount = "<span class='boldwarning'>НЕТ</span>"
 		else
-			willpower.do_select_effect()
+			willpower_amount = H.mind.willpower_amount
+		to_chat(usr, "<span class='notice'>Сила Воли: <b>[willpower_amount]</b>.</span>")
+	else
+		H.mind.do_select_willpower_effect()
 
 /atom/movable/screen/health_doll/add_to_hud(datum/hud/hud)
 	..()
