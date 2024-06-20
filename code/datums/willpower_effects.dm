@@ -48,7 +48,7 @@
 	desc = "<span class='nicegreen'>Вы напрягаете свой живот, сбрасывая вес по древней скрелльской методике похудания.</span>"
 
 /datum/willpower_effect/fat/special_check(mob/living/carbon/human/user)
-	if(user.nutrition >= NUTRITION_LEVEL_NORMAL)
+	if(user.nutrition <= NUTRITION_LEVEL_NORMAL)
 		to_chat(user, "<span class='notice'>Вы не переели.</span>")
 		return FALSE
 	else if(HAS_TRAIT_FROM(user, TRAIT_FAT, ROUNDSTART_TRAIT))
