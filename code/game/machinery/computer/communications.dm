@@ -151,7 +151,7 @@
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else
-					to_chat(usr, "Вы не авторизованы!")
+					to_chat(usr, "У вас недостаточно прав для выполнения этой операции!")
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
