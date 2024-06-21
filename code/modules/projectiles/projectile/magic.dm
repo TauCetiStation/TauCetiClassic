@@ -22,23 +22,46 @@
 	wabbajack(target)
 
 /obj/item/projectile/magic/proc/wabbajack(mob/living/M)
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || !M.client || isxenoqueen(M))
+	if(!istype(M) || isAI(M) || isdrone(M) || isconstruct(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || isxenoqueen(M))
 		return
 
-	M.notransform = TRUE
-	M.canmove = 0
-	M.icon = null
-	M.cut_overlays()
-	M.invisibility = 101
+	if(!issilicon(M))
+		for(var/obj/item/W in M)
+			W.layer = initial(W.layer)
+			W.loc = M.loc
+			W.dropped(M)
 
 	var/mob/living/new_mob
 
-	var/randomizer = pick("animal", "cyborg", "xeno")
-	if(isxeno(M))
-		randomizer = "xeno"
+	var/randomizer = pick("animal", "cyborg", "carbon")
 	switch(randomizer)
 		if("animal")
-			var/beast = pick(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/tomato/angry_tomato, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/pig/shadowpig)
+			var/beast = pick(
+				/mob/living/simple_animal/mouse,
+				/mob/living/simple_animal/cow,
+				/mob/living/simple_animal/chicken,
+				/mob/living/simple_animal/chick,
+				/mob/living/simple_animal/cat,
+				/mob/living/simple_animal/corgi,
+				/mob/living/simple_animal/corgi/Lisa,
+				/mob/living/simple_animal/corgi/borgi,
+				/mob/living/simple_animal/corgi/puppy,
+				/mob/living/simple_animal/parrot,
+				/mob/living/simple_animal/crab,
+				/mob/living/simple_animal/hostile/retaliate/goat,
+				/mob/living/simple_animal/pig/shadowpig,
+				/mob/living/simple_animal/pig,
+				/mob/living/simple_animal/turkey,
+				/mob/living/simple_animal/goose,
+				/mob/living/simple_animal/seal,
+				/mob/living/simple_animal/walrus,
+				/mob/living/simple_animal/fox,
+				/mob/living/simple_animal/lizard,
+				/mob/living/simple_animal/pug,
+				/mob/living/simple_animal/shiba,
+				/mob/living/simple_animal/mushroom,
+				/mob/living/simple_animal/yithian,
+				/mob/living/simple_animal/spiderbot)
 			new_mob = new beast(M.loc)
 			new_mob.universal_speak = TRUE
 		if("cyborg")
@@ -46,26 +69,58 @@
 			new_mob.gender = M.gender
 			new_mob.invisibility = 0
 			new_mob.job = "Cyborg"
-		if("xeno")
-			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
-			new_mob.universal_speak = TRUE
+		if("carbon")
+			var/carbon = pick(
+				/mob/living/carbon/human,
+				/mob/living/carbon/monkey,
+				/mob/living/carbon/monkey/tajara,
+				/mob/living/carbon/monkey/skrell,
+				/mob/living/carbon/monkey/unathi,
+				/mob/living/carbon/monkey/diona,
+				/mob/living/carbon/monkey/diona/podman,
+				/mob/living/carbon/human/tajaran,
+				/mob/living/carbon/human/skrell,
+				/mob/living/carbon/human/unathi,
+				/mob/living/carbon/human/diona,
+				/mob/living/carbon/human/abductor,
+				/mob/living/carbon/human/golem,
+				/mob/living/carbon/human/vox)
+			new_mob = new carbon(M.loc)
+			new_mob.gender = M.gender
 	if(!new_mob)
 		return
 
 	new_mob.attack_log = M.attack_log
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
-	new_mob.set_a_intent(INTENT_HARM)
+	var/mob/living/original_mob = M
+	if(M.original_body)
+		new_mob.original_body = M.original_body
+	else
+		new_mob.original_body = original_mob
+		M.forceMove(new_mob)
+
+	for(var/mob/living/H in M.contents)
+		H.forceMove(new_mob)
+		qdel(M)
+
 	if(M.mind)
 		M.mind.transfer_to(new_mob)
 	else
 		new_mob.key = M.key
 
+	new_mob.wabbajacked = 1
+
 	to_chat(new_mob, "<B>Your body forms to something else!</B>")
 
-	qdel(M)
-	return new_mob
+/mob/living/proc/unwabbajack()
+	for(var/mob/M in contents)
+		M.loc = src.loc
 
+	if(mind && original_body)
+		mind.transfer_to(original_body)
+
+	qdel(src)
 /obj/item/projectile/magic/animate
 	name = "bolt of animation"
 	icon_state = "red_1"

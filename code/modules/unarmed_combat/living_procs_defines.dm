@@ -25,6 +25,9 @@
 	var/attack_push_vis_effect
 	var/attack_disarm_vis_effect
 
+	var/original_body
+	var/wabbajacked = 0
+
 /mob/living/proc/read_possible_combos()
 	set name = "Combos Cheat Sheet"
 	set desc = "A list of all possible combos with rough descriptions."

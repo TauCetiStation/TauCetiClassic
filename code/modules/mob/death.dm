@@ -26,7 +26,6 @@
 /mob/proc/dust()
 	new /obj/effect/decal/cleanable/ash(loc)
 	dust_process()
-	
 
 /mob/proc/death(gibbed)
 	SEND_SIGNAL(src, COMSIG_MOB_DIED, gibbed)
