@@ -196,11 +196,11 @@
 
 	switch (message_mode)
 		if("headset")
-			if(l_ear && istype(l_ear,/obj/item/device/radio) && !(stunned || paralysis))
+			if(l_ear && istype(l_ear,/obj/item/device/radio) && !(IsStun() || IsParalyzed()))
 				var/obj/item/device/radio/R = l_ear
 				R.talk_into(src,message,null,verb,speaking)
 				used_radios += l_ear
-			else if(r_ear && istype(r_ear,/obj/item/device/radio) && !(stunned || paralysis))
+			else if(r_ear && istype(r_ear,/obj/item/device/radio) && !(IsStun() || IsParalyzed()))
 				var/obj/item/device/radio/R = r_ear
 				R.talk_into(src,message,null,verb,speaking)
 				used_radios += r_ear
@@ -208,10 +208,10 @@
 		if("right ear")
 			var/obj/item/device/radio/R
 			var/has_radio = 0
-			if(r_ear && istype(r_ear,/obj/item/device/radio) && !(stunned || paralysis))
+			if(r_ear && istype(r_ear,/obj/item/device/radio) && !(IsStun() || IsParalyzed()))
 				R = r_ear
 				has_radio = 1
-			if(r_hand && istype(r_hand, /obj/item/device/radio) && !(stunned || paralysis))
+			if(r_hand && istype(r_hand, /obj/item/device/radio) && !(IsStun() || IsParalyzed()))
 				R = r_hand
 				has_radio = 1
 			if(has_radio)
@@ -222,10 +222,10 @@
 		if("left ear")
 			var/obj/item/device/radio/R
 			var/has_radio = 0
-			if(l_ear && istype(l_ear,/obj/item/device/radio) && !(stunned || paralysis))
+			if(l_ear && istype(l_ear,/obj/item/device/radio) && !(IsStun() || IsParalyzed()))
 				R = l_ear
 				has_radio = 1
-			if(l_hand && istype(l_hand,/obj/item/device/radio) && !(stunned || paralysis))
+			if(l_hand && istype(l_hand,/obj/item/device/radio) && !(IsStun() || IsParalyzed()))
 				R = l_hand
 				has_radio = 1
 			if(has_radio)
