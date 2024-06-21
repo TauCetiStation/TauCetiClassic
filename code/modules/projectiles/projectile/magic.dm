@@ -130,6 +130,7 @@
 		mind.transfer_to(original_body)
 
 	qdel(src)
+
 /obj/item/projectile/magic/animate
 	name = "bolt of animation"
 	icon_state = "red_1"
