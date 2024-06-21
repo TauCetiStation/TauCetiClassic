@@ -422,17 +422,18 @@
 				return
 			if("Load data from buffer")
 				var/obj/item/device/multitool/M = W
-				if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
-					if(linked_stations.len < efficiency)
-						linked_stations.Add(M.buffer)
-						M.buffer = null
-						to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+				if(istype(M))
+					if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
+						if(linked_stations.len < efficiency)
+							linked_stations.Add(M.buffer)
+							M.buffer = null
+							to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+						else
+							to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
+					else if(M.buffer == src)
+						to_chat(user, "<span class='alert'>You can't load information about the same station.</span>")
 					else
-						to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
-				else if(M.buffer == src)
-					to_chat(user, "<span class='alert'>You can't load information about the same station.</span>")
-				else
-					to_chat(user, "<span class='alert'>Something went wrong!</span>")
+						to_chat(user, "<span class='alert'>Something went wrong!</span>")
 			if("Connect to nearby machinery")
 				link_console_and_hub()
 				to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
