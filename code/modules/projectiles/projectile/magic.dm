@@ -114,6 +114,15 @@
 	to_chat(new_mob, "<B>Your body forms to something else!</B>")
 
 /mob/living/proc/unwabbajack()
+	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+	smoke.set_up(10, 0, src.loc)
+	smoke.start()
+	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+
+	var/obj/effect/decal/remains/human/RH = new /obj/effect/decal/remains/human(src.loc)
+	var/matrix/Mx = matrix()
+	RH.transform = Mx
+
 	for(var/mob/M in contents)
 		M.loc = src.loc
 
