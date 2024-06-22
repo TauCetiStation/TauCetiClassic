@@ -205,9 +205,6 @@
 /obj/structure/window/thin{
 	dir = 8
 	},
-/obj/structure/window/thin{
-	dir = 1
-	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/fore)
 "aar" = (
@@ -5105,6 +5102,10 @@
 	icon_state = "red"
 	},
 /area/station/security/main)
+"aiC" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/glass/reinforced,
+/area/station/maintenance/science)
 "aiD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -20937,7 +20938,6 @@
 /obj/structure/window/thin{
 	dir = 4
 	},
-/obj/structure/window/thin,
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/fore)
 "bBf" = (
@@ -21942,9 +21942,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "neutralfull"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "bKx" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -26672,9 +26670,7 @@
 /area/station/medical/chemistry)
 "cPG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "neutralfull"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "cPN" = (
 /obj/structure/table/woodentable/fancy,
@@ -29525,9 +29521,6 @@
 "dCn" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/thin,
-/obj/structure/window/thin{
-	dir = 4
-	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/fore)
 "dDn" = (
@@ -33603,12 +33596,7 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/chapel)
 "eFg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	icon_state = "neutralfull"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "eFl" = (
 /obj/structure/window/thin{
@@ -46744,13 +46732,12 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "hIF" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
+/obj/machinery/light/smart{
+	dir = 1
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	dir = 4;
+	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/fore)
 "hIK" = (
@@ -49931,6 +49918,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light/smart,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
@@ -51749,9 +51737,6 @@
 /area/station/aisat)
 "iTC" = (
 /obj/structure/flora/ausbushes/grassybush,
-/obj/structure/window/thin{
-	dir = 4
-	},
 /obj/structure/window/thin{
 	dir = 1
 	},
@@ -54258,16 +54243,12 @@
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "jxn" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "neutralfull"
+	dir = 1;
+	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/fore)
 "jxq" = (
@@ -54483,7 +54464,7 @@
 	},
 /area/station/engineering/atmos/supermatter)
 "jzH" = (
-/obj/structure/window/fulltile,
+/obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/fore)
 "jzV" = (
@@ -55459,9 +55440,6 @@
 "jLG" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/window/thin,
-/obj/structure/window/thin{
-	dir = 8
-	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/fore)
 "jLR" = (
@@ -56833,11 +56811,15 @@
 	},
 /area/station/civilian/locker)
 "kco" = (
-/obj/item/weapon/flora/random,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "neutral"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "kcG" = (
 /obj/structure/rack,
@@ -58370,11 +58352,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "kuo" = (
-/obj/item/weapon/flora/random,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "neutral"
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "kuq" = (
 /obj/structure/cable{
@@ -64313,9 +64294,6 @@
 /area/station/engineering/monitoring)
 "lPT" = (
 /obj/structure/flora/tree/jungle,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/fore)
 "lQn" = (
@@ -75887,11 +75865,12 @@
 	},
 /area/station/civilian/chapel)
 "oJP" = (
-/obj/item/weapon/flora/random,
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "neutral"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/glass/reinforced,
 /area/station/hallway/primary/fore)
 "oKu" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
@@ -76568,7 +76547,6 @@
 /obj/structure/window/thin{
 	dir = 8
 	},
-/obj/structure/window/thin,
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/fore)
 "oSo" = (
@@ -82512,9 +82490,6 @@
 /area/station/security/vacantoffice)
 "qoD" = (
 /obj/structure/flora/ausbushes/leafybush,
-/obj/structure/window/thin{
-	dir = 8
-	},
 /obj/structure/window/thin{
 	dir = 1
 	},
@@ -90044,12 +90019,8 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "sgt" = (
-/obj/item/weapon/flora/random,
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "neutral"
-	},
-/area/station/hallway/primary/fore)
+/turf/simulated/floor/glass/reinforced,
+/area/station/maintenance/science)
 "sgR" = (
 /obj/machinery/camera{
 	c_tag = "Escape Shuttle Hallway North"
@@ -111995,7 +111966,10 @@
 /area/station/hallway/secondary/entry)
 "xKF" = (
 /obj/machinery/light/smart,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/primary/fore)
 "xKJ" = (
 /obj/structure/stool/bed/roller,
@@ -113999,9 +113973,6 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/thin{
 	dir = 4
-	},
-/obj/structure/window/thin{
-	dir = 1
 	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/fore)
@@ -132138,11 +132109,11 @@ cjx
 cjx
 ftz
 ilA
-lUT
-xRM
-xRM
-xRM
-lUT
+sgt
+aiC
+aiC
+aiC
+sgt
 xRM
 lUT
 cjx
@@ -132906,7 +132877,7 @@ cjx
 nHd
 nHd
 vee
-lUT
+sgt
 cjx
 fRJ
 fRJ
@@ -132916,7 +132887,7 @@ fRJ
 fRJ
 sSh
 cjx
-lUT
+sgt
 vee
 plf
 kHU
@@ -133163,7 +133134,7 @@ cjx
 aMx
 bkV
 cjx
-lUT
+sgt
 gMM
 mDB
 igp
@@ -133173,7 +133144,7 @@ spv
 jKB
 xXL
 gMM
-lUT
+sgt
 cjx
 cjx
 cjx
@@ -133420,7 +133391,7 @@ cjx
 xii
 rrY
 cjx
-lUT
+sgt
 cjx
 cpj
 fRJ
@@ -133430,7 +133401,7 @@ fRJ
 fRJ
 llw
 cjx
-lUT
+sgt
 gPj
 lwe
 cjx
@@ -148002,12 +147973,12 @@ eIm
 bXP
 fsf
 ixj
-sgt
+tJq
 aaq
 uVY
 oSl
-kco
-liS
+tJq
+hIF
 lUB
 bgR
 eIm
@@ -148507,32 +148478,32 @@ teD
 dkQ
 wzu
 hXb
-hXb
-hXb
-hXb
-hXb
-hXb
-hXb
-hXb
+eFg
+eFg
+eFg
+eFg
+eFg
+eFg
+eFg
 cIy
 lfs
 sEI
-xKF
+cwu
 jzH
 lPT
 jaZ
 koo
 fLj
-hXb
-hXb
-hXb
+eFg
+eFg
+eFg
 bKv
 cPG
 cPG
-jxn
-eFg
-eFg
-hIF
+kco
+kuo
+kuo
+oJP
 gmW
 jZs
 gwa
@@ -149029,13 +149000,13 @@ eIm
 eIm
 pLT
 hOI
-gNR
-kuo
+xKF
+tJq
 yij
 sQq
 bBe
-oJP
-twi
+tJq
+jxn
 iRO
 jGM
 eIm
