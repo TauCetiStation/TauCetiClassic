@@ -21,6 +21,7 @@
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
 	can_be_holstered = FALSE
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 	var/overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_shot.ogg'
 
