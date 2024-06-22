@@ -329,7 +329,7 @@
 
 	var/dat = ""
 	if (SSshuttle.online && SSshuttle.location == 0)
-		dat += "<B>Шаттл</B>\n<BR>\nПримерное время прибытия: [shuttleeta2text()]<BR>"
+		dat += "<B>Аварийный шаттл</B>\n<BR>\nПримерное время прибытия: [shuttleeta2text()]<BR>"
 
 	if (issilicon(user))
 		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
