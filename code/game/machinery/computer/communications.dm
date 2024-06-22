@@ -319,7 +319,7 @@
 	if(emagged)
 		return FALSE
 	src.emagged = 1
-	to_chat(user, "Вы сбили изначальную частоту консоли коммуникаций!")
+	to_chat(user, "Вы шифруете схемы маршрутизации связи!")
 	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
