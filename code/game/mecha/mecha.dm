@@ -41,6 +41,7 @@
 	var/last_message = 0
 	var/add_req_access = 1
 	var/maint_access = 1
+	var/dna_lockable = FALSE
 	var/dna	//dna-locking the mech
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect/effect/system/spark_spread/spark_system = new
@@ -165,17 +166,10 @@
 	radio.icon_state = icon_state
 
 
-/obj/mecha/proc/enter_after(delay, mob/user, numticks = 5)
-	var/delayfraction = delay/numticks
-
-	var/turf/T = user.loc
-
-	for(var/i = 0, i<numticks, i++)
-		sleep(delayfraction)
-		if(!src || !user || !user.canmove || !(user.loc == T))
-			return 0
-
-	return 1
+/obj/mecha/proc/enter_after(delay, mob/user)
+	if(do_after(usr, delay, target = src))
+		return 1
+	return 0
 
 /obj/mecha/examine(mob/user)
 	..()
@@ -681,9 +675,39 @@
 			state = 4
 			to_chat(user, "You unscrew and pry out the powercell.")
 			log_message("Powercell removed")
-		else if(state==4 && src.cell)
-			state=3
-			to_chat(user, "You screw the cell in place")
+		else if(state==4)
+			if(src.cell)
+				state=3
+				to_chat(user, "You screw the cell in place")
+			else
+				var/list/actions = list()
+				var/obj/item/mecha_parts/mecha_tracking/tracking
+				if(dna_lockable)
+					actions += "Exosuit DNA Scanner"
+				for(var/obj/item/mecha_parts/mecha_tracking/found_tracking in src.contents)
+					actions += "Exosuit Tracker"
+					tracking = found_tracking
+					break
+
+				if(actions.len > 0)
+					var/uloc = user.loc
+					var/mloc = src.loc
+					var/choice = tgui_input_list(user, "Pick what to unscrew.", "Unscrew part", actions, 5 SECONDS)
+					if(user.loc != uloc || src.loc != mloc)
+						return
+					switch(choice)
+						if("Exosuit DNA Scanner")
+							if(dna_lockable)
+								to_chat(user, "You unscrew DNA scanner from [src.name]")
+								dna_lockable = FALSE
+								dna = null
+								new /obj/item/mecha_parts/dna_scanner(src.loc)
+						if("Exosuit Tracker")
+							if(tracking && tracking.loc == src)
+								to_chat(user, "You unscrew [tracking.name] from [src.name]")
+								tracking.forceMove(src.loc)
+
+
 		diag_hud_set_mechcell()
 		return
 
@@ -721,6 +745,14 @@
 		W.forceMove(src)
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
+	else if(istype(W, /obj/item/mecha_parts/dna_scanner))
+		if(dna_lockable)
+			to_chat(user, "The [src.name] already has DNA scanner installed.")
+			return
+
+		dna_lockable = TRUE
+		qdel(W)
+		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 
 	else if(istype(W, /obj/item/weapon/melee/changeling_hammer))
 		var/obj/item/weapon/melee/changeling_hammer/hammer = W
@@ -896,7 +928,7 @@
 		return
 
 	var/passed
-	if(src.dna)
+	if(dna_lockable && dna)
 		if(usr.dna.unique_enzymes==src.dna)
 			passed = 1
 	else if(operation_allowed(usr))
