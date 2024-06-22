@@ -359,7 +359,7 @@
 					else
 						dat += "<BR><A HREF='?src=\ref[src];operation=callshuttle'>Вызвать экстренный шаттл</A>"
 
-				dat += "<BR><A HREF='?src=\ref[src];operation=status'>Установить оповещение на дисплеи</A>"
+				dat += "<BR><A HREF='?src=\ref[src];operation=status'>Установить статус дисплея</A>"
 			else
 				dat += "<BR><A HREF='?src=\ref[src];operation=login'>Авторизироваться</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=messagelist'>Список сообщений</A>"
