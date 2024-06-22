@@ -146,6 +146,17 @@
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY)
 
+/obj/item/clothing/glasses/sunglasses/hud/secmed/equipped(mob/user, slot)
+	if(slot == SLOT_GLASSES && user.hud_used)
+		user.hud_used.init_screen(/atom/movable/screen/ammo)
+		user.ammo_hud?.update_icon(user)
+	..()
+
+/obj/item/clothing/glasses/sunglasses/hud/secmed/dropped(mob/user)
+	if(user.hud_used && user.ammo_hud && slot_equipped != SLOT_L_HAND && slot_equipped != SLOT_R_HAND)
+		user.ammo_hud.remove_from_hud(user.hud_used)
+	..()
+
 /obj/item/clothing/glasses/sunglasses/hud/med
 	name = "MEDHUD sunglasses"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
