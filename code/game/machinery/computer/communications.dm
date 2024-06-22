@@ -350,7 +350,7 @@
 						dat += "<BR><A HREF='?src=\ref[src];operation=MessageCentcomm'>Отправить экстренное сообщение Центкому</A>"
 					else
 						dat += "<BR><A HREF='?src=\ref[src];operation=MessageSyndicate'>Отправить экстренное сообщение \[НЕИЗВЕСТНО\]</A>"
-						dat += "<BR><A HREF='?src=\ref[src];operation=RestoreBackup'>Восстановить изначальные данные</A>"
+						dat += "<BR><A HREF='?src=\ref[src];operation=RestoreBackup'>Восстановить резервные данные маршрутизации</A>"
 
 				dat += "<BR><A HREF='?src=\ref[src];operation=changeseclevel'>Сменить код тревоги</A>"
 				if(SSshuttle.location==0)
