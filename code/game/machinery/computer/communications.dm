@@ -324,7 +324,7 @@
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
 	if (!SSmapping.has_level(z))
-		to_chat(usr, "<span class='warning'><b>Невозможно установить связь</b>:</span> Вы слишком далеко от станции!")
+		to_chat(usr, "<span class='warning'><b>Невозможно установить соединение</b>:</span> Вы слишком далеко от станции!")
 		return
 
 	var/dat = ""
