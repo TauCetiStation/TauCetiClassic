@@ -55,10 +55,12 @@
 
 		if(reagents.total_volume >= reagents.maximum_volume)
 			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
+			update_icon()
 			return FALSE
 
 		var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [RD].</span>")
+		update_icon()
 		return FALSE
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
@@ -386,16 +388,16 @@
 	if(reagents.total_volume > 200)
 		item_state_world = "cleaner_world"
 		item_state_inventory = "cleaner"
-	if(reagents.total_volume < 200)
+	else if(reagents.total_volume > 125)
 		item_state_world = "cleaner75_world"
 		item_state_inventory = "cleaner75"
-	if(reagents.total_volume < 125)
+	else if(reagents.total_volume > 75)
 		item_state_world = "cleaner50_world"
 		item_state_inventory = "cleaner50"
-	if(reagents.total_volume < 75)
+	else if(reagents.total_volume > 0)
 		item_state_world = "cleaner25_world"
 		item_state_inventory = "cleaner25"
-	if(reagents.total_volume == 0)
+	else
 		item_state_world = "cleaner_empty_world"
 		item_state_inventory = "cleaner_empty"
 	update_world_icon()
@@ -409,16 +411,19 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	item_state_inventory = "cleaner"
 
 /obj/item/weapon/reagent_containers/spray/cleaner/update_icon()
-	if(reagents.total_volume < 200)
+	if(reagents.total_volume > 200)
+		item_state_world = "cleaner_world"
+		item_state_inventory = "cleaner"
+	else if(reagents.total_volume > 125)
 		item_state_world = "cleaner75_world"
 		item_state_inventory = "cleaner75"
-	if(reagents.total_volume < 125)
+	else if(reagents.total_volume > 75)
 		item_state_world = "cleaner50_world"
 		item_state_inventory = "cleaner50"
-	if(reagents.total_volume < 75)
+	else if(reagents.total_volume > 0)
 		item_state_world = "cleaner25_world"
 		item_state_inventory = "cleaner25"
-	if(reagents.total_volume == 0)
+	else
 		item_state_world = "cleaner_empty_world"
 		item_state_inventory = "cleaner_empty"
 	update_world_icon()
@@ -543,16 +548,19 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	reagents.add_reagent("lube", 150)
 
 /obj/item/weapon/reagent_containers/spray/lube/update_icon()
-	if(reagents.total_volume < 200)
+	if(reagents.total_volume > 200)
+		item_state_world = "cleaner_world"
+		item_state_inventory = "cleaner"
+	else if(reagents.total_volume > 125)
 		item_state_world = "cleaner75_world"
 		item_state_inventory = "cleaner75"
-	if(reagents.total_volume < 125)
+	else if(reagents.total_volume > 75)
 		item_state_world = "cleaner50_world"
 		item_state_inventory = "cleaner50"
-	if(reagents.total_volume < 75)
+	else if(reagents.total_volume > 0)
 		item_state_world = "cleaner25_world"
 		item_state_inventory = "cleaner25"
-	if(reagents.total_volume == 0)
+	else
 		item_state_world = "cleaner_empty_world"
 		item_state_inventory = "cleaner_empty"
 	update_world_icon()
