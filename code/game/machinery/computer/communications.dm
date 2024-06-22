@@ -397,7 +397,7 @@
 			dat += "<li> Линия 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
 			dat += " Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Красный код тревоги</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Изоляция</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая опасность</A><BR><HR>"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая угроза</A><BR><HR>"
 		if(STATE_ALERT_LEVEL)
 			dat += "Текущий код тревоги: [get_security_level()]<BR>"
 			if(security_level == SEC_LEVEL_DELTA)
