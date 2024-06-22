@@ -481,7 +481,7 @@
 		return
 
 	if(SSshuttle.online)
-		to_chat(user, "Шаттл уже вызван.")
+		to_chat(user, "Аварийный шаттл уже вызван.")
 		return
 
 	SSshuttle.incall()
