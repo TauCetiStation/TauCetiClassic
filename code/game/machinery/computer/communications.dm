@@ -422,7 +422,7 @@
 	switch(src.aistate)
 		if(STATE_DEFAULT)
 			if(SSshuttle.location==0 && !SSshuttle.online)
-				dat += "<BR><A HREF='?src=\ref[src];operation=ai-callshuttle'>Вызвать шаттл</A>"
+				dat += "<BR><A HREF='?src=\ref[src];operation=ai-callshuttle'>Вызвать аварийный шаттл</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=ai-messagelist'>Список сообщений</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=ai-status'>Установить текст на дисплеях</A>"
 		if(STATE_CALLSHUTTLE)
