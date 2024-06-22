@@ -6,7 +6,7 @@
 	var/autozoom = prefs.get_pref(/datum/pref/player/display/auto_zoom)
 	var/zoom = autozoom ? 0 : prefs.get_pref(/datum/pref/player/display/zoom) * 0.01
 	var/zoom_mode = prefs.get_pref(/datum/pref/player/display/zoom_mode)
-	winset(src, "mapwindow.map", "zoom=[zoom];zoom-mode=[zoom_mode]")
+	winset(src, "taumapwindow.map", "zoom=[zoom];zoom-mode=[zoom_mode]")
 
 // changes tiles count client can see
 /client/proc/change_view(new_size)
@@ -42,7 +42,7 @@
 	set category = "OOC"
 	set desc = "Fit the width of the map window to match the viewport"
 
-	if(isnewplayer(mob)) // no mapwindow in lobby
+	if(isnewplayer(mob)) // no taumapwindow in lobby
 		to_chat(usr, "<span class='warning'>You can't fix viewport while in lobby.</span>")
 		return
 
@@ -51,16 +51,16 @@
 	var/aspect_ratio = view_size[1] / view_size[2]
 
 	// Calculate desired pixel width using window size and aspect ratio
-	var/list/sizes = params2list(winget(src, "mainwindow.mainvsplit;mapwindow", "size"))
+	var/list/sizes = params2list(winget(src, "mainwindow.mainvsplit;taumapwindow", "size"))
 
 	// Client closed the window? Some other error? This is unexpected behaviour, let's
 	// CRASH with some info.
-	if(!sizes["mapwindow.size"])
-		CRASH("sizes does not contain mapwindow.size key. This means a winget failed to return what we wanted. --- sizes var: [sizes] --- sizes length: [length(sizes)]")
+	if(!sizes["taumapwindow.size"])
+		CRASH("sizes does not contain taumapwindow.size key. This means a winget failed to return what we wanted. --- sizes var: [sizes] --- sizes length: [length(sizes)]")
 
-	var/list/map_size = splittext(sizes["mapwindow.size"], "x")
+	var/list/map_size = splittext(sizes["taumapwindow.size"], "x")
 
-	// Looks like we expect mapwindow.size to be "ixj" where i and j are numbers.
+	// Looks like we expect taumapwindow.size to be "ixj" where i and j are numbers.
 	// If we don't get our expected 2 outputs, let's give some useful error info.
 	if(length(map_size) != 2)
 		CRASH("map_size of incorrect length --- map_size var: [map_size] --- map_size length: [length(map_size)]")
@@ -85,7 +85,7 @@
 	// Apply an ever-lowering offset until we finish or fail
 	var/delta
 	for(var/safety in 1 to 10)
-		var/after_size = winget(src, "mapwindow", "size")
+		var/after_size = winget(src, "taumapwindow", "size")
 		map_size = splittext(after_size, "x")
 		var/got_width = text2num(map_size[1])
 

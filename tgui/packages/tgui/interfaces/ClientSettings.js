@@ -165,25 +165,23 @@ const SettingFieldSelect = (props, context) => {
   // dropdown is not select, apparently, and we can't do different value/text, so this part is a mess
   if (Array.isArray(setting.v_parameters)) {
     return (
-      <><Dropdown
+      <Dropdown
         width="100%"
         options={setting.v_parameters}
         selected={setting.value}
         noscroll={true}
         onSelected={value => act('set_value', { type: setting.type, value: value })}
       />
-      {setting.value}</>
     );
   } else {
     return (
-      <><Dropdown
+      <Dropdown
         width="100%"
         options={Object.values(setting.v_parameters)}
         selected={setting.v_parameters[setting.value]}
         noscroll={true}
         onSelected={value => act('set_value', { type: setting.type, value: Object.keys(setting.v_parameters).find(key => setting.v_parameters[key] === value) })}
       />
-      {setting.v_parameters[setting.value]}</>
     );
   }
 };
