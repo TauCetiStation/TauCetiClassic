@@ -392,7 +392,7 @@
 			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Очистить</A><BR>"
 			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=default'>Стандартный режим</A><BR>"
 			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Время прибытия шаттла</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Режим передачи сообщений</A>"
+			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Сообщение</A>"
 			dat += "<ul><li> Линия 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
 			dat += "<li> Линия 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
 			dat += " Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Красный код тревоги</A> |"
