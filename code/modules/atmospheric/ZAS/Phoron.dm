@@ -106,7 +106,7 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 
 	//Burn eyes if exposed.
 	if(vsc.plc.EYE_BURNS)
-		if(!pl_cloth_protected(FACE))
+		if(!pl_cloth_protected(EYES))
 			burn_eyes()
 
 	//Genetic Corruption
