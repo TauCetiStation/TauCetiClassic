@@ -20,13 +20,13 @@
 	if(!..())
 		return
 
-	if(client.prefs?.get_pref(/datum/pref/player/graphics/ambientocclusion))
+	if(client.prefs?.get_pref(/datum/pref/player/effects/ambientocclusion))
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
 	if(!assigned_map) // todo: don't reapply filter if it's already exists?
 		client.mob.clear_fullscreen("blurry")
 		if(client.mob.eye_blurry)
-			if(client.prefs?.get_pref(/datum/pref/player/graphics/legacy_blur))
+			if(client.prefs?.get_pref(/datum/pref/player/effects/legacy_blur))
 				// alternative filter for users with weak PC
 				client.mob.overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
 			else

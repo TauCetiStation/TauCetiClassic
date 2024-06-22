@@ -145,7 +145,7 @@ var/global/lobby_screen = "lobby"
 	
 	if(global.custom_lobby_image)
 		dat += {"<img src="titlescreen.gif" class="background" alt="">"}
-	else if (client.prefs.get_pref(/datum/pref/player/graphics/lobbyanimation))
+	else if (client.prefs.get_pref(/datum/pref/player/effects/lobbyanimation))
 		dat += {"
 		<video class="background" width="400" height="400" loop mute autoplay>
 			<source src="[global.lobby_screen].mp4" type="video/mp4">

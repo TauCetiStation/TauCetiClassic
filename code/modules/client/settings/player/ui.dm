@@ -1,16 +1,6 @@
 /datum/pref/player/ui
 	category = PREF_PLAYER_UI
 
-/datum/pref/player/ui/auto_fit_viewport
-	name = "Fit viewport"
-	description = "Автоматически подстраивать размер правой колонки под окно игры (убирает черные полосы)."
-	value_type = PREF_TYPE_BOOLEAN
-	value = TRUE
-
-/datum/pref/player/ui/auto_fit_viewport/on_update(client/client, old_value)
-	if(value && client) // if new value requires to fit
-		client.fit_viewport()
-
 /datum/pref/player/ui/runechat
 	name = "Runechat"
 	description = "Чат над головой персонажей"

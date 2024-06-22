@@ -79,7 +79,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		set_pref(/datum/pref/player/audio/admin_sound, S["snd_admin_vol"])
 
 		// ui
-		set_pref(/datum/pref/player/ui/auto_fit_viewport, S["auto_fit_viewport"])
+		set_pref(/datum/pref/player/display/auto_fit_viewport, S["auto_fit_viewport"])
 		set_pref(/datum/pref/player/ui/ui_style, S["UI_style"])
 		set_pref(/datum/pref/player/ui/ui_style_color, S["UI_style_color"])
 		var/converted_alpha = 100 - floor(100*S["UI_style_alpha"]/255)
@@ -96,7 +96,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		// graphics
 		var/converted_fps = S["clientfps"] == -1 ? RECOMMENDED_FPS : S["clientfps"] // before -1 was for default, but it's confusing and we don't change it too often
-		set_pref(/datum/pref/player/graphics/fps, converted_fps)
+		set_pref(/datum/pref/player/display/fps, converted_fps)
 
 		var/converted_parallax
 		switch(S["parallax"])
@@ -110,13 +110,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				converted_parallax = PARALLAX_LOW
 			if(3)
 				converted_parallax = PARALLAX_DISABLE
-		set_pref(/datum/pref/player/graphics/parallax, converted_parallax)
-		set_pref(/datum/pref/player/graphics/lobbyanimation, S["lobbyanimation"])
+		set_pref(/datum/pref/player/effects/parallax, converted_parallax)
+		set_pref(/datum/pref/player/effects/lobbyanimation, S["lobbyanimation"])
 
 		var/converted_blur_effect = !S["eye_blur_effect"]
-		set_pref(/datum/pref/player/graphics/legacy_blur, converted_blur_effect)
+		set_pref(/datum/pref/player/effects/legacy_blur, converted_blur_effect)
 
-		set_pref(/datum/pref/player/graphics/ambientocclusion, S["ambientocclusion"])
+		set_pref(/datum/pref/player/effects/ambientocclusion, S["ambientocclusion"])
 
 		var/converted_glowlevel
 		switch(S["glowlevel"])
@@ -128,9 +128,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				converted_glowlevel = GLOW_LOW
 			if(3)
 				converted_glowlevel = GLOW_DISABLE
-		set_pref(/datum/pref/player/graphics/glowlevel, converted_glowlevel)
-		set_pref(/datum/pref/player/graphics/lampsexposure, S["lampsexposure"])
-		set_pref(/datum/pref/player/graphics/lampsglare, S["lampsglare"])
+		set_pref(/datum/pref/player/effects/glowlevel, converted_glowlevel)
+		set_pref(/datum/pref/player/effects/lampsexposure, S["lampsexposure"])
+		set_pref(/datum/pref/player/effects/lampsglare, S["lampsglare"])
 
 		// game
 		#define SHOW_ANIMATIONS	16

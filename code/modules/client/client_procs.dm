@@ -296,7 +296,7 @@ var/global/list/blacklisted_builds = list(
 		global.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
-	fps = prefs.get_pref(/datum/pref/player/graphics/fps)
+	fps = prefs.get_pref(/datum/pref/player/display/fps)
 
 	var/cur_date = time2text(world.realtime, "YYYY/MM/DD hh:mm:ss")
 	if("[computer_id]" in prefs.cid_list)
@@ -369,10 +369,9 @@ var/global/list/blacklisted_builds = list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	init_zoom()
-
-	if(prefs.get_pref(/datum/pref/player/ui/auto_fit_viewport))
-		fit_viewport()
+	update_fullscreen() // we need it?
+	update_map_zoom()
+	view_on_resize()
 
 	if(!cob)
 		cob = new()
@@ -782,35 +781,6 @@ var/global/list/blacklisted_builds = list(
 				if("South")
 					movement_keys[key] = SOUTH
 
-#define MAXIMAZED  (1<<0)
-#define FULLSCREEN (1<<1)
-
-/client/verb/toggle_fullscreen()
-	set name = "Toggle Fullscreen"
-	set category = "OOC"
-
-	fullscreen ^= FULLSCREEN
-
-	if(fullscreen & FULLSCREEN)
-		if(winget(usr, "mainwindow", "is-maximized") == "true")
-			fullscreen |= MAXIMAZED
-		else
-			fullscreen &= ~MAXIMAZED
-		winset(usr, "mainwindow", "titlebar=false")
-		winset(usr, "mainwindow", "can-resize=false")
-		winset(usr, "mainwindow", "is-maximized=false")
-		winset(usr, "mainwindow", "is-maximized=true")
-		winset(usr, "mainwindow", "menu=")
-	else
-		if(!(fullscreen & MAXIMAZED))
-			winset(usr, "mainwindow", "is-maximized=false")
-		winset(usr, "mainwindow", "titlebar=true")
-		winset(usr, "mainwindow", "can-resize=true")
-		winset(usr, "mainwindow", "menu=menu")
-
-#undef MAXIMAZED
-#undef FULLSCREEN
-
 // ckey = datum/stat/leave_stat
 var/global/list/disconnected_ckey_by_stat = list()
 /client/proc/handle_connect()
@@ -828,18 +798,6 @@ var/global/list/disconnected_ckey_by_stat = list()
 	var/datum/stat/leave_stat/stat = SSStatistics.get_leave_stat(mob.mind, "Disconnected", roundduration2text())
 
 	global.disconnected_ckey_by_stat[ckey] = stat
-
-/client/proc/change_view(new_size)
-	if (isnull(new_size))
-		CRASH("change_view called without argument.")
-
-	view = new_size
-	mob.reload_fullscreen()
-
-/client/proc/init_zoom()
-	var/zoom = prefs.get_pref(/datum/pref/player/graphics/zoom)
-	var/zoom_mode = prefs.get_pref(/datum/pref/player/graphics/zoom_mode)
-	winset(src, "mapwindow.map", "zoom=[zoom];zoom-mode=[zoom_mode]")
 
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)

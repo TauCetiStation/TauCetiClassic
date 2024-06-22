@@ -54,7 +54,7 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
-		on-size = "onresize"
+		on-size = "view_on_resize"
 		title = "Space Station 13"
 		statusbar = false
 		is-maximized = true

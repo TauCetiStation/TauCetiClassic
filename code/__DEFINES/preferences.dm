@@ -18,14 +18,15 @@
 #define PREF_DOMAIN_CHARACTER  "character" // todo
 
 // player pref domain subcategories
-#define PREF_PLAYER_UI "ui"
-#define PREF_PLAYER_GRAPHICS "graphics"
+#define PREF_PLAYER_DISPLAY "display"
+#define PREF_PLAYER_EFFECTS "effects"
 #define PREF_PLAYER_AUDIO "audio"
+#define PREF_PLAYER_UI "ui"
 #define PREF_PLAYER_CHAT "chat"
 #define PREF_PLAYER_GAME "game"
 #define PREF_PLAYER_KEYBINDS "keybinds"
 
-///datum/pref/player/graphics/zoom
+///datum/pref/player/display/zoom
 #define ICON_SCALE_AUTO "0"
 #define ICON_SCALE_16   "0.5"
 #define ICON_SCALE_32   "1"
@@ -36,19 +37,19 @@
 #define ICON_SCALE_112  "3.5"
 #define ICON_SCALE_128  "4"
 
-///datum/pref/player/graphics/zoom_mode
+///datum/pref/player/display/zoom_mode
 #define SCALING_METHOD_NORMAL "normal"
 #define SCALING_METHOD_DISTORT "distort"
-#define SCALING_METHOD_BLUR "blur"
+//#define SCALING_METHOD_BLUR "blur" // gives worst result so currently not used and players can't choice it
 
 
-///datum/pref/player/graphics/glowlevel
+///datum/pref/player/effects/glowlevel
 #define GLOW_HIGH    "high"
 #define GLOW_MED     "med"
 #define GLOW_LOW     "low"
 #define GLOW_DISABLE "disable"
 
-///datum/pref/player/graphics/parallax
+///datum/pref/player/effects/parallax
 #define PARALLAX_INSANE  "insane"  //for show offs
 #define PARALLAX_HIGH    "high"    //default.
 #define PARALLAX_MED     "med"

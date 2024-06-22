@@ -5,16 +5,19 @@
 	set name = "Settings"
 	set category = "Preferences"
 
+	open_settings_menu()
+
+/client/proc/open_settings_menu(tab)
 	if(!prefs_ready)
 		to_chat(usr, "Need more time for initialization!")
 		return
 
 	if(!settings)
 		settings = new /datum/client_settings(src)
-	settings.tgui_interact(usr)
+	settings.tgui_interact(usr, tab)
 
 /datum/client_settings
-	var/tab = PREF_PLAYER_UI // change to default
+	var/active_tab = PREF_PLAYER_DISPLAY
 
 /datum/client_settings/tgui_interact(mob/user, datum/tgui/ui)
 	world.log << "tgui_interact"
@@ -25,15 +28,17 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/datum/client_settings/tgui_data(mob/user)
-	var/list/data = list("active_tab" = tab, "settings" = list())
+/datum/client_settings/tgui_data(mob/user, tab)
+	if(tab)
+		active_tab = tab
+	var/list/data = list("active_tab" = active_tab, "settings" = list())
 
 	//if(tab == PREF_DOMAIN_KEYBINDS)
 
 	var/datum/pref/player/P
 	for(var/type in user.client.prefs.player_settings)
 		P = user.client.prefs.player_settings[type]
-		if(P.category != tab)
+		if(P.category != active_tab)
 			continue
 
 		// todo: more static data can be moved to tgui_static
@@ -50,23 +55,24 @@
 		))
 
 	world.log << "CS: tgui_data [length(data["settings"])]"
-	world.log << json_encode(data)
+	//world.log << json_encode(data)
 
 
 	return data
 
 /datum/client_settings/tgui_static_data(mob/user)
 	var/static/tabs = list(
-		PREF_PLAYER_UI = "Интерфейс",
-		PREF_PLAYER_GRAPHICS = "Графика",
+		PREF_PLAYER_DISPLAY = "Экран",
+		PREF_PLAYER_EFFECTS = "Эффекты",
 		PREF_PLAYER_AUDIO = "Аудио",
+		PREF_PLAYER_UI = "Интерфейс",
 		PREF_PLAYER_CHAT = "Чат",
 		PREF_PLAYER_GAME = "Игра",
 		PREF_PLAYER_KEYBINDS = "Управление",
 	)
 
 	var/static/tabs_tips = list(
-		PREF_PLAYER_GRAPHICS = "Рекомендуется изменять настройки во время игры - так вы сможете сразу увидить результат.",
+		PREF_PLAYER_EFFECTS = "Рекомендуется изменять настройки во время игры - так вы сможете сразу увидеть результат.",
 	)
 
 	var/list/data = list()
@@ -87,10 +93,10 @@
 		if("set_value")
 			C.prefs.set_pref(text2path(params["type"]), params["value"])
 		if("set_tab")
-			tab = params["tab"]
+			active_tab = params["tab"]
 		if("modify_color_value")
 			var/current_color = C.prefs.get_pref(text2path(params["type"]))
-			var/new_color = input(C, "Выберите новый цвет", "Colopick", current_color) as color|null
+			var/new_color = input(C, "Выберите новый цвет", "Выбор цвета", current_color) as color|null
 			if(!new_color)
 				return FALSE
 			else

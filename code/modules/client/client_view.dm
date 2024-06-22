@@ -1,9 +1,42 @@
-/client/verb/onresize()
-	set hidden = TRUE
+// see also: /datum/component/zoom
 
-	if(prefs.get_pref(/datum/pref/player/ui/auto_fit_viewport) && !isnewplayer(mob))
-		fit_viewport()
+// fetches prefs and reloads client zoom settings 
+// note: this has nothing to do with zoom component, zoom component works with change_view
+/client/proc/update_map_zoom()
+	var/autozoom = prefs.get_pref(/datum/pref/player/display/auto_zoom)
+	var/zoom = autozoom ? 0 : prefs.get_pref(/datum/pref/player/display/zoom) * 0.01
+	var/zoom_mode = prefs.get_pref(/datum/pref/player/display/zoom_mode)
+	winset(src, "mapwindow.map", "zoom=[zoom];zoom-mode=[zoom_mode]")
 
+// changes tiles count client can see
+/client/proc/change_view(new_size)
+	if (isnull(new_size))
+		CRASH("change_view called without argument.")
+
+	view = new_size
+	mob.reload_fullscreen()
+
+/client/verb/toggle_fullscreen()
+	set name = "Toggle Fullscreen"
+	set category = "OOC"
+
+	var/fullscreen = prefs.get_pref(/datum/pref/player/display/fullscreen)
+	prefs.set_pref(/datum/pref/player/display/fullscreen, !fullscreen)
+
+	update_fullscreen()
+
+/client/proc/update_fullscreen()
+	set name = "Toggle Fullscreen"
+	set category = "OOC"
+
+	if(prefs.get_pref(/datum/pref/player/display/fullscreen))
+		winset(src, "mainwindow", "menu=")
+		winset(src, "mainwindow", "is-fullscreen=true")
+	else
+		winset(src, "mainwindow", "menu=menu")
+		winset(src, "mainwindow", "is-fullscreen=false")
+
+// basically, resizes right column so that map windows don't have black bars
 /client/verb/fit_viewport()
 	set name = "Fit viewport"
 	set category = "OOC"
@@ -68,3 +101,10 @@
 
 		pct += delta
 		winset(src, "mainwindow.split", "splitter=[pct]")
+
+// called automatically from skin on any columns resize, 
+/client/verb/view_on_resize()
+	set hidden = TRUE
+
+	if(prefs.get_pref(/datum/pref/player/display/auto_fit_viewport) && !isnewplayer(mob))
+		fit_viewport()

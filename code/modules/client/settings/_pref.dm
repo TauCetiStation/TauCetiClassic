@@ -16,7 +16,7 @@
 	// for frontend
 	var/value_type // = COLOR | NUMBER | LIST | BOOLEAN | TEXT
 	// ambivalent value depending on value_type
-	// For PREF_TYPE_RANGE it's list(min, max)
+	// For PREF_TYPE_RANGE it's list(min, max, step (optional), unit (optional))
 	// For PREF_TYPE_SELECT it's list(value, value, value) or list(value = "human name", value = "human name", value = "human name")
 	// todo TEXT min max
 	// not used for other types
@@ -47,6 +47,11 @@
 			. = !!new_value
 		else
 			CRASH("Not implemented sanitize for [src.type]!")
+
+/*	if(!.)
+		stack_trace("Reset at")
+		. = initial(value)
+*/
 
 	return .
 
