@@ -390,7 +390,7 @@
 		if(STATE_STATUSDISPLAY)
 			dat += "Установить текст на дисплеях<BR>"
 			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Очистить</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=default'>Стандартный режим</A><BR>"
+			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=default'>По умолчанию</A><BR>"
 			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Время прибытия шаттла</A><BR>"
 			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Сообщение</A>"
 			dat += "<ul><li> Линия 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
