@@ -20,6 +20,7 @@
 	else
 		new /obj/item/weapon/gun/energy/gun/head(src)
 
+	new /obj/item/clothing/accessory/armor(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/suit/captunic/capjacket(src)
 	new /obj/item/clothing/head/helmet/cap(src)
