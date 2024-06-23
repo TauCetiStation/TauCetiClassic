@@ -37,6 +37,7 @@
 	if(!overlay)
 		overlay = image(icon, "light1-overlay", layer = ABOVE_LIGHTING_LAYER)
 		overlay.plane = LIGHTING_LAMPS_PLANE
+		overlay.color = "#0000aa"
 
 	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))

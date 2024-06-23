@@ -128,6 +128,16 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	icon_state = "disposal"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
+// G.U.T.S.
+/area/station/guts
+	name = "G.U.T.S."
+	has_gravity = FALSE
+
+	requires_power = 0
+
+/area/station/guts/gravitychange(gravitystate = FALSE)
+	return
+
 //Construction
 
 /area/station/construction
