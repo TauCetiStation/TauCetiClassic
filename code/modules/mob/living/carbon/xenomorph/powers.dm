@@ -479,6 +479,20 @@
 	new_xeno.mind.name = new_xeno.real_name
 	qdel(user)
 
+/obj/effect/proc_holder/spell/no_target/larva_evolve/solo
+	var/list/castes = list("Охотник" = /mob/living/carbon/xenomorph/humanoid/hunter/solo)
+
+/obj/effect/proc_holder/spell/no_target/larva_evolve/solo/cast(list/targets, mob/user = usr)
+	to_chat(user, "<span class='alien'>Подождите пока закончится процесс эволюции.</span>")
+	if(!do_after(user, 10 SECONDS, target = user))
+		return
+
+	var/mob/living/carbon/xenomorph/humanoid/alien = /mob/living/carbon/xenomorph/humanoid/hunter/solo
+	var/mob/new_xeno = new alien(user.loc)
+	user.mind.transfer_to(new_xeno)
+	new_xeno.mind.name = new_xeno.real_name
+	qdel(user)
+
 /obj/effect/proc_holder/spell/no_target/xenowinds
 	name = "Эмиссия форона"
 	desc = "Выпустить небольшое облачко накопленного форона."

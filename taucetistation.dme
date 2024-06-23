@@ -1973,6 +1973,7 @@
 #include "code\modules\mob\living\carbon\xenomorph\humanoid\caste\hunter.dm"
 #include "code\modules\mob\living\carbon\xenomorph\humanoid\caste\maid.dm"
 #include "code\modules\mob\living\carbon\xenomorph\humanoid\caste\sentinel.dm"
+#include "code\modules\mob\living\carbon\xenomorph\humanoid\caste\solo.dm"
 #include "code\modules\mob\living\carbon\xenomorph\larva\emote.dm"
 #include "code\modules\mob\living\carbon\xenomorph\larva\inventory.dm"
 #include "code\modules\mob\living\carbon\xenomorph\larva\larva.dm"
