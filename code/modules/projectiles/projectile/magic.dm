@@ -147,7 +147,7 @@
 		C.ChangeOwner(firer)
 		create_spawner(/datum/spawner/living/mimic, C)
 	else if(isshade(change) || isxeno(change))
-		var/mob/living/M = wabbajack(change)
+		var/mob/living/M = animate_atom_living(change)
 		if(!M)
 			return
 		if(firer && iswizard(firer))
@@ -162,6 +162,50 @@
 				if(R)
 					R.Deconvert()
 
+/obj/item/projectile/magic/animate/proc/animate_atom_living(mob/living/M)
+	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || !M.client || isxenoqueen(M))
+		return
+
+	M.notransform = TRUE
+	M.canmove = 0
+	M.icon = null
+	M.cut_overlays()
+	M.invisibility = 101
+
+	var/mob/living/new_mob
+
+	var/randomizer = pick("animal", "cyborg", "xeno")
+	if(isxeno(M))
+		randomizer = "xeno"
+	switch(randomizer)
+		if("animal")
+			var/beast = pick(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/tomato/angry_tomato, /mob/living/simple_animal/hostile/retaliate/goat, /mob/living/simple_animal/pig/shadowpig)
+			new_mob = new beast(M.loc)
+			new_mob.universal_speak = TRUE
+		if("cyborg")
+			new_mob = new /mob/living/silicon/robot(M.loc, "Default", /datum/ai_laws/asimov_xenophile, FALSE, global.chaplain_religion)
+			new_mob.gender = M.gender
+			new_mob.invisibility = 0
+			new_mob.job = "Cyborg"
+		if("xeno")
+			new_mob = new /mob/living/carbon/xenomorph/humanoid/maid(M.loc)
+			new_mob.universal_speak = TRUE
+	if(!new_mob)
+		return
+
+	new_mob.attack_log = M.attack_log
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+
+	new_mob.set_a_intent(INTENT_HARM)
+	if(M.mind)
+		M.mind.transfer_to(new_mob)
+	else
+		new_mob.key = M.key
+
+	to_chat(new_mob, "<B>Your body forms to something else!</B>")
+
+	qdel(M)
+	return new_mob
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
