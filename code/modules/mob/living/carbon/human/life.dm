@@ -1014,8 +1014,6 @@ var/global/list/tourette_bad_words= list(
 		if(!O.up && tinted_weldhelh)
 			impaired = 2
 	if(istype(glasses, /obj/item/clothing/glasses/welding) && (!istype(O, /obj/item/clothing/glasses/welding/superior)) )
-		if(!O.up && tinted_weldhelh)
-			impaired = max(impaired, 2)
 		var/obj/item/clothing/glasses/welding/O = glasses
 	if(impaired)
 		overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, impaired)
