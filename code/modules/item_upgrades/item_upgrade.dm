@@ -74,11 +74,11 @@
 
 /datum/action/item_action/hands_free/switch_hud_modes/
 	name = "Switch Mode"
-	button_icon = 'icons/obj/clothing/glasses.dmi'
+	button_overlay_icon = 'icons/obj/clothing/glasses.dmi'
 
 /datum/action/item_action/hands_free/switch_hud_modes/night
 	name = "Toggle Nightvision"
-	button_icon_state = "night"
+	button_overlay_state = "night"
 
 /datum/action/item_action/hands_free/switch_hud_modes/night/Activate()
 	var/obj/item/clothing/glasses/sunglasses/hud/advanced/hud = target
@@ -86,7 +86,7 @@
 
 /datum/action/item_action/hands_free/switch_hud_modes/thermal1 //only thermal
 	name = "Toggle thermal"
-	button_icon_state = "thermal"
+	button_overlay_state = "thermal"
 
 /datum/action/item_action/hands_free/switch_hud_modes/thermal1/Activate()
 	// if(ishuman(usr))
@@ -109,7 +109,7 @@
 
 /datum/action/item_action/hands_free/switch_hud_modes/thermal2 //mixed thermal and nightvision
 	name = "Toggle Advanced Thermal"
-	button_icon_state = "material"
+	button_overlay_state = "material"
 
 /datum/action/item_action/hands_free/switch_hud_modes/thermal2/Activate()
 	// if(ishuman(usr))
