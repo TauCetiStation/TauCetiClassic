@@ -348,6 +348,15 @@ The tech datums are the actual "tech trees" that you improve through researching
 	shown = FALSE
 	item_tech_req = "syndicate" // research any traiter item and this tech will show up
 
+/datum/tech/special
+	name = "Special Technologies Research"
+	shortname = "Special Tech"
+	desc = "Technologies of another corporations that can be used for Nanotrasen benefit"
+	id = RESEARCH_SPECIAL
+	rare = 3
+	shown = TRUE
+	item_tech_req = "special" // research any special item and this tech will show up
+
 
 /datum/technology
 	var/name = "name"
@@ -1709,3 +1718,67 @@ The tech datums are the actual "tech trees" that you improve through researching
 	cost = 5000
 
 	unlocks_designs = list("camera_bug")
+
+
+/datum/technology/tier1_hud_upgrade
+	name = "Damage Scan HUD upgrade"
+	desc = "Damage Scan HUD upgrade"
+	id = "tier1_hud_upgrade"
+	tech_type = RESEARCH_SPECIAL
+
+	x = 0.1
+	y = 0.2
+	icon = "camerabug"
+
+	required_technologies = list("tier1_hud_upgrade")
+	required_tech_levels = list(RESEARCH_SPECIAL = 1)
+
+	unlocks_designs = list("tier1_hud_upgrade")
+
+/datum/technology/tier2_hud_upgrade
+	name = "Basic Nightvision HUD upgrade"
+	desc = "Basic Nightvision HUD upgrade"
+	id = "tier2_hud_upgrade"
+	tech_type = RESEARCH_SPECIAL
+
+	x = 0.2
+	y = 0.2
+	icon = "camerabug"
+
+	required_technologies = list("tier1_hud_upgrade")
+	required_tech_levels = list(RESEARCH_SPECIAL = 2)
+	cost = 10000
+
+	unlocks_designs = list("tier2_hud_upgrade")
+
+/datum/technology/tier3_hud_upgrade
+	name = "Thermal HUD upgrade"
+	desc = "Ultra HUD upgrade"
+	id = "tier3_hud_upgrade"
+	tech_type = RESEARCH_SPECIAL
+
+	x = 0.3
+	y = 0.2
+	icon = "camerabug"
+
+	required_technologies = list("tier2_hud_upgrade")
+	required_tech_levels = list(RESEARCH_SPECIAL = 3)
+	cost = 20000
+
+	unlocks_designs = list("tier3_hud_upgrade")
+
+/datum/technology/tier4_hud_upgrade
+	name = "Advanced Thermal HUD upgrade"
+	desc = "Advanced Thermal HUD upgrade"
+	id = "tier4_hud_upgrade"
+	tech_type = RESEARCH_SPECIAL
+
+	x = 0.4
+	y = 0.2
+	icon = "camerabug"
+
+	required_technologies = list("tier3_hud_upgrade")
+	required_tech_levels = list(RESEARCH_SPECIAL = 4)
+	cost = 30000
+
+	unlocks_designs = list("tier4_hud_upgrade")

@@ -146,6 +146,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 			files.research_points += research_points
 		else
 			to_chat(user, "<span class='notice'>There was no usefull data inside [D.name]'s buffer.</span>")
+	else if(istype(D, /obj/item/weapon/disk/tech_disk))
+		var/obj/item/weapon/disk/tech_disk/disk = D
+		if(disk.stored_technology)
+			to_chat(user, "<span class='notice'>You succesfully uploaded '[disk.stored_technology.name]' in the console</span>")
+			files.UnlockTechology(disk.stored_technology, TRUE)
+			user.remove_from_mob(disk)
+			qdel(disk)
+		else
+			to_chat(user, "<span class ='alert'>You can't upload empty disk")
 	else
 		//The construction/deconstruction of the console code.
 		..()

@@ -1747,6 +1747,7 @@
 #include "code\modules\holodeck\HolodeckTemplate.dm"
 #include "code\modules\holomap\holochip.dm"
 #include "code\modules\holomap\holochips.dm"
+#include "code\modules\item_upgrades\item_upgrade.dm"
 #include "code\modules\jungle\falsewall.dm"
 #include "code\modules\jungle\jungle.dm"
 #include "code\modules\jungle\jungle_animals.dm"
