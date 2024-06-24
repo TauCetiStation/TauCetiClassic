@@ -328,10 +328,8 @@ Hit Procs
 	if(A == loc)
 		return
 	var/its_wall = FALSE
-	if(istype(A, /obj/structure/alien/resin/membrane || isalien(A)))
-		its_wall = TRUE
 
-	if(its_wall || istype(A, /obj/structure/alien/resin/membrane))
+	if(its_wall || istype(A, /obj/structure/alien/resin/membrane) || isxeno(A))
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
 			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))
