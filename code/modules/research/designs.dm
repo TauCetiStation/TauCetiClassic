@@ -2890,7 +2890,7 @@ other types of metals and chemistry for reagents).
 	id = "tier1_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
-	build_path = /obj/item/hud_upgrade/hud1
+	build_path = /obj/item/hud_upgrade/medscan
 	category = list("Special upgrades")
 
 /datum/design/tier2_hud_upgrade
@@ -2899,7 +2899,7 @@ other types of metals and chemistry for reagents).
 	id = "tier2_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
-	build_path = /obj/item/hud_upgrade/hud2
+	build_path = /obj/item/hud_upgrade/night
 	category = list("Special upgrades")
 
 /datum/design/tier3_hud_upgrade
@@ -2908,7 +2908,7 @@ other types of metals and chemistry for reagents).
 	id = "tier3_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
-	build_path = /obj/item/hud_upgrade/hud3
+	build_path = /obj/item/hud_upgrade/thermal
 	category = list("Special upgrades")
 
 /datum/design/tier4_hud_upgrade
@@ -2917,5 +2917,5 @@ other types of metals and chemistry for reagents).
 	id = "tier4_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
-	build_path = /obj/item/hud_upgrade/hud4
+	build_path = /obj/item/hud_upgrade/thermal_advanced
 	category = list("Special upgrades")

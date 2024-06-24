@@ -24,13 +24,34 @@
 	switch(mode_type)
 		if(HUD_TOGGLEABLE_MODE_NIGHTVISION)
 			if(enable)
-				src.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-				src.sightglassesmod = "nightsight"
-				src.darkness_view = 7
+				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+				sightglassesmod = "nightsight"
+				darkness_view = 7
 			else
-				src.lighting_alpha = null
-				src.sightglassesmod = null
-				src.darkness_view = 0
+				lighting_alpha = null
+				sightglassesmod = null
+				darkness_view = 0
+		if(HUD_TOGGLEABLE_MODE_THERMAL)
+			if(enable)
+				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+				sightglassesmod = "thermal"
+				vision_flags = SEE_MOBS
+
+			else
+				lighting_alpha = null
+				sightglassesmod = null
+				vision_flags = 0
+
+		if(HUD_TOGGLEABLE_MODE_THERMAL_ADVANCED)
+			if(enable)
+				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+				darkness_view = 7
+				vision_flags = SEE_MOBS
+			else
+				lighting_alpha = null
+				darkness_view = 0
+				vision_flags = 0
+
 	playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
 	human.update_sight()
 	update_item_actions()
@@ -43,7 +64,7 @@
 		current_mode = null
 		return
 
-	apply_effects(current_mode, TRUE)
+	apply_effects(mode_type, TRUE)
 	current_mode = mode_type
 
 /obj/item/clothing/glasses/sunglasses/hud/advanced/attackby(obj/item/W, mob/living/user)
@@ -58,6 +79,7 @@
 		switch(hud_upgrade.tier)
 			if(HUD_UPGRADE_MEDSCAN)
 				hud_types.Add(DATA_HUD_MEDICAL)
+				def_hud_types.Add(DATA_HUD_MEDICAL)
 			if(HUD_UPGRADE_NIGHTVISION)
 				item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
 			if(HUD_UPGRADE_THERMAL)
@@ -72,22 +94,22 @@
 /obj/item/hud_upgrade
 	icon = 'icons/obj/item_upgrades.dmi'
 	var/tier = 0
-/obj/item/hud_upgrade/hud1
+/obj/item/hud_upgrade/medscan
 	name = "Damage Scan Upgrade"
 	desc = "Allows HUD to show damage on person."
 	icon_state = "medscan"
 	tier = 1
-/obj/item/hud_upgrade/hud2
+/obj/item/hud_upgrade/night
 	name = "Basic Nightvision HUD upgrade"
 	desc = "Allows HUD to turn a basic nightvision mode. Can be installed only after damage scan upgrade"
 	icon_state = "nightvision"
 	tier = 2
-/obj/item/hud_upgrade/hud3
+/obj/item/hud_upgrade/thermal
 	name = "Thermal HUD upgrade"
 	desc = "Allows HUD to turn a basic thermal mode, makes nightvision mode more comfortable for use. Can be installed only after basic nightvision upgrade"
 	icon_state = "thermal1"
 	tier = 3
-/obj/item/hud_upgrade/hud4
+/obj/item/hud_upgrade/thermal_advanced
 	name = "Advanced Thermal HUD upgrade"
 	desc = "Makes thermal mode comfortable and combines it with nightvision mode. Can be installed only after thermal upgrade"
 	icon_state = "thermal2"
