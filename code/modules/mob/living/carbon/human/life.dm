@@ -1013,7 +1013,7 @@ var/global/list/tourette_bad_words= list(
 		var/obj/item/clothing/mask/gas/welding/O = wear_mask
 		if(!O.up && tinted_weldhelh)
 			impaired = 2
-	if(istype(glasses, /obj/item/clothing/glasses/welding) && (!istype(glasses, /obj/item/clothing/glasses/welding/superior)) )
+	if(istype(glasses, /obj/item/clothing/glasses/welding) && !istype(glasses, /obj/item/clothing/glasses/welding/superior))
 		var/obj/item/clothing/glasses/welding/O = glasses
 		if(!O.up && tinted_weldhelh)
 			impaired = max(impaired, 2)
