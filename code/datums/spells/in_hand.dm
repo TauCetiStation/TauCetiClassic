@@ -196,6 +196,16 @@
 	neurotoxin
 	damage_type = TOX
 
+/obj/item/projectile/neurotoxin/magic/x_turret_acid
+	name = "toxin"
+	damage = 5
+	weaken = 1
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	flag = "magic"
+	neurotoxin
+	damage_type = BURN
+
 ///////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/tesla

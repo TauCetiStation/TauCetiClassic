@@ -103,3 +103,79 @@
 	..()
 	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
 	playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)
+
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret
+	name = "acid turret"
+	real_name = "acid turret"
+	desc = "Склизкое строение, выпускающее из себя смертельные кислотные плевки."
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "pylon_glow"
+	icon_living = "pylon"
+	ranged = TRUE
+	amount_shoot = 1
+	projectiletype = /obj/item/projectile/neurotoxin/magic/x_turret_acid
+	projectilesound = 'sound/voice/xenomorph/spitacid_1.ogg'
+	ranged_cooldown = 5
+	ranged_cooldown_cap = 0
+	maxHealth = 120
+	health = 120
+	melee_damage = 0
+	speed = 0
+	anchored = TRUE
+	stop_automated_movement = TRUE
+	canmove = FALSE
+	faction = "alien"
+
+
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/allowAttackTarget(mob/living/target)
+	return !target.incapacitated()
+
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/atom_init()
+	. = ..()
+	friends = global.alien_list
+
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/death(gibbed)
+	. = ..()
+	for(var/atom/A in contents)
+		qdel(A)
+	qdel(src)
+
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/add_friend(mob/M)
+	if(M.incapacitated())
+		friends = M
+
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/attackby()
+	return ..()
+
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/update_canmove()
+	return
+
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/ListTargets()
+	var/list/L = list()
+	if(search_objects)
+		var/list/Objects = oview(vision_range, src)
+		L += Objects
+	else if(SSchunks.has_enemy_faction(src, vision_range))
+		var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
+		for(var/mob in Mobs)
+			if(allowAttackTarget())
+				L += Mobs
+			if(!allowAttackTarget())
+				L -= Mobs
+		for(var/obj/mecha/M in range(vision_range, src))
+			if(can_see(src, M, vision_range))
+				L += M
+	return L
+
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/CanAttack(atom/the_target)
+	var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
+	var/mob/living/L = Mobs
+	for(var/mob in Mobs)
+		if(allowAttackTarget())
+			L += Mobs
+		if(!allowAttackTarget())
+			L -= Mobs
+
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/UnarmedAttack(atom/A)
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
+	OpenFire(A)
