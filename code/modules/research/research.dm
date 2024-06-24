@@ -1727,13 +1727,13 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_SPECIAL
 
 	x = 0.1
-	y = 0.2
+	y = 0.8
 	icon = "camerabug"
 
 	required_technologies = list("tier1_hud_upgrade")
 	required_tech_levels = list(RESEARCH_SPECIAL = 1)
 
-	unlocks_designs = list("tier1_hud_upgrade")
+	unlocks_designs = list("tier1_hud_upgrade", "advanced_hud")
 
 /datum/technology/tier2_hud_upgrade
 	name = "Basic Nightvision HUD upgrade"
@@ -1742,7 +1742,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_SPECIAL
 
 	x = 0.2
-	y = 0.2
+	y = 0.8
 	icon = "camerabug"
 
 	required_technologies = list("tier1_hud_upgrade")
@@ -1758,7 +1758,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_SPECIAL
 
 	x = 0.3
-	y = 0.2
+	y = 0.8
 	icon = "camerabug"
 
 	required_technologies = list("tier2_hud_upgrade")
@@ -1774,7 +1774,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_SPECIAL
 
 	x = 0.4
-	y = 0.2
+	y = 0.8
 	icon = "camerabug"
 
 	required_technologies = list("tier3_hud_upgrade")

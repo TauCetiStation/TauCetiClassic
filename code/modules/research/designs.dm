@@ -2316,6 +2316,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/device/hud_calibrator
 	category = list("Support")
 
+/datum/design/hud_advanced
+	name = "Advanced HUD"
+	desc = "An advanced HUD that can be flexibly modified"
+	id = "advanced_hud"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
+	build_path = /obj/item/clothing/glasses/sunglasses/hud/advanced
+	category = list("Support")
+
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////

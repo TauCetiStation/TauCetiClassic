@@ -34,7 +34,7 @@
 		if(HUD_TOGGLEABLE_MODE_THERMAL)
 			if(enable)
 				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-				sightglassesmod = "thermal"
+				sightglassesmod = "sepia"
 				vision_flags = SEE_MOBS
 
 			else
@@ -85,6 +85,10 @@
 			if(HUD_UPGRADE_THERMAL)
 				item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
 			if(HUD_UPGRADE_THERMAL_ADVANCED)
+				for(var/datum/action/item_action/hands_free/switch_hud_modes/night/action in item_actions)
+					item_actions.Remove(action)
+				for(var/datum/action/item_action/hands_free/switch_hud_modes/thermal/action in item_actions)
+					item_actions.Remove(action)
 				item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(src))
 		upgrade_tier = hud_upgrade.tier
 		update_item_actions()
