@@ -3,6 +3,10 @@
 #define HUD_UPGRADE_THERMAL 3
 #define HUD_UPGRADE_THERMAL_ADVANCED 4
 
+#define HUD_TOGGLEABLE_MODE_NIGHTVISION "night"
+#define HUD_TOGGLEABLE_MODE_THERMAL "thermal"
+#define HUD_TOGGLEABLE_MODE_THERMAL_ADVANCED "thermal_adv"
+
 /obj/item/clothing/glasses/sunglasses/hud/advanced
 	name = "mixed HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
@@ -11,23 +15,36 @@
 	hud_types = list(DATA_HUD_SECURITY)
 	item_action_types = list()
 	var/upgrade_tier = 0
+	var/current_mode = null
 
-/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/toggle_hud_mode(var/mode_type)
+/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/apply_effects(var/mode_type, var/enable)
+	if(!ishuman(usr))
+		return
+	var/mob/living/carbon/human/human = usr
 	switch(mode_type)
-		if("night")
-			if(ishuman(usr))
-				var/mob/living/carbon/human/H = usr
-				if(src.darkness_view)
-					src.lighting_alpha = null
-					src.sightglassesmod = null
-					src.darkness_view = 0
-				else
-					src.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-					src.sightglassesmod = "nightsight"
-					src.darkness_view = 7
-				playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
-				H.update_sight()
-				update_item_actions()
+		if(HUD_TOGGLEABLE_MODE_NIGHTVISION)
+			if(enable)
+				src.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+				src.sightglassesmod = "nightsight"
+				src.darkness_view = 7
+			else
+				src.lighting_alpha = null
+				src.sightglassesmod = null
+				src.darkness_view = 0
+	playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
+	human.update_sight()
+	update_item_actions()
+
+
+/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/switch_mode(var/mode_type)
+	if(current_mode)
+		apply_effects(current_mode, FALSE)
+	if(current_mode == mode_type)
+		current_mode = null
+		return
+
+	apply_effects(current_mode, TRUE)
+	current_mode = mode_type
 
 /obj/item/clothing/glasses/sunglasses/hud/advanced/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/hud_upgrade))
@@ -43,6 +60,10 @@
 				hud_types.Add(DATA_HUD_MEDICAL)
 			if(HUD_UPGRADE_NIGHTVISION)
 				item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
+			if(HUD_UPGRADE_THERMAL)
+				item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
+			if(HUD_UPGRADE_THERMAL_ADVANCED)
+				item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(src))
 		upgrade_tier = hud_upgrade.tier
 		update_item_actions()
 		qdel(hud_upgrade)
@@ -75,57 +96,34 @@
 /datum/action/item_action/hands_free/switch_hud_modes/
 	name = "Switch Mode"
 	button_overlay_icon = 'icons/obj/clothing/glasses.dmi'
+	var/hud_mode
+
+/datum/action/item_action/hands_free/switch_hud_modes/Activate()
+	var/obj/item/clothing/glasses/sunglasses/hud/advanced/hud = target
+	if(!hud_mode || !istype(hud))
+		return
+
+	hud.switch_mode(hud_mode)
 
 /datum/action/item_action/hands_free/switch_hud_modes/night
 	name = "Toggle Nightvision"
 	button_overlay_state = "night"
+	hud_mode = HUD_TOGGLEABLE_MODE_NIGHTVISION
 
-/datum/action/item_action/hands_free/switch_hud_modes/night/Activate()
-	var/obj/item/clothing/glasses/sunglasses/hud/advanced/hud = target
-	hud.toggle_hud_mode("night")
-
-/datum/action/item_action/hands_free/switch_hud_modes/thermal1 //only thermal
+/datum/action/item_action/hands_free/switch_hud_modes/thermal //only thermal
 	name = "Toggle thermal"
 	button_overlay_state = "thermal"
+	hud_mode = HUD_TOGGLEABLE_MODE_THERMAL
 
-/datum/action/item_action/hands_free/switch_hud_modes/thermal1/Activate()
-	// if(ishuman(usr))
-	// 	var/mob/living/carbon/human/H = usr
-	// 	var/obj/item/clothing/glasses/glasses = target
-	// 	glasses.darkness_view = 0
-	// 	if(glasses.vision_flags)
-	// 		glasses.lighting_alpha = null
-	// 		glasses.sightglassesmod = null
-	// 		glasses.vision_flags = 0
-	// 		glasses.invisa_view = 0
-	// 	else
-	// 		glasses.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	// 		glasses.sightglassesmod = "thermal"
-	// 		glasses.vision_flags = SEE_MOBS
-	// 		glasses.invisa_view = 2
-	// 	playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
-	// 	H.update_sight()
-	// 	update_item_actions()
-
-/datum/action/item_action/hands_free/switch_hud_modes/thermal2 //mixed thermal and nightvision
+/datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced //mixed thermal and nightvision
 	name = "Toggle Advanced Thermal"
 	button_overlay_state = "material"
+	hud_mode = HUD_TOGGLEABLE_MODE_THERMAL_ADVANCED
 
-/datum/action/item_action/hands_free/switch_hud_modes/thermal2/Activate()
-	// if(ishuman(usr))
-	// 	var/obj/item/clothing/glasses/glasses = target
-	// 	glasses.sightglassesmod = null
-	// 	var/mob/living/carbon/human/H = usr
-	// 	if(glasses.lighting_alpha == LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-	// 		glasses.lighting_alpha = null
-	// 		glasses.vision_flags = 0
-	// 		glasses.invisa_view = 0
-	// 		glasses.darkness_view = 0
-	// 	else
-	// 		glasses.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	// 		glasses.vision_flags = SEE_MOBS
-	// 		glasses.invisa_view = 2
-	// 		glasses.darkness_view = 7
-	// 	playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
-	// 	H.update_sight()
-	// 	update_item_actions()
+#undef HUD_UPGRADE_MEDSCAN
+#undef HUD_UPGRADE_NIGHTVISION
+#undef HUD_UPGRADE_THERMAL
+#undef HUD_UPGRADE_THERMAL_ADVANCED
+#undef HUD_TOGGLEABLE_MODE_NIGHTVISION
+#undef HUD_TOGGLEABLE_MODE_THERMAL
+#undef HUD_TOGGLEABLE_MODE_THERMAL_ADVANCED
