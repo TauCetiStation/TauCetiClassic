@@ -322,3 +322,25 @@ Hit Procs
 		to_chat(src, "<span class='noticealien'>You adapt your eyes for [nightvision ? "dark":"light"] !</span>")
 	else
 		return
+
+/mob/living/carbon/xenomorph/Bump(atom/A)
+	. = ..()
+	if(A == loc)
+		return
+	var/its_wall = FALSE
+	if(istype(A, /obj/structure/alien/resin/membrane || isalien(A)))
+		its_wall = TRUE
+
+	if(its_wall || istype(A, /obj/structure/alien/resin/membrane))
+		var/atom/movable/stored_pulling = pulling
+		if(stored_pulling)
+			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))
+			stored_pulling.forceMove(loc)
+
+		if(its_wall)
+			forceMove(A)
+		else
+			forceMove(A.loc)
+
+		if(stored_pulling)
+			start_pulling(stored_pulling) //drag anything we're pulling through the wall with us by magic
