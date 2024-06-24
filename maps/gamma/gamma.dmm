@@ -11344,7 +11344,7 @@
 "bEV" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/oxygen,
-/obj/item/weapon/aiModule/oneHuman,
+/obj/item/weapon/aiModule/onecrewmember,
 /obj/machinery/door/window{
 	name = "High-Risk Modules";
 	req_access = list(20)

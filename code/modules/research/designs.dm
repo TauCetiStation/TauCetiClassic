@@ -396,13 +396,13 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/aiModule/safeguard
 	category = list("AI")
 
-/datum/design/onehuman_module
-	name = "AI Module (OneHuman)"
-	desc = "Allows for the construction of a OneHuman AI Module."
-	id = "onehuman_module"
+/datum/design/onecrewmember_module
+	name = "AI Module (One Crew Member)"
+	desc = "Allows for the construction of a 'One Crew Member' AI Module."
+	id = "onecrewmember_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
-	build_path = /obj/item/weapon/aiModule/oneHuman
+	build_path = /obj/item/weapon/aiModule/onecrewmember
 	category = list("AI")
 
 /datum/design/protectstation_module
