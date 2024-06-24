@@ -325,8 +325,6 @@ Hit Procs
 
 /mob/living/carbon/xenomorph/Bump(atom/A)
 	. = ..()
-	if(A == loc)
-		return
 	var/its_wall = FALSE
 
 	if(its_wall || istype(A, /obj/structure/alien/resin/membrane) || isxeno(A))
