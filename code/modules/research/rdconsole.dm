@@ -150,6 +150,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 		var/obj/item/weapon/disk/tech_disk/disk = D
 		if(disk.stored_technology)
 			to_chat(user, "<span class='notice'>You succesfully uploaded '[disk.stored_technology.name]' in the console</span>")
+			files.tech_trees[disk.stored_technology.tech_type].shown = TRUE
 			files.UnlockTechology(disk.stored_technology, TRUE)
 			user.remove_from_mob(disk)
 			qdel(disk)

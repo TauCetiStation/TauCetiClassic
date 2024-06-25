@@ -354,7 +354,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	desc = "Technologies of another corporations that can be used for Nanotrasen benefit"
 	id = RESEARCH_SPECIAL
 	rare = 3
-	shown = TRUE
+	shown = FALSE
 	item_tech_req = "special" // research any special item and this tech will show up
 
 
