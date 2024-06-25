@@ -958,23 +958,67 @@
 				return
 			M.client.prefs.guard.print_report()
 
-	else if(href_list["cid_list"])
+	else if(href_list["cid_history"])
 		if(!check_rights(R_LOG))
 			return
-		else
-			var/mob/M = locate(href_list["cid_list"])
-			if (ismob(M))
-				if(!M.client)
-					return
-				var/client/C = M.client
-				var/dat = ""
-				dat += "<center><b>Ckey:</b> [C.ckey]</center>"
-				for(var/x in C.prefs.cid_list)
-					dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
 
-				var/datum/browser/popup = new(usr, "[C.ckey]_cid_list", "[C.ckey] cid list")
-				popup.set_content(dat)
-				popup.open()
+		var/mob/M = locate(href_list["cid_history"])
+		if (!ismob(M) || !M.client)
+			return
+
+		var/client/C = M.client
+		if(!C.prefs.admin_cid_request_cache)
+			C.prefs.admin_cid_request_cache = C.generate_cid_history()
+
+		var/dat = ""
+		if(length(C.prefs.admin_cid_request_cache))
+			dat += "<table><tr><th>CID</th><th>First seen</th><th>Last seen</th><th>Related accounts</th></tr>"
+			for(var/cid in C.prefs.admin_cid_request_cache)
+				dat += "<tr>"
+				dat += "<td>[cid]</td>"
+				dat += "<td>[C.prefs.admin_cid_request_cache[cid]["first_seen"]]</td>"
+				dat += "<td>[C.prefs.admin_cid_request_cache[cid]["last_seen"]]</td>"
+				dat += "<td>[list2text(C.prefs.admin_cid_request_cache[cid]["match"], separator = "; ")]</td>"
+				dat += "</tr>"
+			dat += "</table>"
+		else
+			dat += "<b>No history or we can't access database</b>"
+		dat += "<i>By default, we check only for the last 2 years</i>"
+
+		var/datum/browser/popup = new(usr, "[C.ckey]_cid_history", "Computer ID history for [C.ckey]", 700, 300)
+		popup.set_content(dat)
+		popup.open()
+
+	else if(href_list["ip_history"])
+		if(!check_rights(R_LOG))
+			return
+
+		var/mob/M = locate(href_list["ip_history"])
+		if (!ismob(M) || !M.client)
+			return
+
+		var/client/C = M.client
+		if(!C.prefs.admin_ip_request_cache)
+			C.prefs.admin_ip_request_cache = C.generate_ip_history()
+
+		var/dat = ""
+		if(length(C.prefs.admin_ip_request_cache))
+			dat += "<table><tr><th>CID</th><th>First seen</th><th>Last seen</th><th>Related accounts</th></tr>"
+			for(var/ip in C.prefs.admin_ip_request_cache)
+				dat += "<tr>"
+				dat += "<td>[ip]</td>"
+				dat += "<td>[C.prefs.admin_ip_request_cache[ip]["first_seen"]]</td>"
+				dat += "<td>[C.prefs.admin_ip_request_cache[ip]["last_seen"]]</td>"
+				dat += "<td>[list2text(C.prefs.admin_ip_request_cache[ip]["match"], separator = "; ")]</td>"
+				dat += "</tr>"
+			dat += "</table>"
+		else
+			dat += "<b>No history or we can't access database</b>"
+		dat += "<i>By default, we check only for the last 2 years and last 30 ip</i>"
+
+		var/datum/browser/popup = new(usr, "[C.ckey]_ip_history", "IP history for [C.ckey]", 700, 300)
+		popup.set_content(dat)
+		popup.open()
 
 	else if(href_list["related_accounts"])
 		if(!check_rights(R_LOG))

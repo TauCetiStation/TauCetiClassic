@@ -173,19 +173,19 @@ var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
 
 		total_alert_weight += related_db_weight
 
-	if(holder.prefs.cid_list.len > 1)
+	if(holder.prefs.cid_count > 1)
 		var/multicid_weight = 0
 		var/allowed_amount = 1
 
 		if(isnum(holder.player_age) && holder.player_age > 60)
 			allowed_amount++
 
-		multicid_weight += min(((holder.prefs.cid_list.len - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
+		multicid_weight += min(((holder.prefs.cid_count - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
 
 		new_report += {"<div class='Section'><h3>Differents CID's ([multicid_weight]):</h3>
-		Has [holder.prefs.cid_list.len] different computer_id.</div>"}
+		Has [holder.prefs.cid_count] different computer_id.</div>"}
 
-		new_short_report += "Has [holder.prefs.cid_list.len] CID's (tw: [multicid_weight]); "
+		new_short_report += "Has [holder.prefs.cid_count] CID's (tw: [multicid_weight]); "
 
 		total_alert_weight += multicid_weight
 

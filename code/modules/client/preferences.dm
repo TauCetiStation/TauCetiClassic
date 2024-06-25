@@ -27,7 +27,9 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/list/ignore_question = list()		//For roles which getting player_saves with question system
 
 	//account data
-	var/list/cid_list = list()
+	var/cid_count = 0
+	var/admin_cid_request_cache
+	var/admin_ip_request_cache
 
 	//game-preferences
 	var/UI_style = null
