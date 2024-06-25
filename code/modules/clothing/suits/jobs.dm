@@ -299,8 +299,7 @@
 	item_state = "recycler_vest"
 	icon_suit_up = "recycler_vest_t"
 	blood_overlay_type = "coat"
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-
+	min_cold_protection_temperature = ARMOR_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/suit/hooded/recyclervest/atom_init()
 	. = ..()

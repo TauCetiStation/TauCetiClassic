@@ -125,4 +125,4 @@
 	desc = "Они убили Кенни, сволочи!"
 	cold_protection = HEAD
 	flags = BLOCKHEADHAIR
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	min_cold_protection_temperature = HELMET_MIN_COLD_PROTECTION_TEMPERATURE
