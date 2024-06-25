@@ -135,9 +135,7 @@
 	network = list("SS13","Medical");
 	pixel_x = 22
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "av" = (
 /obj/structure/table,
@@ -146,9 +144,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aw" = (
 /obj/structure/table,
@@ -156,9 +152,7 @@
 /obj/item/weapon/circular_saw{
 	pixel_y = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "ax" = (
 /obj/structure/table,
@@ -171,20 +165,14 @@
 	pixel_y = 1
 	},
 /obj/item/weapon/bonesetter,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "ay" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "az" = (
 /obj/structure/table/reinforced,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aA" = (
 /turf/unsimulated/floor{
@@ -201,33 +189,23 @@
 "aC" = (
 /obj/structure/table/reinforced,
 /obj/item/device/mmi,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aD" = (
 /mob/living/simple_animal/crab,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aE" = (
 /obj/machinery/optable,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aF" = (
 /obj/machinery/computer/operating,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aG" = (
 /mob/living/carbon/monkey/tajara,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aH" = (
 /turf/unsimulated/floor,
@@ -243,37 +221,27 @@
 /obj/effect/landmark/start{
 	name = "Fallback-Start"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aM" = (
 /obj/effect/landmark{
 	name = "JoinLate"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aN" = (
 /obj/effect/landmark{
 	name = "Observer-Start"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aO" = (
 /mob/living/carbon/monkey,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aP" = (
 /mob/living/carbon/monkey/diona,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aR" = (
 /obj/effect/decal/turf_decal{
@@ -293,31 +261,23 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aX" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "aY" = (
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "bg" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "bl" = (
 /turf/unsimulated/wall{
@@ -331,17 +291,19 @@
 /area/centcom)
 "br" = (
 /mob/living/carbon/monkey/skrell,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "bI" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/turf/unsimulated/floor,
+/area/centcom)
+"nk" = (
+/obj/effect/landmark{
+	name = "xeno_spawn"
 	},
+/turf/unsimulated/floor,
 /area/centcom)
 
 (1,1,1) = {"
@@ -5113,7 +5075,7 @@ ay
 ay
 aM
 ay
-ay
+nk
 ay
 aR
 ay
