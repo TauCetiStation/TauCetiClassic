@@ -2,6 +2,7 @@ var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
 
 /datum/guard
 	var/client/holder
+
 	var/total_alert_weight = 0
 	var/bridge_reported = FALSE
 
@@ -31,6 +32,7 @@ var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
 	addtimer(CALLBACK(src, PROC_REF(trigger_init)), 20 SECONDS) // time for other systems to collect data
 
 /datum/guard/proc/trigger_init()
+	// if client was lost somehow, mob/login should restart test again
 	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < GUARD_CHECK_AGE)
 		load_geoip() // this may takes a few minutes in bad case
 

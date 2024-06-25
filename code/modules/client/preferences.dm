@@ -1,4 +1,4 @@
-var/global/list/preferences_datums = list()
+var/global/list/datum/preferences/preferences_datums = list()
 
 #define MAX_SAVE_SLOTS 10
 #define MAX_SAVE_SLOTS_SUPPORTER MAX_SAVE_SLOTS+10
@@ -6,6 +6,10 @@ var/global/list/preferences_datums = list()
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
+
+// this datum keeps preferences and some random client things we need to keep persistent
+// because byond client object is too fickle https://www.byond.com/forum/post/2927086
+// todo: after moving preferences to new datumized system we should rename this to something like client_data
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -180,8 +184,13 @@ var/global/list/preferences_datums = list()
 	var/chosen_ringtone = "Flip-Flap"
 	var/custom_melody = "E7,E7,E7"
 
+	var/datum/guard/guard = null
+
 /datum/preferences/New(client/C)
 	parent = C
+
+	guard = new(parent)
+
 	UI_style = global.available_ui_styles[1]
 	custom_emote_panel = global.emotes_for_emote_panel
 	if(istype(C))
@@ -194,6 +203,10 @@ var/global/list/preferences_datums = list()
 	real_name = random_name(gender)
 	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
 	C?.set_macros()
+
+// reattach existing datum to client if client was disconnected and connects again
+/datum/preferences/proc/reattach_to_client(client/client)
+	parent = client
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return

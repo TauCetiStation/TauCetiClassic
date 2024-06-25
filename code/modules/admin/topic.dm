@@ -956,7 +956,7 @@
 		if (ismob(M))
 			if(!M.client)
 				return
-			M.client.guard.print_report()
+			M.client.prefs.guard.print_report()
 
 	else if(href_list["cid_list"])
 		if(!check_rights(R_LOG))

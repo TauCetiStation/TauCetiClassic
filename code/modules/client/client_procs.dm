@@ -247,9 +247,6 @@ var/global/list/blacklisted_builds = list(
 	if(connection != "seeker")					//Invalid connection type.
 		return null
 
-	if(!guard)
-		guard = new(src)
-
 	// Change the way they should download resources.
 	if(config.resource_urls)
 		src.preload_rsc = pick(config.resource_urls)
@@ -289,12 +286,13 @@ var/global/list/blacklisted_builds = list(
 	update_supporter_status()
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
-	prefs = preferences_datums[ckey]
-	if(prefs)
-		prefs.parent = src
+	if(preferences_datums[ckey])
+		prefs = preferences_datums[ckey]
+		prefs.reattach_to_client(src)
 	else
 		prefs = new /datum/preferences(src)
 		preferences_datums[ckey] = prefs
+
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = (prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
@@ -545,7 +543,7 @@ var/global/list/blacklisted_builds = list(
 		query_update.Execute()
 	else if(!config.bunker_ban_mode)
 		//New player!! Need to insert all the stuff
-		guard.first_entry = TRUE
+		prefs.guard.first_entry = TRUE
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[sql_player_ingame_age]')")
 		query_insert.Execute()
 
