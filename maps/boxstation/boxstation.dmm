@@ -57368,10 +57368,6 @@
 	},
 /turf/simulated/floor/engine/n20,
 /area/station/engineering/atmos)
-"cek" = (
-/obj/item/weapon/storage/firstaid/small_firstaid_kit,
-/turf/simulated/wall/r_wall,
-/area/station/aisat/ai_chamber)
 "cel" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -83403,10 +83399,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
-"rXk" = (
-/obj/item/weapon/storage/firstaid/small_firstaid_kit,
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
 "rYb" = (
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/weapon/reagent_containers/syringe/antiviral,
@@ -128313,7 +128305,7 @@ cFP
 cFP
 cmi
 cGa
-rXk
+cGa
 cFP
 cpG
 cFP
@@ -128827,7 +128819,7 @@ cFP
 cmf
 cmh
 coA
-cek
+cFP
 cFP
 cpN
 cFP
