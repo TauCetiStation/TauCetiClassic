@@ -24,7 +24,6 @@ var/global/list/preferences_datums = list()
 
 	//account data
 	var/list/cid_list = list()
-	var/ignore_cid_warning = 0
 
 	//game-preferences
 	var/UI_style = null

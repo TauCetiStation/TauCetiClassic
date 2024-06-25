@@ -968,26 +968,13 @@
 					return
 				var/client/C = M.client
 				var/dat = ""
-				dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
+				dat += "<center><b>Ckey:</b> [C.ckey]</center>"
 				for(var/x in C.prefs.cid_list)
 					dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
 
 				var/datum/browser/popup = new(usr, "[C.ckey]_cid_list", "[C.ckey] cid list")
 				popup.set_content(dat)
 				popup.open()
-
-	else if(href_list["cid_ignore"])
-		if(!check_rights(R_LOG))
-			return
-		else
-			var/mob/M = locate(href_list["cid_ignore"])
-			if (ismob(M))
-				if(!M.client)
-					return
-				var/client/C = M.client
-				C.prefs.ignore_cid_warning = !(C.prefs.ignore_cid_warning)
-				log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
-				message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
 
 	else if(href_list["related_accounts"])
 		if(!check_rights(R_LOG))
