@@ -983,7 +983,7 @@
 			dat += "</table>"
 		else
 			dat += "<b>No history or we can't access database</b>"
-		dat += "<i>By default, we check only for the last 2 years</i>"
+		dat += "<i>By default, we check only for the last 2 years and last 30 cid</i>"
 
 		var/datum/browser/popup = new(usr, "[C.ckey]_cid_history", "Computer ID history for [C.ckey]", 700, 300)
 		popup.set_content(dat)

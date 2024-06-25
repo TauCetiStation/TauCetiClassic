@@ -552,7 +552,7 @@ var/global/list/blacklisted_builds = list(
 		if(query_accesslog.NextRow())
 			prefs.cid_count = text2num(query_accesslog.item[1])
 
-/client/proc/generate_cid_history(years = 2)
+/client/proc/generate_cid_history(years = 2, hardcap = 30)
 	if(!establish_db_connection("erro_connection_log"))
 		return FALSE
 
@@ -560,10 +560,12 @@ var/global/list/blacklisted_builds = list(
 	var/years_cap_sql
 	if(years && isnum(years))
 		years_cap_sql = "AND datetime > (Now() - interval [years] year)"
+	if(hardcap && isnum(hardcap))
+		hard_cap_sql = "LIMIT [hardcap]"
 
 	var/list/cid_list = list()
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT computerid, MIN(datetime) as first, MAX(datetime) as last from erro_connection_log WHERE ckey='[sql_ckey]' [years_cap_sql] GROUP BY computerid ORDER BY last DESC;")
+	var/DBQuery/query = dbcon.NewQuery("SELECT computerid, MIN(datetime) as first, MAX(datetime) as last from erro_connection_log WHERE ckey='[sql_ckey]' [years_cap_sql] GROUP BY computerid ORDER BY last DESC [hard_cap_sql];")
 	query.Execute()
 	while(query.NextRow())
 		cid_list[query.item[1]] = list("first_seen" = query.item[2], "last_seen" = query.item[3])
