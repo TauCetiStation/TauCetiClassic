@@ -116,3 +116,13 @@
 /obj/item/clothing/head/det_hat/gray
 	name = "detective's gray hat"
 	icon_state = "detective_hat_gray"
+
+//Recycler
+
+/obj/item/clothing/head/recycler_hood
+	name = "recycler hood"
+	icon_state = "recycler_hood"
+	desc = "Они убили Кенни, сволочи!"
+	cold_protection = HEAD
+	flags = BLOCKHEADHAIR
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE

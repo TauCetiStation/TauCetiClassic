@@ -290,35 +290,21 @@
 	body_parts_covered = 0
 
 //Recycler
-/obj/item/clothing/suit/recyclervest
+/obj/item/clothing/suit/hooded/recyclervest
 	name = "recycler vest"
-	desc = "This is Recycler vest."
+	hoodtype = /obj/item/clothing/head/recycler_hood
+	desc = "This is Recycler vest. Wow."
 	icon = 'icons/obj/clothing/suits.dmi'
-	icon_state = "recycler_vest_open"
+	icon_state = "recycler_vest"
 	item_state = "recycler_vest"
-	blood_overlay_type = "coat" //it's the less thing that I can put here
-	body_parts_covered = 0
-	item_action_types = list(/datum/action/item_action/hands_free/toggle_vest_buttons)
+	icon_suit_up = "recycler_vest_t"
+	blood_overlay_type = "coat"
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
-/datum/action/item_action/hands_free/toggle_vest_buttons
-	name = "Toggle vest buttons"
 
-/datum/action/item_action/hands_free/toggle_vest_buttons/Activate()
-	var/obj/item/clothing/suit/recyclervest/S = target
-	S.toggle()
-
-/obj/item/clothing/suit/recyclervest/proc/toggle()
-    switch(icon_state)
-        if("recycler_vest_open")
-            src.icon_state = "recycler_vest"
-            to_chat(usr, "You button up the vest.")
-        if("recycler_vest")
-            src.icon_state = "recycler_vest_open"
-            to_chat(usr, "You unbutton the jacket.")
-        else
-            to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
-            return
-    update_inv_mob() //so our overlays update
+/obj/item/clothing/suit/hooded/recyclervest/atom_init()
+	. = ..()
+	icon_suit_up = "[icon_state]_t"
 
 /obj/item/clothing/suit/surgicalapron
 	name = "surgical apron"

@@ -41,9 +41,10 @@
 /datum/outfit/job/recycler
 	name = OUTFIT_JOB_NAME("Recycler")
 
+	head = /obj/item/clothing/head/soft/recycler
 	uniform = /obj/item/clothing/under/rank/recycler
 	shoes = /obj/item/clothing/shoes/black
-	suit = /obj/item/clothing/suit/recyclervest
+	suit = /obj/item/clothing/suit/hooded/recyclervest
 
 	l_ear = /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/cargo

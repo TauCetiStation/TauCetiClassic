@@ -44,14 +44,6 @@
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
-/obj/item/clothing/under/rank/recyclercasual
-	name = "recycler's casual jumpsuit"
-	desc = "Stinks."
-	icon_state = "recyclercasual"
-	item_state = "recyclercasual"
-	flags = ONESIZEFITSALL|HEAR_TALK
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
 /obj/item/clothing/under/rank/chaplain
 	desc = "It's a dark robe, often worn by religious folk."
 	name = "chaplain's dark robe"
