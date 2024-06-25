@@ -261,7 +261,7 @@
 		SSshuttle.set_eta_timeofday()
 	return TRUE
 
-/datum/faction/infestation/proc/check_crew()
+/datum/faction/infestation/check_crew()
 	var/total_human = 0
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		var/turf/human_loc = get_turf(H)
