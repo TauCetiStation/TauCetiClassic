@@ -128,28 +128,28 @@ AI MODULES
 	target.add_supplied_law(4, law)
 	lawchanges.Add("Закон установлен для [targetName]")
 
-/******************** One Crew Member ********************/
+/******************** One NT employe ********************/
 
-/obj/item/weapon/aiModule/onecrewmember
-	name = "'One Crew Member' AI module"
+/obj/item/weapon/aiModule/onentemploye
+	name = "'One NT employe' AI module"
 	var/targetName = ""
-	desc = "Модуль ИИ 'One Crew Member': 'Только <name>  считается членом экипажа.'"
+	desc = "Модуль ИИ 'One NT Employe': 'Только <name>  считается сотрудником НТ.'"
 	origin_tech = "programming=3;materials=6" //made with diamonds!
 
-/obj/item/weapon/aiModule/onecrewmember/attack_self(mob/user)
+/obj/item/weapon/aiModule/onentemploye/attack_self(mob/user)
 	..()
-	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которая является единственным членом экипажа", "Кто это?", input_default(user.real_name)))
-	desc = text("Модуль ИИ 'One Crew Member': 'Только [] считается членом экипажа.'", targetName)
+	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которая будет считаться единственным сотрудником НТ", "Кто это?", input_default(user.real_name)))
+	desc = text("Модуль ИИ 'One NT employe': 'Только [] считается сотрудником НТ.'", targetName)
 
-/obj/item/weapon/aiModule/onecrewmember/install(obj/machinery/computer/C)
+/obj/item/weapon/aiModule/onentemploye/install(obj/machinery/computer/C)
 	if(!targetName)
 		to_chat(usr, "Имя не указано в модуле, пожалуйста, введите его.")
 		return 0
 	..()
 
-/obj/item/weapon/aiModule/onecrewmember/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+/obj/item/weapon/aiModule/onentemploye/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Только [targetName] считается членом экипажа."
+	var/law = "Только [targetName] считается сотрудником НТ."
 	if (!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
 		to_chat(target, law)
 		target.set_zeroth_law(law)
