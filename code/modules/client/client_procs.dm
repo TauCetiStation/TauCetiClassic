@@ -558,6 +558,7 @@ var/global/list/blacklisted_builds = list(
 
 	var/sql_ckey = ckey(ckey)
 	var/years_cap_sql
+	var/hard_cap_sql
 	if(years && isnum(years))
 		years_cap_sql = "AND datetime > (Now() - interval [years] year)"
 	if(hardcap && isnum(hardcap))
