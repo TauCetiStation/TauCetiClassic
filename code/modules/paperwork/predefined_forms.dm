@@ -333,7 +333,7 @@ var/global/list/predefined_forms_list = list(
     index = "1K"
     name = "Журнал заправки автолата"
     content = @{"
-		[center][large][b]Отдел Поставок КСН "Исход"[/b]
+		[center][large][b]Отдел Поставок [sname][/b]
 		Журнал заправки автолата[/large][/center]
 		[hr][table][/br]
 		[tr][/br]
