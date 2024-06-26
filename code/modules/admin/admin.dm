@@ -322,8 +322,6 @@ var/global/BSACooldown = 0
 	// Get player ckey and generate list of players_notes
 	// Return null if errors
 	var/list/db_player_notes = list()
-	if(config.ban_legacy_system)
-		return
 	var/timestamp_format = "%a, %M %D of %Y"
 	var/days_ago_start_date = "1999-12-31"
 	var/list/sql_fields = list(
