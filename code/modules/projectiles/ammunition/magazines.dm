@@ -200,10 +200,18 @@
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 18
+	overlay = "saber-mag"
 
 /obj/item/ammo_box/magazine/smg/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+	cut_overlays()
+	if(ammo_count() == 0)
+		return
+
+	var/ammo_perc = ammo_count() / max_ammo
+	ammo_perc = CEIL(ammo_perc * 4) * 25
+
+	var/image/ammo_icon = image('icons/obj/ammo/magazines.dmi', "smg_mag-[round(ammo_perc, 25)]")
+	add_overlay(ammo_icon)
 
 /obj/item/ammo_box/magazine/c20r
 	name = "magazine (.45)"

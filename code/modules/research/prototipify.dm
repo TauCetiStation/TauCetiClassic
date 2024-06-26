@@ -76,6 +76,64 @@
 			break
 		rating = max(rating - 1, 0)
 
+/obj/item/ammo_box/magazine/smg/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		max_ammo *= mark
+		var/need_bullets = max_ammo - stored_ammo.len
+		for(var/i in 0 to need_bullets)
+			stored_ammo += new ammo_type(src)
+
+/obj/item/weapon/gun/energy/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		power_supply.maxcharge += (mark * 200)
+		fire_delay = max(fire_delay * mark, 4)
+	if(!prob(reliability))
+		fire_delay *= 2
+		power_supply.maxcharge /= 2
+	power_supply.charge = power_supply.maxcharge
+
+/obj/item/weapon/gun/projectile/automatic/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		recoil = max(recoil / mark, 0.5)
+		fire_delay = max(fire_delay / mark, 2)
+	if(!prob(reliability))
+		fire_delay *= 2
+		recoil += 1
+
+/obj/item/weapon/storage/backpack/holding/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		max_storage_space += (10 * mark)
+	if(!prob(reliability))
+		max_storage_space -= 30
+
+/obj/item/weapon/storage/bag/trash/bluespace/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		max_storage_space += (10 * mark)
+	if(!prob(reliability))
+		max_storage_space /= 2
+
+/obj/item/weapon/storage/bag/ore/holding/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		max_storage_space += (25 * mark)
+	if(!prob(reliability))
+		max_storage_space /= 2
+
+/obj/item/clothing/glasses/set_prototype_qualities(rel_val=100, mark=0)
+	if(!prob(reliability))
+		hud_types = list(DATA_HUD_BROKEN)
+
+/obj/item/weapon/weldingtool/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		toolspeed -= 0.5 * (mark - 1)
+		max_fuel *= mark
+	if(!prob(reliability))
+		max_fuel /= 2
+		toolspeed = max(toolspeed + 0.5, 3)
+
+/obj/item/clothing/mask/gas/welding/set_prototype_qualities(rel_val=100, mark=0)
+	if(!prob(reliability))
+		flash_protection = FALSE
+
 #undef PROTOTYPE_ADJECTIVES
 #undef PROTOTYPE_DESC_REMARKS
 
