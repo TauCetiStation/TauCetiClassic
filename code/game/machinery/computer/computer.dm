@@ -27,11 +27,6 @@
 			circuit = new circuit(null)
 		else
 			resistance_flags |= FULL_INDESTRUCTIBLE // no circuit = INDESTRUCTIBLE cuz we cant build it
-	if(circuit && istype(circuit))
-		if(req_access != initial(req_access))
-			circuit.req_access = req_access
-		if(req_one_access != initial(req_one_access))
-			circuit.req_one_access = req_one_access // Sync edited access to board
 	power_change()
 
 /obj/machinery/computer/Topic(href, href_list)

@@ -34313,9 +34313,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "xFt" = (
-/obj/machinery/computer/cargo{
-	req_access = list()
-	},
+/obj/machinery/computer/cargo/qm,
 /obj/machinery/light/smart{
 	dir = 1
 	},
