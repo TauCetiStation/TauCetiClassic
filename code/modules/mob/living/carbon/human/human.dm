@@ -21,6 +21,7 @@
 
 	var/last_massage = 0
 	var/massages_done_right = 0
+	var/leap_mode = LEAP_MODE_OFF
 	attack_push_vis_effect = ATTACK_EFFECT_PUNCH
 	attack_disarm_vis_effect = ATTACK_EFFECT_DISARM
 	throw_range = 2
@@ -31,6 +32,7 @@
 	beauty_dead = -1500
 
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
+	COOLDOWN_DECLARE(leap_cooldown)
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
 	AddComponent(/datum/component/mood)
@@ -1766,19 +1768,29 @@
 /atom/movable/screen/leap/update_icon()
 	icon_state = "[initial(icon_state)]_[on]"
 
-/atom/movable/screen/leap/Click()
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.toggle_leap()
+/mob/living/carbon/human/proc/switch_leap()
+	if(!HAS_TRAIT(src, TRAIT_CAN_LEAP))
+		to_chat(src, "<span class='notice'>Вы не умеете прыгать!</span>")
+		return
+	switch(leap_mode)
+		if(LEAP_MODE_OFF)
+			to_chat(src, "<span class='notice'>Вы попытаетесь совершить прыжок.</span>")
+			leap_mode = LEAP_MODE_ON
+		else
+			to_chat(src, "<span class='notice'>Вы не будете пытаться совершить прыжок.</span>")
+			leap_mode = LEAP_MODE_OFF
 
-/mob/living/carbon/human/proc/toggle_leap(message = 1)
-	leap_icon.on = !leap_icon.on
-	leap_icon.update_icon()
-	if(message)
-		to_chat(src, "<span class='notice'>You will [leap_icon.on ? "now" : "no longer"] leap at enemies!</span>")
+/datum/action/leap
+	name = "Switch Leap"
+	button_icon_state = "leap"
+	action_type = AB_INNATE
+
+/datum/action/leap/Trigger()
+	var/mob/living/carbon/human/H = owner
+	H.switch_leap()
 
 /mob/living/carbon/human/ClickOn(atom/A, params)
-	if(leap_icon && leap_icon.on && A != src)
+	if(leap_mode == LEAP_MODE_ON)
 		leap_at(A)
 	else
 		..()
@@ -1786,7 +1798,7 @@
 #define MAX_LEAP_DIST 4
 
 /mob/living/carbon/human/proc/leap_at(atom/A)
-	if(leap_icon.time_used > world.time)
+	if(!COOLDOWN_FINISHED(src, leap_cooldown))
 		to_chat(src, "<span class='warning'>You are too fatigued to leap right now!</span>")
 		return
 
@@ -1801,8 +1813,8 @@
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
-	leap_icon.time_used = world.time + leap_icon.cooldown
 	add_status_flags(LEAPING)
+	COOLDOWN_START(src, leap_cooldown, 10 SECOND)
 	pass_flags |= PASSTABLE
 	stop_pulling()
 
@@ -1815,7 +1827,6 @@
 			if(V.on)
 				V.overload()
 
-	toggle_leap()
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, PROC_REF(leap_end), prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
