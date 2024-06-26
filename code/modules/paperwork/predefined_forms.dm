@@ -312,7 +312,7 @@ var/global/list/predefined_forms_list = list(
     index = "1J"
     name = "Журнал использования автолата"
     content = @{"
-		[center][large][b]Отдел Поставок КСН "Исход"[/b]
+		[center][large][b]Отдел Поставок [sname][/b]
 		Накладная поставок со склада[/large][/center]
 		[hr]Время поставки: [field]
 		Номер поставки: [field]
