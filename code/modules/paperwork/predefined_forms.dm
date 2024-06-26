@@ -216,7 +216,7 @@ var/global/list/predefined_forms_list = list(
     index = "1F"
     name = "Форма накладной для поставок на склад"
     content = @{"
-		[center][large][b]Отдел Поставок КСН "Исход"[/b]
+		[center][large][b]Отдел Поставок [sname][/b]
 		Накладная поставок на склад[/large][/center]
 		[hr]Номер поставки: [field]
 		Время поставки: [field]
