@@ -77,8 +77,16 @@
 		if(HUD_UPGRADE_THERMAL)
 			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
 		if(HUD_UPGRADE_THERMAL_ADVANCED)
+			for(var/datum/action/item_action/hands_free/switch_hud_modes/night/night_action in item_actions)
+				night_action.Remove(usr)
+				item_actions.Remove(night_action)
+			for(var/datum/action/item_action/hands_free/switch_hud_modes/thermal/thermal_action in item_actions)
+				thermal_action.Remove(usr)
+				item_actions.Remove(thermal_action)
 			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(src))
+
 	upgrade_tier = hud_upgrade.tier
+	add_item_actions(usr)
 
 /obj/item/clothing/glasses/sunglasses/hud/advanced/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/hud_upgrade))
