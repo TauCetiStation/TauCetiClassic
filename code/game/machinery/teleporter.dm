@@ -414,6 +414,8 @@
 	if(ispulsing(W) && panel_open)
 		var/actions = list("Download data in buffer", "Load data from buffer", "Connect to nearby machinery")
 		var/choice = tgui_input_list(user, "Choose your action", "Action", actions)
+		if(!Adjacent(user))
+			return
 		switch(choice)
 			if("Download data in buffer")
 				var/obj/item/device/multitool/M = W
