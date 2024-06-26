@@ -529,7 +529,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 		if(user.client.jobbancache[rank]["rid"])
 			dat += "в раунде #[user.client.jobbancache[rank]["rid"]] "
 
-		if(user.client.jobbancache[rank]["bantype"] == "JOB_TEMPBAN")
+		if(user.client.jobbancache[rank]["bantype"] == BANTYPE_JOB_TEMP)
 			dat += "как временный на [user.client.jobbancache[rank]["duration"]] минут. Истечёт [user.client.jobbancache[rank]["expiration"]]."
 			dat += "<hr>"
 			dat += "<br>"

@@ -370,8 +370,12 @@
 	else if(href_list["warn"])
 		usr.client.warn(href_list["warn"])
 
-	else if(href_list["jobban2"])
+	else if(href_list["jobban2"]) // people of the past, what were you thinking placing this right in the topic
 		if(!check_rights(R_BAN))	return
+
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
 
 		var/mob/M = locate(href_list["jobban2"])
 		if(!ismob(M))
@@ -722,6 +726,10 @@
 		if(!check_rights(R_ADMIN))
 			return
 
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
+
 		var/mob/M = locate(href_list["jobban4"])
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
@@ -866,7 +874,7 @@
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
-						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
+						DB_ban_unban(M.ckey, null, job)
 						if(M.client)
 							jobban_buildcache(M.client)
 						feedback_inc("ban_job_unban",1)
@@ -990,6 +998,10 @@
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))  return
+
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
 
 		var/mob/M = locate(href_list["newban"])
 		if(!ismob(M)) return

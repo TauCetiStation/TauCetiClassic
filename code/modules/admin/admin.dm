@@ -385,16 +385,16 @@ var/global/BSACooldown = 0
 			notes_record.author = a_ckey
 		var/description = "([ip_cid.Join(", ")]): [reason]"
 		switch(bantype)
-			if (BANTYPE_JOB_PERMA_STR)
+			if (BANTYPE_JOB_PERMA)
 				// notes_record.content = "Permanent JOB BAN [job] [description]"
 				// already in notes by Adminbot
 				continue
-			if (BANTYPE_JOB_TEMP_STR)
+			if (BANTYPE_JOB_TEMP)
 				// notes_record.content = "Temporal JOB BAN [job] for [duration] [description]"
 				continue
-			if (BANTYPE_PERMA_STR)
+			if (BANTYPE_PERMA)
 				notes_record.content = "Permanent BAN [description]"
-			if (BANTYPE_TEMP_STR)
+			if (BANTYPE_TEMP)
 				notes_record.content = "Temporal BAN for [duration] [description]"
 		if(length(timestamp))
 			notes_record.timestamp = timestamp
@@ -408,13 +408,13 @@ var/global/BSACooldown = 0
 			if(length(unbanned_a_ckey))
 				unban_notes_record.author =  unbanned_a_ckey
 			switch(bantype)
-				if(BANTYPE_JOB_PERMA_STR)
+				if(BANTYPE_JOB_PERMA)
 					unban_notes_record.content = "Unban. Permanent JOB BAN [job] was [timestamp]"
-				if(BANTYPE_JOB_TEMP_STR)
+				if(BANTYPE_JOB_TEMP)
 					unban_notes_record.content = "Unban. Temporal JOB BAN [job] was [timestamp]"
-				if(BANTYPE_PERMA_STR)
+				if(BANTYPE_PERMA)
 					unban_notes_record.content = "Unban. Permanent BAN was [timestamp]"
-				if(BANTYPE_TEMP_STR)
+				if(BANTYPE_TEMP)
 					unban_notes_record.content = "Unban. Temporal BAN was [timestamp]"
 			if(length(unbanned_timestamp))
 				unban_notes_record.timestamp = unbanned_timestamp
