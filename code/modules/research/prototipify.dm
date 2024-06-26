@@ -100,6 +100,12 @@
 		fire_delay *= 2
 		recoil += 1
 
+/obj/item/weapon/gun/plasma/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		number_of_shots = min(number_of_shots * mark, 40)
+	if(!prob(reliability))
+		number_of_shots /= 2
+
 /obj/item/weapon/storage/backpack/holding/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
 		max_storage_space += (10 * mark)
