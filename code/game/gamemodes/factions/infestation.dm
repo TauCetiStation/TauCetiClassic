@@ -271,7 +271,7 @@
 			continue
 		if(!H.mind || !H.client)
 			continue
-		if(istype(H, /mob/living/carbon/human/machine) || istype(H, /mob/living/carbon/human/diona))
+		if(H.species.name in list(IPC, DIONA))
 			continue
 		total_human++
 	return total_human
