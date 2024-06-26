@@ -12,6 +12,10 @@
 	// gamemode name to force
 	var/gamemode
 
+	// lobby image and music
+	var/icon/map_lobby_image
+	var/map_lobby_music
+
 	// todo: default stats
 
 	// disables random events, most likely you need it
@@ -44,6 +48,14 @@
 	if(gamemode)
 		log_debug("[gamemode] mode forced.")
 		master_mode = gamemode
+
+	if(map_lobby_image)
+		log_debug("Title screen changed.")
+		change_lobbyscreen(map_lobby_image)
+
+	if(map_lobby_music)
+		log_debug("Lobby music changed.")
+		SSticker.login_music = map_lobby_music
 
 	if(player_verbs)
 		setup_temp_player_verbs(player_verbs, "Map")

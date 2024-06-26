@@ -21,32 +21,31 @@
 	return FALSE
 
 /datum/faction/alien/OnPostSetup()
-	for(var/datum/role/role in members)
-		var/mob/living/carbon/xenomorph/larva/alien/L
-		var/start_point = pick(xeno_spawn)
+	var/datum/role/role = pick(members)
+	var/start_point = pick(xeno_spawn)
 
-		L = new (get_turf(start_point))
-		role.antag.transfer_to(L)
-		QDEL_NULL(role.antag.original)
+	var/mob/living/carbon/human/H = new (get_turf(start_point))
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/white, SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white, SLOT_SHOES)
+	H.name = "Gilbert Kane"
+	H.real_name = "Gilbert Kane"
+	H.voice_name = "Gilbert Kane"
+
+	var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(H)
+	var/mob/living/carbon/xenomorph/larva/alien/new_xeno = new /mob/living/carbon/xenomorph/larva(new_embryo)
+	new_xeno.loc = new_embryo
+	new_embryo.baby = new_xeno
+	new_embryo.controlled_by_ai = FALSE
+	new_embryo.stage = 5
+	role.antag.transfer_to(new_xeno)
+	QDEL_NULL(role.antag.original)
 
 	return ..()
+
+/datum/faction/alien/proc/createKane(H)
 
 /datum/faction/alien/forgeObjectives()
 	if(!..())
 		return FALSE
 	AppendObjective(/datum/objective/bloodbath)
 	return TRUE
-
-/datum/faction/proc/check_crew()
-	var/total_human = 0
-	for(var/mob/living/carbon/human/H as anything in human_list)
-		var/turf/human_loc = get_turf(H)
-		if(!human_loc || !is_station_level(human_loc.z))
-			continue
-		if(H.stat == DEAD)
-			continue
-		if(!H.mind || !H.client)
-			continue
-		if(!istype(H, /mob/living/carbon/human/machine))
-		total_human++
-	return total_human
