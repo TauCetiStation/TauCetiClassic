@@ -4,6 +4,7 @@
 //TG-stuff
 /obj/item/ammo_casing
 	name = "bullet casing"
+	cases = list("гильза от пули", "гильзы от пули", "гильзе от пули", "гильзу от пули", "гильзой от пули", "гильзе от пули")
 	desc = "Гильза от пули."
 	icon = 'icons/obj/ammo/casings.dmi'
 	icon_state = "casing_normal"

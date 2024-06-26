@@ -154,6 +154,7 @@
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/stechkin
 	name = "magazine (9mm)"
+	cases = list("магазин (9мм)", "магазина (9мм)", "магазину (9мм)", "магазин (9мм)", "магазином (9мм)", "магазине (9мм)")
 	icon_state = "stechkin_mag"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
@@ -163,13 +164,15 @@
 	overlay = "stechkin-mag"
 
 /obj/item/ammo_box/magazine/stechkin/extended
-	name = "extended capacity magazine (9mm)"
+	name = "extended magazine (9mm)"
+	cases = list("расширенный магазин (9мм)", "расширенного магазина (9мм)", "расширенному магазину (9мм)", "расширенный магазин (9мм)", "расширенным магазином (9мм)", "расширенном магазине (9мм)")
 	icon_state = "stechkin_mag_extended"
 	max_ammo = 16
 	overlay = "stechkin-mag-ex"
 
 /obj/item/ammo_box/magazine/glock
 	name = "magazine (9mm)"
+	cases = list("магазин (9мм)", "магазина (9мм)", "магазину (9мм)", "магазин (9мм)", "магазином (9 мм)", "магазине (9мм)")
 	icon_state = "glock_mag"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
@@ -180,22 +183,26 @@
 
 /obj/item/ammo_box/magazine/glock/rubber
 	name = "magazine (9mm rubber)"
+	cases = list("магазин (резина 9мм)", "магазина (резина 9мм)", "магазину (резина 9мм)", "магазин (резина 9мм)", "магазином (резина 9мм)", "магазине (резина 9мм)")
 	icon_state = "glock_mag_rubber"
 	ammo_type = /obj/item/ammo_casing/c9mmr
 
 /obj/item/ammo_box/magazine/glock/extended
 	name = "extended magazine (9mm)"
+	cases = list("расширенный магазин (9мм)", "расширенного магазина (9мм)", "расширенному магазину (9мм)", "расширенный магазин (9мм)", "расширенным магазином (9мм)", "расширенном магазине (9мм)")
 	icon_state = "glock_mag_extended"
 	max_ammo = 20
 	overlay = "glock-mag-ex"
 
 /obj/item/ammo_box/magazine/glock/extended/rubber
 	name = "extended magazine (9mm rubber)"
+	cases = list("расширенный магазин (резина 9мм)", "расширенного магазина (резина 9мм)", "расширенному магазину (резина 9мм)", "расширенный магазин (резина 9мм)", "расширенным магазином (резина 9мм)", "расширенном магазине (резина 9мм)")
 	icon_state = "glock_mag_extended_rubber"
 	ammo_type = /obj/item/ammo_casing/c9mmr
 
 /obj/item/ammo_box/magazine/smg
 	name = "SMG magazine (9mm)"
+	cases = list("СМГ магазин (9мм)", "СМГ магазина (9мм)", "СМГ магазину (9мм)", "СМГ магазин (9мм)", "СМГ магазином (9мм)", "СМГ магазине (9мм)")
 	icon_state = "smg_mag"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
@@ -207,6 +214,7 @@
 
 /obj/item/ammo_box/magazine/c20r
 	name = "magazine (.45)"
+	cases = list("магазин (.45)", "магазина (.45)", "магазину (.45)", "магазин (.45)", "магазином (.45)", "магазине (.45)")
 	icon_state = "c20r_mag"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45
@@ -226,6 +234,7 @@
 
 /obj/item/ammo_box/magazine/c20r/hp
 	name = "magazine (.45 HP)"
+	cases = list("магазин (.45 МП)", "магазина (.45 МП)", "магазину (.45 МП)", "магазин (.45 МП)", "магазином (.45 МП)", "магазине (.45 МП)")
 	desc = "Магазин, полный мощных патронов для пистолета-пулемета"
 	icon_state = "c20r_mag_hp"
 	origin_tech = "combat=3"
@@ -235,6 +244,7 @@
 
 /obj/item/ammo_box/magazine/c20r/hv
 	name = "magazine (.45 HV)"
+	cases = list("магазин (.45 ВП)", "магазина (.45 ВП)", "магазину (.45 ВП)", "магазин (.45 ВП)", "магазином (.45 ВП)", "магазине (.45 ВП)")
 	desc = "Магазин, полный высокоскоростных патронов для пистолета-пулемета."
 	icon_state = "c20r_mag_hv"
 	origin_tech = "combat=3"
@@ -244,6 +254,7 @@
 
 /obj/item/ammo_box/magazine/c20r/imp
 	name = "magazine (.45 IMP)"
+	cases = list("магазин (.45 ИМП)", "магазина (.45 ИМП)", "магазину (.45 ИМП)", "магазин (.45 ИМП)", "магазином (.45 ИМП)", "магазине (.45 ИМП)")
 	desc = "Магазин, полный импульсных патронов для пистолета-пулемета."
 	icon_state = "c20r_mag_imp"
 	origin_tech = "combat=3"
@@ -253,6 +264,7 @@
 
 /obj/item/ammo_box/magazine/silenced_pistol
 	name = "magazine (.45)"
+	cases = list("магазин (.45)", "магазина (.45)", "магазину (.45)", "магазин (.45)", "магазином (.45)", "магазине (.45)")
 	icon_state = "silenced_pistol_mag"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
@@ -262,6 +274,7 @@
 
 /obj/item/ammo_box/magazine/colt
 	name = "magazine (.45)"
+	cases = list("магазин (.45)", "магазина (.45)", "магазину (.45)", "магазин (.45)", "магазином (.45)", "магазине (.45)")
 	icon_state = "colt_mag"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
@@ -270,11 +283,13 @@
 
 /obj/item/ammo_box/magazine/colt/rubber
 	name = "magazine (.45 rubber)"
+	cases = list("магазин (.45 резина)", "магазина (.45 резина)", "магазину (.45 резина)", "магазин (.45 резина)", "магазином (.45 резина)", "магазине (.45 резина)")
 	icon_state = "colt_mag_rubber"
 	ammo_type = /obj/item/ammo_casing/c45r
 
 /obj/item/ammo_box/magazine/mac10
 	name = "Mac-10 magazine (9mm)"
+	cases = list("магазин Мак-10 (9мм)", "магазина Мак-10 (9мм)", "магазину Мак-10 (9мм)", "магазин Мак-10 (9мм)", "магазином Мак-10 (9мм)", "магазине Мак-10 (9мм)")
 	icon_state = "mac10_mag"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
@@ -284,6 +299,7 @@
 
 /obj/item/ammo_box/magazine/tommygun
 	name = "tommy gun drum (.45)"
+	cases = list("барабан автомата Томпсона (.45)", "барабана автомата Томпсона (.45)", "барабану автомата Томпсона (.45)", "барабан автомата Томпсона (.45)", "барабаном автомата Томпсона (.45)", "барабане автомата Томпсона (.45)")
 	icon_state = "tommygun_mag"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
@@ -293,6 +309,7 @@
 
 /obj/item/ammo_box/magazine/deagle
 	name = "magazine (.50AE)"
+	cases = list("магазин (.50АЕ)", "магазина (.50АЕ)", "магазину (.50АЕ)", "магазин (.50АЕ)", "магазином (.50АЕ)", "магазине (.50АЕ)")
 	icon_state = "deagle_mag"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/a50
@@ -306,6 +323,7 @@
 
 /obj/item/ammo_box/magazine/saw
 	name = "magazine (7.62mm)"
+	cases = list("магазин (7.62мм)", "магазина (7.62мм)", "магазину (7.62мм)", "магазин (7.62мм)", "магазином (7.62мм)", "магазине (7.62мм)")
 	icon_state = "saw_mag"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/a762
@@ -318,6 +336,7 @@
 
 /obj/item/ammo_box/magazine/chameleon
 	name = "magazine (.45)"
+	cases = list("магазин (.45)", "магазина (.45)", "магазину (.45)", "магазин (.45)", "магазином (.45)", "магазине (.45)")
 	icon_state = "colt_mag"
 	ammo_type = /obj/item/ammo_casing/chameleon
 	max_ammo = 7
@@ -325,6 +344,7 @@
 
 /obj/item/ammo_box/magazine/l13
 	name = "magazine (.38 rubber)"
+
 	icon_state = "l13_mag_rubber"
 	origin_tech = "combat=1"
 	ammo_type = /obj/item/ammo_casing/c38
@@ -335,6 +355,7 @@
 
 /obj/item/ammo_box/magazine/l13/lethal
 	name = "magazine (.38)"
+	cases = list("магазин (.38 резина)", "магазина (.38 резина)", "магазину (.38 резина)", "магазин (.38 резина)", "магазином (.38 резина)", "магазине (.38 резина)")
 	origin_tech = "combat=2"
 	icon_state = "l13_mag"
 	ammo_type = /obj/item/ammo_casing/c38m
@@ -349,6 +370,7 @@
 
 /obj/item/ammo_box/magazine/a774clip
 	name = "7.74 ammo clip"
+	cases = list("обойма патронов 7.74", "обоймы патронов 7.74", "обойме патронов 7.74", "обойму патронов 7.74", "обоймой патронов 7.74", "обойме патронов 7.74")
 	icon_state = "clip"
 	origin_tech = "combat=2"
 	caliber = "7.74mm"
@@ -358,6 +380,7 @@
 
 /obj/item/ammo_box/magazine/bar
 	name = "magazine (.30-06)"
+	cases = list("магазин (.30-06)", "магазина (.30-06)", "магазину (.30-06)", "магазин (.30-06)", "магазином (.30-06)", "магазине (.30-06)")
 	icon_state = "bar_mag"
 	ammo_type = /obj/item/ammo_casing/a3006
 	caliber = "a3006"
@@ -367,6 +390,7 @@
 
 /obj/item/ammo_box/magazine/borg45
 	name = "magazine (.45)"
+	cases = list("магазин (.45)", "магазина (.45)", "магазину (.45)", "магазин (.45)", "магазином (.45)", "магазине (.45)")
 	icon_state = "saw_mag"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
@@ -383,14 +407,14 @@
 			SMG.magazine = src
 			SMG.magazine.forceMove(SMG)
 			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
-			to_chat(user, "<span class='notice'>Вы загружаете новый магазин в [SMG].</span>")
+			to_chat(user, "<span class='notice'>Вы загружаете новый магазин в [CASE(SMG,ACCUSATIVE_CASE)].</span>")
 			SMG.chamber_round()
 			I.update_icon()
 			update_icon()
 			return TRUE
 
 		else if (SMG.magazine)
-			to_chat(user, "<span class='notice'>В [src] уже есть магазин.</span>")
+			to_chat(user, "<span class='notice'>В [CASE(src,PREPOSITIONAL_CASE)] уже есть магазин.</span>")
 			return
 
 	return ..()
