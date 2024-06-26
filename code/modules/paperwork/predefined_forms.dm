@@ -260,7 +260,7 @@ var/global/list/predefined_forms_list = list(
     index = "1H"
     name = "Форма отчета о переработке ресурсов"
     content = @{"
-		[center][large][b]Отдел Поставок КСН "Исход"[/b]
+		[center][large][b]Отдел Поставок [sname][/b]
 		Отчет о переработке ресурсов[/large][/center]
 		[hr]Время переработки: [field]
 		[hr][b]Переработанные руды/материалы[/b]
