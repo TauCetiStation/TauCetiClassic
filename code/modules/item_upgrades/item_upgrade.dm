@@ -8,7 +8,7 @@
 #define HUD_TOGGLEABLE_MODE_THERMAL_ADVANCED "thermal_adv"
 
 /obj/item/clothing/glasses/sunglasses/hud/advanced
-	name = "mixed HUD"
+	name = "Advanced HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
 	icon_state = "secmedhud"
 	body_parts_covered = 0
@@ -67,6 +67,19 @@
 	apply_effects(mode_type, TRUE)
 	current_mode = mode_type
 
+/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/upgrade_hud(var/obj/item/hud_upgrade/hud_upgrade)
+	switch(hud_upgrade.tier)
+		if(HUD_UPGRADE_MEDSCAN)
+			hud_types.Add(DATA_HUD_MEDICAL)
+			def_hud_types.Add(DATA_HUD_MEDICAL)
+		if(HUD_UPGRADE_NIGHTVISION)
+			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
+		if(HUD_UPGRADE_THERMAL)
+			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
+		if(HUD_UPGRADE_THERMAL_ADVANCED)
+			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(src))
+	upgrade_tier = hud_upgrade.tier
+
 /obj/item/clothing/glasses/sunglasses/hud/advanced/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/hud_upgrade))
 		var/obj/item/hud_upgrade/hud_upgrade = W
@@ -76,22 +89,12 @@
 		if(upgrade_tier < hud_upgrade.tier - 1)
 			to_chat(usr, "<span class='alert'>You have to install previous upgrades")
 			return
-		switch(hud_upgrade.tier)
-			if(HUD_UPGRADE_MEDSCAN)
-				hud_types.Add(DATA_HUD_MEDICAL)
-				def_hud_types.Add(DATA_HUD_MEDICAL)
-			if(HUD_UPGRADE_NIGHTVISION)
-				item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
-			if(HUD_UPGRADE_THERMAL)
-				item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
-			if(HUD_UPGRADE_THERMAL_ADVANCED)
-				for(var/datum/action/item_action/hands_free/switch_hud_modes/night/action in item_actions)
-					item_actions.Remove(action)
-				for(var/datum/action/item_action/hands_free/switch_hud_modes/thermal/action in item_actions)
-					item_actions.Remove(action)
-				item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(src))
-		upgrade_tier = hud_upgrade.tier
-		update_item_actions()
+		if(user.is_in_hands(src))
+			upgrade_hud(hud_upgrade)
+			add_item_actions(user)
+		else
+			to_chat(usr, "<span class='alert'>You have to hold huds in hands to upgrade it")
+			return
 		qdel(hud_upgrade)
 	. = ..()
 
