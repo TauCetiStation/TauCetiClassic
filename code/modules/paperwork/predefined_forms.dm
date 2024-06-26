@@ -236,7 +236,7 @@ var/global/list/predefined_forms_list = list(
     index = "1G"
     name = "Форма отчета о добыче ресурсов"
     content = @{"
-		[center][large][b]Отдел Поставок КСН "Исход"[/b]
+		[center][large][b]Отдел Поставок [sname][/b]
 		Отчет о добыче ресурсов[/large][/center]
 		[hr]Время начала добычи: [field]
 		Время окончания добычи: [field]
