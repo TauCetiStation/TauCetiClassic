@@ -297,6 +297,28 @@
 	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
 		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
+	init_washing_items_list()
+
+/proc/init_washing_items_list()
+	init_paths(/obj/item/stack/sheet/hairlesshide, global.washing_items_list)
+	init_paths(/obj/item/clothing/mask, global.washing_items_list)
+	init_paths(/obj/item/clothing/head, global.washing_items_list)
+	init_paths(/obj/item/clothing/gloves, global.washing_items_list)
+	init_paths(/obj/item/clothing/shoes, global.washing_items_list)
+	init_paths(/obj/item/clothing/suit, global.washing_items_list)
+	init_paths(/obj/item/weapon/bedsheet, global.washing_items_list)
+	init_paths(/obj/item/clothing/under, global.washing_items_list)
+	global.washing_items_list -= /obj/item/clothing/suit/space
+	global.washing_items_list -= /obj/item/clothing/suit/syndicatefake
+	global.washing_items_list -= /obj/item/clothing/suit/cyborg_suit
+	global.washing_items_list -= /obj/item/clothing/suit/bomb_suit
+	global.washing_items_list -= /obj/item/clothing/suit/armor
+	global.washing_items_list -= /obj/item/clothing/mask/gas
+	global.washing_items_list -= /obj/item/clothing/mask/cigarette
+	global.washing_items_list -= /obj/item/clothing/head/syndicatefake
+	global.washing_items_list -= /obj/item/clothing/head/helmet
+	global.washing_items_list -= /obj/item/clothing/gloves/pipboy
+
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
