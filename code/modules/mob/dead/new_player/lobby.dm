@@ -140,7 +140,7 @@ var/global/lobby_screen = "lobby"
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>"}
 
 	dat += "</div></div>"
-	
+
 	if(global.custom_lobby_image)
 		dat += {"<img src="titlescreen.gif" class="background" alt="">"}
 	else if (client.prefs.lobbyanimation)

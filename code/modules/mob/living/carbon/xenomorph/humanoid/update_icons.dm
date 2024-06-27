@@ -267,6 +267,21 @@
 	if(on_fire)
 		underlays += image(icon = 'icons/mob/OnFire.dmi', icon_state = fire_underlay_state)
 
+/mob/living/carbon/xenomorph/humanoid/hunter/alien/update_fire()
+	remove_standing_overlay(X_FIRE_UPPER_LAYER)
+	update_fire_underlay()
+	if(on_fire)
+		var/image/over = image(icon = 'icons/mob/OnFire48x48.dmi', icon_state = "human_overlay", layer = -X_FIRE_UPPER_LAYER)
+		over.plane = LIGHTING_LAMPS_PLANE
+		overlays_standing[X_FIRE_UPPER_LAYER] = over
+	apply_standing_overlay(X_FIRE_UPPER_LAYER)
+
+/mob/living/carbon/xenomorph/hunter/alien/update_fire_underlay()
+	if(!fire_underlay_state)
+		return
+	underlays.Cut()
+	if(on_fire)
+		underlays += image(icon = 'icons/mob/OnFire48x48.dmi', icon_state = fire_underlay_state)
 
 //Xeno Overlays Indexes//////////
 #undef X_R_HAND_LAYER

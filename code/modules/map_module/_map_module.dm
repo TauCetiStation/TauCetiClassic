@@ -13,7 +13,7 @@
 	var/gamemode
 
 	// lobby image and music
-	var/icon/map_lobby_image
+	var/map_lobby_image
 	var/map_lobby_music
 
 	// todo: default stats

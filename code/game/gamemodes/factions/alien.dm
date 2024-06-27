@@ -32,7 +32,7 @@
 	H.voice_name = "Gilbert Kane"
 
 	var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(H)
-	var/mob/living/carbon/xenomorph/larva/alien/new_xeno = new /mob/living/carbon/xenomorph/larva(new_embryo)
+	var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva/alien(new_embryo)
 	new_xeno.loc = new_embryo
 	new_embryo.baby = new_xeno
 	new_embryo.controlled_by_ai = FALSE

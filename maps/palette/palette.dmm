@@ -101,7 +101,6 @@
 	icon_state = "spline_fancy"
 	},
 /obj/effect/decal/turf_decal/wood{
-	dir = 2;
 	icon_state = "spline_fancy_corner"
 	},
 /turf/simulated/floor,
@@ -733,7 +732,6 @@
 /area/space)
 "gs" = (
 /obj/effect/decal/turf_decal/wood{
-	dir = 2;
 	icon_state = "spline_fancy"
 	},
 /turf/simulated/floor,
@@ -2024,7 +2022,6 @@
 	icon_state = "siding_line"
 	},
 /obj/effect/decal/turf_decal/blue{
-	dir = 2;
 	icon_state = "siding_corner"
 	},
 /obj/effect/decal/turf_decal/blue{
@@ -2144,12 +2141,6 @@
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "escape"
-	},
-/area/space)
-"sf" = (
-/turf/simulated/floor{
-	dir = 2;
-	icon_state = "bluecorner"
 	},
 /area/space)
 "sg" = (
@@ -4527,7 +4518,6 @@
 /area/space)
 "KQ" = (
 /obj/effect/decal/turf_decal/purple{
-	dir = 2;
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor,
@@ -4800,7 +4790,6 @@
 /area/space)
 "MS" = (
 /obj/effect/decal/turf_decal/metal{
-	dir = 2;
 	icon_state = "spline_plain"
 	},
 /turf/simulated/floor,
@@ -7226,7 +7215,7 @@ CD
 SE
 CD
 aO
-sf
+Ou
 Ah
 vy
 Sw
@@ -7241,12 +7230,12 @@ Pw
 Fj
 UH
 Vg
-sf
+Ou
 Og
 VM
 Qe
 lu
-sf
+Ou
 gT
 yP
 iT

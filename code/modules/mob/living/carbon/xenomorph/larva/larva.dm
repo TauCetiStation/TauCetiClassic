@@ -81,5 +81,13 @@
 /mob/living/carbon/xenomorph/larva/alien
 	maxHealth = 50
 	health = 50
+	speed = -1.5
+	ventcrawler = 0
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/hide,
 						/obj/effect/proc_holder/spell/no_target/larva_evolve/alien)
+
+/mob/living/carbon/xenomorph/larva/alien/atom_init()
+	. = ..()
+	name = "alien larva"
+	real_name = name
+

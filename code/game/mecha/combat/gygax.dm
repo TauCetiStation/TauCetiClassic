@@ -100,7 +100,10 @@
 		cell = C
 		return
 	cell = new(src)
-	cell.charge = 30000
+	if(map_discharged)
+		cell.charge = 0
+	else
+		cell.charge = 30000
 	cell.maxcharge = 30000
 
 

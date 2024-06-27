@@ -19030,7 +19030,6 @@
 "aHJ" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/fore)
@@ -23547,7 +23546,6 @@
 "aQb" = (
 /obj/structure/flora/tree/jungle,
 /obj/effect/decal/turf_decal/wood{
-	dir = 2;
 	icon_state = "spline_fancy"
 	},
 /turf/simulated/floor/grass,
@@ -23632,7 +23630,6 @@
 	pixel_y = 23
 	},
 /obj/effect/decal/turf_decal/wood{
-	dir = 2;
 	icon_state = "spline_fancy"
 	},
 /turf/simulated/floor/grass,
@@ -24520,7 +24517,6 @@
 "aRK" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/effect/decal/turf_decal/wood{
-	dir = 2;
 	icon_state = "spline_fancy"
 	},
 /turf/simulated/floor/grass,
@@ -24553,7 +24549,6 @@
 "aRO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/turf_decal/wood{
-	dir = 2;
 	icon_state = "spline_fancy"
 	},
 /turf/simulated/floor/grass,
@@ -29471,7 +29466,6 @@
 "bas" = (
 /obj/structure/flora/junglebush/b,
 /obj/effect/decal/turf_decal/wood{
-	dir = 2;
 	icon_state = "spline_fancy"
 	},
 /turf/simulated/floor/grass,
@@ -29577,7 +29571,6 @@
 "baC" = (
 /obj/structure/flora/ausbushes/reedbush,
 /obj/effect/decal/turf_decal/wood{
-	dir = 2;
 	icon_state = "spline_fancy"
 	},
 /turf/simulated/floor/grass,
@@ -57084,7 +57077,6 @@
 /area/station/maintenance/engineering)
 "cdn" = (
 /obj/effect/decal/turf_decal/wood{
-	dir = 2;
 	icon_state = "spline_fancy"
 	},
 /turf/simulated/floor/grass,
@@ -59643,17 +59635,13 @@
 /area/station/civilian/garden)
 "cla" = (
 /obj/structure/stool/bed/bench,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "clb" = (
 /obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "clc" = (
 /obj/item/weapon/cigbutt,
@@ -60037,9 +60025,7 @@
 "clU" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "clZ" = (
 /obj/structure/window/thin/reinforced,
@@ -61455,9 +61441,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "cpF" = (
 /obj/structure/cable{
@@ -63591,9 +63575,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "cuE" = (
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "cuF" = (
 /obj/structure/table/reinforced,
@@ -63882,9 +63864,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "cvx" = (
 /obj/item/weapon/flora/random,
@@ -64437,9 +64417,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "cxA" = (
 /obj/effect/decal/cleanable/blood/oil,
@@ -66274,9 +66252,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "cCu" = (
 /turf/simulated/floor{
@@ -66413,9 +66389,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "cCL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -68964,9 +68938,7 @@
 	dir = 1;
 	icon_state = "bench_2"
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "cLS" = (
 /obj/structure/cable/yellow{
@@ -69093,9 +69065,7 @@
 /obj/structure/stool/bed/bench{
 	dir = 1
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "cMo" = (
 /obj/item/clothing/suit/justice,

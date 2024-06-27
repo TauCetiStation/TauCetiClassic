@@ -37,11 +37,11 @@ SUBSYSTEM_DEF(mapping)
 	system_name = config.system_name
 	system_name = config.system_name_ru
 
-	if(config.map_module)
-		load_map_module(config.map_module)
-
 	loadWorld()
 	renameAreas()
+
+	if(config.map_module)
+		load_map_module(config.map_module)
 
 	process_teleport_locs()			//Sets up the wizard teleport locations
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.

@@ -5,9 +5,9 @@
 
 	factions_allowed = list(/datum/faction/alien)
 
-	minimum_player_count = 0
-	minimum_players_bundles = 6
+	minimum_player_count = 1
+	minimum_players_bundles = 8
 
 /datum/game_mode/alien/announce()
 	to_chat(world, "<b>Текущий режим игры - Чужой!</b>")
-	to_chat(world, "<b>Это <span class='userdanger'>Ксеноморф</span> на корабле. Экипаж: Убейте эту тварь как можно скорее.</b>")
+	to_chat(world, "<b><span class='userdanger'>Ксеноморф</span> на корабле! Экипаж, убейте эту тварь как можно скорее!</b>")

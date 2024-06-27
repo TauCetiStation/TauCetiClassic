@@ -36,6 +36,8 @@
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
 	var/list/damage_absorption = list(BRUTE=0.8,BURN=1.2,BULLET=0.9,LASER=1,ENERGY=1,BOMB=1)
 	var/obj/item/weapon/stock_parts/cell/cell
+	//spawn with empty battery
+	var/map_discharged = FALSE
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
@@ -148,7 +150,10 @@
 		return
 	cell = new(src)
 	cell.name = "high-capacity power cell"
-	cell.charge = 15000
+	if(map_discharged)
+		cell.charge = 0
+	else
+		cell.charge = 15000
 	cell.maxcharge = 15000
 
 /obj/mecha/proc/add_cabin()

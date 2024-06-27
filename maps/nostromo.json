@@ -1,0 +1,16 @@
+{
+    "map_name": "Nostromo (Alien)",
+    "map_path": "_events",
+    "map_file": "nostromo.dmm",
+    "station_name": "Nostromo",
+    "station_name_ru": "Ностромо",
+    "system_name": "Tau Ceti",
+    "station_image": "nostromo",
+    "traits": [{"Linkage": null}],
+    "space_ruin_levels": 0,
+    "space_empty_levels": 0,
+    "load_junkyard": 0,
+    "smartlight_preset": "default",
+    "map_module": "Alien",
+    "minetype": null
+}
