@@ -183,7 +183,7 @@
 
 /obj/item/ammo_box/magazine/glock/rubber
 	name = "magazine (9mm rubber)"
-	cases = list("магазин (резина 9мм)", "магазина (резина 9мм)", "магазину (резина 9мм)", "магазин (резина 9мм)", "магазином (резина 9мм)", "магазине (резина 9мм)")
+	cases = list("магазин (Резина 9мм)", "магазина (Резина 9мм)", "магазину (Резина 9мм)", "магазин (Резина 9мм)", "магазином (Резина 9мм)", "магазине (Резина 9мм)")
 	icon_state = "glock_mag_rubber"
 	ammo_type = /obj/item/ammo_casing/c9mmr
 
@@ -196,7 +196,7 @@
 
 /obj/item/ammo_box/magazine/glock/extended/rubber
 	name = "extended magazine (9mm rubber)"
-	cases = list("расширенный магазин (резина 9мм)", "расширенного магазина (резина 9мм)", "расширенному магазину (резина 9мм)", "расширенный магазин (резина 9мм)", "расширенным магазином (резина 9мм)", "расширенном магазине (резина 9мм)")
+	cases = list("расширенный магазин (Резина 9мм)", "расширенного магазина (Резина 9мм)", "расширенному магазину (Резина 9мм)", "расширенный магазин (Резина 9мм)", "расширенным магазином (Резина 9мм)", "расширенном магазине (Резина 9мм)")
 	icon_state = "glock_mag_extended_rubber"
 	ammo_type = /obj/item/ammo_casing/c9mmr
 
@@ -283,7 +283,7 @@
 
 /obj/item/ammo_box/magazine/colt/rubber
 	name = "magazine (.45 rubber)"
-	cases = list("магазин (.45 резина)", "магазина (.45 резина)", "магазину (.45 резина)", "магазин (.45 резина)", "магазином (.45 резина)", "магазине (.45 резина)")
+	cases = list("магазин (.45 Резина)", "магазина (.45 Резина)", "магазину (.45 Резина)", "магазин (.45 Резина)", "магазином (.45 Резина)", "магазине (.45 Резина)")
 	icon_state = "colt_mag_rubber"
 	ammo_type = /obj/item/ammo_casing/c45r
 
@@ -355,7 +355,7 @@
 
 /obj/item/ammo_box/magazine/l13/lethal
 	name = "magazine (.38)"
-	cases = list("магазин (.38 резина)", "магазина (.38 резина)", "магазину (.38 резина)", "магазин (.38 резина)", "магазином (.38 резина)", "магазине (.38 резина)")
+	cases = list("магазин (.38 Резина)", "магазина (.38 Резина)", "магазину (.38 Резина)", "магазин (.38 Резина)", "магазином (.38 Резина)", "магазине (.38 Резина)")
 	origin_tech = "combat=2"
 	icon_state = "l13_mag"
 	ammo_type = /obj/item/ammo_casing/c38m
@@ -421,6 +421,7 @@
 
 /obj/item/ammo_box/magazine/bulldog
 	name = "shotgun magazine (12g buckshot)"
+	cases = list("магазин дробовика (12г Картечь)", "магазина дробовика (12г Картечь)", "магазину дробовика (12г Картечь)", "магазин дробовика (12г Картечь)", "магазином дробовика (12г Картечь)", "магазине дробовика (12г Картечь)")
 	icon_state = "bulldog_mag"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
@@ -431,6 +432,7 @@
 
 /obj/item/ammo_box/magazine/bulldog/stun
 	name = "shotgun magazine (12g stun shot)"
+	cases = list("магазин дробовика (12г Электрошок)", "магазина дробовика (12г Электрошок)", "магазину дробовика (12г Электрошок)", "магазин дробовика (12г Электрошок)", "магазином дробовика (12г Электрошок)", "магазине дробовика (12г Электрошок)")
 	icon_state = "bulldog_mag_stun"
 	ammo_type = /obj/item/ammo_casing/shotgun/stunshot
 	caliber = "shotgun"
@@ -439,6 +441,7 @@
 
 /obj/item/ammo_box/magazine/bulldog/incendiary
 	name = "shotgun magazine (12g incendiary)"
+	cases = list("магазин дробовика (12г Зажигателый)", "магазина дробовика (12г Зажигателый)", "магазину дробовика (12г Зажигателый)", "магазин дробовика (12г Зажигателый)", "магазином дробовика (12г Зажигателый)", "магазине дробовика (12г Зажигателый)")
 	icon_state = "bulldog_mag_inc"
 	origin_tech = "combat=3;syndicate=1"
 	ammo_type = /obj/item/ammo_casing/shotgun/incendiary
@@ -446,6 +449,7 @@
 
 /obj/item/ammo_box/magazine/a28
 	name = "A28 magazine (5.56mm)"
+	cases = list("магазин А28 (5.56мм)", "магазина А28 (5.56мм)", "магазину А28 (5.56мм)", "магазин А28 (5.56мм)", "магазином А28 (5.56мм)", "магазине А28 (5.56мм)")
 	icon_state = "a28_mag"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/a556
@@ -456,12 +460,14 @@
 
 /obj/item/ammo_box/magazine/a28/incendiary
 	name = "A28 magazine (5.56mm incendiary)"
+	cases = list("магазин А28 (5.56мм Зажигателый)", "магазина А28 (5.56мм Зажигателый)", "магазину А28 (5.56мм Зажигателый)", "магазин А28 (5.56мм Зажигателый)", "магазином А28 (5.56мм Зажигателый)", "магазине А28 (5.56мм Зажигателый)")
 	ammo_type = /obj/item/ammo_casing/a556i
 	icon_state = "a28_mag_inc"
 	overlay = "a28-mag-i"
 
 /obj/item/ammo_box/magazine/a74
 	name = "A74 magazine (7.74mm)"
+	cases = list("магазин А74 (7.74мм)", "магазина А74 (7.74мм)", "магазину А74 (7.74мм)", "магазин А74 (7.74мм)", "магазином А74 (7.74мм)", "магазине А74 (7.74мм)")
 	icon_state = "a74_mag"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/a74
@@ -471,13 +477,15 @@
 	overlay = "a74-mag"
 
 /obj/item/ammo_box/magazine/a74/krinkov
-	name = "small A74 magazine (7.74)"
+	name = "small A74 magazine (7.74mm)"
+	cases = list("маленький магазин А74 (7.74мм)", "маленького магазина А74 (7.74мм)", "маленькому магазину А74 (7.74мм)", "маленький магазин А74 (7.74мм)", "маленьким магазином А74 (7.74мм)", "маленьком магазине А74 (7.74мм)")
 	icon_state = "krinkov_mag"
 	max_ammo = 15
 	overlay = "krinkov-mag"
 
 /obj/item/ammo_box/magazine/plasma
 	name = "plasma weapon battery pack"
+	cases = list("батарейный блок плазменного оружия", "батарейного блока плазменного оружия", "батарейному блоку плазменного оружия", "батарейный блок плазменного оружия", "батарейным блоком плазменного оружия", "батарейном блоке плазменного оружия")
 	desc = "Специальный корпус аккумулятора с защитой от ЭМИ. Используется метод быстрой зарядки. Имеет стандартизированные размеры и может использоваться с любым плазмотроном данной серии. Возможна замена элемента питания."
 	icon_state = "plasma_clip"
 	origin_tech = "combat=2"
@@ -549,6 +557,7 @@
 
 /obj/item/ammo_box/magazine/drozd
 	name = "Drozd magazine (12.7mm)"
+	cases = list("магазин Дрозд (12.7мм)", "магазина Дрозда (12.7мм)", "магазину Дрозда (12.7мм)", "магазин Дрозд (12.7мм)", "магазином Дрозда(12.7мм)", "магазине Дрозда(12.7мм)")
 	icon_state = "drozd_mag"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/drozd127
@@ -559,6 +568,7 @@
 
 /obj/item/ammo_box/magazine/wjpp
 	name = "small magazine (9mm)"
+	cases = list("маленький магазин (9мм)", "магазина (9мм)", "магазину (9мм)", "магазин (9мм)", "магазином (9мм)", "магазине (9мм)")
 	icon_state = "wjpp_mag"
 	origin_tech = "combat=1"
 	ammo_type = /obj/item/ammo_casing/c9mm
@@ -569,11 +579,13 @@
 
 /obj/item/ammo_box/magazine/wjpp/rubber
 	name = "small magazine (9mm rubber)"
+	cases = list("маленький магазин (9мм Резина)", "магазина (9мм Резина)", "магазину (9мм Резина)", "магазин (9мм Резина)", "магазином (9мм Резина)", "магазине (9мм Резина)")
 	icon_state = "wjpp_mag_rubber"
 	ammo_type = /obj/item/ammo_casing/c9mmr
 
 /obj/item/ammo_box/magazine/m41a
 	name = "M41A magazine (10x24 Caseless)"
+	cases = list("магазин М41А (10x24 Безкассетный)", "магазина М41А (10x24 Безкассетный)", "магазину М41А (10x24 Безкассетный)", "магазин М41А (10x24 Безкассетный)", "магазином М41А (10x24 Безкассетный)", "магазине М41А (10x24 Безкассетный)")
 	desc = "99-и зарядная палочка смерти"
 	icon_state = "M41A"
 	origin_tech = "combat=1"
@@ -590,6 +602,7 @@
 
 /obj/item/ammo_box/speedloader/a357
 	name = "speedloader (.357)"
+	cases = list("спидлоадер (.357)", "спидлоадера (.357)", "спидлоадеру (.357)", "спидлоадер (.357)", "спидлоадером (.357)", "спидлоадере (.357)")
 	desc = "Спидлоадер под 357-й калибр."
 	caliber = "357"
 	icon_state = "357"
@@ -598,6 +611,7 @@
 
 /obj/item/ammo_box/speedloader/c38
 	name = "speedloader (.38 rubber)"
+	cases = list("спидлоадер (.38 Резина)", "спидлоадера (.38 Резина)", "спидлоадеру (.38 Резина)", "спидлоадер (.38 Резина)", "спидлоадером (.38 Резина)", "спидлоадере (.38 Резина)")
 	desc = "Спидлоадер под 38-й калибр"
 	caliber = "38"
 	icon_state = "38"
@@ -606,6 +620,7 @@
 
 /obj/item/ammo_box/speedloader/c38m
 	name = "speedloader (.38)"
+	cases = list("спидлоадер (.38)", "спидлоадера (.38)", "спидлоадеру (.38 )", "спидлоадер (.38)", "спидлоадером (.38)", "спидлоадере (.38)")
 	caliber = "38"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38m
@@ -613,6 +628,7 @@
 
 /obj/item/ammo_box/speedloader/c45rubber
 	name = "speedloader (.45 rubber)"
+	cases = list("спидлоадер (.45 Резина)", "спидлоадера (.45 Резина)", "спидлоадеру (.45 Резина)", "спидлоадер (.45 Резина)", "спидлоадером (.45 Резина)", "спидлоадере (.45 Резина)")
 	desc = "Спидлоадер под 45-й калибр"
 	caliber = ".45"
 	icon_state = "38"
