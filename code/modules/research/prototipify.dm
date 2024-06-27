@@ -85,8 +85,8 @@
 
 /obj/item/weapon/gun/energy/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
-		power_supply.maxcharge += (mark * 200)
-		fire_delay = max(fire_delay * mark, 4)
+		power_supply.maxcharge += (mark - 1) * 200
+		fire_delay = max(fire_delay / mark, 4)
 	if(!prob(reliability))
 		fire_delay *= 2
 		power_supply.maxcharge /= 2
@@ -108,19 +108,19 @@
 
 /obj/item/weapon/storage/backpack/holding/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
-		max_storage_space += (10 * mark)
+		max_storage_space += 10 * (mark - 1)
 	if(!prob(reliability))
 		max_storage_space -= 30
 
 /obj/item/weapon/storage/bag/trash/bluespace/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
-		max_storage_space += (10 * mark)
+		max_storage_space += 10 * (mark - 1)
 	if(!prob(reliability))
 		max_storage_space /= 2
 
 /obj/item/weapon/storage/bag/ore/holding/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
-		max_storage_space += (25 * mark)
+		max_storage_space += 25 * (mark - 1)
 	if(!prob(reliability))
 		max_storage_space /= 2
 
@@ -139,6 +139,20 @@
 /obj/item/clothing/mask/gas/welding/set_prototype_qualities(rel_val=100, mark=0)
 	if(!prob(reliability))
 		flash_protection = FALSE
+
+/obj/item/clothing/suit/space/rig/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		slowdown /= mark
+		max_mounted_devices += mark - 1
+	if(!prob(reliability))
+		slowdown *= 2
+		max_mounted_devices -= max(max_mounted_devices - 2, 1)
+
+/obj/item/weapon/reagent_containers/glass/beaker/bluespace/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		volume *= mark
+	if(!prob(reliability))
+		volume /= mark
 
 #undef PROTOTYPE_ADJECTIVES
 #undef PROTOTYPE_DESC_REMARKS
