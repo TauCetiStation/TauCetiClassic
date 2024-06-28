@@ -425,5 +425,7 @@
 			continue
 		if(!H.mind || !H.client)
 			continue
+		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
+			continue
 		total_human++
 	return total_human
