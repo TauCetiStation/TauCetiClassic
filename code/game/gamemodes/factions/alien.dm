@@ -3,12 +3,12 @@
 /datum/faction/alien
 	name = F_XENOMORPH
 	ID = F_XENOMORPH
-	logo_state = "xeno-logo"
+	logo_state = "alien-logo"
 	required_pref = ROLE_ALIEN
 
 	initroletype = /datum/role/alien
 
-	min_roles = 1
+	min_roles = 0
 	max_roles = 1
 
 	var/last_check = 0
@@ -30,6 +30,7 @@
 	H.name = "Gilbert Kane"
 	H.real_name = "Gilbert Kane"
 	H.voice_name = "Gilbert Kane"
+	H.h_style = "Combover"
 
 	var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(H)
 	var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva/alien(new_embryo)
@@ -49,3 +50,25 @@
 		return FALSE
 	AppendObjective(/datum/objective/bloodbath)
 	return TRUE
+
+#undef CHECK_PERIOD
+
+/datum/faction/nostromo_crew
+	name = F_NOSTROMO_CREW
+	ID = F_NOSTROMO_CREW
+	logo_state = "nostromo-logo"
+
+	initroletype = /datum/role/nostromo_crewmate
+	members = list(
+		/datum/role/nostromo_crewmate/captain,
+		/datum/role/nostromo_crewmate/engineer,
+		/datum/role/nostromo_crewmate/cargotech,
+		/datum/role/nostromo_crewmate/pilot,
+		/datum/role/nostromo_crewmate/medic
+	)
+
+	min_roles = 1
+	max_roles = 7
+
+
+

@@ -2,7 +2,9 @@
 	name = MAP_MODULE_ALIEN
 
 	default_event_name = "Alien"
-	default_event_message = {"В космосе твой крик никто не услышит."}
+	default_event_message = {"Режим Alien, сделанный по мотивам одноименного фильма 1979 года.
+Раунд начнётся за обеденным столом, но во время трапезы произойдет ужасное.
+	In Space, No One Can Hear You Scream."}
 
 	gamemode = "Alien"
 	config_disable_random_events = TRUE

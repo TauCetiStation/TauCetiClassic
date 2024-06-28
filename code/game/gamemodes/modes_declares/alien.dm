@@ -3,7 +3,7 @@
 	config_name = "alien"
 	probability = 100
 
-	factions_allowed = list(/datum/faction/alien)
+	factions_allowed = list(/datum/faction/alien, /datum/faction/nostromo_crew)
 
 	minimum_player_count = 1
 	minimum_players_bundles = 8

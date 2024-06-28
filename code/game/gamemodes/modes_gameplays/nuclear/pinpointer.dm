@@ -245,5 +245,37 @@
 
 	return attack_self(usr)
 
+/obj/item/weapon/pinpointer/alien
+	mode = SEARCH_FOR_OBJECT
+
+/obj/item/weapon/pinpointer/alien/attack_self(mob/user)
+	if(alien_list[ALIEN_HUNTER].len == 0)
+		to_chat(user, "<span class='warning'>The target is missing</span>")
+		return
+	else
+		target = alien_list[ALIEN_HUNTER][1]
+	..()
+
+/obj/item/weapon/pinpointer/alien/process()
+	if(!active)
+		return
+	var/mob/living/carbon/xenomorph/humanoid/hunter/H = target
+	if(H.invisible)
+		icon_state = "pinonnull"
+		return
+	set_dir(get_dir(src, target))
+	var/turf/self_turf = get_turf(src)
+	var/turf/target_turf = get_turf(target)
+	if(target_turf.z != self_turf.z)
+		icon_state = "pinonalert"
+	else if(target_turf == self_turf)
+		icon_state = "pinondirect"
+	else
+		switch(get_dist(target_turf, self_turf))
+			if(1 to 5)
+				icon_state = "pinonalert"
+			if(6 to INFINITY)
+				icon_state = "pinonfar"
+
 #undef SEARCH_FOR_DISK
 #undef SEARCH_FOR_OBJECT
