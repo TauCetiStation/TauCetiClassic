@@ -12,6 +12,9 @@
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/random_tail_holder = "" // overrides species.tail
+	var/obj/machinery/signature_machinery
+	var/m_icon
+	var/m_icon_s
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
@@ -52,6 +55,15 @@
 		metabolism_factor.Set(species.metabolism_mod)
 		metabolism_factor.AddModifier("NeedHeart", multiple=-1)
 		butcher_results = species.butcher_drops.Copy()
+
+	switch(species.name)
+		if(IPC)
+			signature_machinery = pick_machinery()
+			m_icon = signature_machinery.icon
+			m_icon_s = signature_machinery.icon_state
+			var/image/I = image('icons/obj/machines/telecomms.dmi', src, "relay")
+			I.override = 1
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_machinery", I)
 
 	dna.species = species.name
 	dna.b_type = random_blood_type()
@@ -2525,3 +2537,18 @@
 			continue
 		F.attackby(B, src)
 		break
+
+/mob/living/carbon/human/proc/pick_machinery()
+	return pick(
+		/obj/machinery/pdapainter,
+		/obj/machinery/computer/security/wooden_tv/miami,
+		/obj/machinery/message_server,
+		/obj/machinery/blackbox_recorder,
+		/obj/machinery/vending/cigarette,
+		/obj/machinery/kitchen_machine/microwave,
+		/obj/machinery/kitchen_machine/oven,
+		/obj/machinery/media/jukebox,
+		/obj/machinery/washing_machine,
+		/obj/machinery/telecomms/relay,
+		/obj/machinery/portable_atmospherics/powered/pump,
+		/obj/machinery/chem_master)
