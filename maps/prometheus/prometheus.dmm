@@ -356,7 +356,9 @@
 	codes_txt = "patrol;next_patrol=Security";
 	location = "Garden"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "aaz" = (
 /obj/structure/cable{
@@ -3820,7 +3822,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "asn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4403,6 +4407,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/ignition_switch{
 	id = "mixingsparker";
+	layer = 3.3;
 	pixel_y = -28
 	},
 /obj/structure/closet/firecloset,
@@ -4909,6 +4914,7 @@
 /obj/item/weapon/flora/random,
 /obj/machinery/door_control{
 	id = "xenobio7";
+	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_y = 28;
 	req_access = list(55)
@@ -6613,7 +6619,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "aZY" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -6661,7 +6669,9 @@
 	},
 /area/station/medical/storage)
 "bbp" = (
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "bbz" = (
 /obj/machinery/door/airlock/external{
@@ -7628,7 +7638,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "boA" = (
 /obj/item/weapon/flora/random,
@@ -12879,7 +12891,9 @@
 /obj/structure/computerframe{
 	dir = 1
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "cIc" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
@@ -14713,7 +14727,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "dfI" = (
 /obj/machinery/door/firedoor,
@@ -17216,7 +17232,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
 /obj/item/weapon/table_parts,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "dJs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -19070,7 +19088,9 @@
 /obj/effect/landmark{
 	name = "blobstart"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "egw" = (
 /obj/item/weapon/scrap_lump,
@@ -19324,7 +19344,9 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "eiI" = (
 /obj/machinery/firealarm{
@@ -21933,7 +21955,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "eNI" = (
 /obj/machinery/portable_atmospherics/canister/phoron,
@@ -22040,7 +22064,9 @@
 /area/station/security/warden)
 "ePi" = (
 /obj/random/scrap/safe_even,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "ePw" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -22274,6 +22300,7 @@
 "eSa" = (
 /obj/machinery/door_control{
 	id = "xenobio6";
+	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_y = 28;
 	req_access = list(55)
@@ -24030,7 +24057,9 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/random/tools/tool,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "fmZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -25453,6 +25482,7 @@
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/door_control{
 	id = "xenobio1";
+	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_y = 28;
 	req_access = list(55)
@@ -25508,6 +25538,7 @@
 "fDl" = (
 /obj/machinery/door_control{
 	id = "xenobio2";
+	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_x = 28;
 	req_access = list(55)
@@ -25588,7 +25619,9 @@
 /obj/machinery/light_construct/small{
 	dir = 4
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "fEb" = (
 /obj/structure/reagent_dispensers/water_cooler,
@@ -26229,7 +26262,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "fLZ" = (
 /obj/structure/table,
@@ -27335,7 +27370,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "fYg" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -29200,7 +29237,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "guJ" = (
 /obj/machinery/recharge_station,
@@ -30045,7 +30084,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "gFj" = (
 /obj/machinery/atmospherics/components/binary/valve/digital,
@@ -32913,6 +32954,7 @@
 "hkP" = (
 /obj/machinery/door_control{
 	id = "xenobio5";
+	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_x = -28;
 	req_access = list(55)
@@ -34075,6 +34117,7 @@
 /obj/structure/closet/l3closet/scientist,
 /obj/machinery/door_control{
 	id = "xenobio4";
+	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_y = -28;
 	req_access = list(55)
@@ -38764,7 +38807,9 @@
 "iKF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/ammo_casing,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "iKN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -40266,6 +40311,7 @@
 "jeG" = (
 /obj/machinery/door_control{
 	id = "xenobio3";
+	layer = 3.3;
 	name = "Containment Blast Doors";
 	pixel_y = -28;
 	req_access = list(55)
@@ -44495,7 +44541,9 @@
 /area/station/maintenance/dormitory)
 "klJ" = (
 /obj/item/weapon/flora/random,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "klZ" = (
 /obj/structure/table/reinforced,
@@ -44506,7 +44554,9 @@
 	},
 /area/station/civilian/bar)
 "kmh" = (
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "kmF" = (
 /obj/effect/decal/turf_decal/set_burned,
@@ -45173,7 +45223,9 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "kvK" = (
 /obj/machinery/kitchen_machine/grill,
@@ -51973,7 +52025,9 @@
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "mcK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -55058,7 +55112,9 @@
 "mMh" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/five,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "mMo" = (
 /turf/simulated/wall/r_wall,
@@ -59481,7 +59537,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "nUm" = (
 /obj/structure/cable{
@@ -63554,7 +63612,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "oVc" = (
 /obj/structure/window/thin/reinforced,
@@ -66668,7 +66728,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "pLv" = (
 /obj/structure/window/fulltile/reinforced{
@@ -68860,7 +68922,9 @@
 /area/station/security/prison)
 "qna" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "qnd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -70934,7 +70998,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/ammo_casing,
 /obj/item/clothing/suit/storage/hazardvest,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "qPA" = (
 /obj/structure/table/glass,
@@ -78610,7 +78676,9 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "sJt" = (
 /obj/random/scrap/safe_even,
@@ -82111,7 +82179,9 @@
 	layer = 2.8;
 	name = "doorway barricade"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "tGa" = (
 /obj/structure/table,
@@ -85724,7 +85794,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "uAH" = (
 /obj/item/weapon/clipboard{
@@ -86293,7 +86365,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "uIq" = (
 /obj/machinery/airlock_sensor{
@@ -91995,7 +92069,9 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "wbU" = (
 /obj/machinery/door/airlock/command{
@@ -92073,7 +92149,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "wcN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -93402,7 +93480,9 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "wtx" = (
 /obj/structure/table/woodentable,
@@ -93730,7 +93810,9 @@
 	layer = 2.7
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "wxr" = (
 /obj/machinery/door/firedoor{
@@ -98331,7 +98413,9 @@
 /area/station/civilian/bar)
 "xGU" = (
 /obj/machinery/constructable_frame/machine_frame,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/brig)
 "xGY" = (
 /obj/structure/table/glass,
@@ -100013,7 +100097,9 @@
 /obj/structure/flora/ausbushes/ywflowers{
 	layer = 2.7
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/civilian/garden)
 "ycm" = (
 /obj/effect/decal/cleanable/dirt,

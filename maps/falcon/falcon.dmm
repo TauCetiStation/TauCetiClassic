@@ -3852,7 +3852,9 @@
 /area/station/maintenance/science)
 "agY" = (
 /obj/random/scrap/safe_even,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/science)
 "agZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6275,7 +6277,9 @@
 /obj/structure/sign/painting{
 	pixel_x = 30
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "alJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -8264,7 +8268,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/machinery/light/smart{
 	dir = 8
@@ -8772,7 +8777,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/item/weapon/book/manual/wiki/jukebox,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -8846,7 +8852,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/machinery/camera{
 	c_tag = "RnD Lab";
@@ -9033,7 +9040,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot_right"
@@ -9126,7 +9134,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/item/clothing/shoes/magboots,
 /obj/item/device/suit_cooling_unit{
@@ -9159,7 +9168,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/machinery/alarm{
 	dir = 1;
@@ -9183,7 +9193,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -10512,7 +10523,9 @@
 	name = "largecell apc right";
 	pixel_x = 28
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "bcR" = (
 /obj/machinery/space_heater,
@@ -11518,7 +11531,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -11578,7 +11592,9 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/stool,
 /obj/effect/landmark/start/assistant,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "cck" = (
 /obj/structure/table,
@@ -12012,7 +12028,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cxV" = (
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "cyF" = (
 /obj/machinery/newscaster{
@@ -12620,7 +12638,8 @@
 	dir = 4;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -12803,7 +12822,8 @@
 	dir = 4;
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -13398,7 +13418,9 @@
 "dNp" = (
 /obj/structure/stool,
 /obj/effect/landmark/start/assistant,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "dNR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -14107,7 +14129,9 @@
 	pixel_y = 32
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "eAC" = (
 /turf/simulated/floor/garden{
@@ -14930,7 +14954,9 @@
 /obj/item/weapon/rack_parts,
 /obj/item/ammo_casing,
 /obj/effect/decal/cleanable/cellular/meat,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/science)
 "ftP" = (
 /obj/structure/object_wall/pod{
@@ -15032,7 +15058,9 @@
 /area/station/bridge)
 "fCc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "fCH" = (
 /obj/machinery/power/solar{
@@ -15051,7 +15079,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -16671,7 +16700,9 @@
 "hbt" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/game_kit/random,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "hbS" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -16865,7 +16896,9 @@
 	location = "Arrival2"
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "hnM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -16924,7 +16957,9 @@
 /obj/structure/computerframe{
 	dir = 1
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/science)
 "huf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -19150,7 +19185,9 @@
 /area/station/medical/storage)
 "jDs" = (
 /obj/effect/decal/cleanable/cellular/meat,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/science)
 "jDy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -19356,7 +19393,9 @@
 /area/station/rnd/telesci)
 "jNU" = (
 /obj/random/foods/food_trash,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/science)
 "jOg" = (
 /obj/machinery/air_sensor{
@@ -20058,7 +20097,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/structure/closet/secure_closet/scientist,
 /obj/machinery/light/smart{
@@ -20844,7 +20884,9 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "lem" = (
 /obj/structure/cable{
@@ -21142,7 +21184,9 @@
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/stool,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/science)
 "luB" = (
 /obj/structure/cable{
@@ -21454,7 +21498,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "lKy" = (
 /obj/structure/closet/secure_closet/personal,
@@ -22659,7 +22705,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "mVa" = (
 /obj/structure/disposalpipe/segment{
@@ -23166,7 +23214,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -23688,7 +23737,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -26555,7 +26605,9 @@
 /area/station/civilian/kitchen)
 "qqb" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "qri" = (
 /obj/structure/table,
@@ -27093,7 +27145,9 @@
 /area/station/maintenance/dormitory)
 "qHC" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/science)
 "qHG" = (
 /obj/machinery/telecomms/server/presets/supply,
@@ -27599,7 +27653,9 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/science)
 "rkB" = (
 /obj/machinery/computer/card{
@@ -28735,7 +28791,8 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = -22
+	pixel_x = -22;
+	pixel_y = 0
 	},
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -30722,7 +30779,9 @@
 /obj/item/device/camera{
 	pixel_y = -12
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "unh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -32030,7 +32089,9 @@
 /area/station/civilian/hydroponics)
 "vEl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "vES" = (
 /obj/structure/scrap_cube,
@@ -32284,7 +32345,9 @@
 	},
 /area/station/security/prison)
 "vTC" = (
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/science)
 "vUv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -33562,7 +33625,9 @@
 "xbG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/maintenance/science)
 "xbK" = (
 /obj/machinery/door/airlock/external{
@@ -34847,7 +34912,9 @@
 	location = "Arrival1"
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "ygZ" = (
 /obj/structure/stool/bed/chair/metal/yellow{
@@ -34941,7 +35008,9 @@
 /obj/machinery/hologram/holopad{
 	pixel_y = -16
 	},
-/turf/simulated/floor/garden,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid"
+	},
 /area/station/hallway/secondary/arrival)
 "ykW" = (
 /turf/simulated/floor,
