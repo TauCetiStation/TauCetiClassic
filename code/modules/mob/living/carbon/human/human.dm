@@ -175,11 +175,16 @@
 	switch(species.name)
 		if(IPC)
 			signature_obj = pick_machinery()
+			var/image/I = image(signature_obj.icon, src, signature_obj.icon_state)
+			I.override = 1
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_machinery", I)
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "IPC_machinery", I)
 		if(DIONA)
 			signature_obj = pick(typesof(/obj/item/weapon/flora/pottedplant))
-	var/image/I = image(signature_obj.icon, src, signature_obj.icon_state)
-	I.override = 1
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_machinery", I)
+			var/image/I = image(signature_obj.icon, src, signature_obj.icon_state)
+			I.override = 1
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "DIONA_plant", I)
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "DIONA_plant", I)
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
