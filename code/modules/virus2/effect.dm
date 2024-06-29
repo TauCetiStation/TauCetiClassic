@@ -129,6 +129,8 @@
 /datum/disease2/effect/heal/activate_mob(mob/living/carbon/H, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(holder.stage != 2)
 		return
+	if(!ishuman(H))
+		return
 	var/effectiveness = can_heal(H, disease)
 	if(effectiveness)
 		heal(H, disease, effectiveness)
