@@ -189,6 +189,9 @@ var/global/list/active_alternate_appearances = list()
 	return FALSE
 
 // Fake-image can see only xenomorph
+/datum/atom_hud/alternate_appearance/basic/xenomorphs
+	add_ghost_version = FALSE
+
 /datum/atom_hud/alternate_appearance/basic/xenomorphs/New()
 	..()
 	for(var/list_key in global.alien_list)

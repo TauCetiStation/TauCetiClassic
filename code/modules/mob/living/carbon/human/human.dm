@@ -12,9 +12,7 @@
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
 	var/random_tail_holder = "" // overrides species.tail
-	var/obj/machinery/signature_machinery
-	var/m_icon
-	var/m_icon_s
+	var/obj/signature_obj
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
@@ -60,12 +58,9 @@
 
 	switch(species.name)
 		if(IPC)
-			signature_machinery = pick_machinery()
-			m_icon = signature_machinery.icon
-			m_icon_s = signature_machinery.icon_state
-			var/image/I = image('icons/obj/machines/telecomms.dmi', src, "relay")
-			I.override = 1
-			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_machinery", I)
+			signature_obj = pick_machinery()
+		if(DIONA)
+			signature_obj = pick(typesof(/obj/item/weapon/flora/pottedplant))
 
 	dna.species = species.name
 	dna.b_type = random_blood_type()
@@ -181,6 +176,9 @@
 	sec_hud_set_ID()
 	sec_hud_set_implants()
 	sec_hud_set_security_status()
+	var/image/I = image(signature_obj.icon, src, signature_obj.icon_state)
+	I.override = 1
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_machinery", I)
 	//...and display them.
 	add_to_all_data_huds()
 
