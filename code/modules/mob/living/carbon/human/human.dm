@@ -56,12 +56,6 @@
 		metabolism_factor.AddModifier("NeedHeart", multiple=-1)
 		butcher_results = species.butcher_drops.Copy()
 
-	switch(species.name)
-		if(IPC)
-			signature_obj = pick_machinery()
-		if(DIONA)
-			signature_obj = pick(typesof(/obj/item/weapon/flora/pottedplant))
-
 	dna.species = species.name
 	dna.b_type = random_blood_type()
 
@@ -176,11 +170,16 @@
 	sec_hud_set_ID()
 	sec_hud_set_implants()
 	sec_hud_set_security_status()
+	//...and display them.
+	add_to_all_data_huds()
+	switch(species.name)
+		if(IPC)
+			signature_obj = pick_machinery()
+		if(DIONA)
+			signature_obj = pick(typesof(/obj/item/weapon/flora/pottedplant))
 	var/image/I = image(signature_obj.icon, src, signature_obj.icon_state)
 	I.override = 1
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_machinery", I)
-	//...and display them.
-	add_to_all_data_huds()
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
