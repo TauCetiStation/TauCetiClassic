@@ -71,7 +71,7 @@
 /area/shuttle/arrival/velocity/Entered(mob/M)
 	..()
 	if(istype(M) && M.client)
-		M.client.guard.time_velocity_shuttle = world.timeofday
+		M.client.prefs.guard.time_velocity_shuttle = world.timeofday
 
 /area/shuttle/arrival/transit
 	name = "Space"

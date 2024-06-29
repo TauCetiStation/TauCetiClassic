@@ -66518,7 +66518,7 @@
 	dir = 10
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit,
+/obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
