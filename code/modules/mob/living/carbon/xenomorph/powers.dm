@@ -420,7 +420,7 @@
 							"Трутень" = /mob/living/carbon/xenomorph/humanoid/drone)
 
 /obj/effect/proc_holder/spell/no_target/larva_evolve/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
-	if(!user in global.alien_list[ALIEN_LARVA])
+	if(!(user in global.alien_list[ALIEN_LARVA]))
 		return FALSE
 
 	if(!isturf(user.loc))
