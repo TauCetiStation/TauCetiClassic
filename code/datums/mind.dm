@@ -773,13 +773,21 @@
 /mob/living/carbon/xenomorph/humanoid/maid/mind_initialize()
 	..()
 	mind.special_role = "Drone"
+
 	//XENO SOLO
-/mob/living/carbon/xenomorph/humanoid/hunter/alien/mind_initialize()
-	if(!isalien(src))
-		var/datum/faction/alien/A = create_uniq_faction(/datum/faction/alien)
-		add_faction_member(A, src, TRUE)
-	..()
-	mind.special_role = "Solo Alien"
+/mob/living/carbon/xenomorph/humanoid/hunter/solo/mind_initialize()
+	if(mind)
+		mind.key = key
+	else
+		create_mind()
+	if(!mind.name)	mind.name = real_name
+	mind.set_current(src)
+
+	mind.assigned_role = "Alien"
+
+	var/datum/faction/alien/A = create_uniq_faction(/datum/faction/alien)
+	add_faction_member(A, src, TRUE)
+	mind.special_role = "Solo Hunter"
 
 //AI
 /mob/living/silicon/ai/mind_initialize()

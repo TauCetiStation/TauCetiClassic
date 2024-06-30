@@ -225,7 +225,7 @@
 
 #define iszombie(H) (H.get_species() in global.all_zombie_species_names)
 
-#define isalien(H) isrole(XENOMORPH, H)
+#define isalien(H) (isrole(XENOMORPH, H) || isrole(SOLO_XENOMORPH, H))
 
 #define isgangster(H) isrole(GANGSTER, H)
 

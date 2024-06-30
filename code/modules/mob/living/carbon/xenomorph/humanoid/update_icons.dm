@@ -267,7 +267,7 @@
 	if(on_fire)
 		underlays += image(icon = 'icons/mob/OnFire.dmi', icon_state = fire_underlay_state)
 
-/mob/living/carbon/xenomorph/humanoid/hunter/alien/update_fire()
+/mob/living/carbon/xenomorph/humanoid/hunter/solo/update_fire()
 	remove_standing_overlay(X_FIRE_UPPER_LAYER)
 	update_fire_underlay()
 	if(on_fire)

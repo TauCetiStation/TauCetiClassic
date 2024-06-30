@@ -245,18 +245,18 @@
 
 	return attack_self(usr)
 
-/obj/item/weapon/pinpointer/alien
+/obj/item/weapon/pinpointer/solo_alien
 	mode = SEARCH_FOR_OBJECT
 
-/obj/item/weapon/pinpointer/alien/attack_self(mob/user)
-	if(alien_list[ALIEN_HUNTER].len == 0)
+/obj/item/weapon/pinpointer/solo_alien/attack_self(mob/user)
+	if(alien_list[ALIEN_SOLO_HUNTER].len == 0)
 		to_chat(user, "<span class='warning'>The target is missing</span>")
 		return
 	else
-		target = alien_list[ALIEN_HUNTER][1]
+		target = alien_list[ALIEN_SOLO_HUNTER][1]
 	..()
 
-/obj/item/weapon/pinpointer/alien/process()
+/obj/item/weapon/pinpointer/solo_alien/process()
 	if(!active)
 		return
 	var/mob/living/carbon/xenomorph/humanoid/hunter/H = target

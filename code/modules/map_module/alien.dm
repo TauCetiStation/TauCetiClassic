@@ -3,7 +3,6 @@
 
 	default_event_name = "Alien"
 	default_event_message = {"Режим Alien, сделанный по мотивам одноименного фильма 1979 года.
-Раунд начнётся за обеденным столом, но во время трапезы произойдет ужасное.
 	In Space, No One Can Hear You Scream."}
 
 	gamemode = "Alien"

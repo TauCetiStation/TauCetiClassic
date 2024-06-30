@@ -1,6 +1,6 @@
 /datum/role/alien
-	name = XENOMORPH
-	id = XENOMORPH
+	name = SOLO_XENOMORPH
+	id = SOLO_XENOMORPH
 	required_pref = ROLE_ALIEN
 	disallow_job = TRUE
 
@@ -8,7 +8,7 @@
 	antag_hud_name = "hudalien"
 	logo_state = "alien-logo"
 
-/datum/faction/alien/forgeObjectives()
+/datum/role/alien/forgeObjectives()
 	if(!..())
 		return FALSE
 	AppendObjective(/datum/objective/bloodbath)
