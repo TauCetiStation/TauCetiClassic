@@ -2273,21 +2273,87 @@
 
 	// player info stuff
 
-	else if(href_list["add_player_info"])
-		var/key = ckey(href_list["add_player_info"])
-		var/add = input("Add Player Info") as null|text//sanitise below in notes_add
-		if(!add) return
+	else if(href_list["notes_add"])
+		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+			return
 
-		notes_add(key, add, usr.client)
+		var/key = ckey(href_list["notes_add"])
+		var/message = input("Add new notice message to [key]") as null|text//sanitise below in notes_add
+		if(!message)
+			return
+
+		notes_add(key, message, usr.client.ckey)
 		show_player_notes(key)
 
-	/* unimplemented
-	if(href_list["remove_player_info"])
-		var/key = ckey(href_list["remove_player_info"])
-		var/index = text2num(href_list["remove_index"])
+		message_admins("[key_name_admin(usr)] has edited [key]'s notes.")
+		log_admin("[key_name(usr)] has edited [key]'s notes.")
 
-		notes_del(key, index, usr.client)
-		show_player_notes(key)*/
+	if(href_list["notes_delete"])
+		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+			return
+
+		var/key = ckey(href_list["notes_delete"])
+		var/id = text2num(href_list["index"])
+
+		var/DBQuery/query = dbcon.NewQuery({"SELECT type, adminckey, text
+			FROM erro_messages 
+			WHERE id='[id]' AND deleted=0"})
+		query.Execute()
+
+		if(!query.NextRow())
+			to_chat(usr, "<span class='notice'>Message does not exist or already deleted.</span>")
+			return
+
+		var/notetype = query.item[1]
+		var/admin = query.item[2]
+		var/text = query.item[3]
+
+		if(!(admin == usr.client.ckey || check_rights(R_PERMISSIONS)))
+			tgui_alert(usr, "You don't have permissions to delete other people messages!", "No permissions")
+			return
+
+		if(tgui_alert(usr, "Are you really want to delete next message: [text]; by [admin]?", "Confirm", list("Yes", "No")) != "Yes")
+			return
+
+		message_admins("[key_name_admin(usr)] has deleted [key] note [notetype] by [admin] with text: [text].")
+		log_admin("[key_name(usr)] has deleted [key] note [notetype] by [admin] with text: [text].")
+
+		notes_delete(id, usr.client.ckey)
+		show_player_notes(key)
+
+	if(href_list["notes_edit"])
+		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+			return
+
+		var/key = ckey(href_list["notes_edit"])
+		var/id = text2num(href_list["index"])
+
+		var/DBQuery/query = dbcon.NewQuery({"SELECT type, adminckey, text
+			FROM erro_messages 
+			WHERE id='[id]' AND deleted=0"})
+		query.Execute()
+
+		if(!query.NextRow())
+			to_chat(usr, "<span class='notice'>Message does not exist or already deleted.</span>")
+			return
+
+		var/notetype = query.item[1]
+		var/admin = query.item[2]
+		var/text = query.item[3]
+
+		if(!(admin == usr.client.ckey || check_rights(R_PERMISSIONS)))
+			tgui_alert(usr, "You don't have permissions to edit other people messages!", "No permissions")
+			return
+
+		var/new_message = input("Edit message", html_decode(text)) as null|text//sanitise below in notes_add
+		if(!new_message)
+			return
+
+		message_admins("[key_name_admin(usr)] has edited [key] note [notetype] by [admin].")
+		log_admin("[key_name(usr)] has edited [key] note [notetype] by [admin].")
+
+		notes_edit(id, new_message)
+		show_player_notes(key)
 
 	else if(href_list["notes"])
 		var/ckey = ckey(href_list["ckey"])

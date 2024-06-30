@@ -199,7 +199,7 @@
 				M.client.prefs.permamuted |= mute_type
 				M.client.prefs.save_preferences()
 				M.client.prefs.muted |= mute_type
-				notes_add(M.ckey, "Permamute from [mute_string]: [permmutreason]", usr.client)
+				notes_add(M.ckey, "Permamute from [mute_string]: [permmutreason]", author = usr.client.ckey)
 				permmutreason = sanitize(permmutreason)
 				to_chat(M, "<span class='alert big bold'>You have been permamuted from [mute_string] by [usr.key].<br>Reason: [permmutreason]</span>")
 			else
@@ -209,7 +209,7 @@
 		else if (tgui_alert(usr, "Add a notice for round mute?", "Mute Notice?", list("Yes","No")) == "Yes")
 			var/mutereason = input("Mute Reason") as text|null
 			if(mutereason)
-				notes_add(M.ckey, "Muted from [mute_string]: [mutereason]", usr.client)
+				notes_add(M.ckey, "Muted from [mute_string]: [mutereason]", author = usr.client.ckey)
 				mutereason = sanitize(mutereason)
 				to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].<br>Reason: [mutereason]</span>")
 			else
@@ -1076,7 +1076,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(target.player_ingame_age < value)
-		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src, secret = 0)
+		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", author = ckey, secret = 0)
 
 		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [value]")
 		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [value]")
