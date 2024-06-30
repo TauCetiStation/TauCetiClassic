@@ -2,7 +2,7 @@
 	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 		return
 
-	if(!establish_db_connection("erro_messages"))
+	if(!establish_db_connection("erro_messages", "erro_player"))
 		return
 
 	var/sql_ckey = ckey(ckey)
@@ -13,15 +13,31 @@
 	var/html = ""
 
 	var/player_ingame_age
-
-	html += "<a style='float: right;' href='?_src_=holder;notes_add=[sql_ckey]'>Add new message</a>"
+	var/player_age
+	var/offline = TRUE
 
 	if(global.directory[ckey])
 		var/client/C = global.directory[ckey]
-		html +="<span style='color: #000; font-weight: bold;'>Player age: [C.player_age] / In-game age: [C.player_ingame_age]</span>"
 		player_ingame_age = C.player_ingame_age
+		player_age = C.player_age
+		offline = FALSE
+	else
+		var/DBQuery/player_query = dbcon.NewQuery("SELECT datediff(Now(), firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
+		player_query.Execute()
 
-	html += "<hr>"
+		while(player_query.NextRow())
+			player_age = text2num(player_query.item[1])
+			player_ingame_age = text2num(player_query.item[2])
+			break
+
+	html += {"
+		<div style='color: #000; font-weight: bold;'>
+			<a style='float: right;' href='?_src_=holder;notes_add=[sql_ckey]'>Add new message</a>
+			[offline ? "<span style='color: red;'>Offline</span>" : "<span style='color: green;'>Online</span>"] /
+			Player age: [player_age] / In-game age: [player_ingame_age]
+			<br/><hr>
+		</div>
+	"}
 
 	// todo: use mysql DATE_FORMAT(timestamp, '%d.%m.%Y %H:%i:%s') after bans table rework (consistent column names, also need to allow job as null)
 	var/DBQuery/query = dbcon.NewQuery({"
@@ -68,7 +84,7 @@
 		if(player_ingame_age && ingameage)
 			// if diff 5000 minutes or more - green
 			// if diff close to 0 - red
-			age_temperature = floor(((player_ingame_age - ingameage) * 100) / 5000)
+			age_temperature = clamp(floor(((player_ingame_age - ingameage) * 100) / 5000), 0, 100)
 		else
 			age_temperature = 100
 
@@ -83,8 +99,12 @@
 					<a title='Edit' href='?_src_=holder;notes_edit=[sql_ckey];index=[message_id]'>E</a> <a title='Remove' href='?_src_=holder;notes_delete=[sql_ckey];index=[message_id]'>R</a>
 				</div>
 			"}
-		else
-			buttons = null
+		else // bans
+			buttons = {"
+				<div style='float: right'>
+					<a title='View bans' href='?_src_=holder;dbsearchckey=[sql_ckey];index=[message_id]'>V</a>
+				</div>
+			"}
 
 		// todo: move styles to own css
 		html += {"
