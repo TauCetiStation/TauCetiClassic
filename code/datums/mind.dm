@@ -775,11 +775,11 @@
 	mind.special_role = "Drone"
 	//XENO SOLO
 /mob/living/carbon/xenomorph/humanoid/hunter/alien/mind_initialize()
-	mind.special_role = "Alien"
 	if(!isalien(src))
 		var/datum/faction/alien/A = create_uniq_faction(/datum/faction/alien)
 		add_faction_member(A, src, TRUE)
 	..()
+	mind.special_role = "Solo Alien"
 
 //AI
 /mob/living/silicon/ai/mind_initialize()

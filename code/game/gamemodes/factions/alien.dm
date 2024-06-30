@@ -43,14 +43,6 @@
 
 	return ..()
 
-/datum/faction/alien/proc/createKane(H)
-
-/datum/faction/alien/forgeObjectives()
-	if(!..())
-		return FALSE
-	AppendObjective(/datum/objective/bloodbath)
-	return TRUE
-
 #undef CHECK_PERIOD
 
 /datum/faction/nostromo_crew
@@ -59,16 +51,5 @@
 	logo_state = "nostromo-logo"
 
 	initroletype = /datum/role/nostromo_crewmate
-	members = list(
-		/datum/role/nostromo_crewmate/captain,
-		/datum/role/nostromo_crewmate/engineer,
-		/datum/role/nostromo_crewmate/cargotech,
-		/datum/role/nostromo_crewmate/pilot,
-		/datum/role/nostromo_crewmate/medic
-	)
-
-	min_roles = 1
+	min_roles = 0
 	max_roles = 7
-
-
-

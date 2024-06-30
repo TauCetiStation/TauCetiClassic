@@ -1,7 +1,6 @@
 /datum/game_mode/alien
 	name = "Alien"
 	config_name = "alien"
-	probability = 100
 
 	factions_allowed = list(/datum/faction/alien, /datum/faction/nostromo_crew)
 

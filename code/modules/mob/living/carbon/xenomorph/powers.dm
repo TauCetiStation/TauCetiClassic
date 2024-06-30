@@ -484,8 +484,7 @@
 	if(!do_after(user, 10 SECONDS, target = user))
 		return
 
-	var/mob/living/carbon/xenomorph/humanoid/alien = /mob/living/carbon/xenomorph/humanoid/hunter/alien
-	var/mob/new_xeno = new alien(user.loc)
+	var/mob/new_xeno = new /mob/living/carbon/xenomorph/humanoid/hunter/alien(user.loc)
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
 	qdel(user)
