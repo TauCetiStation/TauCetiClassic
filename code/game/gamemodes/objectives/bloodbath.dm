@@ -2,7 +2,7 @@
 	explanation_text = "Убей их всех."
 
 /datum/objective/reproduct/check_completion()
-	var/datum/faction/alien/f = owner.antag_roles[SOLO_XENOMORPH].faction
+	var/datum/faction/alien/f = owner.antag_roles[LONE_XENOMORPH].faction
 	if(istype(f))
 		if(f.check_crew() == 0)
 			return OBJECTIVE_WIN

@@ -63,6 +63,7 @@
 	ID = F_NOSTROMO_CREW
 	logo_state = "nostromo-logo"
 
+	accept_latejoiners = TRUE
 	initroletype = /datum/role/nostromo_crewmate
 	min_roles = 0
 	max_roles = 7

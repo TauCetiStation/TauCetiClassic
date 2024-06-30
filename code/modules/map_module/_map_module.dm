@@ -22,6 +22,8 @@
 	var/config_disable_random_events = FALSE
 	// enables alternative spawn menu for lobby through spawners
 	var/config_use_spawners_lobby = FALSE
+	// enables spawn latejoin in special event cryopods
+	var/config_event_cryopod_latejoin = FALSE
 
 	// disable default mice/drone spawners
 	var/disable_default_spawners = FALSE
@@ -40,6 +42,10 @@
 	if(config_use_spawners_lobby)
 		config.alt_lobby_menu = TRUE
 		log_debug("Alternative event menu enabled.")
+
+	if(config_event_cryopod_latejoin)
+		config.event_cryopod_latejoin = TRUE
+		log_debug("Event cryopods latejoin enabled.")
 
 	if(disable_default_spawners) // need to rewrite configs, this is stupid
 		config.disable_player_mice = TRUE

@@ -7,6 +7,7 @@
 
 	gamemode = "Alien"
 	config_disable_random_events = TRUE
+	config_event_cryopod_latejoin = TRUE
 
 	map_lobby_image = 'html/media/lobby_alien.png'
 	map_lobby_music = 'sound/lobby/alien_main.ogg'

@@ -66,7 +66,7 @@
 #define WIZARD "Wizard"
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
-#define SOLO_XENOMORPH "Solo_Xenomorph"
+#define LONE_XENOMORPH "Lone Xenomorph"
 #define NOSTROMO_CREWMATE "Nostromo Crewmate"
 #define REPLICATOR "Replicator"
 #define PIRATE "Pirate"
