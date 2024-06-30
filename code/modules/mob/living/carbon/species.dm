@@ -350,6 +350,31 @@
 
 	is_common = TRUE
 
+/datum/species/pluvian
+	name = PLUVIAN
+	icobase = 'icons/mob/human_races/r_pluvian.dmi'
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
+	language = LANGUAGE_SOLCOMMON
+	primitive = /mob/living/carbon/monkey
+	unarmed_type = /datum/unarmed_attack/punch
+	dietflags = DIET_OMNI
+
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_HAIR = TRUE
+	,FACEHUGGABLE = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
+	)
+
+	min_age = 25
+	max_age = 85
+
+	is_common = TRUE
+
 /datum/species/unathi
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
