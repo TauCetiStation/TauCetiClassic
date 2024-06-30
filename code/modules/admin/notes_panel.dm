@@ -46,11 +46,11 @@
 	var/age_temperature
 	var/border_color
 	var/static/list/type_hex_colors = list(
-		"note" = "#00FFFF",
-		lowertext(BANTYPE_PERMA) = "#B00000",
+		"note" = "#00ffff",
+		lowertext(BANTYPE_PERMA) = "#b00000",
 		lowertext(BANTYPE_TEMP) = "#ff0000",
-		lowertext(BANTYPE_JOB_PERMA) = "#FF8C00",
-		lowertext(BANTYPE_JOB_TEMP) = "#FFA500",
+		lowertext(BANTYPE_JOB_PERMA) = "#ff8c00",
+		lowertext(BANTYPE_JOB_TEMP) = "#ffa500",
 	)
 
 	var/buttons
