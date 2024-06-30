@@ -4,13 +4,14 @@
 	desc = "Используйте это, чтоб удрать от злых Красных рубашек."
 	gender = MALE
 	var/activation_emote = "blink"
-	uses = 1.0
+	uses = 1
 
 	implant_type = "r"
 
 /obj/item/weapon/implant/freedom/atom_init()
 	activation_emote = pick("blink", "eyebrow", "twitch", "frown", "nod", "giggle", "grin", "groan", "shrug", "smile", "sniff", "whimper", "wink")
-	uses = rand(3, 5)
+	if(prob(reliability))
+		uses = rand(3, 5)
 	. = ..()
 
 

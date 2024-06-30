@@ -5,6 +5,8 @@
 /obj/item/weapon/implant/mind_protect/implanted(mob/M)
 	if(!ishuman(M) || !M.mind)
 		return TRUE
+	if(!prob(reliability))
+		meltdown()
 	var/mob/living/carbon/human/H = M
 	if(isrevhead(H) || isshadowling(H) || isshadowthrall(H)|| iswizard(H))
 		M.visible_message("<span class='warning'>[M] похоже, сопротивляется имплантату!</span>", "<span class='warning'>Вы чувствуете, что что-то мешает вашим мыслям, но вы сопротивляетесь этому!</span>")
