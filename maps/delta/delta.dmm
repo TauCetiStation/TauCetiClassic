@@ -70845,7 +70845,7 @@
 /obj/structure/window/thin/reinforced,
 /obj/item/weapon/aiModule/antimov,
 /obj/item/weapon/aiModule/nanotrasen,
-/obj/item/weapon/aiModule/oneHuman{
+/obj/item/weapon/aiModule/onentemploye{
 	pixel_y = 10
 	},
 /obj/machinery/door/window{
