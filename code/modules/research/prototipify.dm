@@ -80,7 +80,7 @@
 	if(mark)
 		max_ammo *= mark
 		var/need_bullets = max_ammo - stored_ammo.len
-		for(var/i in 0 to need_bullets)
+		for(var/i in 1 to need_bullets)
 			stored_ammo += new ammo_type(src)
 
 /obj/item/weapon/gun/energy/set_prototype_qualities(rel_val=100, mark=0)

@@ -187,7 +187,7 @@
 	name = "extended magazine (9mm)"
 	icon_state = "glock_mag_extended"
 	max_ammo = 20
-	overlay = "glock-mag-ex"
+	overlay = "glock-mag-extended"
 
 /obj/item/ammo_box/magazine/glock/extended/rubber
 	name = "extended magazine (9mm rubber)"
@@ -208,9 +208,9 @@
 		return
 
 	var/ammo_perc = ammo_count() / max_ammo
-	ammo_perc = CEIL(ammo_perc * 4) * 25
+	ammo_perc = CEIL(CEIL(ammo_perc * 6) * (100/6))
 
-	var/image/ammo_icon = image('icons/obj/ammo/magazines.dmi', "smg_mag-[round(ammo_perc, 25)]")
+	var/image/ammo_icon = image('icons/obj/ammo/magazines.dmi', "smg_mag-[ammo_perc]")
 	add_overlay(ammo_icon)
 
 /obj/item/ammo_box/magazine/c20r
