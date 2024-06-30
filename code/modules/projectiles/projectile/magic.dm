@@ -76,7 +76,7 @@
 				/mob/living/carbon/monkey/tajara,
 				/mob/living/carbon/monkey/skrell,
 				/mob/living/carbon/monkey/unathi,
-				/mob/living/carbon/monkey/podman,
+				/mob/living/carbon/monkey/diona/podman,
 				/mob/living/carbon/human/tajaran,
 				/mob/living/carbon/human/skrell,
 				/mob/living/carbon/human/unathi,
