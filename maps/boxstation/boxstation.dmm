@@ -77145,6 +77145,14 @@
 	icon_state = "4,6"
 	},
 /area/shuttle/supply/station)
+"kZI" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "lab" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -79318,6 +79326,14 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
+"nrR" = (
+/obj/structure/flora/tree/jungle,
+/obj/effect/decal/turf_decal/wood{
+	dir = 4;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "nsb" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/machinery/alarm{
@@ -82058,6 +82074,14 @@
 	icon_state = "dark"
 	},
 /area/station/security/execution)
+"qGt" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/decal/turf_decal/wood{
+	dir = 2;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "qGz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -136724,7 +136748,7 @@ cdn
 cuE
 cCt
 aUM
-ccX
+kZI
 cdc
 bFo
 iCb
@@ -137228,7 +137252,7 @@ aaa
 aaa
 bWu
 bZn
-bZp
+qGt
 aTf
 cxu
 cpE
@@ -137495,7 +137519,7 @@ cHi
 cuE
 cCK
 bdq
-cdb
+nrR
 ccX
 bFo
 iHb
