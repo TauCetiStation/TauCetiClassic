@@ -79,6 +79,7 @@
 	max_temperature = 45000
 	overload_coeff = 1
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark
+	dna_lockable = TRUE
 	max_equip = 4
 	step_energy_drain = 5
 

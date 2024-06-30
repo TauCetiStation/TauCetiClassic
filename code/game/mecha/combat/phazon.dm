@@ -14,6 +14,7 @@
 	wreckage = /obj/effect/decal/mecha_wreckage/phazon
 	add_req_access = 1
 	//operation_req_access = list()
+	dna_lockable = TRUE
 	internal_damage_threshold = 25
 	force = 15
 	var/phasing = FALSE

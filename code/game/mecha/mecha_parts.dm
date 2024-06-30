@@ -24,6 +24,14 @@
 /obj/item/mecha_parts/chassis/attack_hand()
 	return
 
+
+/obj/item/mecha_parts/dna_scanner
+	name = "Exosuit DNA scanner"
+	desc = "Device that allows locking exosuits by DNA."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "motion2"
+	origin_tech = "programming=3;biotech=3"
+
 /////////// Ripley
 
 /obj/item/mecha_parts/chassis/ripley

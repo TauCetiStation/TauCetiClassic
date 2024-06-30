@@ -957,7 +957,17 @@
 	name = "Exosuit Tracking Beacon"
 	id = "mecha_tracking"
 	build_type = MECHFAB
-	build_path =/obj/item/mecha_parts/mecha_tracking
+	build_path = /obj/item/mecha_parts/mecha_tracking
+	materials = list(MAT_METAL=500)
+	construction_time = 50
+	starts_unlocked = TRUE
+	category = list("Misc")
+
+/datum/design/dna_scanner
+	name = "Exosuit DNA Scanner"
+	id = "mecha_dnascanner"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/dna_scanner
 	materials = list(MAT_METAL=500)
 	construction_time = 50
 	starts_unlocked = TRUE

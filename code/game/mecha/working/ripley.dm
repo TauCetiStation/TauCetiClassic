@@ -142,6 +142,9 @@
 
 /obj/mecha/working/ripley/recycle_ripley
 	name = "APLU \"Recycler\""
+	add_req_access = 0
+	maint_access = 0
+	operation_req_access = list(access_recycler)
 
 /obj/mecha/working/ripley/recycle_ripley/atom_init()
 	. = ..()
