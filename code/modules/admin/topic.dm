@@ -106,7 +106,7 @@
 
 	else if(href_list["dbbanaddtype"])
 
-		var/bantype = text2num(href_list["dbbanaddtype"])
+		var/bantype = href_list["dbbanaddtype"]
 		var/banckey = href_list["dbbanaddckey"]
 		var/banip = href_list["dbbanaddip"]
 		var/bancid = href_list["dbbanaddcid"]
@@ -115,6 +115,9 @@
 		var/banreason = sanitize(href_list["dbbanreason"])
 
 		banckey = ckey(banckey)
+
+		if(!(bantype in valid_ban_types))
+			CRASH("Unknown ban type [sanitize(bantype)]!")
 
 		switch(bantype)
 			if(BANTYPE_PERMA)
