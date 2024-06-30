@@ -1334,6 +1334,7 @@
 #include "code\modules\admin\holder2.dm"
 #include "code\modules\admin\host_announcements.dm"
 #include "code\modules\admin\IsBanned.dm"
+#include "code\modules\admin\notes_panel.dm"
 #include "code\modules\admin\player_notes.dm"
 #include "code\modules\admin\player_panel.dm"
 #include "code\modules\admin\secrets.dm"

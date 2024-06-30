@@ -551,7 +551,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(!warned_ckey || !reason)
 		return
 
-	notes_add(warned_ckey, "ADMINWARN: " + reason, src, secret = 0)
+	notes_add(warned_ckey, "ADMINWARN: " + reason, admin_key = src.ckey, secret = 0)
 
 	var/client/C = directory[warned_ckey]
 	reason = sanitize(reason)
