@@ -106,7 +106,7 @@
 
 	else if(href_list["dbbanaddtype"])
 
-		var/bantype = text2num(href_list["dbbanaddtype"])
+		var/bantype = href_list["dbbanaddtype"]
 		var/banckey = href_list["dbbanaddckey"]
 		var/banip = href_list["dbbanaddip"]
 		var/bancid = href_list["dbbanaddcid"]
@@ -115,6 +115,9 @@
 		var/banreason = sanitize(href_list["dbbanreason"])
 
 		banckey = ckey(banckey)
+
+		if(!(bantype in valid_ban_types))
+			CRASH("Unknown ban type [sanitize(bantype)]!")
 
 		switch(bantype)
 			if(BANTYPE_PERMA)
@@ -367,77 +370,15 @@
 		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
 		message_admins("[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
 
-
-	/////////////////////////////////////new ban stuff
-	else if(href_list["unbanf"])
-		if(!check_rights(R_BAN))	return
-
-		var/banfolder = href_list["unbanf"]
-		Banlist.cd = "/base/[banfolder]"
-		var/key = Banlist["key"]
-		if(tgui_alert(usr, "Are you sure you want to unban [key]?", "Confirmation", list("Yes", "No")) == "Yes")
-			if(RemoveBan(banfolder))
-				unbanpanel()
-			else
-				tgui_alert(usr, "This ban has already been lifted / does not exist.", "Error")
-				unbanpanel()
-
 	else if(href_list["warn"])
 		usr.client.warn(href_list["warn"])
 
-	else if(href_list["unbane"])
+	else if(href_list["jobban2"]) // people of the past, what were you thinking placing this right in the topic
 		if(!check_rights(R_BAN))	return
 
-		UpdateTime()
-		var/reason
-
-		var/banfolder = href_list["unbane"]
-		Banlist.cd = "/base/[banfolder]"
-		var/reason2 = Banlist["reason"]
-		var/temp = Banlist["temp"]
-
-		var/minutes = Banlist["minutes"]
-
-		var/banned_key = Banlist["key"]
-		Banlist.cd = "/base"
-
-		var/duration
-
-		switch(tgui_alert(usr,"Temporary Ban?",, list("Yes","No")))
-			if("Yes")
-				temp = 1
-				var/mins = 0
-				if(minutes > CMinutes)
-					mins = minutes - CMinutes
-				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
-				if(!mins)	return
-				mins = min(525599,mins)
-				minutes = CMinutes + mins
-				duration = GetExp(minutes)
-				reason = sanitize(input(usr,"Reason?","reason",reason2) as text|null)
-				if(!reason)	return
-			if("No")
-				temp = 0
-				duration = "Perma"
-				reason = sanitize(input(usr,"Reason?","reason",reason2) as text|null)
-				if(!reason)	return
-
-		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
-		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
-		message_admins("<span class='notice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
-		Banlist.cd = "/base/[banfolder]"
-		Banlist["reason"] << reason
-		Banlist["temp"] << temp
-		Banlist["minutes"] << minutes
-		Banlist["bannedby"] << usr.ckey
-		Banlist.cd = "/base"
-		feedback_inc("ban_edit",1)
-		unbanpanel()
-
-	/////////////////////////////////////new ban stuff
-
-	else if(href_list["jobban2"])
-		if(!check_rights(R_BAN))	return
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
 
 		var/mob/M = locate(href_list["jobban2"])
 		if(!ismob(M))
@@ -788,6 +729,10 @@
 		if(!check_rights(R_ADMIN))
 			return
 
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
+
 		var/mob/M = locate(href_list["jobban4"])
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
@@ -932,7 +877,7 @@
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
-						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
+						DB_ban_unban(M.ckey, null, job)
 						if(M.client)
 							jobban_buildcache(M.client)
 						feedback_inc("ban_job_unban",1)
@@ -1057,6 +1002,10 @@
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))  return
 
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
+
 		var/mob/M = locate(href_list["newban"])
 		if(!ismob(M)) return
 
@@ -1071,7 +1020,6 @@
 				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null)
 				if(!reason)
 					return
-				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
 				ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
 				to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
 				to_chat(M, "<span class='warning'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
@@ -1092,12 +1040,6 @@
 				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null)
 				if(!reason)
 					return
-				switch(tgui_alert(usr, "IP ban?",, list("Yes","No","Cancel")))
-					if("Cancel")	return
-					if("Yes")
-						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
-					if("No")
-						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
 				to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
 				to_chat(M, "<span class='warning'>This is a permanent ban.</span>")
 				if(config.banappeals)
