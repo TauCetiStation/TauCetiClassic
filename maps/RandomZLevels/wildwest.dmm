@@ -637,20 +637,16 @@
 /area/awaymission/wildwest/mansion)
 "cp" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/simulated/floor/plating,
-/area/awaymission/wildwest/mansion)
-"cq" = (
-/obj/structure/table/woodentable,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "cr" = (
 /obj/structure/table/woodentable,
 /obj/machinery/kitchen_machine/microwave,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "cs" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "ct" = (
 /obj/structure/lattice,
@@ -679,9 +675,6 @@
 "cy" = (
 /obj/structure/stool/bed/chair/wood/wings,
 /turf/simulated/floor/wood,
-/area/awaymission/wildwest/mansion)
-"cz" = (
-/turf/simulated/floor/plating,
 /area/awaymission/wildwest/mansion)
 "cA" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -713,15 +706,11 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
-"cG" = (
-/mob/living/simple_animal/hostile/creature,
-/turf/simulated/floor/plating,
-/area/awaymission/wildwest/mansion)
 "cH" = (
 /obj/effect/landmark/corpse/chef{
 	mobname = "Chef"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "cI" = (
 /obj/structure/bookcase{
@@ -791,17 +780,17 @@
 "cV" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "cW" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/kitchenknife/butch,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "cX" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/soup/stew,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "cY" = (
 /obj/structure/stool/bed/chair/comfy/black{
@@ -838,12 +827,12 @@
 "de" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/kitchen/rollingpin,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "df" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/lemon,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion{
 	dir = 1;
 	icon_state = "fwindow"
@@ -893,7 +882,7 @@
 "dq" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "dr" = (
 /obj/structure/table/woodentable,
@@ -901,12 +890,12 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "ds" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood,
 /area/awaymission/wildwest/mansion)
 "dt" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -12247,13 +12236,13 @@ bR
 bY
 bP
 cp
-cz
-cz
-cz
-cz
-cz
-cG
-cz
+cn
+cn
+cn
+cn
+cn
+cN
+cn
 dq
 bP
 bY
@@ -12503,14 +12492,14 @@ bw
 bR
 bY
 bP
-cq
-cz
-cz
-cz
-cz
+cF
+cn
+cn
+cn
+cn
 cV
 dd
-cz
+cn
 dq
 bP
 bY
@@ -12761,13 +12750,13 @@ bR
 bY
 bP
 cr
-cz
-cG
-cz
-cz
+cn
+cN
+cn
+cn
 cW
 de
-cz
+cn
 dr
 bP
 bY
@@ -13017,14 +13006,14 @@ bv
 bR
 bY
 bP
-cq
-cz
+cF
+cn
 cH
-cz
-cz
+cn
+cn
 cX
 df
-cz
+cn
 ds
 bP
 bY
@@ -13275,13 +13264,13 @@ bR
 bY
 bP
 cs
-cz
-cz
-cz
-cz
-cz
-cz
-cz
+cn
+cn
+cn
+cn
+cn
+cn
+cn
 ds
 bP
 bY
