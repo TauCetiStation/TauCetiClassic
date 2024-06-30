@@ -74578,6 +74578,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "darkbrown"
 	},
@@ -85515,7 +85516,7 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "uwO" = (
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo/qm,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -88732,7 +88733,6 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/engineering)
 "vlq" = (
-/obj/item/weapon/flora/random,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -88741,6 +88741,9 @@
 /obj/machinery/camera{
 	c_tag = "Quartermaster's Office";
 	dir = 6
+	},
+/obj/machinery/atm{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;

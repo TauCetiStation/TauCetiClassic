@@ -46122,9 +46122,8 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "hBk" = (
-/obj/machinery/computer/cargo{
-	dir = 8;
-	req_access = list()
+/obj/machinery/computer/cargo/qm{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;

@@ -20,6 +20,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	var/safety_warning = "For safety reasons the automated supply shuttle \
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
+/obj/machinery/computer/cargo/qm
+	name = "QM Supply console"
+	desc = "Used to order supplies, approve requests, and control the shuttle. Access requirements removed."
+	req_access = list()
+	circuit = /obj/item/weapon/circuitboard/computer/cargo/qm
 
 /obj/machinery/computer/cargo/request
 	name = "Supply request console"

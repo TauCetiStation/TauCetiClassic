@@ -218,6 +218,9 @@
 	origin_tech = "programming=3"
 	var/contraband_enabled = FALSE
 	var/hacked = FALSE
+/obj/item/weapon/circuitboard/computer/cargo/qm
+	name = "Circuit board (QM Supply shuttle console)"
+	build_path = /obj/machinery/computer/cargo/qm
 /*/obj/item/weapon/circuitboard/research_shuttle
 	name = "Circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle
