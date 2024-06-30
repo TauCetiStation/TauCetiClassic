@@ -420,10 +420,14 @@
 							"Трутень" = /mob/living/carbon/xenomorph/humanoid/drone)
 
 /obj/effect/proc_holder/spell/no_target/larva_evolve/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+	if(!user in global.alien_list[ALIEN_LARVA])
+		return FALSE
+
 	if(!isturf(user.loc))
 		if(try_start)
 			to_chat(user, "<span class='warning'>Вы не можете эволюционировать, когда находитесь внутри чего-то.</span>")
 		return FALSE
+
 	var/mob/living/carbon/xenomorph/larva/larva = user
 	if(larva.amount_grown < larva.max_grown)
 		if(try_start)
