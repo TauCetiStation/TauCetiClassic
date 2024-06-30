@@ -5,7 +5,7 @@
 	icon = 'icons/obj/machines/jammer.dmi'
 	icon_state = "jammer"
 
-	layer = TURF_LAYER+0.1
+	layer = TURF_CAP_LAYER+0.1
 	plane = FLOOR_PLANE
 
 	anchored = TRUE
