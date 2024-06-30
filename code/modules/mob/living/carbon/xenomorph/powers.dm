@@ -479,12 +479,12 @@
 	new_xeno.mind.name = new_xeno.real_name
 	qdel(user)
 
-/obj/effect/proc_holder/spell/no_target/larva_evolve/solo/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/larva_evolve/lone/cast(list/targets, mob/user = usr)
 	to_chat(user, "<span class='alien'>Подождите пока закончится процесс эволюции.</span>")
 	if(!do_after(user, 10 SECONDS, target = user))
 		return
 
-	var/mob/new_xeno = new /mob/living/carbon/xenomorph/humanoid/hunter/solo(user.loc)
+	var/mob/new_xeno = new /mob/living/carbon/xenomorph/humanoid/hunter/lone(user.loc)
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
 	qdel(user)

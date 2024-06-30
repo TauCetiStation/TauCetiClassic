@@ -775,7 +775,7 @@
 	mind.special_role = "Drone"
 
 	//XENO SOLO
-/mob/living/carbon/xenomorph/humanoid/hunter/solo/mind_initialize()
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/mind_initialize()
 	if(mind)
 		mind.key = key
 	else
@@ -787,7 +787,7 @@
 
 	var/datum/faction/alien/A = create_uniq_faction(/datum/faction/alien)
 	add_faction_member(A, src, TRUE)
-	mind.special_role = "Solo Hunter"
+	mind.special_role = "Lone Hunter"
 
 //AI
 /mob/living/silicon/ai/mind_initialize()

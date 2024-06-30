@@ -1,4 +1,4 @@
-/mob/living/carbon/xenomorph/humanoid/hunter/solo
+/mob/living/carbon/xenomorph/humanoid/hunter/lone
 	name = "Alien"
 	icon = 'icons/mob/xenomorph_solo.dmi'
 	icon_state = "alien_s"
@@ -11,19 +11,19 @@
 	var/epoint_cap = 600
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds)
 
-/mob/living/carbon/xenomorph/humanoid/hunter/solo/atom_init()
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/atom_init()
 	. = ..()
 	name = "Alien"
 	real_name = name
 	alien_list[ALIEN_HUNTER] -= src			// ¯\_(ツ)_/¯
-	alien_list[ALIEN_SOLO_HUNTER] += src
+	alien_list[ALIEN_LONE_HUNTER] += src
 
 /mob/living/carbon/xenomorph/humanoid/hunter/Destroy()
-	alien_list[ALIEN_SOLO_HUNTER] -= src
+	alien_list[ALIEN_LONE_HUNTER] -= src
 	return ..()
 
 // Со временем ксенос должен становиться сильнее, чтобы экипаж не мог закрыться где-то и сидеть в обороне
-/mob/living/carbon/xenomorph/humanoid/hunter/solo/Life()
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/Life()
 	if(!invisible)
 		epoint += 1
 	if (epoint > epoint_cap)
@@ -39,7 +39,7 @@
 		else
 			adjustToxLoss(plasma_rate/2 - 1)
 
-/mob/living/carbon/xenomorph/humanoid/hunter/solo/proc/next_stage()
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/next_stage()
 	to_chat(src, "<span class='notice'>Вы перешли на новую стадию эволюции!</span>")
 	estage++
 	maxHealth += 40
@@ -56,21 +56,21 @@
 		if (5)
 			acid_type = /obj/effect/alien/acid/queen_acid
 
-/mob/living/carbon/xenomorph/humanoid/hunter/solo/Stat()
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/Stat()
 	stat(null)
 	if(statpanel("Status"))
 		stat("Очки эволюции: [epoint]/[epoint_cap]")
 		stat("Стадия эволюции: [estage]")
 
 // Если включается одно, выключается другое
-/mob/living/carbon/xenomorph/humanoid/hunter/solo/toggle_neurotoxin(message = TRUE)
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/toggle_neurotoxin(message = TRUE)
 	..()
 	if(leap_on_click)
 		leap_on_click = 0
 		leap_icon.update_icon(src)
 		update_icons()
 
-/mob/living/carbon/xenomorph/humanoid/hunter/solo/toggle_leap(message = TRUE)
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/toggle_leap(message = TRUE)
 	..()
 	if(neurotoxin_on_click)
 		neurotoxin_on_click = 0
@@ -78,10 +78,10 @@
 		update_icons()
 
 // Ксенос должен поощряться за активную и агрессивную игру
-/mob/living/carbon/xenomorph/humanoid/hunter/solo/successful_leap()
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/successful_leap()
 	epoint += 200
 
-/mob/living/carbon/xenomorph/humanoid/hunter/solo/UnarmedAttack(atom/A)
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/UnarmedAttack(atom/A)
 	..()
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A

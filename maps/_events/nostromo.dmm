@@ -7,7 +7,7 @@
 "as" = (/obj/machinery/atmospherics/pipe/manifold/hidden/supply{dir = 8},/obj/structure/cable/orange{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/grid_floor,/area/station/maintenance/medbay)
 "at" = (/obj/machinery/computer/aiupload,/turf/simulated/floor/whitegreed,/area/station/aisat/ai_chamber)
 "au" = (/obj/structure/cable/orange{d2 = 2; icon_state = "0-2"},/obj/machinery/power/apc{dir = 4; name = "apc right"; pixel_x = 28},/turf/simulated/floor{dir = 4; icon_state = "neutral"},/area/station/hallway/primary/aft)
-"aw" = (/mob/living/carbon/xenomorph/humanoid/hunter/solo{dir = 8},/turf/simulated/floor/plating,/area/station/maintenance/medbay)
+"aw" = (/mob/living/carbon/xenomorph/humanoid/hunter/lone{dir = 8},/turf/simulated/floor/plating,/area/station/maintenance/medbay)
 "ay" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet/purple,/turf/simulated/floor{dir = 4; icon_state = "neutral"},/area/station/civilian/dormitories/service_bedrooms)
 "aB" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/structure/cable/orange{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/structure/table,/turf/simulated/floor/plating,/area/station/maintenance/medbay)
 "aD" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/structure/cable/orange{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor/grid_floor,/area/station/maintenance/medbay)

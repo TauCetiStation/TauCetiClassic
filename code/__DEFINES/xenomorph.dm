@@ -11,7 +11,7 @@
 #define ALIEN_DRONE			"Трутни"
 #define ALIEN_SENTINEL		"Стражи"
 #define ALIEN_HUNTER		"Охотники"
-#define ALIEN_SOLO_HUNTER	"Одинокий охотник"
+#define ALIEN_LONE_HUNTER	"Одинокий охотник"
 #define ALIEN_LARVA			"Грудоломы"
 #define ALIEN_FACEHUGGER	"Лицехваты"
 #define ALIEN_MAID			"Горничные"

@@ -34,7 +34,7 @@
 	H.h_style = "Combover"
 
 	var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(H)
-	var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva/solo(new_embryo)
+	var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva/lone(new_embryo)
 	new_xeno.loc = new_embryo
 	new_embryo.baby = new_xeno
 	new_embryo.controlled_by_ai = FALSE
@@ -75,6 +75,6 @@
 	return TRUE
 
 /datum/faction/nostromo_crew/check_win()
-	if(global.alien_list[ALIEN_SOLO_HUNTER].len == 0)
+	if(global.alien_list[ALIEN_LONE_HUNTER].len == 0)
 		return TRUE
-	return global.alien_list[ALIEN_SOLO_HUNTER][1].stat == DEAD
+	return global.alien_list[ALIEN_LONE_HUNTER][1].stat == DEAD

@@ -17,8 +17,8 @@
 	explanation_text = "Ксеноморф на корабле! Убейте эту тварь как можно скорее!"
 
 /datum/objective/kill_alien/check_completion()
-	if(alien_list[ALIEN_SOLO_HUNTER].len == 0)
+	if(alien_list[ALIEN_LONE_HUNTER].len == 0)
 		return OBJECTIVE_WIN
-	if(alien_list[ALIEN_SOLO_HUNTER][1].stat == DEAD)
+	if(alien_list[ALIEN_LONE_HUNTER][1].stat == DEAD)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
