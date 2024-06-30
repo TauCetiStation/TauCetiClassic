@@ -23,7 +23,7 @@
 
 	html += "<hr>"
 
-	// todo: use mysql DATE_FORMAT(timestamp, '%d.%m.%Y %H:%i:%s') after bans table rework
+	// todo: use mysql DATE_FORMAT(timestamp, '%d.%m.%Y %H:%i:%s') after bans table rework (consistent column names, also need to allow job as null)
 	var/DBQuery/query = dbcon.NewQuery({"
 		SELECT id as message_id, type AS message_type, text AS message, timestamp, ingameage, adminckey AS author, round_id FROM erro_messages WHERE targetckey = '[sql_ckey]' AND deleted != 1
 		UNION ALL
