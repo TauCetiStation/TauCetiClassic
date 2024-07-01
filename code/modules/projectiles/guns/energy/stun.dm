@@ -6,6 +6,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/electrode)
 	can_be_holstered = TRUE
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
+	feature_flags = WEAPON_HAVE_AMMOBAR
 
 /obj/item/weapon/gun/energy/taser/select_fire(mob/living/user)
 	if(!handle_fumbling(user,src, SKILL_TASK_TRIVIAL, list(/datum/skill/police = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around figuring out how to switch mode on [src]...</span>", can_move = TRUE))
@@ -69,6 +70,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	can_be_holstered = TRUE
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
+	feature_flags = 0
 	var/charge_tick = 0
 
 

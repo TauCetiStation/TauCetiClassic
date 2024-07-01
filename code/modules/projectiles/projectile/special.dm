@@ -8,6 +8,8 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = ENERGY
+	hud_state   = "plasma_rifle"
+	hud_state_empty = "plasma_rifle"
 
 /obj/item/projectile/ion/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	empulse(target, 1, 1)

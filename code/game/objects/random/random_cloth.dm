@@ -119,7 +119,7 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	icon_state = "material"
 /obj/random/cloth/glasses/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal) - list(/obj/item/clothing/glasses/night/shadowling))
+	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal) - list(/obj/item/clothing/glasses/shadowling))
 
 /obj/random/cloth/glasses_safe
 	name = "random glasses"
@@ -127,7 +127,7 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	icon_state = "material"
 /obj/random/cloth/glasses_safe/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal) - list(/obj/item/clothing/glasses/night/shadowling) - subtypesof(/obj/item/clothing/glasses/hud) - subtypesof(/obj/item/clothing/glasses/sunglasses/hud))
+	return pick(subtypesof(/obj/item/clothing/glasses) - subtypesof(/obj/item/clothing/glasses/thermal) - list(/obj/item/clothing/glasses/shadowling) - subtypesof(/obj/item/clothing/glasses/hud) - subtypesof(/obj/item/clothing/glasses/sunglasses/hud))
 
 /obj/random/cloth/shoes
 	name = "random shoes"

@@ -16,6 +16,7 @@
 	var/pump_cooldown = 10
 	var/pump_sound = list('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg')
 
+
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
@@ -43,10 +44,12 @@
 		chambered.loc = get_turf(src)//Eject casing
 		chambered.SpinAnimation(5, 1)
 		chambered = null
-	if(!magazine.ammo_count())
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, M)
+	if(!magazine?.ammo_count())
 		return FALSE
 	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 	chambered = AC
+	SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, M)
 	update_icon()	//I.E. fix the desc
 	return TRUE
 
@@ -202,6 +205,7 @@
 		magazine.loc = get_turf(src.loc)
 		magazine.update_icon()
 		magazine = null
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, M)
 		return FALSE
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/attackby(obj/item/I, mob/user, params)
@@ -210,6 +214,7 @@
 		if(!magazine && istype(AM, initial_mag))
 			user.remove_from_mob(AM)
 			magazine = AM
+			SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
 			magazine.forceMove(src)
 			to_chat(user, "<span class='notice'>You load a new clip into \the [src].</span>")
 			chamber_round()

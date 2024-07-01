@@ -13,6 +13,7 @@
 	can_be_holstered = FALSE
 	two_hand_weapon = ONLY_TWOHAND
 	fire_sound = 'sound/effects/bang.ogg'
+	feature_flags = 0
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/process_chamber()
 	return ..(1, 1)
@@ -50,3 +51,4 @@
 	icon_state = "commando"
 	item_state = "commando"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket/four
+	feature_flags = WEAPON_HAVE_AMMOBAR

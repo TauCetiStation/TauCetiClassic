@@ -4,6 +4,7 @@
 	damage = 0
 	damage_type = BURN
 	flag = ENERGY
+	hud_state = "laser"
 
 /obj/item/projectile/energy/electrode
 	name = "electrode"

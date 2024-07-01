@@ -12,6 +12,7 @@
 	var/should_alarm_when_empty = FALSE
 	var/can_be_silenced = FALSE
 
+
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
@@ -110,6 +111,7 @@
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
 		magazine = null
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
 		update_icon()
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>Вы вытащили магазин из [src].</span>")
@@ -176,6 +178,7 @@
 		magazine.loc = get_turf(src.loc)
 		magazine.update_icon()
 		magazine = null
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>Вы вытаскиваете магазин из [src]!</span>")
 	else

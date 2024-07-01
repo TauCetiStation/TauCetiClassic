@@ -76,7 +76,7 @@
 	flags_inv = 0
 
 
-/obj/item/clothing/glasses/night/shadowling
+/obj/item/clothing/glasses/shadowling
 	name = "crimson eyes"
 	desc = "A shadowling's eyes. Very light-sensitive and can detect body heat through walls."
 	icon = null
@@ -100,10 +100,10 @@
 /datum/action/item_action/toggle_vision
 	name = "Toggle Vision"
 
-/obj/item/clothing/glasses/night/shadowling/attack_self()
+/obj/item/clothing/glasses/shadowling/attack_self()
 	toggle()
 
-/obj/item/clothing/glasses/night/shadowling/verb/toggle()
+/obj/item/clothing/glasses/shadowling/verb/toggle()
 	set category = "Object"
 	set name = "Toggle Vision"
 	set src in usr

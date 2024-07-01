@@ -5,6 +5,7 @@
 	item_state = "revolver"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
+	feature_flags = 0
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
 	if (chambered || !magazine)
