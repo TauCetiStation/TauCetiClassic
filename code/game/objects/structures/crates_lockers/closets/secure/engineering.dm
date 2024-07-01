@@ -111,6 +111,7 @@
 	else
 		new /obj/item/clothing/accessory/storage/webbing(src)
 
+	new /obj/item/clothing/head/hardhat/red(src)
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/device/flashlight(src)
 	new /obj/item/weapon/reagent_containers/spray/extinguisher(src)
