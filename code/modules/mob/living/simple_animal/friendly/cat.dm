@@ -267,3 +267,18 @@ var/global/cat_number = 0
 
 /mob/living/simple_animal/cat/runtime/fake // fake runtime cat, does not disappear
 	disappear = FALSE
+
+/mob/living/simple_animal/cat/red
+	icon_state = "red_cat"
+	icon_living = "red_cat"
+	icon_dead = "red_cat_dead"
+	holder_type = /obj/item/weapon/holder/cat/red
+
+/mob/living/simple_animal/cat/red/jonesy
+	name = "Jonesy"
+	desc = "Корабельный рыжий кот Джонси. Крайне чувствителен."
+	sight = SEE_MOBS
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	see_in_dark = 8
+	speed = -0.5
+	pass_flags = PASSTABLE

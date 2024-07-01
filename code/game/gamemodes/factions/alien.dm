@@ -1,3 +1,5 @@
+var/global/mob/Jonesy
+
 /datum/faction/alien
 	name = F_XENOMORPH
 	ID = F_XENOMORPH
@@ -73,6 +75,20 @@
 		return FALSE
 	AppendObjective(/datum/objective/kill_alien)
 	return TRUE
+
+/datum/faction/nostromo_crew/OnPostSetup()
+	var/start_point = pick(landmarks_list["jonesy"])
+	var/mob/living/simple_animal/cat/red/jonesy/J = new (get_turf(start_point))
+	global.Jonesy = J
+	// Кот спавнится в любом случае, но заселяется в него игрок, только если их достаточно много
+	// надо будет переделать чтоб не могло слот кэпа умыкнуть
+	if (members.len > 6)
+		var/datum/role/cat = pick(members)
+
+		cat.antag.transfer_to(J)
+		QDEL_NULL(cat.antag.original)
+
+	return ..()
 
 /datum/faction/nostromo_crew/check_win()
 	if(global.alien_list[ALIEN_LONE_HUNTER].len == 0)

@@ -1599,6 +1599,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"jc" = (
+/obj/effect/landmark{
+	dir = 4;
+	icon = 'icons/mob/animal.dmi';
+	icon_state = "red_cat";
+	name = "jonesy"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "jh" = (
 /turf/simulated/wall/beige,
 /area/station/civilian/dormitories/service_bedrooms)
@@ -2579,6 +2590,17 @@
 /area/station/medical/storage{
 	name = "Medbay"
 	})
+"pr" = (
+/obj/effect/landmark{
+	dir = 4;
+	icon = 'icons/mob/animal.dmi';
+	icon_state = "red_cat";
+	name = "jonesy"
+	},
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/bridge)
 "pt" = (
 /obj/structure/closet/crate,
 /turf/simulated/floor/plating,
@@ -3674,6 +3696,19 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/engine)
+"uT" = (
+/obj/effect/landmark{
+	dir = 4;
+	icon = 'icons/mob/animal.dmi';
+	icon_state = "red_cat";
+	name = "jonesy"
+	},
+/turf/simulated/floor{
+	icon_state = "whitechoco"
+	},
+/area/station/medical/storage{
+	name = "Medbay"
+	})
 "uZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -6179,6 +6214,17 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/primary/fore)
+"HA" = (
+/obj/effect/landmark{
+	dir = 4;
+	icon = 'icons/mob/animal.dmi';
+	icon_state = "red_cat";
+	name = "jonesy"
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/hallway/primary/aft)
 "HD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/grid_floor,
@@ -7603,6 +7649,12 @@
 /area/station/civilian/kitchen)
 "Op" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/landmark{
+	dir = 4;
+	icon = 'icons/mob/animal.dmi';
+	icon_state = "red_cat";
+	name = "jonesy"
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -9606,6 +9658,12 @@
 	},
 /obj/machinery/light_switch{
 	pixel_y = 28
+	},
+/obj/effect/landmark{
+	dir = 4;
+	icon = 'icons/mob/animal.dmi';
+	icon_state = "red_cat";
+	name = "jonesy"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -31204,7 +31262,7 @@ Qs
 ck
 uI
 fv
-ao
+pr
 ua
 GD
 Qs
@@ -40201,7 +40259,7 @@ yf
 tt
 IZ
 OS
-OS
+jc
 MU
 zi
 FU
@@ -40690,7 +40748,7 @@ VL
 hi
 kH
 op
-op
+uT
 Kq
 XF
 VL
@@ -42530,7 +42588,7 @@ wF
 wF
 wF
 dX
-Tt
+HA
 aP
 aP
 aP

@@ -94,6 +94,9 @@
 	icon_state = "cat"
 	flags = HEAR_PASS_SAY
 
+/obj/item/weapon/holder/cat/red
+	icon_state = "red_cat"
+
 /obj/item/weapon/holder/mouse
 	name = "mouse"
 	desc = "It's a small rodent."

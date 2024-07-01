@@ -25,6 +25,7 @@
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
 #define F_XENOMORPH          "Alien"
 #define F_NOSTROMO_CREW      "Nostromo Crew"
+#define F_NOSTROMO_CAT       "Nostromo Cat Jonesy"
 #define F_ZOMBIES            "Zobmies"
 #define F_REPLICATORS        "Replicators"
 
