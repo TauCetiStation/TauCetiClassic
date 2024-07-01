@@ -356,7 +356,6 @@
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
 	language = LANGUAGE_SOLCOMMON
-	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_OMNI
 
@@ -374,6 +373,34 @@
 	max_age = 85
 
 	is_common = TRUE
+
+/datum/species/pluvian/spirite
+	name = PLUVIAN_SPIRIT
+	brute_mod = 0
+	burn_mod = 0
+	oxy_mod = 0
+	tox_mod = 0
+	clone_mod = 0
+	eyes = "pluvia_ms_s"
+	eyes_glowing = TRUE
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
+	,NO_SCAN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,NO_FINGERPRINT = TRUE
+	,NO_BLOOD_TRAILS = TRUE
+	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
+	,NO_EMBED = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_EMOTION = TRUE
+	,NO_VOMIT = TRUE
+	,NO_FAT = TRUE
+	)
 
 /datum/species/unathi
 	name = UNATHI

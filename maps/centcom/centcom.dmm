@@ -30419,6 +30419,9 @@
 	icon_state = "barber"
 	},
 /area/velocity/locker)
+"xEi" = (
+/turf/unsimulated/beach/sand,
+/area/pluvia_heaven)
 "xLi" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -93393,7 +93396,7 @@ aVt
 aVH
 aVH
 aVH
-aVH
+xEi
 aVH
 aVH
 aVH

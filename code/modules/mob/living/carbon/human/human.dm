@@ -91,6 +91,14 @@
 	QDEL_NULL(vessel)
 	return ..()
 
+
+/mob/living/carbon/human/pluvian/atom_init(mapload)
+	. = ..(mapload, PLUVIAN)
+
+/mob/living/carbon/human/pluvian_spirite/atom_init(mapload)
+	. = ..(mapload, PLUVIAN_SPIRIT)
+
+
 /mob/living/carbon/human/skrell/atom_init(mapload)
 	h_style = "Skrell Male Tentacles"
 	. = ..(mapload, SKRELL)

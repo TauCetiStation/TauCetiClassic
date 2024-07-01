@@ -16,6 +16,21 @@
 
 	..()
 
+/mob/living/carbon/human/proc/reborn(mob/living/carbon/human/user)
+	var/area/heaven_tile = pick(get_area_turfs(get_area_by_type(/area/pluvia_heaven)))
+	var/datum/dna/my_dna = user.dna
+	var/mob/living/carbon/human/pluvian/P = new /mob/living/carbon/human/pluvian(heaven_tile)
+	P.real_name = my_dna.real_name
+	P.dna = my_dna.Clone()
+	P.UpdateAppearance()
+	P.set_species(PLUVIAN_SPIRIT)
+	P.b_eyes = 200
+	P.g_eyes = 255
+	P.r_eyes = 255
+	P.rejuvenate()
+	mind.transfer_to(P)
+	ClearSpells(P)
+
 /mob/living/carbon/human/dust()
 	new /obj/effect/decal/cleanable/ash(loc)
 	new /obj/effect/decal/remains/human/burned(loc)
@@ -69,7 +84,8 @@
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
 
 	..(gibbed)
-
+	if(ispluvian(src) &&!ischangeling(src))
+		reborn(src)
 	SSStatistics.add_death_stat(src)
 
 // Called right after we will lost our head
