@@ -32051,6 +32051,20 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"haQ" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "haX" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -50570,6 +50584,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -54168,9 +54187,6 @@
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small{
 	dir = 4
-	},
-/obj/machinery/ai_status_display{
-	pixel_x = 32
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -77222,6 +77238,11 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -77232,6 +77253,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -82306,6 +82332,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
@@ -87550,6 +87581,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -90783,6 +90819,24 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"vLV" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/hallway/primary/fore)
 "vLW" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/alarm{
@@ -92265,6 +92319,23 @@
 	icon_state = "red"
 	},
 /area/station/security/interrogation)
+"wef" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/hallway/primary/fore)
 "wei" = (
 /obj/machinery/hologram/holopad{
 	pixel_y = -16
@@ -92962,6 +93033,11 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -133309,7 +133385,7 @@ wox
 mJS
 djZ
 beE
-jbE
+wef
 eFG
 eFG
 jbE
@@ -133823,7 +133899,7 @@ pdO
 xII
 kqF
 xar
-aYj
+vLV
 wmG
 rOD
 aYj
@@ -134594,7 +134670,7 @@ nYK
 nHb
 ekI
 jtV
-wbk
+haQ
 lIs
 ehX
 ufp

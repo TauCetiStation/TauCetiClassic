@@ -3505,6 +3505,10 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "hC" = (
@@ -4634,11 +4638,16 @@
 /area/asteroid/research_outpost/hallway)
 "jA" = (
 /obj/machinery/light/small,
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/blue{
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/tempstorage)
 "jD" = (
@@ -4865,7 +4874,9 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/asteroid/research_outpost/tempstorage)
 "kh" = (
 /obj/structure/disposalpipe/trunk{
@@ -4879,7 +4890,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/asteroid/research_outpost/tempstorage)
 "ki" = (
 /obj/structure/disposalpipe/segment{
@@ -5406,10 +5419,6 @@
 	dir = 6;
 	id = "anotempload"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/tempstorage)
 "le" = (
@@ -5507,18 +5516,13 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso1)
 "lo" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
 /obj/machinery/door_control{
 	id = "riso3";
 	name = "Door Bolt Control";
 	pixel_x = -25;
 	specialfunctions = 4
 	},
-/obj/item/weapon/folder/purple,
-/obj/item/device/analyzer,
+/obj/machinery/atmospherics/components/binary/valve,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
 "lp" = (
@@ -5527,8 +5531,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
@@ -5539,7 +5543,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 6
+	dir = 10
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
@@ -5742,7 +5746,7 @@
 	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "ast_warn"
+	icon_state = "ast_warn_end"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
@@ -5758,16 +5762,9 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "lT" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the isolation room cameras.";
-	dir = 4;
-	layer = 4;
-	name = "Isolation Room Telescreen";
-	network = list("Anomaly Isolation");
-	pixel_x = -32
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
@@ -5779,7 +5776,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+	dir = 5
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
@@ -5807,9 +5804,8 @@
 	locked = 0;
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
@@ -5986,20 +5982,12 @@
 /obj/machinery/conveyor{
 	id = "anotempload"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "mE" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "anosample"
-	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
@@ -6008,12 +5996,16 @@
 	id = "anosample"
 	},
 /obj/effect/decal/turf_decal{
-	dir = 1;
+	dir = 9;
 	icon_state = "warn"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "mG" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "mH" = (
@@ -6110,14 +6102,18 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/harvesting)
 "mP" = (
-/obj/machinery/atmospherics/components/binary/valve,
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/device/analyzer,
+/obj/item/weapon/folder/purple,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
 "mQ" = (
-/obj/structure/table,
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
 "mR" = (
@@ -6125,15 +6121,13 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
-	},
 /obj/machinery/power/apc{
 	custom_smartlight_preset = "RnD";
 	dir = 4;
 	name = "RnD right APC";
 	pixel_x = 27
 	},
+/obj/structure/table,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
 "mS" = (
@@ -6562,7 +6556,7 @@
 	req_access = list(65)
 	},
 /obj/effect/decal/turf_decal{
-	dir = 1;
+	dir = 5;
 	icon_state = "ast_warn"
 	},
 /turf/simulated/floor/airless{
@@ -6572,10 +6566,6 @@
 "nS" = (
 /obj/machinery/conveyor{
 	id = "anotempload"
-	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "ast_warn"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
@@ -6690,7 +6680,6 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
 "oh" = (
-/obj/machinery/atmospherics/components/binary/pump,
 /obj/machinery/ignition_switch{
 	id = "isolationsparker";
 	pixel_x = 22;
@@ -6698,6 +6687,12 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/machinery/artifact_analyser{
+	pixel_y = 32
+	},
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
@@ -6942,12 +6937,6 @@
 	},
 /area/asteroid/mine/maintenance)
 "oO" = (
-/obj/machinery/artifact_analyser{
-	pixel_y = 32
-	},
-/obj/structure/stool/bed/chair/metal{
-	dir = 1
-	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the isolation room cameras.";
 	dir = 4;
@@ -6959,6 +6948,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/machinery/atmospherics/components/binary/pump,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
 "oP" = (
@@ -10679,6 +10669,14 @@
 /obj/structure/plasticflaps/mining,
 /turf/simulated/floor,
 /area/asteroid/mine/west_outpost)
+"xP" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "xU" = (
 /obj/machinery/camera{
 	c_tag = "Misc Test Chamber";
@@ -10918,6 +10916,10 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "zd" = (
@@ -11094,6 +11096,11 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
+"zr" = (
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "zs" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/simulated/floor/plating,
@@ -11890,11 +11897,11 @@
 /area/asteroid/mine/production)
 "Cg" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/visible,
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/iso2)
 "Cr" = (
@@ -12399,6 +12406,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
+"JI" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "Kb" = (
 /obj/structure/sign/warning/fire{
 	pixel_x = 32
@@ -12544,6 +12558,19 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/explored)
+"LP" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "ast_warn"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Mb" = (
 /obj/structure/sign/departments/chemistry{
 	desc = "A warning sign which reads 'SAMPLE PREPARATION'";
@@ -12628,6 +12655,16 @@
 	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
+"MG" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Nb" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -13386,6 +13423,10 @@
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn_corner"
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -53888,8 +53929,8 @@ in
 in
 in
 in
-Aj
-Aj
+zr
+zr
 Aj
 qZ
 lA
@@ -54142,12 +54183,12 @@ le
 nr
 le
 nR
-oC
-lA
-rM
-lA
-lA
-lA
+MG
+zr
+xP
+zr
+zr
+JI
 lA
 lA
 lA
@@ -54400,11 +54441,11 @@ mC
 lJ
 nS
 oD
-lA
-lA
-lA
-lA
-lA
+oE
+zr
+zr
+zr
+JI
 lA
 lA
 kO
@@ -54656,12 +54697,12 @@ zc
 hB
 le
 lR
-oE
-lA
-lA
-lA
-lA
-lA
+LP
+zr
+zr
+zr
+zr
+JI
 lA
 lA
 kO
@@ -54914,11 +54955,11 @@ mE
 nn
 nU
 oF
-lA
-lA
-lA
-lA
-lA
+oE
+zr
+zr
+zr
+JI
 kO
 kO
 kO
@@ -58253,8 +58294,8 @@ lT
 lo
 mQ
 oO
-Sb
-Hg
+Cg
+Jg
 Mg
 pl
 lj
@@ -58767,8 +58808,8 @@ lX
 mP
 mR
 oh
-Cg
-Jg
+Sb
+Hg
 Og
 pl
 lj
