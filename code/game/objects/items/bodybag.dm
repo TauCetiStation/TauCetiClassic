@@ -105,7 +105,7 @@
 /obj/structure/closet/body_bag/cryobag/Entered(atom/movable/AM, atom/oldLoc)
 	if(isliving(AM))
 		var/mob/living/M = AM
-		M.ExtinguishMob()
+		M.set_fire_stacks(0)
 		M.apply_status_effect(STATUS_EFFECT_STASIS_BAG, null, TRUE)
 		used++
 	..()

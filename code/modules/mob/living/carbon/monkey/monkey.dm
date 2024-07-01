@@ -94,7 +94,6 @@
 /mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
 	if(stat != DEAD) // lets put this shit somewhere here
 		stabilize_body_temperature()
-
 	if(!environment || (flags & GODMODE))
 		return
 	handle_monkey_pressure(environment)

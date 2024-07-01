@@ -36,8 +36,7 @@
 	var/silent = null 		//Can't talk. Value goes down every life proc.
 	var/speed = 0			//Movement addditive modifier
 
-	var/on_fire = 0 //The "Are we on fire?" var
-	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
+	var/on_fire = FALSE //The "Are we on fire?" var
 
 	var/tesla_ignore = FALSE
 	var/list/butcher_results = null
@@ -70,5 +69,7 @@
 	var/beauty_dead = -100.0
 
 	var/list/spawner_args = null
+
+	var/list/fire_stack_list
 
 	COOLDOWN_DECLARE(wc_use_cooldown)
