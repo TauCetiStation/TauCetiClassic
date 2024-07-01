@@ -5523,7 +5523,6 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/binary/valve,
-/obj/machinery/atmospherics/components/binary/valve,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso2)
 "lp" = (
