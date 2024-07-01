@@ -56,7 +56,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
 	desc = "A territorial beast, covered in a thick shell that absorbs energy. Its stare causes victims to freeze from the inside."
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/basilisk.dmi'
 	icon_state = "Basilisk"
 	icon_living = "Basilisk"
 	icon_aggro = "Basilisk_alert"
@@ -111,6 +111,21 @@
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(maxHealth * 0.4)
 
+/mob/living/simple_animal/hostile/asteroid/basilisk/high_tier
+	name = "Crystal Basilisk"
+	icon = 'icons/mob/monsters_asteroid/basilisk_high_tier.dmi'
+	view_targeting = FALSE
+	stat_attack = 1
+	vision_range = 6
+	idle_vision_range = 6
+	projectiletype = /obj/item/projectile/temp/hot/high_tier_basilisk
+
+/obj/item/projectile/temp/hot/high_tier_basilisk
+	icon_state = "declone"
+	temperature = 2000
+	nodamage = FALSE
+	damage = 15
+
 ////////////Drone(miniBoss)/////////////
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/mining
@@ -120,13 +135,25 @@
 	w_class = SIZE_HUMAN
 	projectiletype = /obj/item/projectile/beam/xray
 
+/mob/living/simple_animal/hostile/retaliate/malf_drone/mining/high_tier
+	name = "Mining drone"
+	icon = 'icons/mob/monsters_asteroid/drone_high_tier.dmi'
+	icon_state = "drone"
+	icon_living = "drone"
+	icon_dead = "drone"
+	view_targeting = FALSE
+	stat_attack = 1
+	destroy_surroundings = TRUE
+
+/mob/living/simple_animal/hostile/retaliate/malf_drone/mining/high_tier/update_icon()
+	return
 
 ////////////////Goldgrub////////////////
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub
 	name = "goldgrub"
 	desc = "A worm that grows fat from eating everything in its sight. Seems to enjoy precious metals and other shiny things, hence the name."
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/goldgrub.dmi'
 	icon_state = "Goldgrub"
 	icon_living = "Goldgrub"
 	icon_aggro = "Goldgrub_alert"
@@ -148,7 +175,7 @@
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
 	search_objects = 1
-
+	pixel_x = -12
 	var/list/ore_types_eaten = list()
 	var/alerted = FALSE
 	var/ore_eaten = 1
@@ -224,16 +251,74 @@
 	alerted = FALSE
 	Reward()
 
+/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier
+	name = "Gluttony Goldgrub"
+	icon = 'icons/mob/monsters_asteroid/goldgrub_high_tier.dmi'
+	icon_state = "Goldgrub"
+	icon_living = "Goldgrub"
+	icon_aggro = "Goldgrub_alert"
+	icon_dead = "Goldgrub_dead"
+	pixel_x = 0
+	vision_range = 6
+	idle_vision_range = 6
+	search_objects = 2
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier/atom_init()
+	. = ..()
+	wanted_objects += /obj/structure/ore_box
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier/GiveTarget(new_target)
+	target = new_target
+	if(target != null)
+		if(istype(target, /obj/item/weapon/ore))
+			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
+			stance = HOSTILE_STANCE_ATTACK
+			return
+		if(istype(target, /obj/structure/ore_box))
+			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
+			stance = HOSTILE_STANCE_ATTACK
+			return
+		if(isliving(target) && !search_objects)
+			Aggro()
+			stance = HOSTILE_STANCE_ATTACK
+			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
+			retreat_distance = 10
+			minimum_distance = 10
+			Burrow()
+
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier/UnarmedAttack(atom/A)
+	if(istype(A, /obj/structure/ore_box))
+		stop_that_box(A)
+		return
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/high_tier/proc/stop_that_box(obj/structure/ore_box/B)
+	target = null
+	switch(rand(1, 3))
+		if(1)
+			B.dump_box_contents()
+			return
+		if(2)
+			if(B.pulledby)
+				B.pulledby.stop_pulling()
+			start_pulling(B)
+		if(3)
+			if(B.stored_ore.len)
+				visible_message("<span class='danger'>The [src] sniffs the [B]!</span>")
+				return
+			B.deconstruct()
+
 ////////////////Hivelord////////////////
 
 /mob/living/simple_animal/hostile/asteroid/hivelord
 	name = "hivelord"
 	desc = "A truly alien creature, it is a mass of unknown organic material, constantly fluctuating. When attacking, pieces of it split off and attack in tandem with the original."
-	icon = 'icons/mob/monsters.dmi'
-	icon_state = "Hivelord"
-	icon_living = "Hivelord"
-	icon_aggro = "Hivelord_alert"
-	icon_dead = "Hivelord_dead"
+	icon = 'icons/mob/monsters_asteroid/hivelord.dmi'
+	icon_state = "hivelord"
+	icon_living = "hivelord"
+	icon_aggro = "hivelord_alert"
+	icon_dead = "hivelord_dead"
 	icon_gib = "syndicate_gib"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 14
@@ -260,8 +345,11 @@
 	if(ranged_cooldown < 0)
 		OpenFire(A)
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/proc/create_brood()
+	return new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(loc)
+
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = create_brood()
 	A.GiveTarget(the_target)
 	A.friends = friends
 	A.faction = faction
@@ -278,11 +366,25 @@
 	core.corpse = src
 	loc = core  //put dead hivelord in droped core
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/high_tier
+	name = "Dust Hivelord"
+	icon = 'icons/mob/monsters_asteroid/hivelord_high_tier.dmi'
+	icon_state = "hivelord"
+	icon_living = "hivelord"
+	icon_aggro = "hivelord_alert"
+	vision_range = 6
+	idle_vision_range = 6
+	view_targeting = FALSE
+	stat_attack = 1
+
+/mob/living/simple_animal/hostile/asteroid/hivelord/high_tier/create_brood()
+	return new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/high_tier(loc)
+
 /obj/item/asteroid/hivelord_core
 	name = "hivelord core"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
-	icon = 'icons/mob/monsters.dmi'
-	icon_state = "Hivelod_core"
+	icon = 'icons/mob/monsters_asteroid/hivelord.dmi'
+	icon_state = "hivelord_core_high_tier"
 	var/inert = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/corpse
 
@@ -313,7 +415,7 @@
 /obj/item/asteroid/hivelord_core/proc/make_inert()
 	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
-	icon_state = "Hivelord_dead"
+	icon_state = "hivelord_dead"
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
 	if(inert)
@@ -333,17 +435,16 @@
 		qdel(src)
 	return ..()
 
-
 ////////////////Hivelordbrood////////////////
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	name = "hivelord brood"
 	desc = "A fragment of the original Hivelord, rallying behind its original. One isn't much of a threat, but..."
-	icon = 'icons/mob/monsters.dmi'
-	icon_state = "Hivelordbrood"
-	icon_living = "Hivelordbrood"
-	icon_aggro = "Hivelordbrood"
-	icon_dead = "Hivelordbrood"
+	icon = 'icons/mob/monsters_asteroid/hivelord.dmi'
+	icon_state = "hivelord_brood"
+	icon_living = "hivelord_brood"
+	icon_aggro = "hivelord_brood"
+	icon_dead = "hivelord_brood"
 	icon_gib = "syndicate_gib"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 0
@@ -372,12 +473,25 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/gen_modifiers(special_prob = 30, min_mod_am = 1, max_mod_am = 3, min_rarity_cost = 2, max_rarity_cost = 6)
 	return
 
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/high_tier
+	name = "dust hivelord brood"
+	icon = 'icons/mob/monsters_asteroid/hivelord_high_tier.dmi'
+	icon_state = "hivelord_brood"
+	icon_living = "hivelord_brood"
+	icon_aggro = "hivelord_brood"
+	icon_dead = "hivelord_brood"
+	maxHealth = 5
+	health = 5
+	melee_damage = 5
+	view_targeting = FALSE
+	stat_attack = 1
+
 ////////////////Goliath////////////////
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
 	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/goliath.dmi'
 	icon_state = "Goliath"
 	icon_living = "Goliath"
 	icon_aggro = "Goliath_alert"
@@ -401,6 +515,7 @@
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9
 	idle_vision_range = 5
+	pixel_x = -12
 	var/pre_attack = 0
 
 /mob/living/simple_animal/hostile/asteroid/goliath/atom_init()
@@ -418,11 +533,13 @@
 		return
 	icon_state = "Goliath_preattack"
 
+/mob/living/simple_animal/hostile/asteroid/goliath/proc/shoot_tentacle(turf/T)
+	new /obj/effect/goliath_tentacle/original(T, melee_damage)
+
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
-	var/tturf = get_turf(target)
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
-		new /obj/effect/goliath_tentacle/original(tturf, melee_damage)
+		shoot_tentacle(get_turf(target))
 		ranged_cooldown = ranged_cooldown_cap
 		icon_state = icon_aggro
 		pre_attack = 0
@@ -438,9 +555,24 @@
 	if(icon_state != icon_aggro)
 		icon_state = icon_aggro
 
+/mob/living/simple_animal/hostile/asteroid/goliath/high_tier
+	name = "Ancient goliath"
+	icon = 'icons/mob/monsters_asteroid/goliath_high_tier.dmi'
+	pixel_x = -12
+	move_to_delay = 30
+	ranged = TRUE
+	ranged_cooldown = 1
+	vision_range = 6
+	idle_vision_range = 6
+	view_targeting = FALSE
+	stat_attack = 1
+
+/mob/living/simple_animal/hostile/asteroid/goliath/high_tier/shoot_tentacle(turf/T)
+	new /obj/effect/goliath_tentacle/original/high_tier(T, melee_damage)
+
 /obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
-	icon = 'icons/mob/monsters.dmi'
+	icon = 'icons/mob/monsters_asteroid/goliath.dmi'
 	icon_state = "Goliath_tentacle"
 	var/strength
 
@@ -456,17 +588,6 @@
 		A.gets_dug()
 	addtimer(CALLBACK(src, PROC_REF(Trip)), 20)
 
-/obj/effect/goliath_tentacle/original
-
-/obj/effect/goliath_tentacle/original/atom_init()
-	. = ..()
-	var/list/directions = cardinal.Copy()
-	for (var/i in 1 to 3)
-		var/spawndir = pick(directions)
-		directions -= spawndir
-		var/turf/T = get_step(src, spawndir)
-		new /obj/effect/goliath_tentacle(T, strength)
-
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
@@ -480,6 +601,59 @@
 		Trip()
 		return
 	. = ..()
+
+/obj/effect/goliath_tentacle/high_tier
+	icon = 'icons/mob/monsters_asteroid/goliath_high_tier.dmi'
+
+/obj/effect/goliath_tentacle/high_tier/Trip()
+	for(var/mob/living/M in src.loc)
+		visible_message("<span class='userdanger'>The [src.name] captured [M.name]!</span>")
+		playsound(M, 'sound/misc/goliath_tentacle_hit.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		if(!M.has_status_effect(STATUS_EFFECT_CAPTURE))
+			M.apply_status_effect(STATUS_EFFECT_CAPTURE, -1, TRUE)
+	qdel(src)
+
+/obj/effect/goliath_tentacle/original
+
+/obj/effect/goliath_tentacle/original/proc/spawn_copies()
+	var/list/directions = cardinal.Copy()
+	for (var/i in 1 to 3)
+		var/spawndir = pick(directions)
+		directions -= spawndir
+		var/turf/T = get_step(src, spawndir)
+		new /obj/effect/goliath_tentacle(T, strength)
+
+/obj/effect/goliath_tentacle/original/atom_init()
+	. = ..()
+	spawn_copies()
+
+/obj/effect/goliath_tentacle/original/high_tier
+	icon = 'icons/mob/monsters_asteroid/goliath_high_tier.dmi'
+
+/obj/effect/goliath_tentacle/original/high_tier/spawn_copies()
+	var/list/directions = cardinal.Copy()
+	for (var/i in 1 to 3)
+		var/spawndir = pick(directions)
+		directions -= spawndir
+		var/turf/T = get_step(src, spawndir)
+		new /obj/effect/goliath_tentacle/high_tier(T, strength)
+
+/obj/effect/goliath_tentacle/original/high_tier/Trip()
+	for(var/mob/living/M in src.loc)
+		visible_message("<span class='userdanger'>The [src.name] captured [M.name]!</span>")
+		playsound(M, 'sound/misc/goliath_tentacle_hit.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		if(isrobot(M))
+			var/mob/living/silicon/robot/robo = M
+			robo.drop_ore()
+			M.Weaken(strength * 0.1)
+			continue
+		if(!iscarbon(M))
+			M.Weaken(strength * 0.1)
+			M.adjustBruteLoss(strength * 0.4) // 40% pure damage of Goliath force
+			continue
+		if(!M.has_status_effect(STATUS_EFFECT_CAPTURE))
+			M.apply_status_effect(STATUS_EFFECT_CAPTURE, -1, TRUE)
+	qdel(src)
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"

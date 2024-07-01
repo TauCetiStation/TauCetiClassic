@@ -353,6 +353,11 @@
 			или стрелять из пистолета, чтобы передвигаться в соответствии с 3-м законом Ньютона."
 	icon_state = "weightless"
 
+/atom/movable/screen/alert/status_effect/tough_paralysis
+	name = "Tough Paralysis"
+	desc = "You've paralysed. Considering how helpless you are."
+	icon_state = "paralysis"
+
 //ALIENS
 
 /atom/movable/screen/alert/alien_tox
