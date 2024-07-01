@@ -138,3 +138,9 @@
 	desc = "It's baseball hat in tasteful black color with blueshield insignia."
 	icon_state = "blueshieldsoft"
 	cap_color = "blueshield"
+
+/obj/item/clothing/head/soft/recycler
+	name = "recycler cap"
+	desc = "Black baseball cap with a strange orange square."
+	icon_state = "recyclersoft"
+	cap_color = "recycler"
