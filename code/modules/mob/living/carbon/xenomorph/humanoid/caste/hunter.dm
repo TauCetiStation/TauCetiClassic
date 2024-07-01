@@ -108,6 +108,7 @@
 			step_towards(src, L)
 			toggle_leap(FALSE)
 			playsound(src, pick(SOUNDIN_HUNTER_LEAP), VOL_EFFECTS_MASTER, vary = FALSE)
+			successful_leap()
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smashes into [hit_atom]!</span>")
 		playsound(hit_atom, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER)
@@ -117,6 +118,9 @@
 	pounce_cooldown = TRUE
 	VARSET_IN(src, pounce_cooldown, FALSE, pounce_cooldown_time)
 	update_canmove()
+
+/mob/living/carbon/xenomorph/humanoid/hunter/proc/successful_leap()
+	return
 
 #undef MAX_ALIEN_LEAP_DIST
 

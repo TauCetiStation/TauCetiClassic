@@ -275,7 +275,10 @@
 		qdel(src)
 		return
 
-	character.forceMove(pick(latejoin), keep_buckled = TRUE)
+	if(config.event_cryopod_latejoin)
+		character.forceMove(pick(event_cryopods), keep_buckled = TRUE)
+	else
+		character.forceMove(pick(latejoin), keep_buckled = TRUE)
 	show_location_blurb(character.client)
 
 	SSticker.mode.latespawn(character)

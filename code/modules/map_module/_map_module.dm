@@ -12,12 +12,18 @@
 	// gamemode name to force
 	var/gamemode
 
+	// lobby image and music
+	var/map_lobby_image
+	var/map_lobby_music
+
 	// todo: default stats
 
 	// disables random events, most likely you need it
 	var/config_disable_random_events = FALSE
 	// enables alternative spawn menu for lobby through spawners
 	var/config_use_spawners_lobby = FALSE
+	// enables spawn latejoin in special event cryopods
+	var/config_event_cryopod_latejoin = FALSE
 
 	// disable default mice/drone spawners
 	var/disable_default_spawners = FALSE
@@ -37,6 +43,10 @@
 		config.alt_lobby_menu = TRUE
 		log_debug("Alternative event menu enabled.")
 
+	if(config_event_cryopod_latejoin)
+		config.event_cryopod_latejoin = TRUE
+		log_debug("Event cryopods latejoin enabled.")
+
 	if(disable_default_spawners) // need to rewrite configs, this is stupid
 		config.disable_player_mice = TRUE
 		config.allow_drone_spawn = FALSE
@@ -44,6 +54,14 @@
 	if(gamemode)
 		log_debug("[gamemode] mode forced.")
 		master_mode = gamemode
+
+	if(map_lobby_image)
+		log_debug("Title screen changed.")
+		change_lobbyscreen(map_lobby_image)
+
+	if(map_lobby_music)
+		log_debug("Lobby music changed.")
+		SSticker.login_music = map_lobby_music
 
 	if(player_verbs)
 		setup_temp_player_verbs(player_verbs, "Map")

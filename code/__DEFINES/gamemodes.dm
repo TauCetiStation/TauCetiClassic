@@ -23,6 +23,9 @@
 #define F_SPIDERCLAN         "Spider Clan"
 #define F_WIZFEDERATION      "Wizard Federation"
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
+#define F_XENOMORPH          "Alien"
+#define F_NOSTROMO_CREW      "Nostromo Crew"
+#define F_NOSTROMO_CAT       "Nostromo Cat Jonesy"
 #define F_ZOMBIES            "Zobmies"
 #define F_REPLICATORS        "Replicators"
 
@@ -64,6 +67,8 @@
 #define WIZARD "Wizard"
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
+#define LONE_XENOMORPH "Lone Xenomorph"
+#define NOSTROMO_CREWMATE "Nostromo Crewmate"
 #define REPLICATOR "Replicator"
 #define PIRATE "Pirate"
 #define PRISONER "Prisoner"
