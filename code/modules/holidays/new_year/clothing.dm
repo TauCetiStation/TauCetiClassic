@@ -203,3 +203,10 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)
+
+/obj/item/clothing/head/pluvia
+	name = "pluvia hat"
+	desc = "Prepare to rain"
+	icon_state = "pluvia_hat"
+	item_state = "pluvia_hat"
+	flags = HEADCOVERSEYES|BLOCKHAIR

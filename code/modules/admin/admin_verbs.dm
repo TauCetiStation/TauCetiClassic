@@ -125,6 +125,7 @@ var/global/list/admin_verbs_fun = list(
 //	/client/proc/Noir_anomaly,
 	/client/proc/epileptic_anomaly_cancel,
 	/client/proc/achievement,
+	/client/proc/bless,
 	/client/proc/toggle_AI_interact, //toggle admin ability to interact with machines as an AI,
 	/client/proc/centcom_barriers_toggle,
 	/client/proc/gateway_toggle,
@@ -1050,6 +1051,14 @@ var/global/list/admin_verbs_hideable = list(
 	to_chat(winner, "<span class='danger'>Congratulations!</span>")
 
 	SSStatistics.add_achievement(winner.key, winner.name, name, desc)
+
+/client/proc/bless(mob/living/carbon/human/T as mob in player_list)
+	set category = "Fun"
+	set name = "Bless"
+	set desc = "Пускай знает что после смерти попадет в рай"
+	T.bless()
+	log_admin("[key_name(usr)] bless [key_name(T)]")
+	message_admins("<span class='notice'>[key_name_admin(usr)] bless [key_name(T)]</span>")
 
 /client/proc/aooc()
 	set category = "Admin"

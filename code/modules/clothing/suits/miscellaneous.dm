@@ -524,6 +524,24 @@
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
 
+/obj/item/clothing/suit/pluvia_good
+	name = "Path of Good"
+	desc = ""
+	icon_state = "pluvia_good"
+	item_state = "pluvia_good"
+
+/obj/item/clothing/suit/pluvia_trick
+	name = "Path of Trick"
+	desc = ""
+	icon_state = "pluvia_trick"
+	item_state = "pluvia_trick"
+
+/obj/item/clothing/suit/pluvia_balance
+	name = "Path of Balance"
+	desc = ""
+	icon_state = "pluvia_balance"
+	item_state = "pluvia_balance"
+
 //Mafia
 /obj/item/clothing/suit/browntrenchcoat
 	name = "brown trench coat"
