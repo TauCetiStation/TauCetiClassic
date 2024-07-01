@@ -40,7 +40,7 @@
 	if(reagents.has_reagent("space_drugs"))
 		traumatic_shock -= 60 * painkiller_effectiveness
 		shock_stage -= 6 * painkiller_effectiveness
-	if(reagents.has_reagent("tramadol"))
+	if(reagents.has_reagent("tramadol") || reagents.has_reagent("endorphine"))
 		traumatic_shock -= 80 * painkiller_effectiveness
 		shock_stage -= 8 * painkiller_effectiveness
 	if(reagents.has_reagent("oxycodone"))
