@@ -126,13 +126,21 @@
 	canmove = FALSE
 	faction = "alien"
 
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/atom_init()
+	. = ..()
+	friends = global.alien_list
 
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/allowAttackTarget(mob/living/target)
 	return !target.incapacitated()
 
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/atom_init()
-	. = ..()
-	friends = global.alien_list
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/CanAttack(atom/the_target)
+	var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
+	var/mob/living/L = Mobs
+	for(var/mob in Mobs)
+		if(allowAttackTarget())
+			L += Mobs
+		else
+			L -= Mobs
 
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/death(gibbed)
 	. = ..()
@@ -149,32 +157,6 @@
 
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/update_canmove()
 	return
-
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/ListTargets()
-	var/list/L = list()
-	if(search_objects)
-		var/list/Objects = oview(vision_range, src)
-		L += Objects
-	else if(SSchunks.has_enemy_faction(src, vision_range))
-		var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
-		for(var/mob in Mobs)
-			if(allowAttackTarget())
-				L += Mobs
-			if(!allowAttackTarget())
-				L -= Mobs
-		for(var/obj/mecha/M in range(vision_range, src))
-			if(can_see(src, M, vision_range))
-				L += M
-	return L
-
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/CanAttack(atom/the_target)
-	var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
-	var/mob/living/L = Mobs
-	for(var/mob in Mobs)
-		if(allowAttackTarget())
-			L += Mobs
-		if(!allowAttackTarget())
-			L -= Mobs
 
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/UnarmedAttack(atom/A)
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
