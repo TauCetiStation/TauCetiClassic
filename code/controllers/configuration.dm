@@ -50,6 +50,7 @@ var/global/bridge_secret = null
 	var/list/probabilities = list()		// relative probability of each mode
 	var/humans_need_surnames = 0
 	var/allow_random_events = 1			// enables random events mid-round when set to 1
+	var/disable_station_announce = 0	// disables announcements mentioning the station
 	var/alt_lobby_menu = 0 				// event lobby
 	var/event_cryopod_latejoin = 0		// event cryopod latejoin spawn
 	var/allow_ai = 1					// allow ai job

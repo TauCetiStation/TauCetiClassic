@@ -20,6 +20,8 @@
 
 	// disables random events, most likely you need it
 	var/config_disable_random_events = FALSE
+	// disables announcements mentioning the station
+	var/config_disable_station_announce = FALSE
 	// enables alternative spawn menu for lobby through spawners
 	var/config_use_spawners_lobby = FALSE
 	// enables spawn latejoin in special event cryopods
@@ -34,6 +36,10 @@
 	. = ..()
 
 	log_debug("Map module '[name]' loaded.")
+
+	if(config_disable_station_announce)
+		config.disable_station_announce = TRUE
+		log_debug("Station announce disabled by map module.")
 
 	if(config_disable_random_events)
 		config.allow_random_events = FALSE

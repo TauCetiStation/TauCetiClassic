@@ -7,6 +7,7 @@
 
 	gamemode = "Alien"
 	config_disable_random_events = TRUE
+	config_disable_station_announce = TRUE
 	config_event_cryopod_latejoin = TRUE
 
 	map_lobby_image = 'html/media/lobby_alien.png'
