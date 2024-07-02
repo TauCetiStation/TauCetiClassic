@@ -137,6 +137,8 @@
 			return FALSE
 		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
+		if(!allowAttackTarget(L))
+			return FALSE
 		return TRUE
 	if(isobj(the_target))
 		if(the_target.type in wanted_objects)

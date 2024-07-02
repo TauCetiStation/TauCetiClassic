@@ -108,9 +108,8 @@
 	name = "acid turret"
 	real_name = "acid turret"
 	desc = "Склизкое строение, выпускающее из себя смертельные кислотные плевки."
-	icon = 'icons/obj/cult.dmi'
-	icon_state = "pylon_glow"
-	icon_living = "pylon"
+	icon = 'icons/obj/acid_turret.dmi'
+	icon_state = "acid_turret"
 	ranged = TRUE
 	amount_shoot = 1
 	projectiletype = /obj/item/projectile/neurotoxin/magic/x_turret_acid
@@ -132,15 +131,6 @@
 
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/allowAttackTarget(mob/living/target)
 	return !target.incapacitated()
-
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/CanAttack(atom/the_target)
-	var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
-	var/mob/living/L = Mobs
-	for(var/mob in Mobs)
-		if(allowAttackTarget())
-			L += Mobs
-		else
-			L -= Mobs
 
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/death(gibbed)
 	. = ..()

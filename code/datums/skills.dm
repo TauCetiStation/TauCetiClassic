@@ -123,3 +123,6 @@
 
 /mob/living/proc/add_command_buff(mob/commander, time)
 	add_skills_buff(commander.mind.skills.active, time)
+
+/mob/living/proc/allowAttackTarget()
+	return TRUE

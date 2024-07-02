@@ -425,6 +425,3 @@
 
 /mob/living/simple_animal/can_pickup(obj/O)
 	return FALSE
-
-/mob/living/simple_animal/proc/allowAttackTarget(mob/living/target)
-	return TRUE
