@@ -346,6 +346,8 @@
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
 #define COMSIG_LIVING_BUMPED "living_bumped"
+// from base of hurtReaction (mob/living/carbon/human/attacker)
+#define COMSIG_HUMAN_HARMED_OTHER "human_harmed_other"
 
 /// from /obj/effect/proc_holder/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"

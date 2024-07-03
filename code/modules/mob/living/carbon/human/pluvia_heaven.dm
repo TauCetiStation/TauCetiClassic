@@ -3,6 +3,7 @@
 	icon_state = "unexplored"
 
 /var/global/social_credit_threshold = 5
+/var/global/haram_threshold = 5
 
 /mob/living/carbon/human/proc/bless()
 	to_chat(src, "<span class='notice'>\ <font size=4>Высшая сила засвидетельствовала ваш подвиг. Врата рая ожидают вас.</span></font>")
@@ -11,6 +12,10 @@
 	var/image/eye = image('icons/mob/human_face.dmi', icon_state = "pluvia_ms_s")
 	eye.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(eye)
+
+/mob/living/carbon/human/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	. = ..()
+	SEND_SIGNAL(attacker, COMSIG_HUMAN_HARMED_OTHER, src)
 
 /obj/item/weapon/bless_vote
 	name = "Рекомендательное письмо"

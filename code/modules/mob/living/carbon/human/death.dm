@@ -85,9 +85,9 @@
 
 	..(gibbed)
 	if(ispluvian(src) &&!ischangeling(src)) // Pluvia heaven
-		if(blessed) // партия гордится вами
+		if(blessed || social_credit >= social_credit_threshold) // партия гордится вами
 			reborn(src)
-		if(social_credit < social_credit_threshold || cursed)
+		else
 			to_chat(src, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")
 			playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 

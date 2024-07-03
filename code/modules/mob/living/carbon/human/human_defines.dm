@@ -129,6 +129,6 @@
 
 	// Pluvia sochial credit system
 	var/social_credit = 0
-	var/cursed = 0
+	var/haram_point = 0
 	var/blessed = 0
 	var/bless_vote
