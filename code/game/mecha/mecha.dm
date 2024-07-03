@@ -686,7 +686,6 @@
 				var/obj/item/mecha_parts/mecha_tracking/tracking = locate() in contents
 				for(tracking)
 					actions += "Exosuit Tracker"
-					tracking = found_tracking
 					break
 
 				if(actions.len > 0)

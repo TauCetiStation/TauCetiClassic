@@ -78,6 +78,9 @@
 	ME = new /obj/item/mecha_parts/mecha_equipment(src)
 	ME.attach(src)
 
+/obj/mecha/working/ripley/firefighter/ert
+	dna_lockable = TRUE
+
 /obj/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE!!!"
 	name = "DEATH-RIPLEY"

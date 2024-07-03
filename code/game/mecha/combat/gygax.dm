@@ -68,6 +68,9 @@
 	ME = new /obj/item/mecha_parts/mecha_equipment/repair_droid(src)
 	ME.attach(src)
 
+/obj/mecha/combat/gygax/ultra/ert
+	dna_lockable = TRUE
+
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit used by Nanotrasen Death Squads. A significantly upgraded Gygax security mech."
 	name = "Dark Gygax"
