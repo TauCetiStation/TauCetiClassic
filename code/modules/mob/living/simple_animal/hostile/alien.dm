@@ -107,7 +107,7 @@
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret
 	name = "acid turret"
 	real_name = "acid turret"
-	desc = "Склизкое строение, выпускающее из себя смертельные кислотные плевки."
+	desc = "Склизкое строение, выпускающее из себя оглушающие кислотные плевки."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "acid_turret"
 	ranged = TRUE
