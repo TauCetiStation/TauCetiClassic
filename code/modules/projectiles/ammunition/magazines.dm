@@ -196,7 +196,7 @@
 
 /obj/item/ammo_box/magazine/smg
 	name = "SMG magazine (9mm)"
-	icon_state = "smg_mag"
+	icon_state = "smg_mag-5"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 18
