@@ -2,9 +2,6 @@
 	name = "pylon"
 	real_name = "pylon"
 	desc = "Ты не должен этого видеть."
-	icon = 'icons/obj/cult.dmi'
-	icon_state = "pylon_glow"
-	icon_living = "pylon"
 	ranged = TRUE
 	amount_shoot = 3
 	projectiletype = null
@@ -18,7 +15,7 @@
 	anchored = TRUE
 	stop_automated_movement = TRUE
 	canmove = FALSE
-	faction = "cult"
+	faction = null
 	var/timer
 
 /mob/living/simple_animal/hostile/pylon/atom_init()

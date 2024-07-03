@@ -471,21 +471,10 @@
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "pylon_glow"
 	icon_living = "pylon"
-	ranged = TRUE
 	amount_shoot = 3
 	projectiletype = /obj/item/projectile/beam/cult_laser
 	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
-	ranged_cooldown = 5
-	ranged_cooldown_cap = 0
-	maxHealth = 120
-	health = 120
-	melee_damage = 0
-	speed = 0
-	anchored = TRUE
-	stop_automated_movement = TRUE
-	canmove = FALSE
 	faction = "cult"
-	timer
 
 /mob/living/simple_animal/hostile/pylon/cult/atom_init()
 	. = ..()
