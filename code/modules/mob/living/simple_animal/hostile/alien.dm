@@ -138,10 +138,6 @@
 		qdel(A)
 	qdel(src)
 
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/add_friend(mob/M)
-	if(M.incapacitated())
-		friends = M
-
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/attackby()
 	return ..()
 

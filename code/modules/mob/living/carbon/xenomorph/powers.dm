@@ -501,3 +501,16 @@
 
 #undef ALREADY_STRUCTURE_THERE
 #undef CHECK_WEEDS
+
+/obj/effect/proc_holder/no_target/xeno_turret
+	name = "Поставить турель"
+	desc = "Поставить турель, стреляющую кислотными и оглушающими плевками."
+	charge_max = 3000
+	charge_type = "recharge"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	action_background_icon_state = "bg_alien"
+	plasma_cost = 400
+	action_icon_state = "rot"
+
