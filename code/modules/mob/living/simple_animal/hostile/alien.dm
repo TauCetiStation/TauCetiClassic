@@ -140,9 +140,3 @@
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/attackby()
 	return ..()
 
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/update_canmove()
-	return
-
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/UnarmedAttack(atom/A)
-	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
-	OpenFire(A)
