@@ -20941,9 +20941,7 @@
 	},
 /area/space)
 "bav" = (
-/obj/mecha/combat/gygax/ultra{
-	dna_lockable = 1
-	},
+/obj/mecha/combat/gygax/ultra/ert,
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
 	},
@@ -21238,9 +21236,7 @@
 	},
 /area/custom/syndicate_mothership/droppod_garage)
 "bbc" = (
-/obj/mecha/working/ripley/firefighter{
-	dna_lockable = 1
-	},
+/obj/mecha/working/ripley/firefighter/ert,
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
 	},
@@ -21290,9 +21286,7 @@
 	},
 /area/custom/wizard_station)
 "bbi" = (
-/obj/mecha/medical/odysseus{
-	dna_lockable = 1
-	},
+/obj/mecha/medical/odysseus/ert,
 /obj/machinery/light,
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
