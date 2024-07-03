@@ -132,11 +132,10 @@
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/allowAttackTarget(mob/living/target)
 	return !target.incapacitated()
 
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/death(gibbed)
-	. = ..()
-	for(var/atom/A in contents)
-		qdel(A)
-	qdel(src)
+/mob/living/simple_animal/hostile/pylon/xenomorph_turret/death()
+	..()
+	visible_message("[src] lets out a waning guttural screech, acid bubbling from its tube...")
+	playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/attackby()
 	return ..()
