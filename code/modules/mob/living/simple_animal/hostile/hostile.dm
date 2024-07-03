@@ -98,7 +98,6 @@
 			if(can_see(src, M, vision_range))
 				L += M
 	return L
-
 /mob/living/simple_animal/hostile/proc/FindTarget()//Step 2, filter down possible targets to things we actually care about
 	var/list/Targets = list()
 	var/Target
