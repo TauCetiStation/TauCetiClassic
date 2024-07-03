@@ -37,10 +37,13 @@
 	animalistic = FALSE
 	has_head = TRUE
 
+/mob/living/simple_animal/hostile/mimic/proc/target_found(datum/target)
+	me_emote("growls at [target]")
+
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
-		me_emote("growls at [.]")
+		target_found(.)
 
 
 
@@ -137,9 +140,13 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	var/destroy_objects = 0
 	var/knockdown_people = 0
 
-/mob/living/simple_animal/hostile/mimic/copy/atom_init(mapload, obj/copy, mob/living/creator)
+/mob/living/simple_animal/hostile/mimic/copy/atom_init(mapload, obj/copy, mob/living/creator, destroy_original = 0)
 	. = ..()
 	CopyObject(copy, creator)
+	if(!destroy_original)
+		copy.forceMove(src)
+	else
+		qdel(copy)
 
 /mob/living/simple_animal/hostile/mimic/copy/death()
 
@@ -155,35 +162,36 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	. = ..()
 	return . - creator
 
+/mob/living/simple_animal/hostile/mimic/copy/proc/is_object_copyallowed(obj/O)
+	return ((isitem(O) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
+
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/creator)
+	if(!is_object_copyallowed(O))
+		return FALSE
+	O.loc = src
+	name = O.name
+	desc = O.desc
+	icon = O.icon
+	icon_state = O.icon_state
+	icon_living = icon_state
 
-	if((isitem(O) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
+	if(istype(O, /obj/structure))
+		health = (anchored * 50) + 50
+		destroy_objects = 1
+		if(O.density && O.anchored)
+			knockdown_people = 1
+			melee_damage *= 2
+	else if(isitem(O))
+		var/obj/item/I = O
+		health = 15 * I.w_class
+		melee_damage = 2 + I.force
+		move_to_delay = 2 * I.w_class
 
-		O.loc = src
-		name = O.name
-		desc = O.desc
-		icon = O.icon
-		icon_state = O.icon_state
-		icon_living = icon_state
-
-		if(istype(O, /obj/structure))
-			health = (anchored * 50) + 50
-			destroy_objects = 1
-			if(O.density && O.anchored)
-				knockdown_people = 1
-				melee_damage *= 2
-		else if(isitem(O))
-			var/obj/item/I = O
-			health = 15 * I.w_class
-			melee_damage = 2 + I.force
-			move_to_delay = 2 * I.w_class
-
-		maxHealth = health
-		if(creator)
-			src.creator = creator
-			faction = "\ref[creator]" // very unique
-		return 1
-	return
+	maxHealth = health
+	if(creator)
+		src.creator = creator
+		faction = "\ref[creator]" // very unique
+	return TRUE
 
 /mob/living/simple_animal/hostile/mimic/copy/DestroySurroundings()
 	if(destroy_objects)
@@ -215,6 +223,43 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	if (!copy)
 		return INITIALIZE_HINT_QDEL
 	return ..(mapload, copy)
+
+/mob/living/simple_animal/hostile/mimic/copy/vending
+	faction = "profit"
+	speak_chance = 7
+
+/mob/living/simple_animal/hostile/mimic/copy/vending/atom_init(mapload, obj/copy, mob/living/creator)
+	. = ..()
+	// for 30% chance, they're stronger
+	switch(rand(1, 100))
+		// these are usually weak
+		if(1 to 70)
+			// don't make it negative-health
+			var/adjusted_health = max(health - 20, 20)
+			health = adjusted_health
+			maxHealth = adjusted_health
+		// has more health
+		if(71 to 80)
+			var/bonus_health = 15 + rand(1, 7) * 5
+			health += bonus_health
+			maxHealth += bonus_health
+			desc += " This one seems extra robust..."
+		// does stronger damage
+		if(81 to 90)
+			// 3~8
+			melee_damage += 2+rand(1, 6)
+			desc += " This one seems extra painful..."
+		// moves faster
+		if(91 to 100)
+			// just half
+			move_to_delay /= 2
+			desc += " This one seems more agile..."
+
+/mob/living/simple_animal/hostile/mimic/copy/vending/is_object_copyallowed(obj/O)
+	return ismachinery(O)
+
+/mob/living/simple_animal/hostile/mimic/copy/vending/target_found(datum/target)
+	return
 
 /mob/living/simple_animal/hostile/mimic/prophunt
 	name = "mimic"

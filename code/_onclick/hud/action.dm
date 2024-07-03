@@ -256,8 +256,6 @@
 	if(!client)
 		return FALSE
 
-	sync_lighting_plane_alpha()
-
 	if(stat == DEAD)
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = 8
@@ -267,12 +265,10 @@
 
 	return TRUE
 
-///Set the lighting plane hud alpha to the mobs lighting_alpha var
-/mob/proc/sync_lighting_plane_alpha()
-	if(hud_used)
-		var/atom/movable/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if(L)
-			L.alpha = lighting_alpha
+/mob/proc/set_lighting_alpha(value)
+	if(lighting_alpha != value)
+		lighting_alpha = value
+		SEND_SIGNAL(src, COMSIG_MOB_LIGHTING_ALPHA_CHANGED, value)
 
 /datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
 	var/row = round((number-1)/AB_MAX_COLUMNS)

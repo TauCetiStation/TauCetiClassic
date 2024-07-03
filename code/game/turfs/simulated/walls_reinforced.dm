@@ -1,7 +1,7 @@
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
 	desc = "Огромный кусок укрепленного металла для разделения комнат."
-	icon = 'icons/turf/walls/has_false_walls/reinforced_wall.dmi'
+	icon = 'icons/turf/walls/has_false_walls/reinforced.dmi'
 	opacity = 1
 	density = TRUE
 
@@ -15,6 +15,41 @@
 	seconds_to_melt = 60
 
 	var/d_state = INTACT
+
+/turf/simulated/wall/r_wall/yellow
+	icon = 'icons/turf/walls/has_false_walls/reinforced_yellow.dmi'
+
+/turf/simulated/wall/r_wall/red
+	icon = 'icons/turf/walls/has_false_walls/reinforced_red.dmi'
+
+/turf/simulated/wall/r_wall/purple
+	icon = 'icons/turf/walls/has_false_walls/reinforced_purple.dmi'
+
+/turf/simulated/wall/r_wall/green
+	icon = 'icons/turf/walls/has_false_walls/reinforced_green.dmi'
+
+/turf/simulated/wall/r_wall/beige
+	icon = 'icons/turf/walls/has_false_walls/reinforced_beige.dmi'
+
+/turf/simulated/wall/r_wall/change_color(color)
+	var/new_type
+	switch(color)
+		if("blue")
+			new_type = /turf/simulated/wall/r_wall
+		if("yellow")
+			new_type = /turf/simulated/wall/r_wall/yellow
+		if("red")
+			new_type = /turf/simulated/wall/r_wall/red
+		if("purple")
+			new_type = /turf/simulated/wall/r_wall/purple
+		if("green")
+			new_type = /turf/simulated/wall/r_wall/green
+		if("beige")
+			new_type = /turf/simulated/wall/r_wall/beige
+		else
+			stack_trace("Color [color] does not exist")
+	if(new_type && new_type != type)
+		ChangeTurf(/turf/simulated/wall/r_wall)
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -101,6 +136,18 @@
 		else
 			to_chat(user, "<span class='warning'>Нужно больше топлива.</span>")
 			return
+
+	if(istype(W, /obj/item/weapon/airlock_painter))
+		var/obj/item/weapon/airlock_painter/A = W
+		if(!A.can_use(user, 1))
+			return
+		var/new_color = tgui_input_list(user, "Выберите цвет", "Цвет", WALLS_COLORS)
+		if(!new_color)
+			return
+		if(!A.use_tool(src, user, 10, 1))
+			return
+		change_color(new_color)
+		return
 
 	var/turf/T = user.loc	//get user's location for delay checks
 	//DECONSTRUCTION

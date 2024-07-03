@@ -2,6 +2,7 @@ var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
 
 /datum/guard
 	var/client/holder
+
 	var/total_alert_weight = 0
 	var/bridge_reported = FALSE
 
@@ -31,6 +32,7 @@ var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
 	addtimer(CALLBACK(src, PROC_REF(trigger_init)), 20 SECONDS) // time for other systems to collect data
 
 /datum/guard/proc/trigger_init()
+	// if client was lost somehow, mob/login should restart test again
 	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < GUARD_CHECK_AGE)
 		load_geoip() // this may takes a few minutes in bad case
 
@@ -171,19 +173,19 @@ var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
 
 		total_alert_weight += related_db_weight
 
-	if(holder.prefs.cid_list.len > 1)
+	if(holder.prefs.cid_count > 1)
 		var/multicid_weight = 0
 		var/allowed_amount = 1
 
 		if(isnum(holder.player_age) && holder.player_age > 60)
 			allowed_amount++
 
-		multicid_weight += min(((holder.prefs.cid_list.len - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
+		multicid_weight += min(((holder.prefs.cid_count - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
 
 		new_report += {"<div class='Section'><h3>Differents CID's ([multicid_weight]):</h3>
-		Has [holder.prefs.cid_list.len] different computer_id.</div>"}
+		Has [holder.prefs.cid_count] different computer_id.</div>"}
 
-		new_short_report += "Has [holder.prefs.cid_list.len] CID's (tw: [multicid_weight]); "
+		new_short_report += "Has [holder.prefs.cid_count] CID's (tw: [multicid_weight]); "
 
 		total_alert_weight += multicid_weight
 
@@ -301,8 +303,6 @@ var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
 		return
 
 	var/reason = config.guard_autoban_reason
-
-	AddBan(holder.ckey, holder.computer_id, reason, "taukitty", 0, 0, holder.mob.lastKnownIP) // legacy bans base
 
 	DB_ban_record_2(BANTYPE_PERMA, holder.mob, -1, reason) // copypaste, bans refactoring needed
 	feedback_inc("ban_perma",1)

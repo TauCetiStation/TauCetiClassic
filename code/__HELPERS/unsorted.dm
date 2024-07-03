@@ -685,7 +685,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 // Takes: Area type as text string or as typepath OR an instance of the area.
 // Returns: A list of all turfs in areas of that type of that type in the world.
-// Please note that because of (loop in area) this is not really optimal, 
+// Please note that because of (loop in area) this is not really optimal,
 // but you probably have no choice
 /proc/get_area_turfs(areatype, subtypes=TRUE, filter_by_z = 0, ignore_blocked = FALSE)
 	if(istext(areatype))
@@ -1645,12 +1645,12 @@ var/global/list/WALLITEMS = typecacheof(list(
 // Format a power value in W, kW, MW, or GW
 /proc/DisplayPower(powerused)
 	if(powerused < 1000) // Less than a kW
-		return "[powerused] W"
+		return "[powerused] Вт"
 	if(powerused < 1000000) // Less than a MW
-		return "[round((powerused * 0.001), 0.01)] kW"
+		return "[round((powerused * 0.001), 0.01)] кВт"
 	if(powerused < 1000000000) // Less than a GW
-		return "[round((powerused * 0.000001), 0.001)] MW"
-	return "[round((powerused * 0.000000001), 0.0001)] GW"
+		return "[round((powerused * 0.000001), 0.001)] МВт"
+	return "[round((powerused * 0.000000001), 0.0001)] ГВТ"
 
 //Returns a list of all locations (except the area) the movable is within.
 /proc/get_nested_locs(atom/movable/AM, include_turf = FALSE)

@@ -282,7 +282,7 @@
 
 /datum/disease2/disease/proc/activate_symptom(atom/A)
 	//Moving to the next stage
-	if(clicks > stage * 100 && prob(10) && stage < effects.len)
+	if(clicks > stage * 100 && prob(stageprob) && stage < effects.len)
 		stage++
 
 	//Do nasty effects

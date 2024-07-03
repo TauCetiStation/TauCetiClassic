@@ -141,18 +141,28 @@
 	var/datum/stack_recipe/R = recipe
 	var/multiplier = quantity
 	if (!multiplier) multiplier = 1
+	 // don't forget to copypaste checks to /datum/craft_or_build/proc/can_build
 	if(src.amount < (R.req_amount*multiplier))
 		if (R.req_amount*multiplier>1)
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 		else
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return
-	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
-		return
-	if (R.on_floor)
+	if (R.build_outline)
 		usr.client.cob.turn_on_build_overlay(usr.client, R, src)
 		return
+	if (R.max_per_turf)
+		if(R.max_per_turf == 1 && (locate(R.result_type) in usr.loc))
+			to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
+			return
+		else
+			var/already_have = 0
+			for(var/type in usr.loc)
+				if(istype(type, R.result_type))
+					already_have++
+			if(already_have >= R.max_per_turf)
+				to_chat(usr, "<span class='warning'>You can't build another [R.title] here!</span>")
+				return
 	if (R.time)
 		if(usr.is_busy())
 			return
@@ -352,26 +362,36 @@
  * Recipe datum
  */
 /datum/stack_recipe
+	/// The title of the recipe
 	var/title = "ERROR"
-	var/result_type
+	/// What atom the recipe makes, typepath
+	var/atom/result_type
+	/// Amount of stack required to make
 	var/req_amount = 1
+	/// Amount of resulting atoms made
 	var/res_amount = 1
+	/// Max amount of resulting atoms made
 	var/max_res_amount = 1
+	/// How long it takes to make, base value. Can vary based on required_skills
 	var/time = 0
-	var/one_per_turf = FALSE
-	var/on_floor = FALSE
-	var/floor_path
+	/// Number of the resulting atoms is allowed per turf, 0 to disable limit
+	var/max_per_turf = 0
+	/// Enable or disable preview overlay
+	var/build_outline = FALSE
+	/// Restrict building only for these floor types
+	var/list/turf/floor_path
+	/// Skills to check for building time
 	var/list/required_skills
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE, required_skills = null, floor_path = list(/turf/simulated/floor))
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, max_per_turf = 0, build_outline = FALSE, required_skills = null, floor_path = list(/turf/simulated/floor))
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
 	src.res_amount = res_amount
 	src.max_res_amount = max_res_amount
 	src.time = time
-	src.one_per_turf = one_per_turf
-	src.on_floor = on_floor
+	src.max_per_turf = max_per_turf
+	src.build_outline = build_outline
 	src.required_skills = required_skills
 	src.floor_path = floor_path
 

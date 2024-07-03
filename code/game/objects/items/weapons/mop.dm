@@ -3,6 +3,7 @@
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
+	item_state_world = "mop_world"
 	force = 3.0
 	throwforce = 10.0
 	throw_range = 10
@@ -124,6 +125,7 @@
 	name = "advanced mop"
 	icon_state = "advmop"
 	item_state = "advmop"
+	item_state_world = "advmop_world"
 	force = 6.0
 	throwforce = 10.0
 	throw_range = 10.0

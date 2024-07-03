@@ -126,8 +126,8 @@
 	owner.drop_from_inventory(owner.r_hand)
 
 /atom/movable/screen/alert/status_effect/asleep
-	name = "Asleep"
-	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
+	name = "Сон"
+	desc = "Вы заснули. Подождите немного, и вы проснетесь, если только у вас всё в порядке..."
 	icon_state = "asleep"
 
 //STASIS
@@ -173,8 +173,8 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/stasis_bag
-	name = "Stasis Bag"
-	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
+	name = "Стазисный мешок"
+	desc = "Ваши биологические функции остановились. Вы могли бы жить так вечно, но это довольно скучно."
 	icon_state = "stasis"
 
 /datum/status_effect/remove_trait

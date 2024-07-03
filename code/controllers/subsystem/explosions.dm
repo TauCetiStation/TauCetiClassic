@@ -455,5 +455,5 @@ SUBSYSTEM_DEF(explosions)
 				continue
 			EX_ACT(movable_thing, EXPLODE_LIGHT)
 		cost_low_mov_atom = MC_AVERAGE(cost_low_mov_atom, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-	
+
 	currentpart = SSEXPLOSIONS_TURFS

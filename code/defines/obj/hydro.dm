@@ -61,6 +61,9 @@
 	var/plant_type = 0 // 0 = 'normal plant'; 1 = weed; 2 = shroom
 	var/list/mutatelist = list()
 
+/obj/item/seeds/proc/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	return
+
 /obj/item/seeds/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
@@ -74,6 +77,22 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		return FALSE
 	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
+
+/obj/item/seeds/gatfruit
+	name = "pack of gatfruit seeds"
+	desc = "These seeds grow into .357 revolvers."
+	icon_state = "seed-gatfruit"
+	species = "gatfruit"
+	plantname = "Gatfruit Tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
+	lifespan = 20
+	endurance = 20
+	maturation = 10
+	production = 10
+	yield = 2
+	potency = 60
+	growthstages = 2
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
 
 /obj/item/seeds/blackpepper
 	name = "pack of piper nigrum seeds"
@@ -91,6 +110,13 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 5
+
+/obj/item/seeds/blackpepper/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/gibbingtons))
+		return
+	if(prob(holder.stage * 10))
+		mutatelist = list(/obj/item/seeds/gatfruit)
+		tray.mutatespecie()
 
 /obj/item/seeds/chiliseed
 	name = "pack of chili seeds"
@@ -180,6 +206,44 @@
 	plant_type = 0
 	growthstages = 1
 
+/obj/item/seeds/tobacco_space
+	name = "pack of space tobacco seeds"
+	desc = "These seeds grow into space tobacco plants."
+	icon_state = "seed-stobacco"
+	species = "stobacco"
+	plantname = "Space Tobacco Plant"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/hydroponics.dmi'
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco_space
+	plant_type = 0
+	growthstages = 3
+	yield = 10
+	lifespan = 20
+	maturation = 3
+	production = 5
+	endurance = 20
+
+/obj/item/seeds/tobacco
+	name = "pack of tobacco seeds"
+	desc = "These seeds grow into tobacco plants."
+	icon_state = "seed-tobacco"
+	species = "tobacco"
+	plantname = "Tobacco Plant"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/hydroponics.dmi'
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tobacco
+	plant_type = 0
+	growthstages = 3
+	yield = 10
+	lifespan = 20
+	maturation = 3
+	production = 5
+	endurance = 20
+
+/obj/item/seeds/tobacco/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/arousal))
+		return
+	if(prob(holder.stage * 10))
+		mutatelist |= /obj/item/seeds/tobacco_space
+
 /obj/item/seeds/shandseed
 	name = "pack of s'rendarr's hand seeds"
 	desc = "These seeds grow into a helpful herb called S'Rendarr's Hand, native to Ahdomai."
@@ -195,6 +259,12 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 3
+
+/obj/item/seeds/shandseed/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/arousal))
+		return
+	if(prob(holder.stage * 10))
+		mutatelist |= /obj/item/seeds/tobacco
 
 /obj/item/seeds/mtearseed
 	name = "pack of messa's tear seeds"
@@ -420,6 +490,22 @@
 	potency = 20
 	growthstages = 3
 
+/obj/item/seeds/fraxinella
+	name = "pack of fraxinella seeds"
+	desc = "These seeds grow into fraxinella."
+	icon_state = "seed-fraxinella"
+	species = "fraxinella"
+	plantname = "Fraxinella Plants"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_flowers.dmi'
+	endurance = 10
+	maturation = 8
+	production = 6
+	yield = 6
+	potency = 20
+	lifespan = 25
+	growthstages = 3
+
 /obj/item/seeds/poppyseed
 	name = "pack of poppy seeds"
 	desc = "These seeds grow into poppies."
@@ -436,6 +522,12 @@
 	plant_type = 0
 	oneharvest = 1
 	growthstages = 3
+
+/obj/item/seeds/poppyseed/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/fire))
+		return
+	if(prob(holder.stage * 10))
+		mutatelist |= /obj/item/seeds/fraxinella
 
 /obj/item/seeds/potatoseed
 	name = "pack of potato seeds"
@@ -489,6 +581,23 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/meatwheat
+	name = "pack of meatwheat seeds"
+	desc = "If you ever wanted to drive a vegetarian to insanity, here's how."
+	icon_state = "seed-meatwheat"
+	species = "meatwheat"
+	plantname = "Meatwheat"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat
+	lifespan = 25
+	endurance = 15
+	maturation = 6
+	production = 1
+	yield = 4
+	potency = 15
+	oneharvest = 1
+	plant_type = 0
+	growthstages = 6
+
 /obj/item/seeds/wheatseed
 	name = "pack of wheat seeds"
 	desc = "These may, or may not, grow into weed."
@@ -506,6 +615,12 @@
 	plant_type = 0
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/durathread)
+
+/obj/item/seeds/wheatseed/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/radian))
+		return
+	if(prob(holder.stage * 10))
+		mutatelist |= /obj/item/seeds/meatwheat
 
 /obj/item/seeds/riceseed
 	name = "pack of rice seeds"
@@ -615,6 +730,23 @@
 	growthstages = 3
 	plant_type = 2
 
+/obj/item/seeds/jupitercup
+	name = "pack of jupiter cup mycelium"
+	desc = "This mycelium grows into jupiter cups. Zeus would be envious at the power at your fingertips."
+	icon_state = "mycelium-jupitercup"
+	species = "jupitercup"
+	plantname = "Jupiter Cups"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/jupitercup
+	lifespan = 40
+	production = 4
+	endurance = 8
+	yield = 4
+	potency = 15
+	growthstages = 2
+	oneharvest = TRUE
+	plant_type = 2
+
 /obj/item/seeds/chantermycelium
 	name = "pack of chanterelle mycelium"
 	desc = "This mycelium grows into chanterelle mushrooms."
@@ -632,6 +764,13 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = 2
+
+/obj/item/seeds/chantermycelium/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/conductivity))
+		return
+	if(prob(holder.stage * 10))
+		mutatelist = list(/obj/item/seeds/jupitercup)
+		tray.mutatespecie()
 
 /obj/item/seeds/towermycelium
 	name = "pack of tower-cap mycelium"
@@ -879,6 +1018,35 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/tea_astra
+	name = "pack of tea astra seeds"
+	desc = "These seeds grow into tea plants."
+	icon_state = "seed-teaastra"
+	species = "teaastra"
+	plantname = "Tea Astra Plant"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
+	lifespan = 20
+	maturation = 5
+	production = 5
+	yield = 5
+	growthstages = 5
+	endurance = 20
+
+/obj/item/seeds/tea
+	name = "pack of tea aspera seeds"
+	desc = "These seeds grow into tea plants."
+	icon_state = "seed-teaaspera"
+	species = "teaaspera"
+	plantname = "Tea Aspera Plant"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/tea
+	lifespan = 20
+	maturation = 5
+	production = 5
+	yield = 5
+	growthstages = 5
+	endurance = 20
+	mutatelist = list(/obj/item/seeds/tea_astra)
+
 /obj/item/seeds/ambrosiavulgarisseed
 	name = "pack of ambrosia vulgaris seeds"
 	desc = "These seeds grow into common ambrosia, a plant grown by and from medicine."
@@ -895,6 +1063,12 @@
 	plant_type = 0
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/ambrosiadeusseed)
+
+/obj/item/seeds/ambrosiavulgarisseed/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(!istype(E, /datum/disease2/effect/bactericidal_tannins))
+		return
+	if(prob(holder.stage * 10))
+		mutatelist |= /obj/item/seeds/tea
 
 /obj/item/seeds/ambrosiadeusseed
 	name = "pack of ambrosia deus seeds"
@@ -1130,13 +1304,34 @@
 	plant_type = 0
 	growthstages = 6
 
+/obj/item/seeds/fairy_grass
+	name = "pack of fairygrass seeds"
+	desc = "These seeds grow into a more mystical grass."
+	icon_state = "seed-fairygrass"
+	species = "fairygrass"
+	plantname = "Fairygrass"
+	lifespan = 40
+	endurance = 40
+	maturation = 2
+	production = 5
+	yield = 5
+	growthstages = 2
+
+/obj/item/seeds/fairy_grass/harvest(mob/user = usr)
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/t_yield = round(yield * parent.yieldmod)
+
+	if(t_yield > 0)
+		new /obj/item/stack/tile/fairygrass(user.loc, t_yield)
+
+	parent.update_tray()
+
 /obj/item/seeds/grassseed
 	name = "pack of grass seeds"
 	desc = "These seeds grow into grass. Yummy!"
 	icon_state = "seed-grass"
 	species = "grass"
 	plantname = "Grass"
-	// product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/grass
 	lifespan = 60
 	endurance = 50
 	maturation = 2
@@ -1144,6 +1339,17 @@
 	yield = 5
 	plant_type = 0
 	growthstages = 2
+
+/obj/item/seeds/grassseed/react_to_disease_effect(obj/machinery/hydroponics/tray, datum/disease2/effect/E, datum/disease2/effectholder/holder)
+	if(istype(E, /datum/disease2/effect/hallucinations))
+		if(prob(holder.stage * 10))
+			mutatelist |= /obj/item/seeds/fairy_grass
+		return
+	if(istype(E, /datum/disease2/effect/anti_toxins))
+		if(holder.stage < 5)
+			return
+		if(prob(holder.stage * 10))
+			mutatelist |= /obj/item/seeds/kudzuseed
 
 /obj/item/seeds/cocoapodseed
 	name = "pack of cocoa pod seeds"

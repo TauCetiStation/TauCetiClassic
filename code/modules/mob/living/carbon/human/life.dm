@@ -134,14 +134,16 @@ var/global/list/tourette_bad_words= list(
  				 "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
 				 "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
 				 "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
-	TAJARAN = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА",
- 				   "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
-	 			   "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
-	 			   "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
+	TAJARAN = list("ИДИОТ","ДЕБИЛ","ДУРАК","ТУПИЦА","ПЕТУХ","УБЬЮ","СКОТИНА",
+ 				   "СКОТ","БЛЯ","ХЕР","ДУРА","ЖМОТ","ГОМОСЕКСУАЛ","ТЕРПИЛА",
+	 			   "МОШОНКА","ЯЙЦА","ШМАРА","СПЕРМОКРЫЛ","ПУТАНА","ААА","ТВАРЬ",
+	 			   "ГОНДОН","ЕЛДА","КРЕТИН","НАХЕР","ДУРАЧОК","СВЕРЛО"),
 	UNATHI = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА",
 				  "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
 				  "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
-	 			  "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
+	 			  "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО",
+				  "ПЕРНАТЫЙ","ОБМУДОК","ЧУЖАК","РАБ","КОШАК","ЖАБА","МЯСЦО",
+				  "ЕБЛАН", "ЖИВОТНОЕ", "ЧМО", "ПИРАТ", "МЕРЗАВЕЦ", "ИМПОТЕНТ"),
 	VOX = list("ГОВНО", "СЕДАЛИЩЕ", "ЧКАЛ", "СПАРИВАЛ", "ТВАРЬ",
 	 		   "ГНИЛОЙ", "МРАЗЬ", "ХВОСТ", "НАХВОСТ", "ХВОСТОЛИЗ",
 			   "КЛОАКА", "СКРЯТЬ", "СКАРАПУШ", "САМКА", "СКРЯПЫШ")
@@ -1022,8 +1024,6 @@ var/global/list/tourette_bad_words= list(
 	else
 		clear_fullscreen("impaired")
 
-	update_eye_blur()
-
 	if(!machine)
 		var/isRemoteObserve = 0
 		if((REMOTE_VIEW in mutations) && remoteview_target)
@@ -1062,7 +1062,7 @@ var/global/list/tourette_bad_words= list(
 		if(G.vision_flags) // MESONS
 			sight |= G.vision_flags
 		if(!isnull(G.lighting_alpha))
-			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
+			set_lighting_alpha(min(lighting_alpha, G.lighting_alpha))
 		if(G.sightglassesmod && (G.active || !G.toggleable))
 			sightglassesmod = G.sightglassesmod
 		else
@@ -1156,7 +1156,7 @@ var/global/list/tourette_bad_words= list(
 	if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
 		shock_stage = max(shock_stage, 61)
 
-	if(traumatic_shock >= 80)
+	if(traumatic_shock >= 80 && shock_stage <= 150)
 		shock_stage += 1
 	else if(health < config.health_threshold_softcrit)
 		shock_stage = max(shock_stage, 61)

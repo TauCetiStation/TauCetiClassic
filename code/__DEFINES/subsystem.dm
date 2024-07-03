@@ -22,10 +22,10 @@
 #define SS_INIT_PROFILER      100
 #define SS_INIT_ASPECTS       86
 #define SS_INIT_INPUT         85
+#define SS_INIT_HOLIDAY       15
 #define SS_INIT_RATING        14
 #define SS_INIT_EVENTS        13
 #define SS_INIT_FLUIDS        12
-#define SS_INIT_HOLIDAY       11
 #define SS_INIT_JOBS          10
 #define SS_INIT_QUIRKS         9
 #define SS_INIT_MAPPING        8

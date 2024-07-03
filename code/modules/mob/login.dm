@@ -26,13 +26,14 @@
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
 		return FALSE
-
 	hud_used = new hud_type(src)
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
 	hud_used.show_hud(istype(loc, /obj/mecha) ? HUD_STYLE_REDUCED : HUD_STYLE_STANDARD)
 	update_sight()
+
 	return TRUE
 
+// be wary client might disappear here mid execution because byond
 /mob/Login()
 	player_list |= src
 
@@ -44,10 +45,12 @@
 	update_Login_details()
 	world.update_status()
 
-	client.images = null				//remove the images such as AIs being unable to see runes
-	client.screen = list()				//remove hud items just in case
+	client.images = null //remove the images such as AIs being unable to see runes
+	client.screen = list() //remove hud items just in case
 
 	create_mob_hud()
+
+	client.set_main_screen_plane_masters()
 
 	client.pixel_x = 0
 	client.pixel_y = 0
@@ -65,12 +68,7 @@
 		client.eye = src
 		client.perspective = MOB_PERSPECTIVE
 
-	//Users with different eye_blur_effect pref OR client disconnected during eye_blurry effect
-	var/atom/movable/screen/plane_master/game_world/PM = locate(/atom/movable/screen/plane_master/rendering_plate/game_world) in client.screen
-	if(PM)
-		PM.remove_filter("eye_blur_angular")
-		PM.remove_filter("eye_blur_gauss")
-	clear_fullscreen("blurry")
+	client.update_plane_masters()
 
 	// atom_huds
 	reload_huds()

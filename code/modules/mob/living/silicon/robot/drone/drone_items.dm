@@ -16,6 +16,7 @@
 		/obj/item/stack/sheet/metal,
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/plasteel,
+		/obj/item/stack/tile,
 		/obj/item/weapon/stock_parts,
 		/obj/item/light_fixture_frame,
 		/obj/item/apc_frame,

@@ -20,6 +20,7 @@
 	else
 		new /obj/item/weapon/gun/energy/gun/head(src)
 
+	new /obj/item/clothing/accessory/armor(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/suit/captunic/capjacket(src)
 	new /obj/item/clothing/head/helmet/cap(src)
@@ -149,6 +150,7 @@
 
 	new /obj/item/clothing/accessory/armor/dermal(src)
 	new /obj/item/clothing/head/hos_peakedcap(src)
+	new /obj/item/clothing/head/hos_hat(src)
 	new /obj/item/device/remote_device/head_of_security(src)
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security(src)

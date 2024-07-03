@@ -33,6 +33,14 @@
 
 		return "[output][and_text][input[index]]"
 
+/proc/list2text(list/input, separator = ", ")
+	. = ""
+
+	for(var/line in input)
+		if(length(.))
+			. += separator
+		. += line
+
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/list,index)
 	if(istype(list) && list.len)

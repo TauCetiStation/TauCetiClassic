@@ -34,4 +34,4 @@
 	subtitle = "Центральное Командование"
 	sound = "portal"
 /datum/announcement/centcomm/narsie_summon/New(mob/user)
-	message = "Зафиксирована блюспейс аномалия в [get_area(user)], возможно раскрытие неизвестного портала."
+	message = "Зафиксирована блюспейс аномалия в [CASE((get_area(user)), PREPOSITIONAL_CASE)], возможно раскрытие неизвестного портала."
