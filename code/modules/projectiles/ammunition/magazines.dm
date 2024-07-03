@@ -203,15 +203,10 @@
 	overlay = "saber-mag"
 
 /obj/item/ammo_box/magazine/smg/update_icon()
-	cut_overlays()
-	if(ammo_count() == 0)
-		return
-
 	var/ammo_perc = ammo_count() / max_ammo
-	ammo_perc = CEIL(CEIL(ammo_perc * 6) * (100/6))
+	var/ammo_state_indx = CEIL(LERP(0, 5, ammo_perc))
 
-	var/image/ammo_icon = image('icons/obj/ammo/magazines.dmi', "smg_mag-[ammo_perc]")
-	add_overlay(ammo_icon)
+	icon_state = "smg_mag-[ammo_state_indx]"
 
 /obj/item/ammo_box/magazine/c20r
 	name = "magazine (.45)"
