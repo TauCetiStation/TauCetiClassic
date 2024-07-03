@@ -247,7 +247,6 @@
 	walk(src, 0)
 	LoseAggro()
 
-
 //////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/death()
