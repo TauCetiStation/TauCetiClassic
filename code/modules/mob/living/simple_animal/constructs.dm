@@ -415,7 +415,7 @@
 	if(istype(A, /turf/simulated/wall/cult))
 		its_wall = TRUE
 
-	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || isconstruct(A) || istype(A, /mob/living/simple_animal/hostile/pylon))
+	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || isconstruct(A) || istype(A, /mob/living/simple_animal/hostile/pylon/cult))
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
 			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))
@@ -464,7 +464,7 @@
 
 
 /////////////////////////////////////Charged Pylon not construct/////////////////////////////////
-/mob/living/simple_animal/hostile/pylon
+/mob/living/simple_animal/hostile/pylon/cult
 	name = "charged pylon"
 	real_name = "charged pylon"
 	desc = "Летающий кристалл, излучающий таинственную энергию."
@@ -485,38 +485,25 @@
 	stop_automated_movement = TRUE
 	canmove = FALSE
 	faction = "cult"
-	var/timer
+	timer
 
-/mob/living/simple_animal/hostile/pylon/atom_init()
+/mob/living/simple_animal/hostile/pylon/cult/atom_init()
 	. = ..()
 	friends = global.cult_religion?.members
 
-/mob/living/simple_animal/hostile/pylon/death(gibbed)
-	. = ..()
-	for(var/atom/A in contents)
-		qdel(A)
-	qdel(src)
-
-/mob/living/simple_animal/hostile/pylon/proc/deactivate()
+/mob/living/simple_animal/hostile/pylon/cult/deactivate()
 	for(var/obj/structure/cult/pylon/P in contents)
 		P.update_integrity(health)
 		P.forceMove(loc)
 	qdel(src)
 
-/mob/living/simple_animal/hostile/pylon/proc/add_friend(datum/religion/R, mob/M, holy_role)
+/mob/living/simple_animal/hostile/pylon/cult/add_friend(datum/religion/R, mob/M, holy_role)
 	friends = R.members
 
-/mob/living/simple_animal/hostile/pylon/attackby(obj/item/I, mob/user, params)
+/mob/living/simple_animal/hostile/pylon/cult/attackby(obj/item/I, mob/user, params)
 	if(iscultist(user))
 		if(istype(I, /obj/item/weapon/storage/bible/tome))
 			deactivate()
 			deltimer(timer)
 	else
 		return ..()
-
-/mob/living/simple_animal/hostile/pylon/update_canmove()
-	return
-
-/mob/living/simple_animal/hostile/pylon/UnarmedAttack(atom/A)
-	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
-	OpenFire(A)

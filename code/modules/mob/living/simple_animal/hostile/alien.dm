@@ -104,7 +104,7 @@
 	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
 	playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)
 
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret
+/mob/living/simple_animal/hostile/pylon/aliens
 	name = "acid turret"
 	real_name = "acid turret"
 	desc = "Склизкое строение, выпускающее из себя оглушающие кислотные плевки."
@@ -116,10 +116,10 @@
 	projectilesound = 'sound/voice/xenomorph/spitacid_1.ogg'
 	faction = "alien"
 
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/allowAttackTarget(mob/living/target)
+/mob/living/simple_animal/hostile/pylon/aliens/allowAttackTarget(mob/living/target)
 	return !target.incapacitated()
 
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/death()
+/mob/living/simple_animal/hostile/pylon/aliens/death()
 	..()
 	visible_message("[src] lets out a waning guttural snarl, acid bubbling from its tube...")
 	playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)
