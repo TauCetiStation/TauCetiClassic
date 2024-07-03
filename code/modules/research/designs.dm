@@ -398,7 +398,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/onentemploye_module
 	name = "AI Module (One NT Employe)"
-	desc = "Allows for the construction of a 'One Crew Member' AI Module."
+	desc = "Allows for the construction of a 'One NT employee' AI Module."
 	id = "onentemploye_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
