@@ -108,7 +108,7 @@
 	name = "acid turret"
 	real_name = "acid turret"
 	desc = "Склизкое строение, выпускающее из себя смертельные кислотные плевки."
-	icon = 'icons/obj/acid_turret.dmi'
+	icon = 'icons/mob/alien.dmi'
 	icon_state = "acid_turret"
 	ranged = TRUE
 	amount_shoot = 1

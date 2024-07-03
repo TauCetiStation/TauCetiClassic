@@ -523,7 +523,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/xeno_turret/cast(list/targets, mob/user = usr)
-	user.visible_message("<span class='notice'><B>[user]</B> has planted alien turret.</span>", "<span class='notice'>You plant alien turret.</span>")
+	user.visible_message("<span class='notice'><B>[user]</B> has planted acid turret.</span>", "<span class='notice'>You plant acid turret.</span>")
 	new /mob/living/simple_animal/hostile/pylon/xenomorph_turret(user.loc)
 
 #undef ALREADY_STRUCTURE_THERE
