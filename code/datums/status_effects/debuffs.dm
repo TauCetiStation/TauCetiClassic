@@ -214,7 +214,7 @@
 	if(!isxeno(owner))
 		return
 	var/mob/living/carbon/xenomorph/Q = owner
-	Q.heal_rate = Q.heal_rate * 2.5
+	Q.heal_rate = Q.heal_rate * 1.5
 	Q.plasma_rate = Q.plasma_rate * 2
 	Q.storedPlasma = Q.storedPlasma * 2
 	Q.max_plasma = Q.max_plasma * 1.5
