@@ -174,7 +174,7 @@ var/global/lastMove = 0
 		else
 			to_chat(usr, "<span class='notice'>Шаттл уже движется или состыкован со станцией.</span>")
 
-		usr.client.guard.velocity_console = TRUE
+		usr.client.prefs.guard.velocity_console = TRUE
 
 /obj/machinery/computer/arrival_shuttle/dock
 	name = "Arrival Shuttle Communication Console"
@@ -204,7 +204,7 @@ var/global/lastMove = 0
 		else
 			to_chat(usr, "<span class='notice'>Шаттл уже движется или состыкован со станцией.</span>")
 
-		usr.client.guard.velocity_console_dock = TRUE
+		usr.client.prefs.guard.velocity_console_dock = TRUE
 
 /obj/machinery/computer/arrival_shuttle/proc/radio_message_via_ai(msg)
 	if (!msg)

@@ -14,19 +14,10 @@
 #define SPAM_TRIGGER_AUTOMUTE 10
 
 //Some constants for DB_Ban
-#define BANTYPE_PERMA		1
-#define BANTYPE_TEMP		2
-#define BANTYPE_JOB_PERMA	3
-#define BANTYPE_JOB_TEMP	4
-#define BANTYPE_ANY_FULLBAN	5 //used to locate stuff to unban.
-#define BANTYPE_ANY_JOB		9 //used to remove jobbans
-
-#define BANTYPE_PERMA_STR		"PERMABAN"
-#define BANTYPE_TEMP_STR		"TEMPBAN"
-#define BANTYPE_JOB_PERMA_STR	"JOB_PERMABAN"
-#define BANTYPE_JOB_TEMP_STR	"JOB_TEMPBAN"
-#define BANTYPE_ANY_FULLBAN_STR	"ANY"
-#define BANTYPE_ANY_JOB_STR		"ANYJOB"
+#define BANTYPE_PERMA        "PERMABAN"
+#define BANTYPE_TEMP         "TEMPBAN"
+#define BANTYPE_JOB_PERMA    "JOB_PERMABAN"
+#define BANTYPE_JOB_TEMP     "JOB_TEMPBAN"
 
 #define STICKYBAN_TABLENAME "erro_stickyban"
 #define STICKYBAN_CKEY_MATCHED_TABLENAME "erro_stickyban_matched_ckey"

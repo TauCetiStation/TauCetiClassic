@@ -293,7 +293,7 @@
 	joined_player_list += character.ckey
 
 	if(character.client)
-		character.client.guard.time_velocity_spawn = world.timeofday
+		character.client.prefs.guard.time_velocity_spawn = world.timeofday
 
 	qdel(src)
 
