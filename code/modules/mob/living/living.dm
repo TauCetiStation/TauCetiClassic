@@ -1157,6 +1157,10 @@
 		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
 			viewing |= M.client
 
+//Check the ability to attack
+/mob/living/proc/allowAttackTarget()
+	return TRUE
+
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
 	var/obj/item/used_item = get_active_hand()

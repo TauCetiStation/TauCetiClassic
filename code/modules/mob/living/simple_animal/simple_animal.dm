@@ -327,9 +327,6 @@
 			return FALSE
 	return TRUE
 
-/mob/living/simple_animal/proc/allowAttackTarget()
-	return TRUE
-
 /mob/living/simple_animal/update_fire()
 	return
 /mob/living/simple_animal/IgniteMob()
