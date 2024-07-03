@@ -87,6 +87,9 @@ This is emryo growth procs
 		else
 			baby.clear_alert("alien_embryo")
 
+	if(baby.has_status_effect(/datum/status_effect/young_queen_buff))
+		growth_rate = growth_rate * 2
+
 	var/diff = FULL_EMBRYO_GROWTH - growth_counter
 	if(diff < growth_rate)
 		growth_counter += diff	//so as not to go beyond the growth counter
