@@ -11296,7 +11296,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "bar-m";
-	name = "Bar Shutters"
+	name = "Bar Shutters";
+	dir = 4
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -26248,7 +26249,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/poddoor/shutters{
 	id = "Gateway_shutters";
-	name = "Gateway Shutters"
+	name = "Gateway Shutters";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -26261,7 +26263,8 @@
 	icon_state = "shutter0";
 	id = "Medical_Room1";
 	name = "Privacy Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -27013,7 +27016,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "Gateway_shutters";
-	name = "Gateway Shutters"
+	name = "Gateway Shutters";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -29323,7 +29327,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "Gateway_shutters_entrance";
-	name = "Gateway Shutters"
+	name = "Gateway Shutters";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -30278,7 +30283,8 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "Gateway_shutters_entrance";
-	name = "Gateway Shutters"
+	name = "Gateway Shutters";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -30505,7 +30511,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/poddoor/shutters{
 	id = "Gateway_shutters_entrance";
-	name = "Gateway Shutters"
+	name = "Gateway Shutters";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -34659,7 +34666,6 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Captain_private"
 	},
 /obj/machinery/door/firedoor{
@@ -34788,7 +34794,6 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Captain_private"
 	},
 /obj/machinery/door/firedoor{
@@ -35992,7 +35997,6 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Captain_private"
 	},
 /obj/structure/cable,
@@ -37218,7 +37222,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
@@ -37881,7 +37884,8 @@
 	icon_state = "shutter0";
 	id = "Medical_Surgery1";
 	name = "Surgery Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/structure/window/fulltile/polarized{
 	grilled = 1;
@@ -39708,7 +39712,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
@@ -43094,7 +43097,8 @@
 	icon_state = "shutter0";
 	id = "chapel";
 	name = "Privacy Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/machinery/door/airlock/glass{
 	name = "Chapel Office";
@@ -44051,7 +44055,8 @@
 	icon_state = "shutter0";
 	id = "Medical_Room2";
 	name = "Privacy Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -50396,7 +50401,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "Skynet_launch";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -50413,7 +50419,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/poddoor/shutters{
 	id = "Skynet_launch";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -70925,7 +70932,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "Chem";
 	name = "Chemistry Shutters";
@@ -71140,7 +71146,8 @@
 	icon_state = "shutter0";
 	id = "Chem";
 	name = "Chemistry Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -74358,7 +74365,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
-	name = "Warehouse Shutters"
+	name = "Warehouse Shutters";
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -75288,6 +75296,10 @@
 	icon_state = "green"
 	},
 /area/station/civilian/garden)
+"jbp" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/wall,
+/area/station/cargo/storage)
 "jbH" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4
@@ -76535,14 +76547,11 @@
 "kpu" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
-	name = "Warehouse Shutters"
+	name = "Warehouse Shutters";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/poddoor/shutters{
-	id = "qm_warehouse";
-	name = "Warehouse Shutters"
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -76676,7 +76685,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 8;
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
@@ -77627,7 +77635,6 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "shutter0";
 	id = "Chem";
 	name = "Chemistry Shutters";
@@ -80205,7 +80212,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
-	name = "Warehouse Shutters"
+	name = "Warehouse Shutters";
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -81816,7 +81824,8 @@
 	icon_state = "shutter0";
 	id = "Chem";
 	name = "Chemistry Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
@@ -86272,7 +86281,8 @@
 	icon_state = "shutter0";
 	id = "bar";
 	name = "Bar Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -102023,7 +102033,7 @@ aWX
 baK
 bEx
 aXz
-ooW
+jbp
 bnp
 brb
 brG
@@ -103308,7 +103318,7 @@ bxz
 bba
 vIi
 pal
-ooW
+jbp
 ofm
 vBO
 gdb
