@@ -24,9 +24,13 @@
 
 /obj/item/weapon/bless_vote/attack_self(mob/living/carbon/user)
 	user.set_machine(src)
+
 	var/dat
 	dat = "<B><font color = ##ff0000>Рекомендательное письмо для прохода в рай</B><BR>"
-	dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойным(ой) попасть в рай, после его(её) смерти</I><BR><BR>"
+	if(owner.gender == "female")
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойной попасть в рай после смерти</I><BR><BR>"
+	else
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойным попасть в рай после смерти</I><BR><BR>"
 	dat += "<I><font color = ##ff0000>Просто поднесите палец к месту для подписи и слегка надколите об шип на бумаге.</I><BR>"
 	dat += "<A href='byond://?src=\ref[src];choice=yes'>[sign_place]</A><BR>"
 	var/datum/browser/popup = new(user, "window=bless_vote", "Рекомендательное письмо")
@@ -49,3 +53,37 @@
 			to_chat(owner, "<span class='notice'>Ваш уровень кармы повышен!</span>")
 		else
 			to_chat(usr, "<span class='notice'>У вас нет права голоса</span>")
+
+/obj/effect/proc_holder/spell/create_bless_vote
+	name = "Создание рекомендательного письма"
+	range = 1
+	clothes_req = FALSE
+
+	action_icon_state = "charge"
+	sound = 'sound/magic/heal.ogg'
+
+/obj/effect/proc_holder/spell/create_bless_vote/choose_targets(mob/user = usr)
+	var/obj/item/weapon/paper/P
+	var/obj/item/target
+	var/list/possible_targets = list()
+	for(P in orange(range, user))
+		possible_targets[P] = image(P.icon, P.icon_state)
+
+	if(possible_targets.len == 0)
+		revert_cast()
+		to_chat(user, "<span class='warning'>Рядом с вами нет бумаги.</span>")
+		return
+
+	target = show_radial_menu(user, user, possible_targets, radius = 36, tooltips = TRUE)
+	if(!target)
+		revert_cast()
+		return
+	perform(list(target), user=user)
+
+/obj/effect/proc_holder/spell/create_bless_vote/cast(list/targets, mob/living/carbon/human/user = usr)
+	var/obj/item/target = targets[1]
+	var/obj/item/weapon/bless_vote/V = new /obj/item/weapon/bless_vote(user.loc)
+	V.owner = user
+	user.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
+	to_chat(src, "<span class='notice'>Ваша кровь растекается по бумаге, образуя символы</span>")
+	qdel(target)

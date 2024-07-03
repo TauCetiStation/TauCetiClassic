@@ -379,10 +379,10 @@
 
 /datum/species/pluvian/on_gain(mob/living/carbon/human/M)
 	..()
-	M.verbs += /mob/living/carbon/human/proc/create_bless_vote
+	global.pluvia_religion.add_member(M, HOLY_ROLE_PRIEST)
 
 /datum/species/pluvian/on_loose(mob/living/M, new_species)
-	M.verbs -= /mob/living/carbon/human/proc/create_bless_vote
+	global.pluvia_religion.remove_member(M, HOLY_ROLE_PRIEST)
 	..()
 
 /datum/species/pluvian_spirite
