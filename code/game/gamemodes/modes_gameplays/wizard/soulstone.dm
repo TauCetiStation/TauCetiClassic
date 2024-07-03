@@ -41,6 +41,9 @@
 	if(HAS_TRAIT(H, TRAIT_NO_SOUL) || HAS_TRAIT(H, TRAIT_SOULSTONE_IMMUNE) || H.species.flags[IS_SYNTHETIC])
 		to_chat(user, "<span class='warning'>У этого существа нет души.</span>")
 		return ..()
+	if(ispluvian(H) && !H.cursed)
+		to_chat(user, "<span class='warning'>Душа этого существа под защитой.</span>")
+		return ..()
 
 	H.log_combat(user, "soul-captured via [name]")
 

@@ -1911,7 +1911,7 @@
 		if(M.stat == DEAD)
 			M.gib()
 
-/mob/living/carbon/human/proc/create_bless_vote()
+/mob/living/carbon/human/proc/create_bless_vote() // не забыть перенести механ создания в ритуал их религии когда я сделаю им религию
 	set category = "IC"
 	set name = "Создать рекомендательное письмо"
 	set desc = "Положите под себя лист бумаги и капните на нее своей кровью. Это создаст рекоментальное письмо"
