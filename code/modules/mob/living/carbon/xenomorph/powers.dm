@@ -502,7 +502,7 @@
 /obj/effect/proc_holder/spell/no_target/xeno_turret
 	name = "Поставить турель"
 	desc = "Поставить турель, стреляющую кислотными, оглушающими плевками."
-	charge_max = 1800
+	charge_max = 2000
 	charge_type = "recharge"
 	clothes_req = FALSE
 	invocation = "none"
