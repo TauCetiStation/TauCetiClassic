@@ -78,7 +78,7 @@
 // Species Names (keep in mind, that whitelist and preferences DB depends on this names too, and if anything is renamed, update MYSQL tables or is_alien_whitelisted() proc and preferences).
 #define HUMAN          	 "Human"
 #define PLUVIAN        	 "Pluvian"
-#define PLUVIAN_SPIRIT 	"Pluvian Spirit"
+#define PLUVIAN_SPIRIT 	 "Pluvian Spirit"
 #define UNATHI         	 "Unathi"
 #define TAJARAN        	 "Tajaran"
 #define SKRELL         	 "Skrell"

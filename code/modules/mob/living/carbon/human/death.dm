@@ -84,15 +84,12 @@
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
 
 	..(gibbed)
-	if(ispluvian(src) &&!ischangeling(src))
+	if(ispluvian(src) &&!ischangeling(src)) // Pluvia heaven
 		if(blessed) // партия гордится вами
 			reborn(src)
-		if(cursed)
-			to_chat(src, "<span class='warning'>\ <font size=3>Ворота рая для вас закрыты.Ищите своей душе другого покровителя.</span></font>")
-			playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		if(my_sochial_credit < sochial_credit_threshold)
-			to_chat(src, "<span class='warning'>\ <font size=3>К сожалению ваш уровень кармы не достаточно высок для досрочного пропуска в рай! Не печальтесь, ваш дух призовут на суд, когда настанет ваша очередь. Ваше место в очереди:[rand(1000000,10000000)]</span></font>")
-			playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		if(social_credit < social_credit_threshold || cursed)
+			to_chat(src, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")
+			playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	SSStatistics.add_death_stat(src)
 

@@ -1911,6 +1911,21 @@
 		if(M.stat == DEAD)
 			M.gib()
 
+/mob/living/carbon/human/proc/create_bless_vote()
+	set category = "IC"
+	set name = "Создать рекомендательное письмо"
+	set desc = "Положите под себя лист бумаги и капните на нее своей кровью. Это создаст рекоментальное письмо"
+	var/turf/simulated/floor/F = get_turf(src)
+	var/obj/item/weapon/paper/P = locate(/obj/item/weapon/paper) in F.contents
+	if(P)
+		var/obj/item/weapon/bless_vote/V = new /obj/item/weapon/bless_vote(src.loc)
+		take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
+		to_chat(src, "<span class='notice'>Ваша кровь растекается по бумаге, образуя символы</span>")
+		V.owner = src
+		qdel(P)
+	else
+		to_chat(src, "<span class='warning'>Под вами должна быть бумага!</span>")
+
 /mob/living/carbon/human/proc/air_sample()
 	set category = "IC"
 	set name = "Air sample"

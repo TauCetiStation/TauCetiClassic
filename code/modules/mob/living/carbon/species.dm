@@ -31,6 +31,7 @@
 	var/speed_mod =  0                                   // How fast or slow specific specie.
 	var/speed_mod_no_shoes = 0                           // Speed ​​modifier without shoes.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
+	var/can_species_bless_vote = 1                       // Pluvia social credit heaven system
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
@@ -284,6 +285,7 @@
 
 	if(default_mood_event)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "species", default_mood_event)
+	H.bless_vote = can_species_bless_vote
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	SHOULD_CALL_PARENT(TRUE)
@@ -358,6 +360,7 @@
 	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_OMNI
+	can_species_bless_vote = 0
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -374,13 +377,28 @@
 
 	is_common = TRUE
 
-/datum/species/pluvian/spirite
+/datum/species/pluvian/on_gain(mob/living/carbon/human/M)
+	..()
+	M.verbs += /mob/living/carbon/human/proc/create_bless_vote
+
+/datum/species/pluvian/on_loose(mob/living/M, new_species)
+	M.verbs -= /mob/living/carbon/human/proc/create_bless_vote
+	..()
+
+/datum/species/pluvian_spirite
 	name = PLUVIAN_SPIRIT
+	icobase = 'icons/mob/human_races/r_pluvian.dmi'
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
+	language = LANGUAGE_SOLCOMMON
+	unarmed_type = /datum/unarmed_attack/punch
+	dietflags = 0
 	brute_mod = 0
 	burn_mod = 0
 	oxy_mod = 0
 	tox_mod = 0
 	clone_mod = 0
+	can_species_bless_vote = 3
 	eyes = "pluvia_ms_s"
 	eyes_glowing = TRUE
 	flags = list(
@@ -401,6 +419,8 @@
 	,NO_VOMIT = TRUE
 	,NO_FAT = TRUE
 	)
+	min_age = 25
+	max_age = 85
 
 /datum/species/unathi
 	name = UNATHI
@@ -961,6 +981,7 @@
 	language = "Rootspeak"
 	unarmed_type = /datum/unarmed_attack/diona/podman
 	primitive = /mob/living/carbon/monkey/diona/podman
+	can_species_bless_vote = 0 // too young to vote
 
 	// Because they are less thicc than dionaea.
 	siemens_coefficient = 0.75
@@ -1027,6 +1048,7 @@
 	language = LANGUAGE_TRINARY
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
+	can_species_bless_vote = 0 // have no soul
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
 
@@ -1061,6 +1083,7 @@
 	siemens_coefficient = 1.3 // ROBUTT.
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
+
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -1187,6 +1210,7 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 	dietflags = DIET_ALL
+	can_species_bless_vote = 0 //dead cant vote
 	flesh_color = "#c0c0c0"
 
 	brute_mod = 2
@@ -1444,6 +1468,8 @@
 
 	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
 	bodypart_butcher_results = list(/obj/item/weapon/ore/slag = 1)
+
+	can_species_bless_vote = 0
 
 	flags = list(
 		NO_BLOOD = TRUE,
@@ -1792,6 +1818,7 @@
 	brute_mod = 2
 	burn_mod = 2
 	speed_mod = 2
+	can_species_bless_vote = 0
 
 	has_bodypart = list(
 		 BP_CHEST = /obj/item/organ/external/chest/homunculus
