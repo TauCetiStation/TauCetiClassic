@@ -471,7 +471,6 @@
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "pylon_glow"
 	icon_living = "pylon"
-	amount_shoot = 3
 	projectiletype = /obj/item/projectile/beam/cult_laser
 	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
 	faction = "cult"
