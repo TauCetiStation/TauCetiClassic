@@ -81,6 +81,10 @@
 	if(stat == CONSCIOUS)
 		handle_combat_ai()
 
+//Check the ability to attack
+/mob/living/simple_animal/hostile/proc/allowAttackTarget()
+	return TRUE
+
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
 	var/list/L = list()
@@ -94,6 +98,7 @@
 			if(can_see(src, M, vision_range))
 				L += M
 	return L
+
 /mob/living/simple_animal/hostile/proc/FindTarget()//Step 2, filter down possible targets to things we actually care about
 	var/list/Targets = list()
 	var/Target

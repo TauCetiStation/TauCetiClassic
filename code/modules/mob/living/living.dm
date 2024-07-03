@@ -1176,10 +1176,6 @@
 		I.pixel_z = 16 //lift it up...
 		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
 
-//Check the ability to attack
-/mob/living/proc/allowAttackTarget()
-	return TRUE
-
 // returns a new list of viewers without viewers with alternate_appearance
 /mob/living/proc/alternate_attack_animation(obj/item/item, atom/target, list/viewing)
 	if(item.alternate_appearances)

@@ -110,39 +110,15 @@
 	desc = "Склизкое строение, выпускающее из себя оглушающие кислотные плевки."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "acid_turret"
-	ranged = TRUE
 	amount_shoot = 1
 	projectiletype = /obj/item/projectile/neurotoxin/magic/x_turret_acid
 	projectilesound = 'sound/voice/xenomorph/spitacid_1.ogg'
-	ranged_cooldown = 5
-	ranged_cooldown_cap = 0
-	maxHealth = 120
-	health = 120
-	melee_damage = 0
-	speed = 0
-	anchored = TRUE
-	stop_automated_movement = TRUE
-	canmove = FALSE
 	faction = "alien"
-
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/atom_init()
-	. = ..()
-	friends = global.alien_list
 
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/allowAttackTarget(mob/living/target)
 	return !target.incapacitated()
 
 /mob/living/simple_animal/hostile/pylon/xenomorph_turret/death()
 	..()
-	visible_message("[src] lets out a waning guttural screech, acid bubbling from its tube...")
+	visible_message("[src] lets out a waning guttural snarl, acid bubbling from its tube...")
 	playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)
-
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/attackby()
-	return ..()
-
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/update_canmove()
-	return
-
-/mob/living/simple_animal/hostile/pylon/xenomorph_turret/UnarmedAttack(atom/A)
-	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
-	OpenFire(A)
