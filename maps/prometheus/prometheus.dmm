@@ -49380,6 +49380,20 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/hallway)
+"ltA" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "ltI" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/light/small{
@@ -50569,6 +50583,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -54168,9 +54187,6 @@
 /obj/structure/closet/emcloset,
 /obj/machinery/light/small{
 	dir = 4
-	},
-/obj/machinery/ai_status_display{
-	pixel_x = 32
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -77005,6 +77021,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
+"spQ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/hallway/primary/fore)
 "spW" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -77223,6 +77256,11 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -77233,6 +77271,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -82307,6 +82350,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
@@ -87550,6 +87598,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -92965,6 +93018,11 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -100462,6 +100520,24 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge/hop_office)
+"ygK" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/hallway/primary/fore)
 "ygN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -133312,7 +133388,7 @@ wox
 mJS
 djZ
 beE
-jbE
+spQ
 eFG
 eFG
 jbE
@@ -133826,7 +133902,7 @@ pdO
 xII
 kqF
 xar
-aYj
+ygK
 wmG
 rOD
 aYj
@@ -134597,7 +134673,7 @@ nYK
 nHb
 ekI
 jtV
-wbk
+ltA
 lIs
 ehX
 ufp
