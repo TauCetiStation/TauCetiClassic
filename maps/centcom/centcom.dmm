@@ -1,12 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
-/obj/structure/sign/velocity_overlay/reklama{
-	desc = "Now It?s Pepsi for Those Who Think Young";
-	icon_state = "pepsi";
-	name = "\improper billboard"
-	},
-/turf/unsimulated/wall,
-/area/velocity)
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla,
+/turf/unsimulated/floor,
+/area/space)
 "aab" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -143,72 +140,6 @@
 /obj/machinery/door/firedoor,
 /turf/unsimulated/floor,
 /area/velocity)
-"aap" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity05";
-	name = "Security Doors Right";
-	pixel_x = 6;
-	pixel_y = -32;
-	req_access = list(101)
-	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity06";
-	name = "Security Doors Left";
-	pixel_x = -6;
-	pixel_y = -32;
-	req_access = list(101)
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/photocopier{
-	density = 0;
-	layer = 2;
-	pixel_x = 5
-	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/approve,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/device/taperecorder,
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
-"aaq" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity03";
-	name = "Security Doors Right";
-	pixel_x = 6;
-	pixel_y = 32;
-	req_access = list(101)
-	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side blast doors.";
-	id = "velocity04";
-	name = "Security Doors Left";
-	pixel_x = -6;
-	pixel_y = 32;
-	req_access = list(101)
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/photocopier{
-	density = 0;
-	layer = 2;
-	pixel_x = 5
-	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/stamp/denied,
-/obj/item/weapon/stamp/approve,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/device/taperecorder,
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
 "aar" = (
 /obj/structure/closet/secure_closet/velocity_security/full,
 /turf/unsimulated/floor,
@@ -395,12 +326,10 @@
 /turf/unsimulated/floor,
 /area/velocity)
 "aaJ" = (
-/obj/structure/sign/velocity_overlay/reklama/soda_ad{
-	pixel_x = 3;
-	pixel_y = -20
-	},
-/turf/unsimulated/wall,
-/area/velocity)
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/turf/unsimulated/floor,
+/area/space)
 "aaK" = (
 /obj/structure/closet/secure_closet/barber{
 	req_access = list(101)
@@ -430,15 +359,6 @@
 	},
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
-"aaQ" = (
-/obj/structure/sign/velocity_overlay/reklama{
-	desc = "Now It?s Pepsi for Those Who Think Young";
-	icon_state = "SuperPepsi";
-	name = "\improper billboard"
-	},
-/obj/structure/window/fulltile/reinforced/indestructible,
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
 "aaR" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
 /turf/unsimulated/floor,
@@ -8843,18 +8763,6 @@
 	icon_state = "floorplace"
 	},
 /area/shuttle/vox/arkship_hold)
-"aue" = (
-/obj/machinery/door/airlock/security/glass{
-	dir = 4;
-	name = "Security Checkpoint";
-	req_access = list(101)
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
 "auf" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "12,7"
@@ -8914,23 +8822,8 @@
 	},
 /area/shuttle/vox/arkship)
 "aum" = (
-/obj/structure/sign/velocity_overlay/reklama/pda_x{
-	pixel_y = 32
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
-"aun" = (
-/obj/structure/closet/emcloset{
-	pixel_x = -7
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "green"
-	},
-/area/velocity/waitingroom)
+/turf/unsimulated/desert,
+/area/space)
 "auo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/tank/nitrogen,
@@ -8953,39 +8846,15 @@
 	},
 /area/shuttle/vox/arkship)
 "auq" = (
-/obj/structure/closet/emcloset{
-	pixel_x = 7
-	},
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "green"
-	},
-/area/velocity/waitingroom)
-"aur" = (
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
+/mob/living/carbon/human/machine,
+/turf/unsimulated/desert,
+/area/space)
 "aus" = (
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
 /area/shuttle/vox/arkship)
-"aut" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "red"
-	},
-/area/velocity)
-"auu" = (
-/obj/item/weapon/flora/random,
-/turf/unsimulated/floor,
-/area/velocity)
 "auv" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
 	icon_state = "gr_window_reinforced"
@@ -9019,23 +8888,6 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity/exit)
-"auy" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 8;
-	icon_state = "loadingarea"
-	},
-/obj/effect/decal/turf_decal/alpha/black{
-	dir = 8;
-	icon_state = "arrow"
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
-"auz" = (
-/obj/machinery/atm{
-	pixel_x = 30
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
 "auA" = (
 /obj/machinery/chem_dispenser,
 /obj/item/weapon/storage/box/beakers,
@@ -9043,22 +8895,10 @@
 	icon_state = "white"
 	},
 /area/velocity)
-"auB" = (
-/obj/structure/stool/bed/chair/metal/red,
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
 "auC" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side shutters.";
-	id = "velocity_01";
-	name = "Security Shutters";
-	pixel_y = -32;
-	req_access = list(101)
-	},
-/obj/structure/filingcabinet/chestdrawer,
-/obj/item/weapon/folder/red,
+/obj/item/weapon/throwing_star,
 /turf/unsimulated/floor,
-/area/velocity/checkpoint)
+/area/space)
 "auD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ladder{
@@ -9165,25 +9005,16 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "auO" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	dir = 8;
-	icon_state = "chair_a01"
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
+/turf/simulated/floor/carpet,
+/area/space)
 "auP" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/velocity/waitingroom)
+/turf/unsimulated/desert,
+/area/pluvia_heaven)
 "auQ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/unsimulated/wall,
-/area/velocity/checkpoint)
+/obj/structure/table/rglass,
+/obj/item/weapon/kitchen/utensil/fork/sticks,
+/turf/unsimulated/floor,
+/area/space)
 "auR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/hatch,
@@ -9192,34 +9023,24 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "auS" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	id = "velocity_01";
-	name = "Security Shutters"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced,
-/obj/machinery/door/firedoor,
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
 /turf/unsimulated/floor,
-/area/velocity/checkpoint)
+/area/space)
 "auT" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	id = "velocity_01";
-	name = "Security Shutters"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/window/southleft{
-	name = "Security";
-	req_access = list(101)
-	},
-/obj/machinery/door/firedoor,
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
+/obj/item/weapon/reagent_containers/food/snacks/meatball,
 /turf/unsimulated/floor,
-/area/velocity/checkpoint)
+/area/space)
 "auU" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "9,6"
@@ -9261,17 +9082,6 @@
 	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship_hold)
-"auZ" = (
-/obj/machinery/door/airlock/security/glass{
-	dir = 4;
-	name = "Security Checkpoint";
-	req_access = list(101)
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
 "ava" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "12,5"
@@ -9324,19 +9134,8 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "avh" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	dir = 8;
-	icon_state = "chair_a03"
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
-"avi" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
+/turf/simulated/floor/carpet/black,
+/area/space)
 "avj" = (
 /obj/machinery/light/small,
 /obj/effect/decal/cleanable/dirt,
@@ -9374,22 +9173,9 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "avn" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "monorail_01";
-	name = "Doors";
-	opacity = 0
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
-/area/velocity/monorailwagon)
-"avo" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
-/area/velocity/monorailwagon)
+/obj/item/weapon/gun/projectile/revolver/peacemaker,
+/turf/unsimulated/floor,
+/area/space)
 "avp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -9504,23 +9290,9 @@
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
-"avB" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/velocity)
 "avC" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	dir = 8;
-	icon_state = "chair_a02"
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
-"avD" = (
-/obj/structure/disposalpipe/segment,
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
+/turf/simulated/floor/carpet/blue,
+/area/space)
 "avE" = (
 /obj/structure/table,
 /obj/item/weapon/rcd,
@@ -9622,23 +9394,6 @@
 	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship)
-"avT" = (
-/obj/structure/sign/velocity_tablo{
-	icon_state = "velocity_tablo";
-	pixel_x = -32
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
-"avU" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/velocity/waitingroom)
 "avV" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "6,5"
@@ -9655,13 +9410,6 @@
 	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship)
-"avX" = (
-/obj/structure/sign/velocity_overlay/reklama{
-	desc = "Space Beer. Take it easy.";
-	name = "\improper billboard"
-	},
-/turf/unsimulated/wall,
-/area/velocity)
 "avY" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "8,0"
@@ -9781,35 +9529,11 @@
 	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship_hold)
-"awl" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/vending/cigarette,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/velocity/waitingroom)
 "awm" = (
-/obj/machinery/status_display{
-	layer = 4
-	},
-/turf/unsimulated/wall,
-/area/velocity)
-"awn" = (
-/obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "green"
-	},
-/area/velocity)
-"awo" = (
-/obj/structure/table/reinforced,
-/turf/unsimulated/floor{
-	icon_state = "green"
-	},
-/area/velocity)
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/turf/unsimulated/floor,
+/area/space)
 "awp" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -9827,15 +9551,6 @@
 	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship_hold)
-"awr" = (
-/obj/structure/sign/directions/velocity{
-	dir = 4;
-	pixel_x = -32
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
-/area/velocity/monorailwagon)
 "aws" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -9941,56 +9656,14 @@
 /obj/effect/decal/cleanable/generic,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
-"awG" = (
-/obj/machinery/computer/arrival_shuttle/dock{
-	dir = 4
-	},
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot"
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
-"awH" = (
-/obj/structure/disposalpipe/segment,
-/obj/random/vending/snack,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/velocity/waitingroom)
 "awI" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor/grass,
-/area/velocity)
+/turf/simulated/floor/carpet/red,
+/area/space)
 "awJ" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/flora/ausbushes/ppflowers,
-/mob/living/carbon/monkey{
-	desc = "";
-	icon_state = "robust1";
-	name = "Officer Robust"
-	},
-/turf/simulated/floor/grass,
-/area/velocity)
-"awK" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/grass,
-/area/velocity)
-"awL" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor/grass,
-/area/velocity)
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+/turf/unsimulated/floor,
+/area/space)
 "awM" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "0,4"
@@ -10175,41 +9848,20 @@
 	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship_hold)
-"axf" = (
-/obj/structure/disposalpipe/segment,
-/obj/random/vending/cola,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/velocity/waitingroom)
 "axg" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor/grass,
-/area/velocity)
+/turf/unsimulated/floor,
+/area/space)
 "axh" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/grass,
-/area/velocity)
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/space_drugs,
+/turf/unsimulated/floor,
+/area/space)
 "axi" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor/grass,
-/area/velocity)
-"axj" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/flora/ausbushes/ppflowers,
-/turf/simulated/floor/grass,
-/area/velocity)
-"axk" = (
-/obj/machinery/information_display{
-	icon_state = "screen_amin_velocity_90";
-	pixel_x = -32
+/obj/effect/light_emitter{
+	light_range = 15
 	},
 /turf/unsimulated/floor,
-/area/velocity)
+/area/space)
 "axl" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "3,2"
@@ -10326,14 +9978,6 @@
 	icon_state = "wood"
 	},
 /area/custom/wizard_station)
-"axv" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/vending/coffee,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/velocity/waitingroom)
 "axw" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "13,2"
@@ -10505,13 +10149,9 @@
 	},
 /area/shuttle/vox/arkship)
 "axK" = (
-/obj/structure/sign/velocity_overlay/reklama{
-	desc = "<5555> Best in space. Since 2322.";
-	icon_state = "5555_anim";
-	name = "\improper billboard"
-	},
-/turf/unsimulated/wall,
-/area/velocity)
+/obj/item/weapon/melee/baton,
+/turf/unsimulated/floor,
+/area/space)
 "axL" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -10535,18 +10175,6 @@
 	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship_hold)
-"axN" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "monorail_02";
-	name = "Doors";
-	opacity = 0
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
-/area/velocity/monorailwagon)
 "axO" = (
 /obj/structure/table/woodentable,
 /obj/item/device/violin{
@@ -10594,11 +10222,6 @@
 	icon_state = "floorplace"
 	},
 /area/shuttle/vox/arkship)
-"axS" = (
-/turf/unsimulated/floor{
-	icon_state = "red"
-	},
-/area/velocity)
 "axT" = (
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
@@ -10634,12 +10257,10 @@
 /turf/unsimulated/floor,
 /area/velocity)
 "axW" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/velocity/waitingroom)
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
+/turf/unsimulated/floor,
+/area/space)
 "axX" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
@@ -10648,34 +10269,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/vox/arkship)
-"axY" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	dir = 1;
-	id = "velocity_02";
-	name = "Security Shutters"
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
-"axZ" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	dir = 1;
-	id = "velocity_02";
-	name = "Security Shutters"
-	},
-/obj/machinery/door/window/southleft{
-	dir = 1;
-	name = "Security";
-	req_access = list(101)
-	},
-/obj/machinery/door/firedoor,
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
 "aya" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/computerframe{
@@ -10685,13 +10278,9 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "ayb" = (
-/obj/structure/sign/velocity_overlay/reklama{
-	desc = "Caterpillar Tractor Co.";
-	icon_state = "CAT";
-	name = "\improper billboard"
-	},
-/turf/unsimulated/wall,
-/area/velocity)
+/obj/item/weapon/gun/energy/taser,
+/turf/unsimulated/floor,
+/area/space)
 "ayc" = (
 /obj/machinery/light,
 /obj/structure/sign/velocity_overlay/reklama{
@@ -10711,12 +10300,6 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity/exit)
-"aye" = (
-/obj/structure/reagent_dispensers/water_cooler{
-	pixel_y = 1
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
 "ayf" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -10725,27 +10308,6 @@
 	icon_state = "white"
 	},
 /area/velocity)
-"ayg" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 1
-	},
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
-"ayh" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for port-side shutters.";
-	id = "velocity_02";
-	name = "Security Shutters";
-	pixel_y = 32;
-	req_access = list(101)
-	},
-/obj/structure/filingcabinet/chestdrawer,
-/obj/item/weapon/folder/red,
-/obj/machinery/computer/guestpass/dark{
-	pixel_x = 28
-	},
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
 "ayi" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/ash,
@@ -10767,22 +10329,13 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "ayk" = (
-/obj/structure/closet/emcloset{
-	pixel_x = -7
-	},
+/obj/item/weapon/noose,
 /turf/unsimulated/floor,
-/area/velocity/waitingroom)
+/area/space)
 "ayl" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor,
 /area/velocity)
-"aym" = (
-/obj/machinery/newscaster{
-	pixel_y = -28
-	},
-/obj/machinery/light,
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
 "ayn" = (
 /obj/machinery/door/airlock/centcom{
 	req_access = list(101)
@@ -10818,43 +10371,15 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
-"ayq" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/turf/unsimulated/floor{
-	icon_state = "plating"
-	},
-/area/velocity/dormitories)
-"ayr" = (
-/obj/machinery/door/airlock/glass{
-	name = "Cryogenic Storage"
-	},
-/obj/machinery/door/firedoor,
-/turf/unsimulated/floor{
-	icon_state = "white"
-	},
-/area/velocity/dormitories)
 "ays" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_access = list(101)
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/obj/machinery/door/firedoor,
-/turf/unsimulated/floor,
-/area/velocity)
+/obj/structure/stool/bed/chair/metal/red,
+/turf/unsimulated/desert,
+/area/space)
 "ayt" = (
-/obj/item/weapon/crowbar/red,
-/obj/structure/sign/warning/electricshock{
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "plating"
-	},
-/area/velocity)
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+/turf/unsimulated/floor,
+/area/space)
 "ayu" = (
 /obj/structure/object_wall/vox{
 	density = 0;
@@ -16201,12 +15726,6 @@
 	icon_state = "black"
 	},
 /area/custom/syndicate_mothership)
-"aKO" = (
-/obj/machinery/computer/guestpass/dark{
-	pixel_y = 26
-	},
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
 "aKP" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -23145,12 +22664,6 @@
 	icon_state = "neutralfull"
 	},
 /area/velocity)
-"cBs" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
 "cCb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Unisex Restrooms";
@@ -23419,13 +22932,6 @@
 	},
 /turf/unsimulated/floor/carpet,
 /area/velocity)
-"cYQ" = (
-/obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups{
-	pixel_y = 3
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
 "cYR" = (
 /obj/structure/stool/bed/roller,
 /obj/machinery/life_assist/artificial_ventilation,
@@ -23843,25 +23349,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/unsimulated/floor,
 /area/velocity)
-"dFb" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "green"
-	},
-/area/velocity/waitingroom)
-"dGb" = (
-/turf/unsimulated/floor{
-	icon_state = "rampbottom"
-	},
-/area/velocity)
-"dHb" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "rampbottom"
-	},
-/area/velocity)
 "dHm" = (
 /obj/machinery/computer/teleporter,
 /turf/unsimulated/floor{
@@ -23876,41 +23363,12 @@
 	name = "plating"
 	},
 /area/velocity)
-"dJb" = (
-/obj/machinery/door/airlock/glass{
-	locked = 1
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "vwall12"
-	},
-/area/velocity/monorailwagon)
 "dKb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall12"
 	},
 /turf/environment/space,
 /area/velocity/monorailwagon)
-"dLb" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/security{
-	name = "Security Checkpoint";
-	req_access = list(101)
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/obj/machinery/door/firedoor,
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
-"dMb" = (
-/obj/structure/disposalpipe/junction{
-	dir = 1;
-	icon_state = "pipe-j2"
-	},
-/turf/unsimulated/wall,
-/area/velocity/checkpoint)
 "dMd" = (
 /obj/structure/object_wall/standart{
 	dir = 1;
@@ -23919,29 +23377,9 @@
 /turf/environment/space,
 /area/custom/syndicate_mothership/elite_squad)
 "dNb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall3"
-	},
-/turf/environment/space,
-/area/velocity/monorailwagon)
-"dOb" = (
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = -32
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
-/area/velocity/monorailwagon)
-"dPb" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	dir = 8;
-	icon_state = "chair_c03"
-	},
-/obj/effect/landmark/latejoin,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
-/area/velocity/monorailwagon)
+/mob/living/carbon/human,
+/turf/unsimulated/desert,
+/area/space)
 "dQb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -23985,38 +23423,14 @@
 	},
 /area/velocity/locker)
 "dSb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "velocity06";
-	name = "Doors";
-	opacity = 0
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
 /turf/unsimulated/floor,
-/area/velocity)
+/area/space)
 "dSA" = (
 /obj/structure/cult/tech_table,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
-"dTb" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "red"
-	},
-/area/velocity)
 "dTz" = (
 /obj/structure/mopbucket,
 /obj/item/weapon/mop,
@@ -24025,128 +23439,13 @@
 	icon_state = "freezerfloor"
 	},
 /area/velocity)
-"dUb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "velocity05";
-	name = "Doors";
-	opacity = 0
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "rampbottom"
-	},
-/area/velocity)
-"dVb" = (
-/obj/structure/sign/mark{
-	icon_state = "ylf"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
-"dWb" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	dir = 8;
-	icon_state = "chair_c02"
-	},
-/obj/effect/landmark/latejoin,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
-/area/velocity/monorailwagon)
-"dXb" = (
-/obj/structure/shuttle/window{
-	icon_state = "2"
-	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
-/area/velocity/monorailwagon)
-"dYb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "velocity06";
-	name = "Doors";
-	opacity = 0
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/velocity)
-"dZb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "velocity05";
-	name = "Doors";
-	opacity = 0
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "rampbottom"
-	},
-/area/velocity)
-"eab" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	dir = 8;
-	icon_state = "chair_c02"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/effect/landmark/latejoin,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
-/area/velocity/monorailwagon)
-"ebb" = (
-/obj/structure/sign/monorail_map,
-/obj/structure/object_wall/standart{
-	icon_state = "swall3"
-	},
-/turf/environment/space,
-/area/velocity/monorailwagon)
-"ecb" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	icon_state = "chair_a02"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
-"edb" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	icon_state = "chair_a01"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
 "eeb" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_11"
-	},
+/obj/item/weapon/reagent_containers/hypospray/autoinjector,
 /turf/unsimulated/floor,
-/area/velocity)
+/area/space)
 "efb" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_12"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
+/turf/simulated/floor/carpet/cyan,
+/area/space)
 "egb" = (
 /obj/machinery/porta_turret/crescent,
 /obj/effect/decal/turf_decal{
@@ -24171,12 +23470,6 @@
 	icon_state = "bcircuit"
 	},
 /area/custom/syndicate_mothership/control)
-"ehb" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_9"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
 "ehN" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 31;
@@ -24185,22 +23478,6 @@
 /obj/structure/stool/bed/chair/schair/wagon/green,
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
-"eib" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_10"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
-"ejb" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	dir = 8;
-	icon_state = "chair_c01"
-	},
-/obj/effect/landmark/latejoin,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor2"
-	},
-/area/velocity/monorailwagon)
 "ekb" = (
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
@@ -24218,12 +23495,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
-"elb" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_7"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
 "elQ" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
 /turf/unsimulated/floor{
@@ -24231,28 +23502,12 @@
 	},
 /area/velocity)
 "emb" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_8"
-	},
+/obj/structure/table/rglass,
+/obj/item/weapon/paper,
+/obj/item/weapon/paper,
+/obj/item/weapon/paper,
 /turf/unsimulated/floor,
-/area/velocity)
-"eob" = (
-/obj/machinery/door/airlock/glass,
-/turf/simulated/shuttle/floor{
-	icon_state = "vwall12"
-	},
-/area/velocity/monorailwagon)
-"epb" = (
-/obj/structure/sign/velocity_overlay/reklama{
-	desc = "Just billboard";
-	icon_state = "OneCompany";
-	name = "\improper billboard"
-	},
-/obj/structure/object_wall/standart{
-	icon_state = "swall12"
-	},
-/turf/environment/space,
-/area/velocity/monorailwagon)
+/area/space)
 "erb" = (
 /obj/structure/sign/mark{
 	icon_state = "b4"
@@ -24266,29 +23521,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
-"etb" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_5"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
-"eub" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_6"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
-"evb" = (
-/obj/structure/sign/velocity_overlay/reklama{
-	desc = "Lunar Software";
-	icon_state = "Lunar";
-	name = "\improper billboard"
-	},
-/obj/structure/object_wall/standart{
-	icon_state = "swall12"
-	},
-/turf/environment/space,
-/area/velocity/monorailwagon)
 "ewb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -24296,28 +23528,15 @@
 /turf/unsimulated/wall,
 /area/velocity)
 "exb" = (
-/obj/structure/table/reinforced,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "green"
-	},
-/area/velocity)
-"eyb" = (
-/obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "green"
-	},
-/area/velocity)
-"ezb" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_3"
-	},
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
 /turf/unsimulated/floor,
-/area/velocity)
+/area/space)
+"eyb" = (
+/obj/effect/landmark/latejoin,
+/turf/unsimulated/floor,
+/area/space)
 "ezJ" = (
 /obj/structure/closet,
 /obj/random/misc/all,
@@ -24332,12 +23551,6 @@
 	dir = 5;
 	icon_state = "brown"
 	},
-/area/velocity)
-"eAb" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_4"
-	},
-/turf/unsimulated/floor,
 /area/velocity)
 "eBb" = (
 /obj/machinery/door/airlock/centcom{
@@ -24369,66 +23582,25 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
-"eDb" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	dir = 1;
-	icon_state = "chair_a01"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
 "eEb" = (
-/obj/structure/stool/bed/chair/schair/monorail_chair{
-	dir = 1;
-	icon_state = "chair_a02"
-	},
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/space_drugs,
+/obj/machinery/light/built,
 /turf/unsimulated/floor,
-/area/velocity)
+/area/space)
 "eFb" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_1"
-	},
+/obj/item/weapon/gun/energy/gun/nuclear,
 /turf/unsimulated/floor,
-/area/velocity)
+/area/space)
 "eGb" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "velocity_2"
-	},
+/obj/item/clothing/shoes/sandal,
 /turf/unsimulated/floor,
-/area/velocity)
+/area/space)
 "eHb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "velocity04";
-	name = "Doors";
-	opacity = 0
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
+/obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth,
 /turf/unsimulated/floor,
-/area/velocity)
-"eIb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "velocity03";
-	name = "Doors";
-	opacity = 0
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "rampbottom"
-	},
-/area/velocity)
+/area/space)
 "eIp" = (
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
@@ -24450,17 +23622,6 @@
 	icon_state = "plating"
 	},
 /area/velocity)
-"eJb" = (
-/obj/machinery/door/airlock/security{
-	name = "Security Checkpoint";
-	req_access = list(101)
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/obj/machinery/door/firedoor,
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
 "eKb" = (
 /obj/machinery/light{
 	dir = 8
@@ -24471,21 +23632,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
-"eLb" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "rampbottom"
-	},
-/area/velocity)
-"eMb" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "rampbottom"
-	},
-/area/velocity)
 "eNb" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
@@ -25429,8 +24575,8 @@
 	},
 /area/velocity/locker)
 "guj" = (
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
+/turf/simulated/floor/carpet/orange,
+/area/space)
 "guD" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
 /turf/unsimulated/floor{
@@ -25900,8 +25046,9 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "hkh" = (
-/turf/unsimulated/floor,
-/area/velocity/checkpoint)
+/obj/item/weapon/gun/projectile/revolver/peacemaker,
+/turf/unsimulated/desert,
+/area/space)
 "hlb" = (
 /obj/structure/sign/warning/securearea,
 /turf/unsimulated/wall,
@@ -26020,12 +25167,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/velocity)
-"htV" = (
-/obj/structure/window/fulltile/reinforced/indestructible,
-/turf/unsimulated/floor{
-	icon_state = "plating"
-	},
-/area/velocity/waitingroom)
 "hub" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1;
@@ -26163,16 +25304,6 @@
 	icon_state = "floor2"
 	},
 /area/centcom/evac)
-"hMb" = (
-/obj/structure/object_wall/standart{
-	icon_state = "swall3"
-	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
-/turf/unsimulated/floor,
-/area/velocity/monorailwagon)
 "hNb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -26191,17 +25322,6 @@
 	icon_state = "blue"
 	},
 /area/centcom/evac)
-"hQb" = (
-/obj/structure/sign/monorail_map,
-/obj/structure/object_wall/standart{
-	icon_state = "swall3"
-	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
-/turf/unsimulated/floor,
-/area/velocity/monorailwagon)
 "hQw" = (
 /turf/unsimulated/wall,
 /area/centcom/bar)
@@ -28483,12 +27603,6 @@
 	icon_state = "grass2"
 	},
 /area/centcom/evac)
-"mIJ" = (
-/obj/structure/sign/mark{
-	icon_state = "rlf"
-	},
-/turf/unsimulated/floor,
-/area/velocity/waitingroom)
 "mJb" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/unsimulated/floor{
@@ -29813,15 +28927,6 @@
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
-"pNz" = (
-/obj/structure/sign/departments/restroom{
-	pixel_y = 32
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "green"
-	},
-/area/velocity/waitingroom)
 "pOb" = (
 /obj/machinery/computer/robotics{
 	dir = 4
@@ -29940,16 +29045,6 @@
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/elite_squad)
-"qsx" = (
-/obj/machinery/door/airlock/glass{
-	dir = 4;
-	name = "Locker Room"
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/velocity/locker)
 "quq" = (
 /obj/machinery/door/airlock/centcom{
 	req_access = list(101)
@@ -30419,9 +29514,6 @@
 	icon_state = "barber"
 	},
 /area/velocity/locker)
-"xEi" = (
-/turf/unsimulated/beach/sand,
-/area/pluvia_heaven)
 "xLi" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -76605,22 +75697,22 @@ aaM
 aaM
 aaM
 aaM
+aoo
 wRg
 wRg
-htV
-htV
-htV
-awG
-htV
-htV
-htV
-aaQ
-auy
-auy
-srT
-pAe
-qsx
-pAe
+wRg
+wRg
+wRg
+wRg
+wRg
+wRg
+wRg
+wRg
+wRg
+wRg
+wRg
+wRg
+wRg
 srT
 aeG
 kbS
@@ -76862,22 +75954,22 @@ aaM
 aaM
 aaM
 aaM
-wRg
+aoo
 aum
-guj
-avT
-cBs
-mIJ
-cBs
-guj
-avT
-guj
-guj
-guj
-cBs
-guj
-guj
-ayk
+aum
+aum
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
 vNL
 vNL
 vNL
@@ -77119,22 +76211,22 @@ aoo
 aoo
 aoo
 aoo
-wRg
+aoo
+aum
+auP
+aum
+axg
+axg
+axg
+awI
 guj
+efb
 avC
 avh
 auO
-guj
-avC
-avh
-auO
-guj
-avC
-avh
-auO
-guj
-guj
-guj
+axg
+ays
+axg
 vNL
 nGC
 nGC
@@ -77376,23 +76468,23 @@ aqD
 atr
 hWY
 aoo
-aun
+aoo
+aum
+aum
+aum
+axg
+axg
+axg
+awI
 guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-ayq
+efb
+avC
+avh
+auO
+axg
+ayk
+axg
+gzP
 sHm
 sHm
 pIJ
@@ -77633,23 +76725,23 @@ aNG
 atH
 atH
 aoo
-pNz
+aoo
+axg
+axg
+axg
+axg
+axg
+axg
+awI
 guj
+efb
 avC
 avh
 auO
-guj
-avC
-avh
-auO
-guj
-avC
-avh
-auO
-guj
-guj
-guj
-ayr
+axg
+hkh
+axg
+gzP
 sHm
 vKy
 pIJ
@@ -77890,23 +76982,23 @@ atH
 atH
 atH
 atx
-dFb
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-guj
-ayq
+aoo
+axg
+axg
+axg
+axg
+axg
+axg
+eGb
+eGb
+eGb
+eGb
+eGb
+eGb
+axg
+axg
+axg
+gzP
 sHm
 sHm
 pIJ
@@ -78147,22 +77239,22 @@ htR
 auc
 atJ
 aoo
-auq
-auz
-auP
-avi
-avD
-avU
-awl
-awH
-axf
-axv
-avU
-avD
-avD
-axW
-aye
-cYQ
+aoo
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
 vNL
 fbp
 fbp
@@ -78404,22 +77496,22 @@ aoo
 aoo
 aoo
 gzP
-gzP
-gzP
-auQ
-dSb
-dYb
-ayb
-awm
-aaJ
 aoo
+axg
+auQ
+axg
+axg
+axg
+axg
+aaJ
+axW
 awm
 aaa
 eHb
-eHb
-gzP
-gzP
-gzP
+dSb
+axg
+axg
+axg
 gzP
 aoo
 aoo
@@ -78661,22 +77753,22 @@ aoo
 atK
 atU
 gzP
-hkh
-hkh
-dLb
-dTb
-weI
-ecb
-awn
-awI
+aoo
 axg
-exb
-eDb
-weI
-axS
-eJb
-hkh
-hkh
+auS
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
 gzP
 ayv
 ayz
@@ -78918,23 +78010,23 @@ quq
 weI
 atV
 uXB
-hkh
-aap
+aoo
+axg
 auS
-dTb
-weI
-edb
-awo
+axg
+axg
+axg
+axg
 awJ
 axh
 exb
 eEb
-weI
-axS
-axY
-aaq
-hkh
-uXB
+ayt
+axh
+axg
+axg
+axg
+gzP
 ayw
 ayA
 ayA
@@ -79175,22 +78267,22 @@ aoo
 aaC
 atW
 gzP
-aur
-auB
+aoo
+axg
 auT
-dTb
-weI
-ecb
-awo
-awK
+axg
+axg
+axg
+axg
+axg
 axi
-exb
-eDb
-weI
-axS
-axZ
-ayg
-aym
+axg
+axg
+axg
+axg
+axg
+axg
+axg
 gzP
 arw
 aaE
@@ -79432,22 +78524,22 @@ aoo
 atM
 atX
 gzP
-aKO
-auC
+aoo
+axg
 auQ
-dTb
-weI
-edb
-awo
-awL
-axj
+axg
+axg
+axg
+axg
+axg
+axg
 eyb
-eEb
-weI
-axS
-gzP
-ayh
-hkh
+axg
+axg
+axg
+axg
+axg
+axg
 gzP
 atM
 aaL
@@ -79689,22 +78781,22 @@ aoz
 aoz
 aoz
 rIN
-aue
-rIN
-dMb
-dUb
-dZb
-avX
-awm
 aoo
-aoo
-awm
-axK
-eIb
-eIb
-gzP
-gzP
-auZ
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
 gzP
 aoo
 aoo
@@ -79946,22 +79038,22 @@ dnb
 dtb
 dxb
 aoo
-aut
-dGb
-weI
-dVb
-dVb
-avB
-weI
-weI
-axk
-weI
-avB
-dVb
-dVb
-weI
-eLb
-aut
+aoo
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
 aoo
 aAb
 aAy
@@ -80203,23 +79295,23 @@ weI
 weI
 atV
 atB
-weI
-dGb
-weI
-weI
-weI
+aoo
+axg
+axg
+axg
+axg
 eeb
-ehb
-elb
-etb
-ezb
-eFb
-weI
-weI
-weI
-eLb
-eNb
-ays
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+gzP
 eCb
 weI
 eNb
@@ -80460,23 +79552,23 @@ dob
 dub
 dzb
 dBb
-auu
-dHb
-weI
-weI
-weI
-efb
-eib
-emb
-eub
-eAb
-eGb
-weI
-weI
-weI
-eMb
-auu
 aoo
+axg
+axg
+axg
+eFb
+eeb
+axg
+emb
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+gzP
 ayJ
 ayC
 ayy
@@ -80718,22 +79810,22 @@ aoo
 aoo
 aoo
 aoo
-aoo
-ask
-ask
-ask
-ask
-ask
-ask
-ask
-ask
-ask
-ask
-ask
-ask
-aoo
-aoo
-aoo
+axg
+auq
+axg
+ayb
+axK
+axg
+emb
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+gzP
 aoo
 aoo
 aoo
@@ -80974,23 +80066,23 @@ acd
 atP
 atP
 ayB
-atP
-hUb
+aoo
+axg
 dNb
+axg
 avn
-avn
-avn
-dNb
-hrb
-hUb
-dNb
-axN
-axN
-axN
-dNb
-hrb
-atP
-ayt
+auC
+axg
+emb
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+gzP
 atP
 atP
 atP
@@ -81231,23 +80323,23 @@ dpb
 dvb
 dvb
 dvb
-dvb
-dJb
-dOb
-avo
-avo
-avo
-awr
-eob
-eob
-dOb
-avo
-avo
-avo
-awr
-dJb
-dvb
-dvb
+aoo
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+gzP
 dvb
 dvb
 dvb
@@ -81488,23 +80580,23 @@ dqb
 dwb
 dwb
 dwb
-dwb
-dKb
-dPb
-dWb
-eab
-dWb
-ejb
-epb
-evb
-dPb
-dWb
-eab
-dWb
-ejb
-dKb
-dwb
-dwb
+aoo
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+axg
+gzP
 dwb
 dwb
 dwb
@@ -81745,23 +80837,23 @@ acd
 atP
 atP
 atP
-atP
-hVb
-dNb
-dXb
-ebb
-dXb
-dNb
-aFi
-hVb
-hMb
-dXb
-hQb
-dXb
-hMb
-aFi
-atP
-atP
+aoo
+aoo
+aoo
+aoo
+aoo
+aoo
+aoo
+erb
+ewb
+aoo
+aoo
+aoo
+aoo
+aoo
+aoo
+aoo
+gzP
 atP
 atP
 atP
@@ -93396,7 +92488,7 @@ aVt
 aVH
 aVH
 aVH
-xEi
+aVH
 aVH
 aVH
 aVH
