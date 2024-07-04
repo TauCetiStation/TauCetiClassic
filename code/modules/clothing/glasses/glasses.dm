@@ -39,18 +39,6 @@
 			H.update_sight()
 			update_item_actions()
 
-/obj/item/clothing/glasses/equipped(mob/user, slot)
-	. = ..()
-	if(slot == SLOT_GLASSES)
-		if(prescription)
-			user.clear_fullscreen("nearsighted")
-
-/obj/item/clothing/glasses/dropped(mob/user)
-	. = ..()
-	if(prescription)
-		if(HAS_TRAIT(user, TRAIT_NEARSIGHT))
-			user.overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."

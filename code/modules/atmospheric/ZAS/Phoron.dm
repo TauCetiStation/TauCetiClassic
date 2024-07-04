@@ -65,16 +65,23 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 /mob/living/carbon/human/contaminate()
 	//See if anything can be contaminated.
 
-	if(!pl_suit_protected())
-		suit_contamination()
+	if(!pl_cloth_protected(UPPER_TORSO) && wear_suit)
+		wear_suit.contaminate()
 
-	if(!pl_head_protected())
-		if(prob(1))
-			suit_contamination() //Phoron can sometimes get through such an open suit.
+	if(!pl_cloth_protected(UPPER_TORSO) && w_uniform)
+		w_uniform.contaminate()
 
-//Cannot wash backpacks currently.
-//	if(istype(back,/obj/item/weapon/storage/backpack))
-//		back.contaminate()
+	if(!pl_cloth_protected(LEGS) && shoes)
+		shoes.contaminate()
+
+	if(!pl_cloth_protected(ARMS) && gloves)
+		gloves.contaminate()
+
+	if(!pl_cloth_protected(HEAD) && head)
+		head.contaminate()
+
+	if(!pl_cloth_protected(FACE) && wear_mask)
+		wear_mask.contaminate()
 
 /mob/proc/pl_effects()
 
@@ -91,7 +98,7 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 
 	//Burn skin if exposed.
 	if(vsc.plc.SKIN_BURNS)
-		if(!pl_head_protected() || !pl_suit_protected())
+		if(!pl_cloth_protected(HEAD) || !pl_cloth_protected(UPPER_TORSO) || !pl_cloth_protected(ARMS) || !pl_cloth_protected(LEGS))
 			burn_skin(0.75)
 			if(prob(20))
 				to_chat(src, "<span class='danger'>Your skin burns!</span>")
@@ -99,9 +106,8 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 
 	//Burn eyes if exposed.
 	if(vsc.plc.EYE_BURNS)
-		if(!(head && (head.body_parts_covered & EYES)))
-			if(!(wear_mask && (wear_mask.body_parts_covered & EYES)))
-				burn_eyes()
+		if(!pl_cloth_protected(EYES))
+			burn_eyes()
 
 	//Genetic Corruption
 	if(vsc.plc.GENETIC_CORRUPTION)
@@ -124,37 +130,12 @@ var/global/image/contamination_overlay = image('icons/effects/contamination.dmi'
 			to_chat(src, "<span class='danger'>You are blinded!</span>")
 			eye_blind += 20
 
-/mob/living/carbon/human/proc/pl_head_protected()
-	//Checks if the head is adequately sealed.
-	if(head)
-		if(vsc.plc.PHORONGUARD_ONLY)
-			if(head.flags & PHORONGUARD)
-				return TRUE
-		else if(head.body_parts_covered & EYES)
+/mob/living/carbon/human/proc/pl_cloth_protected(body_part)
+	var/list/protective_gear = list(head, wear_mask, wear_suit, w_uniform, gloves, shoes)
+	for(var/obj/item/clothing/C in protective_gear)
+		if((C.body_parts_covered & body_part) && (C.flags & PHORONGUARD))
 			return TRUE
 	return FALSE
-
-/mob/living/carbon/human/proc/pl_suit_protected()
-	//Checks if the suit is adequately sealed.
-	var/coverage = 0
-	for(var/obj/item/protection in list(wear_suit, gloves, shoes))
-		if(!protection)
-			continue
-		if(vsc.plc.PHORONGUARD_ONLY && !(protection.flags & PHORONGUARD))
-			return FALSE
-		coverage |= protection.body_parts_covered
-
-	if(vsc.plc.PHORONGUARD_ONLY)
-		return TRUE
-
-	return BIT_TEST_ALL(coverage, UPPER_TORSO|LOWER_TORSO|LEGS|ARMS)
-
-/mob/living/carbon/human/proc/suit_contamination()
-	//Runs over the things that can be contaminated and does so.
-	if(w_uniform) w_uniform.contaminate()
-	if(shoes) shoes.contaminate()
-	if(gloves) gloves.contaminate()
-
 
 /turf/Entered(obj/item/I)
 	. = ..()

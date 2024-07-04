@@ -233,7 +233,7 @@
 		return "Отсутствует конфиг карт"
 
 #define FORMAT_MAP_NAME(name) splittext(name, " ")[1]
-#define REPEATED_MAPS_FACTOR_DECREASE 0.1
+#define REPEATED_MAPS_FACTOR_DECREASE 0.15
 
 /datum/poll/nextmap/init_choices()
 	var/list/voteweights = get_voteweights()

@@ -192,7 +192,7 @@
 	cases = list("расширенный магазин (9мм)", "расширенного магазина (9мм)", "расширенному магазину (9мм)", "расширенный магазин (9мм)", "расширенным магазином (9мм)", "расширенном магазине (9мм)")
 	icon_state = "glock_mag_extended"
 	max_ammo = 20
-	overlay = "glock-mag-ex"
+	overlay = "glock-mag-extended"
 
 /obj/item/ammo_box/magazine/glock/extended/rubber
 	name = "extended magazine (9mm rubber)"
@@ -203,14 +203,17 @@
 /obj/item/ammo_box/magazine/smg
 	name = "SMG magazine (9mm)"
 	cases = list("магазин ПП (9мм)", "магазина ПП (9мм)", "магазину ПП (9мм)", "магазин ПП (9мм)", "магазином ПП (9мм)", "магазине ПП (9мм)")
-	icon_state = "smg_mag"
+	icon_state = "smg_mag-5"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 18
+	overlay = "saber-mag"
 
 /obj/item/ammo_box/magazine/smg/update_icon()
-	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+	var/ammo_perc = ammo_count() / max_ammo
+	var/ammo_state_indx = CEIL(LERP(0, 5, ammo_perc))
+
+	icon_state = "smg_mag-[ammo_state_indx]"
 
 /obj/item/ammo_box/magazine/c20r
 	name = "magazine (.45)"
@@ -344,7 +347,7 @@
 
 /obj/item/ammo_box/magazine/l13
 	name = "magazine (.38 rubber)"
-
+	cases = list("магазин (.38 Резина)", "магазина (.38 Резина)", "магазину (.38 Резина)", "магазин (.38 Резина)", "магазином (.38 Резина)", "магазине (.38 Резина)")
 	icon_state = "l13_mag_rubber"
 	origin_tech = "combat=1"
 	ammo_type = /obj/item/ammo_casing/c38
@@ -355,7 +358,7 @@
 
 /obj/item/ammo_box/magazine/l13/lethal
 	name = "magazine (.38)"
-	cases = list("магазин (.38 Резина)", "магазина (.38 Резина)", "магазину (.38 Резина)", "магазин (.38 Резина)", "магазином (.38 Резина)", "магазине (.38 Резина)")
+	cases = list("магазин (.38)", "магазина (.38)", "магазину (.38)", "магазин (.38)", "магазином (.38)", "магазине (.38)")
 	origin_tech = "combat=2"
 	icon_state = "l13_mag"
 	ammo_type = /obj/item/ammo_casing/c38m
