@@ -63279,6 +63279,14 @@
 	icon_state = "dark"
 	},
 /area/station/hallway/primary/starboard)
+"ctL" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/decal/turf_decal/wood{
+	dir = 2;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "ctM" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor{
@@ -63435,6 +63443,14 @@
 	icon_state = "dark"
 	},
 /area/station/ai_monitored/storage_secure)
+"cuh" = (
+/obj/structure/flora/tree/jungle,
+/obj/effect/decal/turf_decal/wood{
+	dir = 4;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "cui" = (
 /obj/machinery/porta_turret/station_default,
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -83398,6 +83414,14 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"rXE" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "rYb" = (
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/weapon/reagent_containers/syringe/antiviral,
@@ -136723,7 +136747,7 @@ cdn
 cuE
 cCt
 aUM
-ccX
+rXE
 cdc
 bFo
 iCb
@@ -137227,7 +137251,7 @@ aaa
 aaa
 bWu
 bZn
-bZp
+ctL
 aTf
 cxu
 cpE
@@ -137494,7 +137518,7 @@ cHi
 cuE
 cCK
 bdq
-cdb
+cuh
 ccX
 bFo
 iHb
