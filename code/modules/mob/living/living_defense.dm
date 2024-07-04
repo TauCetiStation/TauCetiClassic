@@ -5,8 +5,14 @@
 	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])[redirected ? " (redirected)" : ""]</font>"
 	if(alert_admins)
 		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)][redirected ? " (redirected)" : ""]", attacker)
-		if(ishuman(attacker))
-			SEND_SIGNAL(attacker, COMSIG_HUMAN_HARMED_OTHER, src)
+	if(ishuman(attacker)) // Я знаю что так делать некрасиво, но этот лог уже расскидан везде где кто-то кого атакует. Если ревьюеры скажут что нужно перенести send_signals в каждое такое место то будет обидно
+		var/mob/living/carbon/human/H = attacker
+		var/obj/item/item_in_hand = H.get_active_hand()
+		if(item_in_hand)
+			if(item_in_hand.force > 0) //а forcethrow проверять не надо, потому что предмета в руке уже нет))
+				SEND_SIGNAL(H, COMSIG_HUMAN_HARMED_OTHER, src)
+		else
+			SEND_SIGNAL(H, COMSIG_HUMAN_HARMED_OTHER, src)
 
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)

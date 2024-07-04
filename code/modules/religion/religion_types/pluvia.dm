@@ -20,6 +20,7 @@
 	style_text = "piety"
 	symbol_icon_state = null
 	var/haram_harm = 2
+	var/haram_drunk = 1
 
 /datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)
 	var/mob/living/carbon/human/attacker  = source
@@ -34,8 +35,23 @@
 			to_chat(attacker, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
 
 /datum/religion/pluvia/proc/suicide_haram(mob/living/carbon/human/target)
+	global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
+	target.social_credit = 0
+
+/datum/religion/pluvia/proc/drunk_haram(mob/living/carbon/human/target) //Я осознанно никак не проверяю, сам ли он пил или его напоили. Так можно гарантированно убить плувийца с концами - напоив его
+	if(target.haram_point < haram_threshold)
+		for(var/datum/reagent/R in target.reagents.reagent_list)
+			if(istype(R, /datum/reagent/consumable/ethanol) || istype(R, /datum/reagent/space_drugs) || istype(R,/datum/reagent/ambrosium))
+				target.reagents.del_reagent(R.id)
+		target.SetDrunkenness(0)
+		target.setDrugginess(0)
+		target.haram_point += haram_drunk
+		target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		to_chat(target, "<span class='warning'>\ <font size=3>Хватит травить себя!</span></font>")
+	else
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 		target.social_credit = 0
+		to_chat(target, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
 
 
 /datum/religion/pluvia/add_member(mob/living/carbon/human/H)
@@ -43,6 +59,7 @@
 	H.AddSpell(new /obj/effect/proc_holder/spell/create_bless_vote)
 	RegisterSignal(H, COMSIG_HUMAN_HARMED_OTHER, PROC_REF(harm_haram))
 	RegisterSignal(H, COMSIG_HUMAN_TRY_SUICIDE, PROC_REF(suicide_haram))
+	RegisterSignal(H, COMSIG_HUMAN_IS_DRUNK, PROC_REF(drunk_haram))
 
 /datum/religion/pluvia/remove_member(mob/M)
 	. = ..()
@@ -50,6 +67,7 @@
 		M.RemoveSpell(spell_to_remove)
 	UnregisterSignal(M, list(COMSIG_HUMAN_HARMED_OTHER, COMSIG_PARENT_QDELETING))
 	UnregisterSignal(M, list(COMSIG_HUMAN_TRY_SUICIDE, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(M, list(COMSIG_HUMAN_IS_DRUNK, COMSIG_PARENT_QDELETING))
 
 /datum/religion/pluvia/setup_religions()
 	global.pluvia_religion = src
