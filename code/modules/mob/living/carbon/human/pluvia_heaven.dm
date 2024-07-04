@@ -42,13 +42,15 @@
 	..()
 	var/mob/living/carbon/human/H = usr
 	if(href_list["choice"] == "yes")
-		if(sign == 1)
+		if(usr == owner)
+			to_chat(usr, "<span class='warning'>Свое письмо нельзя подписывать!</span>")
+		else if(sign == 1)
 			to_chat(usr, "<span class='notice'>Эта бумага уже подписана</span>")
-		else if(H.bless_vote > 0)
+		else if(H.social_credit > 0)
 			to_chat(usr, "<span class='notice'>Подписано!</span>")
 			sign_place = H.name
 			H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
-			H.bless_vote -= 1
+			H.social_credit -= 1
 			owner.social_credit += 1
 			sign = 1
 			to_chat(owner, "<span class='notice'>Ваш уровень кармы повышен!</span>")
