@@ -645,7 +645,7 @@
 		if(issilicon(user))
 			return wires.interact(user)
 		user.SetNextMove(CLICK_CD_MELEE)
-		user.visible_message("<span class='warning'>[user.name] ударил [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)]!</span>", \
+		user.visible_message("<span class='warning'>[user.name] ударил[VERB_RU(user)] [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)]!</span>", \
 			"<span class='warning'>Вы ударили [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)]!</span>", \
 			"Вы слышите удар.")
 		return wires.interact(user)
