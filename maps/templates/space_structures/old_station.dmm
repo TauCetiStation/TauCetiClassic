@@ -6375,8 +6375,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/device/flashlight/flare,
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_x = 14
+/obj/item/stack/medical/bruise_pack/rags/not_old{
+	pixel_y = -4;
+	pixel_x = 16
 	},
 /turf/simulated/floor{
 	dir = 9;
