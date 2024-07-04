@@ -13,11 +13,11 @@
 	log_emote("Ghost/[key_name(src)] : [message]")
 
 	if(client)
-		if(client.prefs.muted & MUTE_DEADCHAT)
+		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
 			to_chat(src, "<span class='alert'>You cannot emote in deadchat (muted).</span>")
 			return
 
-		if(client.handle_spam_prevention(message, MUTE_DEADCHAT))
+		if(client.handle_spam_prevention(message, ADMIN_CD_IC))
 			return
 
 	return emote_dead(message)

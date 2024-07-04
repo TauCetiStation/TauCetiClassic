@@ -80,20 +80,27 @@ var/global/BSACooldown = 0
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
+		<A href='?src=\ref[src];chatban=\ref[M]'>Chatban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
 	"}
 
 	if(M.client)
 		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A><br>"
-		var/muted = M.client.prefs.muted
-		body += {"<br><b>Mute: </b>
-			<A class='[(muted & MUTE_IC)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'>IC</a>
-			<A class='[(muted & MUTE_OOC)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'>OOC</a>
-			<A class='[(muted & MUTE_PRAY)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'>PRAY</a>
-			<A class='[(muted & MUTE_ADMINHELP)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'>ADMINHELP</a>
-			<A class='[(muted & MUTE_MENTORHELP)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_MENTORHELP]'>MENTORHELP</a>
-			<A class='[(muted & MUTE_DEADCHAT)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'>DEADCHAT</a>
-			<A class='[(muted & MUTE_ALL)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'>ALL</a>
+		var/datum/preferences/pref = M.client.prefs
+		// these shows two states: if cooldown is active, and hint for chats if ban active
+		body += {"<br><b>Cooldowns: </b>
+			<A class='[IS_ON_ADMIN_CD(M.client, ADMIN_CD_IC)?"red":"green"]' href='?src=\ref[src];cooldown=\ref[M];type=[ADMIN_CD_IC]'>
+				IC[(pref.muted & MUTE_IC) ? " (BANNED)" : ""]
+			</a>
+			<A class='[IS_ON_ADMIN_CD(M.client, ADMIN_CD_OOC)?"red":"green"]' href='?src=\ref[src];cooldown=\ref[M];type=[ADMIN_CD_OOC]'>
+				OOC[(pref.muted & MUTE_OOC) ? " (BANNED)" : ""]
+			</a>
+			<A class='[IS_ON_ADMIN_CD(M.client, ADMIN_CD_PRAY)?"red":"green"]' href='?src=\ref[src];cooldown=\ref[M];type=[ADMIN_CD_PRAY]'>
+				PRAY[(pref.muted & MUTE_PRAY) ? " (BANNED)" : ""]
+			</a>
+			<A class='[IS_ON_ADMIN_CD(M.client, ADMIN_CD_PM)?"red":"green"]' href='?src=\ref[src];cooldown=\ref[M];type=[ADMIN_CD_PM]'>
+				PM[(pref.muted & MUTE_PM) ? " (BANNED)" : ""]
+			</a>
 		"}
 
 	body += {"<br><br>
