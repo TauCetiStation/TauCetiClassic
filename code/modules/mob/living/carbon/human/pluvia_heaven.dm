@@ -13,10 +13,6 @@
 	eye.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(eye)
 
-/mob/living/carbon/human/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	. = ..()
-	SEND_SIGNAL(attacker, COMSIG_HUMAN_HARMED_OTHER, src)
-
 /obj/item/weapon/bless_vote
 	name = "Рекомендательное письмо"
 	desc = "Билет до рая." // я лучше сам напишу сразу по русски, чем придет кринж-депортамент и напереводит по-свойму

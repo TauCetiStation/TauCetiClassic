@@ -27,9 +27,10 @@
 		if(attacker.haram_point < haram_threshold)
 			attacker.haram_point += haram_harm
 			attacker.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			to_chat(attacker, "<span class='warning'>\ <font size=3> ГРЕХ. Хватит наносить вред Плувийцу!</span></font> +[haram_harm] очка грехов")
+			to_chat(attacker, "<span class='warning'>\ <font size=3>Хватит наносить вред Плувийцу!</span></font>")
 		else
 			global.pluvia_religion.remove_member(attacker, HOLY_ROLE_PRIEST)
+			attacker.social_credit = 0
 			to_chat(attacker, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
 
 

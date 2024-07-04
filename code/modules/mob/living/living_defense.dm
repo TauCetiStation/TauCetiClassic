@@ -5,6 +5,8 @@
 	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])[redirected ? " (redirected)" : ""]</font>"
 	if(alert_admins)
 		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)][redirected ? " (redirected)" : ""]", attacker)
+		if(ishuman(attacker))
+			SEND_SIGNAL(attacker, COMSIG_HUMAN_HARMED_OTHER, src)
 
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
