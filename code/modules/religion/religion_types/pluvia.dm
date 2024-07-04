@@ -21,6 +21,7 @@
 	symbol_icon_state = null
 	var/haram_harm = 2
 	var/haram_drunk = 1
+	var/haram_food = 0.5
 
 /datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)
 	var/mob/living/carbon/human/attacker  = source
@@ -53,6 +54,18 @@
 		target.social_credit = 0
 		to_chat(target, "<span class='warning'>\ <font size=5>¬рата ра€ закрыты дл€ вас. »щите себе другого покровител€</span></font>")
 
+/datum/religion/pluvia/proc/food_haram(datum/source, obj/item/weapon/reagent_containers/food/snacks/target)
+	var/mob/living/carbon/human/H = source
+	if(istype(target.loc, /obj/item/weapon/kitchen/utensil/fork/sticks))
+		return
+	if(H.haram_point < haram_threshold)
+		H.haram_point += haram_food
+		H.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		to_chat(H, "<span class='warning'>\ <font size=3>≈шь как человек, а не как животное</span></font>")
+	else
+		global.pluvia_religion.remove_member(H, HOLY_ROLE_PRIEST)
+		H.social_credit = 0
+		to_chat(H, "<span class='warning'>\ <font size=5>¬рата ра€ закрыты дл€ вас. »щите себе другого покровител€</span></font>")
 
 /datum/religion/pluvia/add_member(mob/living/carbon/human/H)
 	. = ..()
@@ -60,6 +73,7 @@
 	RegisterSignal(H, COMSIG_HUMAN_HARMED_OTHER, PROC_REF(harm_haram))
 	RegisterSignal(H, COMSIG_HUMAN_TRY_SUICIDE, PROC_REF(suicide_haram))
 	RegisterSignal(H, COMSIG_HUMAN_IS_DRUNK, PROC_REF(drunk_haram))
+	RegisterSignal(H, COMSIG_HUMAN_EAT, PROC_REF(food_haram))
 
 /datum/religion/pluvia/remove_member(mob/M)
 	. = ..()
@@ -68,6 +82,7 @@
 	UnregisterSignal(M, list(COMSIG_HUMAN_HARMED_OTHER, COMSIG_PARENT_QDELETING))
 	UnregisterSignal(M, list(COMSIG_HUMAN_TRY_SUICIDE, COMSIG_PARENT_QDELETING))
 	UnregisterSignal(M, list(COMSIG_HUMAN_IS_DRUNK, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(M, list(COMSIG_HUMAN_EAT, COMSIG_PARENT_QDELETING))
 
 /datum/religion/pluvia/setup_religions()
 	global.pluvia_religion = src

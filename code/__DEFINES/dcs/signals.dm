@@ -352,6 +352,8 @@
 #define COMSIG_HUMAN_TRY_SUICIDE "human_try_suicide"
 // from base of /mob/living/carbon/proc/handle_alerts()
 #define COMSIG_HUMAN_IS_DRUNK "human_is_drunk"
+// from base of /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
+#define COMSIG_HUMAN_EAT "human_eat"
 
 /// from /obj/effect/proc_holder/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
