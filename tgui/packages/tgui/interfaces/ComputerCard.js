@@ -2,7 +2,7 @@ import { Fragment } from "inferno";
 import { useLocalState, useBackend } from "../backend";
 import { NoticeBox, Button, LabeledList, Section, Tabs } from "../components";
 import { Window } from "../layouts";
-import { AccessList } from './common/AccessList';
+import { AdvAccessList } from './common/AdvAccessList';
 import { CrewManifest } from "./common/CrewManifest";
 
 export const ComputerCard = (props, context) => {
@@ -190,23 +190,21 @@ export const ComputerCard = (props, context) => {
               </LabeledList>
             </Section>
             <Section>
-              <AccessList
+              <AdvAccessList
+                fast_modify_region={data.fast_modify_region}
+                fast_full_access={data.fast_full_access}
                 accesses={data.regions}
                 selectedList={data.selectedAccess}
                 accessMod={ref => act('access', {
                   access: ref,
                 })}
-                {...(!!data.fast_full_access && {
-                  grantAll: () => act('access_full'),
-                  denyAll: () => act('clear_all'),
+                grantAll={() => act('access_full')}
+                denyAll={() => act('clear_all')}
+                grantDep={ref => act('access_region', {
+                  region: ref,
                 })}
-                {...(!!data.fast_modify_region && {
-                  grantDep: (ref) => act('access_region', {
-                    region: ref,
-                  }),
-                  denyDep: (ref) => act('deny_region', {
-                    region: ref,
-                  }),
+                denyDep={ref => act('deny_region', {
+                  region: ref,
                 })} />
             </Section>
           </Fragment>
