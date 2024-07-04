@@ -684,7 +684,7 @@
 				if(dna_lockable)
 					actions += "Exosuit DNA Scanner"
 				var/obj/item/mecha_parts/mecha_tracking/tracking = locate() in contents
-				for(tracking)
+				if(tracking)
 					actions += "Exosuit Tracker"
 					break
 
