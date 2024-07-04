@@ -684,9 +684,8 @@
 				if(dna_lockable)
 					actions += "Exosuit DNA Scanner"
 				var/obj/item/mecha_parts/mecha_tracking/tracking = locate() in contents
-				for(tracking)
+				if(tracking)
 					actions += "Exosuit Tracker"
-					break
 
 				if(actions.len > 0)
 					var/choice = tgui_input_list(user, "Pick what to unscrew.", "Unscrew part", actions, 5 SECONDS)
