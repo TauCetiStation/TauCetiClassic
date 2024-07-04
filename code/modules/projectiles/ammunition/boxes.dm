@@ -48,7 +48,6 @@
 /obj/item/ammo_box/shotgun
 	name = "shotgun shells box (buckshot)"
 	cases = list("коробка патронов (Картечь)", "коробки патронов (Картечь)", "коробке патронов (Картечь)", "коробку патронов (Картечь)", "коробкой патронов (Картечь)", "коробке патронов (Картечь)")
-	desc = "коробки для патронов (Картечь) 12 калибра."
 	caliber = "shotgun"
 	icon_state = "pellet_box"
 	w_class = SIZE_SMALL
