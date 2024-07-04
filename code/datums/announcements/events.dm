@@ -32,10 +32,10 @@
 
 /datum/announcement/centcomm/bsa
 	name = "Secret: BSA Shot"
-	subtitle = "Сенсоры [station_name_ru()]"
 	message = "Тревога! Обнаружен огонь блюспейс артиллерии. Приготовиться к удару."
 	sound = "artillery"
 /datum/announcement/centcomm/bsa/play(area/A)
+	subtitle = "Сенсоры [station_name_ru()]"
 	if(A)
 		message = "Тревога! Обнаружен огонь блюспейс артиллерии по [CASE(A, DATIVE_CASE)]. Приготовиться к удару."
 	..()

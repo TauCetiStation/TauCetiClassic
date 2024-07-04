@@ -257,8 +257,8 @@
 	sound = "construction_doom"
 
 /datum/announcement/centcomm/ert
-	title = "Сенсоры [station_name_ru()]"
 	subtitle = "Приближается Шаттл"
 	name = "ERT Incoming"
 /datum/announcement/centcomm/ert/New()
+	title = "Сенсоры [station_name_ru()]"
 	message = "Наши сенсоры зафиксировали приближение неидентифицированного шаттла к [station_name_ru()] с активными процедурами стыковки. Готовьтесь встречать гостей."
