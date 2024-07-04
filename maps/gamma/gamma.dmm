@@ -11340,7 +11340,7 @@
 "bEV" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/oxygen,
-/obj/item/weapon/aiModule/oneHuman,
+/obj/item/weapon/aiModule/onentemploye,
 /obj/machinery/door/window{
 	name = "High-Risk Modules";
 	req_access = list(20)
@@ -48499,6 +48499,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "iUy" = (
+/obj/machinery/atm{
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -116806,9 +116809,8 @@
 	},
 /area/station/hallway/secondary/entry)
 "wHq" = (
-/obj/machinery/computer/cargo{
-	dir = 4;
-	req_access = list()
+/obj/machinery/computer/cargo/qm{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;

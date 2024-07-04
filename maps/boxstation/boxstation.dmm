@@ -13474,9 +13474,8 @@
 /turf/simulated/wall,
 /area/station/security/range)
 "axc" = (
-/obj/machinery/computer/cargo{
-	dir = 1;
-	req_access = list()
+/obj/machinery/computer/cargo/qm{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -15310,6 +15309,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -15995,6 +15999,11 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -30902,7 +30911,7 @@
 "bcW" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/oxygen,
-/obj/item/weapon/aiModule/oneHuman,
+/obj/item/weapon/aiModule/onentemploye,
 /obj/machinery/door/window{
 	dir = 8;
 	name = "High-Risk Modules";
@@ -37954,10 +37963,6 @@
 	department = "Medical";
 	dir = 4;
 	pixel_x = -24
-	},
-/obj/structure/closet/secure_closet{
-	name = "Psychiatrist's Locker";
-	req_access = list(64)
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
@@ -45641,6 +45646,14 @@
 	name = "Station Intercom (General)";
 	pixel_y = 28
 	},
+/obj/structure/cable{
+	dir = 8
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "smallcell apc left";
+	pixel_x = -28
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/dormitories/dormthree)
 "bDt" = (
@@ -45664,6 +45677,11 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/dormitories/dormthree)
 "bDv" = (
@@ -49201,6 +49219,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/civilian/dormitories/dormthree)
 "bJM" = (
@@ -49849,6 +49872,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
 "bKZ" = (
@@ -50581,6 +50609,11 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -50687,6 +50720,11 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -50740,6 +50778,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -50801,6 +50844,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -51979,6 +52027,14 @@
 /area/station/civilian/gym)
 "bOP" = (
 /obj/structure/stool,
+/obj/structure/cable{
+	dir = 8
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "smallcell apc left";
+	pixel_x = -28
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/civilian/dormitories/dormtwo)
 "bOQ" = (
@@ -52085,6 +52141,11 @@
 /obj/machinery/light_switch{
 	pixel_y = -25
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/civilian/dormitories/dormtwo)
 "bOY" = (
@@ -52170,6 +52231,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/civilian/dormitories/dormtwo)
@@ -52284,6 +52350,11 @@
 	id_tag = "Dorm2";
 	name = "Dorm 2"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
 "bPr" = (
@@ -52394,6 +52465,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -52526,6 +52602,11 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -52995,11 +53076,24 @@
 /area/station/hallway/secondary/entry)
 "bQC" = (
 /obj/structure/stool,
+/obj/structure/cable{
+	dir = 8
+	},
+/obj/machinery/power/apc/smallcell{
+	dir = 8;
+	name = "smallcell apc left";
+	pixel_x = -28
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/dormitories/dormone)
 "bQD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/dormitories/dormone)
@@ -53012,6 +53106,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/dormitories/dormone)
@@ -53029,6 +53128,11 @@
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
@@ -63213,6 +63317,14 @@
 	icon_state = "dark"
 	},
 /area/station/hallway/primary/starboard)
+"ctL" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/decal/turf_decal/wood{
+	dir = 2;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "ctM" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor{
@@ -63369,6 +63481,14 @@
 	icon_state = "dark"
 	},
 /area/station/ai_monitored/storage_secure)
+"cuh" = (
+/obj/structure/flora/tree/jungle,
+/obj/effect/decal/turf_decal/wood{
+	dir = 4;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "cui" = (
 /obj/machinery/porta_turret/station_default,
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
@@ -66466,7 +66586,7 @@
 	dir = 10
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit,
+/obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -83316,6 +83436,14 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"rXE" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy_corner"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "rYb" = (
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/weapon/reagent_containers/syringe/antiviral,
@@ -136654,7 +136782,7 @@ cdn
 cuE
 cCt
 aUM
-ccX
+rXE
 cdc
 bFo
 iCb
@@ -137158,7 +137286,7 @@ aaa
 aaa
 bWu
 bZn
-bZp
+ctL
 aTf
 cxu
 cpE
@@ -137425,7 +137553,7 @@ cHi
 cuE
 cCK
 bdq
-cdb
+cuh
 ccX
 bFo
 iHb
