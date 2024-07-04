@@ -33,17 +33,23 @@
 			attacker.social_credit = 0
 			to_chat(attacker, "<span class='warning'>\ <font size=5>¬рата ра€ закрыты дл€ вас. »щите себе другого покровител€</span></font>")
 
+/datum/religion/pluvia/proc/suicide_haram(mob/living/carbon/human/target)
+		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
+		target.social_credit = 0
+
 
 /datum/religion/pluvia/add_member(mob/living/carbon/human/H)
 	. = ..()
 	H.AddSpell(new /obj/effect/proc_holder/spell/create_bless_vote)
 	RegisterSignal(H, COMSIG_HUMAN_HARMED_OTHER, PROC_REF(harm_haram))
+	RegisterSignal(H, COMSIG_HUMAN_TRY_SUICIDE, PROC_REF(suicide_haram))
 
 /datum/religion/pluvia/remove_member(mob/M)
 	. = ..()
 	for(var/obj/effect/proc_holder/spell/create_bless_vote/spell_to_remove in M.spell_list)
 		M.RemoveSpell(spell_to_remove)
 	UnregisterSignal(M, list(COMSIG_HUMAN_HARMED_OTHER, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(M, list(COMSIG_HUMAN_TRY_SUICIDE, COMSIG_PARENT_QDELETING))
 
 /datum/religion/pluvia/setup_religions()
 	global.pluvia_religion = src

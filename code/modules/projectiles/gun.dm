@@ -246,6 +246,10 @@
 				user.apply_effect(110,AGONY,0)
 			else if(!chambered.BB.nodamage)
 				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
+				if(ishuman(user))
+					var/mob/living/carbon/human/H = usr
+					H.social_credit = 0
+					SEND_SIGNAL(H, COMSIG_HUMAN_TRY_SUICIDE, src)
 				user.death()
 			chambered.BB = null
 			chambered.update_icon()
