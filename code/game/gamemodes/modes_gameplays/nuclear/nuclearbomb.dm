@@ -51,7 +51,7 @@ var/global/bomb_set
 	else
 		bomb_set = TRUE //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
-		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
+		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MISC, 30, FALSE)
 		if(timeleft <= 120 && COOLDOWN_FINISHED(global, nuclear_siren_cooldown))
 			for(var/mob/M in player_list)
 				if(!isnewplayer(M))

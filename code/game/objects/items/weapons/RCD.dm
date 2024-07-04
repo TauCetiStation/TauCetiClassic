@@ -89,7 +89,7 @@ RCD
 	if(RCD_MODE_PNEUMATIC in available_modes)
 		options[RCD_MODE_PNEUMATIC] = radial_pipe
 
-	var/choice = show_radial_menu(user, src, options, tooltips = TRUE)
+	var/choice = show_radial_menu(user, user, options, tooltips = TRUE)
 
 	if(!choice) //closed radial menu
 		return

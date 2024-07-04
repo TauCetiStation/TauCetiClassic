@@ -921,7 +921,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/aisat
 	name = "AI Satellite Exterior"
-	cases = list("внешний перемитр спутника ИИ", "внешниго перемитра спутника ИИ", "внешнему перемитру спутника ИИ", "внешний перемитр спутника ИИ", "внешним перемитром спутника ИИ", "внешнем перемитре спутника ИИ")
+	cases = list("внешний периметр спутника ИИ", "внешнего периметра спутника ИИ", "внешнему периметру спутника ИИ", "внешний периметр спутника ИИ", "внешним периметром спутника ИИ", "внешнем периметре спутника ИИ")
 	icon_state = "storage"
 	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
 	sound_environment = SOUND_AREA_LARGE_METALLIC
