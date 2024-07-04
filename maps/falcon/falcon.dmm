@@ -2521,7 +2521,7 @@
 /area/station/aisat/ai_chamber)
 "aei" = (
 /obj/item/weapon/aiModule/oxygen,
-/obj/item/weapon/aiModule/oneHuman,
+/obj/item/weapon/aiModule/onentemploye,
 /obj/machinery/door/window{
 	dir = 4;
 	name = "High-Risk Modules";

@@ -30915,7 +30915,7 @@
 "bcW" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/oxygen,
-/obj/item/weapon/aiModule/oneHuman,
+/obj/item/weapon/aiModule/onentemploye,
 /obj/machinery/door/window{
 	dir = 8;
 	name = "High-Risk Modules";
