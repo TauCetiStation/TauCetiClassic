@@ -157,6 +157,14 @@ var/global/list/tourette_bad_words= list(
 			spawn( 0 )
 				emote("cough")
 				return
+
+	if((disabilities & NEARSIGHTED || HAS_TRAIT(src, TRAIT_NEARSIGHT)) && eye_blurry <= 3)
+		if(glasses)
+			var/obj/item/clothing/glasses/G = glasses
+			if(G.prescription)
+				return
+		adjustBlurriness(3)
+
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(!(get_species() in tourette_bad_words))
 			return

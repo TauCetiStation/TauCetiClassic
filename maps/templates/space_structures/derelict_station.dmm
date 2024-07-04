@@ -1067,11 +1067,6 @@
 /obj/structure/girder,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"du" = (
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
-	},
-/area/space_structures/derelict/singularity_engine)
 "dv" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -1132,12 +1127,6 @@
 	},
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless,
-/area/space_structures/derelict/singularity_engine)
-"dF" = (
-/obj/item/stack/rods,
-/turf/simulated/floor/airless{
-	icon_state = "circuit"
-	},
 /area/space_structures/derelict/singularity_engine)
 "dH" = (
 /turf/simulated/floor/plating/airless,
@@ -6814,11 +6803,11 @@ cP
 dc
 bW
 bW
-dF
-du
-du
-du
-du
+cQ
+bW
+bW
+bW
+bW
 bS
 bS
 bS
@@ -6916,13 +6905,13 @@ bS
 cQ
 bW
 bW
-du
+bW
 aa
 aa
 aa
 aa
 aa
-du
+bW
 bW
 eD
 dl
@@ -7019,13 +7008,13 @@ bS
 bW
 bW
 bW
-du
+bW
 aa
 aa
 aa
 aa
 aa
-du
+bW
 bW
 bS
 bS
@@ -7122,13 +7111,13 @@ bW
 cR
 bW
 bW
-du
+bW
 aa
 aa
 aa
 aa
 aa
-du
+bW
 bW
 bS
 bS
@@ -7225,13 +7214,13 @@ bW
 bW
 bW
 bW
-du
+bW
 aa
 aa
 aa
 aa
 aa
-du
+bW
 bS
 bS
 bS
@@ -7328,13 +7317,13 @@ bS
 bW
 bW
 bW
-du
+bW
 aa
 aa
 aa
 aa
 aa
-du
+bW
 bS
 ce
 cq
@@ -7432,11 +7421,11 @@ cS
 dd
 bW
 bW
-du
-du
-du
-du
-du
+bW
+bW
+bW
+bW
+bW
 bW
 bW
 ce

@@ -1,5 +1,6 @@
 /obj/mecha/working
 	internal_damage_threshold = 60
+	dna_lockable = FALSE
 
 /obj/mecha/working/atom_init()
 	. = ..()
