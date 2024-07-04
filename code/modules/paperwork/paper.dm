@@ -1074,7 +1074,7 @@ var/global/list/contributor_names
 	name = "note"
 
 /obj/item/weapon/paper/old_station_note_one/atom_init()
-	..()
+	. = ..()
 	write_info()
 	update_icon()
 	updateinfolinks()
@@ -1092,7 +1092,7 @@ var/global/list/contributor_names
 	name = "note"
 
 /obj/item/weapon/paper/old_station_note_two/atom_init()
-	..()
+	. = ..()
 	write_info()
 	update_icon()
 	updateinfolinks()
@@ -1108,7 +1108,7 @@ var/global/list/contributor_names
 	name = "note"
 
 /obj/item/weapon/paper/old_station_note_three/atom_init()
-	..()
+	. = ..()
 	write_info()
 	update_icon()
 	updateinfolinks()
