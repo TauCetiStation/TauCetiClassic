@@ -1,4 +1,4 @@
-var/global/list/preferences_datums = list()
+var/global/list/datum/preferences/preferences_datums = list()
 
 #define MAX_SAVE_SLOTS 10
 #define MAX_SAVE_SLOTS_SUPPORTER MAX_SAVE_SLOTS+10
@@ -6,6 +6,10 @@ var/global/list/preferences_datums = list()
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
+
+// this datum keeps preferences and some random client things we need to keep persistent
+// because byond client object is too fickle https://www.byond.com/forum/post/2927086
+// todo: after moving preferences to new datumized system we should rename this to something like client_data
 /datum/preferences
 	var/client/parent
 
@@ -19,17 +23,19 @@ var/global/list/preferences_datums = list()
 	var/savefile_version = 0
 
 	//non-preference stuff
-	var/permamuted = 0
-	var/muted = 0
+	var/muted = MUTE_NONE // cache for chat bans, you should not touch it outside bans
 	var/last_ip
 	var/last_id
 	var/menu_type = "general"
 	var/submenu_type = "body"
 	var/list/ignore_question = list()		//For roles which getting player_saves with question system
 
+	var/list/admin_cooldowns
+
 	//account data
-	var/list/cid_list = list()
-	var/ignore_cid_warning = 0
+	var/cid_count = 0
+	var/admin_cid_request_cache
+	var/admin_ip_request_cache
 
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 
@@ -141,8 +147,15 @@ var/global/list/preferences_datums = list()
 	var/chosen_ringtone = "Flip-Flap"
 	var/custom_melody = "E7,E7,E7"
 
+	var/datum/guard/guard = null
+
 /datum/preferences/New(client/C)
 	parent = C
+
+	guard = new(parent)
+	if(!parent.holder)
+		init_chat_bans()
+
 	custom_emote_panel = global.emotes_for_emote_panel
 
 	for(var/datum/pref/player/P as anything in subtypesof(/datum/pref/player))
@@ -159,6 +172,26 @@ var/global/list/preferences_datums = list()
 	real_name = random_name(gender)
 	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
 	C?.set_macros()
+
+// reattach existing datum to client if client was disconnected and connects again
+/datum/preferences/proc/reattach_to_client(client/client)
+	parent = client
+
+/datum/preferences/proc/init_chat_bans()
+	if(!config.sql_enabled)
+		return
+
+	if(!establish_db_connection("erro_ban"))
+		return
+
+	// todo: rename job column
+	var/DBQuery/query = dbcon.NewQuery("SELECT job FROM erro_ban WHERE ckey = '[ckey(parent.ckey)]' AND (bantype = 'CHAT_PERMABAN'  OR (bantype = 'CHAT_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+	if(!query.Execute())
+		return
+	muted = MUTE_NONE
+	while(query.NextRow())
+		world.log << "NR [query.item[1]] : [mute_ban_bitfield[query.item[1]]]"
+		muted |= mute_ban_bitfield[query.item[1]]
 
 // replaced with macro for speed
 ///datum/preferences/proc/get_pref(type)
@@ -495,7 +528,7 @@ var/global/list/preferences_datums = list()
 		if(user.client.jobbancache[rank]["rid"])
 			dat += "в раунде #[user.client.jobbancache[rank]["rid"]] "
 
-		if(user.client.jobbancache[rank]["bantype"] == "JOB_TEMPBAN")
+		if(user.client.jobbancache[rank]["bantype"] == BANTYPE_JOB_TEMP)
 			dat += "как временный на [user.client.jobbancache[rank]["duration"]] минут. Истечёт [user.client.jobbancache[rank]["expiration"]]."
 			dat += "<hr>"
 			dat += "<br>"

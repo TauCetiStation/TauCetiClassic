@@ -23,6 +23,16 @@
 		deconstruct(TRUE, user)
 		return TRUE
 
+	else if(istype(W, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = W
+		if (R.use(4))
+			new /obj/item/weapon/table_parts/reinforced( user.loc )
+			to_chat(user, "<span class='notice'>You reinforce the [name].</span>")
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You need at least four rods to do this.</span>")
+		return TRUE
+
 	return FALSE
 
 /obj/item/weapon/table_parts/attackby(obj/item/I, mob/user, params)
@@ -86,20 +96,20 @@
 /*
  * Glass Table Parts
  */
- 
+
 /obj/item/weapon/table_parts/glass/attack_tools(obj/item/W, mob/user)
 	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
-		
+
 	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = W
-		if (R.use(4))
+		if (R.use(2))
 			new /obj/item/weapon/table_parts/rglass( user.loc )
 			to_chat(user, "<span class='notice'>You reinforce the [name].</span>")
 			qdel(src)
 		else
-			to_chat(user, "<span class='warning'>You need at least four rods to do this.</span>")
+			to_chat(user, "<span class='warning'>You need at least two rods to do this.</span>")
 		return TRUE
 	return FALSE
 

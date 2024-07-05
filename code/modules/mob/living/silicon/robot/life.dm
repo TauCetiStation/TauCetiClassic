@@ -164,6 +164,7 @@
 	else if (sight_mode & BORGTHERM)
 		sight_modifier = "thermal"
 		sight |= SEE_MOBS
+		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	sight_modifier = sight_mode & BORGIGNORESIGHT ? null : sight_modifier
 	set_EyesVision(sight_modifier)
 	if(lighting_alpha != new_lighting_alpha)

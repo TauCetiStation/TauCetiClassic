@@ -30,6 +30,7 @@
 		return
 
 	if(!assigned_map)
+		update_alpha(value = client.mob.lighting_alpha)
 		RegisterSignal(client.mob, COMSIG_MOB_LIGHTING_ALPHA_CHANGED, PROC_REF(update_alpha), override = TRUE)
 
 	// about backdrops and why we need it https://www.byond.com/forum/?post=2141928

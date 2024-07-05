@@ -655,22 +655,18 @@
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
-		H.leap_icon = new /atom/movable/screen/leap()
-
-		if(H.hud_used)
-			H.leap_icon.add_to_hud(H.hud_used)
-
+		ADD_TRAIT(H, TRAIT_CAN_LEAP, ROUNDSTART_TRAIT)
+		var/datum/action/leap/A = new(H)
+		A.Grant(H)
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
 	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
 	if(name != VOX_ARMALIS)
-		if(H.leap_icon)
-			if(H.hud_used)
-				H.leap_icon.remove_from_hud(H.hud_used)
-			QDEL_NULL(H.leap_icon)
-
+		REMOVE_TRAIT(H, TRAIT_CAN_LEAP, ROUNDSTART_TRAIT)
+		var/datum/action/leap/A = locate() in H.actions
+		qdel(A)
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
 	..()
@@ -1827,8 +1823,8 @@
 
 /datum/species/serpentid
 	name = SERPENTID
-	icobase = 'icons/mob/human_races/r_serpentid.dmi'
-	deform = 'icons/mob/human_races/r_serpentid.dmi'
+	icobase = 'icons/mob/human_races/r_serpentid_grey.dmi'
+	deform = 'icons/mob/human_races/r_serpentid_grey.dmi'
 	damage_mask = FALSE
 	has_gendered_icons = FALSE
 	eyes_icon = 'icons/mob/serpentid_face.dmi'
@@ -1856,6 +1852,7 @@
 		NO_SLIP = TRUE,
 		NO_MINORCUTS = TRUE,
 		NO_MED_HEALTH_SCAN = TRUE,
+		HAS_SKIN_COLOR = TRUE,
 		)
 	has_organ = list(
 		 O_HEART   = /obj/item/organ/internal/heart
@@ -1912,7 +1909,18 @@
 	..()
 	H.real_name = pick(global.serpentid_names)
 	H.name = H.real_name
-	H.r_eyes = 255
+	var/list/color_variables = list("#003300",
+									"#333300",
+									"#663300",
+									"#800000",
+									"#000066",
+									"#660033",
+									"#003366")
+	var/color_gain = pick(color_variables)
+	H.r_skin = hex2num(copytext(color_gain, 2, 4))
+	H.g_skin = hex2num(copytext(color_gain, 4, 6))
+	H.b_skin = hex2num(copytext(color_gain, 6, 8))
+	H.apply_recolor()
 	H.update_hair()
 	RegisterSignal(H, COMSIG_PARENT_ATTACKBY, PROC_REF(try_eat_item))
 	RegisterSignal(H, COMSIG_S_CLICK_GRAB, PROC_REF(try_tear_body))

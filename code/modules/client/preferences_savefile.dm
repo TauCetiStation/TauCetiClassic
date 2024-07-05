@@ -453,16 +453,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
 		return 0
 
-	//Account data
-	S["cid_list"]			>> cid_list // ?
-	S["ignore_cid_warning"]	>> ignore_cid_warning // todo: meta & payer messages system
-
 	//General preferences
 	S["lastchangelog"]     >> lastchangelog //meta
 	S["default_slot"]      >> default_slot // meta
 	S["randomslot"]        >> randomslot // meta
-	S["permamuted"]        >> permamuted // wtf move to bans
-	S["permamuted"]        >> muted // wtf2
 
 	S["emote_panel"]       >> custom_emote_panel
 
@@ -482,9 +476,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	key_bindings 	= sanitize_keybindings(key_bindings)
 	hotkeys 		= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
-	if(!cid_list)
-		cid_list = list()
-	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
 	custom_emote_panel  = sanitize_emote_panel(custom_emote_panel)
 
 	if(needs_update >= 0) //save the updated version
@@ -513,15 +504,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["version"] << SAVEFILE_VERSION_MAX
 
-	//Account data
-	S["cid_list"]           << cid_list
-	S["ignore_cid_warning"] << ignore_cid_warning
-
 	//general preferences
 	S["lastchangelog"]     << lastchangelog
 	S["default_slot"]      << default_slot
 	S["randomslot"]        << randomslot
-	S["permamuted"]        << permamuted
 	S["emote_panel"]       << custom_emote_panel
 
 

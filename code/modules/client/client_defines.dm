@@ -59,8 +59,6 @@
 	// Set on login.
 	var/datum/media_manager/media = null
 
-	var/datum/guard/guard = null
-
 	var/datum/tooltip/tooltips
 
 	var/list/datum/browser/browsers

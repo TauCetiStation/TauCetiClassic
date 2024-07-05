@@ -106,10 +106,10 @@ const SettingFieldRange = (props, context) => {
   // approximately for default windows width
   // should be part of the slider option...
   let relativeStepSize = 250 / (setting.v_parameters[1] - setting.v_parameters[0]);
-  if(setting.v_parameters[2]) {
-    relativeStepSize = relativeStepSize * setting.v_parameters[2]
+  if (setting.v_parameters[2]) {
+    relativeStepSize = relativeStepSize * setting.v_parameters[2];
   }
-  relativeStepSize = Math.floor(relativeStepSize) || 1
+  relativeStepSize = Math.floor(relativeStepSize) || 1;
 
   return (
     <Tooltip position="top" content="Вы можете единожды нажать на слайдер для установки точного значения">
@@ -169,7 +169,7 @@ const SettingFieldSelect = (props, context) => {
         width="100%"
         options={setting.v_parameters}
         selected={setting.value}
-        noscroll={true}
+        noscroll
         onSelected={value => act('set_value', { type: setting.type, value: value })}
       />
     );
@@ -179,7 +179,7 @@ const SettingFieldSelect = (props, context) => {
         width="100%"
         options={Object.values(setting.v_parameters)}
         selected={setting.v_parameters[setting.value]}
-        noscroll={true}
+        noscroll
         onSelected={value => act('set_value', { type: setting.type, value: Object.keys(setting.v_parameters).find(key => setting.v_parameters[key] === value) })}
       />
     );

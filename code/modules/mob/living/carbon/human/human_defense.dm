@@ -131,7 +131,7 @@
 		var/obj/item/projectile/bullet/B = P
 
 		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
-		var/armor = get_protection_multiple_organ(BP, BULLET)
+		var/armor  = 100 - get_protection_multiple_organ(BP, BULLET) * 100
 
 		var/delta = max(0, P.damage - P.damage * armor)
 		if(delta)

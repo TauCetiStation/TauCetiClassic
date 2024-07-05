@@ -64,10 +64,25 @@
 	icon_state = "neutralfull"
 	},
 /area/space)
+"aj" = (
+/turf/simulated/floor/glass/phoron,
+/area/space)
+"ak" = (
+/turf/simulated/floor/glass/reinforced/phoron,
+/area/space)
+"al" = (
+/turf/simulated/floor/glass/reinforced,
+/area/space)
 "am" = (
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
+/area/space)
+"an" = (
+/turf/simulated/floor/glass,
+/area/space)
+"ao" = (
+/turf/simulated/floor/grid_floor,
 /area/space)
 "ap" = (
 /turf/simulated/floor/wood{
@@ -7992,9 +8007,9 @@ Am
 Am
 JK
 JK
-uA
-uA
-uA
+aj
+ak
+al
 at
 sz
 wi
@@ -8045,7 +8060,7 @@ AC
 Vx
 eU
 Ad
-uA
+an
 bA
 yc
 gs
@@ -8096,7 +8111,7 @@ Tj
 Mv
 vl
 Ad
-uA
+ao
 MR
 mq
 xa

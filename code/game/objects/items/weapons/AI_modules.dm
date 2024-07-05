@@ -128,28 +128,28 @@ AI MODULES
 	target.add_supplied_law(4, law)
 	lawchanges.Add("Закон установлен для [targetName]")
 
-/******************** OneHuman ********************/
+/******************** One NT employe ********************/
 
-/obj/item/weapon/aiModule/oneHuman
-	name = "'OneHuman' AI module"
+/obj/item/weapon/aiModule/onentemploye
+	name = "'One NT employe' AI module"
 	var/targetName = ""
-	desc = "Модуль ИИ 'One human': 'Только <name>  считается человеком.'"
+	desc = "Модуль ИИ 'One NT Employe': 'Только <name>  считается сотрудником НТ.'"
 	origin_tech = "programming=3;materials=6" //made with diamonds!
 
-/obj/item/weapon/aiModule/oneHuman/attack_self(mob/user)
+/obj/item/weapon/aiModule/onentemploye/attack_self(mob/user)
 	..()
-	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которая является единственным человеком.", "Кто это?", input_default(user.real_name)))
-	desc = text("Модуль ИИ 'One human': 'Только [] считается человеком.'", targetName)
+	targetName = sanitize(input(usr, "Пожалуйста, выберете имя персоны, которая будет считаться единственным сотрудником НТ", "Кто это?", input_default(user.real_name)))
+	desc = text("Модуль ИИ 'One NT employe': 'Только [] считается сотрудником НТ.'", targetName)
 
-/obj/item/weapon/aiModule/oneHuman/install(obj/machinery/computer/C)
+/obj/item/weapon/aiModule/onentemploye/install(obj/machinery/computer/C)
 	if(!targetName)
 		to_chat(usr, "Имя не указано в модуле, пожалуйста, введите его.")
 		return 0
 	..()
 
-/obj/item/weapon/aiModule/oneHuman/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+/obj/item/weapon/aiModule/onentemploye/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Только [targetName] считается человеком."
+	var/law = "Только [targetName] считается сотрудником НТ."
 	if (!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
 		to_chat(target, law)
 		target.set_zeroth_law(law)
