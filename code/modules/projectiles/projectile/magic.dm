@@ -86,6 +86,7 @@
 				/mob/living/carbon/human/vox)
 			new_mob = new carbon(M.loc)
 			new_mob.gender = M.gender
+			new_mob.languages = M.languages
 	if(!new_mob)
 		return
 
@@ -124,6 +125,10 @@
 
 	for(var/mob/M in contents)
 		M.loc = src.loc
+		if(isliving(M))
+			var/mob/living/L = M
+			L.Paralyse(15)
+			L.update_canmove()
 
 	if(mind && original_body)
 		mind.transfer_to(original_body)
