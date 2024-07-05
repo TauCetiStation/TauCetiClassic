@@ -385,6 +385,15 @@
 	global.pluvia_religion.remove_member(M, HOLY_ROLE_PRIEST)
 	..()
 
+/datum/species/pluvian/handle_death(mob/living/carbon/human/H, gibbed)
+	if(!ischangeling(H) && H.mind) // Pluvia heaven
+		message_admins("здох")
+		if(H.blessed || H.social_credit >= social_credit_threshold) // партия гордится вами
+			H.reborn()
+		else
+			to_chat(H, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")
+			H.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
 /datum/species/pluvian_spirite
 	name = PLUVIAN_SPIRIT
 	icobase = 'icons/mob/human_races/r_pluvian.dmi'

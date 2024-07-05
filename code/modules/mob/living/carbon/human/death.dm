@@ -16,9 +16,9 @@
 
 	..()
 
-/mob/living/carbon/human/proc/reborn(mob/living/carbon/human/user)
+/mob/living/carbon/human/proc/reborn()
 	var/area/heaven_tile = pick(get_area_turfs(get_area_by_type(/area/pluvia_heaven)))
-	var/datum/dna/my_dna = user.dna
+	var/datum/dna/my_dna = dna
 	var/mob/living/carbon/human/pluvian/P = new /mob/living/carbon/human/pluvian(heaven_tile)
 	P.real_name = my_dna.real_name
 	P.dna = my_dna.Clone()
@@ -84,13 +84,6 @@
 			to_chat(T.antag.current, "<span class='shadowling'><font size=3>Sudden realization strikes you like a truck! ONE OF OUR MASTERS HAS DIED!!!</span></font>")
 
 	..(gibbed)
-	if(ispluvian(src) &&!ischangeling(src)) // Pluvia heaven
-		if(blessed || social_credit >= social_credit_threshold) // партия гордится вами
-			reborn(src)
-		else
-			to_chat(src, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")
-			playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
 	SSStatistics.add_death_stat(src)
 
 // Called right after we will lost our head

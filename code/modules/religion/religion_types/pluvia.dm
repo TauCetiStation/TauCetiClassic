@@ -35,10 +35,13 @@
 			global.pluvia_religion.remove_member(attacker, HOLY_ROLE_PRIEST)
 			attacker.social_credit = 0
 			to_chat(attacker, "<span class='warning'>\ <font size=5>¬рата ра€ закрыты дл€ вас. »щите себе другого покровител€</span></font>")
+			attacker.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/religion/pluvia/proc/suicide_haram(mob/living/carbon/human/target)
 	global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 	target.social_credit = 0
+	to_chat(target, "<span class='warning'>\ <font size=5>¬рата ра€ закрыты дл€ вас. »щите себе другого покровител€</span></font>")
+	target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/religion/pluvia/proc/drunk_haram(mob/living/carbon/human/target) //я осознанно никак не провер€ю, сам ли он пил или его напоили. “ак можно гарантированно убить плувийца с концами - напоив его
 	if(target.haram_point < haram_threshold)
@@ -52,8 +55,8 @@
 		to_chat(target, "<span class='warning'>\ <font size=3>’ватит травить себ€!</span></font>")
 	else
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
-		target.social_credit = 0
 		to_chat(target, "<span class='warning'>\ <font size=5>¬рата ра€ закрыты дл€ вас. »щите себе другого покровител€</span></font>")
+		target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/religion/pluvia/proc/food_haram(datum/source, obj/item/weapon/reagent_containers/food/snacks/target)
 	var/mob/living/carbon/human/H = source
@@ -67,6 +70,7 @@
 		global.pluvia_religion.remove_member(H, HOLY_ROLE_PRIEST)
 		H.social_credit = 0
 		to_chat(H, "<span class='warning'>\ <font size=5>¬рата ра€ закрыты дл€ вас. »щите себе другого покровител€</span></font>")
+		H.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/religion/pluvia/proc/carpet_haram(mob/living/carbon/human/target)
 	if(target.shoes)
@@ -78,6 +82,7 @@
 			global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 			target.social_credit = 0
 			to_chat(target, "<span class='warning'>\ <font size=5>¬рата ра€ закрыты дл€ вас. »щите себе другого покровител€</span></font>")
+			target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /turf/simulated/floor/carpet/Entered(atom/movable/O)
 	..()
