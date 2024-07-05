@@ -85,9 +85,9 @@ var/global/mob/Jonesy
 	return TRUE
 
 /datum/faction/nostromo_crew/check_win()
-	if(global.alien_list[ALIEN_LONE_HUNTER].len == 0)
-		return TRUE
-	return global.alien_list[ALIEN_LONE_HUNTER][1].stat == DEAD
+	for(var/mob/living/L as anything in global.alien_list[ALIEN_LONE_HUNTER])
+		return L.stat == DEAD
+	return TRUE
 
 // android traitor fraction
 /datum/faction/nostromo_android
