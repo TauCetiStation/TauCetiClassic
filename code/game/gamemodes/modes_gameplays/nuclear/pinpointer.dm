@@ -279,8 +279,10 @@
 		switch(get_dist(target_turf, self_turf))
 			if(1 to 6)
 				icon_state = "pinonalert"
-			if(7 to INFINITY)
+			if(7 to 20)
 				icon_state = "pinonfar"
+			if(21 to INFINITY)
+				icon_state = "pinonnull"
 
 #undef SEARCH_FOR_DISK
 #undef SEARCH_FOR_OBJECT
