@@ -18,13 +18,14 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/savefile_version = 0
 
 	//non-preference stuff
-	var/permamuted = 0
-	var/muted = 0
+	var/muted = MUTE_NONE // cache for chat bans, you should not touch it outside bans
 	var/last_ip
 	var/last_id
 	var/menu_type = "general"
 	var/submenu_type = "body"
 	var/list/ignore_question = list()		//For roles which getting player_saves with question system
+
+	var/list/admin_cooldowns
 
 	//account data
 	var/cid_count = 0
@@ -192,6 +193,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 	parent = C
 
 	guard = new(parent)
+	if(!parent.holder)
+		init_chat_bans()
 
 	UI_style = global.available_ui_styles[1]
 	custom_emote_panel = global.emotes_for_emote_panel
@@ -209,6 +212,22 @@ var/global/list/datum/preferences/preferences_datums = list()
 // reattach existing datum to client if client was disconnected and connects again
 /datum/preferences/proc/reattach_to_client(client/client)
 	parent = client
+
+/datum/preferences/proc/init_chat_bans()
+	if(!config.sql_enabled)
+		return
+
+	if(!establish_db_connection("erro_ban"))
+		return
+
+	// todo: rename job column
+	var/DBQuery/query = dbcon.NewQuery("SELECT job FROM erro_ban WHERE ckey = '[ckey(parent.ckey)]' AND (bantype = 'CHAT_PERMABAN'  OR (bantype = 'CHAT_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+	if(!query.Execute())
+		return
+	muted = MUTE_NONE
+	while(query.NextRow())
+		world.log << "NR [query.item[1]] : [mute_ban_bitfield[query.item[1]]]"
+		muted |= mute_ban_bitfield[query.item[1]]
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return

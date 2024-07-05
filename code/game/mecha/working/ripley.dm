@@ -42,7 +42,7 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/extinguisher(src)
 	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/cable_layer(src)
 	ME.attach(src)
 
 /obj/mecha/working/ripley/mine/atom_init() //for aspect
@@ -75,8 +75,11 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/extinguisher(src)
 	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/cable_layer(src)
 	ME.attach(src)
+
+/obj/mecha/working/ripley/firefighter/ert
+	dna_lockable = TRUE
 
 /obj/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE!!!"
@@ -142,6 +145,9 @@
 
 /obj/mecha/working/ripley/recycle_ripley
 	name = "APLU \"Recycler\""
+	add_req_access = 0
+	maint_access = 0
+	operation_req_access = list(access_recycler)
 
 /obj/mecha/working/ripley/recycle_ripley/atom_init()
 	. = ..()
