@@ -546,7 +546,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		return
 
 	//handle muting and automuting
-	if(prefs.muted & MUTE_ADMINHELP)
+	if(prefs.muted & MUTE_PM || IS_ON_ADMIN_CD(src, ADMIN_CD_PM))
 		to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>")
 		return
 
@@ -560,7 +560,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(is_ahelp_cooldown())
 		return
 
-	if(handle_spam_prevention(msg, MUTE_ADMINHELP))
+	if(handle_spam_prevention(msg, ADMIN_CD_PM))
 		return
 
 	if(current_ticket)

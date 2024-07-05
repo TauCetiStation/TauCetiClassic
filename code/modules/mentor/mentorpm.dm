@@ -1,5 +1,5 @@
 /client/proc/cmd_mentor_pm(client/C, msg)
-	if(prefs.muted & MUTE_MENTORHELP)
+	if(prefs.muted & MUTE_PM || IS_ON_ADMIN_CD(src, ADMIN_CD_PM))
 		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
 		return
 
@@ -23,7 +23,7 @@
 				mentorhelp(msg)	//admin/mentor we are replying to has vanished, mentorhelp instead
 			return
 
-	if (handle_spam_prevention(msg, MUTE_MENTORHELP))
+	if (handle_spam_prevention(msg, ADMIN_CD_PM))
 		return
 
 	var/recieve_color = "purple"
