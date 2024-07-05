@@ -2543,6 +2543,7 @@
 #include "code\unit_tests\unit_test.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
+#include "maps\_events\job_changes.dm"
 #include "maps\centcom\centcom.dmm"
 #include "maps\delta\job_changes.dm"
 #include "maps\falcon\job_changes.dm"

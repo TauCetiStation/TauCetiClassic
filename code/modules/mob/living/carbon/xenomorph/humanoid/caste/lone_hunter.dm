@@ -9,19 +9,15 @@
 	var/epoint = 0
 	var/estage = 1
 	var/epoint_cap = 600
-	var/alien_ambience = list(
-		'sound/antag/Alien_sounds/alien_near1.ogg',
-		'sound/antag/Alien_sounds/alien_near2.ogg',
-		'sound/antag/Alien_sounds/alien_near3.ogg',
-		'sound/antag/Alien_sounds/alien_near4.ogg',
-		'sound/antag/Alien_sounds/alien_near5.ogg',
-		'sound/antag/Alien_sounds/alien_near6.ogg')
-	var/alien_screamer = list(
+	var/list/alien_screamer = list(
 		'sound/antag/Alien_sounds/alien_screamer1.ogg',
-		'sound/antag/Alien_sounds/alien_screamer2.ogg',
-		'sound/antag/Alien_sounds/alien_screamer3.ogg')
-	var/list/ambience_targets = list()
-	var/list/ambience_end_time = list()
+		'sound/antag/Alien_sounds/alien_screamer2.ogg')
+	var/list/alien_attack = list(
+		'sound/antag/Alien_sounds/alien_attack1.ogg',
+		'sound/antag/Alien_sounds/alien_attack2.ogg',
+		'sound/antag/Alien_sounds/alien_attack3.ogg')
+	var/next_scary_music = 0
+	var/obj/effect/landmark/nostromo_ambience/ambience_player
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/atom_init()
@@ -30,6 +26,8 @@
 	real_name = name
 	alien_list[ALIEN_HUNTER] -= src			// ¯\_(ツ)_/¯
 	alien_list[ALIEN_LONE_HUNTER] += src
+	if(landmarks_list["Nostromo Ambience"].len != 0)
+		ambience_player = landmarks_list["Nostromo Ambience"][1]
 
 /mob/living/carbon/xenomorph/humanoid/hunter/Destroy()
 	alien_list[ALIEN_LONE_HUNTER] -= src
@@ -41,19 +39,6 @@
 		epoint += 1
 	if (epoint > epoint_cap)
 		next_stage()
-
-	for(var/i = 1, i <= ambience_targets.len, i++)
-		if(world.time > ambience_end_time[i])
-			ambience_targets -= ambience_targets[i]
-			ambience_end_time -= ambience_end_time[i]
-
-	for(var/mob/living/L in orange(7, src))
-		if(L in ambience_targets)
-			continue
-		ambience_targets += L
-		ambience_end_time += world.time + 1 MINUTE
-		L.playsound_music(pick(alien_ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)
-
 	. = ..()
 
 // Чтоб не мог на траве афк инвиз стоять
@@ -76,11 +61,11 @@
 	switch(estage)
 		if (2)
 			verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin)
-			neurotoxin_icon.icon_state = "neurotoxin0"
 		if (4)
 			alien_spells += /obj/effect/proc_holder/spell/targeted/screech
 		if (5)
 			acid_type = /obj/effect/alien/acid/queen_acid
+			epoint_cap = 2000
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Stat()
 	stat(null)
@@ -106,11 +91,22 @@
 // Ксенос должен поощряться за активную и агрессивную игру
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/successful_leap(mob/living/L)
 	epoint += 200
-	L.playsound_local(null, pick(alien_screamer), VOL_EFFECTS_MASTER, null, FALSE)
+	for(var/mob/living/beholder in oview(6, src))
+		beholder.playsound_local(null, pick(alien_screamer), VOL_EFFECTS_MASTER, null, FALSE)
+	play_scary_music()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/UnarmedAttack(atom/A)
 	..()
-	if(ishuman(A))
-		var/mob/living/carbon/human/H = A
-		if(H.stat != DEAD)
-			epoint += 40
+	if(a_intent == INTENT_HARM)
+		if(ishuman(A))
+			var/mob/living/carbon/human/H = A
+			if(H.stat != DEAD)
+				epoint += 40
+				play_scary_music()
+
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_music()
+	if(world.time > next_scary_music && ambience_player)
+		ambience_player.ambience_next_time += 0.5 MINUTE
+		next_scary_music = world.time + 0.5 MINUTE
+		for(var/mob/living/L in range(7, src))
+			L.playsound_music(pick(alien_attack), VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)

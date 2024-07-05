@@ -40,3 +40,46 @@
 Вы - член экипажа межзвездного буксировщика Ностромо, на борту которого находится ксеноморф.
 Как можно скорее изничтожьте эту тварь, пока не стало слишком поздно.
 ------------------</b></span>"})
+
+
+/datum/role/nostromo_cat
+	name = NOSTROMO_CAT
+	id = NOSTROMO_CAT
+	logo_state = "cat-logo"
+	disallow_job = TRUE
+
+/datum/role/nostromo_cat/forgeObjectives()
+	if(!..())
+		return FALSE
+	AppendObjective(/datum/objective/survive)
+	return TRUE
+
+/datum/role/nostromo_cat/Greet(greeting, custom)
+	. = ..()
+	to_chat(antag.current, {"<span class='notice'><b>
+Вы - очень чувствительный рыжий котик Джонси. Постарайтесь выжить.
+------------------</b></span>"})
+
+
+/datum/role/nostromo_android
+	name = NOSTROMO_ANDROID
+	id = NOSTROMO_ANDROID
+	logo_state = "nano-logo"
+	change_to_maximum_skills = FALSE
+
+/datum/role/nostromo_android/forgeObjectives()
+	if(!..())
+		return FALSE
+	AppendObjective(/datum/objective/defend_alien)
+	return TRUE
+
+/datum/role/nostromo_android/Greet(greeting, custom)
+	. = ..()
+	to_chat(antag.current, {"<span class='notice'><b>
+Вы - андроид, тайно посланный корпорацией в этот рейс.
+На борту корабля находится ксеноморф - идеальная форма жизни.
+Ваша задача - доставить его живым на Марс для дальнейшего изучения.
+Шансы на выживание экипажа крайне малы, поэтому корпорацией принято решение пренебречь их жизнями.
+Экипаж не знает что вы не человек, постарайтесь не раскрывать этого раньше времени.
+Ваш корпус крайне хрупок, поэтому вступать в прямую конфронтацию с экипажем не рекомендуется.
+------------------</b></span>"})

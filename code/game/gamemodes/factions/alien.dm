@@ -1,5 +1,6 @@
 var/global/mob/Jonesy
 
+// alien fraction
 /datum/faction/alien
 	name = F_XENOMORPH
 	ID = F_XENOMORPH
@@ -60,6 +61,13 @@ var/global/mob/Jonesy
 	return total_human
 
 
+#define F_NOSTROMO_CREW		"Nostromo Crew"
+#define NOSTROMO_CREWMATE	"Nostromo Crewmate"
+#define F_NOSTROMO_CAT		"Nostromo Cat"
+#define NOSTROMO_CAT		"Nostromo Cat Jonesy"
+#define NOSTROMO_ANDROID	"Nostromo Android"
+
+// crew fraction
 /datum/faction/nostromo_crew
 	name = F_NOSTROMO_CREW
 	ID = F_NOSTROMO_CREW
@@ -68,7 +76,7 @@ var/global/mob/Jonesy
 	accept_latejoiners = TRUE
 	initroletype = /datum/role/nostromo_crewmate
 	min_roles = 0
-	max_roles = 7
+	max_roles = 6
 
 /datum/faction/nostromo_crew/forgeObjectives()
 	if(!..())
@@ -76,21 +84,39 @@ var/global/mob/Jonesy
 	AppendObjective(/datum/objective/kill_alien)
 	return TRUE
 
-/datum/faction/nostromo_crew/OnPostSetup()
-	var/start_point = pick(landmarks_list["jonesy"])
-	var/mob/living/simple_animal/cat/red/jonesy/J = new (get_turf(start_point))
-	global.Jonesy = J
-	// Кот спавнится в любом случае, но заселяется в него игрок, только если их достаточно много
-	// надо будет переделать чтоб не могло слот кэпа умыкнуть
-	if (members.len > 6)
-		var/datum/role/cat = pick(members)
-
-		cat.antag.transfer_to(J)
-		QDEL_NULL(cat.antag.original)
-
-	return ..()
-
 /datum/faction/nostromo_crew/check_win()
 	if(global.alien_list[ALIEN_LONE_HUNTER].len == 0)
 		return TRUE
 	return global.alien_list[ALIEN_LONE_HUNTER][1].stat == DEAD
+
+// android traitor fraction
+/datum/faction/nostromo_android
+	name = NOSTROMO_ANDROID
+	ID = NOSTROMO_ANDROID
+	logo_state = "nano-logo"
+	required_pref = ROLE_TRAITOR
+
+	initroletype = /datum/role/nostromo_android
+	min_roles = 0
+	max_roles = 1
+
+/datum/faction/nostromo_android/OnPostSetup()
+	var/datum/role/role = pick(members)
+	var/mob/living/carbon/human/H = role.antag.current
+	H.set_species(NOSTROMO_ANDROID)
+	return ..()
+
+
+// kitty fraction
+/datum/faction/nostromo_cat
+	name = F_NOSTROMO_CAT
+	ID = F_NOSTROMO_CAT
+	logo_state = "cat-logo"
+	initroletype = /datum/role/nostromo_cat
+	min_roles = 0
+
+/datum/faction/nostromo_cat/OnPostSetup()
+	var/start_point = pick(landmarks_list["jonesy"])
+	var/mob/living/simple_animal/cat/red/jonesy/J = new (get_turf(start_point))
+	global.Jonesy = J
+	return ..()

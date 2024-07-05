@@ -282,3 +282,15 @@ var/global/cat_number = 0
 	see_in_dark = 8
 	speed = -0.5
 	pass_flags = PASSTABLE
+
+/mob/living/simple_animal/cat/red/jonesy/atom_init()
+	. = ..()
+	create_spawner(/datum/spawner/living/jonesy, src)
+
+/mob/living/simple_animal/cat/red/jonesy/transfer_personality(client/candidate)
+	if(!candidate)
+		return
+	ckey = candidate.ckey
+	var/datum/faction/nostromo_cat/C = find_faction_by_type(/datum/faction/nostromo_cat)
+	if(C)
+		add_faction_member(C, src)

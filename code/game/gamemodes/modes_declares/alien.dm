@@ -2,7 +2,11 @@
 	name = "Alien"
 	config_name = "alien"
 
-	factions_allowed = list(/datum/faction/alien, /datum/faction/nostromo_crew)
+	factions_allowed = list(
+		/datum/faction/alien,
+		/datum/faction/nostromo_android,
+		/datum/faction/nostromo_crew,
+		/datum/faction/nostromo_cat)
 
 	minimum_player_count = 1
 	minimum_players_bundles = 8

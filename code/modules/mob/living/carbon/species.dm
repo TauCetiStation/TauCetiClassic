@@ -2061,3 +2061,79 @@
 /datum/species/moth/on_loose(mob/living/carbon/human/H, new_species)
 	UnregisterSignal(H, COMSIG_PARENT_ATTACKBY)
 	return ..()
+
+// copypast from ipc yeaah
+/datum/species/nostromo_android
+	name = NOSTROMO_ANDROID
+	icobase = 'icons/mob/human_races/r_android.dmi'
+	eyes_icon = 'icons/mob/human_face.dmi'
+	eyes = "eyes"
+	language = LANGUAGE_TRINARY
+	unarmed_type = /datum/unarmed_attack/punch
+	dietflags = 0
+	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
+	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
+
+	brute_mod = 3
+	burn_mod = 1
+	oxy_mod = 0
+	tox_mod = 0
+	clone_mod = 0
+
+	siemens_coefficient = 1.3
+
+	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
+
+	flags = list(
+	,NO_BREATHE = TRUE
+	,NO_DNA = TRUE
+	,NO_PAIN = TRUE
+	,NO_EMOTION = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
+	,IS_SOCIAL = TRUE
+	,NO_GENDERS = TRUE
+	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest/robot/ipc
+		,BP_GROIN  = /obj/item/organ/external/groin/robot/ipc
+		,BP_HEAD   = /obj/item/organ/external/head/robot/ipc
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/robot/ipc
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/robot/ipc
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/robot/ipc
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/robot/ipc
+		)
+	has_organ = list(
+		 O_HEART   = /obj/item/organ/internal/heart/ipc
+		,O_BRAIN   = /obj/item/organ/internal/brain/ipc
+		,O_EYES    = /obj/item/organ/internal/eyes/ipc
+		,O_LUNGS   = /obj/item/organ/internal/lungs/ipc
+		,O_LIVER   = /obj/item/organ/internal/liver/ipc
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys/ipc
+		)
+
+	blood_datum_path = /datum/dirt_cover/oil
+	flesh_color = "#575757"
+
+	survival_kit_items = list(/obj/item/device/suit_cooling_unit/miniature,
+	                          /obj/item/stack/nanopaste
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
+
+	is_common = TRUE
+
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST)
+
+	emotes = list(
+		/datum/emote/robot/beep,
+		/datum/emote/robot/ping,
+		/datum/emote/robot/buzz,
+	)
+
+	default_mood_event = /datum/mood_event/machine

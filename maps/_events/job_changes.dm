@@ -3,7 +3,7 @@
 /datum/job/captain/New()
 	..()
 	MAP_JOB_CHECK
-	minimal_player_ingame_minutes = 3600
+	minimal_player_ingame_minutes = 1200
 	skillsets = list("Captain" = /datum/skillset/falcon/captain)
 
 /datum/job/doctor/New()
@@ -38,9 +38,15 @@
 /datum/job/cargo_tech/New()
 	..()
 	MAP_JOB_CHECK
+	total_positions = 1
+	spawn_positions = 1
 	minimal_player_ingame_minutes = 300
 	supervisors = "the captain"
 	skillsets = list("Cargo Technician" = /datum/skillset/falcon/quartermaster)
+
+// ONLY HUMAN CAN PLAY THIS IVENT XENOSI SOSAAAAT
+/datum/job/special_species_check(datum/species/S)
+	return S.name == HUMAN
 
 MAP_REMOVE_JOB(chief_engineer)
 
