@@ -2,7 +2,7 @@ import { Fragment } from "inferno";
 import { useLocalState, useBackend } from "../backend";
 import { NoticeBox, Button, LabeledList, Section, Tabs } from "../components";
 import { Window } from "../layouts";
-import { AdvAccessList } from './common/AdvAccessList';
+import { AccessList } from './common/AccessList';
 import { CrewManifest } from "./common/CrewManifest";
 
 export const ComputerCard = (props, context) => {
@@ -190,7 +190,8 @@ export const ComputerCard = (props, context) => {
               </LabeledList>
             </Section>
             <Section>
-              <AdvAccessList
+              <AccessList
+                isCompCard
                 fast_modify_region={data.fast_modify_region}
                 fast_full_access={data.fast_full_access}
                 accesses={data.regions}
