@@ -5,15 +5,24 @@
 	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])[redirected ? " (redirected)" : ""]</font>"
 	if(alert_admins)
 		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)][redirected ? " (redirected)" : ""]", attacker)
-	if(ishuman(attacker)) // Я знаю что так делать некрасиво, но этот лог уже расскидан везде где кто-то кого атакует. Если ревьюеры скажут что нужно перенести send_signals в каждое такое место то будет обидно
+	if(ishuman(attacker)) // Я знаю что так делать некрасиво,но лог_комбат так удобно раскидан там где надо...
 		var/mob/living/carbon/human/H = attacker
 		var/obj/item/item_in_hand = H.get_active_hand()
 		if(item_in_hand)
-			if(item_in_hand.force > 0) //а forcethrow проверять не надо, потому что предмета в руке уже нет))
+			if(item_in_hand.force > 0)
 				SEND_SIGNAL(H, COMSIG_HUMAN_HARMED_OTHER, src)
 		else
 			SEND_SIGNAL(H, COMSIG_HUMAN_HARMED_OTHER, src)
 
+/*/
+Запасной вариант, если вариант сверху засрут на ревью.
+Просто поменяю все нужные log_combat на этот прок и получится тоже самое, но длинее
+
+mob/living/proc/process_aggresive_action(mob/living/attacker, msg, alert_admins=TRUE, redirected=FALSE)
+  SEND_SIGNAL(H, COMSIG_HUMAN_HARMED_OTHER, src)
+
+  log_combat(attacker, msg, alert_admins=alert_admins, redirected=redirected)
+*/
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
