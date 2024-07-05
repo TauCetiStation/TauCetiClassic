@@ -67,11 +67,11 @@
 			to_chat(src, "<span class='red'> You have deadchat muted.</span>")
 			return
 
-		if(client.prefs.muted & MUTE_DEADCHAT) // Admin/autospam mute check
+		if(client.prefs.muted & MUTE_OOC || IS_ON_ADMIN_CD(client, ADMIN_CD_OOC)) // Admin/autospam mute check
 			to_chat(src, "<span class='alert'>You cannot talk in deadchat (muted).</span>")
 			return
 
-		if (client.handle_spam_prevention(message, MUTE_DEADCHAT)) // Autospam
+		if (client.handle_spam_prevention(message, ADMIN_CD_OOC)) // Autospam
 			return
 
 	if(mind && mind.name)

@@ -13,10 +13,10 @@
 /mob/living/captive_brain/say(message)
 
 	if (client)
-		if(client.prefs.muted & MUTE_IC)
+		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
 			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
-		if (client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,ADMIN_CD_IC))
 			return
 
 	message = sanitize(message)
@@ -141,10 +141,10 @@
 		return
 
 	if (client)
-		if(client.prefs.muted & MUTE_IC)
+		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
 			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
-		if (client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,ADMIN_CD_IC))
 			return
 
 	if (message[1] == "*")

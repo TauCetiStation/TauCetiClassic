@@ -1,7 +1,5 @@
-var/global/list/valid_ban_types = list(BANTYPE_PERMA, BANTYPE_TEMP, BANTYPE_JOB_PERMA, BANTYPE_JOB_TEMP)
-
-
 //Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
+// todo: job should be renamed as subtype or bansubtype
 /datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", banckey = null, banip = null, bancid = null)
 
 	if(!check_rights(R_BAN))
@@ -12,13 +10,15 @@ var/global/list/valid_ban_types = list(BANTYPE_PERMA, BANTYPE_TEMP, BANTYPE_JOB_
 
 	var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
 
-	if(!(bantype in valid_ban_types))
+	if(!(bantype in global.valid_ban_types))
 		CRASH("Unknown ban type [bantype]!")
 
 	switch(bantype)
 		if(BANTYPE_PERMA)
 			duration = -1
 		if(BANTYPE_JOB_PERMA)
+			duration = -1
+		if(BANTYPE_CHAT_PERMA)
 			duration = -1
 
 	if( !istext(reason) ) return
@@ -108,7 +108,7 @@ var/global/list/valid_ban_types = list(BANTYPE_PERMA, BANTYPE_TEMP, BANTYPE_JOB_
 
 	var/bantype_sql
 	if(bantype) 
-		if(!(bantype in valid_ban_types))
+		if(!(bantype in global.valid_ban_types))
 			CRASH("Unknown ban type [bantype]!")
 		bantype_sql = "bantype = '[bantype]'"
 	else // any actual jobban then
@@ -386,7 +386,7 @@ var/global/list/valid_ban_types = list(BANTYPE_PERMA, BANTYPE_TEMP, BANTYPE_JOB_
 					cidsearch  = "AND computerid LIKE '[playercid]%' "
 
 			if(dbbantype)
-				if(dbbantype in valid_ban_types)
+				if(dbbantype in global.valid_ban_types)
 					bantypesearch = "AND bantype = '[dbbantype]' "
 				else // idk if it's possible, i'm just updating legacy code
 					bantypesearch = "AND bantype = '[BANTYPE_PERMA]' "
@@ -429,6 +429,10 @@ var/global/list/valid_ban_types = list(BANTYPE_PERMA, BANTYPE_TEMP, BANTYPE_JOB_
 						typedesc = "<b>JOBBAN</b><br><font size='2'>([job])</font>"
 					if(BANTYPE_JOB_TEMP)
 						typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]</font>"
+					if(BANTYPE_CHAT_PERMA)
+						typedesc = "<b>CHAT BAN</b><br><font size='2'>([job])</font>"
+					if(BANTYPE_CHAT_TEMP)
+						typedesc = "<b>TEMP CHAT BAN</b><br><font size='2'>([job])<br>([duration] minutes<br>Expires [expiration]</font>"
 
 				output += "<tr bgcolor='[dcolor]'>"
 				output += "<td align='center'>[typedesc]</td>"
@@ -473,7 +477,7 @@ var/global/list/valid_ban_types = list(BANTYPE_PERMA, BANTYPE_TEMP, BANTYPE_JOB_
 	var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
 
 
-	if(!(bantype in valid_ban_types))
+	if(!(bantype in global.valid_ban_types))
 		CRASH("Unknown ban type [bantype]!")
 
 	switch(bantype)
@@ -481,12 +485,7 @@ var/global/list/valid_ban_types = list(BANTYPE_PERMA, BANTYPE_TEMP, BANTYPE_JOB_
 			duration = -1
 		if(BANTYPE_JOB_PERMA)
 			duration = -1
-
-	//var/bantype
-	switch(bantype)
-		if(BANTYPE_PERMA)
-			duration = -1
-		if(BANTYPE_JOB_PERMA)
+		if(BANTYPE_CHAT_PERMA)
 			duration = -1
 
 	if( !istext(reason) ) return 0
