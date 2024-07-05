@@ -21,6 +21,7 @@
 		return FALSE
 	else
 		to_chat(H, "<span class='notice'Вы ощущаете покой и безопасность. Теперь вы защищены от промывания мозгов.</span>")
+		H.social_credit = 0 // пока ты не скинешь эту штуку - ты не можешь заработать карму
 
 	if(prob(50) && !H.isSynthetic())
 		H.visible_message("[H] внезапно становится очень красным и начинает корчиться. В воздухе появляется странный запах....", \
@@ -50,11 +51,6 @@
 				<b>Особенности:</b> Предотвращает и блокирует большинство форм промывания мозгов и пропаганды.<BR>
 				<b>Целостность:</b> Имплантат будет работать до тех пор, пока наноботы находятся в кровотоке."}
 	return dat
-
-/obj/item/weapon/implant/mind_protect/mindshield/process()
-	. = ..()
-	var/mob/living/carbon/human/H = imp_in
-	H.social_credit = 0 // пока ты не скинешь эту штуку - ты не можешь заработать карму
 
 /obj/item/weapon/implant/mind_protect/loyalty
 	name = "loyalty implant"
