@@ -387,7 +387,6 @@
 
 /datum/species/pluvian/handle_death(mob/living/carbon/human/H, gibbed)
 	if(!ischangeling(H) && H.mind) // Pluvia heaven
-		message_admins("здох")
 		if(H.blessed || H.social_credit >= social_credit_threshold) // партия гордится вами
 			H.reborn()
 		else

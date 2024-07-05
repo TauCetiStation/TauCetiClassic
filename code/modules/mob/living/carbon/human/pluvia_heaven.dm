@@ -25,7 +25,6 @@
 
 /obj/item/weapon/bless_vote/attack_self(mob/living/carbon/user)
 	user.set_machine(src)
-
 	var/dat
 	dat = "<B><font color = ##ff0000>Рекомендательное письмо для прохода в рай</B><BR>"
 	if(owner.gender == "female")
@@ -60,9 +59,10 @@
 /obj/effect/proc_holder/spell/create_bless_vote
 	name = "Создание рекомендательного письма"
 	range = 1
+	charge_max = 0
 	clothes_req = FALSE
 
-	action_icon_state = "charge"
+	action_icon_state = "charge" // не забыть попросить нарисовать эконку для этого спела
 	sound = 'sound/magic/heal.ogg'
 
 /obj/effect/proc_holder/spell/create_bless_vote/choose_targets(mob/user = usr)
@@ -90,3 +90,41 @@
 	user.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
 	to_chat(src, "<span class='notice'>Ваша кровь растекается по бумаге, образуя символы</span>")
 	qdel(target)
+
+/obj/effect/proc_holder/spell/no_target/ancestor_call
+	name = "Связь с предками"
+	desc = "Попытайтесь связаться с душами предков"
+	action_icon_state = "commune" // не забыть попросить нарисовать эконку для этого спела
+	clothes_req = FALSE
+	range = -1
+	charge_max = 20
+	sound = 'sound/magic/heal.ogg'
+	var/mob/living/fake_body
+	var/image/eye
+
+/obj/effect/proc_holder/spell/no_target/ancestor_call/proc/mimic_message(datum/source, message)
+	fake_body.say(message)
+
+/obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/user = usr) // не забыть добавить урон мозгу
+	if(!fake_body)
+		fake_body = new /mob/living/(user.loc)
+		fake_body.icon = user.icon
+		fake_body.icon_state = user.icon_state
+		fake_body.copy_overlays(user)
+		fake_body.name = user.name
+		fake_body.alpha = 127
+		RegisterSignal(user,COMSIG_HUMAN_SAY, PROC_REF(mimic_message))
+		user.reset_view(fake_body, TRUE)
+		user.toggle_telepathy_hear(fake_body)
+		eye = image('icons/mob/human_face.dmi',"pluvia_ms_s")
+		eye.plane = ABOVE_LIGHTING_PLANE
+		user.add_overlay(eye)
+	else
+		UnregisterSignal(user, list(COMSIG_HUMAN_SAY, COMSIG_PARENT_QDELETING))
+		user.remove_remote_hearer(fake_body)
+		user.toggle_telepathy_hear(fake_body)
+		qdel(fake_body)
+		fake_body = null
+		user.reset_view(null)
+		user.cut_overlay(eye)
+

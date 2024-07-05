@@ -356,6 +356,8 @@
 #define COMSIG_HUMAN_EAT "human_eat"
 // from base of /turf/simulated/floor/carpet/Entered(atom/movable/O)
 #define COMSIG_HUMAN_ON_CARPET "human_on_carpet"
+// from base of /mob/living/carbon/human/say()
+#define COMSIG_HUMAN_SAY "human_say"
 
 /// from /obj/effect/proc_holder/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
