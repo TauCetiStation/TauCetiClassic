@@ -61,4 +61,4 @@
 		if(MUTE_PM, ADMIN_CD_PM)
 			. = "admin and mentor chats"
 		else
-			return
+			CRASH("Unknown restriction [type]!")

@@ -9,6 +9,7 @@
 var/global/list/valid_ban_types = list(BANTYPE_PERMA, BANTYPE_TEMP, BANTYPE_JOB_PERMA, BANTYPE_JOB_TEMP, BANTYPE_CHAT_PERMA, BANTYPE_CHAT_TEMP)
 
 // bitflags for client chat bans
+#define MUTE_NONE  0
 #define MUTE_IC    (1<<0) // say/me
 #define MUTE_OOC   (1<<1) // ooc/looc/ghostchat
 #define MUTE_PRAY  (1<<2) // pray
