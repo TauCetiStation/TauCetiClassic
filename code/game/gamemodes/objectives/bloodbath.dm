@@ -17,22 +17,23 @@
 	explanation_text = "Ксеноморф на корабле! Убейте эту тварь как можно скорее!"
 
 /datum/objective/kill_alien/check_completion()
-	if(alien_list[ALIEN_LONE_HUNTER].len == 0)
-		return OBJECTIVE_WIN
-	if(alien_list[ALIEN_LONE_HUNTER][1].stat == DEAD)
-		return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS
+	for(var/mob/living/L as anything in global.alien_list[ALIEN_LONE_HUNTER])
+		if(L.stat == DEAD)
+			return OBJECTIVE_WIN
+		else
+			return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 /datum/objective/defend_alien
 	explanation_text = "Ксеноморф должен выжить."
 
 /datum/objective/defend_alien/check_completion()
-	if(alien_list[ALIEN_LONE_HUNTER].len == 0)
-		return OBJECTIVE_LOSS
-	if(alien_list[ALIEN_LONE_HUNTER][1].stat == DEAD)
-		return OBJECTIVE_LOSS
-
-	var/mob/M = owner.current
-	if(!owner.current || ((owner.current.stat == DEAD) && !M.fake_death) || isbrain(owner.current))
-		return OBJECTIVE_HALFWIN
-	return OBJECTIVE_WIN
+	for(var/mob/living/L as anything in global.alien_list[ALIEN_LONE_HUNTER])
+		if(L.stat == DEAD)
+			return OBJECTIVE_LOSS
+		else
+			var/mob/M = owner.current  // если ксеноморф жив, а андроид нет, то халфвин
+			if(!owner.current || ((owner.current.stat == DEAD) && !M.fake_death) || isbrain(owner.current))
+				return OBJECTIVE_HALFWIN
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
