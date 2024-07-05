@@ -63,8 +63,7 @@ var/global/mob/Jonesy
 
 #define F_NOSTROMO_CREW		"Nostromo Crew"
 #define NOSTROMO_CREWMATE	"Nostromo Crewmate"
-#define F_NOSTROMO_CAT		"Nostromo Cat"
-#define NOSTROMO_CAT		"Nostromo Cat Jonesy"
+#define NOSTROMO_CAT		"Nostromo Cat"
 #define NOSTROMO_ANDROID	"Nostromo Android"
 
 // crew fraction
@@ -109,8 +108,8 @@ var/global/mob/Jonesy
 
 // kitty fraction
 /datum/faction/nostromo_cat
-	name = F_NOSTROMO_CAT
-	ID = F_NOSTROMO_CAT
+	name = NOSTROMO_CAT
+	ID = NOSTROMO_CAT
 	logo_state = "cat-logo"
 	initroletype = /datum/role/nostromo_cat
 	min_roles = 0
