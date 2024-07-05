@@ -2085,11 +2085,14 @@
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
 
 	flags = list(
-	,NO_BREATHE = TRUE
+	 NO_BREATHE = TRUE
+	,NO_SCAN = TRUE
+	,NO_BLOOD = TRUE
 	,NO_DNA = TRUE
 	,NO_PAIN = TRUE
 	,NO_EMOTION = TRUE
 	,HAS_HAIR_COLOR = TRUE
+	,IS_SYNTHETIC = TRUE
 	,HAS_SKIN_COLOR = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
