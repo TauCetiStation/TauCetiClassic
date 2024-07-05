@@ -22,6 +22,7 @@
 	var/haram_harm = 2
 	var/haram_drunk = 1
 	var/haram_food = 0.5
+	var/haram_carpet = 0.25
 
 /datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)
 	var/mob/living/carbon/human/attacker  = source
@@ -67,6 +68,22 @@
 		H.social_credit = 0
 		to_chat(H, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
 
+/datum/religion/pluvia/proc/carpet_haram(mob/living/carbon/human/target)
+	if(target.shoes)
+		if(target.haram_point < haram_threshold)
+			target.haram_point += haram_carpet
+			target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			to_chat(target, "<span class='warning'>\ <font size=3>Не ходи в обуви по коврам!</span></font>")
+		else
+			global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
+			target.social_credit = 0
+			to_chat(target, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
+
+/turf/simulated/floor/carpet/Entered(atom/movable/O)
+	..()
+	if(ishuman(O))
+		SEND_SIGNAL(O, COMSIG_HUMAN_ON_CARPET, src)
+
 /datum/religion/pluvia/add_member(mob/living/carbon/human/H)
 	. = ..()
 	H.AddSpell(new /obj/effect/proc_holder/spell/create_bless_vote)
@@ -74,6 +91,7 @@
 	RegisterSignal(H, COMSIG_HUMAN_TRY_SUICIDE, PROC_REF(suicide_haram))
 	RegisterSignal(H, COMSIG_HUMAN_IS_DRUNK, PROC_REF(drunk_haram))
 	RegisterSignal(H, COMSIG_HUMAN_EAT, PROC_REF(food_haram))
+	RegisterSignal(H, COMSIG_HUMAN_ON_CARPET, PROC_REF(carpet_haram))
 
 /datum/religion/pluvia/remove_member(mob/M)
 	. = ..()
@@ -83,6 +101,7 @@
 	UnregisterSignal(M, list(COMSIG_HUMAN_TRY_SUICIDE, COMSIG_PARENT_QDELETING))
 	UnregisterSignal(M, list(COMSIG_HUMAN_IS_DRUNK, COMSIG_PARENT_QDELETING))
 	UnregisterSignal(M, list(COMSIG_HUMAN_EAT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(M, list(COMSIG_HUMAN_ON_CARPET, COMSIG_PARENT_QDELETING))
 
 /datum/religion/pluvia/setup_religions()
 	global.pluvia_religion = src
