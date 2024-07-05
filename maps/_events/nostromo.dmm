@@ -464,6 +464,16 @@
 	icon_state = "neutral"
 	},
 /area/custom/nostromo)
+"cK" = (
+/obj/machinery/door/airlock{
+	dir = 4;
+	name = "Kitchen Cold Room";
+	req_access = list(12)
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/space)
 "cM" = (
 /obj/structure/object_wall/standart{
 	icon_state = "wall3"
@@ -640,6 +650,19 @@
 	icon_state = "whitehall"
 	},
 /area/custom/nostromo)
+"dP" = (
+/obj/machinery/door/airlock{
+	dir = 4;
+	name = "Kitchen Cold Room";
+	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/space)
 "dR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -862,6 +885,16 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/custom/nostromo)
+"fc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark{
+	dir = 4;
+	icon = 'icons/mob/animal.dmi';
+	icon_state = "red_cat";
+	name = "jonesy"
+	},
+/turf/simulated/floor/grid_floor,
+/area/custom/nostromo)
 "fd" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Cryogenic Storage";
@@ -1027,6 +1060,7 @@
 	opacity = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/custom/nostromo)
 "go" = (
@@ -1138,6 +1172,18 @@
 	icon_state = "neutral"
 	},
 /area/custom/nostromo)
+"hn" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
+	dir = 4;
+	internal_pressure_bound = 4000;
+	internal_pressure_bound_default = 4000;
+	name = "(In) Air Vent"
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
+	temperature = 80
+	},
+/area/space)
 "hu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -3837,6 +3883,12 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 5
 	},
+/obj/effect/landmark{
+	dir = 4;
+	icon = 'icons/mob/animal.dmi';
+	icon_state = "red_cat";
+	name = "jonesy"
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -4098,6 +4150,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/custom/nostromo)
+"yx" = (
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 9
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/space)
 "yC" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Central Access";
@@ -5236,6 +5296,12 @@
 	icon_state = "neutral"
 	},
 /area/custom/nostromo)
+"Ff" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden,
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/space)
 "Fj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -5933,6 +5999,13 @@
 	icon_state = "neutral"
 	},
 /area/custom/nostromo)
+"Jb" = (
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/space)
 "Je" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -6694,6 +6767,17 @@
 	icon_state = "neutral"
 	},
 /area/custom/nostromo)
+"Oa" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	icon_state = "freezer_1";
+	power_setting = 20;
+	set_temperature = 73;
+	use_power = 1
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/space)
 "Oi" = (
 /obj/item/device/radio/intercom{
 	name = "Intercom";
@@ -6701,6 +6785,12 @@
 	},
 /obj/machinery/light/smart{
 	dir = 1
+	},
+/obj/effect/landmark{
+	dir = 4;
+	icon = 'icons/mob/animal.dmi';
+	icon_state = "red_cat";
+	name = "jonesy"
 	},
 /turf/simulated/floor/grid_floor,
 /area/custom/nostromo)
@@ -7321,6 +7411,13 @@
 	icon_state = "neutralfull"
 	},
 /area/custom/nostromo)
+"RL" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
+	temperature = 80
+	},
+/area/space)
 "RP" = (
 /turf/simulated/floor{
 	icon_state = "whitecorner"
@@ -7780,11 +7877,27 @@
 	},
 /turf/simulated/floor,
 /area/custom/nostromo)
+"Up" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/tank/emergency_oxygen,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/space)
 "Ur" = (
 /turf/simulated/floor{
 	icon_state = "caution"
 	},
 /area/custom/nostromo)
+"Uu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
+	temperature = 80
+	},
+/area/space)
 "Ux" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -8462,6 +8575,12 @@
 	icon_state = "neutralcorner"
 	},
 /area/custom/nostromo)
+"YT" = (
+/turf/simulated/floor{
+	icon_state = "showroomfloor";
+	temperature = 80
+	},
+/area/space)
 "YU" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
@@ -26204,8 +26323,8 @@ ZG
 bc
 bc
 ZG
-Ok
-Ok
+YT
+hn
 ZG
 Ok
 xC
@@ -26461,8 +26580,8 @@ ZG
 bc
 bc
 ZG
-Ok
-Ok
+Uu
+RL
 ZG
 Ok
 xC
@@ -26718,8 +26837,8 @@ ZG
 bc
 bc
 ZG
-Ok
-Ok
+ZG
+dP
 ZG
 Ok
 Ok
@@ -26975,8 +27094,8 @@ ZG
 bc
 bc
 ZG
-Ok
-Ok
+Oa
+Ff
 ZG
 Ok
 Ok
@@ -27232,13 +27351,13 @@ ZG
 bc
 bc
 ZG
+Jb
+yx
+ZG
+ZG
+ZG
 Ok
 Ok
-ZG
-ZG
-ZG
-ZG
-ZG
 ZG
 ZG
 ZG
@@ -27489,15 +27608,15 @@ ZG
 bc
 bc
 ZG
+ZG
+cK
+ZG
+ru
+ru
 Ok
 Ok
 Ok
-Ok
-Ok
-Ok
-Ok
-Ok
-Ok
+ru
 ZG
 bc
 bc
@@ -27746,6 +27865,7 @@ ZG
 bc
 bc
 ZG
+Up
 Ok
 Ok
 Ok
@@ -27753,8 +27873,7 @@ Ok
 Ok
 Ok
 Ok
-Ok
-Ok
+ru
 ZG
 bc
 bc
@@ -28003,6 +28122,7 @@ ZG
 bc
 bc
 ZG
+ru
 Ok
 Ok
 Ok
@@ -28010,8 +28130,7 @@ Ok
 Ok
 Ok
 Ok
-Ok
-Ok
+ru
 ZG
 bc
 bc
@@ -28260,15 +28379,15 @@ ZG
 bc
 bc
 ZG
+ru
 Ok
 Ok
 Ok
+ru
 Ok
 Ok
 Ok
-Ok
-Ok
-Ok
+ru
 ZG
 bc
 bc
@@ -28517,15 +28636,15 @@ ZG
 bc
 bc
 ZG
+ru
+ru
 Ok
 Ok
+ru
 Ok
 Ok
-Ok
-Ok
-Ok
-Ok
-Ok
+ru
+ru
 ZG
 bc
 bc
@@ -54486,7 +54605,7 @@ fV
 XD
 Mx
 Db
-GC
+ei
 gm
 sb
 Mk
@@ -56016,7 +56135,7 @@ Mx
 bq
 EQ
 ml
-Mx
+vQ
 lH
 qz
 Ps
@@ -56273,7 +56392,7 @@ Mx
 Mx
 EQ
 ml
-Mx
+xc
 Dl
 bo
 xQ
@@ -56797,8 +56916,8 @@ ry
 WR
 Mx
 Mx
-Mx
-Mx
+vQ
+qO
 Mx
 Mx
 iX
@@ -57060,7 +57179,7 @@ qQ
 Id
 dh
 IK
-qQ
+fc
 ZB
 Hi
 Ke

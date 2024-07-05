@@ -774,8 +774,9 @@
 	..()
 	mind.special_role = "Drone"
 
-	//XENO SOLO
+	//XENO SOLO 	ну и калище дааааа
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/mind_initialize()
+	SHOULD_CALL_PARENT(FALSE)
 	if(mind)
 		mind.key = key
 	else
