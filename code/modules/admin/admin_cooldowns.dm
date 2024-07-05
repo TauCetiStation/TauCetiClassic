@@ -20,8 +20,8 @@
 
 	if(ismob(by_who))
 		to_chat(M, "<span class='warning bold'>You have been placed on [restriction2human(type)] cooldown by [by_who] for [time] minute\s!</span>")
-		message_admins("<span class='notice'>[key_name_admin(usr)] has placed [key_name_admin(M)] on [type] cooldown.</span>")
-		log_admin("[key_name(usr)] has placed [key_name(M)] on [type] cooldown.")
+		message_admins("<span class='notice'>[key_name_admin(by_who)] has placed [key_name_admin(M)] on [type] cooldown.</span>")
+		log_admin("[key_name(by_who)] has placed [key_name(M)] on [type] cooldown.")
 	else
 		to_chat(M, "<span class='warning bold'>You have been placed on [restriction2human(type)] cooldown by [by_who] for [time] minute\s!</span>")
 		message_admins("<span class='notice'>[by_who] has placed [key_name_admin(M)] on [type] cooldown.</span>")
@@ -43,8 +43,8 @@
 
 	if(ismob(by_who))
 		to_chat(M, "<span class='warning bold'>Your [restriction2human(type)] cooldown has been lifted.</span>")
-		message_admins("<span class='notice'>[key_name_admin(usr)] has lifted [key_name_admin(M)] [type] cooldown.</span>")
-		log_admin("[key_name(usr)] has lifted [key_name(M)] [type] cooldown.")
+		message_admins("<span class='notice'>[key_name_admin(by_who)] has lifted [key_name_admin(M)] [type] cooldown.</span>")
+		log_admin("[key_name(by_who)] has lifted [key_name(M)] [type] cooldown.")
 	else
 		to_chat(M, "<span class='warning bold'>Your [restriction2human(type)] cooldown has been lifted.</span>")
 		message_admins("<span class='notice'>[by_who] has lifted [key_name_admin(M)] [type] cooldown.</span>")
