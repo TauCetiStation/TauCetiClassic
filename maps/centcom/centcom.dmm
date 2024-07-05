@@ -3326,7 +3326,8 @@
 "aiN" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech1";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -3348,7 +3349,8 @@
 "aiP" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech1";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floordown"
@@ -3425,7 +3427,8 @@
 "aiZ" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech2";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -3487,7 +3490,8 @@
 "ajh" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech2";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floordown"
@@ -3773,7 +3777,8 @@
 	icon_state = "shutter0";
 	id = "syndieshutters";
 	name = "Blast Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/structure/window/shuttle{
 	icon_state = "window_gray_w"
@@ -3805,7 +3810,8 @@
 	icon_state = "shutter0";
 	id = "syndieshutters";
 	name = "Blast Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/structure/window/shuttle{
 	icon_state = "window_gray_e"
@@ -4360,7 +4366,8 @@
 	icon_state = "shutter0";
 	id = "syndieshutters";
 	name = "Blast Shutters";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/structure/window/shuttle{
 	icon_state = "window_gray_we"
@@ -9195,7 +9202,8 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	id = "velocity_01";
-	name = "Security Shutters"
+	name = "Security Shutters";
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9208,7 +9216,8 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	id = "velocity_01";
-	name = "Security Shutters"
+	name = "Security Shutters";
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10651,7 +10660,7 @@
 "axY" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	dir = 1;
+	dir = 4;
 	id = "velocity_02";
 	name = "Security Shutters"
 	},
@@ -10664,9 +10673,9 @@
 "axZ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	dir = 1;
 	id = "velocity_02";
-	name = "Security Shutters"
+	name = "Security Shutters";
+	dir = 4
 	},
 /obj/machinery/door/window/southleft{
 	dir = 1;
@@ -11918,7 +11927,6 @@
 /area/shuttle/vox/arkship)
 "aAJ" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	dir = 8;
 	id = "DropPodGarage"
 	},
 /obj/structure/sign/warning/pods{
@@ -12388,7 +12396,6 @@
 /area/centcom/specops)
 "aBJ" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	dir = 8;
 	id = "DropPodGarage"
 	},
 /turf/unsimulated/floor{
@@ -13657,7 +13664,6 @@
 /area/centcom/specops)
 "aEK" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	dir = 4;
 	id = "Mecha"
 	},
 /turf/unsimulated/floor{
@@ -14565,7 +14571,9 @@
 	},
 /area/shuttle/administration/centcom)
 "aGH" = (
-/obj/machinery/door/poddoor/shutters,
+/obj/machinery/door/poddoor/shutters{
+	dir = 4
+	},
 /turf/unsimulated/wall,
 /area/velocity)
 "aGI" = (
@@ -17221,7 +17229,6 @@
 /area/custom/syndicate_mothership/elite_squad)
 "aNj" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	dir = 8;
 	id = "Esyndimech";
 	name = "Mech Bay"
 	},
@@ -18286,7 +18293,6 @@
 /area/shuttle/syndicate_elite/mothership)
 "aPt" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	dir = 8;
 	id = "Esyndimech";
 	name = "Mech Bay"
 	},
@@ -18324,7 +18330,8 @@
 "aPw" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech3";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -18333,7 +18340,8 @@
 "aPx" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech3";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorup"
@@ -18354,7 +18362,8 @@
 "aPA" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech4";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -18408,7 +18417,8 @@
 "aPG" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Esyndimech4";
-	name = "Mech Bay"
+	name = "Mech Bay";
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorup"
@@ -22544,7 +22554,8 @@
 /area/centcom/specops)
 "bEb" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	id = "MechaModule"
+	id = "MechaModule";
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"

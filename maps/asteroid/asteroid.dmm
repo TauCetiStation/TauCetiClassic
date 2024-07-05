@@ -9213,7 +9213,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/plasticflaps/mining,
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Mecha Shutters";
 	name = "Mecha Shutters"
 	},
