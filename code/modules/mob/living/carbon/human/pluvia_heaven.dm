@@ -10,7 +10,7 @@
 	to_chat(src, "<span class='notice'>\ <font size=4>Вам известно, что после смерти вы попадете в рай</span></font>")
 	src.blessed = 1
 	var/image/eye = image('icons/mob/human_face.dmi', icon_state = "pluvia_ms_s")
-	eye.plane = ABOVE_LIGHTING_PLANE
+	eye.plane = LIGHTING_LAMPS_PLANE
 	eye.layer = ABOVE_LIGHTING_LAYER
 	add_overlay(eye)
 	UnregisterSignal(src, list(COMSIG_HUMAN_HARMED_OTHER, COMSIG_PARENT_QDELETING))
@@ -134,7 +134,9 @@
 		user.reset_view(fake_body, TRUE)
 		user.toggle_telepathy_hear(fake_body)
 		eye = image('icons/mob/human_face.dmi',"pluvia_ms_s")
-		eye.plane = ABOVE_LIGHTING_PLANE
+		eye.plane = LIGHTING_LAMPS_PLANE
+		eye.layer = ABOVE_LIGHTING_LAYER
+
 		user.add_overlay(eye)
 	else
 		UnregisterSignal(user, list(COMSIG_HUMAN_SAY, COMSIG_PARENT_QDELETING))
