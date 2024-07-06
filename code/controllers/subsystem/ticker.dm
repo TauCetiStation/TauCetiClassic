@@ -258,6 +258,10 @@ SUBSYSTEM_DEF(ticker)
 	if(!bundle || !bundle.hide_mode_announce)
 		mode.announce()
 
+	if(istype(mode, /datum/game_mode/nuclear))
+		var/datum/game_mode/nuclear/nuke = new mode
+		nuke.announce_war()
+
 	setup_economy()
 
 	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)

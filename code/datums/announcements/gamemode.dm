@@ -50,6 +50,13 @@
 	sound = "gateway"
 	message = "Произведена синхронизация гейтвеев. Ожидайте гостей."
 
+/datum/announcement/centcomm/nuclear/low_pop_war
+	name = "Nuclear: War Announce"
+	subtitle = "Нападение Синдиката"
+
+/datum/announcement/centcomm/nuclear/low_pop_war/New()
+	message = "Тревога! Надёжные источники™ докладывают нам о готовящемся нападении на [station_name_ru()]! Мы отправим эвакуационный шаттл так быстро, как только сможем!"
+
 /* Vox */
 /datum/announcement/centcomm/vox/arrival
 	name = "Vox: Shuttle Arrives"
