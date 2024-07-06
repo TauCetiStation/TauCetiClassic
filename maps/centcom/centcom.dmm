@@ -30329,6 +30329,10 @@
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/elite_squad)
+"udd" = (
+/obj/item/weapon/melee/pluvia_gong_baton,
+/turf/unsimulated/floor,
+/area/space)
 "ueu" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -30564,7 +30568,7 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "xcN" = (
-/obj/item/weapon/melee/pluvia_gong_baton,
+/obj/item/weapon/defibrillator/loaded,
 /turf/unsimulated/floor,
 /area/space)
 "xdd" = (
@@ -34919,7 +34923,7 @@ aeD
 aeD
 mPM
 mPM
-xcN
+udd
 bKY
 bKY
 mPM
@@ -37490,7 +37494,7 @@ aaM
 aeD
 mPM
 mPM
-mPM
+xcN
 aeD
 aaM
 aaM
