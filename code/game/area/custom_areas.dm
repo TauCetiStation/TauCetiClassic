@@ -180,8 +180,7 @@
 /obj/effect/landmark/nostromo_ambience/process()
 	if(world.time > ambience_next_time)
 		ambience_next_time += rand(2, 4) MINUTE
-		while(current_ambience == last_ambience)
-			current_ambience = pick(ambience)
+		current_ambience = pick(ambience - last_ambience)
 
 		for(var/mob/living/L in area.listeners)
 			L.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)

@@ -26,8 +26,9 @@
 	real_name = name
 	alien_list[ALIEN_HUNTER] -= src			// ¯\_(ツ)_/¯
 	alien_list[ALIEN_LONE_HUNTER] += src
-	if(landmarks_list["Nostromo Ambience"].len != 0)
-		ambience_player = landmarks_list["Nostromo Ambience"][1]
+	for(var/obj/effect/landmark/L as anything in landmarks_list["Nostromo Ambience"])
+		// потом когда на 4 корабля делить буду тут проверка на соответствие номеру будет типо того
+		ambience_player = L
 
 /mob/living/carbon/xenomorph/humanoid/hunter/Destroy()
 	alien_list[ALIEN_LONE_HUNTER] -= src
