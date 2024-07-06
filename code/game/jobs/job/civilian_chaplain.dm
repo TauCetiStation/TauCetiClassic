@@ -16,6 +16,7 @@
 	outfit = /datum/outfit/job/chaplain
 	skillsets = list("Chaplain" = /datum/skillset/chaplain)
 	flags = JOB_FLAG_CIVIL
+	restricted_species = list(PLUVIAN)
 
 /datum/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly && H.mind)
