@@ -359,12 +359,12 @@
 /area/space_structures/old_station/central)
 "bU" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "cd" = (
 /obj/item/ammo_casing/c45,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/carp_space)
 "cl" = (
 /obj/effect/decal/cleanable/vomit,
@@ -562,7 +562,7 @@
 /area/space_structures/old_station/left)
 "dm" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/carp_space)
 "dn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1078,7 +1078,7 @@
 "gz" = (
 /obj/item/trash/chips,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/old_station/left)
 "gD" = (
 /obj/structure/table,
@@ -1141,7 +1141,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/old_station/left)
 "gU" = (
 /turf/simulated/floor/plating,
@@ -1172,7 +1172,7 @@
 "hb" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/carp_space)
 "hd" = (
 /obj/effect/decal/turf_decal/set_damaged,
@@ -1192,7 +1192,7 @@
 "hq" = (
 /obj/item/weapon/rack_parts,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/carp_space)
 "ht" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2380,7 +2380,7 @@
 "oA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/old_station/left)
 "oF" = (
 /obj/structure/sign/poster/official/build,
@@ -2644,7 +2644,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/old_station/left)
 "qo" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3341,7 +3341,7 @@
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/old_station/left)
 "vs" = (
 /obj/machinery/light,
@@ -3367,7 +3367,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "vz" = (
 /obj/structure/table,
@@ -3834,7 +3834,7 @@
 /area/space_structures/old_station/right/rnd)
 "xT" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/old_station/left)
 "xY" = (
 /obj/item/clothing/mask/facehugger{
@@ -4158,7 +4158,7 @@
 "zV" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/carp_space)
 "zW" = (
 /obj/structure/lattice,
@@ -5235,7 +5235,7 @@
 /area/space_structures/old_station/central)
 "Gj" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/old_station/satellite)
 "Gk" = (
 /obj/structure/table,
@@ -5999,7 +5999,7 @@
 "Kv" = (
 /obj/structure/door_assembly/door_assembly_eng,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/carp_space)
 "Kz" = (
 /obj/machinery/door/airlock{
@@ -6893,7 +6893,7 @@
 /area/space_structures/old_station/left)
 "Qd" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/old_station/right)
 "Qg" = (
 /obj/structure/rack,
@@ -7813,7 +7813,7 @@
 "Vy" = (
 /obj/item/weapon/storage/belt/utility,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/carp_space)
 "VA" = (
 /obj/machinery/door/airlock/research/glass{
@@ -8042,6 +8042,10 @@
 	icon_state = "white"
 	},
 /area/space_structures/old_station/left/med)
+"Xa" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/carp_space)
 "Xb" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/night,
@@ -8306,7 +8310,7 @@
 	icon_state = "0-2"
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/carp_space)
 "Zd" = (
 /obj/item/stack/rods,
@@ -9007,7 +9011,7 @@ de
 de
 de
 de
-Cp
+Xa
 CA
 we
 we
@@ -9197,8 +9201,8 @@ yn
 yn
 yn
 yn
-Cp
-Cp
+Xa
+Xa
 Zb
 Bv
 tE
@@ -9227,7 +9231,7 @@ ha
 BF
 LV
 pB
-Cp
+Xa
 yn
 yn
 yn
@@ -9257,8 +9261,8 @@ Ne
 Ne
 Ne
 Ne
-Cp
-Cp
+Xa
+Xa
 AK
 Ne
 Fr
@@ -9287,7 +9291,7 @@ BB
 Ki
 sw
 dm
-Cp
+Xa
 yn
 yn
 yn
