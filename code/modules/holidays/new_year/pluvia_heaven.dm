@@ -4,7 +4,6 @@
 
 /var/global/social_credit_threshold = 5
 /var/global/haram_threshold = 5
-/var/global/list/available_pluvia_gongs = list()
 
 /mob/living/carbon/human/proc/bless()
 	to_chat(src, "<span class='notice'>\ <font size=4>Высшая сила засвидетельствовала ваш подвиг. Врата рая ожидают вас.</span></font>")
@@ -92,6 +91,7 @@
 	to_chat(src, "<span class='notice'>Ваша кровь растекается по бумаге, образуя символы</span>")
 	qdel(target)
 
+#define COMSIG_GONG_RING "gong_ring"
 
 /obj/effect/proc_holder/spell/no_target/ancestor_call
 	name = "Связь с предками"
@@ -104,21 +104,26 @@
 	var/mob/living/fake_body
 	var/image/eye
 	var/target_loc
-	var/obj/my_gong
+
+/obj/effect/proc_holder/spell/no_target/ancestor_call/atom_init()
+	. = ..()
+	RegisterSignal(src, COMSIG_GONG_RING, PROC_REF(set_call_location))
+
+/obj/effect/proc_holder/spell/no_target/ancestor_call/Destroy()
+	. = ..()
+	UnregisterSignal(src, list(COMSIG_GONG_RING, COMSIG_PARENT_QDELETING))
+
+/obj/effect/proc_holder/spell/no_target/ancestor_call/proc/set_call_location(obj/source)
+	target_loc = source.loc
 
 /obj/effect/proc_holder/spell/no_target/ancestor_call/proc/mimic_message(datum/source, message)
 	fake_body.say(message)
 
-/obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/living/user = usr) // не забыть добавить урон мозгу
+/obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/user = usr) // не забыть добавить урон мозгу
 	if(!fake_body)
-		if(available_pluvia_gongs.len == 0)
-			to_chat(user, "<span class='warning'>Все линии связи сейчас заняты! Попробуйте позже</span>")
-			return
 		if(!target_loc)
-			my_gong = pick(available_pluvia_gongs)
-			target_loc = my_gong.loc
-		user.adjustBrainLoss(2)
-		available_pluvia_gongs -= my_gong
+			target_loc = user.loc
+
 		fake_body = new /mob/living/(target_loc)
 		fake_body.icon = user.icon
 		fake_body.icon_state = user.icon_state
@@ -137,11 +142,13 @@
 		user.toggle_telepathy_hear(fake_body)
 		qdel(fake_body)
 		fake_body = null
-		target_loc = null
 		user.reset_view(null)
 		user.cut_overlay(eye)
-		available_pluvia_gongs += my_gong
-	user.clear_alert("Звонок")
+
+/obj/structure/pluvia_gong/proc/set_alert(mob/living/carbon/human/T)
+	T.throw_alert("Звонок", /atom/movable/screen/alert/pluvia_ring)
+	T.playsound_local(null, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 75, null)
+	message_admins("1 [T]")
 
 /obj/structure/pluvia_gong
 	name = "Гонг"
@@ -152,14 +159,13 @@
 	var/next_ring = 0
 	var/mob/target
 
-/obj/item/weapon/melee/pluvia_gong_baton
-	name = "Палочка для гонга"
-	desc = ""
-	icon_state = "stunbaton"
-	item_state = "baton"
-
 /obj/structure/pluvia_gong/atom_init()
-	available_pluvia_gongs += src
+	. = ..()
+	RegisterSignal(src, COMSIG_GONG_RING, PROC_REF(set_alert))
+
+/obj/structure/pluvia_gong/Destroy()
+	. = ..()
+	UnregisterSignal(src, list(COMSIG_GONG_RING, COMSIG_PARENT_QDELETING))
 
 /obj/structure/pluvia_gong/proc/ring(mob/user)
 	if(next_ring > world.time)
@@ -168,7 +174,7 @@
 	next_ring = world.time + 30 SECONDS
 	var/list/possible_targets = list()
 	for(var/mob/living/carbon/human/H in human_list)
-		if(H.mind && H != user)
+		if(H.mind) // не забыть вернуть H != user
 			if(istype(H.my_religion, /datum/religion/pluvia))
 				possible_targets[H] = image(H.icon, H.icon_state)
 				possible_targets[H].copy_overlays(H)
@@ -182,12 +188,7 @@
 	target = show_radial_menu(user, user, possible_targets, radius = 36, tooltips = TRUE)
 	if(!target)
 		return
-	target.throw_alert("Звонок", /atom/movable/screen/alert/pluvia_ring)
-	target.playsound_local(null, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 75, null)
-	for(var/obj/effect/proc_holder/spell/no_target/ancestor_call/S in target.spell_list)
-		S.target_loc = src.loc
-		S.my_gong = src
+	SEND_SIGNAL(target, COMSIG_GONG_RING,src)
 
 /obj/structure/pluvia_gong/attackby(obj/item/I,mob/user)
-	if(istype(I,/obj/item/weapon/melee/pluvia_gong_baton))
-		ring(user)
+	ring(user)

@@ -23878,6 +23878,10 @@
 	icon_state = "green"
 	},
 /area/velocity/waitingroom)
+"dFn" = (
+/obj/structure/sign/deck/first,
+/turf/unsimulated/floor,
+/area/space)
 "dGb" = (
 /turf/unsimulated/floor{
 	icon_state = "rampbottom"
@@ -24155,6 +24159,10 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"ecq" = (
+/obj/structure/sign/deck/second,
+/turf/unsimulated/floor,
+/area/space)
 "edb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	icon_state = "chair_a01"
@@ -24593,6 +24601,7 @@
 /area/shuttle/officer/velocity)
 "eVl" = (
 /obj/structure/table/rglass,
+/obj/item/device/soulstone,
 /turf/unsimulated/floor,
 /area/space)
 "eVX" = (
@@ -25660,6 +25669,10 @@
 	icon_state = "engine"
 	},
 /area/velocity)
+"gJE" = (
+/obj/structure/window/shuttle,
+/turf/unsimulated/floor,
+/area/space)
 "gKb" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -26955,6 +26968,12 @@
 	icon_state = "neutral"
 	},
 /area/centcom/control)
+"jrn" = (
+/obj/structure/pluvia_gong{
+	pixel_x = -15
+	},
+/turf/unsimulated/floor,
+/area/space)
 "jsb" = (
 /turf/unsimulated/floor{
 	icon_state = "neutral"
@@ -30270,6 +30289,10 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity/exit)
+"tgI" = (
+/obj/structure/window/shuttle,
+/turf/environment/space,
+/area/space)
 "tkC" = (
 /obj/item/weapon/reagent_containers/food/snacks/meatball,
 /obj/item/weapon/reagent_containers/food/snacks/meatball,
@@ -30293,6 +30316,10 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"tBU" = (
+/obj/structure/sign/deck/third,
+/turf/unsimulated/floor,
+/area/space)
 "tWq" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -30536,6 +30563,10 @@
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"xcN" = (
+/obj/item/weapon/melee/pluvia_gong_baton,
+/turf/unsimulated/floor,
+/area/space)
 "xdd" = (
 /obj/machinery/light{
 	dir = 4
@@ -31023,7 +31054,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+tgI
 aaM
 aaM
 aaM
@@ -33855,7 +33886,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
 aeD
 aeD
 aeD
@@ -34112,10 +34143,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aeD
-hzd
-bKY
+mPM
+jrn
+dFn
 mPM
 mPM
 mPM
@@ -34369,10 +34400,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aeD
-bKY
-bKY
+aeD
+aeD
+mPM
 mPM
 mPM
 mPM
@@ -34626,14 +34657,14 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aeD
 mPM
-mPM
+jrn
+ecq
 mPM
 ijw
-mPM
-mPM
+hzd
+bKY
 mPM
 aeD
 aaM
@@ -34883,14 +34914,14 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aeD
+aeD
 aeD
 mPM
 mPM
-mPM
-mPM
-mPM
-mPM
+xcN
+bKY
+bKY
 mPM
 aeD
 aaM
@@ -35140,10 +35171,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aeD
 mPM
-mPM
+jrn
+tBU
 mPM
 mPM
 mPM
@@ -35397,9 +35428,9 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aeD
-mPM
+aeD
+aeD
 mPM
 mPM
 mPM
@@ -35659,7 +35690,7 @@ aeD
 aeD
 aeD
 aeD
-mPM
+gJE
 aeD
 aeD
 aeD
