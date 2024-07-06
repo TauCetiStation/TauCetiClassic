@@ -114,7 +114,7 @@
 			var/start_T_descriptor = "<font color='#6b5d00'>tile at [COORD(start_T)] in area [get_area(start_T)]</font>"
 			var/end_T_descriptor = "<font color='#6b4400'>tile at [COORD(end_T)] in area [get_area(end_T)]</font>"
 
-			L.log_combat(usr, "thrown from [start_T_descriptor] with the target [end_T_descriptor]")
+			L.process_aggresive_action(usr, "thrown from [start_T_descriptor] with the target [end_T_descriptor]")
 
 	qdel(src)
 
@@ -385,7 +385,7 @@
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 		assailant.set_dir(get_dir(assailant, affecting))
 
-		affecting.log_combat(assailant, "neck-grabbed")
+		affecting.process_aggresive_action(assailant, "neck-grabbed")
 
 		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
@@ -399,7 +399,7 @@
 
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 
-		affecting.log_combat(assailant, "strangled")
+		affecting.process_aggresive_action(assailant, "strangled")
 
 		affecting.losebreath += 1
 		affecting.set_dir(WEST)
@@ -491,7 +491,7 @@
 						assailant.visible_message("<span class='danger'>[assailant] pressed \his fingers into [affecting]'s eyes!</span>")
 						to_chat(affecting, "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>")
 
-						affecting.log_combat(assailant, "finger-pressed into the eyes")
+						affecting.process_aggresive_action(assailant, "finger-pressed into the eyes")
 
 						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
 						IO.damage += rand(3,4)
@@ -544,7 +544,7 @@
 							affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
 						playsound(assailant, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 
-						affecting.log_combat(assailant, "headbutted")
+						affecting.process_aggresive_action(assailant, "headbutted")
 
 						assailant.drop_from_inventory(src)
 						src.loc = null

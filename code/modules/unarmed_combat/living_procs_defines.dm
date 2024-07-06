@@ -268,7 +268,7 @@
 		visible_message("<span class='warning'><B>[attacker] tried to [damVerb] [src]!</B></span>")
 		return FALSE
 
-	log_combat(attacker, "[damVerb]ed")
+	process_aggresive_action(attacker, "[damVerb]ed")
 
 	var/armor_block = 0
 	var/obj/item/organ/external/BP = attacker.get_targetzone() // apply_damage accepts both the bodypart and the zone.

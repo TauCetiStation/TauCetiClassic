@@ -79,7 +79,7 @@
 			occupant_message("<span class='warning'>You squeeze [target] with [src.name]. Something cracks.</span>")
 			chassis.visible_message("<span class='warning'>[chassis] squeezes [target].</span>")
 
-			M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
+			M.process_aggresive_action(chassis.occupant, "attacked via [chassis]'s [name]")
 		else
 			step_away(M,chassis)
 			occupant_message("You push [target] out of the way.")
@@ -144,7 +144,7 @@
 			else if(target.loc == C)
 				if(isliving(target))
 					var/mob/living/M = target
-					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
+					M.process_aggresive_action(chassis.occupant, "attacked via [chassis]'s [name]")
 
 				log_message("Drilled through [target]")
 				target.ex_act(EXPLODE_HEAVY)
@@ -211,7 +211,7 @@
 			else if(target.loc == C)
 				if(isliving(target))
 					var/mob/living/M = target
-					M.log_combat(chassis.occupant, "attacked via [chassis]'s [name]")
+					M.process_aggresive_action(chassis.occupant, "attacked via [chassis]'s [name]")
 				log_message("Drilled through [target]")
 				target.ex_act(EXPLODE_HEAVY)
 	return 1

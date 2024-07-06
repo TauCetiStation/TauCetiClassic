@@ -94,7 +94,7 @@
 					take_damage(7, BRUTE, MELEE)
 					visible_message("<span class='danger'>[A] slams [M] against \the [src]!</span>")
 
-					M.log_combat(user, "slammed against [name]")
+					M.process_aggresive_action(user, "slammed against [name]")
 				if(2)
 					if (prob(50))
 						M.Stun(1)
@@ -102,14 +102,14 @@
 					M.apply_damage(8)
 					take_damage(9, BRUTE, MELEE)
 					visible_message("<span class='danger'>[A] bashes [M] against \the [src]!</span>")
-					M.log_combat(user, "bashed against [name]")
+					M.process_aggresive_action(user, "bashed against [name]")
 				if(3)
 					M.Stun(5)
 					M.Weaken(5)
 					M.apply_damage(20)
 					take_damage(12, BRUTE, MELEE)
 					visible_message("<span class='danger'><big>[A] crushes [M] against \the [src]!</big></span>")
-					M.log_combat(user, "crushed against [name]")
+					M.process_aggresive_action(user, "crushed against [name]")
 		return
 
 	return ..()

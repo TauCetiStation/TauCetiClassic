@@ -140,7 +140,7 @@
 		add_fingerprint(user)
 
 		user.visible_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
-	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)])")
+	M.process_aggresive_action(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)])")
 
 //Telescopic baton
 /obj/item/weapon/melee/telebaton
@@ -232,7 +232,7 @@
 			playsound(src, 'sound/weapons/hit_metalic.ogg', VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
 			H.visible_message("<span class='warning'>[user] hit [H] harmlessly with a telebaton.</span>")
-			H.log_combat(user, "hit harmlessly with [name]")
+			H.process_aggresive_action(user, "hit harmlessly with [name]")
 			return
 		if(..())
 			L.apply_effect(30, AGONY, target_armor)

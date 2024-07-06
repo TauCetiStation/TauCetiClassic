@@ -199,7 +199,7 @@
 	victim.visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [A]!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
-	victim.log_combat(assailant, "face-slammed against \the [parent]")
+	victim.process_aggresive_action(assailant, "face-slammed against \the [parent]")
 	return FALSE
 
 /// Is called when parent is clicked with a grab with HARM selected. Return TRUE if face slammed.
@@ -228,7 +228,7 @@
 		victim.Stun(2)
 		victim.Weaken(5)
 
-		victim.log_combat(assailant, "laid on [A]")
+		victim.process_aggresive_action(assailant, "laid on [A]")
 	else if(assailant.a_intent != INTENT_HARM)
 		/// Let's pretend a face-slam doesn't exist.
 		to_chat(assailant, "<span class='warning'>You need a better grip to do that!</span>")

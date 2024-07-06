@@ -86,7 +86,7 @@
 					flick(G.hud.icon_state, G.hud)
 					user.SetNextMove(CLICK_CD_ACTION)
 					user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")
-					M.log_combat(user, "knifed with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+					M.process_aggresive_action(user, "knifed with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 					return
 
 	if (isbrain(M))
@@ -104,7 +104,7 @@
 		user.remove_from_mob(src)
 		M.equip_to_slot_if_possible(src, SLOT_HEAD, disable_warning = TRUE)
 		user.visible_message("<span class='danger'>[user] slams [name] on the [M]'s head!</span>")
-		M.log_combat(user, "slammed with [name] on the head (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(BRUTE)])")
+		M.process_aggresive_action(user, "slammed with [name] on the head (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(BRUTE)])")
 		var/list/data = user.get_unarmed_attack()
 		// if item has no force just assume attacker smashed his fist (no scratches or any modifiers) against victim's head.
 		if(user.a_intent in list(INTENT_PUSH, INTENT_GRAB))
@@ -112,7 +112,7 @@
 			playsound(M, data["sound"], VOL_EFFECTS_MASTER)
 		return TRUE
 
-	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+	M.process_aggresive_action(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
 	if(ishuman(user) && damtype == BRUTE)
