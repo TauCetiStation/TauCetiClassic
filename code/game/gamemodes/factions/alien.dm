@@ -103,6 +103,7 @@ var/global/mob/Jonesy
 	var/datum/role/role = pick(members)
 	var/mob/living/carbon/human/H = role.antag.current
 	H.set_species(NOSTROMO_ANDROID)
+	H.nutrition_icon.update_icon(H)
 	return ..()
 
 
