@@ -1267,6 +1267,7 @@
 /area/custom/nostromo)
 "hQ" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/cyan,
+/obj/machinery/meter,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -4578,6 +4579,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/blue{
 	dir = 1
 	},
+/obj/machinery/meter,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -6107,6 +6109,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/meter,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -7530,6 +7533,7 @@
 /area/custom/nostromo)
 "Sk" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
+/obj/machinery/meter,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"
@@ -8436,6 +8440,7 @@
 /area/custom/nostromo)
 "XM" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/yellow,
+/obj/machinery/meter,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"

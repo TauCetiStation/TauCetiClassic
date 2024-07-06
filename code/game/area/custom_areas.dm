@@ -152,36 +152,3 @@
 	if (isliving(A))
 		listeners -= A
 	..()
-
-/obj/effect/landmark/nostromo_ambience
-	name = "Nostromo Ambience"
-	var/ambience_next_time
-	var/area/custom/nostromo/area
-	var/ambience = list(
-		'sound/antag/Alien_sounds/alien_ambience1.ogg',
-		'sound/antag/Alien_sounds/alien_ambience2.ogg',
-		'sound/antag/Alien_sounds/alien_ambience3.ogg',
-		'sound/antag/Alien_sounds/alien_ambience4.ogg',
-		'sound/antag/Alien_sounds/alien_ambience5.ogg',
-		'sound/antag/Alien_sounds/alien_ambience6.ogg',
-		'sound/antag/Alien_sounds/alien_ambience7.ogg',
-		'sound/antag/Alien_sounds/alien_ambience8.ogg')
-	var/last_ambience
-	var/current_ambience
-
-/obj/effect/landmark/nostromo_ambience/atom_init()
-	. = ..()
-	area = get_area(src)
-	if(!istype(area, /area/custom/nostromo))
-		return INITIALIZE_HINT_QDEL
-	ambience_next_time = world.time + 1 MINUTE
-	START_PROCESSING(SSobj, src)
-
-/obj/effect/landmark/nostromo_ambience/process()
-	if(world.time > ambience_next_time)
-		ambience_next_time += rand(2, 4) MINUTE
-		current_ambience = pick(ambience - last_ambience)
-
-		for(var/mob/living/L in area.listeners)
-			L.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
-			last_ambience = current_ambience

@@ -29,6 +29,7 @@
 	for(var/obj/effect/landmark/L as anything in landmarks_list["Nostromo Ambience"])
 		// потом когда на 4 корабля делить буду тут проверка на соответствие номеру будет типо того
 		ambience_player = L
+	playsound(src, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/Destroy()
 	alien_list[ALIEN_LONE_HUNTER] -= src
@@ -38,18 +39,9 @@
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Life()
 	if(!invisible)
 		epoint += 1
-	if (epoint > epoint_cap)
+	if(epoint > epoint_cap)
 		next_stage()
 	. = ..()
-
-// Чтоб не мог на траве афк инвиз стоять
-/mob/living/carbon/xenomorph/humanoid/hunter/handle_environment()
-	..()
-	if(invisible && (locate(/obj/structure/alien/weeds) in loc))
-		if(crawling)
-			adjustToxLoss(plasma_rate - 1)
-		else
-			adjustToxLoss(plasma_rate/2 - 1)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/next_stage()
 	to_chat(src, "<span class='notice'>Вы перешли на новую стадию эволюции!</span>")
@@ -62,6 +54,7 @@
 	switch(estage)
 		if (2)
 			verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin)
+			hud_used.init_screen(/atom/movable/screen/xenomorph/neurotoxin)
 		if (4)
 			alien_spells += /obj/effect/proc_holder/spell/targeted/screech
 		if (5)
@@ -108,6 +101,7 @@
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_music()
 	if(world.time > next_scary_music && ambience_player)
 		ambience_player.ambience_next_time += 0.5 MINUTE
+		ambience_player.sound_next_time += 0.5 MINUTE
 		next_scary_music = world.time + 0.5 MINUTE
 		for(var/mob/living/L in range(7, src))
 			L.playsound_music(pick(alien_attack), VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)
