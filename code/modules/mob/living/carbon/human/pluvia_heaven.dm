@@ -2,21 +2,26 @@
 	name = "Pluvia Heaven"
 	icon_state = "unexplored"
 
-/var/global/social_credit_threshold = 5
+/var/global/social_credit_threshold = 5 // не забыть переписать
 /var/global/haram_threshold = 5
 /var/global/list/available_pluvia_gongs = list()
 
 /mob/living/carbon/human/proc/bless()
-	to_chat(src, "<span class='notice'>\ <font size=4>Высшая сила засвидетельствовала ваш подвиг. Врата рая ожидают вас.</span></font>")
+	to_chat(src, "<span class='notice'>\ <font size=4>Вам известно, что после смерти вы попадете в рай</span></font>")
 	src.blessed = 1
-	playsound_local(null, 'sound/effects/blessed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	var/image/eye = image('icons/mob/human_face.dmi', icon_state = "pluvia_ms_s")
 	eye.plane = ABOVE_LIGHTING_PLANE
+	eye.layer = ABOVE_LIGHTING_LAYER
 	add_overlay(eye)
+	UnregisterSignal(src, list(COMSIG_HUMAN_HARMED_OTHER, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(src, list(COMSIG_HUMAN_TRY_SUICIDE, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(src, list(COMSIG_HUMAN_IS_DRUNK, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(src, list(COMSIG_HUMAN_EAT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(src, list(COMSIG_HUMAN_ON_CARPET, COMSIG_PARENT_QDELETING))
 
 /obj/item/weapon/bless_vote
 	name = "Рекомендательное письмо"
-	desc = "Билет до рая." // я лучше сам напишу сразу по русски, чем придет кринж-депортамент и напереводит по-свойму
+	desc = "Билет до рая."
 	w_class = SIZE_TINY
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
@@ -168,7 +173,7 @@
 	next_ring = world.time + 30 SECONDS
 	var/list/possible_targets = list()
 	for(var/mob/living/carbon/human/H in human_list)
-		if(H.mind && H != user)
+		if(H.mind && H != user && ispluvian(H))
 			if(istype(H.my_religion, /datum/religion/pluvia))
 				possible_targets[H] = image(H.icon, H.icon_state)
 				possible_targets[H].copy_overlays(H)

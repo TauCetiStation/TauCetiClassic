@@ -18,18 +18,21 @@
 
 /mob/living/carbon/human/proc/reborn()
 	var/area/heaven_tile = pick(get_area_turfs(get_area_by_type(/area/pluvia_heaven)))
-	var/datum/dna/my_dna = dna
-	var/mob/living/carbon/human/pluvian/P = new /mob/living/carbon/human/pluvian(heaven_tile)
-	P.real_name = my_dna.real_name
-	P.dna = my_dna.Clone()
+	var/mob/living/carbon/human/pluvian_spirit/P = new /mob/living/carbon/human/pluvian_spirit(heaven_tile)
+	spell_to_remember.Copy(spell_list)
+	for(var/obj/effect/proc_holder/spell/create_bless_vote/c in spell_to_remember)
+		spell_to_remember -=c
+	P.real_name = dna.real_name
+	P.dna = dna.Clone()
 	P.UpdateAppearance()
-	P.set_species(PLUVIAN_SPIRIT)
 	P.b_eyes = 200
 	P.g_eyes = 255
 	P.r_eyes = 255
-	P.rejuvenate()
+	P.regenerate_icons()
+	P.my_corpse = src
+	for(var/obj/effect/proc_holder/spell/s in spell_list)
+		RemoveSpell(s)
 	mind.transfer_to(P)
-	ClearSpells(P)
 
 /mob/living/carbon/human/dust()
 	new /obj/effect/decal/cleanable/ash(loc)

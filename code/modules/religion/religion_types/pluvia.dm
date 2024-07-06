@@ -91,8 +91,9 @@
 
 /datum/religion/pluvia/add_member(mob/living/carbon/human/H)
 	. = ..()
-	H.AddSpell(new /obj/effect/proc_holder/spell/create_bless_vote)
-	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/ancestor_call)
+	if(ispluvian(H))
+		H.AddSpell(new /obj/effect/proc_holder/spell/create_bless_vote)
+		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/ancestor_call)
 	RegisterSignal(H, COMSIG_HUMAN_HARMED_OTHER, PROC_REF(harm_haram))
 	RegisterSignal(H, COMSIG_HUMAN_TRY_SUICIDE, PROC_REF(suicide_haram))
 	RegisterSignal(H, COMSIG_HUMAN_IS_DRUNK, PROC_REF(drunk_haram))

@@ -393,7 +393,7 @@
 			to_chat(H, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")
 			H.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-/datum/species/pluvian_spirite
+/datum/species/pluvian_spirit
 	name = PLUVIAN_SPIRIT
 	icobase = 'icons/mob/human_races/r_pluvian.dmi'
 	gender_limb_icons = TRUE
