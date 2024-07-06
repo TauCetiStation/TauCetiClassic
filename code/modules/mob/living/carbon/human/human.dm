@@ -2296,6 +2296,7 @@
 							AddSpell(new S)
 						qdel(spirit)
 						bless()
+					break
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind == mind && ghost.can_reenter_corpse)
 				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
