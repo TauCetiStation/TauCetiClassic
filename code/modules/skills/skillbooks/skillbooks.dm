@@ -113,7 +113,8 @@
 
 /obj/item/weapon/book/skillbook/engineering
 	name = "Skills 101: Engineering"
-	item_state ="Skillbook_engi"
+	icon_state = "Skillbook_engi"
+	item_state = "Skillbook_engi"
 	item_state_world = "Skillbook_engi_world"
 
 	skills = list(
@@ -125,7 +126,8 @@
 
 /obj/item/weapon/book/skillbook/medical
 	name = "Skills 101: Medicine"
-	item_state ="Skillbook_med"
+	icon_state = "Skillbook_med"
+	item_state = "Skillbook_med"
 	item_state_world = "Skillbook_med_world"
 
 	skills = list(
@@ -136,7 +138,8 @@
 
 /obj/item/weapon/book/skillbook/science
 	name = "Skills 101: Science"
-	item_state ="Skillbook_sci"
+	icon_state = "Skillbook_sci"
+	item_state = "Skillbook_sci"
 	item_state_world = "Skillbook_sci_world"
 
 	skills = list(
@@ -150,7 +153,8 @@
 
 /obj/item/weapon/book/skillbook/robust
 	name = "Skills 101: Robust"
-	item_state ="Skillbook_robust"
+	icon_state = "Skillbook_robust"
+	item_state = "Skillbook_robust"
 	item_state_world = "Skillbook_robust_world"
 
 	skills = list(
@@ -164,7 +168,8 @@
 
 /obj/item/weapon/book/skillbook/chemistry
 	name = "Skills 101: Chemistry"
-	item_state ="Skillbook_chem"
+	icon_state = "Skillbook_chem"
+	item_state = "Skillbook_chem"
 	item_state_world = "Skillbook_chem_world"
 
 	skills = list(
@@ -173,7 +178,8 @@
 
 /obj/item/weapon/book/skillbook/surgery
 	name = "Skills 101: Surgery"
-	item_state ="Skillbook_med"
+	icon_state = "Skillbook_med"
+	item_state = "Skillbook_med"
 	item_state_world = "Skillbook_med_world"
 
 	skills = list(
@@ -183,7 +189,8 @@
 
 /obj/item/weapon/book/skillbook/exosuits
 	name = "Skills 101: Exosuits"
-	item_state ="Skillbook_mech"
+	icon_state = "Skillbook_mech"
+	item_state = "Skillbook_mech"
 	item_state_world = "Skillbook_mech_world"
 
 	skills = list(
