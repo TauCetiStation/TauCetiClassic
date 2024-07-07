@@ -33393,11 +33393,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "bhk" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/turf/simulated/wall,
+/area/station/medical/psych)
 "bhl" = (
 /obj/structure/sink{
 	dir = 4;
@@ -34064,6 +34062,9 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/item/roller,
+/obj/item/device/healthanalyzer,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "biB" = (
@@ -54146,10 +54147,9 @@
 	},
 /area/station/engineering/monitoring)
 "bST" = (
-/obj/structure/closet/crate,
-/obj/item/roller,
-/obj/item/device/healthanalyzer,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bSU" = (
@@ -56627,12 +56627,14 @@
 	},
 /area/station/civilian/chapel/altar)
 "caK" = (
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
-/turf/simulated/floor/carpet/green,
-/area/station/medical/psych)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "caN" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -68244,9 +68246,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cIF" = (
-/obj/structure/grille{
-	destroyed = 1
-	},
+/obj/structure/grille,
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -75700,22 +75700,19 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "jqb" = (
-/obj/item/weapon/reagent_containers/syringe,
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/obj/item/weapon/reagent_containers/pill/citalopram,
-/obj/item/weapon/reagent_containers/pill/citalopram,
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-/obj/item/clothing/suit/straight_jacket,
-/obj/machinery/camera{
-	c_tag = "Psychiatric Office";
-	dir = 8;
-	network = list("SS13","Medical")
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/item/toy/plushie/tuxedo_cat,
-/obj/structure/closet/secure_closet/psycho,
-/turf/simulated/floor/carpet/green,
-/area/station/medical/psych)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "jrS" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -76308,6 +76305,23 @@
 	icon_state = "2,1"
 	},
 /area/shuttle/supply/station)
+"jYw" = (
+/obj/item/weapon/reagent_containers/syringe,
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/obj/item/weapon/reagent_containers/pill/citalopram,
+/obj/item/weapon/reagent_containers/pill/citalopram,
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+/obj/item/clothing/suit/straight_jacket,
+/obj/machinery/camera{
+	c_tag = "Psychiatric Office";
+	dir = 8;
+	network = list("SS13","Medical")
+	},
+/obj/item/toy/plushie/tuxedo_cat,
+/obj/structure/closet/secure_closet/psycho,
+/turf/simulated/floor/wood,
+/area/station/medical/psych)
 "jYz" = (
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -80569,6 +80583,14 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"oDy" = (
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/structure/closet,
+/turf/simulated/floor/wood,
+/area/station/medical/psych)
 "oEO" = (
 /obj/machinery/camera{
 	c_tag = "Hydroponics Lobby";
@@ -128913,8 +128935,8 @@ aXy
 bJm
 bXS
 cEm
-caK
-jqb
+bEi
+bEi
 bMF
 bBy
 cLu
@@ -129170,8 +129192,8 @@ bJm
 bJm
 bMF
 bMF
-bMF
-bMF
+oDy
+jYw
 bMF
 cFU
 cak
@@ -129424,13 +129446,13 @@ bDV
 lTb
 qUb
 bFo
-cak
+cIF
 biA
-bgB
-bgB
+bMF
+bMF
 bhk
-bgB
-bhm
+bMF
+jqb
 cak
 bFo
 aaa
@@ -129682,12 +129704,12 @@ cAz
 cLu
 bRK
 bYh
-cAa
+caK
 bST
-lDb
-cIF
-cak
-cFU
+bgB
+bgB
+bgB
+bhm
 cLs
 bFo
 aaa
