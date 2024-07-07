@@ -1,21 +1,21 @@
 /datum/religion/pluvia
-	name = "Путь Плувиийца"
+	name = "РџСѓС‚СЊ РџР»СѓРІРёРёР№С†Р°"
 	deity_names_by_name = list(
-		"Путь Плувиийца" = list("Лунарис")
+		"РџСѓС‚СЊ РџР»СѓРІРёРёР№С†Р°" = list("Р›СѓРЅР°СЂРёСЃ")
 	)
 	bible_info_by_name = list(
-		"Путь Плувиийца" = /datum/bible_info/chaplain/bible, //потом переделать на другую
+		"РџСѓС‚СЊ РџР»СѓРІРёРёР№С†Р°" = /datum/bible_info/chaplain/bible, //РїРѕС‚РѕРј РїРµСЂРµРґРµР»Р°С‚СЊ РЅР° РґСЂСѓРіСѓСЋ
 	)
 
 	emblem_info_by_name = list(
-		"Путь Плувиийца" = "christianity", //потом переделать на другую
+		"РџСѓС‚СЊ РџР»СѓРІРёРёР№С†Р°" = "christianity", //РїРѕС‚РѕРј РїРµСЂРµРґРµР»Р°С‚СЊ РЅР° РґСЂСѓРіСѓСЋ
 	)
 
 	altar_info_by_name = list(
-		"Путь Плувиийца" = "chirstianaltar",
+		"РџСѓС‚СЊ РџР»СѓРІРёРёР№С†Р°" = "chirstianaltar",
 	)
 	carpet_type_by_name = list(
-		"Путь Плувиийца" = /turf/simulated/floor/carpet,
+		"РџСѓС‚СЊ РџР»СѓРІРёРёР№С†Р°" = /turf/simulated/floor/carpet,
 	)
 	style_text = "piety"
 	symbol_icon_state = null
@@ -30,20 +30,20 @@
 		if(attacker.haram_point < haram_threshold)
 			attacker.haram_point += haram_harm
 			attacker.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			to_chat(attacker, "<span class='warning'>\ <font size=3>Хватит наносить вред Плувийцу!</span></font>")
+			to_chat(attacker, "<span class='warning'>\ <font size=3>Р’С‹ РЅР°СЂСѓС€Р°РµС‚Рµ РїРµСЂРІСѓСЋ Р·Р°РїРѕРІРµРґСЊ!</span></font>")
 		else
 			global.pluvia_religion.remove_member(attacker, HOLY_ROLE_PRIEST)
 			attacker.social_credit = 0
-			to_chat(attacker, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
+			to_chat(attacker, "<span class='warning'>\ <font size=5>Р’СЂР°С‚Р° СЂР°СЏ Р·Р°РєСЂС‹С‚С‹ РґР»СЏ РІР°СЃ. РС‰РёС‚Рµ СЃРµР±Рµ РґСЂСѓРіРѕРіРѕ РїРѕРєСЂРѕРІРёС‚РµР»СЏ</span></font>")
 			attacker.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/religion/pluvia/proc/suicide_haram(mob/living/carbon/human/target)
 	global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 	target.social_credit = 0
-	to_chat(target, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
+	to_chat(target, "<span class='warning'>\ <font size=5>Р’С‹ РЅР°СЂСѓС€РёР»Рё РІС‚РѕСЂСѓСЋ Р·Р°РїРѕРІРµРґСЊ. Р’СЂР°С‚Р° СЂР°СЏ Р·Р°РєСЂС‹С‚С‹ РґР»СЏ РІР°СЃ. РС‰РёС‚Рµ СЃРµР±Рµ РґСЂСѓРіРѕРіРѕ РїРѕРєСЂРѕРІРёС‚РµР»СЏ</span></font>")
 	target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-/datum/religion/pluvia/proc/drunk_haram(mob/living/carbon/human/target) //Я осознанно никак не проверяю, сам ли он пил или его напоили. Так можно гарантированно убить плувийца с концами - напоив его
+/datum/religion/pluvia/proc/drunk_haram(mob/living/carbon/human/target) //РЇ РѕСЃРѕР·РЅР°РЅРЅРѕ РЅРёРєР°Рє РЅРµ РїСЂРѕРІРµСЂСЏСЋ, СЃР°Рј Р»Рё РѕРЅ РїРёР» РёР»Рё РµРіРѕ РЅР°РїРѕРёР»Рё. РўР°Рє РјРѕР¶РЅРѕ РіР°СЂР°РЅС‚РёСЂРѕРІР°РЅРЅРѕ СѓР±РёС‚СЊ РїР»СѓРІРёР№С†Р° СЃ РєРѕРЅС†Р°РјРё - РЅР°РїРѕРёРІ РµРіРѕ
 	if(target.haram_point < haram_threshold)
 		for(var/datum/reagent/R in target.reagents.reagent_list)
 			if(istype(R, /datum/reagent/consumable/ethanol) || istype(R, /datum/reagent/space_drugs) || istype(R,/datum/reagent/ambrosium))
@@ -52,10 +52,10 @@
 		target.setDrugginess(0)
 		target.haram_point += haram_drunk
 		target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		to_chat(target, "<span class='warning'>\ <font size=3>Хватит травить себя!</span></font>")
+		to_chat(target, "<span class='warning'>\ <font size=3>Р’С‹ РЅР°СЂСѓС€Р°РµС‚Рµ С‚СЂРµС‚СЊСЋ Р·Р°РїРѕРІРµРґСЊ!</span></font>")
 	else
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
-		to_chat(target, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
+		to_chat(target, "<span class='warning'>\ <font size=5>Р’СЂР°С‚Р° СЂР°СЏ Р·Р°РєСЂС‹С‚С‹ РґР»СЏ РІР°СЃ. РС‰РёС‚Рµ СЃРµР±Рµ РґСЂСѓРіРѕРіРѕ РїРѕРєСЂРѕРІРёС‚РµР»СЏ</span></font>")
 		target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/religion/pluvia/proc/food_haram(datum/source, obj/item/weapon/reagent_containers/food/snacks/target)
@@ -65,11 +65,11 @@
 	if(H.haram_point < haram_threshold)
 		H.haram_point += haram_food
 		H.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		to_chat(H, "<span class='warning'>\ <font size=3>Ешь как человек, а не как животное</span></font>")
+		to_chat(H, "<span class='warning'>\ <font size=3>Р’С‹ РЅР°СЂСѓС€Р°РµС‚Рµ С‡РµС‚РІРµСЂС‚СѓСЋ Р·Р°РїРѕРІРµРґСЊ!</span></font>")
 	else
 		global.pluvia_religion.remove_member(H, HOLY_ROLE_PRIEST)
 		H.social_credit = 0
-		to_chat(H, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
+		to_chat(H, "<span class='warning'>\ <font size=5>Р’СЂР°С‚Р° СЂР°СЏ Р·Р°РєСЂС‹С‚С‹ РґР»СЏ РІР°СЃ. РС‰РёС‚Рµ СЃРµР±Рµ РґСЂСѓРіРѕРіРѕ РїРѕРєСЂРѕРІРёС‚РµР»СЏ</span></font>")
 		H.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/religion/pluvia/proc/carpet_haram(mob/living/carbon/human/target)
@@ -77,11 +77,11 @@
 		if(target.haram_point < haram_threshold)
 			target.haram_point += haram_carpet
 			target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			to_chat(target, "<span class='warning'>\ <font size=3>Не ходи в обуви по коврам!</span></font>")
+			to_chat(target, "<span class='warning'>\ <font size=3>Р’С‹ РЅР°СЂСѓС€Р°РµС‚Рµ РїСЏС‚СѓСЋ Р·Р°РїРѕРІРµРґСЊ!</span></font>")
 		else
 			global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 			target.social_credit = 0
-			to_chat(target, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
+			to_chat(target, "<span class='warning'>\ <font size=5>Р’СЂР°С‚Р° СЂР°СЏ Р·Р°РєСЂС‹С‚С‹ РґР»СЏ РІР°СЃ. РС‰РёС‚Рµ СЃРµР±Рµ РґСЂСѓРіРѕРіРѕ РїРѕРєСЂРѕРІРёС‚РµР»СЏ</span></font>")
 			target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /turf/simulated/floor/carpet/Entered(atom/movable/O)

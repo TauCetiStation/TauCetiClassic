@@ -206,7 +206,7 @@
 
 /obj/item/clothing/head/pluvia
 	name = "pluvia hat"
-	desc = "Prepare to rain"
+	desc = "Prepare to heavy rain"
 	icon_state = "pluvia_hat"
 	item_state = "pluvia_hat"
 	flags = HEADCOVERSEYES|BLOCKHAIR
