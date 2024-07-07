@@ -837,6 +837,7 @@
 	dietflags = 0		//Diona regenerate nutrition in light, no diet necessary
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	primitive = /mob/living/carbon/monkey/diona
+	start_social_credit = 3// Диона это несколько маленьких нимф. У каждой по праву голоса!
 
 	siemens_coefficient = 0.5 // Because they are plants and stuff.
 
