@@ -13,6 +13,7 @@
 	var/image/eye = image('icons/mob/human_face.dmi', icon_state = "pluvia_ms_s")
 	eye.plane = LIGHTING_LAMPS_PLANE
 	eye.layer = ABOVE_LIGHTING_LAYER
+	ADD_TRAIT(src, TRAIT_SEE_GHOSTS, QUALITY_TRAIT)
 	add_overlay(eye)
 
 /obj/item/weapon/bless_vote
