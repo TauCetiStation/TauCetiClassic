@@ -107,8 +107,6 @@
 	var/obj/my_gong
 
 /obj/effect/proc_holder/spell/no_target/ancestor_call/proc/mimic_message(datum/source, message)
-	message_admins("1 [message]")
-	message_admins("2 [source]")
 	fake_body.say(message)
 
 /obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/living/user = usr)
