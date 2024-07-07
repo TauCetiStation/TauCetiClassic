@@ -407,7 +407,7 @@
 	oxy_mod = 0
 	tox_mod = 0
 	clone_mod = 0
-	start_social_credit = 3
+	start_social_credit = 0
 	eyes = "pluvia_ms_s"
 	eyes_glowing = TRUE
 	flags = list(

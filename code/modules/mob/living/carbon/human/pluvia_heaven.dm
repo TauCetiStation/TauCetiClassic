@@ -8,7 +8,8 @@
 
 /mob/living/carbon/human/proc/bless()
 	to_chat(src, "<span class='notice'>\ <font size=4>Вам известно, что после смерти вы попадете в рай</span></font>")
-	src.blessed = 1
+	blessed = 1
+	social_credit = 2
 	var/image/eye = image('icons/mob/human_face.dmi', icon_state = "pluvia_ms_s")
 	eye.plane = LIGHTING_LAMPS_PLANE
 	eye.layer = ABOVE_LIGHTING_LAYER
