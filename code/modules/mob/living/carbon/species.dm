@@ -387,7 +387,7 @@
 
 /datum/species/pluvian/handle_death(mob/living/carbon/human/H, gibbed)
 	..()
-	if(!ischangeling(H) && H.mind) // Pluvia heaven
+	if(!iscultist(H) && !ischangeling(H) && H.mind)
 		if(H.blessed || H.social_credit >= social_credit_threshold)
 			H.reborn()
 		else
