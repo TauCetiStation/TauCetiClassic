@@ -26,7 +26,7 @@
 
 /datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)
 	var/mob/living/carbon/human/attacker  = source
-	if(istype(target.my_religion, /datum/religion/pluvia))
+	if(istype(target.my_religion, /datum/religion/pluvia) ||target.blessed)
 		if(attacker.haram_point < haram_threshold)
 			attacker.haram_point += haram_harm
 			attacker.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)

@@ -13,11 +13,6 @@
 	eye.plane = LIGHTING_LAMPS_PLANE
 	eye.layer = ABOVE_LIGHTING_LAYER
 	add_overlay(eye)
-	UnregisterSignal(src, list(COMSIG_HUMAN_HARMED_OTHER, COMSIG_PARENT_QDELETING))
-	UnregisterSignal(src, list(COMSIG_HUMAN_TRY_SUICIDE, COMSIG_PARENT_QDELETING))
-	UnregisterSignal(src, list(COMSIG_HUMAN_IS_DRUNK, COMSIG_PARENT_QDELETING))
-	UnregisterSignal(src, list(COMSIG_HUMAN_EAT, COMSIG_PARENT_QDELETING))
-	UnregisterSignal(src, list(COMSIG_HUMAN_ON_CARPET, COMSIG_PARENT_QDELETING))
 
 /obj/item/weapon/bless_vote
 	name = "Рекомендательное письмо"
@@ -112,9 +107,11 @@
 	var/obj/my_gong
 
 /obj/effect/proc_holder/spell/no_target/ancestor_call/proc/mimic_message(datum/source, message)
+	message_admins("1 [message]")
+	message_admins("2 [source]")
 	fake_body.say(message)
 
-/obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/living/user = usr) // не забыть добавить урон мозгу
+/obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/living/user = usr)
 	if(!fake_body)
 		if(available_pluvia_gongs.len == 0)
 			to_chat(user, "<span class='warning'>Все линии связи сейчас заняты! Попробуйте позже</span>")
@@ -175,7 +172,7 @@
 	var/list/possible_targets = list()
 	for(var/mob/living/carbon/human/H in human_list)
 		if(H.mind && H != user && ispluvian(H))
-			if(istype(H.my_religion, /datum/religion/pluvia))
+			if(istype(H.my_religion, /datum/religion/pluvia) || H.blessed)
 				possible_targets[H] = image(H.icon, H.icon_state)
 				possible_targets[H].copy_overlays(H)
 

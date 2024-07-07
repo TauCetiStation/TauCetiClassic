@@ -29,7 +29,7 @@
 
 #define isskeleton(A) (A.get_species() in list(SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX))
 
-#define ispluvian(A) (A.get_species() in list(PLUVIAN)) // потом перееду на проверку на религию, а не на расу. Не забыть удалить.
+#define ispluvian(A) (A.get_species() in list(PLUVIAN))
 
 // CARBON
 #define isxenoqueen(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/queen))

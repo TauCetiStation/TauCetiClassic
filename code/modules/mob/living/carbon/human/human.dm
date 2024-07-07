@@ -96,7 +96,8 @@
 	. = ..(mapload, PLUVIAN)
 
 /mob/living/carbon/human/pluvian_spirit
-	var/my_corpse
+	var/mob/living/carbon/human/my_corpse
+	var/list/spell_to_remember = list()
 
 /mob/living/carbon/human/pluvian_spirit/atom_init(mapload)
 	. = ..(mapload, PLUVIAN_SPIRIT)
@@ -2284,19 +2285,22 @@
 /mob/living/carbon/human/proc/return_to_body_dialog()
 	if (client) //in body?
 		playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	if(ispluvian(src))
+		for(var/mob/living/carbon/human/pluvian_spirit/spirit in player_list)
+			if(spirit.my_corpse == src)
+				spirit.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+				var/answer = tgui_alert(spirit,"You have been reanimated. Do you want to return to body?","Reanimate", list("Yes","No"))
+				if(answer == "Yes")
+					spirit.mind.transfer_to(spirit.my_corpse)
+					for(var/spell in spirit.spell_to_remember)
+						message_admins("1 [spell]")
+						message_admins("2 [spirit]")
+						message_admins("3 [spirit.my_corpse]")
+						spirit.my_corpse.AddSpell(spell)
+					qdel(spirit)
+					bless()
+				break
 	else if(mind)
-		if(ispluvian(src))
-			for(var/mob/living/carbon/human/pluvian_spirit/spirit in player_list)
-				if(spirit.my_corpse == src)
-					spirit.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-					var/answer = tgui_alert(spirit,"You have been reanimated. Do you want to return to body?","Reanimate", list("Yes","No"))
-					if(answer == "Yes")
-						spirit.mind.transfer_to()
-						for(var/obj/effect/proc_holder/spell/S in spell_to_remember)
-							AddSpell(new S)
-						qdel(spirit)
-						bless()
-					break
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind == mind && ghost.can_reenter_corpse)
 				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)

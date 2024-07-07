@@ -131,4 +131,3 @@
 	var/social_credit = 0
 	var/haram_point = 0
 	var/blessed = 0
-	var/list/spell_to_remember = list()

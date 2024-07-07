@@ -386,8 +386,9 @@
 	..()
 
 /datum/species/pluvian/handle_death(mob/living/carbon/human/H, gibbed)
+	..()
 	if(!ischangeling(H) && H.mind) // Pluvia heaven
-		if(H.blessed || H.social_credit >= social_credit_threshold) // партия гордится вами
+		if(H.blessed || H.social_credit >= social_credit_threshold)
 			H.reborn()
 		else
 			to_chat(H, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")
@@ -426,6 +427,7 @@
 	,NO_EMOTION = TRUE
 	,NO_VOMIT = TRUE
 	,NO_FAT = TRUE
+	,HAS_UNDERWEAR = TRUE
 	)
 	min_age = 25
 	max_age = 85
