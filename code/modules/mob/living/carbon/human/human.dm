@@ -2295,7 +2295,8 @@
 					for(var/spell in spirit.spell_to_remember)
 						spirit.my_corpse.AddSpell(spell)
 					qdel(spirit)
-					bless()
+					if(!blessed)
+						bless()
 				break
 	else if(mind)
 		for(var/mob/dead/observer/ghost in player_list)

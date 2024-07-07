@@ -209,4 +209,4 @@
 	desc = "Prepare to heavy rain"
 	icon_state = "pluvia_hat"
 	item_state = "pluvia_hat"
-	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags = HEADCOVERSEYES|BLOCKHEADHAIR
