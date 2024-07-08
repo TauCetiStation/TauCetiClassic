@@ -3505,6 +3505,10 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "hC" = (
@@ -4634,13 +4638,27 @@
 /area/asteroid/research_outpost/hallway)
 "jA" = (
 /obj/machinery/light/small,
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/blue{
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/tempstorage)
+"jB" = (
+/obj/effect/decal/turf_decal{
+	dir = 5;
+	icon_state = "warn"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "jD" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
@@ -4865,7 +4883,9 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
 /area/asteroid/research_outpost/tempstorage)
 "kh" = (
 /obj/structure/disposalpipe/trunk{
@@ -5406,10 +5426,6 @@
 	dir = 6;
 	id = "anotempload"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/tempstorage)
 "le" = (
@@ -5741,7 +5757,11 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal{
-	dir = 1;
+	dir = 9;
+	icon_state = "ast_warn"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 5;
 	icon_state = "ast_warn"
 	},
 /turf/simulated/floor/airless{
@@ -5986,20 +6006,12 @@
 /obj/machinery/conveyor{
 	id = "anotempload"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "mE" = (
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "anosample"
-	},
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
@@ -6008,12 +6020,16 @@
 	id = "anosample"
 	},
 /obj/effect/decal/turf_decal{
-	dir = 1;
+	dir = 9;
 	icon_state = "warn"
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "mG" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "mH" = (
@@ -6562,7 +6578,7 @@
 	req_access = list(65)
 	},
 /obj/effect/decal/turf_decal{
-	dir = 1;
+	dir = 5;
 	icon_state = "ast_warn"
 	},
 /turf/simulated/floor/airless{
@@ -6572,10 +6588,6 @@
 "nS" = (
 /obj/machinery/conveyor{
 	id = "anotempload"
-	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "ast_warn"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
@@ -6593,10 +6605,6 @@
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "anosample"
-	},
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "ast_warn"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
@@ -9205,7 +9213,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/plasticflaps/mining,
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "Mecha Shutters";
 	name = "Mecha Shutters"
 	},
@@ -10664,7 +10671,7 @@
 	},
 /obj/effect/decal/turf_decal{
 	dir = 4;
-	icon_state = "ast_warn"
+	icon_state = "warn"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
@@ -10687,6 +10694,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
+"xW" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "xZ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -10918,6 +10934,10 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "zd" = (
@@ -11118,7 +11138,7 @@
 	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "ast_warn"
+	icon_state = "warn"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
@@ -12197,6 +12217,16 @@
 /obj/structure/table,
 /turf/simulated/floor/bluegrid,
 /area/asteroid/research_outpost/iso1)
+"GT" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Hb" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Auxiliary Storage";
@@ -12628,6 +12658,26 @@
 	icon_state = "vaultfull"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
+"MW" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "ast_warn"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
+"MX" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "Nb" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -12823,6 +12873,14 @@
 /obj/structure/transit_tube,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
+"Px" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Py" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -13081,7 +13139,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal{
-	icon_state = "ast_warn"
+	icon_state = "warn"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
@@ -13167,6 +13225,11 @@
 /obj/machinery/light/smart,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
+"VC" = (
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "VK" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -13361,6 +13424,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
+"XF" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Yb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -13386,6 +13457,14 @@
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn_corner"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn_corner"
 	},
 /turf/simulated/floor/airless{
 	dir = 5;
@@ -53888,8 +53967,8 @@ in
 in
 in
 in
-Aj
-Aj
+VC
+VC
 Aj
 qZ
 lA
@@ -54142,12 +54221,12 @@ le
 nr
 le
 nR
-oC
-lA
-rM
-lA
-lA
-lA
+GT
+VC
+XF
+VC
+VC
+MX
 lA
 lA
 lA
@@ -54400,11 +54479,11 @@ mC
 lJ
 nS
 oD
-lA
-lA
-lA
-lA
-lA
+oE
+VC
+VC
+VC
+MX
 lA
 lA
 kO
@@ -54656,12 +54735,12 @@ zc
 hB
 le
 lR
-oE
-lA
-lA
-lA
-lA
-lA
+MW
+VC
+VC
+VC
+VC
+MX
 lA
 lA
 kO
@@ -54914,11 +54993,11 @@ mE
 nn
 nU
 oF
-lA
-lA
-lA
-lA
-lA
+oE
+VC
+VC
+VC
+MX
 kO
 kO
 kO
@@ -59392,9 +59471,9 @@ lA
 lA
 lA
 rM
-rc
+jB
 xK
-Aj
+xW
 Yc
 Id
 Ud
@@ -59654,7 +59733,7 @@ lA
 lA
 zv
 Id
-tL
+Px
 lA
 lA
 lA

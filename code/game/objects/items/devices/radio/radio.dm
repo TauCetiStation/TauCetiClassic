@@ -848,8 +848,9 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	icon_state = "radio_grid"
 
 /obj/item/device/radio_grid/proc/attach(obj/item/device/radio/radio)
-	radio.on = TRUE
-	radio.grid = TRUE
+	if(prob(reliability))
+		radio.on = TRUE
+		radio.grid = TRUE
 	qdel(src)
 
 /obj/item/device/radio_grid/proc/dettach(obj/item/device/radio/radio)

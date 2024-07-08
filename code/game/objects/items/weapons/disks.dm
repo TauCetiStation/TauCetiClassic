@@ -34,7 +34,7 @@
 	forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
 	message_admins("[src] has been destroyed in ([COORD(diskturf)] - [ADMIN_JMP(diskturf)]). Moving it to ([COORD(targetturf)] - [ADMIN_JMP(targetturf)]).")
 	log_game("[src] has been destroyed in [COORD(diskturf)]. Moving it to [COORD(targetturf)].")
-
+	update_world_icon()
 	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
 
 #undef TIMER_MIN

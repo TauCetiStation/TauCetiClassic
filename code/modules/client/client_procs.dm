@@ -166,24 +166,6 @@ var/global/list/blacklisted_builds = list(
 	..() // Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 
-/client/proc/handle_spam_prevention(message, mute_type)
-	if(global_message_cooldown && (world.time < last_message_time + 5))
-		return 1
-	if(config.automute_on && !holder && src.last_message == message)
-		src.last_message_count++
-		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			to_chat(src, "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
-			spam_automute(src.mob, mute_type)
-			return 1
-		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			to_chat(src, "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>")
-			return 0
-	else
-		last_message_time = world.time
-		last_message = message
-		src.last_message_count = 0
-		return 0
-
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	if(filelength > UPLOAD_LIMIT)
@@ -198,44 +180,23 @@ var/global/list/blacklisted_builds = list(
 	fileaccess_timer = world.time + FTPDELAY	*/
 	return 1
 
-/proc/spam_automute(mob/M as mob, mute_type)
-	if(!config.automute_on)
-		return
-
-	if(!M.client)
-		return
-
-	var/muteunmute = "auto-muted"
-	var/mute_string = get_mute_text(mute_type)
-
-	if(!mute_string)
-		CRASH("Can't parse mute type: [mute_type]")
-
-	M.client.prefs.muted |= mute_type
-	log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]")
-	message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(M)] from [mute_string].")
-	to_chat(M, "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin.")
-	feedback_add_details("admin_verb","AUTOMUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/proc/get_mute_text(mute_type)
-	switch(mute_type)
-		if(MUTE_IC)
-			. = "IC (say and emote)"
-		if(MUTE_OOC)
-			. = "OOC"
-		if(MUTE_PRAY)
-			. = "pray"
-		if(MUTE_ADMINHELP)
-			. = "adminhelp, admin PM and ASAY"
-		if(MUTE_MENTORHELP)
-			. = "mentorhelp and mentor PM"
-		if(MUTE_DEADCHAT)
-			. = "deadchat and DSAY"
-		if(MUTE_ALL)
-			. = "everything"
-		else
-			return
-
+/client/proc/handle_spam_prevention(message, type)
+	if(global_message_cooldown && (world.time < last_message_time + 5))
+		return 1
+	if(config.automute_on && !holder && src.last_message == message)
+		src.last_message_count++
+		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
+			to_chat(src, "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute will be applied.</span>")
+			set_admin_cooldown(mob, type, 20 MINUTES, "ANTI-SPAM")
+			return 1
+		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
+			to_chat(src, "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>")
+			return 0
+	else
+		last_message_time = world.time
+		last_message = message
+		src.last_message_count = 0
+		return 0
 
 	///////////
 	//CONNECT//
@@ -246,9 +207,6 @@ var/global/list/blacklisted_builds = list(
 
 	if(connection != "seeker")					//Invalid connection type.
 		return null
-
-	if(!guard)
-		guard = new(src)
 
 	// Change the way they should download resources.
 	if(config.resource_urls)
@@ -289,25 +247,16 @@ var/global/list/blacklisted_builds = list(
 	update_supporter_status()
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
-	prefs = preferences_datums[ckey]
-	if(prefs)
-		prefs.parent = src
+	if(preferences_datums[ckey])
+		prefs = preferences_datums[ckey]
+		prefs.reattach_to_client(src)
 	else
 		prefs = new /datum/preferences(src)
 		preferences_datums[ckey] = prefs
+
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = (prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
-
-	var/cur_date = time2text(world.realtime, "YYYY/MM/DD hh:mm:ss")
-	if("[computer_id]" in prefs.cid_list)
-		prefs.cid_list["[computer_id]"]["last_seen"] = cur_date
-	else
-		prefs.cid_list["[computer_id]"] = list("first_seen"=cur_date, "last_seen"=cur_date)
-
-	if(prefs.cid_list.len > 2)
-		log_admin("[ckey] has [prefs.cid_list.len] different computer_id.")
-		message_admins("[ckey] has <span class='red'>[prefs.cid_list.len]</span> different computer_id.")
 
 	prefs.save_preferences()
 
@@ -545,7 +494,7 @@ var/global/list/blacklisted_builds = list(
 		query_update.Execute()
 	else if(!config.bunker_ban_mode)
 		//New player!! Need to insert all the stuff
-		guard.first_entry = TRUE
+		prefs.guard.first_entry = TRUE
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[sql_player_ingame_age]')")
 		query_insert.Execute()
 
@@ -557,6 +506,76 @@ var/global/list/blacklisted_builds = list(
 		var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
 		var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 		query_accesslog.Execute()
+
+		query_accesslog = dbcon.NewQuery("SELECT count(DISTINCT computerid) from erro_connection_log where ckey='[sql_ckey]';")
+		query_accesslog.Execute()
+
+		if(query_accesslog.NextRow())
+			prefs.cid_count = text2num(query_accesslog.item[1])
+
+/client/proc/generate_cid_history(years = 2, hardcap = 30)
+	if(!establish_db_connection("erro_connection_log"))
+		return FALSE
+
+	var/sql_ckey = ckey(ckey)
+	var/years_cap_sql
+	var/hard_cap_sql
+	if(years && isnum(years))
+		years_cap_sql = "AND datetime > (Now() - interval [years] year)"
+	if(hardcap && isnum(hardcap))
+		hard_cap_sql = "LIMIT [hardcap]"
+
+	var/list/cid_list = list()
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT computerid, MIN(datetime) as first, MAX(datetime) as last from erro_connection_log WHERE ckey='[sql_ckey]' [years_cap_sql] GROUP BY computerid ORDER BY last DESC [hard_cap_sql];")
+	query.Execute()
+	while(query.NextRow())
+		cid_list[query.item[1]] = list("first_seen" = query.item[2], "last_seen" = query.item[3])
+
+	for(var/query_cid in cid_list)
+		var/list/match_ckeys = list()
+
+		query = dbcon.NewQuery("SELECT DISTINCT ckey from erro_connection_log WHERE computerid = '[query_cid]' AND ckey!='[sql_ckey]';")
+		query.Execute()
+		while(query.NextRow())
+			match_ckeys += query.item[1]
+
+		if(length(match_ckeys))
+			cid_list[query_cid]["match"] = match_ckeys
+
+	return cid_list
+
+/client/proc/generate_ip_history(years = 2, hardcap = 30)
+	if(!establish_db_connection("erro_connection_log"))
+		return FALSE
+
+	var/sql_ckey = ckey(ckey)
+	var/years_cap_sql
+	if(years && isnum(years))
+		years_cap_sql = "AND datetime > (Now() - interval [years] year)"
+	var/hard_cap_sql
+	if(hardcap && isnum(hardcap))
+		hard_cap_sql = "LIMIT [hardcap]"
+
+	var/list/ip_list = list()
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT ip, MIN(datetime) as first, MAX(datetime) as last from erro_connection_log WHERE ckey='[sql_ckey]' [years_cap_sql] GROUP BY ip ORDER BY last DESC [hard_cap_sql];")
+	query.Execute()
+	while(query.NextRow())
+		ip_list[query.item[1]] = list("first_seen" = query.item[2], "last_seen" = query.item[3])
+
+	for(var/query_ip in ip_list)
+		var/list/match_ckeys = list()
+
+		query = dbcon.NewQuery("SELECT DISTINCT ckey from erro_connection_log WHERE ip = '[query_ip]' AND ckey!='[sql_ckey]';")
+		query.Execute()
+		while(query.NextRow())
+			match_ckeys += query.item[1]
+
+		if(length(match_ckeys))
+			ip_list[query_ip]["match"] = match_ckeys
+
+	return ip_list
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
