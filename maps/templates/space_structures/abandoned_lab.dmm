@@ -562,13 +562,18 @@
 /area/space_structures/derelict_lab)
 "bK" = (
 /obj/structure/closet/l3closet/security,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
 "bL" = (
 /obj/structure/rack,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bM" = (
+/turf/simulated/floor/airless{
 	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
@@ -654,7 +659,9 @@
 /area/space_structures/derelict_lab)
 "ca" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
 /area/space_structures/derelict_lab)
 "cb" = (
 /obj/structure/table/glass,
@@ -697,7 +704,9 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
 /area/space_structures/derelict_lab)
 "ch" = (
 /obj/machinery/door/airlock/engineering/glass{
@@ -932,6 +941,16 @@
 	icon_state = "white"
 	},
 /area/space_structures/derelict_lab)
+"wa" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
 "wY" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall7"
@@ -984,7 +1003,9 @@
 "Zu" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
 /area/space_structures/derelict_lab)
 
 (1,1,1) = {"
@@ -1504,7 +1525,7 @@ ae
 bG
 bK
 bK
-ar
+bM
 aR
 ae
 ae
@@ -1526,9 +1547,9 @@ bg
 bp
 bi
 bB
-bi
-bi
-bi
+wa
+wa
+wa
 ca
 ca
 cg
@@ -1552,7 +1573,7 @@ ae
 bG
 bL
 bL
-ar
+bM
 aR
 ae
 ae

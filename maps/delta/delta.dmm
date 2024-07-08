@@ -19617,6 +19617,9 @@
 	icon_state = "blackchoco"
 	},
 /area/station/bridge/nuke_storage)
+"bmr" = (
+/turf/simulated/floor/plating/airless,
+/area/station/maintenance/brig)
 "bmC" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -29919,7 +29922,7 @@
 	pixel_y = -20;
 	req_one_access = list(13,45,1)
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/station/maintenance/brig)
 "dHT" = (
 /obj/machinery/navbeacon{
@@ -169805,8 +169808,8 @@ plf
 plf
 plf
 plf
-oYL
-oYL
+bmr
+bmr
 vst
 dKV
 dfe
@@ -170062,7 +170065,7 @@ plf
 plf
 plf
 plf
-oYL
+bmr
 dHR
 dHv
 tlS
@@ -170319,8 +170322,8 @@ plf
 plf
 plf
 plf
-oYL
-oYL
+bmr
+bmr
 vst
 dKa
 dKa
