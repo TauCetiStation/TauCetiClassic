@@ -19108,8 +19108,9 @@
 	},
 /area/station/civilian/library)
 "ddI" = (
-/obj/structure/sign/poster/official/random{
-	pixel_x = 32
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -21771,16 +21772,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
-"dGo" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = -5
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/hallway/secondary/exit)
 "dGu" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -28357,19 +28348,21 @@
 	},
 /area/station/security/checkpoint)
 "eYO" = (
-/obj/machinery/light/small{
+/obj/machinery/disposal,
+/obj/machinery/camera{
+	c_tag = "Escape Bar Outter";
 	dir = 8
 	},
-/obj/effect/decal/cleanable/generic,
-/obj/machinery/alarm{
-	pixel_x = -28;
-	pixel_y = -6
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/newscaster{
+	pixel_x = 28
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutral"
+	icon_state = "vaultfull"
 	},
-/area/station/civilian/market)
+/area/station/hallway/secondary/exit)
 "eYS" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/simulated/floor{
@@ -37605,8 +37598,6 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "gMg" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/stool,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -66736,15 +66727,9 @@
 	},
 /area/station/engineering/rust)
 "mHj" = (
-/obj/structure/sign/poster/official/random{
-	pixel_x = -32
-	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "neutral"
-	},
-/area/station/civilian/market)
+/turf/simulated/wall,
+/area/station/maintenance/brig)
 "mHl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -67576,7 +67561,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "neutralcorner"
+	icon_state = "yellowcorner"
 	},
 /area/station/hallway/secondary/entry)
 "mQn" = (
@@ -70790,8 +70775,8 @@
 	pixel_y = 29
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
+	dir = 1;
+	icon_state = "yellowcorner"
 	},
 /area/station/hallway/secondary/entry)
 "nyh" = (
@@ -78604,8 +78589,17 @@
 /turf/simulated/wall,
 /area/station/maintenance/brigright)
 "paT" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/generic,
+/obj/machinery/alarm{
+	pixel_x = -28;
+	pixel_y = -6
+	},
 /turf/simulated/floor{
-	icon_state = "neutralchoco"
+	dir = 10;
+	icon_state = "neutral"
 	},
 /area/station/civilian/market)
 "paX" = (
@@ -81019,9 +81013,8 @@
 "pBA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/disposalpipe/junction{
-	dir = 2;
-	icon_state = "pipe-j2"
+/obj/structure/disposalpipe/segment{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -97002,21 +96995,14 @@
 	},
 /area/station/security/prison)
 "sMq" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
+/obj/structure/grille{
+	destroyed = 1
 	},
-/obj/machinery/camera{
-	c_tag = "Escape Bar Outter";
-	dir = 8
+/obj/structure/window/thin/reinforced{
+	dir = 4
 	},
-/obj/machinery/newscaster{
-	pixel_x = 28
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/hallway/secondary/exit)
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "sMr" = (
 /obj/structure/window/thin/reinforced,
 /obj/machinery/disposal,
@@ -107620,8 +107606,9 @@
 "uPR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/disposalpipe/segment{
-	dir = 1
+/obj/structure/disposalpipe/junction{
+	dir = 2;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -140327,8 +140314,8 @@ khY
 khY
 hca
 khY
-khY
 cdJ
+khY
 suZ
 kHd
 xSm
@@ -140584,8 +140571,8 @@ jNW
 vSV
 iXK
 vSV
-jNW
-sMq
+eYO
+mRW
 mRW
 mRW
 jcS
@@ -140841,9 +140828,9 @@ bfs
 kRz
 tXt
 iBI
-iBI
-wqE
 mRW
+mRW
+sMq
 kdT
 qiZ
 wRi
@@ -141098,9 +141085,9 @@ eKr
 nip
 sCj
 ddI
-dGo
-ddI
 mRW
+obG
+gbs
 wzn
 igp
 wRi
@@ -141356,7 +141343,7 @@ evu
 qPH
 mRW
 mRW
-mRW
+mHj
 mRW
 gbs
 dHX
@@ -142654,8 +142641,8 @@ fsH
 dEM
 bOT
 lzl
-vFq
-wJn
+jcE
+bsW
 wRi
 wRi
 vHk
@@ -142916,12 +142903,12 @@ bOT
 mGt
 bOT
 vSF
-blE
-blE
-oSc
-cgV
-qMC
-sfz
+lzl
+dVb
+mRW
+mQi
+tCx
+gOe
 ear
 rwf
 xYn
@@ -143165,20 +143152,20 @@ mRW
 mRW
 vVg
 mRW
-gLx
-gLx
-gLx
+mRW
+vFq
+wJn
 gLx
 gLx
 nWM
 gLx
 gLx
-gLx
-gLx
-gLx
-mQi
-tCx
-gOe
+nlL
+blE
+oSc
+cgV
+qMC
+sfz
 ear
 fjj
 lDn
@@ -143423,15 +143410,15 @@ iDP
 nMl
 hWA
 gLx
-ixc
-iGe
+gLx
+gLx
 gLx
 oTp
 fgC
 iRW
 gLx
-eYO
-mHj
+gLx
+gLx
 gLx
 nye
 gOv
@@ -143679,9 +143666,9 @@ lCw
 xsp
 tLB
 dEZ
-fSb
-bwO
-paT
+gLx
+ixc
+iGe
 oKY
 dmD
 whf
@@ -143689,7 +143676,7 @@ rXG
 mCj
 paT
 hGs
-xCW
+gLx
 tiK
 gOv
 sfz
