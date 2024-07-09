@@ -7,14 +7,14 @@
 	two_hand_weapon = ONLY_TWOHAND
 	feature_flags = 0
 
-/obj/item/weapon/gun/projectile/grenade_launcher/proc/unchamber()
+/obj/item/weapon/gun/projectile/grenade_launcher/proc/unchamber(mob/user)
 	playsound(src, 'sound/weapons/guns/m79_out.ogg', VOL_EFFECTS_MASTER)
 	if(chambered)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), loc, 'sound/weapons/guns/shell_drop.ogg', 50, 1), 3)
 		chambered.loc = get_turf(src)//Eject casing
 		chambered.SpinAnimation(5, 1)
 		chambered = null
-		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 	update_icon()
 
 /obj/item/weapon/gun/projectile/grenade_launcher/proc/try_chambering(obj/item/I, mob/user)
@@ -26,7 +26,7 @@
 		playsound(src, 'sound/weapons/guns/reload_m79.ogg', VOL_EFFECTS_MASTER)
 		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
 		chambered = AC
-		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 		update_icon()	//I.E. fix the desc
 		I.update_icon()
 

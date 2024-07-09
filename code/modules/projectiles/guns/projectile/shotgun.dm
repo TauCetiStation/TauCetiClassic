@@ -214,7 +214,7 @@
 		if(!magazine && istype(AM, initial_mag))
 			user.remove_from_mob(AM)
 			magazine = AM
-			SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+			SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 			magazine.forceMove(src)
 			to_chat(user, "<span class='notice'>You load a new clip into \the [src].</span>")
 			chamber_round()

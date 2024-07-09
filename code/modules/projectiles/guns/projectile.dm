@@ -72,7 +72,7 @@
 			chamber_round()
 			I.update_icon()
 			update_icon()
-			SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+			SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 			return TRUE
 
 		else if (magazine)
@@ -98,13 +98,13 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 	else if(chambered)
 		playsound(src, bolt_slide_sound, VOL_EFFECTS_MASTER)
 		process_chamber()
-		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 	else
 		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
 	update_icon()
@@ -166,12 +166,12 @@
 		playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
 		user.put_in_hands(old_magazine)
 		chamber_round()
-		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 	else
 		user.drop_from_inventory(new_magazine, src)
 		magazine = new_magazine
 		playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
 		chamber_round()
-		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 	update_icon()

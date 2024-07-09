@@ -196,7 +196,7 @@
 	else
 		shoot_with_empty_chamber(user)
 	process_chamber()
-	SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+	SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 	update_icon()
 	update_inv_mob()
 

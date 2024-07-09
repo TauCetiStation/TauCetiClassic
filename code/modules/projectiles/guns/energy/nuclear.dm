@@ -67,7 +67,7 @@
 	if((power_supply.charge / power_supply.maxcharge) != 1)
 		if(!failcheck())	return 0
 		power_supply.give(100)
-		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, M)
 		update_icon()
 	return 1
 

@@ -125,7 +125,7 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+		SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 		to_chat(user, "<span class='notice'>Вы вытаскиваете магазин из [src]!</span>")
 	else
 		to_chat(user, "<span class='notice'>Внутри [src] нет магазина.</span>")
@@ -138,7 +138,7 @@
 		if(!magazine && istype(AB, initial_mag))
 			user.drop_from_inventory(AB, src)
 			magazine = AB
-			SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED)
+			SEND_SIGNAL(src, COSMIG_GUN_AMMO_CHANGED, user)
 			to_chat(user, "<span class='notice'>Вы загрузили новый магазин в [src].</span>")
 			if(AB.get_charge())
 				if(!AB.has_overcharge())
