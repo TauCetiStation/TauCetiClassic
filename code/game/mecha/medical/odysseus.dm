@@ -42,3 +42,6 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/syringe_gun(src)
 	ME.attach(src)
+
+/obj/mecha/medical/odysseus/ert
+	dna_lockable = TRUE

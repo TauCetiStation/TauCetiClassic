@@ -157,7 +157,6 @@ var/global/bridge_secret = null
 									  EVENT_LEVEL_MAJOR    = 70 MINUTES)
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
-	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_ingame_minutes_restriction_for_jobs = 0 //Do jobs use in-game minutes instead account age for restrictions?
 
@@ -275,9 +274,6 @@ var/global/bridge_secret = null
 
 				if ("admin_legacy_system")
 					config.admin_legacy_system = 1
-
-				if ("ban_legacy_system")
-					config.ban_legacy_system = 1
 
 				if ("byond_version_min")
 					config.byond_version_min = text2num(value)
