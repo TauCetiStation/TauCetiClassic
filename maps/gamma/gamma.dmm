@@ -19108,9 +19108,8 @@
 	},
 /area/station/civilian/library)
 "ddI" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
+/obj/structure/sign/poster/official/random{
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -21773,15 +21772,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "dGo" = (
-/obj/machinery/camera{
-	c_tag = "Escape Bar Outter";
-	dir = 8
-	},
-/obj/machinery/newscaster{
-	pixel_x = 28
-	},
-/obj/structure/sign/poster/official/random{
-	pixel_y = 32
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -36513,16 +36507,6 @@
 	icon_state = "whiteyellowfull"
 	},
 /area/station/medical/chemistry)
-"gBk" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = -5
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/hallway/secondary/exit)
 "gBm" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile{
@@ -41867,15 +41851,11 @@
 	},
 /area/station/medical/hallway)
 "hGs" = (
-/obj/machinery/door/airlock/glass{
-	dir = 4;
-	name = "Central Access"
-	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "yellowcorner"
+	dir = 10;
+	icon_state = "neutral"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/civilian/market)
 "hGw" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -46758,9 +46738,11 @@
 	},
 /area/station/civilian/bar)
 "iBI" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/door/poddoor/shutters{
+	id = "bar-evac";
+	name = "Bar Shutters"
 	},
+/obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -67588,11 +67570,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "mQi" = (
-/obj/structure/sign/poster/official/random{
-	pixel_y = -32
+/obj/machinery/door/airlock/glass{
+	dir = 4;
+	name = "Central Access"
 	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
@@ -70807,8 +70790,8 @@
 	pixel_y = 29
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "yellowcorner"
+	dir = 4;
+	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
 "nyh" = (
@@ -77358,21 +77341,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
-"oOJ" = (
-/obj/item/weapon/scrap_lump,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
 "oOY" = (
 /obj/machinery/computer/monitor,
 /obj/machinery/alarm{
@@ -78636,19 +78604,10 @@
 /turf/simulated/wall,
 /area/station/maintenance/brigright)
 "paT" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 5
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/brig)
+/area/station/civilian/market)
 "paX" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -97043,8 +97002,16 @@
 	},
 /area/station/security/prison)
 "sMq" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Escape Bar Outter";
+	dir = 8
+	},
+/obj/machinery/newscaster{
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -140616,8 +140583,8 @@ bkt
 jNW
 vSV
 iXK
-gBk
-evu
+vSV
+jNW
 sMq
 mRW
 mRW
@@ -140873,9 +140840,9 @@ wqE
 bfs
 kRz
 tXt
-wqE
-bkt
 iBI
+iBI
+wqE
 mRW
 kdT
 qiZ
@@ -141130,7 +141097,7 @@ ogR
 eKr
 nip
 sCj
-wqE
+ddI
 dGo
 ddI
 mRW
@@ -142687,8 +142654,8 @@ fsH
 dEM
 bOT
 lzl
-nIw
-dVb
+vFq
+wJn
 wRi
 wRi
 vHk
@@ -142949,12 +142916,12 @@ bOT
 mGt
 bOT
 vSF
-paT
-dVb
-mRW
-hGs
-tCx
-gOe
+blE
+blE
+oSc
+cgV
+qMC
+sfz
 ear
 rwf
 xYn
@@ -143198,20 +143165,20 @@ mRW
 mRW
 vVg
 mRW
-mRW
-vFq
-wJn
+gLx
+gLx
+gLx
 gLx
 gLx
 nWM
 gLx
 gLx
-oOJ
-blE
-oSc
-cgV
-qMC
+gLx
+gLx
+gLx
 mQi
+tCx
+gOe
 ear
 fjj
 lDn
@@ -143456,15 +143423,15 @@ iDP
 nMl
 hWA
 gLx
-gLx
-gLx
+ixc
+iGe
 gLx
 oTp
 fgC
 iRW
 gLx
-gLx
-gLx
+eYO
+mHj
 gLx
 nye
 gOv
@@ -143713,15 +143680,15 @@ xsp
 tLB
 dEZ
 fSb
-ixc
-iGe
+bwO
+paT
 oKY
 dmD
 whf
 rXG
 mCj
-eYO
-mHj
+paT
+hGs
 xCW
 tiK
 gOv
