@@ -5,6 +5,7 @@
 	MAP_JOB_CHECK
 	minimal_player_ingame_minutes = 1200
 	skillsets = list("Captain" = /datum/skillset/falcon/captain)
+	outfit = /datum/outfit/nostromo_captain
 
 /datum/job/doctor/New()
 	..()
@@ -12,18 +13,23 @@
 	access += list(access_maint_tunnels)
 	total_positions = 2
 	spawn_positions = 2
+	alt_titles = list()
 	minimal_player_ingame_minutes = 300
 	supervisors = "the captain"
 	skillsets = list("Medical Doctor" = /datum/skillset/falcon/doctor)
+	outfit = /datum/outfit/nostromo_doctor
 
 /datum/job/engineer/New()
 	..()
 	MAP_JOB_CHECK
+	title = "Engineer"
 	total_positions = 2
 	spawn_positions = 2
+	alt_titles = list()
 	minimal_player_ingame_minutes = 300
 	supervisors = "the captain"
-	skillsets = list("Station Engineer" = /datum/skillset/falcon/engineer)
+	skillsets = list("Engineer" = /datum/skillset/falcon/engineer)
+	outfit = /datum/outfit/nostromo_engineer
 
 /datum/job/assistant/New()
 	..()
@@ -31,9 +37,11 @@
 	title = "Pilot"
 	total_positions = 1
 	spawn_positions = 1
+	access += list(access_maint_tunnels)
 	alt_titles = list()
 	supervisors = "the captain"
 	skillsets = list("Pilot" = /datum/skillset/falcon/test_subject)
+	outfit = /datum/outfit/nostromo_pilot
 
 /datum/job/cargo_tech/New()
 	..()
@@ -43,6 +51,7 @@
 	minimal_player_ingame_minutes = 300
 	supervisors = "the captain"
 	skillsets = list("Cargo Technician" = /datum/skillset/falcon/quartermaster)
+	outfit = /datum/outfit/nostromo_cargo_tech
 
 // ONLY HUMAN CAN PLAY THIS IVENT XENOSI SOSAAAAT
 /datum/job/special_species_check(datum/species/S)
