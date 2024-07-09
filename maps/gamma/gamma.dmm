@@ -21772,6 +21772,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"dGo" = (
+/obj/structure/table,
+/obj/item/weapon/storage/pill_bottle/dice{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/device/harmonica{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/secondary/exit)
 "dGu" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -28348,21 +28362,14 @@
 	},
 /area/station/security/checkpoint)
 "eYO" = (
-/obj/machinery/disposal,
-/obj/machinery/camera{
-	c_tag = "Escape Bar Outter";
-	dir = 8
+/obj/structure/grille{
+	destroyed = 1
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
+/obj/structure/window/thin/reinforced{
+	dir = 4
 	},
-/obj/machinery/newscaster{
-	pixel_x = 28
-	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/hallway/secondary/exit)
+/turf/simulated/floor/plating,
+/area/station/maintenance/brig)
 "eYS" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/simulated/floor{
@@ -66727,9 +66734,21 @@
 	},
 /area/station/engineering/rust)
 "mHj" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/wall,
-/area/station/maintenance/brig)
+/obj/machinery/disposal,
+/obj/machinery/camera{
+	c_tag = "Escape Bar Outter";
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/newscaster{
+	pixel_x = 28
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/hallway/secondary/exit)
 "mHl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -96995,13 +97014,8 @@
 	},
 /area/station/security/prison)
 "sMq" = (
-/obj/structure/grille{
-	destroyed = 1
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/wall,
 /area/station/maintenance/brig)
 "sMr" = (
 /obj/structure/window/thin/reinforced,
@@ -100131,7 +100145,6 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "bar-m";
 	name = "Bar Shutters"
 	},
@@ -140571,7 +140584,7 @@ jNW
 vSV
 iXK
 vSV
-eYO
+mHj
 mRW
 mRW
 mRW
@@ -140830,7 +140843,7 @@ tXt
 iBI
 mRW
 mRW
-sMq
+eYO
 kdT
 qiZ
 wRi
@@ -141085,9 +141098,9 @@ eKr
 nip
 sCj
 ddI
+dGo
 mRW
 obG
-gbs
 wzn
 igp
 wRi
@@ -141343,7 +141356,7 @@ evu
 qPH
 mRW
 mRW
-mHj
+sMq
 mRW
 gbs
 dHX
