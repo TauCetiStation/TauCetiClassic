@@ -20399,16 +20399,6 @@
 	icon_state = "white"
 	},
 /area/station/medical/hallway/outbranch)
-"drt" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	id = "bar-evac";
-	name = "Bar Shutters"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/hallway/secondary/exit)
 "dru" = (
 /obj/structure/rack,
 /obj/machinery/light/small{
@@ -21783,13 +21773,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "dGo" = (
-/obj/structure/stool/bar,
 /obj/machinery/camera{
 	c_tag = "Escape Bar Outter";
 	dir = 8
 	},
 /obj/machinery/newscaster{
 	pixel_x = 28
+	},
+/obj/structure/sign/poster/official/random{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -36522,12 +36514,6 @@
 	},
 /area/station/medical/chemistry)
 "gBk" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	id = "bar-evac";
-	name = "Bar Shutters";
-	dir = 4
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 28;
@@ -59468,7 +59454,6 @@
 /obj/structure/table/reinforced/stall,
 /obj/structure/barricade/wooden,
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "shop1";
 	name = "First Shop Shutters"
 	},
@@ -120890,7 +120875,8 @@
 /obj/structure/barricade/wooden,
 /obj/machinery/door/poddoor/shutters{
 	id = "shop2";
-	name = "Second Shop Shutters"
+	name = "Second Shop Shutters";
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -140630,7 +140616,7 @@ bkt
 jNW
 vSV
 iXK
-vSV
+gBk
 evu
 sMq
 mRW
@@ -140887,8 +140873,8 @@ wqE
 bfs
 kRz
 tXt
-drt
-vSV
+wqE
+bkt
 iBI
 mRW
 kdT
@@ -141144,7 +141130,7 @@ ogR
 eKr
 nip
 sCj
-gBk
+wqE
 dGo
 ddI
 mRW
