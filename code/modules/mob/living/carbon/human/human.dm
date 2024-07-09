@@ -172,19 +172,6 @@
 	sec_hud_set_security_status()
 	//...and display them.
 	add_to_all_data_huds()
-	switch(species.name)
-		if(IPC)
-			signature_obj = pick_machinery()
-			var/image/I = image(signature_obj.icon, src, signature_obj.icon_state)
-			I.override = 1
-			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_machinery", I)
-			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "IPC_machinery", I)
-		if(DIONA)
-			signature_obj = pick(typesof(/obj/item/weapon/flora/pottedplant))
-			var/image/I = image(signature_obj.icon, src, signature_obj.icon_state)
-			I.override = 1
-			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "DIONA_plant", I)
-			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "DIONA_plant", I)
 
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
@@ -2550,18 +2537,3 @@
 			continue
 		F.attackby(B, src)
 		break
-
-/mob/living/carbon/human/proc/pick_machinery()
-	return pick(
-		/obj/machinery/pdapainter,
-		/obj/machinery/computer/security/wooden_tv/miami,
-		/obj/machinery/message_server,
-		/obj/machinery/blackbox_recorder,
-		/obj/machinery/vending/cigarette,
-		/obj/machinery/kitchen_machine/microwave,
-		/obj/machinery/kitchen_machine/oven,
-		/obj/machinery/media/jukebox,
-		/obj/machinery/washing_machine,
-		/obj/machinery/telecomms/relay,
-		/obj/machinery/portable_atmospherics/powered/pump,
-		/obj/machinery/chem_master)

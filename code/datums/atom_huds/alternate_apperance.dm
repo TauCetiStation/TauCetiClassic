@@ -197,7 +197,7 @@ var/global/list/active_alternate_appearances = list()
 				add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/xenomorphs/mobShouldSee(mob/M)
-	return isalien(M)
+	return isxeno(M)
 
 // Fake-image can see only zombie
 /datum/atom_hud/alternate_appearance/basic/zombies/New()
@@ -206,7 +206,7 @@ var/global/list/active_alternate_appearances = list()
 		if(mobShouldSee(mob))
 			add_hud_to(mob)
 
-/datum/atom_hud/alternate_appearance/basic/xenomorphs/mobShouldSee(mob/M)
+/datum/atom_hud/alternate_appearance/basic/zombies/mobShouldSee(mob/M)
 	return iszombie(M)
 
 // Fake-image can see only observers

@@ -840,6 +840,30 @@
 	var/regen_mod = 1.0
 	// Podmen don't.
 	var/regen_limbs = TRUE
+	var/list/signature_plant = list(
+		/obj/structure/flora/ausbushes/genericbush,
+		/obj/structure/flora/ausbushes/grassybush,
+		/obj/structure/flora/ausbushes/pointybush,
+		/obj/structure/flora/junglebush/b,
+		/obj/item/weapon/flora/floorleaf,
+		/obj/item/weapon/flora/pottedplant/aquatic,
+		/obj/item/weapon/flora/pottedplant/decorative,
+		/obj/item/weapon/flora/pottedplant/ficus,
+		/obj/item/weapon/flora/pottedplant/minitree,
+		/obj/item/weapon/flora/pottedplant/palm,
+		/obj/item/weapon/flora/pottedplant/stoutbush,
+		/obj/item/weapon/flora/pottedplant/thinbush,
+		/obj/item/weapon/flora/pottedplant/tropical_2)
+
+/datum/species/diona/on_gain(mob/living/carbon/human/H)
+	..()
+	// initialize hud_list for alt_appearance
+	H.prepare_huds()
+	H.signature_obj = pick(signature_plant)
+	var/image/I = image(H.signature_obj.icon, H, H.signature_obj.icon_state)
+	I.override = 1
+	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "DIONA_xeno", I)
+	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "DIONA_zombie", I)
 
 /datum/species/diona/regen(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
@@ -1072,6 +1096,20 @@
 
 	default_mood_event = /datum/mood_event/machine
 
+	var/list/signature_machinery = list(
+		/obj/machinery/pdapainter,
+		/obj/machinery/computer/security/wooden_tv/miami,
+		/obj/machinery/message_server,
+		/obj/machinery/blackbox_recorder,
+		/obj/machinery/vending/cigarette,
+		/obj/machinery/kitchen_machine/microwave,
+		/obj/machinery/kitchen_machine/oven,
+		/obj/machinery/media/jukebox,
+		/obj/machinery/washing_machine,
+		/obj/machinery/telecomms/relay,
+		/obj/machinery/portable_atmospherics/powered/pump,
+		/obj/machinery/chem_master)
+
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
@@ -1080,6 +1118,14 @@
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP)
 		H.set_light(BP.screen_brightness)
+
+	// initialize hud_list for alt_appearance
+	H.prepare_huds()
+	H.signature_obj = pick(signature_machinery)
+	var/image/I = image(H.signature_obj.icon, H, H.signature_obj.icon_state)
+	I.override = 1
+	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_xeno", I)
+	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "IPC_zombie", I)
 
 /datum/species/machine/on_loose(mob/living/carbon/human/H, new_species)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
@@ -1100,6 +1146,21 @@
 		if(BP.ipc_head == "Default")
 			H.h_style = "IPC off screen"
 		H.update_hair()
+
+/mob/living/carbon/human/proc/pick_machinery()
+	return pick(
+		/obj/machinery/pdapainter,
+		/obj/machinery/computer/security/wooden_tv/miami,
+		/obj/machinery/message_server,
+		/obj/machinery/blackbox_recorder,
+		/obj/machinery/vending/cigarette,
+		/obj/machinery/kitchen_machine/microwave,
+		/obj/machinery/kitchen_machine/oven,
+		/obj/machinery/media/jukebox,
+		/obj/machinery/washing_machine,
+		/obj/machinery/telecomms/relay,
+		/obj/machinery/portable_atmospherics/powered/pump,
+		/obj/machinery/chem_master)
 
 /datum/species/abductor
 	name = ABDUCTOR
