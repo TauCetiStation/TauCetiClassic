@@ -4,7 +4,7 @@
 	set hidden = 1
 	if(!check_rights(R_ADMIN))
 		return
-	if(prefs.muted & MUTE_ADMINHELP)
+	if(prefs.muted & MUTE_PM || IS_ON_ADMIN_CD(src, ADMIN_CD_PM))
 		to_chat_admin_chat(src, "<font color='red'>Error: ASAY: You cannot use asay (Muted).</font>")
 		return
 

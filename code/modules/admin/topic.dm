@@ -106,7 +106,7 @@
 
 	else if(href_list["dbbanaddtype"])
 
-		var/bantype = text2num(href_list["dbbanaddtype"])
+		var/bantype = href_list["dbbanaddtype"]
 		var/banckey = href_list["dbbanaddckey"]
 		var/banip = href_list["dbbanaddip"]
 		var/bancid = href_list["dbbanaddcid"]
@@ -115,6 +115,9 @@
 		var/banreason = sanitize(href_list["dbbanreason"])
 
 		banckey = ckey(banckey)
+
+		if(!(bantype in valid_ban_types))
+			CRASH("Unknown ban type [sanitize(bantype)]!")
 
 		switch(bantype)
 			if(BANTYPE_PERMA)
@@ -367,77 +370,15 @@
 		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
 		message_admins("[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
 
-
-	/////////////////////////////////////new ban stuff
-	else if(href_list["unbanf"])
-		if(!check_rights(R_BAN))	return
-
-		var/banfolder = href_list["unbanf"]
-		Banlist.cd = "/base/[banfolder]"
-		var/key = Banlist["key"]
-		if(tgui_alert(usr, "Are you sure you want to unban [key]?", "Confirmation", list("Yes", "No")) == "Yes")
-			if(RemoveBan(banfolder))
-				unbanpanel()
-			else
-				tgui_alert(usr, "This ban has already been lifted / does not exist.", "Error")
-				unbanpanel()
-
 	else if(href_list["warn"])
 		usr.client.warn(href_list["warn"])
 
-	else if(href_list["unbane"])
+	else if(href_list["jobban2"]) // people of the past, what were you thinking placing this right in the topic
 		if(!check_rights(R_BAN))	return
 
-		UpdateTime()
-		var/reason
-
-		var/banfolder = href_list["unbane"]
-		Banlist.cd = "/base/[banfolder]"
-		var/reason2 = Banlist["reason"]
-		var/temp = Banlist["temp"]
-
-		var/minutes = Banlist["minutes"]
-
-		var/banned_key = Banlist["key"]
-		Banlist.cd = "/base"
-
-		var/duration
-
-		switch(tgui_alert(usr,"Temporary Ban?",, list("Yes","No")))
-			if("Yes")
-				temp = 1
-				var/mins = 0
-				if(minutes > CMinutes)
-					mins = minutes - CMinutes
-				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
-				if(!mins)	return
-				mins = min(525599,mins)
-				minutes = CMinutes + mins
-				duration = GetExp(minutes)
-				reason = sanitize(input(usr,"Reason?","reason",reason2) as text|null)
-				if(!reason)	return
-			if("No")
-				temp = 0
-				duration = "Perma"
-				reason = sanitize(input(usr,"Reason?","reason",reason2) as text|null)
-				if(!reason)	return
-
-		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
-		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
-		message_admins("<span class='notice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
-		Banlist.cd = "/base/[banfolder]"
-		Banlist["reason"] << reason
-		Banlist["temp"] << temp
-		Banlist["minutes"] << minutes
-		Banlist["bannedby"] << usr.ckey
-		Banlist.cd = "/base"
-		feedback_inc("ban_edit",1)
-		unbanpanel()
-
-	/////////////////////////////////////new ban stuff
-
-	else if(href_list["jobban2"])
-		if(!check_rights(R_BAN))	return
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
 
 		var/mob/M = locate(href_list["jobban2"])
 		if(!ismob(M))
@@ -788,6 +729,10 @@
 		if(!check_rights(R_ADMIN))
 			return
 
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
+
 		var/mob/M = locate(href_list["jobban4"])
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
@@ -932,7 +877,7 @@
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
-						DB_ban_unban(M.ckey, BANTYPE_ANY_JOB, job)
+						DB_ban_unban(M.ckey, null, job)
 						if(M.client)
 							jobban_buildcache(M.client)
 						feedback_inc("ban_job_unban",1)
@@ -956,38 +901,69 @@
 		if (ismob(M))
 			if(!M.client)
 				return
-			M.client.guard.print_report()
+			M.client.prefs.guard.print_report()
 
-	else if(href_list["cid_list"])
+	else if(href_list["cid_history"])
 		if(!check_rights(R_LOG))
 			return
+
+		var/mob/M = locate(href_list["cid_history"])
+		if (!ismob(M) || !M.client)
+			return
+
+		var/client/C = M.client
+		if(!C.prefs.admin_cid_request_cache)
+			C.prefs.admin_cid_request_cache = C.generate_cid_history()
+
+		var/dat = ""
+		if(length(C.prefs.admin_cid_request_cache))
+			dat += "<table><tr><th>CID</th><th>First seen</th><th>Last seen</th><th>Related accounts</th></tr>"
+			for(var/cid in C.prefs.admin_cid_request_cache)
+				dat += "<tr>"
+				dat += "<td>[cid]</td>"
+				dat += "<td>[C.prefs.admin_cid_request_cache[cid]["first_seen"]]</td>"
+				dat += "<td>[C.prefs.admin_cid_request_cache[cid]["last_seen"]]</td>"
+				dat += "<td>[list2text(C.prefs.admin_cid_request_cache[cid]["match"], separator = "; ")]</td>"
+				dat += "</tr>"
+			dat += "</table>"
 		else
-			var/mob/M = locate(href_list["cid_list"])
-			if (ismob(M))
-				if(!M.client)
-					return
-				var/client/C = M.client
-				var/dat = ""
-				dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
-				for(var/x in C.prefs.cid_list)
-					dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
+			dat += "<b>No history or we can't access database</b>"
+		dat += "<i>By default, we check only for the last 2 years and last 30 cid</i>"
 
-				var/datum/browser/popup = new(usr, "[C.ckey]_cid_list", "[C.ckey] cid list")
-				popup.set_content(dat)
-				popup.open()
+		var/datum/browser/popup = new(usr, "[C.ckey]_cid_history", "Computer ID history for [C.ckey]", 700, 300)
+		popup.set_content(dat)
+		popup.open()
 
-	else if(href_list["cid_ignore"])
+	else if(href_list["ip_history"])
 		if(!check_rights(R_LOG))
 			return
+
+		var/mob/M = locate(href_list["ip_history"])
+		if (!ismob(M) || !M.client)
+			return
+
+		var/client/C = M.client
+		if(!C.prefs.admin_ip_request_cache)
+			C.prefs.admin_ip_request_cache = C.generate_ip_history()
+
+		var/dat = ""
+		if(length(C.prefs.admin_ip_request_cache))
+			dat += "<table><tr><th>CID</th><th>First seen</th><th>Last seen</th><th>Related accounts</th></tr>"
+			for(var/ip in C.prefs.admin_ip_request_cache)
+				dat += "<tr>"
+				dat += "<td>[ip]</td>"
+				dat += "<td>[C.prefs.admin_ip_request_cache[ip]["first_seen"]]</td>"
+				dat += "<td>[C.prefs.admin_ip_request_cache[ip]["last_seen"]]</td>"
+				dat += "<td>[list2text(C.prefs.admin_ip_request_cache[ip]["match"], separator = "; ")]</td>"
+				dat += "</tr>"
+			dat += "</table>"
 		else
-			var/mob/M = locate(href_list["cid_ignore"])
-			if (ismob(M))
-				if(!M.client)
-					return
-				var/client/C = M.client
-				C.prefs.ignore_cid_warning = !(C.prefs.ignore_cid_warning)
-				log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
-				message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
+			dat += "<b>No history or we can't access database</b>"
+		dat += "<i>By default, we check only for the last 2 years and last 30 ip</i>"
+
+		var/datum/browser/popup = new(usr, "[C.ckey]_ip_history", "IP history for [C.ckey]", 700, 300)
+		popup.set_content(dat)
+		popup.open()
 
 	else if(href_list["related_accounts"])
 		if(!check_rights(R_LOG))
@@ -1026,6 +1002,10 @@
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))  return
 
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
+
 		var/mob/M = locate(href_list["newban"])
 		if(!ismob(M)) return
 
@@ -1040,7 +1020,6 @@
 				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null)
 				if(!reason)
 					return
-				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
 				ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
 				to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
 				to_chat(M, "<span class='warning'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
@@ -1061,12 +1040,6 @@
 				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null)
 				if(!reason)
 					return
-				switch(tgui_alert(usr, "IP ban?",, list("Yes","No","Cancel")))
-					if("Cancel")	return
-					if("Yes")
-						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
-					if("No")
-						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
 				to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
 				to_chat(M, "<span class='warning'>This is a permanent ban.</span>")
 				if(config.banappeals)
@@ -1083,23 +1056,81 @@
 			if("Cancel")
 				return
 
-	else if(href_list["mute"])
-		if(!check_rights(R_ADMIN))
+	else if(href_list["chatban"])
+		if(!check_rights(R_BAN))
 			return
 
-		var/mob/M = locate(href_list["mute"])
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
+
+		var/mob/M = locate(href_list["chatban"])
 		if(!ismob(M))
 			return
 		if(!M.client)
 			return
 
-		var/mute_type = href_list["mute_type"]
-		if(istext(mute_type))
-			mute_type = text2num(mute_type)
-		if(!isnum(mute_type))
+		var/ban_mute_type = input("Choose chat for ban:", "Chat ban") as null|anything in global.mute_ban_bitfield
+		if(!ban_mute_type)
 			return
 
-		cmd_admin_mute(M, mute_type)
+		var/duration
+		switch(tgui_alert(usr, "Temporary Ban?",, list("Yes","No", "Cancel")))
+			if("Yes")
+				duration = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
+				if(!duration)
+					return
+				if(duration >= 525600)
+					duration = 525599
+			if("No")
+				duration = -1
+			else
+				return
+
+		var/reason = sanitize(input(usr,"Mute reason?","reason") as text|null)
+		if(!reason)
+			return
+
+		DB_ban_record(duration == -1 ? BANTYPE_CHAT_PERMA : BANTYPE_CHAT_TEMP, M, duration, reason, ban_mute_type)
+
+		if(duration == -1)
+			message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [ban_mute_type] chat</span>")
+			to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.key] from: [restriction2human(ban_mute_type)] chat.</B></BIG></span>")
+			to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
+			to_chat(M, "<span class='warning'>Chat ban can be lifted only upon request.</span>")
+		else
+			message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [ban_mute_type] chat for [duration] minutes</span>")
+			to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.key] from: [restriction2human(ban_mute_type)] chat.</B></BIG></span>")
+			to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
+			to_chat(M, "<span class='warning'>This chat ban will be lifted in [duration] minutes.</span>")
+
+		if(!M.client.holder)
+			M.client.prefs.muted |= global.mute_ban_bitfield[ban_mute_type]
+		show_player_panel(M)
+
+	else if(href_list["cooldown"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["cooldown"])
+		if(!ismob(M))
+			return
+		if(!M.client)
+			return
+
+		var/type = href_list["type"]
+		if(!(type in admin_cooldowns_list))
+			return
+
+		if(IS_ON_ADMIN_CD(M.client, type))
+			cancel_admin_cooldown(M, type, usr)
+		else
+			var/timeout = input("Enter time in minutes for cooldown.", "Cooldown", 5) as num|null
+			if(!timeout)
+				return
+			set_admin_cooldown(M, type, timeout MINUTES, usr)
+
+		show_player_panel(M)
 
 	else if(href_list["c_mode"])
 		if(!check_rights(R_ADMIN))
@@ -2300,21 +2331,87 @@
 
 	// player info stuff
 
-	else if(href_list["add_player_info"])
-		var/key = ckey(href_list["add_player_info"])
-		var/add = input("Add Player Info") as null|text//sanitise below in notes_add
-		if(!add) return
+	else if(href_list["notes_add"])
+		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+			return
 
-		notes_add(key, add, usr.client)
+		var/key = ckey(href_list["notes_add"])
+		var/message = input("Add new notice message to [key]") as null|text//sanitise below in notes_add
+		if(!message)
+			return
+
+		notes_add(key, message, usr.client.ckey)
 		show_player_notes(key)
 
-	/* unimplemented
-	if(href_list["remove_player_info"])
-		var/key = ckey(href_list["remove_player_info"])
-		var/index = text2num(href_list["remove_index"])
+		message_admins("[key_name_admin(usr)] has edited [key]'s notes.")
+		log_admin("[key_name(usr)] has edited [key]'s notes.")
 
-		notes_del(key, index, usr.client)
-		show_player_notes(key)*/
+	if(href_list["notes_delete"])
+		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+			return
+
+		var/key = ckey(href_list["notes_delete"])
+		var/id = text2num(href_list["index"])
+
+		var/DBQuery/query = dbcon.NewQuery({"SELECT type, adminckey, text
+			FROM erro_messages 
+			WHERE id='[id]' AND deleted=0"})
+		query.Execute()
+
+		if(!query.NextRow())
+			to_chat(usr, "<span class='notice'>Message does not exist or already deleted.</span>")
+			return
+
+		var/notetype = query.item[1]
+		var/admin = query.item[2]
+		var/text = query.item[3]
+
+		if(!(admin == usr.client.ckey || check_rights(R_PERMISSIONS)))
+			tgui_alert(usr, "You don't have permissions to delete other people messages!", "No permissions")
+			return
+
+		if(tgui_alert(usr, "Are you really want to delete next message: [text]; by [admin]?", "Confirm", list("Yes", "No")) != "Yes")
+			return
+
+		message_admins("[key_name_admin(usr)] has deleted [key] note [notetype] by [admin] with text: [text].")
+		log_admin("[key_name(usr)] has deleted [key] note [notetype] by [admin] with text: [text].")
+
+		notes_delete(id, usr.client.ckey)
+		show_player_notes(key)
+
+	if(href_list["notes_edit"])
+		if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+			return
+
+		var/key = ckey(href_list["notes_edit"])
+		var/id = text2num(href_list["index"])
+
+		var/DBQuery/query = dbcon.NewQuery({"SELECT type, adminckey, text
+			FROM erro_messages 
+			WHERE id='[id]' AND deleted=0"})
+		query.Execute()
+
+		if(!query.NextRow())
+			to_chat(usr, "<span class='notice'>Message does not exist or already deleted.</span>")
+			return
+
+		var/notetype = query.item[1]
+		var/admin = query.item[2]
+		var/text = query.item[3]
+
+		if(!(admin == usr.client.ckey || check_rights(R_PERMISSIONS)))
+			tgui_alert(usr, "You don't have permissions to edit other people messages!", "No permissions")
+			return
+
+		var/new_message = input("Edit message", html_decode(text)) as null|text//sanitise below in notes_add
+		if(!new_message)
+			return
+
+		message_admins("[key_name_admin(usr)] has edited [key] note [notetype] by [admin].")
+		log_admin("[key_name(usr)] has edited [key] note [notetype] by [admin].")
+
+		notes_edit(id, new_message)
+		show_player_notes(key)
 
 	else if(href_list["notes"])
 		var/ckey = ckey(href_list["ckey"])

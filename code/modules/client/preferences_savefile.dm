@@ -347,10 +347,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
 		return 0
 
-	//Account data
-	S["cid_list"]			>> cid_list
-	S["ignore_cid_warning"]	>> ignore_cid_warning
-
 	//General preferences
 	S["ooccolor"]          >> ooccolor
 	S["aooccolor"]         >> aooccolor
@@ -364,8 +360,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["toggles"]           >> toggles
 	S["chat_ghostsight"]   >> chat_ghostsight
 	S["randomslot"]        >> randomslot
-	S["permamuted"]        >> permamuted
-	S["permamuted"]        >> muted
 	S["parallax"]          >> parallax
 	S["ambientocclusion"]  >> ambientocclusion
 	S["glowlevel"]         >> glowlevel
@@ -439,9 +433,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	outline_color 	= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
 	eorg_enabled 	= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
 	show_runechat	= sanitize_integer(show_runechat, 0, 1, initial(show_runechat))
-	if(!cid_list)
-		cid_list = list()
-	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
 	custom_emote_panel  = sanitize_emote_panel(custom_emote_panel)
 
 	snd_music_vol	= sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
@@ -480,10 +471,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["version"] << SAVEFILE_VERSION_MAX
 
-	//Account data
-	S["cid_list"]           << cid_list
-	S["ignore_cid_warning"] << ignore_cid_warning
-
 	//general preferences
 	S["ooccolor"]          << ooccolor
 	S["aooccolor"]         << aooccolor
@@ -497,7 +484,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chat_toggles"]      << chat_toggles
 	S["chat_ghostsight"]   << chat_ghostsight
 	S["randomslot"]        << randomslot
-	S["permamuted"]        << permamuted
 	S["parallax"]          << parallax
 	S["ambientocclusion"]  << ambientocclusion
 	S["glowlevel"]         << glowlevel
