@@ -323,7 +323,7 @@ var/global/list/zombie_list = list()
 	var/min_dist = 999
 
 	for(var/mob/living/carbon/human/H as anything in human_list)
-		if(H.stat == DEAD || iszombie(H) || H.z != user.z || H.get_species() == IPC)
+		if(H.stat == DEAD || iszombie(H) || H.z != user.z)
 			continue
 		var/turf/target_turf = get_turf(H)
 		var/target_dist = get_dist(target_turf, self_turf)
