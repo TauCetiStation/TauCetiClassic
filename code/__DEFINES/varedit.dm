@@ -51,7 +51,7 @@
 
 /* hidden variables */
 #define VE_HIDDEN_LOG \
-	list("address", "computer_id", "guard", "related_accounts_ip", "related_accounts_cid", "lastKnownIP", "telemetry_connections")
+	list("address", "computer_id", "guard", "related_accounts_ip", "related_accounts_cid", "admin_cid_request_cache", "admin_ip_request_cache", "lastKnownIP", "telemetry_connections")
 
 var/global/list/duplicate_forbidden_vars = list(
 	"tag", "area", "type", "loc", "locs", "vars", "verbs", "contents",
