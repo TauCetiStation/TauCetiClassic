@@ -1147,21 +1147,6 @@
 			H.h_style = "IPC off screen"
 		H.update_hair()
 
-/mob/living/carbon/human/proc/pick_machinery()
-	return pick(
-		/obj/machinery/pdapainter,
-		/obj/machinery/computer/security/wooden_tv/miami,
-		/obj/machinery/message_server,
-		/obj/machinery/blackbox_recorder,
-		/obj/machinery/vending/cigarette,
-		/obj/machinery/kitchen_machine/microwave,
-		/obj/machinery/kitchen_machine/oven,
-		/obj/machinery/media/jukebox,
-		/obj/machinery/washing_machine,
-		/obj/machinery/telecomms/relay,
-		/obj/machinery/portable_atmospherics/powered/pump,
-		/obj/machinery/chem_master)
-
 /datum/species/abductor
 	name = ABDUCTOR
 	darksight = 3
