@@ -76,15 +76,16 @@ var/global/mob/Jonesy
 		total_human++
 	return total_human
 
+// мейби стоит это на сигнал от ксеноса переписать
 /datum/faction/alien/process()
 	if(!supply_crate)
 		for(var/mob/living/carbon/xenomorph/humanoid/hunter/lone/LH as anything in alien_list[ALIEN_LONE_HUNTER])
 			if(LH.estage == 3)
-				var/supply_point = pick(landmarks_list["supply_crate"])
-				var/obj/structure/closet/crate/secure/weapon/SC = new (get_turf(supply_point))
+				var/supply_point = pick(landmarks_list["Nostromo Supply Crate"])
+				var/obj/structure/closet/crate/secure/gear/SC = new (get_turf(supply_point))
 				var/crate_contains = pick(supply_crate_packs)
-				for(var/item in crate_contains)
-					item = new(SC)
+				for(var/obj/item/I as anything in crate_contains)
+					I = new(SC)
 
 				for(var/mob/living/carbon/human/H as anything in human_list)
 					if(H.stat != DEAD)
@@ -147,7 +148,7 @@ var/global/mob/Jonesy
 	min_roles = 0
 
 /datum/faction/nostromo_cat/OnPostSetup()
-	var/start_point = pick(landmarks_list["jonesy"])
+	var/start_point = pick(landmarks_list["Jonesy"])
 	var/mob/living/simple_animal/cat/red/jonesy/J = new (get_turf(start_point))
 	global.Jonesy = J
 	return ..()

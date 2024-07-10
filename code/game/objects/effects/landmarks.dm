@@ -598,3 +598,14 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 				C.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
 		if(global.Jonesy && Jonesy.ckey && Jonesy.stat != DEAD)
 			Jonesy.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
+
+/obj/effect/landmark/nostromo/supply_crate
+	name = "Nostromo Supply Crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "secgearcrate"
+
+/obj/effect/landmark/nostromo/jonesy
+	name = "Jonesy"
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "red_cat"
+	dir = 4
