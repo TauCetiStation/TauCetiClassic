@@ -78,7 +78,7 @@ var/global/mob/Jonesy
 
 /datum/faction/alien/process()
 	if(!supply_crate)
-		for(/mob/living/carbon/xenomorph/humanoid/hunter/lone/LH as anything in alien_list[ALIEN_LONE_HUNTER])
+		for(var/mob/living/carbon/xenomorph/humanoid/hunter/lone/LH as anything in alien_list[ALIEN_LONE_HUNTER])
 			if(LH.estage == 3)
 				var/supply_point = pick(landmarks_list["supply_crate"])
 				var/obj/structure/closet/crate/secure/weapon/SC = new (get_turf(supply_point))
