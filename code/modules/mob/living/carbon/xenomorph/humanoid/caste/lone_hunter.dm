@@ -17,7 +17,7 @@
 		'sound/antag/Alien_sounds/alien_attack2.ogg',
 		'sound/antag/Alien_sounds/alien_attack3.ogg')
 	var/next_scary_music = 0
-	var/obj/effect/landmark/nostromo_ambience/ambience_player
+	var/obj/effect/landmark/nostromo/ambience/ambience_player
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/atom_init()
