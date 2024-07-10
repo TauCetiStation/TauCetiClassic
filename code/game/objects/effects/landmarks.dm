@@ -569,7 +569,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	name = "Red Team"
 	icon_state = "x"
 
-/obj/effect/landmark/nostromo_ambience
+/obj/effect/landmark/nostromo/ambience
 	name = "Nostromo Ambience"
 	var/ambience_next_time
 	var/ambience = list(
@@ -581,19 +581,20 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 		'sound/antag/Alien_sounds/alien_ambience6.ogg',
 		'sound/antag/Alien_sounds/alien_ambience7.ogg',
 		'sound/antag/Alien_sounds/alien_ambience8.ogg')
-	var/last_ambience
+	var/current_ambience
 
-/obj/effect/landmark/nostromo_ambience/atom_init()
+/obj/effect/landmark/nostromo/ambience/atom_init()
 	. = ..()
 	ambience_next_time = world.time + 1 MINUTE
 	START_PROCESSING(SSobj, src)
 
-/obj/effect/landmark/nostromo_ambience/process()
+/obj/effect/landmark/nostromo/ambience/process()
 	if(world.time > ambience_next_time)
 		ambience_next_time += rand(2, 4) MINUTE
-		var/current_ambience = pick(ambience - last_ambience)
-		last_ambience = current_ambience
+		current_ambience = pick(ambience - current_ambience)
 
-		for(var/mob/living/L in living_list)
-			if(L.ckey)
-				L.playsound_music(pick(ambience - last_ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
+		for(var/mob/living/carbon/C as anything in carbon_list)
+			if(C.ckey && C.stat != DEAD)
+				C.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
+		if(global.Jonesy && Jonesy.ckey && Jonesy.stat != DEAD)
+			Jonesy.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)

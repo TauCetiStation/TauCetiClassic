@@ -52,12 +52,14 @@
 	plasma_rate += 2
 	epoint -= epoint_cap
 	switch(estage)
-		if (2)
+		if(2)
 			verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin)
 			hud_used.init_screen(/atom/movable/screen/xenomorph/neurotoxin)
-		if (4)
+		if(3)
+
+		if(4)
 			alien_spells += /obj/effect/proc_holder/spell/targeted/screech
-		if (5)
+		if(5)
 			acid_type = /obj/effect/alien/acid/queen_acid
 			epoint_cap = 2000
 
@@ -99,7 +101,7 @@
 				play_scary_music()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_music()
-	if(world.time > next_scary_music && ambience_player)
+	if(ambience_player && world.time > next_scary_music)
 		ambience_player.ambience_next_time += 0.5 MINUTE
 		next_scary_music = world.time + 0.5 MINUTE
 		for(var/mob/living/L in range(7, src))
