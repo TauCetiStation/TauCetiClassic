@@ -426,7 +426,7 @@
 		if(!H.mind || !H.client)
 			continue
 		if(for_alien)
-			if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
+			if(!H.species.flags[FACEHUGGABLE])
 				continue
 		total_human++
 	return total_human
