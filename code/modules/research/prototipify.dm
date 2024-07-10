@@ -56,16 +56,27 @@
 
 /obj/item/set_prototype_qualities(rel_val=100, mark=0)
 	..()
-	if(!prob(200 - rel_val))
-		w_class = max(SIZE_MINUSCULE, w_class - 1)
-	else if(!prob(rel_val))
-		w_class += 1
 	if(mark > 0)
 		toolspeed -= 0.2 * (mark - 1)
 	while(!prob(reliability))
 		if(toolspeed > 3)
 			break
 		toolspeed += 0.2
+	attempt_to_change_w_class(rel_val, mark)
+
+/obj/item/proc/attempt_to_change_w_class(rel_val=100, mark=0)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_WRONG_SIZE_RATIO_RND))
+		var/randomize_number_of_attempts = rand(-SIZE_GYGANT, SIZE_GYGANT)
+		var/times_attempting_increase_size = max(randomize_number_of_attempts + SIZE_GYGANT - w_class, SIZE_MINUSCULE)
+		var/chance_to_multiply_size = 200 - rel_val
+		for(var/i in 1 to times_attempting_increase_size)
+			if(prob(chance_to_multiply_size))
+				w_class += 1
+		return
+	if(!prob(200 - rel_val))
+		w_class = max(SIZE_MINUSCULE, w_class - 1)
+	else if(!prob(rel_val))
+		w_class += 1
 
 /obj/item/weapon/stock_parts/set_prototype_qualities(rel_val=100, mark=0)
 	..()
@@ -82,6 +93,7 @@
 		var/need_bullets = max_ammo - stored_ammo.len
 		for(var/i in 1 to need_bullets)
 			stored_ammo += new ammo_type(src)
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/weapon/gun/energy/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
@@ -91,6 +103,7 @@
 		fire_delay *= 2
 		power_supply.maxcharge /= 2
 	power_supply.charge = power_supply.maxcharge
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/weapon/gun/projectile/automatic/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
@@ -99,34 +112,40 @@
 	if(!prob(reliability))
 		fire_delay *= 2
 		recoil += 1
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/weapon/gun/plasma/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
 		number_of_shots = min(number_of_shots * mark, 40)
 	if(!prob(reliability))
 		number_of_shots /= 2
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/weapon/storage/backpack/holding/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
 		max_storage_space += 10 * (mark - 1)
 	if(!prob(reliability))
 		max_storage_space -= 30
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/weapon/storage/bag/trash/bluespace/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
 		max_storage_space += 10 * (mark - 1)
 	if(!prob(reliability))
 		max_storage_space /= 2
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/weapon/storage/bag/ore/holding/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
 		max_storage_space += 25 * (mark - 1)
 	if(!prob(reliability))
 		max_storage_space /= 2
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/clothing/glasses/set_prototype_qualities(rel_val=100, mark=0)
 	if(!prob(reliability))
 		hud_types = list(DATA_HUD_BROKEN)
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/weapon/weldingtool/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
@@ -135,10 +154,12 @@
 	if(!prob(reliability))
 		max_fuel /= 2
 		toolspeed = max(toolspeed + 0.5, 3)
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/clothing/mask/gas/welding/set_prototype_qualities(rel_val=100, mark=0)
 	if(!prob(reliability))
 		flash_protection = FALSE
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/clothing/suit/space/rig/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
@@ -147,12 +168,14 @@
 	if(!prob(reliability))
 		slowdown *= 2
 		max_mounted_devices -= max(max_mounted_devices - 2, 1)
+	attempt_to_change_w_class(rel_val, mark)
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
 		volume *= mark
 	if(!prob(reliability))
 		volume /= mark
+	attempt_to_change_w_class(rel_val, mark)
 
 #undef PROTOTYPE_ADJECTIVES
 #undef PROTOTYPE_DESC_REMARKS
