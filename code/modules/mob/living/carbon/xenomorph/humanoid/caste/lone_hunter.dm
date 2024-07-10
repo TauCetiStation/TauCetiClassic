@@ -101,7 +101,6 @@
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_music()
 	if(world.time > next_scary_music && ambience_player)
 		ambience_player.ambience_next_time += 0.5 MINUTE
-		ambience_player.sound_next_time += 0.5 MINUTE
 		next_scary_music = world.time + 0.5 MINUTE
 		for(var/mob/living/L in range(7, src))
 			L.playsound_music(pick(alien_attack), VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)

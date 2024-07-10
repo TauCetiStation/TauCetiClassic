@@ -572,8 +572,6 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 /obj/effect/landmark/nostromo_ambience
 	name = "Nostromo Ambience"
 	var/ambience_next_time
-	var/sound_next_time
-	var/area/custom/nostromo/area
 	var/ambience = list(
 		'sound/antag/Alien_sounds/alien_ambience1.ogg',
 		'sound/antag/Alien_sounds/alien_ambience2.ogg',
@@ -584,33 +582,18 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 		'sound/antag/Alien_sounds/alien_ambience7.ogg',
 		'sound/antag/Alien_sounds/alien_ambience8.ogg')
 	var/last_ambience
-	var/last_sound
 
 /obj/effect/landmark/nostromo_ambience/atom_init()
 	. = ..()
-	area = get_area(src)
-	if(!istype(area, /area/custom/nostromo))
-		return INITIALIZE_HINT_QDEL
 	ambience_next_time = world.time + 1 MINUTE
-	sound_next_time = world.time + 4 MINUTE
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/landmark/nostromo_ambience/process()
-	if(world.time > sound_next_time)
-		sound_next_time += rand(7, 11) * 100
-		var/current_sound = pick(SOUNDIN_XENOMORPH_TALK + SOUNDIN_XENOMORPH_GROWL - last_sound)
-
-		for(var/mob/living/L in area.listeners)
-			L.playsound_music(current_sound, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
-			last_sound = current_sound
-
 	if(world.time > ambience_next_time)
 		ambience_next_time += rand(2, 4) MINUTE
 		var/current_ambience = pick(ambience - last_ambience)
+		last_ambience = current_ambience
 
-		if(sound_next_time == ambience_next_time)
-			ambience_next_time += 0.2 MINUTE
-
-		for(var/mob/living/L in area.listeners)
-			L.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
-			last_ambience = current_ambience
+		for(var/mob/living/L in living_list)
+			if(L.ckey)
+				L.playsound_music(pick(ambience - last_ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)

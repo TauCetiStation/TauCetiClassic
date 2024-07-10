@@ -139,16 +139,6 @@
 	dynamic_lighting = FALSE
 
 /area/custom/nostromo
-	name = "Nostromo"
+	name = "Towed Spaceship"
+	cases = list("космический буксировщик", "космического буксировщика", "космическому буксировщику", "космический буксировщик", "космическим буксировщиком", "космическом буксировщике")
 	icon_state = "bluenew"
-	var/list/listeners = list()
-
-/area/custom/nostromo/Entered(atom/movable/A, atom/OldLoc)
-	if (isliving(A))
-		listeners += A
-	..()
-
-/area/custom/nostromo/Exited(atom/movable/A, atom/NewLoc)
-	if (isliving(A))
-		listeners -= A
-	..()
