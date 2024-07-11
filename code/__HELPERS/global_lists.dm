@@ -300,14 +300,18 @@
 	init_washing_items_list()
 
 /proc/init_washing_items_list()
-	init_paths(/obj/item/stack/sheet/hairlesshide, global.washing_items_list)
-	init_paths(/obj/item/clothing/mask, global.washing_items_list)
-	init_paths(/obj/item/clothing/head, global.washing_items_list)
-	init_paths(/obj/item/clothing/gloves, global.washing_items_list)
-	init_paths(/obj/item/clothing/shoes, global.washing_items_list)
-	init_paths(/obj/item/clothing/suit, global.washing_items_list)
-	init_paths(/obj/item/weapon/bedsheet, global.washing_items_list)
-	init_paths(/obj/item/clothing/under, global.washing_items_list)
+	var/list/path_list = list(/obj/item/clothing/mask,
+							/obj/item/clothing/head,
+							/obj/item/clothing/gloves,
+							/obj/item/clothing/shoes,
+							/obj/item/clothing/suit,
+							/obj/item/weapon/bedsheet,
+							/obj/item/clothing/under)
+
+	global.washing_items_list = typecacheof(path_list, ignore_root_path = TRUE)
+
+	global.washing_items_list[/obj/item/stack/sheet/hairlesshide] = TRUE
+
 	global.washing_items_list -= /obj/item/clothing/suit/space
 	global.washing_items_list -= /obj/item/clothing/suit/syndicatefake
 	global.washing_items_list -= /obj/item/clothing/suit/cyborg_suit
