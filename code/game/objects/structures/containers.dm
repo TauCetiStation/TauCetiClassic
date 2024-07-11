@@ -7,3 +7,8 @@
 	density = TRUE
 	opacity = 1
 	resistance_flags = FULL_INDESTRUCTIBLE
+	layer = 9
+
+/obj/structure/container/up
+	opacity = 0
+	density = FALSE

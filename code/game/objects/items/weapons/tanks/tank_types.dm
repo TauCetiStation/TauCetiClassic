@@ -101,6 +101,10 @@
 	else
 		return ..()
 
+/obj/item/weapon/tank/phoron/full/atom_init()
+	. = ..()
+	air_contents.adjust_gas("phoron", (7 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C))
+
 /*
  * Emergency Oxygen
  */

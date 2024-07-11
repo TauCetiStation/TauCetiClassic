@@ -225,3 +225,6 @@
 
 /obj/item/weapon/gun/projectile/shotgun/dungeon
 	initial_mag = /obj/item/ammo_box/magazine/internal/shot/dungeon
+
+/obj/item/weapon/gun/projectile/shotgun/incendiary
+	initial_mag = /obj/item/ammo_box/magazine/internal/shot/incendiary

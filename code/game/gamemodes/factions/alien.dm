@@ -15,19 +15,27 @@ var/global/mob/Jonesy
 	var/supply_crate = FALSE
 	var/list/supply_crate_packs = list(
 		list(
-			/obj/item/weapon/flamethrower,
-			/obj/item/weapon/flamethrower,
-			/obj/item/weapon/tank/phoron,
-			/obj/item/weapon/tank/phoron),
+			/obj/item/weapon/flamethrower/full,
+			/obj/item/weapon/flamethrower/full,
+			/obj/item/weapon/tank/phoron/full,
+			/obj/item/weapon/tank/phoron/full,
+			/obj/item/clothing/head/helmet/riot,
+			/obj/item/clothing/suit/armor/riot),
 		list(
-			/obj/item/weapon/gun/energy/laser/cutter,
-			/obj/item/weapon/gun/energy/laser/cutter,
-			/obj/machinery/recharger),
+			/obj/item/weapon/gun/plasma,
+			/obj/item/ammo_casing/plasma,
+			/obj/item/clothing/head/helmet,
+			/obj/item/clothing/suit/storage/flak),
 		list(
-			/obj/item/weapon/gun/projectile/shotgun,
-			/obj/item/weapon/gun/projectile/shotgun,
+			/obj/item/weapon/gun/projectile/shotgun/incendiary,
 			/obj/item/ammo_box/eight_shells/incendiary,
-			/obj/item/ammo_box/eight_shells/incendiary)
+			/obj/item/ammo_box/eight_shells/incendiary,
+			/obj/item/clothing/suit/armor/syndilight,
+			/obj/item/clothing/head/helmet/syndilight),
+		list(
+			/obj/item/weapon/gun/energy/laser,
+			/obj/item/clothing/head/helmet,
+			/obj/item/clothing/suit/storage/flak)
 	)
 
 /datum/faction/alien/can_setup(num_players)
@@ -50,7 +58,6 @@ var/global/mob/Jonesy
 	H.name = "Gilbert Kane"
 	H.real_name = "Gilbert Kane"
 	H.voice_name = "Gilbert Kane"
-	H.h_style = "Combover"
 
 	var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(H)
 	var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva/lone(new_embryo)
@@ -84,8 +91,8 @@ var/global/mob/Jonesy
 				var/supply_point = pick(landmarks_list["Nostromo Supply Crate"])
 				var/obj/structure/closet/crate/secure/gear/SC = new (get_turf(supply_point))
 				var/crate_contains = pick(supply_crate_packs)
-				for(var/obj/item/I as anything in crate_contains)
-					I = new(SC)
+				for(var/item in crate_contains)
+					new item(SC)
 
 				for(var/mob/living/carbon/human/H as anything in human_list)
 					if(H.stat != DEAD)

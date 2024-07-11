@@ -50,6 +50,9 @@
 	max_ammo = 4
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/shot/incendiary
+	ammo_type = /obj/item/ammo_casing/shotgun/incendiary
+
 /obj/item/ammo_box/magazine/internal/heavyrifle
 	name = "heavysniper internal magazine"
 	desc = "О боже, этого не должно было здесь быть!"
