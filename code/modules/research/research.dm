@@ -1728,7 +1728,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	x = 0.1
 	y = 0.8
-	icon = "camerabug"
+	icon = "mixhudadv"
 
 	required_technologies = list("tier1_hud_upgrade")
 	required_tech_levels = list(RESEARCH_SPECIAL = 1)
@@ -1743,7 +1743,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	x = 0.2
 	y = 0.8
-	icon = "camerabug"
+	icon = "nvghud"
 
 	required_technologies = list("tier1_hud_upgrade")
 	required_tech_levels = list(RESEARCH_SPECIAL = 2)
@@ -1759,7 +1759,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	x = 0.3
 	y = 0.8
-	icon = "camerabug"
+	icon = "thermalhud"
 
 	required_technologies = list("tier2_hud_upgrade")
 	required_tech_levels = list(RESEARCH_SPECIAL = 3)
@@ -1775,7 +1775,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	x = 0.4
 	y = 0.8
-	icon = "camerabug"
+	icon = "4thtier"
 
 	required_technologies = list("tier3_hud_upgrade")
 	required_tech_levels = list(RESEARCH_SPECIAL = 4)

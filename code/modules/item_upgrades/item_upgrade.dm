@@ -10,7 +10,8 @@
 /obj/item/clothing/glasses/sunglasses/hud/advanced
 	name = "Advanced HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
-	icon_state = "secmedhud"
+	icon = 'icons/obj/clothing/goggles.dmi'
+	icon_state = "sechud"
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_SECURITY)
 	item_action_types = list()
@@ -70,13 +71,17 @@
 /obj/item/clothing/glasses/sunglasses/hud/advanced/proc/upgrade_hud(var/obj/item/hud_upgrade/hud_upgrade)
 	switch(hud_upgrade.tier)
 		if(HUD_UPGRADE_MEDSCAN)
-			hud_types.Add(DATA_HUD_MEDICAL)
-			def_hud_types.Add(DATA_HUD_MEDICAL)
+			icon_state = "mixhud"
+			hud_types.Add(DATA_HUD_MEDICAL_ADV)
+			def_hud_types.Add(DATA_HUD_MEDICAL_ADV)
 		if(HUD_UPGRADE_NIGHTVISION)
+			icon_state = "nvghud"
 			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
 		if(HUD_UPGRADE_THERMAL)
+			icon_state = "thermalhud"
 			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
 		if(HUD_UPGRADE_THERMAL_ADVANCED)
+			icon_state = "4thtier"
 			for(var/datum/action/item_action/hands_free/switch_hud_modes/night/night_action in item_actions)
 				night_action.Remove(usr)
 				item_actions.Remove(night_action)
@@ -104,6 +109,10 @@
 			to_chat(usr, "<span class='alert'>You have to hold huds in hands to upgrade it")
 			return
 		qdel(hud_upgrade)
+	if(istype(W, /obj/item/device/hud_calibrator))
+		var/obj/item/device/hud_calibrator = W
+		to_chat(usr, "<span class='alert'>You try to recalibrate huds, but nothing happens")
+		qdel(hud_calibrator)
 	. = ..()
 
 /obj/item/hud_upgrade
@@ -132,7 +141,7 @@
 
 /datum/action/item_action/hands_free/switch_hud_modes/
 	name = "Switch Mode"
-	button_overlay_icon = 'icons/obj/clothing/glasses.dmi'
+	button_overlay_icon = 'icons/obj/clothing/goggles.dmi'
 	var/hud_mode
 
 /datum/action/item_action/hands_free/switch_hud_modes/Activate()
@@ -144,17 +153,17 @@
 
 /datum/action/item_action/hands_free/switch_hud_modes/night
 	name = "Toggle Nightvision"
-	button_overlay_state = "night"
+	button_overlay_state = "nvghud"
 	hud_mode = HUD_TOGGLEABLE_MODE_NIGHTVISION
 
 /datum/action/item_action/hands_free/switch_hud_modes/thermal //only thermal
 	name = "Toggle thermal"
-	button_overlay_state = "thermal"
+	button_overlay_state = "thermalhud"
 	hud_mode = HUD_TOGGLEABLE_MODE_THERMAL
 
 /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced //mixed thermal and nightvision
 	name = "Toggle Advanced Thermal"
-	button_overlay_state = "material"
+	button_overlay_state = "4thtier"
 	hud_mode = HUD_TOGGLEABLE_MODE_THERMAL_ADVANCED
 
 #undef HUD_UPGRADE_MEDSCAN

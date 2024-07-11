@@ -2907,7 +2907,7 @@ other types of metals and chemistry for reagents).
 	desc = "Allows HUD to turn a basic nightvision mode. Can be installed only after damage scan upgrade"
 	id = "tier2_hud_upgrade"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_URANIUM = 2000)
 	build_path = /obj/item/hud_upgrade/night
 	category = list("Special upgrades")
 
@@ -2916,7 +2916,7 @@ other types of metals and chemistry for reagents).
 	desc = "Allows HUD to turn a basic thermal mode, makes nightvision mode more comfortable for use. Can be installed only after basic nightvision upgrade"
 	id = "tier3_hud_upgrade"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_PHORON = 2500)
 	build_path = /obj/item/hud_upgrade/thermal
 	category = list("Special upgrades")
 
@@ -2925,6 +2925,6 @@ other types of metals and chemistry for reagents).
 	desc = "Makes thermal mode comfortable and combines it with nightvision mode. Can be installed only after thermal upgrade"
 	id = "tier4_hud_upgrade"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_GOLD = 1500, MAT_URANIUM = 3000, MAT_PHORON = 3500)
 	build_path = /obj/item/hud_upgrade/thermal_advanced
 	category = list("Special upgrades")
