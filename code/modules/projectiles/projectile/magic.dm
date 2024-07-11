@@ -91,22 +91,24 @@
 	new_mob.attack_log = M.attack_log
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
-	if(M.original_body)
-		new_mob.original_body = M.original_body
-	else
-		new_mob.original_body = M
-		M.original_body = M
-		M.forceMove(new_mob)
-
-	for(var/mob/living/H in M.contents)
-		H.forceMove(new_mob)
-
 	if(M.mind)
 		M.mind.transfer_to(new_mob)
 	else
 		new_mob.key = M.key
 
+	if(!M.original_body)
+		new_mob.original_body = M
+		M.original_body = M
+
+	new_mob.original_body = M.original_body
+	M.forceMove(new_mob)
+
+	for(var/mob/living/H in M.contents)
+		H.forceMove(new_mob)
+
 	new_mob.wabbajacked = 1
+
+	qdel(M)
 
 	to_chat(new_mob, "<B>Your body forms to something else!</B>")
 
