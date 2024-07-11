@@ -27,9 +27,7 @@
 
 	if(!issilicon(M))
 		for(var/obj/item/W in M)
-			W.layer = initial(W.layer)
-			W.loc = M.loc
-			W.dropped(M)
+			M.drop_from_inventory(W)
 
 	var/mob/living/new_mob
 
@@ -93,16 +91,15 @@
 	new_mob.attack_log = M.attack_log
 	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
-	var/mob/living/original_mob = M
 	if(M.original_body)
 		new_mob.original_body = M.original_body
 	else
-		new_mob.original_body = original_mob
+		new_mob.original_body = M
+		M.original_body = M
 		M.forceMove(new_mob)
 
 	for(var/mob/living/H in M.contents)
 		H.forceMove(new_mob)
-		qdel(M)
 
 	if(M.mind)
 		M.mind.transfer_to(new_mob)
@@ -113,7 +110,11 @@
 
 	to_chat(new_mob, "<B>Your body forms to something else!</B>")
 
-/mob/living/proc/unwabbajack()
+/mob/living/proc/unwabbajack(mob/living/M)
+	if(!issilicon(M))
+		for(var/obj/item/W in M)
+			M.drop_from_inventory(W)
+
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 	smoke.set_up(10, 0, src.loc)
 	smoke.start()
@@ -123,15 +124,14 @@
 	var/matrix/Mx = matrix()
 	RH.transform = Mx
 
-	for(var/mob/M in contents)
+	for(M in contents)
 		M.loc = src.loc
 		if(isliving(M))
 			var/mob/living/L = M
 			L.Paralyse(15)
 			L.update_canmove()
-
-	if(mind && original_body)
-		mind.transfer_to(original_body)
+			if(mind && original_body)
+				mind.transfer_to(original_body)
 
 	qdel(src)
 
