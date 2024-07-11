@@ -96,7 +96,7 @@ var/global/mob/Jonesy
 
 				for(var/mob/living/carbon/human/H as anything in human_list)
 					if(H.stat != DEAD)
-						to_chat(H, "<span class='warning'>На корабль перед отлётом грузили ящики и контейнеры, в каких-то из них может быть оружие!</span>")
+						to_chat(H, "<span class='warning'>На корабль перед отлётом грузили ящики и контейнеры, где-то на складе может быть оружие!</span>")
 				supply_crate = TRUE
 
 

@@ -16,7 +16,8 @@
 		'sound/antag/Alien_sounds/alien_attack1.ogg',
 		'sound/antag/Alien_sounds/alien_attack2.ogg',
 		'sound/antag/Alien_sounds/alien_attack3.ogg')
-	var/next_scary_music = 0
+	var/time_next_scary_music = 0
+	var/current_scary_music
 	var/obj/effect/landmark/nostromo/ambience/ambience_player
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds)
 
@@ -27,7 +28,6 @@
 	alien_list[ALIEN_HUNTER] -= src			// ¯\_(ツ)_/¯
 	alien_list[ALIEN_LONE_HUNTER] += src
 	for(var/obj/effect/landmark/L as anything in landmarks_list["Nostromo Ambience"])
-		// потом когда на 4 корабля делить буду тут проверка на соответствие номеру будет типо того
 		ambience_player = L
 	playsound(src, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER)
 
@@ -64,7 +64,6 @@
 			epoint_cap = 2000
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Stat()
-	stat(null)
 	if(statpanel("Status"))
 		stat("Очки эволюции: [epoint]/[epoint_cap]")
 		stat("Стадия эволюции: [estage]")
@@ -97,12 +96,13 @@
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
 			if(H.stat != DEAD)
-				epoint += 40
+				epoint += 10
 				play_scary_music()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_music()
-	if(ambience_player && world.time > next_scary_music)
+	if(ambience_player && world.time > time_next_scary_music)
+		current_scary_music = pick(alien_attack - current_scary_music)
 		ambience_player.ambience_next_time += 0.5 MINUTE
-		next_scary_music = world.time + 0.5 MINUTE
+		time_next_scary_music = world.time + 1 MINUTE
 		for(var/mob/living/L in range(7, src))
-			L.playsound_music(pick(alien_attack), VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)
+			L.playsound_music(current_scary_music, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)
