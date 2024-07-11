@@ -859,8 +859,8 @@
 	..()
 	// initialize hud_list for alt_appearance
 	H.prepare_huds()
-	H.signature_obj = pick(signature_plant)
-	var/image/I = image(H.signature_obj.icon, H, H.signature_obj.icon_state)
+	var/signature_obj = pick(signature_plant)
+	var/image/I = image(signature_obj.icon, H, signature_obj.icon_state)
 	I.override = 1
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "DIONA_xeno", I)
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "DIONA_zombie", I)
@@ -1121,8 +1121,8 @@
 
 	// initialize hud_list for alt_appearance
 	H.prepare_huds()
-	H.signature_obj = pick(signature_machinery)
-	var/image/I = image(H.signature_obj.icon, H, H.signature_obj.icon_state)
+	var/signature_obj = pick(signature_machinery)
+	var/image/I = image(signature_obj.icon, H, signature_obj.icon_state)
 	I.override = 1
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_xeno", I)
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "IPC_zombie", I)
