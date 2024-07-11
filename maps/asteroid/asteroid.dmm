@@ -712,7 +712,7 @@
 /area/asteroid/mine/abandoned)
 "bN" = (
 /obj/machinery/door/airlock/external,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "bO" = (
 /obj/structure/table,
@@ -974,7 +974,10 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/unexplored/dangerous)
 "co" = (
-/turf/simulated/floor,
+/obj/machinery/door/airlock{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "cp" = (
 /obj/machinery/radiocarbon_spectrometer,
@@ -1228,7 +1231,7 @@
 /obj/structure/door_assembly/door_assembly_ext{
 	name = "Broken External Airlock"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "cO" = (
 /turf/simulated/floor/plating/airless{
@@ -3168,13 +3171,13 @@
 /area/asteroid/mine/abandoned)
 "gG" = (
 /obj/structure/alien/weeds,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "gH" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "gI" = (
 /obj/structure/transit_tube{
@@ -3406,7 +3409,7 @@
 	icon_state = "facehugger_dead";
 	stat = 2
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "hp" = (
 /turf/simulated/wall,
@@ -3704,7 +3707,7 @@
 	icon_state = "weeds1"
 	},
 /obj/effect/decal/remains/xeno,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "hY" = (
 /obj/structure/transit_tube{
@@ -4698,20 +4701,26 @@
 /turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "jN" = (
-/obj/structure/alien/weeds,
-/turf/simulated/floor,
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor/airless{
+	icon_state = "green";
+	dir = 1
+	},
 /area/asteroid/mine/abandoned)
 "jP" = (
-/obj/structure/table,
-/turf/simulated/floor,
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless{
+	icon_state = "green";
+	dir = 9
+	},
 /area/asteroid/mine/abandoned)
 "jQ" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "jR" = (
 /obj/structure/rack,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "jS" = (
 /turf/simulated/wall,
@@ -5885,7 +5894,7 @@
 /area/asteroid/research_outpost/gearstore)
 "md" = (
 /obj/machinery/hydroponics/constructable,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "dark"
 	},
 /area/asteroid/mine/abandoned)
@@ -5907,7 +5916,7 @@
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "mn" = (
 /obj/machinery/power/grounding_rod,
@@ -6226,7 +6235,7 @@
 /area/asteroid/mine/abandoned)
 "nb" = (
 /obj/effect/decal/remains/xeno,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "nd" = (
 /obj/structure/ore_box,
@@ -6479,9 +6488,9 @@
 /turf/environment/space,
 /area/space)
 "nC" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "green"
+/turf/simulated/floor/airless{
+	icon_state = "green";
+	dir = 8
 	},
 /area/asteroid/mine/abandoned)
 "nE" = (
@@ -6489,7 +6498,7 @@
 	icon_state = "facehugger_dead";
 	stat = 2
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "nG" = (
 /obj/machinery/light_construct/small{
@@ -6789,9 +6798,9 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "op" = (
 /obj/effect/decal/remains/human,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "green"
+/turf/simulated/floor/airless{
+	icon_state = "green";
+	dir = 8
 	},
 /area/asteroid/mine/abandoned)
 "oq" = (
@@ -7310,11 +7319,11 @@
 	icon_state = "facehugger_dead";
 	stat = 2
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "pz" = (
 /obj/item/weapon/table_parts,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "pA" = (
 /turf/simulated/floor/airless{
@@ -7705,7 +7714,7 @@
 /area/asteroid/mine/abandoned)
 "qC" = (
 /obj/structure/alien/resin/wall,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "qD" = (
 /obj/machinery/door/airlock/external{
@@ -7820,7 +7829,7 @@
 /obj/machinery/door/airlock/multi_tile/glass{
 	req_access = list(20)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
 "qS" = (
 /obj/machinery/door/airlock/external{
@@ -12890,6 +12899,13 @@
 	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
+"PC" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless{
+	icon_state = "green";
+	dir = 8
+	},
+/area/asteroid/mine/abandoned)
 "Qb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -31344,8 +31360,8 @@ aa
 aa
 ar
 ei
-dJ
-dJ
+jP
+PC
 nC
 op
 ei
@@ -31601,7 +31617,7 @@ aa
 ar
 ac
 ei
-hj
+jN
 dJ
 dJ
 dJ
@@ -32116,8 +32132,8 @@ fY
 ei
 ei
 ei
-kH
-kH
+co
+co
 ei
 ei
 ei
@@ -32637,7 +32653,7 @@ ei
 ei
 ei
 ei
-jN
+gG
 qQ
 ri
 pA
@@ -32891,10 +32907,10 @@ mZ
 gb
 bM
 iT
-jN
-jN
+gG
+gG
 ei
-co
+jM
 qR
 pA
 rl
@@ -33147,12 +33163,12 @@ ei
 fu
 dJ
 bM
-jN
-jN
+gG
+gG
 dJ
 ei
 gc
-co
+jM
 pA
 rm
 rr
@@ -33661,9 +33677,9 @@ ei
 dJ
 iT
 hj
-jN
+gG
 iQ
-jN
+gG
 ei
 qB
 qQ
@@ -34429,11 +34445,11 @@ jM
 kM
 kM
 bM
-jN
+gG
 nE
 bM
 iQ
-jN
+gG
 iT
 ei
 qC
@@ -34927,7 +34943,7 @@ aa
 aa
 aa
 bN
-co
+jM
 cN
 dh
 dI
@@ -34936,12 +34952,12 @@ eN
 ft
 gb
 dJ
-jN
+gG
 fu
 gb
-jN
+gG
 dJ
-jN
+gG
 dJ
 dJ
 iQ
@@ -35192,13 +35208,13 @@ di
 dJ
 fu
 gc
-jN
+gG
 gb
 hW
 iT
 gc
 fu
-jN
+gG
 ml
 dJ
 fu
@@ -35456,15 +35472,15 @@ ei
 ei
 ei
 ei
-co
+jM
 ei
 ei
 ei
 ei
 ei
 ei
-jP
-jP
+kM
+kM
 ei
 ei
 ei
@@ -35710,17 +35726,17 @@ gG
 ho
 gH
 ei
-jP
-jP
-jP
+kM
+kM
+kM
 fu
-co
+jM
 fu
 nb
 bM
 pz
-jP
-co
+kM
+jM
 jQ
 bM
 pA
@@ -35967,16 +35983,16 @@ gH
 gG
 hX
 ei
-jN
+gG
 fu
 dJ
 dJ
 fu
-co
+jM
 ft
 oY
 pA
-co
+jM
 jQ
 jQ
 qS
@@ -36225,16 +36241,16 @@ ei
 ei
 ei
 jQ
-jN
+gG
 fu
 ft
 dJ
 ml
-co
+jM
 oZ
 pA
 pA
-co
+jM
 jQ
 qT
 jQ
@@ -36484,10 +36500,10 @@ ei
 jR
 jR
 jR
-co
+jM
 dJ
 dJ
-jN
+gG
 bM
 pB
 pP
