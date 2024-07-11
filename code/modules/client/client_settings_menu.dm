@@ -36,8 +36,8 @@
 	//if(tab == PREF_DOMAIN_KEYBINDS)
 
 	var/datum/pref/player/P
-	for(var/type in user.client.prefs.player_settings)
-		P = user.client.prefs.player_settings[type]
+	for(var/type in user.client.prefs.preferences_list)
+		P = user.client.prefs.preferences_list[type]
 		if(P.category != active_tab)
 			continue
 
@@ -89,21 +89,30 @@
 
 	world.log << "TGUI ACT [action]: [json_encode(params)]"
 
+	var/datum/pref/player/pref_type
+	if(params["type"]) // first validate that we have permissions to change this pref
+		pref_type = text2path(params["type"])
+		if(!pref_type || !ispath(pref_type, /datum/pref/player))
+			return
+		if(initial(pref_type.admins_only) && !C.holder)
+			return
+		if(initial(pref_type.supporters_only) && !C.supporter)
+			return
+
 	switch(action)
 		if("set_value")
-			C.prefs.set_pref(text2path(params["type"]), params["value"])
+			C.prefs.set_pref(pref_type, params["value"])
 		if("set_tab")
 			active_tab = params["tab"]
 		if("modify_color_value")
-			var/current_color = C.prefs.get_pref(text2path(params["type"]))
+			var/current_color = C.prefs.get_pref(pref_type)
 			var/new_color = input(C, "Выберите новый цвет", "Выбор цвета", current_color) as color|null
 			if(!new_color)
 				return FALSE
 			else
-				C.prefs.set_pref(text2path(params["type"]), new_color)
+				C.prefs.set_pref(pref_type, new_color)
 		if("reset_value")
-			var/datum/pref/player/P = text2path(params["type"])
-			C.prefs.set_pref(text2path(params["type"]), initial(P.value))
+			C.prefs.set_pref(pref_type, initial(pref_type.value))
 
 	return TRUE
 

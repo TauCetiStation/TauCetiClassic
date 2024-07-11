@@ -1,3 +1,4 @@
+// list contains all clients /datum/preferences so we can keep them persistent in case of client disconnects
 var/global/list/datum/preferences/preferences_datums = list()
 
 #define MAX_SAVE_SLOTS 10
@@ -13,13 +14,12 @@ var/global/list/datum/preferences/preferences_datums = list()
 /datum/preferences
 	var/client/parent
 
-	// list of new PLAYER datumized preferences
-	var/list/datum/pref/player/player_settings = list()
-	var/player_settings_dirty = FALSE // list of dirty DOMAINS!!
+	// list of new datumized preferences
+	var/list/datum/pref/preferences_list = list()
+	var/preferences_list_dirty = FALSE // list of dirty DOMAINS!!
 
 	//doohickeys for savefiles
 	var/path
-	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
 	var/savefile_version = 0
 
 	//non-preference stuff
@@ -37,14 +37,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/admin_cid_request_cache
 	var/admin_ip_request_cache
 
-	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-
 	// Custom Keybindings
 	var/list/key_bindings = list()
-	// If hotkey mode is enabled, then clicking the map will automatically
-	// unfocus the text bar. This removes the red color from the text bar
-	// so that the visual focus indicator matches reality.
-	var/hotkeys = TRUE
 
 	var/list/custom_emote_panel = list()
 
@@ -134,8 +128,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/metadata = ""
 	var/slot_name = ""
 
-	// Whether or not to use randomized character slots
-	var/randomslot = 0
 	// jukebox volume
 	var/volume = 100
 
@@ -158,15 +150,21 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 	custom_emote_panel = global.emotes_for_emote_panel
 
+
+	// todo: rewrite this part
 	for(var/datum/pref/player/P as anything in subtypesof(/datum/pref/player))
-		if(initial(P.category) && initial(P.name))
-			player_settings[initial(P.type)] = new P
+		if(initial(P.name))
+			preferences_list[initial(P.type)] = new P
+	for(var/datum/pref/meta/P as anything in subtypesof(/datum/pref/meta))
+		if(initial(P.name))
+			preferences_list[initial(P.type)] = new P
+
 
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			if(load_preferences())
-				if(load_character())
+			if(load_preferences()) // loads and updates preferences
+				if(load_character()) // everything updated at this moment, now try to load default character
 					return
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
@@ -195,10 +193,10 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 // replaced with macro for speed
 ///datum/preferences/proc/get_pref(type)
-//	return player_settings[type].value
+//	return preferences_list[type].value
 
 /datum/preferences/proc/set_pref(type, new_value)
-	var/datum/pref/player/write_pref = player_settings[type]
+	var/datum/pref/player/write_pref = preferences_list[type]
 	world.log << "writting [write_pref.name] / [type]"
 
 	if(write_pref.update_value(new_value, parent))
@@ -206,7 +204,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 // mark as needed to update
 /datum/preferences/proc/mark_dirty()
-	player_settings_dirty = TRUE
+	preferences_list_dirty = TRUE
 	//SSpreferences.mark_dirty(src)
 
 /datum/preferences/proc/ShowChoices(mob/user)
@@ -291,7 +289,13 @@ var/global/list/datum/preferences/preferences_datums = list()
 			load_character()
 
 		if("changeslot")
-			load_character(text2num(href_list["num"]))
+			var/slot = text2num(href_list["num"])
+
+			if(isnum(slot) && slot >= 1 && slot <= GET_MAX_SAVE_SLOTS(parent))
+				set_pref(/datum/pref/meta/default_slot, slot)
+				load_character()
+			else
+				to_chat(user, "<span class='warning'>You have no access to this slot, please contact maintainers.</span>")
 
 		if("general")
 			menu_type = "general"

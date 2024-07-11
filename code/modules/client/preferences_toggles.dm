@@ -26,17 +26,6 @@
 	to_chat(src, "You will receive requests for \"[role]\" again")
 	feedback_add_details("admin_verb","TBeSpecialIgnore") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/verb/toggle_hotkeys_mode()
-	set name = "Toggle Hotkeys Mode"
-	set category = "Preferences"
-
-	prefs.toggle_hotkeys_mode()
-	if(prefs.hotkeys)
-		to_chat(src, "Режим хоткеев переключен: при клике в окно игры фокус будет переключен на окно игры")
-	else
-		to_chat(src, "Режим хоткеев переключен: при клике в окно игры фокус останется на чате.")
-	feedback_add_details("admin_verb", "thm")
-
 /client/verb/edit_emote_panel()
 	set name = "Edit Emote Panel"
 	set category = "Preferences"

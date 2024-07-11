@@ -103,7 +103,7 @@
 		winset(src, "mainwindow.split", "splitter=[pct]")
 
 // called automatically from skin on any columns resize, 
-/client/verb/view_on_resize()
+/client/verb/handle_autofit()
 	set hidden = TRUE
 
 	if(prefs.get_pref(/datum/pref/player/display/auto_fit_viewport) && !isnewplayer(mob))

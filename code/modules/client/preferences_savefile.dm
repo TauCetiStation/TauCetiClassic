@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 50
+#define SAVEFILE_VERSION_MAX 51
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -55,11 +55,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 16)
 		S["aooccolor"] << S["ooccolor"]
-
-	if(current_version < 26)
-		for(var/role in be_role)
-			if(!CanBeRole(role))
-				be_role -= role
 
 	if(current_version < 44)
 		custom_emote_panel = global.emotes_for_emote_panel
@@ -181,6 +176,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				converted_chat_ghostsight = FALSE
 		set_pref(/datum/pref/player/chat/ghostsight, converted_chat_ghostsight)
 
+		// meta domain
+		set_pref(/datum/pref/meta/lastchangelog, S["lastchangelog"])
+		set_pref(/datum/pref/meta/default_slot, S["default_slot"])
+		set_pref(/datum/pref/meta/random_slot, S["randomslot"])
+		set_pref(/datum/pref/player/game/hotkey_mode, S["hotkeys"])
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
 		for(var/organ_name in organ_data)
@@ -223,6 +224,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			(player_alt_titles[J.title] in list("Technical Assistant", "Medical Intern", "Research Assistant", "Security Cadet")))
 
 			player_alt_titles -= J.title
+
+	if(current_version < 26)
+		for(var/role in be_role)
+			if(!CanBeRole(role))
+				be_role -= role
 
 	if(current_version < 27)
 		job_preferences = list() //It loaded null from nonexistant savefile field.
@@ -454,16 +460,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 
 	//General preferences
-	S["lastchangelog"]     >> lastchangelog //meta
-	S["default_slot"]      >> default_slot // meta
-	S["randomslot"]        >> randomslot // meta
-
 	S["emote_panel"]       >> custom_emote_panel
 
 	// Custom hotkeys
 	S["key_bindings"] >> key_bindings // later
 	check_keybindings()
-	S["hotkeys"]      >> hotkeys // later
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
@@ -471,25 +472,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_preferences(needs_update, S) // needs_update = savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	default_slot	= sanitize_integer(default_slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
-	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	key_bindings 	= sanitize_keybindings(key_bindings)
-	hotkeys 		= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	custom_emote_panel  = sanitize_emote_panel(custom_emote_panel)
 
 	if(needs_update >= 0) //save the updated version
-		var/old_default_slot = default_slot
 		for (var/slot in S.dir) //but first, update all current character slots.
 			if (copytext(slot, 1, 10) != "character")
 				continue
 			var/slotnum = text2num(copytext(slot, 10))
 			if (!slotnum)
 				continue
-			default_slot = slotnum
-			if (load_character())
-				save_character()
-		default_slot = old_default_slot
+			if (load_character(slotnum)) // loads and updates character
+				save_character(slotnum)
 		save_preferences()
 
 	return 1
@@ -505,15 +499,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["version"] << SAVEFILE_VERSION_MAX
 
 	//general preferences
-	S["lastchangelog"]     << lastchangelog
-	S["default_slot"]      << default_slot
-	S["randomslot"]        << randomslot
 	S["emote_panel"]       << custom_emote_panel
 
 
 	// Custom hotkeys
 	S["key_bindings"] << key_bindings
-	S["hotkeys"]      << hotkeys
 
 	return 1
 
@@ -708,23 +698,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = "/"
 	if(!slot)
-		slot = default_slot
-	slot = sanitize_integer(slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
-	if(slot != default_slot)
-		default_slot = slot
-		S["default_slot"] << slot
+		slot = get_pref(/datum/pref/meta/default_slot)
+	if(!slot)
+		CRASH("Attempt to access saves with empty slot")
 	S.cd = "/character[slot]"
 	load_saved_character(S.cd)
 
 	return 1
 
-/datum/preferences/proc/save_character()
+/datum/preferences/proc/save_character(slot)
 	if(!path)
 		return 0
 	var/savefile/S = new /savefile(path)
 	if(!S)
 		return 0
-	S.cd = "/character[default_slot]"
+	if(!slot)
+		slot = get_pref(/datum/pref/meta/default_slot)
+	if(!slot)
+		CRASH("Attempt to access saves with empty slot")
+	S.cd = "/character[slot]"
 
 	S["version"] << SAVEFILE_VERSION_MAX // load_character will sanitize any bad data, so assume up-to-date.
 

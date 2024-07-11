@@ -1,7 +1,7 @@
 // this can be little confusing, but call it as you would call
 // /datum/preferences/proc/get_pref(type)
 // ex. client.prefs.get_pref()
-#define get_pref(type) player_settings[type].value
+#define get_pref(type) preferences_list[type].value
 
 // pref types
 #define PREF_TYPE_BOOLEAN "boolean"
@@ -10,6 +10,7 @@
 #define PREF_TYPE_RANGE   "range"
 #define PREF_TYPE_SELECT  "select"
 #define PREF_TYPE_HEX     "hex"
+#define PREF_TYPE_CUSTOM  "custom"
 
 // pref domains (categories)
 #define PREF_DOMAIN_PLAYER     "player"
