@@ -33120,7 +33120,7 @@
 /area/station/aisat)
 "fUC" = (
 /obj/machinery/camera{
-	c_tag = "Dock 1";
+	c_tag = "Dock Central-West";
 	dir = 10
 	},
 /obj/machinery/firealarm{
