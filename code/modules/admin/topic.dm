@@ -1056,23 +1056,81 @@
 			if("Cancel")
 				return
 
-	else if(href_list["mute"])
-		if(!check_rights(R_ADMIN))
+	else if(href_list["chatban"])
+		if(!check_rights(R_BAN))
 			return
 
-		var/mob/M = locate(href_list["mute"])
+		if(!config.sql_enabled)
+			to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+			return
+
+		var/mob/M = locate(href_list["chatban"])
 		if(!ismob(M))
 			return
 		if(!M.client)
 			return
 
-		var/mute_type = href_list["mute_type"]
-		if(istext(mute_type))
-			mute_type = text2num(mute_type)
-		if(!isnum(mute_type))
+		var/ban_mute_type = input("Choose chat for ban:", "Chat ban") as null|anything in global.mute_ban_bitfield
+		if(!ban_mute_type)
 			return
 
-		cmd_admin_mute(M, mute_type)
+		var/duration
+		switch(tgui_alert(usr, "Temporary Ban?",, list("Yes","No", "Cancel")))
+			if("Yes")
+				duration = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
+				if(!duration)
+					return
+				if(duration >= 525600)
+					duration = 525599
+			if("No")
+				duration = -1
+			else
+				return
+
+		var/reason = sanitize(input(usr,"Mute reason?","reason") as text|null)
+		if(!reason)
+			return
+
+		DB_ban_record(duration == -1 ? BANTYPE_CHAT_PERMA : BANTYPE_CHAT_TEMP, M, duration, reason, ban_mute_type)
+
+		if(duration == -1)
+			message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [ban_mute_type] chat</span>")
+			to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.key] from: [restriction2human(ban_mute_type)] chat.</B></BIG></span>")
+			to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
+			to_chat(M, "<span class='warning'>Chat ban can be lifted only upon request.</span>")
+		else
+			message_admins("<span class='notice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [ban_mute_type] chat for [duration] minutes</span>")
+			to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.key] from: [restriction2human(ban_mute_type)] chat.</B></BIG></span>")
+			to_chat(M, "<span class='warning'><B>The reason is: [reason]</B></span>")
+			to_chat(M, "<span class='warning'>This chat ban will be lifted in [duration] minutes.</span>")
+
+		if(!M.client.holder)
+			M.client.prefs.muted |= global.mute_ban_bitfield[ban_mute_type]
+		show_player_panel(M)
+
+	else if(href_list["cooldown"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["cooldown"])
+		if(!ismob(M))
+			return
+		if(!M.client)
+			return
+
+		var/type = href_list["type"]
+		if(!(type in admin_cooldowns_list))
+			return
+
+		if(IS_ON_ADMIN_CD(M.client, type))
+			cancel_admin_cooldown(M, type, usr)
+		else
+			var/timeout = input("Enter time in minutes for cooldown.", "Cooldown", 5) as num|null
+			if(!timeout)
+				return
+			set_admin_cooldown(M, type, timeout MINUTES, usr)
+
+		show_player_panel(M)
 
 	else if(href_list["c_mode"])
 		if(!check_rights(R_ADMIN))
