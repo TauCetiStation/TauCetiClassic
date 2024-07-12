@@ -16,10 +16,10 @@
 		return
 
 	if(usr.client)
-		if(usr.client.prefs.muted & MUTE_PRAY)
+		if(usr.client.prefs.muted & MUTE_PRAY || IS_ON_ADMIN_CD(usr.client, ADMIN_CD_PRAY))
 			to_chat(usr, "<span class='warning'>You cannot pray (muted).</span>")
 			return
-		if(client.handle_spam_prevention(msg,MUTE_PRAY))
+		if(client.handle_spam_prevention(msg,ADMIN_CD_PRAY))
 			return
 
 	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage.dmi', "bible")
