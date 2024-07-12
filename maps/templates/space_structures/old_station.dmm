@@ -2618,11 +2618,6 @@
 	icon_state = "whitepurple"
 	},
 /area/space_structures/old_station/right)
-"qq" = (
-/obj/structure/table/glass,
-/obj/item/weapon/disk/tech_disk/hud,
-/turf/simulated/floor,
-/area/space_structures/old_station/right/rnd)
 "qr" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -13054,7 +13049,7 @@ TE
 pM
 Jy
 aZ
-qq
+aZ
 cm
 vX
 Ni

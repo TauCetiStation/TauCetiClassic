@@ -42,6 +42,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/disk/tech_disk/hud,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
@@ -56,6 +57,7 @@
 /obj/structure/stool/bed/chair/schair{
 	dir = 1
 	},
+/mob/living/simple_animal/hostile/syndicate/ranged/space/elite,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
