@@ -185,6 +185,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/book/manual/wiki/medical_genetics,
 /obj/structure/table,
+/obj/item/weapon/disk/tech_disk/hud,
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
 "G" = (
@@ -192,6 +193,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/syndicate/ranged/space/elite,
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
 "H" = (
@@ -250,6 +252,10 @@
 "Q" = (
 /turf/simulated/floor/airless,
 /area/space_structures/cloning_lab)
+"V" = (
+/mob/living/simple_animal/hostile/syndicate/melee,
+/turf/simulated/floor,
+/area/space_structures/cloning_lab)
 
 (1,1,1) = {"
 a
@@ -295,7 +301,7 @@ a
 a
 b
 v
-y
+V
 G
 b
 "}
