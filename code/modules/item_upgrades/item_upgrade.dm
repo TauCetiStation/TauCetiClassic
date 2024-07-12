@@ -69,7 +69,7 @@
 	apply_effects(mode_type, TRUE)
 	current_mode = mode_type
 
-/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/upgrade_hud(var/obj/item/hud_upgrade/hud_upgrade)
+/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/upgrade_hud(obj/item/hud_upgrade/hud_upgrade)
 	switch(hud_upgrade.tier)
 		if(HUD_UPGRADE_MEDSCAN)
 			icon_state = "mixhud"
@@ -102,21 +102,21 @@
 	if(istype(W, /obj/item/hud_upgrade))
 		var/obj/item/hud_upgrade/hud_upgrade = W
 		if(upgrade_tier >= hud_upgrade.tier)
-			to_chat(usr, "<span class='notice'>You've already installed that upgrade")
+			to_chat(usr, "<span class='notice'>You've already installed that upgrade</span>")
 			return
 		if(upgrade_tier < hud_upgrade.tier - 1)
-			to_chat(usr, "<span class='alert'>You have to install previous upgrades")
+			to_chat(usr, "<span class='alert'>You have to install previous upgrades</span>")
 			return
 		if(user.is_in_hands(src))
 			upgrade_hud(hud_upgrade)
 			add_item_actions(user)
 		else
-			to_chat(usr, "<span class='alert'>You have to hold huds in hands to upgrade it")
+			to_chat(usr, "<span class='alert'>You have to hold huds in hands to upgrade it</span>")
 			return
 		qdel(hud_upgrade)
 	if(istype(W, /obj/item/device/hud_calibrator))
 		var/obj/item/device/hud_calibrator = W
-		to_chat(usr, "<span class='alert'>You try to recalibrate huds, but nothing happens")
+		to_chat(usr, "<span class='alert'>You try to recalibrate huds, but nothing happens</span>")
 		qdel(hud_calibrator)
 	. = ..()
 

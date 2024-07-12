@@ -155,7 +155,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 			user.remove_from_mob(disk)
 			qdel(disk)
 		else
-			to_chat(user, "<span class ='alert'>You can't upload empty disk")
+			to_chat(user, "<span class ='alert'>You can't upload empty disk</span>")
 	else
 		//The construction/deconstruction of the console code.
 		..()
