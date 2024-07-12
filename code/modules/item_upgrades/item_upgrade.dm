@@ -12,6 +12,7 @@
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
 	icon = 'icons/obj/clothing/goggles.dmi'
 	icon_state = "sechud"
+	item_state = "sechud"
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_SECURITY)
 	item_action_types = list()
@@ -72,16 +73,20 @@
 	switch(hud_upgrade.tier)
 		if(HUD_UPGRADE_MEDSCAN)
 			icon_state = "mixhud"
+			item_state = "mixhud"
 			hud_types.Add(DATA_HUD_MEDICAL_ADV)
 			def_hud_types.Add(DATA_HUD_MEDICAL_ADV)
 		if(HUD_UPGRADE_NIGHTVISION)
 			icon_state = "nvghud"
+			item_state = "nvghud"
 			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
 		if(HUD_UPGRADE_THERMAL)
 			icon_state = "thermalhud"
+			item_state = "thermalhud"
 			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
 		if(HUD_UPGRADE_THERMAL_ADVANCED)
 			icon_state = "4thtier"
+			item_state = "4thtier"
 			for(var/datum/action/item_action/hands_free/switch_hud_modes/night/night_action in item_actions)
 				night_action.Remove(usr)
 				item_actions.Remove(night_action)
