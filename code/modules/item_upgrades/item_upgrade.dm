@@ -19,7 +19,7 @@
 	var/upgrade_tier = 0
 	var/current_mode = null
 
-/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/apply_effects(var/mode_type, var/enable)
+/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/apply_effects(mode_type, enable)
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/human = usr
@@ -59,7 +59,7 @@
 	update_item_actions()
 
 
-/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/switch_mode(var/mode_type)
+/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/switch_mode(mode_type)
 	if(current_mode)
 		apply_effects(current_mode, FALSE)
 	if(current_mode == mode_type)
