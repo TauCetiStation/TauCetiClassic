@@ -128,10 +128,6 @@
 			to_chat(usr, "<span class='warning'>You can only enthrall humans.</span>")
 			charge_counter = charge_max
 			return
-		if(target.ismindprotect())
-			to_chat(usr, "<span class='notice'>Their mind seems to be protected!</span>")
-			charge_counter = charge_max
-			return
 		if(enthralling)
 			to_chat(usr, "<span class='warning'>You are already enthralling!</span>")
 			charge_counter = charge_max
@@ -158,6 +154,15 @@
 					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
 					to_chat(target, "<span class='boldannounce'>Your head cries out. The veil of reality begins to crumple and something evil bleeds through.</span>")//Ow the edge
+					if(jobban_isbanned(target, "Syndicate") || target.ismindprotect())
+						switch(tgui_alert(usr, "Этот разум находится под защитой. Мы можем разрушить его тело, или же нанести ему непоправимый вред", "Подчинение", list("Разрушение тела", "Разрушение разума")))
+							if("Разрушение тела")
+								usr.say("RI'AH BO!")
+								target.gib()
+							if("Разрушение разума")
+								usr.say("CI'BO AH!")
+								target.adjustBrainLoss(30)
+
 			if(!do_mob(usr, target, 100)) //around 30 seconds total for enthralling
 				to_chat(usr, "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
 				to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
