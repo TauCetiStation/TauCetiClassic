@@ -14,7 +14,8 @@ export const UI_CLOSE = -1;
 export const COLORS = {
   // Department colors
   department: {
-    captain: '#2185d0',
+    captain: '#c06616',
+    ntrep: '#6c7391',
     security: '#e74c3c',
     medbay: '#3498db',
     science: '#9b59b6',

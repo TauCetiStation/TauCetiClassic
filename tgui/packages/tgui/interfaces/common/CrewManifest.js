@@ -3,7 +3,6 @@ import { Box, Section, Table } from "../../components";
 import { decodeHtmlEntities } from 'common/string';
 import { COLORS } from "../../constants";
 
-
 const deptCols = COLORS.department;
 
 const HeadRoles = [
@@ -13,6 +12,7 @@ const HeadRoles = [
   "Chief Medical Officer",
   "Research Director",
   "Head of Personnel",
+  "Internal Affairs Agent",
 ];
 // Head colour check. Abbreviated to save on 80 char
 const HCC = role => {
@@ -78,6 +78,7 @@ export const CrewManifest = (props, context) => {
 
   const {
     heads,
+    ntrep,
     sec,
     eng,
     med,
@@ -98,6 +99,17 @@ export const CrewManifest = (props, context) => {
         )}
         level={2}>
         {ManifestTable(heads)}
+      </Section>
+      <Section
+        title={(
+          <Box backgroundColor={deptCols.ntrep} m={-1} pt={1} pb={1}>
+            <Box ml={1} textAlign="center" fontSize={1.4}>
+              NanoTrasen Representatives
+            </Box>
+          </Box>
+        )}
+        level={2}>
+        {ManifestTable(ntrep)}
       </Section>
       <Section
         title={(
