@@ -18,24 +18,16 @@ var/global/mob/Jonesy
 			/obj/item/weapon/flamethrower/full,
 			/obj/item/weapon/flamethrower/full,
 			/obj/item/weapon/tank/phoron/full,
-			/obj/item/weapon/tank/phoron/full,
-			/obj/item/clothing/head/helmet/riot,
-			/obj/item/clothing/suit/armor/riot),
+			/obj/item/weapon/tank/phoron/full),
 		list(
 			/obj/item/weapon/gun/plasma,
-			/obj/item/ammo_casing/plasma,
-			/obj/item/clothing/head/helmet,
-			/obj/item/clothing/suit/storage/flak),
+			/obj/item/ammo_casing/plasma),
 		list(
 			/obj/item/weapon/gun/projectile/shotgun/incendiary,
 			/obj/item/ammo_box/eight_shells/incendiary,
-			/obj/item/ammo_box/eight_shells/incendiary,
-			/obj/item/clothing/suit/armor/syndilight,
-			/obj/item/clothing/head/helmet/syndilight),
+			/obj/item/ammo_box/eight_shells/incendiary),
 		list(
-			/obj/item/weapon/gun/energy/laser,
-			/obj/item/clothing/head/helmet,
-			/obj/item/clothing/suit/storage/flak)
+			/obj/item/weapon/gun/energy/laser)
 	)
 
 /datum/faction/alien/can_setup(num_players)
