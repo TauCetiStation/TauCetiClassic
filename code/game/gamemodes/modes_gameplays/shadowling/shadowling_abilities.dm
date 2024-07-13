@@ -166,7 +166,6 @@
 							if("Разрушение разума")
 								usr.say("CI'BO AH!")
 								target.adjustBrainLoss(30)
-
 			if(!do_mob(usr, target, 100)) //around 30 seconds total for enthralling
 				to_chat(usr, "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
 				to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
