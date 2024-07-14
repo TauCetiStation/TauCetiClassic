@@ -865,6 +865,11 @@
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "DIONA_xeno", I)
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "DIONA_zombie", I)
 
+/datum/species/diona/on_loose(mob/living/carbon/human/H, new_species)
+	H.remove_alt_appearance("DIONA_xeno")
+	H.remove_alt_appearance("DIONA_zombie")
+	..()
+
 /datum/species/diona/regen(mob/living/carbon/human/H)
 	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 	if(isturf(H.loc)) //else, there's considered to be no light
@@ -1134,6 +1139,9 @@
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
 		H.set_light(0)
+
+	H.remove_alt_appearance("IPC_xeno")
+	H.remove_alt_appearance("IPC_zombie")
 	..()
 
 /datum/species/machine/handle_death(mob/living/carbon/human/H, gibbed)
