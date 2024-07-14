@@ -115,6 +115,10 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
+		if(target.stat == DEAD)
+			to_chat(usr, "<span class='warning'>The target must be alive.</span>")
+			charge_counter = charge_max
+			return
 		if(isshadowling(target) || isshadowthrall(target))
 			to_chat(usr, "<span class='warning'>You can not enthrall allies.</span>")
 			charge_counter = charge_max
