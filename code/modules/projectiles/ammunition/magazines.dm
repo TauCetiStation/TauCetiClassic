@@ -372,7 +372,7 @@
 	multiload = 0
 
 /obj/item/ammo_box/magazine/a774clip
-	name = "7.74 ammo clip"
+	name = "ammo clip (7.74)"
 	cases = list("обойма патронов (7.74)", "обоймы патронов (7.74)", "обойме патронов (7.74)", "обойму патронов (7.74)", "обоймой патронов (7.74)", "обойме патронов (7.74)")
 	icon_state = "clip"
 	origin_tech = "combat=2"
