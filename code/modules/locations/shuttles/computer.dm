@@ -32,3 +32,52 @@
 	if(stat & BROKEN)
 		icon_state += "b"
 	return
+
+
+/obj/machinery/computer/narcissus_shuttle
+	name = "Narcissus Shuttle Console"
+	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "shuttle"
+	resistance_flags = FULL_INDESTRUCTIBLE
+	var/docked = TRUE
+
+/obj/machinery/computer/narcissus_shuttle/ui_interact(mob/user)
+	var/dat
+	if(docked)
+		dat += "<ul><li>Местоположение: <b>[station_name_ru()]</b></li>"
+		dat += "</ul>"
+		dat += "<a href='?src=\ref[src];evacuation=1'>Начать процедуру отстыковки</a>"
+	else
+		dat += "<ul><li>Местоположение: <b>Космос</b></li>"
+
+	var/datum/browser/popup = new(user, "flightcomputer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 365, 200)
+	popup.set_content(dat)
+	popup.open()
+
+/obj/machinery/computer/narcissus_shuttle/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
+	if(!(get_security_level() == "delta"))
+		to_chat(usr, "<span class='warning'>Для эвакуации необходимо запустить систему самоуничтожения корабля!</span>")
+		return FALSE
+
+	if(href_list["evacuation"])
+		do_move()
+
+	updateUsrDialog()
+
+/obj/machinery/computer/narcissus_shuttle/proc/do_move()
+	var/area/current_location = locate(/area/shuttle/nostromo_narcissus)
+	var/area/transit_location = locate(/area/shuttle/nostromo_narcissus/transit)
+
+	SSshuttle.undock_act(/area/custom/nostromo, "evac_shuttle_1")
+	SSshuttle.undock_act(/area/shuttle/nostromo_narcissus, "evac_shuttle_1")
+
+	transit_location.parallax_movedir = WEST
+	current_location.move_contents_to(transit_location)
+	SSshuttle.shake_mobs_in_area(transit_location, EAST)
+
+	transit_location.parallax_slowdown()

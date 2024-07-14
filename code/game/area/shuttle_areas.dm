@@ -381,6 +381,14 @@
 	icon_state = "shuttle"
 	parallax_movedir = NORTH
 
+/area/shuttle/nostromo_narcissus
+	name = "Nostromo Shuttle Narcissus"
+	icon_state = "shuttle"
+	looped_ambience = 'sound/ambience/loop_space.ogg'
+
+/area/shuttle/nostromo_narcissus/transit
+	icon_state = "shuttle2"
+
 //Shuttle lists, group by areas
 // CENTCOM
 var/global/list/centcom_shuttle_areas = list (

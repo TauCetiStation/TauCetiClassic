@@ -137,8 +137,3 @@
 	icon_state = "red"
 	requires_power = 0
 	dynamic_lighting = FALSE
-
-/area/custom/nostromo
-	name = "Towed Spaceship"
-	cases = list("космический буксировщик", "космического буксировщика", "космическому буксировщику", "космический буксировщик", "космическим буксировщиком", "космическом буксировщике")
-	icon_state = "bluenew"
