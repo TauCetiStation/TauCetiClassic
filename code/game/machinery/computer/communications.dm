@@ -142,8 +142,8 @@
 					set_security_level(tmp_alertlevel)
 					if(security_level != old_level)
 						//Only notify the admins if an actual change happened
-						log_game("[key_name(usr)] сменил код тревоги на [get_security_level()].")
-						message_admins("[key_name_admin(usr)] сменил код тревоги на [get_security_level()]. [ADMIN_JMP(usr)]")
+						log_game("[key_name(usr)] has changed the security level to [code_name_eng[security_level]].")
+						message_admins("[key_name_admin(usr)] has changed the security level to [code_name_eng[security_level]]. [ADMIN_JMP(usr)]")
 						switch(security_level)
 							if(SEC_LEVEL_GREEN)
 								feedback_inc("alert_comms_green",1)
@@ -399,15 +399,15 @@
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Карантин</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Биологическая угроза</A><BR><HR>"
 		if(STATE_ALERT_LEVEL)
-			dat += "Текущий код тревоги: [get_security_level()]<BR>"
+			dat += "Текущий код тревоги: [code_name_ru[security_level]]<BR>"
 			if(security_level == SEC_LEVEL_DELTA)
 				dat += "<font color='red'><b>Активирован механизм самоуничтожения. Деактивируйте механизм для снижения кода или эвакуируйтесь.</b></font>"
 			else
 				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Синий</A><BR>"
 				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Зелёный</A>"
 		if(STATE_CONFIRM_LEVEL)
-			dat += "Текущий код тревоги: [get_security_level()]<BR>"
-			dat += "Подтвердить смену кода тревоги на: [num2seclevel(tmp_alertlevel)]<BR>"
+			dat += "Текущий код тревоги: [code_name_ru[security_level]]<BR>"
+			dat += "Подтвердить смену кода тревоги на: [code_name_ru[SEC_LEVEL_BLUE]]<BR>"
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Проведите ID-картой</A> для смены кода.<BR>"
 
 	dat += "<BR>[(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Главное меню</A> | " : ""]"

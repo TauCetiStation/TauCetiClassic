@@ -1134,7 +1134,7 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
-		var/dat = "[d1]\n<HR><b>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
+		var/dat = "[d1]\n<HR><b>The current alert level is: [code_name_eng[security_level]]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
 
 		var/datum/browser/popup = new(user, "window=firealarm", src.name)
 		popup.set_content(dat)
@@ -1151,7 +1151,7 @@ FIRE ALARM
 			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
-		var/dat = "[d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
+		var/dat = "[d1]\n<HR><b>The current alert level is: [stars(code_name_eng[security_level])]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
 
 		var/datum/browser/popup = new(user, "window=firealarm", stars(src.name))
 		popup.set_content(dat)
@@ -1215,16 +1215,7 @@ FIRE ALARM
 
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
-	var/msg
-	switch(get_security_level())
-		if("зелёный")
-			msg = "<font color='green'><b>зелёный</b></font>"
-		if("синий")
-			msg = "<font color='blue'><b>синий</b></font>"
-		if("красный")
-			msg = "<font color='red'><b>красный</b></font>"
-		if("дельта")
-			msg = "<font color='purple'><b>дельта</b></font>"
+	var/msg = code_name_ru[security_level]
 	to_chat(user, "Маленький индикатор указывает [msg] код тревоги.")
 
 /obj/machinery/firealarm/atom_init(mapload, dir, building)
@@ -1246,7 +1237,7 @@ FIRE ALARM
 
 	if(is_station_level(z) || is_mining_level(z))
 		if(security_level)
-			add_overlay(image('icons/obj/monitors.dmi', "overlay_[get_security_level()]"))
+			add_overlay(image('icons/obj/monitors.dmi', "code_name_ru[security_level]"))
 		else
 			add_overlay(image('icons/obj/monitors.dmi', "overlay_green"))
 

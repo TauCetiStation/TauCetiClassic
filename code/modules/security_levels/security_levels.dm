@@ -1,5 +1,7 @@
 /var/security_level = 0
 /var/delta_timer_id = 0
+var/global/list/code_name_eng = list("green", "blue", "red", "delta")
+var/global/list/code_name_ru = list("зелёный", "синий", "красный", "дельта")
 
 /proc/set_security_level(level)
 	switch(level)
@@ -93,36 +95,3 @@ var/global/list/quiet_alarm_areas = typecacheof(typesof(/area/station/maintenanc
             else if (is_type_in_typecache(A, loud_alarm_areas))
                 M.playsound_local(get_turf(M), 'sound/machines/alarm_delta.ogg', VOL_EFFECTS_MASTER, null, FALSE)
     return
-
-/proc/get_security_level()
-	switch(security_level)
-		if(SEC_LEVEL_GREEN)
-			return "зелёный"
-		if(SEC_LEVEL_BLUE)
-			return "синий"
-		if(SEC_LEVEL_RED)
-			return "красный"
-		if(SEC_LEVEL_DELTA)
-			return "дельта"
-
-/proc/num2seclevel(num)
-	switch(num)
-		if(SEC_LEVEL_GREEN)
-			return "зелёный"
-		if(SEC_LEVEL_BLUE)
-			return "синий"
-		if(SEC_LEVEL_RED)
-			return "красный"
-		if(SEC_LEVEL_DELTA)
-			return "дельта"
-
-/proc/seclevel2num(seclevel)
-	switch( lowertext(seclevel) )
-		if("зелёный")
-			return SEC_LEVEL_GREEN
-		if("синий")
-			return SEC_LEVEL_BLUE
-		if("красный")
-			return SEC_LEVEL_RED
-		if("дельта")
-			return SEC_LEVEL_DELTA
