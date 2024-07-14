@@ -68,14 +68,14 @@
 /obj/item/ammo_box/shotgun/beanbag
 	name = "shotgun shells box (beanbag)"
 	cases = list("коробки патронов (Травматический)", "коробки патронов (Травматический)", "коробке патронов (Травматический)", "коробке патронов (Травматический)", "коробкой  патронов (Травматический)", "коробке патронов (Травматический)")
-	desc = "коробки для патронов (Травматический) 12 калибра."
+	desc = "коробка для ружейных патронов (Травматический)"
 	icon_state = "beanbag_box"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 
 /obj/item/ammo_box/eight_shells
 	name = "shotgun shells box (slug)"
 	cases = list("коробки патронов (Пуля)", "коробки патронов (Пуля)", "коробке патронов (Пуля)", "коробке патронов (Пуля)", "коробкой патронов (Пуля)", "коробке  патронов (Пуля)")
-	desc = "коробки для патронов (Пуля) 12 калибра."
+	desc = "коробка для ружейных патронов (Пуля) 12 калибра."
 	icon_state = "blushellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun
 	caliber = "shotgun"
@@ -85,34 +85,34 @@
 /obj/item/ammo_box/eight_shells/buckshot
 	name = "shotgun shells box (buckshot)"
 	cases = list("коробки патронов (Картечь)", "коробки патронов (Картечь)", "коробке патронов (Картечь)", "коробке патронов (Картечь)", "коробкой патронов (Картечь)", "коробке патронов (Картечь)")
-	desc = "коробки для патронов (Картечь) 12 калибра."
+	desc = "коробка для ружейных патронов (Картечь)"
 	icon_state = "redshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
 /obj/item/ammo_box/eight_shells/beanbag
 	name = "shotgun shells box (beanbag)"
 	cases = list("коробки патронов (Травматический)", "коробки патронов (Травматический)", "коробке патронов (Травматический)", "коробке патронов (Травматический)", "коробкой патронов (Травматический)", "коробке для патронов (Травматический)")
-	desc = "коробки для патронов (Травматический) 12 калибра."
+	desc = "коробка ружейных для патронов (Травматический)."
 	icon_state = "greenshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 
 /obj/item/ammo_box/eight_shells/incendiary
 	name = "shotgun shells box (incendiary)"
 	cases = list("коробки патронов (Зажигательный)", "коробки патронов (Зажигательный)", "коробке патронов (Зажигательный)", "коробке патронов (Зажигательный)", "коробкой патронов (Зажигательный)", "коробке патронов (Зажигательный)")
-	desc = "коробки для патронов (Зажигательный) 12 калибра."
+	desc = "коробка для ружейных патронов (Зажигательный)"
 	icon_state = "orangeshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/incendiary
 
 /obj/item/ammo_box/eight_shells/dart
 	name = "shotgun shells box (dart)"
 	cases = list("коробки патронов (Дротик)", "коробки патронов (Дротик)", "коробке патронов (Дротик)", "коробке патронов (Дротик)", "коробкой патронов (Дротик)", "коробке патронов (Дротик)")
-	desc = "коробки для патронов (Дротик) 12 калибра."
+	desc = "коробка для ружейных патронов (Дротик)"
 	icon_state = "purpleshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/dart
 
 /obj/item/ammo_box/eight_shells/stunshot
 	name = "shotgun shells box (stunshot)"
 	cases = list("коробки патронов (Электрошок)", "коробки патронов (Электрошок)", "коробке патронов (Электрошок)", "коробке патронов (Электрошок)", "коробкой патронов (Электрошок)", "коробке патронов (Электрошок)")
-	desc = "коробки для патронов (Электрошок) 12 калибра."
+	desc = "коробка для ружейных патронов (Электрошок)"
 	icon_state = "stanshellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/stunshot
