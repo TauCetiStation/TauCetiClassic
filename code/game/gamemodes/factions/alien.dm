@@ -83,14 +83,18 @@ var/global/mob/Jonesy
 			/obj/item/weapon/tank/phoron/full,
 			/obj/item/weapon/tank/phoron/full),
 		list(
-			/obj/item/weapon/gun/plasma,
-			/obj/item/ammo_casing/plasma),
+			/obj/item/weapon/legcuffs/bola/tactical,
+			/obj/item/weapon/legcuffs/bola/tactical,
+			/obj/item/weapon/legcuffs/bola/tactical),
 		list(
 			/obj/item/weapon/gun/projectile/shotgun/incendiary,
 			/obj/item/ammo_box/eight_shells/incendiary,
 			/obj/item/ammo_box/eight_shells/incendiary),
 		list(
-			/obj/item/weapon/gun/energy/laser)
+			/obj/item/weapon/crossbow,
+			/obj/item/stack/rods/ten,
+			/obj/item/weapon/wirecutters,
+			/obj/item/weapon/stock_parts/cell/super)
 	)
 
 /datum/faction/nostromo_crew/forgeObjectives()

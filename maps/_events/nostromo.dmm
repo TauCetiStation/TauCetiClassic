@@ -286,9 +286,12 @@
 	},
 /area/custom/nostromo)
 "cL" = (
-/obj/machinery/autolathe,
+/obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/random/science/capacitor,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "brown"
 	},
 /area/custom/nostromo)
 "cM" = (
@@ -326,6 +329,8 @@
 /area/custom/nostromo)
 "di" = (
 /obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/random/cloth/glasses_safe,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -577,6 +582,8 @@
 "fe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/random/science/slimecore,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -818,6 +825,15 @@
 	icon_state = "graychoco"
 	},
 /area/custom/nostromo)
+"hy" = (
+/obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/random/meds/medical_supply,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/custom/nostromo)
 "hz" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -869,6 +885,8 @@
 /area/custom/nostromo)
 "hY" = (
 /obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/random/tools/tool,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brown"
@@ -1466,7 +1484,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/door_control{
+/obj/machinery/door_control/alien_space{
 	id = "space_warehouse_n";
 	name = "Warehouse Door Control";
 	pixel_y = 28;
@@ -1608,13 +1626,24 @@
 	},
 /area/custom/nostromo)
 "oh" = (
-/obj/structure/closet/crate/engi,
 /obj/item/weapon/airlock_painter,
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = 3;
 	pixel_y = -2
 	},
 /obj/item/device/lightreplacer,
+/obj/item/apc_frame,
+/obj/item/weapon/module/power_control,
+/obj/item/weapon/stock_parts/cell/apc,
+/obj/structure/closet/crate/secure/engisec{
+	req_access = list(12)
+	},
+/obj/item/stack/sheet/metal{
+	amount = 10
+	},
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -1803,7 +1832,9 @@
 	},
 /area/custom/nostromo)
 "pO" = (
-/obj/structure/closet/crate,
+/obj/machinery/vending/cigarette{
+	prices = list()
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2130,6 +2161,7 @@
 /area/custom/nostromo)
 "sv" = (
 /obj/structure/rack,
+/obj/item/weapon/storage/pouch/large_generic,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2138,9 +2170,12 @@
 /obj/structure/closet/crate/secure/engisec{
 	req_access = list(12)
 	},
-/obj/random/tools/tool,
-/obj/random/tools/tool,
-/obj/random/tools/tool,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/item/stack/sheet/metal{
+	amount = 10
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -2415,6 +2450,8 @@
 	dir = 4
 	},
 /obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/random/tools/tool,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -2507,13 +2544,13 @@
 /turf/simulated/floor/plating,
 /area/custom/nostromo)
 "vD" = (
-/obj/machinery/door_control{
+/obj/machinery/light/small,
+/obj/machinery/door_control/alien_space{
 	id = "space_warehouse_s";
 	name = "Warehouse Door Control";
 	pixel_y = -28;
 	req_access = list(12)
 	},
-/obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/custom/nostromo)
 "vH" = (
@@ -2836,6 +2873,8 @@
 /area/custom/nostromo)
 "yj" = (
 /obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/random/cloth/randomhead_safe,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -3039,6 +3078,17 @@
 "zS" = (
 /obj/machinery/telecomms/receiver,
 /turf/simulated/floor/whitegreed,
+/area/custom/nostromo)
+"zV" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
 /area/custom/nostromo)
 "zW" = (
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -3306,6 +3356,8 @@
 /area/custom/nostromo)
 "Cq" = (
 /obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/random/science/manipulator,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -3418,6 +3470,8 @@
 /area/custom/nostromo)
 "Dq" = (
 /obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -3438,6 +3492,8 @@
 "Dw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/random/cloth/gloves_safe,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -5990,12 +6046,28 @@
 	icon_state = "yellowfull"
 	},
 /area/custom/nostromo)
+"WC" = (
+/obj/random/mecha/wreckage,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/custom/nostromo)
 "WE" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/grass,
+/area/custom/nostromo)
+"WF" = (
+/obj/structure/rack,
+/obj/random/misc/all/high,
+/obj/random/meds/medical_supply,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "brown"
+	},
 /area/custom/nostromo)
 "WI" = (
 /obj/item/weapon/cigbutt,
@@ -6032,6 +6104,13 @@
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkblue"
+	},
+/area/custom/nostromo)
+"WX" = (
+/obj/structure/rack,
+/obj/item/clothing/accessory/storage/webbing,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/custom/nostromo)
 "WY" = (
@@ -6352,6 +6431,23 @@
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
+	},
+/area/custom/nostromo)
+"ZI" = (
+/obj/structure/rack,
+/obj/item/weapon/grenade/chem_grenade/antiweed{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/weapon/grenade/chem_grenade/antiweed{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/weapon/grenade/chem_grenade/antiweed{
+	pixel_x = -3
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/custom/nostromo)
 "ZJ" = (
@@ -39157,7 +39253,7 @@ ZS
 ZS
 ZS
 ZS
-di
+hy
 gH
 jI
 lH
@@ -42497,7 +42593,7 @@ ZR
 ZS
 ZS
 ZS
-di
+cL
 gH
 iU
 kb
@@ -43275,9 +43371,9 @@ gx
 mu
 ZS
 qr
-cL
 sv
-sv
+ZI
+WX
 ZS
 za
 gH
@@ -43536,7 +43632,7 @@ ot
 ot
 ZS
 ZS
-hS
+zV
 gx
 gH
 Cf
@@ -46353,7 +46449,7 @@ ZR
 ZS
 ZS
 ZS
-di
+WC
 gH
 lh
 mD
@@ -47386,7 +47482,7 @@ ZS
 ZS
 ZS
 ZS
-hY
+WF
 mY
 lq
 mY
