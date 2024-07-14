@@ -2753,6 +2753,15 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"wM" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "brown"
+	},
+/area/station/nostromo)
 "wN" = (
 /obj/structure/table,
 /obj/item/device/tagger{
@@ -3934,6 +3943,15 @@
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "yellow"
+	},
+/area/station/nostromo)
+"Gl" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "brown"
 	},
 /area/station/nostromo)
 "Gm" = (
@@ -42235,7 +42253,7 @@ gG
 gH
 mu
 ZS
-co
+wM
 jt
 uL
 wP
@@ -43263,7 +43281,7 @@ jg
 kr
 mu
 ZS
-ep
+Gl
 mY
 mY
 wZ
