@@ -3,6 +3,7 @@
 /datum/job/captain/New()
 	..()
 	MAP_JOB_CHECK
+	access = list(access_maint_tunnels)
 	minimal_player_ingame_minutes = 1200
 	skillsets = list("Captain" = /datum/skillset/falcon/captain)
 	outfit = /datum/outfit/nostromo_captain
@@ -10,7 +11,7 @@
 /datum/job/doctor/New()
 	..()
 	MAP_JOB_CHECK
-	access += list(access_maint_tunnels)
+	access = list(access_maint_tunnels)
 	total_positions = 2
 	spawn_positions = 2
 	alt_titles = list()
@@ -23,6 +24,7 @@
 	..()
 	MAP_JOB_CHECK
 	title = "Engineer"
+	access = list(access_maint_tunnels)
 	total_positions = 2
 	spawn_positions = 2
 	alt_titles = list()
@@ -35,9 +37,9 @@
 	..()
 	MAP_JOB_CHECK
 	title = "Pilot"
+	access = list(access_maint_tunnels)
 	total_positions = 1
 	spawn_positions = 1
-	access += list(access_maint_tunnels)
 	alt_titles = list()
 	supervisors = "the captain"
 	skillsets = list("Pilot" = /datum/skillset/falcon/test_subject)
@@ -46,6 +48,7 @@
 /datum/job/cargo_tech/New()
 	..()
 	MAP_JOB_CHECK
+	access = list(access_maint_tunnels)
 	total_positions = 1
 	spawn_positions = 1
 	minimal_player_ingame_minutes = 300

@@ -88,11 +88,16 @@
 	name = "box of syringes"
 	desc = "A box full of syringes."
 	icon_state = "syringe_box"
+	var/syringe_type = /obj/item/weapon/reagent_containers/syringe
 
 /obj/item/weapon/storage/box/syringes/atom_init()
 	. = ..()
 	for(var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/syringe(src)
+		new syringe_type(src)
+
+/obj/item/weapon/storage/box/syringes/mixture
+	name = "box of mixture syringes"
+	syringe_type = /obj/item/weapon/reagent_containers/syringe/mixture
 
 //Beakers
 /obj/item/weapon/storage/box/beakers
