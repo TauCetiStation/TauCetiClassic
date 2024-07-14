@@ -17,7 +17,8 @@
 	explanation_text = "Ксеноморф на корабле! Убейте эту тварь как можно скорее!"
 
 /datum/objective/kill_alien/check_completion()
-	for(var/mob/living/L as anything in global.alien_list[ALIEN_LONE_HUNTER])
+	var/mob/living/L = global.alien_list[ALIEN_LONE_HUNTER][1]
+	if(L)
 		if(L.stat == DEAD)
 			return OBJECTIVE_WIN
 		else
@@ -28,7 +29,8 @@
 	explanation_text = "Ксеноморф должен выжить."
 
 /datum/objective/defend_alien/check_completion()
-	for(var/mob/living/L as anything in global.alien_list[ALIEN_LONE_HUNTER])
+	var/mob/living/L = global.alien_list[ALIEN_LONE_HUNTER][1]
+	if(L)
 		if(L.stat == DEAD)
 			return OBJECTIVE_LOSS
 		else

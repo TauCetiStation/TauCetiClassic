@@ -745,7 +745,7 @@
 	..()
 	mind.assigned_role = "Alien"
 
-	if(!isalien(src))
+	if(!isalien(src) && !(src in alien_list[ALIEN_LONE_HUNTER]))
 		var/datum/faction/infestation/I = create_uniq_faction(/datum/faction/infestation)
 		add_faction_member(I, src, TRUE)
 
@@ -774,21 +774,12 @@
 	..()
 	mind.special_role = "Drone"
 
-	//XENO SOLO 	ну и калище дааааа
+	//LONE XENO
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/mind_initialize()
-	SHOULD_CALL_PARENT(FALSE)
-	if(mind)
-		mind.key = key
-	else
-		create_mind()
-	if(!mind.name)	mind.name = real_name
-	mind.set_current(src)
-
-	mind.assigned_role = "Alien"
-
-	var/datum/faction/alien/A = create_uniq_faction(/datum/faction/alien)
-	add_faction_member(A, src, TRUE)
+	..()
 	mind.special_role = "Lone Hunter"
+	var/datum/faction/alien/A = create_uniq_faction(/datum/faction/alien, post_setup = FALSE)
+	add_faction_member(A, src, TRUE)
 
 //AI
 /mob/living/silicon/ai/mind_initialize()

@@ -26,21 +26,22 @@ var/global/mob/Jonesy
 	var/datum/role/role = pick(members)
 	var/start_point = xeno_spawn[1]
 
-	var/mob/living/carbon/human/H = new (get_turf(start_point))
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/white, SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white, SLOT_SHOES)
-	H.name = "Gilbert Kane"
-	H.real_name = "Gilbert Kane"
-	H.voice_name = "Gilbert Kane"
+	if(start_point && role)
+		var/mob/living/carbon/human/H = new (get_turf(start_point))
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/color/white, SLOT_W_UNIFORM)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white, SLOT_SHOES)
+		H.name = "Gilbert Kane"
+		H.real_name = "Gilbert Kane"
+		H.voice_name = "Gilbert Kane"
 
-	var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(H)
-	var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva/lone(new_embryo)
-	new_xeno.loc = new_embryo
-	new_embryo.baby = new_xeno
-	new_embryo.controlled_by_ai = FALSE
-	new_embryo.stage = 5
-	role.antag.transfer_to(new_xeno)
-	QDEL_NULL(role.antag.original)
+		var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(H)
+		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva/lone(new_embryo)
+		new_xeno.loc = new_embryo
+		new_embryo.baby = new_xeno
+		new_embryo.controlled_by_ai = FALSE
+		new_embryo.stage = 5
+		role.antag.transfer_to(new_xeno)
+		QDEL_NULL(role.antag.original)
 
 	return ..()
 
