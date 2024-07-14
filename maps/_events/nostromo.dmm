@@ -541,6 +541,9 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"eL" = (
+/turf/simulated/shuttle/floor/evac/eng1,
+/area/station/nostromo)
 "eP" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 1
@@ -765,12 +768,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/nostromo)
-"gZ" = (
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/evac/eng1,
-/area/station/nostromo)
 "hg" = (
 /turf/environment/space,
 /area/space)
@@ -822,6 +819,12 @@
 	dir = 1;
 	icon_state = "darkbluecorners"
 	},
+/area/station/nostromo)
+"hu" = (
+/obj/structure/shuttle/engine/propulsion/burst/left{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
 "hx" = (
 /obj/structure/container{
@@ -1407,11 +1410,6 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
-"mS" = (
-/obj/structure/rack,
-/obj/machinery/light/small/built,
-/turf/simulated/shuttle/floor/evac/eng1,
-/area/station/nostromo)
 "mT" = (
 /obj/machinery/door/airlock/hatch{
 	dir = 4;
@@ -1514,6 +1512,10 @@
 	dir = 1;
 	icon_state = "darkblue"
 	},
+/area/station/nostromo)
+"np" = (
+/obj/machinery/constructable_frame/machine_frame,
+/turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
 "nu" = (
 /obj/structure/closet/emcloset,
@@ -1739,6 +1741,12 @@
 	name = "Warehouse Shutters"
 	},
 /turf/simulated/floor/plating,
+/area/station/nostromo)
+"oP" = (
+/obj/machinery/light/small/emergency,
+/turf/simulated/floor{
+	icon_state = "darkred"
+	},
 /area/station/nostromo)
 "oT" = (
 /turf/simulated/floor/plating,
@@ -2415,12 +2423,6 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
-"tQ" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/evac/eng1,
-/area/station/nostromo)
 "tR" = (
 /obj/effect/landmark/nostromo/ambience,
 /turf/simulated/floor{
@@ -2432,9 +2434,6 @@
 	icon_state = "wy_l 0,1"
 	},
 /turf/simulated/floor,
-/area/station/nostromo)
-"uc" = (
-/turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
 "ue" = (
 /obj/structure/container/up{
@@ -2677,13 +2676,6 @@
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
-/area/station/nostromo)
-"wm" = (
-/obj/structure/stool/bed/chair/schair{
-	dir = 1
-	},
-/obj/machinery/light/small/built,
-/turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
 "wn" = (
 /obj/machinery/message_server,
@@ -3171,10 +3163,6 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
-"Ah" = (
-/obj/structure/rack,
-/turf/simulated/shuttle/floor/evac/eng1,
-/area/station/nostromo)
 "Ai" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -3209,6 +3197,11 @@
 /turf/simulated/floor{
 	icon_state = "caution"
 	},
+/area/station/nostromo)
+"AD" = (
+/obj/structure/rack,
+/obj/machinery/light/small/built,
+/turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
 "AK" = (
 /obj/structure/container/up{
@@ -3632,12 +3625,6 @@
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
-"DT" = (
-/obj/machinery/light/small/emergency,
-/turf/simulated/floor{
-	icon_state = "darkred"
-	},
-/area/station/nostromo)
 "DU" = (
 /obj/machinery/light/smart{
 	dir = 8
@@ -3696,6 +3683,13 @@
 	},
 /obj/structure/object_wall/standart{
 	icon_state = "wall3"
+	},
+/turf/simulated/shuttle/floor/evac/eng1,
+/area/station/nostromo)
+"Eu" = (
+/obj/structure/computerframe{
+	anchored = 1;
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
@@ -5119,10 +5113,6 @@
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
-"PA" = (
-/obj/machinery/constructable_frame/machine_frame,
-/turf/simulated/shuttle/floor/evac/eng1,
-/area/station/nostromo)
 "PD" = (
 /turf/simulated/floor{
 	dir = 10;
@@ -6213,13 +6203,6 @@
 /obj/item/weapon/cigbutt,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
-"WK" = (
-/obj/structure/computerframe{
-	anchored = 1;
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/evac/eng1,
-/area/station/nostromo)
 "WM" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -6243,6 +6226,10 @@
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
+/area/station/nostromo)
+"WT" = (
+/obj/structure/rack,
+/turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
 "WU" = (
 /turf/simulated/floor{
@@ -6388,6 +6375,13 @@
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
+/area/station/nostromo)
+"Ya" = (
+/obj/structure/stool/bed/chair/schair{
+	dir = 1
+	},
+/obj/machinery/light/small/built,
+/turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
 "Yd" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -6678,6 +6672,12 @@
 	icon_state = "bot"
 	},
 /turf/simulated/floor/plating,
+/area/station/nostromo)
+"ZW" = (
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
 "ZX" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -43331,7 +43331,7 @@ ZR
 hg
 hg
 DX
-WK
+Eu
 DX
 hg
 hg
@@ -43846,7 +43846,7 @@ hg
 DX
 ES
 EY
-wm
+Ya
 DX
 hg
 ZR
@@ -44103,7 +44103,7 @@ DW
 Em
 Qq
 QZ
-gZ
+ZW
 DX
 FY
 ZR
@@ -44361,7 +44361,7 @@ JO
 EY
 EY
 QZ
-Ah
+WT
 DX
 ZR
 ZS
@@ -44618,7 +44618,7 @@ EF
 QZ
 EY
 QZ
-mS
+AD
 DX
 ZR
 ZS
@@ -44875,7 +44875,7 @@ Kk
 Rm
 EY
 EY
-PA
+np
 DX
 ZR
 ZS
@@ -45130,7 +45130,7 @@ ZR
 Ei
 ND
 DX
-uc
+eL
 DX
 ND
 Gm
@@ -45389,7 +45389,7 @@ Oc
 DX
 ra
 DX
-tQ
+hu
 hg
 ZR
 ZS
@@ -48228,7 +48228,7 @@ nU
 KP
 Ia
 KP
-DT
+oP
 ZR
 ZS
 ZS

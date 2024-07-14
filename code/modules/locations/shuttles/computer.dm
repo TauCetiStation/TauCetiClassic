@@ -73,7 +73,7 @@
 	var/area/current_location = locate(/area/shuttle/nostromo_narcissus)
 	var/area/transit_location = locate(/area/shuttle/nostromo_narcissus/transit)
 
-	SSshuttle.undock_act(/area/custom/nostromo, "evac_shuttle_1")
+	SSshuttle.undock_act(/area/station/nostromo, "evac_shuttle_1")
 	SSshuttle.undock_act(/area/shuttle/nostromo_narcissus, "evac_shuttle_1")
 
 	transit_location.parallax_movedir = WEST
