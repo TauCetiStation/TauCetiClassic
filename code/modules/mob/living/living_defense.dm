@@ -117,7 +117,7 @@
 		if(istype(O,/obj/item/weapon))
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
-		var/throw_damage = O.throwforce * (AM.fly_speed / 5)
+		var/throw_damage = O.throwforce
 
 		var/zone
 		var/mob/living/L = isliving(throwingdatum.thrower) ? throwingdatum.thrower : null
@@ -191,6 +191,17 @@
 		//Thrown sharp objects have some momentum already and have a small chance to embed even if the damage is below the threshold
 		if(sharp && prob(damage / (10 * I.w_class) * 100) || (damage > embed_threshold && prob(embed_chance)))
 			embed(I, zone, created_wound)
+
+		switch(zone)
+			if(BP_CHEST)
+				if(prob((10 + damage) * (100 - armor) / 100))
+					apply_effect(5, WEAKEN, armor)
+					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
+
+			if(BP_HEAD)//Harder to score a stun but if you do it lasts a bit longer
+				if(prob(damage * (100 - armor) / 100))
+					apply_effect(20, PARALYZE, armor)
+					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
 
 /mob/living/proc/embed(obj/item/I)
 	I.loc = src

@@ -744,6 +744,7 @@
 				playsound(loc, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 
 		do_attack_animation(target, has_effect = FALSE)
+		SetNextMove(CLICK_CD_MELEE)
 
 		newtonian_move(get_dir(target, src))
 
