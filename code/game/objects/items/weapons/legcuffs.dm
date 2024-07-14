@@ -91,6 +91,14 @@
 		feedback_add_details("handcuffs","B")
 		C.Weaken(weaken)
 
+	if(isxenoadult(C) && !isxenoqueen(C) && C.stat == CONSCIOUS)
+		C.visible_message("<span class='danger'>\The [src] ensnares [C]!</span>",
+		                "<span class='userdanger'>\The [src] ensnares you!</span>",
+						"<span class='notice'>You hear something flying at a very fast speed.</span>")
+		C.Stun(weaken)
+		C.Weaken(weaken)
+		qdel(src)
+
 //traitor variant
 /obj/item/weapon/legcuffs/bola/tactical
 	name = "reinforced bola"
