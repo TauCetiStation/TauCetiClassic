@@ -11,8 +11,9 @@
 	name = "Advanced HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
 	icon = 'icons/obj/clothing/goggles.dmi'
-	icon_state = "sechud"
 	item_state = "sechud"
+	item_state_inventory = "sechud"
+	item_state_world = "sechud_w"
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_SECURITY)
 	item_action_types = list()
@@ -72,21 +73,25 @@
 /obj/item/clothing/glasses/sunglasses/hud/advanced/proc/upgrade_hud(obj/item/hud_upgrade/hud_upgrade)
 	switch(hud_upgrade.tier)
 		if(HUD_UPGRADE_MEDSCAN)
-			icon_state = "mixhud"
 			item_state = "mixhud"
+			item_state_inventory = "mixhud"
+			item_state_world = "mixhud_w"
 			hud_types.Add(DATA_HUD_MEDICAL_ADV)
 			def_hud_types.Add(DATA_HUD_MEDICAL_ADV)
 		if(HUD_UPGRADE_NIGHTVISION)
-			icon_state = "nvghud"
 			item_state = "nvghud"
+			item_state_inventory = "nvghud"
+			item_state_world = "nvghud_w"
 			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
 		if(HUD_UPGRADE_THERMAL)
-			icon_state = "thermalhud"
 			item_state = "thermalhud"
+			item_state_inventory = "thermalhud"
+			item_state_world = "thermalhud_w"
 			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
 		if(HUD_UPGRADE_THERMAL_ADVANCED)
-			icon_state = "4thtier"
-			item_state = "4thtier"
+			item_state = "thermalhudadv"
+			item_state_inventory = "thermalhudadv"
+			item_state_world = "thermalhudadv_w"
 			for(var/datum/action/item_action/hands_free/switch_hud_modes/night/night_action in item_actions)
 				night_action.Remove(usr)
 				item_actions.Remove(night_action)
@@ -96,6 +101,7 @@
 			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(src))
 
 	upgrade_tier = hud_upgrade.tier
+	update_world_icon()
 	add_item_actions(usr)
 
 /obj/item/clothing/glasses/sunglasses/hud/advanced/attackby(obj/item/W, mob/living/user)
@@ -168,7 +174,7 @@
 
 /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced //mixed thermal and nightvision
 	name = "Toggle Advanced Thermal"
-	button_overlay_state = "4thtier"
+	button_overlay_state = "thermalhudadv"
 	hud_mode = HUD_TOGGLEABLE_MODE_THERMAL_ADVANCED
 
 #undef HUD_UPGRADE_MEDSCAN
