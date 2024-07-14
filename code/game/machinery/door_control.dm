@@ -521,7 +521,7 @@
 
 // No suicides in space
 /obj/machinery/door_control/alien_space/attack_hand(mob/user)
-	if(istype(user, /mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!istype(H.wear_suit, /obj/item/clothing/suit/space))
 			to_chat(H, "<span class='warning'>Эта кнопка открывает ворота в космос! Нажимать её, не надев скафандр - сущая глупость!</span>")
