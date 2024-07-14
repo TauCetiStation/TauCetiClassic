@@ -16,7 +16,7 @@
 		'sound/antag/Alien_sounds/alien_attack1.ogg',
 		'sound/antag/Alien_sounds/alien_attack2.ogg',
 		'sound/antag/Alien_sounds/alien_attack3.ogg')
-	var/time_next_scary_music = 0
+	var/scary_music_next_time = 0
 	var/current_scary_music
 	var/obj/effect/landmark/nostromo/ambience/ambience_player
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds)
@@ -27,7 +27,8 @@
 	real_name = name
 	alien_list[ALIEN_HUNTER] -= src			// ¯\_(ツ)_/¯
 	alien_list[ALIEN_LONE_HUNTER] += src
-	for(var/obj/effect/landmark/L as anything in landmarks_list["Nostromo Ambience"])
+	var/obj/effect/landmark/L = landmarks_list["Nostromo Ambience"][1]
+	if(L)
 		ambience_player = L
 	playsound(src, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER)
 
@@ -53,6 +54,7 @@
 	epoint -= epoint_cap
 	switch(estage)
 		if(2)
+			epoint_cap = 800
 			verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin)
 			hud_used.init_screen(/atom/movable/screen/xenomorph/neurotoxin)
 		if(3)
@@ -85,7 +87,7 @@
 
 // Ксенос должен поощряться за активную и агрессивную игру
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/successful_leap(mob/living/L)
-	epoint += 200
+	epoint += 120
 	for(var/mob/living/beholder in oview(6, src))
 		beholder.playsound_local(null, pick(alien_screamer), VOL_EFFECTS_MASTER, null, FALSE)
 	play_scary_music()
@@ -100,9 +102,9 @@
 				play_scary_music()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_music()
-	if(ambience_player && world.time > time_next_scary_music)
+	if(ambience_player && world.time > scary_music_next_time)
 		current_scary_music = pick(alien_attack - current_scary_music)
 		ambience_player.ambience_next_time += 0.5 MINUTE
-		time_next_scary_music = world.time + 1 MINUTE
+		scary_music_next_time = world.time + 1 MINUTE
 		for(var/mob/living/L in range(7, src))
 			L.playsound_music(current_scary_music, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)

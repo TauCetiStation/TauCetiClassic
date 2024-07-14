@@ -12,28 +12,10 @@ var/global/mob/Jonesy
 	min_roles = 0
 	max_roles = 1
 
-	var/supply_crate = FALSE
-	var/list/supply_crate_packs = list(
-		list(
-			/obj/item/weapon/flamethrower/full,
-			/obj/item/weapon/flamethrower/full,
-			/obj/item/weapon/tank/phoron/full,
-			/obj/item/weapon/tank/phoron/full),
-		list(
-			/obj/item/weapon/gun/plasma,
-			/obj/item/ammo_casing/plasma),
-		list(
-			/obj/item/weapon/gun/projectile/shotgun/incendiary,
-			/obj/item/ammo_box/eight_shells/incendiary,
-			/obj/item/ammo_box/eight_shells/incendiary),
-		list(
-			/obj/item/weapon/gun/energy/laser)
-	)
-
 /datum/faction/alien/can_setup(num_players)
 	if(!..())
 		return FALSE
-	if(xeno_spawn.len > 0)
+	if(xeno_spawn.len >= 1)
 		return TRUE
 	return FALSE
 
@@ -75,22 +57,6 @@ var/global/mob/Jonesy
 		total_human++
 	return total_human
 
-// мейби стоит это на сигнал от ксеноса переписать
-/datum/faction/alien/process()
-	if(!supply_crate)
-		for(var/mob/living/carbon/xenomorph/humanoid/hunter/lone/LH as anything in alien_list[ALIEN_LONE_HUNTER])
-			if(LH.estage == 3)
-				var/supply_point = pick(landmarks_list["Nostromo Supply Crate"])
-				var/obj/structure/closet/crate/secure/gear/SC = new (get_turf(supply_point))
-				var/crate_contains = pick(supply_crate_packs)
-				for(var/item in crate_contains)
-					new item(SC)
-
-				for(var/mob/living/carbon/human/H as anything in human_list)
-					if(H.stat != DEAD)
-						to_chat(H, "<span class='warning'>На корабль перед отлётом грузили ящики и контейнеры, где-то на складе может быть оружие!</span>")
-				supply_crate = TRUE
-
 
 #define F_NOSTROMO_CREW		"Nostromo Crew"
 #define NOSTROMO_CREWMATE	"Nostromo Crewmate"
@@ -108,6 +74,24 @@ var/global/mob/Jonesy
 	min_roles = 0
 	max_roles = 6
 
+	var/supply_crate = FALSE
+	var/list/supply_crate_packs = list(
+		list(
+			/obj/item/weapon/flamethrower/full,
+			/obj/item/weapon/flamethrower/full,
+			/obj/item/weapon/tank/phoron/full,
+			/obj/item/weapon/tank/phoron/full),
+		list(
+			/obj/item/weapon/gun/plasma,
+			/obj/item/ammo_casing/plasma),
+		list(
+			/obj/item/weapon/gun/projectile/shotgun/incendiary,
+			/obj/item/ammo_box/eight_shells/incendiary,
+			/obj/item/ammo_box/eight_shells/incendiary),
+		list(
+			/obj/item/weapon/gun/energy/laser)
+	)
+
 /datum/faction/nostromo_crew/forgeObjectives()
 	if(!..())
 		return FALSE
@@ -115,9 +99,26 @@ var/global/mob/Jonesy
 	return TRUE
 
 /datum/faction/nostromo_crew/check_win()
-	for(var/mob/living/L as anything in global.alien_list[ALIEN_LONE_HUNTER])
+	var/mob/living/L = alien_list[ALIEN_LONE_HUNTER][1]
+	if(L)
 		return L.stat == DEAD
 	return TRUE
+
+// мейби стоит это на сигнал от ксеноса переписать
+/datum/faction/nostromo_crew/process()
+	if(!supply_crate)
+		var/mob/living/carbon/xenomorph/humanoid/hunter/lone/LH = alien_list[ALIEN_LONE_HUNTER][1]
+		if(LH && LH.estage == 3)
+			var/supply_point = pick(landmarks_list["Nostromo Supply Crate"])
+			var/obj/structure/closet/crate/secure/gear/SC = new (get_turf(supply_point))
+			var/crate_contains = pick(supply_crate_packs)
+			for(var/item in crate_contains)
+				new item(SC)
+
+			for(var/mob/living/carbon/human/H as anything in human_list)
+				if(H.stat != DEAD)
+					to_chat(H, "<span class='warning'>На корабль перед отлётом грузили ящики и контейнеры, где-то на складе может быть оружие!</span>")
+			supply_crate = TRUE
 
 // android traitor fraction
 /datum/faction/nostromo_android

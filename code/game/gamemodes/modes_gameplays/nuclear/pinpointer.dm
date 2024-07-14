@@ -249,12 +249,14 @@
 	mode = SEARCH_FOR_OBJECT
 
 /obj/item/weapon/pinpointer/lone_alien/attack_self(mob/user)
-	if(alien_list[ALIEN_LONE_HUNTER] && Jonesy)
-		target = pick(Jonesy, alien_list[ALIEN_LONE_HUNTER][1])
-	else if(Jonesy)
-		target = Jonesy
-	else if (alien_list[ALIEN_LONE_HUNTER])
-		target = alien_list[ALIEN_LONE_HUNTER][1]
+	var/mob/alien = global.alien_list[ALIEN_LONE_HUNTER][1]
+	var/mob/jonesy = global.Jonesy
+	if(alien && jonesy)
+		target = pick(jonesy, alien)
+	else if(jonesy)
+		target = jonesy
+	else if (alien)
+		target = alien
 	else
 		to_chat(user, "<span class='warning'>The target is missing</span>")
 		return
