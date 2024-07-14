@@ -40,7 +40,7 @@
 	if(BP.pumped <= 0 && old_pumped > 0)
 		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
 	else
-		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.0005 * BP.pumped)
+		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.00015 * BP.pumped)
 
 	return BP.pumped - old_pumped
 

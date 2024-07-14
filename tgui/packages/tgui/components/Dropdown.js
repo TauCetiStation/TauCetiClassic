@@ -85,6 +85,13 @@ export class Dropdown extends Component {
 
     const adjustedOpen = over ? !this.state.open : this.state.open;
 
+    // idk why we cache it
+    if (this.state.selected !== props.selected) {
+      this.setState({
+        selected: props.selected,
+      });
+    }
+
     const menu = this.state.open ? (
       <div
         ref={menu => { this.menuRef = menu; }}

@@ -119,6 +119,13 @@
 	if(!can_be_infected(source))
 		return
 	var/datum/disease2/disease/D = source.getcopy()
+	//boost growing in hydroponic tray
+	D.stageprob *= 10
+	D.speed *= 10
+	D.cooldown_mul *= 10
+	for(var/datum/disease2/effectholder/holder in D.effects)
+		holder.chance *= 10
+
 	virus2["[D.uniqueID]"] = D
 	D.register_host(src)
 

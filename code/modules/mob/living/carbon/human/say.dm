@@ -75,7 +75,7 @@
 	var/sound/speech_sound
 	var/sound_vol
 	if(client)
-		if(client.prefs.muted & MUTE_IC)
+		if(client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
 			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 

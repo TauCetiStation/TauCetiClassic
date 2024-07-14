@@ -15,19 +15,18 @@
 //Captain
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"
-	desc = "Worn by a Captain to show their class."
+	desc = "Worn by a Captain to show their class. Also has some space for armor plate."
 	icon_state = "captunic"
 	item_state = "bio_suit"
+	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armband", "armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/captunic/capjacket
 	name = "captain's uniform jacket"
-	desc = "A less formal jacket for everyday captain use."
+	desc = "A less formal jacket for everyday captain use. Also has some space for armor plate."
 	icon_state = "capjacket"
-	item_state = "bio_suit"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
 
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
