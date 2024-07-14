@@ -75,7 +75,7 @@
 /obj/item/ammo_box/eight_shells
 	name = "shotgun shells box (slug)"
 	cases = list("коробки патронов (Пуля)", "коробки патронов (Пуля)", "коробке патронов (Пуля)", "коробке патронов (Пуля)", "коробкой патронов (Пуля)", "коробке  патронов (Пуля)")
-	desc = "коробка для ружейных патронов (Пуля) 12 калибра."
+	desc = "коробка для ружейных патронов (Пуля)"
 	icon_state = "blushellbox"
 	ammo_type = /obj/item/ammo_casing/shotgun
 	caliber = "shotgun"
