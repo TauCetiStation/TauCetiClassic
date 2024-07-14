@@ -132,22 +132,26 @@
 /obj/item/hud_upgrade/medscan
 	name = "Damage Scan Upgrade"
 	desc = "Allows HUD to show damage on person."
-	icon_state = "medscan"
+	item_state_inventory = "medscan"
+	item_state_world = "medscan_w"
 	tier = 1
 /obj/item/hud_upgrade/night
 	name = "Basic Nightvision HUD upgrade"
 	desc = "Allows HUD to turn a basic nightvision mode. Can be installed only after damage scan upgrade"
-	icon_state = "nightvision"
+	item_state_inventory = "nightvision"
+	item_state_world = "nightvision_w"
 	tier = 2
 /obj/item/hud_upgrade/thermal
 	name = "Thermal HUD upgrade"
 	desc = "Allows HUD to turn a basic thermal mode, makes nightvision mode more comfortable for use. Can be installed only after basic nightvision upgrade"
-	icon_state = "thermal1"
+	item_state_inventory = "thermal"
+	item_state_world = "thermal_w"
 	tier = 3
 /obj/item/hud_upgrade/thermal_advanced
 	name = "Advanced Thermal HUD upgrade"
 	desc = "Makes thermal mode comfortable and combines it with nightvision mode. Can be installed only after thermal upgrade"
-	icon_state = "thermal2"
+	item_state_inventory = "thermaladv"
+	item_state_world = "thermaladv_w"
 	tier = 4
 
 /datum/action/item_action/hands_free/switch_hud_modes/
