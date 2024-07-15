@@ -169,7 +169,6 @@
 								to_chat(target, "<span class='danger'>Вы ощущаете пустоту своего разума, забыв про все события, которые произошли с вами за последнее время.</span>")
 							if("Пощадить")
 								return
-								to_chat(target, "<span class='notice'>Давление на ваш разум прекратилось, а неизвестное существо ничего с вами не сделало. Что вообще произошло?!")
 			if(!do_mob(usr, target, 100)) //around 30 seconds total for enthralling
 				to_chat(usr, "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
 				to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
