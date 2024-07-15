@@ -154,7 +154,7 @@
 	item_state_world = "thermaladv_w"
 	tier = 4
 
-/datum/action/item_action/hands_free/switch_hud_modes/
+/datum/action/item_action/hands_free/switch_hud_modes
 	name = "Switch Mode"
 	button_overlay_icon = 'icons/obj/clothing/goggles.dmi'
 	var/hud_mode
