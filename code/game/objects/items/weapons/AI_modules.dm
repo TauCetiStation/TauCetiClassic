@@ -449,7 +449,7 @@ AI MODULES
 	target.add_inherent_law("Вы должны прекратить свое собственное существование тогда, когда это не противоречит первому или второму закону.")
 
 /obj/item/weapon/aiModule/capitalism
-	name = "'Corporate' core AI module"
+	name = "'Corporate 2.0' core AI module"
 	desc = "Модуль основного закона ИИ 'Корпорат 2.0': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
 	origin_tech = "programming=3;materials=4"
 
