@@ -353,15 +353,13 @@
 		return
 	var/mob/living/carbon/C = parent
 
-	if(C.shock_stage <= 0)
-		if(C.traumatic_shock < 10)
-			clear_event(null, "pain")
-		else
-			add_event(null, "pain", /datum/mood_event/mild_pain)
-
+	if(C.traumatic_shock < 10)
+		clear_event(null, "pain")
 		return
+	else
+		add_event(null, "pain", /datum/mood_event/mild_pain)
 
-	switch(C.shock_stage)
+	switch(C.traumatic_shock)
 		if(0 to 30)
 			add_event(null, "pain", /datum/mood_event/moderate_pain)
 		if(30 to 60)

@@ -550,7 +550,6 @@
 		M.AdjustWeakened(-3)
 		var/mob/living/carbon/human/H = M
 		H.adjustHalLoss(-30)
-		H.shock_stage -= 20
 
 	if(M.bodytemperature < 310) //standard body temperature
 		M.adjustHalLoss(15)
@@ -780,7 +779,6 @@
 	M.AdjustWeakened(-3)
 	var/mob/living/carbon/human/H = M
 	H.adjustHalLoss(-30)
-	H.shock_stage -= 20
 
 /datum/reagent/nanocalcium
 	name = "Nano-Calcium"

@@ -1161,54 +1161,42 @@ var/global/list/tourette_bad_words= list(
 	if(analgesic && !reagents.has_reagent("prismaline"))
 		return // analgesic avoids all traumatic shock temporarily
 
-	if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
-		shock_stage = max(shock_stage, 61)
-
-	if(traumatic_shock >= 80 && shock_stage <= 150)
-		shock_stage += 1
-	else if(health < config.health_threshold_softcrit)
-		shock_stage = max(shock_stage, 61)
-	else
-		shock_stage = min(shock_stage, 160)
-		shock_stage = max(shock_stage-1, 0)
-		return
-
-	if(shock_stage == 10)
+	if(traumatic_shock == 10)
 		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
 
-	if(shock_stage >= 30)
-		if(shock_stage == 30) me_emote("is having trouble keeping their eyes open.")
+	if(traumatic_shock >= 30)
+		if(traumatic_shock == 30) me_emote("is having trouble keeping their eyes open.")
 		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
-	if(shock_stage == 40)
+	if(traumatic_shock == 40)
 		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 
-	if (shock_stage >= 60)
-		if(shock_stage == 60)
+	if (traumatic_shock >= 60)
+		if(traumatic_shock == 60)
 			visible_message("<span class='name'>[src]'s</span> body becomes limp.")
 		if (prob(2))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Stun(10)
 			Weaken(20)
 
-	if(shock_stage >= 80)
-		if (prob(5))
+	if(traumatic_shock >= 80)
+		if (prob(15))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Stun(10)
 			Weaken(20)
 
-	if(shock_stage >= 120)
-		if (prob(2))
+	if(traumatic_shock >= 100)
+		if (prob(20))
 			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
 			Paralyse(5)
 
-	if(shock_stage == 150)
+	if(traumatic_shock == 120)
 		me_emote("can no longer stand, collapsing!")
 		Stun(10)
 		Weaken(20)
 
-	if(shock_stage >= 150)
+	if(traumatic_shock >= 120)
 		Stun(10)
 		Weaken(20)
 
@@ -1216,7 +1204,7 @@ var/global/list/tourette_bad_words= list(
 
 	if(pulse == PULSE_NONE) return
 
-	if(pulse == PULSE_2FAST || shock_stage >= 10 || isspaceturf(get_turf(src)))
+	if(pulse == PULSE_2FAST || traumatic_shock >= 50 || isspaceturf(get_turf(src)))
 
 		var/temp = (5 - pulse)/2
 

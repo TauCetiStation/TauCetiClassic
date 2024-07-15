@@ -576,16 +576,12 @@
 
 	SetDrunkenness(0)
 
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.shock_stage = 0
-
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			H.restore_blood()
-			H.full_prosthetic = null
-			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-			Heart?.heart_normalize()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.restore_blood()
+		H.full_prosthetic = null
+		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+		Heart?.heart_normalize()
 
 	restore_all_bodyparts()
 	restore_all_organs()
