@@ -1956,16 +1956,16 @@
 		to_chat(H, "<span class='notice'>Вы не умеете бить хвостом!</span>")
 		return FALSE
 	if(!IsAvailable())
-		to_chat(H, "<span class='notice'>Хвост слишком болит чтобы бить им ещё раз!</span>")
+		to_chat(H, "<span class='notice'>Хвост слишком болит чтобы бить им что-то ещё раз!</span>")
 		return FALSE
 	. = ..()
 
 /datum/action/cooldown/tailpunch/Activate()
-	to_chat(owner, "<span class='notice'>Вы попытаетесь ударить хвостом.</span>")
+	to_chat(owner, "<span class='notice'>Вы попытаетесь ударить что-либо хвостом.</span>")
 	active = TRUE
 
 /datum/action/cooldown/tailpunch/Deactivate()
-	to_chat(owner, "<span class='notice'>Вы не будете пытаться ударить хвостом.</span>")
+	to_chat(owner, "<span class='notice'>Вы не будете пытаться ударить что-либо хвостом.</span>")
 	active = FALSE
 
 /mob/living/carbon/human/ClickOn(atom/A, params)
@@ -2029,6 +2029,7 @@
 				continue
 			new dump_path(src.loc)
 			R.amount--
+			playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/datum/action/cooldown/tailpunch/tp in actions)
 		tp.active = FALSE
