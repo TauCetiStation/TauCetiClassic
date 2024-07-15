@@ -196,6 +196,7 @@
 #define TRAIT_BORK_SKILLCHIP      "bork_skillchip"
 #define TRAIT_MIMING              "miming"
 #define TRAIT_CAN_LEAP            "can_leap"
+#define TRAIT_TAILPUNCH       	  "can_tailpunch"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

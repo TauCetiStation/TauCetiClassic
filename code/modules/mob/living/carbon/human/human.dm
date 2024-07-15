@@ -1943,6 +1943,97 @@
 		return
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
 
+/datum/action/cooldown/tailpunch
+	name = "Switch Tailpunch"
+	button_icon_state = "tailpunch"
+	action_type = AB_INNATE
+	check_flags = AB_CHECK_ALIVE
+	cooldown_time = 200
+
+/datum/action/cooldown/tailpunch/Checks()
+	var/mob/living/carbon/human/H = owner
+	if(!HAS_TRAIT(H, TRAIT_TAILPUNCH))
+		to_chat(H, "<span class='notice'>Вы не умеете бить хвостом!</span>")
+		return FALSE
+	if(!IsAvailable())
+		to_chat(H, "<span class='notice'>Хвост слишком болит чтобы бить им ещё раз!</span>")
+		return FALSE
+	. = ..()
+
+/datum/action/cooldown/tailpunch/Activate()
+	to_chat(owner, "<span class='notice'>Вы попытаетесь ударить хвостом.</span>")
+	active = TRUE
+
+/datum/action/cooldown/tailpunch/Deactivate()
+	to_chat(owner, "<span class='notice'>Вы не будете пытаться ударить хвостом.</span>")
+	active = FALSE
+
+/mob/living/carbon/human/ClickOn(atom/A, params)
+	for(var/datum/action/cooldown/tailpunch/tp in actions)
+		if(tp.active && world.time > next_move)
+			tailpunch(A)
+			return
+	..()
+
+/mob/living/carbon/human/proc/tailpunch(atom/A)
+	if(A == src)
+		to_chat(src, "<span class='warning'>Вы не можете ударить себя своим же хвостом!</span>")
+		return
+	if(!in_range(src, A))
+		to_chat(src, "<span class='warning'>Цель должна находиться рядом!</span>")
+		return
+
+	face_atom(A)
+	do_attack_animation(A)
+	sleep(2)
+	set_dir(turn(dir, 180))
+	playsound(src, pick(SOUNDIN_PUNCH_VERYHEAVY), VOL_EFFECTS_MASTER)
+	sleep(1)
+
+	if(isfloorturf(A))
+		me_verb("бьёт хвостом по полу.")
+		SetNextMove(CLICK_CD_MELEE)
+		return
+
+	else if(isliving(A))
+		var/mob/living/L = A
+		if(a_intent == INTENT_HARM)
+			L.visible_message("<span class='danger'>\The [src] hit the [L] with his tail!</span>", "<span class='userdanger'>[src] hits you with his tail!</span>")
+			L.apply_damage(12, BRUTE, BP_GROIN)
+			L.throw_at(get_step(L, get_dir(src, L)), 2, 1, src, FALSE)
+			L.Stun(2)
+			L.Weaken(3)
+			Stun(1)
+			Weaken(2)
+		else
+			L.visible_message("<span class='danger'>\The [src] hooked a [L] with his tail!</span>", "<span class='userdanger'>[src] hacks you with his tail!</span>")
+			L.Stun(1)
+			L.Weaken(2)
+
+	else
+		visible_message("<span class='danger'>\The [src] hit the [A] with his tail!</span>", "<span class='userdanger'>You hit the [A] with your tail!</span>")
+
+		if(A.uses_integrity)
+			A.take_damage(12, BRUTE)
+
+		if(iswallturf(A))
+			Stun(1)
+			Weaken(2)
+			apply_damage(4, BRUTE, BP_GROIN)
+
+		if(istype(A, /obj/machinery/vending) && prob(20))
+			var/obj/machinery/vending/V = A
+			var/datum/data/vending_product/R = pick(V.product_records)
+			var/dump_path = R.product_path
+			if(!R.amount)
+				continue
+			new dump_path(src.loc)
+			R.amount--
+
+	for(var/datum/action/cooldown/tailpunch/tp in actions)
+		tp.active = FALSE
+		tp.StartCooldown()
+
 /mob/living/carbon/human/proc/IPC_change_screen()
 	set category = "IPC"
 	set name = "Change IPC Screen"

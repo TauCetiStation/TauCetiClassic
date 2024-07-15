@@ -410,15 +410,21 @@
 /datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.unathi_equip(H)
 
-/datum/species/unathi/on_gain(mob/living/carbon/human/M)
+/datum/species/unathi/on_gain(mob/living/carbon/human/H)
 	..()
-	M.verbs += /mob/living/carbon/human/proc/air_sample
-	M.r_belly = HEX_VAL_RED(base_color)
-	M.g_belly = HEX_VAL_GREEN(base_color)
-	M.b_belly = HEX_VAL_BLUE(base_color)
+	ADD_TRAIT(H, TRAIT_TAILPUNCH, ROUNDSTART_TRAIT)
+	var/datum/action/cooldown/tailpunch/A = new(H)
+	A.Grant(H)
+	H.verbs += /mob/living/carbon/human/proc/air_sample
+	H.r_belly = HEX_VAL_RED(base_color)
+	H.g_belly = HEX_VAL_GREEN(base_color)
+	H.b_belly = HEX_VAL_BLUE(base_color)
 
-/datum/species/unathi/on_loose(mob/living/M, new_species)
-	M.verbs -= /mob/living/carbon/human/proc/air_sample
+/datum/species/unathi/on_loose(mob/living/L, new_species)
+	REMOVE_TRAIT(L, TRAIT_TAILPUNCH, ROUNDSTART_TRAIT)
+	var/datum/action/cooldown/tailpunch/A = locate() in L.actions
+	qdel(A)
+	L.verbs -= /mob/living/carbon/human/proc/air_sample
 	..()
 
 /datum/species/tajaran
