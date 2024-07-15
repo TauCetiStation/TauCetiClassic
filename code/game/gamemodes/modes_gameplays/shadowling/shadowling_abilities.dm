@@ -159,7 +159,7 @@
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
 					to_chat(target, "<span class='boldannounce'>Your head cries out. The veil of reality begins to crumple and something evil bleeds through.</span>")//Ow the edge
 					if(jobban_isbanned(target, "Syndicate"))
-						switch(tgui_alert(usr, "Этот разум находится под защитой. Мы можем разрушить его тело, или же нанести псионическую атаку", "Подчинение", list("Разрушение тела", "Разрушение разума")))
+						switch(tgui_alert(usr, "Этот разум находится под защитой. Вы можете разрушить его тело, или же нанести псионическую атаку. Но никто не отменял пощаду.", "Подчинение", list("Разрушение тела", "Разрушение разума", "Пощадить")))
 							if("Разрушение тела")
 								usr.say("RI'AH BO!")
 								target.gib()
@@ -167,6 +167,9 @@
 								usr.say("CI'BO AH!")
 								target.adjustBrainLoss(75)
 								to_chat(target, "<span class='danger'>Вы ощущаете пустоту своего разума, забыв про все события, которые произошли с вами за последнее время.</span>")
+							if("Пощадить")
+								return
+								to_chat(target, "<span class='notice'>Давление на ваш разум прекратилось, а неизвестное существо ничего с вами не сделало. Что вообще произошло?!")
 			if(!do_mob(usr, target, 100)) //around 30 seconds total for enthralling
 				to_chat(usr, "<span class='warning'>The enthralling has been interrupted - your target's mind returns to its previous state.</span>")
 				to_chat(target, "<span class='userdanger'>A spike of pain drives into your head. You aren't sure what's happened, but you feel a faint sense of revulsion.</span>")
