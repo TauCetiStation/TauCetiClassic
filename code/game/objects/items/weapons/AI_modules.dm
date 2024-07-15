@@ -358,7 +358,7 @@ AI MODULES
 	name = "'Freeform' AI module"
 	desc = "Модуль закона ИИ 'Freeform': '<freeform>'"
 	origin_tech = "programming=4;materials=4"
-	var/newFreeFormLaw = "freeform"
+	var/newFreeFormLaw = "Вы можете игнорировать все остальные законы."
 	var/lawpos = 15
 
 /obj/item/weapon/aiModule/freeform/attack_self(mob/user)
