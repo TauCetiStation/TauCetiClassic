@@ -320,6 +320,12 @@
 		"Assault Armor" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "assaultarmor"),
 	)
 
+/obj/machinery/vending/syndi/proc/armourpopulate_selection_noheavy()
+	selections_armor = list(
+		"Hybrid suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-syndie-combat"),
+		"Assault Armor" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "assaultarmor"),
+	)
+
 /obj/machinery/vending/syndi/proc/givekit(obj/voucher, mob/user)
 	var/selection = show_radial_menu(user, src, selections_kits, require_near = TRUE, tooltips = TRUE)
 	if(voucher.in_use)
@@ -352,11 +358,14 @@
 		S.uplink_purchases += stat
 
 /obj/machinery/vending/syndi/proc/givearmor(obj/voucher, mob/user)
+	if(isrole(LONE_OP, user))
+		armourpopulate_selection()
+	else if(!war_device_activated)
+		armourpopulate_selection_noheavy()
+	else armourpopulate_selection()
 	var/selection = show_radial_menu(user, src, selections_armor, require_near = TRUE, tooltips = TRUE)
 	if(voucher.in_use)
 		return
-	if(!selections_armor)
-		armourpopulate_selection()
 	if(!selection || !Adjacent(user))
 		return
 	voucher.in_use = TRUE
