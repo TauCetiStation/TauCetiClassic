@@ -166,24 +166,6 @@ var/global/list/blacklisted_builds = list(
 	..() // Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 
-/client/proc/handle_spam_prevention(message, mute_type)
-	if(global_message_cooldown && (world.time < last_message_time + 5))
-		return 1
-	if(config.automute_on && !holder && src.last_message == message)
-		src.last_message_count++
-		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			to_chat(src, "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>")
-			spam_automute(src.mob, mute_type)
-			return 1
-		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			to_chat(src, "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>")
-			return 0
-	else
-		last_message_time = world.time
-		last_message = message
-		src.last_message_count = 0
-		return 0
-
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
 	if(filelength > UPLOAD_LIMIT)
@@ -198,44 +180,23 @@ var/global/list/blacklisted_builds = list(
 	fileaccess_timer = world.time + FTPDELAY	*/
 	return 1
 
-/proc/spam_automute(mob/M as mob, mute_type)
-	if(!config.automute_on)
-		return
-
-	if(!M.client)
-		return
-
-	var/muteunmute = "auto-muted"
-	var/mute_string = get_mute_text(mute_type)
-
-	if(!mute_string)
-		CRASH("Can't parse mute type: [mute_type]")
-
-	M.client.prefs.muted |= mute_type
-	log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]")
-	message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(M)] from [mute_string].")
-	to_chat(M, "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin.")
-	feedback_add_details("admin_verb","AUTOMUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/proc/get_mute_text(mute_type)
-	switch(mute_type)
-		if(MUTE_IC)
-			. = "IC (say and emote)"
-		if(MUTE_OOC)
-			. = "OOC"
-		if(MUTE_PRAY)
-			. = "pray"
-		if(MUTE_ADMINHELP)
-			. = "adminhelp, admin PM and ASAY"
-		if(MUTE_MENTORHELP)
-			. = "mentorhelp and mentor PM"
-		if(MUTE_DEADCHAT)
-			. = "deadchat and DSAY"
-		if(MUTE_ALL)
-			. = "everything"
-		else
-			return
-
+/client/proc/handle_spam_prevention(message, type)
+	if(global_message_cooldown && (world.time < last_message_time + 5))
+		return 1
+	if(config.automute_on && !holder && src.last_message == message)
+		src.last_message_count++
+		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
+			to_chat(src, "<span class='warning'>You have exceeded the spam filter limit for identical messages. An auto-mute will be applied.</span>")
+			set_admin_cooldown(mob, type, 20 MINUTES, "ANTI-SPAM")
+			return 1
+		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
+			to_chat(src, "<span class='warning'>You are nearing the spam filter limit for identical messages.</span>")
+			return 0
+	else
+		last_message_time = world.time
+		last_message = message
+		src.last_message_count = 0
+		return 0
 
 	///////////
 	//CONNECT//

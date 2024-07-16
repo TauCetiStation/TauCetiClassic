@@ -192,8 +192,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out";
-	dir = 4
+	id = "Out"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -236,8 +235,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out2";
-	dir = 4
+	id = "Out2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -421,7 +419,7 @@
 "aQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "aR" = (
 /obj/machinery/vending/coffee,
@@ -727,7 +725,7 @@
 	dir = 4;
 	id = "stationscrap"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "bx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -749,7 +747,7 @@
 	id = "stationscrap"
 	},
 /obj/random/misc/all,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "bz" = (
 /obj/machinery/disposal/deliveryChute{
@@ -759,7 +757,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "bA" = (
 /turf/simulated/wall/r_wall,
@@ -805,7 +803,7 @@
 	dir = 1;
 	id = "stationscrap"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "bG" = (
 /turf/simulated/floor{
@@ -831,7 +829,7 @@
 	dir = 8;
 	id = "stationscrap"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "bJ" = (
 /obj/machinery/conveyor{
@@ -843,7 +841,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "bK" = (
 /obj/structure/cable/yellow{
@@ -869,7 +867,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "bN" = (
 /obj/structure/window/fulltile/reinforced{
@@ -898,8 +896,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out2";
-	dir = 4
+	id = "Out2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -972,7 +969,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "bW" = (
 /obj/structure/cable/yellow,
@@ -1299,7 +1296,7 @@
 	id = "stationscrap"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cB" = (
 /turf/simulated/floor{
@@ -1312,7 +1309,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/trunk,
-/turf/simulated/wall,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cD" = (
 /obj/machinery/conveyor{
@@ -1320,7 +1317,7 @@
 	id = "stationscrap"
 	},
 /obj/item/weapon/scrap_lump,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cE" = (
 /obj/machinery/door/airlock/mining/glass{
@@ -1509,7 +1506,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cO" = (
 /obj/machinery/conveyor{
@@ -1519,7 +1516,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cP" = (
 /obj/machinery/meter,
@@ -1536,7 +1533,7 @@
 	},
 /obj/structure/scrap_cube,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cR" = (
 /obj/structure/cable/yellow{
@@ -1555,7 +1552,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cT" = (
 /obj/effect/decal/turf_decal{
@@ -1582,7 +1579,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cV" = (
 /obj/machinery/power/port_gen/pacman/scrap,
@@ -1593,7 +1590,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1646,10 +1643,10 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cY" = (
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "cZ" = (
 /obj/machinery/light/small,
@@ -1692,13 +1689,13 @@
 	id = "stationscrap"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dd" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "de" = (
 /obj/machinery/conveyor{
@@ -1707,7 +1704,7 @@
 	},
 /obj/item/stack/sheet/refined_scrap,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "df" = (
 /obj/machinery/door/airlock/engineering{
@@ -1830,27 +1827,27 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dm" = (
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dn" = (
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "do" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/foods/food_trash,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "dp" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "dq" = (
 /obj/structure/cable{
@@ -1862,7 +1859,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dr" = (
 /obj/machinery/floodlight,
@@ -1879,7 +1876,7 @@
 	custom_smartlight_preset = "Cargo";
 	pixel_x = 27
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "ds" = (
 /obj/machinery/alarm{
@@ -2006,21 +2003,21 @@
 "dC" = (
 /obj/random/foods/food_trash,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "dD" = (
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dE" = (
 /obj/structure/closet/crate/engi,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dF" = (
 /obj/structure/closet/crate/engi,
@@ -2147,11 +2144,11 @@
 "dL" = (
 /obj/effect/decal/cleanable/spiderling_remains,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "dM" = (
 /obj/structure/scrap_beacon,
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "dN" = (
 /obj/structure/cable{
@@ -2169,7 +2166,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dP" = (
 /obj/machinery/door/airlock/mining/glass{
@@ -2188,7 +2185,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dR" = (
 /obj/machinery/alarm{
@@ -2242,18 +2239,18 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dW" = (
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dX" = (
 /obj/item/weapon/scrap_lump,
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "dY" = (
 /obj/machinery/conveyor{
@@ -2261,13 +2258,13 @@
 	id = "stationscrap"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "dZ" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "ea" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/blue{
@@ -2283,7 +2280,7 @@
 /obj/item/weapon/scrap_lump,
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "ec" = (
 /obj/structure/disposalpipe/segment{
@@ -2294,7 +2291,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "ed" = (
 /obj/structure/cable{
@@ -2349,7 +2346,7 @@
 /area/station/hallway/secondary/exit)
 "ef" = (
 /obj/structure/closet,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eg" = (
 /obj/structure/closet/crate,
@@ -2357,11 +2354,11 @@
 	dir = 8;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eh" = (
 /obj/structure/closet/crate,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "ei" = (
 /obj/structure/disposalpipe/segment{
@@ -2371,7 +2368,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "ej" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -2385,7 +2382,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "ek" = (
 /obj/machinery/light/smart{
@@ -2526,14 +2523,14 @@
 /area/station/engineering/atmos)
 "ey" = (
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "ez" = (
 /obj/machinery/computer/mech_bay_power_console,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eA" = (
 /obj/mecha/working/ripley,
@@ -2543,27 +2540,27 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "eC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "eD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/airless/ceiling,
+/turf/simulated/floor,
 /area/station/cargo/recycler)
 "eE" = (
 /obj/structure/disposalpipe/segment{
@@ -2573,7 +2570,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eF" = (
 /obj/structure/closet/crate{
@@ -2607,7 +2604,7 @@
 	id = "stationscrap"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eH" = (
 /obj/structure/cable{
@@ -2631,7 +2628,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eJ" = (
 /obj/structure/disposalpipe/segment{
@@ -2658,7 +2655,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2666,21 +2663,21 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eO" = (
 /obj/random/misc/all,
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eP" = (
 /obj/structure/closet/secure_closet/engineering_personal{
@@ -2709,11 +2706,11 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eR" = (
 /obj/item/weapon/scrap_lump,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eS" = (
 /obj/machinery/light/small{
@@ -2736,18 +2733,18 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eU" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2756,7 +2753,7 @@
 	dir = 8;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eX" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
@@ -2776,7 +2773,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "eZ" = (
 /obj/machinery/vending/coffee,
@@ -2790,7 +2787,7 @@
 	dir = 4;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "fb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -2821,7 +2818,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "fe" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2829,12 +2826,12 @@
 	dir = 1;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "ff" = (
 /obj/random/foods/food_trash,
 /obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "fg" = (
 /obj/structure/cable{
@@ -2852,7 +2849,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "fh" = (
 /obj/machinery/door/firedoor{
@@ -3055,7 +3052,7 @@
 	dir = 1;
 	icon_state = "warn_corner"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "fv" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
@@ -3997,8 +3994,7 @@
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "Skynet_launch";
-	name = "Mech Bay";
-	dir = 8
+	name = "Mech Bay"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -5880,7 +5876,7 @@
 /area/station/engineering/equip)
 "Bd" = (
 /obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "Bg" = (
 /obj/random/vending/snack,
@@ -8383,8 +8379,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out2";
-	dir = 4
+	id = "Out2"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -8622,8 +8617,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out";
-	dir = 4
+	id = "Out"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -9229,8 +9223,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Out";
-	dir = 4
+	id = "Out"
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
