@@ -25,6 +25,8 @@
 	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm"
 	item_state = "qm"
+	item_state_world = "qm_w"
+
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 
@@ -33,6 +35,8 @@
 	desc = "Shooooorts! They're comfy and easy to wear!"
 	icon_state = "cargotech"
 	item_state = "cargo"
+	item_state_world = "cargotech_w"
+
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
@@ -41,6 +45,8 @@
 	desc = "Stinks."
 	icon_state = "recycler"
 	item_state = "recycler"
+	item_state_world = "recycler_w"
+
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
@@ -181,6 +187,7 @@
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	item_state = "miner"
+	item_state_world = "miner_w"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/rank/barber
