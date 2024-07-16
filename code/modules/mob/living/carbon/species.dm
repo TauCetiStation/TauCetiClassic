@@ -22,6 +22,8 @@
 	var/total_health = 100                               // Point at which the mob will enter crit.
 	var/datum/unarmed_attack/unarmed                                          // For empty hand harm-intent attack
 	var/unarmed_type = /datum/unarmed_attack
+	var/datum/action/race_ability = null
+	var/race_ability_trait = null
 	var/brute_mod = 1                                    // Physical damage multiplier (0 == immunity).
 	var/burn_mod = 1                                     // Burn damage multiplier.
 	var/oxy_mod = 1                                      // Oxyloss multiplier.
@@ -280,6 +282,11 @@
 	H.exhale_gas = exhale_type
 	H.poison_gas = poison_type
 
+	if(race_ability && race_ability_trait)
+		ADD_TRAIT(H, race_ability_trait, ROUNDSTART_TRAIT)
+		var/datum/action/A = new race_ability(H)
+		A.Grant(H)
+
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 	if(default_mood_event)
@@ -295,6 +302,11 @@
 
 	for(var/emote in emotes)
 		H.clear_emote(emote)
+
+	if(race_ability && race_ability_trait)
+		REMOVE_TRAIT(H, race_ability_trait, ROUNDSTART_TRAIT)
+		var/datum/action/A = locate(race_ability) in H.actions
+		qdel(A)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "species")
@@ -360,6 +372,8 @@
 	language = LANGUAGE_SINTAUNATHI
 	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
+	race_ability = /datum/action/cooldown/tailpunch
+	race_ability_trait = TRAIT_TAILPUNCH
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
@@ -412,18 +426,12 @@
 
 /datum/species/unathi/on_gain(mob/living/carbon/human/H)
 	..()
-	ADD_TRAIT(H, TRAIT_TAILPUNCH, ROUNDSTART_TRAIT)
-	var/datum/action/cooldown/tailpunch/A = new(H)
-	A.Grant(H)
 	H.verbs += /mob/living/carbon/human/proc/air_sample
 	H.r_belly = HEX_VAL_RED(base_color)
 	H.g_belly = HEX_VAL_GREEN(base_color)
 	H.b_belly = HEX_VAL_BLUE(base_color)
 
 /datum/species/unathi/on_loose(mob/living/L, new_species)
-	REMOVE_TRAIT(L, TRAIT_TAILPUNCH, ROUNDSTART_TRAIT)
-	var/datum/action/cooldown/tailpunch/A = locate() in L.actions
-	qdel(A)
 	L.verbs -= /mob/living/carbon/human/proc/air_sample
 	..()
 
@@ -573,6 +581,8 @@
 
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
+	race_ability = /datum/action/leap
+	race_ability_trait = TRAIT_CAN_LEAP
 	dietflags = DIET_OMNI
 
 	cold_level_1 = 80
@@ -659,24 +669,6 @@
 /datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.vox_equip(H)
 
-/datum/species/vox/on_gain(mob/living/carbon/human/H)
-	if(name != VOX_ARMALIS)
-		ADD_TRAIT(H, TRAIT_CAN_LEAP, ROUNDSTART_TRAIT)
-		var/datum/action/leap/A = new(H)
-		A.Grant(H)
-	else
-		H.verbs += /mob/living/carbon/human/proc/gut
-	..()
-
-/datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
-	if(name != VOX_ARMALIS)
-		REMOVE_TRAIT(H, TRAIT_CAN_LEAP, ROUNDSTART_TRAIT)
-		var/datum/action/leap/A = locate() in H.actions
-		qdel(A)
-	else
-		H.verbs -= /mob/living/carbon/human/proc/gut
-	..()
-
 // At 25 damage - no protection at all.
 /datum/species/vox/get_pressure_protection(mob/living/carbon/human/H)
 	var/damage = 0
@@ -700,6 +692,8 @@
 	damage_mask = FALSE
 	language = LANGUAGE_VOXPIDGIN
 	unarmed_type = /datum/unarmed_attack/claws/armalis
+	race_ability = null
+	race_ability_trait = null
 	dietflags = DIET_OMNI	//should inherit this from vox, this is here just in case
 
 	warning_low_pressure = 50
@@ -751,6 +745,14 @@
 	has_gendered_icons = TRUE
 
 	skeleton_type = SKELETON_VOX
+
+/datum/species/vox/armalis/on_gain(mob/living/carbon/human/H)
+	H.verbs += /mob/living/carbon/human/proc/gut
+	..()
+
+/datum/species/vox/armalis/on_loose(mob/living/carbon/human/H, new_species)
+	H.verbs -= /mob/living/carbon/human/proc/gut
+	..()
 
 /datum/species/diona
 	name = DIONA
