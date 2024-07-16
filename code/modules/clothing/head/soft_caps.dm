@@ -143,3 +143,4 @@
 	item_state_inventory = "cargosoft"
 	item_state_world = "cargosoft_world"
 	cap_color = "cargo"
+
