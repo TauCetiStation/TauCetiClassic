@@ -23,7 +23,6 @@
 /obj/item/device/flashlight/atom_init()
 	. = ..()
 	update_brightness()
-	update_item_actions()
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
