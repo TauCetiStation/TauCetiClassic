@@ -79,8 +79,11 @@
 	if(!isliving(hit_atom))
 		return
 	var/mob/living/L = hit_atom
-	if(L.has_status_effect(STATUS_EFFECT_ALERTNESS) && L.stat == CONSCIOUS)
+	if(L.has_status_effect(STATUS_EFFECT_ALERTNESS) && !L.incapacitated())
 		throw_at(throwingdatum.thrower, throw_range, throw_speed, L) // throw bola back
+		L.visible_message("<span class='danger'>\The [L] throws \the [src] away from him!</span>",
+		                "<span class='notice'>You're pushing \the [src] away from you!</span>",
+						"<span class='danger'>You hear something flying at a very fast speed.</span>")
 		return
 	if(!iscarbon(L))
 		L.Weaken(weaken)
