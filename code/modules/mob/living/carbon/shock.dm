@@ -1,5 +1,6 @@
 /mob/living/carbon
 	var/traumatic_shock = 0
+	var/painkiller_overlay_time = 0
 
 // proc to find out in how much pain the mob is at the moment
 /mob/living/carbon/proc/updateshock()
@@ -25,6 +26,8 @@
 
 	if(traumatic_shock < 0)
 		traumatic_shock = 0
+	if(painkiller_overlay_time > 0)
+		painkiller_overlay_time--
 
 	play_pain_sound()
 
@@ -77,14 +80,17 @@
 			last_pain_emote_sound += (HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) ? rand(5 SECONDS, 10 SECONDS) : rand(10 SECONDS, 20 SECONDS))
 
 /mob/living/carbon/proc/painkiller_byeffect(chance, yawn_chance)
+	if(stat != CONSCIOUS)
+		return
 	if(prob(chance))
 		adjustBlurriness(3)
 		drowsyness += 3
+		painkiller_overlay_time += 3
 		if(prob(yawn_chance))
 			emote("yawn")
 		else
-			losebreath = max(losebreath + 10, 10)
-		to_chat(src, "<span class='italics'>[pick("Вы чувствуете себя расслабленным.", "Вы чувствуете себя размякшим.", "Вы ощущаете сонливость.", "Вы чувствуете себя уставшим.", "Вы чувствуете, как силы покидают вас.", "Вам трудно дышать.", "Вам сложно стоять на ногах.")]</span>")
+			losebreath = max(losebreath + 3, 3)
+		to_chat(src, "<span class='italics'>[pick("Вы невольно закрываете глаза.", "Вы чувствуете себя подавленным.", "Вы чувствуете себя расслабленным.", "Вы чувствуете себя размякшим.", "Вы ощущаете сонливость.", "Вы чувствуете себя уставшим.", "Вы чувствуете, как силы покидают вас.", "Вам сложно держаться на ногах.")]</span>")
 
 /mob/living/carbon/proc/get_painkiller_effect()
 	var/painkiller_effect = 1.0
@@ -96,10 +102,8 @@
 		painkiller_effect *= min(0.1 * painkiller_multiplier, 1)
 	else if(reagents.has_reagent("oxycodone"))
 		painkiller_effect *= min(0.15 * painkiller_multiplier, 1)
-		painkiller_byeffect(5, 50)
 	else if(reagents.has_reagent("tramadol"))
 		painkiller_effect *= min(0.25 * painkiller_multiplier, 1)
-		painkiller_byeffect(3, 75)
 	else if(reagents.has_reagent("space_drugs"))
 		painkiller_effect *= min(0.4 * painkiller_multiplier, 1)
 	else if(reagents.has_reagent("paracetamol"))

@@ -35,16 +35,12 @@
 		if(embedded_flag)
 			handle_embedded_objects() // Moving with objects stuck in you can cause bad times.
 
-		var/health_deficiency = (100 - health + halloss)
-		if(health_deficiency >= 40)
-			tally += health_deficiency / 25
+		if(traumatic_shock >= 40)
+			tally += traumatic_shock * 0.25
 
 		var/hungry = 500 - get_satiation()
 		if(hungry >= 350) // Slow down if nutrition <= 150
 			tally += hungry / 250 // 1,4 - 2
-
-		if(traumatic_shock >= 10)
-			tally += round(log(3.5, traumatic_shock), 0.1) // (40 = ~3.0) and (starts at ~1.83)
 
 		if(bodytemperature < species.cold_level_1)
 			tally += 1.75 * (species.cold_level_1 - bodytemperature) / 10

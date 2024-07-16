@@ -111,6 +111,9 @@
 	M.adjustHalLoss(-4)
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.painkiller_byeffect(5, 75)
 
 /datum/reagent/oxycodone
 	name = "Oxycodone"
@@ -128,6 +131,9 @@
 	if(volume > overdose)
 		M.adjustDrugginess(1)
 		M.hallucination = max(M.hallucination, 3)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.painkiller_byeffect(10, 50)
 
 /datum/reagent/sterilizine
 	name = "Sterilizine"

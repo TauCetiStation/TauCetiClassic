@@ -911,7 +911,11 @@ var/global/list/tourette_bad_words= list(
 				else
 					icon_num = 5
 
-			healthdoll.add_overlay(image('icons/hud/screen_gen.dmi',"[BP.body_zone][icon_num]"))
+			if(get_painkiller_effect() <= 0.3)
+				healthdoll.icon_state = "health_numb"
+				healthdoll.cut_overlays()
+			else
+				healthdoll.add_overlay(image('icons/hud/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
 	if(!healths)
 		return
@@ -977,7 +981,7 @@ var/global/list/tourette_bad_words= list(
 			clear_fullscreen("oxy")
 
 		//Fire and Brute damage overlay (BSSR)
-		var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+		var/hurtdamage = ((getBruteLoss() + getFireLoss() + damageoverlaytemp) * get_painkiller_effect())
 		damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
 		if(hurtdamage)
 			var/severity = 0
@@ -1097,6 +1101,11 @@ var/global/list/tourette_bad_words= list(
 	else
 		animate(client, color = null, time = 5)
 
+	if(painkiller_overlay_time)
+		animate(client, color = PAINKILLERS_FILTER, time = 5)
+	else
+		animate(client, color = null, time = 5)
+
 	return TRUE
 
 /mob/living/carbon/human/proc/handle_random_events()
@@ -1161,7 +1170,7 @@ var/global/list/tourette_bad_words= list(
 	if(analgesic && !reagents.has_reagent("prismaline"))
 		return // analgesic avoids all traumatic shock temporarily
 
-	if(traumatic_shock == 10)
+	if(traumatic_shock == 20)
 		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
 
 	if(traumatic_shock >= 30)
