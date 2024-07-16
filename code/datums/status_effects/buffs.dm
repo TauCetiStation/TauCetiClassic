@@ -49,7 +49,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/alertness
 	status_type = STATUS_EFFECT_REFRESH
 
-/datum/status_effect/swarm_gift/on_creation(mob/living/new_owner, duration)
+/datum/status_effect/alertness/on_creation(mob/living/new_owner, duration)
 	. = ..()
 	if(!.)
 		return

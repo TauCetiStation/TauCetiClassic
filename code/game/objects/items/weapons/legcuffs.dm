@@ -81,6 +81,7 @@
 	var/mob/living/L = hit_atom
 	if(L.has_status_effect(STATUS_EFFECT_ALERTNESS))
 		throw_at(throwingdatum.thrower, 7, 4, L) // throw bola back
+		return
 	if(!iscarbon(L))
 		L.Weaken(weaken)
 		qdel(src)
@@ -94,14 +95,14 @@
 		C.Weaken(weaken)
 
 	if(isxenoadult(C) && C.stat == CONSCIOUS)
-		for(var/mob/living/carbon/xenomorph/humanoid/XH in range(7))
-			XH.apply_status_effect(STATUS_EFFECT_ALERTNESS, 1 MINUTE)
 		C.visible_message("<span class='danger'>\The [src] ensnares [C]!</span>",
-		                "<span class='userdanger'>\The [src] ensnares you!</span>",
-						"<span class='notice'>You hear something flying at a very fast speed.</span>")
+		    "<span class='userdanger'>\The [src] ensnares you!</span>",
+			"<span class='notice'>You hear something flying at a very fast speed.</span>")
 		if(!isxenoqueen(C))
-			C.Stun(weaken)
-			C.Weaken(weaken)
+			C.Stun(weaken, TRUE)
+			C.Weaken(weaken, TRUE)
+		for(var/mob/living/carbon/xenomorph/humanoid/XH in range(7, C))
+			XH.apply_status_effect(STATUS_EFFECT_ALERTNESS, 1 MINUTE)
 		qdel(src)
 
 //traitor variant
