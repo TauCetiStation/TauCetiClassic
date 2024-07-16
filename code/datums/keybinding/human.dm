@@ -44,5 +44,5 @@
 
 /datum/keybinding/human/race_ability/down(client/user)
 	var/mob/living/carbon/human/H = user.mob
-	var/datum/action/A = locate(H.race_ability) in H.actions
+	var/datum/action/A = locate(H.species.race_ability) in H.actions
 	A.Trigger()
