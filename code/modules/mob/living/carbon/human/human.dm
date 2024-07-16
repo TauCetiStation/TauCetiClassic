@@ -2006,13 +2006,13 @@
 	else if(isliving(A))
 		var/mob/living/L = A
 		// HARM + MASTER_MELEE_SKILL = SOME DAMAGE
-		if(is_skill_competent(src, list(/datum/skill/melee = SKILL_LEVEL_MASTER)) && a_intent == INTENT_HARM)
+		if(is_skill_competent(src, list(/datum/skill/police = SKILL_LEVEL_MASTER)) && a_intent == INTENT_HARM)
 			L.visible_message("<span class='danger'>\The [src] hit the [L] with his tail!</span>", "<span class='userdanger'>[src] hits you with his tail!</span>")
-			L.apply_damage(16, BRUTE, BP_CHEST)
+			L.apply_damage(12, BRUTE, BP_CHEST)
 			L.throw_at(get_step(L, get_dir(src, L)), 2, 1, src, FALSE)
-			L.Weaken(2)
+			L.Weaken(1)
 		// PUSH + TRAINED_MELEE_SKILL = WEAK UNDERCUT
-		else if(is_skill_competent(src, list(/datum/skill/melee = SKILL_LEVEL_TRAINED)) && a_intent == INTENT_PUSH)
+		else if(is_skill_competent(src, list(/datum/skill/police = SKILL_LEVEL_TRAINED)) && a_intent == INTENT_PUSH)
 			L.visible_message("<span class='danger'>\The [src] hooked a [L] with his tail!</span>", "<span class='userdanger'>[src] hacks you with his tail!</span>")
 			L.Weaken(1)
 		// GRAB = KNOCK DOWN BY YOURSELF
@@ -2027,7 +2027,9 @@
 				L.ExtinguishMob()
 			else
 				L.visible_message("<span class='notice'>[src] patted his tail on [L] back!</span>", "<span class='notice'>[src] patted his tail on your back.</span>")
-				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, src)
+				var/datum/component/mood/mood = L.GetComponent(/datum/component/mood)
+				if(mood)
+					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, src)
 			L.adjustHalLoss(-5)
 		// PUSH/HARM + NON_MELEE_SKILL = JUST STRONG PUNCH
 		else
