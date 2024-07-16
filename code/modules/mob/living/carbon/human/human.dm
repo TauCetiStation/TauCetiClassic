@@ -2024,9 +2024,8 @@
 		if(istype(A, /obj/machinery/vending) && prob(20))
 			var/obj/machinery/vending/V = A
 			var/datum/data/vending_product/R = pick(V.product_records)
-			var/dump_path = R.product_path
 			if(R.amount)
-				new dump_path(src.loc)
+				new R.product_path(loc)
 				R.amount--
 				playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 
