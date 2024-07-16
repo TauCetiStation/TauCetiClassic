@@ -80,7 +80,7 @@
 		return
 	var/mob/living/L = hit_atom
 	if(L.has_status_effect(STATUS_EFFECT_ALERTNESS) && L.stat == CONSCIOUS)
-		throw_at(throwingdatum.thrower, throw_range * 2, throw_speed, L) // throw bola back
+		throw_at(throwingdatum.thrower, throw_range, throw_speed, L) // throw bola back
 		return
 	if(!iscarbon(L))
 		L.Weaken(weaken)
