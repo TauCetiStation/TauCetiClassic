@@ -1983,7 +1983,7 @@
 		to_chat(src, "<span class='warning'>Цель должна находиться рядом!</span>")
 		return
 	if(restrained())
-		var/mob/M = mob.pulledby
+		var/mob/M = pulledby
 		if(M)
 			to_chat(src, "<span class='warning'>Ваши руки связаны и вас насильно удерживают!</span>")
 			return
