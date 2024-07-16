@@ -11,7 +11,7 @@
 	g_amt = 20
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_flashlight)
 	light_color = "#ffffff"
-	light_power = 0.6
+	light_power = 1
 	var/on = 0
 	var/button_sound = 'sound/items/flashlight.ogg' // Sound when using light
 	var/brightness_on = 5 //luminosity when on
@@ -169,6 +169,7 @@
 	desc = "Маленькая лампа."
 	icon_state = "lampsmall"
 	brightness_on = 3
+	light_power = 0.6
 	light_color = "#ffb46b"
 
 	glow_icon_state = "lampsmall"
