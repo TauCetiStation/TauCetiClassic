@@ -1944,31 +1944,31 @@
 	to_chat(src,"<span class='warning'>Well... I need my mask back.</span>")
 
 /datum/action/cooldown/tailpunch
-	name = "Switch Tailpunch"
+	name = "Использовать хвост"
 	button_icon_state = "tailpunch"
 	action_type = AB_INNATE
 	check_flags = AB_CHECK_ALIVE
-	cooldown_time = 200
+	cooldown_time = 600
 
 /datum/action/cooldown/tailpunch/Checks()
 	var/mob/living/carbon/human/H = owner
 	if(!HAS_TRAIT(H, TRAIT_TAILPUNCH))
-		to_chat(H, "<span class='notice'>Вы не умеете бить хвостом!</span>")
+		to_chat(H, "<span class='notice'>Вы не умеете пользоваться хвостом!</span>")
 		return FALSE
 	if(!IsAvailable())
-		to_chat(H, "<span class='notice'>Хвост слишком болит чтобы бить им что-то ещё раз!</span>")
+		to_chat(H, "<span class='notice'>Хвост слишком болит чтобы делать им что-то ещё раз!</span>")
 		return FALSE
 	. = ..()
 
 /datum/action/cooldown/tailpunch/Activate()
-	to_chat(owner, "<span class='notice'>Вы попытаетесь ударить что-либо хвостом.</span>")
+	to_chat(owner, "<span class='notice'>Вы попытаетесь сделать что-либо хвостом при нажатии колёсика мыши.</span>")
 	active = TRUE
 
 /datum/action/cooldown/tailpunch/Deactivate()
-	to_chat(owner, "<span class='notice'>Вы не будете пытаться ударить что-либо хвостом.</span>")
+	to_chat(owner, "<span class='notice'>Вы не будете пытаться делать что-либо хвостом.</span>")
 	active = FALSE
 
-/mob/living/carbon/human/ClickOn(atom/A, params)
+/mob/living/carbon/human/MiddleClickOn(atom/A, params)
 	for(var/datum/action/cooldown/tailpunch/tp in actions)
 		if(tp.active && world.time > next_move)
 			tailpunch(A)
@@ -1977,10 +1977,18 @@
 
 /mob/living/carbon/human/proc/tailpunch(atom/A)
 	if(A == src)
-		to_chat(src, "<span class='warning'>Вы не можете ударить себя своим же хвостом!</span>")
+		to_chat(src, "<span class='warning'>Вы не можете использовать на себя свой же хвост!</span>")
 		return
 	if(!in_range(src, A))
 		to_chat(src, "<span class='warning'>Цель должна находиться рядом!</span>")
+		return
+	if(restrained())
+		var/mob/M = mob.pulledby
+		if(M)
+			to_chat(src, "<span class='warning'>Ваши руки связаны и вас насильно удерживают!</span>")
+			return
+	if(buckled)
+		to_chat(src, "<span class='warning'>Вы пристёгнуты и ваши движения скованы!</span>")
 		return
 
 	face_atom(A)
@@ -1997,19 +2005,34 @@
 
 	else if(isliving(A))
 		var/mob/living/L = A
-		if(a_intent == INTENT_HARM)
+		// HARM + MASTER_MELEE_SKILL = SOME DAMAGE
+		if(is_skill_competent(src, list(/datum/skill/melee = SKILL_LEVEL_MASTER)) && a_intent == INTENT_HARM)
+			L.visible_message("<span class='danger'>\The [src] hit the [L] with his tail!</span>", "<span class='userdanger'>[src] hits you with his tail!</span>")
+			L.apply_damage(16, BRUTE, BP_CHEST)
+			L.throw_at(get_step(L, get_dir(src, L)), 2, 1, src, FALSE)
+			L.Weaken(2)
+		// PUSH + TRAINED_MELEE_SKILL = WEAK UNDERCUT
+		else if(is_skill_competent(src, list(/datum/skill/melee = SKILL_LEVEL_TRAINED)) && a_intent == INTENT_PUSH)
+			L.visible_message("<span class='danger'>\The [src] hooked a [L] with his tail!</span>", "<span class='userdanger'>[src] hacks you with his tail!</span>")
+			L.Weaken(1)
+		// GRAB = KNOCK DOWN BY YOURSELF
+		else if(a_intent == INTENT_GRAB)
+			L.visible_message("<span class='danger'>\The [src] knocked the [L] down by himself!</span>", "<span class='userdanger'>[src] knocked you down by yourself!</span>")
+			L.Weaken(2)
+			Weaken(2)
+		// HELP = EXTINGUISH FIRE / MAKE HIM FEEL BETTER
+		else if(a_intent == INTENT_HELP)
+			if(on_fire)
+				L.visible_message("<span class='notice'>[src] put out the fire on [L] with his tail!</span>", "<span class='notice'>[src] put out the fire on you with his tail.</span>")
+				L.ExtinguishMob()
+			else
+				L.visible_message("<span class='notice'>[src] patted his tail on [L] back!</span>", "<span class='notice'>[src] patted his tail on your back.</span>")
+				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
+			L.adjustHalLoss(-5)
+		// PUSH/HARM + NON_MELEE_SKILL = JUST STRONG PUNCH
+		else
 			L.visible_message("<span class='danger'>\The [src] hit the [L] with his tail!</span>", "<span class='userdanger'>[src] hits you with his tail!</span>")
 			L.apply_damage(12, BRUTE, BP_GROIN)
-			L.throw_at(get_step(L, get_dir(src, L)), 2, 1, src, FALSE)
-			L.Stun(2)
-			L.Weaken(3)
-			Stun(1)
-			Weaken(2)
-		else
-			L.visible_message("<span class='danger'>\The [src] hooked a [L] with his tail!</span>", "<span class='userdanger'>[src] hacks you with his tail!</span>")
-			L.Stun(1)
-			L.Weaken(2)
-
 	else
 		visible_message("<span class='danger'>\The [src] hit the [A] with his tail!</span>", "<span class='userdanger'>You hit the [A] with your tail!</span>")
 
@@ -2021,7 +2044,12 @@
 			Weaken(2)
 			apply_damage(4, BRUTE, BP_GROIN)
 
-		if(istype(A, /obj/machinery/vending) && prob(20))
+		else if(istype(A, /obj/fire))
+			var/obj/fire/F = A
+			if(F.firelevel < 2.5)
+				qdel(A)
+
+		else if(istype(A, /obj/machinery/vending) && prob(20))
 			var/obj/machinery/vending/V = A
 			var/datum/data/vending_product/R = pick(V.product_records)
 			if(R.amount)
