@@ -2027,7 +2027,7 @@
 				L.ExtinguishMob()
 			else
 				L.visible_message("<span class='notice'>[src] patted his tail on [L] back!</span>", "<span class='notice'>[src] patted his tail on your back.</span>")
-				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
+				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, src)
 			L.adjustHalLoss(-5)
 		// PUSH/HARM + NON_MELEE_SKILL = JUST STRONG PUNCH
 		else
