@@ -11,6 +11,7 @@
 	g_amt = 20
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_flashlight)
 	light_color = "#ffffff"
+	light_power = 0.6
 	var/on = 0
 	var/button_sound = 'sound/items/flashlight.ogg' // Sound when using light
 	var/brightness_on = 5 //luminosity when on
@@ -27,7 +28,7 @@
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on, 0.6, light_color)
+		set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
