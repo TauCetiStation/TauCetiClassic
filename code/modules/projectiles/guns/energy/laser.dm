@@ -76,7 +76,7 @@
 
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"
-	icon_state = "oldlaser"
+	icon_state = "laser"
 	desc = "Лазерная пушка, оснащенная комплектом преломления, который создает несколько энергетических зарядов."
 	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
