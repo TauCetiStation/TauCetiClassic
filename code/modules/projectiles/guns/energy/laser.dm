@@ -74,7 +74,7 @@
 	origin_tech = null
 	charge_rate = 50
 
-/obj/item/weapon/gun/energy/laser/scatter/alien
+/obj/item/weapon/gun/energy/laser/scatter_alien
 	name = "scatter laser rife"
 	icon_state = "subegun"
 	desc = "Лазерная пушка, оснащенная комплектом преломления, который создает несколько энергетических зарядов."
