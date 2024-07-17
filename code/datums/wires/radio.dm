@@ -24,7 +24,7 @@ var/global/const/RADIO_WIRE_TRANSMIT = 4
 		if(RADIO_WIRE_TRANSMIT)
 			R.broadcasting = !R.broadcasting && !is_index_cut(RADIO_WIRE_SIGNAL)
 
-/datum/wires/radio/update_cut(index, mended)
+/datum/wires/radio/update_cut(index, mended, mob/user)
 	var/obj/item/device/radio/R = holder
 
 	switch(index)

@@ -82,6 +82,7 @@
 	name = "wet floor sign"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "caution"
+	item_state_world = "caution_world"
 	force = 1.0
 	throwforce = 3.0
 	throw_speed = 1
@@ -93,6 +94,9 @@
 	desc = "This cone is trying to warn you of something!"
 	name = "warning cone"
 	icon_state = "cone"
+	item_state_world = "cone_world"
+	body_parts_covered = HEAD
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/rack_parts
 	name = "rack parts"
@@ -361,6 +365,17 @@
 	flags = CONDUCT
 	table_type = /obj/structure/table/reinforced
 	debris = list(/obj/item/stack/sheet/metal, /obj/item/stack/rods)
+
+/obj/item/weapon/table_parts/rglass
+	name = "reinforced glass table parts"
+	desc = "No longer fragile"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "rglass_tableparts"
+	m_amt = 2500
+	g_amt = 3750
+	flags = CONDUCT
+	table_type = /obj/structure/table/rglass
+	debris = list(/obj/item/stack/rods, /obj/item/stack/sheet/glass)
 
 /obj/item/weapon/table_parts/stall
 	name = "stall table parts"

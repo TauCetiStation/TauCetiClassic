@@ -14,12 +14,12 @@
 	icon_state = "2-4"
 	},
 /obj/structure/girder,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/syndicate_fighter)
 "d" = (
 /obj/item/stack/sheet/metal,
 /obj/machinery/porta_turret_construct,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/syndicate_fighter)
 "e" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -73,7 +73,7 @@
 	},
 /area/space_structures/syndicate_fighter)
 "i" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor4{

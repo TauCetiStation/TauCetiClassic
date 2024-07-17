@@ -3,11 +3,11 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 48
+#define SAVEFILE_VERSION_MAX 50
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
-#define SAVEFILE_VERSION_SPECIES_JOBS 48 // job preferences after breaking changes to any /datum/job/
+#define SAVEFILE_VERSION_SPECIES_JOBS 50 // job preferences after breaking changes to any /datum/job/
 #define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
 //breaking changes is when you remove any existing quirk/job or change their restrictions
 //Don't forget to bump SAVEFILE_VERSION_MAX too
@@ -264,6 +264,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 48)
 		S["b_type"] << null
+
+	if(current_version < 49)
+		if("Imposter" in be_role)
+			be_role -= "Imposter"
+			S["be_role"] << be_role
+
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
@@ -341,10 +347,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
 		return 0
 
-	//Account data
-	S["cid_list"]			>> cid_list
-	S["ignore_cid_warning"]	>> ignore_cid_warning
-
 	//General preferences
 	S["ooccolor"]          >> ooccolor
 	S["aooccolor"]         >> aooccolor
@@ -358,8 +360,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["toggles"]           >> toggles
 	S["chat_ghostsight"]   >> chat_ghostsight
 	S["randomslot"]        >> randomslot
-	S["permamuted"]        >> permamuted
-	S["permamuted"]        >> muted
 	S["parallax"]          >> parallax
 	S["ambientocclusion"]  >> ambientocclusion
 	S["glowlevel"]         >> glowlevel
@@ -433,9 +433,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	outline_color 	= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
 	eorg_enabled 	= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
 	show_runechat	= sanitize_integer(show_runechat, 0, 1, initial(show_runechat))
-	if(!cid_list)
-		cid_list = list()
-	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
 	custom_emote_panel  = sanitize_emote_panel(custom_emote_panel)
 
 	snd_music_vol	= sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
@@ -474,10 +471,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["version"] << SAVEFILE_VERSION_MAX
 
-	//Account data
-	S["cid_list"]           << cid_list
-	S["ignore_cid_warning"] << ignore_cid_warning
-
 	//general preferences
 	S["ooccolor"]          << ooccolor
 	S["aooccolor"]         << aooccolor
@@ -491,7 +484,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chat_toggles"]      << chat_toggles
 	S["chat_ghostsight"]   << chat_ghostsight
 	S["randomslot"]        << randomslot
-	S["permamuted"]        << permamuted
 	S["parallax"]          << parallax
 	S["ambientocclusion"]  << ambientocclusion
 	S["glowlevel"]         << glowlevel
@@ -579,6 +571,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]             >> socks
 	S["backbag"]           >> backbag
 	S["use_skirt"]         >> use_skirt
+	S["pda_ringtone"]      >> chosen_ringtone
+	S["pda_custom_melody"] >> custom_melody
 
 	//Load prefs
 	S["alternate_option"] >> alternate_option
@@ -661,6 +655,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
 	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
+	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
+	chosen_ringtone  = sanitize_inlist(chosen_ringtone, pref_ringtones, initial(chosen_ringtone))
+	custom_melody = sanitize(custom_melody, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	neuter_gender_voice = sanitize_gender_voice(neuter_gender_voice)
 
@@ -773,6 +770,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
 	S["use_skirt"]             << use_skirt
+	S["pda_ringtone"]          << chosen_ringtone
+	S["pda_custom_melody"]     << custom_melody
 	//Write prefs
 	S["alternate_option"]      << alternate_option
 	S["job_preferences"]       << job_preferences

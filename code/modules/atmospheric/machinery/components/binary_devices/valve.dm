@@ -35,9 +35,6 @@
 		add_underlay(T, node1, get_dir(src, node1), node1 ? node1.icon_connect_type : "")
 		add_underlay(T, node2, get_dir(src, node2), node2 ? node2.icon_connect_type : "")
 
-/obj/machinery/atmospherics/components/binary/valve/hide(i)
-	update_underlays()
-
 /obj/machinery/atmospherics/components/binary/valve/proc/open(logging = TRUE) // false used by shutoff valve inside proccess_atmos() proc to mitigate log spam.
 	if(open)
 		return FALSE

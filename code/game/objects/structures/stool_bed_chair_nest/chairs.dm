@@ -10,7 +10,6 @@
 	var/propelled = FALSE // Check for fire-extinguisher-driven chairs
 
 	var/behind = null
-	var/behind_buckled = null
 
 	var/roll_sound = null // Janicart and office chair use this when moving.
 
@@ -107,7 +106,7 @@
 			to_chat(M, "<span class='warning'>Tried buckle you to \the [src].</span>")
 		return
 
-	if(dir == NORTH && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
+	if(dir == NORTH)
 		layer = FLY_LAYER
 	else
 		layer = OBJ_LAYER
@@ -129,6 +128,8 @@
 	set category = "Object"
 	set src in oview(1)
 
+	if(!Adjacent(usr))
+		return
 	if(!config.ghost_interaction && isobserver(usr))
 		return
 	if(ismouse(usr))
@@ -142,13 +143,16 @@
 	handle_rotation()
 	return
 
+/obj/structure/stool/bed/chair/AltClick(mob/user)
+	rotate()
+
 /obj/structure/stool/bed/chair/post_buckle_mob(mob/living/M)
 	. = ..()
 	if(buckled_mob && behind)
 		icon_state = behind
 	else
 		icon_state = initial(icon_state)
-	if(dir == NORTH && buckled_mob && !istype(src, /obj/structure/stool/bed/chair/schair/wagon/bench))
+	if(dir == NORTH && buckled_mob)
 		layer = FLY_LAYER
 	else
 		layer = OBJ_LAYER
@@ -228,7 +232,7 @@
 	var/sarmrest = null
 
 /obj/structure/stool/bed/chair/schair/atom_init()
-	sarmrest = image("icons/obj/objects.dmi", "schair_armrest", layer = FLY_LAYER)
+	sarmrest = image("icons/obj/objects.dmi", "[icon_state]_armrest", layer = FLY_LAYER)
 	. = ..()
 
 /obj/structure/stool/bed/chair/schair/post_buckle_mob(mob/living/M)
@@ -240,8 +244,21 @@
 // Chair types
 /obj/structure/stool/bed/chair/wood/normal
 	icon_state = "wooden_chair"
+	behind = "wooden_chair_behind"
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
+	var/armrest
+
+/obj/structure/stool/bed/chair/wood/normal/atom_init()
+	armrest = image("icons/obj/objects.dmi", "[icon_state]_armrest", layer = FLY_LAYER)
+	. = ..()
+
+/obj/structure/stool/bed/chair/wood/normal/post_buckle_mob(mob/living/M)
+	. = ..()
+	if(buckled_mob)
+		add_overlay(armrest)
+	else
+		cut_overlay(armrest)
 
 /obj/structure/stool/bed/chair/wood/wings
 	icon_state = "wooden_chair_wings"
@@ -477,12 +494,10 @@
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
 	desc = "It looks comfy."
-	icon_state = "comfychair"
-	color = rgb(255,255,255)
 	var/armrest = null
 
 /obj/structure/stool/bed/chair/comfy/atom_init()
-	armrest = image("icons/obj/objects.dmi", "comfychair_armrest", layer = FLY_LAYER)
+	armrest = image("icons/obj/objects.dmi", "[icon_state]_armrest", layer = FLY_LAYER)
 	. = ..()
 
 /obj/structure/stool/bed/chair/comfy/post_buckle_mob(mob/living/M)
@@ -491,20 +506,20 @@
 	else
 		cut_overlay(armrest)
 
-/obj/structure/stool/bed/chair/comfy/brown
-	color = rgb(255,113,0)
-
-/obj/structure/stool/bed/chair/comfy/beige
-	color = rgb(255,253,195)
-
-/obj/structure/stool/bed/chair/comfy/teal
-	color = rgb(0,255,255)
-
 /obj/structure/stool/bed/chair/comfy/black
-	color = rgb(167,164,153)
+	icon_state = "comfychair_black"
+
+/obj/structure/stool/bed/chair/comfy/brown
+	icon_state = "comfychair_brown"
+
+/obj/structure/stool/bed/chair/comfy/white
+	icon_state = "comfychair_white"
+
+/obj/structure/stool/bed/chair/comfy/green
+	icon_state = "comfychair_green"
 
 /obj/structure/stool/bed/chair/comfy/lime
-	color = rgb(255,251,0)
+	icon_state = "comfychair_lime"
 
 /obj/structure/stool/bed/chair/office
 	anchored = FALSE

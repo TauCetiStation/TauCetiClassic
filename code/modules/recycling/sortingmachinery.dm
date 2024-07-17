@@ -395,10 +395,6 @@
 		return FALSE
 	if(target.flags & ABSTRACT)
 		return FALSE
-	if(isitem(target))
-		var/obj/item/I = target
-		if(I.abstract)
-			return FALSE
 
 	return TRUE
 

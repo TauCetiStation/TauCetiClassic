@@ -3,6 +3,10 @@
 // Example: isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
 // Bad example: isabductor(A) istype(A, /mob/living/carbon/human/abductor)
 
+// META
+
+#define isweakref(D) (istype(D, /datum/weakref))
+
 // TURFS
 
 #define isenvironmentturf(A) (istype(A, /turf/environment))
@@ -118,6 +122,8 @@
 
 #define istagger(A) (istype(A, /obj/item/device/tagger))
 
+#define isdiagnostichud(A) (istype(A, /obj/item/clothing/glasses/hud/diagnostic))
+
 // GOONCHAT PORT
 
 #define isatom(A) (istype(A, /atom))
@@ -198,8 +204,6 @@
 #define isrevhead(H) isrole(HEADREV, H)
 
 #define istraitor(H) isrole(TRAITOR, H)
-
-#define isimposter(H) isrole(IMPOSTER, H)
 
 #define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
 

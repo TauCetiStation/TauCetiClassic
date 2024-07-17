@@ -67,6 +67,8 @@
 
 	// See atom_init below.
 	moveset_type = null
+	// used for growing creatures
+	var/evolv_stage = 0
 
 /mob/living/simple_animal/atom_init()
 	if(!moveset_type)

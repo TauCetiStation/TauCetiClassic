@@ -49,6 +49,8 @@
 /datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()
 	antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
+	var/datum/action/RevConvert/action = new(antag.current)
+	action.Grant(antag.current)
 
 	// Show each head revolutionary up to 3 candidates
 	var/list/already_considered = list()
@@ -61,12 +63,21 @@
 			to_chat(rev_mob, "Надежные источники сообщают, что [M.real_name], возможно, захочет помочь вам достигнуть целей. Если вам нужна помощь, то можете обратится к данному сотруднику.")
 			rev_mob.mind.store_memory("<b>Потенциальный соратник</b>: [M.real_name]")
 
+/datum/role/rev_leader/RemoveFromRole(datum/mind/M, msg_admins)
+	if(M.current)
+		M.current.verbs -= /mob/living/carbon/human/proc/RevConvert
+		for(var/datum/action/RevConvert/A in M.current.actions)
+			A.Remove(M.current)
+	..()
+
 /mob/living/carbon/human/proc/RevConvert()
 	set name = "Rev-Convert"
 	set category = "IC"
 
 	if(!isrevhead(src))
 		verbs -= /mob/living/carbon/human/proc/RevConvert
+		for(var/datum/action/RevConvert/A in actions)
+			A.Remove(src)
 		return FALSE
 
 	var/list/Possible = list()
@@ -80,6 +91,8 @@
 	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
 	if(!isrevhead(src))
 		verbs -= /mob/living/carbon/human/proc/RevConvert
+		for(var/datum/action/RevConvert/A in actions)
+			A.Remove(src)
 		return FALSE
 
 	if(isrevhead(M) || isrev(M))
@@ -98,3 +111,13 @@
 		message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
 		var/datum/faction/revolution/rev = lead.GetFaction()
 		rev.convert_revolutionare_by_invite(M, src)
+
+//==========Action==========
+/datum/action/RevConvert
+	name = "Recruitment"
+	action_type = AB_GENERIC
+	button_icon_state = "revconvert"
+
+/datum/action/RevConvert/Trigger()
+	var/mob/living/carbon/human/H = owner
+	H.RevConvert()

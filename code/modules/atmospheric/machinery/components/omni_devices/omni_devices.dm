@@ -183,7 +183,7 @@
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
-		if(!T.is_plating() && istype(P.node, /obj/machinery/atmospherics/pipe) && P.node.level == PIPE_HIDDEN_LEVEL)
+		if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && istype(P.node, /obj/machinery/atmospherics/pipe) && P.node.undertile)
 			//pipe_state = icon_manager.get_atmos_icon("underlay_down", P.dir, color_cache_name(P.node))
 			pipe_state = icon_manager.get_atmos_icon("underlay", P.dir, color_cache_name(P.node), "down")
 		else
@@ -196,9 +196,6 @@
 	for(var/datum/omni_port/P in ports)
 		P.update = TRUE
 	update_ports()
-
-/obj/machinery/atmospherics/components/omni/hide(i)
-	update_underlays()
 
 /obj/machinery/atmospherics/components/omni/proc/update_ports()
 	sort_ports()

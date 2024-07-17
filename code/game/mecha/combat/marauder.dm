@@ -19,6 +19,7 @@
 	var/datum/action/innate/mecha/mech_smoke/smoke_action = new
 	var/datum/action/innate/mecha/mech_zoom/zoom_action = new
 	operation_req_access = list(access_cent_specops)
+	dna_lockable = TRUE
 	wreckage = /obj/effect/decal/mecha_wreckage/marauder
 	add_req_access = 0
 	internal_damage_threshold = 25
@@ -26,6 +27,10 @@
 	max_equip = 4
 	var/thrusters_active = FALSE
 	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
+
+/obj/mecha/combat/marauder/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 8000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/combat/marauder/Destroy()
 	QDEL_NULL(smoke_system)

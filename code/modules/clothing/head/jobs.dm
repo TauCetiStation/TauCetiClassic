@@ -72,6 +72,17 @@
 	valid_accessory_slots = list("dermal")
 	restricted_accessory_slots = list("dermal")
 
+/obj/item/clothing/head/hos_hat
+	name = "head of security's hat"
+	desc = "The hat of the Head of Security. For showing the officers who's in charge."
+	icon_state = "hoshat"
+	item_state = "hoshat"
+	w_class = SIZE_TINY
+	siemens_coefficient = 0.9
+	body_parts_covered = 0
+	valid_accessory_slots = list("dermal")
+	restricted_accessory_slots = list("dermal")
+
 //Medical
 /obj/item/clothing/head/surgery
 	name = "surgical cap"

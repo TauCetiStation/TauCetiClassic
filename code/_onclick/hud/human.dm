@@ -28,8 +28,6 @@
 	))
 
 
-	leap_icon?.add_to_hud(hud)
-
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"
 	set name = "Toggle hotkey buttons"

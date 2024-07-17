@@ -99,7 +99,7 @@
 /area/space_structures/cloning_lab)
 "q" = (
 /obj/random/vending/snack,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/cloning_lab)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
@@ -148,13 +148,13 @@
 "z" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/cloning_lab)
 "A" = (
 /turf/simulated/floor/plating/airless,
 /area/space_structures/cloning_lab)
 "B" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -242,6 +242,13 @@
 	dir = 1;
 	icon_state = "white"
 	},
+/area/space_structures/cloning_lab)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/airless,
+/area/space_structures/cloning_lab)
+"Q" = (
+/turf/simulated/floor/airless,
 /area/space_structures/cloning_lab)
 
 (1,1,1) = {"
@@ -443,8 +450,8 @@ a
 a
 i
 q
-y
-r
+Q
+O
 A
 b
 "}
@@ -454,7 +461,7 @@ a
 a
 a
 i
-r
+O
 z
 A
 A

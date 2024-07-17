@@ -113,7 +113,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FUR                "fur"
 #define NO_GENDERS         "no_genders"
 #define NO_SLIP            "no_slip"
-
 #define NO_MED_HEALTH_SCAN "no_med_health_scan"
 
 //Species Diet Flags
@@ -191,7 +190,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define JOB_FLAG_NON_HUMAN 128
 #define JOB_FLAG_HEAD_OF_STAFF 256
 #define JOB_FLAG_BLUESHIELD_PROTEC 512
-#define JOB_FLAG_IMPOSTER_PRIORITIZE 1024
+#define JOB_FLAG_CENTCOMREPRESENTATIVE 1024
 
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise
@@ -211,3 +210,5 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define ALCOHOL_TOLERANCE_EPILEPSY (1<<0)
 #define WATER_CHOKE_EPILEPSY (1<<1)
+
+#define STANDARD_PDA_RINGTONE (1<<0)

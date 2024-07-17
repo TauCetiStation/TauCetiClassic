@@ -242,11 +242,6 @@
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 
-	else if(src.panel_open)
-		for(var/datum/data/vending_product/R in product_records)
-			if(istype(W, R.product_path))
-				stock(R, user)
-				qdel(W)
 	else
 		..()
 
@@ -484,13 +479,6 @@
 		src.vend_ready = 1
 		src.currently_vending = null
 		updateUsrDialog()
-
-/obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
-	if(src.panel_open)
-		to_chat(user, "<span class='notice'>You stock the [src] with \a [R.product_name]</span>")
-		R.amount++
-
-	updateUsrDialog()
 
 /obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))

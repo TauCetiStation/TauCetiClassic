@@ -22,9 +22,6 @@
 /mob/living/silicon/isSynthetic()
 	return TRUE
 
-/proc/hsl2rgb(h, s, l)
-	return
-
 /mob/proc/ismindshielded() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
 	for(var/obj/item/weapon/implant/mind_protect/mindshield/L in src)
 		if(L.implanted)
@@ -172,7 +169,7 @@
 		else
 			new_text += letter
 
-	return new_text
+	return html_encode(capitalize(new_text))
 
 /proc/slur(text)
 
@@ -252,7 +249,7 @@
 
 		new_text += new_letter
 
-	return html_encode(new_text)
+	return html_encode(capitalize(new_text))
 
 /proc/Gibberish(text, p) // Any value higher than 70 for p will cause letters to be replaced instead of added
 	text = html_decode(text)
@@ -391,16 +388,13 @@ var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА",
 
 
 /mob/proc/abiotic(full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
-		return 1
+	if(full_body && ((l_hand.flags & ABSTRACT) || (r_hand && !(r_hand.flags & ABSTRACT)) || back || wear_mask))
+		return TRUE
 
-	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
-		return 1
+	if((l_hand && !(l_hand.flags & ABSTRACT)) || (r_hand && !(r_hand.flags & ABSTRACT)))
+		return TRUE
 
-	if(l_hand && !(l_hand.flags & ABSTRACT) || r_hand && !(r_hand.flags & ABSTRACT))
-		return 1
-
-	return 0
+	return FALSE
 
 //converts intent-strings into numbers and back
 var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)

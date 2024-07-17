@@ -751,7 +751,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(buckled.buckle_lying != -1)
 			lying = buckled.buckle_lying
 		canmove = canmove && buckled.buckle_movable
-		anchored = anchored || buckled.buckle_movable
+		anchored = anchored || !buckled.buckle_movable
 
 		if(istype(buckled, /obj/vehicle))
 			var/obj/vehicle/V = buckled

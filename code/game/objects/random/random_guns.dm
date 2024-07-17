@@ -119,7 +119,7 @@
 	name = "Random Weapon"
 	desc = "This is a random weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "saber-18"
+	icon_state = "saber"
 /obj/random/guns/weapon_item/item_to_spawn()
 		return pick(\
 						prob(100);/obj/random/guns/energy_weapon,\
@@ -148,7 +148,7 @@
 	name = "Random shotgun Weapon with ammunition"
 	desc = "This is a random weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "saber-18"
+	icon_state = "saber"
 /obj/random/guns/set_shotgun/item_to_spawn()
 		return pick(\
 						prob(100);/obj/item/ammo_casing/shotgun/beanbag,\
@@ -164,7 +164,7 @@
 	name = "Random lethal Weapon with ammunition"
 	desc = "This is a random weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "saber-18"
+	icon_state = "saber"
 /obj/random/guns/set_357/item_to_spawn()
 		return pick(\
 						prob(200);/obj/item/ammo_casing/a357,\
@@ -178,7 +178,7 @@
 	name = "Random lethal Weapon"
 	desc = "This is a random weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "saber-18"
+	icon_state = "saber"
 
 /obj/random/guns/set_special/item_to_spawn()
 		return pick(\

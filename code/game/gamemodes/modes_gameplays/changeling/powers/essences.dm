@@ -126,6 +126,7 @@
 		host.say(message, TRUE)
 		H.special_voice = saved_special_voice
 		return
+	log_say("Essence [name]/[key] via changeling body: [message]")
 	host.say(message)
 
 /mob/living/parasite/essence/whisper(message as text)
@@ -146,6 +147,7 @@
 		H.special_voice = saved_special_voice
 		return
 
+	log_whisper("Essence [name]/[key] via changeling body: [message]")
 	return host.whisper(message)
 
 /mob/living/parasite/essence/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
@@ -160,6 +162,7 @@
 		to_chat(src, "<span class='userdanger'>Your host forbade you emoting!</span>")
 		return
 
+	log_emote("Essence [name]/[key] with changeling body: [message]")
 	return host.me_emote(message, message_type, intentional)
 
 /mob/living/parasite/essence/say_understands(mob/other, datum/language/speaking)

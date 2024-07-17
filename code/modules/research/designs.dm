@@ -396,13 +396,13 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/aiModule/safeguard
 	category = list("AI")
 
-/datum/design/onehuman_module
-	name = "AI Module (OneHuman)"
-	desc = "Allows for the construction of a OneHuman AI Module."
-	id = "onehuman_module"
+/datum/design/onentemploye_module
+	name = "AI Module (One NT Employe)"
+	desc = "Allows for the construction of a 'One NT Employe' AI Module."
+	id = "onentemploye_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
-	build_path = /obj/item/weapon/aiModule/oneHuman
+	build_path = /obj/item/weapon/aiModule/onentemploye
 	category = list("AI")
 
 /datum/design/protectstation_module
@@ -2327,27 +2327,6 @@ other types of metals and chemistry for reagents).
 			build_type = PROTOLATHE
 			materials = list(MAT_SILVER = 2500, MAT_GOLD = 3000, "iron" = 15, "copper" = 10)
 			build_path = /obj/item/weapon/banhammer */
-
-////////////////////////////////////////
-//Disks for transporting design datums//
-////////////////////////////////////////
-
-/obj/item/weapon/disk/design_disk
-	name = "Empty Disk"
-	desc = "Wow. Is that a save icon?"
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk2"
-	item_state = "card-id"
-	w_class = SIZE_TINY
-	m_amt = 30
-	g_amt = 10
-	var/datum/design/blueprint
-
-/obj/item/weapon/disk/design_disk/atom_init()
-	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
-
 
 /////////////////////////////////////////
 //////////////Borg Upgrades//////////////

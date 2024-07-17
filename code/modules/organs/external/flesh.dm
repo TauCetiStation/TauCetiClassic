@@ -40,7 +40,7 @@
 	if(BP.pumped <= 0 && old_pumped > 0)
 		BP.owner.metabolism_factor.RemoveModifier("Pumped_[BP.name]")
 	else
-		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.0005 * BP.pumped)
+		BP.owner.metabolism_factor.AddModifier("Pumped_[BP.name]", base_additive = 0.00015 * BP.pumped)
 
 	return BP.pumped - old_pumped
 
@@ -616,7 +616,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, FALSE, null, -2)
 	BP.status |= ORGAN_BROKEN
-	BP.broken_description = pick("broken", "fracture", "hairline fracture")
+	BP.broken_description = pick("перелом", "трещина")
 	BP.perma_injury = BP.brute_dam
 
 	// Fractures have a chance of getting you out of restraints

@@ -93,7 +93,7 @@
 	if(item_slowdown)
 		if(item_slowdown < 0)
 			tally += item_slowdown
-		else if(!(species.flags[IS_SYNTHETIC] || chem_nullify_debuff))
+		else if(!chem_nullify_debuff)
 			weight_tally += item_slowdown
 
 	item_slowdown = back?.slowdown

@@ -398,26 +398,3 @@
 	scanned_symptoms = list()
 	scanned_slimecores = list()
 	datablocks = 0
-
-/obj/item/weapon/disk/research_points
-	name = "Important Disk"
-	desc = "Looks a disk with some important information stored. Scientists might know what to do with it"
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk2"
-	item_state = "card-id"
-	w_class = SIZE_TINY
-	m_amt = 30
-	g_amt = 10
-	var/stored_points
-
-/obj/item/weapon/disk/research_points/atom_init()
-	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
-
-	stored_points = rand(1,10)*1000
-
-/obj/item/weapon/disk/research_points/rare/atom_init()
-	. = ..()
-
-	stored_points = rand(10, 20)*1000

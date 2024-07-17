@@ -683,9 +683,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			areas += N
 	return areas
 
-//Takes: Area type as text string or as typepath OR an instance of the area.
-//Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype, subtypes=TRUE, target_z = 0, list/black_list)
+// Takes: Area type as text string or as typepath OR an instance of the area.
+// Returns: A list of all turfs in areas of that type of that type in the world.
+// Please note that because of (loop in area) this is not really optimal,
+// but you probably have no choice
+/proc/get_area_turfs(areatype, subtypes=TRUE, filter_by_z = 0, ignore_blocked = FALSE)
 	if(istext(areatype))
 		areatype = text2path(areatype)
 	else if(isarea(areatype))
@@ -697,25 +699,26 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/turfs = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/V in global.all_areas)
-			var/area/A = V
+		for(var/area/A as anything in global.all_areas)
 			if(!cache[A.type])
 				continue
 			for(var/turf/T in A)
-				if(black_list && (T.type in black_list))
+				if(filter_by_z && filter_by_z != T.z)
 					continue
-				if(target_z == 0 || target_z == T.z)
-					turfs += T
+				if(ignore_blocked && is_blocked_turf(T))
+					continue
+				turfs += T
 	else
-		for(var/V in global.all_areas)
-			var/area/A = V
+		for(var/area/A as anything in global.all_areas)
 			if(A.type != areatype)
 				continue
 			for(var/turf/T in A)
-				if(black_list && (T.type in black_list))
+				if(filter_by_z && filter_by_z != T.z)
 					continue
-				if(target_z == 0 || target_z == T.z)
-					turfs += T
+				if(ignore_blocked && is_blocked_turf(T))
+					continue
+				turfs += T
+
 	return turfs
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
@@ -1087,6 +1090,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return "left leg"
 		if(BP_R_LEG)
 			return "right leg"
+		else
+			return zone
+
+/proc/parse_zone_ru(zone)
+	switch(zone)
+		if(BP_L_ARM)
+			return "левая рука"
+		if(BP_R_ARM)
+			return "правая рука"
+		if(BP_L_LEG)
+			return "левая нога"
+		if(BP_R_LEG)
+			return "правая нога"
 		else
 			return zone
 
@@ -1629,12 +1645,12 @@ var/global/list/WALLITEMS = typecacheof(list(
 // Format a power value in W, kW, MW, or GW
 /proc/DisplayPower(powerused)
 	if(powerused < 1000) // Less than a kW
-		return "[powerused] W"
+		return "[powerused] Вт"
 	if(powerused < 1000000) // Less than a MW
-		return "[round((powerused * 0.001), 0.01)] kW"
+		return "[round((powerused * 0.001), 0.01)] кВт"
 	if(powerused < 1000000000) // Less than a GW
-		return "[round((powerused * 0.000001), 0.001)] MW"
-	return "[round((powerused * 0.000000001), 0.0001)] GW"
+		return "[round((powerused * 0.000001), 0.001)] МВт"
+	return "[round((powerused * 0.000000001), 0.0001)] ГВТ"
 
 //Returns a list of all locations (except the area) the movable is within.
 /proc/get_nested_locs(atom/movable/AM, include_turf = FALSE)

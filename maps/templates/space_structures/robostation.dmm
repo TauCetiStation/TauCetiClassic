@@ -377,7 +377,7 @@
 /area/space_structures/robostatoin)
 "bw" = (
 /obj/machinery/porta_turret/stationary,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/robostatoin)
 "bx" = (
 /obj/structure/table/reinforced,
@@ -736,7 +736,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/robostatoin)
 "cL" = (
 /obj/effect/landmark/corpse/clown,
@@ -872,7 +872,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "dg" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -917,7 +917,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "dr" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -948,7 +948,7 @@
 	check_n_synth = 1;
 	shot_synth = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/robostatoin)
 "eQ" = (
 /obj/machinery/light{
@@ -999,7 +999,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "Iy" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1026,6 +1026,9 @@
 	icon_state = "blue"
 	},
 /area/space_structures/robostatoin)
+"Nf" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/robostatoin)
 "OQ" = (
 /obj/machinery/door/airlock/hatch{
 	dir = 4
@@ -1051,7 +1054,7 @@
 /turf/environment/space,
 /area/space)
 "XQ" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -1315,7 +1318,7 @@ bp
 bu
 ad
 bS
-ar
+Nf
 bN
 bT
 ae
@@ -1558,8 +1561,8 @@ aa
 aa
 aC
 cd
-ar
-ar
+Nf
+Nf
 cd
 aC
 aa
@@ -1597,7 +1600,7 @@ bX
 aC
 aC
 aC
-ar
+Nf
 cK
 aC
 aC
@@ -1636,8 +1639,8 @@ aC
 aa
 aC
 cd
-ar
-ar
+Nf
+Nf
 aa
 UA
 aa
@@ -1798,7 +1801,7 @@ ah
 aj
 nb
 ae
-ar
+Nf
 aa
 "}
 (20,1,1) = {"
@@ -1876,7 +1879,7 @@ ah
 Ge
 bC
 ae
-ar
+Nf
 aa
 "}
 (22,1,1) = {"

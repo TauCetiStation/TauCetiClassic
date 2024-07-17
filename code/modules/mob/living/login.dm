@@ -12,7 +12,7 @@
 	noob_notify(src)
 
 	if(config.guard_enabled)
-		client.guard.trigger_init()
+		client.prefs.guard.trigger_init()
 
 	//Jukebox
 	client.media?.open()

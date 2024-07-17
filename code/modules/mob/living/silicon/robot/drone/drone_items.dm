@@ -16,6 +16,7 @@
 		/obj/item/stack/sheet/metal,
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/plasteel,
+		/obj/item/stack/tile,
 		/obj/item/weapon/stock_parts,
 		/obj/item/light_fixture_frame,
 		/obj/item/apc_frame,
@@ -167,6 +168,7 @@
 	icon_state = "gripper"
 
 	can_hold = list(
+		/obj/item/bluespace_crystal,
 		/obj/item/weapon/tank,
 		/obj/item/device/assembly/signaler,
 		/obj/item/device/gps,

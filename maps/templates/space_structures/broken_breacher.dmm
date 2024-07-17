@@ -78,9 +78,7 @@
 	},
 /area/space_structures/broken_breacher)
 "bH" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
+/turf/simulated/shuttle/floor/airless,
 /area/space_structures/broken_breacher)
 "cp" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -111,7 +109,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/broken_breacher)
 "dy" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor{
@@ -199,9 +197,7 @@
 "id" = (
 /obj/structure/stool/bed/roller,
 /obj/machinery/iv_drip,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
+/turf/simulated/shuttle/floor/airless,
 /area/space_structures/broken_breacher)
 "if" = (
 /obj/effect/decal/cleanable/blood/oil,
@@ -355,9 +351,7 @@
 /area/space_structures/broken_breacher)
 "nl" = (
 /obj/machinery/life_assist/artificial_ventilation,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
+/turf/simulated/shuttle/floor/airless,
 /area/space_structures/broken_breacher)
 "nS" = (
 /obj/effect/decal/turf_decal{
@@ -542,9 +536,7 @@
 "sT" = (
 /obj/machinery/iv_drip,
 /obj/structure/stool/bed/roller,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
+/turf/simulated/shuttle/floor/airless,
 /area/space_structures/broken_breacher)
 "uO" = (
 /obj/machinery/light{
@@ -939,7 +931,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor,
-/turf/simulated/floor/wood,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/broken_breacher)
 "Ip" = (
 /obj/structure/computerframe,
@@ -2038,7 +2030,7 @@ sO
 sO
 hh
 Sd
-lV
+rA
 bg
 zd
 xY

@@ -233,22 +233,22 @@
 	subtitle = "Тревога! Блюспэйс прорыв"
 
 /datum/announcement/centcomm/replicator/construction_began/play(area/A)
-	message = "Обнаружено открытие блюспэйс прорыва в [initial(A.name)]. Полное раскрытие прорыва приведёт к дестабилизации реальности вокруг станции!"
+	message = "Обнаружено открытие блюспэйс прорыва в [CASE(A, PREPOSITIONAL_CASE)]. Полное раскрытие прорыва приведёт к дестабилизации реальности вокруг станции!"
 	sound = "construction_began"
 	..()
 
 /datum/announcement/centcomm/replicator/construction_quarter/play(area/A)
-	message = "Блюспэйс прорыв в [initial(A.name)] достиг 25% от критического гиперобъема."
+	message = "Блюспэйс прорыв в [CASE(A, PREPOSITIONAL_CASE)] достиг 25% от критического гиперобъема."
 	sound = "construction_quarter"
 	..()
 
 /datum/announcement/centcomm/replicator/construction_half/play(area/A)
-	message = "Блюспэйс прорыв в [initial(A.name)] достиг 50% от критического гиперобъема."
+	message = "Блюспэйс прорыв в [CASE(A, PREPOSITIONAL_CASE)] достиг 50% от критического гиперобъема."
 	sound = "construction_half"
 	..()
 
 /datum/announcement/centcomm/replicator/construction_three_quarters/play(area/A)
-	message = "Блюспэйс прорыв в [initial(A.name)] достиг 75% от критического гиперобъема."
+	message = "Блюспэйс прорыв в [CASE(A, PREPOSITIONAL_CASE)] достиг 75% от критического гиперобъема."
 	sound = "construction_three_quarters"
 	..()
 

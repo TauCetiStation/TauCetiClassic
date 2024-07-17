@@ -1,6 +1,8 @@
 /obj/item/weapon/implantcase
 	name = "Glass Case"
+	cases = list("cтеклянный футляр", "cтеклянного футляра", "cтеклянному футляру", "cтеклянный футляр", "cтеклянным футляром", "cтеклянном футляре")
 	desc = "A case containing an implant."
+	gender = MALE
 	icon_state = "implantcase-0"
 	item_state = "implantcase"
 	throw_speed = 1
@@ -18,7 +20,7 @@
 
 /obj/item/weapon/implantcase/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
-		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(name), null)  as text, MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "Какой бы вы хотели видеть этикетку?", input_default(name), null)  as text, MAX_NAME_LEN)
 
 		if(user.get_active_hand() != I || !Adjacent(usr))
 			return
@@ -32,10 +34,10 @@
 			return
 
 		if(imp.reagents.total_volume >= imp.reagents.maximum_volume)
-			to_chat(user, "<span class='warning'>[src] is full.</span>")
+			to_chat(user, "<span class='warning'>[C_CASE(src, NOMINATIVE_CASE)] [(ANYMORPH(src, "полон", "полна", "полно", "полны"))]</span>")
 		else
 			I.reagents.trans_to(src.imp, 5)
-			to_chat(user, "<span class='notice'>You inject 5 units of the solution. The syringe now contains [I.reagents.total_volume] units.</span>")
+			to_chat(user, "<span class='notice'>Вы вводите 5 единиц раствора. Теперь в шприце содержится [I.reagents.total_volume] [PLUR_UNITS(I.reagents.total_volume)].</span>")
 
 	else if(istype(I, /obj/item/weapon/implanter))
 		var/obj/item/weapon/implanter/IMP = I
@@ -60,8 +62,10 @@
 		return ..()
 
 /obj/item/weapon/implantcase/tracking
-	name = "Glass Case- 'Tracking'"
-	desc = "A case containing a tracking implant."
+	name = "Glass Case - 'Tracking'"
+	cases = list("cтеклянный футляр - 'Отслеживающий'", "cтеклянного футляра - 'Отслеживающий'", "cтеклянному футляру - 'Отслеживающий'", "cтеклянный футляр - 'Отслеживающий'", "cтеклянным футляром - 'Отслеживающий'", "cтеклянном футляре - 'Отслеживающий'")
+	desc = "Футляр, содержащий имплант слежения."
+	gender = MALE
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 
@@ -72,8 +76,10 @@
 
 
 /obj/item/weapon/implantcase/explosive
-	name = "Glass Case- 'Explosive'"
-	desc = "A case containing an explosive implant."
+	name = "Glass Case - 'Explosive'"
+	cases = list("cтеклянный футляр - 'Взрывной'", "cтеклянного футляра - 'Взрывной'", "cтеклянному футляру - 'Взрывной'", "cтеклянный футляр - 'Взрывной'", "cтеклянным футляром - 'Взрывной'", "cтеклянном футляре - 'Взрывной'")
+	desc = "Футляр, содержащий взрывной имплант."
+	gender = MALE
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
@@ -82,8 +88,10 @@
 	. = ..()
 
 /obj/item/weapon/implantcase/freedom
-	name = "Glass Case- 'Freedom'"
-	desc = "A case containing an freedom implant."
+	name = "Glass Case - 'Freedom'"
+	cases = list("cтеклянный футляр - 'Cвобода'", "cтеклянного футляра - 'Cвобода'", "cтеклянному футляру - 'Cвобода'", "cтеклянный футляр - 'Cвобода'", "cтеклянным футляром - 'Cвобода'", "cтеклянном футляре - 'Cвобода'")
+	desc = "Футляр, содержащий имплант \"Свобода\"."
+	gender = MALE
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
@@ -92,8 +100,10 @@
 	. = ..()
 
 /obj/item/weapon/implantcase/chem
-	name = "Glass Case- 'Chem'"
-	desc = "A case containing a chemical implant."
+	name = "Glass Case - 'Chem'"
+	cases = list("cтеклянный футляр - 'Химия'", "cтеклянного футляра - 'Химия'", "cтеклянному футляру - 'Химия'", "cтеклянный футляр - 'Химия'", "cтеклянным футляром - 'Химия'", "cтеклянном футляре - 'Химия'")
+	desc = "Футляр, содержащий химический имплант."
+	gender = MALE
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 
@@ -102,8 +112,10 @@
 	. = ..()
 
 /obj/item/weapon/implantcase/mindshield
-	name = "Glass Case- 'MindShield'"
-	desc = "A case containing a mindshield implant."
+	name = "Glass Case - 'MindShield'"
+	cases = list("cтеклянный футляр - 'Защита разума'", "cтеклянного футляра - 'Cвобода'", "cтеклянному футляру - 'Cвобода'", "cтеклянный футляр - 'Cвобода'", "cтеклянным футляром - 'Cвобода'", "cтеклянном футляре - 'Cвобода'")
+	desc = "Футляр, содержащий имплант защиты разума"
+	gender = MALE
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
@@ -112,8 +124,10 @@
 	. = ..()
 
 /obj/item/weapon/implantcase/loyalty
-	name = "Glass Case- 'Loyalty'"
-	desc = "A case containing a loyalty implant."
+	name = "Glass Case - 'Loyalty'"
+	cases = list("cтеклянный футляр - 'Лояльность'", "cтеклянного футляра - 'Лояльность'", "cтеклянному футляру - 'Лояльность'", "cтеклянный футляр - 'Лояльность'", "cтеклянным футляром - 'Лояльность'", "cтеклянном футляре - 'Лояльность'")
+	desc = "Футляр, содержит имплант лояльности."
+	gender = MALE
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
@@ -122,8 +136,10 @@
 	. = ..()
 
 /obj/item/weapon/implantcase/death_alarm
-	name = "Glass Case- 'Death Alarm'"
-	desc = "A case containing a death alarm implant."
+	name = "Glass Case - 'Death Alarm'"
+	cases = list("cтеклянный футляр - 'Оповещение о смерти'", "cтеклянного футляра - 'Оповещение о смерти'", "cтеклянному футляру - 'Оповещение о смерти'", "cтеклянный футляр - 'Оповещение о смерти'", "cтеклянным футляром - 'Оповещение о смерти'", "cтеклянном футляре - 'Оповещение о смерти'")
+	desc = "Футляр, содержащий имплант оповещения о смерти."
+	gender = MALE
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 

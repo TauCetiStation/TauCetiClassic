@@ -101,14 +101,6 @@
 	dir = 1;
 	pixel_y = -7
 	})
-"ao" = (
-/obj/structure/window/fulltile/reinforced{
-	dir = 1;
-	grilled = 1;
-	pixel_y = -7
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/export_outpost)
 "aq" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -139,7 +131,7 @@
 	},
 /area/space_structures/export_outpost)
 "av" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -477,7 +469,7 @@
 	},
 /area/space_structures/export_outpost)
 "bm" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 4
 	},
 /obj/item/weapon/storage/wallet/random,
@@ -1091,7 +1083,7 @@ ad
 aB
 ae
 aN
-ao
+aq
 aX
 aW
 bv
@@ -1116,7 +1108,7 @@ ab
 ag
 aK
 aK
-ao
+aq
 bl
 bp
 au

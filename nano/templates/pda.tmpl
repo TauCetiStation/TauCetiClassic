@@ -223,7 +223,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             <div class ="itemContent">
                 {{:helper.link(data.message_silent==1 ? 'Ringer: Off' : 'Ringer: On', data.message_silent==1 ? 'volume-off' : 'volume-on', {'choice' : "Toggle Ringer"}, null, 'fixedLeftWide')}}
                 {{:helper.link(data.toff==1 ? 'Messenger: Off' : 'Messenger: On',data.toff==1 ? 'close':'check', {'choice' : "Toggle Messenger"}, null, 'fixedLeftWide')}}
-                {{:helper.link('Set Ringtone', 'comment', {'choice' : "Ringtone"}, null, 'fixedLeftWide')}}
+                {{:helper.link('Change Ringtone', 'comment', {'choice' : "Ringtone"}, null, 'fixedLeftWide')}}
                 {{:helper.link('Delete all Conversations', 'trash', {'choice' : "Clear", 'option' : "All"}, null, 'fixedLeftWider')}}
             </div>
         </div>
@@ -314,6 +314,18 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     <tr><th colspan="4" class="command">Command</th></tr>
                     {{for data.cached["heads"]}}
                         {{if value.rank == "Captain"}}
+							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                        {{else}}
+							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                        {{/if}}
+                    {{/for}}
+                {{/if}}
+                {{if data.cached.centcom.length}}
+                    <tr><th colspan="4" class="centcom">CentCom representatives</th></tr>
+                    {{for data.cached["centcom"]}}
+                        {{if value.rank == "Internal Affairs Agent"}}
 							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
                             <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
                         {{else}}

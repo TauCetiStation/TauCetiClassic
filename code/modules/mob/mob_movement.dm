@@ -551,3 +551,9 @@
 
 	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
 	selector.set_selected_zone(BP_L_LEG, mob)
+
+// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
+// at this moment we need it only for clients, so it will not be called for clientless mobs
+/mob/proc/update_z(new_z)
+	last_z = new_z
+	SEND_SIGNAL(src, COMSIG_MOB_Z_CHANGED, new_z)

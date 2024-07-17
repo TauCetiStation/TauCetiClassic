@@ -30,7 +30,7 @@ export const SpawnersMenu = (props, context) => {
                         })}
                     />
                     <Button
-                      content={!spawner.register_only 
+                      content={!spawner.register_only
                         ? "Появиться"
                         : (!spawner.checked ? "Заявить" : "Отменить")}
                       selected={spawner.checked}
@@ -51,8 +51,13 @@ export const SpawnersMenu = (props, context) => {
                       {formatTime(spawner.time_left)}
                     </LabeledList.Item>
                   )}
+                  {!!spawner.register_only && (
+                    <LabeledList.Item color="green" label="Кандидатов">
+                      {spawner.registered_candidates}
+                    </LabeledList.Item>
+                  )}
                   <LabeledList.Item color="green" label="Позиций свободно">
-                    {spawner.amount}
+                    {spawner.positions}
                   </LabeledList.Item>
                   {spawner.playing > 0 && (
                     <LabeledList.Item color="green" label="Играет">

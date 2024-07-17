@@ -163,68 +163,6 @@
 	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/proc/cmd_admin_mute(mob/M as mob, mute_type)
-	if(!usr || !usr.client)
-		return
-	if(!usr.client.holder)
-		to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You don't have permission to do this.</font>")
-		return
-	if(!M.client)
-		to_chat(usr, "<font color='red'>Error: cmd_admin_mute: This mob doesn't have a client tied to it.</font>")
-	if(M.client.holder && (M.client.holder.rights & R_ADMIN) && !check_rights(R_PERMISSIONS))
-		return
-	if(M.client.holder && (M.client.holder.rights & R_PERMISSIONS))
-		to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin with permissions rights.</font>")
-		return
-
-	var/muteunmute
-	var/mute_string = get_mute_text(mute_type)
-
-	if(!mute_string)
-		CRASH("Can't parse mute type: [mute_type]")
-
-	if(M.client.prefs.muted & mute_type)
-		muteunmute = "unmuted"
-		M.client.prefs.muted &= ~mute_type
-		if(M.client.prefs.permamuted & mute_type)
-			M.client.prefs.permamuted &= ~mute_type
-			M.client.prefs.save_preferences()
-			to_chat(M, "<span class='notice'>You have been [mute_string] unmuted from [usr.key].</span>")
-	else
-		if(tgui_alert(usr, "Would you like to make it permament?","Permamute?", list("Yes","No, round only")) == "Yes")
-			var/permmutreason = input("Permamute Reason") as text|null
-			if(permmutreason)
-				muteunmute = "permamuted"
-				M.client.prefs.permamuted |= mute_type
-				M.client.prefs.save_preferences()
-				M.client.prefs.muted |= mute_type
-				notes_add(M.ckey, "Permamute from [mute_string]: [permmutreason]", usr.client)
-				permmutreason = sanitize(permmutreason)
-				to_chat(M, "<span class='alert big bold'>You have been permamuted from [mute_string] by [usr.key].<br>Reason: [permmutreason]</span>")
-			else
-				to_chat(usr, "<span class='alert'>Could not apply permamute: Reason is empty</span>")
-				return
-
-		else if (tgui_alert(usr, "Add a notice for round mute?", "Mute Notice?", list("Yes","No")) == "Yes")
-			var/mutereason = input("Mute Reason") as text|null
-			if(mutereason)
-				notes_add(M.ckey, "Muted from [mute_string]: [mutereason]", usr.client)
-				mutereason = sanitize(mutereason)
-				to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].<br>Reason: [mutereason]</span>")
-			else
-				return
-		else
-			to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].</span>")
-
-		muteunmute = "muted"
-		M.client.prefs.muted |= mute_type
-
-	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
-	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].")
-	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
 /client/proc/cmd_admin_add_random_ai_law()
 	set category = "Fun"
 	set name = "Add Random AI Law"
@@ -521,7 +459,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(G_found.mind && !G_found.mind.active)
 		G_found.mind.transfer_to(new_character)	//be careful when doing stuff like this! I've already checked the mind isn't in use
-		new_character.mind.special_verbs = list()
 	else
 		new_character.mind_initialize()
 	if(!new_character.mind.assigned_role)
@@ -854,35 +791,35 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
+	if(tgui_alert(src, "Вы уверены?", "Подтвердите", list("Да", "Нет")) != "Да")
 		return
 
 	if(SSshuttle.fake_recall)
-		var/choice = input("The shuttle will just return if you call it. What you want to do?") in list(
-					"Cancel shuttle call",
-					"Call it anyway",
-					"Call and allow it to fly to station")
+		var/choice = input("Шаттл просто вернется, если вы его вызовете. Что вы хотите сделать?") in list(
+					"Отменить вызов шаттла",
+					"Вызвать в любом случае",
+					"Вызвать и позвольте ему прилететь на станцию")
 		switch(choice)
-			if("Cancel shuttle call")
+			if("Отменить вызов шаттла")
 				return
-			if("Call and allow it to fly to station")
+			if("Вызвать и позволить ему прилететь на станцию")
 				SSshuttle.fake_recall = FALSE
 				SSshuttle.time_for_fake_recall = 0
 				log_admin("[key_name(usr)] disabled shuttle fake recall.")
 				message_admins("<span class='info'>[key_name_admin(usr)] disabled shuttle fake recall.</span>")
 
-	var/type = tgui_alert(src, "It's emergency shuttle or crew transfer?", "Confirm", list("Emergency", "Crew transfer"))
+	var/type = tgui_alert(src, "Это экстренный шаттл или смена экипажа?", "Подтвердите", list("Экстренный", "Смена экипажа"))
 
-	if(type == "Crew transfer")
+	if(type == "Смена экипажа")
 		SSshuttle.shuttlealert(1)
 		SSshuttle.incall()
 		SSshuttle.announce_crew_called.play()
 	else
-		var/eaccess = tgui_alert(src, "Grant acces to maints for everyone?", "Confirm", list("Yes", "No"))
+		var/eaccess = tgui_alert(src, "Предоставить доступ к техническим тоннелям для всех?", "Подтвердите", list("Да", "Нет"))
 		SSshuttle.incall()
 		SSshuttle.announce_emer_called.play()
 
-		if(eaccess == "Yes")
+		if(eaccess == "Да")
 			make_maint_all_access(FALSE)
 
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -897,7 +834,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes") return
+	if(tgui_alert(src, "Вы уверены?", "Подтвердите", list("Да", "Нет")) != "Да") return
 
 	if(!SSticker || SSshuttle.location || SSshuttle.direction == 0)
 		return
@@ -1077,7 +1014,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(target.player_ingame_age < value)
-		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src, secret = 0)
+		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", admin_key = ckey, secret = 0)
 
 		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [value]")
 		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [value]")

@@ -35,9 +35,6 @@
 
 		add_underlay(T, NODE3, dir)
 
-/obj/machinery/atmospherics/components/trinary/tvalve/hide(i)
-	update_underlays()
-
 /obj/machinery/atmospherics/components/trinary/tvalve/SetInitDirections()
 	switch(dir)
 		if(NORTH)

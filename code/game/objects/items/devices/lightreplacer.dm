@@ -1,10 +1,10 @@
 /obj/item/device/lightreplacer
 	name = "light replacer"
 	desc = "A device to automatically replace lights. Refill with reinforced glass."
-
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
 	item_state = "electronic"
+	item_state_world = "lightreplacer0_world"
 
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -54,6 +54,7 @@
 		return FALSE
 
 	uses -= used
+	update_icon()
 	return TRUE
 
 // Negative numbers will subtract
@@ -85,7 +86,10 @@
 		lamp_type = valid_lamp_types[new_type]
 
 /obj/item/device/lightreplacer/update_icon()
-	icon_state = "lightreplacer[emagged]"
+	if(uses == 0)
+		item_state_world = "lightreplacer0_empty_world"
+		item_state_inventory = "lightreplacer0_empty"
+	update_world_icon()
 
 /obj/item/device/lightreplacer/emag_act(mob/user)
 	emagged = !emagged

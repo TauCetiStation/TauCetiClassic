@@ -1,6 +1,7 @@
 /obj/structure/closet/wagon
 	name = "emergency closet"
-	desc = "It's a storage unit for emergency breathmasks and o2 tanks."
+	cases = list("аварийный шкаф", "аварийного шкафа", "аварийному шкафу", "аварийный шкаф", "аварийным шкафом", "аварийном шкафе")
+	desc = "Это настенный шкаф для хранения вещей на экстренный случай. Внутри можно найти дыхательную маску и баллон с кислородом."
 	icon = 'icons/locations/shuttles/closet.dmi'
 	icon_state = "WallClosetw"
 	icon_closed = "WallClosetw"
@@ -16,7 +17,8 @@
 
 /obj/structure/closet/mining
 	name = "emergency closet"
-	desc = "It's a storage unit for emergency o2 supply and pressure suit."
+	cases = list("аварийный шкаф", "аварийного шкафа", "аварийному шкафу", "аварийный шкаф", "аварийным шкафом", "аварийном шкафе")
+	desc = "Это настенный шкаф для хранения вещей на экстренный случай. Внутри можно найти баллон с запасом кислорода и герметичный костюм."
 	icon = 'icons/locations/shuttles/closet.dmi'
 	icon_state = "WallClosetMining"
 	icon_closed = "WallClosetMining"
@@ -34,7 +36,8 @@
 
 /obj/structure/closet/medical_wall/erokez //wall mounted medical closet
 	name = "first-aid closet"
-	desc = "It's wall-mounted storage unit for first aid supplies."
+	cases = list("шкаф первой помощи", "шкафа первой помощи", "шкафу первой помощи", "шкаф первой помощи", "шкафом первой помощи", "шкафе первой помощи")
+	desc = "Это настенный шкаф для хранения предметов первой помощи."
 	icon = 'icons/locations/shuttles/closet.dmi'
 	icon_state = "WallClosetMed_1"
 	icon_closed = "WallClosetMed_1"
@@ -52,7 +55,8 @@
 
 /obj/structure/closet/erokez
 	name = "Closet"
-	desc = "It's wall-mounted storage unit"
+	cases = list("шкаф", "шкафа", "шкафу", "шкаф", "шкафом", "шкафе")
+	desc = "Это настенный шкаф для хранения предметов."
 	icon = 'icons/locations/shuttles/closet.dmi'
 	icon_state = "WallCloset_1"
 	icon_closed = "WallCloset_1"
@@ -62,7 +66,8 @@
 
 /obj/structure/closet/evacvent
 	name = "Engine ventilation"
-	desc = "Looks like you can get in this small engine ventilation shaft"
+	cases = list("вентиляция двигателя", "вентиляции двигателя", "вентиляции двигателя", "вентиляцию двигателя", "вентиляцией двигателя", "вентиляции двигателя")
+	desc = "Похоже, вы можете залезть в эту небольшую вентиляционную шахту двигателя"
 	icon = 'icons/locations/shuttles/closet.dmi'
 	icon_state = "shuttle"
 	icon_closed = "shuttle"

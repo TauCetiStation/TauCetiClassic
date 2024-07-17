@@ -731,17 +731,16 @@
 	anchored = TRUE
 	density = FALSE
 
-	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
 	dir = 0				// dir will contain dominant direction for junction pipes
 	max_integrity = 200
 	layer = 2.3			// slightly lower than wires and other pipes
-	var/base_icon_state	// initial icon state on map
 
 	// new pipe, set the icon_state as on map
 /obj/structure/disposalpipe/atom_init()
 	. = ..()
-	base_icon_state = icon_state
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
@@ -793,30 +792,6 @@
 
 	return P
 
-
-// update the icon_state to reflect hidden status
-/obj/structure/disposalpipe/proc/update()
-	var/turf/T = src.loc
-	hide(T.intact && !isenvironmentturf(T))	// environment never hides pipes
-
-// hide called by levelupdate if turf intact status changes
-// change visibility status and force update of icon
-/obj/structure/disposalpipe/hide(intact)
-	invisibility = intact ? 101: 0	// hide if floor is intact
-	updateicon()
-
-// update actual icon_state depending on visibility
-// if invisible, append "f" to icon_state to show faded version
-// this will be revealed if a T-scanner is used
-// if visible, use regular icon_state
-/obj/structure/disposalpipe/proc/updateicon()
-	if(invisibility)
-		icon_state = "[base_icon_state]f"
-	else
-		icon_state = base_icon_state
-	return
-
-
 // expel the held objects into a turf
 // called when there is a break in the pipe
 //
@@ -833,13 +808,11 @@
 			AM.pipe_eject(0)
 		qdel(H)
 		return
-	if(T.intact && isfloorturf(T)) //intact floor, pop the tile
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && isfloorturf(T)) //intact floor, pop the tile
 		var/turf/simulated/floor/F = T
-		F.burnt	= 1
-		F.intact	= 0
-		F.levelupdate()
-		new F.floor_type(H)	// add to holder so it will be thrown with other stuff
-		F.icon_state = "Floor[F.burnt ? "1" : ""]"
+		if(F.floor_type)
+			new F.floor_type(H)	// add cap to holder so it will be thrown with other stuff
+		F.break_tile_to_plating()
 
 	var/turf/target
 	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -889,7 +862,7 @@
 /obj/structure/disposalpipe/attackby(obj/item/I, mob/user)
 
 	var/turf/T = src.loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
 	if(user.is_busy()) return
@@ -912,7 +885,7 @@
 /obj/structure/disposalpipe/proc/welded()
 
 	var/obj/structure/disposalconstruct/C = new (src.loc)
-	switch(base_icon_state)
+	switch(icon_state)
 		if("pipe-s")
 			C.ptype = 0
 		if("pipe-c")
@@ -937,7 +910,6 @@
 	C.set_dir(dir)
 	C.density = FALSE
 	C.anchored = TRUE
-	C.update()
 
 	qdel(src)
 
@@ -957,8 +929,6 @@
 	else
 		dpdir = dir | turn(dir, -90)
 
-	update()
-
 //a three-way junction with dir being the dominant direction
 /obj/structure/disposalpipe/junction
 	icon_state = "pipe-j1"
@@ -971,8 +941,6 @@
 		dpdir = dir | turn(dir, 90) | turn(dir,180)
 	else // pipe-y
 		dpdir = dir | turn(dir,90) | turn(dir, -90)
-	update()
-
 
 // next direction to move
 // if coming in from secondary dirs, then next is primary dir
@@ -1027,7 +995,6 @@
 		tagger_locations |= sort_tag
 	updatename()
 	updatedesc()
-	update()
 
 /obj/structure/disposalpipe/tagger/attackby(obj/item/I, mob/user)
 	if(..())
@@ -1064,7 +1031,6 @@
 /obj/structure/disposalpipe/shop_scanner/atom_init()
 	. = ..()
 	dpdir = dir | turn(dir, 180)
-	update()
 
 /obj/structure/disposalpipe/shop_scanner/nextdir(fromdir)
 	return dir
@@ -1216,7 +1182,6 @@
 	updatedir()
 	updatename()
 	updatedesc()
-	update()
 
 /obj/structure/disposalpipe/sortjunction/attackby(obj/item/I, mob/user)
 	if(..())
@@ -1308,7 +1273,6 @@
 /obj/structure/disposalpipe/trunk/atom_init()
 	..()
 	dpdir = dir
-	update()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/disposalpipe/trunk/atom_init_late()
@@ -1326,7 +1290,6 @@
 	if(O)
 		linked = O
 
-	update()
 	return
 
 	// Override attackby so we disallow trunkremoval when somethings ontop
@@ -1351,7 +1314,7 @@
 		return
 
 	var/turf/T = src.loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
 	if(iswelding(I))
@@ -1403,10 +1366,6 @@
 	dpdir = 0		// broken pipes have dpdir=0 so they're not found as 'real' pipes
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
-
-/obj/structure/disposalpipe/broken/atom_init()
-	. = ..()
-	update()
 
 /obj/structure/disposalpipe/broken/deconstruct()
 	qdel(src)

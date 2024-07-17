@@ -1,3 +1,5 @@
+# Как добавить новую станцию
+
 ### Начало
 Перед тем как начать мапить обязательно установите хуки или редактор [StrongDMM](https://github.com/SpaiR/StrongDMM/releases) который автоматически переводит карту в TGM формат. Больше информации об этом [Здесь](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/WORK_WITH_MAP.md)
 

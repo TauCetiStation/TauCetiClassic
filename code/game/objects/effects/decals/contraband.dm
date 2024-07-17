@@ -170,14 +170,19 @@
 	random_basetype = /obj/structure/sign/poster
 
 /obj/structure/sign/poster/calendar
-	name = "2223 calendar"
+	name = "2224 calendar"
 	icon_state = "calendar"
-	desc = "Календарь на 2223-й год."
+	desc = "Brand new calendar for year 2224."
 
 /obj/structure/sign/poster/sivtsev
 	name = "sivtsev table"
 	icon_state = "sivtsev"
 	desc = "Таблица Сивцева для проверки остроты зрения."
+
+/obj/structure/sign/poster/olympic_games
+	name = "2214 Winter Olympics"
+	icon_state = "olympic"
+	desc = "At the bottom of the poster it says: «The XLVII Olympic Winter Games. Venus 2214»."
 
 /obj/structure/sign/poster/contraband
 	poster_item_name = "contraband poster"
@@ -614,6 +619,11 @@
 	name = "Carbon Dioxide"
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
+
+/obj/structure/sign/poster/official/cosmonautics_day
+	name = "Yuri Gagarin"
+	desc = "April 12 is the International Day of Human Space Flight."
+	icon_state = "poster36_legit"
 
 /obj/structure/sign/poster/revolution
 	poster_item_name = "revolution poster"

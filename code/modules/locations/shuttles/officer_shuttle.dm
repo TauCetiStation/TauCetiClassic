@@ -4,10 +4,11 @@
 
 /obj/machinery/computer/officer_shuttle
 	name = "Shuttle Console"
+	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
-	var/department_note = "Velocity transport shuttle departed from station."
-	var/arrival_note = "Velocity Transport Shuttle docked with the station."
+	var/department_note = "Транспортный шаттл Велосити отстыковался от станции."
+	var/arrival_note = "Транспортный шаттл Велосити пристыковался к станции."
 	var/obj/item/device/radio/intercom/radio
 	var/moving = 0
 	var/area/curr_location
@@ -16,6 +17,8 @@
 
 
 /obj/machinery/computer/officer_shuttle/atom_init()
+	department_note = "Транспортный шаттл Велосити отстыковался от [station_name_ru()]."
+	arrival_note = "Транспортный шаттл Велосити пристыковался к [station_name_ru()]."
 	radio = new (src)
 	..()
 	return INITIALIZE_HINT_LATELOAD
@@ -36,7 +39,7 @@
 	if(curr_location == locate(/area/shuttle/officer/station))
 		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_officer")
 		SSshuttle.undock_act(curr_location, "arrival_officer")
-		radio.autosay(department_note, "Arrivals Alert System")
+		radio.autosay(department_note, "Система оповещения")
 	else if(curr_location == locate(/area/shuttle/officer/velocity))
 		SSshuttle.undock_act(/area/velocity, "velocity_officer")
 		SSshuttle.undock_act(curr_location, "arrival_officer")
@@ -69,7 +72,7 @@
 	if(dest_location == locate(/area/shuttle/officer/station))
 		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_officer")
 		SSshuttle.dock_act(dest_location, "arrival_officer")
-		radio.autosay(arrival_note, "Arrivals Alert System")
+		radio.autosay(arrival_note, "Система оповещения")
 	else if(dest_location == locate(/area/shuttle/officer/velocity))
 		SSshuttle.dock_act(/area/velocity, "velocity_officer")
 		SSshuttle.dock_act(dest_location, "arrival_officer")
@@ -86,13 +89,15 @@
 	return attack_hand(user)
 
 /obj/machinery/computer/officer_shuttle/ui_interact(mob/user)
-	var/dat = {"Location: [curr_location]<br>
-			Ready to move[max(lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
-		<a href='?src=\ref[src];velocity=1'>NTS Velocity</a> |
-		<a href='?src=\ref[src];station=1'>[station_name()]</a> |
-		<a href='?src=\ref[src];centcomm=1'>Centcomm</a><br>"}
+	var/seconds = max(round((lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
+	var/dat = {"Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>
+			Готов лететь[max(lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]<br>
+		<a href='?src=\ref[src];velocity=1'>Велосити Док 42</a> |
+		<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> |
+		<a href='?src=\ref[src];centcomm=1'>ЦентКом</a><br>"}
 
-	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450)
+	var/datum/browser/popup = new(user, "computer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 575, 450)
 	popup.set_content(dat)
 	popup.open()
 

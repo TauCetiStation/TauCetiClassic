@@ -501,25 +501,7 @@ SUBSYSTEM_DEF(job)
 				return TRUE
 			if("AI")
 				return H
-			if("Clown")	//don't need bag preference stuff!
-			else
-				switch(H.backbag) //BS12 EDIT
-					if(2)
-						var/obj/item/weapon/storage/backpack/BPK = new(H)
-						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
-					if(3)
-						var/obj/item/weapon/storage/backpack/alt/BPK = new(H)
-						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
-					if(4)
-						var/obj/item/weapon/storage/backpack/satchel/norm/BPK = new(H)
-						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
-					if(5)
-						var/obj/item/weapon/storage/backpack/satchel/BPK = new(H)
-						H.equip_to_slot_or_del(BPK, SLOT_BACK,1)
 
-	/*
-	Placed here so the backpack that spawns if there is no job backpack has already spawned by now.
-	*/
 	if(H.species)
 		H.species.after_job_equip(H, job)
 
@@ -618,6 +600,10 @@ SUBSYSTEM_DEF(job)
 		pda.owner_account = MA.account_number //bind the account to the pda
 		pda.owner_fingerprints += C.fingerprint_hash //save fingerprints in pda from ID card
 		MA.owner_PDA = pda //add PDA in /datum/money_account
+
+		var/chosen_ringtone = H.client?.prefs.chosen_ringtone
+		if(chosen_ringtone)
+			pda.set_ringtone(chosen_ringtone, H.client?.prefs.custom_melody)
 
 	return TRUE
 

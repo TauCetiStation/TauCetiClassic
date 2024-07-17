@@ -25,6 +25,7 @@
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
+ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 /obj/machinery/alarm
 	name = "alarm"
 	icon = 'icons/obj/monitors.dmi'
@@ -780,6 +781,23 @@
 			apply_mode()
 			return FALSE
 
+/obj/machinery/alarm/proc/disable_sensors()
+	TLV["oxygen"] =			list(-1.0, -1.0,-1.0,-1.0)
+	TLV["carbon dioxide"] = list(-1.0, -1.0,-1.0,-1.0)
+	TLV["phoron"] =			list(-1.0, -1.0,-1.0,-1.0)
+	TLV["other"] =			list(-1.0, -1.0,-1.0,-1.0)
+	TLV["pressure"] =		list(-1.0, -1.0,-1.0,-1.0)
+	TLV["temperature"] =	list(-1.0, -1.0,-1.0,-1.0)
+
+/obj/machinery/alarm/proc/enable_siphon_mode()
+	for(var/device_id in alarm_area.air_scrub_names)
+		send_signal(device_id, list("power"= 1, "panic_siphon"= 1))
+	for(var/device_id in alarm_area.air_vent_names)
+		send_signal(device_id, list("power"= 0))
+
+/obj/machinery/alarm/proc/enable_highpressure_mode()
+	for(var/device_id in alarm_area.air_vent_names)
+		send_signal(device_id, list("power"= 1, "checks"= "default", "set_external_pressure"= ONE_ATMOSPHERE * 10) )
 
 /obj/machinery/alarm/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
 	to_chat(user, "You don't want to break these things");

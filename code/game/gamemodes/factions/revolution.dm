@@ -135,7 +135,7 @@
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		command_report("Ваша низкая производительность вынуждает нас принять непростое решение о сокращении финансового обеспечения станции. В связи с этим вдвое уменьшены заработные платы всего персонала, за исключением сотрудников службы безопасности и командного состава.")
 		last_command_report = 1
-		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
+		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police") + command_positions + security_positions + centcom_positions
 		for(var/datum/job/J in SSjob.occupations)
 			if(J.title in excluded_rank)
 				continue

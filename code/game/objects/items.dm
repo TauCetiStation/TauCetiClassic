@@ -3,7 +3,6 @@
 	icon = 'icons/obj/items.dmi'
 	w_class = SIZE_SMALL
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
-	var/abstract = 0
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
@@ -98,6 +97,9 @@
 	var/list/flash_protection_slots = list()
 	var/can_get_wet = TRUE
 
+/**
+  * Doesn't call parent, see [/atom/proc/atom_init]
+  */
 /obj/item/atom_init()
 	SHOULD_CALL_PARENT(FALSE)
 	if(initialized)
@@ -107,9 +109,14 @@
 	if(light_power && light_range)
 		update_light()
 
-	if(opacity && isturf(src.loc))
-		var/turf/T = src.loc
+	if(opacity && isturf(loc))
+		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	if(can_block_air && isturf(loc))
+		var/turf/T = loc
+		if(!T.can_block_air)
+			T.can_block_air = TRUE
 
 	if(uses_integrity)
 		if (!armor)
@@ -764,7 +771,7 @@
 			return
 
 	// Use tool's fuel, stack sheets or charges if amount is set.
-	if(amount && !use(amount))
+	if(amount && !use(amount, user))
 		return
 
 	// Play tool sound at the end of tool usage,
@@ -885,7 +892,7 @@
 		blood_overlay = null
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
-		G.transfer_blood = 0
+		G.dirt_transfers = 0
 	update_inv_mob()
 
 /obj/item/add_dirt_cover()
@@ -934,7 +941,7 @@
 	set category = "Object"
 
 	var/obj/item/I = get_active_hand()
-	if(I && !I.abstract)
+	if(I && !(I.flags & ABSTRACT))
 		I.showoff(src)
 
 /obj/item/proc/extinguish()

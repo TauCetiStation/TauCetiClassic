@@ -388,12 +388,12 @@ var/global/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = tgui_alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", list("Yes", "No"))
+	var/confirm = tgui_alert(src, "Вы уверены, что хотите вызвать экстренный шаттл?", "Подтвердите вызов шаттла", list("Да", "Нет"))
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	if(confirm == "Yes")
+	if(confirm == "Да")
 		call_shuttle_proc(src)
 
 	// hack to display shuttle timer

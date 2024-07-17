@@ -10,7 +10,7 @@
 	name = "Asteroid - Artifact"
 	icon_state = "cave"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/asteroid/mine/explored
 	name = "Mine"

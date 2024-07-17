@@ -126,7 +126,7 @@
 		t += "<A href='?src=\ref[src];setx=1'>Set X</A>"
 		t += "<div class='Section'>[cord_x]</div>"
 		t += "<A href='?src=\ref[src];sety=1'>Set Y</A>"
-		t += "<div class='Section'>[cord_y]°</div>"
+		t += "<div class='Section'>[cord_y]</div>"
 		t += "<span class='selected'>Set Power</span>"
 		t += "<div class='Section'>"
 
@@ -217,7 +217,7 @@
 			trueCord_y += rand(-15, 15)
 
 		var/turf/target = locate(trueCord_x, trueCord_y, z_co)
-		var/spawn_time = (crystals.len) * 5
+		var/spawn_time = 1 + (max_crystals - crystals.len) * 5
 		last_target = target
 		var/area/A = get_area(target)
 		flick("pad-beam", telepad)

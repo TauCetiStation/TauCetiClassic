@@ -178,7 +178,6 @@ This is chestburster mechanic for damaging
 	var/last_bite = 0
 
 	layer = 21
-	abstract = 1
 	item_state = "nothing"
 	w_class = SIZE_BIG
 
@@ -335,7 +334,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 	var/on_cooldown = FALSE
 
 	layer = 21
-	abstract = 1
 	item_state = "nothing"
 	w_class = SIZE_BIG
 

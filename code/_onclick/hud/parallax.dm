@@ -30,25 +30,14 @@
 
 	C.screen |= (C.parallax_layers)
 
-	var/atom/movable/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
-
-	PM.color = list(
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		1, 1, 1, 1,
-		0, 0, 0, 0
-		)
+	C.update_plane_masters(/atom/movable/screen/plane_master/parallax_white)
 
 /datum/hud/proc/remove_parallax()
 	var/client/C = mymob.client
 	C.screen -= (C.parallax_layers_cached)
-
-	var/atom/movable/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
-
-	PM.color = initial(PM.color)
-
 	C.parallax_layers = null
+
+	C.update_plane_masters(/atom/movable/screen/plane_master/parallax_white)
 
 /datum/hud/proc/apply_parallax_pref()
 	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(mymob, TRAIT_BYPASS_MEASURES))

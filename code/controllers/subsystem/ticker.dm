@@ -255,7 +255,7 @@ SUBSYSTEM_DEF(ticker)
 		SSjob.ResetOccupations()
 		return FALSE
 
-	if(!bundle || !bundle.hidden)
+	if(!bundle || !bundle.hide_mode_announce)
 		mode.announce()
 
 	setup_economy()

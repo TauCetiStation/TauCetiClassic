@@ -14,13 +14,6 @@
 /turf/unsimulated/wall/log
 	icon = 'icons/turf/walls/log.dmi'
 
-/turf/unsimulated/wall/fakeglass
-	name = "window"
-	icon = 'icons/turf/walls/fakeglass.dmi'
-	icon_state = "box"
-	opacity = FALSE
-	smooth = SMOOTH_TRUE
-
 /turf/unsimulated/wall/abductor
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "alien1"
@@ -32,7 +25,10 @@
 	icon_state = "box"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
-/turf/unsimulated/wall/fakeglass/alien
+/turf/unsimulated/wall/fakealienmembrane
 	name = "alien membrane"
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
+	icon_state = "box"
+	opacity = FALSE
+	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
