@@ -8,7 +8,7 @@
 /mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
 	if(stat >= DEAD)
 		return
-	if(get_painkiller_effect() <= 0.75)
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_MEDIUM)
 		return
 	if(world.time < next_pain_time && !force)
 		return
@@ -49,7 +49,7 @@
 	if(species && species.flags[NO_PAIN])
 		return
 
-	if(get_painkiller_effect() <= 0.6)
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
 		return
 	var/msg = "<span class='warning'><b>[message]</b></span>"
 	if(flash_strength >= 1)
@@ -69,7 +69,7 @@
 
 	if(stat >= DEAD)
 		return
-	if(get_painkiller_effect() <= 0.6)
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
 		return
 	var/maxdam = 0
 	var/obj/item/organ/external/damaged_organ = null

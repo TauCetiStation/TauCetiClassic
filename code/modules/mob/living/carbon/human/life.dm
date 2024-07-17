@@ -911,7 +911,7 @@ var/global/list/tourette_bad_words= list(
 				else
 					icon_num = 5
 
-			if(get_painkiller_effect() <= 0.5)
+			if(get_painkiller_effect() <= PAINKILLERS_EFFECT_VERY_HEAVY)
 				healthdoll.icon_state = "health_numb"
 				healthdoll.cut_overlays()
 			else
