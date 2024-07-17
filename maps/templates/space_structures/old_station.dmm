@@ -5078,7 +5078,8 @@
 	req_access = list(20)
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Old_station"
+	id = "Old_station";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -7940,7 +7941,8 @@
 	req_access = list(20)
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Old_station"
+	id = "Old_station";
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 1;
