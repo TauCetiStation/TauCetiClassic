@@ -583,13 +583,16 @@
 	taste_message = null
 	restrict_species = list (IPC, DIONA, VOX)
 
-/datum/reagent/xenojelly_n/on_general_digest(mob/living/M)
+/datum/reagent/xenojelly_n/on_general_digest(mob/living/carbon/human/H)
 	..()
-	M.heal_bodypart_damage(35, 10)
-	M.adjustToxLoss(-10)
-	M.adjustOxyLoss(-20)
-	M.adjustHalLoss(-25)
-	M.adjustFireLoss(-20)
+	H.heal_bodypart_damage(35, 10)
+	H.adjustToxLoss(-10)
+	H.adjustOxyLoss(-20)
+	H.adjustHalLoss(-25)
+	H.adjustFireLoss(-20)
+	for(var/obj/item/organ/external/E in H.bodyparts)
+		if(E.is_artery_cut())
+			E.status &= ~ORGAN_ARTERY_CUT
 
 /datum/reagent/xenojelly_un
 	name = "Unnatural xenojelly"

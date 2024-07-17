@@ -1,4 +1,19 @@
-//Alium nests. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
+//Alium nests and nest claws. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
+
+/obj/item/weapon/melee/nest_claws
+	name = "nest claws"
+	desc = "It stops you from shooting."
+	flags = NODROP | ABSTRACT | DROPDEL
+	icon = 'icons/mob/alien.dmi'
+	icon_state = "nest"
+	force = 0
+	w_class = SIZE_BIG
+	throwforce = 0
+	throw_range = 0
+	throw_speed = 0
+
+/obj/item/weapon/melee/nest_claws/afterattack()
+	return
 
 /obj/structure/stool/bed/nest
 	name = "alien nest"
@@ -31,6 +46,10 @@
 
 	L.pixel_y = L.default_pixel_y
 	unbuckle_mob()
+	if(istype(L.l_hand, /obj/item/weapon/melee/nest_claws))
+		qdel(L.l_hand)
+	if(istype(L.r_hand, /obj/item/weapon/melee/nest_claws))
+		qdel(L.r_hand)
 	to_chat(L, "<span class='notice'>You successfly break free from the nest!</span>")
 	L.visible_message(
 			"<span class='warning'>[L.name] break free from the nest...</span>",)
@@ -62,6 +81,8 @@
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/structure/bed/nest/post_buckle_mob(mob/living/buckling_mob)
+/obj/structure/stool/bed/nest/post_buckle_mob(mob/living/buckling_mob)
 	. = ..()
 	buckling_mob.reagents.add_reagent("xenojelly_n", 30)
+	buckling_mob.equip_to_slot_or_del(new /obj/item/weapon/melee/nest_claws, SLOT_L_HAND)
+	buckling_mob.equip_to_slot_or_del(new /obj/item/weapon/melee/nest_claws, SLOT_R_HAND)
