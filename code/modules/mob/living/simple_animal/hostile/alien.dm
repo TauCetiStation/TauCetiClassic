@@ -110,6 +110,7 @@
 	desc = "Склизкое строение, выпускающее из себя оглушающие кислотные плевки."
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "acid_turret"
+	icon_dead = "acid_turret_dead"
 	ranged_cooldown = 3
 	amount_shoot = 1
 	projectiletype = /obj/item/projectile/neurotoxin/magic/x_turret_acid
