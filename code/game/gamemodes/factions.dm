@@ -415,7 +415,7 @@
 			continue
 		. += M
 
-/datum/faction/proc/check_crew()
+/datum/faction/proc/check_crew(for_alien = FALSE)
 	var/total_human = 0
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		var/turf/human_loc = get_turf(H)
@@ -425,5 +425,8 @@
 			continue
 		if(!H.mind || !H.client)
 			continue
+		if(for_alien)
+			if(!H.species.flags[FACEHUGGABLE])
+				continue
 		total_human++
 	return total_human
