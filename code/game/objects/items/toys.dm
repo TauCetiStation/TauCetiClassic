@@ -1790,7 +1790,11 @@ Owl & Griffin toys
 							/obj/item/toy/prize/poly/polysec				= 1,
 							/obj/item/toy/prize/poly/polycompanion			= 1,
 							/obj/item/toy/prize/poly/polygold				= 1,
-							/obj/item/toy/prize/poly/polyspecial			= 1
+							/obj/item/toy/prize/poly/polyspecial			= 1,
+							/obj/item/toy/figure/iaa						= 1,
+							/obj/item/toy/figure/blueofficer				= 1,
+							/obj/item/toy/figure/xenobio					= 1,
+							/obj/item/toy/figure/xenoarcheolog				= 1
 							)
 	return pick(figures)
 
