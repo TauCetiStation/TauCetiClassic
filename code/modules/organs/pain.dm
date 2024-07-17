@@ -8,7 +8,7 @@
 /mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
 	if(stat >= DEAD)
 		return
-	if(get_painkiller_effect() <= 0.6)
+	if(get_painkiller_effect() <= 0.75)
 		return
 	if(world.time < next_pain_time && !force)
 		return
