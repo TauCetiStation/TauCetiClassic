@@ -289,19 +289,6 @@
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	body_parts_covered = 0
 
-/obj/item/clothing/suit/recyclervest/proc/toggle()
-    switch(icon_state)
-        if("recycler_vest_open")
-            src.icon_state = "recycler_vest"
-            to_chat(usr, "You button up the vest.")
-        if("recycler_vest")
-            src.icon_state = "recycler_vest_open"
-            to_chat(usr, "You unbutton the jacket.")
-        else
-            to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
-            return
-    update_inv_mob() //so our overlays update
-
 /obj/item/clothing/suit/surgicalapron
 	name = "surgical apron"
 	desc = "A sterile blue apron for performing surgery."
