@@ -222,10 +222,14 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	var/autogenerating_timer
 
 	var/generating = FALSE
+
 	var/frame_width = 13
 	var/frame_height = 17
 	var/image_offset_x = 9
 	var/image_offset_y = 11
+	var/generating_scale = 50
+	var/examinate_scale = 15
+
 	var/prompt
 	var/style = "Детальное фото"
 	var/output_image_base64
@@ -250,7 +254,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 /obj/item/portrait/neuro/examine(mob/user)
 	. = ..()
 	if(output_image_base64)
-		to_chat(user, "\[[prompt]\] в стиле [style]:<br><img height='[frame_height*15]' width='[frame_width*15]' src='data:image/png;base64, [output_image_base64]' />")
+		to_chat(user, "\[[prompt]\] в стиле [style]:<br><img height='[frame_height*examinate_scale]' width='[frame_width*examinate_scale]' src='data:image/png;base64, [output_image_base64]' />")
 
 /obj/item/portrait/neuro/attack_hand(mob/user)
 	var/choice = tgui_input_list(user, "Что сделать?", "Портрет", list("Изменить", "Снять", "Ничего"))
@@ -335,8 +339,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	query.style = style
 	query.target_width = frame_width
 	query.target_height = frame_height
-	query.generate_width = frame_width*32
-	query.generate_height = frame_height*32
+	query.generate_width = frame_width*generating_scale
+	query.generate_height = frame_height*generating_scale
 	query.file_path = SSneural.get_full_path("portrait", prompt)
 
 	output_image_base64 = SSneural.generate_neural_image(query)
@@ -375,3 +379,4 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	frame_height = 28
 	image_offset_x = 2
 	image_offset_y = 2
+	generating_scale = 32

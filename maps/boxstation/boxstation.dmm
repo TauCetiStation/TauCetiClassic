@@ -25590,7 +25590,7 @@
 /obj/machinery/chem_dispenser/soda{
 	dir = 4
 	},
-/obj/structure/sign/poster/official/random{
+/obj/item/portrait/neuro/big{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -55812,6 +55812,9 @@
 	name = "Station Intercom (Medbay)";
 	pixel_x = 28
 	},
+/obj/item/portrait/neuro{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "bXU" = (
@@ -67037,6 +67040,9 @@
 "cEm" = (
 /obj/structure/stool/bed/psych,
 /obj/item/weapon/bedsheet/psych,
+/obj/item/portrait/neuro/big{
+	pixel_x = 32
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "cEn" = (
@@ -76245,6 +76251,9 @@
 /obj/structure/dryer{
 	pixel_y = 20
 	},
+/obj/item/portrait/neuro{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -77258,6 +77267,12 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel)
+"kYy" = (
+/obj/item/portrait/neuro/big{
+	pixel_y = -32
+	},
+/turf/simulated/floor/carpet/green,
+/area/station/medical/psych)
 "kYG" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -79263,6 +79278,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
+/obj/item/portrait/neuro,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "nfb" = (
@@ -128939,7 +128955,7 @@ bJm
 bXS
 cEm
 bEi
-bEi
+kYy
 bMF
 bBy
 cLu
