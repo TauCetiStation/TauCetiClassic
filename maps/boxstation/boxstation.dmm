@@ -77267,12 +77267,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel)
-"kYy" = (
-/obj/item/portrait/neuro/big{
-	pixel_y = -32
-	},
-/turf/simulated/floor/carpet/green,
-/area/station/medical/psych)
 "kYG" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -79278,7 +79272,9 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/item/portrait/neuro,
+/obj/item/portrait/neuro{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "nfb" = (
@@ -86656,6 +86652,12 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"wHG" = (
+/obj/item/portrait/neuro/big{
+	pixel_y = -32
+	},
+/turf/simulated/floor/carpet/green,
+/area/station/medical/psych)
 "wHJ" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
@@ -128955,7 +128957,7 @@ bJm
 bXS
 cEm
 bEi
-kYy
+wHG
 bMF
 bBy
 cLu
