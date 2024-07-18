@@ -611,6 +611,15 @@
 	else
 		return 0
 
+/obj/machinery/vending/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(prob(damage_amount))
+		var/datum/data/vending_product/R = pick(src.product_records)
+		if(R.amount)
+			playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
+			new R.product_path(src.loc)
+			R.amount--
+
 /*
  * Vending machine types
  */
