@@ -369,7 +369,7 @@
 	volume = 60
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask
-	name = "Vacuum flask"
+	name = "vacuum flask"
 	desc = "Keeping your drinks at the perfect temperature since 1892."
 	icon_state = "vacuumflask"
 	volume = 60
