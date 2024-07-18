@@ -304,7 +304,7 @@
 
 
 /obj/item/weapon/reagent_containers/glass/beaker/teapot
-	name = "teapot"
+	name = "Teapot"
 	cases = list("чайник", "чайника", "чайнику", "чайник", "чайником", "чайнике")
 	desc = "Элегантный чайник."
 	gender = MALE

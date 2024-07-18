@@ -132,7 +132,7 @@
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 
 		reagents.standard_splash(target, user=user)
-	
+
 	update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/refill_by_borg(user, refill, trans)
@@ -369,7 +369,7 @@
 	volume = 60
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask
-	name = "vacuum flask"
+	name = "Vacuum flask"
 	desc = "Keeping your drinks at the perfect temperature since 1892."
 	icon_state = "vacuumflask"
 	volume = 60
