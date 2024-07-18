@@ -616,6 +616,7 @@
 	if(prob(damage_amount))
 		var/datum/data/vending_product/R = pick(src.product_records)
 		if(R.amount)
+			do_shake_animation(2, 10, intensity_dropoff = 0.9)
 			playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 			new R.product_path(src.loc)
 			R.amount--
