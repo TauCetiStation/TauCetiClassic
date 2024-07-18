@@ -27,7 +27,6 @@
 					// 4 = Supply shuttle timer
 					// 5 = default N picture
 					// 6 = Queue_Mode
-					// 7 = Kadinsky image
 
 	var/picture_state	// icon_state of alert picture
 	var/message1 = ""	// message line 1
@@ -48,9 +47,6 @@
 
 	// new display
 	// register for radio system
-
-/obj/machinery/status_display/neural
-	mode = 7
 
 /obj/machinery/status_display/atom_init()
 	. = ..()
@@ -85,7 +81,7 @@
 		set_picture("ai_friend")
 		return
 
-	if((mode == 3 || mode == 7) && overlays.len)	//Why we must update diplay if picture is already set?
+	if(mode == 3 && overlays.len) //Why we must update diplay if picture is already set?
 		return
 
 	if(overlays.len && !friendc || mode == 4)
@@ -154,6 +150,7 @@
 	switch(mode)
 		if(1,2,4)
 			to_chat(user, "The display says:<br>&emsp;<xmp>[message1]</xmp><br>&emsp;<xmp>[message2]</xmp>")
+
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
 	if(m1)
