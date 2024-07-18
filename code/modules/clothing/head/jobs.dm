@@ -28,11 +28,10 @@
 	desc = "You fear to wear it for the negligence it brings."
 	icon_state = "capcap"
 	flags_inv = 0
-	body_parts_covered = 0
+	body_parts_covered = 1
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
-	body_parts_covered = 0
 	force = 0
 	hitsound = list()
 
