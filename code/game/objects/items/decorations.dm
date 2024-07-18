@@ -307,6 +307,11 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 			return
 
 /obj/item/portrait/neuro/proc/generate_new_image(mob/user)
+	if(!config.use_kadinsky)
+		if(user)
+			to_chat(user, "<span class='warning'>Рамка не отвечает на ваши действия.</span>")
+		return
+
 	if(autogenerating && !autogenerating_timer)
 		autogenerating_timer = addtimer(CALLBACK(src, PROC_REF(generate_new_image)), 3 MINUTE, TIMER_STOPPABLE)
 		if(prob(10))
