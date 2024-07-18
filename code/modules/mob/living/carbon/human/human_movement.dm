@@ -40,7 +40,7 @@
 			tally += health_deficiency / 25
 
 		var/hungry = NUTRITION_LEVEL_FULL - get_satiation()
-		if(hungry >= NUTRITION_LEVEL_WELL_FED) // Slow down if nutrition <= 20%
+		if(hungry >= NUTRITION_LEVEL_NORMAL) // Slow down if nutrition <= 40%
 			tally += hungry / 250 // 1,4 - 2
 
 		if(shock_stage >= 10)
