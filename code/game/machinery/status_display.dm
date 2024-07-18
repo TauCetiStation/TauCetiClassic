@@ -46,16 +46,6 @@
 	maptext_width = 32
 	maptext_y = 3
 
-	// neural image generation
-	var/generating = FALSE
-	var/frame_width = 26
-	var/frame_height = 17
-	var/image_coord_x = 3
-	var/image_coord_y = 9
-	var/prompt
-	var/style
-	var/output_image_base64
-
 	// new display
 	// register for radio system
 
@@ -158,50 +148,12 @@
 			var/line1 = "Ticket:"
 			var/line2 = "-[queue_number]-"
 			update_display(line1, line2)
-		if(7)
-			if(!output_image_base64)
-				update_display("NEURAL", "LOADING")
-			if(!generating)
-				set_neural_image()
-
-/obj/machinery/status_display/proc/set_neural_image()
-	set waitfor = FALSE
-
-	generating = TRUE
-	prompt = "крутая утка в космосе"
-	style = "Аниме"
-	var/datum/neural_query/query = new
-	query.prompt = prompt
-	query.style = style
-	query.target_width = frame_width
-	query.target_height = frame_height
-	query.generate_width = frame_width*32
-	query.generate_height = frame_height*32
-	query.file_path = SSneural.get_full_path("status_display", prompt)
-
-	output_image_base64 = SSneural.generate_neural_image(query)
-	if(!output_image_base64)
-		generating = FALSE
-		return
-	remove_display()
-
-	var/icon/I = new(query.file_path)
-	var/mutable_appearance/image = mutable_appearance(I)
-	image.pixel_x = image_coord_x
-	image.pixel_y = image_coord_y
-	add_overlay(image)
-
-	SSneural.release_cache(query.file_path)
-	generating = FALSE
 
 /obj/machinery/status_display/examine(mob/user)
 	..()
 	switch(mode)
 		if(1,2,4)
 			to_chat(user, "The display says:<br>&emsp;<xmp>[message1]</xmp><br>&emsp;<xmp>[message2]</xmp>")
-		if(7)
-			to_chat(user, "\[[prompt]\] в стиле [style]:<br><img src='data:image/png;base64, [output_image_base64]' />")
-
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
 	if(m1)

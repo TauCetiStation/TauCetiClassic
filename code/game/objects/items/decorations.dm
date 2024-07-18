@@ -151,6 +151,9 @@
 	. = ..()
 	if(!mapload)
 		anchored = FALSE
+	// gusev....
+	if(istype(src, /obj/item/portrait/neuro))
+		return
 	var/portrait_number = rand(1, 3)
 	icon_state = "nt_portrait_[portrait_number]"
 	switch(portrait_number)
@@ -162,9 +165,9 @@
 			desc = "Константин Карпатенко - ранее адмирал ракетного флота, ныне духовный лидер флота НаноТрейзен."
 
 /obj/item/portrait/attack_hand(mob/user)
-	if(!Adjacent(usr) || usr.incapacitated())
+	if(!Adjacent(user) || user.incapacitated())
 		return
-	src.anchored = FALSE
+	anchored = FALSE
 	user.put_in_hands(src)
 
 var/global/list/station_head_portraits = list()
@@ -205,3 +208,170 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 			Portrait.icon_state = "portrait_empty"
 			Portrait.desc = newdesc
 			Portrait.add_overlay(Heads_photo)
+
+/obj/item/portrait/neuro
+	name = "neuro frame"
+	desc = "Это всего лишь рамка. Только кристалл и дерево. Рамка нарисует картину? Рамка превратит кусок холста в шедевр искусства? А Вы?"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "portrait_empty"
+
+	anchored = TRUE
+
+	// neural image generation
+	var/autogenerating = TRUE
+	var/autogenerating_timer
+
+	var/generating = FALSE
+	var/frame_width = 13
+	var/frame_height = 17
+	var/image_offset_x = 9
+	var/image_offset_y = 11
+	var/prompt
+	var/style = "Детальное фото"
+	var/output_image_base64
+
+	var/list/prompt_rotation = list(
+		"portrait of cool cat in googles",
+		"portrait of cool cat in space",
+		"portrait of the President of the big corporation",
+		"portrait of cool dog in googles",
+		"portrait of cool dog in space",
+	)
+
+/obj/item/portrait/neuro/atom_init(mapload)
+	. = ..()
+	if(autogenerating)
+		generate_new_image()
+
+/obj/item/portrait/neuro/Destroy()
+	deltimer(autogenerating_timer)
+	return ..()
+
+/obj/item/portrait/neuro/examine(mob/user)
+	. = ..()
+	if(output_image_base64)
+		to_chat(user, "\[[prompt]\] в стиле [style]:<br><img height='[frame_height*15]' width='[frame_width*15]' src='data:image/png;base64, [output_image_base64]' />")
+
+/obj/item/portrait/neuro/attack_hand(mob/user)
+	var/choice = tgui_input_list(user, "Что сделать?", "Портрет", list("Изменить", "Снять", "Ничего"))
+	switch(choice)
+		if("Снять")
+			return ..()
+		if("Изменить")
+			change_neuro_settings(user)
+
+/obj/item/portrait/neuro/proc/change_neuro_settings(mob/user)
+	if(!Adjacent(user) || user.incapacitated())
+		return
+
+	var/autogenerating_variant = "Включить авторотацию"
+	if(autogenerating)
+		autogenerating_variant = "Выключить авторотацию"
+
+	var/choice = tgui_input_list(
+		user,
+		"Что сделать?",
+		"Портрет",
+		list("Добавить вариант", "Удалить вариант", "Сменить стиль", "Обновить картину", autogenerating_variant, "Выйти")
+		)
+	switch(choice)
+		if("Добавить вариант")
+			var/new_prompt = sanitize(input(user, "Введите запрос", "Портрет") as text|null)
+			if(new_prompt)
+				prompt_rotation += new_prompt
+			change_neuro_settings(user)
+		if("Удалить вариант")
+			var/remove_prompt = tgui_input_list(user, "Выберите запрос", "Портрет", prompt_rotation)
+			if(remove_prompt)
+				prompt_rotation -= remove_prompt
+			change_neuro_settings(user)
+		if("Сменить стиль")
+			var/new_style = tgui_input_list(user, "Выберите стиль", "Портрет", SSneural.get_available_styles())
+			if(new_style)
+				style = new_style
+			change_neuro_settings(user)
+		if("Обновить картину")
+			generate_new_image(user)
+			change_neuro_settings(user)
+		if("Включить авторотацию")
+			set_autorogenerating(TRUE)
+			change_neuro_settings(user)
+		if("Выключить авторотацию")
+			set_autorogenerating(FALSE)
+			change_neuro_settings(user)
+		else
+			return
+
+/obj/item/portrait/neuro/proc/generate_new_image(mob/user)
+	if(autogenerating && !autogenerating_timer)
+		autogenerating_timer = addtimer(CALLBACK(src, PROC_REF(generate_new_image)), 3 MINUTE, TIMER_STOPPABLE)
+		if(prob(10))
+			style = pick(SSneural.get_available_styles())
+
+	if(generating)
+		if(user)
+			to_chat(user, "<span class='warning'>Пожалуйста, подождите! Генерация в процессе!</span>")
+		return
+
+	if(prompt_rotation.len == 0)
+		if(user)
+			to_chat(user, "<span class='warning'>Список запросов пуст!</span>")
+		return
+
+	set_neural_image()
+
+/obj/item/portrait/neuro/proc/set_neural_image()
+	set waitfor = FALSE
+
+	autogenerating_timer = null
+
+	if(prompt_rotation.len == 0)
+		return
+
+	generating = TRUE
+	prompt = pick(prompt_rotation)
+	var/datum/neural_query/query = new
+	query.prompt = prompt
+	query.style = style
+	query.target_width = frame_width
+	query.target_height = frame_height
+	query.generate_width = frame_width*32
+	query.generate_height = frame_height*32
+	query.file_path = SSneural.get_full_path("portrait", prompt)
+
+	output_image_base64 = SSneural.generate_neural_image(query)
+	if(!output_image_base64)
+		generating = FALSE
+		return
+	// Just in case the frame is deleted during generation
+	if(src == null)
+		SSneural.release_cache(query.file_path)
+		return
+
+	cut_overlays()
+
+	var/icon/I = new(query.file_path)
+	var/mutable_appearance/image = mutable_appearance(I)
+	image.pixel_x = image_offset_x
+	image.pixel_y = image_offset_y
+	add_overlay(image)
+
+	SSneural.release_cache(query.file_path)
+	generating = FALSE
+
+/obj/item/portrait/neuro/proc/set_autorogenerating(value)
+	if(value)
+		autogenerating = TRUE
+		generate_new_image()
+	else
+		autogenerating = FALSE
+		autogenerating_timer = null
+		deltimer(autogenerating_timer)
+
+/obj/item/portrait/neuro/big
+	icon_state = "portrait_big_empty"
+
+	frame_width = 28
+	frame_height = 28
+	image_offset_x = 2
+	image_offset_y = 2
