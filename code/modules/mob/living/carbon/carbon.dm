@@ -231,7 +231,7 @@
 			// Enough to make us sleep as well
 			if(SA_pp > SA_sleep_min)
 				Sleeping(10 SECONDS)
-				analgesic = 2
+				analgesic = 10
 
 		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 		else if(SA_pp > SA_giggle_min)
