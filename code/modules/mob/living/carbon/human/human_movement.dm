@@ -35,8 +35,8 @@
 		if(embedded_flag)
 			handle_embedded_objects() // Moving with objects stuck in you can cause bad times.
 
-		if(traumatic_shock >= 40)
-			tally += traumatic_shock * 0.25
+		if(traumatic_shock >= 60)
+			tally += traumatic_shock * 0.1
 
 		var/hungry = 500 - get_satiation()
 		if(hungry >= 350) // Slow down if nutrition <= 150
