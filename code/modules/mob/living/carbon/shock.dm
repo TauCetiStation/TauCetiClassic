@@ -84,8 +84,6 @@
 		return
 	if(prob(chance))
 		adjustBlurriness(3)
-		if(traumatic_shock <= 5)
-			drowsyness += 3
 		painkiller_overlay_time += 3
 		if(prob(yawn_chance))
 			emote("yawn")
