@@ -1170,30 +1170,26 @@ var/global/list/tourette_bad_words= list(
 	if(analgesic && !reagents.has_reagent("prismaline"))
 		return // analgesic avoids all traumatic shock temporarily
 
-	if(traumatic_shock == 20)
-		to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
+	if(traumatic_shock >= 20)
+		if(prob(1))
+			to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
 
-	if(traumatic_shock >= 30)
-		if(traumatic_shock == 30) me_emote("is having trouble keeping their eyes open.")
+	if(traumatic_shock >= 40)
+		if(prob(1))
+			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
-	if(traumatic_shock == 40)
-		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
-
 	if (traumatic_shock >= 60)
-		if(traumatic_shock == 60)
-			visible_message("<span class='name'>[src]'s</span> body becomes limp.")
 		if (prob(2))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
-			Stun(10)
-			Weaken(20)
+			Weaken(5)
 
 	if(traumatic_shock >= 80)
 		if (prob(15))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
-			Stun(10)
-			Weaken(20)
+			Stun(3)
+			Weaken(10)
 
 	if(traumatic_shock >= 100)
 		if (prob(20))
@@ -1202,12 +1198,12 @@ var/global/list/tourette_bad_words= list(
 
 	if(traumatic_shock == 120)
 		me_emote("can no longer stand, collapsing!")
-		Stun(10)
-		Weaken(20)
+		Stun(5)
+		Weaken(10)
 
 	if(traumatic_shock >= 120)
-		Stun(10)
-		Weaken(20)
+		Stun(5)
+		Weaken(10)
 
 /mob/living/carbon/human/proc/handle_heart_beat()
 
