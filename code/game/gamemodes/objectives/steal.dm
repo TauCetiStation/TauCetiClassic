@@ -157,7 +157,6 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 /datum/objective/steal/non_heads_items/get_possible_items()
 	return list("a functional AI" = /obj/item/device/aicard,
                 "a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
-                "a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
                 "an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
                 "the golden fire extinguisher" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
 	)
