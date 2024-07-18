@@ -2035,29 +2035,20 @@
 		else
 			L.visible_message("<span class='danger'>\The [src] hit the [L] with his tail!</span>", "<span class='userdanger'>[src] hits you with his tail!</span>")
 			L.apply_damage(12, BRUTE, BP_GROIN)
-	else
+
+	else if(iswallturf(A))
+		Stun(1)
+		Weaken(2)
+		apply_damage(4, BRUTE, BP_GROIN)
+
+	else if(istype(A, /obj/fire))
+		var/obj/fire/F = A
+		if(F.firelevel < 2.5)
+			qdel(A)
+
+	if(A.uses_integrity)
 		visible_message("<span class='danger'>\The [src] hit the [A] with his tail!</span>", "<span class='userdanger'>You hit the [A] with your tail!</span>")
-
-		if(A.uses_integrity)
-			A.take_damage(12, BRUTE)
-
-		if(iswallturf(A))
-			Stun(1)
-			Weaken(2)
-			apply_damage(4, BRUTE, BP_GROIN)
-
-		else if(istype(A, /obj/fire))
-			var/obj/fire/F = A
-			if(F.firelevel < 2.5)
-				qdel(A)
-
-		else if(istype(A, /obj/machinery/vending) && prob(20))
-			var/obj/machinery/vending/V = A
-			var/datum/data/vending_product/R = pick(V.product_records)
-			if(R.amount)
-				new R.product_path(loc)
-				R.amount--
-				playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
+		A.take_damage(12, BRUTE)
 
 	for(var/datum/action/cooldown/tailpunch/tp in actions)
 		tp.active = FALSE
