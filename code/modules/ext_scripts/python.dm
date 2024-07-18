@@ -16,5 +16,6 @@
 	if(!errorlevel)
 		return stdout
 	else
+		ERROR(command)
 		ERROR("Python script execution error in [script]:\n [stderr]")
 		return 0

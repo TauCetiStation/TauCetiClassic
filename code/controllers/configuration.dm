@@ -219,6 +219,10 @@ var/global/bridge_secret = null
 
 	var/reactionary_explosions = TRUE
 
+	var/use_kadinsky = FALSE
+	var/kadinsky_api_key = ""
+	var/kadinsky_secret_key = ""
+
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
 
@@ -539,6 +543,15 @@ var/global/bridge_secret = null
 
 				if("github_token")
 					config.github_token = value
+
+				if ("use_kadinsky")
+					use_kadinsky = TRUE
+
+				if ("kadinsky_api_key")
+					kadinsky_api_key = value
+
+				if ("kadinsky_secret_key")
+					kadinsky_secret_key = value
 
 				if("allow_cult_ghostwriter")
 					config.cult_ghostwriter = 1
