@@ -86,4 +86,4 @@
 	to_chat(antag.current, "You are an elite mercenary assassin of the Spider Clan, [antag.current.real_name]. You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor")
 	to_chat(antag.current, "Your current directive is: <span class = 'red'><B>[directive]</B></span>")
 	to_chat(antag.current, "<span class = 'info'>Try your best to adhere to this.</span>")
-	antag.store_memory("<B>Directive:</B> <span class='red'>[directive]</span><br>")
+	antag.store_memory("<B>Directive:</B> <span class='red'>[directive]</span><br>", TRUE)

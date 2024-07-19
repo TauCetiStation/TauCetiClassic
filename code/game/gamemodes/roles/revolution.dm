@@ -61,7 +61,7 @@
 		var/mob/living/carbon/human/M = get_nt_opposed()
 		if(M && !isrevhead(M) && !(M in already_considered))
 			to_chat(rev_mob, "Надежные источники сообщают, что [M.real_name], возможно, захочет помочь вам достигнуть целей. Если вам нужна помощь, то можете обратится к данному сотруднику.")
-			rev_mob.mind.store_memory("<b>Потенциальный соратник</b>: [M.real_name]")
+			rev_mob.mind.store_memory("<b>Потенциальный соратник</b>: [M.real_name]", TRUE)
 
 /datum/role/rev_leader/RemoveFromRole(datum/mind/M, msg_admins)
 	if(M.current)

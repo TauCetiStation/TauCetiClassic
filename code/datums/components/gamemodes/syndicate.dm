@@ -99,11 +99,11 @@
 		target_radio.hidden_uplink = T
 		target_radio.traitor_frequency = freq
 		if(istype(target_radio, /obj/item/device/radio/intercom))
-			to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в [R.name] внутренней связи станции в районе [get_area(R)]. Просто переключитесь на нужную частоту [format_frequency(freq)] для получения доступа к скрытому функционалу.")
+			to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в [R.name] внутренней связи станции в районе [get_area(R)]. Просто переключитесь на нужную частоту [format_frequency(freq)] для получения доступа к скрытому функционалу.", TRUE)
 			traitor_mob.mind.store_memory("<B>Радиочастота:</B> [format_frequency(freq)] ([R.name] [get_area(R)].")
 			target_radio.hidden_uplink.uses += 5
 		else
-			to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в ваш [R.name] [loc]. Просто переключитесь на нужную частоту [format_frequency(freq)] для получения доступа к скрытому функционалу.")
+			to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в ваш [R.name] [loc]. Просто переключитесь на нужную частоту [format_frequency(freq)] для получения доступа к скрытому функционалу.", TRUE)
 			traitor_mob.mind.store_memory("<B>Радиочастота:</B> [format_frequency(freq)] ([R.name] [loc]).")
 		total_TC += target_radio.hidden_uplink.uses
 		target_radio.hidden_uplink.uplink_type = uplink_type
@@ -117,7 +117,7 @@
 		var/obj/item/device/pda/P = R
 		P.lock_code = pda_pass
 		to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в ваш [R.name] [loc]. Просто введите код выданный вам ранее \"[pda_pass]\", зайдите в настройки вашего КПК, а именно в изменения вашего рингтона, вместо \"beep\" введите тот самый код для получения доступа к скрытому функционалу.")
-		traitor_mob.mind.store_memory("<B>Код для Аплинка:</B> [pda_pass] ([R.name] [loc]).")
+		traitor_mob.mind.store_memory("<B>Код для Аплинка:</B> [pda_pass] ([R.name] [loc]).", TRUE)
 		total_TC += R.hidden_uplink.uses
 		R.hidden_uplink.uplink_type = uplink_type
 
@@ -134,7 +134,7 @@
 		to_chat(traitor_mob, "<u><b>Ваш работодатель позаботился, чтобы вам была предоставлена информация для связи с остальными агентами, если таковы будут обнаружены:</b></u>")
 		var/code_phrase = "<b>Кодовая фраза</b>: [codewords2string(global.syndicate_code_phrase)]"
 		to_chat(traitor_mob, code_phrase)
-		traitor_mob.mind.store_memory(code_phrase)
+		traitor_mob.mind.store_memory(code_phrase, TRUE)
 		syndicate_awareness = SYNDICATE_PHRASES
 
 		code_words += 1
@@ -143,7 +143,7 @@
 		ASSERT(global.syndicate_code_response.len)
 		var/code_response = "<b>Ответы для кодовой фразы</b>: [codewords2string(global.syndicate_code_response)]"
 		to_chat(traitor_mob, code_response)
-		traitor_mob.mind.store_memory(code_response)
+		traitor_mob.mind.store_memory(code_response, TRUE)
 		syndicate_awareness = SYNDICATE_RESPONSE
 
 		code_words += 1
@@ -193,7 +193,7 @@
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != traitor_mob)
 		to_chat(traitor_mob, "Надежные источники сообщают, что [M.real_name], возможно, захочет помочь вам достигнуть целей. Если вам нужна помощь, то можете обратится к данному сотруднику.")
-		traitor_mob.mind.store_memory("<b>Потенциальный соратник</b>: [M.real_name]")
+		traitor_mob.mind.store_memory("<b>Потенциальный соратник</b>: [M.real_name]", TRUE)
 
 /datum/component/gamemode/syndicate/proc/take_uplink()
 	var/mob/living/carbon/human/traitor_mob = get_current()
@@ -249,5 +249,5 @@
 	if(href_list["removeuplink"])
 		take_uplink(M.current)
 		var/datum/role/role = parent
-		role.antag.memory = null
+		role.antag.memory = M.not_antag_memory
 		to_chat(M.current, "<span class='warning'>You have been stripped of your uplink.</span>")

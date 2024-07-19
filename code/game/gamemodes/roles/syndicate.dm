@@ -62,7 +62,7 @@
 				code = bombue.r_code
 				break
 		if (code)
-			antag.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", 0)
+			antag.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", TRUE)
 			to_chat(antag.current, "The nuclear authorization code is: <B>[code]</B>")
 		else
 			to_chat(usr, "<span class='warning'>No valid nuke found!</span>")
@@ -80,7 +80,7 @@
 	. = ..()
 	var/datum/faction/nuclear/N = faction
 	if (istype(N) && N.nuke_code)
-		antag.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [N.nuke_code]", 0)
+		antag.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [N.nuke_code]", TRUE)
 		to_chat(antag.current, "The nuclear authorization code is: <B>[N.nuke_code]</B>")
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[N.nuke_code]</b>"
@@ -116,7 +116,7 @@
 		nukecode = bomb.r_code
 
 	to_chat(antag.current, "<span class='bold notice'>Код от бомбы: [nukecode]</span>")
-	antag.current.mind.store_memory("Код от бомбы: [nukecode]")
+	antag.current.mind.store_memory("Код от бомбы: [nukecode]", TRUE)
 
 /datum/role/operative/lone/forgeObjectives()
 	if(!..())

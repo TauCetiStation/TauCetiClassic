@@ -34,6 +34,7 @@
 	var/active = 0
 
 	var/memory
+	var/not_antag_memory	//If antag role adds additional memories, they won't be written here.
 
 	var/assigned_role
 	var/special_role
@@ -110,8 +111,12 @@
 				return G
 			break
 
-/datum/mind/proc/store_memory(new_text)
-	memory += "[new_text]<BR>"
+/datum/mind/proc/store_memory(new_text, is_antag_memory = FALSE)
+	if(!is_antag_memory)
+		not_antag_memory += "[new_text]<BR>"
+		memory += "[new_text]<BR>"
+	else
+		memory += "[new_text]<BR>"
 
 /datum/mind/proc/show_memory(mob/recipient)
 	var/output = "<B>[current.real_name]'s Memory</B><HR>"
