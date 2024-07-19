@@ -524,6 +524,9 @@
 	icon_state = "darkpurple"
 	},
 /area/space)
+"cK" = (
+/turf/simulated/floor/glass/airless,
+/area/space)
 "cL" = (
 /obj/structure/cable/green{
 	d1 = 1;
@@ -2004,6 +2007,9 @@
 	dir = 5
 	},
 /area/space)
+"lz" = (
+/turf/simulated/floor/glass/phoron/airless,
+/area/space)
 "lA" = (
 /turf/simulated/floor/airless{
 	icon_state = "whitegreen";
@@ -2356,6 +2362,9 @@
 /area/space)
 "nL" = (
 /turf/simulated/floor/plating,
+/area/space)
+"nR" = (
+/turf/simulated/floor/glass/reinforced/phoron/airless,
 /area/space)
 "nU" = (
 /turf/simulated/floor{
@@ -3205,6 +3214,9 @@
 	icon_state = "whiteblue";
 	dir = 8
 	},
+/area/space)
+"tV" = (
+/turf/simulated/floor/glass/reinforced/airless,
 /area/space)
 "tX" = (
 /turf/simulated/floor/airless{
@@ -10599,8 +10611,8 @@ VE
 Pf
 IQ
 OC
-uA
-uA
+Mf
+cK
 uA
 uA
 uA
@@ -10675,8 +10687,8 @@ Ta
 qx
 yc
 MS
-uA
-uA
+Mf
+lz
 uA
 uA
 uA
@@ -10751,8 +10763,8 @@ jW
 Bj
 qF
 EW
-uA
-uA
+Mf
+tV
 uA
 uA
 uA
@@ -10827,8 +10839,8 @@ DH
 us
 DT
 oB
-uA
-uA
+Mf
+nR
 uA
 uA
 uA
