@@ -162,6 +162,8 @@ var/global/list/uncommon_loot = list(
 		/obj/item/clothing/mask/muzzle = 1,
 		/obj/item/clothing/ears/earmuffs = 1,
 		/obj/item/clothing/gloves/black = 1,
+		/obj/item/clothing/gloves/insulated = 1,
+		/obj/item/clothing/glasses/sunglasses = 1,
 		) = 8,
 
 	list(
