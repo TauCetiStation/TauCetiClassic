@@ -75,7 +75,7 @@
 	charge_rate = 50
 
 /obj/item/weapon/gun/energy/laser/scatter_alien
-	name = "scatter laser rife"
+	name = "scatter laser rifle"
 	icon_state = "subegun"
 	desc = "Лазерная пушка, оснащенная комплектом преломления, который создает несколько энергетических зарядов."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
