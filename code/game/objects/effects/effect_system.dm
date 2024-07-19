@@ -762,5 +762,6 @@ steam.start() -- spawns the effect
 
 
 /obj/effect/effect/custom/atom_init(mapload, name, icon)
+	. = ..()
 	src.name = name
 	src.icon = icon
