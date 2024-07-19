@@ -78,7 +78,6 @@
 							/obj/item/toy/figure/blueofficer				= 1,
 							/obj/item/toy/figure/xenobio					= 1,
 							/obj/item/toy/figure/xenoarcheolog				= 1,
-							/obj/item/toy/prize/poly/polyspecial			= 1,
 							/obj/item/toy/prize/poly/polyclassic			= 1,
 							/obj/item/toy/prize/poly/polypink				= 1,
 							/obj/item/toy/prize/poly/polydark				= 1,
