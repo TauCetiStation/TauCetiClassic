@@ -321,7 +321,7 @@
 	name = "pack of banana seeds"
 	desc = "They're seeds that grow into banana trees."
 	icon_state = "seed-banana"
-	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "banana"
 	plantname = "Banana Tree"
 	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
