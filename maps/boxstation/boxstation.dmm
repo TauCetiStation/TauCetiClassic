@@ -54053,6 +54053,8 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/device/multitool,
+/obj/item/clothing/gloves/insulated,
+/obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light/smart,
 /turf/simulated/floor{
