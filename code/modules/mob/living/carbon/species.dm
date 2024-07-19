@@ -862,8 +862,8 @@
 	var/obj/signature_obj = pick(signature_plant)
 	var/image/I = image(signature_obj.icon, H, signature_obj.icon_state)
 	I.override = 1
-	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "DIONA_xeno", I)
-	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "DIONA_zombie", I)
+	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "DIONA_xeno", I, null, null, NONE)
+	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "DIONA_zombie", I, null, null, NONE)
 
 /datum/species/diona/on_loose(mob/living/carbon/human/H, new_species)
 	H.remove_alt_appearance("DIONA_xeno")
@@ -1129,8 +1129,8 @@
 	var/obj/signature_obj = pick(signature_machinery)
 	var/image/I = image(signature_obj.icon, H, signature_obj.icon_state)
 	I.override = 1
-	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_xeno", I)
-	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "IPC_zombie", I)
+	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_xeno", I, null, null, NONE)
+	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "IPC_zombie", I, null, null, NONE)
 
 /datum/species/machine/on_loose(mob/living/carbon/human/H, new_species)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
