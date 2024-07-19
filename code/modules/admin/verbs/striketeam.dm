@@ -88,10 +88,10 @@ var/global/sent_strike_team = FALSE
 		create_random_account_and_store_in_mind(new_commando)
 
 		if (nuke_code)
-			new_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code]</span>.")
+			new_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code]</span>.", TRUE)
 		else
-			new_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>NT bomb not found???</span>.")
-		new_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[input]</span>.")
+			new_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>NT bomb not found???</span>.", TRUE)
+		new_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[input]</span>.", TRUE)
 
 		to_chat(new_commando, "<span class='notice'>You are a Special Ops. [is_leader ? "<B>LEADER</B>" : "commando"] in the service of Central Command. Check the table ahead for detailed instructions.\nYour current mission is: <span class='warning'><B>[input]</B></span></span>")
 

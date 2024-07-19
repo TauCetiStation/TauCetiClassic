@@ -99,12 +99,12 @@
 		target_radio.hidden_uplink = T
 		target_radio.traitor_frequency = freq
 		if(istype(target_radio, /obj/item/device/radio/intercom))
-			to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в [R.name] внутренней связи станции в районе [get_area(R)]. Просто переключитесь на нужную частоту [format_frequency(freq)] для получения доступа к скрытому функционалу.", TRUE)
-			traitor_mob.mind.store_memory("<B>Радиочастота:</B> [format_frequency(freq)] ([R.name] [get_area(R)].")
+			to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в [R.name] внутренней связи станции в районе [get_area(R)]. Просто переключитесь на нужную частоту [format_frequency(freq)] для получения доступа к скрытому функционалу.")
+			traitor_mob.mind.store_memory("<B>Радиочастота:</B> [format_frequency(freq)] ([R.name] [get_area(R)].", TRUE)
 			target_radio.hidden_uplink.uses += 5
 		else
-			to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в ваш [R.name] [loc]. Просто переключитесь на нужную частоту [format_frequency(freq)] для получения доступа к скрытому функционалу.", TRUE)
-			traitor_mob.mind.store_memory("<B>Радиочастота:</B> [format_frequency(freq)] ([R.name] [loc]).")
+			to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в ваш [R.name] [loc]. Просто переключитесь на нужную частоту [format_frequency(freq)] для получения доступа к скрытому функционалу.")
+			traitor_mob.mind.store_memory("<B>Радиочастота:</B> [format_frequency(freq)] ([R.name] [loc]).", TRUE)
 		total_TC += target_radio.hidden_uplink.uses
 		target_radio.hidden_uplink.uplink_type = uplink_type
 
