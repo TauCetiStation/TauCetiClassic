@@ -759,3 +759,8 @@ steam.start() -- spawns the effect
 			dmglevel = 3
 
 		if(dmglevel<4) holder.ex_act(dmglevel)
+
+
+/obj/effect/effect/custom/atom_init(mapload, name, icon)
+	src.name = name
+	src.icon = icon
