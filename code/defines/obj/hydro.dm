@@ -321,7 +321,7 @@
 	name = "pack of banana seeds"
 	desc = "They're seeds that grow into banana trees."
 	icon_state = "seed-banana"
-	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
 	species = "banana"
 	plantname = "Banana Tree"
 	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
@@ -333,6 +333,55 @@
 	plant_type = 0
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/honkyseed)
+
+/obj/item/seeds/cannabisseed
+	name = "pack of cannabis seeds"
+	desc = "They're seeds that grow into cannabis."
+	icon_state = "seed-cannabis"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	species = "cannabis"
+	plantname = "Cannabis"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis
+	lifespan = 40
+	endurance = 30
+	maturation = 5
+	production = 5
+	yield = 6
+	plant_type = 1
+	growthstages = 1
+	mutatelist = list(/obj/item/seeds/megacannabisseed,/obj/item/seeds/blackcannabisseed)
+
+/obj/item/seeds/megacannabisseed
+	name = "pack of rainbow weed seeds"
+	desc = "They're seeds that grow into rainbow weed."
+	icon_state = "seed-megacannabis"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	species = "megacannabis"
+	plantname = "Rainbow weed"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/megacannabis
+	lifespan = 40
+	endurance = 25
+	maturation = 5
+	production = 3
+	yield = 6
+	plant_type = 1
+	growthstages = 1
+
+/obj/item/seeds/blackcannabisseed
+	name = "pack of deathweed seeds"
+	desc = "They're seeds that grow deathweed."
+	icon_state = "seed-blackcannabis"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	species = "blackcannabis"
+	plantname = "Deathweed"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/blackcannabis
+	lifespan = 40
+	endurance = 30
+	maturation = 5
+	production = 6
+	yield = 4
+	plant_type = 1
+	growthstages = 1
 
 /obj/item/seeds/honkyseed
 	name = "pack of honk-banana seeds"
