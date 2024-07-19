@@ -403,7 +403,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("cannabidiol", 1+round(potency / 8, 1))
+	reagents.add_reagent("cannabidiol", 1+round(potency / 5, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/megacannabis
@@ -418,7 +418,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 1)
 	reagents.add_reagent("space_drugs", 1+round(potency / 9, 1))
-	reagents.add_reagent("cannabidiol", 1+round(potency / 8, 1))
+	reagents.add_reagent("cannabidiol", 1+round(potency / 5, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackcannabis
@@ -433,7 +433,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 1)
 	reagents.add_reagent("cyanide", 1+round((potency / 5), 1))
-	reagents.add_reagent("cannabidiol", 1+round(potency / 8, 1))
+	reagents.add_reagent("cannabidiol", 1+round(potency / 5, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
