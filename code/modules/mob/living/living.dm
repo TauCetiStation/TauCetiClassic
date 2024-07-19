@@ -942,7 +942,7 @@
 	//breaking out of handcuffs and putting off fires
 	if(iscarbon(L))
 		var/mob/living/carbon/CM = L
-		if(CM.on_fire && CM.canmove)
+		if(CM.on_fire && CM.canmove && !CM.buckled)
 			CM.fire_stacks -= 5
 			CM.Stun(5)
 			CM.Weaken(5)
