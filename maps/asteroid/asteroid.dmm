@@ -10832,9 +10832,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/xeno_warning_mining{
-	pixel_y = 32
-	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
 "xr" = (
@@ -12386,6 +12383,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
+"CL" = (
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "CO" = (
 /obj/structure/computerframe,
 /obj/item/weapon/shard,
@@ -14033,6 +14036,12 @@
 	dir = 6
 	},
 /area/asteroid/mine/abandoned)
+"Tw" = (
+/obj/machinery/light_construct/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/explored)
 "TL" = (
 /obj/structure/alien/weeds,
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -33093,12 +33102,12 @@ ac
 ac
 ac
 sA
-xq
+ys
 lA
 lA
 rH
 lA
-rt
+sn
 sA
 ac
 ac
@@ -35416,7 +35425,7 @@ lA
 lA
 rH
 lA
-sn
+rt
 sA
 ac
 ac
@@ -38501,8 +38510,8 @@ lA
 lA
 rH
 lA
-rt
-sA
+lA
+lA
 kO
 ac
 ac
@@ -38758,8 +38767,8 @@ lA
 lA
 rH
 lA
-lA
-kO
+rt
+sA
 ac
 ac
 ac
@@ -40290,7 +40299,7 @@ ac
 ac
 kO
 sA
-xq
+ys
 lA
 rQ
 rp
@@ -42350,7 +42359,7 @@ lA
 lA
 rH
 lA
-sn
+rt
 sA
 kO
 kO
@@ -45949,7 +45958,7 @@ ac
 ac
 kO
 sA
-xq
+ys
 lA
 rH
 lA
@@ -48010,7 +48019,7 @@ uo
 uo
 uo
 uo
-lA
+xq
 lA
 rH
 lA
@@ -54070,7 +54079,7 @@ lA
 lA
 kO
 kO
-kO
+jS
 kO
 kO
 kO
@@ -54327,7 +54336,7 @@ lA
 lA
 lA
 lA
-lA
+rM
 lA
 lA
 lA
@@ -54887,7 +54896,7 @@ lA
 lA
 lA
 lA
-sn
+rt
 jS
 ac
 kO
@@ -55376,7 +55385,7 @@ lA
 lA
 lA
 lA
-rM
+Tw
 lA
 lA
 lA
@@ -56134,7 +56143,7 @@ kO
 lA
 lA
 lA
-rI
+nG
 lA
 lA
 lA
@@ -56991,7 +57000,7 @@ YV
 YV
 YV
 sA
-lA
+CL
 lA
 lA
 lA
@@ -57740,7 +57749,7 @@ kO
 kO
 kO
 lA
-rM
+Tw
 lA
 lA
 lA
@@ -59531,7 +59540,7 @@ lA
 lA
 rH
 lA
-lA
+nG
 kO
 kO
 YV
@@ -59787,7 +59796,7 @@ rp
 rp
 rp
 rR
-sn
+lA
 sA
 kO
 YV
