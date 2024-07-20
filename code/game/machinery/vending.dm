@@ -628,7 +628,7 @@
 /obj/machinery/vending/examine(mob/user, distance)
 	. = ..()
 	if(unstable_product && distance < 3) // need to be close to see
-		to_chat(user, "<span class='notice'>\The [unstable_product.product_name] in this vending seems unstable</span>")
+		to_chat(user, "<span class='notice'>\The [unstable_product.product_name] seems to be loose. I bet I can punch it out!</span>")
 
 /obj/machinery/vending/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
