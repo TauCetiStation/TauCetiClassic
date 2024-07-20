@@ -57,7 +57,7 @@
 
 
 /proc/has_mentor_powers(client/C)
-	return C.holder || C.mentorholder
+	return C.holder
 
 /client/proc/cmd_mentor_pm(whom, msg, datum/mentor_help/MH)
 	set category = "Admin"
@@ -128,9 +128,6 @@
 	to_chat(src, "<i><span class='mentor'>Mentor-PM to-<b>[recipient]</b>: [msg]</span></i>")
 
 	log_admin("[key_name(src)]->[key_name(recipient)]: [msg]")
-
-	if(recipient.is_preference_enabled(/datum/client_preference/play_mentorhelp_ping))
-		recipient << 'sound/effects/mentorhelp.ogg'
 
 	for(var/client/C in mentors)
 		if (C != recipient && C != src)
