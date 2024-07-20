@@ -162,6 +162,7 @@
 	item_state = "baton"
 
 /obj/structure/pluvia_gong/atom_init()
+	. = ..()
 	available_pluvia_gongs += src
 
 /obj/structure/pluvia_gong/proc/ring(mob/user)
