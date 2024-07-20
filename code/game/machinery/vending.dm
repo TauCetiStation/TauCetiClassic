@@ -580,16 +580,12 @@
 	if(!target)
 		return 0
 
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		if (!R.product_path)
-			continue
-
-		throw_item = give_out_product(R)
-		break
-	if (!throw_item)
+	var/list/AP = get_available_products()
+	if(AP.len)
+		throw_item = give_out_product(pick(AP))
+	else
 		return 0
+
 	throw_item.throw_at(target, 16, 3)
 	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return 1
@@ -607,6 +603,13 @@
 	else
 		return 0
 
+/obj/machinery/vending/proc/get_available_products()
+	var/list/available_products = list()
+	for(var/datum/data/vending_product/VP in product_records)
+		if(VP.amount && VP.product_path)
+			available_products += VP
+	return available_products
+
 /obj/machinery/vending/proc/give_out_product(datum/data/vending_product/VP)
 	playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 	VP.amount--
@@ -618,11 +621,9 @@
 
 /obj/machinery/vending/proc/update_unstable_product()
 	if(!unstable_product && prob(5))
-		var/list/available_products = list()
-		for(var/datum/data/vending_product/VP in product_records)
-			if(VP.amount)
-				available_products += VP
-		unstable_product = pick(available_products)
+		var/list/AP = get_available_products
+		if(AP.len)
+			unstable_product = pick(AP)
 
 /obj/machinery/vending/examine(mob/user, distance)
 	. = ..()
