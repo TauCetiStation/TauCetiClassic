@@ -15,7 +15,6 @@
 	anchored = TRUE
 	stop_automated_movement = TRUE
 	canmove = FALSE
-	faction = null
 	var/timer
 
 /mob/living/simple_animal/hostile/pylon/proc/deactivate()
