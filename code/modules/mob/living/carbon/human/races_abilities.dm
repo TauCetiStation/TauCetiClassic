@@ -225,10 +225,10 @@
 	active = FALSE
 
 /mob/living/carbon/human/MiddleShiftClickOn(atom/A, params)
-	for(var/datum/action/cooldown/tailpunch/tp in actions)
-		if(tp.active && world.time > next_move)
-			tailpunch(A)
-			return
+	var/datum/action/cooldown/tailpunch/tp = locate() in actions
+	if(tp && tp.active && world.time > next_move)
+		tailpunch(A)
+		return
 	..()
 
 /mob/living/carbon/human/proc/tailpunch(atom/A)
@@ -251,7 +251,8 @@
 
 		if(!src)
 			return
-		for(var/datum/action/cooldown/tailpunch/tp in actions)
+		var/datum/action/cooldown/tailpunch/tp = locate() in actions
+		if(tp)
 			tp.active = FALSE
 			tp.StartCooldown()
 
