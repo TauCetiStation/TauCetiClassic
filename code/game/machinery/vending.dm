@@ -52,6 +52,7 @@
 	var/extended_inventory = 0 //can we access the hidden inventory?
 	var/obj/item/weapon/coin/coin
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
+	var/datum/data/vending_product/unstable_product = null
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
 	var/obj/item/weapon/ewallet/ewallet
@@ -82,6 +83,7 @@
 	build_inventory(syndie, req_emag = 1)
 	power_change()
 	update_wires_check()
+	update_unstable_product()
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -479,6 +481,7 @@
 		src.vend_ready = 1
 		src.currently_vending = null
 		updateUsrDialog()
+		update_unstable_product()
 
 /obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))
@@ -611,15 +614,29 @@
 	else
 		return 0
 
+/obj/machinery/vending/proc/update_unstable_product()
+	if(unstable_product)
+		if(!unstable_product.amount) // if an unstable product has been sold out
+			unstable_product = null
+	else
+		if(prob(20))
+			unstable_product = pick(product_records)
+
+/obj/machinery/vending/examine(mob/user, distance)
+	. = ..()
+	if(unstable_product && distance < 3) // need to be close to see
+		to_chat(user, "<span class='notice'>\The [unstable_product.product_name] in this vending seems unstable</span>")
+
 /obj/machinery/vending/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(prob(damage_amount))
-		var/datum/data/vending_product/R = pick(src.product_records)
-		if(R.amount)
-			do_shake_animation(2, 10, intensity_dropoff = 0.9)
-			playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
-			new R.product_path(src.loc)
-			R.amount--
+	if(prob(damage_amount) && unstable_product)
+		do_shake_animation(2, 10, intensity_dropoff = 0.9)
+		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
+		new unstable_product.product_path(src.loc)
+		unstable_product.amount--
+		unstable_product = null
+	update_unstable_product()
+
 
 /*
  * Vending machine types
