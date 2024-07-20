@@ -5399,7 +5399,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/break_room)
 "aID" = (
 /obj/machinery/door/airlock/security{
@@ -6006,7 +6006,7 @@
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/monitoring)
 "aRK" = (
 /obj/structure/window/thin/reinforced{
@@ -8919,7 +8919,7 @@
 	name = "Primary Tool Storage";
 	sortType = "Primary Tool Storage"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/storage/primary)
 "bEe" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -15854,7 +15854,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/storage/primary)
 "duR" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -21158,7 +21158,10 @@
 "eDD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
 /area/station/engineering/break_room)
 "eDF" = (
 /obj/structure/window/fulltile/reinforced{
@@ -21305,7 +21308,7 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/atmos)
 "eFA" = (
 /obj/item/weapon/flora/random,
@@ -25658,7 +25661,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/storage/primary)
 "fEp" = (
 /obj/structure/table/woodentable,
@@ -25875,7 +25878,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/atmos)
 "fGH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -29045,7 +29048,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/storage/primary)
 "gta" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -29558,7 +29561,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/monitoring)
 "gyS" = (
 /obj/machinery/door/firedoor{
@@ -30580,7 +30583,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "gLl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -30799,7 +30802,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "gNr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -36066,7 +36069,7 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/atmos)
 "ibs" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -40745,7 +40748,7 @@
 /obj/structure/disposalpipe/junction{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/storage/primary)
 "jmc" = (
 /obj/item/weapon/shard{
@@ -41040,7 +41043,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/monitoring)
 "jqk" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -47560,7 +47563,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "kYX" = (
 /turf/simulated/floor{
@@ -51518,7 +51521,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/storage/primary)
 "lVS" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -52330,7 +52333,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "mfE" = (
 /turf/simulated/floor/airless/ceiling,
@@ -55222,7 +55225,7 @@
 "mOX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "mPd" = (
 /obj/machinery/chem_master/condimaster,
@@ -58087,7 +58090,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "nAB" = (
 /obj/structure/table/glass,
@@ -59969,7 +59972,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/monitoring)
 "oar" = (
 /obj/structure/rack,
@@ -65670,7 +65673,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "pyq" = (
 /turf/simulated/wall,
@@ -67664,7 +67667,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/storage/primary)
 "pYq" = (
 /obj/structure/closet/secure_closet/freezer/money,
@@ -70174,7 +70177,10 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellow"
+	},
 /area/station/engineering/break_room)
 "qDk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -71863,7 +71869,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/break_room)
 "rbr" = (
 /turf/environment/space,
@@ -74547,7 +74553,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/monitoring)
 "rLA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -75813,14 +75819,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/break_room)
 "rZN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/break_room)
 "rZU" = (
 /turf/simulated/floor{
@@ -76336,7 +76342,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/break_room)
 "sgD" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -77734,7 +77740,9 @@
 	name = "Engineering Break Room";
 	sortType = "Engineering Break Room"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
 /area/station/engineering/break_room)
 "syk" = (
 /obj/structure/closet/secure_closet/freezer/meat,
@@ -78414,7 +78422,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/break_room)
 "sGr" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -89788,7 +89796,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "vzV" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
@@ -95509,7 +95517,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "wSM" = (
 /obj/structure/closet/emcloset,
@@ -96165,7 +96173,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/engineering/monitoring)
 "xbK" = (
 /obj/structure/object_wall/pod{
