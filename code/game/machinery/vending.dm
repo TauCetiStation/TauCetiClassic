@@ -615,12 +615,11 @@
 		return 0
 
 /obj/machinery/vending/proc/update_unstable_product()
-	if(unstable_product)
-		if(!unstable_product.amount) // if an unstable product has been sold out
-			unstable_product = null
-	else
-		if(prob(20))
-			unstable_product = pick(product_records)
+	if(!unstable_product && prob(20))
+		unstable_product = pick(product_records)
+
+	if(unstable_product && !unstable_product.amount) // if an unstable product has been sold out
+		unstable_product = null
 
 /obj/machinery/vending/examine(mob/user, distance)
 	. = ..()
