@@ -621,7 +621,7 @@
 
 /obj/machinery/vending/proc/update_unstable_product()
 	if(!unstable_product && prob(5))
-		var/list/AP = get_available_products
+		var/list/AP = get_available_products()
 		if(AP.len)
 			unstable_product = pick(AP)
 
