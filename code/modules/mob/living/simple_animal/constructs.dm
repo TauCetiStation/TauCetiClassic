@@ -479,6 +479,12 @@
 	. = ..()
 	friends = global.cult_religion?.members
 
+/mob/living/simple_animal/hostile/pylon/death(gibbed)
+	. = ..()
+	for(var/atom/A in contents)
+		qdel(A)
+	qdel(src)
+
 /mob/living/simple_animal/hostile/pylon/cult/deactivate()
 	for(var/obj/structure/cult/pylon/P in contents)
 		P.update_integrity(health)

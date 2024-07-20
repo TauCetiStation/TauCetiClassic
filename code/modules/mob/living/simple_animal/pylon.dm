@@ -18,23 +18,10 @@
 	faction = null
 	var/timer
 
-/mob/living/simple_animal/hostile/pylon/atom_init()
-	. = ..()
-	friends = null
-
-/mob/living/simple_animal/hostile/pylon/death(gibbed)
-	. = ..()
-	for(var/atom/A in contents)
-		qdel(A)
-	qdel(src)
-
 /mob/living/simple_animal/hostile/pylon/proc/deactivate()
 	return
 
 /mob/living/simple_animal/hostile/pylon/proc/add_friend()
-	return
-
-/mob/living/simple_animal/hostile/pylon/attackby()
 	return
 
 /mob/living/simple_animal/hostile/pylon/update_canmove()
