@@ -474,6 +474,7 @@
 	projectiletype = /obj/item/projectile/beam/cult_laser
 	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
 	faction = "cult"
+	var/timer
 
 /mob/living/simple_animal/hostile/pylon/cult/atom_init()
 	. = ..()
@@ -485,13 +486,13 @@
 		qdel(A)
 	qdel(src)
 
-/mob/living/simple_animal/hostile/pylon/cult/deactivate()
+/mob/living/simple_animal/hostile/pylon/cult/proc/deactivate()
 	for(var/obj/structure/cult/pylon/P in contents)
 		P.update_integrity(health)
 		P.forceMove(loc)
 	qdel(src)
 
-/mob/living/simple_animal/hostile/pylon/cult/add_friend(datum/religion/R, mob/M, holy_role)
+/mob/living/simple_animal/hostile/pylon/cult/proc/add_friend(datum/religion/R, mob/M, holy_role)
 	friends = R.members
 
 /mob/living/simple_animal/hostile/pylon/cult/attackby(obj/item/I, mob/user, params)

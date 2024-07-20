@@ -16,13 +16,6 @@
 	stop_automated_movement = TRUE
 	canmove = FALSE
 	faction = null
-	var/timer
-
-/mob/living/simple_animal/hostile/pylon/proc/deactivate()
-	return
-
-/mob/living/simple_animal/hostile/pylon/proc/add_friend()
-	return
 
 /mob/living/simple_animal/hostile/pylon/update_canmove()
 	return
