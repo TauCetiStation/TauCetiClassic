@@ -132,7 +132,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 	if(istype(D, /obj/item/weapon/disk/research_points))
 		var/obj/item/weapon/disk/research_points/disk = D
 		to_chat(user, "<span class='notice'>[name] received [disk.stored_points] research points from [disk.name]</span>")
-		playsound(get_turf(src), 'sound/machines/disk-upload.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/machines/disk-upload.ogg', VOL_EFFECTS_MASTER)
 		files.research_points += disk.stored_points
 		user.remove_from_mob(disk)
 		qdel(disk)
@@ -151,6 +151,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 		var/obj/item/weapon/disk/tech_disk/disk = D
 		if(disk.stored_technology)
 			to_chat(user, "<span class='notice'>You succesfully uploaded '[disk.stored_technology.name]' in the console</span>")
+			playsound(src, 'sound/machines/disk-upload.ogg', VOL_EFFECTS_MASTER)
 			files.tech_trees[disk.stored_technology.tech_type].shown = TRUE
 			files.UnlockTechology(disk.stored_technology, TRUE)
 			user.remove_from_mob(disk)
