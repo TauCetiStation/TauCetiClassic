@@ -290,6 +290,8 @@
 	<span class='cult'>Теперь ты зомби! Не пытайся вылечиться, не вреди своим собратьям мёртвым, не помогай какому бы то ни было не-зомби. \
 	Теперь ты - воплощение голода, смерти и жестокости. Распространяй болезнь и УБИВАЙ.</span>")
 
+	update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/zombies)
+
 var/global/list/zombie_list = list()
 
 /proc/add_zombie(mob/living/carbon/human/H)
