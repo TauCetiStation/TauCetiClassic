@@ -402,13 +402,14 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
+	reagents.add_reagent("dexalin", 1+round(potency / 8, 1))
 	reagents.add_reagent("cannabidiol", 1+round(potency / 5, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/megacannabis
 	seed_type = /obj/item/seeds/megacannabisseed
-	name = "rainbow weed leaf"
+	name = "rainbow weed"
 	desc = "woop woop, that's the sound of police."
 	icon_state = "megacannabis"
 	potency = 10
@@ -416,14 +417,15 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/megacannabis/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
+	reagents.add_reagent("dexalinp", 1+round(potency / 8, 1))
 	reagents.add_reagent("space_drugs", 1+round(potency / 9, 1))
 	reagents.add_reagent("cannabidiol", 1+round(potency / 5, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackcannabis
 	seed_type = /obj/item/seeds/blackcannabisseed
-	name = "deathweed leaf"
+	name = "deathweed"
 	desc = "woop woop, that's the sound of police."
 	icon_state = "blackcannabis"
 	potency = 10
@@ -431,7 +433,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackcannabis/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
 	reagents.add_reagent("cyanide", 1+round((potency / 5), 1))
 	reagents.add_reagent("cannabidiol", 1+round(potency / 5, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
