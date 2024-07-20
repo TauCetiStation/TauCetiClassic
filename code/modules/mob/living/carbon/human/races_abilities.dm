@@ -204,7 +204,7 @@
 	button_icon_state = "tailpunch"
 	action_type = AB_INNATE
 	check_flags = AB_CHECK_ALIVE
-	cooldown_time = 50
+	cooldown_time = 600
 
 /datum/action/cooldown/tailpunch/Checks()
 	var/mob/living/carbon/human/H = owner
