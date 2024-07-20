@@ -247,7 +247,7 @@
 	if(!in_range(src, A))
 		to_chat(src, "<span class='warning'>Цель должна находиться рядом!</span>")
 		return
-	if(can_tailpunch())
+	if(can_tailpunch(A))
 		if(isfloorturf(A))
 			me_verb("[pick("бьёт", "стучит")] хвостом по полу.")
 			SetNextMove(CLICK_CD_MELEE)
@@ -266,6 +266,8 @@
 
 /mob/living/carbon/human/proc/can_tailpunch(atom/A)
 	if(!src) // what the fuck dude?
+		return FALSE
+	if(!A)
 		return FALSE
 	if(restrained())
 		var/mob/M = pulledby
@@ -299,7 +301,7 @@
 	else
 		L = tailpunch_animation_hard(L) // tailpunch can hit another mob or miss
 		if(!L)
-			return
+			return FALSE
 		if(a_intent == INTENT_PUSH && is_skill_competent(src, list(/datum/skill/police = SKILL_LEVEL_TRAINED)))
 			L.visible_message("<span class='danger'>\The [src] hooked a [L] with his tail!</span>",
 			"<span class='userdanger'>[src] hacks you with his tail!</span>")
@@ -317,14 +319,14 @@
 			L.visible_message("<span class='danger'>\The [src] hit the [L] with his tail!</span>", "<span class='userdanger'>[src] hits you with his tail!</span>")
 			L.apply_damage(12, BRUTE, BP_GROIN)
 
-/mob/living/carbon/human/proc/tailpunch_obj(atom/A, hit_obj_animation = TRUE)
-	if(A.uses_integrity)
-		if(hit_obj_animation && !tailpunch_animation_easy(A))
+/mob/living/carbon/human/proc/tailpunch_obj(atom/A, play_animation = TRUE)
+	if(play_animation)
+		if(!tailpunch_animation_easy(A))
 			return
+
+	if(A.uses_integrity)
 		visible_message("<span class='danger'>\The [src] hit the [A] with his tail!</span>", "<span class='userdanger'>You hit the [A] with your tail!</span>")
 		A.take_damage(12, BRUTE)
-	else
-		return
 
 	if(iswallturf(A))
 		Stun(1)
@@ -344,7 +346,7 @@
 	face_atom(A)
 	do_attack_animation(A)
 	sleep(2)
-	if(!can_tailpunch())
+	if(!can_tailpunch(A))
 		return FALSE
 	set_dir(turn(dir, 180))
 	if(friendly)
@@ -367,7 +369,7 @@
 		animation_speed = 2 // attack animation is 1.5 times faster if you skilled
 
 	do_attack_animation(target)
-	var/interupt_atom
+	var/atom/interupt_atom
 	for(var/i = 2, i >= 0, i--)
 		tail.forceMove(get_step(src, turn(attack_dir, 45 * i * attack_side))) // start to 90 degree end to 0 degree
 		set_dir(turn(attack_dir, -180 + 45 * i * attack_side)) // start to 90 degree end to 180 degree
@@ -377,24 +379,25 @@
 			interupt_atom = tail_turf
 		else
 			for(var/obj/O in tail_turf.contents)
-				if(!O.CanPass(src, tail_turf))
+				if(O.density)
 					interupt_atom = O
 					break
 
 		sleep(animation_speed)
-		if(!can_tailpunch())
+		if(!can_tailpunch(target))
 			return null
 		if(interupt_atom)
-			tailpunch_obj(interupt_atom, hit_obj_animation = FALSE) // The object takes the hit on itself without double animation
-			return null
+			tailpunch_obj(interupt_atom, play_animation = FALSE) // The object takes the hit on itself without double animation
+			break
 
 	var/hit_mob = null
-	if(target in (get_turf(tail)).contents)
-		hit_mob = target // priority on target
-	else
-		for(var/mob/living/L in (get_turf(tail)).contents)
-			hit_mob = L
-			break
+	if(!interupt_atom)
+		if(target in (get_turf(tail)).contents)
+			hit_mob = target // priority on target
+		else
+			for(var/mob/living/L in (get_turf(tail)).contents)
+				hit_mob = L
+				break
 
 	if(hit_mob || interupt_atom)
 		playsound(src, pick(SOUNDIN_PUNCH_VERYHEAVY), VOL_EFFECTS_MASTER)
