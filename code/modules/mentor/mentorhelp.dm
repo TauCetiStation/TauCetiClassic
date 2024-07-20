@@ -4,7 +4,7 @@
 //TICKET MANAGER
 //
 
-var/global/datum/mentor_help_tickets/mhelp_tickets
+var/global/datum/mentor_help_tickets/mhelp_tickets = new
 
 /datum/mentor_help_tickets
 	var/list/active_tickets = list()
