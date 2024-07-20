@@ -72382,6 +72382,9 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
+"gco" = (
+/turf/simulated/floor/grid_floor,
+/area/station/maintenance/engineering)
 "gdb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -75919,6 +75922,9 @@
 	},
 /turf/simulated/floor,
 /area/station/security/lobby)
+"jDn" = (
+/turf/simulated/floor/grid_floor,
+/area/station/maintenance/dormitory)
 "jEb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -83623,9 +83629,6 @@
 	icon_state = "vaultfull"
 	},
 /area/station/medical/virology)
-"sdp" = (
-/turf/simulated/floor/grid_floor,
-/area/station/maintenance/engineering)
 "sdW" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "0,6"
@@ -86161,9 +86164,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/library)
-"vYR" = (
-/turf/simulated/floor/grid_floor,
-/area/station/maintenance/dormitory)
 "wbq" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "3,1"
@@ -109918,7 +109918,7 @@ bdF
 bQl
 cAW
 cMa
-sdp
+gco
 gfm
 cAW
 bed
@@ -123682,7 +123682,7 @@ aaa
 aaa
 afl
 afY
-vYR
+jDn
 aib
 afl
 gNb
