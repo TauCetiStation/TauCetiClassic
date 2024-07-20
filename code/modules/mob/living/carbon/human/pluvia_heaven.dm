@@ -29,12 +29,12 @@
 /obj/item/weapon/bless_vote/attack_self(mob/living/carbon/user)
 	user.set_machine(src)
 	var/dat
-	dat = "<B><font color = ##ff0000>Рекомендательное письмо для прохода в рай</B><BR>"
+	dat = "<B><font color = ##ff0000>Рекомендательное письмо для прохода в рай</font></B><BR>"
 	if(owner.gender == "female")
-		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойной попасть в рай после смерти</I><BR><BR>"
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойной попасть в рай после смерти</font></I><BR><BR>"
 	else
-		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойным попасть в рай после смерти</I><BR><BR>"
-	dat += "<I><font color = ##ff0000>Просто поднесите палец к месту для подписи и слегка надколите об шип на бумаге.</I><BR>"
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойным попасть в рай после смерти</font></I><BR><BR>"
+	dat += "<I><font color = ##ff0000>Просто поднесите палец к месту для подписи и слегка надколите об шип на бумаге.</font></I><BR>"
 	dat += "<A href='byond://?src=\ref[src];choice=yes'>[sign_place]</A><BR>"
 	var/datum/browser/popup = new(user, "window=bless_vote", "Рекомендательное письмо")
 	popup.set_content(dat)
