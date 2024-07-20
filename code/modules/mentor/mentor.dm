@@ -1,3 +1,6 @@
+/client
+		var/datum/mentor/mentorholder = null
+
 /var/list/mentor_ckeys = list()//all server mentors list
 /var/list/mentors = list()     //online mentors
 
@@ -38,11 +41,100 @@
 			if(directory[ckey])
 				mentors += directory[ckey]
 
-/proc/message_mentors(msg, observer_only = FALSE, emphasize = FALSE)
-	var/style = "admin"
-	if (emphasize)
-		style += " emphasized"
-	msg = "<span class='[style]'><span class='prefix'>MENTOR LOG:</span> <span class='message'>[msg]</span></span>"
+/client/proc/cmd_mhelp_reply(whom)
+	if(prefs.muted & MUTE_PM)
+		to_chat(src, "<span class='pm warning'>Error: Mentor-PM: You are unable to use admin PM-s (muted).</span>")
+		return
+	var/client/C
+	if(istext(whom))
+		C = directory[whom]
+	else if(istype(whom,/client))
+		C = whom
+	if(!C)
+		if(has_mentor_powers(src))
+			to_chat(src, "<span class='pm warning'>Error: Mentor-PM: Client not found.</span>")
+		return
+
+
+/proc/has_mentor_powers(client/C)
+	return C.holder || C.mentorholder
+
+/client/proc/cmd_mentor_pm(whom, msg, datum/mentor_help/MH)
+	set category = "Admin"
+	set name = "Mentor-PM"
+	set hidden = 1
+
+	if(prefs.muted & MUTE_PM)
+		to_chat(src, "<span class='pm warning'>Error: Mentor-PM: You are unable to use admin PM-s (muted).</span>")
+		return
+
+	if(!has_mentor_powers(src) && !current_mentorhelp)
+		to_chat(src, "<span class='pm warning'>You can no longer reply to this ticket, please open another one by using the Mentorhelp verb if need be.</span>")
+		to_chat(src, "<span class='pm notice'>Message: [msg]</span>")
+		return
+
+	var/client/recipient
+
+	if(istext(whom))
+		recipient = directory[whom]
+
+	else if(istype(whom,/client))
+		recipient = whom
+
+	//get message text, limit it's length.and clean/escape html
+	if(!msg)
+
+		if(prefs.muted & MUTE_PM)
+			to_chat(src, "<span class='pm warning'>Error: Mentor-PM: You are unable to use admin PM-s (muted).</span>")
+			return
+
+		if(!recipient)
+			if(has_mentor_powers(src))
+				to_chat(src, "<span class='pm warning'>Error:Mentor-PM: Client not found.</span>")
+				to_chat(src, msg)
+			else
+				log_admin("Mentorhelp: [key_name(src)]: [msg]")
+				current_mentorhelp.MessageNoRecipient(msg)
+			return
+
+	//Has mentor powers but the recipient no longer has an open ticket
+	if(has_mentor_powers(src) && !recipient.current_mentorhelp)
+		to_chat(src, "<span class='pm warning'>You can no longer reply to this ticket.</span>")
+		to_chat(src, "<span class='pm notice'>Message: [msg]</span>")
+		return
+
+	if (src.handle_spam_prevention(msg,MUTE_PM))
+		return
+
+	msg = trim(sanitize(copytext(msg,1,MAX_MESSAGE_LEN)))
+	if(!msg)
+		return
+
+	var/interaction_message = "<span class='pm notice'>Mentor-PM from-<b>[src]</b> to-<b>[recipient]</b>: [msg]</span>"
+
+	if (recipient.current_mentorhelp && !has_mentor_powers(recipient))
+		recipient.current_mentorhelp.AddInteraction(interaction_message)
+	if (src.current_mentorhelp && !has_mentor_powers(src))
+		src.current_mentorhelp.AddInteraction(interaction_message)
+
+	// It's a little fucky if they're both mentors, but while admins may need to adminhelp I don't really see any reason a mentor would have to mentorhelp since you can literally just ask any other mentors online
+	if (has_mentor_powers(recipient) && has_mentor_powers(src))
+		if (recipient.current_mentorhelp)
+			recipient.current_mentorhelp.AddInteraction(interaction_message)
+		if (src.current_mentorhelp)
+			src.current_mentorhelp.AddInteraction(interaction_message)
+
+	to_chat(recipient, "<i><span class='mentor'>Mentor-PM from-<b><a href='?mentorhelp_msg=\ref[src]'>[src]</a></b>: [msg]</span></i>")
+	to_chat(src, "<i><span class='mentor'>Mentor-PM to-<b>[recipient]</b>: [msg]</span></i>")
+
+	log_admin("[key_name(src)]->[key_name(recipient)]: [msg]")
+
+	if(recipient.is_preference_enabled(/datum/client_preference/play_mentorhelp_ping))
+		recipient << 'sound/effects/mentorhelp.ogg'
+
 	for(var/client/C in mentors)
-		if(!observer_only || (observer_only && isobserver(C.mob)))
-			to_chat(C, msg)
+		if (C != recipient && C != src)
+			to_chat(C, interaction_message)
+	for(var/client/C in admins)
+		if (C != recipient && C != src)
+			to_chat(C, interaction_message)
