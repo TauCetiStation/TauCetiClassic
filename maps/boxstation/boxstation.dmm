@@ -25590,7 +25590,7 @@
 /obj/machinery/chem_dispenser/soda{
 	dir = 4
 	},
-/obj/item/portrait/neuro/big{
+/obj/item/portrait/neuro/big/cosmos{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -55812,9 +55812,6 @@
 	name = "Station Intercom (Medbay)";
 	pixel_x = 28
 	},
-/obj/item/portrait/neuro{
-	pixel_y = 32
-	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "bXU" = (
@@ -67040,7 +67037,7 @@
 "cEm" = (
 /obj/structure/stool/bed/psych,
 /obj/item/weapon/bedsheet/psych,
-/obj/item/portrait/neuro/big{
+/obj/item/portrait/neuro/big/rorschach_test{
 	pixel_x = 32
 	},
 /turf/simulated/floor/carpet/green,
@@ -76251,7 +76248,7 @@
 /obj/structure/dryer{
 	pixel_y = 20
 	},
-/obj/item/portrait/neuro{
+/obj/item/portrait/neuro/small/president{
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -79271,9 +79268,6 @@
 /obj/structure/stool/bar,
 /obj/structure/window/thin/reinforced{
 	dir = 4
-	},
-/obj/item/portrait/neuro{
-	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
@@ -86652,12 +86646,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"wHG" = (
-/obj/item/portrait/neuro/big{
-	pixel_y = -32
-	},
-/turf/simulated/floor/carpet/green,
-/area/station/medical/psych)
 "wHJ" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
@@ -128957,7 +128945,7 @@ bJm
 bXS
 cEm
 bEi
-wHG
+bEi
 bMF
 bBy
 cLu

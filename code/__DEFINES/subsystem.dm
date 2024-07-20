@@ -49,6 +49,7 @@
 #define SS_INIT_DEMO          -94 // To avoid a bunch of changes related to initialization being written, do this last
 #define SS_INIT_CHAT          -95 //Should be last to ensure chat remains smooth during init.
 #define SS_INIT_UNIT_TESTS    -100
+#define SS_INIT_NEURO         -110
 
 
 #define SS_PRIORITY_INPUT       1000  // This must always always be the max highest priority. Player input must never be lost.

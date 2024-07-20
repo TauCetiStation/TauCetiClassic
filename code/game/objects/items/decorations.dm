@@ -242,8 +242,11 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 		"portrait of cool dog in space",
 	)
 
-/obj/item/portrait/neuro/atom_init(mapload)
-	. = ..()
+/obj/item/portrait/neuro/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/portrait/neuro/atom_init_late()
 	if(autogenerating)
 		generate_new_image()
 
@@ -268,27 +271,17 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	if(!Adjacent(user) || user.incapacitated())
 		return
 
-	var/autogenerating_variant = "Включить авторотацию"
+	var/autogenerating_variant = "Включить автообновление"
 	if(autogenerating)
-		autogenerating_variant = "Выключить авторотацию"
+		autogenerating_variant = "Выключить автообновление"
 
 	var/choice = tgui_input_list(
 		user,
 		"Что сделать?",
 		"Портрет",
-		list("Добавить вариант", "Удалить вариант", "Сменить стиль", "Обновить картину", autogenerating_variant, "Выйти")
+		list("Сменить стиль", "Обновить картину", autogenerating_variant, "Выйти")
 		)
 	switch(choice)
-		if("Добавить вариант")
-			var/new_prompt = sanitize(input(user, "Введите запрос", "Портрет") as text|null)
-			if(new_prompt)
-				prompt_rotation += new_prompt
-			change_neuro_settings(user)
-		if("Удалить вариант")
-			var/remove_prompt = tgui_input_list(user, "Выберите запрос", "Портрет", prompt_rotation)
-			if(remove_prompt)
-				prompt_rotation -= remove_prompt
-			change_neuro_settings(user)
 		if("Сменить стиль")
 			var/new_style = tgui_input_list(user, "Выберите стиль", "Портрет", SSneural.get_available_styles())
 			if(new_style)
@@ -297,10 +290,10 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 		if("Обновить картину")
 			generate_new_image(user)
 			change_neuro_settings(user)
-		if("Включить авторотацию")
+		if("Включить автообновление")
 			set_autorogenerating(TRUE)
 			change_neuro_settings(user)
-		if("Выключить авторотацию")
+		if("Выключить автообновление")
 			set_autorogenerating(FALSE)
 			change_neuro_settings(user)
 		else
@@ -327,11 +320,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 			to_chat(user, "<span class='warning'>Список запросов пуст!</span>")
 		return
 
-	set_neural_image()
+	try_generate_image()
 
-/obj/item/portrait/neuro/proc/set_neural_image()
-	set waitfor = FALSE
-
+/obj/item/portrait/neuro/proc/try_generate_image()
 	autogenerating_timer = null
 
 	if(prompt_rotation.len == 0)
@@ -346,26 +337,29 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 	query.target_height = frame_height
 	query.generate_width = frame_width*generating_scale
 	query.generate_height = frame_height*generating_scale
-	query.file_path = SSneural.get_full_path("portrait", prompt)
+	query.file_postfix = "portraits"
+	query.source = src
 
-	output_image_base64 = SSneural.generate_neural_image(query)
-	if(!output_image_base64)
+	SSneural.start_generation_request(query)
+	RegisterSignal(src, COMSIG_NEURAL_IMAGE_GENERATED, PROC_REF(set_generated_image))
+
+/obj/item/portrait/neuro/proc/set_generated_image(atom/source, base64, file_path)
+	UnregisterSignal(src, COMSIG_NEURAL_IMAGE_GENERATED)
+	if(!base64)
 		generating = FALSE
 		return
-	// Just in case the frame is deleted during generation
-	if(src == null)
-		SSneural.release_cache(query.file_path)
-		return
+
+	output_image_base64 = base64
 
 	cut_overlays()
 
-	var/icon/I = new(query.file_path)
+	var/icon/I = new(file_path)
 	var/mutable_appearance/image = mutable_appearance(I)
 	image.pixel_x = image_offset_x
 	image.pixel_y = image_offset_y
 	add_overlay(image)
+	SSneural.release_cache(file_path)
 
-	SSneural.release_cache(query.file_path)
 	generating = FALSE
 
 /obj/item/portrait/neuro/proc/set_autorogenerating(value)
@@ -374,14 +368,40 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 		generate_new_image()
 	else
 		autogenerating = FALSE
-		autogenerating_timer = null
 		deltimer(autogenerating_timer)
+		autogenerating_timer = null
+
+/obj/item/portrait/neuro/small
+	icon_state = "portrait_empty"
+
+/obj/item/portrait/neuro/small/president
+	name = "neuro president frame"
+	prompt_rotation = list(
+		"portrait of the President of the big corporation"
+	)
 
 /obj/item/portrait/neuro/big
 	icon_state = "portrait_big_empty"
 
-	frame_width = 28
-	frame_height = 28
-	image_offset_x = 2
-	image_offset_y = 2
+	frame_width = 24
+	frame_height = 24
+	image_offset_x = 4
+	image_offset_y = 4
 	generating_scale = 32
+
+/obj/item/portrait/neuro/big/rorschach_test
+	name = "neuro rorschach test frame"
+	prompt_rotation = list(
+		"The Rorschach test"
+	)
+
+/obj/item/portrait/neuro/big/cosmos
+	name = "neuro cosmos frame"
+	prompt_rotation = list(
+		"cosmos",
+		"universe",
+		"stars in space",
+		"meteor",
+		"planet in space",
+		"The Milky Way",
+	)
