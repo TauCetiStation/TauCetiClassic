@@ -206,15 +206,6 @@
 	check_flags = AB_CHECK_ALIVE
 	cooldown_time = 50
 
-/datum/action/cooldown/tailpunch/New()
-	..()
-	var/icon/tail_icon = new('icons/hud/actions.dmi', "tailpunch")
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(H.species.flags[HAS_SKIN_COLOR])
-			tail_icon.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
-			button.icon = tail_icon
-
 /datum/action/cooldown/tailpunch/Checks()
 	var/mob/living/carbon/human/H = owner
 	if(!HAS_TRAIT(H, TRAIT_TAILPUNCH))
@@ -363,7 +354,7 @@
 		attack_side = 1  // left hand - left side
 	var/icon/tail_icon = new('icons/hud/actions.dmi', "tailpunch")
 	tail_icon.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
-	var/obj/tail = new /obj/effect/effect/custom(get_step(src, turn(attack_dir, 90 * attack_side)), "Tail", tail_icon)
+	var/obj/tail = new /obj/effect/effect/custom(get_step(src, turn(attack_dir, 90 * attack_side)), "Tail", tail_icon, "tailpunch")
 	var/animation_speed = 3
 	if(is_skill_competent(src, list(/datum/skill/police = SKILL_LEVEL_PRO)))
 		animation_speed = 2 // attack animation is 1.5 times faster if you skilled
