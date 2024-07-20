@@ -121,7 +121,7 @@
 			target_loc = my_gong.loc
 		user.adjustBrainLoss(2)
 		available_pluvia_gongs -= my_gong
-		fake_body = new /mob/living/(target_loc)
+		fake_body = new /mob/living(target_loc)
 		fake_body.icon = user.icon
 		fake_body.icon_state = user.icon_state
 		fake_body.copy_overlays(user)
