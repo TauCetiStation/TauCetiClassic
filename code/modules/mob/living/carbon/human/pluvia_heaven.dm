@@ -175,7 +175,7 @@
 		if(H.mind && H != user && ispluvian(H))
 			if(istype(H.my_religion, /datum/religion/pluvia) || H.blessed)
 				possible_targets[H] = image(H.icon, H.icon_state)
-				possible_targets[H].copy_overlays(user)
+				possible_targets[H].copy_overlays(H)
 
 	visible_message("[bicon(src)] <span class='notice'>[src] rings, strucken by [user].</span>")
 	playsound(src, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 75, null)
