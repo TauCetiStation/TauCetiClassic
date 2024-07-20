@@ -315,8 +315,16 @@
 		if(!tailpunch_animation_easy(A))
 			return
 
+	visible_message("<span class='danger'>\The [src] hit the [A] with his tail!</span>", "<span class='userdanger'>You hit the [A] with your tail!</span>")
+
+	if(istype(A, /atom/movable))
+		var/atom/movable/AM = A
+		if(!AM.anchored)
+			step_away(AM, get_turf(src))
+	if(!has_gravity(src))
+		step_away(src, get_turf(A))
+
 	if(A.uses_integrity)
-		visible_message("<span class='danger'>\The [src] hit the [A] with his tail!</span>", "<span class='userdanger'>You hit the [A] with your tail!</span>")
 		A.take_damage(12, BRUTE)
 
 	if(iswallturf(A))
