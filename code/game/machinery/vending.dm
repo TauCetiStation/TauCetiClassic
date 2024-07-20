@@ -465,10 +465,6 @@
 		else
 			QDEL_NULL(coin)
 
-	R.amount--
-	if(R == unstable_product)
-		unstable_product = null
-
 	if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
 		spawn(0)
 			speak(src.vend_reply)
@@ -478,12 +474,9 @@
 	if (src.icon_vend) //Show the vending animation if needed
 		flick(src.icon_vend,src)
 	spawn(src.vend_delay)
-		new R.product_path(get_turf(src))
-		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
-		src.vend_ready = 1
-		src.currently_vending = null
-		updateUsrDialog()
-		update_unstable_product()
+	give_out_product(R)
+	src.vend_ready = 1
+	src.currently_vending = null
 
 /obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))
@@ -590,12 +583,10 @@
 	for(var/datum/data/vending_product/R in src.product_records)
 		if (R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
+		if (!R.product_path)
 			continue
 
-		R.amount--
-		throw_item = new dump_path(src.loc)
+		throw_item = give_out_product(R)
 		break
 	if (!throw_item)
 		return 0
@@ -616,11 +607,22 @@
 	else
 		return 0
 
+/obj/machinery/vending/proc/give_out_product(datum/data/vending_product/VP)
+	playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
+	VP.amount--
+	if(VP == unstable_product)
+		unstable_product = null
+	updateUsrDialog()
+	update_unstable_product()
+	return new VP.product_path(src.loc)
+
 /obj/machinery/vending/proc/update_unstable_product()
 	if(!unstable_product && prob(5))
-		unstable_product = pick(product_records)
-		if(!unstable_product.amount) // if this product has been sold out
-			unstable_product = null
+		var/list/available_products = list()
+		for(var/datum/data/vending_product/VP in product_records)
+			if(VP.amount)
+				available_products += VP
+		unstable_product = pick(available_products)
 
 /obj/machinery/vending/examine(mob/user, distance)
 	. = ..()
@@ -631,10 +633,8 @@
 	. = ..()
 	if(unstable_product && prob(50))
 		do_shake_animation(2, 10, intensity_dropoff = 0.9)
-		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
-		new unstable_product.product_path(src.loc)
-		unstable_product.amount--
-		unstable_product = null
+		give_out_product(unstable_product)
+
 	update_unstable_product()
 
 /*
