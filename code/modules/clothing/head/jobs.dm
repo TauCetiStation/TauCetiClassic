@@ -28,11 +28,10 @@
 	desc = "You fear to wear it for the negligence it brings."
 	icon_state = "capcap"
 	flags_inv = 0
-	body_parts_covered = 0
+	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
-	body_parts_covered = 0
 	force = 0
 	hitsound = list()
 
@@ -111,7 +110,7 @@
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
 	armor = list(melee = 50, bullet = 5, laser = 25,energy = 10, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
-	body_parts_covered = 0
+	body_parts_covered = HEAD
 
 /obj/item/clothing/head/det_hat/gray
 	name = "detective's gray hat"
