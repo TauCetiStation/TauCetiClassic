@@ -4,8 +4,6 @@
 	desc = "Ты не должен этого видеть."
 	ranged = TRUE
 	amount_shoot = 3
-	projectiletype = null
-	projectilesound = null
 	ranged_cooldown = 5
 	ranged_cooldown_cap = 0
 	maxHealth = 120
