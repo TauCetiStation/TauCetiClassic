@@ -466,6 +466,8 @@
 			QDEL_NULL(coin)
 
 	R.amount--
+	if(R == unstable_product)
+		unstable_product = null
 
 	if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
 		spawn(0)
@@ -615,11 +617,10 @@
 		return 0
 
 /obj/machinery/vending/proc/update_unstable_product()
-	if(!unstable_product && prob(20))
+	if(!unstable_product && prob(5))
 		unstable_product = pick(product_records)
-
-	if(unstable_product && !unstable_product.amount) // if an unstable product has been sold out
-		unstable_product = null
+		if(!unstable_product.amount) // if this product has been sold out
+			unstable_product = null
 
 /obj/machinery/vending/examine(mob/user, distance)
 	. = ..()
@@ -628,14 +629,13 @@
 
 /obj/machinery/vending/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(prob(damage_amount) && unstable_product)
+	if(unstable_product && prob(50))
 		do_shake_animation(2, 10, intensity_dropoff = 0.9)
 		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 		new unstable_product.product_path(src.loc)
 		unstable_product.amount--
 		unstable_product = null
 	update_unstable_product()
-
 
 /*
  * Vending machine types
