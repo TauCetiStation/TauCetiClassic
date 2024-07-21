@@ -593,11 +593,12 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 		ambience_next_time += rand(2, 4) MINUTE
 		current_ambience = pick(ambience - current_ambience)
 
-		for(var/mob/living/carbon/C as anything in carbon_list)
-			if(C.ckey && C.stat != DEAD)
+		var/list/listeners = carbon_list
+		listeners += observer_list
+		listeners += Jonesy
+		for(var/mob/living/carbon/C as anything in listeners)
+			if(C && C.ckey)
 				C.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
-		if(global.Jonesy && Jonesy.ckey && Jonesy.stat != DEAD)
-			Jonesy.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
 
 /obj/effect/landmark/nostromo/supply_crate
 	name = "Nostromo Supply Crate"

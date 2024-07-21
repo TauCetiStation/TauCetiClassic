@@ -81,20 +81,44 @@ var/global/mob/Jonesy
 			/obj/item/weapon/flamethrower/full,
 			/obj/item/weapon/flamethrower/full,
 			/obj/item/weapon/tank/phoron/full,
-			/obj/item/weapon/tank/phoron/full),
-		list(
+			/obj/item/weapon/tank/phoron/full,
 			/obj/item/weapon/legcuffs/bola/tactical,
 			/obj/item/weapon/legcuffs/bola/tactical,
-			/obj/item/weapon/legcuffs/bola/tactical),
+			/obj/item/weapon/reagent_containers/spray/extinguisher),
 		list(
 			/obj/item/weapon/gun/projectile/shotgun/incendiary,
+			/obj/item/weapon/gun/projectile/shotgun/incendiary,
 			/obj/item/ammo_box/eight_shells/incendiary,
-			/obj/item/ammo_box/eight_shells/incendiary),
+			/obj/item/ammo_box/eight_shells/incendiary,
+			/obj/item/weapon/shield/riot),
 		list(
+			/obj/item/weapon/crossbow,
 			/obj/item/weapon/crossbow,
 			/obj/item/stack/rods/ten,
 			/obj/item/weapon/wirecutters,
-			/obj/item/weapon/stock_parts/cell/super)
+			/obj/item/weapon/stock_parts/cell/super,
+			/obj/item/weapon/stock_parts/cell/super,
+			/obj/item/clothing/glasses/night,
+			/obj/item/clothing/glasses/night),
+		list(
+			/obj/item/weapon/pickaxe/drill/jackhammer,
+			/obj/item/weapon/pickaxe/drill/jackhammer,
+			/obj/item/weapon/gun/energy/laser/cutter,
+			/obj/item/weapon/gun/energy/laser/cutter,
+			/obj/item/weapon/storage/firstaid/small_firstaid_kit/space),
+		list(
+			/obj/item/weapon/claymore,
+			/obj/item/weapon/claymore,
+			/obj/item/weapon/shield/riot/roman,
+			/obj/item/weapon/shield/riot/roman,
+			/obj/item/clothing/accessory/bronze_cross),
+		list(
+			/obj/item/weapon/gun/energy/laser,
+			/obj/item/weapon/gun/energy/laser,
+			/obj/item/clothing/head/bio_hood/new_hazmat/general,
+			/obj/item/clothing/head/bio_hood/new_hazmat/general,
+			/obj/item/clothing/suit/bio_suit/new_hazmat/general,
+			/obj/item/clothing/suit/bio_suit/new_hazmat/general),
 	)
 
 /datum/faction/nostromo_crew/forgeObjectives()
@@ -111,7 +135,7 @@ var/global/mob/Jonesy
 
 // мейби стоит это на сигнал от ксеноса переписать
 /datum/faction/nostromo_crew/process()
-	if(!supply_crate)
+	if(!supply_crate && alien_list[ALIEN_LONE_HUNTER].len != 0)
 		var/mob/living/carbon/xenomorph/humanoid/hunter/lone/LH = alien_list[ALIEN_LONE_HUNTER][1]
 		if(LH && LH.estage == 3)
 			var/supply_point = pick(landmarks_list["Nostromo Supply Crate"])
@@ -122,6 +146,11 @@ var/global/mob/Jonesy
 
 			for(var/mob/living/carbon/human/H as anything in human_list)
 				if(H.stat != DEAD)
+					var/scary_sound = pick('sound/hallucinations/scary_sound_1.ogg',
+						'sound/hallucinations/scary_sound_2.ogg',
+						'sound/hallucinations/scary_sound_3.ogg',
+						'sound/hallucinations/scary_sound_4.ogg')
+					H.playsound_local(null, scary_sound, VOL_EFFECTS_MASTER, null, FALSE)
 					to_chat(H, "<span class='warning'>На корабль перед отлётом грузили ящики и контейнеры, где-то на складе может быть оружие!</span>")
 			supply_crate = TRUE
 
@@ -157,3 +186,15 @@ var/global/mob/Jonesy
 	var/mob/living/simple_animal/cat/red/jonesy/J = new (get_turf(start_point))
 	global.Jonesy = J
 	return ..()
+
+/datum/action/nostromo_map
+	name = "Вспомнить схему корабля."
+	check_flags = AB_CHECK_ALIVE
+	action_type = AB_INNATE
+	button_icon_state = "holomap"
+
+/datum/action/nostromo_map/Activate()
+	owner << browse_rsc('nano/images/nanomap_nostromo_1.png', "nanomap.png")
+	var/datum/browser/popup = new(owner, "window=[name]", "[name]", 700, 700, ntheme = CSS_THEME_DARK)
+	popup.set_content("<img src='nanomap.png' style='-ms-interpolation-mode:nearest-neighbor'>")
+	popup.open()

@@ -839,6 +839,16 @@
 	update_icon()
 	updateinfolinks()
 
+/obj/item/weapon/paper/nuclear_code/map/atom_init()
+	. = ..()
+	var/nukecode
+	for(var/obj/machinery/nuclearbomb/bomb in poi_list)
+		if(bomb && bomb.r_code)
+			if(is_station_level(bomb.z))
+				nukecode = bomb.r_code
+	info = "<b>Nuclear Authentication Code:</b> [nukecode]"
+	updateinfolinks()
+
 /obj/item/weapon/paper/cmf_manual
 	name = "CMF manipulation manual"
 	info = {"<h1 style="text-align: center;">Руководство пользователя</h1>

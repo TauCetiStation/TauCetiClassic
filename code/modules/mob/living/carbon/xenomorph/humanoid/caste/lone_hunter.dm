@@ -88,7 +88,7 @@
 // Ксенос должен поощряться за активную и агрессивную игру
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/successful_leap(mob/living/L)
 	epoint += 120
-	for(var/mob/living/beholder in oview(6, src))
+	for(var/mob/beholder in oview(6, src))
 		beholder.playsound_local(null, pick(alien_screamer), VOL_EFFECTS_MASTER, null, FALSE)
 	play_scary_music()
 
@@ -106,5 +106,5 @@
 		current_scary_music = pick(alien_attack - current_scary_music)
 		ambience_player.ambience_next_time += 0.5 MINUTE
 		scary_music_next_time = world.time + 1 MINUTE
-		for(var/mob/living/L in range(7, src))
-			L.playsound_music(current_scary_music, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)
+		for(var/mob/M in range(7, src))
+			M.playsound_music(current_scary_music, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)

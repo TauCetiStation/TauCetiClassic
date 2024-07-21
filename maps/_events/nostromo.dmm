@@ -1,4 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "ae" = (
 /obj/structure/container/up{
 	icon_state = "watatsumi_lm 0,1"
@@ -11,8 +22,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -48,6 +62,18 @@
 	},
 /turf/simulated/wall/beige,
 /area/station/nostromo)
+"ap" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
 "au" = (
 /obj/structure/container/up{
 	icon_state = "wy_l 0,1"
@@ -82,6 +108,9 @@
 /obj/item/weapon/storage/box/pillbottles,
 /obj/item/weapon/storage/box/syringes/mixture,
 /obj/item/weapon/gun/syringe,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -114,9 +143,25 @@
 	dir = 6
 	},
 /obj/machinery/meter,
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"
+	},
+/area/station/nostromo)
+"aN" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "aQ" = (
@@ -128,6 +173,18 @@
 "aV" = (
 /obj/machinery/telecomms/bus,
 /turf/simulated/floor/whitegreed,
+/area/station/nostromo)
+"aZ" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "ba" = (
 /obj/structure/stool,
@@ -168,6 +225,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "neutral"
@@ -187,6 +247,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -197,11 +260,62 @@
 	},
 /turf/environment/space,
 /area/space)
+"bJ" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "bN" = (
 /obj/structure/container/up{
 	icon_state = "hd_l 0,1"
 	},
 /turf/simulated/wall/beige,
+/area/station/nostromo)
+"bR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
+"bU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"cc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"ce" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "cf" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -247,6 +361,9 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"cx" = (
+/turf/unsimulated/wall/cult/runed/anim,
+/area/station/nostromo)
 "cy" = (
 /obj/structure/container{
 	icon_state = "watatsumi_lm 0,0"
@@ -274,6 +391,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkblue"
@@ -287,6 +407,18 @@
 	icon_state = "blackchoco"
 	},
 /area/station/nostromo)
+"cI" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "cL" = (
 /obj/structure/rack,
 /obj/random/misc/all/high,
@@ -297,11 +429,28 @@
 	},
 /area/station/nostromo)
 "cM" = (
-/obj/machinery/vending/medical{
-	req_access = list()
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
 	},
+/obj/structure/closet/l3closet/general,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
+	},
+/area/station/nostromo)
+"cN" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "cQ" = (
@@ -313,6 +462,28 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"cT" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"cU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "cZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -321,6 +492,23 @@
 	dir = 4
 	},
 /turf/simulated/floor/whitegreed,
+/area/station/nostromo)
+"da" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "db" = (
 /obj/structure/closet/toolcloset,
@@ -361,6 +549,21 @@
 	dir = 1;
 	icon_state = "brown"
 	},
+/area/station/nostromo)
+"dq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/nostromo)
+"dv" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "dw" = (
 /obj/structure/urinal{
@@ -406,6 +609,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -424,8 +630,11 @@
 	},
 /area/station/nostromo)
 "dN" = (
-/mob/living/carbon/human{
-	icon_state = "body_m_s"
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
@@ -437,6 +646,15 @@
 	},
 /turf/simulated/floor{
 	dir = 9;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"dQ" = (
+/obj/structure/sign/departments/engineering{
+	pixel_y = 32
+	},
+/turf/simulated/floor{
+	dir = 1;
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
@@ -452,6 +670,17 @@
 	dir = 1;
 	icon_state = "brown"
 	},
+/area/station/nostromo)
+"dU" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor/plating,
+/area/station/nostromo)
+"dY" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "dZ" = (
 /obj/structure/container/up{
@@ -503,6 +732,18 @@
 	},
 /turf/environment/space,
 /area/space)
+"et" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "ev" = (
 /obj/machinery/hydroponics/constructable,
 /turf/simulated/floor{
@@ -515,6 +756,15 @@
 /obj/item/clothing/under/pants/white,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
+	},
+/area/station/nostromo)
+"eD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
 	},
 /area/station/nostromo)
 "eG" = (
@@ -544,6 +794,22 @@
 "eL" = (
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
+"eM" = (
+/obj/machinery/door/airlock/hatch{
+	dir = 4;
+	name = "Space Suits";
+	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/nostromo)
 "eP" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 1
@@ -554,6 +820,14 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
+/area/station/nostromo)
+"eR" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance";
+	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "eS" = (
 /obj/structure/container{
@@ -579,6 +853,25 @@
 	icon_state = "darkblue"
 	},
 /area/station/nostromo)
+"fa" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
+"fd" = (
+/obj/structure/stool/bed/chair/metal/white,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/station/nostromo)
 "fe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -592,11 +885,36 @@
 "fg" = (
 /obj/machinery/alarm{
 	pixel_x = -28;
-	pixel_y = -6
+	pixel_y = -6;
+	req_one_access = list()
 	},
 /obj/item/weapon/flora/pottedplant/crystal,
 /turf/simulated/floor{
 	icon_state = "dark"
+	},
+/area/station/nostromo)
+"fh" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
+"fi" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "fj" = (
@@ -611,6 +929,13 @@
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
+	},
+/area/station/nostromo)
+"fz" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "fA" = (
@@ -654,9 +979,33 @@
 	icon_state = "darkblue"
 	},
 /area/station/nostromo)
+"fU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "fV" = (
 /obj/structure/window/fulltile,
 /turf/simulated/floor/plating,
+/area/station/nostromo)
+"fW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "fY" = (
 /obj/structure/container/up{
@@ -679,6 +1028,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/nostromo_narcissus)
+"gj" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/station/nostromo)
 "gk" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Dinning Hall";
@@ -712,6 +1070,8 @@
 	name = "Dinning Hall";
 	req_access = list(12)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -751,6 +1111,18 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"gN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
 "gQ" = (
 /obj/structure/stool/bed/chair/metal/white,
 /obj/effect/landmark{
@@ -763,9 +1135,38 @@
 "gT" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkblue"
+	},
+/area/station/nostromo)
+"hc" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"hf" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "hg" = (
@@ -773,6 +1174,7 @@
 /area/space)
 "hi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -855,6 +1257,12 @@
 	name = "Comms Room";
 	req_access = list(12)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -868,9 +1276,45 @@
 /obj/item/weapon/tank/oxygen,
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/nostromo_narcissus)
+"hE" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
 "hG" = (
 /obj/machinery/computer/aiupload,
 /turf/simulated/floor/whitegreed,
+/area/station/nostromo)
+"hL" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"hM" = (
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "hN" = (
 /turf/simulated/floor{
@@ -914,12 +1358,41 @@
 /obj/machinery/telecomms/server/presets/common,
 /turf/simulated/floor/whitegreed,
 /area/station/nostromo)
+"ia" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/station/nostromo)
+"ie" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/simulated/floor/plating,
+/area/station/nostromo)
+"ig" = (
+/obj/structure/plasticflaps{
+	layer = 4.1;
+	opacity = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/plating,
+/area/station/nostromo)
 "il" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
 	},
+/area/station/nostromo)
+"io" = (
+/turf/unsimulated/floor/cult/lava,
 /area/station/nostromo)
 "is" = (
 /obj/machinery/conveyor{
@@ -943,11 +1416,27 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"iz" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "iC" = (
 /obj/structure/container/up{
 	icon_state = "arious_l 0,1"
 	},
 /turf/simulated/floor,
+/area/station/nostromo)
+"iE" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "iF" = (
 /obj/structure/stool/bed,
@@ -956,11 +1445,45 @@
 	icon_state = "darkblue"
 	},
 /area/station/nostromo)
+"iN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
+"iO" = (
+/obj/effect/landmark/nostromo/jonesy,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "iR" = (
 /obj/machinery/body_scanconsole,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
+	},
+/area/station/nostromo)
+"iS" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = 22
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "iT" = (
@@ -984,6 +1507,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -991,6 +1517,9 @@
 /area/station/nostromo)
 "iY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1034,6 +1563,17 @@
 	dir = 5;
 	icon_state = "green"
 	},
+/area/station/nostromo)
+"jp" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "jq" = (
 /obj/structure/container/up{
@@ -1084,6 +1624,11 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = -28;
+	pixel_y = -5
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -1097,11 +1642,41 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"jJ" = (
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"jL" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/nostromo)
 "jO" = (
 /obj/structure/container/up{
 	icon_state = "ferret_r 0,1"
 	},
 /turf/simulated/floor,
+/area/station/nostromo)
+"jP" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "jV" = (
 /obj/structure/container{
@@ -1109,6 +1684,13 @@
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
+	},
+/area/station/nostromo)
+"ka" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "kb" = (
@@ -1136,6 +1718,15 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"kg" = (
+/obj/machinery/light/smart,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "kj" = (
 /turf/simulated/floor{
 	dir = 9;
@@ -1144,6 +1735,7 @@
 /area/station/nostromo)
 "kk" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -1170,6 +1762,15 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
+"kG" = (
+/obj/machinery/alarm{
+	pixel_y = -32;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "kK" = (
 /obj/structure/container{
 	icon_state = "seegson_m 0,0"
@@ -1187,6 +1788,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak{
 	pixel_y = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -1214,6 +1817,22 @@
 "lh" = (
 /obj/structure/container/up{
 	icon_state = "trijent_l_alt 0,1"
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/nostromo)
+"li" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -1251,6 +1870,18 @@
 	icon_state = "whitehall"
 	},
 /area/station/nostromo)
+"lu" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
 "lv" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
 	dir = 4
@@ -1276,6 +1907,10 @@
 /area/station/nostromo)
 "lF" = (
 /obj/structure/table/reinforced,
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -1313,6 +1948,25 @@
 	dir = 1;
 	icon_state = "darkredcorners"
 	},
+/area/station/nostromo)
+"lR" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"lX" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "ma" = (
 /turf/simulated/floor{
@@ -1352,6 +2006,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
+"mn" = (
+/obj/structure/plasticflaps{
+	layer = 4.1;
+	opacity = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
 "mu" = (
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -1380,6 +2047,9 @@
 /area/station/nostromo)
 "mE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/sign/departments/engineering{
+	pixel_x = -32
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -1389,14 +2059,31 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "whitechoco"
 	},
+/area/station/nostromo)
+"mK" = (
+/obj/structure/plasticflaps{
+	layer = 4.1;
+	opacity = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "mM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -1410,6 +2097,15 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"mP" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "mT" = (
 /obj/machinery/door/airlock/hatch{
 	dir = 4;
@@ -1417,6 +2113,9 @@
 	req_access = list(12)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1466,6 +2165,10 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/machinery/alarm{
+	pixel_y = 22;
+	req_one_access = list()
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -1493,6 +2196,17 @@
 	req_access = list(12)
 	},
 /turf/simulated/floor/plating,
+/area/station/nostromo)
+"nk" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "nm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -1527,6 +2241,15 @@
 "nx" = (
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/nostromo_narcissus)
+"nA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "nC" = (
 /obj/machinery/light/smart{
 	dir = 8
@@ -1622,6 +2345,7 @@
 	req_access = list(12)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
@@ -1655,6 +2379,10 @@
 	amount = 10
 	},
 /obj/machinery/light/smart,
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -1682,11 +2410,31 @@
 	},
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/shuttle/nostromo_narcissus)
+"on" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "os" = (
 /obj/structure/cable/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -1751,11 +2499,35 @@
 "oT" = (
 /turf/simulated/floor/plating,
 /area/station/nostromo)
+"oX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
+"pc" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "pf" = (
 /obj/machinery/door/airlock/highsecurity{
 	dir = 4;
 	name = "AI Chamber";
 	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1777,6 +2549,10 @@
 "pl" = (
 /obj/machinery/computer/message_monitor{
 	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_y = 22;
+	req_one_access = list()
 	},
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
@@ -1838,6 +2614,9 @@
 	},
 /area/station/nostromo)
 "pI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "green"
@@ -1874,17 +2653,44 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"pY" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/station/nostromo)
 "pZ" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
 	},
 /area/station/nostromo)
+"qa" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "qb" = (
 /obj/structure/table,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
+	},
+/area/station/nostromo)
+"qd" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "qe" = (
@@ -1914,6 +2720,15 @@
 	icon_state = "darkred"
 	},
 /area/station/nostromo)
+"ql" = (
+/obj/structure/sign/departments/evac{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "qn" = (
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 8
@@ -1929,10 +2744,30 @@
 	icon_state = "dark"
 	},
 /area/station/nostromo)
+"qt" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "qu" = (
 /obj/machinery/optable,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1945,6 +2780,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1960,6 +2798,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
+"qC" = (
+/obj/structure/sign/departments/botany{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "qD" = (
 /obj/structure/container{
 	icon_state = "trijent_l 0,0"
@@ -1972,9 +2819,27 @@
 	req_access = list(12)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
+/area/station/nostromo)
+"qM" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/nostromo)
+"qN" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "qQ" = (
 /obj/structure/flora/ausbushes/fullgrass{
@@ -1988,6 +2853,16 @@
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
+	},
+/area/station/nostromo)
+"qW" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "qY" = (
@@ -2010,6 +2885,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -2021,6 +2899,27 @@
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
+	},
+/area/station/nostromo)
+"rj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/station/nostromo)
+"rk" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "rn" = (
@@ -2041,6 +2940,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
+"rq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "rw" = (
 /obj/structure/stool,
 /obj/effect/decal/cleanable/dirt,
@@ -2053,11 +2961,29 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"rB" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_y = 22;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "rE" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Kitchen";
 	req_access = list(12)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -2085,6 +3011,23 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
+"rM" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
+"rN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
 "rQ" = (
 /obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor,
@@ -2095,6 +3038,7 @@
 	req_access = list(12)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -2136,8 +3080,19 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"sj" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor{
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
@@ -2161,6 +3116,12 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"so" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "sq" = (
 /obj/machinery/light/smart{
 	dir = 8
@@ -2168,6 +3129,19 @@
 /obj/effect/landmark/nostromo/supply_crate,
 /turf/simulated/floor{
 	dir = 8;
+	icon_state = "brown"
+	},
+/area/station/nostromo)
+"sr" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = 22
+	},
+/turf/simulated/floor{
+	dir = 1;
 	icon_state = "brown"
 	},
 /area/station/nostromo)
@@ -2211,9 +3185,19 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
+"sB" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "sE" = (
@@ -2226,6 +3210,14 @@
 	},
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/shuttle/nostromo_narcissus)
+"sF" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "sI" = (
 /obj/structure/container/up{
 	icon_state = "watatsumi_lm 0,1"
@@ -2256,10 +3248,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/effect/landmark/start/cargo_technician,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -2305,6 +3296,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
+"sX" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blue"
+	},
+/area/station/nostromo)
 "ta" = (
 /obj/machinery/computer/station_alert,
 /turf/simulated/floor{
@@ -2330,6 +3331,26 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
+"tk" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"tl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "tm" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 1;
@@ -2338,8 +3359,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
+"tn" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "whitehall"
+	},
+/area/station/nostromo)
 "to" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -2367,6 +3396,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -2406,6 +3436,16 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
+"tG" = (
+/obj/machinery/light/smart,
+/obj/machinery/alarm{
+	pixel_y = -32;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "tI" = (
 /obj/structure/container/up{
 	icon_state = "grant_rm 0,1"
@@ -2434,8 +3474,32 @@
 /area/station/nostromo)
 "tR" = (
 /obj/effect/landmark/nostromo/ambience,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
+	},
+/area/station/nostromo)
+"tV" = (
+/obj/structure/sign/departments/evac{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"tW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "ua" = (
@@ -2452,6 +3516,15 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"uf" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/nostromo)
 "uk" = (
 /obj/structure/container/up{
 	icon_state = "wy_r 0,1"
@@ -2459,6 +3532,25 @@
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
+	},
+/area/station/nostromo)
+"ul" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"un" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/station/nostromo)
 "uq" = (
@@ -2473,6 +3565,35 @@
 "uv" = (
 /turf/simulated/floor{
 	icon_state = "darkbluecorners"
+	},
+/area/station/nostromo)
+"uw" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/nostromo)
+"uB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
+"uF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "uK" = (
@@ -2507,6 +3628,9 @@
 /obj/structure/rack,
 /obj/random/misc/all/high,
 /obj/random/tools/tool,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -2530,6 +3654,12 @@
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
+	},
+/area/station/nostromo)
+"vc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/station/nostromo)
 "vl" = (
@@ -2567,10 +3697,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/effect/landmark/start/medical_doctor,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -2582,6 +3711,16 @@
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
+/area/station/nostromo)
+"vz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_y = 22;
+	req_one_access = list()
+	},
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "vB" = (
 /obj/structure/sign/warning/securearea{
@@ -2597,6 +3736,17 @@
 	name = "Warehouse Shutters"
 	},
 /turf/simulated/floor/plating,
+/area/station/nostromo)
+"vC" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "vD" = (
 /obj/machinery/door_control/alien_space{
@@ -2672,10 +3822,42 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"vX" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Warehouse";
+	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "brownfull"
+	},
+/area/station/nostromo)
 "vZ" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "browncorner"
+	},
+/area/station/nostromo)
+"we" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
+"wg" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "cafeteria"
 	},
 /area/station/nostromo)
 "wi" = (
@@ -2684,6 +3866,17 @@
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
+	},
+/area/station/nostromo)
+"wl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/station/nostromo)
 "wn" = (
@@ -2698,6 +3891,25 @@
 	pixel_y = 22
 	},
 /turf/simulated/floor/whitegreed,
+/area/station/nostromo)
+"wt" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "wu" = (
 /obj/structure/table,
@@ -2729,6 +3941,18 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
+"wE" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "wH" = (
 /turf/simulated/floor{
 	icon_state = "darkred"
@@ -2746,6 +3970,9 @@
 "wJ" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -2795,6 +4022,15 @@
 	},
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/shuttle/nostromo_narcissus)
+"wY" = (
+/obj/machinery/light/smart,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/nostromo)
 "wZ" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -2810,6 +4046,10 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"xc" = (
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor/plating,
+/area/station/nostromo)
 "xj" = (
 /obj/structure/container/up{
 	icon_state = "ferret_m 0,1"
@@ -2819,6 +4059,16 @@
 "xm" = (
 /obj/machinery/telecomms/hub,
 /turf/simulated/floor/whitegreed,
+/area/station/nostromo)
+"xn" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "xp" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -2845,11 +4095,27 @@
 	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
+"xs" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
+"xv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "xw" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/blue{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"
@@ -2863,6 +4129,17 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"xA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "xC" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Cargo Office";
@@ -2872,8 +4149,21 @@
 	icon_state = "dark"
 	},
 /area/station/nostromo)
+"xE" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
 "xF" = (
 /obj/effect/landmark/nostromo/jonesy,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -2908,6 +4198,21 @@
 	icon_state = "browncorner"
 	},
 /area/station/nostromo)
+"xV" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "xY" = (
 /obj/structure/container/up{
 	icon_state = "wy_l 0,1"
@@ -2931,6 +4236,15 @@
 	icon_state = "browncorner"
 	},
 /area/station/nostromo)
+"yg" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "yh" = (
 /obj/machinery/cryopod,
 /turf/simulated/shuttle/floor/evac/eng1,
@@ -2951,6 +4265,20 @@
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
+	},
+/area/station/nostromo)
+"yl" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
 	},
 /area/station/nostromo)
 "ym" = (
@@ -2974,6 +4302,13 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor{
 	icon_state = "caution"
+	},
+/area/station/nostromo)
+"yu" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "neutralfull"
 	},
 /area/station/nostromo)
 "yx" = (
@@ -3006,6 +4341,18 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"yO" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "yP" = (
 /obj/structure/sink{
 	dir = 8;
@@ -3024,6 +4371,28 @@
 	icon_state = "darkblue"
 	},
 /area/station/nostromo)
+"yV" = (
+/obj/structure/table,
+/obj/effect/spawner/lootdrop/maintenance/two,
+/turf/simulated/floor/plating,
+/area/station/nostromo)
+"yX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
+"yZ" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance";
+	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "za" = (
 /obj/mecha/working/ripley{
 	map_discharged = 1
@@ -3034,6 +4403,12 @@
 	},
 /area/station/nostromo)
 "zc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -3047,6 +4422,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -3091,8 +4469,18 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
+	},
+/area/station/nostromo)
+"zv" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
 	},
 /area/station/nostromo)
 "zx" = (
@@ -3103,6 +4491,15 @@
 	dir = 8;
 	icon_state = "brown"
 	},
+/area/station/nostromo)
+"zB" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "zE" = (
 /obj/structure/container{
@@ -3121,6 +4518,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -3181,7 +4581,44 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
+"Ab" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Ad" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Af" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/station/nostromo)
 "Ai" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -3201,8 +4638,19 @@
 /area/station/nostromo)
 "An" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
+	},
+/area/station/nostromo)
+"Ap" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "Ax" = (
@@ -3220,6 +4668,15 @@
 /obj/structure/rack,
 /obj/machinery/light/small/built,
 /turf/simulated/shuttle/floor/evac/eng1,
+/area/station/nostromo)
+"AJ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
 /area/station/nostromo)
 "AK" = (
 /obj/structure/container/up{
@@ -3240,15 +4697,31 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"AO" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = 22
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "AT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -3262,6 +4735,17 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
+"AW" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	dir = 4;
+	name = "Maintenance";
+	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "Ba" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -3269,6 +4753,25 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/nostromo)
+"Bc" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -3348,6 +4851,12 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"Bu" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/nostromo)
 "Bv" = (
 /obj/structure/container/up{
 	icon_state = "grant_r 0,1"
@@ -3403,6 +4912,21 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
+"BX" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/turf/simulated/floor/plating,
+/area/station/nostromo)
+"Ca" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
 "Cf" = (
 /obj/structure/container/up{
 	icon_state = "hd_r 0,1"
@@ -3431,6 +4955,17 @@
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
+	},
+/area/station/nostromo)
+"Co" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
 	},
 /area/station/nostromo)
 "Cq" = (
@@ -3466,6 +5001,18 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"CE" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "CF" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/storage/hazardvest,
@@ -3477,6 +5024,18 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
+"CJ" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Hallway";
+	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "CM" = (
 /obj/item/clothing/shoes/magboots{
 	pixel_y = -6
@@ -3485,6 +5044,9 @@
 /area/shuttle/nostromo_narcissus)
 "CN" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
 /turf/simulated/floor{
 	icon_state = "whitechoco"
 	},
@@ -3522,6 +5084,12 @@
 "CY" = (
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -3618,10 +5186,20 @@
 	icon_state = "brownfull"
 	},
 /area/station/nostromo)
+"DH" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/nostromo)
 "DI" = (
 /obj/structure/sign/departments/cargo{
 	pixel_x = -32
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -3630,6 +5208,17 @@
 "DJ" = (
 /obj/machinery/telecomms/broadcaster,
 /turf/simulated/floor/whitegreed,
+/area/station/nostromo)
+"DK" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "DO" = (
 /turf/simulated/floor{
@@ -3678,15 +5267,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
-/area/station/nostromo)
-"Ec" = (
-/mob/living/carbon/xenomorph/humanoid/hunter/lone{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
 /area/station/nostromo)
 "Ei" = (
 /obj/structure/object_wall/standart{
@@ -3694,6 +5280,12 @@
 	icon_state = "diagonalWall3"
 	},
 /turf/environment/space,
+/area/station/nostromo)
+"Ej" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
 /area/station/nostromo)
 "Em" = (
 /obj/structure/object_wall/standart{
@@ -3704,12 +5296,29 @@
 	},
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
+"Eo" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Eu" = (
 /obj/structure/computerframe{
 	anchored = 1;
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/evac/eng1,
+/area/station/nostromo)
+"Ex" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/nostromo)
 "Ey" = (
 /obj/structure/table,
@@ -3744,6 +5353,11 @@
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
+"EH" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "EJ" = (
 /obj/structure/table,
 /turf/simulated/floor{
@@ -3769,6 +5383,15 @@
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
+	},
+/area/station/nostromo)
+"EO" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "EQ" = (
@@ -3815,6 +5438,9 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -3823,6 +5449,18 @@
 "Fg" = (
 /turf/simulated/floor{
 	dir = 9;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Fj" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
@@ -3874,6 +5512,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -3894,6 +5535,10 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -3905,6 +5550,31 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"FK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/station/nostromo)
+"FR" = (
+/obj/machinery/light/smart,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"FW" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor{
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
@@ -3923,6 +5593,10 @@
 "Ga" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "neutral"
@@ -3949,6 +5623,8 @@
 /turf/simulated/floor/grass,
 /area/station/nostromo)
 "Gh" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "yellow"
@@ -3986,6 +5662,30 @@
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
+"Gq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Gt" = (
+/obj/machinery/door/airlock/hatch{
+	dir = 4;
+	name = "Hallway";
+	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Gw" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Hallway";
@@ -3993,6 +5693,15 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Gy" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
@@ -4022,6 +5731,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
+"GH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "GJ" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -4029,6 +5750,9 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
@@ -4092,11 +5816,25 @@
 "Ha" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb2,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
+/area/station/nostromo)
+"Hb" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "Hc" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/red,
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -4111,10 +5849,19 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "Hg" = (
 /obj/effect/landmark/nostromo/jonesy,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -4123,12 +5870,31 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
+/area/station/nostromo)
+"Hk" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "Hr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
@@ -4138,6 +5904,35 @@
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
+	},
+/area/station/nostromo)
+"Hv" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Hx" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"HE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "cafeteria"
 	},
 /area/station/nostromo)
 "HG" = (
@@ -4159,6 +5954,12 @@
 	dir = 5;
 	icon_state = "neutral"
 	},
+/area/station/nostromo)
+"HQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "HR" = (
 /obj/structure/closet/firecloset,
@@ -4185,6 +5986,12 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4195,12 +6002,23 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
+	},
+/area/station/nostromo)
+"Id" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "If" = (
@@ -4212,12 +6030,24 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "In" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
@@ -4236,6 +6066,8 @@
 /obj/item/weapon/disk/nuclear,
 /obj/item/weapon/gun/energy/gun/adv/alien,
 /obj/item/clothing/accessory/holster,
+/obj/item/weapon/pinpointer/lone_alien,
+/obj/item/weapon/paper/nuclear_code/map,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
@@ -4248,6 +6080,12 @@
 	icon_state = "blue"
 	},
 /area/station/nostromo)
+"Iz" = (
+/obj/effect/decal/turf_decal/alpha/dark_red{
+	icon_state = "religion_cult_of_blood"
+	},
+/turf/unsimulated/floor/cult,
+/area/station/nostromo)
 "IA" = (
 /obj/machinery/computer/telecomms/server{
 	dir = 4
@@ -4258,6 +6096,12 @@
 /area/station/nostromo)
 "IB" = (
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "IC" = (
@@ -4274,6 +6118,10 @@
 /area/shuttle/nostromo_narcissus)
 "IE" = (
 /obj/machinery/light/small,
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
+	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "IF" = (
@@ -4300,8 +6148,36 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"IJ" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"IK" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
@@ -4315,6 +6191,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "IR" = (
@@ -4323,6 +6200,13 @@
 	},
 /obj/machinery/light/smart{
 	dir = 1
+	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = 22
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -4342,6 +6226,15 @@
 	dir = 10;
 	icon_state = "darkblue"
 	},
+/area/station/nostromo)
+"IV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "IW" = (
 /obj/structure/stool/bed/chair/schair,
@@ -4366,6 +6259,8 @@
 	opacity = 1
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "Ja" = (
@@ -4392,6 +6287,17 @@
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
+	},
+/area/station/nostromo)
+"Jh" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
 	},
 /area/station/nostromo)
 "Jj" = (
@@ -4445,6 +6351,15 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/nostromo)
+"Jx" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Jy" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
@@ -4465,6 +6380,7 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -4485,6 +6401,16 @@
 /obj/machinery/constructable_frame/machine_frame,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/evac/eng1,
+/area/station/nostromo)
+"JV" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "Ka" = (
 /obj/machinery/computer/monitor,
@@ -4519,6 +6445,8 @@
 /area/station/nostromo)
 "Ki" = (
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -4534,6 +6462,9 @@
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -4562,12 +6493,18 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
-"Kt" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	name = "Intercom";
-	pixel_y = 22
+"Kp" = (
+/obj/machinery/light/smart{
+	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Kt" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
@@ -4578,6 +6515,11 @@
 	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	name = "Intercom";
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -4591,6 +6533,20 @@
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"
+	},
+/area/station/nostromo)
+"Kx" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_x = -28;
+	pixel_y = -6;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "Ky" = (
@@ -4613,6 +6569,31 @@
 /obj/structure/closet/l3closet/general,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
+	},
+/area/station/nostromo)
+"KJ" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"KK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/machinery/alarm{
+	pixel_x = -28;
+	pixel_y = -6;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "KL" = (
@@ -4650,7 +6631,18 @@
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/nostromo)
+"La" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
 "Lf" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -4667,9 +6659,54 @@
 	},
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/nostromo_narcissus)
+"Lm" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Ln" = (
+/obj/structure/toilet{
+	name = "skibidi toilet"
+	},
+/turf/unsimulated/floor/cult,
+/area/station/nostromo)
+"Lo" = (
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Ly" = (
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/nostromo)
@@ -4677,7 +6714,17 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
+/area/station/nostromo)
+"LC" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/nostromo)
 "LG" = (
 /obj/structure/cable/orange{
@@ -4687,6 +6734,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -4703,6 +6753,11 @@
 /obj/machinery/computer/telecomms/monitor{
 	dir = 4
 	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = -28;
+	pixel_y = -5
+	},
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -4713,8 +6768,21 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
+	},
+/area/station/nostromo)
+"LT" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "LU" = (
@@ -4722,6 +6790,9 @@
 	dir = 4;
 	name = "Maintenance";
 	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/nostromo)
@@ -4754,6 +6825,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -4775,14 +6849,37 @@
 /area/station/nostromo)
 "Mj" = (
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Mk" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "brown"
 	},
 /area/station/nostromo)
 "Mt" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkbluecorners"
+	},
+/area/station/nostromo)
+"My" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "MA" = (
@@ -4847,8 +6944,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -4879,6 +6977,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
+"MR" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Na" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/weapon/reagent_containers/glass/bucket,
@@ -4890,11 +6998,22 @@
 	icon_state = "dark"
 	},
 /area/station/nostromo)
+"Ne" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/station/nostromo)
 "Nk" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "Np" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "green"
 	},
@@ -4913,7 +7032,18 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
 /turf/simulated/floor/grid_floor,
+/area/station/nostromo)
+"Nz" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "NC" = (
 /obj/structure/cable/orange{
@@ -4921,6 +7051,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "ND" = (
@@ -4937,6 +7068,13 @@
 /obj/machinery/vending/hydroseeds,
 /turf/simulated/floor{
 	icon_state = "dark"
+	},
+/area/station/nostromo)
+"NK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
 	},
 /area/station/nostromo)
 "NN" = (
@@ -4960,6 +7098,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "NQ" = (
@@ -4967,6 +7108,21 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"NU" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = -28;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -5007,12 +7163,23 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"Ok" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
 "Ol" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Recycle";
 	req_access = list(12)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -5035,6 +7202,28 @@
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
+/area/station/nostromo)
+"Op" = (
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/obj/effect/landmark/nostromo/supply_crate,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/station/nostromo)
+"Os" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "Ov" = (
 /obj/effect/decal/turf_decal{
@@ -5068,6 +7257,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "neutral"
@@ -5085,6 +7277,20 @@
 /obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
+	},
+/area/station/nostromo)
+"OK" = (
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "OM" = (
@@ -5112,6 +7318,13 @@
 	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
+"OX" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Pc" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -5121,16 +7334,68 @@
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "Pf" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
+"Pj" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Ps" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
 "Pt" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
+	},
+/area/station/nostromo)
+"Pu" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Px" = (
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "Py" = (
@@ -5210,6 +7475,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "PX" = (
@@ -5219,8 +7485,25 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"PZ" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = 22
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor{
+	dir = 1;
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
@@ -5247,11 +7530,27 @@
 	},
 /turf/simulated/wall/beige,
 /area/station/nostromo)
+"Ql" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Qo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -5263,6 +7562,33 @@
 	},
 /obj/structure/stool/bed/chair/schair,
 /turf/simulated/shuttle/floor/evac/eng1,
+/area/station/nostromo)
+"Qr" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/nostromo)
+"Qs" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor/plating,
+/area/station/nostromo)
+"Qt" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "neutralfull"
+	},
 /area/station/nostromo)
 "Qu" = (
 /obj/structure/sign/warning/moving_parts{
@@ -5281,6 +7607,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brown"
@@ -5323,6 +7650,25 @@
 	dir = 4;
 	icon_state = "darkbluecorners"
 	},
+/area/station/nostromo)
+"QL" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"QO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "QP" = (
 /obj/structure/cable/yellow{
@@ -5396,6 +7742,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
@@ -5420,6 +7769,12 @@
 	},
 /area/station/nostromo)
 "Rp" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
@@ -5433,6 +7788,24 @@
 	icon_state = "neutralfull"
 	},
 /area/station/nostromo)
+"Rt" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
+"Ry" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blue"
+	},
+/area/station/nostromo)
 "Rz" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Hallway";
@@ -5444,10 +7817,20 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
 	},
+/area/station/nostromo)
+"RD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "RE" = (
 /obj/machinery/telecomms/relay,
@@ -5469,6 +7852,12 @@
 	locked = 1;
 	name = "Vault";
 	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5496,6 +7885,13 @@
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
+/area/station/nostromo)
+"RQ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "RR" = (
 /obj/item/weapon/flora/random,
@@ -5530,11 +7926,25 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/nostromo)
+"RV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "RX" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 1
 	},
 /obj/effect/landmark/start/assistant,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -5578,8 +7988,11 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -5620,6 +8033,8 @@
 	name = "Engineering Storage";
 	req_access = list(12)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "St" = (
@@ -5627,6 +8042,12 @@
 	dir = 4;
 	name = "Unisex Restrooms";
 	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -5638,6 +8059,15 @@
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
+	},
+/area/station/nostromo)
+"SC" = (
+/obj/machinery/alarm{
+	pixel_y = -32;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	icon_state = "whitehall"
 	},
 /area/station/nostromo)
 "SD" = (
@@ -5729,8 +8159,23 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
 /turf/simulated/floor{
 	icon_state = "whitehall"
+	},
+/area/station/nostromo)
+"Td" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "Te" = (
@@ -5750,6 +8195,11 @@
 "Ti" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/latex,
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
@@ -5769,6 +8219,9 @@
 	},
 /obj/structure/closet/radiation,
 /obj/item/clothing/glasses/meson,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -5791,6 +8244,35 @@
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "caution"
+	},
+/area/station/nostromo)
+"Tt" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Tx" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "darkblue"
 	},
 /area/station/nostromo)
 "TA" = (
@@ -5822,6 +8304,23 @@
 	icon_state = "yellow"
 	},
 /area/station/nostromo)
+"TI" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "TL" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -5850,6 +8349,35 @@
 	icon_state = "yellow"
 	},
 /area/station/nostromo)
+"TP" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"TV" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "TW" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -5870,6 +8398,8 @@
 	},
 /area/station/nostromo)
 "Uc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "Stairs2_wide"
 	},
@@ -5882,6 +8412,30 @@
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
+	},
+/area/station/nostromo)
+"Ug" = (
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
+"Ui" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
 	},
 /area/station/nostromo)
 "Uj" = (
@@ -5901,6 +8455,15 @@
 	icon_state = "neutralfull"
 	},
 /area/station/nostromo)
+"Um" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
 "Uq" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
@@ -5919,6 +8482,18 @@
 /obj/item/weapon/bedsheet/yellow,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
+	},
+/area/station/nostromo)
+"Uv" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Recycle";
+	req_access = list(12)
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
 	},
 /area/station/nostromo)
 "Uw" = (
@@ -5948,7 +8523,18 @@
 	name = "Maintenance";
 	req_access = list(12)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/grid_floor,
+/area/station/nostromo)
+"UC" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
 /area/station/nostromo)
 "UJ" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -5960,6 +8546,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "UK" = (
@@ -5985,6 +8572,14 @@
 "UY" = (
 /obj/structure/stool,
 /turf/simulated/floor,
+/area/station/nostromo)
+"UZ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "Vb" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -6016,6 +8611,7 @@
 /area/station/nostromo)
 "Vm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -6048,6 +8644,17 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"Vy" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/nostromo)
 "VA" = (
 /mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
@@ -6061,6 +8668,12 @@
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
+/area/station/nostromo)
+"VH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "VL" = (
 /obj/effect/decal/turf_decal{
@@ -6082,6 +8695,10 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/machinery/alarm{
+	pixel_y = 22;
+	req_one_access = list()
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -6096,16 +8713,50 @@
 	icon_state = "darkbluefull"
 	},
 /area/station/nostromo)
+"VQ" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "VV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/alarm{
+	pixel_y = 22;
+	req_one_access = list()
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
+"VX" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Wa" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor/grass,
+/area/station/nostromo)
+"Wd" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "We" = (
 /obj/structure/cable/orange{
@@ -6114,7 +8765,18 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
+/area/station/nostromo)
+"Wf" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "Wg" = (
 /obj/machinery/conveyor{
@@ -6126,14 +8788,50 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
+"Wh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/nostromo)
 "Wk" = (
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
+	},
+/area/station/nostromo)
+"Wl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
+"Wo" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
 	},
 /area/station/nostromo)
 "Wp" = (
@@ -6141,6 +8839,12 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -6151,6 +8855,12 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -6168,6 +8878,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -6183,6 +8899,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -6190,6 +8912,12 @@
 /area/station/nostromo)
 "Wv" = (
 /obj/structure/stool,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -6240,9 +8968,31 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
+"WG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
 "WI" = (
 /obj/item/weapon/cigbutt,
 /turf/simulated/floor/plating,
+/area/station/nostromo)
+"WL" = (
+/obj/item/device/radio/intercom{
+	name = "Intercom";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "WM" = (
 /turf/simulated/floor{
@@ -6302,6 +9052,12 @@
 /area/station/nostromo)
 "Xe" = (
 /obj/effect/landmark/nostromo/jonesy,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
@@ -6314,8 +9070,29 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6;
+	req_one_access = list()
+	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
+	},
+/area/station/nostromo)
+"Xp" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	icon_state = "blackchoco"
+	},
+/area/station/nostromo)
+"Xq" = (
+/obj/machinery/light/smart,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "Xs" = (
@@ -6334,9 +9111,21 @@
 	},
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/shuttle/nostromo_narcissus)
+"Xw" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Xx" = (
 /obj/machinery/light/smart{
 	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/nostromo)
@@ -6353,11 +9142,16 @@
 	name = "Hydroponics";
 	req_access = list(12)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "greenfull"
 	},
 /area/station/nostromo)
 "XH" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
 /turf/simulated/floor{
 	icon_state = "whitechoco"
 	},
@@ -6417,6 +9211,25 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
+"XU" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/station/nostromo)
+"XY" = (
+/obj/effect/landmark/nostromo/jonesy,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Ya" = (
 /obj/structure/stool/bed/chair/schair{
 	dir = 1
@@ -6441,6 +9254,11 @@
 	name = "(OUT) Space Large Air Vent"
 	},
 /turf/simulated/floor/plating/airless,
+/area/station/nostromo)
+"Yl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "Yt" = (
 /obj/machinery/pipedispenser,
@@ -6505,6 +9323,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
+"YJ" = (
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "YL" = (
 /obj/effect/decal/turf_decal{
 	dir = 4;
@@ -6547,6 +9376,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
@@ -6569,6 +9401,27 @@
 	icon_state = "yellow"
 	},
 /area/station/nostromo)
+"Zn" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/nostromo)
+"Zr" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "Zu" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/cyan,
 /turf/simulated/floor{
@@ -6577,6 +9430,9 @@
 /area/station/nostromo)
 "Zw" = (
 /obj/effect/landmark/nostromo/jonesy,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -6588,6 +9444,8 @@
 	},
 /area/station/nostromo)
 "ZA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -6661,6 +9519,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -6678,6 +9539,17 @@
 	icon_state = "whitecorner"
 	},
 /area/station/nostromo)
+"ZM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
+/area/station/nostromo)
 "ZN" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
@@ -6687,11 +9559,19 @@
 	},
 /area/station/nostromo)
 "ZQ" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 22
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/turf/simulated/floor/whitegreed,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_y = -32;
+	req_one_access = list()
+	},
+/turf/simulated/floor{
+	icon_state = "neutral"
+	},
 /area/station/nostromo)
 "ZR" = (
 /turf/simulated/wall/r_wall/beige,
@@ -6730,6 +9610,12 @@
 	dir = 4;
 	name = "Dormitory";
 	req_access = list(12)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "neutralfull"
@@ -27403,8 +30289,8 @@ hg
 hg
 hg
 ZR
-Py
-Me
+cI
+sF
 ZR
 hg
 hg
@@ -27660,7 +30546,7 @@ hg
 hg
 hg
 MP
-JD
+nA
 Me
 MP
 hg
@@ -27671,7 +30557,7 @@ ZR
 Ka
 Vs
 zd
-OU
+Ej
 cH
 eU
 ZR
@@ -27917,7 +30803,7 @@ hg
 hg
 hg
 MP
-JD
+nA
 Me
 MP
 hg
@@ -28174,7 +31060,7 @@ hg
 hg
 hg
 MP
-JD
+nA
 Me
 MP
 hg
@@ -28431,7 +31317,7 @@ hg
 hg
 hg
 ZR
-JD
+nA
 Me
 ZR
 hg
@@ -28688,7 +31574,7 @@ hg
 hg
 hg
 ZR
-JD
+nA
 Me
 ZR
 hg
@@ -28945,7 +31831,7 @@ hg
 hg
 ZR
 ZR
-JD
+nA
 Me
 ZR
 ZR
@@ -28955,10 +31841,10 @@ ZS
 ZS
 nc
 Zx
-dI
-OU
+yl
+Xp
 az
-eU
+wY
 ZS
 ZS
 ZR
@@ -29202,8 +32088,8 @@ ZR
 ZR
 ZR
 ZS
-JD
-QR
+PZ
+FR
 ZS
 ZR
 ZR
@@ -29459,7 +32345,7 @@ ZR
 ZS
 ZS
 ZS
-JD
+iY
 Me
 ZS
 ZS
@@ -29716,7 +32602,7 @@ ZR
 ZS
 ZS
 ZS
-JD
+iY
 Me
 ZS
 ZS
@@ -29734,10 +32620,10 @@ ZS
 ZS
 ZS
 Je
-fo
+Ne
 fo
 Yd
-fo
+AJ
 WU
 bd
 ZS
@@ -29973,7 +32859,7 @@ ZR
 ZS
 ZS
 ZS
-JD
+iY
 Me
 ZS
 ZS
@@ -29992,9 +32878,9 @@ ZS
 ZS
 fT
 zc
-zc
+zv
 JJ
-zc
+Af
 WM
 Zi
 ZS
@@ -30230,7 +33116,7 @@ ZR
 ZS
 ZS
 ZS
-JM
+mT
 Mf
 ZS
 ZS
@@ -30487,25 +33373,25 @@ ZR
 ZS
 ZS
 ZS
-JD
-Gd
+iY
+eD
 Ub
 DU
-DO
+uq
 DO
 Go
 DO
-DO
+lR
 Fk
-Ba
-gx
-Gd
-DO
-DO
-Go
-DO
-Pt
-Pt
+li
+uf
+fa
+Wf
+TV
+CJ
+Wf
+sX
+Ry
 Rp
 ZS
 ZS
@@ -30744,26 +33630,26 @@ ZR
 ZS
 ZS
 ZS
-Pz
-DQ
+Td
+Ql
 Uc
-DQ
-DQ
-DQ
-Gw
-DQ
-DQ
-FH
+iW
+Ab
+cU
+rR
+cU
+Ab
+Kp
 MJ
+rq
+da
 DQ
-FH
-DQ
-DQ
+Zr
 Gw
 DQ
-DQ
+xv
 Rn
-Gd
+gN
 Oa
 ZS
 ZS
@@ -31004,7 +33890,7 @@ ZS
 ZS
 ZS
 ZS
-WR
+eM
 WR
 ZS
 ZS
@@ -31012,16 +33898,16 @@ ZS
 ZS
 ZS
 EZ
-HW
+dY
 ZS
 GF
-GB
+mK
 ZS
 ZS
 ZS
-Pz
-Rn
-QR
+iz
+AT
+tG
 ZS
 ZS
 ZS
@@ -31261,7 +34147,7 @@ ZS
 ZS
 QT
 Ul
-Fg
+fW
 FZ
 pJ
 ZS
@@ -31272,12 +34158,12 @@ XJ
 LU
 ZS
 oT
+WG
 oT
-oT
-Iq
+ie
 ZS
 ZS
-JD
+iY
 Gd
 FZ
 ZS
@@ -31513,32 +34399,32 @@ hg
 ZR
 ZS
 ZS
-oT
-oT
-GB
-Fg
-DO
+Ps
+iE
+ig
+LT
+Pf
 Xe
-Me
+sj
 An
 ZS
 oT
 oT
 IX
 EZ
-HW
+dY
 ZS
-oT
-oT
-oT
-oT
-oT
+Ps
+rM
+iE
+iE
+hE
 IX
-JD
+iY
 gx
 Me
 ZS
-oT
+vz
 oT
 dE
 ZS
@@ -31769,33 +34655,33 @@ hg
 hg
 ZR
 ZS
-HG
-oT
+lX
+WG
 oT
 IX
 Pz
-DQ
+xv
 DQ
 NX
 Yy
 ZS
-oT
-oT
-GB
-EZ
-HW
+Ps
+iE
+ig
+pc
+xs
+ZS
+WG
+ZS
 ZS
 oT
-ZS
-ZS
-oT
-oT
-GB
-JD
-gx
-Me
+Os
+ig
+Px
+uf
+ka
 Sq
-oT
+iN
 IE
 ZS
 ZS
@@ -32027,7 +34913,7 @@ hg
 ZR
 ZS
 oT
-oT
+WG
 ZS
 ZS
 QV
@@ -32036,23 +34922,23 @@ Xm
 ZT
 ZS
 ZS
-oT
+WG
 oT
 ZS
 sT
-HW
+dY
 ZS
-oT
+WG
 HR
 ZS
 ZS
-oT
+WG
 ZS
-JD
-gx
+iY
+jL
 Me
 ZS
-oT
+uB
 oT
 Gb
 ZS
@@ -32284,7 +35170,7 @@ hg
 ZR
 ZS
 oT
-oT
+WG
 oT
 ZS
 ZS
@@ -32293,19 +35179,19 @@ ZS
 ZS
 ZS
 PR
-oT
-oT
-ZS
-EZ
-HW
-GB
-oT
+WG
 oT
 ZS
-ZS
+qN
+qa
+ig
+dU
 oT
 ZS
-JD
+ZS
+WG
+ZS
+iY
 LZ
 NX
 ZS
@@ -32541,28 +35427,28 @@ hg
 ZR
 ZS
 oT
-oT
-oT
-oT
-oT
-oT
-oT
+IV
+iE
+iE
+iE
+iE
+hE
 ZS
 ZS
-oT
-oT
+Ps
+RD
 oT
 ZS
 EZ
-HW
+dY
 IX
-oT
-oT
-ZS
-oT
+WG
 oT
 ZS
-JM
+oT
+WG
+ZS
+mT
 Mf
 ZS
 ZS
@@ -32803,23 +35689,23 @@ ZS
 ZS
 ZS
 oT
+WG
 oT
 oT
-oT
-oT
+WG
 oT
 ZS
 ZS
 XJ
 LU
 ZS
-oT
-oT
-oT
-oT
-HG
+IV
+iE
+zB
+iE
+jp
 ZS
-JD
+iY
 Me
 ZS
 ZS
@@ -33060,23 +35946,23 @@ nC
 PD
 ZS
 ZS
+WG
 oT
 oT
-oT
-oT
+WG
 ZS
 ZS
 ZS
 EZ
-HW
+dY
 ZS
 ZS
 ZS
+WG
 oT
-oT
 ZS
 ZS
-JD
+iY
 Me
 ZS
 ZS
@@ -33317,24 +36203,24 @@ Jp
 PE
 PD
 ZS
+WG
 oT
 oT
-oT
-oT
+WG
 ZS
 dO
 EG
 LG
-DO
+Wd
 DO
 ww
 ZS
-oT
+WG
 oT
 ZS
 ZS
-JD
-Me
+ce
+Fj
 ZS
 ZS
 ZS
@@ -33572,28 +36458,28 @@ Jp
 fV
 fV
 Jp
-Rk
+SC
 ZS
+WG
 oT
 oT
-oT
-oT
+WG
 ZS
 VM
 gx
 Ba
 tR
 gx
-QR
+kg
 ZS
-oT
+WG
 oT
 ZS
 ZS
-Py
-Me
-GB
-oT
+Pj
+ka
+ig
+hE
 ZS
 ZS
 ZS
@@ -33831,26 +36717,26 @@ fV
 Jp
 Rk
 ZS
-oT
-oT
-oT
-oT
-GB
-JD
-gx
+IV
+iE
+iE
+rM
+ig
+Gq
+Ex
 vw
 HM
 gx
 Me
 ZS
-GB
+mK
 GF
 ZS
 Fg
-Fk
+ap
 Me
 IX
-oT
+Um
 oT
 ZS
 ZS
@@ -34098,16 +36984,16 @@ gQ
 AL
 kT
 RX
-Gd
-DO
-DO
-DO
-DO
-Fk
-LZ
+oX
+Wf
+jP
+Wf
+ul
+rN
+Co
 NX
 ZS
-oT
+Um
 oT
 ZS
 ZS
@@ -34350,7 +37236,7 @@ ZS
 ZS
 ZS
 ZS
-JD
+AO
 gM
 ZK
 GV
@@ -34359,12 +37245,12 @@ LZ
 DQ
 DQ
 DQ
-DQ
+Xw
 DQ
 NX
 ZS
 ZS
-oT
+Um
 oT
 ZS
 ZS
@@ -34601,14 +37487,14 @@ ZS
 ZS
 PO
 Rn
-Gd
-DO
-DO
-DO
-DO
+xE
+sB
+sB
+cc
+Wf
 gv
-Fk
-gx
+rN
+Ex
 sL
 hl
 gx
@@ -34621,7 +37507,7 @@ ZS
 ZS
 ZS
 Nk
-oT
+Um
 GQ
 ZS
 ZS
@@ -34858,27 +37744,27 @@ ZS
 ZS
 ZS
 Pz
-DQ
+xv
 FH
 DQ
-DQ
+Xw
 DQ
 gk
 Rn
 gx
-Ba
-gx
+Bc
+Wh
 gx
 Me
 IX
 oT
 oT
 oT
-Iq
+ie
 ZS
 ZS
 oT
-oT
+Um
 ZS
 ZS
 ZS
@@ -35124,18 +38010,18 @@ ZS
 HO
 FH
 aj
-LZ
-FH
-NX
-GB
-oT
-oT
-oT
-oT
-oT
-oT
-oT
-oT
+fh
+Kp
+UZ
+ig
+iE
+iE
+iE
+zB
+iE
+iE
+iE
+RD
 ZS
 ZS
 ZS
@@ -35373,7 +38259,7 @@ Nk
 oT
 oT
 oT
-Iq
+ie
 ZS
 oT
 oT
@@ -35388,7 +38274,7 @@ ZS
 ZS
 ZS
 oT
-oT
+WG
 oT
 ZS
 ZS
@@ -35635,7 +38521,7 @@ oT
 oT
 oT
 oT
-HG
+lX
 ZS
 zJ
 Me
@@ -35645,7 +38531,7 @@ IS
 Sk
 ZS
 ZS
-oT
+WG
 ZS
 ZS
 Wa
@@ -35891,18 +38777,18 @@ ZS
 ZS
 ZS
 oT
-Ec
+oT
 oT
 ZS
-zJ
-Me
+Tt
+ka
 rE
-Rk
-vs
+tn
+wg
 Hg
 jf
 ZS
-oT
+WG
 PR
 ZS
 SD
@@ -36152,14 +39038,14 @@ oT
 oT
 IX
 zJ
-Me
+sj
 ZS
 Dj
-vs
-vs
+rj
+FK
 IM
 ZS
-oT
+WG
 oT
 IX
 Gg
@@ -36401,22 +39287,22 @@ ZS
 ZS
 Rr
 Fg
-EG
-FZ
+XY
+bU
 Rr
 ZS
 oT
-oT
-GB
-zJ
+Ps
+ig
+hc
 QR
 ZS
 Ta
-vs
+ia
 dN
-IM
-GB
-oT
+hi
+ig
+dU
 oT
 ZS
 dw
@@ -36659,21 +39545,21 @@ ZS
 RO
 JD
 Xz
-Me
+tk
 Hc
 ZS
 ZS
-oT
+WG
 ZS
 zJ
-Me
+mP
 ZS
 bt
 vs
-vs
+HE
 IM
 IX
-oT
+WG
 oT
 ZS
 oT
@@ -36916,11 +39802,11 @@ ZS
 RP
 JD
 XP
-Me
-Ur
-GB
-oT
-oT
+xA
+yu
+ig
+iE
+RD
 ZS
 zJ
 Me
@@ -36930,7 +39816,7 @@ fj
 Ti
 ok
 ZS
-oT
+WG
 oT
 ZS
 ZS
@@ -37170,10 +40056,10 @@ oT
 oT
 oT
 ZS
-RP
+fd
 JD
 XT
-Me
+ZM
 Ur
 IX
 oT
@@ -37187,7 +40073,7 @@ ZS
 ZS
 ZS
 ZS
-oT
+WG
 oT
 ZS
 ZS
@@ -37429,25 +40315,25 @@ ZS
 ZS
 RR
 Pz
-DQ
-NX
+Ap
+xn
 er
 ZS
 ZS
 ZS
 ZS
-zJ
-Me
-GB
-oT
-oT
-oT
-oT
-oT
-oT
-oT
-oT
-If
+Tt
+ka
+ig
+iE
+iE
+iE
+iE
+iE
+rM
+iE
+iE
+JV
 ZS
 ZS
 ZS
@@ -37687,7 +40573,7 @@ ZS
 Rr
 Ut
 zP
-Ur
+Qt
 eC
 ZS
 ZS
@@ -37699,12 +40585,12 @@ IX
 oT
 oT
 oT
-HG
+lX
 oT
 oT
 oT
 oT
-oT
+WG
 ZS
 ZS
 ZS
@@ -37950,8 +40836,8 @@ ZS
 ZS
 ZS
 ZS
-zJ
-Me
+TI
+sF
 ZS
 ZS
 ZS
@@ -37961,7 +40847,7 @@ ZS
 ZS
 ZS
 oT
-oT
+WG
 oT
 ZS
 ZS
@@ -38196,17 +41082,17 @@ HW
 HW
 HW
 Ly
-HW
-HW
-HW
+bR
+bR
+bR
 UA
-HW
-Fg
-DO
-DO
-DO
-Go
-DO
+RQ
+jJ
+qt
+KK
+Wf
+CJ
+Wf
 Ic
 Gd
 DO
@@ -38214,11 +41100,11 @@ Go
 DO
 DO
 uq
-DU
+Lo
 FZ
 ZS
 ZS
-oT
+WG
 oT
 ZS
 ZS
@@ -38452,30 +41338,30 @@ ZS
 HW
 HW
 HW
-HW
+dY
 Nv
 PT
 PT
 UJ
-PT
+ac
 Oy
-Bi
-Bi
+Pu
+on
 Bi
 eG
-Bi
+bJ
 Sj
 iW
-TA
+cU
 rR
-TA
-TA
-TA
+cU
+cU
+Ab
 il
 re
 FZ
 ZS
-oT
+WG
 oT
 ZS
 ZS
@@ -38709,8 +41595,8 @@ ZS
 ZS
 ZS
 ZS
-HW
-NC
+dY
+EZ
 ZS
 ZS
 ZS
@@ -38722,7 +41608,7 @@ ZS
 ZS
 ZS
 GF
-GB
+mK
 ZS
 ZS
 ZS
@@ -38730,9 +41616,9 @@ ZS
 ZS
 Pz
 AT
-Me
+kG
 ZS
-oT
+WG
 oT
 ZS
 ZS
@@ -38966,20 +41852,20 @@ ZS
 ZS
 ZS
 ZS
-HW
-NC
+dY
+EZ
 ZS
 RS
 UK
 Yw
 Om
-UK
+dq
 IF
 ZS
 ZS
-gm
+BX
 oT
-oT
+WG
 ZS
 ZS
 ZS
@@ -38989,7 +41875,7 @@ ZS
 iY
 OM
 ZS
-oT
+WG
 oT
 ZS
 zk
@@ -39223,20 +42109,20 @@ ZS
 ZS
 ZS
 ZS
-HW
-NC
+dY
+EZ
 ZS
 ZS
 ZS
 ZS
 tt
 xF
-UK
+DH
 IX
 oT
 oT
-oT
-oT
+Ps
+RD
 ZS
 ZS
 ZS
@@ -39246,7 +42132,7 @@ ZS
 iY
 Me
 ZS
-GB
+mK
 GF
 ZS
 Kv
@@ -39480,19 +42366,19 @@ ZS
 ZS
 ZS
 ZS
-HW
+dY
 We
 ZS
 RU
 UP
 YA
 UK
-UK
-UK
-GB
-oT
-oT
-oT
+Qr
+NK
+ig
+zB
+iE
+RD
 ZS
 ZS
 ZS
@@ -39500,11 +42386,11 @@ ZS
 ZS
 ZS
 ZS
-iY
+fU
 nm
 mE
-mE
-mE
+tW
+QL
 NN
 PF
 To
@@ -39709,7 +42595,7 @@ mi
 ZS
 ZS
 ZS
-hS
+sr
 gx
 gH
 gx
@@ -39737,8 +42623,8 @@ ZS
 If
 oT
 IX
-HW
-NC
+dY
+EZ
 ZS
 ZS
 ZS
@@ -39747,7 +42633,7 @@ Uw
 vN
 ZS
 ZS
-oT
+Um
 oT
 ZS
 ZS
@@ -39760,8 +42646,8 @@ ZS
 Ff
 aE
 TA
-TA
-TA
+EO
+aN
 NN
 Aj
 jA
@@ -39992,9 +42878,9 @@ GE
 GM
 GM
 Ik
-oT
-GB
-HW
+iE
+ig
+Yl
 NC
 ZS
 ZS
@@ -40004,7 +42890,7 @@ ZS
 ZS
 ZS
 oT
-oT
+Um
 oT
 ZS
 GN
@@ -40018,7 +42904,7 @@ sh
 Ga
 ZS
 GF
-GB
+mK
 ZS
 aM
 mW
@@ -40221,7 +43107,7 @@ gH
 gx
 of
 pB
-sq
+Op
 tK
 vZ
 gx
@@ -40251,17 +43137,17 @@ ZS
 Hj
 oT
 ZS
-HW
-NC
-GB
-oT
-oT
-HG
+so
+et
+ig
+iE
+hE
+lX
 ZS
 oT
 oT
-oT
-oT
+Ps
+RD
 oT
 ZS
 mw
@@ -40275,7 +43161,7 @@ kk
 Me
 ZS
 oT
-oT
+WG
 ZS
 xw
 Uj
@@ -40508,17 +43394,17 @@ oT
 Hj
 oT
 ZS
-HW
-NC
+dY
+EZ
 IX
 oT
-oT
-oT
-oT
-oT
-oT
-oT
-Iq
+IV
+iE
+iE
+iE
+iE
+dU
+ie
 ZS
 ZS
 ZS
@@ -40532,7 +43418,7 @@ iY
 Me
 ZS
 oT
-oT
+WG
 ZS
 cj
 TW
@@ -40763,10 +43649,10 @@ ZS
 ZS
 oT
 Hj
-HG
+lX
 ZS
 Lz
-NC
+EZ
 ZS
 ZS
 ZS
@@ -40774,7 +43660,7 @@ GF
 ZS
 ZS
 ZS
-oT
+Um
 ZS
 ZS
 yi
@@ -40789,7 +43675,7 @@ mT
 Mf
 ZS
 oT
-oT
+WG
 ZS
 Yu
 ix
@@ -41022,8 +43908,8 @@ oT
 Hj
 ZS
 ZS
-HW
-NC
+dY
+EZ
 ZS
 Sa
 UT
@@ -41031,7 +43917,7 @@ gA
 rQ
 ZS
 ZS
-oT
+Um
 ZS
 Iw
 PG
@@ -41046,7 +43932,7 @@ iY
 Me
 ZS
 oT
-HU
+QO
 ZS
 ZS
 SS
@@ -41279,8 +44165,8 @@ oT
 Hj
 ZS
 ZS
-HW
-NC
+dY
+EZ
 ZS
 Si
 UY
@@ -41288,7 +44174,7 @@ gH
 SG
 ZS
 HR
-oT
+Um
 ZS
 FA
 Rk
@@ -41303,7 +44189,7 @@ iY
 Me
 ZS
 HU
-HU
+QO
 oT
 ZS
 ZS
@@ -41536,16 +44422,16 @@ He
 In
 ZS
 ZS
-HW
-NC
+dY
+EZ
 ZS
 Sl
 Vb
 gA
 Jv
 ZS
-oT
-oT
+Ps
+RD
 ZS
 Ck
 PE
@@ -41560,7 +44446,7 @@ iY
 Me
 ZS
 Ha
-HU
+QO
 HU
 oT
 oT
@@ -41794,14 +44680,14 @@ oT
 ZS
 ZS
 LU
-NO
+XJ
 ZS
 So
 Ve
 YD
 is
 ZS
-oT
+Um
 oT
 ZS
 ZS
@@ -41817,11 +44703,11 @@ IR
 Me
 ZS
 ZS
-oT
-oT
-oT
-oT
-oT
+IV
+iE
+iE
+iE
+hE
 PR
 ZS
 ZS
@@ -42050,15 +44936,15 @@ Hj
 oT
 ZS
 ZS
-HW
-NC
+dY
+EZ
 ZS
 ZS
 ZS
 ZS
 ZS
 ZS
-GB
+mn
 GF
 ZS
 LI
@@ -42078,7 +44964,7 @@ ZS
 ZS
 ZS
 oT
-oT
+WG
 oT
 ZS
 ZS
@@ -42307,35 +45193,35 @@ Hj
 oT
 ZS
 ZS
-Fg
+tl
 NQ
 PX
 PX
+Lm
 PX
 PX
-PX
-PX
-PX
+Ug
+TP
 PX
 Rz
-PX
+xV
 GJ
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
-Pf
+Wf
+Wf
+ul
+Wf
+Wf
+TV
+Wf
 sy
-Gd
-DO
-DO
-DO
-FZ
+oX
+Pf
+Wf
+WL
+hf
 ZS
 ZS
-oT
+WG
 HU
 ZS
 ZS
@@ -42564,37 +45450,37 @@ Hj
 ZS
 ZS
 Fg
-Fk
+ap
 NW
+Hx
 DQ
+GH
+OK
 DQ
-DQ
-FH
-DQ
-DQ
+xv
 DQ
 DQ
 Gw
+uF
+cN
+qd
 DQ
-Wr
+Id
 DQ
-DQ
-FH
-DQ
-DQ
-DQ
-DQ
-DQ
+hM
+Zr
 DQ
 DQ
+DQ
+xv
 FH
 Rn
-Gd
+gN
 FZ
 ZS
-HU
-HU
-oT
+Wl
+HQ
+hE
 ZS
 ZR
 hg
@@ -42793,7 +45679,7 @@ ot
 qb
 su
 su
-mu
+UC
 ZS
 cq
 gx
@@ -42820,38 +45706,38 @@ oT
 Hj
 ZS
 ZS
-Py
-LZ
+rk
+yX
 NX
 ZS
 GF
-GB
+mn
 ZS
 ZS
 ZS
 ZS
 ZS
 ZS
-HW
-NC
+VH
+DK
 ZS
 ZS
 ZS
 ZS
 ZS
-GB
+mK
 GF
 ZS
 ZS
 ZS
 ZS
 Pz
-Rn
+AT
 Me
 ZS
 oT
 HU
-HU
+QO
 ZS
 ZR
 hg
@@ -43078,37 +45964,37 @@ Hj
 ZS
 ZS
 JD
-Me
+ZM
 ZS
 ZS
 oT
-oT
+Um
 oT
 oT
 oT
 HG
 ZS
 ZS
-LU
+AW
 NO
 ZS
 ZS
 Iq
 oT
 oT
-oT
+WG
 oT
 oT
 oT
 GQ
 ZS
 ZS
-JM
+mT
 Mf
 ZS
 ZS
 ZS
-oT
+WG
 ZS
 ZR
 ZR
@@ -43335,37 +46221,37 @@ Hj
 ZS
 ZS
 JD
-Me
+ZM
 ZS
 ZS
 HG
-oT
-oT
-oT
-oT
-oT
-oT
-ZS
-HW
-NC
-ZS
-oT
-oT
-oT
-oT
-oT
-oT
-oT
-oT
-oT
+IV
+iE
+iE
+iE
+hE
 oT
 ZS
-JD
+VH
+DK
+ZS
+oT
+Ps
+iE
+iE
+rM
+iE
+iE
+iE
+hE
+oT
+ZS
+iY
 Me
 ZS
 ZS
 gm
-oT
+WG
 ZS
 ZS
 ZR
@@ -43592,37 +46478,37 @@ Hj
 ZS
 ZS
 JM
-Mf
+Gt
 ZS
 ZS
 ZS
 ZS
 ZS
 ZS
+ZS
+Um
+oT
+ZS
+VH
+DK
 ZS
 oT
-oT
-ZS
-HW
-NC
-ZS
-oT
-oT
+WG
 ZS
 ZS
 GF
 ZS
 ZS
 oT
-oT
-oT
-GB
-JD
+IV
+iE
+ig
+kk
 Me
 ZS
 ZS
 oT
-oT
+WG
 ZS
 ZS
 ZR
@@ -43849,7 +46735,7 @@ Hj
 ZS
 ZS
 JD
-Me
+ZM
 ZS
 Qg
 SN
@@ -43857,14 +46743,14 @@ Vj
 YH
 oC
 ZS
-oT
+Um
 oT
 ZS
-HW
-NC
-GB
-oT
-oT
+Rt
+wE
+ig
+iE
+RD
 ZS
 aK
 gA
@@ -43874,12 +46760,12 @@ ZS
 oT
 oT
 IX
-JD
-Me
+fU
+sj
 ZS
 ZS
-oT
-oT
+Ps
+RD
 ZS
 ZS
 ZR
@@ -44106,7 +46992,7 @@ Hj
 ZS
 ZS
 JD
-Me
+ZM
 ZS
 Qh
 ZS
@@ -44114,11 +47000,11 @@ Vo
 YL
 dl
 ZS
-oT
+Um
 ZS
 ZS
-Lz
-NC
+yg
+DK
 IX
 oT
 HG
@@ -44131,11 +47017,11 @@ ZS
 ZS
 ZS
 ZS
-JD
+iY
 QR
 ZS
 ZS
-oT
+WG
 oT
 ZS
 ZS
@@ -44360,22 +47246,22 @@ ZS
 ZS
 oT
 Hj
-Iq
+ie
 ZS
 JD
 Mj
 Ol
 Qo
-jt
+pY
 wP
 YN
 oC
 ZS
-oT
+Um
 Iq
 ZS
-HW
-NC
+VH
+DK
 ZS
 ZS
 ZS
@@ -44388,11 +47274,11 @@ ZS
 ZS
 ZS
 ZS
-JD
-Me
+iY
+Nz
 ZS
 ZS
-HU
+QO
 oT
 ZS
 ZS
@@ -44619,8 +47505,8 @@ oT
 Hj
 oT
 IX
-JD
-QR
+fz
+Xq
 ZS
 Qu
 gx
@@ -44628,11 +47514,11 @@ mu
 YN
 SV
 ZS
-oT
+Um
 oT
 IX
-HW
-NC
+VH
+DK
 ZS
 ZS
 ZS
@@ -44645,11 +47531,11 @@ ZS
 ZS
 ZS
 ZS
-JD
+iS
 Me
 ZS
 HU
-HU
+QO
 oT
 ZS
 ZS
@@ -44877,19 +47763,19 @@ Hr
 IB
 IZ
 Ki
-Mj
-Ol
+FW
+Uv
 Qx
-mY
+gj
 wZ
 YN
 oC
 ZS
-oT
-oT
-GB
-HW
-NC
+Os
+iE
+ig
+EH
+Hb
 ZS
 ZS
 ZS
@@ -44902,12 +47788,12 @@ ZS
 ZS
 ZS
 ZS
-JD
+iY
 Me
 IX
 oT
-HU
-Iq
+QO
+Qs
 ZS
 ZS
 ZR
@@ -45131,10 +48017,10 @@ ZS
 ZS
 ZS
 oT
-oT
+WG
 ZS
 JD
-Me
+ZQ
 ZS
 Qz
 ZS
@@ -45142,12 +48028,11 @@ VL
 YO
 oT
 ZS
+Um
 oT
-oT
 ZS
-HW
-We
-ZS
+VH
+aZ
 ZS
 ZS
 ZS
@@ -45159,11 +48044,12 @@ ZS
 ZS
 ZS
 ZS
-Py
-Me
-GB
-oT
-oT
+ZS
+Pj
+ka
+ig
+iE
+dU
 ZS
 ZS
 ZS
@@ -45184,7 +48070,7 @@ xm
 zQ
 Xx
 cZ
-ZQ
+Ns
 RE
 ZR
 ZR
@@ -45388,10 +48274,10 @@ ZS
 ZS
 ZS
 oT
-oT
+WG
 ZS
-JD
-Me
+AO
+ZM
 ZS
 QI
 SW
@@ -45399,28 +48285,28 @@ Wg
 YQ
 ZS
 ZS
-oT
+Um
 oT
 ZS
-HW
-NC
-HW
-HW
-HW
-HW
-HW
-HW
-Ly
-HW
-HW
-HW
-UA
-HW
-JD
-Me
+VH
+nk
+bR
+bR
+bR
+bR
+La
+bR
+Hk
+bR
+bR
+bR
+yZ
+bR
+KJ
+sF
 ZS
 oT
-oT
+WG
 ZS
 ZS
 ZS
@@ -45621,7 +48507,7 @@ rx
 ZS
 ZS
 ZS
-hS
+sr
 gx
 Bg
 BD
@@ -45644,40 +48530,40 @@ ZR
 ZS
 ZS
 ZS
-HG
+ZS
+WG
+ZS
+OX
+VQ
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+oT
+Um
 oT
 ZS
-JD
-Me
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-oT
-oT
-oT
-ZS
-HW
-NC
-HW
-HW
+Rt
+yO
+dv
+dv
 IN
-HW
-HW
-HW
-HW
-HW
-HW
-HW
-UA
-HW
-JD
+dv
+Zn
+dv
+dv
+dv
+dv
+dv
+eR
+dv
+MR
 Me
 ZS
 oT
-oT
+WG
 oT
 ZS
 ZS
@@ -45697,7 +48583,7 @@ ZS
 ZS
 ZS
 no
-KP
+MC
 Ky
 ZS
 ZS
@@ -45902,27 +48788,27 @@ ZS
 ZS
 ZS
 oT
-oT
+WG
 ZS
 JD
-Me
-GB
-oT
-oT
+IK
+ig
+iE
+hE
 oT
 YW
 oT
 oT
-oT
+Um
 HG
 ZS
-HW
-NC
+VH
+DK
 ZS
 ZS
 ZS
 GF
-GB
+mK
 ZS
 ZS
 ZS
@@ -45930,11 +48816,11 @@ ZS
 ZS
 ZS
 ZS
-JD
+iY
 Me
 ZS
-HG
-oT
+lX
+WG
 HU
 ZS
 ZS
@@ -45953,9 +48839,9 @@ ZS
 ZS
 ZS
 ZS
-QS
-KP
-Ky
+Ui
+un
+Tx
 ZS
 ZS
 ZS
@@ -46159,27 +49045,27 @@ ZS
 ZS
 ZS
 oT
-oT
+WG
 ZS
 Py
-Me
+ZM
 IX
 oT
-oT
-oT
-oT
-oT
-oT
-oT
+IV
+iE
+iE
+iE
+iE
+RD
 ZS
 ZS
-LU
+AW
 NO
 ZS
 ZS
 HG
 oT
-oT
+WG
 ZS
 ZS
 ZS
@@ -46187,11 +49073,11 @@ ZS
 ZS
 ZS
 ZS
-JM
+mT
 Mf
 ZS
 ZS
-oT
+WG
 HU
 ZS
 ZS
@@ -46211,7 +49097,7 @@ ZS
 ZS
 ZS
 QS
-KP
+wl
 Ky
 ZS
 ZS
@@ -46397,7 +49283,7 @@ gH
 gG
 gA
 gG
-gH
+Bu
 mu
 ZS
 ZS
@@ -46406,7 +49292,7 @@ ZS
 ZS
 ZS
 ZS
-Fg
+ql
 DO
 FZ
 ZS
@@ -46416,39 +49302,39 @@ ZS
 ZS
 ZS
 GF
-GB
+mK
 ZS
 JD
+ZM
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+VH
+DK
+ZS
+Ps
+iE
+iE
+RD
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+iY
 Me
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-HW
-NC
-ZS
-oT
-oT
-oT
-oT
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-JD
-Me
-ZS
-ZS
-GB
+mK
 GF
 ZS
 ZS
@@ -46457,7 +49343,7 @@ ZS
 ZS
 Fg
 DO
-FZ
+tV
 ZS
 ZS
 ZS
@@ -46654,44 +49540,44 @@ gx
 gH
 gx
 gH
-gx
-mu
-DF
+Vy
+Mk
+vX
 DI
-DO
-DO
-DO
-DO
-EG
-Fk
-gx
-Gd
-DO
-Go
-DO
-DO
-DO
-DO
-DO
-DO
-DO
-Fk
-Gd
-DO
-Go
-DO
-DO
-DO
-DU
-DO
-DO
-DO
-DO
-DO
+Wf
+Eo
+Wf
+WL
+Wf
+rN
+uf
+oX
+Wf
+CJ
+Wf
+TV
+Pf
+Wf
+Wf
+jP
+Wf
+we
+Wo
+Wf
+CJ
+Wf
+TV
+Pf
+YJ
+Wf
+TV
+Wf
+ul
+qW
 by
 ZS
+WG
 oT
-oT
 ZS
 ZS
 ZS
@@ -46701,31 +49587,31 @@ ZS
 ZS
 ZS
 ZS
-JD
+iY
 Gd
+Gy
 DO
+VX
 DO
-DO
-DO
-DU
-DO
+Lo
+uq
 DO
 Go
 DO
 Fk
 gx
 Gd
+Kx
 DO
 DO
-DO
-DO
+Jx
 DO
 DO
 DU
+Gy
+NU
 DO
-DO
-DO
-DO
+RV
 FZ
 ZS
 ZS
@@ -46911,28 +49797,28 @@ zn
 gx
 gH
 gx
-gH
+qM
 mu
 DF
 ep
 DQ
-DQ
-DQ
+xv
+Hx
 FH
 DQ
 DQ
-DQ
+cT
 DQ
 DQ
 Gw
 DQ
-DQ
-DQ
+Zr
+xv
 FH
+qd
 DQ
 DQ
-DQ
-DQ
+Xw
 DQ
 DQ
 Gw
@@ -46941,13 +49827,13 @@ Wk
 YY
 Bi
 Bi
+fi
 Bi
-Bi
-Bi
+wt
 os
 mf
 ZS
-oT
+WG
 ZS
 ZS
 Bq
@@ -46958,31 +49844,31 @@ ZS
 ZS
 ZS
 ZS
-JD
-LZ
-DQ
-DQ
-DQ
-DQ
-DQ
-DQ
-DQ
-Gw
-DQ
-DQ
-DQ
-DQ
-DQ
-FH
-DQ
-DQ
-DQ
-DQ
-DQ
-DQ
-DQ
-Rn
-gx
+Hv
+fh
+My
+cU
+CE
+cU
+cU
+Ab
+cU
+rR
+cU
+cU
+cU
+cU
+Ab
+hL
+iW
+cU
+cU
+cU
+cU
+My
+cU
+il
+LC
 Me
 ZS
 ZS
@@ -47183,7 +50069,7 @@ EJ
 EJ
 ZS
 ZS
-GB
+mK
 GF
 ZS
 ZS
@@ -47198,13 +50084,13 @@ Wp
 Me
 ZS
 ZS
-GB
+mK
 GF
 ZS
-JD
+iY
 Me
 ZS
-oT
+WG
 ZS
 ZS
 Na
@@ -47213,9 +50099,9 @@ pI
 sb
 ZS
 Fg
+qC
 DO
-DO
-Fk
+ap
 Me
 ZS
 ZS
@@ -47231,7 +50117,7 @@ ZS
 EJ
 EJ
 ZS
-GB
+mK
 GF
 ZS
 ZS
@@ -47239,7 +50125,7 @@ ZS
 ZS
 ZS
 Pz
-DQ
+Zr
 NX
 ZS
 ZS
@@ -47440,8 +50326,8 @@ ZS
 ZS
 ZS
 ZS
+WG
 oT
-oT
 ZS
 ZS
 ZS
@@ -47450,18 +50336,18 @@ ZS
 ZS
 ZS
 ZS
-JD
+dQ
 Wp
 Me
 ZS
-HG
-oT
+yV
+WG
 oT
 ZS
-JD
-Me
+fU
+sj
 ZS
-oT
+WG
 PR
 ZS
 Fb
@@ -47469,10 +50355,10 @@ oM
 CY
 Np
 XG
-JD
-gx
-gx
-gx
+Gq
+Ex
+Ex
+LC
 QR
 ZS
 UY
@@ -47488,7 +50374,7 @@ ZS
 ZS
 ZS
 ZS
-oT
+WG
 oT
 ZS
 ZS
@@ -47697,7 +50583,7 @@ ZS
 ZS
 ZS
 ZS
-oT
+WG
 oT
 oT
 HR
@@ -47712,13 +50598,13 @@ Wr
 NX
 ZS
 oT
-oT
+WG
 oT
 ZS
-Py
+Ad
 Me
 IX
-oT
+WG
 oT
 ZS
 GO
@@ -47729,8 +50615,8 @@ ZS
 Pz
 DQ
 DQ
-Rn
-Me
+AT
+mP
 ZS
 wu
 HU
@@ -47740,12 +50626,12 @@ ZS
 ZS
 ZS
 Nk
-HU
-HU
-oT
-oT
-oT
-oT
+Ok
+HQ
+iE
+iE
+iE
+RD
 oT
 ZS
 ZS
@@ -47753,7 +50639,7 @@ ZS
 ZR
 ZR
 pZ
-KP
+MC
 wH
 ZR
 ZR
@@ -47954,10 +50840,10 @@ ZS
 ZS
 ZS
 ZS
-oT
-oT
-oT
-oT
+IV
+iE
+iE
+hE
 oT
 ZS
 ZS
@@ -47969,13 +50855,13 @@ Wt
 ZS
 ZS
 ZS
-oT
+WG
 oT
 ZS
-JD
-Me
-GB
-oT
+Hv
+ka
+ig
+dU
 oT
 ZS
 ZS
@@ -47986,18 +50872,18 @@ ZS
 ZS
 ZS
 ZS
-JD
-OM
+fU
+iO
 ZS
 rw
 VA
 oT
 ZS
 HR
-oT
-oT
-oT
-oT
+Ps
+iE
+iE
+RD
 oT
 ZS
 oT
@@ -48010,7 +50896,7 @@ ZS
 ZR
 ZE
 lP
-KP
+MC
 nH
 qi
 ZR
@@ -48214,7 +51100,7 @@ ZS
 oT
 ZS
 ZS
-oT
+WG
 oT
 ZR
 ZR
@@ -48226,15 +51112,15 @@ Wu
 Zk
 tr
 ZS
-oT
+WG
 oT
 ZS
-JD
+iY
 Me
 ZS
+WG
 oT
 oT
-oT
 ZS
 ZS
 ZS
@@ -48243,15 +51129,15 @@ ZS
 ZS
 ZS
 ZS
-JD
+iY
 Me
 ZS
-oT
+xc
 HU
 gA
 IX
 oT
-oT
+WG
 oT
 oT
 GQ
@@ -48266,9 +51152,9 @@ ZS
 ZS
 ZR
 nU
-KP
+vc
 Ia
-KP
+SA
 oP
 ZR
 ZS
@@ -48471,7 +51357,7 @@ ZS
 ZS
 ZS
 ZS
-oT
+WG
 oT
 ZR
 Ko
@@ -48479,28 +51365,28 @@ MG
 On
 ZR
 Tk
-gx
-gx
+uw
+Wh
 BE
 ZS
-oT
+WG
 ZS
 ZS
-JD
+rB
 Me
 ZS
-oT
-oT
-oT
-oT
-oT
-oT
-oT
+IV
+iE
+iE
+iE
+iE
+iE
+hE
 ZS
 ZS
 ZS
 ZS
-JD
+iY
 Me
 ZS
 Re
@@ -48508,7 +51394,7 @@ Hd
 PS
 ZS
 ZS
-oT
+WG
 HU
 ZS
 ZS
@@ -48728,7 +51614,7 @@ ZS
 ZS
 ZS
 ZS
-oT
+WG
 oT
 ZR
 Kt
@@ -48736,14 +51622,14 @@ MH
 Ov
 QP
 TG
-gx
+XU
 gx
 oh
 ZS
-oT
+WG
 ZS
 ZS
-JD
+iY
 Me
 ZS
 ZS
@@ -48752,12 +51638,12 @@ oT
 ZS
 Iq
 oT
-oT
+WG
 ZS
 ZS
 ZS
 ZS
-JD
+iY
 Me
 ZS
 ZS
@@ -48765,7 +51651,7 @@ ZS
 ZS
 ZS
 oT
-HU
+QO
 HU
 ZS
 ZS
@@ -48985,7 +51871,7 @@ ZS
 ZS
 ZS
 GQ
-oT
+WG
 oT
 ZR
 KL
@@ -48993,36 +51879,36 @@ MN
 OQ
 ZR
 TL
-gx
+Jh
 Zw
 Ci
 IX
-oT
-gm
+WG
+BX
 ZS
-JD
+iY
 Gd
-FZ
+vC
 ZS
 ZS
 ZS
 ZS
 ZS
 GF
-GB
+mK
 ZS
 ZS
 ZS
 Fg
-Fk
-Me
-GB
-oT
-HU
-HU
-oT
-oT
-HU
+lu
+ka
+ig
+iE
+HQ
+HQ
+iE
+iE
+Ca
 oT
 ZS
 ZS
@@ -49242,7 +52128,7 @@ ZS
 ZS
 ZS
 oT
-oT
+WG
 ZS
 ZR
 ZR
@@ -49253,25 +52139,25 @@ TO
 Wv
 ZA
 Gh
-GB
-oT
+ig
+dU
 oT
 ZS
-Pz
-Rn
-Gd
-DU
-DO
-DO
-Go
-DO
-DO
-DO
-DO
-DO
-DU
-Fk
-LZ
+Td
+il
+oX
+YJ
+Pf
+Wf
+CJ
+Wf
+Wf
+jP
+Pf
+Wf
+YJ
+rN
+Co
 NX
 IX
 oT
@@ -49499,9 +52385,9 @@ ZS
 ZS
 ZS
 ZS
+WG
 oT
-oT
-HG
+lX
 ZS
 ZS
 ZS
@@ -49511,20 +52397,20 @@ Wx
 ZC
 CO
 ZS
-oT
+WG
 oT
 ZS
 ZS
 Pz
 DQ
 DQ
-DQ
+xv
 DQ
 Gw
 DQ
 DQ
 DQ
-DQ
+IJ
 DQ
 DQ
 DQ
@@ -49756,19 +52642,19 @@ ZS
 ZS
 ZS
 ZS
-oT
-oT
-oT
-oT
-oT
-oT
+IV
+iE
+iE
+iE
+iE
+hE
 ZS
 ZS
 ZS
 ZS
 ZS
 ZS
-oT
+WG
 oT
 ZS
 ZS
@@ -50018,14 +52904,14 @@ oT
 oT
 oT
 oT
-oT
+WG
 oT
 ZS
 ZS
 If
 oT
 oT
-oT
+WG
 oT
 ZS
 ZS
@@ -50275,14 +53161,14 @@ ZS
 ZS
 ZS
 oT
-oT
-oT
-oT
-oT
-oT
-oT
-oT
-oT
+IV
+iE
+iE
+iE
+iE
+iE
+iE
+RD
 ZS
 ZS
 ZS
@@ -50299,12 +53185,12 @@ ZS
 ZS
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
+cx
+cx
+cx
+cx
+cx
+cx
 ZS
 ZS
 ZR
@@ -50532,7 +53418,7 @@ ZS
 ZS
 ZS
 ZS
-Iq
+Qs
 oT
 oT
 oT
@@ -50556,12 +53442,12 @@ ZS
 ZS
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
+cx
+io
+io
+Iz
+io
+cx
 ZS
 ZS
 ZR
@@ -50813,12 +53699,12 @@ ZS
 ZS
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
+cx
+Iz
+Iz
+Ln
+Iz
+cx
 ZS
 ZS
 ZR
@@ -51070,12 +53956,12 @@ ZR
 ZR
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
+cx
+io
+io
+Iz
+io
+cx
 ZS
 ZS
 ZR
@@ -51327,12 +54213,12 @@ bf
 ZR
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
+cx
+cx
+cx
+cx
+cx
+cx
 ZS
 ZS
 ZR

@@ -41,6 +41,10 @@
 Как можно скорее изничтожьте эту тварь, пока не стало слишком поздно.
 ------------------</b></span>"})
 
+/datum/role/nostromo_crewmate/OnPostSetup()
+	var/mob/M = antag.current
+	var/datum/action/A = new /datum/action/nostromo_map(M)
+	A.Grant(M)
 
 /datum/role/nostromo_cat
 	name = NOSTROMO_CAT
@@ -84,3 +88,8 @@
 Ваш корпус крайне хрупок, поэтому вступать в прямую конфронтацию с экипажем не рекомендуется.
 Для подзарядки используйте апц в инженерном отсеке.
 ------------------</b></span>"})
+
+/datum/role/nostromo_android/OnPostSetup()
+	var/mob/M = antag.current
+	var/datum/action/A = new /datum/action/nostromo_map(M)
+	A.Grant(M)
