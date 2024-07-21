@@ -1237,7 +1237,7 @@ FIRE ALARM
 
 	if(is_station_level(z) || is_mining_level(z))
 		if(security_level)
-			add_overlay(image('icons/obj/monitors.dmi', "code_name_eng[security_level]"))
+			add_overlay(image('icons/obj/monitors.dmi', "overlay_[code_name_eng[security_level]]"))
 		else
 			add_overlay(image('icons/obj/monitors.dmi', "overlay_green"))
 
