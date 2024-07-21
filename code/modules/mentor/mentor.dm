@@ -78,48 +78,6 @@ var/list/mentor_verbs_default = list(
 	if(mentorholder)
 		verbs -= mentor_verbs_default
 
-/client/proc/make_mentor()
-	set category = "Special Verbs"
-	set name = "Make Mentor"
-	if(!holder)
-		to_chat(src, "<span class='pm warning'>Error: Only administrators may use this command.</span>")
-		return
-	var/list/client/targets[0]
-	for(var/client/T in clients)
-		targets["[T.key]"] = T
-	var/target = tgui_input_list(src,"Who do you want to make a mentor?","Make Mentor", sortList(targets))
-	if(!target)
-		return
-	var/client/C = targets[target]
-	if(has_mentor_powers(C) || C.deadmin_holder) // If an admin is deadminned you could mentor them and that will cause fuckery if they readmin
-		to_chat(src, "<span class='pm warning'>Error: They already have mentor powers.</span>")
-		return
-	var/datum/mentor/M = new /datum/mentor(C.ckey)
-	M.associate(C)
-	to_chat(C, "<span class='pm notice'>You have been granted mentorship.</span>")
-	to_chat(src, "<span class='pm notice'>You have made [C] a mentor.</span>")
-	log_admin("[key_name(src)] made [key_name(C)] a mentor.")
-	feedback_add_details("admin_verb","Make Mentor") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/unmake_mentor()
-	set category = "Special Verbs"
-	set name = "Unmake Mentor"
-	if(!holder)
-		to_chat(src, "<span class='pm warning'>Error: Only administrators may use this command.</span>")
-		return
-	var/list/client/targets[0]
-	for(var/client/T in mentors)
-		targets["[T.key]"] = T
-	var/target = tgui_input_list(src,"Which mentor do you want to unmake?","Unmake Mentor", sortList(targets))
-	if(!target)
-		return
-	var/client/C = targets[target]
-	C.mentorholder.disassociate()
-	to_chat(C, "<span class='pm warning'>Your mentorship has been revoked.</span>")
-	to_chat(src, "<span class='pm notice'>You have revoked [C]'s mentorship.</span>")
-	log_admin("[key_name(src)] revoked [key_name(C)]'s mentorship.")
-	feedback_add_details("admin_verb","Unmake Mentor") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /proc/mentor_commands(href, href_list, client/C)
 	if(href_list["mhelp"])
 		var/mhelp_ref = href_list["mhelp"]
