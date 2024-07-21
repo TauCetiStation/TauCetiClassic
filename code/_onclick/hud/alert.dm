@@ -342,7 +342,7 @@
 
 /atom/movable/screen/alert/status_effect/tough_paralysis
 	name = "Tough Paralysis"
-	desc = "You've paralysed. Considering how helpless you are."
+	desc = "You're paralyzed. Consider how helpless you are."
 	icon_state = "paralysis"
 
 //ALIENS
