@@ -266,7 +266,7 @@
 				CM.cooldown = 55 //about one minute
 
 		if("RestoreBackup")
-			to_chat(usr, "Изначальные данные восстановлены!")
+			to_chat(usr, "Резервные данные маршрутизации восстановлены!")
 			src.emagged = 0
 			updateDialog()
 
