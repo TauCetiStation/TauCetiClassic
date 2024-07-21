@@ -360,8 +360,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["toggles"]           >> toggles
 	S["chat_ghostsight"]   >> chat_ghostsight
 	S["randomslot"]        >> randomslot
-	S["permamuted"]        >> permamuted
-	S["permamuted"]        >> muted
 	S["parallax"]          >> parallax
 	S["ambientocclusion"]  >> ambientocclusion
 	S["glowlevel"]         >> glowlevel
@@ -486,7 +484,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chat_toggles"]      << chat_toggles
 	S["chat_ghostsight"]   << chat_ghostsight
 	S["randomslot"]        << randomslot
-	S["permamuted"]        << permamuted
 	S["parallax"]          << parallax
 	S["ambientocclusion"]  << ambientocclusion
 	S["glowlevel"]         << glowlevel
