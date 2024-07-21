@@ -6,9 +6,7 @@
 	pixel_x = -8
 	ventcrawler = 0
 	storedPlasma = 150
-	var/epoint = 0
 	var/estage = 1
-	var/epoint_cap = 600
 	var/list/alien_screamer = list(
 		'sound/antag/Alien_sounds/alien_screamer1.ogg',
 		'sound/antag/Alien_sounds/alien_screamer2.ogg')
@@ -27,6 +25,7 @@
 	real_name = name
 	alien_list[ALIEN_HUNTER] -= src			// ¯\_(ツ)_/¯
 	alien_list[ALIEN_LONE_HUNTER] += src
+	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid)
 	var/obj/effect/landmark/L = landmarks_list["Nostromo Ambience"][1]
 	if(L)
 		ambience_player = L
@@ -36,58 +35,19 @@
 	alien_list[ALIEN_LONE_HUNTER] -= src
 	return ..()
 
-// Со временем ксенос должен становиться сильнее, чтобы экипаж не мог закрыться где-то и сидеть в обороне
-/mob/living/carbon/xenomorph/humanoid/hunter/lone/Life()
-	if(!invisible)
-		epoint += 1
-	if(epoint > epoint_cap)
-		next_stage()
-	. = ..()
-
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/next_stage()
 	to_chat(src, "<span class='notice'>Вы перешли на новую стадию эволюции!</span>")
 	estage++
-	maxHealth += 40
+	maxHealth += 20
 	heal_rate += 1
 	max_plasma += 50
-	plasma_rate += 2
-	epoint -= epoint_cap
-	switch(estage)
-		if(2)
-			epoint_cap = 800
-			verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin)
-			hud_used.init_screen(/atom/movable/screen/xenomorph/neurotoxin)
-		if(3)
-
-		if(4)
-			alien_spells += /obj/effect/proc_holder/spell/targeted/screech
-		if(5)
-			acid_type = /obj/effect/alien/acid/queen_acid
-			epoint_cap = 2000
+	plasma_rate += 1
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Stat()
 	if(statpanel("Status"))
-		stat("Очки эволюции: [epoint]/[epoint_cap]")
 		stat("Стадия эволюции: [estage]")
 
-// Если включается одно, выключается другое
-/mob/living/carbon/xenomorph/humanoid/hunter/lone/toggle_neurotoxin(message = TRUE)
-	..()
-	if(leap_on_click)
-		leap_on_click = 0
-		leap_icon.update_icon(src)
-		update_icons()
-
-/mob/living/carbon/xenomorph/humanoid/hunter/lone/toggle_leap(message = TRUE)
-	..()
-	if(neurotoxin_on_click)
-		neurotoxin_on_click = 0
-		neurotoxin_icon.icon_state = "neurotoxin0"
-		update_icons()
-
-// Ксенос должен поощряться за активную и агрессивную игру
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/successful_leap(mob/living/L)
-	epoint += 120
 	for(var/mob/beholder in oview(6, src))
 		beholder.playsound_local(null, pick(alien_screamer), VOL_EFFECTS_MASTER, null, FALSE)
 	play_scary_music()
@@ -98,7 +58,6 @@
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
 			if(H.stat != DEAD)
-				epoint += 10
 				play_scary_music()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_music()
