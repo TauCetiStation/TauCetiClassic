@@ -16,10 +16,7 @@
 
 /obj/item/clothing/head/soft/atom_init()
 	. = ..()
-	if (cap_color == "cargo")
-		icon_state = "cargosoft_world"
-	else
-		icon_state = "[cap_color]soft"
+	icon_state = "[cap_color]soft"
 
 
 /obj/item/clothing/head/soft/wash_act(w_color)
