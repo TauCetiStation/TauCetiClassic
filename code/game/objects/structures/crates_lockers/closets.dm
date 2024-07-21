@@ -71,8 +71,9 @@
 		M.forceMove(src.loc)
 		M.instant_vision_update(0)
 
-	for(var/obj/I in src)
+	for(var/obj/item/I in src)
 		I.forceMove(src.loc)
+		I.update_world_icon()
 
 /obj/structure/closet/proc/collect_contents()
 	var/itemcount = 0
