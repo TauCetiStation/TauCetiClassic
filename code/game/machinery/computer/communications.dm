@@ -407,7 +407,7 @@
 				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Зелёный</A>"
 		if(STATE_CONFIRM_LEVEL)
 			dat += "Текущий код тревоги: [code_name_ru[security_level]]<BR>"
-			dat += "Подтвердить смену кода тревоги на: [code_name_ru[SEC_LEVEL_BLUE]]<BR>"
+			dat += "Подтвердить смену кода тревоги на: [code_name_ru[tmp_alertlevel]<BR>"
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Проведите ID-картой</A> для смены кода.<BR>"
 
 	dat += "<BR>[(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Главное меню</A> | " : ""]"
