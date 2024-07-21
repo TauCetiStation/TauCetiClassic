@@ -57,7 +57,9 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	for(var/datum/mentor_help/MH as anything in l2b)
 		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[MH.id]</span>: <A HREF='?_src_=mentorholder;mhelp=\ref[MH];mhelp_action=ticket'>[MH.initiator_ckey]: [MH.name]</A></span><br>"
 
-	usr << browse(dat.Join(), "window=mhelp_list[state];size=600x480")
+	var/datum/browser/popup = new(usr, "mhelp_list[state]", null, 600, 480, null, CSS_THEME_LIGHT)
+	popup.set_content(dat.Join())
+	popup.open()
 
 //Tickets statpanel
 /datum/mentor_help_tickets/proc/stat_entry()
@@ -89,7 +91,8 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 
 //Get a ticket given a ckey
 /datum/mentor_help_tickets/proc/CKey2ActiveTicket(ckey)
-	for(var/datum/admin_help/MH as anything in active_tickets)
+	for(var/I in active_tickets)
+		var/datum/admin_help/MH = I
 		if(MH.initiator_ckey == ckey)
 			return MH
 
@@ -108,30 +111,40 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	global.mhelp_tickets.BrowseTickets(current_state)
 
 //
-//TICKET DATUM
+// # Mentorhelp Ticket
 //
 
 /datum/mentor_help
+	/// Unique ID of the ticket
 	var/id
+	/// The current name of the ticket
 	var/name
+	/// The current state of the ticket
 	var/state = AHELP_ACTIVE
-
+	/// The time (ticks) at which the ticket was opened
 	var/opened_at
+	/// The time (ticks) at which the ticket was closed
 	var/closed_at
-
-	var/client/initiator	//semi-misnomer, it's the person who ahelped/was bwoinked
+	/// The time (timeofday) at which the ticket was opened
+	var/opened_at_server
+	/// The time (timeofday) at which the ticket was closed
+	var/closed_at_server
+	//semi-misnomer, it's the person who mhelped/was bwoinked
+	var/client/initiator
+	/// The ckey of the initiator
 	var/initiator_ckey
+	/// The key name of the initiator
 	var/initiator_key_name
-
-	var/list/_interactions	//use AddInteraction() or, preferably, admin_ticket_log()
-
+	/// use AddInteraction() or, preferably, admin_ticket_log()
+	var/list/_interactions
+	/// Statclick holder for the ticket
 	var/obj/effect/statclick/ahelp/statclick
-
+	/// Static counter used for generating each ticket ID
 	var/static/ticket_counter = 0
 
 //call this on its own to create a ticket, don't manually assign current_mentorhelp
 //msg is the title of the ticket: usually the ahelp text
-/datum/mentor_help/New(msg, client/C)
+/datum/mentor_help/New(msg, client/C, is_mwoink)
 	//clean the input msg
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg || !C || !C.mob)
@@ -147,7 +160,7 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	initiator_ckey = C.ckey
 	initiator_key_name = key_name(initiator, FALSE, TRUE)
 	if(initiator.current_mentorhelp)	//This is a bug
-		log_debug("Ticket erroneously left open by code")
+		stack_trace("Multiple mhelp current_tickets")
 		initiator.current_mentorhelp.AddInteraction("Ticket erroneously left open by code")
 		initiator.current_mentorhelp.Resolve()
 	initiator.current_mentorhelp = src
@@ -155,10 +168,20 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	statclick = new(null, src)
 	_interactions = list()
 
-	log_admin("Mentorhelp: [key_name(C)]: [msg]")
-	MessageNoRecipient(msg)
+	if(is_mwoink)
+		AddInteraction("<font color='green'>[key_name_admin(usr)] PM'd [LinkedReplyName()]</font>")
+		message_admins("<font color='green'>Ticket [TicketHref("#[id]")] created</font>")
+	else
+		MessageNoRecipient(msg)
 	//show it to the person adminhelping too
-	to_chat(C, "<i><span class='mentor'>Mentor-PM to-<b>Mentors</b>: [name]</span></i>")
+		to_chat(C, "<i><span class='mentor'>Mentor-PM to-<b>Mentors</b>: [name]</span></i>")
+
+		world.send2bridge(
+			type = list(BRIDGE_ADMINLOG),
+			attachment_title = "**Ментор тикет #[id]** создан: **[key_name(initiator)]**",
+			attachment_msg = name,
+			attachment_color = BRIDGE_COLOR_MENTORLOG,
+		)
 
 	global.mhelp_tickets.active_tickets += src
 
@@ -176,11 +199,16 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 		ref_src = "\ref[src]"
 	. = " (<A HREF='?_src_=mentorholder;mhelp=[ref_src];mhelp_action=resolve'>RSLVE</A>)"
 
+/datum/mentor_help/proc/EscalateToAdmins(ref_src)
+	if(!ref_src)
+		ref_src = "\ref[src]"
+	. = " (<A HREF='?_src_=mentorholder;mhelp=[ref_src];mhelp_action=escalate'>ESCALATE</A>)"
+
 //private
 /datum/mentor_help/proc/LinkedReplyName(ref_src)
 	if(!ref_src)
 		ref_src = "\ref[src]"
-	return "<A HREF='?_src_=mentorholder;mhelp=[ref_src];mhelp_action=reply'>[initiator_ckey]</A>"
+	return "<A HREF='?_src_=mentorholder;mhelp=[ref_src];mhelp_action=reply'>[initiator_key_name]</A>"
 
 //private
 /datum/mentor_help/proc/TicketHref(msg, ref_src, action = "ticket")
@@ -191,7 +219,7 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 //message from the initiator without a target, all people with mentor powers will see this
 /datum/mentor_help/proc/MessageNoRecipient(msg)
 	var/ref_src = "\ref[src]"
-	var/chat_msg = "<span class='notice'>(<A HREF='?_src_=mentorholder;mhelp=[ref_src];mhelp_action=escalate'>ESCALATE</A>) Ticket [TicketHref("#[id]", ref_src)]<b>: [LinkedReplyName(ref_src)]:</b> [msg]</span>"
+	var/chat_msg = "<span class='notice'>Mentor Ticket [TicketHref("#[id]", ref_src)]<b>: [LinkedReplyName(ref_src)] [EscalateToAdmins(ref_src)]:</b> <span class='emojify linkify'>[msg]</span></span>"
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 	if(initiator)
 		giveadminhelpverb(initiator.ckey)
@@ -212,11 +240,9 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	statclick = new(null, src)
 	global.mhelp_tickets.active_tickets += src
 	global.mhelp_tickets.resolved_tickets -= src
-	switch(state)
-		if(AHELP_RESOLVED)
-			feedback_dec("mhelp_resolve")
 	state = AHELP_ACTIVE
 	closed_at = null
+	closed_at_server = null
 	if(initiator)
 		initiator.current_mentorhelp = src
 
@@ -226,7 +252,11 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name(usr)].</span>"
 	message_mentors(msg)
 	log_admin(msg)
-	feedback_inc("mhelp_reopen")
+	world.send2bridge(
+		type = list(BRIDGE_ADMINLOG),
+		attachment_title = "**Mentor Ticket #[id]** reopened by **[key_name(usr)]**",
+		attachment_color = BRIDGE_COLOR_MENTORLOG,
+	)
 	TicketPanel()	//can only be done from here, so refresh it
 
 //private
@@ -234,6 +264,7 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	if(state != AHELP_ACTIVE)
 		return
 	closed_at = world.time
+	closed_at_server = world.timeofday
 	QDEL_NULL(statclick)
 	global.mhelp_tickets.active_tickets -= src
 	if(initiator && initiator.current_mentorhelp == src)
@@ -246,7 +277,6 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	RemoveActive()
 	state = AHELP_RESOLVED
 	global.mhelp_tickets.ListInsert(src)
-
 	AddInteraction("<span class='filter_adminlog'><font color='green'>Resolved by [key_name(usr)].</font></span>")
 	if(initiator)
 		to_chat(initiator, "<span class='filter_adminlog'><font color='green'>Ticket [TicketHref("#[id]")] was marked resolved by [key_name(usr)].</font></span>")
@@ -255,6 +285,11 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name(usr)]"
 		message_mentors(msg)
 		log_admin(msg)
+		world.send2bridge(
+			type = list(BRIDGE_ADMINLOG),
+			attachment_title = "**Mentor Ticket #[id]** closed by **[key_name(usr)]**",
+			attachment_color = BRIDGE_COLOR_MENTORLOG,
+		)
 
 //Show the ticket panel
 /datum/mentor_help/proc/TicketPanel()
@@ -264,7 +299,7 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
 	var/ref_src = "\ref[src]"
 	dat += "<h4>Mentor Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
-	dat += "<b>State: "
+	dat += "<b>State: [ticket_status()]"
 	switch(state)
 		if(AHELP_ACTIVE)
 			dat += "<font color='red'>OPEN</font>"
@@ -409,7 +444,7 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	global.mhelp_tickets.BrowseTickets(browse_to)
 
 /proc/message_mentors(var/msg)
-	msg = "<span class='mentor_channel'><span class='prefix'>Mentor:</span> <span class=\"message\">[msg]</span></span>"
+	msg = "<span class='mentor_channel'><span class='prefix'></span> <span class=\"message\">[msg]</span></span>"
 
 	for(var/client/C in mentors)
 		to_chat(C, msg)

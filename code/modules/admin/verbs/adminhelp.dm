@@ -279,7 +279,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /datum/admin_help/proc/MessageNoRecipient(msg)
 	var/ref_src = "\ref[src]"
 	//Message to be sent to all admins
-	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='emojify linkify'>[msg]</span></span>"
+	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'> Admin Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='emojify linkify'>[msg]</span></span>"
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 
@@ -318,7 +318,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	log_admin_private(msg)
 	world.send2bridge(
 		type = list(BRIDGE_ADMINLOG),
-		attachment_title = "**Ticket #[id]** reopened by **[key_name(usr)]**",
+		attachment_title = "**Admin Ticket #[id]** reopened by **[key_name(usr)]**",
 		attachment_color = BRIDGE_COLOR_ADMINLOG,
 	)
 	TicketPanel()	//can only be done from here, so refresh it
@@ -348,7 +348,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		log_admin_private(msg)
 		world.send2bridge(
 			type = list(BRIDGE_ADMINLOG),
-			attachment_title = "**Ticket #[id]** closed by **[key_name(usr)]**",
+			attachment_title = "**Admin Ticket #[id]** closed by **[key_name(usr)]**",
 			attachment_color = BRIDGE_COLOR_ADMINLOG,
 		)
 

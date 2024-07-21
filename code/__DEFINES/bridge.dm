@@ -31,6 +31,9 @@
 
 #define BRIDGE_COLOR_BRIDGE     "#adb3f0"
 
+//Mhelp tickets
+#define BRIDGE_COLOR_MENTORLOG  "#6e713e"
+
 //mention types, can be mappet to specific groups
 //if not listed - bot will try to find and slap user
 #define BRIDGE_MENTION_HERE       "here"
