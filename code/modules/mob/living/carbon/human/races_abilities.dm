@@ -293,7 +293,7 @@
 	else
 		L = tailpunch_animation_hard(L) // tailpunch can hit another mob or miss
 		if(!L)
-			return FALSE
+			return
 		if(a_intent == INTENT_PUSH && is_skill_competent(src, list(/datum/skill/police = SKILL_LEVEL_TRAINED)))
 			L.visible_message("<span class='danger'>\The [src] hooked a [L] with his tail!</span>",
 			"<span class='userdanger'>[src] hacks you with his tail!</span>")
