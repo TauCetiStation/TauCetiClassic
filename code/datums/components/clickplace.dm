@@ -198,8 +198,10 @@
 	victim.apply_damage(8, def_zone = BP_HEAD)
 	victim.visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [A]!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-
-	victim.process_aggresive_action(assailant, "face-slammed against \the [parent]")
+	message_admins("[victim]")
+	message_admins("[assailant]")
+	victim.log_combat(assailant, "face-slammed against \the [parent]")
+	SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER,victim )
 	return FALSE
 
 /// Is called when parent is clicked with a grab with HARM selected. Return TRUE if face slammed.

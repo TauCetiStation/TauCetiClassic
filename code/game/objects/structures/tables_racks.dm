@@ -797,7 +797,7 @@
 		can_cut = HAS_TRAIT(D, TRAIT_DOUBLE_WIELDED)
 
 	if(!can_cut)
-		return ..()
+		return
 
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
