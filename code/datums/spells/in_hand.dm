@@ -199,7 +199,6 @@
 /obj/item/projectile/neurotoxin/magic/x_turret_acid
 	name = "turret toxin"
 	damage = 5
-	weaken = 1
 	damage_type = BURN
 
 ///////////////////////////////////////////
