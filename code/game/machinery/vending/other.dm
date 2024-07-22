@@ -44,6 +44,7 @@
 	)
 	syndie = list(
 		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 1,
+		/obj/item/weapon/weldingtool/experimental/sindi = 1,
 	)
 	prices = list(
 		/obj/item/weapon/storage/fancy/cigarettes = 20,
@@ -215,7 +216,7 @@
 		/obj/item/clothing/head/sushi_band = 1,
 		/obj/item/weapon/kitchen/utensil/spoon = 2,
 		/obj/item/weapon/kitchen/rollingpin = 2,
-		/obj/item/weapon/kitchenknife/butch = 2,		
+		/obj/item/weapon/kitchenknife/butch = 2,
 	)
 	syndie = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,

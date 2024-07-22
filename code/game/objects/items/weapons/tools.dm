@@ -515,6 +515,37 @@
 	if(!active && (get_fuel() == max_fuel))
 		STOP_PROCESSING(SSobj, src)
 
+/obj/item/weapon/weldingtool/experimental/sindi
+	icon_state = "syndizippo"
+	name = "syndi zippo"
+	desc = "A very cool zippo"
+	icon = 'icons/obj/items.dmi'
+	w_class = SIZE_MINUSCULE
+	max_fuel = 150
+	next_refuel_tick = 0
+
+/obj/item/weapon/weldingtool/experimental/sindi/process()
+	if(active)
+		hitsound = SOUNDIN_LASERACT
+		if(icon_state != "syndizippo1") // Check that the sprite is correct, if it isnt, it means toggle() was not called
+			force = 15
+			damtype = BURN
+			icon_state = initial(icon_state) + "1"
+		if(prob(5)) // passive fuel burning
+			use(1)
+		light_color = LIGHT_COLOR_NUKE_OPS
+		set_light(2)
+	else
+		hitsound = initial(hitsound)
+		if(icon_state != "syndizippo") // Check that the sprite is correct, if it isnt, it means toggle() was not called
+			force = 3
+			damtype = BRUTE
+			icon_state = initial(icon_state)
+			active = FALSE
+		set_light(0)
+		if(!istype(src, /obj/item/weapon/weldingtool/experimental/sindi))
+			STOP_PROCESSING(SSobj, src)
+		return
 /*
  * Crowbar
  */

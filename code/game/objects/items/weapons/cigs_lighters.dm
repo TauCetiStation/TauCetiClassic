@@ -534,9 +534,3 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		location.hotspot_expose(700, 5, src)
 	return
 
-/obj/item/weapon/lighter/zippo/syndi
-	icon_state = "syndizippo"
-	item_state = "syndizippo"
-	icon_on = "syndizippoon"
-	icon_off = "syndizippo"
-	light_color = LIGHT_COLOR_NUKE_OPS
