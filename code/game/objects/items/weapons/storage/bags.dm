@@ -189,11 +189,11 @@
 	can_hold = list(/obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/pill, /obj/item/weapon/storage/pill_bottle)
 
 // -----------------------------
-//          Bluespace bag
+//          Bluespace Satchel
 // -----------------------------
 
 /obj/item/weapon/storage/bag/ore/holding
-	name = "Bluespace bag of holding"
+	name = "Bluespace Satchel"
 	desc = "A revolution in convenience, this satchel allows for huge amounts of plant, ore, etc satchel, storage. It's been outfitted with anti-malfunction safety measures."
 	max_storage_space = 300
 	origin_tech = "bluespace=4;materials=3;engineering=3"

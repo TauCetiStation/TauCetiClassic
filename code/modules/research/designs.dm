@@ -2250,9 +2250,9 @@ other types of metals and chemistry for reagents).
 	category = list("Misc")
 
 /datum/design/bluespacesatchel_holding
-	name = "Bluespace bag of holding"
+	name = "Bluespace Satchel"
 	desc = "A bluespace satchel that can hold an infinite amount of plant, ore, etc."
-	id = "Bluespacebag_holding"
+	id = "BluespaceSatchel_holding"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 500) //quite cheap, for more convenience
 	build_path = /obj/item/weapon/storage/bag/ore/holding
