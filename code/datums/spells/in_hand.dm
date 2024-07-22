@@ -199,7 +199,6 @@
 /obj/item/projectile/x_turret_acid
 	name = "turret toxin"
 	damage = 5
-	weaken = 0
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "neurotoxin"
 	damage_type = BURN
