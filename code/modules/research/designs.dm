@@ -2249,10 +2249,10 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/bluespace_crystal/artificial
 	category = list("Misc")
 
-/datum/design/miningsatchel_holding
-	name = "Mining Satchel of Holding"
-	desc = "A mining satchel that can hold an infinite amount of ores."
-	id = "minerbag_holding"
+/datum/design/bluespacesatchel_holding
+	name = "Bluespace bag of holding"
+	desc = "A bluespace satchel that can hold an infinite amount of plant, ore, etc."
+	id = "Bluespacebag_holding"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 500) //quite cheap, for more convenience
 	build_path = /obj/item/weapon/storage/bag/ore/holding
