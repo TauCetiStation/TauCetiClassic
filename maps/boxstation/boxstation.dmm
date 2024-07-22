@@ -76567,7 +76567,7 @@
 "kjb" = (
 /obj/structure/stool,
 /obj/effect/decal/remains/human,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
+/obj/item/weapon/inflatable_duck,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)

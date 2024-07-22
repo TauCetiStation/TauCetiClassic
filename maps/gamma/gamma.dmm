@@ -1622,7 +1622,6 @@
 "acS" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/medical/patients_rooms)
@@ -18583,7 +18582,6 @@
 	},
 /area/station/hallway/secondary/mine_sci_shuttle)
 "cXz" = (
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -40493,7 +40491,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "hrc" = (
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
@@ -40549,7 +40546,6 @@
 "hrT" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -66514,7 +66510,6 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /turf/simulated/floor/garden{
 	icon_state = "asteroid3"
 	},
@@ -83003,7 +82998,6 @@
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "pWm" = (
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "pWn" = (
@@ -88578,7 +88572,6 @@
 /area/station/tcommsat/chamber)
 "rbk" = (
 /obj/structure/stool/bed/chair/e_chair,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "rbl" = (
@@ -115260,7 +115253,6 @@
 "wqc" = (
 /obj/item/clothing/shoes/laceup,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "wqj" = (
@@ -120357,7 +120349,6 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
