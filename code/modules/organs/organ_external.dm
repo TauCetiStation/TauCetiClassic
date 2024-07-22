@@ -902,7 +902,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					to_chat(brainmob, "<span class='warning'>[user] severs your brain's connection to the spine with [I]!</span>")
 					to_chat(user, "<span class='warning'>You sever [brainmob]'s brain's connection to the spine with [I]!</span>")
 
-					brainmob.log_combat(user, "debrained with [I.name] (INTENT: [uppertext(user.a_intent)])")
+					brainmob.process_aggresive_action(user, "debrained with [I.name] (INTENT: [uppertext(user.a_intent)])")
 
 					if(istype(src,/obj/item/organ/external/head/robot))
 						var/obj/item/device/mmi/posibrain/B = new(loc)

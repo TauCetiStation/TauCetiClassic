@@ -73,10 +73,10 @@
 	if(!client)
 		if(!remote_hearers)
 			return FALSE
-
+		var/runechat_message = message
 		message = process_speech(message, verb, language, alt_name, italics, speaker, used_radio, speech_sound, sound_vol)
 		if(message)
-			telepathy_eavesdrop(speaker, message, "has heard", language)
+			telepathy_eavesdrop(speaker, message, "has heard", language, runechat_message)
 
 		return FALSE
 

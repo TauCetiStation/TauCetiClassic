@@ -270,6 +270,7 @@ SUBSYSTEM_DEF(ticker)
 		query_round_game_mode.Execute()
 
 	create_religion(/datum/religion/chaplain)
+	create_religion(/datum/religion/pluvia)
 	setup_hud_objects()
 
 	create_characters() //Create player characters and transfer them

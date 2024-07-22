@@ -185,7 +185,7 @@
 		if(!..()) return
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 
-		H.log_combat(user, "attacked with [name]")
+		H.process_aggresive_action(user, "attacked with [name]")
 
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 	else if(!status)
@@ -206,7 +206,7 @@
 			deductcharge(hitcost)
 		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
 
-		H.log_combat(user, "stunned with [name]")
+		H.process_aggresive_action(user, "stunned with [name]")
 
 		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 	//	if(charges < 1)

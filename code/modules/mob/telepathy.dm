@@ -26,11 +26,11 @@
 /mob/living/silicon/telepathy_targetable()
 	return FALSE
 
-/mob/proc/telepathy_eavesdrop(atom/source, message, verb, datum/language/language = null)
+/mob/proc/telepathy_eavesdrop(atom/source, message, verb, datum/language/language = null, runechat_message)
 	for(var/mob/M as anything in remote_hearers)
-		M.telepathy_hear_eavesdrop(source, src, message, verb, language)
+		M.telepathy_hear_eavesdrop(source, src, message, verb, language, runechat_message)
 
-/mob/proc/telepathy_hear_eavesdrop(atom/source, atom/hearer, message, verb, datum/language/language)
+/mob/proc/telepathy_hear_eavesdrop(atom/source, atom/hearer, message, verb, datum/language/language, runechat_message)
 	var/dist = get_dist(src, hearer)
 	if(z != hearer.z)
 		dist += 25
@@ -60,6 +60,7 @@
 	to_chat(src, "<span class='notice'><span class='bold'>[hearer]</span> [verb]:</span> [message]")
 
 	telepathy_eavesdrop(source, message, verb, language)
+	show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
 
 /mob/proc/add_remote_hearer(mob/hearer)
 	LAZYADD(remote_hearers, hearer)

@@ -103,7 +103,7 @@
 	if(borer)
 		borer.detatch() //Should remove borer if the brain is removed - RR
 
-	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
+	target.process_aggresive_action(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 
 	var/obj/item/brain/B
 	B = new(target.loc)

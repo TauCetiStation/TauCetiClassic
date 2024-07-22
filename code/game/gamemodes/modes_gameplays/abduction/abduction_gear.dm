@@ -411,7 +411,7 @@
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
-	L.log_combat(user, "stunned with <b>[name]</b>")
+	L.process_aggresive_action(user, "stunned with <b>[name]</b>")
 	return
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
@@ -421,7 +421,7 @@
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 	playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 
-	L.log_combat(user, "put to sleep with \a [src]")
+	L.process_aggresive_action(user, "put to sleep with \a [src]")
 	return
 
 /obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)

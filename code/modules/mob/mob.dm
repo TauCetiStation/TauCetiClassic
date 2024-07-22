@@ -853,6 +853,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
 	updateDrugginesOverlay()
+	SEND_SIGNAL(src, COMSIG_HUMAN_IS_DRUNK, src)
 
 /mob/proc/setDrugginess(amount)
 	druggy = max(amount, 0)

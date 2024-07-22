@@ -91,6 +91,17 @@
 	QDEL_NULL(vessel)
 	return ..()
 
+
+/mob/living/carbon/human/pluvian/atom_init(mapload)
+	. = ..(mapload, PLUVIAN)
+
+/mob/living/carbon/human/pluvian_spirit
+	var/mob/living/carbon/human/my_corpse
+	var/list/spells_to_remember = list()
+
+/mob/living/carbon/human/pluvian_spirit/atom_init(mapload)
+	. = ..(mapload, PLUVIAN_SPIRIT)
+
 /mob/living/carbon/human/skrell/atom_init(mapload)
 	h_style = "Skrell Male Tentacles"
 	. = ..(mapload, SKRELL)
@@ -2274,6 +2285,21 @@
 /mob/living/carbon/human/proc/return_to_body_dialog()
 	if (client) //in body?
 		playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	if(ispluvian(src))
+		for(var/mob/living/carbon/human/pluvian_spirit/spirit in player_list)
+			if(spirit.my_corpse == src)
+				spirit.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+				var/answer = tgui_alert(spirit,"You have been reanimated. Do you want to return to body?","Reanimate", list("Yes","No"))
+				if(answer == "Yes")
+					spirit.mind.transfer_to(spirit.my_corpse)
+					for(var/spell in spirit.spells_to_remember)
+						spirit.my_corpse.AddSpell(spell)
+					for(var/obj/item/I in spirit.my_corpse.contents)
+						I.add_item_actions(spirit.my_corpse)
+					qdel(spirit)
+					if(!blessed)
+						bless()
+				break
 	else if(mind)
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind == mind && ghost.can_reenter_corpse)

@@ -845,7 +845,7 @@
 	user.do_attack_animation(M)
 	playsound(M, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 
-	M.log_combat(user, "eyestabbed with [name]")
+	M.process_aggresive_action(user, "eyestabbed with [name]")
 
 	add_fingerprint(user)
 	if(M != user)

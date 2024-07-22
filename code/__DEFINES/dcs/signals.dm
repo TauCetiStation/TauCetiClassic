@@ -346,6 +346,18 @@
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
 #define COMSIG_LIVING_BUMPED "living_bumped"
+// from base of mob/living/proc/log_combat (mob/living/carbon/human/attacker)
+#define COMSIG_HUMAN_HARMED_OTHER "human_harmed_other"
+// from base of /obj/structure/stool/bed/chair/noose/user_buckle_mob()
+#define COMSIG_HUMAN_TRY_SUICIDE "human_try_suicide"
+// from base of /mob/living/carbon/proc/handle_alerts()
+#define COMSIG_HUMAN_IS_DRUNK "human_is_drunk"
+// from base of /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
+#define COMSIG_HUMAN_EAT "human_eat"
+// from base of /turf/simulated/floor/carpet/Entered(atom/movable/O)
+#define COMSIG_HUMAN_ON_CARPET "human_on_carpet"
+// from base of /mob/living/carbon/human/say()
+#define COMSIG_HUMAN_SAY "human_say"
 
 /// from /obj/effect/proc_holder/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"

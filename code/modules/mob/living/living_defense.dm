@@ -6,6 +6,21 @@
 	if(alert_admins)
 		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)][redirected ? " (redirected)" : ""]", attacker)
 
+/*/
+Запасной вариант, если вариант сверху засрут на ревью.
+Просто поменяю все нужные log_combat на этот прок и получится тоже самое, но длинее
+*/
+/mob/living/proc/process_aggresive_action(mob/living/attacker, msg, alert_admins=TRUE, redirected=FALSE)
+	if(ishuman(attacker))
+		var/mob/living/carbon/human/H = attacker
+		var/obj/item/item_in_hand = H.get_active_hand()
+		if(item_in_hand)
+			if(item_in_hand.force > 0)
+				SEND_SIGNAL(H, COMSIG_HUMAN_HARMED_OTHER, src)
+		else
+			SEND_SIGNAL(H, COMSIG_HUMAN_HARMED_OTHER, src)
+	log_combat(attacker, msg, alert_admins=alert_admins, redirected=redirected)
+
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
@@ -68,7 +83,7 @@
 			visible_message("<span class='userdanger'>[name] is hit by the [P.name] in the [parse_zone(def_zone)]!</span>")
 			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		if(P.firer)
-			log_combat(P.firer, "shot with <b>[P.type]</b>", alert_admins = !P.fake, redirected = P.redirected)
+			process_aggresive_action(P.firer, "shot with <b>[P.type]</b>", alert_admins = !P.fake, redirected = P.redirected)
 		else
 			attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[src]/[ckey]</b> with a <b>[src]</b>"
 			if(!P.fake)
@@ -145,7 +160,7 @@
 		if(L)
 			var/client/assailant = L.client
 			if(assailant)
-				log_combat(L, "hit with thrown [O]")
+				process_aggresive_action(L, "hit with thrown [O]")
 
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)

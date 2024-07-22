@@ -476,7 +476,7 @@
 				var/turf/end_T = target
 				var/end_T_descriptor = "<font color='#6b4400'>tile at [COORD(end_T)] in area [get_area(end_T)]</font>"
 
-				M.log_combat(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
+				M.process_aggresive_action(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
 
 				M.throw_at(target, 6, 8, attacker)
 				apply_effect(3, STUN,  M, attacker, attack_obj=attack_obj, min_value=1)

@@ -1471,6 +1471,7 @@
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk_catharsis)
 	else if(drunkenness >= DRUNKENNESS_CONFUSED)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/very_drunk)
+		SEND_SIGNAL(src, COMSIG_HUMAN_IS_DRUNK, src)
 	else if(drunkenness >= DRUNKENNESS_SLUR)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "drunk", /datum/mood_event/drunk)
 

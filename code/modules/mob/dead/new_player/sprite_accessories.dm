@@ -27,7 +27,7 @@
 	var/gender = NEUTER
 
 	// Restrict some styles to specific species
-	var/list/species_allowed = list(HUMAN, PODMAN)
+	var/list/species_allowed = list(HUMAN, PODMAN,PLUVIAN)
 
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
@@ -48,7 +48,7 @@
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
 	icon_state = "bald"
-	species_allowed = list(HUMAN, UNATHI, DIONA, PODMAN)
+	species_allowed = list(HUMAN, UNATHI, DIONA, PODMAN, PLUVIAN)
 
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"	  // try to capatilize the names please~

@@ -435,7 +435,7 @@
 	visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [src], breaking it!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
-	victim.log_combat(assailant, "face-slammed against [name]")
+	victim.process_aggresive_action(assailant, "face-slammed against [name]")
 
 	if(prob(30) && ishuman(victim))
 		var/mob/living/carbon/human/H = victim
@@ -734,7 +734,7 @@
 /*
  * reinforced glass table
  */
- 
+
 /obj/structure/table/rglass
 	name = "reinforced glass table"
 	desc = "A reinforced version of the glass table"
