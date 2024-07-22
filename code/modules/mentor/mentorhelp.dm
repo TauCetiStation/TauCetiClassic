@@ -4,7 +4,7 @@
 //TICKET MANAGER
 //
 
-var/global/datum/mentor_help_tickets/mhelp_tickets = new
+var/global/datum/mentor_help_tickets/mhelp_tickets
 
 /datum/mentor_help_tickets
 	var/list/active_tickets = list()
@@ -299,7 +299,7 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
 	var/ref_src = "\ref[src]"
 	dat += "<h4>Mentor Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
-	dat += "<b>State: [ticket_status()]"
+	dat += "<b>State: "
 	switch(state)
 		if(AHELP_ACTIVE)
 			dat += "<font color='red'>OPEN</font>"
@@ -307,9 +307,9 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 			dat += "<font color='green'>RESOLVED</font>"
 		else
 			dat += "UNKNOWN"
-	dat += "</b>[GLOBAL_PROC][TicketHref("Refresh", ref_src)]"
+	dat += "</b>[TAB][TicketHref("Refresh", ref_src)]"
 	if(state != AHELP_ACTIVE)
-		dat += "[GLOBAL_PROC][TicketHref("Reopen", ref_src, "reopen")]"
+		dat += "[TAB][TicketHref("Reopen", ref_src, "reopen")]"
 	dat += "<br><br>Opened at: [time_stamp(wtime = opened_at)] (Approx [(world.time - opened_at) / 600] minutes ago)"
 	if(closed_at)
 		dat += "<br>Closed at: [time_stamp(wtime = closed_at)] (Approx [(world.time - closed_at) / 600] minutes ago)"
@@ -317,7 +317,7 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	if(initiator)
 		dat += "<b>Actions:</b> [Context(ref_src)]<br>"
 	else
-		dat += "<b>DISCONNECTED</b>[GLOBAL_PROC][ClosureLinks(ref_src)]<br>"
+		dat += "<b>DISCONNECTED</b>[TAB][ClosureLinks(ref_src)]<br>"
 	dat += "<br><b>Log:</b><br><br>"
 	for(var/I in _interactions)
 		dat += "[I]<br>"
@@ -326,7 +326,7 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 
 //Kick ticket to admins
 /datum/mentor_help/proc/Escalate()
-	if(tgui_alert(usr, "Really escalate this ticket to admins? No mentors will ever be able to interact with it again if you do.","Escalate",list("Yes","No")) != "Yes")
+	if(tgui_alert(usr, "Вы действительно хотите передать этот тикет администраторам? Если вы это сделаете, то вы и другие менторы больше не смогут с ним взаимодействовать.","Передать тикет админам?",list("Да","Нет")) != "Да")
 		return
 	if (src.initiator == null) // You can't escalate a mentorhelp of someone who's logged out because it won't create the adminhelp properly
 		to_chat(usr, "<span class='pm warning'>Error: client not found, unable to escalate.</span>")
@@ -346,7 +346,20 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	if(state == AHELP_ACTIVE)
 		. += ClosureLinks(ref_src)
 	if(state != AHELP_RESOLVED)
-		. += " (<A HREF='?_src_=mentorholder;mhelp=[ref_src];mhelp_action=escalate'>ESCALATE</A>)"
+		. += EscalateToAdmins(ref_src)
+
+	// Append any tickets also opened by this user if relevant
+	var/list/related_tickets = global.mhelp_tickets.TicketsByCKey(initiator_ckey)
+	if (related_tickets.len > 1)
+		dat += "<br/><b>Other Tickets by [initiator_ckey]</b><br/>"
+		for (var/datum/mentor_help/related_ticket in related_tickets)
+			if (related_ticket.id == id)
+				continue
+			dat += "[related_ticket.TicketHref("#[related_ticket.id]")] ([related_ticket.ticket_status()]): [related_ticket.name]<br/>"
+
+	var/datum/browser/popup = new(usr, "mhelp[id]", null, 620, 480, null, CSS_THEME_LIGHT)
+	popup.set_content(dat.Join())
+	popup.open()
 
 //Forwarded action from admin/Topic OR mentor/Topic depending on which rank the caller has
 /datum/mentor_help/proc/Action(action)
@@ -369,9 +382,9 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 /obj/effect/statclick/mhelp
 	var/datum/mentor_help/mhelp_datum
 
-/obj/effect/statclick/mhelp/New(loc, datum/mentor_help/MH)
+/obj/effect/statclick/mhelp/atom_init(mapload, datum/mentor_help/MH)
 	mhelp_datum = MH
-	..(loc)
+	. = ..()
 
 /obj/effect/statclick/mhelp/update()
 	return ..(mhelp_datum.name)
@@ -387,7 +400,7 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 // CLIENT PROCS
 //
 
-/client/verb/mentorhelp(msg as text)
+/client/verb/mentorhelp()
 	set category = "Admin"
 	set name = "Mentorhelp"
 
@@ -399,9 +412,9 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	if(prefs.muted & MUTE_PM)
 		to_chat(src, "<span class='danger'>Error: Mentor-PM: You cannot send adminhelps (Muted).</span>")
 		return
-	if(handle_spam_prevention(msg,MUTE_PM))
+	if(handle_spam_prevention())
 		return
-
+	var/msg = sanitize(input(src, "Please describe your game problem concisely and an mentor will help as soon as they're able.", "Mentorhelp contents") as message|null)
 	if(!msg)
 		return
 
@@ -427,21 +440,6 @@ var/global/datum/mentor_help_tickets/mhelp_tickets = new
 	new /datum/mentor_help(msg, src, FALSE)
 
 //admin proc
-/client/proc/cmd_mentor_ticket_panel()
-	set name = "Mentor Ticket List"
-	set category = "Admin"
-
-	var/browse_to
-
-	switch(tgui_input_list(usr, "Display which ticket list?", "List Choice", list("Active Tickets", "Resolved Tickets")))
-		if("Active Tickets")
-			browse_to = AHELP_ACTIVE
-		if("Resolved Tickets")
-			browse_to = AHELP_RESOLVED
-		else
-			return
-
-	global.mhelp_tickets.BrowseTickets(browse_to)
 
 /proc/message_mentors(var/msg)
 	msg = "<span class='mentor_channel'><span class='prefix'></span> <span class=\"message\">[msg]</span></span>"

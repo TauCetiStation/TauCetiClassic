@@ -53,7 +53,7 @@ export const MentorTicketPanel = (props, context) => {
           }>
           <LabeledList>
             <LabeledList.Item label="Mentor Help Ticket">
-              #{id}: <div dangerouslySetInnerHTML={{ __html: name }} />
+              #{id}:{{ name }}
             </LabeledList.Item>
             <LabeledList.Item label="State">{State[state]}</LabeledList.Item>
             {State[state] === State.open ? (

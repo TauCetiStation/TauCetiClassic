@@ -134,7 +134,6 @@ var/list/mentor_verbs_default = list(
 /client/proc/cmd_mentor_pm(whom, msg, datum/mentor_help/MH)
 	set category = "Admin"
 	set name = "Mentor-PM"
-	set hidden = 1
 
 	if(prefs.muted & MUTE_PM)
 		to_chat(src, "<span class='pm warning'>Error: Mentor-PM: You are unable to use admin PM-s (muted).</span>")
