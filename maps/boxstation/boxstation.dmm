@@ -21799,6 +21799,7 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aMG" = (
+/obj/item/clothing/gloves/insulated,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet,
 /turf/simulated/floor/plating,
@@ -68314,6 +68315,7 @@
 "cIQ" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/glasses/sunglasses,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -76089,6 +76091,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "jMb" = (
+/obj/item/clothing/gloves/insulated,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet/crate,
 /turf/simulated/floor/plating,
