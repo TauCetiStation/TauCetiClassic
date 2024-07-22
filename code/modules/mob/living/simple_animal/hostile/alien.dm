@@ -113,7 +113,7 @@
 	icon_dead = "acid_turret_dead"
 	ranged_cooldown = 3
 	amount_shoot = 1
-	projectiletype = /obj/item/projectile/neurotoxin/magic/x_turret_acid
+	projectiletype = /obj/item/projectile/x_turret_acid
 	projectilesound = 'sound/voice/xenomorph/spitacid_1.ogg'
 	faction = "alien"
 
