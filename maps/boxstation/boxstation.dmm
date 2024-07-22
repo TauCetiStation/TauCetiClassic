@@ -68854,7 +68854,6 @@
 /area/station/medical/medbreak)
 "cLh" = (
 /obj/structure/table,
-/obj/item/clothing/head/soft/trash,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cLi" = (
