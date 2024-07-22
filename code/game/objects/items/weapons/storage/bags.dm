@@ -198,7 +198,7 @@
 	max_storage_space = 300
 	origin_tech = "bluespace=4;materials=3;engineering=3"
 	icon_state = "satchel_bspace"
-	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal, /obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/weapon/grown, /obj/item/slime_extract,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/food/snacks/monkeycube, /obj/item/organ, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/pill, /obj/item/weapon/storage/pill_bottle)
+	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal, /obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/weapon/grown, /obj/item/slime_extract,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/food/snacks/monkeycube, /obj/item/organ, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/pill, /obj/item/weapon/storage/pill_bottle)
 
 // -----------------------------
 //        Sheet Snatcher
