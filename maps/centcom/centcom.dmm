@@ -30046,6 +30046,14 @@
 /obj/item/weapon/kitchenknife/ritual,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"seQ" = (
+/obj/effect/step_trigger/thrower{
+	affect_ghosts = 1;
+	name = "thrower_throwdown";
+	stopper = 0
+	},
+/turf/environment/space,
+/area/space)
 "skC" = (
 /obj/item/weapon/reagent_containers/blood/AMinus{
 	pixel_x = -7;
@@ -52103,7 +52111,7 @@ aaM
 aaM
 aaM
 aaM
-oeb
+seQ
 acb
 acb
 acb
@@ -52360,7 +52368,7 @@ aaM
 aaM
 aaM
 aaM
-oeb
+seQ
 acb
 acb
 acb
@@ -52617,7 +52625,7 @@ aaM
 aaM
 aaM
 aaM
-oeb
+seQ
 acb
 acb
 acb
@@ -52874,7 +52882,7 @@ aaM
 oeb
 oeb
 oeb
-oeb
+seQ
 acb
 acb
 acb
@@ -54930,7 +54938,7 @@ aaM
 oeb
 oeb
 oeb
-oeb
+seQ
 acb
 acb
 acb
@@ -55187,7 +55195,7 @@ aaM
 aaM
 aaM
 aaM
-oeb
+seQ
 acb
 acb
 acb
@@ -55444,7 +55452,7 @@ aaM
 aaM
 aaM
 aaM
-oeb
+seQ
 acb
 acb
 acb
@@ -55701,7 +55709,7 @@ aaM
 aaM
 aaM
 aaM
-oeb
+seQ
 acb
 acb
 acb
