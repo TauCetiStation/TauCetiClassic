@@ -23395,6 +23395,10 @@
 /obj/machinery/optable/torture_table,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
+"cTn" = (
+/obj/structure/shuttle/window,
+/turf/simulated/floor,
+/area/space)
 "cTu" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien12";
@@ -23438,6 +23442,10 @@
 	},
 /turf/unsimulated/floor/carpet,
 /area/velocity)
+"cXY" = (
+/obj/structure/stool/bed/chair/comfy/white,
+/turf/simulated/floor,
+/area/space)
 "cYQ" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/cups{
@@ -23887,6 +23895,10 @@
 	icon_state = "rampbottom"
 	},
 /area/velocity)
+"dGR" = (
+/obj/structure/wisp_tv,
+/turf/unsimulated/floor,
+/area/space)
 "dHb" = (
 /obj/machinery/light{
 	dir = 4
@@ -24428,6 +24440,10 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"eGi" = (
+/obj/structure/table/holotable,
+/turf/simulated/floor,
+/area/space)
 "eHb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -29564,6 +29580,10 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"oUI" = (
+/obj/machinery/door/window/southright,
+/turf/simulated/floor,
+/area/space)
 "oVb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "11,11"
@@ -30125,6 +30145,11 @@
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"qPK" = (
+/obj/effect/light_emitter,
+/obj/item/weapon/occult_pinpointer,
+/turf/simulated/floor,
+/area/space)
 "qSg" = (
 /obj/structure/table/rglass,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
@@ -30289,6 +30314,10 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity/exit)
+"sYq" = (
+/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
+/turf/simulated/floor,
+/area/space)
 "tgI" = (
 /obj/structure/window/shuttle,
 /turf/environment/space,
@@ -30329,6 +30358,9 @@
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/elite_squad)
+"uci" = (
+/turf/simulated/floor,
+/area/space)
 "udd" = (
 /obj/item/weapon/melee/pluvia_gong_baton,
 /turf/unsimulated/floor,
@@ -30340,6 +30372,10 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity/exit)
+"uix" = (
+/obj/structure/mineral_door/wood,
+/turf/simulated/floor,
+/area/space)
 "usD" = (
 /obj/structure/sign/directions/velocity{
 	dir = 4;
@@ -30627,6 +30663,10 @@
 	icon_state = "purplechecker"
 	},
 /area/velocity/locker)
+"xQA" = (
+/obj/effect/landmark/ancestor_wisp_start,
+/turf/simulated/floor,
+/area/space)
 "xTK" = (
 /obj/machinery/conveyor{
 	id = "QMLoad"
@@ -35435,7 +35475,7 @@ aaM
 aeD
 aeD
 aeD
-mPM
+dGR
 mPM
 mPM
 mPM
@@ -36213,13 +36253,13 @@ aeD
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
 aaM
 aaM
 aaM
@@ -36470,13 +36510,13 @@ mPM
 aeD
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+xQA
+uci
+uci
+uci
+xQA
+aeD
 aaM
 aaM
 aaM
@@ -36726,14 +36766,14 @@ mPM
 mPM
 pYf
 aeD
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+uci
+eGi
+uix
+cXY
+uci
+aeD
 aaM
 aaM
 aaM
@@ -36981,16 +37021,16 @@ mPM
 mPM
 uyP
 mPM
-rjE
+mPM
+mPM
+mPM
+mPM
+uci
+uci
+qPK
+uci
+uci
 aeD
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -37240,14 +37280,14 @@ mPM
 mPM
 rjE
 aeD
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+uci
+oUI
+sYq
+cTn
+uci
+aeD
 aaM
 aaM
 aaM
@@ -37498,13 +37538,13 @@ xcN
 aeD
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+xQA
+uci
+uci
+uci
+xQA
+aeD
 aaM
 aaM
 aaM
@@ -37755,13 +37795,13 @@ aeD
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
 aaM
 aaM
 aaM

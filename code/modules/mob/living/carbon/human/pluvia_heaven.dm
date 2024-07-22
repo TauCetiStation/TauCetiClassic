@@ -5,6 +5,7 @@
 /var/global/social_credit_threshold = 5 // не забыть переписать
 /var/global/haram_threshold = 5
 /var/global/list/available_pluvia_gongs = list()
+var/global/list/wisp_start_landmark = list()
 
 /mob/living/carbon/human/proc/bless()
 	to_chat(src, "<span class='notice'>\ <font size=4>Вам известно, что после смерти вы попадете в рай</span></font>")
@@ -196,3 +197,82 @@
 /obj/structure/pluvia_gong/attackby(obj/item/I,mob/user)
 	if(istype(I,/obj/item/weapon/melee/pluvia_gong_baton))
 		ring(user)
+
+/mob/living/simple_animal/ancestor_wisp
+	name = "Светлячок"
+	real_name = "Светлячок"
+	desc = "ЗАСПРАЙТИ МЕНЯ ЗАСПРАЙТИ МЕНЯ ЗАСПРАЙТИ МЕНЯ"
+	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
+	icon_state = "bluemob_2"
+	icon_living = "bluemob_2"
+	stat = CONSCIOUS
+	maxHealth = 1
+	health = 1
+	melee_damage = 0
+	speed = 10
+	faction = "Station"
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_OBSERVER
+	invisibility = INVISIBILITY_OBSERVER
+	universal_understand = TRUE
+	universal_speak = FALSE
+	w_class = SIZE_MINUSCULE
+	density = FALSE
+	min_oxy = 0
+	max_tox = 0
+	max_co2 = 0
+	unsuitable_atoms_damage = 0
+	var/mob/living/carbon/human/my_body
+
+/mob/living/simple_animal/ancestor_wisp/UnarmedAttack(atom/A)
+	return
+
+/mob/living/simple_animal/ancestor_wisp/RangedAttack(atom/A, params)
+	return
+
+/mob/living/simple_animal/ancestor_wisp/proc/return_to_heaven()
+	set category = "Светлячок"
+	set name = "Вернуться в рай"
+	set desc = "Возвращает вас обратно в ваше тело"
+	death()
+
+/mob/living/simple_animal/ancestor_wisp/atom_init()
+	..()
+	verbs += /mob/living/simple_animal/ancestor_wisp/proc/return_to_heaven
+
+/mob/living/simple_animal/ancestor_wisp/death()
+	. = ..()
+	if(mind && my_body)
+		mind.transfer_to(my_body)
+		verbs -= /mob/living/simple_animal/ancestor_wisp/proc/return_to_heaven
+	qdel(src)
+
+
+/obj/effect/landmark/ancestor_wisp_start
+	name = "start"
+	icon = 'icons/mob/landmarks.dmi'
+	icon_state = "x"
+	anchored = TRUE
+	layer = MOB_LAYER
+
+/obj/effect/landmark/ancestor_wisp_start/New(loc)
+	..()
+	wisp_start_landmark += loc
+
+/obj/structure/wisp_tv //я еще не придумал как оформить это визуально
+	name = "ПРИДУМАЙ МНЕ ИМЯ"
+	desc = "ПРИДУМАЙ МНЕ ОПИСАНИЕ"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "security_det"
+	var/next_wisp = 0
+	density = TRUE
+
+/obj/structure/wisp_tv/attack_hand(mob/user)
+	if(user.get_species() in list(PLUVIAN_SPIRIT))
+		if(next_wisp > world.time)
+			to_chat(user, "<span class='notice'>Please wait [round((next_wisp - world.time) * 0.1, 0.1)] seconds before next wisp.</span>")
+			return
+		next_wisp = world.time + 70 SECONDS
+		var/mob/living/simple_animal/ancestor_wisp/new_wisp = new /mob/living/simple_animal/ancestor_wisp(pick(wisp_start_landmark))
+		user.mind.transfer_to(new_wisp)
+		new_wisp.my_body = user

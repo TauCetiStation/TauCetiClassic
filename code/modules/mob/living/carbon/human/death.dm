@@ -21,7 +21,7 @@
 	var/mob/living/carbon/human/pluvian_spirit/P = new /mob/living/carbon/human/pluvian_spirit(heaven_tile)
 	for(var/obj/effect/proc_holder/spell/S in spell_list)
 		if(!istype(S,/obj/effect/proc_holder/spell/create_bless_vote))
-			P.spell_to_remember.Add(S)
+			P.spells_to_remember.Add(S)
 	global.pluvia_religion.remove_member(src, HOLY_ROLE_PRIEST)
 	P.real_name = dna.real_name
 	P.dna = dna.Clone()
@@ -31,9 +31,11 @@
 	P.r_eyes = 255
 	P.regenerate_icons()
 	P.my_corpse = src
-	for(var/obj/effect/proc_holder/spell/S in spell_list) //В рай со своими спеллами нельзя, а то еще наколдуют чето.
-		RemoveSpell(S)
 	mind.transfer_to(P)
+	for(var/obj/item/I in contents)
+		I.remove_item_actions(P) //Если будет не лень, надо закинуть такую же штуку в майнд_трансфер мага, потому что сейчас там ниче не обновляется.
+	for(var/obj/effect/proc_holder/spell/S in P.spell_list) //В рай со своими спеллами нельзя, а то еще наколдуют чето.
+		P.RemoveSpell(S)
 
 /mob/living/carbon/human/dust()
 	new /obj/effect/decal/cleanable/ash(loc)

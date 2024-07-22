@@ -44,8 +44,10 @@
 	if(!target)
 		target = locate(target_type)
 		if(!target)
-			icon_state = "locnull"
-			return
+			target = locate(/mob/living/simple_animal/ancestor_wisp)
+			if(!target)
+				icon_state = "locnull"
+				return
 	set_dir(get_dir(src,target))
 	if(get_dist(src,target))
 		icon_state = "locon"

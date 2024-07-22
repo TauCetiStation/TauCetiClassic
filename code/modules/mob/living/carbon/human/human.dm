@@ -97,7 +97,7 @@
 
 /mob/living/carbon/human/pluvian_spirit
 	var/mob/living/carbon/human/my_corpse
-	var/list/spell_to_remember = list()
+	var/list/spells_to_remember = list()
 
 /mob/living/carbon/human/pluvian_spirit/atom_init(mapload)
 	. = ..(mapload, PLUVIAN_SPIRIT)
@@ -2292,8 +2292,10 @@
 				var/answer = tgui_alert(spirit,"You have been reanimated. Do you want to return to body?","Reanimate", list("Yes","No"))
 				if(answer == "Yes")
 					spirit.mind.transfer_to(spirit.my_corpse)
-					for(var/spell in spirit.spell_to_remember)
+					for(var/spell in spirit.spells_to_remember)
 						spirit.my_corpse.AddSpell(spell)
+					for(var/obj/item/I in spirit.my_corpse.contents)
+						I.add_item_actions(spirit.my_corpse)
 					qdel(spirit)
 					if(!blessed)
 						bless()
