@@ -18,7 +18,6 @@
 	. = ..()
 	icon_state = "[cap_color]soft"
 
-
 /obj/item/clothing/head/soft/wash_act(w_color)
 	. = ..()
 	var/obj/item/clothing/dye_type = get_dye_type(w_color)
