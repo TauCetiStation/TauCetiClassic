@@ -6,10 +6,6 @@
 	if(alert_admins)
 		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)][redirected ? " (redirected)" : ""]", attacker)
 
-/*/
-Запасной вариант, если вариант сверху засрут на ревью.
-Просто поменяю все нужные log_combat на этот прок и получится тоже самое, но длинее
-*/
 /mob/living/proc/process_aggresive_action(mob/living/attacker, msg, alert_admins=TRUE, redirected=FALSE)
 	if(ishuman(attacker))
 		var/mob/living/carbon/human/H = attacker

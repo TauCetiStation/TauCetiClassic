@@ -197,6 +197,7 @@
 
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
+
 		//disallow upgrading if we're grabbing more than one person
 		if((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/weapon/grab)))
 			var/obj/item/weapon/grab/G = assailant.l_hand
@@ -270,7 +271,7 @@
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.Stun(5)
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
-
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 	adjust_position()
 
 
