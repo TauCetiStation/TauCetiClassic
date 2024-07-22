@@ -402,6 +402,7 @@
 			A.cut_overlays()
 			A.add_overlay(image(icon, "noose"))
 			A.add_overlay(image(icon, "noose_overlay"))
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 	return TRUE
 
 /obj/structure/stool/bed/chair/noose/process()
