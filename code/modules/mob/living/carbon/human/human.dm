@@ -2283,11 +2283,9 @@
 		to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 
 /mob/living/carbon/human/proc/return_to_body_dialog()
-	if (client) //in body?
-		playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 	if(ispluvian(src))
 		for(var/mob/living/carbon/human/pluvian_spirit/spirit in player_list)
-			if(spirit.my_corpse == src)
+			if(spirit.my_corpse == src && spirit.client)
 				spirit.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 				var/answer = tgui_alert(spirit,"You have been reanimated. Do you want to return to body?","Reanimate", list("Yes","No"))
 				if(answer == "Yes")
