@@ -31,7 +31,7 @@ var/global/list/wisp_start_landmark = list()
 	user.set_machine(src)
 	var/dat
 	dat = "<B><font color = ##ff0000>Рекомендательное письмо для прохода в рай</font></B><BR>"
-	if(owner.gender == "female")
+	if(owner.gender == FEMALE)
 		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойной попасть в рай после смерти</font></I><BR><BR>"
 	else
 		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойным попасть в рай после смерти</font></I><BR><BR>"
