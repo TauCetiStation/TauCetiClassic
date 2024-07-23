@@ -75,7 +75,6 @@ var/global/mob/Jonesy
 	min_roles = 0
 	max_roles = 6
 
-	var/supply_crate = FALSE
 	var/list/supply_crate_packs = list(
 		list(
 			/obj/item/weapon/flamethrower/full,
@@ -133,26 +132,22 @@ var/global/mob/Jonesy
 		return L.stat == DEAD
 	return TRUE
 
-// мейби стоит это на сигнал от ксеноса переписать
-/datum/faction/nostromo_crew/process()
-	if(!supply_crate && alien_list[ALIEN_LONE_HUNTER].len != 0)
-		var/mob/living/carbon/xenomorph/humanoid/hunter/lone/LH = alien_list[ALIEN_LONE_HUNTER][1]
-		if(LH && LH.estage == 3)
-			var/supply_point = pick(landmarks_list["Nostromo Supply Crate"])
-			var/obj/structure/closet/crate/secure/gear/SC = new (get_turf(supply_point))
-			var/crate_contains = pick(supply_crate_packs)
-			for(var/item in crate_contains)
-				new item(SC)
+/datum/faction/nostromo_crew/proc/spawn_crate()
+	var/supply_point = pick(landmarks_list["Nostromo Supply Crate"])
+	var/obj/structure/closet/crate/secure/gear/SC = new (get_turf(supply_point))
+	SC.req_access = list(access_cargo)
+	var/crate_contains = pick(supply_crate_packs)
+	for(var/item in crate_contains)
+		new item(SC)
 
-			for(var/mob/living/carbon/human/H as anything in human_list)
-				if(H.stat != DEAD)
-					var/scary_sound = pick('sound/hallucinations/scary_sound_1.ogg',
-						'sound/hallucinations/scary_sound_2.ogg',
-						'sound/hallucinations/scary_sound_3.ogg',
-						'sound/hallucinations/scary_sound_4.ogg')
-					H.playsound_local(null, scary_sound, VOL_EFFECTS_MASTER, null, FALSE)
-					to_chat(H, "<span class='warning'>На корабль перед отлётом грузили ящики и контейнеры, где-то на складе может быть оружие!</span>")
-			supply_crate = TRUE
+	for(var/mob/living/carbon/human/H as anything in human_list)
+		if(H.stat != DEAD)
+			var/scary_sound = pick('sound/hallucinations/scary_sound_1.ogg',
+				'sound/hallucinations/scary_sound_2.ogg',
+				'sound/hallucinations/scary_sound_3.ogg',
+				'sound/hallucinations/scary_sound_4.ogg')
+			H.playsound_local(null, scary_sound, VOL_EFFECTS_MASTER, null, FALSE)
+			to_chat(H, "<span class='warning'>На корабль перед отлётом грузили ящики и контейнеры, где-то на складе может быть оружие!</span>")
 
 // android traitor fraction
 /datum/faction/nostromo_android

@@ -41,6 +41,14 @@
 Как можно скорее изничтожьте эту тварь, пока не стало слишком поздно.
 ------------------</b></span>"})
 
+/datum/role/nostromo_crewmate/forgeObjectives()
+	if(!..())
+		return FALSE
+	var/mob/M = antag.original
+	if(ishuman(M) && M.job == "Captain")
+		AppendObjective(/datum/objective/defend_crew)
+	return TRUE
+
 /datum/role/nostromo_crewmate/OnPostSetup()
 	var/mob/M = antag.current
 	var/datum/action/A = new /datum/action/nostromo_map(M)
@@ -70,6 +78,7 @@
 	id = NOSTROMO_ANDROID
 	logo_state = "nano-logo"
 	change_to_maximum_skills = FALSE
+	restricted_jobs = list("Captain")
 
 /datum/role/nostromo_android/forgeObjectives()
 	if(!..())

@@ -2129,7 +2129,7 @@
 	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
 
 	brute_mod = 3
-	burn_mod = 1
+	burn_mod = 3
 	oxy_mod = 0
 	tox_mod = 0
 	clone_mod = 0

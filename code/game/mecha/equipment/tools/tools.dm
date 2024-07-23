@@ -321,6 +321,9 @@
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
 			else if (isfloorturf(target))
+				var/turf/simulated/floor/F = target
+				if(!F.can_deconstruct)
+					return
 				occupant_message("Deconstructing [target]...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))

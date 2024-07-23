@@ -38,6 +38,8 @@
 
 #define isxenohunter(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/hunter))
 
+#define isxenolonehunter(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/hunter/lone))
+
 #define isxenoadult(A) (istype(A, /mob/living/carbon/xenomorph/humanoid))
 
 #define isxenolarva(A) (istype(A, /mob/living/carbon/xenomorph/larva))

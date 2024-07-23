@@ -2,14 +2,8 @@
 	explanation_text = "Убейте всех людей на корабле."
 
 /datum/objective/reproduct/check_completion()
-	for(var/mob/living/carbon/human/H as anything in human_list)
-		var/turf/human_loc = get_turf(H)
-		if(!human_loc || !is_station_level(human_loc.z))
-			continue
-		if(H.stat == DEAD)
-			continue
-		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
-			continue
+	var/datum/faction/alien/F = find_faction_by_type(/datum/faction/alien)
+	if(F && F.check_crew())
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
 
@@ -17,6 +11,8 @@
 	explanation_text = "Ксеноморф на корабле! Убейте эту тварь как можно скорее!"
 
 /datum/objective/kill_alien/check_completion()
+	if(!global.alien_list[ALIEN_LONE_HUNTER].len)
+		return OBJECTIVE_WIN
 	var/mob/living/L = global.alien_list[ALIEN_LONE_HUNTER][1]
 	if(L)
 		if(L.stat == DEAD)
@@ -29,6 +25,8 @@
 	explanation_text = "Ксеноморф должен выжить."
 
 /datum/objective/defend_alien/check_completion()
+	if(!global.alien_list[ALIEN_LONE_HUNTER].len)
+		return OBJECTIVE_LOSS
 	var/mob/living/L = global.alien_list[ALIEN_LONE_HUNTER][1]
 	if(L)
 		if(L.stat == DEAD)
@@ -39,3 +37,12 @@
 				return OBJECTIVE_HALFWIN
 			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
+
+/datum/objective/defend_crew
+	explanation_text = "Сведите потери среди экипажа к минимуму."
+
+/datum/objective/defend_crew/check_completion()
+	var/datum/faction/alien/F = find_faction_by_type(/datum/faction/nostromo_crew)
+	if(F && F.check_crew() <= (human_list.len / 2))
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN

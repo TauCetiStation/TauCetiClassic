@@ -3,7 +3,7 @@
 /datum/job/captain/New()
 	..()
 	MAP_JOB_CHECK
-	access = list(access_maint_tunnels)
+	access = list(access_maint_tunnels, access_captain)
 	minimal_player_ingame_minutes = 1200
 	skillsets = list("Captain" = /datum/skillset/falcon/captain)
 	outfit = /datum/outfit/nostromo_captain
@@ -11,7 +11,7 @@
 /datum/job/doctor/New()
 	..()
 	MAP_JOB_CHECK
-	access = list(access_maint_tunnels)
+	access = list(access_maint_tunnels, access_medical)
 	total_positions = 2
 	spawn_positions = 2
 	alt_titles = list()
@@ -24,7 +24,7 @@
 	..()
 	MAP_JOB_CHECK
 	title = "Engineer"
-	access = list(access_maint_tunnels)
+	access = list(access_maint_tunnels, access_engine)
 	total_positions = 2
 	spawn_positions = 2
 	alt_titles = list()
@@ -33,22 +33,22 @@
 	skillsets = list("Engineer" = /datum/skillset/falcon/engineer)
 	outfit = /datum/outfit/nostromo_engineer
 
-/datum/job/assistant/New()
+/datum/job/blueshield/New()
 	..()
 	MAP_JOB_CHECK
 	title = "Pilot"
-	access = list(access_maint_tunnels)
+	access = list(access_maint_tunnels, access_blueshield)
 	total_positions = 1
 	spawn_positions = 1
 	alt_titles = list()
 	supervisors = "the captain"
-	skillsets = list("Pilot" = /datum/skillset/falcon/test_subject)
+	skillsets = list("Pilot" = /datum/skillset/falcon/officer)
 	outfit = /datum/outfit/nostromo_pilot
 
 /datum/job/cargo_tech/New()
 	..()
 	MAP_JOB_CHECK
-	access = list(access_maint_tunnels)
+	access = list(access_maint_tunnels, access_cargo)
 	total_positions = 1
 	spawn_positions = 1
 	minimal_player_ingame_minutes = 300
@@ -136,6 +136,6 @@ MAP_REMOVE_JOB(warden)
 
 MAP_REMOVE_JOB(forensic)
 
-MAP_REMOVE_JOB(blueshield)
+MAP_REMOVE_JOB(assistant)
 
 #undef JOB_MODIFICATION_MAP_NAME

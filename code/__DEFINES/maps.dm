@@ -12,6 +12,7 @@
 #define ZTRAIT_RESERVED "Transit/Reserved"
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
+#define ZTRAIT_INDECONSTRUCTABLE_PLATING "Indeconstructable plating"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
 #define ZTRAIT_JUNKYARD "Junkyard"
 #define ZTRAIT_SNOWSTORM "Snowstorm"

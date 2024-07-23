@@ -6,7 +6,7 @@
     "station_name_ru": "Ностромо",
     "system_name": "Tau Ceti",
     "station_image": "nostromo",
-    "traits": [{"Linkage": null}],
+    "traits": [{"Linkage": null, "Indeconstructable plating": true}],
     "space_ruin_levels": 0,
     "space_empty_levels": 0,
     "load_junkyard": 0,
