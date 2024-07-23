@@ -111,7 +111,7 @@
 				else
 					reagents.trans_to_ingest(M, reagents.total_volume)
 				bitecount++
-				SEND_SIGNAL(M, COMSIG_HUMAN_EAT, src)
+				SEND_SIGNAL(M, COMSIG_HUMAN_ON_CONSUME, src)
 				On_Consume(M, silent)
 			return TRUE
 
