@@ -361,13 +361,11 @@
 /atom/movable/screen/alert/pluvia_ring/Click()
 	if(!mob_viewer)
 		return
-	else
-		to_chat(mob_viewer, "Вы сбросили звонок!")
-		for(var/obj/effect/proc_holder/spell/no_target/ancestor_call/S in mob_viewer.spell_list)
-			S.target_loc = null
-			S.my_gong = null
-		mob_viewer.clear_alert("Звонок")
-		return
+	to_chat(mob_viewer, "Вы сбросили звонок!")
+	for(var/obj/effect/proc_holder/spell/no_target/ancestor_call/S in mob_viewer.spell_list)
+		S.target_loc = null
+		S.my_gong = null
+	mob_viewer.clear_alert("Звонок")
 
 //ALIENS
 
