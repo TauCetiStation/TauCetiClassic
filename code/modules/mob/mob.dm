@@ -437,7 +437,6 @@
 
 	// New life, new quality.
 	client.prefs.selected_quality_name = null
-
 	M.key = key
 	M.name = M.key
 //	M.Login()	//wat

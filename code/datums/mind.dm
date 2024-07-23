@@ -720,6 +720,7 @@
 		create_mind()
 	if(!mind.name)	mind.name = real_name
 	mind.set_current(src)
+	set_classic_parallax(mind.current)
 
 /mob/proc/create_mind()
 	mind = new /datum/mind(key)

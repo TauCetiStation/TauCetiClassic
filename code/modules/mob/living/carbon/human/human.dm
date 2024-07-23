@@ -2294,6 +2294,7 @@
 						spirit.my_corpse.AddSpell(spell)
 					for(var/obj/item/I in spirit.my_corpse.contents)
 						I.add_item_actions(spirit.my_corpse)
+					set_classic_parallax(spirit.my_corpse)
 					qdel(spirit)
 					if(!blessed)
 						bless()

@@ -17,6 +17,15 @@ var/global/list/wisp_start_landmark = list()
 	ADD_TRAIT(src, TRAIT_SEE_GHOSTS, QUALITY_TRAIT)
 	add_overlay(eye)
 
+/mob/proc/set_heaven_parallax(mob/user)
+	for(var/atom/movable/screen/parallax_layer/L in user.client.parallax_layers_cached)
+		L.icon = 'icons/effects/pluvia_water.dmi'
+
+/mob/proc/set_classic_parallax(mob/user)
+	for(var/atom/movable/screen/parallax_layer/L in user.client.parallax_layers_cached)
+		L.icon = 'icons/effects/parallax.dmi'
+
+
 /obj/item/weapon/bless_vote
 	name = "Рекомендательное письмо"
 	desc = "Билет до рая."
@@ -113,7 +122,7 @@ var/global/list/wisp_start_landmark = list()
 /obj/effect/proc_holder/spell/no_target/ancestor_call/proc/mimic_message(datum/source, message)
 	fake_body.say(message)
 
-/obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/living/user = usr)
+/obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/living/carbon/human/user = usr)
 	if(!fake_body)
 		if(available_pluvia_gongs.len == 0)
 			to_chat(user, "<span class='warning'>Все линии связи сейчас заняты! Попробуйте позже</span>")
@@ -136,6 +145,7 @@ var/global/list/wisp_start_landmark = list()
 		eye.plane = LIGHTING_LAMPS_PLANE
 		eye.layer = ABOVE_LIGHTING_LAYER
 		user.add_overlay(eye)
+		user.set_heaven_parallax(user)
 	else
 		UnregisterSignal(user, list(COMSIG_HUMAN_SAY, COMSIG_PARENT_QDELETING))
 		user.remove_remote_hearer(fake_body)
@@ -146,6 +156,7 @@ var/global/list/wisp_start_landmark = list()
 		user.reset_view(null)
 		user.cut_overlay(eye)
 		available_pluvia_gongs += my_gong
+		user.set_classic_parallax(user)
 	user.clear_alert("Звонок")
 
 /obj/structure/pluvia_gong
@@ -246,6 +257,7 @@ var/global/list/wisp_start_landmark = list()
 	if(mind && my_body)
 		mind.transfer_to(my_body)
 		verbs -= /mob/living/simple_animal/ancestor_wisp/proc/return_to_heaven
+		my_body.set_classic_parallax(my_body)
 	qdel(src)
 
 
@@ -268,12 +280,13 @@ var/global/list/wisp_start_landmark = list()
 	var/next_wisp = 0
 	density = TRUE
 
-/obj/structure/wisp_tv/attack_hand(mob/user)
+/obj/structure/wisp_tv/attack_hand(mob/living/carbon/human/user)
 	if(user.get_species() in list(PLUVIAN_SPIRIT))
 		if(next_wisp > world.time)
 			to_chat(user, "<span class='notice'>Please wait [round((next_wisp - world.time) * 0.1, 0.1)] seconds before next wisp.</span>")
 			return
 		next_wisp = world.time + 70 SECONDS
 		var/mob/living/simple_animal/ancestor_wisp/new_wisp = new /mob/living/simple_animal/ancestor_wisp(pick(wisp_start_landmark))
+		user.set_heaven_parallax(user)
 		user.mind.transfer_to(new_wisp)
 		new_wisp.my_body = user
