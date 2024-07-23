@@ -543,11 +543,11 @@
 			icon_state = initial(icon_state)
 			active = FALSE
 		set_light(0)
-		if(!istype(src, /obj/item/weapon/weldingtool/experimental/sindi))
+		if(!istype(src, /obj/item/weapon/weldingtool/experimental/syndicate_zippo))
 			STOP_PROCESSING(SSobj, src)
 		return
 
-/obj/item/weapon/weldingtool/experimental/sindi/process()
+/obj/item/weapon/weldingtool/experimental/syndicate_zippo/process()
 	..()
 	if((get_fuel() < max_fuel) && (next_refuel_tick < world.time) && !active)
 		next_refuel_tick = world.time + 2.5 SECONDS

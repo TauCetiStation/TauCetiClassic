@@ -1097,10 +1097,10 @@
 	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
 
-/datum/uplink_item/badass/item/weapon/weldingtool/experimental/sindi
+/datum/uplink_item/badass/item/weapon/weldingtool/experimental/syndicate_zippo
 	name = "Syndicate Zippo"
-	desc = "A very cool zippo and welding"
-	item = /obj/item/weapon/weldingtool/experimental/sindi
+	desc = "A very cool zippo and welder"
+	item = /obj/item/weapon/weldingtool/experimental/syndicate_zippo
 	cost = 4
 
 /datum/uplink_item/badass/syndiedonuts
