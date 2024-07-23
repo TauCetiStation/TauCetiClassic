@@ -1,7 +1,10 @@
 // this can be little confusing, but call it as you would call
 // /datum/preferences/proc/get_pref(type)
 // ex. client.prefs.get_pref()
-#define get_pref(type) preferences_list[type].value
+#define get_pref(type) prefs_player[type].value
+
+// maximum binds per keybind 
+#define KEYBINDS_MAXIMUM 3
 
 // pref types
 #define PREF_TYPE_BOOLEAN "boolean"
@@ -10,6 +13,7 @@
 #define PREF_TYPE_RANGE   "range"
 #define PREF_TYPE_SELECT  "select"
 #define PREF_TYPE_HEX     "hex"
+#define PREF_TYPE_KEYBIND "keybind"
 #define PREF_TYPE_CUSTOM  "custom"
 
 // pref domains (categories)
@@ -25,7 +29,19 @@
 #define PREF_PLAYER_UI "ui"
 #define PREF_PLAYER_CHAT "chat"
 #define PREF_PLAYER_GAME "game"
-#define PREF_PLAYER_KEYBINDS "keybinds"
+//#define PREF_PLAYER_KEYBINDS "keybinds"
+
+// keybinds pref domain subcategories
+#define PREF_KEYBINDS_CLIENT "CLIENT"
+#define PREF_KEYBINDS_EMOTE "EMOTE"
+#define PREF_KEYBINDS_ADMIN "ADMIN"
+#define PREF_KEYBINDS_XENO "XENO"
+#define PREF_KEYBINDS_CARBON "CARBON"
+#define PREF_KEYBINDS_HUMAN "HUMAN" // todo: 3 of them
+#define PREF_KEYBINDS_ROBOT "ROBOT"
+#define PREF_KEYBINDS_MISC "MISC"
+#define PREF_KEYBINDS_MOVEMENT "MOVEMENT"
+#define PREF_KEYBINDS_COMMUNICATION "COMMUNICATION"
 
 ///datum/pref/player/display/zoom
 #define ICON_SCALE_AUTO "0"
@@ -89,3 +105,16 @@
 #define UI_STYLE_MIDNIGHT "Midnight"
 #define UI_STYLE_OLD "Old"
 #define UI_STYLE_ORANGE "Orange"
+
+// keybinds weight
+#define WEIGHT_HIGHEST    0
+#define WEIGHT_ADMIN     10
+#define WEIGHT_CLIENT    20
+#define WEIGHT_ROBOT     30
+#define WEIGHT_MOB       40
+#define WEIGHT_LIVING    50
+#define WEIGHT_DEAD      60
+#define WEIGHT_EMOTE     70
+#define WEIGHT_LOWEST   999
+
+

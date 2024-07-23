@@ -1,19 +1,99 @@
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 
-/* todo */
-import { Section, Box, Button, Input, NumberInput, Tabs, Dropdown, Flex, Slider, NoticeBox, ColorBox, Tooltip, Icon } from '../components';
+import { 
+  Section,
+  Box,
+  Button,
+  Input,
+  NumberInput,
+  Tabs,
+  Dropdown,
+  Flex,
+  Stack,
+  Slider,
+  NoticeBox,
+  ColorBox,
+  Tooltip,
+  Icon,
+  KeyListener,
+  TrackOutsideClicks,
+  Modal,
+} from '../components';
+import { isEscape } from 'common/keys';
+import { KeyEvent } from '../events';
 import { Window } from '../layouts';
+
+// byond <-> IE names
+// order is important, we use it for replace, so place verbose names up
+// p.s. i hate them both endlessly
+const byond2jsKeysDictionary = {
+  "Northwest": "Home",
+  "Northeast": "PageUp",
+  "Southwest": "End",
+  "Southeast": "PageDown",
+  "Space": "Spacebar",
+  "Ctrl": "Control",
+  "Return": "Enter",
+  "Delete": "Del",
+  "North": "Up",
+  "East": "Right",
+  "South": "Down",
+  "West": "Left",
+};
 
 export const ClientSettings = (props, context) => {
   const { act, data } = useBackend(context);
 
   const { active_tab, settings, tabs, tabs_tips } = data;
 
+  const [keyBindingState, setKeyBindingState] = useLocalState(context, 'showmodal', null);
+
+  let settingsList;
+
+  // this all is too overcomplicated because of keybinds tab that handled differently
+  if (active_tab === "keybinds") {
+    const sortedByCategory = settings.reduce((acc, setting) => {
+      if (!acc[setting.category]) {
+        acc[setting.category] = [];
+      }
+      acc[setting.category].push(setting);
+      return acc;
+    }, {});
+
+    settingsList = Object.keys(sortedByCategory).map(categoryName => (
+      <Section key={categoryName} title={categoryName}>
+        {sortedByCategory[categoryName].map(setting => (
+          <SettingField 
+            setting={setting} 
+            setKeyBindingState={setKeyBindingState} 
+            key={setting.type} 
+          />
+        ))}
+      </Section>
+    ));
+
+  } else {
+    settingsList = settings.map(setting => (
+      <SettingField 
+        setting={setting} 
+        key={setting.type} 
+      />
+    ));
+  }
+
   return (
     <Window
       title="Настройки"
       width={500}
       height={650}>
+
+      {keyBindingState 
+        && <KeyBindingModal 
+          settings={settings}
+          keyBindingState={keyBindingState} 
+          setKeyBindingState={setKeyBindingState} 
+        />}
+
       <Window.Content scrollable>
         <Tabs>
           {Object.keys(tabs).map(tab => (
@@ -30,11 +110,93 @@ export const ClientSettings = (props, context) => {
             {tabs_tips[active_tab]}
           </NoticeBox>
         )}
-        {settings.map(setting => (
-          <SettingField setting={setting} key={setting.type} />
-        ))}
+        {settingsList}
       </Window.Content>
     </Window>
+  );
+};
+
+const KeyBindingModal = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    settings,
+    keyBindingState,
+    setKeyBindingState,
+  } = props;
+
+  const handleKeyDown = (keyEvent) => {
+    const event = keyEvent.event;
+
+    event.preventDefault();
+  };
+
+  const handleKeyUp = (keyEvent) => {
+    const event = keyEvent.event;
+
+    event.preventDefault();
+
+    if (isEscape(event.key)) { // empty key (reset)
+      act('set_keybind_value', {
+        type: keyBindingState.type, 
+        index: keyBindingState.index+1,
+        key: "",
+      });
+      setKeyBindingState(null);
+      return;
+    }
+
+    // todo: rewrite it all to use event.code with 516
+    // also maybe this should be moved to keyEvent.toString()
+
+    let sanitizedKey = event.key;
+
+    // so shift+numeric keys will be parsed as 1234 instead of !@#$
+    if (47 < event.keyCode && event.keyCode < 58) {
+      sanitizedKey = String.fromCharCode(event.keyCode);
+    }
+    // so shift+letter keys will be parsed as latin and in lower case
+    else if (64 < event.keyCode && event.keyCode < 91) {
+      sanitizedKey = String.fromCharCode(event.keyCode);
+    }
+    // format Numpad0-Numpad9 for byond
+    else if (95 < event.keyCode && event.keyCode < 106) {
+      sanitizedKey = "Numpad"+sanitizedKey;
+    }
+
+    // replace by dictionary if needed
+    sanitizedKey = Object.keys(byond2jsKeysDictionary)
+      .find(key => byond2jsKeysDictionary[key] === sanitizedKey) || sanitizedKey;
+
+    act('set_keybind_value', {
+      type: keyBindingState.type, 
+      index: keyBindingState.index+1,
+      key: sanitizedKey,
+      altMod: event.altKey,
+      ctrlMod: event.ctrlKey,
+      shiftMod: event.shiftKey,
+    });
+    setKeyBindingState(null);
+  };
+
+  const preference = settings.find(pref => pref.type === keyBindingState.type);
+
+  return (
+    <Modal textAlign="center">
+      <KeyListener
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
+      />
+      <Section title={`Назначить клавишу для ${preference.name}`}>
+        <Box italic>
+          {preference.description} <br /><br />
+        </Box>
+        <Box bold>
+          Нажмити любую клавишу.<br /><br />
+          Можно использовать комбинации с Alt/Ctrl/Shift.<br /><br />
+          Нажмите ESC для сброса.
+        </Box>
+      </Section>
+    </Modal>
   );
 };
 
@@ -45,11 +207,12 @@ const SettingField = (props, context) => {
   } = props;
 
   const settingTypes = {
-    boolean: <SettingFieldBoolean {...props} />,
-    text: <SettingFieldText {...props} />,
-    range: <SettingFieldRange {...props} />,
-    select: <SettingFieldSelect {...props} />,
-    hex: <SettingFieldHex {...props} />,
+    boolean: <SettingTypeBoolean {...props} />,
+    text: <SettingTypeText {...props} />,
+    range: <SettingTypeRange {...props} />,
+    select: <SettingTypeSelect {...props} />,
+    hex: <SettingTypeHex {...props} />,
+    keybind: <SettingTypeKeybind {...props} />,
   };
 
   let outline = null;
@@ -83,7 +246,7 @@ const SettingField = (props, context) => {
         </Flex.Item>
         <Flex.Item basis="100%" pt="1em" style={{ "white-space": "pre-wrap" }}>
           { setting.description }
-          { JSON.stringify(setting.v_parameters) }
+          { /* JSON.stringify(setting.v_parameters)*/ }
           { access_message && (
             <>
               <br />
@@ -97,7 +260,7 @@ const SettingField = (props, context) => {
   );
 };
 
-const SettingFieldRange = (props, context) => {
+const SettingTypeRange = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     setting,
@@ -126,7 +289,7 @@ const SettingFieldRange = (props, context) => {
   );
 };
 
-const SettingFieldHex = (props, context) => {
+const SettingTypeHex = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     setting,
@@ -142,7 +305,7 @@ const SettingFieldHex = (props, context) => {
   );
 };
 
-const SettingFieldText = (props, context) => {
+const SettingTypeText = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     setting,
@@ -156,7 +319,7 @@ const SettingFieldText = (props, context) => {
   );
 };
 
-const SettingFieldSelect = (props, context) => {
+const SettingTypeSelect = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     setting,
@@ -186,7 +349,7 @@ const SettingFieldSelect = (props, context) => {
   }
 };
 
-const SettingFieldBoolean = (props, context) => {
+const SettingTypeBoolean = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     setting,
@@ -200,4 +363,38 @@ const SettingFieldBoolean = (props, context) => {
       onClick={() => act('set_value', { type: setting.type, value: !setting.value })}
     />
   );
+};
+
+
+const SettingTypeKeybind = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    setting,
+    setKeyBindingState,
+  } = props;
+
+  const humaniseByondKey = (text) => {
+    const patterns = Object.keys(byond2jsKeysDictionary).join("|");
+    return text.replace(new RegExp(patterns, "g"), match => byond2jsKeysDictionary[match]);
+  };
+
+  let binds = []; 
+  if (setting.value) {
+    binds = setting.value.split(" ");
+  }
+  let buttons = [];
+
+  for (let i=0; i < 3; i++) {
+    buttons.push(
+      <Stack.Item basis="33.3%">
+        <Button fluid textAlign="center"
+          content={binds[i] ? humaniseByondKey(binds[i]) : "---"}
+          color={!binds[i] && "neutral"}
+          onClick={() => setKeyBindingState({ type: setting.type, index: i })}
+        />
+      </Stack.Item>
+    );
+  }
+
+  return (<Stack>{buttons}</Stack>);
 };

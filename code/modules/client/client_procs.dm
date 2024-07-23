@@ -784,21 +784,27 @@ var/global/list/blacklisted_builds = list(
  * * direct_prefs - the preference we're going to get keybinds from
  */
 /client/proc/update_special_keybinds(datum/preferences/direct_prefs)
+	//todo
 	var/datum/preferences/D = prefs || direct_prefs
-	if(!D?.key_bindings)
+	if(!D?.prefs_keybinds)
 		return
 	movement_keys = list()
-	for(var/key in D.key_bindings)
-		for(var/kb_name in D.key_bindings[key])
-			switch(kb_name)
-				if("North")
-					movement_keys[key] = NORTH
-				if("East")
-					movement_keys[key] = EAST
-				if("West")
-					movement_keys[key] = WEST
-				if("South")
-					movement_keys[key] = SOUTH
+
+	var/datum/pref/keybinds/P = D.prefs_keybinds[/datum/pref/keybinds/movement/north]
+	for(var/key in splittext(P.value, " "))
+		movement_keys[key] = NORTH
+
+	P = D.prefs_keybinds[/datum/pref/keybinds/movement/east]
+	for(var/key in splittext(P.value, " "))
+		movement_keys[key] = EAST
+
+	P = D.prefs_keybinds[/datum/pref/keybinds/movement/west]
+	for(var/key in splittext(P.value, " "))
+		movement_keys[key] = WEST
+
+	P = D.prefs_keybinds[/datum/pref/keybinds/movement/south]
+	for(var/key in splittext(P.value, " "))
+		movement_keys[key] = SOUTH
 
 // ckey = datum/stat/leave_stat
 var/global/list/disconnected_ckey_by_stat = list()

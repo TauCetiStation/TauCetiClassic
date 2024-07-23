@@ -182,6 +182,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		set_pref(/datum/pref/meta/random_slot, S["randomslot"])
 		set_pref(/datum/pref/player/game/hotkey_mode, S["hotkeys"])
 
+		// parse S["key_bindings"]
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
 		for(var/organ_name in organ_data)
@@ -402,44 +404,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				ResetQuirks()
 				break
 
-/// checks through keybindings for outdated unbound keys and updates them
-/datum/preferences/proc/check_keybindings()
-	if(!parent)
-		return
-
-	// When loading from savefile key_binding can be null
-	// This happens when player had savefile created before new kb system, but hotkeys was not saved
-	if(!length(key_bindings))
-		key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
-
-	var/list/user_binds = list()
-	for (var/key in key_bindings)
-		for(var/kb_name in key_bindings[key])
-			user_binds[kb_name] += list(key)
-	var/list/notadded = list()
-	for (var/name in global.keybindings_by_name)
-		var/datum/keybinding/kb = global.keybindings_by_name[name]
-		if(length(user_binds[kb.name]))
-			continue // key is unbound and or bound to something
-		var/addedbind = FALSE
-		for(var/hotkeytobind in kb.hotkey_keys)
-			if(!length(key_bindings[hotkeytobind]))
-				LAZYADD(key_bindings[hotkeytobind], kb.name)
-				addedbind = TRUE
-		if(!addedbind)
-			notadded += kb
-	if(length(notadded))
-		addtimer(CALLBACK(src, PROC_REF(announce_conflict), notadded), 5 SECONDS)
-
-/datum/preferences/proc/announce_conflict(list/notadded)
-	to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!\n\
-	There are new keybindings that have defaults bound to keys you already set, They will default to Unbound. You can bind them in Setup Character or Game Preferences\n\
-	<a href='?_src_=prefs;preference=tab;tab=3'>Or you can click here to go straight to the keybindings page</a></span>")
-	for(var/item in notadded)
-		var/datum/keybinding/conflicted = item
-		to_chat(parent, "<span class='userdanger'>[conflicted.category]: [conflicted.full_name] needs updating</span>")
-		LAZYADD(key_bindings["None"], conflicted.name) // set it to unbound to prevent this from opening up again in the future
-
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
 		return
@@ -463,8 +427,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["emote_panel"]       >> custom_emote_panel
 
 	// Custom hotkeys
-	S["key_bindings"] >> key_bindings // later
-	check_keybindings()
+	//S["key_bindings"] >> key_bindings // later
+	//check_keybindings()
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
@@ -472,7 +436,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_preferences(needs_update, S) // needs_update = savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	key_bindings 	= sanitize_keybindings(key_bindings)
+	//key_bindings 	= sanitize_keybindings(key_bindings)
 	custom_emote_panel  = sanitize_emote_panel(custom_emote_panel)
 
 	if(needs_update >= 0) //save the updated version
@@ -503,7 +467,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 	// Custom hotkeys
-	S["key_bindings"] << key_bindings
+//	S["key_bindings"] << key_bindings
 
 	return 1
 
@@ -792,14 +756,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uplinklocation"]      << uplinklocation
 
 	return 1
-
-/proc/sanitize_keybindings(value)
-	var/list/base_bindings = sanitize_islist(value,list())
-	for(var/key in base_bindings)
-		base_bindings[key] = base_bindings[key] & global.keybindings_by_name
-		if(!length(base_bindings[key]))
-			base_bindings -= key
-	return base_bindings
 
 /proc/sanitize_emote_panel(value)
 	var/list/emote_panel = SANITIZE_LIST(value)

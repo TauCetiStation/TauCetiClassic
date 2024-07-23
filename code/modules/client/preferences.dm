@@ -15,8 +15,9 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/client/parent
 
 	// list of new datumized preferences
-	var/list/datum/pref/preferences_list = list()
-	var/preferences_list_dirty = FALSE // list of dirty DOMAINS!!
+	var/list/datum/pref/prefs_player = list()
+	var/list/datum/pref/prefs_keybinds = list()
+	var/prefs_dirty = FALSE // list of dirty DOMAINS!!
 
 	//doohickeys for savefiles
 	var/path
@@ -37,8 +38,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/admin_cid_request_cache
 	var/admin_ip_request_cache
 
-	// Custom Keybindings
-	var/list/key_bindings = list()
+	/// Cached list of keybindings, keys mapped to /datum/pref/keybinds
+	var/list/key_bindings_by_key = list()
 
 	var/list/custom_emote_panel = list()
 
@@ -154,11 +155,15 @@ var/global/list/datum/preferences/preferences_datums = list()
 	// todo: rewrite this part
 	for(var/datum/pref/player/P as anything in subtypesof(/datum/pref/player))
 		if(initial(P.name))
-			preferences_list[initial(P.type)] = new P
+			prefs_player[initial(P.type)] = new P
 	for(var/datum/pref/meta/P as anything in subtypesof(/datum/pref/meta))
 		if(initial(P.name))
-			preferences_list[initial(P.type)] = new P
+			prefs_player[initial(P.type)] = new P
+	for(var/datum/pref/keybinds/P as anything in subtypesof(/datum/pref/keybinds))
+		if(initial(P.name))
+			prefs_keybinds[initial(P.type)] = new P
 
+	init_keybinds(C) // move it 
 
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -166,10 +171,20 @@ var/global/list/datum/preferences/preferences_datums = list()
 			if(load_preferences()) // loads and updates preferences
 				if(load_character()) // everything updated at this moment, now try to load default character
 					return
+
+	// part below is init of default parameters
+	// in case if we can't load it from saves
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
-	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
 	C?.set_macros()
+
+
+/datum/preferences/proc/init_keybinds(client/client)
+	for(var/type in prefs_keybinds)
+		var/datum/pref/keybinds/KB = prefs_keybinds[type]
+		var/list/keybinds = splittext(KB.value, " ")
+		for(var/key in keybinds)
+			key_bindings_by_key[key] += list(KB)
 
 // reattach existing datum to client if client was disconnected and connects again
 /datum/preferences/proc/reattach_to_client(client/client)
@@ -193,18 +208,36 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 // replaced with macro for speed
 ///datum/preferences/proc/get_pref(type)
-//	return preferences_list[type].value
+//	return prefs_player[type].value
 
 /datum/preferences/proc/set_pref(type, new_value)
-	var/datum/pref/player/write_pref = preferences_list[type]
+	var/datum/pref/player/write_pref = prefs_player[type]
 	world.log << "writting [write_pref.name] / [type]"
 
 	if(write_pref.update_value(new_value, parent))
-		mark_dirty() // mark_dirty(domain) -> adds to SS / or timer
+		mark_dirty()
+
+/datum/preferences/proc/set_keybind(type, new_value, index, altMod, ctrlMod, shiftMod)
+	var/datum/pref/keybinds/write_pref = prefs_keybinds[type]
+	world.log << "writting [write_pref.name] / [type]"
+
+	if(index)
+		var/sanitized_key = write_pref.satinize_key(new_value, altMod, ctrlMod, shiftMod)
+		new_value = ""
+		var/list/keybinds = splittext(write_pref.value, " ")
+		for(var/i in 1 to KEYBINDS_MAXIMUM)
+			if(i == index)
+				new_value += sanitized_key
+			else if(i <= keybinds.len)
+				new_value += keybinds[i]
+			new_value += " "
+
+	if(write_pref.update_value(new_value, parent))
+		mark_dirty()
 
 // mark as needed to update
 /datum/preferences/proc/mark_dirty()
-	preferences_list_dirty = TRUE
+	prefs_dirty = TRUE
 	//SSpreferences.mark_dirty(src)
 
 /datum/preferences/proc/ShowChoices(mob/user)
@@ -234,7 +267,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
 		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
 		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
-		dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
 		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
@@ -258,8 +290,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 			dat += ShowQuirks(user)
 		if("fluff")
 			dat += ShowFluffMenu(user)
-		if("custom_keybindings")
-			dat += ShowCustomKeybindings(user)
 	dat += "</body></html>"
 
 	winshow(user, "preferences_window", TRUE)
@@ -318,9 +348,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		if("fluff")
 			menu_type = "fluff"
 
-		if("custom_keybindings")
-			menu_type = "custom_keybindings"
-
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
@@ -351,9 +378,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		if("fluff")
 			process_link_fluff(user, href_list)
 			return 1
-
-		if("custom_keybindings")
-			process_link_custom_keybindings(user, href_list)
 
 	ShowChoices(user)
 	return 1
