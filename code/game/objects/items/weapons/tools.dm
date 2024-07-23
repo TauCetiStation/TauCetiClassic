@@ -515,16 +515,16 @@
 	if(!active && (get_fuel() == max_fuel))
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/weapon/weldingtool/experimental/sindi
+/obj/item/weapon/weldingtool/experimental/syndicate_zippo
 	icon_state = "syndizippo"
-	name = "syndi zippo"
+	name = "syndicate zippo"
 	desc = "A very cool zippo"
 	icon = 'icons/obj/items.dmi'
 	w_class = SIZE_MINUSCULE
 	max_fuel = 150
 	next_refuel_tick = 0
 
-/obj/item/weapon/weldingtool/experimental/sindi/process()
+/obj/item/weapon/weldingtool/experimental/syndicate_zippo/process()
 	if(active)
 		hitsound = SOUNDIN_LASERACT
 		if(icon_state != "syndizippo1") // Check that the sprite is correct, if it isnt, it means toggle() was not called

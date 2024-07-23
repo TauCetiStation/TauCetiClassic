@@ -44,7 +44,7 @@
 	)
 	syndie = list(
 		/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate = 1,
-		/obj/item/weapon/weldingtool/experimental/sindi = 1,
+		/obj/item/weapon/weldingtool/experimental/syndicate_zippo = 1,
 	)
 	prices = list(
 		/obj/item/weapon/storage/fancy/cigarettes = 20,
