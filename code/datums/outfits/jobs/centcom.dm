@@ -20,6 +20,7 @@
 		)
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H)
+	H.social_credit = 0
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
 		r_hand = /obj/item/weapon/melee/chainofcommand
 
@@ -40,3 +41,6 @@
 
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/blueshield)
+
+/datum/outfit/job/blueshield/pre_equip(mob/living/carbon/human/H)
+	H.social_credit = 0

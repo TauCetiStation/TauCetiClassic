@@ -20,6 +20,7 @@
 	back_style = BACKPACK_STYLE_SECURITY
 
 /datum/outfit/job/hos/pre_equip(mob/living/carbon/human/H)
+	H.social_credit = 0
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
 		implants += /obj/item/weapon/implant/obedience
 
@@ -44,6 +45,7 @@
 	back_style = BACKPACK_STYLE_SECURITY
 
 /datum/outfit/job/warden/pre_equip(mob/living/carbon/human/H)
+	H.social_credit = 0
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
 		implants += /obj/item/weapon/implant/mind_protect/loyalty
 		implants += /obj/item/weapon/implant/dexplosive
@@ -90,6 +92,7 @@
 	back_style = BACKPACK_STYLE_SECURITY
 
 /datum/outfit/job/officer/pre_equip(mob/living/carbon/human/H)
+	H.social_credit = 0
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
 		implants += /obj/item/weapon/implant/mind_protect/loyalty
 		implants += /obj/item/weapon/implant/dexplosive
@@ -131,6 +134,7 @@
 	back_style = BACKPACK_STYLE_SECURITY
 
 /datum/outfit/job/cadet/pre_equip(mob/living/carbon/human/H)
+	H.social_credit = 0
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
 		uniform = /obj/item/clothing/under/syndicate/tacticool
 		uniform_f = /obj/item/clothing/under/syndicate/tacticool

@@ -106,9 +106,6 @@
 	if(imp_in.stat == DEAD)
 		return
 
-	var/mob/living/carbon/human/H = imp_in
-	H.social_credit = 0 // пока ты не скинешь эту штуку - ты не можешь заработать карму
-
 	if(prob(1) && prob(25))//1/400
 		switch(rand(1, 4))
 			if(1)
