@@ -132,7 +132,7 @@ haram_threshold тоже должен как-то высчитываться, н
 		target.setDrugginess(0)
 		target.haram_point += haram_drunk
 		target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		to_chat(target, "<span class='warning'>\ <font size=3>Вы нарушаете третью заповедь!</span></font>")
+		to_chat(target, "<span class='warning'>\ <font size=3>Вы нарушаете вторую заповедь!</span></font>")
 	else
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 		to_chat(target, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
@@ -154,6 +154,8 @@ haram_threshold тоже должен как-то высчитываться, н
 
 /datum/religion/pluvia/proc/carpet_haram(mob/living/carbon/human/target)
 	if(target.shoes)
+		message_admins("1 [target]")
+		message_admins("2 [target.buckled]")
 		if(target.haram_point < haram_threshold)
 			target.haram_point += haram_carpet
 			target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -167,7 +169,9 @@ haram_threshold тоже должен как-то высчитываться, н
 /turf/simulated/floor/carpet/Entered(atom/movable/O)
 	..()
 	if(ishuman(O))
-		SEND_SIGNAL(O, COMSIG_HUMAN_ON_CARPET, src)
+		var/mob/living/carbon/human/target = O
+		if(istype(target.pulledby, /obj/structure/stool))
+			SEND_SIGNAL(O, COMSIG_HUMAN_ON_CARPET, src)
 
 /datum/religion/pluvia/add_member(mob/living/carbon/human/H)
 	. = ..()
