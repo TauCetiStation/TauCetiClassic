@@ -546,6 +546,15 @@
 		if(!istype(src, /obj/item/weapon/weldingtool/experimental/sindi))
 			STOP_PROCESSING(SSobj, src)
 		return
+
+/obj/item/weapon/weldingtool/experimental/sindi/process()
+	..()
+	if((get_fuel() < max_fuel) && (next_refuel_tick < world.time) && !active)
+		next_refuel_tick = world.time + 2.5 SECONDS
+		reagents.add_reagent("fuel", 1)
+	if(!active && (get_fuel() == max_fuel))
+		STOP_PROCESSING(SSobj, src)
+
 /*
  * Crowbar
  */
