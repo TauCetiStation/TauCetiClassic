@@ -39,6 +39,9 @@
 	name = "meat"
 	desc = "Tastes like... something korean..."
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian
+	desc = "Tastes like... an ID card..."
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/pug
 	name = "meat"
 	desc = "Tastes like... uhhhh..."

@@ -635,7 +635,7 @@
 		while(count > 0 && candidates.len)
 			var/mob/M = pick(candidates)
 			candidates -= M
-			if(!M.mind)
+			if(!M.mind || !M.client.prefs.be_role.Find(role_req))
 				continue
 
 			if(isobserver(M))
@@ -651,7 +651,7 @@
 		while(count > 0 && candidates.len)
 			var/mob/M = pick(candidates)
 			candidates -= M
-			if(!M.mind)
+			if(!M.mind || !M.client.prefs.be_role.Find(role_req))
 				continue
 
 			if(isobserver(M))

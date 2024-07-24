@@ -100490,7 +100490,6 @@
 	},
 /area/station/hallway/primary/starboard)
 "uQb" = (
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/effect/decal/remains/human,
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)

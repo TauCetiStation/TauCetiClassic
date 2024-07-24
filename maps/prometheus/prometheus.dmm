@@ -451,7 +451,6 @@
 /area/station/medical/genetics)
 "aaF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/item/weapon/pen,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/port)
@@ -34991,7 +34990,6 @@
 	},
 /area/station/security/armoury)
 "hNj" = (
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/structure/closet/emcloset,
 /obj/machinery/alarm{
 	pixel_x = 29;
@@ -76781,7 +76779,6 @@
 /obj/item/weapon/storage/box/drinkingglasses,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
 "snZ" = (
