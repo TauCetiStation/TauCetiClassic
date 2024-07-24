@@ -8,6 +8,8 @@
 	list_reagents = list("protein" = 3)
 	food_type = NATURAL_FOOD
 	food_moodlet = /datum/mood_event/natural_food
+	cookingThreshold = 10
+	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchenknife))
