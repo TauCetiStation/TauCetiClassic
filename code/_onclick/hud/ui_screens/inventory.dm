@@ -29,7 +29,7 @@
 	remove_stored_outline()
 
 /atom/movable/screen/inventory/proc/add_stored_outline()
-	if(!slot_id || !usr.client.prefs.outline_enabled)
+	if(!slot_id || !usr.client.prefs.get_pref(/datum/pref/player/ui/outline))
 		return
 	var/obj/item/inv_item = usr.get_item_by_slot(slot_id)
 	if(!inv_item)

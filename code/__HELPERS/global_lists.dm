@@ -53,7 +53,7 @@
 	sort_surgeries()
 
 	// Keybindings
-	for(var/KB in subtypesof(/datum/keybinding))
+/*	for(var/KB in subtypesof(/datum/keybinding))
 		var/datum/keybinding/keybinding = KB
 		if(!initial(keybinding.name))
 			continue
@@ -61,7 +61,7 @@
 		global.keybindings_by_name[instance.name] = instance
 		if(length(instance.hotkey_keys))
 			for(var/bound_key in instance.hotkey_keys)
-				global.hotkey_keybinding_list_by_key[bound_key] += list(instance.name)
+				global.hotkey_keybinding_list_by_key[bound_key] += list(instance.name)*/
 
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 	init_subtypes(/datum/dirt_cover, global.all_dirt_covers)

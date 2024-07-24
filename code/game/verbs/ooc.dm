@@ -1,5 +1,5 @@
 
-var/global/normal_ooc_colour = null
+var/global/normal_ooc_colour = DEFAULT_OOC_COLOR
 var/global/bridge_ooc_colour = "#7b804f"
 
 /client/verb/ooc(msg as text)
@@ -17,7 +17,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	if(!msg)	return
 
-	if(!(prefs.chat_toggles & CHAT_OOC))
+	if(!prefs.get_pref(/datum/pref/player/chat/ooc))
 		to_chat(src, "<span class='red'>You have OOC muted.</span>")
 		return
 
@@ -61,17 +61,14 @@ var/global/bridge_ooc_colour = "#7b804f"
 		if(holder.rights & R_DEBUG && !(holder.rights & R_ADMIN))
 			display_colour = "#1b521f"	//dark green
 		else if(holder.rights & R_ADMIN)
-			if(config.allow_admin_ooccolor)
-				display_colour = src.prefs.aooccolor
-			else
-				display_colour = "#b82e00"	//orange
+			display_colour = (config.allow_admin_ooccolor && prefs.get_pref(/datum/pref/player/chat/aooccolor)) || "#b82e00"
 
 	send2ooc(msg, ooc_name, display_colour, src)
 
 	world.send2bridge(
 		type = list(BRIDGE_OOC),
 		attachment_msg = "OOC: **[(holder && holder.fakekey)? holder.fakekey : ooc_name ]**: [msg]",
-		attachment_color = (supporter && prefs.ooccolor) ? prefs.ooccolor : display_colour,
+		attachment_color = (supporter && prefs.get_pref(/datum/pref/player/chat/ooccolor)) || display_colour
 	)
 
 /proc/send2ooc(msg, name, colour, client/sender, display_name, prefix = "OOC")
@@ -88,8 +85,8 @@ var/global/bridge_ooc_colour = "#7b804f"
 			display_name = name
 
 		if(sender)
-			if(sender.supporter && sender.prefs.ooccolor)
-				display_name = "<span style='color: [sender.prefs.ooccolor]'>[display_name]</span>"
+			if(sender.supporter && sender.prefs.get_pref(/datum/pref/player/chat/ooccolor))
+				display_name = "<span style='color: [sender.prefs.get_pref(/datum/pref/player/chat/ooccolor)]'>[display_name]</span>"
 
 			if(sender.holder && sender.holder.fakekey)
 				if(C.holder)
@@ -97,7 +94,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 				else
 					display_name = sender.holder.fakekey
 
-		if(C.prefs.chat_toggles & CHAT_OOC)
+		if(C.prefs.get_pref(/datum/pref/player/chat/ooc))
 			to_chat(C, "[msg_start]:</span> [display_name?"<EM>[display_name]:</EM> ":""][msg_end]")
 
 /client/proc/set_global_ooc(newColor as color)
@@ -107,19 +104,6 @@ var/global/bridge_ooc_colour = "#7b804f"
 	if(!holder)
 		return
 	normal_ooc_colour = newColor != "#000000" ? newColor : null
-
-/client/verb/set_name_ooc()
-	set name = "Set Name OOC Colour"
-	set category = "OOC"
-
-	if(!supporter)
-		to_chat(usr, "<span class='warning'>This is only for [config.donate_info_url ? "<a href='[config.donate_info_url]'>supporters</a>" : "supporters"][config.allow_byond_membership ? " <a href='http://www.byond.com/membership'>and Byond Members</a>" : ""].</span>")
-		return
-
-	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-	if(new_ooccolor)
-		prefs.ooccolor = normalize_color(new_ooccolor)
-		prefs.save_preferences()
 
 /client/verb/looc(msg as text)
 	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
@@ -135,7 +119,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 	msg = sanitize(msg)
 	if(!msg)	return
 
-	if(!(prefs.chat_toggles & CHAT_LOOC))
+	if(!prefs.get_pref(/datum/pref/player/chat/looc))
 		to_chat(src, "<span class='red'>You have LOOC muted.</span>")
 		return
 
@@ -164,7 +148,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 		is_fake_key = TRUE
 	if(isobserver(mob))
 		display_name = "(Ghost) [key]"
-	else if(prefs.chat_toggles & CHAT_CKEY)
+	else if(prefs.get_pref(/datum/pref/player/chat/show_ckey))
 		display_name += " ([key])"
 
 	log_ooc("(LOCAL) [key_name(mob)] : [msg]")
@@ -188,13 +172,13 @@ var/global/bridge_ooc_colour = "#7b804f"
 		if (C in admins)
 			continue //they are handled after that
 
-		if(C.prefs.chat_toggles & CHAT_LOOC)
+		if(C.prefs.get_pref(/datum/pref/player/chat/looc))
 			if(is_fake_key && C.holder)
 				display_name = "[holder.fakekey]/([key])"
 			to_chat(C, "<span class='looc'><span class='prefix'>[prefix]:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
 	for(var/client/C as anything in admins)
-		if(C.prefs.chat_toggles & CHAT_LOOC)
+		if(C.prefs.get_pref(/datum/pref/player/chat/looc))
 			var/track = ""
 			if(isobserver(C.mob) && !isnewplayer(mob))
 				track = FOLLOW_LINK(C.mob, mob)

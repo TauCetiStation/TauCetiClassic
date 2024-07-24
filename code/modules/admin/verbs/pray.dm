@@ -72,11 +72,11 @@
 		if(!M.client)
 			continue
 
-		if(M.client.holder && (M.client.prefs.chat_toggles & CHAT_PRAYER)) // Show the message to admins with prayer toggled on
+		if(M.client.holder && M.client.prefs.get_pref(/datum/pref/player/chat/prayers)) // Show the message to admins with prayer toggled on
 			to_chat(M, admin_msg)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
 			continue
 
-		if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
+		if(M.stat == DEAD && M.client.prefs.get_pref(/datum/pref/player/chat/dead))
 			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
 				continue
 
@@ -86,7 +86,7 @@
 
 
 	for(var/mob/living/simple_animal/shade/god/G as anything in gods_list)
-		if(G.client && (G.client.prefs.chat_toggles & CHAT_PRAYER))
+		if(G.client && G.client.prefs.get_pref(/datum/pref/player/chat/prayers))
 			if(G == src) // Don't hear your own prayer.
 				continue
 			if(G.say_understands(src, speaking))
@@ -133,7 +133,7 @@
 
 	var/list/viewing = list()
 	for(var/mob/M in viewers(src))
-		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+		if(M.client?.prefs.get_pref(/datum/pref/player/game/melee_animation))
 			viewing |= M.client
 
 	flick_overlay(I, viewing, 10)

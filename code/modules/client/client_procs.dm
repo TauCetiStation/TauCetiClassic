@@ -147,7 +147,6 @@ var/global/list/blacklisted_builds = list(
 		if("usr")		hsrc = mob
 		if("prefs")		return prefs.process_link(usr,href_list)
 		if("vars")		return view_var_Topic(href,href_list,hsrc)
-		if("updateVolume")	return update_volume(href_list)
 
 	switch(href_list["action"])
 		if ("openLink")
@@ -247,16 +246,16 @@ var/global/list/blacklisted_builds = list(
 	update_supporter_status()
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
-	if(preferences_datums[ckey])
-		prefs = preferences_datums[ckey]
+	if(global.preferences_datums[ckey])
+		prefs = global.preferences_datums[ckey]
 		prefs.reattach_to_client(src)
 	else
 		prefs = new /datum/preferences(src)
-		preferences_datums[ckey] = prefs
+		global.preferences_datums[ckey] = prefs
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
-	fps = (prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
+	fps = prefs.get_pref(/datum/pref/player/display/fps)
 
 	prefs.save_preferences()
 
@@ -311,7 +310,7 @@ var/global/list/blacklisted_builds = list(
 	else
 		winset(src, "mainwindow", "title='[world.name]'")
 
-	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
+	if(prefs.get_pref(/datum/pref/meta/lastchangelog) != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		winset(src, "rpane.changelog", "font-style=bold")
 
@@ -319,8 +318,9 @@ var/global/list/blacklisted_builds = list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	if(prefs.auto_fit_viewport)
-		fit_viewport()
+	// client screen options
+	update_fullscreen() // we need it?
+	update_map_zoom()
 
 	if(!cob)
 		cob = new()
@@ -686,7 +686,7 @@ var/global/list/blacklisted_builds = list(
 	var/list/modifiers = params2list(params)
 	if(modifiers[DRAG])
 		return
-	if (prefs.hotkeys)
+	if (prefs.get_pref(/datum/pref/player/game/hotkey_mode))
 		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 	else
 		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
@@ -784,50 +784,27 @@ var/global/list/blacklisted_builds = list(
  * * direct_prefs - the preference we're going to get keybinds from
  */
 /client/proc/update_special_keybinds(datum/preferences/direct_prefs)
+	//todo
 	var/datum/preferences/D = prefs || direct_prefs
-	if(!D?.key_bindings)
+	if(!D?.prefs_keybinds)
 		return
 	movement_keys = list()
-	for(var/key in D.key_bindings)
-		for(var/kb_name in D.key_bindings[key])
-			switch(kb_name)
-				if("North")
-					movement_keys[key] = NORTH
-				if("East")
-					movement_keys[key] = EAST
-				if("West")
-					movement_keys[key] = WEST
-				if("South")
-					movement_keys[key] = SOUTH
 
-#define MAXIMAZED  (1<<0)
-#define FULLSCREEN (1<<1)
+	var/datum/pref/keybinds/P = D.prefs_keybinds[/datum/pref/keybinds/movement/north]
+	for(var/key in splittext(P.value, " "))
+		movement_keys[key] = NORTH
 
-/client/verb/toggle_fullscreen()
-	set name = "Toggle Fullscreen"
-	set category = "OOC"
+	P = D.prefs_keybinds[/datum/pref/keybinds/movement/east]
+	for(var/key in splittext(P.value, " "))
+		movement_keys[key] = EAST
 
-	fullscreen ^= FULLSCREEN
+	P = D.prefs_keybinds[/datum/pref/keybinds/movement/west]
+	for(var/key in splittext(P.value, " "))
+		movement_keys[key] = WEST
 
-	if(fullscreen & FULLSCREEN)
-		if(winget(usr, "mainwindow", "is-maximized") == "true")
-			fullscreen |= MAXIMAZED
-		else
-			fullscreen &= ~MAXIMAZED
-		winset(usr, "mainwindow", "titlebar=false")
-		winset(usr, "mainwindow", "can-resize=false")
-		winset(usr, "mainwindow", "is-maximized=false")
-		winset(usr, "mainwindow", "is-maximized=true")
-		winset(usr, "mainwindow", "menu=")
-	else
-		if(!(fullscreen & MAXIMAZED))
-			winset(usr, "mainwindow", "is-maximized=false")
-		winset(usr, "mainwindow", "titlebar=true")
-		winset(usr, "mainwindow", "can-resize=true")
-		winset(usr, "mainwindow", "menu=menu")
-
-#undef MAXIMAZED
-#undef FULLSCREEN
+	P = D.prefs_keybinds[/datum/pref/keybinds/movement/south]
+	for(var/key in splittext(P.value, " "))
+		movement_keys[key] = SOUTH
 
 // ckey = datum/stat/leave_stat
 var/global/list/disconnected_ckey_by_stat = list()
@@ -846,13 +823,6 @@ var/global/list/disconnected_ckey_by_stat = list()
 	var/datum/stat/leave_stat/stat = SSStatistics.get_leave_stat(mob.mind, "Disconnected", roundduration2text())
 
 	global.disconnected_ckey_by_stat[ckey] = stat
-
-/client/proc/change_view(new_size)
-	if (isnull(new_size))
-		CRASH("change_view called without argument.")
-
-	view = new_size
-	mob.reload_fullscreen()
 
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)

@@ -4,6 +4,8 @@
 	set instant = TRUE
 	set hidden = TRUE
 
+	world.log << "KeyDown: [_key]"
+
 	client_keysend_amount += 1
 
 	var/cache = client_keysend_amount
@@ -46,14 +48,12 @@
 		if(!(next_move_dir_sub & movement))
 			next_move_dir_add |= movement
 
-	// Client-level keybindings are ones anyone should be able to do at any time
-	// Things like taking screenshots, hitting tab, and adminhelps.
-	var/AltMod = keys_held["Alt"] ? "Alt" : ""
-	var/CtrlMod = keys_held["Ctrl"] ? "Ctrl" : ""
-	var/ShiftMod = keys_held["Shift"] ? "Shift" : ""
+	var/AltMod = keys_held["Alt"] ? "Alt+" : ""
+	var/CtrlMod = keys_held["Ctrl"] ? "Ctrl+" : ""
+	var/ShiftMod = keys_held["Shift"] ? "Shift+" : ""
 	var/full_key
 	switch(_key)
-		if("Alt", "Ctrl", "Shift")
+		if("Alt", "Ctrl", "Shift") // todo: fix it
 			full_key = "[AltMod][CtrlMod][ShiftMod]"
 		else
 			if(AltMod || CtrlMod || ShiftMod)
@@ -61,10 +61,10 @@
 				key_combos_held[_key] = full_key
 			else
 				full_key = _key
+
 	var/keycount = 0
-	for(var/kb_name in prefs.key_bindings[full_key])
+	for(var/datum/pref/keybinds/kb as anything in prefs.key_bindings_by_key[full_key])
 		keycount++
-		var/datum/keybinding/kb = global.keybindings_by_name[kb_name]
 		if(kb.can_use(src) && kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
 			break
 
@@ -92,8 +92,7 @@
 
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically
-	for (var/kb_name in prefs.key_bindings[_key])
-		var/datum/keybinding/kb = global.keybindings_by_name[kb_name]
+	for(var/datum/pref/keybinds/kb as anything in prefs.key_bindings_by_key[_key])
 		if(kb.can_use(src) && kb.up(src))
 			break
 	holder?.key_up(_key, src)

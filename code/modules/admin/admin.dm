@@ -18,22 +18,27 @@ var/global/BSACooldown = 0
 	log_admin("[key_name(usr)] " + message)
 	message_admins("[key_name_admin(usr)] " + message, 1)
 
+// todo: target can be the one who attacked and the one who was attacked
+// need to fix misuse and add both mobs here, and ATTACK_LOG_BOTH_CLIENT config
 /proc/msg_admin_attack(msg, mob/living/target) //Toggleable Attack Messages
 	log_attack(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ATTACK:</span> <span class=\"message\">[msg]</span></span> [ADMIN_PPJMPFLW(target)]"
 
-
-	var/require_flags = CHAT_ATTACKLOGS
+	var/no_client = FALSE
 	if(!target.client && !ishuman(target))
-		require_flags |= CHAT_NOCLIENT_ATTACK
+		no_client = TRUE
 
 	for(var/client/C as anything in admins)
 		if(!(R_ADMIN & C.holder.rights))
 			continue
-		if((C.prefs.chat_toggles & require_flags) != require_flags)
-			continue
-		to_chat_attack_log(C, msg)
 
+		var/pref_level = C.prefs.get_pref(/datum/pref/player/chat/attack_log)
+		if(pref_level == ATTACK_LOG_DISABLED)
+			continue
+		if(pref_level == ATTACK_LOG_BY_CLIENT && no_client)
+			continue
+
+		to_chat_attack_log(C, msg)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 

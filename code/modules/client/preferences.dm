@@ -1,3 +1,4 @@
+// list contains all clients /datum/preferences so we can keep them persistent in case of client disconnects
 var/global/list/datum/preferences/preferences_datums = list()
 
 #define MAX_SAVE_SLOTS 10
@@ -12,9 +13,14 @@ var/global/list/datum/preferences/preferences_datums = list()
 // todo: after moving preferences to new datumized system we should rename this to something like client_data
 /datum/preferences
 	var/client/parent
+
+	// list of new datumized preferences
+	var/list/datum/pref/prefs_player = list()
+	var/list/datum/pref/prefs_keybinds = list()
+	var/prefs_dirty = FALSE // list of dirty DOMAINS!!
+
 	//doohickeys for savefiles
 	var/path
-	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
 	var/savefile_version = 0
 
 	//non-preference stuff
@@ -32,51 +38,10 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/admin_cid_request_cache
 	var/admin_ip_request_cache
 
-	//game-preferences
-	var/UI_style = null
-	var/UI_style_color = "#ffffff"
-	var/UI_style_alpha = 255
-	var/aooccolor = "#b82e00"
-	var/ooccolor = "#002eb8"
-	var/toggles = TOGGLES_DEFAULT
-	var/chat_toggles = TOGGLES_DEFAULT_CHAT
-	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
-	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-	var/clientfps = -1
-
-	// Custom Keybindings
-	var/list/key_bindings = list()
-	// If hotkey mode is enabled, then clicking the map will automatically
-	// unfocus the text bar. This removes the red color from the text bar
-	// so that the visual focus indicator matches reality.
-	var/hotkeys = TRUE
-
-	var/tooltip = TRUE
-	var/tooltip_font = "Small Fonts"
-	var/tooltip_size = 8
-
-	var/outline_enabled = TRUE
-	var/outline_color = COLOR_BLUE_LIGHT
-	var/eorg_enabled = TRUE
-
-	var/show_runechat = TRUE
+	/// Cached list of keybindings, keys mapped to /datum/pref/keybinds
+	var/list/key_bindings_by_key = list()
 
 	var/list/custom_emote_panel = list()
-
-	//TGUI
-	var/tgui_fancy = TRUE
-	var/tgui_lock = FALSE
-
-	//sound volume preferences
-	var/snd_music_vol = 100
-	var/snd_ambient_vol = 100
-	var/snd_effects_master_vol = 100
-	var/snd_effects_voice_announcement_vol = 100
-	var/snd_effects_misc_vol = 100
-	var/snd_effects_instrument_vol = 100
-	var/snd_notifications_vol = 100
-	var/snd_admin_vol = 100
-	var/snd_jukebox_vol = 100
 
 	//antag preferences
 	var/list/be_role = list()
@@ -164,20 +129,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/metadata = ""
 	var/slot_name = ""
 
-	// Whether or not to use randomized character slots
-	var/randomslot = 0
 	// jukebox volume
 	var/volume = 100
-	var/parallax = PARALLAX_HIGH
-	var/ambientocclusion = TRUE
-	var/auto_fit_viewport = TRUE
-	var/lobbyanimation = FALSE
-	// lighting settings
-	var/glowlevel = GLOW_MED // or bloom
-	var/lampsexposure = TRUE // idk how we should name it
-	var/lampsglare = FALSE // aka lens flare
-	//Impacts performance clientside
-	var/eye_blur_effect = TRUE
 
   //custom loadout
 	var/list/gear = list()
@@ -196,18 +149,42 @@ var/global/list/datum/preferences/preferences_datums = list()
 	if(!parent.holder)
 		init_chat_bans()
 
-	UI_style = global.available_ui_styles[1]
 	custom_emote_panel = global.emotes_for_emote_panel
+
+
+	// todo: rewrite this part
+	for(var/datum/pref/player/P as anything in subtypesof(/datum/pref/player))
+		if(initial(P.name))
+			prefs_player[initial(P.type)] = new P
+	for(var/datum/pref/meta/P as anything in subtypesof(/datum/pref/meta))
+		if(initial(P.name))
+			prefs_player[initial(P.type)] = new P
+	for(var/datum/pref/keybinds/P as anything in subtypesof(/datum/pref/keybinds))
+		if(initial(P.name))
+			prefs_keybinds[initial(P.type)] = new P
+
+	init_keybinds(C) // move it 
+
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			if(load_preferences())
-				if(load_character())
+			if(load_preferences()) // loads and updates preferences
+				if(load_character()) // everything updated at this moment, now try to load default character
 					return
+
+	// part below is init of default parameters
+	// in case if we can't load it from saves
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
-	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
 	C?.set_macros()
+
+
+/datum/preferences/proc/init_keybinds(client/client)
+	for(var/type in prefs_keybinds)
+		var/datum/pref/keybinds/KB = prefs_keybinds[type]
+		var/list/keybinds = splittext(KB.value, " ")
+		for(var/key in keybinds)
+			key_bindings_by_key[key] += list(KB)
 
 // reattach existing datum to client if client was disconnected and connects again
 /datum/preferences/proc/reattach_to_client(client/client)
@@ -228,6 +205,40 @@ var/global/list/datum/preferences/preferences_datums = list()
 	while(query.NextRow())
 		world.log << "NR [query.item[1]] : [mute_ban_bitfield[query.item[1]]]"
 		muted |= mute_ban_bitfield[query.item[1]]
+
+// replaced with macro for speed
+///datum/preferences/proc/get_pref(type)
+//	return prefs_player[type].value
+
+/datum/preferences/proc/set_pref(type, new_value)
+	var/datum/pref/player/write_pref = prefs_player[type]
+	world.log << "writting [write_pref.name] / [type]"
+
+	if(write_pref.update_value(new_value, parent))
+		mark_dirty()
+
+/datum/preferences/proc/set_keybind(type, new_value, index, altMod, ctrlMod, shiftMod)
+	var/datum/pref/keybinds/write_pref = prefs_keybinds[type]
+	world.log << "writting [write_pref.name] / [type]"
+
+	if(index)
+		var/sanitized_key = write_pref.satinize_key(new_value, altMod, ctrlMod, shiftMod)
+		new_value = ""
+		var/list/keybinds = splittext(write_pref.value, " ")
+		for(var/i in 1 to KEYBINDS_MAXIMUM)
+			if(i == index)
+				new_value += sanitized_key
+			else if(i <= keybinds.len)
+				new_value += keybinds[i]
+			new_value += " "
+
+	if(write_pref.update_value(new_value, parent))
+		mark_dirty()
+
+// mark as needed to update
+/datum/preferences/proc/mark_dirty()
+	prefs_dirty = TRUE
+	//SSpreferences.mark_dirty(src)
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
@@ -256,7 +267,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
 		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
 		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
-		dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
 		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
@@ -280,8 +290,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 			dat += ShowQuirks(user)
 		if("fluff")
 			dat += ShowFluffMenu(user)
-		if("custom_keybindings")
-			dat += ShowCustomKeybindings(user)
 	dat += "</body></html>"
 
 	winshow(user, "preferences_window", TRUE)
@@ -311,7 +319,13 @@ var/global/list/datum/preferences/preferences_datums = list()
 			load_character()
 
 		if("changeslot")
-			load_character(text2num(href_list["num"]))
+			var/slot = text2num(href_list["num"])
+
+			if(isnum(slot) && slot >= 1 && slot <= GET_MAX_SAVE_SLOTS(parent))
+				set_pref(/datum/pref/meta/default_slot, slot)
+				load_character()
+			else
+				to_chat(user, "<span class='warning'>You have no access to this slot, please contact maintainers.</span>")
 
 		if("general")
 			menu_type = "general"
@@ -333,9 +347,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 		if("fluff")
 			menu_type = "fluff"
-
-		if("custom_keybindings")
-			menu_type = "custom_keybindings"
 
 		if("load_slot")
 			if(!IsGuestKey(user.key))
@@ -367,9 +378,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		if("fluff")
 			process_link_fluff(user, href_list)
 			return 1
-
-		if("custom_keybindings")
-			process_link_custom_keybindings(user, href_list)
 
 	ShowChoices(user)
 	return 1

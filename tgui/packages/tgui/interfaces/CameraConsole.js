@@ -41,7 +41,7 @@ export const selectCameras = (cameras, searchText = '') => {
 };
 
 export const CameraConsole = (props, context) => {
-  Byond.winget("mapwindow.map", "style").then(style => {
+  Byond.winget("taumapwindow.map", "style").then(style => {
     Byond.winset(mapRef, "style", style);
   });
   const { act, data } = useBackend(context);

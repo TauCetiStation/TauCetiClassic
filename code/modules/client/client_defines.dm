@@ -27,7 +27,7 @@
 	var/area			= null
 	var/mentorhelped = FALSE
 	var/supporter = 0
-	var/prefs_ready = FALSE
+	var/prefs_ready = FALSE // drop it to datum
 
 		///////////////
 		//SOUND STUFF//
@@ -108,8 +108,6 @@
 
 	// Last world.time that the player tried to request their resources.
 	var/last_ui_resource_send = 0
-
-	var/fullscreen = NONE
 
 	/// Messages currently seen by this client
 	var/list/seen_messages

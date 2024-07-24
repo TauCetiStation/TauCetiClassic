@@ -268,7 +268,7 @@
 	var/turf = get_turf(all_items[i])
 	var/list/viewing = list()
 	for(var/mob/M in viewers(turf))
-		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+		if(M.client?.prefs.get_pref(/datum/pref/player/game/melee_animation))
 			viewing |= M.client
 
 	var/image/I = image(uristrune_cache[pick(uristrune_cache)], turf, layer = FLY_LAYER)

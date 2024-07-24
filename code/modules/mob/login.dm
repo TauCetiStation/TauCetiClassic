@@ -87,6 +87,7 @@
 		client.click_intercept.post_login()
 
 	client.change_view(world.view)
+	client.handle_autofit()
 
 	var/turf/T = get_turf(src)
 	if(T && last_z != T.z)

@@ -112,7 +112,7 @@
 	for(var/mob/M as anything in observer_list)
 		if (!M.client)
 			continue //skip leavers
-		if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+		if(M.client.prefs.get_pref(/datum/pref/player/chat/ghostears))
 			listening |= M
 
 	for(var/mob/M in listening)

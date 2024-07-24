@@ -179,6 +179,10 @@
 		return findtext(text, suffix, start, null)
 	return
 
+/proc/endswith(input_text, ending)
+	var/input_length = length(ending)
+	return !!findtext(input_text, ending, -input_length)
+
 /*
  * Text modification
  */

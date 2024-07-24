@@ -27,7 +27,7 @@
 				if(!iszombie(H))
 					message = stars(message, 40)
 
-	if(!(sdisabilities & DEAF || ear_deaf) && client && client.prefs.show_runechat)
+	if(!(sdisabilities & DEAF || ear_deaf) && client && client.prefs.get_pref(/datum/pref/player/ui/runechat))
 		var/list/span_list = list()
 		if(copytext_char(message, -2) == "!!")
 			span_list.Add("yell")
@@ -42,16 +42,27 @@
 
 	var/track = null
 	if(isobserver(src))
-		if(speaker && !speaker.client && !(client.prefs.chat_toggles & CHAT_GHOSTNPC) && !(speaker in view(src)))
+		if(used_radio && client.prefs.get_pref(/datum/pref/player/chat/ghostradio)) // I'm not sure what it does and if its right, probably to remove duplicate message because we will see radio anyway?
 			return null
-		if(used_radio && (client.prefs.chat_toggles & CHAT_GHOSTRADIO))
-			return null
+
+		var/in_view = (speaker in view(src))
+
+		// filter out of view messages by preferences
+		if(!in_view)
+			if(speaker && !speaker.client && client.prefs.get_pref(/datum/pref/player/chat/ghostantispam))
+				return null
+
+			if(!client.prefs.get_pref(/datum/pref/player/chat/ghostears))
+				return null
+
+		// QoL - format in view message, if ghostears enabled
+		if(in_view && client.prefs.get_pref(/datum/pref/player/chat/ghostears))
+			message = "<b>[message]</b>"
 
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
+
 		track = "[FOLLOW_LINK(src, speaker)] "
-		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && (speaker in view(src)))
-			message = "<b>[message]</b>"
 
 	if(sdisabilities & DEAF || ear_deaf)
 		if(speaker == src)

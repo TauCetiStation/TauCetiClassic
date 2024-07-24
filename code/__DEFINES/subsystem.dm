@@ -109,6 +109,7 @@
 #define SS_WAIT_GNAW         20
 #define SS_WAIT_DEFAULT      20
 #define SS_WAIT_UNIT_TESTS   20
+#define SS_WAIT_PREFERENCES  30
 #define SS_WAIT_SUN         600
 #define SS_WAIT_SMARTLIGHT  600
 

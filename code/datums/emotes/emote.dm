@@ -163,16 +163,17 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 		if(!M.client)
 			continue
 
+		var/is_in_view = FALSE
 		if(M in viewers(get_turf(user), world.view))
 			M.show_runechat_message(user, null, get_emote_message_3p(user), null, SHOWMSG_VISUAL)
+			is_in_view = TRUE
 
-		switch(M.client.prefs.chat_ghostsight)
-			if(CHAT_GHOSTSIGHT_ALL)
-				// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
+		// ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
+		if(is_in_view)
+			to_chat(M, "[FOLLOW_LINK(M, user)] [msg_3p]")
+		else if (M.client.prefs.get_pref(/datum/pref/player/chat/ghostsight))
+			if(intentional || !M.client.prefs.get_pref(/datum/pref/player/chat/ghostantispam))
 				to_chat(M, "[FOLLOW_LINK(M, user)] [msg_3p]")
-			if(CHAT_GHOSTSIGHT_ALLMANUAL)
-				if(intentional)
-					to_chat(M, "[FOLLOW_LINK(M, user)] [msg_3p]")
 
 	if(cloud)
 		add_cloud(user)

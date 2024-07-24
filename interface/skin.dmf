@@ -27,96 +27,11 @@ menu "menu"
 		category = "&File"
 		saved-params = "is-checked"
 	elem
-		name = "&Icons"
-		command = ""
-		saved-params = "is-checked"
-	elem "stretch"
-		name = "&Auto (Stretch to fit)"
-		command = ".winset \"mapwindow.map.icon-size=0\""
-		category = "&Icons"
-		is-checked = true
-		can-check = true
-		group = "size"
-		saved-params = "is-checked"
-	elem "icon128"
-		name = "&128x128 (4x)"
-		command = ".winset \"mapwindow.map.icon-size=128\""
-		category = "&Icons"
-		can-check = true
-		group = "size"
-		saved-params = "is-checked"
-	elem "icon96"
-		name = "&96x96 (3x)"
-		command = ".winset \"mapwindow.map.icon-size=96\""
-		category = "&Icons"
-		can-check = true
-		group = "size"
-		saved-params = "is-checked"
-	elem "icon64"
-		name = "&64x64 (2x)"
-		command = ".winset \"mapwindow.map.icon-size=64\""
-		category = "&Icons"
-		can-check = true
-		group = "size"
-		saved-params = "is-checked"
-	elem "icon48"
-		name = "&48x48 (1.5x)"
-		command = ".winset \"mapwindow.map.icon-size=48\""
-		category = "&Icons"
-		can-check = true
-		group = "size"
-		saved-params = "is-checked"
-	elem "icon32"
-		name = "&32x32 (1x)"
-		command = ".winset \"mapwindow.map.icon-size=32\""
-		category = "&Icons"
-		can-check = true
-		group = "size"
-		saved-params = "is-checked"
-	elem
-		name = ""
-		command = ""
-		category = "&Icons"
-		saved-params = "is-checked"
-	elem "textmode"
-		name = "&Text"
-		command = ".winset \"menu.textmode.is-checked=true?mapwindow.map.text-mode=true:mapwindow.map.text-mode=false\""
-		category = "&Icons"
-		can-check = true
-		saved-params = "is-checked"
-	elem
-		name = "&Scaling Mode"
-		command = ""
-		saved-params = "is-checked"
-	elem "ps"
-		name = "&Point Sampling"
-		command = ".winset \"mapwindow.map.zoom-mode=normal\""
-		category = "&Scaling Mode"
-		is-checked = true
-		can-check = true
-		group = "scaling"
-		saved-params = "is-checked"
-	elem "bl"
-		name = "&Bilinear"
-		command = ".winset \"mapwindow.map.zoom-mode=blur\""
-		category = "&Scaling Mode"
-		can-check = true
-		group = "scaling"
-		saved-params = "is-checked"
-	elem "nn"
-		name = "&Nearest Neighbor"
-		command = ".winset \"mapwindow.map.zoom-mode=distort\""
-		category = "&Scaling Mode"
-		can-check = true
-		group = "scaling"
-		saved-params = "is-checked"
-	elem
 		name = "&Options"
 		command = ""
-		saved-params = "is-checked"
 	elem
-		name = "&Audio"
-		command = ".showvolumecontrols"
+		name = "&Settings"
+		command = ".client_settings"
 		category = "&Options"
 		saved-params = "is-checked"
 	elem
@@ -139,7 +54,7 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
-		on-size = "onresize"
+		on-size = "handle_autofit"
 		title = "Space Station 13"
 		statusbar = false
 		is-maximized = true
@@ -174,8 +89,8 @@ window "mainwindow"
 		is-visible = false
 		saved-params = ""
 
-window "mapwindow"
-	elem "mapwindow"
+window "taumapwindow"
+	elem "taumapwindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
@@ -198,8 +113,8 @@ window "mapwindow"
 		font-size = 7
 		text-color = none
 		is-default = true
-		saved-params = "icon-size;zoom-mode"
-		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
+		saved-params = ""
+		on-show = ".winset\"mainwindow.mainvsplit.left=taumapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
 		style = ".center { text-align: center; } .maptext { font-family: 'Small Fonts', 'MS Serif'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; } .small { font-size: 6px; } .big { font-size: 8px; } .yell { font-weight: bold; } .italics { font-size: 6px; }"
 	elem "lobbybrowser"

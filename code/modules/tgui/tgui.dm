@@ -52,7 +52,7 @@
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
 	log_tgui(user,
-		"new [interface] fancy [user?.client?.prefs.tgui_fancy]",
+		"new [interface]",
 		src_object = src_object)
 	src.user = user
 	src.src_object = src_object
@@ -92,7 +92,7 @@
 	window.acquire_lock(src)
 	if(!window.is_ready())
 		window.initialize(
-			fancy = user.client.prefs.tgui_fancy,
+			fancy = TRUE, // legacy
 			inline_assets = list(
 				get_asset_datum(/datum/asset/simple/tgui),
 			))
@@ -219,8 +219,8 @@
 		"window" = list(
 			"key" = window_key,
 			"size" = window_size,
-			"fancy" = user.client.prefs.tgui_fancy,
-			"locked" = user.client.prefs.tgui_lock,
+			"fancy" = TRUE, // legacy
+			"locked" = user.client.prefs.get_pref(/datum/pref/player/ui/tgui_lock),
 		),
 		"client" = list(
 			"ckey" = user.client.ckey,
