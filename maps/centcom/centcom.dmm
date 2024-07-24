@@ -7020,16 +7020,10 @@
 	},
 /area/velocity)
 "aqv" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32
+/turf/unsimulated/floor{
+	icon_state = "engine"
 	},
-/obj/structure/table/reinforced,
-/obj/item/weapon/phone{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/turf/unsimulated/floor,
-/area/centcom/specops)
+/area/custom/syndicate_mothership)
 "aqw" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -23018,6 +23012,12 @@
 	name = "plating"
 	},
 /area/velocity)
+"bVw" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/centcom/control)
 "bVy" = (
 /turf/simulated/wall/cult,
 /area/custom/cult)
@@ -23039,6 +23039,17 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"bXH" = (
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/phone{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor,
+/area/centcom/specops)
 "bYb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -23076,12 +23087,29 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"cbM" = (
+/obj/structure/disposalpipe/segment,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/velocity)
 "ccb" = (
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "brown"
 	},
 /area/velocity)
+"ccp" = (
+/obj/structure/flora/ausbushes/pointybush,
+/obj/effect/decal/turf_decal/wood{
+	dir = 2;
+	icon_state = "spline_fancy"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass2"
+	},
+/area/centcom/evac)
 "ccw" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -23281,10 +23309,16 @@
 	},
 /area/velocity/locker)
 "crb" = (
-/turf/unsimulated/floor{
-	icon_state = "darkredcorners"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "arrows_white";
+	dir = 8
 	},
-/area/centcom/control)
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
+/turf/unsimulated/floor,
+/area/velocity)
 "crG" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/wiki/security_space_law{
@@ -23648,11 +23682,6 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
-"cSN" = (
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/custom/syndicate_mothership)
 "cTb" = (
 /obj/machinery/door/firedoor,
 /turf/unsimulated/floor{
@@ -23694,15 +23723,6 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
-"cWc" = (
-/obj/effect/decal/turf_decal/blue{
-	dir = 8;
-	icon_state = "siding_line"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/control)
 "cXb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
@@ -23741,16 +23761,6 @@
 /obj/item/weapon/scissors,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
-"cZw" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/effect/decal/turf_decal/wood{
-	dir = 1;
-	icon_state = "spline_fancy"
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass2"
-	},
-/area/centcom/evac)
 "cZN" = (
 /obj/structure/closet/wardrobe/white,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -23963,15 +23973,9 @@
 	},
 /area/velocity)
 "doq" = (
-/obj/structure/flora/ausbushes/brflowers,
-/obj/effect/decal/turf_decal/wood{
-	dir = 8;
-	icon_state = "spline_fancy"
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass2"
-	},
-/area/centcom/evac)
+/obj/structure/sign/warning/moving_parts,
+/turf/unsimulated/wall/like_a_normal/beige,
+/area/velocity)
 "dpb" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_03"
@@ -24122,8 +24126,9 @@
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity)
 "dCb" = (
+/obj/structure/stool/bed/chair/office/light,
 /obj/effect/decal/turf_decal/blue{
-	dir = 4;
+	dir = 1;
 	icon_state = "siding_line"
 	},
 /turf/unsimulated/floor{
@@ -24285,12 +24290,6 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
-"dQx" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "darkgreencorners"
-	},
-/area/centcom/control)
 "dRb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell4";
@@ -24662,6 +24661,16 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"ezl" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/effect/decal/turf_decal/wood{
+	dir = 8;
+	icon_state = "spline_fancy"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass2"
+	},
+/area/centcom/evac)
 "ezJ" = (
 /obj/structure/closet,
 /obj/random/misc/all,
@@ -24727,18 +24736,6 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
-"eEA" = (
-/obj/structure/stool/bed/chair/office/light{
-	dir = 4
-	},
-/obj/effect/decal/turf_decal/blue{
-	dir = 8;
-	icon_state = "siding_line"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/control)
 "eFb" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "velocity_1"
@@ -24894,6 +24891,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/officer/velocity)
+"eSC" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "darkgreencorners";
+	dir = 1
+	},
+/area/centcom/control)
 "eTb" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -25313,15 +25319,6 @@
 	},
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity)
-"fFh" = (
-/obj/effect/decal/turf_decal/orange{
-	dir = 8;
-	icon_state = "siding_corner"
-	},
-/turf/unsimulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/velocity)
 "fGb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -25394,6 +25391,17 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/unsimulated/floor,
 /area/centcom/prison)
+"fMT" = (
+/obj/structure/closet/secure_closet/engineering_electrical{
+	req_access = list(101)
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/velocity)
 "fNb" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -25770,15 +25778,6 @@
 	icon_state = "yellow"
 	},
 /area/centcom/specops)
-"grn" = (
-/obj/effect/decal/turf_decal/blue{
-	dir = 4;
-	icon_state = "siding_corner"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/control)
 "gsb" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -26125,12 +26124,6 @@
 	icon_state = "engine"
 	},
 /area/velocity)
-"gOp" = (
-/obj/effect/decal/cleanable/cobweb,
-/turf/unsimulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/centcom/control)
 "gPb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -26486,16 +26479,6 @@
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/elite_squad)
-"hsU" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/effect/decal/turf_decal/wood{
-	dir = 1;
-	icon_state = "spline_fancy"
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass2"
-	},
-/area/centcom/evac)
 "htb" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1
@@ -26760,6 +26743,15 @@
 	icon_state = "dark"
 	},
 /area/centcom)
+"hTF" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 4;
+	icon_state = "siding_line"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/control)
 "hUb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f6"
@@ -26859,17 +26851,6 @@
 	},
 /area/centcom/living)
 "icb" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "arrows_white";
-	dir = 8
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 8;
-	icon_state = "loadingarea"
-	},
-/turf/unsimulated/floor,
-/area/velocity)
-"idb" = (
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
@@ -26878,11 +26859,7 @@
 	icon_state = "white"
 	},
 /area/velocity/dormitories)
-"idX" = (
-/obj/machinery/optable/torture_table,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
-"ieb" = (
+"idb" = (
 /obj/effect/decal/turf_decal/blue{
 	dir = 1;
 	icon_state = "siding_corner"
@@ -26891,6 +26868,13 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"idX" = (
+/obj/machinery/optable/torture_table,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
+"ieb" = (
+/turf/environment/space,
+/area/velocity)
 "ifb" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -27081,10 +27065,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
-"iBE" = (
-/obj/structure/sign/warning/moving_parts,
-/turf/unsimulated/wall/like_a_normal/beige,
-/area/velocity)
 "iCb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -27866,18 +27846,6 @@
 	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
-"jZL" = (
-/obj/structure/stool/bed/chair/office/light{
-	dir = 8
-	},
-/obj/effect/decal/turf_decal/blue{
-	dir = 4;
-	icon_state = "siding_line"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/control)
 "kab" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -28331,6 +28299,15 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"kQL" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "darkredcorners";
+	dir = 4
+	},
+/area/centcom/control)
 "kRb" = (
 /turf/unsimulated/floor{
 	dir = 9;
@@ -28615,17 +28592,6 @@
 	icon_state = "green"
 	},
 /area/centcom/waitingroom)
-"lsv" = (
-/obj/structure/closet/secure_closet/engineering_electrical{
-	req_access = list(101)
-	},
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/velocity)
 "ltb" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/poddoor{
@@ -28665,16 +28631,6 @@
 	icon_state = "brown"
 	},
 /area/centcom/bar)
-"lvT" = (
-/obj/structure/flora/ausbushes/pointybush,
-/obj/effect/decal/turf_decal/wood{
-	dir = 8;
-	icon_state = "spline_fancy"
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass2"
-	},
-/area/centcom/evac)
 "lwb" = (
 /obj/machinery/computer/arcade,
 /obj/machinery/light,
@@ -29268,7 +29224,7 @@
 "mHb" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/effect/decal/turf_decal/wood{
-	dir = 8;
+	dir = 2;
 	icon_state = "spline_fancy"
 	},
 /turf/unsimulated/floor{
@@ -29286,7 +29242,7 @@
 "mIb" = (
 /obj/structure/flora/ausbushes/pointybush,
 /obj/effect/decal/turf_decal/wood{
-	dir = 1;
+	dir = 8;
 	icon_state = "spline_fancy"
 	},
 /turf/unsimulated/floor{
@@ -29294,8 +29250,9 @@
 	},
 /area/centcom/evac)
 "mIJ" = (
-/obj/structure/sign/mark{
-	icon_state = "rlf"
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "arrow";
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/velocity/waitingroom)
@@ -29322,7 +29279,7 @@
 "mLb" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/effect/decal/turf_decal/wood{
-	dir = 2;
+	dir = 8;
 	icon_state = "spline_fancy"
 	},
 /turf/unsimulated/floor{
@@ -29473,15 +29430,6 @@
 	},
 /turf/unsimulated/wall/like_a_normal/green,
 /area/centcom/evac)
-"nad" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "darkgreencorners";
-	dir = 1
-	},
-/area/centcom/control)
 "nbb" = (
 /obj/structure/sign/mark/symbol_b{
 	icon_state = "M"
@@ -30256,6 +30204,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"oAW" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/unsimulated/floor{
+	icon_state = "bcircuitoff"
+	},
+/area/velocity)
 "oBb" = (
 /obj/machinery/light{
 	dir = 4
@@ -30269,6 +30223,16 @@
 /obj/structure/curtain/open,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
+"oCX" = (
+/obj/structure/flora/ausbushes/pointybush,
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass2"
+	},
+/area/centcom/evac)
 "oEb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,13"
@@ -30311,6 +30275,15 @@
 /obj/machinery/iv_drip,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
+"oKs" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/velocity/dormitories)
 "oLb" = (
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
@@ -30543,15 +30516,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
-"pkA" = (
-/obj/effect/decal/turf_decal/blue{
-	dir = 1;
-	icon_state = "siding_line"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/control)
 "plb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "6,24";
@@ -30666,6 +30630,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"pya" = (
+/obj/effect/decal/turf_decal/orange{
+	dir = 8;
+	icon_state = "siding_corner"
+	},
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/velocity)
 "pyb" = (
 /obj/machinery/computer/crew/erokez,
 /turf/simulated/shuttle/floor/evac,
@@ -30818,6 +30791,11 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"pUc" = (
+/turf/unsimulated/floor{
+	icon_state = "darkredcorners"
+	},
+/area/centcom/control)
 "pVb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "11,7"
@@ -30883,6 +30861,16 @@
 	},
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
+"qbV" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass2"
+	},
+/area/centcom/evac)
 "qcb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,20"
@@ -30909,16 +30897,6 @@
 	icon_state = "grass2"
 	},
 /area/centcom/evac)
-"qjd" = (
-/obj/structure/stool/bed/chair/office/light,
-/obj/effect/decal/turf_decal/blue{
-	dir = 1;
-	icon_state = "siding_line"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/control)
 "qnM" = (
 /obj/effect/step_trigger/thrower{
 	direction = 4;
@@ -30996,6 +30974,15 @@
 	icon_state = "floorplating"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"qXA" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 8;
+	icon_state = "siding_line"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/control)
 "rkK" = (
 /obj/item/weapon/flora/pottedplant/tropicalfern{
 	pixel_y = 5
@@ -31004,6 +30991,16 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity/locker)
+"rEu" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/effect/decal/turf_decal/wood{
+	dir = 2;
+	icon_state = "spline_fancy"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass2"
+	},
+/area/centcom/evac)
 "rIN" = (
 /obj/structure/disposalpipe/segment,
 /turf/unsimulated/wall/like_a_normal/beige,
@@ -31127,11 +31124,39 @@
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"sEb" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 4;
+	icon_state = "siding_line"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/control)
 "sHm" = (
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
 /area/velocity/dormitories)
+"sLn" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkgreencorners"
+	},
+/area/centcom/control)
+"sLW" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grass2"
+	},
+/area/centcom/evac)
 "sPb" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -31199,18 +31224,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
-"tDS" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "darkredcorners";
-	dir = 4
-	},
-/area/centcom/control)
-"tEf" = (
-/turf/environment/space,
-/area/velocity)
 "tFF" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -31219,16 +31232,16 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
-"tSz" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/effect/decal/turf_decal/wood{
-	dir = 2;
-	icon_state = "spline_fancy"
+"tGC" = (
+/obj/structure/sign/velocity_tablo{
+	icon_state = "velocity_tablo";
+	pixel_x = -32
 	},
-/turf/unsimulated/floor{
-	icon_state = "grass2"
+/obj/structure/closet/emcloset{
+	pixel_x = -7
 	},
-/area/centcom/evac)
+/turf/unsimulated/floor,
+/area/velocity/waitingroom)
 "tTa" = (
 /obj/structure/table/woodentable{
 	dir = 10
@@ -31239,6 +31252,15 @@
 	},
 /turf/unsimulated/floor/carpet,
 /area/centcom/living)
+"tVC" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 4;
+	icon_state = "siding_corner"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/control)
 "tWq" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -31256,6 +31278,18 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"ucy" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 8;
+	icon_state = "siding_line"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/control)
 "udL" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -31332,12 +31366,6 @@
 	},
 /turf/environment/space,
 /area/space)
-"uMH" = (
-/obj/effect/decal/cleanable/cobweb,
-/turf/unsimulated/floor{
-	icon_state = "bcircuitoff"
-	},
-/area/velocity)
 "uPk" = (
 /obj/effect/decal/turf_decal{
 	dir = 5;
@@ -31429,16 +31457,6 @@
 	name = "plating"
 	},
 /area/velocity)
-"vlF" = (
-/obj/structure/flora/ausbushes/pointybush,
-/obj/effect/decal/turf_decal/wood{
-	dir = 2;
-	icon_state = "spline_fancy"
-	},
-/turf/unsimulated/floor{
-	icon_state = "grass2"
-	},
-/area/centcom/evac)
 "vlY" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -31578,16 +31596,18 @@
 	icon_state = "neutralfull"
 	},
 /area/velocity)
-"wrr" = (
-/obj/structure/disposalpipe/segment,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "wood"
-	},
-/area/velocity)
 "wtx" = (
 /turf/simulated/wall/cult/runed/anim,
 /area/custom/cult)
+"wBQ" = (
+/obj/effect/decal/turf_decal/blue{
+	dir = 1;
+	icon_state = "siding_line"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/control)
 "wDJ" = (
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity/exit)
@@ -31731,15 +31751,6 @@
 	icon_state = "plating"
 	},
 /area/velocity)
-"xVq" = (
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
-	},
-/turf/unsimulated/floor{
-	icon_state = "white"
-	},
-/area/velocity/dormitories)
 "xWI" = (
 /obj/machinery/conveyor_switch{
 	id = "CKLoad"
@@ -54312,7 +54323,7 @@ aID
 aID
 aID
 aHv
-vlF
+ccp
 aIc
 aII
 aII
@@ -54324,7 +54335,7 @@ aII
 aII
 aII
 aIc
-hsU
+sLW
 aNs
 aLL
 aNs
@@ -54569,7 +54580,7 @@ aaM
 aaM
 aaM
 aHv
-mLb
+rEu
 aIc
 aIB
 aII
@@ -54581,7 +54592,7 @@ aII
 aII
 aIB
 aIc
-cZw
+qbV
 aNs
 iLb
 aNs
@@ -55340,7 +55351,7 @@ aBp
 aaM
 aaM
 aHv
-tSz
+mHb
 aIc
 aII
 aII
@@ -56368,7 +56379,7 @@ bzb
 aBp
 aaM
 aHv
-tSz
+mHb
 aIc
 aIC
 aII
@@ -56422,12 +56433,12 @@ aaM
 aaM
 aaM
 aHv
-mHb
-lvT
+ezl
+mIb
 mJb
 hWb
 mKb
-doq
+mLb
 aHv
 aaM
 aaM
@@ -56637,7 +56648,7 @@ aII
 aII
 aII
 aIc
-mIb
+oCX
 aHv
 aaM
 aaM
@@ -63574,9 +63585,9 @@ aSj
 iEb
 jjb
 jjb
-dQx
+sLn
 iwb
-nad
+eSC
 jjb
 jjb
 jjb
@@ -64858,9 +64869,9 @@ aJu
 jjb
 aKf
 aKp
-dCb
-jZL
-grn
+hTF
+sEb
+tVC
 aKP
 jjb
 aLQ
@@ -65117,7 +65128,7 @@ aKf
 aKp
 aKB
 aKQ
-qjd
+dCb
 aLq
 aLh
 aLR
@@ -65374,7 +65385,7 @@ aKf
 aKp
 aKC
 aKR
-pkA
+wBQ
 oSE
 jjb
 aSj
@@ -65614,7 +65625,7 @@ aKh
 gsb
 aCV
 aCV
-aqv
+bXH
 aCV
 ipM
 hwF
@@ -65631,7 +65642,7 @@ aKf
 aKp
 aKD
 aKS
-qjd
+dCb
 aLr
 aLh
 aLS
@@ -65886,9 +65897,9 @@ aJu
 jjb
 aKf
 aKp
-cWc
-eEA
-ieb
+qXA
+ucy
+idb
 iXb
 jjb
 aLT
@@ -67172,9 +67183,9 @@ aSj
 iFb
 jjb
 jjb
-crb
+pUc
 voA
-tDS
+kQL
 jjb
 jjb
 jjb
@@ -68461,7 +68472,7 @@ aSd
 aSd
 iGb
 aKp
-gOp
+bVw
 inb
 inb
 jub
@@ -77383,7 +77394,7 @@ aTk
 aTk
 aoo
 aqL
-wrr
+cbM
 czb
 cEb
 aaz
@@ -77656,14 +77667,14 @@ aaM
 aaM
 aaM
 aoo
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-wDJ
+htV
+htV
+htV
+htV
+htV
+htV
+htV
+wRg
 aux
 aux
 srT
@@ -77913,13 +77924,13 @@ aaM
 aaM
 wRg
 wRg
-htV
-htV
-htV
+ayk
+avT
+cBs
 awG
-htV
-htV
-htV
+cBs
+guj
+tGC
 aaQ
 auy
 auy
@@ -78171,12 +78182,12 @@ aaM
 wRg
 aum
 guj
-avT
-cBs
-mIJ
-cBs
 guj
-avT
+guj
+mIJ
+guj
+guj
+guj
 guj
 guj
 guj
@@ -78408,7 +78419,7 @@ elQ
 elQ
 elQ
 aoo
-tEf
+ieb
 aoo
 aqN
 aqM
@@ -78699,8 +78710,8 @@ guj
 guj
 guj
 ayq
-idb
-idb
+icb
+icb
 pIJ
 aaM
 azb
@@ -79213,8 +79224,8 @@ guj
 guj
 guj
 ayq
-xVq
-xVq
+oKs
+oKs
 pIJ
 aaM
 eVb
@@ -79686,7 +79697,7 @@ aoo
 aoo
 aoo
 pld
-iBE
+doq
 aoo
 aoo
 aoo
@@ -80199,7 +80210,7 @@ aoo
 hRf
 ccb
 bYb
-icb
+crb
 bXb
 cbb
 cgb
@@ -81485,7 +81496,7 @@ aaM
 aoo
 aov
 aoB
-fFh
+pya
 anr
 anw
 api
@@ -82272,7 +82283,7 @@ cNb
 cGb
 cVb
 aoo
-uMH
+oAW
 dcb
 dcb
 aoo
@@ -82775,7 +82786,7 @@ aoU
 apd
 aoo
 apo
-lsv
+fMT
 cnb
 apF
 aoo
@@ -86313,7 +86324,7 @@ aaM
 aaM
 aaM
 aie
-cSN
+aqv
 aie
 aie
 aie
@@ -87855,7 +87866,7 @@ aaM
 aaM
 aaM
 aie
-cSN
+aqv
 aie
 aie
 aie
