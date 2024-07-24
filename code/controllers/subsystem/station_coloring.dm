@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(station_coloring)
 	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce", "#307199")
 
 	var/list/color_palette = list(
-		pick(red)          = typesof(/area/station/security),
+		pick(red)          = typesof(/area/station/security) + /area/custom/syndicate_mothership,
 		pick(purple)       = typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost) + /area/station/medical/genetics,
 		pick(brown)        = typesof(/area/station/cargo) + typesof(/area/asteroid/mine),
 		pick(green)        = list(/area/station/medical/virology,
@@ -33,8 +33,8 @@ SUBSYSTEM_DEF(station_coloring)
 		pick(bar)          = list(/area/station/civilian/bar),
 		pick(dw)           = list(/area/asteroid/mine/dwarf),
 		COLOR_WHITE        = typesof(/area/shuttle),
-		COLOR_WHITE        = typesof(/area/centcom),
-		COLOR_DARK_GRAY    = typesof(/area/velocity)
+		pick(green)        = typesof(/area/centcom),
+		COLOR_BEIGE        = typesof(/area/velocity)
 	)
 
 	for(var/color in color_palette)
