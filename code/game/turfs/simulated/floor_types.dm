@@ -182,11 +182,6 @@
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	footstep = FOOTSTEP_PLATING
 
-/turf/simulated/floor/plating/atom_init()
-	. = ..()
-	if(SSmapping.level_trait(1, ZTRAIT_INDECONSTRUCTABLE_PLATING))
-		can_deconstruct = FALSE
-
 /turf/simulated/floor/plating/airless
 	icon_state = "plating"
 	name = "airless plating"

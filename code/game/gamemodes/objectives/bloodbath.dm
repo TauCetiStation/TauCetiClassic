@@ -3,7 +3,7 @@
 
 /datum/objective/reproduct/check_completion()
 	var/datum/faction/alien/F = find_faction_by_type(/datum/faction/alien)
-	if(F && F.check_crew())
+	if(F && F.check_crew(for_alien = TRUE))
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
 

@@ -20,11 +20,11 @@ var/global/mob/Jonesy
 	return FALSE
 
 /datum/faction/alien/check_win()
-	return check_crew() == 0
+	return check_crew(for_alien = TRUE) == 0
 
 /datum/faction/alien/OnPostSetup()
 	var/datum/role/role = pick(members)
-	var/start_point = xeno_spawn[1]
+	var/start_point = pick(xeno_spawn)
 
 	if(start_point && role)
 		var/mob/living/carbon/human/H = new (get_turf(start_point))
@@ -34,30 +34,15 @@ var/global/mob/Jonesy
 		H.real_name = "Gilbert Kane"
 		H.voice_name = "Gilbert Kane"
 
-		var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(H)
-		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva/lone(new_embryo)
-		new_xeno.loc = new_embryo
-		new_embryo.baby = new_xeno
-		new_embryo.controlled_by_ai = FALSE
-		new_embryo.stage = 5
+		var/mob/living/carbon/xenomorph/larva/lone/new_xeno = new(H)
 		role.antag.transfer_to(new_xeno)
 		QDEL_NULL(role.antag.original)
+		var/obj/item/weapon/larva_bite/auto/G = new(new_xeno, H)
+		new_xeno.put_in_active_hand(G)
+		G.last_bite = world.time - 20
+		G.synch()
 
 	return ..()
-
-/datum/faction/alien/check_crew()
-	var/total_human = 0
-	for(var/mob/living/carbon/human/H as anything in human_list)
-		var/turf/human_loc = get_turf(H)
-		if(!human_loc || !is_station_level(human_loc.z))
-			continue
-		if(H.stat == DEAD)
-			continue
-		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
-			continue
-		total_human++
-	return total_human
-
 
 #define F_NOSTROMO_CREW		"Nostromo Crew"
 #define NOSTROMO_CREWMATE	"Nostromo Crewmate"
@@ -181,15 +166,3 @@ var/global/mob/Jonesy
 	var/mob/living/simple_animal/cat/red/jonesy/J = new (get_turf(start_point))
 	global.Jonesy = J
 	return ..()
-
-/datum/action/nostromo_map
-	name = "Вспомнить схему корабля."
-	check_flags = AB_CHECK_ALIVE
-	action_type = AB_INNATE
-	button_icon_state = "holomap"
-
-/datum/action/nostromo_map/Activate()
-	owner << browse_rsc('nano/images/nanomap_nostromo_1.png', "nanomap.png")
-	var/datum/browser/popup = new(owner, "window=[name]", "[name]", 700, 700, ntheme = CSS_THEME_DARK)
-	popup.set_content("<img src='nanomap.png' style='-ms-interpolation-mode:nearest-neighbor'>")
-	popup.open()

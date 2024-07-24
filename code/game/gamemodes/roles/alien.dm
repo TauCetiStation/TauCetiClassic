@@ -102,3 +102,38 @@
 	var/mob/M = antag.current
 	var/datum/action/A = new /datum/action/nostromo_map(M)
 	A.Grant(M)
+
+
+/datum/action/nostromo_map
+	name = "Вспомнить схему корабля."
+	check_flags = AB_CHECK_ALIVE
+	action_type = AB_INNATE
+	button_icon_state = "holomap"
+
+/datum/action/nostromo_map/Activate()
+	owner << browse_rsc('nano/images/nanomap_nostromo_1.png', "nanomap.png")
+	var/datum/browser/popup = new(owner, "window=[name]", "[name]", 700, 700, ntheme = CSS_THEME_DARK)
+	popup.set_content("<img src='nanomap.png' style='-ms-interpolation-mode:nearest-neighbor'>")
+	popup.open()
+
+
+/atom/movable/screen/alert/status_effect/cutscene
+	name = "Катсцена"
+	desc = "Сидим и смотрим киношку."
+	icon_state = "buckled"
+
+/datum/status_effect/cutscene
+	id = "alien_adrenaline"
+	alert_type = /atom/movable/screen/alert/status_effect/cutscene
+
+/datum/status_effect/cutscene/on_creation(mob/living/new_owner, duration = 30 SECOND)
+	. = ..()
+	if(!.)
+		return
+	src.duration = world.time + duration
+
+/datum/status_effect/cutscene/on_apply()
+	owner.SetParalysis(1000, TRUE)
+
+/datum/status_effect/cutscene/on_remove()
+	owner.SetParalysis(0, TRUE)

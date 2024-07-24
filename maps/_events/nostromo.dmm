@@ -95,23 +95,7 @@
 	},
 /area/station/nostromo)
 "aD" = (
-/obj/structure/closet/secure_closet{
-	icon_closed = "cmosecure";
-	icon_opened = "cmosecure_open";
-	icon_state = "cmosecure";
-	name = "Doctors Locker";
-	req_access = list(5)
-	},
-/obj/item/weapon/storage/belt/medical,
-/obj/item/weapon/storage/belt/medical,
-/obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/storage/box/pillbottles,
-/obj/item/weapon/storage/box/syringes/mixture,
-/obj/item/weapon/gun/syringe,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -28
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/peridaxon,
+/obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -129,15 +113,21 @@
 /turf/simulated/floor,
 /area/station/nostromo)
 "aL" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
 	},
-/obj/structure/stool/bed/chair/metal/yellow{
-	dir = 1
+/obj/structure/sign/departments/medbay{
+	pixel_y = 32
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Surgery";
+	name = "Surgery Shutters";
+	opacity = 0
 	},
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "aM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/blue{
@@ -285,8 +275,7 @@
 	teleport_x_offset = 40;
 	teleport_y = 200;
 	teleport_y_offset = 40;
-	teleport_z = 1;
-	teleport_z_offset = 1
+	teleport_z = 2
 	},
 /turf/environment/space,
 /area/space)
@@ -443,14 +432,12 @@
 	},
 /area/station/nostromo)
 "cM" = (
-/obj/item/device/radio/intercom{
-	name = "Intercom";
-	pixel_x = 28;
-	pixel_y = -5
+/obj/machinery/sleeper/upgraded{
+	dir = 8
 	},
-/obj/structure/closet/l3closet/general,
 /turf/simulated/floor{
-	icon_state = "whitebluefull"
+	dir = 6;
+	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
 "cN" = (
@@ -589,6 +576,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/inflatable/door,
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/shuttle/nostromo_narcissus)
 "dC" = (
@@ -1101,11 +1089,18 @@
 /turf/simulated/floor,
 /area/station/nostromo)
 "gC" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 4
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 7;
+	pixel_y = 8
 	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/peridaxon,
 /turf/simulated/floor{
-	dir = 4;
+	dir = 8;
 	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
@@ -1206,8 +1201,8 @@
 	},
 /area/station/nostromo)
 "hm" = (
-/obj/machinery/bodyscanner,
-/obj/machinery/light/smart,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -1262,9 +1257,10 @@
 	},
 /area/station/nostromo)
 "hz" = (
+/obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "whiteblue"
+	icon_state = "whitebluecorner"
 	},
 /area/station/nostromo)
 "hA" = (
@@ -1480,7 +1476,7 @@
 	},
 /area/station/nostromo)
 "iR" = (
-/obj/machinery/body_scanconsole,
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -1634,20 +1630,11 @@
 	},
 /area/station/nostromo)
 "jG" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	dir = 4
-	},
-/obj/machinery/light/smart{
-	dir = 8
-	},
-/obj/item/device/radio/intercom{
-	name = "Intercom";
-	pixel_x = -28;
-	pixel_y = -5
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 9
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "whiteblue"
+	icon_state = "whitechoco"
 	},
 /area/station/nostromo)
 "jI" = (
@@ -1828,12 +1815,8 @@
 /turf/simulated/floor,
 /area/station/nostromo)
 "lc" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "whiteblue"
+	icon_state = "whitebluecorner"
 	},
 /area/station/nostromo)
 "lh" = (
@@ -1883,13 +1866,25 @@
 	icon_state = "brown"
 	},
 /area/station/nostromo)
-"ls" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+"lr" = (
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
 	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Medical_Surgery";
+	name = "Surgery Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/nostromo)
+"ls" = (
+/obj/machinery/vending/blood,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "whitehall"
+	dir = 5;
+	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
 "lu" = (
@@ -2012,21 +2007,23 @@
 	},
 /area/station/nostromo)
 "mm" = (
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
+/obj/structure/rack,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine{
+	pixel_x = -6
 	},
-/obj/structure/sign/departments/medbay{
-	pixel_y = 32
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine{
+	pixel_x = -2
 	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "Medical_Surgery";
-	name = "Surgery Shutters";
-	opacity = 0
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine{
+	pixel_x = 2
 	},
-/turf/simulated/floor/plating,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine{
+	pixel_x = 6
+	},
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
 /area/station/nostromo)
 "mn" = (
 /obj/structure/plasticflaps{
@@ -2047,12 +2044,14 @@
 	},
 /area/station/nostromo)
 "mw" = (
-/obj/machinery/chem_master,
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
+/obj/machinery/door/airlock/highsecurity{
+	name = "Medlab";
+	req_access = list(12)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "whitechoco"
 	},
 /area/station/nostromo)
 "mz" = (
@@ -2078,14 +2077,18 @@
 	},
 /area/station/nostromo)
 "mH" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/sign/departments/medbay{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
-	icon_state = "whitechoco"
+	dir = 1;
+	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "mK" = (
@@ -2100,16 +2103,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/nostromo)
-"mM" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whiteblue"
-	},
 /area/station/nostromo)
 "mO" = (
 /obj/structure/container{
@@ -2362,14 +2355,9 @@
 	},
 /area/station/nostromo)
 "oe" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Medbay";
-	req_access = list(12)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
-	icon_state = "blue"
+	icon_state = "whitechoco"
 	},
 /area/station/nostromo)
 "of" = (
@@ -2723,18 +2711,11 @@
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "qf" = (
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
+/obj/structure/closet/l3closet/general,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whiteblue"
 	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "Medical_Surgery";
-	name = "Surgery Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
 /area/station/nostromo)
 "qi" = (
 /turf/simulated/floor{
@@ -2784,15 +2765,25 @@
 	},
 /area/station/nostromo)
 "qu" = (
-/obj/machinery/optable,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+/obj/structure/closet/secure_closet{
+	icon_closed = "cmosecure";
+	icon_opened = "cmosecure_open";
+	icon_state = "cmosecure";
+	name = "Doctors Locker";
+	req_access = list(5)
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
+/obj/item/weapon/gun/syringe,
+/obj/item/weapon/storage/belt/medical,
+/obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 1;
+	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
 "qx" = (
@@ -2835,17 +2826,6 @@
 	},
 /turf/simulated/floor,
 /area/station/nostromo)
-"qK" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "Medbay";
-	req_access = list(12)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/station/nostromo)
 "qM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -2871,9 +2851,12 @@
 /turf/simulated/floor/grass,
 /area/station/nostromo)
 "qS" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
 /turf/simulated/floor{
-	dir = 5;
+	dir = 9;
 	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
@@ -3094,21 +3077,6 @@
 	icon_state = "seegson_l 0,1"
 	},
 /turf/simulated/floor,
-/area/station/nostromo)
-"sh" = (
-/obj/structure/sign/departments/medbay{
-	pixel_y = 32
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutral"
-	},
 /area/station/nostromo)
 "sj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -3386,13 +3354,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "whitehall"
-	},
-/area/station/nostromo)
-"to" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
 "tp" = (
@@ -3952,15 +3913,6 @@
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
-"wy" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor{
-	icon_state = "whitechoco"
-	},
-/area/station/nostromo)
 "wD" = (
 /obj/structure/container{
 	icon_state = "wy_m 0,0"
@@ -3994,15 +3946,12 @@
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "wJ" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/table/glass,
+/obj/item/weapon/storage/box/syringes/mixture{
+	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 4;
+	dir = 10;
 	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
@@ -4115,9 +4064,7 @@
 	},
 /area/station/nostromo)
 "xq" = (
-/obj/structure/stool/bed/roller,
 /turf/simulated/floor{
-	dir = 10;
 	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
@@ -4165,6 +4112,17 @@
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
+/area/station/nostromo)
+"xB" = (
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Evacuation Shuttle";
+	req_access = list(12)
+	},
+/obj/item/tape/engineering{
+	icon_state = "engineering_door"
+	},
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "xC" = (
 /obj/machinery/door/airlock/hatch{
@@ -4275,15 +4233,6 @@
 /obj/machinery/cryopod,
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/shuttle/nostromo_narcissus)
-"yi" = (
-/obj/structure/closet/secure_closet/medical2{
-	req_access = list(12)
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "blue"
-	},
-/area/station/nostromo)
 "yj" = (
 /obj/structure/rack,
 /obj/random/misc/all/high,
@@ -4969,23 +4918,6 @@
 	icon_state = "yellow"
 	},
 /area/station/nostromo)
-"Ck" = (
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
-	name = "Surgery Cleaner";
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/obj/item/weapon/razor{
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "blue"
-	},
-/area/station/nostromo)
 "Co" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -5072,10 +5004,8 @@
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/nostromo_narcissus)
 "CN" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "whitechoco"
 	},
@@ -5104,10 +5034,8 @@
 /turf/simulated/floor,
 /area/station/nostromo)
 "CX" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "whiteblue"
+	icon_state = "whitechoco"
 	},
 /area/station/nostromo)
 "CY" = (
@@ -5196,10 +5124,10 @@
 /turf/simulated/floor,
 /area/station/nostromo)
 "DB" = (
-/obj/machinery/life_assist/artificial_ventilation,
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitecorner"
+	dir = 1;
+	icon_state = "whitebluecorner"
 	},
 /area/station/nostromo)
 "DD" = (
@@ -5559,23 +5487,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/nostromo)
-"FA" = (
-/obj/structure/table/glass,
-/obj/item/weapon/storage/visuals/surgery/full{
-	pixel_y = 5
-	},
-/obj/machinery/light/smart{
-	dir = 1
-	},
-/obj/item/device/radio/intercom{
-	name = "Intercom";
-	pixel_y = 22
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "blue"
-	},
-/area/station/nostromo)
 "FH" = (
 /obj/machinery/light/smart{
 	dir = 4
@@ -5769,7 +5680,7 @@
 "GE" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall/r_wall/beige{
-	resistance_flags = 64
+	resistance_flags = 128
 	},
 /area/station/nostromo)
 "GF" = (
@@ -5810,21 +5721,6 @@
 "GM" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall/beige,
-/area/station/nostromo)
-"GN" = (
-/obj/machinery/chem_dispenser{
-	energy = 30;
-	max_energy = 30
-	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
-	},
-/obj/structure/sign/departments/chemistry{
-	pixel_y = 32
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
 /area/station/nostromo)
 "GO" = (
 /obj/machinery/seed_extractor,
@@ -6125,13 +6021,6 @@
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
-	},
-/area/station/nostromo)
-"Iw" = (
-/obj/machinery/life_assist/cardiopulmonary_bypass,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "blue"
 	},
 /area/station/nostromo)
 "Iz" = (
@@ -6507,22 +6396,9 @@
 	},
 /area/station/nostromo)
 "Kj" = (
-/obj/machinery/door/airlock/highsecurity{
-	dir = 4;
-	name = "Medbay";
-	req_access = list(12)
-	},
-/obj/structure/sign/departments/examroom{
-	pixel_y = 32
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 8;
+	icon_state = "whitebluecorner"
 	},
 /area/station/nostromo)
 "Kk" = (
@@ -6619,12 +6495,6 @@
 /obj/machinery/cryopod/right,
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/shuttle/nostromo_narcissus)
-"KG" = (
-/obj/structure/closet/l3closet/general,
-/turf/simulated/floor{
-	icon_state = "whitebluefull"
-	},
-/area/station/nostromo)
 "KJ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -6795,12 +6665,6 @@
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
-	},
-/area/station/nostromo)
-"LI" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/floor{
-	icon_state = "neutralfull"
 	},
 /area/station/nostromo)
 "LM" = (
@@ -7365,11 +7229,6 @@
 "OU" = (
 /turf/simulated/floor{
 	icon_state = "blackchoco"
-	},
-/area/station/nostromo)
-"OV" = (
-/turf/simulated/floor{
-	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
 "OX" = (
@@ -8008,18 +7867,6 @@
 	icon_state = "graychoco"
 	},
 /area/station/nostromo)
-"RY" = (
-/obj/structure/table/glass,
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
-/obj/item/weapon/reagent_containers/glass/beaker/large{
-	pixel_y = 4
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/nostromo)
 "RZ" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor{
@@ -8143,24 +7990,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
-"SI" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor{
-	icon_state = "whitechoco"
-	},
-/area/station/nostromo)
-"SK" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "whiteblue"
-	},
-/area/station/nostromo)
 "SL" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -8177,16 +8006,6 @@
 	},
 /obj/structure/plasticflaps/mining,
 /turf/simulated/floor/plating,
-/area/station/nostromo)
-"SP" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "whiteblue"
-	},
 /area/station/nostromo)
 "SS" = (
 /obj/structure/closet/firecloset,
@@ -8341,13 +8160,6 @@
 	icon_state = "neutral"
 	},
 /area/station/nostromo)
-"TE" = (
-/obj/structure/stool/bed/roller,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "blue"
-	},
-/area/station/nostromo)
 "TG" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -8446,9 +8258,11 @@
 	},
 /area/station/nostromo)
 "Ua" = (
-/obj/machinery/vending/blood,
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
 /turf/simulated/floor{
-	icon_state = "whitebluefull"
+	dir = 4;
+	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
 "Ub" = (
@@ -8669,11 +8483,12 @@
 	},
 /area/station/nostromo)
 "Vm" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "whiteblue"
+	icon_state = "whitechoco"
 	},
 /area/station/nostromo)
 "Vo" = (
@@ -8782,14 +8597,11 @@
 	},
 /area/station/nostromo)
 "VV" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/machinery/alarm{
-	pixel_y = 22;
-	req_one_access = list()
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 9;
-	icon_state = "whiteblue"
+	icon_state = "whitechoco"
 	},
 /area/station/nostromo)
 "VX" = (
@@ -9059,14 +8871,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/nostromo)
-"WN" = (
-/obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whiteblue"
-	},
-/area/station/nostromo)
 "WR" = (
 /obj/machinery/door/airlock/hatch{
 	dir = 4;
@@ -9207,14 +9011,6 @@
 	icon_state = "greenfull"
 	},
 /area/station/nostromo)
-"XH" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
-	},
-/turf/simulated/floor{
-	icon_state = "whitechoco"
-	},
-/area/station/nostromo)
 "XJ" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	dir = 4;
@@ -9232,12 +9028,10 @@
 /turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "XM" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitehall"
+	dir = 9;
+	icon_state = "whiteblue"
 	},
 /area/station/nostromo)
 "XP" = (
@@ -9367,14 +9161,6 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/nostromo)
-"YF" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
 /area/station/nostromo)
 "YH" = (
 /obj/machinery/conveyor{
@@ -9586,16 +9372,9 @@
 	},
 /area/station/nostromo)
 "ZL" = (
-/obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
-/obj/machinery/door_control{
-	id = "Medical_Surgery";
-	name = "Privacy Shutters";
-	pixel_y = -28
-	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitecorner"
+	dir = 4;
+	icon_state = "whitebluecorner"
 	},
 /area/station/nostromo)
 "ZM" = (
@@ -9634,7 +9413,7 @@
 /area/station/nostromo)
 "ZR" = (
 /turf/simulated/wall/r_wall/beige{
-	resistance_flags = 64
+	resistance_flags = 128
 	},
 /area/station/nostromo)
 "ZS" = (
@@ -42698,11 +42477,11 @@ Um
 oT
 ZS
 ZS
-RY
-aD
-jG
-WN
-SK
+ZS
+ZS
+ZS
+ZS
+ZS
 ZS
 Ff
 aE
@@ -42954,14 +42733,14 @@ oT
 Um
 oT
 ZS
-GN
-aL
-hz
-SI
-XH
-OV
 ZS
-sh
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+ce
 Ga
 ZS
 GF
@@ -43209,16 +42988,16 @@ oT
 oT
 Ps
 RD
-oT
 ZS
-mw
-YF
-hz
-wy
-mH
-to
-qK
-kk
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
+iY
 Me
 ZS
 oT
@@ -43465,7 +43244,7 @@ iE
 iE
 iE
 dU
-ie
+oT
 ZS
 ZS
 ZS
@@ -43473,7 +43252,7 @@ ZS
 qS
 gC
 wJ
-SP
+ZS
 ZS
 iY
 Me
@@ -43722,15 +43501,15 @@ ZS
 ZS
 ZS
 Um
-ZS
-ZS
-yi
-TE
+ie
 ZS
 ZS
 ZS
+aD
+hz
+CX
 Kj
-ZS
+mm
 ZS
 mT
 Mf
@@ -43980,16 +43759,16 @@ ZS
 ZS
 Um
 ZS
-Iw
-PG
+ZS
+ZS
 XM
 DB
-ZS
+jG
 VV
-mM
+CX
 xq
 ZS
-iY
+mH
 Me
 ZS
 oT
@@ -44237,16 +44016,16 @@ ZS
 HR
 Um
 ZS
-FA
-Rk
+ZS
+ZS
 qu
-hi
+CX
 oe
 Vm
 CN
 hm
-ZS
-iY
+mw
+kk
 Me
 ZS
 HU
@@ -44494,11 +44273,11 @@ ZS
 Ps
 RD
 ZS
-Ck
-PE
+ZS
+ZS
 ls
 ZL
-ZS
+CX
 CX
 lc
 iR
@@ -44752,13 +44531,13 @@ Um
 oT
 ZS
 ZS
-mm
-qf
-qf
 ZS
+ZS
+qf
+Ua
 Ua
 cM
-KG
+ZS
 ZS
 IR
 Me
@@ -45008,12 +44787,12 @@ ZS
 mn
 GF
 ZS
-LI
-Ur
-Ur
-Ur
 ZS
 ZS
+ZS
+aL
+lr
+lr
 ZS
 ZS
 ZS
@@ -49146,7 +48925,7 @@ ZR
 ZR
 ZR
 ZR
-Fx
+xB
 ZR
 ZR
 ZR
