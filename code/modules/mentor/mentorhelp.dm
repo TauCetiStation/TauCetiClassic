@@ -20,6 +20,14 @@ var/global/datum/mentor_help_tickets/mhelp_tickets
 	QDEL_NULL(rstatclick)
 	return ..()
 
+/datum/mentor_help_tickets/proc/TicketsByCKey(ckey)
+	. = list()
+	var/list/lists = list(active_tickets, resolved_tickets)
+	for(var/I in lists)
+		for(var/datum/mentor_help/MH in I)
+			if(MH.initiator_ckey == ckey)
+				. += MH
+
 //private
 /datum/mentor_help_tickets/proc/ListInsert(datum/mentor_help/new_ticket)
 	var/list/mticket_list
@@ -324,6 +332,32 @@ var/global/datum/mentor_help_tickets/mhelp_tickets
 
 	usr << browse(dat.Join(), "window=mhelp[id];size=620x480")
 
+	// Append any tickets also opened by this user if relevant
+	var/list/related_tickets = global.mhelp_tickets.TicketsByCKey(initiator_ckey)
+	if (related_tickets.len > 1)
+		dat += "<br/><b>Other Tickets by [initiator_ckey]</b><br/>"
+		for (var/datum/mentor_help/related_ticket in related_tickets)
+			if (related_ticket.id == id)
+				continue
+			dat += "[related_ticket.TicketHref("#[related_ticket.id]")] ([related_ticket.ticket_status()]): [related_ticket.name]<br/>"
+
+	var/datum/browser/popup = new(usr, "mhelp[id]", null, 620, 480, null, CSS_THEME_LIGHT)
+	popup.set_content(dat.Join())
+	popup.open()
+
+/**
+ * Renders the current status of the ticket into a displayable string
+ */
+/datum/mentor_help/proc/ticket_status()
+	switch(state)
+		if(AHELP_ACTIVE)
+			return "<font color='red'>OPEN</font>"
+		if(AHELP_RESOLVED)
+			return "<font color='green'>RESOLVED</font>"
+		else
+			stack_trace("Invalid ticket state: [state]")
+			return "INVALID, CALL A CODER"
+
 //Kick ticket to admins
 /datum/mentor_help/proc/Escalate()
 	if(tgui_alert(usr, "Вы действительно хотите передать этот тикет администраторам? Если вы это сделаете, то вы и другие менторы больше не смогут с ним взаимодействовать.","Передать тикет админам?",list("Да","Нет")) != "Да")
@@ -347,19 +381,6 @@ var/global/datum/mentor_help_tickets/mhelp_tickets
 		. += ClosureLinks(ref_src)
 	if(state != AHELP_RESOLVED)
 		. += EscalateToAdmins(ref_src)
-
-	// Append any tickets also opened by this user if relevant
-	var/list/related_tickets = global.mhelp_tickets.TicketsByCKey(initiator_ckey)
-	if (related_tickets.len > 1)
-		dat += "<br/><b>Other Tickets by [initiator_ckey]</b><br/>"
-		for (var/datum/mentor_help/related_ticket in related_tickets)
-			if (related_ticket.id == id)
-				continue
-			dat += "[related_ticket.TicketHref("#[related_ticket.id]")] ([related_ticket.ticket_status()]): [related_ticket.name]<br/>"
-
-	var/datum/browser/popup = new(usr, "mhelp[id]", null, 620, 480, null, CSS_THEME_LIGHT)
-	popup.set_content(dat.Join())
-	popup.open()
 
 //Forwarded action from admin/Topic OR mentor/Topic depending on which rank the caller has
 /datum/mentor_help/proc/Action(action)

@@ -4,9 +4,7 @@
 var/list/mentor_ckeys = list()
 var/global/list/mentors = list()
 
-var/list/mentor_verbs_default = list(
-	/client/proc/cmd_mentor_ticket_panel
-)
+var/list/mentor_verbs_default = list()
 
 /world/proc/load_mentors()
 	mentor_ckeys.Cut()
