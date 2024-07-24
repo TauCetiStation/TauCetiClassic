@@ -374,10 +374,10 @@
 	},
 /area/space_structures/agrospheregarden)
 "aQ" = (
-/obj/item/weapon/reagent_containers/pill/LSD{
+/obj/item/weapon/reagent_containers/pill/hallucination_pills{
 	pixel_y = 5
 	},
-/obj/item/weapon/reagent_containers/pill/LSD{
+/obj/item/weapon/reagent_containers/pill/hallucination_pills{
 	pixel_x = 4;
 	pixel_y = -3
 	},
@@ -808,7 +808,7 @@
 "bM" = (
 /obj/structure/window/thin/reinforced,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/pill/LSD{
+/obj/item/weapon/reagent_containers/pill/hallucination_pills{
 	pixel_x = -7;
 	pixel_y = 10
 	},
