@@ -492,7 +492,6 @@ var/global/list/preferences_datums = list()
 
 	if(socks > socks_t.len || socks < 1)
 		socks = 0
-
 	character.socks = socks
 
 	if(backbag > 5 || backbag < 1)

@@ -63,7 +63,7 @@
 	message = add_period(message)
 
 	//TODO: handle_speech_problems for silent
-	if(!message || silent || miming || HAS_TRAIT(src, TRAIT_MUTE))
+	if(!message || silent || HAS_TRAIT(src, TRAIT_MIMING) || HAS_TRAIT(src, TRAIT_MUTE))
 		return FALSE
 
 	// Mute disability

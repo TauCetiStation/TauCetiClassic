@@ -211,6 +211,13 @@
 				to_chat(user, "<span class='notice'>You take [mybag] from [src].</span>")
 				mybag = null
 		if("bucket")
+			if(mybucket && mymop)
+				mybucket.update_icon()
+				mybucket.forceMove(get_turf(src))
+				user.put_in_hands(mymop)
+				to_chat(user, "<span class='notice'>You unmount [mybucket] and take [mymop] from [src].</span>")
+				mybucket = null
+				mymop = null
 			if(mybucket)
 				mybucket.update_icon()
 				mybucket.forceMove(get_turf(src))

@@ -181,6 +181,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 	severity = EVENT_LEVEL_MUNDANE
 	available_events = list(
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Nothing",            /datum/event/nothing,                                 1100),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "APC Damage",         /datum/event/apc_damage,                              200,  list(ASSIGNMENT_ENGINEER = 60)),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "PDA Spam",           /datum/event/pda_spam,                                0,    list(ASSIGNMENT_ANY = 4),       0, 1, 0, 25, 50),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Lotto",        /datum/event/money_lotto,                             0,    list(ASSIGNMENT_ANY = 1), ONESHOT, 1, 0,  5, 15),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Hacker",       /datum/event/money_hacker,                            0,    list(ASSIGNMENT_ANY = 4), ONESHOT, 1, 0, 10, 25),
@@ -190,6 +191,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Vermin Infestation", /datum/event/infestation,                             100,  list(ASSIGNMENT_JANITOR = 100)),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Wallrot",            /datum/event/wallrot,                                 0,    list(ASSIGNMENT_ENGINEER = 30, ASSIGNMENT_BOTANIST = 50)),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Xenohive",           /datum/event/feature/area/maintenance_spawn/xenohive, 300),
+	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Camera Malfunction", /datum/event/camera_damage,                           200,  list(ASSIGNMENT_ENGINEER = 60)),
 	)
 
 /datum/event_container/moderate
@@ -202,7 +204,8 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Meteor Shower",           /datum/event/meteor_shower,             0,     list(ASSIGNMENT_ENGINEER = 25)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Communication Blackout",  /datum/event/communications_blackout,   500,   list(ASSIGNMENT_AI = 150, ASSIGNMENT_SECURITY = 120)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Prison Break",            /datum/event/prison_break,              0,     list(ASSIGNMENT_SECURITY = 100)),
-		new /datum/event_meta(EVENT_LEVEL_MODERATE, "APC Damage",              /datum/event/apc_damage,                200,   list(ASSIGNMENT_ENGINEER = 60)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "APC Malfunction",         /datum/event/apc_damage,                200,   list(ASSIGNMENT_ENGINEER = 60)),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "AirAlarm Damage",         /datum/event/air_alarm_malfunction,     0,     list(ASSIGNMENT_ENGINEER = 60)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Camera Damage",           /datum/event/camera_damage,             200,   list(ASSIGNMENT_ENGINEER = 60)),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Gravity Failure",         /datum/event/gravity,                   100),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Electrical Storm",        /datum/event/electrical_storm,          250,   list(ASSIGNMENT_ENGINEER = 20, ASSIGNMENT_JANITOR = 150)),
@@ -228,6 +231,16 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta/alien(EVENT_LEVEL_MODERATE, "Alien Infestation", /datum/event/alien_infestation,         0,     list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_MEDICAL = 15), ONESHOT, 1, 35),
 	)
 
+/datum/event_container/moderate/New()
+	. = ..()
+	if(SSholiday.holidays[APRIL_FOOLS])
+		for(var/datum/event_meta/EM in available_events)
+			if(EM.name == "Brand Intelligence")
+				available_events -= EM
+				qdel(EM)
+				break
+		available_events += new /datum/event_meta(EVENT_LEVEL_MODERATE, "Brand Intelligence", /datum/event/brand_intelligence/alive_vends, 50, list(ASSIGNMENT_ENGINEER = 1000), ONESHOT)
+
 /datum/event_container/major
 	severity = EVENT_LEVEL_MAJOR
 	available_events = list(
@@ -238,6 +251,7 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Meteor Wave",             /datum/event/meteor_wave,       0, list(ASSIGNMENT_ENGINEER = 10), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Lone Syndicate Agent",    /datum/event/lone_op,         100, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
 		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Abduction",               /datum/event/abduction,         0, list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
+		new /datum/event_meta(EVENT_LEVEL_MAJOR, "Camera Blackout",         /datum/event/camera_damage,     0, list(ASSIGNMENT_ENGINEER = 25)),
 	)
 
 #undef ASSIGNMENT_ANY

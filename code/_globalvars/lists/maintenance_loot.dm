@@ -184,7 +184,7 @@ var/global/list/uncommon_loot = list(
 			/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 1,
 			) = 1,
 		list(
-			/obj/item/weapon/reagent_containers/spray = 1,
+			/obj/item/weapon/reagent_containers/spray/maintenance = 1,
 			/obj/item/weapon/reagent_containers/watertank_backpack = 1,
 			/obj/item/weapon/reagent_containers/watertank_backpack/janitor = 1,
 			) = 1,

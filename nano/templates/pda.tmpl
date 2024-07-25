@@ -322,6 +322,18 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                         {{/if}}
                     {{/for}}
                 {{/if}}
+                {{if data.cached.centcom.length}}
+                    <tr><th colspan="4" class="centcom">CentCom representatives</th></tr>
+                    {{for data.cached["centcom"]}}
+                        {{if value.rank == "Internal Affairs Agent"}}
+							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                            <td><span class="good">{{:value.name}}</span></td><td><span class="good">{{:value.rank}}</span></td><td><span class="good">{{:value.active}}</span></td></tr>
+                        {{else}}
+							<tr><td>{{:helper.link('Send Money', null, {'choice' : "Send Money", 'account' : value.account}, null, null)}}{{:helper.link('DM', null, {'choice' : "DM", 'reciever' : value.name}, null, null)}}</td>
+                            <td><span class="average">{{:value.name}}</span></td><td><span class="average">{{:value.rank}}</span></td><td><span class="average">{{:value.active}}</span></td></tr>
+                        {{/if}}
+                    {{/for}}
+                {{/if}}
                 {{if data.cached.sec.length}}
                     <tr><th colspan="4" class="sec">Security</th></tr>
                     {{for data.cached["sec"]}}

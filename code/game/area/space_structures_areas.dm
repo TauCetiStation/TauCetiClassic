@@ -83,64 +83,64 @@
 	name = "Agroshere Structure"
 	icon_state = "yellow"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/space_structures/planetarium
 	name = "Planetarium"
 	icon_state = "yellow"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/space_structures/robostatoin
 	name = "Robostation"
 	icon_state = "yellow"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/space_structures/robostation2
 	name = "Robostation2"
 	icon_state = "yellow"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/space_structures/ghostship
 	name = "Ghost Ship"
 	icon_state = "yellow"
 	always_unpowered = 1
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/space_structures/delivery_shuttle
 	name = "Delivery Shuttle"
 	icon_state = "shuttle"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/space_structures/cloning_lab
 	name = "Cloning Facility"
 	icon_state = "purple"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/space_structures/listening_post
 	name = "Listening Post"
 	icon_state = "syndie-elite"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 /area/space_structures/syndicate_fighter
 	name = "Shiv Fighter"
 	icon_state = "syndie-elite"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = 0
 
 /area/space_structures/iss
 	name = "Ancient Space Station"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = 0
 
 /area/space_structures/nasa_satellite
 	name = "NASA_satellite"
 	icon_state = "yellow"
 	requires_power = 0
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	looped_ambience = 'sound/music/space_oddity.ogg'
 
 /area/space_structures/derelict_lab
@@ -150,74 +150,74 @@
 /area/space_structures/tree_asteroid
 	name = "Tree Asteroid"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = 0
 
 /area/space_structures/resource_shuttle
 	name = "Abandoned Cargo Shuttle"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = 0
 
 /area/space_structures/nt_fighter_blaton
 	name = "NT Fighter \"Blaton\""
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = 1
 
 /area/space_structures/nt_fighter_skeora
 	name = "NT Fighter \"Skeora\""
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = 1
 
 /area/space_structures/nt_troopship
 	name = "NT Troopship"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = 1
 
 /area/space_structures/secrete_lab
 	name = "Secrete Lab"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = 0
 
 /area/space_structures/broken_breacher
 	name = "Broken Breacher"
 	icon_state = "broken_breacher"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = 0
 
 /area/space_structures/export_outpost
 	name = "TO-11312 Export Outpost"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = TRUE
 
 /area/space_structures/research_ship
 	name = "Research Ship"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = TRUE
 
 /area/space_structures/cult_ship
 	name = "Spaceship"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = TRUE
 
 /area/space_structures/space_villa
 	name = "SpaceVilla"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	requires_power = TRUE
 
 // Old Station
 /area/space_structures/old_station
 	name = "OldStation"
 	icon_state = "yellow"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 
 
 /area/space_structures/old_station/Entered()
@@ -352,7 +352,7 @@
 /area/space_structures/flagship
 	name = "Destroyed Flagship"
 	icon_state = "syndie-elite"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	dynamic_lighting = TRUE
 	ambience = list('sound/ambience/ambiruin4.ogg', 'sound/ambience/syndicate_station.ogg')
 
 /area/space_structures/flagship/Entered()

@@ -85,10 +85,20 @@
 /datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/user, obj/structure/altar_of_gods/AOG)
 	..()
 	SSticker.nar_sie_has_risen = TRUE
-	for(var/mob/M in player_list)
-		if(!isnewplayer(M))
-			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
-	addtimer(CALLBACK(src, PROC_REF(summon), get_turf(AOG)), 40)
+
+// I'm commenting this out in favor of the new lighting effect
+// this sound is terrible and does more harm than good for the atmosphere
+// if no one is against it in the future - delete comment and the ogg file
+//	for(var/mob/M in player_list)
+//		if(!isnewplayer(M))
+//			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+
+	// probably should be white list or something, maybe check by linkage?
+	for(var/Z in SSmapping.levels_not_having_any_trait(list(ZTRAIT_CENTCOM, ZTRAIT_JUNKYARD)))
+		var/datum/space_level/SL = SSmapping.get_level(Z)
+		SL.set_level_light(new /datum/level_lighting_effect/narsie)
+
+	addtimer(CALLBACK(src, PROC_REF(summon), get_turf(AOG)), 30 SECONDS)
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/narsie/proc/summon(turf/T)

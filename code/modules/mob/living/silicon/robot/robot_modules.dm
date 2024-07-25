@@ -145,14 +145,14 @@
 	modules += new /obj/item/device/gps/cyborg(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/cyborg(src)
 
-	emag = new /obj/item/weapon/reagent_containers/spray(src)
+	emag = new /obj/item/weapon/reagent_containers/spray/maintenance(src)
 
 	emag.reagents.add_reagent("pacid", 250)
 	emag.name = "Polyacid spray"
 
 /obj/item/weapon/robot_module/medical/respawn_consumable(mob/living/silicon/robot/R)
 	if(emag)
-		var/obj/item/weapon/reagent_containers/spray/PS = emag
+		var/obj/item/weapon/reagent_containers/spray/maintenance/PS = emag
 		PS.reagents.add_reagent("pacid", 2)
 	var/obj/item/weapon/reagent_containers/syringe/S = locate() in src.modules
 	if(S.mode == 2)
@@ -239,7 +239,7 @@
 	modules += new /obj/item/weapon/mop(src)
 	modules += new /obj/item/device/lightreplacer/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
-	emag = new /obj/item/weapon/reagent_containers/spray(src)
+	emag = new /obj/item/weapon/reagent_containers/spray/maintenance(src)
 
 	emag.reagents.add_reagent("lube", 250)
 	emag.name = "Lube spray"
@@ -249,7 +249,7 @@
 	var/obj/item/device/lightreplacer/LR = locate() in src.modules
 	LR.Charge(R)
 	if(src.emag)
-		var/obj/item/weapon/reagent_containers/spray/S = src.emag
+		var/obj/item/weapon/reagent_containers/spray/maintenance/S = src.emag
 		S.reagents.add_reagent("lube", 2)
 
 /obj/item/weapon/robot_module/butler

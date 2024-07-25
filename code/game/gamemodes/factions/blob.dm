@@ -280,16 +280,10 @@ Message ends."}
 					floor += 1
 
 			if(iswallturf(T))
-				if(T.intact)
-					wall += 2
-				else
-					wall += 1
+				wall += 2
 
 			if(istype(T, /turf/simulated/wall/r_wall))
-				if(T.intact)
-					r_wall += 2
-				else
-					r_wall += 1
+				r_wall += 2
 
 			for(var/obj/O in T.contents)
 				if(istype(O, /obj/structure/window))

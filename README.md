@@ -35,6 +35,7 @@
   - [F.A.Q. по работе с картой](/.github/wiki/WORK_WITH_MAP.md)
   - [Вводный курс (форум)](https://forum.taucetistation.org/t/gajd-na-maping-i-kak-etim-voobshhe-zanimatsya/32439)
   - [Добавление своей станции](/.github/wiki/HOW_ADD_STATION.md)
+  - [Работа со светом](/.github/wiki/MAP_LIGHT.md)
 * **Звуки:**
   - [Общий гайд по работе со звуками в игре (wiki)](https://wiki.taucetistation.org/Soundmaking)
 * **Спрайты:**

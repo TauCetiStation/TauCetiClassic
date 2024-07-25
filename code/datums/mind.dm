@@ -47,7 +47,6 @@
 
 	var/datum/job/assigned_job
 
-	var/list/special_verbs = list()
 	var/list/antag_roles = list()		// All the antag roles we have.
 
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state

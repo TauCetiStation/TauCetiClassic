@@ -18,7 +18,7 @@
 	name = "jungle"
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "area"
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	dynamic_lighting = FALSE
 
 //randomly spawns, will create paths around the map
 /obj/effect/landmark/path_waypoint

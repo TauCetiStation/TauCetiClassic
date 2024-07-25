@@ -3116,6 +3116,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "gw" = (
@@ -3129,7 +3130,7 @@
 "gx" = (
 /obj/machinery/mass_driver{
 	dir = 4;
-	id = "research"
+	id = "researchshaft"
 	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
@@ -3216,6 +3217,11 @@
 /area/asteroid/research_outpost/power)
 "gO" = (
 /obj/machinery/portable_atmospherics/powered/pump,
+/obj/machinery/driver_button{
+	id = "researchshaft";
+	layer = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "gP" = (
@@ -7316,7 +7322,7 @@
 	},
 /area/asteroid/mine/abandoned)
 "pC" = (
-/turf/simulated/mineral/random/caves,
+/turf/simulated/mineral/random/caves/high_chance,
 /area/asteroid/mine/unexplored/dangerous)
 "pD" = (
 /obj/structure/window/fulltile/reinforced{
@@ -8116,9 +8122,6 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/abandoned)
-"rE" = (
-/turf/simulated/mineral,
-/area/asteroid/mine/unexplored/dangerous)
 "rF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -13259,6 +13262,10 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
+"WK" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/power)
 "Xb" = (
 /obj/structure/sign/departments/science{
 	icon_state = "science2";
@@ -33899,7 +33906,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 ac
 ac
 ac
@@ -34156,8 +34163,8 @@ rx
 pC
 pC
 pC
-rE
-rE
+pC
+pC
 kO
 kO
 kO
@@ -34414,7 +34421,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 kO
 st
 st
@@ -34671,7 +34678,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 kO
 st
 sv
@@ -34928,7 +34935,7 @@ ry
 ry
 pC
 pC
-rE
+pC
 kO
 st
 sw
@@ -35185,7 +35192,7 @@ pC
 ry
 pC
 pC
-rE
+pC
 kO
 st
 sx
@@ -35441,8 +35448,8 @@ pC
 pC
 pC
 pC
-rE
-rE
+pC
+pC
 kO
 st
 sy
@@ -35698,8 +35705,8 @@ pC
 pC
 pC
 pC
-rE
-rE
+pC
+pC
 kO
 st
 sz
@@ -35955,8 +35962,8 @@ pC
 pC
 pC
 pC
-rE
-rE
+pC
+pC
 kO
 st
 st
@@ -36211,7 +36218,7 @@ pC
 pC
 pC
 rx
-rE
+pC
 kO
 kO
 kO
@@ -36468,7 +36475,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 kO
 sp
 sp
@@ -36725,7 +36732,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 kO
 sp
 sr
@@ -36982,7 +36989,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 kO
 sq
 ss
@@ -37239,7 +37246,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 kO
 sp
 sr
@@ -37496,7 +37503,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 kO
 sp
 sp
@@ -37753,7 +37760,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 kO
 kO
 kO
@@ -37770,7 +37777,7 @@ kO
 kO
 kO
 kO
-rE
+pC
 pC
 pC
 ad
@@ -38011,8 +38018,8 @@ pC
 pC
 pC
 pC
-rE
-rE
+pC
+pC
 kO
 st
 st
@@ -38026,8 +38033,8 @@ kO
 kO
 kO
 kO
-rE
-rE
+pC
+pC
 pC
 pC
 ad
@@ -38268,8 +38275,8 @@ pC
 pC
 pC
 pC
-rE
-rE
+pC
+pC
 kO
 st
 sD
@@ -38282,8 +38289,8 @@ st
 kO
 kO
 kO
-rE
-rE
+pC
+pC
 pC
 pC
 pC
@@ -38525,8 +38532,8 @@ pC
 pC
 pC
 pC
-rE
-rE
+pC
+pC
 kO
 st
 sE
@@ -38538,8 +38545,8 @@ tm
 st
 kO
 kO
-rE
-rE
+pC
+pC
 pC
 pC
 pC
@@ -38783,7 +38790,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 kO
 st
 sF
@@ -38794,8 +38801,8 @@ tz
 tH
 st
 kO
-rE
-rE
+pC
+pC
 pC
 pC
 pC
@@ -39040,7 +39047,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 kO
 st
 sG
@@ -39051,7 +39058,7 @@ st
 tI
 st
 kO
-rE
+pC
 pC
 pC
 pC
@@ -39308,7 +39315,7 @@ sU
 tJ
 st
 kO
-rE
+pC
 pC
 pC
 pC
@@ -39565,7 +39572,7 @@ st
 st
 st
 kO
-rE
+pC
 pC
 pC
 pC
@@ -39822,12 +39829,12 @@ kO
 kO
 kO
 kO
-rE
 pC
 pC
 pC
 pC
-rE
+pC
+pC
 pC
 pC
 ad
@@ -40070,15 +40077,15 @@ pC
 pC
 pC
 pC
-rE
-rE
-rE
-rE
-rE
-rE
-rE
-rE
-rE
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 pC
 pC
 pC
@@ -40329,12 +40336,12 @@ pC
 pC
 pC
 pC
-rE
-rE
-rE
-rE
-rE
-rE
+pC
+pC
+pC
+pC
+pC
+pC
 pC
 pC
 pC
@@ -45703,8 +45710,8 @@ pC
 pC
 pC
 pC
-rE
-rE
+pC
+pC
 pC
 pC
 pC
@@ -46220,7 +46227,7 @@ ac
 ac
 ac
 ac
-rE
+pC
 pC
 pC
 pC
@@ -46723,7 +46730,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 ac
 ac
 ac
@@ -46736,7 +46743,7 @@ ac
 ac
 ac
 ac
-rE
+pC
 pC
 pC
 pC
@@ -46980,7 +46987,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 ac
 ac
 ac
@@ -46993,8 +47000,8 @@ ac
 ac
 ac
 ac
-rE
-rE
+pC
+pC
 pC
 pC
 pC
@@ -47013,8 +47020,8 @@ pC
 pC
 pC
 pC
-rE
-rE
+pC
+pC
 pC
 pC
 pC
@@ -47236,8 +47243,8 @@ pC
 pC
 pC
 pC
-rE
-rE
+pC
+pC
 ac
 ac
 aa
@@ -47269,15 +47276,15 @@ pC
 pC
 pC
 pC
-rE
+pC
 as
-rE
-rE
-rE
-rE
-rE
-rE
-rE
+pC
+pC
+pC
+pC
+pC
+pC
+pC
 ac
 ad
 ad
@@ -47525,16 +47532,16 @@ pC
 pC
 pC
 pC
-rE
+pC
 ry
 ry
-rE
+pC
 as
 ry
 ry
-rE
-rE
-rE
+pC
+pC
+pC
 ac
 ad
 ad
@@ -47747,8 +47754,8 @@ ad
 ad
 ad
 ac
-rE
-rE
+pC
+pC
 ac
 ac
 ac
@@ -47782,7 +47789,7 @@ pC
 pC
 pC
 pC
-rE
+pC
 as
 ry
 ry
@@ -48004,8 +48011,8 @@ ac
 ac
 ac
 ac
-rE
-rE
+pC
+pC
 ac
 ac
 ac
@@ -48033,13 +48040,13 @@ pC
 pC
 pC
 pC
-rE
-rE
-rE
-rE
 pC
 pC
-rE
+pC
+pC
+pC
+pC
+pC
 ry
 ry
 ry
@@ -48284,9 +48291,9 @@ ac
 ac
 ac
 ad
-rE
 pC
-rE
+pC
+pC
 ac
 ac
 ac
@@ -48296,9 +48303,9 @@ ac
 ac
 ac
 ad
-rE
-rE
-rE
+pC
+pC
+pC
 cn
 ry
 ry
@@ -48553,7 +48560,7 @@ ac
 ac
 ac
 ac
-rE
+pC
 ac
 ag
 ag
@@ -59264,7 +59271,7 @@ eF
 eF
 fU
 gv
-eF
+WK
 hO
 eF
 ja

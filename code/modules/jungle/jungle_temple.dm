@@ -2,37 +2,37 @@
 
 /area/awaymission/jungle/temple_one
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple1"
 
 /area/awaymission/jungle/temple_two
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple2"
 
 /area/awaymission/jungle/temple_three
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple3"
 
 /area/awaymission/jungle/temple_four
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple4"
 
 /area/awaymission/jungle/temple_five
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple5"
 
 /area/awaymission/jungle/temple_six
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple6"
 

@@ -140,7 +140,13 @@
 	if(ishuman(M))
 		covered = get_human_covering(M)
 
-	if(!handle_fumbling(user, M, SKILL_TASK_CHALLENGING, list(/datum/skill/surgery = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
+	var/skillcheck = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[IS_SYNTHETIC])
+			skillcheck = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
+
+	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, skillcheck, "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
 		return
 
 	for(var/datum/surgery_step/S in surgery_steps)
@@ -208,5 +214,5 @@
 /datum/surgery_step/ipc
 	can_infect = FALSE
 	allowed_species = list(IPC)
-	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/surgery = SKILL_LEVEL_NOVICE)
 	skills_speed_bonus = -0.2

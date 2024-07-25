@@ -65,16 +65,40 @@ RCD
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
+
+	if(available_modes.len <= 1)
+		return
+
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED)))
 		return
 
-	var/mode_index = available_modes.Find(mode)
-	mode_index++
-	if(mode_index > length(available_modes))
-		mode_index = 1
+	var/static/radial_floor_wall = image(icon = 'icons/turf/floors.dmi', icon_state = "plating")
+	var/static/radial_airlock = image(icon = 'icons/obj/doors/airlocks/station/public.dmi', icon_state = "full")
+	var/static/radial_pipe = image(icon = 'icons/obj/pipes/disposal.dmi', icon_state = "conpipe-s")
+	var/static/radial_deconstruct = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_trash")
 
-	mode = available_modes[mode_index]
+	var/list/options = list()
+
+	if(RCD_MODE_FLOOR_WALLS in available_modes)
+		options[RCD_MODE_FLOOR_WALLS] = radial_floor_wall
+	if(RCD_MODE_AIRLOCK in available_modes)
+		options[RCD_MODE_AIRLOCK] = radial_airlock
+	if(RCD_MODE_DECONSTRUCT in available_modes)
+		options[RCD_MODE_DECONSTRUCT] = radial_deconstruct
+	if(RCD_MODE_PNEUMATIC in available_modes)
+		options[RCD_MODE_PNEUMATIC] = radial_pipe
+
+	var/choice = show_radial_menu(user, src, options, tooltips = TRUE)
+
+	if(!choice) //closed radial menu
+		return
+
+	if(!user.Adjacent(src))
+		return
+
+	mode = choice
+
 	to_chat(user, "<span class='notice'>Changed mode to '[mode]'</span>")
 	if(prob(20))
 		spark_system.start()
@@ -100,7 +124,7 @@ RCD
 				if(!canBuildOnTurf(T))
 					to_chat(user, "<span class='warning'>You can't build floor here.</span>")
 					return FALSE
-				to_chat(user, "Building Floor...")
+				to_chat(user, "<span class='notice'>Building Floor...</span>")
 				if(!use_tool(target, user, 0, amount = 1, volume = 0))
 					return FALSE
 				activate()
@@ -112,7 +136,7 @@ RCD
 				if(!canBuildOnTurf(F))
 					to_chat(user, "<span class='warning'>You can't build wall here.</span>")
 					return FALSE
-				to_chat(user, "Building Wall ...")
+				to_chat(user, "<span class='notice'>Building Wall ...</span>")
 				if(!use_tool(target, user, 20, amount = 3))
 					return FALSE
 				activate()
@@ -124,7 +148,8 @@ RCD
 				if(!canBuildOnTurf(target))
 					to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
 					return FALSE
-				to_chat(user, "Building Airlock...")
+
+				to_chat(user, "<span class='notice'>Building Airlock...</span>")
 				if(!use_tool(target, user, 50, amount = 10))
 					return
 				activate()
@@ -136,7 +161,7 @@ RCD
 				var/turf/simulated/wall/W = target
 				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
 					return FALSE
-				to_chat(user, "Deconstructing Wall...")
+				to_chat(user, "<span class='danger'>Deconstructing Wall...</span>")
 				if(!use_tool(target, user, 40, amount = 5))
 					return FALSE
 				activate()
@@ -145,7 +170,7 @@ RCD
 
 			if(isfloorturf(target))
 				var/turf/simulated/floor/F = target
-				to_chat(user, "Deconstructing Floor...")
+				to_chat(user, "<span class='danger'>Deconstructing Floor...</span>")
 				if(!use_tool(target, user, 50, amount = 5))
 					return FALSE
 				activate()
@@ -153,7 +178,7 @@ RCD
 				return TRUE
 
 			if(istype(target, /obj/machinery/door/airlock) && !user.is_busy())
-				to_chat(user, "Deconstructing Airlock...")
+				to_chat(user, "<span class='danger'>Deconstructing Airlock...</span>")
 				if(!use_tool(target, user, 50, amount = 10))
 					return FALSE
 
@@ -166,7 +191,7 @@ RCD
 		if(RCD_MODE_PNEUMATIC)
 			if(istype(target, /obj/structure/disposalconstruct))
 				var/obj/structure/disposalconstruct/D = target
-				to_chat(user, "Changing shape of the pipe...")
+				to_chat(user, "<span class='notice'>Changing shape of the pipe...</span>")
 				if(!use_tool(target, user, 0, amount = 0, volume = 20))
 					return FALSE
 				// some shitty disposals code here
@@ -174,7 +199,7 @@ RCD
 				D.ptype += 1
 				if(D.ptype > 9)
 					D.ptype = 0
-				
+
 				if(D.ptype in list(6, 7, 8))
 					D.density = TRUE
 				else
@@ -189,7 +214,7 @@ RCD
 					to_chat(user, "<span class='warning'>You can't build pipe here.</span>")
 					return FALSE
 
-				to_chat(user, "Building Pipe...")
+				to_chat(user, "<span class='notice'>Building Pipe...</span>")
 				if(!use_tool(target, user, 10, amount = 2, volume = 0))
 					return FALSE
 

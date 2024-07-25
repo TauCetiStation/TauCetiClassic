@@ -240,7 +240,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "iG" = (
-/obj/structure/stool/bed/chair/comfy/teal{
+/obj/structure/stool/bed/chair/comfy/green{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -278,7 +278,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "lC" = (
-/obj/structure/stool/bed/chair/comfy/teal,
+/obj/structure/stool/bed/chair/comfy/green,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 5;
@@ -612,7 +612,7 @@
 	},
 /area/space_structures/robostation2)
 "CN" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 1
 	},
 /turf/simulated/floor{

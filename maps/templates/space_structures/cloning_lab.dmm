@@ -154,7 +154,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/cloning_lab)
 "B" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
 /turf/simulated/floor,

@@ -47,10 +47,12 @@
 									  "<span class='warning'>You hear the operation of some mechanism.</span>")
 					//Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 					feedback_add_details("handcuffs","B")
+					playsound(src,'sound/weapons/legtrap.ogg', VOL_EFFECTS_MASTER)
 		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !isconstruct(AM) && !isshade(AM) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
 			SA.health -= 20
+			playsound(src,'sound/weapons/legtrap.ogg', VOL_EFFECTS_MASTER)
 
 		icon_state = "beartrap[armed]"
 

@@ -54,12 +54,10 @@
 	if(wet < severity)
 		wet = severity
 		UpdateSlip()
-		if(!wet_overlay)
-			var/current_type = "wet_floor"
-			if(severity == LUBE_FLOOR)
-				current_type = "wet_floor_static"
-			wet_overlay = image('icons/effects/water.dmi', current_type, src)
-			add_overlay(wet_overlay)
+		if(wet_overlay || severity >= LUBE_FLOOR)
+			return
+		wet_overlay = image('icons/effects/water.dmi', "wet_floor", src)
+		add_overlay(wet_overlay)
 
 /turf/simulated/proc/make_dry_floor()
 	if(wet)

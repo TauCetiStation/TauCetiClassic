@@ -340,6 +340,26 @@
 	handle_liver_infection()
 	handle_liver_life()
 
+/obj/item/organ/internal/liver/serpentid
+
+/obj/item/organ/internal/liver/serpentid/handle_liver_life()
+	if(is_bruised())
+		if(owner.life_tick % process_accuracy == 0)
+			for(var/datum/reagent/R in owner.reagents.reagent_list)
+				if(istype(R, /datum/reagent/consumable/ethanol))
+					owner.adjustToxLoss(0.1 * process_accuracy)
+				if(istype(R, /datum/reagent/toxin))
+					owner.adjustToxLoss(0.3 * process_accuracy)
+		owner.adjustOxyLoss(damage)
+
+	if(owner.reagents.get_reagent_amount("dexalinp") >= 4.0)
+		return
+	owner.reagents.add_reagent("dexalinp", REAGENTS_METABOLISM * 1.5)
+
+	if(owner.reagents.get_reagent_amount("dexalinp") >= 3.0)
+		return
+	damage += 0.2
+
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
 

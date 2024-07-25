@@ -350,7 +350,8 @@
 			if(!T.broken && !T.burnt)
 				new T.floor_type(T)
 			T.make_plating()
-	return !new_turf.intact
+	return new_turf.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE
+
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/layCable(turf/new_turf)
 	if(equip_ready || !istype(new_turf) || !dismantleFloor(new_turf))
@@ -365,13 +366,13 @@
 	NC.color = COLOR_RED
 	NC.d1 = 0
 	NC.d2 = fdirn
-	NC.updateicon()
+	NC.update_icon()
 
 	var/datum/powernet/PN
 	if(last_piece && last_piece.d2 != chassis.dir)
 		last_piece.d1 = min(last_piece.d2, chassis.dir)
 		last_piece.d2 = max(last_piece.d2, chassis.dir)
-		last_piece.updateicon()
+		last_piece.update_icon()
 		PN = last_piece.powernet
 
 	if(!PN)

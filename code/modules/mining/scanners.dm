@@ -59,6 +59,7 @@
 	sightglassesmod = "sepia"
 	hud_types = list(DATA_HUD_MINER)
 	vision_flags = SEE_TURFS
+	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
 
 /datum/action/item_action/hands_free/toggle_goggles

@@ -21,7 +21,7 @@
 		shake_camera(L, 3, 2)
 
 /obj/item/projectile/bullet/weakbullet // "rubber" bullets
-	damage = 10
+	damage = 3
 	stun = 0
 	weaken = 0
 	agony = 40

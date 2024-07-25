@@ -616,7 +616,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, FALSE, null, -2)
 	BP.status |= ORGAN_BROKEN
-	BP.broken_description = pick("broken", "fracture", "hairline fracture")
+	BP.broken_description = pick("перелом", "трещина")
 	BP.perma_injury = BP.brute_dam
 
 	// Fractures have a chance of getting you out of restraints

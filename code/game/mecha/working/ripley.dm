@@ -36,6 +36,24 @@
 		else
 			add_overlay(image("icon" = "mecha.dmi", "icon_state" = occupant ? "ripley-g-full" : "ripley-g-full-open"))
 
+/obj/mecha/working/ripley/engi/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/rcd(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/extinguisher(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment(src)
+	ME.attach(src)
+
+/obj/mecha/working/ripley/mine/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster(src)
+	ME.attach(src)
+
 /obj/mecha/working/ripley/firefighter
 	desc = "Standart APLU chassis was refitted with additional thermal protection and cistern."
 	name = "APLU \"Firefighter\""
@@ -50,6 +68,15 @@
 /obj/mecha/working/ripley/firefighter/atom_init()
 	. = ..()
 	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 1400, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
+/obj/mecha/working/ripley/firefighter/engi/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/rcd(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/extinguisher(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment(src)
+	ME.attach(src)
 
 /obj/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE!!!"

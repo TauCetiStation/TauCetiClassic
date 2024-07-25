@@ -278,13 +278,17 @@ NO_JUNKYARD
 ## Saves some initialization time
 # NO_SPACE_LEVELS
 
+## Uncomment to enable byond profiler. Logs will be dropped in the round log folder.
+## Keep in mind it can cause performance degradation.
+# AUTO_PROFILE
+
 ## Uncomment to allow drastic performence enhancemet measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
 # AUTO_LAG_SWITCH_POP 100
 
 ## Enables demo recordings, works slower on windows
 # RECORD_REPLAYS
 
-## Use persistent cache for better perfomance
+## Use persistent cache for better performance
 ## You will need to occasionally clean ./cache/persistent yourself from old files
 ## by removing folder or with ./script/clear_persistent_cache.sh
 #USE_PERSISTENT_CACHE

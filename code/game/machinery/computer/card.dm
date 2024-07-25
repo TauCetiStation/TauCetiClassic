@@ -112,6 +112,7 @@
 	data["science_jobs"] = format_jobs(science_positions)
 	data["security_jobs"] = format_jobs(security_positions)
 	data["civilian_jobs"] = format_jobs(civilian_positions)
+	data["representative_jobs"] = format_jobs(centcom_positions)
 	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 
 	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))

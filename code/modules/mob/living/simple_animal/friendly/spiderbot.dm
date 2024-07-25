@@ -266,6 +266,8 @@
 
 	var/list/items = list()
 	for(var/obj/item/I in view(1,src))
+		if(istype(I, /obj/item/weapon/disk/nuclear))
+			continue
 		if(I.loc != src && I.w_class <= SIZE_TINY)
 			items.Add(I)
 

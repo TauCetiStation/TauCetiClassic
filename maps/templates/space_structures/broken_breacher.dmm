@@ -111,7 +111,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/broken_breacher)
 "dy" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor{

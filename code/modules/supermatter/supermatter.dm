@@ -362,7 +362,7 @@
 
 /atom/movable/distortion_effect
 	name = ""
-	plane = ANOMALY_PLANE
+	plane = DISTORTION_PLANE
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	icon = 'icons/effects/96x96.dmi'

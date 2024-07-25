@@ -23,9 +23,6 @@
 		return
 	if(!ishuman(target))
 		return
-	if(isimposter(user))
-		to_chat(user, "<span class='warning'>[src] not working, broken, try another time.</span>")
-		return
 	var/mob/living/carbon/human/H = target
 	user.visible_message("<span class='notice'>[user] flails their [src] at [H]</span>")
 	if(HAS_TRAIT_FROM(H, TRAIT_VISUAL_OBEY, FAKE_IMPLANT_TRAIT))

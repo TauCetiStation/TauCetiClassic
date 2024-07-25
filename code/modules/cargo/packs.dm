@@ -54,7 +54,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 	var/contents_cost = 0.0
 	for(var/item_type in contains)
-		for(var/datum/export/E in exports_list)
+		for(var/datum/export/E in global.exports_list)
 			if(E.applies_to_type(item_type))
 				var/amount = 1
 				if(sheet_amount > 0 && (ispath(item_type, /obj/item/stack/sheet) || ispath(item_type, /obj/item/stack/tile)))
@@ -1437,6 +1437,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Walrus crate"
 	crate_type = /obj/structure/closet/critter/walrus
 	crate_name = "Walrus crate"
+	group = "Hydroponics"
+
+/datum/supply_pack/larva
+	name = "Sugar larva crate"
+	crate_type = /obj/structure/closet/critter/larva
+	crate_name = "Sugar larva crate"
 	group = "Hydroponics"
 
 /datum/supply_pack/seeds

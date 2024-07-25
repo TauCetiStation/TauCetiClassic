@@ -1,9 +1,14 @@
+// container for all character skillsets, we keep it in mind
 /datum/skills
+	// current "active" skillset we use for skill checks
+	// skill value here is based on user choice (so he can fake own skills, hide antag bonuses for example)
+	// and maximum depends on "available" skillset
 	var/datum/skillset/active = new
+	// just a holder for maximums of all "available_skillsets"
 	var/datum/skillset/available = new
 
+	// all skillsets added to the mind, like starting profession skillsets, antag skillsets, etc.
 	var/list/available_skillsets
-
 
 /datum/skills/proc/get_value(skill)
 	return active.get_value(skill)
@@ -26,8 +31,8 @@
 		active.set_value(skill, get_max(skill))
 
 /datum/skills/proc/add_available_skillset(skillset_type)
-    LAZYADD(available_skillsets, global.all_skillsets[skillset_type])
-    update_available()
+	LAZYADD(available_skillsets, global.all_skillsets[skillset_type])
+	update_available()
 
 /datum/skills/proc/remove_available_skillset(skillset_type)
 	for(var/datum/skillset/s as anything in available_skillsets)

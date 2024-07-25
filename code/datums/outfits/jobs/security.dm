@@ -136,19 +136,3 @@
 		uniform_f = /obj/item/clothing/under/syndicate/tacticool
 		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
 
-/datum/outfit/job/blueshield
-	name = OUTFIT_JOB_NAME("Blueshield Officer")
-
-	uniform = /obj/item/clothing/under/rank/blueshield
-	shoes = /obj/item/clothing/shoes/boots
-	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
-
-	l_ear = /obj/item/device/radio/headset/headset_int/blueshield
-	belt = /obj/item/device/pda/blueshield
-
-	r_pocket = /obj/item/device/flash
-	r_pocket_back = /obj/item/weapon/handcuffs
-	l_pocket = /obj/item/weapon/pinpointer/heads
-
-	implants = list(
-		/obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/blueshield)

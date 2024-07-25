@@ -64,9 +64,11 @@
 		if(2)
 			take_bodypart_damage(10)
 			Stun(rand(1,5))
-	flash_eyes(affect_silicon = 1)
-	to_chat(src, "<span class='warning'><B>*BZZZT*</B></span>")
-	to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
+	if(stat != DEAD)
+		flash_eyes(affect_silicon = 1)
+		to_chat(src, "<span class='warning'><B>*BZZZT*</B></span>")
+		to_chat(src, "<span class='warning'>Warning: Electromagnetic pulse detected.</span>")
+		playsound(src, pick(SOUNDIN_SILICON_PAIN), VOL_EFFECTS_MASTER, vary = FALSE, frequency = null)
 	..()
 
 /mob/living/silicon/proc/damage_mob(brute = 0, fire = 0, tox = 0)
@@ -210,6 +212,6 @@
 /mob/living/silicon/update_canmove(no_transform)
 	return
 
-/mob/living/silicon/vomit()
+/mob/living/silicon/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	return
 

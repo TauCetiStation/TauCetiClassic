@@ -12,7 +12,6 @@ Buildable meters
 	icon_state = "simple"
 	item_state = "buildpipe"
 	w_class = SIZE_SMALL
-	level = 2
 
 	var/pipe_type = 0
 	var/pipename

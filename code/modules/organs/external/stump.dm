@@ -1,6 +1,7 @@
 // Appears when you cut away limbs non-cleany, causes pain
 /obj/item/organ/external/stump
 	name = "limb stump"
+	cases = list("культя", "культи", "культе", "культю", "культей", "культе")
 	icon_state = ""
 	is_stump = TRUE
 
@@ -9,6 +10,11 @@
 
 /obj/item/organ/external/stump/proc/copy_original_limb(obj/item/organ/external/limb)
 	name = "[limb.is_robotic() ? "mechanical " : ""]stump of \a [limb.name]"
+	cases = list(
+		"культя [CASE(limb, GENITIVE_CASE)]", "культи [CASE(limb, GENITIVE_CASE)]",
+		"культе [CASE(limb, GENITIVE_CASE)]", "культю [CASE(limb, GENITIVE_CASE)]",
+		"культей [CASE(limb, GENITIVE_CASE)]", "культе [CASE(limb, GENITIVE_CASE)]"
+		)
 	limb_layer = limb.limb_layer
 	body_part = limb.body_part
 	body_zone = limb.body_zone

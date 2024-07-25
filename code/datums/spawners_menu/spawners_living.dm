@@ -186,6 +186,12 @@
 	to_chat(mob, "<B>Эта посудина теперь ваш новый дом, похозяйничайте в нём.</B>")
 	to_chat(mob, "<B>(Вы можете грызть провода и лампочки).</B>")
 
+/datum/spawner/living/sugar_larva
+	name = "Сладкая личинка"
+	desc = "Вы форма жизни используемая в качестве скота, ваша задача выжить на станции."
+	time_while_available = 1 MINUTES
+	register_only = FALSE
+
 /*
  * Heist
 */

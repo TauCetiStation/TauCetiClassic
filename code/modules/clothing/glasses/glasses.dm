@@ -87,6 +87,7 @@
 	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
 	icon_state = "night"
+	item_state_world = "night_w"
 	item_state = "glasses"
 	origin_tech = "magnets=2"
 	darkness_view = 7

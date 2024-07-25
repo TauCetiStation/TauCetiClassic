@@ -292,7 +292,7 @@
 				B.loc = loc
 				beaker = null
 			default_deconstruction_crowbar(I)
-			return 1
+			return TRUE
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -682,7 +682,7 @@
 	if(isnum(num))
 		return clamp(round(num), 0, 200)
 	else
-		return 0
+		return FALSE
 
 
 /obj/machinery/chem_master/condimaster
@@ -724,10 +724,10 @@
 	if(panel_open)
 		if(isprying(B))
 			default_deconstruction_crowbar(B)
-			return 1
+			return TRUE
 		else
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while it's panel is opened.</span>")
-			return 1
+			return TRUE
 
 	if(istype(B, /obj/item/weapon/reagent_containers/glass))
 		if(src.beaker)
@@ -853,17 +853,17 @@
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/shaker))
 
 		if (beaker)
-			return 1
+			return TRUE
 		else
 			src.beaker =  O
 			user.drop_from_inventory(O, src)
 			update_icon()
 			updateUsrDialog()
-			return 0
+			return FALSE
 
 	if(holdingitems && holdingitems.len >= limit)
 		to_chat(usr, "The machine cannot hold anymore items.")
-		return 1
+		return TRUE
 
 	//Fill machine with the plantbag!
 	if(istype(O, /obj/item/weapon/storage/bag/plants))
@@ -880,16 +880,16 @@
 			to_chat(user, "You empty the plant bag into the All-In-One grinder.")
 
 		updateUsrDialog()
-		return 0
+		return FALSE
 
 	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
 		to_chat(user, "Cannot refine into a reagent.")
-		return 1
+		return TRUE
 
 	user.drop_from_inventory(O, src)
 	holdingitems += O
 	updateUsrDialog()
-	return 0
+	return FALSE
 
 /obj/machinery/reagentgrinder/deconstruct(disassembled)
 	drop_all_items()
@@ -902,7 +902,7 @@
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
-	return 0
+	return FALSE
 
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu
 	var/is_chamber_empty = 0
@@ -1018,8 +1018,8 @@
 /obj/machinery/reagentgrinder/proc/is_allowed(obj/item/weapon/reagent_containers/O)
 	for (var/i in blend_items)
 		if(istype(O, i))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/machinery/reagentgrinder/proc/get_allowed_by_id(obj/item/weapon/grown/O)
 	for (var/i in blend_items)
@@ -1184,18 +1184,10 @@
 	for (var/obj/item/weapon/grown/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
-		var/allowed = get_allowed_by_id(O)
-		for (var/r_id in allowed)
-			var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-			var/amount = allowed[r_id]
-			if (amount == 0)
-				if (O.reagents != null && O.reagents.has_reagent(r_id))
-					beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
-			else
-				beaker.reagents.add_reagent(r_id,min(amount, space))
-
-			if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-				break
+		var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+		if (space <= O.reagents.total_volume)
+			break
+		O.reagents.trans_to(beaker, O.reagents.total_volume)
 		remove_object(O)
 
 	//xenoarch

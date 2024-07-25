@@ -10,9 +10,9 @@ var/global/const/APC_WIRE_AI_CONTROL  = 8
 /datum/wires/apc/get_status()
 	var/obj/machinery/power/apc/A = holder
 	. += ..()
-	. += "[(A.locked ? "The APC is locked." : "The APC is unlocked.")]"
-	. += "[(A.shorted ? "The APCs power has been shorted." : "The APC is working properly!")]"
-	. += "[(A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on.")]"
+	. += "[(A.locked ? "Электрический щит заблокирован." : "Электрический щит разблокирован.")]"
+	. += "[(A.shorted ? "Электрический щит закоротило." : "Электрический щит работает нормально.")]"
+	. += "[(A.aidisabled ? "Индикатор удалённого доступа не горит." : "Индикатор удалённого доступа горит.")]"
 
 /datum/wires/apc/can_use()
 	var/obj/machinery/power/apc/A = holder

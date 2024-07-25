@@ -34,6 +34,15 @@
 	..()
 	overload_action.Remove(user)
 
+/obj/mecha/combat/gygax/security/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/repair_droid(src)
+	ME.attach(src)
+
 /obj/mecha/combat/gygax/ultra
 	desc = "A highly improved version of Gygax exosuit."
 	name = "Gygax Ultra"
@@ -49,6 +58,15 @@
 /obj/mecha/combat/gygax/ultra/atom_init()
 	. = ..()
 	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4600, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
+/obj/mecha/combat/gygax/ultra/security/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/repair_droid(src)
+	ME.attach(src)
 
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit used by Nanotrasen Death Squads. A significantly upgraded Gygax security mech."

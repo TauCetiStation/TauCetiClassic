@@ -90,6 +90,7 @@ var/global/list/admin_verbs_variables = list(
 	/client/proc/mass_apply_status_effect,
 	/client/proc/add_smartlight_preset,
 	/client/proc/set_area_smartlight,
+	/client/proc/set_level_light,
 	/client/proc/debug_bloom,
 )
 var/global/list/admin_verbs_ban = list(
@@ -165,6 +166,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/generate_round_scoreboard,
 	/client/proc/save_statistics,
 	/client/proc/cmd_admin_list_open_jobs,
+	/client/proc/toggle_profiler,
 	/client/proc/Debug2,
 	/client/proc/forceEvent,
 	/client/proc/ZASSettings,
@@ -294,6 +296,7 @@ var/global/list/admin_verbs_hideable = list(
 	/datum/admins/proc/adjump,
 	/client/proc/cmd_admin_list_open_jobs,
 //	/client/proc/callproc,
+	/client/proc/toggle_profiler,
 	/client/proc/Debug2,
 	/client/proc/reload_admins,
 	/client/proc/cmd_debug_make_powernets,
@@ -1223,16 +1226,13 @@ var/global/centcom_barriers_stat = 1
 
 /obj/effect/landmark/trololo
 	name = "Rickroll"
-	//var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	//NOPE
 	var/message = "<i><span class='notice'>It's not the door you're looking for...</span></i>"
 	var/active = 1
-	var/lchannel = 999
 
 /obj/effect/landmark/trololo/Crossed(atom/movable/AM)
 	. = ..()
 	if(!active) return
-	/*if(iscarbon(M))
-		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/
+	to_chat(usr, "<span class='notice'><b><font size=3>Never gonna give you up.</font></b></span>")
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"

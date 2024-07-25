@@ -108,7 +108,7 @@
 			P.selecting_quality = TRUE
 			if(tgui_alert(
 				src,
-				"Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
+				"Вы уверены, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
 				"Особенность",
 				list("ДА!!!", "Нет")) == "ДА!!!")
 				SSqualities.register_client(client)
@@ -343,6 +343,7 @@
 		dat += "<div class='clearBoth'>Choose from the following open positions:</div>"
 		var/list/categorizedJobs = list(
 			"Command" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
+			"NT Representatives" = list(jobs = list(), titles = centcom_positions, color = "#6c7391"),
 			"Engineering" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
 			"Security" = list(jobs = list(), titles = security_positions, color = "#ff9999"),
 			"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = TRUE),

@@ -115,14 +115,18 @@ var/global/list/alldepartments = list("Central Command")
 
 	if(href_list["remove"])
 		if(tofax)
-			tofax.loc = usr.loc
-			usr.put_in_hands(tofax)
+			if(usr.Adjacent(loc))
+				tofax.loc = usr.loc
+				usr.put_in_hands(tofax)
+			else
+				tofax.forceMove(loc)
+
 			to_chat(usr, "<span class='notice'>You take the paper out of \the [src].</span>")
 			tofax = null
 
 	if(href_list["scan"])
 		if (scan)
-			if(ishuman(usr))
+			if(ishuman(usr) && usr.Adjacent(loc))
 				scan.loc = usr.loc
 				if(!usr.get_active_hand())
 					usr.put_in_hands(scan)

@@ -1022,8 +1022,6 @@ var/global/list/tourette_bad_words= list(
 	else
 		clear_fullscreen("impaired")
 
-	update_eye_blur()
-
 	if(!machine)
 		var/isRemoteObserve = 0
 		if((REMOTE_VIEW in mutations) && remoteview_target)
@@ -1062,7 +1060,7 @@ var/global/list/tourette_bad_words= list(
 		if(G.vision_flags) // MESONS
 			sight |= G.vision_flags
 		if(!isnull(G.lighting_alpha))
-			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
+			set_lighting_alpha(min(lighting_alpha, G.lighting_alpha))
 		if(G.sightglassesmod && (G.active || !G.toggleable))
 			sightglassesmod = G.sightglassesmod
 		else
@@ -1135,7 +1133,7 @@ var/global/list/tourette_bad_words= list(
 			if(isnull(V)) // Trying to figure out a runtime error that keeps repeating
 				CRASH("virus2 nulled before calling activate()")
 			else
-				V.activate(src)
+				V.on_process(src)
 			// activate may have deleted the virus
 			if(!V) continue
 
@@ -1156,7 +1154,7 @@ var/global/list/tourette_bad_words= list(
 	if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
 		shock_stage = max(shock_stage, 61)
 
-	if(traumatic_shock >= 80)
+	if(traumatic_shock >= 80 && shock_stage <= 150)
 		shock_stage += 1
 	else if(health < config.health_threshold_softcrit)
 		shock_stage = max(shock_stage, 61)

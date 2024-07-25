@@ -59,6 +59,10 @@
 	if(SEND_SIGNAL(target, COMSIG_MOVABLE_TRY_GRAB, src, force_state, show_warnings) & COMPONENT_PREVENT_GRAB)
 		return FALSE
 
+	var/area/A = get_area(target)
+	if(force_state <= GRAB_NECK && HAS_TRAIT(src, TRAIT_BORK_SKILLCHIP) && HAS_TRAIT(A, TRAIT_COOKING_AREA))
+		force_state = GRAB_NECK
+
 	Grab(target, force_state, show_warnings)
 	return TRUE
 

@@ -6,7 +6,7 @@
 	var/severity_range = 0
 	switch(severity)
 		if(EVENT_LEVEL_MUNDANE)
-			severity_range = rand(0, 7)
+			severity_range = 7
 		if(EVENT_LEVEL_MODERATE)
 			severity_range = rand(7, 15)
 		if(EVENT_LEVEL_MAJOR)

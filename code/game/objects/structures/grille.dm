@@ -180,7 +180,7 @@
 //window placing end
 
 /obj/structure/grille/attacked_by(obj/item/attacking_item, mob/living/user)
-	if((attacking_item.flags & CONDUCT) && shock(user, 70))
+	if(((attacking_item.flags & CONDUCT) || HAS_TRAIT(user, TRAIT_CONDUCT)) && shock(user, 70))
 		return
 	..()
 

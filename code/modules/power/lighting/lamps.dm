@@ -245,7 +245,7 @@
 		user.do_attack_animation(src)
 		if(prob(1+W.force * 5))
 			user.visible_message("[user.name] smashed the light!", blind_message = "You hear a tinkle of breaking glass", self_message = "You hit the light, and it smashes!")
-			if(on && (W.flags & CONDUCT))
+			if(on && ((W.flags & CONDUCT) || HAS_TRAIT(user, TRAIT_CONDUCT)))
 				//if(!user.mutations & COLD_RESISTANCE)
 				if (prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
@@ -264,7 +264,7 @@
 			return
 
 		to_chat(user, "You stick [W] into the light socket!")
-		if(has_power() && (W.flags & CONDUCT))
+		if(has_power() && ((W.flags & CONDUCT) || HAS_TRAIT(user, TRAIT_CONDUCT)))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()
