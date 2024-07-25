@@ -304,8 +304,6 @@ var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
 
 	var/reason = config.guard_autoban_reason
 
-	AddBan(holder.ckey, holder.computer_id, reason, "taukitty", 0, 0, holder.mob.lastKnownIP) // legacy bans base
-
 	DB_ban_record_2(BANTYPE_PERMA, holder.mob, -1, reason) // copypaste, bans refactoring needed
 	feedback_inc("ban_perma",1)
 

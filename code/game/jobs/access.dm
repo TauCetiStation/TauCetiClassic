@@ -250,7 +250,7 @@
 		if(6) //station general
 			return list(access_kitchen,access_bar, access_hydroponics, access_barber, access_janitor, access_chapel_office, access_crematorium, access_library, access_lawyer, access_theatre)
 		if(7) //supply
-			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_recycler, access_qm)
+			return list(access_mailsorting, access_cargoshop, access_mining, access_mining_station, access_cargo, access_recycler, access_qm)
 
 /proc/get_region_accesses_name(code)
 	switch(code)
@@ -281,7 +281,7 @@
 		if(access_detective)
 			return "Detective"
 		if(access_cargoshop)
-			return "Cargo Delivery"
+			return "Cargo Delivery/Supply Console"
 		if(access_security)
 			return "Security"
 		if(access_blueshield)
@@ -552,7 +552,9 @@
 /proc/get_all_misc_job_icons() //Use for all misc and custom job hud icons if you ever need one!
 	return list("Prisoner",
 				"Marine",
-				"Marine Squad Leader")
+				"Marine Squad Leader",
+				"Senior Engineer",
+				"Senior Medic")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))
