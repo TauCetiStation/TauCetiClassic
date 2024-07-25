@@ -177,7 +177,7 @@
 	return FALSE
 
 /obj/item/projectile/Bump(atom/A, forced=0)
-	if((bumped && !forced))
+	if((bumped && !forced) || (A == src))
 		return 0
 
 	var/turf/A_loc = isturf(A) ?  A : A.loc
