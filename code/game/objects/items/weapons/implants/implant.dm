@@ -481,12 +481,12 @@ var/global/list/death_alarm_stealth_areas = list(
 				//give the syndies a bit of stealth
 				a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в космосе!", "Оповещение о смерти [mobname]")
 			else
-				a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в [CASE(t, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
+				a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))]. Местоположение: [CASE(t, NOMINATIVE_CASE)]!", "Оповещение о смерти [mobname]")
 			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 		if ("emp")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))] в [CASE(t, PREPOSITIONAL_CASE)]!", "Оповещение о смерти [mobname]")
+			a.autosay("[mobname] [(ANYMORPH(M, "погиб", "погибла", "погибло", "погибли"))]. Местоположение: [CASE(t, NOMINATIVE_CASE)]!", "Оповещение о смерти [mobname]")
 			qdel(a)
 		else
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
