@@ -408,13 +408,7 @@
 		/turf/simulated/wall = "wall", \
 		/obj/structure/falsewall = "wall", \
 		/obj/machinery/door/airlock = "wall", \
-		/obj/machinery/door/airlock/centcom = "wall", \
-		/turf/unsimulated/wall/like_a_normal, \
-		/turf/unsimulated/wall/like_a_normal/yellow = "wall", \
-		/turf/unsimulated/wall/like_a_normal/red = "wall", \
-		/turf/unsimulated/wall/like_a_normal/purple = "wall", \
-		/turf/unsimulated/wall/like_a_normal/green = "wall", \
-		/turf/unsimulated/wall/like_a_normal/beige = "wall", \
+		/turf/unsimulated/wall/like_a_normal = "wall", \
 )
 
 // wall don't need adapter with another wall
