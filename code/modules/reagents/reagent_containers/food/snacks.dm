@@ -416,6 +416,8 @@
 	icon_state = "egg"
 	filling_color = "#fdffd1"
 	list_reagents = list("nutriment" = 1, "egg" = 5)
+	cookingThreshold = 10
+	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/friedegg
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..())
