@@ -17451,6 +17451,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aEB" = (
@@ -104197,7 +104198,7 @@ cnu
 oXR
 aAE
 aBr
-cnZ
+aSr
 aRn
 aMU
 aQJ
@@ -104451,10 +104452,10 @@ czx
 fOT
 hpb
 cnu
+aSr
 cnZ
 cnZ
-cnZ
-cnZ
+aSr
 aRn
 auf
 aQJ
@@ -104711,7 +104712,7 @@ cnu
 cnZ
 aAD
 aBq
-cnZ
+aSr
 aRn
 anj
 aTJ
@@ -105222,7 +105223,7 @@ cnu
 qTb
 cnu
 cnu
-cnZ
+aSr
 cnZ
 aBu
 cnZ
@@ -105480,8 +105481,8 @@ crB
 crb
 clm
 aBk
-cnZ
-cnZ
+aSr
+aSr
 aEA
 clm
 aBj
