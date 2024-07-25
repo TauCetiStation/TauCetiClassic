@@ -190,6 +190,7 @@
 	name = "toxin"
 	damage = 40
 	weaken = 1
+	stun = 4
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "neurotoxin"
 	flag = "magic"
