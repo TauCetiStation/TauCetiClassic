@@ -11929,7 +11929,7 @@
 	req_access = list(48)
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/wall/yellow,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "Au" = (
 /obj/structure/table,
