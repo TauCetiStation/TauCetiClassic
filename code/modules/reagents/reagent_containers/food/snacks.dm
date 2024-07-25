@@ -3445,6 +3445,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
 	list_reagents = list("ectoplasm" = 5)
+	origin_tech = "biotech=5"
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
 
