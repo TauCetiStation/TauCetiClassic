@@ -1,9 +1,9 @@
 //allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
 /client/proc/cmd_admin_pm_context(mob/M as mob in mob_list)
 	set category = null
-	set name = "Admin PM Mob"
+	set name = "Mentor PM Mob"
 	if(!check_rights(R_ADMIN))
-		to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM-Context: Only administrators may use this command.</span>")
+		to_chat_admin_pm(src, "<span class='warning'>Error: Mentor-PM-Context: Only administrators may use this command.</span>")
 		return
 	if( !ismob(M) || !M.client )	return
 	cmd_admin_pm(M.client,null)
@@ -14,7 +14,7 @@
 	set category = "Admin"
 	set name = "Admin PM"
 	if(!check_rights(R_ADMIN))
-		to_chat_admin_pm(src, "<span class='warning'>Error: Admin-PM-Panel: Only administrators may use this command.</span>")
+		to_chat_admin_pm(src, "<span class='warning'>Error: Mentor-PM-Panel: Only administrators may use this command.</span>")
 		return
 	var/list/client/targets[0]
 	for(var/client/T)
