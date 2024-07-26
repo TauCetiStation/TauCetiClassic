@@ -32,7 +32,7 @@
 	P.regenerate_icons()
 	P.my_corpse = src
 	mind.transfer_to(P)
-	set_heaven_parallax(P)
+	P.hud_used.set_parallax(PARALLAX_HEAVEN)
 	for(var/obj/item/I in contents)
 		I.remove_item_actions(P) //Если будет не лень, надо закинуть такую же штуку в майнд_трансфер мага, потому что сейчас там ниче не обновляется.
 	for(var/obj/effect/proc_holder/spell/S in P.spell_list) //В рай со своими спеллами нельзя, а то еще наколдуют чето.

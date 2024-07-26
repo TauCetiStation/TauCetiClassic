@@ -7,6 +7,13 @@
 /var/global/list/available_pluvia_gongs = list()
 var/global/list/wisp_start_landmark = list()
 
+/turf/simulated/floor/beach/water/waterpool/heaven
+	name = "Рай"
+	plane = PLANE_SPACE
+	light_color = "#ffffff "
+	light_power = 2
+	light_range = 2
+
 /mob/living/carbon/human/proc/bless()
 	to_chat(src, "<span class='notice'>\ <font size=4>Вам известно, что после смерти вы попадете в рай</span></font>")
 	blessed = 1
@@ -16,15 +23,6 @@ var/global/list/wisp_start_landmark = list()
 	eye.layer = ABOVE_LIGHTING_LAYER
 	ADD_TRAIT(src, TRAIT_SEE_GHOSTS, QUALITY_TRAIT)
 	add_overlay(eye)
-
-/mob/proc/set_heaven_parallax(mob/user)
-	for(var/atom/movable/screen/parallax_layer/L in user.client.parallax_layers_cached)
-		L.icon = 'icons/effects/pluvia_water.dmi'
-
-/mob/proc/set_classic_parallax(mob/user)
-	for(var/atom/movable/screen/parallax_layer/L in user.client.parallax_layers_cached)
-		L.icon = 'icons/effects/parallax.dmi'
-
 
 /obj/item/weapon/bless_vote
 	name = "Рекомендательное письмо"
@@ -145,7 +143,7 @@ var/global/list/wisp_start_landmark = list()
 		eye.plane = LIGHTING_LAMPS_PLANE
 		eye.layer = ABOVE_LIGHTING_LAYER
 		user.add_overlay(eye)
-		user.set_heaven_parallax(user)
+		user.hud_used.set_parallax(PARALLAX_HEAVEN)
 	else
 		UnregisterSignal(user, list(COMSIG_HUMAN_SAY, COMSIG_PARENT_QDELETING))
 		user.remove_remote_hearer(fake_body)
@@ -156,7 +154,7 @@ var/global/list/wisp_start_landmark = list()
 		user.reset_view(null)
 		user.cut_overlay(eye)
 		available_pluvia_gongs += my_gong
-		user.set_classic_parallax(user)
+		user.hud_used.set_parallax(PARALLAX_CLASSIC)
 	user.clear_alert("Звонок")
 
 /obj/structure/pluvia_gong
@@ -246,6 +244,7 @@ var/global/list/wisp_start_landmark = list()
 	set category = "Светлячок"
 	set name = "Вернуться в рай"
 	set desc = "Возвращает вас обратно в ваше тело"
+	hud_used.set_parallax(PARALLAX_HEAVEN)
 	death()
 
 /mob/living/simple_animal/ancestor_wisp/atom_init()
@@ -257,7 +256,6 @@ var/global/list/wisp_start_landmark = list()
 	if(mind && my_body)
 		mind.transfer_to(my_body)
 		verbs -= /mob/living/simple_animal/ancestor_wisp/proc/return_to_heaven
-		my_body.set_classic_parallax(my_body)
 	qdel(src)
 
 
@@ -287,6 +285,6 @@ var/global/list/wisp_start_landmark = list()
 			return
 		next_wisp = world.time + 70 SECONDS
 		var/mob/living/simple_animal/ancestor_wisp/new_wisp = new /mob/living/simple_animal/ancestor_wisp(pick(wisp_start_landmark))
-		user.set_heaven_parallax(user)
+		user.hud_used.set_parallax(PARALLAX_CLASSIC)
 		user.mind.transfer_to(new_wisp)
 		new_wisp.my_body = user
