@@ -244,7 +244,6 @@ var/global/list/wisp_start_landmark = list()
 	set category = "Светлячок"
 	set name = "Вернуться в рай"
 	set desc = "Возвращает вас обратно в ваше тело"
-	hud_used.set_parallax(PARALLAX_HEAVEN)
 	death()
 
 /mob/living/simple_animal/ancestor_wisp/atom_init()
@@ -256,6 +255,7 @@ var/global/list/wisp_start_landmark = list()
 	if(mind && my_body)
 		mind.transfer_to(my_body)
 		verbs -= /mob/living/simple_animal/ancestor_wisp/proc/return_to_heaven
+	my_body.hud_used.set_parallax(PARALLAX_HEAVEN)
 	qdel(src)
 
 
