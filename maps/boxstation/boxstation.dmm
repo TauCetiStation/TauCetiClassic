@@ -54054,6 +54054,8 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/device/multitool,
+/obj/item/clothing/gloves/insulated,
+/obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light/smart,
 /turf/simulated/floor{
@@ -68852,7 +68854,6 @@
 /area/station/medical/medbreak)
 "cLh" = (
 /obj/structure/table,
-/obj/item/clothing/head/soft/trash,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cLi" = (
@@ -76565,7 +76566,7 @@
 "kjb" = (
 /obj/structure/stool,
 /obj/effect/decal/remains/human,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
+/obj/item/weapon/inflatable_duck,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
