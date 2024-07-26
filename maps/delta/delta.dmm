@@ -89913,9 +89913,7 @@
 	},
 /area/station/cargo/storage)
 "seV" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
+/obj/machinery/shieldwallgen,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -98463,9 +98461,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "unh" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
+/obj/machinery/shieldwallgen,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
