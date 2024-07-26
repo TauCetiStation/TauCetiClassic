@@ -1,5 +1,5 @@
 import { Fragment } from "inferno";
-import { useLocalState, useBackend } from "../backend";
+import { useBackend } from "../backend";
 import { NoticeBox, Button, LabeledList, Section, Tabs } from "../components";
 import { Window } from "../layouts";
 import { AccessList } from './common/AccessList';
@@ -7,36 +7,27 @@ import { CrewManifest } from "./common/CrewManifest";
 
 export const ComputerCard = (props, context) => {
   const { act, data } = useBackend(context);
-  const [mode, setMode] = useLocalState(context, 'mode', data.mode);
-  const ChangeMode = (mode) => {
-    setMode(mode);
-    act("mode", { mode });
-  };
-
-  if (mode !== data.mode) {
-    setMode(data.mode);
-  }
 
   const menuBlock = (
     <Tabs>
       <Tabs.Tab
         icon="id-card"
-        selected={mode === 0}
-        onClick={() => ChangeMode(0)}>
+        selected={data.mode === 0}
+        onClick={() => act("mode", { mode: 0 })}>
         Access Modification
       </Tabs.Tab>
       <Tabs.Tab
         icon="folder-open"
-        selected={mode === 1}
-        onClick={() => ChangeMode(1)}>
+        selected={data.mode === 1}
+        onClick={() => act("mode", { mode: 1 })}>
         Crew Manifest
       </Tabs.Tab>
       <Tabs.Tab
         icon="scroll"
-        selected={mode === 2}
+        selected={data.mode === 2}
         onClick={() => {
           act("print");
-          ChangeMode(2);
+          act("mode", { mode: 2 });
         }}>
         Print
       </Tabs.Tab>
@@ -81,7 +72,7 @@ export const ComputerCard = (props, context) => {
   );
 
   let bodyBlock;
-  switch (mode) {
+  switch (data.mode) {
     case 0: // Access Modification
       if (!data.authenticated || !data.scan_name) {
         bodyBlock = (
