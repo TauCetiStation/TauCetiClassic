@@ -99,8 +99,8 @@
 	if(!M.original_body)
 		new_mob.original_body = M
 		M.original_body = M
-		M.forceMove(new_mob)
 
+	M.forceMove(new_mob)
 	new_mob.original_body = M.original_body
 
 	for(var/mob/living/H in M.contents)
