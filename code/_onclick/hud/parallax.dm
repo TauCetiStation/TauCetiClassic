@@ -23,7 +23,7 @@
 			parralax_icon = 'icons/effects/parallax.dmi'
 		if(PARALLAX_HEAVEN)
 			parralax_icon = 'icons/effects/pluvia_water.dmi'
-	if(!length(C.parallax_layers_cached) || parallax_type != mymob.client.current_parallax)
+	if(!length(C.parallax_layers_cached) || parallax_type != C.current_parallax)
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, C.view, parralax_icon)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, C.view, parralax_icon)
@@ -34,13 +34,14 @@
 		C.parallax_layers.len = C.parallax_layers_max
 
 	C.screen |= (C.parallax_layers)
+
 	C.update_plane_masters(/atom/movable/screen/plane_master/parallax_white)
 
 /datum/hud/proc/remove_parallax()
 	var/client/C = mymob.client
 	C.screen -= (C.parallax_layers_cached)
 	C.parallax_layers = null
-	mymob.client.current_parallax = null
+	C.current_parallax = null
 	C.update_plane_masters(/atom/movable/screen/plane_master/parallax_white)
 
 /datum/hud/proc/apply_parallax_pref()
@@ -267,26 +268,15 @@ datum/hud/proc/set_parallax(new_parallax)
 	speed = 0.6
 	layer = SPACE_PARALLAX_1_LAYER
 
-/atom/movable/screen/parallax_layer/layer_1/heaven
-	layer = SPACE_PARALLAX_1_LAYER + 1
-
 /atom/movable/screen/parallax_layer/layer_2
 	icon_state = "layer2"
 	speed = 1
 	layer = SPACE_PARALLAX_2_LAYER
 
-/atom/movable/screen/parallax_layer/layer_2/heaven
-	layer = SPACE_PARALLAX_2_LAYER + 1
-
-
 /atom/movable/screen/parallax_layer/layer_3
 	icon_state = "layer3"
 	speed = 1.2
 	layer = SPACE_PARALLAX_3_LAYER
-
-/atom/movable/screen/parallax_layer/layer_3/heaven
-	layer = SPACE_PARALLAX_3_LAYER + 1
-
 
 /atom/movable/screen/parallax_layer/planet
 	icon_state = "planet"
