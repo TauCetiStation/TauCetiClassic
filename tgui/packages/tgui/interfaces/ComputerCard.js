@@ -17,7 +17,7 @@ export const ComputerCard = (props, context) => {
     setMode(data.mode);
   }
 
-  let menuBlock = (
+  const menuBlock = (
     <Tabs>
       <Tabs.Tab
         icon="id-card"
@@ -43,7 +43,7 @@ export const ComputerCard = (props, context) => {
     </Tabs>
   );
 
-  let authBlock = (
+  const authBlock = (
     <Section title="Authentication">
       <LabeledList>
         <LabeledList.Item label="Target Identity">
@@ -196,17 +196,11 @@ export const ComputerCard = (props, context) => {
                 fast_full_access={data.fast_full_access}
                 accesses={data.regions}
                 selectedList={data.selectedAccess}
-                accessMod={ref => act('access', {
-                  access: ref,
-                })}
+                accessMod={ref => act('access', { access: ref })}
                 grantAll={() => act('access_full')}
                 denyAll={() => act('clear_all')}
-                grantDep={ref => act('access_region', {
-                  region: ref,
-                })}
-                denyDep={ref => act('deny_region', {
-                  region: ref,
-                })} />
+                grantDep={ref => act('access_region', { region: ref })}
+                denyDep={ref => act('deny_region', { region: ref })} />
             </Section>
           </Fragment>
         );
@@ -214,12 +208,10 @@ export const ComputerCard = (props, context) => {
       break;
 
     case 1: // Crew Manifest
-      bodyBlock = (
-        <CrewManifest />
-      );
+      bodyBlock = <CrewManifest manifest={data.manifest} />;
       break;
 
-    case 2: // print
+    case 2: // Print
       if (data.printing) {
         bodyBlock = (
           <NoticeBox title="Warning" color="blue">
@@ -235,16 +227,19 @@ export const ComputerCard = (props, context) => {
           ERROR: Unknown Mode.
         </NoticeBox>
       );
+      break;
   }
 
   return (
     <Window width={925} height={850} resizable>
       <Window.Content scrollable>
-        {menuBlock}
-        {authBlock}
-        {bodyBlock}
+        <Section
+          title="Card Modification"
+          buttons={menuBlock}>
+          {authBlock}
+          {bodyBlock}
+        </Section>
       </Window.Content>
     </Window>
   );
-
 };

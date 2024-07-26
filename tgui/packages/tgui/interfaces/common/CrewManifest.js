@@ -12,12 +12,11 @@ const HeadRoles = [
   "Chief Medical Officer",
   "Research Director",
   "Head of Personnel",
-  "Internal Affairs Agent",
 ];
 // Head colour check. Abbreviated to save on 80 char
 const HCC = role => {
   // Return green if they are the head
-  if (HeadRoles.indexOf(role) !== -1) {
+  if (HeadRoles.indexOf(role) !== -1 || role === "Internal Affairs Agent") {
     return "green";
   }
   // Return yellow if its the qm
@@ -30,8 +29,8 @@ const HCC = role => {
 
 // Head bold check. Abbreviated to save on 80 char
 const HBC = role => {
-  // Return true if they are a head, or a QM
-  if ((HeadRoles.indexOf(role) !== -1) || role === "Quartermaster") {
+  // Return true if they are a head, or a QM/IAA
+  if ((HeadRoles.indexOf(role) !== -1) || role === "Quartermaster" || role === "Internal Affairs Agent") {
     return true;
   } else {
     return false;
@@ -39,46 +38,42 @@ const HBC = role => {
 };
 
 const ManifestTable = group => {
+  console.log("Rendering ManifestTable with group:", group);
+
+  if (!group || group.length === 0) {
+    return null;
+  }
+
   return (
-    group > 0 && (
-      <Table>
-        <Table.Row header color="white">
-          <Table.Cell width="50%">Name</Table.Cell>
-          <Table.Cell width="35%">Rank</Table.Cell>
-          <Table.Cell width="15%">Active</Table.Cell>
+    <Table>
+      <Table.Row header color="white">
+        <Table.Cell width="50%">Name</Table.Cell>
+        <Table.Cell width="35%">Rank</Table.Cell>
+        <Table.Cell width="15%">Active</Table.Cell>
+      </Table.Row>
+      {group.map(person => (
+        <Table.Row
+          color={HCC(person.rank)}
+          key={person.name + person.rank}
+          bold={HBC(person.rank)}>
+          <Table.Cell>{person.name}</Table.Cell>
+          <Table.Cell>{person.rank}</Table.Cell>
+          <Table.Cell>{person.active}</Table.Cell>
         </Table.Row>
-        {group.map(person => (
-          <Table.Row
-            color={HCC(person.rank)}
-            key={person.name + person.rank}
-            bold={HBC(person.rank)}>
-            <Table.Cell>{decodeHtmlEntities(person.name)}</Table.Cell>
-            <Table.Cell>{decodeHtmlEntities(person.rank)}</Table.Cell>
-            <Table.Cell>{person.active}</Table.Cell>
-          </Table.Row>
-        ))}
-      </Table>
-    )
+      ))}
+    </Table>
   );
 };
 
 export const CrewManifest = (props, context) => {
   const { act } = useBackend(context);
-  let finalData;
-  if (props.data) {
-    finalData = props.data;
-  } else {
-    let { data } = useBackend(context);
-    finalData = data;
-  }
-
   const {
     manifest,
-  } = finalData;
+  } = props;
 
   const {
     heads,
-    ntrep,
+    centcom,
     sec,
     eng,
     med,
@@ -109,7 +104,7 @@ export const CrewManifest = (props, context) => {
           </Box>
         )}
         level={2}>
-        {ManifestTable(ntrep)}
+        {ManifestTable(centcom)}
       </Section>
       <Section
         title={(

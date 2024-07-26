@@ -98,7 +98,7 @@
 	data["station_name"] = station_name()
 	data["mode"] = mode
 	data["printing"] = printing
-	data["manifest"] = data_core ? data_core.html_manifest(monochrome=0) : null
+	data["manifest"] = data_core.get_manifest()
 	data["modify_name"] = modify ? modify.name : FALSE
 	data["modify_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
 	data["modify_rank"] = get_modify_rank()
@@ -133,8 +133,6 @@
 				data["all_centcom_access"] = all_centcom_access
 			else if (modify)
 				data["regions"] = get_accesslist_static_data(REGION_GENERAL, is_centcom() ? REGION_CENTCOMM : REGION_COMMAND)
-		if(IDCOMPUTER_SCREEN_MANIFEST)
-			data["manifest"] = data_core.get_manifest()
 	return data
 
 /obj/machinery/computer/card/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
