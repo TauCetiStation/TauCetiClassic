@@ -297,6 +297,10 @@
 	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
 		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
+	for(var/datum/pref/keybinds/KB as anything in subtypesof(/datum/pref/keybinds))
+		if(initial(KB.legacy_keyname))
+			legacy_keyname_to_pref[initial(KB.legacy_keyname)] = KB
+
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))

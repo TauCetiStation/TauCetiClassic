@@ -1,3 +1,5 @@
+var/global/list/legacy_keyname_to_pref = list()
+
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
 #define SAVEFILE_VERSION_MIN 8
 
@@ -182,7 +184,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		set_pref(/datum/pref/meta/random_slot, S["randomslot"])
 		set_pref(/datum/pref/player/game/hotkey_mode, S["hotkeys"])
 
-		// parse S["key_bindings"]
+		// keibinds
+		var/list/old_keybinds = S["key_bindings"]
+		var/list/keyname_to_bind = list()
+		for(var/key in old_keybinds)
+			for(var/keyname in old_keybinds[key])
+				keyname_to_bind[keyname] = "[keyname_to_bind[keyname] ? "[keyname_to_bind[keyname]] " : "" ][key]"
+
+		for(var/keyname in keyname_to_bind)
+			var/pref_type = legacy_keyname_to_pref[keyname]
+			if(keyname == "None")
+				set_keybind(pref_type, "")
+			else
+				set_keybind(pref_type, keyname_to_bind[keyname])
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
@@ -419,16 +433,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = "/"
 
-	var/needs_update = savefile_needs_update(S)
+	var/needs_update = TRUE //savefile_needs_update(S)
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
 		return 0
 
 	//General preferences
 	S["emote_panel"]       >> custom_emote_panel
-
-	// Custom hotkeys
-	//S["key_bindings"] >> key_bindings // later
-	//check_keybindings()
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
@@ -477,7 +487,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = dir
 
-	var/needs_update = savefile_needs_update(S)
+	var/needs_update = TRUE//savefile_needs_update(S)
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
 		return 0
 

@@ -106,12 +106,7 @@ var/global/list/blacklisted_builds = list(
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
 		return
 
-	//byond bug ID:2694120
-	if(href_list["reset_macros"])
-		reset_macros(skip_alert = TRUE)
-		return
-
-	// Keypress passthrough
+	// Keypress passthrough for some non-tgui interfaces (we should remove it in the future)
 	if(href_list["__keydown"])
 		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
 		if(keycode)
@@ -783,7 +778,7 @@ var/global/list/blacklisted_builds = list(
  * Arguments:
  * * direct_prefs - the preference we're going to get keybinds from
  */
-/client/proc/update_special_keybinds(datum/preferences/direct_prefs)
+/client/proc/update_movement_keybinds(datum/preferences/direct_prefs)
 	//todo
 	var/datum/preferences/D = prefs || direct_prefs
 	if(!D?.prefs_keybinds)

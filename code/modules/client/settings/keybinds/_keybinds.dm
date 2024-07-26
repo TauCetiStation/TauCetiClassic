@@ -64,7 +64,11 @@
 	return trim_right(new_value)
 
 /datum/pref/keybinds/on_update(client/client, old_value)
-// do: remove old_value keybinds, add current value keybinds to pref.keybinds_by_key
+	if(!client || !client.prefs) // offline update or prefs still initialising
+		return
+
+	client.reset_held_keys()
+
 	var/list/old_keybinds = splittext(old_value, " ")
 	for(var/key in old_keybinds)
 		client.prefs.key_bindings_by_key[key] -= list(src)

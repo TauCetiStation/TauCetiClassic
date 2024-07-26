@@ -2,6 +2,10 @@
 	category = PREF_KEYBINDS_MOVEMENT
 	weight = WEIGHT_HIGHEST
 
+/datum/pref/keybinds/movement/on_update(client/client, old_value)
+	..()
+	client?.update_movement_keybinds()
+
 /datum/pref/keybinds/movement/north
 	name = "Move North"
 	description = "Moves your character north"

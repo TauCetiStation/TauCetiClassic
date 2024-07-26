@@ -163,12 +163,11 @@ var/global/list/datum/preferences/preferences_datums = list()
 		if(initial(P.name))
 			prefs_keybinds[initial(P.type)] = new P
 
-	init_keybinds(C) // move it 
-
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
 			if(load_preferences()) // loads and updates preferences
+				init_keybinds(C) // init prefs keybinds (todo: move it to better place)
 				if(load_character()) // everything updated at this moment, now try to load default character
 					return
 
@@ -176,8 +175,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	// in case if we can't load it from saves
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
-	C?.set_macros()
-
+	init_keybinds(C) // if no prefs, init default keybinds
 
 /datum/preferences/proc/init_keybinds(client/client)
 	for(var/type in prefs_keybinds)
