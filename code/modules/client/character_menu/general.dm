@@ -18,7 +18,7 @@
 	if(species == IPC)  // only ipc can change their voice at this moment
 		. += 					"<br><b>Voice:</b> <a href='?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
 	. += 						"<br><b>Height:</b> <a href='?_src_=prefs;preference=height;task=input'>[height]</a>"
-	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[get_pref(/datum/pref/meta/random_slot) ? "Yes" : "No"]</b></a>"
+	. += 						"<br><b>Randomized Character Slot:</b> <a href='?_src_=prefs;preference=randomslot'><b>[get_pref(/datum/pref/player/meta/random_slot) ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
 	. += 					"</td>"
 	. += 				"</tr>"
@@ -617,8 +617,8 @@
 					neuter_gender_voice = neuter_gender_voice == MALE ? FEMALE : MALE
 
 				if("randomslot")
-					var/random_slot = get_pref(/datum/pref/meta/random_slot)
-					set_pref(/datum/pref/meta/random_slot, !random_slot)
+					var/random_slot = get_pref(/datum/pref/player/meta/random_slot)
+					set_pref(/datum/pref/player/meta/random_slot, !random_slot)
 
 				if("name")
 					be_random_name = !be_random_name

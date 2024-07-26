@@ -268,7 +268,7 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in player_list)
 		if(player.ready && player.mind && !player.mind.assigned_role)
 			unassigned += player
-			if(player.client.prefs.get_pref(/datum/pref/meta/random_slot))
+			if(player.client.prefs.get_pref(/datum/pref/player/meta/random_slot))
 				player.client.prefs.random_character()
 	Debug("DO, Len: [unassigned.len]")
 	if(unassigned.len == 0)

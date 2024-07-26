@@ -2,6 +2,8 @@
 	category = PREF_KEYBINDS_CLIENT
 	weight = WEIGHT_ADMIN
 
+	admins_only = TRUE
+
 /datum/pref/keybinds/admin/can_use(client/user)
 	return user.holder ? TRUE : FALSE
 

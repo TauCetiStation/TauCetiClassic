@@ -662,18 +662,6 @@
 		return
 	return ..()
 
-/mob/living/proc/Examine_OOC()
-	set name = "Examine Meta-Info (OOC)"
-	set category = "OOC"
-	set src in view()
-
-	if(client)
-		to_chat(usr, "[src]'s Metainfo:<br>[client.prefs.metadata]")
-	else
-		to_chat(usr, "[src] does not have any stored infomation!")
-
-	return
-
 /mob/living/pointed(atom/A)
 	if(incapacitated() || (status_flags & FAKEDEATH))
 		return FALSE

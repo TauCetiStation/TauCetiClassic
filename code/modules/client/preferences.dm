@@ -125,12 +125,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 	var/list/allowed_quirks = list()
 
-	// OOC Metadata:
-	var/metadata = ""
 	var/slot_name = ""
-
-	// jukebox volume
-	var/volume = 100
 
   //custom loadout
 	var/list/gear = list()
@@ -154,9 +149,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 	// todo: rewrite this part
 	for(var/datum/pref/player/P as anything in subtypesof(/datum/pref/player))
-		if(initial(P.name))
-			prefs_player[initial(P.type)] = new P
-	for(var/datum/pref/meta/P as anything in subtypesof(/datum/pref/meta))
 		if(initial(P.name))
 			prefs_player[initial(P.type)] = new P
 	for(var/datum/pref/keybinds/P as anything in subtypesof(/datum/pref/keybinds))
@@ -261,7 +253,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
 		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
 		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
-		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
 		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
 		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
 		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
@@ -278,8 +269,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 			dat += ShowOccupation(user)
 		if("roles")
 			dat += ShowRoles(user)
-		if("glob")
-			dat += ShowGlobal(user)
 		if("load_slot")
 			dat += ShowLoadSlot(user)
 		if("loadout")
@@ -320,7 +309,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 			var/slot = text2num(href_list["num"])
 
 			if(isnum(slot) && slot >= 1 && slot <= GET_MAX_SAVE_SLOTS(parent))
-				set_pref(/datum/pref/meta/default_slot, slot)
+				set_pref(/datum/pref/player/meta/default_slot, slot)
 				load_character()
 			else
 				to_chat(user, "<span class='warning'>You have no access to this slot, please contact maintainers.</span>")
@@ -364,9 +353,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 		if("roles")
 			process_link_roles(user, href_list)
 
-		if("glob")
-			process_link_glob(user, href_list)
-
 		if("loadout")
 			process_link_loadout(user, href_list)
 
@@ -400,7 +386,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.set_species(species)
 
 	character.flavor_text = flavor_text
-	character.metadata = metadata
 	character.med_record = med_record
 	character.sec_record = sec_record
 	character.gen_record = gen_record

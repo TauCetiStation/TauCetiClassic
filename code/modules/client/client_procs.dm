@@ -305,7 +305,7 @@ var/global/list/blacklisted_builds = list(
 	else
 		winset(src, "mainwindow", "title='[world.name]'")
 
-	if(prefs.get_pref(/datum/pref/meta/lastchangelog) != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
+	if(prefs.get_pref(/datum/pref/player/meta/lastchangelog) != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
 		winset(src, "rpane.changelog", "font-style=bold")
 

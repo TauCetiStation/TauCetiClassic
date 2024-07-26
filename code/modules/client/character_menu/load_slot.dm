@@ -9,7 +9,7 @@
 			S["real_name"] >> name
 			if(!name)
 				name = "Character [i]"
-			if(i==get_pref(/datum/pref/meta/default_slot))
+			if(i==get_pref(/datum/pref/player/meta/default_slot))
 				name = "<b>[name]</b>"
 			. += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
 	. += "</center>"

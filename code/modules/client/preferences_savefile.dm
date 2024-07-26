@@ -179,9 +179,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		set_pref(/datum/pref/player/chat/ghostsight, converted_chat_ghostsight)
 
 		// meta domain
-		set_pref(/datum/pref/meta/lastchangelog, S["lastchangelog"])
-		set_pref(/datum/pref/meta/default_slot, S["default_slot"])
-		set_pref(/datum/pref/meta/random_slot, S["randomslot"])
+		set_pref(/datum/pref/player/meta/lastchangelog, S["lastchangelog"])
+		set_pref(/datum/pref/player/meta/default_slot, S["default_slot"])
+		set_pref(/datum/pref/player/meta/random_slot, S["randomslot"])
 		set_pref(/datum/pref/player/game/hotkey_mode, S["hotkeys"])
 
 		// keibinds
@@ -324,7 +324,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		med_record  = fix_cyrillic(med_record)
 		sec_record  = fix_cyrillic(sec_record)
 		gen_record  = fix_cyrillic(gen_record)
-		metadata    = fix_cyrillic(metadata)
 		home_system = fix_cyrillic(home_system)
 		citizenship = fix_cyrillic(citizenship)
 		faction     = fix_cyrillic(faction)
@@ -334,7 +333,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["med_record"]  << med_record
 		S["sec_record"]  << sec_record
 		S["gen_record"]  << gen_record
-		S["OOC_Notes"]   << metadata
 		S["home_system"] << home_system
 		S["citizenship"] << citizenship
 		S["faction"]     << faction
@@ -492,7 +490,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 
 	//Character
-	S["OOC_Notes"]             >> metadata // move to new player pref
 	S["real_name"]             >> real_name
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]                >> gender
@@ -575,7 +572,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		repetitive_updates_character(needs_update, S)
 
 	//Sanitize
-	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= sanitize_name(real_name)
 
 	if(isnull(species))
@@ -672,7 +668,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = "/"
 	if(!slot)
-		slot = get_pref(/datum/pref/meta/default_slot)
+		slot = get_pref(/datum/pref/player/meta/default_slot)
 	if(!slot)
 		CRASH("Attempt to access saves with empty slot")
 	S.cd = "/character[slot]"
@@ -687,7 +683,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!S)
 		return 0
 	if(!slot)
-		slot = get_pref(/datum/pref/meta/default_slot)
+		slot = get_pref(/datum/pref/player/meta/default_slot)
 	if(!slot)
 		CRASH("Attempt to access saves with empty slot")
 	S.cd = "/character[slot]"
@@ -695,7 +691,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["version"] << SAVEFILE_VERSION_MAX // load_character will sanitize any bad data, so assume up-to-date.
 
 	//Character
-	S["OOC_Notes"]             << metadata
 	S["real_name"]             << real_name
 	S["name_is_always_random"] << be_random_name
 	S["gender"]                << gender

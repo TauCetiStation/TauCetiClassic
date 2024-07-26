@@ -46,8 +46,8 @@
 
 	link_with_alert(src, config.changelog_link)
 
-	if(prefs.get_pref(/datum/pref/meta/lastchangelog) != changelog_hash)
-		prefs.set_pref(/datum/pref/meta/lastchangelog, changelog_hash)
+	if(prefs.get_pref(/datum/pref/player/meta/lastchangelog) != changelog_hash)
+		prefs.set_pref(/datum/pref/player/meta/lastchangelog, changelog_hash)
 		prefs.save_preferences()
 		winset(src, "rpane.changelog", "font-style=")
 

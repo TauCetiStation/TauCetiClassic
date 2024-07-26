@@ -2,7 +2,7 @@
 
 /client/verb/toggle_be_role(role in special_roles)
 	set name = "Toggle SpecialRole Candidacy"
-	set category = "Preferences"
+	set category = "OOC"
 	set desc = "Toggles which special roles you would like to be a candidate for, during events."
 	var/role_type = role
 	if(!role_type)	return
@@ -16,7 +16,7 @@
 
 /client/verb/toggle_ignored_role()
 	set name = "Toggle Ignore Roles"
-	set category = "Preferences"
+	set category = "OOC"
 	set desc = "Toggles ignore questions"
 
 	var/role = input(usr, "Ignored Qustions for Roles in current Round:") as null|anything in prefs.ignore_question
@@ -28,7 +28,7 @@
 
 /client/verb/edit_emote_panel()
 	set name = "Edit Emote Panel"
-	set category = "Preferences"
+	set category = "OOC"
 
 	if(!emote_panel_editor)
 		emote_panel_editor = new /datum/emote_panel_editor(src)

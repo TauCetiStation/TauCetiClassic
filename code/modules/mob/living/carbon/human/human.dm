@@ -15,7 +15,6 @@
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
-	var/metadata
 	var/gnomed = 0 // timer used by gnomecurse.dm
 	var/hulk_activator = null
 
@@ -1663,20 +1662,6 @@
 		if(skill.name == skill_name)
 			mind.skills.choose_value(skill_type, value)
 			return
-
-
-/mob/living/carbon/human/verb/examine_ooc()
-	set name = "Examine OOC"
-	set category = "OOC"
-	set src in oview()
-
-	if(!usr || !src)	return
-
-	to_chat(usr, "<font color='purple'>OOC-info: [src]</font>")
-	if(metadata)
-		to_chat(usr, "<font color='purple'>[metadata]</font>")
-	else
-		to_chat(usr, "<font color='purple'>Nothing of interest...</font>")
 
 /mob/living/carbon/try_inject(mob/living/user, error_msg, instant, stealth, pierce_armor)
 	if(istype(user))

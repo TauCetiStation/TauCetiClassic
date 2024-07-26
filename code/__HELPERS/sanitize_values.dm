@@ -45,18 +45,25 @@
 	return default
 
 /proc/sanitize_hexcolor(color, default="#000000")
-	if(!istext(color)) return default
+	if(!istext(color))
+		return default
 	var/len = length(color)
-	if(len != 7 && len !=4) return default
-	if(text2ascii(color,1) != 35) return default	//35 is the ascii code for "#"
+	if(len != 7 && len !=4)
+		return default
+	if(text2ascii(color,1) != 35)
+		return default	//35 is the ascii code for "#"
 	. = "#"
 	for(var/i=2,i<=len,i++)
 		var/ascii = text2ascii(color,i)
 		switch(ascii)
-			if(48 to 57)	. += ascii2text(ascii)		//numbers 0 to 9
-			if(97 to 102)	. += ascii2text(ascii)		//letters a to f
-			if(65 to 70)	. += ascii2text(ascii+32)	//letters A to F - translates to lowercase
-			else			return default
+			if(48 to 57)
+				. += ascii2text(ascii)		//numbers 0 to 9
+			if(97 to 102)
+				. += ascii2text(ascii)		//letters a to f
+			if(65 to 70)
+				. += ascii2text(ascii+32)	//letters A to F - translates to lowercase
+			else
+				return default
 	return .
 
 var/global/regex/IP_pattern = regex(@"^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$")

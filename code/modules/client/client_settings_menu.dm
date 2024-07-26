@@ -3,7 +3,7 @@
 
 /client/verb/client_settings()
 	set name = "Settings"
-	set category = "Preferences"
+	set category = "OOC"
 
 	open_settings_menu()
 
@@ -33,12 +33,20 @@
 		active_tab = tab
 	var/list/data = list("active_tab" = active_tab, "settings" = list())
 
+	var/client/C = ui.user.client
+
 	// todo: more static data can be moved to tgui_static
 	switch(active_tab)
 		if("keybinds")
 			var/datum/pref/keybinds/P
 			for(var/type in user.client.prefs.prefs_keybinds)
 				P = user.client.prefs.prefs_keybinds[type]
+
+				if(P.admins_only && !C.holder)
+					continue
+				if(P.supporters_only && !C.supporter)
+					continue
+
 				data["settings"] += list(list(
 					"type" = "[P.type]", 
 					"name" = P.name, 
@@ -47,13 +55,20 @@
 					"value" = P.value, 
 					"v_type" = P.value_type, 
 					"v_parameters" = P.value_parameters,
-					"default" = P.value == initial(P.value)
+					"default" = P.value == initial(P.value),
+					"admins_only" = P.admins_only,
+					"supporters_only" = P.supporters_only,
 				))
 		else
 			var/datum/pref/player/P
 			for(var/type in user.client.prefs.prefs_player)
 				P = user.client.prefs.prefs_player[type]
 				if(P.category != active_tab)
+					continue
+
+				if(P.admins_only && !C.holder)
+					continue
+				if(P.supporters_only && !C.supporter)
 					continue
 
 				data["settings"] += list(list(
@@ -119,6 +134,9 @@
 		return FALSE
 
 	if(ispath(pref_type, /datum/pref/player))
+		if(ispath(pref_type, /datum/pref/player/meta))
+			return
+
 		switch(action)
 			if("set_value")
 				C.prefs.set_pref(pref_type, params["value"])

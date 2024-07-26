@@ -20,6 +20,7 @@ import {
   Modal,
 } from '../components';
 import { isEscape } from 'common/keys';
+import { decodeHtmlEntities } from 'common/string';
 import { KeyEvent } from '../events';
 import { Window } from '../layouts';
 
@@ -313,8 +314,8 @@ const SettingTypeText = (props, context) => {
 
   return (
     <Input fluid
-      value={setting.value}
-      onInput={(e, value) => act('set_value', { type: setting.type, value: value })}
+      value={decodeHtmlEntities(setting.value)}
+      onChange={(e, value) => act('set_value', { type: setting.type, value: value })}
     />
   );
 };
