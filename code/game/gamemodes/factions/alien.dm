@@ -60,6 +60,7 @@ var/global/mob/Jonesy
 	min_roles = 0
 	max_roles = 6
 
+	var/dead_crew = 0
 	var/list/supply_crate_packs = list(
 		list(
 			/obj/item/weapon/flamethrower/full,
@@ -117,10 +118,23 @@ var/global/mob/Jonesy
 		return L.stat == DEAD
 	return TRUE
 
+/datum/faction/nostromo_crew/OnPostSetup()
+	for(var/datum/role/r in members)
+		RegisterSignal(r.antag.current, COMSIG_MOB_DIED, PROC_REF(crewmate_died))
+
+/datum/faction/nostromo_crew/proc/crewmate_died()
+	dead_crew++
+	if(dead_crew == 2)
+		spawn_crate()
+		open_cargo()
+	if(dead_crew == 5)
+		open_evac()
+
 /datum/faction/nostromo_crew/proc/spawn_crate()
 	var/supply_point = pick(landmarks_list["Nostromo Supply Crate"])
 	var/obj/structure/closet/crate/secure/gear/SC = new (get_turf(supply_point))
 	SC.req_access = list(access_cargo)
+	SC.anchored = 1
 	var/crate_contains = pick(supply_crate_packs)
 	for(var/item in crate_contains)
 		new item(SC)
@@ -133,6 +147,15 @@ var/global/mob/Jonesy
 				'sound/hallucinations/scary_sound_4.ogg')
 			H.playsound_local(null, scary_sound, VOL_EFFECTS_MASTER, null, FALSE)
 			to_chat(H, "<span class='warning'>На корабль перед отлётом грузили ящики и контейнеры, где-то на складе может быть оружие!</span>")
+
+/datum/faction/nostromo_crew/proc/open_cargo()
+	for(var/obj/BW in landmarks_list["Nostromo Cargo Blockway"])
+		qdel(BW)
+	var/mob/living/silicon/decoy/nostromo/N_AI = locate() in mob_list
+	N_AI.say("Внимание! В связи с высокой смертностью среди экипажа, на склад было возвращено электропитание.")
+
+/datum/faction/nostromo_crew/proc/open_evac()
+	return
 
 // android traitor fraction
 /datum/faction/nostromo_android

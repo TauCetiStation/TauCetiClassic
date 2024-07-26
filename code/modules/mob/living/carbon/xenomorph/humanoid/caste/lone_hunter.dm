@@ -38,9 +38,10 @@
 	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid)
 	var/datum/action/eat_corpse/A = new(src)
 	A.Grant(src)
-	var/obj/effect/landmark/L = landmarks_list["Nostromo Ambience"][1]
-	if(L)
-		ambience_player = L
+	if(landmarks_list["Nostromo Ambience"].len)
+		var/obj/effect/landmark/L = landmarks_list["Nostromo Ambience"][1]
+		if(L)
+			ambience_player = L
 	playsound(src, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Destroy()
@@ -56,8 +57,9 @@
 		apply_status_effect(STATUS_EFFECT_ALIEN_ADRENALINE)
 	..()
 
-/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/next_stage()
-	to_chat(src, "<span class='notice'>Вы перешли на новую стадию эволюции!</span>")
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/next_stage(msg_play = TRUE)
+	if(msg_play)
+		to_chat(src, "<span class='notice'>Вы перешли на новую стадию эволюции!</span>")
 	estage++
 	maxHealth += 20
 	heal_rate += 1
@@ -87,14 +89,16 @@
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
 			if(!H.stat)
+				if(prob(30))
+					say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 				play_scary_music()
 				if(!hunt_target && (estage < 5)) //
 					apply_status_effect(STATUS_EFFECT_ALIEN_HUNT, H)
 
-				if(hunt_target != H)
-					SetNextMove(CLICK_CD_MELEE * 5)
+				if(estage >= 5 || hunt_target == H)
+					SetNextMove(CLICK_CD_MELEE / 2)
 				else
-					SetNextMove(CLICK_CD_MELEE / 2) // rage mod on target
+					SetNextMove(CLICK_CD_MELEE * 5)
 				return
 	if(ismob(A))
 		SetNextMove(CLICK_CD_MELEE)
@@ -106,6 +110,11 @@
 		scary_music_next_time = world.time + 1 MINUTE
 		for(var/mob/M in range(7, src))
 			M.playsound_music(current_scary_music, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)
+
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/set_slaughter_mode()
+	to_chat(src, "<span class='notice'>Да начнётся резня! Ваши характеристики повышены.</span>")
+	for(var/i in estage to 5)
+		next_stage(msg_play = FALSE)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/can_eat_corpse(obj/item/weapon/grab/G)
 	if(incapacitated())

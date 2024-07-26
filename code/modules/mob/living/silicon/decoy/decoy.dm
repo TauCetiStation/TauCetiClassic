@@ -18,3 +18,7 @@
 
 /mob/living/silicon/decoy/diag_hud_set_health()
 	return
+
+/mob/living/silicon/decoy/nostromo
+	name = "MU/TH/UR"
+	icon_state = "ai"

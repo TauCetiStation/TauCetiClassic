@@ -1375,6 +1375,27 @@
 /obj/machinery/power/apc/largecell
 	cell_type = 20000
 
+/obj/machinery/power/apc/smallcell/nostromo/attackby(obj/item/W, mob/user)
+	if(iscoil(W))
+		var/turf/TT = get_turf(src)
+		if(TT.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+			to_chat(user, "<span class='warning'>Вскройте пол перед [CASE(src, ABLATIVE_CASE)].</span>")
+			return
+		var/obj/item/stack/cable_coil/C = W
+		if(C.get_amount() < 2)
+			to_chat(user, "<span class='warning'>Нужно больше проводов.</span>")
+			return
+		if(user.is_busy()) return
+		to_chat(user, "Вы вставляете провода в [CASE(src, ACCUSATIVE_CASE)].")
+		if(C.use_tool(src, user, 20, volume = 50))
+			C.use(2)
+			user.visible_message(\
+				"<span class='warning'>[user.name] подключил проводку в [CASE(src, PREPOSITIONAL_CASE)]!</span>",\
+				"Вы подключили проводку в [CASE(src, PREPOSITIONAL_CASE)].")
+			make_terminal()
+			terminal.connect_to_network()
+	return
+
 /obj/machinery/power/apc/proc/disable_autocharge()
 	chargemode = FALSE
 

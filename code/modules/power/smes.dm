@@ -535,6 +535,126 @@
 		return "[href]=-[Limit]'>-</A>" + rate + "[href]=[Limit]'>+</A>"
 	return rate
 
+/obj/machinery/power/smes/nostromo
+	resistance_flags = FULL_INDESTRUCTIBLE
+	var/mob/living/silicon/decoy/nostromo/N_AI
+	var/stability = 8
+	var/next_stability_decrease
+	var/next_alien_attack
+	var/next_instrument
+	var/list/instruments = list(
+		/obj/item/device/multitool,
+		/obj/item/stack/cable_coil,
+		/obj/item/weapon/weldingtool,
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/crowbar,
+		/obj/item/weapon/wrench)
+	var/list/explosions = list()
+
+/obj/machinery/power/smes/nostromo/atom_init()
+	next_instrument = pick(instruments)
+	next_stability_decrease = world.time + rand(50, 70) SECOND
+	next_alien_attack = world.time
+	stability = rand(6, 8)
+	N_AI = locate() in mob_list
+	var/list/around = orange(src, 5)
+	explosions += locate(/obj/machinery/power/port_gen/riteg) in around
+	explosions += locate(/obj/machinery/power/apc/smallcell/nostromo) in around
+	explosions += src
+	. = ..()
+
+/obj/machinery/power/smes/nostromo/process()
+	..()
+	if(world.time > next_stability_decrease)
+		next_stability_decrease += 1 MINUTE
+		stability--
+		if(!stability)
+			breakdown()
+		if(stability in 1 to 2) // 1 and 2 minute before breakdown AI gives an alert
+			N_AI.say("Внимание! Бортовой ИИ фиксирует резкие скачки напряжения на основной энергоячейке корабля, необходимо срочно выяснить и устранить причину неполадки.")
+
+/obj/machinery/power/smes/nostromo/attack_alien(mob/user)
+	if(world.time > next_alien_attack)
+		next_alien_attack = world.time + 5 MINUTE
+		stability--
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		playsound(loc, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+	else
+		to_chat(src, "<span class='notice'>Ещё не время для этого.</span>")
+		return
+
+/obj/machinery/power/smes/nostromo/proc/breakdown()
+	var/area/A = get_area(src)
+	if(A)
+		A.gravitychange(FALSE)
+
+	if(landmarks_list["Nostromo Ambience"].len)
+		var/obj/effect/landmark/nostromo/ambience/NA = landmarks_list["Nostromo Ambience"][1]
+		if(NA)
+			NA.ambience_next_time += 1 MINUTE
+
+	if(alien_list[ALIEN_LONE_HUNTER].len)
+		var/mob/living/carbon/xenomorph/humanoid/hunter/lone/L = alien_list[ALIEN_LONE_HUNTER][1]
+		if(L)
+			L.set_slaughter_mode()
+
+	for(var/mob/M as anything in player_list)
+		M.playsound_music('sound/ambience/specific/hullcreak.ogg', VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 160)
+
+	for(var/obj/O in explosions)
+		explosion(get_turf(O), 0,1,2,3)
+		qdel(O)
+
+/obj/machinery/power/smes/nostromo/examine(mob/user, distance)
+	..()
+	if(stability >= 8)
+		to_chat(user, "<span class='notice'>СМЕС работает стабильно.</span>")
+		return
+	var/message
+	switch(next_instrument)
+		if(/obj/item/device/multitool)
+			message = pick("На экране отчаянно мигает красная лампочка и скачет синусоида напряжения.",
+						"Изнутри слышится еле различимый писк дросселей, вибрирующих от напряжения.")
+		if(/obj/item/stack/cable_coil)
+			message = pick("В некоторых местах проводов поплавилась изоляция, выглядят они не важно.",
+						"Изнутри доносится лёгкий запах гари и торчат провода.",
+						"Пара почерневших проводов свободно болтается внутри.")
+		if(/obj/item/weapon/weldingtool)
+			message = pick("На поверхности СМЕСа зияет большая трещина.",
+						"Техническая панель раскололась на две части.")
+		if(/obj/item/weapon/screwdriver)
+			message = pick("Несколько болтов валяются неподалеку, вероятно выпали из-за вибрации.",
+						"Техническая панель тихонько болтается туда-сюда, держась на одном болте.",
+						"Внутри СМЕСа что-то еле различимо гремит.")
+		if(/obj/item/weapon/crowbar)
+			message = pick("На технической панели виднеется огромная вмятина.",
+						"Одна из пластин корпуса очень сильно погнулась.")
+		if(/obj/item/weapon/wrench)
+			message = pick("От исходящей вибрации, на болтах ходуном ходят гайки.",
+						"Корпус СМЕСа весь шатается от вибрации.",
+						"СМЕС елозит туда-сюда по земле и трясётся от вибрации.")
+	to_chat(user, "<span class='notice'>[message]</span>")
+
+/obj/machinery/power/smes/nostromo/attackby(obj/item/I, mob/user)
+	if(stability < 8)
+		if(istype(I, next_instrument))
+			if(do_after(user, 20, target = src))
+				if(stability < 3)
+					shock(user)
+				to_chat(user, "<span class='notice'>Вы успешно ремонтируете СМЕС.</span>")
+				next_instrument = pick(instruments - next_instrument)
+				stability += 1
+		else
+			to_chat(user, "<span class='notice'>Не тот инструмент.</span>")
+	else
+		to_chat(user, "<span class='notice'>СМЕС работает стабильно.</span>")
+
+/obj/machinery/power/smes/nostromo/proc/shock(mob/user)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	electrocute_mob(user, get_area(src), src)
 
 #undef SMES_START_CHARGE
 #undef SMES_EPS

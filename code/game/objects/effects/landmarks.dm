@@ -593,12 +593,8 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 		ambience_next_time += rand(2, 4) MINUTE
 		current_ambience = pick(ambience - current_ambience)
 
-		var/list/listeners = carbon_list
-		listeners += observer_list
-		listeners += Jonesy
-		for(var/mob/living/carbon/C as anything in listeners)
-			if(C && C.ckey)
-				C.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
+		for(var/mob/M as anything in player_list)
+			M.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
 
 /obj/effect/landmark/nostromo/supply_crate
 	name = "Nostromo Supply Crate"
@@ -610,3 +606,11 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "red_cat"
 	dir = 4
+
+/obj/effect/landmark/nostromo/cargo_blockway
+	name = "Nostromo Cargo Blockway"
+
+/obj/effect/landmark/nostromo/cargo_blockway/Bumped(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		to_chat(L, "На время полёта склад держат обесточенным для экономии электроэнергии, нет никакого смысла сейчас идти туда.")

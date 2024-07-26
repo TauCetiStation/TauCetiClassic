@@ -18,12 +18,13 @@
 	. = ..()
 	to_chat(antag.current, {"<span class='notice'><b>
 Вы - одинокий ксеноморф. Ваша текущая форма - грудолом.
-Жмите кнопку внизу, чтобы пробиться сквозь грудную клетку своего носителя.
 Выбравшись наружу - бегите и прячьтесь, сейчас вы очень слабы и вас легко убить.
 Ваша задача - вырасти во взрослого ксеноморфа. Прогресс роста указан во вкладке Status.
 На этом процесс эволюции не закончится, даже будучи взрослой особью вам есть куда расти.
-Вы пассивно накапливаете очки эволюции, за которые будут открываться новые стадии развития и способности.
-Этот процесс можно ускорить, нападая на экипаж. Вам будут выдаваться очки за успешные агрессивные действия.
+Атакуйте людей, утаскивайте бездыханные тела в техтуннели и съедайте их.
+Поедая тела людей вы становитесь сильнее.
+Но помните, что нападая на людей вы помечаете первого атакованного вами человека меткой охоты.
+Пока действует эффект охоты вы не можете атаковать никого, кроме человека, помеченного этой меткой.
 Информация о ходе эволюции находится во вкладке Status.
 ------------------</b></span>"})
 
@@ -36,23 +37,62 @@
 
 /datum/role/nostromo_crewmate/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, {"<span class='notice'><b>
-Вы - член экипажа межзвездного буксировщика Ностромо, на борту которого находится ксеноморф.
-Как можно скорее изничтожьте эту тварь, пока не стало слишком поздно.
+	switch(antag.current.job)
+		if("Captain")				// CAPTAIN
+			to_chat(antag.current, {"<span class='notice'><b>
+Вы - капитан межзвёздного буксировщика Ностромо, на борту которого находится ксеноморф.
+Вы несёте прямую ответственность за весь экипаж корабля, постарайтесь свести жертвы к минимуму.
+Организовывайте экипаж, собирайте людей вместе. Помните, что по одиночке вы - лёгкие мишени для монстра.
+В вашем шкафу находится старый энерго пистолет и датчик движения для отслеживания местоположения ксеноморфа.
+Кроме того именно у вас находится всё необходимое для запуска механизма самоуничтожения корабля и эвакуации.
 ------------------</b></span>"})
+
+		if("Station Engineer")		// ENGINEER
+			to_chat(antag.current, {"<span class='notice'><b>
+Вы - инженер межзвёздного буксировщика Ностромо, на борту которого находится ксеноморф.
+Первым делом проследуйте в двигательную и запустите ядерный реактор.
+На этом ваша работа не закончится, вам нужно будет регулярно проверять состояние СМЕСа и чинить его.
+Для починки СМЕСа используйте мультитул, если же вы не успеете это сделать, корабль полностью обесточится.
+Для противодействия ксеноморфу в атмосферном висит пожарный топор, а у двигателя лежит пневмопушка.
+Слушайте всё, что говорит вам капитан.
+------------------</b></span>"})
+
+		if("Blueshield Officer")	// PILOT
+			to_chat(antag.current, {"<span class='notice'><b>
+Вы - пилот межзвездного буксировщика Ностромо, на борту которого находится ксеноморф.
+Помогайте капитану организовать экипаж для борьбы, по возможности защищайте его от угроз.
+В вашем шкафу находится лёгкий раскладной щит и сумка для удобного ношения.
+Слушайте всё, что говорит вам капитан.
+------------------</b></span>"})
+
+		if("Medical Doctor")		// DOCTOR
+			to_chat(antag.current, {"<span class='notice'><b>
+Вы - доктор межзвездного буксировщика Ностромо, на борту которого находится ксеноморф.
+В мед лаборатории
+Слушайте всё, что говорит вам капитан.
+------------------</b></span>"})
+
+		if("Cargo Technician")		// CARGO TECH
+			to_chat(antag.current, {"<span class='notice'><b>
+Вы - заведующий складом межзвездного буксировщика Ностромо, на борту которого находится ксеноморф.
+Как можно скорее изничтожьте эту тварь, пока не стало слишком поздно.
+Слушайте всё, что говорит вам капитан.
+------------------</b></span>"})
+
+	return TRUE
 
 /datum/role/nostromo_crewmate/forgeObjectives()
 	if(!..())
 		return FALSE
-	var/mob/M = antag.original
-	if(ishuman(M) && M.job == "Captain")
+	if(antag.current.job == "Captain")
 		AppendObjective(/datum/objective/defend_crew)
 	return TRUE
 
 /datum/role/nostromo_crewmate/OnPostSetup()
-	var/mob/M = antag.current
-	var/datum/action/A = new /datum/action/nostromo_map(M)
-	A.Grant(M)
+	var/mob/living/L = antag.current
+	var/datum/action/A = new /datum/action/nostromo_map(L)
+	A.Grant(L)
+	L.SetParalysis(8, TRUE)
 
 /datum/role/nostromo_cat
 	name = NOSTROMO_CAT
@@ -96,12 +136,15 @@
 Экипаж не знает что вы не человек, постарайтесь не раскрывать этого раньше времени.
 Ваш корпус крайне хрупок, поэтому вступать в прямую конфронтацию с экипажем не рекомендуется.
 Для подзарядки используйте апц в инженерном отсеке.
+Поведение особи непредсказуемо, рекомендуется свести возможные контакты к минимуму.
+В случае прямого контакта с особью, рекомендуется не подавать признаков жизни.
 ------------------</b></span>"})
 
 /datum/role/nostromo_android/OnPostSetup()
-	var/mob/M = antag.current
-	var/datum/action/A = new /datum/action/nostromo_map(M)
-	A.Grant(M)
+	var/mob/living/L = antag.current
+	var/datum/action/A = new /datum/action/nostromo_map(L)
+	A.Grant(L)
+	L.SetParalysis(80, TRUE)
 
 
 /datum/action/nostromo_map
@@ -115,25 +158,3 @@
 	var/datum/browser/popup = new(owner, "window=[name]", "[name]", 700, 700, ntheme = CSS_THEME_DARK)
 	popup.set_content("<img src='nanomap.png' style='-ms-interpolation-mode:nearest-neighbor'>")
 	popup.open()
-
-
-/atom/movable/screen/alert/status_effect/cutscene
-	name = "Катсцена"
-	desc = "Сидим и смотрим киношку."
-	icon_state = "buckled"
-
-/datum/status_effect/cutscene
-	id = "alien_adrenaline"
-	alert_type = /atom/movable/screen/alert/status_effect/cutscene
-
-/datum/status_effect/cutscene/on_creation(mob/living/new_owner, duration = 30 SECOND)
-	. = ..()
-	if(!.)
-		return
-	src.duration = world.time + duration
-
-/datum/status_effect/cutscene/on_apply()
-	owner.SetParalysis(1000, TRUE)
-
-/datum/status_effect/cutscene/on_remove()
-	owner.SetParalysis(0, TRUE)
