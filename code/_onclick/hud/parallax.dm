@@ -10,6 +10,8 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
+
+/mob
 	var/current_parallax = PARALLAX_CLASSIC
 
 /datum/hud/proc/create_parallax(parallax_type)
@@ -23,7 +25,7 @@
 			parralax_icon = 'icons/effects/parallax.dmi'
 		if(PARALLAX_HEAVEN)
 			parralax_icon = 'icons/effects/pluvia_water.dmi'
-	if(!length(C.parallax_layers_cached) || parallax_type != C.current_parallax)
+	if(!length(C.parallax_layers_cached) || parallax_type != mymob.current_parallax)
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, C.view, parralax_icon)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, C.view, parralax_icon)
@@ -41,7 +43,7 @@
 	var/client/C = mymob.client
 	C.screen -= (C.parallax_layers_cached)
 	C.parallax_layers = null
-	C.current_parallax = null
+	mymob.current_parallax = null
 	C.update_plane_masters(/atom/movable/screen/plane_master/parallax_white)
 
 /datum/hud/proc/apply_parallax_pref()
@@ -76,10 +78,10 @@
 datum/hud/proc/set_parallax(new_parallax)
 	remove_parallax()
 	create_parallax(new_parallax)
-	mymob.client.current_parallax = new_parallax
+	mymob.current_parallax = new_parallax
 
 /datum/hud/proc/update_parallax_pref()
-	set_parallax(mymob.client.current_parallax)
+	set_parallax(mymob.current_parallax)
 
 
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)

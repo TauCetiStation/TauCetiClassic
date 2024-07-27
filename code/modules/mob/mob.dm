@@ -50,7 +50,8 @@
 	spawn()
 		if(client)
 			animate(client, color = null, time = 0)
-			client.current_parallax = PARALLAX_CLASSIC
+			if(current_parallax == PARALLAX_CLASSIC)
+				hud_used.set_parallax(current_parallax)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
