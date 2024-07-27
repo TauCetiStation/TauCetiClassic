@@ -41,12 +41,12 @@
 	mob_type = /mob/living/simple_animal/pug/pug_agrosphere
 	icon_state = "pug_spawn"
 
-obj/effect/spawner/mob_spawn/tomato_agrosphere
-	mob_type = /mob/living/simple_animal/hostile/tomato/tomato_agrosphere
-	icon_state = "tomato_spawn"
-
 obj/effect/spawner/mob_spawn/tomato
 	mob_type = /mob/living/simple_animal/hostile/tomato
+	icon_state = "tomato_spawn"
+
+obj/effect/spawner/mob_spawn/tomato_agrosphere
+	mob_type = /mob/living/simple_animal/hostile/tomato/tomato_agrosphere
 	icon_state = "tomato_spawn"
 
 /obj/effect/spawner/mob_spawn/cellular/meat/flesh

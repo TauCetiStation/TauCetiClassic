@@ -4616,19 +4616,6 @@
 "Cp" = (
 /turf/simulated/floor/plating/airless,
 /area/space_structures/old_station/right)
-"Cq" = (
-/obj/machinery/door/airlock/glass{
-	name = "Hydroponics";
-	req_access = list(73);
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/space_structures/old_station/central/hydro)
 "Cr" = (
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -5438,17 +5425,6 @@
 /area/space_structures/old_station/central/bridge)
 "GP" = (
 /obj/machinery/vending/hydroseeds,
-/obj/machinery/power/apc/largecell{
-	cell_type = 1000;
-	dir = 1;
-	name = "Hydroponic APC";
-	pixel_y = 28
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "green"
@@ -6259,17 +6235,6 @@
 	icon_state = "purple"
 	},
 /area/space_structures/old_station/right/rnd)
-"LC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/space_structures/old_station/central/hydro)
 "LE" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -6702,23 +6667,6 @@
 	icon_state = "purple"
 	},
 /area/space_structures/old_station/right/rnd)
-"Oz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "green"
-	},
-/area/space_structures/old_station/central/hydro)
 "OA" = (
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
@@ -11403,8 +11351,8 @@ iT
 RC
 MV
 GP
-Uy
-LC
+CF
+CF
 CF
 zg
 MV
@@ -11464,7 +11412,7 @@ Gr
 MV
 sO
 EB
-Cq
+Mo
 MV
 ME
 MV
@@ -11524,7 +11472,7 @@ ks
 MM
 ow
 bh
-Oz
+bh
 GX
 HZ
 Vw
