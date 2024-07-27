@@ -345,12 +345,12 @@
 		return
 
 	var/oldPlantName = myseed.plantname
-	if(myseed.mutatelist.len <= 0)
+	if(myseed.mutatelist.len > 0)
+		var/mutantseed = pick(myseed.mutatelist)
+		qdel(myseed)
+		myseed = new mutantseed
+	else
 		return
-
-	var/mutantseed = pick(myseed.mutatelist)
-	qdel(myseed)
-	myseed = new mutantseed
 
 	dead = FALSE
 	hardmutate()
@@ -360,7 +360,9 @@
 	lastcycle = world.time
 	harvest = FALSE
 	weedlevel = 0 // Reset
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 5)
+
+	sleep(5) // Wait a while
+	update_icon()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
 
 
