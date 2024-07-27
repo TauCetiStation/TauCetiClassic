@@ -78,6 +78,9 @@ haram_threshold тоже должен как-то высчитываться, н
 Светлячок может убиться в любой момент, чтобы попасть обратно в рай.
 
 */
+
+#define DEADLY_HARAM "maximum_haram_detected"
+
 /datum/religion/pluvia
 	name = "Путь Плувиийца"
 	deity_names_by_name = list(
@@ -103,75 +106,11 @@ haram_threshold тоже должен как-то высчитываться, н
 	var/haram_drunk = 1
 	var/haram_food = 0.5
 	var/haram_carpet = 0.25
+	var/haram_suicide = DEADLY_HARAM
 
-/datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)
-	var/mob/living/carbon/human/attacker  = source
-	if(istype(target.my_religion, /datum/religion/pluvia) ||target.blessed)
-		if(attacker.haram_point < haram_threshold)
-			attacker.haram_point += haram_harm
-			attacker.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			to_chat(attacker, "<span class='warning'>\ <font size=3>Вы нарушаете первую заповедь!</span></font>")
-		else
-			global.pluvia_religion.remove_member(attacker, HOLY_ROLE_PRIEST)
-			attacker.social_credit = 0
-			to_chat(attacker, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
-			attacker.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-/datum/religion/pluvia/proc/suicide_haram(mob/living/carbon/human/target)
-	global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
-	target.social_credit = 0
-	to_chat(target, "<span class='warning'>\ <font size=5>Вы нарушили вторую заповедь. Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
-	target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-/datum/religion/pluvia/proc/drunk_haram(mob/living/carbon/human/target)
-	if(target.haram_point < haram_threshold)
-		for(var/datum/reagent/R in target.reagents.reagent_list)
-			if(istype(R, /datum/reagent/consumable/ethanol) || istype(R, /datum/reagent/space_drugs) || istype(R,/datum/reagent/ambrosium))
-				target.reagents.del_reagent(R.id)
-		target.SetDrunkenness(0)
-		target.setDrugginess(0)
-		target.haram_point += haram_drunk
-		target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		to_chat(target, "<span class='warning'>\ <font size=3>Вы нарушаете вторую заповедь!</span></font>")
-	else
-		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
-		to_chat(target, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
-		target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-/datum/religion/pluvia/proc/food_haram(datum/source, obj/item/weapon/reagent_containers/food/snacks/target)
-	var/mob/living/carbon/human/H = source
-	if(istype(target.loc, /obj/item/weapon/kitchen/utensil/fork/sticks))
-		return
-	if(H.haram_point < haram_threshold)
-		H.haram_point += haram_food
-		H.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		to_chat(H, "<span class='warning'>\ <font size=3>Вы нарушаете четвертую заповедь!</span></font>")
-	else
-		global.pluvia_religion.remove_member(H, HOLY_ROLE_PRIEST)
-		H.social_credit = 0
-		to_chat(H, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
-		H.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-/datum/religion/pluvia/proc/carpet_haram(mob/living/carbon/human/target)
-	if(target.shoes)
-		message_admins("1 [target]")
-		message_admins("2 [target.buckled]")
-		if(target.haram_point < haram_threshold)
-			target.haram_point += haram_carpet
-			target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			to_chat(target, "<span class='warning'>\ <font size=3>Вы нарушаете пятую заповедь!</span></font>")
-		else
-			global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
-			target.social_credit = 0
-			to_chat(target, "<span class='warning'>\ <font size=5>Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
-			target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-/turf/simulated/floor/carpet/Entered(atom/movable/O)
-	..()
-	if(ishuman(O))
-		var/mob/living/carbon/human/target = O
-		if(istype(target.pulledby, /obj/structure/stool))
-			SEND_SIGNAL(O, COMSIG_HUMAN_ON_CARPET, src)
+/datum/religion/pluvia/setup_religions()
+	global.pluvia_religion = src
+	all_religions += src
 
 /datum/religion/pluvia/add_member(mob/living/carbon/human/H)
 	. = ..()
@@ -196,6 +135,52 @@ haram_threshold тоже должен как-то высчитываться, н
 	UnregisterSignal(M, list(COMSIG_HUMAN_ON_CONSUME, COMSIG_PARENT_QDELETING))
 	UnregisterSignal(M, list(COMSIG_HUMAN_ON_CARPET, COMSIG_PARENT_QDELETING))
 
-/datum/religion/pluvia/setup_religions()
-	global.pluvia_religion = src
-	all_religions += src
+/datum/religion/pluvia/proc/adjust_haram(mob/living/carbon/human/target, haram_amount, reason)
+	if(haram_amount == DEADLY_HARAM || ((target.haram_point + haram_amount) >= haram_threshold))
+		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
+		target.social_credit = 0
+		to_chat(target, "<span class='warning'>\ <font size=5>[reason] Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
+		target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		return TRUE
+	else
+		target.haram_point += haram_amount
+		target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		to_chat(target, "<span class='warning'>\ <font size=3>[reason]</span></font>")
+		return FALSE
+
+/datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)
+	var/mob/living/carbon/human/attacker  = source
+	if(istype(target.my_religion, /datum/religion/pluvia) || target.blessed)
+		adjust_haram(attacker, haram_harm, "Вы нарушаете первую заповедь!")
+
+/datum/religion/pluvia/proc/suicide_haram(mob/living/carbon/human/target)
+	adjust_haram(target, haram_suicide, "Вы нарушили вторую заповедь.")
+
+/datum/religion/pluvia/proc/drunk_haram(mob/living/carbon/human/target)
+	if(!adjust_haram(target, haram_drunk, "Вы нарушаете вторую заповедь!"))
+		for(var/datum/reagent/R in target.reagents.reagent_list)
+			if(istype(R, /datum/reagent/consumable/ethanol) || istype(R, /datum/reagent/space_drugs) || istype(R,/datum/reagent/ambrosium))
+				target.reagents.del_reagent(R.id)
+		target.SetDrunkenness(0)
+		target.setDrugginess(0)
+
+
+/datum/religion/pluvia/proc/food_haram(datum/source, obj/item/weapon/reagent_containers/food/snacks/target)
+	var/mob/living/carbon/human/H = source
+	if(istype(target.loc, /obj/item/weapon/kitchen/utensil/fork/sticks))
+		return
+	adjust_haram(H, haram_food, "Вы нарушаете четвертую заповедь!")
+
+/turf/simulated/floor/carpet/Entered(atom/movable/O)
+	..()
+	if(ishuman(O))
+		SEND_SIGNAL(O, COMSIG_HUMAN_ON_CARPET, src)
+
+/datum/religion/pluvia/proc/carpet_haram(mob/living/carbon/human/target)
+	if(!target.shoes || target.lying || target.crawling || target.buckled)
+		return
+	if(target.alerts["buckled"]) // Спасибо кодерам за крутой костыль buckled=null при Move()/relaymove(). Нашел либо такой способ, либо buckle
+		return
+	adjust_haram(target, haram_carpet, "Вы нарушаете пятую заповедь!")
+
+#undef DEADLY_HARAM
