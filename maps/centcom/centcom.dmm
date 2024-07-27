@@ -1949,7 +1949,7 @@
 /turf/simulated/shuttle/floor/evac/sec1,
 /area/shuttle/escape/centcom)
 "afl" = (
-/mob/living/simple_animal/hostile/carp/dog/polkan,
+/obj/effect/spawner/mob_spawn/carp/polkan,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "afm" = (
@@ -20794,7 +20794,7 @@
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
 "aYM" = (
-/mob/living/simple_animal/crab/Coffee,
+/obj/effect/spawner/mob_spawn/crab,
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
 "aYO" = (
@@ -29374,11 +29374,11 @@
 	},
 /area/centcom)
 "mVb" = (
-/mob/living/simple_animal/hostile/carp/dog,
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/effect/spawner/mob_spawn/carp/rex,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "mWb" = (

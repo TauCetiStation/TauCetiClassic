@@ -8226,6 +8226,7 @@
 	icon_state = "weeds1"
 	},
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/weapon/storage/toolbox/electrical,
 /turf/simulated/floor/airless{
 	icon_state = "darkpurple";
 	dir = 9

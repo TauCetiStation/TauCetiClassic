@@ -618,7 +618,7 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/broken_breacher)
 "xb" = (
-/mob/living/simple_animal/hostile/carp,
+/obj/effect/spawner/mob_spawn/carp,
 /turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
 	},
@@ -1006,7 +1006,7 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/broken_breacher)
 "Lf" = (
-/mob/living/simple_animal/hostile/carp,
+/obj/effect/spawner/mob_spawn/carp,
 /turf/simulated/floor/plating/airless{
 	icon_state = "wood"
 	},

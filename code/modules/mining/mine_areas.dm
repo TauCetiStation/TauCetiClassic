@@ -146,8 +146,10 @@
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 	outdoors = FALSE
 
-/area/asteroid/mine/abandoned/Entered()
+/area/asteroid/mine/abandoned/Entered(atom/movable/A, atom/OldLoc)
 	. = ..()
+	if(!isliving(A))
+		return
 	for(var/obj/effect/spawner/mob_spawn/M in src)
 		M.creatMob()
 
