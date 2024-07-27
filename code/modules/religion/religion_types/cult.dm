@@ -223,7 +223,7 @@
 	M.AddSpell(new type(src))
 
 /datum/religion/cult/can_convert(mob/M)
-	if(M.my_religion)
+	if(M.my_religion && !istype(M.my_religion, /datum/religion/pluvia))
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
@@ -231,7 +231,7 @@
 		return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.species.flags[NO_BLOOD])
+		if(H.species.flags[NO_BLOOD] || H.blessed)
 			return FALSE
 	if(M.ismindprotect())
 		return FALSE
