@@ -202,3 +202,13 @@
 		broken = 1
 		to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 		icon_state = "flashburnt"
+
+/obj/item/device/flash/nostromo/attack(mob/living/M, mob/user)
+	if(world.time < last_used + 30 SECOND)
+		to_chat(user, "Флэшер слишком горячий, чтобы пользоваться им снова!")
+		return
+	..()
+	if(isxenolonehunter(M))
+		M.visible_message("<span class='warning'>Ксеноморф ослепляется светом флэшера!</span>", "<span class='danger'>Яркий свет флэшера ослепляет вас!</span>")
+		M.Stun(1, TRUE)
+		M.Weaken(1, TRUE)

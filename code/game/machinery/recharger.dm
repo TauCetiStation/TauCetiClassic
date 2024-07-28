@@ -210,3 +210,15 @@
 		icon_state = "wrecharger1"
 	else
 		icon_state = "wrecharger0"
+
+/obj/machinery/recharger/indestructible
+	resistance_flags = FULL_INDESTRUCTIBLE
+
+/obj/machinery/recharger/indestructible/attackby(obj/item/weapon/G, mob/user)
+	if(iswrenching(G))
+		to_chat(user, "<span class='warning'>It's wrenched down tight!</span>")
+		return
+	if(isscrewing(G))
+		to_chat(user, "<span class='warning'>It's screwed down tight!</span>")
+		return
+	. = ..()

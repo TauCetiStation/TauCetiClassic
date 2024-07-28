@@ -296,6 +296,9 @@ This is chestburster mechanic for damaging
 	chestburster = null
 	return ..()
 
+/obj/item/weapon/larva_bite/auto/process()
+	s_click()
+
 /*----------------------------------------
              FACEHUGGER'S  GRAB
 

@@ -170,6 +170,8 @@ RCD
 
 			if(isfloorturf(target))
 				var/turf/simulated/floor/F = target
+				if(!F.can_deconstruct)
+					return FALSE
 				to_chat(user, "<span class='danger'>Deconstructing Floor...</span>")
 				if(!use_tool(target, user, 50, amount = 5))
 					return FALSE

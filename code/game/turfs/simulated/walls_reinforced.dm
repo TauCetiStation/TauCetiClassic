@@ -151,6 +151,8 @@
 
 	var/turf/T = user.loc	//get user's location for delay checks
 	//DECONSTRUCTION
+	if(resistance_flags & DECONSTRUCT_IMMUNE)
+		return
 	switch(d_state)
 		if(INTACT)
 			if (iscutter(W))

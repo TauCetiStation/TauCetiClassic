@@ -568,3 +568,50 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 /obj/effect/landmark/red_team
 	name = "Red Team"
 	icon_state = "x"
+
+/obj/effect/landmark/nostromo/ambience
+	name = "Nostromo Ambience"
+	var/ambience_next_time
+	var/ambience = list(
+		'sound/antag/Alien_sounds/alien_ambience1.ogg',
+		'sound/antag/Alien_sounds/alien_ambience2.ogg',
+		'sound/antag/Alien_sounds/alien_ambience3.ogg',
+		'sound/antag/Alien_sounds/alien_ambience4.ogg',
+		'sound/antag/Alien_sounds/alien_ambience5.ogg',
+		'sound/antag/Alien_sounds/alien_ambience6.ogg',
+		'sound/antag/Alien_sounds/alien_ambience7.ogg',
+		'sound/antag/Alien_sounds/alien_ambience8.ogg')
+	var/current_ambience
+
+/obj/effect/landmark/nostromo/ambience/atom_init()
+	. = ..()
+	ambience_next_time = world.time + 1 MINUTE
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/landmark/nostromo/ambience/process()
+	if(world.time > ambience_next_time)
+		ambience_next_time += rand(2, 4) MINUTE
+		current_ambience = pick(ambience - current_ambience)
+
+		for(var/mob/M as anything in player_list)
+			M.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
+
+/obj/effect/landmark/nostromo/supply_crate
+	name = "Nostromo Supply Crate"
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "secgearcrate"
+
+/obj/effect/landmark/nostromo/jonesy
+	name = "Jonesy"
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "red_cat"
+	dir = 4
+
+/obj/effect/landmark/nostromo/cargo_blockway
+	name = "Nostromo Cargo Blockway"
+	density = 1
+
+/obj/effect/landmark/nostromo/cargo_blockway/Bumped(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		to_chat(L, "На время полёта склад держат обесточенным для экономии электроэнергии, нет никакого смысла сейчас идти туда.")

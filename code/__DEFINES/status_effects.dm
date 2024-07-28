@@ -15,6 +15,8 @@
 
 #define STATUS_EFFECT_SWARMS_GIFT /datum/status_effect/swarm_gift
 
+#define STATUS_EFFECT_ALIEN_ADRENALINE /datum/status_effect/alien_adrenaline
+
 /////////////
 // DEBUFFS //
 /////////////
@@ -34,6 +36,8 @@
 /////////////
 
 #define STATUS_EFFECT_ARRAY_TURN_BACK /datum/status_effect/array_turn_back
+
+#define STATUS_EFFECT_ALIEN_HUNT /datum/status_effect/alien_hunt
 
 // Stasis helpers
 

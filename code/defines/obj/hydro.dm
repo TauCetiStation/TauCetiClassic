@@ -1409,6 +1409,28 @@
 	new /obj/effect/spacevine_controller(user.loc)
 	qdel(src)
 
+/obj/item/seeds/kudzuseed/alien
+	name = "pack of alien weed seeds"
+	desc = "These seeds grow into a alien weed that grows incredibly fast."
+	icon_state = "seed-alien-weed"
+	species = "alien-weed"
+	plantname = "Alien weed"
+	product_type = /obj/effect/spacevine_controller/alien
+	growthstages = 3
+	yield = 1
+
+/obj/item/seeds/kudzuseed/alien/attack_self(mob/user)
+	return
+
+/obj/item/seeds/kudzuseed/alien/ripen()
+	var/obj/machinery/hydroponics/pod = loc
+	if(!istype(pod))
+		return
+
+	new /obj/effect/spacevine_controller/alien(pod.loc)
+	pod.myseed = null
+	qdel(src)
+
 /obj/item/seeds/durathread
 	name = "pack of durathread seeds"
 	desc = "A pack of seeds that'll grow into an extremely durable thread that could easily rival plasteel if woven properly."
