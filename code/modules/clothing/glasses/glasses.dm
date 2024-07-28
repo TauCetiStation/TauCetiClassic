@@ -79,7 +79,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2"
 	darkness_view = 7
-	active = TRUE
+	toggleable = TRUE
 	sightglassesmod = "nvg"
 	active = TRUE
 	off_state = "night"
