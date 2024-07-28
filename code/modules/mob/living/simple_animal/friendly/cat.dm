@@ -141,6 +141,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/cat/dusty, chief_animal_list)
 /mob/living/simple_animal/cat/dusty
 	name = "Dusty"
 	desc = "Его шерсть на вид и ощупь напоминает бархат."
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2, /obj/item/clothing/mask/tie/collar = 1)
 
 /mob/living/simple_animal/cat/Syndi
 	name = "SyndiCat"

@@ -29,3 +29,4 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/fox/Renault, chief_animal_list)
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"
 	desc = "Верный лис капитана. Интересно, что он говорит?"
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2, /obj/item/weapon/coin/gold = 1)
