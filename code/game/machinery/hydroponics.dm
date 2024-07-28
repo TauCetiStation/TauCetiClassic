@@ -1041,6 +1041,6 @@
 			nutrilevel = maxnutri
 			weedlevel = 0
 			update_icon()
-			addtimer(CALLBACK(N_AI, PROC_REF(announce), "alien_weed"), 1 MINUTE)
+			addtimer(CALLBACK(N_AI, TYPE_PROC_REF(/mob/living/silicon/decoy/nostromo, announce), "alien_weed"), 1 MINUTE)
 
 #undef HYDRO_RATING_MULTIPLIER

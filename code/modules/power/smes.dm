@@ -597,8 +597,9 @@
 		if(NA)
 			NA.ambience_next_time += 1 MINUTE
 
-	if(alien_list[ALIEN_LONE_HUNTER].len)
-		var/mob/living/carbon/xenomorph/humanoid/hunter/lone/L = alien_list[ALIEN_LONE_HUNTER][1]
+	var/list/lhlist = global.alien_list[ALIEN_LONE_HUNTER]
+	if(lhlist.len)
+		var/mob/living/carbon/xenomorph/humanoid/hunter/lone/L = lhlist[1]
 		if(L)
 			L.set_slaughter_mode()
 

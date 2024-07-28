@@ -89,6 +89,7 @@
 	return TRUE
 
 /datum/role/nostromo_crewmate/OnPostSetup()
+	. = ..()
 	var/mob/living/L = antag.current
 	var/datum/action/A = new /datum/action/nostromo_map(L)
 	A.Grant(L)
@@ -145,6 +146,7 @@
 ------------------</b></span>"})
 
 /datum/role/nostromo_android/OnPostSetup()
+	. = ..()
 	var/mob/living/L = antag.current
 	var/datum/action/A = new /datum/action/nostromo_map(L)
 	A.Grant(L)

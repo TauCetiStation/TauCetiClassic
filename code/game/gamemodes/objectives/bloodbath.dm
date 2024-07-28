@@ -11,9 +11,10 @@
 	explanation_text = "Ксеноморф на корабле! Убейте эту тварь как можно скорее!"
 
 /datum/objective/kill_alien/check_completion()
-	if(!global.alien_list[ALIEN_LONE_HUNTER].len)
+	var/list/lhlist = global.alien_list[ALIEN_LONE_HUNTER]
+	if(!lhlist.len)
 		return OBJECTIVE_WIN
-	var/mob/living/L = global.alien_list[ALIEN_LONE_HUNTER][1]
+	var/mob/living/L = lhlist[1]
 	if(L)
 		if(L.stat == DEAD)
 			return OBJECTIVE_WIN
@@ -25,9 +26,10 @@
 	explanation_text = "Ксеноморф должен выжить."
 
 /datum/objective/defend_alien/check_completion()
-	if(!global.alien_list[ALIEN_LONE_HUNTER].len)
+	var/list/lhlist = global.alien_list[ALIEN_LONE_HUNTER]
+	if(!lhlist.len)
 		return OBJECTIVE_LOSS
-	var/mob/living/L = global.alien_list[ALIEN_LONE_HUNTER][1]
+	var/mob/living/L = lhlist[1]
 	if(L)
 		if(L.stat == DEAD)
 			return OBJECTIVE_LOSS
