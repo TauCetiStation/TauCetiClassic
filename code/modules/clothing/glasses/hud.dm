@@ -29,7 +29,7 @@
 	..()
 	if(slot != SLOT_GLASSES)
 		return
-	(user)
+	enable_hud(user)
 	glasses_user = user
 
 /obj/item/clothing/glasses/dropped(mob/living/carbon/human/user)
