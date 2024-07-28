@@ -574,7 +574,7 @@
 		if(!stability)
 			breakdown()
 		if(stability in 1 to 2) // 1 and 2 minute before breakdown AI gives an alert
-			N_AI.say("Внимание! Бортовой ИИ фиксирует резкие скачки напряжения на основной энергоячейке корабля, необходимо срочно выяснить и устранить причину неполадки.")
+			N_AI.announce("smes")
 
 /obj/machinery/power/smes/nostromo/attack_alien(mob/user)
 	if(world.time > next_alien_attack)

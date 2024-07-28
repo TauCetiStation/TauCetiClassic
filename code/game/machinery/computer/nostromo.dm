@@ -78,7 +78,7 @@
 		course += rand(2, 4) * side
 		next_course_change += rand(110, 120) SECOND
 		if(abs(course) > 18)
-			N_AI.say("Внимание! Прямо по курсу большое скопление заряженных частиц, необходимо срочно сменить курс корабля!")
+			N_AI.announce("cockpit")
 		if(abs(course) > 24)
 			N_SMES.breakdown()
 			var/turf/T = get_turf(landmarks_list["Nostromo Ambience"][1])

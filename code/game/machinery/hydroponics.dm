@@ -1041,9 +1041,6 @@
 			nutrilevel = maxnutri
 			weedlevel = 0
 			update_icon()
-			addtimer(CALLBACK(src, PROC_REF(ai_announce)), 1 MINUTE)
-
-/obj/machinery/hydroponics/nostromo/proc/ai_announce
-	N_AI.say("Внимание! В ботанике обнаружено неопознанное растение, необходимо срочное вмешательство экипажа!")
+			addtimer(CALLBACK(N_AI, PROC_REF(announce), "alien_weed"), 1 MINUTE)
 
 #undef HYDRO_RATING_MULTIPLIER
