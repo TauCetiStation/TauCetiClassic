@@ -33,7 +33,7 @@
 		active_tab = tab
 	var/list/data = list("active_tab" = active_tab, "settings" = list())
 
-	var/client/C = ui.user.client
+	var/client/C = user.client
 
 	// todo: more static data can be moved to tgui_static
 	switch(active_tab)

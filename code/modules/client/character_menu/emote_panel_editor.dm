@@ -2,12 +2,12 @@
 	var/datum/emote_panel_editor
 
 /datum/emote_panel_editor
-	var/list/custom_emote_panel
+	var/list/enabled_emotes
 	var/datum/preferences/prefs
 
 /datum/emote_panel_editor/New(client/user)
 	src.prefs = user.prefs
-	src.custom_emote_panel = prefs.custom_emote_panel
+	src.enabled_emotes = prefs.enabled_emotes_emote_panel
 
 /datum/emote_panel_editor/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -27,12 +27,13 @@
 			if(!(emote in global.emotes_for_emote_panel))
 				return
 
-			if(emote in custom_emote_panel)
-				custom_emote_panel -= emote
+			if(emote in enabled_emotes)
+				enabled_emotes -= emote
 			else
-				custom_emote_panel += emote
+				enabled_emotes += emote
 
-			prefs.save_preferences()
+			var/list/disabled_emotes = global.emotes_for_emote_panel - enabled_emotes
+			prefs.set_pref(/datum/pref/player/meta/disabled_emotes_emote_panel, disabled_emotes)
 
 	return TRUE
 
@@ -42,7 +43,7 @@
 /datum/emote_panel_editor/tgui_data(mob/user)
 	var/list/data = list()
 
-	data["customEmotes"] = custom_emote_panel
+	data["customEmotes"] = enabled_emotes
 	data["allHumanEmotes"] = global.emotes_for_emote_panel
 
 	return data

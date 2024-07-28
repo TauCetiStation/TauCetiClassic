@@ -41,7 +41,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	/// Cached list of keybindings, keys mapped to /datum/pref/keybinds
 	var/list/key_bindings_by_key = list()
 
-	var/list/custom_emote_panel = list()
+	var/list/enabled_emotes_emote_panel
 
 	//antag preferences
 	var/list/be_role = list()
@@ -144,9 +144,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 	if(!parent.holder)
 		init_chat_bans()
 
-	custom_emote_panel = global.emotes_for_emote_panel
-
-
 	// todo: rewrite this part
 	for(var/datum/pref/player/P as anything in subtypesof(/datum/pref/player))
 		if(initial(P.name))
@@ -155,19 +152,26 @@ var/global/list/datum/preferences/preferences_datums = list()
 		if(initial(P.name))
 			prefs_keybinds[initial(P.type)] = new P
 
+	var/character_loaded = FALSE
+
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			if(load_preferences()) // loads and updates preferences
-				init_keybinds(C) // init prefs keybinds (todo: move it to better place)
-				if(load_character()) // everything updated at this moment, now try to load default character
-					return
+			if(load_preferences())
+				character_loaded = load_character()
 
 	// part below is init of default parameters
 	// in case if we can't load it from saves
-	gender = pick(MALE, FEMALE)
-	real_name = random_name(gender)
-	init_keybinds(C) // if no prefs, init default keybinds
+	if(!character_loaded)
+		gender = pick(MALE, FEMALE)
+		real_name = random_name(gender)
+
+	init_keybinds(C) // todo: update it in load
+	init_emote_panel(C)
+
+/datum/preferences/proc/init_emote_panel(client/client)
+	var/list/disabled_emotes = params2list(get_pref(/datum/pref/player/meta/disabled_emotes_emote_panel))
+	enabled_emotes_emote_panel = global.emotes_for_emote_panel - disabled_emotes
 
 /datum/preferences/proc/init_keybinds(client/client)
 	for(var/type in prefs_keybinds)

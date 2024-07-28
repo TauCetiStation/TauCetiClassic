@@ -33,12 +33,16 @@
 	set name = "Emote Panel"
 	set category = "IC"
 
+	if(!length(usr.client.prefs.enabled_emotes_emote_panel))
+		to_chat(usr, "None emotes are enabled for emote panel. Setup it with Edit Emote Panel first.")
+		return
+
 	var/emote_icons = 'icons/misc/emotes.dmi'
 	var/list/emote_choice = list()
 
 	for(var/id in current_emotes)
 		var/datum/emote/E = current_emotes[id]
-		if(!(E.key in usr.client.prefs.custom_emote_panel))
+		if(!(E.key in usr.client.prefs.enabled_emotes_emote_panel))
 			continue
 		emote_choice += E.key
 		emote_choice[E.key] = image(icon = emote_icons, icon_state = E.key)

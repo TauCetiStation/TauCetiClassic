@@ -51,15 +51,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 10)
 		toggles |= MEMBER_PUBLIC
 	*/
-	if(current_version < 15)
+	if(current_version < 15) // cleanup
 		S["warns"]    << null
 		S["warnbans"] << null
 
-	if(current_version < 16)
+	if(current_version < 16) // cleanup
 		S["aooccolor"] << S["ooccolor"]
-
-	if(current_version < 44)
-		custom_emote_panel = global.emotes_for_emote_panel
 
 	// moving prefs to new system
 	//if(current_version < 50)
@@ -183,6 +180,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		set_pref(/datum/pref/player/meta/default_slot, S["default_slot"])
 		set_pref(/datum/pref/player/meta/random_slot, S["randomslot"])
 		set_pref(/datum/pref/player/game/hotkey_mode, S["hotkeys"])
+
+		// emote panel
+		var/list/old_emotes_list = S["emote_panel"]
+		if(length(old_emotes_list))
+			var/list/disabled_emotes = global.emotes_for_emote_panel - old_emotes_list
+			set_pref(/datum/pref/player/meta/disabled_emotes_emote_panel, disabled_emotes)
 
 		// keibinds
 		var/list/old_keybinds = S["key_bindings"]
@@ -435,17 +438,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
 		return 0
 
-	//General preferences
-	S["emote_panel"]       >> custom_emote_panel
-
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_preferences(needs_update, S) // needs_update = savefile_version if we need an update (positive integer)
-
-	//Sanitize
-	//key_bindings 	= sanitize_keybindings(key_bindings)
-	custom_emote_panel  = sanitize_emote_panel(custom_emote_panel)
 
 	if(needs_update >= 0) //save the updated version
 		for (var/slot in S.dir) //but first, update all current character slots.
@@ -469,13 +465,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/"
 
 	S["version"] << SAVEFILE_VERSION_MAX
-
-	//general preferences
-	S["emote_panel"]       << custom_emote_panel
-
-
-	// Custom hotkeys
-//	S["key_bindings"] << key_bindings
 
 	return 1
 
