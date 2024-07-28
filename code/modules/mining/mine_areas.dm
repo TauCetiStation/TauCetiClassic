@@ -146,6 +146,11 @@
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 	outdoors = FALSE
 
+/area/asteroid/mine/abandoned/Entered()
+	. = ..()
+	for(var/obj/effect/spawner/mob_spawn/M in src)
+		M.creatMob()
+
 /area/asteroid/mine/living_quarters
 	name = "Mining Station Port Wing"
 	icon_state = "mining_living"

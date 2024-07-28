@@ -1,7 +1,7 @@
 /obj/item/clothing/head/soft
-	name = "cargo cap"
-	desc = "It's a baseball hat in a tasteless yellow color."
-	icon_state = "cargosoft"
+	name = "cap"
+	desc = "It's a baseball hat"
+	icon_state = "greysoft"
 	flags = HEADCOVERSEYES
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
@@ -9,7 +9,7 @@
 	item_action_types = list(/datum/action/item_action/hands_free/flip_cap)
 
 	var/flipped = FALSE
-	var/cap_color = "cargo"
+	var/cap_color = "grey"
 
 /datum/action/item_action/hands_free/flip_cap
 	name = "Flip Cap"
@@ -107,12 +107,6 @@
 	icon_state = "corpsoft"
 	cap_color = "corp"
 
-/obj/item/clothing/head/soft/trash
-	name = "trash cap"
-	desc = "It's baseball hat."
-	icon_state = "trashsoft"
-	cap_color = "trash"
-
 /obj/item/clothing/head/soft/janitor
 	name = "janitor cap"
 	desc = "It's janitor hat."
@@ -138,3 +132,10 @@
 	desc = "It's baseball hat in tasteful black color with blueshield insignia."
 	icon_state = "blueshieldsoft"
 	cap_color = "blueshield"
+
+/obj/item/clothing/head/soft/cargo
+	name = "cargo cap"
+	desc = "It's cargo hat."
+	item_state_inventory = "cargosoft"
+	cap_color = "cargo"
+
