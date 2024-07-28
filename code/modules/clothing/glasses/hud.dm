@@ -25,14 +25,14 @@
 		for(var/parasit in user.parasites)
 			H.remove_hud_from(parasit)
 
-/obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/glasses/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(slot != SLOT_GLASSES)
 		return
-	enable_hud(user)
+	(user)
 	glasses_user = user
 
-/obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
+/obj/item/clothing/glasses/dropped(mob/living/carbon/human/user)
 	..()
 	if(!istype(user) || user.glasses)
 		return
@@ -52,7 +52,7 @@
 		enable_hud(glasses_user)
 	crit_fail = 0
 
-/obj/item/clothing/glasses/hud/emp_act(severity)
+/obj/item/clothing/glasses/emp_act(severity)
 	if(!crit_fail)
 		crit_fail = 1
 		if(glasses_user)

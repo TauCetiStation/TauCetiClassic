@@ -79,7 +79,7 @@
 	item_state = "glasses"
 	origin_tech = "magnets=2"
 	darkness_view = 7
-	toggleable = TRUE
+	active = TRUE
 	sightglassesmod = "nvg"
 	active = TRUE
 	off_state = "night"
@@ -207,6 +207,7 @@
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
 			flash_protection = FLASHES_FULL_PROTECTION
+			enable_hud(glasses_user)
 			to_chat(usr, "You flip \the [src] down to protect your eyes.")
 		else
 			up = !up
@@ -214,6 +215,7 @@
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
 			flash_protection = NONE
+			disable_hud(glasses_user)
 			to_chat(usr, "You push \the [src] up out of your face.")
 
 		update_inv_mob()
@@ -224,6 +226,7 @@
 	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes."
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
+	hud_types = list(DATA_HUD_DIAGNOSTIC)
 
 /obj/item/clothing/glasses/sunglasses/blindfold
 	name = "blindfold"
