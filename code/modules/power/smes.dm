@@ -552,21 +552,24 @@
 	var/list/explosions = list()
 
 /obj/machinery/power/smes/nostromo/atom_init()
+	..()
 	next_instrument = pick(instruments)
 	next_stability_decrease = world.time + rand(50, 70) SECOND
 	next_alien_attack = world.time
 	stability = rand(6, 8)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/power/smes/nostromo/atom_init_late()
 	N_AI = locate() in mob_list
 	var/list/around = orange(src, 5)
 	explosions += locate(/obj/machinery/power/port_gen/riteg) in around
 	explosions += locate(/obj/machinery/power/apc/smallcell/nostromo) in around
 	explosions += src
-	. = ..()
 
 /obj/machinery/power/smes/nostromo/process()
 	..()
 	if(world.time > next_stability_decrease)
-		next_stability_decrease += 1 MINUTE
+		next_stability_decrease += rand(50, 70) SECOND
 		stability--
 		if(!stability)
 			breakdown()
@@ -608,6 +611,8 @@
 
 /obj/machinery/power/smes/nostromo/examine(mob/user, distance)
 	..()
+	if(distance > 4)
+		return
 	if(stability >= 8)
 		to_chat(user, "<span class='notice'>СМЕС работает стабильно.</span>")
 		return

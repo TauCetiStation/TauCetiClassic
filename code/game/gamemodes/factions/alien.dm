@@ -75,6 +75,10 @@ var/global/mob/Jonesy
 			/obj/item/weapon/gun/projectile/shotgun/incendiary,
 			/obj/item/ammo_box/eight_shells/incendiary,
 			/obj/item/ammo_box/eight_shells/incendiary,
+			/obj/item/clothing/suit/armor/vest/fullbody,
+			/obj/item/clothing/suit/armor/vest/fullbody,
+			/obj/item/clothing/head/helmet,
+			/obj/item/clothing/head/helmet,
 			/obj/item/weapon/shield/riot),
 		list(
 			/obj/item/weapon/crossbow,
@@ -84,26 +88,31 @@ var/global/mob/Jonesy
 			/obj/item/weapon/stock_parts/cell/super,
 			/obj/item/weapon/stock_parts/cell/super,
 			/obj/item/clothing/glasses/night,
-			/obj/item/clothing/glasses/night),
+			/obj/item/clothing/glasses/night,
+			/obj/item/clothing/suit/armor/syndilight,
+			/obj/item/clothing/suit/armor/syndilight,
+			/obj/item/clothing/head/helmet/syndilight,
+			/obj/item/clothing/head/helmet/syndilight),
 		list(
-			/obj/item/weapon/pickaxe/drill/jackhammer,
+			/obj/item/weapon/sledgehammer,
 			/obj/item/weapon/pickaxe/drill/jackhammer,
 			/obj/item/weapon/gun/energy/laser/cutter,
 			/obj/item/weapon/gun/energy/laser/cutter,
-			/obj/item/weapon/storage/firstaid/small_firstaid_kit/space),
+			/obj/item/clothing/suit/space/globose/mining,
+			/obj/item/clothing/suit/space/globose/mining,
+			/obj/item/clothing/head/helmet/space/globose/mining,
+			/obj/item/clothing/head/helmet/space/globose/mining,
+			/obj/item/weapon/storage/box/autoinjector/stimpack),
 		list(
 			/obj/item/weapon/claymore,
 			/obj/item/weapon/claymore,
 			/obj/item/weapon/shield/riot/roman,
 			/obj/item/weapon/shield/riot/roman,
-			/obj/item/clothing/accessory/bronze_cross),
-		list(
-			/obj/item/weapon/gun/energy/laser,
-			/obj/item/weapon/gun/energy/laser,
-			/obj/item/clothing/head/bio_hood/new_hazmat/general,
-			/obj/item/clothing/head/bio_hood/new_hazmat/general,
-			/obj/item/clothing/suit/bio_suit/new_hazmat/general,
-			/obj/item/clothing/suit/bio_suit/new_hazmat/general),
+			/obj/item/clothing/suit/armor/crusader,
+			/obj/item/clothing/suit/armor/crusader,
+			/obj/item/clothing/head/helmet/crusader,
+			/obj/item/clothing/head/helmet/crusader,
+			/obj/item/clothing/accessory/bronze_cross)
 	)
 
 /datum/faction/nostromo_crew/forgeObjectives()
@@ -119,6 +128,7 @@ var/global/mob/Jonesy
 	return TRUE
 
 /datum/faction/nostromo_crew/OnPostSetup()
+	..()
 	for(var/datum/role/r in members)
 		RegisterSignal(r.antag.current, COMSIG_MOB_DIED, PROC_REF(crewmate_died))
 

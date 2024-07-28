@@ -188,7 +188,7 @@
 
 /datum/status_effect/alien_hunt
 	id = "alien_hunt"
-	duration = 5 MINUTE
+	duration = 3 MINUTE
 	alert_type = /atom/movable/screen/alert/status_effect/alien_hunt
 
 /datum/status_effect/alien_hunt/on_creation(mob/living/new_owner, mob/living/target)

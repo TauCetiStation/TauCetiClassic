@@ -609,6 +609,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 /obj/effect/landmark/nostromo/cargo_blockway
 	name = "Nostromo Cargo Blockway"
+	density = 1
 
 /obj/effect/landmark/nostromo/cargo_blockway/Bumped(atom/movable/AM)
 	if(isliving(AM))

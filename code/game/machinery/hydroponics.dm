@@ -1014,4 +1014,36 @@
 		to_chat(user, "You clear up [src]!")
 		qdel(src)
 
+/obj/machinery/hydroponics/nostromo
+	icon_state = "hydrotray3"
+	resistance_flags = FULL_INDESTRUCTIBLE
+	var/mob/living/silicon/decoy/nostromo/N_AI
+
+/obj/machinery/hydroponics/nostromo/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/hydroponics/nostromo/atom_init_late()
+	N_AI = locate() in mob_list
+
+/obj/machinery/hydroponics/nostromo/attack_alien(mob/living/carbon/xenomorph/user)
+	if(!istype(myseed, /obj/item/seeds/kudzuseed/alien))
+		if(planted)
+			planted = FALSE
+			dead = FALSE
+			to_chat(user, "<span class='notice'>You remove the plant from [src].</span>")
+			qdel(myseed)
+			update_icon()
+		else
+			to_chat(user, "<span class='notice'>You plant the alien weed.</span>")
+			myseed = new /obj/item/seeds/kudzuseed/alien
+			waterlevel = maxwater
+			nutrilevel = maxnutri
+			weedlevel = 0
+			update_icon()
+			addtimer(CALLBACK(src, PROC_REF(ai_announce)), 1 MINUTE)
+
+/obj/machinery/hydroponics/nostromo/proc/ai_announce
+	N_AI.say("Внимание! В ботанике обнаружено неопознанное растение, необходимо срочное вмешательство экипажа!")
+
 #undef HYDRO_RATING_MULTIPLIER

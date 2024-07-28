@@ -26,6 +26,8 @@
 	var/config_use_spawners_lobby = FALSE
 	// enables spawn latejoin in special event cryopods
 	var/config_event_cryopod_latejoin = FALSE
+	// disables loadout
+	var/config_disable_loadout = FALSE
 
 	// disable default mice/drone spawners
 	var/disable_default_spawners = FALSE
@@ -52,6 +54,10 @@
 	if(config_event_cryopod_latejoin)
 		config.event_cryopod_latejoin = TRUE
 		log_debug("Event cryopods latejoin enabled.")
+
+	if(config_disable_loadout)
+		config.allow_loadout = FALSE
+		log_debug("Loadout disabled.")
 
 	if(disable_default_spawners) // need to rewrite configs, this is stupid
 		config.disable_player_mice = TRUE
