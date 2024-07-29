@@ -109,6 +109,13 @@
 	icon_state = "yellow"
 	requires_power = 0
 
+area/custom/wizard_station/Entered(atom/movable/A, atom/OldLoc)
+	. = ..()
+	if(!isliving(A))
+		return
+	for(var/obj/effect/spawner/mob_spawn/M in src)
+		M.creatMob()
+
 /area/custom/tophat
 	name = "Tophat"
 	cases = list("шляпа", "шляпы", "шляпе", "шляпу", "шляпой", "шляпе")

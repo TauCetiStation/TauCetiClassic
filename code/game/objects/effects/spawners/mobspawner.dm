@@ -94,3 +94,23 @@
 /obj/effect/spawner/mob_spawn/syndicate_ranged_elite
 	mob_type = /mob/living/simple_animal/hostile/syndicate/ranged/space/elite
 	icon_state = "elite_range_spawn"
+
+obj/effect/spawner/mob_spawn/wiz_goat
+	mob_type = /mob/living/simple_animal/hostile/retaliate/goat
+	icon_state = "goat_spawn"
+
+obj/effect/spawner/mob_spawn/wiz_creature
+	mob_type = /mob/living/simple_animal/hostile/retaliate/goat
+	icon_state = "creature_spawn"
+
+obj/effect/spawner/mob_spawn/wiz_monkey
+	mob_type = /mob/living/carbon/monkey
+	icon_state = "monkey_spawn"
+
+obj/effect/spawner/mob_spawn/wiz_tribesman
+	mob_type = /mob/living/simple_animal/hostile/tribesman
+	icon_state = "tribesman_spawn"
+
+obj/effect/spawner/mob_spawn/nuke_mouse
+	mob_type = /mob/living/simple_animal/mouse/nuke
+	icon_state = "nuke_mouse_spawn"
