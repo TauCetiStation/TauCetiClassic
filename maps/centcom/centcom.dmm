@@ -22556,6 +22556,10 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"bEA" = (
+/obj/structure/mirror/magic,
+/turf/simulated/floor,
+/area/space)
 "bFb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -24278,6 +24282,13 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"enI" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/pluvia_balance,
+/obj/item/clothing/suit/pluvia_balance,
+/obj/item/clothing/suit/pluvia_balance,
+/turf/simulated/floor,
+/area/space)
 "eob" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/shuttle/floor{
@@ -24940,6 +24951,11 @@
 	icon_state = "floor4"
 	},
 /area/velocity/monorailwagon)
+"fAt" = (
+/obj/structure/rack,
+/obj/item/clothing/under/pluvia,
+/turf/simulated/floor,
+/area/space)
 "fBb" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8;
@@ -26343,6 +26359,13 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"hXn" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/pluvia_morality,
+/obj/item/clothing/suit/pluvia_morality,
+/obj/item/clothing/suit/pluvia_morality,
+/turf/simulated/floor,
+/area/space)
 "hXA" = (
 /turf/simulated/floor/carpet/blue2,
 /area/space)
@@ -28654,6 +28677,10 @@
 /obj/machinery/computer/shuttle,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
+"mQu" = (
+/obj/effect/light_emitter,
+/turf/simulated/floor,
+/area/space)
 "mQF" = (
 /obj/structure/mineral_door/cult,
 /turf/unsimulated/floor/cult/lava,
@@ -29415,6 +29442,11 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"oup" = (
+/obj/structure/rack,
+/obj/item/clothing/under/pluvia_gold,
+/turf/simulated/floor,
+/area/space)
 "ouG" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -30290,6 +30322,14 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"sng" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/pluvia_trick,
+/obj/item/clothing/suit/pluvia_trick,
+/obj/item/clothing/suit/pluvia_trick,
+/obj/item/clothing/suit/pluvia_trick,
+/turf/simulated/floor,
+/area/space)
 "srT" = (
 /turf/unsimulated/wall,
 /area/velocity/locker)
@@ -37813,7 +37853,7 @@ aaM
 aaM
 aaM
 mlY
-mlY
+uci
 mlY
 aaM
 aaM
@@ -38067,13 +38107,13 @@ jcu
 gSN
 aeD
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
+uci
+aeD
+aeD
+aeD
 aaM
 aaM
 aaM
@@ -38324,13 +38364,13 @@ aeD
 aeD
 aeD
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+oup
+uci
+uci
+uci
+uci
+aeD
 aaM
 aaM
 aaM
@@ -38581,13 +38621,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+fAt
+uci
+uci
+uci
+sng
+aeD
 aaM
 aaM
 aaM
@@ -38838,13 +38878,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+uci
+uci
+mQu
+uci
+hXn
+aeD
 aaM
 aaM
 aaM
@@ -39095,13 +39135,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+fAt
+uci
+uci
+uci
+enI
+aeD
 aaM
 aaM
 aaM
@@ -39352,13 +39392,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+oup
+uci
+bEA
+uci
+uci
+aeD
 aaM
 aaM
 aaM
@@ -39609,13 +39649,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
+aeD
 aaM
 aaM
 aaM

@@ -524,11 +524,11 @@
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
 
-/obj/item/clothing/suit/pluvia_good
-	name = "Path of Good"
+/obj/item/clothing/suit/pluvia_morality
+	name = "Path of Morality"
 	desc = ""
-	icon_state = "pluvia_good"
-	item_state = "pluvia_good"
+	icon_state = "pluvia_morality"
+	item_state = "pluvia_morality"
 
 /obj/item/clothing/suit/pluvia_trick
 	name = "Path of Trick"
