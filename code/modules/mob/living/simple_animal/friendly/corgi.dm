@@ -117,7 +117,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/corgi/borgi, chief_animal_list)
 	icon_dead = "borgi_dead"
 	butcher_results = list()
 	var/emagged = 0
-	butcher_results = list(/obj/item/weapon/gun/energy/gun = 1)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/donut/classic = 1)
 
 /mob/living/simple_animal/corgi/borgi/emag_act(mob/user)
 	if(!emagged && emagged < 2)

@@ -1,6 +1,6 @@
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 /mob/living/simple_animal/det5
-	name = "DET5" //
+	name = "DET5"
 	icon_state = "robot_rd"
 	icon_living = "robot_rd"
 	icon_dead = "robot_rd_died"
