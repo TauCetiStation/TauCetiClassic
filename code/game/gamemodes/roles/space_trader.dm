@@ -16,7 +16,7 @@
 
 /datum/role/space_trader/guard/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, {"<span class='notice'><b>Вы - барыга.
+	to_chat(antag.current, {"<span class='notice'><b>Вы - ЧОПовец.
 
 ------------------</b></span>"})
 
@@ -25,6 +25,6 @@
 
 /datum/role/space_trader/porter/Greet(greeting, custom)
 	. = ..()
-	to_chat(antag.current, {"<span class='notice'><b>Вы - барыга.
+	to_chat(antag.current, {"<span class='notice'><b>Вы - грузчик.
 
 ------------------</b></span>"})
