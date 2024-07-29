@@ -9,7 +9,7 @@ ADD_TO_POIFS_LIST(/obj/item/device/aicard)
 ADD_TO_POIFS_LIST(/obj/item/blueprints)
 ADD_TO_POIFS_LIST(/obj/item/weapon/tank)
 ADD_TO_POIFS_LIST(/obj/item/slime_extract)
-ADD_TO_POIFS_LIST(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi)
+ADD_TO_POIFS_LIST(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/research_director)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/chief_engineer)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/chief_medical_officer)
@@ -38,7 +38,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"a functional AI" = /obj/item/device/aicard,
 		"the station blueprints" = /obj/item/blueprints,
 		"a head of security's augmented shades" = /obj/item/clothing/glasses/hud/hos_aug,
-		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		"a piece of Ian's meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
 		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray/cmo,
 		"a Research Director's teleport armor" = /obj/item/clothing/suit/armor/vest/reactive,
 		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
@@ -157,7 +157,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 /datum/objective/steal/non_heads_items/get_possible_items()
 	return list("a functional AI" = /obj/item/device/aicard,
                 "a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
-                "a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+                "a piece of Ian's meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
                 "an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
                 "the golden fire extinguisher" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
 	)

@@ -25,6 +25,8 @@
 	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
 	icon_state = "qm"
 	item_state = "qm"
+	item_state_world = "qm_w"
+
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 
@@ -33,6 +35,8 @@
 	desc = "Shooooorts! They're comfy and easy to wear!"
 	icon_state = "cargotech"
 	item_state = "cargo"
+	item_state_world = "cargotech_w"
+
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
@@ -41,16 +45,10 @@
 	desc = "Stinks."
 	icon_state = "recycler"
 	item_state = "recycler"
+	item_state_world = "recycler_w"
+
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-
-/obj/item/clothing/under/rank/recyclercasual
-	name = "recycler's casual jumpsuit"
-	desc = "Stinks."
-	icon_state = "recyclercasual"
-	item_state = "recyclercasual"
-	flags = ONESIZEFITSALL|HEAR_TALK
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/rank/chaplain
 	desc = "It's a dark robe, often worn by religious folk."
@@ -66,6 +64,7 @@
 	item_state = "chaplain_light"
 
 
+//Chef
 /obj/item/clothing/under/rank/chef
 	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
 	name = "chef's uniform"
@@ -73,7 +72,6 @@
 	item_state = "chef_uniform"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
-//Chef
 /obj/item/clothing/under/rank/chef/sushi
 	name = "sushi master robe"
 	desc = "The one who wears this clearly knows a lot about fish, rice and perfectly understands the moonspeak."
@@ -189,6 +187,7 @@
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
 	item_state = "miner"
+	item_state_world = "miner_w"
 	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/rank/barber
