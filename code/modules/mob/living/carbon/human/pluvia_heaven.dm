@@ -246,6 +246,9 @@ var/global/list/wisp_start_landmark = list()
 /mob/living/simple_animal/ancestor_wisp/RangedAttack(atom/A, params)
 	return
 
+/mob/living/simple_animal/ancestor_wisp/start_pulling(atom/movable/AM)
+	return
+
 /mob/living/simple_animal/ancestor_wisp/proc/return_to_heaven()
 	set category = "Светлячок"
 	set name = "Вернуться в рай"

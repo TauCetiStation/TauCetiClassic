@@ -30841,6 +30841,11 @@
 	icon_state = "Heaven_Stairs_wide"
 	},
 /area/space)
+"vXE" = (
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/shoes/white,
+/turf/simulated/floor,
+/area/space)
 "vYm" = (
 /turf/environment/space,
 /area/shuttle/escape_pod6/centcom)
@@ -33806,7 +33811,7 @@ aeD
 aaM
 aeD
 oup
-uci
+vXE
 uci
 uci
 uci
@@ -34063,7 +34068,7 @@ aaM
 aaM
 aeD
 fAt
-uci
+vXE
 uci
 uci
 sng
@@ -34577,7 +34582,7 @@ aaM
 aaM
 aeD
 fAt
-uci
+vXE
 uci
 uci
 enI
@@ -34834,7 +34839,7 @@ aaM
 aaM
 aeD
 oup
-uci
+vXE
 bEA
 uci
 uci
