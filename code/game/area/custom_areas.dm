@@ -109,7 +109,7 @@
 	icon_state = "yellow"
 	requires_power = 0
 
-area/custom/wizard_station/Entered(atom/movable/A, atom/OldLoc)
+/area/custom/wizard_station/Entered(atom/movable/A, atom/OldLoc)
 	. = ..()
 	if(!isliving(A))
 		return

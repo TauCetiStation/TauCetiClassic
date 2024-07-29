@@ -4259,7 +4259,7 @@
 	},
 /area/shuttle/syndicate/start)
 "akN" = (
-/mob/living/simple_animal/cat/Syndi,
+/obj/effect/spawner/mob_spawn/nuke_cat,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -15933,6 +15933,7 @@
 /obj/item/weapon/storage/box/flashbangs{
 	pixel_y = -6
 	},
+/obj/effect/spawner/mob_spawn/nuke_mouse,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -87084,7 +87085,7 @@ akx
 akR
 akM
 akM
-akN
+akM
 akM
 alE
 akM
@@ -87341,7 +87342,7 @@ akw
 aFN
 aHR
 akM
-akM
+akN
 aGs
 aGx
 aGx
