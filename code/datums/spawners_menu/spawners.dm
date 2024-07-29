@@ -745,3 +745,129 @@
 	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
 	R.rename = FALSE
 	setup_role(R, TRUE)
+
+/datum/spawner/space_trader
+	name = "Космический торговец"
+	desc = "Космический торговец."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	time_while_available = 5 MINUTES
+	spawn_landmark_name = "Space Trader"
+	var/datum/role/role = /datum/role/space_trader
+
+/datum/spawner/space_trader/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H = new(spawnloc)
+	C.create_human_apperance(H)
+	H.key = C.key
+	spawn_trader_id(H, 200)
+
+	create_and_setup_role(role, H)
+
+/datum/spawner/space_trader/proc/spawn_trader_id(mob/living/carbon/human/H, money)
+	var/datum/money_account/MA = create_random_account_and_store_in_mind(H, money)
+
+	var/obj/item/weapon/card/id/C = new(H)
+	C.rank = "Space Trader"
+	C.assign(H.real_name)
+	C.access = list(access_space_traders)
+	C.associated_account_number = MA.account_number
+	H.equip_or_collect(C, SLOT_WEAR_ID)
+
+	var/obj/item/device/pda/pda = new(H)
+	pda.assign(H.real_name)
+	pda.ownrank = C.rank
+	pda.owner_account = MA.account_number
+	pda.owner_fingerprints += C.fingerprint_hash
+	MA.owner_PDA = pda
+	H.equip_or_collect(pda, SLOT_R_STORE)
+
+/datum/spawner/space_trader/dealer
+	name = "Космоторговец барыга"
+	desc = "Барыга, владеющий торговым судном и товаром на нём. Заработайте столько денег, сколько сможете увезти!"
+	spawn_landmark_name = "Space Trader Dealer"
+	role = /datum/role/space_trader/dealer
+
+/datum/spawner/space_trader/guard
+	name = "Космоторговец охранник"
+	desc = "ЧОПовец, нанятый барыгой для охраны судна и товара на нём от станционных воришек и космических пиратов."
+	spawn_landmark_name = "Space Trader Guard"
+	role = /datum/role/space_trader/guard
+
+/datum/spawner/space_trader/porter
+	name = "Космический посыльный"
+	desc = "Таяран грузчик, работающий на барыгу. Таскайте грузы, выставляйте товары на продажу, помогите барыге обогатиться и не забудьте спросить свою долю!"
+	spawn_landmark_name = "Space Trader Porter"
+	role = /datum/role/space_trader/porter
+
+// porter - always tajaran
+/datum/spawner/space_trader/porter/can_spawn(mob/dead/spectator)
+	if(is_alien_whitelisted_banned(spectator, TAJARAN) || !is_alien_whitelisted(spectator, TAJARAN))
+		to_chat(spectator, "<span class='warning'>Вы не можете играть за таярана.</span>")
+		return FALSE
+	return ..()
+
+/datum/spawner/space_trader/porter/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+	var/mob/living/carbon/human/H = new(spawnloc, /datum/species/tajaran)
+
+	var/new_name = capitalize(pick(global.tajaran_male_first)) + " " + capitalize(pick(global.last_names))
+	H.real_name = new_name
+	H.name = new_name
+	if(H.mind)
+		H.mind.name = new_name
+
+	var/new_skin = input(H, "Please select xeno-body color", "Xenos Skin") as null|color
+	if(new_skin)
+		H.r_skin = hex2num(copytext(new_skin, 2, 4))
+		H.g_skin = hex2num(copytext(new_skin, 4, 6))
+		H.b_skin = hex2num(copytext(new_skin, 6, 8))
+
+	var/new_f_style = input(H, "Select a facial hair style", "Grooming") as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
+	if(new_f_style)
+		H.f_style = new_f_style
+
+	var/new_h_style = input(H, "Select a hair style", "Grooming") as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
+	if(new_h_style)
+		H.h_style = new_h_style
+
+	var/new_hair = input(H, "Choose your hair color", "Hair Color") as null|color
+	if(new_hair)
+		H.r_hair = hex2num(copytext(new_hair, 2, 4))
+		H.g_hair = hex2num(copytext(new_hair, 4, 6))
+		H.b_hair = hex2num(copytext(new_hair, 6, 8))
+
+	var/new_facial = input(H, "Choose your facial hair color", "Hair Color") as null|color
+	if(new_facial)
+		H.r_facial = hex2num(copytext(new_facial, 2, 4))
+		H.g_facial = hex2num(copytext(new_facial, 4, 6))
+		H.b_facial = hex2num(copytext(new_facial, 6, 8))
+
+	var/new_eyes = input(H, "Choose your eye color", "Eye Color") as null|color
+	if(new_eyes)
+		H.r_eyes = hex2num(copytext(new_eyes, 2, 4))
+		H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
+		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
+
+	var/new_height = input(H, "Choose your character's height:", "Character Height", H.height) as null|anything in heights_list
+	if(new_height)
+		H.height = new_height
+		H.regenerate_icons()
+
+	H.apply_recolor()
+	H.update_hair()
+	H.update_body()
+	H.check_dna(H)
+	H.age = rand(H.species.min_age, H.species.min_age * 1.25)
+	H.key = C.key
+	H.dna.ready_dna(H)
+	spawn_trader_id(H, 20)
+
+	create_and_setup_role(role, H)

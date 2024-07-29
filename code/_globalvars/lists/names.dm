@@ -14,6 +14,7 @@ var/global/list/pirate_second = file2list("config/names/piratesecond.txt")
 var/global/list/moth_first = file2list("config/names/moth_first.txt")
 var/global/list/moth_second = file2list("config/names/moth_second.txt")
 var/global/list/serpentid_names = file2list("config/names/serpentid.txt")
+var/global/list/tajaran_male_first = file2list("config/names/tajaran_male_first.txt")
 
 // Traitors key-words
 var/global/list/rus_nouns

@@ -68,6 +68,7 @@ var/global/list/vending_products = list() //this list is used to create product 
 var/global/list/intercom_list = list()
 var/global/list/all_designs = list()
 var/global/list/all_supply_pack = list()
+var/global/list/all_trader_pack = list()
 var/global/list/all_command_microphones = list()
 var/global/list/global_objectives = list() //objectives that need to be completed by several factions or roles
 var/global/list/air_alarms = list()
