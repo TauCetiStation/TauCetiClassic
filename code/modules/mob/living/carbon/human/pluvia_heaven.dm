@@ -7,6 +7,12 @@
 /var/global/list/available_pluvia_gongs = list()
 var/global/list/wisp_start_landmark = list()
 
+/turf/simulated/wall/heaven
+	icon = 'icons/turf/walls/has_false_walls/wall_heaven.dmi'
+	light_color = "#ffffff "
+	light_power = 2
+	light_range = 2
+
 /turf/simulated/floor/beach/water/waterpool/heaven
 	name = "Рай"
 	plane = PLANE_SPACE
