@@ -606,7 +606,7 @@
 	id = "xenojelly_un"
 	description  = "Usually, this jelly is found in the meat of xenomorphs, but it is less useful than natural."
 	reagent_state = LIQUID
-	color = "#5ea95d2b"
+	color = "#457a45"
 	custom_metabolism = 2
 	overdose = REAGENTS_OVERDOSE / 2
 	taste_message = null

@@ -1,16 +1,16 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostatoin)
 "ab" = (
 /obj/structure/lattice,
 /obj/structure/grille{
 	destroyed = 1
 	},
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostatoin)
 "ac" = (
-/mob/living/simple_animal/hostile/hivebot,
+/obj/effect/spawner/mob_spawn/hivebot,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "ad" = (
@@ -68,7 +68,7 @@
 /area/space_structures/robostatoin)
 "an" = (
 /obj/item/weapon/bikehorn,
-/mob/living/simple_animal/hostile/hivebot/strong,
+/obj/effect/spawner/mob_spawn/hivebot/strong,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "ao" = (
@@ -91,7 +91,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "as" = (
-/mob/living/simple_animal/hostile/hivebot/range,
+/obj/effect/spawner/mob_spawn/hivebot/range,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "at" = (
@@ -142,10 +142,6 @@
 /obj/structure/table/reinforced,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
-"aC" = (
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
 "aD" = (
 /obj/item/mecha_parts/part/honker_right_arm,
 /obj/structure/table/reinforced,
@@ -155,7 +151,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostatoin)
 "aF" = (
 /obj/structure/ore_box,
 /obj/item/weapon/ore/clown,
@@ -377,7 +373,7 @@
 /area/space_structures/robostatoin)
 "bw" = (
 /obj/machinery/porta_turret/stationary,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/robostatoin)
 "bx" = (
 /obj/structure/table/reinforced,
@@ -395,7 +391,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bA" = (
-/mob/living/simple_animal/hostile/hivebot,
+/obj/effect/spawner/mob_spawn/hivebot,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bB" = (
@@ -430,7 +426,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bH" = (
-/mob/living/simple_animal/hostile/hivebot/range,
+/obj/effect/spawner/mob_spawn/hivebot/range,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bI" = (
@@ -450,7 +446,7 @@
 "bL" = (
 /obj/structure/grille,
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostatoin)
 "bM" = (
 /obj/item/weapon/wirecutters,
 /turf/simulated/floor/greengrid,
@@ -513,7 +509,7 @@
 /obj/item/weapon/bikehorn,
 /obj/structure/lattice,
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostatoin)
 "bY" = (
 /obj/structure/table,
 /obj/machinery/light{
@@ -552,7 +548,7 @@
 "cd" = (
 /obj/item/weapon/shard,
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostatoin)
 "ce" = (
 /obj/structure/sign/warning/docking,
 /turf/simulated/wall/r_wall,
@@ -702,7 +698,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cF" = (
-/mob/living/simple_animal/hostile/hivebot/range,
+/obj/effect/spawner/mob_spawn/hivebot/range,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "green"
@@ -736,7 +732,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/robostatoin)
 "cL" = (
 /obj/effect/landmark/corpse/clown,
@@ -768,7 +764,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cQ" = (
-/mob/living/simple_animal/hostile/hivebot/strong,
+/obj/effect/spawner/mob_spawn/hivebot/strong,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -948,13 +944,13 @@
 	check_n_synth = 1;
 	shot_synth = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/robostatoin)
 "eQ" = (
 /obj/machinery/light{
 	dir = 8
 	},
-/mob/living/simple_animal/hostile/hivebot,
+/obj/effect/spawner/mob_spawn/hivebot,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -1026,6 +1022,9 @@
 	icon_state = "blue"
 	},
 /area/space_structures/robostatoin)
+"Nf" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/robostatoin)
 "OQ" = (
 /obj/machinery/door/airlock/hatch{
 	dir = 4
@@ -1049,7 +1048,7 @@
 /obj/structure/lattice,
 /obj/item/weapon/shard,
 /turf/environment/space,
-/area/space)
+/area/space_structures/robostatoin)
 "XQ" = (
 /obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
@@ -1127,12 +1126,12 @@ aa
 aE
 aa
 aa
-aC
+bS
 aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aE
@@ -1149,14 +1148,14 @@ aa
 aE
 aa
 aa
-aC
+bS
 aa
 aE
 aa
 aE
 aa
 aa
-aC
+bS
 aa
 aa
 aE
@@ -1166,12 +1165,12 @@ aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aE
@@ -1188,19 +1187,19 @@ aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aa
@@ -1221,8 +1220,8 @@ aa
 aa
 aa
 aE
-aC
-aC
+bS
+bS
 ad
 ae
 ae
@@ -1239,7 +1238,7 @@ ae
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aa
@@ -1259,7 +1258,7 @@ aE
 aa
 aa
 aE
-aC
+bS
 aa
 ad
 ad
@@ -1290,14 +1289,14 @@ cJ
 dg
 Iy
 ae
-aC
-aC
+bS
+bS
 aE
 "}
 (7,1,1) = {"
 aa
 aE
-aC
+bS
 ad
 ad
 ad
@@ -1315,7 +1314,7 @@ bp
 bu
 ad
 bS
-ar
+Nf
 bN
 bT
 ae
@@ -1375,7 +1374,7 @@ aE
 (9,1,1) = {"
 aa
 aE
-aC
+bS
 ad
 ai
 al
@@ -1395,7 +1394,7 @@ ae
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aa
@@ -1434,10 +1433,10 @@ en
 aa
 aa
 aa
-aC
-aC
-aC
-aC
+bS
+bS
+bS
+bS
 ae
 cq
 cI
@@ -1446,14 +1445,14 @@ de
 ae
 Sx
 ae
-aC
-aC
+bS
+bS
 aE
 "}
 (11,1,1) = {"
 aa
 aE
-aC
+bS
 ad
 ad
 ad
@@ -1466,10 +1465,10 @@ ae
 aa
 aa
 aa
-aC
-aC
-aC
-aC
+bS
+bS
+bS
+bS
 aa
 aa
 aa
@@ -1493,7 +1492,7 @@ aE
 aa
 aa
 aE
-aC
+bS
 aa
 ad
 ad
@@ -1505,24 +1504,24 @@ ae
 aa
 aa
 aa
-aC
+bS
 aa
 aa
-aC
-aa
-aa
-aa
+bS
 aa
 aa
 aa
 aa
 aa
-aC
+aa
+aa
+aa
+bS
 ae
 de
 de
 ae
-aC
+bS
 aa
 aa
 aa
@@ -1533,8 +1532,8 @@ aa
 aa
 aa
 aE
-aC
-aC
+bS
+bS
 ad
 ae
 ae
@@ -1544,10 +1543,10 @@ ae
 aa
 aa
 aa
-aC
-aC
-aC
-aC
+bS
+bS
+bS
+bS
 aa
 aa
 aa
@@ -1556,12 +1555,12 @@ aa
 aa
 aa
 aa
-aC
+bS
 cd
-ar
-ar
+Nf
+Nf
 cd
-aC
+bS
 aa
 aa
 aE
@@ -1583,24 +1582,24 @@ ae
 aa
 aa
 aa
-aC
+bS
 aa
 aa
-aC
+bS
 aa
 aa
-aC
-aC
-aC
-aC
+bS
+bS
+bS
+bS
 bX
-aC
-aC
-aC
-ar
+bS
+bS
+bS
+Nf
 cK
-aC
-aC
+bS
+bS
 aa
 aa
 aa
@@ -1630,14 +1629,14 @@ ad
 ad
 ae
 aa
-aC
+bS
 aa
-aC
+bS
 aa
-aC
+bS
 cd
-ar
-ar
+Nf
+Nf
 aa
 UA
 aa
@@ -1669,23 +1668,23 @@ bG
 bI
 ae
 aa
-aC
+bS
 aa
-aC
+bS
 aa
-aC
+bS
 ae
 cu
 cu
 ae
-aC
+bS
 aa
 aa
 aa
 aa
 "}
 (17,1,1) = {"
-aC
+bS
 ad
 ac
 ah
@@ -1708,16 +1707,16 @@ ah
 ah
 ae
 aa
-aC
+bS
 aa
-aC
+bS
 aa
-aC
+bS
 ae
 bp
 ch
 ae
-aC
+bS
 aa
 aa
 aa
@@ -1770,13 +1769,13 @@ ae
 ae
 aa
 aa
-aC
+bS
 aa
 aa
-aC
+bS
 aa
 aa
-aC
+bS
 aa
 ae
 bs
@@ -1798,24 +1797,24 @@ ah
 aj
 nb
 ae
-ar
+Nf
 aa
 "}
 (20,1,1) = {"
 aa
-aC
+bS
 aa
 aa
-aC
+bS
 aa
 aa
-aC
+bS
 aa
 aa
-aC
+bS
 aa
 aa
-aC
+bS
 aa
 ae
 bt
@@ -1848,13 +1847,13 @@ aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
-aC
+bS
 aa
 aa
-aC
+bS
 aa
 ae
 bC
@@ -1876,7 +1875,7 @@ ah
 Ge
 bC
 ae
-ar
+Nf
 aa
 "}
 (22,1,1) = {"
@@ -1981,20 +1980,20 @@ bz
 bJ
 ae
 aa
-aC
-aC
-aC
-aC
-aC
+bS
+bS
+bS
+bS
+bS
 ce
 de
 de
 ce
-aC
-aC
-aC
-aC
-aC
+bS
+bS
+bS
+bS
+bS
 "}
 (25,1,1) = {"
 aa
@@ -2020,7 +2019,7 @@ ae
 ae
 ae
 aa
-aC
+bS
 aa
 aa
 aa
@@ -2033,7 +2032,7 @@ aa
 aa
 aa
 aa
-aC
+bS
 "}
 (26,1,1) = {"
 aa
@@ -2050,7 +2049,7 @@ aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 ae
@@ -2089,7 +2088,7 @@ aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 ad
@@ -2128,7 +2127,7 @@ aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 ad
@@ -2162,12 +2161,12 @@ aK
 aA
 aJ
 ae
-aC
-aC
-aC
-aC
-aC
-aC
+bS
+bS
+bS
+bS
+bS
+bS
 aa
 aa
 ad
@@ -2206,7 +2205,7 @@ aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 ad
@@ -2235,17 +2234,17 @@ aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 ae
@@ -2274,11 +2273,11 @@ aa
 aa
 aE
 aa
-aC
+bS
 aa
 aa
 aa
-aC
+bS
 aa
 aa
 aa
@@ -2389,8 +2388,8 @@ aa
 (35,1,1) = {"
 aa
 aE
-aC
-aC
+bS
+bS
 ae
 aq
 aB
@@ -2445,9 +2444,9 @@ ae
 ae
 aa
 aa
-aC
+bS
 aa
-aC
+bS
 aa
 aa
 aa
@@ -2509,9 +2508,9 @@ aa
 aE
 aa
 aa
-aC
+bS
 aa
-aC
+bS
 aa
 aa
 aa

@@ -475,11 +475,13 @@ var/global/list/admin_verbs_hideable = list(
 /client/proc/unban_panel()
 	set name = "Unban Panel"
 	set category = "Admin"
-	if(holder)
-		if(config.ban_legacy_system)
-			holder.unbanpanel()
-		else
-			holder.DB_ban_panel()
+	if(!holder)
+		return
+	if(!config.sql_enabled)
+		to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
+		return
+		
+	holder.DB_ban_panel()
 	feedback_add_details("admin_verb","UBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -549,7 +551,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(!warned_ckey || !reason)
 		return
 
-	notes_add(warned_ckey, "ADMINWARN: " + reason, src, secret = 0)
+	notes_add(warned_ckey, "ADMINWARN: " + reason, admin_key = src.ckey, secret = 0)
 
 	var/client/C = directory[warned_ckey]
 	reason = sanitize(reason)

@@ -80,15 +80,15 @@
 /turf/simulated/floor,
 /area/space_structures/iss)
 "an" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ao" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ap" = (
 /obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ar" = (
 /obj/structure/filingcabinet/filingcabinet,
