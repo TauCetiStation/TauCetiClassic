@@ -696,24 +696,24 @@ var/global/list/death_alarm_stealth_areas = list(
 	desc = "Экспериментальный имплант, воздействующий на нервную систему человека и побуждающий его к более активным, волевым действиям."
 	implant_trait = TRAIT_WILLPOWER_IMPLANT
 
-/obj/item/weapon/implant/willpower/inject(mob/living/carbon/C, def_zone)
-	. = ..()
+/obj/item/weapon/implant/willpower/implanted(mob/living/carbon/C, def_zone)
 	if(!ishuman(C))
-		return
+		return FALSE
 	var/mob/living/carbon/human/H = C
 	if(HAS_TRAIT(H, implant_trait) && !H.species.flags[NO_WILLPOWER])
 		H.visible_message("<span class='warning'>Из ушей [H] вырывается поток крови и мозговой жидкости!</span>", "<span class='warning'>За вашими глазами нарастает невероятное давление! КАК БОЛЬНО!!!</span>")
 		var/obj/item/organ/internal/brain/IO = H.organs_by_name[O_BRAIN]
 		qdel(IO)
 		new /obj/effect/gibspawner/generic(H.loc)
-		return
+		return TRUE
 
 	if(H.mind)
 		H.mind.willpower_amount++
 		to_chat(H, "<span class='bold nicegreen'>Вы чувствуете волевой порыв!</span>")
+		return TRUE
 
 /obj/item/weapon/implant/willpower/implant_removal(mob/host)
 	. = ..()
-	if(host.mind)
+	if(host && host.mind)
 		host.mind.willpower_amount--
 		to_chat(host, "<span class='boldwarning'>Ваша воля увядает...</span>")
