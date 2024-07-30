@@ -24022,10 +24022,10 @@
 	},
 /area/custom/ninjaspawn)
 "dHO" = (
-/obj/random/scrap,
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
+/obj/machinery/computer/trader_shuttle{
+	dir = 8
 	},
+/turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/velocity)
 "dIe" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -28947,6 +28947,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"mpy" = (
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "mqb" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -30044,12 +30050,6 @@
 	icon_state = "barber"
 	},
 /area/velocity/locker)
-"ouW" = (
-/obj/machinery/computer/trader_shuttle{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/trader/velocity)
 "ovb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "15,7"
@@ -30501,6 +30501,10 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"psz" = (
+/obj/item/weapon/cigbutt,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "ptb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "8,23";
@@ -72552,7 +72556,7 @@ ttw
 wmo
 uLg
 nKI
-ttw
+psz
 wmo
 vDf
 qmI
@@ -73576,12 +73580,12 @@ ttw
 wmo
 vfa
 ssP
-ouW
+dHO
 gVc
 vfa
-dHO
-ttw
 wmo
+ttw
+mpy
 eDT
 qmI
 aaM
