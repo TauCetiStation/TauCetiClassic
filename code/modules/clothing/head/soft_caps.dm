@@ -32,7 +32,6 @@
 	item_state_world = initial(S.item_state_world)
 	cap_color = initial(S.cap_color)
 	update_world_icon()
-	update_icon()
 
 /obj/item/clothing/head/soft/attack_self(mob/living/carbon/human/user)
 	flipped = !flipped
