@@ -586,7 +586,7 @@
 	var/spawnloc = pick_spawn_location()
 
 	var/datum/faction/heist/faction = create_uniq_faction(/datum/faction/heist)
-	var/mob/living/carbon/human/vox/event/vox = new(spawnloc)
+	var/mob/living/carbon/human/vox/event/vox = new()
 
 	vox.key = spectator.client.key
 	vox.forceMove(spawnloc)
