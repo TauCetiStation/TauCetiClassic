@@ -497,9 +497,9 @@
 			if(current_jetpack) // if you have a jetpack, show the internal tank pressure
 				stat("Internal Atmosphere Info: [current_jetpack.name]")
 				stat("Tank Pressure: [current_jetpack.air_contents.return_pressure()]")
-		if(locate(/obj/item/device/gps/cyborg))
-			var/turf/T = get_turf(src)
-			stat(null, "GPS: [COORD(T)]")
+			if(locate(/obj/item/device/gps/cyborg) in module.modules)
+				var/turf/T = get_turf(src)
+				stat(null, "GPS: [COORD(T)]")
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 

@@ -98,7 +98,7 @@
 	products = list(
 		/obj/item/weapon/reagent_containers/pill/happy = 14,
 		/obj/item/weapon/reagent_containers/pill/zoom = 14,
-		/obj/item/weapon/reagent_containers/pill/LSD = 14,
+		/obj/item/weapon/reagent_containers/pill/hallucination_pills = 14,
 		/obj/item/weapon/reagent_containers/syringe = 12,
 		/obj/item/weapon/reagent_containers/glass/bottle/zombiepowder = 4,
 		/obj/item/weapon/reagent_containers/glass/bottle/jenkem = 4,

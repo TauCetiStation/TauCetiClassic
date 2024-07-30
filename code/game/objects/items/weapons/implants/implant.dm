@@ -513,6 +513,8 @@ var/global/list/death_alarm_stealth_areas = list(
 /obj/item/weapon/implant/death_alarm/implanted(mob/source)
 	mobname = source.real_name
 	START_PROCESSING(SSobj, src)
+	if(!prob(reliability))
+		malfunction = MALFUNCTION_PERMANENT
 	return 1
 
 /obj/item/weapon/implant/death_alarm/coordinates

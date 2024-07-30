@@ -125,7 +125,7 @@ var/global/lastMove = 0
 
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)
-	SSshuttle.undock_act(/area/velocity, "velocity_1")
+	SSshuttle.undock_act(/area/velocity/exit, "velocity_1")
 	SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
 	SSshuttle.undock_act(A)
 	// Sending message only on EXODUS
@@ -138,7 +138,7 @@ var/global/lastMove = 0
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
 	switch(arrival)
 		if(0) //Velocity
-			SSshuttle.dock_act(/area/velocity, "velocity_1")
+			SSshuttle.dock_act(/area/velocity/exit, "velocity_1")
 			SSshuttle.dock_act(A)
 
 		if(2) //Station
@@ -174,7 +174,7 @@ var/global/lastMove = 0
 		else
 			to_chat(usr, "<span class='notice'>Шаттл уже движется или состыкован со станцией.</span>")
 
-		usr.client.guard.velocity_console = TRUE
+		usr.client.prefs.guard.velocity_console = TRUE
 
 /obj/machinery/computer/arrival_shuttle/dock
 	name = "Arrival Shuttle Communication Console"
@@ -204,7 +204,7 @@ var/global/lastMove = 0
 		else
 			to_chat(usr, "<span class='notice'>Шаттл уже движется или состыкован со станцией.</span>")
 
-		usr.client.guard.velocity_console_dock = TRUE
+		usr.client.prefs.guard.velocity_console_dock = TRUE
 
 /obj/machinery/computer/arrival_shuttle/proc/radio_message_via_ai(msg)
 	if (!msg)

@@ -53,15 +53,17 @@
 /area/space_structures/ghostship)
 "ai" = (
 /obj/machinery/door/airlock/external,
-/turf/simulated/shuttle/plating,
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
+	},
 /area/space_structures/ghostship)
 "aj" = (
 /obj/machinery/computer/pod{
 	id = "spacebattlepod";
 	name = "Hull Door Control"
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/ghostship)
 "ak" = (
@@ -122,7 +124,7 @@
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
 	name = "power storage unit"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "as" = (
 /obj/structure/grille,
@@ -143,7 +145,7 @@
 /area/space_structures/ghostship)
 "av" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
 	icon_state = "diagonalWall3"
 	},
@@ -161,7 +163,7 @@
 /area/space_structures/ghostship)
 "ay" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
 	dir = 4;
 	icon_state = "diagonalWall3"
@@ -178,7 +180,7 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "aB" = (
 /obj/structure/artilleryplaceholder{
@@ -198,7 +200,7 @@
 /area/space_structures/ghostship)
 "aE" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "aF" = (
 /turf/simulated/floor/airless,
@@ -235,7 +237,9 @@
 	id = "spacebattlepod";
 	name = "Front Hull Door"
 	},
-/turf/simulated/shuttle/plating,
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
+	},
 /area/space_structures/ghostship)
 "aM" = (
 /turf/simulated/floor/airless,
@@ -308,10 +312,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "engine"
-	},
-/turf/environment/space,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/ghostship)
 "aY" = (
 /turf/simulated/shuttle/wall{
@@ -326,7 +327,7 @@
 	pixel_y = 5
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "ba" = (
 /obj/machinery/telecomms/relay,
@@ -341,16 +342,16 @@
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "bc" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/ghostship)
 "bd" = (
 /obj/structure/stool/bed/chair{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/ghostship)
 "be" = (
@@ -363,7 +364,7 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "bg" = (
 /obj/machinery/power/emitter,
@@ -373,8 +374,8 @@
 /obj/structure/stool/bed/chair{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
+/turf/simulated/floor/plating/airless{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/ghostship)
 "bm" = (
@@ -463,7 +464,7 @@
 "bz" = (
 /obj/item/stack/sheet/metal,
 /obj/item/ammo_casing/a12mm,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "bA" = (
 /obj/item/stack/cable_coil,
@@ -477,7 +478,7 @@
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "bH" = (
-/mob/living/simple_animal/hostile/syndicate/ranged/space/elite,
+/obj/effect/spawner/mob_spawn/syndicate_ranged_elite,
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "bJ" = (
@@ -486,7 +487,8 @@
 	},
 /area/space_structures/ghostship)
 "bK" = (
-/turf/simulated/floor,
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/ghostship)
 "bN" = (
 /obj/machinery/light_construct,
@@ -507,7 +509,7 @@
 "bR" = (
 /obj/item/stack/sheet/metal,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "bT" = (
 /obj/machinery/light_construct{
@@ -597,7 +599,7 @@
 "ch" = (
 /obj/structure/closet/toolcloset,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "ci" = (
 /turf/simulated/floor/plating/airless,
@@ -628,12 +630,12 @@
 /area/space_structures/ghostship)
 "cm" = (
 /obj/structure/table/reinforced,
-/turf/simulated/floor,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/ghostship)
 "cn" = (
 /obj/structure/scrap/vehicle,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/ghostship)
 "co" = (
 /turf/simulated/shuttle/wall{
@@ -650,7 +652,7 @@
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "cr" = (
-/mob/living/simple_animal/hostile/viscerator,
+/obj/effect/spawner/mob_spawn/viscerator,
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "ct" = (
@@ -658,7 +660,7 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "cu" = (
 /obj/structure/lattice,
@@ -817,12 +819,12 @@
 "dd" = (
 /obj/machinery/door/unpowered/shuttle/officer,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "dg" = (
 /obj/structure/scrap/guns,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "dh" = (
 /obj/structure/artilleryplaceholder{
@@ -947,6 +949,9 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/ghostship)
+"Ek" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Ft" = (
 /obj/structure/artilleryplaceholder{
 	icon_state = "35"
@@ -972,6 +977,11 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/ghostship)
+"IZ" = (
+/obj/structure/scrap/vehicle,
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
 "Kx" = (
 /obj/structure/artilleryplaceholder{
 	icon_state = "23"
@@ -993,11 +1003,11 @@
 "NE" = (
 /obj/item/stack/rods,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "NH" = (
 /obj/machinery/computer/monitor,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "Pv" = (
 /obj/structure/artilleryplaceholder{
@@ -1011,6 +1021,11 @@
 	icon_state = "burst_r"
 	},
 /turf/environment/space,
+/area/space_structures/ghostship)
+"QS" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
 /area/space_structures/ghostship)
 "SG" = (
 /obj/machinery/telecomms/server,
@@ -1128,8 +1143,8 @@ aa
 aa
 aa
 aa
-cl
-cl
+aX
+aX
 aa
 aa
 aa
@@ -1153,14 +1168,14 @@ aa
 aC
 aG
 aa
-cl
+aX
 aa
 bP
 aa
 bP
 bP
 aa
-cm
+bp
 NH
 YP
 ci
@@ -1187,8 +1202,8 @@ aa
 aa
 bq
 bA
-cl
-aa
+aX
+Ek
 aC
 aX
 aa
@@ -1251,7 +1266,7 @@ cf
 cn
 aa
 aC
-cm
+bp
 aC
 ar
 aE
@@ -1259,7 +1274,7 @@ aa
 aa
 aa
 cX
-cn
+IZ
 aa
 aa
 aH
@@ -1314,12 +1329,12 @@ aC
 aa
 aa
 cE
-aE
+bK
 bg
 cX
 aa
 UP
-bK
+aJ
 bV
 aE
 aa
@@ -1508,7 +1523,7 @@ nr
 aE
 aa
 bq
-cn
+IZ
 aE
 bR
 aJ
@@ -1789,7 +1804,7 @@ be
 be
 ay
 aE
-bK
+aJ
 dv
 aa
 aa
@@ -1969,7 +1984,7 @@ cv
 aJ
 aJ
 aJ
-dv
+aT
 aa
 "}
 (30,1,1) = {"
@@ -1995,13 +2010,13 @@ dl
 cx
 aa
 aa
-ds
+dv
 bO
 bO
 aJ
 bO
 bO
-bW
+dv
 aa
 "}
 (31,1,1) = {"
@@ -2027,13 +2042,13 @@ dl
 dv
 aa
 aa
-as
+dv
 ax
 ax
 bp
 ax
 ax
-as
+dv
 aa
 "}
 (32,1,1) = {"
@@ -2059,13 +2074,13 @@ dl
 dv
 aa
 aa
-as
-as
-as
-as
-as
-as
-as
+QS
+bo
+bo
+bo
+bo
+bo
+bm
 aa
 "}
 (33,1,1) = {"
