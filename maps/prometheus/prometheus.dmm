@@ -68261,9 +68261,7 @@
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "qeY" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
+/obj/machinery/shieldwallgen,
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
 "qfb" = (
