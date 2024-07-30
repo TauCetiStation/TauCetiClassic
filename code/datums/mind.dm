@@ -733,6 +733,9 @@
 		names += WE.name
 
 	var/chosen_willpower_effect = tgui_input_list(H,"Вы собираете волю в кулак...","ВОЛЯ", names)
+	if(!chosen_willpower_effect)
+		return
+
 	for(var/datum/willpower_effect/selection in willpower_effects)
 		if(selection.name == chosen_willpower_effect)
 			selected_effect = selection
