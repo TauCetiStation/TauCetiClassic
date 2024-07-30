@@ -1,6 +1,6 @@
 
 /obj/machinery/computer/trader_shuttle
-	name = "Narcissus Shuttle Console"
+	name = "Shuttle Console"
 	icon_state = "shuttle"
 	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	resistance_flags = FULL_INDESTRUCTIBLE
@@ -74,4 +74,4 @@
 	else
 		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "trader_shuttle")
 	SSshuttle.dock_act(dest_location, "trader_shuttle")
-
+	docked = TRUE

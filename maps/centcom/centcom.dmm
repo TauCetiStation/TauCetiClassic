@@ -30044,6 +30044,12 @@
 	icon_state = "barber"
 	},
 /area/velocity/locker)
+"ouW" = (
+/obj/machinery/computer/trader_shuttle{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "ovb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "15,7"
@@ -73570,7 +73576,7 @@ ttw
 wmo
 vfa
 ssP
-ttw
+ouW
 gVc
 vfa
 dHO
