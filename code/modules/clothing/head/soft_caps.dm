@@ -33,18 +33,23 @@
 	item_state_world = initial(S.item_state_world)
 	cap_color = initial(S.cap_color)
 	update_world_icon()
+	update_icon()
 
 /obj/item/clothing/head/soft/attack_self(mob/living/carbon/human/user)
 	flipped = !flipped
 	if(flipped)
 		icon_state = "[cap_color]soft_flipped"
+		item_state_inventory = "[cap_color]soft_flipped"
 		to_chat(user, "You flip the hat backwards.")
 	else
 		icon_state = "[cap_color]soft"
+		item_state_inventory = "[cap_color]soft"
 		to_chat(user, "You flip the hat back in normal position.")
 
+	update_world_icon()
 	update_inv_mob()
 	update_item_actions()
+
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"
