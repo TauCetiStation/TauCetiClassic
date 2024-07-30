@@ -9,6 +9,18 @@
 	flags = NODECONSTRUCT
 	material = null
 
+/obj/structure/stool/bed/nest/atom_init()
+	. = ..()
+	START_PROCESSING(SSmobs, src)
+
+/obj/structure/stool/bed/nest/process(mob/living/buckling_mob)
+
+	buckling_mob.heal_bodypart_damage(35, 10)
+	buckling_mob.adjustToxLoss(-10)
+	buckling_mob.adjustOxyLoss(-20)
+	buckling_mob.adjustHalLoss(-25)
+	buckling_mob.adjustFireLoss(-20)
+
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(!buckled_mob || user.is_busy())
 		return
@@ -61,7 +73,3 @@
 			playsound(loc, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
-
-/obj/structure/stool/bed/nest/post_buckle_mob(mob/living/buckling_mob)
-	. = ..()
-	buckling_mob.reagents.add_reagent("xenojelly_n", 30)
