@@ -13,12 +13,13 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/stool/bed/nest/process(mob/living/buckling_mob)
-	buckling_mob.heal_bodypart_damage(35, 10)
-	buckling_mob.adjustToxLoss(-10)
-	buckling_mob.adjustOxyLoss(-20)
-	buckling_mob.adjustHalLoss(-25)
-	buckling_mob.adjustFireLoss(-20)
+/obj/structure/stool/bed/nest/process()
+	if(!buckled_mob) return PROCESS_KILL
+	buckled_mob.heal_bodypart_damage(35, 10)
+	buckled_mob.adjustToxLoss(-10)
+	buckled_mob.adjustOxyLoss(-20)
+	buckled_mob.adjustHalLoss(-25)
+	buckled_mob.adjustFireLoss(-20)
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(!buckled_mob || user.is_busy())
