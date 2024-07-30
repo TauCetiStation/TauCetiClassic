@@ -14,7 +14,8 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/stool/bed/nest/process()
-	if(!buckled_mob) return PROCESS_KILL
+	if(!buckled_mob) 
+		return PROCESS_KILL
 	buckled_mob.heal_bodypart_damage(5, 5)
 	buckled_mob.adjustToxLoss(-5)
 	buckled_mob.adjustOxyLoss(-10)
