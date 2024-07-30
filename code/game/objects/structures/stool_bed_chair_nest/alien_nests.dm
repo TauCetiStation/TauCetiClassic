@@ -11,10 +11,9 @@
 
 /obj/structure/stool/bed/nest/atom_init()
 	. = ..()
-	START_PROCESSING(SSmobs, src)
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/stool/bed/nest/process(mob/living/buckling_mob)
-
 	buckling_mob.heal_bodypart_damage(35, 10)
 	buckling_mob.adjustToxLoss(-10)
 	buckling_mob.adjustOxyLoss(-20)
