@@ -118,7 +118,7 @@
 	if(!prob(reliability))
 		max_storage_space /= 2
 
-/obj/item/weapon/storage/bag/ore/holding/set_prototype_qualities(rel_val=100, mark=0)
+/obj/item/weapon/storage/bag/holding/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
 		max_storage_space += 25 * (mark - 1)
 	if(!prob(reliability))

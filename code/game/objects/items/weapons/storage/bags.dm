@@ -192,8 +192,10 @@
 //          Bluespace Satchel
 // -----------------------------
 
-/obj/item/weapon/storage/bag/ore/holding
+/obj/item/weapon/storage/bag/holding
 	name = "Bluespace Satchel"
+	icon = 'icons/obj/mining.dmi'
+	w_class = SIZE_SMALL
 	desc = "A revolution in convenience, this satchel allows for huge amounts of plant, ore, organ storage. It's been outfitted with anti-malfunction safety measures."
 	max_storage_space = 300
 	origin_tech = "bluespace=4;materials=3;engineering=3"

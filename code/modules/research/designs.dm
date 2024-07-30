@@ -2255,7 +2255,7 @@ other types of metals and chemistry for reagents).
 	id = "BluespaceSatchel_holding"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 500) //quite cheap, for more convenience
-	build_path = /obj/item/weapon/storage/bag/ore/holding
+	build_path = /obj/item/weapon/storage/bag/holding
 	category = list("Tools")
 
 /////////////////////////////////////////
