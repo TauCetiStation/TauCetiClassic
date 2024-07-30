@@ -21,18 +21,18 @@
 	item_state_world = "[cap_color]soft_world"
 
 /obj/item/clothing/head/soft/wash_act(w_color)
-    . = ..()
-    var/obj/item/clothing/dye_type = get_dye_type(w_color)
-    if(!dye_type)
-        return
+	. = ..()
+	var/obj/item/clothing/dye_type = get_dye_type(w_color)
+	if(!dye_type)
+		return
 
-    var/obj/item/clothing/head/soft/S = dye_type
+	var/obj/item/clothing/head/soft/S = dye_type
 
-    icon_state = "[initial(S.icon_state)][flipped ? "_flipped" : ""]"
-    item_state_inventory = "[initial(S.icon_state)][flipped ? "_flipped" : ""]"
-    item_state_world = initial(S.item_state_world)
-    cap_color = initial(S.cap_color)
-    update_world_icon()
+	icon_state = "[initial(S.icon_state)][flipped ? "_flipped" : ""]"
+	item_state_inventory = "[initial(S.icon_state)][flipped ? "_flipped" : ""]"
+	item_state_world = initial(S.item_state_world)
+	cap_color = initial(S.cap_color)
+	update_world_icon()
 
 /obj/item/clothing/head/soft/attack_self(mob/living/carbon/human/user)
 	flipped = !flipped
