@@ -15,11 +15,11 @@
 
 /obj/structure/stool/bed/nest/process()
 	if(!buckled_mob) return PROCESS_KILL
-	buckled_mob.heal_bodypart_damage(35, 10)
-	buckled_mob.adjustToxLoss(-10)
-	buckled_mob.adjustOxyLoss(-20)
-	buckled_mob.adjustHalLoss(-25)
-	buckled_mob.adjustFireLoss(-20)
+	buckled_mob.heal_bodypart_damage(5, 5)
+	buckled_mob.adjustToxLoss(-5)
+	buckled_mob.adjustOxyLoss(-10)
+	buckled_mob.adjustHalLoss(-10)
+	buckled_mob.adjustFireLoss(-10)
 
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(!buckled_mob || user.is_busy())
