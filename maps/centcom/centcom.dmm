@@ -2094,16 +2094,12 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "afG" = (
-/obj/effect/landmark/space_traders/product,
+/turf/environment/space,
+/area/shuttle/trader/transit)
+"afH" = (
+/obj/random/vending/cola,
 /turf/unsimulated/floor{
 	dir = 9;
-	icon_state = "brown"
-	},
-/area/velocity)
-"afH" = (
-/obj/effect/landmark/space_traders/product,
-/turf/unsimulated/floor{
-	dir = 1;
 	icon_state = "brown"
 	},
 /area/velocity)
@@ -11084,13 +11080,9 @@
 /turf/unsimulated/floor,
 /area/velocity)
 "ayS" = (
-/obj/structure/stool/bed/chair/metal/yellow,
-/obj/effect/landmark/space_traders/spawner{
-	layer = 5
-	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "brown"
+	dir = 4;
+	icon_state = "browncorner"
 	},
 /area/velocity)
 "ayT" = (
@@ -13831,15 +13823,10 @@
 	},
 /area/velocity)
 "aEY" = (
-/obj/effect/landmark/space_traders/product,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/vending/cigarette,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "brown"
 	},
 /area/velocity)
 "aEZ" = (
@@ -14137,27 +14124,27 @@
 	},
 /area/velocity)
 "aFH" = (
-/obj/effect/landmark/space_traders/product,
+/obj/structure/stool/bed/chair/metal/yellow,
+/obj/effect/landmark/space_traders/spawner{
+	layer = 5
+	},
 /turf/unsimulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "brown"
 	},
 /area/velocity)
 "aFI" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_y = -32
+/obj/structure/stool/bed/chair/metal/yellow,
+/obj/effect/landmark/space_traders/spawner{
+	layer = 5
 	},
 /turf/unsimulated/floor{
-	dir = 10;
+	dir = 5;
 	icon_state = "brown"
 	},
 /area/velocity)
 "aFJ" = (
-/obj/effect/landmark/space_traders/product,
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -14165,13 +14152,13 @@
 /area/velocity)
 "aFK" = (
 /obj/machinery/door/airlock/external{
-	dock_tag = "velocity_trader_dock";
-	locked = 1;
-	name = "Trader Dock Airlock";
-	req_access = list(74)
+	name = "Trader Dock Airlock"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
 	},
 /turf/unsimulated/floor{
-	name = "plating"
+	icon_state = "engine"
 	},
 /area/velocity)
 "aFL" = (
@@ -14289,55 +14276,39 @@
 	},
 /area/space)
 "aFV" = (
-/obj/structure/object_wall/standart{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/effect/landmark/space_traders/product,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/turf/environment/space,
-/area/shuttle/administration/centcom)
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/velocity)
 "aFW" = (
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
 /area/centcom/specops)
-"aFX" = (
-/obj/structure/object_wall/standart{
-	icon_state = "wall3"
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
 "aFY" = (
-/obj/machinery/door/airlock/external,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "traders blast";
-	name = "Blast Doors";
-	opacity = 0
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
-"aFZ" = (
-/obj/structure/object_wall/standart{
+/obj/effect/decal/turf_decal{
 	dir = 1;
-	icon_state = "diagonalWall3"
+	icon_state = "warn"
 	},
-/turf/environment/space,
-/area/shuttle/administration/centcom)
-"aGa" = (
-/obj/structure/object_wall/standart{
-	icon_state = "wall3"
+/turf/unsimulated/floor{
+	icon_state = "engine"
 	},
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
-"aGb" = (
-/obj/structure/table/reinforced,
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
+/area/velocity)
+"aFZ" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/velocity)
 "aGc" = (
 /obj/effect/landmark/blockway,
 /obj/structure/flora/tree/pine{
@@ -14553,12 +14524,21 @@
 	},
 /area/shuttle/syndicate/start)
 "aGy" = (
-/obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "traders blast";
+	name = "Blast Doors";
+	opacity = 0
 	},
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
+/obj/machinery/door/airlock/highsecurity{
+	dock_tag = "trader_shuttle";
+	name = "Space Traders Shuttle"
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "aGz" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -14568,6 +14548,48 @@
 	},
 /area/centcom/evac)
 "aGA" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/shuttle/trader/velocity)
+"aGB" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/velocity)
+"aGC" = (
+/obj/structure/table/reinforced,
+/obj/item/device/tagger/shop{
+	pixel_y = 4
+	},
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
+"aGD" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "trader_shuttle";
+	name = "Trader Dock Airlock";
+	req_access = list(74)
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/velocity)
+"aGE" = (
 /obj/structure/table/reinforced/stall,
 /obj/item/device/cardpay{
 	dir = 8;
@@ -14575,41 +14597,14 @@
 	pixel_y = 8
 	},
 /turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
-"aGB" = (
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
-"aGC" = (
-/obj/structure/table/reinforced,
-/obj/item/device/tagger/shop,
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
-"aGD" = (
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
-"aGE" = (
-/obj/structure/table/reinforced/stall,
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
-"aGF" = (
-/obj/structure/displaycase,
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
+/area/shuttle/trader/velocity)
 "aGG" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
 	icon_state = "burst_l"
 	},
 /turf/environment/space,
-/area/shuttle/administration/centcom)
+/area/shuttle/trader/velocity)
 "aGH" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 4
@@ -14702,15 +14697,12 @@
 	},
 /area/centcom/specops)
 "aGR" = (
-/obj/structure/shuttle/engine/heater{
+/obj/structure/object_wall/standart{
 	dir = 8;
-	icon_state = "heater1"
+	icon_state = "diagonalWall3"
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
+/turf/environment/space,
+/area/shuttle/trader/velocity)
 "aGS" = (
 /obj/effect/overlay/tophat_portal{
 	pixel_y = -32
@@ -14722,35 +14714,13 @@
 	icon_state = "wood"
 	},
 /area/custom/tophat)
-"aGT" = (
-/obj/structure/stool/bed/chair/schair/wagon/yellow{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
-"aGU" = (
-/obj/structure/table/reinforced/stall,
-/obj/item/weapon/bell{
-	pixel_y = 5
-	},
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
 "aGV" = (
-/obj/structure/displaycase,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/filingcabinet/chestdrawer/black,
 /turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
-"aGW" = (
-/obj/structure/table/reinforced,
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
-"aGX" = (
-/obj/machinery/light,
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
+/area/shuttle/trader/velocity)
 "aHb" = (
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
@@ -22485,12 +22455,6 @@
 	icon_state = "grimy"
 	},
 /area/centcom/specops)
-"btn" = (
-/obj/structure/stool/bed/chair/schair/wagon/blue{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
 "bub" = (
 /obj/structure/table/woodentable{
 	dir = 5
@@ -23123,6 +23087,18 @@
 	name = "plating"
 	},
 /area/velocity)
+"coE" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "heater1"
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "cpb" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/eight,
@@ -23492,12 +23468,6 @@
 	icon_state = "wood"
 	},
 /area/velocity)
-"cRq" = (
-/obj/structure/object_wall/standart{
-	icon_state = "diagonalWall3"
-	},
-/turf/environment/space,
-/area/shuttle/administration/centcom)
 "cRH" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -23986,6 +23956,14 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"dCo" = (
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "dDb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -24043,6 +24021,12 @@
 	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
+"dHO" = (
+/obj/random/scrap,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "dIe" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -24141,26 +24125,6 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
-"dQw" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray"
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "traders blast";
-	name = "Blast Doors";
-	opacity = 0
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
 "dRb" = (
 /obj/machinery/flasher{
 	id = "velocity_cell4";
@@ -24349,6 +24313,14 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"eeA" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "efb" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "velocity_12"
@@ -24450,6 +24422,15 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"enM" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "eob" = (
 /obj/machinery/door/airlock/glass,
 /turf/simulated/shuttle/floor{
@@ -24467,15 +24448,6 @@
 	},
 /turf/environment/space,
 /area/velocity/monorailwagon)
-"epx" = (
-/obj/structure/rack,
-/obj/item/device/tagger/shop{
-	pixel_y = 4
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
 "erb" = (
 /obj/structure/sign/mark{
 	icon_state = "b4"
@@ -24507,7 +24479,7 @@
 	icon_state = "burst_r"
 	},
 /turf/environment/space,
-/area/shuttle/administration/centcom)
+/area/shuttle/trader/velocity)
 "evb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Lunar Software";
@@ -24616,6 +24588,14 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"eDT" = (
+/obj/structure/closet/crate,
+/obj/random/tools/tech_supply/guaranteed,
+/obj/random/tools/tech_supply/guaranteed,
+/obj/random/tools/tech_supply/guaranteed,
+/obj/item/device/tagger/shop,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "eEb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 1;
@@ -25024,6 +25004,10 @@
 	},
 /turf/environment/space,
 /area/shuttle/officer/velocity)
+"fnF" = (
+/obj/structure/displaycase,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "fob" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -25243,6 +25227,26 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"fKb" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "traders blast";
+	name = "Blast Doors";
+	opacity = 0
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "fLb" = (
 /obj/machinery/computer/specops_shuttle,
 /obj/machinery/light/small{
@@ -25926,6 +25930,31 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"gKl" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "traders blast";
+	name = "Blast Doors";
+	opacity = 0
+	},
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
+"gKI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/rack_parts,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "gLb" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -25944,6 +25973,12 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"gLU" = (
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "gMb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -26055,6 +26090,15 @@
 	icon_state = "vaultfull"
 	},
 /area/centcom/specops)
+"gVc" = (
+/obj/structure/table/reinforced,
+/obj/item/toy/plushie/space_whale{
+	pixel_y = 4
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "gWb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/gun/energy,
@@ -26346,11 +26390,12 @@
 /turf/environment/space,
 /area/centcom/evac)
 "huU" = (
-/obj/structure/rack,
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
+/obj/structure/table/reinforced/stall,
+/obj/item/weapon/bell{
+	pixel_y = 5
 	},
-/area/shuttle/administration/centcom)
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "hwb" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light{
@@ -26624,6 +26669,13 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"hXy" = (
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/shuttle/trader/velocity)
 "hYb" = (
 /obj/structure/stool/bed/chair/schair/wagon/red{
 	dir = 1
@@ -26745,6 +26797,12 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"imk" = (
+/obj/structure/object_wall/standart{
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/shuttle/trader/velocity)
 "inb" = (
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
@@ -27010,6 +27068,15 @@
 	icon_state = "cafeteria"
 	},
 /area/centcom/living)
+"iSq" = (
+/obj/structure/stool/bed/chair/schair/wagon/yellow{
+	dir = 1
+	},
+/obj/machinery/light/small,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "iTb" = (
 /obj/structure/stool/bed/chair/metal,
 /turf/unsimulated/floor{
@@ -27116,10 +27183,6 @@
 	icon_state = "white"
 	},
 /area/centcom/holding)
-"jam" = (
-/obj/machinery/door/airlock/hatch,
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
 "jaA" = (
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 4
@@ -27191,6 +27254,10 @@
 	icon_state = "darkblue"
 	},
 /area/centcom/control)
+"jgn" = (
+/obj/item/weapon/flora/random,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "jhb" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -28335,12 +28402,6 @@
 	icon_state = "bcircuitoff"
 	},
 /area/custom/syndicate_mothership/control)
-"lmo" = (
-/obj/machinery/light/small,
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
 "lnb" = (
 /obj/structure/ore_box,
 /turf/unsimulated/floor{
@@ -28446,6 +28507,12 @@
 	icon_state = "brown"
 	},
 /area/centcom/bar)
+"lvh" = (
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/random/foods/donuts,
+/obj/random/foods/drink_can,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "lwb" = (
 /obj/machinery/computer/arcade,
 /obj/machinery/light,
@@ -28454,6 +28521,14 @@
 	icon_state = "brown"
 	},
 /area/centcom/bar)
+"lxt" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/cardboard,
+/obj/item/stack/sheet/cardboard,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "lyb" = (
 /obj/machinery/gateway{
 	dir = 4
@@ -28889,6 +28964,12 @@
 	icon_state = "vaultfull"
 	},
 /area/centcom/tdome)
+"mrv" = (
+/obj/structure/stool/bed/chair/schair/wagon/blue{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "msb" = (
 /obj/machinery/light/small,
 /turf/unsimulated/floor{
@@ -29258,6 +29339,16 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"ngk" = (
+/obj/structure/closet/trader_stash{
+	pixel_y = 32
+	},
+/obj/effect/decal/cleanable/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "nhb" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -29318,6 +29409,12 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
+"nmr" = (
+/obj/machinery/photocopier,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "nnb" = (
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned,
 /turf/unsimulated/floor{
@@ -29597,9 +29694,11 @@
 	},
 /area/velocity)
 "nKI" = (
-/obj/machinery/light,
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "nLb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	name = "\improper It's in the Hat!";
@@ -30012,11 +30111,14 @@
 	},
 /area/centcom/evac)
 "oDt" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Warehouse"
+/obj/structure/closet/secure_closet{
+	name = "traders locker";
+	req_access = list(74)
 	},
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "oEb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,13"
@@ -30221,6 +30323,13 @@
 /obj/structure/window/fulltile/reinforced/indestructible,
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"pcM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/displaycase_chassis,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "pdb" = (
 /obj/structure/sign/mark{
 	icon_state = "yrt"
@@ -30235,14 +30344,6 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity/locker)
-"pdY" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
 "peb" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
@@ -30301,15 +30402,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
-"pjD" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
 "pkb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "9,25";
@@ -30678,13 +30770,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
-"qds" = (
-/obj/structure/object_wall/standart{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/turf/environment/space,
-/area/shuttle/administration/centcom)
 "qeb" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -30706,11 +30791,13 @@
 	},
 /area/centcom/evac)
 "qmI" = (
-/obj/structure/closet/secure_closet/freezer/empty,
-/obj/random/foods/donuts,
-/obj/random/foods/drink_can,
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "qnM" = (
 /obj/effect/step_trigger/thrower{
 	direction = 4;
@@ -30775,6 +30862,26 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"qLc" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/stamp/approve{
+	pixel_x = 2;
+	pixel_y = -12
+	},
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
+/obj/item/weapon/pen/red{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "qOG" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/unsimulated/floor/cult/lava,
@@ -30828,6 +30935,12 @@
 /obj/item/weapon/flora/random,
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/elite_squad)
+"rYz" = (
+/obj/structure/displaycase,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "rZp" = (
 /obj/item/portrait/captain{
 	pixel_y = -32
@@ -30917,6 +31030,11 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"spa" = (
+/obj/machinery/light,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "srT" = (
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity/locker)
@@ -30926,6 +31044,24 @@
 	opacity = 0
 	},
 /area/custom/abductor_ship)
+"ssP" = (
+/obj/structure/table/reinforced,
+/obj/machinery/windowtint{
+	id = "traders";
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/machinery/door_control{
+	id = "traders blast";
+	name = "Blast Door Control";
+	pixel_x = 4;
+	pixel_y = 3;
+	req_access = list(74)
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "sAN" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/box/donkpockets{
@@ -30979,6 +31115,15 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"sWz" = (
+/obj/structure/window/fulltile/reinforced/polarized{
+	id = "traders"
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray"
+	},
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "sXV" = (
 /obj/machinery/porta_turret/crescent,
 /obj/effect/decal/turf_decal{
@@ -31021,22 +31166,8 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "ttw" = (
-/obj/structure/table/reinforced,
-/obj/machinery/windowtint{
-	id = "traders";
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/machinery/door_control{
-	id = "traders blast";
-	name = "Blast Door Control";
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "tAz" = (
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
@@ -31045,6 +31176,26 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"tDa" = (
+/obj/machinery/light/small,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
+"tDO" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/packageWrap{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/weapon/packageWrap{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "tFF" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -31092,23 +31243,11 @@
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/elite_squad)
 "tZo" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/machinery/light,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
 	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray"
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "traders blast";
-	name = "Blast Doors";
-	opacity = 0
-	},
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
+/area/shuttle/trader/velocity)
 "tZC" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/turf_decal/green{
@@ -31205,6 +31344,13 @@
 	},
 /turf/environment/space,
 /area/space)
+"uLg" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Warehouse";
+	req_access = list(74)
+	},
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "uPk" = (
 /obj/effect/decal/turf_decal{
 	dir = 5;
@@ -31235,6 +31381,12 @@
 	icon_state = "wood"
 	},
 /area/centcom/bar)
+"uUO" = (
+/obj/structure/rack,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "uXB" = (
 /obj/machinery/door/airlock/centcom{
 	req_access = list(101)
@@ -31251,10 +31403,8 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "vak" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -31277,6 +31427,10 @@
 	icon_state = "dark"
 	},
 /area/velocity/locker)
+"vcQ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "vdY" = (
 /obj/structure/window/thin/reinforced{
 	dir = 8
@@ -31291,14 +31445,11 @@
 	},
 /area/centcom/living)
 "vfa" = (
-/obj/structure/stool/bed/chair/schair/wagon/yellow{
-	dir = 1
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
 	},
-/obj/machinery/light/small,
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "vir" = (
 /obj/structure/closet/wardrobe/grey,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -31317,6 +31468,14 @@
 	name = "plating"
 	},
 /area/velocity)
+"vkd" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "vlY" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -31346,6 +31505,15 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity/locker)
+"vpf" = (
+/obj/structure/table/reinforced,
+/obj/item/device/tagger{
+	pixel_y = 4
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "vyU" = (
 /obj/structure/table/woodentable,
 /turf/unsimulated/floor{
@@ -31359,6 +31527,13 @@
 	icon_state = "red"
 	},
 /area/custom/syndicate_mothership)
+"vDf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/weapon/table_parts/stall,
+/obj/item/weapon/table_parts/stall,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "vDJ" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/unsimulated/floor/cult/lava,
@@ -31432,14 +31607,10 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "wmo" = (
-/obj/structure/window/fulltile/reinforced/polarized{
-	id = "traders"
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
 	},
-/obj/structure/window/shuttle{
-	icon_state = "window_gray"
-	},
-/turf/simulated/shuttle/floor/erokez,
-/area/shuttle/administration/centcom)
+/area/shuttle/trader/velocity)
 "wmN" = (
 /obj/machinery/light{
 	dir = 4
@@ -31511,13 +31682,12 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "wWf" = (
-/obj/machinery/light/small{
-	dir = 1
+/obj/structure/table/reinforced,
+/obj/item/weapon/folder/brown{
+	pixel_y = 4
 	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "xdd" = (
 /obj/machinery/light{
 	dir = 4
@@ -31580,13 +31750,12 @@
 	},
 /area/centcom/bar)
 "xJu" = (
-/obj/structure/stool/bed/chair/schair/wagon/yellow{
-	dir = 1
+/obj/machinery/door/airlock/hatch{
+	name = "Space Traders Shuttle";
+	req_access = list(74)
 	},
-/turf/simulated/shuttle/floor/erokez{
-	icon_state = "floor"
-	},
-/area/shuttle/administration/centcom)
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/velocity)
 "xLi" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -31606,6 +31775,12 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"xPB" = (
+/obj/structure/table/reinforced/stall,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/velocity)
 "xTK" = (
 /obj/machinery/conveyor{
 	id = "QMLoad"
@@ -44850,7 +45025,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -45107,7 +45282,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -45352,19 +45527,19 @@ aaM
 aaM
 aaM
 aaM
+afG
+afG
+afG
+aaM
+afG
+afG
+afG
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -45607,21 +45782,21 @@ ahG
 aaM
 aaM
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -45863,22 +46038,22 @@ aaM
 ahG
 aaM
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -46120,22 +46295,22 @@ aaM
 ahG
 aaM
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -46376,23 +46551,23 @@ aaM
 aaM
 ahG
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -46633,23 +46808,23 @@ aaM
 aaM
 ahG
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -46890,23 +47065,23 @@ aaM
 aaM
 ahG
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -47147,23 +47322,23 @@ aaM
 aaM
 ahG
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -47404,23 +47579,23 @@ aaM
 aaM
 ahG
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -47661,23 +47836,23 @@ aaM
 aaM
 ahG
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -47918,23 +48093,23 @@ aaM
 aaM
 ahG
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -48175,23 +48350,23 @@ aaM
 aaM
 ahG
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -48432,23 +48607,23 @@ aaM
 aaM
 ahG
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -48689,23 +48864,23 @@ aaM
 aaM
 ahG
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
 aaM
 aaM
+afG
+afG
+afG
+afG
+afG
+afG
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -48947,22 +49122,22 @@ aaM
 ahG
 aaM
 aaM
+afG
+afG
+afG
+afG
+afG
 aaM
 aaM
 aaM
+afG
+afG
+afG
+afG
+afG
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -49204,22 +49379,22 @@ aaM
 ahG
 aaM
 aaM
+afG
+afG
+afG
+afG
+afG
 aaM
 aaM
 aaM
+afG
+afG
+afG
+afG
+afG
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -49461,22 +49636,22 @@ aaM
 ahG
 aaM
 aaM
+afG
+afG
+afG
+afG
+afG
 aaM
 aaM
 aaM
+afG
+afG
+afG
+afG
+afG
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -49719,21 +49894,21 @@ ahG
 aaM
 aaM
 aaM
+afG
+afG
+afG
+afG
 aaM
 aaM
 aaM
+afG
+afG
+afG
+afG
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -49990,7 +50165,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -50247,7 +50422,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -50504,7 +50679,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -50752,16 +50927,16 @@ ahG
 ahG
 ahG
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -70562,16 +70737,16 @@ aaM
 aaM
 aaM
 aaM
-aFV
+aaM
+aaM
+aaM
+aGR
 aGG
 eue
 aaM
 aGG
 eue
-cRq
-aaM
-aaM
-aaM
+imk
 aaM
 aaM
 aaM
@@ -70817,20 +70992,20 @@ afu
 aoo
 aaM
 aaM
-aFV
+aaM
+aaM
+aaM
+aGR
 aGG
-aFX
-aGR
+qmI
 uYl
-aGa
+coE
+vfa
+coE
 uYl
-aGR
-aFX
+qmI
 eue
-cRq
-aaM
-aaM
-aaM
+imk
 aaM
 aaM
 aaM
@@ -71073,22 +71248,22 @@ asE
 asE
 aoo
 aaM
-aFV
-aFX
+aaM
+aaM
+aaM
 aGR
-aFX
-aGa
-aFX
-aGa
-aFX
-aGa
-aFX
-aGR
-aFX
-cRq
-aaM
-aaM
-aaM
+qmI
+uYl
+qmI
+vfa
+qmI
+vfa
+qmI
+vfa
+qmI
+uYl
+qmI
+imk
 aaM
 aaM
 aaM
@@ -71330,22 +71505,22 @@ aEX
 afu
 aoo
 aaM
-aGa
-aFX
-aGa
-aFX
-aGa
-pjD
+aaM
+aaM
+aaM
+vfa
 qmI
-aGW
-aGa
-aFX
-aGa
-aFX
-aGa
-aaM
-aaM
-aaM
+vfa
+qmI
+vfa
+enM
+lvh
+vpf
+vfa
+qmI
+vfa
+qmI
+vfa
 aaM
 aaM
 aaM
@@ -71577,7 +71752,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aoo
 aoo
 aoo
 aoo
@@ -71586,24 +71761,24 @@ cgb
 aoo
 aoo
 aoo
-aFV
-aGa
-aGC
-aGb
-aGW
-aGa
+aoo
+aaM
+aaM
+aGR
+vfa
+qLc
 wWf
-aGB
-aGW
-aGa
-aGD
-aGB
-aGD
-aGa
-cRq
-aaM
-aaM
-aaM
+nmr
+vfa
+vkd
+ttw
+tDO
+vfa
+lxt
+vcQ
+pcM
+vfa
+imk
 aaM
 aaM
 aaM
@@ -71834,33 +72009,33 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aoo
 afu
-aEY
+aFV
+afu
 cib
 cgb
-aEY
+afu
+aFV
 afu
 aoo
-aFX
-aGa
-aGD
-aGB
-aGD
-aGa
-aGD
-aGB
+aaM
+aaM
+qmI
 vfa
-aGa
-pdY
-aGB
-aGD
-aGa
-aFX
-aaM
-aaM
-aaM
+wmo
+gLU
+wmo
+vfa
+wmo
+ttw
+iSq
+vfa
+eeA
+ttw
+pcM
+vfa
+qmI
 aaM
 aaM
 aaM
@@ -72091,33 +72266,33 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aoo
+asE
 asE
 asE
 cib
 cgb
 asE
 asE
+asE
 aoo
-aFX
-aGb
-aGD
-aGB
-aGD
-jam
-aGD
-aGB
+aaM
+aaM
+qmI
+aGC
+wmo
+ttw
+wmo
 xJu
-aGa
-aGD
-aGB
-aGD
-aGa
-aGa
-aaM
-aaM
-aaM
+wmo
+ttw
+dCo
+vfa
+wmo
+ttw
+wmo
+vfa
+vfa
 aaM
 aaM
 aaM
@@ -72348,33 +72523,33 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aoo
+afu
 afu
 afu
 cbb
 ccb
 afu
 afu
+afu
 aoo
-aFX
-aGy
-aGD
-aGT
-aGD
+aaM
+aaM
+qmI
+aGV
 wmo
-epx
-aGB
-aGD
+ttw
+wmo
+sWz
 oDt
-aGD
-aGB
-aGD
-aGB
-aFX
-aaM
-aaM
-aaM
+ttw
+wmo
+uLg
+nKI
+ttw
+wmo
+vDf
+qmI
 aaM
 aaM
 aaM
@@ -72605,7 +72780,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aoo
 aoo
 aoo
 aoo
@@ -72614,24 +72789,24 @@ aFk
 aoo
 aoo
 aoo
-aFX
-aGA
+aoo
+aoo
+aoo
+qmI
 aGE
-aGU
-aGE
-wmo
+xPB
 huU
-aGB
-aGD
-oDt
-aGD
-aGB
-aGD
-aGB
-aFX
-aaM
-aaM
-aaM
+xPB
+sWz
+uUO
+ttw
+wmo
+uLg
+wmo
+ttw
+wmo
+ttw
+qmI
 aaM
 aaM
 aaM
@@ -72862,33 +73037,33 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aoo
-afG
+afH
 awY
 awY
 awY
 awY
-aFI
+awY
+bYb
 aoo
-aFX
+aFY
 aGB
-aGD
-aGB
-aGD
-jam
-aGD
-aGB
-lmo
-aGa
-aGD
-aGB
-aGD
+aoo
+qmI
+jgn
+wmo
+ttw
+wmo
+xJu
+wmo
+ttw
+tDa
+vfa
 nKI
-aFX
-aaM
-aaM
-aaM
+vcQ
+wmo
+spa
+qmI
 aaM
 aaM
 aaM
@@ -73119,9 +73294,9 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aft
-afH
+aEY
+aqC
 aqC
 aqC
 aqC
@@ -73129,23 +73304,23 @@ aqC
 cgb
 aFK
 aFY
-aGB
+aFZ
 aGD
-aGB
-aGD
-aGa
-wWf
-btn
-aGD
-aGa
-aGD
-aGB
-aGD
-aGB
-aFX
-aaM
-aaM
-aaM
+aGy
+ttw
+wmo
+ttw
+wmo
+vfa
+vkd
+mrv
+wmo
+vfa
+wmo
+ttw
+wmo
+vcQ
+qmI
 aaM
 aaM
 aaM
@@ -73376,9 +73551,9 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aft
-ayS
+aFH
+aqC
 aqC
 aqC
 aqC
@@ -73386,23 +73561,23 @@ aqC
 cgb
 aFK
 aFY
-aGB
+aFZ
 aGD
-aGB
-aGD
-aGa
+aGy
 ttw
-aGb
-aGW
-aGa
-aGD
-aGB
-aGD
-aGB
-aFX
-aaM
-aaM
-aaM
+wmo
+ttw
+wmo
+vfa
+ssP
+ttw
+gVc
+vfa
+dHO
+ttw
+wmo
+eDT
+qmI
 aaM
 aaM
 aaM
@@ -73633,33 +73808,33 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aft
-ayS
+aFH
+aqC
 aqC
 aFD
 aFG
-aFH
+cdb
 aFJ
 aoo
-aFX
-aGa
-aGF
+aFY
 aGB
-aGX
-aGa
-dQw
+aoo
+qmI
+vfa
+rYz
+ttw
 tZo
-dQw
-aGa
-aGD
-aGB
-aGD
-aGa
-aFX
-aaM
-aaM
-aaM
+vfa
+fKb
+gKl
+fKb
+vfa
+wmo
+vcQ
+wmo
+vfa
+qmI
 aaM
 aaM
 aaM
@@ -73890,8 +74065,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
 aoo
+aFI
 ayS
 aqC
 cgb
@@ -73899,24 +74074,24 @@ aoo
 aoo
 aoo
 aoo
-aFZ
-aGa
-aGF
-aGB
-aGD
-aGa
+aoo
+aoo
+aoo
+aGA
+vfa
+rYz
+ttw
+wmo
+vfa
 aaM
 aaM
 aaM
-aGa
-pdY
-aGB
-aGD
-aGa
-qds
-aaM
-aaM
-aaM
+vfa
+eeA
+vcQ
+wmo
+vfa
+hXy
 aaM
 aaM
 aaM
@@ -74147,7 +74322,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aoo
 aoo
 aoo
 aEZ
@@ -74157,22 +74332,22 @@ aaM
 aaM
 aaM
 aaM
-aGa
-aGF
-aGB
-aGD
-aGa
 aaM
 aaM
 aaM
-aGa
-aGD
-aGB
-aGD
-aGa
+vfa
+rYz
+ttw
+wmo
+vfa
 aaM
 aaM
 aaM
+vfa
+ngk
+ttw
+gKI
+vfa
 aaM
 aaM
 aaM
@@ -74414,22 +74589,22 @@ aaM
 aaM
 aaM
 aaM
-aGa
-aFX
-aGV
-aGF
-aGa
 aaM
 aaM
 aaM
-aGa
-aFX
-aGa
-aFX
-aGa
+vfa
+qmI
+fnF
+rYz
+vfa
 aaM
 aaM
 aaM
+vfa
+qmI
+vfa
+qmI
+vfa
 aaM
 aaM
 aaM
@@ -74671,22 +74846,22 @@ aaM
 aaM
 aaM
 aaM
-aFZ
-aFX
-aGa
-aFX
-aGa
 aaM
 aaM
 aaM
-aGa
-aFX
-aGa
-aFX
-qds
+aGA
+qmI
+vfa
+qmI
+vfa
 aaM
 aaM
 aaM
+vfa
+qmI
+vfa
+qmI
+hXy
 aaM
 aaM
 aaM
@@ -74929,20 +75104,20 @@ aaM
 aaM
 aaM
 aaM
-aFZ
-aGa
-aFX
-aGa
-abu
-abu
-abu
-aGa
-aFX
-aGa
-qds
 aaM
 aaM
 aaM
+aGA
+vfa
+qmI
+vfa
+abu
+abu
+abu
+vfa
+qmI
+vfa
+hXy
 aaM
 aaM
 aaM
