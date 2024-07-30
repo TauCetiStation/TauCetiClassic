@@ -1097,6 +1097,12 @@
 	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
 
+/datum/uplink_item/badass/item/weapon/weldingtool/experimental/syndicate_zippo
+	name = "Syndicate Zippo"
+	desc = "A very cool zippo and welder"
+	item = /obj/item/weapon/weldingtool/experimental/syndicate_zippo
+	cost = 4
+
 /datum/uplink_item/badass/syndiedonuts
 	name = "Syndicate Donuts"
 	desc = "Special offer from Waffle Co., the box of 6 delicious donuts! But be careful, some of them are posioned!"
