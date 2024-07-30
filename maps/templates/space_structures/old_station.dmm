@@ -26,7 +26,7 @@
 	dir = 1;
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "af" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -215,7 +215,7 @@
 	dir = 8;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "bi" = (
 /obj/structure/sign/poster/official/safety_internals,
 /turf/simulated/wall/r_wall,
@@ -226,13 +226,13 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "bk" = (
 /obj/structure/closet/hydrant{
 	pixel_x = -32
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "bm" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "InnerBrig";
@@ -275,7 +275,7 @@
 /turf/simulated/floor{
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "bw" = (
 /obj/structure/mineral_door/resin,
 /obj/structure/alien/weeds,
@@ -342,7 +342,7 @@
 	pixel_y = 30
 	},
 /turf/simulated/floor,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "bR" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor/airless{
@@ -456,7 +456,7 @@
 "cF" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "cG" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -487,6 +487,11 @@
 /area/space_structures/old_station/central/bridge)
 "cT" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitecorner"
@@ -638,7 +643,7 @@
 	dir = 4;
 	icon_state = "purple"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "dN" = (
 /obj/item/device/flashlight/seclite,
 /turf/simulated/floor,
@@ -666,7 +671,7 @@
 /turf/simulated/floor{
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "ec" = (
 /obj/structure/alien/weeds,
 /obj/structure/extinguisher_cabinet{
@@ -780,7 +785,7 @@
 	dir = 1;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "eE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -900,7 +905,7 @@
 /turf/simulated/floor{
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "ft" = (
 /obj/item/clothing/suit/marinad,
 /obj/structure/alien/weeds,
@@ -918,7 +923,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "fE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/wirecutters,
@@ -947,7 +952,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "fQ" = (
 /obj/structure/sign/departments/science,
 /turf/simulated/wall/r_wall,
@@ -1334,7 +1339,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "ia" = (
 /obj/structure/barricade/wooden{
 	layer = 2.8;
@@ -1364,7 +1369,7 @@
 	dir = 1;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "ie" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(73);
@@ -1412,7 +1417,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "iq" = (
 /obj/item/ammo_casing/c45,
 /turf/simulated/floor/airless,
@@ -1524,7 +1529,7 @@
 	dir = 1;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "iO" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -1541,6 +1546,10 @@
 	icon_state = "darkbluecorners"
 	},
 /area/space_structures/old_station/central/bridge)
+"iT" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space_structures/old_station/central/hydro)
 "iV" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
@@ -1748,10 +1757,13 @@
 /area/space_structures/old_station/satellite)
 "jW" = (
 /obj/effect/decal/cleanable/shreds,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "whitecorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "jY" = (
 /obj/machinery/door/airlock/glass{
 	name = "Hydroponics";
@@ -1766,7 +1778,7 @@
 	dir = 1;
 	icon_state = "blue"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "ke" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1806,7 +1818,7 @@
 	dir = 8;
 	icon_state = "greencorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "kx" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
@@ -1843,7 +1855,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "kR" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -2038,7 +2050,7 @@
 	dir = 8;
 	icon_state = "yellowcorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "mn" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
@@ -2057,7 +2069,7 @@
 	dir = 1;
 	icon_state = "yellowcorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "mt" = (
 /obj/structure/stool/bed/chair/metal/white,
 /turf/simulated/floor{
@@ -2086,7 +2098,7 @@
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "mF" = (
 /obj/item/trash/semki,
 /obj/item/trash/sosjerky,
@@ -2389,7 +2401,7 @@
 	dir = 8;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "oA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -2421,7 +2433,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "oU" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/disk/research_points/rare,
@@ -2527,7 +2539,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "pn" = (
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/central/bridge)
@@ -2539,7 +2551,7 @@
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "pB" = (
 /obj/effect/decal/cleanable/generic,
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
@@ -2719,7 +2731,7 @@
 	dir = 1;
 	icon_state = "bluecorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "qI" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
@@ -2780,7 +2792,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "ri" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/simulated/floor/airless{
@@ -3089,7 +3101,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "tP" = (
 /obj/structure/table,
 /obj/structure/window/thin/reinforced{
@@ -3310,7 +3322,7 @@
 	dir = 4;
 	icon_state = "redcorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "uV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3362,6 +3374,17 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/old_station/left)
+"vn" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitehall"
+	},
+/area/space_structures/old_station/central)
 "vs" = (
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt,
@@ -3379,7 +3402,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "vv" = (
 /obj/structure/window/thin/reinforced,
 /obj/structure/disposalpipe/broken{
@@ -3470,7 +3493,7 @@
 	dir = 1;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "vP" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/simulated/floor{
@@ -3504,7 +3527,7 @@
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "wb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -3545,6 +3568,11 @@
 /area/space)
 "wk" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/power/apc/largecell{
+	name = "largecell apc down";
+	pixel_y = -28
+	},
+/obj/structure/cable,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowcorner"
@@ -3639,6 +3667,9 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/door/airlock/glass{
+	name = "Dormitory"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -3687,7 +3718,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "wX" = (
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/satellite)
@@ -3847,7 +3878,7 @@
 	dir = 4;
 	icon_state = "bluecorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "xS" = (
 /obj/structure/grille{
 	destroyed = 1
@@ -3984,7 +4015,7 @@
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "yL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -4012,7 +4043,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "zd" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/alien/air_plant,
@@ -4027,6 +4058,13 @@
 	},
 /turf/simulated/floor{
 	dir = 6;
+	icon_state = "green"
+	},
+/area/space_structures/old_station/central/hydro)
+"zh" = (
+/obj/effect/spawner/mob_spawn/tomato,
+/turf/simulated/floor{
+	dir = 8;
 	icon_state = "green"
 	},
 /area/space_structures/old_station/central/hydro)
@@ -4059,7 +4097,7 @@
 /turf/simulated/floor{
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "zm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -4255,7 +4293,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/wall/r_wall,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "AB" = (
 /obj/structure/table,
 /obj/item/device/megaphone,
@@ -4348,7 +4386,7 @@
 /obj/item/trash/fries,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Bf" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -4367,7 +4405,7 @@
 	dir = 1;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Bk" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/cups,
@@ -4456,7 +4494,7 @@
 /turf/simulated/floor{
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "BW" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/xeno/body,
@@ -4578,19 +4616,6 @@
 "Cp" = (
 /turf/simulated/floor/plating/airless,
 /area/space_structures/old_station/right)
-"Cq" = (
-/obj/machinery/door/airlock/glass{
-	name = "Hydroponics";
-	req_access = list(73);
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/space_structures/old_station/central/hydro)
 "Cr" = (
 /obj/effect/decal/cleanable/generic,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -4673,6 +4698,11 @@
 	icon_state = "yellowcorner"
 	},
 /area/space_structures/old_station/central/solars_c)
+"CT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space_structures/old_station/central/hydro)
 "CW" = (
 /obj/structure/stool/bed,
 /obj/effect/decal/cleanable/blood,
@@ -4739,7 +4769,7 @@
 	dir = 8;
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Do" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
@@ -4765,6 +4795,12 @@
 /area/space_structures/old_station/right)
 "Dv" = (
 /turf/simulated/floor/glass,
+/area/space_structures/old_station/central/hydro)
+"Dz" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(73)
+	},
+/turf/simulated/floor/plating,
 /area/space_structures/old_station/central/hydro)
 "DA" = (
 /obj/structure/alien/weeds,
@@ -4964,6 +5000,9 @@
 /area/space_structures/old_station/right/rnd)
 "Er" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -5110,7 +5149,7 @@
 /turf/simulated/floor{
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Fh" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/syringe{
@@ -5172,7 +5211,7 @@
 	dir = 4;
 	icon_state = "purplecorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "FH" = (
 /obj/item/stack/sheet/plasteel,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -5303,7 +5342,7 @@
 /turf/simulated/floor{
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Gt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -5317,7 +5356,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Gv" = (
 /obj/structure/computerframe,
 /turf/simulated/floor{
@@ -5386,17 +5425,6 @@
 /area/space_structures/old_station/central/bridge)
 "GP" = (
 /obj/machinery/vending/hydroseeds,
-/obj/machinery/power/apc/largecell{
-	cell_type = 1000;
-	dir = 1;
-	name = "Hydroponic APC";
-	pixel_y = 28
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "green"
@@ -5426,7 +5454,7 @@
 	dir = 8;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "GY" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -5628,7 +5656,7 @@
 	dir = 8;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Ie" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -5711,7 +5739,7 @@
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Iu" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -5781,7 +5809,7 @@
 	dir = 8;
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "IU" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/turf_decal{
@@ -5973,7 +6001,7 @@
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Kg" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -6035,6 +6063,14 @@
 	dir = 4;
 	icon_state = "red"
 	},
+/area/space_structures/old_station/central/hydro)
+"Ku" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/glass{
+	name = "Dormitory"
+	},
+/turf/simulated/floor,
 /area/space_structures/old_station/central)
 "Kv" = (
 /obj/structure/door_assembly/door_assembly_eng,
@@ -6048,7 +6084,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "KF" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating/airless,
@@ -6078,7 +6114,7 @@
 "KJ" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "KR" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor,
@@ -6199,17 +6235,6 @@
 	icon_state = "purple"
 	},
 /area/space_structures/old_station/right/rnd)
-"LC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/space_structures/old_station/central/hydro)
 "LE" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -6385,7 +6410,7 @@
 	dir = 8;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "MP" = (
 /obj/machinery/light/small/emergency,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -6579,11 +6604,16 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "greencorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Oh" = (
 /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical,
 /obj/structure/alien/weeds,
@@ -6637,23 +6667,6 @@
 	icon_state = "purple"
 	},
 /area/space_structures/old_station/right/rnd)
-"Oz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "green"
-	},
-/area/space_structures/old_station/central)
 "OA" = (
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
@@ -6677,13 +6690,8 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/armory)
 "OF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whitehall"
-	},
-/area/space_structures/old_station/central)
+/turf/simulated/wall/r_wall,
+/area/space_structures/old_station/central/hydro)
 "OJ" = (
 /obj/item/weapon/storage/belt/utility,
 /turf/environment/space,
@@ -6706,6 +6714,15 @@
 	icon_state = "dark"
 	},
 /area/space_structures/old_station/satellite)
+"OS" = (
+/obj/machinery/door/airlock/glass{
+	name = "Dormitory"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/old_station/central)
 "OT" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/phoron{
@@ -6938,6 +6955,17 @@
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
+"PT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/glass{
+	name = "Dormitory"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitehall"
+	},
+/area/space_structures/old_station/central)
 "PW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/flora/pottedplant/dead,
@@ -6970,7 +6998,7 @@
 	dir = 4;
 	icon_state = "red"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Qo" = (
 /obj/structure/closet/secure_closet/atmos_personal,
 /obj/effect/decal/cleanable/blood/gibs/body,
@@ -7087,14 +7115,8 @@
 	},
 /area/space_structures/old_station/right)
 "QZ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "green"
-	},
-/area/space_structures/old_station/central)
+/turf/simulated/floor/plating,
+/area/space_structures/old_station/central/hydro)
 "Rh" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -7143,7 +7165,7 @@
 	dir = 4;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Rw" = (
 /obj/structure/sign/directions/command{
 	dir = 4;
@@ -7158,11 +7180,18 @@
 	dir = 4;
 	icon_state = "yellowcorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "RB" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/glass/phoron,
 /area/space_structures/old_station/central/bridge)
+"RC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/mob_spawn/tomato,
+/turf/simulated/floor{
+	icon_state = "green"
+	},
+/area/space_structures/old_station/central/hydro)
 "RE" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/effect/spawner/mob_spawn/alien,
@@ -7299,7 +7328,7 @@
 /turf/simulated/floor{
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Sn" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -7493,7 +7522,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "TA" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/plasteel{
@@ -7576,7 +7605,7 @@
 	dir = 1;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "TV" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7734,7 +7763,7 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "US" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -7750,7 +7779,7 @@
 /turf/simulated/floor{
 	icon_state = "whitehall"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "UW" = (
 /obj/machinery/door/airlock{
 	name = "Custodial Closet";
@@ -7768,7 +7797,7 @@
 /turf/simulated/floor{
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Vb" = (
 /obj/structure/table,
 /obj/item/trash/tray,
@@ -7840,7 +7869,7 @@
 	dir = 4;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Vw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -7855,7 +7884,7 @@
 	dir = 8;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Vx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -8077,7 +8106,7 @@
 	dir = 1;
 	icon_state = "greencorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "WQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -8094,7 +8123,6 @@
 /area/space_structures/old_station/left)
 "WX" = (
 /obj/effect/decal/cleanable/greenglow,
-/mob/living/simple_animal/hostile/tomato/angry_tomato,
 /turf/simulated/floor/glass,
 /area/space_structures/old_station/central/hydro)
 "WZ" = (
@@ -8252,7 +8280,7 @@
 	dir = 1;
 	icon_state = "blue"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "Yl" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -8322,7 +8350,7 @@
 /turf/simulated/floor{
 	icon_state = "purplecorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "YF" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -8358,7 +8386,7 @@
 	dir = 1;
 	icon_state = "blue"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "YU" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/silver{
@@ -8424,6 +8452,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
 "Zm" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -8526,7 +8557,7 @@
 	dir = 8;
 	icon_state = "whitecorner"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "ZI" = (
 /obj/item/weapon/tank/emergency_oxygen/double,
 /obj/structure/rack,
@@ -8549,7 +8580,7 @@
 	dir = 4;
 	icon_state = "green"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/central/hydro)
 "ZL" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
@@ -10650,19 +10681,19 @@ wi
 gO
 gO
 Fd
-Ou
+OF
 cF
-XO
+QZ
 rg
 bk
-Ou
+OF
 Rw
-XO
-pE
+QZ
+iT
 Gu
-pE
-fN
-pE
+iT
+Ft
+iT
 fB
 mm
 IR
@@ -10710,24 +10741,24 @@ wi
 gO
 gO
 gO
-Ou
-Ou
+OF
+OF
 pt
 AY
-XO
-tS
+QZ
+Dz
 ae
 im
-QZ
+Uy
 ZK
-QZ
+Uy
 ZK
-QZ
+Uy
 Rt
 Vv
 Of
 jW
-XO
+OS
 Zm
 Er
 Zm
@@ -10794,7 +10825,7 @@ JI
 Tv
 Kq
 Kq
-Ja
+vn
 wk
 ND
 ND
@@ -10836,12 +10867,12 @@ Gv
 QI
 pn
 MA
-fN
+Ft
 Sl
 MV
 Dc
 Or
-Or
+zh
 Bt
 AP
 MV
@@ -11316,12 +11347,12 @@ YJ
 JY
 pn
 MA
-pE
-fs
+iT
+RC
 MV
 GP
-Uy
-LC
+CF
+CF
 CF
 zg
 MV
@@ -11381,7 +11412,7 @@ Gr
 MV
 sO
 EB
-Cq
+Mo
 MV
 ME
 MV
@@ -11429,26 +11460,26 @@ wi
 wi
 wi
 wi
-Ou
+OF
 oT
 Kz
 kM
 kM
 kM
 vu
-zm
+CT
 ks
 MM
 ow
 bh
-Oz
+bh
 GX
 HZ
 Vw
 WM
 ZG
+PT
 Mq
-OF
 Wn
 dp
 OO
@@ -11489,25 +11520,25 @@ wi
 wi
 wi
 wi
-Ou
-Ou
-Ou
+OF
+OF
+OF
 UM
 bj
 fO
-Ou
+OF
 YD
 dM
 FD
-fN
-pE
-pE
+Ft
+iT
+iT
 yG
 Qk
 Kt
 Qk
 uU
-zm
+Ku
 LF
 pE
 pE
@@ -11549,13 +11580,13 @@ wi
 wi
 wi
 Fd
-Ou
+OF
 pl
 zc
 fO
 wW
 tF
-ND
+MV
 Ay
 hZ
 dq
@@ -11609,14 +11640,14 @@ wi
 wi
 wi
 wi
-Ou
-Ou
-Ou
-Ou
-Ou
-Ou
-Ou
-XO
+OF
+OF
+OF
+OF
+OF
+OF
+OF
+QZ
 KJ
 gP
 nb
