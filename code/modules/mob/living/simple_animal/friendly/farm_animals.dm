@@ -381,6 +381,7 @@ var/global/chicken_count = 0
 	has_arm = TRUE
 
 /mob/living/simple_animal/walrus/syndicate
+	name = "Surlaw"
 	icon_state = "walrus-syndi"
 	icon_living = "walrus-syndi"
 	icon_dead = "walrus-syndi_dead"

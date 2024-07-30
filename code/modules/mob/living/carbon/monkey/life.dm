@@ -12,6 +12,17 @@
 	if(loc)
 		environment = loc.return_air()
 
+	//Handle temperature/pressure differences between body and environment
+	if(environment)	// More error checking -- TLE
+		handle_environment(environment)
+
+	//Check if we're on fire
+	handle_fire()
+
+	//Status updates, death etc.
+	handle_regular_status_updates()
+	update_canmove()
+
 	if (stat != DEAD && !IS_IN_STASIS(src))
 		if(!istype(src,/mob/living/carbon/monkey/diona))
 			//First, resolve location and get a breath
@@ -41,17 +52,6 @@
 	//to find it.
 	reset_alerts()
 	blinded = null
-
-	//Handle temperature/pressure differences between body and environment
-	if(environment)	// More error checking -- TLE
-		handle_environment(environment)
-
-	//Check if we're on fire
-	handle_fire()
-
-	//Status updates, death etc.
-	handle_regular_status_updates()
-	update_canmove()
 
 	if(!client && stat == CONSCIOUS)
 

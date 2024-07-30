@@ -263,9 +263,6 @@
 /area/space_structures/broken_breacher)
 "kQ" = (
 /obj/item/weapon/flora/random,
-/mob/living/simple_animal/hostile/carp{
-	dir = 8
-	},
 /turf/simulated/floor/plating/airless/carpet,
 /area/space_structures/broken_breacher)
 "kW" = (
@@ -408,6 +405,15 @@
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
+	},
+/area/space_structures/broken_breacher)
+"oH" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/spawner/mob_spawn/carp,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
 	},
 /area/space_structures/broken_breacher)
 "oN" = (
@@ -618,7 +624,7 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/broken_breacher)
 "xb" = (
-/mob/living/simple_animal/hostile/carp,
+/obj/effect/spawner/mob_spawn/carp,
 /turf/simulated/floor/plating/airless{
 	icon_state = "podhatchfull"
 	},
@@ -696,6 +702,12 @@
 "zd" = (
 /turf/simulated/floor/plating/airless{
 	icon_state = "wood"
+	},
+/area/space_structures/broken_breacher)
+"zn" = (
+/obj/effect/spawner/mob_spawn/carp,
+/turf/simulated/floor{
+	icon_state = "podhatchfull"
 	},
 /area/space_structures/broken_breacher)
 "zs" = (
@@ -1006,10 +1018,8 @@
 /turf/simulated/floor/carpet,
 /area/space_structures/broken_breacher)
 "Lf" = (
-/mob/living/simple_animal/hostile/carp,
-/turf/simulated/floor/plating/airless{
-	icon_state = "wood"
-	},
+/obj/effect/spawner/mob_spawn/carp,
+/turf/simulated/shuttle/plating,
 /area/space_structures/broken_breacher)
 "Li" = (
 /obj/item/weapon/disk/research_points,
@@ -1099,6 +1109,12 @@
 "Om" = (
 /turf/simulated/floor/carpet,
 /area/space_structures/broken_breacher)
+"Oy" = (
+/obj/effect/spawner/mob_spawn/carp,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/space_structures/broken_breacher)
 "OY" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
@@ -1181,6 +1197,7 @@
 	dir = 4;
 	pixel_x = -6
 	},
+/obj/effect/spawner/mob_spawn/carp,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -1429,7 +1446,7 @@ pT
 va
 FS
 iW
-iW
+Lf
 pT
 pT
 Og
@@ -1504,7 +1521,7 @@ sO
 sO
 sm
 pT
-PM
+zn
 PM
 PM
 pT
@@ -1928,7 +1945,7 @@ PM
 PM
 oV
 pT
-VW
+oH
 zs
 Zm
 Zm
@@ -1962,11 +1979,11 @@ BO
 BO
 BO
 BO
-BO
+Oy
 pT
 Ni
 PM
-PM
+zn
 PM
 kj
 pT
@@ -1989,7 +2006,7 @@ pT
 pT
 pT
 cR
-Lf
+zd
 xh
 zd
 WG
