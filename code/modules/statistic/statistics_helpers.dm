@@ -15,6 +15,15 @@
 	stat.desc = desc
 	achievements += stat
 
+/datum/stat_collector/proc/add_medal(key, name, medal_name, reason, icon_path, icon_state)
+	var/datum/stat/medal/stat = new
+	stat.key = key
+	stat.name = name
+	stat.medal_name = medal_name
+	stat.reason = reason
+	stat.icon = icon(icon_path, icon_state)
+	medals += stat
+
 /datum/stat_collector/proc/add_death_stat(mob/living/H)
 	if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
 		return

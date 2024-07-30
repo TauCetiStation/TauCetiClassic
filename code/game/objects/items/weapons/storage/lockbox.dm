@@ -124,7 +124,8 @@
 /obj/item/weapon/storage/lockbox/medal
 	name = "medal box"
 	desc = "A locked box used to store medals of honor."
-	req_access = list(access_captain)
+	req_access = list(access_cent_general)
+	var/req_role = list() //string, role from "datum/mind/assigned_role"
 	icon_state = "medalbox+l"
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
@@ -136,6 +137,15 @@
 	can_hold = list(/obj/item/clothing/accessory/medal)
 
 	var/open = FALSE // used for overlays
+
+/obj/item/weapon/storage/lockbox/medal/attack_self(mob/user)
+	if (req_role.Find(user.mind.assigned_role))
+		locked =
+		open = TRUE
+		update_icon()
+		to_chat(user, "<span class='warning'>You opened [src]!</span>")
+	else
+		to_chat(user, "<span class='warning'>Access denied!</span>")
 
 /obj/item/weapon/storage/lockbox/medal/open(mob/user)
 	..()
