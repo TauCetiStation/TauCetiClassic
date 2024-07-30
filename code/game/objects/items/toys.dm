@@ -1066,6 +1066,25 @@
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
 
+/obj/item/toy/figure/iaa
+	name = "Internal Affairs Agent action figure"
+	icon_state = "iaa"
+	toysay = "I'll make a report!"
+
+/obj/item/toy/figure/blueofficer
+	name = "Blueshield Officer"
+	icon_state = "blueofficer"
+	toysay = "On guard of the heads!"
+
+/obj/item/toy/figure/xenobio
+	name = "Xenobiologist"
+	icon_state = "xenobio"
+	toysay = "Ghost, come here, there's a rune for summoning a admantive golem!"
+
+/obj/item/toy/figure/xenoarcheolog
+	name = "Xenoarcheologist"
+	icon_state = "xenoarcheolog"
+	toysay = "Excavation, excavation, death!"
 /*
 Owl & Griffin toys
 */
@@ -1760,6 +1779,10 @@ Owl & Griffin toys
 							/obj/item/toy/figure/secofficer					= 1,
 							/obj/item/toy/figure/virologist					= 1,
 							/obj/item/toy/figure/warden						= 1,
+							/obj/item/toy/figure/iaa						= 1,
+							/obj/item/toy/figure/blueofficer				= 1,
+							/obj/item/toy/figure/xenobio					= 1,
+							/obj/item/toy/figure/xenoarcheolog				= 1,
 							/obj/item/toy/prize/poly/polyclassic			= 1,
 							/obj/item/toy/prize/poly/polypink				= 1,
 							/obj/item/toy/prize/poly/polydark				= 1,

@@ -160,7 +160,7 @@
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "oH" = (
-/mob/living/simple_animal/hostile/cellular/meat/flesh,
+/obj/effect/spawner/mob_spawn/cellular/meat/flesh,
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "oM" = (
@@ -378,7 +378,7 @@
 /area/space_structures/cult_ship)
 "Dr" = (
 /obj/effect/decal/cleanable/blood/drip,
-/mob/living/simple_animal/hostile/cellular/meat/creep_standing,
+/obj/effect/spawner/mob_spawn/cellular/meat/creep_standing,
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "DY" = (
@@ -606,8 +606,8 @@
 /area/space_structures/cult_ship)
 "Ry" = (
 /obj/effect/decal/cleanable/blood/drip,
-/mob/living/simple_animal/hostile/cellular/meat/maniac,
 /obj/item/clothing/suit/necromancer_hoodie,
+/obj/effect/spawner/mob_spawn/cellular/meat/maniac,
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "RF" = (

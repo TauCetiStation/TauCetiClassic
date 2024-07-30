@@ -323,9 +323,6 @@
 	icon_state = "graychoco"
 	},
 /area/asteroid/research_outpost/entry)
-"aX" = (
-/turf/simulated/wall/r_wall,
-/area/asteroid/research_outpost/spectro)
 "aY" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell,
@@ -3192,7 +3189,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/wall/r_wall/purple,
+/turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "gw" = (
 /obj/structure/transit_tube{
@@ -3736,7 +3733,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/r_wall/purple,
 /area/asteroid/research_outpost/power)
 "hP" = (
 /obj/structure/window/fulltile/reinforced{
@@ -5558,9 +5555,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/tempstorage)
-"le" = (
-/turf/simulated/wall/r_wall,
-/area/asteroid/research_outpost/maint)
 "lf" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access = list(12,65)
@@ -8226,6 +8220,7 @@
 	icon_state = "weeds1"
 	},
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/weapon/storage/toolbox/electrical,
 /turf/simulated/floor/airless{
 	icon_state = "darkpurple";
 	dir = 9
@@ -11918,9 +11913,6 @@
 	icon_state = "greenfull"
 	},
 /area/asteroid/research_outpost/hallway)
-"Ar" = (
-/turf/simulated/wall/r_wall,
-/area/asteroid/research_outpost/outpost_misc_lab)
 "At" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "mine_dock";
@@ -54566,7 +54558,7 @@ ce
 cB
 cB
 do
-aX
+cP
 Xb
 eR
 fh
@@ -55862,7 +55854,7 @@ in
 il
 ki
 NC
-le
+NC
 zc
 hB
 NC
@@ -61512,7 +61504,7 @@ fX
 gy
 hR
 iH
-Ar
+st
 kG
 st
 st
