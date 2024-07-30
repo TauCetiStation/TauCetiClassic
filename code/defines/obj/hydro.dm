@@ -334,14 +334,14 @@
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/honkyseed)
 
-/obj/item/seeds/cannabisseed
-	name = "pack of cannabis seeds"
-	desc = "They're seeds that grow into cannabis."
-	icon_state = "seed-cannabis"
+/obj/item/seeds/laughweedseed
+	name = "pack of laughweed seeds"
+	desc = "They're seeds that grow into laughweed."
+	icon_state = "seed-laughweed"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
-	species = "cannabis"
-	plantname = "Cannabis"
-	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis
+	species = "laughweed"
+	plantname = "Laughweed"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed
 	lifespan = 40
 	endurance = 30
 	maturation = 5
@@ -349,16 +349,16 @@
 	yield = 6
 	plant_type = 1
 	growthstages = 1
-	mutatelist = list(/obj/item/seeds/megacannabisseed,/obj/item/seeds/blackcannabisseed)
+	mutatelist = list(/obj/item/seeds/megaweedseed,/obj/item/seeds/blackweedseed)
 
-/obj/item/seeds/megacannabisseed
-	name = "pack of rainbow weed seeds"
-	desc = "They're seeds that grow into rainbow weed."
-	icon_state = "seed-megacannabis"
+/obj/item/seeds/megaweedseed
+	name = "pack of megaweed seeds"
+	desc = "They're seeds that grow into megaweed."
+	icon_state = "seed-megaweed"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
-	species = "megacannabis"
-	plantname = "Rainbow weed"
-	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/megacannabis
+	species = "megaweed"
+	plantname = "Megaweed"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed
 	lifespan = 40
 	endurance = 25
 	maturation = 5
@@ -367,14 +367,14 @@
 	plant_type = 1
 	growthstages = 1
 
-/obj/item/seeds/blackcannabisseed
+/obj/item/seeds/blackweedseed
 	name = "pack of deathweed seeds"
 	desc = "They're seeds that grow deathweed."
-	icon_state = "seed-blackcannabis"
+	icon_state = "seed-blackweed"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
 	species = "blackcannabis"
 	plantname = "Deathweed"
-	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/blackcannabis
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed
 	lifespan = 40
 	endurance = 30
 	maturation = 5

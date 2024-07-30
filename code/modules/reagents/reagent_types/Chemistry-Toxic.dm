@@ -931,17 +931,17 @@
 		return
 	SEND_SIGNAL(M, COMSIG_IMPEDREZENE_DIGEST)
 
-/datum/reagent/cannabidiol
-	name = "Cannabidiol"
-	id = "cannabidiol"
-	description = "Extract from cannabis."
+/datum/reagent/laughbidiol
+	name = "Laughbidiol"
+	id = "laughbidiol"
+	description = "Extract from laughweed"
 	reagent_state = LIQUID
 	color = "#3d9e29"
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/cannabidiol/on_general_digest(mob/living/M)
+/datum/reagent/laughbidiol/on_general_digest(mob/living/M)
 	..()
 	M.adjustDrugginess(2)
 	if(prob(25))
