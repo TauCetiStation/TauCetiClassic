@@ -19,19 +19,12 @@
 			"<span class='notice'>[user.name] pulls [L.name] free from the sticky nest!</span>",
 			"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",
 			"<span class='notice'>You hear squelching...</span>")
-
 	else
-		L.visible_message(
-			"<span class='warning'>[L.name] struggles to break free of the gelatinous resin...</span>",
-			"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",
-			"<span class='notice'>You hear squelching...</span>")
-
-		if(!(do_after(L, 3 MINUTES, target = L) && buckled_mob == L))
-			return
+		to_chat(L, "<span class='warning'>You cannot climb out of the nest on your own!</span>")
+		return
 
 	L.pixel_y = L.default_pixel_y
 	unbuckle_mob()
-	to_chat(L, "<span class='notice'>You successfly break free from the nest!</span>")
 	L.visible_message(
 			"<span class='warning'>[L.name] break free from the nest...</span>",)
 
