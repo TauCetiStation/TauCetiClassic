@@ -719,7 +719,6 @@
 		return
 	var/mob/living/carbon/human/H = current
 	if(H.species.flags[NO_WILLPOWER])
-		to_chat(H, "<span class='warning'>Вы безвольное существо.</span>")
 		return
 	if(H.stat == DEAD)
 		to_chat(H, "<span class='warning'>Мертвые не своевольничают.</span>")

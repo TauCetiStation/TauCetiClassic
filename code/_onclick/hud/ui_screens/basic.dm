@@ -117,16 +117,14 @@
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/H = usr
-	var/list/modifiers = params2list(params)
 	var/willpower_amount
-	if(modifiers[SHIFT_CLICK])
-		if(H.species.flags[NO_WILLPOWER])
-			willpower_amount = "<span class='boldwarning'>НЕТ</span>"
-		else
-			willpower_amount = H.mind.willpower_amount
-		to_chat(usr, "<span class='notice'>Сила Воли: <b>[willpower_amount]</b>.</span>")
+	if(H.species.flags[NO_WILLPOWER])
+		willpower_amount = "<span class='boldwarning'>НЕТ</span>"
 	else
-		H.mind.do_select_willpower_effect()
+		willpower_amount = H.mind.willpower_amount
+	to_chat(usr, "<span class='notice'>Сила Воли: <b>[willpower_amount]</b>.</span>")
+
+	usr.mind.do_select_willpower_effect()
 
 /atom/movable/screen/health_doll/add_to_hud(datum/hud/hud)
 	..()
