@@ -11351,7 +11351,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/glass,
+/turf/simulated/floor/glass/reinforced,
 /area/asteroid/mine/production)
 "zj" = (
 /obj/structure/window/thin/reinforced{
@@ -11372,7 +11372,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/glass,
+/turf/simulated/floor/glass/reinforced,
 /area/asteroid/mine/production)
 "zk" = (
 /obj/structure/cable{
@@ -11720,7 +11720,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/glass,
+/turf/simulated/floor/glass/reinforced,
 /area/asteroid/mine/living_quarters)
 "zW" = (
 /obj/structure/window/thin/reinforced{
@@ -11741,7 +11741,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/glass,
+/turf/simulated/floor/glass/reinforced,
 /area/asteroid/mine/living_quarters)
 "zX" = (
 /obj/effect/decal/turf_decal{
