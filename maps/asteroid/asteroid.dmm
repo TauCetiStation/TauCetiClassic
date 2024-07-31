@@ -7911,7 +7911,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/glass/airless,
+/turf/simulated/floor/glass,
 /area/asteroid/mine/west_outpost)
 "qx" = (
 /obj/structure/ore_box,
@@ -8780,7 +8780,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/glass/airless,
+/turf/simulated/floor/glass,
 /area/asteroid/mine/west_outpost)
 "sP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -9769,7 +9769,7 @@
 	},
 /area/asteroid/mine/west_outpost)
 "vj" = (
-/turf/simulated/floor/glass/airless,
+/turf/simulated/floor/glass,
 /area/asteroid/mine/west_outpost)
 "vk" = (
 /obj/structure/table,
@@ -10042,7 +10042,7 @@
 /area/asteroid/mine/west_outpost)
 "vL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/glass/airless,
+/turf/simulated/floor/glass,
 /area/asteroid/mine/west_outpost)
 "vN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -11351,7 +11351,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/glass/airless,
+/turf/simulated/floor/glass,
 /area/asteroid/mine/production)
 "zj" = (
 /obj/structure/window/thin/reinforced{
@@ -11372,7 +11372,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/glass/airless,
+/turf/simulated/floor/glass,
 /area/asteroid/mine/production)
 "zk" = (
 /obj/structure/cable{
@@ -11720,7 +11720,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/glass/airless,
+/turf/simulated/floor/glass,
 /area/asteroid/mine/living_quarters)
 "zW" = (
 /obj/structure/window/thin/reinforced{
@@ -11741,7 +11741,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/glass/airless,
+/turf/simulated/floor/glass,
 /area/asteroid/mine/living_quarters)
 "zX" = (
 /obj/effect/decal/turf_decal{
