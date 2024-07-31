@@ -1215,8 +1215,21 @@ FIRE ALARM
 
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
-	var/msg = code_name_ru[security_level]
-	to_chat(user, "Маленький индикатор указывает [msg] код тревоги.")
+	var/msg
+	switch(code_name_eng[security_level])
+		if("green")
+			msg = "<font color='green'><b>зелёный</b></font>"
+			to_chat(user, "Маленький индикатор указывает на [msg] уровень тревоги.")
+		if("blue")
+			msg = "<font color='blue'><b>синий</b></font>"
+			to_chat(user, "Маленький индикатор указывает на [msg] уровень тревоги.")
+		if("red")
+			msg = "<font color='red'><b>красный</b></font>"
+			to_chat(user, "Маленький индикатор указывает на [msg] уровень тревоги.")
+		if("delta")
+			msg = "<font color='purple'><b>дельта</b></font>"
+			to_chat(user, "Маленький индикатор указывает об активированом коде [msg].")
+
 
 /obj/machinery/firealarm/atom_init(mapload, dir, building)
 	. = ..()

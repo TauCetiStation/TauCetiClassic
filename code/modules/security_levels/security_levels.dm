@@ -1,4 +1,4 @@
-/var/security_level = 0
+/var/security_level = SEC_LEVEL_GREEN
 /var/delta_timer_id = 0
 var/global/list/code_name_eng = list("green", "blue", "red", "delta")
 var/global/list/code_name_ru = list("зелёный", "синий", "красный", "дельта")
