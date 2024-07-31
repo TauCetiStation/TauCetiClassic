@@ -1,5 +1,5 @@
 /datum/outfit/space_trader/dealer
-	name = "Space Trader"
+	name = "Space Trader Dealer"
 	uniform = /obj/item/clothing/under/lawyer/oldman
 	suit = /obj/item/clothing/suit/storage/postal_dude_coat
 	shoes = /obj/item/clothing/shoes/boots
@@ -10,7 +10,7 @@
 	l_hand = /obj/item/blueprints
 
 /datum/outfit/space_trader/guard
-	name = "Space Trader"
+	name = "Space Trader Guard"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/storage/flak
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -23,8 +23,8 @@
 	l_hand = /obj/item/blueprints
 
 /datum/outfit/space_trader/porter
-	name = "Space Trader"
-	uniform = /obj/item/clothing/under/color/black
+	name = "Space Trader Porter"
+	uniform = /obj/item/clothing/under/rank/cargotech
 	suit = /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
 	glasses = /obj/item/clothing/glasses/welding
 	shoes = /obj/item/clothing/shoes/boots/work

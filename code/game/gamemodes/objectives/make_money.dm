@@ -23,4 +23,4 @@
 	return OBJECTIVE_LOSS
 
 /datum/objective/make_money/faction/traders
-	required_money = 10000
+	required_money = 20000

@@ -268,12 +268,14 @@
 	cases = list("торговый шаттл", "торгового шаттла", "торговому шаттлу", "торговый шаттл", "торговым шаттлом", "торговом шаттле")
 	icon_state = "shuttlered"
 
-/area/shuttle/trader/velocity
 /area/shuttle/trader/station
+	name = "Trader Shuttle Station"
 	ambience = 'sound/ambience/space_traders.ogg'
-/area/shuttle/trader/transit
+	is_force_ambience = TRUE
+
+/area/shuttle/trader/space
+	name = "Trader Shuttle Space"
 	icon_state = "shuttlered2"
-	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 //Vox shuttle
 /area/shuttle/vox/arkship
