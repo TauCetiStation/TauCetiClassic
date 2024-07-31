@@ -76,5 +76,5 @@
 		prob(5); /obj/mecha/combat/honker/clown,
 		prob(1); /obj/mecha/combat/marauder/mauler,
 		prob(3); /obj/mecha/combat/gygax/dark,
-		prob(5); /obj/mecha/working/ripley/deathripley
+		prob(5); /obj/mecha/working/ripley/deathripley,
 		prob(3); /obj/vehicle/space/spacebike)

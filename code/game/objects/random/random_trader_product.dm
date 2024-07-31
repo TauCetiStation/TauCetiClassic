@@ -41,7 +41,7 @@
 	prob(5);/obj/item/weapon/tank/emergency_oxygen/double,\
 	prob(5);/obj/item/toy/sound_button/syndi,\
 	prob(5);/obj/item/toy/dualsword,\
-	prob(5);/obj/random/randomtoy\
+	prob(5);/obj/random/randomtoy,\
 	prob(5);/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,\
 	prob(5);/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom,\
 	prob(3);/obj/item/clothing/accessory/armor,\
