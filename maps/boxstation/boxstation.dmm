@@ -24488,7 +24488,7 @@
 "aRG" = (
 /obj/machinery/light/small,
 /obj/structure/closet/emcloset,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/chapel)
 "aRH" = (
 /obj/machinery/door/airlock{
