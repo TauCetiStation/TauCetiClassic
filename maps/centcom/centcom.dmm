@@ -14555,12 +14555,17 @@
 	name = "traders locker";
 	req_access = list(74)
 	},
+/obj/item/device/tagger/shop,
+/obj/item/stack/sheet/cardboard,
+/obj/item/stack/sheet/cardboard,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
 /area/shuttle/trader/space)
 "aGE" = (
 /obj/structure/rack,
+/obj/item/weapon/table_parts/stall,
+/obj/item/weapon/table_parts/stall,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -29686,14 +29691,9 @@
 	},
 /area/velocity)
 "nKI" = (
-/obj/structure/closet/crate,
-/obj/item/weapon/table_parts/stall,
-/obj/item/weapon/table_parts/stall,
+/obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/rack_parts,
 /obj/item/weapon/rack_parts,
-/obj/item/stack/sheet/cardboard,
-/obj/item/stack/sheet/cardboard,
-/obj/item/device/tagger/shop,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "nLb" = (
@@ -56842,7 +56842,7 @@ aFH
 enM
 ayS
 gLU
-iSq
+nKI
 mpy
 ayS
 gKI
@@ -58643,7 +58643,7 @@ ayS
 gLU
 aFH
 lxt
-nKI
+sJs
 afu
 ahG
 aaM

@@ -42,41 +42,39 @@
 	return TRUE
 
 /datum/faction/space_traders/proc/create_products()
-	var/list/high_tier_spawned = list()
+	var/high_tier_spawned = FALSE
 
-	for(var/obj/L in landmarks_list["Space Traders Product"])
+	for(var/obj/L in landmarks_list["Space Traders Product"]) // 21 landmarks on shuttle
 		var/turf/T = get_turf(L)
 		var/product
 
-		if(high_tier_spawned.len < 2 && prob(30))
-			if(prob(5))
-				do product = pick_mech()
-				while(product in high_tier_spawned)
+		if(high_tier_spawned) // 1 landmark for high tier, 20 for another items
+			var/obj/structure/closet/crate/C = new(T)
+			for(var/i in 1 to 2) // 20 * 2 = 40 items for sale
+				product = /obj/random/trader_product
+				new product(C)
+		else
+			if(prob(30))
+				product = pick_mech()
+				if(istype(product, /obj/vehicle/space/spacebike))
+					new /obj/item/weapon/key/spacebike(T)
 			else
 				new /obj/structure/rack(T)
-				do product = pick_high_tier()
-				while(product in high_tier_spawned)
-			high_tier_spawned += product
+				product = pick_high_tier()
 			new product(T)
-		else
-			var/obj/structure/closet/crate/C = new(T)
-			for(var/i in 1 to rand(3, 4))
-				product = pick_item()
-				new product(C)
+			high_tier_spawned = TRUE
 
 /datum/faction/space_traders/proc/pick_high_tier()
 	return pick(
-		prob(10); /obj/item/weapon/gun/medbeam,
-		prob(10); /obj/item/weapon/reagent_containers/glass/bottle/kyphotorin,
-		prob(10); /obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando,
-		prob(10); /obj/item/weapon/gun/energy/gun/portal/loaded,
-		prob(10); /obj/item/weapon/reagent_containers/hypospray/combat,
-		prob(10); /obj/item/weapon/storage/box/syndie_kit/drone,
-		prob(10); /obj/item/weapon/gun/projectile/automatic/m41a,)
+		/obj/item/weapon/gun/medbeam,
+		/obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando,
+		/obj/item/weapon/gun/energy/gun/portal/loaded,
+		/obj/item/weapon/gun/projectile/automatic/m41a)
 
 /datum/faction/space_traders/proc/pick_mech()
 	return pick(
 		prob(5); /obj/mecha/combat/honker/clown,
 		prob(1); /obj/mecha/combat/marauder/mauler,
-		prob(4); /obj/mecha/combat/gygax/dark,
-		prob(5); /obj/mecha/working/ripley/deathripley)
+		prob(3); /obj/mecha/combat/gygax/dark,
+		prob(5); /obj/mecha/working/ripley/deathripley
+		prob(3); /obj/vehicle/space/spacebike)
