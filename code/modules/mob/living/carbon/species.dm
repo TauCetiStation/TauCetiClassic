@@ -433,6 +433,9 @@
 	min_age = 25
 	max_age = 85
 
+	warning_low_pressure = -1
+	hazard_low_pressure = -1
+
 /datum/species/unathi
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'

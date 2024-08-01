@@ -167,16 +167,16 @@ var/global/list/wisp_start_landmark = list()
 	name = "Гонг"
 	desc = "Когда очень-очень нужно связаться с живыми"
 
-	icon = 'icons/obj/big_bell.dmi'
-	icon_state = "lord_Voker"
+	icon = 'icons/obj/pluvia_gong.dmi'
+	icon_state = "gong"
 	var/next_ring = 0
 	var/mob/target
 
 /obj/item/weapon/melee/pluvia_gong_baton
 	name = "Палочка для гонга"
 	desc = ""
-	icon_state = "stunbaton"
-	item_state = "baton"
+	icon_state = "mallet"
+	item_state = "mallet"
 
 /obj/structure/pluvia_gong/atom_init()
 	. = ..()
