@@ -196,6 +196,14 @@
 	neurotoxin
 	damage_type = TOX
 
+/obj/item/projectile/x_turret_acid
+	name = "turret toxin"
+	damage = 5
+	agony = 30
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	damage_type = BURN
+
 ///////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/tesla

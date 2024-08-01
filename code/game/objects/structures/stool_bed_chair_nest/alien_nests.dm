@@ -62,6 +62,6 @@
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/structure/bed/nest/post_buckle_mob(mob/living/buckling_mob)
+/obj/structure/stool/bed/nest/post_buckle_mob(mob/living/buckling_mob)
 	. = ..()
 	buckling_mob.reagents.add_reagent("xenojelly_n", 30)

@@ -457,12 +457,6 @@
 	icon_state = "skirt_cadet"
 	item_state = "skirt_cadet"
 
-/obj/item/clothing/under/rank/cargo_fem
-	name = "quartermaster's dress"
-	desc = "It's a jumpsuit worn by the quartermaster. It's specially designed to prevent back injuries caused by pushing paper."
-	icon_state = "qm_f"
-	item_state = "qm_f"
-
 /obj/item/clothing/under/rank/head_of_security_fem
 	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
 	name = "head of security's dress"
