@@ -20,6 +20,8 @@
 
 /obj/machinery/computer/trader_shuttle/ui_interact(mob/user)
 	var/dat
+	var/seconds = max(round((lastMove + TRADER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
+	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 
 	if(docked)
 		if(is_centcom_level(src.z))
