@@ -3125,6 +3125,10 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
+"sY" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/glass/reinforced,
+/area/space_structures/old_station/central/brig)
 "ta" = (
 /obj/item/weapon/flora/pottedplant/dead,
 /turf/simulated/floor{
@@ -12060,7 +12064,7 @@ jU
 cH
 nb
 Gt
-Xm
+sY
 LN
 St
 op
