@@ -20,18 +20,18 @@
 
 /obj/machinery/computer/trader_shuttle/ui_interact(mob/user)
 	var/dat
-	var/seconds = max(round((lastMove + TRADER_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)
-	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 
 	if(docked)
+		if(world.time < lastMove + TRADER_SHUTTLE_COOLDOWN)
+			dat += "<ul><li>Секунд до готовности двигателя к полёту: <b>[round((last_move + TRADER_SHUTTLE_COOLDOWN - world.time) * 0.1)]</b></li>"
+		else
+			dat += "<ul><li>Двигатель готов к полёту.</li>"
 		if(is_centcom_level(src.z))
 			dat += "<ul><li>Местоположение: <b>Космос.</b></li>"
-			dat += "<ul><li>Готов к полёту[max(lastMove + TRADER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"].</b></li>"
 			dat += "</ul>"
 			dat += "<a href='?src=\ref[src];station=1'>Пристыковаться к станции.</a>"
 		else
 			dat += "<ul><li>Местоположение: <b>[station_name_ru()].</b></li>"
-			dat += "<ul><li>Готов к полёту[max(lastMove + TRADER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"].</b></li>"
 			dat += "</ul>"
 			dat += "<a href='?src=\ref[src];space=1'>Начать процедуру отстыковки</a>"
 	else
