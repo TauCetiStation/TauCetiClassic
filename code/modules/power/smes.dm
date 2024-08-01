@@ -650,7 +650,7 @@
 					shock(user)
 				to_chat(user, "<span class='notice'>Вы успешно ремонтируете СМЕС.</span>")
 				next_instrument = pick(instruments - next_instrument)
-				stability += 1
+				stability++
 		else
 			to_chat(user, "<span class='notice'>Не тот инструмент.</span>")
 	else

@@ -122,10 +122,12 @@ var/global/mob/Jonesy
 	return TRUE
 
 /datum/faction/nostromo_crew/check_win()
-	var/mob/living/L = alien_list[ALIEN_LONE_HUNTER][1]
-	if(L)
-		return L.stat == DEAD
-	return TRUE
+	var/list/list = alien_list[ALIEN_LONE_HUNTER]
+	if(list.len)
+		var/mob/living/L = alien_list[ALIEN_LONE_HUNTER][1]
+		if(L)
+			return L.stat == DEAD
+	return
 
 /datum/faction/nostromo_crew/OnPostSetup()
 	..()
