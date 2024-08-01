@@ -54680,9 +54680,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "kiZ" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
+/obj/machinery/shieldwallgen,
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
 "kjH" = (

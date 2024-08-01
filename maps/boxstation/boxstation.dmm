@@ -3243,13 +3243,18 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/item/weapon/gun/projectile/grenade_launcher/m79{
+	pixel_y = 6
+	},
+/obj/item/weapon/gun/grenadelauncher{
+	pixel_y = -3
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
@@ -53343,9 +53348,7 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bQX" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
+/obj/machinery/shieldwallgen,
 /obj/structure/cable,
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
@@ -81900,11 +81903,6 @@
 	icon_state = "barber"
 	},
 /area/station/civilian/locker)
-"qoQ" = (
-/obj/machinery/light/small,
-/obj/machinery/light/small,
-/turf/simulated/floor/engine,
-/area/station/rnd/xenobiology)
 "qoS" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -133236,7 +133234,7 @@ kZn
 cjv
 cjr
 ckC
-qoQ
+kZn
 cjv
 cuL
 cey
