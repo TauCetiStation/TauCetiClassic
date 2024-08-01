@@ -38,3 +38,19 @@
 /datum/status_effect/swarm_gift/on_remove()
 	owner.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
 	return isreplicator(owner)
+
+/atom/movable/screen/alert/status_effect/alertness
+	name = "Настороженность"
+	desc = "Люди используют болы, следует быть осторожнее. Ваши рефлексы повышены."
+	icon_state = "alertness"
+
+/datum/status_effect/alertness
+	id = "alertness"
+	alert_type = /atom/movable/screen/alert/status_effect/alertness
+	status_type = STATUS_EFFECT_REFRESH
+
+/datum/status_effect/alertness/on_creation(mob/living/new_owner, duration)
+	. = ..()
+	if(!.)
+		return
+	src.duration = world.time + duration

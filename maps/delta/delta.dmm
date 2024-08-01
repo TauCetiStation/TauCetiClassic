@@ -6894,11 +6894,16 @@
 /area/station/security/armoury)
 "alr" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "delivery"
 	},
 /obj/machinery/door/window/brigdoor/northleft,
+/obj/item/weapon/gun/grenadelauncher{
+	pixel_y = -3
+	},
+/obj/item/weapon/gun/projectile/grenade_launcher/m79{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -89909,9 +89914,7 @@
 	},
 /area/station/cargo/storage)
 "seV" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
+/obj/machinery/shieldwallgen,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -98461,9 +98464,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "unh" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
+/obj/machinery/shieldwallgen,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
