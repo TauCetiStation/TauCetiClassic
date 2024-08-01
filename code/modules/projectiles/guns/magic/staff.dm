@@ -13,6 +13,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/animate
 	icon_state = "staffofanimation"
 	item_state = "staffofanimation"
+	recharge_rate = 5
 
 /obj/item/weapon/gun/magic/healing
 	name = "staff of healing"
@@ -36,3 +37,4 @@
 	item_state = "lavastaff"
 	desc = "An artefact that spits a fireball."
 	ammo_type = /obj/item/ammo_casing/magic/fireball
+	recharge_rate = 5
