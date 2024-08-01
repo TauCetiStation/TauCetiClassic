@@ -21,7 +21,6 @@
 /obj/machinery/computer/trader_shuttle/ui_interact(mob/user)
 	var/dat
 
-	Готов к полёту[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]<br>
 	if(docked)
 		if(is_centcom_level(src.z))
 			dat += "<ul><li>Местоположение: <b>Космос.</b></li>"
