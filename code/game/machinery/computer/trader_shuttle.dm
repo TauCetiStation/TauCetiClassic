@@ -6,7 +6,7 @@
 	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	resistance_flags = FULL_INDESTRUCTIBLE
 	var/docked = TRUE
-	var/last_move
+	var/lastmove = 0
 	var/area/space_location
 	var/area/station_location
 
