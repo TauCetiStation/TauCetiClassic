@@ -48,11 +48,11 @@
 /area/space_structures/research_ship)
 "af" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/mob_spawn/alien,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "ag" = (
@@ -541,7 +541,6 @@
 "NF" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
-/mob/living/simple_animal/hostile/xenomorph/drone,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
@@ -551,6 +550,7 @@
 	icon_state = "2-4"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/mob_spawn/alien/drone,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "OD" = (
@@ -648,7 +648,7 @@
 /area/space_structures/research_ship)
 "UV" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph,
+/obj/effect/spawner/mob_spawn/alien,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "Wq" = (

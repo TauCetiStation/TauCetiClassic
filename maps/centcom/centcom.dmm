@@ -1949,7 +1949,7 @@
 /turf/simulated/shuttle/floor/evac/sec1,
 /area/shuttle/escape/centcom)
 "afl" = (
-/mob/living/simple_animal/hostile/carp/dog/polkan,
+/obj/effect/spawner/mob_spawn/carp/polkan,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "afm" = (
@@ -2848,9 +2848,7 @@
 /area/shuttle/vox/arkship_hold)
 "ahM" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/mob/living/simple_animal/hostile/retaliate/goat{
-	name = "Experiment 97d"
-	},
+/obj/effect/spawner/mob_spawn/wiz_goat,
 /turf/unsimulated/floor{
 	icon_state = "grass1";
 	name = "grass"
@@ -4266,7 +4264,7 @@
 	},
 /area/shuttle/syndicate/start)
 "akN" = (
-/mob/living/simple_animal/cat/Syndi,
+/obj/effect/spawner/mob_spawn/nuke_cat,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -9959,14 +9957,6 @@
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
-"awB" = (
-/mob/living/carbon/monkey{
-	name = "Murphey"
-	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/custom/wizard_station)
 "awC" = (
 /obj/effect/decal/cleanable/blood,
 /turf/unsimulated/floor{
@@ -12647,18 +12637,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/specops)
-"aCg" = (
-/mob/living/simple_animal/hostile/shantak{
-	a_intent = "help";
-	aggro_vision_range = 0;
-	faction = "wizard"
-	},
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
-	},
-/area/space)
 "aCh" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Engineering Special Operations";
@@ -12811,7 +12789,7 @@
 	},
 /area/custom/syndicate_mothership)
 "aCv" = (
-/mob/living/simple_animal/mouse/nuke,
+/obj/effect/spawner/mob_spawn/nuke_mouse,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -14641,18 +14619,6 @@
 /area/space)
 "aGL" = (
 /obj/structure/bonfire,
-/turf/unsimulated/floor/snow{
-	nitrogen = 100;
-	oxygen = 25;
-	temperature = 243
-	},
-/area/space)
-"aGM" = (
-/mob/living/simple_animal/hostile/samak{
-	a_intent = "help";
-	aggro_vision_range = 0;
-	faction = "wizard"
-	},
 /turf/unsimulated/floor/snow{
 	nitrogen = 100;
 	oxygen = 25;
@@ -20625,7 +20591,7 @@
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
 "aYM" = (
-/mob/living/simple_animal/crab/Coffee,
+/obj/effect/spawner/mob_spawn/crab,
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
 "aYO" = (
@@ -21583,12 +21549,9 @@
 	},
 /area/space)
 "bcp" = (
-/mob/living/simple_animal/hostile/tribesman{
-	name = "Experiment 69T"
-	},
+/obj/effect/spawner/mob_spawn/wiz_monkey,
 /turf/unsimulated/floor{
-	icon_state = "asteroid7";
-	name = "plating"
+	icon_state = "freezerfloor"
 	},
 /area/custom/wizard_station)
 "bct" = (
@@ -21781,15 +21744,14 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "bdQ" = (
+/obj/effect/spawner/mob_spawn/wiz_tribesman,
 /turf/unsimulated/floor{
 	icon_state = "asteroid6";
 	name = "sand"
 	},
 /area/custom/wizard_station)
 "bdR" = (
-/mob/living/simple_animal/hostile/creature{
-	name = "Experiment 35b"
-	},
+/obj/effect/spawner/mob_spawn/wiz_creature,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "bdS" = (
@@ -29254,11 +29216,11 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "mVb" = (
-/mob/living/simple_animal/hostile/carp/dog,
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/effect/spawner/mob_spawn/carp/rex,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "mWb" = (
@@ -36273,7 +36235,7 @@ abi
 abi
 baz
 abi
-aCg
+abi
 abi
 abt
 abi
@@ -37827,7 +37789,7 @@ arP
 arP
 axc
 aaY
-bcp
+nXb
 bdO
 abg
 afT
@@ -39874,8 +39836,8 @@ abi
 abh
 abi
 abg
+bcp
 abs
-awB
 aaY
 arc
 arY
@@ -41940,7 +41902,7 @@ atd
 abg
 abg
 abi
-aGM
+abi
 abi
 afR
 abi
@@ -86974,7 +86936,7 @@ akx
 akR
 akM
 akM
-akN
+akM
 akM
 alE
 akM
@@ -87231,7 +87193,7 @@ akw
 aFN
 aHR
 akM
-akM
+akN
 aGs
 aGx
 aGx
