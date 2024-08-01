@@ -759,7 +759,7 @@
 	register_only = TRUE
 	time_for_registration = 0.5 MINUTES
 
-	time_while_available = 3 MINUTES
+	time_while_available = 4 MINUTES
 	var/datum/role/role
 
 /datum/spawner/space_trader/spawn_body(mob/dead/spectator)

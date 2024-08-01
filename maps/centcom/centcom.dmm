@@ -9597,8 +9597,10 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "avI" = (
-/turf/unsimulated/wall,
-/area/centcom/prison)
+/turf/unsimulated/wall/like_a_normal/green{
+	density = 0
+	},
+/area/centcom/specops)
 "avK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ladder{
@@ -61339,7 +61341,7 @@ aCV
 aCV
 aCV
 aMs
-aBp
+avI
 bbk
 aAm
 aIh
@@ -64665,7 +64667,7 @@ fsb
 xzP
 xzP
 xzP
-avI
+xzP
 aBp
 aBp
 aBp

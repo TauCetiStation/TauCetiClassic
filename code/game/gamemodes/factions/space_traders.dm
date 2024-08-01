@@ -38,8 +38,13 @@
 	create_spawner(/datum/spawner/space_trader/guard)
 	create_spawner(/datum/spawner/space_trader/porter)
 	create_products()
+
 	var/area/A = locate(/area/shuttle/trader/space) in all_areas
 	A.parallax_movedir = EAST
+
+	var/obj/machinery/computer/trader_shuttle/console = locate() in A
+	console.last_move = world.time
+
 	var/datum/announcement/centcomm/space_traders/announcement = new
 	announcement.play()
 

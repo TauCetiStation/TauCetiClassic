@@ -1,3 +1,4 @@
+#define TRADER_SHUTTLE_COOLDOWN 5 MINUTE
 
 /obj/machinery/computer/trader_shuttle
 	name = "Shuttle Console"
@@ -5,6 +6,7 @@
 	cases = list("консоль шаттла", "консоли шаттла", "консоли шаттла", "консоль шаттла", "консолью шаттла", "консоли шаттла")
 	resistance_flags = FULL_INDESTRUCTIBLE
 	var/docked = TRUE
+	var/last_move
 	var/area/space_location
 	var/area/station_location
 
@@ -19,13 +21,16 @@
 /obj/machinery/computer/trader_shuttle/ui_interact(mob/user)
 	var/dat
 
+	Готов к полёту[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]<br>
 	if(docked)
 		if(is_centcom_level(src.z))
 			dat += "<ul><li>Местоположение: <b>Космос.</b></li>"
+			dat += "<ul><li>Готов к полёту[max(lastMove + TRADER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"].</b></li>"
 			dat += "</ul>"
 			dat += "<a href='?src=\ref[src];station=1'>Пристыковаться к станции.</a>"
 		else
 			dat += "<ul><li>Местоположение: <b>[station_name_ru()].</b></li>"
+			dat += "<ul><li>Готов к полёту[max(lastMove + TRADER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"].</b></li>"
 			dat += "</ul>"
 			dat += "<a href='?src=\ref[src];space=1'>Начать процедуру отстыковки</a>"
 	else
@@ -43,6 +48,9 @@
 	if(!.)
 		return
 
+	if(world.time < lastMove + TRADER_SHUTTLE_COOLDOWN)
+		return
+
 	if(href_list["station"])
 		docked = FALSE
 		dock_to_station()
@@ -51,6 +59,7 @@
 		docked = FALSE
 		undock_to_station()
 
+	last_move = world.time
 	updateUsrDialog()
 
 /obj/machinery/computer/trader_shuttle/proc/dock_to_station()
@@ -75,3 +84,5 @@
 	SSshuttle.shake_mobs_in_area(space_location, WEST)
 
 	docked = TRUE
+
+#undef TRADER_SHUTTLE_COOLDOWN

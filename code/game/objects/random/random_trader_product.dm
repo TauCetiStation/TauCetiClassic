@@ -96,7 +96,7 @@
 	prob(2);/obj/item/robot_parts/r_arm,\
 	prob(2);/obj/item/robot_parts/l_leg,\
 	prob(2);/obj/item/robot_parts/r_leg,\
-	prob(5);/obj/item/roller/roller_holder_surg,\
+	prob(3);/obj/item/roller/roller_holder_surg,\
 	prob(2);/obj/item/weapon/reagent_containers/glass/beaker/bluespace,\
 	prob(2);/obj/item/weapon/reagent_containers/glass/beaker/teapot,\
 	prob(1);/obj/item/weapon/reagent_containers/hypospray/combat,\
@@ -128,8 +128,8 @@
 	prob(5);/obj/item/weapon/storage/toolbox/syndicate,\
 	prob(1);/obj/item/weapon/storage/pneumatic,\
 	prob(5);/obj/item/weapon/grenade/chem_grenade/metalfoam,\
-	prob(5);/obj/item/weapon/multi/hand_drill,\
-	prob(5);/obj/item/weapon/multi/jaws_of_life,\
+	prob(3);/obj/item/weapon/multi/hand_drill,\
+	prob(3);/obj/item/weapon/multi/jaws_of_life,\
 	prob(5);/obj/item/weapon/weldingtool/experimental,\
 	prob(5);/obj/item/device/lightreplacer,\
 	prob(5);/obj/item/weapon/book/skillbook/engineering,\
