@@ -18,6 +18,12 @@
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "Trader Porter"
 
+/datum/announcement/centcomm/space_traders
+	name = "Event: Space Traders"
+	subtitle = "Космоторговцы."
+	message = "Мы получили и одобрили запрос на стыковку от группы космоторговцев. " + \
+			"У них кончаются припасы и есть товары для продажи. Ожидайте гостей."
+
 /datum/faction/space_traders
 	name = F_SPACE_TRADERS
 	ID = F_SPACE_TRADERS
@@ -34,13 +40,15 @@
 	create_products()
 	var/area/A = locate(/area/shuttle/trader/space) in all_areas
 	A.parallax_movedir = EAST
+	var/datum/announcement/centcomm/space_traders/announcement = new
+	announcement.play()
 
 /datum/faction/space_traders/forgeObjectives()
 	if(!..())
 		return FALSE
 	AppendObjective(/datum/objective/make_money/faction/traders)
 	AppendObjective(/datum/objective/trader_purchase)
-	AppendObjective(/datum/objective/trader_escape)
+	AppendObjective(/datum/objective/traders_escape)
 	return TRUE
 
 /datum/faction/space_traders/proc/create_products()

@@ -26,7 +26,8 @@
 
 
 /datum/objective/trader_purchase
-	var/item_name
+	var/item_name1
+	var/item_name2
 	var/static/possible_items[] = list(
 		"эмиттер" = /obj/machinery/power/emitter,
 		"инкубатор вирусов" = /obj/machinery/disease2/incubator,
@@ -57,15 +58,22 @@
 		"алтарь священника" = /obj/structure/altar_of_gods)
 
 /datum/objective/trader_purchase/New()
-	item_name = pick(possible_items)
-	explanation_text = "На станции достать и притащить на наш шаттл [item_name]."
+	item_name1 = pick(possible_items)
+	do item_name2 = pick(possible_items)
+	while(item_name1 == item_name2)
+	explanation_text = "Достать и притащить на наш шаттл [item_name1] и [item_name2]."
 
 /datum/objective/trader_purchase/check_completion()
 	var/list/areas = list(/area/shuttle/trader/space, /area/shuttle/trader/station)
+	var/counter = 0
 	for(var/type in areas)
 		for(var/obj/O in get_area_by_type(type))
-			if(istype(O, possible_items[item_name]))
-				return OBJECTIVE_WIN
+			if(istype(O, possible_items[item_name1]) || istype(O, possible_items[item_name2]))
+				counter++
+	if(counter == 2)
+		return OBJECTIVE_WIN
+	else if(counter)
+		return OBJECTIVE_HALFWIN
 	return OBJECTIVE_LOSS
 
 
@@ -84,7 +92,7 @@
 				counter++
 		if(counter == mems.len) 	// ALL TRADERS ESCAPE ALIVE
 			return OBJECTIVE_WIN
-		else if (counter != 0) 		// AT LEAST ONE TRADER ESCAPE ALIVE
+		else if(counter) 			// AT LEAST ONE TRADER ESCAPE ALIVE
 			return OBJECTIVE_HALFWIN
 		else
 			return OBJECTIVE_LOSS

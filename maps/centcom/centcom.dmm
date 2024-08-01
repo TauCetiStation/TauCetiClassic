@@ -13927,15 +13927,7 @@
 /obj/machinery/door_control{
 	id = "trader_door";
 	name = "Entry door control";
-	pixel_x = 7;
 	pixel_y = 28
-	},
-/obj/machinery/door_control{
-	id = "outer trader bolt";
-	name = "Outer door bolt control";
-	pixel_x = -7;
-	pixel_y = 28;
-	specialfunctions = 4
 	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
@@ -14115,7 +14107,7 @@
 	},
 /area/centcom/specops)
 "aFD" = (
-/obj/structure/displaycase{
+/obj/structure/displaycase/noalert{
 	req_access = list(74)
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -14156,7 +14148,7 @@
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "aFJ" = (
-/obj/structure/displaycase{
+/obj/structure/displaycase/noalert{
 	req_access = list(74)
 	},
 /turf/simulated/shuttle/floor/erokez,
@@ -14575,7 +14567,6 @@
 /obj/item/device/tagger/shop,
 /obj/item/stack/sheet/cardboard,
 /obj/item/stack/sheet/cardboard,
-/obj/item/weapon/moneybag,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
