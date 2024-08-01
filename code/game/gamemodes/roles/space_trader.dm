@@ -30,6 +30,9 @@
 	MA.owner_PDA = pda
 	H.equip_or_collect(pda, SLOT_R_STORE)
 
+	var/datum/faction/space_traders/F = create_uniq_faction(/datum/faction/space_traders)
+	add_faction_member(F, H, TRUE)
+
 /datum/role/space_trader/dealer
 	skillset_type = /datum/skillset/quartermaster
 	outfit = /datum/outfit/space_trader/dealer

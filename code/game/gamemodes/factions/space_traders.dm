@@ -39,6 +39,8 @@
 	if(!..())
 		return FALSE
 	AppendObjective(/datum/objective/make_money/faction/traders)
+	AppendObjective(/datum/objective/trader_purchase)
+	AppendObjective(/datum/objective/trader_escape)
 	return TRUE
 
 /datum/faction/space_traders/proc/create_products()

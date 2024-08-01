@@ -2102,6 +2102,8 @@
 	},
 /obj/machinery/door/airlock/highsecurity{
 	dock_tag = "trader_shuttle";
+	id_tag = "outer trader bolt";
+	locked = 1;
 	name = "Space Traders Shuttle"
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -13600,7 +13602,12 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/filingcabinet/chestdrawer/black,
+/obj/structure/table/reinforced/stall,
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_x = -2;
+	pixel_y = 8
+	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "aEA" = (
@@ -13817,11 +13824,8 @@
 	},
 /area/custom/wizard_station)
 "aEW" = (
-/obj/structure/table/reinforced/stall,
-/obj/item/device/cardpay{
-	dir = 8;
-	pixel_x = -2;
-	pixel_y = 8
+/obj/structure/sign/warning/airlock{
+	pixel_y = 32
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
@@ -13920,6 +13924,19 @@
 /area/velocity/monorailwagon)
 "aFj" = (
 /obj/structure/stool/bed/chair/schair/wagon/red,
+/obj/machinery/door_control{
+	id = "trader_door";
+	name = "Entry door control";
+	pixel_x = 7;
+	pixel_y = 28
+	},
+/obj/machinery/door_control{
+	id = "outer trader bolt";
+	name = "Outer door bolt control";
+	pixel_x = -7;
+	pixel_y = 28;
+	specialfunctions = 4
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -14098,7 +14115,7 @@
 	},
 /area/centcom/specops)
 "aFD" = (
-/obj/structure/displaycase/noalert{
+/obj/structure/displaycase{
 	req_access = list(74)
 	},
 /turf/simulated/shuttle/floor/erokez{
@@ -14133,14 +14150,13 @@
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "aFI" = (
-/obj/structure/table/reinforced/stall,
-/obj/item/weapon/bell{
-	pixel_y = 5
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 4
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "aFJ" = (
-/obj/structure/displaycase/noalert{
+/obj/structure/displaycase{
 	req_access = list(74)
 	},
 /turf/simulated/shuttle/floor/erokez,
@@ -14278,6 +14294,7 @@
 /area/centcom/specops)
 "aFY" = (
 /obj/machinery/door/airlock/hatch{
+	id_tag = "trader_door";
 	name = "Space Traders Shuttle";
 	req_access = list(74)
 	},
@@ -14558,6 +14575,7 @@
 /obj/item/device/tagger/shop,
 /obj/item/stack/sheet/cardboard,
 /obj/item/stack/sheet/cardboard,
+/obj/item/weapon/moneybag,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -28573,8 +28591,9 @@
 	},
 /area/centcom/bar)
 "lEk" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 4
+/obj/structure/table/reinforced/stall,
+/obj/item/weapon/bell{
+	pixel_y = 5
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
@@ -29691,9 +29710,10 @@
 	},
 /area/velocity)
 "nKI" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/rack_parts,
-/obj/item/weapon/rack_parts,
+/obj/machinery/door/airlock/hatch{
+	name = "Space Traders Shuttle";
+	req_access = list(74)
+	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "nLb" = (
@@ -55292,15 +55312,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abu
+abu
+abu
+abu
+abu
+abu
+abu
+abu
+abu
 aaM
 aaM
 aaM
@@ -55547,8 +55567,8 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
+abu
+abu
 ahG
 ahG
 ahG
@@ -55558,8 +55578,8 @@ ahG
 ahG
 ahG
 ahG
-aaM
-aaM
+abu
+abu
 aaM
 aaM
 aaM
@@ -55803,7 +55823,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 ahG
 ahG
@@ -55817,7 +55837,7 @@ gKI
 ahG
 ahG
 ahG
-aaM
+abu
 aaM
 aaM
 "}
@@ -56059,7 +56079,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 ahG
 aft
@@ -56075,7 +56095,7 @@ aGy
 gKI
 ahG
 ahG
-aaM
+abu
 aaM
 "}
 (96,1,1) = {"
@@ -56316,7 +56336,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 aft
 afu
@@ -56332,7 +56352,7 @@ aFF
 afu
 gKI
 ahG
-aaM
+abu
 aaM
 "}
 (97,1,1) = {"
@@ -56572,7 +56592,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 ahG
 ayS
@@ -56590,7 +56610,7 @@ afu
 ayS
 ahG
 ahG
-aaM
+abu
 "}
 (98,1,1) = {"
 ahG
@@ -56829,7 +56849,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 aft
 ayS
@@ -56842,12 +56862,12 @@ aFH
 enM
 ayS
 gLU
-nKI
+iSq
 mpy
 ayS
 gKI
 ahG
-aaM
+abu
 "}
 (99,1,1) = {"
 ahG
@@ -57086,14 +57106,14 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 afu
 ayS
 aFj
 aFH
 nUu
-ayS
+nKI
 nUu
 tUB
 eue
@@ -57104,7 +57124,7 @@ mpy
 ayS
 afu
 ahG
-aaM
+abu
 "}
 (100,1,1) = {"
 ahG
@@ -57343,14 +57363,14 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 afu
 aDP
 nUu
-aFH
+aFI
 nUu
-aFY
+aFZ
 nUu
 aFH
 eDT
@@ -57361,7 +57381,7 @@ huU
 ngk
 ayS
 ahG
-aaM
+abu
 "}
 (101,1,1) = {"
 ahG
@@ -57600,13 +57620,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 afu
 aEz
-nUu
+aFk
 lEk
-nUu
+aFk
 aFZ
 aGD
 btc
@@ -57618,7 +57638,7 @@ nUu
 giM
 afu
 ahG
-aaM
+abu
 "}
 (102,1,1) = {"
 ahG
@@ -57857,13 +57877,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 afu
-aEW
-aFk
-aFI
-aFk
+aFH
+nUu
+aFH
+nUu
 aFZ
 aGE
 aFH
@@ -57875,7 +57895,7 @@ nUu
 sJs
 afu
 ahG
-aaM
+abu
 "}
 (103,1,1) = {"
 ahG
@@ -58114,10 +58134,10 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 afu
-aFH
+aEW
 nUu
 aFH
 nUu
@@ -58132,7 +58152,7 @@ nUu
 nmr
 afu
 ahG
-aaM
+abu
 "}
 (104,1,1) = {"
 ahG
@@ -58371,7 +58391,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 afG
 aFH
@@ -58389,7 +58409,7 @@ nUu
 giM
 afu
 ahG
-aaM
+abu
 "}
 (105,1,1) = {"
 ahG
@@ -58628,7 +58648,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 afG
 aFH
@@ -58646,7 +58666,7 @@ lxt
 sJs
 afu
 ahG
-aaM
+abu
 "}
 (106,1,1) = {"
 ahG
@@ -58885,7 +58905,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 afu
 ayS
@@ -58903,7 +58923,7 @@ gLU
 ayS
 afu
 ahG
-aaM
+abu
 "}
 (107,1,1) = {"
 aaM
@@ -59142,7 +59162,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 afH
 ayS
@@ -59160,7 +59180,7 @@ gLU
 ayS
 mrv
 ahG
-aaM
+abu
 "}
 (108,1,1) = {"
 aaM
@@ -59399,7 +59419,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 ahG
 ayS
@@ -59408,7 +59428,7 @@ aFH
 nUu
 ayS
 ahG
-aaM
+abu
 ahG
 ayS
 hXy
@@ -59417,7 +59437,7 @@ mpy
 ayS
 ahG
 ahG
-aaM
+abu
 "}
 (109,1,1) = {"
 aaM
@@ -59657,7 +59677,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 ayS
 afu
@@ -59665,7 +59685,7 @@ aFJ
 aFD
 ayS
 ahG
-aaM
+abu
 ahG
 ayS
 imk
@@ -59673,7 +59693,7 @@ sJs
 afu
 ayS
 ahG
-aaM
+abu
 aaM
 "}
 (110,1,1) = {"
@@ -59914,7 +59934,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 afH
 afu
@@ -59922,7 +59942,7 @@ ayS
 afu
 ayS
 ahG
-aaM
+abu
 ahG
 ayS
 afu
@@ -59930,7 +59950,7 @@ ayS
 afu
 mrv
 ahG
-aaM
+abu
 aaM
 "}
 (111,1,1) = {"
@@ -60171,7 +60191,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 ahG
 afH
@@ -60179,7 +60199,7 @@ ayS
 afu
 ayS
 ahG
-aaM
+abu
 ahG
 ayS
 afu
@@ -60187,7 +60207,7 @@ ayS
 mrv
 ahG
 ahG
-aaM
+abu
 aaM
 "}
 (112,1,1) = {"
@@ -60429,21 +60449,21 @@ aaM
 aaM
 aaM
 aaM
-aaM
+abu
 ahG
 ahG
 ahG
 ahG
 ahG
 ahG
-aaM
+abu
 ahG
 ahG
 ahG
 ahG
 ahG
 ahG
-aaM
+abu
 aaM
 aaM
 "}
@@ -60687,19 +60707,19 @@ aaM
 aaM
 aaM
 aaM
+abu
+abu
+abu
+abu
+abu
+abu
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+abu
+abu
+abu
+abu
+abu
+abu
 aaM
 aaM
 aaM

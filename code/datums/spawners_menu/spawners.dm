@@ -746,6 +746,9 @@
 	R.rename = FALSE
 	setup_role(R, TRUE)
 
+/*
+ * SPACE TRADERS
+*/
 /datum/spawner/space_trader
 	name = "Космический торговец"
 	desc = "Космический торговец."
@@ -755,9 +758,8 @@
 	register_only = TRUE
 	time_for_registration = 0.5 MINUTES
 
-	time_while_available = 5 MINUTES
-	spawn_landmark_name = "Space Trader"
-	var/datum/role/role = /datum/role/space_trader
+	time_while_available = 3 MINUTES
+	var/datum/role/role
 
 /datum/spawner/space_trader/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
@@ -766,27 +768,8 @@
 	var/mob/living/carbon/human/H = new(spawnloc)
 	C.create_human_apperance(H)
 	H.key = C.key
-	spawn_trader_id(H, 200)
 
 	create_and_setup_role(role, H)
-
-/datum/spawner/space_trader/proc/spawn_trader_id(mob/living/carbon/human/H, money)
-	var/datum/money_account/MA = create_random_account_and_store_in_mind(H, money)
-
-	var/obj/item/weapon/card/id/C = new(H)
-	C.rank = "Space Trader"
-	C.assign(H.real_name)
-	C.access = list(access_space_traders)
-	C.associated_account_number = MA.account_number
-	H.equip_or_collect(C, SLOT_WEAR_ID)
-
-	var/obj/item/device/pda/pda = new(H)
-	pda.assign(H.real_name)
-	pda.ownrank = C.rank
-	pda.owner_account = MA.account_number
-	pda.owner_fingerprints += C.fingerprint_hash
-	MA.owner_PDA = pda
-	H.equip_or_collect(pda, SLOT_R_STORE)
 
 /datum/spawner/space_trader/dealer
 	name = "Космоторговец барыга"
@@ -868,6 +851,9 @@
 	H.age = rand(H.species.min_age, H.species.min_age * 1.25)
 	H.key = C.key
 	H.dna.ready_dna(H)
-	spawn_trader_id(H, 20)
 
 	create_and_setup_role(role, H)
+
+/*
+ *
+*/

@@ -97,6 +97,9 @@
 	prob(2);/obj/item/robot_parts/l_leg,\
 	prob(2);/obj/item/robot_parts/r_leg,\
 	prob(5);/obj/item/roller/roller_holder_surg,\
+	prob(2);/obj/item/weapon/reagent_containers/glass/beaker/bluespace,\
+	prob(2);/obj/item/weapon/reagent_containers/glass/beaker/teapot,\
+	prob(1);/obj/item/weapon/reagent_containers/hypospray/combat,\
 	prob(3);/obj/item/weapon/book/skillbook/surgery,\
 	prob(3);/obj/item/weapon/book/skillbook/medical,\
 	prob(3);/obj/item/weapon/book/skillbook/chemistry,\
@@ -193,7 +196,7 @@
 	prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec,\
 	prob(5);/obj/item/ammo_box/magazine/glock/extended/rubber,\
 	prob(5);/obj/item/weapon/melee/telebaton,\
-	prob(5);/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,\
+	prob(3);/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,\
 	prob(5);/obj/item/weapon/storage/pouch/ammo,\
 	prob(1);/obj/item/weapon/changeling_test/prepared,\
 	prob(3);/obj/item/weapon/shield/riot/tele,\
