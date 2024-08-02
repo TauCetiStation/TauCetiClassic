@@ -32,7 +32,9 @@
 	uniform = /obj/item/clothing/under/lawyer/red
 	shoes = /obj/item/clothing/shoes/black
 	belt = /obj/item/device/pda/reporter
-	l_pocket = /obj/item/device/camera
+	l_pocket = /obj/item/weapon/spacecash/c10
+	r_pocket = /obj/item/weapon/spacecash/c10
+	backpack_contents = list(/obj/item/device/camera)
 
 /datum/outfit/job/assistant/test_subject
 	name = OUTFIT_JOB_NAME("Test Subject")
