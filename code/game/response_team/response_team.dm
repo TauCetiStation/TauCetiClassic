@@ -129,7 +129,7 @@ var/global/can_call_ert
 		H.s_tone = -H.s_tone + 35
 
 	if(H.species.flags[HAS_SKIN_COLOR])
-		var/new_skin = input(H, "Выберите цвет кожи", "Xenos Skin") as null|color
+		var/new_skin = input(src, "Выберите цвет кожи", "Xenos Skin") as null|color
 		if(new_skin)
 			H.r_skin = hex2num(copytext(new_skin, 2, 4))
 			H.g_skin = hex2num(copytext(new_skin, 4, 6))

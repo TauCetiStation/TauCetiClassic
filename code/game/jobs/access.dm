@@ -555,7 +555,8 @@
 				"Marine",
 				"Marine Squad Leader",
 				"Senior Engineer",
-				"Senior Medic")
+				"Senior Medic",
+				"Space Trader")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))

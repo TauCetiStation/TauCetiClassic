@@ -1,5 +1,6 @@
 /datum/outfit/space_trader
 	survival_box = TRUE
+	l_ear = /obj/item/device/radio/headset
 
 /datum/outfit/space_trader/dealer
 	name = "Space Trader Dealer"

@@ -42,7 +42,7 @@
 	A.parallax_movedir = EAST
 
 	var/obj/machinery/computer/trader_shuttle/console = locate() in A
-	console.last_move = world.time
+	console.lastmove = world.time
 
 	var/datum/announcement/centcomm/space_traders/announcement = new
 	announcement.play()
@@ -68,6 +68,7 @@
 				product = /obj/random/trader_product
 				new product(C)
 		else
+			high_tier_spawned = TRUE
 			if(prob(30))
 				product = pick_mech()
 				if(istype(product, /obj/vehicle/space/spacebike))
@@ -75,8 +76,11 @@
 			else
 				new /obj/structure/rack(T)
 				product = pick_high_tier()
-			new product(T)
-			high_tier_spawned = TRUE
+
+			var/O = new product(T)
+			if(istype(O, /obj/mecha))
+				var/obj/mecha/M = O
+				M.operation_req_access = list()
 
 /datum/faction/space_traders/proc/pick_high_tier()
 	return pick(
@@ -91,4 +95,4 @@
 		prob(1); /obj/mecha/combat/marauder/mauler,
 		prob(3); /obj/mecha/combat/gygax/dark,
 		prob(5); /obj/mecha/working/ripley/deathripley,
-		prob(3); /obj/vehicle/space/spacebike)
+		prob(5); /obj/vehicle/space/spacebike)

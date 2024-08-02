@@ -14523,10 +14523,9 @@
 	},
 /area/shuttle/trader/space)
 "aGB" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
+/obj/structure/closet/secure_closet/freezer/empty,
+/obj/random/foods/donuts,
+/obj/random/foods/drink_can,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -14546,7 +14545,6 @@
 	},
 /obj/item/device/tagger/shop,
 /obj/item/stack/sheet/cardboard,
-/obj/item/stack/sheet/cardboard,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -14555,6 +14553,7 @@
 /obj/structure/rack,
 /obj/item/weapon/table_parts/stall,
 /obj/item/weapon/table_parts/stall,
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -14688,9 +14687,8 @@
 	},
 /area/custom/tophat)
 "aGV" = (
-/obj/structure/closet/secure_closet/freezer/empty,
-/obj/random/foods/donuts,
-/obj/random/foods/drink_can,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/gar,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "aHb" = (
@@ -24302,9 +24300,10 @@
 /turf/unsimulated/floor,
 /area/velocity)
 "eeA" = (
-/obj/structure/table/reinforced,
-/obj/item/device/tagger{
-	pixel_y = 4
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/rainbow,
+/obj/structure/sign/poster/random{
+	pixel_x = -32
 	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
@@ -24412,14 +24411,11 @@
 /turf/unsimulated/floor,
 /area/velocity)
 "enM" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/packageWrap{
-	pixel_x = -2;
-	pixel_y = 4
+/obj/structure/displaycase/noalert{
+	req_access = list(74)
 	},
-/obj/item/weapon/packageWrap{
-	pixel_x = 3;
-	pixel_y = 2
+/obj/structure/sign/poster/random{
+	pixel_y = 32
 	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
@@ -25226,9 +25222,9 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "fKb" = (
-/obj/structure/table/reinforced,
-/obj/item/toy/plushie/space_whale{
-	pixel_y = 4
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/hos{
+	name = "dealer's bedsheet"
 	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
@@ -30496,6 +30492,18 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"pxs" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/effect/landmark/space_traders/product,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/space)
 "pya" = (
 /obj/effect/decal/turf_decal/orange{
 	dir = 8;
@@ -31281,6 +31289,15 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"vaE" = (
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/obj/structure/table/reinforced,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/space)
 "vaT" = (
 /obj/structure/closet/wardrobe/black,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -56826,7 +56843,7 @@ aFK
 ayS
 aGC
 aFH
-enM
+nUu
 ayS
 gLU
 iSq
@@ -57338,7 +57355,7 @@ nUu
 aFI
 nUu
 aFZ
-nUu
+vaE
 aFH
 eDT
 ayS
@@ -58876,7 +58893,7 @@ abu
 cuc
 afu
 ayS
-aFD
+enM
 aFH
 aFV
 ayS
@@ -59141,7 +59158,7 @@ cuc
 cuc
 cuc
 ayS
-gVc
+pxs
 iSq
 gLU
 ayS
