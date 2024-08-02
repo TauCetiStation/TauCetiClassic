@@ -27,7 +27,7 @@
 	l_pocket = /obj/item/weapon/lighter/zippo
 
 /datum/outfit/job/assistant/journalist
-	name = OUTFIT_JOB_NAME("Reporter")
+	name = OUTFIT_JOB_NAME("Journalist")
 
 	uniform = /obj/item/clothing/under/lawyer/black
 	shoes = /obj/item/clothing/shoes/black
