@@ -25,20 +25,20 @@
 		if(world.time < lastMove + TRADER_SHUTTLE_COOLDOWN)
 			dat += "<ul><li>Секунд до готовности двигателя к полёту: <b>[round((last_move + TRADER_SHUTTLE_COOLDOWN - world.time) * 0.1)]</b></li>"
 		else
-			dat += "<ul><li>Двигатель готов к полёту.</li>"
+			dat += "<ul><li>Двигатель готов к полёту</li>"
 		if(is_centcom_level(src.z))
-			dat += "<ul><li>Местоположение: <b>Космос.</b></li>"
+			dat += "<ul><li>Местоположение: <b>Космос</b></li>"
 			dat += "</ul>"
-			dat += "<a href='?src=\ref[src];station=1'>Пристыковаться к станции.</a>"
+			dat += "<a href='?src=\ref[src];station=1'>Пристыковаться к станции</a>"
 		else
-			dat += "<ul><li>Местоположение: <b>[station_name_ru()].</b></li>"
+			dat += "<ul><li>Местоположение: <b>[station_name_ru()]</b></li>"
 			dat += "</ul>"
 			dat += "<a href='?src=\ref[src];space=1'>Начать процедуру отстыковки</a>"
 	else
 		if(is_centcom_level(src.z))
-			dat += "<ul><li>Местоположение: <b>Приближаемся к станции.</b></li>"
+			dat += "<ul><li>Местоположение: <b>Приближаемся к станции</b></li>"
 		else
-			dat += "<ul><li>Местоположение: <b>Отдаляемся от станции.</b></li>"
+			dat += "<ul><li>Местоположение: <b>Отдаляемся от станции</b></li>"
 
 	var/datum/browser/popup = new(user, "flightcomputer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 365, 200)
 	popup.set_content(dat)

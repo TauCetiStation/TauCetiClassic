@@ -770,7 +770,9 @@
 	C.create_human_apperance(H)
 	H.key = C.key
 
-	create_and_setup_role(role, H)
+	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
+	F.roletype = role
+	add_faction_member(F, H, TRUE, TRUE)
 
 /datum/spawner/space_trader/dealer
 	name = "Космоторговец барыга"
@@ -800,60 +802,15 @@
 /datum/spawner/space_trader/porter/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
 	var/client/C = spectator.client
-	var/mob/living/carbon/human/H = new(spawnloc, /datum/species/tajaran)
 
+	var/mob/living/carbon/human/H = new(spawnloc, TAJARAN)
 	var/new_name = capitalize(pick(global.tajaran_male_first)) + " " + capitalize(pick(global.last_names))
-	H.real_name = new_name
-	H.name = new_name
-	if(H.mind)
-		H.mind.name = new_name
-
-	var/new_skin = input(H, "Please select xeno-body color", "Xenos Skin") as null|color
-	if(new_skin)
-		H.r_skin = hex2num(copytext(new_skin, 2, 4))
-		H.g_skin = hex2num(copytext(new_skin, 4, 6))
-		H.b_skin = hex2num(copytext(new_skin, 6, 8))
-
-	var/new_f_style = input(H, "Select a facial hair style", "Grooming") as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
-	if(new_f_style)
-		H.f_style = new_f_style
-
-	var/new_h_style = input(H, "Select a hair style", "Grooming") as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
-	if(new_h_style)
-		H.h_style = new_h_style
-
-	var/new_hair = input(H, "Choose your hair color", "Hair Color") as null|color
-	if(new_hair)
-		H.r_hair = hex2num(copytext(new_hair, 2, 4))
-		H.g_hair = hex2num(copytext(new_hair, 4, 6))
-		H.b_hair = hex2num(copytext(new_hair, 6, 8))
-
-	var/new_facial = input(H, "Choose your facial hair color", "Hair Color") as null|color
-	if(new_facial)
-		H.r_facial = hex2num(copytext(new_facial, 2, 4))
-		H.g_facial = hex2num(copytext(new_facial, 4, 6))
-		H.b_facial = hex2num(copytext(new_facial, 6, 8))
-
-	var/new_eyes = input(H, "Choose your eye color", "Eye Color") as null|color
-	if(new_eyes)
-		H.r_eyes = hex2num(copytext(new_eyes, 2, 4))
-		H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
-		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
-
-	var/new_height = input(H, "Choose your character's height:", "Character Height", H.height) as null|anything in heights_list
-	if(new_height)
-		H.height = new_height
-		H.regenerate_icons()
-
-	H.apply_recolor()
-	H.update_hair()
-	H.update_body()
-	H.check_dna(H)
-	H.age = rand(H.species.min_age, H.species.min_age * 1.25)
+	C.create_human_apperance(H, new_name)
 	H.key = C.key
-	H.dna.ready_dna(H)
 
-	create_and_setup_role(role, H)
+	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
+	F.roletype = role
+	add_faction_member(F, H, TRUE, TRUE)
 
 /*
  *

@@ -37,35 +37,28 @@
 	prob(1);/obj/item/weapon/storage/box/space_suit/clown,\
 	prob(5);/obj/item/weapon/gun/energy/laser/cutter,\
 	prob(5);/obj/item/clothing/mask/facehugger_toy,\
-	prob(5);/obj/item/clothing/mask/gas/fawkes,\
 	prob(5);/obj/item/weapon/tank/emergency_oxygen/double,\
 	prob(5);/obj/item/toy/sound_button/syndi,\
 	prob(5);/obj/item/toy/dualsword,\
-	prob(5);/obj/random/randomtoy,\
 	prob(5);/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,\
 	prob(5);/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom,\
-	prob(3);/obj/item/clothing/accessory/armor,\
 	prob(5);/obj/item/clothing/gloves/pipboy/pimpboy3billion,\
 	prob(5);/obj/item/weapon/patcher,\
 	prob(5);/obj/item/weapon/sledgehammer,\
 	prob(8);/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,\
 	prob(8);/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,\
-	prob(5);/obj/item/weapon/storage/pouch/large_generic,\
 	prob(1);/obj/item/weapon/tank/jetpack/oxygen/harness,\
-	prob(5);/obj/item/device/flash,\
 	prob(3);/obj/item/device/remote_device/no_access,\
-	prob(2);/obj/item/seeds/bluespacetomatoseed,\
-	prob(2);/obj/item/seeds/meatwheat,\
-	prob(2);/obj/item/seeds/replicapod/real_deal,\
-	prob(2);/obj/item/seeds/thaadra,\
-	prob(2);/obj/item/seeds/telriis,\
-	prob(2);/obj/item/seeds/vale,\
-	prob(2);/obj/item/seeds/jurlmah,\
-	prob(2);/obj/item/seeds/gelthi,\
+	prob(1);/obj/item/seeds/bluespacetomatoseed,\
+	prob(1);/obj/item/seeds/meatwheat,\
+	prob(1);/obj/item/seeds/replicapod/real_deal,\
+	prob(1);/obj/item/seeds/thaadra,\
+	prob(1);/obj/item/seeds/telriis,\
+	prob(1);/obj/item/seeds/vale,\
+	prob(1);/obj/item/seeds/jurlmah,\
+	prob(1);/obj/item/seeds/gelthi,\
 	prob(1);/obj/item/weapon/bikehorn/gold,\
-	prob(4);/obj/item/weapon/book/skillbook/exosuits,\
-	prob(4);/obj/item/weapon/book/skillbook/robust,\
-	prob(3);/obj/item/weapon/reagent_containers/glass/bottle/mutagen,\
+	prob(2);/obj/item/clothing/shoes/syndigaloshes,\
 	prob(1);/obj/item/weapon/claymore/light\
 	)
 
@@ -85,24 +78,14 @@
 	prob(3);/obj/item/weapon/storage/pill_bottle/dexalin_plus,\
 	prob(3);/obj/item/weapon/storage/pill_bottle/dermaline,\
 	prob(3);/obj/item/weapon/storage/pill_bottle/dylovene,\
-	prob(3);/obj/item/weapon/storage/pill_bottle/spaceacillin,\
 	prob(3);/obj/item/weapon/storage/pill_bottle/tramadol,\
 	prob(3);/obj/item/weapon/reagent_containers/glass/bottle/peridaxon,\
 	prob(1);/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin,\
 	prob(5);/obj/item/weapon/medical/teleporter,\
-	prob(3);/obj/item/weapon/scalpel/manager,\
-	prob(5);/obj/item/weapon/virusdish/random,\
-	prob(2);/obj/item/robot_parts/l_arm,\
-	prob(2);/obj/item/robot_parts/r_arm,\
-	prob(2);/obj/item/robot_parts/l_leg,\
-	prob(2);/obj/item/robot_parts/r_leg,\
+	prob(1);/obj/item/weapon/scalpel/manager,\
 	prob(3);/obj/item/roller/roller_holder_surg,\
 	prob(2);/obj/item/weapon/reagent_containers/glass/beaker/bluespace,\
-	prob(2);/obj/item/weapon/reagent_containers/glass/beaker/teapot,\
 	prob(1);/obj/item/weapon/reagent_containers/hypospray/combat,\
-	prob(3);/obj/item/weapon/book/skillbook/surgery,\
-	prob(3);/obj/item/weapon/book/skillbook/medical,\
-	prob(3);/obj/item/weapon/book/skillbook/chemistry,\
 	prob(2);/obj/item/weapon/dnainjector/clumsymut,\
 	prob(2);/obj/item/weapon/dnainjector/hulkmut,\
 	prob(2);/obj/item/weapon/dnainjector/regenerate\
@@ -121,18 +104,17 @@
 	prob(5);/obj/item/stack/sheet/glass/fifty,\
 	prob(5);/obj/item/weapon/rcd/ert,\
 	prob(5);/obj/item/weapon/rcd_ammo/bluespace,\
-	prob(5);/obj/item/clothing/accessory/storage/brown_vest,\
 	prob(5);/obj/item/clothing/glasses/meson/gar,\
 	prob(5);/obj/item/clothing/glasses/welding/superior,\
 	prob(5);/obj/item/clothing/gloves/insulated,\
 	prob(5);/obj/item/weapon/storage/toolbox/syndicate,\
 	prob(1);/obj/item/weapon/storage/pneumatic,\
-	prob(5);/obj/item/weapon/grenade/chem_grenade/metalfoam,\
+	prob(3);/obj/item/weapon/grenade/chem_grenade/metalfoam,\
 	prob(3);/obj/item/weapon/multi/hand_drill,\
 	prob(3);/obj/item/weapon/multi/jaws_of_life,\
 	prob(5);/obj/item/weapon/weldingtool/experimental,\
-	prob(5);/obj/item/device/lightreplacer,\
-	prob(5);/obj/item/weapon/book/skillbook/engineering,\
+	prob(1);/obj/item/device/lightreplacer,\
+	prob(5);/obj/item/clothing/shoes/magboots/ert,\
 	prob(1);/obj/item/weapon/circuitboard/camera_advanced\
 	)
 
@@ -146,10 +128,10 @@
 	return pick(\
 	prob(1);/obj/item/weapon/disk/research_points,\
 	prob(5);/obj/item/bluespace_crystal,\
-	prob(3);/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser,\
-	prob(3);/obj/item/mecha_parts/mecha_equipment/rcd,\
-	prob(3);/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,\
-	prob(3);/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,\
+	prob(2);/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser,\
+	prob(2);/obj/item/mecha_parts/mecha_equipment/rcd,\
+	prob(2);/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,\
+	prob(2);/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,\
 	prob(1);/obj/item/mecha_parts/part/honker_torso,\
 	prob(3);/obj/item/stack/sheet/mineral/clown,\
 	prob(1);/obj/item/device/assembly/signaler/anomaly,\
@@ -160,8 +142,8 @@
 	prob(2);/obj/item/rig_module/med_teleport,\
 	prob(2);/obj/item/rig_module/selfrepair/adv,\
 	prob(2);/obj/item/rig_module/mounted,\
-	prob(5);/obj/item/borg/upgrade/security,\
-	prob(5);/obj/item/borg/upgrade/vtec,\
+	prob(3);/obj/item/borg/upgrade/security,\
+	prob(3);/obj/item/borg/upgrade/vtec,\
 	prob(5);/obj/item/weapon/stock_parts/cell/bluespace,\
 	prob(3);/obj/item/weapon/storage/bag/trash/bluespace,\
 	prob(3);/obj/item/weapon/storage/backpack/holding,\
@@ -171,8 +153,7 @@
 	prob(1);/obj/item/stack/sheet/mineral/gold/twenty,\
 	prob(1);/obj/item/stack/sheet/mineral/phoron/twenty,\
 	prob(1);/obj/item/stack/sheet/mineral/uranium/twenty,\
-	prob(1);/obj/item/stack/sheet/mineral/diamond/twenty,\
-	prob(5);/obj/item/weapon/book/skillbook/science\
+	prob(1);/obj/item/stack/sheet/mineral/diamond/twenty\
 	)
 
 /obj/random/trader_product/sec
@@ -201,6 +182,7 @@
 	prob(1);/obj/item/weapon/changeling_test/prepared,\
 	prob(3);/obj/item/weapon/shield/riot/tele,\
 	prob(1);/obj/item/weapon/shield/energy,\
+	prob(5);/obj/item/clothing/shoes/boots/combat,\
 	prob(5);/obj/item/weapon/gun/energy/lasercannon\
 	)
 

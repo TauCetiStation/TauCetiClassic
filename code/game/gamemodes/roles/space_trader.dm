@@ -30,9 +30,6 @@
 	MA.owner_PDA = pda
 	H.equip_or_collect(pda, SLOT_R_STORE)
 
-	var/datum/faction/space_traders/F = create_uniq_faction(/datum/faction/space_traders)
-	add_faction_member(F, H, TRUE)
-
 /datum/role/space_trader/dealer
 	skillset_type = /datum/skillset/quartermaster
 	outfit = /datum/outfit/space_trader/dealer
@@ -41,7 +38,7 @@
 /datum/role/space_trader/dealer/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, {"<span class='notice'><b>Вы - барыга.
-
+буквы
 ------------------</b></span>"})
 
 
@@ -53,7 +50,7 @@
 /datum/role/space_trader/guard/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, {"<span class='notice'><b>Вы - ЧОПовец.
-
+буквы2
 ------------------</b></span>"})
 
 
@@ -65,5 +62,5 @@
 /datum/role/space_trader/porter/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, {"<span class='notice'><b>Вы - грузчик.
-
+буквы3
 ------------------</b></span>"})

@@ -271,7 +271,6 @@
 /area/shuttle/trader/station
 	name = "Trader Shuttle Station"
 	ambience = 'sound/ambience/space_traders.ogg'
-	is_force_ambience = TRUE
 
 /area/shuttle/trader/space
 	name = "Trader Shuttle Space"

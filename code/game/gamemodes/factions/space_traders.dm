@@ -9,12 +9,12 @@
 	icon_state = "Quartermaster"
 
 /obj/effect/landmark/space_traders/guard
-	name = "Space Trader Dealer"
+	name = "Space Trader Guard"
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "Blueshield Officer"
 
 /obj/effect/landmark/space_traders/porter
-	name = "Space Trader Dealer"
+	name = "Space Trader Porter"
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "Trader Porter"
 
@@ -28,7 +28,6 @@
 	name = F_SPACE_TRADERS
 	ID = F_SPACE_TRADERS
 
-	initroletype = /datum/role/abductor/scientist
 	logo_state = "space_traders"
 	max_roles = 3
 

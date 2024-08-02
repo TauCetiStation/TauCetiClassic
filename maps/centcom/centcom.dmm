@@ -23160,6 +23160,18 @@
 	},
 /turf/unsimulated/floor/carpet,
 /area/velocity)
+"cuc" = (
+/obj/effect/step_trigger/teleporter/random{
+	name = "tradershuttle_leave";
+	teleport_x = 25;
+	teleport_x_offset = 245;
+	teleport_y = 25;
+	teleport_y_offset = 245;
+	teleport_z = 6;
+	teleport_z_offset = 6
+	},
+/turf/environment/space,
+/area/space)
 "cvb" = (
 /turf/unsimulated/floor/carpet,
 /area/velocity)
@@ -55524,15 +55536,15 @@ aaM
 aaM
 abu
 abu
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
+cuc
+cuc
+cuc
+cuc
+cuc
+cuc
+cuc
+cuc
+cuc
 abu
 abu
 aaM
@@ -55779,19 +55791,19 @@ aaM
 aaM
 aaM
 abu
-ahG
-ahG
-ahG
+cuc
+cuc
+cuc
 aft
 aFE
 aGy
-ahG
+cuc
 aFE
 aGy
 gKI
-ahG
-ahG
-ahG
+cuc
+cuc
+cuc
 abu
 aaM
 aaM
@@ -56035,8 +56047,8 @@ aaM
 aaM
 aaM
 abu
-ahG
-ahG
+cuc
+cuc
 aft
 aFE
 afu
@@ -56048,8 +56060,8 @@ aFF
 afu
 aGy
 gKI
-ahG
-ahG
+cuc
+cuc
 abu
 aaM
 "}
@@ -56292,7 +56304,7 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 aft
 afu
 aFF
@@ -56306,7 +56318,7 @@ afu
 aFF
 afu
 gKI
-ahG
+cuc
 abu
 aaM
 "}
@@ -56548,8 +56560,8 @@ aaM
 aaM
 aaM
 abu
-ahG
-ahG
+cuc
+cuc
 ayS
 afu
 ayS
@@ -56563,8 +56575,8 @@ afu
 ayS
 afu
 ayS
-ahG
-ahG
+cuc
+cuc
 abu
 "}
 (98,1,1) = {"
@@ -56805,7 +56817,7 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 aft
 ayS
 aEZ
@@ -56821,7 +56833,7 @@ iSq
 mpy
 ayS
 gKI
-ahG
+cuc
 abu
 "}
 (99,1,1) = {"
@@ -57062,7 +57074,7 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 afu
 ayS
 aFj
@@ -57078,7 +57090,7 @@ aFH
 mpy
 ayS
 afu
-ahG
+cuc
 abu
 "}
 (100,1,1) = {"
@@ -57319,7 +57331,7 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 afu
 aDP
 nUu
@@ -57335,7 +57347,7 @@ aFH
 huU
 ngk
 ayS
-ahG
+cuc
 abu
 "}
 (101,1,1) = {"
@@ -57576,7 +57588,7 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 afu
 aEz
 aFk
@@ -57592,7 +57604,7 @@ jgn
 nUu
 giM
 afu
-ahG
+cuc
 abu
 "}
 (102,1,1) = {"
@@ -57833,7 +57845,7 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 afu
 aFH
 nUu
@@ -57849,7 +57861,7 @@ aFH
 nUu
 sJs
 afu
-ahG
+cuc
 abu
 "}
 (103,1,1) = {"
@@ -58090,7 +58102,7 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 afu
 aEW
 nUu
@@ -58106,7 +58118,7 @@ iSq
 nUu
 nmr
 afu
-ahG
+cuc
 abu
 "}
 (104,1,1) = {"
@@ -58347,7 +58359,7 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 afG
 aFH
 nUu
@@ -58363,7 +58375,7 @@ aFH
 nUu
 giM
 afu
-ahG
+cuc
 abu
 "}
 (105,1,1) = {"
@@ -58604,7 +58616,7 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 afG
 aFH
 nUu
@@ -58620,7 +58632,7 @@ aFH
 lxt
 sJs
 afu
-ahG
+cuc
 abu
 "}
 (106,1,1) = {"
@@ -58861,7 +58873,7 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 afu
 ayS
 aFD
@@ -58877,7 +58889,7 @@ iSq
 gLU
 ayS
 afu
-ahG
+cuc
 abu
 "}
 (107,1,1) = {"
@@ -59118,23 +59130,23 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 afH
 ayS
 aFD
 aFH
 nUu
 ayS
-ahG
-ahG
-ahG
+cuc
+cuc
+cuc
 ayS
 gVc
 iSq
 gLU
 ayS
 mrv
-ahG
+cuc
 abu
 "}
 (108,1,1) = {"
@@ -59375,23 +59387,23 @@ aaM
 aaM
 aaM
 abu
-ahG
-ahG
+cuc
+cuc
 ayS
 aFD
 aFH
 nUu
 ayS
-ahG
+cuc
 abu
-ahG
+cuc
 ayS
 hXy
 aFH
 mpy
 ayS
-ahG
-ahG
+cuc
+cuc
 abu
 "}
 (109,1,1) = {"
@@ -59633,21 +59645,21 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 ayS
 afu
 aFJ
 aFD
 ayS
-ahG
+cuc
 abu
-ahG
+cuc
 ayS
 imk
 sJs
 afu
 ayS
-ahG
+cuc
 abu
 aaM
 "}
@@ -59890,21 +59902,21 @@ aaM
 aaM
 aaM
 abu
-ahG
+cuc
 afH
 afu
 ayS
 afu
 ayS
-ahG
+cuc
 abu
-ahG
+cuc
 ayS
 afu
 ayS
 afu
 mrv
-ahG
+cuc
 abu
 aaM
 "}
@@ -60147,21 +60159,21 @@ aaM
 aaM
 aaM
 abu
-ahG
-ahG
+cuc
+cuc
 afH
 ayS
 afu
 ayS
-ahG
+cuc
 abu
-ahG
+cuc
 ayS
 afu
 ayS
 mrv
-ahG
-ahG
+cuc
+cuc
 abu
 aaM
 "}
@@ -60405,19 +60417,19 @@ aaM
 aaM
 aaM
 abu
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
+cuc
+cuc
+cuc
+cuc
+cuc
+cuc
 abu
-ahG
-ahG
-ahG
-ahG
-ahG
-ahG
+cuc
+cuc
+cuc
+cuc
+cuc
+cuc
 abu
 aaM
 aaM
