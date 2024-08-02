@@ -114,7 +114,7 @@
 	)
 
 /datum/skillset/assistant/journalist
-	name = "Reporter"
+	name = "Journalist"
 	initial_skills = list(
 		/datum/skill/command = SKILL_LEVEL_NOVICE
 	)
