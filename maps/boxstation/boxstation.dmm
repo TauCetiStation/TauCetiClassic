@@ -6864,7 +6864,10 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/machinery/computer/secure_data,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -7351,14 +7354,6 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "amh" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for the brig foyer.";
-	id = "InnerBrig";
-	name = "Inner Brig Doors";
-	pixel_x = -26;
-	pixel_y = 6;
-	range = 10
-	},
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
@@ -7368,13 +7363,6 @@
 	pixel_x = -26;
 	pixel_y = 26;
 	req_access = list(63)
-	},
-/obj/machinery/door_control{
-	id = "Prison Gate";
-	name = "Prison Wing Lockdown";
-	pixel_x = -26;
-	pixel_y = -7;
-	req_access = list(2)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7400,10 +7388,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/machinery/computer/secure_data{
+	dir = 8
 	},
-/obj/machinery/disposal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7870,6 +7857,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -7900,7 +7890,10 @@
 	dir = 9;
 	network = list("SS13","Security")
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -7947,6 +7940,21 @@
 	dir = 1
 	},
 /obj/structure/stool/bed/chair/office/dark,
+/obj/machinery/door_control{
+	desc = "A remote control switch for the brig foyer.";
+	id = "InnerBrig";
+	name = "Inner Brig Doors";
+	pixel_x = -37;
+	pixel_y = 9;
+	range = 10
+	},
+/obj/machinery/door_control{
+	id = "Prison Gate";
+	name = "Prison Wing Lockdown";
+	pixel_x = -37;
+	pixel_y = -3;
+	req_access = list(2)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8539,6 +8547,7 @@
 	network = list("Security");
 	pixel_x = -28
 	},
+/obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
