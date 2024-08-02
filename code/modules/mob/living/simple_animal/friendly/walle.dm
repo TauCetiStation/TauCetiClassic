@@ -26,4 +26,3 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/walle, chief_animal_list)
 	s.set_up(3, 1, src)
 	s.start()
 	qdel(src)
-	return
