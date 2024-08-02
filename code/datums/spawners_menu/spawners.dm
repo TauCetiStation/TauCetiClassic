@@ -766,9 +766,10 @@
 	var/spawnloc = pick_spawn_location()
 	var/client/C = spectator.client
 
-	var/mob/living/carbon/human/H = new(spawnloc)
+	var/mob/living/carbon/human/H = new
 	C.create_human_apperance(H)
 	H.key = C.key
+	H.forceMove(spawnloc)
 
 	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
 	F.roletype = role
@@ -803,10 +804,11 @@
 	var/spawnloc = pick_spawn_location()
 	var/client/C = spectator.client
 
-	var/mob/living/carbon/human/H = new(spawnloc, TAJARAN)
+	var/mob/living/carbon/human/H = new(null, TAJARAN)
 	var/new_name = capitalize(pick(global.tajaran_male_first)) + " " + capitalize(pick(global.last_names))
 	C.create_human_apperance(H, new_name)
 	H.key = C.key
+	H.forceMove(spawnloc)
 
 	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
 	F.roletype = role

@@ -64,6 +64,7 @@
 	updateUsrDialog()
 
 /obj/machinery/computer/trader_shuttle/proc/dock_to_station()
+	set waitfor = FALSE
 	space_location.parallax_slowdown()
 	sleep(PARALLAX_LOOP_TIME)
 
@@ -73,9 +74,11 @@
 
 	SSshuttle.dock_act(/area/station/hallway/secondary/entry, "trader_shuttle")
 	SSshuttle.dock_act(station_location, "trader_shuttle")
-	docked = TRUE
+
+	if(src) docked = TRUE
 
 /obj/machinery/computer/trader_shuttle/proc/undock_to_station()
+	set waitfor = FALSE
 	SSshuttle.undock_act(/area/station/hallway/secondary/entry, "trader_shuttle")
 	SSshuttle.undock_act(station_location, "trader_shuttle")
 	sleep(PARALLAX_LOOP_TIME)
@@ -84,6 +87,6 @@
 	station_location.move_contents_to(space_location)
 	SSshuttle.shake_mobs_in_area(space_location, WEST)
 
-	docked = TRUE
+	if(src) docked = TRUE
 
 #undef TRADER_SHUTTLE_COOLDOWN

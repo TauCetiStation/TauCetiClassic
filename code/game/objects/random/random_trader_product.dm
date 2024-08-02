@@ -5,14 +5,13 @@
 	icon_state = "spacecash10"
 
 /obj/random/trader_product/item_to_spawn()
-	return pick(\
-	prob(20);/obj/random/trader_product/civ,\
-	prob(20);/obj/random/trader_product/med,\
-	prob(20);/obj/random/trader_product/eng,\
-	prob(20);/obj/random/trader_product/rnd,\
-	prob(10);/obj/random/trader_product/sec,\
-	prob(10);/obj/random/trader_product/contraband\
-	)
+	return pickweight(list(
+	/obj/random/trader_product/civ = 20,
+	/obj/random/trader_product/med = 20,
+	/obj/random/trader_product/eng = 20,
+	/obj/random/trader_product/rnd = 20,
+	/obj/random/trader_product/sec = 10,
+	/obj/random/trader_product/contraband = 10))
 
 /obj/random/trader_product/civ
 	name = "Random Civilian Trader Product"
@@ -21,46 +20,45 @@
 	icon_state = "spacecash10"
 
 /obj/random/trader_product/civ/item_to_spawn()
-	return pick(\
-	prob(5);/obj/item/clothing/glasses/gar/super,\
-	prob(5);/obj/item/device/violin,\
-	prob(3);/obj/item/device/guitar/electric,\
-	prob(3);/obj/item/device/guitar,\
-	prob(1);/obj/item/weapon/survivalcapsule/elite,\
-	prob(5);/obj/item/weapon/coin/diamond,\
-	prob(1);/obj/item/device/lens/nude,\
-	prob(1);/obj/item/clothing/mask/balaclava/richard,\
-	prob(1);/obj/item/clothing/mask/balaclava/don_juan,\
-	prob(1);/obj/item/clothing/mask/balaclava/rasmus,\
-	prob(5);/obj/item/clothing/mask/cigarette/cigar/cohiba,\
-	prob(1);/obj/item/stack/sheet/animalhide/xeno,\
-	prob(1);/obj/item/weapon/storage/box/space_suit/clown,\
-	prob(5);/obj/item/weapon/gun/energy/laser/cutter,\
-	prob(5);/obj/item/clothing/mask/facehugger_toy,\
-	prob(5);/obj/item/weapon/tank/emergency_oxygen/double,\
-	prob(5);/obj/item/toy/sound_button/syndi,\
-	prob(5);/obj/item/toy/dualsword,\
-	prob(5);/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,\
-	prob(5);/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom,\
-	prob(5);/obj/item/clothing/gloves/pipboy/pimpboy3billion,\
-	prob(5);/obj/item/weapon/patcher,\
-	prob(5);/obj/item/weapon/sledgehammer,\
-	prob(8);/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,\
-	prob(8);/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,\
-	prob(1);/obj/item/weapon/tank/jetpack/oxygen/harness,\
-	prob(3);/obj/item/device/remote_device/no_access,\
-	prob(1);/obj/item/seeds/bluespacetomatoseed,\
-	prob(1);/obj/item/seeds/meatwheat,\
-	prob(1);/obj/item/seeds/replicapod/real_deal,\
-	prob(1);/obj/item/seeds/thaadra,\
-	prob(1);/obj/item/seeds/telriis,\
-	prob(1);/obj/item/seeds/vale,\
-	prob(1);/obj/item/seeds/jurlmah,\
-	prob(1);/obj/item/seeds/gelthi,\
-	prob(1);/obj/item/weapon/bikehorn/gold,\
-	prob(2);/obj/item/clothing/shoes/syndigaloshes,\
-	prob(1);/obj/item/weapon/claymore/light\
-	)
+	return pickweight(list(
+	/obj/item/clothing/glasses/gar/super = 5,
+	/obj/item/device/violin = 5,
+	/obj/item/device/guitar/electric= 3,
+	/obj/item/device/guitar = 3,
+	/obj/item/weapon/survivalcapsule/elite = 1,
+	/obj/item/weapon/coin/diamond = 5,
+	/obj/item/device/lens/nude = 1,
+	/obj/item/clothing/mask/balaclava/richard = 1,
+	/obj/item/clothing/mask/balaclava/don_juan = 1,
+	/obj/item/clothing/mask/balaclava/rasmus = 1,
+	/obj/item/clothing/mask/cigarette/cigar/cohiba = 5,
+	/obj/item/stack/sheet/animalhide/xeno = 1,
+	/obj/item/weapon/storage/box/space_suit/clown = 1,
+	/obj/item/weapon/gun/energy/laser/cutter = 3,
+	/obj/item/clothing/mask/facehugger_toy = 3,
+	/obj/item/weapon/tank/emergency_oxygen/double = 5,
+	/obj/item/toy/sound_button/syndi = 3,
+	/obj/item/toy/dualsword = 5,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk = 3,
+	/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom = 3,
+	/obj/item/clothing/gloves/pipboy/pimpboy3billion = 5,
+	/obj/item/weapon/patcher = 5,
+	/obj/item/weapon/sledgehammer = 1,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian = 5,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space = 5,
+	/obj/item/weapon/tank/jetpack/oxygen/harness = 1,
+	/obj/item/device/remote_device/no_access = 3,
+	/obj/item/seeds/bluespacetomatoseed = 1,
+	/obj/item/seeds/meatwheat = 1,
+	/obj/item/seeds/replicapod/real_deal = 1,
+	/obj/item/seeds/thaadra = 1,
+	/obj/item/seeds/telriis = 1,
+	/obj/item/seeds/vale = 1,
+	/obj/item/seeds/jurlmah = 1,
+	/obj/item/seeds/gelthi = 1,
+	/obj/item/weapon/bikehorn/gold = 1,
+	/obj/item/clothing/shoes/syndigaloshes = 2,
+	/obj/item/weapon/claymore/light = 1))
 
 /obj/random/trader_product/med
 	name = "Random Medical Trader Product"
@@ -68,28 +66,27 @@
 	icon_state = "spacecash10"
 
 /obj/random/trader_product/med/item_to_spawn()
-	return pick(\
-	prob(1);/obj/item/asteroid/hivelord_core,\
-	prob(5);/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,\
-	prob(1);/obj/item/weapon/gun/syringe/rapidsyringe,\
-	prob(1);/obj/item/weapon/defibrillator/compact/combat/loaded,\
-	prob(1);/obj/item/weapon/storage/belt/medical/surg/full,\
-	prob(3);/obj/item/weapon/storage/pill_bottle/bicaridine,\
-	prob(3);/obj/item/weapon/storage/pill_bottle/dexalin_plus,\
-	prob(3);/obj/item/weapon/storage/pill_bottle/dermaline,\
-	prob(3);/obj/item/weapon/storage/pill_bottle/dylovene,\
-	prob(3);/obj/item/weapon/storage/pill_bottle/tramadol,\
-	prob(3);/obj/item/weapon/reagent_containers/glass/bottle/peridaxon,\
-	prob(1);/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin,\
-	prob(5);/obj/item/weapon/medical/teleporter,\
-	prob(1);/obj/item/weapon/scalpel/manager,\
-	prob(3);/obj/item/roller/roller_holder_surg,\
-	prob(2);/obj/item/weapon/reagent_containers/glass/beaker/bluespace,\
-	prob(1);/obj/item/weapon/reagent_containers/hypospray/combat,\
-	prob(2);/obj/item/weapon/dnainjector/clumsymut,\
-	prob(2);/obj/item/weapon/dnainjector/hulkmut,\
-	prob(2);/obj/item/weapon/dnainjector/regenerate\
-	)
+	return pickweight(list(
+	/obj/item/asteroid/hivelord_core = 1,
+	/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen = 5,
+	/obj/item/weapon/gun/syringe/rapidsyringe = 1,
+	/obj/item/weapon/defibrillator/compact/combat/loaded = 1,
+	/obj/item/weapon/storage/belt/medical/surg/full = 1,
+	/obj/item/weapon/storage/pill_bottle/bicaridine = 2,
+	/obj/item/weapon/storage/pill_bottle/dexalin_plus = 2,
+	/obj/item/weapon/storage/pill_bottle/dermaline = 2,
+	/obj/item/weapon/storage/pill_bottle/dylovene = 2,
+	/obj/item/weapon/storage/pill_bottle/tramadol = 2,
+	/obj/item/weapon/reagent_containers/glass/bottle/peridaxon = 3,
+	/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin = 1,
+	/obj/item/weapon/medical/teleporter = 3,
+	/obj/item/weapon/scalpel/manager = 1,
+	/obj/item/roller/roller_holder_surg = 3,
+	/obj/item/weapon/reagent_containers/glass/beaker/bluespace = 2,
+	/obj/item/weapon/reagent_containers/hypospray/combat = 1,
+	/obj/item/weapon/dnainjector/clumsymut = 2,
+	/obj/item/weapon/dnainjector/hulkmut = 2,
+	/obj/item/weapon/dnainjector/regenerate = 2))
 
 /obj/random/trader_product/eng
 	name = "Random Engineering Trader Product"
@@ -98,25 +95,24 @@
 	icon_state = "spacecash10"
 
 /obj/random/trader_product/eng/item_to_spawn()
-	return pick(\
-	prob(1);/obj/item/weapon/storage/part_replacer,\
-	prob(5);/obj/item/stack/sheet/metal/fifty,\
-	prob(5);/obj/item/stack/sheet/glass/fifty,\
-	prob(5);/obj/item/weapon/rcd/ert,\
-	prob(5);/obj/item/weapon/rcd_ammo/bluespace,\
-	prob(5);/obj/item/clothing/glasses/meson/gar,\
-	prob(5);/obj/item/clothing/glasses/welding/superior,\
-	prob(5);/obj/item/clothing/gloves/insulated,\
-	prob(5);/obj/item/weapon/storage/toolbox/syndicate,\
-	prob(1);/obj/item/weapon/storage/pneumatic,\
-	prob(3);/obj/item/weapon/grenade/chem_grenade/metalfoam,\
-	prob(3);/obj/item/weapon/multi/hand_drill,\
-	prob(3);/obj/item/weapon/multi/jaws_of_life,\
-	prob(5);/obj/item/weapon/weldingtool/experimental,\
-	prob(1);/obj/item/device/lightreplacer,\
-	prob(5);/obj/item/clothing/shoes/magboots/ert,\
-	prob(1);/obj/item/weapon/circuitboard/camera_advanced\
-	)
+	return pickweight(list(
+	/obj/item/weapon/storage/part_replacer = 1,
+	/obj/item/stack/sheet/metal/fifty = 5,
+	/obj/item/stack/sheet/glass/fifty = 5,
+	/obj/item/weapon/rcd/ert = 5,
+	/obj/item/weapon/rcd_ammo/bluespace = 5,
+	/obj/item/clothing/glasses/meson/gar = 5,
+	/obj/item/clothing/glasses/welding/superior = 5,
+	/obj/item/clothing/gloves/insulated = 5,
+	/obj/item/weapon/storage/toolbox/syndicate = 1,
+	/obj/item/weapon/storage/pneumatic = 1,
+	/obj/item/weapon/grenade/chem_grenade/metalfoam = 3,
+	/obj/item/weapon/multi/hand_drill = 3,
+	/obj/item/weapon/multi/jaws_of_life = 3,
+	/obj/item/weapon/weldingtool/experimental = 5,
+	/obj/item/device/lightreplacer = 1,
+	/obj/item/clothing/shoes/magboots/ert = 5,
+	/obj/item/weapon/circuitboard/camera_advanced = 1))
 
 /obj/random/trader_product/rnd
 	name = "Random Science Trader Product"
@@ -125,36 +121,35 @@
 	icon_state = "spacecash10"
 
 /obj/random/trader_product/rnd/item_to_spawn()
-	return pick(\
-	prob(1);/obj/item/weapon/disk/research_points,\
-	prob(5);/obj/item/bluespace_crystal,\
-	prob(2);/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser,\
-	prob(2);/obj/item/mecha_parts/mecha_equipment/rcd,\
-	prob(2);/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,\
-	prob(2);/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,\
-	prob(1);/obj/item/mecha_parts/part/honker_torso,\
-	prob(3);/obj/item/stack/sheet/mineral/clown,\
-	prob(1);/obj/item/device/assembly/signaler/anomaly,\
-	prob(2);/obj/item/rig_module/simple_ai/advanced,\
-	prob(2);/obj/item/rig_module/nuclear_generator,\
-	prob(2);/obj/item/rig_module/emp_shield/adv,\
-	prob(2);/obj/item/rig_module/chem_dispenser/medical/ert,\
-	prob(2);/obj/item/rig_module/med_teleport,\
-	prob(2);/obj/item/rig_module/selfrepair/adv,\
-	prob(2);/obj/item/rig_module/mounted,\
-	prob(3);/obj/item/borg/upgrade/security,\
-	prob(3);/obj/item/borg/upgrade/vtec,\
-	prob(5);/obj/item/weapon/stock_parts/cell/bluespace,\
-	prob(3);/obj/item/weapon/storage/bag/trash/bluespace,\
-	prob(3);/obj/item/weapon/storage/backpack/holding,\
-	prob(1);/obj/item/device/aicard,\
-	prob(1);/obj/item/device/mmi/posibrain,\
-	prob(1);/obj/item/stack/sheet/mineral/silver/twenty,\
-	prob(1);/obj/item/stack/sheet/mineral/gold/twenty,\
-	prob(1);/obj/item/stack/sheet/mineral/phoron/twenty,\
-	prob(1);/obj/item/stack/sheet/mineral/uranium/twenty,\
-	prob(1);/obj/item/stack/sheet/mineral/diamond/twenty\
-	)
+	return pickweight(list(
+	/obj/item/weapon/disk/research_points = 1,
+	/obj/item/bluespace_crystal = 5,
+	/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser = 2,
+	/obj/item/mecha_parts/mecha_equipment/rcd = 2,
+	/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill = 2,
+	/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg = 2,
+	/obj/item/mecha_parts/part/honker_torso = 1,
+	/obj/item/stack/sheet/mineral/clown = 3,
+	/obj/item/device/assembly/signaler/anomaly = 1,
+	/obj/item/rig_module/simple_ai/advanced = 2,
+	/obj/item/rig_module/nuclear_generator = 2,
+	/obj/item/rig_module/emp_shield/adv = 2,
+	/obj/item/rig_module/chem_dispenser/medical/ert = 2,
+	/obj/item/rig_module/med_teleport = 2,
+	/obj/item/rig_module/selfrepair/adv = 2,
+	/obj/item/rig_module/mounted = 2,
+	/obj/item/borg/upgrade/security = 2,
+	/obj/item/borg/upgrade/vtec = 2,
+	/obj/item/weapon/stock_parts/cell/bluespace = 5,
+	/obj/item/weapon/storage/bag/trash/bluespace = 3,
+	/obj/item/weapon/storage/backpack/holding = 3,
+	/obj/item/device/aicard = 1,
+	/obj/item/device/mmi/posibrain = 1,
+	/obj/item/stack/sheet/mineral/silver/twenty = 1,
+	/obj/item/stack/sheet/mineral/gold/twenty = 1,
+	/obj/item/stack/sheet/mineral/phoron/twenty = 1,
+	/obj/item/stack/sheet/mineral/uranium/twenty = 1,
+	/obj/item/stack/sheet/mineral/diamond/twenty = 1))
 
 /obj/random/trader_product/sec
 	name = "Random Security Trader Product"
@@ -163,28 +158,27 @@
 	icon_state = "spacecash10"
 
 /obj/random/trader_product/sec/item_to_spawn()
-	return pick(\
-	prob(5);/obj/item/weapon/gun/energy/gun/adv,\
-	prob(5);/obj/item/weapon/gun/projectile/automatic/l13,\
-	prob(5);/obj/item/clothing/suit/armor/vest/fullbody,\
-	prob(5);/obj/item/weapon/melee/baton/double,\
-	prob(5);/obj/item/clothing/gloves/combat,\
-	prob(5);/obj/item/ammo_box/eight_shells/dart,\
-	prob(5);/obj/item/ammo_box/eight_shells/stunshot,\
-	prob(5);/obj/item/clothing/glasses/sunglasses/hud/sechud/gar,\
-	prob(1);/obj/item/clothing/glasses/sunglasses/hud/sechud/gar/super,\
-	prob(3);/obj/item/clothing/glasses/night,\
-	prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec,\
-	prob(5);/obj/item/ammo_box/magazine/glock/extended/rubber,\
-	prob(5);/obj/item/weapon/melee/telebaton,\
-	prob(3);/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,\
-	prob(5);/obj/item/weapon/storage/pouch/ammo,\
-	prob(1);/obj/item/weapon/changeling_test/prepared,\
-	prob(3);/obj/item/weapon/shield/riot/tele,\
-	prob(1);/obj/item/weapon/shield/energy,\
-	prob(5);/obj/item/clothing/shoes/boots/combat,\
-	prob(5);/obj/item/weapon/gun/energy/lasercannon\
-	)
+	return pickweight(list(
+	/obj/item/weapon/gun/energy/gun/adv = 5,
+	/obj/item/weapon/gun/projectile/automatic/l13 = 5,
+	/obj/item/clothing/suit/armor/vest/fullbody = 5,
+	/obj/item/weapon/melee/baton/double = 5,
+	/obj/item/clothing/gloves/combat = 5,
+	/obj/item/ammo_box/eight_shells/dart = 5,
+	/obj/item/ammo_box/eight_shells/stunshot = 5,
+	/obj/item/clothing/glasses/sunglasses/hud/sechud/gar = 5,
+	/obj/item/clothing/glasses/sunglasses/hud/sechud/gar/super = 1,
+	/obj/item/clothing/glasses/night = 3,
+	/obj/item/weapon/gun/projectile/automatic/pistol/glock/spec = 5,
+	/obj/item/ammo_box/magazine/glock/extended/rubber = 5,
+	/obj/item/weapon/melee/telebaton = 5,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat = 3,
+	/obj/item/weapon/storage/pouch/ammo = 5,
+	/obj/item/weapon/changeling_test/prepared = 1,
+	/obj/item/weapon/shield/riot/tele = 3,
+	/obj/item/weapon/shield/energy = 1,
+	/obj/item/clothing/shoes/boots/combat = 5,
+	/obj/item/weapon/gun/energy/lasercannon = 5))
 
 /obj/random/trader_product/contraband
 	name = "Random Contraband Trader Product"
@@ -193,39 +187,38 @@
 	icon_state = "syndieshirt"
 
 /obj/random/trader_product/contraband/item_to_spawn()
-	return pick(\
-	prob(5);/obj/item/stack/telecrystal/three,\
-	prob(5);/obj/item/weapon/legcuffs/bola/tactical,\
-	prob(5);/obj/item/weapon/syndcodebook,\
-	prob(5);/obj/item/weapon/switchblade,\
-	prob(3);/obj/item/weapon/melee/energy/sword,\
-	prob(5);/obj/item/weapon/grenade/spawnergrenade/manhacks,\
-	prob(5);/obj/item/weapon/plastique,\
-	prob(3);/obj/item/weapon/storage/pill_bottle/happy,\
-	prob(3);/obj/item/weapon/storage/pill_bottle/zoom,\
-	prob(3);/obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate,\
-	prob(5);/obj/item/weapon/storage/box/syndie_kit/chameleon,\
-	prob(5);/obj/item/seeds/kudzuseed,\
-	prob(3);/obj/item/weapon/storage/box/syndie_kit/posters,\
-	prob(3);/obj/item/clothing/mask/gas/swat,\
-	prob(5);/obj/item/borg/upgrade/syndicate,\
-	prob(3);/obj/item/weapon/grenade/syndieminibomb,\
-	prob(3);/obj/item/weapon/grenade/chem_grenade/acid,\
-	prob(3);/obj/item/weapon/grenade/clusterbuster/soap,\
-	prob(5);/obj/item/weapon/implanter/freedom,\
-	prob(5);/obj/item/weapon/melee/powerfist,\
-	prob(5);/obj/item/device/camera_bug,\
-	prob(5);/obj/item/device/chameleon,\
-	prob(5);/obj/item/device/debugger,\
-	prob(5);/obj/item/device/encryptionkey/syndicate,\
-	prob(5);/obj/item/device/powersink,\
-	prob(5);/obj/item/weapon/card/id/syndicate,\
-	prob(5);/obj/item/weapon/card/emag,\
-	prob(5);/obj/item/weapon/cartridge/syndicate,\
-	prob(1);/obj/item/weapon/reagent_containers/glass/bottle/bonebreaker,\
-	prob(1);/obj/item/weapon/reagent_containers/glass/bottle/cyanide,\
-	prob(1);/obj/item/weapon/reagent_containers/glass/bottle/carpotoxin,\
-	prob(1);/obj/item/weapon/reagent_containers/glass/bottle/zombiepowder,\
-	prob(1);/obj/item/weapon/reagent_containers/glass/bottle/chefspecial,\
-	prob(5);/obj/item/weapon/circuitboard/aiupload\
-	)
+	return pickweight(list(
+	/obj/item/stack/telecrystal/three = 5,
+	/obj/item/weapon/legcuffs/bola/tactical = 5,
+	/obj/item/weapon/syndcodebook = 5,
+	/obj/item/weapon/switchblade = 5,
+	/obj/item/weapon/melee/energy/sword = 3,
+	/obj/item/weapon/grenade/spawnergrenade/manhacks = 5,
+	/obj/item/weapon/plastique = 5,
+	/obj/item/weapon/storage/pill_bottle/happy = 3,
+	/obj/item/weapon/storage/pill_bottle/zoom = 3,
+	/obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate = 3,
+	/obj/item/weapon/storage/box/syndie_kit/chameleon = 5,
+	/obj/item/seeds/kudzuseed = 5,
+	/obj/item/weapon/storage/box/syndie_kit/posters = 3,
+	/obj/item/clothing/mask/gas/swat = 3,
+	/obj/item/borg/upgrade/syndicate = 5,
+	/obj/item/weapon/grenade/syndieminibomb = 3,
+	/obj/item/weapon/grenade/chem_grenade/acid = 3,
+	/obj/item/weapon/grenade/clusterbuster/soap = 3,
+	/obj/item/weapon/implanter/freedom = 5,
+	/obj/item/weapon/melee/powerfist = 5,
+	/obj/item/device/camera_bug = 5,
+	/obj/item/device/chameleon = 5,
+	/obj/item/device/debugger = 5,
+	/obj/item/device/encryptionkey/syndicate = 5,
+	/obj/item/device/powersink = 5,
+	/obj/item/weapon/card/id/syndicate = 3,
+	/obj/item/weapon/card/emag = 3,
+	/obj/item/weapon/cartridge/syndicate = 5,
+	/obj/item/weapon/reagent_containers/glass/bottle/bonebreaker = 1,
+	/obj/item/weapon/reagent_containers/glass/bottle/cyanide = 1,
+	/obj/item/weapon/reagent_containers/glass/bottle/carpotoxin = 1,
+	/obj/item/weapon/reagent_containers/glass/bottle/zombiepowder = 1,
+	/obj/item/weapon/reagent_containers/glass/bottle/chefspecial = 1,
+	/obj/item/weapon/circuitboard/aiupload = 3))

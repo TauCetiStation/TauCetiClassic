@@ -3662,9 +3662,6 @@
 /obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
-"ajs" = (
-/turf/simulated/wall,
-/area/space)
 "aju" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
@@ -18301,14 +18298,6 @@
 	icon_state = "yellowcorner"
 	},
 /area/station/engineering/equip)
-"cUN" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "cUR" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -22961,7 +22950,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/hallway/secondary/entry)
 "dVh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -24402,9 +24391,6 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
-"ejQ" = (
-/turf/simulated/floor/plating,
-/area/space)
 "ejU" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -29960,7 +29946,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/hallway/secondary/entry)
 "fpc" = (
 /obj/machinery/hologram/holopad,
 /obj/structure/cable{
@@ -34079,7 +34065,7 @@
 	dir = 9;
 	icon_state = "neutral"
 	},
-/area/space)
+/area/station/hallway/secondary/entry)
 "gdl" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -34897,7 +34883,7 @@
 	dir = 1;
 	icon_state = "neutral"
 	},
-/area/space)
+/area/station/hallway/secondary/entry)
 "gkF" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -34951,13 +34937,6 @@
 	icon_state = "purplechecker"
 	},
 /area/station/maintenance/outerlabs)
-"glh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutral"
-	},
-/area/space)
 "glj" = (
 /mob/living/simple_animal/mouse,
 /obj/effect/decal/cleanable/dirt,
@@ -35747,12 +35726,6 @@
 	icon_state = "wooden-2"
 	},
 /area/station/civilian/gym)
-"guV" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutral"
-	},
-/area/space)
 "guW" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -37762,13 +37735,6 @@
 	icon_state = "black"
 	},
 /area/station/ai_monitored/eva)
-"gNp" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutral"
-	},
-/area/space)
 "gNr" = (
 /obj/effect/spawner/lootdrop/maintenance/two,
 /obj/structure/closet/crate/internals,
@@ -40525,7 +40491,7 @@
 	dir = 1;
 	icon_state = "neutral"
 	},
-/area/space)
+/area/station/hallway/secondary/entry)
 "hrg" = (
 /obj/machinery/space_heater,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -45233,7 +45199,7 @@
 	dir = 1;
 	icon_state = "neutral"
 	},
-/area/space)
+/area/station/hallway/secondary/entry)
 "inV" = (
 /obj/machinery/disposal,
 /obj/structure/sign/departments/restroom{
@@ -58428,7 +58394,7 @@
 	dir = 10;
 	icon_state = "neutral"
 	},
-/area/space)
+/area/station/hallway/secondary/entry)
 "kWX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 5
@@ -64663,7 +64629,7 @@
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
-/area/space)
+/area/station/hallway/secondary/entry)
 "miM" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/spiderling_remains,
@@ -72546,7 +72512,7 @@
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
-/area/space)
+/area/station/hallway/secondary/entry)
 "nQs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/garden,
@@ -81424,7 +81390,7 @@
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
-/area/space)
+/area/station/hallway/secondary/entry)
 "pGG" = (
 /obj/effect/landmark{
 	name = "blobstart"
@@ -83717,7 +83683,7 @@
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
-/area/space)
+/area/station/hallway/secondary/entry)
 "qcm" = (
 /obj/structure/stool,
 /obj/effect/landmark{
@@ -85551,17 +85517,6 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor,
 /area/station/maintenance/science)
-"quv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "neutral"
-	},
-/area/space)
 "quA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -90079,7 +90034,7 @@
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
-/area/space)
+/area/station/hallway/secondary/entry)
 "rrX" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -103453,7 +103408,7 @@
 	name = "Arrival Airlock"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/hallway/secondary/entry)
 "tYR" = (
 /turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
@@ -131448,10 +131403,10 @@ plf
 plf
 plf
 kHU
-ajs
-ajs
-ajs
-ajs
+czH
+czH
+czH
+czH
 wib
 wib
 wib
@@ -131705,9 +131660,9 @@ plf
 plf
 plf
 kHU
-ajs
+czH
 dVb
-ejQ
+qmE
 tYP
 wib
 wib
@@ -131962,9 +131917,9 @@ plf
 plf
 plf
 kHU
-ajs
-ejQ
-ejQ
+czH
+qmE
+qmE
 tYP
 wib
 wib
@@ -132219,10 +132174,10 @@ kHU
 kHU
 plf
 kHU
-ajs
+czH
 foZ
 foZ
-ajs
+czH
 wib
 wib
 wib
@@ -132476,10 +132431,10 @@ uHr
 kHU
 kHU
 kHU
-ajs
+czH
 gdi
 kWW
-ajs
+czH
 wib
 wib
 wib
@@ -132733,10 +132688,10 @@ uHr
 uHr
 kHU
 kHU
-ajs
+czH
 gkA
 miI
-ajs
+czH
 plf
 wib
 wib
@@ -132990,10 +132945,10 @@ uHr
 uHr
 uHr
 kHU
-cUN
-glh
+wce
+ivp
 nQe
-cUN
+wce
 plf
 wib
 wib
@@ -133247,10 +133202,10 @@ uHr
 uHr
 uHr
 uHr
-cUN
-guV
+wce
+srk
 pGE
-cUN
+wce
 plf
 wib
 wib
@@ -133504,10 +133459,10 @@ uHr
 uHr
 uHr
 uHr
-cUN
-guV
+wce
+srk
 pGE
-cUN
+wce
 plf
 kHU
 wib
@@ -133761,10 +133716,10 @@ uHr
 uHr
 uHr
 uHr
-cUN
-gNp
+wce
+sJY
 qcj
-ajs
+czH
 kHU
 kHU
 kHU
@@ -134018,9 +133973,9 @@ uHr
 uHr
 uHr
 uHr
-cUN
-guV
-quv
+wce
+srk
+rLR
 uqs
 gRc
 coy
@@ -134275,9 +134230,9 @@ uHr
 uHr
 uHr
 kHU
-ajs
+czH
 hrc
-quv
+rLR
 uqs
 dXV
 qCr
@@ -134532,7 +134487,7 @@ uHr
 uHr
 uHr
 kHU
-ajs
+czH
 inM
 rrW
 uqs

@@ -90,9 +90,9 @@
 		/obj/item/weapon/gun/projectile/automatic/m41a)
 
 /datum/faction/space_traders/proc/pick_mech()
-	return pick(
-		prob(5); /obj/mecha/combat/honker/clown,
-		prob(1); /obj/mecha/combat/marauder/mauler,
-		prob(3); /obj/mecha/combat/gygax/dark,
-		prob(5); /obj/mecha/working/ripley/deathripley,
-		prob(5); /obj/vehicle/space/spacebike)
+	return pickweight(list(
+		/obj/mecha/combat/honker/clown = 5,
+		/obj/mecha/combat/marauder/mauler = 1,
+		/obj/mecha/combat/gygax/dark = 3,
+		/obj/mecha/working/ripley/deathripley = 5,
+		/obj/vehicle/space/spacebike = 5))
