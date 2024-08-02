@@ -499,5 +499,32 @@
 	user.adjustToxLoss(-plasma_cost)
 	T.assume_gas("phoron", 25, user.bodytemperature) // give 25 moles of phoron (approx. 0.25% of air in room like Bar)
 
+/obj/effect/proc_holder/spell/no_target/xeno_turret
+	name = "Поставить турель"
+	desc = "Поставить турель, стреляющую кислотными плевками."
+	charge_max = 2000
+	charge_type = "recharge"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	action_background_icon_state = "bg_alien"
+	plasma_cost = 400
+	action_icon_state = "acid_turret"
+
+/obj/effect/proc_holder/spell/no_target/xeno_turret/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+	if(ALREADY_STRUCTURE_THERE(user))
+		if(try_start)
+			to_chat(user, "<span class='warning'>There is already a structure there.</span>")
+		return FALSE
+	if(!CHECK_WEEDS(user))
+		if(try_start)
+			to_chat (user, "<span class='warning'>You can only build on weeds.</span>")
+		return FALSE
+	return ..()
+
+/obj/effect/proc_holder/spell/no_target/xeno_turret/cast(list/targets, mob/user = usr)
+	user.visible_message("<span class='notice'><B>[user]</B> has planted acid turret.</span>", "<span class='notice'>You plant acid turret.</span>")
+	new /mob/living/simple_animal/hostile/pylon/aliens(user.loc)
+
 #undef ALREADY_STRUCTURE_THERE
 #undef CHECK_WEEDS

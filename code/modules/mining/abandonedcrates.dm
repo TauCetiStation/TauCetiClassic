@@ -90,7 +90,7 @@
 			new/obj/item/clothing/suit/space(src)
 			new/obj/item/clothing/head/helmet/space(src)
 		if(2)
-			new/obj/item/weapon/storage/bag/ore/holding(src)
+			new/obj/item/weapon/storage/bag/holding(src)
 		if(3)
 			for (var/i in 1 to 9)
 				new/obj/item/bluespace_crystal(src)

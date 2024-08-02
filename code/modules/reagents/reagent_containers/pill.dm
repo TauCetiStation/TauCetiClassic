@@ -259,12 +259,12 @@
 	reagents.add_reagent("stimulants",5)
 	reagents.add_reagent("toxin", 5)
 
-/obj/item/weapon/reagent_containers/pill/LSD
-	name = "LSD"
+/obj/item/weapon/reagent_containers/pill/hallucination_pills
+	name = "Hallucination pills"
 	desc = "Ahaha oh wow."
 	icon_state = "pill9"
 
-/obj/item/weapon/reagent_containers/pill/LSD/atom_init()
+/obj/item/weapon/reagent_containers/pill/hallucination_pills/atom_init()
 	. = ..()
 	reagents.add_reagent("mindbreaker", 15)
 
