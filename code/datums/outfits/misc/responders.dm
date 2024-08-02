@@ -56,7 +56,7 @@
 	id = /obj/item/weapon/card/id/centcom/ert/leader
 	suit_store = /obj/item/weapon/gun/projectile/grenade_launcher/m79
 
-	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/pinpointer/advpinpointer, /obj/item/device/aicard, /obj/item/device/remote_device/ERT, /obj/item/weapon/storage/box/r4046/rubber, /obj/item/weapon/storage/box/r4046/teargas)
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/weapon/pinpointer/advpinpointer, /obj/item/device/aicard, /obj/item/device/remote_device/ERT, /obj/item/weapon/storage/box/r4046/rubber, /obj/item/weapon/storage/box/r4046/teargas, /obj/item/weapon/storage/box/handcuffs)
 
 	assignment = "Emergency Response Team Leader"
 
