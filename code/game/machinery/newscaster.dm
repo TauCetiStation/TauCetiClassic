@@ -832,8 +832,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			if(MA && !MA.suspended && (FM.author != scanned_user))
 				var/payment = 5
 				if(FM.is_licensed) payment *= 2
-				charge_to_account(MA.account_number, "Newscaster", "Ваша новость кому-то понравилась", name, payment)
-				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата трафика", name, payment)
+				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
+				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
 	else if(href_list["setDislike"])
 		if(is_guest) screen = 25
@@ -841,6 +841,12 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			var/datum/feed_message/FM = locate(href_list["setDislike"])
 			FM.voters += scanned_user
 			FM.dislikes += 1
+			var/datum/money_account/MA = FM.author_account
+			if(MA && !MA.suspended && (FM.author != scanned_user))
+				var/payment = 5
+				if(FM.is_licensed) payment *= 2
+				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
+				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
 	else if(href_list["open_pages"]) //page with comments for assistants
 		var/datum/feed_message/FM = locate(href_list["open_pages"])
