@@ -158,8 +158,9 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		// 0 = there hasn't been a news/wanted update in the last alert_delay
 		// 1 = there has
 	var/scanned_user = "Unknown" //Will contain the name of the person who currently uses the newscaster
-	var/datum/money_account/scanned_user_account = null
-	var/scanned_user_have_license = FALSE
+	var/datum/money_account/user_account = null
+	var/have_license = FALSE
+	var/is_guest = FALSE
 	var/msg = ""                //Feed message
 	var/obj/item/weapon/photo/photo = null
 	var/channel_name = "" //the feed channel which will be receiving the feed, or being created
@@ -314,10 +315,12 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
 				if(msg == "" || msg == "\[██████\]")
 					dat+="<FONT COLOR='maroon'>Недопустимый текст.</FONT><BR>"
+				if(is_guest)
+					dat+="<FONT COLOR='maroon'>Гостевой пропуск не поддерживается.</FONT><BR>"
 				var/payment = 20
-				if(scanned_user_have_license) payment /= 2
-				if(scanned_user_account.money < payment)
-					dat+="<FONT COLOR='maroon'>Недостаточно средств для оплаты.</FONT><BR>"
+				if(have_license) payment /= 2
+				if(user_account.money < payment)
+					dat+="<FONT COLOR='maroon'>Недостаточно средств для оплаты публикации.</FONT><BR>"
 
 				dat+="<BR><A href='?src=\ref[src];setScreen=[3]'>Вернуться</A><BR>"
 			if(7)
@@ -334,6 +337,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="<FONT COLOR='maroon'>Вы уже являетесь автором Новостного Канала.</FONT><BR>"
 				if(channel_name=="" || channel_name == "\[██████\]")
 					dat+="<FONT COLOR='maroon'>Недопустимое имя Канала.</FONT><BR>"
+				if(is_guest)
+					dat+="<FONT COLOR='maroon'>Гостевой пропуск не поддерживается.</FONT><BR>"
 				var/check = 0
 				for(var/datum/feed_channel/FC in news_network.network_channels)
 					if(FC.channel_name == channel_name)
@@ -464,6 +469,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
 				if(msg == "" || msg == "\[██████\]")
 					dat+="<FONT COLOR='maroon'>Недопустимое описание.</FONT><BR>"
+				if(is_guest)
+					dat+="<FONT COLOR='maroon'>Гостевой пропуск не поддерживается.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(17)
 				dat+="<B>Розыск успешно удален.</B><BR>"
@@ -530,6 +537,9 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					dat+="[(current_page != PAGES) ? ("<A href='?src=\ref[src];next_censor_page=\ref[PAGES]'> [i]</A>") : (" [i]")]"
 				dat+="<HR><A href='?src=\ref[src];refresh=1'>Обновить</A><BR>"
 				dat+="<A href='?src=\ref[src];setScreen=[10]'>Вернуться</A>"
+			if(25)
+				dat+="<B><FONT COLOR='maroon'>ОШИБКА: гостевой пропуск не поддерживается.</B></FONT><HR><BR>"
+				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			else
 				dat+="Ошибка 404.<BR>[return_funny_title()]."
 
@@ -570,7 +580,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			if(FC.channel_name == channel_name)
 				check = 1
 				break
-		if(channel_name == "" || channel_name == "\[██████\]" || scanned_user == "Unknown" || check || (scanned_user in existing_authors) )
+		if(channel_name == "" || channel_name == "\[██████\]" || scanned_user == "Unknown" || check || (scanned_user in existing_authors) || is_guest)
 			screen = 7
 		else
 			var/choice = tgui_alert(usr,"Подтвердите создание Новостного Канала","Обработчик Сети Новостей", list("Подтвердить","Отменить"))
@@ -610,17 +620,17 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 	else if(href_list["submit_new_message"])
 		var/payment = 20
-		if(scanned_user_have_license) payment /= 2
-		if(msg == "" || msg == "\[██████\]" || scanned_user == "Unknown" || channel_name == "" || scanned_user_account.money < payment)
+		if(have_license) payment /= 2
+		if(msg == "" || msg == "\[██████\]" || scanned_user == "Unknown" || channel_name == "" || user_account.money < payment || is_guest)
 			screen = 6
 		else
 			var/datum/feed_message/newMsg = new /datum/feed_message
 			var/datum/comment_pages/CP = new /datum/comment_pages
 			newMsg.author = scanned_user
 			newMsg.body = msg
-			newMsg.author_account = scanned_user_account
-			newMsg.is_licensed = scanned_user_have_license
-			charge_to_account(scanned_user_account.account_number, "Newscaster", "Вы опубликовали новость", name, -payment)
+			newMsg.author_account = user_account
+			newMsg.is_licensed = have_license
+			charge_to_account(user_account.account_number, "Newscaster", "Вы опубликовали новость", name, -payment)
 			charge_to_account(global.station_account.account_number, "Newscaster", "Опубликована новость", name, payment)
 			if(photo)
 				newMsg.img = photo.img
@@ -813,20 +823,24 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		screen = 12
 
 	else if(href_list["setLike"])
-		var/datum/feed_message/FM = locate(href_list["setLike"])
-		FM.voters += scanned_user
-		FM.likes += 1
-		var/datum/money_account/MA = FM.author_account
-		if(MA && !MA.suspended && (FM.author != scanned_user))
-			var/payment = 5
-			if(FM.is_licensed) payment *= 2
-			charge_to_account(MA.account_number, "Newscaster", "Ваша новость кому-то понравилась", name, payment)
-			charge_to_account(global.station_account.account_number, "Newscaster", "Оплата трафика", name, payment)
+		if(is_guest) screen = 25
+		else
+			var/datum/feed_message/FM = locate(href_list["setLike"])
+			FM.voters += scanned_user
+			FM.likes += 1
+			var/datum/money_account/MA = FM.author_account
+			if(MA && !MA.suspended && (FM.author != scanned_user))
+				var/payment = 5
+				if(FM.is_licensed) payment *= 2
+				charge_to_account(MA.account_number, "Newscaster", "Ваша новость кому-то понравилась", name, payment)
+				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата трафика", name, payment)
 
 	else if(href_list["setDislike"])
-		var/datum/feed_message/FM = locate(href_list["setDislike"])
-		FM.voters += scanned_user
-		FM.dislikes += 1
+		if(is_guest) screen = 25
+		else
+			var/datum/feed_message/FM = locate(href_list["setDislike"])
+			FM.voters += scanned_user
+			FM.dislikes += 1
 
 	else if(href_list["open_pages"]) //page with comments for assistants
 		var/datum/feed_message/FM = locate(href_list["open_pages"])
@@ -1152,23 +1166,22 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 /obj/machinery/newscaster/proc/scan_user(mob/living/user)
 	if(ishuman(user))                       //User is a human
-		var/mob/living/carbon/human/human_user = user
-		if(human_user.wear_id)                                      //Newscaster scans you
-			if(istype(human_user.wear_id, /obj/item/device/pda) )	//autorecognition, woo!
-				var/obj/item/device/pda/P = human_user.wear_id
-				if(P.id && !istype(P.id, /obj/item/weapon/card/id/guest))
-					scanned_user = "[P.id.registered_name] ([P.id.assignment])"
-					scanned_user_account = get_account(P.id.associated_account_number)
-					scanned_user_have_license = (P.id.assignment == "Journalist")
-				else
-					scanned_user = "Unknown"
-			else if(istype(human_user.wear_id, /obj/item/weapon/card/id) && !istype(human_user.wear_id, /obj/item/weapon/card/id/guest))
-				var/obj/item/weapon/card/id/ID = human_user.wear_id
-				scanned_user ="[ID.registered_name] ([ID.assignment])"
-				scanned_user_account = get_account(ID.associated_account_number)
-				scanned_user_have_license = (ID.assignment == "Journalist")
+		var/mob/living/carbon/human/H = user
+		if(H.wear_id)                                      //Newscaster scans you
+			var/obj/item/weapon/card/id/C
+			if(istype(H.wear_id, /obj/item/device/pda) )	//autorecognition, woo!
+				var/obj/item/device/pda/P = H.wear_id
+				if(P.id)
+					C = P.id
+			else if(istype(H.wear_id, /obj/item/weapon/card/id))
+				C = H.wear_id
+			if(C)
+				scanned_user ="[C.registered_name] ([C.assignment])"
+				user_account = get_account(C.associated_account_number)
+				have_license = (C.assignment == "Journalist")
+				is_guest = istype(C, /obj/item/weapon/card/id/guest)
 			else
-				scanned_user = "Unknown"
+				scanned_user ="Unknown"
 		else
 			scanned_user ="Unknown"
 	else

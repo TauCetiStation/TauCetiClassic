@@ -29,10 +29,10 @@
 /datum/outfit/job/assistant/journalist
 	name = OUTFIT_JOB_NAME("Journalist")
 
-	uniform = /obj/item/clothing/under/lawyer/black
+	uniform = /obj/item/clothing/under/lawyer/red
 	shoes = /obj/item/clothing/shoes/black
 	belt = /obj/item/device/pda/reporter
-	l_pocket = /obj/item/device/camera/polar
+	l_pocket = /obj/item/device/camera
 
 /datum/outfit/job/assistant/test_subject
 	name = OUTFIT_JOB_NAME("Test Subject")
