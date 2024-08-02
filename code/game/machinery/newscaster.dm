@@ -7,6 +7,7 @@
 /datum/feed_message
 	var/author = ""
 	var/body = ""
+	var/datum/money_account/author_account = null
 	//var/parent_channel
 	var/backup_body = ""
 	var/backup_author = ""
@@ -156,6 +157,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		// 0 = there hasn't been a news/wanted update in the last alert_delay
 		// 1 = there has
 	var/scanned_user = "Unknown" //Will contain the name of the person who currently uses the newscaster
+	var/datum/money_account/scanned_user_account = null
 	var/msg = ""                //Feed message
 	var/obj/item/weapon/photo/photo = null
 	var/channel_name = "" //the feed channel which will be receiving the feed, or being created
@@ -608,6 +610,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			var/datum/comment_pages/CP = new /datum/comment_pages
 			newMsg.author = src.scanned_user
 			newMsg.body = src.msg
+			newMsg.author_account = src.scanned_user_account
 			if(photo)
 				newMsg.img = photo.img
 			feedback_inc("newscaster_stories",1)
@@ -802,11 +805,17 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		var/datum/feed_message/FM = locate(href_list["setLike"])
 		FM.voters += src.scanned_user
 		FM.likes += 1
+		var/datum/money_account/MA = FM.author_account
+		if(MA && !MA.suspended && (FM.author != src.scan_user))
+			charge_to_account(MA.account_number, "Newscaster", "Ваша новость кому-то понравилась", src.name, 10)
 
 	else if(href_list["setDislike"])
 		var/datum/feed_message/FM = locate(href_list["setDislike"])
 		FM.voters += src.scanned_user
 		FM.dislikes += 1
+		var/datum/money_account/MA = FM.author_account
+		if(MA && !MA.suspended && (FM.author != src.scan_user))
+			charge_to_account(MA.account_number, "Newscaster", "Ваша новость кому-то не понравилась", src.name, -5)
 
 	else if(href_list["open_pages"]) //page with comments for assistants
 		var/datum/feed_message/FM = locate(href_list["open_pages"])
@@ -1138,11 +1147,15 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				var/obj/item/device/pda/P = human_user.wear_id
 				if(P.id)
 					src.scanned_user = "[P.id.registered_name] ([P.id.assignment])"
+					if(P.id.assignment == "Journalist")
+						scanned_user_account = get_account(P.id.associated_account_number)
 				else
 					src.scanned_user = "Unknown"
 			else if(istype(human_user.wear_id, /obj/item/weapon/card/id) )
 				var/obj/item/weapon/card/id/ID = human_user.wear_id
 				src.scanned_user ="[ID.registered_name] ([ID.assignment])"
+				if(ID.assignment == "Journalist")
+					scanned_user_account = get_account(ID.associated_account_number)
 			else
 				src.scanned_user ="Unknown"
 		else
