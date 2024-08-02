@@ -806,7 +806,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		FM.voters += src.scanned_user
 		FM.likes += 1
 		var/datum/money_account/MA = FM.author_account
-		if(MA && !MA.suspended && (FM.author != src.scan_user))
+		if(MA && !MA.suspended && (FM.author != src.scanned_user))
 			charge_to_account(MA.account_number, "Newscaster", "Ваша новость кому-то понравилась", src.name, 10)
 
 	else if(href_list["setDislike"])
@@ -814,7 +814,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		FM.voters += src.scanned_user
 		FM.dislikes += 1
 		var/datum/money_account/MA = FM.author_account
-		if(MA && !MA.suspended && (FM.author != src.scan_user))
+		if(MA && !MA.suspended && (FM.author != src.scanned_user))
 			charge_to_account(MA.account_number, "Newscaster", "Ваша новость кому-то не понравилась", src.name, -5)
 
 	else if(href_list["open_pages"]) //page with comments for assistants
