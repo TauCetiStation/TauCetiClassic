@@ -6861,13 +6861,10 @@
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
 "alu" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
+/obj/machinery/door/window/brigdoor/northleft{
+	name = "Brig Desk";
+	req_access = list(63)
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/disposal,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -7850,15 +7847,12 @@
 	},
 /area/station/security/brig)
 "amV" = (
-/obj/machinery/door/window/brigdoor/northleft{
-	name = "Brig Desk";
-	req_access = list(63)
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/door/window/brigdoor/northright{
+	name = "Brig Desk";
+	req_access = list(63)
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -7878,10 +7872,6 @@
 /area/station/security/brig)
 "amY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/window/brigdoor/northright{
-	name = "Brig Desk";
-	req_access = list(63)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -7890,9 +7880,12 @@
 	dir = 9;
 	network = list("SS13","Security")
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal,
+/obj/structure/window/thin/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -7944,16 +7937,24 @@
 	desc = "A remote control switch for the brig foyer.";
 	id = "InnerBrig";
 	name = "Inner Brig Doors";
-	pixel_x = -37;
+	pixel_x = -39;
 	pixel_y = 9;
 	range = 10
 	},
 /obj/machinery/door_control{
 	id = "Prison Gate";
 	name = "Prison Wing Lockdown";
-	pixel_x = -37;
+	pixel_x = -39;
 	pixel_y = -3;
 	req_access = list(2)
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used to monitor areas of the Security Division.";
+	dir = 4;
+	name = "Security Monitor";
+	network = list("Security");
+	pixel_x = -25;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8540,13 +8541,6 @@
 	},
 /area/station/engineering/engine)
 "anY" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used to monitor areas of the Security Division.";
-	dir = 4;
-	name = "Security Monitor";
-	network = list("Security");
-	pixel_x = -28
-	},
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
