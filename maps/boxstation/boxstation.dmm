@@ -2667,6 +2667,9 @@
 	name = "Prison Wing flashes";
 	pixel_y = -36
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -6704,8 +6707,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
@@ -6861,10 +6863,10 @@
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
 "alu" = (
-/obj/machinery/door/window/brigdoor/northleft{
-	name = "Brig Desk";
-	req_access = list(63)
+/obj/structure/window/thin/reinforced{
+	dir = 1
 	},
+/obj/machinery/computer/secure_data,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -7351,6 +7353,14 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "amh" = (
+/obj/machinery/door_control{
+	desc = "A remote control switch for the brig foyer.";
+	id = "InnerBrig";
+	name = "Inner Brig Doors";
+	pixel_x = -26;
+	pixel_y = 6;
+	range = 10
+	},
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
@@ -7361,21 +7371,29 @@
 	pixel_y = 26;
 	req_access = list(63)
 	},
+/obj/machinery/door_control{
+	id = "Prison Gate";
+	name = "Prison Wing Lockdown";
+	pixel_x = -26;
+	pixel_y = -7;
+	req_access = list(2)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/security/brig)
 "ami" = (
-/obj/structure/disposalpipe/trunk{
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/structure/disposaloutlet{
-	dir = 4
+/obj/machinery/door/window/westright{
+	name = "Brig Desk"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/prison)
+/area/station/security/brig)
 "amj" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/security/wooden_tv,
@@ -7385,9 +7403,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/machinery/computer/secure_data{
-	dir = 8
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
+/obj/machinery/disposal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7640,6 +7659,9 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -7669,9 +7691,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -7770,6 +7789,9 @@
 	range = 10;
 	req_access = list(2)
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -7847,12 +7869,12 @@
 	},
 /area/station/security/brig)
 "amV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/machinery/door/window/brigdoor/northright{
+/obj/machinery/door/window/brigdoor/northleft{
 	name = "Brig Desk";
 	req_access = list(63)
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -7872,6 +7894,10 @@
 /area/station/security/brig)
 "amY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/window/brigdoor/northright{
+	name = "Brig Desk";
+	req_access = list(63)
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
@@ -7880,13 +7906,7 @@
 	dir = 9;
 	network = list("SS13","Security")
 	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -7933,29 +7953,6 @@
 	dir = 1
 	},
 /obj/structure/stool/bed/chair/office/dark,
-/obj/machinery/door_control{
-	desc = "A remote control switch for the brig foyer.";
-	id = "InnerBrig";
-	name = "Inner Brig Doors";
-	pixel_x = -39;
-	pixel_y = 9;
-	range = 10
-	},
-/obj/machinery/door_control{
-	id = "Prison Gate";
-	name = "Prison Wing Lockdown";
-	pixel_x = -39;
-	pixel_y = -3;
-	req_access = list(2)
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used to monitor areas of the Security Division.";
-	dir = 4;
-	name = "Security Monitor";
-	network = list("Security");
-	pixel_x = -25;
-	pixel_y = 2
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8102,15 +8099,13 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
+/obj/machinery/door/window/southleft{
+	name = "Brig Desk"
+	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/machinery/door/window/southright{
-	dir = 1;
-	req_access = list(63);
-	name = "Brig Deck"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -8484,6 +8479,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/brig)
 "anV" = (
@@ -8541,7 +8537,13 @@
 	},
 /area/station/engineering/engine)
 "anY" = (
-/obj/structure/table/reinforced,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used to monitor areas of the Security Division.";
+	dir = 4;
+	name = "Security Monitor";
+	network = list("Security");
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8574,7 +8576,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
@@ -8588,7 +8589,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -8642,10 +8644,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -8865,7 +8863,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aoB" = (
@@ -9016,6 +9013,9 @@
 "aoQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/southright{
+	name = "Brig Desk"
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -9028,11 +9028,6 @@
 	pixel_x = 7
 	},
 /obj/item/weapon/pen,
-/obj/machinery/door/window/southright{
-	dir = 1;
-	req_access = list(63);
-	name = "Brig Deck"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -9076,6 +9071,7 @@
 	dir = 4;
 	network = list("SS13","Prison")
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "red"
 	},
@@ -9210,7 +9206,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/prison)
 "apj" = (
@@ -9992,10 +9987,8 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/machinery/door/window/southright{
-	dir = 4;
-	name = "Brig Deck";
-	req_access = list(63)
+/obj/machinery/door/window/westleft{
+	name = "Brig Desk"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10681,6 +10674,7 @@
 	id = "cell2";
 	name = "Cell Door"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/prison)
 "arS" = (
@@ -11131,7 +11125,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
@@ -21184,9 +21177,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "aLt" = (
@@ -22657,9 +22647,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -70782,19 +70769,6 @@
 /obj/random/vending/snack,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
-"ehl" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "redcorner"
-	},
-/area/station/security/brig)
 "eho" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -71312,6 +71286,22 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/port)
+"eLC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor{
+	icon_state = "redcorner"
+	},
+/area/station/security/brig)
 "eMb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -72101,6 +72091,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"fEM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/security/prison)
 "fFb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -73140,15 +73137,6 @@
 	icon_state = "vaultfull"
 	},
 /area/station/medical/reception)
-"gMr" = (
-/obj/machinery/light/smart,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "redcorner"
-	},
-/area/station/security/brig)
 "gMs" = (
 /obj/effect/landmark/start/technical_assistant,
 /obj/machinery/camera{
@@ -73347,21 +73335,6 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/bar)
-"gUr" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "redcorner"
-	},
-/area/station/security/brig)
 "gUO" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -74964,6 +74937,17 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
+"iBX" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/prison)
 "iCb" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4
@@ -77177,6 +77161,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -78006,13 +77993,6 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel)
-"lFL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/security/prison)
 "lFQ" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/light/smart,
@@ -78829,6 +78809,22 @@
 	icon_state = "whitered"
 	},
 /area/station/medical/hallway)
+"muN" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/security/prison)
 "mwb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -84205,6 +84201,19 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/virology)
+"syG" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redcorner"
+	},
+/area/station/security/brig)
 "szb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -85608,6 +85617,15 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"urq" = (
+/obj/machinery/light/smart,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "redcorner"
+	},
+/area/station/security/brig)
 "uru" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -113557,7 +113575,7 @@ adM
 aor
 aoJ
 apK
-ami
+iBX
 avO
 apq
 asu
@@ -113814,7 +113832,7 @@ anE
 amb
 ams
 apP
-lFL
+fEM
 asF
 auS
 axL
@@ -115351,9 +115369,9 @@ adh
 ajg
 cUb
 cWb
-kKb
+eLC
 anU
-amg
+muN
 aoV
 arR
 aob
@@ -116893,7 +116911,7 @@ aiy
 akJ
 aiB
 alJ
-gUr
+kKb
 amS
 amg
 apv
@@ -117407,7 +117425,7 @@ aeq
 aeq
 ajw
 alI
-gMr
+urq
 adJ
 adJ
 adJ
@@ -118435,9 +118453,9 @@ agV
 ajp
 ajx
 alK
-ehl
+syG
 adM
-aqE
+ami
 aqE
 adJ
 arC
