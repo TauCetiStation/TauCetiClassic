@@ -37397,9 +37397,6 @@
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -38102,6 +38099,7 @@
 /turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "gPj" = (
+/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -54972,12 +54970,7 @@
 	},
 /area/station/bridge/hop_office)
 "klW" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/stamp/cargo{
-	name = "miner's rubber stamp";
-	stamp_message = "Miner"
-	},
+/obj/machinery/mineral/equipment_vendor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -56840,7 +56833,9 @@
 	},
 /area/station/bridge/captain_quarters)
 "kFL" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -90908,6 +90903,11 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
+/obj/item/weapon/stamp/cargo{
+	name = "miner's rubber stamp";
+	pixel_y = -10;
+	stamp_message = "Miner"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -91676,8 +91676,9 @@
 /area/station/maintenance/bridge)
 "rHM" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
-/obj/machinery/light/smart,
+/obj/item/weapon/paper_bin{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -101508,11 +101509,9 @@
 	},
 /area/station/engineering/equip)
 "tDX" = (
-/obj/machinery/mineral/equipment_vendor,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/cargo/miningoffice)
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "tEi" = (
 /obj/item/weapon/caution/cone,
 /turf/simulated/floor/plating,
@@ -103443,7 +103442,7 @@
 	},
 /area/station/hallway/secondary/mine_sci_shuttle)
 "tYP" = (
-/obj/machinery/space_heater,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "tYR" = (
@@ -103859,6 +103858,17 @@
 /area/station/security/seclunch)
 "ucZ" = (
 /obj/machinery/door/firedoor,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille{
+	destroyed = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "udb" = (
@@ -104142,6 +104152,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -28
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -104682,21 +104693,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
-"uks" = (
-/obj/machinery/door/firedoor,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/grille{
-	destroyed = 1
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "uku" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -135710,7 +135706,7 @@ oyQ
 uqs
 cwN
 rBg
-tYP
+tDX
 uqs
 uqs
 uqs
@@ -135968,7 +135964,7 @@ hvb
 hvb
 wOE
 hvb
-ucZ
+tYP
 hvb
 hvb
 hvb
@@ -136225,7 +136221,7 @@ kyg
 eda
 eda
 nGS
-uks
+ucZ
 nGS
 eda
 biI
@@ -138525,8 +138521,8 @@ czH
 eLf
 efn
 cLp
-czH
-tDX
+eLf
+wUR
 kFL
 qUL
 wrv
