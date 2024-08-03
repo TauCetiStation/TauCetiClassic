@@ -17673,12 +17673,10 @@
 	},
 /area/shuttle/supply/station)
 "dNr" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "arrival_specops";
-	locked = 1;
 	name = "Arrival Airlock"
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "dNt" = (
