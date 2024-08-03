@@ -210,14 +210,14 @@
 
 /datum/action/cooldown/skill_educate/Checks()
 	if(!IsAvailable())
-		to_chat(owner, "<span class='notice'>Вы слишком устали чтобы обучать кого-то ещё.</span>")
+		to_chat(owner, "<span class='notice'>Вы слишком устали, чтобы обучать кого-то ещё.</span>")
 		return FALSE
 	if(!ishuman(owner))
-		to_chat(owner, "<span class='notice'>Вы должны быть человеком чтобы кого-то обучить.</span>")
+		to_chat(owner, "<span class='notice'>Вы должны быть человеком, чтобы кого-то обучить.</span>")
 		return FALSE
 	var/mob/living/carbon/human/H = owner
 	if(!istype(H.get_active_hand(), /obj/item/weapon/book/skillbook))
-		to_chat(owner, "<span class='notice'>Чтобы чему-то обучить надо для начала взять нужную книгу в руки.</span>")
+		to_chat(owner, "<span class='notice'>Чтобы чему-то обучить, надо для начала взять нужную книгу в руки.</span>")
 		return FALSE
 	. = ..()
 
