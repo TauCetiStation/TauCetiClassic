@@ -1375,6 +1375,10 @@
 /obj/machinery/power/apc/largecell
 	cell_type = 20000
 
+/obj/machinery/power/apc/smallcell/nostromo
+	resistance_flags = FULL_INDESTRUCTIBLE
+	unacidable = TRUE
+
 /obj/machinery/power/apc/smallcell/nostromo/attackby(obj/item/W, mob/user)
 	if(iscoil(W))
 		var/turf/TT = get_turf(src)

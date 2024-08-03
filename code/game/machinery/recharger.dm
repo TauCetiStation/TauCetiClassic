@@ -213,6 +213,7 @@
 
 /obj/machinery/recharger/indestructible
 	resistance_flags = FULL_INDESTRUCTIBLE
+	unacidable = TRUE
 
 /obj/machinery/recharger/indestructible/attackby(obj/item/weapon/G, mob/user)
 	if(iswrenching(G))

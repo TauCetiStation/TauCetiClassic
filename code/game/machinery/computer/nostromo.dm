@@ -1,6 +1,7 @@
 /obj/machinery/computer/nostromo
 	icon_state = "shuttle"
 	resistance_flags = FULL_INDESTRUCTIBLE
+	unacidable = TRUE
 
 /obj/machinery/computer/nostromo/narcissus_shuttle
 	name = "Narcissus Shuttle Console"
@@ -50,6 +51,8 @@
 
 
 /obj/machinery/computer/nostromo/cockpit
+	resistance_flags = FULL_INDESTRUCTIBLE
+	unacidable = TRUE
 	name = "Nostromo Ship Console"
 	cases = list("консоль корабля", "консоли корабля", "консоли корабля", "консоль корабля", "консолью корабля", "консоли корабля")
 	var/course = 0

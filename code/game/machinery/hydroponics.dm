@@ -1037,9 +1037,15 @@
 		else
 			to_chat(user, "<span class='notice'>You plant the alien weed.</span>")
 			myseed = new /obj/item/seeds/kudzuseed/alien
+			planted = TRUE
 			waterlevel = maxwater
 			nutrilevel = maxnutri
+			age = 0
+			health = myseed.endurance
+			lastcycle = world.time
+			harvest = FALSE
 			weedlevel = 0
+			pestlevel = 0
 			update_icon()
 			addtimer(CALLBACK(N_AI, TYPE_PROC_REF(/mob/living/silicon/decoy/nostromo, announce), "alien_weed"), 1 MINUTE)
 

@@ -537,9 +537,10 @@
 
 /obj/machinery/power/smes/nostromo
 	resistance_flags = FULL_INDESTRUCTIBLE
+	unacidable = TRUE
 	var/mob/living/silicon/decoy/nostromo/N_AI
 	var/stability = 8
-	var/next_stability_decrease
+	var/next_stability_decrease = 0
 	var/next_alien_attack
 	var/next_instrument
 	var/list/instruments = list(
@@ -554,9 +555,8 @@
 /obj/machinery/power/smes/nostromo/atom_init()
 	..()
 	next_instrument = pick(instruments)
-	next_stability_decrease = world.time + rand(50, 70) SECOND
 	next_alien_attack = world.time
-	stability = rand(6, 8)
+	stability = rand(7, 9)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/power/smes/nostromo/atom_init_late()
@@ -569,12 +569,13 @@
 /obj/machinery/power/smes/nostromo/process()
 	..()
 	if(world.time > next_stability_decrease)
-		next_stability_decrease += rand(50, 70) SECOND
+		next_stability_decrease = world.time + rand(110, 130) SECOND
 		stability--
 		if(!stability)
 			breakdown()
 		if(stability in 1 to 2) // 1 and 2 minute before breakdown AI gives an alert
 			N_AI.announce("smes")
+			do_shake_animation(2, next_stability_decrease - world.time)
 
 /obj/machinery/power/smes/nostromo/attack_alien(mob/user)
 	if(world.time > next_alien_attack)
@@ -645,6 +646,11 @@
 /obj/machinery/power/smes/nostromo/attackby(obj/item/I, mob/user)
 	if(stability < 8)
 		if(istype(I, next_instrument))
+			if(istype(I, /obj/item/weapon/weldingtool))
+				var/obj/item/weapon/weldingtool/WT = I
+				if(!WT.active)
+					to_chat(user, "<span class='notice'>Сначала включите сварку.</span>")
+					return
 			if(do_after(user, 20, target = src))
 				if(stability < 3)
 					shock(user)

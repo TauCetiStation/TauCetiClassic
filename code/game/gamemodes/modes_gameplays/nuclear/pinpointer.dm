@@ -249,8 +249,12 @@
 	mode = SEARCH_FOR_OBJECT
 
 /obj/item/weapon/pinpointer/lone_alien/attack_self(mob/user)
-	var/mob/alien = global.alien_list[ALIEN_LONE_HUNTER][1]
 	var/mob/jonesy = global.Jonesy
+	var/mob/alien
+	var/list/L = global.alien_list[ALIEN_LONE_HUNTER]
+	if(L.len)
+		alien = global.alien_list[ALIEN_LONE_HUNTER][1]
+
 	if(alien && jonesy)
 		target = pick(jonesy, alien)
 	else if(jonesy)

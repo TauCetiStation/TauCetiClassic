@@ -150,7 +150,11 @@
 	var/mob/living/L = antag.current
 	var/datum/action/A = new /datum/action/nostromo_map(L)
 	A.Grant(L)
-	L.SetParalysis(80, TRUE)
+	var/turf/current_turf = get_turf(L)
+	var/obj/structure/stool/bed/chair/metal/chair = locate() in current_turf.contents
+	if(chair)
+		chair.buckle_mob(L)
+	L.Stun(6, TRUE)
 
 
 /datum/action/nostromo_map

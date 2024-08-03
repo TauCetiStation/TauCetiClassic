@@ -57,6 +57,17 @@
 		apply_status_effect(STATUS_EFFECT_ALIEN_ADRENALINE)
 	..()
 
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/handle_fire()
+	if(..())
+		return
+	if(fire_stacks > 0)
+		adjustFireLoss(fire_stacks * 2)
+		fire_stacks--
+		fire_stacks = max(0, fire_stacks)
+	else
+		ExtinguishMob()
+		return TRUE
+
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/next_stage(msg_play = TRUE)
 	if(msg_play)
 		to_chat(src, "<span class='notice'>Вы перешли на новую стадию эволюции!</span>")
@@ -84,6 +95,10 @@
 	play_scary_music()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/UnarmedAttack(atom/A)
+	if(has_status_effect(STATUS_EFFECT_ALIEN_ADRENALINE))
+		to_chat(src, "<span class='warning'>Вы вот-вот умрёте, нужно бежать!</span>")
+		SetNextMove(CLICK_CD_MELEE)
+		return
 	A.attack_alien(src)
 	if(a_intent == INTENT_HARM)
 		if(ishuman(A))
@@ -211,16 +226,17 @@
 
 /datum/status_effect/alien_adrenaline
 	id = "alien_adrenaline"
-	duration = 1 MINUTE
+	duration = 20 SECOND
 	alert_type = /atom/movable/screen/alert/status_effect/alien_adrenaline
 
 /datum/status_effect/alien_adrenaline/on_apply()
-	to_chat(owner, "<span class='notice'>Вы чувствуете резкий прилив сил!</span>")
+	to_chat(owner, "<span class='warning'>БЕГИТЕ ПОКА ЖИВЫ!</span>")
 	owner.stat = CONSCIOUS
 	owner.SetParalysis(0)
 	owner.SetStunned(0)
 	owner.SetWeakened(0)
 	owner.speed -= 1
+	. = ..()
 
 /datum/status_effect/alien_adrenaline/on_remove()
 	to_chat(owner, "<span class='notice'>Ваше сердце медленно успокаивается.</span>")

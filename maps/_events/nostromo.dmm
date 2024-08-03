@@ -107,7 +107,12 @@
 	},
 /area/station/nostromo)
 "aD" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/item/weapon/gun/syringe,
+/obj/structure/rack,
+/obj/machinery/camera{
+	c_tag = "Med Lab";
+	dir = 6
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -1198,10 +1203,6 @@
 	pixel_x = 7;
 	pixel_y = 8
 	},
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	pixel_x = -4;
-	pixel_y = -1
-	},
 /obj/item/weapon/reagent_containers/glass/bottle/peridaxon,
 /obj/item/weapon/storage/pill_bottle/bicaridine{
 	pixel_x = 9;
@@ -1365,13 +1366,6 @@
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
-	},
-/area/station/nostromo)
-"hz" = (
-/obj/machinery/atmospherics/pipe/manifold/visible,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitebluecorner"
 	},
 /area/station/nostromo)
 "hA" = (
@@ -1776,12 +1770,10 @@
 	},
 /area/station/nostromo)
 "jG" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 9
+/obj/effect/decal/turf_decal/alpha/dark_red{
+	icon_state = "religion_cult_of_blood"
 	},
-/turf/simulated/floor{
-	icon_state = "whitechoco"
-	},
+/turf/unsimulated/floor/cult,
 /area/station/nostromo)
 "jI" = (
 /obj/structure/container/up{
@@ -3024,20 +3016,17 @@
 	name = "Doctors Locker";
 	req_access = list(5)
 	},
-/obj/item/weapon/gun/syringe,
-/obj/item/weapon/storage/belt/medical,
-/obj/item/weapon/storage/box/syringes,
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
-/obj/item/weapon/storage/pill_bottle/dylovene,
 /obj/effect/landmark/nostromo/ambience,
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/item/weapon/storage/box/syringes/mixture,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -3112,14 +3101,8 @@
 /turf/simulated/floor/grass,
 /area/station/nostromo)
 "qS" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Med Lab";
-	dir = 4
-	},
+/obj/structure/table/glass,
+/obj/item/weapon/storage/box/syringes,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -3651,6 +3634,7 @@
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/structure/rack,
+/obj/item/device/multitool,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "yellow"
@@ -4278,8 +4262,9 @@
 /area/station/nostromo)
 "wJ" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/syringes/mixture{
-	pixel_y = 4
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -5560,7 +5545,6 @@
 /turf/simulated/floor,
 /area/station/nostromo)
 "DB" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -6556,7 +6540,6 @@
 /obj/item/weapon/gun/energy/gun/adv/alien,
 /obj/item/clothing/accessory/holster,
 /obj/item/weapon/paper/nuclear_code/map,
-/obj/item/clothing/accessory/armor,
 /obj/item/weapon/pinpointer/lone_alien,
 /turf/simulated/floor{
 	dir = 9;
@@ -6564,8 +6547,8 @@
 	},
 /area/station/nostromo)
 "Iz" = (
-/obj/effect/decal/turf_decal/alpha/dark_red{
-	icon_state = "religion_cult_of_blood"
+/obj/structure/toilet{
+	name = "skibidi toilet"
 	},
 /turf/unsimulated/floor/cult,
 /area/station/nostromo)
@@ -7186,12 +7169,6 @@
 	dir = 8;
 	icon_state = "neutral"
 	},
-/area/station/nostromo)
-"Ln" = (
-/obj/structure/toilet{
-	name = "skibidi toilet"
-	},
-/turf/unsimulated/floor/cult,
 /area/station/nostromo)
 "Lo" = (
 /obj/machinery/light/smart{
@@ -9571,6 +9548,7 @@
 /obj/item/weapon/tank/emergency_oxygen/engi,
 /obj/item/weapon/tank/emergency_oxygen/engi,
 /obj/item/weapon/weldingtool/experimental,
+/obj/item/device/multitool,
 /turf/simulated/floor{
 	icon_state = "yellowfull"
 	},
@@ -9797,7 +9775,10 @@
 /turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "XM" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
+/obj/structure/table/glass,
+/obj/item/weapon/storage/belt/medical{
+	pixel_y = 3
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -42537,12 +42518,12 @@ ZS
 ZS
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
+cx
+cx
+cx
+cx
+cx
+cx
 ZS
 ZS
 ZS
@@ -42794,12 +42775,12 @@ ZS
 ZS
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
+cx
+io
+io
+jG
+io
+cx
 ZS
 ZS
 ZS
@@ -43051,12 +43032,12 @@ ZS
 ZS
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
+cx
+jG
+jG
+Iz
+jG
+cx
 ZS
 ZS
 ZS
@@ -43308,12 +43289,12 @@ ZS
 ZS
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
+cx
+io
+io
+jG
+io
+cx
 ZS
 ZS
 ZS
@@ -43565,12 +43546,12 @@ ZS
 ZS
 ZS
 ZS
-ZS
-ZS
-ZS
-ZS
-ZS
-ZS
+cx
+cx
+cx
+cx
+cx
+cx
 ZS
 ZS
 ZS
@@ -44298,7 +44279,7 @@ ZS
 ZS
 ZS
 aD
-hz
+DB
 CX
 Kj
 mm
@@ -44555,7 +44536,7 @@ ZS
 ZS
 XM
 DB
-jG
+CX
 VV
 CX
 xq
@@ -53817,12 +53798,12 @@ ZS
 ZS
 ZS
 ZS
-cx
-cx
-cx
-cx
-cx
-cx
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
 ZS
 ZS
 ZR
@@ -54074,12 +54055,12 @@ ZS
 ZS
 ZS
 ZS
-cx
-io
-io
-Iz
-io
-cx
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
 ZS
 ZS
 ZR
@@ -54331,12 +54312,12 @@ ZS
 ZS
 ZS
 ZS
-cx
-Iz
-Iz
-Ln
-Iz
-cx
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
 ZS
 ZS
 ZR
@@ -54588,12 +54569,12 @@ ZR
 ZR
 ZS
 ZS
-cx
-io
-io
-Iz
-io
-cx
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
 ZS
 ZS
 ZR
@@ -54845,12 +54826,12 @@ bf
 ZR
 ZS
 ZS
-cx
-cx
-cx
-cx
-cx
-cx
+ZS
+ZS
+ZS
+ZS
+ZS
+ZS
 ZS
 ZS
 ZR
