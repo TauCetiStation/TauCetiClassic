@@ -228,7 +228,7 @@
 	var/mob/living/carbon/human/H = owner
 	learning = TRUE
 
-	visible_message(
+	owner.visible_message(
 		"<span class='notice'>Учитель открывает книгу и начинает вести лекцию.</span>",
 		"<span class='notice'>Вы открываете книгу и начинаете вести лекцию.</span>",
 		"<span class='notice'>Вы слышите шелест бумаги и голос учителя, ведущего лекцию.</span>")
