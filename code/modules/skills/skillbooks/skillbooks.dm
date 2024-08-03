@@ -228,30 +228,31 @@
 	var/mob/living/carbon/human/H = owner
 	learning = TRUE
 
-	for(var/mob/living/carbon/human/learner in range(H.loc, 1))
-		if(learner != owner)
+	visible_message(
+		"<span class='notice'>Учитель открывает книгу и начинает вести лекцию.</span>",
+		"<span class='notice'>Вы открываете книгу и начинаете вести лекцию.</span>",
+		"<span class='notice'>Вы слышите шелест бумаги и голос учителя, ведущего лекцию.</span>")
+
+	for(var/mob/living/carbon/human/learner in range(H.loc, 3))
+		if(learner != owner && learner.buckled)
 			learners += learner
-			learner.say("щас я буду чему-то учиться!!!!!")
 
 	for(var/mob/living/carbon/human/learner as anything in learners)
-		learner.say("я чему-то учусь!!!!!")
 		educate(learner)
 
-	if(do_after(owner, 10 SECOND, TRUE, owner))
+	if(do_after(owner, 15 SECOND, TRUE, owner))
 		var/obj/item/weapon/book/skillbook/SB = H.get_active_hand()
 		for(var/mob/living/carbon/human/learner as anything in learners)
 			learner.add_skills_buff(SB.bonus_skillset)
-			learner.say("я научился чему-то лол!!!!!")
 		StartCooldown()
-
+		learners = list()
 
 	learning = FALSE
-	learners = list()
 
 
 /datum/action/cooldown/skill_educate/proc/educate(var/mob/learner)
 	set waitfor = FALSE
-	if(!do_after(learner, 10 SECOND, FALSE, learner, extra_checks = CALLBACK(src, PROC_REF(is_learning))))
+	if(!do_after(learner, 15 SECOND, FALSE, learner, extra_checks = CALLBACK(src, PROC_REF(is_learning))))
 		learners -= learner
 
 /datum/action/cooldown/skill_educate/proc/is_learning()
