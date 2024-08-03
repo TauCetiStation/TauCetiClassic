@@ -250,7 +250,7 @@
 	learning = FALSE
 
 
-/datum/action/cooldown/skill_educate/proc/educate(var/mob/learner)
+/datum/action/cooldown/skill_educate/proc/educate(mob/learner)
 	set waitfor = FALSE
 	if(!do_after(learner, 15 SECOND, FALSE, learner, extra_checks = CALLBACK(src, PROC_REF(is_learning))))
 		learners -= learner
