@@ -200,7 +200,7 @@
 
 
 /datum/action/cooldown/skill_educate
-	name = "Обучить профессии"
+	name = "Провести лекцию"
 	check_flags = AB_CHECK_ALIVE | AB_CHECK_INCAPACITATED
 	button_icon = 'icons/obj/library.dmi'
 	button_icon_state = "book"
@@ -219,6 +219,13 @@
 	if(!istype(H.get_active_hand(), /obj/item/weapon/book/skillbook))
 		to_chat(owner, "<span class='notice'>Чтобы чему-то обучить, надо для начала взять нужную книгу в руки.</span>")
 		return FALSE
+	for(var/mob/living/carbon/human/learner in range(H.loc, 3))
+		if(learner != owner && learner.buckled)
+			learners += learner
+	if(learners.len < 5)
+		to_chat(owner, "<span class='notice'>Для проведения лекции нужно как минимум 5 слушающих.</span>")
+		learners = list()
+		return FALSE
 	. = ..()
 
 /datum/action/cooldown/skill_educate/Trigger()
@@ -232,10 +239,6 @@
 		"<span class='notice'>Учитель открывает книгу и начинает вести лекцию.</span>",
 		"<span class='notice'>Вы открываете книгу и начинаете вести лекцию.</span>",
 		"<span class='notice'>Вы слышите шелест бумаги и голос учителя, ведущего лекцию.</span>")
-
-	for(var/mob/living/carbon/human/learner in range(H.loc, 3))
-		if(learner != owner && learner.buckled)
-			learners += learner
 
 	for(var/mob/living/carbon/human/learner as anything in learners)
 		educate(learner)
