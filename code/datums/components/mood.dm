@@ -329,7 +329,9 @@
 /datum/component/mood/proc/HandleNutrition()
 	var/mob/living/L = parent
 
-	switch(L.nutrition)
+	var/fullness = L.get_satiation()
+
+	switch(fullness)
 		if(NUTRITION_LEVEL_FAT to INFINITY)
 			add_event(null, "nutrition", /datum/mood_event/fat)
 
