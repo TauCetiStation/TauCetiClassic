@@ -218,6 +218,11 @@
 	skillsets = list("Librarian" = /datum/skillset/librarian)
 	flags = JOB_FLAG_CIVIL
 
+/datum/job/librarian/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!visualsOnly)
+		var/datum/action/cooldown/skill_educate/A = new(H)
+		A.Grant(H)
+
 /datum/job/clown
 	title = "Clown"
 	flag = CLOWN

@@ -197,3 +197,62 @@
 		/datum/skill/civ_mech = SKILL_LEVEL_TRAINED,
 		/datum/skill/combat_mech = SKILL_LEVEL_TRAINED,
 	)
+
+
+/datum/action/cooldown/skill_educate
+	name = "Обучить профессии"
+	check_flags = AB_CHECK_ALIVE | AB_CHECK_INCAPACITATED
+	button_icon = 'icons/obj/library.dmi'
+	button_icon_state = "book"
+	cooldown_time = 5 MINUTE
+	var/list/learners = list()
+	var/learning = FALSE
+
+/datum/action/cooldown/skill_educate/Checks()
+	if(!IsAvailable())
+		to_chat(owner, "<span class='notice'>Вы слишком устали чтобы обучать кого-то ещё.</span>")
+		return FALSE
+	if(!ishuman(owner))
+		to_chat(owner, "<span class='notice'>Вы должны быть человеком чтобы кого-то обучить.</span>")
+		return FALSE
+	var/mob/living/carbon/human/H = owner
+	if(!istype(H.get_active_hand(), /obj/item/weapon/book/skillbook))
+		to_chat(owner, "<span class='notice'>Чтобы чему-то обучить надо для начала взять нужную книгу в руки.</span>")
+		return FALSE
+	. = ..()
+
+/datum/action/cooldown/skill_educate/Trigger()
+	if(!Checks() || !owner)
+		return
+
+	var/mob/living/carbon/human/H = owner
+	learning = TRUE
+
+	for(var/mob/living/carbon/human/learner in range(H.loc, 1))
+		if(learner != owner)
+			learners += learner
+			learner.say("щас я буду чему-то учиться!!!!!")
+
+	for(var/mob/living/carbon/human/learner as anything in learners)
+		learner.say("я чему-то учусь!!!!!")
+		educate(learner)
+
+	if(do_after(owner, 10 SECOND, TRUE, owner))
+		var/obj/item/weapon/book/skillbook/SB = H.get_active_hand()
+		for(var/mob/living/carbon/human/learner as anything in learners)
+			learner.add_skills_buff(SB.bonus_skillset)
+			learner.say("я научился чему-то лол!!!!!")
+		StartCooldown()
+
+
+	learning = FALSE
+	learners = list()
+
+
+/datum/action/cooldown/skill_educate/proc/educate(var/mob/learner)
+	set waitfor = FALSE
+	if(!do_after(learner, 10 SECOND, FALSE, learner, extra_checks = CALLBACK(src, PROC_REF(is_learning))))
+		learners -= learner
+
+/datum/action/cooldown/skill_educate/proc/is_learning()
+	return learning
