@@ -234,10 +234,12 @@
 
 	owner.set_typing_indicator(TRUE)
 	var/message
-	do input(owner, "Скажите что-то про тему лекции", "Вступительное слово", "Тема этой лекции ") as text|null
-	while(!message)
-	owner.say_verb(message)
+	input(owner, "Скажите что-то про тему лекции", "Вступительное слово", "Тема этой лекции ") as text|null
 	owner.set_typing_indicator(FALSE)
+	if(!message)
+		to_chat(owner, "<span class='notice'>Лекция не может быть проведена без слов.</span>")
+		return
+	owner.say_verb(message)
 
 	var/education_time = max(10, 20 - (length(sanitize_safe(message)) / 10)) SECOND
 
