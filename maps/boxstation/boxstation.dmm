@@ -14094,8 +14094,8 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
+	dir = 9;
+	icon_state = "whitepurple"
 	},
 /area/station/civilian/barbershop)
 "ayo" = (
@@ -15990,8 +15990,8 @@
 /area/station/civilian/kitchen)
 "aBO" = (
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutral"
+	dir = 8;
+	icon_state = "whitepurple"
 	},
 /area/station/civilian/barbershop)
 "aBP" = (
@@ -36635,18 +36635,35 @@
 	},
 /area/station/bridge)
 "bnA" = (
-/obj/item/weapon/haircomb,
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/device/cardpay{
-	dir = 8;
-	pixel_x = -3;
-	pixel_y = 15
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bsentry";
+	name = "Blueshield Office Shutters";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/command{
+	dir = 4;
+	name = "Blueshield Office";
+	req_access = list(42)
 	},
 /turf/simulated/floor{
-	icon_state = "purplechecker"
+	icon_state = "darkbluefull"
 	},
-/area/station/civilian/barbershop)
+/area/station/security/blueshield)
 "bnB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -36739,7 +36756,7 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "neutralcorner"
+	icon_state = "whitepurple"
 	},
 /area/station/civilian/barbershop)
 "bnL" = (
@@ -37765,16 +37782,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/surgery)
 "bpE" = (
-/obj/machinery/door_control{
-	id = "bsstorage";
-	name = "Storage Shutter";
-	pixel_y = 26;
-	req_access = list(42)
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -37811,21 +37819,12 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/alarm{
-	pixel_y = 23
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/security/blueshield)
 "bpJ" = (
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "Dark Brig";
-	dir = 8;
-	name = "Brig dark left APC";
-	pixel_x = -27
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -42080,6 +42079,11 @@
 	dir = 4;
 	pixel_x = -4
 	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 3;
+	pixel_y = -1
+	},
 /turf/simulated/wall/r_wall,
 /area/station/security/blueshield)
 "bxd" = (
@@ -42194,9 +42198,6 @@
 /area/station/cargo/storage)
 "bxl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -43584,7 +43585,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "neutralcorner"
+	icon_state = "whitepurple"
 	},
 /area/station/civilian/barbershop)
 "bzJ" = (
@@ -43689,8 +43690,8 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutral"
+	dir = 8;
+	icon_state = "whitepurple"
 	},
 /area/station/civilian/barbershop)
 "bzR" = (
@@ -43783,11 +43784,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -47755,7 +47751,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "neutralcorner"
+	icon_state = "whitepurple"
 	},
 /area/station/civilian/barbershop)
 "bHj" = (
@@ -56575,11 +56571,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
-"cbh" = (
-/obj/effect/decal/turf_decal/set_damaged,
-/obj/effect/spawner/lootdrop,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
 "cbi" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8
@@ -70118,13 +70109,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/security/prison/toilet)
-"dFQ" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/turf/simulated/wall/r_wall,
-/area/station/bridge/teleporter)
 "dHv" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -74025,6 +74009,13 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
+"hTF" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/turf/simulated/wall/r_wall,
+/area/station/bridge/teleporter)
 "hUb" = (
 /obj/structure/window/thin/reinforced{
 	dir = 8
@@ -79457,6 +79448,11 @@
 	icon_state = "whitehall"
 	},
 /area/station/medical/hallway)
+"nwi" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/spawner/lootdrop,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "nws" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -80598,8 +80594,8 @@
 "oLn" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
+	dir = 10;
+	icon_state = "whitepurple"
 	},
 /area/station/civilian/barbershop)
 "oMb" = (
@@ -82976,6 +82972,22 @@
 	icon_state = "white"
 	},
 /area/station/medical/virology)
+"rwJ" = (
+/obj/item/weapon/haircomb,
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/dropper,
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_x = -3;
+	pixel_y = 15
+	},
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "purplechecker"
+	},
+/area/station/civilian/barbershop)
 "rxb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -86649,6 +86661,16 @@
 "wLi" = (
 /turf/simulated/wall,
 /area/station/civilian/chapel/mass_driver)
+"wLk" = (
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Dark Brig";
+	dir = 8;
+	name = "Brig dark left APC";
+	pixel_x = -32;
+	pixel_y = -6
+	},
+/turf/simulated/wall/r_wall,
+/area/station/security/blueshield)
 "wLY" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -114693,7 +114715,7 @@ bLx
 bNr
 ayr
 aqf
-cbh
+nwi
 cgt
 alZ
 alZ
@@ -115463,7 +115485,7 @@ aNr
 bGr
 nYP
 rCb
-bnA
+rwJ
 bHK
 bIO
 bFW
@@ -119055,7 +119077,7 @@ aqi
 aqi
 byE
 byE
-dFQ
+hTF
 kNr
 byE
 byE
@@ -120132,7 +120154,7 @@ afz
 cea
 bxc
 cea
-avF
+bnA
 cea
 cea
 bPp
@@ -120643,7 +120665,7 @@ bdc
 jWb
 jZb
 tnb
-cea
+wLk
 aDZ
 bjz
 avq
