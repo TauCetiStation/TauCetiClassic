@@ -15286,12 +15286,11 @@
 	},
 /area/station/civilian/dormitories)
 "aAw" = (
-/obj/structure/bookcase/manuals/security,
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "red"
+/obj/machinery/light/smart{
+	dir = 1
 	},
-/area/station/security/lobby)
+/turf/simulated/floor,
+/area/station/bridge/teleporter)
 "aAx" = (
 /obj/machinery/shower/free{
 	dir = 4
@@ -36658,7 +36657,7 @@
 /area/station/bridge)
 "bnA" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27;
+	pixel_x = -9;
 	pixel_y = 1
 	},
 /turf/simulated/wall/r_wall,
@@ -36760,7 +36759,7 @@
 "bnK" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 22
+	pixel_x = 4
 	},
 /turf/simulated/wall/r_wall,
 /area/station/security/blueshield)
@@ -42095,7 +42094,12 @@
 "bxc" = (
 /obj/machinery/alarm{
 	dir = 4;
-	pixel_x = -25
+	pixel_x = -4
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 3;
+	pixel_y = -1
 	},
 /turf/simulated/wall/r_wall,
 /area/station/security/blueshield)
@@ -78595,10 +78599,6 @@
 	icon_state = "barber"
 	},
 /area/station/civilian/locker)
-"msQ" = (
-/obj/machinery/light/smart,
-/turf/simulated/wall/r_wall,
-/area/station/bridge/teleporter)
 "mtb" = (
 /obj/structure/bookcase{
 	name = "bookcase (Religious)"
@@ -119073,7 +119073,7 @@ fDS
 apF
 aqi
 aqi
-aAw
+byE
 byE
 byE
 kNr
@@ -120359,11 +120359,11 @@ apG
 aqC
 arK
 byE
-bmu
+aAw
 aZb
 bsl
 bAb
-msQ
+byE
 bGu
 awT
 awQ
