@@ -23,7 +23,6 @@
 		var/obj/item/weapon/reagent_containers/pill/P = new(get_turf(src))
 		W.reagents.trans_to(P, W.reagents.total_volume)
 		reagents.trans_to(P, reagents.total_volume)
-		P.name = name
 		to_chat(user, "<span class='notice'>You unite [src] with other halved pill.</span>")
 		qdel(W)
 		qdel(src)
