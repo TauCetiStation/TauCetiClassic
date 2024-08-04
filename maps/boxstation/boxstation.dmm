@@ -14080,8 +14080,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aym" = (
-/turf/simulated/floor/plating,
-/area/station/security/iaa_office)
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/bridge/teleporter)
 "ayn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -15286,11 +15289,12 @@
 	},
 /area/station/civilian/dormitories)
 "aAw" = (
-/obj/machinery/light/smart{
-	dir = 1
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 4
 	},
-/turf/simulated/floor,
-/area/station/bridge/teleporter)
+/turf/simulated/wall/r_wall,
+/area/station/security/blueshield)
 "aAx" = (
 /obj/machinery/shower/free{
 	dir = 4
@@ -15994,7 +15998,6 @@
 	},
 /area/station/civilian/kitchen)
 "aBO" = (
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -36756,13 +36759,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/civilian/barbershop)
-"bnK" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 4
-	},
-/turf/simulated/wall/r_wall,
-/area/station/security/blueshield)
 "bnL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -43688,7 +43684,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -111666,7 +111661,7 @@ bET
 bGt
 aGn
 bDk
-aym
+bEW
 axN
 axN
 axN
@@ -111923,7 +111918,7 @@ aEh
 bxg
 ate
 bDk
-aym
+bEW
 axN
 axo
 bhX
@@ -112180,7 +112175,7 @@ bIp
 bHU
 aGn
 tgJ
-aym
+bEW
 axN
 axw
 bAD
@@ -112437,7 +112432,7 @@ aGn
 aGn
 aGn
 bDk
-aym
+bEW
 axN
 aya
 biL
@@ -112694,7 +112689,7 @@ lrT
 wAe
 wAe
 gvk
-aym
+bEW
 axN
 azD
 bjH
@@ -112951,7 +112946,7 @@ bDk
 bEW
 bJK
 asa
-aym
+bEW
 axN
 azJ
 biL
@@ -119381,7 +119376,7 @@ bdc
 cea
 cea
 cea
-bnK
+aAw
 cea
 cea
 aIR
@@ -120359,7 +120354,7 @@ apG
 aqC
 arK
 byE
-aAw
+aym
 aZb
 bsl
 bAb
