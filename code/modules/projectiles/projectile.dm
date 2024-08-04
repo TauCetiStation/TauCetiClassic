@@ -137,7 +137,7 @@
 	return target == output //Send it back to the gun!
 
 //Used to change the direction of the projectile in flight.
-/obj/item/projectile/proc/redirect(new_x, new_y, atom/starting_loc, mob/new_firer=null)
+/obj/item/projectile/proc/redirect(new_x, new_y, atom/starting_loc, atom/new_firer=null)
 	original = locate(new_x, new_y, src.z)
 	starting = starting_loc
 	current = starting_loc
