@@ -672,6 +672,11 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	icon_state = "sec_prison"
 	ambience = list('sound/ambience/prison_1.ogg')
 
+/area/station/security/visiting_room
+	name = "Visiting Room"
+	cases = list("комната для свиданий", "комнаты для свиданий", "комнате для свиданий", "комната для свиданий", "комнатой для свиданий", "комнатой для свиданий")
+	icon_state = "sec_prison"
+
 /area/station/security/prison/toilet
 	name = "Prison Toilet"
 	cases = list("тюремный туалет", "тюремного туалета", "тюремному туалету", "тюремный туалет", "тюремным туалетом", "тюремном туалете")
