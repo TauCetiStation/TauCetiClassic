@@ -11417,9 +11417,6 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "atp" = (
-/obj/machinery/light/smart{
-	dir = 8
-	},
 /turf/simulated/floor{
 	icon_state = "black"
 	},
@@ -11430,23 +11427,25 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	icon_state = "black"
 	},
 /area/station/security/prison)
 "atr" = (
-/obj/structure/cable,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/turf/simulated/floor{
+	icon_state = "black"
 	},
-/turf/simulated/floor/plating,
-/area/station/security/visiting_room)
+/area/station/security/prison)
 "ats" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=EVA";
@@ -11851,12 +11850,8 @@
 	},
 /area/station/hallway/primary/fore)
 "auc" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/hydroponics/old)
+/turf/simulated/wall,
+/area/station/civilian/barbershop)
 "aud" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -12246,10 +12241,14 @@
 	},
 /area/station/civilian/kitchen)
 "auQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/window/thin/reinforced,
-/turf/simulated/floor,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "black"
+	},
 /area/station/security/prison)
 "auR" = (
 /obj/structure/cable{
@@ -12822,11 +12821,18 @@
 	},
 /area/station/civilian/bar)
 "avQ" = (
-/obj/structure/sign/poster/official/obey{
-	pixel_y = -32
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
 	},
-/turf/simulated/wall/r_wall,
-/area/station/security/prison)
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/structure/closet/crate,
+/obj/item/device/multitool,
+/obj/item/device/flashlight,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "avR" = (
 /obj/machinery/camera{
 	c_tag = "Prison Rec Room South";
@@ -12843,6 +12849,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -12858,6 +12867,11 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -13170,6 +13184,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
@@ -14903,15 +14920,6 @@
 	},
 /area/station/civilian/gym)
 "azJ" = (
-/obj/structure/bookcase,
-/obj/item/weapon/book/manual/wiki/sop{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/weapon/book/manual/wiki/security_space_law{
-	pixel_x = 4;
-	pixel_y = 3
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -16052,16 +16060,12 @@
 	},
 /area/station/civilian/kitchen)
 "aBO" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
 	},
 /turf/simulated/floor/plating,
-/area/station/security/visiting_room)
+/area/station/civilian/hydroponics/old)
 "aBP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -22081,6 +22085,11 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor{
 	icon_state = "black"
 	},
@@ -22115,6 +22124,11 @@
 	frequency = 1480;
 	name = "Chamber One";
 	pixel_x = -26
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -39307,18 +39321,12 @@
 	},
 /area/station/security/blueshield)
 "bsq" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 8
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "black"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/structure/closet/crate,
-/obj/item/device/multitool,
-/obj/item/device/flashlight,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
+/area/station/security/prison)
 "bsr" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
@@ -43595,14 +43603,7 @@
 	},
 /area/station/bridge)
 "bzI" = (
-/obj/structure/cable{
-	dir = 8
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
+/obj/structure/cable,
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
@@ -43712,6 +43713,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/security/visiting_room)
 "bzR" = (
@@ -43807,13 +43811,14 @@
 	},
 /area/station/security/blueshield)
 "bAa" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
 	},
-/turf/simulated/wall/r_wall,
-/area/station/security/visiting_room)
+/turf/simulated/floor{
+	icon_state = "purplechecker"
+	},
+/area/station/civilian/barbershop)
 "bAb" = (
 /obj/machinery/shieldwallgen,
 /obj/structure/window/thin/reinforced{
@@ -44740,6 +44745,10 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/item/weapon/book/manual/wiki/sop{
+	pixel_x = -7;
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
@@ -47085,8 +47094,11 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "bFU" = (
-/turf/simulated/wall,
-/area/station/civilian/barbershop)
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/thin/reinforced,
+/turf/simulated/floor,
+/area/station/security/prison)
 "bFV" = (
 /obj/machinery/requests_console/tech_storage{
 	pixel_y = -32
@@ -49087,6 +49099,7 @@
 	name = "Internal Affairs";
 	opacity = 0
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
 "bJN" = (
@@ -71001,6 +71014,9 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/environment/space,
 /area/station/civilian/hydroponics/old)
 "eKb" = (
@@ -77016,6 +77032,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "kNR" = (
@@ -77613,15 +77632,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
-"lxk" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor{
-	icon_state = "purplechecker"
-	},
-/area/station/civilian/barbershop)
 "lxr" = (
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -79865,6 +79875,10 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/item/weapon/book/manual/wiki/security_space_law{
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
@@ -82167,6 +82181,9 @@
 	grilled = 1;
 	icon_state = "gr_window"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/environment/space,
 /area/station/civilian/hydroponics/old)
 "qGb" = (
@@ -83119,13 +83136,6 @@
 	icon_state = "white"
 	},
 /area/station/medical/hallway)
-"rAh" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "black"
-	},
-/area/station/security/prison)
 "rBb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -85298,6 +85308,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -85457,24 +85468,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
-"umQ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "unb" = (
 /obj/structure/table/woodentable,
 /obj/item/device/paicard{
@@ -85721,6 +85714,16 @@
 	},
 /area/station/civilian/toilet)
 "uHF" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "black"
 	},
@@ -86648,6 +86651,24 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel/mass_driver)
+"wCF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "wDF" = (
 /obj/machinery/light{
 	dir = 4
@@ -108203,7 +108224,7 @@ bIM
 bJX
 rnx
 bDp
-bsq
+avQ
 tgJ
 bNk
 bsT
@@ -113861,7 +113882,7 @@ cro
 oYb
 bxe
 bVa
-umQ
+wCF
 pOb
 cro
 cro
@@ -115610,12 +115631,12 @@ awH
 aLs
 aoo
 cIb
-auQ
+bFU
 are
 ash
-uHF
+atr
 aNr
-aBO
+bzI
 bnA
 nYP
 wjo
@@ -115868,11 +115889,11 @@ aOk
 asF
 aoY
 aqz
-rAh
+bsq
 rsD
-uHF
+auQ
 ayr
-bAa
+adW
 adW
 adW
 bHV
@@ -116125,7 +116146,7 @@ amG
 aop
 apc
 cIb
-rAh
+bsq
 atN
 uHF
 avR
@@ -116385,8 +116406,8 @@ ffD
 arl
 yjk
 aNo
-avQ
-bAa
+ayr
+adW
 adW
 adW
 bKR
@@ -116900,7 +116921,7 @@ asR
 aCO
 aGm
 avV
-bAa
+adW
 adW
 adW
 ayq
@@ -117157,7 +117178,7 @@ asU
 aso
 auR
 avW
-atr
+bzI
 ayn
 nYP
 icK
@@ -121321,15 +121342,15 @@ cea
 aPG
 ovb
 aEV
-bFU
-bFU
+auc
+auc
 aKa
-bFU
+auc
 aKa
-bFU
+auc
 aKa
-bFU
-bFU
+auc
+auc
 swb
 vFP
 mpb
@@ -121579,14 +121600,14 @@ aIR
 ovb
 bht
 bHq
-lxk
+bAa
 aIu
 sxb
 aIu
 aJV
 aIu
 mlb
-bFU
+auc
 amR
 bHM
 bMl
@@ -121843,7 +121864,7 @@ bJd
 bHt
 bJd
 qob
-bFU
+auc
 cdP
 bLt
 bSV
@@ -122100,7 +122121,7 @@ bGr
 pib
 qob
 qob
-bFU
+auc
 cdP
 bLt
 bSV
@@ -122349,7 +122370,7 @@ bXR
 aPE
 bME
 cMQ
-bFU
+auc
 mXb
 pjb
 mlb
@@ -122357,7 +122378,7 @@ qob
 aEq
 bHi
 aIA
-bFU
+auc
 cLk
 bLt
 bSV
@@ -133930,7 +133951,7 @@ ccR
 cew
 cfD
 cya
-auc
+aBO
 bSY
 bSY
 bSY
