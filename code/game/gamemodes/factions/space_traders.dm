@@ -71,8 +71,6 @@
 			high_tier_spawned = TRUE
 			if(prob(30))
 				product = pick_mech()
-				if(istype(product, /obj/vehicle/space/spacebike))
-					new /obj/item/weapon/key/spacebike(T)
 			else
 				new /obj/structure/rack(T)
 				product = pick_high_tier()
@@ -94,5 +92,4 @@
 		/obj/mecha/combat/honker/clown = 5,
 		/obj/mecha/combat/marauder/mauler = 1,
 		/obj/mecha/combat/gygax/dark = 3,
-		/obj/mecha/working/ripley/deathripley = 5,
-		/obj/vehicle/space/spacebike = 5))
+		/obj/mecha/working/ripley/deathripley = 5))
