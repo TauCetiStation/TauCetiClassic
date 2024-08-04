@@ -14080,19 +14080,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aym" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
+/obj/structure/rack,
+/obj/item/weapon/crowbar/red,
 /turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/area/station/maintenance/cargo)
 "ayn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -21471,7 +21462,17 @@
 	icon_state = "browncorner"
 	},
 /area/station/cargo/storage)
-"aMh" = (
+"aMi" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
+"aMj" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -21485,16 +21486,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"aMi" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/plating,
-/area/station/maintenance/chapel)
 "aMk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -31062,9 +31053,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "bdu" = (
-/obj/structure/girder,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/station/security/blueshield)
 "bdv" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -32233,11 +32227,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"bfn" = (
-/obj/structure/grille,
-/obj/item/weapon/shard,
-/turf/simulated/floor/plating,
-/area/station/maintenance/cargo)
 "bfo" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -36746,6 +36735,12 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/civilian/barbershop)
+"bnK" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/bridge/teleporter)
 "bnL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -47832,13 +47827,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
-"bHo" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 4
-	},
-/turf/simulated/wall/r_wall,
-/area/station/security/blueshield)
 "bHp" = (
 /obj/structure/mirror{
 	pixel_x = -28
@@ -52177,6 +52165,11 @@
 	icon_state = "blue"
 	},
 /area/station/medical/surgeryobs)
+"bPg" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/iaa_office)
 "bPh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -78572,6 +78565,20 @@
 	icon_state = "barber"
 	},
 /area/station/civilian/locker)
+"msQ" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "mtb" = (
 /obj/structure/bookcase{
 	name = "bookcase (Religious)"
@@ -79813,7 +79820,7 @@
 	name = "Internal Affairs Agent"
 	},
 /turf/simulated/floor/carpet/black,
-/area/station/civilian/barbershop)
+/area/station/security/iaa_office)
 "nSP" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 6
@@ -81030,12 +81037,6 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
-"pvb" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/bridge/teleporter)
 "pvI" = (
 /obj/structure/flora/junglebush/large,
 /turf/simulated/floor/grass,
@@ -83025,11 +83026,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"rzr" = (
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/iaa_office)
 "rAb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -111365,10 +111361,10 @@ bDn
 bDn
 aSM
 bDk
-bdu
+bEW
 sCd
-bfn
-aSM
+bEW
+bEW
 bBw
 qaV
 tFz
@@ -111622,7 +111618,7 @@ bET
 bGt
 aGn
 bDk
-bEW
+aym
 axN
 axN
 axN
@@ -111630,7 +111626,7 @@ axN
 axN
 axN
 bQl
-aMh
+aMj
 bHa
 cbf
 ccd
@@ -111887,7 +111883,7 @@ bzC
 aGx
 axN
 axN
-aMh
+aMj
 bHa
 cbf
 cvf
@@ -112142,9 +112138,9 @@ axw
 bAD
 bBC
 biL
-rzr
+bPg
 axN
-aMh
+aMj
 cap
 ciO
 bqo
@@ -112401,7 +112397,7 @@ bBM
 nSy
 bLy
 axN
-aMh
+aMj
 bIZ
 bIZ
 bIZ
@@ -112658,7 +112654,7 @@ bHl
 bFU
 bGx
 axN
-aym
+msQ
 cfq
 byU
 bps
@@ -119337,7 +119333,7 @@ bdc
 cea
 cea
 cea
-bHo
+bdu
 cea
 cea
 aIR
@@ -120315,7 +120311,7 @@ apG
 aqC
 arK
 byE
-pvb
+bnK
 aZb
 bsl
 bAb
