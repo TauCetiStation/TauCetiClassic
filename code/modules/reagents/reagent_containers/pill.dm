@@ -19,6 +19,8 @@
 		icon_state = "pill[rand(1,20)]"
 
 /obj/item/weapon/reagent_containers/pill/attackby(obj/item/weapon/reagent_containers/pill/W, mob/user)
+	if(!istype(W, /obj/item/weapon/reagent_containers/pill))
+		return
 	if(W.halved && halved)
 		var/obj/item/weapon/reagent_containers/pill/P = new(get_turf(src))
 		W.reagents.trans_to(P, W.reagents.total_volume)
