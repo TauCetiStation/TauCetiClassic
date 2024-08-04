@@ -3,6 +3,7 @@
 	var/list/mob/remote_hearing
 
 	var/next_telepathy_clue = 0
+	var/ignore_telepathy_distants = FALSE
 
 /mob/Destroy()
 	for(var/mob/M as anything in remote_hearers)
@@ -45,7 +46,7 @@
 	if(remote_hearing.len > CLEAR_TELEPATHY_TARGETS)
 		star_chance += remote_hearing.len * 5
 
-	if(star_chance)
+	if(star_chance && !ignore_telepathy_distants)
 		message = stars(message, star_chance)
 
 	var/mob/M = hearer
@@ -62,15 +63,17 @@
 	telepathy_eavesdrop(source, message, verb, language)
 	show_runechat_message(source, language, capitalize(runechat_message), null, SHOWMSG_AUDIO)
 
-/mob/proc/add_remote_hearer(mob/hearer)
+/mob/proc/add_remote_hearer(mob/hearer, IGNORE_DISTANTS)
 	LAZYADD(remote_hearers, hearer)
 	LAZYADD(hearer.remote_hearing, src)
+	ignore_telepathy_distants = IGNORE_DISTANTS
 
-/mob/proc/remove_remote_hearer(mob/hearer)
+/mob/proc/remove_remote_hearer(mob/hearer, IGNORE_DISTANTS)
 	LAZYREMOVE(remote_hearers, hearer)
 	LAZYREMOVE(hearer.remote_hearing, src)
+	ignore_telepathy_distants = !IGNORE_DISTANTS
 
-/mob/proc/toggle_telepathy_hear(mob/M)
+/mob/proc/toggle_telepathy_hear(mob/M ,IGNORE_DISTANTS)
 	set name = "Toggle Telepathic Eavesdropping"
 	set desc = "Hear anything that mob hears."
 	set category = "Telepathy"
@@ -87,11 +90,11 @@
 		return
 
 	if(src in M.remote_hearers)
-		M.remove_remote_hearer(src)
+		M.remove_remote_hearer(src,IGNORE_DISTANTS)
 		to_chat(src, "<span class='notice'>You stop telepathically eavesdropping on [M].</span>")
 
 	else if(length(remote_hearing) < CLEAR_TELEPATHY_TARGETS)
-		M.add_remote_hearer(src)
+		M.add_remote_hearer(src, IGNORE_DISTANTS)
 		to_chat(src, "<span class='notice'>You start telepathically eavesdropping on [M].</span>")
 
 /mob/proc/telepathy_say()

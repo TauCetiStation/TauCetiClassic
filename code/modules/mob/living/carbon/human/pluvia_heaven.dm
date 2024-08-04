@@ -144,7 +144,7 @@ var/global/list/wisp_start_landmark = list()
 		fake_body.alpha = 127
 		RegisterSignal(user,COMSIG_HUMAN_SAY, PROC_REF(mimic_message))
 		user.reset_view(fake_body, TRUE)
-		user.toggle_telepathy_hear(fake_body)
+		user.toggle_telepathy_hear(fake_body,TRUE)
 		eye = image('icons/mob/human_face.dmi',"pluvia_ms_s")
 		eye.plane = LIGHTING_LAMPS_PLANE
 		eye.layer = ABOVE_LIGHTING_LAYER
