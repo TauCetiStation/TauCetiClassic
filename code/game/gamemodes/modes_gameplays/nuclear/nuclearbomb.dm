@@ -512,8 +512,10 @@ var/global/bomb_set
 	return
 
 /obj/machinery/nuclearbomb/nostromo
-	var/datum/faction/nostromo_crew
+	var/datum/faction/nostromo_crew/NC
 
-/obj/machinery/nuclearbomb/ui_interact(mob/user)
+/obj/machinery/nuclearbomb/nostromo/ui_interact(mob/user)
+	return
 
-/obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
+/obj/machinery/nuclearbomb/nostromo/attackby(obj/item/weapon/O, mob/user)
+	return
