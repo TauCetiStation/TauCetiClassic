@@ -9564,20 +9564,6 @@
 	icon_state = "red"
 	},
 /area/station/security/lobby)
-"apV" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor,
-/area/station/security/visiting_room)
 "apW" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -11444,11 +11430,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -14187,6 +14168,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor,
 /area/station/security/visiting_room)
 "ayr" = (
@@ -16064,9 +16050,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/structure/cable,
 /turf/simulated/wall/r_wall,
 /area/station/security/visiting_room)
 "aBP" = (
@@ -18884,13 +18868,6 @@
 	icon_state = "whitebluefull"
 	},
 /area/station/medical/genetics_cloning)
-"aHq" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/turf/simulated/wall/r_wall,
-/area/station/security/visiting_room)
 "aHr" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -43616,6 +43593,16 @@
 	icon_state = "darkbluecorners"
 	},
 /area/station/bridge)
+"bzI" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_wall,
+/area/station/security/visiting_room)
 "bzJ" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 5;
@@ -47110,20 +47097,6 @@
 	icon_state = "dark"
 	},
 /area/station/storage/tech)
-"bFW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/security/visiting_room)
 "bFX" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /turf/simulated/floor{
@@ -47300,14 +47273,6 @@
 	},
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
-"bGn" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1;
-	icon_state = "gr_window_reinforced"
-	},
-/obj/structure/cable,
-/turf/simulated/wall/r_wall,
-/area/station/security/visiting_room)
 "bGo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -69226,8 +69191,14 @@
 	},
 /area/station/hallway/primary/central)
 "cMR" = (
-/turf/environment/space,
-/area/station/bridge/hop_office)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "cMW" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/red,
@@ -74224,6 +74195,20 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"icK" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "idb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
@@ -76479,15 +76464,12 @@
 	},
 /area/station/medical/reception)
 "kmt" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
-/turf/simulated/floor{
-	icon_state = "vaultfull"
-	},
-/area/station/security/prison)
+/turf/simulated/wall/r_wall,
+/area/station/security/visiting_room)
 "knb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -85608,14 +85590,20 @@
 	},
 /area/station/civilian/toilet)
 "uHF" = (
-/obj/structure/table/reinforced,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
-/turf/simulated/floor,
-/area/station/security/visiting_room)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/security/prison)
 "uIm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -86965,6 +86953,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/photocopier,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blue"
@@ -87349,6 +87338,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"ygy" = (
+/obj/structure/table/reinforced,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "yji" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -115482,9 +115480,9 @@ cIb
 aqz
 are
 ash
-kmt
+atr
 aNr
-bGn
+aBO
 bnA
 nYP
 wjo
@@ -115996,9 +115994,9 @@ apc
 cIb
 axL
 atN
-atr
+uHF
 avR
-aBO
+bzI
 bAf
 nYP
 bso
@@ -116298,7 +116296,7 @@ bcO
 bra
 bra
 bra
-cMR
+bra
 bra
 bra
 bzN
@@ -116512,10 +116510,10 @@ arn
 auc
 atq
 avS
-bGn
+aBO
 ark
 nYP
-ayq
+cMR
 bHu
 bIT
 adW
@@ -116772,8 +116770,8 @@ avV
 adW
 adW
 adW
-apV
-uHF
+ayq
+ygy
 bGs
 adW
 alZ
@@ -117026,10 +117024,10 @@ asU
 aso
 auR
 avW
-aBO
+bzI
 ayn
 nYP
-bFW
+icK
 bHu
 oLn
 adW
@@ -117288,7 +117286,7 @@ adW
 adW
 bzQ
 adW
-aHq
+kmt
 adW
 agO
 bNs
