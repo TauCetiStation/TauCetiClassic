@@ -44749,6 +44749,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/machinery/light/spot,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
