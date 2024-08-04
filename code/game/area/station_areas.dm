@@ -985,3 +985,4 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	name = "Towed Spaceship"
 	cases = list("космический буксировщик", "космического буксировщика", "космическому буксировщику", "космический буксировщик", "космическим буксировщиком", "космическом буксировщике")
 	icon_state = "bluenew"
+	parallax_movedir = WEST

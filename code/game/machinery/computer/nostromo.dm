@@ -43,11 +43,10 @@
 	SSshuttle.undock_act(/area/station/nostromo, "evac_shuttle_1")
 	SSshuttle.undock_act(/area/shuttle/nostromo_narcissus, "evac_shuttle_1")
 
-	transit_location.parallax_movedir = WEST
 	current_location.move_contents_to(transit_location)
 	SSshuttle.shake_mobs_in_area(transit_location, EAST)
 
-	transit_location.parallax_slowdown()
+	transit_location.parallax_movedir = WEST
 
 
 /obj/machinery/computer/nostromo/cockpit
@@ -60,7 +59,6 @@
 	var/next_course_change
 	var/obj/machinery/computer/nostromo/cockpit/second_console
 	var/mob/living/silicon/decoy/nostromo/N_AI
-	var/obj/machinery/power/smes/nostromo/N_SMES
 
 /obj/machinery/computer/nostromo/cockpit/atom_init()
 	..()
@@ -70,7 +68,6 @@
 /obj/machinery/computer/nostromo/cockpit/atom_init_late()
 	second_console = locate() in orange(1, src)
 	N_AI = locate() in mob_list
-	N_SMES = locate() in smes_list
 	if(!side)
 		side = pick(1, -1)
 		second_console.side = -side
@@ -83,7 +80,6 @@
 		if(abs(course) > 18)
 			N_AI.announce("cockpit")
 		if(abs(course) > 24)
-			N_SMES.breakdown()
 			var/turf/T = get_turf(landmarks_list["Nostromo Ambience"][1])
 			empulse(T, 30, 60, custom_effects = EMP_SEBB)
 			explosion(get_turf(src), 0,1,2,3)

@@ -204,10 +204,9 @@
 	slowdown_size = 120
 	collapse_size = 500
 
-/obj/structure/spacevine/alien/buckle_mob(mob/living/M)
-	if(isxeno(M))
-		return
-	. = ..()
-	if(.)
-		M.adjustFireLoss(20)
-		M.reagents.add_reagent("toxin", 10)
+/obj/structure/spacevine/alien/Crossed(atom/movable/AM)
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		H.adjustBruteLoss(5)
+		H.adjustFireLoss(10)
+		H.reagents.add_reagent("sacid", 5)

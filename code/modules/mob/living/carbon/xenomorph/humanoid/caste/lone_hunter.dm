@@ -6,6 +6,7 @@
 	pixel_x = -8
 	ventcrawler = 0
 	storedPlasma = 150
+	sight = SEE_TURFS | SEE_MOBS
 	var/epoint = 0
 	var/estage = 1
 	var/list/alien_screamer = list(
@@ -67,6 +68,13 @@
 	else
 		ExtinguishMob()
 		return TRUE
+
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/crawl()
+	if(crawling)
+		change_view(view.world)
+	else
+		change_view(10)
+	..()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/next_stage(msg_play = TRUE)
 	if(msg_play)
@@ -169,6 +177,7 @@
 	if(can_eat_corpse(G))
 		to_chat(src, "<span class='notice'>Вы приступили к трапезе.</span>")
 		var/mob/living/carbon/human/H = G.affecting
+		change_view(10)
 		for(var/obj/item/organ/external/BP as anything in H.bodyparts)
 			do_after(src, 50, target = H)
 			if(can_eat_corpse(G))
@@ -182,6 +191,7 @@
 				epoint++
 			else
 				break
+		change_view(global.view)
 		eaten_human += H
 
 /datum/action/eat_corpse

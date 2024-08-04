@@ -510,3 +510,10 @@ var/global/bomb_set
 	false_activation = TRUE
 	update_icon()
 	return
+
+/obj/machinery/nuclearbomb/nostromo
+	var/datum/faction/nostromo_crew
+
+/obj/machinery/nuclearbomb/ui_interact(mob/user)
+
+/obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
