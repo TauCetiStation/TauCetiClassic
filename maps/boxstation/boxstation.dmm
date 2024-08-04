@@ -23017,9 +23017,6 @@
 	icon_state = "white"
 	},
 /area/station/rnd/brainstorm_center)
-"aPa" = (
-/turf/simulated/wall,
-/area/station/rnd/hor)
 "aPb" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
@@ -119840,7 +119837,7 @@ aaa
 cAd
 cAd
 cAd
-aaV
+rnU
 aaV
 aaV
 aaV
@@ -120097,7 +120094,7 @@ aaa
 cAd
 aaa
 aaa
-aaV
+rnU
 aaA
 aaP
 aaV
@@ -120354,7 +120351,7 @@ aaa
 cAd
 aaa
 qDo
-aaV
+rnU
 aaz
 aaO
 abb
@@ -120611,7 +120608,7 @@ aaa
 cAd
 aaa
 aah
-aaV
+rnU
 aaC
 aaQ
 aaV
@@ -120868,7 +120865,7 @@ aaa
 cAd
 aaa
 aah
-aaV
+rnU
 bQb
 bQb
 aaV
@@ -121125,7 +121122,7 @@ aaa
 cAd
 aaa
 aah
-aaV
+rnU
 fJb
 fKb
 aaV
@@ -121382,10 +121379,10 @@ aaa
 cAd
 aah
 mUK
-aaV
-aaV
-aaV
-aaV
+rnU
+rnU
+rnU
+rnU
 aEy
 acl
 aSb
@@ -121899,15 +121896,15 @@ aah
 aah
 cAd
 aaa
+rnU
+rnU
+rnU
+rnU
 aaV
-aaV
-aaV
-aaV
-aaV
-aaV
-aaV
-aaV
-aaV
+rnU
+rnU
+rnU
+rnU
 adj
 agg
 aem
@@ -126057,7 +126054,7 @@ aJh
 aKX
 aMs
 aHV
-aPa
+bAU
 aQo
 aRo
 aSS
@@ -126314,7 +126311,7 @@ aHW
 aLd
 aMt
 aFI
-aPa
+bAU
 aQp
 aRq
 bEo
@@ -126571,7 +126568,7 @@ aHX
 aLe
 aMu
 aNL
-aPa
+bAU
 aQt
 bFC
 bFE
@@ -126828,7 +126825,7 @@ aHY
 aLf
 aMv
 aNM
-aPa
+bAU
 aQu
 aRr
 aST
@@ -127085,7 +127082,7 @@ aJi
 aLh
 aMx
 aNN
-aPa
+bAU
 aQv
 aRu
 aSU
