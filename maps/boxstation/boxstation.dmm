@@ -10433,6 +10433,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -10640,10 +10641,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/machinery/camera{
-	c_tag = "Holodeck East";
-	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
@@ -14086,14 +14083,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "ayn" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -36637,12 +36635,18 @@
 	},
 /area/station/bridge)
 "bnA" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -9;
-	pixel_y = 1
+/obj/item/weapon/haircomb,
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/dropper,
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_x = -3;
+	pixel_y = 15
 	},
-/turf/simulated/wall/r_wall,
-/area/station/bridge/teleporter)
+/turf/simulated/floor{
+	icon_state = "purplechecker"
+	},
+/area/station/civilian/barbershop)
 "bnB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -36732,6 +36736,7 @@
 	buildable_sign = 0;
 	pixel_x = -13
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -39143,6 +39148,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
+/obj/machinery/shieldwallgen,
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "bsd" = (
@@ -39219,6 +39225,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/shieldwallgen,
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "bsm" = (
@@ -42073,11 +42080,6 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 3;
-	pixel_y = -1
-	},
 /turf/simulated/wall/r_wall,
 /area/station/security/blueshield)
 "bxd" = (
@@ -43575,6 +43577,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -47259,16 +47265,6 @@
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
 "bGn" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/structure/mirror{
-	pixel_x = -28
-	},
-/obj/structure/dryer{
-	pixel_y = 14
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -47369,15 +47365,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bGw" = (
-/obj/machinery/disposal,
-/obj/machinery/light/smart{
-	dir = 8
-	},
-/obj/structure/sign/poster/official/soft_cap_pop_art{
-	pixel_x = -32
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
@@ -47445,6 +47435,9 @@
 "bGC" = (
 /obj/machinery/light_switch{
 	pixel_x = 27
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
@@ -47833,17 +47826,6 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
 "bHp" = (
-/obj/structure/mirror{
-	pixel_x = -28
-	},
-/obj/item/weapon/haircomb,
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/device/cardpay{
-	dir = 8;
-	pixel_x = -3;
-	pixel_y = 15
-	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -50088,10 +50070,6 @@
 	},
 /area/station/security/prison)
 "bLy" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
 /obj/structure/filingcabinet/chestdrawer/black{
 	dir = 1
 	},
@@ -56597,6 +56575,11 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
+"cbh" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/spawner/lootdrop,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "cbi" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8
@@ -70135,6 +70118,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/security/prison/toilet)
+"dFQ" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/turf/simulated/wall/r_wall,
+/area/station/bridge/teleporter)
 "dHv" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -79932,8 +79922,19 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "nYP" = (
-/obj/effect/spawner/lootdrop,
-/turf/simulated/floor/plating,
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/obj/structure/dryer{
+	pixel_y = 14
+	},
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor{
+	icon_state = "purplechecker"
+	},
 /area/station/civilian/barbershop)
 "nZb" = (
 /obj/machinery/door/airlock/maintenance{
@@ -83031,6 +83032,10 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "rzr" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -83084,7 +83089,16 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "rCb" = (
-/turf/simulated/floor/plating,
+/obj/structure/sign/poster/official/soft_cap_pop_art{
+	pixel_x = -32
+	},
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "purplechecker"
+	},
 /area/station/civilian/barbershop)
 "rCh" = (
 /obj/structure/cable{
@@ -84294,11 +84308,11 @@
 	},
 /area/station/medical/virology)
 "sNO" = (
-/obj/machinery/alarm{
-	pixel_y = 23
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module SW";
+	dir = 4;
+	network = list("SS13","Research")
 	},
-/obj/structure/table,
-/obj/item/weapon/crowbar/red,
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "sOb" = (
@@ -87258,6 +87272,7 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/hand_tele,
+/obj/item/weapon/crowbar/red,
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "xZt" = (
@@ -114678,7 +114693,7 @@ bLx
 bNr
 ayr
 aqf
-atc
+cbh
 cgt
 alZ
 alZ
@@ -115191,10 +115206,10 @@ aNo
 bGr
 bGr
 bGr
-nYP
-rCb
-rCb
-rCb
+bFW
+bFW
+bFW
+bFW
 uBq
 clo
 aCu
@@ -115446,11 +115461,11 @@ ash
 auQ
 aNr
 bGr
-bFW
-bFW
-bFW
-bFW
-bFW
+nYP
+rCb
+bnA
+bHK
+bIO
 bFW
 alZ
 aYi
@@ -115706,8 +115721,8 @@ bGr
 bGn
 bGw
 bHp
-bHK
-bIO
+bHp
+bHp
 bFW
 alZ
 bNg
@@ -119040,7 +119055,7 @@ aqi
 aqi
 byE
 byE
-byE
+dFQ
 kNr
 byE
 byE
@@ -121095,7 +121110,7 @@ apJ
 aqB
 arM
 byE
-bnA
+byE
 byE
 byE
 afl
