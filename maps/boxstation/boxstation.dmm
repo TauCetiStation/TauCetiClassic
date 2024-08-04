@@ -2333,7 +2333,7 @@
 /area/station/security/brig)
 "adW" = (
 /turf/simulated/wall/r_wall,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "adX" = (
 /obj/structure/rack,
 /obj/structure/window/thin/reinforced{
@@ -10281,7 +10281,7 @@
 	dir = 1;
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "arl" = (
 /obj/item/weapon/cigbutt{
 	pixel_x = 5;
@@ -12818,8 +12818,8 @@
 /obj/structure/stool/bed/chair/metal/red,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
-	frequency = 1480;
-	name = "Chamber One";
+	frequency = 1482;
+	name = "Chamber Two";
 	pixel_x = -26
 	},
 /turf/simulated/floor{
@@ -12830,8 +12830,8 @@
 /obj/structure/stool/bed/chair/metal/red,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
-	frequency = 1480;
-	name = "Chamber One";
+	frequency = 1484;
+	name = "Chamber Three";
 	pixel_x = -26
 	},
 /turf/simulated/floor{
@@ -12868,8 +12868,8 @@
 /obj/structure/stool/bed/chair/metal/red,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
-	frequency = 1480;
-	name = "Chamber One";
+	frequency = 1486;
+	name = "Chamber Four";
 	pixel_x = -26
 	},
 /turf/simulated/floor{
@@ -14105,7 +14105,7 @@
 	dir = 1;
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "ayo" = (
 /obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
@@ -14129,8 +14129,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "ayr" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/prison)
@@ -16007,7 +16012,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/wall/r_wall,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "aBP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -36665,7 +36670,7 @@
 	dir = 1;
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bnB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -39255,7 +39260,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bsp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -43673,8 +43678,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bzR" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -43827,7 +43837,7 @@
 	dir = 1;
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bAg" = (
 /obj/structure/closet/fireaxecabinet{
 	pixel_y = -32
@@ -47299,10 +47309,11 @@
 	name = "Brig dark down APC";
 	pixel_y = -27
 	},
+/obj/structure/cable,
 /turf/simulated/floor{
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bGt" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
@@ -47789,7 +47800,7 @@
 /turf/simulated/floor{
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bHq" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -47829,7 +47840,7 @@
 "bHu" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bHv" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
@@ -48002,7 +48013,7 @@
 	pixel_x = 6
 	},
 /turf/simulated/floor,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bHL" = (
 /obj/structure/stool/bar,
 /turf/simulated/floor{
@@ -48112,7 +48123,7 @@
 /area/station/civilian/bar)
 "bHV" = (
 /turf/simulated/floor,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bHW" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -48295,7 +48306,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bIm" = (
 /obj/machinery/door/airlock/research{
 	name = "Research Division Access";
@@ -48623,13 +48634,13 @@
 /turf/simulated/floor{
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bIP" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bIQ" = (
 /obj/machinery/door/window/brigdoor/northright{
 	name = "Brig Desk";
@@ -48639,7 +48650,7 @@
 /turf/simulated/floor{
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bIR" = (
 /obj/item/weapon/folder/white,
 /obj/item/device/radio/headset/headset_medsci,
@@ -48670,7 +48681,7 @@
 /turf/simulated/floor{
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bIU" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -49665,7 +49676,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "bKS" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -74716,6 +74727,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"iFQ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "iFS" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,3"
@@ -79863,7 +79883,7 @@
 	name = "Confession Booth"
 	},
 /turf/environment/space,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "nZb" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance";
@@ -80537,7 +80557,7 @@
 /turf/simulated/floor{
 	icon_state = "black"
 	},
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "oMb" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -86287,7 +86307,7 @@
 "wjo" = (
 /obj/structure/window/thin/reinforced,
 /turf/simulated/floor,
-/area/station/maintenance/eva)
+/area/station/security/visiting_room)
 "wjr" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,3"
@@ -86829,6 +86849,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"xov" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "xoA" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
@@ -86889,6 +86923,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"xse" = (
+/obj/structure/table/reinforced,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "xtY" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,6"
@@ -116521,7 +116564,7 @@ avS
 aBO
 ark
 nYP
-ayq
+iFQ
 bHu
 bIT
 adW
@@ -116779,7 +116822,7 @@ adW
 adW
 adW
 ayq
-bHu
+xse
 bGs
 adW
 alZ
@@ -117035,7 +117078,7 @@ avW
 aBO
 ayn
 nYP
-ayq
+xov
 bHu
 oLn
 adW
