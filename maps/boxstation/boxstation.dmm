@@ -34855,6 +34855,17 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
+"bkt" = (
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Dark Brig";
+	name = "Brig dark down APC";
+	pixel_y = -27
+	},
+/obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/security/iaa_office)
 "bku" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -36381,10 +36392,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"bmS" = (
-/obj/machinery/hydroponics/constructable,
-/turf/simulated/floor/plating,
-/area/station/civilian/hydroponics/old)
 "bmT" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -47067,6 +47074,7 @@
 /area/station/rnd/telesci)
 "bFU" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics/old)
 "bFV" = (
@@ -53946,16 +53954,9 @@
 	},
 /area/station/hallway/primary/starboard)
 "bSY" = (
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "Dark Brig";
-	name = "Brig dark down APC";
-	pixel_y = -27
-	},
-/obj/structure/cable,
-/turf/simulated/floor{
-	icon_state = "darkblue"
-	},
-/area/station/security/iaa_office)
+/obj/machinery/hydroponics/constructable,
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics/old)
 "bSZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/wall,
@@ -66875,6 +66876,10 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
+"cEB" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics/old)
 "cEC" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -69454,10 +69459,6 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/chiefs_office)
-"cXG" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating,
-/area/station/civilian/hydroponics/old)
 "cXS" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -80874,11 +80875,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"peN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank,
-/turf/simulated/floor/plating,
-/area/station/civilian/hydroponics/old)
 "pfz" = (
 /obj/machinery/door/airlock/glass{
 	autoclose = 0;
@@ -84719,6 +84715,10 @@
 	icon_state = "boxing"
 	},
 /area/station/civilian/gym)
+"tfv" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics/old)
 "tfA" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
@@ -86378,10 +86378,6 @@
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 24
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
 	},
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
@@ -112811,7 +112807,7 @@ azD
 bjH
 bHl
 eKS
-bSY
+bkt
 axN
 aMj
 cfq
@@ -132621,10 +132617,10 @@ csA
 cAL
 cBh
 cuo
-bmS
-bmS
-bmS
-bmS
+bSY
+bSY
+bSY
+bSY
 cbz
 aah
 aaa
@@ -132878,9 +132874,9 @@ cbz
 cKv
 iUO
 kJV
-bFU
+cEB
 cer
-bFU
+cEB
 ksB
 fIz
 aah
@@ -133135,9 +133131,9 @@ cbz
 cEy
 cfB
 cil
-cXG
+tfv
 ddK
-cXG
+tfv
 itg
 eJE
 aah
@@ -133391,11 +133387,11 @@ cbz
 cKi
 oqv
 cfC
-bFU
+cEB
+cer
+cEB
 cer
 bFU
-cer
-peN
 qFY
 aah
 aah
@@ -133649,7 +133645,7 @@ cKh
 kdJ
 tgl
 cer
-bFU
+cEB
 oWQ
 cer
 ksB
@@ -133906,10 +133902,10 @@ ccR
 cew
 cfD
 cya
-bmS
-bmS
-bmS
-bmS
+bSY
+bSY
+bSY
+bSY
 cbz
 aah
 aaa
