@@ -9,6 +9,7 @@
 	item_state = "pill"
 	possible_transfer_amounts = null
 	w_class = SIZE_MINUSCULE
+	flags = NOREACT
 	volume = 50
 	var/halved = FALSE // if set to TRUE pill cannot be split in halves again
 
@@ -16,6 +17,18 @@
 	. = ..()
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
+
+/obj/item/weapon/reagent_containers/pill/attackby(obj/item/weapon/W, mob/user)
+	if(!halved)
+		return
+	if(!istype(W, /obj/item/weapon/reagent_containers/pill))
+		return
+	if(W.halved)
+		/obj/item/weapon/reagent_containers/pill/P = new(get_turf(src))
+		W.reagents.trans_to(P, W.reagents.total_volume)
+		reagents.trans_to(P, reagents.total_volume)
+		qdel(w)
+		qdel(src)
 
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	if(halved)
