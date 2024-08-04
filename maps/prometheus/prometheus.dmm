@@ -451,7 +451,6 @@
 /area/station/medical/genetics)
 "aaF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/item/weapon/pen,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/port)
@@ -34991,7 +34990,6 @@
 	},
 /area/station/security/armoury)
 "hNj" = (
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/structure/closet/emcloset,
 /obj/machinery/alarm{
 	pixel_x = 29;
@@ -68263,9 +68261,7 @@
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "qeY" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
+/obj/machinery/shieldwallgen,
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
 "qfb" = (
@@ -70543,9 +70539,14 @@
 /area/station/maintenance/chapel)
 "qIs" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/weapon/gun/projectile/grenade_launcher/m79{
+	pixel_y = 6
+	},
+/obj/item/weapon/gun/grenadelauncher{
+	pixel_y = -3
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -76781,7 +76782,6 @@
 /obj/item/weapon/storage/box/drinkingglasses,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
 "snZ" = (
