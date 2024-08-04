@@ -14680,6 +14680,10 @@
 /obj/item/portrait/captain{
 	pixel_y = -32
 	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 25
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -36339,15 +36343,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"bmS" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
-	},
-/area/station/security/iaa_office)
 "bmT" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -37769,6 +37764,9 @@
 /area/station/medical/surgery)
 "bpE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -37804,6 +37802,12 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Dark Brig";
+	dir = 1;
+	name = "Brig dark top APC";
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -42061,17 +42065,14 @@
 	},
 /area/station/cargo/storage)
 "bxc" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -4
-	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 3;
-	pixel_y = -1
+/obj/machinery/door_control{
+	id = "lawyer_blast";
+	name = "Privacy Shutters";
+	pixel_y = 32;
+	req_access = list(38)
 	},
 /turf/simulated/wall/r_wall,
-/area/station/security/blueshield)
+/area/station/security/iaa_office)
 "bxd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -43800,11 +43801,8 @@
 	},
 /area/station/hallway/primary/central)
 "bAd" = (
-/obj/machinery/door_control{
-	id = "lawyer_blast";
-	name = "Privacy Shutters";
-	pixel_y = 32;
-	req_access = list(38)
+/obj/machinery/power/apc{
+	pixel_y = 2
 	},
 /turf/simulated/wall/r_wall,
 /area/station/security/iaa_office)
@@ -44743,7 +44741,7 @@
 "bBU" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
-	pixel_y = 20
+	pixel_y = 24
 	},
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
@@ -72367,12 +72365,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
-"gmm" = (
-/obj/machinery/power/apc{
-	pixel_y = 2
-	},
-/turf/simulated/wall/r_wall,
-/area/station/security/iaa_office)
 "gmI" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
@@ -77034,15 +77026,14 @@
 	},
 /area/station/security/brig)
 "kRm" = (
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "Dark Brig";
-	dir = 8;
-	name = "Brig dark left APC";
-	pixel_x = -32;
-	pixel_y = -6
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
 	},
-/turf/simulated/wall/r_wall,
-/area/station/security/blueshield)
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/security/iaa_office)
 "kSi" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -111923,7 +111914,7 @@ bhX
 bzC
 aGx
 axN
-bAd
+bxc
 bfn
 bHa
 cbf
@@ -112437,7 +112428,7 @@ biL
 bBM
 nSy
 bLy
-gmm
+bAd
 bfn
 bIZ
 bIZ
@@ -113459,7 +113450,7 @@ sVa
 aIR
 kYG
 bWY
-bmS
+kRm
 asw
 bHq
 aws
@@ -120143,7 +120134,7 @@ bBd
 bEa
 afz
 cea
-bxc
+cea
 cea
 rCb
 cea
@@ -120656,7 +120647,7 @@ bdc
 jWb
 jZb
 tnb
-kRm
+cea
 aDZ
 bjz
 avq
