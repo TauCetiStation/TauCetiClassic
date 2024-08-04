@@ -36635,35 +36635,20 @@
 	},
 /area/station/bridge)
 "bnA" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/mirror{
+	pixel_x = -28
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/dryer{
+	pixel_y = 14
 	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "bsentry";
-	name = "Blueshield Office Shutters";
-	opacity = 0
-	},
-/obj/machinery/door/airlock/command{
-	dir = 4;
-	name = "Blueshield Office";
-	req_access = list(42)
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor{
-	icon_state = "darkbluefull"
+	icon_state = "purplechecker"
 	},
-/area/station/security/blueshield)
+/area/station/civilian/barbershop)
 "bnB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -74009,13 +73994,6 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
-"hTF" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/turf/simulated/wall/r_wall,
-/area/station/bridge/teleporter)
 "hUb" = (
 /obj/structure/window/thin/reinforced{
 	dir = 8
@@ -75629,6 +75607,9 @@
 	icon_state = "warn"
 	},
 /obj/machinery/computer/teleporter,
+/obj/structure/sign/warning/securearea{
+	pixel_x = -32
+	},
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "jub" = (
@@ -75712,14 +75693,10 @@
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
 "jzM" = (
-/obj/structure/sign/warning/securearea{
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bluecorner"
-	},
-/area/station/hallway/primary/central)
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/spawner/lootdrop,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "jAb" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/medical{
@@ -77056,6 +77033,16 @@
 	icon_state = "red"
 	},
 /area/station/security/brig)
+"kRm" = (
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Dark Brig";
+	dir = 8;
+	name = "Brig dark left APC";
+	pixel_x = -32;
+	pixel_y = -6
+	},
+/turf/simulated/wall/r_wall,
+/area/station/security/blueshield)
 "kSi" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -79448,11 +79435,6 @@
 	icon_state = "whitehall"
 	},
 /area/station/medical/hallway)
-"nwi" = (
-/obj/effect/decal/turf_decal/set_damaged,
-/obj/effect/spawner/lootdrop,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
 "nws" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -79918,15 +79900,12 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "nYP" = (
-/obj/structure/mirror{
-	pixel_x = -28
+/obj/structure/sign/poster/official/soft_cap_pop_art{
+	pixel_x = -32
 	},
-/obj/structure/dryer{
-	pixel_y = 14
-	},
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
@@ -82972,22 +82951,6 @@
 	icon_state = "white"
 	},
 /area/station/medical/virology)
-"rwJ" = (
-/obj/item/weapon/haircomb,
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/device/cardpay{
-	dir = 8;
-	pixel_x = -3;
-	pixel_y = 15
-	},
-/obj/structure/mirror{
-	pixel_x = -28
-	},
-/turf/simulated/floor{
-	icon_state = "purplechecker"
-	},
-/area/station/civilian/barbershop)
 "rxb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -83101,17 +83064,35 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "rCb" = (
-/obj/structure/sign/poster/official/soft_cap_pop_art{
-	pixel_x = -32
-	},
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "purplechecker"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/area/station/civilian/barbershop)
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bsentry";
+	name = "Blueshield Office Shutters";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/command{
+	dir = 4;
+	name = "Blueshield Office";
+	req_access = list(42)
+	},
+/turf/simulated/floor{
+	icon_state = "darkbluefull"
+	},
+/area/station/security/blueshield)
 "rCh" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -85940,6 +85921,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"vFW" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/turf/simulated/wall/r_wall,
+/area/station/bridge/teleporter)
 "vIi" = (
 /obj/structure/closet/crate/freezer,
 /obj/random/foods/drink_can,
@@ -86300,6 +86288,22 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
+"wjo" = (
+/obj/item/weapon/haircomb,
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/dropper,
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_x = -3;
+	pixel_y = 15
+	},
+/obj/structure/mirror{
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "purplechecker"
+	},
+/area/station/civilian/barbershop)
 "wjr" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "3,3"
@@ -86661,16 +86665,6 @@
 "wLi" = (
 /turf/simulated/wall,
 /area/station/civilian/chapel/mass_driver)
-"wLk" = (
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "Dark Brig";
-	dir = 8;
-	name = "Brig dark left APC";
-	pixel_x = -32;
-	pixel_y = -6
-	},
-/turf/simulated/wall/r_wall,
-/area/station/security/blueshield)
 "wLY" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -114715,7 +114709,7 @@ bLx
 bNr
 ayr
 aqf
-nwi
+jzM
 cgt
 alZ
 alZ
@@ -115483,9 +115477,9 @@ ash
 auQ
 aNr
 bGr
+bnA
 nYP
-rCb
-rwJ
+wjo
 bHK
 bIO
 bFW
@@ -119077,7 +119071,7 @@ aqi
 aqi
 byE
 byE
-hTF
+vFW
 kNr
 byE
 byE
@@ -120154,7 +120148,7 @@ afz
 cea
 bxc
 cea
-bnA
+rCb
 cea
 cea
 bPp
@@ -120665,7 +120659,7 @@ bdc
 jWb
 jZb
 tnb
-wLk
+kRm
 aDZ
 bjz
 avq
@@ -121696,7 +121690,7 @@ bDK
 aML
 aRR
 bst
-jzM
+aML
 aTR
 aIR
 aIR
