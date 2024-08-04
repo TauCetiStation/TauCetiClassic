@@ -36386,9 +36386,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bmS" = (
-/obj/machinery/hydroponics/constructable,
-/turf/simulated/floor/plating,
-/area/station/civilian/hydroponics/old)
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Dark Brig";
+	name = "Brig dark down APC";
+	pixel_y = -27
+	},
+/obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/security/iaa_office)
 "bmT" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -47069,6 +47076,11 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
+"bFU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics/old)
 "bFV" = (
 /obj/machinery/requests_console/tech_storage{
 	pixel_y = -32
@@ -53945,6 +53957,10 @@
 	icon_state = "green"
 	},
 /area/station/hallway/primary/starboard)
+"bSY" = (
+/obj/machinery/hydroponics/constructable,
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics/old)
 "bSZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/wall,
@@ -57270,17 +57286,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
-"cer" = (
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "Dark Brig";
-	name = "Brig dark down APC";
-	pixel_y = -27
-	},
-/obj/structure/cable,
-/turf/simulated/floor{
-	icon_state = "darkblue"
-	},
-/area/station/security/iaa_office)
 "ces" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
@@ -69451,6 +69456,10 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/chiefs_office)
+"cXG" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics/old)
 "cXS" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -84710,10 +84719,6 @@
 	icon_state = "boxing"
 	},
 /area/station/civilian/gym)
-"tfv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating,
-/area/station/civilian/hydroponics/old)
 "tfA" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
@@ -112806,7 +112811,7 @@ azD
 bjH
 bHl
 eKS
-cer
+bmS
 axN
 aMj
 cfq
@@ -132616,10 +132621,10 @@ csA
 cAL
 cBh
 cuo
-bmS
-bmS
-bmS
-bmS
+bSY
+bSY
+bSY
+bSY
 cbz
 aah
 aaa
@@ -133130,9 +133135,9 @@ cbz
 cEy
 cfB
 cil
-tfv
+cXG
 ddK
-tfv
+cXG
 itg
 eJE
 aah
@@ -133390,7 +133395,7 @@ bkt
 peN
 bkt
 peN
-bkt
+bFU
 qFY
 aah
 aah
@@ -133901,10 +133906,10 @@ ccR
 cew
 cfD
 cya
-bmS
-bmS
-bmS
-bmS
+bSY
+bSY
+bSY
+bSY
 cbz
 aah
 aaa
