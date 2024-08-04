@@ -196,7 +196,9 @@
 			user.visible_message("<span class='notice'>[user] is trying to pin [src] on [H]'s chest.</span>", \
 				"<span class='notice'>You try to pin [src] on [H]'s chest.</span>")
 		var/input
+		var/awarded_name
 		if(!commended && user != H)
+			awarded_name = sanitize(input(user, "Name of awarded person?", "Name", H.name) as null|text)
 			input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text)
 		if(do_after(user, delay, target = H))
 			C.attach_accessory(src, user)
@@ -208,6 +210,8 @@
 					desc += "<br>The inscription reads: [input] - [user.real_name]"
 					log_game("<b>[key_name(H)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 					message_admins("<b>[key_name_admin(H)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
+					if(awarded_name)
+						SSStatistics.add_medal(H.key, awarded_name, name, input, icon(icon, icon_state))
 		return
 
 	..()

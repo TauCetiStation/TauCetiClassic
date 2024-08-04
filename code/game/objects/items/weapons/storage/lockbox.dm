@@ -20,16 +20,7 @@
 			to_chat(user, "<span class='warning'>It appears to be broken.</span>")
 			return
 		if(allowed(user))
-			locked = !( locked )
-			if(locked)
-				icon_state = icon_locked
-				to_chat(user, "<span class='warning'>You lock the [src]!</span>")
-				close_all() // close the content window for all mobs, when lock lockbox
-				return
-			else
-				icon_state = icon_closed
-				to_chat(user, "<span class='warning'>You unlock the [src]!</span>")
-				return
+			toggle_lock()
 		else
 			to_chat(user, "<span class='warning'>Access Denied</span>")
 			return
@@ -51,6 +42,18 @@
 		return ..()
 	else
 		to_chat(user, "<span class='warning'>Its locked!</span>")
+
+/obj/item/weapon/storage/lockbox/proc/toggle_lock()
+	locked = !( locked )
+	if(locked)
+		icon_state = icon_locked
+		to_chat(usr, "<span class='warning'>You lock the [src]!</span>")
+		close_all() // close the content window for all mobs, when lock lockbox
+		return
+	else
+		icon_state = icon_closed
+		to_chat(usr, "<span class='warning'>You unlock the [src]!</span>")
+		return
 
 /obj/item/weapon/storage/lockbox/attack_hand(mob/user)
 	if ((loc == user) && locked)
@@ -125,7 +128,7 @@
 	name = "medal box"
 	desc = "A locked box used to store medals of honor."
 	req_access = list(access_cent_general)
-	var/req_role = list() //string, role from "datum/mind/assigned_role"
+	var/list/req_roles = list() //string, role from "datum/mind/assigned_role"
 	icon_state = "medalbox+l"
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
@@ -139,11 +142,11 @@
 	var/open = FALSE // used for overlays
 
 /obj/item/weapon/storage/lockbox/medal/attack_self(mob/user)
-	if (req_role.Find(user.mind.assigned_role))
-		locked =
-		open = TRUE
-		update_icon()
-		to_chat(user, "<span class='warning'>You opened [src]!</span>")
+	if (req_roles.Find(user.mind.assigned_role))
+		toggle_lock()
+		if(locked)
+			open = FALSE
+			update_overlays()
 	else
 		to_chat(user, "<span class='warning'>Access denied!</span>")
 
@@ -190,6 +193,7 @@
 /obj/item/weapon/storage/lockbox/medal/captain
 	name = "Captain medal box"
 	desc = "A locked box used to store medals to be given to crew."
+	req_roles = list("Captain")
 
 	startswith = list(
 		/obj/item/clothing/accessory/medal/conduct,
