@@ -1,16 +1,16 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/environment/space,
-/area/space_structures/robostatoin)
+/area/space)
 "ab" = (
 /obj/structure/lattice,
 /obj/structure/grille{
 	destroyed = 1
 	},
 /turf/environment/space,
-/area/space_structures/robostatoin)
+/area/space)
 "ac" = (
-/obj/effect/spawner/mob_spawn/hivebot,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "ad" = (
@@ -68,7 +68,7 @@
 /area/space_structures/robostatoin)
 "an" = (
 /obj/item/weapon/bikehorn,
-/obj/effect/spawner/mob_spawn/hivebot/strong,
+/mob/living/simple_animal/hostile/hivebot/strong,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "ao" = (
@@ -91,7 +91,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "as" = (
-/obj/effect/spawner/mob_spawn/hivebot/range,
+/mob/living/simple_animal/hostile/hivebot/range,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "at" = (
@@ -142,6 +142,10 @@
 /obj/structure/table/reinforced,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
+"aC" = (
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space)
 "aD" = (
 /obj/item/mecha_parts/part/honker_right_arm,
 /obj/structure/table/reinforced,
@@ -151,7 +155,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/environment/space,
-/area/space_structures/robostatoin)
+/area/space)
 "aF" = (
 /obj/structure/ore_box,
 /obj/item/weapon/ore/clown,
@@ -391,7 +395,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bA" = (
-/obj/effect/spawner/mob_spawn/hivebot,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bB" = (
@@ -426,7 +430,7 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "bH" = (
-/obj/effect/spawner/mob_spawn/hivebot/range,
+/mob/living/simple_animal/hostile/hivebot/range,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bI" = (
@@ -446,7 +450,7 @@
 "bL" = (
 /obj/structure/grille,
 /turf/environment/space,
-/area/space_structures/robostatoin)
+/area/space)
 "bM" = (
 /obj/item/weapon/wirecutters,
 /turf/simulated/floor/greengrid,
@@ -509,7 +513,7 @@
 /obj/item/weapon/bikehorn,
 /obj/structure/lattice,
 /turf/environment/space,
-/area/space_structures/robostatoin)
+/area/space)
 "bY" = (
 /obj/structure/table,
 /obj/machinery/light{
@@ -548,7 +552,7 @@
 "cd" = (
 /obj/item/weapon/shard,
 /turf/environment/space,
-/area/space_structures/robostatoin)
+/area/space)
 "ce" = (
 /obj/structure/sign/warning/docking,
 /turf/simulated/wall/r_wall,
@@ -698,7 +702,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cF" = (
-/obj/effect/spawner/mob_spawn/hivebot/range,
+/mob/living/simple_animal/hostile/hivebot/range,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "green"
@@ -764,7 +768,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "cQ" = (
-/obj/effect/spawner/mob_spawn/hivebot/strong,
+/mob/living/simple_animal/hostile/hivebot/strong,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -950,7 +954,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/effect/spawner/mob_spawn/hivebot,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitered"
@@ -1048,7 +1052,7 @@
 /obj/structure/lattice,
 /obj/item/weapon/shard,
 /turf/environment/space,
-/area/space_structures/robostatoin)
+/area/space)
 "XQ" = (
 /obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
@@ -1126,12 +1130,12 @@ aa
 aE
 aa
 aa
-bS
+aC
 aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aE
@@ -1148,14 +1152,14 @@ aa
 aE
 aa
 aa
-bS
+aC
 aa
 aE
 aa
 aE
 aa
 aa
-bS
+aC
 aa
 aa
 aE
@@ -1165,12 +1169,12 @@ aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aE
@@ -1187,19 +1191,19 @@ aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aa
@@ -1220,8 +1224,8 @@ aa
 aa
 aa
 aE
-bS
-bS
+aC
+aC
 ad
 ae
 ae
@@ -1238,7 +1242,7 @@ ae
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aa
@@ -1258,7 +1262,7 @@ aE
 aa
 aa
 aE
-bS
+aC
 aa
 ad
 ad
@@ -1289,14 +1293,14 @@ cJ
 dg
 Iy
 ae
-bS
-bS
+aC
+aC
 aE
 "}
 (7,1,1) = {"
 aa
 aE
-bS
+aC
 ad
 ad
 ad
@@ -1374,7 +1378,7 @@ aE
 (9,1,1) = {"
 aa
 aE
-bS
+aC
 ad
 ai
 al
@@ -1394,7 +1398,7 @@ ae
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aa
@@ -1433,10 +1437,10 @@ en
 aa
 aa
 aa
-bS
-bS
-bS
-bS
+aC
+aC
+aC
+aC
 ae
 cq
 cI
@@ -1445,14 +1449,14 @@ de
 ae
 Sx
 ae
-bS
-bS
+aC
+aC
 aE
 "}
 (11,1,1) = {"
 aa
 aE
-bS
+aC
 ad
 ad
 ad
@@ -1465,10 +1469,10 @@ ae
 aa
 aa
 aa
-bS
-bS
-bS
-bS
+aC
+aC
+aC
+aC
 aa
 aa
 aa
@@ -1492,7 +1496,7 @@ aE
 aa
 aa
 aE
-bS
+aC
 aa
 ad
 ad
@@ -1504,24 +1508,24 @@ ae
 aa
 aa
 aa
-bS
+aC
 aa
 aa
-bS
-aa
-aa
-aa
+aC
 aa
 aa
 aa
 aa
 aa
-bS
+aa
+aa
+aa
+aC
 ae
 de
 de
 ae
-bS
+aC
 aa
 aa
 aa
@@ -1532,8 +1536,8 @@ aa
 aa
 aa
 aE
-bS
-bS
+aC
+aC
 ad
 ae
 ae
@@ -1543,10 +1547,10 @@ ae
 aa
 aa
 aa
-bS
-bS
-bS
-bS
+aC
+aC
+aC
+aC
 aa
 aa
 aa
@@ -1555,12 +1559,12 @@ aa
 aa
 aa
 aa
-bS
+aC
 cd
 Nf
 Nf
 cd
-bS
+aC
 aa
 aa
 aE
@@ -1582,24 +1586,24 @@ ae
 aa
 aa
 aa
-bS
+aC
 aa
 aa
-bS
+aC
 aa
 aa
-bS
-bS
-bS
-bS
+aC
+aC
+aC
+aC
 bX
-bS
-bS
-bS
+aC
+aC
+aC
 Nf
 cK
-bS
-bS
+aC
+aC
 aa
 aa
 aa
@@ -1629,11 +1633,11 @@ ad
 ad
 ae
 aa
-bS
+aC
 aa
-bS
+aC
 aa
-bS
+aC
 cd
 Nf
 Nf
@@ -1668,23 +1672,23 @@ bG
 bI
 ae
 aa
-bS
+aC
 aa
-bS
+aC
 aa
-bS
+aC
 ae
 cu
 cu
 ae
-bS
+aC
 aa
 aa
 aa
 aa
 "}
 (17,1,1) = {"
-bS
+aC
 ad
 ac
 ah
@@ -1707,16 +1711,16 @@ ah
 ah
 ae
 aa
-bS
+aC
 aa
-bS
+aC
 aa
-bS
+aC
 ae
 bp
 ch
 ae
-bS
+aC
 aa
 aa
 aa
@@ -1769,13 +1773,13 @@ ae
 ae
 aa
 aa
-bS
+aC
 aa
 aa
-bS
+aC
 aa
 aa
-bS
+aC
 aa
 ae
 bs
@@ -1802,19 +1806,19 @@ aa
 "}
 (20,1,1) = {"
 aa
-bS
+aC
 aa
 aa
-bS
+aC
 aa
 aa
-bS
+aC
 aa
 aa
-bS
+aC
 aa
 aa
-bS
+aC
 aa
 ae
 bt
@@ -1847,13 +1851,13 @@ aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
-bS
+aC
 aa
 aa
-bS
+aC
 aa
 ae
 bC
@@ -1980,20 +1984,20 @@ bz
 bJ
 ae
 aa
-bS
-bS
-bS
-bS
-bS
+aC
+aC
+aC
+aC
+aC
 ce
 de
 de
 ce
-bS
-bS
-bS
-bS
-bS
+aC
+aC
+aC
+aC
+aC
 "}
 (25,1,1) = {"
 aa
@@ -2019,7 +2023,7 @@ ae
 ae
 ae
 aa
-bS
+aC
 aa
 aa
 aa
@@ -2032,7 +2036,7 @@ aa
 aa
 aa
 aa
-bS
+aC
 "}
 (26,1,1) = {"
 aa
@@ -2049,7 +2053,7 @@ aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 ae
@@ -2088,7 +2092,7 @@ aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 ad
@@ -2127,7 +2131,7 @@ aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 ad
@@ -2161,12 +2165,12 @@ aK
 aA
 aJ
 ae
-bS
-bS
-bS
-bS
-bS
-bS
+aC
+aC
+aC
+aC
+aC
+aC
 aa
 aa
 ad
@@ -2205,7 +2209,7 @@ aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 ad
@@ -2234,17 +2238,17 @@ aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 ae
@@ -2273,11 +2277,11 @@ aa
 aa
 aE
 aa
-bS
+aC
 aa
 aa
 aa
-bS
+aC
 aa
 aa
 aa
@@ -2388,8 +2392,8 @@ aa
 (35,1,1) = {"
 aa
 aE
-bS
-bS
+aC
+aC
 ae
 aq
 aB
@@ -2444,9 +2448,9 @@ ae
 ae
 aa
 aa
-bS
+aC
 aa
-bS
+aC
 aa
 aa
 aa
@@ -2508,9 +2512,9 @@ aa
 aE
 aa
 aa
-bS
+aC
 aa
-bS
+aC
 aa
 aa
 aa

@@ -3243,18 +3243,13 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
-	},
-/obj/item/weapon/gun/projectile/grenade_launcher/m79{
-	pixel_y = 6
-	},
-/obj/item/weapon/gun/grenadelauncher{
-	pixel_y = -3
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
@@ -53348,7 +53343,9 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bQX" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/shieldwallgen{
+	req_access = list(55)
+	},
 /obj/structure/cable,
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
@@ -54057,8 +54054,6 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/device/multitool,
-/obj/item/clothing/gloves/insulated,
-/obj/item/device/t_scanner,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light/smart,
 /turf/simulated/floor{
@@ -68857,6 +68852,7 @@
 /area/station/medical/medbreak)
 "cLh" = (
 /obj/structure/table,
+/obj/item/clothing/head/soft/trash,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cLi" = (
@@ -76569,7 +76565,7 @@
 "kjb" = (
 /obj/structure/stool,
 /obj/effect/decal/remains/human,
-/obj/item/weapon/inflatable_duck,
+/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
@@ -81903,6 +81899,11 @@
 	icon_state = "barber"
 	},
 /area/station/civilian/locker)
+"qoQ" = (
+/obj/machinery/light/small,
+/obj/machinery/light/small,
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "qoS" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -133234,7 +133235,7 @@ kZn
 cjv
 cjr
 ckC
-kZn
+qoQ
 cjv
 cuL
 cey

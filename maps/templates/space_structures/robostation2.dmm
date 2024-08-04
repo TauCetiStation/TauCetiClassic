@@ -39,7 +39,7 @@
 /turf/simulated/floor/wood,
 /area/space_structures/robostation2)
 "bO" = (
-/obj/effect/spawner/mob_spawn/hivebot/range,
+/mob/living/simple_animal/hostile/hivebot/range,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "bP" = (
@@ -52,7 +52,7 @@
 /area/space_structures/robostation2)
 "ca" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/mob_spawn/hivebot/range,
+/mob/living/simple_animal/hostile/hivebot/range,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "ce" = (
@@ -107,7 +107,7 @@
 /area/space_structures/robostation2)
 "dK" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/mob_spawn/hivebot/range,
+/mob/living/simple_animal/hostile/hivebot/range,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredcorners"
@@ -250,7 +250,7 @@
 /area/space_structures/robostation2)
 "iO" = (
 /turf/environment/space,
-/area/space_structures/robostation2)
+/area/space)
 "jD" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/ash,
@@ -301,7 +301,7 @@
 "mi" = (
 /obj/structure/lattice,
 /turf/environment/space,
-/area/space_structures/robostation2)
+/area/space)
 "mz" = (
 /obj/structure/glowshroom,
 /turf/simulated/floor/greengrid,
@@ -647,7 +647,7 @@
 /obj/structure/lattice,
 /obj/structure/window/thin/reinforced,
 /turf/environment/space,
-/area/space_structures/robostation2)
+/area/space)
 "FR" = (
 /obj/structure/table,
 /obj/item/weapon/paper{
@@ -684,7 +684,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/environment/space,
-/area/space_structures/robostation2)
+/area/space)
 "GR" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/gun,
@@ -776,7 +776,7 @@
 	dir = 1
 	},
 /turf/environment/space,
-/area/space_structures/robostation2)
+/area/space)
 "Jv" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/disk/research_points{
@@ -864,7 +864,7 @@
 /area/space_structures/robostation2)
 "LG" = (
 /turf/simulated/floor/plating/airless/catwalk,
-/area/space_structures/robostation2)
+/area/space)
 "Mn" = (
 /obj/machinery/door/airlock/hatch{
 	dir = 4
@@ -927,6 +927,10 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
+"Pa" = (
+/mob/living/simple_animal/hostile/hivebot/strong,
+/turf/simulated/floor/greengrid,
+/area/space_structures/robostation2)
 "Pg" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/clown,
@@ -954,8 +958,8 @@
 /area/space_structures/robostation2)
 "RC" = (
 /obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/hivebot/strong,
 /obj/effect/decal/turf_decal/set_burned,
-/obj/effect/spawner/mob_spawn/hivebot/strong,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "Se" = (
@@ -986,9 +990,8 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "TD" = (
-/obj/effect/spawner/mob_spawn/hivebot/strong,
-/turf/simulated/floor/plating,
-/area/space_structures/robostation2)
+/turf/simulated/wall/r_wall,
+/area/space)
 "UI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/paper{
@@ -1005,12 +1008,12 @@
 /area/space_structures/robostation2)
 "UV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/mob_spawn/hivebot/strong,
+/mob/living/simple_animal/hostile/hivebot/strong,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostation2)
 "Vh" = (
+/mob/living/simple_animal/hostile/hivebot/strong,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/mob_spawn/hivebot/strong,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkpurple"
@@ -1308,7 +1311,7 @@ mi
 iO
 mi
 iO
-gj
+TD
 mi
 Gw
 Gw
@@ -1340,7 +1343,6 @@ mi
 mi
 mi
 mi
-iO
 mi
 mi
 mi
@@ -1350,7 +1352,8 @@ mi
 mi
 mi
 mi
-gj
+mi
+TD
 iO
 mi
 iO
@@ -1392,7 +1395,7 @@ mi
 iO
 iO
 iO
-gj
+TD
 iO
 mi
 iO
@@ -1521,9 +1524,9 @@ lO
 ce
 IW
 gj
-gj
-gj
-gj
+TD
+TD
+TD
 mi
 mi
 mi
@@ -1648,9 +1651,9 @@ cL
 Ju
 iO
 iO
-gj
-gj
-gj
+TD
+TD
+TD
 iO
 Gw
 iO
@@ -1690,9 +1693,9 @@ Le
 Ju
 mi
 mi
-gj
+TD
 Hg
-gj
+TD
 mi
 Gw
 mi
@@ -1732,9 +1735,9 @@ Le
 Ju
 iO
 iO
-gj
-gj
-gj
+TD
+TD
+TD
 iO
 Gw
 iO
@@ -2140,7 +2143,7 @@ Jd
 LG
 iO
 tC
-TD
+bP
 mZ
 Gj
 IW
@@ -2182,7 +2185,7 @@ qo
 gj
 gj
 gj
-ph
+Pa
 gj
 gj
 gj
@@ -2193,9 +2196,9 @@ IJ
 IW
 Jv
 gj
-gj
-gj
-gj
+TD
+TD
+TD
 iO
 Gw
 Gw

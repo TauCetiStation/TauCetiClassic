@@ -49,7 +49,7 @@
 		else
 			stack_trace("Color [color] does not exist")
 	if(new_type && new_type != type)
-		ChangeTurf(new_type)
+		ChangeTurf(/turf/simulated/wall/r_wall)
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

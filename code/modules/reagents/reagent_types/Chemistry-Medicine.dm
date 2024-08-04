@@ -574,12 +574,29 @@
 	..()
 	M.heal_bodypart_damage(2 * REM, 0)
 
+/datum/reagent/xenojelly_n // only for alien nest
+	name = "Natural xenojelly"
+	id = "xenojelly_n"
+	description = "Natural xenomorph jelly is released only if the victim hits the nest"
+	reagent_state = LIQUID
+	color = "#3f6d3f"
+	taste_message = null
+	restrict_species = list (IPC, DIONA, VOX)
+
+/datum/reagent/xenojelly_n/on_general_digest(mob/living/M)
+	..()
+	M.heal_bodypart_damage(35, 10)
+	M.adjustToxLoss(-10)
+	M.adjustOxyLoss(-20)
+	M.adjustHalLoss(-25)
+	M.adjustFireLoss(-20)
+
 /datum/reagent/xenojelly_un
 	name = "Unnatural xenojelly"
 	id = "xenojelly_un"
 	description  = "Usually, this jelly is found in the meat of xenomorphs, but it is less useful than natural."
 	reagent_state = LIQUID
-	color = "#457a45"
+	color = "#5ea95d2b"
 	custom_metabolism = 2
 	overdose = REAGENTS_OVERDOSE / 2
 	taste_message = null

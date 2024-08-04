@@ -736,7 +736,7 @@
 		return
 
 	M.drowsyness = max(0, M.drowsyness + adj_drowsy)
-	M.AdjustSleeping(adj_sleepy)
+	M.SetSleeping(adj_sleepy)
 
 	var/drunkpwr = boozepwr
 

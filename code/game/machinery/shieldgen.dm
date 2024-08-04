@@ -214,7 +214,7 @@
 	icon_state = "Shield_Gen"
 	anchored = FALSE
 	density = TRUE
-	req_one_access =  list(access_research, access_engine)
+	req_access = list(access_research)
 	flags = CONDUCT
 	use_power = NO_POWER_USE
 	var/active = FALSE

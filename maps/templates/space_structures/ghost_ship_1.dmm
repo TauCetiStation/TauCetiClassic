@@ -478,7 +478,7 @@
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "bH" = (
-/obj/effect/spawner/mob_spawn/syndicate_ranged_elite,
+/mob/living/simple_animal/hostile/syndicate/ranged/space/elite,
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "bJ" = (
@@ -652,7 +652,7 @@
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "cr" = (
-/obj/effect/spawner/mob_spawn/viscerator,
+/mob/living/simple_animal/hostile/viscerator,
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "ct" = (
@@ -1021,11 +1021,6 @@
 	icon_state = "burst_r"
 	},
 /turf/environment/space,
-/area/space_structures/ghostship)
-"QS" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f10"
-	},
 /area/space_structures/ghostship)
 "SG" = (
 /obj/machinery/telecomms/server,
@@ -1984,7 +1979,7 @@ cv
 aJ
 aJ
 aJ
-aT
+dv
 aa
 "}
 (30,1,1) = {"
@@ -2010,13 +2005,13 @@ dl
 cx
 aa
 aa
-dv
+ds
 bO
 bO
 aJ
 bO
 bO
-dv
+bW
 aa
 "}
 (31,1,1) = {"
@@ -2042,13 +2037,13 @@ dl
 dv
 aa
 aa
-dv
+as
 ax
 ax
 bp
 ax
 ax
-dv
+as
 aa
 "}
 (32,1,1) = {"
@@ -2074,13 +2069,13 @@ dl
 dv
 aa
 aa
-QS
-bo
-bo
-bo
-bo
-bo
-bm
+as
+as
+as
+as
+as
+as
+as
 aa
 "}
 (33,1,1) = {"

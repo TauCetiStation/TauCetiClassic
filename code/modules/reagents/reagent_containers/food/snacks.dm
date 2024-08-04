@@ -13,9 +13,7 @@
 	var/slice_path
 	var/slices_num
 	var/deepfried = 0
-	var/cookingProgress = 0
-	var/cookingThreshold = 50
-	var/fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/badrecipe
+
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M, silent = FALSE)
 	if(!usr)	return
@@ -206,16 +204,7 @@
 		else
 			to_chat(N, text("<span class='notice'>You are unable to nibble away at \the [src] while being hidden.</span>"))
 
-/obj/item/weapon/reagent_containers/food/snacks/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature >= 400)
-		cookingProgress++
 
-	if(cookingProgress >= cookingThreshold)
-		var/turf/T = get_turf(src)
-		var/obj/item/cooking = new fire_act_result(T)
-		cooking.pixel_x = pixel_x
-		cooking.pixel_y = pixel_y
-		qdel(src)
 
 ////////////////////////////////////////////////////////////////////////////////
 /// FOOD END
@@ -416,8 +405,6 @@
 	icon_state = "egg"
 	filling_color = "#fdffd1"
 	list_reagents = list("nutriment" = 1, "egg" = 5)
-	cookingThreshold = 10
-	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/friedegg
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..())
@@ -538,8 +525,6 @@
 	list_reagents = list("protein" = 3, "carpotoxin" = 3)
 	food_type = NATURAL_FOOD
 	food_moodlet = /datum/mood_event/natural_food
-	cookingThreshold = 10
-	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/salmonsteak
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
 	name = "Fish Fingers"
@@ -2519,8 +2504,6 @@
 	list_reagents = list("nutriment" = 6)
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
-	cookingThreshold = 10
-	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/bun
 
 // Dough + rolling pin = flat dough
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/I, mob/user, params)
@@ -2548,8 +2531,6 @@
 	list_reagents = list("nutriment" = 6)
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
-	cookingThreshold = 10
-	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/flatbread
 
 /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	name = "dough slice"
@@ -2636,8 +2617,6 @@
 	list_reagents = list("nutriment" = 1)
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
-	cookingThreshold = 10
-	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/cutlet
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet
 	name = "cutlet"
@@ -2672,8 +2651,6 @@
 	list_reagents = list("protein" = 2)
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
-	cookingThreshold = 10
-	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/meatball
 
 /obj/item/weapon/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
@@ -2806,8 +2783,6 @@
 	icon_state = "raw_bacon"
 	bitesize = 3
 	list_reagents = list("protein" = 1)
-	cookingThreshold = 10
-	fire_act_result = /obj/item/weapon/reagent_containers/food/snacks/bacon
 
 /obj/item/weapon/reagent_containers/food/snacks/bacon
 	name = "bacon"
@@ -3470,7 +3445,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
 	list_reagents = list("ectoplasm" = 5)
-	origin_tech = "biotech=5"
 	food_type = JUNK_FOOD
 	food_moodlet = /datum/mood_event/junk_food
 
@@ -3574,4 +3548,3 @@
 	bitesize = 4
 	food_type = NATURAL_FOOD
 	list_reagents = list("protein" = 7, "plantmatter" = 3, "sodiumchloride" = 1, "blackpepper" = 1)
-
