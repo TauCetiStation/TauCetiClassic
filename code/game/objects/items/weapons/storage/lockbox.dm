@@ -128,7 +128,7 @@
 	name = "medal box"
 	desc = "A locked box used to store medals of honor."
 	req_access = list(access_cent_general)
-	var/list/req_roles = list() //string, role from "datum/mind/assigned_role"
+	var/list/req_roles = list() //string, role from "datum/mind/assigned_role" (probably better make defines?)
 	icon_state = "medalbox+l"
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
@@ -210,7 +210,7 @@
 /obj/item/weapon/storage/lockbox/medal/hop
 	name = "Head of Personnel medal box"
 	desc = "A locked box used to store medals to be given to those exhibiting excellence in management."
-	req_access = list(access_hop)
+	req_roles = list("Captain", "Head of Personnel")
 
 	startswith = list(
 		/obj/item/clothing/accessory/medal/gold/bureaucracy,
@@ -221,7 +221,7 @@
 /obj/item/weapon/storage/lockbox/medal/hos
 	name = "security medal box"
 	desc = "A locked box used to store medals to be given to members of the security department."
-	req_access = list(access_hos)
+	req_roles = list("Captain", "Head of Security")
 
 	startswith = list(
 		/obj/item/clothing/accessory/medal/silver/security,
@@ -231,7 +231,7 @@
 /obj/item/weapon/storage/lockbox/medal/cmo
 	name = "medical medal box"
 	desc = "A locked box used to store medals to be given to members of the medical department."
-	req_access = list(access_cmo)
+	req_roles = list("Captain", "Chief Medical Officer")
 
 	startswith = list(
 		/obj/item/clothing/accessory/medal/silver/med_medal,
@@ -240,7 +240,7 @@
 /obj/item/weapon/storage/lockbox/medal/rd
 	name = "science medal box"
 	desc = "A locked box used to store medals to be given to members of the science department."
-	req_access = list(access_rd)
+	req_roles = list("Captain", "Research Director")
 
 	startswith = list(
 		/obj/item/clothing/accessory/medal/plasma/nobel_science,
