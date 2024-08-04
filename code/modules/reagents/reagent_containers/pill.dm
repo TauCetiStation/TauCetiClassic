@@ -24,6 +24,7 @@
 		W.reagents.trans_to(P, W.reagents.total_volume)
 		reagents.trans_to(P, reagents.total_volume)
 		to_chat(user, "<span class='notice'>You unite [src] with other halved pill.</span>")
+		P.name = "Pill"
 		qdel(W)
 		qdel(src)
 
