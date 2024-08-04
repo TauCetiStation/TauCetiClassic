@@ -239,7 +239,7 @@
 	owner.say_verb(message)
 	owner.set_typing_indicator(FALSE)
 
-	var/education_time = max(10, 20 - (lentext(sanitize_safe(message)) / 10)) SECOND
+	var/education_time = max(10, 20 - (length(sanitize_safe(message)) / 10)) SECOND
 
 	var/mob/living/carbon/human/H = owner
 	learning = TRUE
