@@ -8692,6 +8692,7 @@
 "aop" = (
 /obj/structure/table,
 /obj/item/weapon/storage/pill_bottle/dice,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aoq" = (
@@ -9092,6 +9093,7 @@
 "apc" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor,
 /area/station/security/prison)
 "apd" = (
@@ -9563,10 +9565,14 @@
 	},
 /area/station/security/lobby)
 "apV" = (
-/obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor,
-/area/station/security/prison)
+/area/station/security/visiting_room)
 "apW" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -9764,6 +9770,7 @@
 /area/station/security/forensic_office)
 "aqr" = (
 /obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aqs" = (
@@ -10238,7 +10245,8 @@
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "are" = (
-/obj/structure/window/thin/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/beach_ball/holoball,
 /turf/simulated/floor,
 /area/station/security/prison)
 "arf" = (
@@ -10306,13 +10314,6 @@
 	},
 /area/station/rnd/xenobiology)
 "arn" = (
-/obj/structure/closet,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/flour,
-/obj/item/weapon/reagent_containers/food/condiment/sugar,
-/obj/item/weapon/reagent_containers/food/condiment/sugar,
-/obj/item/weapon/reagent_containers/food/drinks/milk,
-/obj/item/weapon/reagent_containers/food/drinks/milk,
 /obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	dir = 5;
@@ -10864,6 +10865,15 @@
 	name = "Station Intercom (General)";
 	pixel_x = 31
 	},
+/obj/structure/stool/bed/chair/pedalgen{
+	anchored = 1;
+	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11162,11 +11172,15 @@
 	},
 /area/station/rnd/xenobiology)
 "asR" = (
-/obj/structure/table,
 /obj/structure/window/thin/reinforced,
-/obj/item/weapon/kitchen/rollingpin{
-	force = 1
-	},
+/obj/structure/closet,
+/obj/item/weapon/reagent_containers/food/drinks/milk,
+/obj/item/weapon/reagent_containers/food/drinks/milk,
+/obj/item/weapon/reagent_containers/food/condiment/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/flour,
+/obj/item/weapon/reagent_containers/food/condiment/flour,
+/obj/item/weapon/storage/fancy/egg_box,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -11191,11 +11205,13 @@
 /area/station/civilian/hydroponics)
 "asU" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/egg_box,
 /obj/item/weapon/reagent_containers/food/condiment/enzyme{
 	layer = 5
 	},
 /obj/structure/window/thin/reinforced,
+/obj/item/weapon/kitchen/rollingpin{
+	force = 1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -11406,7 +11422,6 @@
 	},
 /area/station/security/prison)
 "atq" = (
-/obj/item/weapon/beach_ball/holoball,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -11837,11 +11852,6 @@
 /area/station/hallway/primary/fore)
 "auc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "red"
@@ -12242,8 +12252,10 @@
 	},
 /area/station/security/prison)
 "auR" = (
-/obj/structure/holohoop{
-	dir = 8
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -14130,9 +14142,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/security/visiting_room)
@@ -15380,10 +15392,10 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aAH" = (
-/obj/structure/window/thin/reinforced,
-/obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/cups,
+/obj/structure/holohoop{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aAI" = (
@@ -16311,6 +16323,7 @@
 "aCt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/weightlifter,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "black"
@@ -16507,8 +16520,9 @@
 	dir = 8
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+	d2 = 2;
+	icon_state = "0-2";
+	pixel_y = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -18268,13 +18282,15 @@
 /area/station/maintenance/medbay)
 "aGm" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/stool/bed/chair/pedalgen{
-	anchored = 1;
-	dir = 8
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
+	d1 = 1;
 	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -47839,6 +47855,11 @@
 /area/station/maintenance/atmos)
 "bHu" = (
 /obj/structure/table/reinforced,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/security/visiting_room)
 "bHv" = (
@@ -74727,15 +74748,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"iFQ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/security/visiting_room)
 "iFS" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,3"
@@ -82864,6 +82876,7 @@
 /area/shuttle/supply/station)
 "rsD" = (
 /obj/structure/dumbbells_rack,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "black"
@@ -84716,6 +84729,10 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
+"tiY" = (
+/obj/structure/table/reinforced,
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "tkb" = (
 /obj/machinery/shower{
 	dir = 1
@@ -86674,6 +86691,20 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
+"wKR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "wLi" = (
 /turf/simulated/wall,
 /area/station/civilian/chapel/mass_driver)
@@ -86849,20 +86880,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
-"xov" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/security/visiting_room)
 "xoA" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
@@ -86923,15 +86940,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
-"xse" = (
-/obj/structure/table/reinforced,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/security/visiting_room)
 "xtY" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,6"
@@ -87403,11 +87411,6 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "yjk" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -115783,10 +115786,10 @@ ani
 ani
 ani
 aOk
-apV
+asF
 aoY
 aqz
-asF
+axL
 rsD
 auQ
 ayr
@@ -116564,8 +116567,8 @@ avS
 aBO
 ark
 nYP
-iFQ
-bHu
+apV
+tiY
 bIT
 adW
 alZ
@@ -116821,8 +116824,8 @@ avV
 adW
 adW
 adW
-ayq
-xse
+wKR
+bHu
 bGs
 adW
 alZ
@@ -117078,8 +117081,8 @@ avW
 aBO
 ayn
 nYP
-xov
-bHu
+ayq
+tiY
 oLn
 adW
 alZ
