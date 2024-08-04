@@ -196,6 +196,6 @@
 	def_zone = ran_zone()
 
 /obj/item/projectile/beam/cult_laser/Bump(atom/A, forced=0)
-	if(istype(A, /mob/living/simple_animal/hostile/pylon) || istype(A, /obj/structure/cult/pylon) || isconstruct(A) || istype(A, /obj/effect/anomaly/bluespace/cult_portal))
+	if(istype(A, /mob/living/simple_animal/hostile/pylon/cult) || istype(A, /obj/structure/cult/pylon) || isconstruct(A) || istype(A, /obj/effect/anomaly/bluespace/cult_portal))
 		return FALSE
 	return ..()

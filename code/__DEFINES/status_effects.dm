@@ -15,6 +15,8 @@
 
 #define STATUS_EFFECT_SWARMS_GIFT /datum/status_effect/swarm_gift
 
+#define STATUS_EFFECT_ALERTNESS /datum/status_effect/alertness
+
 /////////////
 // DEBUFFS //
 /////////////
