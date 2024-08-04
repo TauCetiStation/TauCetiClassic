@@ -233,8 +233,7 @@
 		return
 
 	owner.set_typing_indicator(TRUE)
-	var/message
-	input(owner, "Скажите что-то про тему лекции", "Вступительное слово", "Тема этой лекции ") as text|null
+	var/message = input(owner, "Скажите что-то про тему лекции", "Вступительное слово", "Тема этой лекции ") as text|null
 	owner.set_typing_indicator(FALSE)
 	if(!message)
 		to_chat(owner, "<span class='notice'>Лекция не может быть проведена без слов.</span>")
