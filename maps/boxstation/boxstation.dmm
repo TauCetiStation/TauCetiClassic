@@ -9571,6 +9571,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/security/visiting_room)
 "apW" = (
@@ -14140,11 +14145,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/security/visiting_room)
@@ -47855,11 +47855,6 @@
 /area/station/maintenance/atmos)
 "bHu" = (
 /obj/structure/table/reinforced,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/simulated/floor,
 /area/station/security/visiting_room)
 "bHv" = (
@@ -48664,7 +48659,7 @@
 /area/station/security/visiting_room)
 "bIQ" = (
 /obj/machinery/door/window/brigdoor/northright{
-	name = "Brig Desk";
+	name = "Visiting Room";
 	req_access = list(63);
 	dir = 4
 	},
@@ -70565,6 +70560,15 @@
 /obj/random/vending/cola,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
+"ekS" = (
+/obj/structure/table/reinforced,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "elb" = (
 /obj/machinery/vending/coffee,
 /obj/item/portrait/captain{
@@ -81549,6 +81553,20 @@
 /obj/structure/flora/junglebush,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
+"qeY" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "qgb" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/effect/landmark/start/chief_engineer,
@@ -84729,10 +84747,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
-"tiY" = (
-/obj/structure/table/reinforced,
-/turf/simulated/floor,
-/area/station/security/visiting_room)
 "tkb" = (
 /obj/machinery/shower{
 	dir = 1
@@ -86691,20 +86705,6 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
-"wKR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor,
-/area/station/security/visiting_room)
 "wLi" = (
 /turf/simulated/wall,
 /area/station/civilian/chapel/mass_driver)
@@ -116567,8 +116567,8 @@ avS
 aBO
 ark
 nYP
-apV
-tiY
+ayq
+bHu
 bIT
 adW
 alZ
@@ -116824,8 +116824,8 @@ avV
 adW
 adW
 adW
-wKR
-bHu
+qeY
+ekS
 bGs
 adW
 alZ
@@ -117081,8 +117081,8 @@ avW
 aBO
 ayn
 nYP
-ayq
-tiY
+apV
+bHu
 oLn
 adW
 alZ
