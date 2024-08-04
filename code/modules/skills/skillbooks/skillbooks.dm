@@ -232,6 +232,15 @@
 	if(!Checks() || !owner)
 		return
 
+	owner.set_typing_indicator(TRUE)
+	var/message
+	do input(owner, "Скажите что-то про тему лекции", "Вступительное слово", "Тема этой лекции ") as text|null
+	while(!message)
+	owner.say_verb(message)
+	owner.set_typing_indicator(FALSE)
+
+	var/education_time = max(10, 20 - (message.len / 10)) SECOND
+
 	var/mob/living/carbon/human/H = owner
 	learning = TRUE
 
@@ -243,7 +252,7 @@
 	for(var/mob/living/carbon/human/learner as anything in learners)
 		educate(learner)
 
-	if(do_after(owner, 15 SECOND, TRUE, owner))
+	if(do_after(owner, education_time, TRUE, owner))
 		var/obj/item/weapon/book/skillbook/SB = H.get_active_hand()
 		for(var/mob/living/carbon/human/learner as anything in learners)
 			learner.add_skills_buff(SB.bonus_skillset)
@@ -255,7 +264,7 @@
 
 /datum/action/cooldown/skill_educate/proc/educate(mob/learner)
 	set waitfor = FALSE
-	if(!do_after(learner, 15 SECOND, FALSE, learner, extra_checks = CALLBACK(src, PROC_REF(is_learning))))
+	if(!do_after(learner, education_time, FALSE, learner, extra_checks = CALLBACK(src, PROC_REF(is_learning))))
 		learners -= learner
 
 /datum/action/cooldown/skill_educate/proc/is_learning()
