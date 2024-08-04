@@ -146,8 +146,11 @@
 		Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
 		который даже сама смерть не способна заглушить, ты восстанешь вновь!</span>")
 
+/mob/living/carbon/human/proc/can_zombified()
+    return species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)
+
 /mob/living/carbon/human/proc/handle_infected_death() //Death of human
-	if(species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
+	if(can_zombified())
 		addtimer(CALLBACK(src, PROC_REF(prerevive_zombie)), 300)
 		to_chat(src, "<span class='cult'>Твоё сердце останавливается, но голод так и не унялся... \
 			Как и жизнь не покинула твоё бездыханное тело. Ты чувствуешь лишь ненасытный голод, \
@@ -323,7 +326,7 @@ var/global/list/zombie_list = list()
 	var/min_dist = 999
 
 	for(var/mob/living/carbon/human/H as anything in human_list)
-		if(H.stat == DEAD || iszombie(H) || H.z != user.z || H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT] )
+		if(H.stat == DEAD || iszombie(H) || H.z != user.z || !H.can_zombified() )
 			continue
 		var/turf/target_turf = get_turf(H)
 		var/target_dist = get_dist(target_turf, self_turf)
