@@ -11418,12 +11418,27 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
 	},
 /area/station/security/prison)
 "atr" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -12238,6 +12253,11 @@
 /area/station/civilian/kitchen)
 "auQ" = (
 /mob/living/pbag,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -12247,6 +12267,9 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -12825,6 +12848,9 @@
 	name = "Chamber Two";
 	pixel_x = -26
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	icon_state = "black"
 	},
@@ -12836,6 +12862,11 @@
 	frequency = 1484;
 	name = "Chamber Three";
 	pixel_x = -26
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -12874,6 +12905,9 @@
 	frequency = 1486;
 	name = "Chamber Four";
 	pixel_x = -26
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -14131,6 +14165,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/station/security/visiting_room)
@@ -18826,6 +18865,16 @@
 	icon_state = "whitebluefull"
 	},
 /area/station/medical/genetics_cloning)
+"aHq" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_wall,
+/area/station/security/visiting_room)
 "aHr" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -21941,15 +21990,6 @@
 	icon_state = "brownold"
 	},
 /area/station/security/prison)
-"aNe" = (
-/obj/structure/table/reinforced,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/security/visiting_room)
 "aNf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -22045,6 +22085,11 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "aNp" = (
@@ -22077,6 +22122,11 @@
 	frequency = 1480;
 	name = "Chamber One";
 	pixel_x = -26
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -43561,6 +43611,16 @@
 	icon_state = "darkbluecorners"
 	},
 /area/station/bridge)
+"bzI" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/security/prison)
 "bzJ" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 5;
@@ -47049,6 +47109,15 @@
 	icon_state = "dark"
 	},
 /area/station/storage/tech)
+"bFW" = (
+/obj/structure/table/reinforced,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "bFX" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /turf/simulated/floor{
@@ -72832,20 +72901,6 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
-"gNl" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/security/visiting_room)
 "gOl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -75938,11 +75993,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
 	},
 /turf/simulated/floor,
 /area/station/security/visiting_room)
@@ -79530,6 +79580,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"nFG" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/structure/cable,
+/turf/simulated/wall/r_wall,
+/area/station/security/visiting_room)
 "nGb" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
@@ -87241,6 +87299,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"ygy" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/security/visiting_room)
 "yji" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -115374,9 +115446,9 @@ cIb
 aqz
 are
 ash
-atr
+bzI
 aNr
-aBO
+nFG
 bnA
 nYP
 wjo
@@ -115890,7 +115962,7 @@ axL
 atN
 atr
 avR
-aBO
+aHq
 bAf
 nYP
 bso
@@ -116404,10 +116476,10 @@ arn
 auc
 atq
 avS
-aBO
+nFG
 ark
 nYP
-ayq
+jQM
 bHu
 bIT
 adW
@@ -116664,8 +116736,8 @@ avV
 adW
 adW
 adW
-jQM
-aNe
+ayq
+bFW
 bGs
 adW
 alZ
@@ -116918,10 +116990,10 @@ asU
 aso
 auR
 avW
-aBO
+aHq
 ayn
 nYP
-gNl
+ygy
 bHu
 oLn
 adW
