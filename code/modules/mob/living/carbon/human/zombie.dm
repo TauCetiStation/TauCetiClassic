@@ -292,7 +292,6 @@
 
 	update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/zombies)
 
-
 var/global/list/zombie_list = list()
 
 /proc/add_zombie(mob/living/carbon/human/H)
