@@ -47070,7 +47070,7 @@
 /area/station/rnd/telesci)
 "bFU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/sink,
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics/old)
 "bFV" = (
