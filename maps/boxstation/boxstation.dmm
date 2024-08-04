@@ -13878,6 +13878,7 @@
 	layer = 4;
 	pixel_x = 32
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -16549,17 +16550,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aCU" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/door_control{
+	id = "lawyer_blast";
+	name = "Privacy Shutters";
+	pixel_y = 32;
+	req_access = list(38)
 	},
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/hallway/primary/fore)
+/turf/simulated/wall/r_wall,
+/area/station/security/iaa_office)
 "aCV" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -42065,13 +42063,13 @@
 	},
 /area/station/cargo/storage)
 "bxc" = (
-/obj/machinery/door_control{
-	id = "lawyer_blast";
-	name = "Privacy Shutters";
-	pixel_y = 32;
-	req_access = list(38)
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
 /area/station/security/iaa_office)
 "bxd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -48114,11 +48112,16 @@
 	},
 /area/station/engineering/monitoring)
 "bHS" = (
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "bHT" = (
 /obj/structure/cable{
@@ -77025,15 +77028,6 @@
 	icon_state = "red"
 	},
 /area/station/security/brig)
-"kRm" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
-	},
-/area/station/security/iaa_office)
 "kSi" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -111914,7 +111908,7 @@ bhX
 bzC
 aGx
 axN
-bxc
+aCU
 bfn
 bHa
 cbf
@@ -113450,7 +113444,7 @@ sVa
 aIR
 kYG
 bWY
-kRm
+bxc
 asw
 bHq
 aws
@@ -117525,8 +117519,8 @@ awG
 aCF
 bCn
 awG
-avI
 awG
+avI
 bLz
 bNt
 bOu
@@ -117782,8 +117776,8 @@ cdX
 cPb
 bCo
 bCL
-aCU
-bKT
+bCL
+bHS
 bKT
 bNy
 awn
@@ -118039,7 +118033,7 @@ ayp
 cQb
 bAF
 auT
-bHS
+auT
 axR
 bLI
 bNI
