@@ -13131,6 +13131,14 @@
 	req_one_access = list(19, 38);
 	req_access = list(19, 38)
 	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "lawyer_blast";
+	name = "Internal Affairs";
+	opacity = 0
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
 "awv" = (
@@ -16549,15 +16557,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
-"aCU" = (
-/obj/machinery/door_control{
-	id = "lawyer_blast";
-	name = "Privacy Shutters";
-	pixel_y = 32;
-	req_access = list(38)
-	},
-/turf/simulated/wall/r_wall,
-/area/station/security/iaa_office)
 "aCV" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -31884,6 +31883,14 @@
 /obj/item/weapon/paper_bin{
 	pixel_y = 4
 	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "lawyer_blast";
+	name = "Internal Affairs";
+	opacity = 0
+	},
 /turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
 "beN" = (
@@ -36341,6 +36348,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"bmS" = (
+/obj/machinery/door_control{
+	id = "lawyer_blast";
+	name = "Privacy Shutters";
+	pixel_y = 32;
+	req_access = list(38)
+	},
+/turf/simulated/wall/r_wall,
+/area/station/security/iaa_office)
 "bmT" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -42063,13 +42079,10 @@
 	},
 /area/station/cargo/storage)
 "bxc" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
+/obj/machinery/power/apc{
+	pixel_y = 2
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
-	},
+/turf/simulated/wall/r_wall,
 /area/station/security/iaa_office)
 "bxd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -43799,11 +43812,17 @@
 	},
 /area/station/hallway/primary/central)
 "bAd" = (
-/obj/machinery/power/apc{
-	pixel_y = 2
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/turf/simulated/wall/r_wall,
-/area/station/security/iaa_office)
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/station/hallway/primary/fore)
 "bAe" = (
 /obj/effect/decal/turf_decal{
 	dir = 10;
@@ -48112,17 +48131,14 @@
 	},
 /area/station/engineering/monitoring)
 "bHS" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
 	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor,
-/area/station/hallway/primary/fore)
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/security/iaa_office)
 "bHT" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -111908,7 +111924,7 @@ bhX
 bzC
 aGx
 axN
-aCU
+bmS
 bfn
 bHa
 cbf
@@ -112422,7 +112438,7 @@ biL
 bBM
 nSy
 bLy
-bAd
+bxc
 bfn
 bIZ
 bIZ
@@ -113444,7 +113460,7 @@ sVa
 aIR
 kYG
 bWY
-bxc
+bHS
 asw
 bHq
 aws
@@ -117777,7 +117793,7 @@ cPb
 bCo
 bCL
 bCL
-bHS
+bAd
 bKT
 bNy
 awn
