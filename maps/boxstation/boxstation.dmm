@@ -34855,10 +34855,6 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
-"bkt" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/civilian/hydroponics/old)
 "bku" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -36386,16 +36382,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bmS" = (
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "Dark Brig";
-	name = "Brig dark down APC";
-	pixel_y = -27
-	},
-/obj/structure/cable,
-/turf/simulated/floor{
-	icon_state = "darkblue"
-	},
-/area/station/security/iaa_office)
+/obj/machinery/hydroponics/constructable,
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics/old)
 "bmT" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -47078,7 +47067,6 @@
 /area/station/rnd/telesci)
 "bFU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics/old)
 "bFV" = (
@@ -53958,9 +53946,16 @@
 	},
 /area/station/hallway/primary/starboard)
 "bSY" = (
-/obj/machinery/hydroponics/constructable,
-/turf/simulated/floor/plating,
-/area/station/civilian/hydroponics/old)
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "Dark Brig";
+	name = "Brig dark down APC";
+	pixel_y = -27
+	},
+/obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "darkblue"
+	},
+/area/station/security/iaa_office)
 "bSZ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/wall,
@@ -57286,6 +57281,9 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
+"cer" = (
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics/old)
 "ces" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
@@ -62643,7 +62641,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/airlock{
-	name = "Firefighting equipment"
+	name = "Old Hydroponics"
 	},
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
@@ -80877,6 +80875,8 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "peN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics/old)
 "pfz" = (
@@ -112811,7 +112811,7 @@ azD
 bjH
 bHl
 eKS
-bmS
+bSY
 axN
 aMj
 cfq
@@ -132621,10 +132621,10 @@ csA
 cAL
 cBh
 cuo
-bSY
-bSY
-bSY
-bSY
+bmS
+bmS
+bmS
+bmS
 cbz
 aah
 aaa
@@ -132878,9 +132878,9 @@ cbz
 cKv
 iUO
 kJV
-bkt
-peN
-bkt
+bFU
+cer
+bFU
 ksB
 fIz
 aah
@@ -133391,11 +133391,11 @@ cbz
 cKi
 oqv
 cfC
-bkt
-peN
-bkt
-peN
 bFU
+cer
+bFU
+cer
+peN
 qFY
 aah
 aah
@@ -133648,10 +133648,10 @@ cbz
 cKh
 kdJ
 tgl
-peN
-bkt
+cer
+bFU
 oWQ
-peN
+cer
 ksB
 cbz
 aah
@@ -133906,10 +133906,10 @@ ccR
 cew
 cfD
 cya
-bSY
-bSY
-bSY
-bSY
+bmS
+bmS
+bmS
+bmS
 cbz
 aah
 aaa
