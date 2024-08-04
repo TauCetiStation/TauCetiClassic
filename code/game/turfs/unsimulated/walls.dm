@@ -32,3 +32,29 @@
 	opacity = FALSE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
+
+/turf/unsimulated/wall/like_a_normal
+	name = "wall"
+	desc = "Огромный кусок металла для разделения комнат."
+	icon = 'icons/turf/walls/has_false_walls/wall.dmi'
+	icon_state = "box"
+
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS_FOR_WALLS
+	smooth = SMOOTH_TRUE
+
+/turf/unsimulated/wall/like_a_normal/yellow
+	icon = 'icons/turf/walls/has_false_walls/wall_yellow.dmi'
+
+/turf/unsimulated/wall/like_a_normal/red
+	icon = 'icons/turf/walls/has_false_walls/wall_red.dmi'
+
+/turf/unsimulated/wall/like_a_normal/purple
+	icon = 'icons/turf/walls/has_false_walls/wall_purple.dmi'
+
+/turf/unsimulated/wall/like_a_normal/green
+	icon = 'icons/turf/walls/has_false_walls/wall_green.dmi'
+
+/turf/unsimulated/wall/like_a_normal/beige
+	icon = 'icons/turf/walls/has_false_walls/wall_beige.dmi'
+
