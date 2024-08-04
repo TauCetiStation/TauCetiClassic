@@ -239,7 +239,7 @@
 	owner.say_verb(message)
 	owner.set_typing_indicator(FALSE)
 
-	var/education_time = max(10, 20 - (message.len / 10)) SECOND
+	var/education_time = max(10, 20 - (lentext(sanitize_safe(message)) / 10)) SECOND
 
 	var/mob/living/carbon/human/H = owner
 	learning = TRUE
@@ -250,7 +250,7 @@
 		"<span class='notice'>Вы слышите шелест бумаги и голос учителя, ведущего лекцию.</span>")
 
 	for(var/mob/living/carbon/human/learner as anything in learners)
-		educate(learner)
+		educate(learner, education_time)
 
 	if(do_after(owner, education_time, TRUE, owner))
 		var/obj/item/weapon/book/skillbook/SB = H.get_active_hand()
@@ -262,7 +262,7 @@
 	learning = FALSE
 
 
-/datum/action/cooldown/skill_educate/proc/educate(mob/learner)
+/datum/action/cooldown/skill_educate/proc/educate(mob/learner, education_time)
 	set waitfor = FALSE
 	if(!do_after(learner, education_time, FALSE, learner, extra_checks = CALLBACK(src, PROC_REF(is_learning))))
 		learners -= learner
