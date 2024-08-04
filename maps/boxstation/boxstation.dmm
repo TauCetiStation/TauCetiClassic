@@ -10426,7 +10426,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -13129,10 +13128,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -15302,9 +15297,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 1
-	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -42219,8 +42212,6 @@
 	},
 /area/station/security/blueshield)
 "bxm" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/toolbox/mechanical,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -42705,6 +42696,11 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 1;
+	name = "Barbershop";
+	sortType = "Barbershop"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -47267,6 +47263,7 @@
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bGp" = (
@@ -80789,16 +80786,12 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/obj/structure/disposalpipe/sortjunction/flipped{
-	dir = 1;
-	name = "Visiting Room";
-	sortType = "Barbershop"
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "oZb" = (
@@ -111780,7 +111773,7 @@ axN
 axN
 axN
 axN
-bQl
+cAW
 bfn
 bHa
 cbf
