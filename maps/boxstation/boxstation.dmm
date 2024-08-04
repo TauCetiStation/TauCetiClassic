@@ -36340,10 +36340,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bmS" = (
-/obj/machinery/power/apc{
-	pixel_y = 2
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
 	},
-/turf/simulated/wall/r_wall,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
 /area/station/security/iaa_office)
 "bmT" = (
 /obj/structure/disposalpipe/segment,
@@ -43797,13 +43800,13 @@
 	},
 /area/station/hallway/primary/central)
 "bAd" = (
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32
+/obj/machinery/door_control{
+	id = "lawyer_blast";
+	name = "Privacy Shutters";
+	pixel_y = 32;
+	req_access = list(38)
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
-	},
+/turf/simulated/wall/r_wall,
 /area/station/security/iaa_office)
 "bAe" = (
 /obj/effect/decal/turf_decal{
@@ -72364,6 +72367,12 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
+"gmm" = (
+/obj/machinery/power/apc{
+	pixel_y = 2
+	},
+/turf/simulated/wall/r_wall,
+/area/station/security/iaa_office)
 "gmI" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
@@ -86790,15 +86799,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
-"xdE" = (
-/obj/machinery/door_control{
-	id = "lawyer_blast";
-	name = "Privacy Shutters";
-	pixel_y = 32;
-	req_access = list(38)
-	},
-/turf/simulated/wall/r_wall,
-/area/station/security/iaa_office)
 "xeC" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -111923,7 +111923,7 @@ bhX
 bzC
 aGx
 axN
-xdE
+bAd
 bfn
 bHa
 cbf
@@ -112437,7 +112437,7 @@ biL
 bBM
 nSy
 bLy
-bmS
+gmm
 bfn
 bIZ
 bIZ
@@ -113459,7 +113459,7 @@ sVa
 aIR
 kYG
 bWY
-bAd
+bmS
 asw
 bHq
 aws
@@ -115259,7 +115259,7 @@ bpA
 bra
 pUb
 bmk
-cMR
+bvn
 bwM
 bvn
 bzK
