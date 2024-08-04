@@ -76631,7 +76631,7 @@
 /area/station/cargo/storage)
 "ksb" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Teleporter Maintenance";
+	name = "Blueshield Maintenance";
 	req_access = list(17)
 	},
 /obj/structure/sign/warning/securearea{
