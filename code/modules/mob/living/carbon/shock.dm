@@ -6,7 +6,7 @@
 /mob/living/carbon/proc/updateshock()
 	traumatic_shock = 			\
 	0.5	* getToxLoss() + 		\
-	1.0	* getFireLoss() + 		\
+	1.5	* getFireLoss() + 		\
 	1.0	* getBruteLoss() + 		\
 	1.0	* getCloneLoss() + 		\
 	1.0	* halloss
@@ -82,14 +82,17 @@
 /mob/living/carbon/proc/painkiller_byeffect(chance, yawn_chance)
 	if(stat != CONSCIOUS)
 		return
-	if(prob(chance))
-		adjustBlurriness(3)
-		painkiller_overlay_time += 3
-		if(prob(yawn_chance))
-			emote("yawn")
-		else
-			losebreath = max(losebreath + 3, 3)
-		to_chat(src, "<span class='italics'>[pick("Вы невольно закрываете глаза.", "Вы чувствуете себя подавленным.", "Вы чувствуете себя расслабленным.", "Вы чувствуете себя размякшим.", "Вы ощущаете сонливость.", "Вы чувствуете себя уставшим.", "Вы чувствуете, как силы покидают вас.", "Вам сложно держаться на ногах.")]</span>")
+	if(traumatic_shock >= TRAUMATIC_SHOCK_MINOR)
+		return
+	if(!prob(chance))
+		return
+	adjustBlurriness(3)
+	painkiller_overlay_time += 3
+	to_chat(src, "<span class='italics'>[pick("Вы невольно закрываете глаза.", "Вы чувствуете себя подавленным.", "Вы чувствуете себя расслабленным.", "Вы чувствуете себя размякшим.", "Вы ощущаете сонливость.", "Вы чувствуете себя уставшим.", "Вы чувствуете, как силы покидают вас.", "Вам сложно держаться на ногах.")]</span>")
+	if(dizziness <= 5)
+		make_dizzy(150)
+	if(prob(yawn_chance))
+		emote("yawn")
 
 /mob/living/carbon/proc/get_painkiller_effect()
 	var/painkiller_effect = 1.0
@@ -103,14 +106,12 @@
 		painkiller_effect *= min(0.3 * painkiller_multiplier, 1)
 	else if(reagents.has_reagent("tramadol"))
 		painkiller_effect *= min(0.5 * painkiller_multiplier, 1)
-	else if(reagents.has_reagent("space_drugs"))
-		painkiller_effect *= min(0.55 * painkiller_multiplier, 1)
-	else if(reagents.has_reagent("paracetamol") || reagents.has_reagent("synaptizine") || reagents.has_reagent("ambrosium"))
+	else if(druggy)
+		painkiller_effect *= min(0.6 * painkiller_multiplier, 1)
+	else if(reagents.has_reagent("paracetamol") || reagents.has_reagent("synaptizine"))
 		painkiller_effect *= min(0.75 * painkiller_multiplier, 1)
 	else if(reagents.has_reagent("inaprovaline"))
 		painkiller_effect *= min(0.8 * painkiller_multiplier, 1)
-	else if(reagents.has_reagent("jenkem"))
-		painkiller_effect *= min(0.9 * painkiller_multiplier, 1)
 	if(slurring && drunkenness > DRUNKENNESS_SLUR)
 		painkiller_effect *= min((DRUNKENNESS_PASS_OUT - drunkenness) / 1000, 1)
 	if(analgesic && !reagents.has_reagent("prismaline"))

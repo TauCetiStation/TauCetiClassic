@@ -262,3 +262,11 @@
 #define LOGOUT_GHOST 2
 #define LOGOUT_REENTER 3
 #define LOGOUT_SWAP 4 // not so safe, check other things if available
+
+// traumatic shock levels
+#define TRAUMATIC_SHOCK_MINOR           10
+#define TRAUMATIC_SHOCK_SERIOUS         30
+#define TRAUMATIC_SHOCK_INTENSE         50
+#define TRAUMATIC_SHOCK_MIND_SHATTERING 80
+#define TRAUMATIC_SHOCK_CRITICAL        100
+

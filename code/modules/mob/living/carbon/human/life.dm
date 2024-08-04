@@ -1164,52 +1164,44 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/handle_shock()
 	..()
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(status_flags & GODMODE)	return FALSE	//godmode
 	if(species && species.flags[NO_PAIN])
 		return
 	if(analgesic && !reagents.has_reagent("prismaline"))
 		return // analgesic avoids all traumatic shock temporarily
 
-	if(traumatic_shock >= 20)
-		if(prob(1))
-			to_chat(src, "<span class='danger'>[pick("It hurts so much!", "You really need some painkillers..", "Dear god, the pain!")]</span>")
+	var/message
 
-	if(traumatic_shock >= 40)
-		if(prob(1))
-			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
+	if(traumatic_shock >= TRAUMATIC_SHOCK_MINOR)
+		message = "<span class='warning'>[pick("You feel slight pain.", "Ow... That hurts.")]</span>"
+
+	if(traumatic_shock >= TRAUMATIC_SHOCK_SERIOUS)
+		message = "<span class='boldwarning'><B>[pick("Ughhh... When will it end?", "You're wincing in pain!", "You really need some painkillers!")]</B></span>"
 		blurEyes(2)
 		stuttering = max(stuttering, 5)
 
-	if (traumatic_shock >= 60)
-		if (prob(2))
-			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
-			Weaken(5)
+	if(traumatic_shock >= TRAUMATIC_SHOCK_INTENSE)
+		message = "<span class='danger'>[pick("Stop this pain!", "This pain is unbearable!", "Your whole body is going numb!")]</span>"
 
-	if(traumatic_shock >= 80)
-		if (prob(15))
-			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
-			Stun(3)
-			Weaken(10)
+	if(traumatic_shock >= TRAUMATIC_SHOCK_MIND_SHATTERING)
+		message = "<span class='userdanger'><font size=5>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</font></span>"
+		if(!crawling)
+			SetCrawling(TRUE)
+			Weaken(1)
 
-	if(traumatic_shock >= 100)
-		if (prob(20))
+	if(traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
+		if(prob(10))
 			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
-			Paralyse(5)
+			AdjustSleeping(10)
 
-	if(traumatic_shock == 120)
-		me_emote("can no longer stand, collapsing!")
-		Stun(5)
-		Weaken(10)
-
-	if(traumatic_shock >= 120)
-		Stun(5)
-		Weaken(10)
+	if(prob(15) && message)
+		to_chat(src, message)
 
 /mob/living/carbon/human/proc/handle_heart_beat()
 
 	if(pulse == PULSE_NONE) return
 
-	if(pulse == PULSE_2FAST || traumatic_shock >= 50 || isspaceturf(get_turf(src)))
+	if(pulse == PULSE_2FAST || traumatic_shock >= TRAUMATIC_SHOCK_INTENSE || isspaceturf(get_turf(src)))
 
 		var/temp = (5 - pulse)/2
 

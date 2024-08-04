@@ -113,7 +113,7 @@
 		M.hallucination = max(M.hallucination, 2)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.painkiller_byeffect(5, 75)
+		C.painkiller_byeffect(5, 15)
 
 /datum/reagent/oxycodone
 	name = "Oxycodone"
@@ -133,7 +133,7 @@
 		M.hallucination = max(M.hallucination, 3)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		C.painkiller_byeffect(10, 50)
+		C.painkiller_byeffect(10, 25)
 
 /datum/reagent/sterilizine
 	name = "Sterilizine"
