@@ -76630,10 +76630,6 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "ksb" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Blueshield Maintenance";
-	req_access = list(17)
-	},
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
@@ -76645,6 +76641,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance{
+	name = "Blueshield Maintenance";
+	req_access = list(42)
+	},
 /turf/simulated/floor/plating,
 /area/station/security/blueshield)
 "kss" = (
