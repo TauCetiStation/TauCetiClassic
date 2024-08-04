@@ -18,16 +18,14 @@
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
 
-/obj/item/weapon/reagent_containers/pill/attackby(obj/item/weapon/W, mob/user)
-	if(!halved)
-		return
-	if(!istype(W, /obj/item/weapon/reagent_containers/pill))
-		return
-	if(W.halved)
-		/obj/item/weapon/reagent_containers/pill/P = new(get_turf(src))
+/obj/item/weapon/reagent_containers/pill/attackby(obj/item/weapon/reagent_containers/pill/W, mob/user)
+	if(W.halved && halved)
+		var/obj/item/weapon/reagent_containers/pill/P = new(get_turf(src))
 		W.reagents.trans_to(P, W.reagents.total_volume)
 		reagents.trans_to(P, reagents.total_volume)
-		qdel(w)
+		P.name = name
+		to_chat(user, "<span class='notice'>You unite [src] with other halved pill.</span>")
+		qdel(W)
 		qdel(src)
 
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
