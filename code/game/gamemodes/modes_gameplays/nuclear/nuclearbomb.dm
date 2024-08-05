@@ -511,11 +511,16 @@ var/global/bomb_set
 	update_icon()
 	return
 
+
 /obj/machinery/nuclearbomb/nostromo
-	var/datum/faction/nostromo_crew/NC
+	var/can_interact = FALSE
 
 /obj/machinery/nuclearbomb/nostromo/ui_interact(mob/user)
-	return
+	if(!can_interact)
+		return
+	..()
 
 /obj/machinery/nuclearbomb/nostromo/attackby(obj/item/weapon/O, mob/user)
-	return
+	if(!can_interact)
+		return
+	..()

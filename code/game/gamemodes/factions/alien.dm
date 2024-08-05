@@ -61,6 +61,7 @@ var/global/mob/Jonesy
 	max_roles = 6
 
 	var/dead_crew = 0
+	vav/obj/machinery/nuclearbomb/nostromo/NB
 	var/list/supply_crate_packs = list(
 		list(
 			/obj/item/weapon/flamethrower/full,
@@ -133,6 +134,7 @@ var/global/mob/Jonesy
 	..()
 	for(var/datum/role/r in members)
 		RegisterSignal(r.antag.current, COMSIG_MOB_DIED, PROC_REF(crewmate_died))
+	NB = locate() in poi_list
 
 /datum/faction/nostromo_crew/proc/crewmate_died()
 	dead_crew++
@@ -150,7 +152,21 @@ var/global/mob/Jonesy
 	var/crate_contains = pick(supply_crate_packs)
 	for(var/item in crate_contains)
 		new item(SC)
+	give_signal("На корабль перед отлётом грузили ящики и контейнеры, где-то на складе может быть оружие!")
 
+/datum/faction/nostromo_crew/proc/open_cargo()
+	for(var/obj/BW in landmarks_list["Nostromo Cargo Blockway"])
+		qdel(BW)
+	var/mob/living/silicon/decoy/nostromo/N_AI = locate() in mob_list
+	if(N_AI)
+		N_AI.announce("cargo")
+
+/datum/faction/nostromo_crew/proc/open_evac()
+	if(NB)
+		NB.can_interact = TRUE
+	give_signal("Мы должны эвакуироваться! Нужно запустить механизм самоуничтожения!")
+
+/datum/faction/nostromo_crew/proc/give_signal(message)
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(H.stat != DEAD)
 			var/scary_sound = pick('sound/hallucinations/scary_sound_1.ogg',
@@ -158,16 +174,7 @@ var/global/mob/Jonesy
 				'sound/hallucinations/scary_sound_3.ogg',
 				'sound/hallucinations/scary_sound_4.ogg')
 			H.playsound_local(null, scary_sound, VOL_EFFECTS_MASTER, null, FALSE)
-			to_chat(H, "<span class='warning'>На корабль перед отлётом грузили ящики и контейнеры, где-то на складе может быть оружие!</span>")
-
-/datum/faction/nostromo_crew/proc/open_cargo()
-	for(var/obj/BW in landmarks_list["Nostromo Cargo Blockway"])
-		qdel(BW)
-	var/mob/living/silicon/decoy/nostromo/N_AI = locate() in mob_list
-	N_AI.say("Внимание! В связи с высокой смертностью среди экипажа, на склад было возвращено электропитание.")
-
-/datum/faction/nostromo_crew/proc/open_evac()
-	return
+			to_chat(H, "<span class='warning'>[message]</span>")
 
 // android traitor fraction
 /datum/faction/nostromo_android
@@ -186,7 +193,6 @@ var/global/mob/Jonesy
 	H.set_species(NOSTROMO_ANDROID)
 	H.nutrition_icon.update_icon(H)
 	return ..()
-
 
 // kitty fraction
 /datum/faction/nostromo_cat

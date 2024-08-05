@@ -6534,8 +6534,8 @@
 /obj/item/weapon/disk/nuclear,
 /obj/item/weapon/gun/energy/gun/adv/alien,
 /obj/item/clothing/accessory/holster,
-/obj/item/weapon/paper/nuclear_code/map,
 /obj/item/weapon/pinpointer/lone_alien,
+/obj/item/weapon/paper/nuclear_code/map,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"

@@ -78,7 +78,8 @@
 		course += rand(2, 4) * side
 		next_course_change += rand(110, 120) SECOND
 		if(abs(course) > 18)
-			N_AI.announce("cockpit")
+			if(N_AI)
+				N_AI.announce("cockpit")
 		if(abs(course) > 24)
 			var/turf/T = get_turf(landmarks_list["Nostromo Ambience"][1])
 			empulse(T, 30, 60, custom_effects = EMP_SEBB)

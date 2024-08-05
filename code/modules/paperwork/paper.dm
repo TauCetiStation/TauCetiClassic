@@ -840,7 +840,10 @@
 	updateinfolinks()
 
 /obj/item/weapon/paper/nuclear_code/map/atom_init()
-	. = ..()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/nuclear_code/map/atom_init_late()
 	var/nukecode
 	for(var/obj/machinery/nuclearbomb/bomb in poi_list)
 		if(bomb && bomb.r_code)
