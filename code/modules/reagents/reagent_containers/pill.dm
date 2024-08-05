@@ -34,6 +34,7 @@
 			reagents.trans_to(P, reagents.total_volume)
 			to_chat(user, "<span class='notice'>You unite [src] with other halved pill.</span>")
 			P.name = "Pill"
+			P.icon_state = P1.icon_state
 			qdel(P1)
 			qdel(src)
 
