@@ -1468,6 +1468,10 @@
 	icon_state = "cafeteria"
 	},
 /area/station/nostromo)
+"ic" = (
+/obj/effect/landmark/nostromo/ambience,
+/turf/simulated/wall/beige,
+/area/station/nostromo)
 "ie" = (
 /obj/structure/grille,
 /obj/structure/window/thin/reinforced{
@@ -3017,7 +3021,6 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv,
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
-/obj/effect/landmark/nostromo/ambience,
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -6415,10 +6418,6 @@
 	},
 /area/station/nostromo)
 "Ia" = (
-/obj/machinery/nuclearbomb{
-	nuketype = "NT";
-	r_code = "LOLNO"
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -6427,6 +6426,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
+	},
+/obj/machinery/nuclearbomb/nostromo{
+	anchored = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7002,7 +7004,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 10
 	},
-/obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "caution"
@@ -8411,10 +8412,10 @@
 "RK" = (
 /obj/effect/step_trigger/teleporter/random{
 	name = "nostromo_leave";
-	teleport_x = 15;
-	teleport_x_offset = 35;
-	teleport_y = 220;
-	teleport_y_offset = 240;
+	teleport_x = 20;
+	teleport_x_offset = 30;
+	teleport_y = 225;
+	teleport_y_offset = 235;
 	teleport_z = 2;
 	teleport_z_offset = 2
 	},
@@ -43243,7 +43244,7 @@ ZS
 UV
 lX
 ZS
-ZS
+ic
 ZS
 ZS
 ZS

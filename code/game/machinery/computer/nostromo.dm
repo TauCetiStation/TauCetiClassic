@@ -56,13 +56,12 @@
 	cases = list("консоль корабля", "консоли корабля", "консоли корабля", "консоль корабля", "консолью корабля", "консоли корабля")
 	var/course = 0
 	var/side = 0
-	var/next_course_change
-	var/obj/machinery/computer/nostromo/cockpit/second_console
-	var/mob/living/silicon/decoy/nostromo/N_AI
+	var/next_course_change = 0
+	var/obj/machinery/computer/nostromo/cockpit/second_console = null
+	var/mob/living/silicon/decoy/nostromo/N_AI = null
 
 /obj/machinery/computer/nostromo/cockpit/atom_init()
 	..()
-	next_course_change = world.time + rand(110, 120) SECOND
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/nostromo/cockpit/atom_init_late()
@@ -76,13 +75,13 @@
 	..()
 	if(world.time > next_course_change)
 		course += rand(2, 4) * side
-		next_course_change += rand(110, 120) SECOND
+		next_course_change = world.time + rand(110, 120) SECOND
 		if(abs(course) > 18)
 			if(N_AI)
 				N_AI.announce("cockpit")
 		if(abs(course) > 24)
 			var/turf/T = get_turf(landmarks_list["Nostromo Ambience"][1])
-			empulse(T, 30, 60, custom_effects = EMP_SEBB)
+			empulse(T, 60, 60, custom_effects = EMP_SEBB)
 			explosion(get_turf(src), 0,1,2,3)
 			qdel(second_console)
 			qdel(src)
