@@ -18,7 +18,7 @@
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
 
-/obj/item/weapon/reagent_containers/pill/attackby(obj/item/weapon/reagent_containers/pill/W, mob/user)
+/obj/item/weapon/reagent_containers/pill/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen))
 		var/new_name = sanitize_safe(input(user,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([reagents.total_volume]u)") as text|null, MAX_NAME_LEN)
 		if(!new_name)
