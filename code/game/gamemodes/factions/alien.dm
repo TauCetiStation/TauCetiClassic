@@ -128,7 +128,7 @@ var/global/mob/Jonesy
 		var/mob/living/L = alien_list[ALIEN_LONE_HUNTER][1]
 		if(L)
 			return L.stat == DEAD
-	return
+	return TRUE
 
 /datum/faction/nostromo_crew/OnPostSetup()
 	..()
