@@ -44358,14 +44358,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bBx" = (
-/obj/machinery/light/small{
-	dir = 1
+/obj/random/vending/snack,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralfull"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/area/station/hallway/primary/central)
 "bBy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -74033,10 +74031,13 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "icr" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "neutralcorner"
+	icon_state = "neutralfull"
 	},
 /area/station/hallway/primary/central)
 "idb" = (
@@ -77689,10 +77690,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lHr" = (
-/obj/random/vending/snack,
+/obj/machinery/vending/coffee,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "neutralcorner"
+	icon_state = "neutralfull"
 	},
 /area/station/hallway/primary/central)
 "lIb" = (
@@ -78286,11 +78287,11 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "mlb" = (
-/obj/item/weapon/flora/random,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
+/obj/machinery/color_mixer,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -81204,8 +81205,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "pGk" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -113078,10 +113078,10 @@ atB
 biL
 atG
 axN
-bQl
-bQl
-bQl
-bQl
+bIZ
+bIZ
+bIZ
+bIZ
 cKa
 bBB
 bzS
@@ -113335,12 +113335,12 @@ awt
 bJM
 axN
 axN
-aMR
-aMR
-aMR
-bIZ
-bIZ
 bBx
+lHr
+icr
+bIZ
+bPF
+bBD
 bCE
 ckS
 bQl
@@ -113592,8 +113592,8 @@ aws
 aIR
 aIR
 aIR
-lHr
-icr
+bht
+bht
 pGk
 bIZ
 jMb
