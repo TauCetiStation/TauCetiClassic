@@ -39889,9 +39889,12 @@
 /turf/environment/space,
 /area/shuttle/administration/station)
 "btE" = (
-/obj/machinery/pdapainter,
-/turf/simulated/floor,
-/area/station/bridge/hop_office)
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/sign/poster/contraband/syndicate_recruitment{
+	pixel_y = 31
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "btF" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -66674,13 +66677,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
-"cEq" = (
-/obj/effect/decal/turf_decal/set_damaged,
-/obj/structure/sign/poster/contraband/syndicate_recruitment{
-	pixel_y = 31
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
 "cEr" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
@@ -70117,10 +70113,6 @@
 	icon_state = "dark"
 	},
 /area/station/ai_monitored/storage_secure)
-"dVq" = (
-/obj/structure/spider/stickyweb,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
 "dWb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -71160,6 +71152,13 @@
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
+"fdo" = (
+/obj/structure/stool/bed/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "fec" = (
 /obj/machinery/autolathe,
 /turf/simulated/floor{
@@ -71717,15 +71716,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "fIz" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/pdapainter,
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/bridge/hop_office)
 "fIV" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Chief Engineer";
@@ -72106,6 +72099,10 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"gdl" = (
+/obj/structure/table,
+/turf/simulated/floor,
+/area/station/security/prison)
 "geb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -74856,10 +74853,9 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "iQf" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/cups,
-/turf/simulated/floor,
-/area/station/security/prison)
+/obj/structure/spider/stickyweb,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "iRb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -79634,6 +79630,16 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/construction)
+"nMi" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "nMk" = (
 /obj/machinery/status_display{
 	layer = 4;
@@ -80325,6 +80331,11 @@
 	icon_state = "cafeteria"
 	},
 /area/station/medical/medbreak)
+"owZ" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/cups,
+/turf/simulated/floor,
+/area/station/security/prison)
 "oxb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
@@ -80371,13 +80382,6 @@
 /obj/structure/sign/warning/lethal_turrets,
 /turf/simulated/wall/r_wall,
 /area/station/ai_monitored/storage_secure)
-"ozt" = (
-/obj/structure/stool/bed/chair{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
 "ozz" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -82076,14 +82080,14 @@
 /turf/simulated/wall,
 /area/station/civilian/chapel/crematorium)
 "qFY" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/structure/window/fulltile{
 	grilled = 1;
 	icon_state = "gr_window"
 	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/environment/space,
+/turf/simulated/floor/plating,
 /area/station/civilian/hydroponics/old)
 "qGb" = (
 /obj/structure/stool/bed,
@@ -82961,10 +82965,6 @@
 /obj/machinery/shieldgen,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
-"ruE" = (
-/obj/structure/table,
-/turf/simulated/floor,
-/area/station/security/prison)
 "rvb" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -113859,7 +113859,7 @@ blR
 blR
 blR
 blR
-fIz
+nMi
 bHF
 cux
 boW
@@ -115361,7 +115361,7 @@ aob
 apS
 cmc
 aqr
-iQf
+owZ
 aCt
 nYP
 atp
@@ -115408,7 +115408,7 @@ bpA
 bra
 pUb
 bmk
-btE
+fIz
 bwM
 bvn
 bzK
@@ -115872,7 +115872,7 @@ ani
 ani
 ani
 aOk
-ruE
+gdl
 aoY
 axL
 asF
@@ -116394,8 +116394,8 @@ yjk
 aNo
 atp
 adW
-dVq
-ozt
+iQf
+fdo
 hdb
 alZ
 bCL
@@ -116651,7 +116651,7 @@ ayq
 atq
 avS
 adW
-cEq
+btE
 alZ
 alZ
 aKY
