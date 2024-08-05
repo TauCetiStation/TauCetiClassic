@@ -39889,12 +39889,10 @@
 /turf/environment/space,
 /area/shuttle/administration/station)
 "btE" = (
-/obj/structure/stool/bed/chair{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
+/obj/structure/table,
+/obj/item/weapon/storage/box/cups,
+/turf/simulated/floor,
+/area/station/security/prison)
 "btF" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -71709,15 +71707,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "fIz" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/pdapainter,
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/bridge/hop_office)
 "fIV" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Chief Engineer";
@@ -71907,6 +71899,13 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"fRM" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/sign/poster/contraband/syndicate_recruitment{
+	pixel_y = 31
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "fRW" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
@@ -74848,9 +74847,15 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "iQf" = (
-/obj/structure/spider/stickyweb,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "iRb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -75066,6 +75071,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"iZH" = (
+/obj/structure/stool/bed/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "jab" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -78539,6 +78551,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"mym" = (
+/obj/structure/spider/stickyweb,
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "myC" = (
 /obj/machinery/door/airlock/mining/glass{
 	dir = 4;
@@ -79272,6 +79288,10 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
+"nrM" = (
+/obj/structure/table,
+/turf/simulated/floor,
+/area/station/security/prison)
 "nsb" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /obj/machinery/alarm{
@@ -81933,15 +81953,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"qza" = (
-/obj/machinery/pdapainter,
-/turf/simulated/floor,
-/area/station/bridge/hop_office)
-"qAl" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/cups,
-/turf/simulated/floor,
-/area/station/security/prison)
 "qAF" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -83531,13 +83542,6 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
-"rZg" = (
-/obj/effect/decal/turf_decal/set_damaged,
-/obj/structure/sign/poster/contraband/syndicate_recruitment{
-	pixel_y = 31
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
 "rZh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -85339,10 +85343,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
-"ufK" = (
-/obj/structure/table,
-/turf/simulated/floor,
-/area/station/security/prison)
 "ugb" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
@@ -113862,7 +113862,7 @@ blR
 blR
 blR
 blR
-fIz
+iQf
 bHF
 cux
 boW
@@ -115364,7 +115364,7 @@ aob
 apS
 cmc
 aqr
-qAl
+btE
 aCt
 nYP
 atp
@@ -115411,7 +115411,7 @@ bpA
 bra
 pUb
 bmk
-qza
+fIz
 bwM
 bvn
 bzK
@@ -115875,7 +115875,7 @@ ani
 ani
 ani
 aOk
-ufK
+nrM
 aoY
 axL
 asF
@@ -116397,8 +116397,8 @@ yjk
 aNo
 atp
 adW
-iQf
-btE
+mym
+iZH
 hdb
 alZ
 bCL
@@ -116654,7 +116654,7 @@ ayq
 atq
 avS
 adW
-rZg
+fRM
 alZ
 alZ
 aKY
