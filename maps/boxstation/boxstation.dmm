@@ -39889,10 +39889,10 @@
 /turf/environment/space,
 /area/shuttle/administration/station)
 "btE" = (
-/obj/effect/decal/turf_decal/set_damaged,
-/obj/structure/sign/poster/contraband/syndicate_recruitment{
-	pixel_y = 31
+/obj/structure/stool/bed/chair{
+	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "btF" = (
@@ -40028,9 +40028,6 @@
 	},
 /area/station/security/checkpoint)
 "btQ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
@@ -63281,7 +63278,6 @@
 	},
 /area/station/bridge/hop_office)
 "cux" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
 	d1 = 1;
@@ -63289,6 +63285,9 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "cuB" = (
@@ -70812,7 +70811,8 @@
 "eJE" = (
 /obj/structure/window/fulltile{
 	grilled = 1;
-	icon_state = "gr_window"
+	icon_state = "gr_window";
+	pixel_x = -2
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -71152,13 +71152,6 @@
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
-"fdo" = (
-/obj/structure/stool/bed/chair{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/maintenance/eva)
 "fec" = (
 /obj/machinery/autolathe,
 /turf/simulated/floor{
@@ -71716,9 +71709,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "fIz" = (
-/obj/machinery/pdapainter,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
-/area/station/bridge/hop_office)
+/area/station/hallway/primary/central)
 "fIV" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Chief Engineer";
@@ -72099,10 +72098,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
-"gdl" = (
-/obj/structure/table,
-/turf/simulated/floor,
-/area/station/security/prison)
 "geb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -79630,16 +79625,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/construction)
-"nMi" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "nMk" = (
 /obj/machinery/status_display{
 	layer = 4;
@@ -80331,11 +80316,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/medical/medbreak)
-"owZ" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/cups,
-/turf/simulated/floor,
-/area/station/security/prison)
 "oxb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
@@ -81953,6 +81933,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"qza" = (
+/obj/machinery/pdapainter,
+/turf/simulated/floor,
+/area/station/bridge/hop_office)
+"qAl" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/cups,
+/turf/simulated/floor,
+/area/station/security/prison)
 "qAF" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -83542,6 +83531,13 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"rZg" = (
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/sign/poster/contraband/syndicate_recruitment{
+	pixel_y = 31
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/eva)
 "rZh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -84507,6 +84503,9 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "sVa" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowcorner"
@@ -85340,6 +85339,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
+"ufK" = (
+/obj/structure/table,
+/turf/simulated/floor,
+/area/station/security/prison)
 "ugb" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
@@ -113859,7 +113862,7 @@ blR
 blR
 blR
 blR
-nMi
+fIz
 bHF
 cux
 boW
@@ -115361,7 +115364,7 @@ aob
 apS
 cmc
 aqr
-owZ
+qAl
 aCt
 nYP
 atp
@@ -115408,7 +115411,7 @@ bpA
 bra
 pUb
 bmk
-fIz
+qza
 bwM
 bvn
 bzK
@@ -115872,7 +115875,7 @@ ani
 ani
 ani
 aOk
-gdl
+ufK
 aoY
 axL
 asF
@@ -116395,7 +116398,7 @@ aNo
 atp
 adW
 iQf
-fdo
+btE
 hdb
 alZ
 bCL
@@ -116651,7 +116654,7 @@ ayq
 atq
 avS
 adW
-btE
+rZg
 alZ
 alZ
 aKY
