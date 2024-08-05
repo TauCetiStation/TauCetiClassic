@@ -20,7 +20,7 @@
 
 /obj/item/weapon/reagent_containers/pill/attackby(obj/item/weapon/reagent_containers/pill/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen))
-		var/new_name = sanitize_safe(input(user,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([reagents.total_volume]u)") as text|null, MAX_NAME_LEN)
+		var/new_name = sanitize_safe(input(user,"Name:","Name your pill!", "Pill") as text|null, MAX_NAME_LEN)
 		if(!new_name)
 			return
 		if (!user.Adjacent(src))
