@@ -576,7 +576,7 @@
 		if(stability in 1 to 2) // 1 and 2 minute before breakdown AI gives an alert
 			if(N_AI)
 				N_AI.announce("smes")
-			do_shake_animation(2, next_stability_decrease - world.time)
+			do_shake_animation(2, next_stability_decrease - world.time, 1)
 
 /obj/machinery/power/smes/nostromo/attack_alien(mob/user)
 	if(world.time > next_alien_attack)
