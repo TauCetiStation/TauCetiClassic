@@ -27165,13 +27165,11 @@
 	},
 /area/centcom/holding)
 "jzU" = (
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
 /obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice,
+/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice,
+/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice,
+/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice,
 /turf/unsimulated/floor,
 /area/space)
 "jAb" = (
@@ -30011,6 +30009,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"psH" = (
+/obj/machinery/vending/chinese{
+	use_power = 0
+	},
+/turf/unsimulated/floor,
+/area/space)
 "ptb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "8,23";
@@ -30583,14 +30587,12 @@
 /turf/simulated/floor,
 /area/space)
 "tkC" = (
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
-/obj/item/weapon/reagent_containers/food/snacks/meatball,
 /obj/structure/table/rglass,
+/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice,
+/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice,
+/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice,
+/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice,
+/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice,
 /turf/unsimulated/floor,
 /area/space)
 "tqh" = (
@@ -32291,7 +32293,7 @@ bpE
 aeD
 aeD
 aeD
-mPM
+psH
 mPM
 mPM
 mPM
