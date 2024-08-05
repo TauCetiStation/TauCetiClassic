@@ -11891,11 +11891,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -12689,6 +12684,11 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
@@ -23846,6 +23846,11 @@
 /obj/item/weapon/storage/box/cdeathalarm_kit{
 	pixel_y = -8
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -34317,6 +34322,11 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/blueshield_officer,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -37757,7 +37767,9 @@
 /area/station/security/blueshield)
 "bpJ" = (
 /obj/structure/cable{
-	icon_state = "1-2"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -39197,6 +39209,11 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -39223,6 +39240,11 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -42607,6 +42629,11 @@
 	dir = 1;
 	name = "Barbershop";
 	sortType = "Barbershop"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -47153,6 +47180,9 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -73957,6 +73987,23 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"hYL" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 1;
+	name = "Barbershop";
+	sortType = "Barbershop"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "hZb" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -80514,6 +80561,12 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -80893,6 +80946,15 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
+"pnF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "pqb" = (
 /obj/machinery/camera{
 	c_tag = "Chief Medical Office";
@@ -81670,6 +81732,12 @@
 	icon_state = "whiteyellow"
 	},
 /area/station/medical/chemistry)
+"qls" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkblue"
+	},
+/area/station/bridge/teleporter)
 "qlZ" = (
 /turf/simulated/wall,
 /area/station/cargo/qm)
@@ -82437,6 +82505,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"qWI" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/station/bridge/teleporter)
 "qXb" = (
 /obj/machinery/door/morgue{
 	dir = 4;
@@ -83316,12 +83390,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
-"rOU" = (
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "darkblue"
-	},
-/area/station/bridge/teleporter)
 "rPb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -84871,12 +84939,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/singularity)
-"twk" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
-	},
-/area/station/bridge/teleporter)
 "tyb" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 1
@@ -119423,7 +119485,7 @@ aoz
 arJ
 byE
 sNO
-twk
+qWI
 rEq
 jtE
 byE
@@ -120964,7 +121026,7 @@ ajo
 apb
 aql
 byE
-rOU
+qls
 arT
 whD
 avj
@@ -122042,11 +122104,11 @@ qBb
 xTO
 cro
 bye
-cro
-cro
+pnF
+pnF
 bGq
-cro
-bye
+pnF
+hYL
 oLb
 bCi
 bGy
