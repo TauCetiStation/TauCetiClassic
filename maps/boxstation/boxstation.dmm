@@ -11400,6 +11400,7 @@
 	},
 /area/station/security/prison)
 "atq" = (
+/obj/item/weapon/beach_ball/holoball,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
