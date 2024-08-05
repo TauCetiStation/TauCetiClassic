@@ -19329,10 +19329,11 @@
 	},
 /area/station/medical/hallway)
 "aIu" = (
-/obj/structure/table/glass,
-/obj/structure/mirror{
-	pixel_x = -32
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -43653,13 +43654,6 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge/teleporter)
-"bAc" = (
-/obj/random/vending/snack,
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "neutral"
-	},
-/area/station/civilian/barbershop)
 "bAd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -47617,13 +47611,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
 "bHq" = (
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
-	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "purplechecker"
+	dir = 6;
+	icon_state = "neutral"
 	},
 /area/station/civilian/barbershop)
 "bHr" = (
@@ -80834,6 +80824,15 @@
 	icon_state = "white"
 	},
 /area/station/rnd/xenobiology)
+"pjb" = (
+/obj/structure/table/glass,
+/obj/structure/mirror{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	icon_state = "purplechecker"
+	},
+/area/station/civilian/barbershop)
 "pjk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -81732,6 +81731,7 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "qob" = (
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -82063,9 +82063,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile{
 	grilled = 1;
-	icon_state = "gr_window_reinforced"
+	icon_state = "gr_window"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics/old)
@@ -121564,11 +121564,11 @@ ovb
 bhv
 bAa
 bAa
-bHq
+aIu
 sxb
-aIu
+pjb
 aJV
-aIu
+pjb
 mlb
 auc
 amR
@@ -121819,9 +121819,9 @@ jhA
 aIR
 cxv
 bhv
-qob
-qob
 bHq
+bHq
+aIu
 bnJ
 bJd
 bHt
@@ -122333,7 +122333,7 @@ bXR
 aPE
 bME
 cMQ
-bAc
+qob
 mXb
 auc
 cRb
