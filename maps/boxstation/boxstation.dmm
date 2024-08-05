@@ -36062,7 +36062,7 @@
 /area/station/medical/reception)
 "bmu" = (
 /turf/simulated/floor{
-	dir = 5;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/bridge/teleporter)
@@ -42631,9 +42631,7 @@
 	sortType = "Barbershop"
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -43701,9 +43699,8 @@
 	},
 /area/station/security/blueshield)
 "bAa" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
@@ -69206,7 +69203,6 @@
 	},
 /area/station/hallway/primary/fore)
 "cRb" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/light/smart{
 	dir = 4
 	},
@@ -71188,12 +71184,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
-"fai" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
-	},
-/area/station/bridge/teleporter)
 "fbb" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -71696,23 +71686,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"fEW" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/disposalpipe/sortjunction/flipped{
-	dir = 1;
-	name = "Barbershop";
-	sortType = "Barbershop"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "fFb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -73972,12 +73945,6 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/engine)
-"hXS" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/bridge/teleporter)
 "hYb" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -77569,15 +77536,6 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor,
 /area/station/civilian/fitness)
-"lzi" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "lzm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -79738,6 +79696,25 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"nOu" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 1;
+	name = "Barbershop";
+	sortType = "Barbershop"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "nPb" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -82291,6 +82268,10 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -83452,6 +83433,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"rRZ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/bridge/teleporter)
 "rSb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -84002,6 +83989,12 @@
 	icon_state = "yellowcorner"
 	},
 /area/station/hallway/primary/aft)
+"stk" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkblue"
+	},
+/area/station/bridge/teleporter)
 "stq" = (
 /obj/item/weapon/flora/random,
 /obj/structure/window/thin/reinforced,
@@ -87052,6 +87045,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"xrZ" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "xtY" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,6"
@@ -119485,7 +119487,7 @@ aoz
 arJ
 byE
 sNO
-fai
+bmu
 rEq
 jtE
 byE
@@ -119742,7 +119744,7 @@ ajo
 arI
 byE
 xZq
-hXS
+rRZ
 brZ
 mAJ
 byE
@@ -120256,7 +120258,7 @@ apb
 arL
 byE
 asZ
-hXS
+rRZ
 bsb
 bHz
 byE
@@ -120513,7 +120515,7 @@ aqC
 arK
 byE
 msQ
-hXS
+rRZ
 bsl
 bAb
 byE
@@ -121026,7 +121028,7 @@ ajo
 apb
 aql
 byE
-bmu
+stk
 arT
 whD
 avj
@@ -122103,12 +122105,12 @@ cro
 qBb
 xTO
 cro
-bye
-lzi
-lzi
+nOu
+xrZ
+xrZ
 bGq
-lzi
-fEW
+xrZ
+bye
 oLb
 bCi
 bGy
