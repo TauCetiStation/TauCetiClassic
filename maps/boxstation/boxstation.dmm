@@ -11525,7 +11525,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
 /area/station/security/iaa_office)
 "atC" = (
 /obj/machinery/light/small{
@@ -13101,7 +13104,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/security/iaa_office)
 "awv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -14823,7 +14828,7 @@
 	req_access = list(38)
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 5;
 	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
@@ -31833,7 +31838,9 @@
 	name = "Internal Affairs";
 	opacity = 0
 	},
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/security/iaa_office)
 "beN" = (
 /obj/structure/cable{
@@ -48872,7 +48879,9 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/carpet/black,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/security/iaa_office)
 "bJN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -81189,6 +81198,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/virology)
+"pEj" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/station/security/iaa_office)
 "pEt" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/status_display{
@@ -113073,9 +113088,9 @@ asa
 bEW
 axN
 azJ
-biL
+pEj
 atB
-biL
+pEj
 atG
 axN
 bIZ
