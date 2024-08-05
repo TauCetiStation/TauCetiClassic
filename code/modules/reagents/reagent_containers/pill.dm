@@ -19,16 +19,23 @@
 		icon_state = "pill[rand(1,20)]"
 
 /obj/item/weapon/reagent_containers/pill/attackby(obj/item/weapon/reagent_containers/pill/W, mob/user)
-	if(!istype(W, /obj/item/weapon/reagent_containers/pill))
-		return
-	if(W.halved && halved)
-		var/obj/item/weapon/reagent_containers/pill/P = new(get_turf(src))
-		W.reagents.trans_to(P, W.reagents.total_volume)
-		reagents.trans_to(P, reagents.total_volume)
-		to_chat(user, "<span class='notice'>You unite [src] with other halved pill.</span>")
-		P.name = "Pill"
-		qdel(W)
-		qdel(src)
+	if(istype(W, /obj/item/weapon/pen))
+		var/new_name = sanitize_safe(input(user,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([reagents.total_volume]u)") as text|null, MAX_NAME_LEN)
+		if(!new_name)
+			return
+		if (!user.Adjacent(src))
+			return
+		name = new_name
+	if(istype(W, /obj/item/weapon/reagent_containers/pill))
+		var/obj/item/weapon/reagent_containers/pill/P1 = W
+		if(P1.halved && halved)
+			var/obj/item/weapon/reagent_containers/pill/P = new(get_turf(src))
+			P1.reagents.trans_to(P, P1.reagents.total_volume)
+			reagents.trans_to(P, reagents.total_volume)
+			to_chat(user, "<span class='notice'>You unite [src] with other halved pill.</span>")
+			P.name = "Pill"
+			qdel(P1)
+			qdel(src)
 
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	if(halved)
