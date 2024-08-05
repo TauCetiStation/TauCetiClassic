@@ -233,7 +233,7 @@ var/global/list/wisp_start_landmark = list()
 	universal_understand = TRUE
 	universal_speak = FALSE
 	w_class = SIZE_MINUSCULE
-	density = FALSE //если будут жаловаться на имбовость, вернуть TRUE, чтобы в ниж можно было вслепую что-то кидать-стрелять
+	density = TRUE
 	min_oxy = 0
 	max_tox = 0
 	max_co2 = 0
@@ -264,7 +264,7 @@ var/global/list/wisp_start_landmark = list()
 	if(mind && my_body)
 		mind.transfer_to(my_body)
 		verbs -= /mob/living/simple_animal/ancestor_wisp/proc/return_to_heaven
-	my_body.hud_used.set_parallax(PARALLAX_HEAVEN)
+		my_body.hud_used.set_parallax(PARALLAX_HEAVEN)
 	qdel(src)
 
 
