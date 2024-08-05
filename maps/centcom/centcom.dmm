@@ -9952,13 +9952,6 @@
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
-"awB" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
-/obj/effect/spawner/mob_spawn/carp/rex,
-/turf/unsimulated/floor,
-/area/centcom/evac)
 "awC" = (
 /obj/effect/decal/cleanable/blood,
 /turf/unsimulated/floor{
@@ -15933,7 +15926,6 @@
 /obj/item/weapon/storage/box/flashbangs{
 	pixel_y = -6
 	},
-/obj/effect/spawner/mob_spawn/nuke_mouse,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -55109,7 +55101,7 @@ aVK
 aVK
 aVK
 hgb
-awB
+hRb
 aVK
 aVK
 aRt
