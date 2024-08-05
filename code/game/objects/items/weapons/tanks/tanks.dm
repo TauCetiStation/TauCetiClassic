@@ -208,6 +208,7 @@
 			TI.background_icon_state = "bg_active"
 		else
 			TI.background_icon_state = "bg_default"
+	T.update_action_buttons()
 
 /obj/item/weapon/tank/remove_air(amount)
 	return air_contents.remove(amount)
