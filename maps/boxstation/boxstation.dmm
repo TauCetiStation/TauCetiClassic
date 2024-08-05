@@ -12220,6 +12220,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -36061,8 +36064,8 @@
 /area/station/medical/reception)
 "bmu" = (
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "darkblue"
 	},
 /area/station/bridge/teleporter)
 "bmv" = (
@@ -70926,15 +70929,6 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
-"eNW" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
 "ePa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor/plating,
@@ -73313,6 +73307,23 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"hnm" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 1;
+	name = "Barbershop";
+	sortType = "Barbershop"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "hnr" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -77249,12 +77260,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"liX" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkblue"
-	},
-/area/station/bridge/teleporter)
 "ljb" = (
 /obj/structure/sign/directions/security{
 	buildable_sign = 0;
@@ -78981,15 +78986,6 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
-"mWL" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "mXb" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -79129,6 +79125,15 @@
 	icon_state = "white"
 	},
 /area/station/rnd/xenobiology)
+"nfu" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "nfZ" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,7"
@@ -79794,12 +79799,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/starboardsolar)
-"nTX" = (
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "darkblue"
-	},
-/area/station/bridge/teleporter)
 "nUb" = (
 /obj/structure/closet/l3closet/general,
 /obj/item/clothing/mask/gas/coloured,
@@ -82758,6 +82757,12 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
+"rkC" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/bridge/teleporter)
 "rlb" = (
 /obj/structure/sink{
 	pixel_x = 6;
@@ -85875,6 +85880,12 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"vea" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/station/bridge/teleporter)
 "vhl" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/polarized{
@@ -87157,6 +87168,15 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
+"xHA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "xHP" = (
 /obj/structure/grille{
 	destroyed = 1
@@ -87459,23 +87479,6 @@
 /obj/structure/sign/warning/moving_parts,
 /turf/simulated/wall,
 /area/station/cargo/recycleroffice)
-"ybT" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/disposalpipe/sortjunction/flipped{
-	dir = 1;
-	name = "Barbershop";
-	sortType = "Barbershop"
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "ycW" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -118725,12 +118728,12 @@ aua
 bbb
 aef
 ayu
-eNW
+xHA
 bAH
-eNW
-eNW
-eNW
-eNW
+xHA
+xHA
+xHA
+xHA
 bNP
 aeJ
 aeJ
@@ -119491,7 +119494,7 @@ aoz
 arJ
 byE
 sNO
-liX
+vea
 rEq
 jtE
 byE
@@ -119748,7 +119751,7 @@ ajo
 arI
 byE
 xZq
-bmu
+rkC
 brZ
 mAJ
 byE
@@ -120262,7 +120265,7 @@ apb
 arL
 byE
 asZ
-bmu
+rkC
 bsb
 bHz
 byE
@@ -120519,7 +120522,7 @@ aqC
 arK
 byE
 msQ
-bmu
+rkC
 bsl
 bAb
 byE
@@ -121032,7 +121035,7 @@ ajo
 apb
 aql
 byE
-nTX
+bmu
 arT
 whD
 avj
@@ -122110,11 +122113,11 @@ qBb
 xTO
 cro
 bye
-mWL
-mWL
+nfu
+nfu
 bGq
-mWL
-ybT
+nfu
+hnm
 oLb
 bCi
 bGy
