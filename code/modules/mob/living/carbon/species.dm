@@ -358,6 +358,7 @@
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
 	language = LANGUAGE_SOLCOMMON
+	primitive = /mob/living/carbon/monkey/pluvian
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_OMNI
 	start_social_credit = 0

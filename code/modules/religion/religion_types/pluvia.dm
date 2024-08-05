@@ -113,15 +113,18 @@ haram_threshold тоже должен как-то высчитываться, н
 	all_religions += src
 
 /datum/religion/pluvia/add_member(mob/living/carbon/human/H)
-	. = ..()
-	if(ispluvian(H))
-		H.AddSpell(new /obj/effect/proc_holder/spell/create_bless_vote)
-		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/ancestor_call)
+	if(!ispluvian(H))
+		return
+	if(istype(H.my_religion, /datum/religion/pluvia))
+		return
+	H.AddSpell(new /obj/effect/proc_holder/spell/create_bless_vote)
+	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/ancestor_call)
 	RegisterSignal(H, COMSIG_HUMAN_HARMED_OTHER, PROC_REF(harm_haram))
 	RegisterSignal(H, COMSIG_HUMAN_ON_SUICIDE, PROC_REF(suicide_haram))
 	RegisterSignal(H, COMSIG_HUMAN_ON_ADJUST_DRUGINESS, PROC_REF(drunk_haram))
 	RegisterSignal(H, COMSIG_HUMAN_ON_CONSUME, PROC_REF(food_haram))
 	RegisterSignal(H, COMSIG_HUMAN_ON_CARPET, PROC_REF(carpet_haram))
+	. = ..()
 
 /datum/religion/pluvia/remove_member(mob/M)
 	. = ..()

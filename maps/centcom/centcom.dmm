@@ -22735,6 +22735,14 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
+"bPM" = (
+/obj/item/weapon/dnainjector/h2m,
+/obj/structure/rack,
+/obj/item/weapon/dnainjector/h2m,
+/obj/item/weapon/dnainjector/h2m,
+/obj/item/weapon/dnainjector/h2m,
+/turf/unsimulated/floor,
+/area/space)
 "bQb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,12"
@@ -28607,6 +28615,10 @@
 	icon_state = "vaultfull"
 	},
 /area/centcom/tdome)
+"mtF" = (
+/obj/structure/stool/bed/chair/metal,
+/turf/unsimulated/floor,
+/area/space)
 "mub" = (
 /obj/structure/sign/mark{
 	icon_state = "yup"
@@ -30543,6 +30555,10 @@
 "sKB" = (
 /turf/simulated/floor/carpet/orange,
 /area/space)
+"sKK" = (
+/mob/living/carbon/monkey/pluvian,
+/turf/simulated/floor,
+/area/space)
 "sPb" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -30581,6 +30597,13 @@
 /obj/structure/cult/statue/camera/gargoyle,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"tuc" = (
+/obj/structure/rack,
+/obj/item/weapon/dnainjector/m2h,
+/obj/item/weapon/dnainjector/m2h,
+/obj/item/weapon/dnainjector/m2h,
+/turf/unsimulated/floor,
+/area/space)
 "tAz" = (
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
@@ -31241,9 +31264,9 @@ aeD
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
 aaM
 aaM
 aaM
@@ -31498,9 +31521,9 @@ aeD
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
+aeD
+sKK
+aeD
 aaM
 aaM
 aaM
@@ -31756,7 +31779,7 @@ aaM
 aaM
 aaM
 aeD
-aeD
+mlY
 aeD
 aaM
 aaM
@@ -32012,9 +32035,9 @@ aeD
 aaM
 aaM
 aeD
-mPM
-mPM
-mPM
+bPM
+mtF
+tuc
 aeD
 aaM
 aaM
