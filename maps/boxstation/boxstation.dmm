@@ -8474,7 +8474,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/brig)
 "anV" = (
@@ -9071,7 +9070,6 @@
 	dir = 4;
 	network = list("SS13","Prison")
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "red"
 	},
@@ -10675,7 +10673,6 @@
 	id = "cell2";
 	name = "Cell Door"
 	},
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/prison)
 "arS" = (
