@@ -451,6 +451,10 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	cases = list("гидропоники", "гидропоник", "гидропоникам", "гидропоник", "гидропониками","гидропониках")
 	icon_state = "hydro"
 
+/area/station/civilian/hydroponics/old
+	name = "Old Hydroponics"
+	cases = list("старая гидропоника", "старой гидропоники", "старой гидропонике", "старую гидропонику", "старой гидропоникой", "старой гидропонике")
+
 //Holodeck
 /area/station/civilian/holodeck
 	name = "Holodeck"
