@@ -256,7 +256,7 @@
 		alien = global.alien_list[ALIEN_LONE_HUNTER][1]
 
 	if(alien && jonesy)
-		target = pickweight(jonesy = 3, alien = 1)
+		target = pickweight(list(jonesy = 3, alien = 1))
 	else if(jonesy)
 		target = jonesy
 	else if (alien)
