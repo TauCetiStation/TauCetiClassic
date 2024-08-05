@@ -357,13 +357,9 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/get_breath_from_internal(volume_needed)
 	if(!internal)
-		for(var/datum/action/item_action/hands_free/toggle_internals/action in actions)
-			action.background_icon_state = "bg_default"
 		return null
 
 	if(!(HAS_TRAIT(src, TRAIT_AV) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
-		for(var/datum/action/item_action/hands_free/toggle_internals/action in actions)
-			action.background_icon_state = "bg_default"
 		internal = null
 		return null
 
@@ -948,6 +944,14 @@ var/global/list/tourette_bad_words= list(
 /mob/living/carbon/human/handle_regular_hud_updates()
 	if(!client)
 		return
+
+	if(!internal)
+		for(var/datum/action/item_action/hands_free/toggle_internals/action in actions)
+			action.background_icon_state = "bg_default"
+
+	if(!(HAS_TRAIT(src, TRAIT_AV) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
+		for(var/datum/action/item_action/hands_free/toggle_internals/action in actions)
+			action.background_icon_state = "bg_default"
 
 	if(stat == UNCONSCIOUS && health <= 0)
 		//Critical damage passage overlay
