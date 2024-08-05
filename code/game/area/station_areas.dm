@@ -453,7 +453,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/hydroponics/old
 	name = "Old Hydroponics"
-	cases = list("старые гидропоники", "старых гидропоник", "старым гидропоникам", "старые гидропоники", "старыми гидропониками", "старых гидропониках")
+	cases = list("старая гидропоника", "старой гидропоники", "старой гидропоникой", "старая гидропоника", "старой гидропониками", "старой гидропонике")
 
 //Holodeck
 /area/station/civilian/holodeck
