@@ -10613,8 +10613,9 @@
 	},
 /area/station/bridge/teleporter)
 "arT" = (
-/obj/machinery/light_switch{
-	pixel_x = 27
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 22;
+	pixel_y = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -47552,6 +47553,9 @@
 /obj/item/weapon/razor,
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/dropper/precision,
+/obj/machinery/firealarm{
+	pixel_x = 22
+	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -56704,12 +56708,14 @@
 /area/station/civilian/garden)
 "ccR" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/fire/firefighter,
-/obj/item/weapon/tank/oxygen,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/reagent_containers/spray/extinguisher,
-/obj/item/clothing/head/hardhat/red,
-/obj/item/clothing/glasses/meson,
+/obj/item/seeds/ambrosiavulgarisseed,
+/obj/item/seeds/gourdseed,
+/obj/item/seeds/tobacco,
+/obj/item/seeds/chiliseed,
+/obj/item/seeds/chiliseed,
+/obj/item/seeds/lemonseed,
+/obj/item/seeds/sugarcaneseed,
+/obj/item/seeds/sugarcaneseed,
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics/old)
 "ccT" = (
@@ -64366,7 +64372,7 @@
 	},
 /area/station/rnd/xenobiology)
 "cya" = (
-/obj/machinery/vending/hydroseeds,
+/obj/machinery/biogenerator,
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics/old)
 "cyd" = (
@@ -75929,6 +75935,9 @@
 	},
 /area/station/ai_monitored/storage_secure)
 "jUv" = (
+/obj/machinery/light_switch{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -76453,11 +76462,6 @@
 "ksb" = (
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -85996,13 +86000,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
-"vFW" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/turf/simulated/wall/r_wall,
-/area/station/bridge/teleporter)
 "vIi" = (
 /obj/structure/closet/crate/freezer,
 /obj/random/foods/drink_can,
@@ -119209,7 +119206,7 @@ aqi
 aqi
 byE
 byE
-vFW
+byE
 kNr
 byE
 byE
