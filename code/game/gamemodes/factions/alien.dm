@@ -61,7 +61,7 @@ var/global/mob/Jonesy
 	max_roles = 6
 
 	var/dead_crew = 0
-	vav/obj/machinery/nuclearbomb/nostromo/NB
+	var/obj/machinery/nuclearbomb/nostromo/NB = null
 	var/list/supply_crate_packs = list(
 		list(
 			/obj/item/weapon/flamethrower/full,
