@@ -43648,7 +43648,7 @@
 	dir = 6;
 	icon_state = "neutral"
 	},
-/area/station/civilian/barbershop)
+/area/station/hallway/primary/central)
 "bAb" = (
 /obj/machinery/shieldwallgen,
 /obj/structure/window/thin/reinforced{
@@ -44759,7 +44759,7 @@
 	dir = 6;
 	icon_state = "neutral"
 	},
-/area/station/civilian/barbershop)
+/area/station/hallway/primary/central)
 "bCj" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -47209,7 +47209,7 @@
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
-/area/station/civilian/barbershop)
+/area/station/hallway/primary/central)
 "bGz" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -47620,7 +47620,7 @@
 	dir = 6;
 	icon_state = "neutral"
 	},
-/area/station/civilian/barbershop)
+/area/station/hallway/primary/central)
 "bHr" = (
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 1;
@@ -78963,7 +78963,7 @@
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
-/area/station/civilian/barbershop)
+/area/station/hallway/primary/central)
 "mXO" = (
 /obj/machinery/door/airlock/glass{
 	autoclose = 0;
@@ -81751,7 +81751,7 @@
 	dir = 6;
 	icon_state = "neutral"
 	},
-/area/station/civilian/barbershop)
+/area/station/hallway/primary/central)
 "qoN" = (
 /obj/machinery/light/smart,
 /obj/structure/closet,
@@ -121320,8 +121320,8 @@ cea
 aPG
 ovb
 aEV
-auc
-auc
+aMR
+aMR
 auc
 auc
 auc
