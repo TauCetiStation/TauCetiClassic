@@ -157,7 +157,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 25,
 		/obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 25,
 		/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 25,
-		/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice = 40,
+		/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice = 50,
 		/obj/item/weapon/kitchen/utensil/fork/sticks = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/chinese
