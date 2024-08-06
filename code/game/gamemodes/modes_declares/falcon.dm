@@ -9,7 +9,7 @@
 	message = pick(
 		"На одной из наших станций произошло ужасное происшествие, необходимы ресурсы для восстановления.",
 		"На одной из наших станций произошёл бунт, необходимо срочно возместить убытки.",
-		"Наши инженеры спроектировали новый прототип блюспейс [pick(врат, артиллерии, связи)], нужны ресурсы для реализации.",
+		"Наши инженеры спроектировали новый прототип блюспейс [pick("врат", "артиллерии", "связи")], нужны ресурсы для реализации.",
 		"Наши склады пустеют, мы не собираемся терпеть убытки из-за приостановки производства.")
 
 /datum/announcement/centcomm/falcon/play(amount, list/ores)
@@ -26,14 +26,14 @@
 	to_chat(world, "<B>Текущий режим игры - Шахтёрская станция Фалкон!</B>")
 
 
-/datum/faction/falcon
+/datum/faction/falcon_crew
 	name = "Falcon Crew"
 	ID = F_FAMILIES
 	initroletype = /datum/role/falcon_crewmate
 	accept_latejoiners = TRUE
 	logo_state = "pickaxe"
 
-/datum/faction/falcon/forgeObjectives()
+/datum/faction/falcon_crew/forgeObjectives()
 	. = ..()
 	AppendObjective(/datum/objective/mine_ore)
 	var/datum/objective/mine_ore/O = locate() in GetObjectives()
