@@ -9,7 +9,7 @@ body:
 
   - type: textarea
     id: location
-	validations:
+    validations:
       required: true
     attributes:
       label: "В какой локации это произошло?"
