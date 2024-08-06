@@ -68261,9 +68261,7 @@
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "qeY" = (
-/obj/machinery/shieldwallgen{
-	req_access = list(55)
-	},
+/obj/machinery/shieldwallgen,
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
 "qfb" = (
@@ -70541,9 +70539,14 @@
 /area/station/maintenance/chapel)
 "qIs" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/weapon/gun/projectile/grenade_launcher/m79{
+	pixel_y = 6
+	},
+/obj/item/weapon/gun/grenadelauncher{
+	pixel_y = -3
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

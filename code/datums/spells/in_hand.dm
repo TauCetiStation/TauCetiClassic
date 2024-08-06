@@ -189,7 +189,8 @@
 /obj/item/projectile/neurotoxin/magic
 	name = "toxin"
 	damage = 40
-	weaken = 1
+	weaken = 4
+	stun = 1
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "neurotoxin"
 	flag = "magic"

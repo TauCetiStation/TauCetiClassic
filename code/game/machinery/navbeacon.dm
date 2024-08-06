@@ -4,7 +4,7 @@
 /obj/machinery/navbeacon
 
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "navbeacon0-f"
+	icon_state = "navbeacon0"
 	name = "Navigation Beacon"
 	desc = "A radio beacon used for bot navigation."
 	layer = 2.5
