@@ -32,6 +32,7 @@
 	initroletype = /datum/role/falcon_crewmate
 	accept_latejoiners = TRUE
 	logo_state = "pickaxe"
+	min_roles = 0
 
 /datum/faction/falcon_crew/forgeObjectives()
 	. = ..()

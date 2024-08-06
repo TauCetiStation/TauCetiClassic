@@ -30,6 +30,7 @@
 	var/excav_overlay = ""
 	var/obj/item/weapon/last_find
 	var/datum/artifact_find/artifact_find
+	var/trap = FALSE
 
 	var/ore_amount = 0
 
@@ -132,7 +133,7 @@
 		name = "Rock"
 		icon_state = "rock"
 		return
-	else
+	else if(!ore_amount)
 		if(prob(15))
 			ore_amount = rand(7, 9)
 		else if(prob(45))
@@ -331,11 +332,18 @@
 /turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0, mineral_drop_coefficient = 1.0)
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
-	if (mineral && ore_amount)
+	if(mineral && ore_amount && !trap)
 
 		// if the turf has already been excavated, some of it's ore has been removed
 		for (var/i = 1 to round((ore_amount - mined_ore) * mineral_drop_coefficient, 1))
 			DropMineral()
+
+	if(trap)
+		for(var/mob/living/M in orange(src, 7))
+			M.flash_eyes()
+			var/dist = get_dist(src, M)
+			M.adjustBruteLoss(20 / dist)
+			M.Stun(5 / dist)
 
 	// destroyed artifacts have weird, unpleasant effects
 	// make sure to destroy them before changing the turf though
@@ -432,6 +440,12 @@
 
 			if(7)
 				new/obj/item/stack/sheet/mineral/uranium(src, rand(5,25))
+
+/turf/simulated/mineral/proc/set_trap()
+	trap = TRUE
+	mineral = name_to_mineral[pick("Phoron", "Gold", "Uranium", "Platinum", "Diamond")]
+	ore_amount = 8
+	UpdateMineral()
 
 //this fucking caves works very badly with afterinit mapload (and with atominit generally)
 //todo: move cavespread from atominit for side trigger?
