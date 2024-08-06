@@ -14,7 +14,8 @@ var/global/list/wisp_start_landmark = list()
 	light_range = 2
 
 /turf/simulated/floor/beach/water/waterpool/heaven
-	name = "Рай"
+	name = "Heaven"
+	cases = list("Рай", "Рая", "Раю", "Рай", "Раем", "Рае")
 	plane = PLANE_SPACE
 	light_color = "#ffffff "
 	light_power = 2
@@ -31,7 +32,8 @@ var/global/list/wisp_start_landmark = list()
 	add_overlay(eye)
 
 /obj/item/weapon/bless_vote
-	name = "Рекомендательное письмо"
+	name = "Bless vote"
+	cases = list("Рекомендательное письмо", "Рекомендательного письма", "Рекомендательному письму", "Рекомендательное письмо", "Рекомендательным письмом", "Рекомендательном письме")
 	desc = "Билет до рая."
 	w_class = SIZE_TINY
 	icon = 'icons/obj/wizard.dmi'
@@ -43,11 +45,11 @@ var/global/list/wisp_start_landmark = list()
 /obj/item/weapon/bless_vote/attack_self(mob/living/carbon/user)
 	user.set_machine(src)
 	var/dat
-	dat = "<B><font color = ##ff0000>Рекомендательное письмо для прохода в рай</font></B><BR>"
+	dat = "<B><font color = ##ff0000>[CASE(src, NOMINATIVE_CASE)] для прохода в рай</font></B><BR>"
 	if(owner.gender == FEMALE)
-		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойной попасть в рай после смерти</font></I><BR><BR>"
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [CASE(owner, NOMINATIVE_CASE)] достойной попасть в рай после смерти</font></I><BR><BR>"
 	else
-		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [owner] достойным попасть в рай после смерти</font></I><BR><BR>"
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [CASE(owner, NOMINATIVE_CASE)] достойным попасть в рай после смерти</font></I><BR><BR>"
 	dat += "<I><font color = ##ff0000>Просто поднесите палец к месту для подписи и слегка надколите об шип на бумаге.</font></I><BR>"
 	dat += "<A href='byond://?src=\ref[src];choice=yes'>[sign_place]</A><BR>"
 	var/datum/browser/popup = new(user, "window=bless_vote", "Рекомендательное письмо")
@@ -164,17 +166,18 @@ var/global/list/wisp_start_landmark = list()
 	user.clear_alert("Звонок")
 
 /obj/structure/pluvia_gong
-	name = "Гонг"
+	name = "Gong"
 	desc = "Когда очень-очень нужно связаться с живыми"
-
+	cases = list("Гонг", "Гонга", "Гонгу", "Гонга", "Гонгом", "Гонге")
 	icon = 'icons/obj/pluvia_gong.dmi'
 	icon_state = "gong"
 	var/next_ring = 0
 	var/mob/target
 
 /obj/item/weapon/melee/pluvia_gong_baton
-	name = "Палочка для гонга"
-	desc = ""
+	name = "Gong`s stick"
+	desc = "Инструмент для плувийского гонга"
+	cases = list("Палочка для гонга", "Палочки для гонга", "Палочке для гонга", "Палочки для гонга", "Палочкой для гонга", "Палочке для гонга")
 	icon_state = "mallet"
 	item_state = "mallet"
 
@@ -184,7 +187,7 @@ var/global/list/wisp_start_landmark = list()
 
 /obj/structure/pluvia_gong/proc/ring(mob/user)
 	if(next_ring > world.time)
-		to_chat(user, "<span class='notice'>Please wait [round((next_ring - world.time) * 0.1, 0.1)] seconds before next ring.</span>")
+		to_chat(user, "<span class='notice'>Пожалуйста подождите [round((next_ring - world.time) * 0.1, 0.1)] секунд</span>")
 		return
 	next_ring = world.time + 30 SECONDS
 	var/list/possible_targets = list()
@@ -195,7 +198,7 @@ var/global/list/wisp_start_landmark = list()
 				var/mob/living/target = possible_targets[H]
 				target.copy_overlays(H)
 
-	visible_message("[bicon(src)] <span class='notice'>[src] rings, strucken by [user].</span>")
+	visible_message("[bicon(src)] <span class='notice'>[CASE(src, NOMINATIVE_CASE)] гудит от удара [CASE(user, NOMINATIVE_CASE)].</span>")
 	playsound(src, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 75, null)
 
 	if(possible_targets.len == 0)
@@ -215,8 +218,9 @@ var/global/list/wisp_start_landmark = list()
 		ring(user)
 
 /mob/living/simple_animal/ancestor_wisp
-	name = "Светлячок"
-	real_name = "Светлячок"
+	name = "Wisp"
+	real_name = "Wisp"
+	cases = list("Светлячок", "Светлячка", "Светлячку", "Светлячка", "Светлячком", "Светлячке")
 	desc = "ЗАСПРАЙТИ МЕНЯ ЗАСПРАЙТИ МЕНЯ ЗАСПРАЙТИ МЕНЯ"
 	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 	icon_state = "bluemob_2"

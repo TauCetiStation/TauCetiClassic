@@ -1025,8 +1025,9 @@
 	list_reagents = list("nutriment" = 1, "sugar" = 2, "rice" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice
-	name = "Луна-рис"
+	name = "luna-rice"
 	desc = "Это просто рис с синим пищевым красителем. ВЫ ПЕРЕПЛАЧИВАЕТЕ ЗА БРЕНД. ОСТАНОВИТЕСЬ."
+	cases = list("Луна-рис", "Луна-риса", "Луна-рису", "Луна-рис", "Луна-рисом", "Луна-рисе")
 	icon_state = "lunarice"
 	item_state_world = "lunarice_world"
 	trash = /obj/item/trash/lunarice

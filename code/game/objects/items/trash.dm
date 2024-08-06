@@ -93,7 +93,8 @@
 	icon_state = "chinese4"
 
 /obj/item/trash/lunarice
-	name = "Пустая тарелка Луна-риса"
+	name = "empty lunarice`s plate"
+	cases = list("Тарелка", "Тарелки", "Тарелке", "Тарелку", "Тарелкой", "Тарелке")
 	icon_state = "lunarice"
 	item_state_world = "lunarice_world"
 

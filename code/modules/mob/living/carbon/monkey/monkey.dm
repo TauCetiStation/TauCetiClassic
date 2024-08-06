@@ -129,8 +129,9 @@
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
 /mob/living/carbon/monkey/pluvian
-	name = "Плувеныш"
-	voice_name = "Плувеныш"
+	name = "Pluv-key"
+	voice_name = "Pluv-key"
+	cases = list("Плувеныш", "Плувеныша", "Плувешыну", "Плувеныша", "Плувенышом", "Плувеныше")
 	speak_emote = list("chimpers")
 	icon_state = "pluvian"
 	race = PLUVIAN
