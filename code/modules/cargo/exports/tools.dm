@@ -94,6 +94,10 @@
 	unit_name = "radio"
 	export_types = list(/obj/item/device/radio)
 
+/datum/export/detective_scanner
+	cost = 25
+	unit_name = "investigator scanner"
+	export_types = list(/obj/item/device/radio)
 
 // High-tech tools.
 /datum/export/rcd
@@ -112,3 +116,20 @@
 	cost = 4
 	unit_name = "kitchen knife"
 	export_types = list(/obj/item/weapon/kitchenknife)
+
+// misc
+
+/datum/export/cryobag
+	cost = 150
+	unit_name = "stasis bag"
+	export_types = list(/obj/item/bodybag/cryobag)
+
+/datum/export/monkey_cube
+	cost = 50
+	unit_name = "monkey cube"
+	export_types = list(/obj/item/weapon/storage/box/monkeycubes)
+
+/datum/export/mining_charge
+	cost = 150
+	unit_name = "mining charge"
+	export_types = list(/obj/item/weapon/mining_charge)
