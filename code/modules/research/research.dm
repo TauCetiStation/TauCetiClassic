@@ -1272,7 +1272,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("bluespacebeaker", "splitbeaker", "bag_holding", "minerbag_holding", "blutrash", "survivalcapsule", "portalgun", "bluespace_storage")
+	unlocks_designs = list("bluespacebeaker", "splitbeaker", "bag_holding", "blutrash", "survivalcapsule", "portalgun", "bluespace_storage", "bluespacesatchel_holding")
 
 /datum/technology/bluespace_rped
 	name = "Bluespace RPED"

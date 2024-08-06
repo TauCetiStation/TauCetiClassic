@@ -197,7 +197,7 @@
 		victim.Weaken(5)
 	victim.apply_damage(8, def_zone = BP_HEAD)
 	victim.visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [A]!</span>")
-	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+	playsound(parent, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
 	victim.log_combat(assailant, "face-slammed against \the [parent]")
 	return FALSE
@@ -217,7 +217,7 @@
 		victim.visible_message("<span class='danger'>[assailant] shoves [victim] into [A]!</span>")
 
 		step_towards(victim, A)
-		qdel(src)
+		qdel(G)
 		return
 
 	assailant.SetNextMove(CLICK_CD_MELEE)

@@ -1472,7 +1472,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "Zg" = (
-/mob/living/simple_animal/crab,
+/obj/effect/spawner/mob_spawn/crab,
 /turf/simulated/floor/beach/sand,
 /area/space_structures/space_villa)
 "ZD" = (
