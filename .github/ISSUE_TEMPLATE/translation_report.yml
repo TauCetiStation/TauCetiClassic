@@ -7,7 +7,7 @@ body:
       value: "## Пожалуйста, не стирайте строчки, которые были автоматически созданы."
 
 
-	type: textarea
+  - type: textarea
     id: description
     validations:
       required: true
