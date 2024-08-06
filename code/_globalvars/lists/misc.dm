@@ -200,3 +200,14 @@ var/global/list/deconverted_roles = list()
 var/global/list/reagents_list = typecacheof(/datum/reagent)
 
 var/global/list/virus_types_by_pool
+
+var/global/list/ores_sold = list(
+	/obj/item/stack/sheet/mineral/gold = 0,
+	/obj/item/stack/sheet/mineral/diamond = 0,
+	/obj/item/stack/sheet/mineral/platinum = 0,
+	/obj/item/stack/sheet/mineral/uranium = 0,
+	/obj/item/stack/sheet/mineral/phoron = 0,
+	/obj/item/stack/sheet/mineral/clown = 0,
+	/obj/item/stack/sheet/mineral/silver = 0,
+	/obj/item/stack/sheet/mineral/plastic = 0
+)

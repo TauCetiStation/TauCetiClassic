@@ -159,8 +159,8 @@
 /datum/job/mining/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 4
+	spawn_positions = 4
 	minimal_player_ingame_minutes = 600
 	skillsets = list("Shaft Miner" = /datum/skillset/falcon/miner)
 

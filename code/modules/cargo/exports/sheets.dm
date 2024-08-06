@@ -17,6 +17,10 @@
 		return S.get_amount()
 	return 0
 
+/datum/export/stack/sell_object(obj/O, contr = 0, emag = 0)
+	if(O.type in global.ores_sold)
+		global.ores_sold[O.type] += get_amount(O)
+	. = ..()
 
 // Leather, skin and other farming by-products.
 
