@@ -24515,13 +24515,6 @@
 	icon_state = "white"
 	},
 /area/station/medical/hallway)
-"cnS" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "stationscrap2"
-	},
-/turf/environment/space,
-/area/station/cargo/recycler)
 "cob" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -69810,13 +69803,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage_secure)
-"nfU" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "stationscrap"
-	},
-/turf/environment/space,
-/area/station/cargo/recycler)
 "nfV" = (
 /obj/machinery/bookbinder,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -79801,7 +79787,7 @@
 	id = "stationscrap"
 	},
 /obj/machinery/recycler,
-/turf/environment/space,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "pDB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -94860,10 +94846,6 @@
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/starboard)
-"tnJ" = (
-/obj/structure/lattice,
-/turf/simulated/wall,
-/area/station/cargo/recycler)
 "tok" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 4
@@ -103851,7 +103833,7 @@
 	dir = 8;
 	id = "stationscrap3"
 	},
-/turf/environment/space,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "vEX" = (
 /obj/structure/closet/gmcloset{
@@ -113983,7 +113965,7 @@
 /area/station/engineering/engine)
 "ydD" = (
 /obj/structure/grille,
-/turf/environment/space,
+/turf/simulated/floor/plating,
 /area/station/cargo/recycler)
 "ydE" = (
 /obj/structure/table/woodentable,
@@ -162223,7 +162205,7 @@ nSZ
 dmY
 vaw
 eQh
-nfU
+oKX
 pjX
 fTz
 plf
@@ -162479,7 +162461,7 @@ nSZ
 nSZ
 qmg
 fTz
-cnS
+iau
 pDg
 glq
 fTz
@@ -163253,7 +163235,7 @@ eie
 iau
 fTz
 nsi
-tnJ
+fTz
 plf
 plf
 kHU
@@ -163510,7 +163492,7 @@ eie
 vdC
 fTz
 nsi
-tnJ
+fTz
 plf
 plf
 kHU
@@ -163767,7 +163749,7 @@ nfX
 eMq
 fTz
 hba
-tnJ
+fTz
 kHU
 kHU
 kHU
