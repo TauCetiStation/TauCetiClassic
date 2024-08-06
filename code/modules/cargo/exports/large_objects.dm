@@ -141,7 +141,7 @@
 	unit_name = "security barrier"
 	export_types = list(/obj/machinery/deployable/barrier)
 
-/datum/export/large/barrier
+/datum/export/large/floodlight
 	cost = 50
 	unit_name = "floodlight"
 	export_types = list(/obj/machinery/floodlight)
