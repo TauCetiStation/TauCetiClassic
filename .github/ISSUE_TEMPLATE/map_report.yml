@@ -27,7 +27,6 @@ body:
       placeholder: |
 	  	На аванпост шахтёров невозможно попасть из-за стены в шлюзах доков
 
-
   - type: textarea
     id: additional
     attributes:
