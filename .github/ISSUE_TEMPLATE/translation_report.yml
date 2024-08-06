@@ -8,7 +8,7 @@ body:
 
 
   - type: textarea
-    id: description
+    id: location
     validations:
       required: true
     attributes:
