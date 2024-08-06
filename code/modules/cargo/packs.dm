@@ -685,7 +685,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/random/foods/ramens,
 					/obj/random/foods/ramens,
 					/obj/random/foods/ramens)
-	additional_costs = 300
+	additional_costs = 100
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Ramens supply crate"
 	group = "Hospitality"
@@ -718,7 +718,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/random/misc/cigarettes,
 					/obj/random/misc/cigarettes,
 					/obj/random/misc/cigarettes)
-	additional_costs = 500
+	additional_costs = 250
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Cigarettes supply crate"
 	group = "Hospitality"
@@ -1898,7 +1898,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/pizzabox/mushroom,
 					/obj/item/pizzabox/meat,
 					/obj/item/pizzabox/vegetable)
-	additional_costs = 500
+	additional_costs = 250
 	name = "Surprise pack of five pizzas"
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Pizza crate"
