@@ -29,8 +29,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/insectoid/atom_init()
 	. = ..()
-	verbs.Add(
-		/mob/living/simple_animal/hostile/asteroid/insectoid/proc/dig,
+	verbs.Add(/mob/living/simple_animal/hostile/asteroid/insectoid/proc/dig,
 		/mob/living/simple_animal/hostile/asteroid/insectoid/proc/set_groundtrap,
 		/mob/living/simple_animal/hostile/asteroid/insectoid/proc/set_rocktrap)
 
