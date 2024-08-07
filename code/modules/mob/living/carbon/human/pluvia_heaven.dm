@@ -173,6 +173,7 @@ var/global/list/wisp_start_landmark = list()
 	cases = list("Гонг", "Гонга", "Гонгу", "Гонга", "Гонгом", "Гонге")
 	icon = 'icons/obj/pluvia_gong.dmi'
 	icon_state = "gong"
+	anchored = TRUE
 	var/next_ring = 0
 	var/mob/target
 
@@ -181,6 +182,7 @@ var/global/list/wisp_start_landmark = list()
 	desc = "Инструмент для плувийского гонга"
 	cases = list("Палочка для гонга", "Палочки для гонга", "Палочке для гонга", "Палочки для гонга", "Палочкой для гонга", "Палочке для гонга")
 	icon_state = "mallet"
+	item_state_world = "mallet_world"
 	item_state = "mallet"
 
 /obj/structure/pluvia_gong/atom_init()
@@ -223,10 +225,10 @@ var/global/list/wisp_start_landmark = list()
 	name = "Wisp"
 	real_name = "Wisp"
 	cases = list("Светлячок", "Светлячка", "Светлячку", "Светлячка", "Светлячком", "Светлячке")
-	desc = "ЗАСПРАЙТИ МЕНЯ ЗАСПРАЙТИ МЕНЯ ЗАСПРАЙТИ МЕНЯ"
-	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
-	icon_state = "bluemob_2"
-	icon_living = "bluemob_2"
+	desc = "Безобидный светлячок"
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "wisp"
+	icon_living = "wisp"
 	stat = CONSCIOUS
 	maxHealth = 1
 	health = 1
@@ -285,18 +287,20 @@ var/global/list/wisp_start_landmark = list()
 	..()
 	wisp_start_landmark += loc
 
-/obj/structure/wisp_tv //я еще не придумал как оформить это визуально
-	name = "ПРИДУМАЙ МНЕ ИМЯ"
-	desc = "ПРИДУМАЙ МНЕ ОПИСАНИЕ"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "security_det"
+/obj/structure/moonwell
+	name = "Moonwell"
+	cases = list("Лунный колодец", "Лунного колодца", "Лунному колодцу", "Лунного колодца", "Лунным колодцем", "Лунном колодце")
+	desc = "Ну-ка посмотрим, что там у станционеров."
+	icon = 'icons/obj/structures/moonwell.dmi'
+	icon_state = "well"
 	var/next_wisp = 0
 	density = TRUE
+	anchored = TRUE
 
-/obj/structure/wisp_tv/attack_hand(mob/living/carbon/human/user)
+/obj/structure/moonwell/attack_hand(mob/living/carbon/human/user)
 	if(user.get_species() in list(PLUVIAN_SPIRIT))
 		if(next_wisp > world.time)
-			to_chat(user, "<span class='notice'>Please wait [round((next_wisp - world.time) * 0.1, 0.1)] seconds before next wisp.</span>")
+			to_chat(user, "<span class='notice'>Пожалуйста подождите [round((next_wisp - world.time) * 0.1, 0.1)] секунд.</span>")
 			return
 		next_wisp = world.time + 70 SECONDS
 		var/mob/living/simple_animal/ancestor_wisp/new_wisp = new /mob/living/simple_animal/ancestor_wisp(pick(wisp_start_landmark))

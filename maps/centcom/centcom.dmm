@@ -30619,6 +30619,7 @@
 /area/space)
 "tKY" = (
 /obj/effect/light_emitter,
+/obj/structure/moonwell,
 /turf/unsimulated/floor{
 	icon_state = "heavenfull"
 	},
@@ -30992,9 +30993,6 @@
 	},
 /area/velocity/locker)
 "xDL" = (
-/obj/structure/wisp_tv{
-	pixel_y = 4
-	},
 /obj/effect/light_emitter,
 /obj/structure/table,
 /turf/unsimulated/floor/carpet/blue2,
