@@ -38,6 +38,15 @@
 	for(var/obj/effect/proc_holder/spell/S in P.spell_list) //В рай со своими спеллами нельзя, а то еще наколдуют чето.
 		P.RemoveSpell(S)
 
+/mob/living/carbon/human/proc/check_pluvian_credits()
+	if(iscultist(src) && ischangeling(src) && isshadowthrall(src) || !mind)
+		return
+	if(blessed || social_credit >= social_credit_threshold)
+		reborn()
+	else
+		to_chat(src, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")
+		playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
 /mob/living/carbon/human/dust()
 	new /obj/effect/decal/cleanable/ash(loc)
 	new /obj/effect/decal/remains/human/burned(loc)
@@ -125,6 +134,8 @@
 			for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
 				crab.sting_action(src)
 			return
+	if(ispluvian(src))
+		check_pluvian_credits()
 
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
 	if(IO && IO.parent_bodypart == BP_HEAD)

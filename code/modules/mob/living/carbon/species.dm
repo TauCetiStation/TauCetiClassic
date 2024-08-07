@@ -388,13 +388,7 @@
 
 /datum/species/pluvian/handle_death(mob/living/carbon/human/H, gibbed)
 	..()
-	if(iscultist(H) && ischangeling(H) &&isshadowthrall(H) || !H.mind)
-		return
-	if(H.blessed || H.social_credit >= social_credit_threshold)
-		H.reborn()
-	else
-		to_chat(H, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")
-		H.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	H.check_pluvian_credits()
 
 /datum/species/pluvian_spirit
 	name = PLUVIAN_SPIRIT
