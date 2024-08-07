@@ -1137,7 +1137,7 @@
 	icon_state = "gatfruit"
 	potency = 25
 	filling_color = "#020108"
-	trash = /obj/item/weapon/gun/projectile/revolver
+	trash = /obj/item/weapon/gun/projectile/revolver/empty
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit/atom_init()
 	. = ..()
