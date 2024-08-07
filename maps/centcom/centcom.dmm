@@ -30825,6 +30825,11 @@
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"vHn" = (
+/obj/effect/spawner/newbomb,
+/obj/effect/light_emitter,
+/turf/simulated/floor,
+/area/space)
 "vHt" = (
 /obj/machinery/light,
 /turf/unsimulated/floor,
@@ -31775,8 +31780,8 @@ mPM
 mPM
 vhz
 aeD
-aaM
-aaM
+aeD
+aeD
 aaM
 aeD
 mlY
@@ -32032,8 +32037,8 @@ mPM
 mPM
 duF
 aeD
-aaM
-aaM
+vHn
+aeD
 aeD
 bPM
 mtF
@@ -32289,7 +32294,7 @@ tkC
 mPM
 bpE
 aeD
-aeD
+uci
 aeD
 psH
 mPM
