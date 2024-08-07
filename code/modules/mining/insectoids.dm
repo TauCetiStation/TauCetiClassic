@@ -10,7 +10,7 @@
 	move_to_delay = 20
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
-	speed = 1
+	speed = -1
 	maxHealth = 200
 	health = 200
 	harm_intent_damage = 5
@@ -19,19 +19,25 @@
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	aggro_vision_range = 9
 	idle_vision_range = 2
-	sight = SEE_MOBS | SEE_TURFS
-	see_in_dark = 8
+	sight = SEE_MOBS
+	see_in_dark = 6
 	w_class = SIZE_LARGE
 	pull_size_ratio = 1
+	environment_smash = 1
 	var/underground = FALSE
 	var/last_trap = 0
 	var/trap_cooldown = 20 SECONDS
 
 /mob/living/simple_animal/hostile/asteroid/insectoid/atom_init()
 	. = ..()
+	set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
 	verbs.Add(/mob/living/simple_animal/hostile/asteroid/insectoid/proc/dig,
 		/mob/living/simple_animal/hostile/asteroid/insectoid/proc/set_groundtrap,
 		/mob/living/simple_animal/hostile/asteroid/insectoid/proc/set_rocktrap)
+	var/datum/action/dig = new /datum/action/innate/insectoid/dig_underground(src)
+	var/datum/action/trap = new /datum/action/innate/insectoid/set_trap(src)
+	dig.Grant(src)
+	trap.Grant(src)
 
 /mob/living/simple_animal/hostile/asteroid/insectoid/ex_act(severity)
 	switch(severity)
@@ -45,30 +51,30 @@
 	set desc = "Закопайтесь под землю."
 	set category = "Insectoid"
 
-	var/obj/effect/E = new /obj/effect/insectoid_dig(src.loc)
-	if(do_after(src, 3 SECONDS, target = src))
-		underground = !underground
-		if(underground)
-			density = 0
-			alpha = 0
-			speed = 3
-		else
-			density = 1
-			alpha = initial(alpha)
-			speed = initial(speed)
-	qdel(E)
+	if(istype(get_turf(src), /turf/simulated/floor/plating/airless/asteroid))
+		var/obj/effect/E = new /obj/effect/insectoid_dig(src.loc)
+		if(do_after(src, 3 SECONDS, target = src))
+			underground = !underground
+			if(underground)
+				alpha = 0
+				speed = 1
+				invisibility = INVISIBILITY_LEVEL_ONE
+			else
+				alpha = initial(alpha)
+				speed = initial(speed)
+				invisibility = initial(invisibility)
+		qdel(E)
 
 /mob/living/simple_animal/hostile/asteroid/insectoid/proc/set_groundtrap()
 	set name = "Set Groundtrap"
 	set desc = "Соорудите ловушку в земле."
 	set category = "Insectoid"
 
-	if(world.time < last_trap + trap_cooldown)
-		to_chat(src, "<span class='notice'>Время ещё не пришло.</span>")
-	else
+	if(can_settrap())
 		var/obj/effect/E = new /obj/effect/insectoid_dig(src.loc)
-		if(do_after(src, 5 SECONDS, target = src))
+		if(do_after(src, 3 SECONDS, target = src))
 			new /obj/item/mine/insectoid(src.loc)
+			last_trap = world.time
 		qdel(E)
 
 /mob/living/simple_animal/hostile/asteroid/insectoid/proc/set_rocktrap(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
@@ -76,12 +82,23 @@
 	set desc = "Соорудите ловушку в каменной породе."
 	set category = "Insectoid"
 
+	if(can_settrap())
+		if(O in oview(1))
+			if(istype(O, /turf/simulated/mineral))
+				var/turf/simulated/mineral/M = O
+				var/obj/effect/E = new /obj/effect/insectoid_dig(M.loc)
+				if(do_after(src, 3 SECONDS, target = src))
+					M.set_trap()
+					last_trap = world.time
+				qdel(E)
+
+/mob/living/simple_animal/hostile/asteroid/insectoid/proc/can_settrap()
 	if(underground)
-		return
-	if(O in oview(1))
-		if(istype(O, /turf/simulated/mineral))
-			var/turf/simulated/mineral/M = O
-			M.set_trap()
+		return FALSE
+	if(world.time < last_trap + trap_cooldown)
+		to_chat(src, "<span class='notice'>Время ещё не пришло.</span>")
+		return FALSE
+	return TRUE
 
 /mob/living/simple_animal/hostile/asteroid/insectoid/Bump(atom/A)
 	. = ..()
@@ -89,8 +106,22 @@
 		return
 
 	if(underground && istype(A, /turf/simulated/mineral))
-		forceMove(A) // can crawl under the ground and rocks
+		forceMove(A)
 
+/mob/living/simple_animal/hostile/asteroid/insectoid/Move(NewLoc) // can crawl under the ground and rocks
+	if(underground && !(istype(NewLoc, /turf/simulated/floor/plating/airless/asteroid) || istype(NewLoc, /turf/simulated/mineral)))
+		return FALSE
+	else
+		var/turf/T = NewLoc
+		for(var/atom/A in T.contents)
+			if(A.density)
+				return FALSE
+	. = ..()
+
+/mob/living/simple_animal/hostile/asteroid/insectoid/start_pulling(atom/movable/AM)//Prevents mouse from pulling things
+	if(underground)
+		return
+	. = ..()
 
 /obj/effect/insectoid_dig
 	name = "Insectoid Dig"
@@ -127,6 +158,12 @@
 
 /datum/action/innate/insectoid
 	check_flags = AB_CHECK_ALIVE
+
+/datum/action/innate/insectoid/Grant(mob/T)
+	if(!istype(T, /mob/living/simple_animal/hostile/asteroid/insectoid))
+		qdel(src)
+		return
+	. = ..()
 
 /datum/action/innate/insectoid/dig_underground
 	name = "Закопаться под землю"
