@@ -3,7 +3,7 @@
 	desc = "Вы появляетесь на корабле на подходе к станции Нанотрейзен с какой-то задачей..."
 	wiki_ref = "Emergency_Response_Team"
 
-	ranks = list(ROLE_ERT, "Security Officer")
+	ranks = list(ROLE_ERT)
 
 	register_only = TRUE
 	time_for_registration = 0.5 MINUTES
