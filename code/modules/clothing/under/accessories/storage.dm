@@ -63,7 +63,8 @@
 	name = "brown webbing vest"
 	desc = "Worn brownish synthcotton vest with lots of pockets to unload your hands."
 	icon_state = "vest_brown"
-	slots = 5
+	slots = 6
+	max_w_class = SIZE_MINUSCULE
 
 /obj/item/clothing/accessory/storage/syndi_vest
 	name = "suspicious webbing vest"

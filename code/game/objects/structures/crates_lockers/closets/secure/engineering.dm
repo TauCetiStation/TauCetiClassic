@@ -11,7 +11,7 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/eng(src)
 
-	if (prob(70))
+	if (prob(50))
 		new /obj/item/clothing/accessory/storage/brown_vest(src)
 	else
 		new /obj/item/clothing/accessory/storage/webbing(src)
