@@ -47,10 +47,10 @@ var/global/list/wisp_start_landmark = list()
 	var/dat
 	dat = "<B><font color = ##ff0000>[CASE(src, NOMINATIVE_CASE)] для прохода в рай</font></B><BR>"
 	if(owner.gender == FEMALE)
-		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [CASE(owner, NOMINATIVE_CASE)] достойной попасть в рай после смерти</font></I><BR><BR>"
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете[CASE(owner, NOMINATIVE_CASE)] достойной попасть в рай после смерти</font></I><BR><BR>"
 	else
-		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете что считаете [CASE(owner, NOMINATIVE_CASE)] достойным попасть в рай после смерти</font></I><BR><BR>"
-	dat += "<I><font color = ##ff0000>Просто поднесите палец к месту для подписи и слегка надколите об шип на бумаге.</font></I><BR>"
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете[CASE(owner, NOMINATIVE_CASE)] достойным попасть в рай после смерти</font></I><BR><BR>"
+	dat += "<I><font color = ##ff0000>Проколите подушечку пальца об шип и приложите к месту для печати</font></I><BR>"
 	dat += "<A href='byond://?src=\ref[src];choice=yes'>[sign_place]</A><BR>"
 	var/datum/browser/popup = new(user, "window=bless_vote", "Рекомендательное письмо")
 	popup.set_content(dat)
@@ -180,7 +180,7 @@ var/global/list/wisp_start_landmark = list()
 /obj/item/weapon/melee/pluvia_gong_baton
 	name = "Gong`s stick"
 	desc = "Инструмент для плувийского гонга"
-	cases = list("Палочка для гонга", "Палочки для гонга", "Палочке для гонга", "Палочки для гонга", "Палочкой для гонга", "Палочке для гонга")
+	cases = list("Колотушка для гонга", "Колотушки для гонга", "Колотушке для гонга", "Колотушки для гонга", "Колотушкой для гонга", "Колотушке для гонга")
 	icon_state = "mallet"
 	item_state_world = "mallet_world"
 	item_state = "mallet"
@@ -243,8 +243,14 @@ var/global/list/wisp_start_landmark = list()
 	w_class = SIZE_MINUSCULE
 	density = TRUE
 	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
 	max_tox = 0
+	min_co2 = 0
 	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
 	unsuitable_atoms_damage = 0
 	var/mob/living/carbon/human/my_body
 
@@ -275,6 +281,8 @@ var/global/list/wisp_start_landmark = list()
 		my_body.hud_used.set_parallax(PARALLAX_HEAVEN)
 	qdel(src)
 
+/mob/living/simple_animal/ancestor_wisp/Process_Spacemove(movement_dir = 0)
+	return 1
 
 /obj/effect/landmark/ancestor_wisp_start
 	name = "start"
