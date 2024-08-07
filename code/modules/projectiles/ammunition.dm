@@ -78,7 +78,7 @@
 //Boxes of ammo
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
-	desc = "Коробка с патронами"
+	desc = "Коробка с патронами,"
 	icon_state = "357"
 	icon = 'icons/obj/ammo/boxes.dmi'
 	flags = CONDUCT
@@ -177,13 +177,13 @@
 
 /obj/item/ammo_box/proc/get_ammo_count_description(message)
 	if(stored_ammo.len == max_ammo)
-		message = "Кажется, магазин полон"
+		message = "магазин полон"
 	if(stored_ammo.len < max_ammo)
-		message = "Кажется, магазин почти полон"
+		message = "магазин почти полон"
 	if(stored_ammo.len <= max_ammo*0.5)
-		message = "Кажется, магазин наполовину полон"
+		message = "магазин наполовину полон"
 	if(stored_ammo.len <= max_ammo*0.25)
-		message = "Кажется, магазин почти пуст"
+		message = "магазин почти пуст"
 	if(!stored_ammo.len)
-		message = "Магазин пуст"
+		message = "магазин пуст"
 	return (message)
