@@ -77,7 +77,8 @@ var/global/list/wisp_start_landmark = list()
 			to_chat(usr, "<span class='notice'>У вас нет права голоса</span>")
 
 /obj/effect/proc_holder/spell/create_bless_vote
-	name = "Создание рекомендательного письма"
+	name = "Рекомендательное письмо"
+	cases = list("Рекомендательное письмо", "Рекомендательного письма", "Рекомендательному письму", "Рекомендательное письмо", "Рекомендательным письмом", "Рекомендательном письме")
 	range = 1
 	charge_max = 0
 	clothes_req = FALSE
@@ -114,6 +115,7 @@ var/global/list/wisp_start_landmark = list()
 
 /obj/effect/proc_holder/spell/no_target/ancestor_call
 	name = "Связь с предками"
+	cases = list("Связь с предками", "Связи с предками", "Связи с предками", "Связь с предками", "Связью с предками", "Связи с предками")
 	desc = "Попытайтесь связаться с душами предков"
 	action_icon_state = "commune" // не забыть попросить нарисовать эконку для этого спела
 	clothes_req = FALSE
