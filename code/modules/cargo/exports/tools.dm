@@ -117,6 +117,24 @@
 	unit_name = "kitchen knife"
 	export_types = list(/obj/item/weapon/kitchenknife)
 
+// mining
+
+/datum/export/mining_charge
+	cost = 50
+	unit_name = "mining charge"
+	export_types = list(/obj/item/weapon/mining_charge)
+
+/datum/export/jackhammer
+	cost = 120
+	unit_name = "sonic jackhammer"
+	export_types = list(/obj/item/weapon/pickaxe/drill/jackhammer)
+
+/datum/export/improved_deep_scanner
+	cost = 100
+	unit_name = "improved deep scanner"
+	export_types = list(/obj/item/weapon/mining_scanner/improved)
+
+
 // misc
 
 /datum/export/cryobag
@@ -128,8 +146,3 @@
 	cost = 50
 	unit_name = "monkey cube"
 	export_types = list(/obj/item/weapon/storage/box/monkeycubes)
-
-/datum/export/mining_charge
-	cost = 150
-	unit_name = "mining charge"
-	export_types = list(/obj/item/weapon/mining_charge)

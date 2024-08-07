@@ -136,6 +136,16 @@
 	unit_name = "iv drip"
 	export_types = list(/obj/machinery/iv_drip)
 
+/datum/export/large/cardiopulmonary_bypass
+	cost = 300
+	unit_name = "cardiopulmonary bypass machine"
+	export_types = list(/obj/machinery/life_assist/cardiopulmonary_bypass)
+
+/datum/export/large/artificial_ventilation
+	cost = 300
+	unit_name = "artifical ventilation machine"
+	export_types = list(/obj/machinery/life_assist/artificial_ventilation)
+
 /datum/export/large/barrier
 	cost = 65
 	unit_name = "security barrier"
@@ -145,3 +155,13 @@
 	cost = 50
 	unit_name = "floodlight"
 	export_types = list(/obj/machinery/floodlight)
+
+/datum/export/large/drill_brace
+	cost = 150
+	unit_name = "mining drill brace"
+	export_types = list(/obj/machinery/mining/brace)
+
+/datum/export/large/drill_head
+	cost = 300
+	unit_name = "mining drill head"
+	export_types = list(/obj/machinery/mining/drill)

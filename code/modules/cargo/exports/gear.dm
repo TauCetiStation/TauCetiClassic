@@ -51,6 +51,14 @@
 	unit_name = "riot shield"
 	export_types = list(/obj/item/weapon/shield/riot)
 
+/datum/export/gear/webbing_vest
+	cost = 40
+	unit_name = "webbing"
+	export_types = list(/obj/item/clothing/accessory/storage/brown_vest,
+	/obj/item/clothing/accessory/storage/black_vest,
+	/obj/item/clothing/accessory/storage/webbing)
+
+
 // Masks
 /datum/export/gear/mask/breath
 	cost = 1

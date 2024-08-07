@@ -839,7 +839,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/stack/tile/carpet/blue, /obj/item/stack/tile/carpet/blue2, /obj/item/stack/tile/carpet/red, /obj/item/stack/tile/carpet/cyan
 	)
 	sheet_amount = 50
-	additional_costs = 300
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Carpet crate"
 	group = "Engineering"
@@ -891,7 +890,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/head/welding,
 					/obj/item/clothing/head/welding,
 					/obj/item/clothing/head/hardhat/yellow)
-	additional_costs = 300
+	additional_costs = 150
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Mechanical maintenance crate"
 	group = "Engineering"
@@ -1280,7 +1279,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/closet/crate/medical
 	crate_name = "iv drip crate"
 	group = "Medical / Science"
-	additional_costs = 150
 
 /datum/supply_pack/body_bags
 	name = "Body Bags Crate"
@@ -1325,7 +1323,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/machinery/life_assist/artificial_ventilation)
 	crate_type = /obj/structure/largecrate
 	crate_name = "AVM Crate"
-	additional_costs = 300
 	group = "Medical / Science"
 
 /datum/supply_pack/cardiopulmonary_bypass_machine
@@ -1333,8 +1330,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/machinery/life_assist/cardiopulmonary_bypass)
 	crate_type = /obj/structure/largecrate
 	crate_name = "CBM crate"
-	additional_costs = 300
 	group = "Medical / Science"
+
 //----------------------------------------------
 //-----------------HYDROPONICS------------------
 //----------------------------------------------
@@ -1517,7 +1514,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/seeds/limeseed,
 					/obj/item/seeds/grapeseed,
 					/obj/item/seeds/eggyseed)
-	additional_costs = 150
 	crate_type = /obj/structure/closet/crate/hydroponics
 	crate_name = "Exotic Seeds crate"
 	access = access_hydroponics
@@ -1567,7 +1563,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Drill Crate"
 	contains = list(/obj/machinery/mining/drill)
 	crate_type = /obj/structure/closet/crate/secure/large
-	additional_costs = 300
 	crate_name = "Drill Crate"
 	access = access_mining
 	group = "Mining"
@@ -1576,7 +1571,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Brace Crate"
 	contains = list(/obj/machinery/mining/brace)
 	crate_type = /obj/structure/closet/crate/secure/large
-	additional_costs = 150
 	crate_name = "Brace Crate"
 	access = access_mining
 	group = "Mining"
@@ -1589,7 +1583,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/spray/cleaner,
 					/obj/item/weapon/storage/box/autoinjector/stimpack,
 					/obj/item/weapon/pickaxe/drill/jackhammer)
-	additional_costs = 500
+	additional_costs = 280
 	crate_type = /obj/structure/closet/crate/secure/gear
 	crate_name = "Mining Supply Crate"
 	access = access_mining
@@ -1677,7 +1671,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/clothing/accessory/storage/brown_vest,
 					/obj/item/clothing/accessory/storage/brown_vest,
 					/obj/item/clothing/accessory/storage/black_vest)
-	additional_costs = 200
 	crate_name = "Vest Crate"
 	group = "Supply"
 
