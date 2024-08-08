@@ -46220,9 +46220,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor{
-	icon_state = "neutralchoco"
-	},
+/turf/simulated/floor/glass,
 /area/station/medical/surgeryobs)
 "ixE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -48828,9 +48826,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "neutralchoco"
-	},
+/turf/simulated/floor/glass,
 /area/station/medical/surgeryobs)
 "iZV" = (
 /obj/structure/cable{
@@ -53349,7 +53345,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/primary/bridgehall)
 "jTV" = (
 /obj/structure/window/thin/reinforced{
@@ -74848,7 +74844,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/primary/bridgehall)
 "onc" = (
 /obj/machinery/vending/cigarette,
@@ -92615,9 +92611,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/medical_doctor,
-/turf/simulated/floor{
-	icon_state = "neutralchoco"
-	},
+/turf/simulated/floor/glass,
 /area/station/medical/surgeryobs)
 "rTE" = (
 /obj/machinery/conveyor{
@@ -109534,7 +109528,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "vjT" = (
 /turf/simulated/floor{
@@ -110178,9 +110172,7 @@
 	},
 /area/station/medical/hallway)
 "vrC" = (
-/turf/simulated/floor{
-	icon_state = "neutralchoco"
-	},
+/turf/simulated/floor/glass,
 /area/station/medical/surgeryobs)
 "vrG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -115080,7 +115072,7 @@
 	dir = 8;
 	sortType = "Гардероб"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/grid_floor,
 /area/station/civilian/dormitories)
 "wov" = (
 /mob/living/carbon/monkey,
