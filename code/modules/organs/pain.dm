@@ -6,9 +6,6 @@
 // partname is the name of a body part
 // amount is a num from 1 to 100
 
-/mob/living/carbon/proc/on_painkillers()
-	return reagents.has_reagent("paracetamol") || reagents.has_reagent("tramadol") || reagents.has_reagent("oxycodone") || reagents.has_reagent("endorphine")
-
 /mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
 	if(stat >= DEAD)
 		return
@@ -53,8 +50,6 @@
 		return
 	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
 		return
-	if(analgesic)
-		return
 	var/msg = "<span class='warning'><b>[message]</b></span>"
 	if(flash_strength >= 1)
 		msg = "<span class='warning'><font size=3><b>[message]</b></font></span>"
@@ -72,8 +67,6 @@
 	if(stat >= DEAD)
 		return
 	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
-		return
-	if(analgesic)
 		return
 	var/maxdam = 0
 	var/obj/item/organ/external/damaged_organ = null
