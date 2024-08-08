@@ -333,6 +333,13 @@
 	cases = list("передовая оперативная база Синдиката", "передовой оперативной базы Синдиката", "передовой оперативной базе Синдиката", "передовую оперативную базу Синдиката", "передовой оперативной базой Синдиката", "передовой оперативной базе Синдиката")
 	icon_state = "yellow"
 
+/area/shuttle/syndicate/start/Entered(atom/movable/A, atom/OldLoc)
+	. = ..()
+	if(!isliving(A))
+		return
+	for(var/obj/effect/spawner/mob_spawn/M in src)
+		M.creatMob()
+
 /area/shuttle/syndicate/southwest
 	name = "south-west of station"
 	cases = list("юго-запад от станции", "юго-запада от станции", "юго-западу от станции", "юго-запад от станции", "юго-западом от станции", "юго-западе от станции")
