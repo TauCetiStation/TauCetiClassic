@@ -7,7 +7,6 @@
 	traumatic_shock = 			\
 	0.5	* getToxLoss() + 		\
 	1.5	* getFireLoss() + 		\
-
 	1.0	* getBruteLoss() + 		\
 	1.0	* getCloneLoss() + 		\
 	1.0	* halloss

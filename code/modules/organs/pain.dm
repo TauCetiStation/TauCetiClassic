@@ -10,7 +10,8 @@
 	return reagents.has_reagent("paracetamol") || reagents.has_reagent("tramadol") || reagents.has_reagent("oxycodone") || reagents.has_reagent("endorphine")
 
 /mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
-	if(stat >= DEAD) return
+	if(stat >= DEAD)
+		return
 	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_MEDIUM)
 		return
 	if(world.time < next_pain_time && !force)
@@ -48,12 +49,10 @@
 /mob/living/carbon/human/proc/custom_pain(message, flash_strength)
 	if(stat != CONSCIOUS)
 		return
-
 	if(species && species.flags[NO_PAIN])
 		return
-
 	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
-		return 
+		return
 	if(analgesic)
 		return
 	var/msg = "<span class='warning'><b>[message]</b></span>"
@@ -68,16 +67,12 @@
 
 /mob/living/carbon/human/proc/handle_pain()
 	// not when sleeping
-
 	if(species && species.flags[NO_PAIN])
 		return
-
 	if(stat >= DEAD)
 		return
-
 	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
 		return
-
 	if(analgesic)
 		return
 	var/maxdam = 0
