@@ -14,10 +14,10 @@
 		return
 
 	//handle muting and automuting
-	if(prefs.muted & MUTE_MENTORHELP)
+	if(prefs.muted & MUTE_PM || IS_ON_ADMIN_CD(src, ADMIN_CD_PM))
 		to_chat(src, "<font color='red'>Error: Mentor-PM: You cannot send mentorhelps (Muted).</font>")
 		return
-	if(handle_spam_prevention(msg, MUTE_MENTORHELP))
+	if(handle_spam_prevention(msg, ADMIN_CD_PM))
 		return
 
 	msg = sanitize(msg)

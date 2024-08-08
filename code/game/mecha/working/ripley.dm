@@ -42,7 +42,7 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/extinguisher(src)
 	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/cable_layer(src)
 	ME.attach(src)
 
 /obj/mecha/working/ripley/mine/atom_init() //for aspect
@@ -75,7 +75,7 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/extinguisher(src)
 	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/cable_layer(src)
 	ME.attach(src)
 
 /obj/mecha/working/ripley/firefighter/ert

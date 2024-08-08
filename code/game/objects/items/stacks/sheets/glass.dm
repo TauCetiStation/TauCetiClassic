@@ -30,7 +30,7 @@ var/global/list/datum/stack_recipe/glass_reinforced_recipes = list (
 
 var/global/list/datum/stack_recipe/glass_reinforced_phoron_recipes = list (
 	new/datum/stack_recipe("thin windows", /obj/structure/window/thin/reinforced/phoron, 1, time = 5, max_per_turf = 4, build_outline = TRUE),
-	new/datum/stack_recipe("glass tile", /obj/item/stack/tile/glass/reinforced, 1, 4, 20, required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)),
+	new/datum/stack_recipe("glass tile", /obj/item/stack/tile/glass/reinforced/phoron, 1, 4, 20, required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)),
 )
 
 /*

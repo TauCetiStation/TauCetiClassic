@@ -587,7 +587,7 @@
 
 /obj/item/weapon/card/id/old_station
 	name = "captain's ID"
-	desc = "Старая ID карта, ранее она принадлежала капитану станции 'LCR'."
+	desc = "Старая, повреждённая ID карта, ранее она принадлежала ■ж■■■ ■■н■у, капитану КСН \"Сизиф\"."
 	icon_state = "gold"
 	item_state = "gold_id"
 	item_state_world = "gold_world"
@@ -595,7 +595,7 @@
 
 /obj/item/weapon/card/id/old_station/eng
 	name = "engineer ID"
-	desc = "ID карта, принадлежащая старшему сотруднику инженерного отдела станции 'LCR'."
+	desc = "Старая ID карта, принадлежащая старшему сотруднику инженерного отдела станции \"Сизиф\"."
 	icon_state = "eng"
 	item_state = "eng_id"
 	item_state_world = "eng_world"
@@ -605,7 +605,7 @@
 
 /obj/item/weapon/card/id/old_station/med
 	name = "medic ID"
-	desc = "ID карта, принадлежащая старшему сотруднику медицинского отдела станции 'LCR'."
+	desc = "Старая ID карта, принадлежащая старшему сотруднику медицинского отдела станции \"Сизиф\"."
 	icon_state = "med"
 	item_state = "med_id"
 	item_state_world = "med_world"

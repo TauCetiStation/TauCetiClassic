@@ -1023,7 +1023,7 @@ var/global/list/tourette_bad_words= list(
 		var/obj/item/clothing/mask/gas/welding/O = wear_mask
 		if(!O.up && tinted_weldhelh)
 			impaired = 2
-	if(istype(glasses, /obj/item/clothing/glasses/welding) )
+	if(istype(glasses, /obj/item/clothing/glasses/welding) && !istype(glasses, /obj/item/clothing/glasses/welding/superior))
 		var/obj/item/clothing/glasses/welding/O = glasses
 		if(!O.up && tinted_weldhelh)
 			impaired = max(impaired, 2)
@@ -1279,7 +1279,7 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/handle_nutrition()
 	. = ..()
-	if(nutrition > NUTRITION_LEVEL_WELL_FED)
+	if(nutrition > NUTRITION_LEVEL_FAT)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
 	else
