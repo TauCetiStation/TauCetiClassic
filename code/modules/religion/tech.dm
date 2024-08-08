@@ -30,6 +30,9 @@
 /datum/religion_tech/cult/cooldown_reduction
 	id = RTECH_COOLDOWN_REDUCTION
 
+/datum/religion_tech/cult/reusable_runes
+	id = RTECH_REUSABLE_RUNE
+
 /datum/religion_tech/cult/build_everywhere
 	id = RTECH_BUILD_EVERYWHERE
 
