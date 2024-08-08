@@ -124,7 +124,7 @@
 		willpower_amount = H.mind.willpower_amount
 	to_chat(usr, "<span class='notice'>Сила Воли: <b>[willpower_amount]</b>.</span>")
 
-	usr.mind.do_select_willpower_effect()
+	H.mind.do_select_willpower_effect()
 
 /atom/movable/screen/health_doll/add_to_hud(datum/hud/hud)
 	..()
