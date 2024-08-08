@@ -53,7 +53,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	message_admins("[new_ninja] has spawned at [COORD(new_ninja)] [ADMIN_JMP(new_ninja)] [ADMIN_FLW(new_ninja)].")
 
 	if(assign_mission)
-		new_ninja.mind.store_memory("<B>Mission:</B> <span class='warning'>[assign_mission].</span><br>")
+		new_ninja.mind.store_memory("<B>Mission:</B> <span class='warning'>[assign_mission].</span><br>", TRUE)
 		to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: <span class='warning'><B>[assign_mission]</B></span></span>")
 	else
 		set_ninja_objectives(new_ninja)
@@ -245,7 +245,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 	var/directive = generate_ninja_directive(side)
 	to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: <span class='warning'><B>[directive]</B></span></span>")
-	new_ninja.mind.store_memory("<B>Directive:</B> <span class='warning'>[directive]</span><br>")
+	new_ninja.mind.store_memory("<B>Directive:</B> <span class='warning'>[directive]</span><br>", TRUE)
 
 /*
 This proc will give the ninja a directive to follow. They are not obligated to do so but it's a fun roleplay reminder.

@@ -83,11 +83,11 @@ var/global/sent_syndicate_strike_team = FALSE
 
 		//So they don't forget their code or mission.
 		if(nuke_code)
-			new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code]</span>.")
+			new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>[nuke_code]</span>.", TRUE)
 		else
-			new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>Syndicate bomb no found</span>.")
+			new_syndicate_commando.mind.store_memory("<B>Nuke Code:</B> <span class='warning'>Syndicate bomb no found</span>.", TRUE)
 
-		new_syndicate_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[mission]</span>.")
+		new_syndicate_commando.mind.store_memory("<B>Mission:</B> <span class='warning'>[mission]</span>.", TRUE)
 
 		to_chat(new_syndicate_commando, "<span class='notice'>You are an Elite Syndicate. [!syndicate_commando_leader?"commando":"<B>LEADER</B>"] in the service of the Syndicate. \nYour current mission is: <span class='warning'><B>[mission]</B></span></span>")
 
