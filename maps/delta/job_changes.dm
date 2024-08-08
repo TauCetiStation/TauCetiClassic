@@ -42,6 +42,12 @@
 	total_positions = 4
 	spawn_positions = 4
 
+/datum/job/recycler/New()
+	..()
+	MAP_JOB_CHECK
+	total_positions = 4
+	spawn_positions = 4
+
 /datum/job/librarian/New()
 	..()
 	MAP_JOB_CHECK
