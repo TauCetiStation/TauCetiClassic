@@ -38,8 +38,8 @@
 		if(traumatic_shock >= TRAUMATIC_SHOCK_INTENSE)
 			tally += traumatic_shock * 0.1
 
-		var/hungry = 500 - get_satiation()
-		if(hungry >= 350) // Slow down if nutrition <= 150
+		var/hungry = NUTRITION_LEVEL_FULL - get_satiation()
+		if(hungry >= NUTRITION_LEVEL_NORMAL) // Slow down if nutrition <= 40%
 			tally += hungry / 250 // 1,4 - 2
 
 		if(bodytemperature < species.cold_level_1)

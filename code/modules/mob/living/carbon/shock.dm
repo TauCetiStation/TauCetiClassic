@@ -7,6 +7,7 @@
 	traumatic_shock = 			\
 	0.5	* getToxLoss() + 		\
 	1.5	* getFireLoss() + 		\
+
 	1.0	* getBruteLoss() + 		\
 	1.0	* getCloneLoss() + 		\
 	1.0	* halloss
@@ -104,7 +105,7 @@
 		painkiller_effect *= min(0.1 * painkiller_multiplier, 1)
 	else if(reagents.has_reagent("oxycodone"))
 		painkiller_effect *= min(0.3 * painkiller_multiplier, 1)
-	else if(reagents.has_reagent("tramadol"))
+	else if(reagents.has_reagent("tramadol") || reagents.has_reagent("endorphine"))
 		painkiller_effect *= min(0.5 * painkiller_multiplier, 1)
 	else if(druggy)
 		painkiller_effect *= min(0.6 * painkiller_multiplier, 1)

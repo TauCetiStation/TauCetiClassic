@@ -1422,6 +1422,8 @@
 /mob/living/death(gibbed)
 	beauty.AddModifier("stat", additive=beauty_dead)
 	update_health_hud()
+	if(wabbajacked)
+		unwabbajack()
 	return ..()
 
 /mob/living/proc/update_beauty(datum/source, old_value)

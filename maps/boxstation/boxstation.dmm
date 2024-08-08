@@ -6297,6 +6297,9 @@
 	range = 10;
 	req_access = list(2)
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -6522,6 +6525,9 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "akQ" = (
@@ -6681,6 +6687,9 @@
 	icon_state = "1-2"
 	},
 /obj/effect/landmark/start/security_cadet,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "red"
@@ -6693,6 +6702,10 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
@@ -6723,6 +6736,9 @@
 "alh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -7385,11 +7401,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/machinery/computer/shop{
-	department = "Security";
-	dir = 8;
-	pixel_x = 24
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
+/obj/machinery/disposal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7647,12 +7662,18 @@
 	},
 /area/station/security/brig)
 "amE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
 	},
 /area/station/security/brig)
 "amF" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "red"
@@ -7665,6 +7686,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -7688,6 +7712,10 @@
 "amI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -7765,6 +7793,9 @@
 /area/station/security/brig)
 "amQ" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "red"
@@ -7870,6 +7901,7 @@
 	dir = 9;
 	network = list("SS13","Security")
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -8190,6 +8222,9 @@
 /area/station/aisat/ai_chamber)
 "anC" = (
 /obj/machinery/door_timer/cell_1,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -8535,6 +8570,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
@@ -8547,6 +8583,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "aoc" = (
@@ -8557,6 +8596,9 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "aod" = (
@@ -8596,6 +8638,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -8815,6 +8861,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/prison)
 "aoB" = (
@@ -9157,6 +9204,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/prison)
 "apj" = (
@@ -11075,6 +11123,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "redfull"
 	},
@@ -16167,6 +16216,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "aBY" = (
@@ -16662,6 +16714,9 @@
 	},
 /obj/machinery/newscaster{
 	pixel_y = 30
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -21121,6 +21176,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/security/prison)
 "aLt" = (
@@ -22591,6 +22649,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -71230,6 +71291,18 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/port)
+"eLC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "redcorner"
+	},
+/area/station/security/brig)
 "eMb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -72019,6 +72092,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"fEM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/security/prison)
 "fFb" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -74858,6 +74938,17 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
+"iBX" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/prison)
 "iCb" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4
@@ -77071,6 +77162,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -84092,6 +84186,19 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/virology)
+"syG" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redcorner"
+	},
+/area/station/security/brig)
 "szb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
@@ -85495,6 +85602,15 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"urq" = (
+/obj/machinery/light/smart,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "redcorner"
+	},
+/area/station/security/brig)
 "uru" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -113444,7 +113560,7 @@ adM
 aor
 aoJ
 apK
-avO
+iBX
 avO
 apq
 asu
@@ -113701,7 +113817,7 @@ anE
 amb
 ams
 apP
-axL
+fEM
 asF
 auS
 axL
@@ -115238,7 +115354,7 @@ adh
 ajg
 cUb
 cWb
-kKb
+eLC
 anU
 amg
 aoV
@@ -117294,7 +117410,7 @@ aeq
 aeq
 ajw
 alI
-ali
+urq
 adJ
 adJ
 adJ
@@ -118322,7 +118438,7 @@ agV
 ajp
 ajx
 alK
-alj
+syG
 adM
 ami
 aqE
