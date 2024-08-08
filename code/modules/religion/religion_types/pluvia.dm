@@ -139,6 +139,8 @@ haram_threshold тоже должен как-то высчитываться, н
 	UnregisterSignal(M, list(COMSIG_HUMAN_ON_CARPET, COMSIG_PARENT_QDELETING))
 
 /datum/religion/pluvia/proc/adjust_haram(mob/living/carbon/human/target, haram_amount, reason)
+	if(target.blessed)
+		return
 	if(haram_amount == DEADLY_HARAM || ((target.haram_point + haram_amount) >= haram_threshold))
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 		target.social_credit = 0
@@ -149,6 +151,7 @@ haram_threshold тоже должен как-то высчитываться, н
 		target.haram_point += haram_amount
 		target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		to_chat(target, "<span class='warning'>\ <font size=3>[reason]</span></font>")
+		message_admins("Плувиец [target] совершил харам - [reason] [ADMIN_JMP(target)]" )
 		return FALSE
 
 /datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)
@@ -182,7 +185,7 @@ haram_threshold тоже должен как-то высчитываться, н
 /datum/religion/pluvia/proc/carpet_haram(mob/living/carbon/human/target)
 	if(!target.shoes || target.lying || target.crawling || target.buckled)
 		return
-	if(target.alerts["buckled"]) // Спасибо кодерам за крутой костыль buckled=null при Move()/relaymove(). Нашел либо такой способ, либо buckle
+	if(target.alerts["buckled"])
 		return
 	adjust_haram(target, haram_carpet, "Вы нарушаете пятую заповедь!")
 
