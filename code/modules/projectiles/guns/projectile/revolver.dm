@@ -230,13 +230,6 @@
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
-/obj/item/weapon/gun/projectile/revolver/empty/atom_init()
-	. = ..()
-	while (get_ammo() > 0)
-		var/obj/item/ammo_casing/CB = magazine.get_round(0)
-		chambered = null
-		qdel(CB)
-
 /obj/item/weapon/gun/projectile/revolver/peacemaker/detective
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
 
