@@ -78,7 +78,7 @@
 			to_chat(user, "There is already a reagent container loaded!")
 			return
 		if(istype(W, /obj/item/weapon/reagent_containers/pill/twopart))
-			W.flags = null
+			W.flags &= ~NOREACT
 			W.reagents.handle_reactions()
 		user.drop_from_inventory(W, src)
 		src.beaker = W
