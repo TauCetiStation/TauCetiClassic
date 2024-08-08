@@ -80,15 +80,15 @@
 /turf/simulated/floor,
 /area/space_structures/iss)
 "an" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ao" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ap" = (
 /obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space)
 "ar" = (
 /obj/structure/filingcabinet/filingcabinet,
@@ -296,8 +296,8 @@
 /area/space_structures/iss)
 "aZ" = (
 /obj/machinery/door/airlock/hatch{
-	name = "E.V.A";
-	dir = 4
+	dir = 4;
+	name = "E.V.A"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -338,24 +338,24 @@
 /area/space_structures/iss)
 "be" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Engineering";
-	dir = 4
+	dir = 4;
+	name = "Engineering"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/iss)
 "bf" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Dormitories";
-	dir = 4
+	dir = 4;
+	name = "Dormitories"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/iss)
 "bg" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Medbay";
-	dir = 4
+	dir = 4;
+	name = "Medbay"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,

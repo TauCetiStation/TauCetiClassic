@@ -244,10 +244,10 @@
 /area/space_structures/space_villa)
 "iJ" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "asteroidder_inner";
-	req_access = list(101);
-	dir = 4
+	req_access = list(101)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
@@ -1113,10 +1113,10 @@
 /area/space_structures/space_villa)
 "NT" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "asteroidder_outer";
-	req_access = list(101);
-	dir = 4
+	req_access = list(101)
 	},
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -1472,7 +1472,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "Zg" = (
-/mob/living/simple_animal/crab,
+/obj/effect/spawner/mob_spawn/crab,
 /turf/simulated/floor/beach/sand,
 /area/space_structures/space_villa)
 "ZD" = (

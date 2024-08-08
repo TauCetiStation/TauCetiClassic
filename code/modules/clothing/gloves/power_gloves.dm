@@ -109,6 +109,7 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 		s.set_up(3, 1, L)
 		s.start()
+		return TRUE
 	else if(selected_mode == GLOVES_MODE_KILL)
 		cell.use(cell_use)
 		var/mob/living/carbon/human/H = A
@@ -129,4 +130,6 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 			s.set_up(3, 1, L)
 			s.start()
-	return TRUE
+		return TRUE
+	else if(selected_mode == GLOVES_MODE_OFF)
+		return FALSE

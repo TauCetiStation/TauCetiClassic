@@ -107,16 +107,16 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	COOLDOWN_START(src, corruption, corruption_delay)
 
 /obj/structure/cult/pylon/proc/activate(time_to_stop, datum/religion/R)
-	var/mob/living/simple_animal/hostile/pylon/charged = new(loc)
+	var/mob/living/simple_animal/hostile/pylon/cult/charged = new(loc)
 	charged.maxHealth = max_integrity
 	charged.health = get_integrity()
 	forceMove(charged)
 
 	if(time_to_stop)
-		charged.timer = addtimer(CALLBACK(charged, TYPE_PROC_REF(/mob/living/simple_animal/hostile/pylon, deactivate)), time_to_stop, TIMER_STOPPABLE)
+		charged.timer = addtimer(CALLBACK(charged, TYPE_PROC_REF(/mob/living/simple_animal/hostile/pylon/cult, deactivate)), time_to_stop, TIMER_STOPPABLE)
 
 	if(R)
-		charged.RegisterSignal(R, COMSIG_REL_ADD_MEMBER, TYPE_PROC_REF(/mob/living/simple_animal/hostile/pylon, add_friend))
+		charged.RegisterSignal(R, COMSIG_REL_ADD_MEMBER, TYPE_PROC_REF(/mob/living/simple_animal/hostile/pylon/cult, add_friend))
 	return charged
 
 /obj/structure/cult/pylon_platform

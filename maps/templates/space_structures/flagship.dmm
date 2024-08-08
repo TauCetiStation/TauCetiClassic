@@ -1,19 +1,66 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/turf/simulated/floor/airless{
+	dir = 8;
+	icon_state = "darkbrown"
+	},
+/area/space_structures/flagship)
+"ac" = (
+/obj/structure/computerframe{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/flagship)
+"ad" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/airless{
+	dir = 10;
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"ae" = (
+/turf/simulated/floor/airless{
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"af" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 6;
+	icon_state = "darkpurple"
+	},
+/area/space_structures/flagship)
+"ag" = (
+/turf/simulated/floor/airless{
+	dir = 10;
+	icon_state = "darkbrown"
+	},
+/area/space_structures/flagship)
+"ah" = (
+/obj/effect/decal/cleanable/blood/gibs/robot,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/flagship)
 "aE" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "synd3,3"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
 "bq" = (
 /obj/effect/landmark/corpse/syndicatesoldier{
-	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpsegloves = /obj/item/clothing/gloves/black;
+	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpseshoes = /obj/item/clothing/shoes/boots
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
@@ -57,16 +104,15 @@
 	},
 /area/space_structures/flagship)
 "cw" = (
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 9;
 	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "cE" = (
-/obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkpurple"
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "cM" = (
@@ -76,7 +122,7 @@
 	},
 /area/space_structures/flagship)
 "cN" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "cZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -106,7 +152,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "synd1,1"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
@@ -118,9 +164,7 @@
 /area/space_structures/flagship)
 "gl" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/bluegrid{
-	icon_state = "rcircuit"
-	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "gy" = (
 /obj/structure/dispenser/oxygen,
@@ -173,15 +217,15 @@
 	},
 /area/space_structures/flagship)
 "ix" = (
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkbrown"
+/turf/simulated/floor/airless{
+	dir = 4;
+	icon_state = "darkredcorners"
 	},
 /area/space_structures/flagship)
 "iH" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/simulated/floor{
-	icon_state = "cult"
+/turf/simulated/floor/airless{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/flagship)
 "jL" = (
@@ -205,8 +249,8 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/beret/black,
 /obj/item/weapon/stamp/syndicate{
-	pixel_y = 10;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 10
 	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
@@ -237,16 +281,18 @@
 	},
 /area/space_structures/flagship)
 "lE" = (
-/obj/structure/computerframe{
-	dir = 8
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+/turf/simulated/floor/airless{
+	dir = 8;
+	icon_state = "darkpurple"
 	},
-/turf/simulated/floor/plating,
 /area/space_structures/flagship)
 "lJ" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 1;
 	icon_state = "darkredcorners"
 	},
@@ -257,9 +303,11 @@
 	},
 /area/space_structures/flagship)
 "mj" = (
-/turf/simulated/floor{
-	icon_state = "darkpurple"
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 6;
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "ml" = (
 /obj/machinery/door/airlock/highsecurity,
@@ -280,7 +328,7 @@
 /area/space_structures/flagship)
 "nq" = (
 /obj/effect/decal/mecha_wreckage/mauler,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 4;
 	icon_state = "darkpurple"
 	},
@@ -316,15 +364,15 @@
 /area/space_structures/flagship)
 "pn" = (
 /obj/structure/stool/bed/chair/office/dark,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 8;
 	icon_state = "darkredcorners"
 	},
 /area/space_structures/flagship)
 "pU" = (
 /obj/structure/rack,
-/turf/simulated/floor{
-	icon_state = "cult"
+/turf/simulated/floor/airless{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/flagship)
 "pZ" = (
@@ -377,20 +425,7 @@
 	},
 /area/space_structures/flagship)
 "qS" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/syndicake,
-/obj/item/weapon/book/manual/nuclear{
-	pixel_y = -2;
-	pixel_x = 9
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube-broken";
-	status = 2;
-	use_power = 1
-	},
-/turf/simulated/floor{
-	dir = 8;
+/turf/simulated/floor/airless{
 	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
@@ -464,8 +499,8 @@
 /area/space_structures/flagship)
 "uy" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
-/turf/simulated/floor{
-	icon_state = "cult"
+/turf/simulated/floor/airless{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/flagship)
 "uZ" = (
@@ -526,20 +561,24 @@
 /area/space_structures/flagship)
 "wX" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 1;
+	icon_state = "warn"
+	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "xo" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "synd1,2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
 "xp" = (
-/turf/simulated/floor{
-	icon_state = "darkpurple";
-	dir = 1
+/turf/simulated/floor/airless{
+	dir = 1;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
 "xE" = (
@@ -550,8 +589,8 @@
 	use_power = 1
 	},
 /obj/effect/landmark/corpse/syndicatesoldier{
-	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpsegloves = /obj/item/clothing/gloves/black;
+	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpseshoes = /obj/item/clothing/shoes/boots
 	},
 /turf/simulated/floor{
@@ -730,30 +769,30 @@
 /area/space_structures/flagship)
 "FN" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
 "FP" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredcorners"
 	},
 /area/space_structures/flagship)
 "FT" = (
-/turf/simulated/floor{
-	icon_state = "cult"
+/turf/simulated/floor/airless{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/flagship)
 "Ga" = (
 /obj/structure/computerframe,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "GD" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "synd3,1"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
@@ -776,7 +815,7 @@
 	pixel_y = -6
 	},
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 9;
 	icon_state = "darkpurple"
 	},
@@ -785,12 +824,12 @@
 /obj/effect/decal/turf_decal/set_damaged{
 	icon_state = "wood_damaged_3"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "Hb" = (
 /obj/effect/landmark/corpse/syndicatesoldier{
-	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpsegloves = /obj/item/clothing/gloves/black;
+	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpseshoes = /obj/item/clothing/shoes/boots
 	},
 /turf/simulated/floor{
@@ -803,7 +842,7 @@
 /area/space_structures/flagship)
 "HB" = (
 /obj/effect/decal/mecha_wreckage/gygax/dark,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 5;
 	icon_state = "darkpurple"
 	},
@@ -823,7 +862,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "synd1,3"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
@@ -831,7 +870,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "synd2,1"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
@@ -839,7 +878,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "synd3,2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
@@ -859,15 +898,17 @@
 	},
 /area/space_structures/flagship)
 "JS" = (
-/turf/simulated/floor/bluegrid{
-	icon_state = "rcircuit"
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 4;
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "Nb" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "synd2,3"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
@@ -897,15 +938,9 @@
 	},
 /area/space_structures/flagship)
 "NE" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/machinery/light{
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless{
 	dir = 4;
-	icon_state = "tube-broken";
-	status = 2;
-	use_power = 1
-	},
-/turf/simulated/floor{
-	dir = 6;
 	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
@@ -913,7 +948,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "synd2,2"
 	},
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
@@ -925,8 +960,8 @@
 /area/space_structures/flagship)
 "Pp" = (
 /obj/item/weapon/rack_parts,
-/turf/simulated/floor{
-	icon_state = "cult"
+/turf/simulated/floor/airless{
+	icon_state = "vaultfull"
 	},
 /area/space_structures/flagship)
 "PU" = (
@@ -949,33 +984,43 @@
 /obj/structure/table/reinforced,
 /obj/item/device/megaphone,
 /obj/item/weapon/disk/research_points/rare{
-	pixel_y = 9;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 9
 	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
 /area/space_structures/flagship)
 "Qu" = (
-/obj/structure/rack,
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkpurple"
+/obj/effect/decal/turf_decal/dark_red{
+	dir = 5;
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "Qw" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 6;
 	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "QG" = (
-/obj/effect/decal/cleanable/blood,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "darkpurple"
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/syndicake,
+/obj/item/weapon/book/manual/nuclear{
+	pixel_x = 9;
+	pixel_y = -2
+	},
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube-broken";
+	status = 2;
+	use_power = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 8;
+	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "QV" = (
@@ -1000,7 +1045,7 @@
 /area/space_structures/flagship)
 "RP" = (
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "RX" = (
 /turf/simulated/floor{
@@ -1017,10 +1062,10 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "SU" = (
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "darkbrown"
+/obj/effect/decal/turf_decal/dark_red{
+	icon_state = "warn"
 	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "SX" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -1055,7 +1100,7 @@
 /area/space_structures/flagship)
 "UP" = (
 /obj/effect/decal/cleanable/generic,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	icon_state = "darkredfull"
 	},
 /area/space_structures/flagship)
@@ -1085,7 +1130,7 @@
 /area/space_structures/flagship)
 "Wq" = (
 /obj/effect/spawner/mob_spawn/drone,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 8;
 	icon_state = "darkpurple"
 	},
@@ -1100,12 +1145,13 @@
 	},
 /area/space_structures/flagship)
 "Wz" = (
-/obj/effect/decal/cleanable/blood/gibs/robot,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/airless{
+	icon_state = "darkredfull"
+	},
 /area/space_structures/flagship)
 "Xg" = (
 /obj/effect/spawner/mob_spawn/drone,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 10;
 	icon_state = "darkred"
 	},
@@ -1125,20 +1171,20 @@
 	use_power = 1
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 4;
 	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "Yv" = (
-/turf/simulated/floor{
+/turf/simulated/floor/airless{
 	dir = 1;
 	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "ZF" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/airless,
 /area/space_structures/flagship)
 "ZL" = (
 /obj/structure/object_wall/standart{
@@ -1341,7 +1387,7 @@ Ed
 Ed
 wX
 gl
-cN
+SU
 cN
 Ed
 Ed
@@ -1374,10 +1420,10 @@ Ed
 Ed
 Ed
 Ed
-cN
+Qu
 JS
-JS
-lE
+mj
+ac
 Ee
 Ed
 Ed
@@ -1407,7 +1453,7 @@ FT
 Ed
 FP
 Yu
-zY
+ix
 Ee
 Ed
 SX
@@ -1440,7 +1486,7 @@ Ed
 pU
 iH
 Ed
-yl
+qS
 Hc
 Yv
 Ed
@@ -1477,7 +1523,7 @@ PZ
 Ed
 Qw
 FN
-cM
+cE
 ml
 Dk
 Bl
@@ -1585,9 +1631,9 @@ Nb
 Iw
 Ed
 GT
-Qu
+lE
 Wq
-QG
+ad
 Ed
 xR
 wi
@@ -1622,7 +1668,7 @@ ml
 xp
 Hc
 Hc
-mj
+ae
 ml
 yl
 lM
@@ -1651,13 +1697,13 @@ FT
 uy
 Ed
 bq
-lM
+Wz
 Yv
 Ed
 HB
 nq
-cE
 NE
+af
 Ed
 DD
 dP
@@ -1686,7 +1732,7 @@ cN
 FT
 Ed
 pn
-qS
+QG
 lJ
 Ed
 Ed
@@ -1726,8 +1772,8 @@ Ed
 Ed
 Ed
 cN
-SU
-ix
+ab
+ag
 Ed
 Ed
 Ed
@@ -1760,9 +1806,9 @@ Ed
 Ed
 Ed
 Ed
-wX
-wX
-Wz
+gl
+gl
+ah
 Ed
 Ed
 Ed

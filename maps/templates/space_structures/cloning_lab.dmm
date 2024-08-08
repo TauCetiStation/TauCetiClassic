@@ -88,10 +88,9 @@
 	},
 /area/space_structures/cloning_lab)
 "o" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "white"
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/airless,
 /area/space_structures/cloning_lab)
 "p" = (
 /obj/structure/sign/nanotrasen,
@@ -99,7 +98,7 @@
 /area/space_structures/cloning_lab)
 "q" = (
 /obj/random/vending/snack,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/cloning_lab)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
@@ -147,8 +146,7 @@
 /area/space_structures/cloning_lab)
 "z" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor/airless,
 /area/space_structures/cloning_lab)
 "A" = (
 /turf/simulated/floor/plating/airless,
@@ -161,8 +159,8 @@
 /area/space_structures/cloning_lab)
 "C" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Reabilitaion Chamber";
-	dir = 4
+	dir = 4;
+	name = "Reabilitaion Chamber"
 	},
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
@@ -175,8 +173,8 @@
 /area/space_structures/cloning_lab)
 "E" = (
 /obj/machinery/door/airlock/research{
-	name = "Cloning Facility";
-	dir = 4
+	dir = 4;
+	name = "Cloning Facility"
 	},
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
@@ -443,8 +441,8 @@ a
 a
 i
 q
-y
-r
+o
+z
 A
 b
 "}
@@ -454,8 +452,8 @@ a
 a
 a
 i
-r
 z
+o
 A
 A
 A
