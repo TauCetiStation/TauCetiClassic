@@ -45,7 +45,6 @@
 
 // Religion Techs
 #define RTECH_MEMORIZE_RUNE         "Memorize Rune"
-#define RTECH_COOLDOWN_REDUCTION 	"Cooldown Reduction"
 #define RTECH_REUSABLE_RUNE         "Reusable Rune"
 #define RTECH_BUILD_EVERYWHERE      "Build Everywhere"
 #define RTECH_MORE_RUNES            "More Runes"
