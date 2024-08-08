@@ -1,5 +1,5 @@
 import { sortBy } from 'common/collections';
-import { useLocalState } from '../../backend';
+import { useLocalState, useBackend } from '../../backend';
 import { Box, Button, Flex, LabeledList, Section, Tabs } from '../../components';
 
 const diffMap = {
@@ -31,6 +31,9 @@ export const AccessList = (props, context) => {
     denyAll,
     grantDep,
     denyDep,
+    fast_full_access,
+    fast_modify_region,
+    isCompCard,
   } = props;
   const [
     selectedAccessName,
@@ -68,7 +71,23 @@ export const AccessList = (props, context) => {
     <Section
       title="Access"
       flexGrow={sectionFlexGrow}
-      buttons={(
+      buttons={isCompCard ? (
+        fast_full_access && (
+          <>
+            <Button
+              icon="check-double"
+              content="Select All"
+              color="good"
+              onClick={() => grantAll()} />
+            <Button
+              icon="undo"
+              content="Deselect All"
+              color="bad"
+              onClick={() => denyAll()} />
+            {sectionButtons}
+          </>
+        )
+      ) : (
         <>
           <Button
             icon="check-double"
@@ -106,22 +125,47 @@ export const AccessList = (props, context) => {
         </Flex.Item>
         <Flex.Item grow={1} ml={1.5}>
           <Flex>
-            <Flex.Item width="50%" mr={0}>
-              <Button
-                fluid
-                icon="check"
-                content="Select Region"
-                color="good"
-                onClick={() => grantDep(selectedAccess.regid)} />
-            </Flex.Item>
-            <Flex.Item width="50%" ml={0}>
-              <Button
-                fluid
-                icon="times"
-                content="Deselect Region"
-                color="bad"
-                onClick={() => denyDep(selectedAccess.regid)} />
-            </Flex.Item>
+            {isCompCard ? (
+              fast_modify_region && (
+                <>
+                  <Flex.Item width="50%" mr={0}>
+                    <Button
+                      fluid
+                      icon="check"
+                      content="Select Region"
+                      color="good"
+                      onClick={() => grantDep(selectedAccess.regid)} />
+                  </Flex.Item>
+                  <Flex.Item width="50%" ml={0}>
+                    <Button
+                      fluid
+                      icon="times"
+                      content="Deselect Region"
+                      color="bad"
+                      onClick={() => denyDep(selectedAccess.regid)} />
+                  </Flex.Item>
+                </>
+              )
+            ) : (
+              <>
+                <Flex.Item width="50%" mr={0}>
+                  <Button
+                    fluid
+                    icon="check"
+                    content="Select Region"
+                    color="good"
+                    onClick={() => grantDep(selectedAccess.regid)} />
+                </Flex.Item>
+                <Flex.Item width="50%" ml={0}>
+                  <Button
+                    fluid
+                    icon="times"
+                    content="Deselect Region"
+                    color="bad"
+                    onClick={() => denyDep(selectedAccess.regid)} />
+                </Flex.Item>
+              </>
+            )}
           </Flex>
           {!!usedByRcd && (
             <Box my={1.5}>

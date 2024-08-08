@@ -1,3 +1,7 @@
+#define IDCOMPUTER_SCREEN_ACCESS 0
+#define IDCOMPUTER_SCREEN_MANIFEST 1
+#define IDCOMPUTER_SCREEN_PRINT 2
+
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	desc = "Terminal for programming NanoTrasen employee ID cards to access parts of the station."
@@ -8,7 +12,7 @@
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null		//card that gives access to this console
 	var/obj/item/weapon/card/id/modify = null	//the card we will change
-	var/mode = 0.0
+	var/mode = IDCOMPUTER_SCREEN_ACCESS
 	var/printing = null
 	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_PRO)
@@ -20,18 +24,8 @@
 /obj/machinery/computer/card/proc/is_authenticated()
 	return scan ? check_access(scan) : 0
 
-/obj/machinery/computer/card/proc/get_target_rank()
+/obj/machinery/computer/card/proc/get_modify_rank()
 	return modify && modify.assignment ? modify.assignment : "Unassigned"
-
-/obj/machinery/computer/card/proc/format_jobs(list/jobs)
-	var/list/formatted = list()
-	for(var/job in jobs)
-		formatted.Add(list(list(
-			"display_name" = replacetext(job, " ", "&nbsp"),
-			"target_rank" = get_target_rank(),
-				"job" = job)))
-
-	return formatted
 
 /obj/machinery/computer/card/AltClick(mob/user)
 	if(!user.IsAdvancedToolUser())
@@ -45,7 +39,8 @@
 	set name = "Eject ID Card"
 	set src in oview(1)
 
-	if(!usr || usr.incapacitated() || issilicon(usr))	return
+	if(!usr || usr.incapacitated() || issilicon(usr))
+		return
 
 	if(modify)
 		if(!do_skill_checks(usr))
@@ -85,81 +80,67 @@
 			datum_account = null	//delete information if there is something in the variable
 
 	playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	nanomanager.update_uis(src)
+	SStgui.update_uis(src)
 	attack_hand(user)
 
-/obj/machinery/computer/card/ui_interact(mob/user, ui_key="main", datum/nanoui/ui=null)
-	var/data[0]
+/obj/machinery/computer/card/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/computer/card/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ComputerCard")
+		ui.open()
+
+/obj/machinery/computer/card/tgui_data(mob/user)
+	var/list/data = list()
 	data["src"] = "\ref[src]"
 	data["station_name"] = station_name()
 	data["mode"] = mode
 	data["printing"] = printing
-	data["manifest"] = data_core ? data_core.html_manifest(monochrome=0) : null
-	data["target_name"] = modify ? modify.name : "-----"
-	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
-	data["target_rank"] = get_target_rank()
-	data["scan_name"] = scan ? scan.name : "-----"
+	data["manifest"] = data_core.get_manifest()
+	data["modify_name"] = modify ? modify.name : FALSE
+	data["modify_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
+	data["modify_rank"] = get_modify_rank()
+	data["scan_name"] = scan ? scan.name : FALSE
+	data["scan_rank"] = scan ? scan.rank : FALSE
 	data["authenticated"] = is_authenticated()
-	data["has_modify"] = !!modify
 	data["account_number"] = modify ? modify.associated_account_number : null
 	data["salary"] = datum_account ? datum_account.owner_salary : "not_found"
-	data["centcom_access"] = is_centcom()
-	data["all_centcom_access"] = null
-	data["regions"] = null
+	data["centcom_access"] = is_centcom() ? TRUE : FALSE
+	data["selectedAccess"] = modify ? modify.access : list()
 
-	data["engineering_jobs"] = format_jobs(engineering_positions)
-	data["medical_jobs"] = format_jobs(medical_positions)
-	data["science_jobs"] = format_jobs(science_positions)
-	data["security_jobs"] = format_jobs(security_positions)
-	data["civilian_jobs"] = format_jobs(civilian_positions)
-	data["representative_jobs"] = format_jobs(centcom_positions)
-	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
+	data["command_jobs"] = command_positions
+	data["engineering_jobs"] = engineering_positions
+	data["medical_jobs"] = medical_positions
+	data["science_jobs"] = science_positions
+	data["security_jobs"] = security_positions
+	data["civilian_jobs"] = civilian_positions
+	data["nt_representatives"] = centcom_positions
+	data["centcom_jobs"] = get_all_centcom_jobs()
 
 	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
 	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
 
-	if (modify && is_centcom())
-		var/list/all_centcom_access = list()
-		for(var/access in get_all_centcom_access())
-			all_centcom_access.Add(list(list(
-				"desc" = replacetext(get_centcom_access_desc(access), " ", "&nbsp"),
-				"ref" = access,
-				"allowed" = (access in modify.access) ? 1 : 0)))
-
-		data["all_centcom_access"] = all_centcom_access
-	else if (modify)
-		var/list/regions = list()
-		for(var/i = 1; i <= 7; i++)
-			var/list/accesses = list()
-			var/region_allowed = 0
-			for(var/access in get_region_accesses(i))
-				if (get_access_desc(access))
-					region_allowed += (access in modify.access) ? 1 : 0
-					accesses.Add(list(list(
-						"desc" = replacetext(get_access_desc(access), " ", "&nbsp"),
+	switch(mode)
+		if(IDCOMPUTER_SCREEN_ACCESS)
+			if (modify && is_centcom())
+				var/list/all_centcom_access = list()
+				for(var/access in get_all_centcom_access())
+					all_centcom_access.Add(list(list(
 						"ref" = access,
 						"allowed" = (access in modify.access) ? 1 : 0)))
+				data["all_centcom_access"] = all_centcom_access
+			else if (modify)
+				data["regions"] = get_accesslist_static_data(REGION_GENERAL, is_centcom() ? REGION_CENTCOMM : REGION_COMMAND)
+	return data
 
-			regions.Add(list(list(
-				"name" = get_region_accesses_name(i),
-				"accesses" = accesses,
-				"id" = i,
-				"region_allowed" =  (region_allowed == length(get_region_accesses(i)) ? 1 : 0))))
-
-		data["regions"] = regions
-
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		ui = new(user, src, ui_key, "identification_computer.tmpl", src.name, 600, 700)
-		ui.set_initial_data(data)
-		ui.open()
-
-/obj/machinery/computer/card/Topic(href, href_list)
+/obj/machinery/computer/card/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
-	switch(href_list["choice"])
+	switch(action)
 		if ("modify")
 			if (modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
@@ -187,7 +168,6 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
-
 		if ("scan")
 			if (scan)
 				if(ishuman(usr))
@@ -208,30 +188,36 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
-
 		if("access")
-			if(href_list["allowed"])
-				if(is_authenticated())
-					var/access_type = text2num(href_list["access_target"])
-					var/access_allowed = text2num(href_list["allowed"])
-					if(access_type in (is_centcom() ? get_all_centcom_access() : get_all_accesses()))
-						modify.access -= access_type
-						if(!access_allowed)
-							modify.access += access_type
+			if(is_authenticated())
+				var/access = text2num(params["access"])
+				var/list/changable = is_centcom() ? get_all_centcom_access() + get_all_accesses() : get_all_accesses()
+				if(access in changable)
+					if(access in modify.access)
+						modify.access -= access
+					else
+						modify.access += access
 		if("access_region")
 			if(is_authenticated())
-				var/region_id = text2num(href_list["region_id"])
-				var/region_accesses = get_region_accesses(region_id)
-				var/region_allowed = text2num(href_list["region_allowed"])
-				modify.access -= region_accesses
-				if(!region_allowed)
-					modify.access += region_accesses
+				var/region = text2num(params["region"])
+				if(isnull(region) || region < REGION_GENERAL || region > (is_centcom() ? REGION_CENTCOMM : REGION_COMMAND))
+					return
+				modify.access += get_region_accesses(region)
+		if("deny_region")
+			if(is_authenticated())
+				var/region = text2num(params["region"])
+				if(isnull(region) || region < REGION_GENERAL || region > (is_centcom() ? REGION_CENTCOMM : REGION_COMMAND))
+					return
+				modify.access -= get_region_accesses(region)
 		if("access_full")
 			if(is_authenticated())
 				modify.access += get_all_accesses()
+		if("clear_all")
+			if(is_authenticated())
+				modify.access -= get_all_accesses()
 		if ("assign")
 			if (is_authenticated() && modify)
-				var/t1 = sanitize(href_list["assign_target"] , 45)
+				var/t1 = sanitize(params["assign_modify"])
 				var/new_salary = 0
 				var/datum/job/jobdatum
 				if(t1 == "Custom")
@@ -261,36 +247,33 @@
 
 					if(datum_account)
 						datum_account.set_salary(new_salary, jobdatum.salary_ratio)	//set the new salary equal to job
-
 		if ("reg")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))
-					var/temp_name = sanitize_name(href_list["reg"])
+					var/temp_name = sanitize_name(input("Who is this ID for?", "Name", modify.registered_name) as text | null)
 					if(temp_name)
 						modify.registered_name = temp_name
 					else
 						visible_message("<span class='notice'>[src] buzzes rudely.</span>")
-			nanomanager.update_uis(src)
-
 		if ("account")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))
-					var/datum/money_account/account = get_account(text2num(href_list["account"]))
+					var/datum/money_account/account = get_account(text2num(input("Account Number", "Input Number", modify.associated_account_number) as text | null))
 					if(account)
 						modify.associated_account_number = account.account_number
 					else
 						to_chat(usr, "<span class='warning'> Account with such number does not exist!</span>")
-			nanomanager.update_uis(src)
-
 		if ("mode")
-			mode = text2num(href_list["mode_target"])
-
+			var/static/list/valid_modes = list(IDCOMPUTER_SCREEN_ACCESS, IDCOMPUTER_SCREEN_MANIFEST, IDCOMPUTER_SCREEN_PRINT)
+			var/new_mode = text2num(params["mode"])
+			if(new_mode in valid_modes)
+				mode = new_mode
 		if ("print")
 			if (!printing)
 				printing = 1
 				spawn(50)
 					printing = null
-					nanomanager.update_uis(src)
+					SStgui.update_uis(src)
 
 					var/obj/item/weapon/paper/P = new(loc)
 					if (mode)
@@ -315,14 +298,15 @@
 
 						for(var/A in modify.access)
 							P.info += "  [get_access_desc(A)]"
-
-		if ("terminate")
+		if ("terminate", "demote")
 			if (is_authenticated())
-				modify.assignment = "Terminated"
+				if(action == "terminate")
+					modify.assignment = "Terminated"
+				else if(action == "demote")
+					modify.assignment = "Demoted"
 				modify.access = list()
 				if(datum_account)
 					datum_account.set_salary(0)		//no salary
-
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 
@@ -332,3 +316,7 @@
 	name = "CentCom Identification Computer"
 	circuit = /obj/item/weapon/circuitboard/card/centcom
 	req_access = list(access_cent_captain)
+
+#undef IDCOMPUTER_SCREEN_ACCESS
+#undef IDCOMPUTER_SCREEN_MANIFEST
+#undef IDCOMPUTER_SCREEN_PRINT
