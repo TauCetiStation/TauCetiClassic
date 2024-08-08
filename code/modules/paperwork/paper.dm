@@ -1132,8 +1132,8 @@ var/global/list/contributor_names
 	info = "Энергопистолет второго поколения. В нём установлена более эффективная система охлаждения и продвинутая батарея."
 
 /obj/item/weapon/paper/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed) ||istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed))
-		var/obj/item/clothing/mask/cigarette/Cig=new(get_turf(src))
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed))
+		var/obj/item/clothing/mask/cigarette/Cig = new(get_turf(src))
 		I.reagents.trans_to(Cig, 15)
 		qdel(I)
 		qdel(src)
