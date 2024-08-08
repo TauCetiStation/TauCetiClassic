@@ -285,7 +285,6 @@
 
 	if(default_mood_event)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "species", default_mood_event)
-	H.social_credit = start_social_credit
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	SHOULD_CALL_PARENT(TRUE)

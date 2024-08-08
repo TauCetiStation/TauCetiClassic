@@ -139,17 +139,17 @@ haram_threshold тоже должен как-то высчитываться, н
 	UnregisterSignal(M, list(COMSIG_HUMAN_ON_CARPET, COMSIG_PARENT_QDELETING))
 
 /datum/religion/pluvia/proc/adjust_haram(mob/living/carbon/human/target, haram_amount, reason)
-	if(target.blessed)
+	if(target.mind.blessed)
 		return
-	if(haram_amount == DEADLY_HARAM || ((target.haram_point + haram_amount) >= haram_threshold))
+	if(haram_amount == DEADLY_HARAM || ((target.mind.haram_point + haram_amount) >= haram_threshold))
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
-		target.social_credit = 0
+		target.mind.social_credit = 0
 		to_chat(target, "<span class='warning'>\ <font size=5>[reason] Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
 		message_admins("Плувиец [target] вылетел из религии /datum/religion/pluvia [ADMIN_JMP(target)]" )
 		target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return TRUE
 	else
-		target.haram_point += haram_amount
+		target.mind.haram_point += haram_amount
 		target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		to_chat(target, "<span class='warning'>\ <font size=3>[reason]</span></font>")
 		message_admins("Плувиец [target] совершил харам - [reason] [ADMIN_JMP(target)]" )
@@ -157,7 +157,7 @@ haram_threshold тоже должен как-то высчитываться, н
 
 /datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)
 	var/mob/living/carbon/human/attacker  = source
-	if(istype(target.my_religion, /datum/religion/pluvia) || target.blessed)
+	if(istype(target.my_religion, /datum/religion/pluvia) || target.mind.blessed)
 		adjust_haram(attacker, haram_harm, "Вы нарушаете первую заповедь!")
 
 /datum/religion/pluvia/proc/suicide_haram(mob/living/carbon/human/target)

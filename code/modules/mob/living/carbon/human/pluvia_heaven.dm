@@ -23,8 +23,8 @@ var/global/list/wisp_start_landmark = list()
 
 /mob/living/carbon/human/proc/bless()
 	to_chat(src, "<span class='notice'>\ <font size=4>Вам известно, что после смерти вы попадете в рай</span></font>")
-	blessed = 1
-	social_credit = 2
+	mind.blessed = 1
+	mind.social_credit = 2
 	var/image/eye = image('icons/mob/human_face.dmi', icon_state = "pluvia_ms_s")
 	eye.plane = LIGHTING_LAMPS_PLANE
 	eye.layer = ABOVE_LIGHTING_LAYER
@@ -64,13 +64,13 @@ var/global/list/wisp_start_landmark = list()
 			to_chat(usr, "<span class='warning'>Свое письмо нельзя подписывать!</span>")
 		else if(sign == 1)
 			to_chat(usr, "<span class='notice'>Эта бумага уже подписана</span>")
-		else if(H.social_credit > 0)
+		else if(H.mind.social_credit > 0)
 			to_chat(usr, "<span class='notice'>Подписано!</span>")
 			sign_place = H.name
 			H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
-			H.social_credit -= 1
+			H.mind.social_credit -= 1
 			if(!owner.ismindshielded() && !owner.isloyal())
-				owner.social_credit += 1 //@FatFat Возможно стоит добавить налог на подписи от других плувийцев. Типо не +1, а +0.5. Не уверен что это может хорошо повлиять на их социанльые взаимодействия
+				owner.mind.social_credit += 1 //@FatFat Возможно стоит добавить налог на подписи от других плувийцев. Типо не +1, а +0.5. Не уверен что это может хорошо повлиять на их социанльые взаимодействия
 			sign = 1
 			to_chat(owner, "<span class='notice'>Ваш уровень кармы повышен!</span>")
 		else
@@ -197,7 +197,7 @@ var/global/list/wisp_start_landmark = list()
 	var/list/possible_targets = list()
 	for(var/mob/living/carbon/human/H in human_list)
 		if(H.mind && H != user && ispluvian(H))
-			if(istype(H.my_religion, /datum/religion/pluvia) || H.blessed)
+			if(istype(H.my_religion, /datum/religion/pluvia) || H.mind.blessed)
 				possible_targets[H] = image(H.icon, H.icon_state)
 				var/mob/living/target = possible_targets[H]
 				target.copy_overlays(H)

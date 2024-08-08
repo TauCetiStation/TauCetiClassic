@@ -2298,7 +2298,7 @@
 					for(var/obj/item/W in spirit)
 						spirit.drop_from_inventory(W)
 					qdel(spirit)
-					if(!blessed)
+					if(!mind.blessed)
 						bless()
 				break
 	else if(mind)

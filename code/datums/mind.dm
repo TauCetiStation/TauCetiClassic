@@ -63,6 +63,11 @@
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 	var/creation_roundtime
 
+	// Pluvia sochial credit system
+	var/social_credit = 0
+	var/haram_point = 0
+	var/blessed = 0
+
 /datum/mind/New(key)
 	src.key = key
 	creation_time = world.time
@@ -734,6 +739,7 @@
 	..()
 	if(!mind.assigned_role)
 		mind.assigned_role = "default"	//default
+	mind.social_credit = species.start_social_credit //Pluvia social credit system
 
 //slime
 /mob/living/carbon/slime/mind_initialize()

@@ -53,7 +53,7 @@
 	                     "<span class='notice'>We have devour [target]!</span>")
 	to_chat(target, "<span class='danger'>You have been devoured by the changeling!</span>")
 	var/mob/living/carbon/human/changeling = user
-	changeling.social_credit += target.social_credit
+	changeling.mind.social_credit += target.mind.social_credit
 	for(var/obj/item/I in target)
 		target.drop_from_inventory(I)
 	target.spawn_gibs()

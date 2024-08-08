@@ -126,8 +126,3 @@
 	// Reagent allergies.
 	var/list/allergies
 	var/next_allergy_message = 0
-
-	// Pluvia sochial credit system
-	var/social_credit = 0
-	var/haram_point = 0
-	var/blessed = 0
