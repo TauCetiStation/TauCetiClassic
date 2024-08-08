@@ -222,7 +222,7 @@ export const ComputerCard = (props, context) => {
   }
 
   return (
-    <Window width={925} height={850} resizable>
+    <Window width={930} height={850} resizable>
       <Window.Content scrollable>
         <Section
           title="Card Modification"
