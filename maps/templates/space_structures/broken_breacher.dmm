@@ -1022,9 +1022,10 @@
 /turf/simulated/shuttle/plating,
 /area/space_structures/broken_breacher)
 "Li" = (
+/obj/structure/closet/gimmick,
 /obj/item/weapon/disk/research_points,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
 /area/space_structures/broken_breacher)
 "Lw" = (
@@ -1610,7 +1611,7 @@ TC
 PM
 pT
 FS
-zX
+Li
 pT
 sO
 sO
@@ -1876,7 +1877,7 @@ sO
 (13,1,1) = {"
 nh
 Ip
-Li
+oa
 Eq
 pT
 OY
@@ -1928,7 +1929,7 @@ uX
 Om
 uX
 pD
-BO
+Oy
 BO
 BO
 BO

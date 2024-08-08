@@ -6,6 +6,10 @@
 /obj/structure/stool/bed/chair/comfy/lime{
 	dir = 1
 	},
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 6;
+	icon_state = "siding_wood_line"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "d" = (
@@ -17,14 +21,41 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 10;
+	icon_state = "siding_wood_line"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "f" = (
 /obj/effect/decal/remains/human,
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"g" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 5;
+	icon_state = "siding_wood_line"
+	},
+/obj/structure/flora/ausbushes/grassybush,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"h" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 1;
+	icon_state = "siding_wood_line"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "j" = (
 /obj/structure/flora/junglebush/large,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 9;
+	icon_state = "siding_wood_line"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "k" = (
@@ -32,13 +63,33 @@
 	pixel_x = -4;
 	pixel_y = -7
 	},
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 9;
+	icon_state = "siding_wood_line"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "n" = (
 /turf/simulated/floor/plating,
 /area/space_structures/tree_asteroid)
+"o" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 8;
+	icon_state = "siding_wood_corner"
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"w" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
 "x" = (
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 10;
+	icon_state = "siding_wood_line"
+	},
+/obj/structure/flora/ausbushes/palebush,
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "z" = (
@@ -51,6 +102,10 @@
 	pixel_x = -15;
 	pixel_y = 15
 	},
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 5;
+	icon_state = "siding_wood_line"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "B" = (
@@ -59,14 +114,26 @@
 	},
 /obj/structure/table/woodentable,
 /obj/item/weapon/game_kit/random,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 4;
+	icon_state = "siding_wood_line"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "D" = (
 /obj/structure/flora/tree/jungle/small,
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
+"H" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
 "M" = (
 /obj/structure/flora/junglebush/c,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 6;
+	icon_state = "siding_wood_line"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "R" = (
@@ -77,6 +144,9 @@
 /area/space_structures/tree_asteroid)
 "T" = (
 /obj/structure/flora/ausbushes/ppflowers,
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_corner"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "U" = (
@@ -84,12 +154,29 @@
 /area/space_structures/tree_asteroid)
 "V" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 1;
+	icon_state = "siding_wood_corner"
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/tree_asteroid)
+"W" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 4;
+	icon_state = "siding_wood_corner"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 "Z" = (
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/effect/decal/turf_decal/wood/dark{
+	dir = 8;
+	icon_state = "siding_wood_line"
+	},
+/obj/structure/flora/ausbushes/genericbush,
 /turf/simulated/floor/grass,
 /area/space_structures/tree_asteroid)
 
@@ -150,8 +237,8 @@ R
 U
 j
 V
-S
-z
+H
+o
 e
 U
 U
@@ -161,10 +248,10 @@ a
 (6,1,1) = {"
 R
 U
-z
+h
 S
 D
-S
+w
 f
 d
 n
@@ -174,8 +261,8 @@ a
 (7,1,1) = {"
 R
 U
-S
-f
+g
+W
 z
 T
 M

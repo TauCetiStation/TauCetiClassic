@@ -35,10 +35,19 @@
 /area/space)
 "i" = (
 /obj/effect/landmark/corpse/clown,
-/turf/simulated/floor/airless,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	icon_state = "greenyellowfull";
+	dir = 1
+	},
 /area/space)
 "j" = (
-/turf/simulated/floor/airless,
+/obj/item/weapon/ore/clown,
+/turf/simulated/floor/airless{
+	icon_state = "whitebluefull"
+	},
 /area/space)
 "k" = (
 /obj/structure/closet/crate,
@@ -47,7 +56,9 @@
 /obj/item/weapon/ore/clown,
 /obj/item/weapon/ore/clown,
 /obj/item/weapon/ore/clown,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "redfull"
+	},
 /area/space)
 "l" = (
 /obj/structure/closet/crate{
@@ -55,7 +66,9 @@
 	opened = 1
 	},
 /obj/item/weapon/ore/clown,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "redfull"
+	},
 /area/space)
 "m" = (
 /obj/structure/shuttle/engine/heater{
@@ -66,6 +79,17 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"n" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "redfull"
+	},
+/area/space)
 "o" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
@@ -74,7 +98,9 @@
 /area/space)
 "p" = (
 /obj/item/weapon/ore/clown,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "redfull"
+	},
 /area/space)
 "q" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -96,13 +122,18 @@
 /obj/effect/landmark/corpse/clown{
 	name = "Clown Pilot"
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "greenyellowfull";
+	dir = 1
+	},
 /area/space)
 "t" = (
 /obj/item/weapon/paper{
 	info = "The call has gone out! Our ancestral home has been rediscovered! Not a small patch of land, but a true clown nation, a true Clown Planet! We're on our way home at last!"
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "whitebluefull"
+	},
 /area/space)
 "u" = (
 /obj/structure/window/fulltile/reinforced{
@@ -116,13 +147,22 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "greenyellowfull";
+	dir = 1
+	},
 /area/space)
 "w" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/simulated/floor/airless,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	icon_state = "greenyellowfull";
+	dir = 1
+	},
 /area/space)
 "x" = (
 /turf/environment/space,
@@ -131,14 +171,23 @@
 	},
 /area/space)
 "y" = (
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "greenyellowfull";
+	dir = 1
+	},
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
 /area/space)
 "z" = (
 /obj/item/weapon/pickaxe,
-/turf/simulated/floor/airless,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	icon_state = "greenyellowfull";
+	dir = 1
+	},
 /area/space)
 "A" = (
 /obj/structure/closet/crate,
@@ -146,7 +195,12 @@
 /obj/item/weapon/ore/clown,
 /obj/item/weapon/ore/clown,
 /obj/item/weapon/ore/clown,
-/turf/simulated/floor/airless,
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "redfull"
+	},
 /area/space)
 "B" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -167,6 +221,75 @@
 "D" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
+	},
+/area/space)
+"E" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "redfull"
+	},
+/area/space)
+"F" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "whitebluefull"
+	},
+/area/space)
+"I" = (
+/turf/simulated/floor/airless{
+	icon_state = "greenyellowfull";
+	dir = 1
+	},
+/area/space)
+"K" = (
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "redfull"
+	},
+/area/space)
+"L" = (
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	icon_state = "greenyellowfull";
+	dir = 1
+	},
+/area/space)
+"M" = (
+/turf/simulated/floor/airless{
+	icon_state = "redfull"
+	},
+/area/space)
+"P" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/obj/item/weapon/ore/clown,
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "redfull"
+	},
+/area/space)
+"R" = (
+/turf/simulated/floor/airless{
+	icon_state = "whitebluefull"
+	},
+/area/space)
+"Z" = (
+/obj/effect/landmark/corpse/clown,
+/turf/simulated/floor/airless{
+	icon_state = "whitebluefull"
 	},
 /area/space)
 
@@ -441,7 +564,7 @@ a
 b
 b
 b
-c
+o
 c
 b
 b
@@ -483,7 +606,7 @@ a
 e
 b
 b
-j
+I
 e
 b
 b
@@ -521,8 +644,8 @@ e
 c
 o
 s
-j
-j
+I
+I
 e
 b
 b
@@ -538,8 +661,8 @@ a
 a
 e
 i
-j
-j
+L
+I
 w
 z
 e
@@ -556,11 +679,11 @@ a
 a
 a
 f
-j
-j
+R
+R
 t
-j
-j
+R
+R
 f
 b
 b
@@ -575,11 +698,11 @@ a
 a
 a
 f
-j
-j
-p
-i
-j
+R
+R
+R
+Z
+R
 f
 b
 b
@@ -594,10 +717,10 @@ a
 a
 a
 e
-k
+P
+n
 j
-j
-j
+K
 A
 e
 b
@@ -614,9 +737,9 @@ a
 a
 e
 k
+M
 j
-p
-j
+E
 k
 e
 b
@@ -634,8 +757,8 @@ a
 e
 l
 p
-j
-j
+F
+E
 k
 e
 b
@@ -651,11 +774,11 @@ a
 a
 a
 e
-j
+M
+M
 j
 p
-p
-j
+M
 e
 a
 a
