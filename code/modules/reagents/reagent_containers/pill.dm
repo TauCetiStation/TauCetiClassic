@@ -9,10 +9,10 @@
 	item_state = "pill"
 	possible_transfer_amounts = null
 	w_class = SIZE_MINUSCULE
-	flags = NOREACT
 	volume = 50
 	var/halved = FALSE // if set to TRUE pill cannot be split in halves again
-
+/obj/item/weapon/reagent_containers/pill/twopart
+	flags = NOREACT
 /obj/item/weapon/reagent_containers/pill/atom_init()
 	. = ..()
 	if(!icon_state)
@@ -29,7 +29,7 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/pill))
 		var/obj/item/weapon/reagent_containers/pill/P1 = W
 		if(P1.halved && halved)
-			var/obj/item/weapon/reagent_containers/pill/P = new(get_turf(src))
+			var/obj/item/weapon/reagent_containers/pill/twopart/P = new(get_turf(src))
 			P1.reagents.trans_to(P, P1.reagents.total_volume)
 			reagents.trans_to(P, reagents.total_volume)
 			to_chat(user, "<span class='notice'>You unite [src] with other halved pill.</span>")
@@ -41,6 +41,8 @@
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	if(halved)
 		return
+	flags = null
+	reagents.handle_reactions()
 	user.drop_from_inventory(src)
 	var/volume_half = reagents.total_volume / 2
 	for(var/part in list("top", "bottom"))
