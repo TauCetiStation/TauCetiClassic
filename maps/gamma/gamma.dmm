@@ -21686,6 +21686,9 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/brig)
+"dEN" = (
+/turf/simulated/floor/glass/reinforced/airless,
+/area/station/maintenance/outerlabs)
 "dEZ" = (
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -21978,7 +21981,7 @@
 /obj/effect/decal/turf_decal/alpha/cyan{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/bridge)
 "dIz" = (
 /obj/effect/decal/cleanable/dirt,
@@ -25523,7 +25526,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/bridge)
 "euV" = (
 /turf/simulated/floor/grass,
@@ -34021,7 +34024,7 @@
 	dir = 4;
 	sortType = list("Ординаторская","Хранилище Медбея","Генетика","Морг","Офис СМО","Химия","Вирусология")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "gdg" = (
 /obj/structure/bookcase/manuals/security,
@@ -46445,7 +46448,7 @@
 	name = "Atmos External Access";
 	req_one_access = list(13,45,1)
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/bridge)
 "izK" = (
 /obj/structure/cable{
@@ -49979,7 +49982,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 1
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/bridge)
 "jlR" = (
 /obj/machinery/computer/telescience{
@@ -53659,7 +53662,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/primary/bridgehall)
 "jXR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -70616,9 +70619,7 @@
 "nvY" = (
 /obj/structure/table/glass,
 /obj/item/weapon/clipboard,
-/turf/simulated/floor{
-	icon_state = "purplechecker"
-	},
+/turf/simulated/floor/glass/phoron,
 /area/station/rnd/brainstorm_center)
 "nwi" = (
 /obj/structure/cable{
@@ -72451,7 +72452,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/rnd/hallway)
 "nPT" = (
 /turf/simulated/floor{
@@ -79018,9 +79021,7 @@
 "pfd" = (
 /obj/item/weapon/folder/blue,
 /obj/structure/table/glass,
-/turf/simulated/floor{
-	icon_state = "purplechecker"
-	},
+/turf/simulated/floor/glass/phoron,
 /area/station/rnd/brainstorm_center)
 "pfo" = (
 /obj/effect/decal/cleanable/flour,
@@ -80313,7 +80314,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/bridge)
 "psF" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -81434,9 +81435,7 @@
 	pixel_x = -3;
 	pixel_y = 14
 	},
-/turf/simulated/floor{
-	icon_state = "purplechecker"
-	},
+/turf/simulated/floor/glass/phoron,
 /area/station/rnd/brainstorm_center)
 "pHv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -95743,9 +95742,7 @@
 /obj/item/weapon/paper{
 	layer = 3
 	},
-/turf/simulated/floor{
-	icon_state = "purplechecker"
-	},
+/turf/simulated/floor/glass/phoron,
 /area/station/rnd/brainstorm_center)
 "szh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -106460,9 +106457,7 @@
 /obj/item/weapon/pen{
 	layer = 3.1
 	},
-/turf/simulated/floor{
-	icon_state = "purplechecker"
-	},
+/turf/simulated/floor/glass/phoron,
 /area/station/rnd/brainstorm_center)
 "uCY" = (
 /obj/effect/decal/cleanable/dirt,
@@ -109390,7 +109385,7 @@
 /obj/effect/decal/turf_decal/alpha/cyan{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/bridge)
 "vii" = (
 /obj/item/weapon/scrap_lump,
@@ -109921,9 +109916,7 @@
 	pixel_y = 10
 	},
 /obj/structure/table/glass,
-/turf/simulated/floor{
-	icon_state = "purplechecker"
-	},
+/turf/simulated/floor/glass/phoron,
 /area/station/rnd/brainstorm_center)
 "voH" = (
 /obj/structure/disposalpipe/trunk{
@@ -113965,7 +113958,7 @@
 /area/station/civilian/garden)
 "wcV" = (
 /obj/item/inflatable/torn,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/glass/reinforced/airless,
 /area/station/maintenance/outerlabs)
 "wcY" = (
 /obj/structure/disposalpipe/segment{
@@ -138737,7 +138730,7 @@ dUW
 dUW
 wnK
 dUW
-iTG
+dEN
 bNg
 vMn
 cip
@@ -142576,7 +142569,7 @@ plf
 plf
 plf
 fzo
-iTG
+dEN
 bNg
 fzo
 plf
@@ -143347,7 +143340,7 @@ plf
 plf
 plf
 fzo
-iTG
+dEN
 gYu
 mUg
 plf
