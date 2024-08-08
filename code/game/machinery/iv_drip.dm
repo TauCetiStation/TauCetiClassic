@@ -79,7 +79,7 @@
 			return
 		if(istype(W, /obj/item/weapon/reagent_containers/pill/twopart))
 			W.flags = null
-			W.reagent.handle_reactions()
+			W.reagents.handle_reactions()
 		user.drop_from_inventory(W, src)
 		src.beaker = W
 		to_chat(user, "You attach \the [W] to \the [src].")
