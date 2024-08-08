@@ -87,6 +87,8 @@
 		return FALSE
 	if(incapacitated())
 		return FALSE
+	if(C.anchored)
+		return FALSE
 
 	return TRUE
 

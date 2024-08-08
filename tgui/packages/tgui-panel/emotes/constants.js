@@ -120,7 +120,4 @@ export const emojis = [
   "nedovolen",
   "rastroen",
   "smoltaj",
-  "soyjackdovolen",
-  "soyjacknedovolen",
-  "soyjackrasstroen",
 ];

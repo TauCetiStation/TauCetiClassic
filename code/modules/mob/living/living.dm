@@ -920,7 +920,7 @@
 			if (istype(C.buckled,/obj/structure/stool/bed/nest))
 				C.buckled.user_unbuckle_mob(C)
 				return
-			if(istype(C.buckled, /obj/machinery/optable/torture_table))
+			if(C.handcuffed || istype(C.buckled, /obj/machinery/optable/torture_table))
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				C.visible_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", self_message = "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
@@ -940,9 +940,10 @@
 			C.container_resist(L)
 
 	//breaking out of handcuffs and putting off fires
-	if(iscarbon(L))
+	else if(iscarbon(L))
 		var/mob/living/carbon/CM = L
-		if(CM.on_fire && CM.canmove && !(CM.lying || CM.crawling))
+		if(CM.on_fire)
+			if(!CM.canmove && !CM.crawling)	return
 			CM.fire_stacks -= 5
 			CM.Stun(5)
 			CM.Weaken(5)
@@ -975,7 +976,7 @@
 				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
-						if(!CM.handcuffed)
+						if(!CM.handcuffed || CM.buckled)
 							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
 						if(istype(HC, /obj/item/weapon/handcuffs/alien))
 							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
@@ -1421,8 +1422,6 @@
 /mob/living/death(gibbed)
 	beauty.AddModifier("stat", additive=beauty_dead)
 	update_health_hud()
-	if(wabbajacked)
-		unwabbajack()
 	return ..()
 
 /mob/living/proc/update_beauty(datum/source, old_value)

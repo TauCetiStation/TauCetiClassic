@@ -7,7 +7,7 @@
 
 /mob/proc/emote_dead(message)
 
-	if(client.prefs.muted & MUTE_OOC || IS_ON_ADMIN_CD(client, ADMIN_CD_OOC))
+	if(client.prefs.muted & MUTE_DEADCHAT)
 		to_chat(src, "<span class='warning'>You cannot send deadchat emotes (muted).</span>")
 		return
 

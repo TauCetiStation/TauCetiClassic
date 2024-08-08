@@ -179,7 +179,7 @@
 		UnregisterSignal(H, COMSIG_MOB_DIED)
 		return
 
-	if(!(H.can_zombified()))
+	if(!(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
 		return
 
 	if(infected_organ == null && holder.ticks == 0)

@@ -331,12 +331,6 @@
 //       port smooth groups from tg/other sane server
 #define CAN_SMOOTH_WITH_WALLS list( \
 		/turf/unsimulated/wall, \
-		/turf/unsimulated/wall/like_a_normal, \
-		/turf/unsimulated/wall/like_a_normal/yellow, \
-		/turf/unsimulated/wall/like_a_normal/red, \
-		/turf/unsimulated/wall/like_a_normal/purple, \
-		/turf/unsimulated/wall/like_a_normal/green, \
-		/turf/unsimulated/wall/like_a_normal/beige, \
 		/turf/simulated/wall, \
 		/turf/simulated/wall/yellow, \
 		/turf/simulated/wall/red, \
@@ -408,7 +402,6 @@
 		/turf/simulated/wall = "wall", \
 		/obj/structure/falsewall = "wall", \
 		/obj/machinery/door/airlock = "wall", \
-		/turf/unsimulated/wall/like_a_normal = "wall", \
 )
 
 // wall don't need adapter with another wall

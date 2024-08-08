@@ -892,7 +892,7 @@
 	},
 /area/space_structures/listening_post)
 "bC" = (
-/obj/effect/spawner/mob_spawn/syndicate_walrus,
+/mob/living/simple_animal/walrus/syndicate,
 /turf/simulated/floor/carpet/red,
 /area/space_structures/listening_post)
 "bD" = (

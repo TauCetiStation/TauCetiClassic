@@ -2059,8 +2059,7 @@
 /obj/structure/plasticflaps/mining,
 /obj/machinery/door/poddoor/shutters{
 	id = "Mecha Shutters";
-	name = "Mecha Shutters";
-	dir = 4
+	name = "Mecha Shutters"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/turf_decal{

@@ -4,22 +4,7 @@
 	amount = 12
 	},
 /obj/structure/closet/crate/engi,
-/obj/effect/decal/turf_decal{
-	dir = 10;
-	icon_state = "warn"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
-/area/space_structures/resource_shuttle)
-"aF" = (
-/obj/effect/decal/turf_decal{
-	dir = 2;
-	icon_state = "warn"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
+/turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
 "bv" = (
 /obj/structure/object_wall/cargo{
@@ -36,16 +21,6 @@
 	icon_state = "5,1"
 	},
 /turf/environment/space,
-/area/space_structures/resource_shuttle)
-"el" = (
-/obj/effect/decal/turf_decal{
-	dir = 2;
-	icon_state = "warn"
-	},
-/obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
 /area/space_structures/resource_shuttle)
 "gv" = (
 /obj/structure/object_wall/cargo,
@@ -64,12 +39,7 @@
 /obj/item/stack/sheet/glass{
 	amount = 23
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
+/turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
 "pC" = (
 /obj/structure/object_wall/cargo{
@@ -79,9 +49,7 @@
 /area/space_structures/resource_shuttle)
 "pI" = (
 /obj/machinery/door/unpowered/shuttle/wagon,
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
+/turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
 "qG" = (
 /obj/structure/closet/crate/secure/miningsec,
@@ -91,12 +59,7 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 5
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
+/turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
 "qR" = (
 /obj/structure/lattice,
@@ -109,7 +72,7 @@
 	opacity = 0
 	},
 /obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/shuttle/plating,
 /area/space_structures/resource_shuttle)
 "rH" = (
 /obj/structure/object_wall/cargo{
@@ -132,16 +95,11 @@
 /area/space_structures/resource_shuttle)
 "sy" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/shuttle/plating,
 /area/space_structures/resource_shuttle)
 "sI" = (
 /obj/structure/object_wall/cargo,
 /turf/environment/space,
-/area/space_structures/resource_shuttle)
-"sT" = (
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
 /area/space_structures/resource_shuttle)
 "tA" = (
 /obj/structure/object_wall/cargo{
@@ -157,7 +115,7 @@
 /area/space_structures/resource_shuttle)
 "vY" = (
 /obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/shuttle/plating,
 /area/space_structures/resource_shuttle)
 "wa" = (
 /obj/structure/object_wall/cargo{
@@ -233,14 +191,6 @@
 	},
 /turf/environment/space,
 /area/space_structures/resource_shuttle)
-"Dj" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
-/area/space_structures/resource_shuttle)
 "DR" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "1,0"
@@ -265,22 +215,11 @@
 	},
 /turf/environment/space,
 /area/space_structures/resource_shuttle)
-"Gi" = (
-/obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
-/area/space_structures/resource_shuttle)
 "GK" = (
 /obj/machinery/light_construct{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
+/turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
 "If" = (
 /obj/structure/object_wall/cargo{
@@ -322,37 +261,13 @@
 /obj/machinery/light_construct{
 	dir = 8
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
+/turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
 "OS" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "8,0"
 	},
 /turf/environment/space,
-/area/space_structures/resource_shuttle)
-"Pa" = (
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
-/area/space_structures/resource_shuttle)
-"PU" = (
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
-/obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
 /area/space_structures/resource_shuttle)
 "RX" = (
 /turf/environment/space,
@@ -371,12 +286,7 @@
 	icon_state = "weaponcrateopen";
 	opened = 1
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
+/turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
 "TJ" = (
 /obj/structure/object_wall/cargo{
@@ -401,13 +311,7 @@
 /turf/environment/space,
 /area/space_structures/resource_shuttle)
 "XB" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
+/turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
 "Yw" = (
 /obj/structure/object_wall/cargo{
@@ -421,33 +325,17 @@
 	opened = 1
 	},
 /obj/item/toy/carpplushie,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
+/turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
 "YI" = (
 /obj/machinery/door/poddoor/cargo,
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
+/turf/simulated/shuttle/floor/cargo,
 /area/space_structures/resource_shuttle)
 "YY" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "3,1"
 	},
 /turf/environment/space,
-/area/space_structures/resource_shuttle)
-"ZR" = (
-/obj/effect/decal/turf_decal{
-	dir = 6;
-	icon_state = "warn"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
 /area/space_structures/resource_shuttle)
 
 (1,1,1) = {"
@@ -470,8 +358,8 @@ RY
 yq
 Oq
 SR
-Dj
-Dj
+XB
+XB
 lt
 EH
 DR
@@ -481,11 +369,11 @@ RY
 RY
 RY
 YI
-Pa
-PU
-Pa
+XB
+XB
+XB
 aw
-Dj
+XB
 Bd
 EA
 "}
@@ -494,11 +382,11 @@ RY
 cL
 RY
 pI
-sT
-Gi
-Gi
-aF
-Dj
+XB
+XB
+XB
+XB
+XB
 YY
 If
 "}
@@ -510,7 +398,7 @@ qR
 sy
 sy
 XB
-el
+XB
 qG
 xn
 Jw
@@ -523,7 +411,7 @@ RY
 RY
 qR
 sy
-aF
+XB
 YD
 dM
 JX
@@ -536,8 +424,8 @@ rr
 sy
 vY
 sy
-ZR
-Dj
+XB
+XB
 pC
 Lk
 "}
@@ -548,8 +436,8 @@ xm
 Nn
 vY
 sy
-Dj
-Dj
+XB
+XB
 GK
 ye
 NG

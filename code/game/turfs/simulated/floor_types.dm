@@ -25,10 +25,6 @@
 	update_icon()
 	name = initial(name)
 
-/turf/simulated/floor/light/airless
-	icon_state = "light_on"
-	airless = TRUE
-
 /turf/simulated/floor/wood
 	name = "floor"
 	icon_state = "wood"
@@ -36,9 +32,6 @@
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
-
-/turf/simulated/floor/wood/airless
-	icon_state = "wood"
 
 /turf/unsimulated/desert
 	name = "sand"
@@ -50,30 +43,14 @@
 	icon_state = "center_8"
 	smooth = SMOOTH_TRUE
 
-/turf/simulated/floor/smoothtile/airless
-	icon = 'icons/turf/floors/smooth/floortile.dmi'
-	airless = TRUE
-
 /turf/simulated/floor/smoothtile/neutral
 	icon = 'icons/turf/floors/smooth/floortile_neutral.dmi'
-
-/turf/simulated/floor/smoothtile/neutral/airless
-	icon = 'icons/turf/floors/smooth/floortile_neutral.dmi'
-	airless = TRUE
 
 /turf/simulated/floor/smoothtile/white
 	icon = 'icons/turf/floors/smooth/floortile_white.dmi'
 
-/turf/simulated/floor/smoothtile/white/airless
-	icon = 'icons/turf/floors/smooth/floortile_white.dmi'
-	airless = TRUE
-
 /turf/simulated/floor/smoothtile/dark
 	icon = 'icons/turf/floors/smooth/floortile_dark.dmi'
-
-/turf/simulated/floor/smoothtile/dark/airless
-	icon = 'icons/turf/floors/smooth/floortile_dark.dmi'
-	airless = TRUE
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
@@ -83,30 +60,14 @@
 	footstep = FOOTSTEP_PLATING
 	smooth = SMOOTH_TRUE
 
-/turf/simulated/floor/engine/airless
-	icon = 'icons/turf/floors/smooth/hardfloor_1.dmi'
-	airless = TRUE
-
 /turf/simulated/floor/engine/type2
 	icon = 'icons/turf/floors/smooth/hardfloor_2.dmi'
-
-/turf/simulated/floor/engine/type2/airless
-	icon = 'icons/turf/floors/smooth/hardfloor_2.dmi'
-	airless = TRUE
 
 /turf/simulated/floor/engine/type3
 	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi'
 
-/turf/simulated/floor/engine/type3/airless
-	icon = 'icons/turf/floors/smooth/hardfloor_3.dmi'
-	airless = TRUE
-
 /turf/simulated/floor/engine/type4
 	icon = 'icons/turf/floors/smooth/hardfloor_4.dmi'
-
-/turf/simulated/floor/engine/type4/airless
-	icon = 'icons/turf/floors/smooth/hardfloor_4.dmi'
-	airless = TRUE
 
 /turf/simulated/floor/engine/break_tile()
 	return
@@ -210,6 +171,7 @@
 	thermal_conductivity = 0.05
 	layer = 2
 
+
 /turf/simulated/shuttle/wall // It's not even a floor. What is this doing here?!
 	name = "wall"
 	icon_state = "wall1"
@@ -228,10 +190,6 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/simulated/shuttle/floor/airless
-	icon_state = "floor"
-	airless = TRUE
-
 /turf/simulated/shuttle/plating
 	name = "plating"
 	icon = 'icons/turf/floors.dmi'
@@ -242,10 +200,6 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	explosive_resistance = 1
-
-/turf/simulated/shuttle/plating/airless
-	icon = 'icons/turf/floors.dmi'
-	airless = TRUE
 
 /turf/simulated/shuttle/floor4 // Added this floor tile so that I have a seperate turf to check in the shuttle -- Polymorph
 	name = "Brig floor"        // Also added it into the 2x3 brig area of the shuttle.

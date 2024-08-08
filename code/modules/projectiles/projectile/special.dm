@@ -216,13 +216,6 @@
 	damage_type = TOX
 	flag = BULLET
 
-/obj/item/projectile/acid_special_spider
-	name = "acid"
-	icon_state = "neurotoxin"
-	damage = 25
-	damage_type = TOX
-	flag = BULLET
-
 /obj/item/projectile/acid_special/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_ACIDACT
