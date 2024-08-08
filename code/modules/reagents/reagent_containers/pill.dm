@@ -11,8 +11,10 @@
 	w_class = SIZE_MINUSCULE
 	volume = 50
 	var/halved = FALSE // if set to TRUE pill cannot be split in halves again
+
 /obj/item/weapon/reagent_containers/pill/twopart
 	flags = NOREACT
+
 /obj/item/weapon/reagent_containers/pill/atom_init()
 	. = ..()
 	if(!icon_state)
