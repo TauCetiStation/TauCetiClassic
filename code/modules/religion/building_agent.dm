@@ -155,7 +155,7 @@
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "6"
 	building_type = /datum/religion_tech/cult/cooldown_reduction
-	favor_cost = 450
+	favor_cost = 330
 	piety_cost = 130
 
 /datum/building_agent/tech/cult/build_everywhere
