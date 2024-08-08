@@ -150,13 +150,13 @@
 	favor_cost = 300
 	piety_cost = 230
 
-/datum/building_agent/tech/cult/reusable_runes
-	name = "Многоразовые Руны"
+/datum/building_agent/tech/cult/cooldown_reduction
+	name = "Быстрая Телепортация"
 	icon = 'icons/obj/rune.dmi'
-	icon_state = "1"
-	building_type = /datum/religion_tech/cult/reusable_runes
-	favor_cost = 600
-	piety_cost = 50
+	icon_state = "6"
+	building_type = /datum/religion_tech/cult/cooldown_reduction
+	favor_cost = 450
+	piety_cost = 130
 
 /datum/building_agent/tech/cult/build_everywhere
 	name = "Строительство Везде"

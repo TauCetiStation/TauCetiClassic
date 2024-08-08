@@ -30,8 +30,6 @@
 	fizzle(user)
 	action(user)
 	holder_reaction(user)
-	if(!religion.get_tech(RTECH_REUSABLE_RUNE))
-		qdel(holder)
 
 /datum/rune/proc/holder_reaction(mob/living/carbon/user)
 	if(istype(holder, /obj/effect/rune))
@@ -85,7 +83,12 @@
 	if(!destination)
 		var/area/A = locate(religion.area_type)
 		destination = get_turf(pick(A.contents))
-	teleporting(destination	, user)
+		if(!religion.get_tech(RTECH_COOLDOWN_REDUCTION))
+			if(do_after(user, 20, target = user))
+				teleporting(destination	, user)
+		else
+			if(do_after(user, 10, target = user))
+				teleporting(destination	, user)
 
 /datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target, mob/user)
 	if(isenvironmentturf(target))
@@ -354,10 +357,9 @@
 	return ..()
 
 /datum/rune/cult/wall/can_action(mob/living/carbon/user)
-	if(!religion.get_tech(RTECH_REUSABLE_RUNE)) // The first click puts up a wall. The second click removes the wall and rune.
-		if(!wall)
-			action(user)
-			return FALSE
+	if(!wall)
+		action(user)
+		return FALSE
 	return TRUE
 
 /datum/rune/cult/wall/action(mob/living/carbon/user)
