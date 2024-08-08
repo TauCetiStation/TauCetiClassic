@@ -159,7 +159,7 @@
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
 					to_chat(target, "<span class='boldannounce'>Your head cries out. The veil of reality begins to crumple and something evil bleeds through.</span>")//Ow the edge
 					if(jobban_isbanned(target, "Syndicate"))
-						switch(tgui_alert(usr, "Этот разум находится под защитой. Вы можете разрушить его тело, или же нанести псионическую атаку. Но никто не отменял пощаду.", "Подчинение", list("Разрушение тела", "Разрушение разума", "Пощадить")))
+						switch(tgui_alert(usr, "Этот разум находится под защитой. Вы можете разрушить его тело, или же нанести псионическую атаку. Но никто не отменял пощаду.", "Подчинение", list("Разрушение тела", "Разрушение разума", "Пощадить", timeout = 10 SECONDS)))
 							if("Разрушение тела")
 								usr.say("RI'AH BO!")
 								target.gib()
