@@ -145,6 +145,7 @@ haram_threshold тоже должен как-то высчитываться, н
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 		target.social_credit = 0
 		to_chat(target, "<span class='warning'>\ <font size=5>[reason] Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
+		message_admins("Плувиец [target] вылетел из религии /datum/religion/pluvia [ADMIN_JMP(target)]" )
 		target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return TRUE
 	else
