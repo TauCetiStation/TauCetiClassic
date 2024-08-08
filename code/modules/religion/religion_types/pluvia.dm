@@ -21,7 +21,7 @@ remove_member забирает спеллы и регистрации
 Я осознано не зовел проверку на то, сам ли он выпил или его напоили.
 Это сделано для того чтобы у злоумышленников была возможность быстро накинуть харам_поинтов и только потом убить плувийца без последствий в виде звонков с того света.
 
-/datum/religion/pluvia/proc/drunk_haram - Если ешь палочками - все ок. Ешь руками или вилкой - лови харам поинты
+/datum/religion/pluvia/proc/food_haram - Если ешь палочками (вилкой-ложкой) - все ок. Ешь руками - лови харам поинты
 
 /datum/religion/pluvia/proc/carpet_haram - Если ходишь по ковру в обуви. Долго объяснять, просто нельзя и все.
 
@@ -170,7 +170,7 @@ haram_threshold тоже должен как-то высчитываться, н
 
 /datum/religion/pluvia/proc/food_haram(datum/source, obj/item/weapon/reagent_containers/food/snacks/target)
 	var/mob/living/carbon/human/H = source
-	if(istype(target.loc, /obj/item/weapon/kitchen/utensil/fork/sticks))
+	if(istype(target.loc, /obj/item/weapon/kitchen/utensil))
 		return
 	adjust_haram(H, haram_food, "Вы нарушаете четвертую заповедь!")
 
