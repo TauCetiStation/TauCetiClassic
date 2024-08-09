@@ -31,7 +31,6 @@
 	beauty_dead = -1500
 
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
-	COOLDOWN_DECLARE(leap_cooldown)
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
 	AddComponent(/datum/component/mood)
