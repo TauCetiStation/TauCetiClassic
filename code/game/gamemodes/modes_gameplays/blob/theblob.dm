@@ -143,7 +143,7 @@
 		return
 	var/obj/structure/blob/normal/B = new /obj/structure/blob/normal(src.loc)
 	B.density = TRUE
-	if(T.Enter(B))//Attempt to move into the tile
+	if(can_enter_turf(B, T))//Attempt to move into the tile
 		B.density = initial(B.density)
 		B.loc = T
 	else

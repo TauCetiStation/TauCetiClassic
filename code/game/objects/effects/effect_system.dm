@@ -535,7 +535,7 @@ steam.start() -- spawns the effect
 		if(!T)
 			continue
 
-		if(!T.Enter(src))
+		if(!can_enter_turf(src, T))
 			continue
 
 		var/obj/effect/effect/foam/F = locate() in T
