@@ -18,7 +18,11 @@
 	cooldown = 10 SECOND
 
 /datum/action/innate/race/leap/Grant(mob/T)
+	..()
 	RegisterSignal(T, COMSIG_MOB_CLICK, PROC_REF(leap_at))
+
+/datum/action/innate/race/leap/Destroy()
+	UnregisterSignal(T, COMSIG_MOB_CLICK)
 	..()
 
 /datum/action/innate/race/leap/Checks()
