@@ -366,7 +366,7 @@
 	if(H.getBruteLoss() > 40)
 		if(try_inject(H, chem_disp, list("bicaridine", "tricordrazine")))
 			return
-	if(H.traumatic_shock > 40 || H.shock_stage > 40)
+	if(H.traumatic_shock > 40)
 		if(try_inject(H, chem_disp, list("oxycodone", "tramadol", "paracetamol")))
 			return
 	if(H.getToxLoss() > 20)

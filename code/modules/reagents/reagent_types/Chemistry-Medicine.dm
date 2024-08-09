@@ -111,6 +111,9 @@
 	M.adjustHalLoss(-4)
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.painkiller_byeffect(5, 15)
 
 /datum/reagent/oxycodone
 	name = "Oxycodone"
@@ -128,6 +131,9 @@
 	if(volume > overdose)
 		M.adjustDrugginess(1)
 		M.hallucination = max(M.hallucination, 3)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.painkiller_byeffect(10, 25)
 
 /datum/reagent/endorphine
 	name = "Endorphine"
@@ -560,7 +566,6 @@
 		M.AdjustWeakened(-3)
 		var/mob/living/carbon/human/H = M
 		H.adjustHalLoss(-30)
-		H.shock_stage -= 20
 
 	if(M.bodytemperature < 310) //standard body temperature
 		M.adjustHalLoss(15)
@@ -773,7 +778,6 @@
 	M.AdjustWeakened(-3)
 	var/mob/living/carbon/human/H = M
 	H.adjustHalLoss(-30)
-	H.shock_stage -= 20
 
 /datum/reagent/nanocalcium
 	name = "Nano-Calcium"

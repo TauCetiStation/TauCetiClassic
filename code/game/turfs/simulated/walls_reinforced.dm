@@ -302,7 +302,7 @@
 		//slowdown, user. No need destruct all walls without debuff
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
-			C.shock_stage += 5
+			C.adjustHalLoss(15)
 		user.do_attack_animation(src)
 		user.visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</span>",
 						"<span class='warning'>Вы пытаетесь снести укрепленную стену!</span>",

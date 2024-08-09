@@ -214,18 +214,6 @@
 	else
 		..()
 
-
-//========== Shock Stage =========
-/mob/living/carbon/human/SetShockStage(amount)
-	if(species.flags[NO_PAIN])
-		return
-	shock_stage = max(amount, 0)
-
-/mob/living/carbon/human/AdjustShockStage(amount)
-	if(species.flags[NO_PAIN])
-		return
-	shock_stage = max(shock_stage + amount, 0)
-
 ////////////////////////////////////////////
 
 //Returns a list of damaged bodyparts

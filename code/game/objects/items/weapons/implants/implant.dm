@@ -321,7 +321,6 @@
 	if(ishuman(S.imp_in))
 		var/mob/living/carbon/human/H = S.imp_in
 		H.setHalLoss(0)
-		H.shock_stage = 0
 	S.imp_in.stat = CONSCIOUS
 	S.imp_in.SetParalysis(0)
 	S.imp_in.SetStunned(0)

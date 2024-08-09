@@ -36,8 +36,8 @@
 	smooth = SMOOTH_TRUE
 
 // todo:
-// probably we should make /obj/structure/falsewall 
-// and /turf/simulated/wall as meta-types not used in the game, and move 
+// probably we should make /obj/structure/falsewall
+// and /turf/simulated/wall as meta-types not used in the game, and move
 // real walls and falsewalls to subtypes
 /turf/simulated/wall/yellow
 	icon = 'icons/turf/walls/has_false_walls/wall_yellow.dmi'
@@ -447,7 +447,7 @@
 		//slowdown, user. No need destruct all walls without debuff
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
-			C.shock_stage += 5
+			C.adjustHalLoss(15)
 		user.visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
 		playsound(user, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
