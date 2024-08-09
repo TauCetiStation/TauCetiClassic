@@ -43,6 +43,11 @@
 			return
 		Remove(owner)
 	owner = T
+	if(istype(src, /datum/action/item_action/hands_free/toggle_internals))
+		if(owner.internal)
+			background_icon_state = "bg_active"
+		else
+			background_icon_state = "bg_default"
 	owner.actions.Add(src)
 	owner.update_action_buttons()
 	return
