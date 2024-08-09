@@ -79,7 +79,7 @@
 
 		var/mob/living/silicon/robot/drone/D = locate(href_list["shutdown"])
 
-		if(D.emagged || istype(D, mob/living/silicon/robot/drone/maintenance/malfuction))
+		if(D.emagged || istype(D, /mob/living/silicon/robot/drone/maintenance/malfuction))
 			to_chat(usr, "<span class='notice'>Система самоуничтожения этого дрона неисправна.</span>")
 		else if(D.stat != DEAD)
 			to_chat(usr, "<span class='warning'>You issue a kill command for the unfortunate drone.</span>")

@@ -16,7 +16,7 @@
 
 /datum/objective/malf_drone/closets/check_completion()
 	var/counter = 0
-	for(var/obj/structure/closet/C in closet_list())
+	for(var/obj/structure/closet/C in global.closet_list)
 		if(C.welded && is_station_level(C.z))
 			counter++
 	if(counter > (closet_list.len / 2))
@@ -53,7 +53,7 @@
 //	5
 /datum/objective/malf_drone/table
 	objective = "Полностью заполните отсек столами."
-	var/area/staion/target_area
+	var/area/station/target_area
 	var/list/possible_area = list(
 		/area/station/medical/sleeper = "слиперную медбея",
 		/area/station/rnd/lab = "исследовательскую лабораторию рнд",
@@ -72,9 +72,9 @@
 	var/counter = 0
 	var/turf_amount = 0
 
-	for(obj/structure/table in get_area_by_type(target_area))
+	for(var/obj/structure/table/T in get_area_by_type(target_area))
 		counter++
-	for(turf/simulated/floor in get_area_by_type(target_area))
+	for(var/turf/simulated/floor/F in get_area_by_type(target_area))
 		turf_amount++
 
 	if(counter > turf_amount / 1.5)

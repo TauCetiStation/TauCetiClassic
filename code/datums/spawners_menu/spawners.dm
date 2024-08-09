@@ -763,10 +763,10 @@
 /datum/spawner/malf_drone/proc/fabricator_deleting()
 	qdel(src)
 
-/datum/spawner/drone/jump(mob/dead/spectator)
+/datum/spawner/malf_drone/jump(mob/dead/spectator)
 	spectator.forceMove(get_turf(fabricator))
 
-/datum/spawner/drone/spawn_body(mob/dead/spectator)
+/datum/spawner/malf_drone/spawn_body(mob/dead/spectator)
 	var/client/C = spectator.client
 
 	var/mob/living/silicon/robot/drone/maintenance/malfuction/D = new
