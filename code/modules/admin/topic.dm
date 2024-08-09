@@ -2399,7 +2399,7 @@
 		var/id = text2num(href_list["index"])
 
 		var/DBQuery/query = dbcon.NewQuery({"SELECT type, adminckey, text
-			FROM erro_messages
+			FROM erro_messages 
 			WHERE id='[id]' AND deleted=0"})
 		query.Execute()
 
