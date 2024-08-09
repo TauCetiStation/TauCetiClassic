@@ -208,11 +208,11 @@
 	popup.set_content(dat)
 	popup.open()
 
-mob/living/silicon/robot/drone/maintenance/malfuction
+/mob/living/silicon/robot/drone/maintenance/malfuction
 	name = "strange drone"
 	eyes_overlay = "eyes-malfbot-"
 
-mob/living/silicon/robot/drone/maintenance/malfuction/atom_init()
+/mob/living/silicon/robot/drone/maintenance/malfuction/atom_init()
 	. = ..()
 	eyes_overlay += pickweight(list(
 		"yellow" = 3,
