@@ -212,6 +212,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 // reattach existing datum to client if client was disconnected and connects again
 /datum/preferences/proc/reattach_to_client(client/client)
 	parent = client
+	guard.holder = client
 
 /datum/preferences/proc/init_chat_bans()
 	if(!config.sql_enabled)
