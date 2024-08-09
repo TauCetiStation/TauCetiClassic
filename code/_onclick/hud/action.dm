@@ -34,7 +34,7 @@
 	button.name = name
 	if(cooldown)
 		button.maptext = ""
-		button.maptext_x = 8
+		button.maptext_x = 12
 		button.maptext_y = 0
 		button.maptext_width = 24
 		button.maptext_height = 12
