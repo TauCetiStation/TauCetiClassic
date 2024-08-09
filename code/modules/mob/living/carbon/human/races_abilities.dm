@@ -80,13 +80,6 @@
 		A.Crossed(H)
 	UnregisterSignal(H, COMSIG_ATOM_PREHITBY)
 
-//	Collin Beach leaps on you!
-//	You are crashed into Silvester!
-//	Collin Beach kicks Renault
-//	ATTACK: *no key*/(Renault) has been clawed, by tap0r/(Collin Beach) (PP) (FLW) (JMP)
-//	Collin Beach leaps on you!
-
-
 /datum/action/innate/race/leap/proc/impact(atom/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/H = owner
