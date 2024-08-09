@@ -38,11 +38,12 @@
 
 /datum/keybinding/human/race_ability
 	hotkey_keys = list("U")
-	name = "race ability"
+	name = "race_ability"
 	full_name = "Race Ability"
-	description = "Switches race ability."
+	description = "Switches your racial ability."
 
 /datum/keybinding/human/race_ability/down(client/user)
 	var/mob/living/carbon/human/H = user.mob
-	if(H.species.race_ability)
-		H.species.race_ability.Trigger()
+	var/datum/action/A = locate(H.species.race_ability) in H.actions
+	if(A)
+		A.Trigger()
