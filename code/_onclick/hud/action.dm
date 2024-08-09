@@ -23,12 +23,21 @@
 	var/background_icon_state = "bg_default"
 	var/transparent_when_unavailable = TRUE
 	var/mob/owner
+	var/toggleable = FALSE
+	var/cooldown = 0
+	var/next_use_time = 0
 
 /datum/action/New(Target)
 	target = Target
 	button = new
 	button.owner = src
 	button.name = name
+	if(cooldown)
+		button.maptext = ""
+		button.maptext_x = 8
+		button.maptext_y = 0
+		button.maptext_width = 24
+		button.maptext_height = 12
 
 /datum/action/Destroy()
 	if(owner)
@@ -57,33 +66,34 @@
 	return
 
 /datum/action/proc/Trigger()
-	if(!Checks())
-		return
-	switch(action_type)
-		if(AB_ITEM)
-			Activate()
-		if(AB_SPELL)
-			if(target)
-				var/obj/effect/proc_holder/spell = target
-				spell.Click()
-		if(AB_INNATE)
-			if(!active)
+	if(Checks())
+		switch(action_type)
+			if(AB_ITEM)
 				Activate()
-			else
-				Deactivate()
-	if(!owner)
-		return
-	if(button == null)
-		var/atom/movable/screen/movable/action_button/N = new(owner.hud_used)
-		N.owner = src.owner
-		button = N
-	button.UpdateIcon()
+			if(AB_SPELL)
+				if(target)
+					var/obj/effect/proc_holder/spell = target
+					spell.Click()
+			if(AB_INNATE)
+				if(!active)
+					Activate()
+				else
+					Deactivate()
+		if(button == null)
+			var/atom/movable/screen/movable/action_button/N = new(owner.hud_used)
+			N.owner = src.owner
+			button = N
+		UpdateButtonIcon()
 	return
 
 /datum/action/proc/Activate()
+	if(toggleable)
+		active = TRUE
 	return
 
 /datum/action/proc/Deactivate()
+	if(toggleable)
+		active = FALSE
 	return
 
 /datum/action/proc/CheckRemoval(mob/user) // TRUE if action is no longer valid for this mob and should be removed
@@ -94,10 +104,15 @@
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
-		if(!IsAvailable())
-			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
-		else
+		if(IsAvailable())
 			button.color = rgb(255,255,255,255)
+			if(active)
+				background_icon_state = "bg_active"
+			else
+				background_icon_state = initial(background_icon_state)
+		else
+			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+		button.UpdateIcon()
 
 /atom/movable/screen/movable/action_button/MouseEntered(location,control,params)
 	openToolTip(usr, src, params, title = name, content = desc)
@@ -109,6 +124,9 @@
 /datum/action/proc/Checks()
 	if(!owner)
 		return FALSE
+	if(cooldown)
+		if(world.time < next_use_time)
+			return FALSE
 	if(check_flags & AB_CHECK_INCAPACITATED)
 		if(owner.incapacitated(restrained_check))
 			return FALSE
@@ -126,32 +144,15 @@
 /datum/action/proc/UpdateName()
 	return name
 
-//Preset for an action with a cooldown
-/datum/action/cooldown
-	action_type = AB_GENERIC
-	check_flags = NONE
-	transparent_when_unavailable = FALSE
-	var/cooldown_time = 0
-	var/next_use_time = 0
+/datum/action/proc/StartCooldown()
+	if(cooldown)
+		Deactivate()
+		next_use_time = world.time + cooldown
+		button.maptext = MAPTEXT("<span class='center'><b>[round(cooldown/10, 1)]</b></span>")
+		UpdateButtonIcon()
+		START_PROCESSING(SSfastprocess, src)
 
-/datum/action/cooldown/New()
-	..()
-	button.maptext = ""
-	button.maptext_x = 8
-	button.maptext_y = 0
-	button.maptext_width = 24
-	button.maptext_height = 12
-
-/datum/action/cooldown/IsAvailable()
-	return next_use_time <= world.time
-
-/datum/action/cooldown/proc/StartCooldown()
-	next_use_time = world.time + cooldown_time
-	button.maptext = MAPTEXT("<b>[round(cooldown_time/10, 0.1)]</b>")
-	UpdateButtonIcon()
-	START_PROCESSING(SSfastprocess, src)
-
-/datum/action/cooldown/process()
+/datum/action/process()
 	if(!owner)
 		button.maptext = ""
 		STOP_PROCESSING(SSfastprocess, src)
@@ -161,14 +162,8 @@
 		UpdateButtonIcon()
 		STOP_PROCESSING(SSfastprocess, src)
 	else
-		button.maptext = MAPTEXT("<b>[round(timeleft/10, 0.1)]</b>")
+		button.maptext = MAPTEXT("<span class='center'><b>[round(timeleft/10, 1)]</b></span>")
 
-/datum/action/cooldown/Grant(mob/M)
-	..()
-	if(owner)
-		UpdateButtonIcon()
-		if(next_use_time > world.time)
-			START_PROCESSING(SSfastprocess, src)
 
 /atom/movable/screen/movable/action_button
 	var/datum/action/owner

@@ -160,6 +160,10 @@
 /// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
 #define COMSIG_ATOM_CHANGE_DIR "change_dir"
 
+/// from base of atom/throw_impact, sent by the target hit by a thrown object. (thrown_atom, hit_atom, datum/thrownthing/throwingdatum)
+#define COMSIG_ATOM_PREHITBY "atom_pre_hitby"
+	#define COMSIG_HIT_PREVENTED (1<<0)
+
 // /atom/movable signals
 /// from base of atom/movable/Move(): (/atom/newLoc)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"

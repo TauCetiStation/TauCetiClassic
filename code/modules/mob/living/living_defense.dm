@@ -225,7 +225,7 @@
 /mob/living/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 
-	if(hit_atom.density)
+	if(. && hit_atom.density)
 		visible_message("<span class='warning'>[src] crashed into \the [hit_atom]!</span>","<span class='danger'>You are crashed into \the [hit_atom]!</span>")
 		take_bodypart_damage(fly_speed * 5)
 
