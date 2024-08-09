@@ -161,8 +161,8 @@
 /area/space_structures/cloning_lab)
 "C" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Reabilitaion Chamber";
-	dir = 4
+	dir = 4;
+	name = "Reabilitaion Chamber"
 	},
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
@@ -175,8 +175,8 @@
 /area/space_structures/cloning_lab)
 "E" = (
 /obj/machinery/door/airlock/research{
-	name = "Cloning Facility";
-	dir = 4
+	dir = 4;
+	name = "Cloning Facility"
 	},
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
@@ -185,6 +185,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/book/manual/wiki/medical_genetics,
 /obj/structure/table,
+/obj/item/weapon/disk/tech_disk/hud,
 /turf/simulated/floor,
 /area/space_structures/cloning_lab)
 "G" = (

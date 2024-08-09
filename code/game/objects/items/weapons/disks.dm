@@ -143,6 +143,16 @@
 	m_amt = 30
 	g_amt = 10
 	var/datum/tech/stored
+	var/datum/technology/stored_technology
+
+/obj/item/weapon/disk/tech_disk/hud
+	name = "HUD tech disk"
+	desc = "That disk contains design of basic HUD upgrade"
+	w_class = SIZE_TINY
+	m_amt = 30
+	g_amt = 10
+	stored_technology = new /datum/technology/tier1_hud_upgrade()
+
 
 /obj/item/weapon/disk/tech_disk/atom_init()
 	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)

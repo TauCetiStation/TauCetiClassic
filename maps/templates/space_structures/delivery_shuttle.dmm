@@ -42,6 +42,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/disk/tech_disk/hud,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
