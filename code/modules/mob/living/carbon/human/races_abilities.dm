@@ -22,7 +22,9 @@
 	..()
 
 /datum/action/innate/race/leap/Checks()
-	. = ..()
+	if(!..())
+		return FALSE
+
 	var/mob/living/carbon/human/H = owner
 
 	if(H.status_flags & LEAPING) // Leap while you leap, so you can leap while you leap
@@ -35,6 +37,8 @@
 	if(H.incapacitated(LEGS) || H.buckled || H.anchored || H.stance_damage >= 4) //because you need !restrained legs to leap
 		to_chat(H, "<span class='warning'>You cannot leap in your current state.</span>")
 		return FALSE
+
+	return TRUE
 
 #define MAX_LEAP_DIST 4
 

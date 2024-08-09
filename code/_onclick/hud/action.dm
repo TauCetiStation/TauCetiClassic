@@ -66,7 +66,7 @@
 	return
 
 /datum/action/proc/Trigger()
-	if(owner && Checks())
+	if(Checks())
 		switch(action_type)
 			if(AB_ITEM)
 				Activate()
@@ -122,6 +122,8 @@
 
 /// returns 1 if all checks pass
 /datum/action/proc/Checks()
+	if(!owner)
+		return FALSE
 	if(cooldown)
 		if(world.time < next_use_time)
 			return FALSE
