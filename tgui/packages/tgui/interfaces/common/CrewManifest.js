@@ -1,6 +1,5 @@
 import { useBackend } from "../../backend";
 import { Box, Section, Table } from "../../components";
-import { decodeHtmlEntities } from "../../../common/string";
 import { COLORS } from "../../constants";
 
 const deptCols = COLORS.department;
@@ -27,18 +26,10 @@ const HCC = role => {
   return "orange";
 };
 
-// Head bold check. Abbreviated to save on 80 char
-const HBC = role => {
-  // Return true if they are a head, or a QM/IAA
-  if ((HeadRoles.indexOf(role) !== -1) || role === "Quartermaster" || role === "Internal Affairs Agent") {
-    return true;
-  } else {
-    return false;
-  }
-};
+// Head bold check. Abbreviated to save on 80 char. Return true if they are a head, or a QM/IAA
+const HBC = role => (HeadRoles.indexOf(role) !== -1 || role === "Quartermaster" || role === "Internal Affairs Agent");
 
 const ManifestTable = group => {
-  console.log("Rendering ManifestTable with group:", group);
 
   if (!group || group.length === 0) {
     return null;
@@ -67,111 +58,32 @@ const ManifestTable = group => {
 
 export const CrewManifest = (props, context) => {
   const { act } = useBackend(context);
-  const {
-    manifest,
-  } = props;
-
-  const {
-    heads,
-    centcom,
-    sec,
-    eng,
-    med,
-    sci,
-    civ,
-    misc,
-  } = manifest;
+  const { manifest } = props;
+  const { heads, centcom, sec, eng, med, sci, civ, misc } = manifest;
+  const renderSection = (title, color, data) => (
+    <Section
+      title={(
+        <Box backgroundColor={color} m={-1} pt={1} pb={1}>
+          <Box ml={1} textAlign="center" fontSize={1.4}>
+            {title}
+          </Box>
+        </Box>
+      )}
+      level={2}>
+      {ManifestTable(data)}
+    </Section>
+  );
 
   return (
     <Box>
-      <Section
-        title={(
-          <Box backgroundColor={deptCols.captain} m={-1} pt={1} pb={1}>
-            <Box ml={1} textAlign="center" fontSize={1.4}>
-              Command
-            </Box>
-          </Box>
-        )}
-        level={2}>
-        {ManifestTable(heads)}
-      </Section>
-      <Section
-        title={(
-          <Box backgroundColor={deptCols.ntrep} m={-1} pt={1} pb={1}>
-            <Box ml={1} textAlign="center" fontSize={1.4}>
-              NanoTrasen Representatives
-            </Box>
-          </Box>
-        )}
-        level={2}>
-        {ManifestTable(centcom)}
-      </Section>
-      <Section
-        title={(
-          <Box backgroundColor={deptCols.security} m={-1} pt={1} pb={1}>
-            <Box ml={1} textAlign="center" fontSize={1.4}>
-              Security
-            </Box>
-          </Box>
-        )}
-        level={2}>
-        {ManifestTable(sec)}
-      </Section>
-      <Section
-        title={(
-          <Box backgroundColor={deptCols.engineering} m={-1} pt={1} pb={1}>
-            <Box ml={1} textAlign="center" fontSize={1.4}>
-              Engineering
-            </Box>
-          </Box>
-        )}
-        level={2}>
-        {ManifestTable(eng)}
-      </Section>
-      <Section
-        title={(
-          <Box backgroundColor={deptCols.medbay} m={-1} pt={1} pb={1}>
-            <Box ml={1} textAlign="center" fontSize={1.4}>
-              Medical
-            </Box>
-          </Box>
-        )}
-        level={2}>
-        {ManifestTable(med)}
-      </Section>
-      <Section
-        title={(
-          <Box backgroundColor={deptCols.science} m={-1} pt={1} pb={1}>
-            <Box ml={1} textAlign="center" fontSize={1.4}>
-              Science
-            </Box>
-          </Box>
-        )}
-        level={2}>
-        {ManifestTable(sci)}
-      </Section>
-      <Section
-        title={(
-          <Box backgroundColor={deptCols.other} m={-1} pt={1} pb={1}>
-            <Box ml={1} textAlign="center" fontSize={1.4}>
-              Civilian
-            </Box>
-          </Box>
-        )}
-        level={2}>
-        {ManifestTable(civ)}
-      </Section>
-      <Section
-        title={(
-          <Box m={-1} pt={1} pb={1}>
-            <Box ml={1} textAlign="center" fontSize={1.4}>
-              Misc
-            </Box>
-          </Box>
-        )}
-        level={2}>
-        {ManifestTable(misc)}
-      </Section>
+      {renderSection("Command", deptCols.captain, heads)}
+      {renderSection("NanoTrasen Representatives", deptCols.ntrep, centcom)}
+      {renderSection("Security", deptCols.security, sec)}
+      {renderSection("Engineering", deptCols.engineering, eng)}
+      {renderSection("Medical", deptCols.medbay, med)}
+      {renderSection("Science", deptCols.science, sci)}
+      {renderSection("Civilian", deptCols.other, civ)}
+      {renderSection("Misc", null, misc)}
     </Box>
   );
 };

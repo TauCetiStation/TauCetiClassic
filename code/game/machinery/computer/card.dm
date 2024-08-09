@@ -107,7 +107,7 @@
 	data["authenticated"] = is_authenticated()
 	data["account_number"] = modify ? modify.associated_account_number : null
 	data["salary"] = datum_account ? datum_account.owner_salary : "not_found"
-	data["centcom_access"] = is_centcom() ? TRUE : FALSE
+	data["centcom_access"] = is_centcom()
 	data["selectedAccess"] = modify ? modify.access : list()
 
 	data["command_jobs"] = command_positions
@@ -258,7 +258,7 @@
 		if ("account")
 			if (is_authenticated())
 				if (Adjacent(usr) || issilicon(usr))
-					var/datum/money_account/account = get_account(text2num(input("Account Number", "Input Number", modify.associated_account_number) as text | null))
+					var/datum/money_account/account = get_account(input("Account Number", "Input Number", modify.associated_account_number) as num | null)
 					if(account)
 						modify.associated_account_number = account.account_number
 					else

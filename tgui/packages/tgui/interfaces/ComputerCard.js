@@ -71,6 +71,36 @@ export const ComputerCard = (props, context) => {
     </Section>
   );
 
+  const departments = [
+    { label: "Command", jobs: data.command_jobs },
+    { label: "NT Representatives", jobs: data.nt_representatives },
+    { label: "Engineering", jobs: data.engineering_jobs },
+    { label: "Medical", jobs: data.medical_jobs },
+    { label: "Science", jobs: data.science_jobs },
+    { label: "Security", jobs: data.security_jobs },
+    { label: "Civilian", jobs: data.civilian_jobs },
+    { label: "Custom", jobs: ["Custom"] },
+    { label: "CentCom", jobs: data.centcom_jobs, condition: !!data.centcom_access },
+  ];
+
+
+  const generateDepartmentList = () =>
+    departments.map(({ label, jobs, condition = true, color, icon, tooltip }) => (
+      condition && (
+        <LabeledList.Item key={label} label={label}>
+          {jobs.map(v => (
+            <Button
+              selected={v === data.modify_rank}
+              key={v} content={v}
+              color={color}
+              icon={icon}
+              tooltip={tooltip}
+              onClick={() => act("assign", { assign_modify: v })} />
+          ))}
+        </LabeledList.Item>
+      )
+    ));
+
   let bodyBlock;
   switch (data.mode) {
     case 0: // Access Modification
@@ -91,77 +121,7 @@ export const ComputerCard = (props, context) => {
           <Fragment>
             <Section title="Department">
               <LabeledList>
-                <LabeledList.Item label="Command">
-                  {data.command_jobs.map(v => (
-                    <Button
-                      selected={v === data.modify_rank}
-                      key={v} content={v}
-                      onClick={() => act("assign", { assign_modify: v })} />
-                  ))}
-                </LabeledList.Item>
-                <LabeledList.Item label="NT Representatives">
-                  {data.nt_representatives.map(v => (
-                    <Button
-                      selected={v === data.modify_rank}
-                      key={v} content={v}
-                      onClick={() => act("assign", { assign_modify: v })} />
-                  ))}
-                </LabeledList.Item>
-                <LabeledList.Item label="Engineering">
-                  {data.engineering_jobs.map(v => (
-                    <Button
-                      selected={v === data.modify_rank}
-                      key={v} content={v}
-                      onClick={() => act("assign", { assign_modify: v })} />
-                  ))}
-                </LabeledList.Item>
-                <LabeledList.Item label="Medical">
-                  {data.medical_jobs.map(v => (
-                    <Button
-                      selected={v === data.modify_rank}
-                      key={v} content={v}
-                      onClick={() => act("assign", { assign_modify: v })} />
-                  ))}
-                </LabeledList.Item>
-                <LabeledList.Item label="Science">
-                  {data.science_jobs.map(v => (
-                    <Button
-                      selected={v === data.modify_rank}
-                      key={v} content={v}
-                      onClick={() => act("assign", { assign_modify: v })} />
-                  ))}
-                </LabeledList.Item>
-                <LabeledList.Item label="Security">
-                  {data.security_jobs.map(v => (
-                    <Button
-                      selected={v === data.modify_rank}
-                      key={v} content={v}
-                      onClick={() => act("assign", { assign_modify: v })} />
-                  ))}
-                </LabeledList.Item>
-                <LabeledList.Item label="Civilian">
-                  {data.civilian_jobs.map(v => (
-                    <Button
-                      selected={v === data.modify_rank}
-                      key={v} content={v}
-                      onClick={() => act("assign", { assign_modify: v })} />
-                  ))}
-                </LabeledList.Item>
-                <LabeledList.Item label="Custom">
-                  <Button label="Custom"
-                    key="Custom" content="Custom"
-                    onClick={() => act("assign", { assign_modify: "Custom" })} />
-                </LabeledList.Item>
-                {!!data.centcom_access && (
-                  <LabeledList.Item label="CentCom">
-                    {data.centcom_jobs.map(v => (
-                      <Button
-                        selected={v === data.modify_rank}
-                        key={v} content={v}
-                        onClick={() => act("assign", { assign_modify: v })} />
-                    ))}
-                  </LabeledList.Item>
-                )}
+                {generateDepartmentList()}
                 <LabeledList.Item label="Demotions">
                   <Button
                     disabled={"Demoted" === data.modify_rank}
