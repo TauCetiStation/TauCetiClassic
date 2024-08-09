@@ -360,7 +360,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new
 	s.set_up(5, 1, src)
 	s.start()
-	toggle_stealth()
+	toggle_stealth(TRUE)
 
 /obj/item/clothing/suit/space/vox/stealth/attack_reaction(mob/living/L, reaction_type, mob/living/carbon/human/T = null)
 	if(on)
