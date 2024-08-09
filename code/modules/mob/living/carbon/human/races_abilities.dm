@@ -22,9 +22,6 @@
 	icon_state = "[initial(icon_state)]_[on]"
 
 /mob/living/carbon/human/proc/switch_leap()
-	if(!HAS_TRAIT(src, TRAIT_CAN_LEAP))
-		to_chat(src, "<span class='notice'>Вы не умеете прыгать!</span>")
-		return
 	switch(leap_mode)
 		if(LEAP_MODE_OFF)
 			to_chat(src, "<span class='notice'>Вы попытаетесь совершить прыжок.</span>")
@@ -207,12 +204,8 @@
 	cooldown_time = 600
 
 /datum/action/cooldown/tailpunch/Checks()
-	var/mob/living/carbon/human/H = owner
-	if(!HAS_TRAIT(H, TRAIT_TAILPUNCH))
-		to_chat(H, "<span class='notice'>Вы не умеете пользоваться хвостом!</span>")
-		return FALSE
 	if(!IsAvailable())
-		to_chat(H, "<span class='notice'>Хвост слишком болит чтобы делать им что-то ещё раз!</span>")
+		to_chat(owner, "<span class='notice'>Хвост слишком болит чтобы делать им что-то ещё раз!</span>")
 		return FALSE
 	. = ..()
 

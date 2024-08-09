@@ -23,7 +23,6 @@
 	var/datum/unarmed_attack/unarmed                                          // For empty hand harm-intent attack
 	var/unarmed_type = /datum/unarmed_attack
 	var/datum/action/race_ability = null
-	var/race_ability_trait = null
 	var/brute_mod = 1                                    // Physical damage multiplier (0 == immunity).
 	var/burn_mod = 1                                     // Burn damage multiplier.
 	var/oxy_mod = 1                                      // Oxyloss multiplier.
@@ -282,8 +281,7 @@
 	H.exhale_gas = exhale_type
 	H.poison_gas = poison_type
 
-	if(race_ability && race_ability_trait)
-		ADD_TRAIT(H, race_ability_trait, ROUNDSTART_TRAIT)
+	if(race_ability)
 		var/datum/action/A = new race_ability(H)
 		A.Grant(H)
 
@@ -303,8 +301,7 @@
 	for(var/emote in emotes)
 		H.clear_emote(emote)
 
-	if(race_ability && race_ability_trait)
-		REMOVE_TRAIT(H, race_ability_trait, ROUNDSTART_TRAIT)
+	if(race_ability)
 		var/datum/action/A = locate(race_ability) in H.actions
 		qdel(A)
 
@@ -373,7 +370,6 @@
 	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
 	race_ability = /datum/action/cooldown/tailpunch
-	race_ability_trait = TRAIT_TAILPUNCH
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
@@ -582,7 +578,6 @@
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	race_ability = /datum/action/leap
-	race_ability_trait = TRAIT_CAN_LEAP
 	dietflags = DIET_OMNI
 
 	cold_level_1 = 80
@@ -693,7 +688,6 @@
 	language = LANGUAGE_VOXPIDGIN
 	unarmed_type = /datum/unarmed_attack/claws/armalis
 	race_ability = null
-	race_ability_trait = null
 	dietflags = DIET_OMNI	//should inherit this from vox, this is here just in case
 
 	warning_low_pressure = 50
