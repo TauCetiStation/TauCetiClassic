@@ -80,7 +80,7 @@
 
 /obj/item/seeds/gatfruit
 	name = "pack of gatfruit seeds"
-	desc = "These seeds grow into .357 revolvers."
+	desc = "These seeds grow into a real buck of a shot."
 	icon_state = "seed-gatfruit"
 	species = "gatfruit"
 	plantname = "Gatfruit Tree"
