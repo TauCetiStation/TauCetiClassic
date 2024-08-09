@@ -45,7 +45,8 @@
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	if(halved)
 		return
-	flags = null
+	// reset flags and call reaction for pill/twopart pills
+	flags &= ~NOREACT
 	reagents.handle_reactions()
 	user.drop_from_inventory(src)
 	var/volume_half = reagents.total_volume / 2
