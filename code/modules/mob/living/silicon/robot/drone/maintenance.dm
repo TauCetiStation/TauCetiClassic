@@ -207,3 +207,31 @@
 	var/datum/browser/popup = new(src, "robotmod", "Drone modules")
 	popup.set_content(dat)
 	popup.open()
+
+mob/living/silicon/robot/drone/maintenance/malfuction
+	name = "strange drone"
+	eyes_overlay = "eyes-malfbot-"
+
+mob/living/silicon/robot/drone/maintenance/malfuction/atom_init()
+	. = ..()
+	eyes_overlay += pickweight(list(
+		"yellow" = 3,
+		"green" = 3,
+		"purple" = 3,
+		"rainbow" = 1))
+	updateicon()
+
+/mob/living/silicon/robot/drone/maintenance/malfuction/updatename()
+	real_name = "strange drone ([rand(100,999)])"
+	name = real_name
+
+/mob/living/silicon/robot/drone/maintenance/malfuction/init()
+	..()
+	laws = new /datum/ai_laws/drone/malfuction()
+
+/mob/living/silicon/robot/drone/maintenance/malfuction/shut_down()
+	return
+/mob/living/silicon/robot/drone/maintenance/malfuction/request_player()
+	return
+
+

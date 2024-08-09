@@ -746,3 +746,32 @@
 	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
 	R.rename = FALSE
 	setup_role(R, TRUE)
+
+/datum/spawner/malf_drone
+	name = "Сбойный Дрон"
+	desc = "Станция взывает к вам, ей необходимо преображение."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	var/obj/machinery/drone_fabricator/fabricator
+
+/datum/spawner/malf_drone/New(obj/machinery/drone_fabricator/DF)
+	. = ..()
+	fabricator = DF
+	RegisterSignal(fabricator, COMSIG_PARENT_QDELETING, PROC_REF(fabricator_deleting))
+
+/datum/spawner/malf_drone/proc/fabricator_deleting()
+	qdel(src)
+
+/datum/spawner/drone/jump(mob/dead/spectator)
+	spectator.forceMove(get_turf(fabricator))
+
+/datum/spawner/drone/spawn_body(mob/dead/spectator)
+	var/client/C = spectator.client
+
+	var/mob/living/silicon/robot/drone/maintenance/malfuction/D = new
+	D.key = C.key
+	D.forceMove(get_turf(fabricator))
+
+	var/datum/faction/malf_drones/F = find_faction_by_type(/datum/faction/malf_drones)
+	add_faction_member(F, D, TRUE, TRUE)

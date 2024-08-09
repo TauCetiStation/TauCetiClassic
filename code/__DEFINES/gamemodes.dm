@@ -25,6 +25,7 @@
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
 #define F_ZOMBIES            "Zobmies"
 #define F_REPLICATORS        "Replicators"
+#define F_MALF_DRONES		 "Malf Drones"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
@@ -67,6 +68,7 @@
 #define REPLICATOR "Replicator"
 #define PIRATE "Pirate"
 #define PRISONER "Prisoner"
+#define MALF_DRONE "Malf Drone"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
