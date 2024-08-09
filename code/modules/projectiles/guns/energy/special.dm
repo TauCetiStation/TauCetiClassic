@@ -547,6 +547,13 @@
 /obj/item/weapon/gun/energy/gun/portal/emp_act(severity)
 	return
 
+/obj/item/weapon/gun/energy/gun/portal/loaded/atom_init()
+	. = ..()
+	var/obj/item/device/assembly/signaler/anomaly/C = new(src)
+	firing_core = C
+	modifystate = 2
+	update_icon()
+
 /obj/item/weapon/gun/energy/retro
 	name ="retro phaser"
 	icon_state = "retro"

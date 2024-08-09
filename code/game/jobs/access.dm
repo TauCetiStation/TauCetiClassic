@@ -71,6 +71,7 @@
 /var/const/access_engineering_lobby = 71
 /var/const/access_medbay_storage = 72
 /var/const/access_oldstation = 73
+/var/const/access_space_traders = 74
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -554,7 +555,8 @@
 				"Marine",
 				"Marine Squad Leader",
 				"Senior Engineer",
-				"Senior Medic")
+				"Senior Medic",
+				"Space Trader")
 
 /obj/proc/GetJobName() //Used in secHUD icon generation
 	if (!istype(src, /obj/item/device/pda) && !istype(src,/obj/item/weapon/card/id))

@@ -29,6 +29,9 @@
 	else
 		return ..()
 
+/obj/item/stack/telecrystal/three
+	amount = 3
+
 /obj/item/stack/telecrystal/five
 	amount = 5
 

@@ -116,6 +116,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "diamond"
 	can_be_wall = TRUE
 
+/obj/item/stack/sheet/mineral/diamond/twenty
+	amount = 20
 
 /obj/item/stack/sheet/mineral/diamond/atom_init()
 	. = ..()
@@ -132,6 +134,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "uranium"
 	can_be_wall = TRUE
 
+/obj/item/stack/sheet/mineral/uranium/twenty
+	amount = 20
 
 /obj/item/stack/sheet/mineral/uranium/atom_init()
 	. = ..()
@@ -149,6 +153,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	is_fusion_fuel = TRUE
 	can_be_wall = TRUE
 
+/obj/item/stack/sheet/mineral/phoron/twenty
+	amount = 20
 
 /obj/item/stack/sheet/mineral/phoron/atom_init()
 	. = ..()
@@ -189,7 +195,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "gold"
 	can_be_wall = TRUE
 
-
+/obj/item/stack/sheet/mineral/gold/twenty
+	amount = 20
 
 /obj/item/stack/sheet/mineral/gold/atom_init()
 	. = ..()
@@ -206,7 +213,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "silver"
 	can_be_wall = TRUE
 
-
+/obj/item/stack/sheet/mineral/silver/twenty
+	amount = 20
 
 /obj/item/stack/sheet/mineral/silver/atom_init()
 	. = ..()

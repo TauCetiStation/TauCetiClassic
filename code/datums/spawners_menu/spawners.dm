@@ -746,3 +746,74 @@
 	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
 	R.rename = FALSE
 	setup_role(R, TRUE)
+
+/*
+ * SPACE TRADERS
+*/
+/datum/spawner/space_trader
+	name = "Космический торговец"
+	desc = "Космический торговец."
+
+	ranks = list(ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	time_while_available = 4 MINUTES
+	var/datum/role/role
+
+/datum/spawner/space_trader/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H = new
+	C.create_human_apperance(H)
+	H.key = C.key
+	H.forceMove(spawnloc)
+
+	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
+	F.roletype = role
+	add_faction_member(F, H, TRUE, TRUE)
+
+/datum/spawner/space_trader/dealer
+	name = "Космоторговец барыга"
+	desc = "Барыга, владеющий торговым судном и товаром на нём. Заработайте столько денег, сколько сможете увезти!"
+	spawn_landmark_name = "Space Trader Dealer"
+	role = /datum/role/space_trader/dealer
+
+/datum/spawner/space_trader/guard
+	name = "Космоторговец охранник"
+	desc = "ЧОПовец, нанятый барыгой для охраны судна и товара на нём от станционных воришек и космических пиратов."
+	spawn_landmark_name = "Space Trader Guard"
+	role = /datum/role/space_trader/guard
+
+/datum/spawner/space_trader/porter
+	name = "Космоторговец посыльный"
+	desc = "Таяран грузчик, работающий на барыгу. Таскайте грузы, выставляйте товары на продажу, помогите барыге обогатиться и не забудьте спросить свою долю!"
+	spawn_landmark_name = "Space Trader Porter"
+	role = /datum/role/space_trader/porter
+
+// porter - always tajaran
+/datum/spawner/space_trader/porter/can_spawn(mob/dead/spectator)
+	if(is_alien_whitelisted_banned(spectator, TAJARAN) || !is_alien_whitelisted(spectator, TAJARAN))
+		to_chat(spectator, "<span class='warning'>Вы не можете играть за таярана.</span>")
+		return FALSE
+	return ..()
+
+/datum/spawner/space_trader/porter/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/client/C = spectator.client
+
+	var/mob/living/carbon/human/H = new(null, TAJARAN)
+	var/new_name = capitalize(pick(global.tajaran_male_first)) + " " + capitalize(pick(global.last_names))
+	C.create_human_apperance(H, new_name)
+	H.key = C.key
+	H.forceMove(spawnloc)
+
+	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
+	F.roletype = role
+	add_faction_member(F, H, TRUE, TRUE)
+
+/*
+ *
+*/
