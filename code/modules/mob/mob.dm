@@ -679,6 +679,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(client && client.holder)
 		if(statpanel("Tickets"))
 			global.ahelp_tickets.stat_entry()
+
+		if(has_mentor_powers(client))
+			if(statpanel("Tickets"))
+				global.mhelp_tickets.stat_entry()
+
 		if(client.holder.rights & R_ADMIN)
 			if(statpanel("MC"))
 				stat("CPU:", "[world.cpu]")

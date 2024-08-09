@@ -222,6 +222,7 @@ var/global/list/blacklisted_builds = list(
 	tgui_panel = new(src)
 
 	global.ahelp_tickets?.ClientLogin(src)
+	global.mhelp_tickets?.ClientLogin(src)
 
 	//Admin Authorisation
 	holder = admin_datums[ckey]
@@ -354,7 +355,10 @@ var/global/list/blacklisted_builds = list(
 		admins -= src
 	global.ahelp_tickets?.ClientLogout(src)
 	directory -= ckey
-	mentors -= src
+	if(holder)
+		holder.owner = null
+		mentors -= src
+	global.mhelp_tickets?.ClientLogout(src)
 	clients -= src
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	LAZYREMOVE(movingmob?.clients_in_contents, src)
