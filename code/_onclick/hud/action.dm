@@ -34,7 +34,7 @@
 	button.name = name
 	if(cooldown)
 		button.maptext = ""
-		button.maptext_x = 12
+		button.maptext_x = 8
 		button.maptext_y = 0
 		button.maptext_width = 24
 		button.maptext_height = 12
@@ -148,7 +148,7 @@
 	if(cooldown)
 		Deactivate()
 		next_use_time = world.time + cooldown
-		button.maptext = MAPTEXT("<b>[round(cooldown/10, 1)]</b>")
+		button.maptext = MAPTEXT("<span class='center'><b>[round(cooldown/10, 1)]</b></span>")
 		UpdateButtonIcon()
 		START_PROCESSING(SSfastprocess, src)
 
@@ -162,7 +162,7 @@
 		UpdateButtonIcon()
 		STOP_PROCESSING(SSfastprocess, src)
 	else
-		button.maptext = MAPTEXT("<b>[round(timeleft/10, 1)]</b>")
+		button.maptext = MAPTEXT("<span class='center'><b>[round(timeleft/10, 1)]</b></span>")
 
 
 /atom/movable/screen/movable/action_button
