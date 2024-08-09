@@ -18,12 +18,6 @@
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "Trader Porter"
 
-/datum/announcement/centcomm/space_traders
-	name = "Event: Space Traders"
-	subtitle = "Космоторговцы."
-	message = "Мы получили и одобрили запрос на стыковку от группы космоторговцев. " + \
-			"У них кончаются припасы и есть товары для продажи. Ожидайте гостей."
-
 /datum/faction/space_traders
 	name = F_SPACE_TRADERS
 	ID = F_SPACE_TRADERS
