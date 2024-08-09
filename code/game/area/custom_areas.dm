@@ -56,6 +56,13 @@
 	dynamic_lighting = TRUE
 	looped_ambience = 'sound/ambience/loop_nuke_ops.ogg'
 
+/area/custom/syndicate_mothership/Entered(atom/movable/A, atom/OldLoc)
+	. = ..()
+	if(!isliving(A))
+		return
+	for(var/obj/effect/spawner/mob_spawn/M in src)
+		M.creatMob()
+
 /area/custom/syndicate_mothership/control
 	name = "Syndicate Control Room"
 	cases = list("комната управления Синдиката", "комнаты управления Синдиката", "комнате управления Синдиката", "комнату управления Синдиката", "комнатой управления Синдиката", "комнате управления Синдиката")
