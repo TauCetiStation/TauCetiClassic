@@ -98,3 +98,9 @@
 /datum/gear/head/chep
 	display_name = "Maid cap"
 	path = /obj/item/clothing/head/chep
+
+/datum/gear/head/pluvia_hat
+	display_name = "Pluvia Hat"
+	path = /obj/item/clothing/head/pluvia
+	cost = 1
+	whitelisted = PLUVIAN

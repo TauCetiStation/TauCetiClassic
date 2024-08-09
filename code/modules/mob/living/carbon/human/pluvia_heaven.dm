@@ -36,10 +36,11 @@ var/global/list/wisp_start_landmark = list()
 	cases = list("Рекомендательное письмо", "Рекомендательного письма", "Рекомендательному письму", "Рекомендательное письмо", "Рекомендательным письмом", "Рекомендательном письме")
 	desc = "Билет до рая."
 	w_class = SIZE_TINY
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "scroll"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "bless-vote"
+	item_state_world = "bless-vote_world"
 	var/mob/living/carbon/human/owner
-	var/sign = 0
+	var/sign = FALSE
 	var/sign_place = "ПОДПИСАТЬ"
 
 /obj/item/weapon/bless_vote/attack_self(mob/living/carbon/user)
@@ -62,7 +63,7 @@ var/global/list/wisp_start_landmark = list()
 	if(href_list["choice"] == "yes")
 		if(usr == owner)
 			to_chat(usr, "<span class='warning'>Свое письмо нельзя подписывать!</span>")
-		else if(sign == 1)
+		else if(sign)
 			to_chat(usr, "<span class='notice'>Эта бумага уже подписана</span>")
 		else if(H.mind.social_credit > 0)
 			to_chat(usr, "<span class='notice'>Подписано!</span>")
@@ -71,10 +72,11 @@ var/global/list/wisp_start_landmark = list()
 			H.mind.social_credit -= 1
 			if(!owner.ismindshielded() && !owner.isloyal())
 				owner.mind.social_credit += 1 //@FatFat Возможно стоит добавить налог на подписи от других плувийцев. Типо не +1, а +0.5. Не уверен что это может хорошо повлиять на их социанльые взаимодействия
-			sign = 1
+			sign = TRUE
 			to_chat(owner, "<span class='notice'>Ваш уровень кармы повышен!</span>")
 		else
 			to_chat(usr, "<span class='notice'>У вас нет права голоса</span>")
+
 
 /obj/effect/proc_holder/spell/create_bless_vote
 	name = "Рекомендательное письмо"
@@ -82,8 +84,7 @@ var/global/list/wisp_start_landmark = list()
 	range = 1
 	charge_max = 0
 	clothes_req = FALSE
-
-	action_icon_state = "charge" // не забыть попросить нарисовать эконку для этого спела
+	action_icon_state = "pluvia_bless"
 	sound = 'sound/magic/heal.ogg'
 
 /obj/effect/proc_holder/spell/create_bless_vote/choose_targets(mob/user = usr)
@@ -117,7 +118,7 @@ var/global/list/wisp_start_landmark = list()
 	name = "Связь с предками"
 	cases = list("Связь с предками", "Связи с предками", "Связи с предками", "Связь с предками", "Связью с предками", "Связи с предками")
 	desc = "Попытайтесь связаться с душами предков"
-	action_icon_state = "commune" // не забыть попросить нарисовать эконку для этого спела
+	action_icon_state = "pluvia_call"
 	clothes_req = FALSE
 	range = -1
 	charge_max = 20

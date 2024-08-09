@@ -205,7 +205,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)
 
 /obj/item/clothing/head/pluvia
-	name = "pluvia hat"
+	name = "pluvia non la"
 	desc = "Prepare to heavy rain"
 	icon_state = "pluvia_hat"
 	item_state = "pluvia_hat"
