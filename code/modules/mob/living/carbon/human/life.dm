@@ -1279,7 +1279,7 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/handle_nutrition()
 	. = ..()
-	if(nutrition > NUTRITION_LEVEL_WELL_FED)
+	if(nutrition > NUTRITION_LEVEL_FAT)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
 	else
