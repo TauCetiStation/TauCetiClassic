@@ -288,8 +288,6 @@
 	#define COMPONENT_CANCEL_CLICK 1
 /// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
 #define COMSIG_MOB_SLIP "movable_slip"
-/// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
-#define COMSIG_MOB_THRO "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
 ///from base of mob/create_mob_hud(): ()
