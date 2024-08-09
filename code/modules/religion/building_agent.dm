@@ -158,6 +158,14 @@
 	favor_cost = 600
 	piety_cost = 50
 
+/datum/building_agent/tech/cult/cooldown_reduction
+	name = "Быстрая Телепортация"
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "6"
+	building_type = /datum/religion_tech/cult/cooldown_reduction
+	favor_cost = 330
+	piety_cost = 130
+
 /datum/building_agent/tech/cult/build_everywhere
 	name = "Строительство Везде"
 	icon = 'icons/obj/cult.dmi'
