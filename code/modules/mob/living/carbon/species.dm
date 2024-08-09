@@ -377,10 +377,6 @@
 
 	is_common = TRUE
 
-/datum/species/pluvian/on_gain(mob/living/carbon/human/M)
-	..()
-	global.pluvia_religion.add_member(M, HOLY_ROLE_PRIEST)
-
 /datum/species/pluvian/on_loose(mob/living/M, new_species)
 	global.pluvia_religion.remove_member(M, HOLY_ROLE_PRIEST)
 	..()

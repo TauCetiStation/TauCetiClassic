@@ -740,6 +740,8 @@
 	if(!mind.assigned_role)
 		mind.assigned_role = "default"	//default
 	mind.social_credit = species.start_social_credit //Pluvia social credit system
+	if(ispluvian(src))
+		global.pluvia_religion.add_member(src, HOLY_ROLE_PRIEST)
 
 //slime
 /mob/living/carbon/slime/mind_initialize()
