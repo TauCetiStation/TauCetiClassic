@@ -39,6 +39,8 @@
 			P.icon_state = P1.icon_state
 			qdel(P1)
 			qdel(src)
+		return
+	return ..()
 
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	if(halved)
