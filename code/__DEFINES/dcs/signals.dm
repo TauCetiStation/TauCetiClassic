@@ -160,6 +160,10 @@
 /// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
 #define COMSIG_ATOM_CHANGE_DIR "change_dir"
 
+/// from base of atom/throw_impact, sent by the target hit by a thrown object. (thrown_atom, hit_atom, datum/thrownthing/throwingdatum)
+#define COMSIG_ATOM_PREHITBY "atom_pre_hitby"
+	#define COMSIG_HIT_PREVENTED (1<<0)
+
 // /atom/movable signals
 /// from base of atom/movable/Move(): (/atom/newLoc)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
@@ -284,6 +288,8 @@
 	#define COMPONENT_CANCEL_CLICK 1
 /// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
 #define COMSIG_MOB_SLIP "movable_slip"
+/// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
+#define COMSIG_MOB_THRO "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
 ///from base of mob/create_mob_hud(): ()

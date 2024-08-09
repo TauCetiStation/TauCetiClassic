@@ -1,12 +1,12 @@
-/datum/action/cooldown/spawn_induction_package
+/datum/action/spawn_induction_package
 	name = "Создать Вступительный Набор"
 	check_flags = AB_CHECK_ALIVE
 	button_icon_state = "recruit"
-	cooldown_time = 300
+	cooldown = 30 SECONDS
 	/// The family antagonist datum of the "owner" of this action.
 	var/datum/faction/gang/my_gang_datum
 
-/datum/action/cooldown/spawn_induction_package/Trigger()
+/datum/action/spawn_induction_package/Trigger()
 	if(!IsAvailable() || !Checks())
 		return FALSE
 	if(!my_gang_datum)
