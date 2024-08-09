@@ -788,7 +788,7 @@
 	role = /datum/role/space_trader/guard
 
 /datum/spawner/space_trader/porter
-	name = "Космический посыльный"
+	name = "Космоторговец посыльный"
 	desc = "Таяран грузчик, работающий на барыгу. Таскайте грузы, выставляйте товары на продажу, помогите барыге обогатиться и не забудьте спросить свою долю!"
 	spawn_landmark_name = "Space Trader Porter"
 	role = /datum/role/space_trader/porter
