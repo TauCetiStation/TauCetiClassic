@@ -212,7 +212,6 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
 	salary = 40
-	alt_titles = list("Journalist")
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/librarian
 	skillsets = list("Librarian" = /datum/skillset/librarian)
