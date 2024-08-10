@@ -404,7 +404,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
 	reagents.add_reagent("dexalin", 1 + round(potency / 8, 1))
-	reagents.add_reagent("laughbidiol", 1 + round(potency / 5, 1))
+	reagents.add_reagent("laughbidiol", 3 + round(potency / 5, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed
@@ -418,9 +418,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
-	reagents.add_reagent("dexalinp", 1 + round(potency / 8, 1))
-	reagents.add_reagent("space_drugs", 1 + round(potency / 9, 1))
-	reagents.add_reagent("laughbidiol", 1 + round(potency / 5, 1))
+	reagents.add_reagent("dexalinp", 1 + round(potency / 5, 1))
+	reagents.add_reagent("space_drugs", 1 + round(potency / 8, 1))
+	reagents.add_reagent("laughbidiol", 3 + round(potency / 5, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed
@@ -435,7 +435,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
 	reagents.add_reagent("cyanide", 1 + round((potency / 5), 1))
-	reagents.add_reagent("laughbidiol", 1 + round(potency / 5, 1))
+	reagents.add_reagent("laughbidiol", 3 + round(potency / 5, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
