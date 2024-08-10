@@ -62,7 +62,7 @@
 		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
 			for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
 				if(V.on)
-					V.overload()
+					INVOKE_ASYNC(V, TYPE_PROC_REF(/obj/item/clothing/suit/space/vox/stealth, overload))
 
 		H.throw_at(target, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, PROC_REF(leap_end), prev_intent))
 		RegisterSignal(H, COMSIG_ATOM_PREHITBY, PROC_REF(impact))
