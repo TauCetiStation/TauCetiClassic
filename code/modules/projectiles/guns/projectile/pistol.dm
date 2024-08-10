@@ -63,7 +63,7 @@
 	silenced = FALSE
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	initial_mag = /obj/item/ammo_box/magazine/stechkin
-	suitable_mags = list(/obj/item/ammo_box/magazine/stechkin, /obj/item/ammo_box/magazine/stechkin/extended)
+	suitable_mags = list(/obj/item/ammo_box/magazine/stechkin, /obj/item/ammo_box/magazine/stechkin/extended, /obj/item/ammo_box/magazine/stechkin/extended/incendiary)
 	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/pistol/colt1911

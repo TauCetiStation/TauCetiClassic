@@ -44,6 +44,12 @@
 	dispersion = 2.5
 	armor_multiplier = 1.25
 
+/obj/item/projectile/bullet/revolverpellet
+	name = "small pellet"
+	damage = 13
+	dispersion = 1.5
+	armor_multiplier = 1.25
+
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
 	agony = 95
@@ -74,8 +80,7 @@
 	damage = 25
 
 /obj/item/projectile/bullet/revbullet //.357
-	damage = 60
-	armor_multiplier = 1.5
+	damage = 35
 
 /obj/item/projectile/bullet/rifle1
 	damage = 40
@@ -169,6 +174,20 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 	B1.reagents.add_reagent("uranium", 15)
 	B2.reagents.add_reagent("iron", 15)
+
+	beakers = list()
+	beakers += B1
+	beakers += B2
+
+/obj/item/projectile/bullet/chem/revolveremp
+	damage = 15
+
+/obj/item/projectile/bullet/chem/revolveremp/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
+	B1.reagents.add_reagent("uranium", 10)
+	B2.reagents.add_reagent("iron", 10)
 
 	beakers = list()
 	beakers += B1

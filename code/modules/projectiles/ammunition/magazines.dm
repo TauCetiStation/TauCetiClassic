@@ -160,7 +160,7 @@
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 7
-	multiple_sprites = MANY_STATES
+	multiple_sprites = TWO_STATES
 	overlay = "stechkin-mag"
 
 /obj/item/ammo_box/magazine/stechkin/extended
@@ -169,6 +169,12 @@
 	icon_state = "stechkin_mag_extended"
 	max_ammo = 16
 	overlay = "stechkin-mag-ex"
+
+/obj/item/ammo_box/magazine/stechkin/extended/incendiary
+	name = "extended magazine (9mm incendiary)"
+	cases = list("расширенный магазин (9мм Зажигательный)", "расширенного магазина (9мм Зажигательный)", "расширенному магазину (9мм Зажигательный)", "расширенный магазин (9мм Зажигательный)", "расширенным магазином (9мм Зажигательный)", "расширенном магазине (9мм Зажигательный)")
+	icon_state = "stechkin_mag_incendiary"
+	ammo_type = /obj/item/ammo_casing/c9mmincendiary
 
 /obj/item/ammo_box/magazine/glock
 	name = "magazine (9mm)"
@@ -612,6 +618,24 @@
 	ammo_type = /obj/item/ammo_casing/a357
 	max_ammo = 7
 
+/obj/item/ammo_box/speedloader/buckshot357
+	name = "speedloader (.357 buckshot)"
+	cases = list("спидлоадер (.357 Дробь)", "спидлоадера (.357 Дробь)", "спидлоадеру (.357 Дробь)", "спидлоадер (.357 Дробь)", "спидлоадером (.357 Дробь)", "спидлоадере (.357 Дробь)")
+	desc = "Спидлоадер под 357-й калибр."
+	caliber = "357"
+	icon_state = "buck357"
+	ammo_type = /obj/item/ammo_casing/a357buck
+	max_ammo = 7
+
+/obj/item/ammo_box/speedloader/emp357
+	name = "speedloader (.357 EMP)"
+	cases = list("спидлоадер (.357 ЭМИ)", "спидлоадера (.357 ЭМИ)", "спидлоадеру (.357 ЭМИ)", "спидлоадер (.357 ЭМИ)", "спидлоадером (.357 ЭМИ)", "спидлоадере (.357 Дробь)")
+	desc = "Спидлоадер под 357-й калибр."
+	caliber = "357"
+	icon_state = "emp357"
+	ammo_type = /obj/item/ammo_casing/a357emp
+	max_ammo = 7
+
 /obj/item/ammo_box/speedloader/c38
 	name = "speedloader (.38 rubber)"
 	cases = list("спидлоадер (.38 Резина)", "спидлоадера (.38 Резина)", "спидлоадеру (.38 Резина)", "спидлоадер (.38 Резина)", "спидлоадером (.38 Резина)", "спидлоадере (.38 Резина)")
@@ -624,6 +648,7 @@
 /obj/item/ammo_box/speedloader/c38m
 	name = "speedloader (.38)"
 	cases = list("спидлоадер (.38)", "спидлоадера (.38)", "спидлоадеру (.38 )", "спидлоадер (.38)", "спидлоадером (.38)", "спидлоадере (.38)")
+	desc = "Спидлоадер под 38-й калибр"
 	caliber = "38"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38m

@@ -6,6 +6,19 @@
 	projectile_type = /obj/item/projectile/bullet/revbullet
 	m_amt = 1000
 
+/obj/item/ammo_casing/a357buck
+	desc = "Патрон от пули-дроби калибра .357."
+	caliber = "357"
+	icon_state = "357buckshot"
+	pellets = 5
+	projectile_type = /obj/item/projectile/bullet/revolverpellet
+
+/obj/item/ammo_casing/a357emp
+	desc = "Патрон от ЭМИ пули калибра .357."
+	caliber = "357"
+	icon_state = "casing_357emp"
+	projectile_type = /obj/item/projectile/bullet/chem/revolveremp
+
 /obj/item/ammo_casing/a50
 	desc = "Патрон от пули калибра .50АЕ."
 	caliber = ".50"
@@ -33,6 +46,12 @@
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
 	m_amt = 100
+
+/obj/item/ammo_casing/c9mmincendiary
+	desc = "Патрон от зажигательной пули калибра 9мм."
+	icon_state = "casing_incendiary"
+	caliber = "9mm"
+	projectile_type = /obj/item/projectile/bullet/incendiary
 
 /obj/item/ammo_casing/c45
 	desc = "Патрон от пули 45-го калибра."

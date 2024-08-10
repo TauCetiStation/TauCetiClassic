@@ -428,6 +428,14 @@
 	cost = 2
 	uplink_types = list("nuclear", "traitor")
 
+/datum/uplink_item/ammo/pistol_incendiary
+	name = "9mm Incendiary Handgun Magazine"
+	desc = "An additional 16-round 9mm magazine; compatible with the Stechkin Pistol. These Incendiary rounds \
+			are weaker than regular 9MM bullets, but are capable of setting anyone on fire on impact."
+	item = /obj/item/ammo_box/magazine/stechkin/extended/incendiary
+	cost = 1
+	uplink_types = list("nuclear", "traitor", "dealer")
+
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
 	desc = "An additional 16-round 9mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
@@ -436,11 +444,25 @@
 	cost = 1
 	uplink_types = list("nuclear", "traitor", "dealer")
 
+/datum/uplink_item/ammo/revolver_buckshot
+	name = "Speedloader .357 (BUCKSHOT)"
+	desc = "A speedloader that contains seven additional buckshot rounds for the revolver. The best way to kill an unarmored target!"
+	item = /obj/item/ammo_box/speedloader/buckshot357
+	cost = 1
+	uplink_types = list("nuclear", "traitor")
+
+/datum/uplink_item/ammo/revolver_emp
+	name = "Speedloader .357 (EMP)"
+	desc = "A speedloader that contains seven additional EMP rounds for the revolver."
+	item = /obj/item/ammo_box/speedloader/emp357
+	cost = 1
+	uplink_types = list("nuclear", "traitor")
+
 /datum/uplink_item/ammo/revolver
-	name = "Speedloader-.357"
+	name = "Speedloader .357"
 	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/speedloader/a357
-	cost = 2
+	cost = 1
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/ammo/smg
