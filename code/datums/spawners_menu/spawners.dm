@@ -773,5 +773,8 @@
 	D.key = C.key
 	D.forceMove(get_turf(fabricator))
 
+	D.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	D.mind.skills.maximize_active_skills()
+
 	var/datum/faction/malf_drones/F = find_faction_by_type(/datum/faction/malf_drones)
-	add_faction_member(F, D, TRUE, TRUE)
+	add_faction_member(F, D, FALSE)
