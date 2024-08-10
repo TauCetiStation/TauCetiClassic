@@ -30,7 +30,7 @@
 			fabricators += DF
 	if(fabricators.len)
 		var/obj/machinery/drone_fabricator/DF = pick(fabricators)
-		DF.malfuction()
+		DF.malfunction()
 
 /mob/living/silicon/ai/proc/overload_ai_system()
 	var/ion_law = generate_ion_law()
