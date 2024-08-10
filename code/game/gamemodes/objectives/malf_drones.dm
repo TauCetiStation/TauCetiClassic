@@ -51,32 +51,57 @@
 	return OBJECTIVE_LOSS
 
 //	5
-/datum/objective/malf_drone/table
-	objective = "Полностью заполните отсек столами."
+/datum/objective/malf_drone/department
 	var/area/station/target_area
 	var/list/possible_area = list(
-		/area/station/medical/sleeper = "слиперную медбея",
-		/area/station/rnd/lab = "исследовательскую лабораторию рнд",
-		/area/station/bridge = "капитанский мостик",
-		/area/station/engineering/break_room = "комнату отдыха инженеров",
-		/area/station/security/main = "офис охраны",
-		/area/station/cargo/storage = "склад карго",
-		/area/station/civilian/bar = "бар")
+		/area/station/medical,
+		/area/station/rnd,
+		/area/station/bridge,
+		/area/station/engineering,
+		/area/station/security,
+		/area/station/cargo)
 
-/datum/objective/malf_drone/table/New()
+/datum/objective/malf_drone/department/table
+	objective = "Полностью заполните отдел столами."
+
+/datum/objective/malf_drone/department/table/New()
+	possible_area += /area/station/hallway
 	target_area = pick(possible_area)
-	objective = "Полностью заполните [possible_area[target_area]] столами."
+	objective = "Полностью заполните [CASE(target_area, ACCUSATIVE_CASE)] столами."
 	..()
 
-/datum/objective/malf_drone/table/check_completion()
+/datum/objective/malf_drone/department/table/check_completion()
 	var/counter = 0
 	var/turf_amount = 0
 
-	for(var/obj/structure/table/T in get_area_by_type(target_area))
-		counter++
-	for(var/turf/simulated/floor/F in get_area_by_type(target_area))
-		turf_amount++
+	for(var/area/A in typesof(target_area))
+		for(var/obj/structure/table/T in get_area_by_type(target_area))
+			counter++
+		for(var/turf/simulated/floor/F in get_area_by_type(target_area))
+			turf_amount++
 
 	if(counter > turf_amount / 1.5)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+//	6
+/datum/objective/malf_drone/department/airlock
+	objective = "Полностью разберите все внутренние шлюзы отдела."
+
+/datum/objective/malf_drone/department/airlock/New()
+	target_area = pick(possible_area)
+	objective = "Разберите все внутренние шлюзы [CASE(target_area, GENITIVE_CASE)]."
+	..()
+
+/datum/objective/malf_drone/department/airlock/check_completion()
+	var/counter = 0
+	var/turf_amount = 0
+
+	for(var/A in typesof(target_area))
+		for(var/obj/machinery/door/airlock/D in get_area_by_type(A))
+			if(!istype(D, /obj/machinery/door/airlock/external))
+				counter++
+
+	if(counter < 8)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS

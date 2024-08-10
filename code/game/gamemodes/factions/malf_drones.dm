@@ -13,5 +13,6 @@
 		/datum/objective/malf_drone/disposal,
 		/datum/objective/malf_drone/parquet,
 		/datum/objective/malf_drone/chairs,
-		/datum/objective/malf_drone/table))
+		/datum/objective/malf_drone/department/table,
+		/datum/objective/malf_drone/department/airlock))
 	return TRUE
