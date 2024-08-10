@@ -40,7 +40,7 @@
 	hotkey_keys = list("U")
 	name = "race_ability"
 	full_name = "Race Ability"
-	description = "Switches your racial ability."
+	description = "Activates your racial ability."
 
 /datum/keybinding/human/race_ability/down(client/user)
 	var/mob/living/carbon/human/H = user.mob
