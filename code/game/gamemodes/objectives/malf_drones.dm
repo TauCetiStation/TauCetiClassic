@@ -80,7 +80,7 @@
 		for(var/turf/simulated/floor/F in get_area_by_type(target_area))
 			turf_amount++
 
-	if(counter > turf_amount / 1.5)
+	if(counter > turf_amount * 0.6)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
