@@ -947,6 +947,6 @@
 	if(prob(25))
 		M.make_dizzy(10)
 		M.emote(pick("twitch","drool","moan","giggle"))
-	if(prob(10)
+	if(prob(10))
 		M.Stuttering(1)
 		M.emote(pick("twitch","drool","moan","giggle"))
