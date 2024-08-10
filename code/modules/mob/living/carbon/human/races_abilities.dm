@@ -31,7 +31,7 @@
 
 	var/mob/living/carbon/human/H = owner
 
-	if(H.status_flags & LEAPING) // Leap while you leap, so you can leap while you leap
+	if(HAS_TRAIT(H, TRAIT_ARIBORN))
 		return FALSE
 
 	if(!has_gravity(H))
@@ -52,8 +52,6 @@
 	if(active)
 		StartCooldown()
 		var/mob/living/carbon/human/H = owner
-		H.add_status_flags(LEAPING)
-		H.pass_flags |= PASSTABLE
 		H.stop_pulling()
 
 		var/prev_intent = H.a_intent
@@ -71,9 +69,7 @@
 /datum/action/innate/race/leap/proc/leap_end(prev_intent)
 	var/mob/living/carbon/human/H = owner
 
-	H.remove_status_flags(LEAPING)
 	H.a_intent_change(prev_intent)
-	H.pass_flags &= ~PASSTABLE
 	//Call Crossed() for activate things and breake glass table
 	var/turf/owner_turf = get_turf(H)
 	for(var/atom/A in owner_turf.contents)
