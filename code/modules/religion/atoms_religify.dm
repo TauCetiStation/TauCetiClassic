@@ -65,23 +65,25 @@
 	return TRUE
 
 /obj/machinery/door/airlock/atom_religify(datum/religion/R)
-	if(!R.door_types)
-		return FALSE
-	for(var/ttype in R.door_types)
-		if(ttype == type)
-			return FALSE
-	var/ttype = pick(R.door_types)
-	new ttype(get_turf(src))
-	qdel(src)
-	return TRUE
+    if(!R.door_types)
+        return FALSE
+    for(var/ttype in R.door_types)
+        if(ttype == type)
+            return FALSE
+    var/ttype = pick(R.door_types)
+    var/atom/door = new ttype(get_turf(src))
+    door.set_dir(dir)
+    qdel(src)
+    return TRUE
 
 /obj/structure/mineral_door/atom_religify(datum/religion/R)
-	if(!R.door_types)
-		return FALSE
-	for(var/ttype in R.door_types)
-		if(ttype == type)
-			return FALSE
-	var/ttype = pick(R.door_types)
-	new ttype(get_turf(src))
-	qdel(src)
-	return TRUE
+    if(!R.door_types)
+        return FALSE
+    for(var/ttype in R.door_types)
+        if(ttype == type)
+            return FALSE
+    var/ttype = pick(R.door_types)
+    var/atom/door = new ttype(get_turf(src))
+    door.set_dir(dir)
+    qdel(src)
+    return TRUE
