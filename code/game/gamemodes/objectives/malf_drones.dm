@@ -95,7 +95,6 @@
 
 /datum/objective/malf_drone/department/airlock/check_completion()
 	var/counter = 0
-	var/turf_amount = 0
 
 	for(var/A in typesof(target_area))
 		for(var/obj/machinery/door/airlock/D in get_area_by_type(A))
