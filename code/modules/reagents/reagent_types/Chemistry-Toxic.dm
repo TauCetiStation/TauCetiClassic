@@ -950,8 +950,3 @@
 	if(prob(10)
 		M.Stuttering(1)
 		M.emote(pick("twitch","drool","moan","giggle"))
-
-/datum/reagent/laughbidiol/on_skrell_digest(mob/living/M)
-	M.nutrition += 4 * REM
-	M.adjustDrugginess(2)
-	return FALSE
