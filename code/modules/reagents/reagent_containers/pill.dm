@@ -28,6 +28,7 @@
 		if (!user.Adjacent(src))
 			return
 		name = new_name
+		return
 	if(istype(W, /obj/item/weapon/reagent_containers/pill))
 		var/obj/item/weapon/reagent_containers/pill/P1 = W
 		if(P1.halved && halved)
