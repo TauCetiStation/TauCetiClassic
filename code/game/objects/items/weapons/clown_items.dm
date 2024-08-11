@@ -78,6 +78,24 @@
 	item_state_world = "soapsyndie_world"
 	list_reagents = list("cleaner" = 3, "cyanide" = 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || ishuman(target)) return
+	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
+	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+	if(user.client && (target in user.client.screen))
+		to_chat(user, "<span class='notice'>You need to take that [target.name] off before cleaning it.</span>")
+	else if(istype(target,/obj/effect/decal/cleanable))
+		to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
+		qdel(target)
+	else
+		to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
+		target.clean_blood()
+		if(fingerprints != null)
+			target.fingerprints.Cut()
+		if(suit_fibers != null)
+			target.suit_fibers.Cut()
+	return
+
 /obj/item/weapon/reagent_containers/food/snacks/soap/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || ishuman(target)) return
 	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
