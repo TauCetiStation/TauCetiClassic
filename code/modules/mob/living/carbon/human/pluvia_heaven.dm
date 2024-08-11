@@ -2,7 +2,7 @@
 	name = "Pluvia Heaven"
 	icon_state = "unexplored"
 
-/var/global/social_credit_threshold = 5 // не забыть переписать
+/var/global/social_credit_threshold
 /var/global/haram_threshold = 5
 /var/global/list/available_pluvia_gongs = list()
 var/global/list/wisp_start_landmark = list()
