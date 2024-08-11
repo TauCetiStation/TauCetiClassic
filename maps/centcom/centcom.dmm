@@ -3326,9 +3326,9 @@
 /area/custom/syndicate_mothership/elite_squad)
 "aiN" = (
 /obj/machinery/door/poddoor/shutters/syndi{
+	dir = 4;
 	id = "Esyndimech1";
-	name = "Mech Bay";
-	dir = 4
+	name = "Mech Bay"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -3349,9 +3349,9 @@
 /area/custom/syndicate_mothership/droppod_garage)
 "aiP" = (
 /obj/machinery/door/poddoor/shutters/syndi{
+	dir = 4;
 	id = "Esyndimech1";
-	name = "Mech Bay";
-	dir = 4
+	name = "Mech Bay"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floordown"
@@ -3427,9 +3427,9 @@
 /area/shuttle/vox/arkship)
 "aiZ" = (
 /obj/machinery/door/poddoor/shutters/syndi{
+	dir = 4;
 	id = "Esyndimech2";
-	name = "Mech Bay";
-	dir = 4
+	name = "Mech Bay"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -3490,9 +3490,9 @@
 /area/custom/syndicate_mothership/elite_squad)
 "ajh" = (
 /obj/machinery/door/poddoor/shutters/syndi{
+	dir = 4;
 	id = "Esyndimech2";
-	name = "Mech Bay";
-	dir = 4
+	name = "Mech Bay"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floordown"
@@ -3775,11 +3775,11 @@
 "ajK" = (
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "syndieshutters";
 	name = "Blast Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/shuttle{
 	icon_state = "window_gray_w"
@@ -3808,11 +3808,11 @@
 "ajN" = (
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "syndieshutters";
 	name = "Blast Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/shuttle{
 	icon_state = "window_gray_e"
@@ -4364,11 +4364,11 @@
 "alb" = (
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "syndieshutters";
 	name = "Blast Shutters";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/structure/window/shuttle{
 	icon_state = "window_gray_we"
@@ -6707,9 +6707,9 @@
 "apQ" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "ERTBase";
-	name = "ERT";
-	dir = 4
+	name = "ERT"
 	},
 /turf/unsimulated/floor,
 /area/centcom/specops)
@@ -9230,9 +9230,9 @@
 "auS" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "velocity_01";
-	name = "Security Shutters";
-	dir = 4
+	name = "Security Shutters"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -9244,9 +9244,9 @@
 "auT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "velocity_01";
-	name = "Security Shutters";
-	dir = 4
+	name = "Security Shutters"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10701,9 +10701,9 @@
 "axZ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
+	dir = 4;
 	id = "velocity_02";
-	name = "Security Shutters";
-	dir = 4
+	name = "Security Shutters"
 	},
 /obj/machinery/door/window/southleft{
 	dir = 1;
@@ -13205,7 +13205,9 @@
 /turf/unsimulated/floor,
 /area/custom/syndicate_mothership)
 "aDz" = (
-/obj/structure/mineral_door/wood,
+/obj/structure/mineral_door/wood{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "wizlava";
 	name = "lava"
@@ -13338,8 +13340,8 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	icon_state = "redcorner";
-	dir = 1
+	dir = 1;
+	icon_state = "redcorner"
 	},
 /area/centcom/specops)
 "aDO" = (
@@ -14932,8 +14934,8 @@
 "aHw" = (
 /obj/machinery/bodyscanner,
 /turf/unsimulated/floor{
-	icon_state = "bluecorner";
-	dir = 4
+	dir = 4;
+	icon_state = "bluecorner"
 	},
 /area/centcom/specops)
 "aHx" = (
@@ -18463,9 +18465,9 @@
 /area/custom/syndicate_mothership/droppod_garage)
 "aPw" = (
 /obj/machinery/door/poddoor/shutters/syndi{
+	dir = 4;
 	id = "Esyndimech3";
-	name = "Mech Bay";
-	dir = 4
+	name = "Mech Bay"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -18473,9 +18475,9 @@
 /area/custom/syndicate_mothership/droppod_garage)
 "aPx" = (
 /obj/machinery/door/poddoor/shutters/syndi{
+	dir = 4;
 	id = "Esyndimech3";
-	name = "Mech Bay";
-	dir = 4
+	name = "Mech Bay"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorup"
@@ -18495,9 +18497,9 @@
 /area/centcom/bar)
 "aPA" = (
 /obj/machinery/door/poddoor/shutters/syndi{
+	dir = 4;
 	id = "Esyndimech4";
-	name = "Mech Bay";
-	dir = 4
+	name = "Mech Bay"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -18550,9 +18552,9 @@
 /area/centcom/living)
 "aPG" = (
 /obj/machinery/door/poddoor/shutters/syndi{
+	dir = 4;
 	id = "Esyndimech4";
-	name = "Mech Bay";
-	dir = 4
+	name = "Mech Bay"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorup"
@@ -22728,8 +22730,8 @@
 /area/centcom/specops)
 "bEb" = (
 /obj/machinery/door/poddoor/shutters/syndi{
-	id = "MechaModule";
-	dir = 4
+	dir = 4;
+	id = "MechaModule"
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -23272,8 +23274,8 @@
 /area/velocity/locker)
 "crb" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "arrows_white";
-	dir = 8
+	dir = 8;
+	icon_state = "arrows_white"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
@@ -23553,7 +23555,9 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "cNr" = (
-/obj/structure/mineral_door/cult,
+/obj/structure/mineral_door/cult{
+	dir = 4
+	},
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "cOb" = (
@@ -24858,8 +24862,8 @@
 	dir = 8
 	},
 /turf/unsimulated/floor{
-	icon_state = "darkgreencorners";
-	dir = 1
+	dir = 1;
+	icon_state = "darkgreencorners"
 	},
 /area/centcom/control)
 "eTb" = (
@@ -26914,8 +26918,8 @@
 	icon_state = "warn_corner"
 	},
 /turf/unsimulated/floor{
-	icon_state = "darkbluecorners";
-	dir = 8
+	dir = 8;
+	icon_state = "darkbluecorners"
 	},
 /area/centcom/control)
 "irb" = (
@@ -26966,8 +26970,8 @@
 /area/centcom/waitingroom)
 "iwb" = (
 /turf/unsimulated/floor{
-	icon_state = "darkgreen";
-	dir = 8
+	dir = 8;
+	icon_state = "darkgreen"
 	},
 /area/centcom/control)
 "ixb" = (
@@ -27696,7 +27700,9 @@
 	},
 /area/centcom/bar)
 "jQb" = (
-/obj/structure/mineral_door/wood,
+/obj/structure/mineral_door/wood{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -28266,8 +28272,8 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "darkredcorners";
-	dir = 4
+	dir = 4;
+	icon_state = "darkredcorners"
 	},
 /area/centcom/control)
 "kRb" = (
@@ -29213,8 +29219,8 @@
 /area/centcom/evac)
 "mIJ" = (
 /obj/effect/decal/turf_decal/dark_red{
-	icon_state = "arrow";
-	dir = 8
+	dir = 8;
+	icon_state = "arrow"
 	},
 /turf/unsimulated/floor,
 /area/velocity/waitingroom)
@@ -31186,6 +31192,12 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"tCc" = (
+/obj/structure/mineral_door/cult{
+	dir = 4
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "tFF" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -31585,8 +31597,8 @@
 /area/centcom/waitingroom)
 "wMF" = (
 /turf/unsimulated/floor{
-	icon_state = "bluecorner";
-	dir = 4
+	dir = 4;
+	icon_state = "bluecorner"
 	},
 /area/centcom/specops)
 "wRg" = (
@@ -70820,7 +70832,7 @@ aaM
 adx
 adx
 wtx
-mQF
+tCc
 wtx
 adx
 adx
@@ -75446,7 +75458,7 @@ aaM
 aaM
 adx
 wtx
-mQF
+tCc
 wtx
 adx
 aaM
@@ -78271,11 +78283,11 @@ aaM
 aaM
 adx
 wtx
-mQF
+tCc
 wtx
 wtx
 wtx
-mQF
+tCc
 wtx
 adx
 aaM
