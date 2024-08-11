@@ -34,9 +34,11 @@
 	mind.transfer_to(P)
 	P.hud_used.set_parallax(PARALLAX_HEAVEN)
 	for(var/obj/item/I in contents)
-		I.remove_item_actions(P) //Если будет не лень, надо закинуть такую же штуку в майнд_трансфер мага, потому что сейчас там ниче не обновляется.
-	for(var/obj/effect/proc_holder/spell/S in P.spell_list) //В рай со своими спеллами нельзя, а то еще наколдуют чето.
+		I.remove_item_actions(P)
+	for(var/obj/effect/proc_holder/spell/S in P.spell_list)
 		P.RemoveSpell(S)
+	message_admins("Pluvian [key_name(P)] went to heaven! [ADMIN_JMP(P)]")
+	log_admin("Pluvian [key_name(P)] went to heaven! [ADMIN_JMP(P)]")
 
 /mob/living/carbon/human/proc/check_pluvian_credits()
 	if(iscultist(src) && ischangeling(src) && isshadowthrall(src) || !mind)
