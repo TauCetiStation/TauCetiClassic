@@ -129,6 +129,16 @@
 		M.adjustDrugginess(1)
 		M.hallucination = max(M.hallucination, 3)
 
+/datum/reagent/endorphine
+	name = "Endorphine"
+	id = "endorphine"
+	description = "Naturally produced hormone that helps human body combat pain."
+	reagent_state = LIQUID
+	color = "#cb68fc"
+	overdose = 0
+	custom_metabolism = 0.025
+	restrict_species = list(IPC, DIONA)
+
 /datum/reagent/sterilizine
 	name = "Sterilizine"
 	id = "sterilizine"
@@ -573,23 +583,6 @@
 /datum/reagent/bicaridine/on_general_digest(mob/living/M, alien)
 	..()
 	M.heal_bodypart_damage(2 * REM, 0)
-
-/datum/reagent/xenojelly_n // only for alien nest
-	name = "Natural xenojelly"
-	id = "xenojelly_n"
-	description = "Natural xenomorph jelly is released only if the victim hits the nest"
-	reagent_state = LIQUID
-	color = "#3f6d3f"
-	taste_message = null
-	restrict_species = list (IPC, DIONA, VOX)
-
-/datum/reagent/xenojelly_n/on_general_digest(mob/living/M)
-	..()
-	M.heal_bodypart_damage(35, 10)
-	M.adjustToxLoss(-10)
-	M.adjustOxyLoss(-20)
-	M.adjustHalLoss(-25)
-	M.adjustFireLoss(-20)
 
 /datum/reagent/xenojelly_un
 	name = "Unnatural xenojelly"
