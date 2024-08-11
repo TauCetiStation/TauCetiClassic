@@ -2295,6 +2295,8 @@
 					for(var/obj/item/I in spirit.my_corpse.contents)
 						I.add_item_actions(spirit.my_corpse)
 					spirit.my_corpse.hud_used.set_parallax(PARALLAX_CLASSIC)
+					message_admins("Плувиец [spirit.my_corpse] стал живым святым [ADMIN_JMP(spirit.my_corpse)]")
+					log_admin("Плувиец [spirit.my_corpse] стал живым святым [ADMIN_JMP(spirit.my_corpse)]")
 					for(var/obj/item/W in spirit)
 						spirit.drop_from_inventory(W)
 					qdel(spirit)

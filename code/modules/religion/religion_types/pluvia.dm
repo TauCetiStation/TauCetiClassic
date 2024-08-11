@@ -145,6 +145,7 @@ haram_threshold тоже должен как-то высчитываться, н
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 		target.mind.social_credit = 0
 		to_chat(target, "<span class='warning'>\ <font size=5>[reason] Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
+		log_admin("Плувиец [target] вылетел из религии /datum/religion/pluvia [ADMIN_JMP(target)]")
 		message_admins("Плувиец [target] вылетел из религии /datum/religion/pluvia [ADMIN_JMP(target)]" )
 		target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return TRUE
@@ -152,7 +153,8 @@ haram_threshold тоже должен как-то высчитываться, н
 		target.mind.haram_point += haram_amount
 		target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		to_chat(target, "<span class='warning'>\ <font size=3>[reason]</span></font>")
-		message_admins("Плувиец [target] совершил харам - [reason] [ADMIN_JMP(target)]" )
+		message_admins("Плувиец [target] совершил харам - [reason] [ADMIN_JMP(target)]")
+		log_admin("Плувиец [target] совершил харам - [reason] [ADMIN_JMP(target)]")
 		return FALSE
 
 /datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)
@@ -171,12 +173,14 @@ haram_threshold тоже должен как-то высчитываться, н
 		target.SetDrunkenness(0)
 		target.setDrugginess(0)
 
-
 /datum/religion/pluvia/proc/food_haram(datum/source, obj/item/weapon/reagent_containers/food/snacks/target)
 	var/mob/living/carbon/human/H = source
 	if(istype(target.loc, /obj/item/weapon/kitchen/utensil))
 		return
 	adjust_haram(H, haram_food, "Вы нарушаете четвертую заповедь!")
+
+/datum/religion/pluvia/proc/custom_haram(mob/living/carbon/human/target, haram_point, reason)
+	adjust_haram(target, haram_point, reason)
 
 /turf/simulated/floor/carpet/Entered(atom/movable/O)
 	..()

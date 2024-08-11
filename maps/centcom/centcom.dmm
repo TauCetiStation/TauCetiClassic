@@ -21733,6 +21733,17 @@
 	},
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
+"bdI" = (
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/structure/rack,
+/turf/simulated/floor,
+/area/space)
 "bdN" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/unsimulated/floor{
@@ -29070,6 +29081,10 @@
 /obj/item/clothing/shoes/white,
 /obj/item/clothing/shoes/white,
 /obj/item/clothing/shoes/white,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
 /turf/unsimulated/floor/carpet/blue2,
 /area/space)
 "nub" = (
@@ -30686,6 +30701,10 @@
 /obj/item/clothing/shoes/white,
 /obj/item/clothing/shoes/white,
 /obj/item/clothing/shoes/white,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
 /turf/unsimulated/floor/carpet/blue2,
 /area/space)
 "uwB" = (
@@ -34870,7 +34889,7 @@ oup
 vXE
 bEA
 uci
-uci
+bdI
 aeD
 aaM
 aaM

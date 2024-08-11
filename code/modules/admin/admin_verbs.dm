@@ -125,7 +125,6 @@ var/global/list/admin_verbs_fun = list(
 //	/client/proc/Noir_anomaly,
 	/client/proc/epileptic_anomaly_cancel,
 	/client/proc/achievement,
-	/client/proc/bless,
 	/client/proc/toggle_AI_interact, //toggle admin ability to interact with machines as an AI,
 	/client/proc/centcom_barriers_toggle,
 	/client/proc/gateway_toggle,
@@ -222,6 +221,8 @@ var/global/list/admin_verbs_rejuv = list(
 var/global/list/admin_verbs_whitelist = list(
 	/client/proc/get_whitelist, 			//Whitelist,
 	/client/proc/add_to_whitelist,
+	/client/proc/bless,
+	/client/proc/custom_haram,
 	/datum/admins/proc/whitelist_panel,
 	/datum/admins/proc/toggle_job_restriction
 	)
@@ -1059,6 +1060,17 @@ var/global/list/admin_verbs_hideable = list(
 	T.bless()
 	log_admin("[key_name(usr)] bless [key_name(T)]")
 	message_admins("<span class='notice'>[key_name_admin(usr)] bless [key_name(T)]</span>")
+
+/client/proc/custom_haram(mob/living/carbon/human/T as mob in player_list)
+	set category = "Fun"
+	set name = "Custom Haram"
+	set desc = "Накидывает очки греха вручную"
+	var/haram_point= input("Сколько очков греха накидываем?", "Очки Греха") as text|null
+	var/reason= input("Какая причина?", "Причина?") as text|null
+	var/datum/religion/pluvia/pluvia_religion = global.pluvia_religion
+	pluvia_religion.custom_haram(T,text2num(haram_point), reason)
+	log_admin("[key_name(usr)] custom haram [key_name(T)] with [reason] reason on [haram_point] haram point")
+	message_admins("[key_name(usr)] custom haram [key_name(T)] with [reason] reason on [haram_point] haram point")
 
 /client/proc/aooc()
 	set category = "Admin"
