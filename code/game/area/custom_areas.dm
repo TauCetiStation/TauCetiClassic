@@ -56,13 +56,6 @@
 	dynamic_lighting = TRUE
 	looped_ambience = 'sound/ambience/loop_nuke_ops.ogg'
 
-/area/custom/syndicate_mothership/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
-
 /area/custom/syndicate_mothership/control
 	name = "Syndicate Control Room"
 	cases = list("комната управления Синдиката", "комнаты управления Синдиката", "комнате управления Синдиката", "комнату управления Синдиката", "комнатой управления Синдиката", "комнате управления Синдиката")
@@ -95,13 +88,6 @@
 	dynamic_lighting = FALSE
 	requires_power = 0
 
-/area/custom/beach/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
-
 //ENEMY
 /area/custom/abductor_ship
 	name = "Abductor Ship"
@@ -115,13 +101,6 @@
 	cases = list("логово мага", "логова мага", "логову мага", "логово мага", "логовом мага", "логове мага")
 	icon_state = "yellow"
 	requires_power = 0
-
-/area/custom/wizard_station/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
 
 /area/custom/tophat
 	name = "Tophat"
