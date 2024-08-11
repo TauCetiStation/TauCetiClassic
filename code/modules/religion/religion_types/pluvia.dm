@@ -145,16 +145,16 @@ haram_threshold тоже должен как-то высчитываться, н
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 		target.mind.social_credit = 0
 		to_chat(target, "<span class='warning'>\ <font size=5>[reason] Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
-		log_admin("Плувиец [target] вылетел из религии /datum/religion/pluvia [ADMIN_JMP(target)]")
-		message_admins("Плувиец [target] вылетел из религии /datum/religion/pluvia [ADMIN_JMP(target)]" )
+		log_admin("Плувиец [key_name(target)] вылетел из религии /datum/religion/pluvia [ADMIN_JMP(target)]")
+		message_admins("Плувиец [key_name(target)] вылетел из религии /datum/religion/pluvia [ADMIN_JMP(target)]" )
 		target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return TRUE
 	else
 		target.mind.haram_point += haram_amount
 		target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		to_chat(target, "<span class='warning'>\ <font size=3>[reason]</span></font>")
-		message_admins("Плувиец [target] совершил харам - [reason] [ADMIN_JMP(target)]")
-		log_admin("Плувиец [target] совершил харам - [reason] [ADMIN_JMP(target)]")
+		message_admins("Плувиец [key_name(target)] совершил харам - [reason] [ADMIN_JMP(target)]")
+		log_admin("Плувиец [key_name(target)] совершил харам - [reason] [ADMIN_JMP(target)]")
 		return FALSE
 
 /datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)
