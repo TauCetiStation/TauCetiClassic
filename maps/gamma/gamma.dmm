@@ -8550,7 +8550,7 @@
 	id = "chapelgun";
 	name = "Chapel Launcher Door"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/civilian/chapel/mass_driver)
 "bfI" = (
 /obj/structure/table,
@@ -18316,7 +18316,7 @@
 	locked = null;
 	name = "External Access"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/outerlabs)
 "cUK" = (
 /obj/structure/disposalpipe/segment{
@@ -25451,7 +25451,7 @@
 	locked = null;
 	name = "External Access"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/outerlabs)
 "eub" = (
 /obj/effect/spawner/aspect/mech/gygax/ultra,
@@ -39634,7 +39634,7 @@
 /obj/structure/sign/warning/detailed{
 	pixel_x = 32
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/engineering/rust)
 "hgW" = (
 /obj/machinery/conveyor{
@@ -48592,7 +48592,7 @@
 	name = "Toxins Test Chamber"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor/grid_floor,
 /area/station/rnd/test_area)
 "iWR" = (
 /obj/machinery/door/firedoor,
@@ -48878,7 +48878,7 @@
 /obj/structure/sign/warning/fire{
 	pixel_x = 32
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/engineering/rust)
 "jaq" = (
 /obj/structure/cable{
@@ -49012,7 +49012,7 @@
 	dir = 4;
 	name = "Toxins Test Chamber"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/grid_floor,
 /area/station/rnd/test_area)
 "jck" = (
 /obj/structure/closet/emcloset,
@@ -52718,7 +52718,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/engineering/rust)
 "jLW" = (
 /turf/simulated/wall/r_wall,
@@ -54075,7 +54075,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/civilian/chapel/mass_driver)
 "kcM" = (
 /obj/structure/table,
@@ -61216,7 +61216,7 @@
 	locked = null;
 	name = "External Access"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/outerlabs)
 "lAW" = (
 /obj/machinery/door_control{
@@ -66626,7 +66626,7 @@
 	locked = null;
 	name = "External Access"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/maintenance/outerlabs)
 "mFL" = (
 /obj/random/scrap/safe_even,
@@ -71981,7 +71981,7 @@
 /obj/effect/decal/turf_decal/alpha/cyan{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/engineering/rust)
 "nKz" = (
 /obj/structure/table,
@@ -78722,7 +78722,7 @@
 /obj/effect/decal/turf_decal/alpha/cyan{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/engineering/rust)
 "pbI" = (
 /obj/machinery/disposal,
@@ -79523,7 +79523,7 @@
 	name = "Arrival Airlock";
 	req_one_access = list(65,48)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/mine_sci_shuttle)
 "pjV" = (
 /obj/effect/decal/turf_decal{
@@ -84803,7 +84803,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor/grid_floor,
 /area/station/rnd/test_area)
 "qnT" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -118071,7 +118071,7 @@
 	pixel_x = 25;
 	pixel_y = 12
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/engineering/rust)
 "wXk" = (
 /obj/effect/landmark/start/assistant,
