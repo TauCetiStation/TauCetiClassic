@@ -12,8 +12,7 @@ const HeadRoles = [
   "Research Director",
   "Head of Personnel",
 ];
-// Head colour check. Abbreviated to save on 80 char
-const HCC = role => {
+const HeadColour = role => {
   // Return green if they are the head
   if (HeadRoles.indexOf(role) !== -1 || role === "Internal Affairs Agent") {
     return "green";
@@ -26,9 +25,7 @@ const HCC = role => {
   return "orange";
 };
 
-// Head bold check. Abbreviated to save on 80 char. Return true if they are a head, or a QM/IAA
-const HBC = role => (HeadRoles.indexOf(role) !== -1 || role === "Quartermaster" || role === "Internal Affairs Agent");
-
+const BoldCheck = role => (HeadRoles.indexOf(role) !== -1 || role === "Quartermaster" || role === "Internal Affairs Agent");
 const ManifestTable = group => {
 
   if (!group || group.length === 0) {
@@ -44,9 +41,9 @@ const ManifestTable = group => {
       </Table.Row>
       {group.map(person => (
         <Table.Row
-          color={HCC(person.rank)}
+          color={HeadColour(person.rank)}
           key={person.name + person.rank}
-          bold={HBC(person.rank)}>
+          bold={BoldCheck(person.rank)}>
           <Table.Cell>{person.name}</Table.Cell>
           <Table.Cell>{person.rank}</Table.Cell>
           <Table.Cell>{person.active}</Table.Cell>
