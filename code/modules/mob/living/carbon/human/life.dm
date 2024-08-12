@@ -1185,11 +1185,13 @@ var/global/list/tourette_bad_words= list(
 
 	if(traumatic_shock >= TRAUMATIC_SHOCK_MIND_SHATTERING)
 		message = "<span class='userdanger'><font size=5>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</font></span>"
-		if(!crawling)
-			SetCrawling(TRUE)
+		if(prob(10))
 			Weaken(1)
 
 	if(traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
+		if(!crawling)
+			SetCrawling(TRUE)
+			Weaken(1)
 		if(prob(10))
 			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
 			AdjustSleeping(10)
