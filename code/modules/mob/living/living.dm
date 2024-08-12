@@ -1058,7 +1058,7 @@
 	if(crawling)
 		if(iscarbon(src))
 			var/mob/living/carbon/C = src
-			if(C.traumatic_shock >= TRAUMATIC_SHOCK_MIND_SHATTERING)
+			if(C.traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
 				to_chat(C, "<span class='danger'>I'm in so much pain! I can not get up!</span>")
 				return
 		crawl_getup = TRUE
