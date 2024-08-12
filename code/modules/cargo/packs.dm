@@ -1910,6 +1910,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_theatre
 	group = "Miscellaneous"
 
+
+/datum/supply_pack/willpower
+	name = "Volitional Neuroinhibitor Implanter"
+	contains = list(/obj/item/weapon/implanter/willpower)
+	additional_costs = 10000
+	group = "Miscellaneous"
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Volitional Neuroinhibitor Implanter"
+
 //----------------------------------------------
 //-----------------XENO THREAT-------------------
 //----------------------------------------------
