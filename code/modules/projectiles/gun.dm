@@ -332,7 +332,7 @@
 	.=..()
 	owner = user
 
-/obj/item/weapon/gun/proc/update_firemode(var/force_state = null)
+/obj/item/weapon/gun/proc/update_firemode(force_state = null)
 	if(sel_mode && firemodes.len)
 		var/datum/firemode/new_mode = firemodes[sel_mode]
 		new_mode.update(force_state)
