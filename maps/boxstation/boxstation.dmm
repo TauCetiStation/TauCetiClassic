@@ -3205,7 +3205,7 @@
 /obj/item/weapon/gun/plasma/p104sass{
 	pixel_y = 2
 	},
-/obj/item/weapon/gun/plasma{
+/obj/item/weapon/gun/plasma/automatic{
 	pixel_y = -4
 	},
 /obj/machinery/door/window/brigdoor{

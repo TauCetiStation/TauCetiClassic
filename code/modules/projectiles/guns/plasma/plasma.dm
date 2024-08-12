@@ -175,6 +175,12 @@
 		icon_state = "[initial(icon_state)]-0"
 	update_inv_mob()
 
+/obj/item/weapon/gun/plasma/automatic
+	init_firemodes = list(
+		SEMI_AUTO_PLASMA,
+		FULL_AUTO_MEDIUM
+		)
+
 #undef PLASMA_PROJECTILE_ENERGY_COST
 #undef PLASMAGUN_NORMAL_TYPE
 #undef PLASMAGUN_OVERCHARGE_TYPE

@@ -27,9 +27,14 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec
 	name = "G17 GEN3"
+	desc = "Модифицированный служебный пистолет калибра 9х19 мм, способен вести огонь короткими очередями."
 	icon_state = "9mm_glock_spec"
 	item_state = "9mm_glock_spec"
 	initial_mag = /obj/item/ammo_box/magazine/glock/extended/rubber
+	init_firemodes = list(
+		SEMI_AUTO,
+		BURST_3_ROUND_MEDIUM
+		)
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle
 	name = "desert eagle"
@@ -65,6 +70,10 @@
 	initial_mag = /obj/item/ammo_box/magazine/stechkin
 	suitable_mags = list(/obj/item/ammo_box/magazine/stechkin, /obj/item/ammo_box/magazine/stechkin/extended)
 	can_be_silenced = TRUE
+	init_firemodes = list(
+		SEMI_AUTO,
+		BURST_3_ROUND_MEDIUM
+		)
 
 /obj/item/weapon/gun/projectile/automatic/pistol/colt1911
 	desc = "Дешевая марсианская подделка Colt M1911. Использует менее смертоносные патроны 45-го калибра."

@@ -291,6 +291,8 @@
 
 // Add this proc to /Life() of any mob for it to be able to perform combos.
 /mob/living/proc/handle_combat()
+	if(recoil >= 0 && !crawling) ///crawling robusters mazdie
+		recoil = max(recoil - 0.5, 0)
 	updates_combat = TRUE
 	for(var/datum/combo_handler/CS in combos_saved)
 		CS.update()

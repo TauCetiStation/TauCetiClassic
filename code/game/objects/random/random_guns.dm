@@ -34,7 +34,7 @@
 						prob(10);/obj/item/weapon/gun/energy/toxgun,\
 						prob(10);/obj/item/weapon/gun/energy/laser,\
 						prob(8);/obj/item/weapon/gun/energy/ionrifle,\
-						prob(4);/obj/item/weapon/gun/plasma,\
+						prob(4);/obj/item/weapon/gun/plasma/automatic,\
 						prob(4);/obj/item/weapon/gun/plasma/p104sass,\
 						prob(4);/obj/item/weapon/gun/energy/xray,\
 						prob(4);/obj/item/weapon/gun/energy/gun,\
@@ -92,7 +92,7 @@
 		return pick(\
 						prob(15);/obj/item/weapon/gun/projectile/shotgun/bolt_action,\
 						prob(15);/obj/item/weapon/gun/projectile/shotgun/repeater,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/smg,\
 						prob(14);/obj/item/weapon/gun/projectile/automatic/c20r,\
 						prob(12);/obj/item/weapon/gun/projectile/automatic/mini_uzi,\
 						prob(10);/obj/item/weapon/gun/projectile/automatic/bar,\
@@ -188,7 +188,7 @@
 						/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off,\
 						/obj/item/weapon/gun/projectile/revolver,\
 						/obj/item/weapon/gun/projectile/revolver/detective,\
-						/obj/item/weapon/gun/projectile/automatic,\
+						/obj/item/weapon/gun/projectile/automatic/smg,\
 						/obj/item/weapon/gun/projectile/automatic/mini_uzi,\
 						/obj/item/weapon/gun/projectile/automatic/c20r,\
 						/obj/item/weapon/gun/projectile/automatic/l13,\

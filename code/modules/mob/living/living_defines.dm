@@ -71,4 +71,6 @@
 
 	var/list/spawner_args = null
 
+	var/recoil = 0 //What our current recoil level is
+
 	COOLDOWN_DECLARE(wc_use_cooldown)

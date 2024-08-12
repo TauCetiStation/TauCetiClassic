@@ -46,6 +46,13 @@
 		return install_silencer(I, user, params)
 	return ..()
 
+/obj/item/weapon/gun/projectile/automatic/smg //rnd smg
+	init_firemodes = list(
+		SEMI_AUTO,
+		BURST_3_ROUND_MEDIUM,
+		FULL_AUTO_MEDIUM
+		)
+
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
 	desc = "Легкий и скорострельный пистолет-пулемёт для тех случаев, когда нужно кого-то быстро убить. Использует патроны калибра 9мм."
@@ -56,6 +63,10 @@
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	initial_mag = /obj/item/ammo_box/magazine/mac10
 	can_be_silenced = TRUE
+	init_firemodes = list(
+		BURST_3_ROUND_FAST,
+		FULL_AUTO_FAST
+		)
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
@@ -70,6 +81,11 @@
 	should_alarm_when_empty = TRUE
 	can_be_silenced = TRUE
 	has_ammo_counter = TRUE
+	init_firemodes = list(
+		SEMI_AUTO,
+		BURST_3_ROUND_MEDIUM,
+		FULL_AUTO_MEDIUM
+		)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "L6 SAW"
@@ -83,9 +99,13 @@
 	has_cover = TRUE
 	two_hand_weapon = ONLY_TWOHAND
 	has_ammo_counter = TRUE
+	init_firemodes = list(
+		SEMI_AUTO,
+		FULL_AUTO_VERY_SLOW
+		)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
+	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 25) * 25 : "-empty"]"
 	item_state = "l6[cover_open ? "open" : "closed"][magazine ? "mag" : "nomag"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
@@ -136,6 +156,11 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/l13, /obj/item/ammo_box/magazine/l13/lethal)
 	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
 	can_be_silenced = TRUE
+	init_firemodes = list(
+		SEMI_AUTO,
+		BURST_3_ROUND_MEDIUM,
+		FULL_AUTO_MEDIUM
+		)
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
@@ -149,6 +174,10 @@
 	initial_mag = /obj/item/ammo_box/magazine/tommygun
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_silenced = TRUE
+	init_firemodes = list(
+		SEMI_AUTO,
+		FULL_AUTO_FAST
+		)
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
@@ -160,6 +189,10 @@
 	origin_tech = "combat=5;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/bar
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
+	init_firemodes = list(
+		SEMI_AUTO,
+		FULL_AUTO_SLOW
+		)
 
 /obj/item/weapon/gun/projectile/automatic/borg
 	name = "Robot SMG"
@@ -167,6 +200,9 @@
 	initial_mag = /obj/item/ammo_box/magazine/borg45
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	has_ammo_counter = TRUE
+	init_firemodes = list(
+		BURST_3_ROUND_MEDIUM
+		)
 
 /obj/item/weapon/gun/projectile/automatic/borg/update_icon()
 	return
@@ -205,6 +241,10 @@
 	initial_mag = /obj/item/ammo_box/magazine/a28
 	suitable_mags = list(/obj/item/ammo_box/magazine/a28, /obj/item/ammo_box/magazine/a28/nonlethal, /obj/item/ammo_box/magazine/a28/incendiary)
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
+	init_firemodes = list(
+		SEMI_AUTO,
+		FULL_AUTO_SLOW
+		)
 
 /obj/item/weapon/gun/projectile/automatic/a74
 	name = "A74 assault rifle"
@@ -217,6 +257,10 @@
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
+	init_firemodes = list(
+		SEMI_AUTO,
+		FULL_AUTO_SLOW
+		)
 
 /obj/item/weapon/gun/projectile/automatic/a74/krinkov
 	name = "Krinkov"
@@ -298,8 +342,11 @@
 	fire_sound = 'sound/weapons/guns/gunshot_m41.ogg'
 	initial_mag = /obj/item/ammo_box/magazine/m41a
 	w_class = SIZE_SMALL
+	recoil = 0.5
 	two_hand_weapon = DESIRABLE_TWOHAND
-	fire_delay = 1
+	init_firemodes = list(
+		BURST_3_ROUND_FAST
+		)
 
 /obj/item/weapon/gun/projectile/automatic/m41a/process_chamber()
 	return ..(1, 1, 1)
@@ -325,10 +372,12 @@
 /obj/item/weapon/gun/projectile/automatic/m41a/launcher/proc/toggle_gl(mob/user)
 	using_gl = !using_gl
 	if(using_gl)
+		burst = 1
 		user.visible_message("<span class='warning'>[user] presses a button, activating their [launcher]!</span>",\
 		"<span class='warning'>You activate your [launcher].</span>",\
 		"You hear an ominous click.")
 	else
+		burst = 3
 		user.visible_message("<span class='notice'>[user] presses a button, deciding to stop the bombings.</span>",\
 		"<span class='notice'>You deactivate your [launcher].</span>",\
 		"You hear a click.")

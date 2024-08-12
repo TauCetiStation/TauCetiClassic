@@ -174,6 +174,43 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_brig
 	group = "Security"
 
+/datum/supply_pack/ballistic/smg
+	name = "SMG crate"
+	contains = list(/obj/item/weapon/gun/projectile/automatic/l13,
+					/obj/item/weapon/gun/projectile/automatic/l13,
+					/obj/item/weapon/gun/projectile/automatic/l13)
+	additional_costs = 1500
+	crate_type = /obj/structure/closet/crate/secure/weapon
+	crate_name = "SMG crate"
+	access = access_brig
+	group = "Security"
+
+/datum/supply_pack/ballistic/smg_ammo
+	name = ".38 SMG magazines"
+	contains = list(/obj/item/ammo_box/magazine/l13/lethal,
+					/obj/item/ammo_box/magazine/l13/lethal,
+					/obj/item/ammo_box/magazine/l13/lethal)
+	additional_costs = 560
+	crate_type = /obj/structure/closet/crate/secure/weapon
+	crate_name = ".38 SMG magazines crate"
+	access = access_brig
+	group = "Security"
+
+/datum/supply_pack/ballistic/smg_ammo_rubber
+	name = ".38 SMG magazines (rubber)"
+	contains = list(/obj/item/ammo_box/magazine/l13,
+					/obj/item/ammo_box/magazine/l13,
+					/obj/item/ammo_box/magazine/l13,
+					/obj/item/ammo_box/magazine/l13,
+					/obj/item/ammo_box/magazine/l13,
+					/obj/item/ammo_box/magazine/l13)
+	additional_costs = 360
+	crate_type = /obj/structure/closet/crate/secure/weapon
+	crate_name = ".38 SMG magazines (rubber) crate"
+	access = access_brig
+	group = "Security"
+
+
 /datum/supply_pack/ballistic/pistol
 	name = "9mm pistol crate"
 	contains = list(/obj/item/weapon/gun/projectile/automatic/pistol/glock,

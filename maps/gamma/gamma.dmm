@@ -64991,7 +64991,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/gun/plasma,
+/obj/item/weapon/gun/plasma/automatic,
 /obj/item/ammo_box/magazine/plasma,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"

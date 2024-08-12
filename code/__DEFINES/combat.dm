@@ -111,3 +111,17 @@
 #define MOVESET_TYPE "moveset_type"
 #define MOVESET_ROLES "moveset_role"
 #define MOVESET_QUALITY "moveset_quality"
+
+//Quick defines for rapid fire
+
+#define FULL_AUTO_VERY_SLOW	     list(mode_name="full_auto",  mode_type = /datum/firemode/automatic, fire_delay=3, ru_mode_name="Автоматический")
+#define FULL_AUTO_SLOW	         list(mode_name="full_auto",  mode_type = /datum/firemode/automatic, fire_delay=2, ru_mode_name="Автоматический")
+#define FULL_AUTO_MEDIUM	     list(mode_name="full_auto",  mode_type = /datum/firemode/automatic, fire_delay=1.5, ru_mode_name="Автоматический")
+#define FULL_AUTO_FAST	         list(mode_name="full_auto",  mode_type = /datum/firemode/automatic, fire_delay=1.25, ru_mode_name="Автоматический")
+
+#define BURST_3_ROUND_SLOW   list(mode_name="3round_bursts", mode_desc = "Short, fast bursts.", burst=3, burst_delay = 1.75, ru_mode_name="Отсечка по 3 патрона")
+#define BURST_3_ROUND_MEDIUM list(mode_name="3round_bursts", mode_desc = "Short, fast bursts.", burst=3, burst_delay = 1.5, ru_mode_name="Отсечка по 3 патрона")
+#define BURST_3_ROUND_FAST   list(mode_name="3round_bursts", mode_desc = "Short, fast bursts.", burst=3, burst_delay = 1, ru_mode_name="Отсечка по 3 патрона")
+
+#define SEMI_AUTO	     list(mode_name="semiauto",  burst_delay = 0, burst=1, ru_mode_name="Полуавтоматический", fire_delay=4)
+#define SEMI_AUTO_PLASMA list(mode_name="semiauto",  burst_delay = 0, burst=1, ru_mode_name="Полуавтоматический", fire_delay=1)

@@ -39,12 +39,67 @@
 	var/fire_delay = 6
 	var/last_fired = 0
 	var/two_hand_weapon = FALSE
+	var/need_to_be_in_hand = TRUE //for underslug grenade launchers
+	var/ru_mode_name
+	var/burst = 1
+	var/burst_delay = 1 //cooldown between burst shots
+	var/sel_mode = 1 //index of the currently selected mode
+	var/list/firemodes = list()
+	var/list/init_firemodes = list()
+	var/mob/living/owner
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
+/obj/item/weapon/gun/atom_init()
+	. = ..()
+	QDEL_LIST(firemodes)
+	for(var/i in 1 to init_firemodes.len)
+		var/list/L = init_firemodes[i]
+		add_firemode(L)
+	if(firemodes.len)
+		set_firemode(sel_mode)
+
+/obj/item/weapon/gun/proc/add_firemode(list/firemode)
+	//If this var is set, it means spawn a specific subclass of firemode
+	if(firemode["mode_type"])
+		var/newtype = firemode["mode_type"]
+		firemodes.Add(new newtype(src, firemode))
+	else
+		firemodes.Add(new /datum/firemode(src, firemode))
+
+/obj/item/weapon/gun/proc/switch_firemodes()
+	if(firemodes.len <= 1)
+		return null
+	update_firemode(FALSE) //Disable the old firing mode before we switch away from it
+	sel_mode++
+	if(sel_mode > firemodes.len)
+		sel_mode = 1
+	return set_firemode(sel_mode)
+
+/obj/item/weapon/gun/proc/set_firemode(index)
+	if(index > firemodes.len)
+		index = 1
+	var/datum/firemode/new_mode = firemodes[sel_mode]
+	new_mode.apply_to(src)
+	new_mode.update()
+	return new_mode
+
+/obj/item/weapon/gun/proc/toggle_firemode(mob/living/user)
+	var/datum/firemode/new_mode = switch_firemodes()
+	if(new_mode)
+		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>Текущий режим стрельбы: [ru_mode_name]</span>")
+
 /datum/action/item_action/hands_free/switch_gun
 	name = "Switch Gun"
+
+/datum/action/item_action/hands_free/switch_gun/Activate()
+	var/obj/item/weapon/gun/G = target
+	if(G.firemodes.len >= 2)
+		G.toggle_firemode(owner)
+	else
+		..()
 
 /obj/item/weapon/gun/examine(mob/user)
 	..()
@@ -86,7 +141,7 @@
 				shake_camera(user, recoil + 2, recoil + 1)
 			else
 				shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
-
+		user.recoil = clamp(user.recoil + skill_recoil_duration / 5, 0, 2.5)
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 	else
@@ -174,24 +229,29 @@
 		return
 
 	if (!ready_to_fire())
-		if (world.time % 3) //to prevent spam
-			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
-	if(chambered)
-		if(point_blank)
-			if(!chambered.BB.fake)
-				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
-			chambered.BB.damage *= 1.3
-		if(!chambered.fire(src, target, user, params, , silenced))
-			shoot_with_empty_chamber(user)
+	user.next_click = world.time + (burst - 1) * burst_delay
+	for(var/i in 1 to burst)
+		if(need_to_be_in_hand && !user.is_in_hands(src))
+			break
+		if(chambered)
+			if(point_blank)
+				if(!chambered.BB.fake)
+					user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
+				chambered.BB.damage *= 1.3
+			if(!chambered.fire(src, target, user, params, , silenced))
+				shoot_with_empty_chamber(user)
+				break
+			else
+				shoot_live_shot(user)
+				user.newtonian_move(get_dir(target, user))
 		else
-			shoot_live_shot(user)
-			user.newtonian_move(get_dir(target, user))
-	else
-		shoot_with_empty_chamber(user)
-	process_chamber()
-	update_icon()
-	update_inv_mob()
+			shoot_with_empty_chamber(user)
+			break
+		sleep(burst_delay)
+		process_chamber()
+		update_icon()
+		update_inv_mob()
 
 
 /obj/item/weapon/gun/proc/can_fire()
@@ -266,6 +326,16 @@
 			return
 	else
 		return ..()
+
+//Updating firing modes at appropriate times
+/obj/item/weapon/gun/pickup(mob/user)
+	.=..()
+	owner = user
+
+/obj/item/weapon/gun/proc/update_firemode(var/force_state = null)
+	if(sel_mode && firemodes.len)
+		var/datum/firemode/new_mode = firemodes[sel_mode]
+		new_mode.update(force_state)
 
 #undef OPTIMAL_POWER_RECOIL
 #undef DEFAULT_DURATION_RECOIL

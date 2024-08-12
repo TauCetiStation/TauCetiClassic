@@ -14437,7 +14437,7 @@
 /obj/item/weapon/gun/projectile/automatic{
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/automatic,
+/obj/item/weapon/gun/projectile/automatic/smg,
 /obj/machinery/camera{
 	c_tag = "Spec. Ops. Armory North";
 	network = list("ERT")

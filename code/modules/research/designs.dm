@@ -2056,7 +2056,7 @@ other types of metals and chemistry for reagents).
 	id = "plasma_10_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
-	build_path = /obj/item/weapon/gun/plasma
+	build_path = /obj/item/weapon/gun/plasma/automatic
 	category = list("Weapons")
 
 /datum/design/plasma_104_gun
@@ -2083,7 +2083,7 @@ other types of metals and chemistry for reagents).
 	id = "smg"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 2000, MAT_DIAMOND = 1000)
-	build_path = /obj/item/weapon/gun/projectile/automatic
+	build_path = /obj/item/weapon/gun/projectile/automatic/smg
 	category = list("Weapons")
 
 /datum/design/msmg9mm
