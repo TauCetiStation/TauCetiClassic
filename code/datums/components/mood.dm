@@ -355,20 +355,20 @@
 		return
 	var/mob/living/carbon/C = parent
 
-	if(C.traumatic_shock < 10)
+	if(!C.traumatic_shock)
 		clear_event(null, "pain")
 		return
-	else
-		add_event(null, "pain", /datum/mood_event/mild_pain)
 
 	switch(C.traumatic_shock)
-		if(0 to 30)
+		if(0 to TRAUMATIC_SHOCK_MINOR)
+			add_event(null, "pain", /datum/mood_event/mild_pain)
+		if(TRAUMATIC_SHOCK_MINOR  to TRAUMATIC_SHOCK_SERIOUS)
 			add_event(null, "pain", /datum/mood_event/moderate_pain)
-		if(30 to 60)
+		if(TRAUMATIC_SHOCK_SERIOUS to TRAUMATIC_SHOCK_INTENSE)
 			add_event(null, "pain", /datum/mood_event/intense_pain)
-		if(60 to 120)
+		if(TRAUMATIC_SHOCK_INTENSE to TRAUMATIC_SHOCK_MIND_SHATTERING)
 			add_event(null, "pain", /datum/mood_event/unspeakable_pain)
-		if(120 to INFINITY)
+		if(TRAUMATIC_SHOCK_MIND_SHATTERING to INFINITY)
 			add_event(null, "pain", /datum/mood_event/agony)
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A, atom/OldLoc)
