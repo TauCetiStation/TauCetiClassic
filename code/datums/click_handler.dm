@@ -66,12 +66,12 @@
 		var/atom/movable/screen/click_catcher/CC = a
 		return CC.resolve(owner.mob)
 
-	if (istype(a, /turf))
+	if (isturf(a))
 		return a
 
-	else if (istype(a, /atom))
+	else if (isatom(a))
 		var/atom/A = a
-		if (istype(A.loc, /turf))
+		if (isturf(A.loc))
 			return A
 	return null
 
