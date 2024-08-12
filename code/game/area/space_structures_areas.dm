@@ -85,13 +85,6 @@
 	requires_power = 0
 	dynamic_lighting = TRUE
 
-/area/space_structures/agrospheregarden/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
-
 /area/space_structures/planetarium
 	name = "Planetarium"
 	icon_state = "yellow"
@@ -104,38 +97,17 @@
 	requires_power = 0
 	dynamic_lighting = TRUE
 
-/area/space_structures/robostatoin/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
-
 /area/space_structures/robostation2
 	name = "Robostation2"
 	icon_state = "yellow"
 	requires_power = 0
 	dynamic_lighting = TRUE
 
-/area/space_structures/robostation2/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
-
 /area/space_structures/ghostship
 	name = "Ghost Ship"
 	icon_state = "yellow"
 	always_unpowered = 1
 	dynamic_lighting = TRUE
-
-/area/space_structures/ghostship/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
 
 /area/space_structures/delivery_shuttle
 	name = "Delivery Shuttle"
@@ -151,13 +123,6 @@
 	name = "Listening Post"
 	icon_state = "syndie-elite"
 	dynamic_lighting = TRUE
-
-/area/space_structures/listening_post/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
 
 /area/space_structures/syndicate_fighter
 	name = "Shiv Fighter"
@@ -218,25 +183,11 @@
 	dynamic_lighting = TRUE
 	requires_power = 0
 
-/area/space_structures/secrete_lab/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
-
 /area/space_structures/broken_breacher
 	name = "Broken Breacher"
 	icon_state = "broken_breacher"
 	dynamic_lighting = TRUE
 	requires_power = 0
-
-/area/space_structures/broken_breacher/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
 
 /area/space_structures/export_outpost
 	name = "TO-11312 Export Outpost"
@@ -250,25 +201,11 @@
 	dynamic_lighting = TRUE
 	requires_power = TRUE
 
-/area/space_structures/research_ship/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
-
 /area/space_structures/cult_ship
 	name = "Spaceship"
 	icon_state = "yellow"
 	dynamic_lighting = TRUE
 	requires_power = TRUE
-
-/area/space_structures/cult_ship/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
 
 /area/space_structures/space_villa
 	name = "SpaceVilla"
@@ -276,26 +213,11 @@
 	dynamic_lighting = TRUE
 	requires_power = TRUE
 
-/area/space_structures/space_villa/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
-
 // Old Station
 /area/space_structures/old_station
 	name = "OldStation"
 	icon_state = "yellow"
 	dynamic_lighting = TRUE
-
-
-/area/space_structures/old_station/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
 
 /area/space_structures/old_station/central
 	name = "Central Station"
@@ -426,10 +348,3 @@
 	icon_state = "syndie-elite"
 	dynamic_lighting = TRUE
 	ambience = list('sound/ambience/ambiruin4.ogg', 'sound/ambience/syndicate_station.ogg')
-
-/area/space_structures/flagship/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
