@@ -5,13 +5,13 @@
 
 // partname is the name of a body part
 // amount is a num from 1 to 100
-
-/mob/living/carbon/proc/on_painkillers()
-	return reagents.has_reagent("paracetamol") || reagents.has_reagent("tramadol") || reagents.has_reagent("oxycodone") || reagents.has_reagent("endorphine")
-
 /mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
 	if(stat >= DEAD) return
-	if(on_painkillers())
+	if(reagents.has_reagent("paracetamol"))
+		return
+	if(reagents.has_reagent("tramadol"))
+		return
+	if(reagents.has_reagent("oxycodone"))
 		return
 	if(analgesic)
 		return
@@ -54,7 +54,9 @@
 	if(species && species.flags[NO_PAIN])
 		return
 
-	if(on_painkillers())
+	if(reagents.has_reagent("tramadol"))
+		return
+	if(reagents.has_reagent("oxycodone"))
 		return
 	if(analgesic)
 		return
@@ -76,7 +78,9 @@
 
 	if(stat >= DEAD)
 		return
-	if(on_painkillers())
+	if(reagents.has_reagent("tramadol"))
+		return
+	if(reagents.has_reagent("oxycodone"))
 		return
 	if(analgesic)
 		return

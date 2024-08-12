@@ -6,7 +6,7 @@
 /turf/simulated/mineral/random/caves,
 /area/space)
 "ac" = (
-/turf/simulated/wall/red,
+/turf/simulated/wall,
 /area/space_structures/listening_post)
 "ad" = (
 /obj/machinery/firealarm{
@@ -20,8 +20,9 @@
 /area/space_structures/listening_post)
 "ae" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/airless{
-	icon_state = "blackchoco"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
 	},
 /area/space_structures/listening_post)
 "af" = (
@@ -54,8 +55,9 @@
 	},
 /area/space_structures/listening_post)
 "ai" = (
-/turf/simulated/floor/airless{
-	icon_state = "blackchoco"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
 	},
 /area/space_structures/listening_post)
 "aj" = (
@@ -130,8 +132,9 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
-/turf/simulated/floor/airless{
-	icon_state = "blackchoco"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
 	},
 /area/space_structures/listening_post)
 "ap" = (
@@ -496,8 +499,9 @@
 /area/space_structures/listening_post)
 "aQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor/airless{
-	icon_state = "blackchoco"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
 	},
 /area/space_structures/listening_post)
 "aR" = (
@@ -610,9 +614,9 @@
 	},
 /area/space_structures/listening_post)
 "aY" = (
-/turf/simulated/floor/airless{
-	icon_state = "whitechoco";
-	dir = 1
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "white"
 	},
 /area/space_structures/listening_post)
 "aZ" = (
@@ -648,8 +652,9 @@
 	req_access = list(150)
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/airless{
-	icon_state = "blackchoco"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
 	},
 /area/space_structures/listening_post)
 "bd" = (
@@ -659,8 +664,9 @@
 	req_access = list(150)
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/airless{
-	icon_state = "blackchoco"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "dark"
 	},
 /area/space_structures/listening_post)
 "be" = (

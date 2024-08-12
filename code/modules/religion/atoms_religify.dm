@@ -71,8 +71,7 @@
 		if(ttype == type)
 			return FALSE
 	var/ttype = pick(R.door_types)
-	var/atom/door = new ttype(get_turf(src))
-	door.set_dir(dir)
+	new ttype(get_turf(src))
 	qdel(src)
 	return TRUE
 
@@ -83,7 +82,6 @@
 		if(ttype == type)
 			return FALSE
 	var/ttype = pick(R.door_types)
-	var/atom/door = new ttype(get_turf(src))
-	door.set_dir(dir)
+	new ttype(get_turf(src))
 	qdel(src)
 	return TRUE

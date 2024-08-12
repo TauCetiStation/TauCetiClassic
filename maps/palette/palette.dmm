@@ -706,9 +706,6 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/structure/sign/warning{
-	name = "БЕЗ ВОЗДУХА"
-	},
 /turf/simulated/floor/airless{
 	icon_state = "vaultfull"
 	},
@@ -2086,16 +2083,6 @@
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
-/area/space)
-"lT" = (
-/obj/effect/decal/turf_decal{
-	dir = 1;
-	icon_state = "warn"
-	},
-/obj/structure/sign/warning{
-	name = "БЕЗ ВОЗДУХА"
-	},
-/turf/simulated/floor/airless,
 /area/space)
 "lV" = (
 /turf/simulated/floor/airless{
@@ -9028,7 +9015,7 @@ QS
 RN
 GA
 Ln
-lT
+Mf
 vc
 vc
 vc
@@ -10320,7 +10307,7 @@ yc
 AN
 Kx
 ON
-lT
+Mf
 vc
 mz
 Zb
@@ -10852,7 +10839,7 @@ DH
 us
 DT
 oB
-lT
+Mf
 nR
 uA
 uA

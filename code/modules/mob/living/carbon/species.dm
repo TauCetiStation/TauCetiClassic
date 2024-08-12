@@ -1056,7 +1056,6 @@
 	,NO_VOMIT = TRUE
 	,IS_SOCIAL = TRUE
 	,NO_GENDERS = TRUE
-	,NO_WILLPOWER = TRUE
 	)
 
 	has_bodypart = list(
@@ -1464,7 +1463,6 @@
 		NO_FAT = TRUE,
 		IS_SOCIAL = TRUE,
 		NO_GENDERS = TRUE,
-		,NO_WILLPOWER = TRUE
 		)
 
 	has_organ = list(
@@ -1817,7 +1815,6 @@
 		HAS_TAIL = TRUE,
 		HAS_HAIR = TRUE,
 		HAS_HAIR_COLOR = TRUE,
-		NO_WILLPOWER = TRUE,
 		)
 
 	has_gendered_icons = FALSE
