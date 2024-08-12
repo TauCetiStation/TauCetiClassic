@@ -51,10 +51,10 @@
 
 //Returns true if the passed thing is an atom on a turf, or a turf itself, false otherwise
 /datum/click_handler/proc/is_world_target(var/a)
-	if (istype(a, /turf))
+	if (isatom(a))
 		return TRUE
 
-	else if (istype(a, /atom))
+	else if (isatom(a))
 		var/atom/A = a
 		if (istype(A.loc, /turf))
 			return TRUE
