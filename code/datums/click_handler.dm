@@ -23,7 +23,7 @@
 
 
 //Return false from these procs to discard the click afterwards
-/datum/click_handler/proc/Click(var/atom/target, location, control, params)
+/datum/click_handler/proc/Click(atom/target, location, control, params)
 	if (mob_check(owner.mob) && use_ability(owner.mob, target))
 		//Ability successful
 		if (one_use_flag)
@@ -50,7 +50,7 @@
 	return
 
 //Returns true if the passed thing is an atom on a turf, or a turf itself, false otherwise
-/datum/click_handler/proc/is_world_target(var/a)
+/datum/click_handler/proc/is_world_target(a)
 	if (isatom(a))
 		return TRUE
 
@@ -60,7 +60,7 @@
 			return TRUE
 	return FALSE
 
-/datum/click_handler/proc/resolve_world_target(var/a)
+/datum/click_handler/proc/resolve_world_target(a)
 
 	if (istype(a, /atom/movable/screen/click_catcher))
 		var/atom/movable/screen/click_catcher/CC = a

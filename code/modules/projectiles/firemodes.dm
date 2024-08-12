@@ -35,7 +35,7 @@
 	//The full auto clickhandler we have
 	var/datum/click_handler/fullauto/CH = null
 
-/datum/firemode/automatic/update(var/force_state = null)
+/datum/firemode/automatic/update(force_state = null)
 	var/mob/living/L = gun.owner
 	if(gun && gun.owner)
 		L = gun.loc
