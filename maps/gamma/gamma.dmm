@@ -61245,6 +61245,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/genetics_cloning)
+<<<<<<< HEAD
+=======
+"lBv" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/bridge)
+>>>>>>> parent of 96ab47d637 (Update gamma.dmm)
 "lBy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -162401,7 +162408,7 @@ pvm
 uZA
 jIl
 tpt
-hrc
+lBv
 jjH
 uWk
 thg
@@ -162658,7 +162665,7 @@ dSo
 vyZ
 jIl
 oXV
-hrc
+lBv
 jjH
 jjH
 jjH
@@ -163678,7 +163685,7 @@ qON
 vTP
 vTP
 vOc
-hrc
+lBv
 oGl
 qfV
 qfV
@@ -163936,13 +163943,13 @@ vTP
 sDi
 vPl
 lpb
-hrc
+lBv
 poL
 vOc
 uME
 qKq
 lpb
-hrc
+lBv
 jIl
 eTv
 ues
@@ -164192,8 +164199,8 @@ rOk
 had
 myq
 nuM
-hrc
-hrc
+lBv
+lBv
 biL
 qxa
 jIl
@@ -164205,7 +164212,7 @@ klQ
 jIl
 egB
 vOc
-hrc
+lBv
 qcA
 tSL
 aXT
@@ -164461,9 +164468,9 @@ jIl
 jIl
 jIl
 cjs
-hrc
-hrc
-hrc
+lBv
+lBv
+lBv
 lpb
 vNG
 avT
@@ -164719,8 +164726,8 @@ xbc
 jIl
 jkJ
 biL
-hrc
-hrc
+lBv
+lBv
 fjv
 qKX
 sNg
@@ -164983,12 +164990,12 @@ qKX
 avT
 jIl
 aDZ
-hrc
+lBv
 vWr
 seJ
 aCC
 aDZ
-hrc
+lBv
 img
 aCC
 nSC
@@ -164996,7 +165003,7 @@ jIl
 tpp
 aDZ
 gMa
-hrc
+lBv
 jIl
 njk
 iFJ
@@ -165224,7 +165231,7 @@ soi
 jIl
 vUW
 cHz
-hrc
+lBv
 gmD
 jIl
 eQZ
@@ -165479,7 +165486,7 @@ qCB
 xqC
 nFs
 jIl
-hrc
+lBv
 rqy
 cLU
 elX
@@ -165490,7 +165497,7 @@ oSY
 jIl
 tGy
 vOc
-hrc
+lBv
 jvR
 flj
 lnZ
@@ -165746,7 +165753,7 @@ fEJ
 jIl
 jIl
 rZw
-hrc
+lBv
 vOc
 ewU
 sAE
@@ -166000,9 +166007,9 @@ jIl
 jIl
 uHm
 vOc
-hrc
-hrc
-hrc
+lBv
+lBv
+lBv
 gKa
 jIl
 jIl
@@ -166252,12 +166259,12 @@ jIl
 jIl
 jIl
 uCZ
-hrc
+lBv
 cPI
 jIl
 jIl
-hrc
-hrc
+lBv
+lBv
 eaG
 vPl
 uXp
@@ -166501,7 +166508,7 @@ deo
 lxN
 pga
 jIl
-hrc
+lBv
 jIl
 fLZ
 sDi
@@ -166514,7 +166521,7 @@ hLw
 lGH
 jIl
 gqD
-hrc
+lBv
 jIl
 jIl
 jIl
@@ -166522,7 +166529,7 @@ jIl
 jIl
 jIl
 vJf
-hrc
+lBv
 rRo
 uow
 rSV
@@ -166758,7 +166765,7 @@ nLj
 ykV
 uZA
 jIl
-hrc
+lBv
 jIl
 jIl
 ydo
@@ -166766,12 +166773,12 @@ sLT
 isY
 jIl
 dKG
-hrc
+lBv
 vXK
 kfq
 jIl
 lpb
-hrc
+lBv
 jIl
 doZ
 ink
@@ -167015,7 +167022,7 @@ iyy
 wNe
 uyk
 jIl
-hrc
+lBv
 vOc
 jIl
 jIl
@@ -167035,7 +167042,7 @@ qff
 iSG
 pRj
 cxx
-hrc
+lBv
 uvM
 rRo
 duy
@@ -167283,7 +167290,7 @@ gGQ
 fQV
 gKa
 biL
-hrc
+lBv
 vOc
 xcj
 jIl
@@ -167292,7 +167299,7 @@ jIl
 jIl
 jIl
 jQx
-hrc
+lBv
 jIl
 rRo
 qyy
