@@ -129,6 +129,16 @@
 		M.adjustDrugginess(1)
 		M.hallucination = max(M.hallucination, 3)
 
+/datum/reagent/endorphine
+	name = "Endorphine"
+	id = "endorphine"
+	description = "Naturally produced hormone that helps human body combat pain."
+	reagent_state = LIQUID
+	color = "#cb68fc"
+	overdose = 0
+	custom_metabolism = 0.025
+	restrict_species = list(IPC, DIONA)
+
 /datum/reagent/sterilizine
 	name = "Sterilizine"
 	id = "sterilizine"
