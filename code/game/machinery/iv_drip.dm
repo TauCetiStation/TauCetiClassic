@@ -62,10 +62,10 @@
 		src.attached = null
 		update_icon()
 		return
-		
+
 	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
-		
+
 	if(ishuman(over_object))
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		src.attached = over_object
@@ -77,7 +77,9 @@
 		if(!isnull(src.beaker))
 			to_chat(user, "There is already a reagent container loaded!")
 			return
-
+		if(istype(W, /obj/item/weapon/reagent_containers/pill/twopart))
+			W.flags &= ~NOREACT
+			W.reagents.handle_reactions()
 		user.drop_from_inventory(W, src)
 		src.beaker = W
 		to_chat(user, "You attach \the [W] to \the [src].")
