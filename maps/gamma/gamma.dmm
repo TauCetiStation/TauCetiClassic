@@ -109490,7 +109490,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/grid_floor,
 /area/station/civilian/dormitories)
 "vjT" = (
 /turf/simulated/floor{
