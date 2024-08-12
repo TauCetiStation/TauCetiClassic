@@ -34009,7 +34009,7 @@
 	dir = 4;
 	sortType = list("Ординаторская","Хранилище Медбея","Генетика","Морг","Офис СМО","Химия","Вирусология")
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "gdg" = (
 /obj/structure/bookcase/manuals/security,
@@ -72427,7 +72427,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/grid_floor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/station/rnd/hallway)
 "nPT" = (
 /turf/simulated/floor{
