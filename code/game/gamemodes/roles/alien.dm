@@ -11,7 +11,7 @@
 /datum/role/alien/forgeObjectives()
 	if(!..())
 		return FALSE
-	AppendObjective(/datum/objective/bloodbath)
+	AppendObjective(/datum/objective/evolution)
 	AppendObjective(/datum/objective/survive/ru)
 	return TRUE
 
@@ -115,7 +115,7 @@
 	if(!..())
 		return FALSE
 	if(antag.current.job == "Captain")
-		AppendObjective(/datum/objective/defend_crew)
+		AppendObjective(/datum/objective/nostromo/defend_crew)
 	return TRUE
 
 /datum/role/nostromo_crewmate/OnPostSetup()
@@ -159,7 +159,8 @@
 /datum/role/nostromo_android/forgeObjectives()
 	if(!..())
 		return FALSE
-	AppendObjective(/datum/objective/defend_alien)
+	AppendObjective(/datum/objective/nostromo/defend_alien)
+	AppendObjective(/datum/objective/nostromo/defend_ship)
 	AppendObjective(/datum/objective/survive/ru)
 	return TRUE
 
@@ -190,7 +191,7 @@
 	L.speed++
 
 
-/datum/action/nostromo_map
+/datum/action/nostromo_guide
 	name = "Вспомнить план корабля."
 	check_flags = AB_CHECK_ALIVE
 	action_type = AB_INNATE

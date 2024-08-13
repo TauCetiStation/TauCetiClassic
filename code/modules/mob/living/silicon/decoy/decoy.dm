@@ -33,8 +33,8 @@
 		MM.ai = src
 
 /mob/living/silicon/decoy/nostromo/proc/announce(announce, admin_announce)
-	if(admin_announce
-		say(announce))
+	if(admin_announce)
+		say(announce)
 	else
 		switch(announce)
 			if("smes")

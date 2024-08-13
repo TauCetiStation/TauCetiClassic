@@ -1056,7 +1056,7 @@
 	pestlevel = 0
 	update_icon()
 	if(MM)
-		addtimer(CALLBACK(MM, PROC_REF(AI_announce), "alien_weed"), 1 MINUTE)
+		addtimer(CALLBACK(MM, TYPE_PROC_REF(/datum/map_module/alien, AI_announce), "alien_weed"), 1 MINUTE)
 
 
 #undef HYDRO_RATING_MULTIPLIER

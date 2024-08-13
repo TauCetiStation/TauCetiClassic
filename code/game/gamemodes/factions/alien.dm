@@ -69,7 +69,7 @@
 /datum/faction/nostromo_crew/forgeObjectives()
 	if(!..())
 		return FALSE
-	AppendObjective(/datum/objective/kill_alien)
+	AppendObjective(/datum/objective/nostromo/kill_alien)
 	return TRUE
 
 /datum/faction/nostromo_crew/check_win()
@@ -125,8 +125,9 @@
 	logo_state = "cat-logo"
 	initroletype = /datum/role/nostromo_cat
 	min_roles = 0
+	var/Jonesy = /mob/living/simple_animal/cat/red/jonesy
 
 /datum/faction/nostromo_cat/OnPostSetup()
 	var/start_point = pick(landmarks_list["Jonesy"])
-	var/mob/living/simple_animal/cat/red/jonesy/J = new (get_turf(start_point))
+	new Jonesy(get_turf(start_point))
 	return ..()

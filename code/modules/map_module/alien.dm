@@ -27,7 +27,7 @@
 		/datum/map_module/alien/proc/delay_ambience,
 		/datum/map_module/alien/proc/lights_blinking,
 		/datum/map_module/alien/proc/smes_stability,
-		/datum/map_module/alien/proc/ship_course
+		/datum/map_module/alien/proc/ship_course,
 		/datum/map_module/alien/proc/give_epoint,
 		/datum/map_module/alien/proc/next_estage,
 		/datum/map_module/alien/proc/set_slaughter_mode)
@@ -152,7 +152,7 @@
 	if(breakdown)
 		return
 	if(admin)
-		if(tgui_alert(mob, "Поломка корабля означает конец игры для экипажа!", "Вы уверены?", list("Да", "Нет")) != "Да")
+		if(tgui_alert("Поломка корабля означает конец игры для экипажа!", "Вы уверены?", list("Да", "Нет")) != "Да")
 			return
 
 	breakdown = TRUE
@@ -200,7 +200,8 @@
 	set name = "Alien: Delay Ambience"
 
 	if(!delay)
-		delay = input("На сколько секунд вы хотите отсрочить эмбиенс?", "Значение") as num|null SECONDS
+		delay = input("На сколько секунд вы хотите отсрочить эмбиенс?", "Значение") as num|null
+		delay = delay SECONDS
 	ambience_player.ambience_next_time += delay
 
 //			LIGHTS BLINKING FOR SUSPENSE
