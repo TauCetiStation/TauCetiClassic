@@ -73,7 +73,7 @@
 /obj/item/trash/candle,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left/med)
 "aA" = (
@@ -103,7 +103,9 @@
 	icon_state = "medium"
 	},
 /obj/structure/alien/weeds,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "aI" = (
 /obj/machinery/chem_dispenser/old,
@@ -195,7 +197,9 @@
 "aZ" = (
 /obj/structure/table/glass,
 /obj/item/weapon/book/skillbook/science,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "ba" = (
 /obj/machinery/door/airlock/glass{
@@ -341,7 +345,9 @@
 	dir = 4;
 	pixel_y = 30
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "bR" = (
 /obj/structure/reagent_dispensers/water_cooler,
@@ -377,7 +383,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "co" = (
 /obj/structure/rack,
@@ -404,7 +412,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/carp_space)
 "cy" = (
 /obj/item/weapon/rcd_ammo,
@@ -413,13 +423,15 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "cz" = (
 /obj/structure/table,
 /obj/item/weapon/disk/research_points,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/old_station/central/bridge)
 "cB" = (
@@ -521,7 +533,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "de" = (
 /obj/structure/lattice,
@@ -603,7 +617,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "dv" = (
 /turf/simulated/floor{
@@ -646,7 +662,9 @@
 /area/space_structures/old_station/central/hydro)
 "dN" = (
 /obj/item/device/flashlight/seclite,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "dO" = (
 /obj/machinery/door/airlock/security/glass{
@@ -788,7 +806,9 @@
 /area/space_structures/old_station/central/hydro)
 "eE" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "eG" = (
 /obj/item/stack/rods,
@@ -807,7 +827,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "eM" = (
 /obj/structure/rack,
@@ -922,7 +944,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "fE" = (
 /obj/effect/decal/cleanable/dirt,
@@ -946,7 +970,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/kitchen)
 "fN" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central)
 "fO" = (
 /turf/simulated/floor{
@@ -965,7 +991,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "fV" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -1066,7 +1094,7 @@
 "gx" = (
 /obj/effect/decal/cleanable/generic,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left/med)
 "gy" = (
@@ -1083,7 +1111,9 @@
 "gz" = (
 /obj/item/trash/chips,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "gD" = (
 /obj/structure/table,
@@ -1095,12 +1125,14 @@
 	},
 /obj/item/weapon/paper/old_station_note_one,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkbluefull"
 	},
 /area/space_structures/old_station/central/bridge)
 "gF" = (
 /obj/structure/door_assembly/door_assembly_atmo,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "gG" = (
 /obj/machinery/light{
@@ -1114,13 +1146,14 @@
 "gJ" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/bucket,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "gN" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
+	icon_state = "graychoco"
 	},
 /area/space_structures/old_station/central)
 "gO" = (
@@ -1147,7 +1180,8 @@
 	},
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "white"
+	icon_state = "bluechoco";
+	dir = 1
 	},
 /area/space_structures/old_station/left)
 "gU" = (
@@ -1161,7 +1195,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/space_structures/old_station/right)
 "gZ" = (
@@ -1174,7 +1208,9 @@
 "ha" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/effect/decal/cleanable/blood,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/carp_space)
 "hb" = (
 /obj/effect/decal/cleanable/blood,
@@ -1247,7 +1283,9 @@
 "hG" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "hH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1382,7 +1420,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/carp_space)
 "ii" = (
 /obj/structure/rack,
@@ -1431,7 +1471,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "is" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -1443,7 +1485,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "iv" = (
 /obj/machinery/light{
@@ -1514,7 +1558,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "iK" = (
 /obj/structure/cable{
@@ -1548,7 +1594,9 @@
 /area/space_structures/old_station/central/bridge)
 "iT" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "iV" = (
 /obj/structure/reagent_dispensers/water_cooler,
@@ -1572,7 +1620,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/old_station/central/bridge)
 "ja" = (
@@ -1619,12 +1667,14 @@
 /area/space_structures/old_station/armory)
 "jh" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "jk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/space_structures/old_station/right)
 "jl" = (
@@ -1635,7 +1685,9 @@
 /area/space_structures/old_station/central)
 "jm" = (
 /obj/item/weapon/circuitboard/biogenerator,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "jv" = (
 /obj/structure/alien/weeds,
@@ -1646,7 +1698,9 @@
 /area/space_structures/old_station/satellite)
 "jw" = (
 /obj/item/weapon/melee/baton,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "jz" = (
 /turf/simulated/floor/airless{
@@ -1674,7 +1728,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "jG" = (
 /obj/structure/window/thin/reinforced{
@@ -1769,7 +1825,9 @@
 	name = "Hydroponics";
 	req_access = list(73)
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "greenchoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "kb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1806,7 +1864,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "ks" = (
 /obj/structure/cable{
@@ -1835,7 +1895,9 @@
 "kI" = (
 /obj/item/weapon/circuitboard/protolathe,
 /obj/machinery/constructable_frame/machine_frame,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "kK" = (
 /obj/structure/lattice,
@@ -1962,7 +2024,7 @@
 /obj/structure/table,
 /obj/item/weapon/lighter/zippo,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/old_station/central/bridge)
 "lv" = (
@@ -2155,7 +2217,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "mX" = (
 /obj/structure/table,
@@ -2214,7 +2278,9 @@
 /area/space_structures/old_station/central)
 "nk" = (
 /obj/item/weapon/table_parts,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "nl" = (
 /obj/structure/alien/weeds,
@@ -2316,7 +2382,9 @@
 "nK" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/pill_bottle/assorted,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "nN" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2364,13 +2432,14 @@
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "oj" = (
 /obj/structure/computerframe,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkblue"
+	icon_state = "darkbluefull"
 	},
 /area/space_structures/old_station/central/bridge)
 "ol" = (
@@ -2389,7 +2458,9 @@
 /turf/environment/space,
 /area/space)
 "op" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "ow" = (
 /obj/structure/cable{
@@ -2482,7 +2553,9 @@
 	},
 /obj/structure/alien/weeds,
 /obj/effect/spawner/mob_spawn/alien,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "pc" = (
 /obj/structure/alien/weeds,
@@ -2555,11 +2628,15 @@
 "pB" = (
 /obj/effect/decal/cleanable/generic,
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/carp_space)
 "pE" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central)
 "pF" = (
 /obj/item/weapon/shard{
@@ -2669,7 +2746,9 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "qo" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2712,7 +2791,8 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "darkbluecorners"
 	},
 /area/space_structures/old_station/central/bridge)
 "qC" = (
@@ -2735,7 +2815,7 @@
 "qI" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left/med)
 "qJ" = (
@@ -2749,14 +2829,17 @@
 "qP" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "darkblue"
 	},
 /area/space_structures/old_station/central/bridge)
 "qS" = (
 /obj/machinery/computer/rdconsole{
 	sabotagable = 0
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "rb" = (
 /turf/simulated/floor{
@@ -2844,7 +2927,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "rv" = (
 /obj/structure/disposalpipe/segment{
@@ -2956,7 +3041,9 @@
 	},
 /area/space_structures/old_station/central/brig)
 "sq" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "ss" = (
 /obj/structure/stool/bed,
@@ -3038,6 +3125,10 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
+"sY" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/glass/reinforced,
+/area/space_structures/old_station/central/brig)
 "ta" = (
 /obj/item/weapon/flora/pottedplant/dead,
 /turf/simulated/floor{
@@ -3151,7 +3242,9 @@
 	dir = 8
 	},
 /obj/item/weapon/storage/visuals/surgery/full,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "tX" = (
 /obj/structure/sign/warning/lethal_turrets,
@@ -3268,7 +3361,9 @@
 	},
 /area/space_structures/old_station/central)
 "uI" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "uK" = (
 /obj/structure/alien/weeds,
@@ -3282,9 +3377,13 @@
 	},
 /area/space_structures/old_station/satellite)
 "uM" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/glass/reinforced,
-/area/space_structures/old_station/central/brig)
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
+/area/space_structures/carp_space)
 "uN" = (
 /obj/machinery/light,
 /turf/simulated/floor{
@@ -3435,15 +3534,17 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/space_structures/old_station/left)
-"vD" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
+/turf/simulated/floor/airless{
+	icon_state = "bluechoco";
+	dir = 1
 	},
 /area/space_structures/old_station/left)
+"vD" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/space_structures/old_station/central/bridge)
 "vF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -3455,7 +3556,9 @@
 /area/space_structures/old_station/central/hydro)
 "vI" = (
 /obj/item/weapon/book/skillbook/exosuits,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "vJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3531,7 +3634,9 @@
 "wb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central)
 "wc" = (
 /obj/effect/overlay/wall_rot,
@@ -3640,7 +3745,9 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "wB" = (
 /turf/simulated/wall/r_wall,
@@ -3742,15 +3849,17 @@
 	},
 /area/space_structures/old_station/left)
 "xe" = (
-/turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 1
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "darkblue"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/old_station/central/bridge)
 "xf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "xg" = (
 /turf/simulated/floor/plating/airless/catwalk,
@@ -3774,7 +3883,9 @@
 "xl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "xm" = (
 /obj/structure/cable{
@@ -3870,7 +3981,9 @@
 "xL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "xQ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3887,7 +4000,9 @@
 /area/space_structures/old_station/right/rnd)
 "xT" = (
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "xY" = (
 /obj/item/clothing/mask/facehugger{
@@ -3933,7 +4048,7 @@
 "yd" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "neutralcorner"
+	icon_state = "graychoco"
 	},
 /area/space_structures/old_station/left)
 "ye" = (
@@ -3964,7 +4079,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "yl" = (
 /obj/machinery/door/airlock/command/glass{
@@ -3974,7 +4091,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkbluechoco"
 	},
 /area/space_structures/old_station/central/bridge)
 "yn" = (
@@ -4019,7 +4136,9 @@
 "yL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "yU" = (
 /obj/structure/alien/weeds,
@@ -4062,10 +4181,10 @@
 	},
 /area/space_structures/old_station/central/hydro)
 "zh" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/mob_spawn/tomato,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "green"
+	icon_state = "graychoco"
 	},
 /area/space_structures/old_station/central/hydro)
 "zi" = (
@@ -4101,7 +4220,9 @@
 "zm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central)
 "zn" = (
 /obj/item/weapon/circuitboard/telecomms/server,
@@ -4145,9 +4266,9 @@
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 8
 	},
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "blue"
+/turf/simulated/floor/airless{
+	icon_state = "whiteblue";
+	dir = 6
 	},
 /area/space_structures/old_station/left)
 "zy" = (
@@ -4344,7 +4465,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 10;
+	icon_state = "green"
 	},
 /area/space_structures/old_station/central/hydro)
 "AR" = (
@@ -4393,7 +4515,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "Bh" = (
 /obj/structure/cable{
@@ -4409,7 +4533,9 @@
 "Bk" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/cups,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Bn" = (
 /obj/item/trash/liquidfood,
@@ -4445,7 +4571,9 @@
 /area/space_structures/old_station/armory)
 "BB" = (
 /obj/structure/closet/secure_closet/atmos_personal,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/carp_space)
 "BF" = (
 /obj/structure/door_assembly/door_assembly_atmo,
@@ -4658,7 +4786,9 @@
 	amount = 10;
 	pixel_x = 9
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central)
 "CI" = (
 /obj/machinery/disposal,
@@ -4690,7 +4820,10 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/airless{
+	icon_state = "bluechoco";
+	dir = 1
+	},
 /area/space_structures/old_station/left)
 "CS" = (
 /turf/simulated/floor{
@@ -4701,7 +4834,9 @@
 "CT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "CW" = (
 /obj/structure/stool/bed,
@@ -4720,7 +4855,9 @@
 	pixel_x = 5;
 	pixel_y = 9
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "Dc" = (
 /obj/machinery/vending/hydronutrients,
@@ -4731,7 +4868,9 @@
 /area/space_structures/old_station/central/hydro)
 "Dd" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "Dh" = (
 /obj/structure/table,
@@ -4771,9 +4910,11 @@
 	},
 /area/space_structures/old_station/central/hydro)
 "Do" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
-/area/space_structures/old_station/central)
+/obj/effect/decal/turf_decal/set_burned,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
+/area/space_structures/old_station/right/rnd)
 "Ds" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor{
@@ -4828,7 +4969,9 @@
 "DI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/up,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "DJ" = (
 /obj/item/weapon/crowbar,
@@ -4844,7 +4987,9 @@
 	icon_state = "4-8"
 	},
 /obj/item/weapon/circuitboard/solar_control,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "DL" = (
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment,
@@ -4870,7 +5015,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "white"
+	icon_state = "bluechoco";
+	dir = 1
 	},
 /area/space_structures/old_station/left)
 "DO" = (
@@ -4948,13 +5094,15 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left/med)
 "Eh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/shreds,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "Ei" = (
 /obj/item/trash/chips,
@@ -4996,7 +5144,9 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Er" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5127,7 +5277,9 @@
 /area/space_structures/old_station/warehouse)
 "EX" = (
 /obj/structure/table,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "Fd" = (
 /obj/machinery/porta_turret/stationary{
@@ -5156,12 +5308,16 @@
 	pixel_x = -4
 	},
 /obj/item/weapon/book/skillbook/chemistry,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Fl" = (
 /obj/effect/decal/cleanable/generic,
 /obj/item/weapon/book/skillbook/engineering,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "Fo" = (
 /turf/simulated/floor{
@@ -5185,7 +5341,9 @@
 	},
 /area/space_structures/old_station/right)
 "Ft" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "Fv" = (
 /turf/simulated/floor{
@@ -5204,14 +5362,16 @@
 /obj/structure/table/glass,
 /obj/item/weapon/folder/blue,
 /obj/structure/alien/weeds,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "FD" = (
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "purplecorner"
+	dir = 8;
+	icon_state = "darkblue"
 	},
-/area/space_structures/old_station/central/hydro)
+/area/space_structures/old_station/central/bridge)
 "FH" = (
 /obj/item/stack/sheet/plasteel,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -5287,7 +5447,7 @@
 /area/space_structures/old_station/satellite)
 "Gb" = (
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/space_structures/old_station/central)
 "Gf" = (
@@ -5311,16 +5471,10 @@
 	},
 /area/space_structures/old_station/central/brig)
 "Gl" = (
-/turf/simulated/floor/airless,
-/area/space_structures/old_station/left)
-"Gm" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/old_station/left)
 "Gn" = (
 /obj/item/device/paicard,
 /turf/simulated/floor{
@@ -5350,12 +5504,16 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "Gu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/storage/toolbox/mechanical,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "Gv" = (
 /obj/structure/computerframe,
@@ -5413,14 +5571,16 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/carp_space)
 "GM" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkbluefull"
 	},
 /area/space_structures/old_station/central/bridge)
 "GP" = (
@@ -5769,7 +5929,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/old_station/central/bridge)
 "IG" = (
@@ -5852,11 +6012,15 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Jf" = (
 /obj/item/weapon/rcd,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "Jg" = (
 /obj/structure/cable{
@@ -5911,7 +6075,9 @@
 /area/space_structures/old_station/central/solars_c)
 "Jy" = (
 /obj/structure/stool/bed/chair/office/dark,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Jz" = (
 /obj/structure/window/fulltile/reinforced{
@@ -5965,7 +6131,7 @@
 /area/space_structures/old_station/central/kitchen)
 "JT" = (
 /turf/simulated/floor{
-	dir = 1;
+	dir = 5;
 	icon_state = "darkblue"
 	},
 /area/space_structures/old_station/central/bridge)
@@ -5994,7 +6160,9 @@
 /area/space_structures/old_station/central/bridge)
 "Ka" = (
 /obj/machinery/seed_extractor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "Kd" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6117,7 +6285,9 @@
 /area/space_structures/old_station/central/hydro)
 "KR" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "KS" = (
 /obj/effect/decal/cleanable/blood,
@@ -6127,7 +6297,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/old_station/central/bridge)
 "KT" = (
@@ -6186,7 +6356,9 @@
 /obj/item/weapon/circuitboard/circuit_imprinter,
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /obj/machinery/constructable_frame/machine_frame,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Lb" = (
 /obj/structure/extinguisher_cabinet{
@@ -6245,7 +6417,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central)
 "LG" = (
 /obj/structure/sink{
@@ -6343,7 +6517,9 @@
 	req_access = list(73);
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "greenchoco"
+	},
 /area/space_structures/old_station/central/hydro)
 "Mp" = (
 /turf/simulated/floor/carpet/blue,
@@ -6362,7 +6538,9 @@
 "Mv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Mx" = (
 /obj/structure/alien/weeds,
@@ -6380,7 +6558,9 @@
 /area/space_structures/old_station/central/bridge)
 "MB" = (
 /obj/item/weapon/storage/part_replacer,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "MD" = (
 /obj/structure/grille{
@@ -6414,7 +6594,9 @@
 "MP" = (
 /obj/machinery/light/small/emergency,
 /obj/effect/decal/turf_decal/set_damaged,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "MQ" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -6425,7 +6607,9 @@
 /area/space_structures/carp_space)
 "MR" = (
 /obj/structure/alien/weeds/node,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "MU" = (
 /obj/structure/disposalpipe/segment{
@@ -6516,7 +6700,8 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "white"
+	icon_state = "bluechoco";
+	dir = 1
 	},
 /area/space_structures/old_station/left)
 "NA" = (
@@ -6544,7 +6729,9 @@
 /area/space_structures/old_station/central)
 "NI" = (
 /obj/structure/door_assembly,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "NJ" = (
 /obj/structure/alien/weeds,
@@ -6571,7 +6758,9 @@
 "NO" = (
 /obj/item/weapon/paper,
 /obj/structure/alien/weeds,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "NR" = (
 /obj/structure/table/glass,
@@ -6584,7 +6773,7 @@
 /obj/structure/table,
 /obj/item/clothing/mask/tie/golden_cross,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkbluefull"
 	},
 /area/space_structures/old_station/central/bridge)
 "Od" = (
@@ -6656,7 +6845,7 @@
 	pixel_y = -9
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left/med)
 "Oy" = (
@@ -6705,7 +6894,9 @@
 /area/space_structures/old_station/central)
 "OQ" = (
 /obj/item/weapon/paper,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "OR" = (
 /obj/structure/alien/weeds,
@@ -6771,7 +6962,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/space_structures/old_station/central)
 "OZ" = (
@@ -6785,7 +6976,9 @@
 "Pa" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/spawner/mob_spawn/alien,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Pb" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7002,12 +7195,15 @@
 "Qo" = (
 /obj/structure/closet/secure_closet/atmos_personal,
 /obj/effect/decal/cleanable/blood/gibs/body,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/carp_space)
 "Qq" = (
 /obj/structure/cable,
 /turf/simulated/floor/airless{
-	icon_state = "white"
+	icon_state = "bluechoco";
+	dir = 1
 	},
 /area/space_structures/old_station/left)
 "Qr" = (
@@ -7031,7 +7227,9 @@
 /area/space_structures/old_station/central/brig)
 "QF" = (
 /obj/effect/decal/mecha_wreckage/durand/vindicator,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "QI" = (
 /obj/structure/stool/bed/chair/office/dark{
@@ -7254,7 +7452,9 @@
 "RV" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper/old_station_note_two,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "RY" = (
 /obj/structure/cable{
@@ -7306,7 +7506,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Sk" = (
 /obj/structure/lattice,
@@ -7352,7 +7554,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "Sq" = (
 /obj/structure/alien/weeds,
@@ -7406,7 +7610,9 @@
 "SV" = (
 /obj/item/weapon/circuitboard/destructive_analyzer,
 /obj/machinery/constructable_frame/machine_frame,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Tc" = (
 /obj/structure/cable{
@@ -7443,7 +7649,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/old_station/central/bridge)
 "Tk" = (
@@ -7471,12 +7677,11 @@
 	},
 /area/space_structures/old_station/right)
 "Tp" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutral"
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
 	},
-/area/space_structures/old_station/central)
+/area/space_structures/carp_space)
 "Tt" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/engineering,
@@ -7608,7 +7813,7 @@
 /area/space_structures/old_station/central/hydro)
 "TV" = (
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/old_station/central/bridge)
 "TX" = (
@@ -7695,7 +7900,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left/med)
 "UC" = (
@@ -7769,7 +7974,9 @@
 	icon_state = "1-2"
 	},
 /obj/item/trash/raisins,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "UV" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7962,7 +8169,9 @@
 "VU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/tracker_electronics,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "VV" = (
 /obj/machinery/door/airlock/vault{
@@ -7985,7 +8194,9 @@
 /area/space_structures/old_station/warehouse)
 "VZ" = (
 /obj/effect/decal/cleanable/generic,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "We" = (
 /turf/simulated/floor{
@@ -8022,7 +8233,9 @@
 /obj/item/weapon/circuitboard/rdserver{
 	pixel_y = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Ww" = (
 /obj/item/weapon/shard,
@@ -8113,12 +8326,15 @@
 /area/space_structures/old_station/right)
 "WR" = (
 /obj/structure/alien/weeds,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "WV" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "white"
+	icon_state = "bluechoco";
+	dir = 1
 	},
 /area/space_structures/old_station/left)
 "WX" = (
@@ -8131,7 +8347,7 @@
 	pixel_y = -9
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left/med)
 "Xa" = (
@@ -8154,7 +8370,9 @@
 /area/space_structures/old_station/right)
 "Xm" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "Xp" = (
 /obj/structure/cable{
@@ -8162,7 +8380,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "Xu" = (
 /obj/effect/decal/cleanable/dirt,
@@ -8207,7 +8427,9 @@
 /area/space_structures/old_station/central)
 "XE" = (
 /obj/item/weapon/storage/toolbox/electrical,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "XJ" = (
 /obj/structure/table,
@@ -8301,7 +8523,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor/airless{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/left)
 "Yo" = (
 /obj/structure/disposalpipe/segment{
@@ -8330,7 +8554,9 @@
 /obj/item/weapon/paper{
 	layer = 3
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "neutralchoco"
+	},
 /area/space_structures/old_station/right/rnd)
 "YB" = (
 /obj/effect/decal/turf_decal/set_damaged,
@@ -8428,7 +8654,9 @@
 	pixel_x = -21;
 	pixel_y = -6
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/brig)
 "Zi" = (
 /obj/structure/cable/yellow{
@@ -8590,7 +8818,7 @@
 "ZO" = (
 /obj/item/organ/external/l_leg,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left/med)
 "ZP" = (
@@ -8612,7 +8840,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/space_structures/old_station/central/solars_c)
 "ZY" = (
 /turf/simulated/floor{
@@ -9255,7 +9485,7 @@ Fv
 vS
 Fv
 ya
-xe
+Nw
 oA
 Nz
 WV
@@ -9266,7 +9496,7 @@ do
 HV
 ya
 ig
-rX
+uM
 cw
 Ki
 lt
@@ -9390,7 +9620,7 @@ Qo
 BB
 Ki
 sw
-dm
+Tp
 Xa
 yn
 yn
@@ -10030,7 +10260,7 @@ xK
 no
 gp
 qc
-vD
+yd
 RL
 ya
 wi
@@ -10689,7 +10919,7 @@ bk
 OF
 Rw
 QZ
-iT
+zh
 Gu
 iT
 Ft
@@ -10702,9 +10932,9 @@ wK
 iB
 Qj
 wb
-Do
-Gm
-Tp
+gN
+wb
+gN
 gN
 CI
 ND
@@ -10872,7 +11102,7 @@ Sl
 MV
 Dc
 Or
-zh
+Or
 Bt
 AP
 MV
@@ -10980,7 +11210,7 @@ wi
 wi
 vU
 JT
-TV
+vD
 qA
 IF
 iZ
@@ -11219,9 +11449,9 @@ wi
 wi
 wi
 vU
-JT
-TV
-TV
+xe
+FD
+LE
 TV
 TV
 TV
@@ -11529,7 +11759,7 @@ fO
 OF
 YD
 dM
-FD
+Ft
 Ft
 iT
 iT
@@ -11834,7 +12064,7 @@ jU
 cH
 nb
 Gt
-uM
+sY
 LN
 St
 op
@@ -13332,7 +13562,7 @@ Se
 hz
 rf
 GY
-sq
+Do
 sq
 XE
 Ni

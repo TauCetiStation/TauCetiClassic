@@ -3086,7 +3086,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "aiq" = (
-/obj/structure/mineral_door/wood,
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -3100,6 +3099,9 @@
 /obj/structure/barricade/wooden{
 	layer = 2.8;
 	name = "doorway barricade"
+	},
+/obj/structure/mineral_door/wood{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
@@ -96555,8 +96557,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/mineral_door/wood,
 /obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/mineral_door/wood{
 	dir = 4
 	},
 /turf/simulated/floor/plating,

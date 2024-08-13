@@ -1,11 +1,25 @@
+// static one time use mob spawner for derelicts and other optional areas
+// place it on map and it will spawn a mob if someone enters the area
+// saves us resources if there is no one around
+// for continuous spawns you can look for /datum/component/spawn_area
+
 /obj/effect/spawner/mob_spawn
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "xeno_spawn"
 	layer = OBJ_LAYER
+	invisibility = INVISIBILITY_OBSERVER
 	var/mob_type = /mob/living/simple_animal
 
+/obj/effect/spawner/mob_spawn/atom_init(mapload, view)
+	. = ..()
+
+	var/area/A = get_area(src)
+	LAZYADD(A.mob_spawners, src)
 
 /obj/effect/spawner/mob_spawn/proc/creatMob()
+	var/area/A = get_area(src)
+	LAZYREMOVE(A.mob_spawners, src)
+
 	new mob_type (src.loc)
 	qdel(src)
 
