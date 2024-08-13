@@ -535,10 +535,11 @@
 		return "[href]=-[Limit]'>-</A>" + rate + "[href]=[Limit]'>+</A>"
 	return rate
 
+//		NOSTROMO SMES
 /obj/machinery/power/smes/nostromo
 	resistance_flags = FULL_INDESTRUCTIBLE
 	unacidable = TRUE
-	var/mob/living/silicon/decoy/nostromo/N_AI
+	var/datum/map_module/alien/MM = null
 	var/stability = 8
 	var/next_stability_decrease = 0
 	var/next_alien_attack
@@ -554,33 +555,48 @@
 
 /obj/machinery/power/smes/nostromo/atom_init()
 	..()
+	MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	if(!MM)
+		return INITIALIZE_HINT_QDEL
+	else
+		MM.smes = src
+
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(round_start))
+
+	stability = rand(6, 8)
 	next_instrument = pick(instruments)
-	next_alien_attack = world.time
-	stability = rand(7, 9)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/power/smes/nostromo/atom_init_late()
-	N_AI = locate() in mob_list
 	var/list/around = orange(src, 5)
 	explosions += locate(/obj/machinery/power/port_gen/riteg) in around
 	explosions += locate(/obj/machinery/power/apc/smallcell/nostromo) in around
 	explosions += src
 
-/obj/machinery/power/smes/nostromo/process()
+/obj/machinery/power/smes/nostromo/proc/round_start()
+	next_stability_decrease = world.time + rand(120, 140) SECOND
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
+/obj/machinery/power/smes/nostromo/process(seconds_per_tick)
 	..()
 	if(world.time > next_stability_decrease)
-		next_stability_decrease = world.time + rand(110, 130) SECOND
+		next_stability_decrease += rand(120, 140) SECOND
 		stability--
 		if(!stability)
-			breakdown()
-		if(stability in 1 to 2) // 1 and 2 minute before breakdown AI gives an alert
-			if(N_AI)
-				N_AI.announce("smes")
-			do_shake_animation(2, next_stability_decrease - world.time, 1)
+			MM.breakdown(FALSE)
+		if(stability in 1 to 2) // 2 and 4 minute before breakdown AI gives an alert
+			MM.AI_announce("smes")
+
+	switch(stability)
+		if(4 to 7)
+			do_shake_animation(1, seconds_per_tick, 1)
+		if(1 to 3)
+			do_shake_animation(2, seconds_per_tick, 1)
+
 
 /obj/machinery/power/smes/nostromo/attack_alien(mob/user)
 	if(world.time > next_alien_attack)
-		next_alien_attack = world.time + 5 MINUTE
+		next_alien_attack = world.time + 8 MINUTE
 		stability--
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
@@ -589,27 +605,9 @@
 		to_chat(src, "<span class='notice'>Ещё не время для этого.</span>")
 		return
 
-/obj/machinery/power/smes/nostromo/proc/breakdown()
-	var/area/A = get_area(src)
-	if(A)
-		A.gravitychange(FALSE)
-
-	if(landmarks_list["Nostromo Ambience"].len)
-		var/obj/effect/landmark/nostromo/ambience/NA = landmarks_list["Nostromo Ambience"][1]
-		if(NA)
-			NA.ambience_next_time += 1 MINUTE
-
-	var/list/lhlist = global.alien_list[ALIEN_LONE_HUNTER]
-	if(lhlist.len)
-		var/mob/living/carbon/xenomorph/humanoid/hunter/lone/L = lhlist[1]
-		if(L)
-			L.set_slaughter_mode()
-
-	for(var/mob/M as anything in player_list)
-		M.playsound_music('sound/ambience/specific/hullcreak.ogg', VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 160)
-
+/obj/machinery/power/smes/nostromo/proc/explosion()
 	for(var/obj/O in explosions)
-		explosion(get_turf(O), 0,1,2,3)
+		explosion(get_turf(O), 0, 0, 2)
 		qdel(O)
 
 /obj/machinery/power/smes/nostromo/examine(mob/user, distance)
@@ -652,8 +650,8 @@
 				if(!WT.active)
 					to_chat(user, "<span class='notice'>Сначала включите сварку.</span>")
 					return
-			if(do_after(user, 20, target = src))
-				if(stability < 3)
+			if(do_after(user, 2 SECOND, target = src))
+				if(stability <= 2 && prob(50))
 					shock(user)
 				to_chat(user, "<span class='notice'>Вы успешно ремонтируете СМЕС.</span>")
 				next_instrument = pick(instruments - next_instrument)

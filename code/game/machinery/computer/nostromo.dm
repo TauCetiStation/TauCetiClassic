@@ -2,6 +2,15 @@
 	icon_state = "shuttle"
 	resistance_flags = FULL_INDESTRUCTIBLE
 	unacidable = TRUE
+	var/datum/map_module/alien/MM = null
+
+/obj/machinery/computer/nostromo/atom_init()
+	. = ..()
+	MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	if(!MM)
+		return INITIALIZE_HINT_QDEL
+	else
+		MM.console = src
 
 /obj/machinery/computer/nostromo/narcissus_shuttle
 	name = "Narcissus Shuttle Console"
@@ -33,6 +42,7 @@
 	if(href_list["evacuation"])
 		do_move()
 		docked = FALSE
+		MM.nuke_detonate()
 
 	updateUsrDialog()
 
@@ -58,42 +68,45 @@
 	var/side = 0
 	var/next_course_change = 0
 	var/obj/machinery/computer/nostromo/cockpit/second_console = null
-	var/mob/living/silicon/decoy/nostromo/N_AI = null
 
 /obj/machinery/computer/nostromo/cockpit/atom_init()
 	..()
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(round_start))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/nostromo/cockpit/atom_init_late()
 	second_console = locate() in orange(1, src)
-	N_AI = locate() in mob_list
 	if(!side)
 		side = pick(1, -1)
 		second_console.side = -side
 
+/obj/machinery/computer/nostromo/cockpit/proc/round_start()
+	next_course_change = world.time + rand(90, 110) SECOND
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
 /obj/machinery/computer/nostromo/cockpit/process()
 	..()
 	if(world.time > next_course_change)
-		course += rand(2, 4) * side
-		next_course_change = world.time + rand(110, 120) SECOND
+		next_course_change += rand(90, 110) SECOND
+		course += rand(3, 4) * side
 		if(abs(course) > 18)
-			if(N_AI)
-				N_AI.announce("cockpit")
+			MM.AI_announce("cockpit")
 		if(abs(course) > 24)
-			var/turf/T = get_turf(landmarks_list["Nostromo Ambience"][1])
-			empulse(T, 60, 60, custom_effects = EMP_SEBB)
-			explosion(get_turf(src), 0,1,2,3)
-			qdel(second_console)
-			qdel(src)
+			MM.breakdown(FALSE)
+
+/obj/machinery/computer/nostromo/cockpit/proc/explosion()
+	explosion(loc, 0, 0, 2)
+	qdel(second_console)
+	qdel(src)
 
 /obj/machinery/computer/nostromo/cockpit/examine(mob/user, distance)
 	if(distance > 4)
 		return
-	to_chat(user, "<span class='notice'>Текущее значение наклона по осям: [course] : [second_console.course]</span>")
+	to_chat(user, "<span class='notice'>Текущее значение отклонения [course].</span>")
 
 /obj/machinery/computer/nostromo/cockpit/attack_hand(mob/user)
 	if((side == 1 && course >= side) || (side == -1 && course <= side))
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 2 SECOND, target = src))
 			to_chat(user, "<span class='notice'>Вы успешно корректируете курс корабля.</span>")
 			course -= rand(4, 6) * side
 			second_console.course -= rand(1, 3) * side

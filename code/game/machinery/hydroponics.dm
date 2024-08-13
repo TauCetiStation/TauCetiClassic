@@ -1014,40 +1014,49 @@
 		to_chat(user, "You clear up [src]!")
 		qdel(src)
 
+//		NOSTROMO HYDROPONICS
 /obj/machinery/hydroponics/nostromo
 	icon_state = "hydrotray3"
 	resistance_flags = FULL_INDESTRUCTIBLE
-	var/mob/living/silicon/decoy/nostromo/N_AI
+	unacidable = TRUE
+	var/datum/map_module/alien/MM = null
 
 /obj/machinery/hydroponics/nostromo/atom_init()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/hydroponics/nostromo/atom_init_late()
-	N_AI = locate() in mob_list
+	. = ..()
+	MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	if(!MM)
+		return INITIALIZE_HINT_QDEL
+	else
+		MM.hydro = src
 
 /obj/machinery/hydroponics/nostromo/attack_alien(mob/living/carbon/xenomorph/user)
 	if(!istype(myseed, /obj/item/seeds/kudzuseed/alien))
 		if(planted)
+			to_chat(user, "<span class='notice'>You remove the plant from [src].</span>")
 			planted = FALSE
 			dead = FALSE
-			to_chat(user, "<span class='notice'>You remove the plant from [src].</span>")
 			qdel(myseed)
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>You plant the alien weed.</span>")
-			myseed = new /obj/item/seeds/kudzuseed/alien
-			planted = TRUE
-			waterlevel = maxwater
-			nutrilevel = maxnutri
-			age = 0
-			health = myseed.endurance
-			lastcycle = world.time
-			harvest = FALSE
-			weedlevel = 0
-			pestlevel = 0
-			update_icon()
-			if(N_AI)
-				addtimer(CALLBACK(N_AI, TYPE_PROC_REF(/mob/living/silicon/decoy/nostromo, announce), "alien_weed"), 1 MINUTE)
+			plant_alien_weed()
+
+/obj/machinery/hydroponics/nostromo/proc/plant_alien_weed()
+	if(istype(myseed, /obj/item/seeds/kudzuseed/alien))
+		return
+	myseed = new /obj/item/seeds/kudzuseed/alien
+	planted = TRUE
+	waterlevel = maxwater
+	nutrilevel = maxnutri
+	age = 0
+	health = myseed.endurance
+	lastcycle = world.time
+	harvest = FALSE
+	weedlevel = 0
+	pestlevel = 0
+	update_icon()
+	if(MM)
+		addtimer(CALLBACK(MM, PROC_REF(AI_announce), "alien_weed"), 1 MINUTE)
+
 
 #undef HYDRO_RATING_MULTIPLIER

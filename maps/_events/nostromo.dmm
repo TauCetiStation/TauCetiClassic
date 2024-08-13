@@ -125,7 +125,6 @@
 	},
 /area/station/nostromo)
 "aK" = (
-/obj/item/device/flashlight,
 /obj/structure/closet/crate,
 /turf/simulated/floor,
 /area/station/nostromo)
@@ -540,6 +539,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/weapon/weldpack,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "di" = (
@@ -617,12 +617,10 @@
 /area/station/nostromo)
 "dE" = (
 /obj/structure/closet/crate,
-/obj/item/device/flashlight,
 /obj/random/tools/tool,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/item/device/radio/off,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "dG" = (
@@ -680,9 +678,7 @@
 	},
 /area/station/nostromo)
 "dO" = (
-/obj/machinery/vending/coffee{
-	prices = list()
-	},
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "neutral"
@@ -1006,7 +1002,10 @@
 /area/station/nostromo)
 "fj" = (
 /obj/structure/table,
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/weapon/kitchenknife/butch{
+	pixel_x = -1;
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
@@ -1469,7 +1468,7 @@
 	},
 /area/station/nostromo)
 "ic" = (
-/obj/effect/landmark/nostromo/ambience,
+/obj/effect/landmark/ambience/nostromo,
 /turf/simulated/wall/beige,
 /area/station/nostromo)
 "ie" = (
@@ -1660,9 +1659,15 @@
 /turf/simulated/floor,
 /area/station/nostromo)
 "jf" = (
-/obj/structure/closet/secure_closet/freezer/kitchen/kitchenbig{
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/structure/closet/secure_closet/freezer{
 	req_access = list(12)
 	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -1843,13 +1848,6 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/nostromo)
-"ke" = (
-/mob/living/carbon/xenomorph/humanoid/hunter/lone{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
 /area/station/nostromo)
 "kf" = (
 /obj/structure/container{
@@ -2370,7 +2368,6 @@
 	},
 /area/station/nostromo)
 "nc" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/light/smart{
 	dir = 1
 	},
@@ -2378,6 +2375,7 @@
 	pixel_y = 22;
 	req_one_access = list()
 	},
+/obj/structure/closet/emcloset/antixeno,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -2441,7 +2439,7 @@
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/station/nostromo)
 "nu" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/antixeno,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "blue"
@@ -2596,6 +2594,7 @@
 /obj/item/weapon/stock_parts/cell,
 /obj/item/weapon/stock_parts/capacitor,
 /obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/weldpack,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -2608,10 +2607,7 @@
 /area/station/nostromo)
 "ok" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker{
-	pixel_x = 5;
-	pixel_y = 6
-	},
+/obj/item/weapon/lighter/random,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitecorner"
@@ -2789,7 +2785,7 @@
 	name = "Intercom";
 	pixel_y = 22
 	},
-/obj/machinery/computer/crew,
+/obj/machinery/computer/med_data,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -3025,6 +3021,15 @@
 	dir = 1
 	},
 /obj/item/weapon/storage/box/syringes/mixture,
+/obj/item/stack/medical/advanced/bruise_pack,
+/obj/item/stack/medical/advanced/bruise_pack,
+/obj/item/stack/medical/advanced/ointment,
+/obj/item/stack/medical/advanced/ointment,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/suture,
+/obj/item/weapon/storage/pouch/medical_supply,
+/obj/item/weapon/storage/pouch/medical_supply,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -3089,7 +3094,15 @@
 /area/station/nostromo)
 "qS" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/storage/box/syringes{
+	pixel_y = 7
+	},
+/obj/item/stack/medical/bruise_pack/rags/not_old{
+	pixel_y = -4
+	},
+/obj/item/stack/medical/bruise_pack/rags/not_old{
+	pixel_y = -9
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -3523,10 +3536,10 @@
 /turf/simulated/shuttle/floor/evac/eng1,
 /area/shuttle/nostromo_narcissus)
 "sW" = (
-/obj/structure/closet/emcloset,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/structure/closet/emcloset/antixeno,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "sX" = (
@@ -3559,7 +3572,13 @@
 	},
 /area/station/nostromo)
 "th" = (
-/obj/item/device/flashlight,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "ti" = (
@@ -3865,7 +3884,8 @@
 	pixel_y = 6
 	},
 /obj/item/weapon/stock_parts/cell{
-	pixel_y = -9
+	maxcharge = 3000;
+	pixel_y = -8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -3945,7 +3965,7 @@
 	},
 /area/station/nostromo)
 "vm" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/antixeno,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkblue"
@@ -4049,6 +4069,9 @@
 /area/station/nostromo)
 "vN" = (
 /obj/structure/closet,
+/obj/item/stack/sheet/cloth{
+	amount = 3
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -5027,6 +5050,7 @@
 	dir = 1
 	},
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/cheese{
+	list_reagents = list("nutriment" = 12);
 	pixel_y = -3
 	},
 /turf/simulated/floor{
@@ -5336,7 +5360,7 @@
 	},
 /area/station/nostromo)
 "Cz" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/antixeno,
 /turf/simulated/floor,
 /area/station/nostromo)
 "CC" = (
@@ -5523,7 +5547,6 @@
 /area/station/nostromo)
 "DA" = (
 /obj/item/weapon/table_parts,
-/obj/item/clothing/gloves/insulated,
 /turf/simulated/floor,
 /area/station/nostromo)
 "DB" = (
@@ -5626,9 +5649,6 @@
 /area/station/nostromo)
 "Ea" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/folder/blue{
-	pixel_y = 2
-	},
 /obj/structure/cable/orange{
 	d1 = 4;
 	d2 = 8;
@@ -5640,6 +5660,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/weapon/lighter/zippo,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -5743,7 +5764,7 @@
 /turf/simulated/floor/grid_floor,
 /area/station/nostromo)
 "EJ" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/antixeno,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -5946,9 +5967,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/mob/living/carbon/human{
-	icon_state = "body_m_s"
-	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -6026,18 +6044,6 @@
 /obj/machinery/vending/hydronutrients,
 /turf/simulated/floor{
 	icon_state = "dark"
-	},
-/area/station/nostromo)
-"Gk" = (
-/obj/machinery/light/smart{
-	dir = 4
-	},
-/mob/living/carbon/human{
-	icon_state = "body_m_s"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutral"
 	},
 /area/station/nostromo)
 "Gl" = (
@@ -6184,7 +6190,7 @@
 	},
 /area/station/nostromo)
 "GQ" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/antixeno,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "GS" = (
@@ -6201,6 +6207,7 @@
 "GV" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat{
+	list_reagents = list("nutriment" = 12);
 	pixel_y = 8
 	},
 /turf/simulated/floor{
@@ -6386,9 +6393,6 @@
 /area/station/nostromo)
 "HO" = (
 /obj/item/weapon/flora/random,
-/mob/living/carbon/human{
-	icon_state = "body_m_s"
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "neutral"
@@ -6427,9 +6431,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/obj/machinery/nuclearbomb/nostromo{
-	anchored = 1
-	},
+/obj/machinery/nuclearbomb/nostromo,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6678,7 +6680,15 @@
 	},
 /area/station/nostromo)
 "IS" = (
-/obj/machinery/vending/dinnerware,
+/obj/structure/closet/secure_closet/freezer{
+	req_access = list(12)
+	},
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/carrot,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita,
+/obj/item/weapon/reagent_containers/food/snacks/boiledspagetti,
+/obj/item/weapon/reagent_containers/food/snacks/boiledrice,
+/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -6881,7 +6891,6 @@
 	},
 /area/station/nostromo)
 "Ka" = (
-/obj/machinery/computer/monitor,
 /obj/structure/cable/orange{
 	d2 = 2;
 	icon_state = "0-2"
@@ -6895,6 +6904,7 @@
 	pixel_y = 28;
 	specialfunctions = 4
 	},
+/obj/machinery/computer/monitor,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -6928,7 +6938,6 @@
 /area/station/nostromo)
 "Kh" = (
 /obj/structure/rack,
-/obj/item/device/flashlight/seclite,
 /turf/simulated/floor,
 /area/station/nostromo)
 "Ki" = (
@@ -7415,7 +7424,7 @@
 "MH" = (
 /obj/machinery/power/port_gen/riteg{
 	power_gen = 50000;
-	rad_cooef = 100;
+	rad_cooef = 80;
 	resistance_flags = 64
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -8059,7 +8068,7 @@
 /area/station/nostromo)
 "Qi" = (
 /obj/effect/decal/turf_decal/set_burned,
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/antixeno,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
 "Ql" = (
@@ -8225,6 +8234,12 @@
 /obj/machinery/door/airlock/vault{
 	name = "Engine";
 	req_access = list(12)
+	},
+/obj/structure/sign/warning/detailed{
+	pixel_x = -32
+	},
+/obj/structure/sign/warning/radiation/rad_area{
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	icon_state = "yellowfull"
@@ -8528,7 +8543,7 @@
 	},
 /area/station/nostromo)
 "RZ" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/emcloset/antixeno,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "blue"
@@ -8651,9 +8666,6 @@
 /area/station/nostromo)
 "SG" = (
 /obj/structure/rack,
-/obj/item/clothing/head/welding{
-	pixel_y = -4
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/nostromo)
@@ -8764,6 +8776,9 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/item/stack/sheet/cloth{
+	pixel_y = 15
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
@@ -8783,9 +8798,6 @@
 	},
 /obj/structure/closet/radiation,
 /obj/item/clothing/glasses/meson,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 29
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -8803,6 +8815,11 @@
 "Tq" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
 	dir = 4
+	},
+/obj/item/weapon/tank/phoron/full,
+/obj/item/weapon/tank/phoron/full,
+/obj/structure/closet/crate/secure/engisec{
+	req_access = list(12)
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -8886,14 +8903,6 @@
 	dir = 1;
 	icon_state = "warn_corner"
 	},
-/obj/structure/sign/warning/radiation/rad_area{
-	pixel_y = 32
-	},
-/obj/structure/table,
-/obj/item/weapon/tank/oxygen/red{
-	pixel_x = 1;
-	pixel_y = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Engine";
 	dir = 6
@@ -8904,9 +8913,10 @@
 	},
 /area/station/nostromo)
 "TO" = (
-/obj/structure/table,
-/obj/item/weapon/storage/pneumatic{
-	pixel_y = 5
+/obj/item/weapon/flamethrower/full,
+/obj/structure/rack,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -9134,13 +9144,6 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/station/nostromo)
-"UT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 5
-	},
-/turf/simulated/floor/plating,
 /area/station/nostromo)
 "UV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -9532,10 +9535,6 @@
 	name = "Engineers Locker";
 	req_access = list(10)
 	},
-/obj/item/clothing/accessory/storage/brown_vest,
-/obj/item/clothing/accessory/storage/brown_vest,
-/obj/item/clothing/suit/storage/hazardvest,
-/obj/item/clothing/suit/storage/hazardvest,
 /obj/item/clothing/gloves/insulated,
 /obj/item/clothing/gloves/insulated,
 /obj/item/clothing/mask/gas/coloured,
@@ -9544,6 +9543,7 @@
 /obj/item/weapon/tank/emergency_oxygen/engi,
 /obj/item/weapon/weldingtool/experimental,
 /obj/item/device/multitool,
+/obj/item/weapon/storage/pouch/medium_generic,
 /turf/simulated/floor{
 	icon_state = "yellowfull"
 	},
@@ -10117,6 +10117,7 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/apple{
+	list_reagents = list("nutriment" = 12);
 	pixel_x = -6;
 	pixel_y = -11
 	},
@@ -36307,7 +36308,7 @@ ZS
 XJ
 LU
 ZS
-IV
+th
 iE
 LI
 iE
@@ -38616,7 +38617,7 @@ ZS
 ZS
 ZS
 HO
-Gk
+FH
 aj
 fh
 Kp
@@ -39385,7 +39386,7 @@ ZS
 ZS
 ZS
 oT
-ke
+HU
 lX
 ZS
 Tt
@@ -44520,7 +44521,7 @@ dY
 EZ
 ZS
 Sa
-UT
+HU
 gA
 rQ
 ZS
@@ -46343,7 +46344,7 @@ Pz
 AT
 Me
 ZS
-th
+oT
 HU
 CT
 ZS
@@ -47081,7 +47082,7 @@ RK
 fT
 ZS
 ZS
-lX
+uc
 Kc
 ZS
 ZS
@@ -47597,7 +47598,7 @@ ZS
 ZS
 YM
 Hj
-ZS
+oT
 ZS
 JD
 ZM
@@ -49692,9 +49693,9 @@ ZS
 fT
 fT
 fT
-fT
+ZS
 xB
-fT
+ZS
 fT
 fT
 fT

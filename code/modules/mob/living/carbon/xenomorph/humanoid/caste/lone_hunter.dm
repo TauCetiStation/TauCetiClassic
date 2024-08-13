@@ -5,8 +5,14 @@
 	caste = ""
 	pixel_x = -8
 	ventcrawler = 0
-	storedPlasma = 150
+	storedPlasma = 200
+	max_plasma = 200
+	maxHealth = 200
+	health = 200
 	sight = SEE_TURFS | SEE_MOBS
+	speed = 0
+	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds)
+	acid_type = /obj/effect/alien/acid/queen_acid
 	var/epoint = 0
 	var/estage = 1
 	var/list/alien_screamer = list(
@@ -23,15 +29,16 @@
 		'sound/antag/Alien_sounds/alien_eat_corpse4.ogg')
 	var/list/eaten_human = list()
 	var/scary_music_next_time = 0
-	var/current_scary_music
-	var/adrenaline_available = TRUE
-	var/obj/effect/landmark/nostromo/ambience/ambience_player = null
+	var/current_scary_music = null
+	var/adrenaline_next_time = 0
+	var/datum/map_module/alien/MM = null
 	var/mob/living/carbon/human/hunt_target = null
-	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds)
-	acid_type = /obj/effect/alien/acid/queen_acid
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/atom_init()
 	. = ..()
+	MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	if(MM)
+		MM.alien_appeared(src)
 	name = "Alien"
 	real_name = name
 	alien_list[ALIEN_HUNTER] -= src			// ¯\_(ツ)_/¯
@@ -39,25 +46,13 @@
 	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid)
 	var/datum/action/eat_corpse/A = new(src)
 	A.Grant(src)
-	if(landmarks_list["Nostromo Ambience"].len)
-		var/obj/effect/landmark/L = landmarks_list["Nostromo Ambience"][1]
-		if(L)
-			ambience_player = L
 	playsound(src, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Destroy()
 	alien_list[ALIEN_LONE_HUNTER] -= src
 	return ..()
 
-/mob/living/carbon/xenomorph/humanoid/hunter/lone/Life()
-	if(epoint >= 6)
-		epoint -= 6
-		next_stage()
-	if(adrenaline_available && health < (maxHealth / 3))
-		adrenaline_available = FALSE
-		apply_status_effect(STATUS_EFFECT_ALIEN_ADRENALINE)
-	..()
-
+//		ALIEN TAKE ADDITIONAL FIRE DAMAGE
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/handle_fire()
 	if(..())
 		return
@@ -69,32 +64,31 @@
 		ExtinguishMob()
 		return TRUE
 
-/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/next_stage(msg_play = TRUE)
-	if(msg_play)
-		to_chat(src, "<span class='notice'>Вы перешли на новую стадию эволюции!</span>")
-	estage++
-	maxHealth += 20
-	heal_rate += 1
-	max_plasma += 50
-	plasma_rate += 1
+//		ADRENALINE
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/adjustFireLoss(amount)
+	..()
+	try_adrenaline()
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/adjustBruteLoss(amount)
+	..()
+	try_adrenaline()
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/try_adrenaline()
+	if(estage < 5 && world.time > adrenaline_next_time && health < (maxHealth / 3))
+		adrenaline_next_time = world.time + 5 MINUTE
+		apply_status_effect(STATUS_EFFECT_ALIEN_ADRENALINE)
 
-	if(estage == 3)
-		var/datum/faction/nostromo_crew/NC = find_faction_by_type(/datum/faction/nostromo_crew)
-		if(NC)
-			NC.spawn_crate()
-		adrenaline_available = FALSE
-
+//		STATISTICS
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Stat()
 	if(statpanel("Status"))
 		stat("Очков эволюции: [epoint]")
 		stat("Стадия эволюции: [estage]")
 		stat("Съедено людей: [eaten_human.len]")
 
+//			SCREAMER WHEN LEAP
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/successful_leap(mob/living/L)
-	for(var/mob/beholder in oview(6, src))
+	for(var/mob/beholder in oview(6, L))
 		beholder.playsound_local(null, pick(alien_screamer), VOL_EFFECTS_MASTER, null, FALSE)
-	play_scary_music()
 
+//		HUNT AND ADRENALINE AFFECT THE ATTACK
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/UnarmedAttack(atom/A)
 	if(has_status_effect(STATUS_EFFECT_ALIEN_ADRENALINE))
 		to_chat(src, "<span class='warning'>Вы вот-вот умрёте, нужно бежать!</span>")
@@ -108,6 +102,7 @@
 				if(prob(30))
 					say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 				play_scary_music()
+
 				if(!hunt_target && (estage < 5)) //
 					apply_status_effect(STATUS_EFFECT_ALIEN_HUNT, H)
 
@@ -119,54 +114,50 @@
 	if(ismob(A))
 		SetNextMove(CLICK_CD_MELEE)
 
+//		SCARY MUSIC WHEN ATTACK
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/play_scary_music()
-	if(ambience_player && world.time > scary_music_next_time)
+	if(MM && world.time > scary_music_next_time)
+		MM.delay_ambience(30 SECONDS)
 		current_scary_music = pick(alien_attack - current_scary_music)
-		ambience_player.ambience_next_time += 0.5 MINUTE
 		scary_music_next_time = world.time + 1 MINUTE
 		for(var/mob/M in range(7, src))
 			M.playsound_music(current_scary_music, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 255)
 
+//		SLAUGHTER MODE WHEN SHIP BREAKDOWN
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/set_slaughter_mode()
 	to_chat(src, "<span class='notice'>Да начнётся резня! Ваши характеристики повышены.</span>")
 	for(var/i in estage to 5)
 		next_stage(msg_play = FALSE)
+	alien_spells += /obj/effect/proc_holder/spell/targeted/screech
 
+//		EAT CORPSE
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/can_eat_corpse(obj/item/weapon/grab/G)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>Невозможно делать это в текущем состоянии.</span>")
 		return FALSE
-
 	if(!G || !istype(G))
 		to_chat(src, "<span class='warning'>Сначала нужно схватить тело.</span>")
 		return FALSE
-
 	if(!ishuman(G.affecting))
 		to_chat(src, "<span class='warning'>Это должен быть человек!</span>")
 		return FALSE
-
 	var/mob/living/carbon/human/H = G.affecting
 	if(!H.species.flags[FACEHUGGABLE])
 		to_chat(src, "<span class='warning'>Это невозможно съесть!</span>")
 		return FALSE
-
 	if(H in eaten_human)
 		to_chat(src, "<span class='warning'>Это тело уже всё обглодано!</span>")
 		return FALSE
-
 	if(H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
 		to_chat(src, "<span class='warning'>Уже начался процесс разложения, это тело неупотребимо в пищу!</span>")
 		return FALSE
-
 	if(G.state < GRAB_NECK)
 		to_chat(src, "<span class='warning'>Нужно схватить тело покрепче!</span>")
 		return FALSE
-
 	return TRUE
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/eat_corpse()
 	var/obj/item/weapon/grab/G = locate() in src
-
 	if(can_eat_corpse(G))
 		to_chat(src, "<span class='notice'>Вы приступили к трапезе.</span>")
 		var/mob/living/carbon/human/H = G.affecting
@@ -180,11 +171,27 @@
 						"отрываете кусок мяса от [CASE(BP, GENITIVE_CASE)]")] человека.</span>")
 				playsound(src, pick(alien_eat_corpse), VOL_EFFECTS_MASTER)
 				H.apply_damage(50, BRUTE, BP)
-				epoint++
+				give_epoint(1)
 			else
 				break
 		eaten_human += H
 
+//		EVOLUTION POINT
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/give_epoint(amount)
+	epoint += amount
+	if(epoint >= 6)
+		epoint -= 6
+		next_stage()
+
+//		NEXT STAGE
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/next_stage(msg_play = TRUE)
+	if(msg_play)
+		to_chat(src, "<span class='notice'>Вы перешли на новую стадию эволюции!</span>")
+	estage++
+	maxHealth += 20
+	max_plasma += 20
+
+//		ACTIONS
 /datum/action/eat_corpse
 	name = "Съесть тело."
 	check_flags = AB_CHECK_ALIVE
@@ -197,6 +204,8 @@
 	if(L)
 		L.eat_corpse()
 
+//		STATUS EFFECTS
+//		HUNT
 /atom/movable/screen/alert/status_effect/alien_hunt
 	name = "Охота"
 	desc = "Вы избрали себе цель, цель должна умереть! Вы не можете атаковать никого кроме цели!"
@@ -220,6 +229,7 @@
 		var/mob/living/carbon/xenomorph/humanoid/hunter/lone/L = owner
 		L.hunt_target = null
 
+//		ADRENALINE
 /atom/movable/screen/alert/status_effect/alien_adrenaline
 	name = "Адреналин"
 	desc = "Уносим ноги, пока целы!"

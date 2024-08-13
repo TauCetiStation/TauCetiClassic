@@ -569,10 +569,34 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	name = "Red Team"
 	icon_state = "x"
 
-/obj/effect/landmark/nostromo/ambience
-	name = "Nostromo Ambience"
+//		DYNAMIC AMBIENCE
+/obj/effect/landmark/ambience
+	name = "Ambience"
 	var/ambience_next_time
-	var/ambience = list(
+	var/ambience = list()
+	var/current_ambience
+
+/obj/effect/landmark/ambience/atom_init()
+	. = ..()
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(round_start))
+
+/obj/effect/landmark/ambience/proc/round_start()
+	ambience_next_time = world.time + 1 MINUTE
+	START_PROCESSING(SSobj, src)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
+/obj/effect/landmark/ambience/process()
+	if(world.time > ambience_next_time)
+		ambience_next_time = world.time + rand(2, 4) MINUTE
+		current_ambience = pick(ambience - current_ambience)
+
+		for(var/mob/M as anything in player_list)
+			M.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
+
+//		NOSTROMO AMBIENCE
+/obj/effect/landmark/ambience/nostromo
+	name = "Nostromo Ambience"
+	ambience = list(
 		'sound/antag/Alien_sounds/alien_ambience1.ogg',
 		'sound/antag/Alien_sounds/alien_ambience2.ogg',
 		'sound/antag/Alien_sounds/alien_ambience3.ogg',
@@ -581,20 +605,18 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 		'sound/antag/Alien_sounds/alien_ambience6.ogg',
 		'sound/antag/Alien_sounds/alien_ambience7.ogg',
 		'sound/antag/Alien_sounds/alien_ambience8.ogg')
-	var/current_ambience
 
-/obj/effect/landmark/nostromo/ambience/atom_init()
+/obj/effect/landmark/ambience/nostromo/atom_init()
 	. = ..()
-	ambience_next_time = world.time + 1 MINUTE
-	START_PROCESSING(SSobj, src)
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	if(MM)
+		MM.ambience_player = src
 
-/obj/effect/landmark/nostromo/ambience/process()
-	if(world.time > ambience_next_time)
-		ambience_next_time += rand(2, 4) MINUTE
-		current_ambience = pick(ambience - current_ambience)
-
-		for(var/mob/M as anything in player_list)
-			M.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
+//		NOSTROMO LANDMARKS
+/obj/effect/landmark/nostromo/atom_init()
+	. = ..()
+	if(!SSmapping.get_map_module(MAP_MODULE_ALIEN))
+		return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/nostromo/supply_crate
 	name = "Nostromo Supply Crate"
@@ -615,3 +637,8 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	if(isliving(AM))
 		var/mob/living/L = AM
 		to_chat(L, "На время полёта склад держат обесточенным для экономии электроэнергии, нет никакого смысла сейчас идти туда.")
+
+/obj/effect/landmark/nostromo/random_loot
+	name = "Nostromo Random Loot"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "random_loot"

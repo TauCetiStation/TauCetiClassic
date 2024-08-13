@@ -8,3 +8,6 @@
 	if(issilicon(owner.current) && owner.current != owner.original)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
+
+/datum/objective/survive/ru
+	explanation_text = "Останься в живых."

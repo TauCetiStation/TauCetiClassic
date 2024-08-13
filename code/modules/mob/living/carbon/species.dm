@@ -2150,13 +2150,12 @@
 	,NO_EMOTION = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SYNTHETIC = TRUE
-	,HAS_SKIN_COLOR = TRUE
+	,HAS_SKIN_TONE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_VOMIT = TRUE
 	,IS_SOCIAL = TRUE
-	,NO_GENDERS = TRUE
 	)
 
 	has_bodypart = list(
@@ -2177,23 +2176,10 @@
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys/ipc
 		)
 
-	blood_datum_path = /datum/dirt_cover/oil
-	flesh_color = "#575757"
-
-	survival_kit_items = list(/obj/item/device/suit_cooling_unit/miniature,
-	                          /obj/item/stack/nanopaste
-	                          )
-
-	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
+	blood_datum_path = /datum/dirt_cover/red_blood
+	flesh_color = "#34af10"
+	base_color = "#066000"
 
 	is_common = TRUE
-
-	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST)
-
-	emotes = list(
-		/datum/emote/robot/beep,
-		/datum/emote/robot/ping,
-		/datum/emote/robot/buzz,
-	)
 
 	default_mood_event = /datum/mood_event/machine

@@ -513,14 +513,33 @@ var/global/bomb_set
 
 
 /obj/machinery/nuclearbomb/nostromo
+	anchored = TRUE
 	var/can_interact = FALSE
+
+/obj/machinery/nuclearbomb/nostromo/atom_init()
+	. = ..()
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	if(!MM)
+		return INITIALIZE_HINT_QDEL
+	else
+		MM.nukebomb = src
 
 /obj/machinery/nuclearbomb/nostromo/ui_interact(mob/user)
 	if(!can_interact)
+		to_chat(user, "<span class='warning'>Механизм самоуничтожения заблокирован.</span>")
 		return
 	..()
 
 /obj/machinery/nuclearbomb/nostromo/attackby(obj/item/weapon/O, mob/user)
 	if(!can_interact)
+		to_chat(user, "<span class='warning'>Механизм самоуничтожения заблокирован.</span>")
 		return
 	..()
+
+/obj/machinery/nuclearbomb/nostromo/proc/unlock()
+	can_interact = TRUE
+	anchored = FALSE
+
+/obj/machinery/nuclearbomb/nostromo/proc/detonate()
+	safety = FALSE
+	explode()

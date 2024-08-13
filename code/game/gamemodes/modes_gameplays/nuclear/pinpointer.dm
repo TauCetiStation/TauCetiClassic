@@ -248,12 +248,14 @@
 /obj/item/weapon/pinpointer/lone_alien
 	mode = SEARCH_FOR_OBJECT
 
+/obj/item/weapon/pinpointer/lone_alien/atom_init()
+	. = ..()
+	if(!SSmapping.get_map_module(MAP_MODULE_ALIEN))
+		return INITIALIZE_HINT_QDEL
+
 /obj/item/weapon/pinpointer/lone_alien/attack_self(mob/user)
-	var/mob/jonesy = global.Jonesy
-	var/mob/alien
-	var/list/L = global.alien_list[ALIEN_LONE_HUNTER]
-	if(L.len)
-		alien = global.alien_list[ALIEN_LONE_HUNTER][1]
+	var/mob/living/simple_animal/cat/red/jonesy/jonesy = locate() in living_list
+	var/mob/living/carbon/xenomorph/humanoid/hunter/lone/alien = locate() in alien_list[ALIEN_LONE_HUNTER]
 
 	if(alien && jonesy)
 		target = pickweight(list(jonesy = 3, alien = 1))
