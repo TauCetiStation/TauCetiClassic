@@ -227,7 +227,7 @@
 	var/list/checked_human = list()
 
 	for(var/mob/living/carbon/human/H as anything in human_list)
-		if(H.stat == DEAD || H in checked_human || !is_station_level(H.z) || !H.species.flags[FACEHUGGABLE])
+		if(H.stat == DEAD || (H in checked_human) || !is_station_level(H.z) || !H.species.flags[FACEHUGGABLE])
 			checked_human += H
 			continue
 		var/list/around = range(7, get_turf(H))
