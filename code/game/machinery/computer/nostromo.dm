@@ -47,11 +47,11 @@
 	updateUsrDialog()
 
 /obj/machinery/computer/nostromo/narcissus_shuttle/proc/do_move()
-	var/area/current_location = locate(/area/shuttle/nostromo_narcissus)
-	var/area/transit_location = locate(/area/shuttle/nostromo_narcissus/transit)
+	var/area/current_location = get_area_by_type(/area/shuttle/nostromo_narcissus/ship)
+	var/area/transit_location = get_area_by_type(/area/shuttle/nostromo_narcissus/transit)
 
 	SSshuttle.undock_act(/area/station/nostromo, "evac_shuttle_1")
-	SSshuttle.undock_act(/area/shuttle/nostromo_narcissus, "evac_shuttle_1")
+	SSshuttle.undock_act(/area/shuttle/nostromo_narcissus/ship, "evac_shuttle_1")
 
 	current_location.move_contents_to(transit_location)
 	SSshuttle.shake_mobs_in_area(transit_location, EAST)

@@ -10,27 +10,22 @@
 	config_disable_station_announce = TRUE
 	config_event_cryopod_latejoin = TRUE
 	config_disable_loadout = TRUE
+	config_disable_qualities = TRUE
+	human_delay = 0.2
 
 	map_lobby_image = 'html/media/lobby_alien.png'
 	map_lobby_music = 'sound/lobby/alien_main.ogg'
 
 	admin_verbs = list(
-		/datum/map_module/alien/proc/ivent_info,
-		/datum/map_module/alien/proc/open_cargo,
-		/datum/map_module/alien/proc/open_evac,
-		/datum/map_module/alien/proc/give_crew_signal,
-		/datum/map_module/alien/proc/give_alien_signal,
-		/datum/map_module/alien/proc/breakdown,
-		/datum/map_module/alien/proc/AI_announce,
-		/datum/map_module/alien/proc/plant_seed,
-		/datum/map_module/alien/proc/play_ambience,
-		/datum/map_module/alien/proc/delay_ambience,
-		/datum/map_module/alien/proc/lights_blinking,
-		/datum/map_module/alien/proc/smes_stability,
-		/datum/map_module/alien/proc/ship_course,
-		/datum/map_module/alien/proc/give_epoint,
-		/datum/map_module/alien/proc/next_estage,
-		/datum/map_module/alien/proc/set_slaughter_mode)
+		/client/proc/nostromo_ivent_info,
+		/client/proc/nostromo_open_cargo,
+		/client/proc/nostromo_open_evac,
+		/client/proc/nostromo_give_crew_signal,
+		/client/proc/nostromo_play_ambience,
+		/client/proc/nostromo_delay_ambience,
+		/client/proc/nostromo_lights_blinking,
+		/client/proc/nostromo_smes_stability,
+		/client/proc/nostromo_ship_course)
 
 	var/cargo_open = FALSE
 	var/evac_open = FALSE
@@ -75,16 +70,21 @@
 		random_loot -= loot
 		qdel(landmark)
 
+/////////////////////////////////////////////////////////////////////////////////////
 //			IVENT INFO
-/datum/map_module/alien/proc/ivent_info()
+/client/proc/nostromo_ivent_info()
 	set category = "Event"
 	set name = "Alien: Ivent Info"
 
+/////////////////////////////////////////////////////////////////////////////////////
 //			OPEN CARGO
-/datum/map_module/alien/proc/open_cargo()
+/client/proc/nostromo_open_cargo()
 	set category = "Event"
 	set name = "Alien: Open Cargo"
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM.open_cargo()
 
+/datum/map_module/alien/proc/open_cargo()
 	if(!cargo_open)
 		cargo_open = TRUE
 		for(var/obj/BW as anything in landmarks_list["Nostromo Cargo Blockway"])
@@ -102,24 +102,32 @@
 		new item(SC)
 	give_crew_signal("На корабль перед отлётом грузили ящики и контейнеры, где-то на складе может быть оружие!")
 
+/////////////////////////////////////////////////////////////////////////////////////
 //			OPEN EVAC
-/datum/map_module/alien/proc/open_evac()
+/client/proc/nostromo_open_evac()
 	set category = "Event"
 	set name = "Alien: Open Evac"
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM.open_evac()
 
+/datum/map_module/alien/proc/open_evac()
 	if(!evac_open)
 		nukebomb.unlock()
 		AI_announce("evac")
 		give_crew_signal("Мы должны эвакуироваться! Нужно запустить механизм самоуничтожения!")
 
+/////////////////////////////////////////////////////////////////////////////////////
 //			MESSAGE FOR CREW
-/datum/map_module/alien/proc/give_crew_signal(message)
+/client/proc/nostromo_give_crew_signal()
 	set category = "Event"
 	set name = "Alien: Crew Message"
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	var/message = input("Введите сообщение, которое вы хотите передать экипажу.", "Сообщение") as text|null
+	MM.give_crew_signal(message)
 
+/datum/map_module/alien/proc/give_crew_signal(message)
 	if(!message)
-		message = input("Введите сообщение, которое вы хотите передать экипажу.", "Сообщение") as text|null
-
+		return
 	for(var/mob/living/carbon/human/H as anything in crew_faction.crew)
 		if(H.stat != DEAD)
 			var/scary_sound = pick('sound/hallucinations/scary_sound_1.ogg',
@@ -129,32 +137,74 @@
 			H.playsound_local(null, scary_sound, VOL_EFFECTS_MASTER, null, FALSE, ignore_environment = TRUE)
 			to_chat(H, "<span class='warning'>[message]</span>")
 
-//			MESSAGE FOR ALIEN
-/datum/map_module/alien/proc/give_alien_signal(message)
+/////////////////////////////////////////////////////////////////////////////////////
+//			AI ANNOUNCE
+/datum/map_module/alien/proc/AI_announce(code)
+	ai.announce(code)
+
+/////////////////////////////////////////////////////////////////////////////////////
+//			PLAY NEXT AMBIENCE NOW
+/client/proc/nostromo_play_ambience()
 	set category = "Event"
-	set name = "Alien: Alien Message"
+	set name = "Alien: Play Ambience"
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM.ambience_player.ambience_next_time = world.time
 
-	if(!message)
-		message = input("Введите сообщение, которое вы хотите передать ксеноморфу.", "Сообщение") as text|null
+/////////////////////////////////////////////////////////////////////////////////////
+//			DELAY NEXT AMBIENCE
+/client/proc/nostromo_delay_ambience()
+	set category = "Event"
+	set name = "Alien: Delay Ambience"
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM.delay_ambience()
 
-	var/scary_sound = pick('sound/hallucinations/scary_sound_1.ogg',
-		'sound/hallucinations/scary_sound_2.ogg',
-		'sound/hallucinations/scary_sound_3.ogg',
-		'sound/hallucinations/scary_sound_4.ogg')
-	alien.playsound_local(null, scary_sound, VOL_EFFECTS_MASTER, null, FALSE, ignore_environment = TRUE)
-	to_chat(alien, "<span class='warning'>[message]</span>")
+/datum/map_module/alien/proc/delay_ambience(delay = 0)
+	if(!delay)
+		delay = input("На сколько секунд вы хотите отсрочить эмбиенс?", "Значение") as num|null
+		delay = delay SECONDS
+	ambience_player.ambience_next_time += delay
 
+/////////////////////////////////////////////////////////////////////////////////////
+//			LIGHTS BLINKING FOR SUSPENSE
+/client/proc/nostromo_lights_blinking()
+	set category = "Event"
+	set name = "Alien: Lights Blinking"
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM.lights_blinking()
+
+/datum/map_module/alien/proc/lights_blinking()
+	for(var/obj/machinery/light/L in global.machines)
+		L.flicker(5)
+
+/////////////////////////////////////////////////////////////////////////////////////
+//			CHANGE SMES STABILITY
+/client/proc/nostromo_smes_stability()
+	set category = "Event"
+	set name = "Alien: SMES Stability"
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM.smes.stability = input("Какое значение стабильности установить СМЕСу?", "Значение", MM.smes.stability) as num|null
+
+/////////////////////////////////////////////////////////////////////////////////////
+//			CHANGE SHIP COURSE
+/client/proc/nostromo_ship_course()
+	set category = "Event"
+	set name = "Alien: Ship Course"
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM.console.course = input("Какое значение наклона установить первой консоли?", "Значение", MM.console.course) as num|null
+	MM.console.second_console.course = input("Какое значение наклона установить второй консоли?", "Значение", MM.console.second_console.course) as num|null
+
+/////////////////////////////////////////////////////////////////////////////////////
+//			ALIEN REGENERATION
+/client/proc/nostromo_alien_regen()
+	set category = "Event"
+	set name = "Alien: Alien Regen"
+	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	if(MM.alien)
+		MM.alien.apply_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
+
+/////////////////////////////////////////////////////////////////////////////////////
 //			SHIP BREAKDOWN
-/datum/map_module/alien/proc/breakdown(admin = TRUE)
-	set category = "Event"
-	set name = "!Alien: Ship Breakdown!"
-
-	if(breakdown)
-		return
-	if(admin)
-		if(tgui_alert("Поломка корабля означает конец игры для экипажа!", "Вы уверены?", list("Да", "Нет")) != "Да")
-			return
-
+/datum/map_module/alien/proc/breakdown()
 	breakdown = TRUE
 	for(var/mob/M as anything in player_list)
 		M.playsound_music('sound/ambience/specific/hullcreak.ogg', VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 160)
@@ -168,87 +218,7 @@
 	open_cargo()
 	open_evac()
 
-//			AI ANNOUNCE
-/datum/map_module/alien/proc/AI_announce(code)
-	set category = "Event"
-	set name = "Alien: AI Announce"
-
-	var/admin_announce = FALSE
-	if(!code)
-		code = input("Введите сообщение, которое должен произнести бортовой ИИ.", "Сообщение") as text|null
-		admin_announce = TRUE
-
-	ai.announce(code, admin_announce)
-
-//			PLANT ALIEN SEED IN BOTANY
-/datum/map_module/alien/proc/plant_seed()
-	set category = "Event"
-	set name = "Alien: Alien Weed"
-
-	hydro.plant_alien_weed()
-
-//			PLAY NEXT AMBIENCE NOW
-/datum/map_module/alien/proc/play_ambience()
-	set category = "Event"
-	set name = "Alien: Play Ambience"
-
-	ambience_player.ambience_next_time = world.time
-
-//			DELAY NEXT AMBIENCE
-/datum/map_module/alien/proc/delay_ambience(delay)
-	set category = "Event"
-	set name = "Alien: Delay Ambience"
-
-	if(!delay)
-		delay = input("На сколько секунд вы хотите отсрочить эмбиенс?", "Значение") as num|null
-		delay = delay SECONDS
-	ambience_player.ambience_next_time += delay
-
-//			LIGHTS BLINKING FOR SUSPENSE
-/datum/map_module/alien/proc/lights_blinking()
-	set category = "Event"
-	set name = "Alien: Lights Blinking"
-
-//			CHANGE SMES STABILITY
-/datum/map_module/alien/proc/smes_stability()
-	set category = "Event"
-	set name = "Alien: SMES Stability"
-
-	smes.stability = input("Какое значение стабильности установить СМЕСу?", "Значение", smes.stability) as num|null
-
-//			CHANGE SHIP COURSE
-/datum/map_module/alien/proc/ship_course()
-	set category = "Event"
-	set name = "Alien: Ship Course"
-
-	console.course = input("Какое значение наклона установить первой консоли?", "Значение", console.course) as num|null
-	console.second_console.course = input("Какое значение наклона установить второй консоли?", "Значение", console.second_console.course) as num|null
-
-//			GIVE ALIEN EVOLUTION POINT
-/datum/map_module/alien/proc/give_epoint()
-	set category = "Event"
-	set name = "Alien: Give Epoint"
-
-	alien.give_epoint(input("Сколько очков эволюции вручить ксеноморфу?", "Значение") as num|null)
-
-//			ALIEN NEXT EVOLUTION STAGE
-/datum/map_module/alien/proc/next_estage()
-	set category = "Event"
-	set name = "Alien: Next Estage"
-
-	alien.next_stage()
-
-//			SET ALIEN SLAUGHTER MODE
-/datum/map_module/alien/proc/set_slaughter_mode()
-	set category = "Event"
-	set name = "!Alien: Slaughter Mode!"
-
-	if(!alien)
-		return
-	if(tgui_alert("Ксеноморф перейдёт в свою терминальную стадию!", "Вы уверены?", list("Да", "Нет")) != "Да")
-		return
-	alien.set_slaughter_mode()
-
+/////////////////////////////////////////////////////////////////////////////////////
 //			ROUND END WHEN ALIEN DIED
 /datum/map_module/alien/proc/alien_appeared(mob/M)
 	RegisterSignal(M, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), PROC_REF(alien_died))
@@ -257,10 +227,13 @@
 	else if(isxenolonehunter(M))
 		UnregisterSignal(larva, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING)) // LARVA EVOLVE - NOT DIED
 		alien = M
+		lights_blinking()
+		give_crew_signal("Леденящий ужас спускается по твоему позвоночнику…")
 
 /datum/map_module/alien/proc/alien_died(mob/M)
 	UnregisterSignal(M, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING))
 	alien_alive = FALSE
+	to_chat(world, "<B>2!</B>")
 	crew_faction.round_end = TRUE
 
 /datum/map_module/alien/proc/nuke_detonate()
@@ -268,7 +241,7 @@
 
 /datum/map_module/alien/proc/get_cargo_loot()
 	return pick(
-		list(// incendiary shotguns
+		list(
 			/obj/item/weapon/gun/projectile/shotgun/incendiary,
 			/obj/item/weapon/gun/projectile/shotgun/incendiary,
 			/obj/item/ammo_box/eight_shells/incendiary,
@@ -278,7 +251,7 @@
 			/obj/item/clothing/head/helmet,
 			/obj/item/clothing/head/helmet,
 			/obj/item/weapon/shield/riot),
-		list(// crossbows and tactical bolas
+		list(
 			/obj/item/weapon/crossbow,
 			/obj/item/weapon/crossbow,
 			/obj/item/stack/rods/ten,
@@ -291,7 +264,7 @@
 			/obj/item/clothing/head/helmet/syndilight,
 			/obj/item/weapon/legcuffs/bola/tactical,
 			/obj/item/weapon/legcuffs/bola/tactical),
-		list(// mining equipment
+		list(
 			/obj/item/weapon/sledgehammer,
 			/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
 			/obj/item/weapon/gun/energy/laser/cutter,

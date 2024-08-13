@@ -245,15 +245,15 @@
 
 	return attack_self(usr)
 
-/obj/item/weapon/pinpointer/lone_alien
+/obj/item/weapon/pinpointer/nostromo
 	mode = SEARCH_FOR_OBJECT
 
-/obj/item/weapon/pinpointer/lone_alien/atom_init()
+/obj/item/weapon/pinpointer/nostromo/atom_init()
 	. = ..()
 	if(!SSmapping.get_map_module(MAP_MODULE_ALIEN))
 		return INITIALIZE_HINT_QDEL
 
-/obj/item/weapon/pinpointer/lone_alien/attack_self(mob/user)
+/obj/item/weapon/pinpointer/nostromo/attack_self(mob/user)
 	var/mob/living/simple_animal/cat/red/jonesy/jonesy = locate() in living_list
 	var/mob/living/carbon/xenomorph/humanoid/hunter/lone/alien = locate() in alien_list[ALIEN_LONE_HUNTER]
 
@@ -268,10 +268,11 @@
 		return
 	..()
 
-/obj/item/weapon/pinpointer/lone_alien/process()
+/obj/item/weapon/pinpointer/nostromo/process()
 	if(!active)
+		STOP_PROCESSING(SSobj, src)
 		return
-	if(target in alien_list[ALIEN_LONE_HUNTER])
+	if(isxenolonehunter(target))
 		var/mob/living/carbon/xenomorph/humanoid/hunter/H = target
 		if(H.invisible)
 			icon_state = "pinonnull"

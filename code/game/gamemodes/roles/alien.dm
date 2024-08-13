@@ -127,8 +127,9 @@
 	var/obj/structure/stool/bed/chair/metal/chair = locate() in current_turf.contents
 	if(chair)
 		chair.buckle_mob(L)
-	L.Stun(5, TRUE)
-	L.speed++
+	L.Stun(5)
+	var/datum/faction/nostromo_crew/F = faction
+	F.new_crewmate(L)
 
 /datum/role/nostromo_cat
 	name = NOSTROMO_CAT
@@ -188,10 +189,9 @@
 	if(chair)
 		chair.buckle_mob(L)
 	L.Stun(5, TRUE)
-	L.speed++
 
 
-/datum/action/nostromo_guide
+/datum/action/nostromo_map
 	name = "Вспомнить план корабля."
 	check_flags = AB_CHECK_ALIVE
 	action_type = AB_INNATE

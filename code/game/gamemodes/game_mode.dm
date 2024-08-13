@@ -198,7 +198,7 @@ var/global/list/datum/faction/preinit_factions
 		possible_factions += F
 	if(possible_factions.len)
 		var/datum/faction/F = pick(possible_factions)
-		add_faction_member(F, mob, TRUE)
+		add_faction_member(F, mob, TRUE, F.latejoiners_postsetup)
 
 /datum/game_mode/proc/PostSetup()
 	addtimer(CALLBACK(src, PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)

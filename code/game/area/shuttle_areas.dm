@@ -387,7 +387,11 @@
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 	parallax_movedir = WEST
 
+/area/shuttle/nostromo_narcissus/ship
+	name = "Narcissus Nostromo"
+
 /area/shuttle/nostromo_narcissus/transit
+	name = "Narcissus Space"
 	icon_state = "shuttle2"
 	parallax_movedir = FALSE
 

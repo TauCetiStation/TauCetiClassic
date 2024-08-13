@@ -12,6 +12,7 @@
 	var/min_roles = 1
 	// Whether or not this faction accepts newspawn latejoiners
 	var/accept_latejoiners = FALSE
+	var/latejoiners_postsetup = FALSE
 	// Accepts roundstart populating. Set FALSE to make faction members list empty
 	var/rounstart_populate = TRUE
 

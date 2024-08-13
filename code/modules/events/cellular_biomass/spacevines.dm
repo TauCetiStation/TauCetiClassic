@@ -192,8 +192,6 @@
 	name = "alien vines"
 	desc = "An extremely expansionistic alien weed."
 	icon_state = "ALight1"
-	max_integrity = 100
-	resistance_flags = CAN_BE_HIT
 
 /obj/structure/spacevine/alien/grow()
 	..()
@@ -209,4 +207,4 @@
 		var/mob/living/carbon/human/H = AM
 		H.adjustBruteLoss(5)
 		H.adjustFireLoss(10)
-		H.reagents.add_reagent("sacid", 5)
+		H.Stun(1)

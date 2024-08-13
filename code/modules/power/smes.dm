@@ -589,9 +589,9 @@
 
 	switch(stability)
 		if(4 to 7)
-			do_shake_animation(1, seconds_per_tick, 1)
+			do_shake_animation(1, seconds_per_tick SECONDS, 1)
 		if(1 to 3)
-			do_shake_animation(2, seconds_per_tick, 1)
+			do_shake_animation(2, seconds_per_tick SECONDS, 1)
 
 
 /obj/machinery/power/smes/nostromo/attack_alien(mob/user)

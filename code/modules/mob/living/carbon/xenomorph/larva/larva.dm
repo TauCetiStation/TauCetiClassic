@@ -93,3 +93,5 @@
 	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
 	if(MM)
 		MM.alien_appeared(src)
+	else
+		ventcrawler = 2

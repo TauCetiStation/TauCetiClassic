@@ -9,8 +9,8 @@
 	max_plasma = 200
 	maxHealth = 200
 	health = 200
+	heal_rate = 0	// no passive regeneration
 	sight = SEE_TURFS | SEE_MOBS
-	speed = 0
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds)
 	acid_type = /obj/effect/alien/acid/queen_acid
 	var/epoint = 0
@@ -28,6 +28,10 @@
 		'sound/antag/Alien_sounds/alien_eat_corpse3.ogg',
 		'sound/antag/Alien_sounds/alien_eat_corpse4.ogg')
 	var/list/eaten_human = list()
+	var/list/alien_actions = list(
+		/datum/action/innate/alien/find_human,
+		/datum/action/innate/alien/eat_corpse,
+		/datum/action/innate/alien/regeneration)
 	var/scary_music_next_time = 0
 	var/current_scary_music = null
 	var/adrenaline_next_time = 0
@@ -39,13 +43,17 @@
 	MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
 	if(MM)
 		MM.alien_appeared(src)
+		speed = -0.8
+	else
+		ventcrawler = 2
 	name = "Alien"
 	real_name = name
 	alien_list[ALIEN_HUNTER] -= src			// ¯\_(ツ)_/¯
 	alien_list[ALIEN_LONE_HUNTER] += src
 	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid)
-	var/datum/action/eat_corpse/A = new(src)
-	A.Grant(src)
+	for(var/action in alien_actions)
+		var/datum/action/A = new action(src)
+		A.Grant(src)
 	playsound(src, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Destroy()
@@ -57,7 +65,7 @@
 	if(..())
 		return
 	if(fire_stacks > 0)
-		adjustFireLoss(fire_stacks * 2)
+		adjustFireLoss(fire_stacks)
 		fire_stacks--
 		fire_stacks = max(0, fire_stacks)
 	else
@@ -73,8 +81,11 @@
 	try_adrenaline()
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/try_adrenaline()
 	if(estage < 5 && world.time > adrenaline_next_time && health < (maxHealth / 3))
-		adrenaline_next_time = world.time + 5 MINUTE
+		adrenaline_next_time = world.time + 8 MINUTE
 		apply_status_effect(STATUS_EFFECT_ALIEN_ADRENALINE)
+		playsound(src, pick(SOUNDIN_XENOMORPH_ROAR), VOL_EFFECTS_MASTER)
+		for(var/obj/machinery/light/L in range(5, src))
+			L.broken()
 
 //		STATISTICS
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Stat()
@@ -160,9 +171,12 @@
 	var/obj/item/weapon/grab/G = locate() in src
 	if(can_eat_corpse(G))
 		to_chat(src, "<span class='notice'>Вы приступили к трапезе.</span>")
+		playsound(src, pick(SOUNDIN_XENOMORPH_GROWL), VOL_EFFECTS_MASTER)
+		apply_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
+
 		var/mob/living/carbon/human/H = G.affecting
 		for(var/obj/item/organ/external/BP as anything in H.bodyparts)
-			do_after(src, 50, target = H)
+			do_after(src, 5 SECOND, target = H)
 			if(can_eat_corpse(G))
 				if(prob(30))
 					to_chat(src, "<span class='notice'>Вы [pick(
@@ -174,6 +188,7 @@
 				give_epoint(1)
 			else
 				break
+		remove_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
 		eaten_human += H
 
 //		EVOLUTION POINT
@@ -192,17 +207,81 @@
 	max_plasma += 20
 
 //		ACTIONS
-/datum/action/eat_corpse
-	name = "Съесть тело."
-	check_flags = AB_CHECK_ALIVE
-	action_type = AB_INNATE
-	button_icon_state = "eat_corpse"
+/datum/action/innate/alien
 	background_icon_state = "bg_alien"
+	check_flags = AB_CHECK_ALIVE
 
-/datum/action/eat_corpse/Activate()
+/datum/action/innate/alien/Grant(mob/T)
+	if(!isxeno(T))
+		qdel(src)
+		return
+	. = ..()
+
+//		FIND HUMAN
+/datum/action/innate/alien/find_human
+	name = "Найти одиночку."
+	button_icon_state = "find_human"
+
+/datum/action/innate/alien/find_human/Activate()
+	var/mob/living/carbon/human/target = null
+	var/list/checked_human = list()
+
+	for(var/mob/living/carbon/human/H as anything in human_list)
+		if(H.stat == DEAD || H in checked_human || !is_station_level(H.z) || !H.species.flags[FACEHUGGABLE])
+			checked_human += H
+			continue
+		var/list/around = range(7, get_turf(H))
+		var/list/human_around = list()
+		for(var/mob/living/carbon/human/H2 in around)
+			if(H.stat)
+				human_around += H2
+		if(human_around.len < 3) // 2 humans
+			target = H
+			break
+		else
+			checked_human += human_around
+
+	if(target)
+		playsound(owner, pick(SOUNDIN_XENOMORPH_GROWL), VOL_EFFECTS_MASTER)
+		var/atom/movable/screen/arrow/arrow_hud = new
+		arrow_hud.color = COLOR_DARK_PURPLE
+		arrow_hud.add_hud(owner, target)
+	else
+		to_chat(owner, "<span class='warning'>Вы не смогли учуять одинокого человека.</span>")
+
+//		EAT CORPSE
+/datum/action/innate/alien/eat_corpse
+	name = "Съесть тело."
+	button_icon_state = "eat_corpse"
+
+/datum/action/innate/alien/eat_corpse/Grant(mob/T)
+	if(!isxenolonehunter(T))
+		qdel(src)
+		return
+	. = ..()
+
+/datum/action/innate/alien/eat_corpse/Activate()
 	var/mob/living/carbon/xenomorph/humanoid/hunter/lone/L = owner
 	if(L)
 		L.eat_corpse()
+
+//		REGENERATION
+/datum/action/innate/alien/regeneration
+	name = "Залечить раны."
+	button_icon_state = "alien_regeneration"
+
+/datum/action/innate/alien/regeneration/Checks()
+	. = ..()
+	var/mob/living/carbon/xenomorph/X = owner
+	if(!(locate(/obj/structure/alien/weeds) in X.loc) || !X.crawling)
+		to_chat(X, "<span class='warning'>Вы должны лежать на траве.</span>")
+		return FALSE
+
+/datum/action/innate/alien/regeneration/Activate()
+	var/mob/living/carbon/xenomorph/X = owner
+	X.apply_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
+	if(!do_after(X, 10 SECONDS, target = X))
+		X.remove_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
 
 //		STATUS EFFECTS
 //		HUNT
@@ -252,3 +331,33 @@
 /datum/status_effect/alien_adrenaline/on_remove()
 	to_chat(owner, "<span class='notice'>Ваше сердце медленно успокаивается.</span>")
 	owner.speed += 1
+
+//		REGENERATION
+/atom/movable/screen/alert/status_effect/alien_regeneration
+	name = "Регенерация"
+	desc = "Ваши раны заживают."
+	icon_state = "alien_regeneration"
+
+/datum/status_effect/alien_regeneration
+	id = "alien_adrenaline"
+	duration = 10 SECOND
+	alert_type = /atom/movable/screen/alert/status_effect/alien_regeneration
+
+/datum/status_effect/alien_regeneration/tick()
+	var/regen = -12
+	var/damage_count = 0
+	if(isxenolonehunter(owner))
+		var/mob/living/carbon/xenomorph/humanoid/hunter/lone/alien = owner
+		regen -= alien.estage
+
+	if(owner.getBruteLoss())
+		damage_count++
+	if(owner.getFireLoss())
+		damage_count++
+	if(owner.getOxyLoss())
+		damage_count++
+
+	if(damage_count)
+		owner.adjustBruteLoss(regen / damage_count) // regenerate 120 + 10*estage damage
+		owner.adjustFireLoss(regen / damage_count)
+		owner.adjustOxyLoss(regen / damage_count)

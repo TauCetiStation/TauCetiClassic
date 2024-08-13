@@ -132,8 +132,9 @@ var/global/lobby_screen = "lobby"
 			dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'>CREW</a>"}
 			dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>JOIN</a>"}
 
-		var/has_quality = client.prefs.selected_quality_name
-		dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>[has_quality ? QUALITY_READY : QUALITY_NOT_READY]</a>"}
+		if(config.allow_qualities)
+			var/has_quality = client.prefs.selected_quality_name
+			dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>[has_quality ? QUALITY_READY : QUALITY_NOT_READY]</a>"}
 
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
 	dat += "<br><br>"

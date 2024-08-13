@@ -54,6 +54,7 @@ var/global/bridge_secret = null
 	var/alt_lobby_menu = 0 				// event lobby
 	var/event_cryopod_latejoin = 0		// event cryopod latejoin spawn
 	var/allow_loadout = 1				// allow loadout
+	var/allow_qualities = 1				// allow qualities
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1

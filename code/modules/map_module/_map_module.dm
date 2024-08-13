@@ -28,9 +28,13 @@
 	var/config_event_cryopod_latejoin = FALSE
 	// disables loadout
 	var/config_disable_loadout = FALSE
+	// disables qualities
+	var/config_disable_qualities = FALSE
 
 	// disable default mice/drone spawners
 	var/disable_default_spawners = FALSE
+
+	var/human_delay = 0
 
 /datum/map_module/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -59,9 +63,17 @@
 		config.allow_loadout = FALSE
 		log_debug("Loadout disabled.")
 
+	if(config_disable_qualities)
+		config.allow_qualities = FALSE
+		log_debug("qualities disabled.")
+
 	if(disable_default_spawners) // need to rewrite configs, this is stupid
 		config.disable_player_mice = TRUE
 		config.allow_drone_spawn = FALSE
+
+	if(human_delay)
+		config.human_delay = human_delay
+		log_debug("Human delay changed.")
 
 	if(gamemode)
 		log_debug("[gamemode] mode forced.")

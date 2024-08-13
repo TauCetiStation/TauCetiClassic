@@ -51,6 +51,7 @@
 	logo_state = "nostromo-logo"
 
 	accept_latejoiners = TRUE
+	latejoiners_postsetup = TRUE
 	initroletype = /datum/role/nostromo_crewmate
 	min_roles = 0
 	max_roles = 6
@@ -75,13 +76,6 @@
 /datum/faction/nostromo_crew/check_win()
 	return round_end
 
-/datum/faction/nostromo_crew/HandleNewMind(datum/mind/M, laterole)
-	. = ..()
-	new_crewmate(M.current)
-/datum/faction/nostromo_crew/HandleRecruitedMind(datum/mind/M, laterole)
-	. = ..()
-	new_crewmate(M.current)
-
 /datum/faction/nostromo_crew/proc/new_crewmate(mob/crewmate)
 	RegisterSignal(crewmate, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), PROC_REF(crewmate_died))
 	crew += crewmate
@@ -96,6 +90,7 @@
 	if(dead_crew == 5)
 		MM.open_evac()
 	if(dead_crew == alltime_crew)
+		to_chat(world, "<B>1!</B>")
 		round_end = TRUE
 
 #define NOSTROMO_ANDROID	"Nostromo Android"
