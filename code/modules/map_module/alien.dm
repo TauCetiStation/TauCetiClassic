@@ -268,7 +268,7 @@
 
 /datum/map_module/alien/proc/get_cargo_loot()
 	return pick(
-		list( // incendiary shotguns
+		list(// incendiary shotguns
 			/obj/item/weapon/gun/projectile/shotgun/incendiary,
 			/obj/item/weapon/gun/projectile/shotgun/incendiary,
 			/obj/item/ammo_box/eight_shells/incendiary,
@@ -278,7 +278,7 @@
 			/obj/item/clothing/head/helmet,
 			/obj/item/clothing/head/helmet,
 			/obj/item/weapon/shield/riot),
-		list( // crossbows and tactical bolas
+		list(// crossbows and tactical bolas
 			/obj/item/weapon/crossbow,
 			/obj/item/weapon/crossbow,
 			/obj/item/stack/rods/ten,
@@ -291,7 +291,7 @@
 			/obj/item/clothing/head/helmet/syndilight,
 			/obj/item/weapon/legcuffs/bola/tactical,
 			/obj/item/weapon/legcuffs/bola/tactical),
-		list( // mining equipment
+		list(// mining equipment
 			/obj/item/weapon/sledgehammer,
 			/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
 			/obj/item/weapon/gun/energy/laser/cutter,
