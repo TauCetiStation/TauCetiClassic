@@ -4,7 +4,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
-	fire_delay = 30
+	fire_delay = 120
 	max_charges = 1
 
 /obj/item/weapon/gun/magic/animate

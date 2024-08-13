@@ -92,6 +92,8 @@
 	/// Does the mood bonus require a trait?
 	var/mood_trait
 
+	var/list/obj/effect/spawner/mob_spawners
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/global/list/teleportlocs = list()
@@ -424,6 +426,10 @@ var/global/list/ghostteleportlocs = list()
 	var/mob/living/L = A
 	if (!L.ckey)
 		return
+
+	if(length(mob_spawners))
+		for(var/obj/effect/spawner/mob_spawn/MS as anything in mob_spawners)
+			MS.creatMob()
 
 	if (!L.lastarea)
 		L.lastarea = get_area(L.loc)

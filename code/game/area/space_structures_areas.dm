@@ -219,12 +219,6 @@
 	icon_state = "yellow"
 	dynamic_lighting = TRUE
 
-
-/area/space_structures/old_station/Entered()
-	. = ..()
-	for(var/obj/effect/spawner/mob_spawn/alien/M in src)
-		M.creatMob()
-
 /area/space_structures/old_station/central
 	name = "Central Station"
 	icon_state = "hallC"
@@ -354,8 +348,3 @@
 	icon_state = "syndie-elite"
 	dynamic_lighting = TRUE
 	ambience = list('sound/ambience/ambiruin4.ogg', 'sound/ambience/syndicate_station.ogg')
-
-/area/space_structures/flagship/Entered()
-	. = ..()
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
