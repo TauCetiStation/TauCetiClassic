@@ -123424,6 +123424,9 @@
 	dir = 1;
 	icon_state = "siding_line"
 	},
+/obj/effect/decal/turf_decal/blue{
+	icon_state = "arrows_white"
+	},
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "xMo" = (
