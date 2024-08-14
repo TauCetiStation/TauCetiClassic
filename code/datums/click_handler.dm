@@ -1,5 +1,5 @@
 /client
-	var/datum/click_handler/CH
+	var/datum/click_handler/client_click_handler
 
 /datum/click_handler
 	var/species
@@ -17,7 +17,7 @@
 /datum/click_handler/Destroy()
 	..()
 	if (owner)
-		owner.CH = null
+		owner.client_click_handler = null
 		owner.mouse_pointer_icon=initial(owner.mouse_pointer_icon)
 	return ..()
 
@@ -60,21 +60,6 @@
 			return TRUE
 	return FALSE
 
-/datum/click_handler/proc/resolve_world_target(a)
-
-	if (istype(a, /atom/movable/screen/click_catcher))
-		var/atom/movable/screen/click_catcher/CC = a
-		return CC.resolve(owner.mob)
-
-	if (isturf(a))
-		return a
-
-	else if (isatom(a))
-		var/atom/A = a
-		if (isturf(A.loc))
-			return A
-	return null
-
 /****************************
 	Full auto gunfire
 *****************************/
@@ -93,16 +78,16 @@
 /datum/click_handler/fullauto/proc/do_fire()
 	if(target)
 		reciever.afterattack(target, owner.mob, FALSE)
+		addtimer(CALLBACK(src, PROC_REF(shooting_loop)), 0.1)
 
 /datum/click_handler/fullauto/MouseDown(object,location,control,params)
 	if(!isturf(owner.mob.loc)) // This stops from firing full auto weapons inside closets
 		return
-	if(reciever.ready_to_fire())
-		object = resolve_world_target(object)
-		if(object)
-			target = object
-			shooting_loop()
-			return FALSE
+	if(reciever.ready_to_fire() && is_world_target(object))
+		target = object
+		owner.mob.face_atom(target)
+		shooting_loop()
+		return FALSE
 	return TRUE
 
 /datum/click_handler/fullauto/proc/shooting_loop()
@@ -117,13 +102,11 @@
 		stop_firing()
 		return
 	owner.mob.face_atom(target)
-	spawn(reciever.fire_delay + 1)
-		do_fire()
-		shooting_loop()
+
+	addtimer(CALLBACK(src, PROC_REF(do_fire)), reciever.fire_delay + 0.1)
 
 /datum/click_handler/fullauto/MouseDrag(over_object,src_location,over_location,src_control,over_control,params)
-	src_location = resolve_world_target(src_location)
-	if(src_location)
+	if(is_world_target(src_location))
 		target = src_location
 		return FALSE
 	return TRUE

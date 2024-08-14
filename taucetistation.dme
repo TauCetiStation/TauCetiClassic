@@ -2196,6 +2196,7 @@
 #include "code\modules\projectiles\ammunition.dm"
 #include "code\modules\projectiles\effects.dm"
 #include "code\modules\projectiles\firemodes.dm"
+#include "code\modules\projectiles\firemodes_list.dm"
 #include "code\modules\projectiles\firing.dm"
 #include "code\modules\projectiles\gun.dm"
 #include "code\modules\projectiles\projectile.dm"

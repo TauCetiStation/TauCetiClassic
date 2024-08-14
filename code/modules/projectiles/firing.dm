@@ -51,6 +51,7 @@
 		BB = null
 		return 1
 	BB.dispersion += user.recoil
+	BB.dispersion += weapon.spread
 	BB.loc = get_turf(src)
 	BB.starting = get_turf(src)
 	BB.current = curloc

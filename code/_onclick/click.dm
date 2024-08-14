@@ -40,28 +40,20 @@
 		usr.DblClickOn(src,params)
 
 /client/MouseDown(object,location,control,params)
-	if(CH)
-		if (!CH.MouseDown(object,location,control,params))
-			return
+	if(client_click_handler && !client_click_handler.MouseDown(object,location,control,params))
+		return
 	.=..()
 
 /client/MouseUp(object,location,control,params)
-	if(CH)
-		if (!CH.MouseUp(object,location,control,params))
-			return
+	if(client_click_handler && !client_click_handler.MouseUp(object,location,control,params))
+		return
 	.=..()
 
 /client/MouseDrag(over_object,src_location,over_location,src_control,over_control,params)
-	if(CH)
-		if (!CH.MouseDrag(over_object,src_location,over_location,src_control,over_control,params))
-			return
+	if(client_click_handler && !client_click_handler.MouseDrag(over_object,src_location,over_location,src_control,over_control,params))
+		return
 	.=..()
 
-/client/MouseDrag(over_object,src_location,over_location,src_control,over_control,params)
-	if(CH)
-		if (!CH.MouseDrag(over_object,src_location,over_location,src_control,over_control,params))
-			return
-	.=..()
 
 /*
 	Standard mob ClickOn()
@@ -94,9 +86,8 @@
 		cob_click(client, modifiers)
 		return
 
-	if (client.CH)
-		if (!client.CH.Click(A, location, params))
-			return
+	if (client.client_click_handler && !client.client_click_handler.Click(A, location, params))
+		return
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
 		return
 
@@ -468,7 +459,3 @@
 		if(T)
 			T.Click(location, control, params)
 	. = 1
-
-/atom/movable/screen/click_catcher/proc/resolve(mob/user)
-	var/turf/T = screen_loc2turf(screen_loc, get_turf(user))
-	return T

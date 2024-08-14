@@ -101,7 +101,7 @@
 	has_ammo_counter = TRUE
 	init_firemodes = list(
 		SEMI_AUTO,
-		FULL_AUTO_VERY_SLOW
+		FULL_AUTO_MEDIUM
 		)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()

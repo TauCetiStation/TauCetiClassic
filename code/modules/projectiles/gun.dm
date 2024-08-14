@@ -27,6 +27,7 @@
 	var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
 	var/silenced = 0
 	var/recoil = 0
+	var/spread = 0
 	var/clumsy_check = 1
 	var/can_suicide_with = TRUE
 	var/tmp/list/mob/living/target //List of who yer targeting.
@@ -40,7 +41,7 @@
 	var/last_fired = 0
 	var/two_hand_weapon = FALSE
 	var/need_to_be_in_hand = TRUE //for underslug grenade launchers
-	var/ru_mode_name
+	var/firemode_name
 	var/burst = 1
 	var/burst_delay = 1 //cooldown between burst shots
 	var/sel_mode = 1 //index of the currently selected mode
@@ -61,12 +62,7 @@
 		set_firemode(sel_mode)
 
 /obj/item/weapon/gun/proc/add_firemode(list/firemode)
-	//If this var is set, it means spawn a specific subclass of firemode
-	if(firemode["mode_type"])
-		var/newtype = firemode["mode_type"]
-		firemodes.Add(new newtype(src, firemode))
-	else
-		firemodes.Add(new /datum/firemode(src, firemode))
+	firemodes.Add(new firemode(src, firemode))
 
 /obj/item/weapon/gun/proc/switch_firemodes()
 	if(firemodes.len <= 1)
@@ -89,7 +85,7 @@
 	var/datum/firemode/new_mode = switch_firemodes()
 	if(new_mode)
 		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>Текущий режим стрельбы: [ru_mode_name]</span>")
+		to_chat(user, "<span class='notice'>Текущий режим стрельбы: [firemode_name]</span>")
 
 /datum/action/item_action/hands_free/switch_gun
 	name = "Switch Gun"
