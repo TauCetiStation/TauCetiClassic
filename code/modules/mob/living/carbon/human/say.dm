@@ -181,7 +181,6 @@
 
 	if(speech_problem_flag)
 		var/list/handle_r = handle_speech_problems(message, message_mode, verb)
-		//var/list/handle_r = handle_speech_problems(message)
 		message = handle_r[1]
 		verb = handle_r[2]
 		speech_problem_flag = handle_r[3]
@@ -189,7 +188,7 @@
 			speech_sound = handle_r[4]
 			sound_vol = handle_r[5]
 
-	if(!message || (stat != CONSCIOUS && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
+	if(!length(message) || (stat != CONSCIOUS && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
 		return
 
 	var/list/obj/item/used_radios = new
@@ -370,63 +369,62 @@
 
 	return verb
 
-
-
-
-//mob/living/carbon/human/proc/handle_speech_problems(message)
 /mob/living/carbon/human/proc/handle_speech_problems(message, message_mode, verb)
 	var/list/returns[5]
 	var/handled = 0
 	var/sound/speech_sound = null
 	var/sound_vol = 50
+
 	if(silent)
 		if(message_mode != "changeling")
-			message = ""
+			message = null
 		handled = 1
 	if(sdisabilities & MUTE)
-		message = ""
-		handled = 1
-	if(gnomed)
-		handled = 1
-		if((message_mode != "changeling") && prob(40))
-			if(prob(80))
-				message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
-			else
-				message =  "[message]... Но я ГНОМ!"
-
-			verb = pick("yells like an idiot", "says rather loudly")
-			speech_sound = 'sound/magic/GNOMED.ogg'
-
-	if(wear_mask)
-		if(message_mode != "changeling")
-			message = wear_mask.speechModification(message)
+		message = null
 		handled = 1
 
-	if((HULK in mutations) && health >= 25 && length(message) && !HAS_TRAIT(src, TRAIT_STRONGMIND))
-		message = "[uppertext(message)]!!!"
-		verb = pick("yells","roars","hollers")
-		handled = 1
-	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
-		if(prob(50))
-			message = turret_talk(message, get_species())
-	if(slurring)
-		message = slur(message)
-		verb = pick("stammers","stutters")
-		handled = 1
-	if (stuttering)
-		message = stutter(message)
-		verb = pick("stammers","stutters")
-		handled = 1
+	if(message)
+		if(gnomed)
+			handled = 1
+			if((message_mode != "changeling") && prob(40))
+				if(prob(80))
+					message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
+				else
+					message =  "[message]... Но я ГНОМ!"
 
-	var/braindam = getBrainLoss()
-	if(braindam >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
-		handled = 1
-		if(prob(braindam/4))
+				verb = pick("yells like an idiot", "says rather loudly")
+				speech_sound = 'sound/magic/GNOMED.ogg'
+
+		if(wear_mask)
+			if(message_mode != "changeling")
+				message = wear_mask.speechModification(message)
+			handled = 1
+
+		if((HULK in mutations) && health >= 25 && length(message) && !HAS_TRAIT(src, TRAIT_STRONGMIND))
+			message = "[uppertext(message)]!!!"
+			verb = pick("yells","roars","hollers")
+			handled = 1
+		if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+			if(prob(50))
+				message = turret_talk(message, get_species())
+		if(slurring)
+			message = slur(message)
+			verb = pick("stammers","stutters")
+			handled = 1
+		if (stuttering)
 			message = stutter(message)
-			verb = pick("stammers", "stutters")
-		if(prob(braindam))
-			message = uppertext(message)
-			verb = pick("yells like an idiot","says rather loudly")
+			verb = pick("stammers","stutters")
+			handled = 1
+
+		var/braindam = getBrainLoss()
+		if(braindam >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
+			handled = 1
+			if(prob(braindam/4))
+				message = stutter(message)
+				verb = pick("stammers", "stutters")
+			if(prob(braindam))
+				message = uppertext(message)
+				verb = pick("yells like an idiot","says rather loudly")
 
 	returns[1] = message
 	returns[2] = verb
