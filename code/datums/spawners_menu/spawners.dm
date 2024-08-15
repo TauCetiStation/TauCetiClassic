@@ -814,6 +814,3 @@
 	F.roletype = role
 	add_faction_member(F, H, TRUE, TRUE)
 
-/*
- *
-*/
