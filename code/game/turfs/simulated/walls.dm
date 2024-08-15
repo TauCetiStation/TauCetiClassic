@@ -36,8 +36,8 @@
 	smooth = SMOOTH_TRUE
 
 // todo:
-// probably we should make /obj/structure/falsewall 
-// and /turf/simulated/wall as meta-types not used in the game, and move 
+// probably we should make /obj/structure/falsewall
+// and /turf/simulated/wall as meta-types not used in the game, and move
 // real walls and falsewalls to subtypes
 /turf/simulated/wall/yellow
 	icon = 'icons/turf/walls/has_false_walls/wall_yellow.dmi'
@@ -53,6 +53,9 @@
 
 /turf/simulated/wall/beige
 	icon = 'icons/turf/walls/has_false_walls/wall_beige.dmi'
+
+/turf/simulated/wall/nostromo
+	icon = 'icons/turf/walls/has_false_walls/wall_nostromo.dmi'
 
 /turf/simulated/wall/proc/change_color(color)
 	var/new_type

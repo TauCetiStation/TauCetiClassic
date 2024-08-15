@@ -100,7 +100,10 @@
 					if(!S.use(2))
 						return
 					to_chat(user, "<span class='notice'>Вы сделали потайную дверь! Толкните, чтобы открыть или закрыть проход.</span>")
-					new /obj/structure/falsewall (src.loc)
+					var/falsewall_type = /obj/structure/falsewall
+					if(SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)) // map trait?
+						falsewall_type = /obj/structure/falsewall/nostromo
+					new falsewall_type (src.loc)
 					qdel(src)
 				else
 					if(S.get_amount() < 2)
@@ -109,7 +112,10 @@
 					if(S.use_tool(src, user, 40, amount = 2, volume = 100))
 						to_chat(user, "<span class='notice'>Вы установили обшивку!</span>")
 						var/turf/Tsrc = get_turf(src)
-						Tsrc.ChangeTurf(/turf/simulated/wall)
+						var/wall_type = /turf/simulated/wall
+						if(SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)) // map trait?
+							wall_type = /turf/simulated/wall/nostromo
+						Tsrc.ChangeTurf(wall_type)
 						for(var/turf/simulated/wall/X in Tsrc.loc)
 							X.add_hiddenprint(usr)
 						qdel(src)

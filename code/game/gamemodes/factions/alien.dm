@@ -21,7 +21,7 @@
 	var/start_point = pick(xeno_spawn)
 
 	if(start_point && role)
-		if(SSmapping.get_map_module(MAP_MODULE_ALIEN))
+		if(SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN))
 			var/mob/living/carbon/human/H = new (get_turf(start_point))
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/white, SLOT_W_UNIFORM)
 			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white, SLOT_SHOES)
@@ -64,7 +64,7 @@
 
 /datum/faction/nostromo_crew/New()
 	..()
-	MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	MM.crew_faction = src
 
 /datum/faction/nostromo_crew/forgeObjectives()
@@ -90,7 +90,6 @@
 	if(dead_crew == 5)
 		MM.open_evac()
 	if(dead_crew == alltime_crew)
-		to_chat(world, "<B>1!</B>")
 		round_end = TRUE
 
 #define NOSTROMO_ANDROID	"Nostromo Android"
@@ -124,5 +123,7 @@
 
 /datum/faction/nostromo_cat/OnPostSetup()
 	var/start_point = pick(landmarks_list["Jonesy"])
-	new Jonesy(get_turf(start_point))
+	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
+	if(MM)
+		MM.jonesy = new Jonesy(get_turf(start_point))
 	return ..()

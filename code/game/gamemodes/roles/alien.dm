@@ -11,6 +11,8 @@
 /datum/role/alien/forgeObjectives()
 	if(!..())
 		return FALSE
+	if(SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN))
+		AppendObjective(/datum/objective/nostromo/bloodbath)
 	AppendObjective(/datum/objective/evolution)
 	AppendObjective(/datum/objective/survive/ru)
 	return TRUE
@@ -121,13 +123,13 @@
 /datum/role/nostromo_crewmate/OnPostSetup()
 	. = ..()
 	var/mob/living/L = antag.current
-	var/datum/action/A = new /datum/action/nostromo_map(L)
+	var/datum/action/A = new /datum/action/nostromo_guide(L)
 	A.Grant(L)
 	var/turf/current_turf = get_turf(L)
 	var/obj/structure/stool/bed/chair/metal/chair = locate() in current_turf.contents
 	if(chair)
 		chair.buckle_mob(L)
-	L.Stun(5)
+	L.Stun(4)
 	var/datum/faction/nostromo_crew/F = faction
 	F.new_crewmate(L)
 
@@ -182,23 +184,85 @@
 /datum/role/nostromo_android/OnPostSetup()
 	. = ..()
 	var/mob/living/L = antag.current
-	var/datum/action/A = new /datum/action/nostromo_map(L)
+	var/datum/action/A = new /datum/action/nostromo_guide(L)
 	A.Grant(L)
 	var/turf/current_turf = get_turf(L)
 	var/obj/structure/stool/bed/chair/metal/chair = locate() in current_turf.contents
 	if(chair)
 		chair.buckle_mob(L)
-	L.Stun(5, TRUE)
+	L.Stun(4, TRUE)
 
 
-/datum/action/nostromo_map
-	name = "Вспомнить план корабля."
+/datum/action/nostromo_guide
+	name = "ГИД по ивенту."
 	check_flags = AB_CHECK_ALIVE
 	action_type = AB_INNATE
 	button_icon_state = "holomap"
 
-/datum/action/nostromo_map/Activate()
+/datum/action/nostromo_guide/Activate()
+	var/text = ""
+	if(isrolebytype(/datum/role/alien, owner))
+		text = get_guide("Alien")
+	if(isrolebytype(/datum/role/nostromo_crewmate, owner))
+		text = get_guide(owner.job)
+	if(isrolebytype(/datum/role/nostromo_android, owner))
+		text = get_guide("Android")
+
 	owner << browse_rsc('nano/images/nanomap_nostromo_1.png', "nanomap.png")
-	var/datum/browser/popup = new(owner, "window=[name]", "План корабля", 640, 670, ntheme = CSS_THEME_DARK)
-	popup.set_content("<img src='nanomap.png' style='-ms-interpolation-mode:nearest-neighbor'>")
+
+	var/content = "<img src='nanomap.png' style='-ms-interpolation-mode:nearest-neighbor' align='right' />[text]"
+
+	var/datum/browser/popup = new(owner, "window=[name]", "ГИД по ивенту", 1200, 685, ntheme = CSS_THEME_DARK)
+	popup.set_content(content)
 	popup.open()
+
+/datum/action/nostromo_guide/proc/get_guide(code)
+	var/output_text = "<h1>Добро пожаловать на Ностромо</h1>"
+	switch(code)
+		if("Captain")
+			output_text += {"<font size='2'>
+Вы - капитан этого судна. Ваша задача - свести потери экипажа к минимуму.
+Собирайте людей вместе, следите за тем, чтобы никто и никуда не ходил в одиночку.
+Держите при себе рацию и внимательно следите за сообщениями от бортового ИИ.
+
+</font>"}
+
+		if("Station Engineer")
+			output_text += {"<font size='2'>
+Вы - инженер этого судна. Ваша задача - не допустить поломки энергосистемы корабля.
+
+Держите при себе рацию и внимательно следите за сообщениями от бортового ИИ.
+</font>"}
+
+		if("Blueshield Officer")
+			output_text += {"<font size='2'>
+Вы - пилот этого судна. Ваша задача - не допустить схождения корабля с его курса.
+Помогайте капитану.
+Держите при себе рацию и внимательно следите за сообщениями от бортового ИИ.
+</font>"}
+
+		if("Medical Doctor")
+			output_text += {"<font size='2'>
+Вы - врач этого судна. Ваша задача - лечение раненых.
+Для этого
+</font>"}
+
+		if("Cargo Technician")
+			output_text += {"<font size='2'>
+Вы - снабженец этого судна. Ваша задача - снабдить людей всем необходимым.
+По кораблю в технических помещениях разбросаны
+</font>"}
+
+		if("Alien")
+			output_text += {"<font size='2'>
+Вы - ксеноморф, эмбрионом попавший на это судно. Ваша задача - эволюционировать и убивать.
+
+</font>"}
+
+		if("Android")
+			output_text += {"<font size='2'>
+Вы - андроид, тайно засланный корпорацией на это судно. Ваша задача - поддерживать корабль в рабочем состоянии.
+Для этого
+</font>"}
+
+	return output_text

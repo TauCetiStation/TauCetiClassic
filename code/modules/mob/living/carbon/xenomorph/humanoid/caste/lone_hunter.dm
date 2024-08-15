@@ -40,10 +40,10 @@
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/atom_init()
 	. = ..()
-	MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(MM)
 		MM.alien_appeared(src)
-		speed = -0.8
+		speed = -0.75
 	else
 		ventcrawler = 2
 	name = "Alien"
@@ -65,7 +65,7 @@
 	if(..())
 		return
 	if(fire_stacks > 0)
-		adjustFireLoss(fire_stacks)
+		adjustFireLoss(fire_stacks * 2)
 		fire_stacks--
 		fire_stacks = max(0, fire_stacks)
 	else
@@ -85,7 +85,7 @@
 		apply_status_effect(STATUS_EFFECT_ALIEN_ADRENALINE)
 		playsound(src, pick(SOUNDIN_XENOMORPH_ROAR), VOL_EFFECTS_MASTER)
 		for(var/obj/machinery/light/L in range(5, src))
-			L.broken()
+			L.flicker()
 
 //		STATISTICS
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Stat()
@@ -326,6 +326,7 @@
 	owner.SetStunned(0)
 	owner.SetWeakened(0)
 	owner.speed -= 1
+	owner.fire_stacks = 0
 	. = ..()
 
 /datum/status_effect/alien_adrenaline/on_remove()

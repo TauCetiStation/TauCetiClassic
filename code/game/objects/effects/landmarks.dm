@@ -608,14 +608,14 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 /obj/effect/landmark/ambience/nostromo/atom_init()
 	. = ..()
-	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(MM)
 		MM.ambience_player = src
 
 //		NOSTROMO LANDMARKS
 /obj/effect/landmark/nostromo/atom_init()
 	. = ..()
-	if(!SSmapping.get_map_module(MAP_MODULE_ALIEN))
+	if(!SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN))
 		return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/nostromo/supply_crate
@@ -642,3 +642,4 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	name = "Nostromo Random Loot"
 	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "random_loot"
+	layer = 3

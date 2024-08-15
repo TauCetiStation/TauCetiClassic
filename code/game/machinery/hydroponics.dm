@@ -1023,7 +1023,7 @@
 
 /obj/machinery/hydroponics/nostromo/atom_init()
 	. = ..()
-	MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(!MM)
 		return INITIALIZE_HINT_QDEL
 	else

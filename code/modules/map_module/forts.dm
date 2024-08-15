@@ -86,7 +86,7 @@
 	teammate.AssignToRole(M.mind, msg_admins = FALSE)
 
 	if(rank == FORTS_ROLE_COMMANDER)
-		var/obj/item/weapon/card/id/captains_spare/card = new 
+		var/obj/item/weapon/card/id/captains_spare/card = new
 		card.assignment = FORTS_ROLE_COMMANDER
 		card.assign(M.real_name)
 		M.equip_to_appropriate_slot(card)
@@ -118,7 +118,7 @@
 	set category = "Event"
 	set name = "Fort: Assign Commander"
 
-	var/datum/map_module/forts/forts_map_module = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	var/datum/map_module/forts/forts_map_module = SSmapping.get_map_module_by_name(MAP_MODULE_FORTS)
 
 	var/faction_name = tgui_input_list(src,"Choise faction:", "Assign Commander", forts_map_module.factions)
 	if(!faction_name)
@@ -182,7 +182,7 @@ var/global/list/obj/machinery/door/poddoor/fort_spawn_poddors
 	if(!add_points)
 		return
 
-	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	var/datum/map_module/forts/MM = SSmapping.get_map_module_by_name(MAP_MODULE_FORTS)
 	for(var/team_name in MM.consoles)
 		var/obj/machinery/computer/fort_console/console = MM.consoles[team_name]
 		console.points += add_points
@@ -202,10 +202,10 @@ var/global/forts_points_multiplier = 1
 
 	forts_points_multiplier = multiplier
 
-	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	var/datum/map_module/forts/MM = SSmapping.get_map_module_by_name(MAP_MODULE_FORTS)
 	if(forts_points_multiplier == 1)
 		MM.announce("Скорость получения очков вернулась в норму!")
 	else
 		MM.announce("Скорость получения очков увеличина в [forts_points_multiplier] [pluralize_russian(forts_points_multiplier, "раз", "раза", "раз")]!")
- 
+
 	message_admins("[key_name(src)] changed points multiplier to [forts_points_multiplier].")

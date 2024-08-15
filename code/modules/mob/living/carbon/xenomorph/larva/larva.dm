@@ -90,7 +90,7 @@
 	. = ..()
 	name = "alien larva"
 	real_name = name
-	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(MM)
 		MM.alien_appeared(src)
 	else

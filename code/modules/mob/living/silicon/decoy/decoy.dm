@@ -26,7 +26,7 @@
 
 /mob/living/silicon/decoy/nostromo/atom_init()
 	. = ..()
-	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(!MM)
 		return INITIALIZE_HINT_QDEL
 	else
@@ -44,3 +44,5 @@
 			say("Внимание! В связи с высокой смертностью среди экипажа, на склад было возвращено электропитание.")
 		if("evac")
 			say("Внимание! В связи с крайне высокой смертностью среди экипажа, ИИ разблокировал механизм самоуничтожения корабля.")
+		if("nuke")
+			say("Внимание! Запущен механизм самоуничтожения корабля, всему экипажу следует срочно проследовать на шаттл эвакуации!")

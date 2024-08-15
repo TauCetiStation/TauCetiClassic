@@ -122,3 +122,35 @@
 
 /datum/emote/cough/get_impaired_msg(mob/user)
 	return "moves [P_THEIR(user)] face forward as [P_THEY(user)] open and close [P_THEIR(user)] mouth!"
+
+/datum/emote/cat/hiss
+	key = "hiss"
+
+	message_1p = "You hiss."
+	message_3p = "hiss."
+
+	message_muzzled = "shakes violently and makes a loud noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/voice/mob/cat_hiss.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
+
+/datum/emote/cat/growl
+	key = "growl"
+
+	message_1p = "You growl."
+	message_3p = "growls."
+
+	message_muzzled = "shakes violently and makes a loud noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/voice/mob/cat_growl.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)

@@ -375,7 +375,8 @@ SUBSYSTEM_DEF(ticker)
 				if(M.stat != DEAD)	//Just you wait for real destruction!
 					var/turf/T = get_turf(M)
 					if(T && is_station_level(T.z))
-						M.death(0)	//No mercy
+						if(T.explosive_resistance != INFINITY)
+							M.death(0)
 
 		if(1)	//nuke was nearby but (mostly) missed
 			if(override == "nuclear emergency")

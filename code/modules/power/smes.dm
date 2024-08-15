@@ -555,7 +555,7 @@
 
 /obj/machinery/power/smes/nostromo/atom_init()
 	..()
-	MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(!MM)
 		return INITIALIZE_HINT_QDEL
 	else
@@ -583,7 +583,7 @@
 		next_stability_decrease += rand(120, 140) SECOND
 		stability--
 		if(!stability)
-			MM.breakdown(FALSE)
+			MM.breakdown()
 		if(stability in 1 to 2) // 2 and 4 minute before breakdown AI gives an alert
 			MM.AI_announce("smes")
 
@@ -605,7 +605,7 @@
 		to_chat(src, "<span class='notice'>Ещё не время для этого.</span>")
 		return
 
-/obj/machinery/power/smes/nostromo/proc/explosion()
+/obj/machinery/power/smes/nostromo/explode()
 	for(var/obj/O in explosions)
 		explosion(get_turf(O), 0, 0, 2)
 		qdel(O)

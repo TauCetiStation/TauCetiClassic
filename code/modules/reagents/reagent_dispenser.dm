@@ -337,3 +337,17 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	reagents.add_reagent("condensedcapsaicin", 200)
 	reagents.add_reagent("stoxin", 200)
 
+/obj/structure/reagent_dispensers/wall // потом их отрефачу щас на всех картах их менять это смерть
+	name = "Wall Mounted Dispenser"
+	desc = "Wall mounted dispenser."
+	anchored = TRUE
+	density = FALSE
+
+/obj/structure/reagent_dispensers/wall/fuel
+	name = "Fuel Dispenser"
+	desc = "A dispenser of fuel."
+	icon_state = "fueltank"
+
+/obj/structure/reagent_dispensers/wall/fuel/atom_init()
+	. = ..()
+	reagents.add_reagent("fuel", 1000)

@@ -514,32 +514,57 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/nostromo
 	anchored = TRUE
-	var/can_interact = FALSE
+	safety = FALSE
+	authorized = TRUE
 
 /obj/machinery/nuclearbomb/nostromo/atom_init()
 	. = ..()
-	var/datum/map_module/alien/MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(!MM)
 		return INITIALIZE_HINT_QDEL
 	else
 		MM.nukebomb = src
 
 /obj/machinery/nuclearbomb/nostromo/ui_interact(mob/user)
-	if(!can_interact)
-		to_chat(user, "<span class='warning'>Механизм самоуничтожения заблокирован.</span>")
-		return
-	..()
+	return
 
 /obj/machinery/nuclearbomb/nostromo/attackby(obj/item/weapon/O, mob/user)
-	if(!can_interact)
+	return
+
+/obj/machinery/nostromo/nuclear_starter
+	name = "self-destruct mechanism"
+	desc = "Self-destruct mechanism switch."
+	icon = 'icons/obj/recycling.dmi'
+	icon_state = "switch-off"
+	use_power = NO_POWER_USE
+	anchored = TRUE
+	resistance_flags = FULL_INDESTRUCTIBLE
+	unacidable = TRUE
+	var/locked = TRUE
+	var/datum/map_module/alien/MM = null
+	var/on = FALSE
+
+/obj/machinery/nostromo/nuclear_starter/atom_init()
+	. = ..()
+	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
+	if(MM)
+		MM.nuke_starter = src
+	else
+		return INITIALIZE_HINT_QDEL
+
+/obj/machinery/nostromo/nuclear_starter/proc/unlock()
+	locked = FALSE
+
+/obj/machinery/nostromo/nuclear_starter/attack_hand(mob/user)
+	. = ..()
+	user.SetNextMove(CLICK_CD_INTERACT)
+	if(locked)
 		to_chat(user, "<span class='warning'>Механизм самоуничтожения заблокирован.</span>")
 		return
-	..()
+	if(on)
+		to_chat(user, "<span class='warning'>Механизм самоуничтожения запущен, он не может быть отменён!</span>")
+		return
 
-/obj/machinery/nuclearbomb/nostromo/proc/unlock()
-	can_interact = TRUE
-	anchored = FALSE
-
-/obj/machinery/nuclearbomb/nostromo/proc/detonate()
-	safety = FALSE
-	explode()
+	icon_state = "switch-fwd"
+	on = TRUE
+	MM.nuke_set()

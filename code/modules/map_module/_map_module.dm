@@ -83,10 +83,6 @@
 		log_debug("Title screen changed.")
 		change_lobbyscreen(map_lobby_image)
 
-	if(map_lobby_music)
-		log_debug("Lobby music changed.")
-		SSticker.login_music = map_lobby_music
-
 	if(player_verbs)
 		setup_temp_player_verbs(player_verbs, "Map")
 

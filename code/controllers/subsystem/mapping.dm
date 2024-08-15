@@ -65,7 +65,10 @@ SUBSYSTEM_DEF(mapping)
 	if(!loaded_map_module)
 		CRASH("Can't setup global event \"[module_name]\"!")
 
-/datum/controller/subsystem/mapping/proc/get_map_module(module_name)
+/datum/controller/subsystem/mapping/proc/get_map_module()
+	return loaded_map_module
+
+/datum/controller/subsystem/mapping/proc/get_map_module_by_name(module_name)
 	if(loaded_map_module && loaded_map_module.name == module_name)
 		return loaded_map_module
 

@@ -10,4 +10,4 @@
 	return OBJECTIVE_WIN
 
 /datum/objective/survive/ru
-	explanation_text = "Останься в живых."
+	explanation_text = "Останьтесь в живых."

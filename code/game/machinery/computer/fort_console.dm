@@ -24,7 +24,7 @@
 	. = ..()
 
 	if(team_id)
-		var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+		var/datum/map_module/forts/MM = SSmapping.get_map_module_by_name(MAP_MODULE_FORTS)
 		MM.consoles[team_id] = src
 
 	var/turf/step_to = loc
@@ -45,7 +45,7 @@
 /obj/machinery/computer/fort_console/Destroy()
 	. = ..()
 
-	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	var/datum/map_module/forts/MM = SSmapping.get_map_module_by_name(MAP_MODULE_FORTS)
 	MM.announce("Консоль [team_id] была уничтожена!")
 
 	QDEL_LIST(shoplist)
@@ -130,7 +130,7 @@
 	order = 1
 
 /datum/fort_console_lot/specialization/purchase(mob/user, obj/machinery/computer/fort_console/command)
-	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	var/datum/map_module/forts/MM = SSmapping.get_map_module_by_name(MAP_MODULE_FORTS)
 	var/datum/faction/F = MM.factions[command.team_id]
 
 	if(!length(F.members))
@@ -165,7 +165,7 @@
 
 /datum/fort_console_lot/team_announce/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/message = sanitize(input(user, "Please enter text for your announcement.", "Announce") as text, MAX_MESSAGE_LEN, extra = FALSE)
-	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	var/datum/map_module/forts/MM = SSmapping.get_map_module_by_name(MAP_MODULE_FORTS)
 	MM.announce(message, user, from_team = command.team_id, team_only = TRUE)
 
 /datum/fort_console_lot/global_announce
@@ -177,7 +177,7 @@
 
 /datum/fort_console_lot/global_announce/purchase(mob/user, obj/machinery/computer/fort_console/command)
 	var/message = sanitize(input(user, "Please enter text for your announcement.", "Announce") as text, MAX_MESSAGE_LEN, extra = FALSE)
-	var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+	var/datum/map_module/forts/MM = SSmapping.get_map_module_by_name(MAP_MODULE_FORTS)
 	MM.announce(message, user, from_team = command.team_id)
 
 /datum/fort_console_lot/update_map

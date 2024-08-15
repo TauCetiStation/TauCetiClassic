@@ -247,21 +247,26 @@
 
 /obj/item/weapon/pinpointer/nostromo
 	mode = SEARCH_FOR_OBJECT
+	var/datum/map_module/alien/MM = null
 
 /obj/item/weapon/pinpointer/nostromo/atom_init()
 	. = ..()
-	if(!SSmapping.get_map_module(MAP_MODULE_ALIEN))
+	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
+	if(!MM)
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/weapon/pinpointer/nostromo/attack_self(mob/user)
-	var/mob/living/simple_animal/cat/red/jonesy/jonesy = locate() in living_list
-	var/mob/living/carbon/xenomorph/humanoid/hunter/lone/alien = locate() in alien_list[ALIEN_LONE_HUNTER]
+	var/mob/living/simple_animal/cat/red/jonesy/jonesy = MM.jonesy
+	var/mob/living/carbon/xenomorph/humanoid/hunter/lone/alien = MM.alien
 
 	if(alien && jonesy)
-		target = pickweight(list(jonesy = 3, alien = 1))
+		if(prob(75))
+			target = jonesy
+		else
+			target = alien
 	else if(jonesy)
 		target = jonesy
-	else if (alien)
+	else if(alien)
 		target = alien
 	else
 		to_chat(user, "<span class='warning'>The target is missing</span>")
@@ -280,18 +285,13 @@
 	set_dir(get_dir(src, target))
 	var/turf/self_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
-	if(target_turf.z != self_turf.z)
-		icon_state = "pinonalert"
-	else if(target_turf == self_turf)
-		icon_state = "pinondirect"
-	else
-		switch(get_dist(target_turf, self_turf))
-			if(1 to 6)
-				icon_state = "pinonalert"
-			if(7 to 20)
-				icon_state = "pinonfar"
-			if(21 to INFINITY)
-				icon_state = "pinonnull"
+	switch(get_dist(target_turf, self_turf))
+		if(1 to 6)
+			icon_state = "pinonalert"
+		if(7 to 20)
+			icon_state = "pinonfar"
+		if(21 to INFINITY)
+			icon_state = "pinonnull"
 
 #undef SEARCH_FOR_DISK
 #undef SEARCH_FOR_OBJECT

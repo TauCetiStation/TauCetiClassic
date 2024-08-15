@@ -443,7 +443,7 @@
 
 /obj/machinery/mining/drill/forts/atom_init_late()
 	if(team_name)
-		var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+		var/datum/map_module/forts/MM = SSmapping.get_map_module_by_name(MAP_MODULE_FORTS)
 		console = MM.consoles[team_name]
 		console.drills += src
 

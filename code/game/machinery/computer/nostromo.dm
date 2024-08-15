@@ -6,11 +6,9 @@
 
 /obj/machinery/computer/nostromo/atom_init()
 	. = ..()
-	MM = SSmapping.get_map_module(MAP_MODULE_ALIEN)
+	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(!MM)
 		return INITIALIZE_HINT_QDEL
-	else
-		MM.console = src
 
 /obj/machinery/computer/nostromo/narcissus_shuttle
 	name = "Narcissus Shuttle Console"
@@ -58,6 +56,10 @@
 
 	transit_location.parallax_movedir = WEST
 
+	var/list/turfs = get_area_turfs(transit_location)
+	for(var/turf/T in turfs)
+		T.explosive_resistance = INFINITY // ANTINUKE KOSTIL
+
 
 /obj/machinery/computer/nostromo/cockpit
 	resistance_flags = FULL_INDESTRUCTIBLE
@@ -71,12 +73,15 @@
 
 /obj/machinery/computer/nostromo/cockpit/atom_init()
 	..()
+	if(!MM)
+		return INITIALIZE_HINT_QDEL
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(round_start))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/nostromo/cockpit/atom_init_late()
 	second_console = locate() in orange(1, src)
 	if(!side)
+		MM.console = src
 		side = pick(1, -1)
 		second_console.side = -side
 
@@ -92,9 +97,9 @@
 		if(abs(course) > 18)
 			MM.AI_announce("cockpit")
 		if(abs(course) > 24)
-			MM.breakdown(FALSE)
+			MM.breakdown()
 
-/obj/machinery/computer/nostromo/cockpit/proc/explosion()
+/obj/machinery/computer/nostromo/cockpit/proc/explode()
 	explosion(loc, 0, 0, 2)
 	qdel(second_console)
 	qdel(src)
