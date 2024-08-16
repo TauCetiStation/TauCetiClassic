@@ -2,7 +2,7 @@ import { useBackend } from "../../backend";
 import { Box, Section, Table } from "../../components";
 import { COLORS } from "../../constants";
 
-const deptCols = COLORS.department;
+const depColor = COLORS.department;
 
 const HeadRoles = [
   "Captain",
@@ -73,13 +73,13 @@ export const CrewManifest = (props, context) => {
 
   return (
     <Box>
-      {renderSection("Command", deptCols.captain, heads)}
-      {renderSection("NanoTrasen Representatives", deptCols.ntrep, centcom)}
-      {renderSection("Security", deptCols.security, sec)}
-      {renderSection("Engineering", deptCols.engineering, eng)}
-      {renderSection("Medical", deptCols.medbay, med)}
-      {renderSection("Science", deptCols.science, sci)}
-      {renderSection("Civilian", deptCols.other, civ)}
+      {renderSection("Command", depColor.captain, heads)}
+      {renderSection("NanoTrasen Representatives", depColor.ntrep, centcom)}
+      {renderSection("Security", depColor.security, sec)}
+      {renderSection("Engineering", depColor.engineering, eng)}
+      {renderSection("Medical", depColor.medbay, med)}
+      {renderSection("Science", depColor.science, sci)}
+      {renderSection("Civilian", depColor.other, civ)}
       {renderSection("Misc", null, misc)}
     </Box>
   );
