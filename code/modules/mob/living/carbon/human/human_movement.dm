@@ -36,7 +36,7 @@
 			handle_embedded_objects() // Moving with objects stuck in you can cause bad times.
 
 		if(traumatic_shock >= TRAUMATIC_SHOCK_INTENSE)
-			tally += traumatic_shock * 0.1
+			tally += traumatic_shock * 0.05
 
 		var/hungry = NUTRITION_LEVEL_FULL - get_satiation()
 		if(hungry >= NUTRITION_LEVEL_NORMAL) // Slow down if nutrition <= 40%

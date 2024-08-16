@@ -1185,19 +1185,25 @@ var/global/list/tourette_bad_words= list(
 
 	if(traumatic_shock >= TRAUMATIC_SHOCK_MIND_SHATTERING)
 		message = "<span class='userdanger'><font size=5>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</font></span>"
-		if(prob(10))
+		if(prob(10) && !crawling)
 			Weaken(1)
 
 	if(traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
 		if(!crawling)
-			SetCrawling(TRUE)
-			Weaken(1)
+			addtimer(CALLBACK(src, PROC_REF(knockdown_by_pain)), 7.5 SECOND)
 		if(prob(10))
 			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
 			AdjustSleeping(10)
 
 	if(prob(15) && message)
 		to_chat(src, message)
+
+/mob/living/carbon/human/proc/knockdown_by_pain()
+	if(crawling || traumatic_shock <= TRAUMATIC_SHOCK_CRITICAL)
+		return
+	SetCrawling(TRUE)
+	drop_from_inventory(l_hand)
+	drop_from_inventory(r_hand)
 
 /mob/living/carbon/human/proc/handle_heart_beat()
 
