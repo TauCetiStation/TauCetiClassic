@@ -384,7 +384,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 							if(securityCaster)
 								dat+=" <A href='?src=\ref[src];toggleDisplayVoters=\ref[MESSAGE]'>"
 								var/iconClass = MESSAGE.displayVoters ? "fas fa-eye-slash" : "fas fa-eye"
-								dat+="<i class=[iconClass]'></i>"
+								dat+="<i class=[iconClass]></i>"
 								dat+="</a>"
 								if(MESSAGE.displayVoters)
 									var/likes = MESSAGE.get_likes()
