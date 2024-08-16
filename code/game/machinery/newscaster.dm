@@ -385,27 +385,24 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 								dat+=" <A href='?src=\ref[src];toggleDisplayVoters=\ref[MESSAGE]'>"
 								dat+="<span class='fas fa-eye[MESSAGE.displayVoters ? "-slash" : ""]'></span>"
 								dat+="</a>"
+								dat+="<BR>"
 								if(MESSAGE.displayVoters)
 									var/likes = MESSAGE.get_likes()
 									var/dislikes = MESSAGE.get_dislikes()
-									if(likes > 0 || dislikes > 0)
-										dat+="<BR>"
 									if(likes > 0)
-										dat+="<b>ЛАЙКИ</b>"
+										dat+="<b>Лайки</b>"
 										dat+="<ol>"
 										for(var/voterName in MESSAGE.voters)
 											if(MESSAGE.voters[voterName] > 0)
 												dat+="<li>[voterName]</li>"
 										dat+="</ol>"
 									if(dislikes > 0)
-										dat+="<b>ДИЗЛАЙКИ</b>"
+										dat+="<b>Дизлайки</b>"
 										dat+="<ol>"
 										for(var/voterName in MESSAGE.voters)
 											if(MESSAGE.voters[voterName] < 0)
 												dat+="<li>[voterName]</li>"
 										dat+="</ol>"
-								else
-									dat+="<BR>"
 							else
 								dat+="<BR>"
 							dat+="<A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Открыть комментарии</B></A> - ([MESSAGE.count_comments])<HR>"
