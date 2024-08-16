@@ -397,6 +397,7 @@
 	name = "laughweed"
 	desc = "woop woop, that's the sound of police."
 	icon_state = "laughweed"
+	item_state_world = "laughweed_world"
 	potency = 10
 	filling_color = "#39962d"
 
@@ -412,6 +413,7 @@
 	name = "megaweed"
 	desc = "woop woop, that's the sound of police."
 	icon_state = "megaweed"
+	item_state_world = "megaweed_world"
 	potency = 10
 	filling_color = "#39962d"
 
@@ -428,6 +430,7 @@
 	name = "deathweed"
 	desc = "woop woop, that's the sound of police."
 	icon_state = "blackweed"
+	item_state_world = "blackweed_world"
 	potency = 10
 	filling_color = "#39962d"
 
