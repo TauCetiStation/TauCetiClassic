@@ -2083,7 +2083,7 @@ other types of metals and chemistry for reagents).
 	id = "smg"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 2000, MAT_DIAMOND = 1000)
-	build_path = /obj/item/weapon/gun/projectile/automatic
+	build_path = /obj/item/weapon/gun/projectile/automatic/saber
 	category = list("Weapons")
 
 /datum/design/msmg9mm

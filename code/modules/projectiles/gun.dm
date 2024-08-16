@@ -39,6 +39,9 @@
 	var/fire_delay = 6
 	var/last_fired = 0
 	var/two_hand_weapon = FALSE
+	var/burst = 1 //burst size
+	var/burst_delay = 1 //cooldown between burst shots
+	var/spread = 0
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -173,26 +176,26 @@
 	if(!special_check(user, target))
 		return
 
-	if (!ready_to_fire())
-		if (world.time % 3) //to prevent spam
-			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
-		return
-	if(chambered)
-		if(point_blank)
-			if(!chambered.BB.fake)
-				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
-			chambered.BB.damage *= 1.3
-		if(!chambered.fire(src, target, user, params, , silenced))
-			shoot_with_empty_chamber(user)
+	user.next_click = world.time + (burst - 1) * burst_delay
+	for(var/i in 1 to burst)
+		if(chambered)
+			if(point_blank)
+				if(!chambered.BB.fake)
+					user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
+				chambered.BB.damage *= 1.3
+			if(!chambered.fire(src, target, user, params, , silenced))
+				shoot_with_empty_chamber(user)
+				break
+			else
+				shoot_live_shot(user)
+				user.newtonian_move(get_dir(target, user))
 		else
-			shoot_live_shot(user)
-			user.newtonian_move(get_dir(target, user))
-	else
-		shoot_with_empty_chamber(user)
-	process_chamber()
-	update_icon()
-	update_inv_mob()
-
+			shoot_with_empty_chamber(user)
+			break
+		sleep(burst_delay)
+		process_chamber()
+		update_icon()
+		update_inv_mob()
 
 /obj/item/weapon/gun/proc/can_fire()
 	return

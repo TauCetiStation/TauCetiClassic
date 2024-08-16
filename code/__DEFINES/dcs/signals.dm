@@ -424,3 +424,11 @@
 #define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
 // send this signal to handle disabilities in life for mob/living/carbon/human
 #define COMSIG_HANDLE_DISABILITIES "handle_disabilities"
+
+//from base of client/MouseDown(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEDOWN "client_mousedown"
+//from base of client/MouseUp(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEUP "client_mouseup"
+	#define COMPONENT_CLIENT_MOUSEUP_INTERCEPT (1<<0)
+//from base of client/MouseUp(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"

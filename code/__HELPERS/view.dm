@@ -10,3 +10,5 @@
 		viewX = text2num(viewrangelist[1])
 		viewY = text2num(viewrangelist[2])
 	return list(viewX, viewY)
+
+#define CAN_THEY_SEE(target, source) ((source in viewers(7, target)) || in_range(target, source))
