@@ -383,7 +383,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 											   [((src.scanned_user in MESSAGE.voters) || (src.scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.get_dislikes()]</FONT></FONT>"
 							if(securityCaster)
 								dat+=" <A href='?src=\ref[src];toggleDisplayVoters=\ref[MESSAGE]'>"
-								dat+="<i class='fas fa-eye[MESSAGE.displayVoters ? "-slash" : ""]'>TEST</i>"
+								dat+="<span class='fas fa-eye[MESSAGE.displayVoters ? "-slash" : ""]'></span>"
 								dat+="</a>"
 								if(MESSAGE.displayVoters)
 									var/likes = MESSAGE.get_likes()
