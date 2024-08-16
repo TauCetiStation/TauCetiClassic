@@ -54,7 +54,6 @@
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, fire_delay)
 
-
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
 	desc = "Легкий и скорострельный пистолет-пулемёт для тех случаев, когда нужно кого-то быстро убить. Использует патроны калибра 9мм."
@@ -112,7 +111,7 @@
 	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
+	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 25) * 25 : "-empty"]"
 	item_state = "l6[cover_open ? "open" : "closed"][magazine ? "mag" : "nomag"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays

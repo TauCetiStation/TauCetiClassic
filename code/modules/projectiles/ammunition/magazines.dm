@@ -331,11 +331,11 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/a762
 	caliber = "a762"
-	max_ammo = 50
+	max_ammo = 100
 
 /obj/item/ammo_box/magazine/saw/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
+	icon_state = "[initial(icon_state)]-[round(ammo_count(),20)]"
 
 /obj/item/ammo_box/magazine/chameleon
 	name = "magazine (.45)"
