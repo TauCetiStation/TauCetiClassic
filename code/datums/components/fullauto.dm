@@ -82,8 +82,8 @@
 		RegisterSignal(shooter, COMSIG_LOGOUT, PROC_REF(autofire_off))
 		UnregisterSignal(shooter, COMSIG_LOGIN)
 	RegisterSignals(parent, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(autofire_off))
-	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, TYPE_PROC_REF(/obj/item/weapon/gun/, autofire_bypass_check))
-	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, TYPE_PROC_REF(/obj/item/weapon/gun/, do_autofire))
+	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, TYPE_PROC_REF(/obj/item/weapon/gun, autofire_bypass_check))
+	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, TYPE_PROC_REF(/obj/item/weapon/gun, do_autofire))
 
 
 
