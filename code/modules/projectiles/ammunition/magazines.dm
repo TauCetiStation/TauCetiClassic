@@ -644,4 +644,4 @@
 	desc = "Гороховый зарядник для горохового пистолета."
 	caliber = "9mm"
 	ammo_type = /obj/item/ammo_casing/pea
-	max_ammo = 3
+	max_ammo = 6

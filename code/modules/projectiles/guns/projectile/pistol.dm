@@ -120,8 +120,8 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol/peashooter
 	name = "Peashooter"
-	desc = "Пистолет, стреляющий горохом. Что может быть более забавным?"
+	desc = "Горохострел. Стреляет горохом."
 	icon_state = "peashooter"
 	item_state = "peashooter"
 	origin_tech = "combat=1;materials=1"
-	suitable_mags = /obj/item/ammo_box/speedloader/pea
+	initial_mag = /obj/item/ammo_box/speedloader/pea
