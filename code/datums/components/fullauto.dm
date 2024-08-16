@@ -237,9 +237,9 @@
 	if(get_dist(shooter, target) <= 0)
 		target = get_step(shooter, shooter.dir) //Shoot in the direction faced if the mouse is on the same tile as we are.
 		target_loc = target
-	//else if(!CAN_THEY_SEE(target, shooter))
-	//	stop_autofiring() //Elvis has left the building.
-	//	return FALSE
+	else if(!CAN_THEY_SEE(target, shooter))
+		stop_autofiring() //Elvis has left the building.
+		return FALSE
 	shooter.face_atom(target)
 	var/next_delay = autofire_shot_delay
 	if(windup_autofire)
@@ -266,12 +266,7 @@
 	if(!can_fire())
 		shoot_with_empty_chamber(shooter)
 		return FALSE
-	//var/obj/item/bodypart/other_hand = shooter.has_hand_for_held_index(shooter.get_inactive_hand_index())
-	//if(weapon_weight == WEAPON_HEAVY && (shooter.get_inactive_held_item() || !other_hand))
-	//	balloon_alert(shooter, "use both hands!")
-	//	return FALSE
 	return TRUE
-
 
 /obj/item/weapon/gun/proc/autofire_bypass_check(datum/source, client/clicker, atom/target, turf/location, control, params)
 	SIGNAL_HANDLER
@@ -288,7 +283,6 @@
 		return NONE
 	INVOKE_ASYNC(src, PROC_REF(do_autofire_shot), source, target, shooter, params)
 	return COMPONENT_AUTOFIRE_SHOT_SUCCESS //All is well, we can continue shooting.
-
 
 /obj/item/weapon/gun/proc/do_autofire_shot(datum/source, atom/target, mob/living/shooter, params)
 	afterattack(target, shooter, FALSE)
