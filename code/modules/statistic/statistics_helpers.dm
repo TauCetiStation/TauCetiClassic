@@ -18,7 +18,7 @@
 /datum/stat_collector/proc/add_medal(key, name, medal_name, reason, icon_path, icon_state)
 	var/datum/stat/medal/stat = new
 	stat.key = key
-	stat.name = name
+	stat.target_name = name
 	stat.medal_name = medal_name
 	stat.reason = reason
 	stat.icon = icon(icon_path, icon_state)

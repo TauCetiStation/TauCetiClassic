@@ -643,7 +643,7 @@ SUBSYSTEM_DEF(ticker)
 		var/icon/medal_icon = medal.icon
 		end_icons += medal_icon
 		var/tempstate = end_icons.len
-		var/award_text = "<b>[medal.key]</b> as <b>[medal.name]</b> was awarded \"<b>[medal.medal_name]</b>\" for \"<b>[medal.reason]</b>\"!"
+		var/award_text = "<b>[medal.key]</b> as <b>[medal.target_name]</b> was awarded \"<b>[medal.medal_name]</b>\" for \"<b>[medal.reason]</b>\"!"
 		text += {"<br><img src="logo_[tempstate].png"> [award_text]"}
 	return text
 
