@@ -640,11 +640,8 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/show_medals()
 	var/text = "<br><FONT size = 5><b>Были выданы следующие медали:</b></FONT>"
 	for(var/datum/stat/medal/medal as anything in SSStatistics.medals)
-		var/icon/medal_icon = medal.icon
-		end_icons += medal_icon
-		var/tempstate = end_icons.len
 		var/award_text = "<b>[medal.key]</b> as <b>[medal.target_name]</b> was awarded \"<b>[medal.medal_name]</b>\" for \"<b>[medal.reason]</b>\"!"
-		text += {"<br><img src="logo_[tempstate].png"> [award_text]"}
+		text += "<br>[bicon(medal.icon)] [award_text]"
 	return text
 
 /datum/controller/subsystem/ticker/proc/start_now()
