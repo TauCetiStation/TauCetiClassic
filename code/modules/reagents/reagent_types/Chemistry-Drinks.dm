@@ -364,6 +364,37 @@
 	adj_drowsy 	= 	-3
 	taste_message = "cola"
 
+/datum/reagent/consumable/drink/cold/spacebull
+	name = "Space Bull"
+	id = "spacebull"
+	description = "Space Bull gives you jetpack"
+	color = "#88a302" // rgb: 136, 163, 2
+	adj_dizzy = -5
+	adj_drowsy = -7
+	adj_sleepy = -40
+	taste_message = "energy"
+
+/datum/reagent/consumable/drink/cold/spacebull/on_general_digest(mob/living/M)
+	..()
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
+		if(1 to 60)
+			M.AdjustConfused(-5)
+			M.AdjustStunned(-1)
+		if(60 to 200)
+			M.AdjustConfused(-10)
+			M.AdjustStunned(-5)
+		if(200 to INFINITY)
+			if(prob(50) && ishuman(M))
+				var/mob/living/carbon/human/H = M
+				var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+				if(istype(IO))
+					IO.take_damage(10, 0)
+	var/mob/living/carbon/C = M
+	C.AdjustClumsyStatus(-2)
+
 /datum/reagent/consumable/drink/cold/nuka_cola
 	name = "Nuka Cola"
 	id = "nuka_cola"

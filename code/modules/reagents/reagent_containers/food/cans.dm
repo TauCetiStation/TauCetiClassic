@@ -168,6 +168,12 @@
 	icon_state = "space_mountain_wind"
 	list_reagents = list("spacemountainwind" = 30)
 
+/obj/item/weapon/reagent_containers/food/drinks/cans/spacebull
+	name = "Space Bull"
+	desc = "Space Bull gives you jetpack"
+	icon_state = "energy_drink"
+	list_reagents = list("spacebull" = 30)
+
 /obj/item/weapon/reagent_containers/food/drinks/cans/thirteenloko
 	name = "Thirteen Loko"
 	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly."

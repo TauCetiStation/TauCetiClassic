@@ -182,6 +182,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea = 10,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice = 10,
+		/obj/item/weapon/reagent_containers/food/drinks/cans/spacebull = 10,
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/food/drinks/cans/thirteenloko = 5,
@@ -195,6 +196,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice = 3,
+		/obj/item/weapon/reagent_containers/food/drinks/cans/spacebull = 15,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/cola
 	private = FALSE
