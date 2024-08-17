@@ -6,7 +6,7 @@
 /turf/simulated/mineral/random/caves,
 /area/space)
 "ac" = (
-/turf/simulated/wall,
+/turf/simulated/wall/red,
 /area/space_structures/listening_post)
 "ad" = (
 /obj/machinery/firealarm{
@@ -21,8 +21,7 @@
 "ae" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/listening_post)
 "af" = (
@@ -56,8 +55,7 @@
 /area/space_structures/listening_post)
 "ai" = (
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/listening_post)
 "aj" = (
@@ -66,12 +64,12 @@
 /area/space_structures/listening_post)
 "ak" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "Listening_Post_outer";
 	locked = 1;
 	name = "Listening Post";
-	req_access = list(150);
-	dir = 4
+	req_access = list(150)
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/listening_post)
@@ -91,7 +89,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/listening_post)
@@ -133,8 +131,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/listening_post)
 "ap" = (
@@ -280,7 +277,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/listening_post)
@@ -369,8 +366,7 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/listening_post)
 "aH" = (
@@ -407,7 +403,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/listening_post)
@@ -500,8 +496,7 @@
 "aQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/listening_post)
 "aR" = (
@@ -563,18 +558,18 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/unsimulated/floor{
+/turf/simulated/floor{
 	icon_state = "podhatchfull"
 	},
 /area/space_structures/listening_post)
 "aU" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "Listening_Post_inner";
 	locked = 1;
 	name = "Listening Post";
-	req_access = list(150);
-	dir = 4
+	req_access = list(150)
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 4
@@ -615,8 +610,7 @@
 /area/space_structures/listening_post)
 "aY" = (
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "white"
+	icon_state = "whitechoco"
 	},
 /area/space_structures/listening_post)
 "aZ" = (
@@ -653,8 +647,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/listening_post)
 "bd" = (
@@ -665,8 +658,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/listening_post)
 "be" = (
@@ -720,9 +712,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
+	dir = 4;
 	name = "Personal Quarters";
-	req_access = list(150);
-	dir = 4
+	req_access = list(150)
 	},
 /turf/simulated/floor/wood,
 /area/space_structures/listening_post)

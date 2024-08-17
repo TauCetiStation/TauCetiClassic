@@ -63,10 +63,17 @@
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 	var/creation_roundtime
 
+	var/willpower_amount = 1
+	var/possible_willpower_effects = list(/datum/willpower_effect/painkiller, /datum/willpower_effect/skills, /datum/willpower_effect/nutrition, /datum/willpower_effect/fat)
+	var/willpower_effects = list()
+
 /datum/mind/New(key)
 	src.key = key
 	creation_time = world.time
 	creation_roundtime = roundduration2text()
+	for(var/WE in possible_willpower_effects)
+		var/i = new WE
+		willpower_effects += i
 
 /datum/mind/proc/transfer_to(mob/new_character)
 	for(var/role in antag_roles)
@@ -706,6 +713,47 @@
 			all_factions[initial(F.name)] = F
 	all_factions += "-----"
 	return all_factions
+
+/datum/mind/proc/do_select_willpower_effect()
+	if(!ishuman(current))
+		return
+	var/mob/living/carbon/human/H = current
+	if(H.species.flags[NO_WILLPOWER])
+		return
+	if(H.stat == DEAD)
+		to_chat(H, "<span class='warning'>Мертвые не своевольничают.</span>")
+		return
+	if(!willpower_amount)
+		to_chat(H, "<span class='warning'>У вас нет воли.</span>")
+		return
+	var/datum/willpower_effect/selected_effect
+	var/list/names = list()
+	for(var/datum/willpower_effect/WE in willpower_effects)
+		names += WE.name
+
+	var/chosen_willpower_effect = tgui_input_list(H,"Вы собираете волю в кулак...","ВОЛЯ", names)
+	if(!chosen_willpower_effect)
+		return
+
+	for(var/datum/willpower_effect/selection in willpower_effects)
+		if(selection.name == chosen_willpower_effect)
+			selected_effect = selection
+
+	use_willpower_effect(selected_effect)
+
+/datum/mind/proc/can_use_willpower_effect(datum/willpower_effect/WE)
+	if(!ishuman(current))
+		return
+	if(willpower_amount < WE.cost)
+		to_chat(current, "<span class='warning'>Вам не хватает воли.</span>")
+		return FALSE
+	return WE.special_check(current)
+
+/datum/mind/proc/use_willpower_effect(datum/willpower_effect/WE)
+	if(!can_use_willpower_effect(WE))
+		return FALSE
+	WE.do_effect(current)
+	willpower_amount -= WE.cost
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

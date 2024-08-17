@@ -22,6 +22,9 @@
 	var/total_health = 100                               // Point at which the mob will enter crit.
 	var/datum/unarmed_attack/unarmed                                          // For empty hand harm-intent attack
 	var/unarmed_type = /datum/unarmed_attack
+	var/datum/action/innate/race/race_ability = null
+	var/list/race_verbs = list()
+	var/list/race_traits = list()
 	var/brute_mod = 1                                    // Physical damage multiplier (0 == immunity).
 	var/burn_mod = 1                                     // Burn damage multiplier.
 	var/oxy_mod = 1                                      // Oxyloss multiplier.
@@ -280,6 +283,13 @@
 	H.exhale_gas = exhale_type
 	H.poison_gas = poison_type
 
+	if(race_ability)
+		var/datum/action/A = new race_ability(H)
+		A.Grant(H)
+	H.verbs += race_verbs
+	for(var/trait in race_traits)
+		ADD_TRAIT(H, trait, GENERIC_TRAIT)
+
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
 	if(default_mood_event)
@@ -295,6 +305,13 @@
 
 	for(var/emote in emotes)
 		H.clear_emote(emote)
+
+	if(race_ability)
+		var/datum/action/A = locate(race_ability) in H.actions
+		qdel(A)
+	H.verbs -= race_verbs
+	for(var/trait in race_traits)
+		REMOVE_TRAIT(H, trait, GENERIC_TRAIT)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "species")
@@ -360,6 +377,7 @@
 	language = LANGUAGE_SINTAUNATHI
 	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
+	race_verbs = list(/mob/living/carbon/human/proc/air_sample)
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
@@ -410,16 +428,11 @@
 /datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.unathi_equip(H)
 
-/datum/species/unathi/on_gain(mob/living/carbon/human/M)
+/datum/species/unathi/on_gain(mob/living/carbon/human/H)
 	..()
-	M.verbs += /mob/living/carbon/human/proc/air_sample
-	M.r_belly = HEX_VAL_RED(base_color)
-	M.g_belly = HEX_VAL_GREEN(base_color)
-	M.b_belly = HEX_VAL_BLUE(base_color)
-
-/datum/species/unathi/on_loose(mob/living/M, new_species)
-	M.verbs -= /mob/living/carbon/human/proc/air_sample
-	..()
+	H.r_belly = HEX_VAL_RED(base_color)
+	H.g_belly = HEX_VAL_GREEN(base_color)
+	H.b_belly = HEX_VAL_BLUE(base_color)
 
 /datum/species/tajaran
 	name = TAJARAN
@@ -431,6 +444,7 @@
 	additional_languages = list(LANGUAGE_SIIKTAJR = LANGUAGE_NATIVE)
 	tail = "tajaran"
 	unarmed_type = /datum/unarmed_attack/claws
+	race_traits = list(TRAIT_NATURAL_AGILITY)
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
 	darksight = 8
@@ -482,14 +496,6 @@
 		SPRITE_SHEET_SUIT     = 'icons/mob/species/tajaran/suit.dmi',
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
 	)
-
-/datum/species/tajaran/on_gain(mob/living/M)
-	..()
-	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
-
-/datum/species/tajaran/on_loose(mob/living/M)
-	..()
-	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
@@ -567,6 +573,7 @@
 
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
+	race_ability = /datum/action/innate/race/leap
 	dietflags = DIET_OMNI
 
 	cold_level_1 = 80
@@ -653,24 +660,6 @@
 /datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.vox_equip(H)
 
-/datum/species/vox/on_gain(mob/living/carbon/human/H)
-	if(name != VOX_ARMALIS)
-		ADD_TRAIT(H, TRAIT_CAN_LEAP, ROUNDSTART_TRAIT)
-		var/datum/action/leap/A = new(H)
-		A.Grant(H)
-	else
-		H.verbs += /mob/living/carbon/human/proc/gut
-	..()
-
-/datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
-	if(name != VOX_ARMALIS)
-		REMOVE_TRAIT(H, TRAIT_CAN_LEAP, ROUNDSTART_TRAIT)
-		var/datum/action/leap/A = locate() in H.actions
-		qdel(A)
-	else
-		H.verbs -= /mob/living/carbon/human/proc/gut
-	..()
-
 // At 25 damage - no protection at all.
 /datum/species/vox/get_pressure_protection(mob/living/carbon/human/H)
 	var/damage = 0
@@ -694,6 +683,8 @@
 	damage_mask = FALSE
 	language = LANGUAGE_VOXPIDGIN
 	unarmed_type = /datum/unarmed_attack/claws/armalis
+	race_ability = null
+	race_verbs = list(/mob/living/carbon/human/proc/gut)
 	dietflags = DIET_OMNI	//should inherit this from vox, this is here just in case
 
 	warning_low_pressure = 50
@@ -1003,10 +994,13 @@
 	deform = 'icons/mob/human_races/r_machine.dmi'
 	language = LANGUAGE_TRINARY
 	unarmed_type = /datum/unarmed_attack/punch
+	race_verbs = list(
+		/mob/living/carbon/human/proc/IPC_change_screen,
+		/mob/living/carbon/human/proc/IPC_toggle_screen,
+		/mob/living/carbon/human/proc/IPC_display_text)
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
-
 	eyes = null
 
 	warning_low_pressure = 50
@@ -1056,6 +1050,7 @@
 	,NO_VOMIT = TRUE
 	,IS_SOCIAL = TRUE
 	,NO_GENDERS = TRUE
+	,NO_WILLPOWER = TRUE
 	)
 
 	has_bodypart = list(
@@ -1117,9 +1112,6 @@
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
-	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
-	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
-	H.verbs += /mob/living/carbon/human/proc/IPC_display_text
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP)
 		H.set_light(BP.screen_brightness)
@@ -1133,9 +1125,6 @@
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "IPC_zombie", I, null, null, NONE)
 
 /datum/species/machine/on_loose(mob/living/carbon/human/H, new_species)
-	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
-	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
-	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
 		H.set_light(0)
@@ -1463,6 +1452,7 @@
 		NO_FAT = TRUE,
 		IS_SOCIAL = TRUE,
 		NO_GENDERS = TRUE,
+		NO_WILLPOWER = TRUE
 		)
 
 	has_organ = list(
@@ -1535,6 +1525,7 @@
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
 	deform = 'icons/mob/human_races/r_zombie.dmi'
 	has_gendered_icons = FALSE
+	race_traits = list(TRAIT_HEMOCOAGULATION)
 
 	eyes = "zombie_ms_s"
 	eyes_glowing = TRUE
@@ -1566,9 +1557,6 @@
 
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
 	..()
-
-	ADD_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
-
 	H.remove_status_flags(CANSTUN|CANPARALYSE) //CANWEAKEN
 
 	H.drop_l_hand()
@@ -1583,8 +1571,6 @@
 	add_zombie(H)
 
 /datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
-	REMOVE_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
-
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
 
 	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
@@ -1606,6 +1592,7 @@
 	brute_mod = 2
 	burn_mod = 1.2
 	speed_mod = -0.6
+	race_traits = list(TRAIT_HEMOCOAGULATION, TRAIT_NATURAL_AGILITY)
 
 	tail = "tajaran_zombie"
 
@@ -1626,14 +1613,6 @@
 
 	min_age = 25
 	max_age = 85
-
-/datum/species/zombie/tajaran/on_gain(mob/living/M)
-	..()
-	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
-
-/datum/species/zombie/tajaran/on_loose(mob/living/M)
-	..()
-	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/zombie/skrell
 	name = ZOMBIE_SKRELL
@@ -1815,6 +1794,7 @@
 		HAS_TAIL = TRUE,
 		HAS_HAIR = TRUE,
 		HAS_HAIR_COLOR = TRUE,
+		NO_WILLPOWER = TRUE
 		)
 
 	has_gendered_icons = FALSE
