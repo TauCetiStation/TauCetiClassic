@@ -71,9 +71,16 @@ var/global/BSACooldown = 0
 		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>
 		<br>
 		<b>Mob type</b> = [M.type]<br><br>
-		<b>Guard:</b> <A href='?src=\ref[src];guard=\ref[M]'>Show</A><br>
-		<b>Related accounts by current IP and CID</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
-		<b>Slow queries:</b> <A href='?src=\ref[src];cid_history=\ref[M]'>CID history</A> | <A href='?src=\ref[src];ip_history=\ref[M]'>IP history</A><br>
+		"}
+
+	if(M.client)
+		body += {"
+			<b>Guard:</b> <A href='?src=\ref[src];guard=\ref[M]'>Show</A><br>
+			<b>Related accounts by current IP and CID</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
+			<b>Slow queries:</b> <A href='?src=\ref[src];cid_history=\ref[M]'>CID history</A> | <A href='?src=\ref[src];ip_history=\ref[M]'>IP history</A><br>
+		"}
+
+	body += {"
 		<b>CentCom (other server bans)</b>: <A target='_blank' href='https://centcom.melonmesa.com/viewer/view/[M.ckey]'>CentCom (ENG)</A><br>
 		<b>BYOND profile</b>: <A target='_blank' href='http://byond.com/members/[M.ckey]'>[M.ckey]</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
