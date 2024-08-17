@@ -228,11 +228,9 @@
 
 	return TRUE
 
-/atom/movable/Exit(atom/movable/mover as mob|obj, atom/new_loc as mob|obj|turf)
-	WARNING("[mover] tried to step out of [src] into [new_loc]")
-	return FALSE
-
 /turf/Exit(atom/movable/mover as mob|obj, atom/new_loc as mob|obj|turf)
+	if(!isturf(new_loc))
+		return TRUE
 	return can_enter_turf(mover, new_loc, src)
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/old_loc as mob|obj|turf)
