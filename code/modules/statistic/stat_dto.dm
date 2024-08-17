@@ -36,7 +36,7 @@
 	// string, anything
 	var/medal_name
 	//string, anything
-	var/reason //reason for commendation
+	var/reason
 	//object, icons
 	var/icon //icon of medal
 
