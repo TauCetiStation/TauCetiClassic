@@ -32,7 +32,7 @@
 	// string, anything
 	var/key
 	// string, anything
-	var/name
+	var/target_name
 	// string, anything
 	var/medal_name
 	//string, anything
