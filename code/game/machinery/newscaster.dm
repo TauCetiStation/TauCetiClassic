@@ -621,7 +621,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 	else if(href_list["submit_new_message"])
 		var/payment = 20
-		if(have_license) payment /= 2
+		if(have_license)
+			payment /= 2
 		if(msg == "" || msg == "\[██████\]" || scanned_user == "Unknown" || channel_name == "" || user_account.money < payment || is_guest)
 			screen = 6
 		else
