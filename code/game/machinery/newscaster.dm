@@ -318,7 +318,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				if(is_guest)
 					dat+="<FONT COLOR='maroon'>Гостевой пропуск не поддерживается.</FONT><BR>"
 				var/payment = 20
-				if(have_license) payment /= 2
+				if(have_license)
+					payment /= 2
 				if(user_account.money < payment)
 					dat+="<FONT COLOR='maroon'>Недостаточно средств для оплаты публикации.</FONT><BR>"
 
