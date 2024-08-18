@@ -52,6 +52,26 @@
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine(src)
 	new /obj/item/device/healthanalyzer(src)
 
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/revolution
+	name = "Freedom medkit"
+	icon_state = "first_aid_kit_com"
+	desc = "Small medkit for revolution, and freedom medics!"
+	max_w_class = SIZE_TINY
+	w_class = SIZE_TINY
+
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/revolution/atom_init()
+	. = ..()
+
+	if (empty)
+		return
+
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_imp(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine(src)
+
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/psyops
 	name = "psyops small kit"
 	icon_state = "first_aid_kit_com"
@@ -184,7 +204,7 @@
 	icon_state = "pain_hypo"
 	volume = 100
 	list_reagents = list("tramadol" = 25, "paracetamol" = 25, "oxycodone" = 25, "inaprovaline" = 25)
-	
+
 /obj/item/weapon/reagent_containers/hypospray/combat/bone
 	name = "Bone-repair hypospray"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents which will mend the bones."
