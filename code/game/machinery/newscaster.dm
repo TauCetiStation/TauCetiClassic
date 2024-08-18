@@ -825,7 +825,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		screen = 12
 
 	else if(href_list["setLike"])
-		if(is_guest) screen = 25
+		if(is_guest)
+			screen = 25
 		else
 			var/datum/feed_message/FM = locate(href_list["setLike"])
 			FM.voters += scanned_user
