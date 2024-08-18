@@ -13206,7 +13206,9 @@
 /turf/unsimulated/floor,
 /area/custom/syndicate_mothership)
 "aDz" = (
-/obj/structure/mineral_door/wood,
+/obj/structure/mineral_door/wood{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "wizlava";
 	name = "lava"
@@ -23388,7 +23390,9 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "cNr" = (
-/obj/structure/mineral_door/cult,
+/obj/structure/mineral_door/cult{
+	dir = 4
+	},
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "cOb" = (
@@ -27588,7 +27592,9 @@
 	},
 /area/centcom/bar)
 "jQb" = (
-/obj/structure/mineral_door/wood,
+/obj/structure/mineral_door/wood{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -31092,6 +31098,12 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"tCc" = (
+/obj/structure/mineral_door/cult{
+	dir = 4
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "tFF" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -70710,7 +70722,7 @@ aaM
 adx
 adx
 wtx
-mQF
+tCc
 wtx
 adx
 adx
@@ -75336,7 +75348,7 @@ aaM
 aaM
 adx
 wtx
-mQF
+tCc
 wtx
 adx
 aaM
@@ -78161,11 +78173,11 @@ aaM
 aaM
 adx
 wtx
-mQF
+tCc
 wtx
 wtx
 wtx
-mQF
+tCc
 wtx
 adx
 aaM

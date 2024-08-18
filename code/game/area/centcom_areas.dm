@@ -44,13 +44,6 @@
 	name = "Centcom Checkpoint"
 	cases = list("КПП ЦК", "КПП ЦК", "КПП ЦК", "КПП ЦК", "КПП ЦК", "КПП ЦК")
 
-/area/centcom/holding/Entered(atom/movable/A, atom/OldLoc)
-	. = ..()
-	if(!isliving(A))
-		return
-	for(var/obj/effect/spawner/mob_spawn/M in src)
-		M.creatMob()
-
 /area/centcom/bar
 	name = "Centcom Bar"
 	cases = list("бар ЦК", "бара ЦК", "бару ЦК", "бар ЦК", "баром ЦК", "баре ЦК")
