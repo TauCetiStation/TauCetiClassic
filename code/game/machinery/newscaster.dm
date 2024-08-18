@@ -318,7 +318,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				if(is_guest)
 					dat+="<FONT COLOR='maroon'>Гостевой пропуск не поддерживается.</FONT><BR>"
 				var/payment = 20
-				if(have_license) payment /= 2
+				if(have_license)
+					payment /= 2
 				if(user_account.money < payment)
 					dat+="<FONT COLOR='maroon'>Недостаточно средств для оплаты публикации.</FONT><BR>"
 
@@ -620,7 +621,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 
 	else if(href_list["submit_new_message"])
 		var/payment = 20
-		if(have_license) payment /= 2
+		if(have_license)
+			payment /= 2
 		if(msg == "" || msg == "\[██████\]" || scanned_user == "Unknown" || channel_name == "" || user_account.money < payment || is_guest)
 			screen = 6
 		else
@@ -823,7 +825,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		screen = 12
 
 	else if(href_list["setLike"])
-		if(is_guest) screen = 25
+		if(is_guest)
+			screen = 25
 		else
 			var/datum/feed_message/FM = locate(href_list["setLike"])
 			FM.voters += scanned_user
@@ -831,12 +834,14 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			var/datum/money_account/MA = FM.author_account
 			if(MA && !MA.suspended && (FM.author != scanned_user))
 				var/payment = 5
-				if(FM.is_licensed) payment *= 2
+				if(FM.is_licensed)
+					payment *= 2
 				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
 				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
 	else if(href_list["setDislike"])
-		if(is_guest) screen = 25
+		if(is_guest)
+			screen = 25
 		else
 			var/datum/feed_message/FM = locate(href_list["setDislike"])
 			FM.voters += scanned_user
@@ -844,7 +849,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			var/datum/money_account/MA = FM.author_account
 			if(MA && !MA.suspended && (FM.author != scanned_user))
 				var/payment = 5
-				if(FM.is_licensed) payment *= 2
+				if(FM.is_licensed)
+					payment *= 2
 				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
 				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
