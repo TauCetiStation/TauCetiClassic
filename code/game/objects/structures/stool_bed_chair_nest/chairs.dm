@@ -16,7 +16,7 @@
 /obj/structure/stool/bed/chair/atom_init()
 	..()
 	if(is_station_level(z))
-		global.chairs_count++
+		global.station_chairs_count++
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/stool/bed/chair/atom_init_late()
@@ -24,7 +24,7 @@
 
 /obj/structure/stool/bed/chair/Destroy()
 	if(is_station_level(z))
-		global.chairs_count--
+		global.station_chairs_count--
 	return ..()
 
 /obj/structure/stool/bed/chair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)

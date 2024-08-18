@@ -455,8 +455,8 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 			if(istype(get_step(src,direction),/turf/simulated/floor))
 				var/turf/simulated/floor/FF = get_step(src,direction)
 				FF.update_icon() //so siding gets updated properly
-	if(istype(T,/obj/item/stack/tile/wood))
-		global.parquet_installed_count++
+	if(istype(T,/obj/item/stack/tile/wood) && is_station_level(z))
+		global.station_parquet_installed_count++
 	update_icon()
 	levelupdate()
 
@@ -467,7 +467,8 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	else
 		if(is_wood_floor())
 			to_chat(user, "<span class='warning'>Вы с трудом отодрали доски, сломав их.</span>")
-			global.parquet_installed_count--
+			if(is_station_level(z))
+				global.station_parquet_installed_count--
 		else
 			var/obj/item/I = new floor_type(src)
 			if(is_light_floor())
@@ -483,7 +484,8 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 	broken = 0
 	burnt = 0
 	underfloor_accessibility = UNDERFLOOR_HIDDEN
-	global.parquet_installed_count++
+	if(is_station_level(z))
+		global.station_parquet_installed_count++
 	if(T)
 		if(istype(T,/obj/item/stack/tile/wood))
 			floor_type = T.type
@@ -535,7 +537,8 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 				if(is_wood_floor())
 					to_chat(user, "<span class='warning'>Вы открутили доски.</span>")
 					new floor_type(src)
-					global.parquet_installed_count--
+					if(is_station_level(z))
+						global.station_parquet_installed_count--
 
 			make_plating()
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)

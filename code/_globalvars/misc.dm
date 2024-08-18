@@ -61,6 +61,6 @@ var/global/playsound_frequency_admin = 0	// Admin var for shitspawn via Secrets 
 
 var/global/nuclear_siren_cooldown = 0
 
-var/global/disposal_count = 0
-var/global/parquet_installed_count = 0
-var/global/chairs_count = 0
+var/global/station_disposal_count = 0
+var/global/station_parquet_installed_count = 0
+var/global/station_chairs_count = 0

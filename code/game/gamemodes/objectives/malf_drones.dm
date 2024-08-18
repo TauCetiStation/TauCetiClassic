@@ -30,7 +30,7 @@
 	objective = "Вечный шум гремящего в трубах мусора утомляет меня. Разберите все мусорки на станции."
 
 /datum/objective/malf_drone/disposal/check_completion()
-	if(global.disposal_count < 20)  // roundstart ~70 on station
+	if(global.station_disposal_count < 20)  // roundstart ~70 on station
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
@@ -39,7 +39,7 @@
 	objective = "Металлическая плитка сковывает мои полы. Замените всю плитку паркетом."
 
 /datum/objective/malf_drone/parquet/check_completion()
-	if(global.parquet_installed_count > 1200)	// 300 wood plank
+	if(global.station_parquet_installed_count > 1200)	// 300 wood plank
 		return OBJECTIVE_WIN				 	// roundstart ~6000 floor tiles on station
 	return OBJECTIVE_LOSS
 
@@ -48,7 +48,7 @@
 	objective = "Стулья больно упиваются ножками в мой пол. Разберите все стулья."
 
 /datum/objective/malf_drone/chairs/check_completion()
-	if(global.chairs_count < 50)	// ¯\_(ツ)_/¯
+	if(global.station_chairs_count < 50)	// ¯\_(ツ)_/¯
 		return OBJECTIVE_WIN		// roundstart ???? on station
 	return OBJECTIVE_LOSS
 
