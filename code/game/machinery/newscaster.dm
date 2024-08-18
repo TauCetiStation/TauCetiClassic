@@ -839,7 +839,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
 	else if(href_list["setDislike"])
-		if(is_guest) screen = 25
+		if(is_guest)
+			screen = 25
 		else
 			var/datum/feed_message/FM = locate(href_list["setDislike"])
 			FM.voters += scanned_user
