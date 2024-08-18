@@ -145,11 +145,7 @@
 	/obj/item/weapon/storage/backpack/holding = 3,
 	/obj/item/device/aicard = 1,
 	/obj/item/device/mmi/posibrain = 1,
-	/obj/item/stack/sheet/mineral/silver/twenty = 1,
-	/obj/item/stack/sheet/mineral/gold/twenty = 1,
-	/obj/item/stack/sheet/mineral/phoron/twenty = 1,
-	/obj/item/stack/sheet/mineral/uranium/twenty = 1,
-	/obj/item/stack/sheet/mineral/diamond/twenty = 1))
+	/obj/item/stack/sheet/mineral/diamond = 1))
 
 /obj/random/trader_product/sec
 	name = "Random Security Trader Product"
