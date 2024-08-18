@@ -203,6 +203,25 @@
 		to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 		icon_state = "flashburnt"
 
+
+/obj/item/device/flash/nostromo/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+	if(world.time < last_used + 30 SECOND)
+		to_chat(user, "Флэшер слишком горячий, чтобы пользоваться им снова!")
+		return
+
+	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
+	flick("flash2", src)
+	for(var/mob/living/carbon/C in oviewers(6, null))
+		if(isxenolonehunter(C))
+			C.flash_eyes()
+			C.apply_status_effect(STATUS_EFFECT_SLOWDOWN)
+		else
+			var/safety = C:eyecheck()
+			if(!safety)
+				if(!C.blinded)
+					C.flash_eyes()
+					C.apply_status_effect(STATUS_EFFECT_SLOWDOWN)
+
 /obj/item/device/flash/nostromo/attack(mob/living/M, mob/user)
 	if(world.time < last_used + 30 SECOND)
 		to_chat(user, "Флэшер слишком горячий, чтобы пользоваться им снова!")
@@ -212,3 +231,4 @@
 		M.visible_message("<span class='warning'>Ксеноморф ослепляется светом флэшера!</span>", "<span class='danger'>Яркий свет флэшера ослепляет вас!</span>")
 		M.Stun(1, TRUE)
 		M.Weaken(1, TRUE)
+		M.flash_eyes()

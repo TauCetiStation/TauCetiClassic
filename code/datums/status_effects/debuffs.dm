@@ -269,6 +269,26 @@
 	desc = "Вы чувствуете головокружение."
 	icon_state = "woozy"
 
+/datum/status_effect/slowdown
+	id = "slowdown"
+	alert_type = /atom/movable/screen/alert/status_effect/slowdown
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 3 SECOND
+
+/datum/status_effect/slowdown/on_apply()
+	. = ..()
+	if(!ishuman(owner))
+		owner.speed += 0.5
+
+/datum/status_effect/slowdown/on_remove()
+	if(ishuman(owner))
+		owner.speed -= 0.5
+
+/atom/movable/screen/alert/status_effect/slowdown
+	name = "Замедление"
+	desc = "Ноги становятся ватными."
+	icon_state = "woozy"
+
 /// Hallucination status effect. How most hallucinations end up happening.
 /datum/status_effect/hallucination
 	id = "hallucination"

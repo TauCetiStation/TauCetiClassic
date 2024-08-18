@@ -80,6 +80,9 @@
 	RegisterSignal(crewmate, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), PROC_REF(crewmate_died))
 	crew += crewmate
 	alltime_crew++
+	for(var/item in crewmate.get_equipped_items())
+		qdel(item)
+	crewmate.equipOutfit(pick_n_take(MM.crew_outfit))
 
 /datum/faction/nostromo_crew/proc/crewmate_died(mob/crewmate)
 	UnregisterSignal(crewmate, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING))

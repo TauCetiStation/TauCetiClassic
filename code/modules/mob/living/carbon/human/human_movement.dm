@@ -19,6 +19,9 @@
 	if(RUN in mutations)
 		tally -= 0.5
 
+	if(has_status_effect(STATUS_EFFECT_SLOWDOWN))
+		tally += 0.5
+
 	if(lying)
 		tally += 7
 	if(m_intent == MOVE_INTENT_WALK && HAS_TRAIT(src, TRAIT_FAST_WALKER))

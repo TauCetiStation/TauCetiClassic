@@ -33,6 +33,8 @@
 
 #define STATUS_EFFECT_CLUMSY /datum/status_effect/clumsy
 
+#define STATUS_EFFECT_SLOWDOWN /datum/status_effect/slowdown
+
 /////////////
 // NEUTRAL //
 /////////////

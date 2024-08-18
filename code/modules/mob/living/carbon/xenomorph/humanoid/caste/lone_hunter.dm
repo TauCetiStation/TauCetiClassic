@@ -37,6 +37,8 @@
 	var/adrenaline_next_time = 0
 	var/datum/map_module/alien/MM = null
 	var/mob/living/carbon/human/hunt_target = null
+	var/next_observation = 0
+	var/list/observation_human = list()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/atom_init()
 	. = ..()
@@ -55,6 +57,18 @@
 		var/datum/action/A = new action(src)
 		A.Grant(src)
 	playsound(src, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER)
+
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/Life()
+	..()
+	if(estage == 1 && world.time > next_observation)
+		for(var/mob/living/carbon/human/H in oview(6, src))
+			if(!(H in observation_human) && src in oview(6, H))
+				to_chat(src, "<span class='notice'>Вы получили очко эволюции.</span>")
+				next_observation = world.time + 30 SECONDS
+				observation_human += H
+				emote("hiss")
+				epoint++
+				break
 
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/Destroy()
 	alien_list[ALIEN_LONE_HUNTER] -= src
@@ -83,7 +97,7 @@
 	if(estage < 5 && world.time > adrenaline_next_time && health < (maxHealth / 3))
 		adrenaline_next_time = world.time + 8 MINUTE
 		apply_status_effect(STATUS_EFFECT_ALIEN_ADRENALINE)
-		playsound(src, pick(SOUNDIN_XENOMORPH_ROAR), VOL_EFFECTS_MASTER)
+		emote("roar")
 		for(var/obj/machinery/light/L in range(5, src))
 			L.flicker()
 
@@ -171,7 +185,7 @@
 	var/obj/item/weapon/grab/G = locate() in src
 	if(can_eat_corpse(G))
 		to_chat(src, "<span class='notice'>Вы приступили к трапезе.</span>")
-		playsound(src, pick(SOUNDIN_XENOMORPH_GROWL), VOL_EFFECTS_MASTER)
+		emote("growl")
 		apply_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
 
 		var/mob/living/carbon/human/H = G.affecting
@@ -242,7 +256,7 @@
 			checked_human += human_around
 
 	if(target)
-		playsound(owner, pick(SOUNDIN_XENOMORPH_GROWL), VOL_EFFECTS_MASTER)
+		owner.emote("hiss")
 		var/atom/movable/screen/arrow/arrow_hud = new
 		arrow_hud.color = COLOR_DARK_PURPLE
 		arrow_hud.add_hud(owner, target)

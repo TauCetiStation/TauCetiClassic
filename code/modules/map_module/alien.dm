@@ -47,6 +47,7 @@
 
 	var/datum/faction/nostromo_crew/crew_faction = null
 
+	var/list/crew_outfit = list()
 	var/list/random_loot = list(
 		/obj/item/weapon/legcuffs/bola,
 		/obj/item/device/radio/off,
