@@ -1244,7 +1244,7 @@
 	name = "Freedom Medkit"
 	desc = "Medkit special for revolution!"
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/revolution
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/revolution/armor
 	name = "Surplus Armor Set"
