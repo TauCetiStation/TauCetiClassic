@@ -844,7 +844,8 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			var/datum/money_account/MA = FM.author_account
 			if(MA && !MA.suspended && (FM.author != scanned_user))
 				var/payment = 5
-				if(FM.is_licensed) payment *= 2
+				if(FM.is_licensed)
+					payment *= 2
 				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
 				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
 
