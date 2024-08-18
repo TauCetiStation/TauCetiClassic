@@ -1240,6 +1240,12 @@
 	item = /obj/item/weapon/grenade/empgrenade
 	cost = 2
 
+/datum/uplink_item/revolution/rev_medkit
+	name = "Freedom Medkit"
+	desc = "Medkit special for revolution!"
+	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/revolution
+	cost = 1
+
 /datum/uplink_item/revolution/armor
 	name = "Surplus Armor Set"
 	desc = "Set of cheap armor stolen from forgotten military warehouses."
