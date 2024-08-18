@@ -1173,23 +1173,13 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 /obj/machinery/newscaster/proc/scan_user(mob/living/user)
 	if(ishuman(user))                       //User is a human
 		var/mob/living/carbon/human/H = user
-		if(H.wear_id)                                      //Newscaster scans you
-			var/obj/item/weapon/card/id/C
-			if(istype(H.wear_id, /obj/item/device/pda) )	//autorecognition, woo!
-				var/obj/item/device/pda/P = H.wear_id
-				if(P.id)
-					C = P.id
-			else if(istype(H.wear_id, /obj/item/weapon/card/id))
-				C = H.wear_id
-			if(C)
-				scanned_user ="[C.registered_name] ([C.assignment])"
-				user_account = get_account(C.associated_account_number)
-				have_license = (C.assignment == "Journalist")
-				is_guest = istype(C, /obj/item/weapon/card/id/guest)
-			else
-				scanned_user ="Unknown"
-		else
-			scanned_user ="Unknown"
+		var/obj/item/weapon/card/id/C = H.get_idcard()
+
+		if(C)
+			scanned_user ="[C.registered_name] ([C.assignment])"
+			user_account = get_account(C.associated_account_number)
+			have_license = (C.assignment == "Journalist")
+			is_guest = istype(C, /obj/item/weapon/card/id/guest)
 	else
 		var/mob/living/silicon/ai_user = user
 		scanned_user = "[ai_user.name] ([ai_user.job])"
