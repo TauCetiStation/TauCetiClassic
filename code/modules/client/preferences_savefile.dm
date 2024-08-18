@@ -271,13 +271,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			S["be_role"] << be_role
 
 	if(current_version < 50)
-		var/datum/job/assistant/A = new
-		var/datum/job/librarian/L = new
 
-		if(player_alt_titles && (player_alt_titles[A.title] in list("Reporter")))
-			player_alt_titles -= A.title
-		if(player_alt_titles && (player_alt_titles[L.title] in list("Journalist")))
-			player_alt_titles -= L.title
+		if(player_alt_titles && (player_alt_titles["Assistant"] in list("Reporter")))
+			player_alt_titles -= "Assistant"
+		if(player_alt_titles && (player_alt_titles["Librarian"] in list("Journalist")))
+			player_alt_titles -= "Librarian"
 
 
 //
