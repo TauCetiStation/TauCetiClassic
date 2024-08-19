@@ -48,11 +48,11 @@
 
 /obj/item/weapon/gun/projectile/automatic/saber
 	spread = 1
-	fire_delay = 2
+	fire_delay = 0
 
 /obj/item/weapon/gun/projectile/automatic/saber/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
@@ -64,12 +64,12 @@
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	initial_mag = /obj/item/ammo_box/magazine/mac10
 	can_be_silenced = TRUE
-	fire_delay = 1
+	fire_delay = 0
 	spread = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
@@ -84,12 +84,12 @@
 	should_alarm_when_empty = TRUE
 	can_be_silenced = TRUE
 	has_ammo_counter = TRUE
-	fire_delay = 2
+	fire_delay = 0
 	spread = 1
 
 /obj/item/weapon/gun/projectile/automatic/c20r/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "L6 SAW"
@@ -103,12 +103,12 @@
 	has_cover = TRUE
 	two_hand_weapon = ONLY_TWOHAND
 	has_ammo_counter = TRUE
-	fire_delay = 2.5
+	fire_delay = 0
 	spread = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 25) * 25 : "-empty"]"
@@ -162,12 +162,12 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/l13, /obj/item/ammo_box/magazine/l13/lethal)
 	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
 	can_be_silenced = TRUE
-	fire_delay = 2
+	fire_delay = 0
 	spread = 1
 
 /obj/item/weapon/gun/projectile/automatic/l13/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
@@ -181,12 +181,12 @@
 	initial_mag = /obj/item/ammo_box/magazine/tommygun
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_silenced = TRUE
-	fire_delay = 1.5
+	fire_delay = 0
 	spread = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/tommygun/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS)
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
@@ -198,10 +198,11 @@
 	origin_tech = "combat=5;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/bar
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
+	fire_delay = 0
 
 /obj/item/weapon/gun/projectile/automatic/bar/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS)
 
 /obj/item/weapon/gun/projectile/automatic/borg
 	name = "Robot SMG"
@@ -250,12 +251,12 @@
 	initial_mag = /obj/item/ammo_box/magazine/a28
 	suitable_mags = list(/obj/item/ammo_box/magazine/a28, /obj/item/ammo_box/magazine/a28/nonlethal, /obj/item/ammo_box/magazine/a28/incendiary)
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
-	fire_delay = 2.5
+	fire_delay = 0
 	spread = 1
 
 /obj/item/weapon/gun/projectile/automatic/a28/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
 
 /obj/item/weapon/gun/projectile/automatic/a74
 	name = "A74 assault rifle"
@@ -268,12 +269,12 @@
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
-	fire_delay = 2.5
+	fire_delay = 0
 	spread = 1
 
 /obj/item/weapon/gun/projectile/automatic/a74/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, fire_delay)
+	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
 
 /obj/item/weapon/gun/projectile/automatic/a74/krinkov
 	name = "Krinkov"
@@ -356,7 +357,7 @@
 	initial_mag = /obj/item/ammo_box/magazine/m41a
 	w_class = SIZE_SMALL
 	two_hand_weapon = DESIRABLE_TWOHAND
-	fire_delay = 1
+	fire_delay = 3
 	burst = 3
 	spread = 1.5
 

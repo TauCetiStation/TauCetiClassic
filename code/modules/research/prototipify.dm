@@ -95,9 +95,7 @@
 /obj/item/weapon/gun/projectile/automatic/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
 		recoil = max(recoil / mark, 0.5)
-		fire_delay = max(fire_delay / mark, 2)
 	if(!prob(reliability))
-		fire_delay *= 2
 		recoil += 1
 
 /obj/item/weapon/gun/plasma/set_prototype_qualities(rel_val=100, mark=0)

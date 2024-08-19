@@ -176,6 +176,9 @@
 	if(!special_check(user, target))
 		return
 
+	if (!ready_to_fire())
+		return
+
 	user.next_click = world.time + (burst - 1) * burst_delay
 	for(var/i in 1 to burst)
 		if(chambered)
