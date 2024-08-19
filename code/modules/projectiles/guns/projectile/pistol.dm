@@ -117,3 +117,11 @@
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_holstered = TRUE
 	recoil = 1.5
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter
+	name = "Peashooter"
+	desc = "Горохострел. Стреляет горохом."
+	icon_state = "peashooter"
+	item_state = "peashooter"
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/speedloader/pea
