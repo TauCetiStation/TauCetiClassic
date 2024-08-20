@@ -383,7 +383,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 	for(var/line_num in 1 to lines.len)
 		if(length(lines[line_num]) > MAX_LINE_SIZE)
-			lines[line_num] = sanitize(copytext(lines[line_num], 1, MAX_LINE_SIZE))
+			lines[line_num] = copytext(lines[line_num], 1, MAX_LINE_SIZE)
 
 	song_lines = lines
 
@@ -398,7 +398,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 	for(var/line_num in 1 to lines.len)
 		if(length(lines[line_num]) > MAX_LINE_SIZE)
-			lines[line_num] = sanitize(copytext(lines[line_num], 1, MAX_LINE_SIZE))
+			lines[line_num] = copytext(lines[line_num], 1, MAX_LINE_SIZE)
 
 	lyrics_lines = lines
 
