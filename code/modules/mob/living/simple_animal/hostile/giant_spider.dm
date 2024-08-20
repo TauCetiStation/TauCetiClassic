@@ -70,6 +70,12 @@
 	melee_damage = 15
 	poison_per_bite = 5
 	move_to_delay = 4
+	ranged = TRUE
+	retreat_distance = 5
+	minimum_distance = 5
+	projectiletype = /obj/item/projectile/acid_special_spider
+	projectilesound = 'sound/weapons/pierce.ogg'
+	ranged_cooldown = 5
 
 /mob/living/simple_animal/hostile/giant_spider/UnarmedAttack(atom/target)
 	..()

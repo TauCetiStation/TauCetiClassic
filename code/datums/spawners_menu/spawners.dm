@@ -298,8 +298,8 @@
 	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
 	C.create_human_apperance(H, new_name)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 
 	create_and_setup_role(/datum/role/traitor/dealer, H, TRUE)
 
@@ -328,8 +328,8 @@
 	var/new_name = "[pick(prefixes)] [pick(last_names)]"
 	C.create_human_apperance(cop, new_name)
 
-	cop.loc = spawnloc
 	cop.key = C.key
+	cop.forceMove(spawnloc)
 
 	//Give antag datum
 	var/datum/faction/cops/faction = create_uniq_faction(/datum/faction/cops)
@@ -550,12 +550,12 @@
 
 	var/client/C = spectator.client
 
-	var/mob/living/carbon/human/H = new(null)
+	var/mob/living/carbon/human/H = new()
 	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
 	C.create_human_apperance(H, new_name)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 	H.equipOutfit(/datum/outfit/spy)
 	H.mind.skills.add_available_skillset(/datum/skillset/max)
 	H.mind.skills.maximize_active_skills()
@@ -586,9 +586,10 @@
 	var/spawnloc = pick_spawn_location()
 
 	var/datum/faction/heist/faction = create_uniq_faction(/datum/faction/heist)
-	var/mob/living/carbon/human/vox/event/vox = new(spawnloc)
+	var/mob/living/carbon/human/vox/event/vox = new()
 
 	vox.key = spectator.client.key
+	vox.forceMove(spawnloc)
 
 	var/sounds = rand(2, 8)
 	var/newname = ""
@@ -668,15 +669,17 @@
 	var/mob/living/carbon/human/H = new(null)
 	C.create_human_apperance(H)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 	H.equipOutfit(outfit)
 	H.mind.skills.add_available_skillset(skillset)
 	H.mind.skills.maximize_active_skills()
+	show_location_blurb(C)
 
-	to_chat(H, "<B>Ваша голова раскалывается...Вы просыпаетесь в старом криоподе.</B>")
-	to_chat(H, "<B>Вы - <span class='boldwarning'>были работником передовой Космической Научной Станции Нанотрасен LCR</span>, что уже как год считается уничтоженной.</B>")
-	to_chat(H, "<B>Станция заброшена, никто, кроме вас и вашего товарища в соседней криокамере, не выжил. Вы вольны делать здесь что угодно. Можете попытаться всё починить, а можете просто улететь в поисках лучшей жизни. Выбор за вами.</B>")
+	to_chat(H, "<B>Ваша голова раскалывается... Вы просыпаетесь в старом криоподе.</B>")
+	to_chat(H, "<B>Вы - <span class='boldwarning'>работник передовой Космической Научной Станции Нанотрасен \"Сизиф\"</span>.</B>")
+	to_chat(H, "<B>Вы и ваш коллега ушли в криосон. Похоже, пока вы спали, <span class='boldwarning'>что-то пошло не так...</span></B>")
+	to_chat(H, "<B>Вы вольны делать здесь что угодно. Можете попытаться всё починить, а можете просто улететь в поисках лучшей жизни. Выбор за вами.</B>")
 
 /datum/spawner/survival/med
 	name = "Выживший (Медик)"
@@ -708,8 +711,8 @@
 	var/new_name = "Gorlex Maradeurs Operative"
 	C.create_human_apperance(H, new_name)
 
-	H.loc = spawnloc
 	H.key = C.key
+	H.forceMove(spawnloc)
 
 	create_and_setup_role(/datum/role/operative/lone, H, TRUE, TRUE)
 
@@ -737,8 +740,8 @@
 	var/new_name = "Wizard The Unbenannt"
 	INVOKE_ASYNC(spectator.client, TYPE_PROC_REF(/client, create_human_apperance), H, new_name, TRUE)
 
-	H.loc = spawnloc
 	H.key = spectator.client.key
+	H.forceMove(spawnloc)
 
 	var/datum/role/wizard/R = SSticker.mode.CreateRole(/datum/role/wizard, H)
 	R.rename = FALSE

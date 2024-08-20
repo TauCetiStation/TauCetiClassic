@@ -39,13 +39,15 @@
 	var/mob/living/carbon/human/H = user.mob
 	H.emote_panel()
 
-/datum/pref/keybinds/human/leap
-	name = "Leap Switch"
-	description = "Switches leap mode."
+/datum/pref/keybinds/human/race_ability
+	name = "Race Ability"
+	description = "Activates your racial ability."
 	value = "U"
 
-	legacy_keyname = "leap"
+	legacy_keyname = "race_ability" // or leap
 
-/datum/pref/keybinds/human/leap/down(client/user)
+/datum/pref/keybinds/human/race_ability/down(client/user)
 	var/mob/living/carbon/human/H = user.mob
-	H.switch_leap()
+	var/datum/action/A = locate(H.species.race_ability) in H.actions
+	if(A)
+		A.Trigger()

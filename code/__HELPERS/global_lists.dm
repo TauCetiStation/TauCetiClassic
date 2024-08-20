@@ -300,6 +300,34 @@
 	for(var/datum/pref/keybinds/KB as anything in subtypesof(/datum/pref/keybinds))
 		if(initial(KB.legacy_keyname))
 			legacy_keyname_to_pref[initial(KB.legacy_keyname)] = KB
+	// little fuckup happened and leap key was not converted on time and lost
+	legacy_keyname_to_pref["leap"] = /datum/pref/keybinds/human/race_ability
+
+	init_washing_items_list()
+
+/proc/init_washing_items_list()
+	var/list/path_list = list(/obj/item/clothing/mask,
+							/obj/item/clothing/head,
+							/obj/item/clothing/gloves,
+							/obj/item/clothing/shoes,
+							/obj/item/clothing/suit,
+							/obj/item/weapon/bedsheet,
+							/obj/item/clothing/under)
+
+	global.washing_items_list = typecacheof(path_list, ignore_root_path = TRUE)
+
+	global.washing_items_list[/obj/item/stack/sheet/hairlesshide] = TRUE
+
+	global.washing_items_list -= /obj/item/clothing/suit/space
+	global.washing_items_list -= /obj/item/clothing/suit/syndicatefake
+	global.washing_items_list -= /obj/item/clothing/suit/cyborg_suit
+	global.washing_items_list -= /obj/item/clothing/suit/bomb_suit
+	global.washing_items_list -= /obj/item/clothing/suit/armor
+	global.washing_items_list -= /obj/item/clothing/mask/gas
+	global.washing_items_list -= /obj/item/clothing/mask/cigarette
+	global.washing_items_list -= /obj/item/clothing/head/syndicatefake
+	global.washing_items_list -= /obj/item/clothing/head/helmet
+	global.washing_items_list -= /obj/item/clothing/gloves/pipboy
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

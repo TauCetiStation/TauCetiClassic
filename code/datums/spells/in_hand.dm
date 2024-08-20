@@ -189,12 +189,21 @@
 /obj/item/projectile/neurotoxin/magic
 	name = "toxin"
 	damage = 40
-	weaken = 1
+	weaken = 4
+	stun = 1
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "neurotoxin"
 	flag = "magic"
 	neurotoxin
 	damage_type = TOX
+
+/obj/item/projectile/x_turret_acid
+	name = "turret toxin"
+	damage = 5
+	agony = 30
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	damage_type = BURN
 
 ///////////////////////////////////////////
 
