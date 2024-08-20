@@ -216,18 +216,15 @@ const SettingField = (props, context) => {
     keybind: <SettingTypeKeybind {...props} />,
   };
 
-  let outline = null;
-  let access_message = null;
+  let rowClass = "";
   if (setting.admins_only) {
-    outline = "1px solid rgb(0, 255, 255)";
-    access_message = "Эта настройка доступна вам, так как вы админ.";
+    rowClass = "ClientSettings__row--admin";
   } else if (setting.supporters_only) {
-    outline = "1px solid rgb(255, 200, 0)";
-    access_message = "Эта настройка доступна вам, так как вы поддерживаете сервер.";
+    rowClass = "ClientSettings__row--supporter";
   }
 
   return (
-    <Section style={{ "outline": outline }} >
+    <Section className={`ClientSettings__row ${rowClass}`} >
       <Flex wrap="wrap">
         <Flex.Item basis="30%" grow="2" color="label" pr="1em" bold>
           { setting.name }
@@ -248,13 +245,6 @@ const SettingField = (props, context) => {
         <Flex.Item basis="100%" pt="1em" style={{ "white-space": "pre-wrap" }}>
           { setting.description }
           { /* JSON.stringify(setting.v_parameters)*/ }
-          { access_message && (
-            <>
-              <br />
-              <br />
-              <i>{ access_message }</i>
-            </>
-          )}
         </Flex.Item>
       </Flex>
     </Section>

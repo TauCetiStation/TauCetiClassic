@@ -182,7 +182,7 @@ These are very simple, tiny, reusable CSS classes which you can use and
 combine to change appearance of your elements. Keep them small.
 - `/packages/tgui/styles/components` - CSS classes which are used
 in UI components. These stylesheets closely follow the
-[BEM](https://en.bem.info/methodology/) methodology.
+[BEM](https://en.bem.info/methodology/) methodology and [two-dashes naming convention](https://ru.bem.info/methodology/naming-convention/#стиль-two-dashes)
 - `/packages/tgui/styles/interfaces` - Custom stylesheets for your interfaces.
 Add stylesheets here if you really need a fine control over your UI styles.
 - `/packages/tgui/styles/layouts` - Layout-related styles.

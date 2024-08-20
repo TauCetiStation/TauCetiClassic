@@ -1,0 +1,41 @@
+@use '../colors.scss';
+@use 'sass:color';
+
+$admin-color: color.scale(colors.$blue, $lightness: 50%);
+$supporter-color: color.scale(colors.$orange, $lightness: 50%);
+
+.ClientSettings {
+	&__row {
+		position: relative;
+
+		&::after {
+			position: absolute;
+			bottom: 0.5em;
+			right: 0.5em;
+			font-size: 0.75em;
+			font-style: italic;
+		}
+
+		&--admin, &--supporter {
+			padding-bottom: 1em;
+		}
+
+		&--admin {
+			outline: 1px solid $admin-color;
+
+			&::after {
+				content: "Доступно как администратору";
+				color: $admin-color;
+			}
+		}
+
+		&--supporter {
+			outline: 1px solid $supporter-color;
+
+			&::after {
+				content: "Доступно как подписчику";
+				color: $supporter-color;
+			}
+		}
+	}
+}
