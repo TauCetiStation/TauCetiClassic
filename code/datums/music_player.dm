@@ -229,7 +229,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			if(lyrics_lines.len > MAX_LINES_COUNT)
 				return
 
-			var/newline = sanitize(input("Enter new lyrics line: ") as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
+			var/newline = sanitize(input("Enter new lyrics line: ") as text|null, MAX_LINE_SIZE)
 
 			if(!newline || !instrument.Adjacent(usr))
 				return
@@ -242,7 +242,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 		else if(href_list["modify_lyrics_line"])
 			var/line_num = text2num(href_list["modify_lyrics_line"])
-			var/content = sanitize(input("Enter your line: ", "Change lyrics line [line_num]", lyrics_lines[line_num]) as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
+			var/content = sanitize(input("Enter your line: ", "Change lyrics line [line_num]", lyrics_lines[line_num]) as text|null, MAX_LINE_SIZE)
 
 			if (!content || !instrument.Adjacent(usr))
 				return
@@ -272,7 +272,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			for (var/line in lyrics_lines)
 				lyrics += line + "\n"
 
-			var/lyrics_text = sanitize(input("Please, paste the entire lyrics: ", "Import Lyrics", input_default(lyrics)) as message|null, MAX_SONG_SIZE, extra = FALSE, ascii_only = TRUE)
+			var/lyrics_text = sanitize(input("Please, paste the entire lyrics: ", "Import Lyrics", input_default(lyrics)) as message|null, MAX_SONG_SIZE, extra = FALSE)
 
 			if (!lyrics_text || !instrument.Adjacent(usr))
 				return
