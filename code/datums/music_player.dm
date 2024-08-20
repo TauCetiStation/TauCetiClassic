@@ -382,7 +382,8 @@ var/global/datum/notes_storage/note_cache_storage = new
 		lines.Cut(MAX_LINES_COUNT + 1)
 
 	for(var/line_num in 1 to lines.len)
-		lines[line_num] = sanitize(lines[line_num] as text|null, MAX_LINE_SIZE)
+		if(length(lines[line_num]) > MAX_LINE_SIZE)
+			lines[line_num] = sanitize(copytext(lines[line_num], 1, MAX_LINE_SIZE))
 
 	song_lines = lines
 
@@ -396,7 +397,8 @@ var/global/datum/notes_storage/note_cache_storage = new
 		lines.Cut(MAX_LINES_COUNT + 1)
 
 	for(var/line_num in 1 to lines.len)
-		lines[line_num] = sanitize(lines[line_num] as text|null, MAX_LINE_SIZE)
+		if(length(lines[line_num]) > MAX_LINE_SIZE)
+			lines[line_num] = sanitize(copytext(lines[line_num], 1, MAX_LINE_SIZE))
 
 	lyrics_lines = lines
 
