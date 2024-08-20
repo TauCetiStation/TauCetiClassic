@@ -56,8 +56,10 @@ var/global/datum/notes_storage/note_cache_storage = new
 	var/sound_path      = ""
 
 	var/list/song_lines = list()
+	var/list/lyrics_lines = list()
 	var/song_tempo      = DEFAULT_TEMPO
 
+	var/sing_lyrics = FALSE
 	var/playing   = FALSE
 	var/show_help = FALSE
 	var/show_edit = TRUE
@@ -87,6 +89,12 @@ var/global/datum/notes_storage/note_cache_storage = new
 			html += "<a href='?src=\ref[src];play=1'>Play Song</a><br>"
 			html += "<a href='?src=\ref[src];repeat=1'>Repeat Song: [repeat] times</a><br><br>"
 
+	if(lyrics_lines.len)
+		if(sing_lyrics)
+			html += "<a href='?src=\ref[src];switch_singing_lyrics_to=0'>You will sing lyrics</a><br><br>"
+		else
+			html += "<a href='?src=\ref[src];switch_singing_lyrics_to=1'>You will not sing lyrics</a><br><br>"
+
 	if(!show_edit)
 		html += "<a href='?src=\ref[src];show_edit=1'>Show Editor</a><br><br>"
 	else
@@ -108,6 +116,20 @@ var/global/datum/notes_storage/note_cache_storage = new
 			html += "</table>"
 
 			html += "<a href='?src=\ref[src];newline=1'>Add Line</a><br><br>"
+
+		html += "<a href='?src=\ref[src];import_lyrics=1'>Import Lyrics</a><br><br>"
+
+		if(lyrics_lines.len)
+			html += "<table>"
+			for(var/line_num in 1 to lyrics_lines.len)
+				html += "<tr>"
+				html += "<td><b>Line [line_num]:</b></td>"
+				html += "<td>[lyrics_lines[line_num]]</td>"
+				html += "<td><a href='?src=\ref[src];delete_lyrics_line=[line_num]'>Delete Line</a> <a href='?src=\ref[src];modify_lyrics_line=[line_num]'>Modify Line</a></td>"
+				html += "</tr>"
+			html += "</table>"
+
+			html += "<a href='?src=\ref[src];new_lyrics_line=1'>Add Lyrics Line</a><br><br>"
 
 		if(!show_help)
 			html += "<a href='?src=\ref[src];show_help=1'>Show help</a>"
@@ -146,6 +168,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 			playing = FALSE
 			SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, FALSE)
 			song_lines.len = 0
+			lyrics_lines.len = 0
 
 		else if(href_list["show_help"])
 			show_help = text2num(href_list["show_help"])
@@ -202,12 +225,40 @@ var/global/datum/notes_storage/note_cache_storage = new
 
 			song_lines[line_num] = content
 
+		else if(href_list["new_lyrics_line"])
+			if(lyrics_lines.len > MAX_LINES_COUNT)
+				return
+
+			var/newline = sanitize(input("Enter new lyrics line: ") as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
+
+			if(!newline || !instrument.Adjacent(usr))
+				return
+
+			lyrics_lines += newline
+
+		else if(href_list["delete_lyrics_line"])
+			var/line_num = text2num(href_list["delete_lyrics_line"])
+			lyrics_lines.Cut(line_num, line_num + 1)
+
+		else if(href_list["modify_lyrics_line"])
+			var/line_num = text2num(href_list["modify_lyrics_line"])
+			var/content = sanitize(input("Enter your line: ", "Change lyrics line [line_num]", lyrics_lines[line_num]) as text|null, MAX_LINE_SIZE, ascii_only = TRUE)
+
+			if (!content || !instrument.Adjacent(usr))
+				return
+
+			lyrics_lines[line_num] = content
+
 		else if(href_list["stop"])
 			playing = FALSE
 			SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, FALSE)
 
 		else if(href_list["import"])
-			var/song_text = sanitize(input("Please, paste the entire song formatted: ") as message|null, MAX_SONG_SIZE, extra = FALSE, ascii_only = TRUE)
+			var/song = ""
+			for (var/line in song_lines)
+				song += line + "\n"
+
+			var/song_text = sanitize(input("Please, paste the entire song formatted: ", "Import Song", input_default(song)) as message|null, MAX_SONG_SIZE, extra = FALSE, ascii_only = TRUE)
 
 			if (!song_text || !instrument.Adjacent(usr))
 				return
@@ -215,6 +266,24 @@ var/global/datum/notes_storage/note_cache_storage = new
 			parse_song_text(song_text)
 			playing = FALSE
 			SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, FALSE)
+
+		else if(href_list["import_lyrics"])
+			var/lyrics = ""
+			for (var/line in lyrics_lines)
+				lyrics += line + "\n"
+
+			var/lyrics_text = sanitize(input("Please, paste the entire lyrics: ", "Import Lyrics", input_default(lyrics)) as message|null, MAX_SONG_SIZE, extra = FALSE, ascii_only = TRUE)
+
+			if (!lyrics_text || !instrument.Adjacent(usr))
+				return
+
+			parse_lyrics_text(lyrics_text)
+			sing_lyrics = TRUE
+			playing = FALSE
+			SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, FALSE)
+
+		else if(href_list["switch_singing_lyrics_to"])
+			sing_lyrics = text2num(href_list["switch_singing_lyrics_to"])
 
 		interact(usr)
 
@@ -238,6 +307,13 @@ var/global/datum/notes_storage/note_cache_storage = new
 				// so it result into runtime error in case like that `A5-F5-D5, `
 				if(!beat)
 					beat = " "
+
+				if(sing_lyrics && lyrics_lines.len)
+					if(beat[1] == "l" && length(beat) > 1)
+						var/lyrics_line_num = text2num(copytext(beat, 2, length(beat) + 1))
+						if(lyrics_line_num > 0 && lyrics_line_num <= lyrics_lines.len)
+							musician.say(lyrics_lines[lyrics_line_num])
+							continue
 
 				var/list/notes = splittext(beat, "/")
 
@@ -310,6 +386,21 @@ var/global/datum/notes_storage/note_cache_storage = new
 			lines[line_num] = copytext(lines[line_num], 1, MAX_LINE_SIZE)
 
 	song_lines = lines
+
+/datum/music_player/proc/parse_lyrics_text(lyrics_text)
+	if(!lyrics_text)
+		return
+
+	var/list/lines = splittext(lyrics_text, "\n")
+
+	if(lines.len > MAX_LINES_COUNT)
+		lines.Cut(MAX_LINES_COUNT + 1)
+
+	for(var/line_num in 1 to lines.len)
+		if(length(lines[line_num]) > MAX_LINE_SIZE)
+			lines[line_num] = copytext(lines[line_num], 1, MAX_LINE_SIZE)
+
+	lyrics_lines = lines
 
 #undef COUNT_PAUSE
 #undef DEFAULT_TEMPO
