@@ -642,7 +642,7 @@
 	name = "pealoader"
 	cases = list("гороховый зарядник", "горохового зарядника","гороховому заряднику", "гороховый зарядник", "гороховым зарядником", "гороховом заряднике")
 	desc = "Гороховый зарядник для горохового пистолета."
-	caliber = "Pea?"
+	caliber = "9mm"
 	ammo_type = /obj/item/ammo_casing/pea
 	max_ammo = 6
 	origin_tech = "combat=2"
