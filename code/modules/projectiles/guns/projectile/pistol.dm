@@ -124,4 +124,6 @@
 	icon_state = "peashooter"
 	item_state = "peashooter"
 	origin_tech = "combat=1;materials=1"
-	initial_mag = /obj/item/ammo_box/speedloader/pea
+	initial_mag = /obj/item/ammo_box/magazine/pea
+	suitable_mags = /obj/item/ammo_box/magazine/pea
+	can_be_holstered = TRUE
