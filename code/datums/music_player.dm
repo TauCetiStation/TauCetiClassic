@@ -147,10 +147,13 @@ var/global/datum/notes_storage/note_cache_storage = new
 					A pause may be denoted by an empty chord: <i>C,E,,C,G</i><br>
 					To make a chord be a different time, end it with /x, where the chord length will be length<br>
 					defined by tempo / x: <i>C,G/2,E/4</i><br>
-					Combined, an example is: <i>E-E4/4,/2,G#/8,B/8,E3-E4/4</i>
+					Combined, an example is: <i>E-E4/4,/2,G#/8,B/8,E3-E4/4</i><br>
 					<br>
-					Lines may be up to [MAX_LINE_SIZE] characters.<br>
-					A song may only contain up to [MAX_LINES_COUNT] lines.<br>
+					Also, you can include some lyrics to sing in the duration of the song.<br>
+					To mark where to start to sing a lyrics line, insert <i>L*number of lyrics line*</i> in the song chords.<br>
+					Mark of lyrics must be separated bu commas, like a chord.<br>
+					Lines of song and lyrics may be up to [MAX_LINE_SIZE] characters.<br>
+					A song and lyrics may only contain up to [MAX_LINES_COUNT] lines.<br>
 					"}
 
 	user.set_machine(instrument)
