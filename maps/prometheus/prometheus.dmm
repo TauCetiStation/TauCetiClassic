@@ -8878,9 +8878,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "bDC" = (
@@ -19935,6 +19933,17 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/miningoffice)
+"epM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/whitegreed,
+/area/station/bridge/ai_upload)
 "epO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil,
@@ -36162,9 +36171,7 @@
 /area/station/security/brig)
 "icf" = (
 /obj/structure/window/thin/reinforced,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -38130,10 +38137,6 @@
 	},
 /area/station/medical/virology)
 "iCe" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 28;
@@ -38143,6 +38146,12 @@
 	c_tag = "AI Chamber East";
 	dir = 8;
 	network = list("RD","MiniSat")
+	},
+/obj/machinery/ai_slipper{
+	pixel_y = 16
+	},
+/obj/machinery/hologram/holopad{
+	pixel_y = -16
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -46199,9 +46208,7 @@
 	},
 /area/station/medical/reception)
 "kIr" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "kIB" = (
@@ -80735,10 +80742,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/machinery/hologram/holopad,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "tkT" = (
@@ -82502,10 +82506,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "tJu" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
@@ -82515,6 +82515,12 @@
 	c_tag = "AI Chamber West";
 	dir = 4;
 	network = list("RD","MiniSat")
+	},
+/obj/machinery/ai_slipper{
+	pixel_y = 16
+	},
+/obj/machinery/hologram/holopad{
+	pixel_y = -16
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -133660,7 +133666,7 @@ fpz
 eTw
 tkS
 upy
-uHZ
+epM
 uHZ
 pQf
 kSZ

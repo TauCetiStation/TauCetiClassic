@@ -60853,9 +60853,7 @@
 	},
 /area/station/aisat)
 "cnM" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cnN" = (
@@ -61579,12 +61577,14 @@
 /area/station/aisat/ai_chamber)
 "cpC" = (
 /obj/machinery/ai_slipper{
-	icon_state = "motion0"
+	pixel_y = 16
 	},
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/hologram/holopad{
+	pixel_y = -16
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpD" = (
@@ -61784,13 +61784,15 @@
 	},
 /area/station/aisat/ai_chamber)
 "cpQ" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/hologram/holopad,
+/obj/machinery/hologram/holopad{
+	pixel_y = -16
+	},
+/obj/machinery/ai_slipper{
+	pixel_y = 16
+	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpR" = (
@@ -62349,9 +62351,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -66671,9 +66671,7 @@
 	},
 /area/station/engineering/drone_fabrication)
 "cDj" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
