@@ -1181,12 +1181,12 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
 	seed_type = /obj/item/seeds/gatfruit
-	name = "gatfruit"
-	desc = "It smells like burning."
+	name = "peashooter"
+	desc = "It smells like pea-palm in the morning"
 	icon_state = "gatfruit"
 	potency = 25
 	filling_color = "#020108"
-	trash = /obj/item/weapon/gun/projectile/revolver
+	trash = /obj/item/weapon/gun/projectile/automatic/pistol/peashooter
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit/atom_init()
 	. = ..()
