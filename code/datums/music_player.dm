@@ -151,7 +151,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 					<br>
 					Also, you can include some lyrics to sing in the duration of the song.<br>
 					To mark where to start to sing a lyrics line, insert <i>L*number of lyrics line*</i> in the song chords.<br>
-					Mark of lyrics must be separated bu commas, like a chord.<br>
+					Mark of lyrics must be separated by commas, like a chord.<br>
 					Lines of song and lyrics may be up to [MAX_LINE_SIZE] characters.<br>
 					A song and lyrics may only contain up to [MAX_LINES_COUNT] lines.<br>
 					"}
