@@ -243,7 +243,7 @@ var/global/gourd_name = null
 	if(!COOLDOWN_FINISHED(src, last_maraca))
 		return
 	COOLDOWN_START(src, last_maraca, MARACA_COOLDOWN)
-	playsound(src, 'sound/musical_instruments/maraca/maraca.ogg', VOL_EFFECTS_INSTRUMENT, 100, TRUE, falloff = 5)
+	playsound(src, 'sound/musical_instruments/maraca/maraca.ogg', VOL_MUSIC_INSTRUMENTS, 100, TRUE, falloff = 5)
 
 #undef MARACA_COOLDOWN
 

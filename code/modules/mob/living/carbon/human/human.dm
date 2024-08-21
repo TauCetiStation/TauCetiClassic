@@ -945,7 +945,7 @@
 	if(!src.xylophone)
 		visible_message("<span class='warning'>[src] begins playing his ribcage like a xylophone. It's quite spooky.</span>","<span class='notice'>You begin to play a spooky refrain on your ribcage.</span>","<span class='warning'>You hear a spooky xylophone melody.</span>")
 		var/song = pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg')
-		playsound(src, song, VOL_EFFECTS_INSTRUMENT)
+		playsound(src, song, VOL_MUSIC_INSTRUMENTS)
 		xylophone = 1
 		spawn(1200)
 			xylophone=0

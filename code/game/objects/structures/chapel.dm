@@ -207,7 +207,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	for(var/mob/M in player_list)
 		if(M.z == z)
 			// Why do they call them voice announcements if it's just global announcements?
-			M.playsound_local(null, 'sound/effects/big_bell.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, 75)
+			M.playsound_local(null, 'sound/effects/big_bell.ogg', VOL_VOICE_ANNOUNCEMENTS, 75)
 			to_chat(M, "[bicon(src)] <span class='game say'><b>[src]</b> rings, \"[text]\"</span>")
 
 	var/swing_angle = adjust_strength(12, strength, 0.25, 32)

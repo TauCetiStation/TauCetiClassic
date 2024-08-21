@@ -167,7 +167,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 /mob/proc/playsound_lobbymusic()
 	if(!SSticker || !SSticker.login_music || !client)
 		return
-	playsound_music(SSticker.login_music, VOL_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
+	playsound_music(SSticker.login_music, VOL_LOBBY_MUSIC, null, null, CHANNEL_MUSIC) // MAD JAMS
 
 /mob/proc/playsound_music(soundin, volume_channel = NONE, repeat = FALSE, wait = FALSE, channel = 0, priority = 0, status = 0) // byond vars sorted by ref order.
 	if(!client || !client.prefs_ready)
@@ -180,7 +180,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	but still keep ability to resume admin music on the fly mid position
 	*/
 
-	if(!vol && volume_channel != VOL_ADMIN)
+	if(!vol && volume_channel != VOL_ADMIN_SOUNDS)
 		return
 
 	var/sound/S
@@ -222,27 +222,28 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	if(!isnum(volume_channel) || !volume_channel)
 		CRASH("type mismatch for volume_channel or volume channel is not set.")
 
-	if(volume_channel & VOL_MUSIC)
-		. = prefs.get_pref(/datum/pref/player/audio/lobby)
-	else if(volume_channel & VOL_AMBIENT)
-		. = prefs.get_pref(/datum/pref/player/audio/ambient)
-	else if(volume_channel & VOL_EFFECTS_MASTER)
-		. = prefs.get_pref(/datum/pref/player/audio/effect_master)
-		switch(volume_channel) // now for sub categories
-			if(VOL_EFFECTS_VOICE_ANNOUNCEMENT)
-				. *= prefs.get_pref(/datum/pref/player/audio/effect_announcement) * 0.01
-			if(VOL_EFFECTS_MISC)
-				. *= prefs.get_pref(/datum/pref/player/audio/effect_misc) * 0.01
-			if(VOL_EFFECTS_INSTRUMENT)
-				. *= prefs.get_pref(/datum/pref/player/audio/effect_instrument) * 0.01
-	else if(volume_channel & VOL_NOTIFICATIONS)
-		. = prefs.get_pref(/datum/pref/player/audio/notifications)
-	else if(volume_channel & VOL_ADMIN)
-		. = prefs.get_pref(/datum/pref/player/audio/admin_sound)
-	else if(volume_channel & VOL_JUKEBOX)
-		. = prefs.get_pref(/datum/pref/player/audio/jukebox)
-	else
-		CRASH("unknown volume_channel: [volume_channel]")
+	switch(volume_channel)
+		if(VOL_LOBBY_MUSIC)
+			. = prefs.get_pref(/datum/pref/player/audio/lobby)
+		if(VOL_AMBIENT)
+			. = prefs.get_pref(/datum/pref/player/audio/ambient)
+		if(VOL_EFFECTS_MASTER)
+			. = prefs.get_pref(/datum/pref/player/audio/effects)
+		if(VOL_VOICE_ANNOUNCEMENTS)
+			. = prefs.get_pref(/datum/pref/player/audio/voice_announcements)
+		if(VOL_SPAM_EFFECTS)
+			// spam effects is just additional coefficient, by default it uses effects setting
+			. = prefs.get_pref(/datum/pref/player/audio/effects) * prefs.get_pref(/datum/pref/player/audio/spam_effects) * 0.01
+		if(VOL_MUSIC_INSTRUMENTS)
+			. = prefs.get_pref(/datum/pref/player/audio/instruments)
+		if(VOL_NOTIFICATIONS)
+			. = prefs.get_pref(/datum/pref/player/audio/notifications)
+		if(VOL_ADMIN_SOUNDS)
+			. = prefs.get_pref(/datum/pref/player/audio/admin_sounds)
+		if(VOL_JUKEBOX)
+			. = prefs.get_pref(/datum/pref/player/audio/jukebox)
+		else
+			CRASH("unknown volume_channel: [volume_channel]")
 
 	if(. > 0)
 		. = max(0.002, VOL_LINEAR_TO_NON(.)) // max(master slider won't kill sub slider's volume if both are less than max value).

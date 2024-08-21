@@ -97,7 +97,7 @@ var/global/list/datum/announcement/announcements_list
 					sound_file = pick(sound_file)
 			else
 				WARNING("No sound file for [sound_name]")
-			U.playsound_local(null, sound_file, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
+			U.playsound_local(null, sound_file, VOL_VOICE_ANNOUNCEMENTS, volume, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 		if("preset_select")
 			if(!(C.holder.rights & (R_FUN | R_EVENT)))
 				return

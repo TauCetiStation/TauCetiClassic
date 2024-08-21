@@ -125,7 +125,7 @@
 			amount = new_amount
 
 			if(iscarbon(usr))
-				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_SPAM_EFFECTS, 20)
 
 		if("dispense")
 			. = TRUE
@@ -136,7 +136,7 @@
 			var/space = R.maximum_volume - R.total_volume
 
 			if(iscarbon(usr))
-				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_SPAM_EFFECTS, 20)
 
 			if ((space > 0) && (energy * 10 >= min(amount, space)))
 				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40) // 15 isn't enough
@@ -153,7 +153,7 @@
 			beaker = null
 
 			if(iscarbon(usr))
-				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_SPAM_EFFECTS, 20)
 
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 

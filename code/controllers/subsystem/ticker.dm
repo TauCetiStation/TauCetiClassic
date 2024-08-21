@@ -301,7 +301,7 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, "<FONT color='blue'><B>Приятной игры!</B></FONT>")
 	for(var/mob/M as anything in player_list)
-		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_VOICE_ANNOUNCEMENTS, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 	if(length(SSholiday.holidays))
 		to_chat(world, "<span clas='notice'>и...</span>")
@@ -618,7 +618,7 @@ SUBSYSTEM_DEF(ticker)
 		M.mind.transfer_to(L)
 	else
 		L.key = M.key
-	L.playsound_local(null, 'sound/lobby/Thunderdome.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	L.playsound_local(null, 'sound/lobby/Thunderdome.ogg', VOL_LOBBY_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	L.equipOutfit(/datum/outfit/arena)
 	L.name = L.key
 	L.real_name = L.name

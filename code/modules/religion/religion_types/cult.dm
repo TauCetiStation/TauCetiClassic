@@ -133,7 +133,7 @@
 
 		if(prob(20)) // sound
 			var/list/sounds = pick(SOUNDIN_EXPLOSION, SOUNDIN_SPARKS, SOUNDIN_FEMALE_HEAVY_PAIN, SOUNDIN_MALE_HEAVY_PAIN, SOUNDIN_SHATTER, SOUNDIN_HORROR)
-			playsound(H, pick(sounds), VOL_EFFECTS_INSTRUMENT)
+			playsound(H, pick(sounds), VOL_MUSIC_INSTRUMENTS)
 
 		else if(prob(20)) // chat_message
 			to_chat(H, "<font size='15' color='red'><b>[pick(possible_god_phrases)]!</b></font>")

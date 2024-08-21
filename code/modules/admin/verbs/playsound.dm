@@ -34,7 +34,7 @@ var/global/list/sounds_cache_local = list()
 	message_admins("[key_name_admin(src)] played sound [S].")
 
 	for(var/mob/M in player_list)
-		M.playsound_music(S, VOL_ADMIN, null, TRUE, CHANNEL_ADMIN, 250, SOUND_STREAM)
+		M.playsound_music(S, VOL_ADMIN_SOUNDS, null, TRUE, CHANNEL_ADMIN, 250, SOUND_STREAM)
 
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -112,7 +112,7 @@ var/global/list/sounds_cache_local = list()
 	message_admins("[key_name_admin(src)] played server sound [sound_path].")
 
 	for(var/mob/M in player_list)
-		M.playsound_music(sound_path, VOL_ADMIN, null, TRUE, CHANNEL_ADMIN, 250, 0)
+		M.playsound_music(sound_path, VOL_ADMIN_SOUNDS, null, TRUE, CHANNEL_ADMIN, 250, 0)
 	
 	feedback_add_details("admin_verb","PSS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

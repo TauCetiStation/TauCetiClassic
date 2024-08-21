@@ -172,7 +172,7 @@
 					to_chat(user, "<span class='danger'>No power!</span>")
 					return
 
-		playsound(user, P.usesound, VOL_EFFECTS_INSTRUMENT)
+		playsound(user, P.usesound, VOL_MUSIC_INSTRUMENTS)
 		to_chat(user, "<span class='warning'>You start [P.drill_verb].</span>")
 
 		if(!user.is_busy(src) && P.use_tool(src, user, 10, volume = 100))

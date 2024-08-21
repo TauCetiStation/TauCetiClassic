@@ -136,7 +136,7 @@
 /datum/religion_rites/standing/honk/rite_step(mob/user, obj/AOG, stage)
 	..()
 	var/ratio = (100 / ritual_invocations.len) * stage
-	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
+	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_SPAM_EFFECTS, ratio)
 
 /*
  * Revitalizing items.

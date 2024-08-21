@@ -729,7 +729,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/clownburger/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
-		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+		playsound(src, 'sound/items/bikehorn.ogg', VOL_SPAM_EFFECTS)
 		add_fingerprint(user)
 	return
 

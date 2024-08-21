@@ -216,7 +216,7 @@
 	var/cooldown = FALSE
 
 /obj/item/weapon/bikehorn/proc/honk(mob/user)
-	playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
+	playsound(src, 'sound/items/bikehorn.ogg', VOL_SPAM_EFFECTS)
 	if(user.can_waddle())
 		user.waddle(pick(-14, 0, 14), 4)
 

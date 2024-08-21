@@ -51,7 +51,7 @@ var/global/bomb_set
 	else
 		bomb_set = TRUE //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
-		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MISC, 30, FALSE)
+		playsound(src, 'sound/items/timer.ogg', VOL_SPAM_EFFECTS, 30, FALSE)
 		if(timeleft <= 120 && COOLDOWN_FINISHED(global, nuclear_siren_cooldown))
 			for(var/mob/M in player_list)
 				if(!isnewplayer(M))
@@ -469,7 +469,7 @@ var/global/bomb_set
 	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 30)
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			M.playsound_local(null, 'sound/machines/Alarm_reverb.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+			M.playsound_local(null, 'sound/machines/Alarm_reverb.ogg', VOL_VOICE_ANNOUNCEMENTS, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	update_icon()
 	addtimer(CALLBACK(src, PROC_REF(fail)), 13 SECONDS) //Good taste, right?
 

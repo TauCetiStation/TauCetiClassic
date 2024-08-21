@@ -91,7 +91,7 @@
 // if no one is against it in the future - delete comment and the ogg file
 //	for(var/mob/M in player_list)
 //		if(!isnewplayer(M))
-//			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+//			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_VOICE_ANNOUNCEMENTS, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 	// probably should be white list or something, maybe check by linkage?
 	for(var/Z in SSmapping.levels_not_having_any_trait(list(ZTRAIT_CENTCOM, ZTRAIT_JUNKYARD)))

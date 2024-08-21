@@ -940,7 +940,7 @@ var/global/list/admin_verbs_hideable = list(
 
 	to_chat(T, "<span class='notice'><b><font size=3>Man up and deal with it.</font></b></span>")
 	to_chat(T, "<span class='notice'>Move on.</span>")
-	T.playsound_local(null, 'sound/voice/ManUp1.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
+	T.playsound_local(null, 'sound/voice/ManUp1.ogg', VOL_ADMIN_SOUNDS, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] told [key_name(T)] to man up and deal with it.</span>")
@@ -952,7 +952,7 @@ var/global/list/admin_verbs_hideable = list(
 
 	for (var/mob/T in player_list)
 		to_chat(T, "<br><center><span class='notice'><b><font size=4>Man up.<br> Deal with it.</font></b><br>Move on.</span></center><br>")
-		T.playsound_local(null, 'sound/voice/ManUp1.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
+		T.playsound_local(null, 'sound/voice/ManUp1.ogg', VOL_ADMIN_SOUNDS, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] told everyone to man up and deal with it.</span>")
@@ -992,10 +992,10 @@ var/global/list/admin_verbs_hideable = list(
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 
 	if(glob == "No!")
-		winner.playsound_local(null, 'sound/misc/achievement.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
+		winner.playsound_local(null, 'sound/misc/achievement.ogg', VOL_ADMIN_SOUNDS, vary = FALSE, ignore_environment = TRUE)
 	else
 		for(var/mob/M in player_list)
-			M.playsound_local(null, 'sound/misc/achievement.ogg', VOL_ADMIN, vary = FALSE, ignore_environment = TRUE)
+			M.playsound_local(null, 'sound/misc/achievement.ogg', VOL_ADMIN_SOUNDS, vary = FALSE, ignore_environment = TRUE)
 		to_chat(world, "<span class='danger'>[bicon(cup)] <b>[winner.name]</b> wins \"<b>[name]</b>\"!</span>")
 
 	to_chat(winner, "<span class='danger'>Congratulations!</span>")

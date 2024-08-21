@@ -272,7 +272,7 @@ Message ends."}
 		return
 	RAI.next_music_start = world.time + REPLICATOR_MUSIC_LENGTH
 
-	R.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	R.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_AMBIENT, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 /datum/faction/replicators/proc/victory_animation(turf/T)
 	SSticker.explosion_in_progress = TRUE

@@ -64,13 +64,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		// audio
 		set_pref(/datum/pref/player/audio/lobby, S["snd_music_vol"])
 		set_pref(/datum/pref/player/audio/ambient, S["snd_ambient_vol"])
-		set_pref(/datum/pref/player/audio/effect_master, S["snd_effects_master_vol"])
-		set_pref(/datum/pref/player/audio/effect_announcement, S["snd_effects_voice_announcement_vol"])
-		set_pref(/datum/pref/player/audio/effect_misc, S["snd_effects_misc_vol"])
-		set_pref(/datum/pref/player/audio/effect_instrument, S["snd_effects_instrument_vol"])
 		set_pref(/datum/pref/player/audio/notifications, S["snd_notifications_vol"])
+		set_pref(/datum/pref/player/audio/admin_sounds, S["snd_admin_vol"])
 		set_pref(/datum/pref/player/audio/jukebox, S["snd_jukebox_vol"])
-		set_pref(/datum/pref/player/audio/admin_sound, S["snd_admin_vol"])
+
+		set_pref(/datum/pref/player/audio/effects, S["snd_effects_master_vol"])
+		var/effects_coeff = S["snd_effects_master_vol"] * 0.01
+		set_pref(/datum/pref/player/audio/voice_announcements, S["snd_effects_voice_announcement_vol"] * effects_coeff)
+		set_pref(/datum/pref/player/audio/instruments, S["snd_effects_instrument_vol"] * effects_coeff)
+		set_pref(/datum/pref/player/audio/spam_effects, S["snd_effects_misc_vol"]) // no coefficient as this still depends on the effects audio slider
 
 		// ui
 		set_pref(/datum/pref/player/display/auto_fit_viewport, S["auto_fit_viewport"])

@@ -10,22 +10,20 @@
 /datum/pref/player/audio/on_update(client/client, old_value)
 	client?.mob?.playsound_local(null, 'sound/weapons/saberon.ogg', volume_channel, vary = FALSE, channel = CHANNEL_VOLUMETEST)
 
-// lobby
 /datum/pref/player/audio/lobby
-	name = "Lobby"
-	description = "Громкость музыки в лобби"
+	name = "Музыка в лобби"
+	description = "Громкость музыки в лобби игры."
 	value = 100
 
-	volume_channel = VOL_MUSIC
+	volume_channel = VOL_LOBBY_MUSIC
 
 /datum/pref/player/audio/lobby/on_update(client/client, old_value)
-	client?.mob?.playsound_music_update_volume(VOL_MUSIC, CHANNEL_MUSIC)
+	client?.mob?.playsound_music_update_volume(VOL_LOBBY_MUSIC, CHANNEL_MUSIC)
 	..()
 
-// ambient
 /datum/pref/player/audio/ambient
-	name = "Ambient"
-	description = "Громкость эмбиент музыки и эффектов"
+	name = "Эмбиент"
+	description = "Громкость эффектов окружающей среды - звуки станции, музыка отделов."
 	value = 100
 
 	volume_channel = VOL_AMBIENT
@@ -35,69 +33,62 @@
 	client?.mob?.playsound_music_update_volume(VOL_AMBIENT, CHANNEL_AMBIENT_LOOP)
 	..()
 
-// effect_master
-/datum/pref/player/audio/effect_master // todo: this is too confusing
-	name = "Effects: Master"
-	description = "Общий модификатор громкости всех игровых эффектов"
+/datum/pref/player/audio/effects
+	name = "Эффекты"
+	description = "Громкость игровых эффектов"
 	value = 100
 
 	volume_channel = VOL_EFFECTS_MASTER
 
-// effect_announcement
-/datum/pref/player/audio/effect_announcement
-	name = "Effects: Announcement"
-	description = "Игровые аудио-аннонсы (относится к игровым эффектам)"
+/datum/pref/player/audio/spam_effects
+	name = "Модификатор спам-эффектов"
+	description = "Дополнительный модификатор громкости для некоторых, возможно надоедливых, игровых эффектов - теслы, эммитеры, хонк-и и некоторые другие."
 	value = 100
 
-	volume_channel = VOL_EFFECTS_VOICE_ANNOUNCEMENT
+	volume_channel = VOL_SPAM_EFFECTS
 
-// effect_misc
-/datum/pref/player/audio/effect_misc // todo rename spammy | annoying etc
-	name = "Effects: Miscellaneous"
-	description = "Теслы, эммитеры, и некоторые другие надоедливые спамящие эффекты (относится к игровым эффектам)"
+/datum/pref/player/audio/voice_announcements
+	name = "Голосовые аннонсы"
+	description = "Громкость озвученных игровых аудио-аннонсов, вроде оповещений с ЦК."
 	value = 100
 
-	volume_channel = VOL_EFFECTS_MISC
+	volume_channel = VOL_VOICE_ANNOUNCEMENTS
 
-// effect_instrument
-/datum/pref/player/audio/effect_instrument
-	name = "Effects: Instruments"
-	description = "Музыкальные инструменты (относится к игровым эффектам)"
+/datum/pref/player/audio/instruments
+	name = "Музыкальные инструменты"
+	description = "Громкость музыки, проигрываемой музыкальными инструментами - пианино, гитара и т.п. Джубокс не относится к этой категории."
 	value = 100
 
-	volume_channel = VOL_EFFECTS_INSTRUMENT
+	volume_channel = VOL_MUSIC_INSTRUMENTS
 
-// notifications
 /datum/pref/player/audio/notifications
-	name = "Notifications"
-	description = "OOC-уведомления (клонирование, личные сообщения админов и менторов)"
+	name = "Уведомления"
+	description = "Громкость различных важных уведомлений игрока - личные сообщения админов и менторов, запросы на воскрешение."
 	value = 100
 
 	volume_channel = VOL_NOTIFICATIONS
 
-// admin_sound
-/datum/pref/player/audio/admin_sound
-	name = "Admin sounds"
-	description = "Музыка и звуки, проигрываемые администраторами"
+/datum/pref/player/audio/admin_sounds
+	name = "Админские звуки"
+	description = "Музыка и звуки, проигрываемые администраторами."
 	value = 100
 
-	volume_channel = VOL_ADMIN
+	volume_channel = VOL_ADMIN_SOUNDS
 
-/datum/pref/player/audio/admin_sound/on_update(client/client, old_value)
-	client?.mob?.playsound_music_update_volume(VOL_ADMIN, CHANNEL_ADMIN)
+/datum/pref/player/audio/admin_sounds/on_update(client/client, old_value)
+	client?.mob?.playsound_music_update_volume(VOL_ADMIN_SOUNDS, CHANNEL_ADMIN)
 	..()
 
-// jukebox
 /datum/pref/player/audio/jukebox
 	name = "Jukebox"
-	description = "Громкость музыки из Jukebox автомата"
+	description = "Громкость музыкального автомата."
 	value = 100
 
 	volume_channel = VOL_JUKEBOX
 
-/datum/pref/player/audio/jukebox/on_update(client/client, old_value) // todo
+/datum/pref/player/audio/jukebox/on_update(client/client, old_value)
+	..()
 	var/datum/media_manager/media = client?.media
-	//..()
 	if(istype(media)) // will be updated in "/mob/living/Login()" if changed in lobby.
 		media.update_volume()
 

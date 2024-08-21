@@ -18,7 +18,7 @@
 		return
 	RAI.next_music_start = world.time + REPLICATOR_MUSIC_LENGTH
 
-	mob_viewer.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	mob_viewer.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_AMBIENT, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 
 /datum/status_effect/swarm_gift

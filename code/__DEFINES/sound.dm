@@ -1,17 +1,16 @@
 //volume channels for client's volume sliders.
-#define VOL_MUSIC (1<<0) // lobby.
-#define VOL_AMBIENT (1<<1) // ambient music/environment sounds.
 
-#define VOL_EFFECTS_MASTER (1<<2) // anything that doesn't go into sub categories (this acts as a master channel for all subs of this type).
-//effects sub categories (VOL_EFFECTS_MASTER included, so that we don't need to type it everytime when we want to use just a sub category).
-#define VOL_EFFECTS_VOICE_ANNOUNCEMENT (VOL_EFFECTS_MASTER | 1<<3) // voiced global announcements.
-#define VOL_EFFECTS_MISC (VOL_EFFECTS_MASTER | 1<<4) // for any sound that may annoy players (like tesla engine).
-#define VOL_EFFECTS_INSTRUMENT (VOL_EFFECTS_MASTER | 1<<5) // music instruments! actually this could be merged into spam category.
+// OOC audio
+#define VOL_LOBBY_MUSIC (1<<0) // music in lobby
+#define VOL_NOTIFICATIONS (1<<1) // mainly for ghosts, such as cloning ready, admin pm, etc
+#define VOL_ADMIN_SOUNDS (1<<2) // admin sounds or music (fun category)
 
-#define VOL_NOTIFICATIONS (1<<6) // mainly for ghosts, such as cloning ready, admin pm, etc.
-#define VOL_ADMIN (1<<7) // admin sounds or music (fun category).
-
-// jukebox not a VOL_MUSIC sub category because jukebox plays thru javascript, which is not boynd's sound datum.
+// IC audio
+#define VOL_AMBIENT (1<<3) // ambient music/environment sounds
+#define VOL_EFFECTS_MASTER (1<<4) // effects sounds // todo: rename to VOL_EFFECTS when you have time to push 500+ files change
+#define VOL_VOICE_ANNOUNCEMENTS (1<<5) // voiced global announcements
+#define VOL_MUSIC_INSTRUMENTS (1<<6) // music instruments!
+#define VOL_SPAM_EFFECTS (1<<7) // separated channel for some spamming and annoying sounds so player can setup them separately (ex. tesla engine).
 #define VOL_JUKEBOX (1<<8)
 
 // converts raw preference volume (1-100) to non linear coefficient (0-1) we apply for SANITIZE_VOL(playsound volume) 

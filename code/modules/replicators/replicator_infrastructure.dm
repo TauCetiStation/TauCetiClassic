@@ -782,7 +782,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
-				M.playsound_local(null, 'sound/hallucinations/demons_3.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+				M.playsound_local(null, 'sound/hallucinations/demons_3.ogg', VOL_VOICE_ANNOUNCEMENTS, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 		var/area/A = get_area(src)
 		FR.swarm_chat_message("The Swarm", "Bluespace Catapult construction finished in [A.name]. Escape through the dimensional rift before it closes!", 5)

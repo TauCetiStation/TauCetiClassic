@@ -199,7 +199,7 @@ var/global/list/announcement_sounds = list(
 			if((sound == "emer_shut_left" || sound == "crew_shut_left") && IS_ON_ESCAPE_SHUTTLE)
 				continue
 
-			M.playsound_local(null, announce_sound, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, null, channel = CHANNEL_ANNOUNCE, wait = TRUE)
+			M.playsound_local(null, announce_sound, VOL_VOICE_ANNOUNCEMENTS, volume, FALSE, null, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 
 	if(faction_filter) // antag announce, don't print it in machinery
 		return
