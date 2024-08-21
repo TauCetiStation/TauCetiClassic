@@ -77,10 +77,6 @@
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
 			return
 
-		else if(istype(I, /obj/item/weapon/gun/projectile/automatic/pistol/peashooter))
-			to_chat(user, "<span class='notice'>You can't reload a [src].</span>")
-			return
-
 	return ..()
 
 /obj/item/weapon/gun/projectile/can_fire()
@@ -95,6 +91,9 @@
 			update_icon()
 			return
 		return ..()
+	else if(istype(src, /obj/item/weapon/gun/projectile/automatic/pistol/peashooter))
+		to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [src].</span>")
+		return
 	else if(magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
