@@ -30,7 +30,7 @@
 /obj/item/ammo_casing/pea
 	name = "Гороховая гильза"
 	desc = "Гороховая оболочка для патрона."
-	caliber = "Pea?"
+	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/peabullet
 	m_amt = 300 
 
