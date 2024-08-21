@@ -72,7 +72,6 @@
 
 /obj/item/projectile/bullet/peabullet
 	name = "pea bullet"
-	icon_state = "peabullet"
 	damage = 5
 	agony = 5
 
