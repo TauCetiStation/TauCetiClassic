@@ -56,8 +56,8 @@
 
 		nukecode = bomb.r_code
 
-	to_chat(antag.current, "<span class='bold notice'>Код от бомбы: [nukecode]</span>")
-	antag.current.mind.store_memory("Код от бомбы: [nukecode]")
+	to_chat(antag.current, "<span class='bold notice'>РљРѕРґ РѕС‚ Р±РѕРјР±С‹: [nukecode]</span>")
+	antag.current.mind.store_memory("РљРѕРґ РѕС‚ Р±РѕРјР±С‹: [nukecode]")
 
 /datum/role/pirate
 	name = PIRATE

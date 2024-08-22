@@ -589,6 +589,14 @@
 	else if(istype(I, /obj/item/weapon/lighter))
 		burnpaper(I, user)
 
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed) \
+	|| istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed) \
+	|| istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed))
+		var/obj/item/clothing/mask/cigarette/Cig = new(get_turf(src))
+		I.reagents.trans_to(Cig, 15)
+		qdel(I)
+		qdel(src)
+
 	else
 		return ..()
 

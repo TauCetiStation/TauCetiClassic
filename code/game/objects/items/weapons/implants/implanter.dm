@@ -173,3 +173,13 @@
 	else
 		icon_state = "cimplanter0"
 	return
+
+/obj/item/weapon/implanter/willpower
+	name = "implanter (VN)"
+	desc = "Имплантер волевого нейроингибитора. Побуждает носителя к ВОЛЕВЫМ действиям. <b>ВНИМАНИЕ</b>: не вводить больше одного импланта!"
+	cases = list("имплантер (ВН)", "имплантера (ВН)", "имплантеру (ВН)", "имплантер (ВН)", "имплантером (ВН)", "имплантере (ВН)")
+
+/obj/item/weapon/implanter/willpower/atom_init()
+	imp = new /obj/item/weapon/implant/willpower(src)
+	. = ..()
+	update()
