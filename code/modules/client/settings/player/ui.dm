@@ -8,7 +8,7 @@
 	value = TRUE
 
 /datum/pref/player/ui/ui_style
-	name = "ui style"
+	name = "Стиль UI"
 	description = "Стиль интерфейса игры"
 	value_type = PREF_TYPE_SELECT
 	value = UI_STYLE_WHITE
@@ -25,8 +25,8 @@
 		screen.update_by_hud(client.mob.hud_used)
 
 /datum/pref/player/ui/ui_style_color
-	name = "ui style color"
-	description = "Цвет интерфейса игры (рекомендуется для белого стиля)"
+	name = "Цвет UI"
+	description = "Цвет интерфейса игры, опция лучше всего работает с белым стилем"
 	value_type = PREF_TYPE_HEX
 	value = "#ffffff"
 
@@ -40,7 +40,7 @@
 		screen.update_by_hud(client.mob.hud_used)
 
 /datum/pref/player/ui/ui_style_opacity
-	name = "ui style alpha"
+	name = "Прозрачность UI"
 	description = "Прозрачность интерфейса игры"
 	value_type = PREF_TYPE_RANGE
 	value = 0
@@ -56,50 +56,47 @@
 		screen.update_by_hud(client.mob.hud_used)
 
 /datum/pref/player/ui/outline
-	name = "outline"
-	description = "Подсветка предметов по наведению мышью"
+	name = "Подсветка предметов"
+	description = "По наведению мышью на предмет в игре, у него появится соответствующий контур."
 	value_type = PREF_TYPE_BOOLEAN
 	value = TRUE
 
 /datum/pref/player/ui/outline_color
-	name = "outline color"
-	description = "Цвет подсветки"
+	name = "Цвет подсветки"
 	value_type = PREF_TYPE_HEX
 	value = "#33ccff"
 
 /datum/pref/player/ui/tooltip
-	name = "tooltip"
-	description = "Всплывающая подсказка для предметов"
+	name = "Всплывающая подсказка"
+	description = "Подсказку в верхней части экрана, появляющаяся по наведению мышью на предмет в игре."
 	value_type = PREF_TYPE_BOOLEAN
 	value = TRUE
 
 /datum/pref/player/ui/tooltip/on_update(client/client, old_value)
 	client.tooltip.set_state(value)
 
+// i don't understand why we need it in preferences, pls don't add more fonts or styles preferences like this
 /datum/pref/player/ui/tooltip_font
-	name = "tooltip font"
-	description = "Шрифт всплывающей подсказки"
+	name = "Шрифт подсказки"
 	value_type = PREF_TYPE_SELECT
-	value = "Small Fonts" // define it
+	value = FONT_SMALL_FONTS
 	value_parameters = list(
-		"System", 
-		"Fixedsys", 
-		"Small Fonts", 
-		"Times New Roman", 
-		"Serif", 
-		"Verdana", 
-		"Custom Font"
+		FONT_SYSTEM,
+		FONT_FIXEDSYS,
+		FONT_SMALL_FONTS,
+		FONT_TIMES_NEW_ROMAN,
+		FONT_SERIF,
+		FONT_VERDANA
 	)
 
 /datum/pref/player/ui/tooltip_size
-	name = "tooltip font"
-	description = "Размер всплывающей подсказки"
+	name = "Размер подсказки"
 	value_type = PREF_TYPE_RANGE
 	value = 8
 	value_parameters = list(1, 15)
 
 /datum/pref/player/ui/tgui_lock
 	name = "TGUI только на основном мониторе"
-	description = "..."
+	description = "Блокирует перемещение окон tgui за пределы экрана"
 	value_type = PREF_TYPE_BOOLEAN
 	value = FALSE

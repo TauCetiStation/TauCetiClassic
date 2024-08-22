@@ -2,8 +2,8 @@
 	category = PREF_PLAYER_EFFECTS
 
 /datum/pref/player/effects/ambientocclusion
-	name = "Ambient Occlusion"
-	description = "Добавляет затенение для объектов в игре."
+	name = "Окружающее затенение"
+	description = "Добавляет затенение для объектов в игре, помогает придать объем изображению."
 	value_type = PREF_TYPE_BOOLEAN
 	value = TRUE
 
@@ -29,7 +29,7 @@
 
 /datum/pref/player/effects/glowlevel // aka light sources bloom
 	name = "Уровень свечения"
-	description = "Добавляет легкий блюр источникам свет. Подберите значение на свой вкус."
+	description = "Добавляет легкий блюр источникам света. Подберите значение на свой вкус."
 	value_type = PREF_TYPE_SELECT
 	value = GLOW_MED
 	value_parameters = list(
@@ -52,8 +52,8 @@
 	client?.update_plane_masters(/atom/movable/screen/plane_master/exposure)
 
 /datum/pref/player/effects/lampsglare
-	name = "Блик от ламп"
-	description = "..."
+	name = "Блик на источниках света"
+	description = "На случай, если вы фанат Джей Джей Абрамса."
 	value_type = PREF_TYPE_BOOLEAN
 	value = FALSE
 

@@ -207,14 +207,12 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 /datum/preferences/proc/set_pref(type, new_value)
 	var/datum/pref/player/write_pref = prefs_player[type]
-	world.log << "writting [write_pref.name] / [type]"
 
 	if(write_pref.update_value(new_value, parent))
 		mark_dirty()
 
 /datum/preferences/proc/set_keybind(type, new_value, index, altMod, ctrlMod, shiftMod)
 	var/datum/pref/keybinds/write_pref = prefs_keybinds[type]
-	world.log << "writting [write_pref.name] / [type]"
 
 	if(index)
 		var/sanitized_key = write_pref.satinize_key(new_value, altMod, ctrlMod, shiftMod)

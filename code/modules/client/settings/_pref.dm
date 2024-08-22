@@ -34,7 +34,6 @@
 // default sanitize procedures, override it if you need something more
 /datum/pref/proc/sanitize_value(new_value, client/client)
 
-	//world.log << "SANITIZE: [new_value], | type: [value_type] | params: [json_encode(value_parameters)] | default: [initial(value)] | current: [value]"
 	switch(value_type)
 		if(PREF_TYPE_TEXT)
 			var/max_length = (length(value_parameters) ? value_parameters[1] : MAX_PAPER_MESSAGE_LEN)
@@ -70,8 +69,6 @@
 /datum/pref/proc/update_value(new_value, client/client)
 	var/old_value = value
 	value = sanitize_value(new_value, client)
-
-	world.log << "[type] new value: [value]"
 
 	if(old_value != value) // && client
 		on_update(client, old_value)

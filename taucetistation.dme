@@ -50,6 +50,7 @@
 #include "code\__DEFINES\emote.dm"
 #include "code\__DEFINES\explosions.dm"
 #include "code\__DEFINES\flags.dm"
+#include "code\__DEFINES\fonts.dm"
 #include "code\__DEFINES\footsteps.dm"
 #include "code\__DEFINES\gamemodes.dm"
 #include "code\__DEFINES\genetics.dm"

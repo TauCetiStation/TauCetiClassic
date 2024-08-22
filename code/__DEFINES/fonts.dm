@@ -1,0 +1,6 @@
+#define FONT_SYSTEM "System"
+#define FONT_FIXEDSYS "Fixedsys"
+#define FONT_SMALL_FONTS "Small Fonts"
+#define FONT_TIMES_NEW_ROMAN "Times New Roman"
+#define FONT_SERIF "Serif"
+#define FONT_VERDANA "Verdana"

@@ -20,10 +20,8 @@
 	var/active_tab = PREF_PLAYER_DISPLAY
 
 /datum/client_settings/tgui_interact(mob/user, datum/tgui/ui)
-	world.log << "tgui_interact"
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		world.log << "open"
 		ui = new(user, src, "ClientSettings", "Client Settings")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -83,10 +81,6 @@
 					"supporters_only" = P.supporters_only,
 				))
 
-	world.log << "CS: tgui_data [length(data["settings"])]"
-	//world.log << json_encode(data)
-
-
 	return data
 
 /datum/client_settings/tgui_static_data(mob/user)
@@ -116,8 +110,6 @@
 		return
 
 	var/client/C = ui.user.client
-
-	world.log << "TGUI ACT [action]: [json_encode(params)]"
 
 	if(action == "set_tab")
 		active_tab = params["tab"]
@@ -153,7 +145,6 @@
 	else if(ispath(pref_type, /datum/pref/keybinds))
 		switch(action)
 			if("set_keybind_value")
-				world.log << "SKB [json_encode(params)]"
 				C.prefs.set_keybind(pref_type, params["key"], params["index"], params["altMod"], params["ctrlMod"], params["shiftMod"])
 			if("reset_value")
 				C.prefs.set_keybind(pref_type, initial(pref_type.value))

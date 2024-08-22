@@ -4,14 +4,14 @@
 /* ooc chat settings */
 
 /datum/pref/player/chat/show_ckey
-	name = "Показывать Ckey в LOOC/Ghost"
-	description = "Показать или скрыть ваш сикей (имя Byond-аккаунта), когда вы общаетесь в LOOC и Ghost чатах."
+	name = "Показывать кей в LOOC/Ghost"
+	description = "Показать или скрыть ваш никнейм (имя Byond-аккаунта), когда вы общаетесь в LOOC и Ghost чатах."
 	value_type = PREF_TYPE_BOOLEAN
 	value = TRUE
 
 /datum/pref/player/chat/ooccolor
-	name = "ooccolor"
-	description = "Цвет никнейма в OOC чате. Не даст поставить слишком темные и не читаемые цвета."
+	name = "Цвет имени OOC"
+	description = "Ваш персональный цвет никнейма в OOC чате. Не даст поставить слишком темные и не читаемые цвета."
 	value_type = PREF_TYPE_HEX
 	value = DEFAULT_OOC_COLOR
 
@@ -23,8 +23,8 @@
 		. = normalize_color(.) // so people don't abuse unreadable colors
 
 /datum/pref/player/chat/aooccolor
-	name = "aooccolor"
-	description = "Цвет теста в OOC чате. Не даст поставить слишком темные и не читаемые цвета."
+	name = "Цвет текста OOC"
+	description = "Ваш персональный цвет в OOC чате. Не даст поставить слишком темные и не читаемые цвета."
 	value_type = PREF_TYPE_HEX
 	value = "#b82e00"
 
@@ -37,13 +37,13 @@
 
 /datum/pref/player/chat/ooc
 	name = "OOC чат"
-	description = "Out of Character чат - общий серверный не игровой чат."
+	description = "Показывать или скрыть Out of Character чат - общий серверный не игровой чат."
 	value_type = PREF_TYPE_BOOLEAN
 	value = TRUE
 
 /datum/pref/player/chat/looc
 	name = "LOOC чат"
-	description = "Local OOC чат - как и общий серверный не игровой чат, но действует в пределах экрана."
+	description = "Показывать или скрыть Local OOC чат - как и общий серверный не игровой чат, но действует в пределах экрана."
 	value_type = PREF_TYPE_BOOLEAN
 	value = TRUE
 
@@ -61,7 +61,7 @@
 	value_type = PREF_TYPE_BOOLEAN
 	value = TRUE
 
-/datum/pref/player/chat/ghostsight //+
+/datum/pref/player/chat/ghostsight
 	name = "Призрачное зрение"
 	description = "Включить видимость всех эмоутов от других мобов и персонажей в игре, когда вы призрак. Если выключено - вы будете видеть только в пределах экрана."
 	value_type = PREF_TYPE_BOOLEAN
@@ -83,7 +83,6 @@
 
 /datum/pref/player/chat/attack_log
 	name = "Логи атак"
-	description = "."
 	value_type = PREF_TYPE_SELECT
 	value = ATTACK_LOG_BY_CLIENT
 	value_parameters = list(
@@ -95,8 +94,7 @@
 	admins_only = TRUE
 
 /datum/pref/player/chat/debug_log
-	name = "Дебаг-логи"
-	description = "."
+	name = "Дебаг логи"
 	value_type = PREF_TYPE_BOOLEAN
 	value = FALSE
 
@@ -104,7 +102,7 @@
 
 /datum/pref/player/chat/radio // how is it different with ghostradio???
 	name = "Радио чат"
-	description = "Toggle seeing radiochatter from radios and speakers"
+	description = "Переключает видимость радиосообщений с радио и спикеров."
 	value_type = PREF_TYPE_BOOLEAN
 	value = TRUE
 
