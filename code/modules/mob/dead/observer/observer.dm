@@ -4,7 +4,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	name = "ghost"
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "blank"
+	icon_state = "ghost"
+	alpha = 127
 	plane = GHOST_PLANE
 	stat = DEAD
 	density = FALSE
@@ -36,7 +37,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
-	var/image/body_icon
+	var/mutable_appearance/living_appearance
 
 /mob/dead/observer/atom_init()
 	invisibility = INVISIBILITY_OBSERVER
@@ -51,20 +52,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
 
-		if(ishuman(body))
-			copy_overlays(body)
-		else
-			icon = body.icon
-			icon_state = body.icon_state
-			copy_overlays(body)
-
-		cut_overlay(list(body.typing_indicator, body.stat_indicator))
-
-		// copy for future use
-		body_icon = image(icon, icon_state)
-		body_icon.copy_overlays(body)
-
-		alpha = 127
+		generate_living_appearance(body)
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
@@ -184,6 +172,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	ghost.can_reenter_corpse = can_reenter_corpse
 	ghost.timeofdeath = timeofdeath
 	ghost.key = key
+	ghost.update_skin()
 	ghost.playsound_stop(CHANNEL_AMBIENT)
 	ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)
 	if(client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
@@ -424,43 +413,42 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				to_chat(A, "This mob is not located in the game world.")
 
-/mob/dead/observer/verb/toggle_icon()
-	set category = "Ghost"
-	set name = "Toggle Ghost Icon"
-	set desc = "Choise ghost icon."
-
-	var/list/custom_sprites = get_accepted_custom_items_by_type(ckey, FLUFF_TYPE_GHOST)
-
-	if(!length(custom_sprites))
-		if(config.customitems_info_url)
-			to_chat(src, "<span class='notice'>You don't have any custom ghost sprites. <a href='[config.customitems_info_url]'>Read more about Fluff</a> and how to get them.</span>")
+/mob/dead/observer/proc/generate_living_appearance(mob/body)
+	if(ismob(body))
+		if(ishuman(body))
+			living_appearance = mutable_appearance(icon, "blank") // humans consist of overlays
 		else
-			to_chat(src, "<span class='notice'>You don't have any custom ghost sprites.</span>")
+			living_appearance = mutable_appearance(body.icon, body.icon_state)
+		living_appearance.copy_overlays(body)
+		living_appearance.cut_overlay(list(body.typing_indicator, body.stat_indicator))
+	else
+		living_appearance = client.prefs.generate_preview_icon()
 
-	if(body_icon)
-		custom_sprites += "--body--"
-
-	custom_sprites += "--ghost--"
-
-	var/select = input("Select icon.", "Select") as null|anything in custom_sprites
-
-	if(!select)
-		return
-
+/mob/dead/observer/proc/update_skin()
 	cut_overlays()
 
-	if(select == "--body--")
-		icon = body_icon.icon
-		icon_state = body_icon.icon_state
-		copy_overlays(body_icon)
-	else if (select == "--ghost--")
-		icon = initial(icon)
-		icon_state = "ghost"
-	else
-		var/datum/custom_item/custom = select
-		icon = custom.icon
-		icon_state = custom.icon_state
+	var/type = client?.prefs.get_pref(/datum/pref/player/game/ghost_skin) || GHOST_SKIN_GHOST
 
+	if(type == GHOST_SKIN_FLUFF)
+		// todo: not sure if anyone has more that one ghost fluff, probably we need to allow to choice it somewhere 
+		var/list/ghost_fluff_list = get_accepted_custom_items_by_type(ckey, FLUFF_TYPE_GHOST)
+		if(length(ghost_fluff_list))
+			var/datum/custom_item/custom = ghost_fluff_list[1]
+			icon = custom.icon
+			icon_state = custom.icon_state
+			return
+
+	else if(type == GHOST_SKIN_CHARACTER)
+		if(!living_appearance)
+			generate_living_appearance()
+		icon = living_appearance.icon
+		icon_state = living_appearance.icon_state
+		copy_overlays(living_appearance)
+		return
+
+	// GHOST_SKIN_GHOST and fallbacks
+	icon = initial(icon)
+	icon_state = "ghost"
 
 /*
 /mob/dead/observer/verb/boo()

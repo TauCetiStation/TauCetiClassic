@@ -237,7 +237,9 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
-	update_preview_icon()
+
+	// generates and updates preview icon, with tgui update should be replaced for map_view element
+	parent.show_character_previews(generate_preview_icon())
 
 	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>"
 	dat += "<body link='#045EBE' vlink='045EBE' alink='045EBE'><center>"

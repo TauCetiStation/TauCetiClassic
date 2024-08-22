@@ -83,6 +83,11 @@
 //#define ATTACK_LOG_BOTH_CLIENT "both_client" // todo
 #define ATTACK_LOG_ALL "all"
 
+///datum/pref/player/game/ghost_skin
+#define GHOST_SKIN_CHARACTER "character"
+#define GHOST_SKIN_GHOST "ghost"
+#define GHOST_SKIN_FLUFF "fluff"
+
 //used for alternate_option
 #define GET_RANDOM_JOB 0
 #define BE_ASSISTANT 1

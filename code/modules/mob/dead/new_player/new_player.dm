@@ -214,13 +214,6 @@
 	observer.loc = O.loc
 	observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
-	// client.prefs.update_preview_icon()
-	// observer.icon = client.prefs.preview_icon
-	observer.icon = 'icons/mob/mob.dmi'
-	observer.icon_state = "ghost"
-
-	observer.alpha = 127
-
 	if(client.prefs.be_random_name)
 		client.prefs.real_name = random_name(client.prefs.gender)
 	observer.real_name = client.prefs.real_name
@@ -228,6 +221,7 @@
 	if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
 		observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
 	observer.key = key
+	observer.update_skin()
 	qdel(src)
 
 	return observer

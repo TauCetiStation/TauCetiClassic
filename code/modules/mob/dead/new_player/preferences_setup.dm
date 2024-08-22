@@ -185,8 +185,7 @@
 	g_skin = green
 	b_skin = blue
 
-
-/datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
+/datum/preferences/proc/generate_preview_icon()
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
 
@@ -202,10 +201,10 @@
 
 	if(previewJob)
 		if(istype(previewJob, /datum/job/ai))
-			parent.show_character_previews(image('icons/mob/AI.dmi', "ai", dir = SOUTH))
+			. = mutable_appearance('icons/mob/AI.dmi', "ai", dir = SOUTH)
 			return
 		if(istype(previewJob, /datum/job/cyborg))
-			parent.show_character_previews(image('icons/mob/robots.dmi', "robot", dir = SOUTH))
+			. = mutable_appearance('icons/mob/robots.dmi', "robot", dir = SOUTH)
 			return
 
 	// Set up the dummy for its photoshoot
@@ -222,5 +221,5 @@
 		S.after_job_equip(mannequin, previewJob, TRUE)
 
 	COMPILE_OVERLAYS(mannequin)
-	parent.show_character_previews(new /mutable_appearance(mannequin))
+	. = new /mutable_appearance(mannequin)
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
