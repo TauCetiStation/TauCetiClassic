@@ -589,6 +589,14 @@
 	else if(istype(I, /obj/item/weapon/lighter))
 		burnpaper(I, user)
 
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed) \
+	|| istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed) \
+	|| istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed))
+		var/obj/item/clothing/mask/cigarette/Cig = new(get_turf(src))
+		I.reagents.trans_to(Cig, 15)
+		qdel(I)
+		qdel(src)
+
 	else
 		return ..()
 
@@ -1069,3 +1077,64 @@ var/global/list/contributor_names
 	info += "Вновь переговоры могут быть начаты после знака отменительного (• • — •). <br>"
 	info += "Знак ожидания (• — • • •) делается в тех случаях, когда внезапно требуется на время прервать передачу или прием. <br>"
 	info += "Знак окончания (• — • — •) делается при окончании передачи, если не требуется ответа. <br>"
+
+/obj/item/weapon/paper/old_station_note_one
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_one/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_one/proc/write_info()
+	info = ""
+	info += "20.08.2221. Из-за аномалии, станция переместилась на неизвестные координаты. Связаться с ЦК невозможно.<br>"
+	info += "21.08.2221. Экипаж продолжает работать в штатном режиме. Учёные начинают проводить эксперименты над образцами ксеноморфов, которые были обнаружены на планете Лутиэн.<br>"
+	info += "25.08.2221. В инженерный отсек врезался небольшой метеор. Инженеры начали ремонт отсека.<br>"
+	info += "26.08.2221. Ремонт завершён.<br>"
+	info += "3.09.2221. На станцию попытался проникнуть разведчик Синдиката. Турели нейтрализовали врага, его снаряжение было передано научному персоналу.<br>"
+	info += "<i>Похоже, это был не самый ценный кадр, раз его послали почти без оружия и в древнем как мир скафандре.</i><br>"
+
+/obj/item/weapon/paper/old_station_note_two
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_two/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_two/proc/write_info()
+	info = ""
+	info += "10.09.2221. На станцию напал отряд подготовленных оперативников Синдиката. Атака была отбита.<br>"
+	info += "<i>Если на эту проклятую станцию попытались напасть, значит, о ней кто-то да знает. Эвакуация - это просто вопрос времени.</i> <br>"
+	info += "13.09.2221. Экипаж начинает замышлять что-то неладное. Некоторые считают, что всё, что произошло на этой станции за последние две недели - один большой эксперимент НТ.<br>"
+	info += "15.09.2221. Очередной метеор повредил обшивку в научном отделе.<br>"
+
+/obj/item/weapon/paper/old_station_note_three
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_three/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_three/proc/write_info()
+	info = ""
+	info += "16.09.2221. По окончанию ремонта обнаружилась пропажа нескольких образцов ксенофауны.<br>"
+	info += "17.09.2221. В дормиториях был найден д-р █████ со вспоротым брюхом, жуткое зрелище.<br>"
+	info += "20.09.2221. Эти ксенотвари обосновались в телекомах и успели схватить нескольких уч#<br>"
+
+/obj/item/weapon/paper/old_station_note_syndispacesuit
+	name = "Object #8123"
+	info = "Устаревшая модель боевого скафандра, который использовали \"Мародёры Горлекса\" в 2190-тых годах."
+
+/obj/item/weapon/paper/old_station_note_medhud
+	name = "Object #8124"
+	info = "Продвинутый медицинский интерфейс с встроенным прибором ночного видения."
+
+/obj/item/weapon/paper/old_station_note_egun
+	name = "Object #2921"
+	info = "Энергопистолет второго поколения. В нём установлена более эффективная система охлаждения и продвинутая батарея."

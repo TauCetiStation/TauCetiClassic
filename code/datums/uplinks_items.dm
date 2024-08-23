@@ -787,7 +787,7 @@
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, \
 			a MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/surgery
-	cost = 4
+	cost = 2
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/c4bag

@@ -253,7 +253,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/bridge
 	name = "Bridge"
-	cases = list("мостик", "мостика", "мостику", "мостик", "мостиком", "мостик")
+	cases = list("мостик", "мостика", "мостику", "мостик", "мостиком", "мостике")
 	icon_state = "bridge"
 	ambience = list('sound/ambience/bridge_1.ogg')
 
@@ -614,7 +614,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/medical/cryo
 	name = "Cryogenics"
-	cases = list("криогенные камеры", "криогенных камерах", "криогенным камерам", "криогенные камеры", "криогенными камерами", "криогенных камерах")
+	cases = list("криогенные камеры", "криогенных камер", "криогенным камерам", "криогенные камеры", "криогенными камерами", "криогенных камерах")
 	icon_state = "cryo"
 
 /area/station/medical/genetics

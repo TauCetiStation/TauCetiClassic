@@ -111,16 +111,16 @@
 	feedback_add_details("changeling_powers","CS")
 	return TRUE
 
-/obj/effect/proc_holder/changeling/sting/LSD
+/obj/effect/proc_holder/changeling/sting/hallucination
 	name = "Hallucination Sting"
 	desc = "Causes terror in the target."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
-	sting_icon = "sting_lsd"
-	button_icon_state = "sting_lsd"
+	sting_icon = "sting_hallucination"
+	button_icon_state = "sting_hallucination"
 	chemical_cost = 15
 	genomecost = 1
 
-/obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
+/obj/effect/proc_holder/changeling/sting/hallucination/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
 		return FALSE
 	spawn(rand(300,600))
