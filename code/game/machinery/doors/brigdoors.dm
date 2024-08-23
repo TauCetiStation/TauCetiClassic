@@ -345,7 +345,7 @@
 			var/new_time = input(usr, "Введите время заключения (в минутах):", "Ввод времени") as num
 			new_time = clamp(new_time, 0, 60)
 
-			timeset(text2num(new_time) * 60)
+			timeset(new_time * 60)
 
 		if(href_list["fc"])
 			for(var/obj/machinery/flasher/F in targets)
