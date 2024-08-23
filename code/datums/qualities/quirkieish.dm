@@ -438,7 +438,6 @@
 
 /datum/quality/quirkieish/thief/add_effect(mob/living/carbon/human/H, latespawn)
 	if(jobban_isbanned(H, "Syndicate") || !(ROLE_TRAITOR in H.client.prefs.be_role))
-		to_chat(H, "<span class='notice'>Тебе запретили злодействовать.</span>")
 		return
 
 	create_and_setup_role(/datum/role/thief, H)
