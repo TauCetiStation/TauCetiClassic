@@ -11,9 +11,7 @@
 /area/space_structures/delivery_shuttle)
 "c" = (
 /obj/structure/shuttle/window,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
-	},
+/turf/simulated/floor/plating,
 /area/space_structures/delivery_shuttle)
 "d" = (
 /turf/environment/space,
@@ -42,8 +40,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/delivery_shuttle)
 "g" = (
@@ -56,8 +54,8 @@
 /obj/structure/stool/bed/chair/schair{
 	dir = 1
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/delivery_shuttle)
 "i" = (
@@ -74,8 +72,11 @@
 /area/space_structures/delivery_shuttle)
 "k" = (
 /obj/structure/closet/crate/freezer/rations,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/effect/decal/turf_decal/blue{
+	icon_state = "box_white"
+	},
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/delivery_shuttle)
 "l" = (
@@ -84,8 +85,11 @@
 /obj/item/pizzabox/meat,
 /obj/item/pizzabox/mushroom,
 /obj/item/pizzabox/vegetable,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/effect/decal/turf_decal/blue{
+	icon_state = "box_white"
+	},
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/delivery_shuttle)
 "m" = (
@@ -94,29 +98,41 @@
 /obj/item/weapon/reagent_containers/food/snacks/sushi,
 /obj/item/weapon/reagent_containers/food/snacks/sashimi,
 /obj/item/weapon/reagent_containers/food/snacks/sashimi,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/effect/decal/turf_decal/blue{
+	icon_state = "box_white"
+	},
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/delivery_shuttle)
 "n" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/delivery_shuttle)
 "o" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/delivery_shuttle)
 "p" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/delivery_shuttle)
 "q" = (
@@ -129,10 +145,11 @@
 "r" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "pizza";
-	name = "Cargo Compartment Shutters"
+	name = "Cargo Compartment Shutters";
+	dir = 4
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor3"
+/turf/simulated/floor{
+	icon_state = "darkgreenfull"
 	},
 /area/space_structures/delivery_shuttle)
 "s" = (

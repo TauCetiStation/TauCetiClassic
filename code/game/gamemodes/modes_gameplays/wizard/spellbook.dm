@@ -320,14 +320,12 @@
 		dat += "[surplus] осталось.<br>"
 	return dat
 
-/* Commented because admins ban everyone who uses this staff... Somebody should rebalance this thing
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/weapon/gun/magic/change
 	log_name = "ST"
 	cost = 4
-*/
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Посох анимации"
