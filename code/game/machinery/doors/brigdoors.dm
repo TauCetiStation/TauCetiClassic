@@ -343,6 +343,7 @@
 
 		if(href_list["set_time"])  // set timer (in minutes)
 			var/new_time = input(usr, "Введите время заключения (в минутах):", "Ввод времени") as num
+			new_time = clamp(new_time, 0, 60)
 
 			timeset(text2num(new_time) * 60)
 
