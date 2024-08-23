@@ -67,6 +67,7 @@
 #define REPLICATOR "Replicator"
 #define PIRATE "Pirate"
 #define PRISONER "Prisoner"
+#define THIEF "Thief"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
