@@ -70,17 +70,17 @@
 
 /// Ensures that the lightness value of a color must be greater than the provided minimum.
 /proc/color_lightness_max(color, min_lightness)
-	var/list/rgb = rgb2num(color)
-	var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
+	var/list/hsl = rgb2num(color, COLORSPACE_HSL)
 	hsl[3] = max(hsl[3], min_lightness)
-	var/list/transformed_rgb = hsl2rgb(hsl[1], hsl[2], hsl[3])
-	return rgb(transformed_rgb[1], transformed_rgb[2], transformed_rgb[3])
+	return rgb(hsl[1], hsl[2], hsl[3], space=COLORSPACE_HSL)
 
 /// Ensures that the lightness value of a color must be less than the provided maximum.
 /proc/color_lightness_min(color, max_lightness)
-	var/list/rgb = rgb2num(color)
-	var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
-	// Ensure high lightness (Minimum of 90%)
+	var/list/hsl = rgb2num(color, COLORSPACE_HSL)
 	hsl[3] = min(hsl[3], max_lightness)
-	var/list/transformed_rgb = hsl2rgb(hsl[1], hsl[2], hsl[3])
-	return rgb(transformed_rgb[1], transformed_rgb[2], transformed_rgb[3])
+	return rgb(hsl[1], hsl[2], hsl[3], space=COLORSPACE_HSL)
+
+/proc/color_lightness_clamp(color, min_lightness, max_lightness)
+	var/list/hsl = rgb2num(color, COLORSPACE_HSL)
+	hsl[3] = clamp(hsl[3], min_lightness, max_lightness)
+	return rgb(hsl[1], hsl[2], hsl[3], space=COLORSPACE_HSL)

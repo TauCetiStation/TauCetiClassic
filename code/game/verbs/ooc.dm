@@ -1,5 +1,4 @@
 
-var/global/normal_ooc_colour = DEFAULT_OOC_COLOR
 var/global/bridge_ooc_colour = "#7b804f"
 
 /client/verb/ooc(msg as text)
@@ -53,15 +52,15 @@ var/global/bridge_ooc_colour = "#7b804f"
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	var/display_colour = normal_ooc_colour
+	var/display_colour = null
 	var/ooc_name = key
 
 	if(holder && !holder.fakekey)
-		display_colour = "#704f80"
+		display_colour = OOC_COLOR_EVENTADMIN // we don't use it anymore?
 		if(holder.rights & R_DEBUG && !(holder.rights & R_ADMIN))
-			display_colour = "#1b521f"	//dark green
+			display_colour = OOC_COLOR_CODEADMIN
 		else if(holder.rights & R_ADMIN)
-			display_colour = (config.allow_admin_ooccolor && prefs.get_pref(/datum/pref/player/chat/aooccolor)) || "#b82e00"
+			display_colour = (config.allow_admin_ooccolor && prefs.get_pref(/datum/pref/player/chat/aooccolor)) || OOC_COLOR_ADMIN
 
 	send2ooc(msg, ooc_name, display_colour, src)
 
@@ -96,14 +95,6 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 		if(C.prefs.get_pref(/datum/pref/player/chat/ooc))
 			to_chat(C, "[msg_start]:</span> [display_name?"<EM>[display_name]:</EM> ":""][msg_end]")
-
-/client/proc/set_global_ooc(newColor as color)
-	set name = "Set Global OOC Colour"
-	set desc = "Set to yellow for eye burning goodness. #000000 reset colour."
-	set category = "OOC"
-	if(!holder)
-		return
-	normal_ooc_colour = newColor != "#000000" ? newColor : null
 
 /client/verb/looc(msg as text)
 	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite

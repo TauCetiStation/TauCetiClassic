@@ -201,10 +201,10 @@
 
 	if(previewJob)
 		if(istype(previewJob, /datum/job/ai))
-			. = mutable_appearance('icons/mob/AI.dmi', "ai", dir = SOUTH)
+			. = mutable_appearance('icons/mob/AI.dmi', "ai")
 			return
 		if(istype(previewJob, /datum/job/cyborg))
-			. = mutable_appearance('icons/mob/robots.dmi', "robot", dir = SOUTH)
+			. = mutable_appearance('icons/mob/robots.dmi', "robot")
 			return
 
 	// Set up the dummy for its photoshoot

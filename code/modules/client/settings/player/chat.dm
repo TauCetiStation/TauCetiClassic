@@ -11,29 +11,29 @@
 
 /datum/pref/player/chat/ooccolor
 	name = "Цвет имени OOC"
-	description = "Ваш персональный цвет никнейма в OOC чате. Не даст поставить слишком темные и не читаемые цвета."
+	description = "Ваш персональный цвет никнейма в OOC чате. Не даст поставить слишком темные или светлые и не читаемые цвета."
 	value_type = PREF_TYPE_HEX
-	value = DEFAULT_OOC_COLOR
+	value = OOC_COLOR_SUPPORTER
 
 	supporters_only = TRUE
 
 /datum/pref/player/chat/ooccolor/sanitize_value(new_value)
 	. = ..()
 	if(.)
-		. = normalize_color(.) // so people don't abuse unreadable colors
+		. = color_lightness_clamp(., 20, 80) // so people don't abuse unreadable colors
 
 /datum/pref/player/chat/aooccolor
 	name = "Цвет текста OOC"
-	description = "Ваш персональный цвет в OOC чате. Не даст поставить слишком темные и не читаемые цвета."
+	description = "Ваш персональный цвет в OOC чате. Не даст поставить слишком темные или светлые и не читаемые цвета."
 	value_type = PREF_TYPE_HEX
-	value = "#b82e00"
+	value = OOC_COLOR_ADMIN
 
 	admins_only = TRUE
 
 /datum/pref/player/chat/aooccolor/sanitize_value(new_value)
 	. = ..()
 	if(.)
-		. = normalize_color(.) // so people don't abuse unreadable colors
+		. = color_lightness_clamp(., 20, 80) // so people don't abuse unreadable colors
 
 /datum/pref/player/chat/ooc
 	name = "OOC чат"

@@ -112,7 +112,6 @@ var/global/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_random_ai_law,
 //	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
-	/client/proc/set_global_ooc,
 	/client/proc/editappear,
 	/client/proc/roll_dices,
 	/client/proc/epileptic_anomaly,
@@ -226,7 +225,6 @@ var/global/list/admin_verbs_event = list(
 
 //verbs which can be hidden - needs work
 var/global/list/admin_verbs_hideable = list(
-	/client/proc/set_global_ooc,
 	/datum/admins/proc/library_recycle_bin,
 	/client/proc/deadmin_self,
 //	/client/proc/deadchat,

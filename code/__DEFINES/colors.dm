@@ -210,3 +210,14 @@
                             0,    0,    0,     1, \
                             0,    0,    0,     0)
 
+/**
+* CHAT COLORS
+*
+* These are used in both dark and light chat themes and override default (css) colors,
+* so should be accessible with both background colors
+* (#ffffff for light, #131313 for dark, test it with any color contrast checker)
+*/
+#define OOC_COLOR_SUPPORTER "#cca000" // we use it just for nickname
+#define OOC_COLOR_EVENTADMIN "#ae566d"
+#define OOC_COLOR_CODEADMIN "#257227"
+#define OOC_COLOR_ADMIN "#b82b00"
