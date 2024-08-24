@@ -166,6 +166,21 @@
 	icon_state = "metal_cross"
 
 //Medals
+/datum/medal
+	// string, anything
+	var/key
+	// string, anything
+	var/target_name
+	// string, anything
+	var/medal_name
+	//string, anything
+	var/reason
+	//object, icons
+	var/icon //icon of medal
+
+/datum/medal/proc/to_stat()
+	SSStatistics.add_medal(key, target_name, medal_name, reason)
+
 /obj/item/clothing/accessory/medal
 	name = "bronze medal"
 	desc = "A bronze medal."

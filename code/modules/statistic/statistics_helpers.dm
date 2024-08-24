@@ -21,7 +21,6 @@
 	stat.target_name = name
 	stat.medal_name = medal_name
 	stat.reason = reason
-	stat.icon = icon(icon_path, icon_state)
 	medals += stat
 
 /datum/stat_collector/proc/add_death_stat(mob/living/H)
