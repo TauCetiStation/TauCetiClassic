@@ -248,5 +248,4 @@
 
 	if(href_list["removeuplink"])
 		take_uplink(M.current)
-		var/datum/role/role = parent
 		to_chat(M.current, "<span class='warning'>You have been stripped of your uplink.</span>")
