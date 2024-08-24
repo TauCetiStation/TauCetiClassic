@@ -1,0 +1,9 @@
+// For those cases when we need to create an ATOM at the point of impact
+
+/obj/item/projectile/atom_create
+var/atom/effect = null //effect we want to spawn
+
+/obj/item/projectile/atom_create/Bump(atom/A, forced)
+	. = ..()
+	if(A == original)
+		bumped = TRUE

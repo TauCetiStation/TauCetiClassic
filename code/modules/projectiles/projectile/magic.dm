@@ -266,3 +266,13 @@
 	var/throwdir = get_dir(firer,target)
 	T.throw_at(get_edge_target_turf(target, throwdir),10,10)
 	return 1
+
+/obj/item/projectile/magic/wand/
+	name = "bolt of nothing"
+	icon_state = "ice_1"
+	light_color = "#00bfff"
+
+/obj/item/projectile/atom_create/magic
+	name = "bolt of nothing creation"
+	icon_state = "ice_1"
+	light_color = "#00bfff"

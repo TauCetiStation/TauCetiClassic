@@ -75,3 +75,38 @@
 /obj/item/weapon/gun/magic/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, "<span class='warning'>The [name] whizzles quietly.</span>")
 	return
+
+/obj/item/weapon/gun/magic/wand
+	name = "wand of nothing"
+	desc = "This wand is boring to watch because... it cant do anything."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "wand_null"
+	item_state = "wand_null"
+	fire_sound = 'sound/weapons/guns/gunpulse_emitter.ogg'
+	flags =  CONDUCT
+	slot_flags = SLOT_FLAGS_BACK
+	w_class = SIZE_NORMAL
+	max_charges = 1  /*Weaker that staff, but cheaper*/
+	charges = 0
+	recharge_rate = 1 /* Recharge spells = origin spell cooldown*/
+	charge_tick = 0
+	can_charge = 1
+	ammo_type = /obj/item/ammo_casing/magic
+	global_access = TRUE /*Yes, it is intentional - Ro2tCrab*/
+	origin_tech = null
+	item_action_types = null
+	clumsy_check = 0
+	can_suicide_with = FALSE
+	can_be_holstered = FALSE
+
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+
+/obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user)
+	user.visible_message("<span class='danger'> [user] zaps self with [src].</span>")
+	playsound(user, fire_sound, VOL_EFFECTS_MASTER, TRUE)
+
+/obj/item/weapon/gun/magic/wand/attack(mob/living/M, mob/living/user, def_zone)
+	if(M == user)
+		zap_self()
+	..()
