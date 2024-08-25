@@ -113,8 +113,8 @@
 		/datum/skill/firearms = SKILL_LEVEL_NOVICE
 	)
 
-/datum/skillset/assistant/reporter
-	name = "Reporter"
+/datum/skillset/assistant/journalist
+	name = "Journalist"
 	initial_skills = list(
 		/datum/skill/command = SKILL_LEVEL_NOVICE
 	)
