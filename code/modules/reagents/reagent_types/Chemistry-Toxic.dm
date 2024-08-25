@@ -723,7 +723,7 @@
 		return
 	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
-	randomize_human(H)
+	H.randomize_appearance()
 
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
