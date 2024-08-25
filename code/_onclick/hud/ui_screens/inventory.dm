@@ -114,7 +114,7 @@
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
-	copy_flags = NONE
+	copy_flags = HUD_COPY_ALPHA
 
 /atom/movable/screen/inventory/craft/action()
 	if(check_state())

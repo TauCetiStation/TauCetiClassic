@@ -9,12 +9,20 @@
 	including inventories and item quick actions.
 */
 
-// The default UI style is the first one in the list
+// The default UI styles client can choice with color/alpha customization
+// some mob types use own style and we don't override it
 var/global/list/available_ui_styles = list(
 	UI_STYLE_WHITE = 'icons/hud/screen1_White.dmi',
 	UI_STYLE_MIDNIGHT = 'icons/hud/screen1_Midnight.dmi',
 	UI_STYLE_OLD = 'icons/hud/screen1_old.dmi',
-	UI_STYLE_ORANGE = 'icons/hud/screen1_Orange.dmi'
+	UI_STYLE_ORANGE = 'icons/hud/screen1_Orange.dmi',
+	)
+
+var/global/list/customizable_ui_styles = list(
+	'icons/hud/screen1_White.dmi', 
+	'icons/hud/screen1_Midnight.dmi', 
+	'icons/hud/screen1_old.dmi',
+	'icons/hud/screen1_Orange.dmi',
 	)
 
 /datum/hud
@@ -182,6 +190,7 @@ var/global/list/available_ui_styles = list(
 /mob/proc/refresh_hud()
 	var/list/screens = hud_used.main + hud_used.adding + hud_used.hotkeybuttons
 	for(var/atom/movable/screen/complex/complex as anything in hud_used.complex)
+		screens += complex
 		screens += complex.screens
 
 	for(var/atom/movable/screen/screen as anything in screens)

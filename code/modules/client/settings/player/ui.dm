@@ -3,42 +3,49 @@
 
 /datum/pref/player/ui/runechat
 	name = "Runechat"
-	description = "Чат над головой персонажей"
+	description = "Чат над головой персонажей."
 	value_type = PREF_TYPE_BOOLEAN
 	value = TRUE
 
 /datum/pref/player/ui/ui_style
 	name = "Стиль UI"
-	description = "Стиль интерфейса игры"
+	description = "Стиль интерфейса игры."
 	value_type = PREF_TYPE_SELECT
 	value = UI_STYLE_WHITE
 	value_parameters = list(UI_STYLE_WHITE, UI_STYLE_MIDNIGHT, UI_STYLE_OLD, UI_STYLE_ORANGE)
 
 /datum/pref/player/ui/ui_style/on_update(client/client, old_value)
-	if(client?.mob?.hud_used)
+	// check if current hud customizable and we can change it
+	// borgs, aliens, etc. use their own hud we should not touch
+	// todo: we can look for updates by copy_flags
+	var/datum/hud/current_style = client?.mob?.hud_used?.ui_style
+	if(current_style in global.customizable_ui_styles)
 		client.mob.hud_used.ui_style = global.available_ui_styles[value]
 		client.mob.refresh_hud()
 
 /datum/pref/player/ui/ui_style_color
 	name = "Цвет UI"
-	description = "Цвет интерфейса игры, опция лучше всего работает с белым стилем"
+	description = "Цвет интерфейса игры, опция лучше всего работает с белым стилем."
 	value_type = PREF_TYPE_HEX
 	value = "#ffffff"
 
 /datum/pref/player/ui/ui_style_color/on_update(client/client, old_value)
-	if(client?.mob?.hud_used)
+	// same, don't color special huds
+	var/datum/hud/current_style = client?.mob?.hud_used?.ui_style
+	if(current_style in global.customizable_ui_styles)
 		client.mob.hud_used.ui_color = value
 		client.mob.refresh_hud()
 
 /datum/pref/player/ui/ui_style_opacity
 	name = "Прозрачность UI"
-	description = "Прозрачность интерфейса игры"
+	description = "Прозрачность интерфейса игры."
 	value_type = PREF_TYPE_RANGE
 	value = 0
 	value_parameters = list(0, 100)
 
 /datum/pref/player/ui/ui_style_opacity/on_update(client/client, old_value)
-	if(client?.mob?.hud_used)
+	var/datum/hud/current_style = client?.mob?.hud_used?.ui_style
+	if(current_style in global.customizable_ui_styles)
 		client.mob.hud_used.ui_alpha = 255 - floor(255*value/100)
 		client.mob.refresh_hud()
 
@@ -84,6 +91,6 @@
 
 /datum/pref/player/ui/tgui_lock
 	name = "TGUI только на основном мониторе"
-	description = "Блокирует перемещение окон tgui за пределы экрана"
+	description = "Блокирует перемещение окон tgui за пределы экрана."
 	value_type = PREF_TYPE_BOOLEAN
 	value = FALSE

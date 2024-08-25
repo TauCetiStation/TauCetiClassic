@@ -70,7 +70,7 @@
 	screen_loc = ui_acti
 
 	hud_slot = HUD_SLOT_MAIN
-	copy_flags = HUD_COPY_ICON
+	copy_flags = HUD_COPY_ICON | HUD_COPY_ALPHA
 
 	types = list(
 		/atom/movable/screen/intent/help, /atom/movable/screen/intent/push,

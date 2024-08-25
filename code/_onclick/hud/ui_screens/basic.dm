@@ -395,7 +395,7 @@
 	screen_loc = ui_holomap
 	plane = HUD_PLANE
 	layer = HUD_LAYER
-	copy_flags = HUD_COPY_ALPHA || HUD_COPY_COLOR
+	copy_flags = HUD_COPY_ALPHA | HUD_COPY_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/holomap/add_to_hud(datum/hud/hud)

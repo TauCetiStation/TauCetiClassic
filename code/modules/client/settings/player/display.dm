@@ -56,12 +56,12 @@
 
 Nearest Neighbor - даёт наибольшую четкость изображения, но при не крастных 100 масштабированиях (в т.ч. автомасштабе) может вызывать небольшие артефакты.
 
-Bilinear - работает одинаково хорошо на любом масштабе, но делает изображение менее четким."}
+Point Sampling - работает одинаково хорошо на любом масштабе, но делает изображение менее четким."}
 	value_type = PREF_TYPE_SELECT
 	value = SCALING_METHOD_DISTORT
 	value_parameters = list(
 		SCALING_METHOD_DISTORT = "Nearest Neighbor",
-		SCALING_METHOD_NORMAL = "Bilinear"
+		SCALING_METHOD_NORMAL = "Point Sampling"
 	)
 
 /datum/pref/player/display/zoom_mode/on_update(client/client, old_value)
