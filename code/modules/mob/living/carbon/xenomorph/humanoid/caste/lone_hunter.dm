@@ -58,7 +58,7 @@
 	..()
 	if(estage == 1 && world.time > next_observation)
 		for(var/mob/living/carbon/human/H in oview(6, src))
-			if(!(H in observation_human) && src in oview(6, H))
+			if(!(H in observation_human) && (src in oview(6, H)))
 				to_chat(src, "<span class='notice'>Человек вас заметил. Вы получили очко эволюции.</span>")
 				next_observation = world.time + 30 SECONDS
 				observation_human += H
