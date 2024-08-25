@@ -87,6 +87,11 @@
 	dir = 9;
 	icon_state = "nostromo"
 	},
+/obj/item/device/radio/intercom{
+	dir = 4;
+	name = "Intercom";
+	pixel_x = -18
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "nostromo"
@@ -3390,11 +3395,6 @@
 	},
 /turf/simulated/floor/grid_floor/brown,
 /area/station/nostromo)
-"qj" = (
-/obj/effect/decal/turf_decal/set_burned,
-/obj/structure/girder,
-/turf/simulated/floor/plating,
-/area/station/nostromo)
 "qk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -5034,7 +5034,9 @@
 	broadcasting = 1;
 	canhear_range = 5;
 	name = "Intercom";
-	pixel_y = 22
+	pixel_y = 22;
+	resistance_flags = 64;
+	unacidable = 1
 	},
 /obj/machinery/camera{
 	c_tag = "MU/TH/UR";
@@ -5111,6 +5113,21 @@
 /obj/machinery/power/smes/nostromo,
 /turf/simulated/floor{
 	dir = 9;
+	icon_state = "nostromo"
+	},
+/area/station/nostromo)
+"xy" = (
+/obj/effect/decal/turf_decal/alpha/black{
+	dir = 4;
+	icon_state = "nostromo"
+	},
+/obj/item/device/radio/intercom{
+	dir = 8;
+	name = "Intercom";
+	pixel_x = 18
+	},
+/turf/simulated/floor{
+	dir = 4;
 	icon_state = "nostromo"
 	},
 /area/station/nostromo)
@@ -8705,24 +8722,9 @@
 	},
 /area/station/nostromo)
 "Ks" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/sign/directions/command{
-	dir = 8;
-	pixel_y = 22
-	},
-/obj/effect/decal/turf_decal/alpha/black{
-	dir = 1;
-	icon_state = "nostromo"
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "nostromo"
-	},
+/obj/effect/decal/turf_decal/set_burned,
+/obj/structure/girder,
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "Kt" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -46614,7 +46616,7 @@ AU
 xP
 DU
 xP
-XM
+AU
 Qg
 HO
 oA
@@ -58189,7 +58191,7 @@ EJ
 ZS
 ZS
 ZS
-Ks
+Rn
 Ql
 ZS
 ZS
@@ -58696,8 +58698,8 @@ Jt
 wu
 GE
 IG
-uY
 Jt
+xy
 Hk
 Jt
 Jt
@@ -59449,7 +59451,7 @@ RK
 ZS
 ZS
 ZS
-qj
+Ks
 sq
 ZS
 ZS

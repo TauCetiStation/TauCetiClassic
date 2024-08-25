@@ -529,7 +529,7 @@ var/global/bomb_set
 
 /obj/machinery/nuclearbomb/nostromo/process()
 	. = ..()
-	if(!undock_try && timeleft < 1 MINUTE) // AUTO EVAC
+	if(!undock_try && timeleft < 5 MINUTE) // AUTO EVAC AFTER 5 MINUTE
 		MM.undock_shuttle()
 		undock_try = TRUE
 

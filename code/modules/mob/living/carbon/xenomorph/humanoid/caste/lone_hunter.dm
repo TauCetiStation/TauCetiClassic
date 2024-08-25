@@ -41,6 +41,8 @@
 	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(MM)
 		MM.alien_appeared(src)
+		var/datum/action/nostromo_guide/A = new(src)
+		A.Grant(src)
 		speed = -0.8
 	else
 		ventcrawler = 2
