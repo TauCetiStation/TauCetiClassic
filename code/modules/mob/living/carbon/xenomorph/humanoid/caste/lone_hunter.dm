@@ -230,6 +230,7 @@
 /datum/action/innate/alien/find_human
 	name = "Найти одиночку."
 	button_icon_state = "find_human"
+	cooldown = 1 MINUTE
 
 /datum/action/innate/alien/find_human/Activate()
 	var/mob/living/carbon/human/target = null
@@ -251,17 +252,20 @@
 			checked_human += human_around
 
 	if(target)
-		owner.emote("hiss")
 		var/atom/movable/screen/arrow/arrow_hud = new
 		arrow_hud.color = COLOR_DARK_PURPLE
 		arrow_hud.add_hud(owner, target)
 	else
 		to_chat(owner, "<span class='warning'>Вы не смогли учуять одинокого человека.</span>")
 
+	owner.emote("hiss")
+	StartCooldown()
+
 //		EAT CORPSE
 /datum/action/innate/alien/eat_corpse
 	name = "Съесть тело."
 	button_icon_state = "eat_corpse"
+	cooldown = 3 MINUTE
 
 /datum/action/innate/alien/eat_corpse/Grant(mob/T)
 	if(!isxenolonehunter(T))
@@ -273,22 +277,23 @@
 	var/mob/living/carbon/xenomorph/humanoid/hunter/lone/L = owner
 	if(L)
 		L.eat_corpse()
+		StartCooldown()
 
 //		REGENERATION
 /datum/action/innate/alien/regeneration
 	name = "Залечить раны."
 	button_icon_state = "alien_regeneration"
-
-/datum/action/innate/alien/regeneration/Checks()
-	. = ..()
-	var/mob/living/carbon/xenomorph/X = owner
-	if(!(locate(/obj/structure/alien/weeds) in X.loc) || !X.crawling)
-		to_chat(X, "<span class='warning'>Вы должны лежать на траве.</span>")
-		return FALSE
+	cooldown = 3 MINUTE
 
 /datum/action/innate/alien/regeneration/Activate()
 	var/mob/living/carbon/xenomorph/X = owner
+
+	if(!(locate(/obj/structure/alien/weeds) in X.loc) || !X.crawling)
+		to_chat(X, "<span class='warning'>Вы должны лежать на траве.</span>")
+		return
+
 	X.apply_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
+	StartCooldown()
 	if(!do_after(X, 10 SECONDS, target = X))
 		X.remove_status_effect(STATUS_EFFECT_ALIEN_REGENERATION)
 

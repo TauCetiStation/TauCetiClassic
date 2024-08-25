@@ -572,19 +572,15 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 //		DYNAMIC AMBIENCE
 /obj/effect/landmark/ambience
 	name = "Ambience"
-	var/ambience_next_time = 0
+	var/ambience_next_time
 	var/ambience = list()
-	var/current_ambience = 0
-	var/roundstart_play = 0
+	var/current_ambience
 
 /obj/effect/landmark/ambience/atom_init()
 	. = ..()
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(round_start))
 
 /obj/effect/landmark/ambience/proc/round_start()
-	if(roundstart_play)
-		play_ambience(roundstart_play)
-		current_ambience = roundstart_play
 	ambience_next_time = world.time + 1 MINUTE
 	START_PROCESSING(SSobj, src)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
@@ -592,18 +588,16 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 /obj/effect/landmark/ambience/process()
 	if(world.time > ambience_next_time)
 		ambience_next_time = world.time + rand(2, 4) MINUTE
-		play_ambience()
+		current_ambience = pick(ambience - current_ambience)
+		play_current_ambience()
 
-/obj/effect/landmark/ambience/proc/play_ambience(num = 0)
-	if(!num)
-		num = pick((1 to ambience.len) - current_ambience)
+/obj/effect/landmark/ambience/proc/play_current_ambience()
 	for(var/mob/M as anything in player_list)
-		M.playsound_music(ambience[num], VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
+		M.playsound_music(current_ambience, VOL_AMBIENT, null, null, CHANNEL_AMBIENT, priority = 10)
 
 //		NOSTROMO AMBIENCE
 /obj/effect/landmark/ambience/nostromo
 	name = "Nostromo Ambience"
-	roundstart_play = 1
 	ambience = list(
 		'sound/antag/Alien_sounds/alien_ambience1.ogg',
 		'sound/antag/Alien_sounds/alien_ambience2.ogg',
@@ -618,6 +612,11 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(MM)
 		MM.ambience_player = src
+
+/obj/effect/landmark/ambience/nostromo/round_start()
+	current_ambience = ambience[1]
+	play_current_ambience()
+	. = ..()
 
 //		NOSTROMO LANDMARKS
 /obj/effect/landmark/nostromo/atom_init()
