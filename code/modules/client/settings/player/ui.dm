@@ -15,8 +15,9 @@
 	value_parameters = list(UI_STYLE_WHITE, UI_STYLE_MIDNIGHT, UI_STYLE_OLD, UI_STYLE_ORANGE)
 
 /datum/pref/player/ui/ui_style/on_update(client/client, old_value)
-	client.mob.hud_used.ui_style = global.available_ui_styles[value]
-	client.mob.refresh_hud()
+	if(client?.mob?.hud_used)
+		client.mob.hud_used.ui_style = global.available_ui_styles[value]
+		client.mob.refresh_hud()
 
 /datum/pref/player/ui/ui_style_color
 	name = "Цвет UI"
@@ -25,8 +26,9 @@
 	value = "#ffffff"
 
 /datum/pref/player/ui/ui_style_color/on_update(client/client, old_value)
-	client.mob.hud_used.ui_color = value
-	client.mob.refresh_hud()
+	if(client?.mob?.hud_used)
+		client.mob.hud_used.ui_color = value
+		client.mob.refresh_hud()
 
 /datum/pref/player/ui/ui_style_opacity
 	name = "Прозрачность UI"
@@ -36,8 +38,9 @@
 	value_parameters = list(0, 100)
 
 /datum/pref/player/ui/ui_style_opacity/on_update(client/client, old_value)
-	client.mob.hud_used.ui_alpha = 255 - floor(255*value/100)
-	client.mob.refresh_hud()
+	if(client?.mob?.hud_used)
+		client.mob.hud_used.ui_alpha = 255 - floor(255*value/100)
+		client.mob.refresh_hud()
 
 /datum/pref/player/ui/outline
 	name = "Подсветка предметов"
@@ -52,7 +55,7 @@
 
 /datum/pref/player/ui/tooltip
 	name = "Всплывающая подсказка"
-	description = "Подсказку в верхней части экрана, появляющаяся по наведению мышью на предмет в игре."
+	description = "Подсказка в верхней части экрана, появляющаяся по наведению мышью на предмет в игре."
 	value_type = PREF_TYPE_BOOLEAN
 	value = TRUE
 
