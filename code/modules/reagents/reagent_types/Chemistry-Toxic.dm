@@ -945,4 +945,7 @@
 	..()
 	M.adjustDrugginess(2)
 	if(prob(25))
-		M.emote(pick("twitch","drool","moan","giggle"))
+		M.make_dizzy(10)
+		M.emote(pick("cough","laugh","giggle"))
+	if(prob(10))
+		M.Stuttering(1)
