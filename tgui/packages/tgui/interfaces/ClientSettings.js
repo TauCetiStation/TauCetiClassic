@@ -106,6 +106,9 @@ export const ClientSettings = (props, context) => {
             </Tabs.Tab>
           ))}
         </Tabs>
+        <NoticeBox warning>
+          Тест настроек, они не сохраняются и применяются только на раунд.
+        </NoticeBox>
         {tabs_tips[active_tab] && (
           <NoticeBox info>
             {tabs_tips[active_tab]}
