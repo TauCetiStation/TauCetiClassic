@@ -6,7 +6,7 @@
 	access = list(access_maint_tunnels, access_captain)
 	minimal_player_ingame_minutes = 1200
 	skillsets = list("Captain" = /datum/skillset/falcon/captain)
-	outfit = /datum/outfit/nostromo_captain
+	outfit = /datum/outfit/nostromo
 
 /datum/job/doctor/New()
 	..()
@@ -18,7 +18,7 @@
 	minimal_player_ingame_minutes = 300
 	supervisors = "the captain"
 	skillsets = list("Medical Doctor" = /datum/skillset/falcon/doctor)
-	outfit = /datum/outfit/nostromo_doctor
+	outfit = /datum/outfit/nostromo
 
 /datum/job/engineer/New()
 	..()
@@ -31,7 +31,7 @@
 	minimal_player_ingame_minutes = 300
 	supervisors = "the captain"
 	skillsets = list("Engineer" = /datum/skillset/falcon/engineer)
-	outfit = /datum/outfit/nostromo_engineer
+	outfit = /datum/outfit/nostromo
 
 /datum/job/blueshield/New()
 	..()
@@ -43,7 +43,7 @@
 	alt_titles = list()
 	supervisors = "the captain"
 	skillsets = list("Pilot" = /datum/skillset/falcon/officer)
-	outfit = /datum/outfit/nostromo_pilot
+	outfit = /datum/outfit/nostromo
 
 /datum/job/cargo_tech/New()
 	..()
@@ -54,7 +54,7 @@
 	minimal_player_ingame_minutes = 300
 	supervisors = "the captain"
 	skillsets = list("Cargo Technician" = /datum/skillset/falcon/quartermaster)
-	outfit = /datum/outfit/nostromo_cargo_tech
+	outfit = /datum/outfit/nostromo
 
 // ONLY HUMAN CAN PLAY THIS IVENT XENOSI SOSAAAAT
 /datum/job/special_species_check(datum/species/S)

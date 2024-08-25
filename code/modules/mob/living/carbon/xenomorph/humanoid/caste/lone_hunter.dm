@@ -15,13 +15,9 @@
 	acid_type = /obj/effect/alien/acid/queen_acid
 	var/epoint = 0
 	var/estage = 1
-	var/list/alien_screamer = list(
-		'sound/antag/Alien_sounds/alien_screamer1.ogg',
-		'sound/antag/Alien_sounds/alien_screamer2.ogg')
 	var/list/alien_attack = list(
 		'sound/antag/Alien_sounds/alien_attack1.ogg',
-		'sound/antag/Alien_sounds/alien_attack2.ogg',
-		'sound/antag/Alien_sounds/alien_attack3.ogg')
+		'sound/antag/Alien_sounds/alien_attack2.ogg')
 	var/list/alien_eat_corpse = list(
 		'sound/antag/Alien_sounds/alien_eat_corpse1.ogg',
 		'sound/antag/Alien_sounds/alien_eat_corpse2.ogg',
@@ -45,7 +41,7 @@
 	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(MM)
 		MM.alien_appeared(src)
-		speed = -0.75
+		speed = -0.8
 	else
 		ventcrawler = 2
 	name = "Alien"
@@ -63,7 +59,7 @@
 	if(estage == 1 && world.time > next_observation)
 		for(var/mob/living/carbon/human/H in oview(6, src))
 			if(!(H in observation_human) && src in oview(6, H))
-				to_chat(src, "<span class='notice'>Вы получили очко эволюции.</span>")
+				to_chat(src, "<span class='notice'>Человек вас заметил. Вы получили очко эволюции.</span>")
 				next_observation = world.time + 30 SECONDS
 				observation_human += H
 				emote("hiss")
@@ -110,8 +106,7 @@
 
 //			SCREAMER WHEN LEAP
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/successful_leap(mob/living/L)
-	for(var/mob/beholder in oview(6, L))
-		beholder.playsound_local(null, pick(alien_screamer), VOL_EFFECTS_MASTER, null, FALSE)
+	play_scary_music()
 
 //		HUNT AND ADRENALINE AFFECT THE ATTACK
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/UnarmedAttack(atom/A)

@@ -703,3 +703,48 @@
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 50, bullet = 40, laser = 40, energy = 30, bomb = 0, bio = 0, rad = 0)
+
+
+/obj/item/clothing/suit/nostromo
+	body_parts_covered = UPPER_TORSO|ARMS
+
+/obj/item/clothing/suit/nostromo/hipjack
+	name = "hip jacket"
+	desc = "Старая и измятая, мутно зелёная куртка."
+	icon_state = "hipjack"
+	item_state = "pilotjack"
+	item_state_world = "hipjack_w"
+
+/obj/item/clothing/suit/nostromo/jack
+	name = "jacket"
+	desc = "Солидно выглядящий бирюзовый жакет."
+	icon_state = "pilotjack"
+	item_state = "pilotjack"
+	item_state_world = "pilotjack_w"
+
+/obj/item/clothing/suit/nostromo/leathjacket
+	name = "leather jacket"
+	desc = "Складно сшитая кожанка, очень хороша на вид."
+	icon_state = "leathjacket"
+	item_state = "leathjacket"
+	item_state_world = "leathjacket_w"
+	var/open = TRUE
+
+/obj/item/clothing/suit/nostromo/leathjacket/verb/toggle()
+	set name = "Toggle Jacket"
+	set category = "Object"
+	set src in usr
+
+	if(usr.incapacitated())
+		return FALSE
+	if(open)
+		item_state_world = item_state_world + "_closed"
+		icon_state = icon_state + "_closed"
+		item_state = icon_state
+		open = FALSE
+	else
+		item_state_world = initial(item_state_world)
+		icon_state = initial(icon_state)
+		item_state = icon_state
+		open = TRUE
+	update_inv_mob()

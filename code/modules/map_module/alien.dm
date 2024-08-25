@@ -11,10 +11,10 @@
 	config_event_cryopod_latejoin = TRUE
 	config_disable_loadout = TRUE
 	config_disable_qualities = TRUE
-	human_delay = 0.25
+	human_delay = 0.2
 
 	map_lobby_image = 'html/media/lobby_alien.png'
-	map_lobby_music = 'sound/lobby/alien_main.ogg'
+	map_lobby_music = 'sound/antag/Alien_sounds/alien_lobby_ambience.ogg'
 
 	admin_verbs = list(
 		/client/proc/nostromo_ivent_info,
@@ -47,9 +47,15 @@
 
 	var/datum/faction/nostromo_crew/crew_faction = null
 
-	var/list/crew_outfit = list()
+	var/list/crew_outfit = list(
+		/datum/outfit/nostromo/Arthur_Dallas,
+		/datum/outfit/nostromo/Thomas_Kane,
+		/datum/outfit/nostromo/Ellen_Ripley,
+		/datum/outfit/nostromo/Ash,
+		/datum/outfit/nostromo/Joan_Lambert,
+		/datum/outfit/nostromo/Dennis_Parker,
+		/datum/outfit/nostromo/Samuel_Brett)
 	var/list/random_loot = list(
-		/obj/item/weapon/legcuffs/bola,
 		/obj/item/device/radio/off,
 		/obj/item/device/radio/off,
 		/obj/item/device/radio/off,
@@ -59,7 +65,6 @@
 		/obj/item/stack/sheet/cloth/three,
 		/obj/item/stack/sheet/cloth/three,
 		/obj/item/weapon/grenade/chem_grenade/antiweed,
-		/obj/item/weapon/grenade/cancasing/rag,
 		/obj/item/weapon/kitchenknife/combat,
 		/obj/item/weapon/storage/toolbox/mechanical)
 
@@ -76,6 +81,32 @@
 		var/obj/loot = pick_n_take(random_loot)
 		new loot(landmark.loc)
 		qdel(landmark)
+
+/////////////////////////////////////////////////////////////////////////////////////
+//			EQUIP OUTFIT
+/datum/map_module/alien/proc/equip(mob/living/carbon/human/crewmate)
+	for(var/item in crewmate.get_equipped_items())
+		qdel(item)
+	crewmate.equipOutfit(pick_n_take(crew_outfit)) // random outfit
+	var/obj/item/weapon/card/id/C = new(crewmate)
+	C.assign(crewmate.real_name) // no job on card
+	C.access = crewmate.mind.assigned_job.get_access()
+	crewmate.equip_or_collect(C, SLOT_WEAR_ID)
+	var/acid_color = check_hair_color(list(crewmate.r_hair, crewmate.g_hair, crewmate.b_hair))
+	if(acid_color)
+		crewmate.r_hair = acid_color + rand(-10, 10)
+		crewmate.g_hair = acid_color + rand(-10, 10)
+		crewmate.b_hair = acid_color + rand(-10, 10)
+
+/datum/map_module/alien/proc/check_hair_color(var/list/colors)
+	var/average = 0
+	for(var/color in colors)
+		average += color
+	average /= 3
+	for(var/color in colors)
+		if(color - average > 40) // no acid hairstyles
+			return color
+	return 0
 
 /////////////////////////////////////////////////////////////////////////////////////
 //			IVENT INFO

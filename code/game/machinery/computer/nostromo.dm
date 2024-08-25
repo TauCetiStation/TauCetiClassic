@@ -37,7 +37,7 @@
 		to_chat(usr, "<span class='warning'>Для эвакуации необходимо запустить систему самоуничтожения корабля!</span>")
 		return FALSE
 
-	if(href_list["evacuation"])
+	if(href_list["evacuation"] && do_after(usr, 5 SECOND, target = src))
 		do_move()
 		docked = FALSE
 		MM.nuke_detonate()
@@ -45,11 +45,15 @@
 	updateUsrDialog()
 
 /obj/machinery/computer/nostromo/narcissus_shuttle/proc/do_move()
+	set waitfor = FALSE
+
 	var/area/current_location = get_area_by_type(/area/shuttle/nostromo_narcissus/ship)
 	var/area/transit_location = get_area_by_type(/area/shuttle/nostromo_narcissus/transit)
 
 	SSshuttle.undock_act(/area/station/nostromo, "evac_shuttle_1")
 	SSshuttle.undock_act(/area/shuttle/nostromo_narcissus/ship, "evac_shuttle_1")
+
+	sleep(3 SECOND)
 
 	current_location.move_contents_to(transit_location)
 	SSshuttle.shake_mobs_in_area(transit_location, EAST)
@@ -92,7 +96,7 @@
 /obj/machinery/computer/nostromo/cockpit/process()
 	..()
 	if(world.time > next_course_change)
-		next_course_change += rand(90, 110) SECOND
+		next_course_change += rand(110, 130) SECOND
 		course += rand(3, 4) * side
 		if(abs(course) > 18)
 			MM.AI_announce("cockpit")
@@ -115,3 +119,5 @@
 			to_chat(user, "<span class='notice'>Вы успешно корректируете курс корабля.</span>")
 			course -= rand(4, 6) * side
 			second_console.course -= rand(1, 3) * side
+
+/obj/machinery/nostromo

@@ -23,7 +23,7 @@
 	if(start_point && role)
 		if(SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN))
 			var/mob/living/carbon/human/H = new (get_turf(start_point))
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/color/white, SLOT_W_UNIFORM)
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/nostromo/white, SLOT_W_UNIFORM)
 			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white, SLOT_SHOES)
 			H.name = "Gilbert Kane"
 			H.real_name = "Gilbert Kane"
@@ -54,7 +54,7 @@
 	latejoiners_postsetup = TRUE
 	initroletype = /datum/role/nostromo_crewmate
 	min_roles = 0
-	max_roles = 6
+	max_roles = 7
 
 	var/dead_crew = 0
 	var/list/crew = list()
@@ -76,13 +76,13 @@
 /datum/faction/nostromo_crew/check_win()
 	return round_end
 
-/datum/faction/nostromo_crew/proc/new_crewmate(mob/crewmate)
+/datum/faction/nostromo_crew/proc/new_crewmate(mob/living/carbon/human/crewmate)
 	RegisterSignal(crewmate, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), PROC_REF(crewmate_died))
 	crew += crewmate
 	alltime_crew++
-	for(var/item in crewmate.get_equipped_items())
-		qdel(item)
-	crewmate.equipOutfit(pick_n_take(MM.crew_outfit))
+	MM.equip(crewmate)
+
+/datum/faction/nostromo_crew/proc/equip(mob/crewmate)
 
 /datum/faction/nostromo_crew/proc/crewmate_died(mob/crewmate)
 	UnregisterSignal(crewmate, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING))
@@ -112,6 +112,9 @@
 	var/mob/living/carbon/human/H = role.antag.current
 	H.set_species(NOSTROMO_ANDROID)
 	H.nutrition_icon.update_icon(H)
+	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
+	if(MM)
+		MM.equip(H)
 	return ..()
 
 #define NOSTROMO_CAT		"Nostromo Cat"
@@ -125,8 +128,8 @@
 	var/Jonesy = /mob/living/simple_animal/cat/red/jonesy
 
 /datum/faction/nostromo_cat/OnPostSetup()
-	var/start_point = pick(landmarks_list["Jonesy"])
 	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(MM)
+		var/start_point = pick(landmarks_list["Jonesy"])
 		MM.jonesy = new Jonesy(get_turf(start_point))
 	return ..()

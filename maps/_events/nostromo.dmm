@@ -1965,6 +1965,7 @@
 	icon_state = "nostromo"
 	},
 /obj/effect/landmark/nostromo/random_loot,
+/obj/item/weapon/storage/pouch/medium_generic,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "nostromo"
@@ -3388,6 +3389,11 @@
 	req_access = list(12)
 	},
 /turf/simulated/floor/grid_floor/brown,
+/area/station/nostromo)
+"qj" = (
+/obj/effect/decal/turf_decal/set_burned,
+/obj/structure/girder,
+/turf/simulated/floor/plating,
 /area/station/nostromo)
 "qk" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -4897,7 +4903,9 @@
 /obj/structure/sign/warning/radiation/rad_area{
 	pixel_x = 32
 	},
-/turf/simulated/wall/nostromo,
+/turf/simulated/floor{
+	icon_state = "nostromofull"
+	},
 /area/station/nostromo)
 "wl" = (
 /obj/structure/grille,
@@ -5610,6 +5618,7 @@
 /obj/effect/decal/turf_decal/alpha/black{
 	icon_state = "nostromofull"
 	},
+/obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor{
 	icon_state = "nostromofull"
 	},
@@ -6023,6 +6032,7 @@
 	icon_state = "nostromo"
 	},
 /obj/machinery/light/small,
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor{
 	icon_state = "nostromo"
 	},
@@ -9353,10 +9363,6 @@
 /area/station/nostromo)
 "Oa" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 7;
-	pixel_y = 8
-	},
 /obj/item/weapon/reagent_containers/glass/bottle/peridaxon,
 /obj/item/weapon/storage/pill_bottle/bicaridine{
 	pixel_x = 9;
@@ -9368,6 +9374,10 @@
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 8;
 	icon_state = "nostromo"
+	},
+/obj/item/stack/medical/advanced/bruise_pack{
+	pixel_x = 6;
+	pixel_y = 11
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -9528,6 +9538,10 @@
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 10;
 	icon_state = "nostromo"
+	},
+/obj/item/weapon/storage/pill_bottle/spaceacillin{
+	pixel_x = 7;
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -10607,6 +10621,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/turf_decal/alpha/black{
+	icon_state = "nostromofull"
+	},
 /turf/simulated/floor{
 	icon_state = "nostromofull"
 	},
@@ -11677,6 +11694,7 @@
 	dir = 4;
 	icon_state = "nostromo"
 	},
+/obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "nostromo"
@@ -59431,7 +59449,7 @@ RK
 ZS
 ZS
 ZS
-rJ
+qj
 sq
 ZS
 ZS
