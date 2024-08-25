@@ -300,7 +300,7 @@ var/global/cat_number = 0
 	if(C)
 		add_faction_member(C, src)
 
-mob/living/simple_animal/cat/red/jonesy/Life()
+/mob/living/simple_animal/cat/red/jonesy/Life()
 	..()
 	if(health < maxHealth) // slow regeneration
 		health++
