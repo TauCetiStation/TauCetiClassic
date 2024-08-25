@@ -4,7 +4,6 @@
 	var/datum/religion/religion
 	// Used only for sprite generation
 	var/list/words = list()
-	var/reusable = FALSE
 
 	var/static/list/all_words = RUNE_WORDS
 
@@ -31,7 +30,7 @@
 	fizzle(user)
 	action(user)
 	holder_reaction(user)
-	if(!reusable)
+	if(!religion.get_tech(RTECH_REUSABLE_RUNE))
 		qdel(holder)
 
 /datum/rune/proc/holder_reaction(mob/living/carbon/user)
@@ -132,8 +131,6 @@
 /datum/rune/cult/teleport/teleport
 	name = "Телепорт"
 	words = list("travel", "self", "see")
-	reusable = TRUE
-
 	var/id
 	var/id_inputing = FALSE
 
@@ -349,7 +346,6 @@
 /datum/rune/cult/wall
 	name = "Призыв Стены"
 	words = list("destroy", "travel", "self")
-	reusable = TRUE
 
 	var/obj/effect/forcefield/cult/alt_app/wall
 
@@ -358,9 +354,10 @@
 	return ..()
 
 /datum/rune/cult/wall/can_action(mob/living/carbon/user)
-	if(!wall)
-		action(user)
-		return FALSE
+	if(!religion.get_tech(RTECH_REUSABLE_RUNE)) // The first click puts up a wall. The second click removes the wall and rune.
+		if(!wall)
+			action(user)
+			return FALSE
 	return TRUE
 
 /datum/rune/cult/wall/action(mob/living/carbon/user)
@@ -411,8 +408,6 @@
 /datum/rune/cult/charge_pylons
 	name = "Активация Пилонов"
 	words = list("destroy", "other", "technology")
-	reusable = TRUE
-
 	var/time_to_stop = 2 MINUTE
 
 /datum/rune/cult/charge_pylons/can_action(mob/living/carbon/user)
