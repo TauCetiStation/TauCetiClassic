@@ -5,7 +5,7 @@ var/global/list/legacy_keyname_to_pref = list()
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 51
+#define SAVEFILE_VERSION_MAX 50
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -46,162 +46,149 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return SAVEFILE_UP_TO_DATE
 
-/datum/preferences/proc/update_preferences(current_version, savefile/S)
-	/* JUST AN EXAMPLE for future updates.
-	if(current_version < 10)
-		toggles |= MEMBER_PUBLIC
-	*/
-	if(current_version < 15) // cleanup
-		S["warns"]    << null
-		S["warnbans"] << null
 
-	if(current_version < 16) // cleanup
-		S["aooccolor"] << S["ooccolor"]
+/datum/preferences/proc/convert_preferences(savefile/S)
+	// audio
+	set_pref(/datum/pref/player/audio/lobby, S["snd_music_vol"])
+	set_pref(/datum/pref/player/audio/ambient, S["snd_ambient_vol"])
+	set_pref(/datum/pref/player/audio/notifications, S["snd_notifications_vol"])
+	set_pref(/datum/pref/player/audio/admin_sounds, S["snd_admin_vol"])
+	set_pref(/datum/pref/player/audio/jukebox, S["snd_jukebox_vol"])
 
-	// moving prefs to new system
-	//if(current_version < 50)
-	if(TRUE)
-		// audio
-		set_pref(/datum/pref/player/audio/lobby, S["snd_music_vol"])
-		set_pref(/datum/pref/player/audio/ambient, S["snd_ambient_vol"])
-		set_pref(/datum/pref/player/audio/notifications, S["snd_notifications_vol"])
-		set_pref(/datum/pref/player/audio/admin_sounds, S["snd_admin_vol"])
-		set_pref(/datum/pref/player/audio/jukebox, S["snd_jukebox_vol"])
+	set_pref(/datum/pref/player/audio/effects, S["snd_effects_master_vol"])
+	var/effects_coeff = S["snd_effects_master_vol"] * 0.01
+	set_pref(/datum/pref/player/audio/voice_announcements, S["snd_effects_voice_announcement_vol"] * effects_coeff)
+	set_pref(/datum/pref/player/audio/instruments, S["snd_effects_instrument_vol"] * effects_coeff)
+	set_pref(/datum/pref/player/audio/spam_effects, S["snd_effects_misc_vol"]) // no coefficient as this still depends on the effects audio slider
 
-		set_pref(/datum/pref/player/audio/effects, S["snd_effects_master_vol"])
-		var/effects_coeff = S["snd_effects_master_vol"] * 0.01
-		set_pref(/datum/pref/player/audio/voice_announcements, S["snd_effects_voice_announcement_vol"] * effects_coeff)
-		set_pref(/datum/pref/player/audio/instruments, S["snd_effects_instrument_vol"] * effects_coeff)
-		set_pref(/datum/pref/player/audio/spam_effects, S["snd_effects_misc_vol"]) // no coefficient as this still depends on the effects audio slider
+	// ui
+	set_pref(/datum/pref/player/display/auto_fit_viewport, S["auto_fit_viewport"])
+	set_pref(/datum/pref/player/ui/ui_style, S["UI_style"])
+	set_pref(/datum/pref/player/ui/ui_style_color, S["UI_style_color"])
+	var/converted_alpha = 100 - floor(100*S["UI_style_alpha"]/255)
+	set_pref(/datum/pref/player/ui/ui_style_opacity, converted_alpha)
+	set_pref(/datum/pref/player/ui/outline, S["outline_enabled"])
+	set_pref(/datum/pref/player/ui/outline_color, S["outline_color"])
+	set_pref(/datum/pref/player/ui/runechat, S["show_runechat"])
+	set_pref(/datum/pref/player/ui/tooltip, S["tooltip"])
+	set_pref(/datum/pref/player/ui/tooltip_font, S["tooltip_font"])
+	set_pref(/datum/pref/player/ui/tooltip_size, S["tooltip_size"])
 
-		// ui
-		set_pref(/datum/pref/player/display/auto_fit_viewport, S["auto_fit_viewport"])
-		set_pref(/datum/pref/player/ui/ui_style, S["UI_style"])
-		set_pref(/datum/pref/player/ui/ui_style_color, S["UI_style_color"])
-		var/converted_alpha = 100 - floor(100*S["UI_style_alpha"]/255)
-		set_pref(/datum/pref/player/ui/ui_style_opacity, converted_alpha)
-		set_pref(/datum/pref/player/ui/outline, S["outline_enabled"])
-		set_pref(/datum/pref/player/ui/outline_color, S["outline_color"])
-		set_pref(/datum/pref/player/ui/runechat, S["show_runechat"])
-		set_pref(/datum/pref/player/ui/tooltip, S["tooltip"])
-		set_pref(/datum/pref/player/ui/tooltip_font, S["tooltip_font"])
-		set_pref(/datum/pref/player/ui/tooltip_size, S["tooltip_size"])
+	//set_pref(/datum/pref/player/ui/..., S["tgui_fancy"]) // removed, we don't support ie8 already and 516 is coming
+	set_pref(/datum/pref/player/ui/tgui_lock, S["tgui_lock"])
 
-		//set_pref(/datum/pref/player/ui/..., S["tgui_fancy"]) // removed, we don't support ie8 already and 516 is coming
-		set_pref(/datum/pref/player/ui/tgui_lock, S["tgui_lock"])
+	// graphics
+	var/converted_fps = S["clientfps"] == -1 ? RECOMMENDED_FPS : S["clientfps"] // before -1 was for default, but it's confusing and we don't change it too often
+	set_pref(/datum/pref/player/display/fps, converted_fps)
 
-		// graphics
-		var/converted_fps = S["clientfps"] == -1 ? RECOMMENDED_FPS : S["clientfps"] // before -1 was for default, but it's confusing and we don't change it too often
-		set_pref(/datum/pref/player/display/fps, converted_fps)
+	var/converted_parallax
+	switch(S["parallax"])
+		if(-1)
+			converted_parallax = PARALLAX_INSANE
+		if(0)
+			converted_parallax = PARALLAX_HIGH
+		if(1)
+			converted_parallax = PARALLAX_MED
+		if(2)
+			converted_parallax = PARALLAX_LOW
+		if(3)
+			converted_parallax = PARALLAX_DISABLE
+	set_pref(/datum/pref/player/effects/parallax, converted_parallax)
+	set_pref(/datum/pref/player/effects/lobbyanimation, S["lobbyanimation"])
 
-		var/converted_parallax
-		switch(S["parallax"])
-			if(-1)
-				converted_parallax = PARALLAX_INSANE
-			if(0)
-				converted_parallax = PARALLAX_HIGH
-			if(1)
-				converted_parallax = PARALLAX_MED
-			if(2)
-				converted_parallax = PARALLAX_LOW
-			if(3)
-				converted_parallax = PARALLAX_DISABLE
-		set_pref(/datum/pref/player/effects/parallax, converted_parallax)
-		set_pref(/datum/pref/player/effects/lobbyanimation, S["lobbyanimation"])
+	var/converted_blur_effect = !S["eye_blur_effect"]
+	set_pref(/datum/pref/player/effects/legacy_blur, converted_blur_effect)
 
-		var/converted_blur_effect = !S["eye_blur_effect"]
-		set_pref(/datum/pref/player/effects/legacy_blur, converted_blur_effect)
+	set_pref(/datum/pref/player/effects/ambientocclusion, S["ambientocclusion"])
 
-		set_pref(/datum/pref/player/effects/ambientocclusion, S["ambientocclusion"])
+	var/converted_glowlevel
+	switch(S["glowlevel"])
+		if(0)
+			converted_glowlevel = GLOW_HIGH
+		if(1)
+			converted_glowlevel = GLOW_MED
+		if(2)
+			converted_glowlevel = GLOW_LOW
+		if(3)
+			converted_glowlevel = GLOW_DISABLE
+	set_pref(/datum/pref/player/effects/glowlevel, converted_glowlevel)
+	set_pref(/datum/pref/player/effects/lampsexposure, S["lampsexposure"])
+	set_pref(/datum/pref/player/effects/lampsglare, S["lampsglare"])
 
-		var/converted_glowlevel
-		switch(S["glowlevel"])
-			if(0)
-				converted_glowlevel = GLOW_HIGH
-			if(1)
-				converted_glowlevel = GLOW_MED
-			if(2)
-				converted_glowlevel = GLOW_LOW
-			if(3)
-				converted_glowlevel = GLOW_DISABLE
-		set_pref(/datum/pref/player/effects/glowlevel, converted_glowlevel)
-		set_pref(/datum/pref/player/effects/lampsexposure, S["lampsexposure"])
-		set_pref(/datum/pref/player/effects/lampsglare, S["lampsglare"])
+	// game
+	#define SHOW_ANIMATIONS	16
+	#define SHOW_PROGBAR	32
+	set_pref(/datum/pref/player/game/melee_animation, S["toggles"] & SHOW_ANIMATIONS)
+	set_pref(/datum/pref/player/game/progressbar, S["toggles"] & SHOW_PROGBAR)
+	#undef SHOW_ANIMATIONS
+	#undef SHOW_PROGBAR
 
-		// game
-		#define SHOW_ANIMATIONS	16
-		#define SHOW_PROGBAR	32
-		set_pref(/datum/pref/player/game/melee_animation, S["toggles"] & SHOW_ANIMATIONS)
-		set_pref(/datum/pref/player/game/progressbar, S["toggles"] & SHOW_PROGBAR)
-		#undef SHOW_ANIMATIONS
-		#undef SHOW_PROGBAR
+	set_pref(/datum/pref/player/game/endroundarena, S["eorg_enabled"])
 
-		set_pref(/datum/pref/player/game/endroundarena, S["eorg_enabled"])
+	// chat
+	set_pref(/datum/pref/player/chat/ooccolor, S["ooccolor"])
+	set_pref(/datum/pref/player/chat/aooccolor, S["aooccolor"])
 
-		// chat
-		set_pref(/datum/pref/player/chat/ooccolor, S["ooccolor"])
-		set_pref(/datum/pref/player/chat/aooccolor, S["aooccolor"])
+	var/const/CHAT_OOC = 1
+	var/const/CHAT_DEAD = 2
+	var/const/CHAT_GHOSTEARS = 4 // merged into /ghostears
+	//var/const/CHAT_NOCLIENT_ATTACK = 8 // merged into new /attack_log
+	var/const/CHAT_PRAYER = 16
+	var/const/CHAT_RADIO = 32
+	//var/const/CHAT_ATTACKLOGS = 64 // merged into new /attack_log
+	var/const/CHAT_DEBUGLOGS = 128
+	var/const/CHAT_LOOC = 256
+	var/const/CHAT_GHOSTRADIO = 512
+	//var/const/CHAT_GHOSTNPC = 1024 // merged into new /ghostantispam
+	var/const/CHAT_CKEY = 2048
 
-		var/const/CHAT_OOC = 1
-		var/const/CHAT_DEAD = 2
-		var/const/CHAT_GHOSTEARS = 4 // merged into /ghostears
-		//var/const/CHAT_NOCLIENT_ATTACK = 8 // merged into new /attack_log
-		var/const/CHAT_PRAYER = 16
-		var/const/CHAT_RADIO = 32
-		//var/const/CHAT_ATTACKLOGS = 64 // merged into new /attack_log
-		var/const/CHAT_DEBUGLOGS = 128
-		var/const/CHAT_LOOC = 256
-		var/const/CHAT_GHOSTRADIO = 512
-		//var/const/CHAT_GHOSTNPC = 1024 // merged into new /ghostantispam
-		var/const/CHAT_CKEY = 2048
+	set_pref(/datum/pref/player/chat/ooc, S["chat_toggles"] & CHAT_OOC)
+	set_pref(/datum/pref/player/chat/dead, S["chat_toggles"] & CHAT_DEAD)
+	set_pref(/datum/pref/player/chat/ghostears, S["chat_toggles"] & CHAT_GHOSTEARS)
+	set_pref(/datum/pref/player/chat/prayers, S["chat_toggles"] & CHAT_PRAYER)
+	set_pref(/datum/pref/player/chat/radio, S["chat_toggles"] & CHAT_RADIO)
+	set_pref(/datum/pref/player/chat/debug_log, S["chat_toggles"] & CHAT_DEBUGLOGS)
+	set_pref(/datum/pref/player/chat/looc, S["chat_toggles"] & CHAT_LOOC)
+	set_pref(/datum/pref/player/chat/ghostradio, S["chat_toggles"] & CHAT_GHOSTRADIO)
+	set_pref(/datum/pref/player/chat/show_ckey, S["chat_toggles"] & CHAT_CKEY)
 
-		set_pref(/datum/pref/player/chat/ooc, S["chat_toggles"] & CHAT_OOC)
-		set_pref(/datum/pref/player/chat/dead, S["chat_toggles"] & CHAT_DEAD)
-		set_pref(/datum/pref/player/chat/ghostears, S["chat_toggles"] & CHAT_GHOSTEARS)
-		set_pref(/datum/pref/player/chat/prayers, S["chat_toggles"] & CHAT_PRAYER)
-		set_pref(/datum/pref/player/chat/radio, S["chat_toggles"] & CHAT_RADIO)
-		set_pref(/datum/pref/player/chat/debug_log, S["chat_toggles"] & CHAT_DEBUGLOGS)
-		set_pref(/datum/pref/player/chat/looc, S["chat_toggles"] & CHAT_LOOC)
-		set_pref(/datum/pref/player/chat/ghostradio, S["chat_toggles"] & CHAT_GHOSTRADIO)
-		set_pref(/datum/pref/player/chat/show_ckey, S["chat_toggles"] & CHAT_CKEY)
+	var/const/CHAT_GHOSTSIGHT_ALL = 1
+	//var/const/CHAT_GHOSTSIGHT_ALLMANUAL = 2 // merged into new /ghostantispam
+	var/const/CHAT_GHOSTSIGHT_NEARBYMOBS = 3
 
-		var/const/CHAT_GHOSTSIGHT_ALL = 1
-		//var/const/CHAT_GHOSTSIGHT_ALLMANUAL = 2 // merged into new /ghostantispam
-		var/const/CHAT_GHOSTSIGHT_NEARBYMOBS = 3
+	var/converted_chat_ghostsight
+	switch(S["chat_ghostsight"])
+		if(CHAT_GHOSTSIGHT_ALL)
+			converted_chat_ghostsight = TRUE
+		if(CHAT_GHOSTSIGHT_NEARBYMOBS)
+			converted_chat_ghostsight = FALSE
+	set_pref(/datum/pref/player/chat/ghostsight, converted_chat_ghostsight)
 
-		var/converted_chat_ghostsight
-		switch(S["chat_ghostsight"])
-			if(CHAT_GHOSTSIGHT_ALL)
-				converted_chat_ghostsight = TRUE
-			if(CHAT_GHOSTSIGHT_NEARBYMOBS)
-				converted_chat_ghostsight = FALSE
-		set_pref(/datum/pref/player/chat/ghostsight, converted_chat_ghostsight)
+	// meta domain
+	set_pref(/datum/pref/player/meta/lastchangelog, S["lastchangelog"])
+	set_pref(/datum/pref/player/meta/default_slot, S["default_slot"])
+	set_pref(/datum/pref/player/meta/random_slot, S["randomslot"])
+	set_pref(/datum/pref/player/game/hotkey_mode, S["hotkeys"])
 
-		// meta domain
-		set_pref(/datum/pref/player/meta/lastchangelog, S["lastchangelog"])
-		set_pref(/datum/pref/player/meta/default_slot, S["default_slot"])
-		set_pref(/datum/pref/player/meta/random_slot, S["randomslot"])
-		set_pref(/datum/pref/player/game/hotkey_mode, S["hotkeys"])
+	// emote panel
+	var/list/old_emotes_list = S["emote_panel"]
+	if(length(old_emotes_list))
+		var/list/disabled_emotes = global.emotes_for_emote_panel - old_emotes_list
+		set_pref(/datum/pref/player/meta/disabled_emotes_emote_panel, disabled_emotes)
 
-		// emote panel
-		var/list/old_emotes_list = S["emote_panel"]
-		if(length(old_emotes_list))
-			var/list/disabled_emotes = global.emotes_for_emote_panel - old_emotes_list
-			set_pref(/datum/pref/player/meta/disabled_emotes_emote_panel, disabled_emotes)
+	// keibinds
+	var/list/old_keybinds = S["key_bindings"]
+	var/list/keyname_to_bind = list()
+	for(var/key in old_keybinds)
+		for(var/keyname in old_keybinds[key])
+			keyname_to_bind[keyname] = "[keyname_to_bind[keyname] ? "[keyname_to_bind[keyname]] " : "" ][key]"
 
-		// keibinds
-		var/list/old_keybinds = S["key_bindings"]
-		var/list/keyname_to_bind = list()
-		for(var/key in old_keybinds)
-			for(var/keyname in old_keybinds[key])
-				keyname_to_bind[keyname] = "[keyname_to_bind[keyname] ? "[keyname_to_bind[keyname]] " : "" ][key]"
-
-		for(var/keyname in keyname_to_bind)
-			var/pref_type = legacy_keyname_to_pref[keyname]
-			if(keyname == "None")
-				set_keybind(pref_type, "")
-			else
-				set_keybind(pref_type, keyname_to_bind[keyname])
+	for(var/keyname in keyname_to_bind)
+		var/pref_type = legacy_keyname_to_pref[keyname]
+		if(keyname == "None")
+			set_keybind(pref_type, "")
+		else
+			set_keybind(pref_type, keyname_to_bind[keyname])
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
@@ -426,6 +413,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return
 	path = "data/player_saves/[ckey[1]]/[ckey]/[filename]"
 
+// loads and updates all old preferences if needed
 /datum/preferences/proc/load_preferences()
 	if(!path)
 		return 0
@@ -436,14 +424,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = "/"
 
-	var/needs_update = TRUE //savefile_needs_update(S)
+	// convert old preferences to datumized system, if we haven't done so already
+	//if
+	convert_preferences(S)
+
+	var/needs_update = savefile_needs_update(S)
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
 		return 0
-
-	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
-	//try to fix any outdated data if necessary
-	if(needs_update >= 0)
-		update_preferences(needs_update, S) // needs_update = savefile_version if we need an update (positive integer)
 
 	if(needs_update >= 0) //save the updated version
 		for (var/slot in S.dir) //but first, update all current character slots.
@@ -476,7 +463,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = dir
 
-	var/needs_update = TRUE//savefile_needs_update(S)
+	var/needs_update = savefile_needs_update(S)
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
 		return 0
 

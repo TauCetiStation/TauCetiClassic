@@ -45,20 +45,20 @@
 				. = new_value
 			else
 				. = initial(value)
-				stack_trace("Can't sanitize [type], fallback to default.") // todo: remove them later, just for debug now
+				WARNING("Can't sanitize [type] new value [new_value], fallback to default.")
 		if(PREF_TYPE_SELECT)
 			if(new_value in value_parameters)
 				. = new_value
 			else
 				. = initial(value)
-				stack_trace("Can't sanitize [type], fallback to default.")
+				WARNING("Can't sanitize [type] new value [new_value], fallback to default.")
 		if(PREF_TYPE_HEX)
 			var/hex = sanitize_hexcolor(new_value, null)
 			if(hex)
 				. = hex
 			else
 				. = initial(value)
-				stack_trace("Can't sanitize [type], fallback to default.")
+				WARNING("Can't sanitize [type] new value [new_value], fallback to default.")
 		if(PREF_TYPE_BOOLEAN)
 			. = !!new_value
 		else // any custom types
