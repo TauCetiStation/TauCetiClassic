@@ -85,13 +85,15 @@
 //		ADRENALINE
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/adjustFireLoss(amount)
 	..()
-	try_adrenaline()
+	if(amount > 0)
+		try_adrenaline()
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/adjustBruteLoss(amount)
 	..()
-	try_adrenaline()
+	if(amount > 0)
+		try_adrenaline()
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/try_adrenaline()
 	if(estage < 5 && world.time > adrenaline_next_time && health < (maxHealth / 3))
-		adrenaline_next_time = world.time + 8 MINUTE
+		adrenaline_next_time = world.time + 5 MINUTE
 		apply_status_effect(STATUS_EFFECT_ALIEN_ADRENALINE)
 		emote("roar")
 		for(var/obj/machinery/light/L in range(5, src))
@@ -146,7 +148,7 @@
 //		SLAUGHTER MODE WHEN SHIP BREAKDOWN
 /mob/living/carbon/xenomorph/humanoid/hunter/lone/proc/set_slaughter_mode()
 	to_chat(src, "<span class='notice'>Да начнётся резня! Ваши характеристики повышены.</span>")
-	for(var/i in estage to 5)
+	for(var/i in estage to 6)
 		next_stage(msg_play = FALSE)
 	alien_spells += /obj/effect/proc_holder/spell/targeted/screech
 

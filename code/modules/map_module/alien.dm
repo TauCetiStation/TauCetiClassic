@@ -39,12 +39,12 @@
 	var/obj/machinery/nostromo/nuclear_starter/nuke_starter = null
 	var/obj/machinery/power/smes/nostromo/smes = null
 	var/obj/machinery/computer/nostromo/cockpit/console = null
+	var/obj/machinery/computer/nostromo/narcissus_shuttle/shuttle_console = null
 	var/obj/machinery/hydroponics/nostromo/hydro = null
 	var/mob/living/silicon/decoy/nostromo/ai = null
 	var/mob/living/carbon/xenomorph/larva/lone/larva = null
 	var/mob/living/carbon/xenomorph/humanoid/hunter/lone/alien = null
 	var/mob/living/simple_animal/cat/red/jonesy/jonesy = null
-
 	var/datum/faction/nostromo_crew/crew_faction = null
 
 	var/list/crew_outfit = list(
@@ -92,21 +92,6 @@
 	C.assign(crewmate.real_name) // no job on card
 	C.access = crewmate.mind.assigned_job.get_access()
 	crewmate.equip_or_collect(C, SLOT_WEAR_ID)
-	var/acid_color = check_hair_color(list(crewmate.r_hair, crewmate.g_hair, crewmate.b_hair))
-	if(acid_color)
-		crewmate.r_hair = acid_color + rand(-10, 10)
-		crewmate.g_hair = acid_color + rand(-10, 10)
-		crewmate.b_hair = acid_color + rand(-10, 10)
-
-/datum/map_module/alien/proc/check_hair_color(var/list/colors)
-	var/average = 0
-	for(var/color in colors)
-		average += color
-	average /= 3
-	for(var/color in colors)
-		if(color - average > 40) // no acid hairstyles
-			return color
-	return 0
 
 /////////////////////////////////////////////////////////////////////////////////////
 //			IVENT INFO
@@ -117,14 +102,14 @@
 	var/output_text = "<h1>Добро пожаловать на Ностромо</h1>"
 	output_text += {"<font size='2'>
 Здесь вы найдёте информацию по всем доступным вам кнопкам.
-1. Crew Message
-2. Delay Ambience
-3. Lights Blinking
-4. Open Cargo
-5. Open Evac
-6. Play Ambience
-7. SMES Stability
-8. Ship Course
+<BR> 1. Crew Message - послать экипажу сообщение.
+<BR> 2. Delay Ambience - отсрочить эмбиенс.
+<BR> 3. Lights Blinking - по всему кораблю замигают лампочки.
+<BR> 4. Open Cargo - открыть склад.
+<BR> 5. Open Evac - разблокировать механизм самоуничтожения и возможность эвакуации.
+<BR> 6. Play Ambience - проиграть эмбиенс
+<BR> 7. SMES Stability - изменить стабильность СМЕСа
+<BR> 8. Ship Course - изменить курс корабля.
 </font>"}
 	var/datum/browser/popup = new(usr, "window=Информация", "Информация", 500, 600, ntheme = CSS_THEME_DARK)
 	popup.set_content(output_text)
@@ -272,6 +257,11 @@
 	give_crew_signal("Энергосистема корабля полностью вышла из строя!")
 	open_cargo()
 	open_evac()
+
+/////////////////////////////////////////////////////////////////////////////////////
+//			UNDOCK EVAC SHUTTLE
+/datum/map_module/alien/proc/undock_shuttle()
+	shuttle_console.do_move()
 
 /////////////////////////////////////////////////////////////////////////////////////
 //			ROUND END WHEN ALIEN DIED

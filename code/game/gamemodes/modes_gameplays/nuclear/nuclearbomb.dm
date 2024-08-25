@@ -516,14 +516,22 @@ var/global/bomb_set
 	anchored = TRUE
 	safety = FALSE
 	authorized = TRUE
+	var/datum/map_module/alien/MM = null
+	var/undock_try = FALSE
 
 /obj/machinery/nuclearbomb/nostromo/atom_init()
 	. = ..()
-	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
-	if(!MM)
-		return INITIALIZE_HINT_QDEL
-	else
+	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
+	if(MM)
 		MM.nukebomb = src
+	else
+		return INITIALIZE_HINT_QDEL
+
+/obj/machinery/nuclearbomb/nostromo/process()
+	. = ..()
+	if(!undock_try && timeleft < 1 MINUTE) // AUTO EVAC
+		MM.undock_shuttle()
+		undock_try = TRUE
 
 /obj/machinery/nuclearbomb/nostromo/ui_interact(mob/user)
 	return

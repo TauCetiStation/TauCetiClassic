@@ -9,6 +9,8 @@
 	MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
 	if(!MM)
 		return INITIALIZE_HINT_QDEL
+	else
+		MM.shuttle_console = src
 
 /obj/machinery/computer/nostromo/narcissus_shuttle
 	name = "Narcissus Shuttle Console"
@@ -37,15 +39,22 @@
 		to_chat(usr, "<span class='warning'>Для эвакуации необходимо запустить систему самоуничтожения корабля!</span>")
 		return FALSE
 
-	if(href_list["evacuation"] && do_after(usr, 5 SECOND, target = src))
+	if(!isrolebytype(/datum/role/nostromo_android, usr) && MM.alien && MM.alien in orange(7, src))
+		to_chat(usr, "<span class='warning'>МЫ НЕ МОЖЕМ УЛЕТЕТЬ, ПОКА КСЕНОМОРФ С НАМИ НА ШАТТЛЕ!</span>")
+		return FALSE
+
+	if(href_list["evacuation"] && do_after(usr, 10 SECOND, target = src))
 		do_move()
-		docked = FALSE
-		MM.nuke_detonate()
 
 	updateUsrDialog()
 
 /obj/machinery/computer/nostromo/narcissus_shuttle/proc/do_move()
 	set waitfor = FALSE
+
+	if(!docked)
+		return
+
+	docked = FALSE
 
 	var/area/current_location = get_area_by_type(/area/shuttle/nostromo_narcissus/ship)
 	var/area/transit_location = get_area_by_type(/area/shuttle/nostromo_narcissus/transit)
@@ -53,7 +62,7 @@
 	SSshuttle.undock_act(/area/station/nostromo, "evac_shuttle_1")
 	SSshuttle.undock_act(/area/shuttle/nostromo_narcissus/ship, "evac_shuttle_1")
 
-	sleep(3 SECOND)
+	sleep(5 SECOND)
 
 	current_location.move_contents_to(transit_location)
 	SSshuttle.shake_mobs_in_area(transit_location, EAST)
@@ -63,6 +72,8 @@
 	var/list/turfs = get_area_turfs(transit_location)
 	for(var/turf/T in turfs)
 		T.explosive_resistance = INFINITY // ANTINUKE KOSTIL
+
+	MM.nuke_detonate()
 
 
 /obj/machinery/computer/nostromo/cockpit
