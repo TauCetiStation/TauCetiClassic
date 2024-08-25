@@ -103,7 +103,7 @@
 #define TOOLTIP_NORTH "TOP+0.1, CENTER-3"
 
 //recommened client FPS
-#define RECOMMENDED_FPS 100 // consider updating preferences if you change this value, or else it will be used only for new players
+#define RECOMMENDED_FPS 100
 
 // ui themes
 #define UI_STYLE_WHITE "White"

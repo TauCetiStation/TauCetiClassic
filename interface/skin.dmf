@@ -31,7 +31,7 @@ menu "menu"
 		command = ""
 	elem
 		name = "&Settings"
-		command = ".client_settings"
+		command = "Settings"
 		category = "&Options"
 		saved-params = "is-checked"
 	elem
@@ -45,8 +45,8 @@ menu "menu"
 		saved-params = "is-checked"
 
 
-window "mainwindow"
-	elem "mainwindow"
+window "tcmainwindow"
+	elem "tcmainwindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x440
@@ -54,7 +54,7 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
-		on-size = "handle_autofit"
+		on-size = ".handleautofit"
 		title = "Space Station 13"
 		statusbar = false
 		is-maximized = true
@@ -69,7 +69,7 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-visible = false
 		saved-params = ""
-	elem "mainvsplit"
+	elem "split"
 		type = CHILD
 		pos = 0,0
 		size = 640x440
@@ -89,8 +89,8 @@ window "mainwindow"
 		is-visible = false
 		saved-params = ""
 
-window "taumapwindow"
-	elem "taumapwindow"
+window "tcmapwindow"
+	elem "tcmapwindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
@@ -114,8 +114,8 @@ window "taumapwindow"
 		text-color = none
 		is-default = true
 		saved-params = ""
-		on-show = ".winset\"mainwindow.mainvsplit.left=taumapwindow\""
-		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
+		on-show = ".winset\"tcmainwindow.split.left=tcmapwindow\""
+		on-hide = ".winset\"tcmainwindow.split.left=\""
 		style = ".center { text-align: center; } .maptext { font-family: 'Small Fonts', 'MS Serif'; font-size: 7px; -dm-text-outline: 1px black; color: white; line-height: 1.1; } .small { font-size: 6px; } .big { font-size: 8px; } .yell { font-weight: bold; } .italics { font-size: 6px; }"
 	elem "lobbybrowser"
 		type = BROWSER
@@ -139,8 +139,8 @@ window "popupwindow"
 		statusbar = false
 		can-resize = false
 
-window "outputwindow"
-	elem "outputwindow"
+window "tcoutputwindow"
+	elem "tcoutputwindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
@@ -276,7 +276,7 @@ window "rpane"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
-		right = "outputwindow"
+		right = "tcoutputwindow"
 		left = "infowindow"
 		is-vert = false
 	elem "rulesb"

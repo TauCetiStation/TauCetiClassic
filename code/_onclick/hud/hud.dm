@@ -17,9 +17,6 @@ var/global/list/available_ui_styles = list(
 	UI_STYLE_ORANGE = 'icons/hud/screen1_Orange.dmi'
 	)
 
-/proc/ui_style2icon(ui_style)
-	return global.available_ui_styles[ui_style] || global.available_ui_styles[global.available_ui_styles[1]]
-
 /datum/hud
 	var/mob/mymob
 
@@ -46,7 +43,7 @@ var/global/list/available_ui_styles = list(
 
 	if (!ui_style)
 		// will fall back to the default if any of these are null
-		ui_style = ui_style2icon(mymob.client?.prefs?.get_pref(/datum/pref/player/ui/ui_style))
+		ui_style = global.available_ui_styles[mymob.client?.prefs?.get_pref(/datum/pref/player/ui/ui_style) || UI_STYLE_WHITE]
 
 	instantiate()
 
@@ -181,6 +178,14 @@ var/global/list/available_ui_styles = list(
 	persistant_inventory_update()
 
 	hud_version = version
+
+/mob/proc/refresh_hud()
+	var/list/screens = hud_used.main + hud_used.adding + hud_used.hotkeybuttons
+	for(var/atom/movable/screen/complex/complex as anything in hud_used.complex)
+		screens += complex.screens
+
+	for(var/atom/movable/screen/screen as anything in screens)
+		screen.update_by_hud(hud_used)
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()

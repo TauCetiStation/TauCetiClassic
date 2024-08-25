@@ -506,7 +506,7 @@
 			C = M.client
 	if(!C)
 		return
-	winset(C, "mainwindow", "flash=5")
+	winset(C, "tcmainwindow", "flash=5")
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)

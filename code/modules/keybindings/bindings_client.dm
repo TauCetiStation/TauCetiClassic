@@ -4,8 +4,6 @@
 	set instant = TRUE
 	set hidden = TRUE
 
-	world.log << "KeyDown: [_key]"
-
 	client_keysend_amount += 1
 
 	var/cache = client_keysend_amount
@@ -53,7 +51,7 @@
 	var/ShiftMod = keys_held["Shift"] ? "Shift+" : ""
 	var/full_key
 	switch(_key)
-		if("Alt", "Ctrl", "Shift") // todo: fix it
+		if("Alt", "Ctrl", "Shift")
 			full_key = "[AltMod][CtrlMod][ShiftMod]"
 		else
 			if(AltMod || CtrlMod || ShiftMod)
@@ -62,14 +60,14 @@
 			else
 				full_key = _key
 
+	if(findtext(full_key, "+", -1))
+		full_key = copytext(full_key, 1, -1)
+
 	var/keycount = 0
 	for(var/datum/pref/keybinds/kb as anything in prefs.key_bindings_by_key[full_key])
 		keycount++
 		if(kb.can_use(src) && kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
 			break
-
-	holder?.key_down(full_key, src)
-	mob.key_down(full_key, src)
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
@@ -95,5 +93,3 @@
 	for(var/datum/pref/keybinds/kb as anything in prefs.key_bindings_by_key[_key])
 		if(kb.can_use(src) && kb.up(src))
 			break
-	holder?.key_up(_key, src)
-	mob.key_up(_key, src)

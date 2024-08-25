@@ -52,7 +52,7 @@
 /atom/movable/screen/proc/update_by_hud(datum/hud/hud)
 	if((copy_flags & HUD_COPY_ICON) && hud.ui_style)
 		icon = hud.ui_style
-	if((copy_flags & HUD_COPY_ALPHA) && hud.ui_alpha)
+	if((copy_flags & HUD_COPY_ALPHA) && !isnull(hud.ui_alpha)) // alpha can be 0
 		alpha = hud.ui_alpha
 	if((copy_flags & HUD_COPY_COLOR) && hud.ui_color)
 		color = hud.ui_color

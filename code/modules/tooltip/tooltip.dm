@@ -33,7 +33,7 @@ Notes:
 
 /datum/tooltip
 	var/client/owner
-	var/control = "mainwindow.tooltip"
+	var/control = "tcmainwindow.tooltip"
 	var/file = 'code/modules/tooltip/tooltip.html'
 	var/showing = 0
 	var/queueHide = 0

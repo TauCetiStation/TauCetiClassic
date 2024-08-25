@@ -102,7 +102,7 @@
 	if(scripts.len)
 		send_asset_list(user, scripts)
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
-	winset(user, "taumapwindow.map", "focus=true") // return keyboard focus to map
+	winset(user, "tcmapwindow.map", "focus=true") // return keyboard focus to map
 	onclose(user, window_id, ref)
 
 /datum/browser/proc/close()
@@ -160,7 +160,7 @@
 				if(focusedwindow)
 					winset(user, focusedwindow, "focus=true")
 				else
-					winset(user, "taumapwindow", "focus=true")
+					winset(user, "tcmapwindow", "focus=true")
 				break
 	if(timeout)
 		addtimer(CALLBACK(src, PROC_REF(close)), timeout)

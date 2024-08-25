@@ -301,9 +301,9 @@ var/global/list/blacklisted_builds = list(
 
 	// Set config based title for main window
 	if (config.server_name)
-		winset(src, "mainwindow", "title='[world.name]: [config.server_name]'")
+		winset(src, "tcmainwindow", "title='[world.name]: [config.server_name]'")
 	else
-		winset(src, "mainwindow", "title='[world.name]'")
+		winset(src, "tcmainwindow", "title='[world.name]'")
 
 	if(prefs.get_pref(/datum/pref/player/meta/lastchangelog) != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
@@ -779,7 +779,6 @@ var/global/list/blacklisted_builds = list(
  * * direct_prefs - the preference we're going to get keybinds from
  */
 /client/proc/update_movement_keybinds(datum/preferences/direct_prefs)
-	//todo
 	var/datum/preferences/D = prefs || direct_prefs
 	if(!D?.prefs_keybinds)
 		return
@@ -787,19 +786,23 @@ var/global/list/blacklisted_builds = list(
 
 	var/datum/pref/keybinds/P = D.prefs_keybinds[/datum/pref/keybinds/movement/north]
 	for(var/key in splittext(P.value, " "))
-		movement_keys[key] = NORTH
+		if(length(key))
+			movement_keys[key] = NORTH
 
 	P = D.prefs_keybinds[/datum/pref/keybinds/movement/east]
 	for(var/key in splittext(P.value, " "))
-		movement_keys[key] = EAST
+		if(length(key))
+			movement_keys[key] = EAST
 
 	P = D.prefs_keybinds[/datum/pref/keybinds/movement/west]
 	for(var/key in splittext(P.value, " "))
-		movement_keys[key] = WEST
+		if(length(key))
+			movement_keys[key] = WEST
 
 	P = D.prefs_keybinds[/datum/pref/keybinds/movement/south]
 	for(var/key in splittext(P.value, " "))
-		movement_keys[key] = SOUTH
+		if(length(key))
+			movement_keys[key] = SOUTH
 
 // ckey = datum/stat/leave_stat
 var/global/list/disconnected_ckey_by_stat = list()

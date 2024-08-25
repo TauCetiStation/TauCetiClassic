@@ -15,14 +15,8 @@
 	value_parameters = list(UI_STYLE_WHITE, UI_STYLE_MIDNIGHT, UI_STYLE_OLD, UI_STYLE_ORANGE)
 
 /datum/pref/player/ui/ui_style/on_update(client/client, old_value)
-	client.mob.hud_used.ui_style = value
-
-	var/list/screens = client.mob.hud_used.main + client.mob.hud_used.adding + client.mob.hud_used.hotkeybuttons // todo hud method 
-	for(var/atom/movable/screen/complex/complex as anything in client.mob.hud_used.complex)
-		screens += complex.screens
-
-	for(var/atom/movable/screen/screen as anything in screens)
-		screen.update_by_hud(client.mob.hud_used)
+	client.mob.hud_used.ui_style = global.available_ui_styles[value]
+	client.mob.refresh_hud()
 
 /datum/pref/player/ui/ui_style_color
 	name = "Цвет UI"
@@ -32,12 +26,7 @@
 
 /datum/pref/player/ui/ui_style_color/on_update(client/client, old_value)
 	client.mob.hud_used.ui_color = value
-	var/list/screens = client.mob.hud_used.main + client.mob.hud_used.adding + client.mob.hud_used.hotkeybuttons
-	for(var/atom/movable/screen/complex/complex as anything in client.mob.hud_used.complex)
-		screens += complex.screens
-
-	for(var/atom/movable/screen/screen as anything in screens)
-		screen.update_by_hud(client.mob.hud_used)
+	client.mob.refresh_hud()
 
 /datum/pref/player/ui/ui_style_opacity
 	name = "Прозрачность UI"
@@ -47,13 +36,8 @@
 	value_parameters = list(0, 100)
 
 /datum/pref/player/ui/ui_style_opacity/on_update(client/client, old_value)
-	client.mob.hud_used.ui_alpha = 255 - floor(255*value/100) // todo 100 not works for some reason
-	var/list/screens = client.mob.hud_used.main + client.mob.hud_used.adding + client.mob.hud_used.hotkeybuttons
-	for(var/atom/movable/screen/complex/complex as anything in client.mob.hud_used.complex)
-		screens += complex.screens
-
-	for(var/atom/movable/screen/screen as anything in screens)
-		screen.update_by_hud(client.mob.hud_used)
+	client.mob.hud_used.ui_alpha = 255 - floor(255*value/100)
+	client.mob.refresh_hud()
 
 /datum/pref/player/ui/outline
 	name = "Подсветка предметов"
