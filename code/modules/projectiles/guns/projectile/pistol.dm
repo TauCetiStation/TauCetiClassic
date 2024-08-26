@@ -127,3 +127,10 @@
 	initial_mag = /obj/item/ammo_box/magazine/pea
 	suitable_mags = /obj/item/ammo_box/magazine/pea
 	can_be_holstered = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/attack_self(mob/living/user)
+	if(istype(src, /obj/item/weapon/gun/projectile/automatic/pistol/peashooter))
+		to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [src].</span>")
+		return
+	else
+		return
