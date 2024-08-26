@@ -91,9 +91,6 @@
 			update_icon()
 			return
 		return ..()
-	else if(istype(src, /obj/item/weapon/gun/projectile/automatic/pistol/peashooter))
-		to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [src].</span>")
-		return
 	else if(magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
