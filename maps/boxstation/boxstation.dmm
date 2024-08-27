@@ -61576,14 +61576,8 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpC" = (
-/obj/machinery/ai_slipper{
-	pixel_y = 16
-	},
 /obj/machinery/light/small{
 	dir = 8
-	},
-/obj/machinery/hologram/holopad{
-	pixel_y = -16
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -61786,12 +61780,6 @@
 "cpQ" = (
 /obj/machinery/light/small{
 	dir = 4
-	},
-/obj/machinery/hologram/holopad{
-	pixel_y = -16
-	},
-/obj/machinery/ai_slipper{
-	pixel_y = 16
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -76244,6 +76232,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"jTz" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "jUd" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 5
@@ -128030,9 +128022,9 @@ cCW
 cFP
 cFP
 cGa
-cGa
+cnM
 cpC
-cGa
+jTz
 cpr
 cFP
 cFP
@@ -130600,9 +130592,9 @@ cFJ
 cFP
 cFP
 cGa
-cGa
+cnM
 cpQ
-cGa
+jTz
 cqI
 cFP
 cFP
