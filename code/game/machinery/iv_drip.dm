@@ -71,15 +71,11 @@
 		src.attached = over_object
 		update_icon()
 
-
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/reagent_containers))
+	if (istype(W, /obj/item/weapon/reagent_containers/glass/beaker) || istype(W, /obj/item/weapon/reagent_containers/blood) || istype(W, /obj/item/weapon/reagent_containers/glass/bottle))
 		if(!isnull(src.beaker))
 			to_chat(user, "There is already a reagent container loaded!")
 			return
-		if(istype(W, /obj/item/weapon/reagent_containers/pill/twopart))
-			W.flags &= ~NOREACT
-			W.reagents.handle_reactions()
 		user.drop_from_inventory(W, src)
 		src.beaker = W
 		to_chat(user, "You attach \the [W] to \the [src].")
