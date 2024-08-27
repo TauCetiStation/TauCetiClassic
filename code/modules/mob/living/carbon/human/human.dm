@@ -2233,3 +2233,46 @@
 			continue
 		F.attackby(B, src)
 		break
+
+/mob/living/carbon/human/proc/randomize_appearance()
+	gender = pick(MALE, FEMALE)
+
+	name = random_name(gender, species.name)
+	real_name = name
+
+	s_tone = random_skin_tone()
+
+	h_style = random_hair_style(gender, species)
+	var/list/hair_color = random_hair_color()
+	r_hair = hair_color[1]
+	g_hair = hair_color[2]
+	b_hair = hair_color[3]
+
+	if(prob(25))
+		grad_style = random_gradient_style()
+		var/list/grad_color = random_hair_color()
+		r_grad = grad_color[1]
+		g_grad = grad_color[2]
+		b_grad = grad_color[3]
+
+	f_style = random_facial_hair_style(gender, species.name)
+	r_facial = r_hair
+	g_facial = g_hair
+	b_facial = b_hair
+
+	var/list/eye_color = random_eye_color()
+	r_eyes = eye_color[1]
+	g_eyes = eye_color[2]
+	b_eyes = eye_color[3]
+
+	underwear = rand(1,underwear_m.len)
+	undershirt = rand(1,undershirt_t.len)
+	socks = rand(1, socks_t.len)
+	backbag = rand(2, backbaglist.len)
+
+	use_skirt = pick(TRUE, FALSE)
+
+	var/datum/species/S = all_species[species.name]
+	age = rand(S.min_age, S.max_age)
+
+	regenerate_icons()
