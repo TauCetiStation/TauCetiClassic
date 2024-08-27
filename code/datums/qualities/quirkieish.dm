@@ -365,7 +365,7 @@
 	name = "Prisoner"
 	desc = "Ты загремел в каталажку за какое-то серьёзное преступление и, конечно, не собираешься исправляться."
 
-	requirement = "Подопытный. Включённая опция \"Быть предателем\""
+	requirement = "Подопытный. Включённая опция \"Быть предателем\"."
 
 /datum/quality/quirkieish/prisoner/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return H.mind.role_alt_title == "Test Subject"
