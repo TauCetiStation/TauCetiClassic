@@ -131,7 +131,7 @@
 	// Type of initial runes agent for which available_runes will be generated
 	var/rune_agent_type
 	// All tech that religion can research
-	var/list/datum/building_agent/available_techs = list()
+	var/list/datum/religion_tech/available_techs = list()
 	// Type of initial tech agent for which available_runes will be generated
 	var/tech_agent_type
 
@@ -611,6 +611,9 @@
 /datum/religion/proc/gen_agent_lists()
 	init_subtypes(build_agent_type, available_buildings)
 	init_subtypes(rune_agent_type, available_runes)
+	get_tech_agent_lists()
+
+/datum/religion/proc/get_tech_agent_lists()
 	init_subtypes(tech_agent_type, available_techs)
 
 /datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
@@ -663,10 +666,9 @@
 				link = FOLLOW_LINK(M, source)
 			to_chat(M, "<font size='[font_size]'><span class='[style_text]'>[link][format_name][message]</span></font>")
 
-/datum/religion/proc/add_tech(tech_type)
-	var/datum/religion_tech/T = new tech_type
-	T.on_add(src)
-	all_techs[T.id] = T
+/datum/religion/proc/add_tech(datum/religion_tech/tech)
+	tech.on_add(src)
+	all_techs[tech.id] = tech
 
 /datum/religion/proc/get_tech(tech_id)
 	return all_techs[tech_id]
