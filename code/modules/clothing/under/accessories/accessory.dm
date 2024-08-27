@@ -178,7 +178,7 @@
 	//string, anything
 	var/reason
 	//object, icons
-	var/icon //icon of medal
+	var/image //icon of medal
 
 /datum/medal/New(key, target_name, medal_name, parent_name, reason, icon)
 	..()

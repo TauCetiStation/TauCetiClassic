@@ -40,7 +40,6 @@
 	//string, anything
 	var/reason
 
-
 /datum/stat/score
 	// int, [0...]
 	var/crewscore      = 0 // this is the overall var/score for the whole round
