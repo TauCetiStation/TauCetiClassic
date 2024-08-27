@@ -180,14 +180,14 @@
 	//object, icons
 	var/image //icon of medal
 
-/datum/medal/New(key, target_name, medal_name, parent_name, reason, icon)
+/datum/medal/New(key, target_name, medal_name, parent_name, reason, image)
 	..()
 	src.key = key
 	src.target_name = target_name
 	src.medal_name = medal_name
 	src.parent_name = parent_name
 	src.reason = reason
-	src.icon = icon
+	src.image = image
 
 /obj/item/clothing/accessory/medal
 	name = "bronze medal"
