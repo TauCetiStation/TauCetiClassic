@@ -214,6 +214,8 @@
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_PREHITBY, hit_atom, throwingdatum) & COMSIG_HIT_PREVENTED)
+		return FALSE
 	if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
