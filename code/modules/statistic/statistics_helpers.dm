@@ -15,11 +15,12 @@
 	stat.desc = desc
 	achievements += stat
 
-/datum/stat_collector/proc/add_medal(key, name, medal_name, reason, icon_path, icon_state)
+/datum/stat_collector/proc/add_medal(key, name, medal_name, parent_name, reason)
 	var/datum/stat/medal/stat = new
 	stat.key = key
 	stat.target_name = name
 	stat.medal_name = medal_name
+	stat.parent_name = parent_name
 	stat.reason = reason
 	medals += stat
 

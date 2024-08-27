@@ -35,10 +35,11 @@
 	var/target_name
 	// string, anything
 	var/medal_name
+	// string, anything
+	var/parent_name // person who awarded medal
 	//string, anything
 	var/reason
-	//object, icons
-	var/icon //icon of medal
+
 
 /datum/stat/score
 	// int, [0...]

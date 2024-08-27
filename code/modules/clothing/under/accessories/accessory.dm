@@ -173,13 +173,21 @@
 	var/target_name
 	// string, anything
 	var/medal_name
+	// string, anything
+	var/parent_name // person who awarded medal
 	//string, anything
 	var/reason
 	//object, icons
 	var/icon //icon of medal
 
-/datum/medal/proc/to_stat()
-	SSStatistics.add_medal(key, target_name, medal_name, reason)
+/datum/medal/New(key, target_name, medal_name, parent_name, reason, icon)
+	..()
+	src.key = key
+	src.target_name = target_name
+	src.medal_name = medal_name
+	src.parent_name = parent_name
+	src.reason = reason
+	src.icon = icon
 
 /obj/item/clothing/accessory/medal
 	name = "bronze medal"
@@ -226,7 +234,9 @@
 					log_game("<b>[key_name(H)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 					message_admins("<b>[key_name_admin(H)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
 					if(awarded_name)
-						SSStatistics.add_medal(H.key, awarded_name, name, input, icon(icon, icon_state))
+						var/datum/medal/medal = new(H.key, awarded_name, name, user.name, input, image(icon, icon_state))
+						SSticker.medal_list.Add(medal)
+						SSStatistics.add_medal(H.key, awarded_name, name, user.name, input)
 		return
 
 	..()
