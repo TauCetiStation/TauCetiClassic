@@ -4556,7 +4556,7 @@
 	},
 /obj/machinery/door_control{
 	id = "smindicate";
-	name = "external shutters control";
+	name = "external blast doors control";
 	pixel_x = 27;
 	req_access = list(150)
 	},
