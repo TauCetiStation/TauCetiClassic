@@ -185,7 +185,7 @@
 	src.key = key
 	src.target_name = target_name
 	src.medal_name = medal_name
-	src.parent_name = parent_name
+	src.parent_name = sanitize(parent_name)
 	src.reason = reason
 	src.image = image
 
@@ -221,8 +221,8 @@
 		var/input
 		var/awarded_name
 		if(!commended && user != H)
-			awarded_name = sanitize(input(user, "Name of awarded person?", "Name", H.name) as null|text)
-			input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text)
+			awarded_name = sanitize(input(user, "Name of awarded person?", "Name", H.name) as null|text, 100)
+			input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text, 100)
 		if(do_after(user, delay, target = H))
 			C.attach_accessory(src, user)
 			if(user != H)
