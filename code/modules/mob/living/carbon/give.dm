@@ -1,9 +1,23 @@
-/mob/living/carbon/verb/give(mob/M in oview(1))
+/mob/living/carbon/verb/give()
 	set category = "IC"
 	set name = "Give"
 
-	if(!M)
+	var/list/receiving_candidates = list() 
+
+	for(var/mob/living/L in view(1))
+		// if you are too confused then it's just another way to swap hands
+		// sorry, i was too bored with this code and i needed to do something fun
+		if(L == src && (druggy || getBrainLoss() < 60))
+			continue
+		if(L.invisibility) // changelings chameleon, maybe something else
+			continue
+		receiving_candidates += L
+
+	if(!length(receiving_candidates))
+		to_chat(src, "<span class='red'>There is no one around.</span>")
 		return
+
+	var/mob/living/M = tgui_input_list(src,"Give it to","Choice", receiving_candidates)
 
 	if(!M.can_accept_gives(src, show_warnings = TRUE) || !can_give(M, show_warnings = TRUE) || M.client == null)
 		return
@@ -18,6 +32,7 @@
 		if(I.w_class < SIZE_NORMAL)
 			to_chat(src, "<span class='red'>[I] is too small for [name] to hold.</span>")
 			return
+
 	switch(tgui_alert(M,"[src] wants to give you \a [I]?",, list("Yes","No")))
 		if("Yes")
 			if(!can_give(M, show_warnings = TRUE))
@@ -36,7 +51,10 @@
 				return
 			else
 				drop_from_inventory(I, M)
-				M.put_in_hands(I)
+				if(M == src)
+					M.put_in_inactive_hand(I)
+				else
+					M.put_in_hands(I)
 			I.add_fingerprint(M)
 			M.visible_message("<span class='notice'>[src] handed \the [I] to [M].</span>")
 		if("No")
@@ -77,7 +95,7 @@
 	var/obj/item/organ/external/left_hand = bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/right_hand = bodyparts_by_name[BP_R_ARM]
 	if((!left_hand || !left_hand.is_usable() || l_hand) && (!right_hand || !right_hand.is_usable() || r_hand))
-		to_chat(giver, "<span class='red'>[src] can't take</span>")
+		to_chat(giver, "<span class='red'>[src] can't take it.</span>")
 		return FALSE
 	return TRUE
 
