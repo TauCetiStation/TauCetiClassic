@@ -1,7 +1,7 @@
 /datum/controller/subsystem/ticker/proc/scoreboard(completions, mob/one_mob)
 	if(SSStatistics.achievements.len)
 		completions += "<div class='Section'>[achievement_declare_completion()]</div>"
-	if(SSStatistics.medals.len)
+	if(medal_list.len)
 		completions += "<div class='Section'>[show_medals()]</div>"
 
 	// Who is alive/dead, who escaped
