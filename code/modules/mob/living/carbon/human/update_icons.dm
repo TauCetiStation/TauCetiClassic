@@ -375,6 +375,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 	update_hair()
 	update_mutations()
+	apply_recolor()
 	update_body()
 	update_inv_w_uniform()
 	update_inv_wear_id()
