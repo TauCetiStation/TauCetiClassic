@@ -47,6 +47,132 @@
 	if(gender==FEMALE)	return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 	else				return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 
+/proc/random_eye_color()
+	var/red
+	var/green
+	var/blue
+
+	var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
+	switch(col)
+		if("black")
+			red = 0
+			green = 0
+			blue = 0
+		if("grey")
+			red = rand (100, 200)
+			green = red
+			blue = red
+		if("brown")
+			red = 102
+			green = 51
+			blue = 0
+		if("chestnut")
+			red = 153
+			green = 102
+			blue = 0
+		if("blue")
+			red = 51
+			green = 102
+			blue = 204
+		if("lightblue")
+			red = 102
+			green = 204
+			blue = 255
+		if("green")
+			red = 0
+			green = 102
+			blue = 0
+		if("albino")
+			red = rand (200, 255)
+			green = rand (0, 150)
+			blue = rand (0, 150)
+
+	return list(red, green, blue)
+
+/proc/random_hair_color()
+	var/red
+	var/green
+	var/blue
+
+	var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
+	switch(col)
+		if("blonde")
+			red = 255
+			green = 255
+			blue = 0
+		if("black")
+			red = 0
+			green = 0
+			blue = 0
+		if("chestnut")
+			red = 153
+			green = 102
+			blue = 51
+		if("copper")
+			red = 255
+			green = 153
+			blue = 0
+		if("brown")
+			red = 102
+			green = 51
+			blue = 0
+		if("wheat")
+			red = 255
+			green = 255
+			blue = 153
+		if("old")
+			red = rand (100, 255)
+			green = red
+			blue = red
+		if("punk")
+			red = rand (0, 255)
+			green = rand (0, 255)
+			blue = rand (0, 255)
+
+	return list(red, green, blue)
+
+/proc/random_skin_color() // for species who has skin_color flag
+	var/red
+	var/green
+	var/blue
+
+	var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
+	switch(col)
+		if("black")
+			red = 0
+			green = 0
+			blue = 0
+		if("grey")
+			red = rand (100, 200)
+			green = red
+			blue = red
+		if("brown")
+			red = 102
+			green = 51
+			blue = 0
+		if("chestnut")
+			red = 153
+			green = 102
+			blue = 0
+		if("blue")
+			red = 51
+			green = 102
+			blue = 204
+		if("lightblue")
+			red = 102
+			green = 204
+			blue = 255
+		if("green")
+			red = 0
+			green = 102
+			blue = 0
+		if("albino")
+			red = rand (200, 255)
+			green = rand (0, 150)
+			blue = rand (0, 150)
+
+	return list(red, green, blue)
+
 /proc/random_skin_tone()
 	switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
 		if("caucasian")		. = -10
