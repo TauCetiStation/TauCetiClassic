@@ -14520,6 +14520,9 @@
 	dir = 4;
 	icon_state = "siding_thinplating_line"
 	},
+/obj/structure/rack,
+/obj/item/weapon/mop,
+/obj/item/weapon/reagent_containers/glass/bucket,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -22904,7 +22907,10 @@
 	},
 /obj/machinery/door/poddoor{
 	id = "smindicate";
-	name = "Security Door"
+	name = "Security Door";
+	density = 0;
+	icon_state = "pdoor0";
+	opacity = 0
 	},
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -22929,7 +22935,10 @@
 "bRb" = (
 /obj/machinery/door/poddoor{
 	id = "smindicate";
-	name = "Security Door"
+	name = "Security Door";
+	density = 0;
+	icon_state = "pdoor0";
+	opacity = 0
 	},
 /obj/machinery/door/airlock/external{
 	dir = 4;
