@@ -221,7 +221,7 @@
 		var/input
 		var/awarded_name
 		if(!commended && user != H)
-			awarded_name = sanitize(input(user, "Name of awarded person?", "Name", H.name) as null|text, 100)
+			awarded_name = sanitize(input(user, "Name of awarded person?", "Name", H.name) as null|text, MAX_LNAME_LEN)
 			input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text, 100)
 		if(do_after(user, delay, target = H))
 			C.attach_accessory(src, user)
