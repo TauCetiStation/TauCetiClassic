@@ -299,9 +299,6 @@
 	name = "Назад в Будущее"
 	words = list("see", "hell", "self")
 
-/datum/rune/cult/look_to_future/is_reusable()
-	return FALSE
-
 /datum/rune/cult/look_to_future/can_action(mob/living/carbon/user)
 	var/mob/living/carbon/human/H = locate() in holder.loc
 	if(!H)
