@@ -7,7 +7,7 @@
 		/datum/emote/robot/buzz,
 	)
 
-/mob/living/carbon/brain/emote(act, intentional = FALSE)
+/mob/living/carbon/brain/emote(act, intentional = FALSE, fallback_notice = FALSE)
 	// No MMI, no emotes
 	if(!container || !isMMI(container))
 		to_chat(src, "<span class='notice'>You can not emote in such state.</span>")
