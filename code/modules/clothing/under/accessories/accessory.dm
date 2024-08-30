@@ -166,6 +166,29 @@
 	icon_state = "metal_cross"
 
 //Medals
+/datum/medal
+	// string, anything
+	var/key
+	// string, anything
+	var/target_name
+	// string, anything
+	var/medal_name
+	// string, anything
+	var/parent_name // person who awarded medal
+	//string, anything
+	var/reason
+	//object, icons
+	var/image //icon of medal
+
+/datum/medal/New(key, target_name, medal_name, parent_name, reason, image)
+	..()
+	src.key = key
+	src.target_name = target_name
+	src.medal_name = medal_name
+	src.parent_name = parent_name
+	src.reason = reason
+	src.image = image
+
 /obj/item/clothing/accessory/medal
 	name = "bronze medal"
 	desc = "A bronze medal."
@@ -196,7 +219,9 @@
 			user.visible_message("<span class='notice'>[user] is trying to pin [src] on [H]'s chest.</span>", \
 				"<span class='notice'>You try to pin [src] on [H]'s chest.</span>")
 		var/input
+		var/awarded_name
 		if(!commended && user != H)
+			awarded_name = sanitize(input(user, "Name of awarded person?", "Name", H.name) as null|text)
 			input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text)
 		if(do_after(user, delay, target = H))
 			C.attach_accessory(src, user)
@@ -208,6 +233,10 @@
 					desc += "<br>The inscription reads: [input] - [user.real_name]"
 					log_game("<b>[key_name(H)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 					message_admins("<b>[key_name_admin(H)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
+					if(awarded_name)
+						var/datum/medal/medal = new(H.key, awarded_name, name, user.name, input, image(icon, icon_state))
+						SSticker.medal_list.Add(medal)
+						SSStatistics.add_medal(H.key, awarded_name, name, user.name, input)
 		return
 
 	..()

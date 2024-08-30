@@ -79,11 +79,10 @@
 	var/mob/living/carbon/human/new_ninja = new(spawn_point.loc)
 	var/ninja_title = pick(ninja_titles)
 	var/ninja_name = pick(ninja_names)
-	new_ninja.gender = pick(MALE, FEMALE)
 
-	var/datum/preferences/A = new()//Randomize appearance for the ninja.
-	A.randomize_appearance_for(new_ninja)
-	new_ninja.real_name = "[ninja_title] [ninja_name]"
+	new_ninja.randomize_appearance()
+	new_ninja.name = "[ninja_title] [ninja_name]"
+	new_ninja.real_name = new_ninja.name
 	new_ninja.dna.ready_dna(new_ninja)
 	new_ninja.create_mind_space_ninja()
 	new_ninja.equip_space_ninja()

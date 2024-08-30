@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/atom/movable/screen/cinematic = null
 	var/datum/station_state/start_state = null
-
+	var/list/medal_list = list()
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = FALSE //sit back and relax
 	var/nar_sie_has_risen = FALSE //check, if there is already one god in the world who was summoned (only for tomes)
@@ -635,6 +635,13 @@ SUBSYSTEM_DEF(ticker)
 		var/winner_text = "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[winner.title]</b>\"! \"[winner.desc]\""
 		text += {"<br><img src="logo_[tempstate].png"> [winner_text]"}
 
+	return text
+
+/datum/controller/subsystem/ticker/proc/show_medals()
+	var/text = "<br><FONT size = 5><b>Были выданы следующие медали:</b></FONT>"
+	for(var/datum/medal/medal as anything in medal_list)
+		var/award_text = "<b>[medal.key]</b> as <b>[medal.target_name]</b> was awarded \"<b>[medal.medal_name]</b>\" for \"<b>[medal.reason]</b>\" by <b>[medal.parent_name]</b>!"
+		text += "<br>[bicon(medal.image)] [award_text]"
 	return text
 
 /datum/controller/subsystem/ticker/proc/start_now()

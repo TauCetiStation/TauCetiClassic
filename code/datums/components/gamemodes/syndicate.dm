@@ -201,8 +201,8 @@
 		return
 
 	var/obj/item/I = find_syndicate_uplink(traitor_mob)
-	if(I?.hidden_uplink)
-		QDEL_NULL(I.hidden_uplink)
+	if(I)
+		QDEL_NULL(I)
 
 /datum/component/gamemode/syndicate/OnPostSetup(datum/source, laterole)
 	equip_traitor()
@@ -248,6 +248,4 @@
 
 	if(href_list["removeuplink"])
 		take_uplink(M.current)
-		var/datum/role/role = parent
-		role.antag.memory = null
 		to_chat(M.current, "<span class='warning'>You have been stripped of your uplink.</span>")

@@ -445,9 +445,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.age = record_found.fields["age"]
 		new_character.dna.b_type = record_found.fields["b_type"]
 	else
-		new_character.gender = pick(MALE,FEMALE)
-		var/datum/preferences/A = new()
-		A.randomize_appearance_for(new_character)
+		new_character.randomize_appearance()
+		new_character.name = G_found.name
 		new_character.real_name = G_found.real_name
 
 	if(!new_character.real_name)
