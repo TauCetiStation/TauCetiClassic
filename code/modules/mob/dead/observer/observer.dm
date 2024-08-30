@@ -170,6 +170,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	ghost.can_reenter_corpse = can_reenter_corpse
 	ghost.timeofdeath = timeofdeath
 	ghost.key = key
+	ghost.generate_living_appearance(src)
 	ghost.update_skin()
 	ghost.playsound_stop(CHANNEL_AMBIENT)
 	ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)

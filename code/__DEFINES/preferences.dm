@@ -29,36 +29,21 @@
 #define PREF_PLAYER_UI "ui"
 #define PREF_PLAYER_CHAT "chat"
 #define PREF_PLAYER_GAME "game"
-//#define PREF_PLAYER_KEYBINDS "keybinds"
 
 // keybinds pref domain subcategories
 #define PREF_KEYBINDS_CLIENT "CLIENT"
-#define PREF_KEYBINDS_EMOTE "EMOTE"
-#define PREF_KEYBINDS_ADMIN "ADMIN"
-#define PREF_KEYBINDS_XENO "XENO"
-#define PREF_KEYBINDS_CARBON "CARBON"
-#define PREF_KEYBINDS_HUMAN "HUMAN" // todo: 3 of them
-#define PREF_KEYBINDS_ROBOT "ROBOT"
-#define PREF_KEYBINDS_MISC "MISC"
-#define PREF_KEYBINDS_MOVEMENT "MOVEMENT"
 #define PREF_KEYBINDS_COMMUNICATION "COMMUNICATION"
-
-///datum/pref/player/display/zoom
-#define ICON_SCALE_AUTO "0"
-#define ICON_SCALE_16   "0.5"
-#define ICON_SCALE_32   "1"
-#define ICON_SCALE_48   "1.5"
-#define ICON_SCALE_64   "2"
-#define ICON_SCALE_80   "2.5"
-#define ICON_SCALE_96   "3"
-#define ICON_SCALE_112  "3.5"
-#define ICON_SCALE_128  "4"
+#define PREF_KEYBINDS_MOVEMENT "MOVEMENT"
+#define PREF_KEYBINDS_CARBON "CARBON"
+#define PREF_KEYBINDS_HUMAN "HUMAN"
+#define PREF_KEYBINDS_ROBOT "ROBOT"
+#define PREF_KEYBINDS_EMOTE "EMOTE"
+#define PREF_KEYBINDS_MISC "MISC"
 
 ///datum/pref/player/display/zoom_mode
 #define SCALING_METHOD_NORMAL "normal"
 #define SCALING_METHOD_DISTORT "distort"
 //#define SCALING_METHOD_BLUR "blur" // gives worst result so currently not used and players can't choice it
-
 
 ///datum/pref/player/effects/glowlevel
 #define GLOW_HIGH    "high"

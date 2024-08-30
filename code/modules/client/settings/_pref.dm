@@ -26,11 +26,6 @@
 	var/admins_only = FALSE
 	var/supporters_only = FALSE
 
-
-// todo:
-// /datum/pref/character
-// 	type = "character"
-
 // default sanitize procedures, override it if you need something more
 /datum/pref/proc/sanitize_value(new_value, client/client)
 
@@ -70,7 +65,7 @@
 	var/old_value = value
 	value = sanitize_value(new_value, client)
 
-	if(old_value != value) // && client
+	if(old_value != value && client)
 		on_update(client, old_value)
 		return TRUE
 

@@ -17,7 +17,6 @@
 	C.toggle_throw_mode()
 	return TRUE
 
-
 /datum/pref/keybinds/carbon/give
 	name = "Give item"
 	description = "Give the item you're currently holding"
@@ -27,14 +26,4 @@
 /datum/pref/keybinds/carbon/give/down(client/user)
 	var/mob/living/carbon/C = user.mob
 	C.give()
-	return TRUE
-
-/datum/pref/keybinds/carbon/crawl
-	name = "Crawl"
-
-	legacy_keyname = "crawl"
-
-/datum/pref/keybinds/carbon/crawl/down(client/user)
-	var/mob/living/carbon/C = user.mob
-	C.crawl()
 	return TRUE

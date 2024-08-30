@@ -91,7 +91,18 @@
 		PREF_PLAYER_UI = "Интерфейс",
 		PREF_PLAYER_CHAT = "Чат",
 		PREF_PLAYER_GAME = "Игра",
-		"keybinds" = "Управление",
+		PREF_DOMAIN_KEYBINDS = "Управление",
+	)
+
+	var/static/pref_keybinds_ordered = list(
+		PREF_KEYBINDS_CLIENT,
+		PREF_KEYBINDS_COMMUNICATION,
+		PREF_KEYBINDS_MOVEMENT,
+		PREF_KEYBINDS_CARBON,
+		PREF_KEYBINDS_HUMAN,
+		PREF_KEYBINDS_ROBOT,
+		PREF_KEYBINDS_EMOTE,
+		PREF_KEYBINDS_MISC,
 	)
 
 	var/static/tabs_tips = list(
@@ -102,6 +113,7 @@
 	var/list/data = list()
 	data["tabs"] = tabs
 	data["tabs_tips"] = tabs_tips
+	data["keybinds_order"] = pref_keybinds_ordered
 	return data
 
 /datum/client_settings/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -144,10 +156,12 @@
 
 	else if(ispath(pref_type, /datum/pref/keybinds))
 		switch(action)
+			if("set_value")
+				C.prefs.set_keybind_pref(pref_type, params["value"])
 			if("set_keybind_value")
-				C.prefs.set_keybind(pref_type, params["key"], params["index"], params["altMod"], params["ctrlMod"], params["shiftMod"])
+				C.prefs.set_keybind_pref(pref_type, params["key"], params["index"], params["altMod"], params["ctrlMod"], params["shiftMod"])
 			if("reset_value")
-				C.prefs.set_keybind(pref_type, initial(pref_type.value))
+				C.prefs.set_keybind_pref(pref_type, initial(pref_type.value))
 
 	return TRUE
 

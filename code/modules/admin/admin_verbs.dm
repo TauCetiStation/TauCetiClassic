@@ -393,10 +393,6 @@ var/global/list/admin_verbs_hideable = list(
 	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>")
 	feedback_add_details("admin_verb","TAVVS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-
-
-
 /client/proc/admin_ghost()
 	set category = "Admin"
 	set name = "Aghost"

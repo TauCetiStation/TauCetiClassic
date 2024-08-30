@@ -1,4 +1,5 @@
 var/global/list/all_emotes
+var/global/list/all_emotes_keys // for emote keybinds, contains unique emote keys + "None"
 var/global/list/emotes_for_emote_panel // for custom emote panel
 
 /*

@@ -65,9 +65,11 @@
 /mob/proc/clear_emote(key)
 	LAZYREMOVE(current_emotes, key)
 
-/mob/proc/emote(act, intentional = FALSE)
+/mob/proc/emote(act, intentional = FALSE, fallback_notice = FALSE)
 	var/datum/emote/emo = get_emote(act)
 	if(!emo)
+		if(fallback_notice)
+			to_chat(src, "<span class='notice'>Эта эмоция не доступна вашему типу моба.</span>")
 		return
 
 	if(!emo.can_emote(src, intentional))

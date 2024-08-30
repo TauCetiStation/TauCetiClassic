@@ -1529,6 +1529,7 @@
 #include "code\modules\client\settings\keybinds\carbon.dm"
 #include "code\modules\client\settings\keybinds\client.dm"
 #include "code\modules\client\settings\keybinds\communication.dm"
+#include "code\modules\client\settings\keybinds\emotes.dm"
 #include "code\modules\client\settings\keybinds\human.dm"
 #include "code\modules\client\settings\keybinds\living.dm"
 #include "code\modules\client\settings\keybinds\mob.dm"

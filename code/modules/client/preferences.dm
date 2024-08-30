@@ -176,6 +176,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 /datum/preferences/proc/init_keybinds(client/client)
 	for(var/type in prefs_keybinds)
 		var/datum/pref/keybinds/KB = prefs_keybinds[type]
+		if(KB.value_type != PREF_TYPE_KEYBIND)
+			continue
 		var/list/keybinds = splittext(KB.value, " ")
 		for(var/key in keybinds)
 			key_bindings_by_key[key] += list(KB)
@@ -210,7 +212,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	if(write_pref.update_value(new_value, parent))
 		mark_dirty()
 
-/datum/preferences/proc/set_keybind(type, new_value, index, altMod, ctrlMod, shiftMod)
+/datum/preferences/proc/set_keybind_pref(type, new_value, index, altMod, ctrlMod, shiftMod)
 	var/datum/pref/keybinds/write_pref = prefs_keybinds[type]
 
 	if(index)

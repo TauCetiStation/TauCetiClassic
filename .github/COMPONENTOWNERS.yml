@@ -16,7 +16,7 @@ components:
   ## Код ##
   
   # /code/
-  code/modules/client/preferences_savefile.dm: volas
+  code/modules/client/: volas
 
   ## Конфиги ##
   config/: volas

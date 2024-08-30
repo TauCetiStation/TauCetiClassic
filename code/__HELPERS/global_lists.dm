@@ -248,8 +248,12 @@
 		global.skillset_names_aliases[skillset.name] = s
 
 	global.all_emotes = list()
-	for(var/emote_type in subtypesof(/datum/emote))
-		global.all_emotes[emote_type] = new emote_type
+	global.all_emotes_keys = list()
+	for(var/emote_type as anything in subtypesof(/datum/emote))
+		var/datum/emote/E = new emote_type
+		global.all_emotes[emote_type] = E
+		if(E.key && E.key != "list")
+			global.all_emotes_keys |= E.key
 
 	global.emotes_for_emote_panel = list()
 	var/emote_icons = 'icons/misc/emotes.dmi'

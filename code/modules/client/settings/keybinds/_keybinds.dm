@@ -12,12 +12,18 @@
 	value = ""
 
 	category = PREF_KEYBINDS_MISC
+
+	// probably there was a plan to trigger keybinds in weight order, but currently it is not used anywhere
+	// maybe we should just remove it
 	var/weight = WEIGHT_LOWEST
 
 	// legacy name for migration of old savefiles, you should not use it with new keybindings
 	var/legacy_keyname
 
 /datum/pref/keybinds/sanitize_value(new_value, client/client)
+	if(value_type != PREF_TYPE_KEYBIND)
+		return ..()
+
 	var/list/new_keybinds = splittext(new_value, " ")
 
 	if(!length(new_keybinds))
@@ -64,7 +70,10 @@
 	return trim_right(new_value)
 
 /datum/pref/keybinds/on_update(client/client, old_value)
-	if(!client || !client.prefs) // offline update or prefs still initialising
+	if(value_type != PREF_TYPE_KEYBIND)
+		return ..()
+
+	if(!client || !client.prefs) // offline update or prefs still initializing
 		return
 
 	client.reset_held_keys()

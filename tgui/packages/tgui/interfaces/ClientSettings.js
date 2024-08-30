@@ -19,7 +19,7 @@ import {
   TrackOutsideClicks,
   Modal,
 } from '../components';
-import { isEscape } from 'common/keys';
+import { KEY, isEscape } from 'common/keys';
 import { decodeHtmlEntities } from 'common/string';
 import { KeyEvent } from '../events';
 import { Window } from '../layouts';
@@ -42,10 +42,11 @@ const byond2jsKeysDictionary = {
   "West": "Left",
 };
 
+
 export const ClientSettings = (props, context) => {
   const { act, data } = useBackend(context);
 
-  const { active_tab, settings, tabs, tabs_tips } = data;
+  const { active_tab, settings, tabs, tabs_tips, keybinds_order } = data;
 
   const [keyBindingState, setKeyBindingState] = useLocalState(context, 'showmodal', null);
 
@@ -53,25 +54,28 @@ export const ClientSettings = (props, context) => {
 
   // this all is too overcomplicated because of keybinds tab that handled differently
   if (active_tab === "keybinds") {
-    const sortedByCategory = settings.reduce((acc, setting) => {
-      if (!acc[setting.category]) {
-        acc[setting.category] = [];
+    const sortedByCategory = Object.fromEntries(keybinds_order.map(key => [key]));
+    settings.forEach((setting) => {
+      if (!sortedByCategory[setting.category]) {
+        // fallback if someone forgot to update keybinds_order
+        sortedByCategory[setting.category] = [];
       }
-      acc[setting.category].push(setting);
-      return acc;
-    }, {});
+      sortedByCategory[setting.category].push(setting);
+    });
 
-    settingsList = Object.keys(sortedByCategory).map(categoryName => (
-      <Section key={categoryName} title={categoryName}>
-        {sortedByCategory[categoryName].map(setting => (
-          <SettingField 
-            setting={setting} 
-            setKeyBindingState={setKeyBindingState} 
-            key={setting.type} 
-          />
-        ))}
-      </Section>
-    ));
+    settingsList = Object.keys(sortedByCategory)
+      .filter(categoryName => sortedByCategory[categoryName] && sortedByCategory[categoryName].length)
+      .map(categoryName => (
+        <Section key={categoryName} title={categoryName}>
+          {sortedByCategory[categoryName].map(setting => (
+            <SettingField 
+              setting={setting} 
+              setKeyBindingState={setKeyBindingState} 
+              key={setting.type} 
+            />
+          ))}
+        </Section>
+      ));
 
   } else {
     settingsList = settings.map(setting => (
@@ -139,12 +143,15 @@ const KeyBindingModal = (props, context) => {
 
     event.preventDefault();
 
-    if (isEscape(event.key)) { // empty key (reset)
+    if (event.key === KEY.Backspace) {
       act('set_keybind_value', {
         type: keyBindingState.type, 
         index: keyBindingState.index+1,
         key: "",
       });
+      setKeyBindingState(null);
+      return;
+    } else if (isEscape(event.key)) {
       setKeyBindingState(null);
       return;
     }
@@ -196,8 +203,9 @@ const KeyBindingModal = (props, context) => {
         </Box>
         <Box bold>
           Нажмити любую клавишу.<br /><br />
-          Можно использовать комбинации с Alt/Ctrl/Shift.<br /><br />
-          Нажмите ESC для сброса.
+          Можно использовать комбинации с <i>Alt/Ctrl/Shift</i>.<br /><br />
+          Нажмите <i>ESC</i> для отмены.<br /><br />
+          Нажмите <i>Backspace</i> для сбора.
         </Box>
       </Section>
     </Modal>
@@ -247,7 +255,6 @@ const SettingField = (props, context) => {
         </Flex.Item>
         <Flex.Item basis="100%" pt="1em" style={{ "white-space": "pre-wrap" }}>
           { setting.description }
-          { /* JSON.stringify(setting.v_parameters)*/ }
         </Flex.Item>
       </Flex>
     </Section>

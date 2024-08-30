@@ -186,9 +186,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	for(var/keyname in keyname_to_bind)
 		var/pref_type = legacy_keyname_to_pref[keyname]
 		if(keyname == "None")
-			set_keybind(pref_type, "")
+			set_keybind_pref(pref_type, "")
 		else
-			set_keybind(pref_type, keyname_to_bind[keyname])
+			set_keybind_pref(pref_type, keyname_to_bind[keyname])
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
@@ -427,6 +427,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	// convert old preferences to datumized system, if we haven't done so already
 	//if
 	convert_preferences(S)
+
+	// todo new update and examples
 
 	var/needs_update = savefile_needs_update(S)
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
