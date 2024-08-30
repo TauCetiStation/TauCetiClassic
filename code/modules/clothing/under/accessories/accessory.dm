@@ -185,7 +185,7 @@
 	src.key = key
 	src.target_name = target_name
 	src.medal_name = medal_name
-	src.parent_name = sanitize(parent_name)
+	src.parent_name = parent_name
 	src.reason = reason
 	src.image = image
 
@@ -222,7 +222,7 @@
 		var/awarded_name
 		if(!commended && user != H)
 			awarded_name = sanitize(input(user, "Name of awarded person?", "Name", H.name) as null|text, MAX_LNAME_LEN)
-			input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text, 100)
+			input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text, MAX_MEDAL_REASON_LEN)
 		if(do_after(user, delay, target = H))
 			C.attach_accessory(src, user)
 			if(user != H)
@@ -234,9 +234,10 @@
 					log_game("<b>[key_name(H)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
 					message_admins("<b>[key_name_admin(H)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
 					if(awarded_name)
-						var/datum/medal/medal = new(H.key, awarded_name, name, user.name, input, image(icon, icon_state))
+						var/parent_name = sanitize(user.name)
+						var/datum/medal/medal = new(H.key, awarded_name, name, parent_name, input, image(icon, icon_state))
 						SSticker.medal_list.Add(medal)
-						SSStatistics.add_medal(H.key, awarded_name, name, user.name, input)
+						SSStatistics.add_medal(H.key, awarded_name, name, parent_name, input)
 		return
 
 	..()
