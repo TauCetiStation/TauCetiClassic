@@ -751,6 +751,13 @@
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
 
+/datum/uplink_item/device_tools/pinpointer
+	name = "Advanced Pinpointer"
+	desc = "A modified pinpointer for searching for items that your employers are interested in."
+	item = /obj/item/weapon/pinpointer/highriskitems
+	cost = 10
+	uplink_types = list("traitor")
+
 /datum/uplink_item/device_tools/disk
 	name = "Diskette With Virus"
 	desc = "A floppy disk containing a virus to sabotage R&D systems. Insert this diskette into the R&D Server Controller to destroy scientific data."

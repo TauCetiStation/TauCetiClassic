@@ -160,7 +160,7 @@
 			mode = SEARCH_FOR_OBJECT
 			for (var/obj/machinery/nuclearbomb/N in poi_list)
 				if(N.nuketype == "Syndi")
-					target = locate(N)
+					target = N
 					to_chat(usr, "<span class='notice'>Nuclear Warhead Locator active.</span>")
 
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
@@ -242,6 +242,40 @@
 		return
 	target_dna = heads_dna[target_head]
 	to_chat(usr, "You set the pinpointer to locate [target_head]")
+
+	return attack_self(usr)
+
+/obj/item/weapon/pinpointer/highriskitems
+	desc = "A pinpointer designed and configured to search for specific items using a network of quantum signals."
+	origin_tech = "programming=5;bluespace=5"
+
+/obj/item/weapon/pinpointer/highriskitems/verb/toggle_mode()
+	set category = "Object"
+	set name = "Toggle Pinpointer Target"
+	set src in view(1)
+	reset_target()
+
+	var/datum/objective/steal/itemlist
+	itemlist = itemlist // To supress a 'variable defined but not used' error.
+	var/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in itemlist.possible_items
+	if(!targetitem)
+		return
+	var/obj/item/item_path = itemlist.possible_items[targetitem]
+	for(var/obj/item/I in global.possible_items_for_steal)
+		if(!istype(I, item_path))
+			continue
+		var/turf/T = get_turf(I)
+		if(is_centcom_level(T.z))
+			continue
+		target = I
+		break
+	if(!target)
+		to_chat(usr, "Failed to locate [targetitem]!")
+		return
+	to_chat(usr, "You set the pinpointer to locate [targetitem]")
+
+	if(mode && target)
+		RegisterSignal(target, list(COMSIG_PARENT_QDELETING), PROC_REF(reset_target))
 
 	return attack_self(usr)
 
