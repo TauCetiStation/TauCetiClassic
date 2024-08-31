@@ -29,6 +29,7 @@
 
 /obj/item/ammo_casing/pea
 	name = "Pea bullet casing"
+	cases = list("гороховый патрон", "горохового патрона", "гороховому патрону", "гороховый патрон", "гороховым патроном", "гороховом патроне")
 	desc = "Патрон от гороховой пули"
 	caliber = "Pea"
 	projectile_type = /obj/item/projectile/bullet/peabullet
