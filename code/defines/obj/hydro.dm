@@ -80,7 +80,7 @@
 
 /obj/item/seeds/peashooter
 	name = "pack of peashooter seeds"
-	desc = "These seeds grow into peashooter"
+	desc = "Эти семена вырастают в Горохострел"
 	icon_state = "seed-gatfruit"
 	species = "peashooter"
 	plantname = "Peashooter Tree"
