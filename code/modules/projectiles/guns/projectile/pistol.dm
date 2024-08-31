@@ -132,5 +132,3 @@
 	if(istype(src, /obj/item/weapon/gun/projectile/automatic/pistol/peashooter))
 		to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [CASE(src, GENITIVE_CASE)].</span>")
 		return
-	else
-		return
