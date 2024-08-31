@@ -30,8 +30,11 @@
 	fizzle(user)
 	action(user)
 	holder_reaction(user)
-	if(!religion.get_tech(RTECH_REUSABLE_RUNE))
+	if(!is_reusable())
 		qdel(holder)
+
+/datum/rune/proc/is_reusable()
+	return religion.get_tech(RTECH_REUSABLE_RUNE)
 
 /datum/rune/proc/holder_reaction(mob/living/carbon/user)
 	if(istype(holder, /obj/effect/rune))
@@ -55,6 +58,9 @@
 
 /datum/rune/cult/teleport
 	var/delay = 1 SECONDS
+
+/datum/rune/cult/teleport/is_reusable()
+	return FALSE
 
 /datum/rune/cult/teleport/proc/teleporting(turf/target, mob/user)
 	playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
@@ -199,6 +205,9 @@
 	if(!QDELETED(statue))
 		qdel(statue)
 	return ..()
+
+/datum/rune/cult/capture_area/is_reusable()
+	return FALSE
 
 /datum/rune/cult/capture_area/can_action(mob/living/carbon/user)
 	var/datum/religion/cult/R = global.cult_religion

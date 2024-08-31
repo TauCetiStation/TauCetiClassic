@@ -436,9 +436,7 @@
 		new_character.add_language(client.prefs.language, LANGUAGE_NATIVE)
 
 	if(SSticker.random_players)
-		new_character.gender = pick(MALE, FEMALE)
-		client.prefs.real_name = random_name(new_character.gender)
-		client.prefs.randomize_appearance_for(new_character)
+		new_character.randomize_appearance()
 	else
 		client.prefs.copy_to(new_character)
 
@@ -453,7 +451,7 @@
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.UpdateSE()
 	new_character.dna.original_character_name = new_character.real_name
-	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_WELL_FED)
+	new_character.nutrition = rand(NUTRITION_LEVEL_FED, NUTRITION_LEVEL_WELL_FED)
 	var/old_base_metabolism = new_character.get_metabolism_factor()
 	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
 

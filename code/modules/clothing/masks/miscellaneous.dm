@@ -224,11 +224,13 @@
 	name = "red bandana"
 	desc = "A fine red bandana with nanotech lining."
 	icon_state = "bandred"
+	item_state = "redbandana"
 
 /obj/item/clothing/mask/bandana/blue
 	name = "blue bandana"
 	desc = "A fine blue bandana with nanotech lining."
 	icon_state = "bandblue"
+	item_state = "bluebandana"
 
 /obj/item/clothing/mask/bandana/green
 	name = "green bandana"
@@ -239,16 +241,19 @@
 	name = "gold bandana"
 	desc = "A fine gold bandana with nanotech lining."
 	icon_state = "bandgold"
+	item_state = "goldbandana"
 
 /obj/item/clothing/mask/bandana/black
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
 	icon_state = "bandblack"
+	item_state = "blackbandana"
 
 /obj/item/clothing/mask/bandana/skull
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+	item_state = "skullbandana"
 
 /obj/item/clothing/mask/tie
 	body_parts_covered = 0

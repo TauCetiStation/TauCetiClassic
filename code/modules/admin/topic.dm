@@ -900,6 +900,7 @@
 		var/mob/M = locate(href_list["guard"])
 		if (ismob(M))
 			if(!M.client)
+				show_player_panel(M)
 				return
 			M.client.prefs.guard.print_report()
 
@@ -908,7 +909,11 @@
 			return
 
 		var/mob/M = locate(href_list["cid_history"])
-		if (!ismob(M) || !M.client)
+		if (!ismob(M))
+			return
+
+		if(!M.client)
+			show_player_panel(M)
 			return
 
 		var/client/C = M.client
@@ -939,7 +944,11 @@
 			return
 
 		var/mob/M = locate(href_list["ip_history"])
-		if (!ismob(M) || !M.client)
+		if (!ismob(M))
+			return
+
+		if(!M.client)
+			show_player_panel(M)
 			return
 
 		var/client/C = M.client
@@ -972,6 +981,7 @@
 			var/mob/M = locate(href_list["related_accounts"])
 			if (ismob(M))
 				if(!M.client)
+					show_player_panel(M)
 					return
 				var/client/C = M.client
 
@@ -1068,6 +1078,7 @@
 		if(!ismob(M))
 			return
 		if(!M.client)
+			show_player_panel(M)
 			return
 
 		var/ban_mute_type = input("Choose chat for ban:", "Chat ban") as null|anything in global.mute_ban_bitfield
@@ -1116,6 +1127,7 @@
 		if(!ismob(M))
 			return
 		if(!M.client)
+			show_player_panel(M)
 			return
 
 		var/type = href_list["type"]
