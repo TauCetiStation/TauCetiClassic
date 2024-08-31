@@ -1182,8 +1182,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
 	seed_type = /obj/item/seeds/peashooter
 	name = "peashooter"
-	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
-	desc = "Нераскрывшийся плод горохострела, подозрительно напоминающий пистолет"
+	desc = "Unopened peashooter. Looks suspiciously like a pistol"
 	icon_state = "peashooter"
 	potency = 25
 	filling_color = "#020108"
