@@ -121,6 +121,7 @@
 /obj/item/weapon/gun/projectile/automatic/pistol/peashooter
 	name = "Peashooter"
 	desc = "Горохострел. Стреляет горохом."
+	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
 	icon_state = "peashooter"
 	item_state = "peashooter"
 	origin_tech = "combat=1;materials=1"
