@@ -376,7 +376,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				dat+="<BR><BR><A href='?src=\ref[src];print_paper=[0]'>Распечатать газету</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(9)
-				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[src.viewing_channel.author]</FONT>\]</FONT><HR>"
+				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[viewing_channel.author]</FONT>\]</FONT><HR>"
 				if(viewing_channel.censored)
 					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрозой благополучию станции и был отмечен ❌-меткой НаноТрейзен.<BR>"
 					dat+="Невозможно опубликовывать новые Истории, пока действует ❌-метка.<BR><BR>"
