@@ -80,7 +80,8 @@
 
 /obj/item/seeds/peashooter
 	name = "pack of peashooter seeds"
-	desc = "These seeds grow into peashooter plants."
+	cases = list("семена Горохострела","семян Горохострела","семенам Горохострела","семена Горохострела","семенами Горохострела","семенах Горохострела")
+	desc = "Эти семена вырастают в Горохострел"
 	icon_state = "seed-gatfruit"
 	species = "peashooter"
 	plantname = "Peashooter Tree"
