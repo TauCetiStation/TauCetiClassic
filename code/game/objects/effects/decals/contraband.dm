@@ -665,7 +665,7 @@
 		to_chat(user, "<span class='bold warning'>You can't overcome the guilt to join the revolutionaries. (You are banned.)</span>")
 		return
 	else if(!isrevhead(user) && !isrev(user))
-		rev.convert_revolutionare(user)
+		rev.add_user_to_rev(user)
 
 /obj/structure/sign/poster/revolution/examine(mob/user)
 	. = ..()

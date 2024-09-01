@@ -260,11 +260,6 @@
 	lead.rev_cooldown = world.time + 5 SECONDS
 	return FALSE
 
-/datum/faction/revolution/proc/convert_revolutionare(mob/possible_rev)
-	if(add_user_to_rev(possible_rev))
-		return TRUE
-	return FALSE
-
 /datum/faction/revolution/proc/add_user_to_rev(mob/user)
 	if(add_faction_member(src, user, TRUE))
 		to_chat(user, "<span class='notice'>You join the revolution!</span>")
