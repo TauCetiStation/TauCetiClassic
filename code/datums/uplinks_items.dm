@@ -753,9 +753,9 @@
 
 /datum/uplink_item/device_tools/pinpointer
 	name = "Advanced Pinpointer"
-	desc = "A modified pinpointer for searching for items that your employers are interested in."
+	desc = "A artisanally modified pinpointer for searching for items that your employers are interested in."
 	item = /obj/item/weapon/pinpointer/highriskitems
-	cost = 10
+	cost = 2
 	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/disk

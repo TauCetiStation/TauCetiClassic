@@ -279,5 +279,39 @@
 
 	return attack_self(usr)
 
+/obj/item/weapon/pinpointer/highriskitems/process()
+	if(!active)
+		return
+	if(!target && !mode)
+		target = locate(/obj/item/weapon/disk/nuclear)
+		if(!target)
+			icon_state = "pinonnull"
+			return
+	if(target)
+		var/turf/self_turf = get_turf(src)
+		var/turf/target_turf = get_turf(target)
+		if(target_turf.z != self_turf.z)
+			icon_state = "alterpinfaralert"
+		else if(target_turf == self_turf)
+			icon_state = "alterpindirect"
+		else
+			switch(get_dist(target_turf, self_turf))
+				if(1 to 10)
+					icon_state = "alterpin10"
+				if(11 to 25)
+					icon_state = "alterpin25"
+				if(26 to 50)
+					icon_state = "alterpin50"
+				if(51 to 75)
+					icon_state = "alterpin75"
+				if(76 to 100)
+					icon_state = "alterpin100"
+				if(101 to 150)
+					icon_state = "alterpin150"
+				if(151 to 200)
+					icon_state = "alterpin200"
+				if(201 to INFINITY)
+					icon_state = "pinonfar"
+
 #undef SEARCH_FOR_DISK
 #undef SEARCH_FOR_OBJECT
