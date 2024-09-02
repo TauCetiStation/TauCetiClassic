@@ -79,7 +79,9 @@
 
 		var/mob/living/silicon/robot/drone/D = locate(href_list["shutdown"])
 
-		if(D.stat != DEAD)
+		if(D.emagged || istype(D, /mob/living/silicon/robot/drone/maintenance/malfuction))
+			to_chat(usr, "<span class='notice'>Система самоуничтожения этого дрона неисправна.</span>")
+		else if(D.stat != DEAD)
 			to_chat(usr, "<span class='warning'>You issue a kill command for the unfortunate drone.</span>")
 			message_admins("[key_name_admin(usr)] issued kill order for drone [key_name_admin(D)] from control console. [ADMIN_JMP(usr)]")
 			log_game("[key_name(usr)] issued kill order for [key_name(src)] from control console.")

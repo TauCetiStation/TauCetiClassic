@@ -45,8 +45,10 @@
 		update_adjacent()
 
 	AddComponent(/datum/component/clickplace)
+	global.table_list += src
 
 /obj/structure/table/Destroy()
+	global.table_list -= src
 	if(flipped)
 		update_adjacent()
 	return ..()
@@ -734,7 +736,6 @@
 /*
  * reinforced glass table
  */
- 
 /obj/structure/table/rglass
 	name = "reinforced glass table"
 	desc = "A reinforced version of the glass table"
