@@ -27,6 +27,9 @@
 	RegisterSignal(R, list(COMSIG_REL_ADD_MEMBER), PROC_REF(give_spell))
 	RegisterSignal(R, list(COMSIG_REL_REMOVE_MEMBER), PROC_REF(remove_spell))
 
+/datum/religion_tech/cult/cooldown_reduction
+	id = RTECH_COOLDOWN_REDUCTION
+
 /datum/religion_tech/cult/reusable_runes
 	id = RTECH_REUSABLE_RUNE
 

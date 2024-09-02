@@ -76,6 +76,7 @@
 		/obj/item/seeds/nettleseed = 2,
 		/obj/item/seeds/reishimycelium = 2,
 		/obj/item/seeds/reishimycelium = 2,
+		/obj/item/seeds/laughweedseed = 2,
 	)
 	premium = list(
 		/obj/item/toy/waterflower = 1,

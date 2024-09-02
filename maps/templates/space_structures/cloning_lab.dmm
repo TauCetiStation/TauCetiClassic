@@ -69,8 +69,10 @@
 	},
 /area/space_structures/cloning_lab)
 "m" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/syringes,
 /turf/simulated/floor{
-	dir = 6;
+	dir = 1;
 	icon_state = "whitepurple"
 	},
 /area/space_structures/cloning_lab)
@@ -87,7 +89,7 @@
 /area/space_structures/cloning_lab)
 "o" = (
 /turf/simulated/floor{
-	dir = 1;
+	dir = 5;
 	icon_state = "whitepurple"
 	},
 /area/space_structures/cloning_lab)
@@ -144,7 +146,7 @@
 	icon_state = "warn"
 	},
 /turf/simulated/floor{
-	dir = 9;
+	dir = 10;
 	icon_state = "whitepurple"
 	},
 /area/space_structures/cloning_lab)
@@ -166,33 +168,10 @@
 	},
 /area/space_structures/cloning_lab)
 "A" = (
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "whitepurple"
-	},
-/area/space_structures/cloning_lab)
-"B" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitepurplecorner"
-	},
-/area/space_structures/cloning_lab)
-"C" = (
-/turf/simulated/floor{
-	icon_state = "whitechoco"
-	},
-/area/space_structures/cloning_lab)
-"D" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitepurple"
-	},
-/area/space_structures/cloning_lab)
-"E" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/cloning_lab)
-"F" = (
+"B" = (
 /obj/structure/stool/bed/chair/comfy/white{
 	dir = 8
 	},
@@ -200,25 +179,109 @@
 	icon_state = "wood4"
 	},
 /area/space_structures/cloning_lab)
-"G" = (
+"C" = (
 /obj/machinery/door/airlock/research/glass{
-	dir = 4;
-	name = "Reabilitaion Chamber"
+	name = "Reabilitaion Chamber";
+	dir = 4
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood4"
+	},
+/area/space_structures/cloning_lab)
+"D" = (
+/obj/structure/stool/bed/chair,
+/turf/simulated/floor{
+	icon_state = "whitechoco"
+	},
+/area/space_structures/cloning_lab)
+"E" = (
+/obj/machinery/door/airlock/research{
+	name = "Cloning Facility";
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/area/space_structures/cloning_lab)
+"F" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/book/manual/wiki/medical_genetics,
+/obj/structure/table,
+/turf/simulated/floor/wood{
+	icon_state = "wood4"
+	},
+/area/space_structures/cloning_lab)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood4"
 	},
 /area/space_structures/cloning_lab)
 "H" = (
-/obj/machinery/door/airlock/research/glass{
-	dir = 4;
-	name = "Reabilitaion Chamber"
-	},
+/obj/machinery/clonepod,
 /turf/simulated/floor{
-	icon_state = "whitepurplefull"
+	icon_state = "whitepurple"
 	},
 /area/space_structures/cloning_lab)
 "I" = (
+/obj/structure/computerframe{
+	anchored = 1
+	},
+/obj/machinery/light,
+/turf/simulated/floor{
+	icon_state = "whitepurple"
+	},
+/area/space_structures/cloning_lab)
+"J" = (
+/obj/machinery/dna_scannernew,
+/turf/simulated/floor{
+	icon_state = "whitepurple"
+	},
+/area/space_structures/cloning_lab)
+"K" = (
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
+/turf/simulated/floor{
+	icon_state = "whitepurple"
+	},
+/area/space_structures/cloning_lab)
+"L" = (
+/obj/structure/table,
+/obj/item/weapon/disk/research_points,
+/obj/item/weapon/paper/cloning_lab,
+/turf/simulated/floor{
+	icon_state = "whitepurple"
+	},
+/area/space_structures/cloning_lab)
+"M" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/item/weapon/paper/cloning_log,
+/turf/simulated/floor{
+	icon_state = "whitepurple"
+	},
+/area/space_structures/cloning_lab)
+"N" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whitepurple"
+	},
+/area/space_structures/cloning_lab)
+"O" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/space_structures/cloning_lab)
+"P" = (
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
@@ -228,49 +291,55 @@
 	icon_state = "whitepurple"
 	},
 /area/space_structures/cloning_lab)
-"J" = (
-/obj/structure/stool/bed/chair,
-/turf/simulated/floor{
-	icon_state = "whitechoco"
-	},
-/area/space_structures/cloning_lab)
-"K" = (
-/obj/machinery/door/airlock/research{
-	dir = 4;
-	name = "Cloning Facility"
-	},
-/turf/simulated/floor{
-	icon_state = "whitepurplefull"
-	},
-/area/space_structures/cloning_lab)
-"L" = (
-/obj/effect/decal/cleanable/dirt,
+"Q" = (
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
 	},
 /area/space_structures/cloning_lab)
-"M" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/book/manual/wiki/medical_genetics,
-/obj/structure/table,
-/obj/item/weapon/disk/tech_disk/hud,
-/turf/simulated/floor/wood{
-	icon_state = "wood4"
+"R" = (
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whitepurple"
 	},
 /area/space_structures/cloning_lab)
-"O" = (
+"S" = (
+/obj/machinery/door/airlock/research/glass{
+	name = "Reabilitaion Chamber";
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/area/space_structures/cloning_lab)
+"T" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brown"
 	},
 /area/space_structures/cloning_lab)
-"Q" = (
+"U" = (
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "brown"
+	icon_state = "whitechoco"
+	},
+/area/space_structures/cloning_lab)
+"W" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitepurplecorner"
+	},
+/area/space_structures/cloning_lab)
+"X" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitepurple"
+	},
+/area/space_structures/cloning_lab)
+"Y" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitepurple"
 	},
 /area/space_structures/cloning_lab)
 
@@ -294,8 +363,8 @@ a
 a
 i
 t
+B
 F
-M
 i
 "}
 (3,1,1) = {"
@@ -319,7 +388,7 @@ a
 b
 v
 y
-m
+G
 b
 "}
 (5,1,1) = {"
@@ -330,7 +399,7 @@ a
 a
 b
 b
-G
+C
 b
 b
 "}
@@ -354,7 +423,7 @@ a
 a
 b
 b
-H
+S
 b
 b
 "}
@@ -365,9 +434,9 @@ a
 a
 b
 b
+N
+P
 w
-I
-m
 i
 "}
 (9,1,1) = {"
@@ -377,9 +446,9 @@ a
 a
 i
 k
-B
-C
-m
+W
+U
+H
 i
 "}
 (10,1,1) = {"
@@ -389,9 +458,9 @@ a
 a
 i
 l
-C
-J
-m
+U
+D
+I
 b
 "}
 (11,1,1) = {"
@@ -401,9 +470,9 @@ b
 b
 b
 m
-C
-C
-m
+U
+U
+J
 b
 "}
 (12,1,1) = {"
@@ -413,9 +482,9 @@ f
 f
 b
 n
-C
-C
-m
+U
+U
+K
 i
 "}
 (13,1,1) = {"
@@ -424,10 +493,10 @@ d
 e
 f
 j
-o
-C
-J
-m
+X
+U
+D
+L
 i
 "}
 (14,1,1) = {"
@@ -436,10 +505,10 @@ e
 g
 h
 b
-o
-C
-C
-m
+X
+U
+U
+M
 b
 "}
 (15,1,1) = {"
@@ -448,10 +517,10 @@ b
 b
 b
 b
-A
-D
-D
-m
+o
+Y
+Y
+R
 b
 "}
 (16,1,1) = {"
@@ -462,7 +531,7 @@ a
 b
 p
 x
-K
+E
 b
 b
 "}
@@ -474,8 +543,8 @@ a
 i
 q
 Q
-L
-E
+O
+A
 b
 "}
 (18,1,1) = {"
@@ -484,11 +553,11 @@ a
 a
 a
 i
-O
+T
 z
-E
-E
-E
+A
+A
+A
 "}
 (19,1,1) = {"
 a
@@ -497,8 +566,8 @@ a
 a
 b
 s
-E
-E
+A
+A
 a
 a
 "}

@@ -232,7 +232,7 @@
 				dat += "Установить время: [(setminute ? text("[setminute]:") : null)][setsecond]<br/>"
 
 			// Controls
-			dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
+			dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];set_time=TRUE'>Ввести время</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
 
 			// Mounted flash controls
 			for(var/obj/machinery/flasher/F in targets)
@@ -340,6 +340,12 @@
 			addtime = min(max(round(addtime), 0), 3600)
 
 			timeset(addtime)
+
+		if(href_list["set_time"])  // set timer (in minutes)
+			var/new_time = input(usr, "Введите время заключения (в минутах):", "Ввод времени") as num
+			new_time = clamp(new_time, 0, 60)
+
+			timeset(new_time * 60)
 
 		if(href_list["fc"])
 			for(var/obj/machinery/flasher/F in targets)

@@ -9,6 +9,15 @@
 	flags = NODECONSTRUCT
 	material = null
 
+/obj/structure/stool/bed/nest/process()
+	if(!buckled_mob)
+		return PROCESS_KILL
+	buckled_mob.heal_bodypart_damage(5, 5)
+	buckled_mob.adjustToxLoss(-5)
+	buckled_mob.adjustOxyLoss(-10)
+	buckled_mob.adjustHalLoss(-10)
+	buckled_mob.adjustFireLoss(-10)
+
 /obj/structure/stool/bed/nest/user_unbuckle_mob(mob/user)
 	if(!buckled_mob || user.is_busy())
 		return
@@ -31,6 +40,7 @@
 
 	L.pixel_y = L.default_pixel_y
 	unbuckle_mob()
+	STOP_PROCESSING(SSobj, src)
 	to_chat(L, "<span class='notice'>You successfly break free from the nest!</span>")
 	L.visible_message(
 			"<span class='warning'>[L.name] break free from the nest...</span>",)
@@ -52,6 +62,7 @@
 		"<span class='notice'>[user.name] secretes a thick vile goo, securing [M.name] into [src]!</span>",
 		"<span class='warning'>[user.name] drenches you in a foul-smelling resin, trapping you in the [src]!</span>",
 		"<span class='notice'>You hear squelching...</span>")
+	START_PROCESSING(SSobj, src)
 	M.pixel_y = 2
 	return TRUE
 
@@ -61,7 +72,3 @@
 			playsound(loc, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
-
-/obj/structure/bed/nest/post_buckle_mob(mob/living/buckling_mob)
-	. = ..()
-	buckling_mob.reagents.add_reagent("xenojelly_n", 30)

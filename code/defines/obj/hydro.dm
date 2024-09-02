@@ -334,6 +334,55 @@
 	growthstages = 6
 	mutatelist = list(/obj/item/seeds/honkyseed)
 
+/obj/item/seeds/laughweedseed
+	name = "pack of laughweed seeds"
+	desc = "They're seeds that grow into laughweed."
+	icon_state = "seed-laughweed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	species = "laughweed"
+	plantname = "Laughweed"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed
+	lifespan = 30
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 4
+	plant_type = 1
+	growthstages = 1
+	mutatelist = list(/obj/item/seeds/megaweedseed,/obj/item/seeds/blackweedseed)
+
+/obj/item/seeds/megaweedseed
+	name = "pack of megaweed seeds"
+	desc = "They're seeds that grow into megaweed."
+	icon_state = "seed-megaweed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	species = "megaweed"
+	plantname = "Megaweed"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed
+	lifespan = 30
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 4
+	plant_type = 1
+	growthstages = 1
+
+/obj/item/seeds/blackweedseed
+	name = "pack of deathweed seeds"
+	desc = "They're seeds that grow deathweed."
+	icon_state = "seed-blackweed"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	species = "blackweed"
+	plantname = "Deathweed"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed
+	lifespan = 30
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 4
+	plant_type = 1
+	growthstages = 1
+
 /obj/item/seeds/honkyseed
 	name = "pack of honk-banana seeds"
 	desc = "They're seeds that grow into banana trees."

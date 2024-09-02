@@ -36,7 +36,7 @@
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
 	. = !degutted && (active || ignore_active)
 	if(.)
-		explosion(loc, 2, 5, 11)
+		explosion(loc, 4, 10, 22)
 		degutted = TRUE // prevent double caboom
 		qdel(src)
 

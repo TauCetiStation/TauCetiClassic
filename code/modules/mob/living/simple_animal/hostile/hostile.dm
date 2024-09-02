@@ -81,6 +81,10 @@
 	if(stat == CONSCIOUS)
 		handle_combat_ai()
 
+//Check the ability to attack
+/mob/living/simple_animal/hostile/proc/allowAttackTarget()
+	return TRUE
+
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
 	var/list/L = list()
@@ -137,6 +141,8 @@
 		if(L in friends)
 			return FALSE
 		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
+			return FALSE
+		if(!allowAttackTarget(L))
 			return FALSE
 		return TRUE
 	if(isobj(the_target))

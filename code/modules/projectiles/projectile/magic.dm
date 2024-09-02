@@ -22,6 +22,152 @@
 	wabbajack(target)
 
 /obj/item/projectile/magic/proc/wabbajack(mob/living/M)
+	if(!istype(M) || isAI(M) || isdrone(M) || isconstruct(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || isxenoqueen(M))
+		return
+
+	if(!issilicon(M))
+		for(var/obj/item/W in M)
+			M.drop_from_inventory(W)
+
+	var/mob/living/new_mob
+
+	var/randomizer = pick("animal", "cyborg", "carbon")
+	switch(randomizer)
+		if("animal")
+			var/beast = pick(
+				/mob/living/simple_animal/mouse,
+				/mob/living/simple_animal/cow,
+				/mob/living/simple_animal/chicken,
+				/mob/living/simple_animal/chick,
+				/mob/living/simple_animal/cat,
+				/mob/living/simple_animal/corgi,
+				/mob/living/simple_animal/corgi/Lisa,
+				/mob/living/simple_animal/corgi/borgi,
+				/mob/living/simple_animal/corgi/puppy,
+				/mob/living/simple_animal/parrot,
+				/mob/living/simple_animal/crab,
+				/mob/living/simple_animal/hostile/retaliate/goat,
+				/mob/living/simple_animal/pig/shadowpig,
+				/mob/living/simple_animal/pig,
+				/mob/living/simple_animal/turkey,
+				/mob/living/simple_animal/goose,
+				/mob/living/simple_animal/seal,
+				/mob/living/simple_animal/walrus,
+				/mob/living/simple_animal/fox,
+				/mob/living/simple_animal/lizard,
+				/mob/living/simple_animal/pug,
+				/mob/living/simple_animal/shiba,
+				/mob/living/simple_animal/mushroom,
+				/mob/living/simple_animal/yithian,
+				/mob/living/simple_animal/spiderbot)
+			new_mob = new beast(M.loc)
+			new_mob.universal_speak = TRUE
+		if("cyborg")
+			new_mob = new /mob/living/silicon/robot(M.loc, "Default", /datum/ai_laws/asimov_xenophile, FALSE, global.chaplain_religion)
+			new_mob.gender = M.gender
+			new_mob.invisibility = 0
+			new_mob.job = "Cyborg"
+		if("carbon")
+			var/carbon = pick(
+				/mob/living/carbon/human,
+				/mob/living/carbon/monkey,
+				/mob/living/carbon/monkey/tajara,
+				/mob/living/carbon/monkey/skrell,
+				/mob/living/carbon/monkey/unathi,
+				/mob/living/carbon/monkey/diona/podman,
+				/mob/living/carbon/human/tajaran,
+				/mob/living/carbon/human/skrell,
+				/mob/living/carbon/human/unathi,
+				/mob/living/carbon/human/podman,
+				/mob/living/carbon/human/abductor,
+				/mob/living/carbon/human/golem,
+				/mob/living/carbon/human/vox)
+			new_mob = new carbon(M.loc)
+			new_mob.gender = M.gender
+			new_mob.languages = M.languages
+	if(!new_mob)
+		return
+
+	new_mob.attack_log = M.attack_log
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+
+	if(M.mind)
+		M.mind.transfer_to(new_mob)
+	else
+		new_mob.key = M.key
+
+	if(!M.original_body)
+		new_mob.original_body = M
+		M.original_body = M
+
+	M.forceMove(new_mob)
+	new_mob.original_body = M.original_body
+
+	for(var/mob/living/H in M.contents)
+		H.forceMove(new_mob)
+		qdel(M)
+
+	new_mob.wabbajacked = 1
+
+	to_chat(new_mob, "<B>Your body forms to something else!</B>")
+
+/mob/living/proc/unwabbajack(mob/living/M)
+	if(!issilicon(M))
+		for(var/obj/item/W in M)
+			M.drop_from_inventory(W)
+
+	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
+	smoke.set_up(10, 0, src.loc)
+	smoke.start()
+	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
+
+	var/obj/effect/decal/remains/human/RH = new /obj/effect/decal/remains/human(src.loc)
+	var/matrix/Mx = matrix()
+	RH.transform = Mx
+
+	for(M in contents)
+		M.loc = src.loc
+		if(isliving(M))
+			var/mob/living/L = M
+			L.Paralyse(15)
+			L.update_canmove()
+			if(mind && original_body)
+				mind.transfer_to(original_body)
+
+	qdel(src)
+
+/obj/item/projectile/magic/animate
+	name = "bolt of animation"
+	icon_state = "red_1"
+	light_color = "#ff0000"
+
+/obj/item/projectile/magic/animate/on_hit(atom/change)
+	. = ..()
+	if(isitem(change) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
+		var/obj/O = change
+		new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
+	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))
+		// Change our allegiance!
+		var/mob/living/simple_animal/hostile/mimic/copy/C = change
+		C.ChangeOwner(firer)
+		create_spawner(/datum/spawner/living/mimic, C)
+	else if(isshade(change) || isxeno(change))
+		var/mob/living/M = animate_atom_living(change)
+		if(!M)
+			return
+		if(firer && iswizard(firer))
+			var/datum/role/wizard/mage = firer.mind.GetRole(WIZARD)
+			var/datum/faction/wizards/federation = mage.GetFaction()
+			if(federation && M.mind)
+				var/datum/role/wizard_apprentice/recruit = add_faction_member(federation, M)
+				var/datum/objective/target/protect/new_objective = recruit.AppendObjective(/datum/objective/target/protect)
+				new_objective.explanation_text = "Help [firer.real_name], the Demiurgos of your new life."
+				new_objective.target = firer.mind
+				var/datum/role/R = M.mind.GetRole(EVIL_SHADE)
+				if(R)
+					R.Deconvert()
+
+/obj/item/projectile/magic/animate/proc/animate_atom_living(mob/living/M)
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || !M.client || isxenoqueen(M))
 		return
 
@@ -65,38 +211,6 @@
 
 	qdel(M)
 	return new_mob
-
-/obj/item/projectile/magic/animate
-	name = "bolt of animation"
-	icon_state = "red_1"
-	light_color = "#ff0000"
-
-/obj/item/projectile/magic/animate/on_hit(atom/change)
-	. = ..()
-	if(isitem(change) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
-		var/obj/O = change
-		new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
-	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))
-		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = change
-		C.ChangeOwner(firer)
-		create_spawner(/datum/spawner/living/mimic, C)
-	else if(isshade(change) || isxeno(change))
-		var/mob/living/M = wabbajack(change)
-		if(!M)
-			return
-		if(firer && iswizard(firer))
-			var/datum/role/wizard/mage = firer.mind.GetRole(WIZARD)
-			var/datum/faction/wizards/federation = mage.GetFaction()
-			if(federation && M.mind)
-				var/datum/role/wizard_apprentice/recruit = add_faction_member(federation, M)
-				var/datum/objective/target/protect/new_objective = recruit.AppendObjective(/datum/objective/target/protect)
-				new_objective.explanation_text = "Help [firer.real_name], the Demiurgos of your new life."
-				new_objective.target = firer.mind
-				var/datum/role/R = M.mind.GetRole(EVIL_SHADE)
-				if(R)
-					R.Deconvert()
-
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"

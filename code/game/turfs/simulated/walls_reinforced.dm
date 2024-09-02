@@ -12,7 +12,7 @@
 
 	sheet_type = /obj/item/stack/sheet/plasteel
 
-	seconds_to_melt = 60
+	seconds_to_melt = 10
 
 	var/d_state = INTACT
 
@@ -49,7 +49,7 @@
 		else
 			stack_trace("Color [color] does not exist")
 	if(new_type && new_type != type)
-		ChangeTurf(/turf/simulated/wall/r_wall)
+		ChangeTurf(new_type)
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

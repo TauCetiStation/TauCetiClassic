@@ -40,7 +40,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/weapon/disk/tech_disk/hud,
 /turf/simulated/floor{
 	icon_state = "darkgreenfull"
 	},
@@ -145,9 +144,9 @@
 /area/space_structures/delivery_shuttle)
 "r" = (
 /obj/machinery/door/poddoor/shutters{
-	dir = 4;
 	id = "pizza";
-	name = "Cargo Compartment Shutters"
+	name = "Cargo Compartment Shutters";
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "darkgreenfull"

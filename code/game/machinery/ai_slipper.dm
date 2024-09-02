@@ -1,7 +1,8 @@
 /obj/machinery/ai_slipper
 	name = "AI Liquid Dispenser"
-	icon = 'icons/obj/device.dmi'
-	icon_state = "motion3"
+	desc = "A remotely-activatable dispenser for crowd-controlling foam."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "ai-slipper0"
 	layer = 3
 	plane = FLOOR_PLANE
 	anchored = TRUE
@@ -27,9 +28,9 @@
 
 /obj/machinery/ai_slipper/update_icon()
 	if(stat)
-		icon_state = "motion0"
+		icon_state = "ai-slipper0"
 	else
-		icon_state = disabled ? "motion0" : "motion3"
+		icon_state = disabled ? "ai-slipper0" : "ai-slipper1"
 
 /obj/machinery/ai_slipper/AICtrlClick()
 	toggle_on()
