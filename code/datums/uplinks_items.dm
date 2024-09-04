@@ -752,7 +752,7 @@
 	category = "Devices and Tools"
 
 /datum/uplink_item/device_tools/pinpointer
-	name = "Advanced Pinpointer"
+	name = "Improved Pinpointer"
 	desc = "A artisanally modified pinpointer for searching for items that your employers are interested in."
 	item = /obj/item/weapon/pinpointer/highriskitems
 	cost = 2

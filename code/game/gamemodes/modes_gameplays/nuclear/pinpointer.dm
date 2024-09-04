@@ -248,19 +248,24 @@
 /obj/item/weapon/pinpointer/highriskitems
 	desc = "A pinpointer designed and configured to search for specific items using a network of quantum signals."
 	origin_tech = "programming=5;bluespace=5"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_pinpointer_mode)
 
-/obj/item/weapon/pinpointer/highriskitems/verb/toggle_mode()
-	set category = "Object"
-	set name = "Toggle Pinpointer Target"
-	set src in view(1)
+/datum/action/item_action/hands_free/toggle_pinpointer_mode
+	name = "Toggle pinpointer"
+
+/datum/action/item_action/hands_free/toggle_pinpointer_mode/Activate()
+	var/obj/item/weapon/pinpointer/highriskitems/P = target
+	P.toggle_mode()
+
+/obj/item/weapon/pinpointer/highriskitems/proc/toggle_mode()
 	reset_target()
 
 	var/datum/objective/steal/itemlist
 	itemlist = itemlist // To supress a 'variable defined but not used' error.
-	var/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in itemlist.possible_items
+	var/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in itemlist::possible_items
 	if(!targetitem)
 		return
-	var/obj/item/item_path = itemlist.possible_items[targetitem]
+	var/obj/item/item_path = itemlist::possible_items[targetitem]
 	for(var/obj/item/I in global.possible_items_for_steal)
 		if(!istype(I, item_path))
 			continue
@@ -273,9 +278,6 @@
 		to_chat(usr, "Failed to locate [targetitem]!")
 		return
 	to_chat(usr, "You set the pinpointer to locate [targetitem]")
-
-	if(mode && target)
-		RegisterSignal(target, list(COMSIG_PARENT_QDELETING), PROC_REF(reset_target))
 
 	return attack_self(usr)
 
