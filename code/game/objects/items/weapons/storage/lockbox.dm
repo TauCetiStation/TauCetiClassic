@@ -20,16 +20,7 @@
 			to_chat(user, "<span class='warning'>It appears to be broken.</span>")
 			return
 		if(allowed(user))
-			locked = !( locked )
-			if(locked)
-				icon_state = icon_locked
-				to_chat(user, "<span class='warning'>You lock the [src]!</span>")
-				close_all() // close the content window for all mobs, when lock lockbox
-				return
-			else
-				icon_state = icon_closed
-				to_chat(user, "<span class='warning'>You unlock the [src]!</span>")
-				return
+			toggle_lock()
 		else
 			to_chat(user, "<span class='warning'>Access Denied</span>")
 			return
@@ -51,6 +42,18 @@
 		return ..()
 	else
 		to_chat(user, "<span class='warning'>Its locked!</span>")
+
+/obj/item/weapon/storage/lockbox/proc/toggle_lock()
+	locked = !( locked )
+	if(locked)
+		icon_state = icon_locked
+		to_chat(usr, "<span class='warning'>You lock the [src]!</span>")
+		close_all() // close the content window for all mobs, when lock lockbox
+		return
+	else
+		icon_state = icon_closed
+		to_chat(usr, "<span class='warning'>You unlock the [src]!</span>")
+		return
 
 /obj/item/weapon/storage/lockbox/attack_hand(mob/user)
 	if ((loc == user) && locked)
@@ -124,7 +127,8 @@
 /obj/item/weapon/storage/lockbox/medal
 	name = "medal box"
 	desc = "A locked box used to store medals of honor."
-	req_access = list(access_captain)
+	req_access = list(access_cent_general)
+	var/list/req_roles = list() //string, role from "datum/mind/assigned_role" (probably better make defines?)
 	icon_state = "medalbox+l"
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
@@ -136,6 +140,15 @@
 	can_hold = list(/obj/item/clothing/accessory/medal)
 
 	var/open = FALSE // used for overlays
+
+/obj/item/weapon/storage/lockbox/medal/attack_self(mob/user)
+	if (req_roles.Find(user.mind.assigned_role))
+		toggle_lock()
+		if(locked)
+			open = FALSE
+			update_overlays()
+	else
+		to_chat(user, "<span class='warning'>Access denied!</span>")
 
 /obj/item/weapon/storage/lockbox/medal/open(mob/user)
 	..()
@@ -180,6 +193,7 @@
 /obj/item/weapon/storage/lockbox/medal/captain
 	name = "Captain medal box"
 	desc = "A locked box used to store medals to be given to crew."
+	req_roles = list("Captain")
 
 	startswith = list(
 		/obj/item/clothing/accessory/medal/conduct,
@@ -196,7 +210,7 @@
 /obj/item/weapon/storage/lockbox/medal/hop
 	name = "Head of Personnel medal box"
 	desc = "A locked box used to store medals to be given to those exhibiting excellence in management."
-	req_access = list(access_hop)
+	req_roles = list("Captain", "Head of Personnel")
 
 	startswith = list(
 		/obj/item/clothing/accessory/medal/gold/bureaucracy,
@@ -207,7 +221,7 @@
 /obj/item/weapon/storage/lockbox/medal/hos
 	name = "security medal box"
 	desc = "A locked box used to store medals to be given to members of the security department."
-	req_access = list(access_hos)
+	req_roles = list("Captain", "Head of Security")
 
 	startswith = list(
 		/obj/item/clothing/accessory/medal/silver/security,
@@ -217,7 +231,7 @@
 /obj/item/weapon/storage/lockbox/medal/cmo
 	name = "medical medal box"
 	desc = "A locked box used to store medals to be given to members of the medical department."
-	req_access = list(access_cmo)
+	req_roles = list("Captain", "Chief Medical Officer")
 
 	startswith = list(
 		/obj/item/clothing/accessory/medal/silver/med_medal,
@@ -226,7 +240,7 @@
 /obj/item/weapon/storage/lockbox/medal/rd
 	name = "science medal box"
 	desc = "A locked box used to store medals to be given to members of the science department."
-	req_access = list(access_rd)
+	req_roles = list("Captain", "Research Director")
 
 	startswith = list(
 		/obj/item/clothing/accessory/medal/plasma/nobel_science,
