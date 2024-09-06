@@ -4339,23 +4339,6 @@
 	icon_state = "dark"
 	},
 /area/station/security/prison)
-"aom" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
-	},
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "kitchen";
-	name = "Kitchen Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/kitchen)
 "aov" = (
 /turf/simulated/wall,
 /area/station/engineering/break_room)
@@ -5399,7 +5382,7 @@
 	icon_state = "2,0"
 	},
 /turf/environment/space,
-/area/shuttle/escape_pod2/station)
+/area/shuttle/escape_pod6/transit)
 "azw" = (
 /obj/structure/closet/crate,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -8716,6 +8699,15 @@
 	icon_state = "dark"
 	},
 /area/station/aisat)
+"bfF" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
+	icon_state = "gr_window_polarized";
+	id = "kitchen"
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/kitchen)
 "bfH" = (
 /obj/machinery/door/poddoor{
 	id = "chapelgun";
@@ -23653,17 +23645,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/maintenance/bridge)
-"dWA" = (
-/obj/structure/kitchenspike,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = 28;
-	pixel_y = -5
-	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/station/civilian/kitchen)
 "dWI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -24121,7 +24102,11 @@
 "ecd" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "pod2"
+	dock_tag = "pod2";
+	name = "Escape Pod 2"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/bridge)
@@ -26733,7 +26718,7 @@
 /obj/structure/rack,
 /obj/item/weapon/tank/emergency_oxygen/double,
 /obj/machinery/light/small,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/bridge/captain_quarters)
 "eAo" = (
 /obj/structure/table,
@@ -37722,7 +37707,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/bridge/captain_quarters)
 "gGk" = (
 /obj/structure/window/thin/reinforced{
@@ -39242,7 +39227,9 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "gTC" = (
 /obj/random/scrap/safe_even,
@@ -39765,7 +39752,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "gYW" = (
 /obj/effect/decal/turf_decal{
@@ -42132,7 +42121,7 @@
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
-/area/station/bridge/captain_quarters)
+/area/shuttle/escape_pod6/transit)
 "hzK" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/departments/cargo{
@@ -42185,7 +42174,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "hAt" = (
 /obj/machinery/light/smart{
@@ -43251,8 +43242,12 @@
 	},
 /area/station/engineering/chiefs_office)
 "hLH" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Escape Pod 1"
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/bridge)
@@ -45256,7 +45251,7 @@
 /area/station/medical/hallway)
 "ifk" = (
 /obj/machinery/door/unpowered/shuttle/pod{
-	dock_tag = "pod2"
+	dock_tag = "pod5"
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/escape_pod5/station)
@@ -47861,7 +47856,11 @@
 "iBO" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "pod3"
+	dock_tag = "pod3";
+	name = "Escape Pod 3"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/brigright)
@@ -55154,7 +55153,7 @@
 /obj/structure/rack,
 /obj/item/weapon/crowbar,
 /obj/item/device/flashlight,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/bridge/captain_quarters)
 "jZj" = (
 /obj/structure/closet/walllocker{
@@ -59250,10 +59249,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"kSK" = (
-/obj/structure/lattice,
-/turf/environment/space,
-/area/station/rnd/mixing)
 "kSM" = (
 /obj/structure/window/thin/reinforced{
 	dir = 8
@@ -63642,8 +63637,10 @@
 	},
 /area/station/security/lobby)
 "lKn" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
-	dock_tag = "pod2"
+	dock_tag = "pod5";
+	name = "Escape Pod 5"
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/medbay)
@@ -65501,9 +65498,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "mbV" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "pod1"
+	dock_tag = "pod1";
+	name = "Escape Pod 1"
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/bridge)
@@ -67063,6 +67064,23 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
+"mte" = (
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/structure/window/fulltile{
+	grilled = 1;
+	icon_state = "gr_window"
+	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "kitchen";
+	name = "Kitchen Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/kitchen)
 "mtm" = (
 /obj/structure/flora/junglebush/c,
 /turf/simulated/floor/grass,
@@ -68211,7 +68229,9 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "mGl" = (
 /obj/item/stack/rods,
@@ -71012,7 +71032,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "niT" = (
 /obj/structure/stool,
@@ -72966,11 +72988,11 @@
 	},
 /area/station/engineering/monitoring)
 "nEb" = (
+/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	name = "Escape Pod 5"
+	name = "Escape Pod 4"
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/disposal)
 "nEc" = (
@@ -80589,7 +80611,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/bridge/captain_quarters)
 "pbZ" = (
 /obj/machinery/space_heater,
@@ -94670,15 +94694,6 @@
 	icon_state = "graychoco"
 	},
 /area/station/cargo/miningoffice)
-"rSA" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/polarized{
-	grilled = 1;
-	icon_state = "gr_window_polarized";
-	id = "kitchen"
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/kitchen)
 "rSJ" = (
 /obj/item/weapon/scrap_lump,
 /obj/effect/decal/cleanable/dirt,
@@ -95911,6 +95926,10 @@
 /area/station/civilian/garden)
 "sfT" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Escape Pod 3"
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
@@ -99857,7 +99876,10 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "sSV" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	name = "Escape Pod 5"
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/medbay)
 "sSY" = (
@@ -101639,7 +101661,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/item/device/radio/beacon,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "tkA" = (
 /turf/environment/space,
@@ -102925,7 +102949,9 @@
 	},
 /area/station/medical/cryo)
 "tuW" = (
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "tvb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
@@ -105213,6 +105239,17 @@
 	icon_state = "Stairs_wide"
 	},
 /area/station/maintenance/bridge)
+"tSM" = (
+/obj/structure/kitchenspike,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/station/civilian/kitchen)
 "tSQ" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -107368,7 +107405,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "ums" = (
 /obj/structure/cable{
@@ -108115,7 +108154,7 @@
 /turf/simulated/floor{
 	icon_state = "wooden"
 	},
-/area/station/bridge/captain_quarters)
+/area/shuttle/escape_pod6/transit)
 "usu" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -110390,7 +110429,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/bridge/captain_quarters)
 "uRz" = (
 /obj/item/weapon/cigbutt,
@@ -110948,8 +110987,15 @@
 /turf/simulated/wall,
 /area/station/medical/hallway/outbranch)
 "uWf" = (
-/turf/environment/space,
-/area/station/rnd/mixing)
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Escape Pod 2"
+	},
+/turf/simulated/floor/grid_floor,
+/area/station/maintenance/bridge)
 "uWh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -114175,7 +114221,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "vGU" = (
 /obj/machinery/disposal,
@@ -119187,7 +119235,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "wDV" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -120988,7 +121038,9 @@
 	name = "apc right";
 	pixel_x = 28
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "wYb" = (
 /obj/structure/grille,
@@ -125095,7 +125147,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
 /area/station/bridge/teleporter)
 "xSm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -149438,7 +149492,7 @@ nJA
 qzc
 pWi
 wsQ
-dWA
+tSM
 nSP
 lNH
 jNf
@@ -150463,7 +150517,7 @@ jnt
 eAF
 aFo
 xbI
-rSA
+bfF
 maO
 vsI
 vsI
@@ -150720,7 +150774,7 @@ jnt
 cXL
 qHr
 nJA
-rSA
+bfF
 lyo
 uyl
 vsI
@@ -150977,7 +151031,7 @@ jnt
 cXL
 qHr
 nJA
-rSA
+bfF
 vTz
 vsI
 vsI
@@ -151494,7 +151548,7 @@ awC
 qzc
 qzc
 qzc
-aom
+mte
 sby
 vVw
 qNU
@@ -168716,7 +168770,7 @@ lnZ
 bbd
 rRo
 vfD
-hLH
+uWf
 hIU
 rRo
 vfD
@@ -174154,7 +174208,7 @@ bIx
 fgF
 ahZ
 ucd
-kSK
+kHU
 ucd
 lDx
 iQO
@@ -174411,7 +174465,7 @@ bIx
 vzu
 twb
 iyO
-uWf
+plf
 vym
 qUp
 qoB
@@ -174668,7 +174722,7 @@ bIx
 lGy
 twb
 iyO
-uWf
+plf
 vym
 wyd
 avY
@@ -174925,7 +174979,7 @@ bIx
 gVJ
 ahZ
 ucd
-kSK
+kHU
 ucd
 pWR
 cKj
