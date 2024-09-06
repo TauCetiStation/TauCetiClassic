@@ -1782,3 +1782,83 @@ The tech datums are the actual "tech trees" that you improve through researching
 	cost = 30000
 
 	unlocks_designs = list("tier4_hud_upgrade")
+
+/datum/technology/healer_gun
+	name = "Medigun"
+	desc = "Medigun"
+	id = "medigun"
+	tech_type = RESEARCH_SPECIAL
+
+	x = 0.1
+	y = 0.6
+	icon = "medigun"
+
+	required_technologies = list("medigun")
+	required_tech_levels = list(RESEARCH_SPECIAL = 1)
+	cost = 0
+
+	unlocks_designs = list("medigun")
+
+/datum/technology/rigstealth
+	name = "RIG Stealth Module"
+	desc = "RIG Stealth Module"
+	id = "rigstealth"
+	tech_type = RESEARCH_SPECIAL
+
+	x = 0.2
+	y = 0.6
+	icon = "rigstealth"
+
+	required_technologies = list("medigun")
+	required_tech_levels = list(RESEARCH_SPECIAL = 2)
+	cost = 15000
+
+	unlocks_designs = list("rigstealth")
+
+/datum/technology/sniperrifle
+	name = "Sniper Rifle"
+	desc = "Sniper Rifle"
+	id = "sniperrifle"
+	tech_type = RESEARCH_SPECIAL
+
+	x = 0.3
+	y = 0.6
+	icon = "sniperrifle"
+
+	required_technologies = list("rigstealth")
+	required_tech_levels = list(RESEARCH_SPECIAL = 3)
+	cost = 15000
+
+	unlocks_designs = list("sniperrifle")
+
+/datum/technology/pulse_rifle
+	name = "Pulse Rifle"
+	desc = "Pulse Rifle"
+	id = "pulse_rifle"
+	tech_type = RESEARCH_SPECIAL
+
+	x = 0.4
+	y = 0.6
+	icon = "pulserifle"
+
+	required_technologies = list("rigstealth")
+	required_tech_levels = list(RESEARCH_SPECIAL = 4)
+	cost = 25000
+
+	unlocks_designs = list("pulse_rifle")
+
+/datum/technology/ds_armor
+	name = "DeathSquad Armor"
+	desc = "DeathSquad Armor"
+	id = "ds_armor"
+	tech_type = RESEARCH_SPECIAL
+
+	x = 0.5
+	y = 0.6
+	icon = "dsarmor"
+
+	required_technologies = list("pulse_rifle")
+	required_tech_levels = list(RESEARCH_SPECIAL = 5)
+	cost = 45000
+
+	unlocks_designs = list("ds_helmet", "ds_armor", "ds_boots")

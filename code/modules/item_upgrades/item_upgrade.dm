@@ -30,7 +30,7 @@
 		return
 	var/mob/living/carbon/glasses_user = usr
 	var/datum/glasses_mode_type_state/state = glasses_states[mode_type]
-	if (enabled)
+	if (enable)
 		state.on()
 	else
 		state.off()

@@ -776,7 +776,11 @@ th.cargo {
 .sciTechTreeIcon.icon-thermalhud { background-position: -224px -320px;}
 .sciTechTreeIcon.icon-4thtier { background-position: -32px -352px;}
 
-
+.sciTechTreeIcon.icon-medigun {	background-position: -64px -352px;}
+.sciTechTreeIcon.icon-rigstealth { background-position: -96px -352px;}
+.sciTechTreeIcon.icon-sniperrifle { background-position: -128px -352px;}
+.sciTechTreeIcon.icon-pulserifle { background-position: -160px -352px;}
+.sciTechTreeIcon.icon-dsarmor { background-position: -192px -352px;}
 
 .sciMenuButton {
     width: 300px;
