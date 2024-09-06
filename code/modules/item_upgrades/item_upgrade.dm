@@ -14,49 +14,28 @@
 	item_state = "sechud"
 	item_state_inventory = "sechud"
 	item_state_world = "sechud_w"
-	body_parts_covered = 0
+	body_parts_covered = EYES
 	hud_types = list(DATA_HUD_SECURITY)
 	item_action_types = list()
 	var/upgrade_tier = 0
 	var/current_mode = null
+	var/static/list/glasses_states = list(
+		HUD_TOGGLEABLE_MODE_NIGHTVISION = new /datum/glasses_mode_type_state/night/nightsight,
+		HUD_TOGGLEABLE_MODE_THERMAL = new /datum/glasses_mode_type_state/thermal/sepia,
+		HUD_TOGGLEABLE_MODE_THERMAL_ADVANCED = new /datum/glasses_mode_type_state/thermal_advanced,
+	)
 
 /obj/item/clothing/glasses/sunglasses/hud/advanced/proc/apply_effects(mode_type, enable)
 	if(!ishuman(usr))
 		return
-	var/mob/living/carbon/human/human = usr
-	switch(mode_type)
-		if(HUD_TOGGLEABLE_MODE_NIGHTVISION)
-			if(enable)
-				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-				sightglassesmod = "nightsight"
-				darkness_view = 7
-			else
-				lighting_alpha = null
-				sightglassesmod = null
-				darkness_view = 0
-		if(HUD_TOGGLEABLE_MODE_THERMAL)
-			if(enable)
-				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-				sightglassesmod = "sepia"
-				vision_flags = SEE_MOBS
-
-			else
-				lighting_alpha = null
-				sightglassesmod = null
-				vision_flags = 0
-
-		if(HUD_TOGGLEABLE_MODE_THERMAL_ADVANCED)
-			if(enable)
-				lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-				darkness_view = 7
-				vision_flags = SEE_MOBS
-			else
-				lighting_alpha = null
-				darkness_view = 0
-				vision_flags = 0
-
+	var/mob/living/carbon/glasses_user = usr
+	var/datum/glasses_mode_type_state/state = glasses_states[mode_type]
+	if (enabled)
+		state.on()
+	else
+		state.off()
 	playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
-	human.update_sight()
+	glasses_user.update_sight()
 	update_item_actions()
 
 
@@ -70,7 +49,7 @@
 	apply_effects(mode_type, TRUE)
 	current_mode = mode_type
 
-/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/upgrade_hud(obj/item/hud_upgrade/hud_upgrade)
+/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/upgrade_hud(obj/item/hud_upgrade/hud_upgrade, mob/living/user)
 	switch(hud_upgrade.tier)
 		if(HUD_UPGRADE_MEDSCAN)
 			item_state = "mixhud"
@@ -93,16 +72,16 @@
 			item_state_inventory = "thermalhudadv"
 			item_state_world = "thermalhudadv_w"
 			for(var/datum/action/item_action/hands_free/switch_hud_modes/night/night_action in item_actions)
-				night_action.Remove(usr)
+				night_action.Remove(user)
 				item_actions.Remove(night_action)
 			for(var/datum/action/item_action/hands_free/switch_hud_modes/thermal/thermal_action in item_actions)
-				thermal_action.Remove(usr)
+				thermal_action.Remove(user)
 				item_actions.Remove(thermal_action)
 			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(src))
 
 	upgrade_tier = hud_upgrade.tier
 	update_world_icon()
-	add_item_actions(usr)
+	add_item_actions(user)
 
 /obj/item/clothing/glasses/sunglasses/hud/advanced/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/hud_upgrade))
@@ -114,7 +93,7 @@
 			to_chat(usr, "<span class='alert'>You have to install previous upgrades</span>")
 			return
 		if(user.is_in_hands(src))
-			upgrade_hud(hud_upgrade)
+			upgrade_hud(hud_upgrade, user)
 			add_item_actions(user)
 		else
 			to_chat(usr, "<span class='alert'>You have to hold huds in hands to upgrade it</span>")
