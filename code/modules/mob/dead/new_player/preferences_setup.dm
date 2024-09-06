@@ -102,5 +102,5 @@
 		S.after_job_equip(mannequin, previewJob, TRUE)
 
 	COMPILE_OVERLAYS(mannequin)
-	parent.show_character_previews(new /mutable_appearance(mannequin))
+	parent.show_character_previews(mutable_appearance_from(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)

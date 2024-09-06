@@ -260,7 +260,7 @@ var/global/list/radial_menus = list()
 
 
 /datum/radial_menu/proc/extract_image(E)
-	var/mutable_appearance/MA = new /mutable_appearance(E)
+	var/mutable_appearance/MA = mutable_appearance_from(E)
 	if(MA)
 		MA.appearance_flags |= (RESET_TRANSFORM|RESET_ALPHA|RESET_COLOR)
 	return MA

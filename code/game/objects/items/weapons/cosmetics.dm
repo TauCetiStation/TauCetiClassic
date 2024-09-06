@@ -320,7 +320,7 @@
 
 	if(!MA)
 		var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
-		MA = new /mutable_appearance(mannequin)
+		MA = mutable_appearance_from(mannequin)
 		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_BARBER)
 		LAZYSET(scissors_icon_cache, hash, MA)
 
