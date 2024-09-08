@@ -103,7 +103,7 @@
 		to_chat(usr, "<span class='alert'>You try to recalibrate huds, but nothing happens</span>")
 		qdel(hud_calibrator)
 		return
-	. = ..()
+	return ..()
 
 /obj/item/hud_upgrade
 	icon = 'icons/obj/item_upgrades.dmi'
