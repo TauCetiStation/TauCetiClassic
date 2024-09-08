@@ -1,7 +1,7 @@
-/datum/export/gatfruit
+/datum/export/peashooter
 	unit_name = "strange fruit"
 	cost = 150
-	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit)
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter)
 
 /*
 /export/grown subtype
