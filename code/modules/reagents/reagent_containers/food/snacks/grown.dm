@@ -218,6 +218,19 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	bitesize = reagents.total_volume
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/cucumber
+	seed_type = /obj/item/seeds/cucumberseed
+	name = "cucumber"
+	desc = "Looks like a cucumber."
+	icon_state = "cucumber"
+	potency = 25
+	filling_color = "#426940"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/cucumber/atom_init()
+	. = ..()
+	reagents.add_reagent("ethylredoxrazine", 1+round((potency / 10), 1))
+	bitesize = reagents.total_volume
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	seed_type = /obj/item/seeds/berryseed
 	name = "bunch of berries"
@@ -1179,17 +1192,16 @@
 	reagents.add_reagent("nutriment", 1 + round(potency / 5))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
-	seed_type = /obj/item/seeds/peashooter
-	name = "peashooter"
-	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
-	desc = "Нераскрывшийся плод горохострела, подозрительно напоминающий пистолет"
-	icon_state = "peashooter"
+/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
+	seed_type = /obj/item/seeds/gatfruit
+	name = "gatfruit"
+	desc = "It smells like burning."
+	icon_state = "gatfruit"
 	potency = 25
 	filling_color = "#020108"
-	trash = /obj/item/weapon/gun/projectile/automatic/pistol/peashooter
+	trash = /obj/item/weapon/gun/projectile/revolver
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter/atom_init()
+/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit/atom_init()
 	. = ..()
 	reagents.add_reagent("potassium", 1 + round(potency / 25, 1))
 	reagents.add_reagent("carbon", 1 + round(potency / 10, 1))

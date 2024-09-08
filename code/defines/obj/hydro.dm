@@ -78,14 +78,13 @@
 		return FALSE
 	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
-/obj/item/seeds/peashooter
-	name = "pack of peashooter seeds"
-	cases = list("семена Горохострела", "семян Горохострела", "семенам Горохострела", "семена Горохострела", "семенами Горохострела", "семенах Горохострела")
-	desc = "Эти семена вырастают в Горохострел"
+/obj/item/seeds/gatfruit
+	name = "pack of gatfruit seeds"
+	desc = "These seeds grow into .357 revolvers."
 	icon_state = "seed-gatfruit"
-	species = "peashooter"
-	plantname = "Peashooter Tree"
-	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
+	species = "gatfruit"
+	plantname = "Gatfruit Tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
 	lifespan = 20
 	endurance = 20
 	maturation = 10
@@ -116,7 +115,7 @@
 	if(!istype(E, /datum/disease2/effect/gibbingtons))
 		return
 	if(prob(holder.stage * 10))
-		mutatelist = list(/obj/item/seeds/peashooter)
+		mutatelist = list(/obj/item/seeds/gatfruit)
 		tray.mutatespecie()
 
 /obj/item/seeds/chiliseed
@@ -206,6 +205,23 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 1
+
+/obj/item/seeds/cucumberseed
+	name = "pack of cucumber seeds"
+	desc = "These seeds grow into cucumber."
+	icon_state = "seed-cucumber"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	species = "cucumber"
+	plantname = "Cucumbers"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cucumber
+	lifespan = 45
+	endurance = 20
+	maturation = 3
+	production = 5
+	yield = 3
+	potency = 7
+	plant_type = 0
+	growthstages = 4
 
 /obj/item/seeds/tobacco_space
 	name = "pack of space tobacco seeds"

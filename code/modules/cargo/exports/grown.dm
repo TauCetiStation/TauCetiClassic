@@ -1,7 +1,7 @@
-/datum/export/peashooter
+/datum/export/gatfruit
 	unit_name = "strange fruit"
 	cost = 150
-	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter)
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit)
 
 /*
 /export/grown subtype
@@ -69,6 +69,11 @@ use it if low potency results garbage from harvested crop
 	unit_name = "pack of banana seeds"
 	cost = 15
 	export_types = list(/obj/item/seeds/bananaseed)
+
+/datum/export/seed/cucumber
+	unit_name = "pack of cucumber seeds"
+	cost = 5
+	export_types = list(/obj/item/seeds/cucumberseed)
 
 /datum/export/seed/rice
 	unit_name = "pack of rice seeds"
