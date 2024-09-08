@@ -92,12 +92,11 @@
 		if(upgrade_tier < hud_upgrade.tier - 1)
 			to_chat(usr, "<span class='alert'>You have to install previous upgrades</span>")
 			return
-		if(user.is_in_hands(src))
-			upgrade_hud(hud_upgrade, user)
-			add_item_actions(user)
-		else
+		if(!user.is_in_hands(src))
 			to_chat(usr, "<span class='alert'>You have to hold huds in hands to upgrade it</span>")
 			return
+		upgrade_hud(hud_upgrade, user)
+		add_item_actions(user)
 		qdel(hud_upgrade)
 	if(istype(W, /obj/item/device/hud_calibrator))
 		var/obj/item/device/hud_calibrator = W
