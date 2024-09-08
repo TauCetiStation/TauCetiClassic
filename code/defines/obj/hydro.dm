@@ -78,13 +78,14 @@
 		return FALSE
 	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
-/obj/item/seeds/gatfruit
-	name = "pack of gatfruit seeds"
-	desc = "These seeds grow into .357 revolvers."
+/obj/item/seeds/peashooter
+	name = "pack of peashooter seeds"
+	cases = list("семена Горохострела", "семян Горохострела", "семенам Горохострела", "семена Горохострела", "семенами Горохострела", "семенах Горохострела")
+	desc = "Эти семена вырастают в Горохострел"
 	icon_state = "seed-gatfruit"
-	species = "gatfruit"
-	plantname = "Gatfruit Tree"
-	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
+	species = "peashooter"
+	plantname = "Peashooter Tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
 	lifespan = 20
 	endurance = 20
 	maturation = 10
@@ -115,7 +116,7 @@
 	if(!istype(E, /datum/disease2/effect/gibbingtons))
 		return
 	if(prob(holder.stage * 10))
-		mutatelist = list(/obj/item/seeds/gatfruit)
+		mutatelist = list(/obj/item/seeds/peashooter)
 		tray.mutatespecie()
 
 /obj/item/seeds/chiliseed
