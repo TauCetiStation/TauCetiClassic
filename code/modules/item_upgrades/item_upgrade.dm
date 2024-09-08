@@ -87,20 +87,20 @@
 	if(istype(W, /obj/item/hud_upgrade))
 		var/obj/item/hud_upgrade/hud_upgrade = W
 		if(upgrade_tier >= hud_upgrade.tier)
-			to_chat(usr, "<span class='notice'>You've already installed that upgrade</span>")
+			to_chat(user, "<span class='notice'>You've already installed that upgrade</span>")
 			return
 		if(upgrade_tier < hud_upgrade.tier - 1)
-			to_chat(usr, "<span class='alert'>You have to install previous upgrades</span>")
+			to_chat(user, "<span class='alert'>You have to install previous upgrades</span>")
 			return
 		if(!user.is_in_hands(src))
-			to_chat(usr, "<span class='alert'>You have to hold huds in hands to upgrade it</span>")
+			to_chat(user, "<span class='alert'>You have to hold huds in hands to upgrade it</span>")
 			return
 		upgrade_hud(hud_upgrade, user)
 		add_item_actions(user)
 		qdel(hud_upgrade)
 	if(istype(W, /obj/item/device/hud_calibrator))
 		var/obj/item/device/hud_calibrator = W
-		to_chat(usr, "<span class='alert'>You try to recalibrate huds, but nothing happens</span>")
+		to_chat(user, "<span class='alert'>You try to recalibrate huds, but nothing happens</span>")
 		qdel(hud_calibrator)
 		return
 	return ..()
@@ -113,25 +113,28 @@
 	desc = "Allows HUD to show damage on person."
 	item_state_inventory = "medscan"
 	item_state_world = "medscan_w"
-	tier = 1
+	tier = HUD_UPGRADE_MEDSCAN
+
 /obj/item/hud_upgrade/night
 	name = "Basic Nightvision HUD upgrade"
 	desc = "Allows HUD to turn a basic nightvision mode. Can be installed only after damage scan upgrade"
 	item_state_inventory = "nightvision"
 	item_state_world = "nightvision_w"
-	tier = 2
+	tier = HUD_UPGRADE_NIGHTVISION
+
 /obj/item/hud_upgrade/thermal
 	name = "Thermal HUD upgrade"
 	desc = "Allows HUD to turn a basic thermal mode, makes nightvision mode more comfortable for use. Can be installed only after basic nightvision upgrade"
 	item_state_inventory = "thermal"
 	item_state_world = "thermal_w"
-	tier = 3
+	tier = HUD_UPGRADE_THERMAL
+
 /obj/item/hud_upgrade/thermal_advanced
 	name = "Advanced Thermal HUD upgrade"
 	desc = "Makes thermal mode comfortable and combines it with nightvision mode. Can be installed only after thermal upgrade"
 	item_state_inventory = "thermaladv"
 	item_state_world = "thermaladv_w"
-	tier = 4
+	tier = HUD_UPGRADE_THERMAL_ADVANCED
 
 /datum/action/item_action/hands_free/switch_hud_modes
 	name = "Switch Mode"
