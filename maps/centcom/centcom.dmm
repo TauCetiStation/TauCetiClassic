@@ -4550,9 +4550,16 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "alx" = (
-/obj/item/weapon/reagent_containers/glass/bucket/full,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/weapon/mop,
+/obj/effect/decal/turf_decal/metal{
+	dir = 4;
+	icon_state = "siding_thinplating_line"
+	},
+/obj/machinery/door_control{
+	id = "smindicate";
+	name = "external blast doors control";
+	pixel_x = 27;
+	req_access = list(150)
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -4638,6 +4645,7 @@
 	dir = 4;
 	icon_state = "siding_thinplating_line"
 	},
+/obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -14512,6 +14520,9 @@
 	dir = 4;
 	icon_state = "siding_thinplating_line"
 	},
+/obj/structure/rack,
+/obj/item/weapon/mop,
+/obj/item/weapon/reagent_containers/glass/bucket,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -22894,6 +22905,13 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
+/obj/machinery/door/poddoor{
+	id = "smindicate";
+	name = "Security Door";
+	density = 0;
+	icon_state = "pdoor0";
+	opacity = 0
+	},
 /obj/machinery/door/airlock/external{
 	dir = 4;
 	frequency = 1331;
@@ -22915,6 +22933,13 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "bRb" = (
+/obj/machinery/door/poddoor{
+	id = "smindicate";
+	name = "Security Door";
+	density = 0;
+	icon_state = "pdoor0";
+	opacity = 0
+	},
 /obj/machinery/door/airlock/external{
 	dir = 4;
 	frequency = 1331;
@@ -86834,7 +86859,7 @@ aHP
 akM
 akM
 akM
-alx
+akM
 akM
 akM
 aJR
@@ -87349,7 +87374,7 @@ akM
 akN
 aGs
 aGx
-aGx
+alx
 anx
 aKv
 als

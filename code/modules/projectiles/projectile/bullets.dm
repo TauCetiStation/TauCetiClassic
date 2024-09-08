@@ -70,6 +70,11 @@
 	hitscan = 1
 	armor_multiplier = 0.7
 
+/obj/item/projectile/bullet/peabullet
+	name = "pea bullet"
+	damage = 5
+	agony = 5
+
 /obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25
 

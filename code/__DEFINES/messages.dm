@@ -3,7 +3,7 @@
 #define MAX_BOOK_MESSAGE_LEN  27648
 #define MAX_NAME_LEN          26
 #define MAX_LNAME_LEN         64
-#define MAX_REV_REASON_LEN    255
+#define MAX_MEDAL_REASON_LEN  128
 
 //#define SHOWMSG_SELF
 #define SHOWMSG_VISUAL (1<<0)

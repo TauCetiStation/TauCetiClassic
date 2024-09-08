@@ -637,3 +637,12 @@
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c45r
 	max_ammo = 6
+
+/obj/item/ammo_box/magazine/pea
+	name = "pealoader"
+	cases = list("гороховый зарядник", "горохового зарядника", "гороховому заряднику", "гороховый зарядник", "гороховым зарядником", "гороховом заряднике")
+	desc = "Гороховый зарядник для горохового пистолета."
+	caliber = "Pea"
+	ammo_type = /obj/item/ammo_casing/pea
+	max_ammo = 6
+	origin_tech = "combat=2"

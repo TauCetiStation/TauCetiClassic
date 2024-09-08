@@ -38,7 +38,7 @@
 	equip_to_slot_or_del(new /obj/item/weapon/shovel(src), SLOT_L_HAND)
 	for(var/obj/item/loot in contents)
 		loot.make_old()
-	randomize_human(src)
+	randomize_appearance()
 	sight |= SEE_BLACKNESS
 
 /mob/proc/make_bum()

@@ -28,6 +28,18 @@
 	// string, anything
 	var/desc
 
+/datum/stat/medal
+	// string, anything
+	var/key
+	// string, anything
+	var/target_name
+	// string, anything
+	var/medal_name
+	// string, anything
+	var/parent_name // person who awarded medal
+	//string, anything
+	var/reason
+
 /datum/stat/score
 	// int, [0...]
 	var/crewscore      = 0 // this is the overall var/score for the whole round

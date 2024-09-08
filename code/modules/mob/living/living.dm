@@ -576,16 +576,12 @@
 
 	SetDrunkenness(0)
 
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.shock_stage = 0
-
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			H.restore_blood()
-			H.full_prosthetic = null
-			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-			Heart?.heart_normalize()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.restore_blood()
+		H.full_prosthetic = null
+		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+		Heart?.heart_normalize()
 
 	restore_all_bodyparts()
 	restore_all_organs()
@@ -1060,6 +1056,11 @@
 		return
 
 	if(crawling)
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			if(C.traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
+				to_chat(C, "<span class='danger'>I'm in so much pain! I can not get up!</span>")
+				return
 		crawl_getup = TRUE
 		if(do_after(src, 10, target = src))
 			crawl_getup = FALSE
