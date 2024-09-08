@@ -47,7 +47,8 @@
 	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/saber
-	spread = 1
+	spread_increase = 0.5
+	spread_max = 1.5
 	fire_delay = 0
 
 /obj/item/weapon/gun/projectile/automatic/saber/atom_init()
@@ -65,7 +66,8 @@
 	initial_mag = /obj/item/ammo_box/magazine/mac10
 	can_be_silenced = TRUE
 	fire_delay = 0
-	spread = 1.5
+	spread_increase = 0.25
+	spread_max = 2
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi/atom_init()
 	. = ..()
@@ -85,7 +87,8 @@
 	can_be_silenced = TRUE
 	has_ammo_counter = TRUE
 	fire_delay = 0
-	spread = 1
+	spread_increase = 0.25
+	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/c20r/atom_init()
 	. = ..()
@@ -104,7 +107,8 @@
 	two_hand_weapon = ONLY_TWOHAND
 	has_ammo_counter = TRUE
 	fire_delay = 0
-	spread = 1.5
+	spread_increase = 0.5
+	spread_max = 2
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/atom_init()
 	. = ..()
@@ -163,7 +167,8 @@
 	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
 	can_be_silenced = TRUE
 	fire_delay = 0
-	spread = 1
+	spread_increase = 0.25
+	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/l13/atom_init()
 	. = ..()
@@ -182,7 +187,8 @@
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_silenced = TRUE
 	fire_delay = 0
-	spread = 1.5
+	spread_increase = 0.25
+	spread_max = 2
 
 /obj/item/weapon/gun/projectile/automatic/tommygun/atom_init()
 	. = ..()
@@ -199,6 +205,8 @@
 	initial_mag = /obj/item/ammo_box/magazine/bar
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	fire_delay = 0
+	spread_increase = 0.5
+	spread_max = 1
 
 /obj/item/weapon/gun/projectile/automatic/bar/atom_init()
 	. = ..()
@@ -210,7 +218,6 @@
 	initial_mag = /obj/item/ammo_box/magazine/borg45
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	has_ammo_counter = TRUE
-	spread = 1
 	burst = 3
 	burst_delay = 2
 
@@ -252,7 +259,8 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/a28, /obj/item/ammo_box/magazine/a28/nonlethal, /obj/item/ammo_box/magazine/a28/incendiary)
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	fire_delay = 0
-	spread = 1
+	spread_increase = 0.5
+	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/a28/atom_init()
 	. = ..()
@@ -270,7 +278,8 @@
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
 	fire_delay = 0
-	spread = 1
+	spread_increase = 0.5
+	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/a74/atom_init()
 	. = ..()
@@ -359,7 +368,8 @@
 	two_hand_weapon = DESIRABLE_TWOHAND
 	fire_delay = 3
 	burst = 3
-	spread = 1.5
+	spread_increase = 0.5
+	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/m41a/process_chamber()
 	return ..(1, 1, 1)
@@ -391,7 +401,6 @@
 		"<span class='warning'>You activate your [launcher].</span>",\
 		"You hear an ominous click.")
 	else
-		spread = 1.5
 		burst = 3
 		user.visible_message("<span class='notice'>[user] presses a button, deciding to stop the bombings.</span>",\
 		"<span class='notice'>You deactivate your [launcher].</span>",\

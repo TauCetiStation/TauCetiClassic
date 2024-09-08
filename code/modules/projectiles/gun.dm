@@ -41,6 +41,8 @@
 	var/two_hand_weapon = FALSE
 	var/burst = 1 //burst size
 	var/burst_delay = 1 //cooldown between burst shots
+	var/spread_increase = 0 // per shot
+	var/spread_max = 0
 	var/spread = 0
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
@@ -48,6 +50,12 @@
 
 /datum/action/item_action/hands_free/switch_gun
 	name = "Switch Gun"
+
+/obj/item/weapon/gun/process()
+	if(spread == 0)
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		spread = clamp(spread - 0.1, 0, spread_max)
 
 /obj/item/weapon/gun/examine(mob/user)
 	..()
@@ -83,12 +91,21 @@
 		var/skill_recoil_duration = max(DEFAULT_DURATION_RECOIL, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
 		if(two_hand_weapon != DESIRABLE_TWOHAND)
 			shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
+			if(spread_increase)
+				spread = clamp(spread + spread_increase, 0, spread_max)
+				START_PROCESSING(SSfastprocess, src)
 		if(two_hand_weapon == DESIRABLE_TWOHAND)
 			//No OPTIMAL_POWER_RECOIL only for increasing user's motivation to drop other hand
 			if(user.get_inactive_hand())
 				shake_camera(user, recoil + 2, recoil + 1)
+				if(spread_increase)
+					spread = clamp(spread + spread_increase + 1, 0, spread_max)
+					START_PROCESSING(SSfastprocess, src)
 			else
 				shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
+				if(spread_increase)
+					spread = clamp(spread + spread_increase, 0, spread_max)
+					START_PROCESSING(SSfastprocess, src)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)

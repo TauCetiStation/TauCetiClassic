@@ -66,6 +66,8 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/stechkin, /obj/item/ammo_box/magazine/stechkin/extended)
 	can_be_silenced = TRUE
 	fire_delay = 0
+	spread_increase = 0.5
+	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/pistol/stechkin/atom_init()
 	. = ..()
