@@ -102,6 +102,7 @@
 		var/obj/item/device/hud_calibrator = W
 		to_chat(usr, "<span class='alert'>You try to recalibrate huds, but nothing happens</span>")
 		qdel(hud_calibrator)
+		return
 	. = ..()
 
 /obj/item/hud_upgrade
