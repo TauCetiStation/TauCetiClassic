@@ -231,6 +231,7 @@
 			// Enough to make us sleep as well
 			if(SA_pp > SA_sleep_min)
 				Sleeping(10 SECONDS)
+				analgesic = clamp(analgesic + 5, 0, 10)
 
 		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 		else if(SA_pp > SA_giggle_min)
@@ -840,6 +841,9 @@
 
 	if(IsSleeping())
 		to_chat(src, "<span class='rose'>You are already sleeping</span>")
+		return
+	if(traumatic_shock >= TRAUMATIC_SHOCK_SERIOUS)
+		to_chat(src, "<span class='danger'>The pain keeps you from sleeping.</span>")
 		return
 	if(tgui_alert(src, "You sure you want to sleep for a while?","Sleep", list("Yes","No")) == "Yes")
 		SetSleeping(40 SECONDS) //Short nap

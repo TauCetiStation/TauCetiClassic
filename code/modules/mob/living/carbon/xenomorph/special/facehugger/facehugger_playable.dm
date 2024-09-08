@@ -245,7 +245,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
-			H.SetShockStage(20)
+			H.setHalLoss(20)
 			H.Stun(1)
 			H.Weaken(1)
 			H.emote("scream")
