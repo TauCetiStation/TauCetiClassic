@@ -130,7 +130,7 @@
 /obj/item/seeds/chiliseed
 	name = "pack of chili seeds"
 	cases = list("семена перца чили", "семян перца чили", "семенам перца чили", "семена перца чили", "семенами перца чили", "семенах перца чили")
-	desc = "Из этих семян вырастает перец чили. ГОРЯЧО! ГОРЯЧО! ГОРЯЧО!"
+	desc = "Из этих семян вырастает перец чили. ОСТРО! ЖЖЕТ!"
 	icon_state = "seed-chili"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "chili"
@@ -616,7 +616,7 @@
 /obj/item/seeds/potatoseed
 	name = "pack of potato seeds"
 	cases = list("семена картофеля", "семян картофеля", "семенам картофеля", "семена картофеля", "семенами картофеля", "семенах картофеля")
-	desc = "Свари! Сомни! Потуши! Но для начала посади в грядку."
+	desc = "Вари! Толки! Туши! Но для начала посади в грядку."
 	icon_state = "seed-potato"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "potato"
