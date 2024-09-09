@@ -30,7 +30,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
 		var/msg
-		msg = "<span class='info'>*---------*\n Это \a <span class='name'>[CASE(src, NOMINATIVE_CASE)]</span>\n"
+		msg = "<span class='info'>*---------*\n Это <span class='name'>[CASE(src, NOMINATIVE_CASE)]</span>\n"
 		switch(plant_type)
 			if(0)
 				msg += "- Plant type: <i>Normal plant</i>\n"
@@ -52,7 +52,7 @@
 /obj/item/weapon/grown/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
 		var/msg
-		msg = "<span class='info'>*---------*\n Это \a <span class='name'>[CASE(src, NOMINATIVE_CASE)]</span>\n"
+		msg = "<span class='info'>*---------*\n Это <span class='name'>[CASE(src, NOMINATIVE_CASE)]</span>\n"
 		switch(plant_type)
 			if(0)
 				msg += "- Plant type: <i>Normal plant</i>\n"
