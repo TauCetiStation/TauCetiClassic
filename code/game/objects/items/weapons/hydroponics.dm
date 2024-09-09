@@ -1,8 +1,8 @@
 /* Hydroponic stuff
  * Contains:
  *		Sunflowers
- *		
- *		Death
+ *		Nettle
+ *		Deathnettle
  *		Corbcob
  */
 
@@ -11,7 +11,7 @@
  */
 
 /obj/item/weapon/grown/sunflower/attack(mob/M, mob/user)
-	to_chat(M, "<font color='green'><b>[user]</b> ударяет тебя подсолнухом!</font><font color='yellow'><b>ЦВЕТОЧНАЯ СИЛА</b></font>")
+	to_chat(M, "<font color='green'><b>[user]</b> smacks you with a sunflower!</font><font color='yellow'><b>FLOWER POWER</b></font>")
 	to_chat(user, "<font color='green'>Your sunflower's </font><font color='yellow'><b>FLOWER POWER</b></font><font color='green'> strikes [M]</font>")
 
 /obj/item/weapon/grown/sunflower/attackby(obj/item/I, mob/user, params)
@@ -50,7 +50,7 @@
 		return
 
 	if(!H.gloves)
-		to_chat(H, "<span class='warning'>[CASE(src, NOMINATIVE_CASE)] обжигает вашу голую руку!</span>")
+		to_chat(H, "<span class='warning'>The [src] burns your bare hand!</span>")
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 		BP.take_damage(0, force)
 
@@ -60,7 +60,7 @@
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 	else
-		to_chat(usr, "От сильных ударов с крапивы опали все листья.")
+		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		qdel(src)
 
 /obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
@@ -68,10 +68,10 @@
 	force = round((5+potency/5), 1)
 
 /*
- * Death
+ * Deathnettle
  */
 
-/obj/item/weapon/grown/death/pickup(mob/living/user)
+/obj/item/weapon/grown/deathnettle/pickup(mob/living/user)
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -84,12 +84,12 @@
 
 	if(prob(50))
 		user.Paralyse(5)
-		to_chat(user, "<span class='warning'>Вы были оглушены [CASE(src, ABLATIVE_CASE)] которую попытались взять!</span>")
+		to_chat(user, "<span class='warning'>You are stunned by \the [src] when you try picking it up!</span>")
 
-/obj/item/weapon/grown/death/attack(mob/living/carbon/M, mob/user)
+/obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(isliving(M))
-		to_chat(M, "<span class='warning'>Вы ошеломлены мощной кислотой!</span>")
+		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>")
 
 		M.log_combat(user, "stunned with [name]")
 
@@ -101,16 +101,16 @@
 			M.Weaken(force/15)
 		M.drop_item()
 
-/obj/item/weapon/grown/death/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/grown/deathnettle/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if (force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 
 	else
-		to_chat(usr, "От сильных ударов со смерто-крапивы опали все листья.")
+		to_chat(usr, "All the leaves have fallen off the deathnettle from violent whacking.")
 		qdel(src)
 
-/obj/item/weapon/grown/death/changePotency(newValue) //-QualityVan
+/obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
 	potency = newValue
 	force = round((5+potency/2.5), 1)
 
