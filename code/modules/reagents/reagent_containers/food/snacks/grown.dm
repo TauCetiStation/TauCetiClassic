@@ -415,7 +415,7 @@
 	seed_type = /obj/item/seeds/laughweedseed
 	name = "laughweed"
 	cases = list("смехтрава", "смехтравы", "смехтраве", "смехтрава", "смехтравой", "смехтраве")	
-	desc = "Але, это Пакистан?"
+	desc = "У нас было 2 пакетика травы..."
 	icon_state = "laughweed"
 	item_state_world = "laughweed_world"
 	potency = 10
@@ -432,7 +432,7 @@
 	seed_type = /obj/item/seeds/megaweedseed
 	name = "megaweed"
 	cases = list("мегатравка", "мегатравки", "мегатравке", "мегатравка", "мегатравкой", "мегатравке")	
-	desc = "Але, это Пакистан."
+	desc = "У нас было 2 пакетика мегатравы..."
 	icon_state = "megaweed"
 	item_state_world = "megaweed_world"
 	potency = 10
