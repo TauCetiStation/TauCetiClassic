@@ -49,37 +49,9 @@
 	apply_effects(mode_type, TRUE)
 	current_mode = mode_type
 
-/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/upgrade_hud(obj/item/hud_upgrade/hud_upgrade, mob/living/user)
-	switch(hud_upgrade.tier)
-		if(HUD_UPGRADE_MEDSCAN)
-			item_state = "mixhud"
-			item_state_inventory = "mixhud"
-			item_state_world = "mixhud_w"
-			hud_types.Add(DATA_HUD_MEDICAL_ADV)
-			def_hud_types.Add(DATA_HUD_MEDICAL_ADV)
-		if(HUD_UPGRADE_NIGHTVISION)
-			item_state = "nvghud"
-			item_state_inventory = "nvghud"
-			item_state_world = "nvghud_w"
-			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
-		if(HUD_UPGRADE_THERMAL)
-			item_state = "thermalhud"
-			item_state_inventory = "thermalhud"
-			item_state_world = "thermalhud_w"
-			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
-		if(HUD_UPGRADE_THERMAL_ADVANCED)
-			item_state = "thermalhudadv"
-			item_state_inventory = "thermalhudadv"
-			item_state_world = "thermalhudadv_w"
-			for(var/datum/action/item_action/hands_free/switch_hud_modes/night/night_action in item_actions)
-				night_action.Remove(user)
-				item_actions.Remove(night_action)
-			for(var/datum/action/item_action/hands_free/switch_hud_modes/thermal/thermal_action in item_actions)
-				thermal_action.Remove(user)
-				item_actions.Remove(thermal_action)
-			item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(src))
-
-	upgrade_tier = hud_upgrade.tier
+/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/upgrade_hud(obj/item/hud_upgrade/hud_upgrader, mob/living/user)
+	hud_upgrader.upgrade_hud(src, user)
+	upgrade_tier = hud_upgrader.tier
 	update_world_icon()
 	add_item_actions(user)
 
@@ -108,33 +80,78 @@
 /obj/item/hud_upgrade
 	icon = 'icons/obj/item_upgrades.dmi'
 	var/tier = 0
+
+/obj/item/hud_upgrade/proc/upgrade_hud(/obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
+	if(glasses_item_state)
+		glasses.item_state = glasses_item_state
+	if(glasses_item_state_inventory)
+		glasses.item_state_inventory = glasses_item_state_inventory
+	if(glasses_item_state_world)
+		glasses.item_state_world = glasses_item_state_world
+
 /obj/item/hud_upgrade/medscan
 	name = "Damage Scan Upgrade"
 	desc = "Allows HUD to show damage on person."
 	item_state_inventory = "medscan"
 	item_state_world = "medscan_w"
+	glasses_item_state = "mixhud"
+	glasses_item_state_inventory = "mixhud"
+	glasses_item_state_world = "mixhud_w"
 	tier = HUD_UPGRADE_MEDSCAN
+
+/obj/item/hud_upgrade/medscan/upgrade_hud(/obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
+	..()
+	glasses.hud_types.Add(DATA_HUD_MEDICAL_ADV)
+	glasses.def_hud_types.Add(DATA_HUD_MEDICAL_ADV)
 
 /obj/item/hud_upgrade/night
 	name = "Basic Nightvision HUD upgrade"
 	desc = "Allows HUD to turn a basic nightvision mode. Can be installed only after damage scan upgrade"
 	item_state_inventory = "nightvision"
 	item_state_world = "nightvision_w"
+	glasses_item_state = "nvghud"
+	glasses_item_state_inventory = "nvghud"
+	glasses_item_state_world = "nvghud_w"
 	tier = HUD_UPGRADE_NIGHTVISION
+
+/obj/item/hud_upgrade/night/upgrade_hud(/obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
+	..()
+	glasses.item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
 
 /obj/item/hud_upgrade/thermal
 	name = "Thermal HUD upgrade"
 	desc = "Allows HUD to turn a basic thermal mode, makes nightvision mode more comfortable for use. Can be installed only after basic nightvision upgrade"
 	item_state_inventory = "thermal"
 	item_state_world = "thermal_w"
+	glasses_item_state = "thermalhud"
+	glasses_item_state_inventory = "thermalhud"
+	glasses_item_state_world = "thermalhud_w"
 	tier = HUD_UPGRADE_THERMAL
+
+/obj/item/hud_upgrade/thermal/upgrade_hud(/obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
+	..()
+	item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
 
 /obj/item/hud_upgrade/thermal_advanced
 	name = "Advanced Thermal HUD upgrade"
 	desc = "Makes thermal mode comfortable and combines it with nightvision mode. Can be installed only after thermal upgrade"
 	item_state_inventory = "thermaladv"
 	item_state_world = "thermaladv_w"
+	glasses_item_state = "thermalhudadv"
+	glasses_item_state_inventory = "thermalhudadv"
+	glasses_item_state_world = "thermalhudadv_w"
 	tier = HUD_UPGRADE_THERMAL_ADVANCED
+
+/obj/item/hud_upgrade/thermal_advanced/upgrade_hud(/obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
+	..()
+	for(var/datum/action/item_action/hands_free/switch_hud_modes/night/night_action in glasses.item_actions)
+		night_action.Remove(user)
+		glasses.item_actions.Remove(night_action)
+	for(var/datum/action/item_action/hands_free/switch_hud_modes/thermal/thermal_action in glasses.item_actions)
+		thermal_action.Remove(user)
+		glasses.item_actions.Remove(thermal_action)
+	glasses.item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(src))
+
 
 /datum/action/item_action/hands_free/switch_hud_modes
 	name = "Switch Mode"
