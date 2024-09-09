@@ -336,7 +336,6 @@
 		autocategory = !autocategory
 	else if(href_list["label_text"])
 		var/T = sanitize(input("Введите текст бирки:", "Маркировщик", label, null)  as text)
-		if(T)
 			label = T
 	else if(href_list["change_mode"])
 		mode++
@@ -456,9 +455,6 @@
 		openwindow(user)
 
 /obj/item/device/tagger/proc/label(obj/target, mob/user)
-	if(!label || !length(label))
-		to_chat(user, "<span class='notice'>Нет текста на бирке.</span>")
-		return
 	if(length(target.name) + length(label) > 64)
 		to_chat(user, "<span class='notice'>Текст бирки слишком большой.</span>")
 		return
@@ -472,9 +468,22 @@
 		to_chat(user, "<span class='notice'>The label can't stick to the [target.name].  (Try using a pen)</span>")
 		return
 
-	user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
-						 "<span class='notice'>You label [target] as [label].</span>")
-	target.name = "[target.name] ([label])"
+	if(!label || !length(label))
+		remove_label(target, user)
+		return
+
+	var/datum/component/label/labelcomponent = target.GetComponent(/datum/component/label)
+	if(labelcomponent)
+		if(labelcomponent.label_name == label)
+			to_chat(user, "<span class='warning'>It already has the same label.</span>")
+			return
+
+	user.visible_message("<span class='notice'>[user] labels [target] as \"[label]\".</span>", "<span class='notice'>You label [target] as \"[label]\".</span>")
+
+	log_admin("[user] has labeled [target.name] with label \"[label]\". (CKEY: ([user.ckey]))")
+
+	target.AddComponent(/datum/component/label, label)
+
 
 /obj/item/device/tagger/proc/get_category(obj/target)
 	if(istype(target, /obj/item/weapon/reagent_containers/food))
@@ -494,6 +503,17 @@
 	else
 		return "Разное"
 
+
+/obj/item/device/tagger/proc/remove_label(atom/A, mob/user)
+	var/datum/component/label/label = A.GetComponent(/datum/component/label)
+	if(label)
+		user.visible_message("<span class='notice'>[user] removes label from [A].</span>", "<span class='notice'>You remove the label from [A].</span>")
+		label.remove_label()
+		log_admin("[user] has removed label from [A.name]. (CKEY: ([user.ckey]))")
+		return
+	else
+		to_chat(user, "<span class='notice'>There is no label to remove.</span>")
+		return
 
 /obj/machinery/disposal/deliveryChute
 	name = "Delivery chute"
