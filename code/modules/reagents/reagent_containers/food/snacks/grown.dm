@@ -363,7 +363,7 @@
 	seed_type = /obj/item/seeds/poisonberryseed
 	name = "bunch of poison-berries"
 	cases = list("гроздь ядовитых ягод", "грозди ядовитых ягод", "грозди ядовитых ягод", "гроздь ядовитых ягод", "гроздью ядовитых ягод", "грозди ядовитых ягод")	
-	desc = "Смертельно вкусно, но ты скорее всего умрешь."
+	desc = "Смертельно вкусные ягоды."
 	icon_state = "poisonberrypile"
 	gender = PLURAL
 	potency = 15
