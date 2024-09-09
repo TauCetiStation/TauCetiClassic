@@ -143,7 +143,7 @@
 	seed_type = /obj/item/seeds/potatoseed
 	name = "potato"
 	cases = list("картофель", "картофеля", "картофелю", "картофель", "картофелем", "картофеле")	
-	desc = "Свари! Сомни! Потуши!"
+	desc = "Вари! Толки! Туши!"
 	icon_state = "potato"
 	potency = 25
 	filling_color = "#e6e8da"
