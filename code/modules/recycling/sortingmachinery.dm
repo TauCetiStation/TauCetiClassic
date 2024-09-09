@@ -335,8 +335,8 @@
 	else if(href_list["autocateg"])
 		autocategory = !autocategory
 	else if(href_list["label_text"])
-		var/T = sanitize(input("Введите текст бирки:", "Маркировщик", label, null)  as text)
-			label = T
+		var/T = sanitize(input("Введите текст бирки:", "Маркировщик", label, null) as text)
+		label = T
 	else if(href_list["change_mode"])
 		mode++
 		if(mode > modes.len)
