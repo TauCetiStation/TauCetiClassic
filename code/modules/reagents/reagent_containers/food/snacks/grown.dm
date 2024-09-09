@@ -363,7 +363,7 @@
 	seed_type = /obj/item/seeds/poisonberryseed
 	name = "bunch of poison-berries"
 	cases = list("гроздь ядовитых ягод", "грозди ядовитых ягод", "грозди ядовитых ягод", "гроздь ядовитых ягод", "гроздью ядовитых ягод", "грозди ядовитых ягод")	
-	desc = "По вкусу вкусно, но ты скорее всего умрешь."
+	desc = "Смертельно вкусно, но ты скорее всего умрешь."
 	icon_state = "poisonberrypile"
 	gender = PLURAL
 	potency = 15
@@ -396,7 +396,7 @@
 	seed_type = /obj/item/seeds/ambrosiavulgarisseed
 	name = "ambrosia vulgaris branch"
 	cases = list("ветвь амброзии обыкновенной", "ветви амброзии обыкновенной", "ветви амброзии обыкновенной", "ветвь амброзии обыкновенной", "ветвью амброзии обыкновенной", "ветви амброзии обыкновенной")
-	desc = "Это растение содержит различные лечебные химические вещества."
+	desc = "Это растение содержит различные лечебные вещества."
 	icon_state = "ambrosiavulgaris"
 	potency = 10
 	filling_color = "#125709"
