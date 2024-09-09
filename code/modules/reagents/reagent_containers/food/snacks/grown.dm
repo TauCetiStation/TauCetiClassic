@@ -217,7 +217,7 @@
 	seed_type = /obj/item/seeds/cabbageseed
 	name = "cabbage"
 	cases = list("кочан капусты", "кочана капусты", "кочану капусты", "кочан капусты", "кочаном капусты", "кочане капусты")	
-	desc = "Фе. Капуста."
+	desc = "Бывает, в ней находят детей."
 	icon_state = "cabbage"
 	potency = 25
 	filling_color = "#a2b5a1"
