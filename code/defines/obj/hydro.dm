@@ -1675,7 +1675,7 @@
 		force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class='warning'><b>[user] поедает [CASE(src.name, DATIVE_CASE)]! Похоже, что [THEY_RU(user)] пытается покончить с собой.</b></span>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] поедает [CASE(src, DATIVE_CASE)]! Похоже, что [THEY_RU(user)] пытается покончить с собой.</b></span>")
 	return (BRUTELOSS | TOXLOSS)
 
 /obj/item/weapon/grown/durathread
@@ -1768,7 +1768,7 @@
 	var/PestKillStr = 2
 
 /obj/item/weapon/pestspray/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class='warning'><b>[user] вдыхает [CASE(src.name, DATIVE_CASE)]! Похоже, что [THEY_RU(user)] пытается покончить с собой.</b></span>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] вдыхает [CASE(src, DATIVE_CASE)]! Похоже, что [THEY_RU(user)] пытается покончить с собой.</b></span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
