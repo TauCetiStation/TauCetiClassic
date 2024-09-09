@@ -32,7 +32,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
 		var/msg
-		msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
+		msg = "<span class='info'>*---------*\n Это \a <span class='name'>[CASE(src, NOMINATIVE_CASE)]</span>\n"
 		switch(plant_type)
 			if(0)
 				msg += "- Plant type: <i>Normal plant</i>\n"
@@ -54,7 +54,7 @@
 /obj/item/weapon/grown/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
 		var/msg
-		msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
+		msg = "<span class='info'>*---------*\n Это \a <span class='name'>[CASE(src, NOMINATIVE_CASE)]</span>\n"
 		switch(plant_type)
 			if(0)
 				msg += "- Plant type: <i>Normal plant</i>\n"
@@ -159,7 +159,7 @@
 	if(iscoil(I))
 		var/obj/item/stack/cable_coil/C = I
 		if(C.use(5))
-			to_chat(user, "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>")
+			to_chat(user, "<span class='notice'>Вы добавляете провода к картофелине и получаете самодельную батарею.</span>")
 			var/obj/item/weapon/stock_parts/cell/potato/pocell = new(get_turf(user))
 			pocell.maxcharge = src.potency * 10
 			pocell.charge = pocell.maxcharge
@@ -531,7 +531,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
-		to_chat(user, "<span class='info'>- Содержит минералы: <i>[reagents.get_reagent_amount("gold")]%</i></span>")
+		to_chat(user, "<span class='info'>- Mineral Content: <i>[reagents.get_reagent_amount("gold")]%</i></span>")
 
 	else
 		return ..()
@@ -569,7 +569,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/hatchet) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/melee/energy))
-		to_chat(user, "<span class='notice'>You carve a face into [src]!</span>")
+		to_chat(user, "<span class='notice'>Вы вырезаете лицо в [CASE(src, PREPOSITIONAL_CASE)]!</span>")
 		if (tgui_alert(usr, "Шлем или Декор?", "Что вырезать?", list("Шлем", "Декор")) == "Шлем")
 			new /obj/item/clothing/head/hardhat/pumpkinhead (user.loc)
 			qdel(src)
@@ -893,7 +893,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
-		to_chat(user, "<span class='info'>- Ледяное масло: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>")
+		to_chat(user, "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>")
 
 	else
 		return ..()
@@ -979,8 +979,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
-		to_chat(user, "<span class='info'>- Аматоксины: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>")
-		to_chat(user, "<span class='info'>- Псилоцибин: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>")
+		to_chat(user, "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>")
+		to_chat(user, "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>")
 
 	else
 		return ..()
@@ -1002,7 +1002,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/plant_analyzer))
-		to_chat(user, "<span class='info'>- Псилоцибин: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>")
+		to_chat(user, "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>")
 
 	else
 		return ..()
