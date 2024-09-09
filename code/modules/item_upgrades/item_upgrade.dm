@@ -80,8 +80,11 @@
 /obj/item/hud_upgrade
 	icon = 'icons/obj/item_upgrades.dmi'
 	var/tier = 0
+	var/glasses_item_state
+	var/glasses_item_state_inventory
+	var/glasses_item_state_world
 
-/obj/item/hud_upgrade/proc/upgrade_hud(/obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
+/obj/item/hud_upgrade/proc/upgrade_hud(obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
 	if(glasses_item_state)
 		glasses.item_state = glasses_item_state
 	if(glasses_item_state_inventory)
@@ -99,7 +102,7 @@
 	glasses_item_state_world = "mixhud_w"
 	tier = HUD_UPGRADE_MEDSCAN
 
-/obj/item/hud_upgrade/medscan/upgrade_hud(/obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
+/obj/item/hud_upgrade/medscan/upgrade_hud(obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
 	..()
 	glasses.hud_types.Add(DATA_HUD_MEDICAL_ADV)
 	glasses.def_hud_types.Add(DATA_HUD_MEDICAL_ADV)
@@ -114,7 +117,7 @@
 	glasses_item_state_world = "nvghud_w"
 	tier = HUD_UPGRADE_NIGHTVISION
 
-/obj/item/hud_upgrade/night/upgrade_hud(/obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
+/obj/item/hud_upgrade/night/upgrade_hud(obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
 	..()
 	glasses.item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
 
@@ -128,7 +131,7 @@
 	glasses_item_state_world = "thermalhud_w"
 	tier = HUD_UPGRADE_THERMAL
 
-/obj/item/hud_upgrade/thermal/upgrade_hud(/obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
+/obj/item/hud_upgrade/thermal/upgrade_hud(obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
 	..()
 	item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
 
@@ -142,7 +145,7 @@
 	glasses_item_state_world = "thermalhudadv_w"
 	tier = HUD_UPGRADE_THERMAL_ADVANCED
 
-/obj/item/hud_upgrade/thermal_advanced/upgrade_hud(/obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
+/obj/item/hud_upgrade/thermal_advanced/upgrade_hud(obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
 	..()
 	for(var/datum/action/item_action/hands_free/switch_hud_modes/night/night_action in glasses.item_actions)
 		night_action.Remove(user)
