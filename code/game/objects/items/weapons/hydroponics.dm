@@ -1,8 +1,8 @@
 /* Hydroponic stuff
  * Contains:
  *		Sunflowers
- *		Nettle
- *		Deathnettle
+ *		
+ *		Death
  *		Corbcob
  */
 
@@ -34,7 +34,8 @@
 
 /obj/item/clothing/head/poppy_crown
 	name = "poppy crown"
-	desc = "A flower crown made out of a string of bright red poppies."
+	cases = list("маковый венок", "макового венка", "маковому венку", "маковый венок", "маковым венком", "маковом венке")
+	desc = "Венок из ярких красных маков."
 	icon_state = "poppy_crown"
 
 /*
@@ -66,10 +67,10 @@
 	force = round((5+potency/5), 1)
 
 /*
- * Deathnettle
+ * Death
  */
 
-/obj/item/weapon/grown/deathnettle/pickup(mob/living/user)
+/obj/item/weapon/grown/death/pickup(mob/living/user)
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -84,10 +85,10 @@
 		user.Paralyse(5)
 		to_chat(user, "<span class='warning'>You are stunned by \the [src] when you try picking it up!</span>")
 
-/obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M, mob/user)
+/obj/item/weapon/grown/death/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
 	if(isliving(M))
-		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>")
+		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Death!</span>")
 
 		M.log_combat(user, "stunned with [name]")
 
@@ -99,16 +100,16 @@
 			M.Weaken(force/15)
 		M.drop_item()
 
-/obj/item/weapon/grown/deathnettle/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/grown/death/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if (force > 0)
 		force -= rand(1,(force/3)+1) // When you whack someone with it, leaves fall off
 
 	else
-		to_chat(usr, "All the leaves have fallen off the deathnettle from violent whacking.")
+		to_chat(usr, "All the leaves have fallen off the death from violent whacking.")
 		qdel(src)
 
-/obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
+/obj/item/weapon/grown/death/changePotency(newValue) //-QualityVan
 	potency = newValue
 	force = round((5+potency/2.5), 1)
 
