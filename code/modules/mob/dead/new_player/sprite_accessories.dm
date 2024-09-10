@@ -57,12 +57,10 @@
 /datum/sprite_accessory/hair/business
 	name = "Business"
 	icon_state = "hair_business"
-	gender = MALE
 
 /datum/sprite_accessory/hair/business2
 	name = "Business 2"
 	icon_state = "hair_business2"
-	gender = MALE
 
 /datum/sprite_accessory/hair/bedhead
 	name = "Bedhead"
@@ -79,52 +77,42 @@
 /datum/sprite_accessory/hair/bobcut
 	name = "Bobcut"
 	icon_state = "hair_bobcut"
-	gender = MALE
 
 /datum/sprite_accessory/hair/bobcurls
 	name = "Bobcurl"
 	icon_state = "hair_bobcurl"
-	gender = MALE
 
 /datum/sprite_accessory/hair/bowlcut
 	name = "Bowlcut"
 	icon_state = "hair_bowlcut"
-	gender = MALE
 
 /datum/sprite_accessory/hair/blacksword
 	name = "Blackswordcut"
 	icon_state = "hair_blackswordsman"
-	gender = MALE
 
 /datum/sprite_accessory/hair/bun
 	name = "Bun"
 	icon_state = "hair_bun"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/bunstick
 	name = "Bunstick"
 	icon_state = "hair_bunstick"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/doublebun
 	name = "Double Bun"
 	icon_state = "hair_doublebun"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/doublebun2
 	name = "Double Bun 2"
 	icon_state = "hair_doublebuns_2"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/doublebuns3
 	name = "Double Bun 3"
 	icon_state = "hair_doublebuns_3"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/baum
 	name = "Baum"
 	icon_state = "hair_baum"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/beam
 	name = "Beam"
@@ -133,232 +121,186 @@
 /datum/sprite_accessory/hair/beehive
 	name = "Beehive"
 	icon_state = "hair_beehive"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/smallbeehive
 	name = "Small Beehive"
 	icon_state = "hair_smallbeehive"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/bao
 	name = "Bao"
 	icon_state = "hair_bao"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/bao2
 	name = "Bao 2"
 	icon_state = "hair_bao2"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/ponytail
 	name = "Ponytail"
 	icon_state = "hair_ponytail"
-	gender = MALE
 
 /datum/sprite_accessory/hair/ponytail2
 	name = "Ponytail 2"
 	icon_state = "hair_ponytail2"
-	gender = MALE
 
 /datum/sprite_accessory/hair/ponytail3
 	name = "Ponytail 3"
 	icon_state = "hair_ponytail3"
-	gender = MALE
 
 /datum/sprite_accessory/hair/ponytailf
 	name = "Ponytail (f)"
 	icon_state = "hair_ponytailf"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/spikyponytail
 	name = "Spiky - Ponytail"
 	icon_state = "hair_spikyponytail"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/zoeponytail
 	name = "Zoe - Ponytail"
 	icon_state = "hair_zoe_ponytail"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/rabbyponytail
 	name = "Rabby - Ponytail"
 	icon_state = "hair_rabby_ponytail"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/wisp
 	name = "Wisp - Ponytail"
 	icon_state = "hair_wisp_ponytail"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/ziglertail
 	name = "Ziegler - Ponytail"
 	icon_state = "hair_ziegler_ponytail"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/halfziglertail
 	name = "Half Ziegler - Ponytail"
 	icon_state = "hair_halfzinger_ponytail"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/brazeskatail
 	name = "Brazeska - Ponytail"
 	icon_state = "hair_brazeska_ponytail"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longside
 	name = "Side Part - Long"
 	icon_state = "hair_long_sidepartstraight"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longside2
 	name = "Side Part 2 - Long"
 	icon_state = "hair_long_sidepartstraight_2"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longgipsy
 	name = "Gipsy - Long"
 	icon_state = "hair_long_gipsy"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longwild
 	name = "Wild - Long"
 	icon_state = "hair_long_wild_2"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longshav
 	name = "Halfshaved - Long"
 	icon_state = "hair_long_halfshaved"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longblunt
 	name = "Bluntbangs - Long"
 	icon_state = "hair_long_bluntbangs"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longflutter
 	name = "Fluttershy - Long"
 	icon_state = "hair_long_fluttershy"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longaradia
 	name = "Aradia - Long"
 	icon_state = "hair_long_aradia"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longnord
 	name = "Nord - Long"
 	icon_state = "hair_long_nord"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longjudge
 	name = "Judge - Long"
 	icon_state = "hair_long_judge"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longbedhead
 	name = "Bedhead - Long"
 	icon_state = "hair_long_bedhead"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longnia
 	name = "Nia - Long"
 	icon_state = "hair_long_nia"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longcia
 	name = "Cia - Long"
 	icon_state = "hair_long_cia"
-	gender = MALE
 
 /datum/sprite_accessory/hair/longbrad
 	name = "Braid - Long"
 	icon_state = "hair_long_braid"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longemo
 	name = "Emo - Long"
 	icon_state = "hair_long_emo"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/longafrican
 	name = "African - Long"
 	icon_state = "hair_long_african"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashionnitori
 	name = "Nitori - New Fashion"
 	icon_state = "hair_fash_nitori"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashionfujiyabash
 	name = "Fujiyabash - New Fashion"
 	icon_state = "hair_fash_fujiyabashi"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashionmodern
 	name = "Modern - New Fashion"
 	icon_state = "hair_fash_modern"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashionvriska
 	name = "Vriska - New Fashion"
 	icon_state = "hair_fash_vriska"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashion80s
 	name = "80s - New Fashion"
 	icon_state = "hair_fash_80s"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashionsidetail
 	name = "Side Tail - New Fashion"
 	icon_state = "hair_fash_sidetail"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashionrose
 	name = "Rose - New Fashion"
 	icon_state = "hair_fash_rose"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashionshortovereye
 	name = "Over Eye - New Fashion"
 	icon_state = "hair_fash_shortovereye"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashionlongemo
 	name = "Long Emo - New Fashion"
 	icon_state = "hair_fash_longemo"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashiononeemo
 	name = "One Emo - New Fashion"
 	icon_state = "hair_fash_oneemo"
-	gender = MALE
 
 /datum/sprite_accessory/hair/newfashionhimecut
 	name = "Hime Cut - New Fashion"
 	icon_state = "hair_fash_himecut"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashionhime
 	name = "Hime - New Fashion"
 	icon_state = "hair_fash_hime"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/newfashionlamia
 	name = "Lamia - New Fashion"
 	icon_state = "hair_fash_lamia"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortgeisha
 	name = "Geisha - Short"
 	icon_state = "hair_geisha"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortmillenium
 	name = "Millenium - Short"
 	icon_state = "hair_millenium"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortfridge
 	name = "Fridge - Short"
@@ -367,7 +309,6 @@
 /datum/sprite_accessory/hair/shortkitty
 	name = "Kitty - Short"
 	icon_state = "hair_kitty"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortpear
 	name = "Pear - Short"
@@ -380,17 +321,14 @@
 /datum/sprite_accessory/hair/shortpiggy
 	name = "Piggy - Short"
 	icon_state = "hair_piggy"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortmaya
 	name = "Maya - Short"
 	icon_state = "hair_maya"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortdolly
 	name = "Dolly - Short"
 	icon_state = "hair_dolly"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortelly
 	name = "Elly - Short"
@@ -415,42 +353,34 @@
 /datum/sprite_accessory/hair/shortgentle
 	name = "Gentle - Short"
 	icon_state = "hair_gentle"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortdreads
 	name = "Dreads - Short"
 	icon_state = "hair_dreads"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortafro
 	name = "Afro 1 - Short"
 	icon_state = "hair_afro"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortafro2
 	name = "Afro 2 - Short"
 	icon_state = "hair_bigafro"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortakari
 	name = "Akari - Short"
 	icon_state = "hair_akari"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortspiky
 	name = "Spiky - Short"
 	icon_state = "hair_crono"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortedgeworth
 	name = "Edgeworth - Short"
 	icon_state = "hair_edgeworth"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortdemo
 	name = "Demo - Short"
 	icon_state = "hair_demo"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortpixie
 	name = "Pixie - Short"
@@ -463,22 +393,18 @@
 /datum/sprite_accessory/hair/shortnepeta
 	name = "Nepeta - Short"
 	icon_state = "hair_nepeta"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortkanaya
 	name = "Kanaya - Short"
 	icon_state = "hair_kanaya"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortdave
 	name = "Dave - Short"
 	icon_state = "hair_dave"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortrosa
 	name = "Rosa - Short"
 	icon_state = "hair_rosa"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortfeather1
 	name = "Feather 1 - Short"
@@ -491,17 +417,14 @@
 /datum/sprite_accessory/hair/shortmessy
 	name = "Messy - Short"
 	icon_state = "hair_messy"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortprotagonist
 	name = "Protagonist - Short"
 	icon_state = "hair_protagonist"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortombre
 	name = "Ombre - Short"
 	icon_state = "hair_ombre"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortupdo
 	name = "Updo - Short"
@@ -518,27 +441,22 @@
 /datum/sprite_accessory/hair/shortobjection
 	name = "Objection - Short"
 	icon_state = "hair_objection"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortparted
 	name = "Parted - Short"
 	icon_state = "hair_parted"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortfringe
 	name = "Fringe - Short"
 	icon_state = "hair_emofringe"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortelize
 	name = "Elize - Short"
 	icon_state = "hair_elize"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortelize2
 	name = "Elize 2 - Short"
 	icon_state = "hair_elize_2"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortschierke
 	name = "Schierke - Short"
@@ -551,22 +469,18 @@
 /datum/sprite_accessory/hair/shorthamster
 	name = "Hamster - Short"
 	icon_state = "hair_shorthair2"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortemo
 	name = "Hamber - Short"
 	icon_state = "hair_emo"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortcurls
 	name = "Curls - Short"
 	icon_state = "hair_curls"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortsquare
 	name = "Square - Short"
 	icon_state = "hair_square"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortpoofy
 	name = "Poofy - Short"
@@ -575,17 +489,14 @@
 /datum/sprite_accessory/hair/shortfringetail
 	name = "Fringe Tail - Short"
 	icon_state = "hair_fringetail"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortougi
 	name = "Ougi - Short"
 	icon_state = "hair_ougi"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/cotton
 	name = "Cotton - Old"
 	icon_state = "hair_cotton_hair"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortdad
 	name = "Dad - Short"
@@ -598,132 +509,106 @@
 /datum/sprite_accessory/hair/shortflattop
 	name = "Flat top - Short"
 	icon_state = "hair_bigflattop"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortdubs
 	name = "Dubs - Short"
 	icon_state = "hair_dubs"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortdirk
 	name = "Dirk - Short"
 	icon_state = "hair_dirk"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortmentalist
 	name = "Mentalist - Short"
 	icon_state = "hair_mentalist"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortmulder
 	name = "Mulder - Short"
 	icon_state = "hair_mulder"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortvegeta
 	name = "Vegeta - Short"
 	icon_state = "hair_vegeta"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortcia
 	name = "CIA - Short"
 	icon_state = "hair_cia"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortroxy
 	name = "Roxy - Short"
 	icon_state = "hair_roxy"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/shortquiff
 	name = "Quiff - Short"
 	icon_state = "hair_quiff"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shorthitop
 	name = "Hitop - Short"
 	icon_state = "hair_hitop"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortpompadour
 	name = "Pompadour - Short"
 	icon_state = "hair_pompadour"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortvegass
 	name = "Vegass - Short"
 	icon_state = "hair_part"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortcombover
 	name = "Cowboy - Short"
 	icon_state = "hair_combover"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shorta
 	name = "Arnold - Short"
 	icon_state = "hair_a"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortjensen
 	name = "Jensen - Short"
 	icon_state = "hair_jensen"
-	gender = MALE
 
 /datum/sprite_accessory/hair/shortjoestar
 	name = "Joestar - Short"
 	icon_state = "hair_joestar"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortcas
 	name = "Cas - Super Short"
 	icon_state = "hair_c"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortccut
 	name = "Crew Cut- Super Short"
 	icon_state = "hair_crewcut"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortdevil
 	name = "Devil - Super Short"
 	icon_state = "hair_devilock"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortd
 	name = "Dumb - Super Short"
 	icon_state = "hair_d"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortold
 	name = "Old - Super Short"
 	icon_state = "hair_e"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortleader
 	name = "Leader - Super Short"
 	icon_state = "hair_f"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortgelled
 	name = "Gelled - Super Short"
 	icon_state = "hair_gelled"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortmegaeye
 	name = "Megabrows - Super Short"
 	icon_state = "hair_megaeyebrows"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortreverse
 	name = "Reverse - Super Short"
 	icon_state = "hair_reversemohawk"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortarmy
 	name = "Sargeant - Super Short"
 	icon_state = "hair_sargeant"
-	gender = MALE
 
 /datum/sprite_accessory/hair/sshortskinhead
 	name = "Skinhead - Super Short"
@@ -732,77 +617,62 @@
 /datum/sprite_accessory/hair/sshortdanny
 	name = "Danny - Super Short"
 	icon_state = "hair_spikey"
-	gender = MALE
 
 /datum/sprite_accessory/hair/moviefastline
 	name = "Fastline Dandy - Movie"
 	icon_state = "hair_fastline"
-	gender = MALE
 
 /datum/sprite_accessory/hair/moviemohawk
 	name = "Mohawk Randy - Movie"
 	icon_state = "hair_mohawk"
-	gender = MALE
 
 /datum/sprite_accessory/hair/movielfrieng
 	name = "Longe Fringe Pirat - Movie"
 	icon_state = "hair_vlongfringe"
-	gender = MALE
 
 /datum/sprite_accessory/hair/movieslmessy
 	name = "Slight Messy Tereza 1 - Movie"
 	icon_state = "hair_slightlymessy"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/movieslmessy2
 	name = "Slight Messy Tereza 2 - Movie"
 	icon_state = "hair_slightmessy_2"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/moviebhair
 	name = "Braided Sanny - Movie"
 	icon_state = "hair_braided_hair"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/moviebhair2
 	name = "Braided Sanny 2 - Movie"
 	icon_state = "hair_braided_hair_2"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/moviewild
 	name = "Wild Princess - Movie"
 	icon_state = "hair_wild"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/movieofficer
 	name = "Officer Tacklberry - Movie"
 	icon_state = "hair_combed"
-	gender = MALE
 
 /datum/sprite_accessory/hair/moviestar
 	name = "Star - Movie"
 	icon_state = "hair_star"
-	gender = FEMALE
 
 /datum/sprite_accessory/hair/rows
 	name = "Rows - Gang"
 	icon_state = "hair_rows1"
-	gender = MALE
 
 /datum/sprite_accessory/hair/rows2
 	name = "Rows 2 - Gang"
 	icon_state = "hair_rows2"
-	gender = MALE
 
 /datum/sprite_accessory/hair/rowbun
 	name = "Row Bun - Gang"
 	icon_state = "hair_rowbun"
-	gender = MALE
 
 /datum/sprite_accessory/hair/Topknot
 	name = "Chao Topknot - Gang"
 	icon_state = "hair_topknot"
-	gender = MALE
 
 //	name = "Modern"
 //	icon_state = "hair_modern"
