@@ -208,7 +208,7 @@
 	growthstages = 1
 
 /obj/item/seeds/cucumberseed
-	name = "пачка семян огурца"
+	name = "pack of cucumber seeds"
 	cases = list("семена", "семян", "семенам", "семена", "семенами", "семенах")
 	desc = "Эти семена вырастают в огурцы."
 	icon_state = "seed-cucumber"
