@@ -556,7 +556,7 @@
 /obj/item/seeds/cornseed
 	name = "pack of corn seeds"
 	cases = list("семена кукурузы", "семян кукурузы", "семенам кукурузы", "семена кукурузы", "семенами кукурузы", "семенах кукурузы")
-	desc = "Кукуруза, товарищи, это танк в руках бойцов, я имею в виду колхозников!" 
+	desc = "Если есть сырой - может скукурузить!" 
 	icon_state = "seed-corn"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "corn"
