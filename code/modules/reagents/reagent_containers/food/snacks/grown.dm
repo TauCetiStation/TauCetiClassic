@@ -303,7 +303,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries
 	seed_type = /obj/item/seeds/glowberryseed
 	name = "bunch of glow-berries"
-	cases = list("гроздь светящихся ягод", "грозди светящихся ягод", "грозди светящихся ягод", "гроздь светящихся ягод", "гроздью светящихся ягод", "грозди светящихся ягод")	
+	cases = list("гроздь светоягод", "грозди светоягод", "грозди светоягод", "гроздь светоягод", "гроздью светоягод", "грозди светоягод")	
 	desc = "Гроздь питательных ягод. Слабо светится в темноте."
 	var/light_on = 1
 	var/brightness_on = 2 //luminosity when on
@@ -379,7 +379,7 @@
 	seed_type = /obj/item/seeds/deathberryseed
 	name = "bunch of death-berries"
 	cases = list("гроздь смертоягод", "грозди смертоягод", "грозди смертоягод", "гроздь смертоягод", "гроздью смертоягод", "грозди смертоягод")	
-	desc = "По вкусу вкусно, но ты ТОЧНО умрешь."
+	desc = "После такой сладости хоть в могилу!"
 	icon_state = "deathberrypile"
 	gender = PLURAL
 	potency = 50
@@ -1062,7 +1062,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	seed_type = /obj/item/seeds/glowshroom
 	name = "glowshroom cluster"
-	cases = list("гроздь светящихся грибов", "грозди светящихся грибов", "грозди светящихся грибов", "гроздь светящихся грибов", "гроздью светящихся грибов", "грозди светящихся грибов")
+	cases = list("гроздь светогрибов", "грозди светогрибов", "грозди светогрибов", "гроздь светогрибов", "гроздью светогрибов", "грозди светогрибов")
 	desc = "<I>Мицена Брегпрокс</I>: Этот вид грибов светится в темноте. Или нет?"
 	icon_state = "glowshroom"
 	filling_color = "#daff91"
