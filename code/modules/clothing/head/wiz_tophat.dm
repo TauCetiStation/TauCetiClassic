@@ -289,8 +289,8 @@ var/global/list/tophats_list = list()
 		if(MT)
 			MT.armed = TRUE
 			MT.triggered(target, target.hand ? BP_L_ARM : BP_R_ARM)
-			target.visible_message("<span class='warning'>[target] нечаянно активирует [CASE(MT, ACCUSATIVE_CASE)] внутри [CASE(src, GENITIVE_CASE)], раня свои пальцы.</span>",
-								 "<span class='warning'>Вы нечаянно активируете [CASE(MT, ACCUSATIVE_CASE)]!</span>")
+			target.visible_message("<span class='warning'>[target] случайно активирует [CASE(MT, ACCUSATIVE_CASE)] внутри [CASE(src, GENITIVE_CASE)], раня свои пальцы.</span>",
+								 "<span class='warning'>Вы случайно активируете [CASE(MT, ACCUSATIVE_CASE)]!</span>")
 			MT.forceMove(target.loc)
 			return TRUE
 	return FALSE
