@@ -79,7 +79,9 @@
 		/datum/skill/chemistry = SKILL_LEVEL_TRAINED,
 		/datum/skill/research = SKILL_LEVEL_TRAINED,
 		/datum/skill/civ_mech = SKILL_LEVEL_TRAINED,
-		/datum/skill/medical = SKILL_LEVEL_TRAINED
+		/datum/skill/medical = SKILL_LEVEL_TRAINED,
+		/datum/skill/atmospherics = SKILL_LEVEL_TRAINED,
+		/datum/skill/police = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/xenobiologist
