@@ -461,7 +461,7 @@
 /area/asteroid/research_outpost/hallway)
 "aW" = (
 /obj/machinery/door_control{
-	id = "miningdorm3";
+	id = "miningdorm2";
 	name = "Door Bolt Control";
 	pixel_x = 25;
 	specialfunctions = 4
@@ -4032,7 +4032,7 @@
 	},
 /obj/machinery/light/smart,
 /turf/simulated/floor,
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/production)
 "kQ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
@@ -8054,7 +8054,7 @@
 /area/asteroid/mine/living_quarters)
 "wN" = (
 /turf/simulated/floor,
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/production)
 "wP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -9002,13 +9002,9 @@
 	},
 /area/asteroid/research_outpost/atmos)
 "Ab" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 22
-	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	dir = 4;
+	dir = 8;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
@@ -9143,7 +9139,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/production)
 "Au" = (
 /obj/machinery/shieldwallgen,
 /obj/structure/window/thin/reinforced{
@@ -9319,12 +9315,16 @@
 	},
 /area/asteroid/mine/explored)
 "AU" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "brown"
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Mining Shuttle Airlock";
+	req_access = list(48)
 	},
-/area/asteroid/mine/living_quarters)
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/asteroid/mine/production)
 "AV" = (
 /obj/machinery/mineral/stacking_unit_console,
 /turf/simulated/wall/yellow,
@@ -9415,21 +9415,23 @@
 	},
 /area/asteroid/mine/eva)
 "Bu" = (
-/obj/structure/curtain/open/privacy,
-/turf/simulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/asteroid/mine/living_quarters)
-"By" = (
-/obj/machinery/door/airlock/external{
-	dir = 4;
-	name = "Mining Shuttle Airlock";
-	req_access = list(48)
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
+/obj/machinery/camera{
+	c_tag = "Shuttle Dock";
+	dir = 1;
+	network = list("MINE")
 	},
 /turf/simulated/floor,
+/area/asteroid/mine/production)
+"By" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
 /area/asteroid/mine/living_quarters)
 "BA" = (
 /obj/structure/cable{
@@ -10406,12 +10408,9 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "Gf" = (
-/obj/machinery/alarm{
-	pixel_y = 24
-	},
+/obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
+	icon_state = "freezerfloor"
 	},
 /area/asteroid/mine/living_quarters)
 "Gg" = (
@@ -11120,9 +11119,11 @@
 	},
 /area/asteroid/mine/explored)
 "Jv" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 1;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
@@ -11437,9 +11438,11 @@
 	},
 /area/asteroid/research_outpost/gearstore)
 "Kv" = (
-/obj/structure/table/woodentable,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "freezerfloor"
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
 "Kw" = (
@@ -11587,7 +11590,7 @@
 	name = "KEEP CLEAR: DOCKING AREA"
 	},
 /turf/simulated/floor/plating,
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/production)
 "Ld" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -11623,12 +11626,10 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "Lg" = (
-/obj/machinery/camera{
-	c_tag = "Shuttle Dock";
-	dir = 1;
-	network = list("MINE")
+/obj/structure/table/woodentable,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
 	},
-/turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "Lh" = (
 /obj/machinery/meter,
@@ -11799,10 +11800,9 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "LQ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 4;
+	dir = 8;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
@@ -12103,11 +12103,12 @@
 /turf/simulated/wall/r_wall/purple,
 /area/asteroid/research_outpost/harvesting)
 "Nf" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "freezerfloor"
+/obj/structure/closet/emcloset,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/area/asteroid/mine/living_quarters)
+/turf/simulated/floor,
+/area/asteroid/mine/production)
 "Ni" = (
 /obj/machinery/door/window/westleft{
 	dir = 4
@@ -12465,11 +12466,10 @@
 /turf/environment/space,
 /area/space)
 "Pc" = (
-/obj/structure/closet/emcloset,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
 	},
-/turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "Pe" = (
 /obj/machinery/door/firedoor,
@@ -14146,7 +14146,7 @@
 	icon_state = "warn"
 	},
 /turf/simulated/floor,
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/production)
 "Wj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -14351,7 +14351,7 @@
 	icon_state = "warn_corner"
 	},
 /turf/simulated/floor,
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/production)
 "Xf" = (
 /obj/machinery/alarm{
 	pixel_y = 24
@@ -14584,7 +14584,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/production)
 "Yf" = (
 /turf/simulated/floor/glass/airless,
 /area/asteroid/mine/unexplored/safe)
@@ -19638,11 +19638,11 @@ zA
 zA
 zA
 zA
-uo
-XD
-XD
-XD
-uo
+Bh
+fx
+fx
+fx
+Bh
 lA
 aa
 aa
@@ -19898,8 +19898,8 @@ zA
 At
 We
 wN
-Pc
-ia
+Nf
+kc
 lA
 lA
 aa
@@ -20156,7 +20156,7 @@ Lc
 Xe
 wN
 kP
-ia
+kc
 lA
 lA
 lA
@@ -20409,11 +20409,11 @@ zA
 zA
 zA
 zA
-ia
+kc
 wN
 wN
-Pc
-ia
+Nf
+kc
 lA
 lA
 lA
@@ -20666,11 +20666,11 @@ zA
 zA
 zA
 zA
-uo
+Bh
 Ye
 Ye
-uo
-uo
+Bh
+Bh
 lA
 kO
 kO
@@ -20923,10 +20923,10 @@ zA
 zA
 zA
 zA
-uo
+Bh
 wN
-Lg
-uo
+Bu
+Bh
 lA
 lA
 lA
@@ -21180,10 +21180,10 @@ ar
 ar
 ar
 ar
-uo
-By
-By
-uo
+Bh
+AU
+AU
+Bh
 lA
 lA
 hu
@@ -21952,7 +21952,7 @@ tX
 tX
 tX
 tX
-Gf
+Jv
 gu
 gu
 gu
@@ -24005,10 +24005,10 @@ YV
 uo
 iN
 qG
-AU
-AU
+Ab
+Ab
 qG
-Jv
+LQ
 pX
 uS
 wy
@@ -24262,10 +24262,10 @@ YV
 uo
 bt
 Zf
-Ab
+By
 pe
 qw
-LQ
+Kv
 pe
 qg
 bg
@@ -24779,8 +24779,8 @@ uu
 gh
 kk
 uo
-Kv
-Kv
+Lg
+Lg
 uo
 wn
 mH
@@ -25035,9 +25035,9 @@ tV
 mR
 vd
 iz
-Bu
+Gf
 iz
-Nf
+Pc
 uo
 aN
 dV
