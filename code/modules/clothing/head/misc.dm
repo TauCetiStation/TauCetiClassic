@@ -311,7 +311,7 @@
 
 /obj/item/clothing/head/fedora/proc/fedoraproc(mob/user)
 	if(!usr.incapacitated())
-		user.visible_message("[user] приподнимает свою [CASES(src, ACCUSATIVE_CASE)].")
+		user.visible_message("[user] приподнимает свою [CASE(src, ACCUSATIVE_CASE)].")
 
 
 /obj/item/clothing/head/fedora/verb/fedoratip()

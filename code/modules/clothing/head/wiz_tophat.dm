@@ -483,7 +483,7 @@ var/global/list/tophats_list = list()
 									 "<span class='notice'>Вы достаёте что-то непропорционально большое из [CASE(src, GENITIVE_CASE)].</span>")
 		else
 			if(try_mousetrap(user))
-				user.visible_message("<span class='warning'>[user] натыкается на мышеловку, засунув руку в [CASE(src, ACCUSATIVE_cASE)]!</span>",
+				user.visible_message("<span class='warning'>[user] натыкается на мышеловку, засунув руку в [CASE(src, ACCUSATIVE_CASE)]!</span>",
 									 "<span class='warning'>Засунув руку в [CASE(src, ACCUSATIVE_CASE)], Вы натыкаетесь на мышеловку!</span>")
 	else
 		..()
