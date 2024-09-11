@@ -191,7 +191,7 @@
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
 	cases = list("пиратская шляпа", "пиратской шляпы", "пиратской шляпе", "пиратскую шляпу", "пиратской шляпой", "пиратской шляпе")
-	desc = "Яр-р."
+	desc = "Ар-р."
 	gender = FEMALE
 	icon_state = "pirate"
 	item_state = "pirate"
@@ -200,7 +200,7 @@
 /obj/item/clothing/head/hgpiratecap
 	name = "pirate hat"
 	cases = list("пиратская шляпа", "пиратской шляпы", "пиратской шляпе", "пиратскую шляпу", "пиратской шляпой", "пиратской шляпе")
-	desc = "Яр-р."
+	desc = "Ар-р."
 	gender = FEMALE
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
@@ -209,7 +209,7 @@
 /obj/item/clothing/head/bandana
 	name = "pirate bandana"
 	cases = list("пиратская бандана", "пиратской банданы", "пиратской бандане", "пиратскую бандану", "пиратской банданой", "пиратской бандане")
-	desc = "Яр-р."
+	desc = "Ар-р."
 	gender = FEMALE
 	icon_state = "bandana"
 	item_state = "bandana"
@@ -309,7 +309,7 @@
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
 	cases = list("ксеношлем", "ксеношлема", "ксеношлему", "ксеношлем", "ксеношлемом", "ксеношлеме")
-	desc = "Шлем, сделанный из хитиновой шкуры чужого."
+	desc = "Шлем, сделанный из хитина чужого."
 	gender = MALE
 	icon_state = "xenos"
 	item_state = "xenos_helm"
