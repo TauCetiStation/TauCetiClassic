@@ -318,9 +318,9 @@ var/global/list/tophats_list = list()
 		if(ismob(loc))
 			var/mob/M_loc = loc
 			if(M_loc.get_active_hand() == src || M_loc.get_inactive_hand() == src)
-				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)]] выпрыгивает из рук [M_loc]!</span>")
+				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)])] выпрыгивает из рук [M_loc]!</span>")
 			else
-				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)]] выпрыгивает из [M_loc]!</span>")
+				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)])] выпрыгивает из [M_loc]!</span>")
 
 			M_loc.drop_from_inventory(src, M_loc.loc)
 
@@ -329,7 +329,7 @@ var/global/list/tophats_list = list()
 		else if(istype(loc, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = loc
 			if(S.remove_from_storage(src, S.loc))
-				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)]] выпрыгивает из [CASES(S, GENITIVE_CASE)]!</span>")
+				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)])] выпрыгивает из [CASES(S, GENITIVE_CASE)]!</span>")
 
 				if(ismob(loc))
 					return jump_out(rec_level = rec_level) // So we don't have problems getting out of mobs...
@@ -339,7 +339,7 @@ var/global/list/tophats_list = list()
 		else if(istype(loc, /obj/structure/closet))
 			var/obj/structure/closet/CL = loc
 			if(!CL.opened && CL.open())
-				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)]] выпрыгивает из [CASES(CL, GENITIVE_CASE)]!</span>")
+				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)])] выпрыгивает из [CASES(CL, GENITIVE_CASE)]!</span>")
 
 				return jump_out(rec_level = rec_level - 1)
 
@@ -381,7 +381,7 @@ var/global/list/tophats_list = list()
 		animate(user, pixel_y=user.pixel_y - 5, transform=M, time=5, alpha=100)
 		sleep(5)
 
-	user.visible_message("<span class='warning'>[CASES(AM, NOMINATIVE_CASE)] исчезает в [CASES(src, PREPOSITIONAL_CASE)]!</span>")
+	user.visible_message("<span class='warning'>[capitalize([CASES(AM, NOMINATIVE_CASE)])] исчезает в [CASES(src, PREPOSITIONAL_CASE)]!</span>")
 	global.tophat_portal.go_into(AM)
 
 	if(AM == user)
