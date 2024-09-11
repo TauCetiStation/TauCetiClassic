@@ -144,7 +144,7 @@
 /obj/item/clothing/head/helmet/laserproof
 	name = "ablative helmet"
 	cases = list("абляционный шлем", "абляционного шлема", "абляционному шлему", "абляционный шлем", "абляционным шлемом", "абляционном шлеме")
-	desc = "Абляционный шлем, отлично защищающий носителя от лазерный и энергетических снарядов."
+	desc = "Абляционный шлем, отлично защищающий носителя от лазерных и энергетических снарядов."
 	icon_state = "laserproof"
 	armor = list(melee = 10, bullet = 10, laser = 65,energy = 75, bomb = 0, bio = 0, rad = 0)
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH	// cause sprite has a drawn mask

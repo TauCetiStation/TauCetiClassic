@@ -1,8 +1,8 @@
 /obj/item/clothing/head/centhat
 	name = "CentComm. hat"
 	cases = list("шляпа центрального командования", "шляпы центрального командования", "шляпе центрального командования", "шляпу центрального командования", "шляпой центрального командования", "шляпе центрального командования")
-	icon_state = "centcom"
 	desc = "Хорошо быть императором."
+	icon_state = "centcom"
 	item_state = "centhat"
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
@@ -10,8 +10,8 @@
 /obj/item/clothing/head/hairflower
 	name = "hair flower pin"
 	cases = list("цветочная заколка", "цветочной заколки", "цветочной заколке", "цветочную заколку", "цветочной заколкой", "цветочной заколке")
-	icon_state = "hairflower"
 	desc = "Приятно пахнет."
+	icon_state = "hairflower"
 	item_state = "hairflower"
 	body_parts_covered = 0
 
@@ -51,15 +51,15 @@
 /obj/item/clothing/head/redcoat
 	name = "redcoat's hat"
 	cases = list("треуголка", "треуголки", "треуголке", "треуголку", "треуголкой", "треуголке")
+	desc = "Вызывает у Вас невероятное желание выпить чаю."
 	icon_state = "redcoat"
-	desc = "Вызывает у вас невероятное желание выпить чаю."
 	body_parts_covered = 0
 
 /obj/item/clothing/head/mailman
 	name = "mailman's hat"
 	cases = list("шляпа почтальона", "шляпы почтальона", "шляпе почтальона", "шляпу почтальона", "шляпой почтальона", "шляпе почтальона")
-	icon_state = "mailman"
 	desc = "<i>'Я почему раньше такой злой был? Потому что у меня космовелосипеда не было.'</i>"
+	icon_state = "mailman"
 	body_parts_covered = 0
 
 /obj/item/clothing/head/plaguedoctorhat
@@ -90,9 +90,9 @@
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
 	cases = list("реплика красного космического шлема", "реплики красного космического шлема", "реплике красного космического шлема", "реплику красного космического шлема", "репликой красного космического шлема", "реплике красного космического шлема")
+	desc = "Пластиковая реплика красного шлема агента Синдиката, с ней Вы будете выглядеть как настоящий убийца-головорез! ВНИМАНИЕ: это игрушка и не подходит для использования в космосе!"
 	icon_state = "syndicate-helm"
 	item_state = "syndicate-helm"
-	desc = "Пластиковая реплика красного шлема агента Синдиката, с ней Вы будете выглядеть как настоящий убийца-головорез! ВНИМАНИЕ: это игрушка и не подходит для использования в космосе!"
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
@@ -159,7 +159,7 @@
 /obj/item/clothing/head/rabbitears
 	name = "rabbit ears"
 	cases = list("кроличьи ушки", "кроличьих ушек", "кроличьим ушкам", "кроличьи ушки", "кроличьими ушками", "кроличьих ушках")
-	desc = "Ты кроль." //    desc = "Wearing these makes you looks useless, and only good for your sex appeal." - REMOVED BY ERP POLICE.
+	desc = "Вы кроль." //    desc = "Wearing these makes you looks useless, and only good for your sex appeal." - REMOVED BY ERP POLICE.
 	icon_state = "bunny"
 	body_parts_covered = 0
 
@@ -207,16 +207,16 @@
 /obj/item/clothing/head/feathertrilby
 	name = "feather trilby"
 	cases = list("трильби с пером", "трильби с пером", "трильби с пером", "трильби с пером", "трильби с пером", "трильби с пером")
+	desc = "Модная и невероятная стильная шляпа с пером."
 	icon_state = "feather_trilby"
 	item_state = "feather_trilby"
-	desc = "Модная и невероятная стильная шляпа с пером."
 
 /obj/item/clothing/head/fez
 	name = "fez"
 	cases = list("феска", "фески", "феске", "феску", "феской", "феске")
+	desc = "Вам стоит надеть эту феску. Фески модные."
 	icon_state = "fez"
 	item_state = "fez"
-	desc = "Вам стоит надеть эту феску. Фески модные."
 
 //end bs12 hats
 
@@ -251,45 +251,45 @@
 /obj/item/clothing/head/headscarf
 	name = "платок Жан-Хазан"
 	cases = list("платок Жан-Хазан", "платка Жан-Хазан", "платку Жан-Хазан", "платок Жан-Хазан", "платком Жан-Хазан", "платке Жан-Хазан")
+	desc = "Белый платок, носимый на голове."
 	icon_state = "zhan_scarf"
 	item_state = "zhan_scarf"
-	desc = "Белый платок, носимый на голове."
 	body_parts_covered = 0
 	species_restricted = list(UNATHI, TAJARAN, HUMAN, DIONA, IPC)
 
 /obj/item/clothing/head/skrell_headwear
 	name = "skrell yellow headwear"
 	cases = list("жёлтые скрелльские повязки", "жёлтых скрелльских повязок", "жёлтым скрелльским повязкам", "жёлтые скрелльские повязки", "жёлтыми скрелльскими повязками", "жёлтых скрелльских повязках")
+	desc = "Два куска жёлтой ткани - традиционный головной убор Керрбаллака."
 	icon_state = "skrell_yellow"
 	item_state = "skrell_yellow"
-	desc = "Два куска жёлтой ткани - традиционный головной убор Керрбаллака."
 	body_parts_covered = 0
 	species_restricted = list(SKRELL)
 
 /obj/item/clothing/head/skrell_headwear/red
 	name = "skrell red headwear"
 	cases = list("красные скрелльские повязки", "красных скрелльских повязок", "красным скрелльским повязкам", "красные скрелльские повязкие", "красными скрелльскими повязками", "красных скрелльских повязках")
+	desc = "Два куска красной ткани - традиционный головной убор Керрбаллака."
 	icon_state = "skrell_red"
 	item_state = "skrell_red"
-	desc = "Два куска красной ткани - традиционный головной убор Керрбаллака."
 	body_parts_covered = 0
 	species_restricted = list(SKRELL)
 
 /obj/item/clothing/head/skrell_headwear/blue
 	name = "skrell blue headwear"
 	cases = list("синие скрелльские повязки", "синих скрелльских повязок", "синим скрелльским повязкам", "синие скрелльские повязкие", "синими скрелльскими повязками", "синих скрелльских повязках")
+	desc = "Два куска синей ткани - традиционный головной убор Керрбаллака."
 	icon_state = "skrell_blue"
 	item_state = "skrell_blue"
-	desc = "Два куска синей ткани - традиционный головной убор Керрбаллака."
 	body_parts_covered = 0
 	species_restricted = list(SKRELL)
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
 	cases = list("ксеношлем", "ксеношлема", "ксеношлему", "ксеношлем", "ксеношлемом", "ксеношлеме")
+	desc = "Шлем, сделанный из хитиновой шкуры чужого."
 	icon_state = "xenos"
 	item_state = "xenos_helm"
-	desc = "Шлем, сделанный из хитиновой шкуры чужого."
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	siemens_coefficient = 2.0
@@ -298,9 +298,9 @@
 /obj/item/clothing/head/fedora
 	name = "black fedora"
 	cases = list("чёрная федора", "чёрной федоры", "чёрной федоре", "чёрную федору", "чёрной федорой", "чёрной федоре")
+	desc = "Не стоит притворяться детективом, если у Вас не выходит хорошо играть в угадайку." // Hercule Poirot reference
 	icon_state = "fedora"
 	item_state = "fedora"
-	desc = "Не стоит притворяться детективом, если у Вас не выходит хорошо играть в угадайку." // Hercule Poirot reference
 	item_action_types = list(/datum/action/item_action/hands_free/tip_fedora)
 
 /datum/action/item_action/hands_free/tip_fedora
@@ -350,23 +350,23 @@
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
 	cases = list("сомбреро", "сомбреро", "сомбреро", "сомбреро", "сомбреро", "сомбреро")
+	desc = "Вы чувствуете себя мексиканцем лишь надев эту шляпу."
 	icon_state = "sombrero"
 	item_state = "helmet"
-	desc = "Вы чувствуете себя мексиканцем лишь надев эту шляпу."
 
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
 	cases = list("зелёное сомбреро", "зелёного сомбреро", "зелёному сомбреро", "зелёное сомбреро", "зелёным сомбреро", "зелёном сомбреро")
+	desc = "Модное, как танцующий кактус."
 	icon_state = "greensombrero"
 	item_state = "greensombrero"
-	desc = "Модное, как танцующий кактус."
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero" // Programmers call it the “Sombrero of Shame“, or “Shamebrero”. It’s basically that if a programmer makes a mistake, you give him a sombrero to wear for a day. Sombrero of Shame. -- The More You Know...
 	cases = list("сомбреро позора", "сомбреро позора", "сомбреро позора", "сомбреро позора", "сомбреро позора", "сомбреро позора")
+	desc = "Вы никогда не просили об этом."
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
-	desc = "Вы никогда не просили об этом."
 
 /obj/item/clothing/head/western
 	name = "western hat"
@@ -377,16 +377,16 @@
 /obj/item/clothing/head/western/cowboy
 	name = "cowboy hat"
 	cases = list("ковбойская шляпа", "ковбойской шляпы", "ковбойской шляпе", "ковбойскую шляпу", "ковбойской шляпой", "ковбойской шляпе")
+	desc = "Здорово, партнёр!"
 	icon_state = "cowboy_hat"
 	item_state = "cowboy_hat"
-	desc = "Здорово, партнёр!"
 
 /obj/item/clothing/head/indiana
 	name = "leather hat"
 	cases = list("кожаная шляпа", "кожаной шляпы", "кожаной шляпе", "кожаную шляпу", "кожаной шляпой", "кожаной шляпе")
+	desc = "Остерегайтесь катящихся валунов."
 	icon_state = "indiana_hat"
 	item_state = "indiana_hat"
-	desc = "Остерегайтесь катящихся валунов."
 
 /obj/item/clothing/head/black_hood
 	name = "black hood"
