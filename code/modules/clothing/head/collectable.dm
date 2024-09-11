@@ -75,7 +75,8 @@
 	name = "collectable slime hat"
 	cases = list("коллекционная шляпа-слайм", "коллекционной шляпы-слайма", "коллекционной шляпе-слайму", "коллекционную шляпу-слайма", "коллекционной шляпой-слаймом", "коллекционной шляпе-слайме")
 	desc = "Липнет к голове прямо как настоящий паразит!"
-	icon_state = "slime"
+	icon_state = "headslime"
+	item_state = "headslime"
 	body_parts_covered = 0
 
 /obj/item/clothing/head/collectable/flatcap
