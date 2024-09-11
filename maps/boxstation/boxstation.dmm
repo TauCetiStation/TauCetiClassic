@@ -7948,6 +7948,11 @@
 	pixel_y = 10
 	},
 /obj/item/weapon/reagent_containers/food/drinks/flask/detflask,
+/obj/machinery/windowtint{
+	id = "Detective";
+	pixel_x = -28;
+	pixel_y = -15
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anb" = (
@@ -59174,8 +59179,7 @@
 "ciY" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "pod4";
-	name = "Escape Pod 4"
+	dock_tag = "pod4"
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/engineering)
@@ -70168,8 +70172,7 @@
 /area/shuttle/escape_pod4/station)
 "dAo" = (
 /obj/machinery/door/airlock/external{
-	dir = 4;
-	name = "Escape Pod 5"
+	dir = 4
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
