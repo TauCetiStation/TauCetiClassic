@@ -934,7 +934,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_jetpack
-	name = "Cyborg Upgrade Module (Mining Jetpack)"
+	name = "Cyborg Upgrade Module (Cyborg Jetpack)"
 	id = "borg_upgrade_jetpack"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/jetpack
@@ -943,13 +943,13 @@
 	starts_unlocked = TRUE
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_security
-	name = "Cyborg Upgrade Module (Security Module)"
-	id = "borg_upgrade_security"
+/datum/design/borg_upgrade_hud
+	name = "Cyborg Upgrade Module (Hud Module)"
+	id = "borg_upgrade_hud"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/security
-	materials = list(MAT_METAL=10000, MAT_GOLD=5000, MAT_URANIUM=10000)
-	construction_time = 120
+	build_path = /obj/item/borg/upgrade/hud_calibrator
+	materials = list(MAT_METAL = 500, MAT_GLASS = 400)
+	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
 
 //Misc
@@ -957,7 +957,17 @@
 	name = "Exosuit Tracking Beacon"
 	id = "mecha_tracking"
 	build_type = MECHFAB
-	build_path =/obj/item/mecha_parts/mecha_tracking
+	build_path = /obj/item/mecha_parts/mecha_tracking
+	materials = list(MAT_METAL=500)
+	construction_time = 50
+	starts_unlocked = TRUE
+	category = list("Misc")
+
+/datum/design/dna_scanner
+	name = "Exosuit DNA Scanner"
+	id = "mecha_dnascanner"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/dna_scanner
 	materials = list(MAT_METAL=500)
 	construction_time = 50
 	starts_unlocked = TRUE

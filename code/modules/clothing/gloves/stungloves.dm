@@ -37,7 +37,7 @@
 			to_chat(user, "<span class='notice'>A [cell] is already attached to the [src].</span>")
 		return
 
-	else if(iswirecutter(I) || istype(I, /obj/item/weapon/scalpel))
+	else if(iscutter(I) || istype(I, /obj/item/weapon/scalpel))
 		//stunglove stuff
 		if(cell)
 			cell.updateicon()
@@ -114,6 +114,4 @@
 			item_state = "stungloves"
 	else
 		item_state = initial(item_state)
-	if(ishuman(src.loc)) // Update item_state if src in gloves slot
-		var/mob/living/carbon/human/H = src.loc
-		H.update_inv_gloves()
+	update_inv_mob() // Update item_state if src in gloves slot

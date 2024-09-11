@@ -15,7 +15,7 @@
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag)
 	siemens_coefficient = 3.0
 
 	var/lasertag_color = "none"
@@ -25,7 +25,7 @@
 	desc = "Blue Pride, Station Wide."
 	icon_state = "bluetag"
 	item_state = "bluetag"
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/bluetag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag)
 	lasertag_color = "blue"
 
 /obj/item/clothing/suit/lasertag/redtag
@@ -33,7 +33,7 @@
 	desc = "Reputed to go faster."
 	icon_state = "redtag"
 	item_state = "redtag"
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag)
 	lasertag_color = "red"
 
 /*
@@ -97,16 +97,6 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/spacecash)
 	flags_inv = HIDEJUMPSUIT
-
-
-/obj/item/clothing/suit/wcoat
-	name = "waistcoat"
-	desc = "For some classy, murderous fun."
-	icon_state = "vest"
-	item_state = "wcoat"
-	blood_overlay_type = "armor"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO
-
 
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
@@ -334,8 +324,7 @@
 	name = "black trenchcoat"
 	desc = "A black trenchcoat."
 	icon_state = "dude_coat"
-	item_state = "jensensuit"
-	item_color = "dude_coat"
+	item_state = "dude_coat"
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -376,35 +365,30 @@
 	name = "pink swimsuit"
 	desc = "A rather skimpy pink swimsuit."
 	icon_state = "stripper_p"
-	item_color = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/stripper_green
 	name = "green swimsuit"
 	desc = "A rather skimpy green swimsuit."
 	icon_state = "stripper_g"
-	item_color = "stripper_g"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/stripper_pink
 	name = "pink skimpy dress"
 	desc = "A rather skimpy pink dress."
 	icon_state = "stripper_p"
-	item_state = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/stripper_green
 	name = "green skimpy dress"
 	desc = "A rather skimpy green dress."
 	icon_state = "stripper_g"
-	item_state = "stripper_g"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/mankini
 	name = "the mankini"
 	desc = "No honest man would wear this abomination"
 	icon_state = "mankini"
-	item_color = "mankini"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/xenos
@@ -419,40 +403,36 @@
 /obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
 	body_parts_covered = 0
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/swimsuit/black
 	name = "black swimsuit"
 	desc = "An oldfashioned black swimsuit."
 	icon_state = "swim_black"
-	item_color = "swim_black"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/blue
 	name = "blue swimsuit"
 	desc = "An oldfashioned blue swimsuit."
 	icon_state = "swim_blue"
-	item_color = "swim_blue"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/purple
 	name = "purple swimsuit"
 	desc = "An oldfashioned purple swimsuit."
 	icon_state = "swim_purp"
-	item_color = "swim_purp"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/green
 	name = "green swimsuit"
 	desc = "An oldfashioned green swimsuit."
 	icon_state = "swim_green"
-	item_color = "swim_green"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/red
 	name = "red swimsuit"
 	desc = "An oldfashioned red swimsuit."
 	icon_state = "swim_red"
-	item_color = "swim_red"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/batman
@@ -500,7 +480,7 @@
 		src.icon_state += "_open"
 		to_chat(usr, "You unbutton your jacket.")
 		src.is_button_up = 0
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_mob() //so our overlays update
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
 	name = "field jacket desert"
@@ -610,7 +590,7 @@
 	else
 		to_chat(usr, "You button-up some imaginary buttons on your [src].")
 		return
-	usr.update_inv_wear_suit()
+	update_inv_mob()
 
 /obj/item/clothing/suit/hooded/carp_costume
 	name = "carp costume"
@@ -641,23 +621,19 @@
 	name = "Student Jacket"
 	desc = "A Student's jacket from the eighties."
 	icon_state = "student_jacket"
-	action_button_name = "To Fasten"
+	item_action_types = list(/datum/action/item_action/hands_free/to_fasten)
 	var/fastened = TRUE
+/datum/action/item_action/hands_free/to_fasten
+	name = "To Fasten"
 
-/obj/item/clothing/suit/student_jacket/ui_action_click()
-	if(fastened)
-		icon_state = "student_jacket_open"
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_suit == src)
-				H.update_inv_wear_suit()
+/datum/action/item_action/hands_free/to_fasten/Activate()
+	var/obj/item/clothing/suit/student_jacket/S = target
+	if(S.fastened)
+		S.icon_state = "student_jacket_open"
 	else
-		icon_state = "student_jacket"
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_suit == src)
-				H.update_inv_wear_suit()
-	fastened = !fastened
+		S.icon_state = "student_jacket"
+	S.update_inv_mob()
+	S.fastened = !S.fastened
 
 /obj/item/clothing/suit/atlas_jacket
 	name = "atlas jacket"
@@ -710,3 +686,20 @@
 	name = "blue letterman jacket"
 	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
 	icon_state = "letterman_n"
+
+/obj/item/clothing/suit/kung
+	name = "Kung jacket"
+	desc = "Leather jaket with an old security badge attached to it"
+	icon_state = "kung_jacket"
+	item_state = "kung_jacket"
+	w_class = SIZE_SMALL
+
+/obj/item/clothing/suit/storage/comissar
+	name = "comissar's coat"
+	desc = "Red and black will never go out of fashion."
+	icon_state = "comissar"
+	item_state = "comissar"
+	blood_overlay_type = "coat"
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs)
+	body_parts_covered = UPPER_TORSO|ARMS
+	armor = list(melee = 50, bullet = 40, laser = 40, energy = 30, bomb = 0, bio = 0, rad = 0)

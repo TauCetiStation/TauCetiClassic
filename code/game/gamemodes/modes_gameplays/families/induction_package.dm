@@ -24,7 +24,7 @@
 	if(isanycop(user))
 		to_chat(user, "As a NanoTrasen officer, you can't join this family. However, you pretend to accept it to keep your cover up.")
 		for(var/threads in team_to_use.free_clothes)
-			new threads(get_turf(user))
+			new threads(get_turf(src))
 		qdel(src)
 		return
 	var/datum/role/gangster/is_gangster = isgangsterlead(user)

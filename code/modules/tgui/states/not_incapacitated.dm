@@ -25,7 +25,7 @@ var/global/datum/tgui_state/not_incapacitated_state/not_incapacitated_turf_state
 	turf_check = no_turfs
 
 /datum/tgui_state/not_incapacitated_state/can_use_topic(src_object, mob/user)
-	if(user.stat)
+	if(user.stat != CONSCIOUS)
 		return UI_CLOSE
 	if(user.incapacitated() || (turf_check && !isturf(user.loc)))
 		return UI_DISABLED

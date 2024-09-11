@@ -436,3 +436,34 @@
 		/obj/item/weapon/reagent_containers/food/snacks/stuffing
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/turkey
+
+/datum/recipe/oven/jundarek
+	reagents = list("wine" = 15, "sodiumchloride" = 1)
+	items = list(
+		/obj/item/fish_carp,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/jundarek
+
+/datum/recipe/oven/kaholket_alkeha
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/berries,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/chureech_nut,
+		/obj/item/weapon/grown/log,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/kaholket_alkeha
+
+/datum/recipe/oven/rraasi
+	items = list(
+		/obj/item/fish_carp,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/rraasi
+
+/datum/recipe/oven/el_ehum
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/shand,
+		/obj/item/weapon/grown/log,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/el_ehum

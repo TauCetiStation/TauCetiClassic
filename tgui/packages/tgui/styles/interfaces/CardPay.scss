@@ -1,0 +1,187 @@
+.cardpay_window-titlebar {
+	background: #D0D2DD !important;
+	border-radius: 5px 5px 0px 0px;
+	box-shadow: 0px 0px 0px rgba(1,1,1,0) !important;
+	border-bottom: transparent !important;
+
+	.TitleBar__title{
+		font-weight: bold;
+		color: #333344;
+		left: 15px;
+	}
+	.TitleBar__close {
+		background: transparent !important;
+		color: #333344;
+		font-weight: bold;
+	}
+	.TitleBar__statusIcon {
+		color: transparent !important;
+	}
+}
+
+.cardpay_window-contents {
+	background: #D0D2DD !important;
+	border-radius: 0px 0px 15px 15px;
+}
+
+.cardpay_monitor {
+	width: 208px;
+	height: 50px;
+	background: #111111;
+	border-bottom: 2px solid #E8E9EF;
+	border-top: 3px solid #9497AB;
+	padding: 0px;
+	padding-top: 4px;
+	padding-left: -20px;
+	margin-bottom: 5px;
+}
+
+.cardpay_button {
+	height: 48px;
+	width: 48px;
+	background: #9497AB;
+	outline: #1B1C23 solid 3px; 
+	border: 4px solid;
+	border-top: 2px solid;
+	padding: 0px;
+	margin-left: 2.5px;
+	&:hover {
+		border-top-width: 4px;
+		background: #9497AB !important;
+	}
+}
+
+.cardpay_button--normal {
+	background: #9497AB;
+	border-color: #9497AB;
+	border-top-color: #B9BBCB;
+}
+
+.cardpay_button--normal.Button--selected {
+	height: 48px;
+	width: 48px;
+	background: #9497AB;
+	outline: #1B1C23 solid 3px; 
+	border: 4px solid #9497AB;
+	border-top: 6px solid #B9BBCB;
+	padding: 0px;
+	margin-left: 2.5px;
+	&:hover {
+		border-top-width: 8px;
+		background: #9497AB !important;
+	}
+}
+
+.cardpay_button--red {
+	background: #991000;
+	border-color: #991000;
+	border-top-color: #ca201a;
+	&:hover {
+		background: #991000 !important;
+	}
+}
+
+.cardpay_button--green {
+	top:-2px;
+	background: #105735;
+	border-color: #105735;
+	border-top-color: #1a9f66;
+	&:hover {
+		background: #105735 !important;
+	}
+}
+
+.cardpay_button-inside {
+	height: 40px;
+	width: 40px;
+	background: #D0D2DD;
+	border-bottom: 5px solid;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 35px;
+	font-weight: bold;
+	padding-top: 7px;
+	margin: 0px;
+	margin-top: -2px;
+	position: absolute;
+}
+
+.cardpay_button-inside--normal {
+	background: #D0D2DD;
+	border-bottom-color: #E8E9EF;
+	color: #333344;
+}
+
+.cardpay_button-inside--red {
+	background: #e81b1d;
+	border-bottom-color: #e13a3b;
+	color: #e81b1d;
+	text-shadow: 0px -1px 1px #e13a3b, 0px -3px 5px #e13a3b, 0px 1px 1px #991000, 0px 1px 5px #991000;
+	box-shadow: inset 0px 0px 10px #e13a3b;
+}
+
+.cardpay_button-inside--green {
+	background: #009853;
+	border-bottom-color: #05a05b;
+	color: #009853;
+	text-shadow: 0px -1px 1px #02b46a, 0px -3px 5px #02b46a, 0px 1px 1px #105735, 0px 1px 5px #105735;
+	box-shadow: inset 0px 0px 10px #05a05b;
+}
+
+
+.cardpay_switch {
+	height: 24px;
+	width: 64px;
+	background: #9497AB;
+	border-bottom: 1px solid #E8E9EF;
+	border-top: 2px solid #474A5B;
+	border-radius: 5px;
+	padding: 0px;
+	padding-left: 1px;
+	margin-left: 2.5px;
+	&:hover, &:focus {
+		background: #9497AB !important;
+	}
+	&:hover {
+		padding-left: 3px;
+	}
+}
+
+.cardpay_switch.Button--selected {
+	padding-left: 41px;
+	&:hover {
+		padding-left: 39px;
+	}
+}
+
+.cardpay_switch-inside {
+	height: 22px;
+	width: 22px;
+	background: #D0D2DD;
+	border-bottom: 5px #E8E9EF solid;
+	border-radius: 5px;
+	text-align: center;
+	font-size: 13px;
+	font-weight: bold;
+	color: #D0D2DD;
+	text-shadow: 0px -1px 1px #E8E9EF, 0px -3px 5px #E8E9EF, 0px 1px 1px #474A5B, 0px 1px 5px #474A5B;
+	position: absolute;
+}
+
+.cardpay_resethole {
+	height: 9px;
+	width: 9px;
+	background: #9497AB;
+	border-top: 2px solid #474A5B;
+	border-bottom: 2px solid #E8E9EF;
+	border-radius: 10px;
+	padding: 0px;
+	margin-left: 2.5px;
+	&:focus {
+		background: #9497AB !important;
+	}
+	&:hover {
+		border-top-width: 3px;
+		background: #767989 !important;
+	}
+}

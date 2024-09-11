@@ -22,10 +22,9 @@
 	return TRUE
 
 /turf/simulated/floor/carpet/atom_religify(datum/religion/R)
-	if(icon_state == "carpetsymbol" && !isnull(R.carpet_dir))
-		if(R.carpet_dir == dir)
-			return FALSE
-		set_dir(R.carpet_dir)
+	if(religion_tile && !isnull(R.decal))
+		clean_turf_decals()
+		new /obj/effect/decal/turf_decal(src, R.decal)
 		return TRUE
 
 	else if(R.carpet_type)
@@ -37,18 +36,32 @@
 	return FALSE
 
 /obj/structure/stool/bed/chair/pew/atom_religify(datum/religion/R)
-	if(!R.pews_icon_state || R.pews_icon_state == pew_icon)
+	if(!R.emblem_icon_state || R.emblem_icon_state == pew_icon)
 		return FALSE
-	pew_icon = R.pews_icon_state
+	pew_icon = R.emblem_icon_state
 	update_icon()
 	return TRUE
 
+/obj/structure/stool/bed/chair/lectern/atom_religify(datum/religion/R)
+	if(!R.emblem_icon_state || R.emblem_icon_state == icon_state)
+		return FALSE
+	emblem_overlay.icon_state = R.emblem_icon_state
+	lectern_overlay.cut_overlay(emblem_overlay)
+	lectern_overlay.add_overlay(emblem_overlay)
+	cut_overlay(emblem_overlay)
+	add_overlay(emblem_overlay)
+	return TRUE
+
 /obj/structure/altar_of_gods/atom_religify(datum/religion/R)
-	religion = R
-	R.altars |= src
 	if(R.altar_icon_state != icon_state)
 		icon_state = R.altar_icon_state
 		update_icon()
+
+	if(religion != R)
+		return FALSE
+
+	religion = R
+	R.altars |= src
 	return TRUE
 
 /obj/machinery/door/airlock/atom_religify(datum/religion/R)
@@ -58,7 +71,8 @@
 		if(ttype == type)
 			return FALSE
 	var/ttype = pick(R.door_types)
-	new ttype(get_turf(src))
+	var/atom/door = new ttype(get_turf(src))
+	door.set_dir(dir)
 	qdel(src)
 	return TRUE
 
@@ -69,6 +83,7 @@
 		if(ttype == type)
 			return FALSE
 	var/ttype = pick(R.door_types)
-	new ttype(get_turf(src))
+	var/atom/door = new ttype(get_turf(src))
+	door.set_dir(dir)
 	qdel(src)
 	return TRUE

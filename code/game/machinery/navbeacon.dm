@@ -4,10 +4,9 @@
 /obj/machinery/navbeacon
 
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "navbeacon0-f"
+	icon_state = "navbeacon0"
 	name = "Navigation Beacon"
 	desc = "A radio beacon used for bot navigation."
-	level = 1		// underfloor
 	layer = 2.5
 	anchored = TRUE
 	interact_offline = TRUE
@@ -20,14 +19,14 @@
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_one_access = list(access_engine, access_cargo_bot)
+	req_one_access = list(access_engine, access_cargoshop)
 
 /obj/machinery/navbeacon/atom_init()
 	. = ..()
 	set_codes()
-	var/turf/T = loc
-	hide(T.intact)
 	radio_controller.add_object(src, freq, RADIO_NAVBEACONS)
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
 /obj/machinery/navbeacon/Destroy()
 	if(radio_controller)
@@ -52,23 +51,8 @@
 		else
 			codes[e] = "1"
 
-
-	// called when turf state changes
-	// hide the object if turf is intact
-/obj/machinery/navbeacon/hide(intact)
-	invisibility = intact ? 101 : 0
-	updateicon()
-
-	// update the icon_state
 /obj/machinery/navbeacon/proc/updateicon()
-	var/state="navbeacon[open]"
-
-	if(invisibility)
-		icon_state = "[state]-f"	// if invisible, set icon to faded version
-									// in case revealed by T-scanner
-	else
-		icon_state = "[state]"
-
+	icon_state = "navbeacon[open]"
 
 	// look for a signal of the form "findbeacon=X"
 	// where X is any
@@ -102,10 +86,10 @@
 
 /obj/machinery/navbeacon/attackby(obj/item/I, mob/user)
 	var/turf/T = loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return		// prevent intraction when T-scanner revealed
 
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		open = !open
 		user.SetNextMove(CLICK_CD_RAPID)
 
@@ -135,7 +119,7 @@
 	var/ai = isAI(user) || isobserver(user)
 
 	var/turf/T = loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return		// prevent intraction when T-scanner revealed
 
 	if(!open && !ai)	// can't alter controls if not open, unless you're an AI
@@ -188,19 +172,27 @@
 
 	else if(href_list["locedit"])
 		var/newloc = sanitize_safe(input("Enter New Location", "Navigation Beacon", input_default(location)) as text|null)
-		if(newloc)
-			location = newloc
+		if(!can_still_interact_with(usr))
+			return
+		if(!length(newloc))
+			return
+
+		location = newloc
 
 	else if(href_list["edit"])
 		var/codekey = href_list["code"]
 
 		var/newkey = sanitize_safe(input("Enter Transponder Code Key", "Navigation Beacon", input_default(codekey)) as text|null)
+		if(!can_still_interact_with(usr))
+			return
 		if(!newkey)
 			return FALSE
 
 		var/codeval = codes[codekey]
 		var/newval = sanitize_safe(input("Enter Transponder Code Value", "Navigation Beacon", input_default(codeval)) as text|null)
-		if(!newval)
+		if(!can_still_interact_with(usr))
+			return
+		if(!length(newval))
 			return FALSE
 
 		codes.Remove(codekey)
@@ -214,11 +206,15 @@
 
 	else if(href_list["add"])
 		var/newkey = sanitize(input("Enter New Transponder Code Key", "Navigation Beacon") as text|null)
-		if(!newkey)
+		if(!can_still_interact_with(usr))
+			return
+		if(!length(newkey))
 			return FALSE
 
 		var/newval = sanitize(input("Enter New Transponder Code Value", "Navigation Beacon") as text|null)
-		if(!newval)
+		if(!can_still_interact_with(usr))
+			return
+		if(!length(newval))
 			return FALSE
 
 		if(!codes)

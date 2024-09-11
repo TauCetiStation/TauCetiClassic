@@ -7,7 +7,9 @@
 	idle_power_usage = 5
 	active_power_usage = 10
 	layer = 5
-
+	max_integrity = 25
+	damage_deflection = 5
+	integrity_failure = 0.2
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -27,7 +29,7 @@
 	var/light_disabled = 0
 	var/alarm_on = 0
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
-	
+
 	var/show_paper_cooldown = 0
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
@@ -51,7 +53,7 @@
 	*/
 	if(!network || network.len < 1)
 		if(loc)
-			error("[name] in [get_area(src)] ([COORD(src)]) has errored. [network ? "Empty network list" : "Null network list"]")
+			error("[name] in [get_area(src)] [COORD(src)] has errored. [network ? "Empty network list" : "Null network list"]")
 		else
 			error("[name] in [get_area(src)]has errored. [network ? "Empty network list" : "Null network list"]")
 		ASSERT(network)
@@ -76,10 +78,8 @@
 /obj/machinery/camera/update_icon()
 	if(!status)
 		icon_state = "[initial(icon_state)]1"
-	else if(stat & EMPED)
-		icon_state = "[initial(icon_state)]emp"
 	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[isXRay() ? "xray" : ""][initial(icon_state)]"
 
 /obj/machinery/camera/examine(mob/user)
 	..()
@@ -89,11 +89,12 @@
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof() && status)
 		if(prob(100/severity))
-			addtimer(CALLBACK(src, .proc/fix_emp_state, network), 900)
+			addtimer(CALLBACK(src, PROC_REF(fix_emp_state), network), 900)
 			network = list()
 			stat |= EMPED
 			toggle_cam(TRUE)
 			triggerCameraAlarm()
+			flick("[isXRay() ? "xray" : ""][initial(icon_state)]emp", src)
 			..()
 
 /obj/machinery/camera/proc/fix_emp_state(list/previous_network)
@@ -110,7 +111,8 @@
 	if(!(stat & EMPED))
 		visible_message("[bicon(src)] <span class='notice'>Paint drips from [src].</span>")
 		cancelCameraAlarm()
-		toggle_cam(FALSE)
+		if(!status)
+			toggle_cam(FALSE)
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
@@ -136,12 +138,12 @@
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		toggle_cam(FALSE, user)
 
-/obj/machinery/camera/attackby(W, mob/living/user)
+/obj/machinery/camera/attackby(obj/item/weapon/W, mob/living/user)
 	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
 	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
 
 	// DECONSTRUCTION
-	if(isscrewdriver(W))
+	if(isscrewing(W))
 		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
@@ -152,10 +154,9 @@
 	else if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
 
-	else if(iswelder(W) && wires.is_deconstructable())
+	else if(iswelding(W) && wires.is_deconstructable())
 		if(weld(W, user))
-			drop_assembly(1)
-			qdel(src)
+			deconstruct(TRUE)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
 			upgradeXRay()
@@ -179,6 +180,11 @@
 		else
 			to_chat(user, "[msg2]")
 
+	else if(istype(W, /obj/item/stack/sheet/glass) && panel_open)
+		var/obj/item/stack/sheet/glass/G = W
+		remove_paint_state()
+		to_chat(user, "<span class='notice'>You fixed [src] lens.</span>")
+		G.use(1)
 	// OTHER
 	else if(istype(W, /obj/item/weapon/paper))
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -192,12 +198,12 @@
 		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!", "No!")) != "Yes!")
 			return
 		to_chat(user, "You hold \the [P] up to the camera...")
-		for(var/mob/living/silicon/ai/O in ai_list)
+		for(var/mob/living/silicon/ai/O as anything in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
 			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [P] up to one of your cameras...")
 			P.show_content(O)
-	
+
 		for(var/obj/machinery/computer/security/S in computer_list) // show the paper to all people watching this camera. except ghosts, fuck ghosts
 			if(S.active_camera != src)
 				continue
@@ -218,8 +224,8 @@
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
 			src.bug = W
 			src.bug.bugged_cameras[src.c_tag] = src
-	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/twohanded/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		if(W:force > 3)
+	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
+		if(W.force > 3)
 			user.do_attack_animation(src)
 			disconnect_viewers()
 			var/datum/effect/effect/system/spark_spread/spark_system = new()
@@ -228,12 +234,36 @@
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
-			drop_assembly()
-			new /obj/item/stack/cable_coil/cut/red(loc)
-			qdel(src)
+			deconstruct()
 	else
 		..()
 	return
+
+/obj/machinery/camera/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(stat & BROKEN)
+		switch(damage_type)
+			if(BRUTE, BURN)
+				return damage_amount
+		return
+	. = ..()
+
+/obj/machinery/camera/atom_break(damage_flag)
+	if(!status)
+		return
+	. = ..()
+	if(.)
+		triggerCameraAlarm()
+		toggle_cam(FALSE)
+
+/obj/machinery/camera/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		drop_assembly(1)
+	else
+		drop_assembly()
+		new /obj/item/stack/cable_coil(loc, 2)
+	..()
 
 /obj/machinery/camera/proc/drop_assembly(state = 0)
 	if(assembly)
@@ -242,6 +272,28 @@
 		assembly.forceMove(loc)
 		assembly.update_icon()
 		assembly = null
+
+/obj/machinery/camera/examine(mob/user)
+	. = ..()
+	if(isEmpProof())
+		to_chat(user, "It has electromagnetic interference shielding installed.")
+	else
+		to_chat(user, "<span class='info'>It can be shielded against electromagnetic interference with some <b>phoron</b>.</span>")
+	if(isXRay())
+		to_chat(user, "It has an X-ray photodiode installed.")
+	else
+		to_chat(user, "<span class='info'>It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.</span>")
+	if(isMotion())
+		to_chat(user, "It has a proximity sensor installed.")
+	else
+		to_chat(user, "<span class='info'>It can be upgraded with a <b>proximity sensor</b>.</span>")
+
+	if(!status)
+		to_chat(user, "<span class='info'>It's currently deactivated.</span>")
+	if(panel_open)
+		to_chat(user, "<span class='info'>Its maintenance panel is currently open. You can close it with a <b>screwdriver</b>.</span>")
+	else
+		to_chat(user, "<span class='notice'>You can open its maintenance panel with a <b>screwdriver</b>.</span>")
 
 /obj/machinery/camera/proc/toggle_cam(show_message, mob/living/user = null)
 	status = !status
@@ -277,13 +329,13 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.cancelAlarm("Camera", get_area(src), src)
 
 /obj/machinery/camera/proc/can_use(check_paint = TRUE)
@@ -405,3 +457,9 @@
 	cam["z"] = z
 	cam["isonstation"] = is_station_level(z)
 	return cam
+
+/obj/machinery/camera/atom_religify(datum/religion/R)
+	if(istype(R, /datum/religion/cult))
+		deconstruct(FALSE)
+		return TRUE
+	return ..()

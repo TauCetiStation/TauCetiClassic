@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/xenomorph
 	name = "alien hunter"
-	desc = "Hiss!"
+	desc = "Хсссссс!"
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "alienh_running"
 	icon_living = "alienh_running"
@@ -44,6 +44,7 @@
 
 /mob/living/simple_animal/hostile/xenomorph/drone
 	name = "alien drone"
+	desc = "Выглядит не так опасно, как её сёстры."
 	icon_state = "aliend_running"
 	icon_living = "aliend_running"
 	icon_dead = "aliend_l"
@@ -52,6 +53,7 @@
 
 /mob/living/simple_animal/hostile/xenomorph/sentinel
 	name = "alien sentinel"
+	desc = "Из её пасти вытекает что-то зелёное..."
 	icon_state = "aliens_running"
 	icon_living = "aliens_running"
 	icon_dead = "aliens_l"
@@ -66,6 +68,7 @@
 
 /mob/living/simple_animal/hostile/xenomorph/queen
 	name = "alien queen"
+	desc = "ОНА ОГРОМНАЯ!"
 	icon_state = "alienq_running"
 	icon_living = "alienq_running"
 	icon_dead = "alienq_l"
@@ -83,6 +86,7 @@
 
 /mob/living/simple_animal/hostile/xenomorph/queen/large
 	name = "alien empress"
+	desc = "КУДА ЕЩЁ БОЛЬШЕ?!"
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s"
 	icon_living = "queen_s"
@@ -98,4 +102,25 @@
 /mob/living/simple_animal/hostile/xenomorph/death()
 	..()
 	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
+	playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)
+
+/mob/living/simple_animal/hostile/pylon/aliens
+	name = "acid turret"
+	real_name = "acid turret"
+	desc = "Склизкое строение, выпускающее из себя кислотные плевки, наносящие боль и ожоги при попадании."
+	icon = 'icons/mob/alien.dmi'
+	icon_state = "acid_turret"
+	icon_dead = "acid_turret_dead"
+	ranged_cooldown = 3
+	amount_shoot = 1
+	projectiletype = /obj/item/projectile/x_turret_acid
+	projectilesound = 'sound/voice/xenomorph/spitacid_1.ogg'
+	faction = "alien"
+
+/mob/living/simple_animal/hostile/pylon/aliens/allowAttackTarget(mob/living/target)
+	return !target.incapacitated()
+
+/mob/living/simple_animal/hostile/pylon/aliens/death()
+	..()
+	visible_message("[src] lets out a waning guttural snarl, acid bubbling from its tube...")
 	playsound(src, 'sound/voice/xenomorph/death_1.ogg', VOL_EFFECTS_MASTER)

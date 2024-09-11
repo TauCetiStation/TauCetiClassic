@@ -1,5 +1,6 @@
-/mob/living/silicon/ai/var/max_locations = 5
-/mob/living/silicon/ai/var/stored_locations[0]
+/mob/living/silicon/ai
+	var/max_locations = 5
+	var/list/stored_locations = list()
 
 /mob/living/silicon/ai/proc/InvalidTurf(turf/T)
 	if(!T)
@@ -34,6 +35,10 @@
 
 
 /mob/living/silicon/ai/proc/ai_camera_list(camera in get_camera_list())
+
+	if(uses_legs)
+		to_chat(src, "Not in mobility mode.")
+		return
 
 	if(src.stat == DEAD)
 		to_chat(src, "You can't list the cameras because you are dead!")
@@ -115,7 +120,7 @@
 		return list()
 
 	var/datum/trackable/TB = new()
-	for(var/mob/living/M in living_list)
+	for(var/mob/living/M as anything in living_list)
 		// Easy checks first.
 		// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
 		if(InvalidTurf(get_turf(M)))
@@ -124,25 +129,15 @@
 			continue
 		if(M.invisibility)//cloaked
 			continue
-		if(M.digitalcamo)
+		if(SEND_SIGNAL(M, COMSIG_LIVING_CAN_TRACK) & COMPONENT_CANT_TRACK)
 			continue
-
-		// Human check
-		var/human = 0
-		if(istype(M, /mob/living/carbon/human))
-			human = 1
-			var/mob/living/carbon/human/H = M
-			//Cameras can't track people wearing an agent card or hat with blockTracking.
-			if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-				continue
-			if(istype(H.head, /obj/item/clothing/head))
-				var/obj/item/clothing/head/hat = H.head
-				if(hat.blockTracking)
-					continue
 
 		 // Now, are they viewable by a camera? (This is last because it's the most intensive check)
 		if(!near_camera(M))
 			continue
+
+		// Human check
+		var/human = ishuman(M) ? TRUE : FALSE
 
 		var/name = M.name
 		if (name in TB.names)
@@ -186,7 +181,7 @@
 	cameraFollow = null
 
 /mob/living/silicon/ai/proc/ai_actual_track(mob/living/target)
-	if(!istype(target))	return
+	if(!istype(target) || uses_legs)	return
 	var/mob/living/silicon/ai/U = usr
 
 	U.cameraFollow = target
@@ -197,22 +192,9 @@
 		while (U.cameraFollow == target)
 			if (U.cameraFollow == null)
 				return
-			if (istype(target, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = target
-				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
-					to_chat(U, "Follow camera mode terminated.")
-					U.cameraFollow = null
-					return
-				if(istype(H.head, /obj/item/clothing/head))
-					var/obj/item/clothing/head/hat = H.head
-					if(hat.blockTracking)
-						to_chat(U, "Follow camera mode terminated.")
-						U.cameraFollow = null
-						return
-				if(H.digitalcamo)
-					to_chat(U, "Follow camera mode terminated.")
-					U.cameraFollow = null
-					return
+			if(SEND_SIGNAL(target, COMSIG_LIVING_CAN_TRACK) & COMPONENT_CANT_TRACK)
+				to_chat(U, "Follow camera mode terminated.")
+				return
 
 			if(istype(target.loc,/obj/effect/dummy))
 				to_chat(U, "Follow camera mode ended.")
@@ -245,7 +227,7 @@
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
-	if (!can_use())
+	if (!can_use() || user.uses_legs)
 		return
 	user.eyeobj.setLoc(get_turf(src))
 

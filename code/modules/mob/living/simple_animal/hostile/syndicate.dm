@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
-	desc = "Death to Nanotrasen."
+	desc = "Смерть НаноТрейзен."
 	icon_state = "syndicate"
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
@@ -83,12 +83,11 @@
 		visible_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 
-/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(prob(65))
 		return ..()
-	else
-		visible_message("<span class='warning'><B>[src] blocks [Proj] with its shield!</B></span>")
-		return PROJECTILE_ABSORBED
+	visible_message("<span class='warning'><B>[src] blocks [Proj] with its shield!</B></span>")
+	return PROJECTILE_ABSORBED
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
 	min_oxy = 0
@@ -165,7 +164,7 @@
 
 /mob/living/simple_animal/hostile/viscerator
 	name = "viscerator"
-	desc = "A small, twin-bladed machine capable of inflicting very deadly lacerations."
+	desc = "Небольшая машина с двумя лезвиями, способная наносить смертельные раны."
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
@@ -185,6 +184,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	environment_smash = 1
 
 /mob/living/simple_animal/hostile/viscerator/death()
 	..()

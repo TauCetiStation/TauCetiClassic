@@ -1,5 +1,4 @@
 import { sortBy } from 'common/collections';
-import { Fragment } from 'inferno';
 import { useLocalState } from '../../backend';
 import { Box, Button, Flex, LabeledList, Section, Tabs } from '../../components';
 
@@ -70,7 +69,7 @@ export const AccessList = (props, context) => {
       title="Access"
       flexGrow={sectionFlexGrow}
       buttons={(
-        <Fragment>
+        <>
           <Button
             icon="check-double"
             content="Select All"
@@ -82,7 +81,7 @@ export const AccessList = (props, context) => {
             color="bad"
             onClick={() => denyAll()} />
           {sectionButtons}
-        </Fragment>
+        </>
       )}>
       <Flex>
         <Flex.Item>
@@ -105,13 +104,13 @@ export const AccessList = (props, context) => {
             })}
           </Tabs>
         </Flex.Item>
-        <Flex.Item grow={1}>
+        <Flex.Item grow={1} ml={1.5}>
           <Flex>
-            <Flex.Item width="50%" mr={0.45}>
+            <Flex.Item width="50%" mr={0}>
               <Button
                 fluid
                 icon="check"
-                content="Select All In Region"
+                content="Select Region"
                 color="good"
                 onClick={() => grantDep(selectedAccess.regid)} />
             </Flex.Item>
@@ -119,7 +118,7 @@ export const AccessList = (props, context) => {
               <Button
                 fluid
                 icon="times"
-                content="Deselect All In Region"
+                content="Deselect Region"
                 color="bad"
                 onClick={() => denyDep(selectedAccess.regid)} />
             </Flex.Item>

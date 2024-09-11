@@ -1,3 +1,6 @@
+// todo: this is not a nano-ui only thing anymore, we need to move methods for better place and rename *_nano_interaction
+// do not mistake with tgui methods like /datum/tgui_state/default/can_use_topic
+
 /datum/proc/nano_host()
 	return src
 
@@ -21,7 +24,7 @@
 	return STATUS_UPDATE						// Ghosts can view updates
 
 /mob/living/silicon/pai/can_use_topic(src_object)
-	if(src_object == src && !stat)
+	if(src_object == src && stat == CONSCIOUS)
 		return STATUS_INTERACTIVE
 	else
 		return ..()
@@ -29,7 +32,7 @@
 /mob/living/silicon/robot/can_use_topic(src_object, datum/topic_state/custom_state)
 	if(stat || !client)
 		return STATUS_CLOSE
-	if(lockcharge || stunned || weakened)
+	if(lockcharge || incapacitated(NONE))
 		return STATUS_DISABLED
 	if(isobj(src_object))
 		var/obj/O = src_object
@@ -51,7 +54,7 @@
 		return STATUS_INTERACTIVE
 	if(istype(get_area(src), /area/shuttle/syndicate))	// If elsewhere, they can interact with everything on the syndicate shuttle
 		return STATUS_INTERACTIVE
-	if(istype(src_object, /obj/machinery))				// Otherwise they can only interact with emagged machinery
+	if(ismachinery(src_object))				// Otherwise they can only interact with emagged machinery
 		var/obj/machinery/Machine = src_object
 		if(Machine.emagged)
 			return STATUS_INTERACTIVE

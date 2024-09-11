@@ -84,15 +84,17 @@
 /mob/living/simple_animal/hostile/panther/FindTarget()
 	. = ..()
 	if(.)
-		emote("nashes at [.]")
+		me_emote("nashes at [.]")
 
-/mob/living/simple_animal/hostile/panther/AttackingTarget()
-	. =..()
-	var/mob/living/L = .
-	if(istype(L))
-		if(prob(15))
-			L.Weaken(3)
-			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+/mob/living/simple_animal/hostile/panther/UnarmedAttack(atom/A)
+	. = ..()
+	if(!isliving(A))
+		return
+	var/mob/living/L = A
+	if(prob(15))
+		L.Weaken(3)
+		L.Stun(1)
+		L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
 /mob/living/simple_animal/hostile/panther/AttackTarget()
 	..()
@@ -142,12 +144,12 @@
 /mob/living/simple_animal/hostile/snake/FindTarget()
 	. = ..()
 	if(.)
-		emote("hisses wickedly")
+		me_emote("hisses wickedly")
 
-/mob/living/simple_animal/hostile/snake/AttackingTarget()
-	. =..()
-	var/mob/living/L = .
-	if(istype(L))
+/mob/living/simple_animal/hostile/snake/UnarmedAttack(atom/A)
+	. = ..()
+	if(isliving(A))
+		var/mob/living/L = A
 		L.apply_damage(rand(3,12), TOX)
 
 /mob/living/simple_animal/hostile/snake/AttackTarget()

@@ -41,7 +41,7 @@ var/global/list/incompatible_mob_modifiers = list(
 
 
 	if(need_updates)
-		RegisterSignal(parent, list(COMSIG_MOB_MOD_UPDATE), .proc/on_revert)
+		RegisterSignal(parent, list(COMSIG_MOB_MOD_UPDATE), PROC_REF(on_revert))
 
 	applied = TRUE
 

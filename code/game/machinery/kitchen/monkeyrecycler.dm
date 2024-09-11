@@ -35,7 +35,7 @@
 	use_power(500)
 	var/atom/movable/M = P
 	M.forceMove(src)		//To hide them from view
-	addtimer(CALLBACK(src, .proc/finish_processing,M,user), 50)
+	addtimer(CALLBACK(src, PROC_REF(finish_processing),M,user), 50)
 
 
 /obj/machinery/monkey_recycler/proc/finish_processing(atom/movable/M, mob/user)
@@ -51,6 +51,8 @@
 	pixel_x = initial(pixel_x)
 
 /obj/machinery/monkey_recycler/RefreshParts()
+	..()
+
 	var/req_grind = 5
 	var/cubes_made = 1
 	for(var/obj/item/weapon/stock_parts/manipulator/B in component_parts)
@@ -106,7 +108,7 @@
 			to_chat(user, "<span class='warning'>The machine only accepts monkeys and slimes!</span>")
 
 	if(panel_open)
-		if(ismultitool(O))
+		if(ispulsing(O))
 			var/obj/item/device/multitool/M = O
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in the [O.name]'s buffer.</span>")

@@ -64,7 +64,7 @@
 	if(!client)
 		return UI_CLOSE
 	// Disable UIs if unconcious.
-	else if(stat)
+	else if(stat != CONSCIOUS)
 		return UI_DISABLED
 	// Update UIs if incapicitated but concious.
 	else if(incapacitated())

@@ -126,6 +126,7 @@
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "water"
 	icon_spawn_state = "water"
+	static_fluid_depth = 800
 
 /turf/unsimulated/jungle/water/atom_init()
 	..()
@@ -137,7 +138,7 @@
 
 /turf/unsimulated/jungle/water/Entered(atom/movable/O)
 	..()
-	if(istype(O, /mob/living))
+	if(isliving(O))
 		var/mob/living/M = O
 		//slip in the murky water if we try to run through it
 		if(prob(10 + (M.m_intent == "run" ? 40 : 0)))

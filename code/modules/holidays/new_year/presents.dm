@@ -17,6 +17,7 @@
 						/obj/item/toy/blink								= 2,
 						/obj/item/clothing/under/syndicate/tacticool	= 1,
 						/obj/item/toy/sword								= 2,
+						/obj/item/toy/dualsword							= 2,
 						/obj/item/toy/gun								= 2,
 						/obj/item/toy/crossbow							= 2,
 						/obj/item/clothing/suit/syndicatefake			= 1,
@@ -29,7 +30,7 @@
 						/obj/random/plushie								= 30,
 						/obj/item/toy/moocan							= 1,
 						/obj/item/weapon/bikehorn						= 1,
-						/obj/item/weapon/soap/deluxe					= 1,
+						/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe					= 1,
 						/obj/item/device/guitar							= 1
 						)
 

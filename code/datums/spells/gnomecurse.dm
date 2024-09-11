@@ -101,8 +101,7 @@
 	desc = "It's a handy gnome suit, fits you very well."
 	icon_state = "gnome"
 	item_state = "gnome"
-	item_color = "gnome"
-	flags = ONESIZEFITSALL
+	flags = ONESIZEFITSALL|HEAR_TALK
 
 /obj/item/clothing/under/gnome_suit/attack_hand(mob/user)
 	. = ..()

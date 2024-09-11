@@ -1,5 +1,5 @@
-var/const/TOUCH = 1
-var/const/INGEST = 2
+var/global/const/TOUCH = 1
+var/global/const/INGEST = 2
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -60,11 +60,13 @@ var/const/INGEST = 2
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
+	if(total_volume == 0)
+		return
 	var/datum/reagents/R
 	if(istype(target,/datum/reagents))
 		R = target
 	else
-		if (!target.reagents || src.total_volume<=0)
+		if (!target.reagents)
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -186,8 +188,9 @@ var/const/INGEST = 2
 		if(M && R)
 			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
 			var/remove_amount = R.custom_metabolism * C.get_metabolism_factor()
-			R.on_mob_life(M)
-			remove_reagent(R.id, remove_amount)
+			if(remove_amount > 0)
+				R.on_mob_life(M)
+				remove_reagent(R.id, remove_amount)
 	update_total()
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
@@ -284,7 +287,8 @@ var/const/INGEST = 2
 						feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
 						add_reagent(C.result, C.result_amount*multiplier)
-						set_data(C.result, preserved_data)
+						if(preserved_data)
+							set_data(C.result, preserved_data)
 
 						//add secondary products
 						for(var/S in C.secondary_results)
@@ -368,36 +372,37 @@ var/const/INGEST = 2
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_mob, A, TOUCH, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_mob), A, TOUCH, R.volume+volume_modifier)
 				if(isturf(A))
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_turf, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_turf), A, R.volume+volume_modifier)
 				if(isobj(A))
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_obj), A, R.volume+volume_modifier)
 		if(INGEST)
 			for(var/datum/reagent/R in reagent_list)
 				if(ismob(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_mob, A, INGEST, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_mob), A, INGEST, R.volume+volume_modifier)
 				if(isturf(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_turf, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_turf), A, R.volume+volume_modifier)
 				if(isobj(A) && R)
 					if(!R)
 						return
 					else
-						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
+						INVOKE_ASYNC(R, TYPE_PROC_REF(/datum/reagent, reaction_obj), A, R.volume+volume_modifier)
 	return
 
+// adds new reagent by ID, mix it with those already present if needed
 /datum/reagents/proc/add_reagent(reagent, amount, list/data = null, safety = FALSE, datum/religion/_religion)
 	if(!isnum(amount) || amount < 0 || amount > 2000)
 		return FALSE
@@ -406,30 +411,19 @@ var/const/INGEST = 2
 	if(total_volume + amount > maximum_volume)
 		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
+	// if we already have this reagent just trasnfer new data and update volume
 	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
 			R.volume += amount
 
-			// Data:
+			// blood is one common datum /datum/reagent/blood with different data uploads, we mix it here manually
+			// todo: currently only viruses, else it can break mobs
+			// part of the work happens in /inject_blood()
 			if(R.id == "blood" && reagent == "blood")
-				if(R.data && data)
-					if(R.data["viruses"] || data["viruses"]) // mix dem viruses
-						var/list/mix1 = R.data["viruses"]
-						var/list/mix2 = data["viruses"]
+				if(R.data && R.data["virus2"])
+					R.data["virus2"] |= virus_copylist(data["virus2"])
 
-						// Stop issues with the list changing during mixing.
-						var/list/to_mix = list()
-						to_mix += mix1
-						to_mix += mix2
-
-						var/datum/disease/advance/AD = Advance_Mix(to_mix)
-						if(AD)
-							var/list/preserve = list(AD)
-							for(var/D in R.data["viruses"])
-								if(!istype(D, /datum/disease/advance))
-									preserve += D
-							R.data["viruses"] = preserve
-
+			// not blood, but same problems
 			else if(R.id == "customhairdye" || R.id == "paint_custom")
 				for(var/color in R.data)
 					R.data[color] = (R.data[color] + data[color]) * 0.5
@@ -444,6 +438,7 @@ var/const/INGEST = 2
 				handle_reactions()
 			return TRUE
 
+	// new reagent we don't have, need to create
 	var/datum/reagent/D = chemical_reagents_list[reagent]
 	if(D)
 		var/datum/reagent/R = new D.type()
@@ -452,8 +447,11 @@ var/const/INGEST = 2
 		R.volume = amount
 		R.religion = _religion
 
-		// Data:
-		SetViruses(R, data) // Includes setting data
+		if(data)
+			R.data = data.Copy()
+
+			if(data["virus2"]) // list of datums, need to copy manually through virus_copylist()
+				R.data["virus2"] |= virus_copylist(data["virus2"])
 
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
@@ -514,7 +512,7 @@ var/const/INGEST = 2
 /datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)
-		if (res != "") res += ","
+		if (res != "") res += ", "
 		res += A.name
 
 	return res
@@ -583,6 +581,10 @@ var/const/INGEST = 2
 		var/list/v = trans_data["virus2"]
 		trans_data["virus2"] = v.Copy()
 
+	if (trans_data["changeling_marker"])
+		var/list/v = trans_data["changeling_marker"]
+		trans_data["changeling_marker"] = v.Copy()
+
 	return trans_data
 
 /datum/reagents/Destroy()
@@ -591,8 +593,10 @@ var/const/INGEST = 2
 		qdel(R)
 	reagent_list.Cut()
 	reagent_list = null
-	if(my_atom && my_atom.reagents == src)
-		my_atom.reagents = null
+	if(my_atom)
+		if(my_atom.reagents == src)
+			my_atom.reagents = null
+		my_atom = null
 
 /datum/reagents/proc/create_chempuff(amount, multiplier=1, preserve_data=1, name_from_reagents = TRUE, icon_from_reagents = TRUE)
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(my_atom))
@@ -618,14 +622,19 @@ var/const/INGEST = 2
 
 	if(!isnull(user))
 		var/turf/T = get_turf(target)
-		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location ([COORD(T)]) [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] splashed [get_reagents()] on [target], location ([COORD(T)])")
+		message_admins("[key_name_admin(user)] splashed ([splash.get_reagents()]) on [target], location [COORD(T)] [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [splash.get_reagents()] on [target], location [COORD(T)]")
 
 		if(ismob(target))
 			var/mob/living/L = target
 			var/contained = splash.get_reagents()
 
 			L.log_combat(user, "splashed with [my_atom.name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
+
+			var/image/splash_animation = image('icons/effects/effects.dmi', L, "splash")
+			splash_animation.color = mix_color_from_reagents(splash.reagent_list)
+			splash_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
+			flick_overlay_view(splash_animation, target, 1 SECONDS)
 
 	splash.reaction(target, TOUCH)
 	splash.clear_reagents()

@@ -27,10 +27,9 @@
 	for(var/name in religion.aspects)
 		var/datum/aspect/asp = religion.aspects[name]
 		if(asp.god_desc)
-			to_chat(user, "<font color='[asp.color]'>[name]</font>:")
-			to_chat(user, "\t[asp.god_desc]")
+			to_chat(user, "<font color='[asp.color]'>[name]</font>:<br>\t[asp.god_desc]")
 
-/obj/structure/cult/forge/attack_hand(mob/living/user)
+/obj/structure/cult/forge/attack_hand(mob/user)
 	if(!user.mind.holy_role || !user.my_religion)
 		return
 
@@ -49,7 +48,7 @@
 		var/atom/build = B.building_type
 		items_image[B] = image(icon = initial(build.icon), icon_state = initial(build.icon_state))
 
-/obj/structure/cult/forge/proc/create_def_items(mob/living/user)
+/obj/structure/cult/forge/proc/create_def_items(mob/user)
 	for(var/datum/building_agent/B in items_image)
 		B.name = "[initial(B.name)] [B.get_costs()]"
 

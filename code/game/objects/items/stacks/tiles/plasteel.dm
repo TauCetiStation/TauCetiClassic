@@ -2,16 +2,17 @@
 	name = "floor tile"
 	singular_name = "floor tile"
 	desc = "Those could not work as a pretty decent throwing weapon."
-	icon_state = "tile"
 	w_class = SIZE_SMALL
 	force = 6.0
 	m_amt = 937.5
 	throwforce = 5.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 3
 	flags = CONDUCT
 	max_amount = 60
 	turf_type = /turf/simulated/floor
+
+	
 
 /obj/item/stack/tile/plasteel/atom_init()
 	. = ..()
@@ -20,13 +21,13 @@
 
 /*
 /obj/item/stack/tile/plasteel/attack_self(mob/user)
-	if (usr.stat)
+	if (usr.stat != CONSCIOUS)
 		return
 	var/T = user.loc
 	if (!( istype(T, /turf) ))
 		to_chat(user, "<span class='warning'>You must be on the ground!</span>")
 		return
-	if (!( istype(T, /turf/space) ))
+	if (!( isspaceturf(T) ))
 		to_chat(user, "<span class='warning'>You cannot build on or repair this turf!</span>")
 		return
 	build(T)
@@ -36,7 +37,7 @@
 */
 
 /obj/item/stack/tile/plasteel/proc/build(turf/S)
-	if (istype(S,/turf/space))
+	if (isenvironmentturf(S))
 		S.ChangeTurf(/turf/simulated/floor/plating/airless)
 	else
 		S.ChangeTurf(/turf/simulated/floor/plating)

@@ -136,7 +136,7 @@
 		if(C.broken)	continue
 		if(C.opened && !C.close())	continue
 		C.locked = 1
-		C.icon_state = C.icon_locked
+		C.update_icon()
 
 	return
 
@@ -232,11 +232,11 @@
 				dat += "Установить время: [(setminute ? text("[setminute]:") : null)][setsecond]<br/>"
 
 			// Controls
-			dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
+			dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];set_time=TRUE'>Ввести время</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
 
 			// Mounted flash controls
 			for(var/obj/machinery/flasher/F in targets)
-				if(F.last_flash && (F.last_flash + 150) > world.time)
+				if(!COOLDOWN_FINISHED(F, cd_flash))
 					dat += "<br/><A href='?src=\ref[src];fc=1'>Вспышка Перезаряжается</A>"
 				else
 					dat += "<br/><A href='?src=\ref[src];fc=1'>Ослепить</A>"
@@ -340,6 +340,12 @@
 			addtime = min(max(round(addtime), 0), 3600)
 
 			timeset(addtime)
+
+		if(href_list["set_time"])  // set timer (in minutes)
+			var/new_time = input(usr, "Введите время заключения (в минутах):", "Ввод времени") as num
+			new_time = clamp(new_time, 0, 60)
+
+			timeset(new_time * 60)
 
 		if(href_list["fc"])
 			for(var/obj/machinery/flasher/F in targets)

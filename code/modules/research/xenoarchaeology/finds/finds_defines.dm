@@ -165,7 +165,7 @@
 			)
 	return find_type
 
-var/list/responsive_carriers = list(
+var/global/list/responsive_carriers = list(
 	"carbon",
 	"potassium",
 	"hydrogen",
@@ -176,7 +176,7 @@ var/list/responsive_carriers = list(
 	"phosphorus",
 	"phoron")
 
-var/list/finds_as_strings = list(
+var/global/list/finds_as_strings = list(
 	"Trace organic cells",
 	"Long exposure particles",
 	"Trace water particles",

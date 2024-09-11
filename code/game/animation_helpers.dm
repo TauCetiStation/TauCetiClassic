@@ -2,13 +2,18 @@
 	// To prevent the item from being forever invisible, check this flag. If it's TRUE, don't animate.
 	var/is_invis_anim = FALSE
 	//For handling persistent filters
-	var/list/filter_data
 
-/atom/proc/before_shake_animation(intensity, time, intensity_dropoff)
+/atom/proc/before_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	return
 
-/atom/proc/after_shake_animation(intensity, time, intensity_dropoff)
+/atom/proc/after_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	return
+
+/mob/living/proc/prevent_item_animations()
+	return m_intent == MOVE_INTENT_WALK
+
+/mob/living/carbon/human/prevent_item_animations()
+	return istype(gloves, /obj/item/clothing/gloves/black/strip) || ..()
 
 /atom/proc/do_shake_animation(intensity, time, intensity_dropoff = 0.9)
 	if(invisibility > 0)
@@ -27,16 +32,11 @@
 	I.loc = src
 	I.appearance_flags |= KEEP_APART
 
-	var/list/viewers = list()
-	for(var/mob/M in viewers(src))
-		if(M.client)
-			viewers += M.client
-
-	before_shake_animation(intensity, time, intensity_dropoff, viewers)
+	before_shake_animation(intensity, time, intensity_dropoff, clients)
 
 	var/prev_invis = invisibility
 
-	flick_overlay(I, viewers, time + 1)
+	flick_overlay(I, clients, time + 1)
 
 	var/stop_shaking = world.time + time
 	while(stop_shaking > world.time)
@@ -58,7 +58,7 @@
 			return
 		invisibility = prev_invis
 
-	after_shake_animation(intensity, time, intensity_dropoff, viewers)
+	after_shake_animation(intensity, time, intensity_dropoff, clients)
 
 	qdel(I)
 	is_invis_anim = FALSE
@@ -196,9 +196,9 @@
 	if (!Adjacent(target))
 		return
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(istype(H.gloves, /obj/item/clothing/gloves/black/strip))
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.prevent_item_animations())
 			return
 
 	if(is_invis_anim)
@@ -207,7 +207,7 @@
 
 	var/list/imgs = get_perceived_images(viewers(target))
 	for(var/i in imgs)
-		INVOKE_ASYNC(src, .proc/pickup_animation, i, imgs[i], target, old_loc)
+		INVOKE_ASYNC(src, PROC_REF(pickup_animation), i, imgs[i], target, old_loc)
 	sleep(5)
 	if(QDELETED(src))
 		return
@@ -243,12 +243,12 @@
 		if(M.client)
 			new_viewers += M.client
 
-	flick_overlay(I, new_viewers, 4)
+	flick_overlay(I, new_viewers, PUTDOWN_ANIMATION_DURATION + 1)
 
 	var/to_x = (target.x - old_turf.x) * 32 + pixel_x + additional_pixel_x + target.pixel_x
 	var/to_y = (target.y - old_turf.y) * 32 + pixel_y + additional_pixel_y + target.pixel_y
 
-	animate(I, pixel_x = to_x, pixel_y = to_y, time = 3, transform = matrix(), easing = CUBIC_EASING)
+	animate(I, pixel_x = to_x, pixel_y = to_y, time = PUTDOWN_ANIMATION_DURATION, transform = matrix(), easing = CUBIC_EASING)
 
 /atom/movable/proc/do_putdown_animation(atom/target, mob/user, additional_pixel_x = 0, additional_pixel_y = 0)
 	if (QDELETED(src))
@@ -260,9 +260,9 @@
 	if (!target.Adjacent(user))
 		return
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(istype(H.gloves, /obj/item/clothing/gloves/black/strip))
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.prevent_item_animations())
 			return
 
 	if(is_invis_anim)
@@ -277,9 +277,9 @@
 
 	var/list/imgs = get_perceived_images(viewers(target))
 	for(var/i in imgs)
-		INVOKE_ASYNC(src, .proc/putdown_animation, i, imgs[i], target, user, additional_pixel_x, additional_pixel_y)
+		INVOKE_ASYNC(src, PROC_REF(putdown_animation), i, imgs[i], target, user, additional_pixel_x, additional_pixel_y)
 
-	sleep(3)
+	sleep(PUTDOWN_ANIMATION_DURATION)
 	if (QDELETED(src))
 		return
 	is_invis_anim = FALSE
@@ -287,15 +287,15 @@
 	pixel_x = old_x + additional_pixel_x
 	pixel_y = old_y + additional_pixel_y
 
-/atom/movable/proc/simple_move_animation(image/I, list/viewers, atom/target)
+/atom/movable/proc/simple_move_animation(image/I, list/viewers, atom/target, atom/old_loc)
 	if (QDELETED(src))
 		return
 
-	var/turf/old_turf = get_turf(src)
+	var/turf/old_turf = get_turf(old_loc)
 
 	I.pixel_x = pixel_x
 	I.pixel_y = pixel_y
-	I.loc = loc
+	I.loc = old_loc
 	I.plane = GAME_PLANE
 	I.layer = INFRONT_MOB_LAYER
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -314,16 +314,11 @@
 
 	animate(I, pixel_x = to_x, pixel_y = to_y, time = 3, easing = CUBIC_EASING)
 
-/atom/movable/proc/do_simple_move_animation(atom/target)
+/atom/movable/proc/do_simple_move_animation(atom/target, atom/old_loc)
 	if (QDELETED(src))
 		return
 	if (QDELETED(target))
 		return
-
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(istype(H.gloves, /obj/item/clothing/gloves/black/strip))
-			return
 
 	if(is_invis_anim)
 		return
@@ -334,7 +329,7 @@
 
 	var/list/imgs = get_perceived_images(viewers(target))
 	for(var/i in imgs)
-		INVOKE_ASYNC(src, .proc/simple_move_animation, i, imgs[i], target)
+		INVOKE_ASYNC(src, PROC_REF(simple_move_animation), i, imgs[i], target, old_loc)
 
 	sleep(3)
 	if (QDELETED(src))

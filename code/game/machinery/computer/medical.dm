@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 /obj/machinery/computer/med_data//TODO:SANITY
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
@@ -19,6 +20,7 @@
 	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
 	var/next_print = 0
 	var/docname
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -56,19 +58,22 @@
 				if(3.0)
 					dat += "<B>Records Maintenance</B><HR>\n<A href='?src=\ref[src];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[src];u_load=1'>Upload From disk</A><BR>\n<A href='?src=\ref[src];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[src];screen=1'>Back</A>"
 				if(4.0)
-					var/icon/front = active1.fields["photo_f"]
-					front.Blend(mugshot,ICON_UNDERLAY,1,1)
-					var/icon/side = active1.fields["photo_s"]
-					side.Blend(mugshot,ICON_UNDERLAY,1,1)
-					user << browse_rsc(front, "front.png")
-					user << browse_rsc(side, "side.png")
 					dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
 					if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
+						var/icon/front = active1.fields["photo_f"]
+						front.Blend(mugshot,ICON_UNDERLAY,1,1)
+						var/icon/side = active1.fields["photo_s"]
+						side.Blend(mugshot,ICON_UNDERLAY,1,1)
+						user << browse_rsc(front, "front.png")
+						user << browse_rsc(side, "side.png")
+
 						dat += "<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>Name: [active1.fields["name"]] \
 								ID: [active1.fields["id"]]<BR>\n	\
 								Sex: <A href='?src=\ref[src];field=sex'>[active1.fields["sex"]]</A><BR>\n	\
 								Age: <A href='?src=\ref[src];field=age'>[active1.fields["age"]]</A><BR>\n	\
 								Fingerprint: <A href='?src=\ref[src];field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
+								Insurance Account Number: <A href='?src=\ref[src];field=insurance_account_number'>[active1.fields["insurance_account_number"]]</A><BR>\n	\
+								Insurance Type: [active1.fields["insurance_type"]]<BR>\n \
 								Physical Status: <A href='?src=\ref[src];field=p_stat'>[active1.fields["p_stat"]]</A><BR>\n	\
 								Mental Status: <A href='?src=\ref[src];field=m_stat'>[active1.fields["m_stat"]]</A><BR></td><td align = center valign = top> \
 								Photo:<br><img src=front.png height=64 width=64 border=5 class=nearest><img src=side.png height=64 width=64 border=5 class=nearest></td></tr></table>"
@@ -101,15 +106,6 @@
 					dat += "\n<A href='?src=\ref[src];print_p=1'>Print Record</A><BR>\n<A href='?src=\ref[src];print_photos=1'>Print Photos</A><BR>\n<A href='?src=\ref[src];screen=2'>Back</A><BR>"
 				if(5.0)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
-					/*	Advanced diseases is weak! Feeble! Glory to virus2!
-					for(var/Dt in typesof(/datum/disease))
-						var/datum/disease/Dis = new Dt(0)
-						if(istype(Dis, /datum/disease/advance))
-							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
-						if(!Dis.desc)
-							continue
-						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"
-					*/
 					for (var/ID in virusDB)
 						var/datum/data/record/v = virusDB[ID]
 						dat += "<br><a href='?src=\ref[src];vir=\ref[v]'>[v.fields["name"]]</a>"
@@ -147,7 +143,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	if (!( data_core.general.Find(src.active1) ))
 		src.active1 = null
 
@@ -254,9 +249,43 @@
 				if("fingerprint")
 					if (istype(src.active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input fingerprint hash:", "Med. records", input_default(src.active1.fields["fingerprint"]), null)  as text)
-						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
+						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1 || t1 == src.active1.fields["fingerprint"]))
 							return
+
 						src.active1.fields["fingerprint"] = t1
+						src.active1.fields["insurance_account_number"] = 0
+						src.active1.fields["insurance_type"] = INSURANCE_NONE
+
+				if("insurance_account_number")
+					if (istype(src.active1, /datum/data/record))
+						var/t1 = input("Please input insurance account number:", "Med. records", input_default(src.active1.fields["insurance_account_number"]), null)  as num
+						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1 || t1 == src.active1.fields["insurance_account_number"]))
+							return
+						var/datum/money_account/MA = get_account(t1)
+						if(!MA)
+							tgui_alert(usr, "Unable to find this money account.")
+							return
+						for(var/i in global.department_accounts)
+							if(t1 == global.department_accounts[i].account_number)
+								tgui_alert(usr, "This is department account, you can't use it.")
+								return
+						if(MA.owner_name != src.active1.fields["name"])
+							tgui_alert(usr, "[src.active1.fields["name"]] is not owner of this money account.")
+							return
+
+						var/datum/data/record/R = find_record("insurance_account_number", t1, data_core.general)
+						if(R)
+							tgui_alert(usr, "This money account is already used by [R.fields["id"]] record.")
+							return
+
+						for(var/mob/living/carbon/human/H as anything in global.human_list)
+							if(md5(H.dna.uni_identity) != src.active1.fields["fingerprint"])
+								continue
+							src.active1.fields["insurance_account_number"] = t1
+
+						if(src.active1.fields["insurance_account_number"] != t1)
+							tgui_alert(usr, "Can't match the 'fingerprint' data, please check this and try again.")
+
 				if("sex")
 					if (istype(src.active1, /datum/data/record))
 						if (src.active1.fields["sex"] == "Male")
@@ -331,7 +360,7 @@
 						src.temp = "<B>Mental Condition:</B><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=insane'>*Insane*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=unstable'>*Unstable*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=watch'>*Watch*</A><BR>\n\t<A href='?src=\ref[src];temp=1;m_stat=stable'>Stable</A><BR>"
 				if("b_type")
 					if (istype(src.active2, /datum/data/record))
-						src.temp = "<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=an'>A-</A> <A href='?src=\ref[src];temp=1;b_type=ap'>A+</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=bn'>B-</A> <A href='?src=\ref[src];temp=1;b_type=bp'>B+</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=abn'>AB-</A> <A href='?src=\ref[src];temp=1;b_type=abp'>AB+</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=on'>O-</A> <A href='?src=\ref[src];temp=1;b_type=op'>O+</A><BR>"
+						src.temp = "<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=an'>[BLOOD_A_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=ap'>[BLOOD_A_PLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=bn'>[BLOOD_B_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=bp'>[BLOOD_B_PLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=abn'>[BLOOD_AB_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=abp'>[BLOOD_AB_PLUS]</A><BR>\n\t<A href='?src=\ref[src];temp=1;b_type=on'>[BLOOD_O_MINUS]</A> <A href='?src=\ref[src];temp=1;b_type=op'>[BLOOD_O_PLUS]</A><BR>"
 				if("b_dna")
 					if (istype(src.active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input DNA hash:", "Med. records", input_default(src.active1.fields["dna"]), null)  as text)
@@ -367,8 +396,7 @@
 						src.active1.fields["p_stat"] = "Physically Unfit"
 					if("disabled")
 						src.active1.fields["p_stat"] = "Disabled"
-				if(PDA_Manifest.len)
-					PDA_Manifest.Cut()
+				PDA_Manifest.Cut()
 
 		if (href_list["m_stat"])
 			if (src.active1)
@@ -387,21 +415,21 @@
 			if (src.active2)
 				switch(href_list["b_type"])
 					if("an")
-						src.active2.fields["b_type"] = "A-"
+						src.active2.fields["b_type"] = BLOOD_A_MINUS
 					if("bn")
-						src.active2.fields["b_type"] = "B-"
+						src.active2.fields["b_type"] = BLOOD_B_MINUS
 					if("abn")
-						src.active2.fields["b_type"] = "AB-"
+						src.active2.fields["b_type"] = BLOOD_AB_MINUS
 					if("on")
-						src.active2.fields["b_type"] = "O-"
+						src.active2.fields["b_type"] = BLOOD_O_MINUS
 					if("ap")
-						src.active2.fields["b_type"] = "A+"
+						src.active2.fields["b_type"] = BLOOD_A_PLUS
 					if("bp")
-						src.active2.fields["b_type"] = "B+"
+						src.active2.fields["b_type"] = BLOOD_B_PLUS
 					if("abp")
-						src.active2.fields["b_type"] = "AB+"
+						src.active2.fields["b_type"] = BLOOD_AB_PLUS
 					if("op")
-						src.active2.fields["b_type"] = "O+"
+						src.active2.fields["b_type"] = BLOOD_O_PLUS
 
 
 		if (href_list["del_r"])
@@ -499,12 +527,14 @@
 			var/info = "<CENTER><B>Medical Record</B></CENTER><BR>"
 			if (record1)
 				info += text(
-					"Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>",
+					"Name: [] ID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\n<BR>Insurance Account Number: []<BR>\nInsurance Type: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>",
 					record1.fields["name"],
 					record1.fields["id"],
 					record1.fields["sex"],
 					record1.fields["age"],
 					record1.fields["fingerprint"],
+					record1.fields["insurance_account_number"],
+					record1.fields["insurance_type"],
 					record1.fields["p_stat"],
 					record1.fields["m_stat"]
 				)

@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(demo)
 	name = "Demo"
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_SHOW_IN_MC_TAB
 	wait = SS_WAIT_DEMO
 	priority = SS_PRIORITY_DEMO
 	init_order = SS_INIT_DEMO
@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(demo)
 	var/last_completed = 0
 
 /datum/controller/subsystem/demo/proc/write_time()
-	if(!config.record_replays)
+	if(!can_fire)
 		return
 	var/new_time = world.time
 	if(last_written_time != new_time)
@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(demo)
 	last_written_time = new_time
 
 /datum/controller/subsystem/demo/proc/write_event_line(line)
-	if(!config.record_replays)
+	if(!can_fire)
 		return
 	write_time()
 	if(initialized)
@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(demo)
 		pre_init_lines += line
 
 /datum/controller/subsystem/demo/proc/write_chat(target, text)
-	if(!config.record_replays)
+	if(!can_fire)
 		return
 	var/target_text = ""
 	if(target == clients)
@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(demo)
 
 /datum/controller/subsystem/demo/Initialize()
 	if(!config.record_replays)
-		can_fire = FALSE
+		stop_demo() // todo: lagswith should have higher priority to be able to stop demo initialization
 		return ..()
 	demo_file = file("[global.log_directory]/demo.txt")
 	WRITE_FILE(demo_file, "demo version 1") // increment this if you change the format
@@ -89,9 +89,9 @@ SUBSYSTEM_DEF(demo)
 				var/turf/T = locate(x,y,z)
 				T.demo_last_appearance = T.appearance
 				var/this_appearance
-				// space turfs are difficult to RLE otherwise, because they all
+				// environment turfs are difficult to RLE otherwise, because they all
 				// have different appearances despite being the same thing.
-				if(T.type == /turf/space)
+				if(isenvironmentturf(T))
 					this_appearance = "s" // save the bytes
 				else
 					this_appearance = T.appearance
@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(demo)
 						row_list += this_appearance
 					else
 						// do a diff with the previous turf to save those bytes
-						row_list += encode_appearance(this_appearance, istext(last_appearance) ? null : last_appearance, encoded_type = T.type)
+						row_list += encode_appearance(this_appearance, istext(last_appearance) ? null : last_appearance, encoded_type = T.type, remove_overlays = T.flags_2 & PROHIBIT_OVERLAYS_FOR_DEMO_2)
 				last_appearance = this_appearance
 		if(rle_count > 1)
 			row_list += rle_count
@@ -126,7 +126,7 @@ SUBSYSTEM_DEF(demo)
 					var/atom/movable/as_movable = C
 					if(as_movable.loc != T)
 						continue
-					if(isobj(C) || ismob(C))
+					if((isobj(C) || ismob(C)) && !(as_movable.flags_2 & PROHIBIT_FOR_DEMO_2))
 						turf_list += encode_init_obj(C)
 				if(turf_list.len)
 					if(spacing)
@@ -140,8 +140,9 @@ SUBSYSTEM_DEF(demo)
 	// track objects that exist in nullspace
 	var/nullspace_list = list()
 	for(var/atom/movable/M in world)
-		if(M.loc != null) continue
-		if(!isobj(M) && !ismob(M))
+		if(M.loc != null)
+			continue
+		if((!isobj(M) && !ismob(M)) || !(M.flags_2 & PROHIBIT_FOR_DEMO_2))
 			continue
 		nullspace_list += encode_init_obj(M)
 		CHECK_TICK
@@ -189,7 +190,7 @@ SUBSYSTEM_DEF(demo)
 			M.demo_last_loc = M.loc
 		var/appearance_string = "="
 		if(M.appearance != M.demo_last_appearance)
-			appearance_string = encode_appearance(M.appearance, M.demo_last_appearance, encoded_type = M.type)
+			appearance_string = encode_appearance(M.appearance, M.demo_last_appearance, encoded_type = M.type, remove_overlays = M.flags_2 & PROHIBIT_OVERLAYS_FOR_DEMO_2)
 			M.demo_last_appearance = M.appearance
 		dirty_updates += "\ref[M] [loc_string] [appearance_string]"
 		if(MC_TICK_CHECK)
@@ -216,7 +217,7 @@ SUBSYSTEM_DEF(demo)
 		else if(ismovable(M.loc))
 			loc_string = "\ref[M.loc]"
 		M.demo_last_appearance = M.appearance
-		new_updates += "\ref[M] [loc_string] [encode_appearance(M.appearance, encoded_type = M.type)]"
+		new_updates += "\ref[M] [loc_string] [encode_appearance(M.appearance, encoded_type = M.type, remove_overlays = M.flags_2 & PROHIBIT_OVERLAYS_FOR_DEMO_2)]"
 		if(MC_TICK_CHECK)
 			canceled = TRUE
 			break
@@ -234,7 +235,7 @@ SUBSYSTEM_DEF(demo)
 		var/turf/T = marked_turfs[marked_turfs.len]
 		marked_turfs.len--
 		if(T && T.appearance != T.demo_last_appearance)
-			turf_updates += "([T.x],[T.y],[T.z])=[encode_appearance(T.appearance, T.demo_last_appearance, encoded_type = T.type)]"
+			turf_updates += "([T.x],[T.y],[T.z])=[encode_appearance(T.appearance, T.demo_last_appearance, encoded_type = T.type, remove_overlays = T.flags_2 & PROHIBIT_OVERLAYS_FOR_DEMO_2)]"
 			T.demo_last_appearance = T.appearance
 			if(MC_TICK_CHECK)
 				canceled = TRUE
@@ -248,15 +249,16 @@ SUBSYSTEM_DEF(demo)
 /datum/controller/subsystem/demo/proc/encode_init_obj(atom/movable/M)
 	M.demo_last_loc = M.loc
 	M.demo_last_appearance = M.appearance
-	var/encoded_appearance = encode_appearance(M.appearance, encoded_type = M.type)
+	var/encoded_appearance = encode_appearance(M.appearance, encoded_type = M.type, remove_overlays = M.flags_2 & PROHIBIT_OVERLAYS_FOR_DEMO_2)
 	var/list/encoded_contents = list()
 	for(var/C in M.contents)
-		if(isobj(C) || ismob(C))
-			encoded_contents += encode_init_obj(C)
+		var/atom/A = C
+		if((isobj(A) || ismob(A)) && !(A.flags_2 & PROHIBIT_FOR_DEMO_2))
+			encoded_contents += encode_init_obj(A)
 	return "\ref[M]=[encoded_appearance][(encoded_contents.len ? "([jointext(encoded_contents, ",")])" : "")]"
 
 // please make sure the order you call this function in is the same as the order you write
-/datum/controller/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/encoded_type = null)
+/datum/controller/subsystem/demo/proc/encode_appearance(image/appearance, image/diff_appearance, diff_remove_overlays = FALSE, atom/encoded_type = null, remove_overlays = FALSE)
 	if(appearance == null)
 		return "n"
 	if(appearance == diff_appearance)
@@ -297,7 +299,7 @@ SUBSYSTEM_DEF(demo)
 			inted[i] += round(old_list[i] * 255)
 		color_string = jointext(inted, ",")
 	var/overlays_string = "\[]"
-	if(appearance.overlays.len)
+	if(appearance.overlays.len && !remove_overlays)
 		var/list/overlays_list = list()
 		for(var/i in 1 to appearance.overlays.len)
 			var/image/overlay = appearance.overlays[i]
@@ -332,7 +334,7 @@ SUBSYSTEM_DEF(demo)
 		appearance.pixel_y == 0 ? "" : appearance.pixel_y,
 		appearance.blend_mode <= 1 ? "" : appearance.blend_mode,
 		appearance_transform_string != "i" ? appearance_transform_string : "",
-		appearance:invisibility == 0 ? "" : appearance:invisibility, // colon because dreamchecker is dumb
+		appearance:invisibility == INVISIBILITY_NONE ? "" : appearance:invisibility, // colon because dreamchecker is dumb
 		appearance.pixel_w == 0 ? "" : appearance.pixel_w,
 		appearance.pixel_z == 0 ? "" : appearance.pixel_z,
 		appearance.overlays.len ? overlays_string : "",
@@ -411,12 +413,16 @@ SUBSYSTEM_DEF(demo)
 	..(msg)
 
 /datum/controller/subsystem/demo/proc/mark_turf(turf/T)
-	if(!isturf(T))
+	if(!can_fire)
+		return
+	if(!isturf(T) || T.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	marked_turfs[T] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_new(atom/movable/M)
-	if(!isobj(M) && !ismob(M))
+	if(!can_fire)
+		return
+	if((!isobj(M) && !ismob(M)) || M.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	if(QDELETED(M))
 		return
@@ -426,7 +432,9 @@ SUBSYSTEM_DEF(demo)
 
 // I can't wait for when TG ports this and they make this a #define macro.
 /datum/controller/subsystem/demo/proc/mark_dirty(atom/movable/M)
-	if(!isobj(M) && !ismob(M))
+	if(!can_fire)
+		return
+	if((!isobj(M) && !ismob(M)) || M.flags_2 & PROHIBIT_FOR_DEMO_2)
 		return
 	if(QDELETED(M))
 		return
@@ -434,6 +442,8 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty[M] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_destroyed(atom/movable/M)
+	if(!can_fire)
+		return
 	if(!isobj(M) && !ismob(M))
 		return
 	if(marked_new[M])
@@ -442,3 +452,14 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty -= M
 	if(initialized)
 		del_list["\ref[M]"] = 1
+
+/datum/controller/subsystem/demo/proc/stop_demo(source)
+	if(source)
+		var/blame_note = "<span class='warning big'>!!Demo recording interrupted by [source]!!</span>"
+		write_event_line("chat world [json_encode(blame_note)]")
+	flags |= SS_NO_FIRE
+	can_fire = FALSE
+	marked_dirty.Cut()
+	marked_new.Cut()
+	marked_turfs.Cut()
+	del_list.Cut()

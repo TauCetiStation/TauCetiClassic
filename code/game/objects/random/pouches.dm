@@ -20,4 +20,4 @@
 /obj/random/pouch/low_chance
 	name = "low chance random pouch"
 	icon_state = "small_generic"
-	spawn_nothing_percentage = 80
+	spawn_nothing_chance = 80

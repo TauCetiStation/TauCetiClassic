@@ -13,40 +13,37 @@
 	max_roles = 2
 
 	var/datum/station_state/start
+	var/announcement_timer
 
+	var/list/spawn_locs = list()
 	var/list/pre_escapees = list()
-	var/declared = FALSE
 	var/blobwincount = 0
-	var/prelude_announcement
-	var/outbreak_announcement
-	var/reached_crit_mass = FALSE
+
+/datum/faction/blob_conglomerate/New()
+	..()
+	spawn_locs += get_vents()
 
 /datum/faction/blob_conglomerate/can_setup(num_players)
 	max_roles = max(round(num_players/PLAYER_PER_BLOB_CORE, 1), 1)
+
+	if(spawn_locs.len < max_roles)
+		// we were unable to setup because we didn't have enough spawn locations
+		return FALSE
 	return TRUE
 
 // -- Victory procs --
 /datum/faction/blob_conglomerate/check_win()
-	if(!declared) //No blobs have been spawned yet
-		return FALSE
 	. = FALSE
-	var/ded = TRUE
-	for (var/datum/role/R in members)
-		if (R.antag && R.antag.current && !(R.antag.current.is_dead()))
-			ded = FALSE
 
-	if(!ded)
-		if(blobwincount <= blobs.len) //Blob took over
-			for(var/datum/role/blob_overmind/R in members)
-				var/mob/camera/blob/B = R.antag.current
-				if(istype(B))
-					B.max_blob_points = INFINITY
-					B.blob_points = INFINITY
-			return TRUE // force end
-		if(SSticker.station_was_nuked)
-			return TRUE // force end
-	else
-		stage(FS_DEFEATED)
+	if(blobwincount <= blobs.len) //Blob took over
+		for(var/datum/role/blob_overmind/R in members)
+			var/mob/camera/blob/B = R.antag.current
+			if(istype(B))
+				B.max_blob_points = INFINITY
+				B.blob_points = INFINITY
+		return TRUE // force end
+	if(SSticker.station_was_nuked)
+		return TRUE // force end
 
 	if(config.continous_rounds)
 		return FALSE
@@ -55,24 +52,33 @@
 
 /datum/faction/blob_conglomerate/process()
 	. = ..()
-	if(!blobwincount)
+	if(!blobwincount || !detect_overminds())
 		return .
-	if(prelude_announcement && world.time >= prelude_announcement && detect_overminds())
-		prelude_announcement = 0
-		stage(FS_DORMANT)
-	if(outbreak_announcement && world.time >= outbreak_announcement && detect_overminds()) //Must be alive to advance.
-		outbreak_announcement = 0
+	if(0.2 * blobwincount < blobs.len && stage < FS_START) // Announcement
+		stage(FS_START)
+		if(announcement_timer)
+			deltimer(announcement_timer)
+	if(0.3 * blobwincount < blobs.len && stage < FS_ACTIVE) // AI law
 		stage(FS_ACTIVE)
-	if(!reached_crit_mass && declared && 0.7 * blobwincount <= blobs.len && stage < FS_ENDGAME) // Blob almost won !
-		reached_crit_mass = TRUE
+	else if(0.55 * blobwincount < blobs.len && stage < FS_MIDGAME) // Weapons in cargo
+		stage(FS_MIDGAME)
+	else if(0.7 * blobwincount < blobs.len && stage < FS_ENDGAME) // Nuclear codes
 		stage(FS_ENDGAME)
 
 /datum/faction/blob_conglomerate/OnPostSetup()
 	start = new()
 	start.count()
-	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
-	outbreak_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+	announcement_timer = addtimer(CALLBACK(src, PROC_REF(stage), FS_START), rand(2 * INTERCEPT_TIME_LOW, 1.5 * INTERCEPT_TIME_HIGH), TIMER_STOPPABLE)
+	spawn_blob_mice()
 	return ..()
+
+/datum/faction/blob_conglomerate/proc/spawn_blob_mice()
+	for(var/datum/role/R in members)
+		var/V = pick_n_take(spawn_locs)
+		var/mob/living/simple_animal/mouse/blob/M = new(V) // spawn them inside vents so people wouldn't notice them at round start and they won't die cause of the environment
+		R.antag.transfer_to(M)
+		QDEL_NULL(R.antag.original)
+		M.add_ventcrawl(V)
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
 	blobwincount = 500 * max_roles
@@ -91,44 +97,57 @@
 	. += "<br/>Station takeover: [blobs.len]/[blobwincount]."
 
 /datum/faction/blob_conglomerate/stage(new_stage)
+	stage = new_stage
 	switch(new_stage)
-		if(FS_DORMANT)
+		if(FS_START)
 			var/datum/announcement/centcomm/blob/outbreak5/announcement = new
 			announcement.play()
 			return
+
 		if(FS_ACTIVE)
 			for(var/mob/M in player_list)
 				var/T = M.loc
-				if(istype(T, /turf/space) || istype(T, /turf) && !is_station_level(M.z))
+				if(isspaceturf(T) || isturf(T) && !is_station_level(M.z))
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
-				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
+				var/law = "Станция находится на карантине. Не позволяйте никому покинуть станцию, пока данный закон активен. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
 				aiPlayer.set_zeroth_law(law)
 			SSshuttle.fake_recall = TRUE //Quarantine
+
+		if(FS_MIDGAME)
+			var/datum/game_mode/gamemode = SSticker.mode
+			gamemode.add_supply_to_cargo(2, "Anti-blob equipment: Personal set", "Cent Comm", "Cent Comm", "", "Blob threat")
+			gamemode.add_supply_to_cargo(1, "Anti-blob equipment: Group supply", "Cent Comm", "Cent Comm", "", "Blob threat")
+			var/datum/announcement/centcomm/blob/half/announcement = new()
+			announcement.play()
+
 		if(FS_ENDGAME)
 			var/datum/announcement/centcomm/blob/critical/announcement = new
 			announcement.play()
 			for(var/mob/camera/blob/B in player_list)
 				to_chat(B, "<span class='blob'>The beings intend to eliminate you with a final suicidal attack, you must stop them quickly or consume the station before this occurs!</span>")
 			send_intercept(FS_ENDGAME)
+			if(security_level < SEC_LEVEL_RED)
+				set_security_level("red")
+
 			var/nukecode = "ERROR"
 			for(var/obj/machinery/nuclearbomb/bomb in poi_list)
 				if(bomb && bomb.r_code)
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
-				var/law = "Directive 7-12 has been authorized. Allow no sentient being to escape the purge. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
+
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
+				var/law = "Была утверждена Директива 7-12. Не позвольте ни одному разумному существу избежать уничтожения. Ядерная боеголовка должна быть активирована любой ценой. Код от ядерной боеголовки: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
-		if (FS_DEFEATED) //Cleanup time
+
+		if(FS_DEFEATED) //Cleanup time
 			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
 			announcement.play()
-
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
+				aiPlayer.set_zeroth_law("")
 			send_intercept(FS_DEFEATED)
 			SSshuttle.fake_recall = FALSE
-			declared = FALSE
-			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
-				aiPlayer.set_zeroth_law("")
 
 /datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)
 	var/intercepttext = ""
@@ -187,13 +206,11 @@ Message ends."}
 
 /datum/faction/blob_conglomerate/GetScoreboard()
 	var/dat = ..()
-
 	var/list/result = check_quarantaine()
 	if (detect_overminds() && (result["numOffStation"] + result["numSpace"]))
-		dat += "<span class='danger'>The AI has failed to enforce the quarantine.</span>"
+		dat += "<span class='danger'>ИИ не смог установить карантин.</span>"
 	else
-		dat += "<span class='good'>The AI has managed to enforce the quarantine.</span><BR>"
-
+		dat += "<span class='good'>ИИ смог установить карантин.</span><BR>"
 	return dat
 
 /datum/faction/blob_conglomerate/get_scorestat()
@@ -201,16 +218,16 @@ Message ends."}
 	var/datum/station_state/end = new
 	end.count()
 	var/list/result = check_quarantaine()
-	dat += {"<B><U>BLOB STATS</U></B><BR>
-	<b>Total blobs: [blobs.len]</b><br>
-	<b>Station Integrity: [round(end.score(start)*100)]%</b><br>
+	dat += {"<B><U>Статистика блоба</U></B><BR>
+	<b>Количество блобов: [blobs.len]</b><br>
+	<b>Целостность станции: [round(end.score(start)*100)]%</b><br>
 	<br>
-	<b>Quarantaine status:</b><br>
-	Dead humans: <b>[result["numDead"]]</b><br>
-	Alive humans still on board: <b>[result["numAlive"]]</b><br>
-	Humans in space: <b>[result["numSpace"]]</b><br>
-	Humans off-station: <b>[result["numOffStation"]]</b><br>
-	Pre-escapes: <b>[pre_escapees.len]</b><br>
+	<b>Состояние карантина:</b><br>
+	Экипажа мертво: <b>[result["numDead"]]</b><br>
+	Экипажа на борту станции: <b>[result["numAlive"]]</b><br>
+	Экипажа в космосе: <b>[result["numSpace"]]</b><br>
+	Экипажа вне станции: <b>[result["numOffStation"]]</b><br>
+	Счастливчики: <b>[pre_escapees.len]</b><br>
 	<HR>"}
 	return dat
 
@@ -233,9 +250,9 @@ Message ends."}
 			continue
 		else
 			var/T = M.loc
-			if (istype(T, /turf/space))
+			if (isspaceturf(T))
 				result["numSpace"]++
-			else if(istype(T, /turf))
+			else if(isturf(T))
 				if (M.z!=1)
 					result["numOffStation"]++
 				else
@@ -255,24 +272,18 @@ Message ends."}
 /datum/station_state/proc/count(count_territories)
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		for(var/turf/T in block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z)))
-			if(istype(T,/turf/simulated/floor))
+			if(isfloorturf(T))
 				var/turf/simulated/floor/F = T
 				if(!F.burnt)
 					floor += 12
 				else
 					floor += 1
 
-			if(istype(T, /turf/simulated/wall))
-				if(T.intact)
-					wall += 2
-				else
-					wall += 1
+			if(iswallturf(T))
+				wall += 2
 
 			if(istype(T, /turf/simulated/wall/r_wall))
-				if(T.intact)
-					r_wall += 2
-				else
-					r_wall += 1
+				r_wall += 2
 
 			for(var/obj/O in T.contents)
 				if(istype(O, /obj/structure/window))
@@ -283,7 +294,7 @@ Message ends."}
 						grille += 1
 				else if(istype(O, /obj/machinery/door))
 					door += 1
-				else if(istype(O, /obj/machinery))
+				else if(ismachinery(O))
 					mach += 1
 
 	if(count_territories)

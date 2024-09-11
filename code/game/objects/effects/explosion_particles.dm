@@ -2,6 +2,7 @@
 	name = "explosive particles"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "explosion_particle"
+	plane = LIGHTING_LAMPS_PLANE
 	opacity = 1
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -34,6 +35,7 @@
 	name = "explosive particles"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
+	plane = LIGHTING_LAMPS_PLANE
 	opacity = 1
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -46,17 +48,36 @@
 
 /datum/effect/system/explosion
 	var/turf/location
+	var/practicles = 10
 
-/datum/effect/system/explosion/proc/set_up(loca)
+/datum/effect/system/explosion/proc/set_up(loca, practicles_number)
 	if(istype(loca, /turf)) location = loca
 	else location = get_turf(loca)
+	if(!isnull(practicles_number))
+		practicles = max(practicles_number, 10)
 
 /datum/effect/system/explosion/proc/start()
-	new/obj/effect/explosion( location )
-	var/datum/effect/system/expl_particles/P = new/datum/effect/system/expl_particles()
-	P.set_up(10,location)
-	P.start()
-	spawn(5)
-		var/datum/effect/effect/system/smoke_spread/S = new/datum/effect/effect/system/smoke_spread()
-		S.set_up(5,0,location,null)
-		S.start()
+	new/obj/effect/explosion(location)
+	if(practicles)
+		var/datum/effect/system/expl_particles/P = new/datum/effect/system/expl_particles()
+		P.set_up(practicles,location)
+		P.start()
+
+/obj/effect/shockwave
+	icon = 'icons/effects/shockwave.dmi'
+	icon_state = "shockwave"
+	plane = DISTORTION_PLANE
+	pixel_x = -496
+	pixel_y = -496
+
+/obj/effect/shockwave/atom_init(mapload, radius, speed, y_offset, x_offset)
+	. = ..()
+	if(!speed)
+		speed = 1
+	if(y_offset)
+		pixel_y += y_offset
+	if(x_offset)
+		pixel_x += x_offset
+	QDEL_IN(src, 0.5 * radius * speed)
+	transform = matrix().Scale(32 / 1024, 32 / 1024)
+	animate(src, time = 0.5 * radius * speed, transform=matrix().Scale((32 / 1024) * radius * 1.5, (32 / 1024) * radius * 1.5))

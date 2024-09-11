@@ -12,6 +12,8 @@
 	var/min_roles = 1
 	// Whether or not this faction accepts newspawn latejoiners
 	var/accept_latejoiners = FALSE
+	// Accepts roundstart populating. Set FALSE to make faction members list empty
+	var/rounstart_populate = TRUE
 
 	// Type of roles that should be in faction initially
 	var/datum/role/initroletype
@@ -34,11 +36,21 @@
 	// What are the goals of this faction?
 	var/datum/objective_holder/objective_holder
 
+	// Type for collector of statistics by this faction
+	var/datum/stat/faction/stat_type = /datum/stat/faction
+
+	// Whether the faction should be printed to the scoreboard even if it has 0 members.
+	var/always_print = FALSE
+
 /datum/faction/New()
 	SHOULD_CALL_PARENT(TRUE)
 	..()
 	objective_holder = new
 	objective_holder.faction = src
+
+/datum/faction/Destroy(force, ...)
+	QDEL_NULL(objective_holder)
+	return ..()
 
 /datum/faction/proc/OnPostSetup()
 	SHOULD_CALL_PARENT(TRUE)
@@ -93,6 +105,9 @@
 		return TRUE
 	if(!P.client.prefs.be_role.Find(required_pref) || jobban_isbanned(P, required_pref) || role_available_in_minutes(P, required_pref) || jobban_isbanned(P, "Syndicate"))
 		return FALSE
+	return TRUE
+
+/datum/faction/proc/can_latespawn_mob(mob/P)
 	return TRUE
 
 // Basically, they are members of the new faction
@@ -171,6 +186,12 @@
 /datum/faction/proc/CheckObjectives()
 	return objective_holder.GetObjectiveString(check_success = TRUE)
 
+/datum/faction/proc/calculate_completion()
+	for(var/datum/objective/O in GetObjectives())
+		O.calculate_completion()
+	for(var/datum/role/R in members)
+		R.calculate_completion()
+
 // Numbers!!
 /datum/faction/proc/build_scorestat()
 	return
@@ -197,7 +218,7 @@
 			if (IsSuccessful())
 				score_results += "<span class='green'><B>\The [capitalize(name)] was successful!</B></span>"
 				feedback_add_details("[ID]_success","SUCCESS")
-				score["roleswon"]++
+				SSStatistics.score.roleswon++
 			else if (minor_victory)
 				score_results += "<span class='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</span>"
 				feedback_add_details("[ID]_success","HALF")
@@ -208,7 +229,6 @@
 		score_results += "<br><br>"
 		for (var/datum/objective/objective in objective_holder.GetObjectives())
 			objective.extra_info()
-			objective.calculate_completion()
 			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[ID]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
 			count++
@@ -216,8 +236,6 @@
 				score_results += "<br>"
 
 		score_results += "</ul>"
-
-	antagonists_completion += list(list("faction" = ID, "html" = score_results))
 
 	score_results += "<ul>"
 
@@ -266,7 +284,7 @@
 /datum/faction/proc/IsSuccessful()
 	if(objective_holder.objectives.len > 0)
 		for(var/datum/objective/objective in objective_holder.GetObjectives())
-			if(!objective.check_completion())
+			if(objective.completed == OBJECTIVE_LOSS)
 				return FALSE
 	for(var/datum/role/R in members)
 		if(!R.IsSuccessful())
@@ -383,3 +401,32 @@
 	for(var/datum/role/R in members)
 		if(R.antag == M)
 			return R
+
+/datum/faction/proc/get_member_by_ckey(ckey)
+	for(var/datum/role/R in members)
+		if(R.antag && ckey(R.antag.key) == ckey)
+			return R
+
+/datum/faction/proc/get_active_members()
+	. = list()
+	for(var/datum/role/R in members)
+		var/mob/M = R.antag?.current
+		if(!M || !M.client)
+			continue
+		. += M
+
+/datum/faction/proc/check_crew(for_alien = FALSE)
+	var/total_human = 0
+	for(var/mob/living/carbon/human/H as anything in human_list)
+		var/turf/human_loc = get_turf(H)
+		if(!human_loc || !is_station_level(human_loc.z))
+			continue
+		if(H.stat == DEAD)
+			continue
+		if(!H.mind || !H.client)
+			continue
+		if(for_alien)
+			if(!H.species.flags[FACEHUGGABLE])
+				continue
+		total_human++
+	return total_human

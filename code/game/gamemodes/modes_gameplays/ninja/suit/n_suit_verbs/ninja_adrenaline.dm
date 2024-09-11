@@ -14,6 +14,7 @@
 		//Wouldn't need to track adrenaline boosters if there was a miracle injection to get rid of paralysis and the like instantly.
 		//For now, adrenaline boosters ARE the miracle injection. Well, radium, really.
 		U.SetParalysis(0)
+		U.SetStunned(0)
 		U.SetWeakened(0)
 	/*
 	Due to lag, it was possible to adrenaline boost but remain helpless while life.dm resets player stat.

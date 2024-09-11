@@ -7,19 +7,13 @@
 	var/list/drones_list = list()
 
 /datum/event/rogue_drone/start()
-	//spawn them at the same place as carp
-	var/list/possible_spawns = list()
-	for(var/obj/effect/landmark/C in landmarks_list)
-		if(C.name == "carpspawn")
-			possible_spawns.Add(C)
-
 	//25% chance for this to be a false alarm
-	var/num
 	if(prob(25))
-		num = 0
-	else
-		num = rand(2,6)
-	for(var/i=0, i<num, i++)
+		return
+	//spawn them at the same place as carp
+	var/list/possible_spawns = landmarks_list["carpspawn"]
+	var/num = rand(2, 6)
+	for(var/i in 1 to num)
 		var/mob/living/simple_animal/hostile/retaliate/malf_drone/D = new(get_turf(pick(possible_spawns)))
 		drones_list.Add(D)
 		if(prob(25))

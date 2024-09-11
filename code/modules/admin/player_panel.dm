@@ -215,7 +215,7 @@
 
 	var/list/mobs = sortmobs()
 	var/i = 1
-	for(var/mob/M in mobs)
+	for(var/mob/M as anything in mobs)
 		if(M.ckey)
 
 			var/color = "#e6e6e6"
@@ -331,7 +331,7 @@
 	//add <td>(IP: [M.lastKnownIP])</td> if you want to know their ip to the lists below
 	var/list/mobs = sortmobs()
 
-	for(var/mob/M in mobs)
+	for(var/mob/M as anything in mobs)
 		if(!M.ckey) continue
 
 		dat += "<tr><td>[M.name]</td>"
@@ -351,7 +351,7 @@
 			dat += "<td>Monkey</td>"
 		else if(isxeno(M))
 			dat += "<td>Alien</td>"
-		else if(istype(M, /mob/living/parasite/essence))
+		else if(isessence(M))
 			dat += "<td>Changelling Essence</td>"
 		else
 			dat += "<td>Unknown</td>"
@@ -398,7 +398,7 @@
 					dat += "<a href='?src=\ref[src];call_shuttle=2'>Send Back</a><br>"
 				if(1)
 					dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[shuttleeta2text()]</a><BR>"
-		dat += "<a href='?src=\ref[src];delay_round_end=1'>[SSticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
+		dat += "<a href='?src=\ref[src];delay_round_end=1'>[SSticker.admin_delayed ? "End Round Normally" : "Delay Round End"]</a><br>"
 
 		dat += SSticker.mode.AdminPanelEntry()
 

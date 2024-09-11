@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ab" = (
-/turf/space,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
@@ -14,15 +14,15 @@
 	},
 /area/space_structures/ghostship)
 "ad" = (
-/turf/space,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
 /area/space_structures/ghostship)
 "ae" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/ghostship)
@@ -63,7 +63,9 @@
 	},
 /area/space_structures/ghostship)
 "aj" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair{
+	dir = 1
+	},
 /obj/structure/cellular_biomass/grass/meat,
 /obj/structure/cellular_biomass/core/meat,
 /obj/structure/cellular_biomass/grass/meat,
@@ -89,7 +91,9 @@
 	},
 /area/space_structures/ghostship)
 "am" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	dir = 4;
@@ -161,7 +165,9 @@
 	},
 /area/space_structures/ghostship)
 "ax" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair{
+	dir = 1
+	},
 /obj/structure/cellular_biomass/grass/meat,
 /obj/structure/cellular_biomass/core/meat,
 /obj/structure/cellular_biomass/grass/meat,
@@ -180,7 +186,9 @@
 	},
 /area/space_structures/ghostship)
 "az" = (
-/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/stool/bed/chair/schair{
+	dir = 1
+	},
 /obj/structure/cellular_biomass/grass/meat,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -234,11 +242,11 @@
 	},
 /area/space_structures/ghostship)
 "aJ" = (
-/obj/item/weapon/twohanded/flora/pottedplant/tropical_1,
+/obj/item/weapon/flora/pottedplant/tropical_1,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "aK" = (
-/obj/item/weapon/twohanded/flora/pottedplant/tropical_2,
+/obj/item/weapon/flora/pottedplant/tropical_2,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "aL" = (
@@ -295,7 +303,6 @@
 /obj/structure/stool/bed/psych,
 /obj/structure/cellular_biomass/core/meat,
 /obj/structure/cellular_biomass/grass/meat,
-/obj/item/clothing/mask/michael_guess_1,
 /obj/item/clothing/under/dress/dress_orange,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
@@ -321,13 +328,13 @@
 	},
 /area/space_structures/ghostship)
 "aZ" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "ba" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-22"
 	},
 /turf/simulated/floor/wood,
@@ -395,7 +402,7 @@
 /area/space_structures/ghostship)
 "bl" = (
 /obj/structure/cellular_biomass/grass/meat,
-/mob/living/simple_animal/hostile/cellular/meat/creep_standing,
+/obj/effect/spawner/mob_spawn/cellular/meat/creep_standing,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "bm" = (
@@ -467,7 +474,7 @@
 	},
 /area/space_structures/ghostship)
 "bz" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
+/obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
 	},
 /obj/machinery/light/small{
@@ -581,7 +588,7 @@
 	mobname = "Clarke Isaac";
 	name = "Clarke Isaac"
 	},
-/obj/item/weapon/pickaxe/plasmacutter,
+/obj/item/weapon/gun/energy/laser/cutter,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},
@@ -659,10 +666,10 @@
 /area/space_structures/ghostship)
 "cb" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -727,17 +734,17 @@
 	},
 /area/space_structures/ghostship)
 "cj" = (
-/turf/space,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
 	},
 /area/space_structures/ghostship)
 "ck" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -746,11 +753,11 @@
 /area/space_structures/ghostship)
 "cl" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	req_access = list(72)
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -802,44 +809,44 @@
 	},
 /area/space_structures/ghostship)
 "cs" = (
-/turf/space,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s9"
 	},
 /area/space_structures/ghostship)
 "ct" = (
-/turf/space,
+/turf/environment/space,
 /area/space_structures/ghostship)
 "cu" = (
-/turf/space,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
 /area/space_structures/ghostship)
 "cv" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/ghostship)
 "cw" = (
 /obj/structure/shuttle/engine/propulsion/burst/right,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/ghostship)
 "cx" = (
 /obj/structure/shuttle/engine/propulsion/burst/left,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8;
 	req_access = list(72)
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/ghostship)
 "cy" = (
-/turf/space,
+/turf/environment/space,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s6"
 	},
@@ -884,7 +891,7 @@
 	},
 /area/space_structures/ghostship)
 "cG" = (
-/obj/item/weapon/twohanded/flora/pottedplant,
+/obj/item/weapon/flora/pottedplant,
 /obj/machinery/light/small{
 	dir = 4
 	},

@@ -14,7 +14,7 @@
 	var/list/req_access = list(access_robotics) //Access needed to pop out the brain.
 
 	name = "Spider-bot"
-	desc = "A skittering robotic friend!"
+	desc = "Ползучий друг-робот!"
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "spiderbot-chassis"
 	icon_living = "spiderbot-chassis"
@@ -39,11 +39,11 @@
 	speed = -1                    //Spiderbots gotta go fast.
 	//pass_flags = PASSTABLE      //Maybe griefy?
 	w_class = SIZE_MINUSCULE
-	speak_emote = list("beeps","clicks","chirps")
+	speak_emote = list("гудит","жужит","пищит")
 
 /mob/living/simple_animal/spiderbot/attackby(obj/item/O, mob/user)
 
-	if(istype(O, /obj/item/device/mmi) || istype(O, /obj/item/device/mmi/posibrain))
+	if(isMMI(O))
 		var/obj/item/device/mmi/B = O
 		if(src.mmi) //There's already a brain in it.
 			to_chat(user, "<span class='warning'>There's already a brain in [src]!</span>")
@@ -79,7 +79,7 @@
 		update_icon()
 		return 1
 
-	if (iswelder(O))
+	if (iswelding(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (WT.use(0))
@@ -162,7 +162,7 @@
 
 /mob/living/simple_animal/spiderbot/update_icon()
 	if(mmi)
-		if(istype(mmi,/obj/item/device/mmi))
+		if(isMMI(mmi))
 			icon_state = "spiderbot-chassis-mmi"
 			icon_living = "spiderbot-chassis-mmi"
 		if(istype(mmi, /obj/item/device/mmi/posibrain))
@@ -208,8 +208,8 @@
 		held_item.loc = loc
 		held_item = null
 
-	robogibs(loc, viruses)
-	Destroy()
+	robogibs(loc)
+	qdel(src)
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/spiderbot/verb/hide()
@@ -266,6 +266,8 @@
 
 	var/list/items = list()
 	for(var/obj/item/I in view(1,src))
+		if(istype(I, /obj/item/weapon/disk/nuclear))
+			continue
 		if(I.loc != src && I.w_class <= SIZE_TINY)
 			items.Add(I)
 

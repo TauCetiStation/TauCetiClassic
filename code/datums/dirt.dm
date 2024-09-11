@@ -1,20 +1,31 @@
 /datum/dirt_cover
 	var/name = "red blood"
 	var/color = "#a10808"
+	var/alpha = 255
 
 /datum/dirt_cover/New(datum/dirt_cover/cover)
 	if(cover)
 		name = cover.name
 		color = cover.color
+		alpha = cover.alpha
 	..()
 
 /datum/dirt_cover/dirt
 	name = "dirt"
 	color = "#784800"
 
+/datum/dirt_cover/mud
+	name = "mud"
+	color = "#4d2f02"
+
 /datum/dirt_cover/oil
 	name = "oil"
 	color = "#1f181f"
+
+/datum/dirt_cover/snow
+	name = "snow"
+	color = "#aaaaaa"
+	alpha = 80
 
 /datum/dirt_cover/red_blood
 	name = "red blood"
@@ -48,6 +59,10 @@
 	name = "xeno blood"
 	color = "#05ee05"
 
+/datum/dirt_cover/hemolymph
+	name = "hemolymph"
+	color = "#525252"
+
 /datum/dirt_cover/proc/add_dirt(datum/dirt_cover/A)
 	var/red = (hex2num(copytext(color,2,4)) + hex2num(copytext(A.color,2,4))) / 2
 	var/green = (hex2num(copytext(color,4,6)) + hex2num(copytext(A.color,4,6))) / 2
@@ -55,7 +70,8 @@
 	color = rgb(red,green,blue)
 	if(prob(50))      // lame but whatever
 		name = A.name //
-
+	if(alpha < A.alpha)
+		alpha = A.alpha
 /*
 /proc/get_dirt_mixed_color(list/dms)
 	if(!dms)

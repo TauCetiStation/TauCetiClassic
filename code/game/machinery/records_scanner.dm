@@ -50,7 +50,7 @@
 	flick("scanner_on",src)
 	lastuser = user.real_name
 	var/mname = user.real_name
-	var/dna = user.dna.unique_enzymes
+	var/dna = user.dna.unique_enzymes ? user.dna.unique_enzymes : "None"
 	var/bloodtype = user.dna.b_type
 	var/fingerprint = md5(user.dna.uni_identity)
 	var/list/marks = list()

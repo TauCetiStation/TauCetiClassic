@@ -1,12 +1,12 @@
-/mob/living/proc/log_combat(mob/living/attacker, msg, alert_admins = TRUE)
+/mob/living/proc/log_combat(mob/living/attacker, msg, alert_admins = TRUE, redirected = FALSE)
 	if(!logs_combat)
 		return
-	attack_log += "\[[time_stamp()]\] <font color='orange'>Has been [msg], by [attacker.name] ([attacker.ckey])</font>"
-	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])</font>"
+	attack_log += "\[[time_stamp()]\] <font color='orange'>Has been [msg], by [attacker.name] ([attacker.ckey])[redirected ? " (redirected)" : ""]</font>"
+	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])[redirected ? " (redirected)" : ""]</font>"
 	if(alert_admins)
-		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)]", attacker)
+		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)][redirected ? " (redirected)" : ""]", attacker)
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
 		if(absorb_text)
@@ -24,22 +24,58 @@
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
+/mob/living/proc/is_impact_force_affected(impact_force, impact_dir)
+	if(status_flags & GODMODE)
+		return FALSE
+	if(buckled || anchored)
+		return FALSE
+	return impact_force > 0
+
+/mob/living/carbon/human/is_impact_force_affected(impact_force, impact_dir)
+	if(shoes && (shoes.flags & AIR_FLOW_PROTECT))
+		return lying || crawling
+	if(wear_suit && (wear_suit.flags & AIR_FLOW_PROTECT))
+		return lying || crawling
+
+	if(check_shield_dir(src, impact_dir))
+		return FALSE
+
+	return ..()
+
+/mob/living/proc/get_projectile_impact_force(obj/item/projectile/P, def_zone)
+	return P.impact_force
+
+/mob/living/proc/prob_miss(obj/item/projectile/P)
+	return prob(20 + P.get_miss_modifier()) // no bopyparts -> no reason to check def_zone
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	if(P.impact_force) // we want this to be before everything as this is unblockable type of effect at this moment. If something changes, then mob_bullet_act() won't be needed probably as separate proc.
-		if(istype(loc, /turf/simulated))
+	var/impact_force = get_projectile_impact_force(P, def_zone)
+	if(impact_force && is_impact_force_affected(P.impact_force, get_dir(P, src)))
+		if(isturf(loc))
 			loc.add_blood(src)
-		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
+		throw_at(get_edge_target_turf(src, P.dir), impact_force, 1, P.firer, spin = TRUE)
 
 	if(check_shields(P, P.damage, "the [P.name]", P.dir))
 		P.on_hit(src, def_zone, 100)
 		return PROJECTILE_ABSORBED
 
 	. = mob_bullet_act(P, def_zone)
+
+	if(. == PROJECTILE_ACTED || . == PROJECTILE_ALL_OK) // logs
+		if(P.silenced)
+			to_chat(src, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [P.name]!</span>")
+		else if(!P.fake)
+			visible_message("<span class='userdanger'>[name] is hit by the [P.name] in the [parse_zone(def_zone)]!</span>")
+			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+		if(P.firer)
+			log_combat(P.firer, "shot with <b>[P.type]</b>", alert_admins = !P.fake, redirected = P.redirected)
+		else
+			attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[src]/[ckey]</b> with a <b>[src]</b>"
+			if(!P.fake)
+				msg_admin_attack("UNKNOWN shot [name] ([ckey]) with a [P][P.redirected ? " (redirected)" : ""]", src) //BS12 EDIT ALG
+
 	if(. != PROJECTILE_ALL_OK)
 		return
-
-	flash_weak_pain()
 
 	//Being hit while using a deadman switch
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
@@ -63,7 +99,7 @@
 		flags &= ~(DAM_SHARP | DAM_EDGE | DAM_LASER)
 
 	if(!P.nodamage)
-		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
+		apply_damage(damage, P.damage_type, def_zone, (absorb * P.armor_multiplier), flags, P)
 		if(length(P.proj_act_sound))
 			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	P.on_hit(src, def_zone, absorb)
@@ -119,13 +155,13 @@
 				"<span class='danger'>You stagger under the impact!</span>")
 
 			var/atom/throw_target = get_edge_target_turf(src, get_dir(O.throw_source, src))
-			throw_at(throw_target, 5, 1, throwingdatum.thrower, FALSE, null, null, CALLBACK(src, .proc/pin_to_turf, W))
+			throw_at(throw_target, 5, 1, throwingdatum.thrower, FALSE, null, null, CALLBACK(src, PROC_REF(pin_to_turf), W))
 
 
 /mob/living/proc/resolve_thrown_attack(obj/O, throw_damage, dtype, zone, armor)
 
 	if(isnull(armor)) // Armor arg passed by human
-		armor = run_armor_check(null, "melee")
+		armor = run_armor_check(null, MELEE)
 		visible_message("<span class='warning'>[src] has been hit by [O].</span>")
 
 	var/damage_flags = O.damage_flags()
@@ -136,7 +172,7 @@
 	var/created_wound = apply_damage(throw_damage, dtype, zone, armor, damage_flags, O)
 
 	//thrown weapon embedded object code.
-	if(dtype == BRUTE && istype(O, /obj/item))
+	if(dtype == BRUTE && isitem(O))
 		var/obj/item/I = O
 		if(!I.can_embed || I.is_robot_module())
 			return
@@ -161,6 +197,12 @@
 	embedded += I
 	verbs += /mob/proc/yank_out_object
 
+/mob/living/proc/unpin_signal(obj/item/I)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_ANCHORED, I)
+	update_canmove()
+	UnregisterSignal(I, COMSIG_MOVABLE_MOVED)
+
 /mob/living/proc/pin_to_turf(obj/item/I)
 	if(!I)
 		return
@@ -176,14 +218,16 @@
 
 		visible_message("<span class='warning'>[src] is pinned to the [T] by [I]!</span>",
 			"<span class='danger'>You are pinned to the wall by [I]!</span>")
-		anchored = TRUE
-		pinned += I
+		ADD_TRAIT(src, TRAIT_ANCHORED, I)
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(unpin_signal), I))
 		update_canmove() // instant update, no need to wait Life() tick
 
-//This is called when the mob is thrown into a dense turf
-/mob/living/proc/turf_collision(turf/T)
-	visible_message("<span class='warning'>[src] crashed into \the [T]!</span>","<span class='danger'>You are crashed into \the [T]!</span>")
-	take_bodypart_damage(fly_speed * 5)
+/mob/living/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+
+	if(. && hit_atom.density)
+		visible_message("<span class='warning'>[src] crashed into \the [hit_atom]!</span>","<span class='danger'>You are crashed into \the [hit_atom]!</span>")
+		take_bodypart_damage(fly_speed * 5)
 
 /mob/living/proc/near_wall(direction, distance = 1, check_dense_objs = FALSE)
 	var/turf/T = get_step(get_turf(src), direction)
@@ -274,7 +318,7 @@
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(fire_burn_temperature(), 50)
 
-/mob/living/fire_act()
+/mob/living/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	adjust_fire_stacks(0.5)
 	IgniteMob()
 
@@ -291,7 +335,7 @@
 	update_action_buttons()
 
 /mob/living/incapacitated(restrained_type = ARMS)
-	return stat || paralysis || stunned || weakened || restrained(restrained_type)
+	return stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || restrained(restrained_type)
 
 // These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
 // If targetzone is not specified, returns TRUE if the mob has the bodypart in general.

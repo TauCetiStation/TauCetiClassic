@@ -1,3 +1,6 @@
+var/global/list/cargo_consoles = list()
+
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 /obj/machinery/computer/cargo
 	name = "Supply console"
 	desc = "Used to order supplies, approve requests, and control the shuttle."
@@ -6,7 +9,7 @@
 	state_broken_preset = "techb"
 	state_nopower_preset = "tech0"
 	light_color = "#b88b2e"
-	req_access = list(access_cargo)
+	req_access = list(access_cargoshop)
 	circuit = /obj/item/weapon/circuitboard/computer/cargo
 	var/requestonly = FALSE
 	var/contraband = FALSE
@@ -17,6 +20,11 @@
 	var/safety_warning = "For safety reasons the automated supply shuttle \
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
+/obj/machinery/computer/cargo/qm
+	name = "QM Supply console"
+	desc = "Used to order supplies, approve requests, and control the shuttle. Access requirements removed."
+	req_access = list()
+	circuit = /obj/item/weapon/circuitboard/computer/cargo/qm
 
 /obj/machinery/computer/cargo/request
 	name = "Supply request console"
@@ -41,9 +49,16 @@
 	if(temp)
 		dat = temp
 	else
-		dat += {"<BR><B>Supply shuttle</B><HR>
-		Location: [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>
-		<HR>Supply points: [SSshuttle.points]<BR>\n<BR>"}
+		dat += "<HR><B>Supply shuttle Location:</B> [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>"
+		if(!requestonly)
+			dat += "<HR>Cargo Dep credits: [global.cargo_account.money]$<BR>"
+			dat += "Cargo Dep Number: [global.cargo_account.account_number]<BR>\n<BR>"
+			dat += "Export tax: [SSeconomy.tax_cargo_export]%<BR>"
+			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: <A href='?src=\ref[src];online_shop_delivery_cost=1'>[global.online_shop_delivery_cost*100]</A>%<BR>"
+			dat += "'[CARGOSHOPNAME]' discount: <A href='?src=\ref[src];online_shop_discount=1'>[global.online_shop_discount*100]</A>%<BR>\n<BR>"
+			dat += "'[CARGOSHOPNAME]' profits: [global.online_shop_profits]$<BR>\n<BR>"
+		else
+			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: [global.online_shop_delivery_cost*100]%<BR>\n<BR>"
 		if(requestonly)
 			dat += "\n<A href='?src=\ref[src];order=categories'>Request items</A><BR><BR>"
 		else
@@ -76,7 +91,7 @@
 		else
 			SSshuttle.moving = 1
 			SSshuttle.buy()
-			SSshuttle.eta_timeofday = (REALTIMEOFDAY + SSshuttle.movetime) % MIDNIGHT_ROLLOVER
+			SSshuttle.set_eta_timeofday()
 			temp = "The supply shuttle has been called and will arrive in [round(SSshuttle.movetime/600,1)] minutes.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			post_signal("supply")
 
@@ -87,14 +102,14 @@
 			//all_supply_groups
 			//Request what?
 			last_viewed_group = "categories"
-			temp = "<b>Supply points: [SSshuttle.points]</b><BR>"
+			temp = "<b>Cargo Dep Credits: [global.cargo_account.money]</b><BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A><HR><BR><BR>"
 			temp += "<b>Select a category</b><BR><BR>"
 			for(var/supply_group_name in all_supply_groups )
 				temp += "<A href='?src=\ref[src];order=[supply_group_name]'>[supply_group_name]</A><BR>"
 		else
 			last_viewed_group = href_list["order"]
-			temp = "<b>Supply points: [SSshuttle.points]</b><BR>"
+			temp = "<b>Cargo Dep Credits: [global.cargo_account.money]</b><BR>"
 			temp += "<b>Request from: [last_viewed_group]</b><BR>"
 			temp += "<A href='?src=\ref[src];order=categories'>Back to all categories</A><HR>"
 			temp += "<div class='blockCargo'>"
@@ -186,16 +201,28 @@
 			if(SO.id == ordernum)
 				O = SO
 				P = O.object
-				if(SSshuttle.points >= P.cost)
+				if(global.cargo_account.money >= P.cost)
 					SSshuttle.requestlist.Cut(i,i+1)
-					SSshuttle.points -= P.cost
+					global.cargo_account.money -= P.cost
 					SSshuttle.shoppinglist += O
 					temp = "Thanks for your order.<BR>"
 					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				else
-					temp = "Not enough supply points.<BR>"
+					temp = "Not enough credits.<BR>"
 					temp += "<BR><A href='?src=\ref[src];viewrequests=1'>Back</A> <A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 				break
+
+	if(href_list["online_shop_delivery_cost"])
+		var/cost = input("Delivery Cost: 0% - 100%", "[global.online_shop_delivery_cost]") as num
+		cost = round(clamp(cost, 0, 100))
+
+		global.online_shop_delivery_cost = cost/100
+
+	if(href_list["online_shop_discount"])
+		var/discount = input("Discount: 0% - 100%", "[global.online_shop_discount]") as num
+		discount = round(clamp(discount, 0, 100))
+
+		global.online_shop_discount = discount/100
 
 	if(href_list["vieworders"])
 		temp = "Current approved orders: <BR><BR>"

@@ -6,6 +6,9 @@
 	item_state = "deathsquad"
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 30, rad = 30)
 
+/obj/item/clothing/head/helmet/space/deathsquad/leader
+	icon_state = "deathsquadleader"
+
 /obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "special operations officer's beret"
 	desc = "An armored beret commonly used by special operations officers."
@@ -16,6 +19,11 @@
 	siemens_coefficient = 0.9
 	force = 0
 	hitsound = list()
+
+/obj/item/clothing/head/helmet/space/deathsquad/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/deathsquad(src)
+	holochip.holder = src
 
 //Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat

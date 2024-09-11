@@ -15,9 +15,11 @@ SUBSYSTEM_DEF(air)
 	init_order    = SS_INIT_AIR
 	priority      = SS_PRIORITY_AIR
 	wait          = SS_WAIT_AIR
-	display_order = SS_DISPLAY_AIR
 
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_SHOW_IN_MC_TAB
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+
+	msg_lobby = "Фильтруем кислород..."
 
 	var/next_id       = 1 // Used to keep track of zone UIDs.
 
@@ -49,8 +51,10 @@ SUBSYSTEM_DEF(air)
 	var/currentpart = SSAIR_PIPENETS
 
 	var/map_loading = TRUE
-	var/map_init_levels = 0 // number of z-levels initialized under this type of SS.
+	var/map_init_levels = -1 // number of z-levels initialized under this type of SS.
 	var/list/queued_for_update
+
+	var/stop_airnet_processing = FALSE // todo: we really need to move pipes and machinery to own SS
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "\nC:{"
@@ -84,23 +88,25 @@ SUBSYSTEM_DEF(air)
 	..()
 
 /datum/controller/subsystem/air/fire(resumed = 0)
-	var/timer = world.tick_usage
+	var/timer = TICK_USAGE_REAL
 
 	if (currentpart == SSAIR_PIPENETS || !resumed)
-		process_pipenets(resumed)
-		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
+		if(!stop_airnet_processing)
+			process_pipenets(resumed)
+			cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+			if(state != SS_RUNNING)
+				return
+			resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY
 
 	if(currentpart == SSAIR_ATMOSMACHINERY)
-		timer = world.tick_usage
-		process_atmos_machinery(resumed)
-		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(world.tick_usage - timer))
-		if(state != SS_RUNNING)
-			return
-		resumed = 0
+		if(!stop_airnet_processing)
+			timer = TICK_USAGE_REAL
+			process_atmos_machinery(resumed)
+			cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+			if(state != SS_RUNNING)
+				return
+			resumed = 0
 		currentpart = SSAIR_TILES_CUR
 
 	// defer updating of self-zone-blocked turfs until after all other turfs have been updated.
@@ -110,18 +116,18 @@ SUBSYSTEM_DEF(air)
 	// This ensures that doorways don't form their own single-turf zones, since doorways are self-zone-blocked and
 	// can merge with an adjacent zone, whereas zones that are formed on adjacent turfs cannot merge with the doorway.
 	if (currentpart == SSAIR_TILES_CUR)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_tiles_current(resumed)
-		cost_tiles_curr = MC_AVERAGE(cost_tiles_curr, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_tiles_curr = MC_AVERAGE(cost_tiles_curr, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSAIR_TILES_DEF
 
 	if (currentpart == SSAIR_TILES_DEF)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_tiles_deferred(resumed)
-		cost_tiles_def = MC_AVERAGE(cost_tiles_def, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_tiles_def = MC_AVERAGE(cost_tiles_def, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -129,9 +135,9 @@ SUBSYSTEM_DEF(air)
 
 	// Where gas exchange happens.
 	if (currentpart == SSAIR_EDGES)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_edges(resumed)
-		cost_edges = MC_AVERAGE(cost_edges, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_edges = MC_AVERAGE(cost_edges, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -139,9 +145,9 @@ SUBSYSTEM_DEF(air)
 
 	// Process fire zones.
 	if (currentpart == SSAIR_FIRE_ZONES)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_fire_zones(resumed)
-		cost_fire_zones = MC_AVERAGE(cost_fire_zones, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_fire_zones = MC_AVERAGE(cost_fire_zones, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -149,9 +155,9 @@ SUBSYSTEM_DEF(air)
 
 	// Process hotspots.
 	if (currentpart == SSAIR_HOTSPOTS)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_hotspots(resumed)
-		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -159,9 +165,9 @@ SUBSYSTEM_DEF(air)
 
 	// Process zones.
 	if (currentpart == SSAIR_ZONES)
-		timer = world.tick_usage
+		timer = TICK_USAGE_REAL
 		process_zones(resumed)
-		cost_zones = MC_AVERAGE(cost_zones, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		cost_zones = MC_AVERAGE(cost_zones, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -178,7 +184,7 @@ SUBSYSTEM_DEF(air)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(!QDELETED(thing))
-			thing.process()
+			thing.process(wait * 0.1)
 		else
 			networks -= thing
 		if (MC_TICK_CHECK)
@@ -204,7 +210,7 @@ SUBSYSTEM_DEF(air)
 		tiles_to_update.len--
 
 		// Check if the turf is self-zone-blocked
-		if(T.c_airblock(T) & ZONE_BLOCKED)
+		if(FAST_C_AIRBLOCK(T, T) == ZONE_BLOCKED)
 			deferred_tiles += T
 			if (MC_TICK_CHECK)
 				return
@@ -269,7 +275,7 @@ SUBSYSTEM_DEF(air)
 	while (currentrun.len)
 		var/obj/fire/F = currentrun[currentrun.len]
 		currentrun.len--
-		F.process()
+		F.process(wait * 0.1)
 		if (MC_TICK_CHECK)
 			return
 
@@ -334,10 +340,10 @@ SUBSYSTEM_DEF(air)
 	ASSERT(isturf(B))
 	#endif
 
-	var/ablock = A.c_airblock(B)
+	var/ablock = FAST_C_AIRBLOCK(A, B)
 	if(ablock == BLOCKED)
 		return BLOCKED
-	return ablock | B.c_airblock(A)
+	return ablock | FAST_C_AIRBLOCK(B, A)
 
 /datum/controller/subsystem/air/proc/has_valid_zone(turf/simulated/T)
 	#ifdef ZASDBG
@@ -430,10 +436,14 @@ SUBSYSTEM_DEF(air)
 		T.needs_air_update = TRUE
 
 /datum/controller/subsystem/air/StartLoadingMap()
+	if(map_init_levels == -1) // SSair will init turfs itself
+		return
 	LAZYINITLIST(queued_for_update)
 	map_loading = TRUE
 
 /datum/controller/subsystem/air/StopLoadingMap()
+	if(map_init_levels == -1)
+		return
 	map_loading = FALSE
 	map_init_levels = world.maxz // update z level counting, so air start to work on added levels.
 

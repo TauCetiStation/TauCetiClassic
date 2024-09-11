@@ -29,26 +29,48 @@
 
 /obj/item/weapon/melee/energy/sword/atom_init()
 	. = ..()
-	item_color = pick("red","blue","green","purple","yellow","pink","black")
+	blade_color = pick("red","blue","green","purple","yellow","pink","black")
+	switch(blade_color)
+		if("red")
+			light_color = COLOR_RED
+		if("blue")
+			light_color = COLOR_BLUE
+		if("green")
+			light_color = COLOR_GREEN
+		if("purple")
+			light_color = COLOR_PURPLE
+		if("yellow")
+			light_color = COLOR_YELLOW
+		if("pink")
+			light_color = COLOR_PINK
+		if("black")
+			light_color = COLOR_GRAY
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src].</span>")
 		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
+		qualities = list(
+			QUALITY_KNIFE = 1
+		)
+		sharp = TRUE
 		force = 30
 		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
-			icon_state = "sword[item_color]"
-		w_class = SIZE_NORMAL
+			icon_state = "sword[blade_color]"
+		w_class = SIZE_SMALL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
-
+		set_light(2)
 	else
+		qualities = null
+		sharp = FALSE
 		force = 3
+		flags = NOBLOODY
 		hitsound = initial(hitsound)
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
@@ -57,15 +79,15 @@
 		w_class = SIZE_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
+		set_light(0)
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_mob()
 	add_fingerprint(user)
-	return
 
+/obj/item/weapon/melee/energy/sword/on_enter_storage(obj/item/weapon/storage/S)
+	..()
+	if(active)
+		attack_self(usr)
 
 /*
  * Classic Baton
@@ -92,9 +114,10 @@
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/classic_baton/attack(mob/living/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
-		user.Weaken(3 * force)
+		user.Stun(16)
+		user.Weaken(16)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2 * force, BRUTE, BP_HEAD)
@@ -145,10 +168,10 @@
 
 	SCB.can_pull = TRUE
 
-	SCB.can_sweep_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep)
-	SCB.can_spin_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_spin)
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_push)
-	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/melee/telebaton.proc/can_sweep_pull)
+	SCB.can_sweep_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_sweep))
+	SCB.can_spin_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_spin))
+	SCB.can_push_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_sweep_push))
+	SCB.can_pull_call = CALLBACK(src, TYPE_PROC_REF(/obj/item/weapon/melee/telebaton, can_sweep_pull))
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/telebaton/proc/can_sweep()
@@ -184,57 +207,35 @@
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-
+	update_inv_mob()
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	add_fingerprint(user)
 
-	if(blood_overlay && blood_DNA && (blood_DNA.len >= 1)) //updates blood overlay, if any
-		cut_overlays()//this might delete other item overlays as well but eeeeeeeh
-
-		var/icon/I = new /icon(src.icon, src.icon_state)
-		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD)
-		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY)
-		blood_overlay = I
-
-		add_overlay(blood_overlay)
-
-	return
-
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if(user.ClumsyProbabilityCheck(50))
 			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
-			user.Weaken(3 * force)
+			user.adjustHalLoss(70)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				H.apply_damage(2 * force, BRUTE, BP_HEAD)
 			else
 				user.take_bodypart_damage(2 * force)
 			return
+		if(!isliving(target))
+			return ..()
+		var/mob/living/L = target
+		var/target_armor = L.run_armor_check(user.get_targetzone(), MELEE)
 		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
+			H.apply_effect(35, AGONY, target_armor)
+			playsound(src, 'sound/weapons/hit_metalic.ogg', VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
-
-			if(H.wear_suit)
-				var/obj/item/clothing/suit/S = H.wear_suit
-				var/meleearm = S.armor["melee"]
-				if(meleearm)
-					if(meleearm != 100)
-						H.adjustHalLoss(round(35 - (35 / 100 * meleearm)))
-				else
-					H.adjustHalLoss(35)
-			else
-				H.adjustHalLoss(35)
-
 			H.visible_message("<span class='warning'>[user] hit [H] harmlessly with a telebaton.</span>")
 			H.log_combat(user, "hit harmlessly with [name]")
 			return
 		if(..())
+			L.apply_effect(30, AGONY, target_armor)
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			return
 	else
@@ -248,31 +249,38 @@
 
 /obj/item/weapon/melee/energy/sword/green/atom_init()
 	. = ..()
-	item_color = "green"
+	blade_color = "green"
+	light_color = COLOR_GREEN
 
 /obj/item/weapon/melee/energy/sword/red/atom_init()
 	. = ..()
-	item_color = "red"
+	blade_color = "red"
+	light_color = COLOR_RED
 
 /obj/item/weapon/melee/energy/sword/blue/atom_init()
 	. = ..()
-	item_color = "blue"
+	blade_color = "blue"
+	light_color = COLOR_BLUE
 
 /obj/item/weapon/melee/energy/sword/purple/atom_init()
 	. = ..()
-	item_color = "purple"
+	blade_color = "purple"
+	light_color = COLOR_PURPLE
 
 /obj/item/weapon/melee/energy/sword/yellow/atom_init()
 	. = ..()
-	item_color = "yellow"
+	blade_color = "yellow"
+	light_color = COLOR_YELLOW
 
 /obj/item/weapon/melee/energy/sword/pink/atom_init()
 	. = ..()
-	item_color = "pink"
+	blade_color = "pink"
+	light_color = COLOR_PINK
 
 /obj/item/weapon/melee/energy/sword/black/atom_init()
 	. = ..()
-	item_color = "black"
+	blade_color = "black"
+	light_color = COLOR_GRAY
 
 
 /obj/item/weapon/melee/energy/blade/atom_init()
@@ -311,7 +319,7 @@
 	return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'> You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	if(emp_cooldown >= world.time)
@@ -326,15 +334,13 @@
 
 /obj/item/weapon/shield/energy/proc/turn_on(mob/living/user)
 	force = 10
-	icon_state = "eshield[active]"
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
 	playsound(src, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	update_icon()
 
 /obj/item/weapon/shield/energy/proc/turn_off(mob/living/user)
 	force = 3
-	icon_state = "eshield[active]"
 	w_class = SIZE_MINUSCULE
 	playsound(src, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
@@ -342,7 +348,5 @@
 		to_chat(user, "<span class='notice'> [src] can now be concealed.</span>")
 
 /obj/item/weapon/shield/energy/update_icon()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+	icon_state = "eshield[active]"
+	update_inv_mob()

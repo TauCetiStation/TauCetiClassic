@@ -1,6 +1,6 @@
 /mob/living/simple_animal/hostile/creature
 	name = "creature"
-	desc = "A sanity-destroying otherthing."
+	desc = "Разрушающее здравомыслие... что-то."
 	speak_emote = list("gibbers")
 	icon_state = "otherthing"
 	icon_living = "otherthing"

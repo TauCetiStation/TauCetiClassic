@@ -13,6 +13,12 @@
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
+	if(client && SSlag_switch.measures[SLOWMODE_IC_CHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))
+		if(!COOLDOWN_FINISHED(client, say_slowmode))
+			to_chat(src, to_chat("<span class='warning'>Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\"</span>"))
+			return
+		COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
+
 	usr.say(message)
 
 /mob/verb/me_verb(message as text)
@@ -23,10 +29,22 @@
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
+	if(!message)
+		return
+
+	if(client && SSlag_switch.measures[SLOWMODE_IC_CHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))
+		if(!COOLDOWN_FINISHED(client, say_slowmode))
+			to_chat(src, to_chat("<span class='warning'>Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\"</span>"))
+			return
+		COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
+
+
 	message = sanitize(message)
+	message = uncapitalize(message)
+	message = add_period(message)
 
 	if(me_verb_allowed)
-		usr.emote("me", usr.emote_type, message, FALSE)
+		usr.me_emote(message, message_type=usr.emote_type, intentional=TRUE)
 	else
 		to_chat(usr, "You are unable to emote.")
 		return
@@ -44,9 +62,17 @@
 			to_chat(src, "<span class='red'> Deadchat is globally muted.</span>")
 			return
 
-	if(client && !(client.prefs.chat_toggles & CHAT_DEAD))
-		to_chat(usr, "<span class='red'> You have deadchat muted.</span>")
-		return
+	if(client)
+		if (!(client.prefs.chat_toggles & CHAT_DEAD)) // User preference check
+			to_chat(src, "<span class='red'> You have deadchat muted.</span>")
+			return
+
+		if(client.prefs.muted & MUTE_OOC || IS_ON_ADMIN_CD(client, ADMIN_CD_OOC)) // Admin/autospam mute check
+			to_chat(src, "<span class='alert'>You cannot talk in deadchat (muted).</span>")
+			return
+
+		if (client.handle_spam_prevention(message, ADMIN_CD_OOC)) // Autospam
+			return
 
 	if(mind && mind.name)
 		name = "[mind.name]"
@@ -96,12 +122,7 @@
 			return 1
 		return 0
 
-	//Language check.
-	for(var/datum/language/L in languages)
-		if(speaking.name == L.name)
-			return 1
-
-	return 0
+	return can_understand(speaking)
 
 /*
    ***Deprecated***
@@ -121,10 +142,6 @@
 		say_verb="asks"
 
 	return say_verb
-
-/mob/proc/emote(act, type, message, auto)
-	if(act == "me")
-		return custom_emote(type, message)
 
 /mob/proc/get_ear()
 	// returns an atom representing a location on the map from which this
@@ -157,7 +174,7 @@
 
 //parses the language code (e.g. :j) from text, such as that supplied to say.
 //returns the language object only if the code corresponds to a language that src can speak, otherwise null.
-/mob/proc/parse_language(message)
+/mob/proc/parse_language_code(message)
 	if(length_char(message) >= 2)
 		var/language_prefix = lowertext(copytext(message, 1, 2 + length(message[2])))
 		var/datum/language/L = language_keys[language_prefix]
@@ -165,3 +182,31 @@
 			return L
 
 	return null
+
+/mob/proc/add_approximation(sound, approximation, case_sensitive=FALSE)
+	if(case_sensitive)
+		LAZYSET(sensitive_sound_approximations, sound, approximation)
+		return
+
+	LAZYSET(sound_approximations, sound, approximation)
+
+/mob/proc/remove_approximation(sound, case_sensitive=FALSE)
+	if(case_sensitive)
+		LAZYREMOVE(sensitive_sound_approximations, sound)
+		return
+
+	LAZYREMOVE(sound_approximations, sound)
+
+/mob/proc/approximate_sounds(txt, datum/language/speaking)
+	if(speaking && (speaking.flags & SIGNLANG))
+		return txt
+
+	. = txt
+	. = replace_characters(., sound_approximations)
+	. = replaceEx_characters(., sensitive_sound_approximations)
+
+/mob/proc/accent_sounds(txt, datum/language/speaking)
+	return txt
+
+/mob/proc/init_languages()
+	return

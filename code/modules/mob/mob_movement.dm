@@ -1,15 +1,16 @@
-/mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
+/mob/CanPass(atom/movable/mover, turf/target, height=0)
+	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height)
 	if(retVal & COMPONENT_CANTPASS)
 		return FALSE
 	else if(retVal & COMPONENT_CANPASS)
 		return TRUE
 
-	if(air_group || (height==0))
-		return 1
+	if(!mover)
+		return TRUE
+
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
-	if(mover.checkpass(PASSMOB))
+	if(mover.checkpass(PASSMOB) || checkpass(PASSMOB))
 		return 1
 	if(buckled == mover)
 		return 1
@@ -37,11 +38,6 @@
 /client/East()
 	..()
 
-/client/verb/drop_item()
-	set hidden = 1
-	if(!isrobot(mob) && mob.stat == CONSCIOUS && isturf(mob.loc))
-		return mob.drop_item()
-	return
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
@@ -73,7 +69,7 @@
 
 	if(!n || !direct)
 		return
-	if(!forced && mob.stat)
+	if(!forced && mob.stat != CONSCIOUS)
 		return
 
 /*	// handle possible spirit movement
@@ -87,7 +83,9 @@
 		return mob.remote_control.relaymove(mob, direct)
 
 	if(isAI(mob))
-		return AIMove(n,direct,mob)
+		var/mob/living/silicon/ai/A = mob
+		if(!A.uses_legs)
+			return AIMove(n,direct,mob)
 
 	if(mob.notransform)
 		return//This is sota the goto stop mobs from moving var
@@ -97,23 +95,7 @@
 		if(L.incorporeal_move)//Move though walls
 			Process_Incorpmove(direct)
 			return
-		if(mob.client)
-			if(mob.client.view != world.view)
-				if(locate(/obj/item/weapon/gun/energy/sniperrifle, mob.contents))		// If mob moves while zoomed in with sniper rifle, unzoom them.
-					var/obj/item/weapon/gun/energy/sniperrifle/s = locate() in mob
-					if(s.zoom)
-						s.toggle_zoom()
-
 	Process_Grab()
-
-	if(istype(mob.buckled, /obj/vehicle))
-		//manually set move_delay for vehicles so we don't inherit any mob movement penalties
-		//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
-		move_delay = world.time
-		//drunk driving
-		if(mob.confused)
-			direct = pick(cardinal)
-		return mob.buckled.relaymove(mob,direct)
 
 	if(!forced && !mob.canmove)
 		return
@@ -131,55 +113,55 @@
 	if(isturf(mob.loc))
 
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
-			for(var/mob/M in range(mob, 1))
-				if(M.pulling == mob)
-					if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
-						to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
-						return 0
-					else
-						M.stop_pulling()
+			var/mob/M = mob.pulledby
+			if(M)
+				if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
+					to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
+					return 0
+				else
+					M.stop_pulling()
 
-		if(mob.pinned.len)
-			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
-			return 0
+		//Calculating delays
+		var/add_delay = 0
 
-		//We are now going to move
-		var/add_delay
-		move_delay = world.time//set move delay
 		mob.last_move_intent = world.time + 10
-		switch(mob.m_intent)
-			if("run")
-				if(mob.drowsyness > 0)
-					add_delay += 6
-				add_delay += 1+config.run_speed
-			if("walk")
-				add_delay += 2.5+config.walk_speed
-		add_delay += mob.movement_delay()
-		move_delay += add_delay
 
-		if(mob.pulledby || mob.buckled) // Wheelchair driving!
-			if(istype(mob.loc, /turf/space))
+		add_delay += mob.m_intent_delay()
+
+		var/list/grabs = mob.GetGrabs()
+		if(grabs.len)
+			var/grab_delay
+			for(var/obj/item/weapon/grab/G in grabs)
+				grab_delay += max(0, (G.state - 1) * 4 + (grabs.len - 1) * 4) // so if we have 2 grabs or 1 in high level we will be sloow
+				grab_delay += G.affecting.stat == CONSCIOUS ? ( G.affecting.a_intent == INTENT_HELP ? 0 : 0.5 ) : 1
+			add_delay += grab_delay
+
+		add_delay += mob.movement_delay()
+
+		move_delay = world.time + add_delay //set move delay
+
+		//Relaymoves
+		if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
+			return mob.pulledby.relaymove(mob, direct)
+
+		if(mob.buckled) // Wheelchair driving!
+			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
-			if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
-				return mob.pulledby.relaymove(mob, direct)
-			else if(istype(mob.buckled, /obj/structure/stool/bed/chair/wheelchair))
-				if(ishuman(mob.buckled))
-					var/mob/living/carbon/human/driver = mob.buckled
-					var/obj/item/organ/external/l_hand = driver.bodyparts_by_name[BP_L_ARM]
-					var/obj/item/organ/external/r_hand = driver.bodyparts_by_name[BP_R_ARM]
-					if((!l_hand || (l_hand.is_stump)) && (!r_hand || (r_hand.is_stump)))
-						return // No hands to drive your chair? Tough luck!
-				move_delay += 2
-				return mob.buckled.relaymove(mob,direct)
+
+			return mob.buckled.relaymove(mob, direct)
 
 		//We are now going to move
-		moving = 1
+		moving = TRUE
+
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
+			// Someone please investigate why we can't do moving = TRUE *after* this check. ~Luduk
 			moving = FALSE
 			return
+
+		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVING, n, direct)
+
 		//Something with pulling things
-		if(locate(/obj/item/weapon/grab, mob))
-			move_delay = max(move_delay, world.time + 7)
+		if(grabs.len)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
@@ -210,32 +192,33 @@
 							M.animate_movement = 2
 							return
 
-		else if(mob.confused)
-			var/newdir = direct
-			if(mob.confused > 40)
-				newdir = pick(alldirs)
-			else if(prob(mob.confused * 1.5))
-				newdir = angle2dir(dir2angle(direct) + 180)
-			else if(prob(mob.confused * 3))
-				newdir = angle2dir(dir2angle(direct) + pick(90, -90))
-			step(mob, newdir)
 		else
+			if(mob.confused && !mob.crawling)
+				direct = mob.confuse_input(direct)
+				n = get_step(get_turf(mob), direct)
 			. = mob.SelfMove(n, direct)
 
-		for (var/obj/item/weapon/grab/G in mob.GetGrabs())
-			if (G.state == GRAB_NECK)
+		for(var/obj/item/weapon/grab/G in grabs)
+			if(G.state == GRAB_NECK)
 				mob.set_dir(reverse_dir[direct])
 			G.adjust_position()
-		for (var/obj/item/weapon/grab/G in mob.grabbed_by)
+
+		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
 			G.adjust_position()
 
-		if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
-			move_delay += add_delay
+		if((direct & (direct - 1)) && mob.loc == n)
+			move_delay += add_delay * 0.4 // in general moving diagonally will be 1.4 (sqrt(2)) times slower
+
 		moving = FALSE
+
 		if(mob && .)
 			mob.throwing = FALSE
 
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
+
+/mob/proc/random_move()
+	if(isturf(loc) && !isspaceturf(loc) || (canmove && !incapacitated()))
+		step(src, pick(cardinal))
 
 /mob/proc/SelfMove(turf/n, direct)
 	if(camera_move(direct))
@@ -245,23 +228,48 @@
 /mob/proc/camera_move(Dir = 0)
 	if(stat || restrained())
 		return FALSE
+	if(!machine || !istype(machine, /obj/machinery/computer/security))
+		return FALSE
+	if(!Adjacent(machine) || !machine.can_interact_with(src))
+		return FALSE
+	var/obj/machinery/computer/security/console = machine
 
-	if(machine && istype(machine, /obj/machinery/computer/security))
-		if(!Adjacent(machine) || !machine.can_interact_with(src))
-			return FALSE
-		var/obj/machinery/computer/security/console = machine
-		var/turf/T = get_turf(console.active_camera)
-		for(var/i;i<10;i++)
-			T = get_step(T, Dir)
-		console.jump_on_click(src, T)
-		return TRUE
-	return FALSE
-
-/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	if (pinned.len)
+	if(QDELETED(console.active_camera))
+		console.active_camera = null // if qdeling, set it null
 		return FALSE
 
-	return ..()
+	var/turf/T = get_turf(console.active_camera)
+	var/list/cameras = list()
+
+	for(var/cam_tag in console.camera_cache)
+		var/obj/C = console.camera_cache[cam_tag]
+		if(C == console.active_camera)
+			continue
+		if(C.z != T.z)
+			continue
+		var/dx = C.x - T.x
+		var/dy = C.y - T.y
+		var/is_in_bounds = FALSE
+		switch(Dir)
+			if(NORTH)
+				is_in_bounds = dy >= abs(dx)
+			if(SOUTH)
+				is_in_bounds = dy <= -abs(dx)
+			if(EAST)
+				is_in_bounds = dx >= abs(dy)
+			if(WEST)
+				is_in_bounds = dx <= -abs(dy)
+		if(is_in_bounds)
+			cameras += C
+	var/minDist = INFINITY
+	var/minCam = console.active_camera
+	for(var/obj/machinery/camera/C as anything in cameras)
+		var/dist = get_dist(T, C)
+		if(dist < minDist)
+			minCam = C
+			minDist = dist
+	console.jump_on_click(src, minCam)
+	return TRUE
 
 ///Process_Incorpmove
 ///Called by client/Move()
@@ -338,7 +346,7 @@
 
 		else if(isturf(A))
 			var/turf/turf = A
-			if(istype(turf,/turf/space))
+			if(isspaceturf(turf))
 				continue
 
 			if(!turf.density && !mob_negates_gravity())
@@ -373,19 +381,19 @@
 
 /mob/proc/slip(weaken_duration, obj/slipped_on, lube)
 	SEND_SIGNAL(src, COMSIG_MOB_SLIP, weaken_duration, slipped_on, lube)
-	return FALSE
+	return TRUE
 
 /mob/living/carbon/slip(weaken_duration, obj/slipped_on, lube)
-	..()
-	return loc.handle_slip(src, weaken_duration, slipped_on, lube)
+	if(!loc.handle_slip(src, weaken_duration, slipped_on, lube))
+		return FALSE
 
-/mob/living/carbon/slime/slip()
-	..()
-	return FALSE
+	return ..()
 
 /mob/living/carbon/human/slip(weaken_duration, obj/slipped_on, lube)
+	if(species.flags[NO_SLIP])
+		return FALSE
 	if(!(lube & GALOSHES_DONT_HELP))
-		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP)))
+		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP) || (get_species() == SKRELL && !shoes)))
 			return FALSE
 	return ..()
 
@@ -543,3 +551,9 @@
 
 	var/atom/movable/screen/zone_sel/selector = mob.zone_sel
 	selector.set_selected_zone(BP_L_LEG, mob)
+
+// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
+// at this moment we need it only for clients, so it will not be called for clientless mobs
+/mob/proc/update_z(new_z)
+	last_z = new_z
+	SEND_SIGNAL(src, COMSIG_MOB_Z_CHANGED, new_z)

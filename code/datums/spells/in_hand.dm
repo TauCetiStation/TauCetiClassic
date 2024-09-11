@@ -9,13 +9,13 @@
 /obj/effect/proc_holder/spell/in_hand/Click()
 	if(cast_check())
 		cast()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/in_hand/cast_check(skipcharge = 0, mob/user = usr)
-	return (!user.lying && ..())
+	return ..()
 
 /obj/effect/proc_holder/spell/in_hand/cast(mob/living/carbon/human/user = usr)
-	if(!istype(user) || user.lying)
+	if(!istype(user))
 		return
 
 	if(!user.is_in_hands(summon_path))
@@ -47,7 +47,7 @@
 	update_icon()
 
 /obj/item/weapon/magic/afterattack(atom/target, mob/user, proximity, params)
-	if(user.incapacitated() || user.lying)
+	if(user.incapacitated())
 		return FALSE
 
 	if(!touch_spell)
@@ -115,7 +115,7 @@
 
 /obj/effect/proc_holder/spell/in_hand/fireball
 	name = "Огненный Шар"
-	desc = "Выстреливает огненным шаром в цель и не требует одежды для использования."
+	desc = "Выстреливает огненным шаром в цель."
 	school = "evocation"
 	action_icon_state = "fireball"
 	summon_path = /obj/item/weapon/magic/fireball
@@ -134,16 +134,78 @@
 	damage = 10
 	damage_type = BRUTE
 	nodamage = 0
+	light_color = LIGHT_COLOR_FIRE
 
 /obj/item/projectile/magic/fireball/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(isliving(target))
 		var/mob/living/M = target
 		M.fire_act()
 		M.adjust_fire_stacks(5)
-	explosion(get_turf(target), 1)
+	explosion(get_turf(target), 0, 0, 1, adminlog = FALSE)
 	return ..()
 
+///////////////////////////////////////////
+
+/obj/effect/proc_holder/spell/in_hand/icebolt
+	name = "Ледяная Стрела"
+	desc = "Слабая ледяная стрела, не наносит большого ущерба здоровью, но неплохо замедляет цель."
+	school = "evocation"
+	action_icon_state = "ice_bolt"
+	summon_path = /obj/item/weapon/magic/icebolt
+	charge_max = 150
+
+/obj/item/weapon/magic/icebolt
+	name = "ледяная стрела"
+	invoke = "SI'ON MAD'I"
+	icon_state = "ice_bolt"
+	s_fire = 'sound/weapons/sear.ogg'
+	proj_path = /obj/item/projectile/temp/icebolt
+
+/obj/item/projectile/temp/icebolt
+	name = "bolt of ice"
+	damage = 10
+	flag = "magic"
+	damage_type = BURN
+	temperature = 25 // reduces body temperature to VERY low values
+
 //////////////////////////////////////////////////////////////
+
+/obj/effect/proc_holder/spell/in_hand/acid
+	name = "Кислотный Чих"
+	desc = "Вы используете магию для того, чтобы чихнуть кислотой во врага."
+	school = "evocation"
+	action_icon_state = "alien_neurotoxin"
+	summon_path = /obj/item/weapon/magic/acid
+	charge_max = 200
+
+/obj/item/weapon/magic/acid
+	name = "кислота"
+	invoke = "AP'CHKHI"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	s_fire = 'sound/voice/mob/mbcough_1.ogg'
+	proj_path = /obj/item/projectile/neurotoxin/magic
+
+/obj/item/projectile/neurotoxin/magic
+	name = "toxin"
+	damage = 40
+	weaken = 4
+	stun = 1
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	flag = "magic"
+	neurotoxin
+	damage_type = TOX
+
+/obj/item/projectile/x_turret_acid
+	name = "turret toxin"
+	damage = 5
+	agony = 30
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "neurotoxin"
+	damage_type = BURN
+
+///////////////////////////////////////////
 
 /obj/effect/proc_holder/spell/in_hand/tesla
 	name = "Шаровая Молния"
@@ -167,6 +229,7 @@
 	damage = 15
 	damage_type = BURN
 	nodamage = 0
+	light_color = LIGHT_COLOR_LIGHTNING
 
 /obj/item/projectile/magic/lightning/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	..()
@@ -220,8 +283,9 @@
 	icon_state = "arcane_bolt"
 	damage = 20
 	nodamage = 0
-	flag = "laser"
+	flag = LASER
 	damage_type = BURN
+	light_color = COLOR_PINK
 
 //////////////////////////////////////////////////////////////
 
@@ -261,8 +325,8 @@
 	animation.icon_state = icon_state
 	animation.pixel_y = 32
 	animation.alpha = 0
-	animation.layer = LIGHTING_LAYER + 1
-	animation.plane = LIGHTING_PLANE + 1
+	animation.plane = ABOVE_LIGHTING_PLANE
+	animation.layer = ABOVE_LIGHTING_LAYER
 
 	animate(animation, alpha = 255, time = 10)
 	sleep(10)
@@ -285,7 +349,7 @@
 	L.revive()
 
 	if(!L.ckey || !L.mind)
-		for(var/mob/dead/observer/ghost in observer_list)
+		for(var/mob/dead/observer/ghost as anything in observer_list)
 			if(L.mind == ghost.mind)
 				ghost.reenter_corpse()
 				break
@@ -321,6 +385,37 @@
 	touch_spell = TRUE
 	can_powerup = TRUE
 	max_power = 7
+
+///mob/proc/ClickOn()
+// Ranged
+/obj/item/weapon/magic/heal_touch/afterattack(atom/target, mob/user, proximity, params)
+	if(user.incapacitated())
+		return FALSE
+	if(touch_spell)
+		return
+	var/turf/U = get_turf(user)
+	var/turf/T = get_turf(target)
+	if(U == T)
+		return
+	if(!cast_throw(target, user))
+		return FALSE
+	if(s_fire)
+		playsound(user, s_fire, VOL_EFFECTS_MASTER)
+	if(invoke)
+		user.say(invoke)
+	return TRUE
+
+// Adjacent
+/obj/item/weapon/magic/heal_touch/attack(mob/living/M, mob/living/user, def_zone)
+	if(user.incapacitated())
+		return FALSE
+	if(!cast_touch(M, user))
+		return FALSE
+	if(s_fire)
+		playsound(user, s_fire, VOL_EFFECTS_MASTER)
+	if(invoke)
+		user.say(invoke)
+	return TRUE
 
 /obj/item/weapon/magic/heal_touch/attack_self(mob/user)
 	if(!..())
@@ -387,6 +482,7 @@
 	damage_type = OXY
 	nodamage = 1
 	flag = "magic"
+	light_color = "#00ff00"
 
 /obj/item/projectile/magic/healing_ball/atom_init()
 	. = ..()

@@ -10,8 +10,9 @@
 /mob/proc/update_hud()
 	return
 
-/mob/proc/update_inv_item(obj/item/I) // don't call this proc and it's subtypes directly, used in update_inv_mob proc.
-	switch(I.slot_equipped)
+// don't call this proc and it's subtypes directly, use update_inv_mob proc if you are working with item.
+/mob/proc/update_inv_slot(slot)
+	switch(slot)
 		if(SLOT_BACK)
 			update_inv_back()
 		if(SLOT_WEAR_MASK)
@@ -40,13 +41,15 @@
 			update_inv_wear_suit()
 		if(SLOT_W_UNIFORM)
 			update_inv_w_uniform()
+		if(SLOT_L_STORE, SLOT_R_STORE)
+			update_inv_pockets()
 		if(SLOT_S_STORE)
 			update_inv_s_store()
 		if(SLOT_LEGCUFFED)
 			update_inv_legcuffed()
 
-/mob/living/carbon/ian/update_inv_item(obj/item/I)
-	switch(I.slot_equipped)
+/mob/living/carbon/ian/update_inv_slot(slot)
+	switch(slot)
 		if(SLOT_MOUTH)
 			update_inv_mouth()
 		if(SLOT_NECK)
@@ -54,6 +57,17 @@
 		else
 			..()
 
+/mob/living/carbon/human/update_inv_slot(slot)
+	..()
+	if(slot == SLOT_WEAR_MASK || slot == SLOT_HEAD || slot == SLOT_WEAR_SUIT || slot == SLOT_W_UNIFORM)
+		update_hair()
+
+/obj/item/proc/update_inv_mob()
+	if(!slot_equipped || !ismob(loc))
+		return
+
+	var/mob/M = loc
+	M.update_inv_slot(slot_equipped)
 
 /mob/proc/update_inv_handcuffed()
 	return

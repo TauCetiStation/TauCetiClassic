@@ -1,20 +1,21 @@
-var/const/AIRLOCK_WIRE_IDSCAN        = 1
-var/const/AIRLOCK_WIRE_MAIN_POWER1   = 2
-var/const/AIRLOCK_WIRE_MAIN_POWER2   = 4
-var/const/AIRLOCK_WIRE_DOOR_BOLTS    = 8
-var/const/AIRLOCK_WIRE_BACKUP_POWER1 = 16
-var/const/AIRLOCK_WIRE_BACKUP_POWER2 = 32
-var/const/AIRLOCK_WIRE_OPEN_DOOR     = 64
-var/const/AIRLOCK_WIRE_AI_CONTROL    = 128
-var/const/AIRLOCK_WIRE_ELECTRIFY     = 256
-var/const/AIRLOCK_WIRE_SAFETY        = 512
-var/const/AIRLOCK_WIRE_SPEED         = 1024
-var/const/AIRLOCK_WIRE_LIGHT         = 2048
+var/global/const/AIRLOCK_WIRE_IDSCAN        = 1
+var/global/const/AIRLOCK_WIRE_MAIN_POWER1   = 2
+var/global/const/AIRLOCK_WIRE_MAIN_POWER2   = 4
+var/global/const/AIRLOCK_WIRE_DOOR_BOLTS    = 8
+var/global/const/AIRLOCK_WIRE_BACKUP_POWER1 = 16
+var/global/const/AIRLOCK_WIRE_BACKUP_POWER2 = 32
+var/global/const/AIRLOCK_WIRE_OPEN_DOOR     = 64
+var/global/const/AIRLOCK_WIRE_AI_CONTROL    = 128
+var/global/const/AIRLOCK_WIRE_ELECTRIFY     = 256
+var/global/const/AIRLOCK_WIRE_SAFETY        = 512
+var/global/const/AIRLOCK_WIRE_SPEED         = 1024
+var/global/const/AIRLOCK_WIRE_LIGHT         = 2048
+var/global/const/AIRLOCK_WIRE_UNRES_SIDE    = 4096
 
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
-	wire_count = 12
-	window_y = 570
+	wire_count = 13
+	window_y = 600
 
 /datum/wires/airlock/can_use()
 	var/obj/machinery/door/airlock/A = holder
@@ -38,6 +39,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 	. += "[!A.safe ? "The 'Check Wiring' light is on." : "The 'Check Wiring' light is off."]"
 	. += "[!A.normalspeed ? "The 'Check Timing Mechanism' light is on." : "The 'Check Timing Mechanism' light is off."]"
 	. += "[!A.emergency ? "The emergency lights are off." : "The emergency lights are on."]"
+	. += "[A.unres_sides ? "The unrestricted exit display is indicating that it is letting people pass from [(A.unres_sides in list(NORTH, SOUTH, EAST, WEST)) ? "the [dir2text(A.unres_sides)]" : "multiple sides"]" : "The unrestricted exit display is faintly flickering"]."
 	. += list(list(
 		"label" = "Save to the buffer of your multitool",
 		"act" = "buffer",
@@ -50,7 +52,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 		return
 	if(action == "buffer")
 		var/obj/item/I = usr.get_active_hand()
-		if(ismultitool(I))
+		if(ispulsing(I))
 			var/obj/item/device/multitool/M = I
 			if(holder in M.doors_buffer)
 				to_chat(usr, "<span class='warning'>This <i>door</i> is already in the buffer!</span>")
@@ -65,27 +67,31 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 	if(.)
 		holder.add_fingerprint(usr)
 
-/datum/wires/airlock/update_cut(index, mended)
+/datum/wires/airlock/update_cut(index, mended, mob/user)
 	var/obj/machinery/door/airlock/A = holder
 
 	switch(index)
 		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			if(!mended)
 				A.loseMainPower()
-				A.shock(usr, 50)
+				if(user)
+					A.shock(user, 50)
 			else
 				if(!is_index_cut(AIRLOCK_WIRE_MAIN_POWER1) && !is_index_cut(AIRLOCK_WIRE_MAIN_POWER2))
 					A.regainMainPower()
-					A.shock(usr, 50)
+					if(user)
+						A.shock(user, 50)
 
 		if(AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			if(!mended)
 				A.loseBackupPower()
-				A.shock(usr, 50)
+				if(user)
+					A.shock(user, 50)
 			else
 				if(!is_index_cut(AIRLOCK_WIRE_BACKUP_POWER1) && !is_index_cut(AIRLOCK_WIRE_BACKUP_POWER2))
 					A.regainBackupPower()
-					A.shock(usr, 50)
+					if(user)
+						A.shock(user, 50)
 
 		if(AIRLOCK_WIRE_DOOR_BOLTS)
 			if(!mended)
@@ -103,8 +109,9 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			if(!mended)
 				if(A.secondsElectrified != -1)
-					A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
+					if(user)
+						A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+						user.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
 					A.secondsElectrified = -1
 			else
 				if(A.secondsElectrified == -1)
@@ -121,6 +128,12 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = mended
+
+		if(AIRLOCK_WIRE_UNRES_SIDE)
+			if(mended)
+				A.unres_sides = initial(A.unres_sides)
+			else
+				A.unres_sides = NONE
 
 	A.update_icon()
 
@@ -185,5 +198,9 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_LIGHT)
 			A.lights = !A.lights
+
+		if(AIRLOCK_WIRE_UNRES_SIDE)
+			if(!A.hasPower())
+				A.unres_sides = A.unres_sides < 1 ? NORTH : turn(A.unres_sides, -90)
 
 	A.update_icon()

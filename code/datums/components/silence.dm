@@ -23,12 +23,12 @@
 	radius_obj.bound_y = bound_y
 	radius_obj.bound_width = bound_width
 	radius_obj.bound_height = bound_height
-	radius_obj.AddComponent(/datum/component/bounded, AM, 0, 0, null, FALSE, FALSE)
+	radius_obj.AddComponent(/datum/component/bounded, AM, 0, 0, null, null, FALSE, FALSE)
 	AM.AddComponent(/datum/component/vis_radius, _dist, "radius", COLOR_BLACK)
 
-	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/update_sound_suppression)
-	RegisterSignal(parent, list(COMSIG_START_SUPPRESSING), .proc/enable_suppresion)
-	RegisterSignal(parent, list(COMSIG_STOP_SUPPRESSING), .proc/disable_suppression)
+	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), PROC_REF(update_sound_suppression))
+	RegisterSignal(parent, list(COMSIG_START_SUPPRESSING), PROC_REF(enable_suppresion))
+	RegisterSignal(parent, list(COMSIG_STOP_SUPPRESSING), PROC_REF(disable_suppression))
 
 /datum/component/silence/Destroy()
 	. = ..()

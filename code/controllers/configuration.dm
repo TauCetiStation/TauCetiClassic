@@ -1,5 +1,5 @@
-var/list/net_announcer_secret = list()
-var/bridge_secret = null
+var/global/list/net_announcer_secret = list()
+var/global/bridge_secret = null
 
 /datum/configuration
 	var/name = "Configuration"			// datum name
@@ -50,6 +50,7 @@ var/bridge_secret = null
 	var/list/probabilities = list()		// relative probability of each mode
 	var/humans_need_surnames = 0
 	var/allow_random_events = 1			// enables random events mid-round when set to 1
+	var/alt_lobby_menu = 0 // event lobby
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1
@@ -61,7 +62,7 @@ var/bridge_secret = null
 	var/automute_on = 0					//enables automuting/spam prevention
 
 	// If true - disable OOC for the duration of a round.
-	var/ooc_round_only = FALSE
+	var/ooc_round_autotoggle = FALSE
 
 	var/registration_panic_bunker_age = null
 	var/allowed_by_bunker_player_age = 60
@@ -93,7 +94,7 @@ var/bridge_secret = null
 	var/siteurl
 	var/wikiurl
 	var/forumurl
-	var/media_base_url = "http://example.org"
+	var/media_base_url
 	var/server_rules_url
 	var/discord_invite_url
 	var/customitems_info_url
@@ -104,17 +105,20 @@ var/bridge_secret = null
 
 	var/repository_link = ""
 
+	var/github_repository_owner = ""
+	var/github_repository_name = ""
+
 	var/forbid_singulo_possession = 0
 
 	var/allow_holidays = FALSE
 	//game_options.txt configs
 
 	var/health_threshold_softcrit = 0
-	var/health_threshold_crit = 0
+	var/health_threshold_crit = -50
 	var/health_threshold_dead = -100
 
 	var/organ_health_multiplier = 1
-	var/organ_regeneration_multiplier = 1
+	var/organ_regeneration_multiplier = 0.75
 
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
@@ -122,8 +126,8 @@ var/bridge_secret = null
 
 	//Used for modifying movement speed for mobs.
 	//Unversal modifiers
-	var/run_speed = 0
-	var/walk_speed = 0
+	var/run_speed = 3
+	var/walk_speed = 5
 
 	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
 	var/human_delay = 0
@@ -137,23 +141,22 @@ var/bridge_secret = null
 	var/expected_round_length = 90 MINUTES
 	// If the first delay has a custom start time
 	// No custom time
-	var/list/event_first_run = list(EVENT_LEVEL_ROUNDSTART = null,
+	var/list/event_first_run = list(EVENT_LEVEL_FEATURE = null,
 									EVENT_LEVEL_MUNDANE = null,
 									EVENT_LEVEL_MODERATE = null,
 									EVENT_LEVEL_MAJOR = list("lower" = 50 MINUTES, "upper" = 70 MINUTES))
 	// The lowest delay until next event
-	var/list/event_delay_lower = list(EVENT_LEVEL_ROUNDSTART = null,
+	var/list/event_delay_lower = list(EVENT_LEVEL_FEATURE = null,
 									  EVENT_LEVEL_MUNDANE  = 10 MINUTES,
 									  EVENT_LEVEL_MODERATE = 30 MINUTES,
 									  EVENT_LEVEL_MAJOR    = 50 MINUTES)
 	// The upper delay until next event
-	var/list/event_delay_upper = list(EVENT_LEVEL_ROUNDSTART = null,
+	var/list/event_delay_upper = list(EVENT_LEVEL_FEATURE = null,
 									  EVENT_LEVEL_MUNDANE  = 15 MINUTES,
 									  EVENT_LEVEL_MODERATE = 45 MINUTES,
 									  EVENT_LEVEL_MAJOR    = 70 MINUTES)
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
-	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_ingame_minutes_restriction_for_jobs = 0 //Do jobs use in-game minutes instead account age for restrictions?
 
@@ -168,9 +171,8 @@ var/bridge_secret = null
 	var/gateway_enabled = 0
 	var/ghost_interaction = 0
 
-	var/enter_allowed = 1
-
 	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
+	var/github_token = "" // todo: move this to globals for security
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
@@ -193,16 +195,29 @@ var/bridge_secret = null
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
-	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
-	var/starlight = FALSE	// Whether space turfs have ambient light or not
+	var/craft_recipes_visibility = TRUE // Show all recipes (TRUE) or only these that have all required components around (FALSE) in craft menu.
 	var/nightshift = FALSE
 
 	var/list/maplist = list()
 	var/datum/map_config/defaultmap
 	var/load_testmap = FALSE // swaps whatever.json with testmap.json in SSmapping init phase.
+	var/load_junkyard = TRUE
+	var/load_mine = TRUE
+	var/load_space_levels = TRUE
+
+#ifdef EARLY_PROFILE
+	var/auto_profile = TRUE
+#else
+	var/auto_profile = FALSE
+#endif
+
+	var/auto_lag_switch_pop = FALSE
 
 	var/record_replays = FALSE
 
+	var/use_persistent_cache = FALSE
+
+	var/reactionary_explosions = TRUE
 
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
@@ -211,6 +226,12 @@ var/bridge_secret = null
 	var/secondtopiclimit = 10
 
 	var/deathmatch_arena = TRUE
+
+	var/ghost_max_view = 10 // 21x21
+	var/ghost_max_view_supporter = 13 // 27x27
+
+	var/hard_deletes_overrun_threshold = 0.5
+	var/hard_deletes_overrun_limit = 0
 
 /datum/configuration/New()
 	for (var/type in subtypesof(/datum/game_mode))
@@ -253,9 +274,6 @@ var/bridge_secret = null
 
 				if ("admin_legacy_system")
 					config.admin_legacy_system = 1
-
-				if ("ban_legacy_system")
-					config.ban_legacy_system = 1
 
 				if ("byond_version_min")
 					config.byond_version_min = text2num(value)
@@ -519,11 +537,20 @@ var/bridge_secret = null
 						else //probably windows, if not this should work anyway
 							config.python_path = "python"
 
+				if("github_token")
+					config.github_token = value
+
 				if("allow_cult_ghostwriter")
 					config.cult_ghostwriter = 1
 
 				if("req_cult_ghostwriter")
 					config.cult_ghostwriter_req_cultists = text2num(value)
+
+				if("ghost_max_view")
+					config.ghost_max_view = text2num(value)
+
+				if("ghost_max_view_supporter")
+					config.ghost_max_view_supporter = text2num(value)
 
 				if("deathtime_required")
 					config.deathtime_required = text2num(value)
@@ -615,6 +642,11 @@ var/bridge_secret = null
 
 				if("repository_link")
 					config.repository_link = value
+					var/repo_path = replacetext(config.repository_link, "https://github.com/", "")
+					if(repo_path != config.repository_link)
+						var/split = splittext(repo_path, "/")
+						config.github_repository_owner = split[1]
+						config.github_repository_name = split[2]
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
@@ -640,20 +672,44 @@ var/bridge_secret = null
 				if("summon_testmap")
 					config.load_testmap = TRUE
 
+				if("no_junkyard")
+					config.load_junkyard = FALSE
+
+				if("no_mine")
+					config.load_mine = FALSE
+
+				if("no_space_levels")
+					config.load_space_levels = FALSE
+
+				if("auto_profile")
+					config.auto_profile = TRUE
+
+				if("auto_lag_switch_pop")
+					config.auto_lag_switch_pop = text2num(value)
+
 				if("record_replays")
 					config.record_replays = TRUE
 
 				if("sandbox")
 					config.sandbox = TRUE
 
-				if("ooc_round_only")
-					config.ooc_round_only = TRUE
+				if("use_persistent_cache")
+					config.use_persistent_cache = TRUE
+
+				if("ooc_round_only") // todo: ambiguous old name, need to rename for ooc_round_autotoggle or something
+					config.ooc_round_autotoggle = TRUE
 
 				if("minute_topic_limit")
 					config.minutetopiclimit = text2num(value)
 
 				if("second_topic_limit")
 					config.secondtopiclimit = text2num(value)
+
+				if("hard_deletes_overrun_threshold")
+					config.hard_deletes_overrun_threshold = text2num(value)
+
+				if("hard_deletes_overrun_limit")
+					config.hard_deletes_overrun_limit = text2num(value)
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
@@ -698,8 +754,6 @@ var/bridge_secret = null
 					config.organ_regeneration_multiplier = value / 100
 				if("craft_recipes_visibility")
 					config.craft_recipes_visibility = TRUE
-				if("starlight")
-					config.starlight = TRUE
 				if("nightshift")
 					config.nightshift = TRUE
 				if("deathmatch_arena")
@@ -773,22 +827,22 @@ var/bridge_secret = null
 /datum/configuration/proc/get_runnable_modes(datum/modesbundle/bundle)
 	var/list/datum/game_mode/runnable_modes = list()
 	var/list/runnable_modes_names = list()
-	for (var/type in bundle.possible_gamemodes)
+	for(var/type in bundle.possible_gamemodes)
 		var/datum/game_mode/M = new type()
-		if (!M.name || !(M.config_name in config_name_by_real))
+		if(!M.name || !(M.config_name in config_name_by_real))
 			qdel(M)
 			continue
-		if (probabilities[M.config_name] <= 0)
+		if(probabilities[M.config_name] <= 0)
 			qdel(M)
 			continue
-		if (global.master_last_mode == M.name)
+		if(global.master_last_mode == M.name)
 			qdel(M)
 			continue
-		if (global.modes_failed_start[M.name])
+		if(global.modes_failed_start[M.name])
 			qdel(M)
 			continue
-		var/mod_prob = probabilities[M.name]
-		if (M.can_start())
+		var/mod_prob = probabilities[M.config_name]
+		if(M.can_start())
 			runnable_modes[M] = mod_prob
 			runnable_modes_names += M.name
 	log_mode("Current pool of gamemodes([runnable_modes.len]):")
@@ -854,6 +908,10 @@ var/bridge_secret = null
 				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")
 				currentmap.config_max_users = text2num(data)
+			if ("votable")
+				currentmap.votable = TRUE
+			if ("voteweight")
+				currentmap.voteweight = text2num(data)
 			if ("default","defaultmap")
 				defaultmap = currentmap
 			if ("endmap")

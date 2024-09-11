@@ -1,9 +1,12 @@
-#define DAMAGE_LAYER FULLSCREEN_LAYER + 0.1
-#define BLIND_LAYER DAMAGE_LAYER + 0.1
-#define CRIT_LAYER BLIND_LAYER + 0.1
+#define SCREEN_DAMAGE_LAYER FULLSCREEN_LAYER + 0.1
+#define SCREEN_BLIND_LAYER SCREEN_DAMAGE_LAYER + 0.1
+#define SCREEN_CRIT_LAYER SCREEN_BLIND_LAYER + 0.1
 
 /mob
 	var/list/screens = list()
+
+// todo: need to update fullscreens for better support of outer map views
+// meta-fullscreens (darkness, starlight) should not be a part of mob, but client
 
 /mob/proc/overlay_fullscreen(category, type, severity)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
@@ -33,7 +36,7 @@
 	screens -= category
 	if(animated)
 		animate(screen, alpha = 0, time = animated)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen_after_animate, screen), animated, TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen_after_animate), screen), animated, TIMER_CLIENT_TIME)
 	else
 		if(client)
 			client.screen -= screen
@@ -63,7 +66,7 @@
 
 
 /atom/movable/screen/fullscreen
-	icon = 'icons/mob/screen1_full.dmi'
+	icon = 'icons/hud/screen1_full.dmi'
 	icon_state = "default"
 	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
@@ -73,12 +76,20 @@
 	var/severity = 0
 	var/atom/movable/screen/fullscreen/screen_part
 
+/atom/movable/screen/fullscreen/proc/set_map_view(map_view)
+	assigned_map = map_view
+	screen_loc = "[map_view]:1,1"
+	appearance_flags |= TILE_BOUND // stops fullscreens from resizing external map views
+
 /atom/movable/screen/fullscreen/Destroy()
 	QDEL_NULL(screen_part)
 	severity = 0
 	return ..()
 
 /atom/movable/screen/fullscreen/proc/update_for_view(client_view)
+	if(assigned_map) // used in external map view, no need to resize
+		return
+
 	if (screen_loc == "CENTER-7,CENTER-7" && view != client_view)
 		var/list/actualview = getviewsize(client_view)
 		view = client_view
@@ -92,22 +103,22 @@
 
 /atom/movable/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
-	layer = DAMAGE_LAYER
+	layer = SCREEN_DAMAGE_LAYER
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/oxy
 	icon_state = "oxydamageoverlay"
-	layer = DAMAGE_LAYER
+	layer = SCREEN_DAMAGE_LAYER
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/crit
 	icon_state = "passage"
-	layer = CRIT_LAYER
+	layer = SCREEN_CRIT_LAYER
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
-	layer = BLIND_LAYER
+	layer = SCREEN_BLIND_LAYER
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
 
@@ -134,26 +145,86 @@
 	icon_state = "impairedoverlay"
 
 /atom/movable/screen/fullscreen/blurry
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "blurry"
 
 /atom/movable/screen/fullscreen/flash
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 
 /atom/movable/screen/fullscreen/flash/noise
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "noise"
 
 /atom/movable/screen/fullscreen/high
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 
+
+/atom/movable/screen/fullscreen/darkness
+	icon = 'icons/hud/screen1_full.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "white"
+	color = "#000000"
+	plane = LIGHTING_PLANE
+	blend_mode = BLEND_ADD
+	appearance_flags = RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+
+/atom/movable/screen/fullscreen/environment_lighting_color
+	icon = 'icons/hud/screen1_full.dmi'
+	screen_loc = "CENTER-7,CENTER-7"
+	icon_state = "white"
+	plane = ENVIRONMENT_LIGHTING_PLANE
+	blend_mode = BLEND_MULTIPLY
+	appearance_flags = RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+
+	var/obj/effect/level_color_holder/current_holder
+
+// changes z-level color masks when moving between levels
+/atom/movable/screen/fullscreen/environment_lighting_color/proc/attach_to_level(new_z)
+	SIGNAL_HANDLER
+
+	if(!SSmapping.initialized)
+		return
+
+	var/datum/space_level/L = SSmapping.get_level(new_z)
+	var/obj/effect/level_color_holder/new_holder = L.color_holder
+
+	if(!current_holder)
+		end_transition(new_holder)
+		return
+
+	if(current_holder == new_holder)
+		return
+
+	var/obj/effect/level_color_holder/old_holder = current_holder
+	vis_contents.Cut()
+	current_holder = null
+
+	// same color - we don't need animation
+	if(old_holder.color == new_holder.color)
+		end_transition(new_holder)
+		return
+
+	// should be possible to do it with just animation and without callback, but it's already too complicated
+	// ...
+	// also this looks bad when there is already animation on the holder (aurora), 
+	// maybe i should just remove it completely or do some opacity transaction between two holders
+	animate(src, time = 0, color = old_holder.color)
+	animate(time = 1 SECONDS, color = new_holder.color)
+	addtimer(CALLBACK(src, PROC_REF(end_transition), new_holder), 1 SECONDS)
+
+/atom/movable/screen/fullscreen/environment_lighting_color/proc/end_transition(obj/effect/level_color_holder/new_holder)
+	if(!current_holder)
+		color = null
+		vis_contents += new_holder
+		current_holder = new_holder
+
 #undef FULLSCREEN_LAYER
-#undef BLIND_LAYER
-#undef DAMAGE_LAYER
-#undef CRIT_LAYER
+#undef SCREEN_BLIND_LAYER
+#undef SCREEN_DAMAGE_LAYER
+#undef SCREEN_CRIT_LAYER

@@ -22,8 +22,8 @@
 		var/datum/combat_combo/UCC = global.combat_combos_by_name[upgrade_name]
 		L.learn_combo(UCC, src)
 
-	RegisterSignal(L, list(COMSIG_LIVING_LEARN_COMBO), .proc/on_combo_learn)
-	RegisterSignal(L, list(COMSIG_LIVING_FORGET_COMBO), .proc/on_combo_forget)
+	RegisterSignal(L, list(COMSIG_LIVING_LEARN_COMBO), PROC_REF(on_combo_learn))
+	RegisterSignal(L, list(COMSIG_LIVING_FORGET_COMBO), PROC_REF(on_combo_forget))
 
 	if(!L.movesets_by_source[source])
 		L.movesets_by_source[source] = list()

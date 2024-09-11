@@ -114,7 +114,8 @@
 /area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/mafia,
-/turf/unsimulated/wall/fakeglass,
+/obj/structure/window/fulltile/reinforced/indestructible,
+/turf/unsimulated/floor,
 /area/mafia)
 "t" = (
 /turf/simulated/floor/beach/water/waterpool,

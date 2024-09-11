@@ -1,10 +1,8 @@
 import { useBackend } from '../../backend';
-import { Fragment } from 'inferno';
 import { Box, Section, LabeledList, Button, AnimatedNumber, ProgressBar } from '../../components';
 
 export const PortableBasicInfo = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     connected,
     holding,
@@ -18,7 +16,7 @@ export const PortableBasicInfo = (props, context) => {
   const cell_chargepercent = cell_charge / cell_maxcharge;
 
   return (
-    <Fragment>
+    <>
       <Section
         title="Status"
         buttons={(
@@ -85,6 +83,6 @@ export const PortableBasicInfo = (props, context) => {
           </Box>
         )}
       </Section>
-    </Fragment>
+    </>
   );
 };

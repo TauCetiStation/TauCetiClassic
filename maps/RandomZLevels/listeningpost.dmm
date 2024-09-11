@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/space,
+/turf/environment/space,
 /area)
 "b" = (
 /turf/simulated/mineral,
@@ -48,7 +48,9 @@
 /turf/simulated/floor,
 /area/awaymission/listeningpost)
 "k" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/awaymission/listeningpost)
 "l" = (
@@ -245,7 +247,7 @@
 	},
 /area/awaymission/listeningpost)
 "K" = (
-/turf/space,
+/turf/environment/space,
 /area/asteroid/mine/unexplored)
 "L" = (
 /turf/simulated/shuttle/wall{
@@ -325,6 +327,12 @@
 	icon_state = "gcircuit"
 	},
 /area/asteroid/mine/explored)
+"Y" = (
+/obj/machinery/door/airlock{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/awaymission/listeningpost)
 
 (1,1,1) = {"
 a
@@ -8711,7 +8719,7 @@ c
 c
 c
 g
-f
+Y
 g
 c
 b

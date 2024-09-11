@@ -219,7 +219,7 @@
 			if(loc)
 				var/obj/item/PDA = loc
 				var/mob/user = null
-				if(istype(PDA.loc,/mob/living))
+				if(isliving(PDA.loc))
 					user = PDA.loc
 				else if(PDA.fingerprintslast)
 					var/client/user_client = directory[PDA.fingerprintslast]

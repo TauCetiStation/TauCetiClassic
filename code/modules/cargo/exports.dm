@@ -27,7 +27,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
  then the player gets the profit from selling his own wasted time.
 */
 /proc/export_item_and_contents(atom/movable/AM, contraband, hacked, dry_run = FALSE)
-	if(!exports_list.len)
+	if(!global.exports_list.len)
 		setupExports()
 
 	var/sold_str = ""
@@ -38,7 +38,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	// We go backwards, so it'll be innermost objects sold first
 	for(var/i in reverseRange(contents))
 		var/atom/movable/thing = i
-		for(var/datum/export/E in exports_list)
+		for(var/datum/export/E in global.exports_list)
 			if(!E)
 				continue
 			if(E.applies_to(thing, contraband, hacked))
@@ -48,8 +48,12 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 					E.sell_object(thing, contraband, hacked)
 					sold_str += " [thing.name]"
 				break
-		if(!dry_run)
-			qdel(thing)
+
+		if(dry_run)
+			continue
+
+		SSeconomy.handle_centcomm_onlineshop_orders(thing)
+		qdel(thing)
 
 	if(dry_run)
 		return cost
@@ -70,6 +74,21 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/total_cost = 0
 	var/total_amount = 0
 
+// What would be the cost of the export type if it were to appear in a pack somewhere.
+/datum/export/proc/get_type_cost(export_type, amount = 1, contr = 0, emag = 0)
+	return cost * amount
+
+/datum/export/proc/applies_to_type(export_type, contr = 0, emag = 0)
+	if(contraband && !contr)
+		return FALSE
+	if(hacked && !emag)
+		return FALSE
+	if(!include_subtypes && !(export_type in export_types))
+		return FALSE
+	if(include_subtypes && (!is_path_in_list(export_type, export_types) || is_path_in_list(export_type, exclude_types)))
+		return FALSE
+	return TRUE
+
 // Checks the cost. 0 cost items are skipped in export.
 /datum/export/proc/get_cost(obj/O, contr = 0, emag = 0)
 	return cost * get_amount(O, contr, emag)
@@ -81,13 +100,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 // Checks if the item is fit for export datum.
 /datum/export/proc/applies_to(obj/O, contr = 0, emag = 0)
-	if(contraband && !contr)
-		return FALSE
-	if(hacked && !emag)
-		return FALSE
-	if(!include_subtypes && !(O.type in export_types))
-		return FALSE
-	if(include_subtypes && (!is_type_in_list(O, export_types) || is_type_in_list(O, exclude_types)))
+	if(!applies_to_type(O.type, contr, emag))
 		return FALSE
 	if(!get_cost(O, contr, emag))
 		return FALSE
@@ -132,10 +145,10 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	total_cost = 0
 	total_amount = 0
 
-var/list/exports_list = list()
+var/global/list/exports_list = list()
 
 /proc/setupExports()
 	for(var/subtype in subtypesof(/datum/export))
 		var/datum/export/E = new subtype
 		if(E.export_types && E.export_types.len) // Exports without a type are invalid/base types
-			exports_list += E
+			global.exports_list += E

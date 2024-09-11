@@ -47,6 +47,24 @@
 /obj/item/weapon/reagent_containers/hypospray/cmo
 	list_reagents = list("tricordrazine" = 30)
 
+/obj/item/weapon/reagent_containers/hypospray/cmo/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
+	if(istype(target, /obj/item/weapon/reagent_containers/glass))
+		if(reagents.total_volume >= reagents.maximum_volume)
+			to_chat(user, "<span class='warning'>The hypospray is full.</span>")
+			return
+		if(!target.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[target] is empty.</span>")
+			return
+
+		if(!target.is_open_container())
+			to_chat(user, "<span class='warning'>Container is closed.</span>")
+			return
+
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+
+		to_chat(user, "<span class='notice'>You fill the syringe with [trans] units of the solution.</span>")
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
 	name = "inaprovaline autoinjector"
@@ -58,11 +76,11 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack //goliath kiting
 	name = "stimpack"
-	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
+	desc = "A rapid way to stimulate healing of minor wounds."
 	icon_state = "stimpen"
 	item_state = "autoinjector_empty"
 	volume = 20
-	list_reagents = list("inaprovaline" = 5, "coffee" = 13, "hyperzine" = 2)
+	list_reagents = list("inaprovaline" = 5, "coffee" = 13, "tricordrazine" = 2)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
 	flags &= ~OPENCONTAINER
@@ -72,11 +90,7 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M, mob/user)
 	..()
 	update_icon()
-
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	update_inv_mob()
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
 	if(reagents.total_volume > 0)
@@ -85,3 +99,11 @@
 	else
 		icon_state = "autoinjector_empty"
 		item_state = "autoinjector_empty"
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine
+	name = "metatrombine autoinjector"
+	desc = "Accelerates blood clotting."
+	icon_state = "autobrut"
+	item_state = "autobrut"
+	volume = 5
+	list_reagents = list("metatrombine" = 5)

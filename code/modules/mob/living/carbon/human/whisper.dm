@@ -9,39 +9,40 @@
 
 	log_whisper("[key_name(src)]: [message]")
 
-	if(src.client)
-		if (src.client.prefs.muted & MUTE_IC)
+	if(client)
+		if (client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(client, ADMIN_CD_IC))
 			to_chat(src, "<span class='warning'>You cannot whisper (muted).</span>")
 			return FALSE
 
-		if (client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,ADMIN_CD_IC))
 			return FALSE
-
-	if(!speech_allowed && usr == src)
-		to_chat(usr, "<span class='warning'>You can't speak.</span>")
-		return FALSE
 
 	if (src.stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
 			return FALSE
 		return say_dead(message)
 
-	if(src.stat)
+	if(stat != CONSCIOUS)
+		return FALSE
+	message = sanitize(message)	//made consistent with say
+
+	if(!message)
 		return FALSE
 
-	message = sanitize(message)	//made consistent with say
 	if(iszombie(src))
 		message = zombie_talk(message)
+
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(prob(50))
+			message = turret_talk(message)
 
 	if(name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
 
 	//parse the language code and consume it
-	var/datum/language/speaking = parse_language(message)
-	if(speaking)
-		message = copytext(message,2+length_char(speaking.key))
-	else if(species.force_racial_language)
-		speaking = all_languages[species.language]
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	return whisper_say(message, speaking, alt_name)
 
@@ -50,7 +51,7 @@
 // Returns FALSE if speaking was not succesful.
 /mob/living/carbon/human/proc/whisper_say(message, datum/language/speaking = null, alt_name="", verb="whispers")
 	// Whispering with gestures? You mad bro?
-	if(speaking && (speaking.flags & SIGNLANG))
+	if(speaking && (speaking.flags & SIGNLANG) || !message)
 		return FALSE
 
 	var/message_range = 1
@@ -59,9 +60,10 @@
 	var/italics = 1
 
 	message = capitalize(trim(message))
+	message = add_period(message)
 
 	//TODO: handle_speech_problems for silent
-	if(!message || silent || miming || HAS_TRAIT(src, TRAIT_MUTE))
+	if(!message || silent || HAS_TRAIT(src, TRAIT_MIMING) || HAS_TRAIT(src, TRAIT_MUTE))
 		return FALSE
 
 	// Mute disability
@@ -87,14 +89,14 @@
 	listening |= src
 
 	//ghosts
-	for(var/mob/M in observer_list)	//does this include players who joined as observers as well?
+	for(var/mob/M as anything in observer_list)	//does this include players who joined as observers as well?
 		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 			listening |= M
 
 	//Pass whispers on to anything inside the immediate listeners.
 	for(var/mob/L in listening)
 		for(var/mob/C in L.contents)
-			if(istype(C,/mob/living))
+			if(isliving(C))
 				listening += C
 
 	//pass on the message to objects that can hear us.
@@ -124,7 +126,7 @@
 	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	INVOKE_ASYNC(GLOBAL_PROC, .proc/flick_overlay, I, speech_bubble_recipients, 30)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), I, speech_bubble_recipients, 30)
 
 	for(var/mob/M in listening)
 		M.hear_say(message, verb, speaking, alt_name, italics, src)

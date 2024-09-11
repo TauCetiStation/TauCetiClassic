@@ -3,16 +3,15 @@
 	icon = 'icons/obj/items.dmi'
 	w_class = SIZE_SMALL
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
-	var/abstract = 0
-	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
-	var/health = null
 	var/burn_point = null
 	var/burning = null
 	var/list/hitsound = list()
 	var/usesound = null
+	var/pickup_sound = null
+	var/dropped_sound = null
 	var/wet = 0
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
@@ -26,15 +25,17 @@
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-	var/datum/action/item_action/action = null
-	var/action_button_name //It is also the text which gets displayed on the action button. If not set it defaults to 'Use [name]'. If it's not set, there'll be no button.
-	var/action_button_is_hands_free = 0 //If 1, bypass the restrained, lying, and stunned checks action buttons normally test for
+	///Actions that item spawns on atom_init(), paths
+	var/list/item_action_types = list()
+	///Spawned actions, datums
+	var/list/item_actions = list()
+	///Add actions on equip(), otherwise we have a special behavior
+	var/item_actions_special = FALSE
 
 	var/slot_equipped = 0 // Where this item currently equipped in player inventory (slot_id) (should not be manually edited ever).
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
-	var/item_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/pierce_protection = 0
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
@@ -43,7 +44,7 @@
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
-	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/materials = list()
 	var/list/allowed = null //suit storage stuff.
 	var/list/can_be_placed_into = list(
@@ -61,7 +62,13 @@
 	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
-	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
+	// optional world/inventory icon_state overrides
+	var/item_state_world = null      // has priority over icon_state for item world (not in inventory) sprites
+	var/item_state_inventory = null  // has priority over icon_state for item inventory sprites, defaults to initial(icon_state)
+
+	// other icon overrides
+	var/item_state = null            // has priority over icon_state for on-mob sprites
+	var/icon_override = null         // Used to override hardcoded clothing dmis in human clothing proc (see also icon_custom)
 
 	/* Species-specific sprite sheets for inventory sprites
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
@@ -69,7 +76,7 @@
 	var/list/sprite_sheets_obj = null
 
     /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
-	var/list/tools = list()
+	var/list/qualities
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
@@ -78,10 +85,55 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+	// Is heavily utilized by swiping component. Perhaps use to determine how "quick" the strikes with this weapon are?
+	// See swiping.dm for more details.
+	var/sweep_step = 4
+	// Is using this item requires any specific skills?
+	var/list/required_skills
 
+	var/dyed_type
+
+	var/flash_protection = NONE
+	var/list/flash_protection_slots = list()
+	var/can_get_wet = TRUE
+
+/**
+  * Doesn't call parent, see [/atom/proc/atom_init]
+  */
 /obj/item/atom_init()
-	. = ..()
-	AddElement(/datum/element/beauty, -w_class)
+	SHOULD_CALL_PARENT(FALSE)
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
+	if(light_power && light_range)
+		update_light()
+
+	if(opacity && isturf(loc))
+		var/turf/T = loc
+		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	if(can_block_air && isturf(loc))
+		var/turf/T = loc
+		if(!T.can_block_air)
+			T.can_block_air = TRUE
+
+	if(uses_integrity)
+		if (!armor)
+			armor = list()
+		atom_integrity = max_integrity
+
+	if(istype(loc, /obj/item/weapon/storage)) // todo: need to catch all spawns in /storage/ objects and make them use handle_item_insertion or forceMove, so we can remove this
+		flags_2 |= IN_STORAGE
+
+	if(item_state_world)
+		update_world_icon()
+
+	for(var/path in item_action_types)
+		var/datum/action/B = new path (src)
+		item_actions += B
+
+	return INITIALIZE_HINT_NORMAL
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -92,129 +144,8 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
-/obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat)
-	var/message = ""
-	if(!output_to_chat)
-		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[M.name]'s scan results</title></head><BODY>"
-
-	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
-		message += "<span class='notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span><br>"
-		message += "<span class='notice'>&emsp; Damage Specifics: [0]-[0]-[0]-[0]</span><br>"
-		message += "<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span><br>"
-		message += "<span class='notice'>Body Temperature: ???</span>"
-		if(!output_to_chat)
-			message += "</BODY></HTML>"
-		return message
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
-
-	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
-	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
-	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()
-	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
-	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
-	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
-		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: dead</span><br>"
-	else
-		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: [M.stat > 1 ? "dead" : "[M.health - M.halloss]% healthy"]</span><br>"
-	message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
-	message += "&emsp; Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
-	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
-	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
-		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
-	if(istype(M, /mob/living/carbon/human) && mode)
-		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_bodyparts(1, 1)
-		message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
-		if(length(damaged))
-			for(var/obj/item/organ/external/BP in damaged)
-				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
-		else
-			message += "<span class='notice'>&emsp; Limbs are OK.</span><br>"
-
-	OX = M.getOxyLoss() > 50 ? "<font color='blue'><b>Severe oxygen deprivation detected</b></font>" : "Subject bloodstream oxygen level normal"
-	TX = M.getToxLoss() > 50 ? "<font color='green'><b>Dangerous amount of toxins detected</b></font>" : "Subject bloodstream toxin level minimal"
-	BU = M.getFireLoss() > 50 ? "<font color='#FFA500'><b>Severe burn damage detected</b></font>" : "Subject burn injury status O.K"
-	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" : "Subject brute-force injury status O.K"
-	if(M.status_flags & FAKEDEATH)
-		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected</span>" : "Subject bloodstream oxygen level normal"
-	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
-	if(istype(M, /mob/living/carbon))
-		var/mob/living/carbon/C = M
-		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
-			message += "<span class='warning'>Warning: Unknown substance detected in subject's blood.</span><br>"
-		if(C.virus2.len)
-			for (var/ID in C.virus2)
-				if (ID in virusDB)
-					var/datum/data/record/V = virusDB[ID]
-					message += "<span class='warning'>Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]</span><br>"
-//			user.oldshow_message(text("<span class='warning'>Warning: Unknown pathogen detected in subject's blood.</span>"))
-		if(C.roundstart_quirks.len)
-			message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span><br>"
-	if(M.getCloneLoss())
-		to_chat(user, "<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
-	for(var/datum/disease/D in M.viruses)
-		if(!D.hidden[SCANNER])
-			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
-	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
-		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
-	if(M.has_brain_worms())
-		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
-	else if(M.getBrainLoss() >= 100 || (istype(M, /mob/living/carbon/human) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
-		message += "<span class='warning'>Subject is brain dead.</span>"
-	else if(M.getBrainLoss() >= 60)
-		message += "<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span><br>"
-	else if(M.getBrainLoss() >= 10)
-		message += "<span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span><br>"
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-
-		var/found_bleed
-		var/found_broken
-		for(var/obj/item/organ/external/BP in H.bodyparts)
-			if(BP.status & ORGAN_BROKEN)
-				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
-					message += "<span class='warning'>Unsecured fracture in subject [BP.name]. Splinting recommended for transport.</span><br>"
-				if(!found_broken)
-					found_broken = TRUE
-
-			if(!found_bleed && (BP.status & ORGAN_ARTERY_CUT))
-				found_bleed = TRUE
-
-			if(BP.has_infected_wound())
-				message += "<span class='warning'>Infected wound detected in subject [BP.name]. Disinfection recommended.</span><br>"
-
-		if(found_bleed)
-			message += "<span class='warning'>Arterial bleeding detected. Advanced scanner required for location.</span><br>"
-		if(found_broken)
-			message += "<span class='warning'>Bone fractures detected. Advanced scanner required for location.</span><br>"
-
-		var/blood_volume = H.blood_amount()
-		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
-		var/blood_type = H.dna.b_type
-		if(blood_volume <= BLOOD_VOLUME_SAFE && blood_volume > BLOOD_VOLUME_OKAY)
-			message += "<span class='warning bold'>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.</span><span class='notice'>Type: [blood_type]</span><br>"
-		else if(blood_volume <= BLOOD_VOLUME_OKAY)
-			message += "<span class='warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Type: [blood_type]</span><br>"
-		else
-			message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
-
-		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-		if(Heart)
-			switch(Heart.heart_status)
-				if(HEART_FAILURE)
-					message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
-				if(HEART_FIBR)
-					message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
-			message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
-
-	if(!output_to_chat)
-		message += "</BODY></HTML>"
-	return message
-
 /obj/item/Destroy()
-	QDEL_NULL(action)
+	QDEL_LIST(item_actions)
 	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -223,22 +154,32 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				return
-		else
-	return
+	qdel(src)
 
 /obj/item/blob_act()
 	return
+
+///Updates all icons of action buttons associated with this item
+/obj/item/proc/update_item_actions()
+	for(var/datum/action/A as anything in item_actions)
+		A.button.UpdateIcon()
+
+///Adds action buttons to user associated with this item
+/obj/item/proc/add_item_actions(mob/user)
+	for(var/datum/action/A in item_actions)
+		A.Grant(user)
+
+///Removes all action buttons from user associated with this item
+/obj/item/proc/remove_item_actions(mob/user)
+	for(var/datum/action/A in item_actions)
+		if(A.CheckRemoval(user))
+			A.Remove(user)
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -255,7 +196,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+	if(!istype(src.loc, /turf) || usr.stat != CONSCIOUS || usr.restrained() )
 		return
 
 	var/turf/T = src.loc
@@ -276,21 +217,16 @@
 
 		to_chat(user, stat_flavor)
 
-/obj/item/attack_hand(mob/user)
+/obj/item/proc/mob_pickup(mob/user, hand_index=null)
 	if (!user || anchored)
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
-		if(istype(src, /obj/item/weapon/melee))
-			if(src.w_class < SIZE_NORMAL)
-				to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
-				return
-		else if(istype(src, /obj/item/weapon/gun))
+		if(istype(src, /obj/item/weapon/gun))
 			if(prob(20))
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("<span class='notice'>[user] crushes \a [src] with hands.</span>", "<span class='notice'>You crush the [src].</span>")
 			qdel(src)
-			//user << "<span class='warning'>\The [src] is far too small for you to pick up.</span>"
 			return
 		else if(istype(src, /obj/item/clothing))
 			if(prob(20))
@@ -307,11 +243,22 @@
 			to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 			return
 
-	src.throwing = 0
+	throwing = FALSE
 
-	if(src.loc == user)
+	if(freeze_movement || !user.can_pickup(src))
+		return
+
+	remove_outline()
+	add_fingerprint(user)
+
+	if(!pickup(user))
+		return
+
+	user.SetNextMove(CLICK_CD_RAPID)
+
+	if(loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(!src.canremove)
+		if(!canremove)
 			return
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -320,44 +267,45 @@
 				return
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				if(istype(H.wear_suit, /obj/item/clothing/suit))
 					var/obj/item/clothing/suit/V = H.wear_suit
 					V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
-				if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-					if(user.get_item_by_slot(SLOT_L_HAND) != src && user.get_item_by_slot(SLOT_R_HAND) != src) //swap item in hands have no delay
-						if(!user.delay_clothing_unequip(src))
-							return
-
+				if(!user.delay_clothing_unequip(src))
+					return
+		. = user.remove_from_mob(src, user)
 	else
-		if(isliving(src.loc))
+		if(isliving(loc))
 			return
-		user.SetNextMove(CLICK_CD_RAPID)
-
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+			if(istype(H.wear_suit, /obj/item/clothing/suit))
 				var/obj/item/clothing/suit/V = H.wear_suit
 				V.attack_reaction(H, REACTION_ITEM_TAKE)
 
-	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
+		if(istype(loc, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = src.loc
+			. = S.remove_from_storage(src, user)
+		else
+			. = TRUE
+
+	if(QDELETED(src)) // remove_from_mob() may remove DROPDEL items, so...
 		return
 
-	if(!user.can_pickup(src))
-		return
+	if(.)
+		if(isnull(hand_index))
+			. = user.put_in_active_hand(src)
+		else
+			switch(hand_index)
+				if(0)
+					. = user.put_in_r_hand(src)
+				if(1)
+					. = user.put_in_l_hand(src)
 
-	remove_outline()
-	pickup(user)
-	add_fingerprint(user)
+		if(!(. || isturf(loc)))
+			forceMove(get_turf(user))
 
-	if(istype(src.loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = src.loc
-		if(!S.remove_from_storage(src, user) || !user.put_in_active_hand(src))
-			forceMove(get_turf(src))
-	else if(loc == user)
-		if(!user.remove_from_mob(src, user) || !user.put_in_active_hand(src))
-			forceMove(get_turf(src))
-	else
-		user.put_in_active_hand(src)
+/obj/item/attack_hand(mob/user)
+	mob_pickup(user)
 
 /obj/item/attack_paw(mob/user)
 	if (!user || anchored)
@@ -375,7 +323,7 @@
 		else
 			user.remove_from_mob(src)
 	else
-		if(istype(src.loc, /mob/living))
+		if(isliving(src.loc))
 			return
 
 		user.next_move = max(user.next_move+2,world.time + 2)
@@ -388,7 +336,8 @@
 		return
 
 	remove_outline()
-	pickup(user)
+	if(!pickup(user))
+		return
 	user.put_in_active_hand(src)
 	return
 
@@ -416,12 +365,14 @@
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
-	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
+	callback = CALLBACK(src, PROC_REF(after_throw), callback) // Replace their callback with our own.
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
 
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
 		. = callback.Invoke()
+	flags_2 &= ~IN_INVENTORY // #10047
+	update_world_icon()
 
 /obj/item/proc/talk_into(mob/M, text)
 	return FALSE
@@ -432,21 +383,37 @@
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	if(user && user.loc != loc && isturf(loc))
+		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
+	flags_2 &= ~IN_INVENTORY
 	if(flags & DROPDEL)
 		qdel(src)
+	update_world_icon()
 	set_alt_apperances_layers()
+	if(!item_actions_special)
+		remove_item_actions(user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
+		return FALSE
+	playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
+	return TRUE
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
+	SHOULD_CALL_PARENT(TRUE)
+	flags_2 &= ~IN_STORAGE
+	update_world_icon()
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S)
+	SHOULD_CALL_PARENT(TRUE)
+	flags_2 |= IN_STORAGE
+	update_world_icon()
 	return
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
@@ -460,9 +427,13 @@
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
 	SHOULD_CALL_PARENT(TRUE)
+	flags_2 |= IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
+	update_world_icon()
 	set_alt_apperances_layers()
+	if(!item_actions_special)
+		add_item_actions(user)
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
@@ -482,7 +453,7 @@
 				to_chat(H, "<span class='warning'>Your species can not wear clothing of this type.</span>")
 			return FALSE
 		//fat mutation
-		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
+		if(isunder(src) || istype(src, /obj/item/clothing/suit))
 			if(HAS_TRAIT(H, TRAIT_FAT))
 				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
@@ -648,7 +619,7 @@
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return FALSE
 				var/obj/item/clothing/under/uniform = H.w_uniform
-				if(uniform.accessories.len && !uniform.can_attach_accessory(src))
+				if(!uniform.can_attach_accessory(src))
 					if (!disable_warning)
 						to_chat(H, "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>")
 					return FALSE
@@ -733,7 +704,7 @@
 		return
 	if(usr.incapacitated() || !Adjacent(usr))
 		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
+	if((!iscarbon(usr)) || (isbrain(usr)))//Is humanoid, and is not a brain
 		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
 		return
 	if(src.anchored) //Object isn't anchored
@@ -752,7 +723,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4, can_move = FALSE)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -761,21 +732,38 @@
 	if(!delay && !tool_start_check(user, amount))
 		return
 
+	var/skill_bonus = 1
+
+	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
+	if(required_skills_override)
+		skill_bonus = apply_skill_bonus(user, 1, required_skills_override, skills_speed_bonus)
+	else if(required_skills) //default check for item
+		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
+
+
 	delay *= toolspeed
+	delay *= max(skill_bonus, 0.1)
+
+	if(!isnull(quality))
+		var/qual_mod = get_quality(quality)
+		if(qual_mod <= 0)
+			return
+
+		delay *= 1 / qual_mod
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
 
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
-		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
+		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks, target)
 
 		if(ismob(target))
 			if(!do_mob(user, target, delay, extra_checks = tool_check))
 				return
 
 		else
-			if(!do_after(user, delay, target=target, extra_checks = tool_check))
+			if(!do_after(user, delay, target=target, can_move = can_move, extra_checks = tool_check))
 				return
 	else
 		// Invoke the extra checks once, just in case.
@@ -783,7 +771,7 @@
 			return
 
 	// Use tool's fuel, stack sheets or charges if amount is set.
-	if(amount && !use(amount))
+	if(amount && !use(amount, user))
 		return
 
 	// Play tool sound at the end of tool usage,
@@ -818,14 +806,8 @@
 	return !used
 
 // Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
-/obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
-	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
-
-//This proc is executed when someone clicks the on-screen UI button. To make the UI button show, set the 'icon_action_button' to the icon_state of the image of the button in screen1_action.dmi
-//The default action is attack_self().
-//Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
-/obj/item/proc/ui_action_click()
-	attack_self(usr)
+/obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks, target)
+	return tool_use_check(user, amount, target) && (!extra_checks || extra_checks.Invoke())
 
 /obj/item/proc/IsReflect(def_zone, hol_dir, hit_dir) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return FALSE
@@ -856,7 +838,7 @@
 		to_chat(user, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
 		return
 
-	if(istype(M, /mob/living/carbon/xenomorph) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
+	if(isxeno(M) || isslime(M))//Aliens don't have eyes./N     slimes also don't have eyes!
 		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
 
@@ -866,14 +848,6 @@
 	M.log_combat(user, "eyestabbed with [name]")
 
 	add_fingerprint(user)
-	//if((CLUMSY in user.mutations) && prob(50))
-	//	M = user
-		/*
-		to_chat(M, "<span class='warning'>You stab yourself in the eye.</span>")
-		M.sdisabilities |= BLIND
-		M.weakened += 4
-		M.adjustBruteLoss(10)
-		*/
 	if(M != user)
 		visible_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", ignored_mobs = list(user, M))
 		to_chat(M, "<span class='warning'>[user] stabs you in the eye with [src]!</span>")
@@ -918,7 +892,8 @@
 		blood_overlay = null
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
-		G.transfer_blood = 0
+		G.dirt_transfers = 0
+	update_inv_mob()
 
 /obj/item/add_dirt_cover()
 	. = ..()
@@ -930,6 +905,7 @@
 	cut_overlay(blood_overlay)
 	blood_overlay.color = dirt_overlay.color
 	add_overlay(blood_overlay)
+	update_inv_mob()
 
 /obj/item/add_blood(mob/living/carbon/human/M)
 	if (!..())
@@ -938,6 +914,7 @@
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+	update_inv_mob() // if item on mob, update mob's icon too.
 	return 1 //we applied blood to the item
 
 /obj/item/proc/generate_blood_overlay()
@@ -964,14 +941,8 @@
 	set category = "Object"
 
 	var/obj/item/I = get_active_hand()
-	if(I && !I.abstract)
+	if(I && !(I.flags & ABSTRACT))
 		I.showoff(src)
-
-/obj/item/proc/update_inv_mob()
-	if(!slot_equipped || !ismob(loc))
-		return
-	var/mob/M = loc
-	M.update_inv_item(src)
 
 /obj/item/proc/extinguish()
 	return
@@ -1024,28 +995,93 @@
 	if(src != over)
 		remove_outline()
 
+/obj/item/be_thrown(mob/living/thrower, atom/target)
+	if(!canremove || flags & NODROP)
+		return null
+	return src
 
-/client/var/list/image/outlined_item = list()
-/obj/item/proc/apply_outline(color)
-	if(anchored || !usr.client.prefs.outline_enabled)
+/obj/item/airlock_crush_act()
+	var/qual_prying = get_quality(QUALITY_PRYING)
+	if(qual_prying <= 0)
 		return
-	if(!color)
-		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
-	if(usr.client.outlined_item[src])
+
+	var/chance = w_class / (qual_prying * (m_amt + 1))
+
+	if(prob(chance * 100))
+		qdel(src)
+
+/obj/item/proc/display_accessories()
+	return
+
+/obj/item/taken(mob/living/user, atom/fallback)
+	if(user.Adjacent(src) && user.put_in_hands(src))
+		return TRUE
+
+	return ..()
+
+/obj/item/proc/get_quality(quality)
+	if(!qualities)
+		return 0
+	return qualities[quality]
+
+/obj/item/proc/get_dye_type(w_color)
+	if(!dyed_type)
 		return
 
-	if(usr.client.outlined_item.len)
-		remove_outline()
+	var/list/dye_colors = global.dyed_item_types[dyed_type]
+	if(!dye_colors)
+		return
 
-	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
-	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	IMG.vis_contents += src
+	var/obj/item/clothing/dye_type = dye_colors[w_color]
+	if(!dye_type)
+		return
 
-	IMG.filters += filter(type = "outline", size = 1, color = color)
-	usr.client.images |= IMG
-	usr.client.outlined_item[src] = IMG
+	if(islist(dye_type))
+		dye_type = pick(dye_type)
 
+	return dye_type
 
-/obj/item/proc/remove_outline()
-	usr.client.images -= usr.client.outlined_item[src]
-	usr.client.outlined_item -= src
+/obj/item/proc/wash_act(w_color)
+	decontaminate()
+	wet = 0
+
+	var/obj/item/clothing/dye_type = get_dye_type(w_color)
+	if(!dye_type)
+		return
+
+	name = initial(dye_type.name)
+	icon_state = initial(dye_type.icon_state)
+	item_state = initial(dye_type.item_state)
+	desc = "The colors are a bit dodgy."
+
+/obj/item/attack_hulk(mob/living/user)
+	return FALSE
+
+/obj/item/burn()
+	var/turf/T = get_turf(src)
+	var/ash_type
+	if(w_class >= SIZE_BIG)
+		ash_type = /obj/effect/decal/cleanable/ash/large
+	else
+		ash_type = /obj/effect/decal/cleanable/ash
+	var/obj/effect/decal/cleanable/ash/A = new ash_type(T)
+	A.desc += "\nLooks like this used to be \an [name] some time ago."
+	..()
+
+// swap between world (small) and ui (big) icons when item changes location
+// feel free to override for items with complicated icon mechanics
+/obj/item/proc/update_world_icon()
+	if(!item_state_world)
+		return
+
+	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
+		// moving to inventory, restore icon (big inventory icon)
+		icon_state = item_state_inventory ? item_state_inventory : initial(icon_state)
+	else
+		// moving to world, change icon (small world icon)
+		icon_state = item_state_world
+
+/obj/item/CtrlShiftClick(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)

@@ -7,6 +7,7 @@
 	item_state = "backpack"
 	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
+	flags = HEAR_PASS_SAY
 
 /obj/item/weapon/pedalbag/verb/quick_empty()
 	set name = "Empty Prisoners"
@@ -25,7 +26,7 @@
 
 		if(ismob(A))
 			var/mob/M = A
-			M.status_flags ^= GODMODE
+			M.remove_status_flags(GODMODE)
 
 /obj/item/weapon/pedalbag/attack()
 	return
@@ -43,7 +44,7 @@
 	playsound(user, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
 	M.forceMove(src)
-	M.status_flags ^= GODMODE
+	M.add_status_flags(GODMODE)
 
 
 /obj/item/weapon/pedalbag/santabag
@@ -87,7 +88,7 @@
 
 		user.visible_message("<span class='notice'>\the [user] takes <span class='bold'>\a [A]</span> from \a [src]!</span>")
 
-		if (istype(A, /obj/item))
+		if (isitem(A))
 			user.put_in_hands(A)
 		else
 			A.forceMove(get_turf(user))

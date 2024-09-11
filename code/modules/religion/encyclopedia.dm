@@ -30,7 +30,7 @@
 	for(var/rite_type in all_rites)
 		var/datum/religion_rites/RR = new rite_type
 
-		if(!RR.desc || !RR.name || (RR.religion_type && !istype(src, RR.religion_type)))
+		if(!RR.desc || !RR.name || (RR.religion_type && !istype(religion, RR.religion_type)))
 			QDEL_NULL(RR)
 			continue
 

@@ -48,11 +48,11 @@
 #define SEE_BLIND 1
 
 /proc/is_wire_tool(obj/item/I)
-	if(ismultitool(I))
+	if(ispulsing(I))
 		return TRUE
-	if(iswirecutter(I))
+	if(iscutter(I))
 		return TRUE
-	if(istype(I, /obj/item/device/assembly/signaler))
+	if(issignaling(I))
 		return TRUE
 	return
 
@@ -77,8 +77,10 @@ var/global/list/wire_daltonism_colors = list()
 	var/window_x = 370
 	var/window_y = 470
 
+	var/required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
+
 	// All possible wires colors are here.
-	var/static/list/wire_colors = list("red", "blue", "green", "white", "orange", "brown", "gold", "gray", "cyan", "lime", "purple", "pink")
+	var/static/list/wire_colors = list("red", "blue", "green", "white", "orange", "brown", "gold", "grey", "cyan", "lime", "purple", "pink", "crimson", "magenta", "silver", "violet", "yellow")
 
 /datum/wires/New(atom/holder)
 	..()
@@ -258,20 +260,22 @@ var/global/list/wire_daltonism_colors = list()
 
 	var/mob/living/L = usr
 
-	if(!can_use(src) || !holder.can_mob_interact(L))
+	if(!can_use(src) || L.interact_prob_brain_damage(holder))
 		return
 	var/target_wire = params["wire"]
 	var/obj/item/I = L.get_active_hand()
+	if(!handle_fumbling(L, holder, SKILL_TASK_AVERAGE, required_skills, message_self = "<span class='notice'>You fumble around figuring out the wiring.</span>"))
+		return
 	switch(action)
 		if("cut")
-			if(I && iswirecutter(I))
-				cut_wire_color(target_wire)
+			if(I && iscutter(I))
+				cut_wire_color(target_wire, L)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
-			if(I && ismultitool(I))
+			if(I && ispulsing(I))
 				pulse_color(target_wire)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
@@ -284,7 +288,7 @@ var/global/list/wire_daltonism_colors = list()
 					L.put_in_hands(O)
 					. = TRUE
 			else
-				if(issignaler(I))
+				if(I && issignaling(I))
 					L.drop_from_inventory(I, holder)
 					attach_signaler(target_wire, I)
 				else
@@ -298,7 +302,7 @@ var/global/list/wire_daltonism_colors = list()
 /**
  * Called when wires cut/mended.
  */
-/datum/wires/proc/update_cut(index, mended)
+/datum/wires/proc/update_cut(index, mended, mob/user)
 	return
 
 /**
@@ -394,17 +398,17 @@ var/global/list/wire_daltonism_colors = list()
 //////////////////////////////
 // Cut Wire Colour/Index procs
 //////////////////////////////
-/datum/wires/proc/cut_wire_color(color)
+/datum/wires/proc/cut_wire_color(color, mob/user)
 	var/index = get_index_by_color(color)
-	cut_wire_index(index)
+	cut_wire_index(index, user)
 
-/datum/wires/proc/cut_wire_index(index)
+/datum/wires/proc/cut_wire_index(index, mob/user)
 	if(is_index_cut(index))
 		wires_status &= ~index
-		update_cut(index, TRUE)
+		update_cut(index, TRUE, user)
 	else
 		wires_status |= index
-		update_cut(index, FALSE)
+		update_cut(index, FALSE, user)
 
 /datum/wires/proc/random_cut()
 	var/r = rand(1, wires.len)
@@ -412,7 +416,8 @@ var/global/list/wire_daltonism_colors = list()
 
 /datum/wires/proc/cut_all()
 	for(var/i = 1; i < MAX_FLAG && i < (1 << wire_count); i += i)
-		cut_wire_index(i)
+		wires_status |= i
+		update_cut(i, FALSE)
 
 /datum/wires/proc/is_all_cut()
 	if(wires_status == (1 << wire_count) - 1)

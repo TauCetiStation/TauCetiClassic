@@ -42,6 +42,8 @@ field_generator power level display
 	var/list/obj/machinery/containment_field/fields
 	var/list/obj/machinery/field_generator/connected_gens
 
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
+
 
 /obj/machinery/field_generator/Destroy()
 	if(active != FG_OFFLINE)
@@ -90,6 +92,8 @@ field_generator power level display
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
 				return 1
 			else
+				if(!do_skill_checks(user))
+					return
 				user.visible_message(
 					"<span class='notice'>[user] turns on the [src].</span>",
 					"<span class='notice'>You turn on the [src].</span>",
@@ -105,7 +109,7 @@ field_generator power level display
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if(active != FG_OFFLINE)
 		to_chat(user, "<span class='red'>The [src] needs to be off.</span>")
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		switch(state)
 			if(FG_UNSECURED)
 				state = FG_SECURED
@@ -125,7 +129,7 @@ field_generator power level display
 				anchored = FALSE
 			if(FG_WELDED)
 				to_chat(user, "<span class='red'>The [src] needs to be unwelded from the floor.</span>")
-	else if(iswelder(W))
+	else if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)
@@ -136,7 +140,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
 						"<span class='notice'>You start to weld the [src] to the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if(WT.use_tool(src, user, 20, volume = 50))
+					if(WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
@@ -145,7 +149,7 @@ field_generator power level display
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",
 						"<span class='notice'>You start to cut the [src] free from the floor.</span>",
 						"<span class='notice'>You hear welding.</span>")
-					if (WT.use_tool(src, user, 20, volume = 50))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						state = FG_SECURED
 						to_chat(user, "<span class='notice'>You cut the [src] free from the floor.</span>")
 	else
@@ -161,11 +165,13 @@ field_generator power level display
 	else
 		..()
 
-/obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj)
-	if(Proj.flag != "bullet")
-		power += Proj.damage
-		update_icon()
-	return FALSE
+/obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj, def_zone)
+	switch(Proj.flag)
+		if(LASER, ENERGY)
+			power += Proj.damage
+			update_icon()
+			return
+	. = ..()
 
 /obj/machinery/field_generator/proc/turn_off()
 	active = FG_OFFLINE
@@ -241,10 +247,10 @@ field_generator power level display
 	if(state != FG_WELDED || !anchored)
 		turn_off()
 		return
-	addtimer(CALLBACK(src, .proc/setup_field, NORTH), 1)
-	addtimer(CALLBACK(src, .proc/setup_field, SOUTH), 2)
-	addtimer(CALLBACK(src, .proc/setup_field, EAST), 3)
-	addtimer(CALLBACK(src, .proc/setup_field, WEST), 4)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), NORTH), 1)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), SOUTH), 2)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), EAST), 3)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), WEST), 4)
 	active = FG_ONLINE
 
 /obj/machinery/field_generator/proc/setup_field(NSEW)
@@ -288,9 +294,8 @@ field_generator power level display
 		var/field_dir = get_dir(T, get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
 		if(!locate(/obj/machinery/containment_field) in T)
-			var/obj/machinery/containment_field/CF = new
+			var/obj/machinery/containment_field/CF = new(T)
 			CF.set_master(src, G)
-			CF.loc = T
 			CF.set_dir(field_dir)
 
 	connected_gens |= G
@@ -320,7 +325,7 @@ field_generator power level display
 	//This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
 	//singulo eats the evidence". It's not fool-proof but better than nothing.
 	//I want to avoid using global variables.
-	addtimer(CALLBACK(src, .proc/warn_admins), 1)
+	addtimer(CALLBACK(src, PROC_REF(warn_admins)), 1)
 
 /obj/machinery/field_generator/proc/warn_admins()
 	var/temp = TRUE //stops spam

@@ -15,7 +15,7 @@ CHANGING ICONS
 Several new procs have been added to the /icon datum to simplify working with icons. To use them,
 remember you first need to setup an /icon var like so:
 
-var/icon/my_icon = new('iconfile.dmi')
+var/global/icon/my_icon = new('iconfile.dmi')
 
 icon/ChangeOpacity(amount = 1)
     A very common operation in DM is to try to make an icon more or less transparent. Making an icon more
@@ -830,11 +830,13 @@ The _flatIcons list is a cache for generated icon files.
 	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
 	return flat_icon
 
-/proc/build_disappear_icon(atom/A)
+/proc/build_disappear_icon(atom/A, turn_angle = 0)
 	var/icon/disappear_icon = new(getFlatIcon(A))
 	var/W = disappear_icon.Width()
 	var/H = disappear_icon.Height()
 	var/icon/T = icon('icons/effects/effects.dmi',"disappear")
+	if(turn_angle)
+		T.Turn(turn_angle)
 	if(W != world.icon_size || H != world.icon_size)
 		T.Scale(W, H)
 	T.BecomeAlphaMask()

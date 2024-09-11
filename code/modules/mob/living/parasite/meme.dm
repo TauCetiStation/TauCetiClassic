@@ -19,6 +19,7 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 
 /mob/living/parasite
 	var/mob/living/carbon/host // the host that this parasite occupies
+	show_examine_log = FALSE
 
 /mob/living/parasite/Login()
 	..()

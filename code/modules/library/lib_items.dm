@@ -19,6 +19,9 @@
 	density = TRUE
 	opacity = 1
 
+	max_integrity = 200
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/bookcase/atom_init()
 	. = ..()
 	for(var/obj/item/I in loc)
@@ -39,6 +42,14 @@
 	else
 		..()
 
+/obj/structure/bookcase/deconstruct(disassembled)
+	for(var/obj/item/I as anything in contents)
+		I.forceMove(loc)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/wood(loc, 4)
+	..()
+
 /obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents
@@ -54,25 +65,21 @@
 
 /obj/structure/bookcase/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			for(var/obj/item/weapon/book/b in contents)
 				qdel(b)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			for(var/obj/item/weapon/book/b in contents)
-				if (prob(50)) b.loc = (get_turf(src))
-				else qdel(b)
-			qdel(src)
-			return
-		if(3.0)
-			if (prob(50))
-				for(var/obj/item/weapon/book/b in contents)
+				if(prob(50))
 					b.loc = (get_turf(src))
-				qdel(src)
-			return
-		else
-	return
+				else
+					qdel(b)
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				return
+			for(var/obj/item/weapon/book/b in contents)
+				b.loc = (get_turf(src))
+	qdel(src)
 
 /obj/structure/bookcase/update_icon()
 	if(contents.len < 5)
@@ -136,6 +143,18 @@
 	new /obj/item/weapon/book/manual/detective(src)
 	update_icon()
 
+/obj/structure/bookcase/skills
+	name = "Professional manuals"
+
+/obj/structure/bookcase/skills/atom_init()
+	. = ..()
+
+	for(var/type in subtypesof(/obj/item/weapon/book/skillbook))
+		new type(src)
+		new type(src)
+
+	update_icon()
+
 /*
  * Book
  */
@@ -145,6 +164,7 @@
 	force = 1.0
 	hitsound = list('sound/items/misc/book-slap.ogg')
 	icon_state ="book"
+	item_state_world = "book_world"
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_SMALL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
@@ -159,24 +179,40 @@
 	var/window_height
 	var/obj/item/store	//What's in the book?
 
+	var/free_space = MAX_BOOK_MESSAGE_LEN
+
 /obj/item/weapon/book/attack_self(mob/user)
 	if(carved)
-		if(store)
-			to_chat(user, "<span class='notice'>[store] falls out of [title]!</span>")
-			store.loc = get_turf(src.loc)
-			store = null
-			return
-		else
-			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
-			return
+		handle_carved(user)
+		return
 	if(src.dat)
-		var/datum/browser/popup = new(user, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
-		popup.set_content("<TT><I>Penned by [author].</I></TT> <BR>[dat]")
-		popup.open()
+		if(istype(src, /obj/item/weapon/book/manual/wiki)) // wiki books has own styling so no browser/popup
+			var/window_size
+			if(window_width && window_height)
+				window_size = "[window_width]x[window_height]"
+			//<TT><I>Penned by [author].</I></TT> <BR> // <- no place for "penned"
+			user << browse(dat, "window=book[window_size != null ? ";size=[window_size]" : ""]")
+		else
+			//var/datum/browser/popup = new(user, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
+			var/datum/browser/popup = new(user, "book", "Penned by [author].", window_width, window_height, ntheme = CSS_THEME_LIGHT)
+			popup.set_content(dat)
+			popup.open()
 
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 	else
-		to_chat(user, "This book is completely blank!")
+		if(!istype(src, /obj/item/weapon/book/skillbook))
+			to_chat(user, "This book is completely blank!")
+
+/obj/item/weapon/book/proc/handle_carved(mob/user)
+	if(!carved)
+		return
+
+	if(store)
+		to_chat(user, "<span class='notice'>[store] falls out of [title]!</span>")
+		store.loc = get_turf(src.loc)
+		store = null
+	else
+		to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(carved)
@@ -208,12 +244,13 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, MAX_BOOK_MESSAGE_LEN)
+				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, free_space)
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return
 				else
-					src.dat += content//infiniti books?
+					free_space -= length(content)
+					src.dat += content
 			if("Author")
 				var/newauthor = sanitize(input(usr, "Write the author's name:"), MAX_NAME_LEN)
 				if(!newauthor)
@@ -253,7 +290,7 @@
 							return
 					scanner.computer.inventory.Add(src)
 					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
-	else if(istype(I, /obj/item/weapon/kitchenknife) || iswirecutter(I))
+	else if(istype(I, /obj/item/weapon/kitchenknife) || iscutter(I))
 		if(carved)
 			return
 		if(user.is_busy(src))
@@ -270,6 +307,8 @@
 	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You open up the book and show it to [M]. </span>", \
 			"<span class='notice'> [user] opens up a book and shows it to [M]. </span>")
+		if(!length(dat))
+			return
 		var/datum/browser/popup = new(M, "book", null, window_width, window_height, ntheme = CSS_THEME_LIGHT)
 		popup.set_content("<TT><I>Penned by [author].</I></TT> <BR>[dat]")
 		popup.open()
@@ -305,9 +344,9 @@
 			modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 		else
 			modedesc = "ERROR!"
-	to_chat(user, " - Mode [mode] : [modedesc]")
+	var/msg = " - Mode [mode] : [modedesc]"
 	if(src.computer)
-		to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
+		msg += "<br><font color=green>Computer has been associated with this unit.</font>"
 	else
-		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
-	to_chat(user, "\n")
+		msg += "<br><font color=red>No associated computer found. Only local scans will function properly.</font>"
+	to_chat(user, "[msg]<br>")

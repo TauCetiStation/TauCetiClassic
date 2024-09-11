@@ -73,6 +73,8 @@
 #define COMPSTARTERLOAD 2800
 
 /obj/machinery/compressor/RefreshParts()
+	..()
+
 	var/E = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		E += M.rating
@@ -162,6 +164,8 @@
 		compressor.turbine = src
 
 /obj/machinery/power/turbine/RefreshParts()
+	..()
+
 	var/P = 0
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		P += C.rating

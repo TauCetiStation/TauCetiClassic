@@ -10,6 +10,7 @@ var/global/list/asset_datums = list()
 
 /datum/asset
 	var/_abstract = /datum/asset	//assets with this variable will not be loaded into the cache automatically when the game starts
+	var/cached_url_mappings
 
 /datum/asset/New()
 	global.asset_datums[type] = src
@@ -17,6 +18,12 @@ var/global/list/asset_datums = list()
 
 /datum/asset/proc/get_url_mappings()
 	return list()
+
+/datum/asset/proc/get_serialized_url_mappings()
+	if (isnull(cached_url_mappings))
+		cached_url_mappings = TGUI_CREATE_MESSAGE("asset/mappings", get_url_mappings())
+
+	return cached_url_mappings
 
 /datum/asset/proc/register()
 	return
@@ -81,6 +88,7 @@ var/global/list/asset_datums = list()
 	var/name
 	var/list/sizes = list()    // "32x32" -> list(sprite count, icon/normal, icon/stripped)
 	var/list/sprites = list()  // "foo_bar" -> list("32x32", sprite index)
+	var/list/items_to_clear = list()
 
 /datum/asset/spritesheet/register()
 	if(!name)
@@ -95,7 +103,7 @@ var/global/list/asset_datums = list()
 	text2file(generate_css(), fname)
 	register_asset(res_name, fcopy_rsc(fname))
 	fdel(fname)
-
+	QDEL_LIST(items_to_clear)
 
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)

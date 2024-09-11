@@ -19,6 +19,32 @@
 	origin_tech = "biotech=2;programming=2"
 	device_type = /obj/item/device/healthanalyzer
 
+/obj/item/rig_module/device/analyzer
+	name = "hardsuit analyzer module"
+	desc = "A hardsuit-mounted atmospherics and anomalies scanner."
+	icon_state = "analyzer"
+	interface_name = "Analyzer"
+	interface_desc = "Shows anomalies frequencies and reports current gas levels when used."
+	use_power_cost = 25
+	usable = TRUE
+	engage_string = "Analyze air"
+	origin_tech = "magnets=1;programming=2;engineering=1"
+	device_type = /obj/item/device/analyzer/mounted
+
+/obj/item/device/analyzer/mounted
+	advanced_mode = TRUE
+
+/obj/item/rig_module/device/science_tool
+	name = "hardsuit science tool module"
+	desc = "A hardsuit-mounted tool for gathering research points."
+	icon_state = "scitool"
+	interface_name = "Science tool"
+	interface_desc = "Used to collect research data from different sources."
+	use_power_cost = 25
+	selectable = TRUE
+	origin_tech = "engineering=1;programming=1;biotech=1"
+	device_type = /obj/item/device/science_tool
+
 /obj/item/rig_module/device/drill
 	name = "hardsuit drill mount"
 	desc = "A very heavy diamond-tipped drill."
@@ -27,6 +53,7 @@
 	interface_name = "mounted drill"
 	interface_desc = "A diamond-tipped industrial drill."
 	use_power_cost = 100 // normal drills use 15 energy, we mine 3 turfs at a time
+	usable = TRUE // Allow mode switching
 	origin_tech = "materials=5;powerstorage=3;engineering=3;programming=2"
 	device_type = /obj/item/weapon/pickaxe/drill/jackhammer // this one doesn't use energy
 
@@ -37,7 +64,7 @@
 	interface_name = "Alden-Saraspova counter"
 	interface_desc = "An exotic particle detector commonly used by xenoarchaeologists."
 	engage_string = "Begin Scan"
-	use_power_cost = 200
+	use_power_cost = 50
 	usable = TRUE
 	selectable = FALSE
 	device_type = /obj/item/device/ano_scanner
@@ -56,7 +83,7 @@
 	device_type = /obj/item/weapon/mining_scanner
 	origin_tech = "magnets=2;programming=2;engineering=2"
 
-/obj/item/weapon/rcd/mounted/useResource(amount, mob/user)
+/obj/item/weapon/rcd/mounted/use(amount, mob/user)
 	var/cost = amount*70 //Arbitary number that hopefully gives it as many uses as a plain RCD.
 	if(istype(loc,/obj/item/rig_module))
 		var/obj/item/rig_module/module = loc
@@ -66,7 +93,7 @@
 				return TRUE
 	return FALSE
 
-/obj/item/weapon/rcd/mounted/checkResource(amount, mob/user)
+/obj/item/weapon/rcd/mounted/tool_start_check(mob/user, amount)
 	var/cost = amount*70
 	if(istype(loc,/obj/item/rig_module))
 		var/obj/item/rig_module/module = loc
@@ -116,14 +143,12 @@
 		return TRUE
 
 	var/turf/T = get_turf(target)
-	if(need_adjacent && istype(T) && !T.Adjacent(get_turf(src)))
-		return FALSE
-
-	var/resolved
 	if(need_adjacent) // so we don't telepathically bash the target
-		resolved = target.attackby(device,holder.wearer)
-	if(!resolved && device && target)
-		device.afterattack(target,holder.wearer,1)
+		if(istype(T) && !T.Adjacent(get_turf(src)))
+			return FALSE
+		device.melee_attack_chain(target, holder.wearer)
+	else
+		device.afterattack(target, holder.wearer, FALSE)
 	return TRUE
 
 /obj/item/rig_module/chem_dispenser
@@ -237,7 +262,7 @@
 
 	var/mob/living/carbon/target_mob
 	if(target)
-		if(istype(target,/mob/living/carbon))
+		if(iscarbon(target))
 			target_mob = target
 		else
 			return FALSE
@@ -330,9 +355,58 @@
 	if (temp_adj < 0.5)
 		return passive_power_cost
 
-	H.bodytemperature -= temp_adj
+	H.adjust_bodytemperature(-temp_adj)
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
+
+/obj/item/rig_module/cooling_unit/advanced
+	name = "advanced hardsuit mounted cooling unit"
+	charge_consumption = 20
+	interface_name = "advanced mounted cooling unit"
+
+/obj/item/rig_module/emp_shield
+	name = "hardsuit EMP shield"
+	icon_state = "powersink"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 5 EMPs."
+	origin_tech = "engineering=2;magnets=2"
+	interface_name = "EMP shield"
+	var/uses = 5
+
+/obj/item/rig_module/emp_shield/adv
+	name = "hardsuit advanced EMP shield"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 20 EMPs."
+	origin_tech = "engineering=2;magnets=2;bluespace=3;"
+	uses = 20
+
+/obj/item/rig_module/teleporter_stabilizer
+	name = "hardsuit teleporter stabilizer"
+	icon_state = "scanner"
+	origin_tech = "engineering=3;programming=3;bluespace=2;"
+	interface_name = "mounted wormhole stabilizer"
+	interface_desc = "Special device to stabilize bluespace interferences occuring during teleportation."
+	passive_power_cost = 3
+	use_power_cost = 1500
+
+/obj/item/rig_module/teleporter_stabilizer/proc/calculate_cost(dangerous_coeff)
+	var/cost = use_power_cost
+	if(damage > MODULE_NO_DAMAGE)
+		cost *= 1.25
+	return cost * dangerous_coeff
+
+/obj/item/rig_module/teleporter_stabilizer/proc/base_check()
+	var/mob/living/carbon/human/H = holder.wearer
+	if(!H || damage >= MODULE_DESTROYED)
+		return FALSE
+	return TRUE
+
+/obj/item/rig_module/teleporter_stabilizer/proc/stabilize_teleportation(dangerous_coeff = 1)
+	if(!base_check())
+		return FALSE
+	var/cost = calculate_cost(dangerous_coeff)
+	if(holder.try_use(holder.wearer, cost, use_unconcious = TRUE, use_stunned = TRUE))
+		to_chat(holder.wearer, "<span class='notice'>Teleporter stabilization system activated. Cell charge used: [cost].</span>")
+		return TRUE
+	return FALSE
 
 /obj/item/rig_module/selfrepair
 	name = "hardsuit self-repair module"
@@ -421,6 +495,67 @@
 
 	return FALSE
 
+/obj/item/rig_module/selfrepair/adv
+	name = "hardsuit advanced self-repair module"
+
+/obj/item/rig_module/selfrepair/adv/process_module()
+	if(!active)
+		return passive_power_cost
+
+	var/mob/living/carbon/human/H = holder.wearer
+	var/obj/item/organ/external/DBP
+
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.is_robotic())
+			if(BP.brute_dam)
+				DBP = BP
+			else if(BP.burn_dam)
+				DBP = BP
+
+	if(!holder.brute_damage && !holder.burn_damage && !DBP)
+		deactivate()
+		to_chat(H, "<span class='notice'>Self-repair is completed</span>")
+		return passive_power_cost
+
+	var/datum/rig_charge/charge = charges["metal"]
+
+	if(!charge)
+		deactivate()
+		return FALSE
+
+	active_power_cost = passive_power_cost
+	if(holder.brute_damage && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+
+		charge.charges -= chargeuse
+		holder.repair_breaches(BRUTE, chargeuse, H, stop_messages = TRUE)
+
+		active_power_cost = chargeuse * 150
+	else if(holder.burn_damage && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+
+		charge.charges -= chargeuse
+		holder.repair_breaches(BURN, chargeuse, H, stop_messages = TRUE)
+
+		active_power_cost = chargeuse * 150
+	else if(DBP?.brute_dam && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+		DBP.heal_damage(10, 0, 0, 1)
+		charge.charges -= chargeuse
+
+		active_power_cost = chargeuse * 200
+	else if(DBP?.burn_dam && charge.charges > 0)
+		var/chargeuse = min(charge.charges, 2)
+		DBP.heal_damage(0, 10, 0, 1)
+		charge.charges -= chargeuse
+
+		active_power_cost = chargeuse * 200
+	else
+		deactivate()
+		to_chat(H, "<span class='danger'>Not enough materials to continue self-repair</span>")
+
+	return active_power_cost
+
 /obj/item/rig_module/med_teleport
 	name = "hardsuit medical teleport system"
 	origin_tech = "programming=2;materials=2;bluespace=1"
@@ -496,7 +631,7 @@
 	if(damage == MODULE_DAMAGED && prob(2))
 		if(holder.wearer)
 			to_chat(holder.wearer, "<span class='warning'>Your damaged [name] irradiates you</span>")
-			holder.wearer.apply_effect(rand(5, 25), IRRADIATE, 0)
+			irradiate_one_mob(holder.wearer, rand(5, 25))
 
 	if(damage >= MODULE_DESTROYED)
 		if(!unstable)
@@ -508,7 +643,7 @@
 			else
 				holder.visible_message("<span class='warning'>The nuclear reactor inside [holder] is gloving red and looks very unstable</span>")
 			unstable = TRUE
-			addtimer(CALLBACK(src, .proc/boom), rand(60 SECONDS, 120 SECONDS))
+			addtimer(CALLBACK(src, PROC_REF(boom)), rand(60 SECONDS, 120 SECONDS))
 			light_color = LIGHT_COLOR_FLARE
 			set_light(5)
 
@@ -521,6 +656,46 @@
 		if(holder)
 			holder.installed_modules -= src
 		qdel(src)
+
+/obj/item/rig_module/mounted_relay
+	name = "hardsuit mounted relay module"
+	desc = "Can relay radio signals from other sectors"
+	origin_tech = "programming=6;engineering=6;bluespace=6"
+	interface_name = "portable radio relay"
+	interface_desc = "Can transmit messages to other  sectors as well as receive. Consumes a lot of energy when active."
+	icon_state = "relay"
+	suit_overlay = "mounted-relay"
+	toggleable = TRUE
+	show_toggle_button = TRUE
+	module_cooldown = 0
+	activate_string = "Activate radio relay"
+	deactivate_string = "Deactivate radio relay"
+	active_power_cost = 50
+
+	var/relay_type = /obj/machinery/telecomms/relay/preset/portable
+	var/obj/machinery/telecomms/relay
+
+/obj/item/rig_module/mounted_relay/atom_init()
+	. = ..()
+	relay = new relay_type(src)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/rig_module/mounted_relay/atom_init_late()
+	for(var/obj/machinery/telecomms/T in telecomms_list)
+		if(istype(T, /obj/machinery/telecomms/hub))
+			T.links |= relay
+			relay.links |= T
+
+/obj/item/rig_module/mounted_relay/process_module()
+	if(!active)
+		relay.on = FALSE
+		return passive_power_cost
+
+	var/mob/living/carbon/human/H = holder.wearer
+	relay.on = TRUE
+	relay.listening_level = H.z
+
+	return active_power_cost
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/mounted
 	volume = 400
@@ -555,7 +730,7 @@
 /obj/item/rig_module/device/extinguisher/engage(atom/target)
 	. = ..()
 	if(device)
-		addtimer(CALLBACK(src, .proc/update_foam_amount), 5) // because extinguisher uses spawns
+		addtimer(CALLBACK(src, PROC_REF(update_foam_amount)), 5) // because extinguisher uses spawns
 
 /obj/item/rig_module/device/extinguisher/proc/update_foam_amount()
 	if(device)
@@ -606,7 +781,7 @@
 
 	charges["foaming agent"].charges = max(charges["foaming agent"].charges - per_use, 0)
 	playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
-	INVOKE_ASYNC(src, .proc/spray_at, T)
+	INVOKE_ASYNC(src, PROC_REF(spray_at), T)
 
 	return TRUE
 

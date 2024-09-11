@@ -1,0 +1,129 @@
+
+	<div class="item">
+		<div class="itemLabelNarrow">
+			 <b>Functions</b>:
+        </div>
+        <div class="itemContent">
+			{{if data.mode != 1}} {{:helper.link('Return', 'arrowreturn-1-w', {'choice' : "Return"}, null, 'fixedLeft')}} {{/if}}
+		</div>
+		<div class="floatRight">
+			<span class="average">{{:data.stationTime}}&emsp;{{:data.securityLevel}}</span>
+		</div>
+	</div>
+	<br>
+	{{if data.mode == 1}} <!-- Online Shop -->
+        <div class="item">
+            <center><H2><span class="cargo">ГрузТорг</span></H2> <small><I>Также в КПК!</I></small></center>
+			{{if data.no_cargonauts}}
+				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+			{{/if}}
+			<span class="fxdLft"><b>Баланс кошелька отдела:</b> <span class="good">{{:data.money}}$</span></span>
+			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
+        </div>
+		<div class="item">
+			<table class="shop" style="width: 100%;"><tbody>
+			<tr><th colspan="7" class="cargo" style="padding: 5px; font-size: medium;">Каталог</th></tr>
+		    {{for data.categories}}
+				<td style="padding: 0px;">{{:helper.link('<span class="good">'+value.name+'</span> (<span class="bad">'+value.amount+'</span>)', null, {'choice' : "Shop_Category", 'categ' : value.name}, null, 'fxdLft')}}</td>
+			{{/for}}
+			</tbody></table>
+		</div>
+		<center><table class="shop" style="width: 100%;"><tbody>
+		<tr><th colspan="4" class="cargo" style="padding: 5px; font-size: medium;">Новинки</th></tr>
+		{{for data.latest_lots}}
+			{{if value}}
+				<tr><th colspan="4" class="cargo">{{:value.name}}</th></tr>
+				<tr><td rowspan="2">{{:value.icon}}<br></td>
+				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
+				<td><B>Продавец: </B><SMALL><I>{{:value.seller}}</I></SMALL></td>
+				<td>{{:helper.link('Заказ', 'tag', {'choice' : "Shop_Order", 'order_item' : value.number}, null, 'floatRight')}}</td></tr>
+				<tr><td colspan="3"><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
+			{{/if}}
+		{{empty}}
+			<tr><td><center><H4>Нет новинок</H4></center></td></tr>
+        {{/for}}
+		</tbody></table></center>
+		<div class="item">
+			<center><H3><span class="cargo">Заказы и Предложения</span></H3></center>
+			{{:helper.link('Добавить новый запрос', 'plusthick', {'choice' : "Shop_Add_Order_or_Offer"}, null, 'fixedLeftWider')}}<br>
+			<div class="item">
+				{{for data.orders_and_offers}}
+					{{if value}}
+						<div class="fxdLft">
+						<table class="shop"><tbody>
+							<tr><th colspan="4" class="cargo"><B>Имя: </B><SMALL><I>{{:value.name}}</I></SMALL></th></tr>
+							<tr><td><SMALL><I>{{:value.description}} | {{:value.time}}</I></SMALL></td></tr>
+						</tbody></table>
+						</div>
+					{{/if}}
+				{{/for}}
+			</div>
+        </div>
+	{{else data.mode == 11}} <!-- Online Shop Item -->
+        <div class="item">
+            <center><H2><span class="cargo">ГрузТорг</span></H2> <small><I>Также в КПК!</I></small></center>
+			{{if data.no_cargonauts}}
+				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+			{{/if}}
+			<span class="fxdLft"><b>Баланс кошелька отдела:</b> <span class="good">{{:data.money}}$</span></span>
+			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
+        </div>
+		<div class="item">
+			<table class="shop" style="width: 100%;"><tbody>
+			<tr><th colspan="7" class="cargo" style="padding: 5px; font-size: medium;">Каталог</th></tr>
+		    {{for data.categories}}
+				<td style="padding: 0px;">{{:helper.link('<span class="good">'+value.name+'</span> (<span class="bad">'+value.amount+'</span>)', null, {'choice' : "Shop_Category", 'categ' : value.name}, null, 'fxdLft')}}</td>
+			{{/for}}
+			</tbody></table>
+		</div>
+		<center><table class="shop" style="width: 100%;"><tbody>
+		<tr><th colspan="4" class="cargo" style="padding: 5px; font-size: medium;">
+			<span class="fixedLeftWidest">{{:data.category}}</span>
+			<span style="font-size:small;">{{:helper.link('20', null, {'choice' : "Shop_Change_Per_page", 'shop_per_page' : "20"}, null, 'fxdRght')}}
+			{{:helper.link('15', null, {'choice' : "Shop_Change_Per_page", 'shop_per_page' : "15"}, null, 'fxdRght')}}
+			{{:helper.link('10', null, {'choice' : "Shop_Change_Per_page", 'shop_per_page' : "10"}, null, 'fxdRght')}}
+			{{:helper.link('5', null, {'choice' : "Shop_Change_Per_page", 'shop_per_page' : "5"}, null, 'fxdRght')}}
+			<span class="floatRight">Показывать по:   </span></span>
+		</th></tr>
+		{{for data.shop_lots}}
+				<tr><th colspan="4" class="cargo">{{:value.name}}</th></tr>
+				<tr><td rowspan="2">{{:value.icon}}<br></td>
+				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
+				<td><B>Продавец: </B><SMALL><I>{{:value.seller}}</I></SMALL></td>
+				<td>{{:helper.link('Заказ', 'tag', {'choice' : "Shop_Order", 'order_item' : value.number}, null, 'floatRight')}}</td></tr>
+				<tr><td colspan="3"><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
+		{{empty}}
+			<tr><td><center><H4>Нет предметов в наличии</H4></center></td></tr>
+        {{/for}}
+		</tbody></table></center>
+		<center><table class="shop" style="width: 100%;"><tbody>
+			<tr><th class="cargo">{{:helper.link('пред.', 'arrow-1-w', {'choice' : "Shop_Change_Page", 'shop_change_page' : "previous"}, null, 'arrow')}}<span class="arrow"><center>{{:data.category_shop_page}}</center></span>{{:helper.link('след.', 'arrow-1-e', {'choice' : "Shop_Change_Page", 'shop_change_page' : "next"}, null, 'arrow')}}</th></tr>
+		</tbody></table></center>
+
+	{{else data.mode == 12}} <!-- Online Shop Cart -->
+		<div class="item">
+            <center><H2><span class="cargo">ГрузТорг</span></H2> <small><I>Также в КПК!</I></small></center>
+			{{if data.no_cargonauts}}
+				<div class="notice">На смене нет активных грузчиков. Никто не сможет обработать ваш заказ.</div>
+			{{/if}}
+			<span class="fxdLft"><b>Баланс кошелька отдела:</b> <span class="good">{{:data.money}}$</span></span>
+			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
+        </div>
+		<center><table class="shop" style="width: 100%;"><tbody>
+		<tr><th colspan="5" class="cargo" style="padding: 5px; font-size: medium;">Корзина заказов:</th></tr>
+		{{for data.shopping_cart}}
+			{{if !value.delivered}}
+				<tr><th colspan="5" class="cargo">{{:value.name}}  №{{:value.number}}</th></tr>
+				<tr><td rowspan="2">{{:value.icon}}<br></td>
+				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
+				<td><B>Продавец: </B><SMALL><I>{{:value.seller}}</I></SMALL></td>
+                <td><B>Локация: </B>{{:value.area}}</td>
+				<td>{{:helper.link('Доставлено', 'check', {'choice' : "Shop_Mark_As_Delivered", 'delivered_item' : value.number}, null, 'floatRight')}}</td></tr>
+				<tr><td colspan="4"><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
+
+			{{/if}}
+		{{empty}}
+			<tr><td><center><H4>Нет предметов в корзине</H4></center></td></tr>
+        {{/for}}
+		</tbody></table></center>
+    {{/if}}

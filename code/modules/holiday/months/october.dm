@@ -18,6 +18,15 @@
 	end_day = 2
 	end_month = NOVEMBER
 
+	staffwho_group_name = list(
+		SW_ADMINS     = "EvilAdmins",
+		SW_MENTORS    = "Tikvyaks",
+		SW_XENOVISORS = "Monstervisors",
+		SW_DEVELOPERS = "Skeletons",
+	)
+	staffwho_prefixs = list("Gory", "Supernatural", "Ominous", "Wicked", "Twisted", "Creepy", "Haunted", "Unsettling", "Chilling", "Eerie", "Mysterious", "Otherworldly", "Spookish", "Spooky", "Petrifying", "Scary", "Skeletal")
+	staffwho_no_staff = "No monsters in town"
+
 /datum/holiday/halloween/greet()
 	return "Have a spooky Halloween!"
 

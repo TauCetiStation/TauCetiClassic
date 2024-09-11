@@ -39,13 +39,32 @@
 /mob/living/simple_animal/hostile/examine(mob/user)
 	..()
 	if(stat == DEAD)
-		to_chat(user, "<span class='danger'>Appears to be dead.</span>")
+		to_chat(user, "<span class='danger'>Кажется, мертв.</span>")
 	else if(health <= maxHealth * 0.2)
-		to_chat(user, "<span class='danger'>Appears to be heavily wounded.</span>")
+		to_chat(user, "<span class='danger'>Кажется, он сильно ранен.</span>")
 	else if(health <= maxHealth * 0.6)
-		to_chat(user, "<span class='warning'>Appears to be wounded.</span>")
+		to_chat(user, "<span class='warning'>Похоже, ранен.</span>")
 	else if(health <= maxHealth * 0.9)
-		to_chat(user, "<span class='notice'>Appears to be slightly wounded.</span>")
+		to_chat(user, "<span class='notice'>Виднеется пара царапин.</span>")
+
+/mob/living/simple_animal/hostile/proc/handle_combat_ai()
+	switch(stance)
+		if(HOSTILE_STANCE_IDLE)
+			if(environment_smash)
+				EscapeConfinement()
+			var/new_target = FindTarget()
+			GiveTarget(new_target)
+
+		if(HOSTILE_STANCE_ATTACK)
+			MoveToTarget()
+			DestroySurroundings()
+
+		if(HOSTILE_STANCE_ATTACKING)
+			AttackTarget()
+			DestroySurroundings()
+
+	if(ranged)
+		ranged_cooldown--
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
@@ -53,26 +72,18 @@
 		walk(src, 0)
 		return 0
 	if(client)
-		return 0
-
-	if(!stat)
-		switch(stance)
-			if(HOSTILE_STANCE_IDLE)
-				if(environment_smash)
-					EscapeConfinement()
-				var/new_target = FindTarget()
-				GiveTarget(new_target)
-
-			if(HOSTILE_STANCE_ATTACK)
-				MoveToTarget()
-				DestroySurroundings()
-
-			if(HOSTILE_STANCE_ATTACKING)
-				AttackTarget()
-				DestroySurroundings()
-
+		if(target)
+			LoseTarget()
 		if(ranged)
 			ranged_cooldown--
+		return
+
+	if(stat == CONSCIOUS)
+		handle_combat_ai()
+
+//Check the ability to attack
+/mob/living/simple_animal/hostile/proc/allowAttackTarget()
+	return TRUE
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
@@ -80,7 +91,7 @@
 	if(search_objects)
 		var/list/Objects = oview(vision_range, src)
 		L += Objects
-	else
+	else if(SSchunks.has_enemy_faction(src, vision_range))
 		var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
 		L += Mobs
 		for(var/obj/mecha/M in range(vision_range, src))
@@ -131,6 +142,8 @@
 			return FALSE
 		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
 			return FALSE
+		if(!allowAttackTarget(L))
+			return FALSE
 		return TRUE
 	if(isobj(the_target))
 		if(the_target.type in wanted_objects)
@@ -149,6 +162,12 @@
 		stance = HOSTILE_STANCE_ATTACK
 	return
 
+/mob/living/simple_animal/hostile/proc/Retreat(target_distance)
+	if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
+		walk_away(src,target,retreat_distance,move_to_delay)
+	else
+		Goto(target, move_to_delay, minimum_distance)//Otherwise, get to our minimum distance so we chase them
+
 /mob/living/simple_animal/hostile/proc/MoveToTarget()//Step 5, handle movement between us and our target
 	stop_automated_movement = TRUE
 	if(!target || !CanAttack(target))
@@ -160,14 +179,11 @@
 			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
 		if(canmove && retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
-			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
-				walk_away(src,target,retreat_distance,move_to_delay)
-			else
-				Goto(target, move_to_delay, minimum_distance)//Otherwise, get to our minimum distance so we chase them
+			Retreat(target_distance)
 		else if(canmove)
 			Goto(target, move_to_delay, minimum_distance)
-		if(isturf(loc) && target.Adjacent(src))	//If they're next to us, attack
-			AttackingTarget()
+		if(isturf(loc) && IsMeleeAttackReachable(target))	//If they're next to us, attack
+			UnarmedAttack(target)
 		return
 	if(canmove && target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
 		if(FindHidden(target) && environment_smash)//Check if he tried to hide in something to lose us
@@ -183,9 +199,12 @@
 /mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
 	walk_to(src, target, minimum_distance, delay)
 
+/mob/living/simple_animal/hostile/proc/IsMeleeAttackReachable(atom/target)
+	return target.Adjacent(src)
+
 /mob/living/simple_animal/hostile/adjustBruteLoss(damage)
 	..()
-	if(!stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
+	if(stat == CONSCIOUS && search_objects < 3)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
 			target = null
@@ -207,13 +226,13 @@
 	if(!(target in ListTargets()))
 		LostTarget()
 		return 0
-	if(isturf(loc) && target.Adjacent(src))
-		AttackingTarget()
+	if(isturf(loc) && IsMeleeAttackReachable(target))
+		UnarmedAttack(target)
 		return 1
 
-/mob/living/simple_animal/hostile/proc/AttackingTarget()
-	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
-	target.attack_animal(src)
+/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, A)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
@@ -241,43 +260,41 @@
 	..()
 	walk(src, 0)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(the_target)
-	var/target = the_target
+/mob/living/simple_animal/hostile/RangedAttack(atom/A, params)
+	. = ..()
+	if(ranged && ranged_cooldown <= 0)
+		OpenFire(A)
+
+/mob/living/simple_animal/hostile/proc/OpenFire(target)
 	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
 
-	INVOKE_ASYNC(src, .proc/start_shoot, target)
+	INVOKE_ASYNC(src, PROC_REF(start_shoot), target)
 
 	ranged_cooldown = ranged_cooldown_cap
 
 /mob/living/simple_animal/hostile/proc/start_shoot(the_target)
-	var/tturf
 	for(var/i in 1 to amount_shoot)
-		tturf = get_turf(the_target) // need for refresh target location between shoots
-		Shoot(tturf, src.loc, src)
+		Shoot(the_target, loc, src)
 		if(casingtype)
 			new casingtype(get_turf(src))
 		sleep(4)
 
-/mob/living/simple_animal/hostile/proc/Shoot(target, start, user, bullet = 0)
+/mob/living/simple_animal/hostile/proc/Shoot(atom/target, atom/start, mob/user, bullet = 0)
 	if(target == start)
 		return
 
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_SHOOT, target)
 
-	var/obj/item/projectile/A = new projectiletype(user:loc)
+	var/obj/item/projectile/A = new projectiletype(user.loc)
 	playsound(user, projectilesound, VOL_EFFECTS_MASTER)
 	if(!A)
 		return
 
-	if (!istype(target, /turf))
-		qdel(A)
-		return
-
 	A.current = target
 	A.starting = get_turf(src)
-	A.original = get_turf(target)
-	A.yo = target:y - start:y
-	A.xo = target:x - start:x
+	A.original = target
+	A.yo = target.y - start.y
+	A.xo = target.x - start.x
 	spawn(0)
 		A.process()
 
@@ -286,17 +303,26 @@
 		EscapeConfinement()
 		for(var/dir in cardinal) // North, South, East, West
 			var/turf/T = get_step(src, dir)
-			if(istype(T, /turf/simulated/wall) || istype(T, /turf/simulated/mineral))
+			if(iswallturf(T) || istype(T, /turf/simulated/mineral))
 				if(T.Adjacent(src))
 					T.attack_animal(src)
-			for(var/obj/structure/window/W in get_step(src, dir))
+			for(var/obj/structure/grille/G in T)
+				G.attack_animal(src)
+				return
+			for(var/obj/structure/windowsill/WS in T)
+				WS.attack_animal(src)
+				return
+			for(var/obj/structure/window/fulltile/W in T)
+				W.attack_animal(src)
+				return
+			for(var/obj/structure/window/thin/W in T)
 				if(W.dir == reverse_dir[dir]) // So that windows get smashed in the right order
 					W.attack_animal(src)
 					return
 			for(var/atom/A in T)
 				if(!A.Adjacent(src))
 					continue
-				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack) || istype(A, /obj/machinery/door/window))
+				if(istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/machinery/door/window))
 					A.attack_animal(src)
 				if(istype(A, /obj/item/tape))
 					var/obj/item/tape/Tp = A

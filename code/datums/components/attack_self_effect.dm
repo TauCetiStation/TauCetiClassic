@@ -35,10 +35,10 @@
 	can_callback = _can_callback
 	outline_color = _outline_color
 
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/do_effect)
-	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), .proc/equipped_effect)
-	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped_effect)
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/del_effect)
+	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), PROC_REF(do_effect))
+	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), PROC_REF(equipped_effect))
+	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), PROC_REF(dropped_effect))
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), PROC_REF(del_effect))
 
 	var/datum/mechanic_tip/self_effect/effect_tip = new(src, effect_type)
 
@@ -59,10 +59,10 @@
 	if(isitem(A))
 		if(user.put_in_inactive_hand(A))
 			can_spawn_effect = FALSE
-			can_spawn_effect_timer = addtimer(CALLBACK(src, .proc/ready_create_effect), recharge_time, TIMER_STOPPABLE)
+			can_spawn_effect_timer = addtimer(CALLBACK(src, PROC_REF(ready_create_effect)), recharge_time, TIMER_STOPPABLE)
 			effect = A
 			if(time_to_del)
-				addtimer(CALLBACK(src, .proc/scatter_effect), time_to_del)
+				addtimer(CALLBACK(src, PROC_REF(scatter_effect)), time_to_del)
 			remove_outline()
 		else
 			qdel(A)
@@ -93,7 +93,7 @@
 	del_effect()
 	if(can_spawn_effect_timer)
 		deltimer(can_spawn_effect_timer)
-	can_spawn_effect_timer = addtimer(CALLBACK(src, .proc/ready_create_effect), recharge_time_after_del, TIMER_STOPPABLE)
+	can_spawn_effect_timer = addtimer(CALLBACK(src, PROC_REF(ready_create_effect)), recharge_time_after_del, TIMER_STOPPABLE)
 
 /datum/component/self_effect/proc/remove_outline()
 	if(outline_color)

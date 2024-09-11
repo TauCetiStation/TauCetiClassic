@@ -60,7 +60,7 @@
 		broke_hud()
 		if(glasses_user)
 			enable_hud(glasses_user)
-		addtimer(CALLBACK(src, .proc/fix_hud), (90 SECONDS) / severity)
+		addtimer(CALLBACK(src, PROC_REF(fix_hud)), (90 SECONDS) / severity)
 
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
@@ -90,10 +90,18 @@
 	icon_state = "diagnostichud"
 	item_state = "diagnostichud"
 	origin_tech = "engineering=2;programming=2"
-	action_button_name = "Toggle Goggles"
 	toggleable = 1
-	sightglassesmod = "sepia"
+	sightglassesmod = "yellow"
 	hud_types = list(DATA_HUD_DIAGNOSTIC)
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_goggles)
+
+/obj/item/clothing/glasses/hud/diagnostic/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot == SLOT_GLASSES)
+		to_chat(user, "<span class='info'>Вы можете получать очки исследований, проводя диагностику изобретений, связанных с роботами. Осматривайте объекты в этих очках.</span>")
+
+/datum/action/item_action/hands_free/toggle_goggles
+	name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/hud/security/jensenshades
 	name = "augmented shades"
@@ -115,7 +123,7 @@
 		broke_hud()
 		if(glasses_user)
 			enable_hud(glasses_user)
-		addtimer(CALLBACK(src, .proc/fix_hud), (90 SECONDS) / severity)
+		addtimer(CALLBACK(src, PROC_REF(fix_hud)), (90 SECONDS) / severity)
 
 /obj/item/clothing/glasses/sunglasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
@@ -137,3 +145,25 @@
 	icon_state = "secmedhud"
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY)
+
+/obj/item/clothing/glasses/sunglasses/hud/med
+	name = "MEDHUD sunglasses"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+	icon_state = "sunmedhud"
+	body_parts_covered = 0
+	hud_types = list(DATA_HUD_MEDICAL)
+
+/obj/item/device/hud_calibrator
+	name = "Рекалибратор дисплея"
+	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "motion2"
+
+/obj/item/clothing/glasses/attackby(obj/item/device/hud_calibrator/W, mob/living/user)
+	if(!istype(W))
+		return ..()
+	if(sightglassesmod == null)
+		to_chat(user, "<span class='notice'>Внедрение калибратора не принесло никакого эффекта</span>")
+		return
+	sightglassesmod = null
+	qdel(W)

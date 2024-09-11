@@ -269,7 +269,10 @@
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "Unless you are good at guessing, it is not much use being a detective." // Hercule Poirot reference
-	action_button_name = "Tip Fedora"
+	item_action_types = list(/datum/action/item_action/hands_free/tip_fedora)
+
+/datum/action/item_action/hands_free/tip_fedora
+	name = "Tip Fedora"
 
 /obj/item/clothing/head/fedora/attack_self(mob/user)
 	fedoraproc(user)
@@ -395,16 +398,19 @@
 	body_parts_covered = HEAD
 	flags_inv = BLOCKHAIR
 
-/obj/item/clothing/head/WAFFEN_SS_Cap
-	name = "Waffen SS Cap"
-	desc = "An officer's SS cap."
-	icon_state = "SS_cap"
-	item_state = "that"
-	item_color = "SS_cap"
+/obj/item/clothing/head/orange_bandana
+	name = "orange bandana"
+	desc = "Hey, I think we're missing a hazard vest..."
+	icon_state = "orange_bandana"
 
-/obj/item/clothing/head/Nazi_Officer_Cap
-	name = "Nazi Officer Cap"
-	desc = "A nazi officer's cap."
-	icon_state = "officer_cap"
-	item_state = "that"
-	item_color = "officer_cap"
+/obj/item/clothing/head/kung
+	name = "Kung headband"
+	desc = "Stripe of red cloth.You can wear it on your head."
+	icon_state = "kung_headband"
+	item_state = "kung_headband"
+
+/obj/item/clothing/head/soviet_peaked_cap
+	name = "comissar's peaked cap"
+	desc = "Not a step back."
+	icon_state = "soviet_peakedcap"
+	item_state = "soviet_peakedcap"

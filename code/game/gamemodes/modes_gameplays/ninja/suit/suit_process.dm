@@ -9,7 +9,7 @@
 			terminate()//Kills the suit and attached objects.
 		if(!s_initialized || !U)
 			return//When turned off the proc stops.
-		if(AI && AI.stat==2)//If there is an AI and it's ded. Shouldn't happen without purging, could happen.
+		if(AI && AI.stat==DEAD)//If there is an AI and it's ded. Shouldn't happen without purging, could happen.
 			if(!s_control)
 				ai_return_control()//Return control to ninja if the AI was previously in control.
 			killai()//Delete AI.

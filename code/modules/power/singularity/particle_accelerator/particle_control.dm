@@ -16,6 +16,7 @@
 	var/list/obj/structure/particle_accelerator/connected_parts
 	var/assembled = 0
 	var/parts = null
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /obj/machinery/particle_accelerator/control_box/atom_init()
 	connected_parts = list()
@@ -111,7 +112,7 @@
 	if(stat & NOPOWER)
 		active = 0
 		set_power_use(NO_POWER_USE)
-	else if(!stat && construction_state == 3)
+	else if(stat == CONSCIOUS && construction_state == 3)
 		set_power_use(IDLE_POWER_USE)
 	return
 

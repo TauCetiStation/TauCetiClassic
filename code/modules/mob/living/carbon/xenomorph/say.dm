@@ -11,10 +11,17 @@
 	if(stat == DEAD)
 		return say_dead(message)
 
-	var/datum/language/xeno_language = all_languages["Xenomorph language"]
+	var/datum/language/xeno_language = all_languages[LANGUAGE_XENOMORPH]
 
 	if(message[1] == "*")
 		return emote(copytext(message, 2))
+
+	if(length(message) >= 1)
+		if(message[1] == ";")
+			message = copytext(message, 1 + length(message[1]))
+			message = trim(message)
+			alien_talk(message)
+			return
 
 	if(length(message) >= 2)
 		if(parse_message_mode(message) == "alientalk")
@@ -53,13 +60,13 @@
 
 	var/rendered = "<span class='[tag]'>УЛЕЙ: <i>[name] шепчет, \"[message]\"</i></span>"
 	for(var/key in alien_list)
-		for(var/mob/living/carbon/xenomorph/S in alien_list[key])
+		for(var/mob/living/carbon/xenomorph/S as anything in alien_list[key])
 			if(!S.client)
 				continue
 			if(S.stat == CONSCIOUS)
 				S.show_message(rendered, SHOWMSG_AUDIO)
 
-	for(var/mob/M in observer_list)
+	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue
 		var/tracker = FOLLOW_LINK(M, src)

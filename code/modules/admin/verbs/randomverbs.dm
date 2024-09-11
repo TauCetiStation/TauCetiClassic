@@ -23,7 +23,7 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 	if (ismob(M))
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			tgui_alert(usr, "The AI can't be sent to prison you jerk!")
 			return
 		//strip their stuff before they teleport into a cell :downs:
@@ -33,7 +33,7 @@
 		M.Paralyse(5)
 		sleep(5)	//so they black out before warping
 		M.loc = pick(prisonwarp)
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/prisoner = M
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), SLOT_W_UNIFORM)
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), SLOT_SHOES)
@@ -153,105 +153,15 @@
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	M.status_flags ^= GODMODE
+	if(M.status_flags & GODMODE)
+		M.remove_status_flags(GODMODE)
+	else
+		M.add_status_flags(GODMODE)
 	to_chat(usr, "<span class='notice'>Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]</span>")
 
 	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
 	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-/proc/cmd_admin_mute(mob/M as mob, mute_type, automute = 0)
-	if(automute)
-		if(!config.automute_on)
-			return
-	else
-		if(!usr || !usr.client)
-			return
-		if(!usr.client.holder)
-			to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You don't have permission to do this.</font>")
-			return
-		if(!M.client)
-			to_chat(usr, "<font color='red'>Error: cmd_admin_mute: This mob doesn't have a client tied to it.</font>")
-		if(M.client.holder && (M.client.holder.rights & R_ADMIN) && !check_rights(R_PERMISSIONS))
-			return
-		if(M.client.holder && (M.client.holder.rights & R_PERMISSIONS))
-			to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin with permissions rights.</font>")
-			return
-	if(!M.client)
-		return
-
-
-	var/muteunmute
-	var/mute_string
-
-	switch(mute_type)
-		if(MUTE_IC)
-			mute_string = "IC (say and emote)"
-		if(MUTE_OOC)
-			mute_string = "OOC"
-		if(MUTE_PRAY)
-			mute_string = "pray"
-		if(MUTE_ADMINHELP)
-			mute_string = "adminhelp, admin PM and ASAY"
-		if(MUTE_MENTORHELP)
-			mute_string = "mentorhelp and mentor PM"
-		if(MUTE_DEADCHAT)
-			mute_string = "deadchat and DSAY"
-		if(MUTE_ALL)
-			mute_string = "everything"
-		else
-			return
-
-	if(automute)
-		muteunmute = "auto-muted"
-		M.client.prefs.muted |= mute_type
-		log_admin("SPAM AUTOMUTE: [muteunmute] [key_name(M)] from [mute_string]")
-		message_admins("SPAM AUTOMUTE: [muteunmute] [key_name_admin(M)] from [mute_string].")
-		to_chat(M, "You have been [muteunmute] from [mute_string] by the SPAM AUTOMUTE system. Contact an admin.")
-		feedback_add_details("admin_verb","AUTOMUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		return
-
-	if(M.client.prefs.muted & mute_type)
-		muteunmute = "unmuted"
-		M.client.prefs.muted &= ~mute_type
-		if(M.client.prefs.permamuted & mute_type)
-			M.client.prefs.permamuted &= ~mute_type
-			M.client.prefs.save_preferences()
-			to_chat(M, "<span class='notice'>You have been [mute_string] unmuted from [usr.key].</span>")
-	else
-		if(tgui_alert(usr, "Would you like to make it permament?","Permamute?", list("Yes","No, round only")) == "Yes")
-			var/permmutreason = input("Permamute Reason") as text|null
-			if(permmutreason)
-				muteunmute = "permamuted"
-				M.client.prefs.permamuted |= mute_type
-				M.client.prefs.save_preferences()
-				M.client.prefs.muted |= mute_type
-				notes_add(M.ckey, "Permamute from [mute_string]: [permmutreason]", usr.client)
-				permmutreason = sanitize(permmutreason)
-				to_chat(M, "<span class='alert big bold'>You have been permamuted from [mute_string] by [usr.key].<br>Reason: [permmutreason]</span>")
-			else
-				to_chat(usr, "<span class='alert'>Could not apply permamute: Reason is empty</span>")
-				return
-
-		else if (tgui_alert(usr, "Add a notice for round mute?", "Mute Notice?", list("Yes","No")) == "Yes")
-			var/mutereason = input("Mute Reason") as text|null
-			if(mutereason)
-				notes_add(M.ckey, "Muted from [mute_string]: [mutereason]", usr.client)
-				mutereason = sanitize(mutereason)
-				to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].<br>Reason: [mutereason]</span>")
-			else
-				return
-		else
-			to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].</span>")
-
-		muteunmute = "muted"
-		M.client.prefs.muted |= mute_type
-
-	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
-	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].")
-	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 
 /client/proc/cmd_admin_add_random_ai_law()
 	set category = "Fun"
@@ -268,7 +178,7 @@
 	if(show_log == "Yes")
 		announcement_ion_storm.play()
 
-	for(var/mob/living/silicon/ai/target in ai_list)
+	for(var/mob/living/silicon/ai/target as anything in ai_list)
 		if(istraitor(target))
 			continue
 		target.overload_ai_system()
@@ -351,7 +261,7 @@ Ccomp's first proc.
 			to_chat(src, "There doesn't appear to be any ghosts for you to select.")
 		return
 
-	for(var/mob/M in mobs)
+	for(var/mob/M as anything in mobs)
 		var/name = M.name
 		ghosts[name] = M                                        //get the name of the mob for the popup list
 	if(what==1)
@@ -383,6 +293,9 @@ Ccomp's first proc.
 									*/
 	G.has_enabled_antagHUD = 2
 	G.can_reenter_corpse = 1
+
+	if(G.ckey && SSrole_spawners.spawners_cooldown[G.ckey])
+		SSrole_spawners.spawners_cooldown[G.ckey] = null
 
 	to_chat(G, "<span class='notice'><B>You may now respawn. You should roleplay as if you learned nothing about the round during your time with the dead.</B></span>")
 	log_admin("[key_name(usr)] allowed [key_name(G)] to bypass the 30 minute respawn limit")
@@ -530,11 +443,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.b_type = record_found.fields["b_type"]
+		new_character.dna.b_type = record_found.fields["b_type"]
 	else
-		new_character.gender = pick(MALE,FEMALE)
-		var/datum/preferences/A = new()
-		A.randomize_appearance_for(new_character)
+		new_character.randomize_appearance()
+		new_character.name = G_found.name
 		new_character.real_name = G_found.real_name
 
 	if(!new_character.real_name)
@@ -546,11 +458,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(G_found.mind && !G_found.mind.active)
 		G_found.mind.transfer_to(new_character)	//be careful when doing stuff like this! I've already checked the mind isn't in use
-		new_character.mind.special_verbs = list()
 	else
 		new_character.mind_initialize()
 	if(!new_character.mind.assigned_role)
-		new_character.mind.assigned_role = "Test Subject"//If they somehow got a null assigned role.
+		new_character.mind.assigned_role = "Assistant"//If they somehow got a null assigned role.
 
 	//DNA
 	if(record_found)//Pull up their name from database records if they did have a mind.
@@ -582,7 +493,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		var/datum/role/R = new_character.mind.GetRole(role)
 		R.OnPostSetup()
 
-	SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
+	SSjob.EquipRank(new_character, new_character.mind.assigned_role, TRUE)
 
 	//Announces the character on all the systems, based on the record.
 	if(!issilicon(new_character))//If they are not a cyborg/AI.
@@ -610,14 +521,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/input = sanitize(input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null)
 	if(!input)
 		return
-	for(var/mob/living/silicon/ai/M in ai_list)
+	for(var/mob/living/silicon/ai/M as anything in ai_list)
 		if (M.stat == DEAD)
 			to_chat(usr, "Upload failed. No signal is being detected from the AI.")
 		else if (M.see_in_dark == 0)
 			to_chat(usr, "Upload failed. Only a faint signal is being detected from the AI, and it is not responding to our requests. It may be low on power.")
 		else
 			M.add_ion_law(input)
-			for(var/mob/living/silicon/ai/O in ai_list)
+			for(var/mob/living/silicon/ai/O as anything in ai_list)
 				to_chat(O, "<span class='warning'></span>" + input + "<span class='warning'>...LAWS UPDATED</span>")
 
 	log_admin("Admin [key_name(usr)] has added a new AI law - [input]")
@@ -660,9 +571,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "Please wait until the game starts!")
 		return
 
-	if(!holder.secrets_menu["custom_announce"])
-		holder.secrets_menu["custom_announce"] = new /datum/secrets_menu/custom_announce(usr.client)
-	holder.secrets_menu["custom_announce"].interact()
+	if(!holder.tgui_secrets["custom_announce"])
+		holder.tgui_secrets["custom_announce"] = new /datum/tgui_secrets/custom_announce(usr.client)
+	holder.tgui_secrets["custom_announce"].interact(usr)
 
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -717,7 +628,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if (tgui_alert(src, "Are you sure you want to do this? It will laaag.", "Confirmation", list("Yes", "No")) == "No")
 				return
 
-		explosion(O, devastation, heavy, light, flash)
+		explosion(O, devastation, heavy, light, flash, ignorecap = TRUE)
 		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at [COORD(O)]")
 		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at [COORD(O)]")
 		feedback_add_details("admin_verb","EXPL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -762,8 +673,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] has gibbed [key_name(M)]")
 	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]")
 
-	if(istype(M, /mob/dead/observer))
-		gibs(M.loc, M.viruses)
+	if(isobserver(M))
+		gibs(M.loc)
 		return
 
 	M.gib()
@@ -775,7 +686,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/confirm = tgui_alert(src, "You sure?", "Confirm", list("Yes", "No"))
 	if(confirm == "Yes")
-		if (istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
+		if (isobserver(mob)) // so they don't spam gibs everywhere
 			return
 		else
 			mob.gib()
@@ -799,7 +710,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] has annihilate [key_name(M)]")
 	message_admins("[key_name_admin(usr)] has annihilate [key_name_admin(M)]")
 
-	if(istype(M, /mob/dead/observer))
+	if(isobserver(M))
 		return
 
 	M.dust()
@@ -853,15 +764,17 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/toggle_view_range()
 	set category = "Special Verbs"
-	set name = "Change View Range"
-	set desc = "switches between 1x and custom views."
+	set name = "Admin Change View Range"
+	set desc = "Change your view range"
 
-	if(view == world.view)
-		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
-	else
-		change_view(world.view)
+	var/viewx = clamp(input("Enter view width (1-127)") as num, 1, 127) * 2 + 1
+	var/viewy = clamp(input("Enter view height (1-127)") as num, 1, 127) * 2 + 1
 
-	log_admin("[key_name(usr)] changed their view range to [view].")
+	change_view("[viewx]x[viewy]")
+	if(prefs.auto_fit_viewport)
+		fit_viewport()
+
+	log_admin("[key_name(usr)] changed their view range to [viewx]x[viewy].")
 	//message_admins("<span class='notice'>[key_name_admin(usr)] changed their view range to [view].</span>", 1)	//why? removed by order of XSI
 
 	feedback_add_details("admin_verb","CVRA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -877,35 +790,35 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
+	if(tgui_alert(src, "Вы уверены?", "Подтвердите", list("Да", "Нет")) != "Да")
 		return
 
 	if(SSshuttle.fake_recall)
-		var/choice = input("The shuttle will just return if you call it. What you want to do?") in list(
-					"Cancel shuttle call",
-					"Call it anyway",
-					"Call and allow it to fly to station")
+		var/choice = input("Шаттл просто вернется, если вы его вызовете. Что вы хотите сделать?") in list(
+					"Отменить вызов шаттла",
+					"Вызвать в любом случае",
+					"Вызвать и позвольте ему прилететь на станцию")
 		switch(choice)
-			if("Cancel shuttle call")
+			if("Отменить вызов шаттла")
 				return
-			if("Call and allow it to fly to station")
+			if("Вызвать и позволить ему прилететь на станцию")
 				SSshuttle.fake_recall = FALSE
 				SSshuttle.time_for_fake_recall = 0
 				log_admin("[key_name(usr)] disabled shuttle fake recall.")
 				message_admins("<span class='info'>[key_name_admin(usr)] disabled shuttle fake recall.</span>")
 
-	var/type = tgui_alert(src, "It's emergency shuttle or crew transfer?", "Confirm", list("Emergency", "Crew transfer"))
+	var/type = tgui_alert(src, "Это экстренный шаттл или смена экипажа?", "Подтвердите", list("Экстренный", "Смена экипажа"))
 
-	if(type == "Crew transfer")
+	if(type == "Смена экипажа")
 		SSshuttle.shuttlealert(1)
 		SSshuttle.incall()
 		SSshuttle.announce_crew_called.play()
 	else
-		var/eaccess = tgui_alert(src, "Grant acces to maints for everyone?", "Confirm", list("Yes", "No"))
+		var/eaccess = tgui_alert(src, "Предоставить доступ к техническим тоннелям для всех?", "Подтвердите", list("Да", "Нет"))
 		SSshuttle.incall()
 		SSshuttle.announce_emer_called.play()
 
-		if(eaccess == "Yes")
+		if(eaccess == "Да")
 			make_maint_all_access(FALSE)
 
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -920,7 +833,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes") return
+	if(tgui_alert(src, "Вы уверены?", "Подтвердите", list("Да", "Нет")) != "Да") return
 
 	if(!SSticker || SSshuttle.location || SSshuttle.direction == 0)
 		return
@@ -933,7 +846,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(timer_maint_revoke_id)
 		deltimer(timer_maint_revoke_id)
 		timer_maint_revoke_id = 0
-	timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
+	timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(revoke_maint_all_access), FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 	return
 
@@ -1061,7 +974,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	send_fax(usr, P, department)
 
-	add_communication_log(type = "fax-centcomm", title = sent_name, author = "Centcomm Officer", content = P.info + "\n" + P.stamp_text)
+	SSStatistics.add_communication_log(type = "fax-centcomm", title = sent_name, author = "Centcomm Officer", content = P.info + "\n" + P.stamp_text)
 
 	feedback_add_details("admin_verb","FAXMESS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("Fax message was created by [key_name_admin(usr)] and sent to [department]")
@@ -1100,7 +1013,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(target.player_ingame_age < value)
-		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src, secret = 0)
+		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", admin_key = ckey, secret = 0)
 
 		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [value]")
 		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [value]")

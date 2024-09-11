@@ -1,7 +1,7 @@
 
 //malfunctioning combat drones
 /mob/living/simple_animal/hostile/retaliate/malf_drone
-	name = "Боевой дрон"
+	name = "Сombat drone"
 	desc = "Автоматический боевой дрон, вооруженный новейшим вооружением и обладающий высокой прочностью корпуса."
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "drone_100"
@@ -100,7 +100,7 @@
 	stat = UNCONSCIOUS
 	wander = FALSE
 	speak_chance = 0
-	addtimer(CALLBACK(src, .proc/enable), time)
+	addtimer(CALLBACK(src, PROC_REF(enable)), time)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/proc/enable()
 	visible_message("<span class='notice'>[bicon(src)] [src] включается.</span>")
@@ -133,52 +133,58 @@
 			switch(chosen)
 				if(1)
 					C = new(loc)
-					C.name = "ЦПУ Дрона"
+					C.name = "Drone CPU motherboard"
 					C.origin_tech = "programming=[rand(4, 6)]"
 
 				if(2)
 					C = new(loc)
-					C.name = "Нейронный интерфейс Дрона"
+					C.name = "Drone neural interface"
 					C.origin_tech = "biotech=[rand(4, 6)]"
 
 				if(3)
 					C = new(loc)
-					C.name = "Магнитная плата Дрона"
+					C.name = "Drone suspension processor"
 					C.origin_tech = "magnets=[rand(4, 6)]"
 
 				if(4)
 					C = new(loc)
-					C.name = "Контроллер щита Дрона"
+					C.name = "Drone shielding controller"
 					C.origin_tech = "bluespace=[rand(4, 6)]"
 
 				if(5)
 					C = new(loc)
-					C.name = "Конденсатор Дрона"
+					C.name = "Drone power capacitor"
 					C.origin_tech = "powerstorage=[rand(4, 6)]"
 
 				if(6)
 					C = new(loc)
-					C.name = "Плата корпуса Дрона"
+					C.name = "Drone hull reinforcer"
 					C.origin_tech = "materials=[rand(4, 6)]"
 
 				if(7)
 					C = new(loc)
-					C.name = "Модуль авто-ремонта Дрона"
+					C.name = "Drone auto-repair system"
 					C.origin_tech = "engineering=[rand(4, 6)]"
 
 				if(8)
 					C = new(loc)
-					C.name = "Фороновый микроконтроллер Дрона"
+					C.name = "Drone phoron overcharge counter"
 					C.origin_tech = "phorontech=[rand(4, 6)]"
 
 				if(9)
 					C = new(loc)
-					C.name = "Модуль наведения Дрона"
+					C.name = "Drone targetting circuitboard"
 					C.origin_tech = "combat=[rand(4, 6)]"
 
 				if(10)
 					C = new(loc)
-					C.name = "Модуль нестабильности Дрона"
+					C.name = "Corrupted drone morality core"
 					C.origin_tech = "syndicate=[rand(4, 6)]"
 
 	return ..()
+
+/mob/living/simple_animal/hostile/retaliate/malf_drone/dangerous
+	health = 400
+	maxHealth = 400
+	retreat_distance = 7
+	minimum_distance = 7

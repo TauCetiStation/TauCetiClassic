@@ -21,6 +21,7 @@
 	var/shot_number = 0
 	var/state = 0
 	var/locked = FALSE
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/power/emitter/atom_init()
 	. = ..()
@@ -36,10 +37,11 @@
 	RefreshParts()
 
 /obj/machinery/power/emitter/RefreshParts()
+	..()
+
 	var/max_firedelay = 120
 	var/firedelay = 120
 	var/min_firedelay = 24
-	var/power_usage = 350
 	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
 		max_firedelay -= 20 * L.rating
 		min_firedelay -= 4 * L.rating
@@ -47,16 +49,13 @@
 	maximum_fire_delay = max_firedelay
 	minimum_fire_delay = min_firedelay
 	fire_delay = firedelay
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		power_usage -= 50 * M.rating
-	active_power_usage = power_usage
 
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	set_dir(turn(src.dir, 90))
@@ -81,6 +80,8 @@
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
+	if(!do_skill_checks(user))
+		return
 	activate(user)
 
 /obj/machinery/power/emitter/proc/activate(mob/user)
@@ -172,8 +173,7 @@
 
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
-
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
@@ -196,7 +196,7 @@
 				to_chat(user, "<span class='warning'>The [src.name] needs to be unwelded from the floor.</span>")
 		return
 
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
@@ -210,7 +210,7 @@
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"You start to weld the [src] to the floor.", \
 						"You hear welding")
-					if (WT.use_tool(src, user, 20, volume = 50))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 						state = 2
 						to_chat(user, "You weld the [src] to the floor.")
 						connect_to_network()
@@ -222,7 +222,7 @@
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"You start to cut the [src] free from the floor.", \
 						"You hear welding")
-					if (WT.use_tool(src, user, 20, volume = 50))
+					if (WT.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 						state = 1
 						to_chat(user, "You cut the [src] free from the floor.")
 						disconnect_from_network()
@@ -245,7 +245,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
-	if(isscrewdriver(W))
+	if(isscrewing(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return

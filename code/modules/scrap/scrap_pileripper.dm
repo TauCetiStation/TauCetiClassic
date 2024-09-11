@@ -55,7 +55,7 @@
 				if(prob(20))
 					break
 			count++
-		else if(istype(ripped_item, /obj/item))
+		else if(isitem(ripped_item))
 			ripped_item.forceMove(src.loc)
 			if(prob(20))
 				qdel(ripped_item)
@@ -64,6 +64,8 @@
 			cube.make_pile()
 
 /obj/machinery/pile_ripper/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		rating = M.rating
 

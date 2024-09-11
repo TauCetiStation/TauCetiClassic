@@ -1,4 +1,4 @@
-var/church_name = null
+var/global/church_name = null
 /proc/church_name()
 	if (church_name)
 		return church_name
@@ -15,7 +15,7 @@ var/church_name = null
 
 	return name
 
-var/command_name = null
+var/global/command_name = null
 /proc/command_name()
 	if (command_name)
 		return command_name
@@ -31,7 +31,7 @@ var/command_name = null
 
 	return name
 
-var/religion_name = null
+var/global/religion_name = null
 /proc/religion_name()
 	if (religion_name)
 		return religion_name
@@ -127,7 +127,7 @@ var/religion_name = null
 
 	return name
 
-var/syndicate_name = null
+var/global/syndicate_name = null
 /proc/syndicate_name()
 	if (syndicate_name)
 		return syndicate_name
@@ -177,12 +177,12 @@ var/global/regex/code_response_highlight_rule
 	*/
 
 /proc/set_languge_lists()
-	global.rus_nouns = file2list("config/names/rus_nouns.txt")
-	global.rus_adjectives = file2list("config/names/rus_adjectives.txt")
-	global.rus_verbs = file2list("config/names/rus_verbs.txt")
-	global.rus_occupations = file2list("config/names/rus_occupations.txt")
-	global.rus_bays = file2list("config/names/rus_bays.txt")
-	global.rus_local_terms = file2list("config/names/rus_local_terms.txt")
+	global.rus_nouns = file2list("static/names/rus_nouns.txt")
+	global.rus_adjectives = file2list("static/names/rus_adjectives.txt")
+	global.rus_verbs = file2list("static/names/rus_verbs.txt")
+	global.rus_occupations = file2list("static/names/rus_occupations.txt")
+	global.rus_bays = file2list("static/names/rus_bays.txt")
+	global.rus_local_terms = file2list("static/names/rus_local_terms.txt")
 
 //Proc is used for phrase and response in subsystem init.
 /proc/generate_code_phrase()

@@ -1,3 +1,17 @@
+/mob/living/carbon
+	var/list/overlays_standing
+
+/mob/living/carbon/proc/apply_standing_overlay(cache_index)
+	var/image/I = overlays_standing[cache_index]
+	if(I)
+		add_overlay(I)
+
+/mob/living/carbon/proc/remove_standing_overlay(cache_index)
+	if(overlays_standing[cache_index])
+		cut_overlay(overlays_standing[cache_index])
+		overlays_standing[cache_index] = null
+
+
 /mob/living/carbon/update_transform()
 	var/matrix/ntransform = matrix(default_transform)
 	var/final_pixel_y = default_pixel_y
@@ -6,12 +20,12 @@
 	var/final_layer = default_layer
 	var/changed = FALSE
 
-	if(lying)
-		if(lying != lying_prev)
-			lying_prev = lying
+	if(lying != lying_prev)
+		lying_prev = lying
+		changed = TRUE
+		if(lying)
 			get_lying_angle()
 			playsound(src, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
-			changed = TRUE
 			ntransform.TurnTo(0,lying_current)
 			final_layer = layer - 0.1
 			pixel_y = get_pixel_y_offset()
@@ -21,21 +35,20 @@
 			final_pixel_x = get_pixel_x_offset(lying_current)
 			if((dir & (EAST|WEST)) && !buckled) //Facing east or west
 				final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
-	else
-		if(lying != lying_prev)
-			lying_prev = lying
-			changed = TRUE
+
+		else
 			ntransform.TurnTo(lying_current, 0)
 
 			final_pixel_y = get_pixel_y_offset()
 			final_pixel_x = get_pixel_x_offset()
 
 			final_layer = initial(layer)
-		if(resize != RESIZE_DEFAULT_SIZE)
-			resize_rev *= 1/resize
-			changed = TRUE
-			ntransform.Scale(resize)
-			resize = RESIZE_DEFAULT_SIZE
+
+	if(resize != RESIZE_DEFAULT_SIZE)
+		resize_rev *= 1/resize
+		changed = TRUE
+		ntransform.Scale(resize)
+		resize = RESIZE_DEFAULT_SIZE
 
 	if(changed)
 		default_transform = ntransform

@@ -2,7 +2,7 @@
 	name = "flash"
 	desc = "Used for blinding and being an asshole."
 	icon_state = "flash"
-	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
+	item_state = "flash"
 	throwforce = 5
 	w_class = SIZE_TINY
 	throw_speed = 4
@@ -10,8 +10,7 @@
 	flags = CONDUCT
 	origin_tech = "magnets=2;combat=1"
 
-	action_button_name = "Toggle Flash"
-
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_flash)
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 
@@ -19,8 +18,11 @@
 	var/broken = 0     //Is the flash burnt out?
 	var/last_used = 0 //last world.time it was used.
 
+/datum/action/item_action/hands_free/toggle_flash
+	name = "Toggle Flash"
+
 /obj/item/device/flash/proc/clown_check(mob/user)
-	if(user && (CLUMSY in user.mutations) && prob(50))
+	if(user && user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>\The [src] slips out of your hand.</span>")
 		user.drop_item()
 		return 0
@@ -43,7 +45,6 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
 		return
-
 	M.log_combat(user, "flashed (attempt) with [name]")
 
 	if(!clown_check(user))	return
@@ -74,7 +75,7 @@
 	if(iscarbon(M))
 		var/safety = M:eyecheck()
 		if(safety <= 0)
-			M.confused = max(rand(6, 10), M.confused)
+			M.MakeConfused(rand(6, 10))
 			M.flash_eyes()
 		else
 			flashfail = 1
@@ -82,7 +83,7 @@
 	else if(issilicon(M))
 		//M.Weaken(rand(5,10))
 		var/power = rand(7,13)
-		M.confused = min(M.confused + power, 20)
+		M.SetConfused(min(M.confused + power, 20))
 		M.eye_blind = min(M.eye_blind + power, 20)
 	else
 		flashfail = 1
@@ -102,10 +103,10 @@
 		flick("flash2", src)
 		if(!issilicon(M))
 
-			user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
+			user.visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>")
 		else
 
-			user.visible_message("<span class='notice'>[user] overloads [M]'s sensors with the flash!</span>")
+			user.visible_message("<span class='danger'>[user] overloads [M]'s sensors with the flash!</span>")
 	else
 
 		user.visible_message("<span class='notice'>[user] fails to blind [M] with the flash!</span>")
@@ -124,7 +125,6 @@
 	if(broken)
 		to_chat(user, "<span class='warning'>The [src.name] is broken</span>")
 		return
-
 	flash_recharge()
 
 	//spamming the flash before it's fully charged (60seconds) increases the chance of it  breaking
@@ -135,6 +135,7 @@
 				broken = 1
 				to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 				icon_state = "flashburnt"
+				update_item_actions()
 				return
 			times_used++
 		else	//can only use it  5 times a minute
@@ -169,9 +170,10 @@
 			if(prob(2*times_used))
 				broken = 1
 				icon_state = "flashburnt"
+				update_item_actions()
 				return
 			times_used++
-			if(istype(loc, /mob/living/carbon))
+			if(iscarbon(loc))
 				var/mob/living/carbon/M = loc
 				var/safety = M.eyecheck()
 				if(safety <= 0)
@@ -184,6 +186,7 @@
 	name = "synthetic flash"
 	desc = "When a problem arises, SCIENCE is the solution."
 	icon_state = "sflash"
+	item_state = "sflash"
 	origin_tech = "magnets=2;combat=1"
 
 /obj/item/device/flash/synthetic/attack(mob/living/M, mob/user)

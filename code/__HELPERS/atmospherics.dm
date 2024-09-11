@@ -1,4 +1,4 @@
-/obj/proc/analyze_gases(obj/A, mob/user, advanced)
+/obj/proc/analyze_gases(atom/A, mob/user, advanced)
 	user.visible_message("<span class='notice'>\The [user] has used \an [src] on \the [A].</span>")
 	A.add_fingerprint(user)
 
@@ -32,7 +32,7 @@
 				. += "<span class='warning'>Pressure: [round(pressure, 0.1)] kPa</span>"
 			for(var/mix in mixture.gas)
 				var/percentage = round(mixture.gas[mix] / total_moles * 100, advanced ? 0.01 : 1)
-				. += "<span class='notice'>[gas_data.name[mix]]: [percentage]%</span>"
+				. += "<span class='notice'>[gas_data.name[mix]]: [percentage]% ([round(mixture.gas[mix], 0.01)] moles)</span>"
 				if(advanced)
 					var/list/traits = list()
 					if(gas_data.flags[mix] & XGM_GAS_FUEL)

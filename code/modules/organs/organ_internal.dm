@@ -13,11 +13,14 @@
 
 	// Will be moved, removed or refactored.
 	var/process_accuracy = 0    // Damage multiplier for organs, that have damage values.
+	// 0 - normal
+	// 1 - assisted
+	// 2 - mechanical
 	var/robotic = 0             // For being a robot
 
 /obj/item/organ/internal/Destroy()
 	if(parent)
-		parent.children -= src
+		parent.bodypart_organs -= src
 		parent = null
 	if(owner)
 		owner.organs -= src
@@ -25,7 +28,7 @@
 			owner.organs_by_name -= organ_tag
 	return ..()
 
-/obj/item/organ/internal/insert_organ()
+/obj/item/organ/internal/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()
 
 	owner.organs += src
@@ -76,15 +79,16 @@
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
 
-/obj/item/organ/internal/proc/take_damage(amount, silent=0)
+/obj/item/organ/internal/take_damage(amount, silent=0)
+	if(!isnum(silent))
+		return // prevent basic take_damage usage (TODO remove workaround)
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else
 		src.damage += amount
 
-	var/obj/item/organ/external/BP = owner.bodyparts_by_name[parent_bodypart]
 	if (!silent)
-		owner.custom_pain("Something inside your [BP.name] hurts a lot.", 1)
+		owner.custom_pain("What a pain! My [name]!", 1)
 
 /obj/item/organ/internal/emp_act(severity)
 	switch(robotic)
@@ -127,28 +131,43 @@
 
 /obj/item/organ/internal/heart
 	name = "heart"
+	cases = list("сердце", "сердца", "сердцу", "сердце", "сердцем", "сердце")
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
 	var/heart_status = HEART_NORMAL
 	var/fibrillation_timer_id = null
+	var/failing_interval = 1 MINUTE
+
+/obj/item/organ/internal/heart/insert_organ()
+	..()
+	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
 
 /obj/item/organ/internal/heart/proc/heart_stop()
-	heart_status = HEART_FAILURE
+	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
+		heart_status = HEART_FAILURE
+		deltimer(fibrillation_timer_id)
+		fibrillation_timer_id = null
+		owner.metabolism_factor.AddModifier("Heart", multiple = 0.0)
+	else
+		take_damage(1, 0)
+		fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
-	var/failing_interval = 1 MINUTE
 	heart_status = HEART_FIBR
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
-	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+	fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
+	owner.metabolism_factor.AddModifier("Heart", multiple = 0.5)
 
 /obj/item/organ/internal/heart/proc/heart_normalize()
 	heart_status = HEART_NORMAL
 	deltimer(fibrillation_timer_id)
 	fibrillation_timer_id = null
+	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
+	cases = list("помпа системы охлаждения", "помпы системы охлаждения", "помпе системы охлаждения", "помпу системы охлаждения", "помпой системы охлаждения", "помпой системы охлаждения")
 
 	var/pumping_rate = 5
 	var/bruised_loss = 3
@@ -175,6 +194,7 @@
 
 /obj/item/organ/internal/lungs
 	name = "lungs"
+	cases = list("лёгкие", "лёгких", "лёгким", "лёгкие", "лёгкими", "лёгких")
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
 
@@ -182,18 +202,22 @@
 
 /obj/item/organ/internal/lungs/vox
 	name = "air capillary sack"
+	cases = list("воздушно-капиллярный мешок", "воздушно-капиллярного мешка", "воздушно-капиллярному мешку", "воздушно-капиллярный мешок", "воздушно-капиллярным мешком", "воздушно-капиллярном мешке")
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs/skrell
 	name = "respiration sac"
+	cases = list("дыхательная сумка", "дыхательной сумки", "дыхательной сумке", "дыхательную сумку", "дыхательной сумкой", "дыхательной сумке")
 	has_gills = TRUE
 
 /obj/item/organ/internal/lungs/diona
 	name = "virga inopinatus"
+	cases = list("полая ветка", "полой ветки", "полой ветки", "полую ветку", "полой веткой", "полой ветке")
 	process_accuracy = 10
 
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
+	cases = list("охлаждающий элемент", "охлаждающего элемента", "охлаждающему элементу", "охлаждающий элемент", "охлаждающим элементом", "охлаждающем элементе")
 
 	var/refrigerant_max = 50
 	var/refrigerant = 50
@@ -210,39 +234,11 @@
 
 	if(is_bruised())
 		if(prob(2))
-			owner.emote("cough", message = "coughs up blood!")
+			owner.emote("cough")
 			owner.drip(10)
 		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
-			owner.emote("gasp", message = "gasps for air!")
+			owner.emote("gasp")
 			owner.losebreath += 15
-
-/obj/item/organ/internal/lungs/diona/process()
-	..()
-	if(is_bruised())
-		if(prob(2))
-			owner.emote("me", 2, "annoyingly creaks!")
-			owner.drip(10)
-		if(prob(4))
-			owner.emote("me", 2, "smells of rot.")
-			owner.apply_damage(rand(1,15), TOX, BP_CHEST, 0)		//Diona's lungs are used to dispose of toxins, so when lungs are broken, diona gets intoxified.
-	if(owner.life_tick % process_accuracy == 0)
-		if(damage < 0)
-			damage = 0
-
-		if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
-			if(damage < min_broken_damage)
-				damage += 0.2 * process_accuracy
-			else
-				var/obj/item/organ/internal/IO = pick(owner.organs)
-				if(IO)
-					IO.damage += 0.2  * process_accuracy
-
-		if(damage >= min_bruised_damage)
-			for(var/datum/reagent/R in owner.reagents.reagent_list)
-				if(istype(R, /datum/reagent/consumable/ethanol))
-					owner.adjustToxLoss(0.1 * process_accuracy)
-				if(istype(R, /datum/reagent/toxin))
-					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/lungs/ipc/process()
 	if(owner.nutrition < 1)
@@ -263,12 +259,10 @@
 			temp_gain -= refrigerant_spent
 
 	if(HAS_TRAIT(owner, TRAIT_COOLED) & owner.bodytemperature > 290)
-		owner.bodytemperature -= 50
+		owner.adjust_bodytemperature(-50)
 
 	if(temp_gain > 0)
-		owner.bodytemperature += temp_gain
-		if(owner.bodytemperature > owner.species.synth_temp_max)
-			owner.bodytemperature = owner.species.synth_temp_max
+		owner.adjust_bodytemperature(temp_gain, max_temp = owner.species.synth_temp_max)
 
 /obj/item/organ/internal/lungs/ipc/proc/add_refrigerant(volume)
 	if(refrigerant < refrigerant_max)
@@ -278,62 +272,93 @@
 
 /obj/item/organ/internal/liver
 	name = "liver"
+	cases = list("печень", "печени", "печени", "печень", "печенью", "печени")
 	organ_tag = O_LIVER
 	parent_bodypart = BP_CHEST
 	process_accuracy = 10
 
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
+	cases = list("хлорофилловый мешок", "хлорофиллового мешка", "хлорофилловому мешку", "хлорофилловый мешок", "хлорофилловым мешком", "хлорофилловом мешке")
 
 /obj/item/organ/internal/liver/vox
 	name = "waste tract"
+	cases = list("канал отходов", "канала отходов", "каналу отходов", "канал отходов", "каналом отходов", "канале отходов")
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
+	cases = list("аккумулятор", "аккумулятора", "аккумулятору", "аккумулятор", "аккумулятором", "аккумуляторе")
 	var/accumulator_warning = 0
 
-/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H)
+/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
 	new/obj/item/weapon/stock_parts/cell/crap(src)
-	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
+	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(ipc_cell_explode))
+
+/obj/item/organ/internal/liver/proc/handle_liver_infection()
+	if(germ_level > INFECTION_LEVEL_ONE)
+		if(prob(1))
+			to_chat(owner, "<span class='warning'>Your skin itches.</span>")
+	if(germ_level > INFECTION_LEVEL_TWO)
+		if(prob(1))
+			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living/carbon/human, vomit))
+
+/obj/item/organ/internal/liver/proc/handle_liver_life()
+	if(owner.life_tick % process_accuracy != 0)
+		return
+
+	if(src.damage < 0)
+		src.damage = 0
+
+	//High toxins levels are dangerous
+	if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
+		//Healthy liver suffers on its own
+		if (src.damage < min_broken_damage)
+			src.damage += 0.2 * process_accuracy
+		//Damaged one shares the fun
+		else
+			var/obj/item/organ/internal/IO = pick(owner.organs)
+			if(IO)
+				IO.damage += 0.2 * process_accuracy
+
+	//Detox can heal small amounts of damage
+	if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
+		src.damage -= 0.2 * process_accuracy
+
+	// Damaged liver means some chemicals are very dangerous
+	if(src.damage >= src.min_bruised_damage)
+		for(var/datum/reagent/R in owner.reagents.reagent_list)
+			// Ethanol and all drinks are bad
+			if(istype(R, /datum/reagent/consumable/ethanol))
+				owner.adjustToxLoss(0.1 * process_accuracy)
+			// Can't cope with toxins at all
+			if(istype(R, /datum/reagent/toxin))
+				owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/liver/process()
 	..()
-	if (germ_level > INFECTION_LEVEL_ONE)
-		if(prob(1))
-			to_chat(owner, "<span class='warning'>Your skin itches.</span>")
-	if (germ_level > INFECTION_LEVEL_TWO)
-		if(prob(1))
-			INVOKE_ASYNC(owner, /mob/living/carbon/human.proc/vomit)
+	handle_liver_infection()
+	handle_liver_life()
 
-	if(owner.life_tick % process_accuracy == 0)
-		if(src.damage < 0)
-			src.damage = 0
+/obj/item/organ/internal/liver/serpentid
 
-		//High toxins levels are dangerous
-		if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
-			//Healthy liver suffers on its own
-			if (src.damage < min_broken_damage)
-				src.damage += 0.2 * process_accuracy
-			//Damaged one shares the fun
-			else
-				var/obj/item/organ/internal/IO = pick(owner.organs)
-				if(IO)
-					IO.damage += 0.2  * process_accuracy
-
-		//Detox can heal small amounts of damage
-		if (src.damage && src.damage < src.min_bruised_damage && owner.reagents.has_reagent("anti_toxin"))
-			src.damage -= 0.2 * process_accuracy
-
-		// Damaged liver means some chemicals are very dangerous
-		if(src.damage >= src.min_bruised_damage)
+/obj/item/organ/internal/liver/serpentid/handle_liver_life()
+	if(is_bruised())
+		if(owner.life_tick % process_accuracy == 0)
 			for(var/datum/reagent/R in owner.reagents.reagent_list)
-				// Ethanol and all drinks are bad
 				if(istype(R, /datum/reagent/consumable/ethanol))
 					owner.adjustToxLoss(0.1 * process_accuracy)
-				// Can't cope with toxins at all
 				if(istype(R, /datum/reagent/toxin))
 					owner.adjustToxLoss(0.3 * process_accuracy)
+		owner.adjustOxyLoss(damage)
+
+	if(owner.reagents.get_reagent_amount("dexalinp") >= 4.0)
+		return
+	owner.reagents.add_reagent("dexalinp", REAGENTS_METABOLISM * 1.5)
+
+	if(owner.reagents.get_reagent_amount("dexalinp") >= 3.0)
+		return
+	damage += 0.2
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
@@ -361,30 +386,27 @@
 		return
 	var/turf/T = get_turf(owner.loc)
 	if(owner.nutrition > (C.maxcharge * 1.2))
-		explosion(T, 1, 0, 1, 1)
-		C.ex_act(1.0)
+		explosion(T, 0, 1, 2)
+		C.ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
+	cases = list("почки", "почек", "почкам", "почки", "почками", "почках")
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/kidneys/vox
 	name = "filtration bladder"
+	cases = list("фильтрующий пузырь", "фильтрующего пузыря", "фильтрующему пузырю", "фильтрующий пузырь", "фильтрующим пузырём", "фильтрующем пузыре")
 
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
+	cases = list("вакуоль", "вакуоли", "вакуолям", "вакуоль", "вакуолью", "вакуоли")
 	parent_bodypart = BP_GROIN
-
-/obj/item/organ/internal/kidneys/diona/process()
-	if(damage)
-		if(prob(10))
-			damage -= 1
-		if(prob(2))
-			to_chat(owner, "<span class='warning'>You notice slight discomfort in your groin.</span>")
 
 /obj/item/organ/internal/kidneys/ipc
 	name = "self-diagnosis unit"
+	cases = list("устройство самодиагностики", "устройства самодиагностики", "устройству самодиагностики", "устройство самодиагностики", "устройством самодиагностики", "устройстве самодиагностики")
 	parent_bodypart = BP_GROIN
 
 	var/next_warning = 0
@@ -411,24 +433,34 @@
 
 /obj/item/organ/internal/brain
 	name = "brain"
+	cases = list("мозг", "мозга", "мозгу", "мозг", "мозгом", "мозге")
 	organ_tag = O_BRAIN
 	parent_bodypart = BP_HEAD
 
 /obj/item/organ/internal/brain/diona
 	name = "main node nymph"
+	cases = list("главная нимфа", "главной нимфы", "главной нимфе", "главную нимфу", "главной нимфой", "главной нимфе")
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/brain/ipc
 	name = "positronic brain"
+	cases = list("позитронный мозг", "позитронного мозга", "позитронному мозгу", "позитронный мозг", "позитронным мозгом", "позитронном мозге")
+	parent_bodypart = BP_CHEST
+
+/obj/item/organ/internal/brain/abomination
+	name = "deformed brain"
+	cases = list("деформированный мозг", "деформированного мозга", "деформированному мозгу", "деформированный мозг", "деформированным мозгом", "деформированном мозге")
 	parent_bodypart = BP_CHEST
 
 /obj/item/organ/internal/eyes
 	name = "eyes"
+	cases = list("глаза", "глаз", "глазам", "глаза", "глазами", "глазах")
 	organ_tag = O_EYES
 	parent_bodypart = BP_HEAD
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"
+	cases = list("камеры", "камер", "камерам", "камеры", "камерами", "камерах")
 	robotic = 2
 
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.

@@ -28,25 +28,14 @@
 	var/bible_type
 
 	var/list/bible_info_by_name
-	// Radial menu
-	var/list/bible_skins
 
 	var/religious_tool_type
 
-	/*
-	var/lecturn_icon_state
+	var/emblem_icon_state
 	// Is required to have a "Default" as a fallback.
-	var/static/list/lecturn_info_by_name = list(
-	)
-
+	var/list/emblem_info_by_name
 	// Radial menu
-	var/lecturn_skins
-	*/
-
-	var/pews_icon_state
-	var/list/pews_info_by_name
-	// Radial menu
-	var/list/pews_skins
+	var/list/emblem_skins
 
 	var/altar_icon_state
 	// Is required to have a "Default" as a fallback.
@@ -62,11 +51,10 @@
 	var/list/floor_types
 	var/list/door_types
 
-	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
-	var/carpet_dir
-	var/list/carpet_dir_by_name
-	// Radial menu
-	var/list/carpet_skins
+	var/decal
+	// List of possible decals
+	var/list/decal_by_name
+	var/list/decal_radial_menu
 	// Main area with structures
 	var/area_type
 	// Subtypes of area_type
@@ -106,8 +94,8 @@
 
 	// All runes on map
 	var/list/obj/effect/rune/runes = list()
-	// mob = list(rune, rune, rune)
-	var/list/runes_by_mob = list()
+	// ckey = list(rune, rune, rune)
+	var/list/runes_by_ckey
 	// Max runes on mob
 	var/max_runes_on_mob
 
@@ -224,19 +212,20 @@
 		I.transform = M
 		altar_skins[info] = I
 
-/datum/religion/proc/gen_pews_variants()
-	pews_skins = list()
-	for(var/info in pews_info_by_name)
-		pews_skins[info] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "[pews_info_by_name[info]]_left")
+/datum/religion/proc/gen_emblem_variants()
+	emblem_skins = list()
+	for(var/info in emblem_info_by_name)
+		emblem_skins[info] = image(icon = 'icons/obj/lectern.dmi', icon_state = "[emblem_info_by_name[info]]")
 
-/datum/religion/proc/gen_carpet_variants()
-	carpet_skins = list()
+/datum/religion/proc/gen_decal_variants()
+	decal_radial_menu = list()
 	var/matrix/M = matrix()
 	M.Scale(0.7)
-	for(var/info in carpet_dir_by_name)
-		var/image/I = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol", dir = carpet_dir_by_name[info])
+	for(var/name in decal_by_name)
+		var/image/I = image(icon = 'icons/turf/turf_decals.dmi', icon_state = "religion_[lowertext(name)]")
 		I.transform = M
-		carpet_skins[info] = I
+		//I.color = "#000000"
+		decal_radial_menu[name] = I
 
 // This proc creates a "preset" of religion, before allowing to fill out the details.
 /datum/religion/proc/create_default()
@@ -251,8 +240,8 @@
 
 	gen_bible_info()
 	gen_altar_variants()
-	gen_pews_variants()
-	gen_carpet_variants()
+	gen_emblem_variants()
+	gen_decal_variants()
 
 	gen_agent_lists()
 
@@ -260,26 +249,11 @@
 
 // Update all info regarding structure based on current religion info.
 /datum/religion/proc/update_structure_info()
-	var/carpet_symbol_info = carpet_dir_by_name[name]
-	if(carpet_symbol_info)
-		carpet_dir = carpet_symbol_info
+	var/emblem_info = emblem_info_by_name[name]
+	if(emblem_info)
+		emblem_icon_state = emblem_info
 	else
-		carpet_dir = 0
-
-	/*
-	// Luduk when?
-	var/lecturn_info = lecturn_info_by_name[name]
-	if(lecturn_info)
-		lecturn_icon_state = lecturn_info
-	else
-		lecturn_info_state = lecturn_info_by_name["Default"]
-	*/
-
-	var/pews_info = pews_info_by_name[name]
-	if(pews_info)
-		pews_icon_state = pews_info
-	else
-		pews_icon_state = pews_info_by_name["Default"]
+		emblem_icon_state = emblem_info_by_name["Default"]
 
 	var/altar_info = altar_info_by_name[name]
 	if(altar_info)
@@ -329,14 +303,9 @@
 	return TRUE
 
 // This proc returns a bible object of this religion, spawning it at a given location.
-/datum/religion/proc/spawn_bible(atom/location, custom_type)
-	var/obj/item/weapon/storage/bible/B
-	if(custom_type)
-		B = new custom_type(location)
-	else
-		B = new bible_type(location)
+/datum/religion/proc/spawn_bible(atom/location)
+	var/obj/item/weapon/storage/bible/B = new bible_type(location)
 	bible_info.apply_to(B)
-	B.deity_name = pick(deity_names)
 	B.religion = src
 	return B
 
@@ -421,6 +390,17 @@
 /datum/religion/proc/affect_divine_power_rite(datum/religion_rites/R)
 	R.divine_power = calc_divine_power(R.needed_aspects, initial(R.divine_power))
 
+/**
+ * Returns a list with the difference between the needed aspects for rite and those in religion.
+ * Return format: "Aspect name" = difference
+ */
+/datum/religion/proc/get_aspect_diffs(list/rite_aspects)
+	var/list/diffs = list()
+	for(var/need_aspect in rite_aspects)
+		var/datum/aspect/aspect = aspects[need_aspect]
+		diffs[aspect.name] = aspect.power - rite_aspects[need_aspect]
+	return diffs
+
 // Give our gods all needed spells which in /list/spells
 /datum/religion/proc/give_god_spells(mob/G)
 	for(var/spell in god_spells)
@@ -464,7 +444,7 @@
 
 	return name_entry
 
-// Generate new rite_list
+// Generate new rite_list and updating existing rites' divine power
 /datum/religion/proc/update_rites()
 	if(rites_by_name.len > 0)
 		rites_info = list()
@@ -472,6 +452,7 @@
 		for(var/i in rites_by_name)
 			var/datum/religion_rites/RI = rites_by_name[i]
 			rites_info[RI.name] = get_rite_info(RI)
+			affect_divine_power_rite(RI)
 
 // Adds all binding rites once
 /datum/religion/proc/give_binding_rites()
@@ -526,7 +507,7 @@
 // Is called after any addition of new aspects.
 // Manages new spells and rites, gained by adding the new aspects.
 /datum/religion/proc/update_aspects()
-	var/datum/callback/aspect_pred = CALLBACK(src, .proc/satisfy_requirements)
+	var/datum/callback/aspect_pred = CALLBACK(src, PROC_REF(satisfy_requirements))
 
 	for(var/aspect_name in aspects)
 		var/datum/aspect/asp = aspects[aspect_name]
@@ -633,10 +614,10 @@
 	init_subtypes(tech_agent_type, available_techs)
 
 /datum/religion/proc/on_holy_reagent_created(datum/reagent/R)
-	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), .proc/holy_reagent_react_turf)
+	RegisterSignal(R, list(COMSIG_REAGENT_REACTION_TURF), PROC_REF(holy_reagent_react_turf))
 
 /datum/religion/proc/holy_reagent_react_turf(datum/source, turf/T, volume)
-	if(!istype(T, /turf/simulated/floor))
+	if(!isfloorturf(T))
 		return
 
 	add_holy_turf(T, volume)
@@ -667,16 +648,20 @@
 	var/list/acolytes = list()
 	var/turf/center = get_turf(target)
 	for(var/mob/living/carbon/C in range(range, center))
-		if(is_member(C) && !C.stat)
+		if(is_member(C) && C.stat == CONSCIOUS)
 			acolytes += C
 			if(message)
 				C.say(message)
 	return acolytes
 
-/datum/religion/proc/send_message_to_members(message, name) // As a god
-	for(var/mob/M in global.mob_list)
+/datum/religion/proc/send_message_to_members(message, name, font_size = 6, mob/source)
+	var/format_name = name ? "[name]: " : ""
+	for(var/mob/M in global.player_list)
 		if(is_member(M) || isobserver(M))
-			to_chat(M, "<span class='[style_text]'><font size='6'>[name]: [message]</font></span>")
+			var/link = ""
+			if(source && (iseminence(M) || isobserver(M)))
+				link = FOLLOW_LINK(M, source)
+			to_chat(M, "<font size='[font_size]'><span class='[style_text]'>[link][format_name][message]</span></font>")
 
 /datum/religion/proc/add_tech(tech_type)
 	var/datum/religion_tech/T = new tech_type
@@ -685,3 +670,12 @@
 
 /datum/religion/proc/get_tech(tech_id)
 	return all_techs[tech_id]
+
+/datum/religion/proc/get_runes_by_type(rune_type)
+	var/list/valid_runes = list()
+	for(var/obj/effect/rune/R as anything in runes)
+		if(!istype(R.power, rune_type))
+			continue
+		if(!is_centcom_level(R.loc.z) || istype(get_area(R), area_type))
+			valid_runes += R
+	return valid_runes

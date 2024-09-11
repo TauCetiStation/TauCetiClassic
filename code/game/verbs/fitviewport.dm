@@ -1,13 +1,17 @@
 /client/verb/onresize()
 	set hidden = TRUE
 
-	if(prefs.auto_fit_viewport)
+	if(prefs.auto_fit_viewport && !isnewplayer(mob))
 		fit_viewport()
 
 /client/verb/fit_viewport()
 	set name = "Fit viewport"
 	set category = "OOC"
 	set desc = "Fit the width of the map window to match the viewport"
+
+	if(isnewplayer(mob)) // no mapwindow in lobby
+		to_chat(usr, "<span class='warning'>You can't fix viewport while in lobby.</span>")
+		return
 
 	// Fetch aspect ratio
 	var/view_size = getviewsize(view)

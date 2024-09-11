@@ -1,0 +1,19 @@
+{
+    "map_name": "Stroecka Station",
+    "map_path": "stroechka",
+    "map_file": "stroechka.dmm",
+    "station_name": "Hephaestus",
+    "station_name_ru": "Гефест",
+    "system_name" : "Tau Ceti",
+    "station_image": "stroechka",
+    "space_ruin_levels": 2,
+    "space_empty_levels": 1,
+    "load_junkyard": 0,
+    "minetype": null,
+    "traits":[{
+        "Linkage": null,
+        "Environment Type": "Snow",
+        "Station": true,
+        "Snowstorm": true
+    }]
+}

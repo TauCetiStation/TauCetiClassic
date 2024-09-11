@@ -38,14 +38,17 @@
 
 /datum/objective/heist/loot/check_completion()
 	var/total_amount = 0
+	var/list/arkship_areas = list(/area/shuttle/vox/arkship, /area/shuttle/vox/arkship_hold)
 
-	for(var/obj/O in get_area_by_type(/area/shuttle/vox/arkship))
-		if(istype(O,loot_type)) total_amount++
-		for(var/obj/I in O.contents)
-			if(istype(I, loot_type))
+	for(var/type in arkship_areas)
+		for(var/obj/O in get_area_by_type(type))
+			if(istype(O,loot_type)) 
 				total_amount++
-		if(total_amount >= target_amount)
-			return OBJECTIVE_WIN
+			for(var/obj/I in O.contents)
+				if(istype(I, loot_type))
+					total_amount++
+			if(total_amount >= target_amount)
+				return OBJECTIVE_WIN
 
 	for(var/datum/role/raider in faction.members)
 		if(raider.antag.current)

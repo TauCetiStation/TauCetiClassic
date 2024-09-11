@@ -1,6 +1,6 @@
 /obj/structure/altar_of_gods/cult
 	name = "Altar of the Death"
-	desc = "An altar which allows the head of the church to choose a sect of religious teachings as well as provide sacrifices to earn favor."
+	desc = "Алтарь, позволяющий главе церкви выбирать религиозное учение и приносить жертвы для того, чтобы заработать милость богов."
 	icon = 'icons/obj/structures/chapel.dmi'
 	icon_state = "cultaltar"
 

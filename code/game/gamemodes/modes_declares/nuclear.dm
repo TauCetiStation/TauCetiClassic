@@ -5,10 +5,10 @@
 
 	factions_allowed = list(/datum/faction/nuclear)
 
-	minimum_player_count = 15
-	minimum_players_bundles = 25
+	minimum_player_count = 21
+	minimum_players_bundles = 20
 
 /datum/game_mode/nuclear/announce()
-	to_chat(world, "<B>The current game mode is - Nuclear Emergency!</B>")
-	to_chat(world, "<B>Gorlex Maradeurs are approaching [station_name()]!</B>")
-	to_chat(world, "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!")
+	to_chat(world, "<B>Текущий режим игры - Ядерная катастрофа!</B>")
+	to_chat(world, "<B>Мародёры Gorlex приближаются к [station_name_ru()]!</B>")
+	to_chat(world, "НаноТрейзен перевозили ядерную боеголовку на военную базу. Транспортный корабль загадочным образом потерял связь с системой управления космическим движением. Примерно в это же время в районе [station_name_ru()] был обнаружен странный диск. Он был идентифицирован НаноТрайзен как диск ядерной аутентификации, и теперь оперативники Синдиката прибыли, чтобы захватить диск и взорвать [station_name_ru()]! Кроме того, поблизости, скорее всего, находятся звездные корабли Синдиката, так что будьте осторожны, чтобы не потерять диск!\n<B>Синдикат</B>: Верните диск и взорвите ядерную бомбу в любой точке [station_name_ru()].\n<B>Персонал</B>: Сохраните диск и <B>улетите с диском</B> на шаттле!")

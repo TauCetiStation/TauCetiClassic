@@ -1,6 +1,10 @@
 // ----- Effects ------
 var/global/list/SOUNDIN_SHATTER   = list('sound/effects/glassbr1.ogg', 'sound/effects/glassbr2.ogg', 'sound/effects/glassbr3.ogg')
-var/global/list/SOUNDIN_EXPLOSION = list('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg')
+var/global/list/SOUNDIN_CREAK = list('sound/effects/creak1.ogg', 'sound/effects/creak2.ogg', 'sound/effects/creak3.ogg')
+var/global/list/SOUNDIN_EXPLOSION = list('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg', 'sound/effects/explosion3.ogg')
+var/global/list/SOUNDIN_EXPLOSION_FAR = list('sound/effects/explosionfar1.ogg', 'sound/effects/explosionfar2.ogg')
+var/global/list/SOUNDIN_EXPLOSION_ECHO = list('sound/effects/explosion_echo.ogg')
+var/global/list/SOUNDIN_EXPLOSION_CREAK = list('sound/effects/explosioncreak1.ogg', 'sound/effects/explosioncreak2.ogg')
 var/global/list/SOUNDIN_SPARKS    = list('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg')
 var/global/list/SOUNDIN_BODYFALL  = list('sound/effects/bodyfall1.ogg', 'sound/effects/bodyfall2.ogg', 'sound/effects/bodyfall3.ogg', 'sound/effects/bodyfall4.ogg')
 var/global/list/SOUNDIN_PAGETURN  = list('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
@@ -36,6 +40,21 @@ var/global/list/SOUNDIN_FBCOUGH = list('sound/voice/mob/fbcough_1.ogg', 'sound/v
 var/global/list/SOUNDIN_MBCOUGH = list('sound/voice/mob/mbcough_1.ogg', 'sound/voice/mob/mbcough_2.ogg', 'sound/voice/mob/mbcough_3.ogg')
 var/global/list/SOUNDIN_LAUGH_MALE = list('sound/voice/laugh/human_male/laugh_male-1.ogg', 'sound/voice/laugh/human_male/laugh_male-2.ogg', 'sound/voice/laugh/human_male/laugh_male-3.ogg', 'sound/voice/laugh/human_male/laugh_male-4.ogg', 'sound/voice/laugh/human_male/laugh_male-5.ogg', 'sound/voice/laugh/human_male/laugh_male-6.ogg', 'sound/voice/laugh/human_male/laugh_male-7.ogg','sound/voice/laugh/human_male/laugh_male-8.ogg', 'sound/voice/laugh/human_male/laugh_male-9.ogg')
 var/global/list/SOUNDIN_LAUGH_FEMALE = list('sound/voice/laugh/human_female/laugh_female-1.ogg', 'sound/voice/laugh/human_female/laugh_female-2.ogg', 'sound/voice/laugh/human_female/laugh_female-3.ogg', 'sound/voice/laugh/human_female/laugh_female-4.ogg', 'sound/voice/laugh/human_female/laugh_female-5.ogg', 'sound/voice/laugh/human_female/laugh_female-6.ogg', 'sound/voice/laugh/human_female/laugh_female-7.ogg','sound/voice/laugh/human_female/laugh_female-8.ogg', 'sound/voice/laugh/human_female/laugh_female-9.ogg')
+var/global/list/SOUNDIN_HMM_THINK_MALE 		= list('sound/voice/hmm/hmm_think_male_1.ogg', 'sound/voice/hmm/hmm_think_male_2.ogg', 'sound/voice/hmm/hmm_think_male_3.ogg', 'sound/voice/hmm/hmm_think_male_4.ogg', 'sound/voice/hmm/hmm_think_male_5.ogg', 'sound/voice/hmm/hmm_think_male_6.ogg', 'sound/voice/hmm/hmm_think_male_7.ogg')
+var/global/list/SOUNDIN_HMM_THINK_FEMALE 	= list('sound/voice/hmm/hmm_think_female_1.ogg', 'sound/voice/hmm/hmm_think_female_2.ogg', 'sound/voice/hmm/hmm_think_female_3.ogg')
+var/global/list/SOUNDIN_HMM_QUESTION_MALE 	= list('sound/voice/hmm/hmm_question_male_1.ogg', 'sound/voice/hmm/hmm_question_male_2.ogg', 'sound/voice/hmm/hmm_question_male_3.ogg', 'sound/voice/hmm/hmm_question_male_4.ogg', 'sound/voice/hmm/hmm_question_male_5.ogg', 'sound/voice/hmm/hmm_question_male_6.ogg')
+var/global/list/SOUNDIN_HMM_QUESTION_FEMALE = list('sound/voice/hmm/hmm_question_female_1.ogg')
+var/global/list/SOUNDIN_HMM_EXCLAIM_FEMALE 	= list('sound/voice/hmm/hmm_exclaim_female_1.ogg', 'sound/voice/hmm/hmm_exclaim_female_2.ogg')
+var/global/list/SOUNDIN_HMM_EXCLAIM_MALE 	= list('sound/voice/hmm/hmm_exclaim_male_1.ogg', 'sound/voice/hmm/hmm_exclaim_male_2.ogg', 'sound/voice/hmm/hmm_exclaim_male_3.ogg', 'sound/voice/hmm/hmm_exclaim_male_4.ogg', 'sound/voice/hmm/hmm_exclaim_male_5.ogg')
+var/global/list/SOUNDIN_WOO_MALE 	= list('sound/voice/woo/woo_male_1.ogg', 'sound/voice/woo/woo_male_2.ogg', 'sound/voice/woo/woo_male_3.ogg', 'sound/voice/woo/woo_male_4.ogg', 'sound/voice/woo/woo_male_5.ogg', 'sound/voice/woo/woo_male_6.ogg')
+var/global/list/SOUNDIN_WOO_FEMALE 	= list('sound/voice/woo/woo_female_1.ogg', 'sound/voice/woo/woo_female_2.ogg', 'sound/voice/woo/woo_female_3.ogg', 'sound/voice/woo/woo_female_4.ogg', 'sound/voice/woo/woo_female_5.ogg')
+var/global/list/SOUNDIN_SIGH_MALE   = list('sound/voice/sigh/sigh_male.ogg')
+var/global/list/SOUNDIN_SIGH_FEMALE = list('sound/voice/sigh/sigh_female.ogg')
+var/global/list/SOUNDIN_GASP_MALE   = list('sound/voice/gasp/gasp_male_1.ogg', 'sound/voice/gasp/gasp_male_2.ogg', 'sound/voice/gasp/gasp_male_3.ogg', 'sound/voice/gasp/gasp_male_4.ogg')
+var/global/list/SOUNDIN_GASP_FEMALE   = list('sound/voice/gasp/gasp_female_1.ogg', 'sound/voice/gasp/gasp_female_2.ogg', 'sound/voice/gasp/gasp_female_3.ogg', 'sound/voice/gasp/gasp_female_4.ogg', 'sound/voice/gasp/gasp_female_5.ogg')
+var/global/list/SOUNDIN_SNEEZE_MALE   	= list('sound/voice/sneeze/sneeze_male.ogg', 'sound/voice/sneeze/sneeze_neutral.ogg')
+var/global/list/SOUNDIN_SNEEZE_FEMALE   = list('sound/voice/sneeze/sneeze_female.ogg', 'sound/voice/sneeze/sneeze_neutral.ogg')
+
 // Human's pain
 var/global/list/SOUNDIN_FEMALE_LIGHT_PAIN   = list('sound/voice/mob/pain/female/light_1.ogg', 'sound/voice/mob/pain/female/light_2.ogg', 'sound/voice/mob/pain/female/light_3.ogg', 'sound/voice/mob/pain/female/light_4.ogg', 'sound/voice/mob/pain/female/light_5.ogg', 'sound/voice/mob/pain/female/light_6.ogg', 'sound/voice/mob/pain/female/light_7.ogg', 'sound/voice/mob/pain/female/light_8.ogg')
 var/global/list/SOUNDIN_FEMALE_HEAVY_PAIN   = list('sound/voice/mob/pain/female/heavy_1.ogg', 'sound/voice/mob/pain/female/heavy_2.ogg', 'sound/voice/mob/pain/female/heavy_3.ogg', 'sound/voice/mob/pain/female/heavy_4.ogg', 'sound/voice/mob/pain/female/heavy_5.ogg', 'sound/voice/mob/pain/female/heavy_6.ogg')
@@ -48,6 +67,10 @@ var/global/list/SOUNDIN_MALE_WHINER_PAIN    = list('sound/voice/mob/pain/male/pa
 // Skrell's emotes
 var/global/list/SOUNDIN_LAUGH_SKRELL_MALE = list('sound/voice/laugh/skrell_male/laugh_male-1.ogg', 'sound/voice/laugh/skrell_male/laugh_male-2.ogg', 'sound/voice/laugh/skrell_male/laugh_male-3.ogg', 'sound/voice/laugh/skrell_male/laugh_male-4.ogg', 'sound/voice/laugh/skrell_male/laugh_male-5.ogg', 'sound/voice/laugh/skrell_male/laugh_male-6.ogg', 'sound/voice/laugh/skrell_male/laugh_male-7.ogg','sound/voice/laugh/skrell_male/laugh_male-8.ogg', 'sound/voice/laugh/skrell_male/laugh_male-9.ogg')
 var/global/list/SOUNDIN_LAUGH_SKRELL_FEMALE = list('sound/voice/laugh/skrell_female/laugh_female-1.ogg', 'sound/voice/laugh/skrell_female/laugh_female-2.ogg', 'sound/voice/laugh/skrell_female/laugh_female-3.ogg', 'sound/voice/laugh/skrell_female/laugh_female-4.ogg', 'sound/voice/laugh/skrell_female/laugh_female-5.ogg', 'sound/voice/laugh/skrell_female/laugh_female-6.ogg', 'sound/voice/laugh/skrell_female/laugh_female-7.ogg','sound/voice/laugh/skrell_female/laugh_female-8.ogg', 'sound/voice/laugh/skrell_female/laugh_female-9.ogg')
+// Insectoid's emotes
+var/global/list/SOUNDIN_LAUGH_INSECTOID = list('sound/voice/Bug.ogg')
+var/global/list/SOUNDIN_GRUNT_INSECTOID = list('sound/voice/BugHiss.ogg')
+var/global/list/SOUNDIN_SCREAM_INSECTOID = list('sound/voice/BugBuzz.ogg')
 // Xenomorph's emotes
 var/global/list/SOUNDIN_XENOMORPH_TALK  = list('sound/voice/xenomorph/talk_1.ogg', 'sound/voice/xenomorph/talk_2.ogg', 'sound/voice/xenomorph/talk_3.ogg', 'sound/voice/xenomorph/talk_4.ogg')
 var/global/list/SOUNDIN_XENOMORPH_ROAR  = list('sound/voice/xenomorph/roar_1.ogg', 'sound/voice/xenomorph/roar_2.ogg')
@@ -57,6 +80,8 @@ var/global/list/SOUNDIN_XENOMORPH_GROWL = list('sound/voice/xenomorph/growl_1.og
 var/global/list/SOUNDIN_HUNTER_LEAP = list('sound/voice/xenomorph/leap_1.ogg', 'sound/voice/xenomorph/leap_2.ogg')
 var/global/list/SOUNDIN_XENOMORPH_CHESTBURST = list('sound/voice/xenomorph/chestburst_1.ogg', 'sound/voice/xenomorph/chestburst_2.ogg')
 var/global/list/SOUNDIN_XENOMORPH_SPLITACID = list('sound/voice/xenomorph/spitacid_1.ogg', 'sound/voice/xenomorph/spitacid_2.ogg')
+// Silicon's sound
+var/global/list/SOUNDIN_SILICON_PAIN = list('sound/voice/silicon/damage/borg_damage-1.ogg', 'sound/voice/silicon/damage/borg_damage-2.ogg', 'sound/voice/silicon/damage/borg_damage-3.ogg')
 // Beepsky
 var/global/list/SOUNDIN_BEEPSKY = list('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
 
@@ -67,14 +92,18 @@ var/global/list/SOUNDIN_RIGBREATH   = list('sound/misc/rigbreath1.ogg', 'sound/m
 var/global/list/SOUNDIN_BREATHMASK  = list('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')
 var/global/list/SOUNDIN_DESCERATION = list('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
 
+// ----- Punches -----
+var/global/list/SOUNDIN_PUNCH_MEDIUM    = list('sound/effects/mob/hits/medium_1.ogg', 'sound/effects/mob/hits/medium_2.ogg', 'sound/effects/mob/hits/medium_3.ogg', 'sound/effects/mob/hits/medium_4.ogg', 'sound/effects/mob/hits/medium_5.ogg')
+var/global/list/SOUNDIN_PUNCH_HEAVY     = list('sound/effects/mob/hits/heavy_1.ogg', 'sound/effects/mob/hits/heavy_2.ogg', 'sound/effects/mob/hits/heavy_3.ogg', 'sound/effects/mob/hits/heavy_4.ogg')
+var/global/list/SOUNDIN_PUNCH_VERYHEAVY = list('sound/effects/mob/hits/veryheavy_1.ogg', 'sound/effects/mob/hits/veryheavy_2.ogg', 'sound/effects/mob/hits/veryheavy_3.ogg', 'sound/effects/mob/hits/veryheavy_4.ogg')
+
 // ----- Weapons -----
 // Melee
 var/global/list/SOUNDIN_GENHIT = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-var/global/list/SOUNDIN_PUNCH  = list('sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
 // ----- Items -----
 // Medical
-var/global/list/SOUNDIN_BANDAGE = list('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
+var/global/list/SOUNDIN_BANDAGE = list('sound/items/bandage1.ogg', 'sound/items/bandage2.ogg')
 var/global/list/SOUNDIN_KNIFE_CUTTING = list('sound/items/knife_cutting1.ogg', 'sound/items/knife_cutting2.ogg', 'sound/items/knife_cutting3.ogg')
 
 // ----- Footsteps -----
@@ -135,6 +164,17 @@ var/global/list/footstep = list(
 		'sound/effects/mob/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_WATER_SHALLOW = list(SOUNDIN_WATER_SHALLOW, 100, -1),
 	FOOTSTEP_WATER_DEEP = list(SOUNDIN_WATER_DEEP, 100, 0),
+	FOOTSTEP_SNOWSTEP = list(list(
+		'sound/effects/mob/footstep/snowstep1.ogg',
+		'sound/effects/mob/footstep/snowstep2.ogg',
+		'sound/effects/mob/footstep/snowstep3.ogg',
+		'sound/effects/mob/footstep/snowstep4.ogg',
+		'sound/effects/mob/footstep/snowstep5.ogg',
+		'sound/effects/mob/footstep/snowstep6.ogg',
+		'sound/effects/mob/footstep/snowstep7.ogg',
+		'sound/effects/mob/footstep/snowstep8.ogg',
+		'sound/effects/mob/footstep/snowstep9.ogg'), 100, 0),
+	FOOTSTEP_ICESTEP = list(list('sound/effects/icestep.ogg'), 100, 0),
 )
 
 //bare footsteps lists
@@ -174,6 +214,17 @@ var/global/list/barefootstep = list(
 		'sound/effects/mob/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_WATER_SHALLOW = list(SOUNDIN_WATER_SHALLOW, 100, -1),
 	FOOTSTEP_WATER_DEEP = list(SOUNDIN_WATER_DEEP, 100, 0),
+	FOOTSTEP_SNOWSTEP = list(list(
+		'sound/effects/mob/footstep/snowstep1.ogg',
+		'sound/effects/mob/footstep/snowstep2.ogg',
+		'sound/effects/mob/footstep/snowstep3.ogg',
+		'sound/effects/mob/footstep/snowstep4.ogg',
+		'sound/effects/mob/footstep/snowstep5.ogg',
+		'sound/effects/mob/footstep/snowstep6.ogg',
+		'sound/effects/mob/footstep/snowstep7.ogg',
+		'sound/effects/mob/footstep/snowstep8.ogg',
+		'sound/effects/mob/footstep/snowstep9.ogg'), 100, 0),
+	FOOTSTEP_ICESTEP = list(list('sound/effects/icestep.ogg'), 100, 0),
 )
 
 //claw footsteps lists
@@ -213,6 +264,17 @@ var/global/list/clawfootstep = list(
 		'sound/effects/mob/footstep/lava3.ogg'), 100, -2),
 	FOOTSTEP_WATER_SHALLOW = list(SOUNDIN_WATER_SHALLOW, 100, -1),
 	FOOTSTEP_WATER_DEEP = list(SOUNDIN_WATER_DEEP, 100, 0),
+	FOOTSTEP_SNOWSTEP = list(list(
+		'sound/effects/mob/footstep/snowstep1.ogg',
+		'sound/effects/mob/footstep/snowstep2.ogg',
+		'sound/effects/mob/footstep/snowstep3.ogg',
+		'sound/effects/mob/footstep/snowstep4.ogg',
+		'sound/effects/mob/footstep/snowstep5.ogg',
+		'sound/effects/mob/footstep/snowstep6.ogg',
+		'sound/effects/mob/footstep/snowstep7.ogg',
+		'sound/effects/mob/footstep/snowstep8.ogg',
+		'sound/effects/mob/footstep/snowstep9.ogg'), 100, 0),
+	FOOTSTEP_ICESTEP = list(list('sound/effects/icestep.ogg'), 100, 0),
 )
 
 //heavy footsteps list
@@ -226,5 +288,16 @@ var/global/list/heavyfootstep = list(
 		'sound/effects/mob/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_WATER_SHALLOW = list(SOUNDIN_WATER_SHALLOW, 100, -1),
 	FOOTSTEP_WATER_DEEP = list(SOUNDIN_WATER_DEEP, 100, 0),
+	FOOTSTEP_SNOWSTEP = list(list(
+		'sound/effects/mob/footstep/snowstep1.ogg',
+		'sound/effects/mob/footstep/snowstep2.ogg',
+		'sound/effects/mob/footstep/snowstep3.ogg',
+		'sound/effects/mob/footstep/snowstep4.ogg',
+		'sound/effects/mob/footstep/snowstep5.ogg',
+		'sound/effects/mob/footstep/snowstep6.ogg',
+		'sound/effects/mob/footstep/snowstep7.ogg',
+		'sound/effects/mob/footstep/snowstep8.ogg',
+		'sound/effects/mob/footstep/snowstep9.ogg'), 100, 0),
+	FOOTSTEP_ICESTEP = list(list('sound/effects/icestep.ogg'), 100, 0),
 )
 

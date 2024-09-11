@@ -1,4 +1,4 @@
-var/const/SAFETY_COOLDOWN = 100
+var/global/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler
 	name = "crusher"
@@ -29,6 +29,8 @@ var/const/SAFETY_COOLDOWN = 100
 	update_icon()
 
 /obj/machinery/recycler/RefreshParts()
+	..()
+
 	var/amt_made = 0
 	var/prob_mod = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
@@ -111,7 +113,7 @@ var/const/SAFETY_COOLDOWN = 100
 				eat(AM)
 			else
 				stop(AM)
-		else if(istype(AM, /obj/item))
+		else if(isitem(AM))
 			recycle(AM)
 		else // Can't recycle
 			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)

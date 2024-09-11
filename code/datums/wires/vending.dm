@@ -1,8 +1,8 @@
-var/const/VENDING_WIRE_THROW      = 1
-var/const/VENDING_WIRE_CONTRABAND = 2
-var/const/VENDING_WIRE_ELECTRIFY  = 4
-var/const/VENDING_WIRE_IDSCAN     = 8
-var/const/VENDING_WIRE_SHUT_UP    = 16
+var/global/const/VENDING_WIRE_THROW      = 1
+var/global/const/VENDING_WIRE_CONTRABAND = 2
+var/global/const/VENDING_WIRE_ELECTRIFY  = 4
+var/global/const/VENDING_WIRE_IDSCAN     = 8
+var/global/const/VENDING_WIRE_SHUT_UP    = 16
 
 /datum/wires/vending
 	holder_type = /obj/machinery/vending
@@ -31,7 +31,7 @@ var/const/VENDING_WIRE_SHUT_UP    = 16
 	. += "The [V.scan_id ? "purple" : "yellow"] light is on."
 	. += "The blue light is [V.shut_up ? "off" : "on"]."
 
-/datum/wires/vending/update_cut(index, mended)
+/datum/wires/vending/update_cut(index, mended, mob/user)
 	var/obj/machinery/vending/V = holder
 
 	switch(index)

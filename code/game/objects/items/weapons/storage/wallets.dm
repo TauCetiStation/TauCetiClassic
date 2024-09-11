@@ -6,6 +6,7 @@
 	w_class = SIZE_TINY
 	can_hold = list(
 		/obj/item/weapon/spacecash,
+		/obj/item/weapon/ewallet,
 		/obj/item/weapon/card,
 		/obj/item/clothing/mask/cigarette,
 		/obj/item/device/flashlight/pen,

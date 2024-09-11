@@ -10,13 +10,18 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 
 	suit_store = /obj/item/weapon/gun/energy/gun
-	belt = /obj/item/device/pda/heads/hos
+	belt = /obj/item/weapon/melee/chainofcommand
 	l_pocket_back = /obj/item/weapon/handcuffs
+	l_pocket = /obj/item/device/pda/heads/hos
 	r_pocket = /obj/item/device/flash
 
 	implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
 
 	back_style = BACKPACK_STYLE_SECURITY
+
+/datum/outfit/job/hos/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
+		implants += /obj/item/weapon/implant/obedience
 
 // WARDEN OUTFIT
 /datum/outfit/job/warden
@@ -34,9 +39,21 @@
 	l_hand_back = /obj/item/weapon/handcuffs
 
 	backpack_contents = null
-	implants = list(/obj/item/weapon/implant/mind_protect/mindshield)
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY
+
+/datum/outfit/job/warden/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		implants += /obj/item/weapon/implant/mind_protect/loyalty
+		implants += /obj/item/weapon/implant/dexplosive
+		head = /obj/item/clothing/head/soft/nt_pmc_cap
+		uniform = /obj/item/clothing/under/tactical
+		uniform_f = /obj/item/clothing/under/tactical
+		gloves = /obj/item/clothing/gloves/swat
+		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
+		glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
+		ADD_TRAIT(H, TRAIT_NO_CLONE, ROUNDSTART_TRAIT)
 
 // DETECTIVE OUTFIT
 /datum/outfit/job/detective
@@ -68,9 +85,18 @@
 	l_hand_back = /obj/item/weapon/handcuffs
 	l_pocket = /obj/item/device/flash
 
-	implants = list(/obj/item/weapon/implant/mind_protect/mindshield)
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY
+
+/datum/outfit/job/officer/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		implants += /obj/item/weapon/implant/mind_protect/loyalty
+		implants += /obj/item/weapon/implant/dexplosive
+		uniform = /obj/item/clothing/under/syndicate
+		uniform_f = /obj/item/clothing/under/syndicate
+		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
+		ADD_TRAIT(H, TRAIT_NO_CLONE, ROUNDSTART_TRAIT)
 
 // FORENSIC OUTFIT
 /datum/outfit/job/forensic
@@ -79,7 +105,7 @@
 	uniform = /obj/item/clothing/under/rank/forensic_technician
 	suit = /obj/item/clothing/suit/storage/forensics/red
 	gloves = /obj/item/clothing/gloves/black
-	shoes = /obj/item/clothing/shoes/red
+	shoes = /obj/item/clothing/shoes/laceup
 	belt = /obj/item/device/pda/forensic
 	l_ear = /obj/item/device/radio/headset/headset_sec
 
@@ -100,6 +126,13 @@
 	l_hand_back = /obj/item/weapon/handcuffs
 	r_hand = /obj/item/weapon/book/manual/wiki/security_space_law
 
-	implants = list(/obj/item/weapon/implant/mind_protect/mindshield)
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY
+
+/datum/outfit/job/cadet/pre_equip(mob/living/carbon/human/H)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		uniform = /obj/item/clothing/under/syndicate/tacticool
+		uniform_f = /obj/item/clothing/under/syndicate/tacticool
+		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
+

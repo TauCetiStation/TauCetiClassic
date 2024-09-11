@@ -8,7 +8,7 @@
 	if(already_completed)
 		return OBJECTIVE_WIN
 
-	if(target && target.current && istype(target.current, /mob/living/carbon/human))
+	if(target && target.current && ishuman(target.current))
 		if(target.current.stat == DEAD)
 			return OBJECTIVE_LOSS
 

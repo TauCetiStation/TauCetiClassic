@@ -19,12 +19,19 @@
 	var/config_max_users = 0
 	var/config_min_users = 0
 
+	var/votable = FALSE
+	var/voteweight = 1
+
 	var/traits = null
 	var/space_ruin_levels = 2
 	var/space_empty_levels = 1
 	var/load_junkyard = TRUE
 
+	var/environment_lighting = "starlight"
 	var/minetype = "asteroid"
+	var/smartlight_preset = "default"
+
+	var/map_module = null
 
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
@@ -136,6 +143,15 @@
 	if("station_image" in json)
 		station_image = json["station_image"]
 
+	if("environment_lighting" in json)
+		environment_lighting = json["environment_lighting"]
+
+	if("smartlight_preset" in json)
+		smartlight_preset = json["smartlight_preset"]
+
+	if("map_module" in json)
+		map_module = json["map_module"]
+
 	defaulted = FALSE
 	return TRUE
 #undef CHECK_EXISTS
@@ -146,6 +162,26 @@
 	. = list()
 	for (var/file in map_file)
 		. += "maps/[map_path]/[file]"
+
+/datum/map_config/proc/GetFullMapName()
+	var/mapname = map_name
+	if (src == config.defaultmap)
+		mapname += " (Default)"
+
+	if (config_min_users > 0 || config_max_users > 0)
+		mapname += " \["
+		if (config_min_users > 0)
+			mapname += "[config_min_users]"
+		else
+			mapname += "0"
+		mapname += "-"
+		if (config_max_users > 0)
+			mapname += "[config_max_users]"
+		else
+			mapname += "inf"
+		mapname += "\]"
+	
+	return mapname
 
 /datum/map_config/proc/MakeNextMap()
 	return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")

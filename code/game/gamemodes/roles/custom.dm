@@ -28,6 +28,9 @@
 	return dat
 
 /datum/role/custom/Topic(href, href_list)
+	if(!check_rights(R_ADMIN))
+		return
+
 	var/datum/mind/M = locate(href_list["custom_mind"])
 	if(!M)
 		return

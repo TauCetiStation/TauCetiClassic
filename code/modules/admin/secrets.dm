@@ -1,11 +1,15 @@
 /datum/admins
 	var/current_tab = 0
 
-	var/list/datum/secrets_menu/secrets_menu = list()
+	var/list/datum/tgui_secrets/tgui_secrets = list()
 
 	var/static/datum/announcement/station/gravity_off/announce_gravity_off = new
 	var/static/datum/announcement/station/gravity_on/announce_gravity_on = new
 	var/static/datum/announcement/centcomm/access_override/announce_override = new
+
+/datum/admins/Destroy()
+	QDEL_LIST_ASSOC_VAL(tgui_secrets)
+	return ..()
 
 /datum/admins/proc/Secrets()
 	if(!check_rights(0))
@@ -27,6 +31,7 @@
 					<A href='?src=\ref[src];secretsadmin=manifest'>Show Crew Manifest</A><BR>
 					<A href='?src=\ref[src];secretsadmin=check_antagonist'>Show current traitors and objectives</A><BR>
 					<A href='?src=\ref[src];secretsadmin=night_shift_set'>Set Night Shift Mode</A><BR>
+					<A href='?src=\ref[src];secretsadmin=smartlight_set'>Set Smart Light Mode</A><BR>
 					<A href='?src=\ref[src];secretsadmin=clear_virus'>Cure all diseases currently in existence</A><BR>
 					<A href='?src=\ref[src];secretsadmin=restore_air'>Restore air in your zone</A><BR>
 					<h4>Bombs</h4>
@@ -76,6 +81,7 @@
 					<A href='?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
 					<h4>Do something stupid</h4>
 					<A href='?src=\ref[src];secretsfun=spawncompletesandwich'>Create a Complete Sandwich</A><BR>
+					<A href='?src=\ref[src];secretsfun=forcedquality'>Force a \"Random\" Quality</A><BR>
 					"}
 
 		if(2) // OOC Events
@@ -164,7 +170,7 @@
 		if("monkey")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","M")
-			for(var/mob/living/carbon/human/H in human_list)
+			for(var/mob/living/carbon/human/H as anything in human_list)
 				spawn(0)
 					H.monkeyize()
 			ok = 1
@@ -172,7 +178,7 @@
 		if("corgi")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","M")
-			for(var/mob/living/carbon/human/H in human_list)
+			for(var/mob/living/carbon/human/H as anything in human_list)
 				spawn(0)
 					H.corgize()
 			ok = 1
@@ -246,7 +252,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","PW")
 			message_admins("<span class='notice'>[key_name_admin(usr)] teleported all players to the prison station.</span>")
-			for(var/mob/living/carbon/human/H in human_list)
+			for(var/mob/living/carbon/human/H as anything in human_list)
 				var/turf/loc = find_loc(H)
 				var/security = 0
 				if(!is_station_level(loc.z) || prisonwarped.Find(H))
@@ -261,7 +267,7 @@
 				if(!security)
 					//strip their stuff before they teleport into a cell :downs:
 					for(var/obj/item/weapon/W in H)
-						if(istype(W, /obj/item/organ/external))
+						if(isbodypart(W))
 							continue
 							//don't strip organs
 						H.drop_from_inventory(W)
@@ -322,23 +328,22 @@
 		if("togglebombcap")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BC")
-			switch(MAX_EXPLOSION_RANGE)
-				if(14)	MAX_EXPLOSION_RANGE = 16
-				if(16)	MAX_EXPLOSION_RANGE = 20
-				if(20)	MAX_EXPLOSION_RANGE = 28
-				if(28)	MAX_EXPLOSION_RANGE = 56
-				if(56)	MAX_EXPLOSION_RANGE = 128
-				if(128)	MAX_EXPLOSION_RANGE = 14
-			var/range_dev = MAX_EXPLOSION_RANGE *0.25
-			var/range_high = MAX_EXPLOSION_RANGE *0.5
-			var/range_low = MAX_EXPLOSION_RANGE
-			message_admins("<span class='warning'><b> [key_name_admin(usr)] changed the bomb cap to [range_dev], [range_high], [range_low]</b></span>")
-			log_admin("[key_name(usr)] changed the bomb cap to [MAX_EXPLOSION_RANGE]")
+			var/new_cap = input("Enter new cap value, up to 128. Default is [SSexplosions.MAX_EX_LIGHT_RANGE].", "Set Cap") as num|null
+			if(isnull(new_cap))
+				return
+			new_cap = clamp(round(new_cap), 0, 128)
+			SSexplosions.MAX_EX_DEVESTATION_RANGE = round(new_cap * 0.25)
+			SSexplosions.MAX_EX_HEAVY_RANGE = round(new_cap * 0.5)
+			SSexplosions.MAX_EX_LIGHT_RANGE = new_cap
+			SSexplosions.MAX_EX_FLASH_RANGE = new_cap
+			//SSexplosions.MAX_EX_FLAME_RANGE = new_cap
+			message_admins("<span class='warning'><b> [key_name_admin(usr)] changed the bomb cap to [SSexplosions.MAX_EX_DEVESTATION_RANGE], [SSexplosions.MAX_EX_HEAVY_RANGE], [SSexplosions.MAX_EX_LIGHT_RANGE]</b></span>")
+			log_admin("[key_name(usr)] changed the bomb cap to [new_cap]")
 		// Ghost Mode
 		if("flicklights")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","FL")
-			while(!usr.stat)
+			while(usr.stat == CONSCIOUS)
 				//knock yourself out to stop the ghosts
 				for(var/mob/M in player_list)
 					if(M.stat != DEAD && prob(25))
@@ -401,7 +406,7 @@
 		if("friendai")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","FA")
-			for(var/mob/camera/Eye/ai/aE in ai_eyes_list)
+			for(var/mob/camera/Eye/ai/aE as anything in ai_eyes_list)
 				aE.icon_state = "ai_friend"
 			for(var/obj/machinery/ai_status_display/A in ai_status_display_list)
 				A.emotion = "Friend Computer"
@@ -450,8 +455,7 @@
 			feedback_add_details("admin_secrets_fun_used","SG")
 			for(var/obj/item/clothing/under/W in world)
 				W.icon_state = "schoolgirl"
-				W.item_state = "w_suit"
-				W.item_color = "schoolgirl"
+				W.item_state = "schoolgirl"
 			message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
 			announcement_ping.play("animes")
 		// Egalitarian Station Mode
@@ -467,7 +471,7 @@
 		if("dorf")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","DF")
-			for(var/mob/living/carbon/human/H in human_list)
+			for(var/mob/living/carbon/human/H as anything in human_list)
 				H.f_style = "Dwarf Beard"
 				H.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
@@ -508,6 +512,20 @@
 			feedback_add_details("admin_secrets_fun_used","DASANDWICH")
 			var/obj/item/weapon/reagent_containers/food/snacks/csandwich/CS = new(get_turf(usr))
 			CS.complete()
+		if("forcedquality")
+			if(!check_rights(R_EVENT|R_FUN))
+				to_chat(usr, "<span class='warning'>You don't have permissions for this</span>")
+				return
+			if(!SSqualities)
+				to_chat(usr, "<span class='warning'>Please wait untill Qualities Subsystem loads</span>")
+				return
+			var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_by_name
+			if(!quality_name)
+				return
+
+			var/datum/quality/Q = SSqualities.qualities_by_name[quality_name]
+			SSqualities.forced_quality_type = Q.type
+
 		if("global_sound_speed")
 			if(!check_rights(R_SOUNDS))
 				return
@@ -536,7 +554,7 @@
 			var/choice1 = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
 			if(choice1 == "Yes")
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
-				for(var/mob/living/carbon/M in carbon_list)
+				for(var/mob/living/carbon/M as anything in carbon_list)
 					if(M.virus2.len)
 						for(var/ID in M.virus2)
 							var/datum/disease2/disease/V = M.virus2[ID]
@@ -555,7 +573,7 @@
 		// Restore air in your zone
 		if("restore_air") // this is unproper way to restore turfs default gas values, since you can delete sleeping agent for example.
 			var/turf/simulated/T = get_turf(usr)
-			if((istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
+			if((isfloorturf(T) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
 				var/datum/gas_mixture/GM = T.zone.air
 
 				for(var/g in gas_data.gases)
@@ -630,7 +648,7 @@
 		if("manifest")
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
-			for(var/mob/living/carbon/human/H in human_list)
+			for(var/mob/living/carbon/human/H as anything in human_list)
 				if(H.ckey)
 					dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
 			dat += "</table>"
@@ -646,9 +664,9 @@
 		if("DNA")
 			var/dat = ""
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
-			for(var/mob/living/carbon/human/H in human_list)
+			for(var/mob/living/carbon/human/H as anything in human_list)
 				if(H.dna && H.ckey)
-					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
+					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.b_type]</td></tr>"
 			dat += "</table>"
 
 			var/datum/browser/popup = new(usr, "DNA", "Showing DNA from blood", 440, 410)
@@ -659,7 +677,7 @@
 		if("fingerprints")
 			var/dat = ""
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
-			for(var/mob/living/carbon/human/H in human_list)
+			for(var/mob/living/carbon/human/H as anything in human_list)
 				if(H.ckey)
 					if(H.dna && H.dna.uni_identity)
 						dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
@@ -678,16 +696,35 @@
 			var/val = tgui_alert(usr, "What do you want to set night shift to?", "Night Shift", list("On", "Off", "Automatic"))
 			switch(val)
 				if("Automatic")
-					SSnightshift.can_fire = TRUE
-					SSnightshift.check_nightshift()
+					SSsmartlight.can_fire = TRUE
+					SSsmartlight.check_nightshift()
 				if("On")
-					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(TRUE)
+					SSsmartlight.can_fire = FALSE
+					SSsmartlight.toggle_nightshift(TRUE)
 				if("Off")
-					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(FALSE)
+					SSsmartlight.can_fire = FALSE
+					SSsmartlight.toggle_nightshift(FALSE)
 			if(val)
 				message_admins("[key_name_admin(usr)] switched night shift mode to '[val]'.")
+				log_admin("[key_name(usr)] switched night shift mode to '[val]'.")
+
+		if("smartlight_set")
+			var/val = tgui_alert(usr, "What do you want to set smartlight to?", "Smartlight", list("Force Mode", "Cancel Forced Mode"))
+			var/custom_mode
+			switch(val)
+				if("Force Mode")
+					custom_mode = input("Select new lighting mode. Station will be locked in this mode.", "Force Mode") as null|anything in light_modes_by_name
+					if(custom_mode)
+						SSsmartlight.forced_admin_mode = TRUE
+						SSsmartlight.can_fire = FALSE
+						SSsmartlight.update_mode(light_modes_by_name[custom_mode], TRUE)
+				if("Cancel Forced Mode")
+					SSsmartlight.can_fire = TRUE
+					SSsmartlight.forced_admin_mode = FALSE
+					SSsmartlight.reset_smartlight()
+			if(val)
+				message_admins("[key_name_admin(usr)] switched smartlight mode to '[val]'[custom_mode && ": '[custom_mode]'"].")
+				log_admin("[key_name(usr)] switched smartlight mode to '[val]'[custom_mode && ": '[custom_mode]'"].")
 		// Put everyone to sleep
 		if("mass_sleep")
 			for(var/mob/living/L in global.living_list)

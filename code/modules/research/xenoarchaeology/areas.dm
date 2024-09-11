@@ -2,6 +2,8 @@
 /area/asteroid/research_outpost
 	name = "Research Outpost"
 	icon_state = "anomaly"
+	ambience = list('sound/ambience/rnd_1.ogg', 'sound/ambience/rnd_2.ogg')
+	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/asteroid/research_outpost/hallway
 	name = "Research Outpost Hallway"
@@ -10,6 +12,7 @@
 /area/asteroid/research_outpost/gearstore
 	name = "Expedition Preparation"
 	icon_state = "anog"
+	looped_ambience = 'sound/ambience/loop_mineeva.ogg'
 
 /area/asteroid/research_outpost/power
 	name = "Research Outpost Power"
@@ -18,10 +21,14 @@
 /area/asteroid/research_outpost/atmos
 	name = "Research Outpost Atmospherics"
 	icon_state = "atmos"
+	ambience = list('sound/ambience/atmos_1.ogg', 'sound/ambience/atmos_2.ogg')
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/asteroid/research_outpost/maint
 	name = "Research Outpost Maintenance"
 	icon_state = "maintcentral"
+	looped_ambience = 'sound/ambience/loop_maintenance.ogg'
+	sound_environment = SOUND_AREA_MAINTENANCE
 
 /area/asteroid/research_outpost/iso1
 	name = "Isolation Cell"

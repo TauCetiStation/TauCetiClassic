@@ -10,15 +10,14 @@ Pipelines + Other Objects -> Pipe network
 
 */
 
-#define PIPE_VISIBLE_LEVEL   2
-#define PIPE_HIDDEN_LEVEL    1
-
 /obj/machinery/atmospherics
 	anchored = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = STATIC_ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER // under wires
+
+	resistance_flags = FIRE_PROOF | CAN_BE_HIT
 
 	var/nodealert = FALSE
 	var/can_unwrench = FALSE
@@ -35,6 +34,10 @@ Pipelines + Other Objects -> Pipe network
 	var/list/obj/machinery/atmospherics/nodes
 
 	var/atmos_initalized = FALSE
+	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_NOVICE)
+
+	// mostly for pipes and components, sets level we need to show them and attaches undertile component
+	var/undertile = FALSE // FALSE
 
 /obj/machinery/atmospherics/atom_init(mapload, process = TRUE)
 	nodes = new(device_type)
@@ -56,7 +59,14 @@ Pipelines + Other Objects -> Pipe network
 
 	SetInitDirections()
 
+	if(undertile)
+		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
+		RegisterSignal(src, COMSIG_OBJ_LEVELUPDATE, PROC_REF(update_underlays))
+
 /obj/machinery/atmospherics/Destroy()
+	if(SSair.stop_airnet_processing)
+		return ..()
+
 	for(DEVICE_TYPE_LOOP)
 		nullifyNode(I)
 
@@ -92,7 +102,7 @@ Pipelines + Other Objects -> Pipe network
 
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src, node_connects[I]))
-			if(can_be_node(target, I))
+			if(can_be_node(target, I) && target.can_be_node(src))
 				if(check_connect_types(target, src))
 					NODE_I = target
 					break
@@ -151,11 +161,11 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		return
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		if(user.is_busy()) return
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
-			if (level == 1 && isturf(T) && T.intact)
+			if (HAS_TRAIT(src, TRAIT_UNDERFLOOR) && isturf(T) && T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 				to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
 				return 1
 
@@ -166,13 +176,20 @@ Pipelines + Other Objects -> Pipe network
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
 			add_fingerprint(user)
+			if(!do_skill_checks())
+				return
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
-			if (internal_pressure > 2 * ONE_ATMOSPHERE)
+			if (internal_pressure > 2 * ONE_ATMOSPHERE && !issilicon(user))
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if(!((H.shoes && (H.shoes.flags & AIR_FLOW_PROTECT)) || (H.wear_suit && (H.wear_suit.flags & AIR_FLOW_PROTECT))))
+						unsafe_wrenching = TRUE // you forgot to activate magboots
+				else
+					unsafe_wrenching = TRUE //Oh dear oh dear
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
-				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (W.use_tool(src, user, 20, volume = 50))
+			if (W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_NOVICE)))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",
@@ -209,21 +226,21 @@ Pipelines + Other Objects -> Pipe network
 	user.throw_at(target, range, speed)
 
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		if(can_unwrench)
-			var/obj/item/pipe/stored = new(loc, null, null, src)
-			transfer_fingerprints_to(stored)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(can_unwrench)
+		var/obj/item/pipe/stored = new(loc, null, null, src)
+		transfer_fingerprints_to(stored)
 	..()
 
 /obj/machinery/atmospherics/construction(pipe_type, obj_color)
-	var/turf/T = get_turf(src)
-	if(level == PIPE_HIDDEN_LEVEL) // so we only hide ones that are hideable.
-		level = !T.is_plating() ? PIPE_VISIBLE_LEVEL : PIPE_HIDDEN_LEVEL
 	atmos_init()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
-		A.atmos_init()
-		A.addMember(src)
+		if(can_be_node(A) && A.can_be_node(src))
+			A.atmos_init()
+			A.addMember(src)
 	build_network()
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
@@ -236,7 +253,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/add_underlay(turf/T, obj/machinery/atmospherics/node, direction, icon_connect_type)
 	if(node)
-		if(!T.is_plating() && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
+		if(T.underfloor_accessibility < UNDERFLOOR_VISIBLE && undertile && istype(node, /obj/machinery/atmospherics/pipe))
 			//underlays += icon_manager.get_atmos_icon("underlay_down", direction, color_cache_name(node))
 			underlays += icon_manager.get_atmos_icon("underlay", direction, color_cache_name(node), "down" + icon_connect_type)
 		else

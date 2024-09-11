@@ -12,14 +12,43 @@
 	volume = 50
 	var/halved = FALSE // if set to TRUE pill cannot be split in halves again
 
+/obj/item/weapon/reagent_containers/pill/twopart
+	flags = NOREACT
+
 /obj/item/weapon/reagent_containers/pill/atom_init()
 	. = ..()
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
 
+/obj/item/weapon/reagent_containers/pill/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/pen))
+		var/new_name = sanitize_safe(input(user,"Name:","Name your pill!", "Pill") as text|null, MAX_NAME_LEN)
+		if(!new_name)
+			return
+		if (!user.Adjacent(src))
+			return
+		name = new_name
+		return
+	if(istype(W, /obj/item/weapon/reagent_containers/pill))
+		var/obj/item/weapon/reagent_containers/pill/P1 = W
+		if(P1.halved && halved)
+			var/obj/item/weapon/reagent_containers/pill/twopart/P = new(get_turf(src))
+			P1.reagents.trans_to(P, P1.reagents.total_volume)
+			reagents.trans_to(P, reagents.total_volume)
+			to_chat(user, "<span class='notice'>You unite [src] with other halved pill.</span>")
+			P.name = "Pill"
+			P.icon_state = P1.icon_state
+			qdel(P1)
+			qdel(src)
+		return
+	return ..()
+
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
 	if(halved)
 		return
+	// reset flags and call reaction for pill/twopart pills
+	flags &= ~NOREACT
+	reagents.handle_reactions()
 	user.drop_from_inventory(src)
 	var/volume_half = reagents.total_volume / 2
 	for(var/part in list("top", "bottom"))
@@ -50,7 +79,9 @@
 	else
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
 
-		if(!do_mob(user, M)) return
+		var/ingestion_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NOVICE), -0.2)
+		if(!do_mob(user, M, ingestion_time))
+			return
 
 		user.drop_from_inventory(src) //icon update
 		user.visible_message("<span class='warning'>[user] forces [M] to swallow [src].</span>")
@@ -85,6 +116,15 @@
 			qdel(src)
 
 	return
+
+/obj/item/weapon/reagent_containers/pill/examine(mob/user)
+	..()
+	if(!is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)))
+		return
+	to_chat(user, "It contains:")
+	if(reagents.reagent_list.len)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			to_chat(user, "<span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>")
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END
@@ -126,15 +166,6 @@
 /obj/item/weapon/reagent_containers/pill/cyanide/atom_init()
 	. = ..()
 	reagents.add_reagent("cyanide", 50)
-
-/obj/item/weapon/reagent_containers/pill/adminordrazine
-	name = "Adminordrazine pill"
-	desc = "It's magic. We don't have to explain it."
-	icon_state = "pill16"
-
-/obj/item/weapon/reagent_containers/pill/adminordrazine/atom_init()
-	. = ..()
-	reagents.add_reagent("adminordrazine", 50)
 
 /obj/item/weapon/reagent_containers/pill/stox
 	name = "Sleeping pill (15u)"
@@ -253,8 +284,18 @@
 /obj/item/weapon/reagent_containers/pill/zoom/atom_init()
 	. = ..()
 	reagents.add_reagent("impedrezene", 10)
-	reagents.add_reagent("synaptizine", 5)
-	reagents.add_reagent("hyperzine", 5)
+	reagents.add_reagent("tramadol", 10)
+	reagents.add_reagent("stimulants",5)
+	reagents.add_reagent("toxin", 5)
+
+/obj/item/weapon/reagent_containers/pill/hallucination_pills
+	name = "Hallucination pills"
+	desc = "Ahaha oh wow."
+	icon_state = "pill9"
+
+/obj/item/weapon/reagent_containers/pill/hallucination_pills/atom_init()
+	. = ..()
+	reagents.add_reagent("mindbreaker", 15)
 
 /obj/item/weapon/reagent_containers/pill/lipozine
 	name = "Lipozine (15u)"
@@ -290,3 +331,12 @@
 	. = ..()
 	reagents.add_reagent("hyronalin", 5)
 	reagents.add_reagent("anti_toxin", 10)
+
+/obj/item/weapon/reagent_containers/pill/adminordrazine
+	name = "AB-X-7921 compound pill"
+	desc = "Experimental chemical agent which is believed to completely heal a human being of any damage upon consumption."
+	icon_state = "pillA"
+
+/obj/item/weapon/reagent_containers/pill/adminordrazine/atom_init()
+	. = ..()
+	reagents.add_reagent("adminordrazine", 1)

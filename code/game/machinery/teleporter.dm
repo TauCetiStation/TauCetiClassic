@@ -173,7 +173,7 @@
 				continue
 			else
 				var/mob/M = I.loc
-				if (M.stat == 2)
+				if (M.stat == DEAD)
 					if (M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
@@ -188,6 +188,8 @@
 				L[tmpname] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") in L
+		if(!can_still_interact_with(user))
+			return
 		target = L[desc]
 
 	else
@@ -210,6 +212,8 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 		var/desc = input("Please select a station to lock in.", "Locking Computer") in L
+		if(!can_still_interact_with(user))
+			return
 		target = L[desc]
 		if(target)
 			var/obj/machinery/teleport/station/trg = target
@@ -261,6 +265,8 @@
 	return ..()
 
 /obj/machinery/teleport/hub/RefreshParts()
+	..()
+
 	var/A = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		A += M.rating
@@ -307,6 +313,11 @@
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
+					var/list/stabilizer = M.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
+					for(var/obj/item/rig_module/teleporter_stabilizer/s in stabilizer)
+						if (s.stabilize_teleportation(2))
+							calibrated = 0
+							return
 					// Effects similar to mutagen.
 					if(!human.species.flags[IS_SYNTHETIC])
 						randmuti(human)
@@ -317,7 +328,7 @@
 				//			M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
 				//			human.set_species(/datum/species/fly)
 
-						human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
+						irradiate_one_mob(human, rand(120 - accurate * 40, 180 - accurate * 60))
 			calibrated = 0
 	return
 
@@ -336,10 +347,9 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
-//obj/machinery/teleport/hub/syndicate/atom_init()
-//	. = ..()
-//	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
-//	RefreshParts()
+/obj/machinery/teleport/hub/attack_ghost(mob/user)
+	if(power_station?.teleporter_console?.target)
+		user.abstract_move(power_station.teleporter_console.target)
 
 /obj/machinery/teleport/station
 	name = "station"
@@ -370,6 +380,8 @@
 	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()
+	..()
+
 	var/E
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		E += C.rating
@@ -399,15 +411,36 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user)
-	if(ismultitool(W) && !panel_open)
-		var/obj/item/device/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
-			if(linked_stations.len < efficiency)
-				linked_stations.Add(M.buffer)
-				M.buffer = null
-				to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
-			else
-				to_chat(user, "<span class='alert'>This station cant hold more information, try to use better parts.</span>")
+	if(ispulsing(W) && panel_open)
+		var/actions = list("Download data in buffer", "Load data from buffer", "Connect to nearby machinery")
+		var/choice = tgui_input_list(user, "Choose your action", "Action", actions)
+		if(!Adjacent(user))
+			return
+		switch(choice)
+			if("Download data in buffer")
+				var/obj/item/device/multitool/M = W
+				M.buffer = src
+				to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
+				return
+			if("Load data from buffer")
+				var/obj/item/device/multitool/M = W
+				if(istype(M))
+					if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
+						if(linked_stations.len < efficiency)
+							linked_stations.Add(M.buffer)
+							M.buffer = null
+							to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+						else
+							to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
+					else if(M.buffer == src)
+						to_chat(user, "<span class='alert'>You can't load information about the same station.</span>")
+					else
+						to_chat(user, "<span class='alert'>Something went wrong!</span>")
+			if("Connect to nearby machinery")
+				link_console_and_hub()
+				to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
+				return
+
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
 		return
@@ -416,17 +449,6 @@
 		return
 
 	default_deconstruction_crowbar(W)
-
-	if(panel_open)
-		if(ismultitool(W))
-			var/obj/item/device/multitool/M = W
-			M.buffer = src
-			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
-			return
-		if(iswirecutter(W))
-			link_console_and_hub()
-			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
-			return
 
 /obj/machinery/teleport/station/attack_hand(mob/user)
 	. = ..()

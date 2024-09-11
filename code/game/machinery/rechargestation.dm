@@ -32,6 +32,8 @@
 	update_icon()
 
 /obj/machinery/recharge_station/RefreshParts()
+	..()
+
 	recharge_speed = 0
 	repairs = 0
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
@@ -192,7 +194,7 @@
 
 /obj/machinery/recharge_station/proc/process_occupant()
 	if(src.occupant)
-		if (istype(occupant, /mob/living/silicon/robot))
+		if (isrobot(occupant))
 			var/mob/living/silicon/robot/R = occupant
 			if(R.module)
 				R.module.respawn_consumable(R)

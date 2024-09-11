@@ -1,49 +1,56 @@
 /datum/controller/subsystem/ticker/proc/scoreboard(completions, mob/one_mob)
-	if(achievements.len)
+	if(SSStatistics.achievements.len)
 		completions += "<div class='Section'>[achievement_declare_completion()]</div>"
+	if(medal_list.len)
+		completions += "<div class='Section'>[show_medals()]</div>"
 
 	// Who is alive/dead, who escaped
-	for (var/mob/living/silicon/ai/I in ai_list)
+	for (var/mob/living/silicon/ai/I as anything in ai_list)
 		if (I.stat == DEAD && is_station_level(I.z))
-			score["deadaipenalty"] = 1
-			score["crew_dead"] += 1
+			SSStatistics.score.deadaipenalty = 1
+			SSStatistics.score.crew_dead += 1
 
-	for (var/mob/living/carbon/human/I in human_list)
+	for (var/mob/living/carbon/human/I as anything in human_list)
 		if (I.stat == DEAD && is_station_level(I.z))
-			score["crew_dead"] += 1
+			SSStatistics.score.crew_dead += 1
 		if (I.job == "Clown")
 			for(var/thing in I.attack_log)
 				if(findtext(thing, "<font color='orange'>")) //</font>
-					score["clownabuse"]++
+					SSStatistics.score.clownabuse++
 
 	var/area/escape_zone = get_area_by_type(/area/shuttle/escape/centcom)
 
 	var/cashscore = 0
 	var/dmgscore = 0
-	for(var/mob/living/carbon/human/E in human_list)
+	for(var/mob/living/carbon/human/E as anything in human_list)
 		if(E.stat == DEAD)
 			continue
 		cashscore = 0
 		dmgscore = 0
 		var/turf/location = get_turf(E.loc)
 		if(location in escape_zone) // Escapee Scores
-			if(E.mind && E.mind.initial_account)
-				cashscore += E.mind.initial_account.money
+			if(E.mind)
+				var/datum/money_account/MA = get_account(E.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+				if(MA)
+					cashscore += MA.money
 
 			for (var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
 				cashscore += C2.worth
 
-			if (cashscore > score["richestcash"])
-				score["richestcash"] = cashscore
-				score["richestname"] = E.real_name
-				score["richestjob"] = E.job
-				score["richestkey"] = E.key
+			for (var/obj/item/weapon/ewallet/EW in get_contents_in_object(E, /obj/item/weapon/ewallet))
+				cashscore += EW.get_money()
+
+			if (cashscore > SSStatistics.score.richestcash)
+				SSStatistics.score.richestcash = cashscore
+				SSStatistics.score.richestname = E.real_name
+				SSStatistics.score.richestjob = E.job
+				SSStatistics.score.richestkey = E.key
 			dmgscore = E.bruteloss + E.fireloss + E.toxloss + E.oxyloss
-			if (dmgscore > score["dmgestdamage"])
-				score["dmgestdamage"] = dmgscore
-				score["dmgestname"] = E.real_name
-				score["dmgestjob"] = E.job
-				score["dmgestkey"] = E.key
+			if (dmgscore > SSStatistics.score.dmgestdamage)
+				SSStatistics.score.dmgestdamage = dmgscore
+				SSStatistics.score.dmgestname = E.real_name
+				SSStatistics.score.dmgestjob = E.job
+				SSStatistics.score.dmgestkey = E.key
 
 	// Check station's power levels
 	for (var/obj/machinery/power/apc/A in apc_list)
@@ -51,27 +58,23 @@
 			continue
 		for (var/obj/item/weapon/stock_parts/cell/C in A.contents)
 			if (C.charge < 2300)
-				score["powerloss"] += 1 // 200 charge leeway
+				SSStatistics.score.powerloss += 1 // 200 charge leeway
 
 	// Check how much uncleaned mess is on the station
 	for (var/obj/effect/decal/cleanable/M in decal_cleanable)
 		if (!is_station_level(M.z))
 			continue
 		if (istype(M, /obj/effect/decal/cleanable/blood/gibs))
-			score["mess"] += 3
+			SSStatistics.score.mess += 3
 		if (istype(M, /obj/effect/decal/cleanable/blood))
-			score["mess"] += 1
+			SSStatistics.score.mess += 1
 		if (istype(M, /obj/effect/decal/cleanable/vomit))
-			score["mess"] += 1
+			SSStatistics.score.mess += 1
 
-	// How many antags did we reconvert using loyalty implant.
-	for(var/datum/faction/faction in SSticker.mode.factions)
-		for(var/datum/role/reconverted in faction.members)
-			if(!reconverted.antag)
-				score["rec_antags"]++
-	for(var/datum/role/reconverted in SSticker.mode.orphaned_roles)
-		if(!reconverted.antag)
-			score["rec_antags"]++
+	// How many antags did we deconvert
+	for(var/name in global.deconverted_roles)
+		var/list/L = global.deconverted_roles[name]
+		SSStatistics.score.rec_antags += L.len
 
 	//Research Levels
 	var/research_levels = 0
@@ -81,45 +84,47 @@
 			research_levels += T.level
 
 	if(research_levels)
-		score["researchdone"] += research_levels
+		SSStatistics.score.researchdone += research_levels
 
 	// Bonus Modifiers
-	var/rolesuccess = score["roleswon"] * 250
-	var/deathpoints = score["crew_dead"] * 250 //done
-	var/researchpoints = score["researchdone"] * 30
-	var/eventpoints = score["eventsendured"] * 50
-	var/escapoints = score["crew_escaped"] * 25 //done
-	var/harvests = score["stuffharvested"] //done
-	var/shipping = score["stuffshipped"] * 75
-	var/mining = score["oremined"] //done
-	var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
-	var/power = score["powerloss"] * 30
-	var/plaguepoints = score["disease"] * 30
-	var/messpoints = score["mess"] != 0 ? score["mess"] : null
+	var/rolesuccess = SSStatistics.score.roleswon * 250
+	var/deathpoints = SSStatistics.score.crew_dead * 250 //done
+	var/researchpoints = SSStatistics.score.researchdone * 30
+	var/eventpoints = SSStatistics.score.eventsendured * 50
+	var/escapoints = SSStatistics.score.crew_escaped * 25 //done
+	var/harvests = SSStatistics.score.stuffharvested //done
+	var/shipping = SSStatistics.score.stuffshipped * 75
+	var/mining = SSStatistics.score.oremined //done
+	var/meals = SSStatistics.score.meals * 5 //done, but this only counts cooked meals, not drinks served
+	var/power = SSStatistics.score.powerloss * 30
+	var/plaguepoints = SSStatistics.score.disease * 30
+	var/messpoints = SSStatistics.score.mess != 0 ? SSStatistics.score.mess : null
 
 	for(var/datum/faction/F in mode.factions)
 		F.build_scorestat()
 
 	// Good Things
-	score["crewscore"] += shipping + harvests + mining + meals + researchpoints + eventpoints + escapoints
+	SSStatistics.score.crewscore += shipping + harvests + mining + meals + researchpoints + eventpoints + escapoints
 
 	if (power == 0)
-		score["crewscore"] += 2500
-		score["powerbonus"] = 1
-	if (score["mess"] == 0)
-		score["crewscore"] += 3000
-		score["messbonus"] = 1
-	if (score["allarrested"])
-		score["crewscore"] *= 3 // This needs to be here for the bonus to be applied properly
+		SSStatistics.score.crewscore += 2500
+		SSStatistics.score.powerbonus = 1
+	if (SSStatistics.score.mess == 0)
+		SSStatistics.score.crewscore += 3000
+		SSStatistics.score.messbonus = 1
+	if (SSStatistics.score.allarrested)
+		SSStatistics.score.crewscore *= 3 // This needs to be here for the bonus to be applied properly
 
 	// Bad Things
-	score["crewscore"] -= rolesuccess
-	score["crewscore"] -= deathpoints
-	if (score["deadaipenalty"])
-		score["crewscore"] -= 250
-	score["crewscore"] -= power
-	score["crewscore"] -= messpoints
-	score["crewscore"] -= plaguepoints
+	SSStatistics.score.crewscore -= rolesuccess
+	SSStatistics.score.crewscore -= deathpoints
+	if (SSStatistics.score.deadaipenalty)
+		SSStatistics.score.crewscore -= 250
+	SSStatistics.score.crewscore -= power
+	SSStatistics.score.crewscore -= messpoints
+	SSStatistics.score.crewscore -= plaguepoints
+
+	completions += scorestats()
 
 	if(one_mob)
 		one_mob.scorestats(completions)
@@ -128,13 +133,10 @@
 			if(E.client)
 				E.scorestats(completions)
 
-/mob/proc/scorestats(completions)//omg why we count this for every player
-	// Show the score - might add "ranks" later
-	to_chat(src, "<b>The crew's final score is:</b>")
-	to_chat(src, "<b><font size='4'>[score["crewscore"]]</font></b>")
-
+#define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "[points] очко", "[points] очка", "[points] очков")
+/datum/controller/subsystem/ticker/proc/scorestats(completions)
 	var/dat = completions
-	dat += {"<h2>Round Statistics and Score</h2><div class='Section'>"}
+	dat += {"<h2>Статистика и рейтинги раунда</h2><div class='Section'>"}
 
 	for(var/datum/faction/F in SSticker.mode.factions)
 		var/stat = F.get_scorestat()
@@ -142,70 +144,87 @@
 			dat += stat
 			dat += "<hr>"
 
+	if(global.deconverted_roles.len)
+		dat += "<B>Деконвертированные роли:</B><BR>"
+		dat += "<ul>"
+		for(var/name in global.deconverted_roles)
+			dat += "<li>"
+			dat += "[name]: [get_english_list(global.deconverted_roles[name])]."
+			dat += "</li>"
+		dat += "</ul>"
+
 	var/totalfunds = station_account.money
-	dat += {"<B><U>GENERAL STATS</U></B><BR>
-	<U>THE GOOD:</U><BR>
-	<B>Useful Crates Shipped:</B> [score["stuffshipped"]] ([score["stuffshipped"] * 75] Points)<BR>
-	<B>Hydroponics Harvests:</B> [score["stuffharvested"]] ([score["stuffharvested"]] Points)<BR>
-	<B>Ore Mined:</B> [score["oremined"]] ([score["oremined"]] Points)<BR>
-	<B>Refreshments Prepared:</B> [score["meals"]] ([score["meals"] * 5] Points)<BR>
-	<B>Research Completed:</B> [score["researchdone"]] ([score["researchdone"] * 30] Points)<BR>"}
-	dat += "<B>Shuttle Escapees:</B> [score["crew_escaped"]] ([score["crew_escaped"] * 25] Points)<BR>"
-	dat += {"<B>Random Events Endured:</B> [score["eventsendured"]] ([score["eventsendured"] * 50] Points)<BR>
-	<B>Whole Station Powered:</B> [score["powerbonus"] ? "Yes" : "No"] ([score["powerbonus"] * 2500] Points)<BR>
-	<B>Ultra-Clean Station:</B> [score["mess"] ? "No" : "Yes"] ([score["messbonus"] * 3000] Points)<BR><BR>
-	<U>THE BAD:</U><BR>
-	<B>Roles successful:</B> [score["roleswon"]] (-[score["roleswon"] * 250] Points)<BR>
-	<B>Dead Bodies on Station:</B> [score["crew_dead"]] (-[score["crew_dead"] * 250] Points)<BR>
-	<B>Uncleaned Messes:</B> [score["mess"]] (-[score["mess"]] Points)<BR>
-	<B>Station Power Issues:</B> [score["powerloss"]] (-[score["powerloss"] * 30] Points)<BR>
-	<B>Rampant Diseases:</B> [score["disease"]] (-[score["disease"] * 30] Points)<BR>
-	<B>AI Destroyed:</B> [score["deadaipenalty"] ? "Yes" : "No"] (-[score["deadaipenalty"] * 250] Points)<BR><BR>
-	<U>THE WEIRD</U><BR>
-	<B>Final Station Budget:</B> $[num2text(totalfunds,50)]<BR>"}
+	dat += {"<B><U>ОБЩАЯ СТАТИСТИКА</U></B><BR>
+	<U>ХОРОШО:</U><BR>
+	<B>Ящиков отгружено:</B> [SSStatistics.score.stuffshipped] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.stuffshipped * 75)])<BR>
+	<B>Урожая собрано:</B> [SSStatistics.score.stuffharvested] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.stuffharvested)])<BR>
+	<B>Руды добыто:</B> [SSStatistics.score.oremined] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.oremined)])<BR>
+	<B>Приготовлено закусок:</B> [SSStatistics.score.meals] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.meals * 5)])<BR>
+	<B>Исследований завершено:</B> [SSStatistics.score.researchdone] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.researchdone * 30)])<BR>"}
+	dat += "<B>Улетевшие на шаттле и капсулах:</B> [SSStatistics.score.crew_escaped] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.crew_escaped * 25)])<BR>"
+	dat += {"<B>Случайные события пережили:</B> [SSStatistics.score.eventsendured] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.eventsendured * 50)])<BR>
+	<B>Электропитание по всей станции:</B> [SSStatistics.score.powerbonus ? "Да" : "Нет"] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.powerbonus * 2500)])<BR>
+	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.messbonus * 3000)])<BR><BR>
+	<U>ПЛОХО:</U><BR>
+	<B>Успешность действий антагонистов:</B> [SSStatistics.score.roleswon] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.roleswon * 250)])<BR>
+	<B>Мёртвые тела на станции:</B> [SSStatistics.score.crew_dead] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.crew_dead * 250)])<BR>
+	<B>Не убрано мусора:</B> [SSStatistics.score.mess] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.mess)])<BR>
+	<B>Проблемы с электропитанием на станции:</B> [SSStatistics.score.powerloss] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.powerloss * 30)])<BR>
+	<B>Распространено заболеваний:</B> [SSStatistics.score.disease] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.disease * 30)])<BR>
+	<B>ИИ уничтожен:</B> [SSStatistics.score.deadaipenalty ? "Да" : "Нет"] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.deadaipenalty * 250)] )<BR><BR>
+	<U>Остальное:</U><BR>
+	<B>Итоговый бюджет станции:</B> $[num2text(totalfunds,50)]<BR>"}
+
 	var/profit = totalfunds - global.initial_station_money
 	if (profit > 0)
-		dat += "<B>Station Profit:</B> +[num2text(profit,50)]<BR>"
+		dat += "<B>Прибыль станции:</B> +[num2text(profit,50)]<BR>"
 	else if (profit < 0)
-		dat += "<B>Station Deficit:</B> [num2text(profit,50)]<BR>"
-	dat += {"<B>Food Eaten:</b> [score["foodeaten"]]<BR>
-	<B>Times a Clown was Abused:</B> [score["clownabuse"]]<BR><BR>"}
-	if (score["crew_escaped"])
-		dat += "<B>Most Richest Escapee:</B> [score["richestname"]], [score["richestjob"]]: [score["richestcash"]] credits ([score["richestkey"]])<BR>"
-		dat += "<B>Most Battered Escapee:</B> [score["dmgestname"]], [score["dmgestjob"]]: [score["dmgestdamage"]] damage ([score["dmgestkey"]])<BR>"
+		dat += "<B>Убытки станции:</B> [num2text(profit,50)]<BR>"
+	dat += {"<B>Еды съедено:</b> [SSStatistics.score.foodeaten]<BR>
+	<B>Случаи жестокого обращения с клоуном:</B> [SSStatistics.score.clownabuse]<BR><BR>"}
+	if (SSStatistics.score.crew_escaped)
+		dat += "<B>Самый богатый эвакуировавшийся:</B> [SSStatistics.score.richestname], [SSStatistics.score.richestjob]: [SSStatistics.score.richestcash] кредитов ([SSStatistics.score.richestkey])<BR>"
+		dat += "<B>Самый избитый эвакуировавшийся:</B> [SSStatistics.score.dmgestname], [SSStatistics.score.dmgestjob]: [SSStatistics.score.dmgestdamage] урона ([SSStatistics.score.dmgestkey])<BR>"
 	else
-		dat += "The station wasn't evacuated or no one escaped!<BR>"
+		dat += "Шаттл эвакуации не был вызван, или никто не эвакуировался!<BR>"
 	dat += {"<HR><BR>
-	<B><U>FINAL SCORE: [score["crewscore"]]</U></B><BR>"}
-	score["rating"] = "The Aristocrats!"
-	switch(score["crewscore"])
-		if(-99999 to -50000) score["rating"] = "Even the Singularity Deserves Better"
-		if(-49999 to -5000) score["rating"] = "Singularity Fodder"
-		if(-4999 to -1000) score["rating"] = "You're All Fired"
-		if(-999 to -500) score["rating"] = "A Waste of Perfectly Good Oxygen"
-		if(-499 to -250) score["rating"] = "A Wretched Heap of Scum and Incompetence"
-		if(-249 to -100) score["rating"] = "Outclassed by Lab Monkeys"
-		if(-99 to -21) score["rating"] = "The Undesirables"
-		if(-20 to -1) score["rating"] = "Not So Good"
-		if(0) score["rating"] = "Nothing of Value"
-		if(1 to 20) score["rating"] = "Ambivalently Average"
-		if(21 to 99) score["rating"] = "Not Bad, but Not Good"
-		if(100 to 249) score["rating"] = "Skillful Servants of Science"
-		if(250 to 499) score["rating"] = "Best of a Good Bunch"
-		if(500 to 999) score["rating"] = "Lean Mean Machine Thirteen"
-		if(1000 to 4999) score["rating"] = "Promotions for Everyone"
-		if(5000 to 9999) score["rating"] = "Ambassadors of Discovery"
-		if(10000 to 49999) score["rating"] = "The Pride of Science Itself"
-		if(50000 to INFINITY) score["rating"] = "NanoTrasen's Finest"
-	dat += "<B><U>RATING:</U></B> [score["rating"]]"
+	<B><U>ФИНАЛЬНЫЙ СЧЁТ: [SSStatistics.score.crewscore]</U></B><BR>"}
+	SSStatistics.score.rating = "Аристократы!"
+	switch(SSStatistics.score.crewscore)
+		if(-99999 to -50000) SSStatistics.score.rating = "Даже сингулярность заслуживает большего"
+		if(-49999 to -5000) SSStatistics.score.rating = "Корм для сингулярности"
+		if(-4999 to -1000) SSStatistics.score.rating = "Вы все уволены!"
+		if(-999 to -500) SSStatistics.score.rating = "Пустая трата чистого кислорода"
+		if(-499 to -250) SSStatistics.score.rating = "Жалкая кучка подонков и некомпетентных людей"
+		if(-249 to -100) SSStatistics.score.rating = "Превзошли лабораторных обезьян"
+		if(-99 to -21) SSStatistics.score.rating = "Нежданные гости"
+		if(-20 to -1) SSStatistics.score.rating = "Могло быть и хуже"
+		if(0) SSStatistics.score.rating = "Ничего ценного"
+		if(1 to 20) SSStatistics.score.rating = "Среднестатистическая смена"
+		if(21 to 99) SSStatistics.score.rating = "Ни рыба ни мясо"
+		if(100 to 249) SSStatistics.score.rating = "Искусные служители науки"
+		if(250 to 499) SSStatistics.score.rating = "Бережливая станция 13"
+		if(500 to 999) SSStatistics.score.rating = "Образцовая команда"
+		if(1000 to 4999) SSStatistics.score.rating = "Повышение для всех!"
+		if(5000 to 9999) SSStatistics.score.rating = "Послы научных открытий"
+		if(10000 to 49999) SSStatistics.score.rating = "Гордость самой науки"
+		if(50000 to INFINITY) SSStatistics.score.rating = "Самые лучшие в НаноТрайзен!"
+	dat += "<B><U>Рейтинг:</U></B> [SSStatistics.score.rating]"
 	dat += "</div>"
+
+	log_game(dat)
+
+	return dat
+#undef PLURALIZE_RUSSIAN_POINTS
+
+/mob/proc/scorestats(completions)//omg why we count this for every player
+	// Show the score - might add "ranks" later
+	to_chat(src, "<b>Итоговый результат персонала таков:</b>")
+	to_chat(src, "<b><font size='4'>[SSStatistics.score.crewscore]</font></b>")
+
 	for(var/i in 1 to end_icons.len)
 		src << browse_rsc(end_icons[i],"logo_[i].png")
 
-	if(!endgame_info_logged)//so the End Round info only gets logged on the first player.
-		endgame_info_logged = 1
-		log_game(dat)
-
 	var/datum/browser/popup = new(src, "roundstats", "Round #[global.round_id] Stats", 1000, 600)
-	popup.set_content(dat)
+	popup.set_content(completions)
 	popup.open()

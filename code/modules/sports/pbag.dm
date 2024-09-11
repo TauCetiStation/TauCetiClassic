@@ -26,7 +26,7 @@
 	alive_mob_list -= src
 
 /mob/living/pbag/incapacitated()
-	return resting
+	return crawling
 
 /mob/living/pbag/restrained()
 	return FALSE
@@ -34,7 +34,7 @@
 /mob/living/pbag/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.do_attack_animation(src)
 
-	INVOKE_ASYNC(src, /mob/living/pbag.proc/swing, 0.2 SECONDS)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/pbag, swing), 0.2 SECONDS)
 
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	if(show_message)
@@ -55,22 +55,23 @@
 
 	ghostize(can_reenter_corpse = FALSE) // If there was a @ckey before or something.
 	ckey = attacker.ckey
+	timeofdeath = attacker.timeofdeath
 	ghosts_were_here[ckey] = world.time + 10 MINUTES
 	qdel(attacker)
 
 /mob/living/pbag/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
-	return ..(can_reenter_corpse = FALSE, bancheck = FALSE)
+	return ..(can_reenter_corpse = FALSE, bancheck = FALSE, timeofdeath = src.timeofdeath)
 
 /mob/living/pbag/UnarmedAttack(atom/A)
-	INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/pbag, swing))
 
-/mob/living/pbag/on_lay_down()
+/mob/living/pbag/crawl()
 	drop_down()
 	return TRUE
 
 /mob/living/pbag/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(ckey && !incapacitated() && !moving_diagonally)
-		INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/pbag, swing))
 		return
 	return ..()
 
@@ -78,10 +79,10 @@
 	if(ckey)
 		. = ..(capitalize(message), verb = "whispers", message_range = 1) // why not all args?
 
-/mob/living/pbag/emote(act, type, message, auto)
+/mob/living/pbag/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
 	if(ckey)
 		visible_message("<span class='notice'>[bicon(src)] [src] swings ominously...</span>")
-		INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/pbag, swing))
 
 /mob/living/pbag/helpReaction(mob/living/attacker, show_message = TRUE)
 	if(incapacitated())
@@ -91,7 +92,7 @@
 	if(gibbed)
 		var/list/pos_turfs = RANGE_TURFS(3, src)
 		for(var/i in 1 to 5)
-			var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src), null, null, FALSE)
+			var/obj/item/stack/sheet/cloth/R = new(get_turf(src))
 			R.color = color
 			var/turf/target = pick(pos_turfs)
 			R.throw_at(target, 3, 2)
@@ -154,7 +155,7 @@
 	if(bruteloss > maxHealth)
 		drop_down()
 	else
-		INVOKE_ASYNC(src, .proc/swing, damage)
+		INVOKE_ASYNC(src, PROC_REF(swing), damage)
 
 /mob/living/pbag/proc/drop_down()
 	if(ckey)
@@ -168,7 +169,7 @@
 			ghost.throw_at(T, 7, 5, src) // It will say that the bad "thrown" the ghost out. Sounds fun.
 
 	can_be_pulled = TRUE
-	resting = TRUE
+	SetCrawling(TRUE)
 	icon_state = "pbagdown"
 	my_icon_state = "pbagdown"
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
@@ -192,7 +193,7 @@
 	icon_state = "pbag"
 	my_icon_state = "pbag"
 	pixel_y = 0
-	resting = FALSE
+	SetCrawling(FALSE)
 
 /mob/living/pbag/verb/user_hang()
 	set name = "Hang Bag"
@@ -210,8 +211,8 @@
 		else
 			rejuvenate()
 
-		user.visible_message("<span class='notice'>[user] [!resting ? "secures" : "unsecures"] \the [src].</span>",
-			"<span class='notice'>You [!resting ? "secure" : "unsecure"] \the [src].</span>",
+		user.visible_message("<span class='notice'>[user] [!crawling ? "secures" : "unsecures"] \the [src].</span>",
+			"<span class='notice'>You [!crawling ? "secure" : "unsecure"] \the [src].</span>",
 			"<span class='notice'>You hear a ratchet.</span>")
 
 /mob/living/pbag/is_usable_eyes(targetzone = null)

@@ -1,15 +1,15 @@
 //Space bears!
 /mob/living/simple_animal/hostile/bear
 	name = "space bear"
-	desc = "RawrRawr!!"
+	desc = "МЕДВЕДЬ!!"
 	icon_state = "bear"
 	icon_living = "bear"
 	icon_dead = "bear_dead"
 	icon_gib = "bear_gib"
-	speak = list("RAWR!","Rawr!","GRR!","Growl!")
-	speak_emote = list("growls", "roars")
-	emote_hear = list("rawrs","grumbles","grawls")
-	emote_see = list("stares ferociously", "stomps")
+	speak = list("РРРА!","Ррра!","ГРР!","Грра!")
+	speak_emote = list("рычит")
+	emote_hear = list("рычит")
+	emote_see = list("свирепо смотрит", "топает")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -46,7 +46,7 @@
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
 	name = "Hudson"
-	desc = ""
+	desc = "Что за..."
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "pokes"
@@ -56,7 +56,7 @@
 	if(!.)
 		return
 
-	if(loc && istype(loc,/turf/space))
+	if(loc && isspaceturf(loc))
 		icon_state = "bear"
 	else
 		icon_state = "bearfloor"
@@ -85,7 +85,7 @@
 					if(stance_step in list(1,4,7)) //every 3 ticks
 						var/action = pick( list( "growls at [target]", "stares angrily at [target]", "prepares to attack [target]", "closely watches [target]" ) )
 						if(action)
-							custom_emote(1,action)
+							me_emote(action)
 			if(!found_mob)
 				stance_step--
 
@@ -96,7 +96,7 @@
 
 		if(HOSTILE_STANCE_ATTACKING)
 			if(stance_step >= 20)	//attacks for 20 ticks, then it gets tired and needs to rest
-				custom_emote(1, "is worn out and needs to rest" )
+				me_emote("устал.")
 				stance = HOSTILE_STANCE_TIRED
 				stance_step = 0
 				walk(src, 0) //This stops the bear's walking
@@ -124,16 +124,16 @@
 /mob/living/simple_animal/hostile/bear/FindTarget()
 	. = ..()
 	if(.)
-		custom_emote(1,"stares alertly at [.]")
+		me_emote("stares alertly at [.].")
 		stance = HOSTILE_STANCE_ALERT
 
 /mob/living/simple_animal/hostile/bear/LoseTarget()
 	..(5)
 
-/mob/living/simple_animal/hostile/bear/AttackingTarget()
+/mob/living/simple_animal/hostile/bear/UnarmedAttack(atom/target)
 	if(!Adjacent(target))
 		return
-	custom_emote(1, pick( list("slashes at [target]", "bites [target]") ) )
+	me_emote(pick(list("slashes at [target].", "bites [target].")))
 
 	var/damage = rand(20,30)
 
@@ -141,7 +141,7 @@
 		var/mob/living/carbon/human/H = target
 		var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(dam_zone)]
-		H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP | DAM_EDGE)
+		H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, MELEE), DAM_SHARP | DAM_EDGE)
 		return H
 	else if(isliving(target))
 		var/mob/living/L = target

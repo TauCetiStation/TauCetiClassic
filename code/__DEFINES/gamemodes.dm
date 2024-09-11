@@ -9,28 +9,35 @@
 #define F_CUSTOMSQUAD        "Custom Squad"
 #define F_DEATHSQUAD         "Nanotrasen Deathsquad"
 #define F_EMERSQUAD          "Emergency Response Team"
+#define F_EMERNUKE           "Gorlex Marauders Recon Squad"
+#define F_EMERPIRATES        "Pirate Gang"
 #define F_FAMILIES           "Families"
 #define F_HEIST              "Vox Shoal"
 #define F_HIVEMIND           "Changeling Hivemind"
+#define F_PROPS              "Props"
 #define F_REVOLUTION         "Revolution"
 #define F_SYNDIOPS           "Syndicate Operatives"
+#define F_SYNDIOPS_CROSSFIRE "Syndicate Operatives (CrossFire)"
 #define F_SYNDIESQUAD        "Syndicate Elite Strike Team"
 #define F_SHADOWLINGS        "Shadowlings"
 #define F_SPIDERCLAN         "Spider Clan"
 #define F_WIZFEDERATION      "Wizard Federation"
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
 #define F_ZOMBIES            "Zobmies"
+#define F_REPLICATORS        "Replicators"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
 #define ABDUCTOR_SCI "Abductor Scientist"
+#define ABDUCTOR_ASSISTANT "Abductor Assistant"
 #define ABDUCTED "Abducted"
 #define BORER "Cortical Borer"
 #define BLOBOVERMIND "Blob Overmind"
 #define BLOBCEREBRATE "Blob Cerebrate"
+#define BLOBBERNAUT "Blobbernaut"
 #define CHANGELING "Changeling"
 #define CULTIST "Cultist"
-#define CULT_LEADER "Cult Leader"
+#define CULT_LEADER "Cult Harbinger"
 #define DEATHSQUADIE "Death Commando"
 #define GANGSTER "Gangster"
 #define GANGSTER_LEADER "Gangster Leader"
@@ -40,11 +47,14 @@
 #define MALFBOT "Malf-Slaved Cyborg"
 #define NUKE_OP "Nuclear Operative"
 #define NUKE_OP_LEADER "Nuclear Operative Leader"
+#define LONE_OP "Solo Nuclear Operative"
 #define NINJA "Space Ninja"
+#define PROP "Prop"
 #define REV "Revolutionary"
 #define RESPONDER "Emergency Responder"
 #define SHADOW "Shadowling"
 #define SHADOW_THRALL "Thrall"
+#define SLAVE "Slave"
 #define SPACE_COP "OCD Officer"
 #define SYNDIESQUADIE "Syndicate Commando"
 #define TRAITOR "Traitor"
@@ -54,6 +64,10 @@
 #define WIZARD "Wizard"
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
+#define REPLICATOR "Replicator"
+#define PIRATE "Pirate"
+#define PRISONER "Prisoner"
+#define THIEF "Thief"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
@@ -67,9 +81,11 @@
 ///////////////// FACTION STAGES //////////////////////
 #define FS_DEFEATED    -1
 #define FS_DORMANT      0
-#define FS_ACTIVE       1
-#define FS_ENDGAME      2
-#define FS_VICTORY      3
+#define FS_START        1
+#define FS_ACTIVE       2
+#define FS_MIDGAME      3
+#define FS_ENDGAME      4
+#define FS_VICTORY      5
 
 /////////////////////// OTHERS ////////////////////////
 

@@ -33,20 +33,21 @@
 	name = "Девальвация"
 	desc = "Меняет номинал банкнот на один выше."
 	ritual_length = (50 SECONDS)
-	ritual_invocations = list("Lord, hope and support...",
-							  "...Thy Everlasting Throne, your backwater...",
-							  "...walked through the sky...",
-							  "...carried bags of money...",
-							  "...bags opened...",
-							  "...money fell...",
-							  "...I, your slave, walked along the bottom...",
-							  "...raised money...",
-							  "...carried it home...",
-							  "...lit candles...",
-							  "...gave it to mine...",
-							  "...Candles, burn...",
-							  "...money, come to the house...",)
-	invoke_msg = "...Till the end of time!"
+	ritual_invocations = list("Услышь, Всевышний, наш призыв...",
+							  "...Сокровищ сказочный прорыв...",
+							  "...на нас златым дождем прольется!...",
+							  "...И те сердца, что в унисон...",
+							  "...со всей Вселенной в ритме бьются...",
+							  "...богатств достигнут и высот...",
+							  "...и Ангелов душой коснутся...",
+							  "...Что приготовили дары...",
+							  "...для всех - несметные богатства...",
+							  "...всё есть твоё! Иди - бери!...",
+							  "...вступай в божественное братство!...", 	//help
+							  "...Фортуна! Возроди сознанье!...",   //help2 etc
+							  "...чтоб манну получить с небес!...",
+							  "...низ равен верху в век познанья!..")
+	invoke_msg = "...Для всех достаточно чудес!"
 	favor_cost = 150
 
 	needed_aspects = list(
@@ -64,12 +65,12 @@
 	name = "Улучшение"
 	desc = "Улучшает научные штуки."
 	ritual_length = (50 SECONDS)
-	ritual_invocations = list("The moon was born...",
-							  "...the force was born...",
-							  "...She endowed these things with her power...",
-							  "... As the moon and the earth never part...",
-							  "...So this item will be better forever...",)
-	invoke_msg = "...I call on all things!"
+	ritual_invocations = list("Родилась луна...",
+							  "...Родилась сила...",
+							  "...Она наделила эти вещи своей силой...",
+							  "...Как луна и земля никогда не расстаются...",
+							  "...так этот предмет всегда будет лучше...",)
+	invoke_msg = "...Я взываю ко всему сущему!"
 	favor_cost = 200
 
 	needed_aspects = list(

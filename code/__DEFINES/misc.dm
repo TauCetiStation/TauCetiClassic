@@ -1,15 +1,21 @@
+#define path2text(path) "[path]"
+
 //gets all subtypes of type
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
+
+// gets final path from /obj/random, ignores item spawn nothing chance
+#define PATH_OR_RANDOM_PATH(path) (ispath(path, /obj/random) ? random2path(path) : path)
+
+#define PM_RENDER_NAME(path) "*[path]: render name"
 
 //number of deciseconds in a day
 #define MIDNIGHT_ROLLOVER 864000
 
-//Ghost orbit types:
-#define GHOST_ORBIT_CIRCLE		"circle"
-#define GHOST_ORBIT_TRIANGLE	"triangle"
-#define GHOST_ORBIT_HEXAGON		"hexagon"
-#define GHOST_ORBIT_SQUARE		"square"
-#define GHOST_ORBIT_PENTAGON	"pentagon"
+// Define for coders.
+// If you want switch conditions to be fully specified in the switch body
+// and at the same time the empty condition do nothing.
+#define SWITCH_PASS ;
+
 
 #define TRANSITIONEDGE		7 //Distance from edge to move to another z-level
 
@@ -76,10 +82,17 @@
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
-#define EVENT_LEVEL_ROUNDSTART 1
+#define EVENT_LEVEL_FEATURE 1
 #define EVENT_LEVEL_MUNDANE 2
 #define EVENT_LEVEL_MODERATE 3
 #define EVENT_LEVEL_MAJOR 4
+
+// shows STORAGE levels deep:
+// 1 lvl: item in backpack in src
+// 2 lvl: item in box in backpack in src
+// 3 lvl: item in matchbox in box in backpack in src
+// and so on
+#define MAX_STORAGE_DEEP_LEVEL 2
 
 //defines
 #define RESIZE_DEFAULT_SIZE 1
@@ -186,11 +199,9 @@
 
 // (Bay12 = -2), but we don't have that projectile code, so...
 #define PROJECTILE_FORCE_MISS -1
-#define PROJECTILE_ACTED 0 // it means that something else has took control of bullet_act() proc and it didn't run till the end.
+#define PROJECTILE_ACTED 0
 #define PROJECTILE_ABSORBED 2
 #define PROJECTILE_ALL_OK 3
-
-#define COORD(A) "([A.x],[A.y],[A.z])"
 
 #define RUNE_WORDS list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
 
@@ -282,3 +293,125 @@
 // Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
 #define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
+
+// can_heal proc return values
+#define HEAL_EFFECTIVENESS_NONE 0
+#define HEAL_EFFECTIVENESS_HALF 0.5
+#define HEAL_EFFECTIVENESS_MAX 1
+
+// Calculates the offset n in the dir d.
+// For example, if you pass a non-horizontal dir to X_OFFSET, it will always be 0.
+// If dir is EAST, then a positive number will be returned, if WEST, then a negative one.
+#define X_OFFSET(n_steps, dir) (n_steps * (!!(dir & EAST) + !!(dir & WEST) * -1))
+#define Y_OFFSET(n_steps, dir) (n_steps * (!!(dir & NORTH) + !!(dir & SOUTH) * -1))
+
+// strips all newlines from a string, replacing them with null
+#define STRIP_NEWLINE(S) replacetextEx(S, "\n", null)
+
+/// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
+#define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
+
+//For crawl_can_use() in /mob/living
+#define IS_ABOVE(A, B) (A.layer > B.layer || A.plane > B.plane)
+
+#define CARGOSHOPNAME "ГрузТорг"
+
+// Notification action types for ghosts
+#define NOTIFY_JUMP "jump"
+#define NOTIFY_ATTACK "attack"
+#define NOTIFY_ORBIT "orbit"
+
+#define TEST_MERGE_DEFAULT_TEXT "Loading..."
+
+#define TURF_DECALS_LIMIT 4 // max of /obj/effect/decal/turf_decal in one turf
+
+#define WALLS_COLORS list("blue", "yellow", "red", "purple", "green", "beige")
+
+// todo: do something with this monster
+//       port smooth groups from tg/other sane server
+#define CAN_SMOOTH_WITH_WALLS list( \
+		/turf/unsimulated/wall, \
+		/turf/unsimulated/wall/like_a_normal, \
+		/turf/unsimulated/wall/like_a_normal/yellow, \
+		/turf/unsimulated/wall/like_a_normal/red, \
+		/turf/unsimulated/wall/like_a_normal/purple, \
+		/turf/unsimulated/wall/like_a_normal/green, \
+		/turf/unsimulated/wall/like_a_normal/beige, \
+		/turf/simulated/wall, \
+		/turf/simulated/wall/yellow, \
+		/turf/simulated/wall/red, \
+		/turf/simulated/wall/purple, \
+		/turf/simulated/wall/green, \
+		/turf/simulated/wall/beige, \
+		/turf/simulated/wall/r_wall, \
+		/turf/simulated/wall/r_wall/yellow, \
+		/turf/simulated/wall/r_wall/red, \
+		/turf/simulated/wall/r_wall/purple, \
+		/turf/simulated/wall/r_wall/green, \
+		/turf/simulated/wall/r_wall/beige, \
+		/obj/structure/falsewall, \
+		/obj/structure/falsewall/yellow, \
+		/obj/structure/falsewall/red, \
+		/obj/structure/falsewall/purple, \
+		/obj/structure/falsewall/green, \
+		/obj/structure/falsewall/beige, \
+		/obj/structure/falsewall/reinforced, \
+		/obj/structure/falsewall/reinforced/yellow, \
+		/obj/structure/falsewall/reinforced/red, \
+		/obj/structure/falsewall/reinforced/purple, \
+		/obj/structure/falsewall/reinforced/green, \
+		/obj/structure/falsewall/reinforced/beige, \
+		/obj/structure/girder, \
+		/obj/structure/girder/reinforced, \
+		/obj/structure/windowsill, \
+		/obj/structure/window/fulltile, \
+		/obj/structure/window/fulltile/phoron, \
+		/obj/structure/window/fulltile/tinted, \
+		/obj/structure/window/fulltile/polarized, \
+		/obj/structure/window/fulltile/reinforced, \
+		/obj/structure/window/fulltile/reinforced/phoron, \
+		/obj/structure/window/fulltile/reinforced/tinted, \
+		/obj/structure/window/fulltile/reinforced/polarized, \
+		/obj/structure/window/fulltile/reinforced/indestructible, \
+		/obj/machinery/door/airlock, \
+		/obj/machinery/door/airlock/centcom, \
+		/obj/machinery/door/airlock/command, \
+		/obj/machinery/door/airlock/security, \
+		/obj/machinery/door/airlock/engineering, \
+		/obj/machinery/door/airlock/medical, \
+		/obj/machinery/door/airlock/virology, \
+		/obj/machinery/door/airlock/maintenance, \
+		/obj/machinery/door/airlock/freezer, \
+		/obj/machinery/door/airlock/mining, \
+		/obj/machinery/door/airlock/atmos, \
+		/obj/machinery/door/airlock/research, \
+		/obj/machinery/door/airlock/science, \
+		/obj/machinery/door/airlock/neutral, \
+		/obj/machinery/door/airlock/highsecurity, \
+		/obj/machinery/door/airlock/vault, \
+		/obj/machinery/door/airlock/external, \
+		/obj/machinery/door/airlock/glass, \
+		/obj/machinery/door/airlock/command/glass, \
+		/obj/machinery/door/airlock/engineering/glass, \
+		/obj/machinery/door/airlock/security/glass, \
+		/obj/machinery/door/airlock/medical/glass, \
+		/obj/machinery/door/airlock/virology/glass, \
+		/obj/machinery/door/airlock/research/glass, \
+		/obj/machinery/door/airlock/mining/glass, \
+		/obj/machinery/door/airlock/atmos/glass, \
+		/obj/machinery/door/airlock/science/glass, \
+		/obj/machinery/door/airlock/science/neutral, \
+		/obj/machinery/door/airlock/maintenance_hatch, \
+)
+
+#define SMOOTH_ADAPTERS_WALLS list( \
+		/turf/simulated/wall = "wall", \
+		/obj/structure/falsewall = "wall", \
+		/obj/machinery/door/airlock = "wall", \
+		/turf/unsimulated/wall/like_a_normal = "wall", \
+)
+
+// wall don't need adapter with another wall
+#define SMOOTH_ADAPTERS_WALLS_FOR_WALLS list( \
+		/obj/machinery/door/airlock = "wall", \
+)

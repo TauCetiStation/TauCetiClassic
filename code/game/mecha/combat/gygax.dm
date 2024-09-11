@@ -7,7 +7,7 @@
 	dir_in = 1 //Facing North.
 	health = 300
 	deflect_chance = 15
-	damage_absorption = list("brute"=0.75,"fire"=1,"bullet"=0.8,"laser"=0.7,"energy"=0.85,"bomb"=1)
+	damage_absorption = list(BRUTE=0.75,BURN=1,BULLET=0.8,LASER=0.7,ENERGY=0.85,BOMB=1)
 	max_temperature = 25000
 	infra_luminosity = 6
 	var/overload_coeff = 2
@@ -22,6 +22,9 @@
 	QDEL_NULL(overload_action)
 	return ..()
 
+/obj/mecha/combat/gygax/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 3000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
 	..()
@@ -31,6 +34,15 @@
 	..()
 	overload_action.Remove(user)
 
+/obj/mecha/combat/gygax/security/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/repair_droid(src)
+	ME.attach(src)
+
 /obj/mecha/combat/gygax/ultra
 	desc = "A highly improved version of Gygax exosuit."
 	name = "Gygax Ultra"
@@ -38,10 +50,26 @@
 	initial_icon = "ultra"
 	health = 350
 	deflect_chance = 20
-	damage_absorption = list("brute"=0.65,"fire"=0.9,"bullet"=0.7,"laser"=0.6,"energy"=0.75,"bomb"=0.9)
+	damage_absorption = list(BRUTE=0.65,BURN=0.9,BULLET=0.7,LASER=0.6,ENERGY=0.75,BOMB=0.9)
 	max_temperature = 30000
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/ultra
 	animated = 1
+
+/obj/mecha/combat/gygax/ultra/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4600, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
+/obj/mecha/combat/gygax/ultra/security/atom_init() //for aspect
+	. = ..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/repair_droid(src)
+	ME.attach(src)
+
+/obj/mecha/combat/gygax/ultra/ert
+	dna_lockable = TRUE
 
 /obj/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit used by Nanotrasen Death Squads. A significantly upgraded Gygax security mech."
@@ -50,10 +78,11 @@
 	initial_icon = "darkgygax"
 	health = 400
 	deflect_chance = 25
-	damage_absorption = list("brute"=0.6,"fire"=0.8,"bullet"=0.6,"laser"=0.5,"energy"=0.65,"bomb"=0.8)
+	damage_absorption = list(BRUTE=0.6,BURN=0.8,BULLET=0.6,LASER=0.5,ENERGY=0.65,BOMB=0.8)
 	max_temperature = 45000
 	overload_coeff = 1
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark
+	dna_lockable = TRUE
 	max_equip = 4
 	step_energy_drain = 5
 
@@ -67,6 +96,7 @@
 	ME.attach(src)
 	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay(src)
 	ME.attach(src)
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/combat/gygax/dark/add_cell(obj/item/weapon/stock_parts/cell/C=null)
 	if(C)
@@ -80,6 +110,8 @@
 
 /obj/mecha/combat/gygax/proc/overload()
 	if(usr != src.occupant)
+		return
+	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to [overload? "en" : "dis"]able leg actuators overload.</span>"))
 		return
 	if(overload)
 		overload = 0

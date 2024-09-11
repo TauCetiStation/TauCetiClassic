@@ -9,8 +9,11 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
+
 	w_class = SIZE_NORMAL
-	max_storage_space = DEFAULT_BOX_STORAGE + 2 // fits all tools and around 2 extra items
+	max_w_class = SIZE_SMALL
+	max_storage_space = DEFAULT_BOX_STORAGE + 3 // fits all tools and around 2 extra items
+
 	origin_tech = "combat=1"
 	hitsound = list('sound/items/tools/toolbox-hit.ogg')
 	attack_verb = list("robusted")
@@ -20,6 +23,29 @@
 	if (src.type == /obj/item/weapon/storage/toolbox)
 		to_chat(world, "BAD: [src] ([type]) spawned at [COORD(src)]")
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/weapon/storage/toolbox/attack(mob/living/M, mob/living/user, def_zone)
+	if(!..())
+		return
+	//Clumsy used only for dna-handlers
+	if(!iscarbon(M))
+		return
+	if(def_zone != BP_HEAD)
+		return
+	var/mob/living/carbon/C = M
+	var/amount_of_effect = 4
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		var/obj/item/organ/external/head = H.get_bodypart(def_zone)
+		var/armor = H.getarmor(head, MELEE)
+		amount_of_effect = max((100 - armor) / 25, 1)
+	var/datum/status_effect/clumsy/S = C.has_status_effect(STATUS_EFFECT_CLUMSY)
+	if(!S)
+		C.AdjustClumsyStatus(amount_of_effect)
+		return
+	S.applied_times++
+	var/duration_calculate = round(amount_of_effect / S.applied_times) SECONDS
+	S.duration += duration_calculate
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
@@ -65,7 +91,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/stack/cable_coil/random(src)
 	if(prob(5))
-		new /obj/item/clothing/gloves/yellow(src)
+		new /obj/item/clothing/gloves/insulated(src)
 	else
 		new /obj/item/stack/cable_coil/random(src)
 
@@ -80,8 +106,9 @@
 	. = ..()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
-	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/weldingtool/largetank(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/glasses/welding(src)

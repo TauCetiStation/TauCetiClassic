@@ -4,24 +4,24 @@
 	var/total_TC = 0
 	var/spent_TC = 0
 	var/uplink_uses
+	var/uplink_type = "traitor"
 
 	// Dont uplink
 	var/syndicate_awareness = SYNDICATE_UNAWARE
+	var/list/datum/stat/uplink_purchase/uplink_purchases = list()
 
-/datum/component/gamemode/syndicate/Initialize(crystals)
+/datum/component/gamemode/syndicate/Initialize(crystals, type)
 	..()
 	uplink_uses = crystals
+	uplink_type = type
+
 
 /datum/component/gamemode/syndicate/Destroy()
 	return ..()
 
 /datum/component/gamemode/syndicate/proc/get_current()
 	var/datum/role/role = parent
-	var/datum/mind/M = role.antag
-	if(!M)
-		return
-
-	var/mob/living/carbon/human/traitor_mob = M.current
+	var/mob/living/carbon/human/traitor_mob = role.antag.current
 	if(!traitor_mob)
 		return
 
@@ -40,30 +40,47 @@
 		R = locate(/obj/item/device/radio) in traitor_mob.contents
 		if(!R)
 			R = locate(/obj/item/device/pda) in traitor_mob.contents
-			to_chat(traitor_mob, "Could not locate a Radio, installing in PDA instead!")
+			to_chat(traitor_mob, "Гарнитура не обнаружена, установка портативного телепортационного реле AntagCorp в КПК!")
 		if (!R)
-			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в КПК.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "PDA")
 		R = locate(/obj/item/device/pda) in traitor_mob.contents
 		if(!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
-			to_chat(traitor_mob, "Could not locate a PDA, installing into a Radio instead!")
+			to_chat(traitor_mob, "КПК не обнаружен, установка портативного телепортационного реле AntagCorp в гарнитуру!")
 		if (!R)
-			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в КПК.")
+
+	else if(traitor_mob.client.prefs.uplinklocation == "Intercom")
+		var/list/station_intercom_list = list()
+		for(var/obj/item/device/radio/intercom/I as anything in intercom_list)
+			if(is_station_level(I.z))
+				station_intercom_list += I
+
+		if(station_intercom_list.len)
+			R = pick(station_intercom_list)
+		if(!R)
+			R = locate(/obj/item/device/radio) in traitor_mob.contents
+			to_chat(traitor_mob, "Не обнаружено подходящего интеркома внутренней связи станции, установка портативного телепортационного реле AntagCorp в гарнитуру!")
+		if (!R)
+			R = locate(/obj/item/device/pda) in traitor_mob.contents
+			to_chat(traitor_mob, "Гарнитура не обнаружена, установка портативного телепортационного реле AntagCorp в КПК!")
+		if (!R)
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в КПК.")
 
 	else if(traitor_mob.client.prefs.uplinklocation == "None")
-		to_chat(traitor_mob, "You have elected to not have an AntagCorp portable teleportation relay installed!")
+		to_chat(traitor_mob, "Вы отказались от установки портативного телепортационного реле AntagCorp! Удачи.")
 		R = null
 
 	else
-		to_chat(traitor_mob, "You have not selected a location for your relay in the antagonist options! Defaulting to PDA!")
+		to_chat(traitor_mob, "Вы не указали место установки портативного телепортационного реле AntagCorp в настройках антагонистов (перед началом раунда, зайдите в Setup, далее во вкладку Roles и нажмите на \"PDA\", чтобы вам был выдан список где может быть установлен Аплинк)! По умолчанию в КПК!")
 		R = locate(/obj/item/device/pda) in traitor_mob.contents
 		if (!R)
 			R = locate(/obj/item/device/radio) in traitor_mob.contents
-			to_chat(traitor_mob, "Could not locate a PDA, installing into a Radio instead!")
+			to_chat(traitor_mob, "КПК не обнаружен, установка портативного телепортационного реле AntagCorp в гарнитуру!")
 		if (!R)
-			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
+			to_chat(traitor_mob, "К сожалению, не удалось установить портативное телепортационное реле AntagCorp ни в гарнитуру, ни в КПК.")
 
 	if (istype(R, /obj/item/device/radio))
 		// generate list of radio freqs
@@ -81,9 +98,16 @@
 		T.uses = uplink_uses
 		target_radio.hidden_uplink = T
 		target_radio.traitor_frequency = freq
-		to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
+		if(istype(target_radio, /obj/item/device/radio/intercom))
+			to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в [R.name] внутренней связи станции в районе [get_area(R)]. Просто переключитесь на нужную частоту [format_frequency(freq)] для получения доступа к скрытому функционалу.")
+			traitor_mob.mind.store_memory("<B>Радиочастота:</B> [format_frequency(freq)] ([R.name] [get_area(R)].")
+			target_radio.hidden_uplink.uses += 5
+		else
+			to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в ваш [R.name] [loc]. Просто переключитесь на нужную частоту [format_frequency(freq)] для получения доступа к скрытому функционалу.")
+			traitor_mob.mind.store_memory("<B>Радиочастота:</B> [format_frequency(freq)] ([R.name] [loc]).")
 		total_TC += target_radio.hidden_uplink.uses
+		target_radio.hidden_uplink.uplink_type = uplink_type
+
 	else if (istype(R, /obj/item/device/pda))
 		// generate a passcode if the uplink is hidden in a PDA
 		var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
@@ -92,9 +116,12 @@
 		R.hidden_uplink = T
 		var/obj/item/device/pda/P = R
 		P.lock_code = pda_pass
-		to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
-		traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
+		to_chat(traitor_mob, "Портативное телепортационное реле, сокращённо - Аплинк, было установлено в ваш [R.name] [loc]. Просто введите код выданный вам ранее \"[pda_pass]\", зайдите в настройки вашего КПК, а именно в изменения вашего рингтона, вместо \"beep\" введите тот самый код для получения доступа к скрытому функционалу.")
+		traitor_mob.mind.store_memory("<B>Код для Аплинка:</B> [pda_pass] ([R.name] [loc]).")
 		total_TC += R.hidden_uplink.uses
+		R.hidden_uplink.uplink_type = uplink_type
+
+	R.hidden_uplink.extra_purchasable += create_uplink_sales(rand(2,3), "Discounts", TRUE, get_uplink_items(R.hidden_uplink))
 
 /datum/component/gamemode/syndicate/proc/give_codewords()
 	var/mob/traitor_mob = get_current()
@@ -104,8 +131,8 @@
 	var/code_words = 0
 	if(prob(80))
 		ASSERT(global.syndicate_code_phrase.len)
-		to_chat(traitor_mob, "<u><b>Your employers provided you with the following information on how to identify possible allies:</b></u>")
-		var/code_phrase = "<b>Code Phrase</b>: [codewords2string(global.syndicate_code_phrase)]"
+		to_chat(traitor_mob, "<u><b>Ваш работодатель позаботился, чтобы вам была предоставлена информация для связи с остальными агентами, если таковы будут обнаружены:</b></u>")
+		var/code_phrase = "<b>Кодовая фраза</b>: [codewords2string(global.syndicate_code_phrase)]"
 		to_chat(traitor_mob, code_phrase)
 		traitor_mob.mind.store_memory(code_phrase)
 		syndicate_awareness = SYNDICATE_PHRASES
@@ -114,7 +141,7 @@
 
 	if(prob(80))
 		ASSERT(global.syndicate_code_response.len)
-		var/code_response = "<b>Code Response</b>: [codewords2string(global.syndicate_code_response)]"
+		var/code_response = "<b>Ответы для кодовой фразы</b>: [codewords2string(global.syndicate_code_response)]"
 		to_chat(traitor_mob, code_response)
 		traitor_mob.mind.store_memory(code_response)
 		syndicate_awareness = SYNDICATE_RESPONSE
@@ -123,12 +150,12 @@
 
 	switch(code_words)
 		if(0)
-			to_chat(traitor_mob, "Unfortunately, the Syndicate did not provide you with a code response.")
+			to_chat(traitor_mob, "К сожалению, Синдикат не предоставил вам кодовые фразы для связи с другими агентами.")
 		if(1) // half
-			to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
+			to_chat(traitor_mob, "Воспользуйтесь кодовыми словами в указанном порядке для идентификации других агентов во время разговора. Помните, что каждый может оказаться врагом.")
 		if(2)
 			syndicate_awareness = SYNDICATE_AWARE
-			to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
+			to_chat(traitor_mob, "Воспользуйтесь кодовыми словами в указанном порядке для идентификации других агентов во время разговора. Помните, что каждый может оказаться врагом.")
 
 /datum/component/gamemode/syndicate/proc/give_intel()
 	var/mob/traitor_mob = get_current()
@@ -151,36 +178,22 @@
 	var/mob/living/carbon/human/traitor_mob = mob
 
 	if (traitor_mob.mind?.assigned_role == "Clown")
-		to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		traitor_mob.mutations.Remove(CLUMSY)
+		to_chat(traitor_mob, "Ваши специальные тренировки позволили вам преодолеть клоунскую неуклюжесть, что позволит вам без вреда для себя применять любое вооружение.")
+		REMOVE_TRAIT(traitor_mob, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
-	var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)
-	if(!guplink)
-		give_uplink()
-	else
-		guplink.uses = uplink_uses
-		total_TC = uplink_uses
-
-	var/datum/role/R = parent
-	for(var/datum/objective/target/dehead/D in R.objectives.GetObjectives())
-		var/obj/item/device/biocan/B = new (traitor_mob.loc)
-		var/list/slots = list(
-			"backpack" = SLOT_IN_BACKPACK,
-			"left hand" = SLOT_L_HAND,
-			"right hand" = SLOT_R_HAND,
-		)
-		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
-		traitor_mob.update_icons()
-		if (!where)
-			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
+	if(uplink_uses > 0)
+		var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)
+		if(!guplink)
+			give_uplink()
 		else
-			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
+			guplink.uses = uplink_uses
+			total_TC = uplink_uses
 
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
 	if(M && M != traitor_mob)
-		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
-		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
+		to_chat(traitor_mob, "Надежные источники сообщают, что [M.real_name], возможно, захочет помочь вам достигнуть целей. Если вам нужна помощь, то можете обратится к данному сотруднику.")
+		traitor_mob.mind.store_memory("<b>Потенциальный соратник</b>: [M.real_name]")
 
 /datum/component/gamemode/syndicate/proc/take_uplink()
 	var/mob/living/carbon/human/traitor_mob = get_current()
@@ -188,8 +201,8 @@
 		return
 
 	var/obj/item/I = find_syndicate_uplink(traitor_mob)
-	if(I?.hidden_uplink)
-		QDEL_NULL(I.hidden_uplink)
+	if(I)
+		QDEL_NULL(I)
 
 /datum/component/gamemode/syndicate/OnPostSetup(datum/source, laterole)
 	equip_traitor()
@@ -235,6 +248,4 @@
 
 	if(href_list["removeuplink"])
 		take_uplink(M.current)
-		var/datum/role/role = parent
-		role.antag.memory = null
 		to_chat(M.current, "<span class='warning'>You have been stripped of your uplink.</span>")

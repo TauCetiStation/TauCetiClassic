@@ -35,10 +35,15 @@
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
 	var/req_admin_notify
 
+	// Is this position of a Head of some department? They always start with max level insurance.
+	var/is_head = FALSE
+
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
 	var/outfit = null
+
+	var/list/skillsets
 
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_ingame_minutes ingame minutes old. (meaning they must play a game.)
 	var/minimal_player_ingame_minutes = 0
@@ -49,12 +54,13 @@
 	var/salary = 0
 	//salary ratio - for global salary changes
 	var/salary_ratio = 1
+	// Some jobs don't have a salary but still would like to eat roundstart. They have some starting money.
+	var/starting_money = 0
 
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	/// Species that can not be this job.
@@ -64,6 +70,11 @@
 
 	// What movesets does this job grant.
 	var/list/moveset_types
+
+	// Which department stocks this job has on arrival.
+	var/list/department_stocks
+
+	var/flags = 0
 
 /datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
@@ -78,6 +89,10 @@
 
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_JOB)
+
+	if (H.mind)
+		H.mind.skills.add_available_skillset(get_skillset(H))
+		H.mind.skills.maximize_active_skills()
 
 	post_equip(H, visualsOnly)
 	return TRUE
@@ -174,3 +189,8 @@
 
 /datum/job/proc/map_check()
 	return TRUE
+
+/datum/job/proc/get_skillset(mob/living/carbon/human/H)
+	if(alt_titles && H.mind.role_alt_title)
+		return skillsets[H.mind.role_alt_title] || skillsets[title]
+	return skillsets[title]

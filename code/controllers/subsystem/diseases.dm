@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(diseases)
 	name = "Diseases"
 
 	flags = SS_NO_INIT | SS_KEEP_TIMING
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
 	var/list/processing = list()
@@ -21,7 +22,7 @@ SUBSYSTEM_DEF(diseases)
 		currentrun.len--
 
 		if(thing)
-			thing.process()
+			thing.process(wait * 0.1)
 		else
 			processing -= thing
 

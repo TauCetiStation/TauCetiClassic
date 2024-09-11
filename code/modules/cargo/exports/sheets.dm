@@ -5,6 +5,12 @@
 /datum/export/stack
 	unit_name = "sheet"
 
+/datum/export/stack/get_cost(O)
+	return round(..(O))
+
+/datum/export/stack/get_type_cost(export_type, amount = 1, contr = 0, emag = 0)
+	return amount * cost
+
 /datum/export/stack/get_amount(obj/O)
 	var/obj/item/stack/S = O
 	if(istype(S))
@@ -19,13 +25,13 @@
 
 // Monkey hide. Cheap.
 /datum/export/stack/skin/monkey
-	cost = 150
+	cost = 30
 	unit_name = "monkey hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/monkey)
 
 // Human skin. Illegal
 /datum/export/stack/skin/human
-	cost = 2000
+	cost = 400
 	contraband = 1
 	unit_name = "piece"
 	message = "of human skin"
@@ -33,33 +39,33 @@
 
 // Goliath hide. Expensive.
 /datum/export/stack/skin/goliath_hide
-	cost = 2500
+	cost = 500
 	unit_name = "goliath hide"
 	export_types = list(/obj/item/asteroid/goliath_hide)
 
 // Cat hide. Just in case Dusty is catsploding again.
 /datum/export/stack/skin/cat
-	cost = 2000
+	cost = 400
 	contraband = 1
 	unit_name = "cat hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/cat)
 
 // Corgi hide. You monster.
 /datum/export/stack/skin/corgi
-	cost = 2500
+	cost = 500
 	contraband = 1
 	unit_name = "corgi hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/corgi)
 
 // Lizard hide. Very expensive.
 /datum/export/stack/skin/lizard
-	cost = 5000
+	cost = 1000
 	unit_name = "lizard hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/lizard)
 
 // Alien hide. Extremely expensive.
 /datum/export/stack/skin/xeno
-	cost = 15000
+	cost = 3000
 	unit_name = "alien hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
 
@@ -68,55 +74,57 @@
 
 // Metal. Common building material.
 /datum/export/stack/metal
-	cost = 5
+	cost = 1
 	message = "of metal"
 	export_types = list(/obj/item/stack/sheet/metal)
 
 // Glass. Common building material.
 /datum/export/stack/glass
-	cost = 5
+	cost = 1
 	message = "of glass"
 	export_types = list(/obj/item/stack/sheet/glass)
 
 // Plasteel. Lightweight, strong and contains some plasma too.
 /datum/export/stack/plasteel
-	cost = 85
+	cost = 17
 	message = "of plasteel"
 	export_types = list(/obj/item/stack/sheet/plasteel)
 
-// Reinforced Glass. Common building material. 1 glass + 0.5 metal, cost is rounded up.
+// Reinforced Glass. Common building material. 1 glass + 0.5 metal
 /datum/export/stack/rglass
-	cost = 8
+	cost = 1.5
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
-// Wood. Quite expensive in the grim and dark 26 century.
+// Wood. Quite expensive in the grim and dark future.
 /datum/export/stack/wood
 	cost = 15
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/wood)
 
+/datum/export/stack/carpet
+	cost = 10
+	unit_name = "carpet"
+	export_types = list(/obj/item/stack/tile/carpet)
+
 // Cardboard. Cheap.
 /datum/export/stack/cardboard
-	cost = 2
+	cost = 0.2
 	message = "of cardboard"
 	export_types = list(/obj/item/stack/sheet/cardboard)
 
 // Sandstone. Literally dirt cheap.
 /datum/export/stack/sandstone
-	cost = 1
+	cost = 0.2
 	unit_name = "block"
 	message = "of sandstone"
 	export_types = list(/obj/item/stack/sheet/mineral/sandstone)
 
 // Cable.
 /datum/export/stack/cable
-	cost = 0.2
+	cost = 0.1
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
-
-/datum/export/stack/cable/get_cost(O)
-	return round(..(O))
 
 /datum/export/stack/cable/get_amount(obj/O)
 	var/obj/item/stack/cable_coil/S = O
@@ -125,19 +133,19 @@
 	return 0
 
 /datum/export/stack/bananium
-	cost = 5000
+	cost = 1000
 	export_types = list(/obj/item/stack/sheet/mineral/clown)
 	message = "of bananium"
 
 // Diamonds. Rare and expensive.
 /datum/export/stack/diamond
-	cost = 2500
+	cost = 500
 	export_types = list(/obj/item/stack/sheet/mineral/diamond)
 	message = "of diamonds"
 
-// Phoron. The oil of 26 century. The reason why you are here.
+// Phoron. The oil of future. The reason why you are here.
 /datum/export/stack/phoron
-	cost = 350
+	cost = 70
 	export_types = list(/obj/item/stack/sheet/mineral/phoron)
 	message = "of phoron"
 
@@ -146,43 +154,43 @@
 	if(emag) // Syndicate pays you more for the plasma.
 		. = round(. * 1.5)
 
-// Refined scrap. The coal of 26 century. The reason why you are here.
+// Refined scrap. The coal of future. The reason why you are here.
 /datum/export/stack/scrap
-	cost = 250
+	cost = 35
 	export_types = list(/obj/item/stack/sheet/refined_scrap)
 	message = "of scrap"
 
 // Uranium. Still useful for both power generation and nuclear annihilation.
 /datum/export/stack/uranium
-	cost = 400
+	cost = 80
 	export_types = list(/obj/item/stack/sheet/mineral/uranium)
 	message = "of uranium"
 
 // Gold. Used in electronics and corrosion-resistant plating.
 /datum/export/stack/gold
-	cost = 250
+	cost = 50
 	export_types = list(/obj/item/stack/sheet/mineral/gold)
 	message = "of gold"
 
 // Silver.
 /datum/export/stack/silver
-	cost = 100
+	cost = 20
 	export_types = list(/obj/item/stack/sheet/mineral/silver)
 	message = "of silver"
 
 // Plastic.
 /datum/export/stack/plastic
-	cost = 20
+	cost = 4
 	export_types = list(/obj/item/stack/sheet/mineral/plastic)
 	message = "of plastic"
 
 // Platinum.
 /datum/export/stack/platinum
-	cost = 1000
+	cost = 200
 	message = "of platinum"
 	export_types = list(/obj/item/stack/sheet/mineral/platinum)
 
 /datum/export/stack/nanopaste
-	cost = 80
+	cost = 16
 	message = "of nanopaste"
 	export_types = list(/obj/item/stack/nanopaste)

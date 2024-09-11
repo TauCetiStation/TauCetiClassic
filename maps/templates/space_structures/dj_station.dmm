@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ab" = (
 /obj/structure/grille,
@@ -17,43 +17,15 @@
 /area/space_structures/djstation/solars)
 "ae" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "af" = (
-/turf/simulated/wall,
+/turf/simulated/wall/red,
 /area/space_structures/djstation)
 "ag" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
-"ah" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
-"ai" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/djstation)
@@ -64,17 +36,6 @@
 /obj/machinery/telecomms/relay/preset/ruskie,
 /obj/machinery/light{
 	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
-"al" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/djstation)
@@ -204,19 +165,6 @@
 	icon_state = "cafeteria"
 	},
 /area/space_structures/djstation)
-"aC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
 "aD" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -236,20 +184,6 @@
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
-/area/space_structures/djstation)
-"aG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
 /area/space_structures/djstation)
 "aH" = (
 /turf/simulated/floor{
@@ -278,29 +212,6 @@
 	icon_state = "grimy"
 	},
 /area/space_structures/djstation)
-"aL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
-"aM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
 "aN" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
@@ -313,7 +224,8 @@
 /area/space_structures/djstation)
 "aO" = (
 /obj/machinery/door/airlock/glass{
-	name = "Kitchen"
+	name = "Kitchen";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -327,6 +239,10 @@
 	freerange = 1;
 	name = "Pirate Radio Listening Channel"
 	},
+/obj/effect/decal/turf_decal/metal{
+	dir = 9;
+	icon_state = "siding_thinplating_line"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -334,6 +250,10 @@
 /area/space_structures/djstation)
 "aQ" = (
 /obj/structure/stool/bed/chair/office/light,
+/obj/effect/decal/turf_decal/metal{
+	dir = 1;
+	icon_state = "spline_plain"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -341,7 +261,8 @@
 /area/space_structures/djstation)
 "aR" = (
 /obj/machinery/door/airlock/glass{
-	name = "Cabin"
+	name = "Cabin";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -355,27 +276,6 @@
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
-/area/space_structures/djstation)
-"aT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/djstation)
-"aU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
 /area/space_structures/djstation)
 "aV" = (
 /obj/machinery/disposal,
@@ -395,6 +295,10 @@
 "aX" = (
 /obj/structure/table,
 /obj/item/weapon/disk/research_points,
+/obj/effect/decal/turf_decal/metal{
+	dir = 10;
+	icon_state = "siding_thinplating_line"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -409,6 +313,10 @@
 	listening = 0;
 	name = "Pirate Radio Broadcast Channel"
 	},
+/obj/effect/decal/turf_decal/metal{
+	dir = 2;
+	icon_state = "spline_plain"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -418,6 +326,10 @@
 /obj/structure/table,
 /obj/item/weapon/paper/djstation{
 	info = "<B>Welcome new owner!</B><BR><BR>You have purchased the latest in listening equipment. The telecommunication setup we created is the best in listening to common and private radio fequencies. Here is a step by step guide to start listening in on those saucy radio channels:<br><ol><li>Equip yourself with a multi-tool</li><li>Use the multitool on each machine, that is the broadcaster, receiver and the relay.</li><li>Turn all the machines on, it has already been configured for you to listen on.</li></ol> Simple as that. Now to listen to the private channels, you'll have to configure the intercoms, located on the front desk. Here is a list of frequencies for you to listen on.<br><ul><li>145.7 - Common Channel</li><li>144.7 - Private AI Channel</li><li>135.9 - Security Channel</li><li>135.7 - Engineering Channel</li><li>135.5 - Medical Channel</li><li>135.3 - Command Channel</li><li>135.1 - Science Channel</li><li>134.7 - Supply Channel</li>"
+	},
+/obj/effect/decal/turf_decal/metal{
+	dir = 6;
+	icon_state = "spline_plain"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -455,7 +367,7 @@
 /area/space_structures/djstation)
 "be" = (
 /obj/structure/disposalpipe/segment,
-/turf/simulated/wall,
+/turf/simulated/wall/red,
 /area/space_structures/djstation)
 "bf" = (
 /obj/machinery/door/airlock{
@@ -505,7 +417,7 @@
 	},
 /area/space_structures/djstation)
 "bl" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/machinery/space_heater,
@@ -515,7 +427,7 @@
 	},
 /area/space_structures/djstation)
 "bm" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/rack{
@@ -543,9 +455,7 @@
 /obj/structure/toilet{
 	pixel_y = 8
 	},
-/turf/simulated/floor{
-	icon_state = "freezerfloor"
-	},
+/turf/simulated/floor/glass/reinforced,
 /area/space_structures/djstation)
 "bp" = (
 /obj/structure/table,
@@ -577,7 +487,7 @@
 	name = "Ruskie DJ Station";
 	req_access = list(0)
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/space_structures/djstation)
 "bs" = (
 /obj/structure/disposalpipe/trunk{
@@ -588,8 +498,27 @@
 /area/space)
 "bt" = (
 /obj/structure/grille,
-/turf/space,
+/turf/environment/space,
 /area/space)
+"AE" = (
+/obj/structure/table,
+/obj/item/device/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Pirate Radio Listening Channel"
+	},
+/obj/effect/decal/turf_decal/metal{
+	dir = 5;
+	icon_state = "spline_plain"
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/space_structures/djstation)
+"LD" = (
+/turf/simulated/floor/grid_floor,
+/area/space_structures/djstation)
 
 (1,1,1) = {"
 aa
@@ -606,9 +535,9 @@ ab
 ab
 aa
 af
-aC
-aM
-aU
+ag
+ag
+ag
 af
 aa
 ae
@@ -753,17 +682,17 @@ ab
 ab
 ab
 af
-ai
-al
+ag
+ag
 af
-ai
-al
+ag
+ag
 af
 af
 af
-aG
+ag
 aO
-aG
+ag
 af
 af
 bo
@@ -814,7 +743,7 @@ ad
 ad
 ad
 ad
-ah
+ag
 aj
 aj
 aj
@@ -886,7 +815,7 @@ aj
 af
 aA
 az
-aP
+AE
 aZ
 az
 bl
@@ -907,7 +836,7 @@ ac
 ac
 ac
 ac
-ah
+ag
 aj
 aj
 ao
@@ -923,7 +852,7 @@ bh
 bm
 az
 br
-aj
+LD
 br
 aa
 aa
@@ -939,17 +868,17 @@ ab
 ab
 ab
 af
-ai
-al
+ag
+ag
 af
-ai
-al
+ag
+ag
 af
 af
 af
-aG
+ag
 aR
-aG
+ag
 af
 af
 af
@@ -1102,9 +1031,9 @@ ab
 ab
 aa
 af
-aL
-aT
-al
+ag
+ag
+ag
 af
 aa
 ae

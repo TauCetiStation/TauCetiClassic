@@ -46,7 +46,8 @@
 /obj/structure/snow/proc/check_overlay()
 	cut_overlays()
 	for(var/direction_to_check in cardinal)
-		if(!istype(get_step(src, direction_to_check), /turf/space) && !istype(get_step(src, direction_to_check), /turf/simulated/wall) && !istype(get_step(src, direction_to_check), /obj/structure/snow))
+		var/turf/T = get_step(src, direction_to_check)
+		if(!isspaceturf(T) && !iswallturf(T) && !locate(/obj/structure/snow, T))
 			var/image/snow_side = image('icons/turf/snow.dmi', "[direction_to_check]")
 			snow_side.layer = LOW_OBJ_LAYER
 			switch(direction_to_check)
@@ -74,10 +75,11 @@
 		C.throw_mode_on()
 
 /obj/item/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..()
+	if(..())
+		return
 	qdel(src)
 
-/obj/item/snowball/fire_act()
+/obj/item/snowball/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	qdel(src)
 
 /obj/item/snowball/ex_act(severity)

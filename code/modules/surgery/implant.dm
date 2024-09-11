@@ -41,6 +41,10 @@
 			W.embedded_objects -= obj_to_remove
 			break
 	obj_to_remove.forceMove(get_turf(target))
+	if(isitem(obj_to_remove))
+		var/obj/item/I = obj_to_remove
+		I.item_actions_special = initial(I.item_actions_special)
+		I.remove_item_actions(target)
 	user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 	"<span class='notice'>You take [obj_to_remove] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 
@@ -152,6 +156,8 @@
 	user.drop_from_inventory(tool, target)
 	BP.hidden = tool
 	BP.cavity = 0
+	tool.item_actions_special = TRUE
+	tool.add_item_actions(target)
 
 /datum/surgery_step/cavity/place_item/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
@@ -176,6 +182,9 @@
 /datum/surgery_step/cavity/implant_removal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+		if(BP.stage == 3)
+			return FALSE
+
 		return BP && ((BP.open == 3 && BP.body_zone == BP_CHEST) || (BP.open == 2))
 
 /datum/surgery_step/cavity/implant_removal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -227,6 +236,10 @@
 						if(imp in W.embedded_objects)
 							W.embedded_objects -= imp
 							break
+					if(istype(imp, /obj/item/weapon/implant/skill))
+						var/obj/item/weapon/implant/skill/skill_impant = imp
+						skill_impant.removed()
+					imp.implant_removal(target)
 					imp.imp_in = null
 					imp.implanted = FALSE
 					if(istype(imp, /obj/item/weapon/implant/storage))
@@ -248,7 +261,9 @@
 	else if (BP.hidden)
 		user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
 		"<span class='notice'>You take something out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
-		BP.hidden.loc = get_turf(target)
+		BP.hidden.forceMove(get_turf(target))
+		BP.hidden.item_actions_special = initial(BP.hidden.item_actions_special)
+		BP.hidden.remove_item_actions(target)
 		if(!BP.hidden.blood_DNA)
 			BP.hidden.blood_DNA = list()
 		BP.hidden.blood_DNA[target.dna.unique_enzymes] = target.dna.b_type
@@ -268,7 +283,7 @@
 		fail_prob += 100 - tool_quality(tool)
 		if (prob(fail_prob))
 			var/obj/item/weapon/implant/imp = BP.implants[1]
-			user.visible_message("<span class='warning'>Something beeps inside [target]'s [BP.name]!</span>")
+			user.visible_message("<span class='warning'>Внутри [CASE(BP, GENITIVE_CASE)] [target] что-то пищит!</span>")
 			playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			spawn(25)
 				imp.activate()

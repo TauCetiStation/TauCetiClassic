@@ -2,6 +2,7 @@
 	name = "Augmented Eyesight"
 	desc = "Creates heat receptors in our eyes and dramatically increases light sensing ability."
 	helptext = "Grants us night vision and thermal vision. It may be toggled on or off."
+	button_icon_state = "augmented_eyesight"
 	chemical_cost = 0
 	genomecost = 3
 	var/active = 0 //Whether or not vision is enhanced
@@ -12,16 +13,11 @@
 	user.changeling_aug = !user.changeling_aug
 	if(active)
 		to_chat(user, "<span class='notice'>We feel a minute twitch in our eyes, and darkness creeps away.</span>")
-		user.sight |= SEE_MOBS
-		user.see_in_dark = 8
-		user.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	else
 		to_chat(user, "<span class='notice'>Our vision dulls. Shadows gather.</span>")
-		user.sight -= SEE_MOBS
-		user.see_in_dark = 0
-		user.lighting_alpha = initial(user.lighting_alpha)
-		user.see_invisible = SEE_INVISIBLE_LIVING
-	return 1
+
+	user.update_sight()
+	return TRUE
 
 /mob/living
 	var/changeling_aug = 0

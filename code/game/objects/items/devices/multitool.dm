@@ -24,6 +24,10 @@
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 	var/list/obj/machinery/door/doors_buffer = list()
 
+	qualities = list(
+		QUALITY_PULSING = 1
+	)
+
 /obj/item/device/multitool/verb/clear_buffer()
 	set category = "Object"
 	set name = "Clear buffer"
@@ -32,7 +36,7 @@
 		buffer = null
 		to_chat(usr, "<span class='notice'>You clear the buffer of your multitool</span>")
 	else
-		to_chat(usr, "<span class='notice'>The buffer if empty</span>")
+		to_chat(usr, "<span class='notice'>The buffer is empty</span>")
 
 /obj/item/device/multitool/Destroy()
 	doors_buffer.Cut()

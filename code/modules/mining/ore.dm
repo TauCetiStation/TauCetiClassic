@@ -8,6 +8,12 @@
 	var/points = 0
 	var/refined_type = null //What this ore defaults to being refined into
 
+/obj/item/weapon/ore/Crossed(atom/movable/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		if (L.stat == CONSCIOUS && !L.restrained())
+			L.pickup_ore()
+
 /obj/item/weapon/ore/uranium
 	name = "pitchblende"
 	icon_state = "Uranium ore"
@@ -100,7 +106,7 @@
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 	if(is_mining_level(z))
-		score["oremined"]++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
+		SSStatistics.score.oremined++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
 
 /obj/item/weapon/ore/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/core_sampler))
@@ -108,3 +114,9 @@
 		C.sample_item(src, user)
 	else
 		return ..()
+
+/obj/item/weapon/ore/use(used, transfer = FALSE)
+	if(used == 1)
+		qdel(src)
+		return TRUE
+	return FALSE

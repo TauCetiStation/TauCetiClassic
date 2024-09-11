@@ -9,9 +9,7 @@
 	update_canmove()
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
-	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	update_sight()
 	client.screen.Cut()
 	remove_ai_verbs(src)
 
@@ -34,7 +32,7 @@
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
 		if(is_centcom_level(shuttlecaller.z))
 			continue
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			break
 		callshuttle++
 
@@ -49,7 +47,7 @@
 
 	if(explosive)
 		spawn(10)
-			explosion(src.loc, 3, 6, 12, 15)
+			explosion(src.loc, 3, 6, 12, 14)
 
 	for(var/obj/machinery/ai_status_display/O in ai_status_display_list) //change status
 		spawn( 0 )

@@ -4,7 +4,6 @@ SUBSYSTEM_DEF(fluids)
 	init_order    = SS_INIT_FLUIDS
 	priority      = SS_PRIORITY_FLUIDS
 	wait          = SS_WAIT_FLUIDS
-	display_order = SS_DISPLAY_FLUIDS
 
 	flags = SS_NO_INIT | SS_BACKGROUND | SS_POST_FIRE_TIMING
 
@@ -63,8 +62,8 @@ SUBSYSTEM_DEF(fluids)
 			for(var/other_thing in get_turf(thing))
 				var/atom/A = other_thing
 				if(A.simulated)
-					var/obj/effect/fluid/F = thing
-					A.water_act(F.fluid_amount)
+					var/turf/T = A.loc
+					A.water_act(T.get_fluid_depth())
 		CHECK_TICK
 
 /datum/controller/subsystem/fluids/proc/add_active_source(turf/T)

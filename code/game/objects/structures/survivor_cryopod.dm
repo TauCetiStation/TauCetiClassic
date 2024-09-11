@@ -39,7 +39,7 @@
 	visible_message("<span class='notice'>Automatic cryosleep interruption process has begun, please stand by...</span>")
 	searching = TRUE
 	request_player()
-	addtimer(CALLBACK(src, .proc/stop_search), 350)
+	addtimer(CALLBACK(src, PROC_REF(stop_search)), 350)
 
 /obj/structure/survivor_cryopod/proc/request_player()
 	var/list/candidates = pollGhostCandidates("Survivor role is available. Would you like to play?", ROLE_GHOSTLY, IGNORE_SURVIVOR, 250, TRUE)
@@ -54,27 +54,21 @@
 	H.SetSleeping(2000 SECONDS)
 	H.drowsyness = 1000
 
+	H.randomize_appearance()
+
 	if(fixed_gender)
 		switch(fixed_gender)
 			if("male")
 				H.gender = MALE
 			if("female")
 				H.gender = FEMALE
-			else
-				H.gender = pick(MALE, FEMALE)
-	else
-		H.gender = pick(MALE, FEMALE)
+
+		H.update_body()
+
 	if(fixed_name)
 		H.name = fixed_name
-	else
-		if(H.gender == MALE)
-			H.name = pick(first_names_male)
-		else
-			H.name = pick(first_names_female)
-		H.name += " [pick(last_names)]"
-	H.real_name = H.name
-	var/datum/preferences/A = new()	//Randomize appearance for the human
-	A.randomize_appearance_for(H)
+		H.real_name = fixed_name
+
 	H.dna.ready_dna(H)
 	H.dna.UpdateSE()
 	H.forceMove(src)
@@ -111,6 +105,9 @@
 
 /obj/structure/survivor_cryopod/proc/equip_survivor(mob/living/carbon/human/H)
 	return
+
+/obj/structure/survivor_cryopod/nasa
+	fixed_name = "Major Tom" // ground control to maaaajor tom
 
 /obj/structure/survivor_cryopod/nasa/equip_survivor(mob/living/carbon/human/H)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(H), SLOT_W_UNIFORM)

@@ -2,7 +2,15 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 33
+
+#define SAVEFILE_VERSION_MAX 51
+
+//For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
+//set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
+#define SAVEFILE_VERSION_SPECIES_JOBS 51 // job preferences after breaking changes to any /datum/job/
+#define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
+//breaking changes is when you remove any existing quirk/job or change their restrictions
+//Don't forget to bump SAVEFILE_VERSION_MAX too
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -64,6 +72,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(!CanBeRole(role))
 				be_role -= role
 
+	if(current_version < 44)
+		custom_emote_panel = global.emotes_for_emote_panel
+
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
 		for(var/organ_name in organ_data)
@@ -82,7 +93,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				language = A.name
 
 			var/datum/language/lang = all_languages[language]
-			if(!(species in lang.allowed_species))
+			if(!(species in lang.allowed_speak))
 				language = "None"
 				S["language"] << language
 
@@ -180,23 +191,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		S["be_role"] << be_role
 
-	if(current_version < 30)
-		if(species != HUMAN)
-			for(var/datum/job/job in SSjob.occupations)
-				if(!job.is_species_permitted(species))
-					SetJobPreferenceLevel(job, 0)
-			S["job_preferences"] << job_preferences
-
-	if(current_version < 30)
-		for(var/quirk_name in all_quirks)
-			// If the quirk isn't even hypothetically allowed, pref can't have it.
-			// If IsAllowedQuirk() for some reason ever becomes more computationally
-			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
-			if(!IsAllowedQuirk(quirk_name))
-				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
-				ResetQuirks()
-				break
-
 	if(current_version < 31)
 		flavor_text = fix_cyrillic(flavor_text)
 		med_record  = fix_cyrillic(med_record)
@@ -227,6 +221,83 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 33)
 		S["parallax_theme"] << null
 
+	if(current_version < 36)
+		var/datum/job/assistant/J = new
+
+		if(player_alt_titles && (player_alt_titles[J.title] in list("Mecha Operator")))
+			player_alt_titles -= J.title
+
+	if(current_version < 37)
+		var/list/deleted_hairstyles = list("Skrell Long Female Tentacles", "Skrell Zeke Female Tentacles", "Gold plated Skrell Male Tentacles", "Gold chained Skrell Female Tentacles", "Cloth draped Skrell Male Tentacles", "Cloth draped Skrell Female Tentacles")
+		if(h_style in deleted_hairstyles)
+			h_style = "Skrell Long Tentacles"
+
+	if(current_version < 38)
+		if("Raider" in be_role)
+			be_role -= "Raider"
+
+		S["be_role"] << be_role
+
+	if(current_version < 39)
+		S["ghost_orbit"] << null
+
+	if(current_version < 40)
+		if(ignore_question && ignore_question.len)
+			if("Lavra" in ignore_question)
+				ignore_question -= "Lavra"
+				ignore_question |= IGNORE_LARVA
+				S["ignore_question"] << ignore_question
+
+	if(current_version < 42)
+		if(ROLE_NINJA in be_role)
+			be_role -= ROLE_NINJA
+		if(ROLE_ABDUCTOR in be_role)
+			be_role -= ROLE_ABDUCTOR
+		S["be_role"] << be_role
+
+	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
+	if(current_version < 45)
+		if(ignore_question && ignore_question.len)
+			var/list/diff = ignore_question - global.full_ignore_question
+			if(diff.len)
+				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 48)
+		S["b_type"] << null
+
+	if(current_version < 49)
+		if("Imposter" in be_role)
+			be_role -= "Imposter"
+			S["be_role"] << be_role
+
+	if(current_version < 50)
+
+		if(player_alt_titles && (player_alt_titles["Assistant"] in list("Reporter")))
+			player_alt_titles -= "Assistant"
+		if(player_alt_titles && (player_alt_titles["Librarian"] in list("Journalist")))
+			player_alt_titles -= "Librarian"
+
+
+//
+/datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
+
+	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
+		if(species != HUMAN)
+			for(var/datum/job/job in SSjob.occupations)
+				if(!job.is_species_permitted(species))
+					SetJobPreferenceLevel(job, 0)
+			S["job_preferences"] << job_preferences
+
+	if(current_version < SAVEFILE_VERSION_QUIRKS)
+		for(var/quirk_name in all_quirks)
+			// If the quirk isn't even hypothetically allowed, pref can't have it.
+			// If IsAllowedQuirk() for some reason ever becomes more computationally
+			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
+			if(!IsAllowedQuirk(quirk_name))
+				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
+				ResetQuirks()
+				break
+
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
 	if(!parent)
@@ -254,7 +325,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!addedbind)
 			notadded += kb
 	if(length(notadded))
-		addtimer(CALLBACK(src, .proc/announce_conflict, notadded), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(announce_conflict), notadded), 5 SECONDS)
 
 /datum/preferences/proc/announce_conflict(list/notadded)
 	to_chat(parent, "<span class='userdanger'>KEYBINDING CONFLICT!!!\n\
@@ -284,10 +355,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == SAVEFILE_TOO_OLD) // fatal, can't load any data
 		return 0
 
-	//Account data
-	S["cid_list"]			>> cid_list
-	S["ignore_cid_warning"]	>> ignore_cid_warning
-
 	//General preferences
 	S["ooccolor"]          >> ooccolor
 	S["aooccolor"]         >> aooccolor
@@ -299,20 +366,24 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["default_slot"]      >> default_slot
 	S["chat_toggles"]      >> chat_toggles
 	S["toggles"]           >> toggles
-	S["ghost_orbit"]       >> ghost_orbit
 	S["chat_ghostsight"]   >> chat_ghostsight
 	S["randomslot"]        >> randomslot
-	S["permamuted"]        >> permamuted
-	S["permamuted"]        >> muted
 	S["parallax"]          >> parallax
 	S["ambientocclusion"]  >> ambientocclusion
+	S["glowlevel"]         >> glowlevel
+	S["lampsexposure"]     >> lampsexposure
+	S["lampsglare"]        >> lampsglare
+	S["eye_blur_effect"]   >> eye_blur_effect
 	S["auto_fit_viewport"] >> auto_fit_viewport
+	S["lobbyanimation"]    >> lobbyanimation
 	S["tooltip"]           >> tooltip
 	S["tooltip_size"]      >> tooltip_size
 	S["tooltip_font"]      >> tooltip_font
 	S["outline_enabled"]   >> outline_enabled
 	S["outline_color"]     >> outline_color
 	S["eorg_enabled"]      >> eorg_enabled
+	S["show_runechat"]     >> show_runechat
+	S["emote_panel"]       >> custom_emote_panel
 
 	// Custom hotkeys
 	S["key_bindings"] >> key_bindings
@@ -345,10 +416,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
 	clientfps		= sanitize_integer(clientfps, -1, 1000, -1)
-	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	default_slot	= sanitize_integer(default_slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
-	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
@@ -359,15 +429,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	glowlevel		= sanitize_integer(glowlevel, GLOW_HIGH, GLOW_DISABLE, initial(glowlevel))
+	eye_blur_effect = sanitize_integer(eye_blur_effect, 0, 1, initial(eye_blur_effect))
+	lampsexposure	= sanitize_integer(lampsexposure, 0, 1, initial(lampsexposure))
+	lampsglare		= sanitize_integer(lampsglare, 0, 1, initial(lampsglare))
+	lobbyanimation	= sanitize_integer(lobbyanimation, 0, 1, initial(lobbyanimation))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
 	tooltip_size 	= sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
 	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
 	outline_color 	= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
 	eorg_enabled 	= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
-	if(!cid_list)
-		cid_list = list()
-	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
+	show_runechat	= sanitize_integer(show_runechat, 0, 1, initial(show_runechat))
+	custom_emote_panel  = sanitize_emote_panel(custom_emote_panel)
 
 	snd_music_vol	= sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
 	snd_ambient_vol = sanitize_integer(snd_ambient_vol, 0, 100, initial(snd_ambient_vol))
@@ -405,10 +479,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["version"] << SAVEFILE_VERSION_MAX
 
-	//Account data
-	S["cid_list"]           << cid_list
-	S["ignore_cid_warning"] << ignore_cid_warning
-
 	//general preferences
 	S["ooccolor"]          << ooccolor
 	S["aooccolor"]         << aooccolor
@@ -420,16 +490,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["default_slot"]      << default_slot
 	S["toggles"]           << toggles
 	S["chat_toggles"]      << chat_toggles
-	S["ghost_orbit"]       << ghost_orbit
 	S["chat_ghostsight"]   << chat_ghostsight
 	S["randomslot"]        << randomslot
-	S["permamuted"]        << permamuted
 	S["parallax"]          << parallax
-	S["ambientocclusion"]	 << ambientocclusion
+	S["ambientocclusion"]  << ambientocclusion
+	S["glowlevel"]         << glowlevel
+	S["eye_blur_effect"]   << eye_blur_effect
+	S["lampsexposure"]     << lampsexposure
+	S["lampsglare"]        << lampsglare
+	S["lobbyanimation"]    << lobbyanimation
 	S["auto_fit_viewport"] << auto_fit_viewport
 	S["tooltip"]           << tooltip
 	S["tooltip_size"]      << tooltip_size
 	S["tooltip_font"]      << tooltip_font
+	S["emote_panel"]       << custom_emote_panel
 
 
 	// Custom hotkeys
@@ -439,6 +513,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["outline_enabled"] << outline_enabled
 	S["outline_color"]   << outline_color
 	S["eorg_enabled"]    << eorg_enabled
+	S["show_runechat"]   << show_runechat
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy
 	S["tgui_lock"]		<< tgui_lock
@@ -470,7 +545,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["real_name"]             >> real_name
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]                >> gender
+	S["neuter_gender_voice"]   >> neuter_gender_voice
 	S["age"]                   >> age
+	S["height"]                >> height
 	S["species"]               >> species
 	S["language"]              >> language
 
@@ -478,6 +555,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hair_red"]          >> r_hair
 	S["hair_green"]        >> g_hair
 	S["hair_blue"]         >> b_hair
+	S["belly_red"]         >> r_belly
+	S["belly_green"]       >> g_belly
+	S["belly_blue"]        >> b_belly
 	S["grad_red"]          >> r_grad
 	S["grad_green"]        >> g_grad
 	S["grad_blue"]         >> b_grad
@@ -498,11 +578,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]        >> undershirt
 	S["socks"]             >> socks
 	S["backbag"]           >> backbag
-	S["b_type"]            >> b_type
 	S["use_skirt"]         >> use_skirt
+	S["pda_ringtone"]      >> chosen_ringtone
+	S["pda_custom_melody"] >> custom_melody
 
 	//Load prefs
-	S["job_preferences"] >> job_preferences
+	S["alternate_option"] >> alternate_option
+	S["job_preferences"]  >> job_preferences
 
 	//Traits
 	S["all_quirks"]       >> all_quirks
@@ -526,8 +608,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"]         >> home_system
 	S["citizenship"]         >> citizenship
+	S["insurance"]           >> insurance
 	S["faction"]             >> faction
 	S["religion"]            >> religion
+	S["vox_rank"]            >> vox_rank
 
 	S["uplinklocation"]      >> uplinklocation
 
@@ -537,6 +621,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S) // needs_update == savefile_version if we need an update (positive integer)
+		repetitive_updates_character(needs_update, S)
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -552,8 +637,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!gear) gear = list()
 	if(!custom_items) custom_items = list()
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
-	gender			= sanitize_gender(gender)
+	gender			= sanitize_gender(gender, species_obj.flags[NO_GENDERS])
 	age				= sanitize_integer(age, species_obj.min_age, species_obj.max_age, initial(age))
+	height			= sanitize_inlist(height, heights_list, initial(height))
 	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
 	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
 	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
@@ -577,8 +663,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	undershirt		= sanitize_integer(undershirt, 1, undershirt_t.len, initial(undershirt))
 	socks			= sanitize_integer(socks, 1, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
-	b_type			= sanitize_text(b_type, initial(b_type))
+	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
+	chosen_ringtone  = sanitize_inlist(chosen_ringtone, pref_ringtones, initial(chosen_ringtone))
+	custom_melody = sanitize(custom_melody, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
+	neuter_gender_voice = sanitize_gender_voice(neuter_gender_voice)
 
 	all_quirks = SANITIZE_LIST(all_quirks)
 	positive_quirks = SANITIZE_LIST(positive_quirks)
@@ -593,8 +682,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
+	if(!insurance)   insurance = INSURANCE_STANDARD
 	if(!faction)     faction =     "None"
 	if(!religion)    religion =    "None"
+	if(!vox_rank)    vox_rank =    "Larva"
 
 /datum/preferences/proc/random_character()
 	if(!path)
@@ -606,7 +697,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	var/list/saves = list()
 	var/name
-	for(var/i = 1 to MAX_SAVE_SLOTS)
+	for(var/i = 1 to GET_MAX_SAVE_SLOTS(parent))
 		S.cd = "/character[i]"
 		S["real_name"] >> name
 		if(!name)
@@ -631,7 +722,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/"
 	if(!slot)
 		slot = default_slot
-	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	slot = sanitize_integer(slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
 		S["default_slot"] << slot
@@ -655,12 +746,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["real_name"]             << real_name
 	S["name_is_always_random"] << be_random_name
 	S["gender"]                << gender
+	S["neuter_gender_voice"]   << neuter_gender_voice
 	S["age"]                   << age
+	S["height"]                << height
 	S["species"]               << species
 	S["language"]              << language
 	S["hair_red"]              << r_hair
 	S["hair_green"]            << g_hair
 	S["hair_blue"]             << b_hair
+	S["belly_red"]             << r_belly
+	S["belly_green"]           << g_belly
+	S["belly_blue"]            << b_belly
 	S["grad_red"]              << r_grad
 	S["grad_green"]            << g_grad
 	S["grad_blue"]             << b_grad
@@ -681,8 +777,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]            << undershirt
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
-	S["b_type"]                << b_type
 	S["use_skirt"]             << use_skirt
+	S["pda_ringtone"]          << chosen_ringtone
+	S["pda_custom_melody"]     << custom_melody
 	//Write prefs
 	S["alternate_option"]      << alternate_option
 	S["job_preferences"]       << job_preferences
@@ -709,8 +806,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"]         << home_system
 	S["citizenship"]         << citizenship
+	S["insurance"]           << insurance
 	S["faction"]             << faction
 	S["religion"]            << religion
+	S["vox_rank"]            << vox_rank
 	S["uplinklocation"]      << uplinklocation
 
 	return 1
@@ -722,6 +821,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!length(base_bindings[key]))
 			base_bindings -= key
 	return base_bindings
+
+/proc/sanitize_emote_panel(value)
+	var/list/emote_panel = SANITIZE_LIST(value)
+	var/list/sanitized_emote_panel = list()
+	for(var/key in emote_panel)
+		if(!(key in global.emotes_for_emote_panel))
+			continue
+		sanitized_emote_panel |= key
+	return sanitized_emote_panel
 
 #undef SAVEFILE_TOO_OLD
 #undef SAVEFILE_UP_TO_DATE

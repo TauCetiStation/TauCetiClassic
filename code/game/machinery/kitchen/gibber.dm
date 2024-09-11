@@ -57,6 +57,8 @@
 	RefreshParts()
 
 /obj/machinery/gibber/RefreshParts()
+	..()
+
 	var/gib_time = initial(gibtime)
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		meat_produced += 3 * B.rating
@@ -147,7 +149,7 @@
 	if(user.is_busy(src)) return
 	user.visible_message("<span class='warning'>[user] starts to put [victim] into the gibber!</span>")
 	add_fingerprint(user)
-	var/checks_to_check = CALLBACK(src, .proc/do_after_checks, user, victim)
+	var/checks_to_check = CALLBACK(src, PROC_REF(do_after_checks), user, victim)
 	if(istype(victim.loc, /obj/item/weapon/holder))
 		checks_to_check = null
 	if(do_after(user, 30, target = src, extra_checks = checks_to_check))
@@ -201,7 +203,7 @@
 	animate(src, pixel_x = pixel_x + offset, time = gibtime / 100, loop = gibtime) //start shaking
 	playsound(src, 'sound/effects/gibber.ogg', VOL_EFFECTS_MASTER)
 
-	addtimer(CALLBACK(src, .proc/gib_mob, user), gibtime)
+	addtimer(CALLBACK(src, PROC_REF(gib_mob), user), gibtime)
 
 /obj/machinery/gibber/proc/gib_mob(mob/user)
 	occupant.log_combat(user, "gibbed via [name]")

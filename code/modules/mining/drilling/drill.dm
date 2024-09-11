@@ -97,7 +97,7 @@
 				T.gets_dug()
 		else if(istype(get_turf(src), /turf/simulated/floor))
 			var/turf/simulated/floor/T = get_turf(src)
-			T.ex_act(2.0)
+			T.ex_act(EXPLODE_HEAVY)
 
 	dig_ore()
 
@@ -114,12 +114,12 @@
 
 /obj/machinery/mining/drill/proc/use_cell_power()
 	if(wires_power_disable)
-		return 0
+		return FALSE
 	if(!cell)
-		return 0
+		return FALSE
 	if(cell.use(charge_use))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/mining/drill/proc/check_supports()
 	if(!supports || supports.len < braces_needed)
@@ -132,7 +132,7 @@
 /obj/machinery/mining/drill/proc/system_error(error)
 
 	if(error)
-		visible_message("<span class='notice'>\The [src] flashes a '[error]' warning.</span>")
+		visible_message("<span class='warning'>\The [src] flashes a <b>'[error]'</b> warning.</span>")
 	need_player_check = 1
 	active = 0
 	update_icon()
@@ -168,6 +168,8 @@
 		harvesting.has_resources = 0
 		harvesting.resources = null
 		resource_field -= harvesting
+		if(resource_field.len <= 0)
+			break
 		harvesting = pick(resource_field)
 
 	if(!harvesting)
@@ -255,6 +257,7 @@
 
 /obj/machinery/mining/drill/RefreshParts()
 	..()
+
 	damage_to_user = 30
 	harvest_speed = 0
 	capacity = 0
@@ -267,7 +270,7 @@
 		if(istype(P, /obj/item/weapon/stock_parts/matter_bin))
 			capacity = 200 * P.rating
 		if(istype(P, /obj/item/weapon/stock_parts/capacitor))
-			charge_use -= 10 * P.rating
+			charge_use /= P.rating
 		if(istype(P, /obj/item/weapon/stock_parts/scanning_module))
 			radius = 1 + P.rating
 	cell = locate(/obj/item/weapon/stock_parts/cell) in component_parts
@@ -355,7 +358,7 @@
 /obj/machinery/mining/drill/proc/shock(mob/user)
 	if(!cell || wires_power_disable )
 		return 0
-	if(!istype(user, /mob/living/carbon))
+	if(!iscarbon(user))
 		return 0
 
 	var/mob/living/carbon/C = user
@@ -383,7 +386,7 @@
 	if(!BP || !BP.is_usable())
 		return
 
-	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 	if(BP.is_stump)
@@ -391,7 +394,7 @@
 
 	BP = BP.parent
 
-	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 /obj/machinery/mining/drill/update_icon()
@@ -421,4 +424,60 @@
 	else
 		to_chat(usr, "<span class='notice'>You must move an ore box up to the drill before you can unload it.</span>")
 
+// variant for Forts event
+// made it dumb drill subtype and not own type just because of brace mechanics i don't want to copypaste
+/obj/machinery/mining/drill/forts
+	name = "mining drill head"
+	desc = "An enormous drill to drill points for your team. Install it at the center of the asteroid."
 
+	var/team_name
+	var/obj/machinery/computer/fort_console/console
+
+/obj/machinery/mining/drill/forts/atom_init(mapload, _team_name)
+	..()
+
+	if(_team_name)
+		team_name = _team_name
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/mining/drill/forts/atom_init_late()
+	if(team_name)
+		var/datum/map_module/forts/MM = SSmapping.get_map_module(MAP_MODULE_FORTS)
+		console = MM.consoles[team_name]
+		console.drills += src
+
+/obj/machinery/mining/drill/forts/Destroy()
+	if(console)
+		console.drills -= src
+		console = null
+
+	return ..()
+
+/obj/machinery/mining/drill/forts/use_cell_power() // always powered
+	return TRUE
+
+/obj/machinery/mining/drill/forts/process(seconds_per_tick)
+	if(!can_work())
+		return
+
+	if(!istype(get_turf(src), /turf/simulated/floor/plating/airless/asteroid))
+		system_error("resources depleted")
+		return
+
+	if(QDELETED(console))
+		system_error("command computer not found")
+		explosion(src.loc, 1, 2, 3)
+		qdel(src)
+		return
+
+	var/points_per_second = min(harvest_speed, 4) // already capped, just in case
+	points_per_second = points_per_second * 0.1
+
+	console.points += round(seconds_per_tick * points_per_second, 0.1) * forts_points_multiplier // 0.6-0.8 per tick
+
+/obj/machinery/mining/drill/forts/red
+	team_name = TEAM_NAME_RED
+
+/obj/machinery/mining/drill/forts/blue
+	team_name = TEAM_NAME_BLUE

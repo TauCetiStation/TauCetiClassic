@@ -1,7 +1,7 @@
 // shouldn't these be deprecated? ~Luduk
 /mob/living/simple_animal/slime
 	name = "pet slime"
-	desc = "A lovable, domesticated slime."
+	desc = "Милый, одомашненный слайм."
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	icon_living = "grey baby slime"
@@ -12,7 +12,7 @@
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
-	emote_see = list("jiggles", "bounces in place")
+	emote_see = list("булькает", "качается")
 	var/colour = "grey"
 	ventcrawler = 2
 
@@ -23,7 +23,7 @@
 
 /mob/living/simple_animal/adultslime
 	name = "pet slime"
-	desc = "A lovable, domesticated slime."
+	desc = "Милый, одомашненный слайм."
 	icon = 'icons/mob/slimes.dmi'
 	health = 200
 	maxHealth = 200
@@ -33,7 +33,7 @@
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
-	emote_see = list("jiggles", "bounces in place")
+	emote_see = list("булькает", "качается")
 	w_class = SIZE_HUMAN
 	var/colour = "grey"
 
@@ -47,18 +47,13 @@
 	add_overlay("aslime-:33")
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME)
 
-
 /mob/living/simple_animal/slime/adult/death()
-	var/mob/living/simple_animal/slime/S1 = new /mob/living/simple_animal/slime (src.loc)
-	S1.icon_state = "[src.colour] baby slime"
-	S1.icon_living = "[src.colour] baby slime"
-	S1.icon_dead = "[src.colour] baby slime dead"
-	S1.colour = "[src.colour]"
-	var/mob/living/simple_animal/slime/S2 = new /mob/living/simple_animal/slime (src.loc)
-	S2.icon_state = "[src.colour] baby slime"
-	S2.icon_living = "[src.colour] baby slime"
-	S2.icon_dead = "[src.colour] baby slime dead"
-	S2.colour = "[src.colour]"
+	for(var/i in 1 to 2)
+		var/mob/living/simple_animal/slime/S = new /mob/living/simple_animal/slime(loc)
+		S.icon_state = "[colour] baby slime"
+		S.icon_living = "[colour] baby slime"
+		S.icon_dead = "[colour] baby slime dead"
+		S.colour = "[colour]"
 	med_hud_set_health()
 	med_hud_set_status()
 	qdel(src)

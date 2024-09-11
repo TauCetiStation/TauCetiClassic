@@ -1,10 +1,19 @@
-var/round_id = 0
-var/base_commit_sha = 0
+var/global/round_id = 0
+var/global/base_commit_sha = 0
+
+var/global/it_is_a_snow_day = FALSE
 
 /world/New()
 #ifdef DEBUG
 	enable_debugger()
 #endif
+
+#ifdef EARLY_PROFILE
+	Profile(PROFILE_RESTART)
+	Profile(PROFILE_RESTART, type = "sendmaps")
+#endif
+
+	it_is_a_snow_day = prob(50)
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
@@ -28,7 +37,7 @@ var/base_commit_sha = 0
 	load_last_mode()
 	load_motd()
 	load_host_announcements()
-	load_test_merge()
+	load_test_merges()
 	load_admins()
 	load_mentors()
 	load_supporters()
@@ -36,7 +45,7 @@ var/base_commit_sha = 0
 		load_whitelist()
 	if(config.usealienwhitelist)
 		load_whitelistSQL()
-	LoadBans()
+	load_guard_blacklist()
 
 	spawn
 		changelog_hash = trim(get_webpage(config.changelog_hash_link))
@@ -74,8 +83,7 @@ var/base_commit_sha = 0
 #endif
 
 	if(config.kick_inactive)
-		spawn(15 MINUTES)
-			KickInactiveClients()
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(KickInactiveClients)), 15 MINUTES)
 
 #undef RECOMMENDED_VERSION
 
@@ -99,6 +107,10 @@ var/base_commit_sha = 0
 	global.qdel_log  = file("[log_debug_directory]/qdel.log")
 	global.sql_error_log = file("[log_debug_directory]/sql.log")
 
+	#ifdef REFERENCE_TRACKING
+	global.gc_log  = file("[log_debug_directory]/gc_debug.log")
+	#endif
+
 	round_log("Server '[config.server_name]' starting up on [BYOND_SERVER_ADDRESS]")
 
 	var/debug_rev_message = ""
@@ -112,8 +124,8 @@ var/base_commit_sha = 0
 		info(debug_rev_message)
 		log_runtime(debug_rev_message)
 
-var/world_topic_spam_protect_ip = "0.0.0.0"
-var/world_topic_spam_protect_time = world.timeofday
+var/global/world_topic_spam_protect_ip = "0.0.0.0"
+var/global/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
 
@@ -139,15 +151,15 @@ var/world_topic_spam_protect_time = world.timeofday
 
 		var/list/s = list()
 		s["version"] = game_version
-		s["mode"] = custom_event_msg ? "event" : master_mode
+		s["mode"] = SSevents.custom_event_mode ? SSevents.custom_event_mode : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
-		s["enter"] = enter_allowed
+		s["enter"] = !LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS)
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["players"] = list()
 		s["stationtime"] = worldtime2text()
 		s["gamestate"] = SSticker.current_state
-		s["roundduration"] = roundduration2text()
+		s["roundduration"] = global.roundduration2text()
 		s["map_name"] = SSmapping.config?.map_name || "Loading..."
 		s["popcap"] = config.client_limit_panic_bunker_count ? config.client_limit_panic_bunker_count : 0
 		s["round_id"] = global.round_id
@@ -200,7 +212,7 @@ var/world_topic_spam_protect_time = world.timeofday
 	var/list/dellog = list()
 
 	//sort by how long it's wasted hard deleting
-	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	sortTim(SSgarbage.items, cmp=GLOBAL_PROC_REF(cmp_qdel_item_time), associative = TRUE)
 	for(var/path in SSgarbage.items)
 		var/datum/qdel_item/I = SSgarbage.items[path]
 		dellog += "Path: [path]"
@@ -222,13 +234,14 @@ var/world_topic_spam_protect_time = world.timeofday
 
 
 
-var/shutdown_processed = FALSE
+var/global/shutdown_processed = FALSE
 
 /world/Reboot(reason = 0, end_state)
 	PreShutdown(end_state)
 
 	for(var/client/C in clients)
 		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		C.tgui_panel?.send_roundrestart()
 		C << link(BYOND_JOIN_LINK)
 
 	round_log("Reboot [end_state ? ", [end_state]" : ""]")
@@ -254,13 +267,13 @@ var/shutdown_processed = FALSE
 
 	..()
 
-/world/proc/KickInactiveClients()
+/proc/KickInactiveClients()
 	for (var/client/C in clients)
 		if (!(C.holder || C.supporter) && C.is_afk())
 			log_access("AFK: [key_name(C)]")
 			to_chat(C, "<span class='userdanger'>You have been inactive for more than [config.afk_time_bracket / 600] minutes and have been disconnected.</span>")
 			QDEL_IN(C, 2 SECONDS)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/KickInactiveClients), 5 MINUTES)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(KickInactiveClients)), 5 MINUTES)
 
 /world/proc/load_stealth_keys()
 	var/list/keys_list = file2list("config/stealth_keys.txt")
@@ -311,13 +324,47 @@ var/shutdown_processed = FALSE
 
 		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
 
-/world/proc/load_test_merge()
-	if(fexists("test_merge.txt"))
-		join_test_merge = "<strong>Test merged PRs:</strong> "
-		var/list/prs = splittext(trim(file2text("test_merge.txt")), " ")
-		for(var/pr in prs)
-			test_merges += "#[pr] "
-			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
+/world/proc/load_test_merges()
+	if(!fexists("test_merge.txt"))
+		return
+
+	test_merges = splittext(trim(file2text("test_merge.txt")), " ")
+
+	var/list/to_fetch = list()
+
+	for(var/pr in test_merges)
+		var/path = "[PERSISTENT_CACHE_FOLDER]/github/[pr]"
+		if(fexists(path))
+			test_merges[pr] = sanitize(file2text(path))
+		else
+			test_merges[pr] = TEST_MERGE_DEFAULT_TEXT
+			to_fetch += pr
+
+	if(length(to_fetch))
+		fetch_new_test_merges(to_fetch)
+
+/world/proc/fetch_new_test_merges(list/to_fetch)
+	set waitfor = FALSE
+
+	if(!to_fetch)
+		return
+
+	var/arguments = to_fetch.Join(" ")
+	if(config.github_token)
+		arguments += " -t '[config.github_token]'"
+	if(config.repository_link)
+		arguments += " -r '[config.github_repository_owner]/[config.github_repository_name]'"
+
+	var/json_content = world.ext_python("fetch_test_merges.py", arguments)
+	if(!json_content)
+		return
+
+	var/list/fetch = json_decode(json_content) // {"number": {"title": title, "success": TRUE|FALSE}}
+	for(var/pr in fetch)
+		test_merges[pr] = sanitize(fetch[pr]["title"])
+		if(fetch[pr]["success"])
+			var/path = "[PERSISTENT_CACHE_FOLDER]/github/[pr]"
+			text2file(fetch[pr]["title"], path)
 
 /world/proc/load_regisration_panic_bunker()
 	if(config.registration_panic_bunker_age)
@@ -336,15 +383,69 @@ var/shutdown_processed = FALSE
 			var/active_hours_left = num2text((active_until - world.realtime) / 36000, 1)
 			log_game("Round with registration panic bunker! Panic age: [config.registration_panic_bunker_age]. Enabled by [enabled_by]. Active hours left: [active_hours_left]")
 
+/world/proc/load_guard_blacklist()
+	if(!config.guard_enabled || !fexists("config/guard_blacklist.txt"))
+		return
+
+	var/L = file2list("config/guard_blacklist.txt")
+
+	for(var/line in L)
+		line = trim(line)
+
+		if(!length(line) || line[1] == "#")
+			continue
+
+		var/pos = findtext(line," ")
+		var/code = trim(copytext(line, 1, pos))
+		var/value = trim(copytext(line, pos))
+
+		if(!length(value)) // don't fuck up
+			continue
+
+		switch(code)
+			if("IP")
+				guard_blacklist["IP"] += value
+			if("ISP")
+				guard_blacklist["ISP"] += value
+
 /world/proc/load_supporters()
 	if(config.allow_donators && fexists("config/donators.txt"))
 		var/L = file2list("config/donators.txt")
+
+		var/current_DD = text2num(time2text(world.timeofday, "DD"))
+		var/current_MM = text2num(time2text(world.timeofday, "MM"))
+		var/current_YY = text2num(time2text(world.timeofday, "YY"))
+
 		for(var/line in L)
+
+			line = trim(line)
+
 			if(!length(line))
 				continue
+
 			if(line[1] == "#")
 				continue
-			donators.Add(ckey(line))
+
+			var/list/params = splittext(line, " ")
+			var/ckey = ckey(params[1])
+			var/list/until_date = length(params) > 1 ? splittext(params[2], ".") : 0  // DD.MM.YY
+
+			if(until_date)
+
+				var/DD = text2num(until_date[1])
+				var/MM = text2num(until_date[2])
+				var/YY = text2num(until_date[3])
+
+				if(YY < current_YY)
+					continue
+				else if (YY == current_YY)
+					if(MM < current_MM)
+						continue
+					else if (MM == current_MM)
+						if(DD < current_DD)
+							continue
+
+			donators.Add(ckey)
 
 	// just some tau ceti specific stuff
 	if(config.allow_tauceti_patrons)
@@ -399,7 +500,7 @@ var/shutdown_processed = FALSE
 	else
 		features += "<b>STARTING</b>"
 
-	if (!enter_allowed)
+	if (LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS))
 		features += "closed"
 
 	features += abandon_allowed ? "respawn" : "no respawn"
@@ -446,7 +547,7 @@ var/shutdown_processed = FALSE
 			world.log << "New round: #[global.round_id]\n-------------------------"
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
-var/failed_db_connections = 0
+var/global/failed_db_connections = 0
 
 /proc/setup_database_connection()
 
@@ -571,7 +672,7 @@ var/failed_db_connections = 0
 	switch(type)
 		if (NET_ANNOUNCE_BAN)
 			// legacy system use files, we need DB for ban check
-			if (config.net_announcers["ban_receive"] && !self_flag && config && !config.ban_legacy_system)
+			if (config.net_announcers["ban_receive"] && !self_flag)
 				return proccess_ban_announce(data, sender)
 	return
 

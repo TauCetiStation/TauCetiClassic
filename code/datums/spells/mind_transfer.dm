@@ -83,7 +83,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 			for(var/j=checked_spells.len,(j>0&&checked_spells.len),j--)//While the spell list to check is greater than zero and has spells in it, run this proc.
 				if(prob(base_spell_loss_chance))
 					checked_spells -= pick(checked_spells)//Pick a random spell to remove.
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, victim, "<span class='danger'>The mind transfer has robbed you of a spell.</span>"), msg_wait)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), victim, "<span class='danger'>The mind transfer has robbed you of a spell.</span>"), msg_wait)
 					break//Spell lost. Break loop, going back to the previous for() statement.
 				else//Or keep checking, adding spell chance modifier to increase chance of losing a spell.
 					base_spell_loss_chance += spell_loss_chance_modifier
@@ -94,31 +94,17 @@ Also, you never added distance checking after target is selected. I've went ahea
 	//SPELL LOSS END
 
 	//MIND TRANSFER BEGIN
-	if(caster.mind.special_verbs.len)//If the caster had any special verbs, remove them from the mob verb list.
-		for(var/V in caster.mind.special_verbs)//Since the caster is using an object spell system, this is mostly moot.
-			caster.verbs -= V//But a safety nontheless.
-
-	if(victim.mind.special_verbs.len)//Now remove all of the victim's verbs.
-		for(var/V in victim.mind.special_verbs)
-			victim.verbs -= V
-
+	victim.logout_reason = LOGOUT_SWAP
+	caster.logout_reason = LOGOUT_SWAP
 	var/mob/dead/observer/ghost = victim.ghostize(can_reenter_corpse = FALSE)
 	ghost.spell_list = victim.spell_list//If they have spells, transfer them. Now we basically have a backup mob.
 
 	caster.mind.transfer_to(victim)
 	victim.spell_list = caster.spell_list//Now they are inside the victim's body.
 
-	if(victim.mind.special_verbs.len)//To add all the special verbs for the original caster.
-		for(var/V in caster.mind.special_verbs)//Not too important but could come into play.
-			caster.verbs += V
-
 	ghost.mind.transfer_to(caster)
 	caster.key = ghost.key	//have to transfer the key since the mind was not active
 	caster.spell_list = ghost.spell_list
-
-	if(caster.mind.special_verbs.len)//If they had any special verbs, we add them here.
-		for(var/V in caster.mind.special_verbs)
-			caster.verbs += V
 
 	//MIND TRANSFER END
 
@@ -127,4 +113,4 @@ Also, you never added distance checking after target is selected. I've went ahea
 	victim.Paralyse(paralysis_amount_victim)
 
 	//After a certain amount of time the victim gets a message about being in a different body.
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, caster, "<span class='warning'>You feel woozy and lightheaded. <b>Your body doesn't seem like your own.</b></span>"), msg_wait)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), caster, "<span class='warning'>You feel woozy and lightheaded. <b>Your body doesn't seem like your own.</b></span>"), msg_wait)

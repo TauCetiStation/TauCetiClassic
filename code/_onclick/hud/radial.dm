@@ -4,8 +4,7 @@
 var/global/list/radial_menus = list()
 
 /atom/movable/screen/radial
-	icon = 'icons/mob/radial.dmi'
-	layer = ABOVE_HUD_LAYER
+	icon = 'icons/hud/radial.dmi'
 	plane = ABOVE_HUD_PLANE
 	var/datum/radial_menu/parent
 
@@ -87,7 +86,7 @@ var/global/list/radial_menus = list()
 
 /datum/radial_menu/New()
 	close_button = new
-	close_button.parent = src
+	close_button.set_parent(src)
 
 /datum/radial_menu/Destroy()
 	Reset()
@@ -99,6 +98,17 @@ var/global/list/radial_menus = list()
 	anchor = null
 	QDEL_NULL(menu_holder)
 	return ..()
+
+/atom/movable/screen/radial/proc/set_parent(new_value)
+	if(parent)
+		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	parent = new_value
+	if(parent)
+		RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(handle_parent_del))
+
+/atom/movable/screen/radial/proc/handle_parent_del()
+	SIGNAL_HANDLER
+	set_parent(null)
 
 //If we swap to vis_contens inventory these will need a redo
 /datum/radial_menu/proc/check_screen_border(mob/user)
@@ -142,7 +152,7 @@ var/global/list/radial_menus = list()
 		for(var/i in 1 to elements_to_add) //Create all elements
 			var/atom/movable/screen/radial/slice/new_element = new /atom/movable/screen/radial/slice
 			new_element.tooltips = use_tooltips
-			new_element.parent = src
+			new_element.set_parent(src)
 			elements += new_element
 
 	var/page = 1
@@ -252,7 +262,6 @@ var/global/list/radial_menus = list()
 /datum/radial_menu/proc/extract_image(E)
 	var/mutable_appearance/MA = new /mutable_appearance(E)
 	if(MA)
-		MA.layer = ABOVE_HUD_LAYER
 		MA.appearance_flags |= (RESET_TRANSFORM|RESET_ALPHA|RESET_COLOR)
 	return MA
 
@@ -269,7 +278,7 @@ var/global/list/radial_menus = list()
 		return
 	current_user = M.client
 	//Blank
-	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing",layer = ABOVE_HUD_LAYER)
+	menu_holder = image(icon='icons/effects/effects.dmi',loc=anchor,icon_state="nothing")
 	menu_holder.plane = ABOVE_HUD_PLANE
 	menu_holder.appearance_flags |= (KEEP_APART|RESET_TRANSFORM|RESET_ALPHA|RESET_COLOR)
 	menu_holder.vis_contents += elements + close_button
@@ -295,7 +304,7 @@ var/global/list/radial_menus = list()
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, min_angle, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE)
 	if(!user || !anchor || !length(choices))
 		return
 	if(!uniqueid)
@@ -313,6 +322,8 @@ var/global/list/radial_menus = list()
 		menu.radius = radius
 	if(istype(custom_check))
 		menu.custom_check_callback = custom_check
+	if(min_angle)
+		menu.min_angle = min_angle
 	menu.anchor = anchor
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
 	menu.set_choices(choices, tooltips)

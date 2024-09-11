@@ -33,6 +33,14 @@
 
 		return "[output][and_text][input[index]]"
 
+/proc/list2text(list/input, separator = ", ")
+	. = ""
+
+	for(var/line in input)
+		if(length(.))
+			. += separator
+		. += line
+
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/list,index)
 	if(istype(list) && list.len)
@@ -52,8 +60,8 @@
 //Checks if the list is empty
 /proc/isemptylist(list/list)
 	if(!list.len)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
@@ -63,6 +71,22 @@
 		if(istype(A, type))
 			return TRUE
 	return FALSE
+
+/proc/is_path_in_list(t, list/L)
+	if(!length(L) || !t)
+		return FALSE
+	for(var/type in L)
+		if(ispath(t, type))
+			return TRUE
+	return FALSE
+
+/proc/get_type_in_list(atom/A, list/L)
+	if(!length(L) || !A)
+		return null
+	for(var/type in L)
+		if(istype(A, type))
+			return type
+	return null
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
@@ -290,7 +314,7 @@
 
 
 //any value in a list
-/proc/sortList(list/L, cmp=/proc/cmp_text_asc)
+/proc/sortList(list/L, cmp=GLOBAL_PROC_REF(cmp_text_asc))
 	return sortTim(L.Copy(), cmp)
 
 //Mergsorge: uses sortList() but uses the var's name specifically. This should probably be using mergeAtom() instead
@@ -400,10 +424,10 @@
 	var/list/out = list(pop(L))
 	for(var/entry in L)
 		if(isnum(entry))
-			var/success = 0
+			var/success = FALSE
 			for(var/i=1, i<=out.len, i++)
 				if(entry <= out[i])
-					success = 1
+					success = TRUE
 					out.Insert(i, entry)
 					break
 			if(!success)
@@ -530,7 +554,7 @@
 	return sorted_list
 */
 
-/proc/dd_sortedtextlist(list/incoming, case_sensitive = 0)
+/proc/dd_sortedtextlist(list/incoming, case_sensitive = FALSE)
 	// Returns a new list with the text values sorted.
 	// Use binary search to order by sortValue.
 	// This works by going to the half-point of the list, seeing if the node in question is higher or lower cost,
@@ -590,7 +614,7 @@
 
 
 /proc/dd_sortedTextList(list/incoming)
-	var/case_sensitive = 1
+	var/case_sensitive = TRUE
 	return dd_sortedtextlist(incoming, case_sensitive)
 
 /datum/proc/dd_SortValue()
@@ -822,6 +846,12 @@
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 //#define LAZYLEN(L) length(L) // don't return it, pointless now
 #define LAZYCLEARLIST(L) if(L) L.Cut()
+// This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)
+#define LAZYADDASSOCLIST(L, K, V) if(!L) { L = list(); } L[K] += list(V);
+// Removes value V and key K from associative list L
+#define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
+///Accesses an associative list, returns null if nothing is found
+#define LAZYACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 

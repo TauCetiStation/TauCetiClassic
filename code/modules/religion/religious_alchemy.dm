@@ -17,7 +17,7 @@
 
 /datum/faith_reaction/proc/react(atom/container, mob/user, datum/religion/religion)
 	if(do_reaction(container, user, religion))
-		INVOKE_ASYNC(src, .proc/after_reaction, container, user)
+		INVOKE_ASYNC(src, PROC_REF(after_reaction), container, user)
 
 /datum/faith_reaction/proc/get_amount(atom/container, mob/user, datum/religion/religion)
 	var/to_convert = container.reagents.get_reagent_amount(convertable_id)
@@ -51,7 +51,7 @@
 	if(!istype(container, /atom/movable))
 		return
 
-	INVOKE_ASYNC(user, /mob.proc/pray_animation)
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, pray_animation))
 	sleep(2)
 	if(QDELING(container) || QDELING(user))
 		return
@@ -64,7 +64,7 @@
 
 	AM.add_filter("holy_outline", 2, outline_filter(1, "#fffb00a1"))
 	animate(container.filters[container.filters.len], color = "#FFD70000", time = 2 SECONDS)
-	addtimer(CALLBACK(src, .proc/revert_effects, container, user), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(revert_effects), container, user), 2 SECONDS)
 
 /datum/faith_reaction/proc/revert_effects(atom/container, mob/user)
 	container.remove_filter("holy_outline")

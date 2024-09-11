@@ -26,7 +26,6 @@
 		if(HALLOSS)
 			adjustHalLoss(damage * blocked_mult(blocked))
 
-	flash_weak_pain()
 	updatehealth()
 	return TRUE
 
@@ -56,7 +55,7 @@
 		if(PARALYZE)
 			Paralyse(effect * blocked)
 		if(AGONY)
-			adjustHalLoss(effect) // Useful for objects that cause "subdual" damage. PAIN!
+			adjustHalLoss(effect * blocked) // Useful for objects that cause "subdual" damage. PAIN!
 		if(IRRADIATE)
 			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
 		if(STUTTER)

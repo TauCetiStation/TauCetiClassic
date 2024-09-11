@@ -7,6 +7,8 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/welded = FALSE //Used on pumps and scrubbers
 	var/showpipe = FALSE
 
+	plane = FLOOR_PLANE
+
 	var/list/datum/pipeline/parents
 	var/list/datum/gas_mixture/airs
 
@@ -19,16 +21,6 @@ On top of that, now people can add component-speciic procs/vars if they want!
 		var/datum/gas_mixture/A = new
 		A.volume = 200
 		AIR_I = A
-
-/obj/machinery/atmospherics/components/update_icon()
-	if(!isturf(loc))
-		return
-	var/turf/T = loc
-
-	if(level == 2 || !T.intact)
-		plane = GAME_PLANE
-	else
-		plane = FLOOR_PLANE
 
 /*
 	Pipenet stuff; housekeeping
@@ -81,29 +73,23 @@ On top of that, now people can add component-speciic procs/vars if they want!
 	var/I = parents.Find(Old)
 	PARENT_I = New
 
-/obj/machinery/atmospherics/components/unsafe_pressure_release(mob/user, pressures)
+/obj/machinery/atmospherics/components/deconstruct(disassembled)
+	var/turf/T = get_turf(loc)
+	if(!(T && device_type))
+		return ..()
+	
+	//Remove the gas from airs and assume it
+	var/datum/gas_mixture/to_release
+	for(DEVICE_TYPE_LOOP)
+		var/datum/gas_mixture/air = AIR_I
+		if(!to_release)
+			to_release = new
+			to_release.copy_from(air)
+			continue
+		to_release.merge(air)
+	T.assume_air(to_release)
+
 	..()
-
-	var/turf/T = get_turf(src)
-	if(T)
-		//Remove the gas from airs and assume it
-		var/datum/gas_mixture/environment = T.return_air()
-		var/lost = null
-		var/times_lost = 0
-		for(DEVICE_TYPE_LOOP)
-			var/datum/gas_mixture/air = AIR_I
-			lost += pressures * environment.volume / (air.temperature * R_IDEAL_GAS_EQUATION)
-			times_lost++
-		var/shared_loss = lost/times_lost
-
-		var/datum/gas_mixture/to_release
-		for(DEVICE_TYPE_LOOP)
-			var/datum/gas_mixture/air = AIR_I
-			if(!to_release)
-				to_release = air.remove(shared_loss)
-				continue
-			to_release.merge(air.remove(shared_loss))
-		T.assume_air(to_release)
 
 /*
 	Helpers

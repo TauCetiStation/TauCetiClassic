@@ -1,8 +1,8 @@
-var/const/BORG_WIRE_LAWCHECK    = 1
-var/const/BORG_WIRE_MAIN_POWER  = 2
-var/const/BORG_WIRE_LOCKED_DOWN = 4
-var/const/BORG_WIRE_AI_CONTROL  = 8
-var/const/BORG_WIRE_CAMERA      = 16
+var/global/const/BORG_WIRE_LAWCHECK    = 1
+var/global/const/BORG_WIRE_MAIN_POWER  = 2
+var/global/const/BORG_WIRE_LOCKED_DOWN = 4
+var/global/const/BORG_WIRE_AI_CONTROL  = 8
+var/global/const/BORG_WIRE_CAMERA      = 16
 
 /datum/wires/robot
 	random = TRUE
@@ -21,7 +21,7 @@ var/const/BORG_WIRE_CAMERA      = 16
 	var/mob/living/silicon/robot/R = holder
 	return R.wiresexposed
 
-/datum/wires/robot/update_cut(index, mended)
+/datum/wires/robot/update_cut(index, mended, mob/user)
 	var/mob/living/silicon/robot/R = holder
 
 	switch(index)

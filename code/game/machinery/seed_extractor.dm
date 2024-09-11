@@ -17,6 +17,8 @@
 	RefreshParts()
 
 /obj/machinery/seed_extractor/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		max_seeds = 1000 * B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
@@ -39,17 +41,17 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(istype(O, /obj/item/organ/external))
+	if(isbodypart(O))
 		var/obj/item/organ/external/IO = O
 		if(IO.species.name == DIONA)
-			to_chat(user, "<span class='notice'>You extract some seeds from the [IO.name].</span>")
-			var/t_amount = 0
-			var/t_max = rand(1,4)
-			for(var/I in t_amount to t_max)
-				new /obj/item/seeds/replicapod(loc)
+			to_chat(user, "<span class='notice'>You extract some seeds from \the [IO.name].</span>")
+			new /obj/item/seeds/replicapod/real_deal(loc)
+			qdel(IO)
+		else if(IO.species.name == PODMAN)
+			to_chat(user, "<span class='warning'>You fail to extract any seeds from \the [IO.name].</span>")
 			qdel(IO)
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
+	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
 		var/seed = F.seed_type
@@ -91,5 +93,10 @@
 			return
 		to_chat(user, "<span class='notice'>You extract some seeds from the [S.name].</span>")
 		new /obj/item/seeds/grassseed(loc)
-
+	else if(istype(O, /obj/item/stack/tile/fairygrass))
+		var/obj/item/stack/tile/fairygrass/F = O
+		if(!F.use(1))
+			return
+		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
+		new /obj/item/seeds/fairy_grass(loc)
 	return

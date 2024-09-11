@@ -34,21 +34,21 @@
 
 /obj/structure/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			for(var/atom/movable/AM in contents)
-				AM.forceMove(loc)
-				AM.ex_act(severity++)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				for(var/atom/movable/AM in contents)
-					AM.forceMove(loc)
-					AM.ex_act(severity++)
-				qdel(src)
 				return
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			return
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(loc)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += AM
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += AM
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += AM
+	qdel(src)
 
 /obj/structure/proc/climb_on()
 
@@ -137,7 +137,9 @@
 		. *= 0.25
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		. *= 0.5
-
+	//tajaran can jump on/over the table faster than else species
+	if(HAS_TRAIT(user, TRAIT_NATURAL_AGILITY))
+		. *= 0.25
 
 /obj/structure/proc/do_climb(mob/living/climber, mob/living/user)
 	add_fingerprint(climber)

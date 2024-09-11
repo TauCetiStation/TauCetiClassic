@@ -4,7 +4,7 @@
 	desc = "This is a random item."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "gift"
-	spawn_nothing_percentage = 80
+	spawn_nothing_chance = 80
 /obj/random/misc/all/item_to_spawn()
 		return pick(\
 						prob(10);/obj/random/meds/medical_supply,\

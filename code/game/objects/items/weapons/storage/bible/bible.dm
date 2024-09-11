@@ -7,8 +7,6 @@
 	w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BOX_STORAGE
 
-	var/deity_name = "Christ"
-
 	var/datum/religion/religion
 	var/religify_next = list()
 	var/religify_cd = 3 MINUTE
@@ -19,8 +17,8 @@
 	. = ..()
 	rad_choices = list(
 		"Altar" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "altar"),
-		"Pews" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left"),
-		"Mat symbol" = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol")
+		"Emblem" = image(icon = 'icons/obj/lectern.dmi', icon_state = "christianity"),
+		"Mat symbol" = image(icon = 'icons/turf/turf_decals.dmi', icon_state = "religion_christianity")
 	)
 
 /obj/item/weapon/storage/bible/booze
@@ -92,7 +90,7 @@
 
 	var/done = FALSE
 	var/changes = FALSE
-	var/list/choices = list("Altar", "Pews", "Mat symbol")
+	var/list/choices = list("Altar", "Emblem", "Mat symbol")
 
 	to_chat(user, "<span class='notice'>Select chapel attributes.</span>")
 	while(!done)
@@ -119,21 +117,21 @@
 				changes = TRUE
 				choices -= "Altar"
 
-			if("Pews")
-				var/new_look = show_radial_menu(user, src, religion.pews_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+			if("Emblem")
+				var/new_look = show_radial_menu(user, src, religion.emblem_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
-				religion.pews_icon_state = religion.pews_info_by_name[new_look]
+				religion.emblem_icon_state = religion.emblem_info_by_name[new_look]
 				changes = TRUE
-				choices -= "Pews"
+				choices -= "Emblem"
 
 			if("Mat symbol")
-				var/new_mat = show_radial_menu(user, src, religion.carpet_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+				var/new_mat = show_radial_menu(user, src, religion.decal_radial_menu, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_mat)
 					continue
 
-				religion.carpet_dir = religion.carpet_dir_by_name[new_mat]
+				religion.decal = "religion_[lowertext(new_mat)]"
 				changes = TRUE
 				choices -= "Mat symbol"
 

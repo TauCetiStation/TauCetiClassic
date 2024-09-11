@@ -17,6 +17,8 @@
 
 	var/nuke_code
 
+	var/list/team_discounts = list()
+
 /datum/faction/nuclear/AdminPanelEntry()
 	var/dat = ..()
 	var/obj/item/weapon/disk/nuclear/nukedisk
@@ -54,19 +56,10 @@
 	if (!..())
 		return FALSE
 
-	max_roles = clamp((num_players/5), MIN_OPS, MAX_OPS)
+	max_roles = clamp((num_players/7), MIN_OPS, MAX_OPS)
 
 	// Looking for map to nuclear spawn points
-	var/spwn_synd = FALSE
-	var/spwn_comm = FALSE
-	for(var/obj/effect/landmark/A in landmarks_list)
-		if(A.name == "Syndicate-Commander")
-			spwn_comm = TRUE
-		else if (A.name == "Syndicate-Spawn")
-			spwn_synd = TRUE
-		if (spwn_synd && spwn_comm)
-			return TRUE
-	return FALSE
+	return length(landmarks_list["Syndicate-Commander"]) > 0 && length(landmarks_list["Syndicate-Spawn"]) > 0
 
 /datum/faction/nuclear/HandleNewMind(datum/mind/M)
 	. = ..()
@@ -82,19 +75,15 @@
 	return TRUE
 
 /datum/faction/nuclear/OnPostSetup()
+	//Add commander spawn places first, really should only be one though.
+	var/obj/effect/landmark/A = locate("landmark*Syndicate-Commander")
+	var/turf/synd_comm_spawn = get_turf(A)
+	qdel(A)
+
 	var/list/turf/synd_spawn = list()
-	var/turf/synd_comm_spawn
-
-	for(var/obj/effect/landmark/A in landmarks_list) //Add commander spawn places first, really should only be one though.
-		if(A.name == "Syndicate-Commander")
-			synd_comm_spawn = get_turf(A)
-			qdel(A)
-			break
-
-	for(var/obj/effect/landmark/A in landmarks_list)
-		if(A.name == "Syndicate-Spawn")
-			synd_spawn += get_turf(A)
-			qdel(A)
+	for(A as anything in landmarks_list["Syndicate-Spawn"])
+		synd_spawn += get_turf(A)
+		qdel(A)
 
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
 	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
@@ -117,6 +106,7 @@
 
 	if(nuke_spawn)
 		var/obj/machinery/nuclearbomb/the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
+		the_bomb.nuketype = "Syndi"
 		the_bomb.r_code = nuke_code
 
 	return ..()
@@ -146,7 +136,7 @@
 	if      (!disk_rescued &&  SSticker.station_was_nuked &&          !syndies_didnt_escape)
 		dat += "<span class='red'>Syndicate Major Victory!</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives have destroyed [station_name()]!</b>"
-		score["roleswon"]++
+		SSStatistics.score.roleswon++
 		feedback_add_details("[ID]_success","SUCCESS")
 
 	else if (!disk_rescued &&  SSticker.station_was_nuked &&           syndies_didnt_escape)
@@ -223,28 +213,28 @@
 	var/nukedpenalty = 1000
 	for(var/datum/role/role in members)
 		foecount++
-		if (!role.antag || !role.antag.current)
-			score["opkilled"]++
+		if (!role.antag.current)
+			SSStatistics.score.opkilled++
 			continue
 		var/turf/T = role.antag.current.loc
 		if (T && istype(T.loc, /area/station/security/brig))
-			score["arrested"] += 1
+			SSStatistics.score.arrested += 1
 		else if (role.antag.current.stat == DEAD)
-			score["opkilled"]++
-	if(foecount == score["arrested"])
-		score["allarrested"] = 1
+			SSStatistics.score.opkilled++
+	if(foecount == SSStatistics.score.arrested)
+		SSStatistics.score.allarrested = 1
 
-	if (score["nuked"])
+	if (SSStatistics.score.nuked)
 		nukedpenalty = get_nukedpenalty()
-		if(score["disc"])
-			score["crewscore"] += 500
+		if(SSStatistics.score.disc)
+			SSStatistics.score.crewscore += 500
 
-	var/killpoints = score["opkilled"] * 250
-	var/arrestpoints = score["arrested"] * 1000
-	score["crewscore"] += killpoints
-	score["crewscore"] += arrestpoints
-	if (score["nuked"])
-		score["crewscore"] -= nukedpenalty
+	var/killpoints = SSStatistics.score.opkilled * 250
+	var/arrestpoints = SSStatistics.score.arrested * 1000
+	SSStatistics.score.crewscore += killpoints
+	SSStatistics.score.crewscore += arrestpoints
+	if (SSStatistics.score.nuked)
+		SSStatistics.score.crewscore -= nukedpenalty
 
 /datum/faction/nuclear/get_scorestat()
 	var/dat = ""
@@ -285,17 +275,26 @@
 	if (!diskdat)
 		diskdat = "Uh oh. Something has fucked up! Report this."
 
-	dat += {"<B><U>NUKE STATS</U></B><BR>
-	<B>Number of Operatives:</B> [foecount]<BR>
-	<B>Number of Surviving Crew:</B> [crewcount]<BR>
-	<B>Final Location of Nuke:</B> [bombdat]<BR>
-	<B>Final Location of Disk:</B> [diskdat]<BR><BR>
-	<B>Operatives Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
-	<B>Operatives Killed:</B> [score["opkilled"]] ([score["opkilled"] * 250] Points)<BR>
-	<B>Station Destroyed:</B> [score["nuked"] ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
-	<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>"}
+	dat += {"<B><U>Ядерная статистика</U></B><BR>
+	<B>Количество оперативников:</B> [foecount]<BR>
+	<B>Количество выживших членов экипажа:</B> [crewcount]<BR>
+	<B>Местоположение ядерной бомбы:</B> [bombdat]<BR>
+	<B>Местоположение диска:</B> [diskdat]<BR><BR>
+	<B>Оперативников арестовано:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] очков)<BR>
+	<B>Оперативников убито:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 250] очков)<BR>
+	<B>Станция разрушена:</B> [SSStatistics.score.nuked ? "Да" : "Нет"] (-[nukedpenalty] очков)<BR>
+	<B>Все оперативники арестованы:</B> [SSStatistics.score.allarrested ? "Да (очки утроены)" : "Нет"]<BR>"}
 
 	return dat
 
 #undef MAX_OPS
 #undef MIN_OPS
+
+/datum/faction/nuclear/crossfire
+	name = F_SYNDIOPS_CROSSFIRE
+	ID = F_SYNDIOPS_CROSSFIRE
+	var/nuke_landed = FALSE
+
+/datum/faction/nuclear/crossfire/proc/landing_nuke()
+	if(!nuke_landed)
+		create_uniq_faction(/datum/faction/heist/saboteurs)

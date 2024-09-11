@@ -2,20 +2,23 @@
 	name = "megaphone"
 	desc = "A device used to project your voice. Loudly."
 	icon_state = "megaphone"
-	item_state = "radio"
+	item_state = "megaphone"
 	w_class = SIZE_TINY
 	flags = CONDUCT
 
-	action_button_name = "Toggle Megaphone"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_megaphone)
 
 	var/spamcheck = 0
 	var/emagged = 0
-	var/insults = 0
-	var/list/insultmsg = list("FUCK EVERYONE!", "I'M A TATER!", "ALL SECURITY TO SHOOT ME ON SIGHT!", "I HAVE A BOMB!", "CAPTAIN IS A COMDOM!", "FOR THE SYNDICATE!")
+	var/list/insultmsg = list("ПОШЛИ ВЫ ВСЕ НАХУЙ!", "Я АГЕНТ СИНДИКАТА!", "ХОС ХУЕСОС!", "У МЕНЯ БОМБА!", "КАПИТАН ГОНДОН!", "СЛАВА СИНДИКАТУ!")
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
+
+/datum/action/item_action/hands_free/toggle_megaphone
+	name = "Toggle Megaphone"
 
 /obj/item/device/megaphone/attack_self(mob/living/user)
 	if (user.client)
-		if(user.client.prefs.muted & MUTE_IC)
+		if(user.client.prefs.muted & MUTE_IC || IS_ON_ADMIN_CD(user.client, ADMIN_CD_IC))
 			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 	if(!ishuman(user))
@@ -33,18 +36,21 @@
 	if(!message)
 		return
 	message = (capitalize(message))
+	var/cooldown = apply_skill_bonus(user, 10 SECONDS, required_skills, 0.5) //+50% for each level
+	var/command_power = user.mind.skills.get_value(/datum/skill/command) * 2 + 1//to avoid recursive increase with help
+
 	if ((src.loc == user && usr.stat == CONSCIOUS))
 		if(emagged)
-			if(insults)
-				user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>")
-				insults--
-			else
-				to_chat(user, "<span class='warning'>*BZZZZzzzzzt*</span>")
+			user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[pick(insultmsg)]\"</FONT>")
 		else
-			user.audible_message("<B>[user]</B> broadcasts, <FONT size=3>\"[message]\"</FONT>")
+			if(is_skill_competent(usr, required_skills))
+				for(var/mob/living/carbon/M in get_hearers_in_view(command_power, user))
+					if(M != user)
+						M.add_command_buff(usr, cooldown)
+			user.audible_message("<B>[user]</B> broadcasts, <FONT size=[max(3, command_power)]>\"[message]\"</FONT>")
 
 		spamcheck = 1
-		spawn(20)
+		spawn(cooldown)
 			spamcheck = 0
 		return
 
@@ -53,5 +59,4 @@
 		return FALSE
 	to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
 	emagged = 1
-	insults = rand(1, 3)//to prevent dickflooding
 	return TRUE

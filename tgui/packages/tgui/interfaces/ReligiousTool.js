@@ -1,7 +1,6 @@
 import { toTitleCase, capitalize, createSearch } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
-import { BlockQuote, Box, Button, Collapsible, Icon, Section, Tabs, Flex, Input } from '../components';
-import { FlexItem } from '../components/Flex';
+import { BlockQuote, Box, Button, Collapsible, Icon, Section, Tabs, Stack, Input } from '../components';
 import { Window } from '../layouts';
 
 const ASPECT2COLOR = [];
@@ -40,38 +39,38 @@ export const ReligiousTool = (props, context) => {
       height={700}>
       <Window.Content fontSize="14px">
         <Tabs textAlign="center">
-          <Flex direction="raw" width="100%">
-            <Flex.Item grow={1}>
+          <Stack direction="raw" width="100%">
+            <Stack.Item grow>
               <Tabs.Tab
                 fluid
                 selected={tab === 1}
                 onClick={() => setTab(1)}>
                 Religion <Icon name="place-of-worship" />
               </Tabs.Tab>
-            </Flex.Item>
+            </Stack.Item>
             {!sects && (
-              <Flex.Item grow={1}>
+              <Stack.Item grow>
                 <Tabs.Tab
                   fluid
                   selected={tab === 2}
                   onClick={() => setTab(2)}>
                   Rites <Icon name="pray" />
                 </Tabs.Tab>
-              </Flex.Item>
+              </Stack.Item>
             )}
-            <Flex.Item grow={1}>
+            <Stack.Item grow>
               <Tabs.Tab
                 fluid
                 selected={tab === 3}
                 onClick={() => setTab(3)}>
                 Encyclopedia <Icon name="book-open" />
               </Tabs.Tab>
-            </Flex.Item>
-          </Flex>
+            </Stack.Item>
+          </Stack>
         </Tabs>
-        <Flex.Item>
+        <Stack.Item>
           {GetTab(tab, sects)}
-        </Flex.Item>
+        </Stack.Item>
       </Window.Content>
     </Window>
   );
@@ -95,7 +94,7 @@ const GetInfoItem = (title, list) => {
   }
 
   return (
-    <Flex.Item width="100%" height={22}>
+    <Stack.Item width="100%" height={22}>
       <Section
         title={title}
         fill={1}>
@@ -105,7 +104,7 @@ const GetInfoItem = (title, list) => {
           <ui>{listItems}</ui>
         </Box>
       </Section>
-    </Flex.Item >
+    </Stack.Item >
   );
 };
 
@@ -133,8 +132,8 @@ const ReligionTab = (props, context) => {
         {deities}
       </Box>
       <Box>
-        <Flex mt={2}>
-          <Flex.Item width="100%" height={22}>
+        <Stack mt={2}>
+          <Stack.Item width="100%" height={22}>
             <Section
               title="Resources"
               fill={1}>
@@ -156,8 +155,8 @@ const ReligionTab = (props, context) => {
                 </ui>
               </Box>
             </Section>
-          </Flex.Item>
-          <Flex.Item width="100%" height={22}>
+          </Stack.Item>
+          <Stack.Item width="100%" height={22}>
             <Section
               title="Aspects"
               fill={1}>
@@ -166,14 +165,14 @@ const ReligionTab = (props, context) => {
                 {GetAspectBox("", aspects)}
               </Box>
             </Section>
-          </Flex.Item>
+          </Stack.Item>
           {GetInfoItem("Techs", techs)}
-        </Flex>
-        <Flex>
+        </Stack>
+        <Stack>
           {GetInfoItem("God Spells", god_spells)}
           {GetInfoItem("Holy Reagents", holy_reagents)}
           {GetInfoItem("Faith Reactions", faith_reactions)}
-        </Flex>
+        </Stack>
       </Box>
     </Section >
   );
@@ -245,18 +244,14 @@ const SectSelectTab = (props, context) => {
 
   return (
     <Section fill title="Sect Select">
-      <Flex direction="column">
+      <Stack vertical>
         {sects.map(sect => (
           <Collapsible key={sect.name}
             title={(
-              <Flex mt={-3.3} ml={3}>
-                <Flex.Item grow>
-                  {sect.name}
-                </Flex.Item>
-              </Flex>
+              <b>{sect.name}</b>
             )}
             color="transparent">
-            <Flex.Item key={sect.name} >
+            <Stack.Item key={sect.name} >
               <BlockQuote>
                 <Box>
                   <Box bold>
@@ -284,10 +279,10 @@ const SectSelectTab = (props, context) => {
                 })}>
                 {sect.aspects_count ? "Create" : "Select"} {sect.name}
               </Button>
-            </Flex.Item>
+            </Stack.Item>
           </Collapsible>
         ))}
-      </Flex>
+      </Stack>
     </Section>
   );
 };
@@ -301,7 +296,7 @@ const Encyclopedia = (props, context) => {
 
   // about categories here code\modules\religion\encyclopedia.dm
   return (
-    <Flex>
+    <Stack>
       <Tabs vertical={1}>
         {Object.keys(encyclopedia).map(category => (
           <Tabs.Tab
@@ -315,9 +310,10 @@ const Encyclopedia = (props, context) => {
       </Tabs>
       <Section
         height={52}
+        fill
         scrollable
         width="100%">
-        <Flex.Item>
+        <Stack.Item>
           {cat === "RITES" && (
             <ERitesTab />
           )}
@@ -336,9 +332,9 @@ const Encyclopedia = (props, context) => {
           {cat === "FAITH REACTIONS" && (
             <EReactionsTab />
           )}
-        </Flex.Item>
+        </Stack.Item>
       </Section>
-    </Flex>
+    </Stack>
   );
 };
 
@@ -679,6 +675,7 @@ const RiteTab = (props, context) => {
   return (
     <Section
       height={52}
+      fill
       scrollable
       width="100%">
       <Input
@@ -687,9 +684,9 @@ const RiteTab = (props, context) => {
         placeholder="Search for..."
         onInput={(e, v) => setSearchText(v)}
         mb={1} />
-      <Flex direction="column">
+      <Stack vertical mt={2}>
         {items.map(rite => (
-          <Flex.Item mt={1} key={rite.name}>
+          <Stack.Item key={rite.name}>
             <Section
               title={rite.name}
               buttons={(
@@ -757,9 +754,9 @@ const RiteTab = (props, context) => {
                 </Box>
               </BlockQuote>
             </Section>
-          </Flex.Item>
+          </Stack.Item>
         ))}
-      </Flex>
+      </Stack>
     </Section >
   );
 };

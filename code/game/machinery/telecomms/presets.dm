@@ -23,6 +23,13 @@
 	toggled = FALSE
 	autolinkers = list("r_relay")
 
+/obj/machinery/telecomms/relay/preset/portable
+	id = "Portable Relay"
+	heatgen = 0
+	hide = TRUE
+	use_power = 0
+	active_power_usage = 0
+
 /obj/machinery/telecomms/relay/preset/centcom
 	id = "Centcom Relay"
 	hide = TRUE
@@ -39,12 +46,17 @@
 	"supply", "common", "command", "engineering", "security",
 	"receiverA", "receiverB", "broadcasterA", "broadcasterB")
 
+/obj/machinery/telecomms/hub/preset/atom_init()
+	. = ..()
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL))
+		autolinkers -= "common"
+
 /obj/machinery/telecomms/hub/preset_cent
 	id = "CentComm Hub"
 	network = "tcommsat"
 	heatgen = 0
 	autolinkers = list("hub_cent", "c_relay", "s_relay", "m_relay", "r_relay",
-	 "centcomm", "receiverCent", "broadcasterCent")
+	"centcomm", "receiverCent", "broadcasterCent")
 
 //Receivers
 
@@ -108,6 +120,8 @@
 /obj/machinery/telecomms/bus/preset_four/atom_init()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_NO_COMMON_RADIO_CHANNEL))
+		autolinkers -= "common"
 	. = ..()
 
 /obj/machinery/telecomms/bus/preset_cent

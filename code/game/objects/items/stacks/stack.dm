@@ -115,7 +115,7 @@
 	)
 
 /obj/item/stack/tgui_state(mob/user)
-	return global.hands_state
+	return global.interactive_reach_state
 
 /obj/item/stack/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
@@ -137,31 +137,43 @@
 			produce_recipe(R, multiplier, usr)
 			return TRUE
 
-/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/user)
+/obj/item/stack/proc/produce_recipe(datum/stack_recipe/recipe, quantity, mob/living/user)
 	var/datum/stack_recipe/R = recipe
 	var/multiplier = quantity
 	if (!multiplier) multiplier = 1
+	 // don't forget to copypaste checks to /datum/craft_or_build/proc/can_build
 	if(src.amount < (R.req_amount*multiplier))
 		if (R.req_amount*multiplier>1)
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 		else
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return
-	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
-		return
-	if (R.on_floor)
+	if (R.build_outline)
 		usr.client.cob.turn_on_build_overlay(usr.client, R, src)
 		return
+	if (R.max_per_turf)
+		if(R.max_per_turf == 1 && (locate(R.result_type) in usr.loc))
+			to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
+			return
+		else
+			var/already_have = 0
+			for(var/type in usr.loc)
+				if(istype(type, R.result_type))
+					already_have++
+			if(already_have >= R.max_per_turf)
+				to_chat(usr, "<span class='warning'>You can't build another [R.title] here!</span>")
+				return
 	if (R.time)
 		if(usr.is_busy())
 			return
 		to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
-		if (!do_after(usr, R.time, target = usr))
+		if (!do_skilled(usr, usr, R.time, R.required_skills, -0.2))
 			return
+	var/atom/build_loc = loc
 	if(!use(R.req_amount*multiplier))
 		return
-	var/atom/O = new R.result_type( usr.loc )
+	var/atom/movable/O = new R.result_type(build_loc)
+	user.try_take(O, build_loc)
 	O.set_dir(usr.dir)
 	if (R.max_res_amount>1)
 		var/obj/item/stack/new_item = O
@@ -188,11 +200,11 @@
 	. = (amount)
 
 /obj/item/stack/proc/is_cyborg()
-	return istype(loc, /obj/item/weapon/robot_module) || istype(loc, /mob/living/silicon)
+	return istype(loc, /obj/item/weapon/robot_module) || issilicon(loc)
 
 /obj/item/stack/use(used, transfer = FALSE)
 	if(used < 0)
-		stack_trace("[src.type]/use() called with a negative parameter [used]")
+		stack_trace("[src.type]/use() called with a negative parameter")
 		return FALSE
 	if(zero_amount())
 		return FALSE
@@ -235,14 +247,15 @@
 			S.use(res_list[x])
 
 /obj/item/stack/proc/zero_amount()
-	if(amount < 1 && !is_cyborg())
-		qdel(src)
+	if(amount < 1)
+		if(!is_cyborg())
+			qdel(src)
 		return TRUE
 	return FALSE
 
 /obj/item/stack/proc/add(_amount)
 	if(_amount < 0)
-		stack_trace("[src.type]/add() called with a negative parameter [_amount]")
+		stack_trace("[src.type]/add() called with a negative parameter")
 		return
 	amount += _amount
 	update_icon()
@@ -269,13 +282,27 @@
 		s.update_ui_after_item_removal()
 	S.add(transfer)
 
+/obj/item/stack/Move(NewLoc, Dir, step_x, step_y)
+	. = ..()
+	if(!.)
+		return .
+	if(!isturf(NewLoc, loc))
+		return .
+	var/turf/T = NewLoc
+	for(var/obj/item/stack/AM in T.contents)
+		if(throwing || AM.throwing)
+			continue
+		if(istype(AM, merge_type))
+			var/obj/item/stack/S = AM
+			S.merge(src)
+
 /obj/item/stack/attack_hand(mob/user)
 	if (user.get_inactive_hand() == src)
 		if(zero_amount())
 			return
 		change_stack(user, 1)
 		if(!QDELETED(src) && usr.machine == src)
-			INVOKE_ASYNC(src, .proc/interact, usr)
+			INVOKE_ASYNC(src, PROC_REF(interact), usr)
 	else
 		..()
 
@@ -303,11 +330,11 @@
 			change_stack(user, stackmaterial)
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
-/obj/item/stack/proc/change_stack(mob/user, amount)
-	var/obj/item/stack/F = new type(user, amount, FALSE)
+/obj/item/stack/proc/change_stack(mob/living/user, amount)
+	var/obj/item/stack/F = new type(loc, amount, FALSE)
+	user.try_take(F, loc)
 	. = F
 	F.copy_evidences(src)
-	user.put_in_hands(F)
 	add_fingerprint(user)
 	F.add_fingerprint(user)
 	use(amount, TRUE)
@@ -318,9 +345,9 @@
 		merge(S)
 		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 		if(!QDELETED(S) && usr.machine == S)
-			INVOKE_ASYNC(S, /obj/item/stack.proc/interact, usr)
+			INVOKE_ASYNC(S, TYPE_PROC_REF(/obj/item/stack, interact), usr)
 		if(!QDELETED(src) && usr.machine == src)
-			INVOKE_ASYNC(src, .proc/interact, usr)
+			INVOKE_ASYNC(src, PROC_REF(interact), usr)
 	else
 		return ..()
 
@@ -335,24 +362,38 @@
  * Recipe datum
  */
 /datum/stack_recipe
+	/// The title of the recipe
 	var/title = "ERROR"
-	var/result_type
+	/// What atom the recipe makes, typepath
+	var/atom/result_type
+	/// Amount of stack required to make
 	var/req_amount = 1
+	/// Amount of resulting atoms made
 	var/res_amount = 1
+	/// Max amount of resulting atoms made
 	var/max_res_amount = 1
+	/// How long it takes to make, base value. Can vary based on required_skills
 	var/time = 0
-	var/one_per_turf = FALSE
-	var/on_floor = FALSE
+	/// Number of the resulting atoms is allowed per turf, 0 to disable limit
+	var/max_per_turf = 0
+	/// Enable or disable preview overlay
+	var/build_outline = FALSE
+	/// Restrict building only for these floor types
+	var/list/turf/floor_path
+	/// Skills to check for building time
+	var/list/required_skills
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, max_per_turf = 0, build_outline = FALSE, required_skills = null, floor_path = list(/turf/simulated/floor))
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
 	src.res_amount = res_amount
 	src.max_res_amount = max_res_amount
 	src.time = time
-	src.one_per_turf = one_per_turf
-	src.on_floor = on_floor
+	src.max_per_turf = max_per_turf
+	src.build_outline = build_outline
+	src.required_skills = required_skills
+	src.floor_path = floor_path
 
 /*
  * Recipe list datum

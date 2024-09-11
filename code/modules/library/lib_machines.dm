@@ -59,7 +59,7 @@
 			if(!establish_db_connection("erro_library"))
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else
-				var/SQLquery = "SELECT author, title, category, id FROM erro_library WHERE "
+				var/SQLquery = "SELECT author, title, category, id FROM erro_library WHERE deletereason IS NULL AND "
 				if(category == "Any")
 					SQLquery += "author LIKE '%[sanitize_sql(author)]%' AND title LIKE '%[sanitize_sql(title)]%' LIMIT [page], [LIBRETURNLIMIT]"
 				else
@@ -102,7 +102,7 @@
 			title = null
 		title = sanitize_sql(title)
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Reference", "Religion")
 		if(newcategory)
 			category = newcategory
 		else
@@ -232,7 +232,7 @@
 			if(!establish_db_connection("erro_library"))
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category, deletereason FROM erro_library LIMIT [page], [LIBRETURNLIMIT]")
+				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category, deletereason FROM erro_library WHERE deletereason IS NULL LIMIT [page], [LIBRETURNLIMIT]")
 				query.Execute()
 
 				var/first_id = null
@@ -367,7 +367,7 @@
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Reference", "Religion")
 		if(newcategory)
 			upload_category = newcategory
 	if(href_list["upload"])
@@ -410,7 +410,7 @@
 			visible_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
 		else
 			next_print = world.time + 6 SECONDS
-			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id='[sqlid]'")
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id='[sqlid]' AND deletereason IS NULL")
 			query.Execute()
 
 			while(query.NextRow())
@@ -423,6 +423,9 @@
 				B.author = author
 				B.dat = content
 				B.icon_state = "book[rand(1,10)]"
+				B.item_state_world = "[B.icon_state]_world"
+				B.item_state_inventory = B.icon_state
+				B.update_world_icon()
 				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
 
@@ -439,6 +442,7 @@
 		if(!query.Execute())
 			return
 
+		tgui_alert(usr, "Предупреждаем, что неправомерное использование функции может повлечь за собой наказание! Только книги, нарушающие установленные регуляции, подлежат донесению.")
 
 		var/title
 		if(query.NextRow())
@@ -446,20 +450,23 @@
 			if(query.item[2] != null)
 				return
 
-		var/reason = sanitize_sql(sanitize(input(usr,"Reason for removal","Enter reason (max 60 characters)") as text))
-		if(length(reason) > 60)
-			tgui_alert(usr, "The reason is more than 60 characters long")
+		var/reason = sanitize_sql(sanitize(input(usr,"Причина для удаления","Введите причину, не более 60 символов") as text))
+		if(length_char(reason) > 60)
+			tgui_alert(usr, "Причина не должна быть более 60 символов, отмена.")
 			return
 
 		if(!reason)
 			return
 
-		query = dbcon.NewQuery("UPDATE erro_library SET deletereason = '[reason]' WHERE id = '[sqlid]'")
+		var/key = ckey(usr.ckey)
+
+		query = dbcon.NewQuery("UPDATE erro_library SET deletereason = '[reason] | Reported by [key]' WHERE id = '[sqlid]'")
 		query.Execute()
 
-		message_admins("[usr.name]/[usr.ckey] requested removal of [title] from the library database")
+		log_admin("[key_name(usr)] requested removal of '[title]' from the library database.")
+		message_admins("[key_name_admin(usr)] requested removal of '[title]' from the library database.")
 
-		tgui_alert(usr, "Delete request sent.")
+		tgui_alert(usr, "Запрос на удаление отправлен, спасибо за ваше участие!")
 
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null
@@ -541,6 +548,9 @@
 		b.dat = O:info
 		b.name = "Print Job #" + "[rand(100, 999)]"
 		b.icon_state = "book[rand(1,10)]"
+		b.item_state_world = "[b.icon_state]_world"
+		b.item_state_inventory = b.icon_state
+		b.update_world_icon()
 		qdel(O)
 	else
 		..()

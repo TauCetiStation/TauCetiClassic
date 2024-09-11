@@ -1,4 +1,12 @@
-/proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
+/obj/effect/overlay/temp/heavy_emp
+	icon = 'icons/effects/sebb.dmi'
+	icon_state = "sebb_explode"
+	layer = ABOVE_LIGHTING_PLANE
+	pixel_x = -175 // We need these offsets to force center the sprite because BYOND is dumb
+	pixel_y = -175
+	appearance_flags = RESET_COLOR
+
+/proc/empulse(turf/epicenter, heavy_range, light_range, log=0, custom_effects = EMP_DEFAULT)
 	if(!epicenter) return
 
 	if(!istype(epicenter, /turf))
@@ -8,24 +16,26 @@
 		message_admins("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] [ADMIN_JMP(epicenter)]")
 		log_game("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
 
-	var/power = heavy_range * 2 + light_range
-	for(var/obj/item/device/radio/beacon/interaction_watcher/W in interaction_watcher_list)
-		if(get_dist(W, epicenter) < 10)
-			W.react_empulse(epicenter, power)
+	SSStatistics.add_emp_stat(epicenter, heavy_range, light_range)
 
-	if(heavy_range > 1)
+	SEND_SIGNAL(SSexplosions, COMSIG_EXPLOSIONS_EMPULSE, epicenter, heavy_range, light_range)
+
+	if(custom_effects == EMP_SEBB)
+		var/obj/effect/overlay/temp/heavy_emp/S = new(epicenter)
+		S.anchored = TRUE
+		QDEL_IN(S, 1 SECOND)
+	else if(heavy_range > 1)
 		var/obj/effect/overlay/pulse = new /obj/effect/overlay(epicenter)
 		pulse.icon = 'icons/effects/effects.dmi'
 		pulse.icon_state = "emppulse"
 		pulse.name = "emp pulse"
 		pulse.anchored = TRUE
-		QDEL_IN(pulse, 20)
+		QDEL_IN(pulse, 2 SECONDS)
 
 	if(heavy_range > light_range)
 		light_range = heavy_range
-
 	for(var/mob/M in range(heavy_range, epicenter))
-		M.playsound_local(null, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		M.playsound_local(null, custom_effects, VOL_EFFECTS_MASTER, null, FALSE)
 
 	for(var/atom/T in range(light_range, epicenter))
 		var/distance = get_dist(epicenter, T)

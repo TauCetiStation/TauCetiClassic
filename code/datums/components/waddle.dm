@@ -36,7 +36,7 @@
 	waddle_height = _waddle_height
 	waddle_angles = _waddle_angles
 
-	RegisterSignal(parent, waddle_on, .proc/try_waddle)
+	RegisterSignal(parent, waddle_on, PROC_REF(try_waddle))
 
 /datum/component/waddle/proc/try_waddle()
 	var/atom/movable/waddler = parent

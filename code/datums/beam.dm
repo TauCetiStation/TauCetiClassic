@@ -13,13 +13,13 @@
 	var/origin_oldloc = null
 	var/static_beam = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
-	var/layer = null
+	var/plane = null
 	var/timing_id = null
 	var/recalculating = FALSE
 
 	var/obj/effect/ebeam/visuals //what we add to the ebeam's visual contents. never gets deleted on redrawing.
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam, beam_sleep_time=3, beam_layer)
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam, beam_sleep_time=3, beam_plane)
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
 	target = beam_target
@@ -32,9 +32,10 @@
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
-	layer = beam_layer
+	if(!isnull(beam_plane))
+		plane = beam_plane
 	if(time < INFINITY)
-		addtimer(CALLBACK(src,.proc/End), time)
+		addtimer(CALLBACK(src,PROC_REF(End)), time)
 
 /datum/beam/proc/Start()
 	visuals = new beam_type()
@@ -68,13 +69,13 @@
 /datum/beam/proc/recalculate_in(time)
 	if(timing_id)
 		deltimer(timing_id)
-	timing_id = addtimer(CALLBACK(src, .proc/recalculate), time, TIMER_STOPPABLE)
+	timing_id = addtimer(CALLBACK(src, PROC_REF(recalculate)), time, TIMER_STOPPABLE)
 
 /datum/beam/proc/after_calculate()
 	if((sleep_time == null) || finished)	//Does not automatically recalculate.
 		return
 	if(isnull(timing_id))
-		timing_id = addtimer(CALLBACK(src, .proc/recalculate), sleep_time, TIMER_STOPPABLE)
+		timing_id = addtimer(CALLBACK(src, PROC_REF(recalculate)), sleep_time, TIMER_STOPPABLE)
 
 /datum/beam/proc/End(destroy_self = TRUE)
 	finished = TRUE
@@ -111,8 +112,8 @@
 			break
 		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
 		X.owner = src
-		if(layer)
-			X.layer = layer
+		if(plane)
+			X.plane = plane
 		elements += X
 
 		//Assign our single visual ebeam to each ebeam's vis_contents
@@ -168,7 +169,7 @@
 /obj/effect/ebeam/singularity_act()
 	return
 
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3,beam_layer)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time,beam_layer)
-	INVOKE_ASYNC(newbeam, /datum/beam/.proc/Start)
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3,beam_plane)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time,beam_plane)
+	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam, Start))
 	return newbeam

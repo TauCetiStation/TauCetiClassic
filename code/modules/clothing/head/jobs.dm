@@ -1,12 +1,18 @@
 
-//Bartender
+//Cook
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
 	desc = "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
-	icon_state = "chef"
+	icon_state = "chefhat"
 	item_state = "chefhat"
-	desc = "The commander in chef's head wear."
 	siemens_coefficient = 0.9
+
+//Cook-alt
+/obj/item/clothing/head/sushi_band
+	name = "sushi master headband"
+	desc = "Beautiful minimalistic headband."
+	icon_state = "sushiband"
+	item_state = "sushiband"
 
 //Captain: This probably shouldn't be space-worthy
 /obj/item/clothing/head/caphat
@@ -22,11 +28,10 @@
 	desc = "You fear to wear it for the negligence it brings."
 	icon_state = "capcap"
 	flags_inv = 0
-	body_parts_covered = 0
+	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.9
-	body_parts_covered = 0
 	force = 0
 	hitsound = list()
 
@@ -57,12 +62,25 @@
 //HoS
 /obj/item/clothing/head/hos_peakedcap
 	name = "head of security's peaked cap"
-	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG."
+	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG. Also has some space for special armor plate."
 	icon_state = "hos_peakedcap"
 	item_state = "hos_peakedcap"
 	w_class = SIZE_TINY
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
+	valid_accessory_slots = list("dermal")
+	restricted_accessory_slots = list("dermal")
+
+/obj/item/clothing/head/hos_hat
+	name = "head of security's hat"
+	desc = "The hat of the Head of Security. For showing the officers who's in charge."
+	icon_state = "hoshat"
+	item_state = "hoshat"
+	w_class = SIZE_TINY
+	siemens_coefficient = 0.9
+	body_parts_covered = 0
+	valid_accessory_slots = list("dermal")
+	restricted_accessory_slots = list("dermal")
 
 //Medical
 /obj/item/clothing/head/surgery
@@ -88,20 +106,12 @@
 /obj/item/clothing/head/det_hat
 	name = "detective's brown hat"
 	desc = "Someone who wears this will look very smart."
-	icon_state = "detective_brown"
+	icon_state = "detective_hat_brown"
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
 	armor = list(melee = 50, bullet = 5, laser = 25,energy = 10, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
-	body_parts_covered = 0
+	body_parts_covered = HEAD
 
-/obj/item/clothing/head/det_hat/grey
-	name = "detective's grey hat"
-	icon_state = "detective_grey"
-
-/obj/item/clothing/head/det_hat/darkgrey
-	name = "detective's dark grey hat"
-	icon_state = "detective_darkgrey"
-
-/obj/item/clothing/head/det_hat/black
-	name = "detective's black hat"
-	icon_state = "detective_black"
+/obj/item/clothing/head/det_hat/gray
+	name = "detective's gray hat"
+	icon_state = "detective_hat_gray"

@@ -15,8 +15,14 @@
 	return ..()
 
 /obj/machinery/atmospherics/ex_act(severity)
-	for(var/atom/movable/A in src) //ventcrawling is serious business
-		A.ex_act(severity)
+	for(var/atom/A in src) //ventcrawling is serious business
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 	. = ..()
 
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)

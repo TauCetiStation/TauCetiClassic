@@ -1,4 +1,4 @@
-/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
+/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 
@@ -79,15 +79,8 @@
 
 	if(suiciding)
 		O.suiciding = suiciding
-		suiciding = null
-	O.a_intent = INTENT_HARM
-
-	//keep viruses?
-	if(tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/datum/disease/D in O.viruses)
-			D.affected_mob = O
+		suiciding = FALSE
+	O.set_a_intent(INTENT_HARM)
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -105,16 +98,14 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in stored_implants)
 			var/obj/item/weapon/implant/IMP = Y
-			IMP.loc = O
-			IMP.imp_in = O
-			IMP.implanted = TRUE
+			IMP.stealth_inject(O)
 		O.sec_hud_set_implants()
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.SetParalysis(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -125,26 +116,18 @@
 	if(mind)
 		mind.transfer_to(O)
 
-		var/datum/role/changeling/C = O.mind.GetRoleByType(/datum/role/changeling)
-		if(C)
-			C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
-			O.changeling_update_languages(C.absorbed_languages)
-			for(var/mob/living/parasite/essence/M in src)
-				M.transfer(O)
-
+	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE, O)
 	transfer_trait_datums(O)
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a monkey.</B>")
-
 	. = O
-
 	qdel(src)
 
 //////////////////////////           Humanize               //////////////////////////////
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
-/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
+/mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
 	if (notransform)
 		return
 
@@ -216,16 +199,8 @@
 
 	if(suiciding)
 		O.suiciding = suiciding
-		suiciding = null
-	O.a_intent = INTENT_HELP
-
-	//keep viruses?
-	if(tr_flags & TR_KEEPVIRUS)
-		O.viruses = viruses
-		viruses = list()
-		for(var/datum/disease/D in O.viruses)
-			D.affected_mob = O
-		O.med_hud_set_status()
+		suiciding = FALSE
+	O.set_a_intent(INTENT_HELP)
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -243,20 +218,16 @@
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in stored_implants)
 			var/obj/item/weapon/implant/IMP = Y
-			IMP.loc = O
-			IMP.imp_in = O
-			IMP.implanted = TRUE
 			var/obj/item/organ/external/BP = pick(O.bodyparts)
 			if(BP)
-				IMP.part = BP
-				BP.implants += IMP
+				IMP.inject(O, BP)
 		O.sec_hud_set_implants()
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.Paralyse(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -267,19 +238,12 @@
 	if(mind)
 		mind.transfer_to(O)
 
-		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(C)
-			O.changeling_update_languages(C.absorbed_languages)
-			for(var/mob/living/parasite/essence/M in src)
-				M.transfer(O)
-
 	transfer_trait_datums(O)
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
-
 	. = O
-
+	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE, O)
 	qdel(src)
 
 /mob/dead/new_player/AIize()
@@ -312,23 +276,19 @@
 	var/newloc = loc
 	if(move)
 		var/obj/loc_landmark
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
-			if (sloc.name != "AI")
-				continue
-			if ((locate(/mob/living) in sloc.loc) || (locate(/obj/structure/AIcore) in sloc.loc))
+		for(var/obj/effect/landmark/start/sloc as anything in landmarks_list["AI"])
+			if((locate(/mob/living) in sloc.loc) || (locate(/obj/structure/AIcore) in sloc.loc))
 				continue
 			loc_landmark = sloc
 		if (!loc_landmark)
-			for(var/obj/effect/landmark/tripai in landmarks_list)
-				if (tripai.name == "tripai")
-					if((locate(/mob/living) in tripai.loc) || (locate(/obj/structure/AIcore) in tripai.loc))
-						continue
-					loc_landmark = tripai
+			for(var/obj/effect/landmark/tripai as anything in landmarks_list["tripai"])
+				if((locate(/mob/living) in tripai.loc) || (locate(/obj/structure/AIcore) in tripai.loc))
+					continue
+				loc_landmark = tripai
 		if (!loc_landmark)
 			to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
-			for(var/obj/effect/landmark/start/sloc in landmarks_list)
-				if (sloc.name == "AI")
-					loc_landmark = sloc
+			for(var/obj/effect/landmark/start/sloc as anything in landmarks_list["AI"])
+				loc_landmark = sloc
 
 		newloc = loc_landmark.loc
 
@@ -344,6 +304,8 @@
 	if(mind)
 		mind.transfer_to(O)
 		O.mind.original = O
+		O.mind.skills.add_available_skillset(/datum/skillset/max)
+		O.mind.skills.maximize_active_skills()
 	else
 		O.key = key
 
@@ -358,7 +320,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/crewsimov, ai_link = TRUE, datum/religion/R)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -384,6 +346,8 @@
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
+		O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+		O.mind.skills.maximize_active_skills()
 		if(O.mind.assigned_role == "Cyborg")
 			O.mind.original = O
 		else if(mind && mind.special_role)
@@ -432,7 +396,7 @@
 		if("Drone")
 			new_xeno = new /mob/living/carbon/xenomorph/humanoid/drone(loc)
 
-	new_xeno.a_intent = INTENT_HARM
+	new_xeno.set_a_intent(INTENT_HARM)
 	new_xeno.key = key
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
@@ -468,7 +432,7 @@
 			new_slime = new /mob/living/carbon/slime/adult(loc)
 		else
 			new_slime = new /mob/living/carbon/slime(loc)
-	new_slime.a_intent = INTENT_HARM
+	new_slime.set_a_intent(INTENT_HARM)
 	new_slime.key = key
 
 	to_chat(new_slime, "<B>You are now a slime. Skreee!</B>")
@@ -490,7 +454,7 @@
 		qdel(t)
 
 	var/mob/living/simple_animal/corgi/new_corgi = new /mob/living/simple_animal/corgi (loc)
-	new_corgi.a_intent = INTENT_HARM
+	new_corgi.set_a_intent(INTENT_HARM)
 	new_corgi.key = key
 
 	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
@@ -524,7 +488,7 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = INTENT_HARM
+	new_mob.set_a_intent(INTENT_HARM)
 
 
 	to_chat(new_mob, "You suddenly feel more... animalistic.")
@@ -544,7 +508,7 @@
 	var/mob/new_mob = new mobpath(src.loc)
 
 	new_mob.key = key
-	new_mob.a_intent = INTENT_HARM
+	new_mob.set_a_intent(INTENT_HARM)
 	to_chat(new_mob, "You feel more... animalistic")
 
 	qdel(src)
@@ -600,15 +564,11 @@
 	//Not in here? Must be untested!
 	return 1
 
-/mob/living/carbon/human/proc/Blobize()
+/mob/proc/Blobize()
 	if (notransform)
 		return
-	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
 	if(!client)
-		for(var/mob/dead/observer/G in player_list)
-			if(ckey == "@[G.ckey]")
-				new_blob.create_overmind(G.client , 1)
-				break
+		new /obj/structure/blob/core(loc)
 	else
-		new_blob.create_overmind(src.client , 1)
-	gib(src)
+		new /obj/structure/blob/core(loc, client)
+	gib()

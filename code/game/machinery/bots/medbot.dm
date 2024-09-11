@@ -5,13 +5,12 @@
 
 /obj/machinery/bot/medbot
 	name = "Medibot"
-	desc = "A little medical robot. He looks somewhat underwhelmed."
+	desc = "Маленький робо-доктор. Он выглядит озадаченно."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "medibot0"
 	density = FALSE
 	anchored = FALSE
-	health = 20
-	maxhealth = 20
+	max_integrity = 20
 	req_access =list(access_medical)
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 //var/emagged = 0
@@ -40,7 +39,7 @@
 
 /obj/machinery/bot/medbot/mysterious
 	name = "Mysterious Medibot"
-	desc = "International Medibot of mystery."
+	desc = "Медибот-загадка международного уровня."
 	skin = "bezerk"
 	treatment_oxy = "dexalinp"
 	treatment_brute = "bicaridine"
@@ -70,6 +69,7 @@
 	else
 		botcard.access = botcard_access
 	icon_state = "medibot[on]"
+	add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/bot/medbot/turn_on()
@@ -200,8 +200,11 @@
 
 	else
 		..()
-		if(health < maxhealth && !isscrewdriver(W) && W.force)
-			step_to(src, (get_step_away(src,user)))
+
+/obj/machinery/bot/medbot/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	if(. && !QDELING(src))
+		step(src, reverse_dir[attack_dir])
 
 /obj/machinery/bot/medbot/emag_act(mob/user)
 	..()
@@ -257,7 +260,7 @@
 
 	if(!patient)
 		if(!shut_up && prob(1))
-			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',"Delicious!" = 'sound/voice/medbot/delicious.ogg')
+			var/list/messagevoice = list("Радар, надень маску!" = 'sound/voice/medbot/radar.ogg',"Сомнения порождают страх, но со мной тебе нечего бояться!" = 'sound/voice/medbot/catch.ogg',"Я так и знал! Нужно было учиться на пластического хирурга!" = 'sound/voice/medbot/surgeon.ogg',"Что это за медотсек такой? Все мрут как мухи!" = 'sound/voice/medbot/flies.ogg',"Великолепно!" = 'sound/voice/medbot/delicious.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
 			playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
@@ -278,7 +281,7 @@
 				last_found = world.time
 				spawn(0)
 					if((last_newpatient_speak + 100) < world.time) //Don't spam these messages!
-						var/list/messagevoice = list("Hey, [C.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [C.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[C.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
+						var/list/messagevoice = list("[C.name]! Держись, я иду!" = 'sound/voice/medbot/coming.ogg',"Стой, [C.name]! Я хочу помочь!" = 'sound/voice/medbot/help.ogg',"[C.name], должно быть, тебе нужна помощь!" = 'sound/voice/medbot/injured.ogg')
 						var/message = pick(messagevoice)
 						speak(message)
 						last_newpatient_speak = world.time
@@ -357,13 +360,6 @@
 	if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return 1
 
-
-	for(var/datum/disease/D in C.viruses)
-		if((D.stage > 1) || (D.spread_type == AIRBORNE))
-
-			if(!C.reagents.has_reagent(treatment_virus))
-				return 1 //STOP DISEASE FOREVER
-
 	return 0
 
 /obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
@@ -378,7 +374,7 @@
 		return
 
 	if(C.stat == DEAD)
-		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/medbot/no.ogg',"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg')
+		var/list/messagevoice = list("Нет! Не бросай нас!" = 'sound/voice/medbot/no.ogg',"Проклятье! Не закрывай глаза!" = 'sound/voice/medbot/live.ogg',"Я... Я ещё никогда не терял пациента... Сегодня, то есть." = 'sound/voice/medbot/lost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
@@ -399,14 +395,6 @@
 
 	if(emagged == 2) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
-
-	var/virus = 0
-	for(var/datum/disease/D in C.viruses)
-		virus = 1
-
-	if(!reagent_id && (virus))
-		if(!C.reagents.has_reagent(treatment_virus))
-			reagent_id = treatment_virus
 
 	if(!reagent_id && (C.getBruteLoss() >= heal_threshold))
 		if(!C.reagents.has_reagent(treatment_brute))
@@ -429,7 +417,7 @@
 		patient = null
 		currently_healing = 0
 		last_found = world.time
-		var/list/messagevoice = list("All patched up!" = 'sound/voice/medbot/patchedup.ogg',"An apple a day keeps me away." = 'sound/voice/medbot/apple.ogg',"Feel better soon!" = 'sound/voice/medbot/feelbetter.ogg')
+		var/list/messagevoice = list("Как новенький!" = 'sound/voice/medbot/patchedup.ogg',"Яблочко на ужин, и врач не нужен!" = 'sound/voice/medbot/apple.ogg',"Поправляйся!" = 'sound/voice/medbot/feelbetter.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], VOL_EFFECTS_MASTER, null, FALSE)
@@ -461,10 +449,10 @@
 	visible_message("[src] beeps, \"[message]\"")
 	return
 
-/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		stunned = min(stunned+10,20)
-	..()
 
 /obj/machinery/bot/medbot/explode()
 	on = 0
@@ -499,7 +487,7 @@
 		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			frustration = 0
-	else if((istype(M, /mob/living)) && (!anchored))
+	else if((isliving(M)) && (!anchored))
 		loc = M.loc
 		frustration = 0
 	return

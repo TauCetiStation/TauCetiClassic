@@ -15,8 +15,8 @@
 	consent_msg = msg
 	consent = def_consent
 
-	RegisterSignal(parent, list(COMSIG_RITE_ON_CHOSEN), .proc/victim_ask)
-	RegisterSignal(parent, list(COMSIG_RITE_CAN_START), .proc/check_victim)
+	RegisterSignal(parent, list(COMSIG_RITE_ON_CHOSEN), PROC_REF(victim_ask))
+	RegisterSignal(parent, list(COMSIG_RITE_CAN_START), PROC_REF(check_victim))
 
 // Send ask to victim
 /datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, obj/AOG)
@@ -39,7 +39,9 @@
 	if(!AOG.buckled_mob)
 		to_chat(user, "<span class='warning'>Требуется прикрепить жертву к алтарю.</span>")
 		return COMPONENT_CHECK_FAILED
-	if(AOG.buckled_mob.mind && !AOG.buckled_mob.client)
+	if(!AOG.buckled_mob.mind)
+		return NONE
+	if(!AOG.buckled_mob.client)
 		to_chat(user, "<span class='warning'>Требуется сознательная жертва на алтаре.</span>")
 		return COMPONENT_CHECK_FAILED
 	if(!consent)

@@ -2,7 +2,7 @@
 #define AI_CHECK_RADIO 2
 #define EMERGENCY_MESSAGE_COOLDOWN 300
 
-var/list/ai_verbs_default = list(
+var/global/list/ai_verbs_default = list(
 //	/mob/living/silicon/ai/proc/ai_recall_shuttle,
 	/mob/living/silicon/ai/proc/ai_goto_location,
 	/mob/living/silicon/ai/proc/ai_remove_location,
@@ -135,6 +135,9 @@ var/list/ai_verbs_default = list(
 
 	var/datum/announcement/station/command/ai/announcement = new
 
+	var/legs = FALSE //shitspawn only var
+	var/uses_legs = FALSE //shitspawn only var
+
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
 
@@ -146,7 +149,7 @@ var/list/ai_verbs_default = list(
 	SetNextMove(CLICK_CD_MELEE * 3)
 	var/mob/living/L = A
 	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
-	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
+	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, MELEE), DAM_SHARP|DAM_EDGE)
 	playsound(eyeobj, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
@@ -161,7 +164,7 @@ var/list/ai_verbs_default = list(
 	var/pickedName = null
 	while(!pickedName)
 		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in ai_list)
+		for (var/mob/living/silicon/ai/A as anything in ai_list)
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
@@ -170,8 +173,6 @@ var/list/ai_verbs_default = list(
 	name = real_name
 
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
-
-	proc_holder_list = new()
 
 	if(L)
 		if (istype(L, /datum/ai_laws))
@@ -194,15 +195,15 @@ var/list/ai_verbs_default = list(
 		add_ai_verbs(src)
 
 	//Languages
-	add_language("Sol Common", 0)
-	add_language("Sinta'unathi", 0)
-	add_language("Siik'maas", 0)
-	add_language("Siik'tajr", 0)
-	add_language("Skrellian", 0)
-	add_language("Rootspeak", 0)
-	add_language("Tradeband", 1)
-	add_language("Trinary", 1)
-	add_language("Gutter", 0)
+	add_language(LANGUAGE_SOLCOMMON, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SINTAUNATHI, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SIIKMAAS, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SIIKTAJR, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SKRELLIAN, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_ROOTSPEAK, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_TRADEBAND)
+	add_language(LANGUAGE_TRINARY)
+	add_language(LANGUAGE_GUTTER, LANGUAGE_CAN_UNDERSTAND)
 
 	if(!safety) // Only used by AIize() to successfully spawn an AI.
 		if(!B)  // If there is no player/brain inside.
@@ -221,6 +222,10 @@ var/list/ai_verbs_default = list(
 	new /obj/machinery/ai_powersupply(src)
 
 	ai_list += src
+
+	if(mind)
+		mind.skills.add_available_skillset(/datum/skillset/max)
+		mind.skills.maximize_active_skills()
 
 /mob/living/silicon/ai/proc/announce_role()
 	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
@@ -291,7 +296,10 @@ var/list/ai_verbs_default = list(
 
 	gen_radial_cores()
 
-	var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
+	var/mob/showing_to = eyeobj
+	if(uses_legs)
+		showing_to = src
+	var/state = show_radial_menu(usr, showing_to, chooses_ai_cores, radius = 50, tooltips = TRUE)
 	if(!state)
 		return
 	icon_state = name_by_state[state]
@@ -380,12 +388,12 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = tgui_alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", list("Yes", "No"))
+	var/confirm = tgui_alert(src, "Вы уверены, что хотите вызвать экстренный шаттл?", "Подтвердите вызов шаттла", list("Да", "Нет"))
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	if(confirm == "Yes")
+	if(confirm == "Да")
 		call_shuttle_proc(src)
 
 	// hack to display shuttle timer
@@ -465,24 +473,20 @@ var/list/ai_verbs_default = list(
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-		if(2.0)
-			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (stat != DEAD)
-				adjustBruteLoss(30)
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
 	updatehealth()
-
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	if(usr != src)
@@ -563,16 +567,25 @@ var/list/ai_verbs_default = list(
 
 		return
 
+	if(href_list["x"] && href_list["y"] && href_list["z"])
+		var/tx = text2num(href_list["x"])
+		var/ty = text2num(href_list["y"])
+		var/tz = text2num(href_list["z"])
+		var/turf/target = locate(tx, ty, tz)
+		if(istype(target))
+			eyeobj.forceMove(target)
+			return
+
 	return
 
-/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
 
 	updatehealth()
 
-/mob/living/silicon/ai/reset_view(atom/A)
+/mob/living/silicon/ai/reset_view(atom/A, force_remote_viewing)
 	if(camera)
 		camera.set_light(0)
 	if(istype(A,/obj/machinery/camera))
@@ -817,7 +830,7 @@ var/list/ai_verbs_default = list(
 
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("<span class='notice'>\The [user] starts to unbolt \the [src] from the plating...</span>")
@@ -891,7 +904,7 @@ var/list/ai_verbs_default = list(
 	if(ismalf(usr) && stat != DEAD)
 		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
 		return
-	if(stat)
+	if(stat != CONSCIOUS)
 		return ..()
 
 	// Wipe Core
@@ -900,3 +913,38 @@ var/list/ai_verbs_default = list(
 					"Wipe Core", list("No", "Yes")) != "Yes")
 		return
 	perform_wipe_core()
+
+/mob/living/silicon/ai/proc/allow_walking()
+	legs = !legs
+	if(!legs)
+		verbs -= /mob/living/silicon/ai/proc/toggle_walking
+		to_chat(src, "M.O.V.E. protocol has been disabled.")
+		if(uses_legs)
+			toggle_walking()
+	else
+		verbs += /mob/living/silicon/ai/proc/toggle_walking
+		to_chat(src, "M.O.V.E. protocol has been enabled.")
+
+/mob/living/silicon/ai/proc/toggle_walking()
+	set name = "Toggle Moving"
+	set desc = "Deploy or conceal your hidden mobility threads."
+	set category = "AI Commands"
+
+	if(stat == DEAD)
+		return
+
+	view_core()
+	uses_legs = !uses_legs
+	canmove = !canmove
+	cut_overlays()
+	playsound(src, 'sound/misc/ai_threads.ogg', VOL_EFFECTS_MASTER, 70, FALSE)
+
+	visible_message("<span class='notice'>[src] [uses_legs ? "engages" : "disengages"] it's mobility module!</span>")
+
+	if(uses_legs)
+		var/image/legs = image(icon, src, "threads", MOB_LAYER, pixel_y = -9)
+		legs.plane = plane
+		add_overlay(legs)
+		pixel_y = 8
+	else
+		pixel_y = 0

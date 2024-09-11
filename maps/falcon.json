@@ -1,0 +1,14 @@
+{
+    "map_name": "Falcon Station",
+    "map_path": "falcon",
+    "map_file": "falcon.dmm",
+    "station_name": "NSS Falcon",
+    "station_name_ru": "КСН Сокол",
+    "system_name" : "Tau Ceti",
+    "station_image": "falcon",
+    "traits": [{"Mining": true, "Linkage": "Cross"}],
+    "space_ruin_levels": 2,
+    "space_empty_levels": 1,
+    "load_junkyard": 1,
+    "minetype": null
+}

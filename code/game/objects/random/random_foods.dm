@@ -32,6 +32,17 @@
 						prob(2);/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers\
 					)
 
+/obj/random/foods/ramens
+	name = "Random Ramen"
+	desc = "This is a random ramen."
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "ramen_open"
+/obj/random/foods/ramens/item_to_spawn()
+		return pick(
+						/obj/item/weapon/reagent_containers/food/drinks/dry_ramen,
+						/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen,
+					)
+
 /obj/random/foods/drink_bottle
 	name = "Random Snack Food Pile"
 	desc = "This is a random snack."
@@ -41,7 +52,7 @@
 		return pick(subtypesof(/obj/item/weapon/reagent_containers/food/drinks/bottle))
 
 /obj/random/foods/food_without_garbage
-	name = "Random Food Supply with Garbage"
+	name = "Random Food Supply without Garbage"
 	desc = "This is a random food."
 	icon = 'icons/obj/food.dmi'
 	icon_state = "mysterysoup"

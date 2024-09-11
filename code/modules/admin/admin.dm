@@ -3,12 +3,15 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-/proc/message_admins(msg, reg_flag = R_ADMIN)
+/proc/message_admins(msg, reg_flag = R_ADMIN, emphasize = FALSE)
 	log_adminwarn(msg) // todo: msg in html format, dublicates other logs; must be removed, use logs_*() where necessary (also, thanks you dear ZVE)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	for(var/client/C in admins)
+	var/style = "admin"
+	if (emphasize)
+		style += " emphasized"
+	msg = "<span class='[style]'><span class='prefix'>ADMIN LOG:</span> <span class='message'>[msg]</span></span>"
+	for(var/client/C as anything in admins)
 		if(C.holder.rights & reg_flag)
-			to_chat(C, msg)
+			to_chat_admin_log(C, msg)
 
 // do not use with formatted messages (html), we don't need it in logs
 /proc/admin_log_and_message_admins(message as text)
@@ -24,12 +27,12 @@ var/global/BSACooldown = 0
 	if(!target.client && !ishuman(target))
 		require_flags |= CHAT_NOCLIENT_ATTACK
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!(R_ADMIN & C.holder.rights))
 			continue
 		if((C.prefs.chat_toggles & require_flags) != require_flags)
 			continue
-		to_chat(C, msg)
+		to_chat_attack_log(C, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -68,28 +71,43 @@ var/global/BSACooldown = 0
 		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>
 		<br>
 		<b>Mob type</b> = [M.type]<br><br>
-		<b>Guard:</b> <A href='?src=\ref[src];guard=\ref[M]'>Show</A> |
-		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A>|<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A><br>
-		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
+		"}
+
+	if(M.client)
+		body += {"
+			<b>Guard:</b> <A href='?src=\ref[src];guard=\ref[M]'>Show</A><br>
+			<b>Related accounts by current IP and CID</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
+			<b>Slow queries:</b> <A href='?src=\ref[src];cid_history=\ref[M]'>CID history</A> | <A href='?src=\ref[src];ip_history=\ref[M]'>IP history</A><br>
+		"}
+
+	body += {"
+		<b>CentCom (other server bans)</b>: <A target='_blank' href='https://centcom.melonmesa.com/viewer/view/[M.ckey]'>CentCom (ENG)</A><br>
 		<b>BYOND profile</b>: <A target='_blank' href='http://byond.com/members/[M.ckey]'>[M.ckey]</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
+		<A href='?src=\ref[src];chatban=\ref[M]'>Chatban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
 	"}
 
 	if(M.client)
 		body += "| <A HREF='?src=\ref[src];sendtoprison=\ref[M]'>Prison</A><br>"
-		var/muted = M.client.prefs.muted
-		body += {"<br><b>Mute: </b>
-			<A class='[(muted & MUTE_IC)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_IC]'>IC</a>
-			<A class='[(muted & MUTE_OOC)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_OOC]'>OOC</a>
-			<A class='[(muted & MUTE_PRAY)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_PRAY]'>PRAY</a>
-			<A class='[(muted & MUTE_ADMINHELP)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ADMINHELP]'>ADMINHELP</a>
-			<A class='[(muted & MUTE_MENTORHELP)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_MENTORHELP]'>MENTORHELP</a>
-			<A class='[(muted & MUTE_DEADCHAT)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_DEADCHAT]'>DEADCHAT</a>
-			<A class='[(muted & MUTE_ALL)?"red":"green"]' href='?src=\ref[src];mute=\ref[M];mute_type=[MUTE_ALL]'>ALL</a>
+		var/datum/preferences/pref = M.client.prefs
+		// these shows two states: if cooldown is active, and hint for chats if ban active
+		body += {"<br><b>Cooldowns: </b>
+			<A class='[IS_ON_ADMIN_CD(M.client, ADMIN_CD_IC)?"red":"green"]' href='?src=\ref[src];cooldown=\ref[M];type=[ADMIN_CD_IC]'>
+				IC[(pref.muted & MUTE_IC) ? " (BANNED)" : ""]
+			</a>
+			<A class='[IS_ON_ADMIN_CD(M.client, ADMIN_CD_OOC)?"red":"green"]' href='?src=\ref[src];cooldown=\ref[M];type=[ADMIN_CD_OOC]'>
+				OOC[(pref.muted & MUTE_OOC) ? " (BANNED)" : ""]
+			</a>
+			<A class='[IS_ON_ADMIN_CD(M.client, ADMIN_CD_PRAY)?"red":"green"]' href='?src=\ref[src];cooldown=\ref[M];type=[ADMIN_CD_PRAY]'>
+				PRAY[(pref.muted & MUTE_PRAY) ? " (BANNED)" : ""]
+			</a>
+			<A class='[IS_ON_ADMIN_CD(M.client, ADMIN_CD_PM)?"red":"green"]' href='?src=\ref[src];cooldown=\ref[M];type=[ADMIN_CD_PM]'>
+				PM[(pref.muted & MUTE_PM) ? " (BANNED)" : ""]
+			</a>
 		"}
 
 	body += {"<br><br>
@@ -99,7 +117,8 @@ var/global/BSACooldown = 0
 		<br><br>
 		[check_rights(R_ADMIN,0) ? "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | " : "" ]
 		<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> |
-		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
+		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A> |
+		<A href='?src=\ref[src];skills=\ref[M]'>Skills panel</A>
 	"}
 
 	if (M.client)
@@ -177,8 +196,7 @@ var/global/BSACooldown = 0
 				Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A>
 				<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A>
 				<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A>
-				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>|
-				<A href='?src=\ref[src];simplemake=meme;mob=\ref[M]'>Meme</A>
+				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
 				<br>
 			"}
 			body += "</div>"
@@ -197,227 +215,11 @@ var/global/BSACooldown = 0
 
 	feedback_add_details("admin_verb","SPP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-#define PLAYER_INFO_MISSING_CONTENT_TEXT    "Missing Data"
-#define PLAYER_INFO_MISSING_AUTHOR_TEXT     "N/A"
-#define PLAYER_INFO_MISSING_RANK_TEXT       "N/A"
-#define PLAYER_INFO_MISSING_TIMESTAMP_TEXT  "N/A"
-#define PLAYER_INFO_MISSING_JOB_TEXT        "N/A"
-#define PLAYER_INFO_MISSING_ROUND_ID_TEXT   "N/A"
-
-/datum/player_info
-	var/author = PLAYER_INFO_MISSING_AUTHOR_TEXT        // admin who authored the information
-	var/content = PLAYER_INFO_MISSING_CONTENT_TEXT      // text content of the information
-	var/timestamp = PLAYER_INFO_MISSING_TIMESTAMP_TEXT  // Because this is bloody annoying
-	var/days_timestamp = 0 // number of day after 1 Jan 2000
-	var/round_id = PLAYER_INFO_MISSING_ROUND_ID_TEXT
-
-/datum/player_info/proc/get_days_timestamp()
-	return isnum(days_timestamp) ? days_timestamp : 0
-
 /datum/admins/proc/show_player_notes(key)
 	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 		return
 
-	key = ckey(key)
-
-	if(!key || !config.sql_enabled)
-		return
-
-	if(!establish_db_connection("erro_messages", "erro_ban"))
-		to_chat(usr, "Notes [key] from DB don't available.")
-		return
-
-	//Display player age and player warn bans
-	var/p_age
-	var/p_ingame_age
-	for(var/client/C in clients)
-		if(C.ckey == key)
-			p_age = C.player_age
-			p_ingame_age = C.player_ingame_age
-
-	// Gather data
-	var/list/db_messages = load_info_player_db_messages(key)
-	var/list/db_bans = load_info_player_db_bans(key)
-	// Start render info page
-	var/dat = ""
-	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age] / In-game age: [p_ingame_age]</span><hr>"
-
-	if(!length(db_messages) && !length(db_bans))
-		dat += "No information found on the given key.<br>"
-	else
-		var/list/infos = generalized_players_info(db_messages, db_bans)
-		for(var/datum/player_info/I in infos)
-			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> on <i><font color=blue>#[I.round_id], [I.timestamp]</i></font> "
-			dat += "<br><br>"
-	dat += "<br>"
-	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
-
-	var/datum/browser/popup = new(usr, "window=adminplayerinfo", "Info on [key]", 480, 480, ntheme = CSS_THEME_LIGHT)
-	popup.set_content(dat)
-	popup.open()
-
-/datum/admins/proc/generalized_players_info(list/file_notes, list/db_notes)
-	var/list/datum/player_info/merged = list()
-	if(length(file_notes))
-		merged += file_notes
-	if(length(db_notes))
-		merged += db_notes
-	merged = sortMerge(merged, /proc/cmp_days_timestamp, FALSE)
-	return merged
-
-/proc/cmp_days_timestamp(datum/player_info/a, datum/player_info/b)
-	return a.get_days_timestamp() - b.get_days_timestamp()
-
-/datum/admins/proc/load_info_player_db_messages(player_ckey)
-	// Get player ckey and generate list of players_notes
-	// Return null if errors
-	var/list/db_player_notes = list()
-	var/timestamp_format = "%a, %M %D of %Y" // we don't really need it now because both bans and notes use normal timestamp, but i'm little tired
-	var/days_ago_start_date = "1999-12-31"   // to make changes here ang test, and anyway we will rewrite it completely
-	var/list/sql_fields = list(
-		"adminckey",
-		"text",
-		"DATE_FORMAT(timestamp, '[timestamp_format]')",
-		"DATEDIFF(timestamp, '[days_ago_start_date]')",
-		"round_id"
-	 )
-	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_messages WHERE (targetckey = '[ckey(player_ckey)]') AND (deleted = 0) ORDER BY id LIMIT 100")
-	if(!query.Execute())
-		return
-	while(query.NextRow())
-		var/datum/player_info/notes_record = new()
-
-		var/a_ckey = query.item[1]
-		var/text = query.item[2]
-		var/timestamp = query.item[3]
-		var/days_ago = text2num(query.item[4])
-		var/rid = text2num(query.item[5])
-
-		if(length(a_ckey))
-			notes_record.author = a_ckey
-		if(length(text))
-			notes_record.content = text
-		if(length(timestamp))
-			notes_record.timestamp = timestamp
-		if(days_ago)
-			notes_record.days_timestamp = days_ago
-		if(rid)
-			notes_record.round_id = rid
-
-		db_player_notes += notes_record
-
-	return db_player_notes
-
-/datum/admins/proc/load_info_player_db_bans(player_ckey)
-	// Get player ckey and generate list of players_notes
-	// Return null if errors
-	var/list/db_player_notes = list()
-	if(config.ban_legacy_system)
-		return
-	var/timestamp_format = "%a, %M %D of %Y"
-	var/days_ago_start_date = "1999-12-31"
-	var/list/sql_fields = list(
-		"a_ckey",
-		"bantype",
-		"reason",
-		"DATE_FORMAT(bantime, '[timestamp_format]')",
-		"ip",
-		"computerid",
-		"duration",
-		"job",
-		"DATEDIFF(bantime, '[days_ago_start_date]')",
-		"unbanned",
-		"DATE_FORMAT(unbanned_datetime, '[timestamp_format]')",
-		"DATEDIFF(unbanned_datetime, '[days_ago_start_date]')",
-		"unbanned_ckey",
-		"round_id"
-	 )
-	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_ban WHERE (ckey = '[ckey(player_ckey)]') ORDER BY id LIMIT 100")
-	if(!query.Execute())
-		return
-	while(query.NextRow())
-		var/datum/player_info/notes_record = new()
-		var/datum/player_info/unban_notes_record
-		var/list/ip_cid = list()
-		var/a_ckey = query.item[1]
-		var/bantype = query.item[2]
-		var/reason = query.item[3]
-		var/timestamp = query.item[4]
-		if(query.item[5])
-			ip_cid += query.item[5]
-		if(query.item[6])
-			ip_cid += query.item[6]
-		var/duration = text2num(query.item[7])
-		var/job = query.item[8] ? query.item[8] : PLAYER_INFO_MISSING_JOB_TEXT
-		var/days_ago = text2num(query.item[9])
-		var/is_unbanned = query.item[10] ? TRUE : FALSE
-		var/unbanned_timestamp = query.item[11]
-		var/unbanned_days_ago = text2num(query.item[12])
-		var/unbanned_a_ckey = query.item[13]
-		var/rid = text2num(query.item[14])
-
-		if(rid)
-			notes_record.round_id = rid
-
-		// -1 = perma, duration in minutes come
-		if(!duration)
-			duration = "N/A"
-		else if(duration < 0)
-			duration = "infinity"
-		else
-			duration = DisplayTimeText((duration MINUTE), 1)
-
-		// Ban Record creating
-		if(length(a_ckey))
-			notes_record.author = a_ckey
-		var/description = "([ip_cid.Join(", ")]): [reason]"
-		switch(bantype)
-			if (BANTYPE_JOB_PERMA_STR)
-				// notes_record.content = "Permanent JOB BAN [job] [description]"
-				// already in notes by Adminbot
-				continue
-			if (BANTYPE_JOB_TEMP_STR)
-				// notes_record.content = "Temporal JOB BAN [job] for [duration] [description]"
-				continue
-			if (BANTYPE_PERMA_STR)
-				notes_record.content = "Permanent BAN [description]"
-			if (BANTYPE_TEMP_STR)
-				notes_record.content = "Temporal BAN for [duration] [description]"
-		if(length(timestamp))
-			notes_record.timestamp = timestamp
-		if(days_ago)
-			notes_record.days_timestamp = days_ago
-		db_player_notes += notes_record
-
-		// Unban record creating
-		if(is_unbanned)
-			unban_notes_record = new()
-			if(length(unbanned_a_ckey))
-				unban_notes_record.author =  unbanned_a_ckey
-			switch(bantype)
-				if(BANTYPE_JOB_PERMA_STR)
-					unban_notes_record.content = "Unban. Permanent JOB BAN [job] was [timestamp]"
-				if(BANTYPE_JOB_TEMP_STR)
-					unban_notes_record.content = "Unban. Temporal JOB BAN [job] was [timestamp]"
-				if(BANTYPE_PERMA_STR)
-					unban_notes_record.content = "Unban. Permanent BAN was [timestamp]"
-				if(BANTYPE_TEMP_STR)
-					unban_notes_record.content = "Unban. Temporal BAN was [timestamp]"
-			if(length(unbanned_timestamp))
-				unban_notes_record.timestamp = unbanned_timestamp
-			if(unbanned_days_ago)
-				unban_notes_record.days_timestamp = unbanned_days_ago
-			db_player_notes += unban_notes_record
-	return db_player_notes
-
-#undef PLAYER_INFO_MISSING_ROUND_ID_TEXT
-#undef PLAYER_INFO_MISSING_CONTENT_TEXT
-#undef PLAYER_INFO_MISSING_AUTHOR_TEXT
-#undef PLAYER_INFO_MISSING_RANK_TEXT
-#undef PLAYER_INFO_MISSING_TIMESTAMP_TEXT
-#undef PLAYER_INFO_MISSING_JOB_TEXT
-
+	notes_panel(key)
 
 /datum/admins/proc/access_news_network() //MARKER
 	set category = "Fun"
@@ -674,6 +476,7 @@ var/global/BSACooldown = 0
 
 	dat += {"
 		<BR>
+		<A href='?src=\ref[src];show_raspect=1'>Show Round Aspect</A><br>
 		<A href='?src=\ref[src];create_object=1'>Create Object</A><br>
 		<A href='?src=\ref[src];quick_create_object=1'>Quick Create Object</A><br>
 		<A href='?src=\ref[src];create_turf=1'>Create Turf</A><br>
@@ -700,15 +503,18 @@ var/global/BSACooldown = 0
 		dat += "<table>"
 		dat += "<tr><th>Name</th><th>Rank</th><th>Salary</th><th>Control</th></tr>"
 		for(var/person in crew)
+			var/datum/money_account/acc = get_account(person["account"])
+			if(!acc)
+				continue
+
 			var/color = "silver"
-			var/datum/money_account/acc = person["acc_datum"]
 			if(acc.owner_salary > acc.base_salary)
 				color = "green"
 			else if(acc.owner_salary < acc.base_salary)
 				color = "red"
 			dat += "<tr><td><span class='highlight'>[person["name"]]</span></td><td><span class='average'>[person["rank"]]</span></td>"
 			dat += "<td><font color='[color]'><b>[person["salary"]]$</b></font></td>"
-			dat += "<td><A href='byond://?src=\ref[src];salary=\ref[person["acc_datum"]]'>Change</A></td></tr>"
+			dat += "<td><A href='byond://?src=\ref[src];salary=[person["account"]]'>Change</A></td></tr>"
 		dat += "</table>"
 	else
 		dat += "<span class='bad'>Crew not found!</span>"
@@ -745,6 +551,14 @@ var/global/BSACooldown = 0
 		sleep(50)
 		world.Reboot(end_state = "admin reboot - by [usr.key]")
 
+/datum/admins/proc/end_round()
+	set category = "Server"
+	set name = "End Round"
+
+	if(tgui_alert(usr, "This will finish the round, but print and save all statistics. Are you sure?", "Restart", list("Yes", "Cancel")) != "Yes")
+		return
+
+	SSticker.force_end = TRUE
 
 /datum/admins/proc/announce()
 	set category = "Special Verbs"
@@ -861,13 +675,12 @@ var/global/BSACooldown = 0
 	set category = "Server"
 	set desc="People can't enter"
 	set name="Toggle Entering"
-	enter_allowed = !( enter_allowed )
-	if (!( enter_allowed ))
-		to_chat(world, "<B>New players may no longer enter the game.</B>")
-	else
-		to_chat(world, "<B>New players may now enter the game.</B>")
-	log_admin("[key_name(usr)] toggled new player game entering.")
-	message_admins("<span class='notice'>[key_name_admin(usr)] toggled new player game entering.</span>")
+	if(!SSlag_switch.initialized)
+		return
+	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, !SSlag_switch.measures[DISABLE_NON_OBSJOBS])
+	log_admin("[key_name(usr)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
+	message_admins("[key_name_admin(usr)] toggled new player game entering [SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "OFF" : "ON"].")
+
 	world.update_status()
 	feedback_add_details("admin_verb","TE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -975,12 +788,12 @@ var/global/BSACooldown = 0
 
 	if(!check_rights(R_SERVER))	return
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		SSticker.delay_end = !SSticker.delay_end
-		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
+		SSticker.admin_delayed = !SSticker.admin_delayed
+		log_admin("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].</span>")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "**[key_name(usr)]** [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 	else
@@ -1100,29 +913,22 @@ var/global/BSACooldown = 0
 		else
 			return "Error: Invalid sabotage target: [target]"
 */
-/datum/admins/proc/spawn_atom(object as text)
+/datum/admins/proc/spawn_atom()
 	set category = "Debug"
-	set desc = "(atom path) Spawn an atom."
 	set name = "Spawn"
 
-	if(!check_rights(R_SPAWN))	return
-
-	var/list/types = typesof(/atom)
-	var/list/matches = new()
-
-	for(var/path in types)
-		if(findtext("[path]", object))
-			matches += path
-
-	if(matches.len==0)
+	if(!check_rights(R_SPAWN))
 		return
 
-	var/chosen
-	if(matches.len==1)
-		chosen = matches[1]
-	else
-		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+	var/target_path = input("Enter typepath:", "Typepath", "mob/living/carbon/human?")
+	var/chosen = text2path(target_path)
+	if(!ispath(chosen))
+		chosen = pick_closest_path(target_path)
 		if(!chosen)
+			tgui_alert(usr, "No path was selected")
+			return
+		else if(ispath(chosen, /area))
+			tgui_alert(usr, "That path is not allowed.")
 			return
 
 	if(ispath(chosen,/turf))
@@ -1150,6 +956,17 @@ var/global/BSACooldown = 0
 	M.mind.edit_memory()
 	feedback_add_details("admin_verb","STP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/show_skills_panel(mob/M)
+
+	if(!istype(M))
+		to_chat(usr, "This can only be used on instances of type /mob")
+		return
+	if(!M.mind)
+		to_chat(usr, "This mob has no mind! So no skills!")
+		return
+
+	M.mind.edit_skills()
+	feedback_add_details("admin_verb","SKP")
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"
@@ -1179,7 +996,7 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
@@ -1212,13 +1029,56 @@ var/global/BSACooldown = 0
 	if(istype(H))
 		H.regenerate_icons()
 
+/datum/admins/proc/show_lag_switch_panel()
+	set category = "Server"
+	set name = "Show Lag Switches"
+	set desc="Display the controls for drastic lag mitigation measures."
+
+	if(!SSlag_switch.initialized)
+		to_chat(usr, "<span class='notice'>The Lag Switch subsystem has not yet been initialized.</span>")
+		return
+	if(!check_rights(R_SERVER))
+		return
+
+	var/html = ""
+
+	html += "<div class='Section__title'>Settings</div><div class='Section'>"
+	html += "Automatic Trigger: <a href='?_src_=holder;change_lag_switch_option=TOGGLE_AUTO'><b>[SSlag_switch.auto_switch ? "On" : "Off"]</b></a><br>"
+	html += "Population Threshold: <a href='?_src_=holder;change_lag_switch_option=NUM'><b>[SSlag_switch.trigger_pop]</b></a><br>"
+	html += "Slowmode Cooldown (toggle On/Off below): <a href='?_src_=holder;change_lag_switch_option=SLOWCOOL'><b>[SSlag_switch.slowmode_cooldown/10] seconds</b></a><br>"
+	html += "<br><b>SET ALL MEASURES: <a href='?_src_=holder;change_lag_switch=ALL_ON'>ON</a> | <a href='?_src_=holder;change_lag_switch=ALL_OFF'>OFF</a></b><br>"
+	html += "Disable late joining: <a href='?_src_=holder;change_lag_switch=[DISABLE_NON_OBSJOBS]'><b>[SSlag_switch.measures[DISABLE_NON_OBSJOBS] ? "On" : "Off"]</b></a>"
+	html += "</div>"
+
+	html += "<div class='Section__title'>Lag Switches</div><div class='Section'>"
+	html += "Disable deadmob <u title='Movement with keyboard'>keyLoop</u> (except staff): <a href='?_src_=holder;change_lag_switch=[DISABLE_DEAD_KEYLOOP]'><b>[SSlag_switch.measures[DISABLE_DEAD_KEYLOOP] ? "On" : "Off"]</b></a><br>"
+	html += "Disable ghost zoom: <a href='?_src_=holder;change_lag_switch=[DISABLE_GHOST_ZOOM]'><b>[SSlag_switch.measures[DISABLE_GHOST_ZOOM] ? "On" : "Off"]</b></a><br><br>"
+	html += "Measures below can be bypassed with a <u title='TRAIT_BYPASS_MEASURES'>special trait</u><br>"
+	html += "Slowmode say/me verbs: <a href='?_src_=holder;change_lag_switch=[SLOWMODE_IC_CHAT]'><b>[SSlag_switch.measures[SLOWMODE_IC_CHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br>"
+	html += "Disable runechat: <a href='?_src_=holder;change_lag_switch=[DISABLE_RUNECHAT]'><b>[SSlag_switch.measures[DISABLE_RUNECHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br>"
+	html += "Disable examine icons: <a href='?_src_=holder;change_lag_switch=[DISABLE_BICON]'><b>[SSlag_switch.measures[DISABLE_BICON] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to examiner</span><br>"
+	html += "Disable parallax: <a href='?_src_=holder;change_lag_switch=[DISABLE_PARALLAX]'><b>[SSlag_switch.measures[DISABLE_PARALLAX] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br>"
+	html += "Disable footsteps sounds: <a href='?_src_=holder;change_lag_switch=[DISABLE_FOOTSTEPS]'><b>[SSlag_switch.measures[DISABLE_FOOTSTEPS] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span>"
+	html += "</div>"
+
+	html += "<div class='Section__title bgbad'>Dangerous Zone</div><div class='Section'>"
+	html += "<a class='[SSdemo.can_fire ? "bgbad" : "bggrey"]' href='?_src_=holder;lag_switch_special=STOP_DEMO'>DISABLE DEMO</a>"
+
+	// not sure if we need it here, without own subsystem it will be awfully bad
+	html += "<a class='[SSair.stop_airnet_processing ? "bgbad" : "bggrey"]' href='?_src_=holder;lag_switch_special=STOP_AIRNET'>DISABLE AIRNET</a>"
+	html += "<a class='[SSmachines.stop_powernet_processing ? "bgbad" : "bggrey"]' href='?_src_=holder;lag_switch_special=STOP_POWERNET'>DISABLE POWERNET</a>"
+	html += "</div>"
+
+	var/datum/browser/popup = new(usr, "lag_switch_panel", "Lag Switch Panel", 440, 540)
+	popup.set_content(html)
+	popup.open()
 
 /proc/get_options_bar(whom, detail = 2, name = 0, link = 1, reply = null, mentor_pm = FALSE)
 	if(!whom)
 		return "<b>(*null*)</b>"
 	var/mob/M
 	var/client/C
-	if(istype(whom, /client))
+	if(isclient(whom))
 		C = whom
 		M = C.mob
 	else if(istype(whom, /mob))
@@ -1278,7 +1138,7 @@ var/global/BSACooldown = 0
 
 /**********************Administration Shuttle**************************/
 
-var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
+var/global/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 /proc/move_admin_shuttle()
 	var/area/fromArea
@@ -1319,7 +1179,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 /**********************Centcom Ferry**************************/
 
-var/ferry_location = 0 // 0 = centcom , 1 = station
+var/global/ferry_location = 0 // 0 = centcom , 1 = station
 
 /proc/move_ferry()
 	var/area/fromArea
@@ -1360,7 +1220,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 
 /**********************Alien ship**************************/
 
-var/alien_ship_location = 1 // 0 = base , 1 = mine
+var/global/alien_ship_location = 1 // 0 = base , 1 = mine
 
 /proc/move_alien_ship()
 	var/area/fromArea

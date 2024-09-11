@@ -1,12 +1,23 @@
 // Space Cash. Now it isn't that useless.
-/datum/export/stack/cash
+/datum/export/cash
 	cost = 1 // Multiplied both by value of each bill and by amount of bills in stack.
 	unit_name = "credit chip"
 	export_types = list(/obj/item/weapon/spacecash)
 
-/datum/export/stack/cash/get_amount(obj/O)
+/datum/export/cash/get_amount(obj/O)
 	var/obj/item/weapon/spacecash/C = O
 	return ..() * C.worth
+
+
+// EWallets.
+/datum/export/ewallet
+	cost = 1 // Multiplied both by value of each bill and by amount of bills in stack.
+	unit_name = "charge card"
+	export_types = list(/obj/item/weapon/ewallet)
+
+/datum/export/ewallet/get_amount(obj/O)
+	var/obj/item/weapon/ewallet/EW = O
+	return EW.get_money()
 
 
 // Coins. At least the coins that do not contain any materials.
@@ -21,21 +32,21 @@
 	var/price = 0
 	switch(O.name)
 		if(COIN_IRON)
-			price = 50
+			price = 10
 		if(COIN_SILVER)
-			price = 100
+			price = 20
 		if(COIN_GOLD)
-			price = 150
+			price = 30
 		if(COIN_URANIUM)
-			price = 180
+			price = 36
 		if(COIN_PHORON)
-			price = 220
+			price = 44
 		if(COIN_PLATINUM, COIN_MYTHRIL)
-			price = 300
+			price = 60
 		if(COIN_DIAMOND)
-			price = 350
+			price = 70
 		if(COIN_BANANIUM)
-			price = 450
+			price = 90
 		else
 			price = 1
 	return ..() * price

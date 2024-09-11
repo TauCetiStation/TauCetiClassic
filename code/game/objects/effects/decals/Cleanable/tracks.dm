@@ -137,6 +137,7 @@ var/global/list/image/fluidtrack_cache=list()
 			track.overlay=null
 		var/image/I = image(icon, icon_state=state, dir=num2dir(truedir))
 		I.color = track.basedatum.color
+		I.alpha = track.basedatum.alpha
 
 		track.fresh=0
 		track.overlay=I
@@ -160,6 +161,12 @@ var/global/list/image/fluidtrack_cache=list()
 /obj/effect/decal/cleanable/blood/tracks/footprints/claws
 	coming_state = "claw1"
 	going_state  = "claw2"
+
+/obj/effect/decal/cleanable/blood/tracks/snake
+	name = "wet tracks"
+	desc = "They look like still wet tracks left by a giant snake."
+	coming_state = "snake1"
+	going_state  = "snake2"
 
 /obj/effect/decal/cleanable/blood/tracks/wheels
 	name = "wet tracks"

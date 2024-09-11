@@ -2,37 +2,37 @@
 
 /area/awaymission/jungle/temple_one
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple1"
 
 /area/awaymission/jungle/temple_two
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple2"
 
 /area/awaymission/jungle/temple_three
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple3"
 
 /area/awaymission/jungle/temple_four
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple4"
 
 /area/awaymission/jungle/temple_five
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple5"
 
 /area/awaymission/jungle/temple_six
 	name = "temple"
-	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = TRUE
 	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple6"
 
@@ -50,7 +50,7 @@
 /obj/effect/landmark/glowshroom_spawn/atom_init()
 	..()
 	if(prob(10))
-		new /obj/effect/glowshroom(loc)
+		new /obj/structure/glowshroom(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/loot_spawn
@@ -123,13 +123,13 @@
 				new /obj/effect/decal/remains/xeno(src.loc)
 		if("plants")
 			if(prob(25))
-				new /obj/effect/glowshroom(src.loc)
+				new /obj/structure/glowshroom(src.loc)
 			else if(prob(33))
 				new /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap(src.loc)
 			else if(prob(50))
 				new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris(src.loc)
 		if("blob")
-			new /obj/effect/blob/core(src.loc)
+			new /obj/structure/blob/core(src.loc)
 		if("clothes")
 			var/obj/structure/closet/C = new(src.loc)
 			C.icon_state = "blue"
@@ -161,9 +161,8 @@
 			var/obj/structure/closet/crate/secure/weapon/C = new(src.loc)
 			var/new_type = pick(
 			200; /obj/item/weapon/hatchet, \
-			/obj/item/weapon/gun/projectile/automatic/pistol, \
-			/obj/item/weapon/gun/projectile/automatic/deagle, \
-			/obj/item/weapon/gun/projectile/revolver/russian, \
+			/obj/item/weapon/gun/projectile/automatic/pistol/stechkin, \
+			/obj/item/weapon/gun/projectile/automatic/pistol/deagle, \
 			)
 			new new_type(C)
 		if("spacesuit")
@@ -294,7 +293,7 @@
 /obj/effect/step_trigger/trap/atom_init_late()
 	trap_type = pick(50;"thrower","sawburst","poison_dart","flame_burst",10;"phoron_gas",5;"n2_gas")
 	if( (trap_type == "phoron_gas" || trap_type == "n2_gas") && prob(10))
-		new /obj/effect/glowshroom(src.loc)
+		new /obj/structure/glowshroom(src.loc)
 
 	//hint that this tile is dangerous
 	if(prob(90))
@@ -384,7 +383,7 @@
 /obj/effect/step_trigger/trap/fake/atom_init_late()
 	..()
 	if(prob(10))
-		new /obj/effect/glowshroom(src.loc)
+		new /obj/structure/glowshroom(src.loc)
 	if(prob(90))
 		var/turf/T = get_turf(src)
 		T.desc = pick("It looks a little dustier than the surrounding tiles.","It is somewhat ornate.","It looks a little darker than the surrounding tiles.")
@@ -401,5 +400,5 @@
 		..()
 	else
 		if(prob(10))
-			new /obj/effect/glowshroom(src.loc)
+			new /obj/structure/glowshroom(src.loc)
 		qdel(src)

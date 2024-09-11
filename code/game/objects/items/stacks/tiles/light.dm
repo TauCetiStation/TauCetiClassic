@@ -6,7 +6,7 @@
 	w_class = SIZE_SMALL
 	force = 3.0
 	throwforce = 5.0
-	throw_speed = 5
+	throw_speed = 3
 	throw_range = 20
 	flags = CONDUCT
 	max_amount = 60
@@ -27,7 +27,7 @@
 		state = 0 //fine
 
 /obj/item/stack/tile/light/attackby(obj/item/I, mob/user, params)
-	if(iscrowbar(I))
+	if(isprying(I))
 		if(!use(1))
 			return
 		new/obj/item/stack/sheet/metal(user.loc)

@@ -7,6 +7,7 @@
 *.tsx text eol=lf
 *.css text eol=lf
 *.scss text eol=lf
+*.svg text eol=lf
 *.html text eol=lf
 *.json text eol=lf
 *.yml text eol=lf
@@ -17,3 +18,6 @@ bin/tgui text eol=lf
 
 ## Treat bundles as binary and ignore them during conflicts
 *.bundle.* binary merge=tgui-merge-bundle
+*.chunk.* binary merge=tgui-merge-bundle
+.yarn/releases/**/* binary
+.yarn/plugins/**/* binary

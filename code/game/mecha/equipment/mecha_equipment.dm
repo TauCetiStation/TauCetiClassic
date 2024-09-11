@@ -12,14 +12,13 @@
 	var/equip_ready = 1
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
-	var/range = MELEE //bitflags
+	var/range = RANGE_MELEE //bitflags
 	reliability = 1000
 	var/selectable = TRUE// Set to FALSE for passive equipment such as mining scanner or armor plates
 	var/salvageable = 1
 	var/sound_detonation = 'sound/mecha/critdestr.ogg'
 	var/sound_attach_equip = 'sound/mecha/mecha_attack_equip.ogg'
 	var/sound_detach_equip = 'sound/mecha/mech_detach_equip.ogg'
-
 
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)
 	sleep(equip_cooldown)
@@ -69,8 +68,7 @@
 	return range&RANGED
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_melee()
-	return range&MELEE
-
+	return range&RANGE_MELEE
 
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)
 	if(!target)
@@ -107,18 +105,16 @@
 	update_chassis_page()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
-	moveto = moveto || get_turf(chassis)
-	if(Move(moveto))
-		chassis.equipment -= src
-		if(chassis.selected == src)
-			chassis.selected = null
-		playsound(src, sound_detach_equip, VOL_EFFECTS_MASTER, 75, FALSE, null, -3)
-		update_chassis_page()
-		chassis.log_message("[src] removed from equipment.")
-		chassis = null
-		set_ready_state(1)
-	return
+/obj/item/mecha_parts/mecha_equipment/proc/detach()
+	forceMove(get_turf(chassis))
+	chassis.equipment -= src
+	if(chassis.selected == src)
+		chassis.selected = null
+	playsound(src, sound_detach_equip, VOL_EFFECTS_MASTER, 75, FALSE, null, -3)
+	update_chassis_page()
+	chassis.log_message("[src] removed from equipment.")
+	chassis = null
+	set_ready_state(1)
 
 
 /obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)

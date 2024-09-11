@@ -2,14 +2,14 @@
 /mob/living/simple_animal/shiba
 	name = "Shiba Inu"
 	real_name = "shiba inu"
-	desc = "It's a small, agile cute doggy."
+	desc = "Это маленькая, подвижная, симпатичная собачка."
 	icon_state = "shiba"
 	icon_living = "shiba"
 	icon_dead = "shiba_dead"
-	speak = list("Kyan!","Van!", "Woof!", "Bark!", "AUUUUUU", "Yap!")
-	speak_emote = list("barks", "woofs")
-	emote_hear = list("barks", "woofs", "pants", "vans")
-	emote_see = list("shakes its head", "shivers", "looks cute")
+	speak = list("Кьян!", "Ван!", "Ауф!", "Гав!", "АУУУУ!")
+	speak_emote = list("лает", "воет", "тявкает")
+	emote_hear = list("лает", "воет", "тявкает")
+	emote_see = list("облизывается", "виляет хвостом", "выглядит мило")
 	speak_chance = 20
 	turns_per_move = 3
 	w_class = SIZE_BIG
@@ -25,13 +25,17 @@
 	has_head = TRUE
 	has_leg = TRUE
 
+	default_emotes = list(
+		/datum/emote/dance,
+	)
+
 	var/facehugger
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/shiba
 	name = "shiba meat"
-	desc = "Tastes like... well you know..."
+	desc = "На вкус как... ну ты знаешь..."
 
 /mob/living/simple_animal/shiba/regenerate_icons()
 	cut_overlays()
@@ -41,7 +45,7 @@
 /mob/living/simple_animal/shiba/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(!stat)
+		if(stat == CONSCIOUS)
 			visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
@@ -53,20 +57,16 @@
 /mob/living/simple_animal/shiba/Life()
 	..()
 
-	if(!stat && !resting && !buckled)
+	if(stat == CONSCIOUS && !buckled)
 		if(prob(1))
-			emote(pick("chases its tail"))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					set_dir(i)
-					sleep(1)
+			emote("dance")
 
 	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
 		if(prob(30))
-			emote(pick("barks!","woofs loudly!","eyes [histoy] joyfully."))
+			me_emote(pick("лает", "воет!","рычит."))
 		break
 
-	if(!stat && !resting && !buckled)
+	if(stat == CONSCIOUS && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)
@@ -90,4 +90,4 @@
 				set_dir(i)
 				sleep(1)
 		if(prob(40))
-			visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)
+			visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"))

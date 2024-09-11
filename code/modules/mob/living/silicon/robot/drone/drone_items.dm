@@ -13,6 +13,10 @@
 		/obj/item/weapon/airalarm_electronics,
 		/obj/item/weapon/airlock_electronics,
 		/obj/item/weapon/module/power_control,
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/sheet/plasteel,
+		/obj/item/stack/tile,
 		/obj/item/weapon/stock_parts,
 		/obj/item/light_fixture_frame,
 		/obj/item/apc_frame,
@@ -34,11 +38,11 @@
 
 /obj/item/weapon/gripper/atom_init()
 	. = ..()
-	RegisterSignal(src, list(COMSIG_HAND_IS), .proc/is_hand)
-	RegisterSignal(src, list(COMSIG_HAND_ATTACK), .proc/attack_as_hand)
-	RegisterSignal(src, list(COMSIG_HAND_DROP_ITEM), .proc/drop_item)
-	RegisterSignal(src, list(COMSIG_HAND_PUT_IN), .proc/put_in)
-	RegisterSignal(src, list(COMSIG_HAND_GET_ITEM), .proc/get_item)
+	RegisterSignal(src, list(COMSIG_HAND_IS), PROC_REF(is_hand))
+	RegisterSignal(src, list(COMSIG_HAND_ATTACK), PROC_REF(attack_as_hand))
+	RegisterSignal(src, list(COMSIG_HAND_DROP_ITEM), PROC_REF(drop_item))
+	RegisterSignal(src, list(COMSIG_HAND_PUT_IN), PROC_REF(put_in))
+	RegisterSignal(src, list(COMSIG_HAND_GET_ITEM), PROC_REF(get_item))
 
 /obj/item/weapon/gripper/Destroy()
 	UnregisterSignal(src, list(COMSIG_HAND_IS, COMSIG_HAND_ATTACK,
@@ -56,7 +60,7 @@
 /obj/item/weapon/gripper/proc/wrap(obj/item/I)
 	wrapped = I
 	I.forceMove(src)
-	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), .proc/clear_wrapped)
+	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), PROC_REF(clear_wrapped))
 
 /obj/item/weapon/gripper/proc/attack_as_hand(datum/source, atom/T, mob/user, params)
 	if(wrapped)
@@ -164,6 +168,7 @@
 	icon_state = "gripper"
 
 	can_hold = list(
+		/obj/item/bluespace_crystal,
 		/obj/item/weapon/tank,
 		/obj/item/device/assembly/signaler,
 		/obj/item/device/gps,
@@ -200,7 +205,11 @@
 		/obj/item/robot_parts/l_arm,
 		/obj/item/robot_parts/r_arm,
 		/obj/item/robot_parts/l_leg,
-		/obj/item/robot_parts/r_leg
+		/obj/item/robot_parts/r_leg,
+		/obj/item/stack/sheet/mineral/phoron,
+		/obj/item/weapon/tank/anesthetic,
+		/obj/item/bodybag,
+		/obj/item/weapon/reagent_containers/syringe
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
@@ -217,8 +226,8 @@
 
 /obj/item/weapon/gripper/verb/drop_item_verb()
 	set name = "Drop Item"
-	set desc = "Release an item from your magnetic gripper."
-	set category = "Drone"
+	set desc = "Освобождает взятый вами предмет из магнитного держателя."
+	set category = "Commands"
 
 	SEND_SIGNAL(src, COMSIG_HAND_DROP_ITEM, get_turf(src))
 
@@ -270,7 +279,7 @@
 			stored_comms["plastic"]++
 			return
 
-		else if(istype(M,/mob/living/silicon/robot/drone) && !M.client)
+		else if(isdrone(M) && !M.client)
 
 			var/mob/living/silicon/robot/drone/D = src.loc
 
@@ -303,7 +312,7 @@
 		//Different classes of items give different commodities.
 		if (istype(W,/obj/item/weapon/cigbutt))
 			stored_comms["plastic"]++
-		else if(istype(W,/obj/effect/spider/spiderling))
+		else if(istype(W,/obj/structure/spider/spiderling))
 			stored_comms["wood"]++
 			stored_comms["wood"]++
 			stored_comms["plastic"]++
@@ -357,91 +366,3 @@
 	else
 		to_chat(user, "<span class='warning'>Nothing on \the [T] is useful to you.</span>")
 	return
-
-//PRETTIER TOOL LIST.
-/mob/living/silicon/robot/drone/installed_modules()
-
-	if(weapon_lock)
-		to_chat(src, "<span class='warning'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>")
-		return
-
-	if(!module)
-		module = new /obj/item/weapon/robot_module/drone(src)
-
-	var/dat = ""
-	dat += {"
-	<B>Activated Modules</B>
-	<BR>
-	Module 1: [module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]<BR>
-	Module 2: [module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]<BR>
-	Module 3: [module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]<BR>
-	<BR>
-	<B>Installed Modules</B><BR><BR>"}
-
-
-	var/tools = "<B>Tools and devices</B><BR>"
-	var/resources = "<BR><B>Resources</B><BR>"
-
-	for (var/O in module.modules)
-
-		var/module_string = ""
-
-		if (!O)
-			module_string += text("<B>Resource depleted</B><BR>")
-		else if(activated(O))
-			module_string += text("[O]: <B>Activated</B><BR>")
-		else
-			module_string += text("[O]: <A HREF=?src=\ref[src];act=\ref[O]>Activate</A><BR>")
-
-		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(iscoil(O)))
-			tools += module_string
-		else
-			resources += module_string
-
-	dat += tools
-
-	if (emagged)
-		if (!module.emag)
-			dat += text("<B>Resource depleted</B><BR>")
-		else if(activated(module.emag))
-			dat += text("[module.emag]: <B>Activated</B><BR>")
-		else
-			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
-
-	dat += resources
-
-	var/datum/browser/popup = new(src, "robotmod", "Drone modules")
-	popup.set_content(dat)
-	popup.open()
-
-//Putting the decompiler here to avoid doing list checks every tick.
-/mob/living/silicon/robot/drone/use_power()
-
-	..()
-	if(!src.has_power || !decompiler)
-		return
-
-	//The decompiler replenishes drone stores from hoovered-up junk each tick.
-	for(var/type in decompiler.stored_comms)
-		if(decompiler.stored_comms[type] > 0)
-			var/obj/item/stack/sheet/stack
-			switch(type)
-				if("metal")
-					if(!stack_metal)
-						stack_metal = new (module, 1)
-					stack = stack_metal
-				if("glass")
-					if(!stack_glass)
-						stack_glass = new (module, 1)
-					stack = stack_glass
-				if("wood")
-					if(!stack_wood)
-						stack_wood = new (module, 1)
-					stack = stack_wood
-				if("plastic")
-					if(!stack_plastic)
-						stack_plastic = new (module, 1)
-					stack = stack_plastic
-
-			stack.add(1)
-			decompiler.stored_comms[type]--;

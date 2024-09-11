@@ -1,0 +1,228 @@
+@use './chat-base.scss';
+
+
+a {
+  color: #397ea5;
+}
+
+a.visited {
+  color: #7c00e6;
+}
+
+a:visited {
+  color: #7c00e6;
+}
+
+
+
+/*****************************************
+*
+* OUTPUT ACTUALLY RELATED TO MESSAGES
+*
+******************************************/
+
+/* MOTD */
+.motd {
+  color: #a4bad6;
+  font-family: Verdana, sans-serif;
+}
+
+.motd a,
+.motd a:link,
+.motd a:visited,
+.motd a:active,
+.motd a:hover {
+  color: #a4bad6;
+}
+
+/* ANNOUNCEMENTS */
+.host_announcements {
+  border-left: 3px solid #b00000;
+  color: #b00000;
+}
+
+.host_announcements h1,
+.host_announcements h2,
+.host_announcements h3,
+.host_announcements h4,
+.host_announcements h5,
+.host_announcements h6 {
+  color: #b00000;
+}
+
+.host_announcements hr {
+  border-top: 1px dashed #b00000;
+}
+
+/* TEST MERGES */
+.test_merges {
+  border-left: 3px solid #000; /* #013220 */
+}
+
+.emphasized {
+  border-left: 3px solid #e9e000;
+  background-color: #505505;
+}
+
+/* OUTPUT COLORS */
+.highlight {
+  background: yellow;
+}
+
+/* OOC */
+.ooc            {color: #cca300;}
+.looc           {color: #6699CC;}
+.antagooc       {color: #ff002b}
+.admin				  {color: #5975da;}
+.adminsay			  {color: #ff4500;}
+.adminnotice		{color: #6685f5;}
+.boldannounce		{color: #c51e1e;}
+.success				{color: #32bd59;}
+.vote				    {color: mediumpurple;}
+
+/* Miscellaneous */
+.alert {
+  color: #d82020;
+}
+h1.alert,
+h2.alert {
+  color: #a4bad6;
+}
+.artefact {
+  color: #ffa533;
+}
+.electronicblue {
+  color: #55bfff;
+  background-color: #313131;
+}
+.piety {
+  color: #c9c635;
+  text-shadow: 3px 3px 6px rgba(255, 255, 0, 0.4);
+}
+
+/* Radio Channels */
+.comradio		{color: #fcdf03;}
+.syndradio		{color: #8f4a4b;}
+.voxradio		{color: #8e9629;}
+.centradio		{color: #2681a5;}
+.airadio		{color: #d65d95;}
+.secradio		{color: #dd3535;}
+.engradio		{color: #f37746;}
+.medradio		{color: #57b8f0;}
+.sciradio		{color: #c68cfa;}
+.supradio		{color: #b88646;}
+
+
+/* Radio: Misc */
+.radio			{color: #1ecc43;}
+.deptradio		{color: #994d99;}
+.deadsay		{color: #e2c1ff;}
+.ghostalert		{color: #6600ff;}
+.newscaster		{color: #b00000;}
+
+.binarysay {
+  color: #1e90ff;
+}
+
+.binarysay a {
+  color: #00ff00;
+}
+
+.binarysay a:active,
+.binarysay a:visited {
+  color: #88ff88;
+}
+
+/* Game Messages */
+.userdanger			{color: #c51e1e;}
+.danger				{color: #c51e1e;}
+.warning			{color: #c51e1e;}
+.boldwarning		{color: #c51e1e;}
+.red				{color: #ff0000;}
+.rose				{color: #ff5050;}
+.info				{color: #9ab0ff;}
+.notice				{color: #6685f5;}
+.boldnotice			{color: #6685f5;}
+.nicegreen			{color: #059223;}
+.boldnicegreen		{color: #059223;}
+
+.wet				{color: #2e8cbb;}
+
+/* ANTAGS */
+.shadowling			{color: #896fc5;}
+.changeling			{color: #059223;}
+.abductor_team0		{color: #a000a0;}
+.abductor_team1		{color: #e00090;}
+.abductor_team2		{color: #608f8c;}
+.abductor_team3		{color: #6f6060;}
+.abductor_team4		{color: #a000a0;}
+.cult				{color: #973e3b;}
+.alien				{color: #855d85;}
+.hive,
+.hive_queen			{color: #763983;}
+.noticealien		{color: #059223;}
+.alertalien			{color: #059223;}
+
+
+/* Admin: Channels */
+.admin_announce {
+  color: #a4bad6;
+  background: #383838;
+}
+
+/* Languages */
+.tajaran				{color: #834d62;}
+.tajaran_signlang		{color: #963b3b;}
+.skrell					{color: #3ad2d4;}
+.soghun					{color: #81ac26;}
+.vox					{color: #b12fb1;}
+.ipc					{color: #dadada;}
+.syndcode				{color: #ff4141;}
+.replicator     {color: #a8dff0;}
+
+.interface {
+	color: #750e75;
+}
+
+/* Popup windows */
+.embedded_tip .embedded_tip-text {
+  background-color: #353535;
+  color: white;
+  border: 1px solid black;
+}
+
+/* STAFFWHO */
+table.staffwho {
+  color: #a5a4a4;
+}
+
+table.staffwho th {
+	color: #474140;
+}
+table.staffwho .Admins			{color: #e67e22;}
+table.staffwho .Mentors			{color: #e91e63;}
+table.staffwho .Developers		{color: #5e5ed1;}
+table.staffwho .Xenovisors		{color: #2ecc71;}
+
+/* CLOWN */
+.clown {
+  color: #ff70c1;
+}
+
+
+/* CONNECTION */
+.connectionClosed,
+.fatalError {
+  background: red;
+  color: white;
+  padding: 5px;
+}
+
+.connectionClosed.restored {
+  background: green;
+}
+
+.internal.boldnshit {
+  color: blue;
+  font-weight: bold;
+}

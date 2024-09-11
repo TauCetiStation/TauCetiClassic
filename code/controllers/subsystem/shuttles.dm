@@ -17,7 +17,10 @@ SUBSYSTEM_DEF(shuttle)
 	init_order = SS_INIT_SHUTTLES
 	wait       = SS_WAIT_SHUTTLES
 
-	flags = SS_KEEP_TIMING | SS_NO_TICK_CHECK
+	flags = SS_KEEP_TIMING
+	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
+
+	msg_lobby = "Заправляем шаттлы..."
 
 		//emergency shuttle stuff
 	var/alert = 0				//0 = emergency, 1 = crew cycle
@@ -32,8 +35,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/deny_shuttle = 0		//for admins not allowing it to be called.
 	var/departed = 0
 
-		//supply shuttle stuff
-	var/points = 5000
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
 	var/hacked = FALSE
@@ -44,7 +45,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
 		//shuttle movement
-	var/at_station = 0
+	var/at_station = TRUE
 	var/movetime = 1200
 	var/moving = 0
 	var/eta_timeofday
@@ -70,6 +71,9 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	ordernum = rand(1, 9000)
 	pod_station_area = typecacheof(list(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod2/station, /area/shuttle/escape_pod3/station, /area/shuttle/escape_pod4/station))
+
+	if(!global.exports_list.len)
+		setupExports()
 
 	for(var/typepath in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/P = new typepath()
@@ -109,7 +113,7 @@ SUBSYSTEM_DEF(shuttle)
 					stop_parallax = locate(/area/shuttle/escape_pod4/transit)
 					stop_parallax.parallax_slowdown()
 				if(timeleft > 0)
-					return 0
+					return FALSE
 
 				/* --- Shuttle has arrived at Centrcal Command --- */
 				else
@@ -134,60 +138,29 @@ SUBSYSTEM_DEF(shuttle)
 					dock_act(end_location, "shuttle_escape")
 					dock_act(/area/centcom/evac, "shuttle_escape")
 
+
 							//pods
-					start_location = locate(/area/shuttle/escape_pod1/transit)
-					end_location = locate(/area/shuttle/escape_pod1/centcom)
-					if(prob(5)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod1")
-						dock_act(/area/centcom/evac, "pod1")
-
-					shake_mobs_in_area(end_location, EAST)
-
-					start_location = locate(/area/shuttle/escape_pod2/transit)
-					end_location = locate(/area/shuttle/escape_pod2/centcom)
-					if(prob(5)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod2")
-						dock_act(/area/centcom/evac, "pod2")
-
-					shake_mobs_in_area(end_location, EAST)
-
-					start_location = locate(/area/shuttle/escape_pod3/transit)
-					end_location = locate(/area/shuttle/escape_pod3/centcom)
-					if(prob(5)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod3")
-						dock_act(/area/centcom/evac, "pod3")
-
-					shake_mobs_in_area(end_location, EAST)
-
-					start_location = locate(/area/shuttle/escape_pod4/transit)
-					end_location = locate(/area/shuttle/escape_pod4/centcom)
-					if(prob(5)) // 5% that they survive
-						start_location.move_contents_to(end_location, null, NORTH)
-						dock_act(end_location, "pod4")
-						dock_act(/area/centcom/evac, "pod4")
-
-					shake_mobs_in_area(end_location, WEST)
-
+					pod_docking(/area/shuttle/escape_pod1/transit, /area/shuttle/escape_pod1/centcom, "pod1")
+					pod_docking(/area/shuttle/escape_pod2/transit, /area/shuttle/escape_pod2/centcom, "pod2")
+					pod_docking(/area/shuttle/escape_pod3/transit, /area/shuttle/escape_pod3/centcom, "pod3")
+					pod_docking(/area/shuttle/escape_pod4/transit, /area/shuttle/escape_pod4/centcom, "pod4")
 					online = 0
 
-					return 1
+					return TRUE
 
 					/* --- Shuttle has docked centcom after being recalled --- */
 			if(timeleft>timelimit)
 				online = 0
 				direction = 1
 				endtime = null
-				return 0
+				return FALSE
 
 			else if((time_for_fake_recall != 0) && (timeleft <= time_for_fake_recall))
 				log_admin("Gamemode fake-recalled the shuttle.")
 				message_admins("<span class='notice'>Gamemode fake-recalled the shuttle.</span>")
 				recall()
 				time_for_fake_recall = 0
-				return 0
+				return FALSE
 
 			else if(timeleft == 22)
 				if(last_es_sound < world.time)
@@ -195,7 +168,7 @@ SUBSYSTEM_DEF(shuttle)
 					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
 						playsound(SD, 'sound/effects/escape_shuttle/es_ss_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -2, voluminosity = FALSE)
 					last_es_sound = world.time + 10
-				return 0
+				return FALSE
 
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */
 			else if(timeleft <= 0)
@@ -203,34 +176,7 @@ SUBSYSTEM_DEF(shuttle)
 				var/area/start_location = locate(/area/shuttle/escape/centcom)
 				var/area/end_location = locate(/area/shuttle/escape/station)
 
-				var/list/dstturfs = list()
-				var/throwy = world.maxy
-
-				for(var/turf/T in end_location)
-					dstturfs += T
-					if(T.y < throwy)
-						throwy = T.y
-					CHECK_TICK
-
-				// hey you, get out of the way!
-				for(var/turf/T in dstturfs)
-					// find the turf to move things to
-					var/turf/D = locate(T.x, throwy - 1, 1)
-					//var/turf/E = get_step(D, SOUTH)
-					for(var/atom/movable/AM as mob|obj in T)
-						AM.Move(D)
-
-					if(istype(T, /turf/simulated) || T.is_catwalk())
-						qdel(T)
-					CHECK_TICK
-
-				for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
-					bug.gib()
-					CHECK_TICK
-
-				for(var/mob/living/simple_animal/pest in end_location) // And for the other kind of bug...
-					pest.gib()
-					CHECK_TICK
+				clean_arriving_area(end_location)
 
 				start_location.move_contents_to(end_location)
 
@@ -250,7 +196,7 @@ SUBSYSTEM_DEF(shuttle)
 					attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 				)
 
-				return 1
+				return TRUE
 
 		if(SHUTTLE_AT_STATION)
 			// Just before it leaves, close the damn doors!
@@ -277,19 +223,10 @@ SUBSYSTEM_DEF(shuttle)
 								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 							CHECK_TICK
 						last_es_sound = world.time + 10
-				return 0
+				return FALSE
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-				//if(alert == 1)
-				//	sleep(100)
-				// Turn on the star effects
-
-				/* // kinda buggy atm, i'll fix this later
-				for(var/obj/effect/starspawner/S in not_world)
-					if(!S.spawning)
-						spawn() S.startspawn()
-				*/
 
 				departed = 1 // It's going!
 				location = SHUTTLE_IN_TRANSIT // in deep space
@@ -308,63 +245,55 @@ SUBSYSTEM_DEF(shuttle)
 				shake_mobs_in_area(end_location, SOUTH)
 
 				//pods
-				if(alert == 0) // Crew Transfer not for pods
-
-					var/ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_lucky_shot.ogg' // successful undocking, clean flight, yay!
-					if(prob(33))
-						ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg' // the escape pod almost crashed into something, damn it!
-					start_location = locate(/area/shuttle/escape_pod1/station)
-					end_location = locate(/area/shuttle/escape_pod1/transit)
-					end_location.parallax_movedir = EAST
-					start_location.move_contents_to(end_location, null, NORTH)
-					undock_act(start_location, "pod1")
+				try_launch_pod(/area/shuttle/escape_pod1/station, /area/shuttle/escape_pod1/transit, EAST, WEST, "pod1")
+				try_launch_pod(/area/shuttle/escape_pod2/station, /area/shuttle/escape_pod2/transit, EAST, WEST, "pod2")
+				try_launch_pod(/area/shuttle/escape_pod3/station, /area/shuttle/escape_pod3/transit, EAST, WEST, "pod3")
+				try_launch_pod(/area/shuttle/escape_pod4/station, /area/shuttle/escape_pod4/transit, WEST, EAST, "pod4")
+				try_launch_pod(/area/shuttle/escape_pod5/station, /area/shuttle/escape_pod5/transit, NORTH, SOUTH, "pod5")
+				try_launch_pod(/area/shuttle/escape_pod6/station, /area/shuttle/escape_pod6/transit, NORTH, SOUTH, "pod6")
+				if(alert == 0)
 					undock_act(/area/station/maintenance/chapel || /area/station/maintenance/bridge, "pod1")
-
-					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
-
-					start_location = locate(/area/shuttle/escape_pod2/station)
-					end_location = locate(/area/shuttle/escape_pod2/transit)
-					end_location.parallax_movedir = EAST
-					start_location.move_contents_to(end_location, null, NORTH)
-					undock_act(start_location, "pod2")
-					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge, "pod2")
-
-					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
-
-					start_location = locate(/area/shuttle/escape_pod3/station)
-					end_location = locate(/area/shuttle/escape_pod3/transit)
-					end_location.parallax_movedir = EAST
-					start_location.move_contents_to(end_location, null, NORTH)
-					undock_act(start_location, "pod3")
+					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge || /area/station/maintenance/dormitory, "pod2")
 					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig, "pod3")
-
-					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
-
-					start_location = locate(/area/shuttle/escape_pod4/station)
-					end_location = locate(/area/shuttle/escape_pod4/transit)
-					end_location.parallax_movedir = WEST
-					start_location.move_contents_to(end_location, null, EAST)
-					undock_act(start_location, "pod4")
 					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig, "pod4")
-
-					for(var/mob/M in end_location)
-						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, EAST)
-
+					undock_act(/area/station/hallway/secondary/entry, "pod5")
+					undock_act(/area/station/hallway/secondary/entry, "pod6")
 					announce_emer_left.play()
 				else
 					announce_crew_left.play()
 
-				return 1
+				start_transit()
+
+				return TRUE
 
 		else
-			return 1
+			return TRUE
+
+/**
+ * Cleans passed area, gibs any mob inside area, unachored movable gets moved, everything else will be qdeled
+ *
+ * vars:
+ * * arriving_area (required) area that is gonna get used in proc
+ */
+/datum/controller/subsystem/shuttle/proc/clean_arriving_area(area/arriving_area)
+	var/throw_y = world.maxy
+	for(var/turf/turf_to_check in arriving_area)
+		if(turf_to_check.y < throw_y)
+			throw_y = turf_to_check.y
+		var/turf/target_turf = locate(turf_to_check.x, throw_y - 1, turf_to_check.z)
+		for(var/i in turf_to_check.contents)
+			var/atom/movable/thing = i
+			if(isliving(thing))
+				var/mob/living/mob_to_gib = thing
+				mob_to_gib.gib()
+			else
+				if(istype(thing, /obj/singularity))
+					continue
+				if(!thing.anchored)
+					thing.Move(target_turf)
+				else
+					qdel(thing)
+			CHECK_TICK
 
 /datum/controller/subsystem/shuttle/proc/shake_mobs_in_area(area/A, fall_direction)
 	for(var/mob/M in A)
@@ -373,6 +302,7 @@ SUBSYSTEM_DEF(shuttle)
 				shake_camera(M, 2, 1) // buckled, not a lot of shaking
 			else
 				shake_camera(M, 4, 2)// unbuckled, HOLY SHIT SHAKE THE ROOM
+				M.Stun(1)
 				M.Weaken(3)
 		if(isliving(M) && !issilicon(M) && !M.buckled)
 			var/mob/living/L = M
@@ -432,57 +362,52 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/send()
 	var/area/from
 	var/area/dest
-	var/area/the_shuttles_way
 	switch(at_station)
 		if(1)
 			from = locate(SUPPLY_STATION_AREATYPE)
 			dest = locate(SUPPLY_DOCK_AREATYPE)
-			the_shuttles_way = from
 			undock_act(/area/station/cargo/storage, "supply_dock")
+			dock_act(/area/velocity, "velocity_dock")
 			at_station = 0
 		if(0)
 			from = locate(SUPPLY_DOCK_AREATYPE)
 			dest = locate(SUPPLY_STATION_AREATYPE)
-			the_shuttles_way = dest
 			dock_act(/area/station/cargo/storage, "supply_dock")
+			undock_act(/area/velocity, "velocity_dock")
 			at_station = 1
 	moving = 0
 
-	//Do I really need to explain this loop?
-	for(var/mob/living/unlucky_person in the_shuttles_way)
-		unlucky_person.gib()
-		CHECK_TICK
-
+	clean_arriving_area(dest)
 	from.move_contents_to(dest)
 
 //Check whether the shuttle is allowed to move
 /datum/controller/subsystem/shuttle/proc/can_move()
-	if(moving) return 0
-	if(!at_station) return 1
+	if(moving) return FALSE
+	if(!at_station) return TRUE
 
 	var/area/shuttle = locate(/area/shuttle/supply/station)
-	if(!shuttle) return 0
+	if(!shuttle) return FALSE
 
 	if(forbidden_atoms_check(shuttle))
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 //To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
 /datum/controller/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
-	if(istype(A,/mob/living))
-		return 1
+	if(isliving(A))
+		return TRUE
 	if(istype(A,/obj/item/weapon/disk/nuclear))
-		return 1
+		return TRUE
 	if(istype(A,/obj/machinery/nuclearbomb))
-		return 1
+		return TRUE
 	if(istype(A,/obj/item/device/radio/beacon))
-		return 1
+		return TRUE
 
 	for(var/i=1, i<=A.contents.len, i++)
 		var/atom/B = A.contents[i]
 		if(.(B))
-			return 1
+			return TRUE
 
 	//Sellin
 /datum/controller/subsystem/shuttle/proc/sell()
@@ -496,7 +421,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(!shuttle)
 		return
 
-	if(!exports_list.len) // No exports list? Generate it!
+	if(!global.exports_list.len) // No exports list? Generate it!
 		setupExports()
 
 	var/msg = ""
@@ -510,14 +435,16 @@ SUBSYSTEM_DEF(shuttle)
 	if(sold_atoms)
 		sold_atoms += "."
 
-	for(var/a in exports_list)
+	for(var/a in global.exports_list)
 		var/datum/export/E = a
 		var/export_text = E.total_printout()
 		if(!export_text)
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += E.total_cost
+		var/tax = round(E.total_cost * SSeconomy.tax_cargo_export * 0.01)
+		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на экспорт", "НТС Велосити", tax)
+		charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Прибыль с экспорта", "НТС Велосити", E.total_cost - tax)
 		E.export_end()
 
 	centcom_message = msg
@@ -569,7 +496,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(SO.object.dangerous)
 			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 
-		score["stuffshipped"]++
+		SSStatistics.score.stuffshipped++
 		CHECK_TICK
 
 	SSshuttle.shoppinglist.Cut()
@@ -651,11 +578,49 @@ SUBSYSTEM_DEF(shuttle)
 	endtime = REALTIMEOFDAY + (get_shuttle_arrive_time()*10 - ticksleft)
 	return
 
+/datum/controller/subsystem/shuttle/proc/check_emag(area/escape_pod)
+	var/obj/item/device/radio/intercom/pod/int = locate(/obj/item/device/radio/intercom/pod) in escape_pod
+	if(isnull(int))
+		return
+	return int.emagged
+
+/datum/controller/subsystem/shuttle/proc/try_launch_pod(area/escape_pod_start, area/escape_pod_end, move_content_dir, shake_dir, loc_name)
+	if(!locate(escape_pod_start) in all_areas)
+		return
+	var/area/start = locate(escape_pod_start)
+	var/area/transit = locate(escape_pod_end)
+	if(alert == 0 || check_emag(start))
+		var/ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_lucky_shot.ogg'
+		if(prob(33))
+			ep_shot_sound_type = 'sound/effects/escape_shuttle/ep_unlucky_shot.ogg'
+		transit.parallax_movedir = move_content_dir
+		start.move_contents_to(transit, null, move_content_dir)
+		for(var/mob/M in transit)
+			M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
+		shake_mobs_in_area(transit, shake_dir)
+		undock_act(start, loc_name)
+
+/datum/controller/subsystem/shuttle/proc/pod_docking(area/start, area/end, loc_name)
+	var/area/transit = locate(start)
+	var/area/centcom = locate(end)
+	if(prob(5) || check_emag(transit)) // 5% that they survive
+		transit.move_contents_to(centcom, null, NORTH)
+		dock_act(centcom, loc_name)
+		dock_act(/area/centcom/evac, loc_name)
+	shake_mobs_in_area(centcom, EAST)
+
+
+/datum/controller/subsystem/shuttle/proc/set_eta_timeofday(flytime = SSshuttle.movetime)
+	eta_timeofday = (REALTIMEOFDAY + flytime) % MIDNIGHT_ROLLOVER
+
+/datum/controller/subsystem/shuttle/proc/start_transit()
+	SSrating.start_rating_collection()
+
 /obj/effect/bgstar
 	name = "star"
 	var/speed = 10
 	var/direction = SOUTH
-	layer = 2 // TURF_LAYER
+	layer = TURF_LAYER
 
 /obj/effect/bgstar/New()
 	..()
@@ -677,10 +642,10 @@ SUBSYSTEM_DEF(shuttle)
 
 
 /obj/effect/starender
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/starspawner
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	var/spawndir = SOUTH
 	var/spawning = 0
 

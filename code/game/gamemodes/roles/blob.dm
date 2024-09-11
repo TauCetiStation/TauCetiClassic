@@ -5,8 +5,7 @@
 	logo_state = "blob-logo"
 	greets = list(GREET_DEFAULT,GREET_CUSTOM)
 
-	restricted_jobs = list("Cyborg", "AI")
-	restricted_species_flags = list(IS_SYNTHETIC)
+	disallow_job = TRUE
 
 /datum/role/blob_overmind/cerebrate
 	name = BLOBCEREBRATE
@@ -20,57 +19,66 @@
 	var/time_to_stage2 = wait_time * 2
 	var/time_to_stage3 = wait_time * 2 + wait_time / 2
 
-	addtimer(CALLBACK(src, .proc/stage1), time_to_stage1)
-	addtimer(CALLBACK(src, .proc/stage2), time_to_stage2)
-	addtimer(CALLBACK(src, .proc/stage3), time_to_stage3)
+	addtimer(CALLBACK(src, PROC_REF(stage1)), time_to_stage1)
+	addtimer(CALLBACK(src, PROC_REF(stage2)), time_to_stage2)
+	addtimer(CALLBACK(src, PROC_REF(stage3)), time_to_stage3)
 
 /datum/role/blob_overmind/proc/stage1()
-	if(!antag || !antag.current)
+	if(!antag.current)
 		return
 
 	to_chat(antag.current, "<span class='alert'>You feel tired and bloated.</span>")
 
 /datum/role/blob_overmind/proc/stage2()
-	if(!antag || !antag.current)
+	if(!antag.current)
 		return
 
 	to_chat(antag.current, "<span class='alert'>You feel like you are about to burst.</span>")
 
 /datum/role/blob_overmind/proc/stage3()
-	if(!antag || !antag.current)
+	if(!antag.current)
 		return
 
 	burst()
 
 /datum/role/blob_overmind/proc/burst()
-	if(!antag || isovermind(antag.current))
+	if(isovermind(antag.current))
 		return
 
 	var/client/blob_client = null
 	var/turf/location = null
 
-	if(iscarbon(antag.current))
-		var/mob/living/carbon/C = antag.current
+	if(isliving(antag.current))
+		var/mob/living/C = antag.current
 		if(directory[ckey(antag.key)])
 			blob_client = directory[ckey(antag.key)]
 			location = get_turf(C)
-			if(!is_station_level(location.z)|| istype(location, /turf/space))
+			if(!is_station_level(location.z) || isspaceturf(location))
 				location = null
 			C.gib()
 
 	if(blob_client && location)
-		new /obj/effect/blob/core(location, 200, blob_client, 3)
+		new /obj/structure/blob/core(location, blob_client, 200, 3)
 	Drop()
 
 /datum/role/blob_overmind/Greet(greeting,custom)
 	if(!..())
 		return FALSE
-	if(!antag || isovermind(antag.current))
+	if(isovermind(antag.current))
 		return FALSE
 
-	to_chat(antag.current, "<span class='warning'>Your body is ready to give spawn to a new blob core which will eat this station.</span>")
-	to_chat(antag.current, "<span class='warning'>Find a good location to spawn the core and then take control and overwhelm the station!</span>")
-	to_chat(antag.current, "<span class='warning'>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</span>")
-	to_chat(antag.current, "<span class='warning'>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</span>")
+	to_chat(antag.current, "<span class='warning'>Ваше тело готово дать начало новому ядру Блоба, которое поглотит эту станцию.</span>")
+	to_chat(antag.current, "<span class='warning'>Найдите хорошее место для создания ядра, после чего возьмите контроль над ядром и разраститесь по всей станции!</span>")
+	to_chat(antag.current, "<span class='warning'>Когда вы найдете подходящее место, ожидайте созревания ядра; это произойдет автоматически и вы никак не можете ускорить данный процесс.</span>")
+	to_chat(antag.current, "<span class='warning'>Если вы покинете сектор станции, или улетите в космос, тогда вы умрете; убедитесь в том, что ваше место имеет достаточно твердой поверхности, чтобы закрепиться на станции.</span>")
 
 	return TRUE
+
+/datum/role/blobbernaut
+	name = BLOBBERNAUT
+	id = BLOBBERNAUT
+	required_pref = ROLE_BLOB
+	logo_state = "blob-logo"
+	greets = list(GREET_DEFAULT,GREET_CUSTOM)
+
+	disallow_job = TRUE

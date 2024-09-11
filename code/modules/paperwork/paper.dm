@@ -35,6 +35,15 @@
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
 
+	///"Cache" of maximum of 100 signatures on this paper
+	var/list/signed_by
+	///"Cache" of maximum of 100 stamp messages on this paper
+	var/list/stamped_by
+	///Last world.time tick the name of this paper was changed.
+	var/last_name_change = 0
+	///Last world.time tick the contents of this paper was changed.
+	var/last_info_change = 0
+
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
 /obj/item/weapon/paper/atom_init()
@@ -57,11 +66,11 @@
 	if(!new_text)
 		return
 
-	free_space -= length(strip_html_properly(new_text))
+	free_space -= length(new_text)
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
-	if(in_range(user, src) || istype(user, /mob/dead/observer))
+	if(in_range(user, src) || isobserver(user))
 		if(crumpled)
 			to_chat(user, "<span class='notice'>You can't read anything until it crumpled.</span>")
 			return
@@ -82,7 +91,7 @@
 		data = "[infolinks ? info_links : info][stamp_text]"
 
 	if(view)
-		var/datum/browser/popup = new(user, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
+		var/datum/browser/popup = new(user, "window=[name]", "[name]", 425, 600, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(data)
 		popup.open()
 
@@ -94,7 +103,7 @@
 	set src in usr
 
 
-	if((CLUMSY in usr.mutations) && prob(50))
+	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H) && !H.species.flags[NO_MINORCUTS])
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
@@ -109,7 +118,7 @@
 	set category = "Object"
 	set src in usr
 
-	if((CLUMSY in usr.mutations) && prob(50))
+	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H) && !H.species.flags[NO_MINORCUTS])
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
@@ -225,6 +234,7 @@
 		var/before = copytext(info, 1, textindex)
 		var/after = copytext(info, textindex)
 		info = before + text + after
+		last_info_change = world.time
 		updateinfolinks()
 
 /obj/item/weapon/paper/proc/updateinfolinks()
@@ -239,6 +249,7 @@
 
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
+	last_info_change = world.time
 	stamp_text = null
 	free_space = MAX_PAPER_MESSAGE_LEN
 	LAZYCLEARLIST(stamped)
@@ -274,12 +285,24 @@
 		return P.get_signature(user)
 	return (user && user.real_name) ? user.real_name : "Anonymous"
 
+/obj/item/weapon/paper/proc/add_signature(signature)
+	LAZYSET(signed_by, signature, world.time)
+	if(signed_by.len > 100)
+		signed_by.Cut(1, 2)
+
+/obj/item/weapon/paper/proc/add_stamp(stamp)
+	LAZYSET(stamped_by, stamp, world.time)
+	if(stamped_by.len > 100)
+		stamped_by.Cut(1, 2)
+
 /obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
 	if(length(t) == 0)
 		return ""
 
 	if(findtext(t, "\[sign\]"))
-		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[get_signature(P, user)]</i></font>")
+		var/signature = get_signature(P, user)
+		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[signature]</i></font>")
+		add_signature(signature)
 
 	var/font = deffont
 	if(iscrayon) // If it is a crayon, and he still tries to use these, make them empty!
@@ -296,6 +319,7 @@
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 	t = replacetext(t, "\[sfield\]", "<span class=\"sign_field\"></span>")
 	t = "<font face=\"[font]\" color=\"[P.colour]\">[t]</font>"
+	t = replacetext(t, "\[sname\]", station_name_ru())
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
 //Count the fields
@@ -329,6 +353,7 @@
 		\[u\] - \[/u\] : Makes the text <u>underlined</u>.<br>
 		\[large\] - \[/large\] : Increases the <font size = \"4\">size</font> of the text.<br>
 		\[sign\] : Inserts a signature of your name in a foolproof way.<br>
+		\[sname\] : Inserts the current station name. <br>
 		\[field\] : Inserts an invisible field which lets you start type from there. Useful for forms.<br>
 		<br>
 		<b><center>Pen exclusive commands</center></b><br>
@@ -339,6 +364,26 @@
 		"}
 
 	var/datum/browser/popup = new(user, "paper_help", "Pen Help")
+	popup.set_content(dat)
+	popup.open()
+/obj/item/weapon/paper/proc/select_form(mob/user)
+	var/dat
+
+	for(var/department in predefined_forms_list)
+		var/color = predefined_forms_list[department]["color"]
+		var/dep_name = predefined_forms_list[department]["name"]
+		dat += "<h2>[dep_name]</h2>"
+		dat += "<table><tbody><tr>"
+		dat += "<th style='background:[color]; width:6em'>Номер</th>"
+		dat += "<th style='background:[color];'>Название</th></tr>"
+
+		for(var/premade_form in predefined_forms_list[department]["content"])
+			var/datum/form/form = new premade_form
+			dat += "<tr><th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
+			dat += "<th> [form.name]</th></tr>"
+		dat +="</tbody></table>"
+
+	var/datum/browser/popup = new(user, "window=[name]", "Список форм", 700, 500, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
@@ -381,7 +426,6 @@
 	..()
 	if(!usr || usr.incapacitated())
 		return
-
 	if(href_list["write"])
 		var/id = href_list["write"]
 
@@ -394,8 +438,23 @@
 			if(tgui_alert(usr, "Are you sure you want to sign this paper?",, list("Yes","No")) == "No")
 				return
 			t = "\[sign\] "
+		else if (href_list["form"])
+			for(var/department in predefined_forms_list)
+				if(t)
+					break
+				for(var/premade_form in predefined_forms_list[department]["content"])
+					var/datum/form/form = new premade_form
+					if(form.index == href_list["form"])
+						t = sanitize(form.content, free_space, extra = FALSE)
+						break
 		else
-			t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+			if (is_skill_competent(usr, list(/datum/skill/command = SKILL_LEVEL_NOVICE)) && id == "end" )
+				if(tgui_alert(usr, "You want to write text of create form?",, list("Text","Form")) == "Form")
+					select_form(usr)
+				else
+					t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+			else
+				t = sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
 
 		if(!t)
 			return
@@ -431,6 +490,7 @@
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
 		else
 			info += t // Oh, he wants to edit to the end of the file, let him.
+			last_info_change = world.time
 			updateinfolinks()
 
 		playsound(src, pick(SOUNDIN_PEN), VOL_EFFECTS_MASTER, null, FALSE)
@@ -472,7 +532,7 @@
 		else if(I.name != "paper" && I.name != "photo")
 			B.name = I.name
 		user.drop_from_inventory(I)
-		if (istype(user, /mob/living/carbon/human))
+		if (ishuman(user))
 			var/mob/living/carbon/human/h_user = user
 			if (h_user.r_hand == src)
 				h_user.drop_from_inventory(src)
@@ -482,18 +542,10 @@
 				h_user.put_in_l_hand(B)
 			else if (h_user.l_store == src)
 				h_user.drop_from_inventory(src)
-				B.loc = h_user
-				B.layer = ABOVE_HUD_LAYER
-				B.plane = ABOVE_HUD_PLANE
-				h_user.l_store = B
-				h_user.update_inv_pockets()
+				h_user.equip_to_slot_if_possible(B, SLOT_L_STORE)
 			else if (h_user.r_store == src)
 				h_user.drop_from_inventory(src)
-				B.loc = h_user
-				B.layer = ABOVE_HUD_LAYER
-				B.plane = ABOVE_HUD_PLANE
-				h_user.r_store = B
-				h_user.update_inv_pockets()
+				h_user.equip_to_slot_if_possible(B, SLOT_R_STORE)
 			else if (h_user.head == src)
 				h_user.u_equip(src)
 				h_user.put_in_hands(B)
@@ -529,12 +581,21 @@
 
 		var/obj/item/weapon/stamp/S = I
 		S.stamp_paper(src)
+		add_stamp(S.stamp_message)
 
 		playsound(src, 'sound/effects/stamp.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[user] stamp the paper.</span>", "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	else if(istype(I, /obj/item/weapon/lighter))
 		burnpaper(I, user)
+
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed) \
+	|| istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed) \
+	|| istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed))
+		var/obj/item/clothing/mask/cigarette/Cig = new(get_turf(src))
+		I.reagents.trans_to(Cig, 15)
+		qdel(I)
+		qdel(src)
 
 	else
 		return ..()
@@ -615,6 +676,11 @@
 	name = "Armory Inventory"
 	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>3 Riot Sets:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Helmet<li>Riot Suit</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>8 Security Masks<br>3 Pistols Glock 17<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>3 Energy Guns<br>2 Ion Rifle<br>3 Laser rifles <br>1 L10-c Carbine<br>1 104-sass Shotgun<br>2 Plasma weapon battery packs<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 teargas, 7 rounds)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 m79 Grenade Box (40x46 EMP, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
 
+/obj/item/weapon/paper/brig_arsenal/atom_init()
+	. = ..()
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY) || HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
+		info = "A program is underway to re-equip NanoTrasen security. The current list has not yet been compiled, we apologize."
+
 /obj/item/weapon/paper/firing_range
 	name = "Firing Range Instructions"
 	info = "Directions:<br><i>First you'll want to make sure there is a target stake in the center of the magnetic platform. Next, take an aluminum target from the crates back there and slip it into the stake. Make sure it clicks! Next, there should be a control console mounted on the wall somewhere in the room.<br><br> This control console dictates the behaviors of the magnetic platform, which can move your firing target around to simulate real-world combat situations. From here, you can turn off the magnets or adjust their electromagnetic levels and magnetic fields. The electricity level dictates the strength of the pull - you will usually want this to be the same value as the speed. The magnetic field level dictates how far the magnetic pull reaches.<br><br>Speed and path are the next two settings. Speed is associated with how fast the machine loops through the designated path. Paths dictate where the magnetic field will be centered at what times. There should be a pre-fabricated path input already. You can enable moving to observe how the path affects the way the stake moves. To script your own path, look at the following key:</i><br><br>N: North<br>S: South<br>E: East<br>W: West<br>C: Center<br>R: Random (results may vary)<br>; or &: separators. They are not necessary but can make the path string better visible."
@@ -676,6 +742,25 @@
 	<br>
 	<i>Professor Galen Linkovich</i>"}
 
+/obj/item/weapon/paper/psyops_starting_guide
+	name = "Добро пожаловать в \"СИПсО\""
+	info = {"Добро пожаловать в отряд \"СИПсО\"!<br>
+	Успешно пройдя все тренировки Скрельской Инициативы Пси Операций, тобой была получена необходимая экипировка:<br>
+	- Посох с проектором силового щита<br>
+	- Набор психоактивных веществ<br>
+	- Экстренный набор еды<br>
+	- Пси-усиляющая корона<br>
+	- Перчатки тишины<br>
+	<br>
+	Напоминание о процедурах и методах работы с пси-короной:<br>
+	- Мысленный тычёк по предмету в режиме захвата - сфокусирует разум на нём.<br>
+	- Во всех остальных случаях мысленный тычёк отправит волны твоей воли для совершения действия.<br>
+	- В режиме броска мысленный тычёк по чему-либо сфокусированным объектом бросит его туда.<br>
+	- Активация фокуса, или мысленный тычёк фокуса самим по себе активирует сфокусированный объект.<br>
+	- Психологически активные вещества усиляют способности, позволяя, к примеру брать в фокус живых существ.<br>
+	- Телекинетическая активность быстро расходует запасы питательных веществ организма, особенно если не применять психоактивные вещества. Не забывайте иметь достаточный запас еды.<br>
+	- Применение психоактивных веществ позволяет взаимодействовать с миром вопреки активации силового щита.<br>
+	- Использование брони крайне нежелательно, так как может негативно влиять на ваши пси-способности.<br>"}
 
 /obj/item/weapon/paper/lovenote
 	name = "mysterious note"
@@ -747,3 +832,309 @@
 
 /obj/item/weapon/paper/lovenote/update_icon()
 	icon_state = "lovenote"
+
+/obj/item/weapon/paper/nuclear_code
+	name = "NSS Exodus Nuclear Detonation Device Code (TOP SECRET)"
+
+/obj/item/weapon/paper/nuclear_code/atom_init(mapload, nukecode)
+	. = ..()
+	name = "[station_name()] Nuclear Detonation Device Code (TOP SECRET)"
+	info = "<b>Nuclear Authentication Code:</b> [nukecode]"
+
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm Security Department")
+
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/cmf_manual
+	name = "CMF manipulation manual"
+	info = {"<h1 style="text-align: center;">Руководство пользователя</h1>
+	<h2>Введение</h2>
+	<p>Благодаря разработкам наших ученых мы смогли изготовить около стабильные прототипы картриджей USP. Эти картриджи позволяют изменять когнитивно-моторные способности существ.&nbsp;</p>
+	<p>Эта технология состоит из четырех частей</p>
+	<div>
+	<ul>
+	<li>CMF Modifier Access Console - используется для настройки картриджей. Показывает информацию о IQ (коэффициент интеллекта) и MDI (индекс моторного развития).</li>
+	</ul>
+	</div>
+	<ul>
+	<li>CMF manipulation table - получает данные с консоли и устанавливает имплант CMF с нужными параметрами. Он также может служить хирургическим операционным столом для лечения черепно-мозговых травм.</li>
+	<li>USP cartridge - <span style="text-decoration: line-through;"><strong>\[секретно\]</strong></span></li>
+	<li>Имплант CMF - изменяет навыки существа, позволяя ему быть более полезным работником.</li>
+	</ul>
+	<h2>Процедура</h2>
+	<ol>
+	<li>Поместите пациента на CMF manipulation table</li>
+	<li>Спросите пациента о его знаниях и навыках. Проверьте показатели IQ и MDI</li>
+	<li>Вставьте картридж в стол</li>
+	<li>Распакуйте картридж (процедура не является обратимой)</li>
+	<li>Используйте консоль для установки желаемых параметров импланта</li>
+	<li>Имплантируйте пациента с помощью консоли</li>
+	<li>В случае повреждения головного мозга направьте пациента на лечение к квалифицированному специалисту</li>
+	<li>Окончание процедуры. Теперь работник готов к выполнению своих обязанностей.</li>
+	</ol>
+	<h2>Опасности и противопоказания</h2>
+	<ul>
+	<li>Из-за особенностей работы имплантов защиты разума и лояльности их нельзя использовать вместе с имплантами CMF.</li>
+	<li>Консоль не позволит вам ввести этот имплантат существу неподходящей расы. Если такое произойдет, существо получит серьезные повреждения мозга, а имплант будет уничтожен.</li>
+	<li>Импланты CMF все еще находятся на стадии прототипа, сильный ЭМИ может разрушить его.</li>
+	<li>Поскольку эта технология является совершенно секретной, любое удаление импланта приведет к его уничтожению.</li>
+	</ul>
+	<h1 style="text-align: center;">Техническая информация</h1>
+	<h2>Подключение оборудования</h2>
+	<p>Чтобы подключить манипуляционный стол CMF к консоли, откройте панель обслуживания стола с помощью отвертки, затем с помощью мультиинструмента подсоедините стол к консоли и закройте панель обслуживания после этого.</p>
+	<h2>Потребляемая мощность</h2>
+	<p>После распаковки картриджа оборудование потребляет гораздо больше энергии, поэтому в консоли был установлен датчик заряда APC. Следите за зарядом во время манипуляций CMF.</p>
+	<h2>Стоимость производства картриджей USP</h2>
+	<p>Поскольку эти картриджи являются прототипами, которые еще не поступили в массовое производство, каждый картридж собирается вручную, и их распространение ограничено станциями, где гибель экипажа или наличие неквалифицированного персонала является обычным явлением. Используйте их с умом и не тратьте впустую. Внимательно изучите показатели IQ и MDI пациентов, чтобы определить, какой картридж необходим. Один базовый зеленый картридж стоил двадцать пять человеко-лет. Мы также не можем допустить, чтобы эти технологии попали в руки наших конкурентов.</p>
+	"}
+
+var/global/list/contributor_names
+// https://docs.github.com/en/rest/repos/repos#list-repository-contributors
+/proc/get_github_contributers(per_page = 100, anon = FALSE)
+	if(global.contributor_names && global.contributor_names?.len)
+		return global.contributor_names
+	global.contributor_names = list()
+
+	var/page = 1
+
+	var/owner = config.github_repository_owner
+	var/name = config.github_repository_name
+	while(TRUE)
+		var/list/response = get_webpage("https://api.github.com/repos/[owner]/[name]/contributors?anon=[anon]&per_page=[per_page]&page=[page]")
+		if(!response)
+			return
+		response = json_decode(response)
+		if(response.len == 0)
+			break
+		for(var/list/user in response)
+			if(user["type"] == "User" && !(user["login"] in global.contributor_names))
+				global.contributor_names += user["login"]
+			else if(anon && user["type"] == "Anonymous" && !(user["name"] in global.contributor_names))
+				global.contributor_names += user["name"]
+		page++
+
+	return global.contributor_names
+
+/obj/item/weapon/paper/github_easter_egg
+	name = "Department of Paranormal Activity"
+
+/obj/item/weapon/paper/github_easter_egg/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/github_easter_egg/atom_init_late()
+	write_info()
+
+/obj/item/weapon/paper/github_easter_egg/proc/write_info()
+	set waitfor = FALSE
+
+	var/list/names = get_github_contributers()
+	info = "<h1 style='text-align: center;'>Department of Paranormal Activity</h1>"
+	info += "<h2>List of callsigns of employees:</h2>"
+	info += "<div>"
+	info += "<ul>"
+	for(var/name in names)
+		info += "<li>[name]</li>"
+	info += "</ul>"
+	info += "</div>"
+
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm DPA")
+
+	update_icon()
+
+/obj/item/weapon/paper/psc
+	name = "Разрешение на работу ЧОП"
+	info = {"<h1 style="text-align: center;"Разрешение на работу ЧОП></h1>
+	<p>Данный документ подтверждает, что держатель документа (далее Сотрудник) является сотрудником частного охранного предприятия, нанятого для охраны активов Карго.</p>
+	<p>Сотрудник имеет право на владение и использование пистолета W&J PP и/или флешера и средств личной защиты в целях охраны активов Карго.</p>
+	<p>При неправомерном применении спецсредств офицеры охраны имеют право изъять пистолет, флешер и средства личной защиты.</p>"}
+
+/obj/item/weapon/paper/psc/atom_init()
+	. = ..()
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm Logistics Department")
+
+/obj/item/weapon/paper/depacc
+	name = "Реквизиты счёта отдела "
+	var/department_name = ""
+
+/obj/item/weapon/paper/depacc/atom_init()
+	. = ..()
+	if(!department_name)
+		qdel(src)
+		return
+
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
+
+/obj/item/weapon/paper/depacc/Destroy()
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+	return ..()
+
+/obj/item/weapon/paper/depacc/proc/on_round_start()
+	var/datum/money_account/dep = global.department_accounts[department_name]
+	if(!dep)
+		qdel(src)
+		return
+
+	info = {"<h2>Бухгалтерия Центрального Коммитета «ЦК»</h2>
+	<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">[current_date_string]</blockquote>
+	<table align="center" border="3" cellpadding="10" width="100%">
+  		<caption><b><big>Реквизиты счёта отдела</big></b></caption>
+  		<tr><td>Отдел:</td><td>«[department_name]»</td></tr>
+  		<tr><td>Номер счёта:</td><td>№ [dep.account_number]</td></tr>
+  		<tr><td>Пин-код:</td><td>PIN: [dep.remote_access_pin]</td></tr>
+ 	 	<tr><td>Бюджет:</td><td>[dep.money] $</td></tr>
+	</table>
+	<hr>"}
+
+	var/obj/item/weapon/stamp/centcomm/Stamp1 = new
+	Stamp1.stamp_paper(src, "CentComm")
+	var/obj/item/weapon/stamp/copy_correct/Stamp2 = new
+	Stamp2.stamp_paper(src)
+
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
+/obj/item/weapon/paper/Morse
+	name = "Strange note"
+
+/obj/item/weapon/paper/Morse/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/Morse/atom_init_late()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/Morse/proc/write_info()
+	info = ""
+	info += "I. Знаки, присвоенные флагам и буквам <br>"
+	info += "А • — <br>"
+	info += "Б — • • • <br>"
+	info += "В • — — <br>"
+	info += "Г — — • <br>"
+	info += "Д — • • <br>"
+	info += "Е • <br>"
+	info += "Ж • • • — <br>"
+	info += "3 — — • • <br>"
+	info += "И • • <br>"
+	info += "Й • — — — <br>"
+	info += "К — • — <br>"
+	info += "Л • — • • <br>"
+	info += "М — — <br>"
+	info += "Н — • <br>"
+	info += "О — — — <br>"
+	info += "П • — — • <br>"
+	info += "Р • — • <br>"
+	info += "С • • • <br>"
+	info += "Т — <br>"
+	info += "У • • — <br>"
+	info += "Ф • • — • <br>"
+	info += "Х • • • • <br>"
+	info += "Ц — • — • <br>"
+	info += "Ч — — — • <br>"
+	info += "Ш — — — — <br>"
+	info += "Щ — — • — <br>"
+	info += "Ъ • — — • — • <br>"
+	info += "Ы — • — — <br>"
+	info += "Ь — • • — <br>"
+	info += "Э • • • — • • • <br>"
+	info += "Ю • • — — <br>"
+	info += "Я • — • — <br>"
+
+	info += "II. Цифры <br>"
+	info += "1 • — — — — <br>"
+	info += "2 • • — — — <br>"
+	info += "3 • • • — — <br>"
+	info += "4 • • • • — <br>"
+	info += "5 • • • • • <br>"
+	info += "6 — • • • • <br>"
+	info += "7 — — • • • <br>"
+	info += "8 — — — • • <br>"
+	info += "9 — — — — • <br>"
+	info += "0 — — — — — <br>"
+
+	info += "III. Служебные знаки <br>"
+	info += "• • • • • • Знак ошибки <br>"
+	info += "— — • • — Знак исполнительный <br>"
+	info += "• • — • Знак отменительный <br>"
+	info += "— • • • — Знак разделительный <br>"
+	info += "— — — — — — — — — — Знак молчания <br>"
+	info += "• — • • • Знак ожидания <br>"
+	info += "— • • — • Знак номера <br>"
+	info += "— — — • —Знак—не могу читать вашей передачи <br>"
+	info += "• — • — — — Знак — сигнал принял ясно, но расшифровать не могу. Проверьте кодирование. <br>"
+
+	info += "Примечание. <br>"
+	info += "Знак ошибки (• • • • • •) делается вслед за ошибочно переданным словом клера или сигнальным сочетанием. После знака ошибки повторяется в исправленном виде переданный ранее текст. <br>"
+	info += "Знак исполнительный (— — • • —) или исполнительный огонь (красный клотик) на закрытых рейдах делается после светограммы, требующей одновременного исполнения приказания. <br>"
+	info += "Знак отменительный (• • — •) делается после знака общего вызова или позывных при необходимости отмены только что переданной светограммы. <br>"
+	info += "Знак разделительный (— • • • —) делается для отделения одного сигнального сочетания от другого. <br>"
+	info += "Знак молчания (— — — — — — — — — —) делается в тех случаях, когда необходимо, чтобы всякие переговоры световыми средствами были немедленно прекращены. <br>"
+	info += "Вновь переговоры могут быть начаты после знака отменительного (• • — •). <br>"
+	info += "Знак ожидания (• — • • •) делается в тех случаях, когда внезапно требуется на время прервать передачу или прием. <br>"
+	info += "Знак окончания (• — • — •) делается при окончании передачи, если не требуется ответа. <br>"
+
+/obj/item/weapon/paper/old_station_note_one
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_one/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_one/proc/write_info()
+	info = ""
+	info += "20.08.2221. Из-за аномалии, станция переместилась на неизвестные координаты. Связаться с ЦК невозможно.<br>"
+	info += "21.08.2221. Экипаж продолжает работать в штатном режиме. Учёные начинают проводить эксперименты над образцами ксеноморфов, которые были обнаружены на планете Лутиэн.<br>"
+	info += "25.08.2221. В инженерный отсек врезался небольшой метеор. Инженеры начали ремонт отсека.<br>"
+	info += "26.08.2221. Ремонт завершён.<br>"
+	info += "3.09.2221. На станцию попытался проникнуть разведчик Синдиката. Турели нейтрализовали врага, его снаряжение было передано научному персоналу.<br>"
+	info += "<i>Похоже, это был не самый ценный кадр, раз его послали почти без оружия и в древнем как мир скафандре.</i><br>"
+
+/obj/item/weapon/paper/old_station_note_two
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_two/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_two/proc/write_info()
+	info = ""
+	info += "10.09.2221. На станцию напал отряд подготовленных оперативников Синдиката. Атака была отбита.<br>"
+	info += "<i>Если на эту проклятую станцию попытались напасть, значит, о ней кто-то да знает. Эвакуация - это просто вопрос времени.</i> <br>"
+	info += "13.09.2221. Экипаж начинает замышлять что-то неладное. Некоторые считают, что всё, что произошло на этой станции за последние две недели - один большой эксперимент НТ.<br>"
+	info += "15.09.2221. Очередной метеор повредил обшивку в научном отделе.<br>"
+
+/obj/item/weapon/paper/old_station_note_three
+	name = "note"
+
+/obj/item/weapon/paper/old_station_note_three/atom_init()
+	. = ..()
+	write_info()
+	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/old_station_note_three/proc/write_info()
+	info = ""
+	info += "16.09.2221. По окончанию ремонта обнаружилась пропажа нескольких образцов ксенофауны.<br>"
+	info += "17.09.2221. В дормиториях был найден д-р █████ со вспоротым брюхом, жуткое зрелище.<br>"
+	info += "20.09.2221. Эти ксенотвари обосновались в телекомах и успели схватить нескольких уч#<br>"
+
+/obj/item/weapon/paper/old_station_note_syndispacesuit
+	name = "Object #8123"
+	info = "Устаревшая модель боевого скафандра, который использовали \"Мародёры Горлекса\" в 2190-тых годах."
+
+/obj/item/weapon/paper/old_station_note_medhud
+	name = "Object #8124"
+	info = "Продвинутый медицинский интерфейс с встроенным прибором ночного видения."
+
+/obj/item/weapon/paper/old_station_note_egun
+	name = "Object #2921"
+	info = "Энергопистолет второго поколения. В нём установлена более эффективная система охлаждения и продвинутая батарея."

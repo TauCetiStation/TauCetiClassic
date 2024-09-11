@@ -5,12 +5,15 @@
 	name = "guest pass"
 	desc = "Allows temporary access to station areas."
 	icon_state = "guest"
+	item_state_world = "guest_world"
 	light_color = "#0099ff"
 	customizable_view = FORDBIDDEN_VIEW
 
 	var/temp_access = list() // to prevent agent cards stealing access as permanent
 	var/reason = "NOT SPECIFIED"
 	var/expiration_time = 0
+
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
 
 /obj/item/weapon/card/id/guest/GetAccess()
 	if(world.time > expiration_time)
@@ -142,11 +145,11 @@
 		return // everything below here requires card auth
 	switch(action)
 		if("giv_name")
-			var/nam = strip_html_simple(input("Person pass is issued to", "Name", giv_name) as text | null)
+			var/nam = sanitize(input("Person pass is issued to", "Name", giv_name) as text | null)
 			if(nam)
 				giv_name = nam
 		if("reason")
-			var/reas = strip_html_simple(input("Reason why pass is issued", "Reason", reason) as text | null)
+			var/reas = sanitize(input("Reason why pass is issued", "Reason", reason) as text | null)
 			if(reas)
 				reason = reas
 		if("duration")

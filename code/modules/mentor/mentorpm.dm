@@ -1,9 +1,9 @@
 /client/proc/cmd_mentor_pm(client/C, msg)
-	if(prefs.muted & MUTE_MENTORHELP)
+	if(prefs.muted & MUTE_PM || IS_ON_ADMIN_CD(src, ADMIN_CD_PM))
 		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
 		return
 
-	if(!istype(C,/client))
+	if(!isclient(C))
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Private-Message: Client not found.</font>")
 		else
@@ -23,7 +23,7 @@
 				mentorhelp(msg)	//admin/mentor we are replying to has vanished, mentorhelp instead
 			return
 
-	if (handle_spam_prevention(msg, MUTE_MENTORHELP))
+	if (handle_spam_prevention(msg, ADMIN_CD_PM))
 		return
 
 	var/recieve_color = "purple"
@@ -75,7 +75,7 @@
 	)
 
 	//we don't use message_admins here because the sender/receiver might get it too
-	for(var/client/X in admins)
+	for(var/client/X as anything in admins)
 		//check client/X is an admin and isn't the sender or recipient
 		if(X == C || X == src)
 			continue

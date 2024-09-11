@@ -27,6 +27,79 @@
 
 	moveset_type = /datum/combat_moveset/human
 
+/mob/living/carbon/monkey/proc/handle_monkey_pressure(datum/gas_mixture/environment)
+	var/pressure = environment.return_pressure()
+	//Returns how much pressure actually affects the mob.
+	var/adjusted_pressure = calculate_affecting_pressure(pressure)
+	//Account for massive pressure differences
+	var/warning_LOW_pressure = WARNING_LOW_PRESSURE
+	var/hazard_LOW_pressure = HAZARD_LOW_PRESSURE
+	var/warning_HIGH_pressure = WARNING_HIGH_PRESSURE
+	var/hazard_HIGH_pressure = HAZARD_HIGH_PRESSURE
+
+	var/datum/species/monk_specie = global.all_species[race]
+	if(monk_specie)
+		warning_LOW_pressure = monk_specie.warning_low_pressure
+		hazard_LOW_pressure = monk_specie.hazard_low_pressure
+		warning_HIGH_pressure = monk_specie.warning_high_pressure
+		hazard_HIGH_pressure = monk_specie.hazard_high_pressure
+
+	var/highpress_damage = MAX_HIGH_PRESSURE_DAMAGE
+	var/lowpress_damage = LOW_PRESSURE_DAMAGE
+
+	if(adjusted_pressure > warning_HIGH_pressure)
+		if(adjusted_pressure < hazard_HIGH_pressure)
+			pressure_alert = 1
+			return
+		if(RESIST_HEAT in mutations)
+			highpress_damage /= 3
+		adjustBruteLoss(min(((adjusted_pressure / hazard_HIGH_pressure) - 1) * PRESSURE_DAMAGE_COEFFICIENT, highpress_damage))
+		pressure_alert = 2
+	else if(adjusted_pressure < warning_LOW_pressure)
+		if(adjusted_pressure >= hazard_LOW_pressure)
+			pressure_alert = -1
+			return
+		if(COLD_RESISTANCE in mutations)
+			lowpress_damage /= 3
+		adjustBruteLoss(lowpress_damage)
+		pressure_alert = -2
+
+/mob/living/carbon/monkey/proc/handle_monkey_temperature(datum/gas_mixture/environment)
+	var/temperature = environment.temperature
+	var/affecting_temp = (temperature - bodytemperature) * environment.return_relative_density()
+
+	if(!on_fire)
+		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
+
+	var/heat_lvl_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	var/cold_lvl_1 = BODYTEMP_COLD_DAMAGE_LIMIT
+	var/datum/species/monk_specie = global.all_species[race]
+	if(monk_specie)
+		heat_lvl_1 = monk_specie.heat_level_1
+		cold_lvl_1 = monk_specie.cold_level_1
+
+	if(bodytemperature > heat_lvl_1)
+		if(RESIST_HEAT in mutations)
+			temp_alert = 1
+			return
+		temp_alert = 2
+		adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
+	else if(bodytemperature < cold_lvl_1)
+		if(COLD_RESISTANCE in mutations)
+			temp_alert = -1
+			return
+		temp_alert = -2
+		adjustFireLoss(COLD_DAMAGE_LEVEL_2)
+
+/mob/living/carbon/monkey/handle_environment(datum/gas_mixture/environment)
+	if(stat != DEAD) // lets put this shit somewhere here
+		stabilize_body_temperature()
+
+	if(!environment || (flags & GODMODE))
+		return
+	handle_monkey_pressure(environment)
+	handle_monkey_temperature(environment)
+
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
 	voice_name = "farwa"
@@ -103,50 +176,38 @@
 	return ..()
 
 /mob/living/carbon/monkey/unathi/atom_init()
-
 	. = ..()
-	dna.mutantrace = "lizard"
 	greaterform = UNATHI
-	add_language("Sinta'unathi")
+	add_language(LANGUAGE_SINTAUNATHI)
 
 /mob/living/carbon/monkey/skrell/atom_init()
-
 	. = ..()
-	dna.mutantrace = "skrell"
 	greaterform = SKRELL
-	add_language("Skrellian")
+	add_language(LANGUAGE_SKRELLIAN)
 
 /mob/living/carbon/monkey/tajara/atom_init()
-
 	. = ..()
-	dna.mutantrace = "tajaran"
 	greaterform = TAJARAN
-	add_language("Siik'tajr")
+	add_language(LANGUAGE_SIIKTAJR)
 
-/mob/living/carbon/monkey/diona/atom_init()
+/mob/living/carbon/monkey/movement_delay()
+	var/tally = speed
 
-	. = ..()
-	gender = NEUTER
-	dna.mutantrace = "plant"
-	greaterform = DIONA
-	add_language("Rootspeak")
-
-/mob/living/carbon/monkey/diona/movement_delay()
-	return ..(tally = 3.5)
-
-/mob/living/carbon/monkey/movement_delay(tally = 0)
 	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
 
 	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45) tally += (health_deficiency / 25)
+	if(health_deficiency >= 45)
+		tally += (health_deficiency / 25)
 
-	if(pull_debuff)
-		tally += pull_debuff
+	tally += count_pull_debuff()
 
-	if (bodytemperature < 283.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
-	return tally+config.monkey_delay
+	if (bodytemperature < BODYTEMP_NORMAL - 30)
+		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
+	return tally + config.monkey_delay
+
+/mob/living/carbon/monkey/count_pull_debuff()
+	return pulling ? ..() + 1 : 0
 
 /mob/living/carbon/monkey/helpReaction(mob/living/attacker, show_message = TRUE)
 	help_shake_act(attacker)
@@ -158,7 +219,7 @@
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(istype(src, /mob/living/carbon/monkey/diona))
-			stat(null, "Nutriment: [nutrition]/400")
+			stat(null, "Nutriment: [nutrition]/[NUTRITION_LEVEL_NORMAL]")
 	if(mind)
 		for(var/role in mind.antag_roles)
 			var/datum/role/R = mind.antag_roles[role]
@@ -179,16 +240,16 @@
 		flash_eyes()
 
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			if (stat != DEAD)
 				adjustBruteLoss(200)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			if (stat != DEAD)
 				adjustBruteLoss(30)
 				health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
@@ -207,7 +268,7 @@
 		gib()
 		return
 	if (stat == DEAD && !client)
-		gibs(loc, viruses)
+		gibs(loc)
 		qdel(src)
 		return
 
@@ -216,14 +277,14 @@
 	return 0
 
 /mob/living/carbon/monkey/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list())
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	if(!message)
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2))
 
 	if(speak_emote.len)
 		verb = pick(speak_emote)

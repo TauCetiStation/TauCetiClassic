@@ -2,16 +2,17 @@
                 BLOOD SYSTEM
 ****************************************************/
 // Blood levels
-var/const/BLOOD_VOLUME_MAXIMUM = 600
-var/const/BLOOD_VOLUME_NORMAL = 560
-var/const/BLOOD_VOLUME_SAFE = 501
-var/const/BLOOD_VOLUME_OKAY = 336
-var/const/BLOOD_VOLUME_BAD = 224
-var/const/BLOOD_VOLUME_SURVIVE = 122
+var/global/const/BLOOD_VOLUME_MAXIMUM = 600
+var/global/const/BLOOD_VOLUME_NORMAL = 560
+var/global/const/BLOOD_VOLUME_SAFE = 501
+var/global/const/BLOOD_VOLUME_OKAY = 336
+var/global/const/BLOOD_VOLUME_BAD = 224
+var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 
-/mob/living/carbon/human/var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
-/mob/living/carbon/human/var/pale = FALSE          // Should affect how mob sprite is drawn, but currently doesn't.
+/mob/living/carbon/human
+	var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
+	var/pale = FALSE          // Should affect how mob sprite is drawn, but currently doesn't.
 
 
 // Initializes blood vessels
@@ -23,20 +24,29 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	vessel.my_atom = src
 
 	blood_add(BLOOD_VOLUME_NORMAL)
-	addtimer(CALLBACK(src, .proc/fixblood), 1)
+	addtimer(CALLBACK(src, PROC_REF(fixblood)), 1)
 
 // Resets blood data
 /mob/living/carbon/human/proc/fixblood(clean = TRUE)
 	var/datum/reagent/blood/B = blood_get()
 	if(istype(B))
 		if(clean)
-			B.data = list("donor" = src, "viruses" = null, "blood_DNA" = dna.unique_enzymes,
-						"blood_type" = dna.b_type, "resistances" = null, "trace_chem" = null,
-						"virus2" = null, "antibodies" = null)
+			B.data = list("donor" = REF(src), "blood_DNA" = dna.unique_enzymes,
+						"blood_type" = dna.b_type, "trace_chem" = null,
+						"virus2" = null, "antibodies" = null, "changeling_marker" = null)
 		else // Change DNA to ours, left the rest intact
-			B.data["donor"] = src
+			B.data["donor"] = REF(src)
 			B.data["blood_DNA"] = dna.unique_enzymes
 			B.data["blood_type"] = dna.b_type
+
+// currently take_blood ingores blood reagent and creates new blood from air so this is useless
+// commented and preserved in case of future changeling mechanics or blood refactor
+// but you need to update "timelimit" somewhere after death
+// (and also you maybe need to write some reaction between different blood reagents)
+//		if(mind)
+//			var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+//			if(C)
+//				B.data["changeling_marker"] = list("id" = C.unique_changeling_marker, "timelimit" = FALSE)
 
 /mob/living/carbon/human/proc/blood_amount(exact = FALSE)
 	if(species && species.flags[NO_BLOOD])
@@ -87,9 +97,16 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		if (reagents.has_reagent("nutriment")) // Getting food speeds it up
 			change_volume += 0.4
 			reagents.remove_reagent("nutriment", 0.1)
+		if (reagents.has_reagent("copper") && get_species(src) == SKRELL) // skrell blood base on copper
+			change_volume += 1
+			reagents.remove_reagent("copper", 0.1)
 		if (reagents.has_reagent("iron")) // Hematogen candy anyone?
-			change_volume += 0.8
-			reagents.remove_reagent("iron", 0.1)
+			if(get_species(src) == SKRELL) // a little more toxins when trying to restore blood with iron
+				var/mob/living/carbon/human/H = src
+				H.adjustToxLoss(1)
+			else
+				change_volume += 0.8
+				reagents.remove_reagent("iron", 0.1)
 		blood_add(change_volume)
 		blood_total += change_volume
 
@@ -155,6 +172,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		else if(nutrition >= 200)
 			nutrition -= 3
 
+	if(reagents.has_reagent("metatrombine"))
+		return
+
 	// Bleeding out:
 	var/blood_max = 0
 	var/list/do_spray = list()
@@ -166,6 +186,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		if(BP.status & ORGAN_BLEEDING)
 			if(BP.open)
 				blood_max += 2 // Yer stomach is cut open
+			if(HAS_TRAIT(src, TRAIT_HEMOPHILIAC))
+				blood_max += 4
 
 			for(var/datum/wound/W in BP.wounds)
 				if(!open_wound && (W.damage_type == CUT || W.damage_type == PIERCE) && W.damage && !W.is_treated())
@@ -230,6 +252,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 // Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
+	if(reagents.has_reagent("metatrombine"))
+		return
+
 	if(organs_by_name[O_HEART] && blood_remove(amt))
 		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
 
@@ -238,7 +263,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
 	var/turf/T = get_turf(target)
 
-	if(istype(source, /mob/living/carbon/human))
+	if(ishuman(source))
 		var/mob/living/carbon/human/M = source
 		source = M.blood_get()
 
@@ -292,6 +317,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/proc/blood_squirt(amt, turf/sprayloc)
 	set waitfor = FALSE
 
+	if(reagents.has_reagent("metatrombine"))
+		return
 	if(amt <= 0 || !istype(sprayloc))
 		return
 
@@ -355,31 +382,41 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 // Gets blood from mob to the container, preserving all data in it
 /mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, amount)
-	var/datum/reagent/blood/B = container.reagents.get_reagent(/datum/reagent/blood)
-	if(!istype(B))
-		B = new /datum/reagent/blood
+	var/datum/reagent/blood/B = new
 	B.holder = container
 	B.volume += amount
 
 	// Set reagent data:
-	B.data["donor"] = src
+	B.data["donor"] = REF(src)
 	if (!B.data["virus2"])
 		B.data["virus2"] = list()
 	B.data["virus2"] |= virus_copylist(virus2)
 	B.data["antibodies"] = antibodies
-	B.data["blood_DNA"] = dna.unique_enzymes
+	B.data["blood_DNA"] = dna.unique_enzymes // todo: for some reason we ignore original blood datum and all his data here, refactoring needed
 	B.data["blood_type"] = dna.b_type
-	if(resistances && resistances.len)
-		if(B.data["resistances"])
-			B.data["resistances"] |= resistances.Copy()
-		else
-			B.data["resistances"] = resistances.Copy()
+	B.data["time"] = world.time
+
+	if (mind)
+		// Changeling blood has unique marker like DNA but invisible for scanners
+		// timer means until what time marker should be considered "active" out of (alive) changeling body
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if (C)
+			var/marker_preserve_for = timeofdeath ? timeofdeath : world.time
+			marker_preserve_for += 1 MINUTES + rand(0, 20) MINUTES
+			B.data["changeling_marker"] = list("id" = C.unique_changeling_marker, "timelimit" = marker_preserve_for)
 
 	var/list/temp_chem = list()
 	for(var/datum/reagent/R in reagents.reagent_list)
 		temp_chem += R.id
 		temp_chem[R.id] = R.volume
 	B.data["trace_chem"] = list2params(temp_chem)
+
+	if(container)
+		container.reagents.reagent_list += B
+		container.reagents.update_total()
+		container.on_reagent_change()
+		container.reagents.handle_reactions()
+
 	return B
 
 // For humans, blood does not appear from blue, it comes from vessels
@@ -424,28 +461,45 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	blood_add(amount, injected.data)
 	var/datum/reagent/blood/our = blood_get()
 
-	if(blood_incompatible(injected.data["blood_type"], our.data["blood_type"]))
+	if(!blood_compatible(injected.data["blood_type"], our.data["blood_type"]))
 		reagents.add_reagent("toxin", amount * 0.5)
 	..()
 
-/proc/blood_incompatible(donor, receiver)
-	if(!donor || !receiver)
-		return FALSE
-	var/donor_antigen = copytext(donor, 1, -1)
-	var/receiver_antigen = copytext(receiver, 1, -1)
-	var/donor_rh = (findtext(donor, "+") > 0)
-	var/receiver_rh = (findtext(receiver, "+") > 0)
-	if(donor_rh && !receiver_rh) // Bad: "+" -> "-". Other combinations is ok
-		return TRUE
-	switch(receiver_antigen)
-		if("A")
-			if(donor_antigen != "A" && donor_antigen != "O")
-				return TRUE
-		if("B")
-			if(donor_antigen != "B" && donor_antigen != "O")
-				return TRUE
-		if("O")
-			if(donor_antigen != "O")
-				return TRUE
-		// AB is a universal receiver
-	return FALSE
+/proc/blood_compatible(blood_donor, blood_recipient)
+	var/static/list/blood_recipient_can_receive = list(
+		BLOOD_A_PLUS = list(
+			BLOOD_A_PLUS = TRUE, BLOOD_A_MINUS = TRUE,
+			BLOOD_O_PLUS = TRUE, BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_A_MINUS = list(
+			BLOOD_A_MINUS = TRUE,
+			BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_B_PLUS = list(
+			BLOOD_B_PLUS = TRUE, BLOOD_B_MINUS = TRUE,
+			BLOOD_O_PLUS = TRUE, BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_B_MINUS = list(
+			BLOOD_B_MINUS = TRUE,
+			BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_O_PLUS = list(
+			BLOOD_O_PLUS = TRUE, BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_O_MINUS = list(
+			BLOOD_O_MINUS = TRUE
+			),
+		BLOOD_AB_PLUS = list(
+			BLOOD_A_PLUS  = TRUE, BLOOD_A_MINUS  = TRUE,
+			BLOOD_B_PLUS  = TRUE, BLOOD_B_MINUS  = TRUE,
+			BLOOD_O_PLUS  = TRUE, BLOOD_O_MINUS  = TRUE,
+			BLOOD_AB_PLUS = TRUE, BLOOD_AB_MINUS = TRUE
+			),
+		BLOOD_AB_MINUS = list(
+			BLOOD_A_MINUS  = TRUE,
+			BLOOD_B_MINUS  = TRUE,
+			BLOOD_O_MINUS  = TRUE,
+			BLOOD_AB_MINUS = TRUE
+			)
+		)
+	return blood_recipient_can_receive[blood_recipient][blood_donor]

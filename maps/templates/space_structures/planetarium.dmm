@@ -1,15 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/space,
+/turf/environment/space,
 /area/space)
 "b" = (
-/turf/space,
+/turf/environment/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien20"
 	},
 /area/space_structures/planetarium)
 "c" = (
-/turf/space,
+/turf/environment/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien24"
 	},
@@ -25,13 +25,13 @@
 	},
 /area/space_structures/planetarium)
 "f" = (
-/turf/space,
+/turf/environment/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien16"
 	},
 /area/space_structures/planetarium)
 "g" = (
-/turf/space,
+/turf/environment/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien19"
 	},
@@ -42,14 +42,12 @@
 	},
 /area/space_structures/planetarium)
 "i" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
+/obj/structure/window/fulltile/reinforced/phoron,
 /turf/unsimulated/floor/abductor,
-/turf/space,
+/turf/environment/space,
 /area/space_structures/planetarium)
 "j" = (
-/turf/space,
+/turf/environment/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien6"
 	},
@@ -65,29 +63,25 @@
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "m" = (
-/turf/space,
+/turf/environment/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien9"
 	},
 /area/space_structures/planetarium)
 "n" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
-/turf/space,
+/obj/structure/window/fulltile/reinforced/phoron,
+/turf/environment/space,
 /area/space_structures/planetarium)
 "o" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
+/obj/structure/window/fulltile/reinforced/phoron,
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "p" = (
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "q" = (
-/obj/singularity/academy,
-/turf/space,
+/obj/singularity/gravitational/academy,
+/turf/environment/space,
 /area/space_structures/planetarium)
 "r" = (
 /obj/structure/closet/abductor,
@@ -110,7 +104,7 @@
 	},
 /area/space_structures/planetarium)
 "u" = (
-/turf/space,
+/turf/environment/space,
 /turf/unsimulated/wall/abductor,
 /area/space_structures/planetarium)
 "v" = (
@@ -133,7 +127,7 @@
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "y" = (
-/turf/space,
+/turf/environment/space,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien5"
 	},
@@ -142,7 +136,7 @@
 /obj/structure/table/abductor,
 /obj/structure/planetarium_spawner,
 /turf/unsimulated/floor/abductor,
-/turf/space,
+/turf/environment/space,
 /area/space_structures/planetarium)
 "A" = (
 /turf/unsimulated/wall/abductor{
@@ -159,15 +153,15 @@
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "D" = (
-/obj/structure/window/phoronreinforced,
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/thin/reinforced/phoron,
+/obj/structure/window/thin/reinforced/phoron{
 	dir = 8
 	},
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "E" = (
-/obj/structure/window/phoronreinforced,
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/thin/reinforced/phoron,
+/obj/structure/window/thin/reinforced/phoron{
 	dir = 4
 	},
 /turf/unsimulated/floor/abductor,
@@ -214,19 +208,19 @@
 	},
 /area/space_structures/planetarium)
 "O" = (
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/thin/reinforced/phoron{
 	dir = 1
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/thin/reinforced/phoron{
 	dir = 4
 	},
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "P" = (
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/thin/reinforced/phoron{
 	dir = 8
 	},
-/obj/structure/window/phoronreinforced{
+/obj/structure/window/thin/reinforced/phoron{
 	dir = 1
 	},
 /obj/item/weapon/haircomb,

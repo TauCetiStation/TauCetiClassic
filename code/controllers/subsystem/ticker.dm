@@ -1,12 +1,15 @@
-var/round_start_time = 0
-var/round_start_realtime = 0
+var/global/round_start_time = 0
+var/global/round_start_realtime = 0
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
 
 	priority = SS_PRIORITY_TICKER
 
-	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | SS_SHOW_IN_MC_TAB
+
+	msg_lobby = "Запускаем сверхточные атомные часы..."
 
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
@@ -20,7 +23,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/random_players = 0					// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
-	var/delay_end = 0						//if set to nonzero, the round will not restart on it's own
+	var/admin_delayed = 0						//if set to nonzero, the round will not restart on it's own
 
 	var/triai = 0							//Global holder for Triumvirate
 
@@ -32,7 +35,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/atom/movable/screen/cinematic = null
 	var/datum/station_state/start_state = null
-
+	var/list/medal_list = list()
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = FALSE //sit back and relax
 	var/nar_sie_has_risen = FALSE //check, if there is already one god in the world who was summoned (only for tomes)
@@ -40,13 +43,16 @@ SUBSYSTEM_DEF(ticker)
 	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
 	var/Malf_announce_stage = 0//Used for announcement
 
+	var/force_end = FALSE // set TRUE to forse round end and show credits
+
+	var/end_timer_id
+
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
-	/*
+	'sound/music/1.ogg',\
 	'sound/music/space.ogg',\
 	'sound/music/clouds.s3m',\
-	'sound/music/title1.ogg',\	//disgusting
-	*/
+	'sound/music/title1.ogg',\
 	'sound/music/space_oddity.ogg',\
 	'sound/music/b12_combined_start.ogg',\
 	'sound/music/title2.ogg',\
@@ -69,9 +75,10 @@ SUBSYSTEM_DEF(ticker)
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			timeLeft = initial(timeLeft)
-			to_chat(world, "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>")
-			to_chat(world, "Please, setup your character and select ready. Game will start in [timeLeft/10] seconds")
+			to_chat(world, "<b><font color='blue'>Добро пожаловать в предыгровое лобби!</font></b>")
+			to_chat(world, "Пожалуйста, настройте своего персонажа и нажмите на кнопку Ready. Игра начнется через [timeLeft/10] секунд.")
 			current_state = GAME_STATE_PREGAME
+			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 
 			log_initialization() // need to dump cached log
 
@@ -93,18 +100,28 @@ SUBSYSTEM_DEF(ticker)
 
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
+				Master.SetRunLevel(RUNLEVEL_SETUP)
+				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
 
 		if(GAME_STATE_SETTING_UP)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
+				Master.SetRunLevel(RUNLEVEL_LOBBY)
+				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
-			if(!explosion_in_progress && mode_finished)
+			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1) || force_end
+			if(!explosion_in_progress && mode_finished && !SSrating.voting)
+
+				if(!SSrating.already_started)
+					start_rating_vote_if_unexpected_roundend()
+					return
+
 				current_state = GAME_STATE_FINISHED
+				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 				declare_completion()
 				spawn(50)
 					for(var/client/C in clients)
@@ -120,46 +137,62 @@ SUBSYSTEM_DEF(ticker)
 
 					world.send2bridge(
 						type = list(BRIDGE_ROUNDSTAT),
-						attachment_title = "Round #[global.round_id] is over",
+						attachment_title = "Раунд #[global.round_id] закончился",
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
 
-					drop_round_stats()
+					SSStatistics.drop_round_stats()
+
+					SSmapping.autovote_next_map()
 
 					if (station_was_nuked)
 						feedback_set_details("end_proper","nuke")
-						if(!delay_end)
-							to_chat(world, "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>")
+						if(!admin_delayed)
+							to_chat(world, "<span class='notice'><B>Рестарт из-за уничтожения станции через [restart_timeout/10] [pluralize_russian(restart_timeout/10, "секунда", "секунды", "секунд")].</B></span>")
 					else
 						feedback_set_details("end_proper","proper completion")
-						if(!delay_end)
-							to_chat(world, "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>")
+						if(!admin_delayed)
+							to_chat(world, "<span class='notice'><B>Рестарт через [restart_timeout/10] [pluralize_russian(restart_timeout/10, "секунда", "секунды", "секунд")].</B></span>")
 
-					if(!delay_end)
-						sleep(restart_timeout)
-						if(!delay_end)
-							world.Reboot(end_state = station_was_nuked ? "nuke" : "proper completion") //Can be upgraded to remove unneded sleep here.
-						else
-							to_chat(world, "<span class='info bold'>An admin has delayed the round end</span>")
-							world.send2bridge(
-								type = list(BRIDGE_ROUNDSTAT),
-								attachment_msg = "An admin has delayed the round end",
-								attachment_color = BRIDGE_COLOR_ROUNDSTAT,
-							)
-					else
-						to_chat(world, "<span class='info bold'>An admin has delayed the round end</span>")
-						world.send2bridge(
-							type = list(BRIDGE_ROUNDSTAT),
-							attachment_msg = "An admin has delayed the round end",
-							attachment_color = BRIDGE_COLOR_ROUNDSTAT,
-						)
+					end_timer_id = addtimer(CALLBACK(src, PROC_REF(try_to_end)), restart_timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+/datum/controller/subsystem/ticker/proc/start_rating_vote_if_unexpected_roundend()
+	to_chat(world, "<span class='info bold'><B>Конец раунда задержан из-за голосования.</B></span>")
+	SSrating.start_rating_collection()
+
+/datum/controller/subsystem/ticker/proc/try_to_end()
+	var/delayed = FALSE
+
+	var/static/admin_delay_announced = FALSE //announce reason only first time
+	if(admin_delayed)
+		if(!admin_delay_announced)
+			to_chat(world, "<span class='info bold'>Рестарт отложен администратором.</span>")
+			world.send2bridge(
+				type = list(BRIDGE_ROUNDSTAT),
+				attachment_msg = "Администратор отложил окончание раунда.",
+				attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+			)
+			admin_delay_announced = TRUE
+		delayed = TRUE
+
+	var/static/vote_delay_announced = FALSE
+	if(SSvote.active_poll)
+		if(!vote_delay_announced)
+			to_chat(world, "<span class='info bold'>Рестарт задержан из-за голосования.</span>")
+			vote_delay_announced = TRUE
+		delayed = TRUE
+
+	if(delayed)
+		end_timer_id = addtimer(CALLBACK(src, PROC_REF(try_to_end)), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	else
+		world.Reboot(end_state = station_was_nuked ? "nuke" : "proper completion")
 
 /datum/controller/subsystem/ticker/proc/setup()
-	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
+	to_chat(world, "<span class='boldannounce'>Игра начинается...</span>")
 
 	// Discuss your stuff after the round ends.
-	if(config.ooc_round_only)
-		to_chat(world, "<span class='warning bold'>The OOC channel has been globally disabled for the duration of the round!</span>")
+	if(config.ooc_round_autotoggle)
+		to_chat(world, "<span class='warning bold'>OOC-канал отключен для всех на время раунда!</span>")
 		ooc_allowed = FALSE
 
 	var/init_start = world.timeofday
@@ -176,12 +209,12 @@ SUBSYSTEM_DEF(ticker)
 
 		if(!runnable_modes.len)
 			current_state = GAME_STATE_PREGAME
-			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
+			to_chat(world, "<B>Невозможно выбрать игровой режим.</B> Возвращение в предыгровое лобби.")
 			// Players can initiate gamemode vote again
-			var/datum/poll/gamemode_vote = SSvote.votes[/datum/poll/gamemode]
+			var/datum/poll/gamemode_vote = SSvote.possible_polls[/datum/poll/gamemode]
 			if(gamemode_vote)
 				gamemode_vote.reset_next_vote()
-			return 0
+			return FALSE
 
 		// hiding forced gamemode in secret
 		if(istype(bundle, /datum/modesbundle/all/secret) && secret_force_mode != "Secret")
@@ -207,7 +240,7 @@ SUBSYSTEM_DEF(ticker)
 		QDEL_NULL(mode)
 		current_state = GAME_STATE_PREGAME
 		SSjob.ResetOccupations()
-		return 0
+		return FALSE
 
 	//Configure mode and assign player to special mode stuff
 	SSjob.DivideOccupations() //Distribute jobs
@@ -220,11 +253,14 @@ SUBSYSTEM_DEF(ticker)
 		world.log << "The gamemode setup for [mode.name] errored out."
 		QDEL_NULL(mode)
 		SSjob.ResetOccupations()
-		return 0
+		return FALSE
 
-	if(!bundle || !bundle.hidden)
+	if(!bundle || !bundle.hide_mode_announce)
 		mode.announce()
 
+	setup_economy()
+
+	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
 	round_start_realtime = world.realtime
@@ -233,10 +269,9 @@ SUBSYSTEM_DEF(ticker)
 		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now(), map_name = '[sanitize_sql(SSmapping.config.map_name)]' WHERE id = [global.round_id]")
 		query_round_game_mode.Execute()
 
-	setup_economy()
 	create_religion(/datum/religion/chaplain)
+	setup_hud_objects()
 
-	//start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -244,23 +279,32 @@ SUBSYSTEM_DEF(ticker)
 
 	spawn_empty_ai()
 
-	Master.RoundStart()
+	update_station_head_portraits()
+
+	CHECK_TICK
+
+	for(var/mob/dead/new_player/player as anything in new_player_list)
+		if(player.spawning)
+			qdel(player)
+
+	current_state = GAME_STATE_PLAYING
+	Master.SetRunLevel(RUNLEVEL_GAME)
 
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
-		attachment_title = "Round is started, gamemode - **[master_mode]**",
-		attachment_msg = "Round #[global.round_id]; Join now: <[BYOND_JOIN_LINK]>",
+		attachment_title = "Раунд начался, игровой режим - **[master_mode]**",
+		attachment_msg = "Раунд #[global.round_id]; Присоединиться сейчас: <[BYOND_JOIN_LINK]>",
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 	)
 
 	world.log << "Game start took [(world.timeofday - init_start)/10]s"
 
-	to_chat(world, "<FONT color='blue'><B>Enjoy the game!</B></FONT>")
-	for(var/mob/M in player_list)
+	to_chat(world, "<FONT color='blue'><B>Приятной игры!</B></FONT>")
+	for(var/mob/M as anything in player_list)
 		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 	if(length(SSholiday.holidays))
-		to_chat(world, "<span clas='notice'>and...</span>")
+		to_chat(world, "<span clas='notice'>и...</span>")
 		for(var/holidayname in SSholiday.holidays)
 			var/datum/holiday/holiday = SSholiday.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
@@ -268,25 +312,29 @@ SUBSYSTEM_DEF(ticker)
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.PostSetup()
 		show_blurbs()
+		populate_response_teams()
 
 		SSevents.start_roundstart_event()
+		SSqualities.give_all_qualities()
 
-		for(var/mob/dead/new_player/N in new_player_list)
+		for(var/mob/dead/new_player/N as anything in new_player_list)
 			if(N.client)
 				N.show_titlescreen()
 		//Cleanup some stuff
-		for(var/obj/effect/landmark/start/S in landmarks_list)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if (S.name != "AI")
-				qdel(S)
+		SSjob.fallback_landmark = null
+		for(var/obj/effect/landmark/start/type as anything in subtypesof(/obj/effect/landmark/start))
+			for(var/obj/effect/landmark/start/S as anything in landmarks_list[initial(type.name)])
+				S.after_round_start()
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
 
-	return 1
+		create_default_spawners()
+
+	return TRUE
 
 /datum/controller/subsystem/ticker/proc/show_blurbs()
-	for(var/datum/mind/M in SSticker.minds)
+	for(var/datum/mind/M as anything in SSticker.minds)
 		show_location_blurb(M.current.client)
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
@@ -300,8 +348,8 @@ SUBSYSTEM_DEF(ticker)
 	var/summary = "summary_selfdes"
 	if(mode && !override)
 		override = mode.name
-	cinematic = new /atom/movable/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
-	for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
+	cinematic = new /atom/movable/screen/nuke(src)
+	for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
 		if(isliving(M))
@@ -316,8 +364,13 @@ SUBSYSTEM_DEF(ticker)
 				summary = "summary_malf"
 			else if(override == "nuclear emergency")
 				summary = "summary_nukewin"
+			else if(override == "replicators")
+				screen = "intro_malf"
+				explosion = "station_swarmed"
+				summary = "summary_replicators"
+				screen_time = 76
 
-			for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
+			for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 				if(M.stat != DEAD)	//Just you wait for real destruction!
 					var/turf/T = get_turf(M)
 					if(T && is_station_level(T.z))
@@ -339,19 +392,19 @@ SUBSYSTEM_DEF(ticker)
 
 	if(screen)
 		flick(screen, cinematic)
-	addtimer(CALLBACK(src, .proc/station_explosion_effects, explosion, summary, cinematic), screen_time)
+	addtimer(CALLBACK(src, PROC_REF(station_explosion_effects), explosion, summary, cinematic), screen_time)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /atom/movable/screen/cinematic)
-	for(var/mob/M in mob_list) //search any goodest
-		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
+/*	for(var/mob/M as anything in mob_list) //search any goodest
+		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)*/
 	if(explosion)
 		flick(explosion,cinematic)
 	if(summary)
 		cinematic.icon_state = summary
-	addtimer(CALLBACK(src, .proc/station_explosion_rollback_effects, cinematic), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(station_explosion_rollback_effects), cinematic), 10 SECONDS)
 
 /datum/controller/subsystem/ticker/proc/station_explosion_rollback_effects(cinematic)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.client)
 			M.client.screen -= cinematic
 		if(isliving(M))
@@ -362,7 +415,6 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in player_list)
-		//sleep(1)//Maybe remove??
 		if(player && player.ready && player.mind)
 			joined_player_list += player.ckey
 			if(player.mind.assigned_role=="AI")
@@ -372,8 +424,17 @@ SUBSYSTEM_DEF(ticker)
 			//	continue
 			else
 				player.create_character()
-				qdel(player)
-		CHECK_TICK // comment/remove this and uncomment sleep, if crashes at round start will come back.
+		CHECK_TICK
+
+/datum/controller/subsystem/ticker/proc/station_explosion_detonation(source)
+
+	// unfortunately airnet and powernet don't have own SS, so we need to break them completly to make things less laggy
+	// no one will notice anyway
+	SSair.stop_airnet_processing = TRUE
+	SSmachines.stop_powernet_processing = TRUE
+
+	explosion(get_turf(source), 30, 60, 120, ignorecap = TRUE)
+
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
@@ -387,27 +448,35 @@ SUBSYSTEM_DEF(ticker)
 		if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role != "default")
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			if(ishuman(player))
-				SSquirks.AssignQuirks(player, player.client, TRUE)
+			SSquirks.AssignQuirks(player, player.client, TRUE)
 			if(player.mind.assigned_role != "MODE")
-				SSjob.EquipRank(player, player.mind.assigned_role, 0)
+				SSjob.EquipRank(player, player.mind.assigned_role, FALSE)
+				player.PutDisabilityMarks()
 	if(captainless)
-		for(var/mob/M in player_list)
+		for(var/mob/M as anything in player_list)
 			if(!isnewplayer(M))
-				to_chat(M, "Captainship not forced on anyone.")
+				to_chat(M, "Капитаном никто не стал.")
 
 /datum/controller/subsystem/ticker/proc/generate_scoreboard(mob/one_mob)
-	var/completition = "<h1>Round End Information</h1><HR>"
+	var/completition = "<h1>Информация по окончании раунда</h1><HR>"
 	completition += get_ai_completition()
 	completition += mode.declare_completion()
+	completition += get_ratings()
 	scoreboard(completition, one_mob)
+
+/datum/controller/subsystem/ticker/proc/get_ratings()
+	var/dat = "<h2>Оценки раунда</h2>"
+	dat += "<div class='Section'>"
+	dat += SSrating.get_voting_results()
+	dat += "</div>"
+	return dat
 
 /datum/controller/subsystem/ticker/proc/get_ai_completition()
 	var/ai_completions = ""
 	if(silicon_list.len)
-		ai_completions += "<h2>Silicons Laws</h2>"
+		ai_completions += "<h2>Законы синтетиков:</h2>"
 		ai_completions += "<div class='Section'>"
-		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
+		for (var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 			if(!aiPlayer)
 				continue
 			var/icon/flat = getFlatIcon(aiPlayer)
@@ -415,16 +484,16 @@ SUBSYSTEM_DEF(ticker)
 			var/tempstate = end_icons.len
 			var/aikey = aiPlayer.mind ? aiPlayer.mind.key : aiPlayer.key
 			if (aiPlayer.stat != DEAD)
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aikey])'s laws at the end of the game were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Игрок: [aikey]) Законы в конце игры были таковы:</B>"}
 			else
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Played by: [aikey])'s laws when it was deactivated were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [aiPlayer.name] (Игрок: [aikey]) Законы на момент деактивации были таковы:</B>"}
 			ai_completions += "<BR>[aiPlayer.write_laws()]"
 
 			if (aiPlayer.connected_robots.len)
-				var/robolist = "<BR><B>The AI's loyal minions were:</B> "
-				for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
+				var/robolist = "<BR><B>Верными приспешниками ИИ были:</B> "
+				for(var/mob/living/silicon/robot/robo as anything in aiPlayer.connected_robots)
 					var/robokey = robo.mind ? robo.mind.key : robo.key
-					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robokey]), ":" (Played by: [robokey]), "]"
+					robolist += "[robo.name][robo.stat?" (Деактивированный) (Игрок: [robokey]), ":" (Игрок: [robokey]), "]"
 				ai_completions += "[robolist]"
 
 		var/dronecount = 0
@@ -432,7 +501,7 @@ SUBSYSTEM_DEF(ticker)
 		for (var/mob/living/silicon/robot/robo in silicon_list)
 			if(!robo)
 				continue
-			if(istype(robo,/mob/living/silicon/robot/drone))
+			if(isdrone(robo))
 				dronecount++
 				continue
 			var/icon/flat = getFlatIcon(robo,exact=1)
@@ -441,15 +510,15 @@ SUBSYSTEM_DEF(ticker)
 			var/robokey = robo.mind ? robo.mind.key : robo.key
 			if (!robo.connected_ai)
 				if (robo.stat != DEAD)
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) survived as an AI-less borg! Its laws were:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) выжил как непривязанный к ИИ киборг! Его законы были таковы:</B>"}
 				else
-					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) was unable to survive the rigors of being a cyborg without an AI. Its laws were:</B>"}
+					ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) не смог выдержать суровых условий жизни киборга без ИИ. Его законы были таковы:</B>"}
 			else
-				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Played by: [robokey]) [robo.stat!=2?"survived":"perished"] as a cyborg slaved to [robo.connected_ai]! Its laws were:</B>"}
+				ai_completions += {"<BR><B><img src="logo_[tempstate].png"> [robo.name] (Игрок: [robokey]) [robo.stat!=2?"выжил":"уничтоженный"] как киборг, подчиненный [robo.connected_ai]! Его законы были таковы:</B>"}
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)
-			ai_completions += "<br><B>There [dronecount > 1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
+			ai_completions += "<br><B>В этом раунде [dronecount > 1 ? "было" : "был"] [dronecount] [dronecount > 1 ? "трудолюбивых" : "трудолюбивый"] [dronecount>1 ? "дронов" : "дрон"].</B>"
 
 		ai_completions += "</div>"
 	return ai_completions
@@ -457,8 +526,8 @@ SUBSYSTEM_DEF(ticker)
 //cursed code
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	// Now you all can discuss the game.
-	if(config.ooc_round_only)
-		to_chat(world, "<span class='notice bold'>The OOC channel has been globally enabled!</span>")
+	if(config.ooc_round_autotoggle)
+		to_chat(world, "<span class='notice bold'>OOC-канал включен для всех!</span>")
 		ooc_allowed = TRUE
 
 	var/station_evacuated
@@ -467,10 +536,10 @@ SUBSYSTEM_DEF(ticker)
 	var/num_survivors = 0
 	var/num_escapees = 0
 
-	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	to_chat(world, "<BR><BR><BR><FONT size=3><B>Раунд закончился.</B></FONT>")
 
 	//Player status report
-	for(var/mob/Player in mob_list)
+	for(var/mob/Player as anything in mob_list)
 		if(Player.mind && !isnewplayer(Player))
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
@@ -480,27 +549,29 @@ SUBSYSTEM_DEF(ticker)
 					if(!playerTurf)
 						continue
 					if(!is_centcom_level(playerTurf.z))
-						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
+						to_chat(Player, "<font color='blue'><b>Вам удалось выжить, но вы были брошены на [station_name_ru()]...</b></FONT>")
 					else
 						num_escapees++
-						to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
+						to_chat(Player, "<font color='green'><b>Вам удалось пережить события на [station_name_ru()] как [Player.real_name].</b></FONT>")
 				else
-					to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
+					to_chat(Player, "<font color='green'><b>Вам удалось пережить события на [station_name_ru()] как [Player.real_name].</b></FONT>")
 			else
-				to_chat(Player, "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>")
+				to_chat(Player, "<font color='red'><b>Вы не пережили событий, произошедших на [station_name_ru()]...</b></FONT>")
 
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
 	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
 
-	to_chat(world, "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B>")
-	to_chat(world, "<BR>[TAB]Station Integrity: <B>[station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
+	to_chat(world, "<BR>[TAB]Продолжительность смены: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B>")
+	to_chat(world, "<BR>[TAB]Целостность станции: <B>[station_was_nuked ? "<font color='red'>Уничтожена</font>" : "[station_integrity]%"]</B>")
 	if(joined_player_list.len)
-		to_chat(world, "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>")
+		to_chat(world, "<BR>[TAB]Общая численность персонала: <B>[joined_player_list.len]</B>")
 		if(station_evacuated)
-			to_chat(world, "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
-		to_chat(world, "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>")
+			to_chat(world, "<BR>[TAB]Эвакуировалось: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
+		to_chat(world, "<BR>[TAB]Процент выживших: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>")
+	if(SSround_aspects.aspect)
+		to_chat(world, "<BR>[TAB]Аспект Раунда: <B>[SSround_aspects.aspect_name].</B> [SSround_aspects.aspect.desc]")
 	to_chat(world, "<BR>")
 
 	//Print a list of antagonists to the server log
@@ -513,8 +584,7 @@ SUBSYSTEM_DEF(ticker)
 	// Add AntagHUD to everyone, see who was really evil the whole time!
 	for(var/hud in get_all_antag_huds())
 		var/datum/atom_hud/antag/H = hud
-		for(var/m in global.player_list)
-			var/mob/M = m
+		for(var/mob/M as anything in global.player_list)
 			H.add_hud_to(M)
 
 	teleport_players_to_eorg_area()
@@ -525,7 +595,14 @@ SUBSYSTEM_DEF(ticker)
 	//Ask the event manager to print round end information
 	SSevents.RoundEnd()
 
-	return 1
+	return TRUE
+
+/datum/controller/subsystem/ticker/proc/create_default_spawners()
+	// infinity spawners
+	if(!config.disable_player_mice)
+		create_spawner(/datum/spawner/mouse)
+	if(config.allow_drone_spawn)
+		create_spawner(/datum/spawner/drone)
 
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
 	if(!config.deathmatch_arena)
@@ -533,23 +610,38 @@ SUBSYSTEM_DEF(ticker)
 	for(var/mob/living/M in global.player_list)
 		if(!M.client.prefs.eorg_enabled)
 			continue
-		var/mob/living/carbon/human/L = new(pick(eorgwarp))
+		spawn_gladiator(M)
+
+/datum/controller/subsystem/ticker/proc/spawn_gladiator(mob/M, transfer_mind = TRUE)
+	var/mob/living/carbon/human/L = new(pick_landmarked_location("eorgwarp"))
+	if(transfer_mind)
 		M.mind.transfer_to(L)
-		L.playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
-		L.equipOutfit(/datum/outfit/arena)
-		L.name = "Gladiator ([rand(1, 1000)])"
-		L.real_name = L.name
-		to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
+	else
+		L.key = M.key
+	L.playsound_local(null, 'sound/lobby/Thunderdome.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	L.equipOutfit(/datum/outfit/arena)
+	L.name = L.key
+	L.real_name = L.name
+	L.mind.skills.add_available_skillset(/datum/skillset/max)
+	L.mind.skills.maximize_active_skills()
+	to_chat(L, "<span class='warning'>Добро пожаловать на арену Смертельных игр! Разгуляйся, выпусти пар и покажи кто здесь батя!</span>")
 
 /datum/controller/subsystem/ticker/proc/achievement_declare_completion()
-	var/text = "<br><FONT size = 5><b>Additionally, the following players earned achievements:</b></FONT>"
+	var/text = "<br><FONT size = 5><b>Кроме того, достижения получили следующие игроки:</b></FONT>"
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 	end_icons += cup
 	var/tempstate = end_icons.len
-	for(var/winner in achievements)
-		var/winner_text = "<b>[winner["key"]]</b> as <b>[winner["name"]]</b> won \"<b>[winner["title"]]</b>\"! \"[winner["desc"]]\""
+	for(var/datum/stat/achievement/winner as anything in SSStatistics.achievements)
+		var/winner_text = "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[winner.title]</b>\"! \"[winner.desc]\""
 		text += {"<br><img src="logo_[tempstate].png"> [winner_text]"}
 
+	return text
+
+/datum/controller/subsystem/ticker/proc/show_medals()
+	var/text = "<br><FONT size = 5><b>Были выданы следующие медали:</b></FONT>"
+	for(var/datum/medal/medal as anything in medal_list)
+		var/award_text = "<b>[medal.key]</b> as <b>[medal.target_name]</b> was awarded \"<b>[medal.medal_name]</b>\" for \"<b>[medal.reason]</b>\" by <b>[medal.parent_name]</b>!"
+		text += "<br>[bicon(medal.image)] [award_text]"
 	return text
 
 /datum/controller/subsystem/ticker/proc/start_now()

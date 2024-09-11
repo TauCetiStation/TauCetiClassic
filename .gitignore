@@ -8,6 +8,8 @@
 taucetistation.dmb
 Thumbs.db
 data/
+cache/
 cfg/
 .vscode
 **/MapFXDrawer/*.png
+test_merge.txt

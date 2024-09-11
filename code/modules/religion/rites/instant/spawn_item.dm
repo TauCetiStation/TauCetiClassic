@@ -1,6 +1,5 @@
 
 /datum/religion_rites/instant/spawn_item
-	name = "Spawn item"
 	//Type for the item to be spawned
 	var/spawn_type
 	//Type for the item to be sacrificed. If you specify the type here, then the component itself will change spawn_type to sacrifice_type.
@@ -9,7 +8,7 @@
 	var/adding_favor = 75
 
 /datum/religion_rites/instant/spawn_item/New()
-	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, divine_power, CALLBACK(src, .proc/modify_item))
+	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, divine_power, CALLBACK(src, PROC_REF(modify_item)))
 
 // Used to apply some effect to an item after its spawn.
 /datum/religion_rites/instant/spawn_item/proc/modify_item(atom/item)
@@ -51,5 +50,4 @@
 
 	needed_aspects = list(
 		ASPECT_MYSTIC = 1,
-		ASPECT_RESOURCES = 1,
 	)

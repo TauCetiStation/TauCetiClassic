@@ -64,7 +64,7 @@ var/global/sent_strike_team = FALSE
 
 	var/is_leader_seleceted = FALSE
 
-	var/datum/faction/strike_team/deathsquad/S = SSticker.mode.CreateFaction(/datum/faction/strike_team/deathsquad)
+	var/datum/faction/strike_team/deathsquad/S = create_faction(/datum/faction/strike_team/deathsquad, FALSE, FALSE)
 	S.forgeObjectives(input)
 	// Spawns commandos and equips them.
 	for (var/obj/effect/landmark/L in landmarks_list)
@@ -106,13 +106,11 @@ var/global/sent_strike_team = FALSE
 	var/commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
 	var/commando_name = pick(last_names)
 
-	new_commando.gender = pick(MALE, FEMALE)
-
 	// Randomize appearance for the commando
-	var/datum/preferences/A = new
-	A.randomize_appearance_for(new_commando)
+	new_commando.randomize_appearance()
 
 	new_commando.real_name = "[is_leader ? commando_leader_rank : commando_rank] [commando_name]"
+	new_commando.name = new_commando.real_name
 	new_commando.age = is_leader ? rand(new_commando.species.min_age * 1.25, new_commando.species.min_age * 1.75) :  rand(new_commando.species.min_age, new_commando.species.min_age * 1.5)
 
 	new_commando.dna.ready_dna(new_commando)
@@ -120,53 +118,13 @@ var/global/sent_strike_team = FALSE
 	// Creates mind stuff
 	new_commando.mind_initialize()
 	new_commando.equip_death_commando(is_leader)
-	var/datum/faction/strike_team/deathsquad/D = find_faction_by_type(/datum/faction/strike_team/deathsquad)
-	if(D)
-		add_faction_member(D, new_commando, FALSE)
+	var/datum/faction/strike_team/deathsquad/D = create_uniq_faction(/datum/faction/strike_team/deathsquad)
+	add_faction_member(D, new_commando, FALSE)
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(is_leader)
-	equip_to_slot_or_del(new /obj/item/device/radio/headset/deathsquad(src), SLOT_L_EAR)
-
-	if (is_leader)
-		equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(src), SLOT_W_UNIFORM)
-	else
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/green(src), SLOT_W_UNIFORM)
-
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/swat(src), SLOT_SHOES)
-	equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(src), SLOT_WEAR_SUIT)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)
-	equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/deathsquad(src), SLOT_HEAD)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/swat(src), SLOT_WEAR_MASK)
-	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), SLOT_GLASSES)
-
-	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), SLOT_BACK)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), SLOT_IN_BACKPACK)
-
-	equip_to_slot_or_del(new /obj/item/ammo_box/a357(src), SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/regular(src), SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box/flashbangs(src), SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/device/flashlight(src), SLOT_IN_BACKPACK)
-
-	if (is_leader)
-		equip_to_slot_or_del(new /obj/item/weapon/pinpointer(src), SLOT_IN_BACKPACK)
-		equip_to_slot_or_del(new /obj/item/weapon/disk/nuclear(src), SLOT_IN_BACKPACK)
-	else
-		equip_to_slot_or_del(new /obj/item/weapon/plastique(src), SLOT_IN_BACKPACK)
-
-	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), SLOT_L_STORE)
-	equip_to_slot_or_del(new /obj/item/weapon/grenade/flashbang(src), SLOT_R_STORE)
-	equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_oxygen(src), SLOT_S_STORE)
-	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/mateba(src), SLOT_BELT)
-
-	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), SLOT_R_HAND)
-
-	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(src)
-	L.inject(src)
-
-	var/obj/item/weapon/card/id/centcom/C = new(src)
-	C.name = "[real_name]'s ID Card"
-	C.registered_name = real_name
-	equip_to_slot_or_del(C, SLOT_WEAR_ID)
+	var/outfit_type = is_leader ? /datum/outfit/death_squad/leader : /datum/outfit/death_squad
+	var/datum/outfit/outfit = new outfit_type
+	outfit.equip(src)
 
 #undef COMMANDOS_POSSIBLE

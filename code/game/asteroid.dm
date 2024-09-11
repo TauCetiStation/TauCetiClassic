@@ -3,11 +3,11 @@ var/global/list/space_surprises = list(
 	/obj/item/weapon/pickaxe/silver					= 4,
 	/obj/item/weapon/pickaxe/drill					= 4,
 	/obj/item/weapon/pickaxe/drill/jackhammer		= 4,
-	/obj/item/weapon/twohanded/sledgehammer			= 3,
+	/obj/item/weapon/sledgehammer					= 3,
 	/obj/item/weapon/pickaxe/diamond				= 3,
 	/obj/item/weapon/pickaxe/drill/diamond_drill	= 3,
 	/obj/item/weapon/pickaxe/gold					= 3,
-	/obj/item/weapon/pickaxe/plasmacutter			= 2,
+	/obj/item/weapon/gun/energy/laser/cutter		= 2,
 	/obj/structure/closet/syndicate/resources		= 2,
 	/obj/item/weapon/melee/energy/sword/pirate		= 1,
 	/obj/mecha/working/ripley/mining				= 1
@@ -118,7 +118,7 @@ var/global/list/spawned_surprises = list()
 			valid = 0
 			continue
 
-		if(locate(/turf/space) in surroundings)
+		if(locate(/turf/environment) in surroundings)
 			valid = 0
 			continue
 

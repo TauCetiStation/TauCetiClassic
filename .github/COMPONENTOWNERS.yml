@@ -1,0 +1,48 @@
+##
+# Почти CODEOWNERS, только работает лучше. Формат: https://github.com/dyladan/component-owners
+# Реквестит ревью указанных людей/команд при изменениях в указанных файлах/папках. Названия команд начинаются с "/", пути от корневой папки.
+#
+# Вы должны быть частью команды гитхаб-организации, иначе гитхаб не сможет назначить вас на ревью.
+# Так что запросите у мейнтейнеров инвайт в группу Collaborators, если необходимо. Или в другие подходящие группы.
+#
+# Держите файлы и папки в алфавитном порядке (так, как они отсортированны в DreamMaker и taucetistation.dme).
+#
+# CODEOWNERS используются у нас ТОЛЬКО ДЛЯ УВЕДОМЛЕНИЙ, если вы хотите закрепить за собой обязательность 
+# ревью PR-а перед мержем - напишите об этом дополнительно в PR, желательно в первые сутки его открытия!
+#
+##
+
+components:
+  ## Код ##
+  
+  # /code/
+  code/modules/client/preferences_savefile.dm: volas
+
+  ## Конфиги ##
+  config/: volas
+
+  ## Иконки ##
+  icons/:
+    TauCetiStation/sprites-department
+
+  ## Карты ##
+  maps/boxstation/: TauCetiStation/maps-department
+  #maps/delta/: Deahaka
+  #maps/falcon/: Tap0r
+  #maps/gamma/: AgRevol
+  #maps/prometheus/: Tap0r
+  #maps/stroechka/: Tap0r
+  maps/testmap/: volas
+
+  ## TGUI ##
+  # tgui/: вы
+
+  ## Общее ##
+  "*.py": volas
+  "*.sh": volas
+
+  .github/: TauCetiStation/maintainers
+
+ignored-authors:
+  - dependabot
+  - renovate-bot

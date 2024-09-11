@@ -48,7 +48,7 @@
 	vermin = rand(0,2)
 	switch(vermin)
 		if(VERM_MICE)
-			spawn_types = list(/mob/living/simple_animal/mouse/gray, /mob/living/simple_animal/mouse/brown, /mob/living/simple_animal/mouse/white)
+			spawn_types = list(/mob/living/simple_animal/mouse/gray, /mob/living/simple_animal/mouse/brown, /mob/living/simple_animal/mouse/white, /mob/living/simple_animal/mouse/rat)
 			max_number = 12
 			vermstring = "мышей"
 		if(VERM_LIZARDS)
@@ -56,7 +56,7 @@
 			max_number = 6
 			vermstring = "ящериц"
 		if(VERM_SPIDERS)
-			spawn_types = list(/obj/effect/spider/spiderling)
+			spawn_types = list(/obj/structure/spider/spiderling)
 			max_number = 3
 			vermstring = "пауков"
 
@@ -68,11 +68,14 @@
 			num--
 
 			if(vermin == VERM_SPIDERS)
-				var/obj/effect/spider/spiderling/S = new(T)
+				var/obj/structure/spider/spiderling/S = new(T)
 				S.amount_grown = -1
 			else
 				var/spawn_type = pick(spawn_types)
 				new spawn_type(T)
+				var/mob/living/simple_animal/SA = new spawn_type(T)
+				if(istype(SA, /mob/living/simple_animal/mouse/rat))
+					create_spawner(/datum/spawner/living/rat, SA)
 
 #undef INFESTATION_LOCATIONS
 

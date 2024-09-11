@@ -1,0 +1,14 @@
+{
+    "map_name": "Prometheus Station",
+    "map_path": "prometheus",
+    "map_file": "prometheus.dmm",
+    "station_name": "NSS Prometheus",
+    "station_name_ru": "КСН Прометей",
+    "system_name" : "Tau Ceti",
+    "station_image": "prometheus",
+    "traits": [],
+    "space_ruin_levels": 2,
+    "space_empty_levels": 1,
+    "load_junkyard": 1,
+    "minetype": "prometheus_asteroid"
+}

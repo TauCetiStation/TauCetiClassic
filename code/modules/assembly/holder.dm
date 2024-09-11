@@ -3,7 +3,7 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "holder"
 	item_state = "assembly"
-	flags = CONDUCT
+	flags = CONDUCT | HEAR_TALK
 	throwforce = 5
 	w_class = SIZE_TINY
 	throw_speed = 3
@@ -13,6 +13,11 @@
 	var/obj/item/device/assembly/a_left = null
 	var/obj/item/device/assembly/a_right = null
 	var/obj/special_assembly = null
+
+/obj/item/device/assembly_holder/Destroy()
+	QDEL_NULL(a_left)
+	QDEL_NULL(a_right)
+	return ..()
 
 /obj/item/device/assembly_holder/proc/attach(obj/item/device/D, obj/item/device/D2, mob/user)
 	return
@@ -79,16 +84,6 @@
 		else
 			to_chat(user, "\The [src] can be attached!")
 
-
-/obj/item/device/assembly_holder/HasProximity(atom/movable/AM)
-	if(a_left)
-		a_left.HasProximity(AM)
-	if(a_right)
-		a_right.HasProximity(AM)
-	if(special_assembly)
-		special_assembly.HasProximity(AM)
-
-
 /obj/item/device/assembly_holder/Crossed(atom/movable/AM)
 	. = ..()
 	if(a_left)
@@ -105,7 +100,7 @@
 	if(a_right)
 		a_right.on_found(finder)
 	if(special_assembly)
-		if(istype(special_assembly, /obj/item))
+		if(isitem(special_assembly))
 			var/obj/item/S = special_assembly
 			S.on_found(finder)
 
@@ -133,7 +128,7 @@
 	return
 
 /obj/item/device/assembly_holder/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(!a_left || !a_right)
 			to_chat(user, "<span class='warning'>BUG:Assembly part missing, please report this!</span>")
 			return
@@ -163,19 +158,21 @@
 				if("Right")	a_right.attack_self(user)
 			return
 		else
-			if(!istype(a_left,/obj/item/device/assembly/igniter))
+			if(!isigniter(a_left))
 				a_left.attack_self(user)
-			if(!istype(a_right,/obj/item/device/assembly/igniter))
+			if(!isigniter(a_right))
 				a_right.attack_self(user)
 	else
 		var/turf/T = get_turf(src)
 		if(!T)	return 0
 		if(a_left)
-			a_left:holder = null
 			a_left.loc = T
+			a_left.holder = null
+			a_left = null
 		if(a_right)
-			a_right:holder = null
 			a_right.loc = T
+			a_right.holder = null
+			a_right = null
 		qdel(src)
 	return
 
@@ -231,9 +228,9 @@
 			var/obj/item/weapon/grenade/chem_grenade/gren = src
 			holder=gren.detonator
 		var/obj/item/device/assembly/timer/tmr = holder.a_left
-		if(!istype(tmr,/obj/item/device/assembly/timer))
+		if(!istimer(tmr))
 			tmr = holder.a_right
-		if(!istype(tmr,/obj/item/device/assembly/timer))
+		if(!istimer(tmr))
 			to_chat(usr, "<span class='notice'>This detonator has no timer.</span>")
 			return
 

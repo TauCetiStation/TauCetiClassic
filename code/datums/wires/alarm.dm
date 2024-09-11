@@ -1,8 +1,8 @@
-var/const/AALARM_WIRE_IDSCAN     = 1
-var/const/AALARM_WIRE_POWER      = 2
-var/const/AALARM_WIRE_SYPHON     = 4
-var/const/AALARM_WIRE_AI_CONTROL = 8
-var/const/AALARM_WIRE_AALARM     = 16
+var/global/const/AALARM_WIRE_IDSCAN     = 1
+var/global/const/AALARM_WIRE_POWER      = 2
+var/global/const/AALARM_WIRE_SYPHON     = 4
+var/global/const/AALARM_WIRE_AI_CONTROL = 8
+var/global/const/AALARM_WIRE_AALARM     = 16
 
 /datum/wires/alarm
 	holder_type = /obj/machinery/alarm
@@ -19,7 +19,7 @@ var/const/AALARM_WIRE_AALARM     = 16
 	. += "[(A.shorted || (A.stat & (NOPOWER|BROKEN))) ? "The Air Alarm is offline." : "The Air Alarm is working properly!"]"
 	. += "[A.aidisabled ? "The 'AI control allowed' light is off." : "The 'AI control allowed' light is on."]"
 
-/datum/wires/alarm/update_cut(index, mended)
+/datum/wires/alarm/update_cut(index, mended, mob/user)
 	var/obj/machinery/alarm/A = holder
 
 	switch(index)
@@ -28,7 +28,8 @@ var/const/AALARM_WIRE_AALARM     = 16
 				A.locked = TRUE
 
 		if(AALARM_WIRE_POWER)
-			A.shock(usr, 50)
+			if(user)
+				A.shock(usr, 50)
 			A.shorted = !mended
 			A.update_icon()
 
@@ -57,12 +58,12 @@ var/const/AALARM_WIRE_AALARM     = 16
 			if(!A.shorted)
 				A.shorted = TRUE
 				A.update_icon()
-				addtimer(CALLBACK(src, .proc/pulse_reaction, index), 1200)
+				addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 1200)
 
 		if (AALARM_WIRE_AI_CONTROL)
 			if(!A.aidisabled)
 				A.aidisabled = TRUE
-				addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
+				addtimer(CALLBACK(src, PROC_REF(pulse_reaction), index), 100)
 
 		if(AALARM_WIRE_SYPHON)
 			A.mode = AALARM_MODE_REPLACEMENT

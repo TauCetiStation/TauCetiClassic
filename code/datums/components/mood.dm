@@ -14,13 +14,12 @@
 
 	START_PROCESSING(SSmood, src)
 
-	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
-	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
-	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
-	RegisterSignal(get_area(parent), COMSIG_AREA_UPDATE_BEAUTY, /datum/component/mood.proc/update_beauty)
-	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, .proc/on_revive)
-	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
-	RegisterSignal(parent, COMSIG_MOB_SLIP, .proc/on_slip)
+	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, PROC_REF(add_event))
+	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, PROC_REF(clear_event))
+	RegisterSignal(parent, COMSIG_ENTER_AREA, PROC_REF(check_area_mood))
+	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, PROC_REF(on_revive))
+	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, PROC_REF(modify_hud))
+	RegisterSignal(parent, COMSIG_MOB_SLIP, PROC_REF(on_slip))
 
 	var/mob/living/owner = parent
 	owner.become_area_sensitive(MOOD_COMPONENT_TRAIT)
@@ -32,10 +31,8 @@
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
 	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
-	var/area/A = get_area(parent)
-	if(A)
-		UnregisterSignal(A, list(COMSIG_AREA_UPDATE_BEAUTY))
 	unmodify_hud()
+	QDEL_LIST_ASSOC_VAL(mood_events)
 	return ..()
 
 /datum/component/mood/proc/print_mood(mob/user)
@@ -180,30 +177,30 @@
 			break
 
 ///Called on SSmood process
-/datum/component/mood/process(delta_time)
+/datum/component/mood/process(seconds_per_tick)
 	var/mob/living/moody_fellow = parent
 	if(moody_fellow.stat == DEAD)
 		return //updating spirit during death leads to people getting revived and being completely insane for simply being dead for a long time
 
 	switch(mood_level)
 		if(1)
-			setSpirit(spirit - 0.3 * delta_time, SPIRIT_BAD)
+			setSpirit(spirit - 0.3 * seconds_per_tick, SPIRIT_BAD)
 		if(2)
-			setSpirit(spirit - 0.15 * delta_time, SPIRIT_BAD)
+			setSpirit(spirit - 0.15 * seconds_per_tick, SPIRIT_BAD)
 		if(3)
-			setSpirit(spirit - 0.1 * delta_time, SPIRIT_LOW)
+			setSpirit(spirit - 0.1 * seconds_per_tick, SPIRIT_LOW)
 		if(4)
-			setSpirit(spirit - 0.05 * delta_time, SPIRIT_POOR)
+			setSpirit(spirit - 0.05 * seconds_per_tick, SPIRIT_POOR)
 		if(5)
 			setSpirit(spirit, SPIRIT_POOR) //This makes sure that mood gets increased should you be below the minimum.
 		if(6)
-			setSpirit(spirit + 0.2 * delta_time, SPIRIT_POOR)
+			setSpirit(spirit + 0.2 * seconds_per_tick, SPIRIT_POOR)
 		if(7)
-			setSpirit(spirit  +0.3 * delta_time, SPIRIT_POOR)
+			setSpirit(spirit  +0.3 * seconds_per_tick, SPIRIT_POOR)
 		if(8)
-			setSpirit(spirit + 0.4 * delta_time, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
+			setSpirit(spirit + 0.4 * seconds_per_tick, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
 		if(9)
-			setSpirit(spirit + 0.6*  delta_time, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
+			setSpirit(spirit + 0.6*  seconds_per_tick, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
 
 	HandleNutrition()
 	HandleShock()
@@ -221,33 +218,34 @@
 		return
 	spirit = amount
 
+	var/prev_spirit_level = spirit_level
+
 	var/mob/living/master = parent
 	switch(spirit)
 		if(SPIRIT_BAD to SPIRIT_LOW)
-			master.mood_additive_speed_modifier = 1.0
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 6
 		if(SPIRIT_LOW to SPIRIT_POOR)
-			master.mood_additive_speed_modifier = 0.5
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 5
 		if(SPIRIT_POOR to SPIRIT_DISTURBED)
-			master.mood_additive_speed_modifier = 0.25
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			spirit_level = 4
 		if(SPIRIT_DISTURBED to SPIRIT_NEUTRAL)
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = 0.0
 			spirit_level = 3
 		if(SPIRIT_NEUTRAL + 1 to SPIRIT_HIGH + 1) //shitty hack but +1 to prevent it from responding to super small differences
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 2
 		if(SPIRIT_HIGH + 1 to INFINITY)
-			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 1
 	update_mood_icon()
+
+	if(spirit_level > prev_spirit_level)
+		to_chat(parent, "<span class='warning'>Ваше настроение ухудшилось.</span>")
+	if(spirit_level < prev_spirit_level)
+		to_chat(parent, "<span class='notice'>Ваше настроение улучшилось.</span>")
 
 // Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 /datum/component/mood/proc/add_event(datum/source, category, type, ...)
@@ -260,7 +258,7 @@
 			clear_event(null, category)
 		else
 			if(the_event.timeout)
-				addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+				addtimer(CALLBACK(src, PROC_REF(clear_event), null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 			return //Don't have to update the event.
 
 	var/list/params = args.Copy(4)
@@ -272,9 +270,9 @@
 	update_mood()
 
 	if(the_event.timeout)
-		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(clear_event), null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-	mood_events = sortTim(mood_events, cmp=/proc/cmp_abs_mood_dsc, associative=TRUE)
+	mood_events = sortTim(mood_events, cmp=GLOBAL_PROC_REF(cmp_abs_mood_dsc), associative=TRUE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
 	SIGNAL_HANDLER
@@ -304,10 +302,10 @@
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
 	screen_obj.color = "#4b96c4"
-	hud.adding += screen_obj
+	screen_obj.add_to_hud(hud)
 
-	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
-	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
+	RegisterSignal(hud, COMSIG_PARENT_QDELETING, PROC_REF(unmodify_hud))
+	RegisterSignal(screen_obj, COMSIG_CLICK, PROC_REF(hud_click))
 
 	update_mood_icon()
 
@@ -318,8 +316,7 @@
 		return
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
-	if(hud?.adding)
-		hud.adding -= screen_obj
+	screen_obj.remove_from_hud(hud)
 	QDEL_NULL(screen_obj)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
@@ -332,11 +329,13 @@
 /datum/component/mood/proc/HandleNutrition()
 	var/mob/living/L = parent
 
-	switch(L.nutrition)
-		if(NUTRITION_LEVEL_FULL to INFINITY)
+	var/fullness = L.get_satiation()
+
+	switch(fullness)
+		if(NUTRITION_LEVEL_FAT to INFINITY)
 			add_event(null, "nutrition", /datum/mood_event/fat)
 
-		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FAT)
 			add_event(null, "nutrition", /datum/mood_event/wellfed)
 
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
@@ -356,31 +355,24 @@
 		return
 	var/mob/living/carbon/C = parent
 
-	if(C.shock_stage <= 0)
-		if(C.traumatic_shock < 10)
-			clear_event(null, "pain")
-		else
-			add_event(null, "pain", /datum/mood_event/mild_pain)
-
+	if(!C.traumatic_shock)
+		clear_event(null, "pain")
 		return
 
-	switch(C.shock_stage)
-		if(0 to 30)
+	switch(C.traumatic_shock)
+		if(0 to TRAUMATIC_SHOCK_MINOR)
+			add_event(null, "pain", /datum/mood_event/mild_pain)
+		if(TRAUMATIC_SHOCK_MINOR  to TRAUMATIC_SHOCK_SERIOUS)
 			add_event(null, "pain", /datum/mood_event/moderate_pain)
-		if(30 to 60)
+		if(TRAUMATIC_SHOCK_SERIOUS to TRAUMATIC_SHOCK_INTENSE)
 			add_event(null, "pain", /datum/mood_event/intense_pain)
-		if(60 to 120)
+		if(TRAUMATIC_SHOCK_INTENSE to TRAUMATIC_SHOCK_MIND_SHATTERING)
 			add_event(null, "pain", /datum/mood_event/unspeakable_pain)
-		if(120 to INFINITY)
+		if(TRAUMATIC_SHOCK_MIND_SHATTERING to INFINITY)
 			add_event(null, "pain", /datum/mood_event/agony)
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A, atom/OldLoc)
 	SIGNAL_HANDLER
-
-	var/area/OA = get_area(OldLoc)
-	if(OA)
-		UnregisterSignal(OA, list(COMSIG_AREA_UPDATE_BEAUTY))
-	RegisterSignal(A, list(COMSIG_AREA_UPDATE_BEAUTY), /datum/component/mood.proc/update_beauty)
 
 	update_beauty(A)
 	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))

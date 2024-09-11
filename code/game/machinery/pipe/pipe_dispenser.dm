@@ -8,6 +8,7 @@
 	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/unwrenched = 0
 	var/wait = 0
+	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/pipedispenser/ui_interact(user)
 	var/dat = {"
@@ -82,7 +83,6 @@
 	if(unwrenched)
 		usr << browse(null, "window=pipedispenser")
 		return FALSE
-
 	if(href_list["make"])
 		if(!wait)
 			var/p_type = text2num(href_list["make"])
@@ -106,7 +106,7 @@
 		to_chat(usr, "<span class='notice'>You put \the [W] back into \the [src].</span>")
 		qdel(W)
 		return
-	else if (iswrench(W) && !user.is_busy(src))
+	else if (iswrenching(W) && !user.is_busy(src))
 		if (unwrenched == 0)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
 			if(W.use_tool(src, user, 40, volume = 50))
@@ -133,6 +133,23 @@
 	else
 		return ..()
 
+//Allow you to drag-drop disposal pipes into it
+/obj/machinery/pipedispenser/MouseDrop_T(atom/movable/target, mob/user)
+	if(user.incapacitated())
+		return
+
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+
+	if(!checkPipeType(target))
+		return
+
+	qdel(target)
+
+/obj/machinery/pipedispenser/proc/checkPipeType(atom/movable/target)
+	return istype(target, /obj/item/pipe) || istype(target, /obj/item/pipe_meter)
+
 /obj/machinery/pipedispenser/disposal
 	name = "Disposal Pipe Dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -150,22 +167,8 @@
 Nah
 */
 
-//Allow you to drag-drop disposal pipes into it
-/obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
-	if(usr.incapacitated())
-		return
-
-	if(!usr.IsAdvancedToolUser())
-		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-
-	if (!istype(pipe))
-		return
-
-	if (pipe.anchored)
-		return
-
-	qdel(pipe)
+/obj/machinery/pipedispenser/disposal/checkPipeType(atom/movable/target)
+	return istype(target, /obj/structure/disposalconstruct) && !target.anchored
 
 /obj/machinery/pipedispenser/disposal/ui_interact(user)
 	var/dat = {"<b>Disposal Pipes</b><br><br>
@@ -191,7 +194,6 @@ Nah
 	. = ..()
 	if(!.)
 		return
-
 	if(href_list["dmake"])
 		if(unwrenched)
 			usr << browse(null, "window=pipedispenser")

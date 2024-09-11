@@ -3,16 +3,13 @@ var/global/list/possible_items_for_steal = list()
 #define ADD_TO_POIFS_LIST(type) ADD_TO_GLOBAL_LIST(type, possible_items_for_steal)
 ADD_TO_POIFS_LIST(/obj/item/weapon/gun/energy/laser/selfcharging/captain)
 ADD_TO_POIFS_LIST(/obj/item/weapon/hand_tele)
-ADD_TO_POIFS_LIST(/obj/item/weapon/rcd)
-ADD_TO_POIFS_LIST(/obj/item/weapon/tank/jetpack)
+ADD_TO_POIFS_LIST(/obj/item/weapon/tank/jetpack/oxygen)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/captain)
 ADD_TO_POIFS_LIST(/obj/item/device/aicard)
-ADD_TO_POIFS_LIST(/obj/item/clothing/shoes/magboots)
 ADD_TO_POIFS_LIST(/obj/item/blueprints)
-ADD_TO_POIFS_LIST(/obj/item/clothing/suit/space/nasavoid)
 ADD_TO_POIFS_LIST(/obj/item/weapon/tank)
 ADD_TO_POIFS_LIST(/obj/item/slime_extract)
-ADD_TO_POIFS_LIST(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi)
+ADD_TO_POIFS_LIST(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/research_director)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/chief_engineer)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/chief_medical_officer)
@@ -20,7 +17,6 @@ ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/head_of_security)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/head_of_personnel)
 ADD_TO_POIFS_LIST(/obj/item/weapon/reagent_containers/hypospray/cmo)
 ADD_TO_POIFS_LIST(/obj/item/weapon/pinpointer)
-ADD_TO_POIFS_LIST(/obj/item/clothing/suit/armor/laserproof)
 ADD_TO_POIFS_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher/golden)
 ADD_TO_POIFS_LIST(/obj/item/weapon/gun/energy/gun/nuclear)
 ADD_TO_POIFS_LIST(/obj/item/weapon/pickaxe/drill/diamond_drill)
@@ -34,28 +30,18 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 /datum/objective/steal
 	var/obj/item/steal_target
 	var/target_name
-
+	var/list/items_to_steal = list()
 	var/static/possible_items[] = list(
 		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
-		"an RCD" = /obj/item/weapon/rcd,
-		"a jetpack" = /obj/item/weapon/tank/jetpack,
-		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
+		"a captain's jetpack" = /obj/item/weapon/tank/jetpack/oxygen,
 		"a functional AI" = /obj/item/device/aicard,
-		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 		"the station blueprints" = /obj/item/blueprints,
-		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
-		"28 moles of phoron (full tank)" = /obj/item/weapon/tank,
-		"a sample of slime extract" = /obj/item/slime_extract,
-		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-		"a research director's jumpsuit" = /obj/item/clothing/under/rank/research_director,
-		"a chief engineer's jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
-		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
-		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
-		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
+		"a head of security's augmented shades" = /obj/item/clothing/glasses/hud/hos_aug,
+		"a piece of Ian's meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
 		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray/cmo,
+		"a Research Director's teleport armor" = /obj/item/clothing/suit/armor/vest/reactive,
 		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
-		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 		"the golden fire extinguisher" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
 	)
 
@@ -70,9 +56,16 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
 	)
 
+/datum/objective/steal/proc/get_possible_items()
+	return possible_items
+
+/datum/objective/steal/New()
+	. = ..()
+	items_to_steal = get_possible_items()
+
 /datum/objective/steal/proc/set_target(item_name)
 	target_name = item_name
-	steal_target = possible_items[target_name]
+	steal_target = items_to_steal[target_name]
 	if (!steal_target )
 		steal_target = possible_items_special[target_name]
 	explanation_text = "Steal [target_name]."
@@ -80,9 +73,8 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 
 
 /datum/objective/steal/find_target()
-	set_target(pick(possible_items))
+	set_target(pick(items_to_steal))
 	return TRUE
-
 
 /datum/objective/steal/select_target()
 	var/list/possible_items_all = possible_items+possible_items_special+"custom"
@@ -134,13 +126,13 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		if("a functional AI")
 			for(var/obj/item/device/aicard/C in all_items) //Check for ai card
 				for(var/mob/living/silicon/ai/M in C)
-					if(istype(M, /mob/living/silicon/ai) && M.stat != DEAD) //See if any AI's are alive inside that card.
+					if(isAI(M) && M.stat != DEAD) //See if any AI's are alive inside that card.
 						return OBJECTIVE_WIN
 
 			for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
 				if(S.AI && S.AI.stat != DEAD)
 					return OBJECTIVE_WIN
-			for(var/mob/living/silicon/ai/ai in ai_list)
+			for(var/mob/living/silicon/ai/ai as anything in ai_list)
 				if(ai.stat == DEAD)
 					continue
 				if(istype(ai.loc, /turf))
@@ -161,3 +153,11 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 				if(istype(I, steal_target))
 					return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
+
+/datum/objective/steal/non_heads_items/get_possible_items()
+	return list("a functional AI" = /obj/item/device/aicard,
+                "a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
+                "a piece of Ian's meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
+                "an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
+                "the golden fire extinguisher" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
+	)

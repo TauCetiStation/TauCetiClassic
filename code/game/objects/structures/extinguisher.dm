@@ -9,6 +9,10 @@
 	var/obj/item/weapon/reagent_containers/spray/extinguisher/has_extinguisher = null
 	var/opened = FALSE
 
+	max_integrity = 200
+	integrity_failure = 0.25
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/extinguisher_cabinet/atom_init()
 	. = ..()
 	if(!has_extinguisher)
@@ -29,6 +33,10 @@
 		user.visible_message("<span class='notice'>[user] places \the [O] in \the [src].</span>", "<span class='notice'>You place \the [O] in \the [src].</span>")
 	else
 		opened = !opened
+		if(opened)
+			playsound(src, 'sound/items/extinguisher_cabinet_open.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(src, 'sound/items/extinguisher_cabinet_close.ogg', VOL_EFFECTS_MASTER)
 
 	update_icon()
 
@@ -37,23 +45,22 @@
 		return
 
 	if(has_extinguisher)
-		user.put_in_hands(has_extinguisher)
-		user.visible_message("<span class='notice'>[user] takes \the [has_extinguisher] from \the [src].</span>", "<span class='notice'>You take \the [has_extinguisher] from \the [src].</span>")
-		has_extinguisher = null
+		if(usr.Adjacent(loc))
+			user.put_in_hands(has_extinguisher)
+			user.visible_message("<span class='notice'>[user] takes \the [has_extinguisher] from \the [src].</span>", "<span class='notice'>You take \the [has_extinguisher] from \the [src].</span>")
+			has_extinguisher = null
+		else
+			has_extinguisher.forceMove(loc)
+			visible_message("<span class='notice'>[src] opens and \the [has_extinguisher] falls out!</span>")
+			has_extinguisher = null
 		opened = TRUE
 	else
 		opened = !opened
+		if(opened)
+			playsound(src, 'sound/items/extinguisher_cabinet_open.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(src, 'sound/items/extinguisher_cabinet_close.ogg', VOL_EFFECTS_MASTER)
 
-	update_icon()
-
-/obj/structure/extinguisher_cabinet/attack_tk(mob/user)
-	if(has_extinguisher)
-		has_extinguisher.forceMove(loc)
-		to_chat(user, "<span class='notice'>You telekinetically remove \the [has_extinguisher] from \the [src].</span>")
-		has_extinguisher = null
-		opened = TRUE
-	else
-		opened = !opened
 	update_icon()
 
 /obj/structure/extinguisher_cabinet/attack_paw(mob/user)
@@ -68,6 +75,27 @@
 		icon_state = "extinguisher_[FE]"
 	else
 		icon_state = "extinguisher_[FE]_closed"
+
+/obj/structure/extinguisher_cabinet/atom_break(damage_flag)
+	. = ..()
+	opened = TRUE
+	if(has_extinguisher)
+		has_extinguisher.forceMove(loc)
+		has_extinguisher = null
+	update_icon()
+
+
+/obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	//if(disassembled) TODO /obj/item/wallframe
+	//	new /obj/item/wallframe/extinguisher_cabinet(loc)
+	//else
+	new /obj/item/stack/sheet/metal(loc, 2)
+	if(has_extinguisher)
+		has_extinguisher.forceMove(loc)
+		has_extinguisher = null
+	..()
 
 /obj/structure/extinguisher_cabinet/highrisk
 	name = "expensive extinguisher cabinet"

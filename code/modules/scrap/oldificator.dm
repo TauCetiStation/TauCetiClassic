@@ -1,3 +1,6 @@
+/obj
+	var/oldificated = FALSE
+
 /obj/proc/make_old(change_looks = TRUE)
 	color = pick("#996633", "#663300", "#666666")
 	light_color = color
@@ -21,10 +24,12 @@
 	if(prob(50))
 		crit_fail = 1
 	update_icon()
+	oldificated = TRUE
 
 /obj/item/make_old()
 	..()
 	siemens_coefficient += 0.3
+	update_inv_mob()
 
 
 /obj/item/weapon/storage/make_old()
@@ -115,12 +120,12 @@
 	if(prob(50))
 		slowdown += pick(0.5, 0.5, 1, 1.5)
 	if(prob(75))
-		armor["melee"] = armor["melee"] / 2
-		armor["bullet"] = armor["bullet"] / 2
-		armor["laser"] = armor["laser"] / 2
-		armor["energy"] = armor["energy"] / 2
-		armor["bomb"] = armor["bomb"] / 2
-		armor["bio"] = armor["bio"] / 2
+		armor[MELEE] = armor[MELEE] / 2
+		armor[BULLET] = armor[BULLET] / 2
+		armor[LASER] = armor[LASER] / 2
+		armor[ENERGY] = armor[ENERGY] / 2
+		armor[BOMB] = armor[BOMB] / 2
+		armor[BIO] = armor[BIO] / 2
 		armor["rad"] = armor["rad"] / 2
 	if(prob(50))
 		uncleanable = 1
@@ -236,3 +241,4 @@
 
 /obj/effect/decal/mecha_wreckage/make_old()
 	salvage_num = 8
+	oldificated = TRUE

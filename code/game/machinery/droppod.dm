@@ -1,3 +1,5 @@
+// warning! bad code below
+
 #define ADVANCED_AIMING_INSTALLED 1
 #define STATE_AIMING 2
 #define STATE_DROPING 4
@@ -8,8 +10,6 @@
 /obj/structure/droppod
 	name = "Drop Pod"
 	desc = "We are coming. Look to the skies for your salvation."
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "pod_0"
 	anchored = TRUE
 	density = TRUE
 	opacity = 1
@@ -18,8 +18,9 @@
 	icon_state = "dropod_opened"
 	var/item_state = null
 
-	var/max_integrity = 100
-	var/obj_integrity = 100
+	var/stat_flags = 0
+
+	max_integrity = 100
 
 	var/mob/living/carbon/intruder
 	var/mob/living/second_intruder
@@ -31,7 +32,7 @@
 	var/obj/machinery/nuclearbomb/Stored_Nuclear
 	var/list/stored_items = list()
 
-	var/static/datum/droppod_allowed/allowed_areas
+	var/static/datum/droppod_vision/allowed_areas
 
 	var/static/initial_eyeobj_location = null
 	var/image/mob_overlay
@@ -39,13 +40,13 @@
 /obj/structure/droppod/atom_init()
 	. = ..()
 	if(!initial_eyeobj_location)
-		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmarks_list
+		initial_eyeobj_location = locate("landmark*Droppod")
 	if(!allowed_areas)
 		allowed_areas = new
 
 /obj/structure/droppod/Destroy()
 	var/turf/turf = get_turf(loc)
-	if(flags & ADVANCED_AIMING_INSTALLED && prob(50))
+	if(stat_flags & ADVANCED_AIMING_INSTALLED && prob(50))
 		new /obj/item/device/camera_bug(loc)
 	CancelAdvancedAiming(1) // just to be sure
 	if(intruder)
@@ -68,12 +69,12 @@
 	return ..()
 
 /obj/structure/droppod/ex_act()
-	if(flags & STATE_DROPING)
+	if(stat_flags & STATE_DROPING)
 		return
 	return ..()
 
 /obj/structure/droppod/blob_act()
-	if(flags & STATE_DROPING)
+	if(stat_flags & STATE_DROPING)
 		return
 	return ..()
 
@@ -92,11 +93,12 @@
 
 /********Datum helper with restricted and allowed areas for droping********/
 
-/datum/droppod_allowed
+/datum/droppod_vision
 	var/static/list/areas
 	var/static/list/black_list_areas
+	var/static/list/image/obscured_turfs
 
-/datum/droppod_allowed/New()
+/datum/droppod_vision/New()
 	..()
 	if(!black_list_areas)
 		black_list_areas = list(
@@ -134,7 +136,17 @@
 			if(is_type_in_list(areas[i], black_list_areas))
 				areas -= i
 
+	if(obscured_turfs)
+		return
+	obscured_turfs = list()
+	for(var/A in black_list_areas)
+		for(var/turf/simulated/turf in get_area_turfs(A))
+			var/image/i = image('icons/effects/cameravis.dmi', turf, "black", ABOVE_LIGHTING_LAYER)
+			i.plane = ABOVE_LIGHTING_PLANE
+			obscured_turfs += i
+
 /obj/effect/landmark/droppod
+	name = "Droppod"
 
 /********Move in and out********/
 
@@ -173,10 +185,10 @@
 	return
 
 /obj/structure/droppod/proc/Eject()
-	if(flags & STATE_DROPING)
+	if(stat_flags & STATE_DROPING)
 		to_chat(intruder, "<span class='danger'>You cannot leave the pod while Droping!</span>")
 		return
-	if(flags & IS_LOCKED)
+	if(stat_flags & IS_LOCKED)
 		to_chat(intruder, "<span class='danger'>Unlock Pod first!</span>")
 		return
 	intruder << browse(null, "window=droppod")
@@ -199,20 +211,20 @@
 	if (usr.buckled)
 		to_chat(usr, "<span class='warning'>You can't climb into the [src] while buckled!</span>")
 		return
-	if(flags & IS_LOCKED)
+	if(stat_flags & IS_LOCKED)
 		to_chat(usr, "<span class='userdanger'>[src] is lock down!</span>")
 		return
 	if(usr.is_busy()) return
-	if(do_after(usr, 10, 1, src) && !second_intruder && !usr.buckled && !(flags & IS_LOCKED) && !(flags & STATE_DROPING) && usr != intruder)
+	if(do_after(usr, 10, 1, src) && !second_intruder && !usr.buckled && !(stat_flags & IS_LOCKED) && !(stat_flags & STATE_DROPING) && usr != intruder)
 		usr.forceMove(src)
 		second_intruder = usr
 		verbs -= /obj/structure/droppod/verb/move_inside_second
 
 /obj/structure/droppod/proc/Eject_second()
-	if(flags & STATE_DROPING)
+	if(stat_flags & STATE_DROPING)
 		to_chat(usr, "<span class='danger'>You cannot leave the pod while Droping!</span>")
 		return
-	if(flags & IS_LOCKED)
+	if(stat_flags & IS_LOCKED)
 		to_chat(usr, "<span class='danger'>Unlock Pod first!</span>")
 		return
 	second_intruder.forceMove(get_turf(src))
@@ -224,20 +236,20 @@
 /********Aiming********/
 
 /obj/structure/droppod/proc/Aiming()
-	if(flags & STATE_DROPING || !isturf(loc))
+	if(stat_flags & STATE_DROPING || !isturf(loc))
 		return
-	if(flags & POOR_AIMING)
+	if(stat_flags & POOR_AIMING)
 		poor_aiming_n_drop()
-	else if(flags & ADVANCED_AIMING_INSTALLED)
-		if(flags & STATE_AIMING)
+	else if(stat_flags & ADVANCED_AIMING_INSTALLED)
+		if(stat_flags & STATE_AIMING)
 			CancelAdvancedAiming()
 		else
 			StartAdvancedAiming()
-	else if(!(flags & STATE_AIMING))
+	else if(!(stat_flags & STATE_AIMING))
 		SimpleAiming()
 
 /obj/structure/droppod/proc/poor_aiming_n_drop() // used in Syndi Pod
-	if(!(flags & IS_LOCKED))
+	if(!(stat_flags & IS_LOCKED))
 		to_chat(intruder, "<span class='userdanger'>Close [src] First!</span>")
 		return
 	if(!isturf(loc))
@@ -254,8 +266,14 @@
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
-		if(!T.density && !istype(T, /turf/space) && !T.obscured)
-			L+=T
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
+			var/clear = TRUE
+			for(var/obj/O in T)
+				if(O.density)
+					clear = FALSE
+					break
+			if(clear)
+				L+=T
 	if(isemptylist(L))
 		to_chat(intruder, "<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
 		return
@@ -263,15 +281,16 @@
 	StartDrop()
 
 /obj/structure/droppod/proc/SimpleAiming()
-	flags |= STATE_AIMING
-	var/A
-	A = input("Select Area for Droping Pod", "Select", A) in allowed_areas.areas
+	stat_flags |= STATE_AIMING
+	var/A = input("Select Area for Droping Pod", "Select") in allowed_areas.areas
+	if(intruder != usr)
+		return
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density && !istype(T, /turf/space) && !T.obscured)
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			L+=T
-	flags &= ~STATE_AIMING
+	stat_flags &= ~STATE_AIMING
 	if(isemptylist(L))
 		to_chat(intruder, "<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
 		return
@@ -279,7 +298,7 @@
 	AimTarget = pick(L)
 
 /obj/structure/droppod/proc/StartAdvancedAiming()
-	flags |= STATE_AIMING
+	stat_flags |= STATE_AIMING
 	eyeobj = new((initial_eyeobj_location ? initial_eyeobj_location : loc))
 
 	intruder.client.adminobs = TRUE
@@ -287,15 +306,18 @@
 	eyeobj.name = "[intruder.name] (Eye)"
 	intruder.client.images += eyeobj.ghostimage
 	intruder.client.eye = eyeobj
+	if (!(stat_flags & IS_LEGITIMATE))
+		intruder.client.images += allowed_areas.obscured_turfs
+	intruder.client.show_popup_menus = FALSE
 
 /obj/structure/droppod/proc/ChooseTarget()
 	if(!eyeobj || is_centcom_level(eyeobj.z))
 		return
 	var/turf/teleport_turf = get_turf(eyeobj.loc)
-	if(teleport_turf.obscured)
+	if(teleport_turf.obscured || isenvironmentturf(teleport_turf))
 		to_chat(intruder, "<span class='userdanger'>No signal here! It might be unsafe to deploy here!</span>")
 		return
-	if(!(flags & IS_LEGITIMATE) && is_type_in_list(teleport_turf.loc, allowed_areas.black_list_areas))
+	if(!(stat_flags & IS_LEGITIMATE) && is_type_in_list(teleport_turf.loc, allowed_areas.black_list_areas))
 		to_chat(intruder, "<span class='userdanger'>This location has got a Muffler!</span>")
 		return
 	to_chat(intruder, "<span class='notice'>You succesfully [AimTarget ? "re" : ""]selected target!</span>")
@@ -309,22 +331,23 @@
 			if(I.icon_state == "black") // deleting interferences
 				intruder.client.images -= I
 		intruder.client.adminobs = FALSE
+		intruder.client.show_popup_menus = TRUE
 		intruder.reset_view(deleting ? loc : src)
-	flags &= ~STATE_AIMING
+	stat_flags &= ~STATE_AIMING
 
 /********Droping********/
 
 /obj/structure/droppod/verb/Start_Verb()
 	set category = "Drop Pod"
 	set name = "Start Drop"
-	set src = orange(1)
+	set src = usr.loc
 	if(!(ishuman(usr) || isrobot(usr)) || usr.incapacitated() || !isturf(loc))
 		return FALSE
 	if(intruder)
 		if(intruder != usr)
 			to_chat(usr, "<span class ='notice'>Someone in [src]</span>")
 			return FALSE
-		if(!(flags & IS_LOCKED))
+		if(!(stat_flags & IS_LOCKED))
 			to_chat(usr, "<span class='userdanger'>Close [src] First!</span>")
 			return FALSE
 	else if(stored_dna)
@@ -340,7 +363,7 @@
 	if(!AimTarget)
 		to_chat(usr, "<span class='userdanger'>No target selected!</span>")
 		return FALSE
-	if(flags & STATE_AIMING)
+	if(stat_flags & STATE_AIMING)
 		to_chat(usr, "<span class='userdanger'>You cannot drop while aim system in progress!</span>")
 		return FALSE
 	if(!isturf(loc))
@@ -351,7 +374,7 @@
 /obj/structure/droppod/proc/StartDrop()
 	verbs -= /obj/structure/droppod/verb/Start_Verb
 	playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
-	flags |= STATE_DROPING
+	stat_flags |= STATE_DROPING
 	density = FALSE
 	opacity = FALSE
 	icon_state = "dropod_flying[item_state]"
@@ -359,15 +382,15 @@
 	var/initial_y = pixel_y
 	animate(src, pixel_y = 500, pixel_x = rand(-150, 150), time = 20, easing = SINE_EASING)
 	sleep(25)
-	loc = AimTarget
+	loc = AimTarget // and who should check if we still can land?
 	sleep(10)
 	animate(src, pixel_y = initial_y, pixel_x = initial_x, time = 20, easing = CUBIC_EASING)
-	addtimer(CALLBACK(src, .proc/perform_drop), 20)
+	addtimer(CALLBACK(src, PROC_REF(perform_drop)), 20)
 
 /obj/structure/droppod/proc/perform_drop()
 	for(var/atom/movable/T in loc)
 		if(T != src && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
-			T.ex_act(1)
+			T.ex_act(EXPLODE_DEVASTATE)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, src))
@@ -386,54 +409,50 @@
 	if(uses <= 0)
 		qdel(src)
 	else
-		flags &= ~(STATE_DROPING | IS_LOCKED)
+		stat_flags &= ~(STATE_DROPING | IS_LOCKED)
 		verbs += /obj/structure/droppod/verb/Start_Verb
 
 /********Actions with objects********/
 
 /obj/structure/droppod/attackby(obj/item/O, mob/living/carbon/user)
-	if(flags & IS_LOCKED)
+	if(stat_flags & IS_LOCKED)
 		to_chat(user, "<span class ='userdanger'>[src] is lock down!</span>")
 		return
 
-	if(isscrewdriver(O))
-		if(flags & ADVANCED_AIMING_INSTALLED)
-			if(flags & STATE_AIMING)
+	if(isscrewing(O))
+		if(stat_flags & ADVANCED_AIMING_INSTALLED)
+			if(stat_flags & STATE_AIMING)
 				CancelAdvancedAiming()
 			to_chat(user, "<span class ='notice'>You yank out advanced aim system from [src]!</span>")
 			new /obj/item/device/camera_bug(user.loc)
-			flags &= ~ADVANCED_AIMING_INSTALLED
+			stat_flags &= ~ADVANCED_AIMING_INSTALLED
 			AimTarget = null
 		else
 			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
-	else if(iswelder(O))
+	else if(iswelding(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(obj_integrity < max_integrity && WT.use(0, user))
+		if(get_integrity() < max_integrity && WT.use(0, user))
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-			obj_integrity = min(obj_integrity + 10, max_integrity)
+			repair_damage(10)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
-		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
-		user.SetNextMove(CLICK_CD_MELEE)
-		take_damage(O.force)
+	else if(O.flags & ABSTRACT)
 		return ..()
-
 	else
 		if(istype(O, /obj/item/weapon/simple_drop_system))
-			if(!(flags & POOR_AIMING))
+			if(!(stat_flags & POOR_AIMING))
 				to_chat(user, "<span class ='notice'>The [src] already has simple aiming system installed!</span>")
 				return
-			flags &= ~POOR_AIMING
+			stat_flags &= ~POOR_AIMING
 			to_chat(user, "<span class ='notice'>You upgrade [src]'s Guidance system with [O]!</span>")
 			qdel(O)
 		else if(istype(O, /obj/item/device/camera_bug))
-			if(flags & ADVANCED_AIMING_INSTALLED)
+			if(stat_flags & ADVANCED_AIMING_INSTALLED)
 				to_chat(user, "<span class ='notice'>The [src] already has advanced aiming system installed!</span>")
 				return
-			flags |= ADVANCED_AIMING_INSTALLED
+			stat_flags |= ADVANCED_AIMING_INSTALLED
 			to_chat(user, "<span class ='notice'>You upgrade [src]'s Guidance system with [O], Now it has astonishing accuracy!</span>")
 			qdel(O)
 		else if(length(stored_items) < 7)
@@ -452,9 +471,9 @@
 	set category = "Drop Pod"
 	set name = "Eject Items"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || flags & STATE_DROPING || !isturf(loc))
+	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || stat_flags & STATE_DROPING || !isturf(loc))
 		return
-	if(flags & IS_LOCKED)
+	if(stat_flags & IS_LOCKED)
 		to_chat(usr, "<span class='danger'>Interface is block down!</span>")
 		return
 	Eject_items()
@@ -471,7 +490,7 @@
 	set category = "Drop Pod"
 	set name = "Nuclear Bomb"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || flags & STATE_DROPING || !Stored_Nuclear)
+	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || stat_flags & STATE_DROPING || !Stored_Nuclear)
 		return
 	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
@@ -487,27 +506,25 @@
 
 /********Damage system********/
 
-/obj/structure/droppod/bullet_act(obj/item/projectile/Proj)
-	if((Proj.damage && Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
-		take_damage(Proj.damage)
-		if(!(flags & IS_LOCKED))
-			if(intruder && prob(60))
-				intruder.bullet_act(Proj)
-			if(second_intruder && prob(40))
-				second_intruder.bullet_act(Proj)
+/obj/structure/droppod/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	if(stat_flags & IS_LOCKED)
+		return
+	if(intruder && prob(60))
+		intruder.bullet_act(Proj)
+	if(second_intruder && prob(40))
+		second_intruder.bullet_act(Proj)
 
-/obj/structure/droppod/proc/take_damage(amount)
-	obj_integrity -= amount / 2
-	if(obj_integrity <= 0)
-		visible_message("<span class='warning'>The [src] has been destroyed!</span>")
-		qdel(src)
+/obj/structure/droppod/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(damage_amount)
+		playsound(loc, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 
-/obj/structure/droppod/attack_animal(mob/living/simple_animal/attacker)
-	..()
-	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-	take_damage(attacker.melee_damage)
+/obj/structure/droppod/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
+	..(damage_amount * 0.5, damage_type, damage_flag, sound_effect, attack_dir)
+
+/obj/structure/droppod/deconstruct()
+	visible_message("<span class='warning'>The [src] has been destroyed!</span>")
+	. = ..()
 
 /********Stats********/
 
@@ -578,14 +595,14 @@
 
 /obj/structure/droppod/proc/get_commands()
 	var/select_target = FALSE
-	if(flags & STATE_AIMING && flags & ADVANCED_AIMING_INSTALLED)
+	if(stat_flags & STATE_AIMING && stat_flags & ADVANCED_AIMING_INSTALLED)
 		select_target = TRUE
 	var/output = {"<div class='wr'>
 				<div class='header'>Commands</div>
 				<div class='links'>
 				<a href='?src=\ref[src];start_aiming=1'>Aim</a><br>
 				[select_target ? "<a href='?src=\ref[src];select_target=1'>Select Target</a><br>" : null]</a><br>
-				<a href='?src=\ref[src];locked=1'>Pod is [(flags & IS_LOCKED) ? "lock down" : "open"]</a><br>
+				<a href='?src=\ref[src];locked=1'>Pod is [(stat_flags & IS_LOCKED) ? "lock down" : "open"]</a><br>
 				[ishuman(intruder) ? "<a href='?src=\ref[src];set_dna=1'>[stored_dna ? "un" : ""]set Dna</a><br>" : null]</a><br>
 				</div>
 				</div>
@@ -604,12 +621,12 @@
 
 /obj/structure/droppod/proc/get_stat()
 	var/state = "Waiting"
-	if(flags & STATE_AIMING)
+	if(stat_flags & STATE_AIMING)
 		state = "Aiming"
-	if(flags & STATE_DROPING)
+	if(stat_flags & STATE_DROPING)
 		state = "Droping"
-	var/output = {"<b>Integrity: </b> [obj_integrity/max_integrity * 100]%<br>
-					<b>Advanced Aiming System: </b> [(flags & ADVANCED_AIMING_INSTALLED) ? "" : "Un"]installed<br>
+	var/output = {"<b>Integrity: </b> [get_integrity()/max_integrity * 100]%<br>
+					<b>Advanced Aiming System: </b> [(stat_flags & ADVANCED_AIMING_INSTALLED) ? "" : "Un"]installed<br>
 					<b>Second Passenger: </b>[second_intruder ? "[second_intruder.name]" : "None"]<br>
 					<b>Nuclear bomb: </b> [Stored_Nuclear ? "" : "Un"]installed<br>
 					<b>Selected area:</b> [AimTarget ? "[AimTarget.loc]" : "None"]<br>
@@ -640,6 +657,9 @@
 	if(href_list["set_dna"])
 		var/mob/living/carbon/human/H = intruder // players can choose this option only if they are playing for a human
 		if(!stored_dna)
+			if(!H.dna.unique_enzymes)
+				to_chat(intruder, "<span class='warning'>No DNA was found.</span>")
+				return
 			stored_dna = H.dna.unique_enzymes
 			to_chat(intruder, "<span class='notice'>Dna key stored.</span>")
 		else
@@ -651,12 +671,12 @@
 		ChooseTarget()
 		return
 	if(href_list["locked"])
-		if(flags & IS_LOCKED)
-			flags &= ~IS_LOCKED
+		if(stat_flags & IS_LOCKED)
+			stat_flags &= ~IS_LOCKED
 			to_chat(intruder, "<span class='notice'>You unblocked [src].</span>")
 			cut_overlay(image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3))
 		else
-			flags |= IS_LOCKED
+			stat_flags |= IS_LOCKED
 			add_overlay(image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3))
 			to_chat(intruder, "<span class='notice'>You blocked [src].</span>")
 		send_byjax(intruder, "droppod.browser", "commands", get_commands())
@@ -681,11 +701,11 @@
 /obj/structure/droppod/Legitimate
 	icon_state = "dropod_opened_nt"
 	item_state = "_nt"
-	flags = (ADVANCED_AIMING_INSTALLED | IS_LEGITIMATE)
+	stat_flags = (ADVANCED_AIMING_INSTALLED | IS_LEGITIMATE)
 
 /obj/structure/droppod/Syndi
 	var/droped = FALSE // if TRUE. The POD can only return to the Syndi Base
-	flags = POOR_AIMING
+	stat_flags = POOR_AIMING
 
 /obj/structure/droppod/Syndi/Aiming()
 	if(war_device_activated)
@@ -698,7 +718,7 @@
 		war_device_activation_forbidden = TRUE
 
 	if(droped)
-		if(!(flags & IS_LOCKED))
+		if(!(stat_flags & IS_LOCKED))
 			to_chat(intruder, "<span class='userdanger'>Close [src] First!</span>")
 			return
 		if(!isturf(loc))
@@ -713,13 +733,20 @@
 		return
 	..()
 
+/obj/structure/droppod/Syndi/StartDrop()
+	//mix stuff
+	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
+	if(N)
+		N.landing_nuke()
+	return ..()
+
 /obj/structure/droppod/Syndi/perform_drop()
 	..()
 	droped = TRUE
 
 /obj/structure/droppod/Syndi/attackby(obj/item/O, mob/living/carbon/user)
 	. = ..()
-	if(flags & ADVANCED_AIMING_INSTALLED)
+	if(stat_flags & ADVANCED_AIMING_INSTALLED)
 		if(uses == 1 && !droped)
 			uses++ // this allow only to return to the base.
 	else if(uses == 2)
@@ -754,7 +781,7 @@
 	spawn_drop.pixel_x = rand(-150, 150)
 	spawn_drop.pixel_y = 500
 	animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 	qdel(src)
 
 /obj/item/device/drop_caller/Legitimate
@@ -781,7 +808,7 @@
 		spawn_drop.pixel_x = rand(-150, 150)
 		spawn_drop.pixel_y = 500
 		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 		qdel(src)
 
 /obj/effect/landmark/droppod_spawn
@@ -793,3 +820,31 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "aim_system"
 	w_class = SIZE_TINY
+
+// forts event
+/obj/structure/droppod/fort/Aiming()
+	// my dream is aiming with holomap
+	var/x_coord = clamp(input("X coordinate, 1-[world.maxx] ", "Coordinates") as num, 1, world.maxx)
+	var/y_coord = clamp(input("Y coordinate, 1-[world.maxy]", "Coordinates") as num, 1, world.maxy)
+
+	var/deviation = 5
+	if(tgui_alert(usr, "Coordinates: ([x_coord], [y_coord]). Continue?", "Coordinates", list("Confirm", "Cancel")) == "Cancel")
+		return
+
+	var/turf/center = locate(x_coord, y_coord, z)
+	var/list/L = list()
+	for(var/turf/T in RANGE_TURFS(deviation, center))
+		if(is_blocked_turf(T) || istype(T.loc, /area/space/holospace/forts/no_droppods))
+			continue
+		L += T
+
+	if(isemptylist(L))
+		to_chat(intruder, "<span class='warning'>Cannot navigate there! Please change Aim and repeat.</span>")
+		return
+	AimTarget = pick(L)
+
+/obj/structure/droppod/fort/blue_team
+	icon_state = "dropod_opened_nt"
+	item_state = "_nt"
+
+/obj/structure/droppod/fort/red_team

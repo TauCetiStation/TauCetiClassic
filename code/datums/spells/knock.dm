@@ -16,9 +16,9 @@
 		for(var/obj/machinery/door/door in T.contents)
 			if(istype(door, /obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/A = door
-				INVOKE_ASYNC(A, /obj/machinery/door/airlock/proc/unbolt)
-			INVOKE_ASYNC(door, /obj/machinery/door/proc/open)
+				INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/machinery/door/airlock, unbolt))
+			INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door, open))
 		for(var/obj/structure/closet/C in T.contents)
 			C.locked = 0
-			INVOKE_ASYNC(C, /obj/structure/closet/proc/open)
+			INVOKE_ASYNC(C, TYPE_PROC_REF(/obj/structure/closet, open))
 	return

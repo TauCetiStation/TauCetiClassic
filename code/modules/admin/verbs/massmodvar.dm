@@ -30,6 +30,9 @@
 		to_chat(usr, "<span class='warning'>It is forbidden to edit this object's variables.</span>")
 		return
 
+	if(istype(O, /datum/controller) && !check_rights(R_DEBUG))
+		return
+
 	var/list/names = list()
 	for (var/V in O.vars)
 		names += V
@@ -87,7 +90,7 @@
 		var_value = "[bicon(var_value)]"
 		default = "icon"
 
-	else if(istype(var_value,/atom) || istype(var_value,/datum))
+	else if(isatom(var_value) || istype(var_value,/datum))
 		to_chat(usr, "Variable appears to be <b>TYPE</b>.")
 		default = "type"
 
@@ -95,7 +98,7 @@
 		to_chat(usr, "Variable appears to be <b>LIST</b>.")
 		default = "list"
 
-	else if(istype(var_value,/client))
+	else if(isclient(var_value))
 		to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
 		default = "cancel"
 
@@ -135,7 +138,7 @@
 
 	var/original_name
 
-	if (!istype(O, /atom))
+	if (!isatom(O))
 		original_name = "\ref[O] ([O])"
 	else
 		original_name = O:name
@@ -158,7 +161,7 @@
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type))
 							if(variable=="resize")
 								M.vars[variable] = M.resize_rev
@@ -192,7 +195,7 @@
 
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							if(variable=="resize")
 								M.vars[variable] = M.resize_rev
@@ -242,7 +245,7 @@
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type))
 							if(variable == "light_color")
 								M.set_light(l_color = new_value)
@@ -266,7 +269,7 @@
 								A.vars[variable] = O.vars[variable]
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							if(variable == "light_color")
 								M.set_light(l_color = new_value)
@@ -290,19 +293,7 @@
 								A.vars[variable] = O.vars[variable]
 
 		if("num")
-			var/new_value
-
-			if(variable == "dynamic_lighting")
-				new_value = tgui_alert(usr, "dynamic_lighting",, list("DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"))
-				switch(new_value)
-					if("DYNAMIC_LIGHTING_DISABLED")
-						new_value = DYNAMIC_LIGHTING_DISABLED
-					if("DYNAMIC_LIGHTING_ENABLED")
-						new_value = DYNAMIC_LIGHTING_ENABLED
-					if("DYNAMIC_LIGHTING_FORCED")
-						new_value = DYNAMIC_LIGHTING_FORCED
-			else
-				new_value = input("Enter new number:","Num", O.vars[variable]) as num|null
+			var/new_value = input("Enter new number:","Num", O.vars[variable]) as num|null
 
 			if(isnull(new_value))
 				return
@@ -322,7 +313,7 @@
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type))
 							switch(variable)
 								if("opacity")
@@ -365,8 +356,6 @@
 									A.set_light(new_value)
 								if("light_power")
 									A.set_light(l_power = new_value)
-								if("dynamic_lighting")
-									A.set_dynamic_lighting(new_value)
 								if("resize")
 									A.vars[variable] = new_value
 									A.update_transform()
@@ -386,7 +375,7 @@
 
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							switch(variable)
 								if("opacity")
@@ -398,6 +387,11 @@
 								if("resize")
 									M.vars[variable] = new_value
 									M.update_transform()
+								if("height")
+									if(ishuman(M))
+										var/mob/living/carbon/human/H = M
+										H.vars[variable] = new_value
+										H.regenerate_icons()
 								else
 									M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -429,8 +423,6 @@
 									A.set_light(new_value)
 								if("light_power")
 									A.set_light(l_power = new_value)
-								if("dynamic_lighting")
-									A.set_dynamic_lighting(new_value)
 								if("resize")
 									A.vars[variable] = new_value
 									A.update_transform()
@@ -456,7 +448,7 @@
 			O.vars[variable] = new_value
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type) )
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -474,7 +466,7 @@
 						CHECK_TICK
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -499,7 +491,7 @@
 
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type))
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -517,7 +509,7 @@
 						CHECK_TICK
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -541,7 +533,7 @@
 			O.vars[variable] = new_value
 			if(method)
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(istype(M, O.type))
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK
@@ -560,7 +552,7 @@
 
 			else
 				if(istype(O, /mob))
-					for(var/mob/M in mob_list)
+					for(var/mob/M as anything in mob_list)
 						if(M.type == O.type)
 							M.vars[variable] = O.vars[variable]
 						CHECK_TICK

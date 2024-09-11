@@ -6,7 +6,7 @@ import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 export const Apc = (props, context) => {
   return (
     <Window
-      width={450}
+      width={500}
       height={445}>
       <Window.Content scrollable>
         <ApcContent />
@@ -18,18 +18,18 @@ export const Apc = (props, context) => {
 const powerStatusMap = {
   2: {
     color: 'good',
-    externalPowerText: 'External Power',
-    chargingText: 'Fully Charged',
+    externalPowerText: 'Питание от сети',
+    chargingText: 'Заряжен',
   },
   1: {
     color: 'average',
-    externalPowerText: 'Low External Power',
-    chargingText: 'Charging',
+    externalPowerText: 'Низкое напряжение в сети',
+    chargingText: 'Идёт зарядка...',
   },
   0: {
     color: 'bad',
-    externalPowerText: 'No External Power',
-    chargingText: 'Not Charging',
+    externalPowerText: 'Нет внешнего питания',
+    chargingText: 'Не заряжается',
   },
 };
 
@@ -48,7 +48,7 @@ const ApcContent = (props, context) => {
     siliconUser,
     malfCanHack,
     nightshiftLights,
-    nightshiftPreset,
+    smartlightMode,
     powerChannels,
   } = data;
   const isLocked = locked && !siliconUser;
@@ -60,22 +60,22 @@ const ApcContent = (props, context) => {
   return (
     <>
       <InterfaceLockNoticeBox />
-      <Section title="Power Status">
+      <Section title="Сеть">
         <LabeledList>
           <LabeledList.Item
-            label="Main Breaker"
+            label="Вводный автомат"
             color={externalPowerStatus.color}
             buttons={(
               <Button
                 icon={isOperating ? 'power-off' : 'times'}
-                content={isOperating ? 'On' : 'Off'}
+                content={isOperating ? 'Вкл.' : 'Выкл.'}
                 selected={isOperating && !isLocked}
                 disabled={isLocked}
                 onClick={() => act('breaker')} />
             )}>
             [ {externalPowerStatus.externalPowerText} ]
           </LabeledList.Item>
-          <LabeledList.Item label="Power Cell">
+          <LabeledList.Item label="Аккумулятор">
             {!!powerCellStatus && (
               <ProgressBar
                 color="good"
@@ -83,17 +83,17 @@ const ApcContent = (props, context) => {
                 value={powerCellCharge * 0.01} />
             ) || (
               <Box color="bad">
-                Power cell removed
+                Извлечён
               </Box>
             )}
           </LabeledList.Item>
           <LabeledList.Item
-            label="Charge Mode"
+            label="Режим зарядки"
             color={chargingStatus.color}
             buttons={(
               <Button
                 icon={chargeMode ? 'sync' : 'times'}
-                content={chargeMode ? 'Auto' : 'Off'}
+                content={chargeMode ? 'Авт.' : 'Выкл.'}
                 disabled={isLocked}
                 onClick={() => act('charge')} />
             )}>
@@ -101,7 +101,7 @@ const ApcContent = (props, context) => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section title="Power Channels">
+      <Section title="Автоматы">
         <LabeledList>
           {channelArray.map(channel => {
             const { topicParams } = channel;
@@ -113,11 +113,11 @@ const ApcContent = (props, context) => {
                   <>
                     <Box inline mx={2}
                       color={channel.status >= 2 ? 'good' : 'bad'}>
-                      {channel.status >= 2 ? 'On' : 'Off'}
+                      {channel.status >= 2 ? 'Вкл.' : 'Выкл.'}
                     </Box>
                     <Button
                       icon="sync"
-                      content="Auto"
+                      content="Авт."
                       selected={!isLocked && (
                         channel.status === 1 || channel.status === 3
                       )}
@@ -125,13 +125,13 @@ const ApcContent = (props, context) => {
                       onClick={() => act('channel', topicParams.auto)} />
                     <Button
                       icon="power-off"
-                      content="On"
+                      content="Вкл."
                       selected={!isLocked && channel.status === 2}
                       disabled={isLocked}
                       onClick={() => act('channel', topicParams.on)} />
                     <Button
                       icon="times"
-                      content="Off"
+                      content="Выкл."
                       selected={!isLocked && channel.status === 0}
                       disabled={isLocked}
                       onClick={() => act('channel', topicParams.off)} />
@@ -141,56 +141,54 @@ const ApcContent = (props, context) => {
               </LabeledList.Item>
             );
           })}
-          <LabeledList.Item label="Total Load">
+          <LabeledList.Item label="Общая нагрузка">
             <b>{totalLoad}</b>
           </LabeledList.Item>
         </LabeledList>
       </Section>
       <Section
-        title="Misc"
+        title="Разное"
         buttons={!!siliconUser && (
           <>
             {!!malfCanHack && (
               <Button
                 icon="terminal"
-                content="Override Programming"
+                content="Перепрошить"
                 color="bad"
                 onClick={() => act('hack')} />
             )}
             <Button
               icon="lightbulb-o"
-              content="Overload"
+              content="Перегрузить"
               onClick={() => act('overload')} />
           </>
         )}>
         <LabeledList>
           <LabeledList.Item
-            label="Cover Lock"
+            label="Крышка"
             buttons={(
               <Button
                 icon={coverLocked ? 'lock' : 'unlock'}
-                content={coverLocked ? 'Engaged' : 'Disengaged'}
+                content={coverLocked ? 'Заблокирована' : 'Разблокирована'}
                 disabled={isLocked}
                 onClick={() => act('cover')} />
             )} />
           <LabeledList.Item
-            label="Night Shift Lighting"
+            label="Ночной режим"
             buttons={(
               <Button
                 icon="lightbulb-o"
-                content={nightshiftLights ? 'Enabled' : 'Disabled'}
+                content={nightshiftLights ? 'Вкл' : 'Выкл'}
                 onClick={() => act('toggle_nightshift')} />
             )} />
-          {!!nightshiftLights && (
-            <LabeledList.Item
-              label="Night Shift Lighting Preset"
-              buttons={(
-                <Button
-                  icon="lightbulb-o"
-                  content={nightshiftPreset}
-                  onClick={() => act('change_nightshift')} />
-              )} />
-          )}
+          <LabeledList.Item
+            label="Текущий режим освещения"
+            buttons={(
+              <Button
+                icon="lightbulb-o"
+                content={smartlightMode}
+                onClick={() => act('change_smartlight')} />
+            )} />
         </LabeledList>
       </Section>
     </>

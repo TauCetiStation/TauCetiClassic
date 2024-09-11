@@ -9,6 +9,7 @@
 	selection_color = "#ffeeaa"
 	idtype = /obj/item/weapon/card/id/engGold
 	req_admin_notify = 1
+	is_head = TRUE
 	access = list(
 		access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 		access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
@@ -19,15 +20,15 @@
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/chief_engineer
+	skillsets = list("Chief Engineer" = /datum/skillset/ce)
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
-
+	restricted_species = list(TAJARAN, VOX, DIONA)
+	flags = JOB_FLAG_COMMAND|JOB_FLAG_ENGINEERING|JOB_FLAG_HEAD_OF_STAFF|JOB_FLAG_BLUESHIELD_PROTEC
 
 /datum/job/engineer
 	title = "Station Engineer"
@@ -42,10 +43,11 @@
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_lobby)
 	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
 	outfit = /datum/outfit/job/engineer
+	skillsets = list("Station Engineer" = /datum/skillset/engineer)
 	salary = 160
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
-
+	flags = JOB_FLAG_ENGINEERING
 
 /datum/job/atmos
 	title = "Atmospheric Technician"
@@ -62,7 +64,8 @@
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 600
 	outfit = /datum/outfit/job/atmos
-
+	skillsets = list("Atmospheric Technician" = /datum/skillset/atmostech)
+	flags = JOB_FLAG_ENGINEERING
 
 /datum/job/technical_assistant
 	title = "Technical Assistant"
@@ -77,7 +80,8 @@
 	access = list(access_engineering_lobby, access_construction, access_maint_tunnels)
 	salary = 50
 	outfit = /datum/outfit/job/technical_assistant
-
+	skillsets = list("Technical Assistant" = /datum/skillset/technicassistant)
+	flags = JOB_FLAG_ENGINEERING
 
 /proc/get_airlock_wires_identification()
 	var/list/wire_list = same_wires[/obj/machinery/door/airlock]
@@ -91,7 +95,8 @@
 		"[AIRLOCK_WIRE_ELECTRIFY]"   = "electrify",
 		"[AIRLOCK_WIRE_SAFETY]"      = "door safety",
 		"[AIRLOCK_WIRE_SPEED]"       = "timing mechanism",
-		"[AIRLOCK_WIRE_LIGHT]"       = "bolt light"
+		"[AIRLOCK_WIRE_LIGHT]"       = "bolt light",
+		"[AIRLOCK_WIRE_UNRES_SIDE]"  = "unrestricted sides"
 	)
 
 	var/info = ""

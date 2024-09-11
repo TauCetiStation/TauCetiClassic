@@ -2,7 +2,7 @@
 	TODO README
 */
 
-var/list/fusion_cores = list()
+var/global/list/fusion_cores = list()
 
 #define MAX_FIELD_STR 1000
 #define MIN_FIELD_STR 1
@@ -79,9 +79,11 @@ var/list/fusion_cores = list()
 		owned_field.AddParticles(name, quantity)
 		. = TRUE
 
-/obj/machinery/power/fusion_core/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/fusion_core/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(owned_field)
 		. = owned_field.bullet_act(Proj)
+	else
+		. = ..()
 
 /obj/machinery/power/fusion_core/proc/set_strength(value)
 	value = clamp(value, MIN_FIELD_STR, MAX_FIELD_STR)
@@ -109,13 +111,13 @@ var/list/fusion_cores = list()
 		to_chat(user,"<span class='warning'>Shut \the [src] off first!</span>")
 		return
 
-	if(ismultitool(W))
+	if(ispulsing(W))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Fusion Core", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident
 		return
 
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		user.SetNextMove(CLICK_CD_INTERACT)

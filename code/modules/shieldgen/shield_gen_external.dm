@@ -14,7 +14,7 @@
 				if(get_dist(O,src) > field_radius)
 					continue
 				var/add_this_turf = 0
-				if(istype(O,/turf/space))
+				if(isenvironmentturf(O))
 					for(var/turf/simulated/G in orange(1, O))
 						add_this_turf = 1
 						break

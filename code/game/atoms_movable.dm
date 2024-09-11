@@ -1,6 +1,7 @@
 /atom/movable
-	layer = 3
+	layer = OBJ_LAYER
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
+
 	var/last_move = null
 	var/anchored = FALSE
 	var/move_speed = 10
@@ -26,7 +27,6 @@
 
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
-	var/list/client_mobs_in_contents
 	var/freeze_movement = FALSE
 
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
@@ -42,19 +42,22 @@
 		loc.handle_atom_del(src)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	loc = null
 	invisibility = 101
 	if(pulledby)
 		pulledby.stop_pulling()
 
 	. = ..()
 
+	loc = null
 	// If we have opacity, make sure to tell (potentially) affected light sources.
 	if (opacity && istype(T))
 		var/old_has_opaque_atom = T.has_opaque_atom
 		T.recalc_atom_opacity()
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
+
+	vis_locs = null //clears this atom out of all viscontents
+	vis_contents.Cut()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -82,19 +85,20 @@
 
 			moving_diagonally = FIRST_DIAG_STEP
 			. = step(src, v)
-			if(.)
-				moving_diagonally = SECOND_DIAG_STEP
-				if(!step(src, h))
-					set_dir(v)
-			else
-				dir = old_dir // blood trails uses dir
-				. = step(src, h)
+			if(moving_diagonally) // forcemove, bump, etc. can interrupt diagonal movement
 				if(.)
 					moving_diagonally = SECOND_DIAG_STEP
-					if(!step(src, v))
-						set_dir(h)
+					if(!step(src, h))
+						set_dir(v)
+				else
+					dir = old_dir // blood trails uses dir
+					. = step(src, h)
+					if(.)
+						moving_diagonally = SECOND_DIAG_STEP
+						if(!step(src, v))
+							set_dir(h)
 
-			moving_diagonally = 0
+				moving_diagonally = 0
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
@@ -117,6 +121,7 @@
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	if(!ISDIAGONALDIR(Dir))
+		// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
 
 		if(moving_diagonally)
@@ -128,8 +133,12 @@
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
-	if(length(client_mobs_in_contents))
-		update_parallax_contents()
+
+	update_parallax_contents()
+
+	 // Cycle through the light sources on this atom and tell them to update.
+	for(var/datum/light_source/L as anything in light_sources)
+		L.source_atom.update_light()
 
 	if (orbiters)
 		for (var/thing in orbiters)
@@ -138,8 +147,8 @@
 	if (orbiting)
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
-	return
 
+// https://github.com/TauCetiStation/TauCetiClassic/issues/12899
 /atom/movable/proc/locMoved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
 	for(var/atom/movable/AM in contents)
@@ -152,49 +161,49 @@
 	STOP_THROWING(src, A)
 
 	if(A && non_native_bump)
-		A.last_bumped = world.time
 		A.Bumped(src)
 
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE)
+	if(!destination)
+		return
+	if(pulledby && !keep_pulling)
+		pulledby.stop_pulling()
+	var/atom/oldloc = loc
+	var/same_loc = (oldloc == destination)
+	var/area/old_area = get_area(oldloc)
+	var/area/destarea = get_area(destination)
+	loc = destination
+	if(!keep_moving_diagonally)
+		moving_diagonally = FALSE
+	if(!same_loc)
+		if(oldloc)
+			oldloc.Exited(src, destination)
+			if(old_area && old_area != destarea)
+				old_area.Exited(src, destination)
+		for(var/atom/movable/AM in oldloc)
+			AM.Uncrossed(src)
+		destination.Entered(src, oldloc)
+		if(destarea && old_area != destarea)
+			destarea.Entered(src, oldloc)
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE)
-	if(destination)
-		if(pulledby && !keep_pulling)
-			pulledby.stop_pulling()
-		var/atom/oldloc = loc
-		var/same_loc = (oldloc == destination)
-		var/area/old_area = get_area(oldloc)
-		var/area/destarea = get_area(destination)
+		for(var/atom/movable/AM in destination)
+			if(AM == src)
+				continue
+			AM.Crossed(src, oldloc)
+	Moved(oldloc, 0)
 
-		loc = destination
-
-		if(!same_loc)
-			if(oldloc)
-				oldloc.Exited(src, destination)
-				if(old_area && old_area != destarea)
-					old_area.Exited(src, destination)
-			for(var/atom/movable/AM in oldloc)
-				AM.Uncrossed(src)
-			destination.Entered(src, oldloc)
-			if(destarea && old_area != destarea)
-				destarea.Entered(src, oldloc)
-
-			for(var/atom/movable/AM in destination)
-				if(AM == src)
-					continue
-				AM.Crossed(src, oldloc)
-		Moved(oldloc, 0)
-		return TRUE
-	return FALSE
-
-/mob/living/forceMove(atom/destination, keep_pulling = FALSE)
+/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
 	if(!keep_pulling)
 		stop_pulling()
-	if(buckled)
+	if(buckled && !keep_buckled)
 		buckled.unbuckle_mob()
 	. = ..()
+	if(buckled && keep_buckled)
+		buckled.loc = loc
+		buckled.set_dir(dir)
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination, keep_pulling)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
@@ -205,8 +214,8 @@
 
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	hit_atom.hitby(src, throwingdatum)
-
+	if(SEND_SIGNAL(src, COMSIG_ATOM_PREHITBY, hit_atom, throwingdatum) & COMSIG_HIT_PREVENTED)
+		return FALSE
 	if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
@@ -214,6 +223,8 @@
 
 	if(isturf(hit_atom) && hit_atom.density)
 		Move(get_step(src, turn(dir, 180)))
+
+	return hit_atom.hitby(src, throwingdatum)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
 	if (!target || speed <= 0)
@@ -291,7 +302,7 @@
 //Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
 //movement_dir == 0 when stopping or any dir when trying to move
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(has_gravity(src))
+	if(has_gravity(src) && !(ice_slide_count && isiceturf(get_turf(src))))
 		return 1
 
 	if(pulledby)
@@ -357,7 +368,7 @@
 	return 1
 
 /atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(buckled_mob == mover)
+	if(istype(mover) && buckled_mob == mover)
 		return 1
 	return ..()
 
@@ -384,7 +395,7 @@
 /// See traits.dm. Use this in place of ADD_TRAIT.
 /atom/movable/proc/become_area_sensitive(trait_source = GENERIC_TRAIT)
 	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
-		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), .proc/on_area_sensitive_trait_loss)
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), PROC_REF(on_area_sensitive_trait_loss))
 		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYADD(location.area_sensitive_contents, src)
 	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
@@ -395,10 +406,18 @@
 	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVE(location.area_sensitive_contents, src)
+
+/atom/movable/Destroy()
+	if(HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
+		on_area_sensitive_trait_loss()
+	return ..()
+
 /* Sizes stuff */
 
 /atom/movable/proc/get_size_flavor()
 	switch(w_class)
+		if(SIZE_MIDGET)
+			. = "midget"
 		if(SIZE_MINUSCULE)
 			. = "minuscule"
 		if(SIZE_TINY)
@@ -429,3 +448,132 @@
 
 /atom/movable/proc/update_size_class()
 	return w_class
+
+/client/var/list/image/outlined_item = list()
+/atom/movable/proc/apply_outline(color)
+	if(anchored || !usr.client.prefs.outline_enabled)
+		return
+	if(!color)
+		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
+	if(usr.client.outlined_item[src])
+		return
+
+	if(usr.client.outlined_item.len)
+		remove_outline()
+
+	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
+	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	IMG.vis_contents += src
+
+	IMG.filters += filter(type = "outline", size = 1, color = color)
+	usr.client.images |= IMG
+	usr.client.outlined_item[src] = IMG
+
+
+/atom/movable/proc/remove_outline()
+	usr.client.images -= usr.client.outlined_item[src]
+	usr.client.outlined_item -= src
+
+/**
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
+ * most of the time you want forceMove()
+ */
+/atom/movable/proc/abstract_move(atom/new_loc)
+	var/atom/old_loc = loc
+	loc = new_loc
+	Moved(old_loc)
+
+// Return what item *should* be thrown, when a mob tries to throw us. Return null for no throw to happen.
+/atom/movable/proc/be_thrown(mob/living/thrower, atom/target)
+	return src
+
+/*
+	Handle trying to be taken by user.
+	If it's impossible to be taken by user, appear in fallback.
+	If it's impossible to resolve those two rules - return FALSE.
+*/
+/atom/movable/proc/taken(mob/living/user, atom/fallback)
+	forceMove(fallback)
+	// We failed to be taken, but still are in some mob. Drop down.
+	if(ismob(loc))
+		forceMove(loc.loc)
+
+/atom/movable/proc/jump_from_contents(rec_level=1)
+	for(var/i in 1 to rec_level)
+		if(!ismovable(loc))
+			return
+		var/atom/movable/AM = loc
+
+		if(!AM.drop_from_contents(src))
+			return
+
+/*
+	Return TRUE on successful drop.
+*/
+/atom/movable/proc/drop_from_contents(atom/movable/AM)
+	return FALSE
+
+/mob/drop_from_contents(atom/movable/AM)
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(I.slot_equipped)
+			return drop_from_inventory(I, loc, putdown_anim=FALSE)
+
+	AM.forceMove(loc)
+	return TRUE
+
+/obj/item/weapon/holder/drop_from_contents(atom/movable/AM)
+	AM.forceMove(loc)
+	return TRUE
+
+/mob/living/proc/get_radiation_message(rad_dose)
+	var/message = ""
+	switch(rad_dose)
+		if(0 to 299)
+			message += "You feel warm."
+		if(300 to 499)
+			message += "You feel a wave of heat wash over you."
+		if(500 to INFINITY)
+			message += "You notice your skin is covered in fresh radiation burns."
+	return message
+
+#define GEIGER_RANGE 15
+
+/proc/irradiate_one_mob(mob/living/victim, rad_dose)
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		if(H.species.flags[IS_SYNTHETIC])
+			return
+	victim.apply_effect(rad_dose, IRRADIATE)
+	to_chat(victim, "<span class='warning'>[victim.get_radiation_message(rad_dose)]</span>")
+	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
+		var/distance_rad_signal = get_dist(counter, victim)
+		if(distance_rad_signal <= GEIGER_RANGE)
+			var/rad_power = rad_dose
+			rad_power *= sqrt(1 / (distance_rad_signal + 1))
+			counter.recieve_rad_signal(rad_power, distance_rad_signal)
+
+/proc/irradiate_in_dist(turf/source_turf, rad_dose, effect_distance)
+	for(var/mob/living/L in range(source_turf, effect_distance))
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.species.flags[IS_SYNTHETIC])
+				continue
+		var/neighbours_in_turf = 0
+		for(var/mob/living/neighbour in L.loc)
+			if(neighbour == L)
+				continue
+			neighbours_in_turf++
+		var/rads = rad_dose / (neighbours_in_turf > 0 ? neighbours_in_turf : 1)
+		rads *= sqrt(1 / (get_dist(L, source_turf) + 1))
+		L.apply_effect(rads, IRRADIATE)
+		to_chat(L, "<span class='warning'>[L.get_radiation_message(rad_dose)]</span>")
+	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
+		var/distance_rad_signal = get_dist(counter, source_turf)
+		if(distance_rad_signal <= GEIGER_RANGE)
+			var/rad_power = rad_dose
+			rad_power *= sqrt(1 / (distance_rad_signal + 1))
+			counter.recieve_rad_signal(rad_power, distance_rad_signal)
+
+#undef GEIGER_RANGE

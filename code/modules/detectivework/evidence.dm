@@ -11,7 +11,7 @@
 /obj/item/weapon/evidencebag/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 
-	if(!istype(target, /obj/item))
+	if(!isitem(target))
 		return ..()
 
 	var/obj/item/I = target
@@ -103,6 +103,7 @@
 	desc = "Used to take fingerprints."
 	icon = 'icons/obj/card.dmi'
 	icon_state = "fingerprint0"
+	item_state_world = "fingerprint0_world"
 	var/amount = 10.0
 	item_state = "paper"
 	throwforce = 1

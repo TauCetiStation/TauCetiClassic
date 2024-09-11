@@ -84,7 +84,7 @@
 		while (cur!=end && can_place)
 			if(cur.density == 1)
 				can_place = 0
-			else if (istype(cur, /turf/space))
+			else if (isspaceturf(cur))
 				can_place = 0
 			else
 				for(var/obj/O in cur)
@@ -119,10 +119,8 @@
 		P.layer = 3.2
 		to_chat(user, "<span class='notice'>You finish placing the [src].</span>")
 
-/obj/item/tape/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/item/tape/CanPass(atom/movable/mover, turf/target, height=0)
 	if(!density)
-		return TRUE
-	if(air_group || (height == 0))
 		return TRUE
 	if(allowed(mover))
 		return TRUE

@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(mob_modifier)
 	name = "Mob Modifiers"
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_INIT
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/processing = list()
 	var/list/currentrun = list()
@@ -22,7 +23,7 @@ SUBSYSTEM_DEF(mob_modifier)
 		if(QDELETED(thing))
 			processing -= thing
 		else
-			thing.process()
+			thing.process(wait * 0.1)
 
 		if (MC_TICK_CHECK)
 			return

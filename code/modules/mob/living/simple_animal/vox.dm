@@ -2,7 +2,7 @@
 
 	name = "serpentine alien"
 	real_name = "serpentine alien"
-	desc = "A one-eyed, serpentine creature, half-machine, easily nine feet from tail to beak!"
+	desc = "Одноглазое, пернатое существо. Полумашина, легко достигающая девяти футов от хвоста до клюва!"
 	icon = 'icons/mob/vox.dmi'
 	icon_state = "armalis"
 	icon_living = "armalis"
@@ -63,7 +63,7 @@
 
 	var/obj/item/weapon/arrow/quill/Q = new(loc)
 	Q.fingerprintslast = src.ckey
-	Q.throw_at(target,10,30)
+	Q.throw_at(target, 10, 30)
 	quills--
 
 	spawn(100)
@@ -88,12 +88,12 @@
 
 	var/mob/M = targets[target]
 
-	if(istype(M, /mob/dead/observer) || M.stat == DEAD)
+	if(isobserver(M) || M.stat == DEAD)
 		to_chat(src, "Not even the armalis can speak to the dead.")
 		return
 
 	to_chat(M, "<span class='notice'>Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]</span>")
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == VOX)
 			return

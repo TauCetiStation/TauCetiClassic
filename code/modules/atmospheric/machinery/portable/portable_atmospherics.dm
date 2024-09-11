@@ -91,6 +91,8 @@
 	connected_port_parent.update = 1
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user)
+	if(!do_skill_checks(user))
+		return
 	if (istype(W, /obj/item/weapon/tank))
 		if(!(stat & BROKEN))
 			if (holding || !user.drop_from_inventory(W, src))
@@ -98,7 +100,7 @@
 			var/obj/item/weapon/tank/T = W
 			holding = T
 			update_icon()
-	else if (iswrench(W))
+	else if (iswrenching(W))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
@@ -160,7 +162,7 @@
 		cell = C
 		user.visible_message("<span class='notice'>[user] opens the panel on [src] and inserts [C].</span>", "<span class='notice'>You open the panel on [src] and insert [C].</span>")
 		power_change()
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(!cell)
 			to_chat(user, "<span class='warning'>There is no power cell installed.</span>")
 			return

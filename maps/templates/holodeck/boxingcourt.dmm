@@ -28,13 +28,13 @@
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "e" = (
-/obj/structure/window/reinforced/holowindow,
+/obj/structure/window/thin/reinforced/holowindow,
 /turf/simulated/floor/holofloor{
 	icon_state = "dark"
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "f" = (
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 4
 	},
 /turf/simulated/floor/holofloor{
@@ -57,7 +57,7 @@
 /turf/simulated/floor/holofloor,
 /area/station/civilian/holodeck/source_boxingcourt)
 "j" = (
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 8
 	},
 /turf/simulated/floor/holofloor{
@@ -93,7 +93,7 @@
 	},
 /area/station/civilian/holodeck/source_boxingcourt)
 "p" = (
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 1
 	},
 /turf/simulated/floor/holofloor{

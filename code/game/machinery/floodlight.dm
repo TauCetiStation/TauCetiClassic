@@ -38,7 +38,6 @@
 			visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
 
-
 /obj/machinery/floodlight/attack_hand(mob/user)
 	. = ..()
 	if(.)
@@ -72,9 +71,24 @@
 		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 		playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+/obj/machinery/floodlight/verb/rotate()
+	set name = "Rotate Floodlight"
+	set category = "Object"
+	set src in oview(1)
+
+	if(!config.ghost_interaction && isobserver(usr))
+		return
+	if(ismouse(usr))
+		return
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.incapacitated())
+		return
+
+	set_dir(turn(dir, 90))
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
-	if (isscrewdriver(W))
+	if (isscrewing(W))
 		if (!open)
 			if(unlocked)
 				unlocked = FALSE
@@ -83,7 +97,7 @@
 				unlocked = TRUE
 				to_chat(user, "You unscrew the battery panel.")
 
-	if (iscrowbar(W))
+	if (isprying(W))
 		if(unlocked)
 			if(open)
 				open = FALSE
@@ -103,3 +117,13 @@
 				cell = W
 				to_chat(user, "You insert the power cell.")
 	update_icon()
+
+/obj/machinery/floodlight/deconstruct(disassembled)
+	playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+	//var/obj/structure/floodlight_frame/F = new(loc) // TODO floodligh construction
+	//F.state = FLOODLIGHT_NEEDS_LIGHTS
+	//new /obj/item/light/tube/broken(loc)
+	..()
+
+/obj/machinery/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	playsound(loc, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER, 75, TRUE)

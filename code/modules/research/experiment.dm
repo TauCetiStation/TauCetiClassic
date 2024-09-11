@@ -14,9 +14,9 @@
 	)
 
 
-	//Determines maximum amount of points that can be earned by certain methods. 
+	//Determines maximum amount of points that can be earned by certain methods.
 	//Total points that can be earned equal highest score multiplied by this number
-	var/cap_coeff = 2 
+	var/cap_coeff = 2
 
 	var/list/tech_points = list(
 		"materials" = 200,
@@ -121,7 +121,7 @@
 			if(special_weapons[weapon])
 				points += special_weapons[weapon]
 			else
-				points += rand(5,10) * 200 // 1000-2000 points for random weapon
+				points += rand(1,5) * 100 // 100-500 points for random weapon
 
 	for(var/list/scanning_artifact in I.scanned_artifacts)
 		var/already_scanned = FALSE
@@ -203,6 +203,8 @@
 
 	channels = list("Science" = 1)
 
+	var/sensitivity_radius = 10
+
 	var/message_scientists = TRUE
 
 	// This thing should be really hard to destroy by any means.
@@ -222,6 +224,8 @@
 /obj/item/device/radio/beacon/interaction_watcher/atom_init()
 	. = ..()
 	global.interaction_watcher_list += src
+	RegisterSignal(SSexplosions, COMSIG_EXPLOSIONS_EXPLODE, PROC_REF(react_explosion))
+	RegisterSignal(SSexplosions, COMSIG_EXPLOSIONS_EMPULSE, PROC_REF(react_empulse))
 
 /obj/item/device/radio/beacon/interaction_watcher/attack_self(mob/living/carbon/human/user)
 	message_scientists = !message_scientists
@@ -247,8 +251,8 @@
 
 /obj/item/device/radio/beacon/interaction_watcher/proc/research_interaction(inter_type, score, new_score_coeff=800, repeat_score_coeff=160)
 	var/calculated_research_points = -1
-	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
-		if(RD.id == 1)
+	for(var/obj/machinery/computer/rdconsole/RD as anything in global.RDcomputer_list)
+		if(RD.id == DEFAULT_SCIENCE_CONSOLE_ID)
 			var/saved_interaction_score = RD.files.experiments.saved_best_score[inter_type]
 			var/saved_earned_points = max(RD.files.experiments.earned_score[inter_type], 1)
 
@@ -260,6 +264,9 @@
 
 			calculated_research_points = added_score * new_score_coeff + min(already_earned_score * round(repeat_score_coeff * softcap_coeff), repetition_cap - saved_earned_points)
 
+			if(HAS_ROUND_ASPECT(ROUND_ASPECT_ALTERNATIVE_RESEARCH))
+				calculated_research_points /= 5
+
 			if(score > saved_interaction_score)
 				RD.files.experiments.saved_best_score[inter_type] = score
 
@@ -268,18 +275,31 @@
 
 	return calculated_research_points
 
-/obj/item/device/radio/beacon/interaction_watcher/proc/react_explosion(turf/epicenter, power)
+/obj/item/device/radio/beacon/interaction_watcher/proc/react_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range)
+
+	if(get_dist(epicenter,get_turf(src)) > sensitivity_radius)
+		return
+
+	// this is part of old explosions before SS, moved here to keep science same:
+	var/power = devastation_range * 2 + heavy_impact_range + light_impact_range //The ranges add up, ie light 14 includes both heavy 7 and devestation 3. So this calculation means devestation counts for 4, heavy for 2 and light for 1 power, giving us a cap of 27 power.
+
 	power = round(power)
-	var/calculated_research_points = research_interaction("Explosion", power, new_score_coeff=800, repeat_score_coeff=160)
+	var/calculated_research_points = research_interaction("Explosion", power, new_score_coeff=1600, repeat_score_coeff=320)
 
 	if(calculated_research_points > 0)
-		autosay("Detected explosion with power level [power], received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected explosion with power level [power] ([devastation_range]:[heavy_impact_range]:[light_impact_range]), received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
 	else if (calculated_research_points == 0)
-		autosay("Detected explosion with power level [power], could not acquire any more research points", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected explosion with power level [power] ([devastation_range]:[heavy_impact_range]:[light_impact_range]), could not acquire any more research points", name ,"Science", freq = radiochannels["Science"])
 	else
-		autosay("Detected explosion with power level [power], R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected explosion with power level [power] ([devastation_range]:[heavy_impact_range]:[light_impact_range]), R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
 
-/obj/item/device/radio/beacon/interaction_watcher/proc/react_empulse(turf/epicenter, power)
+/obj/item/device/radio/beacon/interaction_watcher/proc/react_empulse(datum/source, turf/epicenter, heavy_range, light_range)
+
+	if(get_dist(epicenter,get_turf(src)) > sensitivity_radius)
+		return
+
+	var/power = heavy_range * 2 + light_range
+
 	power = round(power)
 	var/calculated_research_points = research_interaction("Empulse", power, new_score_coeff=600, repeat_score_coeff=120)
 
@@ -300,7 +320,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
 	w_class = SIZE_TINY
-	throw_speed = 5
+	throw_speed = 4
 	throw_range = 10
 	m_amt = 200
 	origin_tech = "engineering=1;biotech=1"
@@ -365,7 +385,7 @@
 	if(scanneddata > 0)
 		datablocks += scanneddata
 		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [target]</span>")
-	else if(istype(target, /obj/item))
+	else if(isitem(target))
 		var/science_value = experiments.get_object_research_value(target)
 		if(science_value > 0)
 			to_chat(user, "<span class='notice'>Estimated research value of [target.name] is [science_value]</span>")
@@ -378,26 +398,3 @@
 	scanned_symptoms = list()
 	scanned_slimecores = list()
 	datablocks = 0
-
-/obj/item/weapon/disk/research_points
-	name = "Important Disk"
-	desc = "Looks a disk with some important information stored. Scientists might know what to do with it"
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk2"
-	item_state = "card-id"
-	w_class = SIZE_TINY
-	m_amt = 30
-	g_amt = 10
-	var/stored_points
-
-/obj/item/weapon/disk/research_points/atom_init()
-	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
-
-	stored_points = rand(1,10)*1000
-
-/obj/item/weapon/disk/research_points/rare/atom_init()
-	. = ..()
-
-	stored_points = rand(10, 20)*1000

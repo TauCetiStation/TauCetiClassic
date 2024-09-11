@@ -33,12 +33,14 @@
 	. = ..()
 	if(.)
 		return
-	for(var/client/C in admins)
+	if(world.has_round_finished())
+		return "Раунд закончен"
+	for(var/client/C as anything in admins)
 		if((C.holder.rights & R_ADMIN) && !C.holder.fakekey && !C.is_afk())
 			return "Администрация сейчас в сети"
 
-/datum/poll/restart/get_vote_power(client/C)
-	return get_vote_power_by_role(C)
+/datum/poll/restart/get_vote_power(client/C, datum/vote_choice/choice)
+	return get_vote_power_by_role(C) * choice.vote_weight
 
 /datum/vote_choice/restart
 	text = "Рестарт"
@@ -48,7 +50,7 @@
 
 /datum/vote_choice/restart/on_win()
 	var/active_admins = FALSE
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!C.is_afk() && (R_SERVER & C.holder.rights))
 			active_admins = TRUE
 			break
@@ -99,11 +101,9 @@
 		return
 	if(SSshuttle.online || SSshuttle.location != 0)
 		return "Шаттл используется"
-	if(security_level >= SEC_LEVEL_RED)
-		return "Код безопасности КРАСНЫЙ или выше"
 
-/datum/poll/crew_transfer/get_vote_power(client/C)
-	return get_vote_power_by_role(C)
+/datum/poll/crew_transfer/get_vote_power(client/C, datum/vote_choice/choice)
+	return get_vote_power_by_role(C) * choice.vote_weight
 
 /datum/vote_choice/crew_transfer
 	text = "Конец смены"
@@ -150,6 +150,8 @@
 		return
 	if(!world.is_round_preparing())
 		return "Доступно только перед началом игры"
+	if(SSmapping.loaded_map_module && SSmapping.loaded_map_module.gamemode)
+		return "Режим установлен картой"
 
 /datum/poll/gamemode/get_blocking_reason()
 	. = ..()
@@ -204,6 +206,96 @@
 		master_mode = new_gamemode
 		world.save_mode(new_gamemode)
 
+/*********************
+	Map
+**********************/
+/datum/poll/nextmap
+	name = "Карта на следующий раунд"
+	question = "Выберите карту для следующего раунда"
+	choice_types = list()
+	minimum_voters = 0 // todo: server vote need to change map at any cost, meanwhile for player vote minimum will be good
+	only_admin = FALSE
+
+	multiple_votes = TRUE
+	can_revote = TRUE
+	can_unvote = TRUE
+	detailed_result = TRUE
+
+	vote_period = 600 // same as ticker.restart_timeout
+
+	description = "Некоторые карты могут быть не доступны в голосовании из-за ограничений на количество игроков или других настроек сервера."
+
+/datum/poll/nextmap/get_force_blocking_reason()
+	. = ..()
+	if(!world.has_round_finished())
+		return "Доступно только по окончанию раунда"
+	if(!config.maplist.len)
+		return "Отсутствует конфиг карт"
+
+#define FORMAT_MAP_NAME(name) splittext(name, " ")[1]
+#define REPEATED_MAPS_FACTOR_DECREASE 0.15
+
+/datum/poll/nextmap/init_choices()
+	var/list/voteweights = get_voteweights()
+	if(!voteweights)
+		voteweights = list()
+	for (var/map in config.maplist)
+		var/datum/map_config/VM = config.maplist[map]
+
+		if (!VM.votable)
+			continue
+
+		if (VM.config_min_users > 0 && length(player_list) < VM.config_min_users)
+			continue
+
+		if (VM.config_max_users > 0 && length(player_list) > VM.config_max_users)
+			continue
+
+		var/datum/vote_choice/nextmap/vc = new
+		var/map_name = FORMAT_MAP_NAME(VM.map_name)
+		if(map_name in voteweights)
+			VM.voteweight = max(0.4, VM.voteweight * voteweights[map_name])
+		vc.text = VM.GetFullMapName()
+		if(VM.voteweight != 1)
+			vc.text += "\[vote weight: [VM.voteweight]\]"
+		vc.mapname = VM.map_name
+		vc.vote_weight = VM.voteweight
+		choices.Add(vc)
+
+
+/datum/poll/nextmap/proc/get_voteweights()
+	if(!establish_db_connection("erro_round"))
+		return FALSE
+	var/list/voteweights = list()
+
+	// decrease weight for repeated maps
+
+	// last 1
+	var/map_name = FORMAT_MAP_NAME(SSmapping.config.map_name) 
+	voteweights[map_name] = 1 - REPEATED_MAPS_FACTOR_DECREASE
+
+	// and 2 previous from DB history
+	var/DBQuery/select_query = dbcon.NewQuery("SELECT map_name FROM erro_round WHERE (end_state = 'proper completion' OR end_state = 'nuke') AND server_port = [sanitize_sql(world.port)] ORDER BY id DESC LIMIT 2")
+	select_query.Execute()
+	while(select_query.NextRow())
+		var/list/row = select_query.GetRowData()
+		map_name = FORMAT_MAP_NAME(row["map_name"])
+		if(!(map_name in voteweights))
+			voteweights[map_name] = 1
+		voteweights[map_name] -= REPEATED_MAPS_FACTOR_DECREASE
+
+	return voteweights
+
+#undef REPEATED_MAPS_FACTOR_DECREASE
+#undef FORMAT_MAP_NAME
+
+/datum/vote_choice/nextmap
+	text = "Box Station"
+	var/mapname = "Box Station"
+
+/datum/vote_choice/nextmap/on_win()
+	var/datum/map_config/VM = config.maplist[mapname]
+	SSmapping.changemap(VM)
 
 /*********************
 	Custom

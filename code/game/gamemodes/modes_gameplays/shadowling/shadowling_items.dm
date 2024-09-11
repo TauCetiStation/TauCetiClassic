@@ -3,7 +3,6 @@
 	desc = "Black, chitonous skin."
 	icon_state = "golem"
 	item_state = "golem"
-	item_color = "golem"
 	has_sensor = 0
 	canremove = 0
 	origin_tech = null
@@ -91,10 +90,15 @@
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
 	canremove = 0
-	action_button_name = "Toggle Vision"
 	icon = 'icons/mob/shadowling_hud.dmi'
 	icon_state = "ling_vision_off"
+	flash_protection = FLASHES_AMPLIFIER
+	flash_protection_slots = list(SLOT_GLASSES)
 
+	item_action_types = list(/datum/action/item_action/toggle_vision)
+
+/datum/action/item_action/toggle_vision
+	name = "Toggle Vision"
 
 /obj/item/clothing/glasses/night/shadowling/attack_self()
 	toggle()
@@ -108,19 +112,20 @@
 		return
 	switch(usr.lighting_alpha)
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-			lighting_alpha = usr.lighting_alpha
+			usr.set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			flash_protection = FLASHES_AMPLIFIER
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-			lighting_alpha = usr.lighting_alpha
+			usr.set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
-			lighting_alpha = usr.lighting_alpha
+			usr.set_lighting_alpha(LIGHTING_PLANE_ALPHA_INVISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		else
-			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-			lighting_alpha = usr.lighting_alpha
+			usr.set_lighting_alpha(LIGHTING_PLANE_ALPHA_VISIBLE)
+			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			flash_protection = NONE
 	usr.update_sight()
-	usr.update_inv_glasses()
 
 /obj/structure/shadow_vortex
 	name = "vortex"

@@ -7,7 +7,7 @@
 	health = 140
 	deflect_chance = 60
 	internal_damage_threshold = 60
-	damage_absorption = list("brute"=1.2,"fire"=1.5,"bullet"=1,"laser"=1,"energy"=1,"bomb"=1)
+	damage_absorption = list(BRUTE=1.2,BURN=1.5,BULLET=1,LASER=1,ENERGY=1,BOMB=1)
 	max_temperature = 25000
 	infra_luminosity = 5
 	operation_req_access = list(access_clown)
@@ -16,14 +16,14 @@
 	max_equip = 3
 	var/squeak = 0
 
-/*
-/obj/mecha/combat/honker/atom_init()
+/obj/mecha/combat/honker/clown/atom_init() // for aspect
 	. = ..()
-	weapons += new /datum/mecha_weapon/honker(src)
-	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar(src)
-	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar/mousetrap_mortar(src)
-	selected_weapon = weapons[1]
-*/
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/honker(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar(src)
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar/mousetrap_mortar(src)
+	ME.attach(src)
 
 
 /obj/mecha/combat/honker/melee_action(target)

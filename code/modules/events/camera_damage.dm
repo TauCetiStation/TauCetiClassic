@@ -6,7 +6,7 @@
 	var/severity_range = 0
 	switch(severity)
 		if(EVENT_LEVEL_MUNDANE)
-			severity_range = rand(0, 7)
+			severity_range = 7
 		if(EVENT_LEVEL_MODERATE)
 			severity_range = rand(7, 15)
 		if(EVENT_LEVEL_MAJOR)
@@ -32,4 +32,4 @@
 /datum/event/camera_damage/proc/is_valid_camera(obj/machinery/camera/C)
 	// Only return a functional camera, not installed in a silicon, and that exists somewhere players have access
 	var/turf/T = get_turf(C)
-	return T && C.can_use() && !istype(C.loc, /mob/living/silicon) && (T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING)))
+	return T && C.can_use() && !issilicon(C.loc) && (T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING)))

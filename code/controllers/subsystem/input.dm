@@ -31,5 +31,5 @@ SUBSYSTEM_DEF(input)
 		C.set_macros()
 
 /datum/controller/subsystem/input/fire()
-	for(var/client/C in clients)
-		C.keyLoop()
+	for(var/mob/M in global.keyloop_list)
+		M.keyLoop(M.client)

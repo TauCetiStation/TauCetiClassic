@@ -3,6 +3,7 @@
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
+	flags = HEAR_PASS_SAY
 	w_class = SIZE_SMALL
 	origin_tech = "biotech=3"
 
@@ -12,8 +13,6 @@
 
 	var/locked = FALSE
 	var/mob/living/carbon/brain/brainmob = null//The current occupant.
-	var/mob/living/silicon/robot = null//Appears unused.
-	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 /obj/item/device/mmi/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
@@ -52,7 +51,6 @@
 		transfer_nymph(D)
 
 		feedback_inc("cyborg_mmis_filled",1)
-		qdel(D)
 		return
 
 	else if((istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda)) && brainmob)
@@ -70,6 +68,33 @@
 
 	return ..()
 
+/obj/item/device/mmi/proc/eject_brain(mob/user)
+	var/mob/living/carbon/monkey/diona/D = locate(/mob/living/carbon/monkey/diona) in brainmob
+	icon_state = "mmi_empty"
+	name = "Man-Machine Interface"
+	if(D)
+		if(user)
+			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
+			D.forceMove(get_turf(user))
+		else
+			D.forceMove(get_turf(src))
+		if(brainmob.mind)
+			brainmob.mind.transfer_to(D)
+		QDEL_NULL(brainmob)
+		return
+
+	var/obj/item/brain/brain
+	if(user)
+		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
+		brain = new(get_turf(user))
+	else
+		brain = new(get_turf(src))
+	brainmob.container = null //Reset brainmob mmi var.
+	brainmob.forceMove(brain) //Throw mob into brain.
+	alive_mob_list -= brainmob //Get outta here
+	brain.brainmob = brainmob  //Set the brain to use the brainmob
+	brainmob = null
+
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brainmob)
 		to_chat(user, "<span class='warning'>You upend the MMI, but there's nothing in it.</span>")
@@ -77,26 +102,12 @@
 	else if(locked)
 		to_chat(user, "<span class='warning'>You upend the MMI, but the brain is clamped into place.</span>")
 		return
-	var/mob/living/carbon/monkey/diona/D = locate(/mob/living/carbon/monkey/diona) in brainmob
-	icon_state = "mmi_empty"
-	name = "Man-Machine Interface"
-	if(D)
-		to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
-		D.forceMove(user.loc)
-		if(brainmob.mind)
-			brainmob.mind.transfer_to(D)
-		brainmob = null
-		qdel(brainmob)
-		return
-	else
-		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
-		var/obj/item/brain/brain = new(user.loc)
-		brainmob.container = null//Reset brainmob mmi var.
-		brainmob.loc = brain//Throw mob into brain.
-		alive_mob_list -= brainmob//Get outta here
-		brain.brainmob = brainmob//Set the brain to use the brainmob
-		brainmob = null
-		qdel(brainmob)
+	eject_brain(user)
+
+/obj/item/device/mmi/deconstruct(disassembled = TRUE)
+	if(brainmob)
+		eject_brain()
+	..()
 
 /obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
 	if(user.incapacitated() || !istype(target))
@@ -199,3 +210,8 @@
 			if(3)
 				brainmob.emp_damage += rand(0,10)
 	..()
+
+/obj/item/device/mmi/get_listeners()
+	. = list()
+	if(brainmob)
+		. += brainmob

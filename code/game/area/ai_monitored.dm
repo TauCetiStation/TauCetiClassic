@@ -11,6 +11,7 @@
 			if(M.isMotion())
 				motioncamera = M
 				M.area_motion = src
+				QDEL_NULL(M.proximity_monitor)
 				return
 
 /area/station/ai_monitored/Entered(atom/movable/O)

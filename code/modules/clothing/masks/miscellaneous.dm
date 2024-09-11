@@ -21,7 +21,7 @@
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
-	item_state = "sterile"
+	item_state = "m_mask"
 	w_class = SIZE_TINY
 	flags = MASKCOVERSMOUTH
 	body_parts_covered = 0
@@ -60,8 +60,11 @@
 	flags = MASKCOVERSMOUTH
 	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.90
-	action_button_name = "Adjust scarf"
 	var/hanging = 0
+	item_action_types = list(/datum/action/item_action/hands_free/adjust_scarf)
+
+/datum/action/item_action/hands_free/adjust_scarf
+	name = "Adjust scarf"
 
 /obj/item/clothing/mask/scarf/blue
 	name = "blue neck scarf"
@@ -111,7 +114,8 @@
 		flags |= MASKCOVERSMOUTH
 		icon_state = "[initial(icon_state)]"
 		to_chat(user, "You pull the scarf up to cover your face.")
-	user.update_inv_wear_mask()
+	update_inv_mob()
+	update_item_actions()
 
 
 
@@ -178,9 +182,13 @@
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
 	w_class = SIZE_MINUSCULE
 	flags = MASKCOVERSMOUTH
-	action_button_name = "Adjust Bandana"
 	icon_state = "bandbotany"
+	item_state = "greenbandana"
 	body_parts_covered = 0
+	item_action_types = list(/datum/action/item_action/hands_free/adjust_bandana)
+
+/datum/action/item_action/hands_free/adjust_bandana
+	name = "Adjust Bandana"
 
 /obj/item/clothing/mask/chicken
 	name = "chicken suit head"
@@ -206,7 +214,8 @@
 		else
 			src.icon_state += "_up"
 			to_chat(usr, "You tie the bandana around your head.")
-		usr.update_inv_wear_mask()
+		update_inv_mob()
+		update_item_actions()
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
@@ -215,11 +224,13 @@
 	name = "red bandana"
 	desc = "A fine red bandana with nanotech lining."
 	icon_state = "bandred"
+	item_state = "redbandana"
 
 /obj/item/clothing/mask/bandana/blue
 	name = "blue bandana"
 	desc = "A fine blue bandana with nanotech lining."
 	icon_state = "bandblue"
+	item_state = "bluebandana"
 
 /obj/item/clothing/mask/bandana/green
 	name = "green bandana"
@@ -230,16 +241,19 @@
 	name = "gold bandana"
 	desc = "A fine gold bandana with nanotech lining."
 	icon_state = "bandgold"
+	item_state = "goldbandana"
 
 /obj/item/clothing/mask/bandana/black
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
 	icon_state = "bandblack"
+	item_state = "blackbandana"
 
 /obj/item/clothing/mask/bandana/skull
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+	item_state = "skullbandana"
 
 /obj/item/clothing/mask/tie
 	body_parts_covered = 0

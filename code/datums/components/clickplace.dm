@@ -31,14 +31,14 @@
 	var/datum/callback/on_slam
 
 /datum/component/clickplace/Initialize(datum/callback/_on_place = null, datum/callback/_on_slam = null)
-	if(!istype(parent, /atom))
+	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	on_place = _on_place
 	on_slam = _on_slam
 
-	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), .proc/try_place_click)
-	RegisterSignal(parent, list(COMSIG_MOUSEDROPPED_ONTO), .proc/try_place_drag)
+	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), PROC_REF(try_place_click))
+	RegisterSignal(parent, list(COMSIG_MOUSEDROPPED_ONTO), PROC_REF(try_place_drag))
 
 	var/datum/mechanic_tip/clickplace/clickplace_tip = new
 	parent.AddComponent(/datum/component/mechanic_desc, list(clickplace_tip))
@@ -68,6 +68,8 @@
 		return FALSE
 	if(I.swiping)
 		return FALSE
+	if(I.anchored)
+		return FALSE
 	return TRUE
 
 /datum/component/clickplace/proc/try_place_click(datum/source, obj/item/I,  mob/living/user, params)
@@ -82,15 +84,22 @@
 	if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
 		return
 
-	var/p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
-	var/p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
+	var/icon_size = world.icon_size
+	var/half_icon_size = icon_size * 0.5
 
 	var/atom/A = parent
-	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x=p_x - I.pixel_x, additional_pixel_y=p_y - I.pixel_y))
+
+	var/p_x = text2num(click_params[ICON_X]) + A.pixel_x
+	var/p_y = text2num(click_params[ICON_Y]) + A.pixel_y
+
+	p_x = clamp(p_x, 0, icon_size) - half_icon_size - I.pixel_x
+	p_y = clamp(p_y, 0, icon_size) - half_icon_size - I.pixel_y
+
+	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x=p_x, additional_pixel_y=p_y))
 		return FALSE
 
 	if(on_place)
-		on_place.Invoke(A, I, user)
+		on_place.Invoke(A, I, user, params)
 
 	A.add_fingerprint(user)
 	// Prevent hitting the thing if we're just putting it.
@@ -112,7 +121,7 @@
 	jump_out(I, target, rec_limit - 1)
 
 /datum/component/clickplace/proc/try_place_drag(datum/source, atom/dropping, mob/living/user)
-	if(!istype(dropping, /obj/item))
+	if(!isitem(dropping))
 		return
 
 	var/obj/item/I = dropping
@@ -130,13 +139,13 @@
 			BP_L_ARM = user.l_hand,
 			BP_R_ARM = user.r_hand
 		)
-		check_slot_callback = CALLBACK(user, /mob/living.proc/is_usable_arm)
-	else if(istype(user, /mob/living/carbon/ian))
+		check_slot_callback = CALLBACK(user, TYPE_PROC_REF(/mob/living, is_usable_arm))
+	else if(isIAN(user))
 		var/mob/living/carbon/ian/IAN = user
 		slots_to_check = list(
 			BP_HEAD = IAN.mouth
 		)
-		check_slot_callback = CALLBACK(user, /mob/living.proc/is_usable_head)
+		check_slot_callback = CALLBACK(user, TYPE_PROC_REF(/mob/living, is_usable_head))
 
 	if(!slots_to_check)
 		return
@@ -149,6 +158,9 @@
 			spare_slots--
 
 	if(spare_slots <= 0)
+		return
+
+	if((!user.delay_clothing_unequip(I)))
 		return
 
 	var/atom/old_loc = I.loc
@@ -167,7 +179,7 @@
 
 	if(I.loc == A.loc)
 		if(!isturf(old_loc))
-			INVOKE_ASYNC(I, /atom/movable.proc/do_putdown_animation, A.loc, user)
+			INVOKE_ASYNC(I, TYPE_PROC_REF(/atom/movable, do_putdown_animation), A.loc, user)
 		if(on_place)
 			on_place.Invoke(A, I, user)
 
@@ -181,10 +193,11 @@
 		return TRUE
 
 	if(prob(15))
+		victim.Stun(2)
 		victim.Weaken(5)
 	victim.apply_damage(8, def_zone = BP_HEAD)
 	victim.visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [A]!</span>")
-	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+	playsound(parent, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
 	victim.log_combat(assailant, "face-slammed against \the [parent]")
 	return FALSE
@@ -204,13 +217,15 @@
 		victim.visible_message("<span class='danger'>[assailant] shoves [victim] into [A]!</span>")
 
 		step_towards(victim, A)
-		qdel(src)
+		qdel(G)
 		return
 
 	assailant.SetNextMove(CLICK_CD_MELEE)
 	if(G.state >= GRAB_AGGRESSIVE)
-		INVOKE_ASYNC(victim, /atom/movable.proc/do_simple_move_animation, A.loc)
+		var/atom/old_loc = victim.loc
 		victim.forceMove(A.loc)
+		INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), A.loc, old_loc)
+		victim.Stun(2)
 		victim.Weaken(5)
 
 		victim.log_combat(assailant, "laid on [A]")

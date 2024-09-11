@@ -7,8 +7,7 @@
 "b" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/civilian/holodeck/source_emptycourt)
 "c" = (

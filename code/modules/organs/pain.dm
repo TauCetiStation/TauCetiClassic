@@ -1,27 +1,21 @@
-/mob/proc/flash_pain()
-	flick("pain",pain)
 
-/mob/var/list/pain_stored = list()
-/mob/var/last_pain_message = ""
-/mob/var/next_pain_time = 0
+/mob
+	var/last_pain_message = ""
+	var/next_pain_time = 0
 
 // partname is the name of a body part
 // amount is a num from 1 to 100
+
 /mob/living/carbon/proc/pain(partname, amount, force, burning = 0)
-	if(stat >= 2) return
-	if(reagents.has_reagent("paracetamol"))
+	if(stat >= DEAD)
 		return
-	if(reagents.has_reagent("tramadol"))
-		return
-	if(reagents.has_reagent("oxycodone"))
-		return
-	if(analgesic)
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_MEDIUM)
 		return
 	if(world.time < next_pain_time && !force)
 		return
-	if(amount > 10 && istype(src,/mob/living/carbon/human))
-		if(src:paralysis)
-			src:paralysis = max(0, src:paralysis-round(amount/10))
+	if(amount > 10 && ishuman(src))
+		if(paralysis)
+			SetParalysis(AmountParalyzed() - amount / 10)
 	if(amount > 50 && prob(amount / 5))
 		drop_item()
 	var/msg
@@ -30,20 +24,16 @@
 			if(1 to 10)
 				msg = "<span class='warning'><b>Your [partname] burns.</b></span>"
 			if(11 to 90)
-				flash_weak_pain()
 				msg = "<span class='warning'><b><font size=2>Your [partname] burns badly!</font></b></span>"
 			if(91 to 10000)
-				flash_pain()
 				msg = "<span class='warning'><b><font size=3>OH GOD! Your [partname] is on fire!</font></b></span>"
 	else
 		switch(amount)
 			if(1 to 10)
 				msg = "<b>Your [partname] hurts.</b>"
 			if(11 to 90)
-				flash_weak_pain()
 				msg = "<b><font size=2>Your [partname] hurts badly.</font></b>"
 			if(91 to 10000)
-				flash_pain()
 				msg = "<b><font size=3>OH GOD! Your [partname] is hurting terribly!</font></b>"
 	if(msg && (msg != last_pain_message || prob(10)))
 		last_pain_message = msg
@@ -54,17 +44,11 @@
 // message is the custom message to be displayed
 // flash_strength is 0 for weak pain flash, 1 for strong pain flash
 /mob/living/carbon/human/proc/custom_pain(message, flash_strength)
-	if(stat >= 1)
+	if(stat != CONSCIOUS)
 		return
-
 	if(species && species.flags[NO_PAIN])
 		return
-
-	if(reagents.has_reagent("tramadol"))
-		return
-	if(reagents.has_reagent("oxycodone"))
-		return
-	if(analgesic)
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
 		return
 	var/msg = "<span class='warning'><b>[message]</b></span>"
 	if(flash_strength >= 1)
@@ -78,17 +62,11 @@
 
 /mob/living/carbon/human/proc/handle_pain()
 	// not when sleeping
-
 	if(species && species.flags[NO_PAIN])
 		return
-
-	if(stat >= 2)
+	if(stat >= DEAD)
 		return
-	if(reagents.has_reagent("tramadol"))
-		return
-	if(reagents.has_reagent("oxycodone"))
-		return
-	if(analgesic)
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_HEAVY)
 		return
 	var/maxdam = 0
 	var/obj/item/organ/external/damaged_organ = null

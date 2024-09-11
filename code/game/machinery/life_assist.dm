@@ -8,6 +8,7 @@
 
 	var/icon_state_attached
 	var/icon_state_detached
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/life_assist/atom_init()
 	. = ..()
@@ -26,7 +27,7 @@
 
 /obj/machinery/life_assist/proc/attach(mob/living/carbon/human/H)
 	attached = H
-	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, .proc/resolve_stranded))
+	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, PROC_REF(resolve_stranded)))
 	visible_message("<span class='notice'>[usr] attaches \the [src] to \the [H].</span>")
 	assist(H)
 	update_icon()
@@ -58,7 +59,11 @@
 	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
 
+	if(!do_skill_checks(usr))
+		return
 	if(do_after(usr, 20, target = src))
+		if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
+			return
 		if(attached)
 			detach()
 		else if(ishuman(over_object))
@@ -69,9 +74,9 @@
 			attach(H)
 
 /obj/machinery/life_assist/proc/resolve_stranded(datum/component/bounded/bounds)
-	if(get_dist(bounds.bound_to, src) == 2 && !anchored)
-		step_towards(src, bounds.bound_to)
-		var/dist = get_dist(src, get_turf(bounds.bound_to))
+	if(get_dist(bounds.master, src) == 2 && !anchored)
+		step_towards(src, bounds.master)
+		var/dist = get_dist(src, get_turf(bounds.master))
 		if(dist >= bounds.min_dist && dist <= bounds.max_dist)
 			return TRUE
 
@@ -94,20 +99,23 @@
 	var/obj/item/weapon/tank/holding
 
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/tank) && istype(W, /obj/item/weapon/tank/jetpack) && (stat & BROKEN))
-		return
-	if (holding || !user.drop_from_inventory(W, src))
+	if (!istype(W, /obj/item/weapon/tank) || istype(W, /obj/item/weapon/tank/jetpack) || (stat & BROKEN) || holding)
 		return
 	if(do_after(user, 10, target = src))
+		if(!user.drop_from_inventory(W, src))
+			return
 		holding = W
 		add_overlay(holding.icon_state)
-		user.drop_from_inventory(holding, src)
 		visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
 		if(attached)
 			update_internal(attached, TRUE)
 
 /obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
-	if(user.is_busy())
+	. = ..()
+	if(.)
+		return
+
+	if(user.is_busy() || issilicon(user))
 		return
 	if(holding && do_after(user, 20, target = src))
 		user.put_in_hands(holding)
@@ -133,11 +141,16 @@
 			visible_message("<span class='notice'>\the [attached] is already attached to tank</span>")
 			return
 		attached.internal = holding
-		if(attached.internals)
-			attached.internals.icon_state = "internal1"
-	else if(attached.internals)
-		attached.internals.icon_state = "internal0"
+	else if(attached.internal == holding)
 		attached.internal = null
+
+/obj/machinery/life_assist/cardiopulmonary_bypass/assist(mob/living/carbon/human/H)
+	..()
+	H.metabolism_factor.AddModifier("CPB", additive = 0.5)
+
+/obj/machinery/life_assist/cardiopulmonary_bypass/deassist(mob/living/carbon/human/H)
+	..()
+	H.metabolism_factor.RemoveModifier("CPB")
 
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"

@@ -1,0 +1,17 @@
+@font-face{
+  font-family: "Gys14Segment";
+  src: url(Gys14Segment.ttf) format("truetype"), url(Gys14Segment.eot) format("embedded-opentype"), url(Gys14Segment.woff) format("woff");
+}
+
+@font-face{
+  font-family: "TINIESTONE";
+  src: url(TINIESTONE.ttf) format("truetype"), url(TINIESTONE.eot) format("embedded-opentype"), url(TINIESTONE.woff) format("woff");
+}
+
+@font-face{
+  font-family: "StatusDisplays";
+  src: url(StatusDisplays.ttf) format("truetype"), url(StatusDisplays.eot) format("embedded-opentype"), url(StatusDisplays.woff) format("woff");
+}
+
+/* font-face in ie doesn't work without styles defined. Fuck you microsoft */
+:root {}

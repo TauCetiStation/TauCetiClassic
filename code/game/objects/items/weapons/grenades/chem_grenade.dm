@@ -1,10 +1,12 @@
 /obj/item/weapon/grenade/chem_grenade
 	name = "grenade casing"
+	cases = list("граната", "гранаты", "гранате", "гранату", "гранатой", "гранате")
 	icon_state = "chemg"
 	item_state = "flashbang"
-	desc = "A hand made chemical grenade."
+	desc = "Химическая граната ручного изготовления."
 	w_class = SIZE_TINY
 	force = 2.0
+	flags = HEAR_TALK
 	var/stage = 0
 	var/state = 0
 	var/path = 0
@@ -42,13 +44,13 @@
 	if(istype(I, /obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 		var/obj/item/device/assembly_holder/det = I
 		if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
-			to_chat(user, "<span class='red'>Assembly must contain one igniter.</span>")
+			to_chat(user, "<span class='red'>В корпусе гранаты должен быть воспламенитель.</span>")
 			return
 		if(!det.secured)
-			to_chat(user, "<span class='red'>Assembly must be secured with screwdriver.</span>")
+			to_chat(user, "<span class='red'>Корпус гранаты необходимо скрепить отверткой.</span>")
 			return
 		path = 1
-		to_chat(user, "<span class='notice'>You add [I] to the metal casing.</span>")
+		to_chat(user, "<span class='notice'>Вы помещаете [CASE(I, ACCUSATIVE_CASE)] в корпус гранаты.</span>")
 		playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
 		user.drop_from_inventory(det, src)
 		detonator = det
@@ -62,28 +64,28 @@
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
 
-	else if(isscrewdriver(I) && path != 2)
+	else if(isscrewing(I) && path != 2)
 		if(stage == 1)
 			path = 1
 			if(!detonator)
 				det_time = 1
 			if(beakers.len)
-				to_chat(user, "<span class='notice'>You lock the assembly.</span>")
+				to_chat(user, "<span class='notice'>Вы скрепляете корпус гранаты.</span>")
 				name = "grenade"
 			else
 //					user << "<span class='warning'>You need to add at least one beaker before locking the assembly.</span>"
-				to_chat(user, "<span class='notice'>You lock the empty assembly.</span>")
+				to_chat(user, "<span class='notice'>Вы скрепляете пустой корпус.</span>")
 				name = "fake grenade"
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			icon_state = initial(icon_state) +"_locked"
 			stage = 2
 		else if(stage == 2)
 			if(active && prob(95))
-				to_chat(user, "<span class='red'>You trigger the assembly!</span>")
+				to_chat(user, "<span class='red'>Вы активируете гранату!</span>")
 				prime()
 				return
 			else
-				to_chat(user, "<span class='notice'>You unlock the assembly.</span>")
+				to_chat(user, "<span class='notice'>Вы открываете корпус гранаты.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 				icon_state = initial(icon_state) + (detonator?"_ass":"")
@@ -93,25 +95,24 @@
 	else if(is_type_in_list(I, allowed_containers) && (!stage || stage==1) && path != 2)
 		path = 1
 		if(beakers.len == 2)
-			to_chat(user, "<span class='red'>The grenade can not hold more containers.</span>")
+			to_chat(user, "<span class='red'>В гранату не поместится больше сосудов.</span>")
 			return
 		else
 			if(I.reagents && I.reagents.total_volume)
-				to_chat(user, "<span class='notice'>You add \the [I] to the assembly.</span>")
+				to_chat(user, "<span class='notice'>Вы помещаете [CASE(I, ACCUSATIVE_CASE)] в корпус гранаты.</span>")
 				user.drop_from_inventory(I, src)
 				beakers += I
 				stage = 1
 				name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 			else
-				to_chat(user, "<span class='red'>\the [I] is empty.</span>")
-
+				to_chat(user, "<span class='red'> В [CASE(I, DATIVE_CASE)] ничего нет.</span>")
 	else
 		return ..()
 
 /obj/item/weapon/grenade/chem_grenade/examine(mob/user)
 	..()
 	if(src in user && detonator)
-		to_chat(user, "With attached [detonator.name]")
+		to_chat(user, "С закрепленным [CASE(detonator, ABLATIVE_CASE)]")
 
 /obj/item/weapon/grenade/chem_grenade/activate(mob/user)
 	if(active) return
@@ -165,7 +166,7 @@
 			if( A == src ) continue
 			reagents.reaction(A, 1, 10)
 
-	if(istype(loc, /mob/living/carbon))		//drop dat grenade if it goes off in your hand
+	if(iscarbon(loc))		//drop dat grenade if it goes off in your hand
 		var/mob/living/carbon/C = loc
 		C.drop_from_inventory(src)
 		C.throw_mode_off()
@@ -189,7 +190,7 @@
 
 /obj/item/weapon/grenade/chem_grenade/large
 	name = "large chem grenade"
-	desc = "An oversized grenade that affects a larger area."
+	desc = "Крупная граната, поражающая большую область."
 	icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/weapon/reagent_containers/glass)
 	origin_tech = "combat=3;materials=3"
@@ -199,7 +200,7 @@
 ///////Metalfoam
 /obj/item/weapon/grenade/chem_grenade/metalfoam
 	name = "metal-foam grenade"
-	desc = "Used for emergency sealing of air breaches."
+	desc = "Используется для экстренной герметизации."
 	path = 1
 	stage = 2
 
@@ -222,7 +223,7 @@
 ///////Incendiary
 /obj/item/weapon/grenade/chem_grenade/incendiary
 	name = "incendiary grenade"
-	desc = "Used for clearing rooms of living things."
+	desc = "Используется для очистки помещений от живых существ."
 	path = 1
 	stage = 2
 
@@ -246,7 +247,7 @@
 ///////Antiweed
 /obj/item/weapon/grenade/chem_grenade/antiweed
 	name = "weedkiller grenade"
-	desc = "Used for purging large areas of invasive plant species. Contents under pressure. Do not directly inhale contents."
+	desc = "Используется для очистки больших площадей от инвазивных видов растений. Содержимое под давлением. Не вдыхайте содержимое напрямую."
 	path = 1
 	stage = 2
 
@@ -270,7 +271,7 @@
 ///////Cleaner
 /obj/item/weapon/grenade/chem_grenade/cleaner
 	name = "cleaner grenade"
-	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
+	desc = "БЛАМ! – пенящееся чистящее средство в специальном аппликаторе для быстрой очистки больших площадей."
 	stage = 2
 	path = 1
 
@@ -293,7 +294,7 @@
 ///////Teargas
 /obj/item/weapon/grenade/chem_grenade/teargas
 	name = "teargas grenade"
-	desc = "Used for nonlethal riot control. Contents under pressure. Do not directly inhale contents."
+	desc = "Используется для подавления беспорядков. Содержимое под давлением. Не вдыхайте содержимое напрямую."
 	stage = 2
 	path = 1
 
@@ -306,6 +307,52 @@
 	B1.reagents.add_reagent("potassium", 25)
 	B2.reagents.add_reagent("phosphorus", 25)
 	B2.reagents.add_reagent("sugar", 25)
+
+	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+
+	beakers += B1
+	beakers += B2
+	icon_state = initial(icon_state) +"_locked"
+
+///////Acid
+/obj/item/weapon/grenade/chem_grenade/acid
+	name = "Acid grenade"
+	desc = "Используется для сжигания брони, вещей и человеческой плоти."
+	stage = 2
+	path = 1
+
+/obj/item/weapon/grenade/chem_grenade/acid/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+	B1.reagents.add_reagent("sacid", 50)
+	B1.reagents.add_reagent("sugar", 50)
+	B1.reagents.add_reagent("potassium", 50)
+	B2.reagents.add_reagent("pacid", 100)
+	B2.reagents.add_reagent("phosphorus", 50)
+
+	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+
+	beakers += B1
+	beakers += B2
+	icon_state = initial(icon_state) +"_locked"
+
+///Drugs
+/obj/item/weapon/grenade/chem_grenade/drugs
+	name = "Drugs grenade"
+	desc = "Граната с запрещенными химическими веществами, используемая в качестве наркотика."
+	path = 1
+	stage = 2
+
+/obj/item/weapon/grenade/chem_grenade/drugs/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+	B1.reagents.add_reagent("space_drugs", 50)
+	B1.reagents.add_reagent("sugar", 50)
+	B1.reagents.add_reagent("potassium", 50)
+	B2.reagents.add_reagent("space_drugs", 100)
+	B2.reagents.add_reagent("phosphorus", 50)
 
 	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
 

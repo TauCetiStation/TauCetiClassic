@@ -22,7 +22,6 @@
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
 
-
 /obj/machinery/space_heater/atom_init()
 	. = ..()
 	cell = new(src)
@@ -66,6 +65,8 @@
 		to_chat(user, "There is no power cell installed.")
 
 /obj/machinery/space_heater/RefreshParts()
+	..()
+
 	var/laser = 0
 	var/cap = 0
 	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
@@ -108,7 +109,7 @@
 		else
 			to_chat(user, "The hatch must be open to insert a power cell.")
 			return
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		panel_open = !panel_open
 		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()
@@ -120,9 +121,8 @@
 		..()
 
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
-	if(user.stat) // this probably handled by nano itself, a check would be nice.
+	if(user.stat != CONSCIOUS) // this probably handled by nano itself, a check would be nice.
 		return
-
 	var/data[0]
 	data["open"] = panel_open
 	data["on"] = on
@@ -181,7 +181,7 @@
 		var/value
 		if(href_list["temp"] == "custom")
 			value = input("Please input the target temperature", name) as num|null
-			if(isnull(value))
+			if(isnull(value) || !can_still_interact_with(usr))
 				return
 			value += T0C
 		else

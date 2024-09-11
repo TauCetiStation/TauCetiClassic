@@ -11,5 +11,5 @@
 	minimum_players_bundles = 45
 
 /datum/game_mode/traitorchan/announce()
-	to_chat(world, "<B>The current game mode is - [name]!</B>")
-	to_chat(world, "<B>There is an alien creature on the station along with some syndicate operatives out for their own gain! Do not let the changeling and the traitors succeed!</B>")
+	to_chat(world, "<B>Текущий режим игры - Предатели-Генокрады!</B>")
+	to_chat(world, "<B>На станции находится инопланетное существо, а также несколько оперативников Синдиката, преследующих свои цели! Не дайте генокраду и предателям добиться успеха!</B>")

@@ -2,9 +2,11 @@
 	name = "Fleshmend"
 	desc = "Our flesh rapidly regenerates, healing our wounds."
 	helptext = "Heals a moderate amount of damage over a short period of time. Can be used while unconscious."
+	button_icon_state = "fleshmend"
 	chemical_cost = 25
 	genomecost = 4
 	req_stat = UNCONSCIOUS
+	can_be_used_in_abom_form = FALSE
 
 //Starts healing you every second for 10 seconds. Can be used whilst unconscious.
 /obj/effect/proc_holder/changeling/fleshmend/sting_action(mob/living/user)
@@ -17,4 +19,4 @@
 			sleep(10)
 
 	feedback_add_details("changeling_powers","RR")
-	return 1
+	return TRUE

@@ -1,8 +1,10 @@
 //infestation
-#define TOTAL_HUMAN			1
-#define TOTAL_ALIEN			2
-#define ALIEN_PERCENT		3
-#define WIN_PERCENT			190
+#define TOTAL_HUMAN         1
+#define TOTAL_ALIEN         2
+#define ALIEN_PERCENT       3
+#define FIRST_HELP_PERCENT  20
+#define SECOND_HELP_PERCENT 60
+#define WIN_PERCENT         190
 
 //alien list
 #define ALIEN_QUEEN			"Королева"
@@ -11,6 +13,7 @@
 #define ALIEN_HUNTER		"Охотники"
 #define ALIEN_LARVA			"Грудоломы"
 #define ALIEN_FACEHUGGER	"Лицехваты"
+#define ALIEN_MAID			"Горничные"
 
 //alien embryo
 #define MAX_EMBRYO_GROWTH 40

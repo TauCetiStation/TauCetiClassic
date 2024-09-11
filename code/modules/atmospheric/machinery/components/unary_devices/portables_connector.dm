@@ -36,9 +36,6 @@
 			return
 		add_underlay(T, NODE1, dir)
 
-/obj/machinery/atmospherics/components/unary/portables_connector/hide(i)
-	update_underlays()
-
 /obj/machinery/atmospherics/components/unary/portables_connector/process_atmos()
 	if(!connected_device)
 		return

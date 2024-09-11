@@ -39,13 +39,13 @@
 
 /obj/item/weapon/gun/energy/proc/newshot()
 	if (!ammo_type || !power_supply)
-		return
+		return FALSE
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if (power_supply.charge < shot.e_cost)
-		return
+		return FALSE
 	chambered = shot
 	chambered.newshot()
-	return
+	return TRUE
 
 /obj/item/weapon/gun/energy/process_chamber()
 	if (chambered) // incase its out of energy - since then this will be null.

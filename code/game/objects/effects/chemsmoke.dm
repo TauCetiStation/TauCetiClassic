@@ -54,7 +54,7 @@
 	//build affected area list
 	for(var/turf/T in view(range, location))
 		//cull turfs to circle
-		if(cheap_pythag(T.x - location.x, T.y - location.y) <= range)
+		if(HYPOTENUSE(T.x, T.y, location.x, location.y) <= range)
 			targetTurfs += T
 
 	//make secondary list for reagents that affect walls
@@ -133,7 +133,7 @@
 							if(istype(A, /obj/effect/effect/smoke/chem))	//skip the item if it is chem smoke
 								continue
 							else if(istype(A, /mob))
-								var/dist = cheap_pythag(T.x - location.x, T.y - location.y)
+								var/dist = HYPOTENUSE(T.x, T.y, location.x, location.y)
 								if(!dist)
 									dist = 1
 								R.reaction_mob(A, volume = R.volume / dist)
@@ -197,9 +197,7 @@
 	smoke.pixel_x = -32 + rand(-8,8)
 	smoke.pixel_y = -32 + rand(-8,8)
 	walk_to(smoke, T)
-	smoke.opacity = 1		//switching opacity on after the smoke has spawned, and then
 	sleep(150+rand(0,20))	// turning it off before it is deleted results in cleaner
-	smoke.opacity = 0		// lighting and view range updates
 	fadeOut(smoke)
 	qdel(smoke)
 
@@ -229,7 +227,7 @@
 			for(var/D in cardinal)
 				var/turf/target = get_step(current, D)
 				if(wallList)
-					if(istype(target, /turf/simulated/wall))
+					if(iswallturf(target))
 						if(!(target in wallList))
 							wallList += target
 						continue
@@ -240,9 +238,9 @@
 					continue
 				if(!(target in targetTurfs))
 					continue
-				if(current.c_airblock(target)) //this is needed to stop chemsmoke from passing through thin window walls
+				if(FAST_C_AIRBLOCK(current, target) & AIR_BLOCKED) //this is needed to stop chemsmoke from passing through thin window walls
 					continue
-				if(target.c_airblock(current))
+				if(FAST_C_AIRBLOCK(target, current) & AIR_BLOCKED)
 					continue
 				pending += target
 

@@ -25,6 +25,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	..()
+
 	var/cap_rating = 0
 	var/man_rating = 0
 	var/bin_rating = 0
@@ -165,6 +166,7 @@
 
 	max_temperature = T20C
 	min_temperature = 170
+	required_skills = list()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/atom_init()
 	. = ..()
@@ -213,6 +215,7 @@
 
 	max_temperature = T20C + 680
 	min_temperature = T20C
+	required_skills = list()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/atom_init()
 	. = ..()

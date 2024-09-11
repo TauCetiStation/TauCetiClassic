@@ -3,11 +3,10 @@
 #define AB_INNATE 3
 #define AB_GENERIC 4
 
-#define AB_CHECK_RESTRAINED 1
-#define AB_CHECK_STUNNED 2
-#define AB_CHECK_LYING 4
-#define AB_CHECK_ALIVE 8
-#define AB_CHECK_INSIDE 16
+#define AB_CHECK_INCAPACITATED 2
+#define AB_CHECK_ALIVE 4
+#define AB_CHECK_INSIDE 8
+#define AB_CHECK_ACTIVE 16
 
 
 /datum/action
@@ -15,20 +14,30 @@
 	var/action_type = AB_ITEM
 	var/atom/movable/target = null
 	var/check_flags = 0
+	var/restrained_check = ARMS // for AB_CHECK_INCAPACITATED
 	var/processing = 0
 	var/active = 0
 	var/atom/movable/screen/movable/action_button/button = null
-	var/button_icon = 'icons/mob/actions.dmi'
+	var/button_icon = 'icons/hud/actions.dmi'
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
 	var/transparent_when_unavailable = TRUE
-	var/mob/living/owner
+	var/mob/owner
+	var/toggleable = FALSE
+	var/cooldown = 0
+	var/next_use_time = 0
 
 /datum/action/New(Target)
 	target = Target
 	button = new
 	button.owner = src
 	button.name = name
+	if(cooldown)
+		button.maptext = ""
+		button.maptext_x = 8
+		button.maptext_y = 0
+		button.maptext_width = 24
+		button.maptext_height = 12
 
 /datum/action/Destroy()
 	if(owner)
@@ -37,7 +46,7 @@
 	QDEL_NULL(button)
 	return ..()
 
-/datum/action/proc/Grant(mob/living/T)
+/datum/action/proc/Grant(mob/T)
 	if(owner)
 		if(owner == T)
 			return
@@ -47,7 +56,7 @@
 	owner.update_action_buttons()
 	return
 
-/datum/action/proc/Remove(mob/living/T)
+/datum/action/proc/Remove(mob/T)
 	if(button)
 		if(T.client)
 			T.client.screen -= button
@@ -57,45 +66,53 @@
 	return
 
 /datum/action/proc/Trigger()
-	if(!Checks())
-		return
-	switch(action_type)
-		if(AB_ITEM)
-			if(target)
-				var/obj/item/item = target
-				item.ui_action_click()
-		if(AB_SPELL)
-			if(target)
-				var/obj/effect/proc_holder/spell = target
-				spell.Click()
-		if(AB_INNATE)
-			if(!active)
+	if(Checks())
+		switch(action_type)
+			if(AB_ITEM)
 				Activate()
-			else
-				Deactivate()
+			if(AB_SPELL)
+				if(target)
+					var/obj/effect/proc_holder/spell = target
+					spell.Click()
+			if(AB_INNATE)
+				if(!active)
+					Activate()
+				else
+					Deactivate()
+		if(button == null)
+			var/atom/movable/screen/movable/action_button/N = new(owner.hud_used)
+			N.owner = src.owner
+			button = N
+		UpdateButtonIcon()
 	return
 
 /datum/action/proc/Activate()
+	if(toggleable)
+		active = TRUE
 	return
 
 /datum/action/proc/Deactivate()
+	if(toggleable)
+		active = FALSE
 	return
 
-/datum/action/proc/Process()
-	return
-
-/datum/action/proc/CheckRemoval(mob/living/user) // 1 if action is no longer valid for this mob and should be removed
-	return 0
+/datum/action/proc/CheckRemoval(mob/user) // TRUE if action is no longer valid for this mob and should be removed
+	return FALSE
 
 /datum/action/proc/IsAvailable()
 	return Checks()
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
-		if(!IsAvailable())
-			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
-		else
+		if(IsAvailable())
 			button.color = rgb(255,255,255,255)
+			if(active)
+				background_icon_state = "bg_active"
+			else
+				background_icon_state = initial(background_icon_state)
+		else
+			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+		button.UpdateIcon()
 
 /atom/movable/screen/movable/action_button/MouseEntered(location,control,params)
 	openToolTip(usr, src, params, title = name, content = desc)
@@ -103,55 +120,39 @@
 /atom/movable/screen/movable/action_button/MouseExited()
 	closeToolTip(usr)
 
-/datum/action/proc/Checks()// returns 1 if all checks pass
+/// returns 1 if all checks pass
+/datum/action/proc/Checks()
 	if(!owner)
-		return 0
-	if(check_flags & AB_CHECK_RESTRAINED)
-		if(owner.restrained())
-			return 0
-	if(check_flags & AB_CHECK_STUNNED)
-		if(owner.stunned || owner.weakened)
-			return 0
-	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying && !owner.crawling)
-			return 0
+		return FALSE
+	if(cooldown)
+		if(world.time < next_use_time)
+			return FALSE
+	if(check_flags & AB_CHECK_INCAPACITATED)
+		if(owner.incapacitated(restrained_check))
+			return FALSE
 	if(check_flags & AB_CHECK_ALIVE)
-		if(owner.stat)
-			return 0
+		if(owner.stat != CONSCIOUS)
+			return FALSE
 	if(check_flags & AB_CHECK_INSIDE)
 		if(!(target in owner))
-			return 0
-	return 1
+			return FALSE
+	if(check_flags & AB_CHECK_ACTIVE)
+		if(owner.get_active_hand() != target)
+			return FALSE
+	return TRUE
 
 /datum/action/proc/UpdateName()
 	return name
 
-//Preset for an action with a cooldown
-/datum/action/cooldown
-	action_type = AB_GENERIC
-	check_flags = NONE
-	transparent_when_unavailable = FALSE
-	var/cooldown_time = 0
-	var/next_use_time = 0
+/datum/action/proc/StartCooldown()
+	if(cooldown)
+		Deactivate()
+		next_use_time = world.time + cooldown
+		button.maptext = MAPTEXT("<span class='center'><b>[round(cooldown/10, 1)]</b></span>")
+		UpdateButtonIcon()
+		START_PROCESSING(SSfastprocess, src)
 
-/datum/action/cooldown/New()
-	..()
-	button.maptext = ""
-	button.maptext_x = 8
-	button.maptext_y = 0
-	button.maptext_width = 24
-	button.maptext_height = 12
-
-/datum/action/cooldown/IsAvailable()
-	return next_use_time <= world.time
-
-/datum/action/cooldown/proc/StartCooldown()
-	next_use_time = world.time + cooldown_time
-	button.maptext = MAPTEXT("<b>[round(cooldown_time/10, 0.1)]</b>")
-	UpdateButtonIcon()
-	START_PROCESSING(SSfastprocess, src)
-
-/datum/action/cooldown/process()
+/datum/action/process()
 	if(!owner)
 		button.maptext = ""
 		STOP_PROCESSING(SSfastprocess, src)
@@ -161,14 +162,8 @@
 		UpdateButtonIcon()
 		STOP_PROCESSING(SSfastprocess, src)
 	else
-		button.maptext = MAPTEXT("<b>[round(timeleft/10, 0.1)]</b>")
+		button.maptext = MAPTEXT("<span class='center'><b>[round(timeleft/10, 1)]</b></span>")
 
-/datum/action/cooldown/Grant(mob/M)
-	..()
-	if(owner)
-		UpdateButtonIcon()
-		if(next_use_time > world.time)
-			START_PROCESSING(SSfastprocess, src)
 
 /atom/movable/screen/movable/action_button
 	var/datum/action/owner
@@ -182,11 +177,11 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers[SHIFT_CLICK])
 		moved = 0
-		return 1
+		return TRUE
 	if(usr.next_move >= world.time) // Is this needed ?
 		return
 	owner.Trigger()
-	return 1
+	return TRUE
 
 /atom/movable/screen/movable/action_button/proc/UpdateIcon()
 	if(!owner)
@@ -201,6 +196,7 @@
 		img = image(I.icon, src , I.icon_state)
 	else if(owner.button_icon && owner.button_icon_state)
 		img = image(owner.button_icon,src,owner.button_icon_state)
+
 	img.pixel_x = 0
 	img.pixel_y = 0
 	add_overlay(img)
@@ -213,7 +209,7 @@
 //Hide/Show Action Buttons ... Button
 /atom/movable/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
-	icon = 'icons/mob/actions.dmi'
+	icon = 'icons/hud/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = 0
 
@@ -228,7 +224,7 @@
 	UpdateIcon()
 	usr.update_action_buttons()
 
-/atom/movable/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
+/atom/movable/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/user)
 	if(isxeno(user))
 		icon_state = "bg_alien"
 	else
@@ -252,14 +248,22 @@
 
 /mob/proc/update_sight()
 	SHOULD_CALL_PARENT(TRUE)
-	sync_lighting_plane_alpha()
+	if(!client)
+		return FALSE
 
-///Set the lighting plane hud alpha to the mobs lighting_alpha var
-/mob/proc/sync_lighting_plane_alpha()
-	if(hud_used)
-		var/atom/movable/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if(L)
-			L.alpha = lighting_alpha
+	if(stat == DEAD)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		set_EyesVision(null)
+		return FALSE
+
+	return TRUE
+
+/mob/proc/set_lighting_alpha(value)
+	if(lighting_alpha != value)
+		lighting_alpha = value
+		SEND_SIGNAL(src, COMSIG_MOB_LIGHTING_ALPHA_CHANGED, value)
 
 /datum/hud/proc/ButtonNumberToScreenCoords(number) // TODO : Make this zero-indexed for readabilty
 	var/row = round((number-1)/AB_MAX_COLUMNS)
@@ -282,13 +286,21 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_INSIDE
 
-/datum/action/item_action/CheckRemoval(mob/living/user)
+/datum/action/item_action/Activate()
+	var/obj/item/I = target
+	I.attack_self(usr)
+
+/datum/action/item_action/IsAvailable()
+	return TRUE
+
+/datum/action/item_action/CheckRemoval(mob/user)
 	return !(target in user)
 
 /datum/action/item_action/hands_free
-	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_INSIDE|AB_CHECK_ALIVE
+
 
 //Preset for spells
 /datum/action/spell_action
@@ -296,26 +308,35 @@
 	check_flags = 0
 	background_icon_state = "bg_spell"
 
+/datum/action/spell_action/Grant(mob/T)
+	. = ..()
+	if(istype(target, /obj/effect/proc_holder/spell))
+		var/obj/effect/proc_holder/spell/S = target
+		if(S.charge_max < 1)
+			START_PROCESSING(SSaction_buttons, src)
+
+/datum/action/spell_action/process()
+	UpdateButtonIcon()
+
 /datum/action/spell_action/UpdateName()
 	var/obj/effect/proc_holder/spell/spell = target
 	return spell.name
 
 /datum/action/spell_action/IsAvailable()
 	if(!target)
-		return 0
+		return FALSE
 	var/obj/effect/proc_holder/spell/spell = target
 
 	if(usr)
 		return spell.can_cast(usr)
-	else
-		if(owner)
-			return spell.can_cast(owner)
-	return 1
+	else if(owner)
+		return spell.can_cast(owner)
+	return TRUE
 
 /datum/action/spell_action/CheckRemoval()
 	if(owner.mind)
 		if(target in owner.mind.spell_list)
-			return 0
+			return FALSE
 	return !(target in owner.spell_list)
 
 #undef AB_WEST_OFFSET

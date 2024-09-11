@@ -16,8 +16,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, atom/firestarter)
+	return FALSE
 
-
+// todo: exposed_volume not used and idk what should do, should be removed
 /turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, atom/firestarter)
 	if(fire_protection > world.time - 300)
 		return FALSE
@@ -36,7 +37,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		create_fire(exposed_temperature)
 
 		if(firestarter)
-			if (firestarter.fingerprintslast && istype(firestarter, /obj/item))
+			if (firestarter.fingerprintslast && isitem(firestarter))
 				message_admins("Fire started at [COORD(src)] [ADMIN_JMP(src)] by [firestarter] [ADMIN_JMP(firestarter)] [ADMIN_FLW(firestarter)] Last touched by: <B>[firestarter.fingerprintslast]</B>")
 				log_game("Fire started at [COORD(src)] by [firestarter]. Last touched by: [firestarter.fingerprintslast].")
 			else
@@ -116,6 +117,53 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	return FALSE
 
+// todo: check effect/hotspot on tg, possible future refactoring needed
+// wrote it because create_fire() and /obj/fire will die right after spawn without fuel
+/obj/effect/firewave
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	blend_mode = BLEND_ADD
+
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "1"
+	light_color = LIGHT_COLOR_FIRE
+	layer = OBJ_LAYER
+	plane = LIGHTING_LAMPS_PLANE
+	flags = ABSTRACT
+
+/obj/effect/firewave/atom_init(mapload, temperature = 1000)
+	. = ..()
+
+	var/turf/T = get_turf(src)
+
+	if(isspaceturf(T))
+		return INITIALIZE_HINT_QDEL
+
+	var/datum/gas_mixture/air_contents = T.return_air()
+	if(!air_contents)
+		return INITIALIZE_HINT_QDEL
+
+	// todo: increase air temperature?
+	// todo: should FireBurn and fire_act be part of hotspot_expose?
+
+	var/fire_started = T.hotspot_expose(temperature) // can start real fire if possible
+
+	// part copypaste from obj/fire below
+	T.fire_act(exposed_temperature = temperature)
+
+	for(var/atom/A in T)
+		A.fire_act(exposed_temperature = temperature)
+
+	if(fire_started) // fire will handle visual
+		return INITIALIZE_HINT_QDEL
+
+	// else do temp fire flash
+	color = heat2color(temperature)
+	set_light(3, 3, color)
+
+	QDEL_IN(src, 2 SECONDS)
+
 /obj/fire
 	// Icon for fire on turfs.
 
@@ -128,6 +176,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	icon_state = "1"
 	light_color = LIGHT_COLOR_FIRE
 	layer = OBJ_LAYER
+	plane = LIGHTING_LAMPS_PLANE
 	flags = ABSTRACT
 
 	var/firelevel = 1 //Calculated by gas_mixture.calculate_firelevel()
@@ -155,7 +204,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		set_light(3, 1)
 
 	for(var/mob/living/L in loc)
-		L.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure())  //Burn the mobs!
+		L.FireBurn(firelevel, air_contents.temperature, air_contents.return_relative_density())  //Burn the mobs!
 
 	loc.fire_act(air_contents, air_contents.temperature, air_contents.volume)
 	for(var/atom/A in loc)
@@ -183,7 +232,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 					continue
 
 				//Spread the fire.
-				if(prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && my_tile.CanPass(null, enemy_tile, 0,0) && enemy_tile.CanPass(null, my_tile, 0,0))
+				if(prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && my_tile.CanPass(null, enemy_tile, 0))
 					enemy_tile.create_fire(firelevel)
 
 			else
@@ -264,6 +313,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 		total_fuel = gas_fuel + liquid_fuel
 		if(total_fuel <= 0.005)
+			#ifdef FIREDBG
+			log_debug("Burning canceled because no fuel!")
+			#endif
 			return FALSE
 
 		//*** Determine how fast the fire burns
@@ -400,12 +452,12 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	return max(0, firelevel)
 
 
-/mob/living/proc/FireBurn(firelevel, last_temperature, pressure)
-	var/mx = 5 * firelevel / vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
+/mob/living/proc/FireBurn(firelevel, last_temperature, air_multiplier)
+	var/mx = 5 * firelevel / vsc.fire_firelevel_multiplier * air_multiplier
 	apply_damage(2.5 * mx, BURN)
 
 
-/mob/living/carbon/human/FireBurn(firelevel, last_temperature, pressure)
+/mob/living/carbon/human/FireBurn(firelevel, last_temperature, air_multiplier)
 	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.
 	//Due to TG reworking how fireprotection works, this is kinda less meaningful.
 
@@ -432,8 +484,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 				legs_exposure = 0
 			if(C.body_parts_covered & ARMS)
 				arms_exposure = 0
-	//minimize this for low-pressure enviroments
-	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
+
+	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * air_multiplier
 
 	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 

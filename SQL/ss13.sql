@@ -36,6 +36,7 @@ CREATE TABLE `erro_ban` (
   `ckey` varchar(32) NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `ip` varchar(32) NOT NULL,
+  `ingameage` varchar(32) NOT NULL DEFAULT '0',
   `a_ckey` varchar(32) NOT NULL,
   `a_computerid` varchar(32) NOT NULL,
   `a_ip` varchar(32) NOT NULL,
@@ -54,12 +55,15 @@ CREATE TABLE `erro_ban` (
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `erro_connection_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `datetime` datetime DEFAULT NULL,
+  `datetime` datetime NOT NULL,
   `serverip` varchar(32) NOT NULL,
-  `ckey` varchar(45) DEFAULT NULL,
+  `ckey` varchar(45) NOT NULL,
   `ip` varchar(32) NOT NULL,
-  `computerid` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `computerid` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_uniq_history` (`ckey`,`datetime`,`computerid`,`ip`),
+  KEY `idx_history_cid` (`computerid`,`ckey`),
+  KEY `idx_history_ip` (`ip`,`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -187,6 +191,7 @@ CREATE TABLE `erro_messages` (
   `adminckey` varchar(32) NOT NULL,
   `text` varchar(2048) NOT NULL,
   `timestamp` datetime NOT NULL,
+  `ingameage` varchar(32) NOT NULL DEFAULT '0',
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
   `round_id` int(11) unsigned NOT NULL,

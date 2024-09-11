@@ -16,10 +16,10 @@
 		return
 
 	if(usr.client)
-		if(usr.client.prefs.muted & MUTE_PRAY)
+		if(usr.client.prefs.muted & MUTE_PRAY || IS_ON_ADMIN_CD(usr.client, ADMIN_CD_PRAY))
 			to_chat(usr, "<span class='warning'>You cannot pray (muted).</span>")
 			return
-		if(client.handle_spam_prevention(msg,MUTE_PRAY))
+		if(client.handle_spam_prevention(msg,ADMIN_CD_PRAY))
 			return
 
 	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage.dmi', "bible")
@@ -48,13 +48,9 @@
 		deity = "their progenitor"
 
 	//parse the language code and consume it
-	var/datum/language/speaking = parse_language(msg)
-	if(speaking)
-		msg = copytext_char(msg, 2 + length_char(speaking.key))
-	else if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.species.force_racial_language)
-			speaking = all_languages[H.species.language]
+	var/list/parsed = parse_language(msg)
+	msg = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	if(speaking)
 		msg = speaking.color_message(msg)
@@ -89,7 +85,7 @@
 			continue
 
 
-	for(var/mob/living/simple_animal/shade/god/G in gods_list)
+	for(var/mob/living/simple_animal/shade/god/G as anything in gods_list)
 		if(G.client && (G.client.prefs.chat_toggles & CHAT_PRAYER))
 			if(G == src) // Don't hear your own prayer.
 				continue
@@ -108,7 +104,7 @@
 
 /mob/living/carbon/human/pray_act(message, speaking, alt_name, verb_)
 	if(whisper_say(message, speaking, alt_name, "prays quietly"))
-		INVOKE_ASYNC(src, /mob.proc/pray_animation)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, pray_animation))
 	else
 		// Mimes, and other mute beings.
 		emote("pray")
@@ -124,7 +120,7 @@
 	next_pray_anim = world.time + 1 SECOND
 
 	// So restrained people can also pray.
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	//Show an image of the wielded weapon over the person who got dunked.
@@ -153,7 +149,7 @@
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
 	text = "<span class='notice'><b><font color=orange>CENTCOMM[iamessage ? " IA" : ""]:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [text]</span>"
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		to_chat(C, text)
 
 /proc/Syndicate_announce(text , mob/Sender)
@@ -165,5 +161,5 @@
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
 	text = "<span class='notice'><b><font color=crimson>SYNDICATE:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [text]</span>"
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		to_chat(C, text)

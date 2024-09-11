@@ -1,5 +1,8 @@
+var/global/list/guard_blacklist = list("IP" = list(), "ISP" = list())
+
 /datum/guard
 	var/client/holder
+
 	var/total_alert_weight = 0
 	var/bridge_reported = FALSE
 
@@ -10,7 +13,7 @@
 	var/list/geoip_data
 	var/geoip_processed = FALSE
 
-	var/list/chat_data = list("cookie_match", "charset")
+	var/list/chat_data = list("cookie_match", "charset", "local_time")
 	var/chat_processed = FALSE
 
 	var/first_entry = FALSE
@@ -26,9 +29,10 @@
 	if(!config.guard_enabled)
 		return
 
-	addtimer(CALLBACK(src, .proc/trigger_init), 20 SECONDS) // time for other systems to collect data
+	addtimer(CALLBACK(src, PROC_REF(trigger_init)), 20 SECONDS) // time for other systems to collect data
 
 /datum/guard/proc/trigger_init()
+	// if client was lost somehow, mob/login should restart test again
 	if(holder && isnum(holder.player_ingame_age) && holder.player_ingame_age < GUARD_CHECK_AGE)
 		load_geoip() // this may takes a few minutes in bad case
 
@@ -41,11 +45,12 @@
 			process_autoban()
 
 /datum/guard/proc/do_announce()
+	log_admin("GUARD: new player [key_name(holder)] is suspicious with [total_alert_weight] weight[log_end] | [short_report]")
+
 	if(!total_alert_weight || total_alert_weight < 1)
 		return
 
 	message_admins("GUARD: new player [key_name_admin(holder)] is suspicious with [total_alert_weight] weight (<a href='?_src_=holder;guard=\ref[holder.mob]'>report</a>)", R_LOG)
-	log_admin("GUARD: new player [key_name(holder)] is suspicious with [total_alert_weight] weight[log_end]\nGUARD: [short_report]")
 
 	if(!bridge_reported)
 		bridge_reported = TRUE
@@ -81,12 +86,11 @@
 		if(geoip_data["countryCode"] && length(config.guard_whitelisted_country_codes) && !(geoip_data["countryCode"] in config.guard_whitelisted_country_codes))
 			geoip_weight += geoip_data["proxy"]   ? 1 : 0
 			geoip_weight += geoip_data["hosting"] ? 1 : 0
+			geoip_weight += geoip_data["mobile"]  ? 1 : 0
 		else
-			geoip_weight += geoip_data["proxy"]   ? 0.5 : 0 // low weight because false-positives
+			geoip_weight += geoip_data["proxy"]   ? 0.5 : 0 // low weight because of false-positives
 			geoip_weight += geoip_data["hosting"] ? 0.5 : 0 // same
-
-
-		geoip_weight += geoip_data["mobile"]  ? 0.2 : 0
+			geoip_weight += geoip_data["mobile"]  ? 0.2 : 0
 
 		geoip_weight += geoip_data["ipintel"]>=0.9 ? geoip_data["ipintel"] : 0
 
@@ -97,9 +101,34 @@
 		Remember: next flags may be false-positives!<br>
 		Proxy: [geoip_data["proxy"]];<br> Mobile: [geoip_data["mobile"]];<br> Hosting: [geoip_data["hosting"]];<br> Ipintel: [geoip_data["ipintel"]];</div>"}
 
-		new_short_report += "Geoip:[geoip_data["proxy"]],[geoip_data["mobile"]],[geoip_data["hosting"]],[geoip_data["ipintel"]]; "
-
+		new_short_report += "Geoip([geoip_data["isp"]]):[geoip_data["proxy"]],[geoip_data["mobile"]],[geoip_data["hosting"]],[geoip_data["ipintel"]]; "
 		total_alert_weight += geoip_weight
+
+	/* blacklist */
+	if(geoip_processed && geoip_data["isp"])
+		var/blacklist_weight = 0
+
+		var/bad_isp = FALSE
+		var/bad_ip = FALSE
+
+		if(geoip_data["isp"] in guard_blacklist["ISP"])
+			bad_isp = TRUE
+
+		for(var/mask in guard_blacklist["ISP"]) 
+			if(findtext(holder.address, mask)) // real ip masks?
+				bad_isp = TRUE
+				break
+
+		if(bad_isp | bad_ip)
+			blacklist_weight += 1
+			new_report += {"<div class='Section'><h3>GeoIP Blacklist ([blacklist_weight]):</h3>
+			[bad_isp ? "ISP in blacklist; " : ""]
+			[bad_ip ? "IP in blacklist; " : ""]
+			</div>"}
+
+			new_short_report += "[bad_isp ? "BADISP " : ""][bad_ip ? "BADIP " : ""](tw: [blacklist_weight]); "
+
+		total_alert_weight += blacklist_weight
 
 	/* country */
 	if(geoip_processed && geoip_data["countryCode"] && length(config.guard_whitelisted_country_codes))
@@ -127,24 +156,6 @@
 
 		total_alert_weight += cookie_weight
 
-	/* ru-specific, not sure about it. 513/post-IE should be removed */
-	/*
-	if(length(config.guard_whitelisted_country_codes) && chat_processed)
-		var/charset_weight = 0
-		if(!(geoip_data["countryCode"] in config.guard_whitelisted_country_codes) && chat_data["charset"] == "windows1251")
-			charset_weight += 1
-
-			if(first_entry)
-				charset_weight += 0.5 // how he know
-
-			new_report += {"<div class='Section'><h3>Charset ([charset_weight]):</h3>
-			Charset not ordinary for country[first_entry ? " <b>in the first entry</b>" : ""].</div>"}
-
-			new_short_report += "Charset test failed(tw: [charset_weight]); "
-
-		total_alert_weight += charset_weight
-	*/
-
 	/* database related accounts */
 	if((length(holder.related_accounts_cid) && holder.related_accounts_cid != "Requires database") || (length(holder.related_accounts_ip) && holder.related_accounts_ip != "Requires database"))
 		var/related_db_weight = 0
@@ -162,25 +173,36 @@
 
 		total_alert_weight += related_db_weight
 
-	if(holder.prefs.cid_list.len > 1)
+	if(holder.prefs.cid_count > 1)
 		var/multicid_weight = 0
 		var/allowed_amount = 1
 
 		if(isnum(holder.player_age) && holder.player_age > 60)
 			allowed_amount++
 
-		multicid_weight += min(((holder.prefs.cid_list.len - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
+		multicid_weight += min(((holder.prefs.cid_count - allowed_amount) * 0.35), 2) // new account, should not be many. 4 cids in the first hour -> +1 weight
 
 		new_report += {"<div class='Section'><h3>Differents CID's ([multicid_weight]):</h3>
-		Has [holder.prefs.cid_list.len] different computer_id.</div>"}
+		Has [holder.prefs.cid_count] different computer_id.</div>"}
 
-		new_short_report += "Has [holder.prefs.cid_list.len] CID's (tw: [multicid_weight]); "
+		new_short_report += "Has [holder.prefs.cid_count] CID's (tw: [multicid_weight]); "
 
 		total_alert_weight += multicid_weight
 
+	/* timezone test */
+	if(chat_processed && chat_data["local_time"] && geoip_processed && geoip_data["offset"])
+		var/timeoffset = text2num(geoip_data["offset"])
+		var/local_time = chat_data["local_time"]
+		if(isnum(timeoffset) && isnum(local_time))
+			var/deviation = abs(local_time - timeoffset)
+			if(deviation >= 3600) // if local timezone differs from geoip timezone by 3600 seconds
+				var/deviation_weight = 0.7
+				new_report += "<div class='Section'><h3>Timezone deviation ([deviation_weight]).</h3></div>"
+				new_short_report += "TZ deviation (tw: [deviation_weight]); "
+				total_alert_weight += deviation_weight
+
 	// todo:
 	// age & byond profile tests (useless)
-	// timezone tests
 	// speedrun tests
 
 	/* No more tests, prepare reports (todo: some cleanup needet) */
@@ -236,7 +258,7 @@
 		geoip_processed = TRUE
 		return
 
-	geoip_data = get_geoip_data("http://ip-api.com/json/[holder.address]?fields=country,countryCode,regionName,city,isp,mobile,proxy,hosting")
+	geoip_data = get_geoip_data("http://ip-api.com/json/[holder.address]?fields=country,countryCode,regionName,city,isp,mobile,proxy,hosting,offset")
 
 	if(!geoip_data)
 		return
@@ -282,8 +304,6 @@
 
 	var/reason = config.guard_autoban_reason
 
-	AddBan(holder.ckey, holder.computer_id, reason, "taukitty", 0, 0, holder.mob.lastKnownIP) // legacy bans base
-
 	DB_ban_record_2(BANTYPE_PERMA, holder.mob, -1, reason) // copypaste, bans refactoring needed
 	feedback_inc("ban_perma",1)
 
@@ -295,8 +315,8 @@
 	if(config.banappeals)
 		to_chat(holder, "<span class='red'>To try to resolve this matter head to [config.banappeals]</span>")
 
-	log_admin("Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
-	message_admins("Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
+	log_admin("GUARD: Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
+	message_admins("GUARD: Tau Kitty has banned [holder.ckey].\nReason: [reason]\nThis is a permanent ban.")
 
 	if(config.guard_autoban_sticky)
 		var/list/ban = list()

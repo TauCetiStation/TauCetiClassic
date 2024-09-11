@@ -4,7 +4,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/change
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
-	fire_delay = 30
+	fire_delay = 120
 	max_charges = 1
 
 /obj/item/weapon/gun/magic/animate
@@ -13,7 +13,6 @@
 	ammo_type = /obj/item/ammo_casing/magic/animate
 	icon_state = "staffofanimation"
 	item_state = "staffofanimation"
-	item_color = "staffofanimation"
 
 /obj/item/weapon/gun/magic/healing
 	name = "staff of healing"
@@ -30,3 +29,10 @@
 	icon_state = "staffofdoor"
 	item_state = "staffofdoor"
 	fire_sound = 'sound/magic/Staff_Door.ogg'
+
+/obj/item/weapon/gun/magic/fireball
+	name = "staff of fireball"
+	icon_state = "lavastaff"
+	item_state = "lavastaff"
+	desc = "An artefact that spits a fireball."
+	ammo_type = /obj/item/ammo_casing/magic/fireball

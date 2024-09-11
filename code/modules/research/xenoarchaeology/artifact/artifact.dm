@@ -46,16 +46,20 @@
 	var/excavation_level = 0
 	var/datum/geosample/geological_data
 	var/datum/artifact_find/artifact_find
-	var/last_act = 0
 
 /obj/structure/boulder/atom_init()
 	. = ..()
-	icon_state = "boulder[rand(1,4)]"
-	excavation_level = rand(5,50)
+	icon_state = "boulder[rand(1, 4)]"
+	excavation_level = rand(5, 50)
 
 /obj/structure/boulder/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_RAPID)
+
+	if (user.is_busy(src))
+		return
+
 	if (istype(W, /obj/item/device/core_sampler))
-		src.geological_data.artifact_distance = rand(-100,100) / 100
+		src.geological_data.artifact_distance = rand(-100, 100) / 100
 		src.geological_data.artifact_id = artifact_find.artifact_id
 
 		var/obj/item/device/core_sampler/C = W
@@ -68,19 +72,24 @@
 		return
 
 	if (istype(W, /obj/item/device/measuring_tape))
-		if(user.is_busy()) return
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
-		if(P.use_tool(src, user, 40))
+		if(P.use_tool(src, user, 4 SECOND))
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*src.excavation_level]cm.</span>")
 		return
 
+	if (istype(W, /obj/item/weapon/sledgehammer))
+		var/obj/item/weapon/sledgehammer/S = W
+		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
+			user.do_attack_animation(src)
+			shake_camera(user, 1, 0.37)
+			playsound(src, 'sound/misc/sledgehammer_hit_rock.ogg', VOL_EFFECTS_MASTER)
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You need to take it with both hands to break it!</span>")
+
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
-
-		if(last_act + 50 * P.toolspeed > world.time)//prevents message spam
-			return
-		last_act = world.time
 
 		to_chat(user, "<span class='warning'>You start [P.drill_verb] [src].</span>")
 
@@ -116,17 +125,17 @@
 	. = ..()
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
-			attackby(H.l_hand,H)
-		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
-			attackby(H.r_hand,H)
+		if(istype(H.l_hand, /obj/item/weapon/pickaxe))
+			attackby(H.l_hand, H)
+		else if(istype(H.r_hand, /obj/item/weapon/pickaxe))
+			attackby(H.r_hand, H)
 
 	else if(isrobot(AM))
 		var/mob/living/silicon/robot/R = AM
-		if(istype(R.module_active,/obj/item/weapon/pickaxe))
-			attackby(R.module_active,R)
+		if(istype(R.module_active, /obj/item/weapon/pickaxe))
+			attackby(R.module_active, R)
 
-	else if(istype(AM,/obj/mecha))
+	else if(istype(AM, /obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
+		if(istype(M.selected, /obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)

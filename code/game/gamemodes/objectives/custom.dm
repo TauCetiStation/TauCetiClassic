@@ -27,3 +27,6 @@
 			explanation_text = "Kill all monkeys aboard the station."
 		else
 			explanation_text = "Make certain at least 80% of the station evacuates on the shuttle."
+
+/datum/objective/custom/clowns
+	explanation_text = "Emag as many things as you can! HONK!"

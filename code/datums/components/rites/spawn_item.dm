@@ -43,10 +43,10 @@
 
 		rite.add_tips(tips_to_add)
 
-	RegisterSignal(parent, list(COMSIG_RITE_CAN_START), .proc/check_items_on_altar)
-	RegisterSignal(parent, list(COMSIG_RITE_IN_STEP), .proc/update_fake_item)
-	RegisterSignal(parent, list(COMSIG_RITE_INVOKE_EFFECT), .proc/replace_fake_item)
-	RegisterSignal(parent, list(COMSIG_RITE_FAILED_CHECK), .proc/revert_effects)
+	RegisterSignal(parent, list(COMSIG_RITE_CAN_START), PROC_REF(check_items_on_altar))
+	RegisterSignal(parent, list(COMSIG_RITE_IN_STEP), PROC_REF(update_fake_item))
+	RegisterSignal(parent, list(COMSIG_RITE_INVOKE_EFFECT), PROC_REF(replace_fake_item))
+	RegisterSignal(parent, list(COMSIG_RITE_FAILED_CHECK), PROC_REF(revert_effects))
 
 /datum/component/rite/spawn_item/Destroy()
 	clear_lists()
@@ -143,7 +143,7 @@
 	if(sacrifice_type)
 		for(var/I in illusion_to_sacrifice)
 			animate(I, time = 2.8 SECONDS, alpha = 255)
-	addtimer(CALLBACK(src, .proc/pull_out_items, AOG), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(pull_out_items), AOG), 3 SECONDS)
 
 /datum/component/rite/spawn_item/proc/pull_out_items(obj/AOG)
 	for(var/obj/item/item in AOG.contents)

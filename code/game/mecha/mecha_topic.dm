@@ -130,7 +130,7 @@
 						<div class='links'>
 						<a href='?src=\ref[src];toggle_id_upload=1'><span id='t_id_upload'>[add_req_access?"L":"Unl"]ock ID upload panel</span></a><br>
 						<a href='?src=\ref[src];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
-						<a href='?src=\ref[src];dna_lock=1'>DNA-lock</a><br>
+						[dna_lockable?"<a href='?src=\ref[src];dna_lock=1'>DNA-lock</a><br>":null]
 						<a href='?src=\ref[src];view_log=1'>View internal log</a><br>
 						<a href='?src=\ref[src];change_name=1'>Change exosuit name</a><br>
 						</div>
@@ -234,6 +234,8 @@
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["select_equip"])
 		if(usr != src.occupant)
+			return
+		if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to switch selected equipment.</span>"))
 			return
 		playsound(src, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, null, -3)
 		var/obj/item/mecha_parts/mecha_equipment/equip = F.getObj("select_equip")
@@ -403,11 +405,16 @@
 	if(href_list["dna_lock"])
 		if(usr != src.occupant)
 			return
-		if(istype(occupant, /mob/living/carbon/brain))
+		if(!dna_lockable)
+			return
+		if(isbrain(occupant))
 			occupant_message("You are a brain. No.")
 			occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			return
 		if(src.occupant)
+			if(!occupant.dna.unique_enzymes)
+				to_chat(occupant, "<span class='warning'>No DNA was found.</span>")
+				return
 			src.dna = src.occupant.dna.unique_enzymes
 			occupant_message("You feel a prick as the needle takes your DNA sample.")
 			occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -424,11 +431,10 @@
 		occupant_message("Recalibrating coordination system.")
 		log_message("Recalibration of coordination system started.")
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		addtimer(CALLBACK(src, .proc/stationary_repair), TIME_TO_RECALIBRATION, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(stationary_repair), loc), TIME_TO_RECALIBRATION, TIMER_UNIQUE)
 
 	return
 
-///Repairs internal damage if the mech hasn't moved.
 /obj/mecha/proc/stationary_repair(location)
 	if(location == loc)
 		clearInternalDamage(MECHA_INT_CONTROL_LOST)

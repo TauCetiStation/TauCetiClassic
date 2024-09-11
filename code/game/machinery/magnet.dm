@@ -9,7 +9,6 @@
 	icon_state = "floor_magnet-f"
 	name = "Electromagnetic Generator"
 	desc = "A device that uses station power to create points of magnetic energy."
-	level = 1		// underfloor
 	layer = 2.5
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -30,29 +29,14 @@
 
 /obj/machinery/magnetic_module/atom_init()
 	. = ..()
-	var/turf/T = loc
-	hide(T.intact)
-	center = T
+	center = loc
 	radio_controller.add_object(src, freq, RADIO_MAGNETS)
-	INVOKE_ASYNC(src, .proc/magnetic_process)
+	INVOKE_ASYNC(src, PROC_REF(magnetic_process))
 
-	// update the invisibility and icon
-/obj/machinery/magnetic_module/hide(intact)
-	invisibility = intact ? 101 : 0
-	updateicon()
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
-	// update the icon_state
 /obj/machinery/magnetic_module/proc/updateicon()
-	var/state = "floor_magnet"
-	var/onstate = ""
-	if(!on)
-		onstate = "0"
-
-	if(invisibility)
-		icon_state = "[state][onstate]-f"	// if invisible, set icon to faded version
-											// in case of being revealed by T-scanner
-	else
-		icon_state = "[state][onstate]"
+	icon_state = "floor_magnet[on ? "" : "0"]"
 
 /obj/machinery/magnetic_module/receive_signal(datum/signal/signal)
 	var/command = signal.data["command"]
@@ -171,7 +155,7 @@
 					step_towards(M, center)
 
 			for(var/mob/living/silicon/S in orange(magnetic_field, center))
-				if(istype(S, /mob/living/silicon/ai))
+				if(isAI(S))
 					continue
 				step_towards(S, center)
 
@@ -305,7 +289,9 @@
 					speed = 1
 			if("setpath")
 				var/newpath = sanitize_safe(input(usr, "Please define a new path!",,input_default(path)) as text|null)
-				if(newpath && newpath != "")
+				if(!can_still_interact_with(usr))
+					return
+				if(length(newpath))
 					moving = 0 // stop moving
 					path = newpath
 					pathpos = 1 // reset position

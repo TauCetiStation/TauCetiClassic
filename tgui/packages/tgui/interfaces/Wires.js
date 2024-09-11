@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
@@ -19,27 +18,27 @@ export const Wires = (props, context) => {
               <LabeledList.Item
                 key={wire.color}
                 className="candystripe"
-                label={wire.label ? wire.label : "Wire"}
+                label={wire.label ? wire.label : "Провода"}
                 labelColor={wire.color}
                 color={wire.color}
                 buttons={(
-                  <Fragment>
+                  <>
                     <Button
-                      content={wire.cut ? 'Mend' : 'Cut'}
+                      content={wire.cut ? 'Соединить' : 'Перерезать'}
                       onClick={() => act('cut', {
                         wire: wire.wire,
                       })} />
                     <Button
-                      content="Pulse"
+                      content="Пульс"
                       onClick={() => act('pulse', {
                         wire: wire.wire,
                       })} />
                     <Button
-                      content={wire.attached ? 'Detach' : 'Attach'}
+                      content={wire.attached ? 'Отсоединить' : 'Присоединить'}
                       onClick={() => act('attach', {
                         wire: wire.wire,
                       })} />
-                  </Fragment>
+                  </>
                 )} />
             ))}
           </LabeledList>

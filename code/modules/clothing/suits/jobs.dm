@@ -15,19 +15,18 @@
 //Captain
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"
-	desc = "Worn by a Captain to show their class."
+	desc = "Worn by a Captain to show their class. Also has some space for armor plate."
 	icon_state = "captunic"
 	item_state = "bio_suit"
+	valid_accessory_slots = list("armband", "decor", "armor")
+	restricted_accessory_slots = list("armband", "armor")
 	body_parts_covered = UPPER_TORSO|ARMS
 	flags_inv = HIDEJUMPSUIT
 
 /obj/item/clothing/suit/captunic/capjacket
 	name = "captain's uniform jacket"
-	desc = "A less formal jacket for everyday captain use."
+	desc = "A less formal jacket for everyday captain use. Also has some space for armor plate."
 	icon_state = "capjacket"
-	item_state = "bio_suit"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
 
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
@@ -87,7 +86,7 @@
 		icon_state = "nun"
 		to_chat(usr, "You let off your sleeves.")
 		sleeves = TRUE
-	usr.update_inv_wear_suit()
+	update_inv_mob()
 
 //Chef
 /obj/item/clothing/suit/chef
@@ -98,42 +97,74 @@
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	allowed = list (/obj/item/weapon/kitchenknife)
+	var/rolled = FALSE
+
+/obj/item/clothing/suit/chef/verb/roll_down()
+	set name = "Rolled Down Apron"
+	set category = "Object"
+	set src in usr
+
+	if(usr.incapacitated())
+		return
+
+	if(rolled)
+		icon_state = initial(icon_state)
+		item_state = initial(icon_state)
+		to_chat(usr, "You roll up [src] sleeves")
+		rolled = FALSE
+	else
+		icon_state += "_r"
+		item_state += "_r"
+		to_chat(usr, "You roll down [src] sleeves")
+		rolled = TRUE
+	update_inv_mob()
 
 //Chef
-/obj/item/clothing/suit/chef/classic
-	name = "A classic chef's apron."
+/obj/item/clothing/suit/chef_classic
+	name = "A classic chef's apron"
 	desc = "A basic, dull, white chef's apron."
 	icon_state = "apronchef"
 	item_state = "apronchef"
 	blood_overlay_type = "armor"
-	body_parts_covered = 0
+	gas_transfer_coefficient = 0.90
+	permeability_coefficient = 0.50
+	allowed = list (/obj/item/weapon/kitchenknife, /obj/item/weapon/kitchen/rollingpin)
+
 
 //Detective
 /obj/item/clothing/suit/storage/det_suit
-	name = "brown coat"
+	name = "detective's brown trenchcoat"
 	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "detective_brown"
-	item_state = "det_suit"
+	icon_state = "detective_trenchcoat_brown"
+	item_state = "detective_trenchcoat_brown"
 	blood_overlay_type = "coat"
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
+	var/is_fasten = TRUE
 
-/obj/item/clothing/suit/storage/det_suit/grey
-	name = "grey coat"
-	icon_state = "detective_grey"
+/obj/item/clothing/suit/storage/det_suit/verb/toggle()
+	set name = "Toggle Trenchcoat Belt"
+	set category = "Object"
+	set src in usr
 
-/obj/item/clothing/suit/storage/det_suit/black
-	name = "black coat"
-	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "maxcoat"
+	if(usr.incapacitated())
+		return
 
-/obj/item/clothing/suit/storage/det_suit/noir_trenchcoat
-	name = "dark grey trenchcoat"
-	desc = "A hard-boiled private investigator's dark grey trenchcoat."
-	icon_state = "trenchcoat_darkgrey"
-	item_state = "trenchcoat_darkgrey"
+	if(!is_fasten)
+		icon_state = initial(icon_state)
+		to_chat(usr, "You have fasteneded [src]")
+		is_fasten = TRUE
+	else
+		icon_state += "_open"
+		to_chat(usr, "You have unfastened [src]")
+		is_fasten = FALSE
+	update_inv_mob()
+
+/obj/item/clothing/suit/storage/det_suit/gray
+	name = "detective's gray trenchcoat"
+	icon_state = "detective_trenchcoat_gray"
+	item_state = "detective_trenchcoat_gray"
 
 //Forensics
 /obj/item/clothing/suit/storage/forensics
@@ -147,12 +178,14 @@
 /obj/item/clothing/suit/storage/forensics/red
 	name = "red jacket"
 	desc = "A red forensics technician jacket."
-	icon_state = "forensics_red"
+	icon_state = "forensicsredsuit"
+	item_state = "forensicsredsuit"
 
 /obj/item/clothing/suit/storage/forensics/blue
 	name = "blue jacket"
 	desc = "A blue forensics technician jacket."
-	icon_state = "forensics_blue"
+	icon_state = "forensicsblusuit"
+	item_state = "forensicsblusuit"
 
 //Engineering
 /obj/item/clothing/suit/storage/hazardvest
@@ -217,7 +250,7 @@
 		else
 			to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
 			return
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_mob() //so our overlays update
 
 //Medical
 /obj/item/clothing/suit/storage/fr_jacket
@@ -245,7 +278,7 @@
 		if("fr_jacket")
 			src.icon_state = "fr_jacket_open"
 			to_chat(usr, "You unbutton the jacket.")
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_mob() //so our overlays update
 
 //Mime
 /obj/item/clothing/suit/suspenders
@@ -255,33 +288,6 @@
 	icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	body_parts_covered = 0
-
-//Recycler
-/obj/item/clothing/suit/recyclervest
-    name = "recycler vest"
-    desc = "This is Recycler vest."
-    icon = 'icons/obj/clothing/suits.dmi'
-    icon_state = "recycler_vest_open"
-    item_state = "recycler_vest"
-    blood_overlay_type = "coat" //it's the less thing that I can put here
-    body_parts_covered = 0
-    action_button_name = "Toggle vest buttons"
-
-/obj/item/clothing/suit/recyclervest/ui_action_click()
-    toggle()
-
-/obj/item/clothing/suit/recyclervest/proc/toggle()
-    switch(icon_state)
-        if("recycler_vest_open")
-            src.icon_state = "recycler_vest"
-            to_chat(usr, "You button up the vest.")
-        if("recycler_vest")
-            src.icon_state = "recycler_vest_open"
-            to_chat(usr, "You unbutton the jacket.")
-        else
-            to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
-            return
-    usr.update_inv_wear_suit()    //so our overlays update
 
 /obj/item/clothing/suit/surgicalapron
 	name = "surgical apron"

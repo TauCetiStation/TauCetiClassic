@@ -1,0 +1,1300 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/environment/space,
+/area/space)
+"ab" = (
+/turf/simulated/wall,
+/area/space_structures/export_outpost)
+"ac" = (
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space)
+"ad" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "export"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"ae" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"af" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/export_outpost)
+"ag" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"ah" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/sign/poster/contraband/syndicate_recruitment{
+	pixel_y = -32
+	},
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"ai" = (
+/obj/machinery/power/apc{
+	environ = 0;
+	lighting = 0
+	},
+/obj/structure/cable,
+/obj/item/weapon/screwdriver,
+/obj/machinery/alarm{
+	dir = 8;
+	hidden_from_console = 1;
+	pixel_x = 24
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"aj" = (
+/obj/machinery/vending/snack{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"al" = (
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"am" = (
+/obj/machinery/vending/chinese{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost{
+	dir = 1;
+	pixel_y = -7
+	})
+"aq" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"ar" = (
+/obj/structure/lattice,
+/turf/simulated/wall,
+/area/space_structures/export_outpost)
+"as" = (
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"at" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"au" = (
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"av" = (
+/obj/structure/stool/bed/chair/comfy/white{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aw" = (
+/obj/machinery/vending/coffee{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"ax" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"az" = (
+/obj/machinery/vending/cola{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aA" = (
+/obj/machinery/light,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"aB" = (
+/obj/structure/table,
+/obj/item/ashtray/plastic,
+/obj/item/weapon/cigbutt,
+/obj/item/weapon/cigbutt,
+/obj/item/weapon/cigbutt,
+/obj/item/weapon/cigbutt/cigarbutt,
+/obj/item/weapon/cigbutt,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"aC" = (
+/obj/machinery/vending/clothing{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/obj/machinery/light,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aD" = (
+/obj/machinery/vending/cigarette{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aE" = (
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/export_outpost)
+"aF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"aG" = (
+/obj/machinery/light,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"aH" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"aI" = (
+/obj/machinery/computer/export{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal{
+	dir = 9;
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/export_outpost)
+"aJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aK" = (
+/obj/item/weapon/cigbutt,
+/obj/item/weapon/cigbutt,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"aL" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall,
+/area/space_structures/export_outpost)
+"aM" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"aN" = (
+/obj/structure/sign/poster/contraband/robust_softdrinks{
+	pixel_x = -32
+	},
+/obj/item/weapon/cigbutt/cigarbutt,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "yellowchecker"
+	},
+/area/space_structures/export_outpost)
+"aO" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"aP" = (
+/obj/machinery/vending/donut{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aQ" = (
+/obj/machinery/vending/junkfood{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/obj/structure/sign/poster/contraband/revolver{
+	pixel_y = 32
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"aS" = (
+/obj/machinery/export_pad,
+/obj/effect/decal/turf_decal{
+	dir = 10;
+	icon_state = "warn"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/export_outpost)
+"aT" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door_control{
+	id = "export";
+	name = "Protective Shutters";
+	pixel_y = 3
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"aU" = (
+/obj/structure/disposalpipe/junction{
+	dir = 1;
+	icon_state = "pipe-y"
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"aV" = (
+/obj/machinery/door/airlock/gold,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"aW" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/sign/poster/contraband/space_up{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"aX" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/aiModule/capitalism,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"aY" = (
+/obj/machinery/door/airlock/security{
+	name = "Security Booth";
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"aZ" = (
+/obj/machinery/vending/holy{
+	shut_up = 0;
+	slogan_delay = 300
+	},
+/obj/structure/sign/poster/contraband/space_cola{
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bd" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"be" = (
+/obj/machinery/alarm{
+	dir = 8;
+	hidden_from_console = 1;
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bi" = (
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bk" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bl" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/gun/energy/taser/stunrevolver,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bm" = (
+/obj/structure/stool/bed/chair/comfy/white{
+	dir = 4
+	},
+/obj/item/weapon/storage/wallet/random,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bn" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	layer = 1.9
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bo" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bp" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"br" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood,
+/obj/item/clothing/head/collectable/tophat{
+	pixel_y = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bs" = (
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bt" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bv" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/bot/secbot{
+	wander = 0
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bw" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/carpet/orange,
+/area/space_structures/export_outpost)
+"bx" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"by" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bz" = (
+/obj/structure/rack,
+/obj/item/weapon/handcuffs,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "redchecker"
+	},
+/area/space_structures/export_outpost)
+"bA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bB" = (
+/obj/machinery/access_button/airlock_interior{
+	master_tag = "export_outpost_airlock";
+	pixel_x = 26;
+	pixel_y = -32
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bC" = (
+/obj/structure/table,
+/obj/item/clothing/glasses/jerusalem,
+/obj/item/weapon/coin/twoheaded,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "bar"
+	},
+/area/space_structures/export_outpost)
+"bD" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/obj/machinery/atmospherics/pipe/simple/visible/universal,
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bE" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "export_outpost_inner";
+	locked = 1;
+	name = "Export Outpost"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bF" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bG" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/port_gen/pacman/money,
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bH" = (
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bI" = (
+/obj/machinery/airlock_sensor{
+	id_tag = "export_outpost_sensor";
+	layer = 3.3;
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "export_outpost_pump";
+	name = "Export Outpost Large Air Vent"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bJ" = (
+/obj/machinery/porta_turret_construct{
+	anchored = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/export_outpost)
+"bK" = (
+/obj/machinery/access_button/airlock_exterior{
+	master_tag = "export_outpost_airlock";
+	pixel_x = -26;
+	pixel_y = 32
+	},
+/turf/environment/space,
+/area/space)
+"bM" = (
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "export_outpost_airlock";
+	pixel_x = 26;
+	pixel_y = 0;
+	tag_airpump = "export_outpost_pump";
+	tag_chamber_sensor = "export_outpost_sensor";
+	tag_exterior_door = "export_outpost_outer";
+	tag_interior_door = "export_outpost_inner"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "export_outpost_pump";
+	name = "Export Outpost Large Air Vent"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"bN" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "export_outpost_outer";
+	locked = 1;
+	name = "Export Outpost"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"Ry" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "export";
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"Wx" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "export";
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ar
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+Wx
+Wx
+Wx
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+bi
+bm
+ax
+av
+aZ
+ab
+af
+bJ
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aj
+aJ
+bn
+as
+as
+aC
+ab
+af
+af
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+aL
+aP
+aR
+aU
+as
+as
+aD
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aQ
+bj
+bn
+bq
+bw
+bA
+bE
+bH
+bH
+bN
+bK
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+ab
+ac
+ac
+ac
+ac
+ab
+ab
+aH
+ab
+am
+bj
+bn
+br
+as
+bB
+bE
+bI
+bM
+bN
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+al
+aF
+aV
+bd
+bk
+bo
+bs
+bx
+bC
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ad
+ae
+ae
+ab
+be
+at
+aw
+bt
+az
+ab
+ab
+bG
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ad
+ae
+aG
+ab
+ab
+ab
+ab
+aY
+ab
+ab
+aM
+ah
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ad
+aB
+ae
+aN
+aq
+aX
+aW
+bv
+by
+bD
+bF
+ai
+ab
+ac
+ac
+ac
+ac
+ab
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ag
+aK
+aK
+aq
+bl
+bp
+au
+bz
+ab
+aO
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aI
+aS
+aq
+aT
+au
+aA
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+Ry
+Ry
+Ry
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ar
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

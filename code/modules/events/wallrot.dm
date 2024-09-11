@@ -15,7 +15,7 @@
 	// 100 attempts
 	for(var/i in 1 to 100)
 		var/turf/candidate = locate(rand(1, world.maxx), rand(1, world.maxy), pick(SSmapping.levels_by_trait(ZTRAIT_STATION)))
-		if(istype(candidate, /turf/simulated/wall))
+		if(iswallturf(candidate))
 			center = candidate
 			break
 

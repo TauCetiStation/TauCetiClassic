@@ -10,6 +10,23 @@
 /obj/structure/sign/map/right
 	icon_state = "map-right"
 
+/obj/structure/sign/map/gamma_left
+	icon_state = "gammamap-left"
+
+/obj/structure/sign/map/gamma_right
+	icon_state = "gammamap-right"
+
+/obj/structure/sign/map/prometheus
+	icon_state = "prometheus"
+	var/icon/img = 'nano/images/nanomap_prometheus_1_small.png'
+
+/obj/structure/sign/map/prometheus/examine(mob/user)
+	..()
+	user << browse_rsc(img, "nanomap.png")
+	var/datum/browser/popup = new(user, "window=[name]", "[name]", 700, 700, ntheme = CSS_THEME_DARK)
+	popup.set_content("<img src='nanomap.png' style='-ms-interpolation-mode:nearest-neighbor'>")
+	popup.open()
+
 /obj/structure/sign/directions/science
 	name = "science department"
 	desc = "A direction sign, pointing out which way the Science department is."

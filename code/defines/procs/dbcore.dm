@@ -50,7 +50,7 @@
 
 /DBConnection/proc/Connect(dbi_handler = src.dbi, user_handler = src.user, password_handler = src.password, cursor_handler)
 	if(!config.sql_enabled || !src)
-		return 0
+		return FALSE
 	cursor_handler = src.default_cursor
 	if(!cursor_handler)
 		cursor_handler = Default_Cursor
@@ -67,7 +67,7 @@
 
 /DBConnection/proc/IsConnected()
 	if(!config.sql_enabled)
-		return 0
+		return FALSE
 	var/success = _dm_db_is_connected(_db_con)
 	return success
 
@@ -146,7 +146,7 @@
 // we need this for sandbox server, where only part of the tables is available
 /DBConnection/proc/TableExists(table_name)
 	if(!IsConnected())
-		return 0
+		return FALSE
 
 	table_name = sanitize_sql(table_name)
 
@@ -158,11 +158,11 @@
 
 	if(check_table.RowCount())
 		table_exists[table_name] = 1
-		return 1
+		return TRUE
 	else
 		table_exists[table_name] = 0
 		log_sql("ERROR: table '[table_name]' does not exist in the database!")
-		return 0
+		return FALSE
 
 /DBQuery/New(sql_query, DBConnection/connection_handler, cursor_handler)
 	if(sql_query)

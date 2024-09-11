@@ -95,7 +95,7 @@
 	desc = "It's a storage unit for tools."
 	icon_state = "toolcloset"
 	icon_closed = "toolcloset"
-	icon_opened = "toolclosetopen"
+	icon_opened = "toolcloset_open"
 
 /obj/structure/closet/toolcloset/PopulateContents()
 	if(prob(40))
@@ -122,7 +122,7 @@
 	if(prob(20))
 		new /obj/item/device/multitool(src)
 	if(prob(5))
-		new /obj/item/clothing/gloves/yellow(src)
+		new /obj/item/clothing/gloves/insulated(src)
 	if(prob(5))
 		new /obj/item/weapon/storage/pouch/engineering_tools(src)
 	if(prob(1))
@@ -141,7 +141,7 @@
 	name = "radiation suit closet"
 	desc = "It's a storage unit for rad-protective suits."
 	icon_state = "radsuitcloset"
-	icon_opened = "toolclosetopen"
+	icon_opened = "toolcloset_open"
 	icon_closed = "radsuitcloset"
 
 /obj/structure/closet/radiation/PopulateContents()
@@ -228,9 +228,9 @@
 /obj/structure/closet/medical_wall //wall mounted medical closet
 	name = "first-aid closet"
 	desc = "It's wall-mounted storage unit for first aid supplies."
-	icon_state = "medical_wall"
-	icon_closed = "medical_wall"
-	icon_opened = "medical_wall_open"
+	icon_state = "medicalwall"
+	icon_closed = "medicalwall"
+	icon_opened = "medicalwall_open"
 	anchored = TRUE
 	density = FALSE
 	wall_mounted = TRUE

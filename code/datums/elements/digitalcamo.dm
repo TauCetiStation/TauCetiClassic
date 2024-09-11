@@ -1,0 +1,48 @@
+/datum/element/digitalcamo
+	element_flags = ELEMENT_DETACH
+	var/list/attached_mobs = list()
+
+/datum/element/digitalcamo/Attach(datum/target)
+	. = ..()
+	if(!isliving(target) || (target in attached_mobs))
+		return ELEMENT_INCOMPATIBLE
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+	var/image/img = image(loc = target)
+	img.override = TRUE
+	attached_mobs[target] = img
+	for(var/mob/living/silicon/ai/AI as anything in ai_list)
+		if(AI.client)
+			AI.client.images += img
+	HideFromAIHuds(target)
+
+/datum/element/digitalcamo/Detach(datum/target)
+	. = ..()
+	UnregisterSignal(target, list(COMSIG_PARENT_EXAMINE, COMSIG_LIVING_CAN_TRACK))
+	for(var/mob/living/silicon/ai/AI as anything in ai_list)
+		if(AI.client)
+			AI.client.images -= attached_mobs[target]
+	attached_mobs -= target
+	UnhideFromAIHuds(target)
+
+/datum/element/digitalcamo/proc/HideFromAIHuds(mob/living/target)
+	for(var/mob/living/silicon/ai/AI in global.ai_list)
+		var/datum/atom_hud/M = global.huds[DATA_HUD_MEDICAL]
+		M.hide_single_atomhud_from(AI, target)
+		var/datum/atom_hud/S = global.huds[DATA_HUD_SECURITY]
+		S.hide_single_atomhud_from(AI, target)
+
+/datum/element/digitalcamo/proc/UnhideFromAIHuds(mob/living/target)
+	for(var/mob/living/silicon/ai/AI in global.ai_list)
+		var/datum/atom_hud/M = global.huds[DATA_HUD_MEDICAL]
+		M.unhide_single_atomhud_from(AI, target)
+		var/datum/atom_hud/S = global.huds[DATA_HUD_SECURITY]
+		S.unhide_single_atomhud_from(AI, target)
+
+/datum/element/digitalcamo/proc/on_examine(datum/source, mob/M)
+	SIGNAL_HANDLER
+	to_chat(M, "<span class='warning'>[source] skin seems to be shifting like something is moving below it.</span>")
+
+/datum/element/digitalcamo/proc/can_track(datum/source)
+	SIGNAL_HANDLER
+	return COMPONENT_CANT_TRACK

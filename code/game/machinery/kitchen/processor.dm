@@ -22,6 +22,8 @@
 	RefreshParts()
 
 /obj/machinery/processor/RefreshParts()
+	..()
+
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
 		rating_amount = B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
@@ -91,33 +93,14 @@
 /datum/food_processor_process/mob/monkey/process_food(loc, what, processor)
 	var/mob/living/carbon/monkey/O = what
 	if (O.client) //grief-proof
-		O.loc = loc
+		O.forceMove(loc)
 		O.visible_message("<span class='notice'>Suddenly [O] jumps out from the processor!</span>", \
 				"You jump out from the processor", \
 				"You hear chimp")
 		return
 	var/obj/item/weapon/reagent_containers/glass/bucket/bucket_of_blood = new(loc)
-	var/datum/reagent/blood/B = new()
-	B.holder = bucket_of_blood
-	B.volume = 70
-	//set reagent data
-	B.data["donor"] = O
+	O.take_blood(bucket_of_blood, 70)
 
-	if(O.viruses && O.viruses.len > 0)
-		if(!B.data["viruses"])
-			B.data["viruses"] = list()
-
-		for(var/datum/disease/D in O.viruses)
-			if(D.spread_type != SPECIAL)
-				B.data["viruses"] += D.Copy()
-
-	B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
-	if(O.resistances&&O.resistances.len)
-		B.data["resistances"] = O.resistances.Copy()
-	bucket_of_blood.reagents.reagent_list += B
-	bucket_of_blood.reagents.update_total()
-	bucket_of_blood.on_reagent_change()
-	//bucket_of_blood.reagents.handle_reactions() //blood doesn't react
 	..()
 
 
@@ -162,7 +145,10 @@
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
-	user.drop_from_inventory(what, src)
+	if(isitem(what))
+		user.drop_from_inventory(what, src)
+	else
+		what.forceMove(src)
 
 /obj/machinery/processor/attack_hand(mob/user)
 	. = ..()

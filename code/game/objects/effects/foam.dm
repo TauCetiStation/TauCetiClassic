@@ -8,7 +8,7 @@
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
-	layer = TURF_LAYER + 0.9
+	layer = BELOW_OBJ_LAYER
 
 	animate_movement = FALSE
 
@@ -46,10 +46,10 @@
 	fore_image += image(icon, icon_state="afff_foam_fore", layer=MOB_LAYER + 0.9)
 	add_overlay(fore_image)
 
-	if(loc.density || !has_gravity(loc) || istype(get_turf(src), /turf/space))
-		addtimer(CALLBACK(src, .proc/disolve), 5 SECONDS)
+	if(loc.density || !has_gravity(loc))
+		addtimer(CALLBACK(src, PROC_REF(disolve)), 5 SECONDS)
 
-	INVOKE_ASYNC(src, .proc/performAction)
+	INVOKE_ASYNC(src, PROC_REF(performAction))
 
 /obj/effect/effect/aqueous_foam/Destroy()
 	if(smooth)
@@ -112,7 +112,7 @@
 	if(istype(AM, /obj/effect/decal/chempuff))
 		return
 
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.w_class <= SIZE_MINUSCULE)
 			return
@@ -120,7 +120,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.lying || L.crawling)
-			INVOKE_ASYNC(src, .proc/shake)
+			INVOKE_ASYNC(src, PROC_REF(shake))
 			return
 
 		if(L.get_species() == SLIME) // Slimes are vulnerable to us and shouldn't be able to destroy us.
@@ -128,7 +128,7 @@
 			L.adjustToxLoss(rand(15, 20))
 			return
 
-	INVOKE_ASYNC(src, .proc/disolve) // You should never call procs with delay from BYOND movement procs.
+	INVOKE_ASYNC(src, PROC_REF(disolve)) // You should never call procs with delay from BYOND movement procs.
 
 /obj/effect/effect/aqueous_foam/attack_hand(mob/user)
 	disolve()
@@ -163,8 +163,11 @@
 		else if(istype(A, /obj/structure/bonfire)) // Currently very snowflakey please fix later ~Luduk.
 			var/obj/structure/bonfire/B = A
 			B.extinguish()
-		if(istype(A, /obj/item))
+		else if(istype(A, /obj/structure/fireplace))
+			var/obj/structure/fireplace/F = A
+			F.extinguish()
+		else if(isitem(A))
 			var/obj/item/I = A
 			I.extinguish()
-		if(istype(A, /obj/effect/decal/cleanable/liquid_fuel))
+		else if(istype(A, /obj/effect/decal/cleanable/liquid_fuel))
 			qdel(A)

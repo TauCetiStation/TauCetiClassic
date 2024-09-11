@@ -1,46 +1,91 @@
+
+/datum/action/innate/slime
+	var/needs_growth = FALSE
+
+/datum/action/innate/slime/IsAvailable()
+	if(!..())
+		return
+	var/mob/living/carbon/slime/S = owner
+	if(needs_growth && S.amount_grown < 10)
+		return FALSE
+	if(S.incapacitated())
+		return FALSE
+	return TRUE
+
+/datum/action/innate/slime/feed
+	name = "Feed"
+	button_icon_state = "slimeeat"
+
+/datum/action/innate/slime/feed/Activate()
+	var/mob/living/carbon/slime/S = owner
+	S.Feed()
+
+/datum/action/innate/slime/evolve
+	name = "Evolve"
+	button_icon_state = "slimegrow"
+	needs_growth = TRUE
+
+/datum/action/innate/slime/evolve/Activate()
+	var/mob/living/carbon/slime/S = owner
+	S.Evolve()
+
+/datum/action/innate/slime/reproduce
+	name = "Reproduce"
+	button_icon_state = "slimesplit"
+	needs_growth = TRUE
+
+/datum/action/innate/slime/reproduce/Activate()
+	var/mob/living/carbon/slime/S = owner
+	S.Reproduce()
+
 /mob/living/carbon/slime/verb/Feed()
 	set category = "Slime"
 	set desc = "This will let you feed on any valid creature in the surrounding area. This should also be used to halt the feeding process."
-	if(Victim)
-		Feedstop()
-		return
 
 	if(incapacitated())
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 
+	if(Victim)
+		Feedstop()
+		return
+
 	var/list/choices = list()
-	for(var/mob/living/C in view(1,src))
-		if(C!=src && !istype(C,/mob/living/carbon/slime))
-			choices += C
+	for(var/mob/living/nearby_mob in view(1,src))
+		if(nearby_mob != src && !isslime(nearby_mob))
+			choices += nearby_mob
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to feed on?") in null|choices
-	if(!M) return
-	if(M in view(1, src))
+	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sortTim(choices, GLOBAL_PROC_REF(cmp_name_asc)))
+	if(!isliving(choice))
+		return
 
-		if(!istype(src, /mob/living/carbon/brain))
-			if(!istype(M, /mob/living/carbon/slime))
-				if(stat != DEAD)
-					if(health > -70)
+	var/mob/living/victim = choice
 
-						for(var/mob/living/carbon/slime/met in view())
-							if(met.Victim == M && met != src)
-								to_chat(src, "<i>The [met.name] is already feeding on this subject...</i>")
-								return
-						to_chat(src, "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>")
-						to_chat(M, "<span class='warning'><b>The [src.name] has latched onto your head!</b></span>")
-						Feedon(M)
+	if(isbrain(victim) || issilicon(victim))
+		to_chat(src, "<i>This subject does not have an edible life energy...</i>")
+		return
 
-					else
-						to_chat(src, "<i>This subject does not have a strong enough life energy...</i>")
-				else
-					to_chat(src, "<i>This subject does not have an edible life energy...</i>")
-			else
-				to_chat(src, "<i>I must not feed on my brothers...</i>")
-		else
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		if(H.species.name in list(IPC, DIONA, GOLEM))
 			to_chat(src, "<i>This subject does not have an edible life energy...</i>")
+			return
 
+	if(victim.stat == DEAD || victim.health < -70 )
+		to_chat(src, "<i>This subject does not have a strong enough life energy...</i>")
+		return
 
+	if(!Adjacent(victim))
+		return
+
+	for(var/mob/living/carbon/slime/S in view(1, Victim))
+		if(S.Victim == victim)
+			to_chat(src, "<i>Another slime is already feeding on this subject...</i>")
+			return
+
+	to_chat(src, "<span class='notice'><i>I have latched onto the subject and begun feeding...</i></span>")
+	to_chat(victim, "<span class='warning'><b>The [src.name] has latched onto your head!</b></span>")
+	Feedon(victim)
 
 /mob/living/carbon/slime/proc/Feedon(mob/living/carbon/M)
 	Victim = M
@@ -48,20 +93,18 @@
 	canmove = 0
 	anchored = TRUE
 	var/lastnut = nutrition
-	//if(M.client) M << "<span class='warning'>You legs become paralyzed!</span>"
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(isslimeadult(src))
 		icon_state = "[colour] adult slime eat"
 	else
 		icon_state = "[colour] baby slime eat"
 
 	while(Victim && M.health > -70 && stat != DEAD)
-		// M.canmove = 0
 		canmove = 0
 
 		if(M in view(1, src))
 			loc = M.loc
 
-			if(prob(15) && M.client && istype(M, /mob/living/carbon))
+			if(prob(15) && M.client && iscarbon(M))
 				to_chat(M, "<span class='warning'>[pick("You can feel your body becoming weak!", \
 				"You feel like you're about to die!", \
 				"You feel every part of your body screaming in agony!", \
@@ -70,7 +113,7 @@
 				"You feel extremely weak!", \
 				"A sharp, deep pain bathes every inch of your body!")]</span>")
 
-			if(istype(M, /mob/living/carbon))
+			if(iscarbon(M))
 				Victim.adjustCloneLoss(rand(1,10))
 				Victim.adjustToxLoss(rand(1,2))
 				if(Victim.health <= 0)
@@ -96,7 +139,7 @@
 						if(powerlevel > 10)
 							powerlevel = 10
 
-				if(istype(src, /mob/living/carbon/slime/adult))
+				if(isslimeadult(src))
 					if(nutrition > 1200)
 						nutrition = 1200
 				else
@@ -119,11 +162,11 @@
 			break
 
 	if(stat == DEAD)
-		if(!istype(src, /mob/living/carbon/slime/adult))
+		if(!isslimeadult(src))
 			icon_state = "[colour] baby slime dead"
 
 	else
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			icon_state = "[colour] adult slime"
 		else
 			icon_state = "[colour] baby slime"
@@ -142,7 +185,7 @@
 								Friends[Victim.LAssailant] = 1
 							else
 								++Friends[Victim.LAssailant]
-			if(M.client && istype(src, /mob/living/carbon/human))
+			if(M.client && ishuman(src))
 				if(prob(85))
 					rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
 
@@ -178,12 +221,12 @@
 	if(incapacitated())
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
-	if(!istype(src, /mob/living/carbon/slime/adult))
+	if(!isslimeadult(src))
 		if(amount_grown >= max_grown)
 			var/mob/living/carbon/slime/adult/new_slime = new adulttype(loc)
 			new_slime.nutrition = nutrition
 			new_slime.powerlevel = max(0, powerlevel-1)
-			new_slime.a_intent = INTENT_HARM
+			new_slime.set_a_intent(INTENT_HARM)
 			new_slime.key = key
 			new_slime.universal_speak = universal_speak
 			to_chat(new_slime, "<B>You are now an adult slime.</B>")
@@ -201,7 +244,7 @@
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(isslimeadult(src))
 		if(amount_grown >= max_grown)
 			var/list/babies = list()
 			var/new_nutrition = round(nutrition * 0.9)
@@ -242,7 +285,7 @@
 							babies += M
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
-			new_slime.a_intent = INTENT_HARM
+			new_slime.set_a_intent(INTENT_HARM)
 			new_slime.universal_speak = universal_speak
 			new_slime.key = key
 

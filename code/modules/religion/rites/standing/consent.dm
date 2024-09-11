@@ -13,12 +13,12 @@
  */
 /datum/religion_rites/standing/consent/synthconversion
 	name = "Синтетическое Возвышение"
-	desc = "Превращает <i>homosapiens</i> в (превосходящего) Андройда."
+	desc = "Превращает <i>homosapiens</i> в (превосходящую) Машину."
 	ritual_length = (50 SECONDS)
-	ritual_invocations = list("By the inner workings of our god...",
-						"...We call upon you, in the face of adversity...",
-						"...to complete us, removing that which is undesirable...")
-	invoke_msg = "...Arise, our champion! Become that which your soul craves, live in the world as your true form!!"
+	ritual_invocations = list("Согласно внутреннему устройству твоему...",
+						"...Мы взываем к тебе, перед лицом напасти...",
+						"...чтобы завершить нас, искоренить нежелаемое...")
+	invoke_msg = "...Восстань, наш чемпион! Стань тем, чего жаждет твоя душа, живи в мире в своем истинном обличье!!"
 	favor_cost = 700
 
 	consent_msg = "Are you ready to sacrifice your body to turn into a cyborg?"
@@ -27,27 +27,31 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/standing/consent/synthconversion/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/consent/synthconversion/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
 	var/mob/living/simple_animal/shade/god/god = locate() in get_turf(AOG)
 	if(!istype(god))
 		if(!ishuman(AOG.buckled_mob))
-			to_chat(user, "<span class='warning'>Only humanoid bodies can be accepted.</span>")
+			to_chat(user, "<span class='warning'>Только тела гуманоидов могут быть приняты.</span>")
+			return FALSE
+
+		if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+			to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
 			return FALSE
 
 		if(jobban_isbanned(AOG.buckled_mob, "Cyborg") || role_available_in_minutes(AOG.buckled_mob, ROLE_GHOSTLY))
-			to_chat(user, "<span class='warning'>[AOG.buckled_mob]Тело [AOG.buckled_mob] слишком слабо!</span>")
+			to_chat(user, "<span class='warning'>Тело [AOG.buckled_mob] слишком слабо!</span>")
 			return FALSE
 	else
 		if(jobban_isbanned(god, "Cyborg") || role_available_in_minutes(god, ROLE_GHOSTLY))
-			to_chat(user, "<span class='warning'>[god] is too weak!</span>")
+			to_chat(user, "<span class='warning'>[god] слишком слаб!</span>")
 			return FALSE
 
 	return TRUE
 
-/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/user, obj/AOG)
 	..()
 
 	if(convert_god(AOG))
@@ -56,7 +60,7 @@
 	var/mob/living/carbon/human/human2borg = AOG.buckled_mob
 	if(!istype(human2borg))
 		return FALSE
-	hgibs(get_turf(AOG), human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
+	hgibs(get_turf(AOG), human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [pick(religion.deity_names)]!</span>")
 	var/mob/living/silicon/robot/R = human2borg.Robotize(religion.bible_info.borg_name, religion.bible_info.laws_type, FALSE, religion)
 	religion.add_member(R, HOLY_ROLE_PRIEST)
@@ -71,6 +75,8 @@
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(AOG), "Son of Heaven", religion.bible_info.laws_type, FALSE, religion)
 	god.mind.transfer_to(O)
 	O.job = "Cyborg"
+	O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	O.mind.skills.maximize_active_skills()
 	qdel(god)
 	religion.add_deity(O, HOLY_ROLE_PRIEST)
 	return TRUE
@@ -82,15 +88,15 @@
 /datum/religion_rites/standing/consent/sacrifice
 	name = "Добровольное Жертвоприношение"
 	desc = "Превращает энергию живого в favor."
-	ritual_length = (50 SECONDS)
-	ritual_invocations = list("Hallowed be thy name...",
-							  "...Thy kingdom come...",
-							  "...Thy will be done in earth as it is in heaven...",
-							  "...Give us this day our daily bread...",
-							  "...and forgive us our trespasses...",
-							  "...as we forgive them who trespass against us...",
-							  "...and lead us not into temptation...")
-	invoke_msg = "...but deliver us from the evil one!!"
+	ritual_length = (25 SECONDS)
+	ritual_invocations = list("Отче наш, сущий на небесах......",
+								"...Да святится име Твое...",
+								"...Да наступит царствие Твое...",
+								"...Да будет воля Твоя на земле, как на небе;...",
+								"...Хлеб наш насущный дай нам на сей день, и прости нам долги наши...",
+								"...как и мы прощаем должникам нашим...",
+								"...и не введи нас во искушение, но избави нас от лукавого...")
+	invoke_msg = "...Ибо Твое есть Царство и сила и слава во веки, Аминь!!!"
 	favor_cost = 0
 
 	consent_msg = "Are you ready to sacrifice your body to give strength to a deity?"
@@ -134,18 +140,18 @@
 /datum/religion_rites/standing/consent/clownconversion
 	name = "Клоунконверсия"
 	desc = "Превращает маленького человека в Клоуна." // this is ref to Russian writers
-	ritual_length = (1.9 MINUTES)
-	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
-						"...From our mother to our ears we got the gift of horns...",
-						"...From our mother to our feet we walk on we got the shoes of length...")
-	invoke_msg = "...And from our mothers gift to you, we grant you the power of HONK!"
+	ritual_length = (25 SECONDS)
+	ritual_invocations = list("Земля от нашей Матери заполучила бананы...",
+						"...Уши от нашей Матери заполучили клаксоны...",
+						"...Стопы от нашей Матери заполучили длинную обувь...")
+	invoke_msg = "...И от Матери нашей, да заполучишь ты силу ГУДКА!!"
 	favor_cost = 500
 
 	consent_msg = "Do you feel the honk, growing, from within your body?"
 
 	needed_aspects = list(
 		ASPECT_WACKY = 1,
-		ASPECT_HERD = 1
+		ASPECT_CHAOS = 1,
 	)
 
 /datum/religion_rites/standing/consent/clownconversion/can_start(mob/living/user, obj/AOG)
@@ -192,7 +198,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
 
 	religion.add_member(H, HOLY_ROLE_PRIEST)
-	H.mutations.Add(CLUMSY)
+	ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 	H.mind.assigned_role = "Clown"
 	return TRUE
 
@@ -203,22 +209,18 @@
 /datum/religion_rites/standing/consent/invite
 	name = "Божественное Приглашение"
 	desc = "Заставляет человека поверить в Бога."
-	ritual_length = (40 SECONDS)
-	ritual_invocations = list("Send peace, love, and unquestioning love to...",
-						"...all that is good into the hearts of him and our children...",
-						"...do not allow any of my family to be separated...",
-						"...and to suffer a painful separation...",
-						"...to die prematurely and suddenly without repentance....",
-						"...Yes, and we will singly and separately, openly and secretly...",
-						"...glorify Your Holy Name always, now and ever, and to the ages of ages....",)
-	invoke_msg = "...Don't be afraid, little flock! I am with you and no one else on you!"
+	ritual_length = (20 SECONDS)
+	ritual_invocations = list("Всевышний, возьми под Свой покров семью мою...",
+						"...Всели в сердца супруга моего и чад наших мир, любовь и непрекословие всему доброму...",
+						"...Не допусти никого из семьи моей до разлуки и тяжкого расставания...",
+						"...До преждевременной и внезапной смерти без покаяния....",
+						"...А дом наш и всех нас, живущих в нем, сохрани от огненного запаления, воровского нападения...",
+						"...всякого злого обстояния, страха и дьявольского навождения...",
+						"...Да и мы, вместе и раздельно, явно и сокровенно будем прославлять имя Твое Святое....",)
+	invoke_msg = "...всегда, ныне и присно, и во веки веков. Аминь!!!"
 	favor_cost = 250
 
 	consent_msg = "Do you believe in God?"
-
-	needed_aspects = list(
-		ASPECT_HERD = 1
-	)
 
 /datum/religion_rites/standing/consent/invite/can_start(mob/living/user, obj/AOG)
 	if(!..())

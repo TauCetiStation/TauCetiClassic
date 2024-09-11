@@ -639,3 +639,10 @@ body.theme_abductor {
 .theme_abductor a:hover {
 	background-color:#c42f60;
 }
+
+.center_div {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}

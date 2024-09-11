@@ -47,7 +47,7 @@
 // This is really pretty crap and should be overridden for specific machines.
 /obj/machinery/water_act(depth)
 	if(!(stat & (NOPOWER|BROKEN)) && !waterproof && (depth > FLUID_DEEP))
-		ex_act(3)
+		ex_act(EXPLODE_LIGHT)
 
 /obj/item/weapon/match/water_act(depth)
 	if(!waterproof && lit)

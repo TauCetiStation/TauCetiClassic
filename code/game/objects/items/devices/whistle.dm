@@ -3,13 +3,17 @@
 	desc = "Used by obese officers to save their breath for running."
 	icon_state = "voice0"
 	item_state = "flashbang"	//looks exactly like a flash (and nothing like a flashbang)
-	action_button_name = "Toggle Hailer"
 	w_class = SIZE_MINUSCULE
 	flags = CONDUCT
 
 	var/spamcheck = 0
 	var/emagged = 0
 	var/insults = 0//just in case
+
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_hailer)
+
+/datum/action/item_action/hands_free/toggle_hailer
+	name = "Toggle Hailer"
 
 /obj/item/device/hailer/attack_self(mob/living/carbon/user)
 	if (spamcheck)

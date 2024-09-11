@@ -1,21 +1,29 @@
 #define VOX_SHUTTLE_MOVE_TIME 375
 #define VOX_SHUTTLE_COOLDOWN 1200
-#define VOX_CAN_USE(A) (ishuman(A) && A.can_speak(all_languages["Vox-pidgin"]) || isobserver(A))
+#define VOX_CAN_USE(A) (ishuman(A) && A.can_speak(all_languages[LANGUAGE_VOXPIDGIN]) || isobserver(A))
 // human and know vox language (and ghosts, because ghosts see everything).
 
 //Copied from Syndicate shuttle.
-var/global/vox_shuttle_location
 var/global/announce_vox_departure = FALSE // Stealth systems - give an announcement or not.
 
 /obj/machinery/proc/console_say(text)
-	visible_message("<b>[src]</b> beeps, \"[text]\'")
+	visible_message("<b>[capitalize(CASE(src, NOMINATIVE_CASE))]</b> сигнализирует, \"[text]\'")
 
 /obj/machinery/computer/vox_stealth
 	name = "skipjack cloaking field terminal"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "syndishuttle"
+	cases = list("терминал маскировочного поля \"Скипджек\"", "терминала маскировочного поля \"Скипджек\"", "терминалу \"Скипджек\"", "терминал маскировочного поля \"Скипджек\"", "терминалом маскировочного поля \"Скипджек\"", "терминале маскировочного поля \"Скипджек\"")
+	icon = 'icons/locations/shuttles/vox_pc.dmi'
+	icon_state = "vox_invs"
 	state_broken_preset = "tcbossb"
 	state_nopower_preset = "tcboss0"
+
+/obj/machinery/computer/vox_stealth/atom_init()
+	. = ..()
+	SSholomaps.holomap_landmarks += src
+
+/obj/machinery/computer/vox_stealth/Destroy()
+	SSholomaps.holomap_landmarks -= src
+	return ..()
 
 /obj/machinery/computer/vox_stealth/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
@@ -28,7 +36,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_stealth/attack_hand(mob/user)
 	if(!VOX_CAN_USE(user))
-		to_chat(user, "<span class='notice'>You have no idea how to use this.</span>")
+		to_chat(user, "<span class='notice'>Вы понятия не имеете, как это использовать.</span>")
 		return
 
 	. = ..()
@@ -39,16 +47,17 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		return // no point in this console after moving shuttle from start position.
 
 	if(announce_vox_departure)
-		console_say("Смена режима маскировки: полная маскировки. КСН \"Исход\" не будет оповещен о нашем прибытии.")
+		console_say("Смена режима маскировки: полная маскировка. [station_name_ru()] не будет оповещен о нашем прибытии.")
 		announce_vox_departure = FALSE
 	else
-		console_say("Смена режима маскировки: торговое судно. КСН \"Исход\" будет оповещен о нашем прибытии.")
+		console_say("Смена режима маскировки: торговое судно. [station_name_ru()] будет оповещен о нашем прибытии.")
 		announce_vox_departure = TRUE
 
 /obj/machinery/computer/vox_station
 	name = "skipjack terminal"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "syndishuttle"
+	cases = list("терминал \"Скипджек\"", "терминала \"Скипджек\"", "терминалу \"Скипджек\"", "терминал \"Скипджек\"", "терминалом \"Скипджек\"", "терминале \"Скипджек\"")
+	icon = 'icons/locations/shuttles/vox_pc.dmi'
+	icon_state = "vox_cont"
 	state_broken_preset = "tcbossb"
 	state_nopower_preset = "tcboss0"
 	var/area/curr_location
@@ -59,6 +68,16 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	var/datum/announcement/centcomm/vox/arrival/announce_arrival = new
 	var/datum/announcement/centcomm/vox/returns/announce_returns = new
+
+	// Random turfs of the transit areas for the interface
+	var/list/solar_coords = list()
+
+	var/list/solar_by_type = list(
+		"solars_fore_starboard" = /area/shuttle/vox/northeast_solars,
+		"solars_fore_port"      = /area/shuttle/vox/northwest_solars,
+		"solars_aft_starboard"  = /area/shuttle/vox/southeast_solars,
+		"solars_aft_port"       = /area/shuttle/vox/southwest_solars,
+	)
 
 /obj/machinery/computer/vox_station/atom_init()
 	. = ..()
@@ -100,8 +119,6 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
-	if(istype(dest_location, /area/shuttle/vox/arkship))
-		vox_shuttle_location = "start"
 	moving = FALSE
 
 	return TRUE
@@ -118,22 +135,41 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 /obj/machinery/computer/vox_station/attack_hand(mob/user)
 	if(!VOX_CAN_USE(user))
-		to_chat(user, "<span class='notice'>You have no idea how to use this.</span>")
+		to_chat(user, "<span class='notice'>Вы понятия не имеете, как это использовать.</span>")
 		return
 	. = ..()
 
 /obj/machinery/computer/vox_station/ui_interact(mob/user)
-	var/dat = {"Skipjack Cloaking Field: [announce_vox_departure ? "<span class='danger'>Deactivated!</span>" : "<span class='vox'>Activated!</span>"]<br><br>
-		Location: [curr_location]<br>
-		Ready to move[max(lastMove + VOX_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + VOX_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
-		<a href='?src=\ref[src];start=1'>Return to dark space</a><br><br>
-		<a href='?src=\ref[src];solars_fore_port=1'>North-west solar port</a> |
-		<a href='?src=\ref[src];solars_fore_starboard=1'>North-east starboard</a><br>
-		<a href='?src=\ref[src];solars_aft_port=1'>South-west solar port</a> |
-		<a href='?src=\ref[src];solars_aft_starboard=1'>South-east starboard</a><br>
-		<a href='?src=\ref[src];mining=1'>Mining Asteroid</a><br><br>"}
+	if(!solar_coords.len)
+		for(var/ref in solar_by_type)
+			var/turf/rand = pick(get_area_turfs(solar_by_type[ref], FALSE))
+			solar_coords[ref] = list(rand.x, rand.y)
 
-	var/datum/browser/popup = new(user, "computer", null, 575, 450)
+	// beautifully
+	var/const/X = "&times;"
+
+	var/button_html = ""
+	for(var/ref in solar_coords)
+		button_html += {"
+		<a href='?src=\ref[src];[ref]=1'
+			style='position: absolute; top: [world.maxy-solar_coords[ref][2]]px; left: [solar_coords[ref][1]]px;'>
+			[X]
+		</a>"}
+
+	var/time_to_move = max(lastMove + VOX_SHUTTLE_COOLDOWN - world.time, 0)
+	var/time_seconds = round(time_to_move * 0.1)
+	var/sec_word = pluralize_russian(time_seconds, "секунду", "секунды", "секунд")
+	var/dat = {"Маскировочное Поле Skipjack: [announce_vox_departure ? "<span style='color: #ff0000;font-weight: bold;'>Деактивировано!</span>" : "<span style='color: #aa00aa'>Активировано!</span>"]<br><br>
+		Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>
+		Готов к полёту[time_to_move ? " через [time_seconds] [sec_word]" : ": Готово"]<br><br>
+		<a href='?src=\ref[src];start=1' style='width:100%;text-align:center'>Вернуться в далёкий космос</a>
+		<div class="center_div" style="position: relative;" >
+			<img src="nanomap_[SSmapping.station_image]_1.png" width="[world.maxx]px" height="[world.maxy]px">
+			[button_html]
+		</div>
+		<a href='?src=\ref[src];mining=1' style='width:100%;text-align:center'>Шахтёрский астероид</a><br><br>"}
+
+	var/datum/browser/popup = new(user, "computer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 500, 500)
 	popup.set_content(dat)
 	popup.open()
 
@@ -142,36 +178,31 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	if(!. || !VOX_CAN_USE(usr))
 		return
 
-	vox_shuttle_location = "station"
 	if(href_list["start"])
 		if(find_faction_by_type(/datum/faction/heist))
 			if(!warning)
-				to_chat(usr, "<span class='red'>Returning to dark space will end your raid and report your success or failure. If you are sure, press the button again.</span>")
+				console_say("<span class='red'>Нажмите кнопку ещё раз для подтверждения процедуры.</span>")
 				warning = TRUE
-				addtimer(CALLBACK(src, .proc/reset_warning), 10 SECONDS) // so, if someone accidentaly uses this, it won't stuck for a whole round.
+				addtimer(CALLBACK(src, PROC_REF(reset_warning)), 10 SECONDS) // so, if someone accidentaly uses this, it won't stuck for a whole round.
 				return
 		vox_move_to(/area/shuttle/vox/arkship)
-	else if(href_list["solars_fore_starboard"])
-		vox_move_to(/area/shuttle/vox/northeast_solars)
-	else if(href_list["solars_fore_port"])
-		vox_move_to(/area/shuttle/vox/northwest_solars)
-	else if(href_list["solars_aft_starboard"])
-		vox_move_to(/area/shuttle/vox/southeast_solars)
-	else if(href_list["solars_aft_port"])
-		vox_move_to(/area/shuttle/vox/southwest_solars)
+
 	else if(href_list["mining"])
 		vox_move_to(/area/shuttle/vox/mining)
+
+	else
+		for(var/ref in href_list)
+			if(solar_by_type[ref])
+				vox_move_to(solar_by_type[ref])
+				break
 
 	updateUsrDialog()
 
 /obj/machinery/computer/vox_station/proc/reset_warning()
 	if(returning) // no point in reseting, if shuttle is going back.
 		return
-	console_say("Mission abort procedure canceled.")
+	console_say("Процедура полёта отменена.")
 	warning = FALSE
-
-/obj/machinery/computer/vox_station/bullet_act(obj/item/projectile/Proj)
-	visible_message("[Proj] ricochets off [src]!")
 
 #undef VOX_SHUTTLE_MOVE_TIME
 #undef VOX_SHUTTLE_COOLDOWN

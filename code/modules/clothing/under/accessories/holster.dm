@@ -2,9 +2,14 @@
 	name = "shoulder holster"
 	desc = "A handgun holster."
 	icon_state = "holster"
-	item_color = "holster"
 	slot = "utility"
 	var/obj/item/weapon/gun/holstered = null
+
+/obj/item/clothing/accessory/holster/atom_init()
+	. = ..()
+	if(holstered)
+		holstered = new holstered(src)
+		update_icon()
 
 /obj/item/clothing/accessory/holster/proc/holster(obj/item/I, mob/user)
 	if(holstered)
@@ -80,9 +85,9 @@
 
 /mob/living/carbon/human/proc/get_holster()
 	var/obj/item/clothing/accessory/holster/H = locate() in src
-	if(!H && istype(w_uniform, /obj/item/clothing/under))
+	if(!H && isunder(w_uniform))
 		var/obj/item/clothing/under/S = w_uniform
-		if(S.accessories.len)
+		if(S.accessories)
 			H = locate() in S.accessories
 	return H
 
@@ -117,15 +122,15 @@
 /obj/item/clothing/accessory/holster/armpit
 	name = "shoulder holster"
 	desc = "A worn-out handgun holster. Perfect for concealed carry."
-	icon_state = "holster_armpit"
-	item_color = "holster"
+	icon_state = "holster"
 
 /obj/item/clothing/accessory/holster/armpit/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][holstered ? "_loaded" : ""]"
 
+/obj/item/clothing/accessory/holster/armpit/
+
 /obj/item/clothing/accessory/holster/mafia
 	name = "gun holster"
 	desc = "When you just HAVE to show off your guns."
 	icon_state = "mafia_holster"
-	item_color = "mafia_holster"
