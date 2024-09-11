@@ -13,7 +13,7 @@
 /obj/item/clothing/head/sushi_band
 	name = "sushi master headband"
 	cases = list("повязка суши-мастера", "повязки суши-мастера", "повязке суши-мастера", "повязку суши-мастера", "повязкой суши-мастера", "повязке суши-мастера")
-	desc = "Прекрасная минималистическая повязка."
+	desc = "Прекрасная минималистичная повязка."
 	gender = FEMALE
 	icon_state = "sushiband"
 	item_state = "sushiband"
