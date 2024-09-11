@@ -258,7 +258,7 @@ var/global/list/tophats_list = list()
 
 	var/list/pos_turfs = get_area_turfs(get_area(src))
 	if(pos_turfs && pos_turfs.len && src_turf)
-		visible_message("<span class='danger'>[CASES(src, NOMINATIVE_CASE)] рвётся на части, выпуская из себя АБСОЛЮТНО ВСЁ, что было внутри...</span>")
+		visible_message("<span class='danger'>[C_CASE(src, NOMINATIVE_CASE)] рвётся на части, выпуская из себя АБСОЛЮТНО ВСЁ, что было внутри...</span>")
 
 		var/list/to_exit = get_area_turfs(/area/custom/tophat)
 
@@ -289,8 +289,8 @@ var/global/list/tophats_list = list()
 		if(MT)
 			MT.armed = TRUE
 			MT.triggered(target, target.hand ? BP_L_ARM : BP_R_ARM)
-			target.visible_message("<span class='warning'>[target] нечаянно активирует [CASES(MT, ACCUSATIVE_CASE)] внутри [CASES(src, GENITIVE_CASE)], раня свои пальцы.</span>",
-								 "<span class='warning'>Вы нечаянно активируете [CASES(MT, ACCUSATIVE_CASE)]!</span>")
+			target.visible_message("<span class='warning'>[target] нечаянно активирует [CASE(MT, ACCUSATIVE_CASE)] внутри [CASE(src, GENITIVE_CASE)], раня свои пальцы.</span>",
+								 "<span class='warning'>Вы нечаянно активируете [CASE(MT, ACCUSATIVE_CASE)]!</span>")
 			MT.forceMove(target.loc)
 			return TRUE
 	return FALSE
@@ -318,9 +318,9 @@ var/global/list/tophats_list = list()
 		if(ismob(loc))
 			var/mob/M_loc = loc
 			if(M_loc.get_active_hand() == src || M_loc.get_inactive_hand() == src)
-				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)])] выпрыгивает из рук [M_loc]!</span>")
+				visible_message("<span class='warning'>[C_CASE(src, NOMINATIVE_CASE)] выпрыгивает из рук [M_loc]!</span>")
 			else
-				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)])] выпрыгивает из [M_loc]!</span>")
+				visible_message("<span class='warning'>[C_CASE(src, NOMINATIVE_CASE)])] выпрыгивает из [M_loc]!</span>")
 
 			M_loc.drop_from_inventory(src, M_loc.loc)
 
@@ -329,7 +329,7 @@ var/global/list/tophats_list = list()
 		else if(istype(loc, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = loc
 			if(S.remove_from_storage(src, S.loc))
-				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)])] выпрыгивает из [CASES(S, GENITIVE_CASE)]!</span>")
+				visible_message("<span class='warning'>[C_CASE(src, NOMINATIVE_CASE)] выпрыгивает из [CASE(S, GENITIVE_CASE)]!</span>")
 
 				if(ismob(loc))
 					return jump_out(rec_level = rec_level) // So we don't have problems getting out of mobs...
@@ -339,7 +339,7 @@ var/global/list/tophats_list = list()
 		else if(istype(loc, /obj/structure/closet))
 			var/obj/structure/closet/CL = loc
 			if(!CL.opened && CL.open())
-				visible_message("<span class='warning'>[capitalize([CASES(src, NOMINATIVE_CASE)])] выпрыгивает из [CASES(CL, GENITIVE_CASE)]!</span>")
+				visible_message("<span class='warning'>[C_CASE(src, NOMINATIVE_CASE)] выпрыгивает из [CASE(CL, GENITIVE_CASE)]!</span>")
 
 				return jump_out(rec_level = rec_level - 1)
 
@@ -381,7 +381,7 @@ var/global/list/tophats_list = list()
 		animate(user, pixel_y=user.pixel_y - 5, transform=M, time=5, alpha=100)
 		sleep(5)
 
-	user.visible_message("<span class='warning'>[capitalize([CASES(AM, NOMINATIVE_CASE)])] исчезает в [CASES(src, PREPOSITIONAL_CASE)]!</span>")
+	user.visible_message("<span class='warning'>[C_CASE(AM, NOMINATIVE_CASE)])] исчезает в [CASE(src, PREPOSITIONAL_CASE)]!</span>")
 	global.tophat_portal.go_into(AM)
 
 	if(AM == user)
@@ -403,7 +403,7 @@ var/global/list/tophats_list = list()
 	if(!user.mind || user.mind.special_role != "Wizard")
 		return
 	if(!global.tophat_portal)
-		to_chat(user, "<span class='warning'>Вы с ума сошли? В такую шляпу [CASES(AM, NOMINATIVE_CASE)] ни за что не влезет...</span>")
+		to_chat(user, "<span class='warning'>Вы с ума сошли? В такую шляпу [CASE(AM, NOMINATIVE_CASE)] ни за что не влезет...</span>")
 		return
 
 	if(istype(AM, /obj/item/weapon/grab))
@@ -437,15 +437,15 @@ var/global/list/tophats_list = list()
 		put_in_delay += 1 SECOND // If we see a ghost, let 'em get in...
 
 	if(put_in_delay == 0)
-		to_chat(user, "<span class='warning'>Вы не можете засунуть [CASES(AM, NOMINATIVE_CASE)] в [CASES(src, ACCUSATIVE_CASE)]!</span>")
+		to_chat(user, "<span class='warning'>Вы не можете засунуть [CASE(AM, NOMINATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)]!</span>")
 		return
 
 	if(user == AM)
-		user.visible_message("<span class='warning'>[user] готовится запрыгнуть в [CASES(src, ACCUSATIVE_CASE)]!</span>",
-							 "<span class='warning'>Вы готовитесь запрыгнуть в [CASES(src, ACCUSATIVE_CASE)]!</span>")
+		user.visible_message("<span class='warning'>[user] готовится запрыгнуть в [CASE(src, ACCUSATIVE_CASE)]!</span>",
+							 "<span class='warning'>Вы готовитесь запрыгнуть в [CASE(src, ACCUSATIVE_CASE)]!</span>")
 	else
-		user.visible_message("<span class='warning'>[user] пытается засунуть [CASES(AM, ACCUSATIVE_CASE)] в [CASES(src, ACCUSATIVE_CASE)]!</span>",
-							 "<span class='warning'>Вы пытаетесь засунуть [CASES(AM, ACCUSATIVE_CASE)] в [CASES(src, ACCUSATIVE_CASE)]!</span>")
+		user.visible_message("<span class='warning'>[user] пытается засунуть [CASE(AM, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)]!</span>",
+							 "<span class='warning'>Вы пытаетесь засунуть [CASE(AM, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)]!</span>")
 	if(do_after(user, put_in_delay, target=AM))
 		if(!isturf(loc))
 			if(ismob(loc))
@@ -462,7 +462,7 @@ var/global/list/tophats_list = list()
 /obj/item/clothing/head/wizard/tophat/attackby(obj/item/I, mob/user, params)
 	if(I.w_class <= w_class)
 		if(!global.tophat_portal)
-			to_chat(user, "<span class='warning'>Вы с ума сошли? В такую шляпу [CASES(I, NOMINATIVE_CASE)] ни за что не влезет...</span>")
+			to_chat(user, "<span class='warning'>Вы с ума сошли? В такую шляпу [CASE(I, NOMINATIVE_CASE)] ни за что не влезет...</span>")
 			return
 		drop_into(I, user)
 		return TRUE
@@ -479,12 +479,12 @@ var/global/list/tophats_list = list()
 		next_trick = world.time + trick_delay
 		if(iswizard(user))
 			if(try_get_monkey(user))
-				user.visible_message("<span class='notice'>[user] достаёт что-то большое из [CASES(src, GENITIVE_CASE)]!</span>",
-									 "<span class='notice'>Вы достаёте что-то непропорционально большое из [CASES(src, GENITIVE_CASE)].</span>")
+				user.visible_message("<span class='notice'>[user] достаёт что-то большое из [CASE(src, GENITIVE_CASE)]!</span>",
+									 "<span class='notice'>Вы достаёте что-то непропорционально большое из [CASE(src, GENITIVE_CASE)].</span>")
 		else
 			if(try_mousetrap(user))
-				user.visible_message("<span class='warning'>[user] натыкается на мышеловку, засунув руку в [CASES(src, ACCUSATIVE_cASE)]!</span>",
-									 "<span class='warning'>Засунув руку в [CASES(src, ACCUSATIVE_CASE)], Вы натыкаетесь на мышеловку!</span>")
+				user.visible_message("<span class='warning'>[user] натыкается на мышеловку, засунув руку в [CASE(src, ACCUSATIVE_cASE)]!</span>",
+									 "<span class='warning'>Засунув руку в [CASE(src, ACCUSATIVE_CASE)], Вы натыкаетесь на мышеловку!</span>")
 	else
 		..()
 
