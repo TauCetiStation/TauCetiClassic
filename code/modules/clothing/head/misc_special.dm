@@ -15,6 +15,7 @@
 	name = "welding helmet"
 	cases = list("сварочный шлем", "сварочного шлема", "сварочному шлему", "сварочный шлем", "сварочным шлемом", "сварочном шлеме")
 	desc = "Призван защитить глаза владельца от космической сварочной дуги."
+	gender = MALE
 	icon_state = "welding"
 	flags = (HEADCOVERSEYES | HEADCOVERSMOUTH)
 	item_state = "welding"
@@ -68,6 +69,7 @@
 	name = "cake-hat"
 	cases = list("шляпа-торт", "шляпы-торта", "шляпе-торту", "шляпу-торт", "шляпой-тортом", "шляпе-торту")
 	desc = "Выглядит вкусно!"
+	gender = FEMALE
 	icon_state = "cake0"
 	flags = HEADCOVERSEYES
 	var/onfire = 0.0
@@ -117,6 +119,7 @@
 	name = "ushanka"
 	cases = list("ушанка", "ушанки", "ушанке", "ушанку", "ушанкой", "ушанке")
 	desc = "Идеально подходит для сибирских зим, правда, товарищ?"
+	gender = FEMALE
 	flags_inv = HIDEEARS
 
 	var/ushanka_state = "ushanka_black_brown"
@@ -157,6 +160,7 @@
 	name = "carved pumpkin"
 	cases = list("резная тыква", "резной тыквы", "резной тыкве", "резную тыкву", "резной тыквой", "резной тыкве")
 	desc = "Светильник из тыквы, какие обычно изготавливают во время космического Хеллоуина. Считается, что такие светильники могут отгонять злых духов."
+	gender = FEMALE
 	icon_state = "hardhat_pumpkin"//Could stand to be renamed
 	item_state = "hardhat_pumpkin"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
@@ -173,6 +177,7 @@
 	name = "kitty ears"
 	cases = list("кошачьи ушки", "кошачьих ушек", "кошачьим ушкам", "кошачьи ушки", "кошачьими ушками", "кошачьих ушках")
 	desc = "Пара искусственных кошачьих ушей. Мяу!"
+	gender = PLURAL
 	icon_state = "kitty"
 	body_parts_covered = 0
 	var/icon/mob

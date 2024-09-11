@@ -222,6 +222,7 @@ var/global/list/tophats_list = list()
 	name = "top hat"
 	cases = list("цилиндр", "цилиндра", "цилиндру", "цилиндр", "цилиндром", "цилиндре")
 	desc = "Сюда вполне может поместиться десяток кроликов. Или, может, мартышек."
+	gender = MALE
 	icon_state = "tophat"
 	item_state = "that"
 

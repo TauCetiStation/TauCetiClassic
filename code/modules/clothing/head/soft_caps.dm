@@ -2,6 +2,7 @@
 	name = "cap"
 	cases = list("кепка", "кепки", "кепке", "кепку", "кепкой", "кепке")
 	desc = "Обыкновенная бейсболка."
+	gender = FEMALE
 	icon_state = "greysoft"
 	item_state = "greysoft"
 	item_state_world = "greysoft_world"
