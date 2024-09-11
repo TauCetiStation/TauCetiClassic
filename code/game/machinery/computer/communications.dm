@@ -240,7 +240,7 @@
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(CM.cooldown)
-					to_chat(usr, "<span class='warning'>Блюспейс-передатчик в состоянии перезагрузки. Ожидайте.</span>")
+					to_chat(usr, "<span class='warning'>Рекалибровка систем связи. Пожалуйста подождите.</span>")
 					return
 				var/input = sanitize(input(usr, "Передайте оповещение Центкому через квантовую связь. Этот процесс является крайне затратным, потому злоупотребление им приведёт к вашему... увольнению. Передача сообщения не гарантирует ответ. Между сообщениями есть задержка в 30 секунд, постарайтесь написать развёрнуто, полно и лаконично.", "Чтобы отменить, отправьте пустое сообщение.", ""))
 				if(!input || !(usr in view(1,src)))
@@ -255,9 +255,9 @@
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(CM.cooldown)
-					to_chat(usr, "<span class='warning'>Обработка информации. Ожидайте.</span>")
+					to_chat(usr, "<span class='warning'>Рекалибровка систем связи. Пожалуйста подождите.</span>")
 					return
-				var/input = sanitize(input(usr, "Передайте оповещение \[НЕИЗВЕСТНЫМ\] через блюспейс-связь.  Этот процесс является крайне затратным, потому злоупотребление им приведёт к вашему увольнению. Передача сообщения не гарантирует ответ. Между сообщениями есть промежуток в 30 секунд, поэтому они должны содержать полную информацию.", "Чтобы отменить, отправьте пустое сообщение.", ""))
+				var/input = sanitize(input(usr, "Передайте оповещение \[НЕИЗВЕСТНЫМ\] через квантовую связь.  Этот процесс является крайне затратным, потому злоупотребление им приведёт к вашему увольнению. Передача сообщения не гарантирует ответ. Между сообщениями есть промежуток в 30 секунд, поэтому они должны содержать полную информацию.", "Чтобы отменить, отправьте пустое сообщение.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
@@ -329,7 +329,7 @@
 
 	var/dat = ""
 	if (SSshuttle.online && SSshuttle.location == 0)
-		dat += "<B>Аварийный шаттл</B>\n<BR>\nПримерное время прибытия: [shuttleeta2text()]<BR>"
+		dat += "<B>Эвакуационный шаттл</B>\n<BR>\nПримерное время прибытия: [shuttleeta2text()]<BR>"
 
 	if (issilicon(user))
 		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
@@ -357,9 +357,9 @@
 					if (SSshuttle.online)
 						dat += "<BR><A HREF='?src=\ref[src];operation=cancelshuttle'>Отменить вызов шаттла</A>"
 					else
-						dat += "<BR><A HREF='?src=\ref[src];operation=callshuttle'>Вызвать экстренный шаттл</A>"
+						dat += "<BR><A HREF='?src=\ref[src];operation=callshuttle'>Вызвать эвакуационный шаттл</A>"
 
-				dat += "<BR><A HREF='?src=\ref[src];operation=status'>Установить статус дисплея</A>"
+				dat += "<BR><A HREF='?src=\ref[src];operation=status'>Установить статус дисплеев</A>"
 			else
 				dat += "<BR><A HREF='?src=\ref[src];operation=login'>Авторизоваться</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=messagelist'>Список сообщений</A>"
@@ -422,11 +422,11 @@
 	switch(src.aistate)
 		if(STATE_DEFAULT)
 			if(SSshuttle.location==0 && !SSshuttle.online)
-				dat += "<BR><A HREF='?src=\ref[src];operation=ai-callshuttle'>Вызвать аварийный шаттл</A>"
+				dat += "<BR><A HREF='?src=\ref[src];operation=ai-callshuttle'>Вызвать эвакуационный шаттл</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=ai-messagelist'>Список сообщений</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=ai-status'>Установить текст на дисплеях</A>"
 		if(STATE_CALLSHUTTLE)
-			dat += "Вы уверены, что хотите вызвать аварийный шаттл? <A HREF='?src=\ref[src];operation=ai-callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=ai-main'>НЕТ</A>"
+			dat += "Вы уверены, что хотите вызвать эвакуационный шаттл? <A HREF='?src=\ref[src];operation=ai-callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=ai-main'>НЕТ</A>"
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
@@ -477,11 +477,11 @@
 		return
 
 	if(SSshuttle.direction == -1)
-		to_chat(user, "Аварийный шаттл возвращается к отделению Центкома, вызов невозможен.")
+		to_chat(user, "Эвакуационный шаттл возвращается к отделению Центкома, вызов невозможен.")
 		return
 
 	if(SSshuttle.online)
-		to_chat(user, "Аварийный шаттл уже вызван.")
+		to_chat(user, "Эвакуационный шаттл уже вызван.")
 		return
 
 	SSshuttle.incall()
