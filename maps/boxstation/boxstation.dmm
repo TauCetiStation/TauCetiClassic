@@ -6396,6 +6396,21 @@
 "akE" = (
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
+"akF" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/machinery/door/airlock/neutral{
+	dir = 4;
+	name = "Diner"
+	},
+/turf/simulated/floor,
+/area/station/civilian/bar)
 "akG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -13400,13 +13415,13 @@
 	},
 /area/station/civilian/gym)
 "awO" = (
-/obj/machinery/door/airlock/glass{
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/machinery/door/airlock/neutral{
 	dir = 4;
 	name = "Kitchen";
 	req_access = list(28)
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -14256,9 +14271,10 @@
 /area/station/maintenance/dormitory)
 "ayv" = (
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile{
+/obj/structure/window/fulltile/polarized{
 	grilled = 1;
-	icon_state = "gr_window"
+	icon_state = "gr_window_polarized";
+	id = "bar"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
@@ -17650,18 +17666,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aET" = (
-/obj/machinery/light/smart{
-	dir = 8
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
-/obj/machinery/light_switch{
-	pixel_x = -30
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
+	icon_state = "gr_window_polarized";
+	id = "bar"
 	},
-/obj/machinery/vending/boozeomat,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/civilian/bar)
+/turf/simulated/floor/plating,
+/area/station/civilian/kitchen)
 "aEU" = (
 /obj/machinery/optable,
 /obj/effect/decal/cleanable/vomit,
@@ -29897,20 +29911,22 @@
 /turf/simulated/floor,
 /area/station/gateway)
 "baX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/light/smart{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/light_switch{
+	pixel_x = -36
 	},
-/obj/machinery/door/airlock/glass{
+/obj/machinery/vending/boozeomat,
+/obj/machinery/windowtint{
+	id = "bar";
+	pixel_x = -28;
+	range = 12
+	},
+/turf/simulated/floor{
 	dir = 4;
-	name = "Diner"
+	icon_state = "dark"
 	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/simulated/floor,
 /area/station/civilian/bar)
 "baY" = (
 /obj/machinery/door/airlock/external{
@@ -32005,17 +32021,20 @@
 	},
 /area/station/hallway/primary/central)
 "beG" = (
-/obj/structure/disposalpipe/segment{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/door/airlock/neutral{
+	dir = 4;
+	name = "Diner"
+	},
+/turf/simulated/floor,
 /area/station/civilian/bar)
 "beH" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -36335,19 +36354,18 @@
 	},
 /area/station/civilian/bar)
 "bmy" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/glass{
-	dir = 4;
-	name = "Diner"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/turf/simulated/floor,
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
+	icon_state = "gr_window_polarized";
+	id = "bar"
+	},
+/turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "bmz" = (
 /obj/structure/disposalpipe/segment{
@@ -73475,12 +73493,13 @@
 	},
 /area/shuttle/mining/station)
 "hgi" = (
-/obj/structure/window/fulltile{
-	grilled = 1;
-	icon_state = "gr_window"
-	},
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
+	icon_state = "gr_window_polarized";
+	id = "bar"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
@@ -110465,9 +110484,9 @@ npd
 aMZ
 aMZ
 awO
-aDd
-aMZ
 aET
+aMZ
+baX
 bmx
 aTH
 bmd
@@ -112780,9 +112799,9 @@ avP
 axC
 azO
 aGn
-baX
 beG
 bmy
+akF
 aGn
 bCP
 aCn
