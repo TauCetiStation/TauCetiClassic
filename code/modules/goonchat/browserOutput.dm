@@ -1,4 +1,4 @@
-var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
+var/global/savefile/iconCache = new /savefile("cache/iconCache.sav")
 
 var/global/list/bicon_cache = list()
 
