@@ -91,7 +91,12 @@
 	if(!destination)
 		var/area/A = locate(religion.area_type)
 		destination = get_turf(pick(A.contents))
-	teleporting(destination	, user)
+		if(!religion.get_tech(RTECH_COOLDOWN_REDUCTION))
+			if(do_after(user, 20, target = user))
+				teleporting(destination	, user)
+		else
+			if(do_after(user, 10, target = user))
+				teleporting(destination	, user)
 
 /datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target, mob/user)
 	if(isenvironmentturf(target))
