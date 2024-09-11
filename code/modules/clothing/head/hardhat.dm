@@ -1,6 +1,8 @@
 /obj/item/clothing/head/hardhat
-	name = "hard hat"
-	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
+	name = "защитная каска"
+	cases = list("защитная каска", "защитной каски", "защитной каске", "защитную каску", "защитной каской", "защитной каске")
+	desc = "Головной убор, носимый в опасных рабочих условиях для защиты черепной коробки. Встроенный фонарик позволяет освободить руки для работы."
+	gender = FEMALE
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
@@ -17,7 +19,7 @@
 
 /obj/item/clothing/head/hardhat/attack_self(mob/user)
 	if(!isturf(user.loc))
-		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
+		to_chat(user, "Вы не можете включить фонарик, находясь внутри [CASE(user.loc, GENITIVE_CASE)].")//To prevent some lighting anomalities.
 		return
 
 	on = !on
@@ -39,8 +41,7 @@
 	icon_state = "hardhat_yellow"
 
 /obj/item/clothing/head/hardhat/yellow/visor
-	name = "visor hard hat"
-	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight and visor, which may protect eyes."
+	desc = "Головной убор, носимый в опасных рабочих условиях для защиты черепной коробки. Встроенный фонарик позволяет освободить руки для работы, а визор защитит глаза."
 	icon_state = "hardhat_yellow_visor"
 	body_parts_covered = HEAD|FACE|EYES
 	flags = MASKCOVERSEYES
@@ -50,6 +51,8 @@
 
 /obj/item/clothing/head/hardhat/red
 	name = "firefighter helmet"
+	gender = MALE
+	cases = list("пожарный шлем", "пожарного шлема", "пожарному шлему", "пожарный шлем", "пожарным шлемом", "пожарном шлеме")
 	icon_state = "hardhat_red"
 	flags_pressure = STOPS_HIGHPRESSUREDMAGE
 	heat_protection = HEAD

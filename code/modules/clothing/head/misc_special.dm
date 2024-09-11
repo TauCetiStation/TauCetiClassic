@@ -13,7 +13,8 @@
  */
 /obj/item/clothing/head/welding
 	name = "welding helmet"
-	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
+	cases = list("сварочный шлем", "сварочного шлема", "сварочному шлему", "сварочный шлем", "сварочным шлемом", "сварочном шлеме")
+	desc = "Призван защитить глаза владельца от космической сварочной дуги."
 	icon_state = "welding"
 	flags = (HEADCOVERSEYES | HEADCOVERSMOUTH)
 	item_state = "welding"
@@ -30,7 +31,7 @@
 	item_action_types = list(/datum/action/item_action/hands_free/flip_welding_mask)
 
 /datum/action/item_action/hands_free/flip_welding_mask
-	name = "Flip Welding Mask"
+	name = "Использовать сварочный шлем"
 
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
@@ -48,14 +49,14 @@
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = initial(icon_state)
 			flash_protection = FLASHES_FULL_PROTECTION
-			to_chat(usr, "You flip the [src] down to protect your eyes.")
+			to_chat(usr, "Вы опускаете [CASE(src, ACCUSATIVE_CASE)], защищая глаза.")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
 			flash_protection = NONE
-			to_chat(usr, "You push the [src] up out of your face.")
+			to_chat(usr, "Вы поднимаете [CASE(src, ACCUSATIVE_CASE)] со своего лица.")
 		update_inv_mob() //so our mob-overlays update
 		update_item_actions()
 
@@ -65,7 +66,8 @@
  */
 /obj/item/clothing/head/cakehat
 	name = "cake-hat"
-	desc = "It's tasty looking!"
+	cases = list("шляпа-торт", "шляпы-торта", "шляпе-торту", "шляпу-торт", "шляпой-тортом", "шляпе-торту")
+	desc = "Выглядит вкусно!"
 	icon_state = "cake0"
 	flags = HEADCOVERSEYES
 	var/onfire = 0.0
@@ -113,7 +115,8 @@
  */
 /obj/item/clothing/head/ushanka
 	name = "ushanka"
-	desc = "Perfect for winter in Siberia, da?"
+	cases = list("ушанка", "ушанки", "ушанке", "ушанку", "ушанкой", "ушанке")
+	desc = "Идеально подходит для сибирских зим, правда, товарищ?"
 	flags_inv = HIDEEARS
 
 	var/ushanka_state = "ushanka_black_brown"
@@ -128,12 +131,12 @@
 		icon_state = "[ushanka_state]-up"
 		item_state = "[ushanka_state]-up"
 		flags_inv &= ~HIDEEARS
-		to_chat(user, "You raise the ear flaps on the ushanka.")
+		to_chat(user, "Вы поднимаете науши ушанки.")
 	else
 		icon_state = "[ushanka_state]-down"
 		item_state = "[ushanka_state]-down"
 		flags_inv |= HIDEEARS
-		to_chat(user, "You lower the ear flaps on the ushanka.")
+		to_chat(user, "Вы опускаете науши ушанки.")
 
 /obj/item/clothing/head/ushanka/black
 	ushanka_state = "ushanka_black"
@@ -152,7 +155,8 @@
  */
 /obj/item/clothing/head/hardhat/pumpkinhead
 	name = "carved pumpkin"
-	desc = "A jack o' lantern! Believed to ward off evil spirits."
+	cases = list("резная тыква", "резной тыквы", "резной тыкве", "резную тыкву", "резной тыквой", "резной тыкве")
+	desc = "Светильник из тыквы, какие обычно изготавливают во время космического Хеллоуина. Считается, что такие светильники могут отгонять злых духов."
 	icon_state = "hardhat_pumpkin"//Could stand to be renamed
 	item_state = "hardhat_pumpkin"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
@@ -167,7 +171,8 @@
  */
 /obj/item/clothing/head/kitty
 	name = "kitty ears"
-	desc = "A pair of kitty ears. Meow!"
+	cases = list("кошачьи ушки", "кошачьих ушек", "кошачьим ушкам", "кошачьи ушки", "кошачьими ушками", "кошачьих ушках")
+	desc = "Пара искусственных кошачьих ушей. Мяу!"
 	icon_state = "kitty"
 	body_parts_covered = 0
 	var/icon/mob

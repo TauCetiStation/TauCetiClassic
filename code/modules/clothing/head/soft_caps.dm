@@ -1,6 +1,7 @@
 /obj/item/clothing/head/soft
 	name = "cap"
-	desc = "It's a baseball hat"
+	cases = list("кепка", "кепки", "кепке", "кепку", "кепкой", "кепке")
+	desc = "Обыкновенная бейсболка."
 	icon_state = "greysoft"
 	item_state = "greysoft"
 	item_state_world = "greysoft_world"
@@ -14,7 +15,7 @@
 	var/cap_color = "grey"
 
 /datum/action/item_action/hands_free/flip_cap
-	name = "Flip Cap"
+	name = "Повернуть кепку"
 
 /obj/item/clothing/head/soft/atom_init(mapload, ...)
 	. = ..()
@@ -37,10 +38,10 @@
 	flipped = !flipped
 	if(flipped)
 		item_state_inventory = "[cap_color]soft_flipped"
-		to_chat(user, "You flip the hat backwards.")
+		to_chat(user, "Вы поворачиваете кепку козырьком назад.")
 	else
 		item_state_inventory = "[cap_color]soft"
-		to_chat(user, "You flip the hat back in normal position.")
+		to_chat(user, "Вы поворачиваете кепку в нормальную сторону.")
 
 	update_world_icon()
 	update_inv_mob()
@@ -49,84 +50,96 @@
 
 /obj/item/clothing/head/soft/red
 	name = "red cap"
-	desc = "It's a baseball hat in a tasteless red color."
+	cases = list("красная кепка", "красной кепки", "красной кепке", "красную кепку", "красной кепкой", "красной кепке")
+	desc = "Это бейсболка безвкусного красного цвета."
 	icon_state = "redsoft"
 	item_state_world = "redsoft_world"
 	cap_color = "red"
 
 /obj/item/clothing/head/soft/blue
 	name = "blue cap"
-	desc = "It's a baseball hat in a tasteless blue color."
+	cases = list("синяя кепка", "синей кепки", "синей кепке", "синюю кепку", "синей кепкой", "синей кепке")
+	desc = "Это бейсболка безвкусного синего цвета."
 	icon_state = "bluesoft"
 	item_state_world = "bluesoft_world"
 	cap_color = "blue"
 
 /obj/item/clothing/head/soft/green
 	name = "green cap"
-	desc = "It's a baseball hat in a tasteless green color."
+	cases = list("зелёная кепка", "зелёной кепки", "зелёной кепке", "зелёную кепку", "зелёной кепкой", "зелёной кепке")
+	desc = "Это бейсболка безвкусного зелёного цвета."
 	icon_state = "greensoft"
 	item_state_world = "greensoft_world"
 	cap_color = "green"
 
 /obj/item/clothing/head/soft/yellow
 	name = "yellow cap"
-	desc = "It's a baseball hat in a tasteless yellow color."
+	cases = list("жёлтая кепка", "жёлтой кепки", "жёлтой кепке", "жёлтую кепку", "жёлтой кепкой", "жёлтой кепке")
+	desc = "Это бейсболка безвкусного жёлтого цвета."
 	icon_state = "yellowsoft"
 	item_state_world = "yellowsoft_world"
 	cap_color = "yellow"
 
 /obj/item/clothing/head/soft/grey
 	name = "grey cap"
-	desc = "It's a baseball hat in a tasteful grey color."
+	cases = list("серая кепка", "серой кепки", "серой кепке", "серую кепку", "серой кепкой", "серой кепке")
+	desc = "Это бейсболка модного серого цвета."
 	icon_state = "greysoft"
 	item_state_world = "greysoft_world"
 	cap_color = "grey"
 
 /obj/item/clothing/head/soft/orange
 	name = "orange cap"
-	desc = "It's a baseball hat in a tasteless orange color."
+	cases = list("оранжевая кепка", "оранжевой кепки", "оранжевой кепке", "оранжевую кепку", "оранжевой кепкой", "оранжевой кепке")
+	desc = "Это бейсболка безвкусного оранжевого цвета."
 	icon_state = "orangesoft"
 	item_state_world = "orangesoft_world"
 	cap_color = "orange"
 
 /obj/item/clothing/head/soft/mime
 	name = "white cap"
-	desc = "It's a baseball hat in a tasteless white color."
+	cases = list("белая кепка", "белой кепки", "белой кепке", "белую кепку", "белой кепкой", "белой кепке")
+	desc = "Это бейсболка безвкусного белого цвета."
 	icon_state = "mimesoft"
 	item_state_world = "mimesoft_world"
 	cap_color = "mime"
 
 /obj/item/clothing/head/soft/purple
 	name = "purple cap"
-	desc = "It's a baseball hat in a tasteless purple color."
+	cases = list("фиолетовая кепка", "фиолетовой кепки", "фиолетовой кепке", "фиолетовую кепку", "фиолетовой кепкой", "фиолетовой кепке")
+	desc = "Это бейсболка безвкусного фиолетового цвета."
 	icon_state = "purplesoft"
 	item_state_world = "purplesoft_world"
 	cap_color = "purple"
 
 /obj/item/clothing/head/soft/rainbow
 	name = "rainbow cap"
-	desc = "It's a baseball hat in a bright rainbow of colors."
+	cases = list("радужная кепка", "радужной кепки", "радужной кепке", "радужную кепку", "радужной кепкой", "радужной кепке")
+	desc = "Это яркая семицветная бейсболка."
 	icon_state = "rainbowsoft"
 	item_state_world = "rainbowsoft_world"
 	cap_color = "rainbow"
 
 /obj/item/clothing/head/soft/sec
 	name = "security cap"
-	desc = "It's baseball hat in tasteful red color."
+	cases = list("кепка охраны", "кепки охраны", "кепке охраны", "кепку охраны", "кепкой охраны", "кепке охраны")
+	desc = "Это бейсболка модного красного цвета."
 	icon_state = "secsoft"
 	item_state_world = "secsoft_world"
 	cap_color = "sec"
 
 /obj/item/clothing/head/soft/sec/corp
 	name = "corporate security cap"
-	desc = "It's baseball hat in corporate colors."
+	cases = list("кепка корпоративной охраны", "кепки корпоративной охраны", "кепке корпоративной охраны", "кепку корпоративной охраны", "кепкой корпоративной охраны", "кепке корпоративной охраны")
+	desc = "Это бейсболка корпоративного цвета."
 	icon_state = "corpsoft"
 	item_state_world = "corpsoft_world"
 	cap_color = "corp"
 
 /obj/item/clothing/head/soft/janitor
 	name = "janitor cap"
-	desc = "It's janitor hat."
+	cases = list("кепка уборщика", "кепки уборщика", "кепке уборщика", "кепку уборщика", "кепкой уборщика", "кепке уборщика")
+	desc = "Это форменная шапка уборщика."
 	icon_state = "janitorsoft"
 	item_state_world = "janitorsoft_world"
 	cap_color = "janitor"
@@ -134,28 +147,32 @@
 
 /obj/item/clothing/head/soft/nt_pmc_cap
 	name = "NT PMC Cap"
-	desc = "Dark cap used by the private security corporation. This one looks good."
+	cases = list("кепка НТ ЧВК", "кепки НТ ЧВК", "кепке НТ ЧВК", "кепку НТ ЧВК", "кепкой НТ ЧВК", "кепке НТ ЧВК")
+	desc = "Тёмная кепка, использующаяся частной военной корпорацией. Выглядит неплохо."
 	icon_state = "nt_pmcsoft"
 	item_state_world = "nt_pmcsoft_world"
 	cap_color = "nt_pmc"
 
 /obj/item/clothing/head/soft/paramed
 	name = "first responder cap"
-	desc = "It's first responder hat. Shows who's saving lives here."
+	cases = list("кепка первой помощи", "кепки первой помощи", "кепке первой помощи", "кепку первой помощи", "кепкой первой помощи", "кепке первой помощи")
+	desc = "Бейсболка парамедика. Показывает, кто тут спасает жизни."
 	icon_state = "frsoft"
 	item_state_world = "frsoft_world"
 	cap_color = "fr"
 
 /obj/item/clothing/head/soft/blueshield
 	name = "blueshield cap"
-	desc = "It's baseball hat in tasteful blue color with blueshield insignia."
+	cases = list("кепка синего щита", "кепки синего щита", "кепке синего щита", "кепку синего щита", "кепкой синего щита", "кепке синего щита")
+	desc = "Это бейсболка модного синего цвета с эмблемой синего щита."
 	icon_state = "blueshieldsoft"
 	item_state_world = "blueshieldsoft_world"
 	cap_color = "blueshield"
 
 /obj/item/clothing/head/soft/cargo
 	name = "cargo cap"
-	desc = "It's cargo hat."
+	cases = list("кепка снабжения", "кепки снабжения", "кепке снабжения", "кепку снабжения", "кепкой снабжения", "кепке снабжения")
+	desc = "Это бейсболка модного коричневого цвета."
 	icon_state = "cargosoft"
 	item_state_world = "cargosoft_world"
 	cap_color = "cargo"

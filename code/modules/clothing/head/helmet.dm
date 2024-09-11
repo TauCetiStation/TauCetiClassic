@@ -1,6 +1,7 @@
 /obj/item/clothing/head/helmet
 	name = "helmet"
-	desc = "Standard Security gear. Protects the head from impacts."
+	cases = list("шлем", "шлема", "шлему", "шлем", "шлемом", "шлеме")
+	desc = "Стандартная экипировка охраны. Защищает голову от пуль, лазеров, осколков и ящиков с инструментами."
 	icon_state = "helmet"
 	flags = HEADCOVERSEYES
 	item_state = "helmet"
@@ -42,7 +43,7 @@
 		if(flags & ABSTRACT)
 			return    //You can't insert holochip in abstract item.
 		if(holochip)
-			to_chat(user, "<span class='notice'>The [src] is already modified with the [holochip]</span>")
+			to_chat(user, "<span class='notice'>В этом [CASE(src, PREPOSITIONAL_CASE)] уже есть [holochip].</span>")
 			return
 		user.drop_from_inventory(I, src)
 		holochip = I
@@ -51,10 +52,10 @@
 		if(istype(H) && H.head == src)
 			holochip.add_action(user)
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You modify the [src] with the [holochip]</span>")
+		to_chat(user, "<span class='notice'>Вы вставляете [CASE(holochip, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>")
 	else if(isscrewing(I))
 		if(!holochip)
-			to_chat(user, "<span class='notice'>There's no holochip to remove from the [src]</span>")
+			to_chat(user, "<span class='notice'>В этом [CASE(src, PREPOSITIONAL_CASE)] нет голочипа.</span>")
 			return
 		holochip.deactivate_holomap()
 		holochip.remove_action(user)
@@ -63,25 +64,26 @@
 			holochip.forceMove(get_turf(src))
 		holochip = null
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
+		to_chat(user, "<span class='notice'>Вы вынимаете [CASE(holochip, ACCUSATIVE_CASE)] из [CASE(src, GENITIVE_CASE)].</span>")
 
 	if(!issignaler(I)) //Eh, but we don't want people making secbots out of space helmets.
 		return ..()
 
 	var/obj/item/device/assembly/signaler/S = I
 	if(!S.secured)
-		to_chat(user, "<span class='notice'>The signaler not secured.</span>")
+		to_chat(user, "<span class='notice'>Сигналер не готов к использованию.</span>")
 		return ..()
 
 	var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
 	user.put_in_hands(A)
-	to_chat(user, "<span class='notice'>You add \the [I] to the helmet.</span>")
+	to_chat(user, "<span class='notice'>Вы закрепляете [CASE(I, ACCUSATIVE_CASE)] на шлеме.</span>")
 	qdel(I)
 	qdel(src)
 
 /obj/item/clothing/head/helmet/psyamp
 	name = "psychic amplifier"
-	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
+	cases = list("психический усилитель", "психического усилителя", "психическому усилителю", "психический усилитель", "психическим усилителем", "психическом усилителе")
+	desc = "Психический усилитель в виде тернового венца. Выглядит как внебрачный ребёнок тиары и индустриального робота."
 	icon_state = "amp"
 	item_state = "amp"
 	flags_inv = 0
@@ -89,12 +91,14 @@
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's helmet"
-	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
+	cases = list("шлем смотрителя", "шлема смотрителя", "шлему смотрителя", "шлем смотрителя", "шлемом смотрителя", "шлеме смотрителя")
+	desc = "Особый шлем, выдаваемый смотрителям службы безопасности. Защищает голову от пуль, лазеров, осколков и ящиков с инструментами."
 	icon_state = "helmet_warden"
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
-	desc = "It's a helmet specifically designed to protect against close range attacks."
+	cases = list("противоударный шлем", "противоударного шлема", "противоударному шлему", "противоударный шлем", "противоударным шлемом", "противоударном шлеме")
+	desc = "Шлем, специально разработанный для защиты от атак в ближнем бою."
 	icon_state = "riot"
 	item_state = "helmet"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH
@@ -105,14 +109,14 @@
 	item_action_types = list(/datum/action/item_action/hands_free/adjust_helmet_visor)
 
 /datum/action/item_action/hands_free/adjust_helmet_visor
-	name = "Adjust helmet visor"
+	name = "Использовать визор"
 
 /obj/item/clothing/head/helmet/riot/attack_self()
 	toggle()
 
 /obj/item/clothing/head/helmet/riot/verb/toggle()
 	set category = "Object"
-	set name = "Adjust helmet visor"
+	set name = "Использовать визор"
 	set src in usr
 
 	if(!usr.incapacitated())
@@ -120,25 +124,27 @@
 			src.up = !src.up
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = initial(icon_state)
-			to_chat(usr, "You pull the visor down on")
+			to_chat(usr, "Вы опускаете визор.")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = "[initial(icon_state)]up"
-			to_chat(usr, "You push the visor up on")
+			to_chat(usr, "Вы поднимаете визор.")
 		update_inv_mob() //so our mob-overlays update
 		update_item_actions()
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
-	desc = "A bulletproof security helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	cases = list("пуленепробиваемый шлем", "пуленепробиваемого шлема", "пуленепробиваемому шлему", "пуленепробиваемый шлем", "пуленепробиваемым шлемом", "пуленепробиваемом шлеме")
+	desc = "Пуленепробиваемый шлем, отлично защищающий носителя от выстрелов из огнестрельного оружия."
 	icon_state = "bulletproof"
 	armor = list(melee = 10, bullet = 80, laser = 20,energy = 20, bomb = 35, bio = 0, rad = 0)
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH	// cause sprite has a drawn mask
 
 /obj/item/clothing/head/helmet/laserproof
 	name = "ablative helmet"
-	desc = "A ablative security helmet that excels in protecting the wearer against energy and laser projectiles."
+	cases = list("абляционный шлем", "абляционного шлема", "абляционному шлему", "абляционный шлем", "абляционным шлемом", "абляционном шлеме")
+	desc = "Абляционный шлем, отлично защищающий носителя от лазерный и энергетических снарядов."
 	icon_state = "laserproof"
 	armor = list(melee = 10, bullet = 10, laser = 65,energy = 75, bomb = 0, bio = 0, rad = 0)
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH	// cause sprite has a drawn mask
@@ -151,7 +157,8 @@
 
 /obj/item/clothing/head/helmet/swat
 	name = "SWAT helmet"
-	desc = "They're often used by highly trained Swat Members."
+	cases = list("шлем спецназа", "шлема спецназа", "шлему спецназа", "шлем спецназа", "шлемом спецназа", "шлеме спецназа")
+	desc = "Такие шлемы часто используют подразделения специального назначения."
 	icon_state = "swat"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state = "swat"
@@ -165,7 +172,8 @@
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "thunderdome helmet"
-	desc = "<i>'Let the battle commence!'</i>"
+	cases = list("шлем 'Thunderdome'", "шлема 'Thunderdome'", "шлему 'Thunderdome'", "шлем 'Thunderdome'", "шлемом 'Thunderdome'", "шлеме 'Thunderdome'")
+	desc = "<i>'Да начнётся битва!'</i>"
 	icon_state = "thunderdome"
 	flags = HEADCOVERSEYES
 	item_state = "thunderdome"
@@ -176,6 +184,7 @@
 
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"
+	cases = list("шлем гладиатора", "шлема гладиатора", "шлему гладиатора", "шлем гладиатора", "шлемом гладиатора", "шлеме гладиатора")
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
@@ -185,7 +194,8 @@
 
 /obj/item/clothing/head/helmet/tactical
 	name = "tactical helmet"
-	desc = "An armored helmet capable of being fitted with a multitude of attachments."
+	cases = list("тактический шлем", "тактического шлема", "тактическому шлему", "тактический шлем", "тактическим шлемом", "тактическом шлеме")
+	desc = "Бронированный шлем, на который можно установить широкий спектр тактических обвесов. Только где их взять-то?"
 	icon_state = "swathelm"
 	item_state = "helmet"
 	flags = HEADCOVERSEYES
@@ -195,25 +205,28 @@
 
 /obj/item/clothing/head/helmet/tactical/marinad
 	name = "marine helmet"
-	desc = "Spectrum alloy helmet. Lightweight and ready for action."
+	cases = list("шлем морпеха", "шлема морпеха", "шлему морпеха", "шлем морпеха", "шлемом морпеха", "шлеме морпеха")
+	desc = "Лёгкий и прочный шлем из особого защитного сплава. К бою готов!"
 	icon_state = "marinad"
 	item_state = "marinad_helmet"
 
 /obj/item/clothing/head/helmet/tactical/marinad/leader
 	name = "marine beret"
-	desc = "Sturdy kevlar beret in protective colors, issued to low-ranking NTCM officers."
+	cases = list("берет морпеха", "берета морпеха", "берету морпеха", "берет морпеха", "беретом морпеха", "берете морпеха")
+	desc = "Прочный кевларовый берет в защитных цветах, носимый офицерами низшего звена КМП НТ."
 	icon_state = "beret_marinad"
 
 /obj/item/clothing/head/helmet/helmet_of_justice
 	name = "helmet of justice"
-	desc = "Prepare for Justice!"
+	cases = list("шлем правосудия", "шлема правосудия", "шлему правосудия", "шлем правосудия", "шлемом правосудия", "шлеме правосудия")
+	desc = "Приготовься к правосудию!"
 	icon_state = "shitcuritron_0"
 	item_state = "helmet"
 	var/on = 0
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_helmet)
 
 /datum/action/item_action/hands_free/toggle_helmet
-	name = "Toggle Helmet"
+	name = "Включить шлем"
 
 /obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
 	on = !on
@@ -223,7 +236,8 @@
 
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"
-	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
+	cases = list("шляпа смотрителя", "шляпы смотрителя", "шляпе смотрителя", "шляпу смотрителя", "шляпой смотрителя", "шляпе смотрителя")
+	desc = "Особая кевларовая шляпа, которую раньше носили смотрители службы безопасности."
 	icon_state = "policehelm"
 	item_state = "helmet"
 	force = 0
@@ -231,32 +245,37 @@
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
-	desc = "An ancient helmet made of bronze and leather."
+	cases = list("римский шлем", "римского шлема", "римскому шлему", "римский шлем", "римским шлемом", "римском шлеме")
+	desc = "Древний шлем, сделанный из бронзы и железа."
 	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
 	icon_state = "roman"
 	item_state = "roman"
 
 /obj/item/clothing/head/helmet/roman/legionaire
 	name = "roman legionaire helmet"
-	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
+	cases = list("римский шлем легионера", "римского шлем легионера", "римскому шлем легионера", "римский шлем легионера", "римским шлем легионера", "римском шлем легионера")
+	desc = "Древний шлем, сделанный из бронзы и железа с красным гребнем."
 	icon_state = "roman_c"
 	item_state = "roman_c"
 
 /obj/item/clothing/head/helmet/M89_Helmet
 	name = "M89 Helmet"
-	desc = "Combat helmet used by the private security corporation."
+	cases = list("шлем М39", "шлема М39", "шлему М39", "шлем М39", "шлемом М39", "шлеме М39")
+	desc = "Боевой шлем, используемый частной охранной организацией."
 	icon_state = "m89_helmet"
 	item_state = "helmet"
 
 /obj/item/clothing/head/helmet/M35_Helmet
 	name = "M35 Helmet"
-	desc = "The Basic werhmacht army helmet."
+	cases = list("шлем M35", "шлема M35", "шлему M35", "шлем M35", "шлемом M35", "шлеме M35")
+	desc = "Стандартный шлем Вермахта."
 	icon_state = "M35_Helmet"
 	item_state = "helmet"
 
 /obj/item/clothing/head/helmet/syndilight
 	name = "light helmet"
-	desc = "Light and far less armored than it's assault counterpart, this helmet is used by stealthy operators."
+	cases = list("лёгкий шлем", "лёгкого шлема", "лёгкому шлему", "лёгкий шлем", "лёгким шлемом", "лёгком шлеме")
+	desc = "Более лёгкий и менее бронированный, чем штурмовой аналог, этот шлем предпочитают носить скрытные оперативники."
 	icon_state = "lighthelmet"
 	item_state = "lighthelmet"
 	armor = list(melee = 50, bullet = 60, laser = 45,energy = 50, bomb = 35, bio = 0, rad = 50)
@@ -264,7 +283,8 @@
 
 /obj/item/clothing/head/helmet/syndiassault
 	name = "assault helmet"
-	desc = "Stylish black and red helmet with armored protective visor."
+	cases = list("штурмовой шлем", "штурмового шлема", "штурмовому шлему", "штурмовой шлем", "штурмовым шлемом", "штурмовом шлеме")
+	desc = "Стильный чёрно-красный шлем с бронированным забралом."
 	icon_state = "assaulthelmet_b"
 	item_state = "assaulthelmet_b"
 	armor = list(melee = 80, bullet = 70, laser = 55, energy = 70, bomb = 50, bio = 0, rad = 50)
@@ -283,7 +303,8 @@
 
 /obj/item/clothing/head/helmet/crusader
 	name = "crusader topfhelm"
-	desc = "They may call you a buckethead but who'll laugh when crusade begins?"
+	cases = list("топфхельм крестоносца", "топфхельма крестоносца", "топфхельму крестоносца", "топфхельм крестоносца", "топфхельмом крестоносца", "топфхельме крестоносца")
+	desc = "Пусть Вас и зовут ведроголовым, но мы ещё посмотрим, кто будет смеяться последним, когда начнётся крестовый поход."
 	icon_state = "crusader"
 	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 20, bio = 0, rad = 10)
 	siemens_coefficient = 1.2
@@ -292,45 +313,52 @@
 
 /obj/item/clothing/head/helmet/police
 	name = "police helmet"
-	desc = "Latest fashion of law enforcement organizations. It's big. Like, really big."
+	cases = list("полицейский шлем", "полицейского шлема", "полицейскому шлему", "полицейский шлем", "полицейским шлемом", "полицейском шлеме")
+	desc = "Последний писк моды правоохранительных организаций. А ещё этот шлем большой. Реально большой."
 	icon_state = "police_helmet"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/police/heavy
 	name = "heavy police helmet"
-	desc = "Latest fashion of law enforcement organizations. It's big. Like, really big. Golden marks on this helmet denote the higher rank of it's wearer."
+	cases = list("тяжелый полицейский шлем", "тяжелого полицейского шлема", "тяжелому полицейскому шлему", "тяжелый полицейский шлем", "тяжелым полицейским шлемом", "тяжелом полицейском шлеме")
+	desc = "Последний писк моды правоохранительных организаций. А ещё этот шлем большой. Реально большой. Золотые знаки на этом шлеме обозначают высокое звание его владельца."
 	icon_state = "police_helmet_heavy"
 	armor = list(melee = 55, bullet = 50, laser = 45,energy = 25, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/laserproof/police
 	name = "inspector helmet"
-	desc = "An experimental helmet that is able to reflect laser projectiles via psionic manipulations with wearer's mind or something. It's also slightly bigger than other police helmets, since big brain and all."
+	cases = list("шлем инспектора", "шлема инспектора", "шлему инспектора", "шлем инспектора", "шлемом инспектора", "шлеме инспектора")
+	desc = "Экспериментальный шлем, способный отражать лазерные выстрелы с помощью псионических манипуляций. А ещё он немного больше своих аналогов, чтобы вместить развитый мозг своего владельца."
 	icon_state = "police_helmet_inspector"
 	armor = list(melee = 35, bullet = 35, laser = 65,energy = 75, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0
 
 /obj/item/clothing/head/helmet/police/elite
 	name = "elite police helmet"
-	desc = "This is a heavily armored police helmet. The most blockiest of them all."
+	cases = list("элитный полицейский шлем", "элитного полицейского шлема", "элитному полицейскому шлему", "элитный полицейский шлем", "элитным полицейским шлемом", "элитном полицейском шлеме")
+	desc = "Tяжелобронированный полицейский шлем. Больше похож на голубой кирпич, чем на шлем."
 	icon_state = "police_helmet_elite"
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/surplus
 	name = "surplus helmet"
-	desc = "A simple steel helmet - a steelpot, if you will."
+	cases = list("потёртый шлем", "потёртого шлема", "потёртому шлему", "потёртый шлем", "потёртым шлемом", "потёртом шлеме")
+	desc = "Простой стальной шлем, копирующий дизайн шлемов двадцатого века."
 	icon_state = "surplus_helmet"
 	armor = list(melee = 45, bullet = 40, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/blueshield
 	name = "blueshield helmet"
-	desc = "An advanced helmet issued to blueshield officers."
+	cases = list("шлем синего щита", "шлема синего щита", "шлему синего щита", "шлем синего щита", "шлемом синего щита", "шлеме синего щита")
+	desc = "Шлем из продвинутых материалов, носимый офицерами синего щита."
 	icon_state = "blueshield_helmet"
 	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
-	desc = "A helmet crafted from a bunch of metal, durathread, and God's help."
+	cases = list("дюратканевый шлем", "дюратканевого шлема", "дюратканевому шлему", "дюратканевый шлем", "дюратканевым шлемом", "дюратканевом шлеме")
+	desc = "Шлем, собранный на коленке из пары листов металла и бюраткани."
 	icon_state = "Durahelmet"
 	item_state = "Durahelmet"
 	armor = list(melee = 45, bullet = 15, laser = 50, energy = 35, bomb = 0, bio = 0, rad = 0)
