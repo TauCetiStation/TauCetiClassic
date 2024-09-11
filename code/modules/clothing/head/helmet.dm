@@ -358,7 +358,7 @@
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
 	cases = list("дюратканевый шлем", "дюратканевого шлема", "дюратканевому шлему", "дюратканевый шлем", "дюратканевым шлемом", "дюратканевом шлеме")
-	desc = "Шлем, собранный на коленке из пары листов металла и бюраткани."
+	desc = "Шлем, собранный на коленке из пары листов металла и дюраткани."
 	icon_state = "Durahelmet"
 	item_state = "Durahelmet"
 	armor = list(melee = 45, bullet = 15, laser = 50, energy = 35, bomb = 0, bio = 0, rad = 0)
