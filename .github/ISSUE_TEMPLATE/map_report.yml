@@ -3,10 +3,6 @@ title: "[Название карты или локации] "
 description: "Если что-то не так с картой"
 labels: ["Bug", "Map Issue"]
 body:
-  - type: markdown
-    attributes:
-      value: "## Пожалуйста, не стирайте строчки, которые были автоматически созданы."
-
   - type: textarea
     id: location
     validations:
