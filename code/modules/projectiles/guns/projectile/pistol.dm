@@ -117,3 +117,18 @@
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_holstered = TRUE
 	recoil = 1.5
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter
+	name = "Peashooter"
+	desc = "Горохострел. Стреляет горохом."
+	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
+	icon_state = "peashooter"
+	item_state = "peashooter"
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/magazine/pea
+	suitable_mags = /obj/item/ammo_box/magazine/pea
+	can_be_holstered = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/attack_self(mob/living/user)
+	to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [CASE(src, GENITIVE_CASE)].</span>")
+	return
