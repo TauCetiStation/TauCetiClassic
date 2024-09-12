@@ -1,6 +1,7 @@
 /mob/living/silicon/ai
 	var/max_locations = 5
 	var/list/stored_locations = list()
+	var/item_state_world = ""
 
 /mob/living/silicon/ai/proc/InvalidTurf(turf/T)
 	if(!T)
