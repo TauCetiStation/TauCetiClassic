@@ -210,7 +210,7 @@
 	// Obstacle not on border or null
 	return rollback_obstacle
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/old_loc as mob|obj|turf)
+/proc/can_enter_turf(atom/movable/mover as mob|obj, turf/new_loc, turf/old_loc)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
 		return FALSE
@@ -218,14 +218,22 @@
 	var/atom/bump_target
 
 	if(istype(mover, /obj/item/projectile))
-		bump_target = get_projectile_bump_target(src, mover)
+		bump_target = get_projectile_bump_target(new_loc, mover)
 	else
-		bump_target = get_bump_target(src, mover)
+		bump_target = get_bump_target(new_loc, mover)
 
 	if(bump_target)
 		mover.Bump(bump_target, TRUE)
 		return FALSE
 
+	return TRUE
+
+/turf/Exit(atom/movable/mover as mob|obj, atom/new_loc as mob|obj|turf)
+	if(!isturf(new_loc))
+		return TRUE
+	return can_enter_turf(mover, new_loc, src)
+
+/turf/Enter(atom/movable/mover as mob|obj, atom/old_loc as mob|obj|turf)
 	return TRUE
 
 /turf/proc/is_mob_placeable(mob/M) // todo: maybe rewrite as COMSIG_ATOM_INTERCEPT_TELEPORT

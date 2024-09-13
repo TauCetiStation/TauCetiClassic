@@ -27,6 +27,13 @@
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 	m_amt = 300
 
+/obj/item/ammo_casing/pea
+	name = "Pea bullet casing"
+	cases = list("гороховый патрон", "горохового патрона", "гороховому патрону", "гороховый патрон", "гороховым патроном", "гороховом патроне")
+	desc = "Гороховый патрон"
+	caliber = "Pea"
+	projectile_type = /obj/item/projectile/bullet/peabullet
+
 /obj/item/ammo_casing/c9mmr
 	desc = "Патрон от резиновой пули калибра 9мм."
 	icon_state = "casing_rubber"

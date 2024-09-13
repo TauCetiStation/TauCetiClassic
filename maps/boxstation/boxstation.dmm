@@ -7948,6 +7948,11 @@
 	pixel_y = 10
 	},
 /obj/item/weapon/reagent_containers/food/drinks/flask/detflask,
+/obj/machinery/windowtint{
+	id = "Detective";
+	pixel_x = -28;
+	pixel_y = -15
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anb" = (
@@ -59174,8 +59179,7 @@
 "ciY" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
-	dock_tag = "pod4";
-	name = "Escape Pod 4"
+	dock_tag = "pod4"
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/engineering)
@@ -60853,9 +60857,7 @@
 	},
 /area/station/aisat)
 "cnM" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cnN" = (
@@ -61578,13 +61580,9 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpC" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/hologram/holopad,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpD" = (
@@ -61784,13 +61782,9 @@
 	},
 /area/station/aisat/ai_chamber)
 "cpQ" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/hologram/holopad,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpR" = (
@@ -62349,9 +62343,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -66671,9 +66663,7 @@
 	},
 /area/station/engineering/drone_fabrication)
 "cDj" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -70182,8 +70172,7 @@
 /area/shuttle/escape_pod4/station)
 "dAo" = (
 /obj/machinery/door/airlock/external{
-	dir = 4;
-	name = "Escape Pod 5"
+	dir = 4
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -76246,6 +76235,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"jTz" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
 "jUd" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 5
@@ -128032,9 +128025,9 @@ cCW
 cFP
 cFP
 cGa
-cGa
+cnM
 cpC
-cGa
+jTz
 cpr
 cFP
 cFP
@@ -130602,9 +130595,9 @@ cFJ
 cFP
 cFP
 cGa
-cGa
+cnM
 cpQ
-cGa
+jTz
 cqI
 cFP
 cFP
