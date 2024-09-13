@@ -146,20 +146,11 @@
 /turf/environment/space,
 /area/space)
 "as" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/random/tools/tech_supply,
-/obj/random/tools/tech_supply,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
-/obj/item/device/gps/engineering{
-	pixel_x = 5
-	},
-/obj/machinery/camera{
-	c_tag = "Storage Room";
-	dir = 6;
-	network = list("MINE")
+/obj/machinery/alarm{
+	pixel_y = 25
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -199,15 +190,18 @@
 /turf/simulated/floor/grid_floor,
 /area/asteroid/mine/production)
 "aw" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/alarm{
-	pixel_y = 25
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "brownchoco"
+	dir = 1;
+	icon_state = "brown"
 	},
 /area/asteroid/mine/eva)
 "ax" = (
@@ -235,21 +229,6 @@
 	},
 /area/asteroid/mine/west_outpost)
 "az" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/asteroid/mine/eva)
-"aA" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
@@ -264,7 +243,7 @@
 	icon_state = "brown"
 	},
 /area/asteroid/mine/eva)
-"aB" = (
+"aA" = (
 /obj/machinery/door/airlock/mining{
 	dir = 4;
 	name = "Mining Storage";
@@ -288,6 +267,19 @@
 	icon_state = "brownfull"
 	},
 /area/asteroid/mine/production)
+"aB" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/closet/crate/secure/miningsec,
+/obj/machinery/camera{
+	c_tag = "Mining";
+	dir = 8;
+	network = list("MINE")
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/asteroid/mine/production)
 "aC" = (
 /obj/effect/decal/turf_decal/metal{
 	dir = 8;
@@ -301,18 +293,16 @@
 	},
 /area/asteroid/mine/abandoned)
 "aD" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/closet/crate/secure/miningsec,
 /obj/machinery/camera{
-	c_tag = "Mining";
-	dir = 8;
+	c_tag = "Production Line External";
+	dir = 4;
 	network = list("MINE")
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "brown"
+/turf/simulated/floor/airless{
+	dir = 5;
+	icon_state = "asteroidfloor"
 	},
-/area/asteroid/mine/production)
+/area/asteroid/mine/explored)
 "aE" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/structure/cable{
@@ -985,6 +975,11 @@
 /obj/machinery/computer/rdconsole/mining{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Storage Room";
+	dir = 6;
+	network = list("MINE")
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkpurple"
@@ -1060,20 +1055,16 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/harvesting)
 "ce" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Mining production";
-	dir = 6;
-	network = list("MINE")
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 1;
 	icon_state = "brown"
 	},
-/area/asteroid/mine/production)
+/area/asteroid/mine/living_quarters)
 "cf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1203,6 +1194,15 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -1222,26 +1222,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/simulated/floor{
-	icon_state = "brown"
-	},
-/area/asteroid/mine/living_quarters)
-"ct" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -1254,6 +1234,25 @@
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
+	},
+/area/asteroid/mine/living_quarters)
+"ct" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
 "cu" = (
@@ -1281,11 +1280,22 @@
 /turf/simulated/wall/r_wall/purple,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "cy" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "brown"
+/obj/machinery/door/airlock/mining{
+	name = "Mining Storage";
+	req_access = list(48)
 	},
-/area/asteroid/mine/living_quarters)
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "graychoco"
+	},
+/area/asteroid/mine/production)
 "cz" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
@@ -1545,32 +1555,28 @@
 /turf/environment/space,
 /area/space)
 "dc" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/turf/simulated/floor{
-	icon_state = "brown"
-	},
-/area/asteroid/mine/west_outpost)
-"dd" = (
-/obj/machinery/door/airlock/mining{
-	name = "Mining Storage";
-	req_access = list(48)
-	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "graychoco"
+	icon_state = "blueyellowfull"
+	},
+/area/asteroid/mine/living_quarters)
+"dd" = (
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 5;
+	icon_state = "siding_line"
+	},
+/obj/machinery/camera{
+	c_tag = "Sleeper Room";
+	dir = 8;
+	network = list("MINE")
+	},
+/turf/simulated/floor{
+	icon_state = "graybluechecker"
 	},
 /area/asteroid/mine/production)
 "de" = (
@@ -1603,37 +1609,48 @@
 	},
 /area/asteroid/mine/abandoned)
 "di" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost)
+"dj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/machinery/camera{
+	c_tag = "West Outpost";
+	dir = 1;
+	network = list("MINE")
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/west_outpost)
+"dk" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/west_outpost)
-"dj" = (
+"dl" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
 	icon_state = "burst_l"
 	},
 /turf/environment/space,
-/area/asteroid/mine/unexplored)
-"dk" = (
-/obj/structure/lattice,
-/obj/structure/closet/crate/large,
-/obj/effect/decal/turf_decal/set_damaged,
-/turf/environment/space,
-/area/asteroid/mine/unexplored)
-"dl" = (
-/obj/item/mecha_parts/mecha_equipment/repair_droid,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
-/obj/structure/closet/crate,
-/obj/item/weapon/scrap_lump,
-/obj/item/weapon/scrap_lump,
-/obj/item/weapon/scrap_lump,
-/turf/simulated/floor/plating,
 /area/asteroid/mine/unexplored)
 "dm" = (
 /obj/structure/disposalpipe/segment{
@@ -1655,6 +1672,12 @@
 	icon_state = "brownchoco"
 	},
 /area/asteroid/mine/eva)
+"do" = (
+/obj/structure/lattice,
+/obj/structure/closet/crate/large,
+/obj/effect/decal/turf_decal/set_damaged,
+/turf/environment/space,
+/area/asteroid/mine/unexplored)
 "dp" = (
 /obj/effect/decal/turf_decal/set_burned,
 /obj/effect/decal/cleanable/dirt,
@@ -1696,12 +1719,15 @@
 	},
 /area/asteroid/mine/living_quarters)
 "du" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "blueyellowfull"
+/obj/machinery/sleeper,
+/obj/effect/decal/turf_decal/blue{
+	dir = 1;
+	icon_state = "siding_line"
 	},
-/area/asteroid/mine/living_quarters)
+/turf/simulated/floor{
+	icon_state = "graybluechecker"
+	},
+/area/asteroid/mine/production)
 "dv" = (
 /obj/structure/table,
 /obj/item/weapon/wrench,
@@ -1730,6 +1756,20 @@
 	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/explored)
+"dx" = (
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/structure/closet/crate,
+/obj/item/weapon/scrap_lump,
+/obj/item/weapon/scrap_lump,
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/unexplored)
 "dy" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
@@ -1898,29 +1938,16 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor{
-	dir = 4
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
 "dW" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -2463,13 +2490,13 @@
 	},
 /area/asteroid/mine/eva)
 "fC" = (
-/obj/machinery/sleeper,
-/obj/effect/decal/turf_decal/blue{
-	dir = 1;
-	icon_state = "siding_line"
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
 	},
 /turf/simulated/floor{
-	icon_state = "graybluechecker"
+	dir = 1;
+	icon_state = "brown"
 	},
 /area/asteroid/mine/production)
 "fD" = (
@@ -2557,23 +2584,14 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/unexplored)
 "fR" = (
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/machinery/camera{
-	c_tag = "Sleeper Room";
-	dir = 8;
-	network = list("MINE")
-	},
-/obj/effect/decal/turf_decal/blue{
-	dir = 5;
-	icon_state = "siding_line"
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "graybluechecker"
+	icon_state = "blueyellowfull"
 	},
-/area/asteroid/mine/production)
+/area/asteroid/mine/living_quarters)
 "fS" = (
 /obj/structure/lattice,
 /obj/machinery/light/small{
@@ -2869,9 +2887,9 @@
 /turf/simulated/floor/grid_floor,
 /area/asteroid/research_outpost/gearstore)
 "gR" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
 /turf/simulated/floor{
 	icon_state = "blueyellowfull"
@@ -3167,14 +3185,17 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/anomaly)
 "hM" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+/obj/effect/decal/turf_decal/blue{
+	dir = 8;
+	icon_state = "siding_line"
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "blueyellowfull"
+	icon_state = "graybluechecker"
 	},
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/production)
 "hO" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -3323,12 +3344,8 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "il" = (
-/obj/effect/decal/turf_decal/blue{
-	dir = 8;
-	icon_state = "siding_line"
-	},
-/obj/machinery/light/smart{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "graybluechecker"
@@ -3850,6 +3867,15 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/camera{
+	c_tag = "Crew Area Hallway South";
+	dir = 1;
+	network = list("MINE")
+	},
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = -29
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -3983,8 +4009,16 @@
 	},
 /area/asteroid/mine/abandoned)
 "kB" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
+/obj/effect/decal/turf_decal/blue{
+	dir = 2;
+	icon_state = "siding_corner"
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 4;
+	icon_state = "siding_corner"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "graybluechecker"
@@ -4100,16 +4134,16 @@
 /turf/simulated/floor/airless,
 /area/asteroid/mine/west_outpost)
 "kT" = (
-/obj/machinery/camera{
-	c_tag = "Communications Relay";
-	dir = 8;
-	network = list("MINE")
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /obj/machinery/light_switch{
 	pixel_y = -25
+	},
+/obj/machinery/camera{
+	c_tag = "Communications Relay";
+	dir = 8;
+	network = list("MINE")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4345,19 +4379,9 @@
 /turf/simulated/floor,
 /area/asteroid/mine/explored)
 "lH" = (
-/obj/effect/decal/turf_decal/blue{
-	dir = 2;
-	icon_state = "siding_corner"
-	},
-/obj/effect/decal/turf_decal/blue{
-	dir = 4;
-	icon_state = "siding_corner"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "graybluechecker"
+	icon_state = "graychoco"
 	},
 /area/asteroid/mine/production)
 "lK" = (
@@ -4391,10 +4415,7 @@
 	},
 /area/asteroid/mine/west_outpost)
 "lR" = (
-/obj/structure/table/woodentable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "blueyellowfull"
 	},
@@ -4958,11 +4979,16 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "nP" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "graychoco"
+/obj/item/weapon/storage/box/cups,
+/obj/structure/table/woodentable,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
 	},
-/area/asteroid/mine/production)
+/turf/simulated/floor{
+	icon_state = "blueyellowfull"
+	},
+/area/asteroid/mine/living_quarters)
 "nQ" = (
 /obj/structure/transit_tube/station{
 	dir = 8
@@ -4973,11 +4999,23 @@
 /turf/simulated/floor,
 /area/asteroid/mine/explored)
 "nR" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	icon_state = "blueyellowfull"
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
-/area/asteroid/mine/living_quarters)
+/obj/machinery/vending/wallmed1{
+	pixel_x = 28
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 6;
+	icon_state = "siding_line"
+	},
+/turf/simulated/floor{
+	icon_state = "graybluechecker"
+	},
+/area/asteroid/mine/production)
 "nS" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 8
@@ -5363,16 +5401,19 @@
 	},
 /area/asteroid/mine/living_quarters)
 "oY" = (
-/obj/item/weapon/storage/box/cups,
-/obj/structure/table/woodentable,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 22
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/o2{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/effect/decal/turf_decal/blue{
+	dir = 10;
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
-	icon_state = "blueyellowfull"
+	icon_state = "graybluechecker"
 	},
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/production)
 "oZ" = (
 /obj/structure/window/fulltile/reinforced{
 	grilled = 1;
@@ -5701,17 +5742,14 @@
 	},
 /area/asteroid/mine/unexplored/dangerous)
 "qa" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/effect/decal/turf_decal/blue{
-	dir = 10;
-	icon_state = "siding_line"
+/obj/effect/decal/cleanable/dirt,
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_x = 27
 	},
 /turf/simulated/floor{
-	icon_state = "graybluechecker"
+	dir = 6;
+	icon_state = "brown"
 	},
 /area/asteroid/mine/production)
 "qc" = (
@@ -6620,22 +6658,20 @@
 /area/asteroid/mine/dwarf)
 "sQ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/random/tools/tech_supply,
+/obj/random/tools/tech_supply,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
 	},
-/obj/machinery/vending/wallmed1{
-	pixel_x = 28
-	},
-/obj/effect/decal/turf_decal/blue{
-	dir = 6;
-	icon_state = "siding_line"
+/obj/item/device/gps/engineering{
+	pixel_x = 5
 	},
 /turf/simulated/floor{
-	icon_state = "graybluechecker"
+	dir = 5;
+	icon_state = "brownchoco"
 	},
-/area/asteroid/mine/production)
+/area/asteroid/mine/eva)
 "sR" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -7015,12 +7051,16 @@
 	},
 /area/asteroid/mine/living_quarters)
 "tT" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "brown"
+/obj/item/device/guitar,
+/obj/structure/table/woodentable,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 25
 	},
-/area/asteroid/mine/production)
+/turf/simulated/floor{
+	icon_state = "blueyellowfull"
+	},
+/area/asteroid/mine/living_quarters)
 "tU" = (
 /obj/machinery/light/smart{
 	dir = 4
@@ -7200,13 +7240,16 @@
 /turf/simulated/floor/grid_floor,
 /area/asteroid/mine/west_outpost)
 "ur" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/closet/crate/secure/miningsec,
 /obj/structure/cable{
-	d1 = 4;
+	d1 = 2;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	icon_state = "graychoco"
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/asteroid/mine/production)
 "ut" = (
@@ -7255,18 +7298,15 @@
 	},
 /area/asteroid/mine/living_quarters)
 "uw" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/closet/crate/secure/miningsec,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+/obj/structure/table/woodentable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "brown"
+	icon_state = "blueyellowfull"
 	},
-/area/asteroid/mine/production)
+/area/asteroid/mine/living_quarters)
 "ux" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -7409,16 +7449,23 @@
 	},
 /area/asteroid/research_outpost/maintstore1)
 "uO" = (
-/obj/item/device/guitar,
-/obj/structure/table/woodentable,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 25
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor{
-	icon_state = "blueyellowfull"
+	dir = 8;
+	icon_state = "brown"
 	},
-/area/asteroid/mine/living_quarters)
+/area/asteroid/mine/production)
 "uP" = (
 /turf/simulated/wall/r_wall/green,
 /area/asteroid/mine/dwarf)
@@ -7456,21 +7503,13 @@
 /turf/simulated/wall/yellow,
 /area/asteroid/mine/west_outpost)
 "uV" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "brown"
+	icon_state = "graychoco"
 	},
 /area/asteroid/mine/production)
 "uX" = (
@@ -7632,11 +7671,6 @@
 /area/asteroid/mine/production)
 "vy" = (
 /obj/structure/closet/secure_closet/miner,
-/obj/machinery/camera{
-	c_tag = "Storage Room";
-	dir = 6;
-	network = list("MINE")
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
@@ -8254,6 +8288,10 @@
 /obj/item/weapon/storage/firstaid/toxin,
 /obj/effect/decal/turf_decal/blue{
 	icon_state = "siding_line"
+	},
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = -29
 	},
 /turf/simulated/floor{
 	icon_state = "graybluechecker"
@@ -9381,6 +9419,11 @@
 /area/asteroid/mine/production)
 "AW" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/camera{
+	c_tag = "Crew Area Hallway North";
+	dir = 4;
+	network = list("MINE")
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -9474,9 +9517,10 @@
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "By" = (
-/obj/structure/curtain/open/privacy,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "freezerfloor"
+	dir = 8;
+	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
 "BA" = (
@@ -10454,12 +10498,9 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "Gf" = (
-/obj/machinery/alarm{
-	pixel_y = 24
-	},
+/obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
+	icon_state = "freezerfloor"
 	},
 /area/asteroid/mine/living_quarters)
 "Gg" = (
@@ -11168,10 +11209,12 @@
 	},
 /area/asteroid/mine/explored)
 "Jv" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
+/obj/machinery/camera{
+	c_tag = "Crew Area Hallway East";
+	network = list("MINE")
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -11489,10 +11532,9 @@
 	},
 /area/asteroid/research_outpost/gearstore)
 "Kv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 4;
+	dir = 8;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
@@ -11677,9 +11719,11 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
 "Lg" = (
-/obj/structure/table/woodentable,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "freezerfloor"
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
 "Lh" = (
@@ -11851,9 +11895,13 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "LQ" = (
-/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 1;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
@@ -12517,7 +12565,7 @@
 /turf/environment/space,
 /area/space)
 "Pc" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -12706,14 +12754,9 @@
 	},
 /area/asteroid/mine/west_outpost)
 "Qf" = (
-/obj/structure/closet/crate,
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
+	icon_state = "freezerfloor"
 	},
 /area/asteroid/mine/living_quarters)
 "Qk" = (
@@ -12912,9 +12955,8 @@
 /area/asteroid/research_outpost/iso2)
 "Rc" = (
 /obj/structure/closet/crate,
-/obj/item/device/radio/intercom{
-	name = "Asteroid Intercom (General)";
-	pixel_y = 24
+/obj/machinery/light/smart{
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -13478,9 +13520,14 @@
 	},
 /area/asteroid/research_outpost/spectro)
 "Tb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/closet/crate,
+/obj/item/device/radio/intercom{
+	name = "Asteroid Intercom (General)";
+	pixel_y = 24
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	dir = 8;
+	dir = 1;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
@@ -14111,24 +14158,12 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/hallway)
 "VK" = (
-/obj/machinery/camera{
-	c_tag = "West Outpost";
-	dir = 1;
-	network = list("MINE")
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /turf/simulated/floor{
+	dir = 8;
 	icon_state = "brown"
 	},
-/area/asteroid/mine/west_outpost)
+/area/asteroid/mine/living_quarters)
 "VM" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube{
@@ -21751,14 +21786,14 @@ vf
 Ro
 uG
 nA
-Tb
+VK
 cc
 uo
 oy
 Lq
 je
 zK
-lR
+uw
 at
 aJ
 uo
@@ -22005,15 +22040,15 @@ tX
 tX
 tX
 tX
-Gf
+Jv
 gu
 gu
 gu
 dt
 qd
 wJ
-gR
-nR
+fR
+lR
 wJ
 vt
 be
@@ -22268,8 +22303,8 @@ gu
 gu
 xK
 lj
-du
-hM
+dc
+gR
 be
 be
 Of
@@ -22519,16 +22554,16 @@ tX
 pY
 uj
 up
-Jv
+LQ
 gu
 gu
 gu
-cq
+ce
 qd
 uF
 pN
-oY
-uO
+nP
+tT
 uF
 aj
 ai
@@ -22780,7 +22815,7 @@ xv
 ak
 aX
 XY
-cs
+cq
 uo
 uo
 uo
@@ -23294,8 +23329,8 @@ uo
 xj
 uo
 Zl
-ct
-cy
+cs
+dW
 yX
 Ld
 Xd
@@ -24059,9 +24094,9 @@ uo
 iN
 qG
 AW
-AW
+By
 qG
-LQ
+Kv
 pX
 uS
 wy
@@ -24072,7 +24107,7 @@ zs
 wM
 zY
 vD
-as
+sQ
 vg
 bA
 bA
@@ -24318,7 +24353,7 @@ Zf
 Ab
 pe
 qw
-Kv
+Lg
 pe
 qg
 bg
@@ -24329,7 +24364,7 @@ Bh
 Bh
 Bh
 vD
-aw
+as
 Bt
 DC
 dz
@@ -24579,11 +24614,11 @@ uo
 uo
 uo
 aN
-dV
+ct
 Bh
 uH
-il
-qa
+hM
+oY
 Bh
 ph
 YK
@@ -24832,14 +24867,14 @@ uu
 gh
 kk
 uo
-Lg
-Lg
+Pc
+Pc
 uo
 wn
 mH
 fx
-fC
-kB
+du
+il
 xo
 Bh
 vy
@@ -25088,19 +25123,19 @@ tV
 mR
 vd
 iz
-By
+Gf
 iz
-Pc
+Qf
 uo
 ap
-dW
+dV
 Bh
-fR
-lH
-sQ
+dd
+kB
+nR
 Bh
 Xq
-az
+aw
 kh
 jT
 fB
@@ -25357,7 +25392,7 @@ cZ
 kt
 Bh
 dn
-aA
+az
 uR
 bF
 bW
@@ -25862,7 +25897,7 @@ uo
 uo
 YV
 uo
-Qf
+Rc
 ku
 mH
 Ak
@@ -25871,7 +25906,7 @@ xq
 hY
 Bh
 Bh
-aB
+aA
 Bh
 Bh
 Bh
@@ -26119,14 +26154,14 @@ YV
 YV
 YV
 uo
-Rc
+Tb
 cJ
 gw
-dd
+cy
 vZ
 Og
 eT
-uV
+uO
 vw
 bY
 Ze
@@ -26383,7 +26418,7 @@ Ak
 Ke
 Hc
 Ui
-ur
+uV
 Hc
 kD
 UP
@@ -26640,9 +26675,9 @@ yP
 pU
 Ae
 lV
-uw
+ur
 af
-aD
+aB
 aZ
 bT
 kc
@@ -27151,7 +27186,7 @@ Dd
 Bh
 Ee
 Bh
-ce
+fC
 Ui
 Pf
 uc
@@ -27409,7 +27444,7 @@ Bh
 Fe
 Bh
 pK
-nP
+lH
 Pf
 Ak
 Rf
@@ -27924,7 +27959,7 @@ Ge
 Bh
 da
 zn
-tT
+qa
 AV
 Tf
 Bh
@@ -28955,7 +28990,7 @@ VC
 oC
 VC
 XF
-oC
+aD
 nv
 VC
 VC
@@ -40088,10 +40123,10 @@ px
 bn
 bn
 bn
-dj
+dl
 bn
-dj
-dj
+dl
+dl
 bn
 bn
 tY
@@ -40861,7 +40896,7 @@ bn
 tQ
 Yb
 fX
-dl
+dx
 tQ
 bn
 gg
@@ -41116,7 +41151,7 @@ tY
 bn
 tY
 tQ
-dk
+do
 in
 ax
 tQ
@@ -47738,7 +47773,7 @@ sC
 zB
 sO
 vL
-VK
+di
 vs
 wt
 uT
@@ -48252,7 +48287,7 @@ sL
 tw
 vj
 vj
-dc
+dj
 uU
 uU
 uU
@@ -49028,7 +49063,7 @@ vn
 hc
 xf
 uU
-di
+dk
 eK
 eK
 eK
