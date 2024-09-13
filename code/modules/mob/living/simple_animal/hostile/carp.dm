@@ -170,6 +170,7 @@
 	ranged = TRUE
 	retreat_distance = 2
 	minimum_distance = 5
+	faction = "wizard"
 
 /mob/living/simple_animal/hostile/carp/magic/atom_init()
 	..()
@@ -184,9 +185,9 @@
 /mob/living/simple_animal/hostile/carp/magic/carp_randomify()
 	return 0
 
-/mob/living/simple_animal/hostile/carp/magic/chaos
+/mob/living/simple_animal/hostile/carp/magic/chaos //Only for shitspawn.. for now. -Ro2tCrab
 	name = "chaos carp"
-	desc = "Свирепое и клыкастое существо, напоминающее рыбу. На 50% карп, 100% хаос."
+	desc = "Свирепое и клыкастое существо, напоминающее рыбу. На 50% карп, на 100% хаос."
 	icon_state = "chaoscarp"
 	icon_living = "chaoscarp"
 	icon_dead = "chaoscarp_dead"

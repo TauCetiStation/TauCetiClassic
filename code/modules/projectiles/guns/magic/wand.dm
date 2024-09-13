@@ -1,7 +1,7 @@
 /obj/item/weapon/gun/magic/wand/healing
 	name = "wand of healing"
-	desc = "An artefact that uses healing magics to heal the living and revive the dead. Rarely utilized on others, for some reason"
-	ammo_type = /obj/item/ammo_casing/magic/change
+	desc = "Артефакт, способный привести в чувства любое сушество.. пока оно живо. Судя по небольшой надписи, кольцо на жезле ''служит спусковым крючком'' "
+	ammo_type = /obj/item/ammo_casing/magic/wand/heal
 	icon_state = "staffofchange"
 	item_state = "staffofchange"
 	fire_delay = 120
@@ -52,13 +52,13 @@
 	fire_sound = 'sound/magic/Staff_Door.ogg'
 
 /obj/item/weapon/gun/magic/wand/broken_mirror
-	name = "Жезл разбитого стекла"
+	name = "Жезл разбитого зеркала"
 	icon_state = "lavastaff"
 	item_state = "lavastaff"
-	desc = "Артефакт, способный до неузнаваимости поменять внешний вид гуманоида. Судя по небольшой надписи, кольцо на жезле ''служит спусковым крючком''."
+	desc = "Артефакт, способный до неузнаваимости изуродовать личность жертвы. Судя по небольшой надписи, кольцо на жезле ''служит спусковым крючком''."
 	ammo_type = /obj/item/ammo_casing/magic/wand/broken_mirror
 
-/obj/item/weapon/gun/magic/wand/broken_mirror/zap_self(/mob/living/user)
+/obj/item/weapon/gun/magic/wand/broken_mirror/zap_self(mob/living/user)
 	..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/T = user
@@ -77,4 +77,4 @@
 	icon_state = "lavastaff"
 	item_state = "lavastaff"
 	desc = "Артефакт, призывающий сбивающую c ног магическую ракету. Судя по небольшой надписи, кольцо на жезле ''служит спусковым крючком''"
-	ammo_type = /obj/item/ammo_casing/magic/fireball
+	ammo_type = /obj/item/ammo_casing/magic/wand/magic_missle

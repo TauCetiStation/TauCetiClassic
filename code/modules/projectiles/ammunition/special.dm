@@ -18,11 +18,17 @@
 /obj/item/ammo_casing/magic/wand/forcewall
 	projectile_type = /obj/item/projectile/magic/wand/forcewall
 
+/obj/item/ammo_casing/magic/wand/heal
+	projectile_type = /obj/item/projectile/magic/wand/heal
+
 /obj/item/ammo_casing/magic/wand/broken_mirror
 	projectile_type = /obj/item/projectile/magic/wand/broken_mirror
 
 /obj/item/ammo_casing/magic/wand/magicarp
 	projectile_type = /obj/item/projectile/magic/wand/magic_carp
+
+/obj/item/ammo_casing/magic/wand/magic_missle
+	projectile_type = /obj/item/projectile/magic/wand/magic_missle
 
 
 /*
