@@ -107,6 +107,7 @@
 	playsound(user, fire_sound, VOL_EFFECTS_MASTER, TRUE)
 
 /obj/item/weapon/gun/magic/wand/attack(mob/living/M, mob/living/user, def_zone)
-	if(M == user)
-		zap_self()
-	..()
+	if(user.a_intent != INTENT_HARM && M == user)
+		zap_self(user)
+	else
+		..()

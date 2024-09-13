@@ -158,3 +158,48 @@
 	if(rand(0,100) < idle_snd_chance)
 		var/list/idle_snd = list('sound/voice/polkan/idle1.ogg','sound/voice/polkan/idle2.ogg')
 		playsound(src, pick(idle_snd), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
+
+/mob/living/simple_animal/hostile/carp/magic
+	name = "magic carp"
+	desc = "Свирепое и клыкастое существо, напоминающее рыбу. От этой рубиновой чещуи вам хочется кричать Ei'Nath"
+	icon_state = "magicarp"
+	icon_living = "magicarp"
+	icon_dead = "magicarp_dead"
+	icon_gib = "magicarp_gib"
+	icon_move = "magicarp"
+	ranged = TRUE
+	retreat_distance = 2
+	minimum_distance = 5
+
+/mob/living/simple_animal/hostile/carp/magic/atom_init()
+	..()
+	projectiletype = pick(
+		/obj/item/projectile/magic/wand/magic_missle,
+		/obj/item/projectile/magic/wand/blink,
+		/obj/item/projectile/magic/forcebolt,
+		/obj/item/projectile/magic/Arcane_barrage,
+		/obj/item/projectile/temp/icebolt,
+	)
+
+/mob/living/simple_animal/hostile/carp/magic/carp_randomify()
+	return 0
+
+/mob/living/simple_animal/hostile/carp/magic/chaos
+	name = "chaos carp"
+	desc = "Свирепое и клыкастое существо, напоминающее рыбу. На 50% карп, 100% хаос."
+	icon_state = "chaoscarp"
+	icon_living = "chaoscarp"
+	icon_dead = "chaoscarp_dead"
+	icon_gib = "chaoscarp_gib"
+	icon_move = "chaoscarp"
+
+/mob/living/simple_animal/hostile/carp/magic/chaos/OpenFire(target)
+	..()
+	projectiletype = pick(
+		/obj/item/projectile/magic/wand/magic_missle,
+		/obj/item/projectile/magic/wand/blink,
+		/obj/item/projectile/magic/forcebolt,
+		/obj/item/projectile/magic/Arcane_barrage,
+		/obj/item/projectile/temp/icebolt,
+		)
+

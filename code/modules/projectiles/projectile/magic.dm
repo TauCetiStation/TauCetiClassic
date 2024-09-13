@@ -267,12 +267,77 @@
 	T.throw_at(get_edge_target_turf(target, throwdir),10,10)
 	return 1
 
-/obj/item/projectile/magic/wand/
+
+//Wands
+
+/obj/item/projectile/magic/wand
 	name = "bolt of nothing"
 	icon_state = "ice_1"
 	light_color = "#00bfff"
+	hitturf = TRUE
 
-/obj/item/projectile/atom_create/magic
-	name = "bolt of nothing creation"
+/obj/item/projectile/magic/wand/forcewall
+	name = "bolt of forcewall"
 	icon_state = "ice_1"
 	light_color = "#00bfff"
+	hitturf = TRUE
+
+/obj/item/projectile/magic/wand/forcewall/do_effect(target)
+	new /obj/effect/forcefield/magic(get_turf(target), target)
+
+/obj/item/projectile/magic/wand/heal
+	name = "bolt of healing"
+	icon_state = "ion"
+	light_color = "#a9e2f3"
+	var/heal_power = -60
+
+/obj/item/projectile/magic/wand/heal/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(isliving(target))
+		var/mob/living/M = target
+		M.apply_damages(heal_power, heal_power, heal_power, heal_power, heal_power, heal_power)
+		M.apply_effects(heal_power, heal_power, heal_power, heal_power, heal_power, heal_power, heal_power, heal_power)
+		if(ishuman(M))
+			var/mob/living/carbon/human/S = target
+			for(var/obj/item/organ/internal/IO in S.organs)
+				if(IO.damage > 0 && IO.robotic < 2)
+					IO.damage = max((IO.damage - (heal_power / 4)), 0)
+
+		to_chat(target, "<span class='notice'> Ты чувствуешь себя лучше!</span>")
+
+
+/obj/item/projectile/magic/wand/blink
+	name = "bolt of blink"
+	icon_state = "bluespace"
+	light_color = "#00bfff"
+	var/blink_range = 12
+
+/obj/item/projectile/magic/wand/blink/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(isliving(target))
+		do_teleport(target, get_turf(target), blink_range, asoundin = 'sound/magic/blink.ogg')
+
+/obj/item/projectile/magic/wand/broken_mirror
+	name = "bolt of mirrors"
+	icon_state = "spell"
+	light_color = "#629bb4"
+
+/obj/item/projectile/magic/wand/broken_mirror/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+
+/obj/item/projectile/magic/wand/magic_missle
+	name = "magic rocket"
+	icon_state = "magicm"
+	light_color = "#b63aa3"
+	stun = 2
+	weaken = 5
+
+/obj/item/projectile/magic/wand/magic_carp
+	name = "bolt of carps"
+	icon_state = "carp"
+	light_color = "#b63aa3"
+
+/obj/item/projectile/magic/wand/magic_carp/do_effect(target)
+	new /mob/living/simple_animal/hostile/carp/magic(get_turf(target), target)
+
+
+
+
+
