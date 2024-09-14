@@ -89,6 +89,6 @@
 	density = FALSE
 
 /obj/structure/closet/trader_stash/toggle(mob/user)
-	if(!isrolebytype(/datum/role/space_trader/dealer, user)) // only dealer can open this
+	if(!isrole(SPACE_TRADER, user)) // only traders can open this
 		return
 	..()
