@@ -60,7 +60,7 @@
 /datum/objective/trader_purchase/New()
 	var/indx = rand(1, possible_items.len)
 	var/offset = rand(1, possible_items.len -1) // -1, чтобы не вступить в тот же элемент
-	var/new_indx = (indx + offset) % L.len
+	var/new_indx = (indx + offset) % possible_items.len
 	item_name1 = possible_items[indx]
 	item_name2 =  possible_items[new_indx == 0 ? possible_items.len : new_indx] // этот финт, потому что в бъонде листы начинаются с 1
 	explanation_text = "Достать и притащить на наш шаттл [item_name1] и [item_name2]."
