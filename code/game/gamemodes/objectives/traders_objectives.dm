@@ -26,8 +26,7 @@
 
 
 /datum/objective/trader_purchase
-	var/item_name1
-	var/item_name2
+	var/list/items = list()
 	var/static/possible_items[] = list(
 		"эмиттер" = /obj/machinery/power/emitter,
 		"инкубатор вирусов" = /obj/machinery/disease2/incubator,
@@ -61,20 +60,22 @@
 	var/indx = rand(1, possible_items.len)
 	var/offset = rand(1, possible_items.len -1) // -1, чтобы не вступить в тот же элемент
 	var/new_indx = (indx + offset) % possible_items.len
-	item_name1 = possible_items[indx]
-	item_name2 =  possible_items[new_indx == 0 ? possible_items.len : new_indx] // этот финт, потому что в бъонде листы начинаются с 1
-	explanation_text = "Достать и притащить на наш шаттл [item_name1] и [item_name2]."
+	items += possible_items[indx]
+	items += possible_items[new_indx == 0 ? possible_items.len : new_indx]
+	explanation_text = "Достать и притащить на наш шаттл [items[1]] и [items[2]]."
 
 /datum/objective/trader_purchase/check_completion()
 	var/list/areas = list(/area/shuttle/trader/space, /area/shuttle/trader/station)
-	var/counter = 0
+	var/list/checks = list(FALSE, FALSE)
 	for(var/type in areas)
 		for(var/obj/O in get_area_by_type(type))
-			if(istype(O, possible_items[item_name1]) || istype(O, possible_items[item_name2]))
-				counter++
-	if(counter == 2)
+			if(istype(O, possible_items[items[1]]))
+				checks[1] = TRUE
+			else if(istype(O, possible_items[items[2]]))
+				checks[2] = TRUE
+	if(checks[1] && checks[2])
 		return OBJECTIVE_WIN
-	else if(counter)
+	else if(checks[1] || checks[2])
 		return OBJECTIVE_HALFWIN
 	return OBJECTIVE_LOSS
 

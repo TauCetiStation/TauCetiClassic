@@ -89,6 +89,7 @@
 	density = FALSE
 
 /obj/structure/closet/trader_stash/toggle(mob/user)
-	if(!isrole(SPACE_TRADER, user)) // only traders can open this
-		return
+	if(user.loc != src) // you can't lock a person inside
+		if(!isrole(SPACE_TRADER, user)) // only traders can open this
+			return
 	..()

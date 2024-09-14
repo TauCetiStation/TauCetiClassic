@@ -24,6 +24,7 @@
 
 	logo_state = "space_traders"
 	max_roles = 3
+	roletype = /datum/role/space_trader
 
 /datum/faction/space_traders/forgeObjectives()
 	if(!..())

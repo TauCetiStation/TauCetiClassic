@@ -60,7 +60,7 @@
 		docked = FALSE
 		undock_to_station()
 
-	last_move = world.time
+	lastMove = world.time
 	updateUsrDialog()
 
 /obj/machinery/computer/trader_shuttle/proc/dock_to_station()
