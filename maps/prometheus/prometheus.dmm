@@ -8866,9 +8866,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "bDC" = (
@@ -16120,6 +16118,12 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
+"dwK" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
 "dwL" = (
 /obj/effect/decal/turf_decal{
 	dir = 6;
@@ -19911,6 +19915,17 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/miningoffice)
+"epM" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/whitegreed,
+/area/station/bridge/ai_upload)
 "epO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/oil,
@@ -36117,9 +36132,7 @@
 /area/station/security/brig)
 "icf" = (
 /obj/structure/window/thin/reinforced,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -38085,10 +38098,6 @@
 	},
 /area/station/medical/virology)
 "iCe" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = 28;
@@ -46145,9 +46154,7 @@
 	},
 /area/station/medical/reception)
 "kIr" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "kIB" = (
@@ -50179,6 +50186,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "lFP" = (
+/obj/machinery/ai_slipper,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -80665,10 +80673,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/obj/machinery/hologram/holopad,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
 "tkT" = (
@@ -82430,10 +82435,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "tJu" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
@@ -133572,7 +133573,7 @@ fpz
 eTw
 tkS
 upy
-uHZ
+epM
 uHZ
 pQf
 kSZ
@@ -146236,7 +146237,7 @@ hiU
 hiU
 lFP
 tJu
-lFP
+dwK
 hiU
 hiU
 hiU
@@ -149320,7 +149321,7 @@ hiU
 hiU
 lFP
 iCe
-lFP
+dwK
 hiU
 hiU
 hiU

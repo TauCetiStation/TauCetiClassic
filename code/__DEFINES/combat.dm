@@ -111,3 +111,9 @@
 #define MOVESET_TYPE "moveset_type"
 #define MOVESET_ROLES "moveset_role"
 #define MOVESET_QUALITY "moveset_quality"
+
+//Painkiller effectiveness (for get_painkiller_effect() comparison)
+#define PAINKILLERS_EFFECT_SLIGHT 0.95 //all painkillers.
+#define PAINKILLERS_EFFECT_MEDIUM 0.75 //weak painkillers, allow you to ignore minor pain and not see pain() messages.
+#define PAINKILLERS_EFFECT_HEAVY 0.6 //powerful painkillers, allow you to not see custom_pain() messages.
+#define PAINKILLERS_EFFECT_VERY_HEAVY 0.5 //very powerful painkillers that does not allow the user to determine the location of the injury.

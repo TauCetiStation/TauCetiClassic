@@ -1179,16 +1179,17 @@
 	reagents.add_reagent("nutriment", 1 + round(potency / 5))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
-	seed_type = /obj/item/seeds/gatfruit
-	name = "gatfruit"
-	desc = "It smells like burning."
-	icon_state = "gatfruit"
+/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
+	seed_type = /obj/item/seeds/peashooter
+	name = "peashooter"
+	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
+	desc = "Нераскрывшийся плод горохострела, подозрительно напоминающий пистолет"
+	icon_state = "peashooter"
 	potency = 25
 	filling_color = "#020108"
-	trash = /obj/item/weapon/gun/projectile/revolver
+	trash = /obj/item/weapon/gun/projectile/automatic/pistol/peashooter
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit/atom_init()
+/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter/atom_init()
 	. = ..()
 	reagents.add_reagent("potassium", 1 + round(potency / 25, 1))
 	reagents.add_reagent("carbon", 1 + round(potency / 10, 1))

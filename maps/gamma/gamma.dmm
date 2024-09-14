@@ -22200,9 +22200,7 @@
 	},
 /area/station/rnd/mixing)
 "dGY" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -69543,9 +69541,7 @@
 	name = "AI Core Door";
 	req_access = list(16)
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -84091,9 +84087,7 @@
 	name = "AI Core Door";
 	req_access = list(16)
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -86859,9 +86853,7 @@
 	},
 /area/station/security/seclunch)
 "qsw" = (
-/obj/machinery/ai_slipper{
-	icon_state = "motion0"
-	},
+/obj/machinery/ai_slipper,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "qsG" = (

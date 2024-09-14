@@ -1,6 +1,8 @@
 /datum/controller/subsystem/ticker/proc/scoreboard(completions, mob/one_mob)
 	if(SSStatistics.achievements.len)
 		completions += "<div class='Section'>[achievement_declare_completion()]</div>"
+	if(medal_list.len)
+		completions += "<div class='Section'>[show_medals()]</div>"
 
 	// Who is alive/dead, who escaped
 	for (var/mob/living/silicon/ai/I as anything in ai_list)
@@ -164,7 +166,7 @@
 	<B>Электропитание по всей станции:</B> [SSStatistics.score.powerbonus ? "Да" : "Нет"] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.powerbonus * 2500)])<BR>
 	<B>Самая чистая станция:</B> [SSStatistics.score.mess ? "Нет" : "Да"] ([PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.messbonus * 3000)])<BR><BR>
 	<U>ПЛОХО:</U><BR>
-	<B>Успешность действий антоганистов:</B> [SSStatistics.score.roleswon] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.roleswon * 250)])<BR>
+	<B>Успешность действий антагонистов:</B> [SSStatistics.score.roleswon] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.roleswon * 250)])<BR>
 	<B>Мёртвые тела на станции:</B> [SSStatistics.score.crew_dead] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.crew_dead * 250)])<BR>
 	<B>Не убрано мусора:</B> [SSStatistics.score.mess] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.mess)])<BR>
 	<B>Проблемы с электропитанием на станции:</B> [SSStatistics.score.powerloss] (-[PLURALIZE_RUSSIAN_POINTS(SSStatistics.score.powerloss * 30)])<BR>

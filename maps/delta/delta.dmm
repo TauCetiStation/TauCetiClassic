@@ -4108,7 +4108,7 @@
 /obj/structure/closet/secure_closet/medical_wall{
 	pixel_x = 32;
 	req_access = list();
-	req_one_access = list(1, 5)
+	req_one_access = list(1,5)
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -27990,9 +27990,7 @@
 	},
 /area/station/hallway/primary/port)
 "dgm" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -44940,9 +44938,7 @@
 	},
 /area/station/engineering/atmos)
 "hnX" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -55106,9 +55102,7 @@
 	},
 /area/station/engineering/atmos)
 "jFu" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -62916,7 +62910,7 @@
 	desc = "Used to monitor areas of the Security Division.";
 	dir = 1;
 	name = "Security Monitor";
-	network = list("Security", "Prison");
+	network = list("Security","Prison");
 	pixel_y = -27
 	},
 /turf/simulated/floor{
@@ -79084,9 +79078,7 @@
 	},
 /area/station/hallway/secondary/mine_sci_shuttle)
 "pwl" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -79590,9 +79582,7 @@
 	},
 /area/station/engineering/atmos/supermatter)
 "pAH" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -85624,9 +85614,7 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "qYF" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -99392,9 +99380,7 @@
 	},
 /area/station/engineering/atmos)
 "uty" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
+/obj/machinery/ai_slipper,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -99568,9 +99554,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "uvR" = (
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
+/obj/machinery/ai_slipper,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},

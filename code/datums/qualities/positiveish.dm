@@ -334,7 +334,7 @@
 
 /datum/quality/positiveish/cqc
 	name = "CQC"
-	desc = "Вы прошли курсы единоборств и теперь знаете на несколько приёмов больше."
+	desc = "Ты прошёл курсы единоборств и теперь знаешь на несколько приёмов больше."
 	requirement = "Нет."
 
 /datum/quality/positiveish/cqc/add_effect(mob/living/carbon/human/H)
