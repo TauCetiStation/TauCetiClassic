@@ -37618,9 +37618,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-"boX" = (
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
 "boY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
@@ -70928,7 +70925,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "evP" = (
 /obj/structure/stool/bed/chair/pedalgen{
@@ -71458,12 +71455,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
-"fab" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
 "fbb" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -75772,7 +75763,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "jwb" = (
 /obj/structure/flora/ausbushes/ppflowers,
@@ -79090,7 +79081,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "mTb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
@@ -83330,7 +83321,7 @@
 /area/station/medical/virology)
 "rIX" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "rJb" = (
 /obj/structure/grille{
@@ -84227,12 +84218,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/virology)
-"sDo" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
 "sEb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -85182,16 +85167,6 @@
 /obj/machinery/status_display,
 /turf/simulated/wall,
 /area/station/hallway/secondary/exit)
-"tQb" = (
-/obj/machinery/door/airlock/external{
-	dir = 4;
-	name = "Arrival Airlock"
-	},
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
 "tQr" = (
 /obj/structure/rack,
 /obj/random/cloth/randomsuit,
@@ -86861,7 +86836,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "wYU" = (
 /obj/machinery/door/firedoor{
@@ -96093,7 +96068,7 @@ bgj
 bgj
 bgj
 evb
-boX
+aro
 rIX
 apT
 aah
@@ -96350,8 +96325,8 @@ bgj
 bgj
 bgj
 evb
-boX
-boX
+aro
+aro
 apT
 aaa
 aah
@@ -96607,8 +96582,8 @@ bgj
 bgj
 bgj
 apT
-tQb
-tQb
+xnL
+xnL
 apT
 aaa
 aah
@@ -97631,15 +97606,15 @@ apT
 apT
 apT
 apT
-fab
+bLZ
 apT
 apT
 apT
 dCb
 aml
 jvG
-boX
-boX
+aro
+aro
 mQU
 btD
 btD
@@ -97888,15 +97863,15 @@ aYx
 apT
 aYx
 cxD
-tQb
+xnL
 apT
 aYx
 cKo
 bwe
 aJK
 jvG
-boX
-sDo
+aro
+aNG
 mQU
 btD
 btD
