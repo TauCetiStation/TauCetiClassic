@@ -58,7 +58,7 @@
 
 /datum/objective/trader_purchase/New()
 	var/indx = rand(1, possible_items.len)
-	var/offset = rand(1, possible_items.len -1) // -1, чтобы не вступить в тот же элемент
+	var/offset = rand(1, possible_items.len - 1)
 	var/new_indx = (indx + offset) % possible_items.len
 	items += possible_items[indx]
 	items += possible_items[new_indx == 0 ? possible_items.len : new_indx]
