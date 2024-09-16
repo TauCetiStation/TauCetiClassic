@@ -108,6 +108,6 @@
 /datum/gear/head/pluvia_hat/New()
 	..()
 	var/hats = list()
-	hats["blue"] = /datum/gear/head/pluvia_hat
+	hats["blue"] = /obj/item/clothing/head/pluvia
 	hats["white"] = /obj/item/clothing/head/wpluvia
 	gear_tweaks += new/datum/gear_tweak/path(hats)
