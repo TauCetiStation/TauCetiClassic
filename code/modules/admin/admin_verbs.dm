@@ -482,7 +482,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(!config.sql_enabled)
 		to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
 		return
-		
+
 	holder.DB_ban_panel()
 	feedback_add_details("admin_verb","UBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -1058,7 +1058,7 @@ var/global/list/admin_verbs_hideable = list(
 /client/proc/bless(mob/living/carbon/human/T as mob in player_list)
 	set category = "Fun"
 	set name = "Bless"
-	set desc = "Пускай знает что после смерти попадет в рай"
+	set desc = "Пускай знает, что после смерти попадет в рай"
 	T.bless()
 	log_admin("[key_name(usr)] bless [key_name(T)]")
 	message_admins("<span class='notice'>[key_name_admin(usr)] bless [key_name(T)]</span>")
