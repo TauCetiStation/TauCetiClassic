@@ -48,9 +48,9 @@ var/global/list/wisp_start_landmark = list()
 	var/dat
 	dat = "<B><font color = ##ff0000>[CASE(src, NOMINATIVE_CASE)] для прохода в рай</font></B><BR>"
 	if(owner.gender == FEMALE)
-		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете[CASE(owner, NOMINATIVE_CASE)] достойной попасть в рай после смерти</font></I><BR><BR>"
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете [CASE(owner, ACCUSATIVE_CASE)] достойной попасть в рай после смерти</font></I><BR><BR>"
 	else
-		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете[CASE(owner, NOMINATIVE_CASE)] достойным попасть в рай после смерти</font></I><BR><BR>"
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете [CASE(owner, ACCUSATIVE_CASE)] достойным попасть в рай после смерти</font></I><BR><BR>"
 	dat += "<I><font color = ##ff0000>Проколите подушечку пальца об шип и приложите к месту для печати</font></I><BR>"
 	dat += "<A href='byond://?src=\ref[src];choice=yes'>[sign_place]</A><BR>"
 	var/datum/browser/popup = new(user, "window=bless_vote", "Рекомендательное письмо")
@@ -203,7 +203,7 @@ var/global/list/wisp_start_landmark = list()
 				var/mob/living/target = possible_targets[H]
 				target.copy_overlays(H)
 
-	visible_message("[bicon(src)] <span class='notice'>[CASE(src, NOMINATIVE_CASE)] гудит от удара [CASE(user, NOMINATIVE_CASE)].</span>")
+	visible_message("[bicon(src)] <span class='notice'>[CASE(src, NOMINATIVE_CASE)] гудит от удара [CASE(user, ACCUSATIVE_CASE)].</span>")
 	playsound(src, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 75, null)
 
 	if(possible_targets.len == 0)
