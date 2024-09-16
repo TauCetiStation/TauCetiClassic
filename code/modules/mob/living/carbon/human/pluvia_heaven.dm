@@ -71,7 +71,7 @@ var/global/list/wisp_start_landmark = list()
 			H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
 			H.mind.social_credit -= 1
 			if(!owner.ismindshielded() && !owner.isloyal())
-				owner.mind.social_credit += 1 //@FatFat Возможно стоит добавить налог на подписи от других плувийцев. Типо не +1, а +0.5. Не уверен что это может хорошо повлиять на их социанльые взаимодействия
+				owner.mind.social_credit += 1
 			sign = TRUE
 			to_chat(owner, "<span class='notice'>Ваш уровень кармы повышен!</span>")
 		else
