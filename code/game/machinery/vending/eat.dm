@@ -62,6 +62,10 @@
 	contraband = list(
 		/obj/item/weapon/reagent_containers/food/drinks/ice = 10,
 	)
+	premium = list(
+		/obj/item/weapon/reagent_containers/glass/beaker/teapot = 1,
+		/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask = 2,
+	)
 	prices = list(
 		/obj/item/weapon/reagent_containers/food/drinks/coffee = 15,
 		/obj/item/weapon/reagent_containers/food/drinks/tea = 15,

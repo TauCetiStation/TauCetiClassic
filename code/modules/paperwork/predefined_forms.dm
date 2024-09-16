@@ -8,7 +8,13 @@ var/global/list/predefined_forms_list = list(
 				/datum/form/cargo/request_resources,
 				/datum/form/cargo/delivery,
 				/datum/form/cargo/bay_items,
-				/datum/form/cargo/miner_bill
+				/datum/form/cargo/miner_bill,
+				/datum/form/cargo/warehouse_invoice_form,
+				/datum/form/cargo/resource_extraction_report,
+				/datum/form/cargo/recycling_of_resources,
+				/datum/form/cargo/deliveries_from_the_warehouse,
+				/datum/form/cargo/magazine_of_autolathe,
+				/datum/form/cargo/refueling_autolathe
 				)
 		),
 		"HR" = list(
@@ -71,7 +77,8 @@ var/global/list/predefined_forms_list = list(
 				/datum/form/sec/execution,
 				/datum/form/sec/loyal_voluntary,
 				/datum/form/sec/test_subject_transfer,
-				/datum/form/sec/loyalty_force
+				/datum/form/sec/loyalty_force,
+				/datum/form/sec/using_combat_exoskeleton
 				)
 		),
 		"Engineering" = list(
@@ -102,7 +109,8 @@ var/global/list/predefined_forms_list = list(
 				/datum/form/misc/kitchen_menu,
 				/datum/form/misc/incident_report,
 				/datum/form/misc/transport_visa,
-				/datum/form/misc/clearance_protocol
+				/datum/form/misc/clearance_protocol,
+				/datum/form/misc/petition_form
 			)
 		)
 	)
@@ -202,6 +210,143 @@ var/global/list/predefined_forms_list = list(
         [hr]Составитель: [sfield]
         Принимающий сотрудник: [sfield]
         [hr][small]*В случае получения разрешения на заказ он должен быть отмечен штампом "Одобрено" и штампом Квартирмейстера. Заказы, не получившие разрешения со стороны Глав или Квартирмейстера, должны быть отмечены штампом "Отказано". В случае отсутствия Глав, Квартирмейстер сам может решать, что заказывать, а что нет. После заполнения, накладная должна храниться в картотеке до конца смены.[/small]
+	"}
+
+/datum/form/cargo/warehouse_invoice_form
+    index = "1F"
+    name = "Форма накладной для поставок на склад"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Накладная поставок на склад[/large][/center]
+		[hr]Номер поставки: [field]
+		Время поставки: [field]
+		Поставщик (отдел или должность): [field]
+		[hr]Содержимое поставки:
+		[small]В скобках пометить количество.[/small]
+		[list][*][field]
+		[*][field]
+		[*][field]
+		[hr]Принявший поставку: [sfield]
+		Поставщик: [sfield]
+		[hr][small]*В случае получения разрешения на поставку она должна быть отмечена штампом "Одобрено" и штампом Квартирмейстера. Поставки, не получившие разрешения со стороны Глав или Квартирмейстера, должны быть отмечены штампом "Отказано". В случае отсутствия Глав, Квартирмейстер сам может решать, что поставлять, а что нет. После заполнения, накладная должна храниться в картотеке до конца смены.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/cargo/resource_extraction_report
+    index = "1G"
+    name = "Форма отчета о добыче ресурсов"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Отчет о добыче ресурсов[/large][/center]
+		[hr]Время начала добычи: [field]
+		Время окончания добычи: [field]
+		Используемое добывающее оборудование:[field]
+		[hr][b]Добытые руды/материалы[/b]
+		Железная руда: [field], Металл: [field], Пласталь: [field]
+		Песок: [field], Стекло: [field], Укрепленное стекло: [field]
+		Золотая руда: [field], Золотой слиток(слитки): [field]
+		Серебряная руда: [field], Серебряный слиток(слитки): [field]
+		Неочищенная плазма: [field], Твердая плазма: [field]
+		Уран: [field], Очищенный уран: [field]
+		Алмаз: [field], Ограненный алмаз(алмазы): [field]
+		Разное: [field]
+		[hr]Составитель: [sfield]
+		Принимающий сотрудник: [sfield]
+		[hr][small]*Отчет должен быть предоставлен Квартирмейстеру и отмечен его штампом. После заполния, документ должен хранится в кабинете Квартирмейстера до конца смены.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/cargo/recycling_of_resources
+    index = "1H"
+    name = "Форма отчета о переработке ресурсов"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Отчет о переработке ресурсов[/large][/center]
+		[hr]Время переработки: [field]
+		[hr][b]Переработанные руды/материалы[/b]
+		Железная руда: [field]
+		Песок: [field]
+		Золотая руда: [field]
+		Серебряная руда: [field]
+		Неочищенная плазма: [field]
+		Уран: [field]
+		Алмаз: [field]
+		Разное: [field]
+		[hr][b]Полученные после переработки материалы[/b]
+		Металл: [field], Пласталь: [field]
+		Стекло: [field], Укрепленное стекло: [field]
+		Золотой слиток(слитки): [field]
+		Серебряный слиток(слитки): [field]
+		Твердая плазма: [field]
+		Очищенный уран: [field]
+		Ограненный алмаз(алмазы): [field]
+		Разное: [field]
+		[hr]Составитель: [sfield]
+		Принимающий сотрудник: [sfield]
+		[hr][small]*Отчет должен быть предоставлен Квартирмейстеру и отмечен его штампом. После заполния, документ должен хранится в кабинете Квартирмейстера до конца смены.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/cargo/deliveries_from_the_warehouse
+    index = "1I"
+    name = "Форма накладной для поставок со склада"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Накладная поставок со склада[/large][/center]
+		[hr]Время поставки: [field]
+		Номер поставки: [field]
+		Пункт поставки: [field]
+		Способ доставки: [field]
+		[hr]Содержимое поставки:
+		[small]В скобках пометить количество.[/small]
+		[list][*][field]
+		[*][field]
+		[*][field]
+		[hr]Принявший поставку: [sfield]
+		Поставщик: [sfield]
+		[hr][small]*В случае получения разрешения на поставку она должна быть отмечена штампом "Одобрено" и штампом Квартирмейстера. Поставки, не получившие разрешения со стороны Глав или Квартирмейстера, должны быть отмечены штампом "Отказано". В случае отсутствия Глав, Квартирмейстер сам может решать, что поставлять, а что нет. После заполнения, накладная должна храниться в картотеке до конца смены.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/cargo/magazine_of_autolathe
+    index = "1J"
+    name = "Журнал использования автолата"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Накладная поставок со склада[/large][/center]
+		[hr]Время поставки: [field]
+		Номер поставки: [field]
+		Пункт поставки: [field]
+		Способ доставки: [field]
+		[hr]Содержимое поставки:
+		[small]В скобках пометить количество.[/small]
+		[list][*][field]
+		[*][field]
+		[*][field]
+		[hr]Принявший поставку: [sfield]
+		Поставщик: [sfield]
+		[hr][small]*В случае получения разрешения на поставку она должна быть отмечена штампом "Одобрено" и штампом Квартирмейстера. Поставки, не получившие разрешения со стороны Глав или Квартирмейстера, должны быть отмечены штампом "Отказано". В случае отсутствия Глав, Квартирмейстер сам может решать, что поставлять, а что нет. После заполнения, накладная должна храниться в картотеке до конца смены.[/small]
+		[hr]Место для штампов.
+	"}
+
+/datum/form/cargo/refueling_autolathe
+    index = "1K"
+    name = "Журнал заправки автолата"
+    content = @{"
+		[center][large][b]Отдел Поставок [sname][/b]
+		Журнал заправки автолата[/large][/center]
+		[hr][table][/br]
+		[tr][/br]
+		[th]Время заправки[/th][/br]
+		[th]Заправленные ресурсы (металл/стекло)[/th][/br]
+		[th]Заправщик[/th][/br]
+		[/tr][/br]
+		[tr][/br]
+		[td][field][/td][/br]
+		[td][field][/td][/br]
+		[td][sfield][/td][/br]
+		[/tr][/br]
+		[/table]
 	"}
 
 /datum/form/hr/temp_access
@@ -362,7 +507,7 @@ var/global/list/predefined_forms_list = list(
         [hr]Вероятная причина смерти: [field]
         Примечания: [field]
         [hr]Патологоанатом: [sfield]
-        [hr][small]Настоящим я заявляю, что после заполнения отчета, описанного в данном документе, я взял на себя ответственность за тело и определил причину смерти в соответствии с разделом 38-701b патологического кодекса NanoTrasen и что информация, содержащаяся в документе, верна и правильна в меру моих знаний и убеждений.[/small]
+        [hr][small]Настоящим я заявляю, что после заполнения отчета, описанного в данном документе, я взял на себя ответственность за тело и определил причину смерти в соответствии с разделом 38-701b патологического кодекса НаноТрейзен и что информация, содержащаяся в документе, верна и правильна в меру моих знаний и убеждений.[/small]
 	"}
 
 /datum/form/med/chem_tracking
@@ -513,7 +658,7 @@ var/global/list/predefined_forms_list = list(
     content = @{"
         [center][large][b]Отдел Исследований и Разработок [sname][/b]
         Займ оборудования[/large][/center]
-        [hr][block][center]Следующие предметы числятся на учете как "экспериментальные". NanoTrasen не несет ответственности за ущерб, полученный в ходе использования этого оборудования.
+        [hr][block][center]Следующие предметы числятся на учете как "экспериментальные". НаноТрейзен не несет ответственности за ущерб, полученный в ходе использования этого оборудования.
         Получатель должен использовать эти предметы только по их прямому назначению. Получатель не должен делится этим оборудованием с любыми другими лицами без прямого одобрения командного состава станции.[/center][/block][hr]Имя получающего: [field]
         Полное имя получателя: [field]
         Полное имя выдающего предметы в займ: [field]
@@ -870,6 +1015,22 @@ var/global/list/predefined_forms_list = list(
         [hr]Место для штампов.
 	"}
 
+/datum/form/sec/using_combat_exoskeleton
+    index = "5J"
+    name = "Форма легального пилотирования и использования боевого экзоскелета"
+    content = @{"
+        [center][large][b]Служба Безопасности [sname][/b]
+		Разрешение на пилотирование боевого экзоскелета[/large][/center]
+		[hr]Полное имя заказчика: [field]
+		Тип экзоскелета: [field]
+		[small]Включая название, если таковое имеется.[/small]
+		Цель выдачи: [field]
+		Примечания: [field]
+		[hr]Заказчик: [sfield]
+		Капитан/Глава Службы Безопасности: [sfield]
+		[hr]Место для штампов.
+	"}
+
 /datum/form/eng/maintentance
     index = "6A"
     name = "Эксплуатация отсека"
@@ -1146,4 +1307,64 @@ var/global/list/predefined_forms_list = list(
 		[hr]Запросивший: [sfield]
 		Офицер, выдавший разрешение: [sfield]
 		[hr]Место для штампов.
+	"}
+
+/datum/form/misc/petition_form
+    index = "15V"
+    name = "Форма петиции"
+    content = @{"
+		[h] Цель петиции: [field] [/h]
+		[table][/br]
+		[tr][/br]
+		[th]Член экипажа[/th][/br]
+		[th]Подпись[/th][/br]
+		[/tr][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[/tr][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[/tr][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[tr][/br]
+		[td][sfield][/td][/br]
+		[td][sfield][/td][/br]
+		[/table]
 	"}

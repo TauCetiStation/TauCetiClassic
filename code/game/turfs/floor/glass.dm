@@ -41,12 +41,19 @@
 
 	levelupdate()
 
+/turf/simulated/floor/glass/airless
+	airless = TRUE
+
 /turf/simulated/floor/glass/reinforced
 	name = "reinforced glass floor"
 
 	floor_type = /obj/item/stack/tile/glass/reinforced
 
 	icon = 'icons/turf/floors/glass/glass_reinforced.dmi'
+
+
+/turf/simulated/floor/glass/reinforced/airless
+	airless = TRUE
 
 /turf/simulated/floor/glass/phoron
 	name = "phoron glass floor"
@@ -55,9 +62,15 @@
 
 	icon = 'icons/turf/floors/glass/phoron_glass.dmi'
 
+/turf/simulated/floor/glass/phoron/airless
+	airless = TRUE
+
 /turf/simulated/floor/glass/reinforced/phoron
 	name = "reinforced phoron glass floor"
 
 	floor_type = /turf/simulated/floor/glass/reinforced/phoron
 
 	icon = 'icons/turf/floors/glass/phoron_glass_reinforced.dmi'
+
+/turf/simulated/floor/glass/reinforced/phoron/airless
+	airless = TRUE

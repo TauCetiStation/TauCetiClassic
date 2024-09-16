@@ -89,8 +89,6 @@
 	H.dyed_b_facial = dirt_b
 	H.facial_painted = TRUE
 
-	H.apply_recolor()
-	H.update_body()
 	H.regenerate_icons()
 
 

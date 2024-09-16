@@ -402,7 +402,7 @@
 /area/space_structures/ghostship)
 "bl" = (
 /obj/structure/cellular_biomass/grass/meat,
-/mob/living/simple_animal/hostile/cellular/meat/creep_standing,
+/obj/effect/spawner/mob_spawn/cellular/meat/creep_standing,
 /turf/simulated/floor/wood,
 /area/space_structures/ghostship)
 "bm" = (

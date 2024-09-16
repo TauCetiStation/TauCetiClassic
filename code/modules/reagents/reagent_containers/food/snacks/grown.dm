@@ -392,6 +392,55 @@
 	reagents.add_reagent("bicaridine", 1+round(potency / 10, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/laughweed
+	seed_type = /obj/item/seeds/laughweedseed
+	name = "laughweed"
+	desc = "woop woop, that's the sound of police."
+	icon_state = "laughweed"
+	item_state_world = "laughweed_world"
+	potency = 10
+	filling_color = "#39962d"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/laughweed/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
+	reagents.add_reagent("dexalin", 1 + round(potency / 8, 1))
+	reagents.add_reagent("laughbidiol", 3 + round(potency / 5, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/megaweed
+	seed_type = /obj/item/seeds/megaweedseed
+	name = "megaweed"
+	desc = "woop woop, that's the sound of police."
+	icon_state = "megaweed"
+	item_state_world = "megaweed_world"
+	potency = 10
+	filling_color = "#39962d"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/megaweed/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
+	reagents.add_reagent("dexalinp", 1 + round(potency / 5, 1))
+	reagents.add_reagent("space_drugs", 1 + round(potency / 8, 1))
+	reagents.add_reagent("laughbidiol", 3 + round(potency / 5, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackweed
+	seed_type = /obj/item/seeds/blackweedseed
+	name = "deathweed"
+	desc = "woop woop, that's the sound of police."
+	icon_state = "blackweed"
+	item_state_world = "blackweed_world"
+	potency = 10
+	filling_color = "#39962d"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/blackweed/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
+	reagents.add_reagent("cyanide", 1 + round((potency / 5), 1))
+	reagents.add_reagent("laughbidiol", 3 + round(potency / 5, 1))
+	bitesize = 1 + round(reagents.total_volume / 2, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
 	seed_type = /obj/item/seeds/ambrosiadeusseed
 	name = "ambrosia deus branch"
@@ -1130,16 +1179,17 @@
 	reagents.add_reagent("nutriment", 1 + round(potency / 5))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
-	seed_type = /obj/item/seeds/gatfruit
-	name = "gatfruit"
-	desc = "It smells like burning."
-	icon_state = "gatfruit"
+/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
+	seed_type = /obj/item/seeds/peashooter
+	name = "peashooter"
+	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
+	desc = "Нераскрывшийся плод горохострела, подозрительно напоминающий пистолет"
+	icon_state = "peashooter"
 	potency = 25
 	filling_color = "#020108"
-	trash = /obj/item/weapon/gun/projectile/revolver
+	trash = /obj/item/weapon/gun/projectile/automatic/pistol/peashooter
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit/atom_init()
+/obj/item/weapon/reagent_containers/food/snacks/grown/peashooter/atom_init()
 	. = ..()
 	reagents.add_reagent("potassium", 1 + round(potency / 25, 1))
 	reagents.add_reagent("carbon", 1 + round(potency / 10, 1))

@@ -132,7 +132,7 @@
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 
 		reagents.standard_splash(target, user=user)
-	
+
 	update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/refill_by_borg(user, refill, trans)

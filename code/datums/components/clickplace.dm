@@ -197,11 +197,9 @@
 		victim.Weaken(5)
 	victim.apply_damage(8, def_zone = BP_HEAD)
 	victim.visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [A]!</span>")
-	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-	message_admins("[victim]")
-	message_admins("[assailant]")
+	playsound(parent, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+
 	victim.log_combat(assailant, "face-slammed against \the [parent]")
-	SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER,victim )
 	return FALSE
 
 /// Is called when parent is clicked with a grab with HARM selected. Return TRUE if face slammed.
@@ -219,7 +217,7 @@
 		victim.visible_message("<span class='danger'>[assailant] shoves [victim] into [A]!</span>")
 
 		step_towards(victim, A)
-		qdel(src)
+		qdel(G)
 		return
 
 	assailant.SetNextMove(CLICK_CD_MELEE)
@@ -230,7 +228,7 @@
 		victim.Stun(2)
 		victim.Weaken(5)
 
-		victim.process_aggresive_action(assailant, "laid on [A]")
+		victim.log_combat(assailant, "laid on [A]")
 	else if(assailant.a_intent != INTENT_HARM)
 		/// Let's pretend a face-slam doesn't exist.
 		to_chat(assailant, "<span class='warning'>You need a better grip to do that!</span>")

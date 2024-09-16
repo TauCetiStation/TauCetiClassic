@@ -1,4 +1,4 @@
-var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
+var/global/savefile/iconCache = new /savefile("cache/iconCache.sav")
 
 var/global/list/bicon_cache = list()
 
@@ -23,7 +23,8 @@ var/global/list/bicon_cache = list()
 	var/iconData = iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
 	var/list/almost_partial = splittext(partial[2], "}")
-	return replacetext(copytext(almost_partial[1], 3, -5), "\n", "")
+	var/base64 = copytext(almost_partial[1], 3, -2)
+	return replacetext(base64, "\n", "")
 
 /proc/bicon(obj, css = "class='icon'", time_stamp = -1) // if you don't want any styling just pass null to css
 	if (!obj)

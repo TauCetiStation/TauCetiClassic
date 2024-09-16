@@ -437,7 +437,7 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 			else
 				for(var/obj/item/I in D)
 					qdel(I)
-				randomize_human(D)
+				D.randomize_appearance()
 				JB.equip(D, TRUE, FALSE)
 				COMPILE_OVERLAYS(D)
 				var/icon/I = icon(getFlatIcon(D), frame = 1)

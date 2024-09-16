@@ -576,16 +576,12 @@
 
 	SetDrunkenness(0)
 
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.shock_stage = 0
-
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			H.restore_blood()
-			H.full_prosthetic = null
-			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-			Heart?.heart_normalize()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.restore_blood()
+		H.full_prosthetic = null
+		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+		Heart?.heart_normalize()
 
 	restore_all_bodyparts()
 	restore_all_organs()
@@ -920,7 +916,7 @@
 			if (istype(C.buckled,/obj/structure/stool/bed/nest))
 				C.buckled.user_unbuckle_mob(C)
 				return
-			if(C.handcuffed || istype(C.buckled, /obj/machinery/optable/torture_table))
+			if(istype(C.buckled, /obj/machinery/optable/torture_table))
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				C.visible_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", self_message = "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
@@ -940,10 +936,9 @@
 			C.container_resist(L)
 
 	//breaking out of handcuffs and putting off fires
-	else if(iscarbon(L))
+	if(iscarbon(L))
 		var/mob/living/carbon/CM = L
-		if(CM.on_fire)
-			if(!CM.canmove && !CM.crawling)	return
+		if(CM.on_fire && CM.canmove && !(CM.lying || CM.crawling))
 			CM.fire_stacks -= 5
 			CM.Stun(5)
 			CM.Weaken(5)
@@ -976,7 +971,7 @@
 				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
-						if(!CM.handcuffed || CM.buckled)
+						if(!CM.handcuffed)
 							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
 						if(istype(HC, /obj/item/weapon/handcuffs/alien))
 							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
@@ -1061,6 +1056,11 @@
 		return
 
 	if(crawling)
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			if(C.traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
+				to_chat(C, "<span class='danger'>I'm in so much pain! I can not get up!</span>")
+				return
 		crawl_getup = TRUE
 		if(do_after(src, 10, target = src))
 			crawl_getup = FALSE
@@ -1422,6 +1422,8 @@
 /mob/living/death(gibbed)
 	beauty.AddModifier("stat", additive=beauty_dead)
 	update_health_hud()
+	if(wabbajacked)
+		unwabbajack()
 	return ..()
 
 /mob/living/proc/update_beauty(datum/source, old_value)

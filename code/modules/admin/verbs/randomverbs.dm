@@ -163,68 +163,6 @@
 	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/proc/cmd_admin_mute(mob/M as mob, mute_type)
-	if(!usr || !usr.client)
-		return
-	if(!usr.client.holder)
-		to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You don't have permission to do this.</font>")
-		return
-	if(!M.client)
-		to_chat(usr, "<font color='red'>Error: cmd_admin_mute: This mob doesn't have a client tied to it.</font>")
-	if(M.client.holder && (M.client.holder.rights & R_ADMIN) && !check_rights(R_PERMISSIONS))
-		return
-	if(M.client.holder && (M.client.holder.rights & R_PERMISSIONS))
-		to_chat(usr, "<font color='red'>Error: cmd_admin_mute: You cannot mute an admin with permissions rights.</font>")
-		return
-
-	var/muteunmute
-	var/mute_string = get_mute_text(mute_type)
-
-	if(!mute_string)
-		CRASH("Can't parse mute type: [mute_type]")
-
-	if(M.client.prefs.muted & mute_type)
-		muteunmute = "unmuted"
-		M.client.prefs.muted &= ~mute_type
-		if(M.client.prefs.permamuted & mute_type)
-			M.client.prefs.permamuted &= ~mute_type
-			M.client.prefs.save_preferences()
-			to_chat(M, "<span class='notice'>You have been [mute_string] unmuted from [usr.key].</span>")
-	else
-		if(tgui_alert(usr, "Would you like to make it permament?","Permamute?", list("Yes","No, round only")) == "Yes")
-			var/permmutreason = input("Permamute Reason") as text|null
-			if(permmutreason)
-				muteunmute = "permamuted"
-				M.client.prefs.permamuted |= mute_type
-				M.client.prefs.save_preferences()
-				M.client.prefs.muted |= mute_type
-				notes_add(M.ckey, "Permamute from [mute_string]: [permmutreason]", usr.client)
-				permmutreason = sanitize(permmutreason)
-				to_chat(M, "<span class='alert big bold'>You have been permamuted from [mute_string] by [usr.key].<br>Reason: [permmutreason]</span>")
-			else
-				to_chat(usr, "<span class='alert'>Could not apply permamute: Reason is empty</span>")
-				return
-
-		else if (tgui_alert(usr, "Add a notice for round mute?", "Mute Notice?", list("Yes","No")) == "Yes")
-			var/mutereason = input("Mute Reason") as text|null
-			if(mutereason)
-				notes_add(M.ckey, "Muted from [mute_string]: [mutereason]", usr.client)
-				mutereason = sanitize(mutereason)
-				to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].<br>Reason: [mutereason]</span>")
-			else
-				return
-		else
-			to_chat(M, "<span class='alert big bold'>You have been muted from [mute_string] by [usr.key].</span>")
-
-		muteunmute = "muted"
-		M.client.prefs.muted |= mute_type
-
-	log_admin("[key_name(usr)] has [muteunmute] [key_name(M)] from [mute_string]")
-	message_admins("[key_name_admin(usr)] has [muteunmute] [key_name_admin(M)] from [mute_string].")
-	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
 /client/proc/cmd_admin_add_random_ai_law()
 	set category = "Fun"
 	set name = "Add Random AI Law"
@@ -507,9 +445,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.age = record_found.fields["age"]
 		new_character.dna.b_type = record_found.fields["b_type"]
 	else
-		new_character.gender = pick(MALE,FEMALE)
-		var/datum/preferences/A = new()
-		A.randomize_appearance_for(new_character)
+		new_character.randomize_appearance()
+		new_character.name = G_found.name
 		new_character.real_name = G_found.real_name
 
 	if(!new_character.real_name)
@@ -1076,7 +1013,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(target.player_ingame_age < value)
-		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", src, secret = 0)
+		notes_add(target.ckey, "PLAYERAGE: increased in-game age from [target.player_ingame_age] to [value]", admin_key = ckey, secret = 0)
 
 		log_admin("[key_name(usr)] increased [key_name(target)] in-game age from [target.player_ingame_age] to [value]")
 		message_admins("[key_name_admin(usr)] increased [key_name_admin(target)] in-game age from [target.player_ingame_age] to [value]")

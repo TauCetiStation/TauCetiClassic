@@ -101,6 +101,9 @@
 /proc/library_needs_rewiew()
 	. = 0
 
+	if(!establish_db_connection("erro_library"))
+		return .
+
 	var/DBQuery/select_query = dbcon.NewQuery({"SELECT COUNT(*)
 		FROM erro_library
 		WHERE deletereason IS NOT NULL"})

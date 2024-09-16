@@ -396,13 +396,13 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/aiModule/safeguard
 	category = list("AI")
 
-/datum/design/onehuman_module
-	name = "AI Module (OneHuman)"
-	desc = "Allows for the construction of a OneHuman AI Module."
-	id = "onehuman_module"
+/datum/design/onentemploye_module
+	name = "AI Module (One NT Employe)"
+	desc = "Allows for the construction of a 'One NT Employe' AI Module."
+	id = "onentemploye_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
-	build_path = /obj/item/weapon/aiModule/oneHuman
+	build_path = /obj/item/weapon/aiModule/onentemploye
 	category = list("AI")
 
 /datum/design/protectstation_module
@@ -2249,13 +2249,13 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/bluespace_crystal/artificial
 	category = list("Misc")
 
-/datum/design/miningsatchel_holding
-	name = "Mining Satchel of Holding"
-	desc = "A mining satchel that can hold an infinite amount of ores."
-	id = "minerbag_holding"
+/datum/design/bluespacesatchel_holding
+	name = "Bluespace Satchel"
+	desc = "A bluespace satchel that can hold an infinite amount of plant, ore, etc."
+	id = "bluespacesatchel_holding"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 500) //quite cheap, for more convenience
-	build_path = /obj/item/weapon/storage/bag/ore/holding
+	build_path = /obj/item/weapon/storage/bag/holding
 	category = list("Tools")
 
 /////////////////////////////////////////
