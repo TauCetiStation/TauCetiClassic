@@ -210,3 +210,17 @@
 	icon_state = "pluvia_hat"
 	item_state = "pluvia_hat"
 	flags = HEADCOVERSEYES
+
+/obj/item/clothing/head/wpluvia
+	name = "pluvia non la"
+	desc = "Prepare to heavy rain"
+	icon_state = "wpluvia_hat"
+	item_state = "wpluvia_hat"
+	flags = HEADCOVERSEYES
+
+/obj/item/clothing/head/ricehat
+	name = "non la"
+	desc = "welcome to the rice fields"
+	icon_state = "ricehat"
+	item_state = "ricehat"
+	flags = HEADCOVERSEYES

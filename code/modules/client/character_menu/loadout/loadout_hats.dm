@@ -104,3 +104,10 @@
 	path = /obj/item/clothing/head/pluvia
 	cost = 1
 	whitelisted = PLUVIAN
+
+/datum/gear/head/pluvia_hat/New()
+	..()
+	var/hats = list()
+	hats["blue"] = /datum/gear/head/pluvia_hat
+	hats["white"] = /obj/item/clothing/head/wpluvia
+	gear_tweaks += new/datum/gear_tweak/path(hats)

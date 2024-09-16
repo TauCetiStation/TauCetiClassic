@@ -529,18 +529,21 @@
 	desc = ""
 	icon_state = "pluvia_morality"
 	item_state = "pluvia_morality"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/suit/pluvia_trick
 	name = "Path of Trick"
 	desc = ""
 	icon_state = "pluvia_trick"
 	item_state = "pluvia_trick"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/suit/pluvia_balance
 	name = "Path of Balance"
 	desc = ""
 	icon_state = "pluvia_balance"
 	item_state = "pluvia_balance"
+	flags = ONESIZEFITSALL
 
 //Mafia
 /obj/item/clothing/suit/browntrenchcoat
