@@ -176,6 +176,7 @@
 	if(!process_shot()) //First shot is processed instantly.
 		return //If it fails, such as when the gun is empty, then there's no need to schedule a second shot.
 
+	ADD_TRAIT(shooter, TRAIT_AUTOFIRE_SHOOTS, GENERIC_TRAIT)
 	START_PROCESSING(SSfullauto, src)
 	RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDRAG, PROC_REF(on_mouse_drag))
 
@@ -201,6 +202,7 @@
 		UnregisterSignal(clicker, COMSIG_CLIENT_MOUSEDRAG)
 	if(!QDELETED(shooter))
 		UnregisterSignal(shooter, COMSIG_MOB_SWAP_HANDS)
+	REMOVE_TRAIT(shooter, TRAIT_AUTOFIRE_SHOOTS, GENERIC_TRAIT)
 	target = null
 	target_loc = null
 	mouse_parameters = null

@@ -167,15 +167,11 @@
 
 /client/MouseDown(datum/object, location, control, params)
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
-	if(mouse_down_icon)
-		mouse_pointer_icon = mouse_down_icon
 	..()
 
 /client/MouseUp(object, location, control, params)
 	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
 		click_intercept_time = world.time
-	if(mouse_up_icon)
-		mouse_pointer_icon = mouse_up_icon
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)

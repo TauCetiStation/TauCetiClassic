@@ -1,6 +1,6 @@
-/obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
-	name = "submachine gun"
-	desc = "Легкий, скорострельный пистолет-пулемёт. Использует патроны калибра 9мм."
+/obj/item/weapon/gun/projectile/automatic
+	name = "generic automatic gun"
+	desc = "О боже, вы не должны были видеть это!"
 	icon_state = "saber"
 	item_state = null
 	w_class = SIZE_SMALL
@@ -47,6 +47,8 @@
 	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/saber
+	name = "submachine gun"
+	desc = "Легкий, скорострельный пистолет-пулемёт. Использует патроны калибра 9мм."
 	spread_increase = 0.5
 	spread_max = 1.5
 	fire_delay = 0

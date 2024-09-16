@@ -14441,10 +14441,10 @@
 /area/custom/wizard_station)
 "aGr" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic{
+/obj/item/weapon/gun/projectile/automatic/saber{
 	pixel_y = 6
 	},
-/obj/item/weapon/gun/projectile/automatic{
+/obj/item/weapon/gun/projectile/automatic/saber{
 	pixel_y = 3
 	},
 /obj/item/weapon/gun/projectile/automatic/saber,
