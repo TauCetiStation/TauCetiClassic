@@ -211,12 +211,9 @@
 	item_state = "pluvia_hat"
 	flags = HEADCOVERSEYES
 
-/obj/item/clothing/head/wpluvia
-	name = "pluvia non la"
-	desc = "Prepare to heavy rain"
+/obj/item/clothing/head/pluvia/white
 	icon_state = "wpluvia_hat"
 	item_state = "wpluvia_hat"
-	flags = HEADCOVERSEYES
 
 /obj/item/clothing/head/ricehat
 	name = "non la"
