@@ -75,7 +75,7 @@
 			C.parallax_layers_max = 3
 			return TRUE
 
-datum/hud/proc/set_parallax(new_parallax)
+/datum/hud/proc/set_parallax(new_parallax)
 	remove_parallax()
 	create_parallax(new_parallax)
 	mymob.current_parallax = new_parallax
