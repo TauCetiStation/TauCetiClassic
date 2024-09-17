@@ -90,7 +90,7 @@
 					continue
 				R.Deconvert()
 				cleared_role = TRUE
-
+				M.mind.social_credit = 0
 			if(cleared_role)
 				// M.mind.remove_objectives() Uncomment this if you're feeling suicidal, and inable to see player's objectives.
 				to_chat(M, "<span class='danger'>Вам вживили [CASE(src, NOMINATIVE_CASE)], и теперь вы должны служить НТ. Ваша прежняя миссия больше не имеет значения. Слава НТ!</span>")
