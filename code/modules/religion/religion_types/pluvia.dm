@@ -101,11 +101,6 @@
 /datum/religion/pluvia/proc/custom_haram(mob/living/carbon/human/target, haram_point, reason)
 	adjust_haram(target, haram_point, reason)
 
-/turf/simulated/floor/carpet/Entered(atom/movable/O)
-	..()
-	if(ishuman(O))
-		SEND_SIGNAL(O, COMSIG_HUMAN_ON_CARPET, src)
-
 /datum/religion/pluvia/proc/carpet_haram(mob/living/carbon/human/target)
 	if(!target.shoes || target.lying || target.crawling || target.buckled)
 		return
