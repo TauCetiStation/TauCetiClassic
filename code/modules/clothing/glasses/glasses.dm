@@ -448,6 +448,12 @@
 
 /datum/glasses_mode_type_state
 
+/datum/glasses_mode_type_state/proc/change_state(obj/item/clothing/glasses/glasses, state)
+	if(state)
+		on(glasses)
+	else
+		off(glasses)
+
 /datum/glasses_mode_type_state/proc/on(obj/item/clothing/glasses/glasses)
 	return
 

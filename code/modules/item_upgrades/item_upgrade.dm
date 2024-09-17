@@ -25,15 +25,28 @@
 		HUD_TOGGLEABLE_MODE_THERMAL_ADVANCED = new /datum/glasses_mode_type_state/thermal_advanced,
 	)
 
-/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/apply_effects(mode_type, enable)
-	if(!ishuman(usr))
+/obj/item/clothing/glasses/sunglasses/hud/advanced/atom_init()
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(handle_drop))
+
+/obj/item/clothing/glasses/sunglasses/hud/advanced/equipped(mob/user, slot)
+	. = ..()
+	if(slot != SLOT_GLASSES)
 		return
-	var/mob/living/carbon/glasses_user = usr
+	apply_effects(current_mode, TRUE)
+
+/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/handle_drop(source, mob/living/carbon/human/user)
+	if(!istype(user) || user.glasses)
+		return
+	apply_effects(current_mode, FALSE)
+
+/obj/item/clothing/glasses/sunglasses/hud/advanced/proc/apply_effects(mode_type, enable)
+	if(!ishuman(glasses_user))
+		return
+	if(mode_type == null)
+		return
 	var/datum/glasses_mode_type_state/state = glasses_states[mode_type]
-	if (enable)
-		state.on()
-	else
-		state.off()
+	state.change_state(src, enable)
 	playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
 	glasses_user.update_sight()
 	update_item_actions()
@@ -119,7 +132,7 @@
 
 /obj/item/hud_upgrade/night/upgrade_hud(obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
 	..()
-	glasses.item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(src))
+	glasses.item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/night(glasses))
 
 /obj/item/hud_upgrade/thermal
 	name = "Thermal HUD upgrade"
@@ -133,7 +146,7 @@
 
 /obj/item/hud_upgrade/thermal/upgrade_hud(obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
 	..()
-	glasses.item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
+	glasses.item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(glasses))
 
 /obj/item/hud_upgrade/thermal_advanced
 	name = "Advanced Thermal HUD upgrade"
@@ -153,7 +166,7 @@
 	for(var/datum/action/item_action/hands_free/switch_hud_modes/thermal/thermal_action in glasses.item_actions)
 		thermal_action.Remove(user)
 		glasses.item_actions.Remove(thermal_action)
-	glasses.item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(src))
+	glasses.item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal_advanced(glasses))
 
 
 /datum/action/item_action/hands_free/switch_hud_modes
