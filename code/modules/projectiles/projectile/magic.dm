@@ -335,7 +335,9 @@
 	light_color = "#b63aa3"
 
 /obj/item/projectile/magic/wand/magic_carp/do_effect(target)
-	new /mob/living/simple_animal/hostile/carp/magic(get_turf(target), target)
+	var/fire_dir = get_dir(target,starting)
+	var/new_loc = get_step(target, fire_dir)
+	new /mob/living/simple_animal/hostile/carp/magic(get_turf(new_loc), target)
 
 
 
