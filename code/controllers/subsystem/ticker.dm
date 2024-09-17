@@ -189,7 +189,6 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Игра начинается...</span>")
-	global.social_credit_threshold = (totalPlayersReady/10) + 3
 	// Discuss your stuff after the round ends.
 	if(config.ooc_round_autotoggle)
 		to_chat(world, "<span class='warning bold'>OOC-канал отключен для всех на время раунда!</span>")

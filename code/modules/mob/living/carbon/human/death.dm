@@ -43,6 +43,8 @@
 /mob/living/carbon/human/proc/check_pluvian_credits()
 	if(iscultist(src) && ischangeling(src) && isshadowthrall(src) || !mind)
 		return
+	if(isnull(social_credit_threshold))
+		social_credit_threshold = (SSticker.totalPlayersReady/10) + 3
 	if(mind.blessed || mind.social_credit >= social_credit_threshold)
 		reborn()
 	else
