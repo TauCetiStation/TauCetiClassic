@@ -133,7 +133,7 @@
 
 /obj/item/hud_upgrade/thermal/upgrade_hud(obj/item/clothing/glasses/sunglasses/hud/advanced/glasses, mob/living/user)
 	..()
-	item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
+	glasses.item_actions.Add(new /datum/action/item_action/hands_free/switch_hud_modes/thermal(src))
 
 /obj/item/hud_upgrade/thermal_advanced
 	name = "Advanced Thermal HUD upgrade"
