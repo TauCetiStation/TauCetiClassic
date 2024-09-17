@@ -1,5 +1,5 @@
 #define TRANSCATION_COOLDOWN 30	//delay between transactions
-#define ALLOWED_ID_OVERLAYS list("id", "gold", "silver", "centcom", "ert", "ert-leader", "syndicate", "syndicate-command", "clown", "mime", "id_pda_world", "gold_pda_world", "silver_pda_world", "centcom_pda_world", "ert_pda_world", "ert-leader_pda_world", "syndicate_pda_world", "syndicate-command_pda_world", "clown_pda_world", "mime_pda_world") // List of overlays in pda.dmi
+#define ALLOWED_ID_OVERLAYS list("id", "gold", "silver", "centcom", "ert", "ert-leader", "syndicate", "syndicate-command", "clown", "mime", "id_world", "gold_world", "silver_world", "centcom_world", "ert_world", "ert-leader_world", "syndicate_world", "syndicate-command_world", "clown_world", "mime_world") // List of overlays in pda.dmi
 //The advanced pea-green monochrome lcd of tomorrow.
 
 /obj/item/device/pda
@@ -1420,8 +1420,10 @@
 	if(newmessage)
 		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 	if(id)
-		var/id_overlay = get_id_overlay(id, overlay_suffix)
+		var/id_overlay = get_id_overlay(id)
 		if(id_overlay)
+			if(findtext(id_overlay, "_world", max(0, length(id_overlay) - length("_world"))))
+				id_overlay = copytext(id_overlay, 1, length(id_overlay) - length("_world") + 1)
 			add_overlay(image('icons/obj/pda.dmi', id_overlay + overlay_suffix))
 	if(pen)
 		add_overlay(image('icons/obj/pda.dmi', "pen_pda" + overlay_suffix))
