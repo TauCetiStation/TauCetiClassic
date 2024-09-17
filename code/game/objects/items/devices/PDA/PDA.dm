@@ -1417,7 +1417,7 @@
 	var/overlay_suffix = ""
 	if(findtext(icon_state, "_world"))
 		overlay_suffix = "_world"
-	if(newmessage)
+	if(newmessage && !findtext(icon_state, "_world"))
 		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 	if(id)
 		var/id_overlay = get_id_overlay(id)
