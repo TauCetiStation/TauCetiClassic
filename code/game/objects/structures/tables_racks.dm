@@ -435,7 +435,8 @@
 	visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [src], breaking it!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
-	victim.process_aggresive_action(assailant, "face-slammed against [name]")
+	victim.log_combat(assailant, "face-slammed against [name]")
+	SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER,victim)
 
 	if(prob(30) && ishuman(victim))
 		var/mob/living/carbon/human/H = victim

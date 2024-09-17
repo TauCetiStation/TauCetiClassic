@@ -206,8 +206,8 @@
 	addtimer(CALLBACK(src, PROC_REF(gib_mob), user), gibtime)
 
 /obj/machinery/gibber/proc/gib_mob(mob/user)
-	occupant.process_aggresive_action(user, "gibbed via [name]")
-
+	occupant.log_combat(user, "gibbed via [name]")
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, occupant)
 	occupant.ghostize(bancheck = TRUE)
 
 	occupant.harvest()

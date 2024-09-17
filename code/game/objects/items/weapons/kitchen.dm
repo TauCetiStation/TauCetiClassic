@@ -257,7 +257,8 @@
 		user.Paralyse(2)
 		return
 
-	M.process_aggresive_action(user, "attacked with [name]")
+	M.log_combat(user, "attacked with [name]")
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 
 	var/t = user.get_targetzone()
 	if (t == BP_HEAD)

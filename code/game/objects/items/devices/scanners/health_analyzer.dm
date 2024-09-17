@@ -116,7 +116,8 @@
 			used = 0
 			icon_state = "health"
 		to_chat(user,"<span class='warning'>Успешное облучение [M].</span>")
-		M.process_aggresive_action(user, "irradiated with [name]")
+		M.log_combat(user, "irradiated with [name]")
+		SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)

@@ -89,7 +89,8 @@
 	if(isliving(M))
 		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>")
 
-		M.process_aggresive_action(user, "stunned with [name]")
+		M.log_combat(user, "stunned with [name]")
+		SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 
 		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 
@@ -371,6 +372,7 @@ var/global/gourd_name = null
 			user.visible_message("<span class='bold warning'>[target] has attacked himself with \a [name]!</span>")
 
 	//Attack logs
-	target.process_aggresive_action(user, "smashed with a [name] (INTENT: [uppertext(user.a_intent)])")
+	target.log_combat(user, "smashed with a [name] (INTENT: [uppertext(user.a_intent)])")
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, target)
 
 	qdel(src)

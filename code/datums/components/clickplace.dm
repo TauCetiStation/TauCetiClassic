@@ -227,7 +227,8 @@
 		INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), A.loc, old_loc)
 		victim.Stun(2)
 		victim.Weaken(5)
-		victim.process_aggresive_action(assailant, "laid on [A]")
+		victim.log_combat(assailant, "laid on [A]")
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, victim)
 	else if(assailant.a_intent != INTENT_HARM)
 		/// Let's pretend a face-slam doesn't exist.
 		to_chat(assailant, "<span class='warning'>You need a better grip to do that!</span>")
