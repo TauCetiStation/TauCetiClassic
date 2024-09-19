@@ -162,6 +162,7 @@
 				if(N.nuketype == "Syndi")
 					target = N
 					to_chat(usr, "<span class='notice'>Nuclear Warhead Locator active.</span>")
+					break
 
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
@@ -260,14 +261,11 @@
 /obj/item/weapon/pinpointer/highriskitems/proc/toggle_mode()
 	reset_target()
 
-	var/datum/objective/steal/itemlist
-	itemlist = itemlist // To supress a 'variable defined but not used' error.
-	var/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in itemlist::possible_items
+	var/obj/item/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in global.possible_items_for_steal
 	if(!targetitem)
 		return
-	var/obj/item/item_path = itemlist::possible_items[targetitem]
 	for(var/obj/item/I in global.possible_items_for_steal)
-		if(!istype(I, item_path))
+		if(!istype(I, targetitem))
 			continue
 		var/turf/T = get_turf(I)
 		if(is_centcom_level(T.z))
