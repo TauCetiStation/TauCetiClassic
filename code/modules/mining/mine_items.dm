@@ -697,7 +697,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if((iswallturf(target)) && (prob(destruction_chance)))
 		target.ex_act(EXPLODE_HEAVY)
 
-
 /obj/item/weapon/gun/energy/laser/cutter/atom_init()
 	. = ..()
 	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
