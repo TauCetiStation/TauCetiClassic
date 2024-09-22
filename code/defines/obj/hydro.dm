@@ -142,7 +142,7 @@
 
 /obj/item/seeds/plastiseed
 	name = "pack of plastellium mycelium"
-	cases = list("мицелий пластеллия", "мицелия пластеллия", "мицелию пластеллия", "мицелий пластеллия", "мицелием пластеллия", "мицелие пластеллия")
+	cases = list("мицелий пластеллия", "мицелия пластеллия", "мицелию пластеллия", "мицелий пластеллия", "мицелием пластеллия", "мицелии пластеллия")
 	desc = "Из этого мицелия вырастает пластеллий."
 	icon_state = "mycelium-plast"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
