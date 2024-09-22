@@ -1284,7 +1284,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella
 	seed_type = /obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella
 	name = "fraxinella"
-	cases = list("ясенец", "ясенца", "ясенцу", "ясенец", "ясенцем", "ясенце")
+	cases = list("ясенец", "ясенца", "ясенцу", "ясенец", "ясенцом", "ясенце")
 	desc = "Красивый светло-розовый цветок."
 	icon_state = "fraxinella"
 	potency = 30
