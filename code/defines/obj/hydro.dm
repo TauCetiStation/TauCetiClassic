@@ -98,7 +98,7 @@
 
 /obj/item/seeds/blackpepper
 	name = "pack of piper nigrum seeds"
-	cases = list("семена черного перца", "семян черного перца", "семенам черного перца", "семена черного перец", "семенами черного перца", "семенах черного перца")	
+	cases = list("семена черного перца", "семян черного перца", "семенам черного перца", "семена черного перец", "семенами черного перца", "семенах черного перца")
 	desc = "Из этих семян вырастает черный перец."
 	icon_state = "seed-blackpepper"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
