@@ -885,7 +885,7 @@
 /obj/item/seeds/glowshroom
 	name = "pack of glowshroom mycelium"
 	cases = list("мицелий светогрибов", "мицелия светогрибов", "мицелию светогрибов", "мицелий светогрибов", "мицелием светогрибов", "мицелие светогрибов")
-	desc = "Из этого мицелия -высветают- особые грибы!"
+	desc = "Из этого мицелия -просветают- особые грибы!"
 	icon_state = "mycelium-glowshroom"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	species = "glowshroom"
