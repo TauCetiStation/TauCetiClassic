@@ -385,10 +385,10 @@ var/global/list/sting_paths
 	chem_recharge_rate = initial(chem_recharge_rate)
 	chem_charges = min(chem_charges, chem_storage)
 	mimicing = ""
-	if(isliving(antag.current))
+/*	if(isliving(antag.current))
 		var/mob/living/L = antag.current
 		L.changeling_aug = FALSE
-
+*/
 /mob/proc/remove_changeling_powers(keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
 		if(ischangeling(src))

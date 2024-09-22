@@ -836,6 +836,22 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	unlocks_designs = list("triphasic_scanning", "femto_mani", "scalpel_manager", "flora_gun")
 
+/datum/technology/base_implant
+	name = "base implant"
+	desc = "base implant"
+	id = "base_implant"
+	tech_type = RESEARCH_BIOTECH
+
+	x = 0.85
+	y = 0.60
+	icon = "implant"
+
+	required_technologies = list("top_biotech")
+	required_tech_levels = list()
+	cost = 4000
+
+	unlocks_designs = list("ci-nutriment", "ci-welding", "ci-medhud", "ci-sechud", "ci-nutrimentplus")
+
 // Combat
 
 /datum/technology/basic_combat

@@ -1240,11 +1240,15 @@
 		germ_level += n
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
-	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+	var/obj/item/organ/internal/lungs/IO = get_int_organ(/obj/item/organ/internal/lungs)
+	if(!IO)
+		return 0
+
 	return IO.is_bruised()
 
+
 /mob/living/carbon/human/proc/rupture_lung()
-	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+	var/obj/item/organ/internal/lungs/IO = get_int_organ(/obj/item/organ/internal/lungs)
 
 	if(!IO.is_bruised())
 		custom_pain("You feel a stabbing pain in your chest!", 1)

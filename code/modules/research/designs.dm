@@ -2661,6 +2661,56 @@ other types of metals and chemistry for reagents).
 	category = list("Equipment")
 
 /////////////////////////////////////////
+//////////Cybernetic Implants////////////
+/////////////////////////////////////////
+
+/datum/design/cyberimp_welding
+	name = "Welding Shield implant"
+	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
+	id = "ci-welding"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200, MAT_GLASS = 400)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/shield
+	category = list("Support")
+
+/datum/design/cyberimp_medical_hud
+	name = "Medical HUD implant"
+	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
+	id = "ci-medhud"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 500)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/medical
+	category = list("Support")
+
+/datum/design/cyberimp_security_hud
+	name = "Security HUD implant"
+	desc = "These cybernetic eyes will display a security HUD over everything you see. Wiggle eyes to control."
+	id = "ci-sechud"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 750, MAT_GOLD = 750)
+	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/security
+	category = list("Support")
+
+/datum/design/cyberimp_nutriment
+	name = "Nutriment pump implant"
+	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
+	id = "ci-nutriment"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 500)
+	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment
+	category = list("Support")
+
+/datum/design/cyberimp_nutriment_plus
+	name = "Nutriment pump implant PLUS"
+	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
+	id = "ci-nutrimentplus"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 750)
+	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment/plus
+	category = list("Support")
+
+
+/////////////////////////////////////////
 //////////////Rig Modules////////////////
 /////////////////////////////////////////
 

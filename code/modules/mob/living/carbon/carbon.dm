@@ -158,6 +158,18 @@
 	inhaling = inhale_pp >= druggy_inhale_pp ? inhaling : druggy_inhaling
 	inhale_pp = inhale_pp >= druggy_inhale_pp ? inhale_pp : druggy_inhale_pp
 
+	var/lungs = get_int_organ_by_name(O_LUNGS)
+	if(!lungs)
+		adjustOxyLoss(10)
+		if(prob(20))
+			emote("gasp")
+	//CRIT
+	if(!breath || (breath.total_moles == 0) || !lungs)
+		adjustOxyLoss(5)
+		throw_alert("not_enough_oxy", /atom/movable/screen/alert/oxy)
+		return FALSE
+
+
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
 			emote("gasp")
@@ -1197,11 +1209,13 @@
 
 	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 
+	sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+/*
 	if(changeling_aug)
 		sight |= SEE_MOBS
 		see_in_dark = 8
 		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-
+*/
 	if(XRAY in mutations)
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = 8

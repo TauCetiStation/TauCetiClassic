@@ -406,6 +406,15 @@
 	,IS_SOCIAL = TRUE
 	)
 
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart/unathi,
+		O_BRAIN   = /obj/item/organ/internal/brain/unathi,
+		O_EYES    = /obj/item/organ/internal/eyes/unathi,
+		O_LUNGS   = /obj/item/organ/internal/lungs/unathi,
+		O_LIVER   = /obj/item/organ/internal/liver/unathi,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/unathi
+		)
+
 	flesh_color = "#34af10"
 	base_color = "#066000"
 
@@ -481,6 +490,15 @@
 	,FUR = TRUE
 	)
 
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart/tajaran,
+		O_BRAIN   = /obj/item/organ/internal/brain/tajaran,
+		O_EYES    = /obj/item/organ/internal/eyes/tajaran,
+		O_LUNGS   = /obj/item/organ/internal/lungs/tajaran,
+		O_LIVER   = /obj/item/organ/internal/liver/tajaran,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/tajaran
+		)
+
 	flesh_color = "#afa59e"
 	base_color = "#333333"
 
@@ -531,12 +549,12 @@
 	)
 
 	has_organ = list(
-		O_HEART   = /obj/item/organ/internal/heart,
-		O_BRAIN   = /obj/item/organ/internal/brain,
-		O_EYES    = /obj/item/organ/internal/eyes,
+		O_HEART   = /obj/item/organ/internal/heart/skrell,
+		O_BRAIN   = /obj/item/organ/internal/brain/skrell,
+		O_EYES    = /obj/item/organ/internal/eyes/skrell,
 		O_LUNGS   = /obj/item/organ/internal/lungs/skrell,
-		O_LIVER   = /obj/item/organ/internal/liver,
-		O_KIDNEYS = /obj/item/organ/internal/kidneys
+		O_LIVER   = /obj/item/organ/internal/liver/skrell,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/skrell
 		)
 
 	eyes = "skrell_eyes"
@@ -601,8 +619,8 @@
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
-		O_BRAIN   = /obj/item/organ/internal/brain,
-		O_EYES    = /obj/item/organ/internal/eyes,
+		O_BRAIN   = /obj/item/organ/internal/brain/vox,
+		O_EYES    = /obj/item/organ/internal/eyes/vox,
 		O_LUNGS   = /obj/item/organ/internal/lungs/vox,
 		O_LIVER   = /obj/item/organ/internal/liver/vox,
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/vox

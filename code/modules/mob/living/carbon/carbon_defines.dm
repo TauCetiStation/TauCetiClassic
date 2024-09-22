@@ -5,6 +5,8 @@
 	var/list/datum/disease2/disease/virus2 = list()
 	var/antibodies = 0
 
+	var/list/internal_organs_slot = list()	//Same as above, but stores "slot ID" - "organ" pairs for easy access.
+
 	var/life_tick = 0      // The amount of life ticks that have processed on this mob.
 	var/analgesic = 0 // when this is set, the mob isn't affected by shock or pain
 					  // life should decrease this by 1 every tick
