@@ -29,6 +29,7 @@
 
 /turf/simulated/shuttle/floor/evac/eng1
 	icon_state = "flooreng1"
+	footstep = FOOTSTEP_CATWALK
 
 /turf/simulated/shuttle/floor/evac/eng2
 	icon_state = "flooreng2"
@@ -36,6 +37,7 @@
 /turf/simulated/shuttle/floor/evac/sec1
 	icon = 'icons/locations/shuttles/evac_shuttle.dmi'
 	icon_state = "floorsec"
+	footstep = FOOTSTEP_CATWALK
 
 /turf/simulated/shuttle/floor/evac/sec2
 	icon = 'icons/locations/shuttles/evac_shuttle.dmi'
