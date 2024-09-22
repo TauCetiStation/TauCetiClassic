@@ -1476,7 +1476,7 @@
 /obj/item/seeds/cocoapodseed
 	name = "pack of cocoa pod seeds"
 	cases = list("семена какао-бобов", "семян какао-бобов", "семенам какао-бобов", "семена какао-бобов", "семенами какао-бобов", "семенах какао-бобов")
-	desc = "Из этих семян вырастает дерево какао. Выглядит сладко." 
+	desc = "Из этих семян вырастает дерево какао. Выглядит сладко."
 	icon_state = "seed-cocoapod"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "cocoapod"
