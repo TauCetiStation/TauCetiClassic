@@ -189,7 +189,6 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Игра начинается...</span>")
-
 	// Discuss your stuff after the round ends.
 	if(config.ooc_round_autotoggle)
 		to_chat(world, "<span class='warning bold'>OOC-канал отключен для всех на время раунда!</span>")
@@ -270,6 +269,7 @@ SUBSYSTEM_DEF(ticker)
 		query_round_game_mode.Execute()
 
 	create_religion(/datum/religion/chaplain)
+	create_religion(/datum/religion/pluvia)
 	setup_hud_objects()
 
 	create_characters() //Create player characters and transfer them

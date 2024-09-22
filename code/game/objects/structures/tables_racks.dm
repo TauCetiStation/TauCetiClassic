@@ -436,6 +436,7 @@
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
 	victim.log_combat(assailant, "face-slammed against [name]")
+	SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER,victim)
 
 	if(prob(30) && ishuman(victim))
 		var/mob/living/carbon/human/H = victim
@@ -734,7 +735,7 @@
 /*
  * reinforced glass table
  */
- 
+
 /obj/structure/table/rglass
 	name = "reinforced glass table"
 	desc = "A reinforced version of the glass table"
@@ -797,7 +798,7 @@
 		can_cut = HAS_TRAIT(D, TRAIT_DOUBLE_WIELDED)
 
 	if(!can_cut)
-		return ..()
+		return
 
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)

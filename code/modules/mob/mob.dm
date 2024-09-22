@@ -50,6 +50,7 @@
 	spawn()
 		if(client)
 			animate(client, color = null, time = 0)
+			hud_used.set_parallax(current_parallax)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
@@ -437,7 +438,6 @@
 
 	// New life, new quality.
 	client.prefs.selected_quality_name = null
-
 	M.key = key
 	M.name = M.key
 //	M.Login()	//wat
@@ -853,6 +853,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
 	updateDrugginesOverlay()
+	SEND_SIGNAL(src, COMSIG_HUMAN_ON_ADJUST_DRUGINESS, src)
 
 /mob/proc/setDrugginess(amount)
 	druggy = max(amount, 0)

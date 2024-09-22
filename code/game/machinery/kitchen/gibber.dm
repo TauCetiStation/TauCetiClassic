@@ -207,7 +207,7 @@
 
 /obj/machinery/gibber/proc/gib_mob(mob/user)
 	occupant.log_combat(user, "gibbed via [name]")
-
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, occupant)
 	occupant.ghostize(bancheck = TRUE)
 
 	occupant.harvest()

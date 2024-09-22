@@ -135,4 +135,3 @@
 		uniform = /obj/item/clothing/under/syndicate/tacticool
 		uniform_f = /obj/item/clothing/under/syndicate/tacticool
 		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
-

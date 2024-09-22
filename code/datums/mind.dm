@@ -63,6 +63,11 @@
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 	var/creation_roundtime
 
+	// Pluvia sochial credit system
+	var/social_credit = 0
+	var/haram_point = 0
+	var/blessed = 0
+
 	var/willpower_amount = 1
 	var/possible_willpower_effects = list(/datum/willpower_effect/painkiller, /datum/willpower_effect/skills, /datum/willpower_effect/nutrition, /datum/willpower_effect/fat)
 	var/willpower_effects = list()
@@ -782,6 +787,13 @@
 	..()
 	if(!mind.assigned_role)
 		mind.assigned_role = "default"	//default
+	 //Pluvia social credit system
+	if(mind.assigned_job.title in list("Captain","Head of Security","Warden","Security Officer","Security Cadet","Blueshield Officer","Internal Affairs Agent"))
+		mind.social_credit = 0
+	else
+		mind.social_credit = species.start_social_credit
+	if(ispluvian(src))
+		global.pluvia_religion.add_member(src, HOLY_ROLE_PRIEST)
 
 //slime
 /mob/living/carbon/slime/mind_initialize()

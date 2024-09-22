@@ -104,7 +104,7 @@
 		borer.detatch() //Should remove borer if the brain is removed - RR
 
 	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
-
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, target)
 	var/obj/item/brain/B
 	B = new(target.loc)
 	B.transfer_identity(target)

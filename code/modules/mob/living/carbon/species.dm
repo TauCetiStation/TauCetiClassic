@@ -34,6 +34,7 @@
 	var/speed_mod =  0                                   // How fast or slow specific specie.
 	var/speed_mod_no_shoes = 0                           // Speed ​​modifier without shoes.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
+	var/start_social_credit = 1                       // Pluvia social credit heaven system
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
@@ -366,6 +367,81 @@
 	max_age = 85
 
 	is_common = TRUE
+
+/datum/species/pluvian
+	name = PLUVIAN
+	icobase = 'icons/mob/human_races/r_pluvian.dmi'
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
+	language = LANGUAGE_SOLCOMMON
+	primitive = /mob/living/carbon/monkey/pluvian
+	unarmed_type = /datum/unarmed_attack/punch
+	dietflags = DIET_OMNI
+	start_social_credit = 0
+
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,HAS_HAIR = TRUE
+	,FACEHUGGABLE = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,IS_SOCIAL = TRUE
+	)
+
+	min_age = 25
+	max_age = 85
+
+	is_common = TRUE
+
+/datum/species/pluvian/on_loose(mob/living/M, new_species)
+	global.pluvia_religion.remove_member(M, HOLY_ROLE_PRIEST)
+	..()
+
+/datum/species/pluvian/handle_death(mob/living/carbon/human/H, gibbed)
+	..()
+	H.check_pluvian_credits()
+
+/datum/species/pluvian_spirit
+	name = PLUVIAN_SPIRIT
+	icobase = 'icons/mob/human_races/r_pluvian.dmi'
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
+	language = LANGUAGE_SOLCOMMON
+	unarmed_type = /datum/unarmed_attack/punch
+	dietflags = 0
+	brute_mod = 0
+	burn_mod = 0
+	oxy_mod = 0
+	tox_mod = 0
+	clone_mod = 0
+	start_social_credit = 0
+	eyes = "pluvia_ms_s"
+	eyes_glowing = TRUE
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
+	,NO_SCAN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,NO_FINGERPRINT = TRUE
+	,NO_BLOOD_TRAILS = TRUE
+	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
+	,NO_EMBED = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_EMOTION = TRUE
+	,NO_VOMIT = TRUE
+	,NO_FAT = TRUE
+	,HAS_UNDERWEAR = TRUE
+	)
+	min_age = 25
+	max_age = 85
+
+	warning_low_pressure = -1
+	hazard_low_pressure = -1
 
 /datum/species/unathi
 	name = UNATHI
@@ -746,6 +822,7 @@
 	dietflags = 0		//Diona regenerate nutrition in light, no diet necessary
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	primitive = /mob/living/carbon/monkey/diona
+	start_social_credit = 3
 
 	siemens_coefficient = 0.5 // Because they are plants and stuff.
 
@@ -929,6 +1006,7 @@
 	language = "Rootspeak"
 	unarmed_type = /datum/unarmed_attack/diona/podman
 	primitive = /mob/living/carbon/monkey/diona/podman
+	start_social_credit = 0 // too young to vote
 
 	// Because they are less thicc than dionaea.
 	siemens_coefficient = 0.75
@@ -999,6 +1077,7 @@
 		/mob/living/carbon/human/proc/IPC_toggle_screen,
 		/mob/living/carbon/human/proc/IPC_display_text)
 	dietflags = 0		//IPCs can't eat, so no diet
+	start_social_credit = 0 // have no soul
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
 	eyes = null
@@ -1032,6 +1111,7 @@
 	siemens_coefficient = 1.3 // ROBUTT.
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
+
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -1178,6 +1258,7 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 	dietflags = DIET_ALL
+	start_social_credit = 0 //cursed cant vote
 	flesh_color = "#c0c0c0"
 
 	brute_mod = 2
@@ -1435,6 +1516,8 @@
 
 	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
 	bodypart_butcher_results = list(/obj/item/weapon/ore/slag = 1)
+
+	start_social_credit = 0
 
 	flags = list(
 		NO_BLOOD = TRUE,
@@ -1773,6 +1856,7 @@
 	brute_mod = 2
 	burn_mod = 2
 	speed_mod = 2
+	start_social_credit = 0
 
 	has_bodypart = list(
 		 BP_CHEST = /obj/item/organ/external/chest/homunculus

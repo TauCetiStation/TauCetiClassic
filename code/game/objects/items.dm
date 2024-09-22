@@ -846,6 +846,7 @@
 	playsound(M, 'sound/items/tools/screwdriver-stab.ogg', VOL_EFFECTS_MASTER)
 
 	M.log_combat(user, "eyestabbed with [name]")
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 
 	add_fingerprint(user)
 	if(M != user)

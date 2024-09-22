@@ -393,12 +393,16 @@
 		"<span class='userdanger'>[user == M ? "You tie" : "[user] ties"] \the [src] over your neck!</span>")
 	playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
 	message_admins("[key_name_admin(M)] was hanged by [key_name(user)]. [ADMIN_JMP(M)]")
+
+	if(M == user)
+		SEND_SIGNAL(M, COMSIG_HUMAN_ON_SUICIDE, src)
 	for(var/alert in M.alerts)
 		var/atom/movable/screen/alert/A = M.alerts[alert]
 		if(A.master.icon_state == "noose") // our alert icon is terrible, let's build a new one
 			A.cut_overlays()
 			A.add_overlay(image(icon, "noose"))
 			A.add_overlay(image(icon, "noose_overlay"))
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 	return TRUE
 
 /obj/structure/stool/bed/chair/noose/process()

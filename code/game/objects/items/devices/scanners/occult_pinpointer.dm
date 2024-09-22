@@ -19,6 +19,7 @@
 		START_PROCESSING(SSobj, src)
 	else
 		icon_state = "locoff"
+		target = null
 		to_chat(usr, "<span class='notice'>You deactivate the [name]</span>")
 		STOP_PROCESSING(SSobj, src)
 	active = !active
@@ -42,10 +43,16 @@
 	if(!active)
 		return
 	if(!target)
+		var/list/wisp_list = list()
+		for(var/mob/living/simple_animal/ancestor_wisp/W in living_list)
+			wisp_list += W
+		target = pick(wisp_list)
+		message_admins("[target]")
+	if(!target)
 		target = locate(target_type)
-		if(!target)
-			icon_state = "locnull"
-			return
+	if(!target)
+		icon_state = "locnull"
+		return
 	set_dir(get_dir(src,target))
 	if(get_dist(src,target))
 		icon_state = "locon"
