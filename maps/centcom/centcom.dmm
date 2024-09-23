@@ -13598,6 +13598,9 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
+/obj/machinery/atm{
+	pixel_y = 28
+	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "aEA" = (
@@ -22724,10 +22727,10 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
-	id = "smindicate";
-	name = "Security Door";
 	density = 0;
 	icon_state = "pdoor0";
+	id = "smindicate";
+	name = "Security Door";
 	opacity = 0
 	},
 /obj/machinery/door/airlock/external{
@@ -22752,10 +22755,10 @@
 /area/shuttle/escape/centcom)
 "bRb" = (
 /obj/machinery/door/poddoor{
-	id = "smindicate";
-	name = "Security Door";
 	density = 0;
 	icon_state = "pdoor0";
+	id = "smindicate";
+	name = "Security Door";
 	opacity = 0
 	},
 /obj/machinery/door/airlock/external{

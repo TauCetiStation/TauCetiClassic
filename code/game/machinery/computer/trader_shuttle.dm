@@ -23,7 +23,7 @@
 
 	if(docked)
 		if(world.time < lastMove + TRADER_SHUTTLE_COOLDOWN)
-			dat += "<ul><li>Секунд до готовности двигателя к полёту: <b>[round((last_move + TRADER_SHUTTLE_COOLDOWN - world.time) * 0.1)]</b></li>"
+			dat += "<ul><li>Секунд до готовности двигателя к полёту: <b>[round((lastMove + TRADER_SHUTTLE_COOLDOWN - world.time) * 0.1)]</b></li>"
 		else
 			dat += "<ul><li>Двигатель готов к полёту</li>"
 		if(is_centcom_level(z))

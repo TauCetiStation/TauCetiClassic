@@ -762,6 +762,7 @@
 	time_while_available = 4 MINUTES
 	var/money = 100
 	var/outfit
+	var/skillset
 
 /datum/spawner/space_trader/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
@@ -778,6 +779,8 @@
 
 /datum/spawner/space_trader/proc/equip(mob/living/carbon/human/H)
 	H.equipOutfit(outfit)
+	H.mind.skills.add_available_skillset(skillset)
+	H.mind.skills.maximize_active_skills()
 
 	var/datum/money_account/MA = create_random_account_and_store_in_mind(H, money)
 	var/obj/item/weapon/card/id/cargo/C = new(H)
@@ -802,12 +805,14 @@
 	spawn_landmark_name = "Space Trader Dealer"
 	money = 200
 	outfit = /datum/outfit/space_trader/dealer
+	skillset = /datum/skillset/quartermaster
 
 /datum/spawner/space_trader/guard
 	name = "Космоторговец охранник"
 	desc = "ЧОПовец, нанятый барыгой для охраны судна и товара на нём от станционных воришек и космических пиратов."
 	spawn_landmark_name = "Space Trader Guard"
 	outfit = /datum/outfit/space_trader/guard
+	skillset = /datum/skillset/officer
 
 /datum/spawner/space_trader/porter
 	name = "Космоторговец посыльный"
@@ -815,6 +820,7 @@
 	spawn_landmark_name = "Space Trader Porter"
 	money = 20
 	outfit = /datum/outfit/space_trader/porter
+	skillset = /datum/skillset/cargotech
 
 /datum/spawner/space_trader/porter/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
