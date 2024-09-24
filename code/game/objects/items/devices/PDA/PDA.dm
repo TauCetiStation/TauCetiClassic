@@ -84,6 +84,9 @@
 
 	var/datum/music_player/chiptune_player
 
+	var/world_state = FALSE
+	var/overlay_suffix = ""
+
 /datum/action/item_action/hands_free/toggle_pda_light
 	name = "Toggle light"
 
@@ -930,6 +933,7 @@
 				if (cartridge.radio)
 					cartridge.radio.hostpda = null
 				cartridge = null
+				update_icon()
 
 //MENU FUNCTIONS===================================
 
@@ -1414,25 +1418,19 @@
 	..()
 	cut_overlays()
 
-	var/overlay_suffix = ""
-	if(findtext(icon_state, "_world"))
-		overlay_suffix = "_world"
-	if(newmessage && !findtext(icon_state, "_world"))
+	world_state = (icon_state == item_state_world)
+	overlay_suffix = world_state ? "_world" : ""
+
+	if(newmessage && icon_state != item_state_world)
 		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 	if(id)
 		var/id_overlay = get_id_overlay(id)
 		if(id_overlay)
-			if(findtext(id_overlay, "_world", max(0, length(id_overlay) - length("_world"))))
-				id_overlay = copytext(id_overlay, 1, length(id_overlay) - length("_world") + 1)
 			add_overlay(image('icons/obj/pda.dmi', id_overlay + overlay_suffix))
 	if(pen)
 		add_overlay(image('icons/obj/pda.dmi', "pen_pda" + overlay_suffix))
 	if(cartridge)
 		add_overlay(image('icons/obj/pda.dmi', "cart_pda" + overlay_suffix))
-
-/obj/item/device/pda/mob_pickup(mob/user, hand_index)
-	. = ..()
-	update_icon()
 
 /obj/item/device/pda/dropped(mob/user)
 	. = ..()
@@ -1445,7 +1443,10 @@
 /obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
 	if(!I)
 		return
-	var/icon_name = I.icon_state + (suffix || "")
+	var/icon_name = I.icon_state
+	var/suffix_pos = findtext(icon_name, overlay_suffix)
+	if(suffix_pos)
+		icon_name = copytext(icon_name, 1, suffix_pos)
 	if(icon_name in ALLOWED_ID_OVERLAYS)
 		return icon_name
 	return "id"
@@ -1731,6 +1732,7 @@
 		cartridge = I
 		user.drop_from_inventory(I, src)
 		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
+		update_icon()
 		nanomanager.update_uis(src) // update all UIs attached to src
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
