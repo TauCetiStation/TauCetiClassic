@@ -422,11 +422,11 @@
 	switch(src.aistate)
 		if(STATE_DEFAULT)
 			if(SSshuttle.location==0 && !SSshuttle.online)
-				dat += "<BR><A HREF='?src=\ref[src];operation=ai-callshuttle'>Вызвать аварийный шаттл</A>"
+				dat += "<BR><A HREF='?src=\ref[src];operation=ai-callshuttle'>Вызвать экстренный шаттл</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=ai-messagelist'>Список сообщений</A>"
 			dat += "<BR><A HREF='?src=\ref[src];operation=ai-status'>Установить текст на дисплеях</A>"
 		if(STATE_CALLSHUTTLE)
-			dat += "Вы уверены, что хотите вызвать аварийный шаттл? <A HREF='?src=\ref[src];operation=ai-callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=ai-main'>НЕТ</A>"
+			dat += "Вы уверены, что хотите вызвать экстренный шаттл? <A HREF='?src=\ref[src];operation=ai-callshuttle2'>ДА</A> | <A HREF='?src=\ref[src];operation=ai-main'>НЕТ</A>"
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
