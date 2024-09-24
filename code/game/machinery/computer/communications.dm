@@ -375,7 +375,7 @@
 			if (src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
 				if (src.authenticated)
-					dat += "<BR><BR><A HREF='?src=\ref[src];operation=delmessage'>Delete"
+					dat += "<BR><BR><A HREF='?src=\ref[src];operation=delmessage'>Удалить"
 			else
 				src.state = STATE_MESSAGELIST
 				attack_hand(user)
