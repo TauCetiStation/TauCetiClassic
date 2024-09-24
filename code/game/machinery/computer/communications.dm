@@ -473,7 +473,8 @@
 		return
 
 	if(world.time < 6000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
-		to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [round((6000-world.time)/600)] минут до повторного вызова.")
+		var/time_to_stay = round((6000-world.time)/600)
+		to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [time_to_stay] [pluralize_russian(time_to_stay, "минута", "минуты", "минут")] до повторного вызова.")
 		return
 
 	if(SSshuttle.direction == -1)
@@ -517,7 +518,8 @@
 
 
 		if(world.time < 54000) // 30 minute grace period to let the game get going
-			to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [round((54000-world.time)/600)] минут до повторного вызова.")//may need to change "/600"
+			var/time_to_stay = round((54000-world.time)/600)
+			to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [time_to_stay] [pluralize_russian(time_to_stay, "минута", "минуты", "минут")] до повторного вызова.")//may need to change "/600"
 			return
 
 	SSshuttle.shuttlealert(1)
