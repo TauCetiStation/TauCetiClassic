@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 51
+#define SAVEFILE_VERSION_MAX 52
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -277,8 +277,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(player_alt_titles && (player_alt_titles["Librarian"] in list("Journalist")))
 			player_alt_titles -= "Librarian"
 
-	if(current_version < 51)
-		var/static/list/pre_51_hairstyles_to_modern_ones = list (
+	if(current_version < 52)
+		var/static/list/pre_52_hairstyles_to_modern_ones = list (
 			"Bald" = "Bald",
 			"Short Hair" = "Arnold - Short",
 			"Short Hair 2" = "Arnold - Short",
