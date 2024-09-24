@@ -517,7 +517,7 @@
 
 
 		if(world.time < 54000) // 30 minute grace period to let the game get going
-			to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [round((54000-world.time)/600)] минут до повторного вызова.")//may need to change "/600"
+			to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [round((54000-world.time)/600)] [pluralize_russian(minute, "минута", "минуты", "минут")] до повторного вызова.")//may need to change "/600"
 			return
 
 	SSshuttle.shuttlealert(1)
