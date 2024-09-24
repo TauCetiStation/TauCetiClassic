@@ -463,8 +463,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			"Spicy" = "Spicy - Short",
 			"Piggy" = "Piggy - Short",
 		)
-		if (pre_51_hairstyles_to_modern_ones[h_style])
-			h_style = pre_51_hairstyles_to_modern_ones[h_style]
+		if (pre_52_hairstyles_to_modern_ones[h_style])
+			h_style = pre_52_hairstyles_to_modern_ones[h_style]
 
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
