@@ -183,9 +183,6 @@
 		if((0 < height) && (height <= heights_list.len))
 			H.height = heights_list[height]
 
-		H.apply_recolor()
-		H.update_body()
-		H.update_hair()
 		H.regenerate_icons()
 
 // Used below, simple injection modifier.

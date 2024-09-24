@@ -1228,7 +1228,7 @@ FIRE ALARM
 			to_chat(user, "Маленький индикатор указывает на [msg] уровень тревоги.")
 		if("delta")
 			msg = "<font color='purple'><b>дельта</b></font>"
-			to_chat(user, "Маленький индикатор указывает об активированом коде [msg].")
+			to_chat(user, "Маленький индикатор указывает об активированном коде [msg].")
 
 
 /obj/machinery/firealarm/atom_init(mapload, dir, building)

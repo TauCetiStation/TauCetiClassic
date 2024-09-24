@@ -24,7 +24,6 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.setHalLoss(0)
-		H.shock_stage = 0
 
 	feedback_add_details("changeling_powers","UNS")
 	return TRUE

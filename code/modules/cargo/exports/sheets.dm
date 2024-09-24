@@ -96,11 +96,16 @@
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
-// Wood. Quite expensive in the grim and dark 26 century.
+// Wood. Quite expensive in the grim and dark future.
 /datum/export/stack/wood
 	cost = 15
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/wood)
+
+/datum/export/stack/carpet
+	cost = 10
+	unit_name = "carpet"
+	export_types = list(/obj/item/stack/tile/carpet)
 
 // Cardboard. Cheap.
 /datum/export/stack/cardboard
@@ -138,7 +143,7 @@
 	export_types = list(/obj/item/stack/sheet/mineral/diamond)
 	message = "of diamonds"
 
-// Phoron. The oil of 26 century. The reason why you are here.
+// Phoron. The oil of future. The reason why you are here.
 /datum/export/stack/phoron
 	cost = 70
 	export_types = list(/obj/item/stack/sheet/mineral/phoron)
@@ -149,7 +154,7 @@
 	if(emag) // Syndicate pays you more for the plasma.
 		. = round(. * 1.5)
 
-// Refined scrap. The coal of 26 century. The reason why you are here.
+// Refined scrap. The coal of future. The reason why you are here.
 /datum/export/stack/scrap
 	cost = 35
 	export_types = list(/obj/item/stack/sheet/refined_scrap)
