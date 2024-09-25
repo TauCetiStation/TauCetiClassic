@@ -82,11 +82,13 @@
 
 /datum/surgery_step/organ_manipulation/remove
 	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
 	)
 
-	min_duration = 50
-	max_duration = 50
+	min_duration = 110
+	max_duration = 150
 
 /datum/surgery_step/organ_manipulation/remove/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
@@ -105,16 +107,21 @@
 
 /datum/surgery_step/organ_manipulation/remove/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	var/obj/item/organ/internal/cyberimp/chest/nutriment/pump = target.get_organ_slot("stomach")
 	if (BP.bodypart_organs.len)
 		var/list/embed_organs = list()
 		for(var/embed_organ in BP.bodypart_organs)
 			embed_organs += embed_organ
 		for(var/atom/embed_organ as anything in embed_organs)
 			embed_organs[embed_organ] = image(icon = embed_organ.icon, icon_state = embed_organ.icon_state)
+		if(pump)
+			embed_organs += pump
+		for(pump as anything in embed_organs)
+			embed_organs[pump] = image(icon = pump.icon, icon_state = pump.icon_state)
 		var/choosen_organ = show_radial_menu(user, target, embed_organs, radius = 50, require_near = TRUE, tooltips = TRUE)
 		if(!choosen_organ)
-			user.visible_message("<span class='notice'>Error.</span>", \
-					"<span class='notice'>Error.</span>" )
+			user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
+		"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>")
 			return
 		var/obj/item/organ/internal/I = choosen_organ
 		I.status |= ORGAN_CUT_AWAY

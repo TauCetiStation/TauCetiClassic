@@ -22,7 +22,9 @@
 
 /datum/surgery_step/gender_reassignment/reshape_genitals
 	allowed_tools = list(
-	/obj/item/weapon/FixOVein = 100
+	/obj/item/weapon/retractor = 100, 	\
+	/obj/item/weapon/kitchen/utensil/fork = 75,	\
+	/obj/item/weapon/screwdriver = 50
 	)
 
 	min_duration = 110

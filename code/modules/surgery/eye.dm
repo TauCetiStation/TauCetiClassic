@@ -159,8 +159,8 @@
 /datum/surgery_step/eye/manipulation/place
 	allowed_tools = list(/obj/item/organ/internal = 100)
 
-	min_duration = 50
-	max_duration = 50
+	min_duration = 110
+	max_duration = 150
 
 
 /datum/surgery_step/eye/manipulation/place/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -221,8 +221,8 @@
 	priority = 2
 	allowed_tools = list(/obj/item/organ/internal/eyes = 100)
 
-	min_duration = 50
-	max_duration = 50
+	min_duration = 110
+	max_duration = 150
 
 /datum/surgery_step/organ_manipulation/place_eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(istype(target,/mob/living/carbon/human))
@@ -281,11 +281,13 @@
 
 /datum/surgery_step/eye/manipulation/remove
 	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100
+	/obj/item/weapon/scalpel = 100,		\
+	/obj/item/weapon/kitchenknife = 75,	\
+	/obj/item/weapon/shard = 50, 		\
 	)
 
-	min_duration = 50
-	max_duration = 50
+	min_duration = 110
+	max_duration = 150
 
 /datum/surgery_step/eye/manipulation/remove/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return ..() && target.op_stage.eyes == 2
@@ -311,14 +313,20 @@
 			embed_organs[embed_organ] = image(icon = embed_organ.icon, icon_state = embed_organ.icon_state)
 		if(eyes)
 			embed_organs += eyes
+		for(eyes as anything in embed_organs)
+			embed_organs[eyes] = image(icon = eyes.icon, icon_state = eyes.icon_state)
 		if(hud)
 			embed_organs += hud
+		for(hud as anything in embed_organs)
+			embed_organs[hud] = image(icon = hud.icon, icon_state = hud.icon_state)
 		if(shield)
 			embed_organs += shield
+		for(shield as anything in embed_organs)
+			embed_organs[shield] = image(icon = shield.icon, icon_state = shield.icon_state)
 		var/choosen_organ = show_radial_menu(user, target, embed_organs, radius = 50, require_near = TRUE, tooltips = TRUE)
 		if(!choosen_organ)
-			user.visible_message("<span class='notice'>Error.</span>", \
-					"<span class='notice'>Error.</span>" )
+			user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
+		"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>")
 			return
 		var/obj/item/organ/internal/I = choosen_organ
 		I.status |= ORGAN_CUT_AWAY

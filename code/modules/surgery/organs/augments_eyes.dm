@@ -11,8 +11,9 @@
 	var/lighting_alpha = null
 	var/list/eye_colour = list(0,0,0)
 	var/list/old_eye_colour = list(0,0,0)
-	var/flash_protect = 0
 	var/aug_message = "Your vision is augmented!"
+
+	flash_protection_slots = list(O_AUG_EYES)
 
 /obj/item/organ/internal/cyberimp/eyes/proc/update_colour()
 	if(!owner)
@@ -53,16 +54,10 @@
 /obj/item/organ/internal/cyberimp/eyes/on_life()
 	..()
 	var/obj/item/organ/internal/cyberimp/eyes/IO = owner.organs_by_name[O_AUG_EYES]
-	var/obj/item/organ/internal/cyberimp/eyes/hud/huds = owner.organs_by_name[O_AUG_EYES]
 	owner.sight |= vision_flags
 	if(IO.lighting_alpha)
 		owner.set_lighting_alpha(min(IO.lighting_alpha))
-	if(huds.hud_types)
-		for(var/hud in huds.hud_types)
-			var/datum/atom_hud/H = global.huds[hud]
-			H.add_hud_to(owner)
-			for(var/parasit in owner.parasites)
-				H.add_hud_to(parasit)
+
 
 /obj/item/organ/internal/cyberimp/eyes/emp_act(severity)
 	if(!owner)
@@ -98,7 +93,7 @@
 	implant_color = "#FFCC00"
 	vision_flags = SEE_MOBS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	flash_protect = -1
+	flash_protection = FLASHES_AMPLIFIER
 	origin_tech = "materials=6;programming=4;biotech=5;magnets=5;syndicate=4"
 	aug_message = "You see prey everywhere you look..."
 
@@ -128,6 +123,15 @@
 				H.remove_hud_from(parasit)
 
 
+/obj/item/organ/internal/cyberimp/eyes/hud/on_life()
+	var/obj/item/organ/internal/cyberimp/eyes/hud/huds = owner.organs_by_name[O_AUG_EYES]
+	if(huds.hud_types)
+		for(var/hud in huds.hud_types)
+			var/datum/atom_hud/H = global.huds[hud]
+			H.add_hud_to(owner)
+			for(var/parasit in owner.parasites)
+				H.add_hud_to(parasit)
+
 /obj/item/organ/internal/cyberimp/eyes/hud/medical
 	name = "Medical HUD implant"
 	desc = "These cybernetic eye implants will display a medical HUD over everything you see."
@@ -154,7 +158,7 @@
 	slot = "eye_shield"
 	origin_tech = "materials=4;biotech=3"
 	implant_color = "#101010"
-	flash_protect = 2
+	flash_protection = FLASHES_FULL_PROTECTION
 	// Welding with thermals will still hurt your eyes a bit.
 
 /obj/item/organ/internal/cyberimp/eyes/shield/emp_act(severity)

@@ -3473,7 +3473,7 @@
 /area/awaymission/academy/academyaft)
 "jc" = (
 /obj/structure/table,
-/obj/item/brain{
+/obj/item/organ/internal/brain{
 	name = "The preserved brain of Harry Houdini"
 	},
 /turf/simulated/floor/airless{

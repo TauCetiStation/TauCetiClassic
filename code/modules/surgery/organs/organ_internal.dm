@@ -152,6 +152,7 @@
 
 /obj/item/organ/internal/heart
 	name = "heart"
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "heart-on"
 	cases = list("сердце", "сердца", "сердцу", "сердце", "сердцем", "сердце")
 	organ_tag = O_HEART
@@ -187,7 +188,6 @@
 
 /obj/item/organ/internal/heart/remove(mob/living/carbon/M, special = 0)
 	..()
-	heart_status = HEART_FAILURE
 	spawn(120)
 		beating = 0
 		update_icon()
@@ -213,6 +213,16 @@
 	var/pumping_rate = 5
 	var/bruised_loss = 3
 	requires_robotic_bodypart = TRUE
+
+	icon = 'icons/obj/device.dmi'
+	icon_state = "miniaturesuitcooler0"
+
+
+/obj/item/organ/internal/heart/ipc/update_icon()
+	if(beating)
+		icon_state = "miniaturesuitcooler0"
+	else
+		icon_state = "miniaturesuitcooler0"
 
 /obj/item/organ/internal/heart/ipc/process()
 	if(owner.nutrition < 1)
@@ -285,6 +295,9 @@
 	var/refrigerant_rate = 5
 	var/bruised_loss = 3
 	requires_robotic_bodypart = TRUE
+
+	icon = 'icons/obj/robot_component.dmi'
+	icon_state = "working"
 
 /obj/item/organ/internal/lungs/process()
 	..()
@@ -364,6 +377,8 @@
 	cases = list("аккумулятор", "аккумулятора", "аккумулятору", "аккумулятор", "аккумулятором", "аккумуляторе")
 	var/accumulator_warning = 0
 	requires_robotic_bodypart = TRUE
+	icon = 'icons/obj/power.dmi'
+	icon_state = "hpcell"
 
 /obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
@@ -499,6 +514,9 @@
 	var/next_warning = 0
 	requires_robotic_bodypart = TRUE
 
+	icon = 'icons/obj/robot_component.dmi'
+	icon_state = "analyser"
+
 /obj/item/organ/internal/kidneys/process()
 
 	..()
@@ -568,6 +586,28 @@
 	parent_bodypart = BP_CHEST
 	requires_robotic_bodypart = TRUE
 
+	icon = 'icons/obj/assemblies.dmi'
+	icon_state = "posibrain-occupied"
+
+/obj/item/organ/internal/brain/remove(var/mob/living/user,special = 0)
+
+	if(!owner) return ..() // Probably a redundant removal; just bail
+	var/obj/item/organ/internal/brain/B = src
+	if(!special)
+		var/mob/living/simple_animal/borer/borer = owner.has_brain_worms()
+
+		if(borer)
+			borer.detatch() //Should remove borer if the brain is removed - RR
+
+		B.transfer_identity(user)
+
+	if(istype(owner,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner
+		H.update_hair(1)
+	..()
+
+
+
 /obj/item/organ/internal/brain/abomination
 	name = "deformed brain"
 	cases = list("деформированный мозг", "деформированного мозга", "деформированному мозгу", "деформированный мозг", "деформированным мозгом", "деформированном мозге")
@@ -624,6 +664,9 @@
 	cases = list("камеры", "камер", "камерам", "камеры", "камерами", "камерах")
 	robotic = 2
 	requires_robotic_bodypart = TRUE
+
+	icon = 'icons/obj/robot_component.dmi'
+	icon_state = "camera"
 
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()
