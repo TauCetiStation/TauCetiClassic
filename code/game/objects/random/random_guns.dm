@@ -57,10 +57,10 @@
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/colt1911,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/silenced,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/silenced,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/peacemaker,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/detective,\
-						prob(5);/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal,\
+						prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/silenced/nonlethal,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver/syndie,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver,\
 						prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/deagle,\
