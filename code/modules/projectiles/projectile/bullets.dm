@@ -238,7 +238,7 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/a762
-	damage = 50
+	damage = 30
 	embed = 0
 
 /obj/item/projectile/bullet/incendiary
