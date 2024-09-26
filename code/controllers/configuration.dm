@@ -114,11 +114,11 @@ var/global/bridge_secret = null
 	//game_options.txt configs
 
 	var/health_threshold_softcrit = 0
-	var/health_threshold_crit = 0
+	var/health_threshold_crit = -50
 	var/health_threshold_dead = -100
 
 	var/organ_health_multiplier = 1
-	var/organ_regeneration_multiplier = 1
+	var/organ_regeneration_multiplier = 0.75
 
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
@@ -195,7 +195,7 @@ var/global/bridge_secret = null
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
-	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
+	var/craft_recipes_visibility = TRUE // Show all recipes (TRUE) or only these that have all required components around (FALSE) in craft menu.
 	var/nightshift = FALSE
 
 	var/list/maplist = list()

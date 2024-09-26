@@ -3,7 +3,7 @@
 // Maybe rename
 /datum/building_agent
 	var/name
-	var/atom/building_type
+	var/datum/building_type
 	var/favor_cost = 0
 	var/deconstruct_favor_cost = 0
 	var/piety_cost = 0
@@ -139,9 +139,14 @@
 /datum/building_agent/tech
 	var/icon
 	var/icon_state
-	var/researching = FALSE
+
+/datum/building_agent/tech/aspect
+	// base costs
+	favor_cost = 0
+	piety_cost = 100
 
 /datum/building_agent/tech/cult
+
 /datum/building_agent/tech/cult/memorize_rune
 	name = "Запомнить Руну"
 	icon = 'icons/obj/rune.dmi'
