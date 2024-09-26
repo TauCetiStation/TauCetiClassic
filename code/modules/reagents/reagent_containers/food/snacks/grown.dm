@@ -223,6 +223,7 @@
 	name = "cucumber"
 	desc = "Looks like a cucumber."
 	icon_state = "cucumber"
+	item_state_world = "cucumber_world"
 	potency = 15
 	filling_color = "#598157"
 
