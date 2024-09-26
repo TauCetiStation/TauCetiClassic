@@ -221,7 +221,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cucumber
 	seed_type = /obj/item/seeds/cucumberseed
 	name = "cucumber"
-	desc = "Looks like a cucumber."
+	cases = list("огурец", "огурца", "огурцу", "огурец", "огурцом", "огурце")
+	desc = "Выглядит как слащавый огурчик."
 	icon_state = "cucumber"
 	item_state_world = "cucumber_world"
 	potency = 15

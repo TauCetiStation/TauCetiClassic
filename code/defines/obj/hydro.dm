@@ -209,7 +209,8 @@
 
 /obj/item/seeds/cucumberseed
 	name = "pack of cucumber seeds"
-	desc = "These seeds grow into cucumbers."
+	cases = list("семена огурцов", "семян огурцов", "семенам огурцов", "семена огурцов", "семенами огурцов", "семенах огурцов")
+	desc = "Эти семена вырастают в огурцы."
 	icon_state = "seed-cucumber"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	species = "cucumber"
