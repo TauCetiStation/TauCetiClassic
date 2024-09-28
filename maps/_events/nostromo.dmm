@@ -475,12 +475,12 @@
 "cA" = (
 /obj/structure/closet,
 /obj/item/clothing/shoes/white,
-/obj/item/clothing/under/color/white,
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 5;
 	icon_state = "nostromo"
 	},
 /obj/effect/landmark/nostromo/random_loot,
+/obj/item/clothing/under/nostromo/blue,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "nostromo"
@@ -1492,12 +1492,12 @@
 "hS" = (
 /obj/structure/closet,
 /obj/item/clothing/shoes/white,
-/obj/item/clothing/under/color/white,
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 10;
 	icon_state = "nostromo"
 	},
 /obj/effect/landmark/nostromo/random_loot,
+/obj/item/clothing/under/nostromo/tropicspess,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "nostromo"
@@ -1964,13 +1964,13 @@
 "jC" = (
 /obj/structure/closet,
 /obj/item/clothing/shoes/white,
-/obj/item/clothing/under/pants/white,
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 6;
 	icon_state = "nostromo"
 	},
 /obj/effect/landmark/nostromo/random_loot,
 /obj/item/weapon/storage/pouch/medium_generic,
+/obj/item/clothing/under/nostromo/green,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "nostromo"
@@ -5895,12 +5895,12 @@
 "Bg" = (
 /obj/structure/closet,
 /obj/item/clothing/shoes/white,
-/obj/item/clothing/under/pants/white,
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 10;
 	icon_state = "nostromo"
 	},
 /obj/effect/landmark/nostromo/random_loot,
+/obj/item/clothing/under/nostromo/white,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "nostromo"
@@ -5909,12 +5909,12 @@
 "Bi" = (
 /obj/structure/closet,
 /obj/item/clothing/shoes/white,
-/obj/item/clothing/under/color/white,
 /obj/effect/decal/turf_decal/alpha/black{
 	dir = 9;
 	icon_state = "nostromo"
 	},
 /obj/effect/landmark/nostromo/random_loot,
+/obj/item/clothing/under/nostromo/black,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "nostromo"
@@ -9333,6 +9333,12 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/chocolate,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/cheese,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/mushroom,
+/obj/item/weapon/reagent_containers/food/snacks/soup/tomatosoup,
+/obj/item/weapon/reagent_containers/food/snacks/soup/meatballsoup,
+/obj/item/weapon/reagent_containers/food/snacks/tofukabob,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "nostromo"

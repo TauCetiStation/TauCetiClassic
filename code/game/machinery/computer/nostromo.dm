@@ -39,7 +39,7 @@
 		to_chat(usr, "<span class='warning'>Для эвакуации необходимо запустить систему самоуничтожения корабля!</span>")
 		return FALSE
 
-	if(!isrolebytype(/datum/role/nostromo_android, usr) && MM.alien && MM.alien in orange(7, src))
+	if(!isrolebytype(/datum/role/nostromo_android, usr) && MM.alien && (MM.alien.stat != DEAD) && (MM.alien in orange(7, src)))
 		to_chat(usr, "<span class='warning'>МЫ НЕ МОЖЕМ УЛЕТЕТЬ, ПОКА КСЕНОМОРФ С НАМИ НА ШАТТЛЕ!</span>")
 		return FALSE
 

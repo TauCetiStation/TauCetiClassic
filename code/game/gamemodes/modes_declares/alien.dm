@@ -4,7 +4,6 @@
 
 	factions_allowed = list(
 		/datum/faction/alien,
-		/datum/faction/nostromo_android,
 		/datum/faction/nostromo_crew,
 		/datum/faction/nostromo_cat)
 

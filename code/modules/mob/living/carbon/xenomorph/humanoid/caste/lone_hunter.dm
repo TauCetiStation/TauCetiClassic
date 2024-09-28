@@ -269,7 +269,6 @@
 /datum/action/innate/alien/eat_corpse
 	name = "Съесть тело."
 	button_icon_state = "eat_corpse"
-	cooldown = 3 MINUTE
 
 /datum/action/innate/alien/eat_corpse/Grant(mob/T)
 	if(!isxenolonehunter(T))
@@ -281,7 +280,6 @@
 	var/mob/living/carbon/xenomorph/humanoid/hunter/lone/L = owner
 	if(L)
 		L.eat_corpse()
-		StartCooldown()
 
 //		REGENERATION
 /datum/action/innate/alien/regeneration
@@ -344,7 +342,7 @@
 	owner.SetStunned(0)
 	owner.SetWeakened(0)
 	owner.speed -= 1
-	owner.fire_stacks = 0
+	owner.ExtinguishMob()
 	. = ..()
 
 /datum/status_effect/alien_adrenaline/on_remove()

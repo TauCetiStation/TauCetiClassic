@@ -222,7 +222,9 @@
 	set category = "Event"
 	set name = "Alien: SMES Stability"
 	var/datum/map_module/alien/MM = SSmapping.get_map_module_by_name(MAP_MODULE_ALIEN)
-	MM.smes.stability = input("Какое значение стабильности установить СМЕСу?", "Значение", MM.smes.stability) as num|null
+	var/stability = input("Какое значение стабильности установить СМЕСу?", "Значение", MM.smes.stability) as num|null
+	if(stability)
+		MM.smes.stability = stability
 
 /////////////////////////////////////////////////////////////////////////////////////
 //			CHANGE SHIP COURSE
