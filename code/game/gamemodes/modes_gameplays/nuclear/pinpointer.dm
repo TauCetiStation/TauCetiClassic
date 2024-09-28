@@ -315,6 +315,7 @@
 
 
 /obj/item/weapon/pinpointer/nostromo
+	icon_state = "n_pinoff"
 	mode = SEARCH_FOR_OBJECT
 	var/datum/map_module/alien/MM = null
 
@@ -341,6 +342,8 @@
 		to_chat(user, "<span class='warning'>The target is missing</span>")
 		return
 	..()
+	if(!active)
+		icon_state = "n_pinoff"
 
 /obj/item/weapon/pinpointer/nostromo/process()
 	if(!active)
@@ -349,18 +352,18 @@
 	if(isxenolonehunter(target))
 		var/mob/living/carbon/xenomorph/humanoid/hunter/H = target
 		if(H.invisible)
-			icon_state = "pinonnull"
+			icon_state = "n_pinonnull"
 			return
 	set_dir(get_dir(src, target))
 	var/turf/self_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
 	switch(get_dist(target_turf, self_turf))
 		if(1 to 6)
-			icon_state = "pinonalert"
+			icon_state = "n_pinonalert"
 		if(7 to 20)
-			icon_state = "pinonfar"
+			icon_state = "n_pinon"
 		if(21 to INFINITY)
-			icon_state = "pinonnull"
+			icon_state = "n_pinonnull"
 
 #undef SEARCH_FOR_DISK
 #undef SEARCH_FOR_OBJECT

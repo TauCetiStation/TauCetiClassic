@@ -1,6 +1,7 @@
 /datum/outfit/nostromo
 	name = "Nostromo Outfit"
 	uniform = /obj/item/clothing/under/nostromo/white
+	shoes = /obj/item/clothing/shoes/white
 
 /datum/outfit/nostromo/Arthur_Dallas
 	name = "Nostromo Arthur Dallas"

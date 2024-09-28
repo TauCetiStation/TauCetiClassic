@@ -728,6 +728,7 @@
 	icon_state = "leathjacket"
 	item_state = "leathjacket"
 	item_state_world = "leathjacket_w"
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0)
 	var/open = TRUE
 
 /obj/item/clothing/suit/nostromo/leathjacket/verb/toggle()

@@ -1,64 +1,37 @@
 #define JOB_MODIFICATION_MAP_NAME "Nostromo (Alien)"
 
+/datum/job/assistant/New()
+	..()
+	MAP_JOB_CHECK
+	title = "Crewmate"
+	alt_titles = list()
+	total_positions = 6
+	spawn_positions = 6
+	access = list(access_maint_tunnels)
+	skillsets = list("Crewmate" = /datum/skillset/jack_of_all_trades)
+	outfit = /datum/outfit/nostromo
+
 /datum/job/captain/New()
 	..()
 	MAP_JOB_CHECK
 	access = list(access_maint_tunnels, access_captain)
 	minimal_player_ingame_minutes = 1200
-	skillsets = list("Captain" = /datum/skillset/falcon/captain)
-	outfit = /datum/outfit/nostromo
-
-/datum/job/doctor/New()
-	..()
-	MAP_JOB_CHECK
-	access = list(access_maint_tunnels, access_medical)
-	total_positions = 2
-	spawn_positions = 2
-	alt_titles = list()
-	minimal_player_ingame_minutes = 300
-	supervisors = "the captain"
-	skillsets = list("Medical Doctor" = /datum/skillset/falcon/doctor)
-	outfit = /datum/outfit/nostromo
-
-/datum/job/engineer/New()
-	..()
-	MAP_JOB_CHECK
-	title = "Engineer"
-	access = list(access_maint_tunnels, access_engine)
-	total_positions = 2
-	spawn_positions = 2
-	alt_titles = list()
-	minimal_player_ingame_minutes = 300
-	supervisors = "the captain"
-	skillsets = list("Engineer" = /datum/skillset/falcon/engineer)
-	outfit = /datum/outfit/nostromo
-
-/datum/job/blueshield/New()
-	..()
-	MAP_JOB_CHECK
-	title = "Pilot"
-	access = list(access_maint_tunnels, access_blueshield)
-	total_positions = 1
-	spawn_positions = 1
-	alt_titles = list()
-	supervisors = "the captain"
-	skillsets = list("Pilot" = /datum/skillset/falcon/officer)
-	outfit = /datum/outfit/nostromo
-
-/datum/job/cargo_tech/New()
-	..()
-	MAP_JOB_CHECK
-	access = list(access_maint_tunnels, access_cargo)
-	total_positions = 1
-	spawn_positions = 1
-	minimal_player_ingame_minutes = 300
-	supervisors = "the captain"
-	skillsets = list("Cargo Technician" = /datum/skillset/falcon/quartermaster)
-	outfit = /datum/outfit/nostromo
+	skillsets = list("Captain" = /datum/skillset/jack_of_all_trades)
+	outfit = /datum/outfit/nostromo/Arthur_Dallas
 
 // ONLY HUMAN CAN PLAY THIS IVENT XENOSI SOSAAAAT
 /datum/job/special_species_check(datum/species/S)
 	return S.name == HUMAN
+
+MAP_REMOVE_JOB(cargo_tech)
+
+MAP_REMOVE_JOB(doctor)
+
+MAP_REMOVE_JOB(blueshield)
+
+MAP_REMOVE_JOB(engineer)
+
+MAP_REMOVE_JOB(chief_engineer)
 
 MAP_REMOVE_JOB(chief_engineer)
 
@@ -135,7 +108,5 @@ MAP_REMOVE_JOB(roboticist)
 MAP_REMOVE_JOB(warden)
 
 MAP_REMOVE_JOB(forensic)
-
-MAP_REMOVE_JOB(assistant)
 
 #undef JOB_MODIFICATION_MAP_NAME

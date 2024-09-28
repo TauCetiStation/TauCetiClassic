@@ -48,7 +48,6 @@
 	var/datum/faction/nostromo_crew/crew_faction = null
 
 	var/list/crew_outfit = list(
-		/datum/outfit/nostromo/Arthur_Dallas,
 		/datum/outfit/nostromo/Thomas_Kane,
 		/datum/outfit/nostromo/Ellen_Ripley,
 		/datum/outfit/nostromo/Ash,
@@ -66,6 +65,7 @@
 		/obj/item/stack/sheet/cloth/three,
 		/obj/item/weapon/grenade/chem_grenade/antiweed,
 		/obj/item/weapon/kitchenknife/combat,
+		/obj/item/weapon/storage/pouch/medium_generic,
 		/obj/item/weapon/storage/toolbox/mechanical)
 
 /datum/map_module/alien/New()
@@ -87,10 +87,15 @@
 /datum/map_module/alien/proc/equip(mob/living/carbon/human/crewmate)
 	for(var/item in crewmate.get_equipped_items())
 		qdel(item)
-	crewmate.equipOutfit(pick_n_take(crew_outfit)) // random outfit
+	if(crewmate.job == "Captain")
+		crewmate.equipOutfit(/datum/outfit/nostromo/Arthur_Dallas)
+	else
+		crewmate.equipOutfit(pick_n_take(crew_outfit)) // random outfit
 	var/obj/item/weapon/card/id/C = new(crewmate)
 	C.assign(crewmate.real_name) // no job on card
-	C.access = crewmate.mind.assigned_job.get_access()
+	C.access = list(access_maint_tunnels)
+	if(crewmate.job == "Captain")
+		C.access += access_captain
 	crewmate.equip_or_collect(C, SLOT_WEAR_ID)
 
 /////////////////////////////////////////////////////////////////////////////////////

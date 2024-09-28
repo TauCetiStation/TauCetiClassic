@@ -88,9 +88,9 @@
 	UnregisterSignal(crewmate, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING))
 	dead_crew++
 	MM.deadcrew_ratio = dead_crew / alltime_crew * 100
-	if(dead_crew == 2)
+	if(MM.deadcrew_ratio == 20)
 		MM.open_cargo()
-	if(dead_crew == 5)
+	if(MM.deadcrew_ratio == 50)
 		MM.open_evac()
 	if(dead_crew == alltime_crew)
 		round_end = TRUE
