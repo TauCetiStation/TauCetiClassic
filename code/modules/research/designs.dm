@@ -2992,5 +2992,5 @@ other types of metals and chemistry for reagents).
 	id = "ds_boots"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 2000, MAT_PHORON = 4000)
-	build_path = /obj/item/clothing/suit/armor/swat
+	build_path = /obj/item/clothing/shoes/boots/swat
 	category = list("Armor")
