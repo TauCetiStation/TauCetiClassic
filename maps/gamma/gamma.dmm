@@ -3221,12 +3221,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "afJ" = (
-/obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "brown"
+	icon_state = "browncorner"
 	},
-/area/station/cargo/miningoffice)
+/area/station/hallway/secondary/entry)
 "afK" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -4798,7 +4796,7 @@
 /area/station/maintenance/outerlabs)
 "atB" = (
 /turf/simulated/floor{
-	dir = 4;
+	dir = 5;
 	icon_state = "brown"
 	},
 /area/station/cargo/miningoffice)
@@ -42104,9 +42102,11 @@
 	},
 /area/station/hallway/secondary/exit)
 "hyT" = (
-/turf/simulated/floor{
-	icon_state = "graychoco"
+/obj/structure/flora/junglebush,
+/obj/structure/window/thin/reinforced{
+	dir = 8
 	},
+/turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
 "hyV" = (
 /turf/simulated/wall/r_wall,
@@ -56243,12 +56243,7 @@
 	},
 /area/station/bridge/hop_office)
 "klW" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/stamp/cargo{
-	name = "miner's rubber stamp";
-	stamp_message = "Miner"
-	},
+/obj/machinery/mineral/equipment_vendor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -67185,11 +67180,14 @@
 	name = "Security Equipment"
 	})
 "mun" = (
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "graychoco"
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
-/area/station/hallway/secondary/entry)
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/station/cargo/miningoffice)
 "muI" = (
 /obj/machinery/alarm{
 	pixel_y = 22
@@ -70133,7 +70131,8 @@
 	pixel_y = -6
 	},
 /turf/simulated/floor{
-	icon_state = "graychoco"
+	dir = 1;
+	icon_state = "browncorner"
 	},
 /area/station/hallway/secondary/entry)
 "naA" = (
@@ -85745,7 +85744,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "graychoco"
+	dir = 1;
+	icon_state = "browncorner"
 	},
 /area/station/hallway/secondary/entry)
 "qfM" = (
@@ -92801,6 +92801,11 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
+/obj/item/weapon/stamp/cargo{
+	name = "miner's rubber stamp";
+	pixel_y = -10;
+	stamp_message = "Miner"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -93621,8 +93626,10 @@
 /area/station/maintenance/bridge)
 "rHM" = (
 /obj/structure/table,
-/obj/item/device/flashlight/lamp,
 /obj/machinery/light/smart,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -103740,12 +103747,6 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/equip)
-"tDX" = (
-/obj/machinery/mineral/equipment_vendor,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/cargo/miningoffice)
 "tEi" = (
 /obj/item/weapon/caution/cone,
 /turf/simulated/floor/plating,
@@ -117308,7 +117309,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "brown"
+	icon_state = "browncorner"
 	},
 /area/station/hallway/secondary/entry)
 "wkp" = (
@@ -120669,7 +120670,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "browncorner"
+	},
 /area/station/hallway/secondary/entry)
 "wVR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -140634,13 +140638,13 @@ czH
 srq
 czH
 hfi
-mcz
-mcz
-mcz
-mun
+tgA
+tgA
+tgA
+xMc
 nay
 qfD
-hyT
+tgA
 gsF
 xLy
 gPj
@@ -141150,15 +141154,15 @@ czH
 qYo
 mcz
 eYW
-mcz
+afJ
 vKq
 msv
 wkl
+msv
 cIZ
 xLy
-afJ
 atB
-atB
+mun
 eXK
 xLy
 kYI
@@ -141407,13 +141411,13 @@ czH
 fjH
 fRG
 eYW
-mcz
+afJ
 czH
 eLf
 efn
 cLp
+hyT
 wUR
-tDX
 kFL
 qUL
 wrv
@@ -141664,7 +141668,7 @@ czH
 kxC
 nuC
 eYW
-mcz
+cIZ
 czH
 czH
 fXg
@@ -141927,11 +141931,11 @@ doH
 fXg
 ghd
 oib
-fXg
-fXg
-bKd
-fXg
-rRX
+wUR
+wUR
+xLy
+wUR
+wUR
 ieO
 fVU
 wtC
