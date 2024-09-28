@@ -757,3 +757,38 @@
 	flags = ONESIZEFITSALL|HEAR_TALK
 	siemens_coefficient = 0.8
 	armor = list(melee = 5, bullet = 0, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
+
+
+/obj/item/clothing/under/nostromo
+	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/under/nostromo/blue
+	name = "blue uniform"
+	icon_state = "blueform"
+	item_state = "blueform"
+	item_state_world = "blueform_w"
+
+/obj/item/clothing/under/nostromo/black
+	name = "black uniform"
+	icon_state = "blackform"
+	item_state = "blackform"
+	item_state_world = "blackform_w"
+
+/obj/item/clothing/under/nostromo/white
+	name = "white uniform"
+	icon_state = "whiteform"
+	item_state = "whiteform"
+	item_state_world = "whiteform_w"
+
+/obj/item/clothing/under/nostromo/green
+	name = "green uniform"
+	icon_state = "greenform"
+	item_state = "greenform"
+	item_state_world = "greenform_w"
+
+/obj/item/clothing/under/nostromo/tropicspess
+	name = "tropicspess uniform"
+	desc = "Стильная гавайская рубашка и брюки."
+	icon_state = "tropicspess"
+	item_state = "tropicspess"
+	item_state_world = "tropicspess_w"

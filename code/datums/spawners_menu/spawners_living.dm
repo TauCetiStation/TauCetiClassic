@@ -206,3 +206,13 @@
 	wiki_ref = "Abductor"
 	time_for_registration = null
 	register_only = FALSE
+
+/datum/spawner/living/jonesy
+	name = "Котик Джонси"
+	desc = "Очень чувствительный рыжий котик Джонси. Постарайтесь выжить."
+	time_for_registration = null
+	register_only = FALSE
+
+/datum/spawner/living/jonesy/spawn_body(mob/dead/spectator)
+	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
+	mob.transfer_personality(spectator.client)

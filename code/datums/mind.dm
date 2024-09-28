@@ -793,7 +793,7 @@
 	..()
 	mind.assigned_role = "Alien"
 
-	if(!isalien(src))
+	if(!isalien(src) && !(src in alien_list[ALIEN_LONE_HUNTER]))
 		var/datum/faction/infestation/I = create_uniq_faction(/datum/faction/infestation)
 		add_faction_member(I, src, TRUE)
 
@@ -821,6 +821,13 @@
 /mob/living/carbon/xenomorph/humanoid/maid/mind_initialize()
 	..()
 	mind.special_role = "Drone"
+
+	//LONE XENO
+/mob/living/carbon/xenomorph/humanoid/hunter/lone/mind_initialize()
+	..()
+	mind.special_role = "Lone Hunter"
+	var/datum/faction/alien/A = create_uniq_faction(/datum/faction/alien, post_setup = FALSE)
+	add_faction_member(A, src, TRUE)
 
 //AI
 /mob/living/silicon/ai/mind_initialize()

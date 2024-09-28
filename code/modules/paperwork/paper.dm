@@ -839,12 +839,25 @@
 /obj/item/weapon/paper/nuclear_code/atom_init(mapload, nukecode)
 	. = ..()
 	name = "[station_name()] Nuclear Detonation Device Code (TOP SECRET)"
-	info = "<b>Nuclear Authentication Code:</b> [nukecode]"
+	info = "<b>Код ядерной аутентификации:</b> [nukecode]"
 
 	var/obj/item/weapon/stamp/centcomm/S = new
 	S.stamp_paper(src, "CentComm Security Department")
 
 	update_icon()
+	updateinfolinks()
+
+/obj/item/weapon/paper/nuclear_code/map/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/nuclear_code/map/atom_init_late()
+	var/nukecode
+	for(var/obj/machinery/nuclearbomb/bomb in poi_list)
+		if(bomb && bomb.r_code)
+			if(is_station_level(bomb.z))
+				nukecode = bomb.r_code
+	info = "<b>Код ядерной аутентификации:</b> [nukecode]"
 	updateinfolinks()
 
 /obj/item/weapon/paper/cmf_manual

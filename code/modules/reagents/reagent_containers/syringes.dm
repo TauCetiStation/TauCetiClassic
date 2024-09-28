@@ -420,6 +420,17 @@
 	mode = SYRINGE_INJECT
 	update_icon()
 
+/obj/item/weapon/reagent_containers/syringe/mixture
+	name = "Syringe (mixture)"
+	desc = "Contains healing mixture."
+
+/obj/item/weapon/reagent_containers/syringe/mixture/atom_init()
+	. = ..()
+	reagents.add_reagent("doctorsdelight", 6)
+	reagents.add_reagent("tricordrazine", 6)
+	reagents.add_reagent("peridaxon", 3)
+	mode = SYRINGE_INJECT
+	update_icon()
 
 //Robot syringes
 //Not special in any way, code wise. They don't have added variables or procs.

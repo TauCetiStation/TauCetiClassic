@@ -60,6 +60,18 @@
 			sleep(sleep_not_stacking) //Not stacking
 			stop_spin_bottle = FALSE
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/verb/splash_reagents()
+	set name = "Pour out the bottle"
+	set category = "Object"
+	set src in view(1)
+
+	if(!iscarbon(usr))
+		return
+
+	if(src.reagents)
+		usr.visible_message("<span class='rose'>Floor has been splashed with something by [usr]!</span>")
+		reagents.standard_splash(get_turf(src), user = usr)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
 	. = ..()
 	animate(src, transform = null, time = 0) //Restore bottle to its original position

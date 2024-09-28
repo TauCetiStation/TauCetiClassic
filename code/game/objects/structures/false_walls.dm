@@ -200,8 +200,8 @@
 		qdel(src)
 
 // todo:
-// probably we should make /obj/structure/falsewall 
-// and /turf/simulated/wall as meta-types not used in the game, and move 
+// probably we should make /obj/structure/falsewall
+// and /turf/simulated/wall as meta-types not used in the game, and move
 // real walls and falsewalls to subtypes
 /obj/structure/falsewall/yellow
 	icon = 'icons/turf/walls/has_false_walls/wall_yellow.dmi'
@@ -222,6 +222,10 @@
 /obj/structure/falsewall/beige
 	icon = 'icons/turf/walls/has_false_walls/wall_beige.dmi'
 	walltype = /turf/simulated/wall/beige
+
+/obj/structure/falsewall/nostromo
+	icon = 'icons/turf/walls/has_false_walls/wall_nostromo.dmi'
+	walltype = /turf/simulated/wall/nostromo
 
 /*
  * False R-Walls

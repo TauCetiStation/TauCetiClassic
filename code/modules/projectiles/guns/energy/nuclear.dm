@@ -37,6 +37,15 @@
 		power_supply.maxcharge = 1500
 		power_supply.charge = 1500
 
+/obj/item/weapon/gun/energy/gun/adv/alien
+	fire_delay = 10
+
+/obj/item/weapon/gun/energy/gun/adv/atom_init()
+	. = ..()
+	if(power_supply)
+		power_supply.maxcharge = 500
+		power_supply.charge = 500
+
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"
 	desc = "Энергетическое оружие с экспериментальным миниатюрным реактором."
