@@ -646,3 +646,30 @@
 	ammo_type = /obj/item/ammo_casing/pea
 	max_ammo = 6
 	origin_tech = "combat=2"
+
+/obj/item/ammo_box/magazine/pea/in_fire
+	name = "pealoader"
+	cases = list("гороховый зарядник", "горохового зарядника", "гороховому заряднику", "гороховый зарядник", "гороховым зарядником", "гороховом заряднике")
+	desc = "Гороховый зарядник для горохового пистолета."
+	caliber = "Pea"
+	ammo_type = /obj/item/ammo_casing/pea/in_fire
+	max_ammo = 6
+	origin_tech = "combat=2"
+
+/obj/item/ammo_box/magazine/pea/virus
+	name = "pealoader"
+	cases = list("гороховый зарядник", "горохового зарядника", "гороховому заряднику", "гороховый зарядник", "гороховым зарядником", "гороховом заряднике")
+	desc = "Гороховый зарядник для горохового пистолета."
+	caliber = "Pea"
+	ammo_type = /obj/item/ammo_casing/pea/virus
+	max_ammo = 6
+	origin_tech = "combat=2"
+
+/obj/item/ammo_box/magazine/pea/virus/in_fire
+	name = "pealoader"
+	cases = list("гороховый зарядник", "горохового зарядника", "гороховому заряднику", "гороховый зарядник", "гороховым зарядником", "гороховом заряднике")
+	desc = "Гороховый зарядник для горохового пистолета."
+	caliber = "Pea"
+	ammo_type = /obj/item/ammo_casing/pea/virus/in_fire
+	max_ammo = 6
+	origin_tech = "combat=2"

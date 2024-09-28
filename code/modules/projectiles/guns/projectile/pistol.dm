@@ -132,3 +132,67 @@
 /obj/item/weapon/gun/projectile/automatic/pistol/peashooter/attack_self(mob/living/user)
 	to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [CASE(src, GENITIVE_CASE)].</span>")
 	return
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/lighter/zippo))
+		new /obj/item/weapon/gun/projectile/automatic/pistol/peashooter/in_fire(loc)
+		to_chat(user, "<span class='notice'>Горохострел обвил зажигалку намертво. Кажется, её уже не вытащить.</span>")
+		qdel(I)
+		qdel(src)
+	else
+		return ..()
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/in_fire
+	name = "Peashooter"
+	desc = "Горохострел. Стреляет горохом."
+	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
+	icon_state = "peashooter"
+	item_state = "peashooter"
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/magazine/pea/in_fire
+	suitable_mags = /obj/item/ammo_box/magazine/pea/in_fire
+	can_be_holstered = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/in_fire/attack_self(mob/living/user)
+	to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [CASE(src, GENITIVE_CASE)].</span>")
+	return
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/lighter/zippo))
+		new /obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus/in_fire(loc)
+		to_chat(user, "<span class='notice'>Горохострел обвил зажигалку намертво. Кажется, её уже не вытащить.</span>")
+		qdel(I)
+		qdel(src)
+
+	else
+		return ..()
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus
+	name = "Virus Peashooter"
+	desc = "Горохострел Гиббингтоский. Стреляет особо большим горохом."
+	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
+	icon_state = "peashooter"
+	item_state = "peashooter"
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/magazine/pea/virus
+	suitable_mags = /obj/item/ammo_box/magazine/pea/virus
+	can_be_holstered = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus/attack_self(mob/living/user)
+	to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [CASE(src, GENITIVE_CASE)].</span>")
+	return
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/virus/in_fire
+	name = "Virus Peashooter"
+	desc = "Горохострел Гиббингтоский. Стреляет особо большим горохом."
+	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
+	icon_state = "peashooter"
+	item_state = "peashooter"
+	origin_tech = "combat=1;materials=1"
+	initial_mag = /obj/item/ammo_box/magazine/pea/virus/in_fire
+	suitable_mags = /obj/item/ammo_box/magazine/pea/virus/in_fire
+	can_be_holstered = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/in_fire/attack_self(mob/living/user)
+	to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [CASE(src, GENITIVE_CASE)].</span>")
+	return
