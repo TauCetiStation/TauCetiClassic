@@ -450,7 +450,7 @@
 		//slowdown, user. No need destruct all walls without debuff
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
-			C.shock_stage += 5
+			C.adjustHalLoss(15)
 		user.visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
 		playsound(user, pick(hammer.hitsound), VOL_EFFECTS_MASTER)

@@ -70,6 +70,11 @@
 	hitscan = 1
 	armor_multiplier = 0.7
 
+/obj/item/projectile/bullet/peabullet
+	name = "pea bullet"
+	damage = 5
+	agony = 5
+
 /obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25
 
@@ -233,7 +238,7 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/a762
-	damage = 50
+	damage = 30
 	embed = 0
 
 /obj/item/projectile/bullet/incendiary
