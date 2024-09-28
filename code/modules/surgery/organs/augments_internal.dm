@@ -5,18 +5,16 @@
 	desc = "a state-of-the-art implant that improves a baseline's functionality"
 	status = ORGAN_ROBOT
 	organ_tag = O_AUG
-	var/implant_color = "#FFFFFF"
+	var/implant_color = "#ffffff"
 	var/implant_overlay
 	sterile = 1 //not very germy
 
-/obj/item/organ/internal/cyberimp/New(var/mob/M = null)
-	if(iscarbon(M))
-		src.insert_organ(M)
+/obj/item/organ/internal/cyberimp/New(mob/M = null)
+	. = ..()
 	if(implant_overlay)
 		var/image/overlay = new /image(icon, implant_overlay)
 		overlay.color = implant_color
 		overlays |= overlay
-	return ..()
 
 
 
@@ -52,7 +50,7 @@
 	name = "Nutriment pump implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "chest_implant"
-	implant_color = "#00AA00"
+	implant_color = "#00ff00"
 	var/hunger_threshold = 250
 	var/synthesizing = 0
 	var/poison_amount = 5
@@ -70,8 +68,7 @@
 		synthesizing = 1
 		owner << "<span class='notice'>You feel less hungry...</span>"
 		owner.nutrition += 50
-		spawn(50)
-			synthesizing = 0
+		VARSET_IN(src, synthesizing, 0, 50 SECONDS)
 
 /obj/item/organ/internal/cyberimp/chest/nutriment/emp_act(severity)
 	if(!owner)
@@ -83,7 +80,7 @@
 	name = "Nutriment pump implant PLUS"
 	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	icon_state = "chest_implant"
-	implant_color = "#006607"
+	implant_color = "#006600"
 	hunger_threshold = 450
 	poison_amount = 10
 	origin_tech = "materials=5;programming=3;biotech=5"

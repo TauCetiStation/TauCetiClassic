@@ -22,7 +22,7 @@
 		ChangeToHusk()
 	return
 
-/mob/living/carbon/human/proc/get_organ(var/zone)
+/mob/living/carbon/human/proc/get_organ(zone)
 	if(!zone)
 		zone = BP_CHEST
 	if(zone in list(O_EYES, O_MOUTH))

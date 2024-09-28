@@ -164,7 +164,7 @@
 
 
 /datum/surgery_step/eye/manipulation/place/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(istype(target,/mob/living/carbon/human))
+	if(ishuman(target))
 		if(is_int_organ(tool))
 			var/obj/item/organ/internal/I = tool
 			if(I.requires_robotic_bodypart)
@@ -225,7 +225,7 @@
 	max_duration = 150
 
 /datum/surgery_step/organ_manipulation/place_eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(istype(target,/mob/living/carbon/human))
+	if(ishuman(target))
 		if(target_zone == O_EYES)
 			if(is_int_organ(tool))
 				var/obj/item/organ/internal/I = tool

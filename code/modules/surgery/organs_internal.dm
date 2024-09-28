@@ -27,7 +27,7 @@
 	max_duration = 50
 
 /datum/surgery_step/organ_manipulation/place/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(istype(target,/mob/living/carbon/human))
+	if(ishuman(target))
 		if(target_zone in list(O_EYES , O_MOUTH, BP_HEAD))
 			return 0
 		if(is_int_organ(tool))
@@ -57,11 +57,6 @@
 	if(is_int_organ(tool))
 		user.visible_message("[user] starts transplanting \the [tool] into [target]'s [parse_zone(target_zone)].", \
 		"You start transplanting \the [tool] into [target]'s [parse_zone(target_zone)].")
-
-/*	user.visible_message("[user] starts putting \the [tool] inside [target].", \
-	"You start putting \the [tool] inside [target]." )
-	target.custom_pain("The pain in your chest is living hell!",1)
-*/
 
 	..()
 

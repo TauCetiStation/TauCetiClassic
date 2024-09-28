@@ -41,7 +41,7 @@
 	owner = null
 	return ..()
 
-/obj/item/organ/proc/remove(var/mob/living/user,special = 0)
+/obj/item/organ/proc/remove(mob/living/user,special = 0)
 	if(!istype(owner))
 		return
 
@@ -117,7 +117,7 @@
 		parent = owner.bodyparts_by_name[parent_bodypart]
 
 
-/obj/item/organ/proc/replaced(var/mob/living/carbon/human/target,var/obj/item/organ/external/parent_bodypart)
+/obj/item/organ/proc/replaced(mob/living/carbon/human/target, obj/item/organ/external/parent_bodypart)
 
 	if(!istype(target)) return
 
@@ -329,7 +329,7 @@
 		if(!has_arm) //need atleast one hand to crawl
 			Stun(5)
 
-/obj/item/organ/proc/is_primary_organ(var/mob/living/carbon/human/O = null)
+/obj/item/organ/proc/is_primary_organ(mob/living/carbon/human/O = null)
 	if (isnull(O))
 		O = owner
 	if (!istype(owner)) // You're not the primary organ of ANYTHING, bucko

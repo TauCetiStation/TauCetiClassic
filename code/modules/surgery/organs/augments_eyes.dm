@@ -25,9 +25,9 @@
 		)
 
 
-/obj/item/organ/internal/cyberimp/eyes/insert_organ(var/mob/living/carbon/human/M, var/special = 0)
+/obj/item/organ/internal/cyberimp/eyes/insert_organ(mob/living/carbon/human/M, special = 0)
 	..()
-	if(istype(owner, /mob/living/carbon/human) && eye_colour)
+	if(ishuman(owner) && eye_colour)
 		var/mob/living/carbon/human/HMN = owner
 		old_eye_colour[1] = HMN.r_eyes
 		old_eye_colour[2] = HMN.g_eyes
@@ -41,10 +41,10 @@
 		owner << "<span class='notice'>[aug_message]</span>"
 	M.sight |= vision_flags
 
-/obj/item/organ/internal/cyberimp/eyes/remove(var/mob/living/carbon/human/M, var/special = 0)
+/obj/item/organ/internal/cyberimp/eyes/remove(mob/living/carbon/human/M, special = 0)
 	..()
 	M.sight ^= vision_flags
-	if(istype(owner,/mob/living/carbon/human) && eye_colour)
+	if(ishuman(owner) && eye_colour)
 		var/mob/living/carbon/human/HMN = owner
 		HMN.r_eyes = old_eye_colour[1]
 		HMN.g_eyes = old_eye_colour[2]
@@ -90,7 +90,7 @@
 	name = "Thermals implant"
 	desc = "These cybernetic eye implants will give you Thermal vision. Vertical slit pupil included."
 	eye_colour = list(255, 204, 0)
-	implant_color = "#FFCC00"
+	implant_color = "#ffbf00"
 	vision_flags = SEE_MOBS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	flash_protection = FLASHES_AMPLIFIER
@@ -104,7 +104,7 @@
 	slot = "eye_hud"
 	var/hud_types = 0
 
-/obj/item/organ/internal/cyberimp/eyes/hud/insert_organ(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/internal/cyberimp/eyes/hud/insert_organ(mob/living/carbon/M, special = 0)
 	..()
 	if(hud_types)
 		for(var/hud in hud_types)
@@ -113,7 +113,7 @@
 			for(var/parasit in M.parasites)
 				H.add_hud_to(parasit)
 
-/obj/item/organ/internal/cyberimp/eyes/hud/remove(var/mob/living/carbon/M, var/special = 0)
+/obj/item/organ/internal/cyberimp/eyes/hud/remove(mob/living/carbon/M, special = 0)
 	..()
 	if(hud_types)
 		for(var/hud in hud_types)
@@ -136,7 +136,7 @@
 	name = "Medical HUD implant"
 	desc = "These cybernetic eye implants will display a medical HUD over everything you see."
 	eye_colour = list(0,0,208)
-	implant_color = "#00FFFF"
+	implant_color = "#00ffff"
 	origin_tech = "materials=4;programming=3;biotech=4"
 	aug_message = "You suddenly see health bars floating above people's heads..."
 	hud_types = list(DATA_HUD_MEDICAL)
@@ -146,7 +146,7 @@
 	name = "Security HUD implant"
 	desc = "These cybernetic eye implants will display a security HUD over everything you see."
 	eye_colour = list(208,0,0)
-	implant_color = "#CC0000"
+	implant_color = "#ff0000"
 	origin_tech = "materials=4;programming=4;biotech=3;combat=1"
 	aug_message = "Job indicator icons pop up in your vision. That is not a certified surgeon..."
 	hud_types = list(DATA_HUD_SECURITY)
@@ -157,7 +157,7 @@
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
 	slot = "eye_shield"
 	origin_tech = "materials=4;biotech=3"
-	implant_color = "#101010"
+	implant_color = "#0000007A"
 	flash_protection = FLASHES_FULL_PROTECTION
 	// Welding with thermals will still hurt your eyes a bit.
 

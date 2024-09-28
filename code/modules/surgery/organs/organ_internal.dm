@@ -11,7 +11,7 @@
 	// 1 - assisted
 	// 2 - mechanical
 
-/obj/item/organ/internal/New(var/mob/living/carbon/holder)
+/obj/item/organ/internal/New(mob/living/carbon/holder)
 	if(istype(holder))
 		insert_organ(holder)
 	..()
@@ -40,7 +40,7 @@
 			if(M.stat != DEAD)//safety check!
 				M.death()
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/parent = H.get_organ(check_zone(parent_bodypart))
 		if(!istype(parent))
@@ -62,7 +62,7 @@
 	if(parent)
 		parent.bodypart_organs += src
 
-/obj/item/organ/internal/replaced(var/mob/living/carbon/human/target,var/obj/item/organ/external/affected)
+/obj/item/organ/internal/replaced(mob/living/carbon/human/target, obj/item/organ/external/affected)
     insert_organ(target)
     ..()
 
@@ -188,9 +188,8 @@
 
 /obj/item/organ/internal/heart/remove(mob/living/carbon/M, special = 0)
 	..()
-	spawn(120)
-		beating = 0
-		update_icon()
+	VARSET_IN(src, beating, 0, 100 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2 MINUTES)
 
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
@@ -254,6 +253,11 @@
 /obj/item/organ/internal/heart/skrell
 	icon = 'icons/obj/special_organs/skrell.dmi'
 
+/obj/item/organ/internal/heart/diona
+	name = "circulatory siphonostele"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "nymph"
+
 /obj/item/organ/internal/lungs
 	name = "lungs"
 	cases = list("лёгкие", "лёгких", "лёгким", "лёгкие", "лёгкими", "лёгких")
@@ -285,6 +289,9 @@
 	name = "virga inopinatus"
 	cases = list("полая ветка", "полой ветки", "полой ветки", "полую ветку", "полой веткой", "полой ветке")
 	process_accuracy = 10
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "nymph"
+
 
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
@@ -357,6 +364,8 @@
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
 	cases = list("хлорофилловый мешок", "хлорофиллового мешка", "хлорофилловому мешку", "хлорофилловый мешок", "хлорофилловым мешком", "хлорофилловом мешке")
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "podkid"
 
 /obj/item/organ/internal/liver/vox
 	name = "waste tract"
@@ -505,6 +514,10 @@
 	name = "vacuole"
 	cases = list("вакуоль", "вакуоли", "вакуолям", "вакуоль", "вакуолью", "вакуоли")
 	parent_bodypart = BP_GROIN
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "nymph"
+
+
 
 /obj/item/organ/internal/kidneys/ipc
 	name = "self-diagnosis unit"
@@ -567,6 +580,8 @@
 	name = "main node nymph"
 	cases = list("главная нимфа", "главной нимфы", "главной нимфе", "главную нимфу", "главной нимфой", "главной нимфе")
 	parent_bodypart = BP_CHEST
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "nymph"
 
 /obj/item/organ/internal/brain/tajaran
 	icon = 'icons/obj/special_organs/tajaran.dmi'
@@ -589,7 +604,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain-occupied"
 
-/obj/item/organ/internal/brain/remove(var/mob/living/user,special = 0)
+/obj/item/organ/internal/brain/remove(mob/living/user,special = 0)
 
 	if(!owner) return ..() // Probably a redundant removal; just bail
 	var/obj/item/organ/internal/brain/B = src
@@ -601,7 +616,7 @@
 
 		B.transfer_identity(user)
 
-	if(istype(owner,/mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.update_hair(1)
 	..()
@@ -658,6 +673,11 @@
 
 /obj/item/organ/internal/eyes/skrell
 	icon = 'icons/obj/special_organs/skrell.dmi'
+
+/obj/item/organ/internal/eyes/diona
+	name = "nutrient sac"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "podkid"
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"
