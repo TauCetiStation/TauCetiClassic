@@ -22,6 +22,7 @@ body:
         - Prometheus Asteroid
         - Forts
         - Другое
+
   - type: textarea
     id: description
     validations:
