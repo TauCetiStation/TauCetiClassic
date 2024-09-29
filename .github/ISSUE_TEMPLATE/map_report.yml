@@ -3,7 +3,7 @@ title: "[Название карты или локации] "
 description: "Если что-то не так с картой"
 labels: ["Bug", "Map Issue"]
 body:
-  - type: textarea
+  - type: dropdown
     id: location
     validations:
       required: true
