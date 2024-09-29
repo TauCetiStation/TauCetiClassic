@@ -75,3 +75,21 @@
 	anchored = TRUE
 	wall_mounted = TRUE
 	density = FALSE
+
+/obj/structure/closet/trader_stash
+	name = "shuttle wall"
+	cases = list("стена шаттла", "стене шаттла", "стене шаттла", "стену шаттла", "стеной шаттла", "стене шаттла")
+	desc = "Это просто стена."
+	icon = 'icons/locations/shuttles/closet.dmi'
+	icon_state = "trader_stash"
+	icon_closed = "trader_stash"
+	icon_opened = "trader_stash_open"
+	anchored = TRUE
+	wall_mounted = TRUE
+	density = FALSE
+
+/obj/structure/closet/trader_stash/toggle(mob/user)
+	if(user.loc != src) // you can't lock a person inside
+		if(!isrole(SPACE_TRADER, user)) // only traders can open this
+			return
+	..()
