@@ -1067,7 +1067,7 @@ var/global/list/admin_verbs_hideable = list(
 	set category = "Fun"
 	set name = "Custom Haram"
 	set desc = "Накидывает очки греха вручную"
-	var/haram_point= sanitize(input("Сколько очков греха накидываем?", "Очки Греха") as text|null)
+	var/haram_point= sanitize(input("Сколько очков греха накидываем?", "Очки Греха") as num|null)
 	var/reason = sanitize(input("Какая причина?", "Причина?") as text|null)
 	if(!reason)
 		return
