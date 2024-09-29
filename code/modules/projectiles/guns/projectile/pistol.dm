@@ -129,6 +129,10 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/pea)
 	can_be_holstered = TRUE
 
+/obj/item/weapon/gun/projectile/automatic/pistol/peashooter/update_icon()
+	if(magazine.ammo_count() < 6)
+		icon_state = "[initial(icon_state)][magazine.ammo_count()]"
+
 /obj/item/weapon/gun/projectile/automatic/pistol/peashooter/attack_self(mob/living/user)
 	to_chat(user, "<span class='notice'>Вы не можете вынуть горох из [CASE(src, GENITIVE_CASE)].</span>")
 	return
