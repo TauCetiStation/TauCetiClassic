@@ -1067,8 +1067,10 @@ var/global/list/admin_verbs_hideable = list(
 	set category = "Fun"
 	set name = "Custom Haram"
 	set desc = "Накидывает очки греха вручную"
-	var/haram_point= input("Сколько очков греха накидываем?", "Очки Греха") as text|null
-	var/reason= input("Какая причина?", "Причина?") as text|null
+	var/haram_point= sanitize(input("Сколько очков греха накидываем?", "Очки Греха") as text|null)
+	var/reason = sanitize(input("Какая причина?", "Причина?") as text|null)
+	if(!reason)
+		return
 	var/datum/religion/pluvia/pluvia_religion = global.pluvia_religion
 	pluvia_religion.custom_haram(T,text2num(haram_point), reason)
 	log_admin("[key_name(usr)] custom haram [key_name(T)] with [reason] reason on [haram_point] haram point")
