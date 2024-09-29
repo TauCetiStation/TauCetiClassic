@@ -82,7 +82,7 @@
 	name = "pack of peashooter seeds"
 	cases = list("семена Горохострела обыкновенного", "семян Горохострела обыкновенного", "семенам Горохострела обыкновенного", "семена Горохострела обыкновенного", "семенами Горохострела обыкновенного", "семенах Горохострела обыкновенного")
 	desc = "Эти семена вырастают в Горохострел"
-	icon_state = "seed-gatfruit"
+	icon_state = "seed-peashooter"
 	species = "peashooter"
 	plantname = "Peashooter Tree"
 	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
@@ -106,8 +106,8 @@
 	name = "pack of virus peashooter seeds"
 	cases = list("семена Горохострела Гиббингтонского", "семян Горохострела Гиббингтонского", "семенам Горохострела Гиббингтонского", "семена Горохострела Гиббингтонского", "семенами Горохострела Гиббингтонского", "семенах Горохострела Гиббингтонского")
 	desc = "Эти семена вырастают в Горохострел Гиббингтонский"
-	icon_state = "seed-gatfruit"
-	species = "peashooter"
+	icon_state = "seed-peashooter_virus"
+	species = "peashooter_virus"
 	plantname = "Virus Peashooter Tree"
 	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
 	lifespan = 20

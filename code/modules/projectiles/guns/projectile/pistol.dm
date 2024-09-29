@@ -150,8 +150,8 @@
 	name = "Peashooter"
 	desc = "Горохострел. Стреляет горохом. У самого кончика стручка закреплена горящая зажигалка."
 	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
-	icon_state = "peashooter"
-	item_state = "peashooter"
+	icon_state = "peashooter_in_fire"
+	item_state = "peashooter_in_fire"
 	origin_tech = "combat=1;materials=1"
 	initial_mag = /obj/item/ammo_box/magazine/pea/in_fire
 	suitable_mags = list(/obj/item/ammo_box/magazine/pea/in_fire)
@@ -167,8 +167,8 @@
 	name = "Virus Peashooter"
 	desc = "Горохострел Гиббингтоский. Стреляет особо большим горохом. У самого кончика стручка закреплена горящая зажигалка."
 	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
-	icon_state = "peashooter"
-	item_state = "peashooter"
+	icon_state = "peashooter_virus"
+	item_state = "peashooter_virus"
 	origin_tech = "combat=1;materials=1"
 	initial_mag = /obj/item/ammo_box/magazine/pea/virus
 	suitable_mags = list(/obj/item/ammo_box/magazine/pea/virus)
@@ -187,8 +187,8 @@
 	name = "Virus Peashooter"
 	desc = "Горохострел Гиббингтоский. Стреляет особо большим горохом."
 	cases = list("горохострел", "горохострела", "горохострелу", "горохострел", "горохострелом", "горохостреле")
-	icon_state = "peashooter"
-	item_state = "peashooter"
+	icon_state = "peashooter_virus_in_fire"
+	item_state = "peashooter_virus_in_fire"
 	origin_tech = "combat=1;materials=1"
 	initial_mag = /obj/item/ammo_box/magazine/pea/virus/in_fire
 	suitable_mags = list(/obj/item/ammo_box/magazine/pea/virus/in_fire)
