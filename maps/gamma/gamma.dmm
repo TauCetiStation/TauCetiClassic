@@ -6909,10 +6909,7 @@
 "aOq" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/machinery/door/airlock/command{
 	dir = 4;
@@ -73915,10 +73912,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -94690,10 +94684,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -96711,10 +96702,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/item/device/cardpay{
 	dir = 8;

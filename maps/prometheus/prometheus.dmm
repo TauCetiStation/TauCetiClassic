@@ -28910,10 +28910,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -56409,10 +56406,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -96402,10 +96396,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/machinery/door/firedoor{
 	dir = 4

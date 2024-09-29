@@ -843,10 +843,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/machinery/door/airlock/command{
 	dir = 4;
@@ -34173,10 +34170,7 @@
 	},
 /obj/item/weapon/bell,
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/item/device/cardpay{
 	dir = 8;
@@ -63684,11 +63678,8 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
@@ -103634,10 +103625,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)

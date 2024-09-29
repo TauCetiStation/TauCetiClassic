@@ -12660,11 +12660,8 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -25125,11 +25122,8 @@
 "oDX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
@@ -33565,11 +33559,8 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
 	dir = 4;
-	icon_state = "shutter0";
-	id = "HoP_private";
-	opacity = 0
+	id = "HoP_private"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
