@@ -60,6 +60,8 @@ var/global/list/wisp_start_landmark = list()
 /obj/item/weapon/bless_vote/Topic(href, href_list)
 	..()
 	var/mob/living/carbon/human/H = usr
+	if (usr.incapacitated() || src.loc != usr)
+		return
 	if(href_list["choice"] == "yes")
 		if(usr == owner)
 			to_chat(usr, "<span class='warning'>Свое письмо нельзя подписывать!</span>")
