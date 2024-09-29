@@ -76,7 +76,6 @@
 	agony = 10
 
 /obj/item/projectile/bullet/peabullet/in_fire
-	name = "pea bullet"
 	damage = 8
 	agony = 15
 	weaken = 1
@@ -89,7 +88,6 @@
 	weaken = 1
 
 /obj/item/projectile/bullet/peabullet/virus/in_fire
-	name = "virus pea bullet"
 	damage = 18
 	agony = 20
 	stun = 3

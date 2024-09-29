@@ -37,15 +37,9 @@
 /obj/item/ammo_casing/pea/in_fire
 	name = "Burned pea bullet casing"
 	cases = list("обгоревший гороховый патрон", "обгоревшего горохового патрона", "обгоревшему гороховому патрону", "обгоревший гороховый патрон", "обгоревшим гороховым патроном", "обгоревшем гороховом патроне")
-	desc = "Гороховый патрон"
-	caliber = "Pea"
 	projectile_type = /obj/item/projectile/bullet/peabullet/in_fire
 
 /obj/item/ammo_casing/pea/virus
-	name = "Pea bullet casing"
-	cases = list("гороховый патрон", "горохового патрона", "гороховому патрону", "гороховый патрон", "гороховым патроном", "гороховом патроне")
-	desc = "Гороховый патрон"
-	caliber = "Pea"
 	projectile_type = /obj/item/projectile/bullet/peabullet/virus
 
 /obj/item/ammo_casing/pea/virus/in_fire
