@@ -14,6 +14,11 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/silenced_pistol, /obj/item/ammo_box/magazine/silenced_pistol/nonlethal)
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 
+/obj/item/weapon/gun/projectile/automatic/pistol/silenced/nonlethal
+	name = "silenced pistol NL"
+	icon_state = "silenced_pistol_nl"
+	initial_mag = /obj/item/ammo_box/magazine/silenced_pistol/nonlethal
+
 /obj/item/weapon/gun/projectile/automatic/pistol/glock
 	name = "G17"
 	desc = "Полуавтоматический служебный пистолет калибра 9х19 мм. Предназначен для профессионалов."

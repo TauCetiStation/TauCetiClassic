@@ -2229,7 +2229,6 @@
 #include "code\modules\projectiles\guns\projectile\automatic.dm"
 #include "code\modules\projectiles\guns\projectile\bow.dm"
 #include "code\modules\projectiles\guns\projectile\launcher.dm"
-#include "code\modules\projectiles\guns\projectile\old_pirate_guns.dm"
 #include "code\modules\projectiles\guns\projectile\pistol.dm"
 #include "code\modules\projectiles\guns\projectile\pneumatic.dm"
 #include "code\modules\projectiles\guns\projectile\revolver.dm"

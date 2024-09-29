@@ -251,7 +251,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/a28
 	name = "A28 assault rifle"
-	desc = "Автоматическая винтовка типа булл-пап с воздушным охлаждением, используемая военным корпусом пехоты НаноТрейзен. На ствольной коробке выгравировано - 'Сэр, я заканчиваю этот бой'. Использует патроны калибром 5.56мм."
+	desc = "Автоматическая винтовка типа булл-пап с воздушным охлаждением, используемая военным корпусом пехоты НаноТрейзен. На ствольной коробке выгравировано - 'Сэр, я заканчиваю этот бой'. Использует патроны калибра 5.56мм."
 	icon_state = "a28"
 	item_state = "a28"
 	w_class = SIZE_SMALL
@@ -267,6 +267,14 @@
 /obj/item/weapon/gun/projectile/automatic/a28/atom_init()
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
+
+/obj/item/weapon/gun/projectile/automatic/a28/nonlethal
+	name = "A28 assault rifle NL"
+	icon_state = "a28w"
+	item_state = "a28w"
+	silenced = TRUE
+	initial_mag = /obj/item/ammo_box/magazine/a28/nonlethal
+	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/a74
 	name = "A74 assault rifle"
