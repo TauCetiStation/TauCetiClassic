@@ -5,7 +5,8 @@
 	cost = CARGO_CRATE_COST
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
-	exclude_types = list(/obj/structure/closet/crate/large)
+	exclude_types = list(/obj/structure/closet/crate/large,
+	/obj/structure/closet/crate/secure/woodseccrate/cargo_general)
 
 /datum/export/large/crate/total_printout() // That's why a goddamn metal crate costs that much.
 	. = ..()
@@ -21,7 +22,6 @@
 /datum/export/large/crate/wooden/ore
 	unit_name = "ore box"
 	export_types = list(/obj/structure/ore_box)
-
 
 // Reagent dispensers.
 /datum/export/large/reagent_dispenser
@@ -165,3 +165,8 @@
 	cost = 300
 	unit_name = "mining drill head"
 	export_types = list(/obj/machinery/mining/drill)
+
+/datum/export/large/mule
+	cost = 300
+	unit_name = "mule"
+	export_types = list(/obj/machinery/bot/mulebot)

@@ -433,6 +433,12 @@
 	icon_opened = "woodseccrateopen"
 	icon_closed = "woodseccrate"
 
+/obj/structure/closet/crate/secure/woodseccrate/cargo_general //(almost) all ordered items go here
+	name = "Secure supply crate"
+	desc = "A box with all your ordered junk."
+	req_access = list(access_cargo)
+	storage_capacity = 120
+
 /obj/structure/closet/crate/secure/bin
 	desc = "A secure bin."
 	name = "Secure bin"

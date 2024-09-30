@@ -73261,6 +73261,7 @@
 	},
 /area/station/security/main)
 "gWa" = (
+/obj/effect/landmark/supply_general_crate_spawn,
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,4"
 	},

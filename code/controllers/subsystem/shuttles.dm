@@ -477,11 +477,17 @@ SUBSYSTEM_DEF(shuttle)
 				continue
 			if(istype(A, /obj/machinery/light))
 				continue
+			if(istype(A, /obj/effect/landmark/supply_general_crate_spawn))
+				continue
 			contcount++
 		if(contcount)
 			continue
 		clear_turfs += T
 		CHECK_TICK
+
+	for(var/obj/effect/landmark/supply_general_crate_spawn/GB in shuttle)
+		var/turf/CT = get_turf(GB)
+		new /obj/structure/closet/crate/secure/woodseccrate/cargo_general(CT)
 
 	for(var/S in shoppinglist)
 		if(!clear_turfs.len)
@@ -491,8 +497,12 @@ SUBSYSTEM_DEF(shuttle)
 		clear_turfs.Cut(i,i+1)
 
 		var/datum/supply_order/SO = S
+		if(SO.object.general_crate)
+			for(var/obj/structure/closet/crate/secure/woodseccrate/cargo_general/P in shuttle)
+				SO.object.fill(P)
+		else
+			SO.generate(pickedloc)
 
-		SO.generate(pickedloc)
 		if(SO.object.dangerous)
 			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 

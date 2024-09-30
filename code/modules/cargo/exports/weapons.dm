@@ -18,23 +18,23 @@
 //--------------------------------------------
 
 /datum/export/weapon/laser
-	cost = 200
+	cost = 450 //ordinary laser rifle
 	unit_name = "laser gun"
 	export_types = list(/obj/item/weapon/gun/energy/laser)
 
 /datum/export/weapon/energy_gun
-	cost = 250
+	cost = 400
 	unit_name = "energy gun"
 	export_types = list(/obj/item/weapon/gun/energy/gun,
 										/obj/item/weapon/gun/energy)
 
 /datum/export/weapon/sniper_rifle
-	cost = 300
+	cost = 800
 	unit_name = "sniper rifle"
 	export_types = list(/obj/item/weapon/gun/energy/sniperrifle)
 
 /datum/export/weapon/ion_rifle
-	cost = 300
+	cost = 750
 	unit_name = "ion rifle"
 	export_types = list(/obj/item/weapon/gun/energy/ionrifle)
 
@@ -44,27 +44,43 @@
 	include_subtypes = TRUE
 	export_types = list(/obj/item/weapon/gun/energy/pyrometer)
 
+/datum/export/weapon/kinetic
+	cost = 500
+	unit_name = "kinetic accelerator"
+	export_types = list(/obj/item/weapon/gun/energy/kinetic_accelerator)
+
+/datum/export/weapon/plasma_cutter
+	cost = 500
+	unit_name = "plasma cutter"
+	export_types = list(/obj/item/projectile/beam/plasma_cutter)
+
+
 //--------------------------------------------
 //----------------ballistic weapons-----------
 //--------------------------------------------
 
 /datum/export/weapon/combat_shotgun
-	cost = 200
+	cost = 500
 	unit_name = "combat shotgun"
 	export_types = list(/obj/item/weapon/gun/projectile/shotgun/combat)
 
 /datum/export/weapon/shotgun
-	cost = 150
+	cost = 300 //cheap and old shotgun
 	unit_name = "shotgun"
 	export_types = list(/obj/item/weapon/gun/projectile/shotgun)
 
 /datum/export/weapon/glock
-	cost = 100
+	cost = 400
 	unit_name = "Glock 17"
 	export_types = list(/obj/item/weapon/gun/projectile/automatic/pistol/glock)
 
+/datum/export/weapon/l13
+	cost = 600
+	unit_name = "L13 SMG"
+	export_types = list(/obj/item/weapon/gun/projectile/automatic/l13)
+
 /datum/export/weapon/m79
-	cost = 150
+	cost = 350
 	unit_name = "M79"
 	export_types = list(/obj/item/weapon/gun/projectile/grenade_launcher/m79)
 

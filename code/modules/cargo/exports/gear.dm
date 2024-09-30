@@ -27,12 +27,12 @@
 	export_types = list(/obj/item/clothing/suit/armor/riot)
 
 /datum/export/gear/bulletproof_helmet
-	cost = 50
+	cost = 60
 	unit_name = "bulletproof helmet"
 	export_types = list(/obj/item/clothing/head/helmet/bulletproof)
 
 /datum/export/gear/bulletproof_armor
-	cost = 100
+	cost = 125
 	unit_name = "bulletproof armor vest"
 	export_types = list(/obj/item/clothing/suit/storage/flak/bulletproof)
 
@@ -47,7 +47,7 @@
 	export_types = list(/obj/item/clothing/suit/armor/laserproof)
 
 /datum/export/gear/riot_shield
-	cost = 80
+	cost = 100
 	unit_name = "riot shield"
 	export_types = list(/obj/item/weapon/shield/riot)
 
@@ -76,6 +76,17 @@
 // EVA gear
 /datum/export/gear/space
 	include_subtypes = TRUE
+
+/datum/export/gear/space/budget_helm
+	cost = 15
+	unit_name = "cheap space helmet"
+	export_types = list(/obj/item/clothing/suit/space/cheap)
+
+/datum/export/gear/space/budget_suit
+	cost = 30
+	unit_name = "cheap space suit"
+	export_types = list(/obj/item/clothing/head/helmet/space/cheap)
+
 
 /datum/export/gear/space/helmet
 	cost = 150
@@ -214,7 +225,7 @@
 //--------------------------------------------
 
 /datum/export/gear/gloves/insulated
-	cost = 20
+	cost = 40
 	unit_name = "insulated gloves"
 	export_types = list(/obj/item/clothing/gloves/insulated)
 

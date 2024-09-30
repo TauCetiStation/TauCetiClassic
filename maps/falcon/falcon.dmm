@@ -27671,6 +27671,7 @@
 /turf/environment/space,
 /area/space)
 "qEY" = (
+/obj/effect/landmark/supply_general_crate_spawn,
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},

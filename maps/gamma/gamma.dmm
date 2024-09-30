@@ -29058,6 +29058,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "eZy" = (
+/obj/effect/landmark/supply_general_crate_spawn,
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,3"
 	},

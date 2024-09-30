@@ -99326,6 +99326,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "usK" = (
+/obj/effect/landmark/supply_general_crate_spawn,
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,3"
 	},

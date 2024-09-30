@@ -95,9 +95,14 @@
 	export_types = list(/obj/item/device/radio)
 
 /datum/export/detective_scanner
-	cost = 25
+	cost = 30
 	unit_name = "investigator scanner"
-	export_types = list(/obj/item/device/radio)
+	export_types = list(/obj/item/device/detective_scanner)
+
+/datum/export/export_scanner
+	cost = 25
+	unit_name = "export scanner"
+	export_types = list(/obj/item/device/export_scanner)
 
 // High-tech tools.
 /datum/export/rcd
@@ -117,6 +122,12 @@
 	unit_name = "kitchen knife"
 	export_types = list(/obj/item/weapon/kitchenknife)
 
+/datum/export/scythe
+	cost = 50
+	unit_name = "scythe"
+	export_types = list(/obj/item/weapon/scythe)
+
+
 // mining
 
 /datum/export/mining_charge
@@ -125,7 +136,7 @@
 	export_types = list(/obj/item/weapon/mining_charge)
 
 /datum/export/jackhammer
-	cost = 120
+	cost = 200
 	unit_name = "sonic jackhammer"
 	export_types = list(/obj/item/weapon/pickaxe/drill/jackhammer)
 
@@ -138,7 +149,7 @@
 // misc
 
 /datum/export/cryobag
-	cost = 150
+	cost = 60
 	unit_name = "stasis bag"
 	export_types = list(/obj/item/bodybag/cryobag)
 
@@ -146,3 +157,18 @@
 	cost = 50
 	unit_name = "monkey cube"
 	export_types = list(/obj/item/weapon/storage/box/monkeycubes)
+
+/datum/export/adv_mop
+	cost = 30
+	unit_name = "advanced mop"
+	export_types = list(/obj/item/weapon/mop/advanced)
+
+/datum/export/holosign
+	cost = 30
+	unit_name = "holosign projector"
+	export_types = list(/obj/item/weapon/holosign_creator)
+
+/datum/export/hc_power_cell
+	cost = 50
+	unit_name = "high-capacity power cell"
+	export_types = list(/obj/item/weapon/stock_parts/cell/high)
