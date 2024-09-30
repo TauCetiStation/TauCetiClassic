@@ -1443,7 +1443,7 @@
 /obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
 	if(!I)
 		return
-	var/icon_name = initial(I.icon_state)
+	var/icon_name = I.icon_state
 	var/suffix_pos = findtext(icon_name, overlay_suffix)
 	if(suffix_pos)
 		icon_name = copytext(icon_name, 1, suffix_pos)
