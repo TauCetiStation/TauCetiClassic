@@ -158,13 +158,8 @@
 	inhaling = inhale_pp >= druggy_inhale_pp ? inhaling : druggy_inhaling
 	inhale_pp = inhale_pp >= druggy_inhale_pp ? inhale_pp : druggy_inhale_pp
 
-	var/lungs = get_int_organ_by_name(O_LUNGS)
-	if(!lungs)
-		adjustOxyLoss(10)
-		if(prob(20))
-			emote("gasp")
 	//CRIT
-	if(!breath || (breath.total_moles == 0) || !lungs)
+	if(!breath || (breath.total_moles == 0))
 		adjustOxyLoss(5)
 		throw_alert("not_enough_oxy", /atom/movable/screen/alert/oxy)
 		return FALSE

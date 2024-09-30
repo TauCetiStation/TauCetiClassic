@@ -347,6 +347,17 @@ var/global/list/tourette_bad_words= list(
 
 	failed_last_breath = inhale_alert
 
+	var/lungs = get_int_organ_by_name(O_LUNGS)
+	if(!lungs)
+		adjustOxyLoss(10)
+		if(prob(80))
+			emote("gasp")
+	//CRIT
+	if(!breath || (breath.total_moles == 0) || !lungs)
+		adjustOxyLoss(5)
+		throw_alert("not_enough_oxy", /atom/movable/screen/alert/oxy)
+		return FALSE
+
 	if(breath)
 		//spread some viruses while we are at it
 		if (virus2.len > 0)
