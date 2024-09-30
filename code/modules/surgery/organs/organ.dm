@@ -60,7 +60,7 @@
 	owner = H
 
 /obj/item/organ/proc/die()
-	if(robotic)
+	if(is_robotic())
 		return
 	damage = max_damage
 	status |= ORGAN_DEAD
@@ -78,7 +78,7 @@
 		return
 
 	//Process infections
-	if ((robotic) || (sterile) ||(owner && owner.species && (owner.species.flags & IS_PLANT)))
+	if ((is_robotic()) || (sterile) ||(owner && owner.species && (owner.species.flags & IS_PLANT)))
 		germ_level = 0
 		return
 
@@ -129,7 +129,7 @@
 		target.organs_by_name += src
 		target.organs += src
 	src.loc = target
-	if(robotic)
+	if(is_robotic())
 		status |= ORGAN_ROBOT
 
 /obj/item/organ/proc/receive_chem(chemical)
@@ -162,7 +162,7 @@
 /obj/item/organ/take_damage(amount, silent=0)
 	if(!isnum(silent))
 		return // prevent basic take_damage usage (TODO remove workaround)
-	if(src.is_robotic())
+	if(is_robotic())
 		src.damage += (amount * 0.8)
 	else
 		src.damage += amount
