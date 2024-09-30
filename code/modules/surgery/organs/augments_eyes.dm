@@ -37,8 +37,9 @@
 		HMN.g_eyes = eye_colour[2]
 		HMN.b_eyes = eye_colour[3]
 		HMN.update_eyes()
+
 	if(aug_message && !special)
-		owner << "<span class='notice'>[aug_message]</span>"
+		owner.visible_message ("<span class='notice'>[aug_message]</span>")
 	M.sight |= vision_flags
 
 /obj/item/organ/internal/cyberimp/eyes/remove(mob/living/carbon/human/M, special = 0)

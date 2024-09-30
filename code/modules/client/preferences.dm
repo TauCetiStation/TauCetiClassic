@@ -497,9 +497,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 			var/obj/item/organ/external/new_BP = new type(null)
 			new_BP.insert_organ(character)
 
-		else if(status == "assisted" && IO)
-			IO.mechassist()
-		else if(status == "mechanical" && IO)
+		else if(status == "Cybernetic" && IO)
 			IO.mechanize()
 
 		else

@@ -7,6 +7,7 @@
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
+	item_state_world
 	germ_level = 0
 	var/organ_tag = O_HEART
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | KEEP_APART | APPEARANCE_UI_IGNORE_ALPHA
@@ -17,8 +18,6 @@
 	// Status tracking.
 	var/status = 0                     // Various status flags (such as robotic)
 	var/vital                          // Lose a vital organ, die immediately.
-
-	var/robotic = 0             // For being a robot
 
 	// Reference data.
 	var/mob/living/carbon/human/owner  // Current mob owning the organ.
@@ -31,6 +30,8 @@
 	var/min_bruised_damage = 10
 	var/min_broken_damage = 30
 	var/max_damage
+
+	var/dead_icon
 
 	var/sterile = 0 //can the organ be infected by germs?
 	var/requires_robotic_bodypart = FALSE
@@ -161,7 +162,7 @@
 /obj/item/organ/take_damage(amount, silent=0)
 	if(!isnum(silent))
 		return // prevent basic take_damage usage (TODO remove workaround)
-	if(src.robotic == 2)
+	if(src.is_robotic())
 		src.damage += (amount * 0.8)
 	else
 		src.damage += amount
@@ -262,6 +263,17 @@
 					for(var/datum/wound/W in BP.wounds)
 						if (W.infection_check())
 							W.germ_level += 1
+
+
+/obj/item/organ/proc/is_robotic()
+	if(status & ORGAN_ROBOT)
+		return TRUE
+	return FALSE
+
+/obj/item/organ/proc/mechanize() //Being used to make robutt hearts, etc
+	status &= ~ORGAN_BROKEN
+	status &= ~ORGAN_SPLINTED
+	status += ORGAN_ROBOT
 
 /mob/living/carbon/human/proc/handle_stance()
 	// Don't need to process any of this if they aren't standing anyways

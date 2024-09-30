@@ -1949,7 +1949,7 @@
 		if(!isbodypart(I))
 			return
 		var/obj/item/organ/external/BP = I
-		if(BP.is_robotic())
+		if(BP.is_robotic_part())
 			return
 	source.nutrition += max(0, NUTRITION_LEVEL_FULL - source.nutrition)
 	qdel(I)

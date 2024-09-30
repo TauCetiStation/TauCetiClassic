@@ -1,5 +1,3 @@
-#define STUN_SET_AMOUNT	2
-
 /obj/item/organ/internal/cyberimp
 	name = "cybernetic implant"
 	desc = "a state-of-the-art implant that improves a baseline's functionality"
@@ -12,11 +10,9 @@
 /obj/item/organ/internal/cyberimp/New(mob/M = null)
 	. = ..()
 	if(implant_overlay)
-		var/image/overlay = new /image(icon, implant_overlay)
+		var/mutable_appearance/overlay = mutable_appearance(icon, implant_overlay)
 		overlay.color = implant_color
-		overlays |= overlay
-
-
+		add_overlay(overlay)
 
 //[[[[BRAIN]]]]
 //For future

@@ -183,7 +183,7 @@
 				user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
 				return 0
 			else
-				user.visible_message("it work")
+			
 				return ..() && target.op_stage.eyes == 2
 
 	else return 0

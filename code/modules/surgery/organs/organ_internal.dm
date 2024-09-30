@@ -7,9 +7,6 @@
 
 	// Will be moved, removed or refactored.
 	var/process_accuracy = 0    // Damage multiplier for organs, that have damage values.
-	// 0 - normal
-	// 1 - assisted
-	// 2 - mechanical
 
 /obj/item/organ/internal/New(mob/living/carbon/holder)
 	if(istype(holder))
@@ -81,7 +78,7 @@
 /obj/item/organ/internal/process()
 	//Process infections
 
-	if (robotic >= 2 || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic organs and bodyparts separate types instead of a flag
+	if (is_robotic() || (owner.species && owner.species.flags[IS_PLANT]))	//TODO make robotic organs and bodyparts separate types instead of a flag
 		germ_level = 0
 		return
 
@@ -110,41 +107,33 @@
 				take_damage(1,silent=prob(30))
 
 
-
 /obj/item/organ/internal/emp_act(severity)
-	switch(robotic)
-		if(0)
-			return
+	if(!is_robotic())
+		return
+
+	switch(severity)
 		if(1)
-			switch (severity)
-				if (1.0)
-					take_damage(20,0)
-					return
-				if (2.0)
-					take_damage(7,0)
-					return
-				if(3.0)
-					take_damage(3,0)
-					return
+			take_damage(20, 1)
 		if(2)
-			switch (severity)
-				if (1.0)
-					take_damage(40,0)
-					return
-				if (2.0)
-					take_damage(15,0)
-					return
-				if(3.0)
-					take_damage(10,0)
-					return
+			take_damage(7, 1)
 
-/obj/item/organ/internal/proc/mechanize() //Being used to make robutt hearts, etc
-	robotic = 2
+/obj/item/organ/internal/mechanize() //Being used to make robutt hearts, etc
+	if(!is_robotic())
+		var/list/states = icon_states('icons/obj/surgery.dmi') //Insensitive to specially-defined icon files for species like the Drask or whomever else. Everyone gets the same robotic heart.
+		if(slot == "heart" && ("[slot]-prosthetic-on" in states) && ("[slot]-prosthetic-off" in states)) //Give the robotic heart its robotic heart icons if they exist.
+			var/obj/item/organ/internal/heart/H = src
+			H.icon = icon('icons/obj/surgery.dmi')
+			H.icon_state = "[slot]-prosthetic"
+			H.dead_icon = "[slot]-prosthetic-off"
+			H.item_state_world = "[slot]-prosthetic_world"
+			H.update_icon()
+		else if("[slot]-prosthetic" in states) //Give the robotic organ its robotic organ icons if they exist.
+			icon = icon('icons/obj/surgery.dmi')
+			icon_state = "[slot]-prosthetic"
+			item_state_world = "[slot]-prosthetic_world"
+		name = "cybernetic [slot]"
+	..() //Go apply all the organ flags/robotic statuses.
 
-/obj/item/organ/internal/proc/mechassist() //Used to add things like pacemakers, etc
-	robotic = 1
-	min_bruised_damage = 15
-	min_broken_damage = 35
 
 /****************************************************
 				ORGANS DEFINES
@@ -154,6 +143,7 @@
 	name = "heart"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "heart-on"
+	item_state_world = "heart-on_world"
 	cases = list("сердце", "сердца", "сердцу", "сердце", "сердцем", "сердце")
 	organ_tag = O_HEART
 	vital = TRUE
@@ -166,8 +156,10 @@
 /obj/item/organ/internal/heart/update_icon()
 	if(beating)
 		icon_state = "heart-on"
+		item_state_world = "heart-on_world"
 	else
 		icon_state = "heart-off"
+		item_state_world = "heart-off_world"
 
 /obj/item/organ/internal/heart/insert_organ(mob/living/carbon/M, special = 0)
 	..()
@@ -212,7 +204,7 @@
 	var/pumping_rate = 5
 	var/bruised_loss = 3
 	requires_robotic_bodypart = TRUE
-
+	status = ORGAN_ROBOT
 	icon = 'icons/obj/device.dmi'
 	icon_state = "miniaturesuitcooler0"
 
@@ -220,8 +212,10 @@
 /obj/item/organ/internal/heart/ipc/update_icon()
 	if(beating)
 		icon_state = "miniaturesuitcooler0"
+		item_state_world = "miniaturesuitcooler0"
 	else
 		icon_state = "miniaturesuitcooler0"
+		item_state_world = "miniaturesuitcooler0"
 
 /obj/item/organ/internal/heart/ipc/process()
 	if(owner.nutrition < 1)
@@ -241,27 +235,34 @@
 		lungs.add_refrigerant(pumping_volume)
 
 /obj/item/organ/internal/heart/vox
+	name = "vox heart"
 	icon = 'icons/obj/special_organs/vox.dmi'
 	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/heart/tajaran
+	name = "tajaran heart"
 	icon = 'icons/obj/special_organs/tajaran.dmi'
 
 /obj/item/organ/internal/heart/unathi
+	name = "unathi heart"
 	icon = 'icons/obj/special_organs/unathi.dmi'
+	desc = "A large looking heart."
 
 /obj/item/organ/internal/heart/skrell
+	name = "skrell heart"
 	icon = 'icons/obj/special_organs/skrell.dmi'
+	desc = "A stream lined heart."
 
 /obj/item/organ/internal/heart/diona
 	name = "circulatory siphonostele"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "nymph"
-
+	item_state_world = "nymph"
 /obj/item/organ/internal/lungs
 	name = "lungs"
 	cases = list("лёгкие", "лёгких", "лёгким", "лёгкие", "лёгкими", "лёгких")
 	icon_state = "lungs"
+	item_state_world = "lungs_world"
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
 	slot = "lungs"
@@ -270,13 +271,16 @@
 /obj/item/organ/internal/lungs/vox
 	name = "air capillary sack"
 	cases = list("воздушно-капиллярный мешок", "воздушно-капиллярного мешка", "воздушно-капиллярному мешку", "воздушно-капиллярный мешок", "воздушно-капиллярным мешком", "воздушно-капиллярном мешке")
+	desc = "They're filled with dust....wow."
 	parent_bodypart = BP_GROIN
 	icon = 'icons/obj/special_organs/vox.dmi'
 
 /obj/item/organ/internal/lungs/tajaran
+	name = "tajaran lungs"
 	icon = 'icons/obj/special_organs/tajaran.dmi'
 
 /obj/item/organ/internal/lungs/unathi
+	name = "unathi lungs"
 	icon = 'icons/obj/special_organs/unathi.dmi'
 
 /obj/item/organ/internal/lungs/skrell
@@ -291,7 +295,7 @@
 	process_accuracy = 10
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "nymph"
-
+	item_state_world = "nymph"
 
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
@@ -302,9 +306,10 @@
 	var/refrigerant_rate = 5
 	var/bruised_loss = 3
 	requires_robotic_bodypart = TRUE
-
+	status = ORGAN_ROBOT
 	icon = 'icons/obj/robot_component.dmi'
 	icon_state = "working"
+	item_state_world = "working"
 
 /obj/item/organ/internal/lungs/process()
 	..()
@@ -356,6 +361,7 @@
 	name = "liver"
 	cases = list("печень", "печени", "печени", "печень", "печенью", "печени")
 	icon_state = "liver"
+	item_state_world = "liver_world"
 	organ_tag = O_LIVER
 	parent_bodypart = BP_GROIN
 	slot = "liver"
@@ -366,6 +372,7 @@
 	cases = list("хлорофилловый мешок", "хлорофиллового мешка", "хлорофилловому мешку", "хлорофилловый мешок", "хлорофилловым мешком", "хлорофилловом мешке")
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podkid"
+	item_state_world = "podkid"
 
 /obj/item/organ/internal/liver/vox
 	name = "waste tract"
@@ -373,12 +380,16 @@
 	icon = 'icons/obj/special_organs/vox.dmi'
 
 /obj/item/organ/internal/liver/tajaran
+	name = "tajaran liver"
 	icon = 'icons/obj/special_organs/tajaran.dmi'
 
 /obj/item/organ/internal/liver/unathi
+	name = "unathi liver"
 	icon = 'icons/obj/special_organs/unathi.dmi'
+	desc = "A large looking liver."
 
 /obj/item/organ/internal/liver/skrell
+	name = "skrell liver"
 	icon = 'icons/obj/special_organs/skrell.dmi'
 
 /obj/item/organ/internal/liver/ipc
@@ -386,8 +397,10 @@
 	cases = list("аккумулятор", "аккумулятора", "аккумулятору", "аккумулятор", "аккумулятором", "аккумуляторе")
 	var/accumulator_warning = 0
 	requires_robotic_bodypart = TRUE
+	status = ORGAN_ROBOT
 	icon = 'icons/obj/power.dmi'
 	icon_state = "hpcell"
+	item_state_world = "hpcell"
 
 /obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
@@ -492,6 +505,7 @@
 	name = "kidneys"
 	cases = list("почки", "почек", "почкам", "почки", "почками", "почках")
 	icon_state = "kidneys"
+	item_state_world = "kidneys_world"
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_GROIN
 	slot = "kidneys"
@@ -502,13 +516,17 @@
 	icon = 'icons/obj/special_organs/vox.dmi'
 
 /obj/item/organ/internal/kidneys/tajaran
+	name = "tajaran kidneys"
 	icon = 'icons/obj/special_organs/tajaran.dmi'
 
 /obj/item/organ/internal/kidneys/unathi
+	name = "unathi kidneys"
 	icon = 'icons/obj/special_organs/unathi.dmi'
 
 /obj/item/organ/internal/kidneys/skrell
+	name = "skrell kidneys"
 	icon = 'icons/obj/special_organs/skrell.dmi'
+	desc = "The smallest kidneys you have ever seen, it probably doesn't even work."
 
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
@@ -516,6 +534,7 @@
 	parent_bodypart = BP_GROIN
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "nymph"
+	item_state_world = "nymph"
 
 
 
@@ -523,12 +542,13 @@
 	name = "self-diagnosis unit"
 	cases = list("устройство самодиагностики", "устройства самодиагностики", "устройству самодиагностики", "устройство самодиагностики", "устройством самодиагностики", "устройстве самодиагностики")
 	parent_bodypart = BP_GROIN
-
+	status = ORGAN_ROBOT
 	var/next_warning = 0
 	requires_robotic_bodypart = TRUE
 
 	icon = 'icons/obj/robot_component.dmi'
 	icon_state = "analyser"
+	item_state_world = "analyser"
 
 /obj/item/organ/internal/kidneys/process()
 
@@ -575,6 +595,7 @@
 	vital = TRUE
 	parent_bodypart = O_BRAIN
 	slot = "brain"
+	item_state_world = "brain2_world"
 
 /obj/item/organ/internal/brain/diona
 	name = "main node nymph"
@@ -582,27 +603,25 @@
 	parent_bodypart = BP_CHEST
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "nymph"
+	item_state_world = "nymph"
 
 /obj/item/organ/internal/brain/tajaran
 	icon = 'icons/obj/special_organs/tajaran.dmi'
 
 /obj/item/organ/internal/brain/unathi
 	icon = 'icons/obj/special_organs/unathi.dmi'
+	desc = "A smallish looking brain."
 
 /obj/item/organ/internal/brain/vox
+	name = "cortical-stack"
+	desc = "A peculiarly advanced bio-electronic device that seems to hold the memories and identity of a Vox."
 	icon = 'icons/obj/special_organs/vox.dmi'
+	item_state = "cortical-stack"
+	item_state_world = "cortical-stack_world"
 
 /obj/item/organ/internal/brain/skrell
 	icon = 'icons/obj/special_organs/skrell.dmi'
-
-/obj/item/organ/internal/brain/ipc
-	name = "positronic brain"
-	cases = list("позитронный мозг", "позитронного мозга", "позитронному мозгу", "позитронный мозг", "позитронным мозгом", "позитронном мозге")
-	parent_bodypart = BP_CHEST
-	requires_robotic_bodypart = TRUE
-
-	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "posibrain-occupied"
+	desc = "A brain with a odd division in the middle."
 
 /obj/item/organ/internal/brain/remove(mob/living/user,special = 0)
 
@@ -621,6 +640,22 @@
 		H.update_hair(1)
 	..()
 
+/obj/item/organ/internal/brain/ipc
+	name = "positronic brain"
+	cases = list("позитронный мозг", "позитронного мозга", "позитронному мозгу", "позитронный мозг", "позитронным мозгом", "позитронном мозге")
+	parent_bodypart = BP_CHEST
+	requires_robotic_bodypart = TRUE
+	icon = 'icons/obj/assemblies.dmi'
+	icon_state = "posibrain-occupied"
+	item_state_world = "posibrain-occupied"
+	var/obj/item/device/mmi/posibrain/stored_mmi
+
+
+/obj/item/organ/internal/brain/ipc/remove(mob/living/carbon/human/M, special = 0)
+	if(!special)
+		var/brain_type = /obj/item/device/mmi/posibrain
+		var/obj/item/device/mmi/P = new brain_type(owner.loc)
+		P.transfer_identity(owner)
 
 
 /obj/item/organ/internal/brain/abomination
@@ -631,6 +666,7 @@
 /obj/item/organ/internal/eyes
 	name = "eyes"
 	icon_state = "eyes"
+	item_state_world = "eyes_world"
 	cases = list("глаза", "глаз", "глазам", "глаза", "глазами", "глазах")
 	organ_tag = O_EYES
 	parent_bodypart = BP_HEAD
@@ -663,30 +699,36 @@
 		regenerate_icons()
 
 /obj/item/organ/internal/eyes/tajaran
+	name = "tajaran eyeballs"
 	icon = 'icons/obj/special_organs/tajaran.dmi'
 
 /obj/item/organ/internal/eyes/unathi
+	name = "unathi eyeballs"
 	icon = 'icons/obj/special_organs/unathi.dmi'
 
+
 /obj/item/organ/internal/eyes/vox
+	name = "vox eyeballs"
 	icon = 'icons/obj/special_organs/vox.dmi'
 
 /obj/item/organ/internal/eyes/skrell
+	name = "skrell eyeballs"
 	icon = 'icons/obj/special_organs/skrell.dmi'
 
 /obj/item/organ/internal/eyes/diona
 	name = "nutrient sac"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podkid"
+	item_state_world = "podkid"
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"
 	cases = list("камеры", "камер", "камерам", "камеры", "камерами", "камерах")
-	robotic = 2
 	requires_robotic_bodypart = TRUE
-
+	status = ORGAN_ROBOT
 	icon = 'icons/obj/robot_component.dmi'
 	icon_state = "camera"
+	item_state_world = "camera"
 
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()

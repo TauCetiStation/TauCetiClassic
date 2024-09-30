@@ -321,20 +321,20 @@ Note that amputating the affected organ does in fact remove the infection from t
 	switch(disintegrate)
 		if(DROPLIMB_EDGE)
 			if(!clean)
-				var/gore_sound = "[is_robotic() ? "tortured metal" : "ripping tendons and flesh"]"
+				var/gore_sound = "[is_robotic_part() ? "tortured metal" : "ripping tendons and flesh"]"
 				owner.visible_message(
 					"<span class='danger'>\The [owner]'s [name] flies off in an arc!</span>",
 					"<span class='userdanger'><b>Your [name] goes flying off!</b></span>",
 					"<span class='danger'>You hear a terrible sound of [gore_sound].</span>")
 		if(DROPLIMB_BURN)
-			var/gore = "[is_robotic() ? "": " of burning flesh"]"
+			var/gore = "[is_robotic_part() ? "": " of burning flesh"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] flashes away into ashes!</span>",
 				"<span class='userdanger'><b>Your [name] flashes away into ashes!</b></span>",
 				"<span class='danger'>You hear a crackling sound[gore].</span>")
 		if(DROPLIMB_BLUNT)
-			var/gore = "[is_robotic() ? "": " in shower of gore"]"
-			var/gore_sound = "[is_robotic() ? "rending sound of tortured metal" : "sickening splatter of gore"]"
+			var/gore = "[is_robotic_part() ? "": " in shower of gore"]"
+			var/gore_sound = "[is_robotic_part() ? "rending sound of tortured metal" : "sickening splatter of gore"]"
 			owner.visible_message(
 				"<span class='danger'>\The [owner]'s [name] explodes[gore]!</span>",
 				"<span class='userdanger'><b>Your [name] explodes[gore]!</b></span>",
@@ -365,7 +365,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
-				if(is_robotic() && !no_explode && sabotaged)
+				if(is_robotic_part() && !no_explode && sabotaged)
 					explosion(get_turf(owner), 0, 0, 2, 3)
 					var/datum/effect/effect/system/spark_spread/spark_system = new
 					spark_system.set_up(5, 0, owner)
@@ -391,7 +391,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			should_delete = TRUE
 		if(DROPLIMB_BLUNT)
 			var/obj/effect/decal/cleanable/blood/gibs/gore
-			if(is_robotic())
+			if(is_robotic_part())
 				gore = new /obj/effect/decal/cleanable/blood/gibs/robot(get_turf(owner))
 			else
 				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(owner))
@@ -623,7 +623,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/is_flesh()
 	return controller.bodypart_type == BODYPART_ORGANIC
 
-/obj/item/organ/external/proc/is_robotic()
+/obj/item/organ/external/proc/is_robotic_part()
 	return controller.bodypart_type == BODYPART_ROBOTIC
 
 /obj/item/organ/external/proc/is_usable()
@@ -636,7 +636,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return (status & ORGAN_ARTERY_CUT)
 
 /obj/item/organ/external/proc/is_malfunctioning()
-	return (is_robotic() && prob(brute_dam + burn_dam))
+	return (is_robotic_part() && prob(brute_dam + burn_dam))
 
 //for arms and hands
 /obj/item/organ/external/proc/process_grasp(obj/item/c_hand, hand_name)
@@ -1116,7 +1116,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 
 /obj/item/organ/external/proc/get_wounds_desc()
-	if(is_robotic())
+	if(is_robotic_part())
 		var/list/descriptors = list()
 		if(brute_dam)
 			switch(brute_dam)
