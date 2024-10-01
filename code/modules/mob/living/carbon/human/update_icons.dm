@@ -100,7 +100,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/icon_path = def_icon_path
 
 	var/t_state
-	if(sprite_sheet_slot in list(SPRITE_SHEET_HELD, SPRITE_SHEET_GLOVES, SPRITE_SHEET_BELT, SPRITE_SHEET_UNIFORM, SPRITE_SHEET_UNIFORM_FAT))
+	if(sprite_sheet_slot in list(SPRITE_SHEET_HELD, SPRITE_SHEET_GLOVES, SPRITE_SHEET_BELT, SPRITE_SHEET_UNIFORM, SPRITE_SHEET_UNIFORM_FAT, SPRITE_SHEET_EARS))
 		t_state = item_state
 		if(!icon_custom)
 			icon_state_appendix = null
@@ -381,7 +381,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_inv_wear_id()
 	update_inv_gloves()
 	update_inv_glasses()
-	update_inv_ears()
+	update_inv_r_ear()
+	update_inv_l_ear()
 	update_inv_shoes()
 	update_inv_s_store()
 	update_inv_wear_mask()
@@ -518,34 +519,37 @@ Please contact me on #coderbus IRC. ~Carn x
 	apply_standing_overlay(GLASSES_LAYER)
 
 
-/mob/living/carbon/human/update_inv_ears()
-	remove_standing_overlay(EARS_LAYER)
+/mob/living/carbon/human/update_inv_l_ear()
+	remove_standing_overlay(L_EAR_LAYER)
+	if(l_ear)
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				l_ear.screen_loc = ui_l_ear			//...draw the item in the inventory screen
+			client.screen += l_ear					//Either way, add the item to the HUD
 
-	if(l_ear || r_ear)
-		if(l_ear)
-			if(client && hud_used && hud_used.hud_shown)
-				if(hud_used.inventory_shown)			//if the inventory is open ...
-					l_ear.screen_loc = ui_l_ear			//...draw the item in the inventory screen
-				client.screen += l_ear					//Either way, add the item to the HUD
+		var/image/standing = l_ear.get_standing_overlay(src, 'icons/mob/l_ear.dmi', SPRITE_SHEET_EARS, -L_EAR_LAYER)
+		standing = human_update_offset(standing, TRUE)
+		standing.pixel_x += species.offset_features[OFFSET_EARS][1]
+		standing.pixel_y += species.offset_features[OFFSET_EARS][2]
+		overlays_standing[L_EAR_LAYER] = standing
 
-			var/image/standing = l_ear.get_standing_overlay(src, 'icons/mob/ears.dmi', SPRITE_SHEET_EARS, -EARS_LAYER)
-			standing = human_update_offset(standing, TRUE)
-			standing.pixel_x += species.offset_features[OFFSET_EARS][1]
-			standing.pixel_y += species.offset_features[OFFSET_EARS][2]
-			overlays_standing[EARS_LAYER] = standing
-		if(r_ear)
-			if(client && hud_used && hud_used.hud_shown)
-				if(hud_used.inventory_shown)		//if the inventory is open ...
-					r_ear.screen_loc = ui_r_ear		//...draw the item in the inventory screen
-				client.screen += r_ear				//Either way, add the item to the HUD
+	apply_standing_overlay(L_EAR_LAYER)
 
-			var/image/standing = r_ear.get_standing_overlay(src, 'icons/mob/ears.dmi', SPRITE_SHEET_EARS, -EARS_LAYER)
-			standing = human_update_offset(standing, TRUE)
-			standing.pixel_x += species.offset_features[OFFSET_EARS][1]
-			standing.pixel_y += species.offset_features[OFFSET_EARS][2]
-			overlays_standing[EARS_LAYER] = standing
+/mob/living/carbon/human/update_inv_r_ear()
+	remove_standing_overlay(R_EAR_LAYER)
+	if(r_ear)
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)		//if the inventory is open ...
+				r_ear.screen_loc = ui_r_ear		//...draw the item in the inventory screen
+			client.screen += r_ear				//Either way, add the item to the HUD
 
-	apply_standing_overlay(EARS_LAYER)
+		var/image/standing = r_ear.get_standing_overlay(src, 'icons/mob/r_ear.dmi', SPRITE_SHEET_EARS, -R_EAR_LAYER)
+		standing = human_update_offset(standing, TRUE)
+		standing.pixel_x += species.offset_features[OFFSET_EARS][1]
+		standing.pixel_y += species.offset_features[OFFSET_EARS][2]
+		overlays_standing[R_EAR_LAYER] = standing
+
+	apply_standing_overlay(R_EAR_LAYER)
 
 
 /mob/living/carbon/human/update_inv_shoes()
