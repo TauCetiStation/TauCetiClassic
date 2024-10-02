@@ -1447,9 +1447,6 @@
 	var/suffix_pos = findtext(icon_name, overlay_suffix)
 	if(suffix_pos > 0)
 		icon_name = copytext(icon_name, suffix_pos)
-		to_chat(world, "3-icon_name:[icon_name]")
-	else
-		to_chat(world, "Суффикс не найден, icon_name не изменён")
 	if(icon_name in ALLOWED_ID_OVERLAYS)
 		return icon_name
 	return "id"
