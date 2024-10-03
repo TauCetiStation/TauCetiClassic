@@ -15,12 +15,24 @@
 	var/is_admin_message = 0
 	var/icon/img = null
 	var/icon/backup_img
-	var/list/voters = list() //stores a string with voters
-	var/likes = 0
-	var/dislikes = 0
+	var/list/voters = list() //stores a string with voters and his mark
+	var/displayVoters = FALSE
 	var/count_comments = 0
-	var/comments_closed = TRUE //spoiler
 	var/list/datum/comment_pages/pages = list()
+
+/datum/feed_message/proc/get_likes()
+	var/likes = 0
+	for(var/voter in voters)
+		if(voters[voter] > 0)
+			likes += voters[voter]
+	return likes
+
+/datum/feed_message/proc/get_dislikes()
+	var/dislikes = 0
+	for(var/voter in voters)
+		if(voters[voter] < 0)
+			dislikes -= voters[voter]
+	return dislikes
 
 /datum/comment_pages
 	var/list/datum/message_comment/comments = list() //stores COMMENTS_ON_PAGE comments
@@ -366,7 +378,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			if(9)
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[viewing_channel.author]</FONT>\]</FONT><HR>"
 				if(viewing_channel.censored)
-					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрозой благополучию станции, и был отмечен ❌-меткой НаноТрейзен.<BR>"
+					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрозой благополучию станции и был отмечен ❌-меткой НаноТрейзен.<BR>"
 					dat+="Невозможно опубликовывать новые Истории, пока действует ❌-метка.<BR><BR>"
 				else
 					if( isemptylist(viewing_channel.messages) )
@@ -381,10 +393,33 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR><BR>"
 							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
 							//If a person has already voted, then the button will not be clickable
-							dat+="<FONT SIZE=1>[((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.likes]</FONT> \
-											   [((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.dislikes]</FONT></FONT>"
-
-							dat+="<BR><A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Открыть комментарии</B></A> - ([MESSAGE.count_comments])<HR>"
+							dat+="<FONT SIZE=1>[((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=like_clck.png>") : ("<A href='?src=\ref[src];setLike=\ref[MESSAGE]'><img src=like.png></A>")]: <FONT SIZE=2>[MESSAGE.get_likes()]</FONT> \
+											   [((scanned_user in MESSAGE.voters) || (scanned_user == "Unknown")) ? ("<img src=dislike_clck.png>") : ("<A href='?src=\ref[src];setDislike=\ref[MESSAGE]'><img src=dislike.png></A>")]: <FONT SIZE=2>[MESSAGE.get_dislikes()]</FONT></FONT>"
+							if(securityCaster)
+								dat+=" <A href='?src=\ref[src];toggleDisplayVoters=\ref[MESSAGE]'>"
+								dat+="<span class='fas fa-eye[MESSAGE.displayVoters ? "-slash" : ""]'></span>"
+								dat+="</a>"
+								dat+="<BR>"
+								if(MESSAGE.displayVoters)
+									var/likes = MESSAGE.get_likes()
+									var/dislikes = MESSAGE.get_dislikes()
+									if(likes > 0)
+										dat+="<b>Лайки</b>"
+										dat+="<ol>"
+										for(var/voterName in MESSAGE.voters)
+											if(MESSAGE.voters[voterName] > 0)
+												dat+="<li>[voterName]</li>"
+										dat+="</ol>"
+									if(dislikes > 0)
+										dat+="<b>Дизлайки</b>"
+										dat+="<ol>"
+										for(var/voterName in MESSAGE.voters)
+											if(MESSAGE.voters[voterName] < 0)
+												dat+="<li>[voterName]</li>"
+										dat+="</ol>"
+							else
+								dat+="<BR>"
+							dat+="<A href='?src=\ref[src];open_pages=\ref[MESSAGE]'><B>Открыть комментарии</B></A> - ([MESSAGE.count_comments])<HR>"
 
 				dat+="<A href='?src=\ref[src];refresh=1'>Обновить</A>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Назад</A>"
@@ -401,9 +436,9 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				dat+="<HR><BR><A href='?src=\ref[src];setScreen=[0]'>Назад</A>"
 			if(11)
 				dat+="<B>Обработчик ❌-метки НаноТрейзен</B><HR>"
-				dat+="<FONT SIZE=1>❌-меткой должен быть отмечен канал, который служба безопасности сочтет Канал опасным для морального духа и дисциплины персонала станции."
-				dat+="❌-метка не позволяет кому-либо обновлять, изменять или добавлять Истории в Канал, но при этом сохраняет всю информацию."
-				dat+="Вы можете наложить или убрать ❌-метку в любое время, если у вас есть необходимый доступ.</FONT><HR>"
+				dat+="<FONT SIZE=1>❌-меткой должен быть отмечен Канал, который служба безопасности сочтет опасным для морального духа и дисциплины персонала станции. \
+				❌-метка не позволяет кому-либо обновлять, изменять или добавлять Истории в Канал, но при этом сохраняет всю информацию. \
+				Вы можете поставить или убрать ❌-метку в любое время, если у вас есть необходимый доступ.</FONT><HR>"
 				if(isemptylist(news_network.network_channels))
 					dat+="<I>Активных Каналов не найдено...</I><BR>"
 				else
@@ -427,7 +462,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[создано: <FONT COLOR='maroon'>[viewing_channel.author]</FONT> \]</FONT><BR>"
 				dat+="Если вы считаете содержание опасным для станции, вы можете <A href='?src=\ref[src];toggle_d_notice=\ref[viewing_channel]'>Наложить ❌-метку на Канал</A>.<HR>"
 				if(viewing_channel.censored)
-					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрозой благополучию станции, и был отмечен ❌-меткой НаноТрейзен.<BR>"
+					dat+="<FONT COLOR='red'><B>ВНИМАНИЕ: </B></FONT>Этот Канал был признан угрозой благополучию станции и был отмечен ❌-меткой НаноТрейзен.<BR>"
 					dat+="Невозможно опубликовывать новые Истории, пока действует ❌-метка.</FONT><BR><BR>"
 				else
 					if( isemptylist(viewing_channel.messages) )
@@ -829,8 +864,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			screen = 25
 		else
 			var/datum/feed_message/FM = locate(href_list["setLike"])
-			FM.voters += scanned_user
-			FM.likes += 1
+			FM.voters[scanned_user] = 1
 			var/datum/money_account/MA = FM.author_account
 			if(MA && !MA.suspended && (FM.author != scanned_user))
 				var/payment = 5
@@ -844,8 +878,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			screen = 25
 		else
 			var/datum/feed_message/FM = locate(href_list["setDislike"])
-			FM.voters += scanned_user
-			FM.dislikes += 1
+			FM.voters[scanned_user] = -1
 			var/datum/money_account/MA = FM.author_account
 			if(MA && !MA.suspended && (FM.author != scanned_user))
 				var/payment = 5
@@ -853,6 +886,10 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 					payment *= 2
 				charge_to_account(MA.account_number, "Newscaster", "Вашу новость оценили", name, payment)
 				charge_to_account(global.station_account.account_number, "Newscaster", "Оплата СМИ", name, -payment)
+
+	else if(href_list["toggleDisplayVoters"])
+		var/datum/feed_message/FM = locate(href_list["toggleDisplayVoters"])
+		FM.displayVoters = !FM.displayVoters
 
 	else if(href_list["open_pages"]) //page with comments for assistants
 		var/datum/feed_message/FM = locate(href_list["open_pages"])
@@ -1090,7 +1127,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 								user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
 							dat+="<FONT SIZE=1>\[Автор: <FONT COLOR='maroon'>[MESSAGE.author]</FONT>\]</FONT><BR>"
-							dat+="<FONT SIZE=1>Лайки: [MESSAGE.likes] Дизлайки: [MESSAGE.dislikes]</FONT><BR><BR>"
+							dat+="<FONT SIZE=1>Лайки: [MESSAGE.get_likes()] Дизлайки: [MESSAGE.get_dislikes()]</FONT><BR><BR>"
 						dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>Маленькая надпись внизу страницы гласит: \"[scribble]\"</I>"

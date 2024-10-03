@@ -151,6 +151,10 @@
 	if(!length(signal_procs[target]))
 		signal_procs -= target
 
+/datum/proc/RegisterSignals(datum/target, list/signal_types, proctype, override = FALSE)
+	for (var/signal_type in signal_types)
+		RegisterSignal(target, signal_type, proctype, override)
+
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
 

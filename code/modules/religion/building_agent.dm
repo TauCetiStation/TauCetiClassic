@@ -3,7 +3,7 @@
 // Maybe rename
 /datum/building_agent
 	var/name
-	var/atom/building_type
+	var/datum/building_type
 	var/favor_cost = 0
 	var/deconstruct_favor_cost = 0
 	var/piety_cost = 0
@@ -139,9 +139,14 @@
 /datum/building_agent/tech
 	var/icon
 	var/icon_state
-	var/researching = FALSE
+
+/datum/building_agent/tech/aspect
+	// base costs
+	favor_cost = 0
+	piety_cost = 100
 
 /datum/building_agent/tech/cult
+
 /datum/building_agent/tech/cult/memorize_rune
 	name = "Запомнить Руну"
 	icon = 'icons/obj/rune.dmi'
@@ -157,6 +162,14 @@
 	building_type = /datum/religion_tech/cult/reusable_runes
 	favor_cost = 600
 	piety_cost = 50
+
+/datum/building_agent/tech/cult/cooldown_reduction
+	name = "Быстрая Телепортация"
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "6"
+	building_type = /datum/religion_tech/cult/cooldown_reduction
+	favor_cost = 330
+	piety_cost = 130
 
 /datum/building_agent/tech/cult/build_everywhere
 	name = "Строительство Везде"
