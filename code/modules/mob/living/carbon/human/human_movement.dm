@@ -136,6 +136,9 @@
 	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
 		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
 
+	if(HAS_TRAIT(src, TRAIT_AUTOFIRE_SHOOTS)) // so that you can’t run at full speed and shoot everyone and everything
+		tally += 0.75
+
 	return (tally + config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)

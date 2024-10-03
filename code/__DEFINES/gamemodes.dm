@@ -25,6 +25,7 @@
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
 #define F_ZOMBIES            "Zobmies"
 #define F_REPLICATORS        "Replicators"
+#define F_SPACE_TRADERS      "Space Traders"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
@@ -67,6 +68,7 @@
 #define REPLICATOR "Replicator"
 #define PIRATE "Pirate"
 #define PRISONER "Prisoner"
+#define SPACE_TRADER "Space Trader"
 #define THIEF "Thief"
 
 ////////////////////// GREETS /////////////////////////
