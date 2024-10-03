@@ -1136,47 +1136,6 @@ var/global/BSACooldown = 0
 
 	return 1
 
-/**********************Administration Shuttle**************************/
-
-var/global/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
-
-/proc/move_admin_shuttle()
-	var/area/fromArea
-	var/area/toArea
-	var/static/moving = FALSE
-
-	if(moving)
-		return
-	moving = TRUE
-
-	if (admin_shuttle_location == 1)
-		fromArea = locate(/area/shuttle/administration/station)
-		toArea = locate(/area/shuttle/administration/centcom)
-
-		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_admin")
-	else
-		fromArea = locate(/area/shuttle/administration/centcom)
-		toArea = locate(/area/shuttle/administration/station)
-
-		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/centcom/specops, "centcomm_admin")
-
-	fromArea.move_contents_to(toArea)
-
-	if (admin_shuttle_location)
-		admin_shuttle_location = 0
-
-		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/centcom/specops, "centcomm_admin")
-	else
-		admin_shuttle_location = 1
-
-		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_admin")
-
-	moving = FALSE
-
 /**********************Centcom Ferry**************************/
 
 var/global/ferry_location = 0 // 0 = centcom , 1 = station

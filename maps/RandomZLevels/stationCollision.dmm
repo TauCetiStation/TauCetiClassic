@@ -709,7 +709,7 @@
 	},
 /obj/item/clothing/shoes/syndigaloshes,
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/item/weapon/gun/projectile/automatic/silenced,
+/obj/item/weapon/gun/projectile/automatic/pistol/silenced,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
