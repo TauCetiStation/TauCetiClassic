@@ -16,6 +16,8 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/colorooc,				//allows us to set a custom colour for everythign we say in ooc,
 	/client/proc/admin_ghost,			//allows us to ghost/reenter body at will,
 	/client/proc/toggle_view_range,		//changes how far we can see,
+	/client/proc/cmd_mwntor_pm_context,	//right-click adminPM interface,
+	/client/proc/cmd_mentor_pm_panel,
 	/client/proc/cmd_admin_pm_context,	//right-click adminPM interface,
 	/client/proc/cmd_admin_pm_panel,	//admin-pm list,
 	/client/proc/cmd_admin_subtle_message,	//send an message to somebody as a 'voice in their head',
@@ -480,7 +482,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(!config.sql_enabled)
 		to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
 		return
-		
+
 	holder.DB_ban_panel()
 	feedback_add_details("admin_verb","UBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

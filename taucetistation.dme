@@ -1824,6 +1824,7 @@
 #include "code\modules\media\broadcast\transmitters\broadcast.dm"
 #include "code\modules\memories\memories.dm"
 #include "code\modules\mentor\mentor.dm"
+#include "code\modules\mentor\mentorpm.dm"
 #include "code\modules\mentor\mentorhelp.dm"
 #include "code\modules\metahelp\metahelp.dm"
 #include "code\modules\minigames\minesweeper.dm"
