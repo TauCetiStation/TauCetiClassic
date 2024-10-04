@@ -341,6 +341,7 @@
 	icon_state = "weaponcrateopen";
 	opened = 1
 	},
+/obj/item/weapon/disk/tech_disk/spec_ops,
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
 	},
