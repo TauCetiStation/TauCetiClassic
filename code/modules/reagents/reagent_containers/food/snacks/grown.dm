@@ -88,7 +88,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherries
 	seed_type = /obj/item/seeds/cherryseed
 	name = "cherries"
-	cases = list("вишня", "вишни", "вишне", "вишня", "вишней", "вишне")
+	cases = list("вишня", "вишни", "вишне", "вишню", "вишней", "вишне")
 	desc = "Лучшее украшение для торта!" // Адаптация вместо "Хороша для топпингов"
 	icon_state = "cherry"
 	filling_color = "#ff0000"
@@ -412,7 +412,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed
 	seed_type = /obj/item/seeds/laughweedseed
 	name = "laughweed"
-	cases = list("смехтрава", "смехтравы", "смехтраве", "смехтрава", "смехтравой", "смехтраве")	
+	cases = list("смехтрава", "смехтравы", "смехтраве", "смехтраву", "смехтравой", "смехтраве")	
 	desc = "У нас было 2 пакетика травы..."
 	icon_state = "laughweed"
 	item_state_world = "laughweed_world"
@@ -429,7 +429,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed
 	seed_type = /obj/item/seeds/megaweedseed
 	name = "megaweed"
-	cases = list("мегатравка", "мегатравки", "мегатравке", "мегатравка", "мегатравкой", "мегатравке")	
+	cases = list("мегатравка", "мегатравки", "мегатравке", "мегатравку", "мегатравкой", "мегатравке")	
 	desc = "У нас было 2 пакетика мегатравы..."
 	icon_state = "megaweed"
 	item_state_world = "megaweed_world"
@@ -447,7 +447,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed
 	seed_type = /obj/item/seeds/blackweedseed
 	name = "deathweed"
-	cases = list("смертьтрава", "смертьтравы", "смертьтраве", "смертьтрава", "смертьтравой", "смертьтраве")	
+	cases = list("смертьтрава", "смертьтравы", "смертьтраве", "смертьтраву", "смертьтравой", "смертьтраве")	
 	desc = "Смешит до болезненных колик в животике."
 	icon_state = "blackweed"
 	item_state_world = "blackweed_world"
@@ -553,7 +553,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	seed_type = /obj/item/seeds/pumpkinseed
 	name = "pumpkin"
-	cases = list("тыква", "тыквы", "тыкве", "тыква", "тыквой", "тыкве")	
+	cases = list("тыква", "тыквы", "тыкве", "тыкву", "тыквой", "тыкве")	
 	desc = "Большая и страшная."
 	icon_state = "pumpkin"
 	potency = 10
@@ -623,7 +623,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
 	seed_type = /obj/item/seeds/whitebeetseed
 	name = "white-beet"
-	cases = list("сахарная свекла", "сахарной свеклы", "сахарной свекле", "сахарная свекла", "сахарной свеклой", "сахарной свекле")	
+	cases = list("сахарная свекла", "сахарной свеклы", "сахарной свекле", "сахарную свеклу", "сахарной свеклой", "сахарной свекле")	
 	desc = "Не то чтобы сильно сладкая."
 	icon_state = "whitebeet"
 	potency = 15
@@ -835,7 +835,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	seed_type = /obj/item/seeds/wheatseed
 	name = "wheat"
-	cases = list("пшеница", "пшеницы", "пшенице", "пшеница", "пшеницей", "пшенице")	
+	cases = list("пшеница", "пшеницы", "пшенице", "пшеницу", "пшеницей", "пшенице")	
 	desc = "Курочка будет благодарна."
 	gender = PLURAL
 	icon_state = "wheat"
@@ -962,7 +962,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
 	seed_type = /obj/item/seeds/angelmycelium
 	name = "destroying angel"
-	cases = list("бледная поганка", "бледной поганки", "бледной поганке", "бледная поганка", "бледной поганкой", "бледной поганке")	
+	cases = list("бледная поганка", "бледной поганки", "бледной поганке", "бледную поганку", "бледной поганкой", "бледной поганке")	
 	desc = "<I>Бледная поганка</I>: Смертельно ядовитый гриб-базидиомицет, содержащий альфа-аматоксины."
 	icon_state = "angel"
 	potency = 35
@@ -1312,7 +1312,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
 	seed_type = /obj/item/seeds/tea_astra
 	name = "Tea Astra tips"
-	cases = list("чайная астра", "чайной астры", "чайной астре", "чайная астра", "чайной астрой", "чайной астре")
+	cases = list("чайная астра", "чайной астры", "чайной астре", "чайную астру", "чайной астрой", "чайной астре")
 	desc = "Как насчет травяного чая по уникальному бабушкиному рецепту?"
 	icon_state = "tea_astra_leaves"
 
