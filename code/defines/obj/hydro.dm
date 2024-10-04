@@ -1033,7 +1033,7 @@
 
 /obj/item/seeds/brownmold
 	name = "pack of brown mold"
-	cases = list("упаковка коричневой плесени", "упаковки коричневой плесени", "упаковке коричневой плесени", "упаковка коричневой плесени", "упаковкой коричневой плесени", "упаковке коричневой плесени")
+	cases = list("упаковка коричневой плесени", "упаковки коричневой плесени", "упаковке коричневой плесени", "упаковку коричневой плесени", "упаковкой коричневой плесени", "упаковке коричневой плесени")
 	desc = "Оу... заплесневело."
 	icon_state = "seed"
 	species = "mold"
@@ -1621,7 +1621,7 @@
 	seed_type = /obj/item/seeds/sunflowerseed
 
 /obj/item/weapon/grown/
-	cases = list("крапива", "крапивы", "крапиве", "крапива", "крапивой", "крапиве")
+	cases = list("крапива", "крапивы", "крапиве", "крапиву", "крапивой", "крапиве")
 	desc = "Вероятно <B>НЕ</B> разумно трогать это голыми руками..."
 	icon = 'icons/obj/weapons.dmi'
 	name = "nettle"
@@ -1644,7 +1644,7 @@
 		force = round((5 + potency / 5), 1)
 
 /obj/item/weapon/grown/deathnettle
-	cases = list("смерто-крапива", "смерто-крапивы", "смерто-крапиве", "смерто-крапива", "смерто-крапивой", "смерто-крапиве")
+	cases = list("смерто-крапива", "смерто-крапивы", "смерто-крапиве", "смерто-крапиву", "смерто-крапивой", "смерто-крапиве")
 	desc = "Эта <span class='warning'>светящаяся</span> крапива пробуждает в вас <span class='warning'><B>ярость</B></span> от одного лишь взгляда!"
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
@@ -1669,14 +1669,14 @@
 		force = round((5 + potency / 2.5), 1)
 
 /obj/item/weapon/grown/deathnettle/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class='warning'><b>[user] поедает [CASE(src, DATIVE_CASE)]! Похоже, что [THEY_RU(user)] пытается покончить с собой.</b></span>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] поедает [CASE(src, ACCUSATIVE_CASE)]! Похоже, что [THEY_RU(user)] пытается покончить с собой.</b></span>")
 	return (BRUTELOSS | TOXLOSS)
 
 /obj/item/weapon/grown/durathread
 	seed_type = /obj/item/seeds/durathread
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	name = "durathread bundle"
-	cases = list("клубок дюранити", "клубка дюранити", "клубку дюранити", "клубок дюранити", "клубком дюранити", "клубке дюранити")
+	cases = list("клубок дюраткани", "клубка дюраткани", "клубку дюраткани", "клубок дюраткани", "клубком дюраткани", "клубке дюраткани")
 	desc = "Крепкий клубок дюранити, удачи в его распутывании."
 	icon_state = "durathread"
 
@@ -1762,7 +1762,7 @@
 	var/PestKillStr = 2
 
 /obj/item/weapon/pestspray/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class='warning'><b>[user] вдыхает [CASE(src, DATIVE_CASE)]! Похоже, что [THEY_RU(user)] пытается покончить с собой.</b></span>")
+	to_chat(viewers(user), "<span class='warning'><b>[user] вдыхает [CASE(src, ACCUSATIVE_CASE)]! Похоже, что [THEY_RU(user)] пытается покончить с собой.</b></span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/minihoe // -- Numbers
@@ -1786,7 +1786,7 @@
 
 /obj/item/weedkiller
 	name = "bottle of weedkiller"
-	cases = list("бутылка средства от сорняков", "бутылки средства от сорняков", "бутылке средства от сорняков", "бутылка средства от сорняков", "бутылкой средства от сорняков", "бутылке средства от сорняков")
+	cases = list("бутылка средства от сорняков", "бутылки средства от сорняков", "бутылке средства от сорняков", "бутылку средства от сорняков", "бутылкой средства от сорняков", "бутылке средства от сорняков")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	var/toxicity = 0
@@ -1794,14 +1794,14 @@
 
 /obj/item/weedkiller/triclopyr
 	name = "bottle of glyphosate"
-	cases = list("бутылка глифосата", "бутылки глифосата", "бутылке глифосата", "бутылка глифосата", "бутылкой глифосата", "бутылке глифосата")
+	cases = list("бутылка глифосата", "бутылки глифосата", "бутылке глифосата", "бутылку глифосата", "бутылкой глифосата", "бутылке глифосата")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	toxicity = 4
 	WeedKillStr = 2
 
 /obj/item/weedkiller/lindane
-	cases = list("бутылка линдана", "бутылки линдана", "бутылке линдана", "бутылка линдана", "бутылкой линдана", "бутылке линдана")
+	cases = list("бутылка линдана", "бутылки линдана", "бутылке линдана", "бутылку линдана", "бутылкой линдана", "бутылке линдана")
 	name = "bottle of triclopyr"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
@@ -1809,7 +1809,7 @@
 	WeedKillStr = 4
 
 /obj/item/weedkiller/D24
-	cases = list("бутылка 2,4-D", "бутылки 2,4-D", "бутылке 2,4-D", "бутылка 2,4-D", "бутылкой 2,4-D", "бутылке 2,4-D")
+	cases = list("бутылка 2,4-D", "бутылки 2,4-D", "бутылке 2,4-D", "бутылку 2,4-D", "бутылкой 2,4-D", "бутылке 2,4-D")
 	name = "bottle of 2,4-D"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
@@ -1822,7 +1822,7 @@
 
 /obj/item/nutrient
 	name = "bottle of nutrient"
-	cases = list("бутылка удобрений", "бутылки удобрений", "бутылке удобрений", "бутылка удобрений", "бутылкой удобрений", "бутылке удобрений")
+	cases = list("бутылка удобрений", "бутылки удобрений", "бутылке удобрений", "бутылку удобрений", "бутылкой удобрений", "бутылке удобрений")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	w_class = SIZE_TINY
@@ -1836,7 +1836,7 @@
 
 /obj/item/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
-	cases = list("бутылка E-Z удобрений", "бутылки E-Z удобрений", "бутылке E-Z удобрений", "бутылка E-Z удобрений", "бутылкой E-Z удобрений", "бутылке E-Z удобрений")
+	cases = list("бутылка E-Z удобрений", "бутылки E-Z удобрений", "бутылке E-Z удобрений", "бутылку E-Z удобрений", "бутылкой E-Z удобрений", "бутылке E-Z удобрений")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle16"
 	mutmod = 1
@@ -1844,7 +1844,7 @@
 
 /obj/item/nutrient/l4z
 	name = "bottle of Left 4 Zed"
-	cases = list("бутылка удобрений Left 4 Zed", "бутылки удобрений Left 4 Zed", "бутылке удобрений Left 4 Zed", "бутылка удобрений Left 4 Zed", "бутылкой удобрений Left 4 Zed", "бутылке удобрений Left 4 Zed")
+	cases = list("бутылка удобрений Left 4 Zed", "бутылки удобрений Left 4 Zed", "бутылке удобрений Left 4 Zed", "бутылку удобрений Left 4 Zed", "бутылкой удобрений Left 4 Zed", "бутылке удобрений Left 4 Zed")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
 	mutmod = 2
@@ -1852,7 +1852,7 @@
 
 /obj/item/nutrient/rh
 	name = "bottle of Robust Harvest"
-	cases = list("бутылка удобрений Robust Harvest", "бутылки удобрений Robust Harvest", "бутылке удобрений Robust Harvest", "бутылка удобрений Robust Harvest", "бутылкой удобрений Robust Harvest", "бутылке удобрений Robust Harvest")
+	cases = list("бутылка удобрений Robust Harvest", "бутылки удобрений Robust Harvest", "бутылке удобрений Robust Harvest", "бутылку удобрений Robust Harvest", "бутылкой удобрений Robust Harvest", "бутылке удобрений Robust Harvest")
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 	mutmod = 0
