@@ -273,7 +273,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	)
 
 /obj/item/weapon/shovel/experimental
-	name = "experimental shove"
+	name = "experimental shovel"
 	desc = "A large tool for digging and moving dirt."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "expshovel"
