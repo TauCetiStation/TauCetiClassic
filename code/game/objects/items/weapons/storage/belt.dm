@@ -181,6 +181,26 @@
 	for (var/i in 1 to 6)
 		new /obj/item/device/soulstone(src)
 
+/obj/item/weapon/storage/belt/wands
+	name = "magic wands belt"
+	desc = "Designed for ease of access to the wands, as to not let a single enemy life slip away."
+	icon_state = "soulstonebelt"
+	item_state = "soulstonebelt"
+	storage_slots = 7
+	can_hold = list(
+		/obj/item/weapon/gun/magic/wand
+		)
+
+/obj/item/weapon/storage/belt/wands/atom_init()
+	. = ..()
+	new /obj/item/weapon/gun/magic/wand/fireball(src)
+	new /obj/item/weapon/gun/magic/wand/blink(src)
+	new /obj/item/weapon/gun/magic/wand/magic_carp(src)
+	new /obj/item/weapon/gun/magic/wand/forcewall(src)
+	new /obj/item/weapon/gun/magic/wand/broken_mirror(src)
+	new /obj/item/weapon/gun/magic/wand/magic_missle(src)
+	new /obj/item/weapon/gun/magic/wand/healing(src)
+
 /obj/item/weapon/storage/belt/champion
 	name = "championship belt"
 	desc = "Proves to the world that you are the strongest!"

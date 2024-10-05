@@ -321,13 +321,17 @@
 	light_color = "#629bb4"
 
 /obj/item/projectile/magic/wand/broken_mirror/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	..()
+	if(ishuman(target))
+		var/mob/living/carbon/human/T = target
+		T.randomize_appearance()
 
 /obj/item/projectile/magic/wand/magic_missle
 	name = "magic rocket"
 	icon_state = "magicm"
 	light_color = "#b63aa3"
-	stun = 2
-	weaken = 5
+	stun = 3
+	weaken = 8
 
 /obj/item/projectile/magic/wand/magic_carp
 	name = "bolt of carps"
@@ -335,9 +339,11 @@
 	light_color = "#b63aa3"
 
 /obj/item/projectile/magic/wand/magic_carp/do_effect(target)
-	var/fire_dir = get_dir(target,starting)
-	var/new_loc = get_step(target, fire_dir)
-	new /mob/living/simple_animal/hostile/carp/magic(get_turf(new_loc), target)
+	var/final_loc = target
+	if(istype(target, /turf/simulated/wall))
+		var/fire_dir = get_dir(target,starting)
+		final_loc = get_step(target, fire_dir)
+	new /mob/living/simple_animal/hostile/carp/magic(get_turf(final_loc), target)
 
 
 

@@ -2,15 +2,19 @@
 	name = "staff of nothing"
 	desc = "This staff is boring to watch because even though it came first you've seen everything it can do in other staves for years."
 	icon = 'icons/obj/wizard.dmi'
-	icon_state = "staff"
+	icon_state = "neal_on"
 	item_state = "staff"
+	var/item_state_inventory_on = null
+	var/item_state_inventory_off = null
+	var/item_state_world_on = null
+	var/item_state_world_off = null
 	fire_sound = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	w_class = SIZE_NORMAL
 	var/max_charges = 3
 	var/charges = 0
-	var/recharge_rate = 14
+	var/recharge_rate = 14 /* 1 = 2sec*/
 	var/charge_tick = 0
 	var/can_charge = 1
 	var/ammo_type = /obj/item/ammo_casing/magic
@@ -61,15 +65,35 @@
 		STOP_PROCESSING(SSobj, src)
 	return ..()
 
-
 /obj/item/weapon/gun/magic/process()
 	charge_tick++
 	if(charge_tick < recharge_rate || charges >= max_charges) return 0
 	charge_tick = 0
 	charges++
+	update_icon()
+	update_world_icon()
 	return 1
 
 /obj/item/weapon/gun/magic/update_icon()
+
+	if(item_state_inventory_off != null){
+		if(charges > 0)
+			icon_state = item_state_inventory_on
+			item_state_inventory = item_state_inventory_on
+		else
+			icon_state = item_state_inventory_off
+			item_state_inventory = item_state_inventory_off
+	}
+
+/obj/item/weapon/gun/magic/update_world_icon()
+
+	if(item_state_world_off != null){
+		if(charges > 0)
+			item_state_world = item_state_world_on
+		else
+			item_state_world = item_state_world_off
+		..()
+	}
 	return
 
 /obj/item/weapon/gun/magic/shoot_with_empty_chamber(mob/living/user)
@@ -79,13 +103,13 @@
 /obj/item/weapon/gun/magic/wand
 	name = "wand of nothing"
 	desc = "This wand is boring to watch because... it cant do anything."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/wands.dmi'
 	icon_state = "wand_null"
-	item_state = "wand_null"
+	item_state = "godstaff"
 	fire_sound = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
-	w_class = SIZE_NORMAL
+	w_class = SIZE_TINY
 	max_charges = 1  /*Weaker that staff, but cheaper*/
 	charges = 0
 	recharge_rate = 1 /* Recharge spells = origin spell cooldown*/
@@ -103,8 +127,10 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user)
-	user.visible_message("<span class='danger'> [user] zaps self with [src].</span>")
+	user.visible_message("<span class='danger'> [user] стреляет в себя из [src].</span>")
 	playsound(user, fire_sound, VOL_EFFECTS_MASTER, TRUE)
+	charges--
+	update_icon()
 
 /obj/item/weapon/gun/magic/wand/attack(mob/living/M, mob/living/user, def_zone)
 	if(user.a_intent != INTENT_HARM && M == user)

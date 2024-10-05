@@ -18,6 +18,9 @@
 /obj/item/ammo_casing/magic/wand/forcewall
 	projectile_type = /obj/item/projectile/magic/wand/forcewall
 
+/obj/item/ammo_casing/magic/wand/blink
+	projectile_type = /obj/item/projectile/magic/wand/blink
+
 /obj/item/ammo_casing/magic/wand/heal
 	projectile_type = /obj/item/projectile/magic/wand/heal
 
