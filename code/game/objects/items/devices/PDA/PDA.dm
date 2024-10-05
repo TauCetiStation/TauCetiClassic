@@ -1443,12 +1443,8 @@
 /obj/item/device/pda/proc/get_id_overlay(obj/item/weapon/card/id/I)
 	if(!I)
 		return
-	var/icon_name = initial(I.icon_state)
-	var/suffix_pos = findtext(icon_name, overlay_suffix)
-	if(suffix_pos > 0)
-		icon_name = copytext(icon_name, suffix_pos)
-	if(icon_name in ALLOWED_ID_OVERLAYS)
-		return icon_name
+	if(I.icon_state in ALLOWED_ID_OVERLAYS)
+		return item_state_inventory ? "[initial(I.icon_state)]_world" : "[initial(I.icon_state)]"
 	return "id"
 
 /obj/item/device/pda/proc/detonate_act(obj/item/device/pda/P)
