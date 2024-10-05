@@ -335,6 +335,14 @@
 	category = "Помощь"
 	cost = 3
 
+/datum/spellbook_entry/item/staffanimation
+	name = "Пояс магических жезлов"
+	desc =  "Набор магических жезлов для начинаюших магов, начинающих не-магов и карпов."
+	item_path = /obj/item/weapon/storage/belt/wands
+	log_name = "WW"
+	category = "Помощь"
+	cost = 3 //for now - Ro2tCrab.. free to balance this later
+
 /datum/spellbook_entry/item/staffdoor
 	name = "Посох создания дверей"
 	desc = "Специфичный посох, который может превращать твердые стены в двери. Полезно с заклинаниями телепорта. Не работает со стеклом."
