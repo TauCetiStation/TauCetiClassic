@@ -254,6 +254,9 @@
 	damage_deflection = 15
 	resistance_flags = CAN_BE_HIT
 	cutting_sound = 'sound/items/Axe.ogg'
+	var/restoring_moles = MOLES_CELLSTANDARD / 2
+	var/animating = FALSE
+	var/pressure = 0
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
 
 /obj/structure/flora/tree/atom_init()
