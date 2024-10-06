@@ -1,11 +1,14 @@
-/area/pluvia_heaven
-	name = "Pluvia Heaven"
-	icon_state = "unexplored"
-
 /var/global/social_credit_threshold
 /var/global/haram_threshold = 5
 /var/global/list/available_pluvia_gongs = list()
 var/global/list/wisp_start_landmark = list()
+
+/obj/effect/landmark/heaven_landmark
+	name = "Heaven"
+	icon = 'icons/mob/landmarks.dmi'
+	icon_state = "x"
+	anchored = TRUE
+	layer = MOB_LAYER
 
 /turf/simulated/wall/heaven
 	icon = 'icons/turf/walls/has_false_walls/wall_heaven.dmi'
@@ -15,7 +18,7 @@ var/global/list/wisp_start_landmark = list()
 
 /turf/simulated/floor/beach/water/waterpool/heaven
 	name = "Heaven"
-	cases = list("Р Р°Р№", "Р Р°СЏ", "Р Р°СЋ", "Р Р°Р№", "Р Р°РµРј", "Р Р°Рµ")
+	cases = list("Рай", "Рая", "Раю", "Рай", "Раем", "Рае")
 	plane = PLANE_SPACE
 	light_color = "#ffffff"
 	light_power = 2
@@ -23,7 +26,7 @@ var/global/list/wisp_start_landmark = list()
 
 /mob/living/carbon/human/proc/bless()
 	if(ispluvian(src))
-		to_chat(src, "<span class='notice'>\ <font size=4>Р’Р°Рј РёР·РІРµСЃС‚РЅРѕ, С‡С‚Рѕ РїРѕСЃР»Рµ СЃРјРµСЂС‚Рё РІС‹ РїРѕРїР°РґРµС‚Рµ РІ СЂР°Р№</span></font>")
+		to_chat(src, "<span class='notice'>\ <font size=4>Вам известно, что после смерти вы попадете в рай</span></font>")
 		mind.blessed = 1
 		mind.social_credit = 2
 		var/image/eye = image('icons/mob/human_face.dmi', icon_state = "pluvia_ms_s")
@@ -34,27 +37,27 @@ var/global/list/wisp_start_landmark = list()
 
 /obj/item/weapon/bless_vote
 	name = "Bless vote"
-	cases = list("Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРµ РїРёСЃСЊРјРѕ", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРіРѕ РїРёСЃСЊРјР°", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРјСѓ РїРёСЃСЊРјСѓ", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРµ РїРёСЃСЊРјРѕ", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅС‹Рј РїРёСЃСЊРјРѕРј", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРј РїРёСЃСЊРјРµ")
-	desc = "Р‘РёР»РµС‚ РґРѕ СЂР°СЏ."
+	cases = list("Рекомендательное письмо", "Рекомендательного письма", "Рекомендательному письму", "Рекомендательное письмо", "Рекомендательным письмом", "Рекомендательном письме")
+	desc = "Билет до рая."
 	w_class = SIZE_TINY
 	icon = 'icons/obj/items.dmi'
 	icon_state = "bless-vote"
 	item_state_world = "bless-vote_world"
 	var/mob/living/carbon/human/owner
 	var/sign = FALSE
-	var/sign_place = "РџРћР”РџРРЎРђРўР¬"
+	var/sign_place = "ПОДПИСАТЬ"
 
 /obj/item/weapon/bless_vote/attack_self(mob/living/carbon/user)
 	user.set_machine(src)
 	var/dat
-	dat = "<B><font color = ##ff0000>[CASE(src, NOMINATIVE_CASE)] РґР»СЏ РїСЂРѕС…РѕРґР° РІ СЂР°Р№</font></B><BR>"
+	dat = "<B><font color = ##ff0000>[CASE(src, NOMINATIVE_CASE)] для прохода в рай</font></B><BR>"
 	if(owner.gender == FEMALE)
-		dat += "<I><font color = ##ff0000>РџРѕРґРїРёСЃС‹РІР°СЏ СЌС‚Сѓ Р±СѓРјР°РіСѓ, РІС‹ РїРѕРґС‚РІРµСЂР¶РґР°РµС‚Рµ [CASE(owner, ACCUSATIVE_CASE)] РґРѕСЃС‚РѕР№РЅРѕР№ РїРѕРїР°СЃС‚СЊ РІ СЂР°Р№ РїРѕСЃР»Рµ СЃРјРµСЂС‚Рё</font></I><BR><BR>"
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете [CASE(owner, ACCUSATIVE_CASE)] достойной попасть в рай после смерти</font></I><BR><BR>"
 	else
-		dat += "<I><font color = ##ff0000>РџРѕРґРїРёСЃС‹РІР°СЏ СЌС‚Сѓ Р±СѓРјР°РіСѓ, РІС‹ РїРѕРґС‚РІРµСЂР¶РґР°РµС‚Рµ [CASE(owner, ACCUSATIVE_CASE)] РґРѕСЃС‚РѕР№РЅС‹Рј РїРѕРїР°СЃС‚СЊ РІ СЂР°Р№ РїРѕСЃР»Рµ СЃРјРµСЂС‚Рё</font></I><BR><BR>"
-	dat += "<I><font color = ##ff0000>РџСЂРѕРєРѕР»РёС‚Рµ РїРѕРґСѓС€РµС‡РєСѓ РїР°Р»СЊС†Р° РѕР± С€РёРї Рё РїСЂРёР»РѕР¶РёС‚Рµ Рє РјРµСЃС‚Сѓ РґР»СЏ РїРµС‡Р°С‚Рё</font></I><BR>"
+		dat += "<I><font color = ##ff0000>Подписывая эту бумагу, вы подтверждаете [CASE(owner, ACCUSATIVE_CASE)] достойным попасть в рай после смерти</font></I><BR><BR>"
+	dat += "<I><font color = ##ff0000>Проколите подушечку пальца об шип и приложите к месту для печати</font></I><BR>"
 	dat += "<A href='byond://?src=\ref[src];choice=yes'>[sign_place]</A><BR>"
-	var/datum/browser/popup = new(user, "window=bless_vote", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРµ РїРёСЃСЊРјРѕ")
+	var/datum/browser/popup = new(user, "window=bless_vote", "Рекомендательное письмо")
 	popup.set_content(dat)
 	popup.open()
 
@@ -65,25 +68,25 @@ var/global/list/wisp_start_landmark = list()
 		return
 	if(href_list["choice"] == "yes")
 		if(usr == owner)
-			to_chat(usr, "<span class='warning'>РЎРІРѕРµ РїРёСЃСЊРјРѕ РЅРµР»СЊР·СЏ РїРѕРґРїРёСЃС‹РІР°С‚СЊ!</span>")
+			to_chat(usr, "<span class='warning'>Свое письмо нельзя подписывать!</span>")
 		else if(sign)
-			to_chat(usr, "<span class='notice'>Р­С‚Р° Р±СѓРјР°РіР° СѓР¶Рµ РїРѕРґРїРёСЃР°РЅР°</span>")
+			to_chat(usr, "<span class='notice'>Эта бумага уже подписана</span>")
 		else if(H.mind.social_credit > 0)
-			to_chat(usr, "<span class='notice'>РџРѕРґРїРёСЃР°РЅРѕ!</span>")
+			to_chat(usr, "<span class='notice'>Подписано!</span>")
 			sign_place = H.name
 			H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
 			H.mind.social_credit -= 1
 			if(!owner.ismindshielded() && !owner.isloyal())
 				owner.mind.social_credit += 1
 			sign = TRUE
-			to_chat(owner, "<span class='notice'>Р’Р°С€ СѓСЂРѕРІРµРЅСЊ РєР°СЂРјС‹ РїРѕРІС‹С€РµРЅ!</span>")
+			to_chat(owner, "<span class='notice'>Ваш уровень кармы повышен!</span>")
 		else
-			to_chat(usr, "<span class='notice'>РЈ РІР°СЃ РЅРµС‚ РїСЂР°РІР° РіРѕР»РѕСЃР°</span>")
+			to_chat(usr, "<span class='notice'>У вас нет права голоса</span>")
 
 
 /obj/effect/proc_holder/spell/create_bless_vote
-	name = "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРµ РїРёСЃСЊРјРѕ"
-	cases = list("Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРµ РїРёСЃСЊРјРѕ", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРіРѕ РїРёСЃСЊРјР°", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРјСѓ РїРёСЃСЊРјСѓ", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРµ РїРёСЃСЊРјРѕ", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅС‹Рј РїРёСЃСЊРјРѕРј", "Р РµРєРѕРјРµРЅРґР°С‚РµР»СЊРЅРѕРј РїРёСЃСЊРјРµ")
+	name = "Рекомендательное письмо"
+	cases = list("Рекомендательное письмо", "Рекомендательного письма", "Рекомендательному письму", "Рекомендательное письмо", "Рекомендательным письмом", "Рекомендательном письме")
 	range = 1
 	charge_max = 0
 	clothes_req = FALSE
@@ -99,7 +102,7 @@ var/global/list/wisp_start_landmark = list()
 
 	if(possible_targets.len == 0)
 		revert_cast()
-		to_chat(user, "<span class='warning'>Р СЏРґРѕРј СЃ РІР°РјРё РЅРµС‚ Р±СѓРјР°РіРё.</span>")
+		to_chat(user, "<span class='warning'>Рядом с вами нет бумаги.</span>")
 		return
 
 	target = show_radial_menu(user, user, possible_targets, radius = 36, tooltips = TRUE)
@@ -113,14 +116,14 @@ var/global/list/wisp_start_landmark = list()
 	var/obj/item/weapon/bless_vote/V = new /obj/item/weapon/bless_vote(user.loc)
 	V.owner = user
 	user.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
-	to_chat(src, "<span class='notice'>Р’Р°С€Р° РєСЂРѕРІСЊ СЂР°СЃС‚РµРєР°РµС‚СЃСЏ РїРѕ Р±СѓРјР°РіРµ, РѕР±СЂР°Р·СѓСЏ СЃРёРјРІРѕР»С‹</span>")
+	to_chat(src, "<span class='notice'>Ваша кровь растекается по бумаге, образуя символы</span>")
 	qdel(target)
 
 
 /obj/effect/proc_holder/spell/no_target/ancestor_call
-	name = "РЎРІСЏР·СЊ СЃ РїСЂРµРґРєР°РјРё"
-	cases = list("РЎРІСЏР·СЊ СЃ РїСЂРµРґРєР°РјРё", "РЎРІСЏР·Рё СЃ РїСЂРµРґРєР°РјРё", "РЎРІСЏР·Рё СЃ РїСЂРµРґРєР°РјРё", "РЎРІСЏР·СЊ СЃ РїСЂРµРґРєР°РјРё", "РЎРІСЏР·СЊСЋ СЃ РїСЂРµРґРєР°РјРё", "РЎРІСЏР·Рё СЃ РїСЂРµРґРєР°РјРё")
-	desc = "РџРѕРїС‹С‚Р°Р№С‚РµСЃСЊ СЃРІСЏР·Р°С‚СЊСЃСЏ СЃ РґСѓС€Р°РјРё РїСЂРµРґРєРѕРІ"
+	name = "Связь с предками"
+	cases = list("Связь с предками", "Связи с предками", "Связи с предками", "Связь с предками", "Связью с предками", "Связи с предками")
+	desc = "Попытайтесь связаться с душами предков"
 	action_icon_state = "pluvia_call"
 	clothes_req = FALSE
 	range = -1
@@ -137,7 +140,7 @@ var/global/list/wisp_start_landmark = list()
 /obj/effect/proc_holder/spell/no_target/ancestor_call/cast(list/targets,mob/living/carbon/human/user = usr)
 	if(!fake_body)
 		if(available_pluvia_gongs.len == 0)
-			to_chat(user, "<span class='warning'>Р’СЃРµ Р»РёРЅРёРё СЃРІСЏР·Рё СЃРµР№С‡Р°СЃ Р·Р°РЅСЏС‚С‹! РџРѕРїСЂРѕР±СѓР№С‚Рµ РїРѕР·Р¶Рµ</span>")
+			to_chat(user, "<span class='warning'>Все линии связи сейчас заняты! Попробуйте позже</span>")
 			return
 		if(!target_loc)
 			my_gong = pick(available_pluvia_gongs)
@@ -169,12 +172,12 @@ var/global/list/wisp_start_landmark = list()
 		user.cut_overlay(eye)
 		available_pluvia_gongs += my_gong
 		user.hud_used.set_parallax(PARALLAX_CLASSIC)
-	user.clear_alert("Р—РІРѕРЅРѕРє")
+	user.clear_alert("Звонок")
 
 /obj/structure/pluvia_gong
 	name = "Gong"
-	desc = "РљРѕРіРґР° РѕС‡РµРЅСЊ-РѕС‡РµРЅСЊ РЅСѓР¶РЅРѕ СЃРІСЏР·Р°С‚СЊСЃСЏ СЃ Р¶РёРІС‹РјРё"
-	cases = list("Р“РѕРЅРі", "Р“РѕРЅРіР°", "Р“РѕРЅРіСѓ", "Р“РѕРЅРіР°", "Р“РѕРЅРіРѕРј", "Р“РѕРЅРіРµ")
+	desc = "Когда очень-очень нужно связаться с живыми"
+	cases = list("Гонг", "Гонга", "Гонгу", "Гонга", "Гонгом", "Гонге")
 	icon = 'icons/obj/pluvia_gong.dmi'
 	icon_state = "gong"
 	anchored = TRUE
@@ -183,8 +186,8 @@ var/global/list/wisp_start_landmark = list()
 
 /obj/item/weapon/melee/pluvia_gong_baton
 	name = "Gong`s stick"
-	desc = "РРЅСЃС‚СЂСѓРјРµРЅС‚ РґР»СЏ РїР»СѓРІРёР№СЃРєРѕРіРѕ РіРѕРЅРіР°"
-	cases = list("РљРѕР»РѕС‚СѓС€РєР° РґР»СЏ РіРѕРЅРіР°", "РљРѕР»РѕС‚СѓС€РєРё РґР»СЏ РіРѕРЅРіР°", "РљРѕР»РѕС‚СѓС€РєРµ РґР»СЏ РіРѕРЅРіР°", "РљРѕР»РѕС‚СѓС€РєРё РґР»СЏ РіРѕРЅРіР°", "РљРѕР»РѕС‚СѓС€РєРѕР№ РґР»СЏ РіРѕРЅРіР°", "РљРѕР»РѕС‚СѓС€РєРµ РґР»СЏ РіРѕРЅРіР°")
+	desc = "Инструмент для плувийского гонга"
+	cases = list("Колотушка для гонга", "Колотушки для гонга", "Колотушке для гонга", "Колотушки для гонга", "Колотушкой для гонга", "Колотушке для гонга")
 	icon_state = "mallet"
 	item_state_world = "mallet_world"
 	item_state = "mallet"
@@ -195,7 +198,7 @@ var/global/list/wisp_start_landmark = list()
 
 /obj/structure/pluvia_gong/proc/ring(mob/user)
 	if(next_ring > world.time)
-		to_chat(user, "<span class='notice'>РџРѕР¶Р°Р»СѓР№СЃС‚Р° РїРѕРґРѕР¶РґРёС‚Рµ [round((next_ring - world.time) * 0.1, 0.1)] СЃРµРєСѓРЅРґ</span>")
+		to_chat(user, "<span class='notice'>Пожалуйста подождите [round((next_ring - world.time) * 0.1, 0.1)] секунд</span>")
 		return
 	next_ring = world.time + 30 SECONDS
 	var/list/possible_targets = list()
@@ -206,16 +209,16 @@ var/global/list/wisp_start_landmark = list()
 				var/mob/living/target = possible_targets[H]
 				target.copy_overlays(H)
 
-	visible_message("[bicon(src)] <span class='notice'>[CASE(src, NOMINATIVE_CASE)] РіСѓРґРёС‚ РѕС‚ СѓРґР°СЂР° [CASE(user, ACCUSATIVE_CASE)].</span>")
+	visible_message("[bicon(src)] <span class='notice'>[CASE(src, NOMINATIVE_CASE)] гудит от удара [CASE(user, ACCUSATIVE_CASE)].</span>")
 	playsound(src, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 75, null)
 
 	if(possible_targets.len == 0)
-		to_chat(user, "<span class='warning'>РЎРїРёСЃРѕРє Р°РєС‚РёРІРЅС‹С… Р°Р±РѕРЅРµРЅС‚РѕРІ РїСѓСЃС‚</span>")
+		to_chat(user, "<span class='warning'>Список активных абонентов пуст</span>")
 		return
 	target = show_radial_menu(user, user, possible_targets, radius = 36, tooltips = TRUE)
 	if(!target)
 		return
-	target.throw_alert("Р—РІРѕРЅРѕРє", /atom/movable/screen/alert/pluvia_ring)
+	target.throw_alert("Звонок", /atom/movable/screen/alert/pluvia_ring)
 	target.playsound_local(null, 'sound/effects/bell.ogg', VOL_EFFECTS_MASTER, 75, null)
 	for(var/obj/effect/proc_holder/spell/no_target/ancestor_call/S in target.spell_list)
 		S.target_loc = src.loc
@@ -228,8 +231,8 @@ var/global/list/wisp_start_landmark = list()
 /mob/living/simple_animal/ancestor_wisp
 	name = "Wisp"
 	real_name = "Wisp"
-	cases = list("РЎРІРµС‚Р»СЏС‡РѕРє", "РЎРІРµС‚Р»СЏС‡РєР°", "РЎРІРµС‚Р»СЏС‡РєСѓ", "РЎРІРµС‚Р»СЏС‡РєР°", "РЎРІРµС‚Р»СЏС‡РєРѕРј", "РЎРІРµС‚Р»СЏС‡РєРµ")
-	desc = "Р‘РµР·РѕР±РёРґРЅС‹Р№ СЃРІРµС‚Р»СЏС‡РѕРє"
+	cases = list("Светлячок", "Светлячка", "Светлячку", "Светлячка", "Светлячком", "Светлячке")
+	desc = "Безобидный светлячок"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wisp"
 	icon_living = "wisp"
@@ -268,9 +271,9 @@ var/global/list/wisp_start_landmark = list()
 	return
 
 /mob/living/simple_animal/ancestor_wisp/proc/return_to_heaven()
-	set category = "РЎРІРµС‚Р»СЏС‡РѕРє"
-	set name = "Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ СЂР°Р№"
-	set desc = "Р’РѕР·РІСЂР°С‰Р°РµС‚ РІР°СЃ РѕР±СЂР°С‚РЅРѕ РІ РІР°С€Рµ С‚РµР»Рѕ"
+	set category = "Светлячок"
+	set name = "Вернуться в рай"
+	set desc = "Возвращает вас обратно в ваше тело"
 	death()
 
 /mob/living/simple_animal/ancestor_wisp/atom_init()
@@ -301,8 +304,8 @@ var/global/list/wisp_start_landmark = list()
 
 /obj/structure/moonwell
 	name = "Moonwell"
-	cases = list("Р›СѓРЅРЅС‹Р№ РєРѕР»РѕРґРµС†", "Р›СѓРЅРЅРѕРіРѕ РєРѕР»РѕРґС†Р°", "Р›СѓРЅРЅРѕРјСѓ РєРѕР»РѕРґС†Сѓ", "Р›СѓРЅРЅРѕРіРѕ РєРѕР»РѕРґС†Р°", "Р›СѓРЅРЅС‹Рј РєРѕР»РѕРґС†РµРј", "Р›СѓРЅРЅРѕРј РєРѕР»РѕРґС†Рµ")
-	desc = "РќСѓ-РєР° РїРѕСЃРјРѕС‚СЂРёРј, С‡С‚Рѕ С‚Р°Рј Сѓ СЃС‚Р°РЅС†РёРѕРЅРµСЂРѕРІ."
+	cases = list("Лунный колодец", "Лунного колодца", "Лунному колодцу", "Лунного колодца", "Лунным колодцем", "Лунном колодце")
+	desc = "Ну-ка посмотрим, что там у станционеров."
 	icon = 'icons/obj/structures/moonwell.dmi'
 	icon_state = "well"
 	var/next_wisp = 0
@@ -312,7 +315,7 @@ var/global/list/wisp_start_landmark = list()
 /obj/structure/moonwell/attack_hand(mob/living/carbon/human/user)
 	if(user.get_species() in list(PLUVIAN_SPIRIT))
 		if(next_wisp > world.time)
-			to_chat(user, "<span class='notice'>РџРѕР¶Р°Р»СѓР№СЃС‚Р° РїРѕРґРѕР¶РґРёС‚Рµ [round((next_wisp - world.time) * 0.1, 0.1)] СЃРµРєСѓРЅРґ.</span>")
+			to_chat(user, "<span class='notice'>Пожалуйста подождите [round((next_wisp - world.time) * 0.1, 0.1)] секунд.</span>")
 			return
 		next_wisp = world.time + 70 SECONDS
 		var/mob/living/simple_animal/ancestor_wisp/new_wisp = new /mob/living/simple_animal/ancestor_wisp(pick(wisp_start_landmark))

@@ -27197,10 +27197,6 @@
 /obj/item/weapon/flora/random,
 /turf/unsimulated/floor,
 /area/centcom/specops)
-"iuC" = (
-/obj/effect/light_emitter,
-/turf/unsimulated/floor/carpet/blue2,
-/area/pluvia_heaven)
 "ivb" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 4
@@ -27223,9 +27219,6 @@
 	icon_state = "darkgreen"
 	},
 /area/centcom/control)
-"iwH" = (
-/turf/unsimulated/floor/carpet/blue2,
-/area/pluvia_heaven)
 "ixb" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -27977,6 +27970,11 @@
 	icon_state = "brown"
 	},
 /area/centcom/bar)
+"jPD" = (
+/obj/effect/light_emitter,
+/obj/effect/landmark/heaven_landmark,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "jPL" = (
 /obj/effect/decal/turf_decal{
 	dir = 4;
@@ -40345,9 +40343,9 @@ vZC
 jOn
 fEa
 pyr
-iwH
-iwH
-iwH
+pyr
+pyr
+pyr
 kWT
 wQk
 wQk
@@ -40602,9 +40600,9 @@ jOn
 jOn
 jOn
 pyr
-iwH
-iuC
-iwH
+pyr
+jPD
+pyr
 pQZ
 hkC
 mSS
@@ -40859,9 +40857,9 @@ wWE
 jOn
 roT
 pyr
-iwH
-iwH
-iwH
+pyr
+pyr
+pyr
 hxJ
 aTH
 aTH

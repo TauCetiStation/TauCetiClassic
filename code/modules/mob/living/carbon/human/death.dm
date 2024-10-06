@@ -17,8 +17,8 @@
 	..()
 
 /mob/living/carbon/human/proc/reborn()
-	var/area/heaven_tile = pick(get_area_turfs(get_area_by_type(/area/pluvia_heaven)))
-	var/mob/living/carbon/human/pluvian_spirit/P = new /mob/living/carbon/human/pluvian_spirit(heaven_tile)
+	var/target = pick_landmarked_location("Heaven")
+	var/mob/living/carbon/human/pluvian_spirit/P = new /mob/living/carbon/human/pluvian_spirit(target)
 	for(var/obj/effect/proc_holder/spell/S in spell_list)
 		if(!istype(S,/obj/effect/proc_holder/spell/create_bless_vote))
 			P.spells_to_remember.Add(S)
