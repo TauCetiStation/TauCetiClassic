@@ -274,19 +274,11 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/shovel/experimental
 	name = "experimental shove"
-	desc = "A large tool for digging and moving dirt."
+	desc = "It's a damn cool shovel."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "expshovel"
-	flags = CONDUCT
-	slot_flags = SLOT_FLAGS_BELT
-	force = 8.0
-	throwforce = 4.0
-	item_state = "shovel"
-	w_class = SIZE_SMALL
 	toolspeed = 0.1
 	origin_tech = "materials=2;engineering=3"
-	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
-	usesound = 'sound/effects/shovel_digging.ogg'
 	qualities = list(
 		QUALITY_PRYING = 0.5
 	)
