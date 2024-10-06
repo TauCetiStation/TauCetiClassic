@@ -244,6 +244,9 @@
 	..()
 
 // trees
+
+#define AIR_PLANT_PRESSURE	ONE_ATMOSPHERE * 0.90	// ~ 90 kPa
+
 /obj/structure/flora/tree
 	name = "tree"
 	anchored = TRUE
@@ -258,6 +261,26 @@
 	var/animating = FALSE
 	var/pressure = 0
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
+
+/obj/structure/flora/tree/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	set_light(2, 1, "#24c1ff")
+
+/obj/structure/flora/tree/process()
+	if(prob(25))
+		var/turf/T = get_turf(src)
+
+		if(isspaceturf(T) || !istype(T, /turf/simulated))
+			qdel(src)
+
+		var/datum/gas_mixture/environment = T.return_air()
+		pressure = round(environment.return_pressure())
+
+		//actually restoring air
+		if(pressure < AIR_PLANT_PRESSURE)
+			environment.adjust_multi_temp("oxygen", restoring_moles*O2STANDARD, T20C, "nitrogen", restoring_moles*N2STANDARD, T20C)
+
 
 /obj/structure/flora/tree/atom_init()
 	. = ..()
