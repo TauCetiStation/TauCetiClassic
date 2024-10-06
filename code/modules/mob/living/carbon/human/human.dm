@@ -1999,6 +1999,14 @@
 					if(!mind.blessed)
 						bless()
 				break
+			else if(mind)
+				for(var/mob/dead/observer/ghost in player_list)
+					if(ghost.mind == mind && ghost.can_reenter_corpse)
+						ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+						var/answer = tgui_alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate", list("Yes","No"))
+						if(answer == "Yes")
+							ghost.reenter_corpse()
+						break
 	else if(mind)
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind == mind && ghost.can_reenter_corpse)

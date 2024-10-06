@@ -151,7 +151,7 @@
 	flags = HEAR_PASS_SAY
 
 /obj/item/weapon/holder/monkey/pluvia
-	name = "Плувеныш"
+	name = "pluvian"
 	desc = "Оно никогда не существовало в дикой природе.."
 	icon_state = "pluvian"
 	flags = HEAR_PASS_SAY
