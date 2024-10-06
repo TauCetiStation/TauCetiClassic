@@ -245,7 +245,7 @@
 
 // trees
 
-#define AIR_PLANT_PRESSURE	ONE_ATMOSPHERE * 0.90	// ~ 90 kPa
+
 
 /obj/structure/flora/tree
 	name = "tree"
@@ -261,11 +261,6 @@
 	var/animating = FALSE
 	var/pressure = 0
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
-
-/obj/structure/flora/tree/atom_init()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-	set_light(2, 1, "#24c1ff")
 
 /obj/structure/flora/tree/process()
 	if(prob(25))

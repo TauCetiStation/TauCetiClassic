@@ -450,7 +450,7 @@
 
 //Air generator
 
-#define AIR_PLANT_PRESSURE	ONE_ATMOSPHERE * 0.90	// ~ 90 kPa
+ #define AIR_PLANT_PRESSURE	ONE_ATMOSPHERE * 0.90	// ~ 90 kPa
 
 /obj/structure/alien/air_plant
 	name = "strange plant"
