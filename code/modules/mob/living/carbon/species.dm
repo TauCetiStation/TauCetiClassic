@@ -400,7 +400,7 @@
 
 /datum/species/pluvian/handle_death(mob/living/carbon/human/H, gibbed)
 	..()
-	H.check_pluvian_credits()
+	H.pluvian_reborn_if_worthy()
 
 /datum/species/pluvian_spirit
 	name = PLUVIAN_SPIRIT

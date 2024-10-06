@@ -64,16 +64,16 @@
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 		target.mind.social_credit = 0
 		to_chat(target, "<span class='warning'>\ <font size=5>[reason] Врата рая закрыты для вас. Ищите себе другого покровителя</span></font>")
-		log_admin("Pluvian [key_name(target)] lose /datum/religion/pluvia [ADMIN_JMP(target)]")
-		message_admins("Pluvian [key_name(target)] lose /datum/religion/pluvia [ADMIN_JMP(target)]" )
+		log_admin("Pluvian [key_name_admin(target)] lose /datum/religion/pluvia")
+		message_admins("Pluvian [key_name(target)] lose /datum/religion/pluvia" )
 		target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return TRUE
 	else
 		target.mind.haram_point += haram_amount
 		target.playsound_local(null, 'sound/effects/haram.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		to_chat(target, "<span class='warning'>\ <font size=3>[reason]</span></font>")
-		message_admins("Pluvian [key_name(target)] haram - [reason] [ADMIN_JMP(target)]")
-		log_admin("Pluvian [key_name(target)] haram - [reason] [ADMIN_JMP(target)]")
+		message_admins("Pluvian [key_name_admin(target)] haram - [reason]")
+		log_admin("Pluvian [key_name(target)] haram - [reason]")
 		return FALSE
 
 /datum/religion/pluvia/proc/harm_haram(datum/source, mob/living/carbon/human/target)

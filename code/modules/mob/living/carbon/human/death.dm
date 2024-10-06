@@ -37,10 +37,10 @@
 		I.remove_item_actions(P)
 	for(var/obj/effect/proc_holder/spell/S in P.spell_list)
 		P.RemoveSpell(S)
-	message_admins("Pluvian [key_name(P)] went to heaven! [ADMIN_JMP(P)]")
-	log_admin("Pluvian [key_name(P)] went to heaven! [ADMIN_JMP(P)]")
+	message_admins("Pluvian [key_name_admin(P)] went to heaven!")
+	log_admin("Pluvian [key_name(P)] went to heaven!")
 
-/mob/living/carbon/human/proc/check_pluvian_credits()
+/mob/living/carbon/human/proc/pluvian_reborn_if_worthy()
 	if(iscultist(src) && ischangeling(src) && isshadowthrall(src) || !mind)
 		return
 	if(isnull(social_credit_threshold))
@@ -139,7 +139,7 @@
 				crab.sting_action(src)
 			return
 	if(ispluvian(src))
-		check_pluvian_credits()
+		pluvian_reborn_if_worthy()
 
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]
 	if(IO && IO.parent_bodypart == BP_HEAD)
