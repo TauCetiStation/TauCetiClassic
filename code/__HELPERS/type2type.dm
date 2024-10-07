@@ -218,6 +218,7 @@
 	if(rights & R_WHITELIST)   . += "[seperator]+WHITELIST"
 	if(rights & R_EVENT)       . += "[seperator]+EVENT"
 	if(rights & R_LOG)		   . += "[seperator]+LOG"
+	if(rights & R_MENTOR)	   . += "[seperator]+MENTOR"
 	return .
 
 // heat2color functions. Adapted from: http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/

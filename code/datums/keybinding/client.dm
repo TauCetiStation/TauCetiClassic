@@ -20,7 +20,7 @@
 	description = "Ask an mentors for help."
 
 /datum/keybinding/client/mentor_help/down(client/user)
-	user.get_mentorhelp()
+	user.mentorhelp()
 	return TRUE
 
 /datum/keybinding/client/screenshot
