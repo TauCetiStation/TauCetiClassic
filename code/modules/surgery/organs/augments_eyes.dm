@@ -7,6 +7,7 @@
 	organ_tag = O_AUG_EYES
 	parent_bodypart = O_EYES
 
+	var/hud_types = 0
 	var/vision_flags = 0
 	var/lighting_alpha = null
 	var/list/eye_colour = list(0,0,0)
@@ -103,7 +104,6 @@
 	name = "HUD implant"
 	desc = "These cybernetic eyes will display a HUD over everything you see. Maybe."
 	slot = "eye_hud"
-	var/hud_types = 0
 
 /obj/item/organ/internal/cyberimp/eyes/hud/insert_organ(mob/living/carbon/M, special = 0)
 	..()

@@ -919,6 +919,8 @@
 	for(var/obj/item/I in get_all_slots())
 		if(I.slot_equipped in I.flash_protection_slots)
 			protection += I.flash_protection
+	for(var/obj/item/organ/internal/cyberimp/eyes/EFP in src.organs)
+		protection += EFP.flash_protection
 	return protection
 
 /mob/living/carbon/human/IsAdvancedToolUser()

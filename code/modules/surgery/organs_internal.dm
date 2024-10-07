@@ -1,7 +1,7 @@
 
 
 //////////////////////////////////////////////////////////////////
-//					 ORGAN PATCHING	          					//
+//					 ORGANS SURGERY	          					//
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/organ_manipulation
@@ -27,31 +27,34 @@
 	max_duration = 50
 
 /datum/surgery_step/organ_manipulation/place/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(ishuman(target))
-		if(target_zone in list(O_EYES , O_MOUTH, BP_HEAD))
-			return 0
-		if(is_int_organ(tool))
-			var/obj/item/organ/internal/I = tool
-			if(I.requires_robotic_bodypart)
-				user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
-				return 0
+    if(!ishuman(target))
+        return FALSE
 
-			if(target_zone != I.parent_bodypart || target.get_organ_slot(I.slot))
-				user.visible_message ( "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
-				return 0
+    if(target_zone in list(O_EYES , O_MOUTH, BP_HEAD))
+        return FALSE
 
-			if(I.damage > (I.max_damage * 0.75))
-				user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
-				return 0
+    if(!is_int_organ(tool))
+        return FALSE
 
-			if(target.get_int_organ(I))
-				user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
-				return 0
+    var/obj/item/organ/internal/I = tool
+    if(I.requires_robotic_bodypart)
+        user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
+        return FALSE
 
-			else
-				return 1
+    if(target_zone != I.parent_bodypart || target.get_organ_slot(I.slot))
+        user.visible_message ( "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
+        return FALSE
 
-	else return 0
+    if(I.damage > (I.max_damage * 0.75))
+        user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
+        return FALSE
+
+    if(target.get_int_organ(I))
+        user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
+        return FALSE
+
+    return TRUE
+
 
 /datum/surgery_step/organ_manipulation/place/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(is_int_organ(tool))
