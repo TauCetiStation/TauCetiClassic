@@ -865,7 +865,7 @@
 /turf/simulated/floor/grass,
 /area/space_structures/space_villa)
 "Gy" = (
-/obj/item/weapon/gun/projectile/automatic/silenced,
+/obj/item/weapon/gun/projectile/automatic/pistol/silenced,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/space_structures/space_villa)

@@ -418,7 +418,7 @@
 /area/awaymission/spacebattle/syndicate1)
 "bk" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/gun/projectile/automatic/silenced,
+/obj/item/weapon/gun/projectile/automatic/pistol/silenced,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},

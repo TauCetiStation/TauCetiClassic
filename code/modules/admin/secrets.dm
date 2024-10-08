@@ -294,13 +294,6 @@
 
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","ShM")
-		// Move Administration Shuttle
-		if("moveadminshuttle")
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","ShA")
-			move_admin_shuttle()
-			message_admins("<span class='notice'>[key_name_admin(usr)] moved the centcom administration shuttle</span>")
-			log_admin("[key_name(usr)] moved the centcom administration shuttle")
 		// Move Ferry
 		if("moveferry")
 			feedback_inc("admin_secrets_fun_used",1)

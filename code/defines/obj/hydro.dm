@@ -207,6 +207,24 @@
 	plant_type = 0
 	growthstages = 1
 
+/obj/item/seeds/cucumberseed
+	name = "pack of cucumber seeds"
+	cases = list("семена огурцов", "семян огурцов", "семенам огурцов", "семена огурцов", "семенами огурцов", "семенах огурцов")
+	desc = "Эти семена вырастают в огурцы."
+	icon_state = "seed-cucumber"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	species = "cucumber"
+	plantname = "Cucumbers"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cucumber
+	lifespan = 30
+	endurance = 20
+	maturation = 3
+	production = 4
+	yield = 4
+	potency = 4
+	plant_type = 0
+	growthstages = 4
+
 /obj/item/seeds/tobacco_space
 	name = "pack of space tobacco seeds"
 	desc = "These seeds grow into space tobacco plants."

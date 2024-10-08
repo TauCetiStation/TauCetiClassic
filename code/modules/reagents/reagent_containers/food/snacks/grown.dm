@@ -218,6 +218,21 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	bitesize = reagents.total_volume
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/cucumber
+	seed_type = /obj/item/seeds/cucumberseed
+	name = "cucumber"
+	cases = list("огурец", "огурца", "огурцу", "огурец", "огурцом", "огурце")
+	desc = "Выглядит как слащавый огурчик."
+	icon_state = "cucumber"
+	item_state_world = "cucumber_world"
+	potency = 15
+	filling_color = "#598157"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/cucumber/atom_init()
+	. = ..()
+	reagents.add_reagent("ethylredoxrazine", 1+round((potency / 10), 1))
+	bitesize = reagents.total_volume
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	seed_type = /obj/item/seeds/berryseed
 	name = "bunch of berries"
