@@ -37,16 +37,15 @@
 	var/data[0]
 
 	data["stationTime"] = worldtime2text()
-	var/secLevelStr
-	switch(get_security_level())
-		if("green")
-			secLevelStr = "<font color='green'><b>&#9899;</b></font>"
-		if("blue")
-			secLevelStr = "<font color='blue'><b>&#9899;</b></font>"
-		if("red")
-			secLevelStr = "<font color='red'><b>&#9899;</b></font>"
-		if("delta")
-			secLevelStr = "<font color='purple'><b>&Delta;</b></font>"
+	var/secLevelStr = code_name_eng[security_level]
+	if(security_level == SEC_LEVEL_GREEN)
+		secLevelStr = "<font color='green'><b>&#9899;</b></font>"
+	if(security_level == SEC_LEVEL_BLUE)
+		secLevelStr = "<font color='blue'><b>&#9899;</b></font>"
+	if(security_level == SEC_LEVEL_RED)
+		secLevelStr = "<font color='red'><b>&#9899;</b></font>"
+	if(security_level == SEC_LEVEL_DELTA)
+		secLevelStr = "<font color='purple'><b>&Delta;</b></font>"
 	data["securityLevel"] = secLevelStr
 
 	data["mode"] = mode
