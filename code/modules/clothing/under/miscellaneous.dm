@@ -760,13 +760,11 @@
 
 /obj/item/clothing/under/pluvia
 	name = "pluvia suit"
-	desc = ""
 	icon_state = "pluvia"
 	item_state = "pluvia"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/pluvia_gold
 	name = "pluvia suit"
-	desc = ""
 	icon_state = "pluviaGold"
 	item_state = "pluviaGold"
