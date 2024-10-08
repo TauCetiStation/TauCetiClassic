@@ -8,10 +8,16 @@
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 4
+	var/cooldown = 0
 	w_class = SIZE_TINY
 	attack_verb = list("called", "rang")
 	hitsound = list('sound/weapons/ring.ogg')
 
+/obj/item/weapon/phone/attack_self(mob/user)
+	if(cooldown <= world.time)
+		cooldown = world.time + 10
+		to_chat(user, "<span class='notice'>Сalled.</span>")
+		playsound(user, 'sound/weapons/ring.ogg', VOL_EFFECTS_MASTER, 20)
 /obj/item/weapon/rsp
 	name = "Rapid-Seed-Producer (RSP)"
 	desc = "A device used to rapidly deploy seeds."
