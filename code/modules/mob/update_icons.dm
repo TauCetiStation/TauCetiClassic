@@ -17,6 +17,8 @@
 			update_inv_back()
 		if(SLOT_WEAR_MASK)
 			update_inv_wear_mask()
+		if(SLOT_NECK)
+			update_inv_neck()
 		if(SLOT_HANDCUFFED)
 			update_inv_handcuffed()
 		if(SLOT_L_HAND)
@@ -52,7 +54,7 @@
 	switch(slot)
 		if(SLOT_MOUTH)
 			update_inv_mouth()
-		if(SLOT_NECK)
+		if(SLOT_IAN_NECK)
 			update_inv_neck()
 		else
 			..()
@@ -85,6 +87,9 @@
 	return
 
 /mob/proc/update_inv_wear_mask()
+	return
+
+/mob/proc/update_inv_neck()
 	return
 
 /mob/proc/update_inv_wear_suit()
