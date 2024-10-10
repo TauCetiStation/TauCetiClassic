@@ -252,6 +252,8 @@
 	layer = 9
 	max_integrity = 150
 	damage_deflection = 15
+	var/pressure = 0
+	var/restoring_moles = MOLES_CELLSTANDARD / 2
 	resistance_flags = CAN_BE_HIT
 	cutting_sound = 'sound/items/Axe.ogg'
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
@@ -259,6 +261,19 @@
 /obj/structure/flora/tree/atom_init()
 	. = ..()
 	AddComponent(/datum/component/seethrough, get_seethrough_map())
+
+/obj/structure/flora/tree/process()
+	if(prob(25))
+		var/turf/T = get_turf(src)
+
+		if(isspaceturf(T) || !istype(T, /turf/simulated))
+			qdel(src)
+
+		var/datum/gas_mixture/environment = T.return_air()
+		pressure = round(environment.return_pressure())
+		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+		if(light_amount > 2) //if there's enough light, heal
+			environment.adjust_multi_temp("oxygen", restoring_moles*O2STANDARD, T20C, "nitrogen", restoring_moles*N2STANDARD, T20C)
 
 ///Return a see_through_map, examples in seethrough.dm
 /obj/structure/flora/tree/proc/get_seethrough_map()
