@@ -26,6 +26,7 @@
 #define SLOT_FLAGS_DENYPOCKET   (1<<12)    // This is to deny items with a w_class of 2 or 1 to fit in pockets.
 #define SLOT_FLAGS_TWOEARS      (1<<13)
 #define SLOT_FLAGS_TIE          (1<<14)
+#define SLOT_FLAGS_NECK         (1<<15)
 
 //slots
 #define SLOT_BACK          1
@@ -50,6 +51,7 @@
 #define SLOT_LEGCUFFED     20
 #define SLOT_TIE           21
 #define SLOT_EARS          22 // Used in obscured checks
+#define SLOT_NECK          23
 
 //sprite sheet slot types(as also seen in update_icon.dm)
 #define SPRITE_SHEET_HELD "held"
@@ -65,6 +67,7 @@
 #define SPRITE_SHEET_EYES "eyes"
 #define SPRITE_SHEET_FEET "feet"
 #define SPRITE_SHEET_GLOVES "gloves"
+#define SPRITE_SHEET_NECK "neck"
 
 #define OFFSET_UNIFORM "uniform"
 #define OFFSET_ID "id"
@@ -86,7 +89,7 @@
 
 //Sol translation for dog slots.
 #define SLOT_MOUTH SLOT_WEAR_MASK  // 2
-#define SLOT_NECK  SLOT_HANDCUFFED // 3 (Ian actually is a cat! ~if you know what i mean)
+#define SLOT_IAN_NECK  SLOT_HANDCUFFED // 3 (Ian actually is a cat! ~if you know what i mean)
 
 //Cant seem to find a mob bitflags area other than the powers one
 

@@ -80,6 +80,8 @@
 			return has_bodypart(BP_CHEST)
 		if(SLOT_WEAR_MASK)
 			return has_bodypart(BP_HEAD)
+		if(SLOT_NECK)
+			return has_bodypart(BP_HEAD)
 		if(SLOT_HANDCUFFED)
 			return has_bodypart(BP_L_ARM) && has_bodypart(BP_R_ARM)
 		if(SLOT_LEGCUFFED)
@@ -158,6 +160,8 @@
 		if(internal)
 			internal = null
 		sec_hud_set_security_status()
+	else if (W == neck)
+		neck = null
 	else if (W == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
@@ -217,6 +221,9 @@
 			src.wear_mask = W
 			W.equipped(src, slot)
 			sec_hud_set_security_status()
+		if(SLOT_NECK)
+			neck = W
+			W.equipped(src, slot)
 		if(SLOT_HANDCUFFED)
 			src.handcuffed = W
 		if(SLOT_LEGCUFFED)

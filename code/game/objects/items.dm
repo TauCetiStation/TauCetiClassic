@@ -476,6 +476,12 @@
 				if( !(slot_flags & SLOT_FLAGS_MASK) )
 					return 0
 				return 1
+			if(SLOT_NECK)
+				if(H.neck)
+					return FALSE
+				if(!(slot_flags & SLOT_FLAGS_NECK) )
+					return FALSE
+				return TRUE
 			if(SLOT_BACK)
 				if(H.back)
 					return 0
@@ -677,7 +683,7 @@
 				if(C.mouth)
 					return FALSE
 				return TRUE
-			if(SLOT_NECK)
+			if(SLOT_IAN_NECK)
 				if(C.neck)
 					return FALSE
 				if(istype(src, /obj/item/weapon/handcuffs))

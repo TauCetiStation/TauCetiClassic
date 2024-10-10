@@ -76,6 +76,7 @@ var/global/list/available_ui_styles = list(
 			H.w_uniform?.screen_loc = ui_iclothing
 			H.wear_suit?.screen_loc = ui_oclothing
 			H.wear_mask?.screen_loc = ui_mask
+			H.neck?.screen_loc = ui_neck
 			H.head?.screen_loc = ui_head
 		else
 			H.shoes?.screen_loc = null
@@ -86,6 +87,7 @@ var/global/list/available_ui_styles = list(
 			H.w_uniform?.screen_loc = null
 			H.wear_suit?.screen_loc = null
 			H.wear_mask?.screen_loc = null
+			H.neck?.screen_loc = null
 			H.head?.screen_loc = null
 
 
