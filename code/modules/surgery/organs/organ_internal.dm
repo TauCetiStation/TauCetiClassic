@@ -197,6 +197,15 @@
 	fibrillation_timer_id = null
 	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
 
+/obj/item/organ/internal/heart/cybernetic
+	name = "cybernetic heart"
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Offers no benefit over an organic heart other than being easy to make."
+	icon_state = "heart-prosthetic"
+	item_state_world = "heart-prosthetic_world"
+	dead_icon = "heart-prosthetic-off"
+	status = ORGAN_ROBOT
+
+
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
 	cases = list("помпа системы охлаждения", "помпы системы охлаждения", "помпе системы охлаждения", "помпу системы охлаждения", "помпой системы охлаждения", "помпой системы охлаждения")
@@ -297,6 +306,14 @@
 	icon_state = "nymph"
 	item_state_world = "nymph"
 
+/obj/item/organ/internal/lungs/cybernetic
+	name = "cybernetic lungs"
+	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
+	icon_state = "lungs-prosthetic"
+	item_state_world = "lungs-prosthetic_world"
+	origin_tech = "biotech=4"
+	status = ORGAN_ROBOT
+
 /obj/item/organ/internal/lungs/ipc
 	name = "cooling element"
 	cases = list("охлаждающий элемент", "охлаждающего элемента", "охлаждающему элементу", "охлаждающий элемент", "охлаждающим элементом", "охлаждающем элементе")
@@ -391,6 +408,14 @@
 /obj/item/organ/internal/liver/skrell
 	name = "skrell liver"
 	icon = 'icons/obj/special_organs/skrell.dmi'
+
+/obj/item/organ/internal/liver/cybernetic
+	name = "cybernetic liver"
+	icon_state = "liver-prosthetic"
+	desc = "An electronic device designed to mimic the functions of a human liver. It has no benefits over an organic liver, but is easy to produce."
+	item_state_world = "liver-prosthetic_world"
+	origin_tech = "biotech=4"
+	status = ORGAN_ROBOT
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
@@ -536,7 +561,13 @@
 	icon_state = "nymph"
 	item_state_world = "nymph"
 
-
+/obj/item/organ/internal/kidneys/cybernetic
+	name = "cybernetic kidneys"
+	icon_state = "kidneys-prosthetic"
+	desc = "An electronic device designed to mimic the functions of human kidneys. It has no benefits over a pair of organic kidneys, but is easy to produce."
+	item_state_world = "kidneys-prosthetic_world"
+	origin_tech = "biotech=4"
+	status = ORGAN_ROBOT
 
 /obj/item/organ/internal/kidneys/ipc
 	name = "self-diagnosis unit"
@@ -654,6 +685,13 @@
 /obj/item/organ/internal/brain/ipc/remove(mob/living/carbon/human/M, special = 0)
 	if(!special)
 		var/brain_type = /obj/item/device/mmi/posibrain
+
+		var/obj/item/organ/external/BP = owner.get_bodypart(parent_bodypart)
+		if(istype(BP, /obj/item/organ/external/chest/robot/ipc))
+			var/obj/item/organ/external/chest/robot/ipc/I = BP
+			brain_type = I.posibrain_type
+
+
 		var/obj/item/device/mmi/P = new brain_type(owner.loc)
 		P.transfer_identity(owner)
 
@@ -706,7 +744,6 @@
 	name = "unathi eyeballs"
 	icon = 'icons/obj/special_organs/unathi.dmi'
 
-
 /obj/item/organ/internal/eyes/vox
 	name = "vox eyeballs"
 	icon = 'icons/obj/special_organs/vox.dmi'
@@ -720,6 +757,14 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podkid"
 	item_state_world = "podkid"
+
+/obj/item/organ/internal/eyes/cybernetic
+	name = "cybernetic eyes"
+	icon_state = "eyes-prosthetic"
+	desc = "An electronic device designed to mimic the functions of a pair of human eyes. It has no benefits over organic eyes, but is easy to produce."
+	item_state_world = "eyes-prosthetic_world"
+	origin_tech = "biotech=4"
+	status = ORGAN_ROBOT
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"
