@@ -746,6 +746,12 @@
 	if(HAS_TRAIT(M, TRAIT_LIGHT_DRINKER))
 		drunkpwr *= 2
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/internal/liver/L = H.get_int_organ(/obj/item/organ/internal/liver)
+		if(!L)
+			drunkpwr*=5
+
 	M.AdjustDrunkenness(drunkpwr)
 
 	M.dizziness += dizzy_adj

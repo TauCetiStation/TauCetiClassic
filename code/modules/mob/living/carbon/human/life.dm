@@ -347,6 +347,17 @@ var/global/list/tourette_bad_words= list(
 
 	failed_last_breath = inhale_alert
 
+	var/lungs = get_int_organ_by_name(O_LUNGS)
+	if(!lungs)
+		adjustOxyLoss(10)
+		if(prob(80))
+			emote("gasp")
+	//CRIT
+	if(!breath || (breath.total_moles == 0) || !lungs)
+		adjustOxyLoss(5)
+		throw_alert("not_enough_oxy", /atom/movable/screen/alert/oxy)
+		return FALSE
+
 	if(breath)
 		//spread some viruses while we are at it
 		if (virus2.len > 0)
@@ -1233,18 +1244,23 @@ var/global/list/tourette_bad_words= list(
 	if(stat == DEAD)
 		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse
 
-	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
-	if(life_tick % 10)
-		switch(IO.heart_status)
-			if(HEART_FAILURE)
-				to_chat(src, "<span class='userdanger'>Your feel a prick in your heart!</span>")
-				apply_effect(5,AGONY,0)
-				return PULSE_NONE
-			if(HEART_FIBR)
-				to_chat(src, "<span class='danger'>Your heart hurts a little.</span>")
-				playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-				apply_effect(1,AGONY,0)
-				return PULSE_SLOW
+	var/obj/item/organ/internal/heart/H = get_int_organ(/obj/item/organ/internal/heart)
+	if(!H)
+		return
+
+	else
+		var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+		if(life_tick % 10)
+			switch(IO.heart_status)
+				if(HEART_FAILURE)
+					to_chat(src, "<span class='userdanger'>Your feel a prick in your heart!</span>")
+					apply_effect(5,AGONY,0)
+					return PULSE_NONE
+				if(HEART_FIBR)
+					to_chat(src, "<span class='danger'>Your heart hurts a little.</span>")
+					playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+					apply_effect(1,AGONY,0)
+					return PULSE_SLOW
 
 	var/temp = PULSE_NORM
 

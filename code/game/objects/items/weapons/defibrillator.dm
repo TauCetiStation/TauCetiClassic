@@ -283,6 +283,9 @@
 	if(!check_brain(H))
 		return "buzzes, \"Error - Patient's brain is missing or is too damaged to be functional. Operation aborted.\""
 
+	if(!check_heart(H))
+		return "buzzes, \"Error - Patient's heart is missing or is too damaged to be functional. Operation aborted.\""
+
 /obj/item/weapon/shockpaddles/proc/check_contact(mob/living/carbon/human/H, sel_zone = BP_CHEST)
 	if(!combat)
 		if(H.check_pierce_protection(target_zone = sel_zone))
@@ -306,6 +309,16 @@
 		return FALSE
 	var/obj/item/organ/external/bodypart_head = H.bodyparts_by_name[BP_HEAD]
 	if(!bodypart_head || (bodypart_head.is_stump))
+		return FALSE
+	return TRUE
+
+/obj/item/weapon/shockpaddles/proc/check_heart(mob/living/carbon/human/H)
+	if(!H.should_have_organ(O_HEART))
+		return TRUE
+	if(!H.organs_by_name[O_HEART])
+		return FALSE
+	var/obj/item/organ/external/bodypart_chest = H.bodyparts_by_name[BP_CHEST]
+	if(!bodypart_chest)
 		return FALSE
 	return TRUE
 

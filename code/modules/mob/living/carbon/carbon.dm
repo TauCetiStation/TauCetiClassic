@@ -158,6 +158,13 @@
 	inhaling = inhale_pp >= druggy_inhale_pp ? inhaling : druggy_inhaling
 	inhale_pp = inhale_pp >= druggy_inhale_pp ? inhale_pp : druggy_inhale_pp
 
+	//CRIT
+	if(!breath || (breath.total_moles == 0))
+		adjustOxyLoss(5)
+		throw_alert("not_enough_oxy", /atom/movable/screen/alert/oxy)
+		return FALSE
+
+
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
 			emote("gasp")
@@ -635,7 +642,7 @@
 						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
 							var/mob/living/carbon/human/H = src
 							var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
-							if(BP && BP.is_robotic())
+							if(BP && BP.is_robotic_part())
 								var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 								sparks.set_up(3, 0, get_turf(H))
 								sparks.start()
@@ -1197,11 +1204,13 @@
 
 	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 
+	sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+/*
 	if(changeling_aug)
 		sight |= SEE_MOBS
 		see_in_dark = 8
 		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-
+*/
 	if(XRAY in mutations)
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = 8

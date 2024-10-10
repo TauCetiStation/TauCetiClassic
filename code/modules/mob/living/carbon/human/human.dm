@@ -919,6 +919,8 @@
 	for(var/obj/item/I in get_all_slots())
 		if(I.slot_equipped in I.flash_protection_slots)
 			protection += I.flash_protection
+	for(var/obj/item/organ/internal/cyberimp/eyes/EFP in src.organs)
+		protection += EFP.flash_protection
 	return protection
 
 /mob/living/carbon/human/IsAdvancedToolUser()
@@ -1240,11 +1242,15 @@
 		germ_level += n
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
-	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+	var/obj/item/organ/internal/lungs/IO = get_int_organ(/obj/item/organ/internal/lungs)
+	if(!IO)
+		return 0
+
 	return IO.is_bruised()
 
+
 /mob/living/carbon/human/proc/rupture_lung()
-	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+	var/obj/item/organ/internal/lungs/IO = get_int_organ(/obj/item/organ/internal/lungs)
 
 	if(!IO.is_bruised())
 		custom_pain("You feel a stabbing pain in your chest!", 1)
@@ -1332,7 +1338,7 @@
 				to_chat(src, msg)
 
 				BP.take_damage(rand(1,3), 0, 0)
-				if(!BP.is_robotic()) //There is no blood in protheses.
+				if(!BP.is_robotic_part()) //There is no blood in protheses.
 					if(!reagents.has_reagent("metatrombine")) // metatrombine just prevents bleeding, not toxication
 						BP.status |= ORGAN_BLEEDING
 					adjustToxLoss(rand(1,3))
@@ -1805,7 +1811,7 @@
 	else if(organ_check in list(O_LIVER, O_KIDNEYS))
 		BP = bodyparts_by_name[BP_GROIN]
 
-	if(BP && BP.is_robotic())
+	if(BP && BP.is_robotic_part())
 		return FALSE
 	return species.has_organ[organ_check]
 

@@ -3,6 +3,7 @@
 /obj/item/organ/external/chest/robot/ipc
 	name = "ipc chest"
 	controller_type = /datum/bodypart_controller/robot/ipc
+	status = ORGAN_ROBOT
 
 	// Only used for a quirk because our surgery code is stupid. Or dumb.
 	var/posibrain_type = /obj/item/device/mmi/posibrain
@@ -20,6 +21,7 @@
 	var/screen_toggle = TRUE
 	var/screen_brightness = 2
 	var/display_text
+	status = ORGAN_ROBOT
 
 	controller_type = /datum/bodypart_controller/robot/ipc
 
@@ -48,6 +50,7 @@
 
 /obj/item/organ/external/groin/robot/ipc
 	name = "ipc groin"
+	status = ORGAN_ROBOT
 
 	controller_type = /datum/bodypart_controller/robot/ipc
 
@@ -58,6 +61,7 @@
 
 /obj/item/organ/external/l_arm/robot/ipc
 	name = "left ipc arm"
+	status = ORGAN_ROBOT
 
 	controller_type = /datum/bodypart_controller/robot/ipc
 
@@ -68,6 +72,7 @@
 
 /obj/item/organ/external/r_arm/robot/ipc
 	name = "right ipc arm"
+	status = ORGAN_ROBOT
 
 	controller_type = /datum/bodypart_controller/robot/ipc
 
@@ -78,6 +83,7 @@
 
 /obj/item/organ/external/r_leg/robot/ipc
 	name = "right ipc leg"
+	status = ORGAN_ROBOT
 
 	controller_type = /datum/bodypart_controller/robot/ipc
 
@@ -88,6 +94,7 @@
 
 /obj/item/organ/external/l_leg/robot/ipc
 	name = "left ipc leg"
+	status = ORGAN_ROBOT
 
 	controller_type = /datum/bodypart_controller/robot/ipc
 

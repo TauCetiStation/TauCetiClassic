@@ -7,6 +7,7 @@
 /datum/surgery_step/cavity
 	priority = 1
 	allowed_species = null
+	var/obj/item/organ/internal/I = null
 
 /datum/surgery_step/cavity/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
@@ -228,6 +229,7 @@
 			if("Shrapnel")
 				var/atom/picked_obj = pick(embed_object_shrapnel)
 				remove_from_cavity(user, target, picked_obj, BP, tool)
+
 			if("Implants")
 				var/choosen_object = show_radial_menu(user, target, embed_object_implants, radius = 50, require_near = TRUE, tooltips = TRUE)
 				if(choosen_object)

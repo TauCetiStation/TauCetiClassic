@@ -213,7 +213,7 @@
 /area/awaymission/BMPship1)
 "aR" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/brain,
+/obj/item/organ/internal/brain,
 /obj/item/weapon/reagent_containers/food/snacks/appendix,
 /obj/item/weapon/reagent_containers/food/snacks/meat,
 /obj/effect/decal/turf_decal{
