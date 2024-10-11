@@ -160,8 +160,9 @@
 			mode = SEARCH_FOR_OBJECT
 			for (var/obj/machinery/nuclearbomb/N in poi_list)
 				if(N.nuketype == "Syndi")
-					target = locate(N)
+					target = N
 					to_chat(usr, "<span class='notice'>Nuclear Warhead Locator active.</span>")
+					break
 
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
@@ -244,6 +245,73 @@
 	to_chat(usr, "You set the pinpointer to locate [target_head]")
 
 	return attack_self(usr)
+
+/obj/item/weapon/pinpointer/highriskitems
+	desc = "A pinpointer designed and configured to search for specific items using a network of quantum signals."
+	origin_tech = "programming=5;bluespace=5"
+	item_action_types = list(/datum/action/item_action/hands_free/toggle_pinpointer_mode)
+
+/datum/action/item_action/hands_free/toggle_pinpointer_mode
+	name = "Toggle pinpointer"
+
+/datum/action/item_action/hands_free/toggle_pinpointer_mode/Activate()
+	var/obj/item/weapon/pinpointer/highriskitems/P = target
+	P.toggle_mode()
+
+/obj/item/weapon/pinpointer/highriskitems/proc/toggle_mode()
+	reset_target()
+
+	var/obj/item/targetitem = input("Select item to search for.", "Item Mode Select","") as null|anything in global.possible_items_for_steal
+	if(!targetitem)
+		return
+	for(var/obj/item/I in global.possible_items_for_steal)
+		if(!istype(I, targetitem))
+			continue
+		var/turf/T = get_turf(I)
+		if(is_centcom_level(T.z))
+			continue
+		target = I
+		break
+	if(!target)
+		to_chat(usr, "Failed to locate [targetitem]!")
+		return
+	to_chat(usr, "You set the pinpointer to locate [targetitem]")
+
+	return attack_self(usr)
+
+/obj/item/weapon/pinpointer/highriskitems/process()
+	if(!active)
+		return
+	if(!target && !mode)
+		target = locate(/obj/item/weapon/disk/nuclear)
+		if(!target)
+			icon_state = "pinonnull"
+			return
+	if(target)
+		var/turf/self_turf = get_turf(src)
+		var/turf/target_turf = get_turf(target)
+		if(target_turf.z != self_turf.z)
+			icon_state = "alterpinfaralert"
+		else if(target_turf == self_turf)
+			icon_state = "alterpindirect"
+		else
+			switch(get_dist(target_turf, self_turf))
+				if(1 to 10)
+					icon_state = "alterpin10"
+				if(11 to 25)
+					icon_state = "alterpin25"
+				if(26 to 50)
+					icon_state = "alterpin50"
+				if(51 to 75)
+					icon_state = "alterpin75"
+				if(76 to 100)
+					icon_state = "alterpin100"
+				if(101 to 150)
+					icon_state = "alterpin150"
+				if(151 to 200)
+					icon_state = "alterpin200"
+				if(201 to INFINITY)
+					icon_state = "pinonfar"
 
 #undef SEARCH_FOR_DISK
 #undef SEARCH_FOR_OBJECT

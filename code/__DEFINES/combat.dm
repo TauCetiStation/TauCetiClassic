@@ -112,8 +112,23 @@
 #define MOVESET_ROLES "moveset_role"
 #define MOVESET_QUALITY "moveset_quality"
 
+
+//Autofire component
+/// Compatible firemode is in the gun. Wait until it's held in the user hands.
+#define AUTOFIRE_STAT_IDLE (1<<0)
+/// Gun is active and in the user hands. Wait until user does a valid click.
+#define AUTOFIRE_STAT_ALERT	(1<<1)
+/// Gun is shooting.
+#define AUTOFIRE_STAT_FIRING (1<<2)
+
+#define COMSIG_AUTOFIRE_ONMOUSEDOWN "autofire_onmousedown"
+	#define COMPONENT_AUTOFIRE_ONMOUSEDOWN_BYPASS (1<<0)
+#define COMSIG_AUTOFIRE_SHOT "autofire_shot"
+	#define COMPONENT_AUTOFIRE_SHOT_SUCCESS (1<<0)
+
 //Painkiller effectiveness (for get_painkiller_effect() comparison)
 #define PAINKILLERS_EFFECT_SLIGHT 0.95 //all painkillers.
 #define PAINKILLERS_EFFECT_MEDIUM 0.75 //weak painkillers, allow you to ignore minor pain and not see pain() messages.
 #define PAINKILLERS_EFFECT_HEAVY 0.6 //powerful painkillers, allow you to not see custom_pain() messages.
 #define PAINKILLERS_EFFECT_VERY_HEAVY 0.5 //very powerful painkillers that does not allow the user to determine the location of the injury.
+

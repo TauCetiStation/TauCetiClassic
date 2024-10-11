@@ -70,6 +70,11 @@ use it if low potency results garbage from harvested crop
 	cost = 15
 	export_types = list(/obj/item/seeds/bananaseed)
 
+/datum/export/seed/cucumber
+	unit_name = "pack of cucumber seeds"
+	cost = 15
+	export_types = list(/obj/item/seeds/cucumberseed)
+
 /datum/export/seed/rice
 	unit_name = "pack of rice seeds"
 	cost = 15
