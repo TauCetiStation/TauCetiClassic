@@ -3422,7 +3422,7 @@
 "iL" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/gibspawner/human,
-/obj/item/weapon/gun/projectile/automatic/silenced{
+/obj/item/weapon/gun/projectile/automatic/pistol/silenced{
 	desc = "A sidearm commonly favored by terrestrial security forces.";
 	icon_state = "g115 Pistol";
 	name = "Pistol";
@@ -8316,7 +8316,7 @@
 "tQ" = (
 /obj/structure/rack,
 /obj/item/ammo_box/c45,
-/obj/item/weapon/gun/projectile/automatic/silenced{
+/obj/item/weapon/gun/projectile/automatic/pistol/silenced{
 	desc = "A sidearm commonly favored by terrestrial security forces.";
 	icon_state = "g115 Pistol";
 	name = "Pistol";

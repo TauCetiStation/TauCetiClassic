@@ -121,12 +121,19 @@ var/global/can_call_ert
 		H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_tone = input(src, "Выберите тон кожи: 1-220 (1=альбинос, 35=белый, 150=чёрный, 220='очень' чёрный)", "Создание персонажа")  as text
+	if(H.species.flags[HAS_SKIN_TONE])
+		var/new_tone = input(src, "Выберите тон кожи: 1-220 (1=альбинос, 35=белый, 150=чёрный, 220='очень' чёрный)", "Создание персонажа")  as text
+		if (!new_tone)
+			new_tone = 35
+		H.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+		H.s_tone = -H.s_tone + 35
 
-	if (!new_tone)
-		new_tone = 35
-	H.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-	H.s_tone = -H.s_tone + 35
+	if(H.species.flags[HAS_SKIN_COLOR])
+		var/new_skin = input(src, "Выберите цвет кожи", "Xenos Skin") as null|color
+		if(new_skin)
+			H.r_skin = hex2num(copytext(new_skin, 2, 4))
+			H.g_skin = hex2num(copytext(new_skin, 4, 6))
+			H.b_skin = hex2num(copytext(new_skin, 6, 8))
 
 	// hair
 	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)

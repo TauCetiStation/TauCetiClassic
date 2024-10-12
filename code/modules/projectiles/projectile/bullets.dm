@@ -51,6 +51,10 @@
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
 
+/obj/item/projectile/bullet/weakbullet/nl_rifle
+	stutter = 10
+	agony = 55
+
 /obj/item/projectile/bullet/smg //.45 ACP
 	damage = 20
 
@@ -238,7 +242,7 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/a762
-	damage = 50
+	damage = 30
 	embed = 0
 
 /obj/item/projectile/bullet/incendiary

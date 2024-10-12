@@ -53,6 +53,11 @@
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
 /mob/proc/ClickOn( atom/A, params )
+	if(client.click_intercept_time)
+		if(client.click_intercept_time >= world.time)
+			client.click_intercept_time = 0 //Reset and return. Next click should work, but not this one.
+			return
+		client.click_intercept_time = 0 //Just reset. Let's not keep re-checking forever.
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
@@ -159,6 +164,18 @@
 				W.afterattack(A, src, FALSE, params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
+
+/client/MouseDown(datum/object, location, control, params)
+	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
+	..()
+
+/client/MouseUp(object, location, control, params)
+	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
+		click_intercept_time = world.time
+
+/client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
+	..()
 
 // Default behavior: ignore double clicks (don't add normal clicks, as it will do three clicks instead of two with double).
 /mob/proc/DblClickOn(atom/A, params)

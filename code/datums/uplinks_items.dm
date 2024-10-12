@@ -242,7 +242,7 @@
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
-	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62x51mm ammunition."
+	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 100-round magazine of 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 30
 	uplink_types = list("nuclear")
@@ -522,7 +522,7 @@
 
 /datum/uplink_item/ammo/machinegun
 	name = "Ammo-7.62x51mm"
-	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
+	desc = "A 100-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/saw
 	cost = 10
 	uplink_types = list("nuclear")
@@ -750,6 +750,13 @@
 
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
+
+/datum/uplink_item/device_tools/pinpointer
+	name = "Improved Pinpointer"
+	desc = "A artisanally modified pinpointer for searching for items that your employers are interested in."
+	item = /obj/item/weapon/pinpointer/highriskitems
+	cost = 2
+	uplink_types = list("traitor")
 
 /datum/uplink_item/device_tools/disk
 	name = "Diskette With Virus"
