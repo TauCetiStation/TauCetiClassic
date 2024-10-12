@@ -6967,7 +6967,7 @@
 /area/space_structures/old_station/central)
 "OZ" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic,
+/obj/item/weapon/gun/projectile/automatic/saber,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},

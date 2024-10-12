@@ -35,7 +35,7 @@
 	area_type = /area/custom/cult
 	build_agent_type = /datum/building_agent/structure/cult
 	rune_agent_type = /datum/building_agent/rune/cult
-	tech_agent_type = /datum/building_agent/tech/cult
+	tech_agent_type = /datum/religion_tech/cult
 	wall_types = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim)
 	floor_types = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
 	door_types = list(/obj/structure/mineral_door/cult)
@@ -112,6 +112,25 @@
 
 /datum/religion/cult/setup_religions()
 	global.cult_religion = src
+
+/datum/religion/cult/get_tech_agent_lists()
+	..()
+	var/list/aspect_types = subtypesof(/datum/aspect)
+	for(var/type in aspect_types)
+		var/datum/aspect/A = new type
+		if(!A.name)
+			qdel(A)
+			continue
+		var/datum/religion_tech/upgrade_aspect/tech = new
+		tech.id = A.name
+		tech.aspect_type = type
+		tech.info = new /datum/building_agent/tech/aspect
+		tech.info.name = A.name
+		tech.info.icon = A.icon
+		tech.info.icon_state = A.icon_state
+		tech.calculate_costs(src)
+		available_techs += tech
+		qdel(A)
 
 /datum/religion/cult/process()
 	adjust_favor(passive_favor_gain)

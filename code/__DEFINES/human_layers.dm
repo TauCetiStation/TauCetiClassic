@@ -1,17 +1,18 @@
 //Human Overlays Indexes/////////
-#define FIRE_LOWER_LAYER      28
-#define BODY_LAYER            27
-#define EXTERNAL_APPEARANCE   26
-#define MUTATIONS_LAYER       25
-#define DAMAGE_LAYER          24
-#define SURGERY_LAYER         23 //bs12 specific.
-#define BANDAGE_LAYER         22
-#define UNIFORM_LAYER         21
-#define ID_LAYER              20
-#define SHOES_LAYER           19
-#define TAIL_LAYER            18 //bs12 specific. this hack is probably gonna come back to haunt me
-#define GLOVES_LAYER          17
-#define EARS_LAYER            16
+#define FIRE_LOWER_LAYER      29
+#define BODY_LAYER            28
+#define EXTERNAL_APPEARANCE   27
+#define MUTATIONS_LAYER       26
+#define DAMAGE_LAYER          25
+#define SURGERY_LAYER         24 //bs12 specific.
+#define BANDAGE_LAYER         23
+#define UNIFORM_LAYER         22
+#define ID_LAYER              21
+#define SHOES_LAYER           20
+#define TAIL_LAYER            19 //bs12 specific. this hack is probably gonna come back to haunt me
+#define GLOVES_LAYER          18
+#define R_EAR_LAYER           17
+#define L_EAR_LAYER           16
 #define SUIT_LAYER            15
 #define GLASSES_LAYER         14
 #define BELT_LAYER            13 //Possible make this an overlay of somethign required to wear a belt?

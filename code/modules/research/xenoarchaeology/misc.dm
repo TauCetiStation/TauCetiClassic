@@ -58,6 +58,8 @@
 	new /obj/item/weapon/book/manual/anomaly_testing(src)
 	new /obj/item/weapon/book/manual/anomaly_spectroscopy(src)
 	new /obj/item/weapon/book/manual/stasis(src)
+	new /obj/item/weapon/book/skillbook/engineering(src)
+	new /obj/item/weapon/book/skillbook/robust(src)
 	update_icon()
 
 //---- Lockers and closets

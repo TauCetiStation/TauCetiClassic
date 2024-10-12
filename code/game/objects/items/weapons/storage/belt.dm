@@ -47,7 +47,6 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/stack/cable_coil(src, 30, pick(COLOR_RED, COLOR_YELLOW, COLOR_ORANGE))
 
-
 /obj/item/weapon/storage/belt/utility/atmostech/atom_init()
 	. = ..()
 	new /obj/item/weapon/screwdriver(src)
@@ -57,6 +56,13 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
 
+/obj/item/weapon/storage/belt/utility/advanced/atom_init()
+	. = ..()
+	new /obj/item/weapon/multi/hand_drill(src)
+	new /obj/item/weapon/multi/jaws_of_life(src)
+	new /obj/item/weapon/weldingtool/experimental(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src, 30, pick(COLOR_RED, COLOR_YELLOW, COLOR_ORANGE))
 
 
 /obj/item/weapon/storage/belt/medical

@@ -228,6 +228,11 @@
 	icon_state = "casing_incendiary"
 	projectile_type = /obj/item/projectile/bullet/incendiary
 
+/obj/item/ammo_casing/a556/nonlethal
+	desc = "Патрон для нелетальной пули калибра 5.56 мм."
+	icon_state = "casing_rubber"
+	projectile_type = /obj/item/projectile/bullet/weakbullet/nl_rifle
+
 /obj/item/ammo_casing/a74
 	desc = "Патрон от пули калибра 7.74мм."
 	caliber = "7.74mm"
