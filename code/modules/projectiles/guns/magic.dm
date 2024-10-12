@@ -133,10 +133,10 @@
 		charges--
 		update_icon()
 	else
-		to_chat(user, "<span class='warning'>Ваш [name] тихо свистит...")
+		to_chat(user, "<span class='warning'> Ваш [name] тихо свистит...")
 
 /obj/item/weapon/gun/magic/shoot_with_empty_chamber(mob/living/user)
-	to_chat(user, "<span class='warning'>Ваш [name] тихо свистит...")
+	to_chat(user, "<span class='warning'> Ваш [name] тихо свистит...")
 	return
 
 
