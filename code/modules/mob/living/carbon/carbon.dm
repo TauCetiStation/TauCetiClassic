@@ -1201,16 +1201,14 @@
 	var/datum/species/S = all_species[get_species()]
 	if(S)
 		see_in_dark = S.darksight
+	var/obj/item/organ/internal/eyes/eyes = organs_by_name[O_EYES]
+	if(eyes)
+		see_in_dark = eyes.darksight
 
 	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 
 	sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-/*
-	if(changeling_aug)
-		sight |= SEE_MOBS
-		see_in_dark = 8
-		new_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-*/
+
 	if(XRAY in mutations)
 		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = 8

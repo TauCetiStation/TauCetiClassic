@@ -380,7 +380,7 @@
 	race_verbs = list(/mob/living/carbon/human/proc/air_sample)
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
-	darksight = 3
+
 
 	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT + 15
@@ -456,7 +456,6 @@
 	race_traits = list(TRAIT_NATURAL_AGILITY)
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
-	darksight = 8
 	nighteyes = TRUE
 
 	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40

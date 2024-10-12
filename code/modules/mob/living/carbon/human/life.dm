@@ -1077,7 +1077,12 @@ var/global/list/tourette_bad_words= list(
 		set_EyesVision(sightglassesmod)
 		return FALSE
 
-	see_in_dark = species.darksight
+	var/obj/item/organ/internal/eyes/eyes = organs_by_name[O_EYES]
+	if(eyes)
+		see_in_dark = eyes.darksight
+	else
+		see_in_dark = species.darksight
+
 
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G))

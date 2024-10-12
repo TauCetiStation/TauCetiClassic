@@ -716,6 +716,7 @@
 	parent_bodypart = BP_HEAD
 	slot = "eyes"
 	var/list/eye_colour = list(0,0,0)
+	var/darksight = 2
 
 /obj/item/organ/internal/eyes/proc/update_colour()
 	if(!owner)
@@ -745,10 +746,12 @@
 /obj/item/organ/internal/eyes/tajaran
 	name = "tajaran eyeballs"
 	icon = 'icons/obj/special_organs/tajaran.dmi'
+	darksight = 8
 
 /obj/item/organ/internal/eyes/unathi
 	name = "unathi eyeballs"
 	icon = 'icons/obj/special_organs/unathi.dmi'
+	darksight = 3
 
 /obj/item/organ/internal/eyes/vox
 	name = "vox eyeballs"
