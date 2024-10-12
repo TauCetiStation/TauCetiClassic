@@ -262,17 +262,19 @@
 	icon_state = "shuttlered2"
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
-//Administration Centcom Shuttle
-/area/shuttle/administration/centcom
-	name = "Administration Shuttle Centcom"
-	cases = list("административный шаттл", "административного шаттла", "административному шаттлу", "административный шаттл", "административным шаттлом", "административном шаттле")
+//Space Traders Shuttle
+/area/shuttle/trader
+	name = "Trader Shuttle"
+	cases = list("торговый шаттл", "торгового шаттла", "торговому шаттлу", "торговый шаттл", "торговым шаттлом", "торговом шаттле")
 	icon_state = "shuttlered"
 
-/area/shuttle/administration/station
-	name = "Administration Shuttle"
-	cases = list("административный шаттл", "административного шаттла", "административному шаттлу", "административный шаттл", "административным шаттлом", "административном шаттле")
+/area/shuttle/trader/station
+	name = "Trader Shuttle Station"
+	ambience = 'sound/ambience/space_traders.ogg'
+
+/area/shuttle/trader/space
+	name = "Trader Shuttle Space"
 	icon_state = "shuttlered2"
-	looped_ambience = 'sound/ambience/loop_space.ogg'
 
 //Vox shuttle
 /area/shuttle/vox/arkship
@@ -390,7 +392,6 @@ var/global/list/centcom_shuttle_areas = list (
 	/area/shuttle/escape_pod3/centcom,
 	/area/shuttle/escape_pod4/centcom,
 	/area/shuttle/transport1/centcom,
-	/area/shuttle/administration/centcom,
 	/area/shuttle/specops/centcom,
 	/area/shuttle/officer/centcom
 )
@@ -403,7 +404,7 @@ var/global/list/station_shuttle_areas = list (
 	/area/shuttle/escape_pod3/station,
 	/area/shuttle/escape_pod4/station,
 	/area/shuttle/transport1/station,
-	/area/shuttle/administration/station,
+	/area/shuttle/trader/station,
 	/area/shuttle/specops/station,
 	/area/shuttle/officer/station,
 	/area/shuttle/supply/station,

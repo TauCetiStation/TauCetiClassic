@@ -208,6 +208,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/book/manual/wiki/medical_genetics,
 /obj/structure/table,
+/obj/item/weapon/disk/tech_disk/hud,
 /turf/simulated/floor/wood{
 	icon_state = "wood4"
 	},
