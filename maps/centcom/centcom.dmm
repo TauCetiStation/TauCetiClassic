@@ -19268,6 +19268,12 @@
 	icon_state = "grimy"
 	},
 /area/centcom/living)
+"aTz" = (
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "heaven"
+	},
+/area/space)
 "aTA" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -22860,6 +22866,11 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/specops)
+"bXJ" = (
+/turf/simulated/floor{
+	icon_state = "Heaven_Stairs_wide"
+	},
+/area/space)
 "bYb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -22919,6 +22930,10 @@
 	icon_state = "grass2"
 	},
 /area/centcom/evac)
+"ccr" = (
+/obj/structure/dresser,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "ccw" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -22945,6 +22960,11 @@
 	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"cdP" = (
+/obj/effect/light_emitter,
+/obj/effect/landmark/heaven_landmark,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "ceb" = (
 /obj/machinery/door_control{
 	id = "CKLoaddoor2";
@@ -23025,6 +23045,12 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"cie" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "Heaven_Stairs_wide"
+	},
+/area/space)
 "cjb" = (
 /obj/machinery/door_control{
 	id = "ck_warehouse";
@@ -23298,6 +23324,12 @@
 	icon_state = "freezerfloor"
 	},
 /area/velocity)
+"cCP" = (
+/obj/structure/stool/bed/chair/wood/normal{
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "cDb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -23340,6 +23372,12 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
+"cHH" = (
+/obj/item/weapon/flora/pottedplant/orientaltree,
+/turf/unsimulated/floor{
+	icon_state = "heaven"
+	},
+/area/space)
 "cIb" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -23805,6 +23843,9 @@
 /obj/structure/sign/warning/moving_parts,
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity)
+"doD" = (
+/turf/simulated/wall/heaven,
+/area/space)
 "dpb" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_03"
@@ -23819,6 +23860,17 @@
 /obj/machinery/door/poddoor,
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity)
+"dqf" = (
+/obj/effect/light_emitter,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
+"dqo" = (
+/obj/structure/mineral_door/metal,
+/obj/structure/mineral_door/silver,
+/turf/unsimulated/floor{
+	icon_state = "heavenfull2"
+	},
+/area/space)
 "drb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -24081,6 +24133,12 @@
 /obj/machinery/door/firedoor,
 /turf/unsimulated/floor,
 /area/velocity/checkpoint)
+"dLD" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "Heaven_stairs_middle"
+	},
+/area/space)
 "dMb" = (
 /obj/structure/disposalpipe/junction{
 	dir = 1;
@@ -24745,6 +24803,13 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"eNH" = (
+/obj/effect/light_emitter,
+/obj/structure/moonwell,
+/turf/unsimulated/floor{
+	icon_state = "heavenfull"
+	},
+/area/space)
 "ePb" = (
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
@@ -24832,6 +24897,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/officer/velocity)
+"eXK" = (
+/obj/item/weapon/flora/pottedplant/flower,
+/turf/unsimulated/floor{
+	icon_state = "heavenfull2"
+	},
+/area/space)
 "eYb" = (
 /turf/unsimulated/floor{
 	icon_state = "engine"
@@ -24862,6 +24933,12 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
+"eZh" = (
+/turf/simulated/floor/beach/water/waterpool/heaven{
+	density = 1;
+	opacity = 1
+	},
+/area/space)
 "eZK" = (
 /mob/living/silicon/decoy{
 	icon_state = "ai-malf";
@@ -25088,6 +25165,12 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"frA" = (
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "heaven"
+	},
+/area/space)
 "fsb" = (
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
@@ -25344,6 +25427,9 @@
 	icon_state = "rampbottom"
 	},
 /area/velocity)
+"fSg" = (
+/turf/simulated/floor/beach/water/waterpool/heaven,
+/area/space)
 "fTb" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
@@ -25879,6 +25965,11 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"gEJ" = (
+/turf/simulated/floor{
+	icon_state = "Heaven_stairs_middle"
+	},
+/area/space)
 "gFb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -26199,6 +26290,11 @@
 	icon_state = "engine"
 	},
 /area/velocity)
+"hfm" = (
+/turf/unsimulated/floor{
+	icon_state = "heaven"
+	},
+/area/space)
 "hgb" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -26593,6 +26689,11 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"hQz" = (
+/turf/unsimulated/floor{
+	icon_state = "Heaven_Stairs2_wide"
+	},
+/area/space)
 "hRb" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
@@ -26720,6 +26821,12 @@
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/elite_squad)
+"hZB" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "heaven"
+	},
+/area/space)
 "iab" = (
 /obj/structure/window/thin/reinforced,
 /obj/machinery/shower/free{
@@ -26869,6 +26976,13 @@
 	icon_state = "darkblue"
 	},
 /area/centcom/control)
+"itR" = (
+/obj/effect/light_emitter,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "heaven"
+	},
+/area/space)
 "iub" = (
 /obj/machinery/light,
 /obj/item/weapon/flora/random,
@@ -27192,6 +27306,12 @@
 	icon_state = "white"
 	},
 /area/centcom/holding)
+"jal" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/drinkingglasses,
+/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "jaA" = (
 /obj/structure/stool/bed/chair/metal/blue{
 	dir = 4
@@ -27713,6 +27833,15 @@
 	icon_state = "brown"
 	},
 /area/centcom/bar)
+"jYM" = (
+/obj/machinery/vending/boozeomat{
+	name = "Heaven Booze-O-Mat";
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/gin=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/rum=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/wine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/beer=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/ale=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/cream=10,/obj/item/weapon/reagent_containers/food/drinks/cans/tonic=10,/obj/item/weapon/reagent_containers/food/drinks/cans/cola=10,/obj/item/weapon/reagent_containers/food/drinks/cans/sodawater=15,/obj/item/weapon/reagent_containers/food/drinks/flask/barflask=5,/obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask=5,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass=50,/obj/item/weapon/reagent_containers/food/drinks/ice=15,/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine=10,/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne=10);
+	req_access = list();
+	use_power = 0
+	},
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "jZb" = (
 /obj/machinery/light{
 	dir = 1
@@ -27954,6 +28083,12 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"kuZ" = (
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "heaven"
+	},
+/area/space)
 "kvb" = (
 /obj/machinery/implantchair,
 /turf/unsimulated/floor{
@@ -28076,6 +28211,15 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"kEX" = (
+/obj/structure/table/woodentable,
+/obj/machinery/chem_dispenser/soda{
+	dispensable_reagents = list("water","ice","coffee","cream","tea","tea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","tomatojuice","banana","limejuice","watermelonjuice","berryjuice","grapejuice","lemonjuice","milk","soymilk","nothing");
+	name = "heaven soda fountain";
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "kFb" = (
 /obj/machinery/light{
 	dir = 1
@@ -28353,6 +28497,15 @@
 	icon_state = "neutralcorner"
 	},
 /area/centcom/bar)
+"lfe" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/pluvia_trick,
+/obj/item/clothing/suit/pluvia_trick,
+/obj/item/clothing/suit/pluvia_trick,
+/obj/item/clothing/suit/pluvia_trick,
+/obj/item/clothing/suit/pluvia_trick,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "lgb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
@@ -28413,6 +28566,12 @@
 	icon_state = "bcircuitoff"
 	},
 /area/custom/syndicate_mothership/control)
+"lmp" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "heaven"
+	},
+/area/space)
 "lnb" = (
 /obj/structure/ore_box,
 /turf/unsimulated/floor{
@@ -28573,6 +28732,14 @@
 	icon_state = "brown"
 	},
 /area/centcom/bar)
+"lCv" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/pluvia_balance,
+/obj/item/clothing/suit/pluvia_balance,
+/obj/item/clothing/suit/pluvia_balance,
+/obj/item/clothing/suit/pluvia_balance,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "lDb" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -29126,6 +29293,15 @@
 	icon_state = "grass2"
 	},
 /area/centcom/evac)
+"mHr" = (
+/obj/structure/table/woodentable,
+/obj/machinery/chem_dispenser/beer{
+	dispensable_reagents = list("singulo","demonsblood","lean","hippiesdelight","devilskiss","kvass","doctorsdelight","atomicbomb","nuka_cola","patron","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead","sake");
+	name = "heaven booze dispenser";
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "mHG" = (
 /obj/machinery/light{
 	dir = 1
@@ -29497,6 +29673,14 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
+"nsr" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/pluvia_morality,
+/obj/item/clothing/suit/pluvia_morality,
+/obj/item/clothing/suit/pluvia_morality,
+/obj/item/clothing/suit/pluvia_morality,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "ntb" = (
 /obj/structure/stool/bed/chair/metal,
 /turf/unsimulated/floor{
@@ -29643,6 +29827,11 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
+"nGp" = (
+/turf/unsimulated/floor{
+	icon_state = "heavenfull2"
+	},
+/area/space)
 "nGC" = (
 /obj/machinery/cryopod/right{
 	storage = 0
@@ -30018,6 +30207,11 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"opp" = (
+/obj/effect/light_emitter,
+/obj/structure/table,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "oqb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "11,8"
@@ -30216,6 +30410,11 @@
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
+"oPM" = (
+/obj/structure/table,
+/obj/item/toy/cards,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "oQb" = (
 /obj/machinery/light/spot{
 	dir = 4
@@ -30448,6 +30647,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"pnl" = (
+/obj/effect/light_emitter,
+/turf/unsimulated/floor{
+	icon_state = "heavenfull2"
+	},
+/area/space)
 "pnw" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -30470,6 +30675,26 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"pos" = (
+/obj/structure/rack,
+/obj/item/clothing/under/pluvia_gold,
+/obj/item/clothing/under/pluvia_gold,
+/obj/item/clothing/under/pluvia,
+/obj/item/clothing/under/pluvia,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia/white,
+/obj/item/clothing/head/pluvia/white,
+/obj/item/clothing/head/pluvia/white,
+/obj/item/clothing/head/pluvia/white,
+/obj/item/clothing/head/pluvia/white,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "ppb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "10,24";
@@ -30498,6 +30723,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"psf" = (
+/obj/item/weapon/melee/pluvia_gong_baton,
+/turf/unsimulated/floor{
+	icon_state = "heavenfull2"
+	},
+/area/space)
 "ptb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "8,23";
@@ -30538,6 +30769,14 @@
 	icon_state = "floor"
 	},
 /area/shuttle/trader/space)
+"pxO" = (
+/obj/structure/pluvia_gong{
+	pixel_x = -15
+	},
+/turf/unsimulated/floor{
+	icon_state = "heavenfull2"
+	},
+/area/space)
 "pya" = (
 /obj/effect/decal/turf_decal/orange{
 	dir = 8;
@@ -30737,6 +30976,12 @@
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"pWp" = (
+/obj/structure/stool/bed/chair/wood/normal{
+	dir = 1
+	},
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "pXb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "2,6"
@@ -30805,6 +31050,13 @@
 	icon_state = "grass2"
 	},
 /area/centcom/evac)
+"qlq" = (
+/obj/effect/light_emitter,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "heaven"
+	},
+/area/space)
 "qnM" = (
 /obj/effect/step_trigger/thrower{
 	direction = 4;
@@ -30812,6 +31064,12 @@
 	tiles = 0
 	},
 /turf/environment/space,
+/area/space)
+"qpf" = (
+/obj/effect/light_emitter,
+/turf/unsimulated/floor{
+	icon_state = "Heaven_stairs_middle"
+	},
 /area/space)
 "qsd" = (
 /obj/machinery/recharge_station,
@@ -30839,6 +31097,11 @@
 	icon_state = "dark"
 	},
 /area/velocity)
+"qwb" = (
+/turf/unsimulated/floor{
+	icon_state = "Heaven_stairs_middle"
+	},
+/area/space)
 "qym" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
@@ -30891,6 +31154,11 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"ras" = (
+/obj/structure/table,
+/obj/item/weapon/storage/pill_bottle/dice,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "rkK" = (
 /obj/item/weapon/flora/pottedplant/tropicalfern{
 	pixel_y = 5
@@ -30899,6 +31167,17 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity/locker)
+"rtz" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
+"rus" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "Heaven_Stairs2_wide"
+	},
+/area/space)
 "rEu" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/effect/decal/turf_decal/wood{
@@ -30908,6 +31187,12 @@
 	icon_state = "grass2"
 	},
 /area/centcom/evac)
+"rIG" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "heaven"
+	},
+/area/space)
 "rIN" = (
 /obj/structure/disposalpipe/segment,
 /turf/unsimulated/wall/like_a_normal/beige,
@@ -30949,6 +31234,12 @@
 /obj/item/weapon/kitchenknife/ritual,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"seM" = (
+/obj/structure/stool/bed/chair/wood/normal{
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "seQ" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -31048,6 +31339,12 @@
 	icon_state = "white"
 	},
 /area/velocity/dormitories)
+"sHC" = (
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "heaven"
+	},
+/area/space)
 "sJs" = (
 /obj/effect/landmark/space_traders/product,
 /turf/simulated/shuttle/floor/erokez,
@@ -31077,6 +31374,14 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"sVJ" = (
+/obj/structure/mineral_door/metal,
+/obj/structure/mineral_door/silver,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "heaven"
+	},
+/area/space)
 "sXV" = (
 /obj/machinery/porta_turret/crescent,
 /obj/effect/decal/turf_decal{
@@ -31132,6 +31437,11 @@
 	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"tCg" = (
+/turf/unsimulated/floor{
+	icon_state = "heavenfull"
+	},
+/area/space)
 "tFF" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -31190,6 +31500,9 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"ubh" = (
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "ucy" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -31266,6 +31579,14 @@
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
+"uEk" = (
+/obj/machinery/media/jukebox/bar{
+	use_power = 0
+	},
+/turf/unsimulated/floor{
+	icon_state = "heavenfull"
+	},
+/area/space)
 "uEN" = (
 /obj/effect/step_trigger/teleporter/random{
 	name = "escapeshuttle_leave_noghosts";
@@ -31378,6 +31699,14 @@
 	name = "plating"
 	},
 /area/velocity)
+"viS" = (
+/obj/structure/mineral_door/metal,
+/obj/structure/mineral_door/silver,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "heaven"
+	},
+/area/space)
 "vlY" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -31407,6 +31736,11 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity/locker)
+"vyy" = (
+/turf/simulated/floor{
+	icon_state = "Heaven_Stairs2_wide"
+	},
+/area/space)
 "vyU" = (
 /obj/structure/table/woodentable,
 /turf/unsimulated/floor{
@@ -31469,6 +31803,11 @@
 	icon_state = "browncorner"
 	},
 /area/centcom/specops)
+"vRm" = (
+/turf/unsimulated/floor{
+	icon_state = "Heaven_Stairs_wide"
+	},
+/area/space)
 "vSL" = (
 /obj/machinery/washing_machine,
 /obj/machinery/light/small{
@@ -31562,6 +31901,21 @@
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"wXB" = (
+/obj/structure/rack,
+/obj/item/clothing/under/pluvia,
+/obj/item/clothing/under/pluvia,
+/obj/item/clothing/under/pluvia_gold,
+/obj/item/clothing/under/pluvia_gold,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/shoes/white,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/obj/item/clothing/head/pluvia,
+/turf/unsimulated/floor/carpet/blue2,
+/area/space)
 "xdd" = (
 /obj/machinery/light{
 	dir = 4
@@ -32382,39 +32736,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
 aaM
 aaM
 aaM
@@ -32639,39 +32993,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -32896,39 +33250,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+frA
+rIG
+ubh
+nGp
+frA
+rIG
+aTz
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -33153,39 +33507,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+nGp
+pxO
+ubh
+pnl
+nGp
+eXK
+nGp
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -33410,39 +33764,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+kuZ
+lmp
+ubh
+nGp
+kuZ
+lmp
+sHC
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -33667,39 +34021,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+doD
+doD
+doD
+ubh
+nGp
+hZB
+doD
+doD
+lmp
+sHC
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -33924,39 +34278,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+nGp
+frA
+rIG
+ubh
+nGp
+frA
+vRm
+tCg
+tCg
+hfm
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -34181,39 +34535,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+nGp
+pxO
+nGp
+dqf
+psf
+nGp
+qwb
+tCg
+eNH
+hfm
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -34438,39 +34792,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+nGp
+kuZ
+lmp
+ubh
+nGp
+kuZ
+hQz
+tCg
+tCg
+hfm
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -34695,39 +35049,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+doD
+doD
+doD
+ubh
+nGp
+hZB
+doD
+doD
+doD
+doD
+doD
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -34952,39 +35306,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+frA
+rIG
+ubh
+nGp
+frA
+doD
+ras
+pWp
+frA
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -35209,39 +35563,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+nGp
+pxO
+ubh
+pnl
+nGp
+doD
+opp
+pWp
+nGp
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -35466,39 +35820,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+kuZ
+lmp
+ubh
+nGp
+kuZ
+doD
+oPM
+pWp
+kuZ
+fSg
+fSg
+fSg
+fSg
+fSg
+doD
+doD
+doD
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -35723,39 +36077,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+doD
+fSg
+fSg
+fSg
+doD
+rus
+dLD
+cie
+doD
+cHH
+nGp
+hZB
+doD
+fSg
+fSg
+fSg
+doD
+pos
+ccr
+wXB
+doD
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -35980,39 +36334,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+jYM
+aTz
+nGp
+frA
+rIG
+aTz
+nGp
+frA
+rIG
+aTz
+nGp
+frA
+vRm
+aTz
+nGp
+frA
+ubh
+ubh
+ubh
+ubh
+sVJ
+vRm
+vRm
+vRm
+vRm
+vRm
+bXJ
+eZh
 aaM
 aaM
 aaM
@@ -36237,39 +36591,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+kEX
+nGp
+nGp
+nGp
+nGp
+pnl
+nGp
+nGp
+nGp
+nGp
+nGp
+nGp
+qpf
+nGp
+nGp
+nGp
+ubh
+ubh
+cdP
+ubh
+dqo
+qwb
+qpf
+qwb
+qwb
+qwb
+gEJ
+eZh
 aaM
 aaM
 aaM
@@ -36494,39 +36848,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+mHr
+sHC
+nGp
+cCP
+cCP
+cCP
+nGp
+kuZ
+lmp
+sHC
+nGp
+kuZ
+hQz
+sHC
+nGp
+kuZ
+ubh
+ubh
+ubh
+ubh
+viS
+hQz
+hQz
+hQz
+hQz
+hQz
+vyy
+eZh
 aaM
 aaM
 aaM
@@ -36751,39 +37105,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+doD
+hfm
+ubh
+jal
+rtz
+rtz
+ubh
+hZB
+uEk
+hfm
+nGp
+hZB
+doD
+fSg
+fSg
+fSg
+doD
+nsr
+lCv
+lfe
+doD
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -37008,39 +37362,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+doD
+aTz
+nGp
+seM
+seM
+seM
+nGp
+frA
+rIG
+aTz
+nGp
+frA
+fSg
+fSg
+fSg
+fSg
+fSg
+doD
+doD
+doD
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -37265,39 +37619,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+doD
+nGp
+nGp
+nGp
+nGp
+nGp
+nGp
+nGp
+nGp
+nGp
+nGp
+nGp
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -37522,39 +37876,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+doD
+qlq
+nGp
+kuZ
+lmp
+sHC
+nGp
+kuZ
+lmp
+sHC
+nGp
+itR
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -37779,39 +38133,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+doD
+doD
+doD
+doD
+doD
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -38036,39 +38390,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -38293,39 +38647,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+fSg
+eZh
 aaM
 aaM
 aaM
@@ -38550,39 +38904,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
+eZh
 aaM
 aaM
 aaM
