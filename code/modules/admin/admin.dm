@@ -121,9 +121,9 @@ var/global/BSACooldown = 0
 		<A href='?src=\ref[src];skills=\ref[M]'>Skills panel</A>
 	"}
 
-	if(global.pluvia_religion?.is_member(M)) 
+	if(global.pluvia_religion?.is_member(M) && M.mind)
 		body += {"<br><br>
-			<b>Pluvian Religion</b>: <A href='?src=\ref[src];pluvian_bless=\ref[M]'>Bless</a> | <A href='?src=\ref[src];pluvian_haram=\ref[M]'>Haram</a>
+			<b>Pluvian Religion</b>: Karma: [M.mind.pluvian_social_credit] / [global.pluvia_religion.social_credit_threshold] | Haram: [M.mind.pluvian_haram_points] | <A href='?src=\ref[src];pluvian_bless=\ref[M]'>Bless</a> | <A href='?src=\ref[src];pluvian_haram=\ref[M]'>Haram</a>
 			<br>
 		"}
 
