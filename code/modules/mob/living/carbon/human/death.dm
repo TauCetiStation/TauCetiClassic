@@ -43,9 +43,8 @@
 /mob/living/carbon/human/proc/pluvian_reborn_if_worthy()
 	if(iscultist(src) && ischangeling(src) && isshadowthrall(src) || !mind)
 		return
-	if(isnull(social_credit_threshold))
-		social_credit_threshold = (SSticker.totalPlayersReady/10) + 3
-	if(mind.blessed || mind.social_credit >= social_credit_threshold)
+	var/static/pluvian_social_credit_threshold = (SSticker.totalPlayersReady/10) + 3
+	if(mind.pluvian_blessed || mind.pluvian_social_credit >= pluvian_social_credit_threshold)
 		reborn()
 	else
 		to_chat(src, "<span class='warning'>\ <font size=4> Врата рая закрыты для вас...</span></font>")

@@ -1,7 +1,4 @@
-/var/global/social_credit_threshold
-/var/global/haram_threshold = 5
 /var/global/list/available_pluvia_gongs = list()
-var/global/list/wisp_start_landmark = list()
 
 /obj/effect/landmark/heaven_landmark
 	name = "Heaven"
@@ -23,17 +20,6 @@ var/global/list/wisp_start_landmark = list()
 	light_color = "#ffffff"
 	light_power = 2
 	light_range = 2
-
-/mob/living/carbon/human/proc/bless()
-	if(ispluvian(src))
-		to_chat(src, "<span class='notice'>\ <font size=4>Вам известно, что после смерти вы попадете в рай</span></font>")
-		mind.blessed = 1
-		mind.social_credit = 2
-		var/image/eye = image('icons/mob/human_face.dmi', icon_state = "pluvia_ms_s")
-		eye.plane = LIGHTING_LAMPS_PLANE
-		eye.layer = ABOVE_LIGHTING_LAYER
-		ADD_TRAIT(src, TRAIT_SEE_GHOSTS, QUALITY_TRAIT)
-		add_overlay(eye)
 
 /obj/item/weapon/bless_vote
 	name = "Bless vote"
@@ -71,13 +57,13 @@ var/global/list/wisp_start_landmark = list()
 			to_chat(usr, "<span class='warning'>Свое письмо нельзя подписывать!</span>")
 		else if(sign)
 			to_chat(usr, "<span class='notice'>Эта бумага уже подписана</span>")
-		else if(H.mind.social_credit > 0)
+		else if(H.mind.pluvian_social_credit > 0)
 			to_chat(usr, "<span class='notice'>Подписано!</span>")
 			sign_place = H.name
 			H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
-			H.mind.social_credit -= 1
+			H.mind.pluvian_social_credit -= 1
 			if(!owner.ismindshielded() && !owner.isloyal())
-				owner.mind.social_credit += 1
+				owner.mind.pluvian_social_credit += 1
 			sign = TRUE
 			to_chat(owner, "<span class='notice'>Ваш уровень кармы повышен!</span>")
 		else
@@ -148,14 +134,12 @@ var/global/list/wisp_start_landmark = list()
 		user.adjustBrainLoss(2)
 		available_pluvia_gongs -= my_gong
 		fake_body = new /mob/living(target_loc)
-		fake_body.icon = user.icon
-		fake_body.icon_state = user.icon_state
-		fake_body.copy_overlays(user)
-		fake_body.name = user.name
+		fake_body.appearance = user.appearance
+		fake_body.name = user.real_name
 		fake_body.alpha = 127
 		RegisterSignal(user,COMSIG_HUMAN_SAY, PROC_REF(mimic_message))
 		user.reset_view(fake_body, TRUE)
-		user.toggle_telepathy_hear(fake_body,TRUE)
+		user.add_remote_hearer(fake_body)
 		eye = image('icons/mob/human_face.dmi',"pluvia_ms_s")
 		eye.plane = LIGHTING_LAMPS_PLANE
 		eye.layer = ABOVE_LIGHTING_LAYER
@@ -164,7 +148,6 @@ var/global/list/wisp_start_landmark = list()
 	else
 		UnregisterSignal(user, list(COMSIG_HUMAN_SAY, COMSIG_PARENT_QDELETING))
 		user.remove_remote_hearer(fake_body)
-		user.toggle_telepathy_hear(fake_body)
 		qdel(fake_body)
 		fake_body = null
 		target_loc = null
@@ -204,7 +187,7 @@ var/global/list/wisp_start_landmark = list()
 	var/list/possible_targets = list()
 	for(var/mob/living/carbon/human/H in human_list)
 		if(H.mind && H != user && ispluvian(H))
-			if(istype(H.my_religion, /datum/religion/pluvia) || H.mind.blessed)
+			if(istype(H.my_religion, /datum/religion/pluvia) || H.mind.pluvian_blessed)
 				possible_targets[H] = image(H.icon, H.icon_state)
 				var/mob/living/target = possible_targets[H]
 				target.copy_overlays(H)
@@ -292,15 +275,11 @@ var/global/list/wisp_start_landmark = list()
 	return 1
 
 /obj/effect/landmark/ancestor_wisp_start
-	name = "start"
+	name = "ancestor wisp start"
 	icon = 'icons/mob/landmarks.dmi'
 	icon_state = "x"
 	anchored = TRUE
 	layer = MOB_LAYER
-
-/obj/effect/landmark/ancestor_wisp_start/New(loc)
-	..()
-	wisp_start_landmark += loc
 
 /obj/structure/moonwell
 	name = "Moonwell"
@@ -318,7 +297,8 @@ var/global/list/wisp_start_landmark = list()
 			to_chat(user, "<span class='notice'>Пожалуйста подождите [round((next_wisp - world.time) * 0.1, 0.1)] секунд.</span>")
 			return
 		next_wisp = world.time + 70 SECONDS
-		var/mob/living/simple_animal/ancestor_wisp/new_wisp = new /mob/living/simple_animal/ancestor_wisp(pick(wisp_start_landmark))
+		var/turf/T = pick_landmarked_location("ancestor wisp start")
+		var/mob/living/simple_animal/ancestor_wisp/new_wisp = new /mob/living/simple_animal/ancestor_wisp(T)
 		user.hud_used.set_parallax(PARALLAX_CLASSIC)
 		user.mind.transfer_to(new_wisp)
 		new_wisp.my_body = user

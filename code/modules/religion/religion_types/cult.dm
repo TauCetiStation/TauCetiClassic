@@ -250,7 +250,7 @@
 		return FALSE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.species.flags[NO_BLOOD] || H.mind.blessed)
+		if(H.species.flags[NO_BLOOD] || H.mind.pluvian_blessed)
 			return FALSE
 	if(M.ismindprotect())
 		return FALSE

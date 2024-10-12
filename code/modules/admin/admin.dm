@@ -121,7 +121,13 @@ var/global/BSACooldown = 0
 		<A href='?src=\ref[src];skills=\ref[M]'>Skills panel</A>
 	"}
 
-	if (M.client)
+	if(global.pluvia_religion?.is_member(M)) 
+		body += {"<br><br>
+			<b>Pluvian Religion</b>: <A href='?src=\ref[src];pluvian_bless=\ref[M]'>Bless</a> | <A href='?src=\ref[src];pluvian_haram=\ref[M]'>Haram</a>
+			<br>
+		"}
+
+	if(M.client)
 		if(!isnewplayer(M))
 			body += "<br>"
 			body += "<div class='Section'>"

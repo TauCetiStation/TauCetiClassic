@@ -1979,6 +1979,12 @@
 		to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 
 /mob/living/carbon/human/proc/return_to_body_dialog()
+	// just give a sound notification if already in the body
+	if (client)
+		playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+		return
+
+	// pluvians if they in the spirit form
 	if(ispluvian(src))
 		for(var/mob/living/carbon/human/pluvian_spirit/spirit in player_list)
 			if(spirit.my_corpse == src && spirit.client)
@@ -1996,18 +2002,11 @@
 					for(var/obj/item/W in spirit)
 						spirit.drop_from_inventory(W)
 					qdel(spirit)
-					if(!mind.blessed)
-						bless()
-				break
-			else if(mind)
-				for(var/mob/dead/observer/ghost in player_list)
-					if(ghost.mind == mind && ghost.can_reenter_corpse)
-						ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
-						var/answer = tgui_alert(ghost,"You have been reanimated. Do you want to return to body?","Reanimate", list("Yes","No"))
-						if(answer == "Yes")
-							ghost.reenter_corpse()
-						break
-	else if(mind)
+					global.pluvia_religion.bless(src)
+				return
+
+	// default behavior - search for the ghost from the mind datum and ask if he want to reenter
+	if(mind)
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind == mind && ghost.can_reenter_corpse)
 				ghost.playsound_local(null, 'sound/misc/mario_1up.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
