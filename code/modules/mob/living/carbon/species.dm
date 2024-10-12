@@ -381,8 +381,7 @@
 	pluvian_social_credit = 0
 
 	flags = list(
-	 IS_WHITELISTED = TRUE
-	,HAS_LIPS = TRUE
+	HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
