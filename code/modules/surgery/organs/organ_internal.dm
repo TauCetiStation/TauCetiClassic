@@ -381,6 +381,7 @@
 	item_state_world = "liver_world"
 	organ_tag = O_LIVER
 	parent_bodypart = BP_GROIN
+	var/alcohol_intensity = 1
 	slot = "liver"
 	process_accuracy = 10
 
@@ -390,24 +391,29 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podkid"
 	item_state_world = "podkid"
+	alcohol_intensity = 0.5
 
 /obj/item/organ/internal/liver/vox
 	name = "waste tract"
 	cases = list("канал отходов", "канала отходов", "каналу отходов", "канал отходов", "каналом отходов", "канале отходов")
 	icon = 'icons/obj/special_organs/vox.dmi'
+	alcohol_intensity = 1.6
 
 /obj/item/organ/internal/liver/tajaran
 	name = "tajaran liver"
 	icon = 'icons/obj/special_organs/tajaran.dmi'
+	alcohol_intensity = 1.4
 
 /obj/item/organ/internal/liver/unathi
 	name = "unathi liver"
 	icon = 'icons/obj/special_organs/unathi.dmi'
 	desc = "A large looking liver."
+	alcohol_intensity = 0.8
 
 /obj/item/organ/internal/liver/skrell
 	name = "skrell liver"
 	icon = 'icons/obj/special_organs/skrell.dmi'
+	alcohol_intensity = 0
 
 /obj/item/organ/internal/liver/cybernetic
 	name = "cybernetic liver"

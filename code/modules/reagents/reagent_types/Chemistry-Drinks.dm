@@ -748,9 +748,11 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/internal/liver/L = H.get_int_organ(/obj/item/organ/internal/liver)
+		var/obj/item/organ/internal/liver/L = H.organs_by_name[O_LIVER]
 		if(!L)
-			drunkpwr*=5
+			drunkpwr *= 5
+		else
+			drunkpwr *= L.alcohol_intensity
 
 	M.AdjustDrunkenness(drunkpwr)
 
