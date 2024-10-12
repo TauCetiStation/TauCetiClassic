@@ -139,7 +139,7 @@
 		fake_body.alpha = 127
 		RegisterSignal(user,COMSIG_HUMAN_SAY, PROC_REF(mimic_message))
 		user.reset_view(fake_body, TRUE)
-		user.add_remote_hearer(fake_body)
+		fake_body.add_remote_hearer(user)
 		eye = image('icons/mob/human_face.dmi',"pluvia_ms_s")
 		eye.plane = LIGHTING_LAMPS_PLANE
 		eye.layer = ABOVE_LIGHTING_LAYER
@@ -147,7 +147,7 @@
 		user.hud_used.set_parallax(PARALLAX_HEAVEN)
 	else
 		UnregisterSignal(user, list(COMSIG_HUMAN_SAY, COMSIG_PARENT_QDELETING))
-		user.remove_remote_hearer(fake_body)
+		fake_body.remove_remote_hearer(user)
 		qdel(fake_body)
 		fake_body = null
 		target_loc = null
