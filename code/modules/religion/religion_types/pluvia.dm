@@ -92,8 +92,8 @@
 		global.pluvia_religion.remove_member(target, HOLY_ROLE_PRIEST)
 		target.mind.pluvian_social_credit = 0
 		to_chat(target, "<span class='warning'>\ <font size=5>[reason] Врата рая закрыты для вас. Ищите себе другого покровителя.</span></font>")
-		log_admin("Pluvian [key_name_admin(target)] lose /datum/religion/pluvia")
-		message_admins("Pluvian [key_name(target)] lose /datum/religion/pluvia" )
+		message_admins("Pluvian [key_name_admin(target)] lose /datum/religion/pluvia" )
+		log_admin("Pluvian [key_name(target)] lose /datum/religion/pluvia")
 		target.playsound_local(null, 'sound/effects/heaven_fail.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return TRUE
 	else
