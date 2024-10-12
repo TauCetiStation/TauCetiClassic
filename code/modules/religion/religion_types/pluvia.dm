@@ -27,9 +27,13 @@
 	var/haram_carpet = 0.25
 	var/haram_suicide = DEADLY_HARAM
 
+	var/social_credit_threshold = 3
+
 /datum/religion/pluvia/setup_religions()
 	global.pluvia_religion = src
 	all_religions += src
+
+	social_credit_threshold = (SSticker.totalPlayersReady/10) + 3
 
 /datum/religion/pluvia/add_member(mob/living/carbon/human/H)
 	if(!ispluvian(H))

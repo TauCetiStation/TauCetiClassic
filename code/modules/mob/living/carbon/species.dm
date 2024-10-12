@@ -396,7 +396,8 @@
 	is_common = TRUE
 
 /datum/species/pluvian/on_loose(mob/living/M, new_species)
-	global.pluvia_religion.remove_member(M, HOLY_ROLE_PRIEST)
+	if(global.pluvia_religion?.is_member(M)) // skip lobby dummy
+		global.pluvia_religion.remove_member(M, HOLY_ROLE_PRIEST)
 	..()
 
 /datum/species/pluvian/handle_death(mob/living/carbon/human/H, gibbed)
