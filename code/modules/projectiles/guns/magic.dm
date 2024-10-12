@@ -105,7 +105,7 @@
 	desc = "This wand is boring to watch because... it cant do anything."
 	icon = 'icons/obj/wands.dmi'
 	icon_state = "wand_null"
-	item_state = "godstaff"
+	item_state = "wand_blue"
 	fire_sound = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
@@ -127,10 +127,19 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user)
-	user.visible_message("<span class='danger'> [user] стреляет в себя из [src].</span>")
-	playsound(user, fire_sound, VOL_EFFECTS_MASTER, TRUE)
-	charges--
-	update_icon()
+	if(charges > 0)
+		user.visible_message("<span class='danger'> [user] стреляет в себя из [src].</span>")
+		playsound(user, fire_sound, VOL_EFFECTS_MASTER, TRUE)
+		charges--
+		update_icon()
+	else
+		to_chat(user, "<span class='warning'>Ваш [name] тихо свистит...")
+
+/obj/item/weapon/gun/magic/shoot_with_empty_chamber(mob/living/user)
+	to_chat(user, "<span class='warning'>Ваш [name] тихо свистит...")
+	return
+
+
 
 /obj/item/weapon/gun/magic/wand/attack(mob/living/M, mob/living/user, def_zone)
 	if(user.a_intent != INTENT_HARM && M == user)

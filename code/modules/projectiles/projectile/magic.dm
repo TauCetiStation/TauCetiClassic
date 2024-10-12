@@ -340,7 +340,7 @@
 
 /obj/item/projectile/magic/wand/magic_carp/do_effect(target)
 	var/final_loc = target
-	if(istype(target, /turf/simulated/wall))
+	if(iswallturf(target))
 		var/fire_dir = get_dir(target,starting)
 		final_loc = get_step(target, fire_dir)
 	new /mob/living/simple_animal/hostile/carp/magic(get_turf(final_loc), target)
