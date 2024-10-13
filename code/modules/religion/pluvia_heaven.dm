@@ -7,6 +7,10 @@
 	anchored = TRUE
 	layer = MOB_LAYER
 
+/area/pluvian_heaven
+	name = "Pluvian Heaven"
+	icon_state = "blue2"
+
 /turf/simulated/wall/heaven
 	icon = 'icons/turf/walls/has_false_walls/wall_heaven.dmi'
 	light_color = "#ffffff"
