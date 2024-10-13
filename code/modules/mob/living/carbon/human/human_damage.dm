@@ -8,7 +8,7 @@
 	var/total_burn = 0
 	var/total_brute = 0
 	for(var/obj/item/organ/external/BP in bodyparts) // hardcoded to streamline things a bit
-		if(BP.is_robotic() && !BP.vital)
+		if(BP.is_robotic_part() && !BP.vital)
 			continue // *non-vital* robot limbs don't count towards shock and crit
 		total_brute += BP.brute_dam
 		total_burn += BP.burn_dam
@@ -21,6 +21,14 @@
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD)
 		ChangeToHusk()
 	return
+
+/mob/living/carbon/human/proc/get_organ(zone)
+	if(!zone)
+		zone = BP_CHEST
+	if(zone in list(O_EYES, O_MOUTH))
+		zone = BP_HEAD
+
+	return bodyparts[zone]
 
 // =============================================
 
@@ -64,7 +72,7 @@
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_robotic() && !BP.vital)
+		if(BP.is_robotic_part() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.brute_dam
 	return round(amount, 0.01)
@@ -80,7 +88,7 @@
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_robotic() && !BP.vital)
+		if(BP.is_robotic_part() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.burn_dam
 	return round(amount, 0.01)

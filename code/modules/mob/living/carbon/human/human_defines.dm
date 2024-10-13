@@ -126,3 +126,6 @@
 	// Reagent allergies.
 	var/list/allergies
 	var/next_allergy_message = 0
+
+	//Same as above, but stores "slot ID" - "organ" pairs for easy access.
+	var/list/internal_organs_slot = list()

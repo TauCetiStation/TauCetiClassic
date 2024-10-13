@@ -4,9 +4,10 @@
 #define ORGAN_BLEEDING   4
 #define ORGAN_BROKEN     8
 #define ORGAN_SPLINTED   16
-#define ORGAN_DEAD       32
-#define ORGAN_MUTATED    64
-#define ORGAN_ARTERY_CUT 128
+#define ORGAN_ROBOT      32
+#define ORGAN_DEAD       64
+#define ORGAN_MUTATED    128
+#define ORGAN_ARTERY_CUT 256
 
 #define DROPLIMB_EDGE  0
 #define DROPLIMB_BLUNT 1

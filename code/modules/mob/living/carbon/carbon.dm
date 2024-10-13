@@ -635,7 +635,7 @@
 						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
 							var/mob/living/carbon/human/H = src
 							var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
-							if(BP && BP.is_robotic())
+							if(BP && BP.is_robotic_part())
 								var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 								sparks.set_up(3, 0, get_turf(H))
 								sparks.start()

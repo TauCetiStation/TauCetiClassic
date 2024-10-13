@@ -860,21 +860,22 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-		IO.damage += rand(force * 0.5, force)
-		if(IO.damage >= IO.min_bruised_damage)
-			if(H.stat != DEAD)
-				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
-					to_chat(H, "<span class='warning'>Your eyes start to bleed profusely!</span>")
-			if(prob(10 * force))
+		if(IO)
+			IO.damage += rand(force * 0.5, force)
+			if(IO.damage >= IO.min_bruised_damage)
 				if(H.stat != DEAD)
-					to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
-					H.drop_item()
-				H.adjustBlurriness(10)
-				H.Paralyse(1)
-				H.Weaken(4)
-			if (IO.damage >= IO.min_broken_damage)
-				if(H.stat != DEAD)
-					to_chat(H, "<span class='warning'>You go blind!</span>")
+					if(!IO.is_robotic()) //robot eyes bleeding might be a bit silly
+						to_chat(H, "<span class='warning'>Your eyes start to bleed profusely!</span>")
+				if(prob(10 * force))
+					if(H.stat != DEAD)
+						to_chat(H, "<span class='warning'>You drop what you're holding and clutch at your eyes!</span>")
+						H.drop_item()
+					H.adjustBlurriness(10)
+					H.Paralyse(1)
+					H.Weaken(4)
+				if (IO.damage >= IO.min_broken_damage)
+					if(H.stat != DEAD)
+						to_chat(H, "<span class='warning'>You go blind!</span>")
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 		BP.take_damage(force)
 	else
