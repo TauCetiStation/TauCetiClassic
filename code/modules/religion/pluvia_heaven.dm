@@ -235,7 +235,7 @@
 	universal_understand = TRUE
 	universal_speak = FALSE
 	w_class = SIZE_MINUSCULE
-	density = TRUE
+	density = FALSE
 	ventcrawler = 2
 	min_oxy = 0
 	max_oxy = 0
