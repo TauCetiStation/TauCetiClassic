@@ -1,4 +1,5 @@
 //Human Overlays Indexes/////////
+#define TOTAL_LAYERS          29
 #define FIRE_LOWER_LAYER      29
 #define BODY_LAYER            28
 #define EXTERNAL_APPEARANCE   27
@@ -28,7 +29,6 @@
 #define R_HAND_LAYER          3
 #define FIRE_UPPER_LAYER      2
 #define TARGETED_LAYER        1  //BS12: Layer for the target overlay from weapon targeting system
-#define TOTAL_LAYERS          28
 //////////////////////////////////
 //Human Limb Overlays Indexes/////
 #define LIMB_HEAD_LAYER			7
