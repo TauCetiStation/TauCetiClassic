@@ -7,7 +7,6 @@
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
-	item_state_world
 	germ_level = 0
 
 	var/organ_tag = O_HEART
