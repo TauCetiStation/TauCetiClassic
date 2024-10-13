@@ -119,7 +119,7 @@
 				A.control_disabled = !A.control_disabled
 				to_chat(A, "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!")
 				cut_overlays()
-				if(findtext(icon_state, "_world"))
+				if(icon_state == item_state_world)
 					if (A.control_disabled)
 						cut_overlays(image('icons/obj/pda.dmi', "aicard-on_world"))
 					else
@@ -152,7 +152,6 @@
 		if (!A.control_disabled)
 			cut_overlay(image('icons/obj/pda.dmi', "aicard-on"))
 			add_overlay(image('icons/obj/pda.dmi', "aicard-on_world"))
-
 	update_icon()
 
 /obj/item/device/aicard/mob_pickup(mob/user, hand_index)
@@ -161,5 +160,4 @@
 		if (!A.control_disabled)
 			cut_overlay(image('icons/obj/pda.dmi', "aicard-on_world"))
 			add_overlay(image('icons/obj/pda.dmi', "aicard-on"))
-
 	update_icon()

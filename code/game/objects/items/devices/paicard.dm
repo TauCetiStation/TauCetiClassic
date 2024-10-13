@@ -301,7 +301,7 @@
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
-	if(!findtext(icon_state, "_world"))
+	if(icon_state != item_state_world)
 		prev_emotion = 1
 		cut_overlays()
 		add_overlay("pai-happy")
@@ -310,7 +310,7 @@
 
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
-	if(!findtext(icon_state, "_world"))
+	if(icon_state != item_state_world)
 		prev_emotion = 6
 		cut_overlays()
 		add_overlay("pai-off")
@@ -318,7 +318,7 @@
 		prev_emotion = 6
 
 /obj/item/device/paicard/proc/setEmotion(emotion)
-	if(pai && !findtext(icon_state, "_world"))
+	if(pai && icon_state != item_state_world)
 		cut_overlays()
 		prev_emotion = emotion
 		switch(emotion)
