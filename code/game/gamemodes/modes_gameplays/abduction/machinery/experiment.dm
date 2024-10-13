@@ -58,7 +58,7 @@
 		if((BP.status & ORGAN_CUT_AWAY) || (BP.is_stump))
 			continue
 		temp = new /icon(icobase, "[BP.body_zone]")
-		if(BP.is_robotic())
+		if(BP.is_robotic_part())
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 

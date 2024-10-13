@@ -15,8 +15,8 @@
 	var/mob/living/carbon/brain/brainmob = null//The current occupant.
 
 /obj/item/device/mmi/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
-		var/obj/item/brain/B = I
+	if(istype(I, /obj/item/organ/internal/brain) && !brainmob) //Time to stick a brain in it --NEO
+		var/obj/item/organ/internal/brain/B = I
 		if(!B.brainmob)
 			to_chat(user, "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>")
 			return
@@ -83,7 +83,7 @@
 		QDEL_NULL(brainmob)
 		return
 
-	var/obj/item/brain/brain
+	var/obj/item/organ/internal/brain/brain
 	if(user)
 		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
 		brain = new(get_turf(user))

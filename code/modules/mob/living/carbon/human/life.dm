@@ -347,6 +347,18 @@ var/global/list/tourette_bad_words= list(
 
 	failed_last_breath = inhale_alert
 
+	var/lungs = get_int_organ_by_name(O_LUNGS)
+	if(!lungs)
+		adjustOxyLoss(10)
+		if(prob(80))
+			emote("gasp")
+
+	//CRIT
+	if(!breath || (breath.total_moles == 0) || !lungs)
+		adjustOxyLoss(5)
+		inhale_alert = TRUE
+		return FALSE
+
 	if(breath)
 		//spread some viruses while we are at it
 		if (virus2.len > 0)
@@ -1066,7 +1078,11 @@ var/global/list/tourette_bad_words= list(
 		set_EyesVision(sightglassesmod)
 		return FALSE
 
-	see_in_dark = species.darksight
+	var/obj/item/organ/internal/eyes/eyes = organs_by_name[O_EYES]
+	if(eyes)
+		see_in_dark = eyes.darksight
+	else
+		see_in_dark = species.darksight
 
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G))

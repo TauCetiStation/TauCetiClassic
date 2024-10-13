@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////
 //						APPENDECTOMY							//
 //////////////////////////////////////////////////////////////////
-
+/*
 /datum/surgery_step/appendectomy
 	priority = 2
 	can_infect = 1
@@ -49,3 +49,5 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!</span>")
 	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE, tool)
+
+*/

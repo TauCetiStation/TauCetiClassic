@@ -9,7 +9,7 @@
 	return 0
 
 /obj/item/organ/external/stump/proc/copy_original_limb(obj/item/organ/external/limb)
-	name = "[limb.is_robotic() ? "mechanical " : ""]stump of \a [limb.name]"
+	name = "[limb.is_robotic_part() ? "mechanical " : ""]stump of \a [limb.name]"
 	cases = list(
 		"культя [CASE(limb, GENITIVE_CASE)]", "культи [CASE(limb, GENITIVE_CASE)]",
 		"культе [CASE(limb, GENITIVE_CASE)]", "культю [CASE(limb, GENITIVE_CASE)]",
