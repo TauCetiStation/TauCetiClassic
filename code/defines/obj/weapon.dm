@@ -16,7 +16,7 @@
 /obj/item/weapon/phone/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = world.time + 1 SECOND
-		to_chat(user, "<span class='notice'>Сalled.</span>")
+		to_chat(user, "<span class='notice'>Ring.</span>")
 		playsound(user, 'sound/weapons/ring.ogg', VOL_EFFECTS_MASTER, 20)
 /obj/item/weapon/rsp
 	name = "Rapid-Seed-Producer (RSP)"
