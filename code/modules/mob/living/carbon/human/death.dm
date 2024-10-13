@@ -41,7 +41,7 @@
 	log_admin("Pluvian [key_name(P)] went to heaven!")
 
 /mob/living/carbon/human/proc/pluvian_reborn_if_worthy()
-	if(iscultist(src) && ischangeling(src) && isshadowthrall(src) || !mind)
+	if(iscultist(src) ||  ischangeling(src) || isshadowthrall(src) || isshadowling(src) || !mind)
 		return
 	if(mind.pluvian_blessed || mind.pluvian_social_credit >= global.pluvia_religion.social_credit_threshold)
 		reborn()
