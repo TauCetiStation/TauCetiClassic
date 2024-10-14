@@ -22,6 +22,7 @@
 	var/atom/original = null // the original target clicked
 	var/turf/starting = null // the projectile's starting turf
 	var/list/permutated = list() // we've passed through these atoms, don't try to hit them again
+	var/atom/original_loc = null // the original target TURF location
 
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
@@ -35,6 +36,7 @@
 	var/fake = 0 //Fake projectile won't spam chat for admins with useless logs
 	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
+	var/hitturf = FALSE // We want to hit "turf" and call "do_effect" after hitting
 	var/paused = FALSE //for suspending the projectile midair
 		//Effects
 	var/stun = 0
@@ -102,6 +104,9 @@
 		if(is_the_opposite_dir(H.dir, dir))
 			return grab.affecting
 	return H
+
+/obj/item/projectile/proc/do_effect(target)
+	return(0)
 
 /obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	impact_effect(effect_transform)		// generate impact effect
@@ -190,7 +195,7 @@
 		permutated.Add(A)
 
 		return FALSE
-
+	do_effect(A)
 	qdel(src)
 	return TRUE
 
@@ -202,7 +207,7 @@
 
 /obj/item/projectile/process(boolet_number = 1) // we add default arg value, because there is alot of uses of projectiles without guns (e.g turrets).
 	var/first_step = 1
-
+	original_loc = get_turf(original)
 	//plot the initial trajectory
 	setup_trajectory()
 
@@ -219,6 +224,11 @@
 		if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 			qdel(src)
 			return
+		if(hitturf)
+			if(loc == original_loc)
+				do_effect(loc)
+				qdel(src)
+				return
 		trajectory.increment()	// increment the current location
 		location = trajectory.return_location(location)		// update the locally stored location data
 
