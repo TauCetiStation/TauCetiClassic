@@ -176,7 +176,7 @@ var/global/list/available_ui_styles = list(
 
 	mymob.update_action_buttons()
 	reorganize_alerts()
-	create_parallax() // todo: why we recreate parallax every time we change mob or press f12
+	set_parallax(mymob.current_parallax) // todo: why we recreate parallax every time we change mob or press f12
 	hidden_inventory_update()
 	persistant_inventory_update()
 

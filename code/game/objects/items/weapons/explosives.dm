@@ -31,6 +31,7 @@
 	if(ismob(target))
 		var/mob/living/M = target
 		M.log_combat(user, "planted (attempt) with [name]")
+		SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, M)
 		user.visible_message("<span class ='red'> [user.name] пытается установить взрывчатку на [M.name]!</span>")
 	else
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"

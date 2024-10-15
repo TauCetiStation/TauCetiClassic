@@ -77,6 +77,8 @@
 
 // Species Names (keep in mind, that whitelist and preferences DB depends on this names too, and if anything is renamed, update MYSQL tables or is_alien_whitelisted() proc and preferences).
 #define HUMAN          	 "Human"
+#define PLUVIAN        	 "Pluvian"
+#define PLUVIAN_SPIRIT 	 "Pluvian Spirit"
 #define UNATHI         	 "Unathi"
 #define TAJARAN        	 "Tajaran"
 #define SKRELL         	 "Skrell"
@@ -262,3 +264,11 @@
 #define LOGOUT_GHOST 2
 #define LOGOUT_REENTER 3
 #define LOGOUT_SWAP 4 // not so safe, check other things if available
+
+// traumatic shock levels
+#define TRAUMATIC_SHOCK_MINOR           10
+#define TRAUMATIC_SHOCK_SERIOUS         30
+#define TRAUMATIC_SHOCK_INTENSE         50
+#define TRAUMATIC_SHOCK_MIND_SHATTERING 80
+#define TRAUMATIC_SHOCK_CRITICAL        100
+

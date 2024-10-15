@@ -1,0 +1,11 @@
+beard
+bilge
+deck
+fish
+flag
+helm
+hook
+hull
+keel
+knot
+salt

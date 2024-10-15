@@ -164,8 +164,7 @@
 "gE" = (
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "hp" = (
@@ -200,7 +199,7 @@
 "iH" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/airless{
-	icon_state = "vaultfull"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "jL" = (
@@ -215,9 +214,9 @@
 	},
 /area/space_structures/flagship)
 "kc" = (
-/obj/effect/decal/turf_decal/set_damaged,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "kt" = (
@@ -326,7 +325,7 @@
 "nX" = (
 /obj/effect/spawner/mob_spawn/drone,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "og" = (
@@ -349,7 +348,7 @@
 "pU" = (
 /obj/structure/rack,
 /turf/simulated/floor/airless{
-	icon_state = "vaultfull"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "pZ" = (
@@ -490,7 +489,7 @@
 "uy" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/simulated/floor/airless{
-	icon_state = "vaultfull"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "uZ" = (
@@ -636,10 +635,9 @@
 	},
 /area/space_structures/flagship)
 "AB" = (
-/obj/effect/spawner/mob_spawn/drone,
+/obj/machinery/door/airlock/highsecurity,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "Bg" = (
@@ -654,7 +652,7 @@
 /area/space_structures/flagship)
 "Bl" = (
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "Ca" = (
@@ -777,7 +775,7 @@
 /area/space_structures/flagship)
 "FT" = (
 /turf/simulated/floor/airless{
-	icon_state = "vaultfull"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "Ga" = (
@@ -851,7 +849,7 @@
 	use_power = 1
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "Iw" = (
@@ -966,14 +964,13 @@
 "Pp" = (
 /obj/item/weapon/rack_parts,
 /turf/simulated/floor/airless{
-	icon_state = "vaultfull"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "PU" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	icon_state = "blackchoco"
 	},
 /area/space_structures/flagship)
 "PZ" = (
@@ -1527,7 +1524,7 @@ mq
 ml
 Dk
 Bl
-CD
+kc
 Hb
 Ed
 pZ
@@ -1588,7 +1585,7 @@ ml
 JH
 PU
 gE
-AB
+nX
 eF
 vE
 Jv
@@ -1606,8 +1603,8 @@ Ed
 Ed
 HR
 Bl
-kc
-ml
+PU
+AB
 Bl
 Bl
 yl
@@ -1639,7 +1636,7 @@ xR
 wi
 qw
 Ed
-CD
+kc
 nX
 RX
 Ed

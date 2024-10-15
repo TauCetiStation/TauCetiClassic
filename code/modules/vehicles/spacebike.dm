@@ -129,6 +129,7 @@
 			visible_message("<span class='danger'>[Driver] drives over [L]!</span>")
 
 			L.log_combat(Driver, "driven over with [src]")
+			SEND_SIGNAL(Driver, COMSIG_HUMAN_HARMED_OTHER, L)
 
 			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 			L.stop_pulling()

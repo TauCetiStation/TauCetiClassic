@@ -900,6 +900,7 @@
 		var/mob/M = locate(href_list["guard"])
 		if (ismob(M))
 			if(!M.client)
+				show_player_panel(M)
 				return
 			M.client.prefs.guard.print_report()
 
@@ -908,7 +909,11 @@
 			return
 
 		var/mob/M = locate(href_list["cid_history"])
-		if (!ismob(M) || !M.client)
+		if (!ismob(M))
+			return
+
+		if(!M.client)
+			show_player_panel(M)
 			return
 
 		var/client/C = M.client
@@ -939,7 +944,11 @@
 			return
 
 		var/mob/M = locate(href_list["ip_history"])
-		if (!ismob(M) || !M.client)
+		if (!ismob(M))
+			return
+
+		if(!M.client)
+			show_player_panel(M)
 			return
 
 		var/client/C = M.client
@@ -972,6 +981,7 @@
 			var/mob/M = locate(href_list["related_accounts"])
 			if (ismob(M))
 				if(!M.client)
+					show_player_panel(M)
 					return
 				var/client/C = M.client
 
@@ -1068,6 +1078,7 @@
 		if(!ismob(M))
 			return
 		if(!M.client)
+			show_player_panel(M)
 			return
 
 		var/ban_mute_type = input("Choose chat for ban:", "Chat ban") as null|anything in global.mute_ban_bitfield
@@ -1116,6 +1127,7 @@
 		if(!ismob(M))
 			return
 		if(!M.client)
+			show_player_panel(M)
 			return
 
 		var/type = href_list["type"]
@@ -1203,6 +1215,36 @@
 		message_admins("<span class='notice'>[key_name_admin(usr)] set the forced secret mode as [secret_force_mode].</span>")
 		Game() // updates the main game menu
 		.(href, list("f_secret"=1))
+
+	else if(href_list["pluvian_bless"])
+		if(!check_rights(R_ADMIN|R_WHITELIST))
+			return
+
+		var/mob/living/carbon/human/M = locate(href_list["pluvian_bless"])
+		if(!istype(M))
+			return
+
+		global.pluvia_religion.bless(M)
+		message_admins("<span class='notice'>[key_name_admin(usr)] blessed [key_name(M)]</span>")
+		log_admin("[key_name(usr)] blessed [key_name(M)]")
+		return
+
+	else if(href_list["pluvian_haram"])
+		if(!check_rights(R_ADMIN|R_WHITELIST))
+			return
+
+		var/mob/M = locate(href_list["pluvian_haram"])
+
+		var/haram_point = input("Сколько очков греха накидываем?", "Очки Греха") as num|null
+		if(!haram_point)
+			return
+		var/reason = sanitize(input("Какая причина?", "Причина?") as text|null)
+		if(!reason)
+			return
+		global.pluvia_religion.adjust_haram(M, haram_point, reason)
+		message_admins("[key_name_admin(usr)] custom haram [key_name_admin(M)] with [reason] reason on [haram_point] haram point")
+		log_admin("[key_name(usr)] custom haram [key_name(M)] with [reason] reason on [haram_point] haram point")
+		return
 
 	else if(href_list["monkeyone"])
 		if(!check_rights(R_SPAWN))	return

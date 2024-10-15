@@ -71,9 +71,16 @@ var/global/BSACooldown = 0
 		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>
 		<br>
 		<b>Mob type</b> = [M.type]<br><br>
-		<b>Guard:</b> <A href='?src=\ref[src];guard=\ref[M]'>Show</A><br>
-		<b>Related accounts by current IP and CID</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
-		<b>Slow queries:</b> <A href='?src=\ref[src];cid_history=\ref[M]'>CID history</A> | <A href='?src=\ref[src];ip_history=\ref[M]'>IP history</A><br>
+		"}
+
+	if(M.client)
+		body += {"
+			<b>Guard:</b> <A href='?src=\ref[src];guard=\ref[M]'>Show</A><br>
+			<b>Related accounts by current IP and CID</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br>
+			<b>Slow queries:</b> <A href='?src=\ref[src];cid_history=\ref[M]'>CID history</A> | <A href='?src=\ref[src];ip_history=\ref[M]'>IP history</A><br>
+		"}
+
+	body += {"
 		<b>CentCom (other server bans)</b>: <A target='_blank' href='https://centcom.melonmesa.com/viewer/view/[M.ckey]'>CentCom (ENG)</A><br>
 		<b>BYOND profile</b>: <A target='_blank' href='http://byond.com/members/[M.ckey]'>[M.ckey]</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
@@ -114,7 +121,13 @@ var/global/BSACooldown = 0
 		<A href='?src=\ref[src];skills=\ref[M]'>Skills panel</A>
 	"}
 
-	if (M.client)
+	if(global.pluvia_religion?.is_member(M) && M.mind)
+		body += {"<br><br>
+			<b>Pluvian Religion</b>: Karma: [M.mind.pluvian_social_credit] / [global.pluvia_religion.social_credit_threshold] | Haram: [M.mind.pluvian_haram_points] | <A href='?src=\ref[src];pluvian_bless=\ref[M]'>Bless</a> | <A href='?src=\ref[src];pluvian_haram=\ref[M]'>Haram</a>
+			<br>
+		"}
+
+	if(M.client)
 		if(!isnewplayer(M))
 			body += "<br>"
 			body += "<div class='Section'>"
@@ -1128,47 +1141,6 @@ var/global/BSACooldown = 0
 	qdel(frommob)
 
 	return 1
-
-/**********************Administration Shuttle**************************/
-
-var/global/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
-
-/proc/move_admin_shuttle()
-	var/area/fromArea
-	var/area/toArea
-	var/static/moving = FALSE
-
-	if(moving)
-		return
-	moving = TRUE
-
-	if (admin_shuttle_location == 1)
-		fromArea = locate(/area/shuttle/administration/station)
-		toArea = locate(/area/shuttle/administration/centcom)
-
-		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_admin")
-	else
-		fromArea = locate(/area/shuttle/administration/centcom)
-		toArea = locate(/area/shuttle/administration/station)
-
-		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/centcom/specops, "centcomm_admin")
-
-	fromArea.move_contents_to(toArea)
-
-	if (admin_shuttle_location)
-		admin_shuttle_location = 0
-
-		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/centcom/specops, "centcomm_admin")
-	else
-		admin_shuttle_location = 1
-
-		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_admin")
-
-	moving = FALSE
 
 /**********************Centcom Ferry**************************/
 

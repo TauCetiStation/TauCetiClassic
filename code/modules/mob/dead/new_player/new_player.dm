@@ -436,9 +436,7 @@
 		new_character.add_language(client.prefs.language, LANGUAGE_NATIVE)
 
 	if(SSticker.random_players)
-		new_character.gender = pick(MALE, FEMALE)
-		client.prefs.real_name = random_name(new_character.gender)
-		client.prefs.randomize_appearance_for(new_character)
+		new_character.randomize_appearance()
 	else
 		client.prefs.copy_to(new_character)
 

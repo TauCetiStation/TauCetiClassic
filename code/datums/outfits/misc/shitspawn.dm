@@ -266,7 +266,7 @@
 	back = /obj/item/weapon/storage/backpack/security
 	l_pocket = /obj/item/weapon/melee/energy/sword
 	r_pocket = /obj/item/weapon/grenade/empgrenade
-	belt = /obj/item/weapon/gun/projectile/automatic/silenced
+	belt = /obj/item/weapon/gun/projectile/automatic/pistol/silenced
 
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,

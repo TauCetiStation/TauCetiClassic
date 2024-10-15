@@ -78,13 +78,14 @@
 		return FALSE
 	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
-/obj/item/seeds/gatfruit
-	name = "pack of gatfruit seeds"
-	desc = "These seeds grow into .357 revolvers."
+/obj/item/seeds/peashooter
+	name = "pack of peashooter seeds"
+	cases = list("семена Горохострела", "семян Горохострела", "семенам Горохострела", "семена Горохострела", "семенами Горохострела", "семенах Горохострела")
+	desc = "Эти семена вырастают в Горохострел"
 	icon_state = "seed-gatfruit"
-	species = "gatfruit"
-	plantname = "Gatfruit Tree"
-	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gatfruit
+	species = "peashooter"
+	plantname = "Peashooter Tree"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/peashooter
 	lifespan = 20
 	endurance = 20
 	maturation = 10
@@ -115,7 +116,7 @@
 	if(!istype(E, /datum/disease2/effect/gibbingtons))
 		return
 	if(prob(holder.stage * 10))
-		mutatelist = list(/obj/item/seeds/gatfruit)
+		mutatelist = list(/obj/item/seeds/peashooter)
 		tray.mutatespecie()
 
 /obj/item/seeds/chiliseed
@@ -205,6 +206,24 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 1
+
+/obj/item/seeds/cucumberseed
+	name = "pack of cucumber seeds"
+	cases = list("семена огурцов", "семян огурцов", "семенам огурцов", "семена огурцов", "семенами огурцов", "семенах огурцов")
+	desc = "Эти семена вырастают в огурцы."
+	icon_state = "seed-cucumber"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	species = "cucumber"
+	plantname = "Cucumbers"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/cucumber
+	lifespan = 30
+	endurance = 20
+	maturation = 3
+	production = 4
+	yield = 4
+	potency = 4
+	plant_type = 0
+	growthstages = 4
 
 /obj/item/seeds/tobacco_space
 	name = "pack of space tobacco seeds"
@@ -342,11 +361,11 @@
 	species = "laughweed"
 	plantname = "Laughweed"
 	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/laughweed
-	lifespan = 40
-	endurance = 30
-	maturation = 5
-	production = 5
-	yield = 6
+	lifespan = 30
+	endurance = 25
+	maturation = 6
+	production = 6
+	yield = 4
 	plant_type = 1
 	growthstages = 1
 	mutatelist = list(/obj/item/seeds/megaweedseed,/obj/item/seeds/blackweedseed)
@@ -359,11 +378,11 @@
 	species = "megaweed"
 	plantname = "Megaweed"
 	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/megaweed
-	lifespan = 40
+	lifespan = 30
 	endurance = 25
-	maturation = 5
-	production = 3
-	yield = 6
+	maturation = 6
+	production = 6
+	yield = 4
 	plant_type = 1
 	growthstages = 1
 
@@ -372,12 +391,12 @@
 	desc = "They're seeds that grow deathweed."
 	icon_state = "seed-blackweed"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
-	species = "blackcannabis"
+	species = "blackweed"
 	plantname = "Deathweed"
 	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed
-	lifespan = 40
-	endurance = 30
-	maturation = 5
+	lifespan = 30
+	endurance = 25
+	maturation = 6
 	production = 6
 	yield = 4
 	plant_type = 1
