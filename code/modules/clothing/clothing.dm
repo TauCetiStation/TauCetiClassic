@@ -220,8 +220,6 @@
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_EARS
 
-	sprite_sheet_slot = SPRITE_SHEET_EARS
-
 /obj/item/clothing/ears/attack_hand(mob/user)
 	if (!user) return
 

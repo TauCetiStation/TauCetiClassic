@@ -21,6 +21,8 @@
 	var/button_icon = 'icons/hud/actions.dmi'
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
+	var/icon/button_overlay_icon = null
+	var/button_overlay_state = null
 	var/transparent_when_unavailable = TRUE
 	var/mob/owner
 	var/toggleable = FALSE
@@ -191,7 +193,9 @@
 
 	cut_overlays()
 	var/image/img
-	if(owner.action_type == AB_ITEM && owner.target)
+	if(owner.button_overlay_icon && owner.button_overlay_state)
+		img = image(owner.button_overlay_icon, owner.button_overlay_state)
+	else if(owner.action_type == AB_ITEM && owner.target)
 		var/obj/item/I = owner.target
 		img = image(I.icon, src , I.icon_state)
 	else if(owner.button_icon && owner.button_icon_state)
