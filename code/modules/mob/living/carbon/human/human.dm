@@ -1922,7 +1922,7 @@
 			massages_done_right = 0
 
 			if((health > config.health_threshold_dead) || (!suiciding))
-				INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human/, return_to_body_dialog))
+				INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, return_to_body_dialog))
 				Heart.heart_fibrillate()
 				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
 			else
