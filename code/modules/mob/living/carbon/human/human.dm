@@ -1931,9 +1931,9 @@
 			visible_message("<span class='danger'>[user] is trying perform a heart massage on [src]!</span>")
 
 			massages_done_right = 0
-			return_to_body_dialog()
 
 			if((health > config.health_threshold_dead) || (!suiciding))
+				INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, return_to_body_dialog))
 				Heart.heart_fibrillate()
 				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
 			else
