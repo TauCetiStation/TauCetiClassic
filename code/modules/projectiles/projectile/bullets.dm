@@ -76,8 +76,26 @@
 
 /obj/item/projectile/bullet/peabullet
 	name = "pea bullet"
-	damage = 5
-	agony = 5
+	damage = 3
+	agony = 10
+
+/obj/item/projectile/bullet/peabullet/in_fire
+	damage = 8
+	agony = 15
+	weaken = 1
+	incendiary = 2
+
+/obj/item/projectile/bullet/peabullet/virus
+	name = "virus pea bullet"
+	damage = 15
+	agony = 15
+	weaken = 1
+
+/obj/item/projectile/bullet/peabullet/virus/in_fire
+	damage = 18
+	agony = 20
+	stun = 3
+	incendiary = 5
 
 /obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25

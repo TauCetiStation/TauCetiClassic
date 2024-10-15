@@ -658,3 +658,12 @@
 	ammo_type = /obj/item/ammo_casing/pea
 	max_ammo = 6
 	origin_tech = "combat=2"
+
+/obj/item/ammo_box/magazine/pea/in_fire
+	ammo_type = /obj/item/ammo_casing/pea/in_fire
+
+/obj/item/ammo_box/magazine/pea/virus
+	ammo_type = /obj/item/ammo_casing/pea/virus
+
+/obj/item/ammo_box/magazine/pea/virus/in_fire
+	ammo_type = /obj/item/ammo_casing/pea/virus/in_fire
