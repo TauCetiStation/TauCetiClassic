@@ -494,3 +494,26 @@
 	gender = FEMALE
 	icon_state = "soviet_peakedcap"
 	item_state = "soviet_peakedcap"
+
+/obj/item/clothing/head/pluvia
+	name = "pluvia non la"
+	cases = list("плувийская нон ла", "плувийской нон ла", "плувийской нон ла", "плувийскую нон ла", "плувийской нон ла", "плувийской нон ла")
+	desc = "Традиционная конусовидная шляпа жителей Плувии. Такая специфическая форма символизирует саму океаническую планету и её неостановимые волны."
+	gender = FEMALE
+	icon_state = "pluvia_hat"
+	item_state = "pluvia_hat"
+	flags = HEADCOVERSEYES
+
+/obj/item/clothing/head/pluvia/white
+	icon_state = "wpluvia_hat"
+	item_state = "wpluvia_hat"
+	desc = "Традиционная конусовидная шляпа жителей Плувии. Белый цвет символизирует готовность к исполнению заповедей Лунарис и морскую пену, покоящуюся на волнах плувийского океана."
+
+/obj/item/clothing/head/ricehat
+	name = "non la"
+	cases = list("нон ла", "нон ла", "нон ла", "нон ла", "нон ла", "нон ла")
+	desc = "Добро пожаловать на рисовые поля."
+	gender = FEMALE
+	icon_state = "ricehat"
+	item_state = "ricehat"
+	flags = HEADCOVERSEYES
