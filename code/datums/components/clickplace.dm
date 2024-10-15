@@ -198,7 +198,7 @@
 	victim.apply_damage(8, def_zone = BP_HEAD)
 	victim.visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [A]!</span>")
 	playsound(parent, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-
+	SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER,victim )
 	victim.log_combat(assailant, "face-slammed against \the [parent]")
 	return FALSE
 
@@ -227,8 +227,8 @@
 		INVOKE_ASYNC(victim, TYPE_PROC_REF(/atom/movable, do_simple_move_animation), A.loc, old_loc)
 		victim.Stun(2)
 		victim.Weaken(5)
-
 		victim.log_combat(assailant, "laid on [A]")
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, victim)
 	else if(assailant.a_intent != INTENT_HARM)
 		/// Let's pretend a face-slam doesn't exist.
 		to_chat(assailant, "<span class='warning'>You need a better grip to do that!</span>")

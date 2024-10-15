@@ -197,6 +197,7 @@
 
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
+
 		//disallow upgrading if we're grabbing more than one person
 		if((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/weapon/grab)))
 			var/obj/item/weapon/grab/G = assailant.l_hand
@@ -270,7 +271,7 @@
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.Stun(5)
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
-
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 	adjust_position()
 
 
@@ -386,6 +387,7 @@
 		assailant.set_dir(get_dir(assailant, affecting))
 
 		affecting.log_combat(assailant, "neck-grabbed")
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
@@ -400,6 +402,7 @@
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 
 		affecting.log_combat(assailant, "strangled")
+		SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 		affecting.losebreath += 1
 		affecting.set_dir(WEST)
@@ -492,6 +495,7 @@
 						to_chat(affecting, "<span class='danger'>You experience immense pain as you feel digits being pressed into your eyes!</span>")
 
 						affecting.log_combat(assailant, "finger-pressed into the eyes")
+						SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 						var/obj/item/organ/internal/eyes/IO = affecting:organs_by_name[O_EYES]
 						IO.damage += rand(3,4)
@@ -545,6 +549,7 @@
 						playsound(assailant, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 
 						affecting.log_combat(assailant, "headbutted")
+						SEND_SIGNAL(assailant, COMSIG_HUMAN_HARMED_OTHER, affecting)
 
 						assailant.drop_from_inventory(src)
 						src.loc = null

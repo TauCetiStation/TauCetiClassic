@@ -103,3 +103,6 @@
 #define REACTION_RESULT      "result_id"
 #define REACITON_COST        "favor_cost"
 #define REACTION_ASPECTS     "needed_aspects"
+
+// pluvians stuff
+#define PLUVIAN_HARAM_THRESHOLD 5

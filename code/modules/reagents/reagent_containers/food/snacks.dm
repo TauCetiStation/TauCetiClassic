@@ -113,6 +113,7 @@
 				else
 					reagents.trans_to_ingest(M, reagents.total_volume)
 				bitecount++
+				SEND_SIGNAL(M, COMSIG_HUMAN_ON_CONSUME, src)
 				On_Consume(M, silent)
 			return TRUE
 
@@ -1037,6 +1038,16 @@
 	icon_state = "chinese4"
 	trash = /obj/item/trash/chinese4
 	list_reagents = list("nutriment" = 1, "sugar" = 2, "rice" = 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice
+	name = "luna-rice"
+	desc = "Это просто рис с синим пищевым красителем. ВЫ ПЕРЕПЛАЧИВАЕТЕ ЗА БРЕНД. ОСТАНОВИТЕСЬ."
+	cases = list("Луна-рис", "Луна-риса", "Луна-рису", "Луна-рис", "Луна-рисом", "Луна-рисе")
+	icon_state = "lunarice"
+	item_state_world = "lunarice_world"
+	trash = /obj/item/trash/lunarice
+	list_reagents = list("nutriment" = 3, "sugar" = 3, "rice" = 3)
+
 
 /obj/item/weapon/reagent_containers/food/snacks/syndicake
 	name = "Syndi-Cake"
