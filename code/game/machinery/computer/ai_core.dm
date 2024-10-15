@@ -253,11 +253,16 @@ That prevents a few funky behaviors.
 							C.name = "inteliCard - [T.name]"
 							if (T.stat == DEAD)
 								C.icon_state = "aicard-404"
+								C.item_state_inventory = "aicard-404"
+								C.item_state_world = "aicard-404_world"
 							else
 								C.icon_state = "aicard-full"
+								C.item_state_inventory = "aicard-full"
+								C.item_state_world = "aicard-full_world"
 							T.cancel_camera()
 							to_chat(T, "You have been downloaded to a mobile storage device. Remote device connection severed.")
 							to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+							C.update_icon()
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
 						if(C.AI)//If there is an AI on card.
@@ -293,11 +298,14 @@ That prevents a few funky behaviors.
 							A.aiRadio.disabledAi = 0
 							A.loc = T.loc//To replace the terminal.
 							C.icon_state = "aicard"
+							C.item_state_inventory = "aicard"
+							C.item_state_world = "aicard_world"
 							C.name = "inteliCard"
 							C.cut_overlays()
 							A.cancel_camera()
 							to_chat(A, "You have been uploaded to a stationary terminal. Remote device connection restored.")
 							to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed succesfully. Local copy has been removed.")
+							C.update_icon()
 							qdel(T)
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src
@@ -320,6 +328,8 @@ That prevents a few funky behaviors.
 								to_chat(U, "No AI to copy over!")//Well duh
 							else for(var/mob/living/silicon/ai/A in C)
 								C.icon_state = "aicard"
+								C.item_state_inventory = "aicard"
+								C.item_state_world = "aicard_world"
 								C.name = "inteliCard"
 								C.cut_overlays()
 								A.loc = T
@@ -333,18 +343,24 @@ That prevents a few funky behaviors.
 								A.cancel_camera()
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
 								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
+								C.update_icon()
 						else
 							if(!C.contents.len && T.occupier && !T.active)
 								C.name = "inteliCard - [T.occupier.name]"
 								T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
 								if (T.occupier.stat == DEAD)
 									C.icon_state = "aicard-404"
+									C.item_state_inventory = "aicard-404"
+									C.item_state_world = "aicard-404_world"
 									T.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 								else
 									C.icon_state = "aicard-full"
+									C.item_state_inventory = "aicard-full"
+									C.item_state_world = "aicard-full_world"
 									T.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 								to_chat(T.occupier, "You have been downloaded to a mobile storage device. Still no remote access.")
 								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+								C.update_icon()
 								T.occupier.loc = C
 								T.occupier.cancel_camera()
 								T.occupier = null
@@ -405,10 +421,13 @@ That prevents a few funky behaviors.
 									A.loc = C//Throw them into the target card. Since they are already on a card, transfer is easy.
 									C.name = "inteliCard - [A.name]"
 									C.icon_state = "aicard-full"
+									C.item_state_inventory = "aicard-full"
+									C.item_state_world = "aicard-full_world"
 									T.AI = null
 									A.cancel_camera()
 									to_chat(A, "You have been uploaded to a mobile storage device.")
 									to_chat(U, "<span class='notice'><b>SUCCESS</b>:</span> [A.name] ([rand(1000,9999)].exe) removed from host and stored within local memory.")
+									C.update_icon()
 							else//If host AI is empty.
 								if(C.flush)//If the other card is flushing.
 									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> AI flush is in progress, cannot execute transfer protocol.")
@@ -416,14 +435,18 @@ That prevents a few funky behaviors.
 									if(A_T&&A_T.stat == CONSCIOUS)//If there is an AI on the target card and it's not inactive.
 										A_T.loc = T//Throw them into suit.
 										C.icon_state = "aicard"
+										C.item_state_inventory = "aicard"
+										C.item_state_world = "aicard_world"
 										C.name = "inteliCard"
 										C.cut_overlays()
 										T.AI = A_T
 										A_T.cancel_camera()
 										to_chat(A_T, "You have been uploaded to a mobile storage device.")
 										to_chat(U, "<span class='notice'><b>SUCCESS</b>:</span> [A_T.name] ([rand(1000,9999)].exe) removed from local memory and installed to host.")
+										C.update_icon()
 									else if(A_T)//If the target AI is dead. Else just go to return since nothing would happen if both are empty.
 										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [A_T.name] data core is corrupted. Unable to install.")
+										C.update_icon()
 	else
 		to_chat(U, "<span class='warning'><b>ERROR</b>:</span> AI flush is in progress, cannot execute transfer protocol.")
 	return

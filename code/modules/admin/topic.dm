@@ -1216,6 +1216,36 @@
 		Game() // updates the main game menu
 		.(href, list("f_secret"=1))
 
+	else if(href_list["pluvian_bless"])
+		if(!check_rights(R_ADMIN|R_WHITELIST))
+			return
+
+		var/mob/living/carbon/human/M = locate(href_list["pluvian_bless"])
+		if(!istype(M))
+			return
+
+		global.pluvia_religion.bless(M)
+		message_admins("<span class='notice'>[key_name_admin(usr)] blessed [key_name(M)]</span>")
+		log_admin("[key_name(usr)] blessed [key_name(M)]")
+		return
+
+	else if(href_list["pluvian_haram"])
+		if(!check_rights(R_ADMIN|R_WHITELIST))
+			return
+
+		var/mob/M = locate(href_list["pluvian_haram"])
+
+		var/haram_point = input("Сколько очков греха накидываем?", "Очки Греха") as num|null
+		if(!haram_point)
+			return
+		var/reason = sanitize(input("Какая причина?", "Причина?") as text|null)
+		if(!reason)
+			return
+		global.pluvia_religion.adjust_haram(M, haram_point, reason)
+		message_admins("[key_name_admin(usr)] custom haram [key_name_admin(M)] with [reason] reason on [haram_point] haram point")
+		log_admin("[key_name(usr)] custom haram [key_name(M)] with [reason] reason on [haram_point] haram point")
+		return
+
 	else if(href_list["monkeyone"])
 		if(!check_rights(R_SPAWN))	return
 

@@ -23,6 +23,7 @@
 		return FALSE
 	else
 		to_chat(H, "<span class='notice'Вы ощущаете покой и безопасность. Теперь вы защищены от промывания мозгов.</span>")
+		H.mind.pluvian_social_credit = 0
 
 	if(prob(50) && !H.isSynthetic())
 		H.visible_message("[H] внезапно становится очень красным и начинает корчиться. В воздухе появляется странный запах....", \
@@ -89,7 +90,7 @@
 					continue
 				R.Deconvert()
 				cleared_role = TRUE
-
+				M.mind.pluvian_social_credit = 0
 			if(cleared_role)
 				// M.mind.remove_objectives() Uncomment this if you're feeling suicidal, and inable to see player's objectives.
 				to_chat(M, "<span class='danger'>Вам вживили [CASE(src, NOMINATIVE_CASE)], и теперь вы должны служить НТ. Ваша прежняя миссия больше не имеет значения. Слава НТ!</span>")

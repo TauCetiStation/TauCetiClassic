@@ -5060,6 +5060,7 @@
 	icon_state = "pipe-c";
 	layer = 1.9
 	},
+/obj/effect/landmark/ancestor_wisp_start,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/primary/central)
 "awc" = (
@@ -14642,6 +14643,10 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
+"cjO" = (
+/obj/effect/landmark/ancestor_wisp_start,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "cjS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/cigbutt,
@@ -47193,6 +47198,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/ancestor_wisp_start,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "iwE" = (
@@ -52656,6 +52662,7 @@
 	icon_state = "pipe-c";
 	layer = 1.9
 	},
+/obj/effect/landmark/ancestor_wisp_start,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/primary/central)
 "jzX" = (
@@ -67934,6 +67941,7 @@
 	dir = 2;
 	sortType = list("Парк","Производство Дронов","Кабинет ГП","Роботехника","�?сследования Плазмы","Ординаторская","Комната Отдыха �?нженеров","Хранилище Медбея","Офис Главы �?сследований","Генетика","Морг","Двигатель","Офис Главного �?нженера","Атмосферный Контроль","Комната отдыха РнД","Офис СМО","Ксенобиология","Каюта Капитана","Конференц-Зал","Химия","Научная лаборатория","Вирусология","Прочие �?сследования")
 	},
+/obj/effect/landmark/ancestor_wisp_start,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/primary/central)
 "mBQ" = (
@@ -96079,6 +96087,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/effect/landmark/ancestor_wisp_start,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/primary/central)
 "sik" = (
@@ -97631,6 +97640,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/effect/landmark/ancestor_wisp_start,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/primary/central)
 "sww" = (
@@ -152414,7 +152424,7 @@ cQg
 fKV
 uWJ
 dpu
-uWJ
+cjO
 tfD
 uWJ
 uWJ

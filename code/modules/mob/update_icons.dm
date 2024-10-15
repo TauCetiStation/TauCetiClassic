@@ -29,8 +29,10 @@
 			update_inv_belt()
 		if(SLOT_WEAR_ID)
 			update_inv_wear_id()
-		if(SLOT_L_EAR, SLOT_R_EAR)
-			update_inv_ears()
+		if(SLOT_L_EAR)
+			update_inv_l_ear()
+		if(SLOT_R_EAR)
+			update_inv_r_ear()
 		if(SLOT_GLASSES)
 			update_inv_glasses()
 		if(SLOT_GLOVES)
@@ -125,7 +127,10 @@
 /mob/proc/update_inv_pockets()
 	return
 
-/mob/proc/update_inv_ears()
+/mob/proc/update_inv_l_ear()
+	return
+
+/mob/proc/update_inv_r_ear()
 	return
 
 /mob/proc/update_targeted()

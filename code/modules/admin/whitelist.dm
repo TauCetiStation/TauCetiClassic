@@ -307,6 +307,9 @@
 	if(role == "human")
 		return TRUE
 
+	if(role == "pluvian")
+		return TRUE
+
 	switch(role) //We don't use separate whitelist for languages, lets transform lang name to their race name.
 		if("sinta'unathi")
 			role = "unathi"
