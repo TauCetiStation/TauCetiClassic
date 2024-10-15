@@ -253,7 +253,7 @@
 			"[SLOT_SHOES]" = O.shoes,
 			"[SLOT_HEAD]" = O.head,
 			"[SLOT_WEAR_MASK]" = O.mask,
-			"[SLOT_TIE]" = O.neck,
+			"[SLOT_NECK]" = O.neck,
 			"[SLOT_L_EAR]" = O.l_ear,
 			"[SLOT_R_EAR]" = O.r_ear,
 			"[SLOT_GLASSES]" = O.glasses
@@ -1804,7 +1804,7 @@
 
 	darksight = 8
 
-	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_SHOES, SLOT_GLOVES, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_GLASSES)
+	restricted_inventory_slots = list(SLOT_BELT, SLOT_NECK, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_SHOES, SLOT_GLOVES, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_GLASSES)
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -1981,7 +1981,7 @@
 		,O_LIVER   = /obj/item/organ/internal/liver/serpentid
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
-	restricted_inventory_slots = list(SLOT_L_EAR, SLOT_R_EAR, SLOT_SHOES, SLOT_GLASSES, SLOT_GLOVES, SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_WEAR_MASK)
+	restricted_inventory_slots = list(SLOT_L_EAR, SLOT_NECK, SLOT_R_EAR, SLOT_SHOES, SLOT_GLASSES, SLOT_GLOVES, SLOT_W_UNIFORM, SLOT_WEAR_SUIT, SLOT_WEAR_MASK)
 	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT + 50
 	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 80
 	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440

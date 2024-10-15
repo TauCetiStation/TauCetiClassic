@@ -386,6 +386,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_inv_shoes()
 	update_inv_s_store()
 	update_inv_wear_mask()
+	update_inv_neck()
 	update_inv_head()
 	update_inv_belt()
 	update_inv_back()
@@ -691,7 +692,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	update_inv_w_uniform()
 	update_tail_showing()
-	update_collar()
+	update_inv_neck()
 
 	apply_standing_overlay(SUIT_LAYER)
 
@@ -724,6 +725,20 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_standing_overlay(FACEMASK_LAYER)
 
+/mob/living/carbon/human/update_inv_neck()
+	remove_standing_overlay(NECK_LAYER)
+	if(neck)
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)
+				neck.screen_loc = ui_neck
+			client.screen += neck
+
+		var/image/standing = neck.get_standing_overlay(src, 'icons/mob/neck.dmi', SPRITE_SHEET_NECK, -NECK_LAYER)
+		standing = human_update_offset(standing, FALSE)
+		standing.pixel_x += species.offset_features[OFFSET_NECK][1]
+		standing.pixel_y += species.offset_features[OFFSET_NECK][2]
+		overlays_standing[NECK_LAYER] = standing
+	apply_standing_overlay(NECK_LAYER)
 
 /mob/living/carbon/human/update_inv_back()
 	remove_standing_overlay(BACK_LAYER)
@@ -847,25 +862,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			overlays_standing[TAIL_LAYER] = standing
 
 	apply_standing_overlay(TAIL_LAYER)
-
-
-//Adds a collar overlay above the helmet layer if the suit has one
-//	Suit needs an identically named sprite in icons/mob/collar.dmi
-/mob/living/carbon/human/proc/update_collar()
-	remove_standing_overlay(COLLAR_LAYER)
-
-	if(wear_suit)
-		var/icon/C = new('icons/mob/collar.dmi')
-		if(wear_suit.icon_state in C.IconStates())
-
-			var/image/standing = image("icon" = C, "icon_state" = "[wear_suit.icon_state]", "layer"=-COLLAR_LAYER)
-			standing.color = wear_suit.color
-			standing = human_update_offset(standing, TRUE)
-			standing.pixel_x += species.offset_features[OFFSET_NECK][1]
-			standing.pixel_y += species.offset_features[OFFSET_NECK][2]
-			overlays_standing[COLLAR_LAYER]	= standing
-
-	apply_standing_overlay(COLLAR_LAYER)
 
 
 /mob/living/carbon/human/proc/update_surgery()

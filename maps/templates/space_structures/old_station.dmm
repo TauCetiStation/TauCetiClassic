@@ -6771,7 +6771,7 @@
 /area/space_structures/old_station/right/rnd)
 "NS" = (
 /obj/structure/table,
-/obj/item/clothing/mask/tie/golden_cross,
+/obj/item/clothing/neck/golden_cross,
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},

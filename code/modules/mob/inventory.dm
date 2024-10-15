@@ -70,6 +70,7 @@ var/global/list/slot_equipment_priority = list(
 	SLOT_W_UNIFORM,
 	SLOT_WEAR_SUIT,
 	SLOT_WEAR_MASK,
+	SLOT_NECK,
 	SLOT_HEAD,
 	SLOT_SHOES,
 	SLOT_GLOVES,
@@ -387,6 +388,7 @@ var/global/list/slot_equipment_priority = list(
 		if(SLOT_W_UNIFORM) return w_uniform
 		if(SLOT_BACK) return back
 		if(SLOT_WEAR_MASK) return wear_mask
+		if(SLOT_NECK) return neck
 		if(SLOT_L_HAND) return l_hand
 		if(SLOT_R_HAND) return r_hand
 		if(SLOT_S_STORE) return s_store
@@ -432,6 +434,8 @@ var/global/list/slot_equipment_priority = list(
 		items += wear_suit
 	if(w_uniform)
 		items += w_uniform
+	if(neck)
+		items += neck
 
 	return items
 
@@ -470,6 +474,8 @@ var/global/list/slot_equipment_priority = list(
 			return "back"
 		if(SLOT_WEAR_MASK)
 			return "mask"
+		if(SLOT_NECK)
+			return "neck"
 		if(SLOT_HANDCUFFED)
 			return "hands"
 		if(SLOT_L_HAND)
@@ -514,7 +520,7 @@ var/global/list/slot_equipment_priority = list(
 			return "error=[slot]"
 
 /mob/living/carbon/ian/slot_id_to_name(slot)
-	if(slot == SLOT_NECK)
+	if(slot == SLOT_IAN_NECK)
 		return "neck"
 	else
 		return ..()

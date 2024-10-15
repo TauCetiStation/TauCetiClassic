@@ -52,6 +52,7 @@
 
 /obj/item/clothing/accessory/tie
 	layer_priority = 0.1
+	slot_flags = SLOT_FLAGS_NECK | SLOT_FLAGS_TIE
 
 /obj/item/clothing/accessory/tie/blue
 	name = "blue tie"
@@ -74,6 +75,7 @@
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
+	slot_flags = SLOT_FLAGS_TIE
 
 /obj/item/clothing/accessory/stethoscope
 	name = "stethoscope"
@@ -159,11 +161,13 @@
 	name = "bronze cross"
 	desc = "That's a little bronze cross for wearing under the clothes."
 	icon_state = "bronze_cross"
+	slot_flags = SLOT_FLAGS_NECK | SLOT_FLAGS_TIE
 
 /obj/item/clothing/accessory/metal_cross
 	name = "metal cross"
 	desc = "That's a little metal cross for wearing under the clothes."
 	icon_state = "metal_cross"
+	slot_flags = SLOT_FLAGS_NECK | SLOT_FLAGS_TIE
 
 //Medals
 /datum/medal
@@ -339,7 +343,7 @@
 
 /obj/item/clothing/accessory/holobadge/cord
 	icon_state = "holobadge-cord"
-	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
+	slot_flags = SLOT_FLAGS_NECK | SLOT_FLAGS_TIE
 
 /obj/item/clothing/accessory/holobadge/attack_self(mob/user)
 	if(!stored_name)
