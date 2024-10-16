@@ -2,13 +2,14 @@
 	name = "inteliCard"
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "aicard" // aicard-full
+	item_state_world = "aicard_world"
+	item_state_inventory = "aicard"
 	item_state = "electronic"
 	flags = HEAR_PASS_SAY
 	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	var/flush = null
 	origin_tech = "programming=4;materials=4"
-
 
 /obj/item/device/aicard/attack(mob/living/silicon/ai/M, mob/user)
 	if(!isAI(M))//If target is not an AI.
@@ -117,13 +118,46 @@
 			for(var/mob/living/silicon/ai/A in src)
 				A.control_disabled = !A.control_disabled
 				to_chat(A, "The intelicard's wireless port has been [A.control_disabled ? "disabled" : "enabled"]!")
-				if (A.control_disabled)
-					cut_overlay(image('icons/obj/pda.dmi', "aicard-on"))
+				cut_overlays()
+				if(icon_state == item_state_world)
+					if (A.control_disabled)
+						cut_overlays(image('icons/obj/pda.dmi', "aicard-on_world"))
+					else
+						add_overlay(image('icons/obj/pda.dmi', "aicard-on_world"))
 				else
-					add_overlay(image('icons/obj/pda.dmi', "aicard-on"))
+					if (A.control_disabled)
+						cut_overlay(image('icons/obj/pda.dmi', "aicard-on"))
+					else
+						add_overlay(image('icons/obj/pda.dmi', "aicard-on"))
 	attack_self(U)
 
+/obj/item/device/aicard/update_icon(mob/living/silicon/ai/A)
+	. = ..()
+	if(A)
+		icon_state = "aicard-full"
+		item_state_inventory = "aicard-full"
+		item_state_world = "aicard-full_world"
+	if(A.stat == DEAD)
+		icon_state = "aicard-404"
+		item_state_inventory = "aicard-404"
+		item_state_world = "aicard-404_world"
+	else
+		icon_state = "aicard"
+		item_state_inventory = "aicard"
+		item_state_world = "aicard_world"
 
+/obj/item/device/aicard/dropped(mob/user)
+	. = ..()
+	for(var/mob/living/silicon/ai/A in src)
+		if (!A.control_disabled)
+			cut_overlay(image('icons/obj/pda.dmi', "aicard-on"))
+			add_overlay(image('icons/obj/pda.dmi', "aicard-on_world"))
+	update_icon()
 
-
-
+/obj/item/device/aicard/mob_pickup(mob/user, hand_index)
+	. = ..()
+	for(var/mob/living/silicon/ai/A in src)
+		if (!A.control_disabled)
+			cut_overlay(image('icons/obj/pda.dmi', "aicard-on_world"))
+			add_overlay(image('icons/obj/pda.dmi', "aicard-on"))
+	update_icon()

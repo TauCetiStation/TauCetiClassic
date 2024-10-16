@@ -57,10 +57,10 @@
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/glock,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/colt1911,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/silenced,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol/silenced,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/peacemaker,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/detective,\
-						prob(5);/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal,\
+						prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/silenced/nonlethal,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver/syndie,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver,\
 						prob(5);/obj/item/weapon/gun/projectile/automatic/pistol/deagle,\
@@ -92,7 +92,7 @@
 		return pick(\
 						prob(15);/obj/item/weapon/gun/projectile/shotgun/bolt_action,\
 						prob(15);/obj/item/weapon/gun/projectile/shotgun/repeater,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/saber,\
 						prob(14);/obj/item/weapon/gun/projectile/automatic/c20r,\
 						prob(12);/obj/item/weapon/gun/projectile/automatic/mini_uzi,\
 						prob(10);/obj/item/weapon/gun/projectile/automatic/bar,\
@@ -188,7 +188,7 @@
 						/obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off,\
 						/obj/item/weapon/gun/projectile/revolver,\
 						/obj/item/weapon/gun/projectile/revolver/detective,\
-						/obj/item/weapon/gun/projectile/automatic,\
+						/obj/item/weapon/gun/projectile/automatic/saber,\
 						/obj/item/weapon/gun/projectile/automatic/mini_uzi,\
 						/obj/item/weapon/gun/projectile/automatic/c20r,\
 						/obj/item/weapon/gun/projectile/automatic/l13,\

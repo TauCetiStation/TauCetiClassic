@@ -92,12 +92,17 @@
 		power_supply.maxcharge /= 2
 	power_supply.charge = power_supply.maxcharge
 
+/obj/item/weapon/gun/energy/laser/cutter/set_prototype_qualities(rel_val=100, mark=0)
+	if(mark)
+		power_supply.maxcharge += (mark - 1) * 200
+	if(!prob(reliability))
+		power_supply.maxcharge /= 2
+	power_supply.charge = power_supply.maxcharge
+
 /obj/item/weapon/gun/projectile/automatic/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
 		recoil = max(recoil / mark, 0.5)
-		fire_delay = max(fire_delay / mark, 2)
 	if(!prob(reliability))
-		fire_delay *= 2
 		recoil += 1
 
 /obj/item/weapon/gun/plasma/set_prototype_qualities(rel_val=100, mark=0)

@@ -69,6 +69,7 @@
 			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		if(P.firer)
 			log_combat(P.firer, "shot with <b>[P.type]</b>", alert_admins = !P.fake, redirected = P.redirected)
+			SEND_SIGNAL(P.firer, COMSIG_HUMAN_HARMED_OTHER, src)
 		else
 			attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[src]/[ckey]</b> with a <b>[src]</b>"
 			if(!P.fake)
@@ -146,6 +147,8 @@
 			var/client/assailant = L.client
 			if(assailant)
 				log_combat(L, "hit with thrown [O]")
+				if(throw_damage > 0)
+					SEND_SIGNAL(L, COMSIG_HUMAN_HARMED_OTHER, src)
 
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)

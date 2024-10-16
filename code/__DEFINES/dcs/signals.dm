@@ -350,6 +350,18 @@
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
 #define COMSIG_LIVING_BUMPED "living_bumped"
+// from base of mob/living/proc/log_combat (mob/living/carbon/human/attacker)
+#define COMSIG_HUMAN_HARMED_OTHER "human_harmed_other"
+// from base of /obj/structure/stool/bed/chair/noose/user_buckle_mob()
+#define COMSIG_HUMAN_ON_SUICIDE "human_on_suicide"
+// from base of /mob/living/carbon/proc/handle_alerts()
+#define COMSIG_HUMAN_ON_ADJUST_DRUGINESS "human_on_adjust_drugines"
+// from base of /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume()
+#define COMSIG_HUMAN_ON_CONSUME "human_on_consume"
+// from base of /turf/simulated/floor/carpet/Entered(atom/movable/O)
+#define COMSIG_HUMAN_ON_CARPET "human_on_carpet"
+// from base of /mob/living/carbon/human/say()
+#define COMSIG_HUMAN_SAY "human_say"
 
 /// from /obj/effect/proc_holder/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
@@ -424,3 +436,11 @@
 #define COMSIG_REMOVE_GENE_DISABILITY "remove_gene_disability"
 // send this signal to handle disabilities in life for mob/living/carbon/human
 #define COMSIG_HANDLE_DISABILITIES "handle_disabilities"
+
+//from base of client/MouseDown(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEDOWN "client_mousedown"
+//from base of client/MouseUp(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEUP "client_mouseup"
+	#define COMPONENT_CLIENT_MOUSEUP_INTERCEPT (1<<0)
+//from base of client/MouseUp(): (/client, object, location, control, params)
+#define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"

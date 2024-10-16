@@ -445,3 +445,61 @@
 		return
 	active = !active
 	to_chat(usr, "<span class='notice'>You toggle the Noire Mode [active ? "on. Let the investigation begin." : "off."]</span>")
+
+/datum/glasses_mode_type_state
+
+/datum/glasses_mode_type_state/proc/change_state(obj/item/clothing/glasses/glasses, state)
+	if(state)
+		on(glasses)
+	else
+		off(glasses)
+
+/datum/glasses_mode_type_state/proc/on(obj/item/clothing/glasses/glasses)
+	return
+
+/datum/glasses_mode_type_state/proc/off(obj/item/clothing/glasses/glasses)
+	return
+
+/datum/glasses_mode_type_state/thermal
+	var/sightglassesmod = "thermal"
+
+/datum/glasses_mode_type_state/thermal/sepia
+	sightglassesmod = "sepia"
+
+/datum/glasses_mode_type_state/thermal/on(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	glasses.sightglassesmod = sightglassesmod
+	glasses.vision_flags = SEE_MOBS
+
+/datum/glasses_mode_type_state/thermal/off(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = null
+	glasses.sightglassesmod = null
+	glasses.vision_flags = 0
+
+/datum/glasses_mode_type_state/night
+	var/sightglassesmod = "night"
+
+/datum/glasses_mode_type_state/night/nightsight
+	sightglassesmod = "nightsight"
+
+/datum/glasses_mode_type_state/night/on(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	glasses.sightglassesmod = sightglassesmod
+	glasses.darkness_view = 7
+
+/datum/glasses_mode_type_state/night/off(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = null
+	glasses.sightglassesmod = null
+	glasses.darkness_view = 0
+
+/datum/glasses_mode_type_state/thermal_advanced
+
+/datum/glasses_mode_type_state/thermal_advanced/on(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	glasses.darkness_view = 7
+	glasses.vision_flags = SEE_MOBS
+
+/datum/glasses_mode_type_state/thermal_advanced/off(obj/item/clothing/glasses/glasses)
+	glasses.lighting_alpha = null
+	glasses.darkness_view = 0
+	glasses.vision_flags = 0
