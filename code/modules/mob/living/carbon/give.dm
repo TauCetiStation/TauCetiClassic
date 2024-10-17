@@ -18,7 +18,7 @@
 		if(I.w_class < SIZE_NORMAL)
 			to_chat(src, "<span class='red'>[I] is too small for [name] to hold.</span>")
 			return
-	switch(tgui_alert(M,"[src] wants to give you \a [I]?",, list("Yes","No")))
+	switch(tgui_alert(M,"[src] wants to give you \a [I]?",, list("No","Yes")))
 		if("Yes")
 			if(!can_give(M, show_warnings = TRUE))
 				return
