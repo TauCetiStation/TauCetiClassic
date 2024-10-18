@@ -12,7 +12,7 @@
 	name = "neck"
 	icon_state = "id"
 	screen_loc = ui_ian_neck
-	slot_id = SLOT_NECK
+	slot_id = SLOT_IAN_NECK
 
 /atom/movable/screen/resist/ian
 	screen_loc = ui_drop_throw

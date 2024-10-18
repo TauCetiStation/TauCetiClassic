@@ -97,7 +97,7 @@
 			head = item_type
 		if(SLOT_WEAR_MASK)
 			mask = item_type
-		if(SLOT_TIE)
+		if(SLOT_NECK)
 			neck = item_type
 		if(SLOT_L_EAR)
 			l_ear = item_type
@@ -178,7 +178,7 @@
 		"[SLOT_SHOES]"       = shoes,
 		"[SLOT_WEAR_SUIT]"   = suit,
 		"[SLOT_W_UNIFORM]"   = uniform,
-		"[SLOT_TIE]"         = neck,
+		"[SLOT_NECK]"        = neck,
 		"[SLOT_BELT]"        = belt,
 		"[SLOT_WEAR_ID]"     = id
 	)

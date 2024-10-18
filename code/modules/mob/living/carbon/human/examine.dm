@@ -200,6 +200,14 @@
 		else
 			msg += "[t_He] [t_has] [bicon(wear_mask)] \a [wear_mask] on [t_his] face.\n"
 
+	if(neck)
+		if(neck.dirt_overlay)
+			msg += "<span class='warning'>[t_He] [t_has] [bicon(neck)] [neck.gender==PLURAL?"some":"a"] [neck.dirt_description()] on [t_his] neck!</span>\n"
+		else if(neck.wet)
+			msg += "<span class='wet'>[t_He] [t_has] [bicon(neck)] [neck.gender==PLURAL?"some":"a"] wet [neck.name] on [t_his] neck!</span>\n"
+		else
+			msg += "[t_He] [t_has] [bicon(neck)] \a [neck] on [t_his] neck.\n"
+
 	//eyes
 	if(!skipeyes)
 		if(glasses)
