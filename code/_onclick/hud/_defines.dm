@@ -169,3 +169,7 @@
 #define HUD_COPY_ICON	1
 #define HUD_COPY_COLOR	2
 #define HUD_COPY_ALPHA	4
+
+//Parallax
+#define PARALLAX_CLASSIC "parallax_classic"
+#define PARALLAX_HEAVEN "parallax_heaven"

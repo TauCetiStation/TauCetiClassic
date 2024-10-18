@@ -349,6 +349,7 @@
 		/turf/simulated/wall/r_wall/purple, \
 		/turf/simulated/wall/r_wall/green, \
 		/turf/simulated/wall/r_wall/beige, \
+		/turf/simulated/wall/heaven, \
 		/obj/structure/falsewall, \
 		/obj/structure/falsewall/yellow, \
 		/obj/structure/falsewall/red, \

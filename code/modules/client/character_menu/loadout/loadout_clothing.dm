@@ -162,6 +162,19 @@
 	path = /obj/item/clothing/under/kung
 	cost = 1
 
+/datum/gear/under/pluvia
+	display_name = "Pluvia uniform"
+	path = /obj/item/clothing/under/pluvia
+	cost = 1
+	whitelisted = PLUVIAN
+
+/datum/gear/under/pluvia/New()
+	..()
+	var/pluvia = list()
+	pluvia["classic"] = /obj/item/clothing/under/pluvia
+	pluvia["gold"] = /obj/item/clothing/under/pluvia_gold
+	gear_tweaks += new/datum/gear_tweak/path(pluvia)
+
 /datum/gear/suit/m65
 	display_name = "M65 Jacket Selection"
 	path = /obj/item/clothing/suit/storage/miljacket_army
@@ -211,3 +224,17 @@
 	cost = 1
 	allowed_roles = list("Security Officer", "Security Cadet", "Warden", "Detective", "Head of Security", "Forensic Technician" )
 	whitelisted = SKRELL
+
+/datum/gear/suit/pluvia_path
+	display_name = "Pluvia Path"
+	path = /obj/item/clothing/suit/pluvia_morality
+	cost = 1
+	whitelisted = PLUVIAN
+
+/datum/gear/suit/pluvia_path/New()
+	..()
+	var/pluvia_path = list()
+	pluvia_path["Balance"] = /obj/item/clothing/suit/pluvia_balance
+	pluvia_path["Morality"] = /obj/item/clothing/suit/pluvia_morality
+	pluvia_path["Trick"] = /obj/item/clothing/suit/pluvia_trick
+	gear_tweaks += new/datum/gear_tweak/path(pluvia_path)

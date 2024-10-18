@@ -567,6 +567,8 @@
 	return TRUE
 
 /datum/religion/proc/add_member(mob/M, holy_role)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(is_member(M) || !can_convert(M))
 		return FALSE
 
@@ -587,6 +589,8 @@
 	return
 
 /datum/religion/proc/remove_member(mob/M)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!is_member(M))
 		return FALSE
 
