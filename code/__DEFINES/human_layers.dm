@@ -22,7 +22,7 @@
 #define HAIR_LAYER            10 //TODO: make part of head layer?
 #define FACEMASK_LAYER        9
 #define HEAD_LAYER            8
-#define COLLAR_LAYER          7
+#define NECK_LAYER            7
 #define HANDCUFF_LAYER        6
 #define LEGCUFF_LAYER         5
 #define L_HAND_LAYER          4
