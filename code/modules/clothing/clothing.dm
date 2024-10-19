@@ -354,6 +354,14 @@ BLIND     // can't see anything
 	w_class = SIZE_TINY
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
 
+//Neck
+/obj/item/clothing/neck
+	name = "neck"
+	icon = 'icons/obj/clothing/neck.dmi'
+	slot_flags = SLOT_FLAGS_NECK
+	w_class = SIZE_TINY
+	sprite_sheet_slot = SPRITE_SHEET_NECK
+
 //Mask
 /obj/item/clothing/mask
 	name = "mask"

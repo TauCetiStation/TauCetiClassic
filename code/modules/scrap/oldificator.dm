@@ -242,3 +242,6 @@
 /obj/effect/decal/mecha_wreckage/make_old()
 	salvage_num = 8
 	oldificated = TRUE
+
+/obj/machinery/kitchen_machine/microwave/make_old()
+	broken = 2
