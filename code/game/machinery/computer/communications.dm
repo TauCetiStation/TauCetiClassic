@@ -2,7 +2,7 @@
 /obj/machinery/computer/communications
 	name = "Communications Console"
 	cases = list("консоль коммуникаций", "консоли коммуникаций", "консоли коммуникаций", "консоль коммуникаций", "консолью коммуникаций", "консоли коммуникаций")
-	desc = "Эта консоль имеет функционал для управления станцией."
+	desc = "Эта консоль обладает важным функционалом по управлению станцией."
 	icon_state = "comm"
 	light_color = "#0099ff"
 	req_access = list(access_heads)
@@ -126,7 +126,7 @@
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
 			if(last_seclevel_change > world.time)
-				to_chat(usr, "<span class='warning'>Красный индикатор загорелся на консоли. Вероятно, вы не можете менять код тревоги так быстро!</span>")
+				to_chat(usr, "<span class='warning'>Красный индикатор загорелся на консоли. Вероятно, вы не можете сменить код тревоги так быстро!</span>")
 				return
 			else
 				last_seclevel_change = world.time + 1 MINUTE
@@ -335,7 +335,7 @@
 		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat += dat2
-			var/datum/browser/popup = new(user, "communications", "Консоль коммуникаций", 400, 500)
+			var/datum/browser/popup = new(user, "communications", "Коммуникационная консоль", 400, 500)
 			popup.set_content(dat)
 			popup.open()
 		return
