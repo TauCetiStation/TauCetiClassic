@@ -158,9 +158,11 @@
 
 	if(fon)
 		fon = FALSE
+		playsound(src, 'sound/items/flashlight.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		set_light(0)
 	else
 		fon = TRUE
+		playsound(src, 'sound/items/flashlight.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		set_light(f_lum)
 
 /obj/item/device/pda/proc/assign(real_name)
