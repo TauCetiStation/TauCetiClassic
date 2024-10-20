@@ -240,7 +240,7 @@
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(CM.cooldown)
-					to_chat(usr, "<span class='warning'>Рекалибровка систем связи. Пожалуйста подождите.</span>")
+					to_chat(usr, "<span class='warning'>Рекалибровка систем связи. Пожалуйста, подождите.</span>")
 					return
 				var/input = sanitize(input(usr, "Передайте оповещение Центкому через квантовую связь. Этот процесс является крайне затратным, потому злоупотребление им приведёт к вашему... увольнению. Передача сообщения не гарантирует ответ. Между сообщениями есть промежуток в 30 секунд, поэтому они должны содержать полную информацию.", "Чтобы отменить, отправьте пустое сообщение.", ""))
 				if(!input || !(usr in view(1,src)))
@@ -329,7 +329,7 @@
 
 	var/dat = ""
 	if (SSshuttle.online && SSshuttle.location == 0)
-		dat += "<B>Аварийный шаттл</B>\n<BR>\nПримерное время прибытия: [shuttleeta2text()]<BR>"
+		dat += "<B>Аварийный шаттл</B>\n<BR>\nРасчетное время прибытия [shuttleeta2text()]<BR>"
 
 	if (issilicon(user))
 		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
@@ -391,7 +391,7 @@
 			dat += "Установить текст на дисплеях<BR>"
 			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Очистить</A><BR>"
 			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=default'>По умолчанию</A><BR>"
-			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Время до прибытия шаттла</A><BR>"
+			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Расчетное время до прибытия шаттла</A><BR>"
 			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Сообщение</A>"
 			dat += "<ul><li> Линия 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
 			dat += "<li> Линия 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
@@ -519,7 +519,7 @@
 
 		if(world.time < 54000) // 30 minute grace period to let the game get going
 			var/time_to_stay = round((54000-world.time)/600)
-			to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [time_to_stay] [pluralize_russian(time_to_stay, "минута", "минуты", "минут")] до повторного вызова.")//may need to change "/600"
+			to_chat(user, "Шаттл находится на дозаправке. Пожалуйста, подождите еще [time_to_stay] [PLUR_MINUTES_IN(time_to_stay)] до повторного вызова.")//may need to change "/600"
 			return
 
 	SSshuttle.shuttlealert(1)
