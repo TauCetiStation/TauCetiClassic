@@ -427,13 +427,11 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(state != AHELP_ACTIVE)
 		return
 
-	var/msg = "<font color='red'>Ваш AdminHelp рассматривает: [key_name(usr,FALSE,FALSE)], пожалуйста, будьте терпеливы.</font>"
-
 	if(initiator)
-		to_chat(initiator, msg)
+		to_chat(initiator, "<font color='red'>Ваш AdminHelp рассматривает: [key_name(usr,FALSE,FALSE)], пожалуйста, будьте терпеливы.</font>")
 
 	feedback_inc("ahelp_handling")
-	msg = "Ticket [TicketHref("#[id]")] being handled by **[key_name(usr)]**"
+	var/msg = "Ticket [TicketHref("#[id]")] being handled by **[key_name(usr)]**"
 	message_admins(msg)
 	log_admin(msg)
 	world.send2bridge(
