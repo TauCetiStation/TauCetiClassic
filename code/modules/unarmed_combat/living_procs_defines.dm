@@ -272,6 +272,7 @@
 		return FALSE
 
 	log_combat(attacker, "[damVerb]ed")
+	SEND_SIGNAL(attacker, COMSIG_HUMAN_HARMED_OTHER, src)
 
 	var/armor_block = 0
 	var/obj/item/organ/external/BP = attacker.get_targetzone() // apply_damage accepts both the bodypart and the zone.

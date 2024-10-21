@@ -128,6 +128,15 @@
 	race = UNATHI
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
+/mob/living/carbon/monkey/pluvian
+	name = "Pluv-key"
+	voice_name = "Pluv-key"
+	cases = list("Плувеныш", "Плувеныша", "Плувешыну", "Плувеныша", "Плувенышом", "Плувеныше")
+	speak_emote = list("chimpers")
+	icon_state = "pluvian"
+	race = PLUVIAN
+	holder_type = /obj/item/weapon/holder/monkey/pluvia
+
 /mob/living/carbon/monkey/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
@@ -189,6 +198,10 @@
 	. = ..()
 	greaterform = TAJARAN
 	add_language(LANGUAGE_SIIKTAJR)
+
+/mob/living/carbon/monkey/pluvian/atom_init()
+	. = ..()
+	greaterform = PLUVIAN
 
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = speed

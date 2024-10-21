@@ -44,11 +44,11 @@
 
 	if(!target.holder)
 		 // workaround because tickets needs clients to reply and it's not easy to change
-		to_chat(target, "<font color='red'><i>Это удаленный ответ администратора, используйте F1 для ответа.</i></font>")
+		to_chat(target, "<font color='red'><i>Р­С‚Рѕ СѓРґР°Р»РµРЅРЅС‹Р№ РѕС‚РІРµС‚ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°, РёСЃРїРѕР»СЊР·СѓР№С‚Рµ F1 РґР»СЏ РѕС‚РІРµС‚Р°.</i></font>")
 		giveadminhelpverb(target.ckey)
 
 	admin_ticket_log(target, "<font color='blue'>PM From [BRIDGE_FROM_SNIPPET_TEXT]: [message]</font>")
-	
+
 	if(!target.holder)
 		target.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 

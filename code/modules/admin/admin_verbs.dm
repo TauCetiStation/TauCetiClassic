@@ -480,7 +480,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(!config.sql_enabled)
 		to_chat(usr, "<span class='notice'>SQL database is disabled. Setup it or use native Byond bans.</span>")
 		return
-		
+
 	holder.DB_ban_panel()
 	feedback_add_details("admin_verb","UBP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

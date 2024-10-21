@@ -98,6 +98,7 @@ log transactions
 		if(!held_card)
 			usr.drop_from_inventory(idcard, src)
 			held_card = idcard
+			playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
 				authenticated_account = null
 		return
@@ -672,6 +673,7 @@ log transactions
 								H.sec_hud_set_ID()
 				else
 					release_held_id(usr)
+				playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if("logout")
 				authenticated_account = null
 				//usr << browse(null,"window=atm")
