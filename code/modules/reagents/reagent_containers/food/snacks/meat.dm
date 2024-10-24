@@ -54,7 +54,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat
 	name = "meatwheat clump"
-	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
+	cases = list("комок мясной пшеницы", "комка мясной пшеницы", "комку мясной пшеницы", "комок мясной пшеницы", "комком мясной пшеницы", "комке мясной пшеницы")
+	desc = "Это не похоже на мясо, но ваши стандарты изначально <i>не очень-то</i> высоки."
 	filling_color = rgb(150, 0, 0)
 	icon_state = "meatwheat_clump"
 	bitesize = 4
