@@ -17386,7 +17386,7 @@
 /area/station/bridge)
 "hFM" = (
 /obj/structure/closet/theatrecloset,
-/obj/item/device/guitar/electric,
+/obj/item/device/synth,
 /obj/random/randomtoy,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,

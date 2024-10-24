@@ -61889,7 +61889,7 @@
 /area/station/hallway/secondary/entry)
 "ljP" = (
 /obj/structure/table/woodentable,
-/obj/item/device/guitar/electric,
+/obj/item/device/synth,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
