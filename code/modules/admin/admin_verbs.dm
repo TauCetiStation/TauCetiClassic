@@ -855,8 +855,14 @@ var/global/list/admin_verbs_hideable = list(
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
+			M.bodytype = BODY_TYPE_NORMAL
 		else
 			M.gender = FEMALE
+			var/new_body_type = tgui_alert(usr, "Please select body type.", "Character Generation", list("Normal", "Slim"))
+			if(new_body_type == "Normal")
+				M.bodytype = BODY_TYPE_NORMAL
+			else
+				M.bodytype = BODY_TYPE_SLIM
 
 	// hair
 	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)

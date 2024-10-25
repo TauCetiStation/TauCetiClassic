@@ -123,7 +123,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		icon_path = def_icon_path
 
 	var/fem = ""
-	if(H.gender == FEMALE && S.gender_limb_icons)
+	if(H.bodytype == BODY_TYPE_SLIM && S.gender_limb_icons)
 		if(t_state != null)
 			if("[t_state]_fem" in icon_states(def_icon_path))
 				fem = "_fem"
@@ -176,6 +176,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
 	var/g = (gender == FEMALE ? "f" : "m")
+	var/fem_body_type = null
+	var/bt = (bodytype == BODY_TYPE_NORMAL ? "m" : "f")
+	if(g == "f")
+		fem_body_type = (bodytype == BODY_TYPE_NORMAL ? "alt_" : null)
 
 	var/list/standing = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
@@ -215,14 +219,14 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	//Underwear
 	if((underwear > 0) && (underwear < 12) && species.flags[HAS_UNDERWEAR])
-		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_underwear.dmi', 'icons/mob/human_underwear_fat.dmi', "underwear[underwear]_[g]_s")
+		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_underwear.dmi', 'icons/mob/human_underwear_fat.dmi', "underwear[underwear]_[fem_body_type][g]_s")
 		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 		MA = update_height(MA, TRUE)
 		standing += MA
 
 	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
-		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_undershirt.dmi', 'icons/mob/human_undershirt_fat.dmi', "undershirt[undershirt]_s_[g]")
+		var/mutable_appearance/MA = BODY_ICON('icons/mob/human_undershirt.dmi', 'icons/mob/human_undershirt_fat.dmi', "undershirt[undershirt]_s_[bt]")
 		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 		MA = update_height(MA, TRUE)
@@ -232,7 +236,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/obj/item/organ/external/r_foot = bodyparts_by_name[BP_R_LEG]
 		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
 		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump)
-			var/mutable_appearance/MA = BODY_ICON('icons/mob/human_socks.dmi', 'icons/mob/human_socks_fat.dmi', "socks[socks]_s_[g]")
+			var/mutable_appearance/MA = BODY_ICON('icons/mob/human_socks.dmi', 'icons/mob/human_socks_fat.dmi', "socks[socks]_s_[bt]")
 			MA.pixel_x += species.offset_features[OFFSET_SHOES][1]
 			MA.pixel_y += species.offset_features[OFFSET_SHOES][2]
 			MA = update_height(MA, TRUE)
@@ -446,7 +450,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				t_state += "_mob"
 				icon_path = A.icon_custom
 
-			if(gender == FEMALE && species.gender_limb_icons)
+			if(bodytype == BODY_TYPE_SLIM && species.gender_limb_icons)
 				if("[t_state]_fem" in icon_states(icon_path))
 					t_state += "_fem"
 
@@ -457,7 +461,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			standing.add_overlay(accessory)
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
-		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//
+		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))
 			drop_from_inventory(thing)
 
 	apply_standing_overlay(UNIFORM_LAYER)

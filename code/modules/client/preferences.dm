@@ -89,6 +89,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/neuter_gender_voice = MALE		//for male/female emote sounds but with neuter gender
 	var/age = 30						//age of character
 	var/height = HUMANHEIGHT_MEDIUM		//height of character
+	var/bodytype = BODY_TYPE_NORMAL	//sprites for clothing and body
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
 	var/socks = 1						//socks type
@@ -401,6 +402,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.gen_record = gen_record
 
 	character.gender = gender
+	character.bodytype = bodytype
 	character.neuter_gender_voice = neuter_gender_voice
 	character.age = age
 	character.height = height

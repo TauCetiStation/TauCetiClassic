@@ -208,6 +208,7 @@
 			if(H.gender == "male")
 				if(tgui_alert(H, "Become a Witch?", "Confirmation", list("Yes", "No")) == "Yes")
 					H.gender = "female"
+					H.bodytype = pick(BODY_TYPE_NORMAL, BODY_TYPE_SLIM)
 					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
 					return
@@ -215,6 +216,7 @@
 			else
 				if(tgui_alert(H, "Become a Warlock?", "Confirmation", list("Yes", "No")) == "Yes")
 					H.gender = "male"
+					H.bodytype = BODY_TYPE_NORMAL
 					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
 					return

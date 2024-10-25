@@ -1421,6 +1421,9 @@
 	if(species.flags[NO_PAIN])
 		traumatic_shock = 0
 
+	if(gender == FEMALE)
+		bodytype = species.default_female_bodytype
+
 	if(species.base_color && default_colour)
 		//Apply colour.
 		r_skin = HEX_VAL_RED(species.base_color)

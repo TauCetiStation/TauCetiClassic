@@ -22,3 +22,6 @@
 #define LIGHT_DAM_THRESHOLD 3
 #define LIGHT_HEAL_THRESHOLD 3
 #define LIGHT_DAMAGE_TAKEN 10
+
+#define BODY_TYPE_NORMAL "Normal Body Type"
+#define BODY_TYPE_SLIM   "Slim Body Type"

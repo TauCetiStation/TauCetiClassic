@@ -3,8 +3,10 @@
 	if(H)
 		if(H.gender == MALE)
 			gender = MALE
+			bodytype = BODY_TYPE_NORMAL
 		else
 			gender = FEMALE
+			bodytype = pick(BODY_TYPE_SLIM, BODY_TYPE_NORMAL)
 	s_tone = random_skin_tone()
 	h_style = random_hair_style(gender, species, ipc_head)
 	grad_style = random_gradient_style()

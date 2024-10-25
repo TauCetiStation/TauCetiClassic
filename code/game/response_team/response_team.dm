@@ -149,8 +149,14 @@ var/global/can_call_ert
 	if (new_gender)
 		if(new_gender == "Мужской")
 			H.gender = MALE
+			H.bodytype = BODY_TYPE_NORMAL
 		else
 			H.gender = FEMALE
+			var/new_body_type = tgui_alert(src, "Выберите телосложение.", "Создание персонажа", list("Нормальное", "Худое"))
+			if(new_body_type == "Нормальное")
+				H.bodytype = BODY_TYPE_NORMAL
+			else
+				H.bodytype = BODY_TYPE_SLIM
 
 	//hair
 	var/new_hstyle = input(src, "Выберите прическу", "Внешность")  as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)

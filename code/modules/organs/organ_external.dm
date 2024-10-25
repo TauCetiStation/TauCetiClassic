@@ -159,8 +159,12 @@
 
 	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
 		g = (gender == FEMALE ? "f" : "m")
+		if(g == "f" && owner.bodytype == BODY_TYPE_NORMAL)
+			g = "alt_f"
 	else if(species.gender_limb_icons == TRUE && (body_zone in list(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
 		g = (gender == FEMALE ? "f" : "m")
+		if(g == "f" && owner.bodytype == BODY_TYPE_NORMAL)
+			g = "alt_f"
 
 	if (!species.has_gendered_icons)
 		g = null

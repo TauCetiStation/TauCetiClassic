@@ -48,6 +48,8 @@
 			. += "<br>Insurance: <a href='byond://?src=\ref[user];preference=insurance;task=input'>[insurance]</a>"
 			if(specie_obj.flags[HAS_SKIN_TONE])
 				. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
+			if(specie_obj.flags[HAS_BODY_TYPE_SELECTION] && gender == FEMALE)
+				. += "<br>Body Type: <a href='?_src_=prefs;preference=bodytype;task=input'>[bodytype]</a>"
 
 		//Organs
 		if("organs")
@@ -328,6 +330,9 @@
 				if("insurance")
 					insurance = input("Please select an insurance level", "Character Generation", insurance) in SSeconomy.insurance_prices
 
+				if("bodytype")
+					bodytype = tgui_alert(usr, "Please select body type.", "Character Generation", list(BODY_TYPE_NORMAL, BODY_TYPE_SLIM))
+
 				if("hair")
 					if(!specie_obj.flags[HAS_HAIR_COLOR])
 						return
@@ -604,11 +609,14 @@
 				if("gender")
 					if(specie_obj.flags[NO_GENDERS])
 						gender = NEUTER
+						bodytype = BODY_TYPE_NORMAL
 						return
 					if(gender == MALE)
 						gender = FEMALE
+						bodytype = specie_obj.default_female_bodytype
 					else
 						gender = MALE
+						bodytype = BODY_TYPE_NORMAL
 
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species, ipc_head)

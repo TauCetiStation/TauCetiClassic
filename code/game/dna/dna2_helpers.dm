@@ -165,8 +165,10 @@
 
 		if (dna.GetUIState(DNA_UI_GENDER))
 			H.gender = FEMALE
+			H.bodytype = pick(BODY_TYPE_NORMAL, BODY_TYPE_SLIM)
 		else
 			H.gender = MALE
+			H.bodytype = BODY_TYPE_NORMAL
 
 		//Hair
 		var/hair = dna.GetUIValueRange(DNA_UI_HAIR_STYLE,hair_styles_list.len)

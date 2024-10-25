@@ -34,6 +34,7 @@
 	var/speed_mod =  0                                   // How fast or slow specific specie.
 	var/speed_mod_no_shoes = 0                           // Speed ​​modifier without shoes.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
+	var/default_female_bodytype = BODY_TYPE_SLIM
 
 	var/pluvian_social_credit = 1                        // Species default social credit for pluvian social credit system
 
@@ -362,6 +363,7 @@
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
+	,HAS_BODY_TYPE_SELECTION = TRUE
 	)
 
 	min_age = 25
@@ -589,6 +591,7 @@
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_PLANT
+	default_female_bodytype = BODY_TYPE_NORMAL
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
